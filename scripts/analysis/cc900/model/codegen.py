@@ -6986,6 +6986,9 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+MULDIV_MEMBER_PTR = True                                 # see gen_opassign
+OPK_MEMBER_GLOBAL = True                                 # see gen_opassign
+REM_POW2_AND_ALL = True                                  # see gen_stmt
 XR_ARG_CSE = True                                        # see gen_call_adecl
 XR_CHAR_ARG_VIA_A = True                                 # see gen_call_adecl
 AND_ZERO_FOLD_OPT = True                                 # see compile_function_once
@@ -9403,6 +9406,16 @@ def gen_opassign(F, e):
     if OPASSIGN_ZERO and op in ('|', '^', '+', '-') and True and fold(r).k == 'const' and fold(r).value == 0 and \
             strip(e.l).k == 'var' and strip(e.l).ty.kind == 'int' and not nodes_in(r, 'call'):
         return None                                        # x |= 0 is no code (random r1_04_17: gi2 |= 0 * 1)
+    lmx_ = strip(e.l)
+    if OPK_MEMBER_GLOBAL and op in '&|^' and fold(r).k == 'const' and size in (1, 2) and lmx_.k == 'member' and lmx_.arrow and \
+            strip(lmx_.base).k == 'load' and strip(strip(lmx_.base).e).k == 'var' and \
+            strip(strip(lmx_.base).e).decl.kind == 'global' and not (getattr(F, 'naive_loads', False) or
+                                                                     getattr(F, 'l2', None) or getattr(F, 'ptr_cache', None)) and \
+            'WA' not in live_regs(F):
+        off_ = member_offset(lmx_)                         # a global pointer's member op= a constant: through XWA, in
+        F.emit('ld', 'XWA,%s' % mem_operand(F, strip(lmx_.base)))   # memory (rstmt rs_3_07_19_2: gps->u %= 16 ->
+        t_ = '(XWA+%s)' % hx(off_) if off_ else '(XWA)'    # ld XWA,(_gps) / andw (XWA+0x8),0xf)
+        F.emit(SIMPLE_OPS[op] + ('b' if size == 1 else 'w'), '%s,%s' % (t_, imm_of(fold(r), size))); return t_
     if op in SIMPLE_OPS and fold(r).k == 'const' and size <= 2 and (getattr(F, 'naive_loads', False) or
                                                                     (OPK_DEREF_GLOBAL and True and op in '&|^' and
                                                                      size == 2 and strip(e.l).k == 'deref' and
@@ -9675,6 +9688,14 @@ def gen_opassign(F, e):
                 t = '(%s)' % ptr                                   # a static element or member is multiplied or
                                                            # divided through its address (random r1_06_13: gua[6] %= 3 ->
                                                            # lda XBC,_gua + 0xc / ld WA,(XBC) / .. / ld (XBC),WA)
+            mpm_ = re.match(r'^\((XBC|XDE)\+(0x[0-9a-f]+)\)$', t)
+            if MULDIV_MEMBER_PTR and mpm_ and strip(e.l).k == 'member' and strip(e.l).arrow and size in (1, 2) and \
+                    not (not signed and kq_ >= 2 and kq_ & (kq_ - 1) == 0) and \
+                    F.lines[-1] == '\tld\t%s,%s' % (mpm_.group(1), mem_operand(F, strip(strip(e.l).base)) or '?') and \
+                    'WA' not in live_regs(F):              # a global pointer's member multiplied or divided in place:
+                F.lines[-1] = '\tld\tXWA,%s' % mem_operand(F, strip(strip(e.l).base))   # its address first (rstmt
+                F.emit('lda', '%s,XWA+%s' % (mpm_.group(1), mpm_.group(2))); t = '(%s)' % mpm_.group(1)   # rs_3_06_09_5:
+                                                           # gps->u /= 3 -> ld XWA,(_gps) / lda XBC,XWA+0x8 / ld WA,(XBC))
         rs = mem_operand(F, r)
         if rs is None: raise Unsupported('complex operand')
         in_t = {f_[1:] for f_ in ('XWA', 'XBC', 'XDE', 'XHL') if f_ in t} | \
@@ -10988,6 +11009,13 @@ def gen_stmt(F, s, last):
             strip(s.e.l).ty.size in (1, 2) and not strip(s.e.l).ty.signed:
         from frontend import N                             # an unsigned x /= 2 is x >>= 1 (rstmt rs_1_05_00_3: guc /= 2
         s.e.op = '>>'; s.e.r = N('const', value=1, ty=s.e.r.ty)   # -> srlb (_guc))
+    if REM_POW2_AND_ALL and s.k == 'expr' and s.e.k == 'opassign' and s.e.op == '%' and fold(s.e.r).k == 'const' and \
+            fold(s.e.r).value is not None and fold(s.e.r).value >= 2 and fold(s.e.r).value & (fold(s.e.r).value - 1) == 0 and \
+            strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and strip(s.e.l).ty.size in (1, 2) and \
+            not strip(s.e.l).ty.signed:
+        from frontend import N                             # an unsigned x %= 2^k is x &= 2^k - 1, in memory (rstmt
+        s.e.op = '&'; s.e.r = N('const', value=fold(s.e.r).value - 1, ty=s.e.r.ty)   # rs_3_07_19_2: gps->u %= 16 ->
+                                                           # ld XWA,(_gps) / andw (XWA+0x8),0xf)
     n_ms_ = len(F.lines)
     try:
         r_ = gen_body_shift(F, s, last) if LIVE_SHIFT and F.adecl and s.k in ('expr', 'return', 'decl') and \

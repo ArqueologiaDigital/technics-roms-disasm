@@ -2954,6 +2954,14 @@ for a register parameter other than WA goes through A while WA holds nothing yet
 -> `ld A,(_guc) / ld C,A / extz BC / ld WA,(_gi2)`). rstmt -Xr +7, random3 and random4 -Xr +1 each; library 186/248,
 pairs 223, semcheck 50 unchanged.
 
+**Batch 256 (2026-11-15): a global pointer's member op= in memory.** REM_POW2_AND_ALL (`gen_stmt`): an unsigned char
+or int `x %= 2^k` is `x &= 2^k - 1` at every option set (it was a -O rewrite only). OPK_MEMBER_GLOBAL
+(`gen_opassign`): a global pointer's member `&= | ^=` a constant is done in memory through XWA (rstmt rs_3_07_19_2:
+`gps->u %= 16` -> `ld XWA,(_gps) / andw (XWA+0x8),0xf`), as OPK_DEREF_GLOBAL does for `*gpi`. MULDIV_MEMBER_PTR: a
+global pointer's member multiplied or divided in place takes its address first (rs_3_06_09_5: `gps->u /= 3` ->
+`ld XWA,(_gps) / lda XBC,XWA+0x8 / ld WA,(XBC) / extz XWA / div XWA,0x3 / ld (XBC),WA`), except an unsigned one by a
+power of two. rstmt +2 at every set; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
