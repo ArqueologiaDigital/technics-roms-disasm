@@ -1973,7 +1973,7 @@ def plan_lh_call0(F):
              LH_STORE_SAVE and lh_save_kinds(F, x.e.l, hits[0]) is not None)]
     if len(tops) != 1: return
     n = hits[0]; lk, rk = lh_call_kinds(F, n.op, strip(n.l), strip(n.r)); ks = (lk[0], rk[0])
-    if F.opt and ks == ('X', 'X'): return                    # (-O: one index for both, unmodelled)
+    if F.opt and ks == ('X', 'X') and not LH_XX_OPT: return   # (-O: one index for both; lifted, LH_XX_OPT: stdiv / lhidx -O3 -XS)
     from frontend import Decl, Type
     tmp = tix = None
     save = LH_STORE_SAVE and lh_save_kinds(F, tops[0].e.l, n) is not None and not (strip(tops[0].e.l).k == 'var')
@@ -7067,6 +7067,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+LH_XX_OPT = True                                         # see the long helper with two element operands under -O
 XR_GUARDS_LIFT = True                                    # see the long helper store / save paths and stvx_char_plan: -Xr too
 LX5_XR = True                                            # see lx5_parts: under -Xr too
 SD4_XR = True                                            # see sd4_stmt / plan_sd4: under -Xr too

@@ -3126,6 +3126,12 @@ Measured one at a time on the scratch ledger: stdiv -Xr +8 and -O3 -XS -Xr +4, s
 losses; a fourth such guard changed nothing and is left as it is. Together stdiv -Xr 238 -> 286 and -O3 -XS -Xr 222 ->
 266, stvxc +6 / +6; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 280 (2026-11-15): a long helper with two element operands under -O.** LH_XX_OPT: a long helper whose operands
+are both elements (kinds X, X) is no longer refused under -O. The guard said "one index for both, unmodelled", but the
+existing forms hold: stdiv -O3 -XS +20, lhidx -O3 -XS and -O3 -XS -Xr +6 each, nothing lost. Two more guards of the
+same kind (an index used by two arrays under -O, a -Xr exclusion in an index path) were lifted on the scratch ledger
+and changed nothing, so they stay. rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
