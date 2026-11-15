@@ -2904,6 +2904,15 @@ and scales the index at 32 bits and adds the member offset to the low byte (rstm
 / ld E,A / add E,0xe / ld XBC,(_gps) / cp WA,(XBC+E)`); a signed index keeps `add WA,WA / add WA,0xe` (micro m_gps_a).
 rstmt +4 / +2 / +3 / +1, random4 -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 249 (2026-11-15): a long multiplied in place by a constant; a char divided by a constant as a byte.**
+LONG_MULK_OPA (`gen_opassign`): a long variable multiplied in place by a constant with at most three one bits, or by
+2^n - 1, is built by shifts and adds through XWA with the operand kept in XBC, with no helper call (rstmt
+rs_1_06_17_3: `gul *= 7UL` -> `ld XWA,(_gul) / ld XBC,XWA / sll 0x3,XWA / sub XWA,XBC / ld (_gul),XWA`; rs_3_02_11_3:
+`gl2 *= 5L` -> `.. / sla 0x2,XWA / add XWA,XBC`). CHAR_DIVK (`char_narrow`'s visit2): a signed char divided by a
+constant 1..127 under `!`, or divided or shifted again, is a byte division (rs_4_03_08_6: `!(gc2 / 2)` -> `exts WA /
+divs WA,0x2 / cp A,0x0`; rs_3_01_10_2: `(gc2 % 2) % 4` -> `divs WA,0x2 / ld A,W / exts WA / divs WA,0x4 / ld L,W`).
+rstmt +8 / +6 / +7 / +6; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

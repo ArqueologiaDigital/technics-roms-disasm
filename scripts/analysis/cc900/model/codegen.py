@@ -6971,6 +6971,8 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+CHAR_DIVK = True                                         # see char_narrow's visit2
+LONG_MULK_OPA = True                                     # see gen_opassign
 MEMBER_ARR_UINT = True                                   # see gen_load_mem
 MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
@@ -7695,6 +7697,12 @@ def char_narrow(body):
             getattr(parent, 'ty', None) is not None and parent.ty.size == 1   # (stored to a char: stdiv.c's forms stand)
         if n.op == '/' and plain(x) and plain(y) and x.ty.signed and y.ty.signed and not to_char:
             wrap(N('bin', op='/', l=x, r=y, ty=ct0(True), narrowed=True)); return
+        if CHAR_DIVK and n.op in ('/', '%') and anyc(x) and x.ty.signed and rk.k == 'const' and rk.value is not None and \
+                1 <= rk.value <= 127 and not to_char and parent is not None and \
+                (parent.k == 'un' and parent.op == '!' or parent.k == 'bin' and parent.op in ('/', '%', '>>') and parent.l is n):
+            wrap(N('bin', op=n.op, l=x, r=N('const', value=rk.value, ty=ct0(True)), ty=ct0(True), narrowed=True)); return
+            # a char divided by a constant under !, or divided or shifted again, is a byte division (rstmt rs_4_03_08_6:
+            # !(gc2 / 2) -> exts WA / divs WA,0x2 / cp A,0x0; rs_3_01_10_2: (gc2 % 2) % 4 -> divs WA,0x2 / ld A,W / ..)
         if n.op == '*':
             if rk.k == 'const' and rk.value is not None and 0 <= rk.value <= (127 if x.ty.signed else 255):
                 sg = x.ty.signed; r = N('const', value=rk.value, ty=ct0(sg))
@@ -9543,6 +9551,26 @@ def gen_opassign(F, e):
             if run == 1: F.emit('add', 'XWA,XWA')
             elif run > 1: F.emit('sla' if signed else 'sll', '%s,XWA' % hx(run))
             F.emit('ld', '%s,XWA' % t); return t
+        if LONG_MULK_OPA and size == 4 and op == '*' and rk.k == 'const' and rk.value is not None and rk.value > 1 and \
+                (bin(rk.value).count('1') <= 3 or rk.value & (rk.value + 1) == 0) and strip(e.l).k in ('var', 'member') and \
+                not ({'WA', 'BC'} & set(live_regs(F))):
+            t = lvalue(F, e.l)                             # a long variable times a constant in place: shifts and adds
+            if re.match(r'^\(_[\w ]+(\+ 0x[0-9a-f]+)?\)$', t):   # through XWA, the operand kept in XBC (rstmt rs_1_06_17_3:
+                k_ = rk.value; F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,XWA')   # gul *= 7UL -> ld XWA,(_gul) /
+                sh_ = 'sla' if signed else 'sll'           # ld XBC,XWA / sll 0x3,XWA / sub XWA,XBC / ld (_gul),XWA;
+                if k_ >= 7 and k_ & (k_ + 1) == 0:          # rs_3_02_11_3: gl2 *= 5L -> .. / sla 0x2,XWA / add XWA,XBC)
+                    F.emit(sh_, '%s,XWA' % hx(k_.bit_length())); F.emit('sub', 'XWA,XBC')
+                else:
+                    run = 0
+                    for b_ in bin(k_)[3:]:
+                        run += 1
+                        if b_ == '1':
+                            if run == 1 and MUL_K_DOUBLE_ADD: F.emit('add', 'XWA,XWA')
+                            else: F.emit(sh_, '%s,XWA' % hx(run))
+                            F.emit('add', 'XWA,XBC'); run = 0
+                    if run == 1: F.emit('add', 'XWA,XWA')
+                    elif run > 1: F.emit(sh_, '%s,XWA' % hx(run))
+                F.emit('ld', '%s,XWA' % t); return t
         if size == 4:
             lvx = strip(e.l); held = False
             if LONG_RMW_XIZ and lvx.k in ('index', 'deref') and not F.xiz_vars and len(F.lines) == 1:
