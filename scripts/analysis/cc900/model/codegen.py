@@ -7144,6 +7144,8 @@ LHYW_WHOLE = True                                        # see compile_unit
 EVLHW_WHOLE = True                                       # see compile_unit
 LHXW_WHOLE = True                                        # see compile_unit
 CMPO2W_WHOLE = True                                      # see compile_unit
+OR_TEST_DIRECT = True                                    # see compile_unit
+SAME_ADDR_PTR_ONCE = True                                # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17128,6 +17130,54 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
                         full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
                                                            # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if SAME_ADDR_PTR_ONCE and opt == 'none' and alt_ is None:   # (not over a probe override's code)       # ld XA,(_p) / ld XB,(_p) / ld r,(XB+k) .. ld (XA+k),r' -- the
+                for k_ in range(len(full) - 3):            # statement reads the address it stores to: the pointer is
+                    m1_ = re.match(r'^\tld\t(X(?:WA|BC|DE|HL)),\((_\w+)\)$', full[k_] or '')   # loaded once (random
+                    m2_ = re.match(r'^\tld\t(X(?:WA|BC|DE|HL)),\((_\w+)\)$', full[k_ + 1] or '')   # r1_02_04: *gpl =
+                    if not (m1_ and m2_ and m1_.group(2) == m2_.group(2) and m1_.group(1) != m2_.group(1)): continue   # ~gpl[0]
+                    XA_, XB_ = m1_.group(1), m2_.group(1)  # -> ld XBC,(_gpl) / ld XWA,(XBC) / .. / ld (XBC),XWA; the
+                    m3_ = re.match(r'^\tld\t(\w+),\(%s(\+0x[0-9a-f]+)?\)$' % XB_, full[k_ + 2] or '')   # oracle loads it
+                    if not m3_ or not re.match(r'^(%s|Q?%s|%s|%s)$' % (XB_, XB_[1:], XB_[1], XB_[2]), m3_.group(1)):   # twice
+                        continue                           # when the two offsets differ)
+                    off_ = m3_.group(2) or ''; st_ = None
+                    for j_ in range(k_ + 3, len(full)):
+                        l_ = full[j_] or ''
+                        if not l_.startswith('\t') or re.match(r'^\t(j|cal|ret)', l_): break
+                        if re.match(r'^\tld\t\(%s%s\),\w+$' % (XA_, re.escape(off_)), l_): st_ = j_; break
+                        if re.search(r'\b(%s|Q%s|%s|%s|%s)\b' % (XA_, XA_[1:], XA_[1:], XA_[1], XA_[2]), l_): break
+                    if st_ is None: continue
+                    if any(re.match(r'^\t(div|divs|mul|muls|exts|extz)\t', full[j_] or '') for j_ in range(k_ + 3, st_)):
+                        continue                           # (rstmt rs_1_00_17_1: gps->i = gps->i / gi3 widens and
+                                                           #  divides, and the oracle loads gps twice)
+                    if m3_.group(1) != XB_:                # a narrower load leaves XB's other parts: unread after it
+                        ok_ = False
+                        for l_ in full[k_ + 3:]:
+                            l_ = l_ or ''
+                            if re.match(r'^\t(ret|cal\t)', l_) or re.match(r'^\t(exts|extz)\t%s$' % XB_, l_) or \
+                                    re.match(r'^\t(ld|lda)\t%s,' % XB_, l_) and XB_ not in l_.split(',', 1)[1]:
+                                ok_ = True; break
+                            if not l_.startswith('\t') or l_.startswith('\tj') or re.search(r'\b(%s|Q%s)\b' % (XB_, XB_[1:]), l_): break
+                        if not ok_: continue
+                    full[k_ + 2] = '\tld\t%s,(%s%s)' % (m3_.group(1), XA_, off_); full[k_ + 1] = None
+                full = [l for l in full if l is not None]
+            if OR_TEST_DIRECT and alt_ is None:            # ld X1,X2 / or X1,X1 with X1's old value read nowhere after
+                for k_ in range(len(full) - 2):            # is or X2,X2 (random .r4_03_13 -Xr: (unsigned int)!b with b in
+                    m_ = re.match(r'^\tld\t(X(?:WA|BC|DE)),(X(?:WA|BC|DE|HL|IX|IY|IZ))$', full[k_] or '')   # XIZ -> or
+                    if not m_ or full[k_ + 1] != '\tor\t%s,%s' % (m_.group(1), m_.group(1)) or m_.group(1) == m_.group(2):   # XIZ,XIZ;
+                        continue                           # the oracle's listings: ld / or once per set, or on a register
+                    X1_ = m_.group(1); nx_ = full[k_ + 2] or ''   # variable's own register 11-15 times)
+                    if re.match(r'^\tscc\t\w+,%s$' % X1_[1:], nx_):   # scc into its low word: only the stale high
+                        ok_ = False                        # word survives; it must not be read before it is rewritten
+                        for l_ in full[k_ + 3:]:
+                            l_ = l_ or ''
+                            if re.match(r'^\t(ret|cal\t)', l_) or re.match(r'^\t(exts|extz)\t%s$' % X1_, l_) or \
+                                    re.match(r'^\t(ld|lda)\t%s,' % X1_, l_) and X1_ not in l_.split(',', 1)[1]:
+                                ok_ = True; break
+                            if not l_.startswith('\t') or l_.startswith('\tj') or re.search(r'\b(%s|Q%s)\b' % (X1_, X1_[1:]), l_): break
+                    else: ok_ = False                      # (not before a jump: micro assign_expr.c ae_l_ne_l, (y = x)
+                                                           #  != 0 tests the assignment's value copied to XWA)
+                    if ok_: full[k_:k_ + 2] = ['\tor\t%s,%s' % (m_.group(2), m_.group(2)), None]
+                full = [l for l in full if l is not None]
             if CP_Q_DIRECT:                                # ld R,Qrr / cp R,imm with R dead after is cp Qrr,imm (random
                 for k_ in range(len(full) - 1):            # r1_00_09: unsigned int t in QIZ, t != 0 -> cp QIZ,0x0; the
                     m_ = re.match(r'^\tld\t(WA|BC|DE),(Q(?:WA|BC|DE|HL|IX|IY|IZ))$', full[k_] or '')   # oracle's listings

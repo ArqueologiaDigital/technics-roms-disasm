@@ -3326,6 +3326,19 @@ declines anything outside the probe's grammar).  cmpordl2 398 / 394 / 338 / 357 
 semcheck 50 -> 44: the six wrong-code verdicts of cmpordl2 cc_l_YF / cc_e_YF (an older reviewed class) are gone, the
 functions now exact.  rstmt and random unchanged.  Ledger up 4 rows by 801, down 0; library 186/248, pairs 223.
 
+**Batch 303 (2026-11-15): a long register variable tested in place; one pointer load for a read of the stored
+address.** OR_TEST_DIRECT (finished listing, not over an override's code): `ld X1,X2 / or X1,X1 / scc cc,W1` whose
+X1 nothing reads afterwards beyond the scc's word is `or X2,X2 / scc cc,W1` (random .r4_03_13 -Xr: `(unsigned
+int)!b` with b in XIZ; rstmt rs_4_06_11_6: `(long)!t`); the oracle's listings have `ld / or` once per set.  Not
+before a jump: micro assign_expr.c ae_l_ne_l tests `(y = x) != 0` through a copy in XWA, and rstmt rs_2_01_03_3
+tests the folded `!(0UL | u)` the same way (that one is lost at none: the model folds the `|` before it can tell).
+SAME_ADDR_PTR_ONCE (none, not over an override): `ld XA,(_p) / ld XB,(_p) / ld r,(XB+k) .. ld (XA+k),r'` -- a
+statement reading the address it stores to -- loads the pointer once (random r1_02_04: `*gpl = ~gpl[0]`; rstmt
+rs_4_02_07_1: `*gp = *gp | gc2`), unless the value is widened or multiplied / divided on the way (rstmt rs_1_00_17_1:
+`gps->i = gps->i / gi3` keeps two loads); at other offsets the oracle loads twice (74 times at none).  Random -Xr 172
+-> 174; rstmt none +2, -O3 -XS +1, -Xr +2, -O3 -XS -Xr +1; ledger up 6 rows by 8, down 0; library 186/248, pairs
+223, semcheck 44 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
