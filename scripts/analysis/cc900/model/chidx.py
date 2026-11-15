@@ -295,6 +295,7 @@ def param_mem(F, d):
     if hasattr(d, 'off'): return '(XSP+%s)' % cg.hx(d.off + F.push)
     return None
 
+SIGNED_IDX_NO_COPY_XR = True                             # see element: under -Xr too
 SIGNED_IDX_NO_COPY = True                                # see element
 
 def element(F, lv, kind, fam='WA'):
@@ -315,7 +316,7 @@ def element(F, lv, kind, fam='WA'):
     src = source(F, x, how)
     if src is None: return None
     if how == 'load' and src[0] == 'reg' and not single_use(strip(x.e).decl):
-        if kind == 'load' and esz == 1 and SIGNED_IDX_NO_COPY and signed and not F.adecl:
+        if kind == 'load' and esz == 1 and SIGNED_IDX_NO_COPY and signed and (not F.adecl or SIGNED_IDX_NO_COPY_XR):
             busy = busy | {src[1]}                         # a signed char index is used as it is, no copy (random
                                                            # r2_09_07: gca[t] with t in E -> lda XWA,_gca / ld A,(XWA+E))
         elif kind == 'load' and esz == 1:

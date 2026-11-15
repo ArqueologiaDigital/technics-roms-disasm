@@ -7085,6 +7085,7 @@ MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
 SHIFT1_MEM_REG = True                                    # see SHIFT1_MEM
+STORE_HL_DIRECT_BC = True                                # see STORE_HL_DIRECT
 SDXR_CDECL_OPT = True                                    # see compile_unit: sdxr for cdecl -O3 -XS
 UAS_NESTED = True                                        # see uses_after_stmt
 UIDX_REGPARAM_STORE = True                               # see the unsigned index path: stores too (-Xr)
@@ -17028,10 +17029,11 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             if STORE_HL_DIRECT and not (opt != 'none' and fa):   # ld WA,HL / ld (m),WA -> ld (m),HL where XWA is dead after
                 k_ = 0                                     # (the oracle has the pair only at -O3 -XS -Xr; fpp3.c k1:
                 while k_ < len(full) - 1:                  # cal ._fcmp_d / ld (_gi),HL)
-                    m_ = re.match(r'^\tld\t(X?WA),(X?HL)$', full[k_])
+                    m_ = re.match(r'^\tld\t(X?WA|X?BC),(X?HL)$' if STORE_HL_DIRECT_BC else r'^\tld\t(X?WA),(X?HL)$', full[k_])
                     if m_ and len(m_.group(1)) == len(m_.group(2)):
+                        f_ = 'X' + m_.group(1).lstrip('X')        # (BC too: random .r3_04_05, ld (_gul),XHL)
                         m2_ = re.match(r'^\tld\t(\([^)]*\)),%s$' % m_.group(1), full[k_ + 1])
-                        if m2_ and 'WA' not in m2_.group(1) and reg_dead(full, k_ + 2, 'XWA'):
+                        if m2_ and f_[1:] not in m2_.group(1) and reg_dead(full, k_ + 2, f_):
                             full[k_:k_ + 2] = ['\tld\t%s,%s' % (m2_.group(1), m_.group(2))]
                     k_ += 1
             if BYTE_SHL1_ADD:                              # a byte doubled from another register is ld T,R / add T,R:

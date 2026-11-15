@@ -3213,6 +3213,13 @@ cdecl listing). Its families file lists the eight rules that separate cdecl none
 rules again, and one is new for cdecl: a Q destination's index loaded straight into the address register. stdiv -O3
 -XS 718 -> 750 of 750, so stdiv is now exact at every set; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 291 (2026-11-15): a register char index under -Xr; a value in HL stored from HL instead of BC.**
+SIGNED_IDX_NO_COPY_XR (`chidx.py`, research-scratch `edit_batch291_chidx.py`): batch 263's rule holds under -Xr too
+(random .r2_09_07: `gca[t]` with t in E -> `lda XWA,_gca / ld A,(XWA+E)`). STORE_HL_DIRECT_BC: batch 272's
+STORE_HL_DIRECT also turns `ld BC,HL / ld (m),BC` (or the long form) into `ld (m),HL` where XBC is dead afterwards; no
+oracle listing has that pair at none, -Xr or -O3 -XS. random2 -Xr +1, rstmt -O3 -XS -Xr +1; library 186/248, pairs
+223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
