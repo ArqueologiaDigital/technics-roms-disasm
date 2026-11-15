@@ -7149,6 +7149,7 @@ SAME_ADDR_PTR_ONCE = True                                # see compile_unit
 CA2W_WHOLE = True                                        # see compile_unit
 STCHW_WHOLE = True                                       # see compile_unit
 EVSTW_WHOLE = True                                       # see compile_unit
+EARLY_DEST_ADDR = True                                   # see early_dest_addr
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -7438,6 +7439,48 @@ IZ_TAIL_DIRECT_XR = True                                 # see regvar_stmt: IZ_T
 MEMBER_STORE_BC_XR = True                                # see gen_stmt: MEMBER_STORE_BC under -Xr too (rstmt rs_1_03_03_1)
 GUARD_DIV = True                                         # see guard_div_plan
 BASE_HOIST = True                                        # see base_hoist
+
+def early_dest_addr(F, s, n0):
+    """G.m = (c ? a : b) and G[k] = (c ? a : b), a global aggregate's member or constant element assigned a ?: with no
+    call or double: the destination's address is formed before the condition, in the first of XBC, XDE the
+    statement's code leaves alone, and the arms' value is stored through it (random r4_09_19: gs.l = (gc2 ? gpl[2] :
+    *gpl) -> lda XBC,_gs + 0x4 / .. / ld (XBC),XWA; rstmt rs_1_05_05_3 at none: gula[0] = (.. ? gul : ..) -> lda
+    XWA,_gula / ld XDE,XWA, an offset-0 address through XWA without -O).  In the rstmt listings 8 such statements of
+    11 have it at each set; the others fold the ?: or have a call, a double or a cast around it; a plain global
+    destination never does (32)."""
+    import re as _r
+    e = strip(s.e)
+    if not (e.k == 'bin' and e.op == '='): return
+    r = strip(e.r)
+    while r.k == 'cast' and r.kind in ('IntegralCast', 'NoOp'): r = strip(r.e)
+    if r.k != 'cond' or nodes_in(e, 'call') or has_helper_call(e) or fpgen.is_fp_op(e) or fpgen.is_fp(getattr(e, 'ty', None)): return
+    seg = F.lines[n0:]
+    if not seg or not any(l and _r.match(r'^L\d+:$', l) for l in seg): return
+    m_ = _r.match(r'^\tld\t\((_\w+)(?: \+ (0x[0-9a-f]+))?\),(\w+)$', seg[-1] or '')
+    if not m_: return
+    l_ = strip(e.l)
+    if l_.k == 'member' and not l_.arrow:
+        b_ = strip(l_.base)
+        if not (b_.k == 'var' and b_.decl.kind == 'global' and '_' + b_.decl.name == m_.group(1)): return
+    elif l_.k == 'load' and strip(l_.e).k == 'member' and not strip(l_.e).arrow:
+        b_ = strip(strip(l_.e).base)
+        if not (b_.k == 'var' and b_.decl.kind == 'global' and '_' + b_.decl.name == m_.group(1)): return
+    elif l_.k in ('index', 'load'):
+        x_ = l_ if l_.k == 'index' else strip(l_.e)
+        if x_.k != 'index' or fold(x_.idx).k != 'const': return
+        b_ = strip(x_.base)
+        while b_.k in ('decay', 'cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
+        if not (b_.k == 'var' and b_.decl.kind == 'global' and b_.decl.ty.kind == 'array' and '_' + b_.decl.name == m_.group(1)): return
+    else: return
+    if any(l and m_.group(1) in l for l in seg[:-1]): return     # (the aggregate read in the statement: base_hoist's)
+    live = live_regs(F)
+    for R, fam in (('XBC', 'BC'), ('XDE', 'DE')):
+        parts = _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1]))
+        if fam in live or any(l and parts.search(l) for l in seg): continue
+        sym = m_.group(1) + (' + ' + m_.group(2) if m_.group(2) else '')
+        pre = ['\tlda\t%s,%s' % (R, sym)] if F.opt or m_.group(2) else ['\tlda\tXWA,%s' % sym, '\tld\t%s,XWA' % R]
+        F.lines[n0:] = pre + seg[:-1] + ['\tld\t(%s),%s' % (R, m_.group(3))]
+        return
 
 def base_hoist(F, s, n0):
     """-O: a global int array read or written at two or more constant indices in one expression or return statement
@@ -11284,6 +11327,7 @@ def gen_stmt(F, s, last):
             gen_block_shift(F, s, last) if LIVE_SHIFT_DECL and F.adecl and s.k == 'block' and \
             not getattr(F, 'shift_free', None) and not getattr(F, 'shift_decl', None) else _gen_stmt_body(F, s, last)
         if BASE_HOIST and F.opt and s.k in ('expr', 'return', 'decl'): base_hoist(F, s, n_ms_)
+        if EARLY_DEST_ADDR and s.k == 'expr': early_dest_addr(F, s, n_ms_)
         if MEMBER_STORE_SWAP and True and s.k == 'expr' and \
                 (s.e.k == 'opassign' or s.e.k == 'bin' and s.e.op == '=') and len(F.lines) - n_ms_ >= 4:
             new_ = F.lines[n_ms_:]                         # a computed value stored into p->m (m displaced): the pointer

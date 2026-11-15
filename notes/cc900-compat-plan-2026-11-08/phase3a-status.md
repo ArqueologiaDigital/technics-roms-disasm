@@ -3359,6 +3359,15 @@ oracle run it writes 324 of 96,114 functions (evorder_ad 280, elrd 40, stord 4),
 at the -O3 -XS, -Xr and -O3 -XS -Xr sets.  rstmt and random unchanged.  Ledger up 7 rows by 708, down 0; library
 186/248, pairs 223, semcheck 44 with the same verdicts.
 
+**Batch 306 (2026-11-15): a global aggregate's destination address before a ?:.** EARLY_DEST_ADDR (`early_dest_addr`,
+after each expression statement): `G.m = (c ? a : b)` or `G[k] = (c ? a : b)` with no call or double has the
+destination's address formed before the condition, in the first of XBC, XDE the statement leaves alone, and the
+arms' value stored through it (random r4_09_19: `gs.l = (gc2 ? gpl[2] : *gpl)` -> `lda XBC,_gs + 0x4 / .. / ld
+(XBC),XWA`; without -O an offset-0 address goes through XWA, `lda XWA,_gula / ld XDE,XWA`).  In the rstmt listings 8
+of 11 such statements have it at each set (the others fold the ?:, call, use a double or cast around it); a plain
+global destination never does (32 of 32).  Random +1 and rstmt +1 at every set (r4_09_19 and its statement); ledger
+up 8 rows by 8, down 0; library 186/248, pairs 223, semcheck 44 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
