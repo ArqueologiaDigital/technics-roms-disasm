@@ -6962,6 +6962,7 @@ PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
 ADDR_REG_REUSE = True                                    # see addr_reg_reuse
 MEM_REG_REUSE = True                                     # see addr_reg_reuse: a global's value still in a register
+CHAR_ARG_INPLACE_OPT = True                              # see push_arg
 JUMP_TABLE_REUSE = True                                  # see addr_reg_reuse
 REG_COPY_REUSE = True                                    # see addr_reg_reuse
 HELPER_KEEPS_XIZ = True                                  # see addr_reg_reuse
@@ -8031,6 +8032,10 @@ def push_arg(F, a):
             if f_ not in FAM or 1 not in FAM[f_]: raise Unsupported('complex char argument')   # from L), then exts WA /
             m = FAM[f_][1]                                              # push WA (r2_06_07: ld XWA,(_gp) / ld A,(XWA))
         if m is None: raise Unsupported('complex char argument')
+        if CHAR_ARG_INPLACE_OPT and F.opt and m in ('C', 'E', 'L'):   # -O: a char in C / E / L is widened in its own
+            W_ = {'C': 'BC', 'E': 'DE', 'L': 'HL'}[m]                 # register and pushed from there (random r1_06_19:
+            F.emit('exts' if a0.ty.signed else 'extz', W_); F.emit('push', W_)   # vc(gc << (a & 7)) -> .. sla A,C /
+            F.push += 2; return 2                                     # exts BC / push BC; r4_01_00: v1(t), t in C)
         if m != 'A': F.emit('ld', 'A,%s' % m)
         F.emit('exts' if a0.ty.signed else 'extz', 'WA'); F.emit('push', 'WA')
         F.push += 2; return 2

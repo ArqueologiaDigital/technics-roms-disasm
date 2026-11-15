@@ -2859,6 +2859,13 @@ every value of two bytes or more (micro m_gps_set: `ld (XBC+0x2),WA` then `ld XW
 lost it at both -O sets). reg_dead's tables learn XDE. rstmt +2 at both -O sets, random2 +1 at both; library
 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 243 (2026-11-15): a char argument in C / E / L is widened in place (-O).** CHAR_ARG_INPLACE_OPT in `push_arg`:
+under -O a char argument already in C, E or L is widened in its own register and pushed from it (random r1_06_19 -O3
+-XS: `vc(gc << (a & 7))` -> `.. sla A,C / exts BC / push BC`; r4_01_00: `v1(t)` with t in C -> `extz BC / push BC`),
+not `ld A,C / exts WA / push WA`. Without -O the oracle goes through A (the rule costs rstmt none -1 and random none
+-2 there). rstmt -O3 -XS +1, random -O3 -XS +2, loc0 -O3 -XS +28, elrd -O3 -XS +2; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
