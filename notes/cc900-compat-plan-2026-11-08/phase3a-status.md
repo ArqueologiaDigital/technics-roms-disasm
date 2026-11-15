@@ -3457,6 +3457,14 @@ again later: rs_4_00_05_3, `gca[t] > gc .. return gca[t]`).  Under -Xr only when
 DE / BC as arguments.  rstmt none +3, -Xr +1; ledger up 2 rows by 4, down 0; library 186/248, pairs 223, semcheck 17
 with the same verdicts.
 
+**Batch 317 (2026-11-15): leaf functions without options (probes lnr, lnr2, lnr3, lnr4).** LNRW_WHOLE
+(`compile_unit`): `model/lnrw.py` (research-scratch tabulation/lnr-ast, stage 1 of a leaf-function generator by the
+evorder_st subagent: which register each variable gets, the body's temporaries placed in free registers, loop and
+`ret cc` shapes, built on the model's leafnone.py; it declines 17 of the 136 functions and returns None at the other
+sets until stages 2 and 3).  lnr 28 -> 49, lnr2 22 -> 41, lnr3 12 -> 24, lnr4 6 -> 11 at none; over every run but
+lnr's it writes 117 functions, all exact (micro opt_counted.c 28 -> 30, opt_loops.c 28 -> 29).  rstmt and random
+unchanged.  Ledger up 6 rows by 60, down 0; library 186/248, pairs 223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

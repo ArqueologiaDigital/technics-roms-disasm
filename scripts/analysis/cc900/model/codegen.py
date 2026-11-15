@@ -7165,6 +7165,7 @@ EXT_IN_PLACE_ARG = True                                  # see compile_unit
 DUP_ARG_VIA_BC = True                                    # see compile_unit
 MORE315_WHOLE = True                                     # see compile_unit
 ONCE_LOCAL_DIRECT = True                                 # see compile_unit
+LNRW_WHOLE = True                                        # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17180,7 +17181,8 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                  (LHIDXW_WHOLE, 'lhidxw'), (LHIDXW_WHOLE, 'lslw'), (LOC0W_WHOLE, 'loc0w'),
                                  (LOC0W_WHOLE, 'pcw'), (STVXW_WHOLE, 'stvxw'), (STVXW_WHOLE, 'stvxcw'),
                                  (MORE315_WHOLE, 'idxlocw'), (MORE315_WHOLE, 'loopctrw'), (MORE315_WHOLE, 'stvw'),
-                                 (MORE315_WHOLE, 'stv2w'), (MORE315_WHOLE, 'fpopaw'), (MORE315_WHOLE, 'fparggw')):   # probes
+                                 (MORE315_WHOLE, 'stv2w'), (MORE315_WHOLE, 'fpopaw'), (MORE315_WHOLE, 'fparggw'),
+                                 (LNRW_WHOLE, 'lnrw')):   # probes
                                                            # chararith2 (ca2w.py, 576 /
                 if alt_ is None and flag_ and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # 576; 192 functions
                     try:                                   # of chararith.c written, all exact) and stchain (stchw.py,
@@ -17200,6 +17202,8 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            # (idxloc / loopctr / stv / stv2 / fpopa / fpargg: idxlocw /
                                                            #  loopctrw / stvw / stv2w / fpopaw / fparggw.py, 108 / 30 /
                                                            #  96 / 32 / 112 / 44)
+                                                           # (lnr / lnr2 / lnr3 / lnr4 without options: lnrw.py, 119 of
+                                                           #  136, the rest declined; its other sets come later)
             alt_full_ = None
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)

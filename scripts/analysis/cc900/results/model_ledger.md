@@ -89,19 +89,19 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-30-micro-chnarrow, v423/O3XS                         | probes/chnarrow.c    | 18 / 20 exact (90.0%)      |
 | run 2026-11-09-30-micro-chnarrow, v423/Xr                           | probes/chnarrow.c    | 19 / 20 exact (95.0%)      |
 | run 2026-11-09-30-micro-chnarrow, v423/O3XSXr                       | probes/chnarrow.c    | 18 / 20 exact (90.0%)      |
-| run 2026-11-09-31-micro-lnr, v423/none                              | probes/lnr.c         | 28 / 50 exact (56.0%)      |
+| run 2026-11-09-31-micro-lnr, v423/none                              | probes/lnr.c         | 49 / 50 exact (98.0%)      |
 | run 2026-11-09-31-micro-lnr, v423/O3XS                              | probes/lnr.c         | 3 / 50 exact (6.0%)        |
 | run 2026-11-09-31-micro-lnr, v423/Xr                                | probes/lnr.c         | 9 / 50 exact (18.0%)       |
 | run 2026-11-09-31-micro-lnr, v423/O3XSXr                            | probes/lnr.c         | 7 / 50 exact (14.0%)       |
-| run 2026-11-09-32-micro-lnr2, v423/none                             | probes/lnr2.c        | 22 / 43 exact (51.2%)      |
+| run 2026-11-09-32-micro-lnr2, v423/none                             | probes/lnr2.c        | 41 / 43 exact (95.3%)      |
 | run 2026-11-09-32-micro-lnr2, v423/O3XS                             | probes/lnr2.c        | 0 / 43 exact (0.0%)        |
 | run 2026-11-09-32-micro-lnr2, v423/Xr                               | probes/lnr2.c        | 3 / 43 exact (7.0%)        |
 | run 2026-11-09-32-micro-lnr2, v423/O3XSXr                           | probes/lnr2.c        | 5 / 43 exact (11.6%)       |
-| run 2026-11-09-33-micro-lnr3, v423/none                             | probes/lnr3.c        | 12 / 25 exact (48.0%)      |
+| run 2026-11-09-33-micro-lnr3, v423/none                             | probes/lnr3.c        | 24 / 25 exact (96.0%)      |
 | run 2026-11-09-33-micro-lnr3, v423/O3XS                             | probes/lnr3.c        | 1 / 25 exact (4.0%)        |
 | run 2026-11-09-33-micro-lnr3, v423/Xr                               | probes/lnr3.c        | 4 / 25 exact (16.0%)       |
 | run 2026-11-09-33-micro-lnr3, v423/O3XSXr                           | probes/lnr3.c        | 4 / 25 exact (16.0%)       |
-| run 2026-11-09-34-micro-lnr4, v423/none                             | probes/lnr4.c        | 6 / 18 exact (33.3%)       |
+| run 2026-11-09-34-micro-lnr4, v423/none                             | probes/lnr4.c        | 11 / 18 exact (61.1%)      |
 | run 2026-11-09-34-micro-lnr4, v423/O3XS                             | probes/lnr4.c        | 0 / 18 exact (0.0%)        |
 | run 2026-11-09-34-micro-lnr4, v423/Xr                               | probes/lnr4.c        | 2 / 18 exact (11.1%)       |
 | run 2026-11-09-34-micro-lnr4, v423/O3XSXr                           | probes/lnr4.c        | 1 / 18 exact (5.6%)        |
@@ -297,7 +297,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-10-micro-fptemps, v423/O3XS                          | micro/fp_temps.c     | 33 / 33 exact (100.0%)     |
 | run 2026-11-09-11-micro-opttemps, v423/Xr                           | micro/opt_temps.c    | 35 / 38 exact (92.1%)      |
 | run 2026-11-09-11-micro-opttemps, v423/O3XSXr                       | micro/opt_temps.c    | 38 / 38 exact (100.0%)     |
-| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 28 / 32 exact (87.5%)      |
+| run 2026-11-09-12-micro-optcounted, v423/none                       | micro/opt_counted.c  | 30 / 32 exact (93.8%)      |
 | run 2026-11-09-12-micro-optcounted, v423/O3XS                       | micro/opt_counted.c  | 29 / 32 exact (90.6%)      |
 | run 2026-11-09-12-micro-optcounted, v423/Xr                         | micro/opt_counted.c  | 31 / 32 exact (96.9%)      |
 | run 2026-11-09-12-micro-optcounted, v423/O3XSXr                     | micro/opt_counted.c  | 32 / 32 exact (100.0%)     |
@@ -310,7 +310,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)       |
 | run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 21 / 42 exact (50.0%)      |
 | run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 24 / 42 exact (57.1%)      |
-| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 28 / 33 exact (84.8%)      |
+| run 2026-11-08-9-micro-optloops, v423/none                          | micro/opt_loops.c    | 29 / 33 exact (87.9%)      |
 | run 2026-11-08-9-micro-optloops, v423/Xr                            | micro/opt_loops.c    | 30 / 33 exact (90.9%)      |
 | run 2026-11-08-9-micro-optloops, v423/O3XSXr                        | micro/opt_loops.c    | 30 / 33 exact (90.9%)      |
 
