@@ -2972,6 +2972,14 @@ ld XBC,(_gl2) / ld XWA,(XWA)`). Probe stdiv2's other element rows (`gna[3] = hs.
 version took every constant element and lost 18 stdiv2 and 3 stord functions on the scratch ledger. rstmt none +5;
 library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 258 (2026-11-15): an element 0's address goes through XWA (without -O).** ELEM0_VIA_XWA, a post-pass
+(`elem0_via_xwa`): an object's address at offset 0, such as element 0 of a global array, wanted in a register other
+than XWA and used only as `(XR)` until that register is redefined or restored, is built in XWA and moved (rstmt
+rs_2_02_02_2: `gula[0] /= 3UL` -> `lda XWA,_gula / ld XIZ,XWA`; rs_2_03_17_2: `gula[0] = ..` -> `lda XWA,_gula / ld
+XBC,XWA`), where XWA is dead. An indexing base `(XR+WA)` or a displaced use stays `lda XR,_sym` (the oracle's none
+listings hold 14,926 `lda` of a bare symbol into another register, 21 through XWA). Under -O it costs rstmt -2, so
+not there. rstmt none and -Xr +2; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -7024,6 +7024,34 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
+
+def elem0_via_xwa(lines):
+    """without -O, an object's address at offset 0 (element 0 of a global array, used only as (XR)) wanted in a register
+    other than XWA is built in XWA and moved (rstmt rs_2_02_02_2: gula[0] /= 3UL -> lda XWA,_gula / ld XIZ,XWA;
+    rs_2_03_17_2: gula[0] = .. -> lda XWA,_gula / ld XBC,XWA); an indexing base (XR+WA) or a displaced use stays
+    lda XR,_sym.  Only where XWA is dead."""
+    import re as _r
+    out = list(lines); i = 0
+    while i < len(out):
+        m_ = _r.match(r'^\tlda\t(XBC|XDE|XHL|XIX|XIY|XIZ),(_\w+)$', out[i] or '')
+        if not m_: i += 1; continue
+        R = m_.group(1); fam_ = REG_PARTS.get(R) or (R, R[1:])
+        pr = _r.compile(r'\b(%s)\b' % '|'.join(sorted(set([R, R[1:], 'Q' + R[1:]] + (list(REG_PARTS[R]) if R in REG_PARTS else [])), key=len, reverse=True)))
+        uses = 0; ok = True
+        for l in out[i + 1:]:
+            if not l or not l.startswith('\t'):
+                if l and not l.startswith('\t'): continue
+            if not pr.search(l): continue
+            md_ = _r.match(r'^\t(ld|lda)\t%s,(.*)$' % R, l)
+            if md_ and not pr.search(md_.group(2)) or l == '\tpop\t%s' % R: break   # redefined (or restored)
+            if _r.search(r'\(%s\)' % R, l) and not pr.search(l.replace('(%s)' % R, '')): uses += 1; continue
+            ok = False; break
+        if ok and uses and reg_dead(out, i + 1, 'XWA'):
+            out[i:i + 1] = ['\tlda\tXWA,%s' % m_.group(2), '\tld\t%s,XWA' % R]; i += 2; continue
+        i += 1
+    return out
+
 PUSH_CSE = True                                          # see push_cse
 
 def push_cse(lines):
@@ -16498,6 +16526,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                    i + 1 < len(F.lines) and re.match(r'^L\d+:$', F.lines[i + 1] or ''))]   # (rstmt .rs_2_07_08_5: the
                                                            # if's join L1 before the exit L50001 the test jumps to)
     if TEST_REG_REUSE and F.opt and (not F.adecl or TEST_REG_REUSE_XR): F.lines = test_reg_reuse(F.lines)
+    if ELEM0_VIA_XWA and not F.opt: F.lines = elem0_via_xwa(F.lines)
     if PUSH_CSE and F.opt: F.lines = push_cse(F.lines)
     if LDA_RUN_BASE and F.opt: F.lines = lda_run_base(F.lines)
     if ADDR_REG_REUSE and F.opt: F.lines = addr_reg_reuse(F.lines, F.adecl)   # (after test_reg_reuse / ptr_test_reuse, which
