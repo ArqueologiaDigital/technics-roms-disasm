@@ -7132,6 +7132,10 @@ ASSIGN_K_VALUE = True                                    # see gen_assign_value
 AND_FF_LD = True                                         # see compile_unit
 INC_LD_LDA = True                                        # see compile_unit
 SD3W_WHOLE = True                                        # see compile_unit
+SCC_DIRECT_OPT = True                                    # see compile_unit
+LDA_RUN_SAME_OFF = True                                  # see lda_run_base
+BASE_HOIST_REGDECL = True                                # see gen_stmt (block)
+CP_Q_DIRECT = True                                       # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -7212,6 +7216,10 @@ def lda_run_base(lines):
         B = regs[-1]; uses = dict(syms[g[0]])
         if any(_r.search(r'\b%s\b' % B, src) for _, src in run): i = j; continue
         new = ['\tlda\t%s,%s' % (B, g[0])]
+        same_ = set(uses.values())
+        if LDA_RUN_SAME_OFF and len(same_) == 1 and 0 not in same_:   # one address loaded twice: lda B,sym + d / ld R,B
+            d0_ = same_.pop(); new = ['\tlda\t%s,%s + %s' % (B, g[0], hx(d0_))]   # (random r4_06_09: gda[2] = -gda[2]
+            uses = {k: 0 for k in uses}                    # -> lda XBC,_gda + 0x10 / ld XWA,XBC; r1_07_02)
         for k, (r, src) in enumerate(run):
             if k in uses:
                 d = uses[k]
@@ -10308,7 +10316,12 @@ def gen_stmt(F, s, last):
                                                           getattr(c.var, 'reg', None) == 'WA' and getattr(c.var, 'regtemp', False)):
                 if c.init is not None:
                     from frontend import N
-                    regvar_stmt(F, N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty))
+                    n_bh_ = len(F.lines); asg_ = N('bin', op='=', l=N('var', decl=c.var, ty=c.var.ty), r=c.init, ty=c.var.ty)
+                    regvar_stmt(F, asg_)
+                    if BASE_HOIST and BASE_HOIST_REGDECL and F.opt:   # a register variable's initialiser is a statement too
+                        import types as _ty                # (random r1_00_09: unsigned int t = gua[3] * gua[4] in QIZ ->
+                        base_hoist(F, _ty.SimpleNamespace(k='expr', e=asg_), n_bh_)   # lda XBC,_gua / ld WA,(XBC+0x8) /
+                                                           # mul XWA,(XBC+0x6))
                 i += 1; continue
             if c.k == 'decl' and getattr(c.var, 'reg', None) == 'XIZ':
                 ci = strip(c.init) if c.init is not None else None
@@ -17069,6 +17082,25 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
                         full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
                                                            # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if CP_Q_DIRECT:                                # ld R,Qrr / cp R,imm with R dead after is cp Qrr,imm (random
+                for k_ in range(len(full) - 1):            # r1_00_09: unsigned int t in QIZ, t != 0 -> cp QIZ,0x0; the
+                    m_ = re.match(r'^\tld\t(WA|BC|DE),(Q(?:WA|BC|DE|HL|IX|IY|IZ))$', full[k_] or '')   # oracle's listings
+                    m2_ = re.match(r'^\tcp\t(WA|BC|DE),(0x[0-9a-f]+)$', full[k_ + 1] or '')   # at every set: cp Qrr,imm
+                    nx_ = full[k_ + 2] if k_ + 2 < len(full) else ''   # 26 or more, ld / cp with an immediate 0;
+                    if m_ and m2_ and m2_.group(1) == m_.group(1) and reg_dead(full, k_ + 2, 'X' + m_.group(1)) and \
+                            (m2_.group(2) != '0x0' or re.match(r'^\t(j|scc)\t(eq|ne|z|nz),', nx_ or '')):   # a long's
+                        full[k_:k_ + 2] = ['\tcp\t%s,%s' % (m_.group(2), m2_.group(2)), None]   # sign tested in its
+                full = [l for l in full if l is not None]  # high word stays ld WA,QBC / cp WA,0x0 / j ge: _itoa)
+            if SCC_DIRECT_OPT and opt != 'none':           # -O: scc cc,WA / ld S,WA with XWA dead after is scc cc,S
+                for k_ in range(len(full) - 1):            # (random r2_06_16: int t = !gi3 in IZ -> scc eq,IZ; the
+                    m_ = re.match(r'^\tscc\t(\w+),(WA|BC|DE)$', full[k_] or '')   # -O3 -XS listings: scc IZ 4, BC
+                    m2_ = re.match(r'^\tld\t(BC|DE|HL|IX|IY|IZ),(WA|BC|DE)$', full[k_ + 1] or '')   # 194, scc / ld into
+                    nx_ = full[k_ + 2] if k_ + 2 < len(full) else ''   # BC or DE 0; scc / ld IZ 4, each before exts
+                    if m_ and m2_ and m2_.group(2) == m_.group(2) and m2_.group(1) != m_.group(2) and \
+                            not re.match(r'^\text[sz]\tX%s$' % m2_.group(1), nx_ or '') and \
+                            reg_dead(full, k_ + 2, 'X' + m_.group(2)):   # XIZ: an int truth value widened, evorder_lh)
+                        full[k_:k_ + 2] = ['\tscc\t%s,%s' % (m_.group(1), m2_.group(1)), None]
+                full = [l for l in full if l is not None]
             if INC_LD_LDA and opt != 'none' and not fa:   # -O: inc K,XR / ld XS,XR with XR dead after is lda XS,XR+K
                 for k_ in range(len(full) - 1):            # (random r1_05_17: int *t = gpi + 1 in XIZ -> lda XIZ,XWA+0x2;
                     m_ = re.match(r'^\tinc\t(0x[1-8]),(X(?:WA|BC|DE))$', full[k_] or '')   # the oracle's -O3 -XS

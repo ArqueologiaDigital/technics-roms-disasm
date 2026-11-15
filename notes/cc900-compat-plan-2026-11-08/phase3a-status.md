@@ -3253,6 +3253,19 @@ r1_05_17: `int *t = gpi + 1` in XIZ; the -O3 -XS listings have 640 `lda r,r+k` a
 or keep XR live). loc0 -O3 -XS 464 -> 472, rstmt +2 at every set, random -O3 -XS 104 -> 106 and -O3 -XS -Xr 89 -> 90;
 ledger up 11 rows by 2,285, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
 
+**Batch 296 (2026-11-15): scc into its variable, one address loaded once, a register initialiser's base hoisted, cp
+on a Q register.** SCC_DIRECT_OPT (-O, finished listing): `scc cc,WA / ld S,WA` with XWA dead after is `scc cc,S`
+(random r2_06_16: `int t = !gi3` in IZ -> `scc eq,IZ`; the -O3 -XS listings write `scc` straight into BC 194 times,
+IZ 4, and `scc / ld` into IZ only 4 times, each before `exts XIZ`, which stays). LDA_RUN_SAME_OFF (`lda_run_base`): a
+run that loads one address twice is `lda B,sym + d / ld R,B` (random r4_06_09: `gda[2] = -gda[2]` -> `lda XBC,_gda +
+0x10 / ld XWA,XBC`; r1_07_02). BASE_HOIST_REGDECL: `base_hoist` also runs after a register variable's initialiser
+(random r1_00_09: `unsigned int t = gua[3] * gua[4]` in QIZ -> `lda XBC,_gua / ld WA,(XBC+0x8) / mul XWA,(XBC+0x6)`).
+CP_Q_DIRECT (every set): `ld R,Qrr / cp R,imm` with R dead after is `cp Qrr,imm` (r1_00_09: `t != 0` -> `cp
+QIZ,0x0`; the oracle's random and probe listings have no `ld / cp` with an immediate), except a 0 tested by anything
+but eq / ne (the 1997 library's _itoa tests a long's sign as `ld WA,QBC / cp WA,0x0 / j ge`). Random -O3 -XS 106 ->
+110, -O3 -XS -Xr 90 -> 93; rstmt none +1, -O3 -XS +3, -Xr +1, -O3 -XS -Xr +3; fpopa -O sets 84 -> 92; ledger up 14
+rows by 34, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
