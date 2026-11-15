@@ -6986,6 +6986,8 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+XR_ARG_CSE = True                                        # see gen_call_adecl
+XR_CHAR_ARG_VIA_A = True                                 # see gen_call_adecl
 AND_ZERO_FOLD_OPT = True                                 # see compile_function_once
 LDA_SMALL_OPT = True                                     # see Fn.emit
 AND_ZERO = True                                          # see gen
@@ -8331,6 +8333,15 @@ def gen_call_adecl(F, fn, args, fam, size):
                 f_ = gen(F, a0, t, 1)                    # (r1_06_19: the shifted value in C -> ld A,C / exts WA)
                 if f_ != t: F.emit('ld', '%s,%s' % (FAM[t][1], FAM[f_][1]))
             F.emit('exts' if a0.ty.signed else 'extz', FAM[t][2])
+        elif XR_CHAR_ARG_VIA_A and t in ('BC', 'DE', 'HL') and a0.ty.size == 2 and a0.k == 'cast' and \
+                a0.kind == 'IntegralCast' and strip(a0.e).ty is not None and strip(a0.e).ty.size == 1 and \
+                (mem_operand(F, strip(a0.e)) or '').startswith('(') and \
+                not any(t2 == 'WA' for t2, _ in groups['computed'][:groups['computed'].index((t, a))]) and \
+                'WA' not in live_regs(F):
+            F.emit('ld', 'A,%s' % mem_operand(F, strip(a0.e))); F.emit('ld', '%s,A' % FAM[t][1])   # a char in memory
+            F.emit('exts' if strip(a0.e).ty.signed else 'extz', FAM[t][2])   # widened for a register parameter goes
+                                                           # through A (rstmt .rs_1_00_02_5: r2(gi2, (int)guc) ->
+                                                           # ld A,(_guc) / ld C,A / extz BC / ld WA,(_gi2))
         else:
             f_ = gen(F, a0, t, a0.ty.size)
             if f_ != t and f_ in FAM and a0.ty.size in FAM[f_] and f_ != 'HL' or (f_ == 'HL' and strip(a0).k != 'call' and f_ != t):
@@ -8348,13 +8359,20 @@ def gen_call_adecl(F, fn, args, fam, size):
         order = [x for x in groups['mem'] if not on_stack(x[1])] + groups['const'] + \
                 [x for x in groups['mem'] if on_stack(x[1])]   # ld BC,(_gi) / ld WA,0x1; ls_mc_n1: ld XWA,0x0 /
     else: order = groups['mem'] + groups['const']               # ld BC,0x0 / ld DE,(XSP+0x4))
+    seen_m_ = {}
     fslot = getattr(F, 'farg_slot', None); fwa = False   # probes/adfp.c ac_fi: a float in a register goes through a
     for k_, (t, a) in enumerate(order):                       # frame temporary: ld XWA,(_gf) / ld (XSP),XWA / ld BC,(_gi)
         sz = strip(a).ty.size                                # / ld XWA,(XSP) (XWA reloaded after later loads; ac_if,
         if fold(strip(a)).k == 'const':                      # ac_ifi: XBC is not)
             sz = max(2, sz); v = fold(strip(a)).value & ((1 << (8 * sz)) - 1)
             F.emit('ld', '%s,%s' % (FAM[t][sz], hx(v))); continue
-        F.emit('ld', '%s,%s' % (FAM[t][sz], mem_operand(F, strip(a))))
+        mm_ = mem_operand(F, strip(a))
+        if XR_ARG_CSE and mm_.startswith('(_') and (mm_, sz) in seen_m_ and not fpgen.is_fp(strip(a).ty):
+            F.emit('ld', '%s,%s' % (FAM[t][sz], FAM[seen_m_[(mm_, sz)]][sz])); continue   # the same global twice: loaded
+                                                           # once, then copied (rstmt .rs_2_03_13_2: v2(gi, gi) ->
+                                                           # ld WA,(_gi) / ld BC,WA)
+        if mm_.startswith('(_'): seen_m_[(mm_, sz)] = t
+        F.emit('ld', '%s,%s' % (FAM[t][sz], mm_))
         if fpgen.is_fp(strip(a).ty):
             if fslot is None: raise Unsupported('float argument temporary')
             F.emit('ld', '(XSP+%s),%s' % (hx(fslot + F.push), FAM[t][4]) if fslot + F.push else '(XSP),%s' % FAM[t][4])

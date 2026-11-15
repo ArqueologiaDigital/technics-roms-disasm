@@ -2947,6 +2947,13 @@ effects is the constant 0 in the tree, so what contains it folds too (random r1_
 `ldb (_guc),0xff`; without -O the oracle keeps `ld A,0x0 / cpl A`, batch 253). rstmt -O3 -XS +1, -O3 -XS -Xr +2;
 library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 255 (2026-11-15): -Xr register arguments: one load for a repeated global, a widened char through A.**
+XR_ARG_CSE (`gen_call_adecl`): the same global passed twice in register arguments is loaded once and copied (rstmt
+.rs_2_03_13_2: `v2(gi, gi)` -> `ld WA,(_gi) / ld BC,WA`; .rs_3_02_00_2). XR_CHAR_ARG_VIA_A: a char in memory widened
+for a register parameter other than WA goes through A while WA holds nothing yet (.rs_1_00_02_5: `r2(gi2, (int)guc)`
+-> `ld A,(_guc) / ld C,A / extz BC / ld WA,(_gi2)`). rstmt -Xr +7, random3 and random4 -Xr +1 each; library 186/248,
+pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
