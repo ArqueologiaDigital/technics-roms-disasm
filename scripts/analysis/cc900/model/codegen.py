@@ -132,9 +132,10 @@ class Fn:
         if ADD_INC and op == 'add' and args is not None:        # add R,1..8 is inc (no oracle listing adds 1..8 to a
             m_ = re.match(r'^(X?(?:WA|BC|DE|HL|IX|IY|IZ)|[WABCDEHL]),0x([1-8])$', args)   # register; 1,335 inc at none)
             if m_: op, args = 'inc', '0x%s,%s' % (m_.group(2), m_.group(1))
-        if NO_RELOAD and op == 'ld' and args is not None and s.lines and not s.adecl:   # ld Y,X right after ld X,Y is not written (no such
-            m_ = re.match(r'^(\w+),(\w+)$', args)                       # pair in the cdecl listings; -Xr has them;
-            if m_ and s.lines[-1] == '\tld\t%s,%s' % (m_.group(2), m_.group(1)): return   # random r3_09_12: ld QIZH,A / add A,QIZH)
+        if NO_RELOAD and op == 'ld' and args is not None and s.lines and \
+                (not s.adecl or NO_RELOAD_XR_Q and re.match(r'^(Q\w+,\w+|\w+,Q\w+)$', args)):   # ld Y,X right after ld X,Y is not written (no such
+            m_ = re.match(r'^(\w+),(\w+)$', args)                       # pair in the cdecl listings; -Xr has them, but none
+            if m_ and s.lines[-1] == '\tld\t%s,%s' % (m_.group(2), m_.group(1)): return   # with a Q register: random .r3_06_07)
         if NO_SELF_LD and op == 'ld' and args is not None and re.match(r'^(\w+),\1$', args) \
                 and not (s.lines and s.lines[-1].startswith('\tcal')):   # (after a call the later passes drop it: switch.c sw_local)
             return                                         # ld WA,WA is never written (never_forms.py: fpp9.c v39 -O)
@@ -1086,6 +1087,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('ld', 'XWA,%s' % mem_operand(F, strip(mb_.base)))   # (rstmt rs_2_01_14_5: ld XWA,(_gps) /
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % ('(XWA+%s)' % hx(off_) if off_ else '(XWA)'))   # cpw (XWA+0x8),0x0;
                                                  # a member array's element is loaded and compared, r1_01_18)
+        elif NOT_LONG_REGVAR and xs == 4 and strip(x).k == 'load' and regvar_of(strip(x).e) is not None and \
+                regvar_of(strip(x).e).ty.size == 4 and regvar_of(strip(x).e).reg in ('XIZ', 'BC', 'DE', 'HL', 'WA'):
+            r_ = regvar_of(strip(x).e).reg; R_ = r_ if r_ == 'XIZ' else FAM[r_][4]   # a long register variable is tested
+            F.emit('or', '%s,%s' % (R_, R_))     # where it is (random .r4_03_13: !b with b in XIZ -> or XIZ,XIZ / scc eq,WA)
         elif xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
             f_ = gen(F, x, 'WA', xs); W = FAM[f_ if f_ in FAM and xs in FAM[f_] else 'WA'][xs]
             if xs == 4: F.emit('or', '%s,%s' % (W, W))   # (random r1_00_05: !(k * gl2) tests the helper's XHL; r1_09_14:
@@ -7048,6 +7053,8 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+NOT_LONG_REGVAR = True                                   # see gen: !
+NO_RELOAD_XR_Q = True                                    # see Fn.emit's NO_RELOAD
 STVX_D_ZERO = True                                       # see stvx_plan's value
 RIGHT_LONG_LEFT_COMPUTED = True                          # see _gen_bin_body's RIGHT_LONG_FIRST
 CALL_HELPER_ARG_POP = True                               # see gen_stmt's call statements

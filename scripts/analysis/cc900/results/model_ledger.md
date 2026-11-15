@@ -115,11 +115,11 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-4-micro-chidx, v423/O3XSXr                           | probes/chidx.c       | 50 / 50 exact (100.0%)     |
 | run 2026-11-09-37-micro-homes2a, v423/none                          | probes/homes2a.c     | 24 / 204 exact (11.8%)     |
 | run 2026-11-09-37-micro-homes2a, v423/O3XS                          | probes/homes2a.c     | 78 / 204 exact (38.2%)     |
-| run 2026-11-09-37-micro-homes2a, v423/Xr                            | probes/homes2a.c     | 40 / 204 exact (19.6%)     |
+| run 2026-11-09-37-micro-homes2a, v423/Xr                            | probes/homes2a.c     | 41 / 204 exact (20.1%)     |
 | run 2026-11-09-37-micro-homes2a, v423/O3XSXr                        | probes/homes2a.c     | 35 / 204 exact (17.2%)     |
 | run 2026-11-09-42-micro-homes2b, v423/none                          | probes/homes2b.c     | 15 / 90 exact (16.7%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XS                          | probes/homes2b.c     | 17 / 90 exact (18.9%)      |
-| run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 22 / 90 exact (24.4%)      |
+| run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 23 / 90 exact (25.6%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 18 / 90 exact (20.0%)      |
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 60 / 200 exact (30.0%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 34 / 200 exact (17.0%)     |
@@ -131,8 +131,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 18 / 200 exact (9.0%)      |
 | run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 52 / 200 exact (26.0%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 20 / 200 exact (10.0%)     |
-| run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 40 / 200 exact (20.0%)     |
-| run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 17 / 200 exact (8.5%)      |
+| run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 42 / 200 exact (21.0%)     |
+| run 2026-11-10-6-micro-random3, v423/O3XSXr                         | random3/*.c          | 18 / 200 exact (9.0%)      |
 | run 2026-11-10-7-micro-random4, v423/none                           | random4/*.c          | 51 / 200 exact (25.5%)     |
 | run 2026-11-10-7-micro-random4, v423/O3XS                           | random4/*.c          | 25 / 200 exact (12.5%)     |
 | run 2026-11-10-7-micro-random4, v423/Xr                             | random4/*.c          | 41 / 200 exact (20.5%)     |
@@ -257,8 +257,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3660 / 4694 exact (78.0%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3386 / 4694 exact (72.1%)  |
-| run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3441 / 4694 exact (73.3%)  |
-| run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3271 / 4694 exact (69.7%)  |
+| run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3442 / 4694 exact (73.3%)  |
+| run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3272 / 4694 exact (69.7%)  |
 | run 2026-11-13-8-micro-chararith, v423/none                         | probes/chararith.c   | 130 / 238 exact (54.6%)    |
 | run 2026-11-13-8-micro-chararith, v423/O3XS                         | probes/chararith.c   | 129 / 238 exact (54.2%)    |
 | run 2026-11-13-8-micro-chararith, v423/Xr                           | probes/chararith.c   | 130 / 238 exact (54.6%)    |

@@ -3029,6 +3029,14 @@ r4_05_14: `gpi[2] = gs.i + *gpi` -> `ld XWA,(_gpi) / ld BC,(XWA) / add BC,(_gs +
 (XWA+0x4),BC`); a displaced target (probe stvx's D rows, `hps->m`) keeps the plain operand first. rstmt +1 at every
 set, random4 none and -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 266 (2026-11-15): -Xr: no reload of a Q home; a long register variable tested in place.** NO_RELOAD_XR_Q
+(`Fn.emit`): under -Xr, `ld Y,X` right after `ld X,Y` is not written when one side is a Q register; the -Xr listings
+hold such pairs only for WA/IZ, XWA/XIZ, WA/HL, WA/BC, A/C and BC/IZ (random .r3_06_07: `char t = gp[1]; gc = t` ->
+`ld QIZH,A / ld (_gc),A`, not `ld A,QIZH` again). NOT_LONG_REGVAR (`gen`, `!`): the `!` of a long register variable
+tests it where it is (random .r4_03_13: `!b` with b in XIZ -> `or XIZ,XIZ / scc eq,WA`, not `ld XWA,XIZ / or
+XWA,XWA`). rstmt -Xr and -O3 -XS -Xr +1, random3 -Xr +2 and -O3 -XS -Xr +1, homes2a and homes2b -Xr +1; library
+186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
