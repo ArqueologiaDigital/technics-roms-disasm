@@ -2962,6 +2962,16 @@ global pointer's member multiplied or divided in place takes its address first (
 `ld XWA,(_gps) / lda XBC,XWA+0x8 / ld WA,(XBC) / extz XWA / div XWA,0x3 / ld (XBC),WA`), except an unsigned one by a
 power of two. rstmt +2 at every set; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 257 (2026-11-15): a long division stored to a constant element keeps the element's address in XIZ.**
+SD_ELEM_EARLY (`sd4_stmt` / `sd4_store`, without -O): a long division or remainder stored to a constant element of a
+global array keeps the element's address in XIZ across the helper when the element is element 0 (rstmt
+rs_4_01_04_4: `gula[0] = gul / 3UL` -> `push XIZ / lda XWA,_gula / ld XIZ,XWA / ld XWA,(_gul) / ld XBC,0x3 / cal
+C9H_divlu / ld (XIZ),XHL`) or the dividend is another element of the same array (rs_1_09_07_5: `gula[6] = gula[5] /
+gul` -> `lda XIZ,_gula + 0x18 / ..`); with a pointer's target as the dividend as well (rs_3_06_10_6: `ld XWA,(_gpl) /
+ld XBC,(_gl2) / ld XWA,(XWA)`). Probe stdiv2's other element rows (`gna[3] = hs.n / kn`) stay plain: the first
+version took every constant element and lost 18 stdiv2 and 3 stord functions on the scratch ledger. rstmt none +5;
+library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

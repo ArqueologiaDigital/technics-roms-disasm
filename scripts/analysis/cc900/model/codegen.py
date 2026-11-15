@@ -2542,6 +2542,16 @@ def sd4_stmt(F, lv, rv):
     if a is None or b is None: return None
     if b[0] == 'K' and (b[1] & 0xffffffff) in (0, 1): return None
     need = sd4_need(L, a, b)
+    if SD_ELEM_EARLY and L[0] == 'M' and l0.k == 'index' and fold(l0.idx).k == 'const' and \
+            re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', L[1] or ''):   # a constant element of a global array keeps its
+        sym_ = re.match(r'^\((_\w+)', L[1]).group(1)       # (only element 0, or a dividend from the same array: the
+        same_arr_ = a[0] == 'M' and isinstance(a[1], str) and a[1].startswith('(%s' % sym_) and \
+            re.match(r'^\(%s( \+ 0x[0-9a-f]+)?\)$' % sym_, a[1])   #  probe stdiv2's gna[3] = hs.n / kn stays plain)
+        if need is not None and need[0] == 'plain' and (' + ' not in L[1] or same_arr_):   # address in XIZ across the helper (rstmt rs_1_09_07_5:
+            need = ('early-ME', 'XIZ', False, False)       # gula[6] = gula[5] / gul -> push XIZ / lda XIZ,_gula + 0x18 /
+        elif need is None and a[0] == 'P' and b[0] in ('G', 'R', 'K'):   # .. / ld (XIZ),XHL; rs_4_01_04_4: element 0 ->
+            need = ('early-MEP', 'XIZ', False, False)      # lda XWA,_gula / ld XIZ,XWA; rs_3_06_10_6: a pointer's target
+                                                           # as the dividend -> ld XWA,(_gpl) / ld XBC,(_gl2) / ld XWA,(XWA))
     if need is None: return None
     return L, a, b, need
 
@@ -2649,6 +2659,15 @@ def sd4_store(F, lv, rv):
         pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '%s,XHL' % L[1]); return True
     if form == 'early':
         e('ld', 'XIZ,%s' % L[1]); pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '%s,XHL' % at('XIZ', L[2])); return True
+    def elem_xiz():
+        so_ = L[1][1:-1]
+        if ' + ' in so_: e('lda', 'XIZ,%s' % so_)
+        else: e('lda', 'XWA,%s' % so_); e('ld', 'XIZ,XWA')
+    if form == 'early-ME':
+        elem_xiz(); pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '(XIZ),XHL'); return True
+    if form == 'early-MEP':
+        elem_xiz(); e('ld', 'XWA,%s' % a[1]); e('ld', 'XBC,%s' % mem(b)); e('ld', 'XWA,(XWA)'); call(); e('ld', '(XIZ),XHL')
+        return True
     if form == 'early-MS':
         e('lda', 'XIZ,%s' % L[1][1:-1]); pair(lambda: e('ld', 'XWA,%s' % mem(a))); call(); e('ld', '(XIZ),XHL'); return True
     if form == 'early-PS':
@@ -6986,6 +7005,7 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+SD_ELEM_EARLY = True                                     # see sd4_stmt
 MULDIV_MEMBER_PTR = True                                 # see gen_opassign
 OPK_MEMBER_GLOBAL = True                                 # see gen_opassign
 REM_POW2_AND_ALL = True                                  # see gen_stmt
