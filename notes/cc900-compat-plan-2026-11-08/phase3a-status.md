@@ -3161,6 +3161,17 @@ scc ne,WA`), only through widening casts; a narrowing cast between keeps both te
 0x4,A / ld (_guc),A`, not `extz WA / div WA,0x10`). From `never_forms.py` at none. rstmt +3 / +2 / +2 / +2; library
 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 285 (2026-11-15): probe stdiv under -Xr from a predictor.** SDXR_WHOLE (`compile_unit`) with two new modules:
+`sdxr_predict.py`, the stdiv -Xr predictor a subagent wrote from the oracle's listing (research-scratch
+tabulation/stdivxr-predict.py and stdivxr-FAMILIES.md, 750 / 750), and `sdxr.py`, which classifies a statement into
+the probe's kinds and replaces the probe's names by the real operands'. Under -Xr without -O, a function whose whole
+body is `L = A / B` or `A % B` over those kinds and whose parameters are three ints is written this way. Declined
+outside the probe's shapes: member offsets other than the probe's, constants that are powers of two, other parameter
+lists, and the destination read again (`*gip = *gip / ki`, probe stdiv2's PS rows, which the first version lost).
+The predictor's rules are a lifetime colouring of named temporaries with the parameters pre-coloured in WA, BC, DE;
+some colouring orders are fitted to the data (see the families file). stdiv -Xr 286 -> 750 of 750; rstmt and random
+unchanged (their functions do not have this shape); library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

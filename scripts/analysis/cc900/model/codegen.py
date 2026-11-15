@@ -7084,6 +7084,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+SDXR_WHOLE = True                                        # see compile_unit and sdxr.py
 OPASSIGN_ZERO_ELEM = True                                # see gen_opassign
 DIVPOW2_SHIFT_CHAR = True                                # see gen_stmt's MUL2_SHIFT
 NOT_NOT = True                                           # see gen: !!x
@@ -16970,8 +16971,12 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             import pickle as _pickle, sys as _sys
             _sys.setrecursionlimit(max(_sys.getrecursionlimit(), 200000))
             spare = _pickle.dumps(f, -1) if opt != 'none' and not fa else None
+            alt_ = None
+            if SDXR_WHOLE and fa and opt == 'none':       # probe stdiv's statement shapes under -Xr (sdxr.py)
+                import sdxr
+                alt_ = sdxr.whole(f)
             try:
-                full = compile_function(f, opt, fa, personality)
+                full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
                 if spare is None: raise                    # (_strcspn); never instead of a function it can write
                 global L2_WIDE
