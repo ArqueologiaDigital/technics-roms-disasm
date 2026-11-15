@@ -79,6 +79,8 @@ class Fn:
         h = self.home.get(d)
         if h is None:
             return None
+        if getattr(self, 'xr', False):
+            return xr_tok(h, d.ty.size)
         if d.ty.size == 4:
             need(not h.startswith('Q'))
             return 'X' + h
@@ -378,7 +380,11 @@ def assign_scalar(F, d, op, r):
         need(o in ARITH)
         v = simple(F, r)
         if tgt is not None:                                            # a += x on a register variable
-            if v is not None:
+            if v is not None and getattr(F, 'xr', False) and o in ('+', '-') and unc(r).k == 'const' and                     1 <= unc(r).value <= 8 and not tgt.startswith('Q'):
+                F.e('%s %s,%s' % ('inc' if o == '+' else 'dec', hx(unc(r).value), tgt))   # -Xr h17: k += 2 -> inc 0x2,HL
+                return
+            need(not (getattr(F, 'xr', False) and tgt.startswith('Q')))   # (-Xr ra_leaf5: no arithmetic on
+            if v is not None:                                          #  a high word; cc900 spills instead)
                 F.e('%s %s,%s' % (ARITH[o], tgt, v))
                 return
             if strip(r).k == 'load' and strip(strip(r).e).k == 'index':
@@ -570,6 +576,8 @@ def assign_elem(F, L, op, r):
             F.e('ld %s,%s' % (a, orr))
             F.e('ld %s,%s' % (ol, a) if o is None else '%s %s,%s' % (ARITH[o], ol, a))
             return
+        if o is None and xr_char_store(F, L, R):
+            return
         if L.kind == 'ptr' and R.kind == 'ptr':
             if L.esz == 1:
                 need(o is None)
@@ -699,6 +707,7 @@ def assign_elem(F, L, op, r):
             F.e('ld %s,%s' % (opd, rv))
             return
         if rv is not None:
+            need(not (getattr(F, 'xr', False) and L.base.kind == 'param'))   # (-Xr r_p_wr: p goes to the frame)
             c, opd = addr_ptr(F, L, held='XBC')
             F.e(*c)
             F.e('ld WA,%s' % rv, 'ld %s,WA' % opd)
@@ -761,7 +770,10 @@ def if_stmt(F, s):
         if strip(l).k == 'load' and strip(strip(l).e).k == 'index':
             el = Elem(strip(l).e)
             need(el.cidx is not None)
-            F.e('ld WA,%s' % const_elem(F, el), 'cp WA,%s' % rv)
+            if getattr(F, 'xr', False) and not is_mem(rv) and unc(r).k != 'const':
+                F.e('cp %s,%s' % (const_elem(F, el), rv))   # -Xr p_cond_after: cp (XWA),BC
+            else:
+                F.e('ld WA,%s' % const_elem(F, el), 'cp WA,%s' % rv)
         else:
             lv = simple(F, l)
             need(lv is not None and not is_mem(lv))
@@ -801,11 +813,15 @@ def st_for(F, s, last):
     if not up:
         need(b == '0x0')
     lend, ltop = F.label(), F.label()
+    if getattr(F, 'xr', False):
+        xr_seg(F, s.cond)
     compare(F, r, b)
     exit_cc = 'ge' if up else 'le'
     F.e('j %s,%s' % (exit_cc, lend))
     F.e(ltop + ':')
     st_block(F, s.body, False)
+    if getattr(F, 'xr', False):
+        xr_seg(F, s.cond)
     if up:
         F.e('inc 0x1,%s' % r)
         compare(F, r, b)
@@ -822,6 +838,9 @@ def st_block(F, s, last):
         for k, c in enumerate(s.body):
             st_block(F, c, last and k == len(s.body) - 1)
         return
+    if getattr(F, 'xr', False) and s.k in ('decl', 'expr', 'return', 'if'):
+        xr_seg(F, getattr(s, 'init', None) if s.k == 'decl' else s.e if s.k == 'expr' else
+               None if s.k == 'return' else s.cond)   # (the result's HL is no template register)
     if s.k == 'decl':
         if getattr(s, 'init', None) is not None:
             assign_scalar(F, s.var, '=', s.init)
@@ -835,9 +854,13 @@ def st_block(F, s, last):
     if s.k == 'while':                                                 # while (v rel b): the test, the body, the test
         d, r, rel, b = cond_parts2(F, s.cond)
         lend, ltop = F.label(), F.label()
+        if getattr(F, 'xr', False):
+            xr_seg(F, s.cond)
         compare(F, r, b)
         F.e('j %s,%s' % (NEG[rel], lend), ltop + ':')
         st_block(F, s.body, False)
+        if getattr(F, 'xr', False):
+            xr_seg(F, s.cond)
         compare(F, r, b)
         F.e('j %s,%s' % (CC[rel], ltop), lend + ':')
         return
@@ -846,6 +869,8 @@ def st_block(F, s, last):
         ltop = F.label()
         F.e(ltop + ':')
         st_block(F, s.body, False)
+        if getattr(F, 'xr', False):
+            xr_seg(F, s.cond)
         compare(F, r, b)
         F.e('j %s,%s' % (CC[rel], ltop))
         return
@@ -856,12 +881,12 @@ def st_block(F, s, last):
         x = unc(s.value)
         v = simple(F, x)
         if v is not None:
-            if v != 'HL':
+            if v.upper() != 'HL':
                 F.e('ld HL,%s' % v)
             return
         need(x.k == 'bin' and x.op in ARITH)
         a, b = simple(F, x.l), simple(F, x.r)
-        need(a == 'HL' and b is not None)
+        need(a is not None and a.upper() == 'HL' and b is not None)
         F.e('%s HL,%s' % (ARITH[x.op], b))
         return
     raise Decline()
@@ -876,6 +901,8 @@ def is_leaf(f):
 
 
 def whole_(f, s):
+    if s == 'Xr' and LNRW_XR:
+        return whole_xr(f)
     need(s == 'none')
     need(is_leaf(f))
     need(f.ret is not None and (f.ret.kind == 'void' or is_int(f.ret)))
@@ -912,6 +939,383 @@ def whole_(f, s):
             if nxt == 'ret':
                 out[k] = 'ret %s' % m.group(1)
     return out
+
+
+LNRW_XR = True                                            # see whole_xr
+
+# --------------------------------------------------------------------------------------------- stage 2: -Xr
+# (executed in lnrw's namespace; see lane_lnrxr/RULES.md)
+#
+# The parameters arrive in WA, BC, DE (A C E for a char, XWA XBC XDE for a long or pointer).  A parameter that
+# leafnone.early_param calls early stays in its register (precoloured); the statements' template registers are then
+# resolved around it as LN1 resolves them around any earlier variable (resolve(): the next free family), so the
+# templates of section 2 come out shifted (index WA, base XBC -> index BC, base XDE while k sits in WA), and the
+# locals fill what is left, which pushes the counter to IX / IY / IZ.  A parameter whose register is the fixed A of a
+# shift count, or that is not early, is allocated like a late parameter and moved there at entry (ld BC,WA).  The
+# code is the none code with the variables written in lower case; each statement's upper-case (template) families
+# are moved up past the families that a variable holds across it, then the variables are written in upper case.
+
+XR_ARGS = ('WA', 'BC', 'DE')
+XR_SOFT = True
+XR_T16 = ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ')
+
+
+def xr_tok(h, size):
+    """a variable's register written in lower case (the template registers stay upper case)"""
+    if h.startswith('Q'):
+        need(size == 2)
+        return 'Q' + h[1:].lower()
+    if size == 4:
+        return 'X' + h.lower()
+    if size == 1:
+        need(h in ('WA', 'BC', 'DE', 'HL'))
+        return h[1].lower()
+    return h.lower()
+
+
+def xr_fixed_wa(u, inreg):
+    """does the unit need A itself: a shift by a variable count (and A,0xf / sla A,BC), a char copied between two
+    elements of register pointers (ld A,(XBC+QWA) / ld (XHL+QWA),A)?"""
+    e = u[2][2] if isinstance(u[2], tuple) else u[2]
+    hit = []
+    if xr_shape(u, inreg) == 'cptr':
+        return True
+    cg.walk(e, lambda n, d: hit.append(n) if n.k == 'bin' and n.op in ('<<', '>>') and unc(n.r).k != 'const' else None)
+    cg.walk(e, lambda n, d: hit.append(n) if n.k == 'opassign' and n.op in ('<<=', '>>=') and unc(n.r).k != 'const' else None)
+    return bool(hit)
+
+
+def xr_shape(u, inreg):
+    """units whose -Xr template is not the none template with its registers moved: 'cptr' a char copied between
+    elements of two register pointers (ld A,(XBC+QWA) / ld (XHL+QWA),A), 'cps' a char element of a sized global
+    stored through a register pointer (lda XDE,_gca / ld E,(XDE+HL) / ld (XWA+HL),E), 'pgw' p[i] op= gw[i] with p a
+    register pointer and gw unsized (the right base and the held address come after the locals: s_add_gw, h17)"""
+    if isinstance(u[2], tuple):
+        return None
+    x = unc(u[2])
+    if x.k not in ('bin', 'opassign') or (x.k == 'bin' and x.op != '=') or strip(x.l).k != 'index':
+        return None
+    lb = strip(strip(x.l).base)
+    lb = strip(lb.e) if lb.k == 'decay' else lb
+    pl = vdecl(lb)
+    if pl is None or pl not in inreg or pl.ty.kind != 'ptr':
+        return None
+    r = unc(x.r)
+    if strip(r).k == 'load' and strip(strip(r).e).k == 'index' and x.l.ty.size == 1 and x.k == 'bin':
+        rb = strip(strip(strip(r).e).base)
+        rb = strip(rb.e) if rb.k == 'decay' else rb
+        if vdecl(rb) is not None and vdecl(rb) in inreg and vdecl(rb).ty.kind == 'ptr' and r.ty.size == 1:
+            return 'cptr'
+        if rb.k == 'var' and rb.decl.kind == 'global' and rb.decl.ty.kind == 'array' and (rb.decl.ty.count or 0) > 0 \
+                and r.ty.size == 1:
+            return 'cps'
+    els = []
+    cg.walk(r, lambda n, d: els.append(n) if n.k == 'index' else None)
+    if x.l.ty.size == 2 and any(leafnone.is_unsized_global(n.base) for n in els):
+        return 'pgw'
+    return None
+
+
+def xr_allocate(f, inreg, args):
+    """leafnone.allocate with the early parameters precoloured in their argument registers -> (got, rng, L)"""
+    lf = leafnone
+    vs = [d for d in lf.variables(f) if d in inreg]
+    L = lf.linear(f)
+    rng = {}
+    for d in vs:
+        evs = [e for e in L.ev if e[1] is d]
+        pos = [e[0] for e in evs]
+        lo = 0 if d.kind == 'param' else (min(pos) if pos else 0)
+        hi = max(pos) if pos else 0
+        for (a, b, n) in L.loops:
+            inl = [e for e in evs if a <= e[0] <= b]
+            if inl and inl[0][2] != 'w':
+                lo, hi = min(lo, a), max(hi, b)
+        rng[d] = (lo, hi, evs)
+
+    def overlaps(d, u):
+        return rng[d][0] <= u[1] and rng[d][1] >= u[0]
+
+    def reads_in(d, u):
+        return [e[0] for e in rng[d][2] if u[0] <= e[0] <= u[1] and 'r' in e[2]]
+
+    def crowded(u):
+        return sum(rng[w][0] < u[0] and rng[w][1] > u[1] and not any(u[0] <= e[0] <= u[1] for e in rng[w][2]) for w in vs)
+    P = lf.prefs(f, vs, inreg)
+    early = {d for d in vs if d.kind == 'param' and lf.early_param(d, L)}
+    got = {}
+    R = {id(u): lf.reserve(u, inreg, crowded(u)) for u in L.units}
+    for u in L.units:
+        sh_ = xr_shape(u, inreg)
+        if sh_ in ('cptr', 'cps'):
+            R[id(u)] = (['WA'], [])
+        elif sh_ == 'pgw':
+            R[id(u)] = ([x for x in R[id(u)][0] if x not in ('BC', 'QBC')], [])
+
+    def held_by(u, done):
+        h = set()
+        for w, r in done.items():
+            if overlaps(w, u):
+                h |= lf.res_of(r, w.ty.size)
+        return h
+
+    def resolve(want, u, avoid):
+        """LN1's resolve, and a high word follows its low word's move (QBC with BC -> DE: QDE)"""
+        out = []
+        mv = {}
+        for r in [x for x in want if not x.startswith('Q')] + [x for x in want if x.startswith('Q')]:
+            if r.startswith('Q') and r[1:] in mv:
+                r = 'Q' + mv[r[1:]]
+                if r in avoid or r in out or r not in lf.SEQ16:
+                    continue
+                out.append(r)
+                continue
+            if r in avoid or r in out:
+                if r.startswith('Q'):
+                    continue
+                r0 = r
+                r = next((x for x in lf.SEQ16[lf.SEQ16.index(r):] if x not in avoid and x not in out), None)
+                if r is None:
+                    continue
+                mv[r0] = r
+            out.append(r)
+        return set(out)
+
+    def busy_for(d, sets):
+        lo, hi, evs = rng[d]
+        busy = set()
+        for u in L.units:
+            if not overlaps(d, u):
+                continue
+            rd = reads_in(d, u)
+            e = u[2]
+            defines = (isinstance(e, tuple) and e[1] is d) or (getattr(e, 'k', None) == 'bin' and e.op == '=' and
+                                                               strip(e.l).k == 'var' and strip(e.l).decl is d)
+            if defines and not rd and d.kind != 'param':
+                continue
+            rs = set(sets[id(u)])
+            last = rd and max(rd) == hi and u[0] <= hi <= u[1]
+            if last:
+                top = e[2] if isinstance(e, tuple) else e
+                top = unc(top)
+                if top.k in ('bin', 'opassign') and (top.k == 'opassign' or top.op == '=') and \
+                        strip(top.l).k in ('index', 'deref'):
+                    top = type('X', (), {'k': 'none'})()
+                elif top.k == 'bin' and top.op == '=':
+                    top = unc(top.r)
+                if lf.var_of(top) is d or (top.k == 'bin' and lf.var_of(top.l) is d) or P.get(d) == 'WA':
+                    rs -= {'WA', 'QWA'}
+                if P.get(d) and top.k == 'bin' and lf.var_of(top.l) is d:
+                    rs -= lf.res_of(P[d], 4)
+            busy |= rs
+        return busy
+
+    def take(d, avoid_sets):
+        busy = busy_for(d, avoid_sets)
+        lo, hi, _ = rng[d]
+        held = set()
+        for w, r in got.items():
+            if rng[w][0] <= hi and rng[w][1] >= lo:
+                held |= lf.res_of(r, w.ty.size)
+        blocked = busy | held
+        seq = lf.SEQ8 if d.ty.size == 1 else lf.SEQ32 if d.ty.size == 4 else lf.SEQ16
+        pr = P.get(d)
+        if pr and not (lf.res_of(pr, d.ty.size) & blocked):
+            return pr
+        return next((r for r in seq if not (lf.res_of(r, d.ty.size) & blocked)), '-')
+    # 0. the result variables (HL), then the early parameters in their argument registers
+    for d in reversed(vs):
+        if d.kind == 'local' and P.get(d) == 'HL':
+            got[d] = take(d, {id(u): set() for u in L.units})
+            if got[d] != 'HL':
+                del got[d]
+    fixed = {d for d in vs if d.kind == 'param' and args[d] == 'WA' and any(overlaps(d, u) and xr_fixed_wa(u, inreg)
+                                                                          for u in L.units)}
+    for d in vs:                                       # every parameter stays in its register
+        if d.kind == 'param' and d not in fixed:
+            got[d] = args[d]
+    for d in vs:                                       # unless a template needs A there: an early one moves to the
+        if d in fixed and d in early:                  # next free family at once (r_shl_i: ld BC,WA), a late one is
+            held = set()                               # allocated last (r_cp_cpy: ld XHL,XWA)
+            for w, r in got.items():
+                held |= lf.res_of(r, w.ty.size)
+            got[d] = next((r for r in (lf.SEQ32 if d.ty.size == 4 else lf.SEQ16)[1:]
+                           if not (lf.res_of(r, d.ty.size) & held)), None)
+            need(got[d] is not None)
+    # 1. the template registers, around them
+    HARD = {id(u): resolve(R[id(u)][0], u, held_by(u, got)) for u in L.units}
+    # 2. the early parameters that could not stay
+    for d in reversed(vs):
+        if d in early and d not in got:
+            got[d] = take(d, HARD)
+    SOFT = {}
+    for u in L.units:
+        hs = HARD[id(u)]
+        SOFT[id(u)] = resolve(R[id(u)][1], u, held_by(u, got) | hs) if R[id(u)][1] else set()
+    ALL = {k: HARD[k] | (SOFT[k] if XR_SOFT else set()) for k in HARD}
+    for d in [d for d in reversed(vs) if d.kind == 'local' and d not in got] + \
+             [d for d in reversed(vs) if d.kind == 'param' and d not in got]:
+        got[d] = take(d, ALL)
+    return got, rng, L
+
+
+def xr_homes(F):
+    f = F.f
+    need(len(f.params) <= 3)
+    args = {}
+    for k, d in enumerate(f.params):
+        need(d.ty.kind in ('int', 'ptr') and d.ty.size in (1, 2, 4))
+        args[d] = XR_ARGS[k]
+    vs = leafnone.variables(f)
+    need(all(d in vs for d in f.params))
+    inreg = set(vs)
+    got, rng, L = xr_allocate(f, inreg, args)
+    for d in inreg:
+        r = got.get(d, '-')
+        need(r != '-')
+        F.home[d] = r
+    F.xr_args, F.xr_rng, F.xr_L = args, rng, L
+    F.xr_units = {}
+    for u in L.units:
+        e = u[2][2] if isinstance(u[2], tuple) else u[2]
+        F.xr_units[id(e)] = u
+
+
+FAMRX = r'\b(X|Q)?(WA|BC|DE|HL|IX|IY|IZ)\b|\b([AWBCDEHL])\b'
+
+
+def xr_fam(m):
+    if m.group(2):
+        return m.group(2)
+    return {'A': 'WA', 'W': 'WA', 'B': 'BC', 'C': 'BC', 'D': 'DE', 'E': 'DE', 'H': 'HL', 'L': 'HL'}[m.group(3)]
+
+
+def xr_seg(F, key):
+    """mark the start of a statement's code (key: the unit's expression, None for code outside any unit)"""
+    F.out.append('#U %s' % (key if key is None else id(key)))
+
+
+def xr_finish(F, out):
+    """shift each segment's template families past the variables live across it, then upper-case the variables"""
+    res = []
+    unit = None
+    seg = []
+
+    def flush():
+        if not seg:
+            return
+        avoid = set()
+        if unit is not None:
+            for d, (lo, hi, _) in F.xr_rng.items():
+                if lo <= unit[1] and hi >= unit[0]:
+                    h = F.home[d]
+                    avoid |= {h} if h.startswith('Q') else ({h, 'Q' + h} if d.ty.size == 4 else {h})
+        for l in seg:
+            for m in re.finditer(r'\b(X|Q)?(wa|bc|de|hl|ix|iy|iz)\b', l):
+                avoid.add(('Q' if m.group(1) == 'Q' else '') + m.group(2).upper())
+            for m in re.finditer(r'\b([awbcdehl])\b', l):
+                avoid.add({'a': 'WA', 'w': 'WA', 'b': 'BC', 'c': 'BC', 'd': 'DE', 'e': 'DE', 'h': 'HL', 'l': 'HL'}[m.group(1)])
+        temps = set()
+        for l in seg:
+            if l.endswith(':'):
+                continue
+            for m in re.finditer(FAMRX, l.split(' ', 1)[1] if ' ' in l else ''):
+                temps.add(xr_fam(m))
+        mp = {}
+        taken = set()
+        for t in [x for x in XR_T16 if x in temps]:
+            if t not in avoid and t not in taken:
+                mp[t] = t
+            else:
+                n = next((x for x in XR_T16[XR_T16.index(t):] if x not in avoid and x not in taken), None)
+                need(n is not None)
+                mp[t] = n
+            taken.add(mp[t])
+        for l in seg:
+            if l.endswith(':') or ' ' not in l or not any(a != b for a, b in mp.items()):
+                res.append(l)
+                continue
+            op, args = l.split(' ', 1)
+
+            def sub(m):
+                fam = xr_fam(m)
+                t = mp.get(fam, fam)
+                if t == fam:
+                    return m.group(0)
+                if m.group(2):
+                    return (m.group(1) or '') + t
+                need(t in ('WA', 'BC', 'DE', 'HL'))
+                return t[1] if m.group(3) in 'ACEL' else t[0]
+            res.append(op + ' ' + re.sub(FAMRX, sub, args))
+    for l in out:
+        if l.startswith('#U '):
+            flush()
+            seg = []
+            k = l[3:]
+            unit = None if k == 'None' else next((u for kk, u in F.xr_units.items() if str(kk) == k), None)
+            continue
+        seg.append(l)
+    flush()
+
+    def up(l):
+        if ' ' not in l:
+            return l
+        op, args = l.split(' ', 1)
+        args = re.sub(r'\b(X|Q)?(wa|bc|de|hl|ix|iy|iz)\b', lambda m: (m.group(1) or '') + m.group(2).upper(), args)
+        args = re.sub(r'\b([awbcdehl])\b', lambda m: m.group(1).upper(), args)
+        return op + ' ' + args
+    return [up(l) for l in res]
+
+
+def whole_xr(f):
+    need(is_leaf(f))
+    need(f.ret is not None and (f.ret.kind == 'void' or is_int(f.ret)))
+    F = Fn(f, 'Xr')
+    F.xr = True
+    xr_homes(F)
+    body = cg.flat(f.body)
+    need(any(x.k == 'for' for x in body))
+    if any(h.lstrip('Q') == 'IZ' for h in F.home.values()):
+        F.push = 2
+    xr_seg(F, None)
+    for d in f.params:                                                 # a parameter moved at entry
+        if F.home[d] != F.xr_args[d]:
+            need(not F.home[d].startswith('Q'))
+            F.e('ld %s,%s' % (F.reg(d), xr_tok(F.xr_args[d], d.ty.size).upper()))
+    for k, st in enumerate(body):
+        st_block(F, st, k == len(body) - 1)
+    body_ = xr_finish(F, F.out)
+    xiz = any(re.search(r'\bXIZ\b', l) for l in body_)
+    need(not (xiz and F.push == 2))
+    pre = ['push IZ'] if F.push == 2 else ['push XIZ'] if xiz else []
+    post = ['pop IZ'] if F.push == 2 else ['pop XIZ'] if xiz else []
+    out = pre + body_ + post + ['ret']
+    for k, l in enumerate(out):
+        m = re.match(r'j (\w+),(L\d+)$', l)
+        if m:
+            t = out.index(m.group(2) + ':')
+            nxt = next(x for x in out[t + 1:] if not x.endswith(':'))
+            if nxt == 'ret':
+                out[k] = 'ret %s' % m.group(1)
+    return out
+
+
+def xr_char_store(F, L, R):
+    """-Xr, a char element stored through a register pointer at a register index: (Xp+i) with no address code; the
+    right a register pointer's element (ld A,(XBC+QWA)) or a sized global's (lda XWA,_gca / ld A,(XWA+i)) -> True"""
+    if not getattr(F, 'xr', False) or L.esz != 1 or R.esz != 1 or L.kind != 'ptr' or L.add or L.cidx is not None:
+        return False
+    rp, ri = F.reg(L.base), F.reg(L.idx)
+    if rp is None or ri is None or not rp.startswith('X'):
+        return False
+    if R.kind == 'ptr':
+        need(False)                                    # (two register pointers: which one moves, and where the char
+                                                       # goes, is not settled -- r_cp_cpy moves the destination to XHL
+                                                       # and uses A, micro c_copy the source and uses C)
+    if R.kind == 'sized' and R.cidx is None and not R.add and R.idx is L.idx:
+        F.e('lda XWA,_%s' % R.base.name, 'ld A,(XWA+%s)' % ri, 'ld (%s+%s),A' % (rp, ri))
+        return True
+    return False
 
 
 def fmt(lines):

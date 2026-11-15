@@ -3578,6 +3578,19 @@ fpp10 s01 / s04 / s10 wrong-code verdicts at none and -O3 -XS are gone); no func
 LOOP_KILLED_LOCAL was left out (no gain, `_fgets` one line farther).  Ledger up 12 rows by 40, down 0; library
 189/248, pairs 223.
 
+**Batch 327 (2026-11-15): the leaf generator at -Xr; random +2 / +3 / +3 / +6.** lane_o3, from random near misses:
+GUARD_DIV_DE (-O: for `if (D) p->m = X / D` the guard's divisor goes in DE and the division reads it; the oracle 6 / 10
+times, never BC), XR_UNARY_ARG_BC (-O3 -XS -Xr: a neg / cpl argument right before a call is computed in BC and copied
+to WA; 14 of 14 there, and 14 of 14 directly in WA at -Xr), SHIFT_RMW_XBC (a constant shift assigned through a
+pointer loaded from memory takes the pointer in XBC; 36 of 36).  lane_locals: POST_CALL_PARAM (-O: a stack parameter
+read only after one call is not a home candidate; the oracle homes none of 14), REGTEMP_ARM_CALLS (an initialised
+local read only in the next if / switch's arms before any call becomes a register temporary).  lane_lnrxr:
+LNRW_XR (lnrw.py, edit_batch327_lnrw.py: the leaf generator's -Xr stage, parameters kept in their argument registers;
+it declines 36 of the 136 lnr functions; over every other run it writes 217 functions, all exact).  Random 218 / 120
+/ 177 / 106 -> 220 / 123 / 180 / 112 at none / -O3 -XS / -Xr / -O3 -XS -Xr; rstmt +5 / +7 / +4 / +10; lnr probes at
+-Xr 18 -> 102; micro ra_homes -O3 -XS and ra_* -Xr +1; no function lost at any set.  Ledger up 20 rows by 126, down 0;
+library 189/248, pairs 223, semcheck 11 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

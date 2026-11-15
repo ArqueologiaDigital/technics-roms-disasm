@@ -1464,6 +1464,7 @@ Q_COUNTER_SUB = True                                      # see compile_unit (rs
 DOUBLE_ADD = True                                         # see compile_unit (library _atan)
 MULS_NO_EXTS = True                                       # see compile_unit (library _atan)
 FP_SLOT_DECL_ORDER = True                                 # see fp_plan_frame (library _sqrt)
+POST_CALL_PARAM = True                                    # see plan_homes (ra_homes.c rh_pp_a2, random r1_01_08)
 OPA_NO_HOMES = True                                       # see plan_homes: a double op= in XIZ leaves no register home
 OPA_NO_HOMES_ELEM = False
 SLOT_LOCAL_SIGNED_IDX = True                              # see gen_load_mem: guca[t], t a signed local in a slot
@@ -1618,7 +1619,8 @@ def bin_wide(F, e, op, l, r, fam, size):
     the same at the byte (ld A,(_gc) / sub A,(XBC); exts WA / divs WA,(_hc)); a constant left loads the right (ld A,(_hc)
     / inc 0x7,A).  Returns the register family of the result, or None where the pair is not in the table."""
     gr_ = getattr(F, 'guard_reg', None)
-    if gr_ is not None and op in ('/', '%') and gr_[1] == FAM['BC'].get(size) and expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
+    if gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'].get(size), FAM['DE'].get(size) if GUARD_DIV_DE else None) and \
+            expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     lk, rk = cw_kind(F, l, size), cw_kind(F, r, size)
     if lk is None or rk is None: return None
     root_ = getattr(F, 'bw_root', False); F.bw_root = False
@@ -3299,7 +3301,7 @@ def store_div(F, lv, rv):
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or x.ty.kind != 'int': return False
     if lv.ty is None or lv.ty.size != 2 or lv.ty.kind not in ('int', 'ptr'): return False
     gr_ = getattr(F, 'guard_reg', None)
-    if gr_ is not None and gr_[1] == 'BC' and expr_key(x.r) == gr_[0]: return False   # (GUARD_DIV: the divisor is in BC)
+    if gr_ is not None and gr_[1] in ('BC', 'DE') and expr_key(x.r) == gr_[0]: return False   # (GUARD_DIV: the divisor is in BC)
     L = sc_lkind(F, lv)
     if L is None: return False
     a, b = sd_opkind(F, x.l, 2), sd_opkind(F, x.r, 2)
@@ -4702,7 +4704,8 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     (s_PX), a left g[i] keeps WA / XBC and a right *p takes XDE (s_XP).  Returns None where the shape is not one
     of these (a ?: beside a member or element, two indexed elements, a shift beside an indexed element, ...)."""
     gr_ = getattr(F, 'guard_reg', None)
-    if gr_ is not None and op in ('/', '%') and gr_[1] == FAM['BC'].get(size) and expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
+    if gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'].get(size), FAM['DE'].get(size) if GUARD_DIV_DE else None) and \
+            expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     cl, cr = ev_class(F, l), ev_class(F, r)
     if cl is None or cr is None: return None
     lx, rx = ev_core(l), ev_core(r)
@@ -5435,6 +5438,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         gr_ = getattr(F, 'guard_reg', None)
         guard_ = gr_ is not None and op in ('/', '%') and FAM['BC'][size] == gr_[1] and expr_key(r) == gr_[0] and \
             not writes_family(F.lines[gr_[2]:], 'BC')
+        if GUARD_DIV_DE and not guard_ and gr_ is not None and op in ('/', '%') and FAM['DE'].get(size) == gr_[1] and \
+                expr_key(r) == gr_[0] and not writes_family(F.lines[gr_[2]:], 'DE'): guard_ = True
         rs = gr_[1] if guard_ else mem_operand(F, r)       # (GUARD_DIV: the divisor the test left in BC / C)
         n_rs = len(F.lines)
         if size == 1 and rs is not None and rs.startswith('0x'): rs = hx(int(rs, 16) & 0xff)   # r2_01_17: muls WA,0xa6
@@ -5511,7 +5516,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
             f1 = gen(F, l, work, size)                      # ld HL,IZ / muls XHL,QIZ
             if f1 != work and f1 in FAM and f1 in ('WA', 'BC', 'DE', 'HL'):
                 work = f1                                   # (where gen left it: ra_noloop's a + b in DE, before
-        if guard_ and (writes_family(F.lines[n_rs:], 'BC') or work == 'BC'):
+        gf_ = 'DE' if guard_ and GUARD_DIV_DE and gr_[1] in ('DE', 'E') else 'BC'
+        if guard_ and (writes_family(F.lines[n_rs:], gf_) or work == gf_):
             rs = mem_operand(F, r)                         # (the dividend's code took BC: the divisor is read again)
         if STORE_ADDR_GUARD and rs is not None and clobbers(F.lines[n_rs:], rs):
             raise Unsupported('the left operand overwrites the right operand\'s address')   # (lnr3.c s_mul -Xr)
@@ -7344,6 +7350,9 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+SHIFT_RMW_XBC = True                                     # see gen_opassign
+XR_UNARY_ARG_BC = True                                   # see compile_function_once's -O passes
+GUARD_DIV_DE = True                                      # see gen_stmt's GUARD_DIV
 TERN_PLAIN_ON_CLOBBER = True                             # see gen's -O ?: preload
 COND_ASSIGN = True                                       # see gen_cond_false
 SP_MUL_THROUGH = True                                    # see sp_value_kind
@@ -7970,7 +7979,7 @@ def expr_key(n):
 def writes_family(lines, fam):
     """does any line write a part of the register family fam ('BC'), or call?"""
     import re as _r
-    parts = {'BC': ('B', 'C', 'BC', 'QBC', 'XBC')}[fam]
+    parts = {'BC': ('B', 'C', 'BC', 'QBC', 'XBC'), 'DE': ('D', 'E', 'DE', 'QDE', 'XDE')}[fam]
     for l in lines:
         if l is None or not l.startswith('\t'): continue
         if l.startswith('\tcal') or l.startswith('\tcall'): return True
@@ -9900,7 +9909,7 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                                                          # XWA); a computed value: XBC (random r1_03_04: gpi[1] = ~gi ->
                                                          # ld XBC,(_gpi) / ld WA,(_gi) / cpl WA / ld (XBC+0x2),WA)
         if m is not None:
-            P_ = ptr if ptr != 'XBC' else ('XBC' if kind == 'storev' and PK_STORE_XBC else 'XWA')
+            P_ = ptr if ptr != 'XBC' else ('XBC' if kind == 'storev' and PK_STORE_XBC or getattr(F, 'shift_rmw_xbc', False) else 'XWA')
             if m.startswith('('): F.emit('ld', '%s,%s' % (P_, m)); m = P_
             off = fold(lv.idx).value * lv.ty.size
             return '(%s+%s)' % (m, hx(off)) if off else '(%s)' % m
@@ -10304,7 +10313,16 @@ def gen_opassign(F, e):
                 F.emit('ld', '%s,%s' % (V, t)); F.emit('ld', 'WA,%s' % cnt)
                 F.emit('and', 'A,0xf'); lab = F.newlabel(); F.emit('j', 'z,%s' % lab); F.emit(mnem, 'A,%s' % V)
                 F.lines.append(lab + ':'); F.emit('ld', '%s,%s' % (t, V)); return t
-        t = lvalue(F, e.l, ptr='XDE', idx='DE', base='XHL', kind='rmw')
+        lvk_ = strip(e.l)
+        pb_ = strip(lvk_.e) if lvk_.k == 'deref' else strip(lvk_.base) if lvk_.k in ('member', 'index') else None
+        pk_ = 'XBC' if SHIFT_RMW_XBC and fold(r).k == 'const' and (lvk_.k == 'deref' or lvk_.k == 'member' and lvk_.arrow or
+                                                                  lvk_.k == 'index' and fold(lvk_.idx).k == 'const' and
+                                                                  strip(lvk_.base).k == 'load') and \
+            pb_ is not None and (mem_operand(F, pb_) or '').startswith('(') and \
+            'BC' not in live_regs(F) else 'XDE'                    # (random r3_08_06: gps->c >>= 3 -> ld XBC,(_gps))
+        F.shift_rmw_xbc = pk_ == 'XBC'
+        try: t = lvalue(F, e.l, ptr=pk_, idx='DE', base='XHL', kind='rmw')
+        finally: F.shift_rmw_xbc = False
         V = FAM[next((x for x in (('WA', 'BC', 'DE', 'HL') if SHIFTB_A and (size == 1 or SHIFTK_WA) and fold(r).k == 'const'
                                   and 'WA' not in live_regs(F) else ('BC', 'WA', 'DE', 'HL')) if not re.search(r'\b(X?%s|%s)\b' % (x, FAM[x][1]), t) and not (SHIFT_COUNT_GUARD and x == 'WA' and fold(r).k != 'const' and mem_operand(F, r) is None)), 'BC')][size]   # (r1_06_03: not over the computed count)
         rr = fold(r); cs = mem_operand(F, r) if rr.k != 'const' else None
@@ -11236,12 +11254,18 @@ def gen_stmt(F, s, last):
             k = None
             if gp_ is not None:                          # -O: if (D != 0) .. A / D: D in BC (C) for the test and the
                 D_, sz_, cc_ = gp_                       # division (random r1_09_05: if (gps->i != 0) gi3 = 100 / gps->i
-                f_ = gen(F, D_, 'BC', sz_)               # -> ld XWA,(_gps) / ld BC,(XWA+0x2) / cp BC,0x0 / j eq,L /
-                if f_ != 'BC' or 'BC' in live_regs(F):   # lda XWA,0x64 / divs XWA,BC / ld (_gi3),WA)
+                G_ = 'BC'
+                if GUARD_DIV_DE and sz_ == 2:            # p->m = X / D: the quotient computes in BC, D waits in DE
+                    e0_ = strip(flat(s.then)[0].e)       # (random r2_09_09: ld DE,(_gi3) / cp DE,0x0 / .. / divs XBC,DE)
+                    if e0_.k == 'bin' and e0_.op == '=' and strip(e0_.r).k == 'bin' and strip(e0_.r).op == '/' and \
+                            (sp_lvalue_kind(F, e0_.l) or ('',))[0] == 'D' and sp_value_kind(F, e0_.r, 2) == 'M' and \
+                            'DE' not in live_regs(F): G_ = 'DE'
+                f_ = gen(F, D_, G_, sz_)                 # -> ld XWA,(_gps) / ld BC,(XWA+0x2) / cp BC,0x0 / j eq,L /
+                if f_ != G_ or G_ in live_regs(F):       # lda XWA,0x64 / divs XWA,BC / ld (_gi3),WA)
                     del F.lines[n_if0_:]; gp_ = None
                 else:
-                    F.emit('or', 'XBC,XBC') if sz_ == 4 else F.emit('cp', '%s,0x0' % FAM['BC'][sz_]); F.emit('j', '%s,%s' % (cc_, lab))
-                    F.guard_reg = (expr_key(D_), FAM['BC'][sz_], len(F.lines))
+                    F.emit('or', 'XBC,XBC') if sz_ == 4 else F.emit('cp', '%s,0x0' % FAM[G_][sz_]); F.emit('j', '%s,%s' % (cc_, lab))
+                    F.guard_reg = (expr_key(D_), FAM[G_][sz_], len(F.lines))
             if gp_ is None: k = gen_cond_false(F, s.cond, 'RET' if last and bare else lab)   # pushed XIZ is popped first
             n_if1_ = len(F.lines)
             test_clobber_check(F, n_if0_, n_if1_, s.cond, [s.then])
@@ -12181,6 +12205,22 @@ def plan_homes(F):
         if x[0] == 'loop' and any(y[0] == 'call' for y in x[1]):
             for y in x[1]:
                 if y[0] == 'use': mark(y[1])
+    if POST_CALL_PARAM and F.opt and across:              # a stack parameter read only after one same call: no home
+        wr_ = set()                                        # (rh_pp_a2, random r1_01_08: loaded into a scratch register)
+        def wv_(n, dep):
+            if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': wr_.add(strip(n.l).decl)
+            if n.k == 'opassign' and strip(n.l).k == 'var': wr_.add(strip(n.l).decl)
+            if n.k == 'incdec' and strip(n.e).k == 'var': wr_.add(strip(n.e).decl)
+            if n.k == 'addr' and strip(n.e).k == 'var': wr_.add(strip(n.e).decl)
+        walk(F.f.body, wv_)
+        cl_ = [k for k, x in enumerate(seq) if x[0] in ('call', 'rcall')]   # (eval_sequence's order: calls, FP
+        for d in list(across):                             # operations and long helpers count; _modf's nptr is read
+            if d.kind != 'param' or getattr(d, 'reg', None) or d in wr_ or d is getattr(F, 'sret', None): continue
+            us_ = [k for k, x in enumerate(seq) if x[0] == 'use' and x[1] is d]   # before _fint and after it)
+            if not us_ or not any(c < us_[0] for c in cl_) or any(us_[0] < c < us_[-1] for c in cl_): continue
+            if any(x[0] == 'loop' and any(y[0] in ('call', 'rcall') for y in x[1]) and
+                   any(y[0] == 'use' and y[1] is d for y in x[1]) for x in seq): continue   # (read again each iteration)
+            across.remove(d)
     helper_ops = []
     if F.opt:
         def hv(n, dep):
@@ -16448,6 +16488,7 @@ def plan_store_xiz(F):
         F.store_xiz = True; F.xiz_vars.append('stores'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
 
 REGTEMP = True                                            # see plan_regtemps
+REGTEMP_ARM_CALLS = True                                  # see regtemp_candidates (rstmt rs_3_02_12_3)
 REGTEMP_OPT = True                                        # register temporaries under -O as well (loc0 O3XS)
 REGTEMP_OPT_SCRATCH = False                               # -O: the source of a computed initialiser into a scratch register
                                                           # first (lo_i_Bgd: ld WA,(_hi) / ld BC,(_gi) / add BC,WA): off, it
@@ -16539,6 +16580,32 @@ def loop_ctr_cands(lp, d):
         if n.k == 'load' and strip(n.e).k == 'index' and uses_decl(strip(n.e).idx, d): excl.add('BC')
     walk(lp.body if getattr(lp, 'body', None) is not None else lp, v)
     return [r for r in ('BC', 'DE', 'HL') if r not in excl] + [r for r in ('BC', 'DE', 'HL') if r in excl] + ['WA']
+
+def reads_before_calls(x, d):
+    """REGTEMP_ARM_CALLS: is every read of d in statement x evaluated before any call on its own path (eval_sequence's
+    branch paths; no loop in x, no assignment of d)?"""
+    def unwrap_(y):
+        p_ = {}
+        while y[0] == 'branch': p_[y[1]] = y[2]; y = y[3]
+        return y, p_
+    if getattr(x, 'k', None) not in ('if', 'switch'): return False   # (an expression statement: the older rule's, or
+                                                           # folded into it: rstmt -Xr rs_4_01_16_6, rs_1_05_11_3)
+    lv_ = []                                               # a read in the target of an assignment whose value calls: the
+    def lvw_(n, dep):                                      # call comes first (rstmt rs_2_03_08_1: gs.a[t] = r2(gi, gi))
+        if n.k == 'bin' and n.op == '=' and strip(n.l).k != 'var' and uses_decl(n.l, d) and \
+                (nodes_in(n.r, 'call') or has_helper_call(n.r) or fpgen.is_fp_op(n.r)): lv_.append(n)
+    walk(x, lvw_)
+    if lv_: return False
+    its_ = [unwrap_(y) for y in eval_sequence(x, [])]
+    if any(it[0] == 'loop' or (it[0] == 'def' and it[1] is d) for it, _ in its_): return False
+    seen_ = False
+    for k, (it, p) in enumerate(its_):
+        if it[0] == 'use' and it[1] is d:
+            if not p: return False                         # (read by the test itself: folded there, rs_2_09_16_2)
+            seen_ = True
+            for it2, p2 in its_[:k]:
+                if it2[0] in ('call', 'rcall') and all(p.get(a_, b_) == b_ for a_, b_ in p2.items()): return False
+    return seen_
 
 def regtemp_candidates(F):
     """[(decl, [candidate homes])] for plan_regtemps, from the body alone (its docstring says which locals)"""
@@ -16655,8 +16722,9 @@ def regtemp_candidates(F):
         lx = rest[last]
         cl = calls_in(lx)
         if cl:                                             # the last statement may call once, with the local among the
-            if len(cl) != 1 or cl[0].k != 'call' or (lx.k == 'expr' and strip(lx.e) is not cl[0]) or lx.k != 'expr' or \
-                    not any(uses_decl(a_, d) for a_ in cl[0].args) or any(calls_in(a_) for a_ in cl[0].args):
+            if not (REGTEMP_ARM_CALLS and reads_before_calls(lx, d)) and \
+                    (len(cl) != 1 or cl[0].k != 'call' or (lx.k == 'expr' and strip(lx.e) is not cl[0]) or lx.k != 'expr' or
+                     not any(uses_decl(a_, d) for a_ in cl[0].args) or any(calls_in(a_) for a_ in cl[0].args)):
                 continue                                   # arguments it dies in (lo_i_Gga: push BC / cal _vi)
         ci0_ = strip(c.init)                               # (a long * / % helper's result stays in XHL like a call's:
         lhres_ = DEAD_CALL_STORE and not F.opt and not F.adecl and ci0_.k == 'bin' and ci0_.op in ('*', '/', '%') and \
@@ -17561,6 +17629,21 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 F.lines[i] = '\tsub\t%s,0x1' % m.group(1); F.lines[i + 1] = None
         F.lines = [l for l in F.lines if l is not None]
     if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)
+    if XR_UNARY_ARG_BC and F.opt and F.adecl:            # -O3 -XS -Xr: neg / cpl of a WA argument in BC, then copied
+        i_ = 0                                           # (random .r1_02_10: ld BC,(_gu2) / cpl BC / ld WA,BC / j .ru)
+        while i_ + 2 < len(F.lines):
+            a_ = re.match(r'^\tld\t(X?)WA,(.+)$', F.lines[i_] or ''); b_ = re.match(r'^\t(neg|cpl)\tWA$', F.lines[i_ + 1] or '')
+            c_ = re.match(r'^\t(cal|j)\t\.\w+$', F.lines[i_ + 2] or '')
+            if a_ and b_ and c_ and not re.search(r'\b(X?BC|QBC|[BC])\b|\bWA\b|\bXWA\b|\(.*\b[AW]\b', a_.group(2)):
+                k_ = i_ - 1; clean_ = True
+                while k_ >= 0 and F.lines[k_] and not F.lines[k_].endswith(':') and not F.lines[k_].startswith('\tcal'):
+                    m_ = re.match(r'^\t\w+\t([^,]+)', F.lines[k_])
+                    if m_ and re.match(r'^(X?BC|QBC|B|C)$', m_.group(1)): clean_ = False; break
+                    k_ -= 1
+                if clean_:
+                    F.lines[i_:i_ + 2] = ['\tld\t%sBC,%s' % (a_.group(1), a_.group(2)), '\t%s\tBC' % b_.group(1), '\tld\tWA,BC']
+                    i_ += 4; continue
+            i_ += 1
     if F.opt: F.lines = drop_unreachable(F.lines)        # (without -O a switch keeps its end: sw_jt6 L3: ret)
     if F.opt and GLOBAL_FORWARD:                          # _rand: ld (_Seed),XHL / ld XWA,(_Seed) -> ld XWA,XHL (the
         for i in range(len(F.lines) - 1):                 # value just stored, in the next instruction)
