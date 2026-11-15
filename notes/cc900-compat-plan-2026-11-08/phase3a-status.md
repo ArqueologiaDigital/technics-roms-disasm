@@ -3540,6 +3540,18 @@ IFELSE_INNER_JOIN.  Library 187 -> 189 (kn5000 185 -> 187, ide2003 174 -> 175); 
 -O3 -XS -Xr +2; random unchanged; no function lost at any set, none newly compiled.  Ledger up 7 rows by 42, down 0;
 pairs 223, semcheck 17 with the same verdicts.
 
+**Batch 324 (2026-11-15): five more lane rules.** From lane_o3: IFELSE_TAIL_JOIN (-O: the join label of an if/else
+ending the function is dropped when only a jump that became `ret` reached it; jumps to an inner if's join go to the
+outer one), REGTEMP_LAST_READ (a char register temporary whose reads in the statement are done may have its BC home
+written: `char t = jc; int u = gia[t];`), LDA_SAME_BASE_USE (in `lda_run_base` an address loaded twice goes into the
+register of its last use, 17 of 17 oracle cases).  From lane_locals: HALVES_BY_USE (-O, two 16-bit locals homed in
+XIZ: the IZ half by use class -- a plain copy or constant, then a loop counter, then an arithmetic value, then a call
+result).  From lane_st: BASE_FIRST (-O, a chain `gul = gula[4] = gula[6]` or `g[K] = g[K2] op y` on word / long
+elements: the shared base in XWA, the values in BC).  Random -O3 -XS 114 -> 115, -O3 -XS -Xr 101 -> 102; rstmt +4 /
++17 / +3 / +15 at none / -O3 -XS / -Xr / -O3 -XS -Xr; homes2b -O3 -XS 86 -> 87; no function lost at any set; the
+lanes semchecked every function their rules newly compile.  Ledger up 7 rows by 42, down 0; library 189/248, pairs
+223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

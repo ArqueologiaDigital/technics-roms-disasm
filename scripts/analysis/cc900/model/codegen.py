@@ -28,6 +28,13 @@ import homes2
 
 class Unsupported(Exception): pass
 
+def regtemp_reads_done(s, d):
+    """the statement guard's count says the current statement has made every read of d (REGTEMP_LAST_READ)"""
+    st_ = getattr(s, 'spg', None)
+    if st_ is None or st_[0] is not getattr(s, 'cur_stmt', None) or st_[2]: return False
+    e_ = st_[1].get(id(d))
+    return e_ is not None and bool(e_['n']) and not e_.get('arm') and e_['reads'] >= e_['n']
+
 class LiveClobber(Unsupported):
     """the live-register guard fired on a register temporary (plan_regtemps): compile_function retries with the
     next candidate home"""
@@ -194,6 +201,8 @@ class Fn:
                                  (getattr(getattr(s, 'top_cur', None), 'k', None) not in ('while', 'do', 'for') or
                                   self_update(op, args, d))) and \
                             not (op == 'ld' and own_slot(s, d, args)) and \
+                            not (REGTEMP_LAST_READ and rt_ and d.kind == 'local' and d.reg != 'WA' and d.ty.size == 1 and not param_live_after(s, d) and
+                                 regtemp_reads_done(s, d)) and \
                             not re.search(r',(X?IZ|QIZ|QIZH|IZL|X?IX|X?IY)$', args):   # (a read of a home: the
                         if rt_: raise LiveClobber('%s %s over the register temporary %s in %s' % (op, args, d.name, d.reg), d)
                         raise Unsupported('%s %s over the live parameter %s in %s' % (op, args, d.name, d.reg))   # parameter moved there, c_fordown)
@@ -1410,6 +1419,7 @@ CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (lo
 DEAD_INIT_OPT = True                                      # see gen_stmt's block: -O drops a dead initialiser
 WHILE_KNOWN_FIRST = True                                  # see while_first_true
 FOR_TESTED_NO_EXIT = True                                 # see gen_loop: no unreferenced exit label after a decided first test
+HALVES_BY_USE = True                                      # see plan_homes (rstmt rs_1_00_09_2, homes2b HL03)
 OPA_NO_HOMES = True                                       # see plan_homes: a double op= in XIZ leaves no register home
 OPA_NO_HOMES_ELEM = False
 SLOT_LOCAL_SIGNED_IDX = True                              # see gen_load_mem: guca[t], t a signed local in a slot
@@ -7281,6 +7291,9 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+LDA_SAME_BASE_USE = True                                 # see lda_run_base
+REGTEMP_LAST_READ = True                                 # see Fn.emit's live guard
+IFELSE_TAIL_JOIN = True                                  # see gen_stmt's if .. else and compile_function_once
 IFELSE_INNER_JOIN = True                                 # see gen_stmt (if-else)
 UDIV_POW2_SRL = True                                     # see compile_unit
 EXT_VIA_XWA = True                                       # see compile_unit
@@ -7396,6 +7409,12 @@ def lda_run_base(lines):
         g = [n for n, v in syms.items() if len(v) >= 2]
         if len(g) != 1: i = j; continue
         B = regs[-1]; uses = dict(syms[g[0]])
+        if LDA_SAME_BASE_USE and LDA_RUN_SAME_OFF and len(set(uses.values())) == 1 and 0 not in set(uses.values()) and \
+                not any(_r.search(r'\b%s\b' % run[max(uses)][0], src) for _, src in run):
+            B = run[max(uses)][0]                          # (one address twice: its last use's register, rs_3_01_18_3)
+        elif LDA_SAME_BASE_USE and len(set(uses.values())) == 1 and 0 in set(uses.values()) and \
+                not any(_r.search(r'\b%s\b' % run[max(uses)][0], src) for _, src in run):
+            B = run[max(uses)][0]
         if any(_r.search(r'\b%s\b' % B, src) for _, src in run): i = j; continue
         new = ['\tlda\t%s,%s' % (B, g[0])]
         same_ = set(uses.values())
@@ -7607,6 +7626,7 @@ IZ_TAIL_DIRECT_XR = True                                 # see regvar_stmt: IZ_T
 MEMBER_STORE_BC_XR = True                                # see gen_stmt: MEMBER_STORE_BC under -Xr too (rstmt rs_1_03_03_1)
 GUARD_DIV = True                                         # see guard_div_plan
 BASE_HOIST = True                                        # see base_hoist
+BASE_FIRST = True                                        # see base_hoist: the base's register before the values'
 
 def early_dest_addr(F, s, n0):
     """G.m = (c ? a : b) and G[k] = (c ? a : b), a global aggregate's member or constant element assigned a ?: with no
@@ -7650,6 +7670,74 @@ def early_dest_addr(F, s, n0):
         F.lines[n0:] = pre + seg[:-1] + ['\tld\t(%s),%s' % (R, m_.group(3))]
         return
 
+def base_first_shape(e, g):
+    """(rule 03) the statements whose hoisted base the oracle puts in XWA: a chain storing one element of g into
+    another and into a variable (gul = gula[4] = gula[6]; gula[3] = gul = gula[2]; guc = guca[5] = guca[7]), or
+    g[K] = g[K2] op y with op one of + - % / << >> & | ^, a word or long element and y a constant, a plain global or an
+    element of g (gua[3] = gua[0] + gua[4]; gula[2] = gula[3] << 27; gua[1] = gua[2] % gua[1]).  Not a plain copy
+    (gla[0] = gla[7]: XBC), a product, an op= or a char operation (guc = (guca[4] ^ guca[2]) - 1: XBC)"""
+    e = strip(e)
+    def cel(x):                                            # g[K]
+        x = strip(x)
+        while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp') and x.ty is not None and \
+                strip(x.e).ty is not None and x.ty.size == strip(x.e).ty.size: x = strip(x.e)
+        if x.k == 'load': x = strip(x.e)
+        if x.k != 'index' or fold(x.idx).k != 'const': return False
+        b = strip(x.base)
+        while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+        return b.k == 'var' and b.decl.name == g
+    def plain(x):
+        x = strip(x)
+        while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+        return fold(x).k == 'const' or cel(x) or (x.k == 'load' and strip(x.e).k == 'var' and
+                                                  strip(x.e).decl.kind == 'global' and not getattr(strip(x.e).decl, 'reg', None))
+    def var_(x):
+        x = strip(x)
+        return x.k == 'var' and x.decl.kind == 'global'
+    if e.k != 'bin' or e.op != '=': return False
+    r = strip(e.r)
+    while r.k == 'cast' and r.kind in ('IntegralCast', 'NoOp') and r.ty is not None and strip(r.e).ty is not None and \
+            r.ty.size == strip(r.e).ty.size: r = strip(r.e)
+    if r.k == 'bin' and r.op == '=':                       # a chain
+        return (cel(e.l) and var_(r.l) or var_(e.l) and cel(r.l)) and cel(r.r)
+    if not cel(e.l) or e.l.ty is None or strip(e.l).ty.size < 2: return False
+    return r.k == 'bin' and r.op in ('+', '-', '%', '/', '<<', '>>', '&', '|', '^') and cel(r.l) and plain(r.r)
+
+
+def base_first_moves(F, seg, live):
+    """(rule 03, BASE_FIRST) the statement's code with its value registers moved up one family so that the hoisted
+    base takes the lowest one: WA alone -> BC (the base XWA), WA and BC -> WA and DE (the base XBC); None when the code
+    uses another family, a variable lives in the target, or an instruction is tied to its register"""
+    import re as _r
+    def fams_in(l):
+        out = set()
+        for fam in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
+            if _r.search(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1]) if len(fam) == 2 and fam[0] != 'I'
+                         else r'\bX?%s[LH]?\b' % fam, l): out.add(fam)
+        return out
+    used = set()
+    for l in seg:
+        if not l: continue
+        if l.endswith(':') or l.startswith(('\tcal', '\tj', '\tret', '\tpush', '\tpop', '\tldir', '\tlddr', '\tcpir',
+                                            '\tldi', '\tldd', '\tmul', '\tmuls', '\tdiv', '\tdivs', '\tscc')):
+            return None
+        if _r.search(r'\bXSP\b|\bQ(WA|BC|DE|HL)\b', l): return None
+        used |= fams_in(l)
+    if used == {'WA'}: mv = {'WA': 'BC'}
+    else: return None
+    if 'WA' in live: return None
+    first = next(l for l in seg if l and fams_in(l))      # (WA written before it is read: no value comes in through it)
+    m_ = _r.match(r'^\t(ld|lda)\t(XWA|WA|A),(.*)$', first)
+    if not m_ or fams_in(m_.group(3)): return None
+    if any(t in live for t in mv.values()): return None
+    def ren(l):
+        for a, b in mv.items():
+            l = _r.sub(r'\b(X?)%s\b' % a, lambda m: m.group(1) + b, l)
+            l = _r.sub(r'\b%s\b' % a[0], b[0], l); l = _r.sub(r'\b%s\b' % a[1], b[1], l)
+        return l
+    return [ren(l) if l else l for l in seg]
+
+
 def base_hoist(F, s, n0):
     """-O: a global int array read or written at two or more constant indices in one expression or return statement
     without a call, helper or double has its base loaded once at the statement's start, into the first of XWA, XBC,
@@ -7682,6 +7770,9 @@ def base_hoist(F, s, n0):
     if len(uses) < 2 or any(l and ('_%s' % g) in l and not pat.search(l) for l in seg): return
     if any(l and (l.endswith(':') or l.startswith(('\tcal', '\tj', '\tcall'))) for l in seg[:uses[-1] + 1]): return
     live = live_regs(F)
+    if BASE_FIRST and base_first_shape(e, g):
+        bf_ = base_first_moves(F, seg, live)
+        if bf_ is not None: seg = bf_
     for R, fam in (('XWA', 'WA'), ('XBC', 'BC'), ('XDE', 'DE')):
         parts = _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1]))
         if fam in live or any(l and parts.search(l) for l in seg): continue   # (the statement's code leaves R alone; R
@@ -11020,6 +11111,14 @@ def gen_stmt(F, s, last):
                                                                                   # itself: cb_c_else_80 under O3XS)
             flush_pops(F); F.emit('ret')               # c_ifchain: the exit is duplicated, not jumped to (cdecl -O
                                                        # jumps to the join and the tails merge: pushw 0xa / j L2)
+            if IFELSE_TAIL_JOIN and F.opt and len(F.lines) >= 2 and re.match(r'^L\d+:$', F.lines[-2]) and \
+                    F.lines[-2][:-1] in {str(x) for x in getattr(F, 'if_joins', set())} and \
+                    not nodes_in(s.els, 'return'):        # -O: the inner if's join is the outer one (rstmt rs_1_07_12_3:
+                lx_ = F.lines[-2][:-1]                     # its j eq goes to the outer join, ret eq / .. / L448: / ret)
+                rx_ = [i for i, l in enumerate(F.lines) if re.search(r'\b%s\b' % lx_, l) and not l.endswith(':')]
+                if rx_ and all(re.match(r'^\tj\t\w+,%s$' % lx_, F.lines[i]) for i in rx_):
+                    for i in rx_: F.lines[i] = F.lines[i][:-len(lx_)] + str(lend)
+                    del F.lines[-2]
         elif not F.lines[-1].startswith(('\tret', '\tj\t')):
             flush_pops(F); F.emit('j', lend)
         F.push -= F.pending; F.pending = 0
@@ -12068,6 +12167,23 @@ def plan_homes(F):
         walk(F.f.body, lambda n_, dd: fpopa_.append(n_) if n_.k == 'opassign' and fpgen.is_fp(getattr(strip(n_.l), 'ty', None))
              and not (strip(n_.l).k == 'var' and strip(n_.l).decl.kind in ('local', 'param')) else None)
     winners_sorted = [d for d in winners_sorted if not getattr(d, 'lh_slot', False)]
+    if HALVES_BY_USE and F.opt and h2home is None:         # two 16-bit locals: plain < counter < arithmetic < call
+        l16_ = [d for d in winners_sorted if d.kind == 'local' and d.ty.size == 2]   # result for IZ (rstmt
+        if len(l16_) == 2 and not any(d.kind == 'param' or d.ty.size != 2 for d in winners_sorted):   # rs_1_00_09_2,
+            try:                                           # homes2b HL03 / HL07, random r1_00_09, library _atan)
+                _, V_, _ = homes2.values(F.f, True)
+                def cls_(d):
+                    v = V_.get(d)
+                    if v is None: return None
+                    if 'c' in v.dk: return 3
+                    if 'U' in v.rk: return 1
+                    if 'r' in v.dk: return 2
+                    return 0
+                c0_, c1_ = cls_(l16_[0]), cls_(l16_[1])
+                if c0_ is not None and c1_ is not None and c1_ < c0_:
+                    winners_sorted = [l16_[1], l16_[0]]
+            except Exception:
+                pass
     for d in winners_sorted:
         if d.ty.size == 4 and fpopa_ and d.kind == 'local':   # a 4-byte local then stays in its slot (random r1_03_12:
             d.no_fold = True; continue                     # char *t = gp; gda[1] *= .. -> ld (XSP+0x4),XWA / lda XIZ,_gda + 0x8)
@@ -17103,6 +17219,11 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
             if m_: F.lines[i_] = '\tret\t' + m_.group(1)        # a conditional jump only (r2_07_14: a ?: arm's j L2 stays)
     import re as _rg
     F.gen_refs = {m for l in F.lines if l.startswith('\t') for m in _rg.findall(r'\b(L\d+)\b', l)}   # labels jumped to
+    F.gen_ref_kinds = {}                                   # (IFELSE_TAIL_JOIN: how each label was reached)
+    for l in F.lines:
+        if l.startswith('\t'):
+            for m in _rg.findall(r'\b(L\d+)\b', l):
+                F.gen_ref_kinds.setdefault(m, set()).add('j' if _rg.match(r'^\tj\tL\d+$', l) else 'other')
     if CHAIN_TEST_SOURCE and F.opt:                       # -O: v1 = v2 = e; if (v1 ..) tests v2's register (_fwrite)
         st_ = F.f.body.body if F.f.body.k == 'block' else []
         for a_, b_ in zip(st_, st_[1:]):
@@ -17140,7 +17261,14 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         # statement: switch.c sw_local's breaks keep j L128 to L128: / ret)
         rl_ = {F.lines[k][:-1] for k in range(len(F.lines) - 1)   # ret, the label kept (rstmt rs_1_00_19_2: switch ..
                if F.lines[k] and re.match(r'^L\d+:$', F.lines[k]) and F.lines[k + 1] == '\tret'}   # break -> ret)
+        uj_ = {l.split('\t')[2] for l in F.lines if l and re.match(r'^\tj\t(L\d+)$', l) and l.split('\t')[2] in rl_}
         F.lines = ['\tret' if l and re.match(r'^\tj\t(L\d+)$', l) and l.split('\t')[2] in rl_ else l for l in F.lines]
+        if IFELSE_TAIL_JOIN:                               # an if .. else's join that only the then arm's j reached is
+            ij_ = {str(x) for x in getattr(F, 'if_joins', set())}   # not written once that j is a ret (rstmt rs_3_02_11_4)
+            gk_ = getattr(F, 'gen_ref_kinds', {})
+            rf_ = {m for l in F.lines if l and l.startswith('\t') for m in re.findall(r'\b(L\d+)\b', l)}
+            F.lines = [l for l in F.lines if not (l and l.endswith(':') and l[:-1] in uj_ and l[:-1] in ij_ and
+                                                  l[:-1] not in rf_ and gk_.get(l[:-1]) == {'j'})]
     if SWITCH_END_DROP and F.opt and getattr(F, 'switch_ends', None):   # -O: a noted switch end label left
         refs_ = {m for l in F.lines if l and l.startswith('\t') for m in re.findall(r'\b(L\d+)\b', l)}   # unreferenced
         F.lines = [l for l in F.lines if not (l and l.endswith(':') and l[:-1] in F.switch_ends and   # (all breaks
