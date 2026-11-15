@@ -7169,6 +7169,25 @@ LNRW_WHOLE = True                                        # see compile_unit
 HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+XR_CHAR_EXT_WA = True                                    # see compile_unit
+LOCAL_TEST_REG = True                                    # see local_test_k
+
+
+def local_test_k(nx, d):
+    """is statement nx an if whose test compares local d (read there) with a constant?"""
+    if nx.k != 'if': return False
+    c = strip(nx.cond)
+    if c.k != 'bin' or c.op not in ('<', '>', '<=', '>=', '==', '!='): return False
+    l = strip(c.l)
+    while l.k == 'cast' and l.kind == 'IntegralCast': l = strip(l.e)
+    return l.k == 'load' and strip(l.e).k == 'var' and strip(l.e).decl is d and fold(strip(c.r)).k == 'const'
+CPB_ELEM_K = True                                        # see compile_unit
+ELEM_BASE_XWA = True                                     # see compile_unit
+STORE_HL_DIRECT_O3XR = True                              # see STORE_HL_DIRECT in compile_unit
+PTR_RELOAD_REUSE = True                                  # see compile_unit
+MUL_POW2_SHIFT = True                                    # see compile_unit
+BYTE_STORE_DIRECT = True                                 # see compile_unit
+SWITCH_END_DROP = True                                   # see gen_switch / compile_function
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
 def elem0_via_xwa(lines):
@@ -7716,6 +7735,9 @@ REG_PARTS = {'BC': ('B', 'C', 'BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('D',
              'XDE': ('D', 'E', 'DE', 'QDE', 'XDE')}
 REG_KILLS = {'BC': ('BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('DE', 'XDE'), 'E': ('E', 'DE', 'XDE'), 'XBC': ('XBC',),
              'XWA': ('XWA', 'WA'), 'XDE': ('XDE',)}                     # (a 16-bit load ends XWA's old value: nothing reads the stale QWA)
+
+REG_PARTS.update({'A': ('A', 'WA', 'XWA'), 'L': ('L', 'HL', 'XHL')})   # (byte registers for reg_dead: CPB_ELEM_K)
+REG_KILLS.update({'A': ('A', 'WA', 'XWA'), 'L': ('L', 'HL', 'XHL')})
 
 def reg_dead(lines, start, R, lab=None):
     """is register R's value dead from line index start (or from label lab)?  Every path, conditional jumps followed
@@ -12500,6 +12522,17 @@ def value_table(F, s, cases, vals, default, lo, hi):
     return (fn, byval) if fn is not None else None
 
 def gen_switch(F, s, last):
+    """SWITCH_END_DROP: the switch (below), and its end label noted for -O when it has a default and no conditional
+    jump to the end"""
+    n0 = len(F.lines)
+    r = gen_switch_(F, s, last)
+    end = getattr(F, 'sw_end_of', {}).get(id(s))
+    if SWITCH_END_DROP and F.opt and end and any(c.k == 'default' for c in switch_cases(s.body, [])) and \
+            not any(l and l.startswith('\tj\t') and l.endswith(',' + end) for l in F.lines[n0:]):
+        F.switch_ends = getattr(F, 'switch_ends', set()) | {end}
+    return r
+
+def gen_switch_(F, s, last):
     """switch (oracle run 2026-11-09-4-micro-switch, v423, -Xr and -O3 -XS -Xr).
     Six or more case values spanning at most twice their number: a jump table of 16-bit offsets from a base label
     (dw Lcase-Lbase, holes to the default), placed in f_const right after the function label; the selector is
@@ -12518,6 +12551,7 @@ def gen_switch(F, s, last):
         if c.body is not None and c.body.k in ('case', 'default'):
             F.case_labels[id(c.body)] = F.case_labels[id(c)]; F.case_inner.add(id(c.body))
     end = F.newulabel()
+    F.sw_end_of = getattr(F, 'sw_end_of', {}); F.sw_end_of[id(s)] = end   # (SWITCH_END_DROP)
     vals = []; default = None
     for c in cases:
         if c.k == 'default': default = F.case_labels[id(c)]
@@ -16036,7 +16070,11 @@ def regtemp_candidates(F):
                 any(unpromote(y).ty is not None and unpromote(y).ty.size == 1 for y in (ci.l, ci.r)): continue
         # (a pointer plus a char index: zero-extended through XDE by the oracle, r3_03_11; unmodelled)
         # (a stack address: folded into its uses, _tan's p = (unsigned short *)&x -> ld WA,(XSP+0x3a))
-        if last == 0 and foldable(F.f, d) and not nxcall_ and ci.k != 'call' and not cw_index_use(rest[0], d): continue   # read once by the next
+        if last == 0 and foldable(F.f, d) and not nxcall_ and ci.k != 'call' and not cw_index_use(rest[0], d) and \
+                not (LOCAL_TEST_REG and ci.k == 'load' and strip(ci.e).k == 'var' and strip(ci.e).decl.kind == 'global' and
+                     d.ty.size == 2 and local_test_k(rest[0], d)): continue   # read once by the next
+        # (an if's test against a constant keeps it in a register: rstmt rs_2_06_16_1, int t = ji; if (t > 2) ->
+        #  ld WA,(_ji) / cp WA,0x2)
         # statement: folded there; a call result instead stays in HL and takes the operator there (lo_i_R0e: cal _ri /
         # add HL,(_hi) / ld (_hi2),HL)
         ci = strip(c.init)                                 # (binop_i.c add_i_loc: int x = a + b; return x; -> ld HL,(a) /
@@ -16818,6 +16856,10 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         rl_ = {F.lines[k][:-1] for k in range(len(F.lines) - 1)   # ret, the label kept (rstmt rs_1_00_19_2: switch ..
                if F.lines[k] and re.match(r'^L\d+:$', F.lines[k]) and F.lines[k + 1] == '\tret'}   # break -> ret)
         F.lines = ['\tret' if l and re.match(r'^\tj\t(L\d+)$', l) and l.split('\t')[2] in rl_ else l for l in F.lines]
+    if SWITCH_END_DROP and F.opt and getattr(F, 'switch_ends', None):   # -O: a noted switch end label left
+        refs_ = {m for l in F.lines if l and l.startswith('\t') for m in re.findall(r'\b(L\d+)\b', l)}   # unreferenced
+        F.lines = [l for l in F.lines if not (l and l.endswith(':') and l[:-1] in F.switch_ends and   # (all breaks
+                                              l[:-1] not in refs_)]   # became ret) is not written
     if DEAD_LABEL_PAIR and not F.opt:                    # an unreferenced label right before another label is not
         refs_ = {m for l in F.lines if l and l.startswith('\t') for m in re.findall(r'\b(L\d+)\b', l)}   # written
         ij_ = getattr(F, 'if_joins', set())           # (an if's join only: a loop's continue label stays, switch.c sw_loop)
@@ -17256,6 +17298,23 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                         full[k_:k_ + 2] = ['\tld\tWA,%s' % m_.group(2)]   # ld WA,(m) (rstmt rs_3_04_11_2: unsigned
                                                            # int u = ju; gc = gca[u]; read twice it stays in DE:
                                                            # rs_4_00_05_3, gca[t] > gc .. return gca[t])
+            if CPB_ELEM_K and opt == 'none' and alt_ is None:   # without -O a char read through a register index
+                for k_ in range(len(full) - 2):            # and compared with a constant for a branch is compared in
+                    m_ = re.match(r'^\tld\t([ACEL]),(\(X(?:WA|BC|DE|HL|IX|IY|IZ)\+(?:[ACELWBDH]|WA|BC|DE|HL|IX|IY|IZ)\))$',
+                                  full[k_] or '')          # memory: ld A,(XWA+DE) / cp A,0x0 / j eq,L -> cpb (XWA+DE),0x0
+                    if not m_ or not re.match(r'^\tcp\t%s,(0x[0-9a-f]+)$' % m_.group(1), full[k_ + 1] or ''):
+                        continue                           # (random r1_01_19; the oracle's none / Xr listings: cpb
+                    if not re.match(r'^\t(j|ret)\t(?!L)\w+(,|$)', full[k_ + 2] or ''):   # (XR+R),k 36 / 54, ld r / cp r,k
+                        continue                           # 1 / 2, both a truth value for scc)
+                    if not reg_dead(full, k_ + 2, m_.group(1)): continue   # (the byte only)
+                    full[k_:k_ + 2] = ['\tcpb\t%s,%s' % (m_.group(2), full[k_ + 1].split(',', 1)[1])]
+            if XR_CHAR_EXT_WA and opt == 'none' and fa and alt_ is None:   # -Xr: a char register parameter widened
+                for k_ in range(len(full) - 1):            # for HL is widened in WA when WA is free: exts DE / ld HL,DE ->
+                    m_ = re.match(r'^\t(exts|extz)\t(BC|DE)$', full[k_] or '')   # ld A,E / exts WA / ld HL,WA (rstmt
+                    if not m_ or full[k_ + 1] != '\tld\tHL,%s' % m_.group(2): continue   # rs_1_02_12_2; the oracle's ext
+                    if not reg_dead(full, k_, 'XWA') or not reg_dead(full, k_ + 2, 'X' + m_.group(2)): continue   # BC / ld
+                    full[k_:k_ + 2] = ['\tld\tA,%s' % m_.group(2)[1], '\t%s\tWA' % m_.group(1), '\tld\tHL,WA']   # HL,BC:
+                                                           # 10, each with WA live: chidx.c bc2, stvxc.c c_i_QX)
             if SCC_HL_VIA_WA and opt == 'none' and alt_ is None:   # without -O a compare's truth value that an
                 for k_ in range(len(full) - 1):            # operation in HL reads next is set in WA and moved (random
                     m_ = re.match(r'^\tscc\t(\w+),HL$', full[k_] or '')   # r2_01_05: gia[7] & (gl >= ..) -> scc ge,WA
@@ -17377,14 +17436,18 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                             not (k_ and (full[k_ - 1] or '').startswith('\tcpl\tQ')) and reg_dead(full, k_ + 2, m_.group(2)):
                         full[k_:k_ + 2] = ['\tlda\t%s,%s+%s' % (m2_.group(1), m_.group(2), m_.group(1)), None]   # inc / ld 8:
                 full = [l for l in full if l is not None]  # a negation's cpl / cpl / inc, or XR read after)
-            if STORE_HL_DIRECT and not (opt != 'none' and fa):   # ld WA,HL / ld (m),WA -> ld (m),HL where XWA is dead after
+            if STORE_HL_DIRECT and (not (opt != 'none' and fa) or STORE_HL_DIRECT_O3XR):   # ld WA,HL / ld (m),WA -> ld (m),HL where XWA is dead after
                 k_ = 0                                     # (the oracle has the pair only at -O3 -XS -Xr; fpp3.c k1:
                 while k_ < len(full) - 1:                  # cal ._fcmp_d / ld (_gi),HL)
                     m_ = re.match(r'^\tld\t(X?WA|X?BC),(X?HL)$' if STORE_HL_DIRECT_BC else r'^\tld\t(X?WA),(X?HL)$', full[k_])
                     if m_ and len(m_.group(1)) == len(m_.group(2)):
                         f_ = 'X' + m_.group(1).lstrip('X')        # (BC too: random .r3_04_05, ld (_gul),XHL)
                         m2_ = re.match(r'^\tld\t(\([^)]*\)),%s$' % m_.group(1), full[k_ + 1])
-                        if m2_ and f_[1:] not in m2_.group(1) and reg_dead(full, k_ + 2, f_):
+                        nx_ = next((l for l in full[k_ + 2:] if l and not re.match(r'^L\d+:$', l)), '\tret')
+                        o3xr_ok_ = not (opt != 'none' and fa) or nx_.startswith('\tret') or \
+                            (re.match(r'^\tld\t(%s),' % '|'.join(REG_KILLS.get(f_, (f_,))), nx_) is not None and
+                             not re.search(r',.*\b(%s)\b' % '|'.join(REG_PARTS.get(f_, (f_,))), nx_))   # (-O -Xr: a call reads WA)
+                        if m2_ and f_[1:] not in m2_.group(1) and reg_dead(full, k_ + 2, f_) and o3xr_ok_:
                             full[k_:k_ + 2] = ['\tld\t%s,%s' % (m2_.group(1), m_.group(2))]
                     k_ += 1
             if BYTE_SHL1_ADD:                              # a byte doubled from another register is ld T,R / add T,R:
@@ -17400,6 +17463,78 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                             reg_dead(full, k_ + 2, m3_.group(1)):
                         full[k_:k_ + 2] = ['\tld\t%s,%s' % (m4_.group(1), m3_.group(1)), '\tadd\t%s,%s' % (m4_.group(1), m3_.group(1))]
                     k_ += 1
+            if BYTE_STORE_DIRECT and opt != 'none':        # -O: ld A,R / ld (m),A -> ld (m),R (R = C E L) where XWA is
+                k_ = 0                                     # dead after (the -O listings: 2090 direct, no pair; rstmt
+                while k_ < len(full) - 1:                  # .rs_1_01_05_0)
+                    m_ = re.match(r'^\tld\tA,([CEL])$', full[k_] or '')
+                    m2_ = re.match(r'^\tld\t(\([^)]*\)),A$', full[k_ + 1] or '')
+                    if m_ and m2_ and not re.search(r'\b(XWA|WA|A|W)\b', m2_.group(1)) and reg_dead(full, k_ + 2, 'XWA'):
+                        nx_ = next((l for l in full[k_ + 2:] if l and not re.match(r'^L\d+:$', l)), '\tret')
+                        if not fa or nx_.startswith('\tret') or re.match(r'^\tld\t(A|WA|XWA),', nx_) and \
+                                not re.search(r',.*\b(A|W|WA|XWA)\b', nx_):
+                            full[k_:k_ + 2] = ['\tld\t%s,%s' % (m2_.group(1), m_.group(1))]
+                    k_ += 1
+            if MUL_POW2_SHIFT:                             # no mul(s) by 2^k in the oracle: a shift (or ld HL,R / add
+                k_ = 0                                     # HL,R for 2 into HL; rstmt rs_1_00_12_7, rs_2_08_03_2)
+                while k_ < len(full):
+                    m_ = re.match(r'^\t(muls?)\tX(WA|BC|DE|HL),0x([0-9a-f]+)$', full[k_] or '')
+                    v_ = int(m_.group(3), 16) if m_ else 0
+                    if m_ and v_ >= 2 and v_ & (v_ - 1) == 0:
+                        R_, sh_ = m_.group(2), v_.bit_length() - 1
+                        mn_ = 'sla' if m_.group(1) == 'muls' else 'sll'
+                        nx_ = full[k_ + 1] if k_ + 1 < len(full) else ''
+                        if nx_ == '\tld\tHL,%s' % R_ and R_ != 'HL' and sh_ == 1:
+                            full[k_:k_ + 2] = ['\tld\tHL,%s' % R_, '\tadd\tHL,%s' % R_]
+                        elif nx_ == '\tld\tHL,%s' % R_ and R_ != 'HL' and opt == 'none':
+                            full[k_:k_ + 2] = ['\tld\tHL,%s' % R_, '\t%s\t%s,HL' % (mn_, hx(sh_))]
+                        else:
+                            full[k_] = '\t%s\t%s,%s' % (mn_, hx(sh_), R_)
+                    k_ += 1
+            if PTR_RELOAD_REUSE and opt != 'none':         # -O: ld XR,(g) / ld XS,(g) / op ..,(XS+K) -> the op reads XR
+                k_ = 0                                     # (the -O listings never load one global into two registers
+                while k_ < len(full) - 2:                  # back to back; none and -Xr do it 104 times each)
+                    m1_ = re.match(r'^\tld\t(X(?:WA|BC|DE|HL|IX|IY|IZ)),(\(_\w+(?: \+ 0x[0-9a-f]+)?\))$', full[k_] or '')
+                    m2_ = re.match(r'^\tld\t(XWA|XBC|XDE),(\(_\w+(?: \+ 0x[0-9a-f]+)?\))$', full[k_ + 1] or '')
+                    if m1_ and m2_ and m1_.group(2) == m2_.group(2) and m1_.group(1) != m2_.group(1):
+                        XR_, XS_ = m1_.group(1), m2_.group(1); l3_ = full[k_ + 2] or ''
+                        m3_ = re.match(r'^\t(\w+)\t([^,]*)(?:,(.*))?$', l3_)
+                        parts_ = REG_PARTS[XS_]
+                        if m3_ and len(re.findall(r'\(%s[+)]' % XS_, l3_)) == 1:
+                            rest_ = re.sub(r'\(%s([+)])' % XS_, '', l3_)
+                            dst_ = m3_.group(2)
+                            kills_ = m3_.group(1) in ('ld', 'lda') and dst_ in parts_
+                            other_ = [p for p in re.findall(r'\b(\w+)\b', rest_.split('\t', 2)[-1]) if p in parts_ and p != dst_]
+                            nxr_ = next((l for l in full[k_ + 3:] if l and re.search(r'\b(%s)\b' % '|'.join(REG_PARTS.get(XR_, (XR_,))), l)), '')
+                            if not other_ and (kills_ or reg_dead(full, k_ + 3, XS_)) and re.match(r'^\t\w+\t\(%s[+)]' % XR_, nxr_) and \
+                                    not re.search(r'\b(%s)\b' % '|'.join(REG_PARTS.get(XR_, (XR_,))), dst_ if kills_ is False else ''):
+                                m4_ = re.search(r'\(%s\+(0x[0-9a-f]+)\)' % XS_, l3_)
+                                m5_ = re.match(r'^\t\w+\t\(%s\+(0x[0-9a-f]+)\)' % XR_, nxr_)
+                                if m4_ and m5_ and m4_.group(1) == m5_.group(1):   # the member read and written: its address once
+                                    j_ = full.index(nxr_, k_ + 3)
+                                    full[j_] = nxr_.replace('(%s+%s)' % (XR_, m5_.group(1)), '(%s)' % XR_, 1)
+                                    full[k_ + 2] = l3_.replace('(%s+%s)' % (XS_, m4_.group(1)), '(%s)' % XR_)
+                                    full[k_] = '\tld\t%s,%s' % (XS_, m1_.group(2)); full[k_ + 1] = '\tlda\t%s,%s+%s' % (XR_, XS_, m4_.group(1))
+                                else:
+                                    full[k_ + 2] = re.sub(r'\(%s([+)])' % XS_, r'(%s\1' % XR_, l3_); full[k_ + 1] = None
+                    k_ += 1
+                full = [l for l in full if l is not None]
+            if ELEM_BASE_XWA and opt != 'none':            # -O: an element into A / WA / XWA at a register index: the
+                def wa_free_(k0):                          # base in XWA (lda XWA,_g / ld A,(XWA+DE); -O listings 471
+                    for l in full[k0:]:                    # XWA bases at a register index, 16 XBC)
+                        if not l or re.match(r'^L\d+:$', l): return False
+                        if l.startswith('\tret'): return True
+                        if l.startswith('\tcal\t') or l.startswith('\tj'): return not fa and l.startswith('\tcal\t')
+                        if not re.search(r'\b(W|WA|XWA|QWA)\b', l): continue
+                        if re.match(r'^\t(exts|extz)\tWA$', l): return True
+                        m9_ = re.match(r'^\t(ld|lda)\t(WA|XWA),(.*)$', l)
+                        return bool(m9_) and not re.search(r'\b(A|W|WA|XWA|QWA)\b', m9_.group(3))
+                    return True
+                for k_ in range(len(full) - 1):
+                    m_ = re.match(r'^\tlda\tXBC,(_\w+(?: \+ 0x[0-9a-f]+)?)$', full[k_] or '')
+                    m2_ = re.match(r'^\tld\t(A|WA|XWA),\(XBC\+(DE|E|D|HL|L|H|IX|IY|IZ|QIZH)\)$', full[k_ + 1] or '')
+                    if m_ and m2_ and reg_dead(full, k_ + 2, 'XBC') and (m2_.group(1) != 'A' or wa_free_(k_ + 2)):
+                        full[k_] = '\tlda\tXWA,%s' % m_.group(1)
+                        full[k_ + 1] = '\tld\t%s,(XWA+%s)' % (m2_.group(1), m2_.group(2))
             if QIZH_DIRECT:                                # ld A,C / ld QIZH,A -> ld QIZH,C where XWA is dead after (no
                 k_ = 0                                     # oracle listing at any set has ld A,C|E|L then ld QIZH,A;
                 while k_ < len(full) - 1:                  # random .r3_00_09 -O3 -XS -Xr: sll 0x4,C / ld QIZH,C)

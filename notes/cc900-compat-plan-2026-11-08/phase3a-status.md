@@ -3479,6 +3479,21 @@ the library's `_fgets` crash and rejected (it then wrote an undefined label; res
 rejected/break_label_str.md).  rstmt and random unchanged.  Ledger up 30 rows by 1,272, down 0; library 186/248,
 pairs 223, semcheck 17 with the same verdicts.
 
+**Batch 319 (2026-11-15): nine rules from two subagent lanes.** Two subagents now look for code-generation rules for
+the random corpora on private copies of the model, each delivering a patch script with oracle counts and a
+per-function loss check (research-scratch tabulation/lanes-2026-11-15: lane_o3 for -O3 -XS / -O3 -XS -Xr, lane_none
+for none / -Xr; RULES.md in each).  From the -O lane: SWITCH_END_DROP (a switch with a default and no conditional
+jump to its end drops the unreferenced end label at -O), BYTE_STORE_DIRECT (-O: `ld A,C|E|L / ld (m),A` -> `ld
+(m),R`; the -O listings have 2,090 direct stores and no pair), MUL_POW2_SHIFT (no listing multiplies by a power of
+two: shifts, or `ld HL,R / add HL,R` for *2 into HL), PTR_RELOAD_REUSE (-O never loads one pointer into two registers
+back to back), STORE_HL_DIRECT_O3XR, ELEM_BASE_XWA (an element read at a register index takes its base in XWA when
+it is free: 191 / 280 against 6 / 10).  From the none / -Xr lane: CPB_ELEM_K (`cpb (XR+R),k` for a char compared
+with a constant before a branch), LOCAL_TEST_REG (an int local read once by the next if test stays in WA),
+XR_CHAR_EXT_WA (-Xr: a char register parameter widened for HL goes through WA when WA is free).  The none lane's own
+MUL_POW2_SHIFT overlapped the -O lane's and was left out.  Random none 216 -> 217, -O3 -XS 113 -> 114, -O3 -XS -Xr 99
+-> 101; rstmt +9 / +15 / +13 / +26 at none / -O3 -XS / -Xr / -O3 -XS -Xr; no function lost at any set.  Ledger up 8
+rows by 67, down 0; library 186/248, pairs 223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
