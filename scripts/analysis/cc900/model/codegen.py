@@ -164,6 +164,13 @@ class Fn:
             m_ = re.match(r'^(.*),0x([0-9a-f]+)$', args)   # an immediate store is masked to its width (r1_08_15 wrote
             if m_ and len(m_.group(2)) > (4 if op == 'ldw' else 2):   # ldw ..,0xffffff00)
                 args = '%s,%s' % (m_.group(1), hx(int(m_.group(2), 16) & (0xffff if op == 'ldw' else 0xff)))
+        if HELPER_HL_GUARD and op == 'cal' and args is not None and args.startswith('C9H_') and \
+                getattr(s, 'guard_on', False) and getattr(s, 'leaf_planned', False):   # a long helper returns in XHL:
+            for d in s.f.decls:                            # a leaf-planned local kept in HL that is read later would be lost
+                if d.kind == 'local' and getattr(d, 'reg', None) == 'HL' and d not in getattr(s, 'dead', ()) and \
+                        not assigns_decl(getattr(s, 'cur_stmt', None), d) and uses_after_stmt(s, d):
+                    raise Unsupported('a long helper over the local %s in HL' % d.name)   # (random -O3 -XS -Xr
+                                                           # .r1_03_02, wrong code once rule 05 compiled it)
         if LIVE_PARAM_GUARD and (s.adecl or LIVE_LOCAL_GUARD) and getattr(s, 'guard_on', False) and args is not None and \
                 getattr(s, 'u1_i', None) is None and not getattr(s, 'u1x', None) and not getattr(s, 'cl_active', None) \
                 and not getattr(s, 'l2', None) and not getattr(s, 'u1_inv', None):   # (the loop allocators keep their
@@ -932,7 +939,8 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 if a.op == '-': F.emit('inc', '0x1,%s' % R)
             else: F.emit('neg' if a.op == '-' else 'cpl', R)
             F.lines.append(lelse + ':'); F.lines.append(lend + ':'); return fam
-    if e.k == 'cond' and F.opt and not getattr(F, 'cw_plain_cond', False):   # (a compare operand keeps the plain form)
+    if e.k == 'cond' and F.opt and not getattr(F, 'cw_plain_cond', False) and \
+            id(e) not in getattr(F, 'tern_plain_ids', ()):  # (a compare operand keeps the plain form)
         c, a, b = strip(e.c), strip(e.a), strip(e.b)
         truth = False
         if TERN_TRUTH_PRE and c.k == 'load' and strip(c.e).k == 'var' and c.ty.kind == 'int' and c.ty.size == 2:
@@ -998,7 +1006,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 if cc in (True, False): raise Unsupported('constant ?: condition')
                 if TERN_PRE_GUARD and clobbers(F.lines[n_cmp:], '(%s)' % FAM[fam][4]):
                     del F.lines[n_pre:]                    # (-O3 -XS -Xr r1_05_05: the condition reads gla[t] through
-                    raise Unsupported('?: arm loaded over its condition')   # XWA: the preloaded arm was wrong code)
+                    if TERN_PLAIN_ON_CLOBBER:              # XWA: the preloaded arm was wrong code)
+                        F.tern_plain_ids = getattr(F, 'tern_plain_ids', set()) | {id(e)}   # the plain form (rstmt
+                        return gen(F, e, fam, size, then_ret, store)                      # rs_3_03_08_4)
+                    raise Unsupported('?: arm loaded over its condition')
             jcc = INV[cc] if not pre_then else cc
             if narrow_ok:                                  # _strncmp: ... j eq,L5 / ... / ld L,A / L5: exts HL
                 F.emit('j', '%s,%s' % (jcc, lend))
@@ -1266,6 +1277,7 @@ def ev_addr_kind(F, x):
     x = ev_uncast(x)
     if x.k != 'load': return None
     v = strip(x.e)
+    if ev_ptr_const(F, v) is not None: return 'P'
     if v.k == 'deref' or (v.k == 'member' and v.arrow):
         pv = strip(v.e if v.k == 'deref' else v.base)
         if pv.k == 'load' and strip(pv.e).k == 'var' and not getattr(strip(pv.e).decl, 'reg', None) and \
@@ -1290,10 +1302,38 @@ def ev_left_kind(F, x):
     if x.k == 'bin' and x.op in ('<<', '>>') and fold(x.r).k != 'const': return 'wa'
     return 'idx' if ev_addr_kind(F, x) == 'X' else 'plain'
 
+CMP_PTR_CONST = True                                      # see ev_ptr_const
+CMP_SWAP_TEXT_ORDER = True                                # see cmp_order_
+
+def ev_ptr_const(F, v):
+    """inside cmp_order only: an element at a constant index of a pointer in memory, or of an array member through
+    one (gpi[1], gps->a[5]): (the pointer's load, the byte offset), the address kind 'P' with its offset (rstmt
+    rs_1_06_04_5: gia[0] <= gps->a[5] -> ld XBC,(_gps) / ld WA,(_gia) / cp WA,(XBC+0x18); rs_3_05_09_1: gpi[1] ==
+    gps->a[4] -> ld XBC,(_gpi) / ld XWA,(_gps) / ld WA,(XWA+0x16) / cp WA,(XBC+0x2)); else None"""
+    if not (CMP_PTR_CONST and getattr(F, 'cmp_order_on', False)) or v.k != 'index': return None
+    k_ = fold(v.idx)
+    if k_.k != 'const' or k_.value is None or k_.value < 0 or v.ty is None or v.ty.size not in (1, 2, 4): return None
+    b = strip(v.base)
+    while b.k in ('decay', 'noop') or (b.k == 'cast' and b.kind in ('NoOp', 'BitCast', 'ArrayToPointerDecay')):
+        if getattr(b, 'e', None) is None: break
+        b = strip(b.e)
+    off = k_.value * v.ty.size
+    if b.k == 'member' and b.arrow:
+        pv = strip(b.base); off += member_offset(b)
+    elif b.k == 'load' and b.ty is not None and b.ty.is_ptr(): pv = b
+    else: return None
+    if pv.k == 'load' and strip(pv.e).k == 'var' and not getattr(strip(pv.e).decl, 'reg', None) and \
+            (mem_operand(F, pv) or '').startswith('('): return (pv, off)
+    return None
+
 def ev_address(F, x, P, I, B):
     """emit the address setup of an addressed operand (ev_addr_kind) with the pointer in P, or the index in I and
     the array in B; return the operand string"""
     x = ev_uncast(x); v = strip(x.e)
+    pc_ = ev_ptr_const(F, v)
+    if pc_ is not None:
+        F.emit('ld', '%s,%s' % (P, mem_operand(F, pc_[0])))
+        return '(%s+%s)' % (P, hx(pc_[1])) if pc_[1] else '(%s)' % P
     if v.k in ('deref', 'member'):
         pv = strip(v.e if v.k == 'deref' else v.base)
         F.emit('ld', '%s,%s' % (P, mem_operand(F, pv)))
@@ -1423,6 +1463,7 @@ HALVES_BY_USE = True                                      # see plan_homes (rstm
 Q_COUNTER_SUB = True                                      # see compile_unit (rstmt rs_1_00_09_2)
 DOUBLE_ADD = True                                         # see compile_unit (library _atan)
 MULS_NO_EXTS = True                                       # see compile_unit (library _atan)
+FP_SLOT_DECL_ORDER = True                                 # see fp_plan_frame (library _sqrt)
 OPA_NO_HOMES = True                                       # see plan_homes: a double op= in XIZ leaves no register home
 OPA_NO_HOMES_ELEM = False
 SLOT_LOCAL_SIGNED_IDX = True                              # see gen_load_mem: guca[t], t a signed local in a slot
@@ -4528,6 +4569,11 @@ def cmp_wide(F, e, l, r, size, op, cc):
     return None
 
 def cmp_order(F, e, l, r, size, op, cc, swapped=False):
+    sv_ = getattr(F, 'cmp_order_on', False); F.cmp_order_on = True   # (CMP_PTR_CONST's kind applies in here only)
+    try: return cmp_order_(F, e, l, r, size, op, cc, swapped)
+    finally: F.cmp_order_on = sv_
+
+def cmp_order_(F, e, l, r, size, op, cc, swapped=False):
     """the operands of a 16-bit compare (corpus/probes/cmpord.c, run 2026-11-10-12-micro-cmpord; the order of the
     operand-order rule): a computed right goes to WA and a memory left stays in memory (cp (_gi),WA for an ordered
     compare, cp WA,(_gi) for == / !=); a computed left goes to WA against a memory right (cp WA,(_hi)); two computed
@@ -4580,8 +4626,12 @@ def cmp_order(F, e, l, r, size, op, cc, swapped=False):
     if lk == 'P' and 'LA' not in plan: plan['LA'] = ('X' + pick(), None, None)   # ci_l_PB: XBC behind the right's WA
     # emission: addresses in textual order, the right value, the left value or load, the compare
     lm = rm = None
-    if 'LA' in plan: lm = ev_address(F, l, *plan['LA'])
-    if 'RA' in plan: rm = ev_address(F, r, *plan['RA'])
+    if CMP_SWAP_TEXT_ORDER and swapped and 'LA' in plan and 'RA' in plan:   # (swapped ==: the source's left
+        rm = ev_address(F, r, *plan['RA'])                 # operand is r here, and its address still comes first:
+        lm = ev_address(F, l, *plan['LA'])                 # rstmt rs_3_05_09_1, gpi[1] == gps->a[4] -> ld XBC,(_gpi) /
+    else:                                                  # ld XWA,(_gps) / ld WA,(XWA+0x16) / cp WA,(XBC+0x2))
+        if 'LA' in plan: lm = ev_address(F, l, *plan['LA'])
+        if 'RA' in plan: rm = ev_address(F, r, *plan['RA'])
     n0 = len(F.lines)
     if rv:
         f_ = gen(F, r, plan['R'], size)
@@ -7294,6 +7344,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+TERN_PLAIN_ON_CLOBBER = True                             # see gen's -O ?: preload
+COND_ASSIGN = True                                       # see gen_cond_false
 SP_MUL_THROUGH = True                                    # see sp_value_kind
 DEAD_COND_INIT_LOAD = True                               # see drop_write_only, UNUSED_LOCAL_INIT
 LDA_SAME_BASE_USE = True                                 # see lda_run_base
@@ -7315,6 +7367,7 @@ BYTE_STORE_DIRECT_NOOPT = True                                 # see compile_uni
 CP_HL_SCC = True                                         # see compile_unit
 CONST_STORE_IMM = True                                   # see compile_unit
 CHAIN_BC_ADDR_WA = True                                  # see gen_assign (operator = through BC)
+CHAIN_ELEM_BASE_XWA = True                               # see gen_assign_value: rule 05
 GUARD_ELEM_REGS = True                                   # see compile_unit
 GUARD_DIV_LONG = True                                    # see guard_div_plan / gen_long_helper
 GUARD_LONG_FIRED = [False]                               # (set by gen_long_helper, read by compile_unit)
@@ -8316,6 +8369,40 @@ def copy_propagate(f):
     decl_init = []
     walk(f.body, lambda n, dep: decl_init.append(n) if n.k == 'decl' and n.init is not None else None)
     inited = {c.var for c in decl_init}
+    if INIT_CONST_PROP:                                    # int t = 2; (never written again) -> t is 2 (random r1_06_12)
+        for c_ in decl_init:
+            d_ = c_.var
+            if d_.kind != 'local' or d_ in assigns or d_ in writes or d_ in addr or d_.ty.kind != 'int' or \
+                    sum(1 for x_ in decl_init if x_.var is d_) != 1:
+                continue
+            k_ = fold(narrow(c_.init, d_.ty.size))
+            if k_.k == 'const' and k_.value is not None and d_.ty.size == 1 and not d_.ty.signed and k_.value & 0x80:
+                continue                                   # (random r4_00_10: unsigned char u = 211; the oracle's
+                                                           # gs.a[u] reads _gs + 0xffffffb4, the byte sign-extended)
+            if k_.k == 'const' and k_.value is not None:
+                mk_ = lambda k_=k_, d_=d_: N('const', value=k_.value, ty=d_.ty)
+            else:                                          # unsigned char u = b; (b a parameter never written) -> b
+                src_ = strip(c_.init)                      # (random r3_06_05: ld A,(XSP+0x8) is b's own slot)
+                while src_.k == 'cast' and src_.kind == 'NoOp': src_ = strip(src_.e)
+                if not (INIT_COPY_PROP and src_.k == 'load' and strip(src_.e).k == 'var'): continue
+                p_ = strip(src_.e).decl
+                if p_.kind != 'param' or p_ in writes or p_ in addr or p_ in assigns or p_.ty.size != d_.ty.size or \
+                        p_.ty.kind != d_.ty.kind or p_.ty.signed != d_.ty.signed:
+                    continue
+                mk_ = lambda p_=p_: N('load', e=N('var', decl=p_, ty=p_.ty), ty=p_.ty)
+            def rw_(node, d_=d_, mk_=mk_):
+                for key, val in list(node.__dict__.items()):
+                    items = val if isinstance(val, list) else [val]
+                    for i, x in enumerate(items):
+                        if not hasattr(x, 'k'): continue
+                        if x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl is d_:
+                            new = mk_()
+                            if isinstance(val, list): val[i] = new
+                            else: setattr(node, key, new)
+                            continue
+                        rw_(x)
+            rw_(f.body)
+            c_.init = None
     for d, al in assigns.items():
         if d.kind != 'local' or len(al) != 1 or d in writes or d in addr or d in inited or d.ty.kind not in ('int', 'ptr'):
             continue
@@ -8434,6 +8521,53 @@ def and_truth(F, e, fam):
 
 HIGHB8 = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}
 
+def chain_elem_base_xwa(F, e, lv, rv, n0):
+    """(rule 05) -O cdecl: g[c] = v inside a chain, g a global char array, c an unsigned int parameter in its stack
+    slot, v reading g at a constant index (and no other array, call or helper): ld BC,(c) / extz XBC / lda XWA,_g /
+    ld XDE,XWA / add XDE,XBC / v in A with g[K] read as (XWA+K) before WA is written / ld (XDE),A; 'WA', or None with
+    the lines restored"""
+    lx = strip(lv)
+    if lx.k != 'index' or lx.ty is None or lx.ty.size != 1: return None
+    b = strip(lx.base)
+    while b.k in ('decay', 'cast', 'noop') and getattr(b, 'e', None) is not None: b = strip(b.e)
+    if not (b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array'): return None
+    g = b.decl.name
+    ix = uncast_int(lx.idx)
+    if not (ix.k == 'load' and strip(ix.e).k == 'var' and strip(ix.e).decl.kind == 'param' and
+            not getattr(strip(ix.e).decl, 'reg', None) and ix.ty is not None and ix.ty.kind == 'int' and
+            ix.ty.size == 2 and not ix.ty.signed): return None
+    im = mem_operand(F, ix)
+    if not (isinstance(im, str) and im.startswith('(XSP+')): return None
+    if nodes_in(rv, 'call') or has_helper_call(rv) or fpgen.is_fp_op(rv): return None
+    if {'WA', 'BC', 'DE'} & live_regs(F) or held_after(F, 'WA', e): return None
+    ks = []
+    def v_(n, d):
+        if n.k == 'index':
+            bb = strip(n.base)
+            while bb.k in ('decay', 'cast', 'noop') and getattr(bb, 'e', None) is not None: bb = strip(bb.e)
+            ks.append((bb.k == 'var' and getattr(bb, 'decl', None) is not None and bb.decl.name == g, fold(n.idx).k == 'const'))
+    walk(rv, v_)
+    if not ks or not all(a and c for a, c in ks): return None
+    keep = F.lines[n0:]
+    del F.lines[n0:]
+    F.emit('ld', 'BC,%s' % im); F.emit('extz', 'XBC'); F.emit('lda', 'XWA,_%s' % g)
+    F.emit('ld', 'XDE,XWA'); F.emit('add', 'XDE,XBC')
+    n1 = len(F.lines)
+    try:
+        f2 = gen(F, rv, 'WA', 1)
+    except Unsupported:
+        f2 = None
+    seg = F.lines[n1:]
+    pat = re.compile(r'\(_%s( \+ (0x[0-9a-f]+))?\)' % re.escape(g))
+    ok = f2 == 'WA' and seg and pat.search(seg[0] or '') and not any(pat.search(l or '') for l in seg[1:]) and \
+        re.match(r'^\t\w+\tA,', seg[0]) and not any(re.search(r'\bX?DE\b|\b[DE]\b|\bQDE\b', l or '') for l in seg)
+    if not ok:
+        del F.lines[n0:]; F.lines.extend(keep); return None
+    F.lines[n1] = pat.sub(lambda m: '(XWA+%s)' % m.group(2) if m.group(2) else '(XWA)', seg[0])
+    F.emit('ld', '(XDE),A')
+    return 'WA'
+
+
 def gen_assign_value(F, e, fam, size, in_place=False):
     """an assignment used as a value (assign_expr.c): the value is built once in a register and stored, and the
     register is the expression's value.  A global, parameter or slot is stored directly (ld WA,(XSP+0x4) /
@@ -8522,6 +8656,9 @@ def gen_assign_value(F, e, fam, size, in_place=False):
                             for l_ in F.lines[n0_:]):   # (the value reads no part of the address: rstmt .rs_1_08_13_1)
                     raise Unsupported('operator = value over its address')   # ld (XDE+BC),XWA / ld (_gul),XWA)
                 F.emit('ld', '%s,%s' % (t, FAM['WA'][vs])); return 'WA'
+            if CHAIN_ELEM_BASE_XWA and F.opt and not F.adecl and vs == 1:
+                cx_ = chain_elem_base_xwa(F, e, lv, rv, nlv_)
+                if cx_ is not None: return cx_
             if 'XBC' in t or 'BC' in t.replace('XBC', ''): raise Unsupported('operator = through BC')
             V = 'BC'
             if CHAIN_STATIC_WA and True and re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t) and \
@@ -8635,6 +8772,20 @@ def gen_cond_false(F, c, target):
             F.emit('ret') if target == 'RET' else F.emit('j', target); return
         F.emit('ret', INV[cc]) if target == 'RET' else F.emit('j', '%s,%s' % (INV[cc], target))
         return
+    if COND_ASSIGN and c.k == 'bin' and c.op == '=' and c.ty is not None and c.ty.kind in ('int', 'ptr') and \
+            c.ty.size in (1, 2, 4) and not fpgen.is_fp(c.ty):   # if ((x = v)): the value's register tested (rstmt
+        rk_ = fold(narrow(c.r, c.ty.size))                 # rs_1_02_16_4: ld WA,(_gi3) / ld (_gi2),WA / cp WA,0x0)
+        if rk_.k == 'const' and rk_.value is not None:     # a constant: the store, no test (rs_3_07_02_1)
+            from frontend import N
+            gen_stmt(F, N('expr', e=c), False)
+            if not rk_.value & ((1 << (8 * c.ty.size)) - 1):
+                F.emit('ret') if target == 'RET' else F.emit('j', target); return None
+            return True                                    # (always true: no join label either)
+        fam = gen(F, c, 'WA', c.ty.size)
+        if fam not in FAM: raise Unsupported('condition bin = in %s' % fam)
+        R = FAM[fam][c.ty.size]
+        F.emit('or', '%s,%s' % (R, R)) if c.ty.size == 4 else F.emit('cp', '%s,0x0' % R)
+        jump(F, 'eq', target); return None
     if LX5 and getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and F.sd4['node'] == id(c) and lx5_emit(F, None, c):
         F.emit('or', 'XHL,XHL')                            # (lhx.c lxo_l_d_QPG: .. / cal C9H_divls / or XHL,XHL / ret eq)
         F.emit('ret', 'eq') if target == 'RET' else F.emit('j', 'eq,%s' % target); return None
@@ -11947,6 +12098,9 @@ CDECL_TAILCALL = True                              # -O: cal _f / ret (nothing b
 EXIT_PLACEMENT = True                              # -O: an exit block nothing falls into moves (switch.c sw_evtab)
 CJ_TRAMPOLINES = True                              # -O: arms the tail merge empties go (switch.c sw_ev)
 RET_TAILS = True                                   # -O cross jumping of `cal X / ret` tails (switch.c sw_ret)
+INIT_CONST_PROP = True                                    # see copy_propagate (random r1_06_12)
+INIT_COPY_PROP = True                                     # see copy_propagate (random r3_06_05)
+HELPER_HL_GUARD = True                                    # see Function.emit (random .r1_03_02)
 CONST_PROP = True                                  # -O: a local assigned one constant is that constant (rc_loop1)
 COPY_PROP = True                                   # -O copy propagation (assign_expr.c, copy_propagate)
 UNPROMOTED_SIGN = True
@@ -16662,7 +16816,11 @@ def fp_plan_frame(F):
     top = size - fret
     lp_ = 0
     for d in low: d.slot = lp_; lp_ += (d.ty.size + 1) // 2 * 2
-    for d in ints + locs:
+    order_ = ints + locs
+    dl_ = [d for d in f.decls if d.kind == 'local']
+    if FP_SLOT_DECL_ORDER and all(d in dl_ for d in order_):   # declaration order, ints and doubles together (_sqrt:
+        order_ = sorted(order_, key=dl_.index)             # f, y, n; not with adecl parameter slots, ad_ifi)
+    for d in order_:
         top -= (d.ty.size + 1) // 2 * 2; d.slot = top
     F.ftemp_top = top; F.ftemp_used = 0; F.fret_slot = size - (fret - fargs) if fret - fargs else None
     F.farg_slot = size - fret if fargs else None
@@ -17263,7 +17421,8 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
-    if not plan_leaf(F): regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_param_cache(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
+    F.leaf_planned = plan_leaf(F)
+    if not F.leaf_planned: regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_param_cache(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)

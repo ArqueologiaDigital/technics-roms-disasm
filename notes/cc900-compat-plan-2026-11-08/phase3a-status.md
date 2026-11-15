@@ -3563,6 +3563,21 @@ WA,Qrr / cp WA,0x0` -> `sub Qrr,0x1`), DOUBLE_ADD (`sla 0x1,R` -> `add R,R` unle
 rstmt +6 / +9 / +4 / +6 at none / -O3 -XS / -Xr / -O3 -XS -Xr; no function lost at any set; library 189 (`_atan`
 115 -> 83 lines off).  Ledger up 5 rows by 26, down 0; pairs 223, semcheck 17 with the same verdicts.
 
+**Batch 326 (2026-11-15): constants and parameters propagated into locals at -O; seven lane rules.** lane_locals:
+INIT_CONST_PROP / INIT_COPY_PROP (-O: a local initialised to a constant, or from a parameter, and never written
+again becomes that constant or parameter; semcheck drove two guards -- no unsigned char constant >= 0x80, which the
+oracle sign-extends as an index in r4_00_10, and HELPER_HL_GUARD, which refuses a long helper called while a
+leaf-planned local in HL is still to be read, after .r1_03_02 came out wrong), FP_SLOT_DECL_ORDER (in functions with
+doubles, locals' frame slots in declaration order, ints and doubles together).  lane_o3: COND_ASSIGN (`if ((x = v))`
+compiles as the assignment and a test of its register; all "condition bin =" refusals now compile),
+TERN_PLAIN_ON_CLOBBER (-O: a ?: whose condition would overwrite a preloaded arm is written test-first instead of
+refused).  lane_st: CHAIN_ELEM_BASE_XWA (`guc = guca[c] = f(guca[K])`, -O cdecl).  lane_cmp: CMP_PTR_CONST and
+CMP_SWAP_TEXT_ORDER (a constant-index element through a pointer is an addressed compare operand).  Random -O3 -XS 115
+-> 120, -O3 -XS -Xr 102 -> 106; rstmt +6 / +11 / +5 / +5; fpp10 +2 at none and -O3 -XS; semcheck 17 -> 11 (the six
+fpp10 s01 / s04 / s10 wrong-code verdicts at none and -O3 -XS are gone); no function lost at any set.  lane_locals'
+LOOP_KILLED_LOCAL was left out (no gain, `_fgets` one line farther).  Ledger up 12 rows by 40, down 0; library
+189/248, pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
