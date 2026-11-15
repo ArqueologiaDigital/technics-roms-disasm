@@ -10354,7 +10354,7 @@ def gen_stmt(F, s, last):
             rc_ = fold(bv_.r)                                                  # ld XBC,(_gs + 0x4) / sub XBC,(_gl2) /
             F.emit(SIMPLE_OPS[bv_.op], '%s,%s' % (FAM['BC'][size], hx(rc_.value & ((1 << (8 * size)) - 1)) if rc_.k == 'const' else mem_operand(F, bv_.r)))
             F.emit('ld', '(XWA+%s),%s' % (hx(pk_[2]), FAM['BC'][size])); return   # ld (XWA+0x4),XBC)
-        elif REGVAL_STORE_XWA and not F.opt and not F.adecl and size in (2, 4) and strip(s.e.r).k == 'load' and \
+        elif REGVAL_STORE_XWA and not F.opt and (not F.adecl or SWEEP_XR_LIFTS) and size in (2, 4) and strip(s.e.r).k == 'load' and \
                 regvar_of(strip(s.e.r).e) is not None and regvar_of(strip(s.e.r).e).reg in ('BC', 'DE', 'HL') and \
                 getattr(regvar_of(strip(s.e.r).e), 'regtemp', False) and regvar_of(strip(s.e.r).e).ty.size == size and \
                 (sp_lvalue_kind(F, lv) or ('',))[0] in ('P', 'D') and 'WA' not in live_regs(F):
@@ -10489,6 +10489,7 @@ REGVAR_HL_POP = True                                      # see regvar_stmt
 POP_LAZY_DECL = True                                      # see later_call_absorbs
 SLOT_INIT_KCOMM = True                                    # see slot_init: K op m with op commutative
 SWEEP_OPT_LIFTS = True                                    # batch 232: LH_ELEM0 under -O (random-scored sweep)
+SWEEP_ALL_LIFTS = True                                    # batch 233: SLOT_INIT_FORMS at every set (random-scored sweep)
 SWEEP_XR_LIFTS = True                                     # batch 232: four rules under -Xr (random-scored sweep)
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
@@ -14330,7 +14331,7 @@ def slot_init(F, d, init):
     from frontend import N
     S = mem_operand(F, N('load', e=N('var', decl=d, ty=d.ty), ty=d.ty))
     r0 = strip(init); size = d.ty.size
-    if SLOT_INIT_FORMS and not F.opt and not F.adecl and getattr(d, 'lh_slot', False) and r0.k == 'bin' and \
+    if SLOT_INIT_FORMS and (not F.opt and not F.adecl or SWEEP_ALL_LIFTS) and getattr(d, 'lh_slot', False) and r0.k == 'bin' and \
             not ({'WA'} & set(live_regs(F))):              # (lsl.c, a local across a long helper; run 2026-11-13-16)
         rk_ = fold(r0.r)
         if size == 2 and r0.op in SIMPLE_OPS and not r0.ty.is_ptr() and rk_.k == 'const':
@@ -15261,7 +15262,7 @@ def regtemp_candidates(F):
         if not used: continue
         last = used[-1]
         if any(calls_in(x) for x in rest[:last]): continue      # a call in between: homes2's case
-        if LH_PLAIN_IZ and not F.opt and not F.adecl and not getattr(d, 'lh_slot', False) and \
+        if LH_PLAIN_IZ and not F.opt and (not F.adecl or SWEEP_XR_LIFTS) and not getattr(d, 'lh_slot', False) and \
                 any(plain_long_helper_stmt(x) for x in rest[:last]):
             continue                                       # a long helper of plain operands and target in between: homes2's
                                                            # case too (random r4_00_09: unsigned char t = ..; .. gs.l = gl %

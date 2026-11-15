@@ -2773,6 +2773,14 @@ three semcheck verdicts of the first gate came from those two. Ledger up 7 by 10
 96, both 96 / 96; random -O3 -XS -Xr +4, -Xr +1; rstmt -O3 -XS -Xr +3), down 0; pairs MATCH 223; semcheck 50. Random
 196 / 84 / 148 / 73; library 186 / 248 at -O3 -XS.
 
+**Batch 233 (2026-11-15): three combined `not F.opt and not F.adecl` gates lifted after a random-scored sweep.** The
+combined-gate sweep was re-run scored on the random corpora (research-scratch `gate/xrtry2r.sh`, results in
+`gate/xrtry-results-combined-*-random-2026-11-15.txt`). Three gates now apply beyond no options. REGVAL_STORE_XWA (a
+register temporary stored through a pointer, the pointer in XWA) and LH_PLAIN_IZ (no IZ home across a long helper of
+plain operands) hold under -Xr too. SLOT_INIT_FORMS (a slot local across a long helper initialised in its slot) holds at
+every set. Ledger up 8 (random -O3 -XS +1, -Xr +3, -O3 -XS -Xr +1; lsl.c +5 at three sets), down 0; pairs MATCH 223;
+semcheck 50. Random 196 / 85 / 151 / 74; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
