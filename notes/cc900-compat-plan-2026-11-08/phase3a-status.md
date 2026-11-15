@@ -3108,6 +3108,12 @@ stdiv3's `sd3_c_*_p_X*` rows at -O3 -XS, and the tree was restored before this v
 -O3 -XS -Xr 92 -> 124, stdiv -O3 -XS -Xr +8; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50
 unchanged.
 
+**Batch 277 (2026-11-15): the long division store planner runs under -Xr.** SD4_XR (`sd4_stmt` / `plan_sd4`): the
+planner for a long division stored to memory (probe stdiv2's forms) runs under -Xr as well; under -O it changes nothing
+and stays off. It now declines `x / x` and `x % x` at every set, which the older paths fold (rstmt .rs_3_03_11_1:
+`if (gl != 0) gs.l = gl % gl` -> `ld XWA,0x0 / ld (_gs + 0x4),XWA`). stdiv2 -Xr 640 -> 684, lhx -Xr +24, stv -Xr +4,
+rstmt -Xr +8 and none +2, random1 -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

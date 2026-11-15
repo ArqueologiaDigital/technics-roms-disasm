@@ -2560,7 +2560,7 @@ def sd4_need(L, a, b):
 
 def sd4_stmt(F, lv, rv):
     """(L kind, dividend kind, divisor kind, need) of a long division store, or None"""
-    if not (SD_MORE and SD_LONG) or F.adecl or F.opt: return None
+    if not (SD_MORE and SD_LONG) or (F.adecl and not SD4_XR) or F.opt: return None
     x = strip(rv)
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
     l0 = strip(lv)
@@ -2572,6 +2572,7 @@ def sd4_stmt(F, lv, rv):
     a, b = sd4_kind(F, x.l), sd4_kind(F, x.r)
     if a is None or b is None: return None
     if b[0] == 'K' and (b[1] & 0xffffffff) in (0, 1): return None
+    if SD4_XR and a == b: return None                      # (x % x, x / x: the older paths fold them; rstmt .rs_3_03_11_1)
     need = sd4_need(L, a, b)
     if SD_ELEM_EARLY and L[0] == 'M' and l0.k == 'index' and fold(l0.idx).k == 'const' and \
             re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', L[1] or ''):   # a constant element of a global array keeps its
@@ -2590,7 +2591,7 @@ def plan_sd4(F):
     """before the frame: the one long division store of a function (sd4_need) gets its register saved and its
     temporaries"""
     F.sd4 = None
-    if not (SD_MORE and SD_LONG) or F.xiz_vars or F.adecl or F.opt: return
+    if not (SD_MORE and SD_LONG) or F.xiz_vars or (F.adecl and not SD4_XR) or F.opt: return
     f = F.f
     if fpgen.uses_fp(f): return                              # (the double frame has its own layout: random r3_01_08)
     if any(getattr(d, 'reg', None) in IZ_HOMES for d in list(f.params) + list(f.decls)): return
@@ -7066,6 +7067,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+SD4_XR = True                                            # see sd4_stmt / plan_sd4: under -Xr too
 CHAR_CHAIN_VIA_A_OPT = True                              # see gen: CHAR_CHAIN_VIA_A under -O too
 TERN_TRUTH_PLAIN = True                                  # see gen's -O ?:
 STORE_HL_DIRECT = True                                   # see compile_unit
