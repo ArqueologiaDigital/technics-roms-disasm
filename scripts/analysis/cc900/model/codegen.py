@@ -7161,6 +7161,7 @@ OVERRIDE_RAW = True                                      # see compile_unit
 LHIDXW_WHOLE = True                                      # see compile_unit
 LOC0W_WHOLE = True                                       # see compile_unit
 STVXW_WHOLE = True                                       # see compile_unit
+EXT_IN_PLACE_ARG = True                                  # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17215,6 +17216,14 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
                         full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
                                                            # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if EXT_IN_PLACE_ARG and opt != 'none' and alt_ is None:   # -O: a char in C / E / L widened for a call
+                for k_ in range(len(full) - 2):            # that follows at once is widened where it is and copied: ld
+                    m_ = re.match(r'^\tld\tA,([CEL])$', full[k_] or '')   # A,C / extz WA / cal -> extz BC / ld WA,BC
+                    m2_ = re.match(r'^\t(exts|extz)\tWA$', full[k_ + 1] or '')   # (random .r4_01_00; the -O3 -XS -Xr
+                    if not (m_ and m2_ and re.match(r'^\t(cal|j)\t[._]\w+$', full[k_ + 2] or '')): continue   # listings:
+                    r16_ = {'C': 'BC', 'E': 'DE', 'L': 'HL'}[m_.group(1)]   # 73 such before a call or a tail jump, and
+                    full[k_:k_ + 2] = ['\t%s\t%s' % (m2_.group(1), r16_), '\tld\tWA,%s' % r16_]   # ld A,r / ext WA 65,
+                                                           # each before arithmetic in WA)
             if SCC_HL_VIA_WA and opt == 'none' and alt_ is None:   # without -O a compare's truth value that an
                 for k_ in range(len(full) - 1):            # operation in HL reads next is set in WA and moved (random
                     m_ = re.match(r'^\tscc\t(\w+),HL$', full[k_] or '')   # r2_01_05: gia[7] & (gl >= ..) -> scc ge,WA

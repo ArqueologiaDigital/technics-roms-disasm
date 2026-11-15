@@ -3425,6 +3425,13 @@ defines HOME_ before a module's first import and removes a block that put the tr
 semcheck 40 -> 36: the four stvx sx_c_XE / sx_c_XP wrong-code verdicts are gone, the functions now exact.  rstmt and
 random unchanged.  Ledger up 16 rows by 868, down 0; library 186/248, pairs 223.
 
+**Batch 313 (2026-11-15): a char widened in place for a call.** EXT_IN_PLACE_ARG (-O, finished listing, not over an
+override): `ld A,C|E|L / exts|extz WA` right before a call or a tail jump is `exts|extz BC|DE|HL / ld WA,BC|DE|HL`
+(random .r4_01_00 and .r3_04_00 under -O3 -XS -Xr: a char in C or L passed as an int); the -O3 -XS -Xr listings
+have the in-place form 73 times, each before a call or a tail jump, and `ld A,r / ext WA` 65 times, each before
+arithmetic in WA.  Random -O3 -XS -Xr 95 -> 97, rstmt -O3 -XS -Xr +3; ledger up 3 rows by 5, down 0; library
+186/248, pairs 223, semcheck 36 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
