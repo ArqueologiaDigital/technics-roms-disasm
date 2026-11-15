@@ -3494,6 +3494,15 @@ MUL_POW2_SHIFT overlapped the -O lane's and was left out.  Random none 216 -> 21
 -> 101; rstmt +9 / +15 / +13 / +26 at none / -O3 -XS / -Xr / -O3 -XS -Xr; no function lost at any set.  Ledger up 8
 rows by 67, down 0; library 186/248, pairs 223, semcheck 17 with the same verdicts.
 
+**Batch 320 (2026-11-15): a continue in a rotated while loop goes to its test; the library's _fgets compiles.**
+CONT_TO_TEST: in a rotated `while` (-O, or a byte-compare test under -Xr), `continue` jumps to the loop's test label;
+`getc2()` used to make a fresh label that nothing placed.  With that, the break label of such a loop (a LazyLabel) is
+made with str() where a break jumps to it, and `Fn.emit`'s 'None' check takes only strings.  The 1997 library's
+`_fgets` (`if (..) { s++; continue; } s++; break;`) crashed with a TypeError; it now compiles, and semcheck finds its
+code correct, though not yet exact.  The same str() fix alone had been rejected earlier this day because `_fgets` then
+jumped to the unplaced continue label (research-scratch rejected/break_label_str.md, now marked as taken up).  rstmt
+and random unchanged; ledger up 0, down 0; library 186/248, pairs 223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

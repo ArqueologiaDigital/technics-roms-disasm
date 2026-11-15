@@ -82,7 +82,8 @@ class Fn:
                 p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
         if s.sret is not None: f.params = [s.sret] + [p for p in f.params if p is not s.sret]
     def emit(s, op, args=None):
-        if args is not None and 'None' in args: raise Unsupported('operand None in %s %s' % (op, args))   # (r4_07_06)
+        if isinstance(args, str) and 'None' in args: raise Unsupported('operand None in %s %s' % (op, args))   # (r4_07_06;
+                                                   # a loop's LazyLabel is not a string: _fgets's break crashed here)
         if op == 'ld' and args is not None and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ),[WABCDEHL]$', args):
             raise Unsupported('a byte into a word: ld %s' % args)   # (r2_02_05 -Xr: ld WA,A for a char index)
         if OR_BIT_SET and op in ('or', 'orb') and args is not None:   # an OR with one bit is set: random r2_05_08
@@ -7168,6 +7169,7 @@ ONCE_LOCAL_DIRECT = True                                 # see compile_unit
 LNRW_WHOLE = True                                        # see compile_unit
 HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
+CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 XR_CHAR_EXT_WA = True                                    # see compile_unit
 LOCAL_TEST_REG = True                                    # see local_test_k
@@ -10710,8 +10712,8 @@ def gen_stmt(F, s, last):
         if c.k == 'bin' and c.op in ('==', '!=') and strip(c.l).k == 'opassign':
             from frontend import N
             inv = N('bin', op='!=' if c.op == '==' else '==', l=c.l, r=c.r, ty=c.ty)
-            gen_cond_false(F, inv, F.loops[-1][0]); F.newulabel(); return
-        lab = F.newulabel(); gen_cond_true(F, c, F.loops[-1][0]); return
+            gen_cond_false(F, inv, str(F.loops[-1][0])); F.newulabel(); return
+        lab = F.newulabel(); gen_cond_true(F, c, str(F.loops[-1][0])); return
     if s.k == 'if' and s.els is None and not F.pending and not F.pushes and not F.xiz_vars and \
             flat(s.then) and flat(s.then)[0].k == 'return' and len(flat(s.then)) == 1 and (
             flat(s.then)[0].value is None or (strip(flat(s.then)[0].value).k == 'load' and regvar_of(strip(flat(s.then)[0].value).e)
@@ -10909,7 +10911,9 @@ def gen_stmt(F, s, last):
         if F.loops[-1][0] in getattr(F, 'switch_rets', set()):   # sw_jt6 under none: each case returns itself
             flush_pops(F); F.emit('ret'); return
         flush_pops(F)                                      # switch.c under O3XS: each arm's pops before its jump (cross-
-        F.emit('j', F.loops[-1][0]); return                # jumping then merges cal _f1 / inc 0x2,XSP)
+        F.emit('j', str(F.loops[-1][0])); return           # jumping then merges cal _f1 / inc 0x2,XSP;
+                                                           # str(): a while loop's break label is a LazyLabel, made by the
+                                                           # first jump to it, _fgets)
     if s.k == 'continue': F.emit('j', F.loops[-1][1]()); return
     if s.k == 'expr' and s.e.k == 'noop' and s.e.ty is not None and s.e.ty.kind == 'void':
         from frontend import N                                                     # (void)(ap = ...) as a statement
@@ -13133,8 +13137,8 @@ def gen_loop(F, s, last):
             F.emit('j', test)                              # (-O: a first test known true is not jumped to, rstmt
         F.lines.append(body + ':')                         #  rs_4_07_00_1: i = 0; while (i < 6) -> ld IZ,0x0 / L: ..)
         cont = [None]; brk = [None]
-        def getc2():
-            if cont[0] is None: cont[0] = F.newulabel()
+        def getc2():                                       # a continue goes to the test (CONT_TO_TEST: the label it
+            if cont[0] is None: cont[0] = test if CONT_TO_TEST else F.newulabel()   # made was never placed, _fgets)
             return cont[0]
         def getb():                                        # the break label, made on first use (_strnicmp: a break
                                                            # jumped to None: wrong code)
