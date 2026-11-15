@@ -35,6 +35,21 @@ def regtemp_reads_done(s, d):
     e_ = st_[1].get(id(d))
     return e_ is not None and bool(e_['n']) and not e_.get('arm') and e_['reads'] >= e_['n']
 
+def param_copy_reads_pending(s, d):
+    """PARAM_COPY_RET_GUARD: d is a parameter copied into its register (PARAM_CACHE), the current statement reads it,
+    and fewer of the lines since its copy read the register than the statement has reads of d"""
+    if d.kind != 'param' or d not in getattr(s, 'param_copies', ()) or d.reg not in ('BC', 'DE', 'HL'): return False
+    st = getattr(s, 'cur_stmt', None)
+    if st is None or not uses_decl(st, d): return False
+    n_ = []
+    walk(st, lambda n, dep: n_.append(n) if n.k == 'var' and n.decl is d else None)
+    cp = '\tld\t%s,(XSP+' % d.reg
+    k = max([i for i, l in enumerate(s.lines) if l.startswith(cp)] or [-1])
+    if k < 0: return False
+    pat = re.compile(r'\b(X?%s|%s|%s)\b' % (d.reg, d.reg[0], d.reg[1]))
+    reads = sum(1 for l in s.lines[k + 1:] if ',' in l and pat.search(l.split(',', 1)[1]))
+    return reads < len(n_)
+
 class LiveClobber(Unsupported):
     """the live-register guard fired on a register temporary (plan_regtemps): compile_function retries with the
     next candidate home"""
@@ -186,7 +201,9 @@ class Fn:
                 for d in list(s.f.params) + (list(s.f.decls) if LIVE_LOCAL_GUARD else []):
                     if d in getattr(s, 'shift_free', ()): continue   # (LIVE_SHIFT: its family is renamed afterwards)
                     rt_ = getattr(d, 'regtemp', False)
-                    if cur_k == 'return' or getattr(s, 'in_return', False) or d in getattr(s, 'deferred', ()) or \
+                    if (cur_k == 'return' or getattr(s, 'in_return', False)) and not (PARAM_COPY_RET_GUARD and rt_ and
+                                                                        param_copy_reads_pending(s, d)) or \
+                            d in getattr(s, 'deferred', ()) or \
                             (d.kind != 'param' and ((op == 'cal' and not rt_) or cur_k is None or getattr(s, 'counted', None) or
                                                     not local_defined_before(s, d))):
                         continue                         # (nothing is live after a return: _strlen's ld HL,0xffff; a
@@ -7488,6 +7505,9 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+CHAR_LOCAL_IDX_SIGNED = True                             # see elem_addr
+PARAM_COPY_RET_GUARD = True                              # see Fn.emit's live guard
+LONG_INDEX_REFUSE = True                                 # see compile_function_once
 TERN_CONST_PRE = True                                    # see tern_const_pre
 MEM_RMW_K = True                                         # see compile_function_once's finishing passes
 CHAR_REGTEMP_HOME_OPT = True                             # see the register home's initialiser
@@ -8256,6 +8276,8 @@ def xbase_cse(F):
         return xbase_cse(F)                                # (indices moved: once more for the next global)
     F.lines = L
 
+STRUCT_CSE_LIVE = True                                    # see struct_base_cse (fpctx1 x10c: wrong code)
+
 def struct_base_cse(F):
     """-O: a global struct whose members are addressed in two or more statements of one straight run (no label, call,
     jump or return between) has its address loaded once, before the first use, into the first of XWA, XBC, XDE that
@@ -8342,7 +8364,7 @@ def struct_base_cse(F):
                                                            #  gs.d = -gd -> lda XBC,_gd / .. / cal ._fneg_d)
                 if pre:
                     S = next((f2 for f2 in ('WA', 'BC', 'DE') if f2 != fam and
-                              not home_live(f2, first) and
+                              not home_live(f2, ls0 if STRUCT_CSE_LIVE else first) and
                               not any(parts(f2).search(L[i]) for i in range(ls0, ls1))), None)
                     if S is None: continue
                     ren = (fam, S)
@@ -8364,7 +8386,8 @@ def struct_base_cse(F):
             if BASE_AT_STMT_START:                         # the start of the first use's statement (random r1_06_18)
                 s0_ = seg(first)[0]
                 if s0_ < first and not any(_r.search(r'\b(X?%s|Q%s|%s|%s)\b' % (R, R, R[0], R[1]), new[i] or '') or
-                                           _r.match(r'^(L\d+:|\tj|\tcal|\tret|\tpush|\tpop|.*XSP,XSP|\t(inc|dec)\t\w+,XSP)', new[i] or '') for i in range(s0_, first)):
+                                           _r.match(r'^(L\d+:|\tj|\tcal|\tret|\tpush|\tpop|.*XSP,XSP|\t(inc|dec)\t\w+,XSP)', new[i] or '') or
+                                           STRUCT_CSE_LIVE and (new[i] or '').endswith(':') for i in range(s0_, first)):
                     at_ = s0_
             new.insert(at_, '\tlda\t%s,_%s' % (XR, g))
             L[:] = new; done = True; break
@@ -10450,6 +10473,17 @@ def elem_addr(F, lv, kind):
             if ixm_ is not None and char_uidx_param(F, ixm_, ixu_.ty.signed) and ixu_.ty.size == 2:   # (an unsigned index:
                 F.emit('ld', 'WA,%s' % ixm_); F.emit('extz', 'XWA')    # zero-extended in XWA, rstmt rs_1_02_11_3)
                 F.emit('ld', 'XBC,%s' % g); F.emit('add', 'XBC,XWA'); return '(XBC)'
+            if CHAR_LOCAL_IDX_SIGNED and kind in ('rmw', 'add', 'sub', 'and', 'or', 'xor'):   # (op=: probe shp2 eo_cL*)
+                ul_ = unpromote(lv.idx); fl_ = getattr(ul_, 'from_local', None)
+                if not hasattr(fl_, 'ty') and ul_.k == 'load' and strip(ul_.e).k == 'var' and strip(ul_.e).decl.kind == 'local':
+                    fl_ = strip(ul_.e).decl
+                if hasattr(fl_, 'ty') and fl_.ty is not None and fl_.ty.size == 2 and fl_.ty.signed and fl_.ty.kind == 'int':
+                    lv_ = set(live_regs(F)); r_ = getattr(fl_, 'reg', None) if ul_.k == 'load' else None
+                    if r_ in ('BC', 'DE', 'HL'):           # a local held in a register: indexed by it
+                        B_ = next((x for x in ('BC', 'DE') if x != r_ and x not in lv_), None)
+                        if B_ is not None: F.emit('lda', 'X%s,%s' % (B_, g)); return '(X%s+%s)' % (B_, r_)
+                    elif not (lv_ & {'BC', 'DE'}):         # folded or in a slot: loaded into DE
+                        idx_into('DE'); F.emit('lda', 'XBC,%s' % g); return '(XBC+DE)'
             F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None
@@ -18934,6 +18968,12 @@ def drop_write_only(f):
 def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap):
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
     personality = PERSONALITIES[personality]
+    if LONG_INDEX_REFUSE:                                  # a long variable index: only its low word was used (probe
+        for n_ in nodes_in(f.body, 'index'):               # ternk tk_l_E*, wrong at an index of 0x8000 or more)
+            ix_ = strip(n_.idx)
+            while ix_.k == 'cast' and ix_.kind == 'IntegralCast' and ix_.ty is not None and ix_.ty.size == 4: ix_ = strip(ix_.e)
+            if fold(n_.idx).k != 'const' and ix_.ty is not None and ix_.ty.size == 4 and ix_.ty.kind == 'int':
+                raise Unsupported('a long variable index')
     merge_address_inits(f)
     drop_dead_call_stores(f, opt != 'none', adecl)
     eval_write_only(f, opt != 'none', adecl)

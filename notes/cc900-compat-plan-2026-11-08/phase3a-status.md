@@ -3763,6 +3763,18 @@ semcheck-new-probes-base341-2026-11-15.txt): shp2 eo_cL* (char element op= with 
 O3XSXr), ternk tk_l_* / tk_i_E*PR (24, mostly an index of 0x8000 or more), fpctx1 x10c (2).  They are wrong code
 the model wrote all along on shapes nothing had checked; they are the next work.
 
+**Batch 343 (2026-11-15): wrong-code fixes.**  The 101 semcheck verdicts that batch 342's new probe rows exposed in the
+base model are gone (semcheck 110 -> 9, the same 9 as before 342): STRUCT_CSE_LIVE (lane_fpframe; fpctx1 x10c: the -O
+global base CSE moved a statement's register to one it believed free from the wrong point and could hoist the lda
+above the function label), LONG_INDEX_REFUSE (lane_o3; ternk tk_l_E*: an element at a long variable index was
+addressed with the index's low word, which the CPU sign-extends -- wrong from 0x8000 on; refused until the oracle's
+32-bit form is modelled), PARAM_COPY_RET_GUARD (ternk tk_i_EePR / EtPR: inside a return the live guard did not protect
+a parameter copy the statement still reads), CHAR_LOCAL_IDX_SIGNED (shp2 eo_cL*: `gca[b] op= v` with a signed int
+local indexed zero-extended; now (XBC+DE), as cc900).  Ledger, validation and library unchanged (no row moved; the
+changed functions are now equal or refused); pairs 223.  The honest wrong-code measure is now val_sem.sh on the
+validation corpus (batch 342: 16 / 14 / 8 / 8 random functions DIFFERENT), and lane_nm's stptr probe
+(oracle run 2026-11-15-8) shows 47 / 55 / 38 / 43 DIFFERENT of 825 / 788 / 697 / 697 compiled store shapes, being fixed.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
