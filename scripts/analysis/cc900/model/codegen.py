@@ -7030,6 +7030,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+ASSIGN_K_VALUE = True                                    # see gen_assign_value
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -7985,6 +7986,12 @@ def gen_assign_value(F, e, fam, size, in_place=False):
         raise Unsupported('operator = to a register variable')
     if lv.k == 'var':
         t = lvalue(F, lv)
+        kv_ = fold(rv)
+        if ASSIGN_K_VALUE and vs in (1, 2) and kv_.k == 'const' and kv_.value is not None and t.startswith('(_') and \
+                fam in FAM and vs in FAM[fam]:
+            K_ = hx(kv_.value & ((1 << 8 * vs) - 1))       # a constant assigned and used: stored with ldw / ldb, then
+            F.emit('ldb' if vs == 1 else 'ldw', '%s,%s' % (t, K_))   # loaded (random r1_04_06: (gi2 = 256) > 255 ->
+            F.emit('ld', '%s,%s' % (FAM[fam][vs], K_)); return fam   # ldw (_gi2),0x100 / ld WA,0x100 / cp WA,0xff)
         if strip(rv).k == 'call' and not has_helper_call(strip(rv).fn):   # ae_i_call_g: cal _g / ld (_gi),HL /
             gen_call(F, strip(rv)); flush_pops(F)                        # cp HL,0x0
             F.emit('ld', '%s,%s' % (t, FAM['HL'][vs])); return 'HL'
@@ -9663,7 +9670,11 @@ def gen_opassign(F, e):
                 not ({'WA', 'BC'} & set(live_regs(F))):
             t = lvalue(F, e.l)                             # a long variable times a constant in place: shifts and adds
             if re.match(r'^\(_[\w ]+(\+ 0x[0-9a-f]+)?\)$', t):   # through XWA, the operand kept in XBC (rstmt rs_1_06_17_3:
-                k_ = rk.value; F.emit('ld', 'XWA,%s' % t); F.emit('ld', 'XBC,XWA')   # gul *= 7UL -> ld XWA,(_gul) /
+                k_ = rk.value; F.emit('ld', 'XWA,%s' % t)  # gul *= 7UL -> ld XWA,(_gul) /
+                if k_ & (k_ - 1) == 0:                     # (a power of two: the shift alone, random r1_04_06: gul *= 4UL
+                    F.emit('sla' if signed else 'sll', '%s,XWA' % hx(k_.bit_length() - 1))   # -> sll 0x2,XWA)
+                    F.emit('ld', '%s,XWA' % t); return t
+                F.emit('ld', 'XBC,XWA')
                 sh_ = 'sla' if signed else 'sll'           # ld XBC,XWA / sll 0x3,XWA / sub XWA,XBC / ld (_gul),XWA;
                 if k_ >= 7 and k_ & (k_ + 1) == 0:          # rs_3_02_11_3: gl2 *= 5L -> .. / sla 0x2,XWA / add XWA,XBC)
                     F.emit(sh_, '%s,XWA' % hx(k_.bit_length())); F.emit('sub', 'XWA,XBC')

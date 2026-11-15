@@ -2986,6 +2986,13 @@ masked (random r3_03_16: `gc = (0 + gs.c) ^ (-4 / 4)` -> `xor A,0xff`; the model
 formatted at the int's width, which the assembler cannot even encode). rstmt +3 / +2 / +3 / +2, random3 +1 at every
 set; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 260 (2026-11-15): a constant assigned and used is stored, then loaded; a long times a power of two is a
+shift.** ASSIGN_K_VALUE (`gen_assign_value`): a constant assigned to a char or int global and used as a value is
+stored with `ldb` / `ldw` and then loaded (random r1_04_06: `(gi2 = 256) > 255` -> `ldw (_gi2),0x100 / ld WA,0x100 /
+cp WA,0xff`), as RET_ASSIGN does for a returned one. LONG_MULK_OPA (batch 249) by a power of two is the shift alone,
+without the XBC copy (r1_04_06: `gul *= 4UL` -> `ld XWA,(_gul) / sll 0x2,XWA / ld (_gul),XWA`). rstmt +2 / +1 / +1 /
++1, random1 none and -Xr +1, stchain -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
