@@ -3746,6 +3746,23 @@ Validation (val_agg.py, run 2026-11-15-3): statements +3 / +1 / +2 / +1, functio
 Random 224 / 138 / 184 / 125 (+3 / +1 / +3 / +1), rstmt +7 / +8 / +7 / +6; ledger up 18 rows, down 0; library
 (lib_score.sh, now all four sets) 142 / 190 / 32 / 33 unchanged; pairs 223; semcheck 9 with the same verdicts.
 
+**Batch 342 (2026-11-15).**  lane_fpframe 01 / 03 / 04 / 05 / 11 (fpe3.py: when the double temporary region is single
+or double size), 06 / 09 (fpgen.py: `(double)*gpl`, `gp[k]`, `*p` converted from the address; pops before the op= XIZ
+load), 08 (FP negation folds: `a - -b`, `a + -b`, `-(-x)` only as a whole right-hand side), each checked on the fpctx1
+probe's oracle run (2026-11-15-7; its 02 refuted and dropped, 10 held); lane_o3 31 TERN_CONST_PRE (`?:` with one
+constant arm preloaded) and 32 MEM_RMW_K (`incw K,(_g)` in memory).  A wrong-code fix, POSTINC_LONG_BC: `x = gl++`
+with a long global and the value wanted in WA loaded the old value into XWA and overwrote it with the bump's
+`ld XWA,0x1`, storing 1 (since before batch 127; found by semcheck on fpctx1 x01f); the value now goes to XBC, as
+cc900 does.  The ledger gains rows for the probes ternk, shp2, o3v, fpctx1 at all four sets (now 337 / 281 / 302 /
+261 of 672, 159 / 151 / 109 / 101 of 306, 279 / 246 / 230 / 189 of 296, 27 / 24 / 27 / 23 of 56; ternk was 100 / 107
+/ 96 / 117 and fpctx1 12 / 9 / 16 / 12 before this batch).  Validation +1 statement at each set, nothing lost; random
+231 / 139 / 189 / 126 (+7 / +1 / +5 / +1); rstmt 3766 / 3557 / 3582 / 3432; old ledger rows up 11, down 0; library
+unchanged at all sets; pairs 223.  **semcheck 9 -> 110:** the 101 new verdicts are all in the newly added probe rows
+and are the base model's (batch 341 gives the same 101 there, plus fpctx1 x01f which this batch fixes; list in
+semcheck-new-probes-base341-2026-11-15.txt): shp2 eo_cL* (char element op= with a local index, 75 at Xr / O3XS /
+O3XSXr), ternk tk_l_* / tk_i_E*PR (24, mostly an index of 0x8000 or more), fpctx1 x10c (2).  They are wrong code
+the model wrote all along on shapes nothing had checked; they are the next work.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

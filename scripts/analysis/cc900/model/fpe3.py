@@ -230,22 +230,33 @@ def same_obj(a, b):
     a = mem_leaf(a); b = mem_leaf(b)
     return a is not None and b is not None and a.k == 'var' and b.k == 'var' and a.decl is b.decl
 
+def bit_const(t):
+    """the constant of a bit test m & K: plain, or (RESET_BIT_CAST) behind an integral cast in a test of 1 or 2 bytes"""
+    r = fpgen.strip(t.r)
+    if r.k == 'const': return True
+    return RESET_BIT_CAST and r.k == 'cast' and r.kind == 'IntegralCast' and fpgen.strip(r.e).k == 'const' and t.ty.size <= 2
+
 def is_reset(F, st):
     """a resetting statement (R_E): a plain copy between memory objects, a compound assignment / `m = m op m2` of a
     memory object with a memory operand, a long ++ / --, a bit test `if (m & c)`"""
     if st is None: return False
     k = getattr(st, 'k', None)
+    if RESET_OPA_LOST and any(not getattr(d, 'reg', None) for d in getattr(F, 'opa_lost', None) or ()):
+        return True                                       # (random r4_06_12: u below an 8-byte region)
     if RESET_COND_BIT and k in ('expr', 'decl', 'return'):   # a ?: tested on a bit, m & c (rstmt rs_4_06_15_1: double t =
         for c_ in fpgen.C().nodes_in(st, 'cond'):          # (gi3 & 0x80 ? gs.d : gd) -> region D alone)
             t_ = fpgen.strip(c_.c)
-            if t_.k == 'bin' and t_.op == '&' and mem_leaf(t_.l) is not None and fpgen.strip(t_.r).k == 'const' and \
+            if t_.k == 'bin' and t_.op == '&' and mem_leaf(t_.l) is not None and bit_const(t_) and \
                     not fpgen.is_fp(t_.ty):
                 return True
     if k == 'if':
         c = fpgen.strip(st.cond)
-        return c.k == 'bin' and c.op == '&' and mem_leaf(c.l) is not None and fpgen.strip(c.r).k == 'const' and not fpgen.is_fp(c.ty)
+        return c.k == 'bin' and c.op == '&' and mem_leaf(c.l) is not None and bit_const(c) and not fpgen.is_fp(c.ty)
     if k != 'expr': return False
     e = fpgen.strip(st.e)
+    if RESET_INC4_INNER and any(n is not e and not fpgen.is_fp(n.ty) and n.ty.size == 4 and is_memory(F, n.e)
+                                for n in fpgen.C().nodes_in(e, 'incdec')):
+        return True                                       # *gp++ = 8 (random r4_03_02, r4_09_13, r1_07_13)
     if e.k == 'opassign' and not fpgen.is_fp(e.ty):
         if e.op in ('+', '-', '*', '/', '&', '|', '^'):
             return is_memory(F, e.l) and mem_leaf(e.r) is not None and (mem_leaf(e.r).k != 'var' or mem_leaf(e.r).decl.kind != 'local' or getattr(mem_leaf(e.r).decl, 'slot', None) is not None)
@@ -254,8 +265,10 @@ def is_reset(F, st):
     if e.k != 'bin' or e.op != '=' or (fpgen.is_fp(e.ty) and e.ty.size == 8): return False
     r = fpgen.strip(e.r)
     while r.k == 'cast' and (r.kind == 'NoOp' or (r.kind == 'IntegralCast' and fpgen.strip(r.e).ty.size == r.ty.size)): r = fpgen.strip(r.e)
-    if r.k == 'bin' and r.op in ('+', '-', '*', '/', '&', '|', '^') and not fpgen.is_fp(e.ty):   # gi = gi + gi2 (w45)
-        if same_obj(e.l, r.l) and mem_leaf(r.r) is not None and fpgen.strip(r.r).k != 'const': return is_memory(F, e.l)
+    if r.k == 'bin' and r.op in ('+', '-', '*', '/', '&', '|', '^') and not fpgen.is_fp(e.ty) and \
+            not (RESET_NO_MUL and r.op == '*'):          # (fpctx1 x02f: gi = gi * gi2 keeps D + D')   # gi = gi + gi2 (w45)
+        if same_obj(e.l, r.l) and mem_leaf(r.r) is not None and fpgen.strip(r.r).k != 'const' and \
+                not (RESET_NO_DIV and r.op == '/'): return is_memory(F, e.l)   # (gul = gul / gul: rs_2_04_10_1)
         if r.op in ('+', '*', '&', '|', '^') and same_obj(e.l, r.r) and mem_leaf(r.l) is not None and fpgen.strip(r.l).k != 'const': return is_memory(F, e.l)
         if r.op == '+' and fpgen.strip(r.r).k == 'const' and fpgen.strip(r.r).value == 0: r = fpgen.strip(r.l)   # gi2 + 0 (w32)
         else: return False
@@ -271,6 +284,11 @@ CALL_OPERAND_FIRST = True                                  # see eval_val (_cosh
 RESET_COND_BIT = True                                      # see is_reset
 CONV_OPA_NONE = True                                       # without -O an op= reserves no root cell (rstmt rs_4_01_04_2;
                                                            # -O3 -XS keeps it for a product: random r4_01_19)
+RESET_INC4_INNER = True                                    # see is_reset (random r4_03_02)
+RESET_BIT_CAST = True                                      # see bit_const (random r3_04_04)
+RESET_NO_DIV = True                                        # see is_reset (rstmt rs_2_04_10_1)
+RESET_OPA_LOST = True                                      # see is_reset (random r4_06_12)
+RESET_NO_MUL = True                                        # see is_reset (fpctx1 x02f)
 CONV_LOCAL_FIRST = True                                    # see eval_val
 
 _orig_get0 = fpgen.FrameAlloc.get0

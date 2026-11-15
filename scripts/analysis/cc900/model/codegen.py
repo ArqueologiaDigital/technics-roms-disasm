@@ -926,6 +926,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         lend = F.newulabel()
         gen_cond_false(F, e, 'RET' if then_ret else lend)
         F.emit('ld', '%s,0x1' % R); F.lines.append(lend + ':'); return fam
+    if TERN_CONST_PRE and e.k == 'cond' and not then_ret:
+        r_ = tern_const_pre(F, e, fam, size)
+        if r_ is not None: return r_
     if e.k == 'cond' and F.opt:
         c, a, b = strip(e.c), strip(e.a), strip(e.b)
         v = strip(b.e).decl if b.k == 'load' and strip(b.e).k == 'var' else None
@@ -1012,6 +1015,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 if cc in (True, False): raise Unsupported('constant ?: condition')
                 if TERN_PRE_GUARD and clobbers(F.lines[n_cmp:], '(%s)' % FAM[fam][4]):
                     del F.lines[n_pre:]                    # (-O3 -XS -Xr r1_05_05: the condition reads gla[t] through
+                    if TERN_CONST_PRE and not then_ret:    # (a constant arm: preloaded where the condition leaves
+                        r_ = tern_const_pre(F, e, fam, size, force=True)   # a register, rstmt rs_2_03_16_1)
+                        if r_ is not None: return r_
                     if TERN_PLAIN_ON_CLOBBER:              # XWA: the preloaded arm was wrong code)
                         F.tern_plain_ids = getattr(F, 'tern_plain_ids', set()) | {id(e)}   # the plain form (rstmt
                         return gen(F, e, fam, size, then_ret, store)                      # rs_3_03_08_4)
@@ -7482,6 +7488,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+TERN_CONST_PRE = True                                    # see tern_const_pre
+MEM_RMW_K = True                                         # see compile_function_once's finishing passes
 CHAR_REGTEMP_HOME_OPT = True                             # see the register home's initialiser
 PUSH_EXT_INPLACE = True                                  # see compile_function_once's -O passes
 TWICE_LOAD_ONCE = True                                   # see compile_function_once's -O passes
@@ -8116,6 +8124,57 @@ def char_home_bin(x):
     x = strip(x)
     while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
     return x.k == 'bin' and x.op in ('+', '-', '&', '|', '^', '*')
+
+def tern_const_pre(F, e, fam, size, force=False):
+    """TERN_CONST_PRE (see the flag's note): the family holding the value, or None (nothing emitted)"""
+    c, a, b = strip(e.c), strip(e.a), strip(e.b)
+    if size not in (1, 2, 4) or e.ty is None or fpgen.is_fp(e.ty) or fpgen.is_fp(getattr(c, 'ty', None)): return None
+    if nodes_in(c, 'call') or nodes_in(c, 'cond') or has_helper_call(c) or fpgen.is_fp_op(c) or \
+            nodes_in(c, 'incdec') or nodes_in(c, 'opassign') or any(n.op in ('&&', '||', '=') for n in nodes_in(c, 'bin')): return None
+    if any(fold(n.idx).k != 'const' for n in nodes_in(c, 'index')): return None   # (an element at a variable index in
+                                                           #  the test: semcheck found wrong code, probe ternk tk_*_E*)
+    if F.opt and c.k == 'bin' and c.op in CC_S and not force: return None   # (the -O compare preload path decides
+                                                           #  those; it hands over when its register is clobbered)
+    ka, kb = fold(narrow(a, size)), fold(narrow(b, size))
+    if kb.k == 'const' and kb.value is not None and ka.k != 'const': pre, other, on_false = b, a, True
+    elif ka.k == 'const' and ka.value is not None and kb.k != 'const': pre, other, on_false = a, b, False
+    else: return None
+    om = mem_operand(F, strip(narrow(other, size)))
+    if om is None: return None
+    n0 = len(F.lines); lab0 = F.label; dead0 = set(F.dead)
+    try:
+        lab = F.newulabel()
+        (gen_cond_false if on_false else gen_cond_true)(F, c, lab)
+    except Unsupported:
+        del F.lines[n0:]; F.dead = dead0; return None
+    cond_ = F.lines[n0:]; del F.lines[n0:]; F.dead = dead0
+    if not cond_ or not re.match(r'^\t(j|jr)\t\w+,', cond_[-1]): return None
+    used = ' '.join(cond_)
+    fo_ = (family_of(om) or '')[1:] if om and not om.startswith('(') else None
+    if fo_ and re.search(r'\b(X?%s|Q%s|%s|%s)\b' % (fo_, fo_, fo_[0], fo_[1]) if len(fo_) == 2 else r'\bX?%s\b' % fo_, ' '.join(l.split(',')[0] for l in cond_)): return None
+                                                           # (the test writes the other arm's register)
+    live = set(live_regs(F))
+    R = None
+    for f_ in [fam] + [x for x in ('WA', 'BC', 'DE', 'HL') if x != fam]:
+        if f_ not in ('WA', 'BC', 'DE', 'HL') or f_ in live: continue
+        if re.search(r'\b(X?%s|Q%s|%s|%s)\b' % (f_, f_, f_[0], f_[1]), used) or f_ in (om or ''): continue
+        R = f_; break
+    if R is None: return None
+    n1 = len(F.lines)
+    try:
+        f1 = gen(F, pre, R, size)
+        if f1 != R: raise Unsupported('preload')
+        lab = F.newulabel()
+        n2 = len(F.lines)
+        (gen_cond_false if on_false else gen_cond_true)(F, c, lab)
+        if clobbers(F.lines[n2:], '(X%s)' % R) or re.search(r'\b(X?%s|Q%s|%s|%s)\b' % (R, R, R[0], R[1]), ' '.join(F.lines[n2:])):
+            raise Unsupported('preload clobbered')
+        f2 = gen(F, other, R, size)
+        if f2 != R: raise Unsupported('arm')
+    except Unsupported:
+        del F.lines[n1:]; F.dead = dead0; return None
+    F.lines.append(lab + ':')
+    return R
 
 def xbase_cse(F):
     """XBASE_CSE: struct_base_cse across labels and jumps (see the flag's note)"""
@@ -10045,6 +10104,8 @@ def global_name(e):
     if v.k == 'var' and v.decl.kind == 'global': return '_' + v.decl.name
     return None
 
+POSTINC_LONG_BC = True                                    # see gen_incdec
+
 def gen_incdec(F, e, fam, size, value):
     """++/-- on a global: incb/incw in memory, long through XWA (unop_*: preinc, postinc_val); *p++ (deref_inc)"""
     g = global_name(e.e)
@@ -10088,6 +10149,10 @@ def gen_incdec(F, e, fam, size, value):
         else:
             F.emit(('inc' if e.op == '++' else 'dec') + ('b' if vt.size == 1 else 'w'), '%s,(%s)' % (hx(step), g))
     if not value: bump(); return None
+    if POSTINC_LONG_BC and e.post and vt.size == 4 and fam == 'WA':
+        fam = 'BC'                                       # the bump's ld XWA,step would overwrite the old value: cc900 keeps
+                                                         # it in XBC (fpctx1 x01f: ld XBC,(_gl) / ld XWA,0x1 / add (_gl),XWA /
+                                                         # ld (_gia + 0x4),BC); was wrong code before batch 127
     if e.post: F.emit('ld', '%s,(%s)' % (FAM[fam][vt.size], g)); bump()
     else: bump(); F.emit('ld', '%s,(%s)' % (FAM[fam][vt.size], g))
     return fam
@@ -16622,6 +16687,15 @@ def fold_fp_consts(f):
             if a is not None and b is not None and not (n.op == '/' and b == 0):
                 r = a + b if n.op == '+' else a - b if n.op == '-' else a * b if n.op == '*' else a / b
                 return N('fconst', value=r, ty=n.ty)
+        isd_ = lambda x: getattr(x, 'ty', None) is not None and x.ty.kind == 'float' and x.ty.size == 8
+        if FP_NEG_FOLD and n.k == 'bin' and n.op in ('-', '+') and isd_(n) and strip(n.r).k == 'un' and \
+                strip(n.r).op == '-' and isd_(strip(n.r)) and isd_(strip(strip(n.r).e)):
+            n.op = '+' if n.op == '-' else '-'; n.r = strip(n.r).e   # fpctx1 x08b / x08c: a - -b, a + -b
+            return n
+        if FP_NEG_FOLD and n.k == 'bin' and n.op == '=' and isd_(n) and strip(n.r).k == 'un' and strip(n.r).op == '-' \
+                and strip(strip(n.r).e).k == 'un' and strip(strip(n.r).e).op == '-' and isd_(strip(strip(strip(n.r).e).e)):
+            n.r = strip(strip(n.r).e).e                    # fpctx1 x08a: gd = -(-gd2) is a copy
+            return n
         if FP_COND_CONST and n.k == 'cond' and n.ty is not None and n.ty.kind == 'float':
             ct_ = cond_const(n.c)                          # a double ?: whose test is a constant is its live arm (random
             arm_ = n.a if ct_ else n.b if ct_ is not None else None   # r4_01_01: double t = (128 == 128 ? gs.d : gs.d) ->
@@ -16631,6 +16705,7 @@ def fold_fp_consts(f):
         return n
     if FP_CONST_FOLD: f.body = folded(f.body)
 
+FP_NEG_FOLD = True                                        # see fold_fp_consts (fpctx1 x08a-x08c)
 LH_CTR_SLOT = True                                        # see lh_counter_slots
 LH_CTR_SLOT_XR = True                                     # see lh_counter_slots: -Xr too
 LH_CTR_INIT = True                                        # see gen_block: an lh_ctr counter's initialiser
@@ -19041,6 +19116,32 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 F.lines[i] = '\tsub\t%s,0x1' % m.group(1); F.lines[i + 1] = None
         F.lines = [l for l in F.lines if l is not None]
     if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)
+    if MEM_RMW_K:                                        # g updated by K in memory (probe fpp9 v4: incw 0x1,(_gi))
+        i_ = 0
+        while i_ + 2 < len(F.lines):
+            a_ = re.match(r'^\tld\t(WA|A|BC|C|DE|E|HL|L),\((_\w+(?: \+ 0x[0-9a-f]+)?)\)$', F.lines[i_] or '')
+            if a_:
+                R_, g_ = a_.groups(); sz_ = 'b' if len(R_) == 1 else 'w'
+                b_ = re.match(r'^\t(inc|dec)\t(0x[0-9a-f]+),%s$' % R_, F.lines[i_ + 1] or '') or \
+                    re.match(r'^\t(add|sub)\t%s,(0x[0-9a-f]+)$' % R_, F.lines[i_ + 1] or '')
+                nx_ = F.lines[i_ + 3] if i_ + 3 < len(F.lines) else ''
+                if b_ and F.lines[i_ + 2] == '\tld\t(%s),%s' % (g_, R_) and \
+                        not re.match(r'^\t(j|jr|ret|scc|cal)\t\w+,|^\tret\t\w+$|^\tscc', nx_ or ''):
+                    fam_ = {'A': 'WA', 'C': 'BC', 'E': 'DE', 'L': 'HL'}.get(R_, R_)
+                    pf_ = re.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam_, fam_, fam_[0], fam_[1]))
+                    dead_ = False
+                    for l_ in F.lines[i_ + 3:]:
+                        if not l_ or not pf_.search(l_):
+                            if l_ and (l_.endswith(':') or l_.startswith(('\tj', '\tret', '\tcal'))):
+                                dead_ = l_.startswith('\tcal') or l_ == '\tret'; break
+                            continue
+                        m_ = re.match(r'^\t(ld|lda)\t(X?%s|%s|%s),(.*)$' % (fam_, fam_[0], fam_[1]), l_)
+                        dead_ = bool(m_ and not pf_.search(m_.group(3)) and (len(m_.group(2)) >= len(R_))); break
+                    if dead_:
+                        op_, k_ = b_.group(1), b_.group(2)
+                        F.lines[i_:i_ + 3] = ['\t%s%s\t%s,(%s)' % (op_, sz_, k_, g_) if op_ in ('inc', 'dec') else
+                                              '\t%s%s\t(%s),%s' % (op_, sz_, g_, k_)]
+            i_ += 1
     if PUSH_EXT_INPLACE and F.opt:                       # -O: ld A,C / extz WA / push WA -> extz BC / push BC (r4_01_00)
         i_ = 0
         while i_ + 2 < len(F.lines):

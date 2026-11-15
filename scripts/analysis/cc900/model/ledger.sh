@@ -366,6 +366,26 @@ for c in none O3XS; do    # a local in a frame slot across a long helper or a ca
 done
 row "run 2026-11-13-16-micro-lsl, v423/Xr" "probes/lsl.c" "$O/2026-11-13-16-micro-lsl/out/v423/Xr/probes" corpus/probes/lsl.c --opt none --adecl
 row "run 2026-11-13-16-micro-lsl, v423/O3XSXr" "probes/lsl.c" "$O/2026-11-13-16-micro-lsl/out/v423/O3XSXr/probes" corpus/probes/lsl.c --opt O3XS --adecl
+for c in none O3XS; do    # ?: with one constant arm (lane_o3 rule 31) (corpus/probes/ternk.c, P11 evidence)
+  row "run 2026-11-15-4-micro-ternk, v423/$c" "probes/ternk.c" "$O/2026-11-15-4-micro-ternk/out/v423/$c/probes" corpus/probes/ternk.c --opt $c
+done
+row "run 2026-11-15-4-micro-ternk, v423/Xr" "probes/ternk.c" "$O/2026-11-15-4-micro-ternk/out/v423/Xr/probes" corpus/probes/ternk.c --opt none --adecl
+row "run 2026-11-15-4-micro-ternk, v423/O3XSXr" "probes/ternk.c" "$O/2026-11-15-4-micro-ternk/out/v423/O3XSXr/probes" corpus/probes/ternk.c --opt O3XS --adecl
+for c in none O3XS; do    # element op= with computed values, truth values, char complements (corpus/probes/shp2.c, P11 evidence)
+  row "run 2026-11-15-5-micro-shp2, v423/$c" "probes/shp2.c" "$O/2026-11-15-5-micro-shp2/out/v423/$c/probes" corpus/probes/shp2.c --opt $c
+done
+row "run 2026-11-15-5-micro-shp2, v423/Xr" "probes/shp2.c" "$O/2026-11-15-5-micro-shp2/out/v423/Xr/probes" corpus/probes/shp2.c --opt none --adecl
+row "run 2026-11-15-5-micro-shp2, v423/O3XSXr" "probes/shp2.c" "$O/2026-11-15-5-micro-shp2/out/v423/O3XSXr/probes" corpus/probes/shp2.c --opt O3XS --adecl
+for c in none O3XS; do    # verification of lane_o3 rules 19 / 21 / 22 / 26 (corpus/probes/o3v.c, P11 evidence)
+  row "run 2026-11-15-6-micro-o3v, v423/$c" "probes/o3v.c" "$O/2026-11-15-6-micro-o3v/out/v423/$c/probes" corpus/probes/o3v.c --opt $c
+done
+row "run 2026-11-15-6-micro-o3v, v423/Xr" "probes/o3v.c" "$O/2026-11-15-6-micro-o3v/out/v423/Xr/probes" corpus/probes/o3v.c --opt none --adecl
+row "run 2026-11-15-6-micro-o3v, v423/O3XSXr" "probes/o3v.c" "$O/2026-11-15-6-micro-o3v/out/v423/O3XSXr/probes" corpus/probes/o3v.c --opt O3XS --adecl
+for c in none O3XS; do    # frame / context minimal pairs (lane_fpframe) (corpus/probes/fpctx1.c, P11 evidence)
+  row "run 2026-11-15-7-micro-fpctx1, v423/$c" "probes/fpctx1.c" "$O/2026-11-15-7-micro-fpctx1/out/v423/$c/probes" corpus/probes/fpctx1.c --opt $c
+done
+row "run 2026-11-15-7-micro-fpctx1, v423/Xr" "probes/fpctx1.c" "$O/2026-11-15-7-micro-fpctx1/out/v423/Xr/probes" corpus/probes/fpctx1.c --opt none --adecl
+row "run 2026-11-15-7-micro-fpctx1, v423/O3XSXr" "probes/fpctx1.c" "$O/2026-11-15-7-micro-fpctx1/out/v423/O3XSXr/probes" corpus/probes/fpctx1.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

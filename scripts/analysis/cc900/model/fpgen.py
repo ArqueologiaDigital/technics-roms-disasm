@@ -581,6 +581,30 @@ def int_to_long_temp(F, e, reg_family):
     F.emit('ld', '%s,%s' % (slot_mem(F, off), R4))
     return off
 
+def dl_ptr_addr(F, src, probe=False):
+    """DL_DEREF_PTR: XBC = the address of a long read through a pointer (*p, p a global or a parameter; p[k], k a
+    constant, p a global); with probe, only whether the form applies"""
+    cg = C()
+    d0 = strip(src.e) if src.k == 'load' else src
+    if d0.k == 'deref':
+        p0, k = strip(d0.e), 0
+    elif d0.k == 'index' and cg.fold(d0.idx).k == 'const' and strip(d0.base).k == 'load':
+        p0, k = strip(d0.base), cg.fold(d0.idx).value * 4
+    else: return False
+    if p0.k != 'load' or strip(p0.e).k != 'var' or p0.ty.size != 4: return False
+    v = strip(p0.e).decl
+    if v.kind not in ('global', 'param') or getattr(v, 'addr_taken', False): return False
+    if v.kind == 'global' and d0.k != 'deref' and v.ty.kind != 'ptr': return False
+    reg = getattr(v, 'reg', None)
+    if v.kind == 'param' and not (reg in ('XWA', 'XBC', 'XDE') or (reg is None and cg.mem_operand(F, p0))): return False
+    if k and v.kind != 'global': return False
+    if probe: return True
+    R = 'XWA' if k else 'XBC'
+    if reg: F.emit('ld', '%s,%s' % (R, reg)) if reg != R else None
+    else: F.emit('ld', '%s,%s' % (R, cg.mem_operand(F, p0)))
+    if k: F.emit('lda', 'XBC,XWA+%s' % cg.hx(k))         # fpctx1 x06c: ld XWA,(_gpl) / lda XBC,XWA+0x4
+    return True
+
 def eval_into(F, e, dest):
     """compute FP expression e and store it at dest: ('sret',), ('slot', off), ('lv', lvalue node)"""
     cg = C(); e = fp_value_cast(e)
@@ -628,6 +652,11 @@ def eval_into(F, e, dest):
             F.emit('lda', 'XBC,%s' % m[1:-1])                                    # d_from_l: lda XBC,_gl
             if not first: dest_last(F, dest)
             F.emit('cal', name); return
+        if DL_DEREF_PTR and src.ty.size == 4 and dl_ptr_addr(F, src, probe=True):
+            first = dest_first(F, dest)                                          # fpctx1 x06a: (double)*gpl ->
+            dl_ptr_addr(F, src)                                                  # ld XBC,(_gpl) / .. / cal ._fld_dl
+            if not first: dest_last(F, dest)
+            F.emit('cal', name); return
         if dest[0] == 'sret':
             first = dest_first(F, dest); off = int_to_long_temp(F, src, 'BC')
         else:
@@ -651,6 +680,8 @@ def eval_into(F, e, dest):
     emit_operands(F, dest, [e])
     F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(e.ty)))
 
+DL_DEREF_PTR = True                                       # see eval_into (fpctx1 x06a, x06c, x06e)
+OPA_XIZ_POPS_FIRST = True                                 # see gen_assign (random r2_04_01)
 FP_ARG_ELEM0 = True                                       # see push_fp_arg
 
 def push_fp_arg(F, a, hint=None):
@@ -764,6 +795,8 @@ def gen_assign(F, e):
             if F.xiz_vars != ['sret'] or needs_xiz(F) or getattr(F, 'sret_home', False) or \
                     getattr(F, 'call_temp', None):
                 raise cg.Unsupported('a double compound assignment beside another XIZ use')
+            if OPA_XIZ_POPS_FIRST and not cg.later_call_absorbs(F):   # (random r2_04_01: cal _vc / inc 0x2,XSP /
+                cg.flush_pops(F)                                       #  lda XIZ,..; r3_05_06: vc(t) later takes them)
             if hk[0] == 'S' and lv.k == 'index' and ' + ' not in hk[1] and not F.opt:
                 F.emit('lda', 'XWA,%s' % hk[1]); F.emit('ld', 'XIZ,XWA')   # element 0 is the array itself, taken
             elif hk[0] == 'S': F.emit('lda', 'XIZ,%s' % hk[1])             # through XWA (rstmt rs_3_00_17_0: gda[0] *= ..
