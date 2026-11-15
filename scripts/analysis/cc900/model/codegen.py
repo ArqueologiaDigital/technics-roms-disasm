@@ -7085,6 +7085,7 @@ MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
 SHIFT1_MEM_REG = True                                    # see SHIFT1_MEM
+SD2XR_OPT = True                                         # see compile_unit: sd2xr at the -O sets
 STORE_HL_DIRECT_BC = True                                # see STORE_HL_DIRECT
 SDXR_CDECL_OPT = True                                    # see compile_unit: sdxr for cdecl -O3 -XS
 UAS_NESTED = True                                        # see uses_after_stmt
@@ -17008,12 +17009,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             if SDXR_CDECL_OPT and not fa and opt != 'none':   # probe stdiv's shapes, cdecl -O3 -XS (sdxr.py)
                 import sdxr
                 alt_ = sdxr.whole(f, opt, cdecl=True)
+                if alt_ is None and SD2XR_OPT:            # probe stdiv2's shapes, cdecl -O3 -XS (sd2xr.py)
+                    import sd2xr
+                    alt_ = sd2xr.whole(f, opt, cdecl=True)
             if SDXR_WHOLE and fa and (opt == 'none' or SDXR_OPT):   # probe stdiv's statement shapes under -Xr (sdxr.py)
                 import sdxr
                 alt_ = sdxr.whole(f, opt)
-                if alt_ is None and SD2XR_WHOLE and opt == 'none':   # probe stdiv2's shapes under -Xr (sd2xr.py)
+                if alt_ is None and SD2XR_WHOLE and (opt == 'none' or SD2XR_OPT):   # probe stdiv2's shapes under -Xr (sd2xr.py)
                     import sd2xr
-                    alt_ = sd2xr.whole(f)
+                    alt_ = sd2xr.whole(f, opt)
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may

@@ -22,7 +22,7 @@ def tkind(ty):
     return {(2, True): 'i', (4, False): 'n', (1, True): 'c'}.get((ty.size, ty.signed))
 
 
-def whole(f):
+def whole(f, opt='none', cdecl=False):
     if not SD2XR: return None
     if len(f.params) != 3 or tkind(f.params[0].ty) != 'i': return None
     body = cg.flat(f.body)
@@ -97,7 +97,7 @@ def whole(f):
     if A[0] not in 'SDMER' or B[0] not in 'SGDMERK': return None
     sub = dict(L[2]); sub.update(A[1]); sub.update(B[1])
     name = '.sd2_%s_%s_%s%s%s' % (t, 'd' if rv.op == '/' else 'm', L[0], A[0], B[0])
-    try: lines = P.predict(name)
+    try: lines = P.predict(name, 'O3XS' if cdecl else ('O3XSXr' if opt != 'none' else 'Xr'))
     except Exception: return None
     if not lines: return None
     out = []

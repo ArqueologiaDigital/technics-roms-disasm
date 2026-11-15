@@ -3220,6 +3220,14 @@ STORE_HL_DIRECT also turns `ld BC,HL / ld (m),BC` (or the long form) into `ld (m
 oracle listing has that pair at none, -Xr or -O3 -XS. random2 -Xr +1, rstmt -O3 -XS -Xr +1; library 186/248, pairs
 223, semcheck 50 unchanged.
 
+**Batch 292 (2026-11-15): probe stdiv2 at the -O sets from the predictor.** SD2XR_OPT (`compile_unit`): `sd2xr.py`
+writes probe stdiv2's shapes at -O3 -XS -Xr and cdecl -O3 -XS too, from the predictor's new sets (research-scratch
+tabulation/stdiv2xr-predict.py `--set O3XSXr` / `O3XS`, 1,020 / 1,020 each, extended by the same subagent): the
+address built once for a destination that is also an operand, register merging after allocation, a fixed XIZ priority
+for long values that live across the helper call, stack parameters for cdecl (fitted choices are listed in the
+families file). stdiv2 -O3 -XS 840 -> 1,020, -O3 -XS -Xr 542 -> 1,020, so stdiv2 is now exact at every set; rstmt and
+random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
