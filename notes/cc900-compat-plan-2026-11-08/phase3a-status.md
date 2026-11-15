@@ -3449,6 +3449,14 @@ copy the oracle (tabulation/fpp_b-ast/fpp_b-FAMILIES.md).  semcheck 36 -> 17: th
 and 6 stv sv_*_d_GG wrong-code verdicts are gone, the functions now exact.  rstmt and random unchanged.  Ledger up
 24 rows by 540, down 0; library 186/248, pairs 223.
 
+**Batch 316 (2026-11-15): a local read once is loaded where it is read.** ONCE_LOCAL_DIRECT (without -O, finished
+listing, not over an override): `ld DE|BC,(m) / ld WA,DE|BC` with DE / BC dead after is `ld WA,(m)` (rstmt
+rs_3_04_11_2: `unsigned int u = ju; gc = gca[u];` -> `ld WA,(_ju) / extz XWA ..`); a local read twice keeps its
+register (the oracle's none listings have `ld DE,(m) / ld WA,DE` 7 times in random and rstmt, each for a local read
+again later: rs_4_00_05_3, `gca[t] > gc .. return gca[t]`).  Under -Xr only when no call follows, since a call reads
+DE / BC as arguments.  rstmt none +3, -Xr +1; ledger up 2 rows by 4, down 0; library 186/248, pairs 223, semcheck 17
+with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

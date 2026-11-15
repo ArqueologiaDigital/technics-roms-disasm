@@ -7164,6 +7164,7 @@ STVXW_WHOLE = True                                       # see compile_unit
 EXT_IN_PLACE_ARG = True                                  # see compile_unit
 DUP_ARG_VIA_BC = True                                    # see compile_unit
 MORE315_WHOLE = True                                     # see compile_unit
+ONCE_LOCAL_DIRECT = True                                 # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17238,6 +17239,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     r16_ = {'C': 'BC', 'E': 'DE', 'L': 'HL'}[m_.group(1)]   # 73 such before a call or a tail jump, and
                     full[k_:k_ + 2] = ['\t%s\t%s' % (m2_.group(1), r16_), '\tld\tWA,%s' % r16_]   # ld A,r / ext WA 65,
                                                            # each before arithmetic in WA)
+            if ONCE_LOCAL_DIRECT and opt == 'none' and alt_ is None:   # without -O a local initialised from
+                for k_ in range(len(full) - 1):            # memory and read once is loaded where it is read: ld DE,(m) /
+                    m_ = re.match(r'^\tld\t(DE|BC),(\([^)]*\))$', full[k_] or '')   # ld WA,DE with DE dead after is
+                    if m_ and full[k_ + 1] == '\tld\tWA,%s' % m_.group(1) and reg_dead(full, k_ + 2, 'X' + m_.group(1)) and \
+                            not (fa and any((l or '').startswith('\tcal') for l in full[k_ + 2:])):   # (-Xr: no call after,
+                                                           # which could read DE / BC as an argument)
+                        full[k_:k_ + 2] = ['\tld\tWA,%s' % m_.group(2)]   # ld WA,(m) (rstmt rs_3_04_11_2: unsigned
+                                                           # int u = ju; gc = gca[u]; read twice it stays in DE:
+                                                           # rs_4_00_05_3, gca[t] > gc .. return gca[t])
             if SCC_HL_VIA_WA and opt == 'none' and alt_ is None:   # without -O a compare's truth value that an
                 for k_ in range(len(full) - 1):            # operation in HL reads next is set in WA and moved (random
                     m_ = re.match(r'^\tscc\t(\w+),HL$', full[k_] or '')   # r2_01_05: gia[7] & (gl >= ..) -> scc ge,WA
