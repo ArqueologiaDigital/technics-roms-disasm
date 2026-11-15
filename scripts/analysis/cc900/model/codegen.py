@@ -4998,6 +4998,8 @@ def emit_shift(F, mnem, count, R):
     F.emit(mnem, '%s,%s' % ('0x0' if count == 16 and SHIFT_SPLIT else hx(count), R))
 
 def gen_bin(F, e, fam, size, then_ret, store=False):
+    if FP_INT_PATH_GUARD and e.op in ('+', '-', '*', '/', '%') and fpgen.is_fp(getattr(e, 'ty', None)):
+        raise Unsupported('an FP operation in the integer path')   # (probe fpw fp_lc_f0: a float local times C9H_mulls)
     if CHAR_UNARY_ACC and size == 1:
         r_ = char_unary_acc(F, e)
         if r_ is not None: return r_
@@ -6616,6 +6618,8 @@ def gen_compare(F, e):
     """emit the compare for relational/equality node e; return its condition code, or True/False if constant
     (cmp_*: cp acc,mem; cpw/cpb mem,k; long: ld XWA / cp XWA,k / or XWA,XWA for ==0 and !=0)"""
     l, r = strip(e.l), strip(e.r)
+    if FP_INT_PATH_GUARD and (fpgen.is_fp(getattr(l, 'ty', None)) or fpgen.is_fp(getattr(r, 'ty', None))):
+        raise Unsupported('an FP compare in the integer path')   # (probe fpw fp_cm_flGR -O: cp XWA,(_gf2))
     if F.opt and unpromote(l).k == 'load' and unpromote(r).k == 'load' and strip(unpromote(l).e).k == 'var' and \
             strip(unpromote(r).e).k == 'var' and strip(unpromote(l).e).decl is strip(unpromote(r).e).decl:
         return e.op in ('==', '<=', '>=')                # ae_i_ne_l after copy propagation: y == x -> 1
@@ -7537,6 +7541,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+FLOAT_SHAPES_REFUSE = True                               # see compile_function_once
+FP_INT_PATH_GUARD = True                                 # see gen_compare, gen_bin
 OPA_FREE_LIVE = True                                     # see gen_opassign
 STORE_HOME_TOUCH = True                                  # see store_global
 BYTE_CMP_UNSIGNED = True                                 # see gen_compare
@@ -11983,6 +11989,7 @@ def gen_stmt(F, s, last):
                                                            # mul XWA,(XBC+0x6))
                 i += 1; continue
             if c.k == 'decl' and getattr(c.var, 'reg', None) == 'XIZ':
+                if FP_INT_PATH_GUARD and fpgen.is_fp(c.var.ty): raise Unsupported('a float local homed in XIZ')   # (fpw fp_lc_f3)
                 ci = strip(c.init) if c.init is not None else None
                 if ci is not None and F.opt and F.adecl and ci.k == 'bin' and ci.op in ('+', '-') and \
                         fold(ci.r).k == 'const' and fold(ci.r).value is not None and 1 <= abs(fold(ci.r).value) <= 8 and \
@@ -19059,6 +19066,16 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
             while ix_.k == 'cast' and ix_.kind == 'IntegralCast' and ix_.ty is not None and ix_.ty.size == 4: ix_ = strip(ix_.e)
             if fold(n_.idx).k != 'const' and ix_.ty is not None and ix_.ty.size == 4 and ix_.ty.kind == 'int':
                 raise Unsupported('a long variable index')
+    if FLOAT_SHAPES_REFUSE:                                # float shapes the model writes wrongly (probe fpw)
+        def flt_(t_): return t_ is not None and getattr(t_, 'kind', None) == 'float' and t_.size == 4
+        for n_ in nodes_in(f.body, 'cast'):
+            x_ = strip(n_.e)
+            if n_.ty is not None and n_.ty.size == 8 and flt_(getattr(x_, 'ty', None)) and x_.k not in ('load', 'fconst', 'const'):
+                raise Unsupported('a computed float widened to double')
+        for n_ in nodes_in(f.body, 'call'):
+            if flt_(getattr(n_, 'ty', None)): raise Unsupported('a call returning float')
+        for n_ in nodes_in(f.body, 'cond'):
+            if flt_(getattr(n_, 'ty', None)): raise Unsupported('a float ?: value')
     merge_address_inits(f)
     drop_dead_call_stores(f, opt != 'none', adecl)
     eval_write_only(f, opt != 'none', adecl)

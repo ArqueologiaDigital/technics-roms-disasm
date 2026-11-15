@@ -3799,6 +3799,15 @@ never ended) and STORE_HOME_TOUCH (`g1 = a` with a homed in IZ / XIZ and loaded 
 home load).  fctx now semchecks clean and joins the ledger: 350 / 150 / 277 / 126 of 624 exact.  Old rows,
 validation and library unchanged; semcheck 9, same verdicts.
 
+**Batch 347 (2026-11-15): float wrong code refused.**  lane_o3's fpw.c (600 floating-point functions free of
+undefined behaviour, oracle run 2026-11-15-11) showed 75 / 87 / 65 / 76 DIFFERENT of 524 / 506 / 464 / 440 compiled at
+none / O3XS / Xr / O3XSXr -- every one a float (4-byte) function, no double function: a computed float widened to
+double converted in place in a 4-byte slot, a call returning float given a result pointer (cc900 returns it in XHL), a
+float ?: copied as 8 bytes, FP compares and + - * / % in the -O integer path (cp XWA,(_gf2)), a float local homed in
+XIZ whose initialiser was added as a long.  FLOAT_SHAPES_REFUSE and FP_INT_PATH_GUARD refuse those shapes until the
+oracle's forms are modelled (fpw compiled 449 / 413 / 397 / 357, all semcheck-equal).  fpw joins the ledger: 341 /
+338 / 292 / 288 of 600 exact.  Old rows, validation and library unchanged; semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -396,6 +396,11 @@ for c in none O3XS; do    # multi-statement function context free of undefined b
 done
 row "run 2026-11-15-10-micro-fctx, v423/Xr" "probes/fctx.c" "$O/2026-11-15-10-micro-fctx/out/v423/Xr/probes" corpus/probes/fctx.c --opt none --adecl
 row "run 2026-11-15-10-micro-fctx, v423/O3XSXr" "probes/fctx.c" "$O/2026-11-15-10-micro-fctx/out/v423/O3XSXr/probes" corpus/probes/fctx.c --opt O3XS --adecl
+for c in none O3XS; do    # floating point free of undefined behaviour (corpus/probes/fpw.c, a wrong-code hunt)
+  row "run 2026-11-15-11-micro-fpw, v423/$c" "probes/fpw.c" "$O/2026-11-15-11-micro-fpw/out/v423/$c/probes" corpus/probes/fpw.c --opt $c
+done
+row "run 2026-11-15-11-micro-fpw, v423/Xr" "probes/fpw.c" "$O/2026-11-15-11-micro-fpw/out/v423/Xr/probes" corpus/probes/fpw.c --opt none --adecl
+row "run 2026-11-15-11-micro-fpw, v423/O3XSXr" "probes/fpw.c" "$O/2026-11-15-11-micro-fpw/out/v423/O3XSXr/probes" corpus/probes/fpw.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
