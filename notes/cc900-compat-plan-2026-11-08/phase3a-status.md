@@ -2993,6 +2993,14 @@ cp WA,0xff`), as RET_ASSIGN does for a returned one. LONG_MULK_OPA (batch 249) b
 without the XBC copy (r1_04_06: `gul *= 4UL` -> `ld XWA,(_gul) / sll 0x2,XWA / ld (_gul),XWA`). rstmt +2 / +1 / +1 /
 +1, random1 none and -Xr +1, stchain -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 261 (2026-11-15): ! of a member through a global pointer compares the memory.** NOT_MEMBER_PTR (`gen`, `!`):
+the `!` of a char or int member reached through a global pointer compares the member in memory through XWA (rstmt
+rs_2_01_14_5 and random r2_01_14: `(unsigned int)!gps->u` -> `ld XWA,(_gps) / cpw (XWA+0x8),0x0 / scc eq,WA`;
+rs_3_09_16_4: `!gps->i` -> `cpw (XWA+0x2),0x0`); a member array's element is still loaded and compared (random
+r1_01_18: `!gps->a[2]` -> `ld WA,(XWA+0x12) / cp WA,0x0`). Also tried and dropped the same day: rewriting `a[0]` of a
+global array as `*a` (no effect: the model reads `*a` from `(_a)` directly). rstmt +1 at every set, random2 none +1;
+library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

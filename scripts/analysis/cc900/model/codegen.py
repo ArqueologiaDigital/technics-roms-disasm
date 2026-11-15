@@ -1079,6 +1079,13 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % regptr_mem(F, x))   # !p[k] with p held in a
                                                  # register compares the memory (random r4_07_06: !t[6], t in XHL ->
                                                  # cpb (XHL+0x6),0x0 / scc eq,WA)
+        elif NOT_MEMBER_PTR and xs in (1, 2) and m is None and strip(x).k == 'load' and strip(strip(x).e).k == 'member' and \
+                strip(strip(x).e).arrow and strip(strip(strip(x).e).base).k == 'load' and \
+                (mem_operand(F, strip(strip(strip(x).e).base)) or '').startswith('(_') and 'WA' not in live_regs(F):
+            mb_ = strip(strip(x).e); off_ = member_offset(mb_)   # !gps->u: the member compared in memory through XWA
+            F.emit('ld', 'XWA,%s' % mem_operand(F, strip(mb_.base)))   # (rstmt rs_2_01_14_5: ld XWA,(_gps) /
+            F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % ('(XWA+%s)' % hx(off_) if off_ else '(XWA)'))   # cpw (XWA+0x8),0x0;
+                                                 # a member array's element is loaded and compared, r1_01_18)
         elif xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
             f_ = gen(F, x, 'WA', xs); W = FAM[f_ if f_ in FAM and xs in FAM[f_] else 'WA'][xs]
             if xs == 4: F.emit('or', '%s,%s' % (W, W))   # (random r1_00_05: !(k * gl2) tests the helper's XHL; r1_09_14:
@@ -7030,6 +7037,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+NOT_MEMBER_PTR = True                                    # see gen: !
 ASSIGN_K_VALUE = True                                    # see gen_assign_value
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
