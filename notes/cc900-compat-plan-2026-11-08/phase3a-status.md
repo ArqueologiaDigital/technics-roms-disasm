@@ -3234,6 +3234,12 @@ through the plain argument's register, which is then loaded again (random .r3_04
 WA,(_gi2) / ld BC,WA / add BC,0x10 / ld WA,(_gi2) / cal .v2`). rstmt -Xr +1, random3 -Xr +1; library 186/248, pairs
 223, semcheck 50 unchanged.
 
+**Batch 294 (2026-11-15): a cast long on the right goes through XWA.** RIGHT_LONG_IN_WA (`_gen_bin_body`): a cast long
+in memory as the right operand of an operation whose left is not in WA is loaded through XWA when WA is free (random
+.r3_01_18: `.. - (int)gs.l` with the left in HL -> `ld XWA,(_gs + 0x4) / sub HL,WA`, not `ld XBC,(_gs + 0x4) / sub
+HL,BC`), as batch 239 found for the other orders. rstmt none and -Xr +1, random3 -Xr +1; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

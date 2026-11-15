@@ -5306,6 +5306,12 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                                                            # and WA,HL / ld HL,WA)
         if rs is None:
             other = 'BC' if fam != 'BC' else 'DE'
+            rkl_ = strip(narrow(r, size))
+            if RIGHT_LONG_IN_WA and fam not in ('WA',) and rkl_.k == 'cast' and long_load_kept(rkl_, size) and \
+                    'WA' not in live_regs(F) and not held_after(F, 'WA', r):
+                other = 'WA'                               # a cast long on the right goes through XWA (random .r3_01_18:
+                                                           # .. - (int)gs.l with the left in HL -> ld XWA,(_gs + 0x4) /
+                                                           # sub HL,WA)
             if IDX_GUARD and held_after(F, other, r):       # (ol_two_arr: DE held i)
                 other = next((x for x in ('BC', 'DE', 'HL') if x != fam and not held_after(F, x, r) and
                               x not in live_regs(F)), None)
@@ -7085,6 +7091,7 @@ MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
 SHIFT1_MEM_REG = True                                    # see SHIFT1_MEM
+RIGHT_LONG_IN_WA = True                                  # see _gen_bin_body
 XR_ARG_CSE_COMPUTED = True                               # see gen_call_adecl
 SD2XR_OPT = True                                         # see compile_unit: sd2xr at the -O sets
 STORE_HL_DIRECT_BC = True                                # see STORE_HL_DIRECT
