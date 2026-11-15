@@ -14,3 +14,9 @@ Oracle run: ~/compartilhado/cc900-oracle/runs/2026-11-15-3-micro-validation678 (
 | batch | functions exact none / O3XS / Xr / O3XSXr of 600 | statements exact none / O3XS / Xr / O3XSXr of 3,580 |
 |-------|--------------------------------------------------|-----------------------------------------------------|
 | 340   | 93 / 46 / 77 / 40                                | 2,730 / 2,538 / 2,610 / 2,493                       |
+
+Wrong code on validation (`sh val_sem.sh`, semcheck DIFFERENT, counts only; compiled = not refused):
+
+| batch | random6-8 none / O3XS / Xr / O3XSXr | of compiled (approx.)  | rstmt6-8 none / O3XS / Xr / O3XSXr |
+|-------|-------------------------------------|------------------------|------------------------------------|
+| 342   | 16 / 14 / 8 / 8                     | 319 / 309 / 244 / 259  | 26 / 27 / 15 / 15                  |
