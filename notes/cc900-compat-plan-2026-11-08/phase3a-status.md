@@ -2837,6 +2837,17 @@ with a jump table or a computed jump is left alone. RET_REGVAR_K_OPT: under -O t
 t in a register goes (random r1_04_05 -O3 -XS). rstmt -O3 -XS +2, -O3 -XS -Xr +4; random -O3 -XS +2; elrd -O3 -XS +20,
 -O3 -XS -Xr +4; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 241 (2026-11-15): a global's value still in a register is not loaded again (-O).** MEM_REG_REUSE extends
+`addr_reg_reuse`: it also remembers a global's value loaded into a register (`ld XWA,(_gps)`), and drops a later
+identical load when nothing between wrote the register's family or that global, no call came, and no store of the
+value's width was made (random r4_04_15 -O3 -XS: `ld XWA,(_gps) / ldb (XWA),0x0 / pushw (XWA+0x10)`; r4_02_03:
+`ld XWA,(_gul) / cp XWA,0x2 / j ult,L / cp XWA,(_gula + 0x1c)`). Any store of the same width kills the value, through
+a register (r4_05_18: `ld (XDE+BC),XWA`, then `ld XWA,(_gul)` again) or to another global (fpp11 w29: `gi = gi2;
+gi3 = gi2` reloads); a narrower store does not (r4_04_15's `ldb`). The pass now runs after `test_reg_reuse`:
+run before it, `ptr_test_reuse` took away a reload whose register a later line still read (rstmt rs_4_01_13_2,
+rs_3_04_10_5, random r3_04_10, r4_01_13: 8 semcheck verdicts in the first gate run, none after the move). rstmt
+-O3 -XS +4, -O3 -XS -Xr +2; random4 +2 at both -O sets; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
