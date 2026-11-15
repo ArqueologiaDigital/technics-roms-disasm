@@ -2799,6 +2799,13 @@ number 235 was first used by a rejected attempt; see research-scratch `rejected/
 up 8 (random4 +1 at every set, rstmt +1 / +1 / +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random 197 / 86 / 152 /
 75; library 186 / 248 at -O3 -XS.
 
+**Batch 236 (2026-11-15): `!p[k]` / `!*p` with the pointer held in a register compares the memory directly
+(NOT_REGPTR_MEM).** Random r4_07_06 was two lines off: `char *t = rp(); .. gua[5] = (unsigned int)!t[6]`, with t a
+register temporary in XHL, is `cpb (XHL+0x6),0x0 / scc eq,WA`; the model loaded the byte into A and compared A. The `!`
+of a constant element of, or a dereference through, a pointer variable held in a register now compares the memory
+operand (helper regptr_mem). Ledger up 7 (random +1 at none, -O3 -XS and -O3 -XS -Xr; rstmt +1 at those sets and more),
+down 0; pairs MATCH 223; semcheck 50. Random 198 / 87 / 152 / 76; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

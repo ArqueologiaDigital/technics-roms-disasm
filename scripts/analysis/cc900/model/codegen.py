@@ -1047,6 +1047,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             f_ = gen(F, strip(x.e), 'WA', 1)     # a char value computed in a byte is tested as a byte (random r3_08_11:
             if f_ != 'WA': raise Unsupported('a char truth test outside A')   # !(gc - 5) -> ld A,(_gc) / dec 0x5,A /
             F.emit('cp', 'A,0x0')                # cp A,0x0)
+        elif NOT_REGPTR_MEM and xs in (1, 2) and m is None and regptr_mem(F, x) is not None:
+            F.emit('cp%s' % ('b' if xs == 1 else 'w'), '%s,0x0' % regptr_mem(F, x))   # !p[k] with p held in a
+                                                 # register compares the memory (random r4_07_06: !t[6], t in XHL ->
+                                                 # cpb (XHL+0x6),0x0 / scc eq,WA)
         elif xs == 4 or m is None:               # lnot_l: ld XWA,x / or XWA,XWA
             f_ = gen(F, x, 'WA', xs); W = FAM[f_ if f_ in FAM and xs in FAM[f_] else 'WA'][xs]
             if xs == 4: F.emit('or', '%s,%s' % (W, W))   # (random r1_00_05: !(k * gl2) tests the helper's XHL; r1_09_14:
@@ -2133,6 +2137,26 @@ LH_CALL_XR = True                                         # see plan_lh_call0: u
 LH_IDX_BCDE = True                                        # see lh_call_kinds: a register-temporary index in BC or DE too
 HOMED_WRITES_GEN = True                                   # see regvar_stmt: a computed write to a long homed in XIZ
 REG_SHIFT_SPLIT = True                                    # see regvar_stmt: a register long shifted by 17..31
+
+NOT_REGPTR_MEM = True                                     # see gen's !: p[k] / *p with p in a register
+
+def regptr_mem(F, x):
+    """the memory operand of p[k] or *p (a load, k constant) with the pointer p a variable held in a 32-bit register
+    (WA / BC / DE / HL family or XIZ), else None"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind in ('NoOp', 'BitCast'): x = strip(x.e)
+    if x.k != 'load': return None
+    v = strip(x.e)
+    if v.k == 'deref': b, off = strip(v.e), 0
+    elif v.k == 'index' and fold(v.idx).k == 'const' and fold(v.idx).value is not None and v.ty is not None:
+        b, off = strip(v.base), fold(v.idx).value * v.ty.size
+    else: return None
+    if b.k != 'load' or strip(b.e).k != 'var': return None
+    d = strip(b.e).decl; r = getattr(d, 'reg', None)
+    if r is None or d.ty is None or not d.ty.is_ptr(): return None
+    R = 'XIZ' if r == 'XIZ' else (FAM[r][4] if r in FAM and 4 in FAM[r] else None)
+    if R is None or not (-128 <= off < 0x10000): return None
+    return '(%s+%s)' % (R, hx(off)) if off else '(%s)' % R
 
 def uncast_int(e):
     """e without its integral casts"""
