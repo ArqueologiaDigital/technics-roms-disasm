@@ -7154,6 +7154,8 @@ CAW_WHOLE = True                                         # see compile_unit
 EVOW_WHOLE = True                                        # see compile_unit
 EVADW_WHOLE = True                                       # see compile_unit
 CMPOW_WHOLE = True                                       # see compile_unit
+SCC_HL_VIA_WA = True                                     # see compile_unit
+HL_OP_VIA_WA = True                                      # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17195,6 +17197,21 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
                         full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
                                                            # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if SCC_HL_VIA_WA and opt == 'none' and alt_ is None:   # without -O a compare's truth value that an
+                for k_ in range(len(full) - 1):            # operation in HL reads next is set in WA and moved (random
+                    m_ = re.match(r'^\tscc\t(\w+),HL$', full[k_] or '')   # r2_01_05: gia[7] & (gl >= ..) -> scc ge,WA
+                    if not m_ or not re.match(r'^\t(add|sub|and|or|xor|sll|sla|srl|sra|inc|dec)\t(0x[0-9a-f]+,)?HL\b', full[k_ + 1] or ''):
+                        continue                           # / ld HL,WA / and HL,(_gia + 0xe); the oracle's none listings:
+                    if not reg_dead(full, k_ + 1, 'XWA') or fa and any((l or '').startswith('\tcal') for l in full[k_ + 1:]):
+                        continue                           # scc / ld HL,WA 87, each before an operation on HL; scc HL 244,
+                    full[k_:k_ + 1] = ['\tscc\t%s,WA' % m_.group(1), '\tld\tHL,WA']   # before ret, exts or a pop)
+            if HL_OP_VIA_WA and alt_ is None:               # ld BC,WA / op HL,BC (no oracle listing has it) with BC and
+                for k_ in range(len(full) - 1):            # WA dead after is op WA,HL / ld HL,WA (random r2_05_09: return
+                    m_ = re.match(r'^\t(add|and|or|xor)\tHL,BC$', full[k_ + 1] or '')   # r0() + gi2 * 7; the oracle
+                    if full[k_] != '\tld\tBC,WA' or not m_: continue   # has op WA,HL / ld HL,WA 3-5 times per set)
+                    if not (reg_dead(full, k_ + 2, 'XBC') and reg_dead(full, k_ + 2, 'XWA')) or \
+                            fa and any((l or '').startswith('\tcal') for l in full[k_ + 2:]): continue
+                    full[k_:k_ + 2] = ['\t%s\tWA,HL' % m_.group(1), '\tld\tHL,WA']
             if SAME_ADDR_PTR_ONCE and opt == 'none' and alt_ is None:   # (not over a probe override's code)       # ld XA,(_p) / ld XB,(_p) / ld r,(XB+k) .. ld (XA+k),r' -- the
                 for k_ in range(len(full) - 3):            # statement reads the address it stores to: the pointer is
                     m1_ = re.match(r'^\tld\t(X(?:WA|BC|DE|HL)),\((_\w+)\)$', full[k_] or '')   # loaded once (random

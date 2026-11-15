@@ -3387,6 +3387,16 @@ renamed globals score the same; over every other oracle run the functions they w
 rstmt and random unchanged.  Ledger up 24 rows by 2,165, down 0; library 186/248, pairs 223, semcheck 44 with the
 same verdicts.
 
+**Batch 309 (2026-11-15): a compare's truth value through WA before an operation on HL; op WA,HL for a never-written
+copy.** SCC_HL_VIA_WA (none, finished listing, not over an override): `scc cc,HL` that an operation on HL reads next
+is `scc cc,WA / ld HL,WA` (random r2_01_05: `gia[7] & (gl >= (long)gp[0])` -> `scc ge,WA / ld HL,WA / and
+HL,(_gia + 0xe)`); the oracle's none listings write `scc / ld HL,WA` 87 times, each before an operation on HL, and
+`scc HL` 244 times before `ret`, `exts XHL` or a pop; the -O3 -XS listings never go through WA.  HL_OP_VIA_WA (every
+set): `ld BC,WA / op HL,BC`, which no oracle listing has, with BC and WA dead after is `op WA,HL / ld HL,WA` (random
+r2_05_09: `return r0() + gi2 * 7`; the oracle has that pair 3-5 times per set).  Random none 214 -> 216, -Xr 175 ->
+176; rstmt none +2, -Xr +3; ledger up 4 rows by 8, down 0; library 186/248, pairs 223, semcheck 44 with the same
+verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
