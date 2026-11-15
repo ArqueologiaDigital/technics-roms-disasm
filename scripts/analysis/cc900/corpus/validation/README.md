@@ -20,3 +20,10 @@ Wrong code on validation (`sh val_sem.sh`, semcheck DIFFERENT, counts only; comp
 | batch | random6-8 none / O3XS / Xr / O3XSXr | of compiled (approx.)  | rstmt6-8 none / O3XS / Xr / O3XSXr |
 |-------|-------------------------------------|------------------------|------------------------------------|
 | 342   | 16 / 14 / 8 / 8                     | 319 / 309 / 244 / 259  | 26 / 27 / 15 / 15                  |
+
+Caveat (2026-11-15): a semcheck DIFFERENT is not always model wrong code.  The 9 verdicts left on the committed corpora
+at batch 344 are all reviewed non-bugs (model/semcheck_review.tsv): reads before assignment and out-of-range indices
+(undefined behaviour), functions that fall off the end without a return (semcheck compares the leftover HL), an
+out-parameter slot written before it is read, and one V4.23 miscompile (rstmt2 rs_2_04_03_3 at -O3 -XS -Xr: two
+equal switch arms merged so that case 2 makes no call) that the model, correct by C, does not copy.  The generated
+validation programs contain the same kinds, so val_sem.sh's counts are an upper bound on wrong code.
