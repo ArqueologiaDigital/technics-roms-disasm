@@ -646,6 +646,12 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     e0 = strip(e)
     if LX5 and size == 4 and getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and F.sd4['node'] == id(e0) and lx5_emit(F, None, e0):
         return 'HL'                                    # (lhx.c lxo_*_R*: the planned long helper as a value)
+    if AND_ZERO and e0.k == 'bin' and e0.op == '&' and size in (1, 2, 4) and fam in FAM and size in FAM[fam] and \
+            any(fold(x_).k == 'const' and fold(x_).value == 0 for x_ in (e0.l, e0.r)) and \
+            not nodes_in(e0, 'call') and not nodes_in(e0, 'incdec') and not nodes_in(e0, 'opassign') and \
+            not any(n_.k == 'bin' and n_.op == '=' for n_ in nodes_in(e0, 'bin')):
+        F.emit('ld', '%s,0x0' % FAM[fam][size]); return fam   # x & 0 is 0 (random r1_05_11: guc = ~(guc & 0) ->
+                                                           # ld A,0x0 / cpl A; the oracle never writes and A,0x0)
     if RET_ASSIGN and then_ret and fam == 'HL' and e0.k == 'bin' and e0.op == '=' and not getattr(F, 'l2', None) and \
             not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None and ret_assign(F, e0, size):
         return 'HL'                                    # (stret.c: return L = V)
@@ -6975,6 +6981,7 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+AND_ZERO = True                                          # see gen
 NEG_LONG_MOVE = True                                     # see gen: - / ~ of a long
 MUL2_SHIFT = True                                        # see gen_stmt
 IF_JOIN_RET_DROP = True                                  # see LABEL_MERGE

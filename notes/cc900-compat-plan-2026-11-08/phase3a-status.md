@@ -2934,6 +2934,11 @@ when the operand ended in another register, the oracle moves it where the value 
 0x1,XWA / ld (XSP+0x6),XWA`), not `cpl BC / cpl QBC` in place; the oracle's listings never complement BC
 (`never_forms.py`). rstmt none +1, random2 none +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 253 (2026-11-15): x & 0 is 0.** AND_ZERO (`gen`): an `&` with a constant 0 operand and no call, increment or
+assignment inside is the constant 0; only the operation is replaced, its consumer is not folded (random r1_05_11:
+`guc = ~(guc & 0)` -> `ld A,0x0 / cpl A / ld (_guc),A`; the oracle's listings never write `and A,0x0`). rstmt +2 /
++1 / +2 / +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
