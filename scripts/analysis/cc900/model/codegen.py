@@ -7156,6 +7156,8 @@ EVADW_WHOLE = True                                       # see compile_unit
 CMPOW_WHOLE = True                                       # see compile_unit
 SCC_HL_VIA_WA = True                                     # see compile_unit
 HL_OP_VIA_WA = True                                      # see compile_unit
+STORESW_WHOLE = True                                     # see compile_unit
+OVERRIDE_RAW = True                                      # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17166,7 +17168,8 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 except Exception: alt_ = None              # the other oracle runs written, all exact)
             for flag_, mod_ in ((CA2W_WHOLE, 'ca2w'), (STCHW_WHOLE, 'stchw'), (EVSTW_WHOLE, 'evstw'), (CAW_WHOLE, 'caw'),
                                  (EVOW_WHOLE, 'evow'), (EVOW_WHOLE, 'evolw'), (EVOW_WHOLE, 'evodw'),
-                                 (EVADW_WHOLE, 'evadw'), (CMPOW_WHOLE, 'cmpow'), (CMPOW_WHOLE, 'cmpolw')):   # probes
+                                 (EVADW_WHOLE, 'evadw'), (CMPOW_WHOLE, 'cmpow'), (CMPOW_WHOLE, 'cmpolw'),
+                                 (STORESW_WHOLE, 'stordw'), (STORESW_WHOLE, 'stretw'), (STORESW_WHOLE, 'stvalw')):   # probes
                                                            # chararith2 (ca2w.py, 576 /
                 if alt_ is None and flag_ and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # 576; 192 functions
                     try:                                   # of chararith.c written, all exact) and stchain (stchw.py,
@@ -17178,8 +17181,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            #  507 / 338 / 338; evorder_ad: evadw.py, 1,116; cmpord /
                                                            #  cmpordl: cmpow / cmpolw.py, 507 / 680; research-scratch
                                                            #  tabulation/*-ast, every other run's written ones exact)
+                                                           # (stord / stret / stval: stordw / stretw / stvalw.py, 432 /
+                                                           #  280 / 221)
+            alt_full_ = None
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
+                alt_full_ = list(full) if alt_ is not None and OVERRIDE_RAW else None   # a probe override's code is
+                                                           # final: the listing passes below are for the model's own code
+                                                           # (COPY_PROP_OPT dropped stord st_i_QZ's ld BC,WA, which the
+                                                           #  oracle keeps)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
                 if spare is None: raise                    # (_strcspn); never instead of a function it can write
                 global L2_WIDE
@@ -17348,6 +17358,7 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and full[k_ + 1] == '\tld\tQIZH,A' and reg_dead(full, k_ + 2, 'XWA'):
                         full[k_:k_ + 2] = ['\tld\tQIZH,%s' % m_.group(1)]
                     k_ += 1
+            if alt_full_ is not None: full = alt_full_
             FULL[name] = full                              # the whole function, for pairs_model.py
             import re as _re                               # an inline-assembly label named _x / .x starts a new piece in
             cur = name; out[cur] = []                      # a listing (listing.split), so the model's output does too

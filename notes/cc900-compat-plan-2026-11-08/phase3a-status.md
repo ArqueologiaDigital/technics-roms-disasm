@@ -3397,6 +3397,17 @@ r2_05_09: `return r0() + gi2 * 7`; the oracle has that pair 3-5 times per set). 
 176; rstmt none +2, -Xr +3; ledger up 4 rows by 8, down 0; library 186/248, pairs 223, semcheck 44 with the same
 verdicts.
 
+**Batch 310 (2026-11-15): probes stord, stret and stval at every set; an override's code is final.**
+STORESW_WHOLE (`compile_unit`): `model/stordw.py`, `stretw.py`, `stvalw.py` (research-scratch tabulation/stores-ast,
+written by the stchain subagent; renamed globals score the same; stord writes 96 functions of other runs, all exact,
+stret and stval none).  stord 366 / 341 / 312 / 308 -> 432, stret 264 / 264 / 173 / 173 -> 280, stval 208 / 206 / 129
+/ 129 -> 221 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  OVERRIDE_RAW: a probe override's code skips the finished-listing
+passes, which are written for the model's own code: COPY_PROP_OPT (batch 298) had dropped stord st_i_QZ's `ld BC,WA`
+(a quotient copied before the store address forms in XHL), which the oracle keeps.  semcheck 44 -> 40: the four
+stord st_c_QS / QX / XS / XX wrong-code verdicts (an older reviewed class) are gone, the functions now exact.  pc +1
+at none, -O3 -XS, -O3 -XS -Xr.  rstmt and random unchanged.  Ledger up 15 rows by 862, down 0; library 186/248,
+pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
