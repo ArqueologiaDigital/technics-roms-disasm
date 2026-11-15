@@ -3719,6 +3719,23 @@ newly compiled, all semcheck equal.  Ledger up 4 rows by 8, down 0; library 190/
 same verdicts.  From this batch on, a strategy-observer subagent reviews progress and proposes strategy changes
 (owner's request); proposals and decisions are logged in research-scratch strategy/DECISIONS.md.
 
+**The library at every option set (2026-11-15, model at 15141555f).**  Oracle run 2026-11-15-2-libsrc97-othersets
+added none, -Xr and -O3 -XS -Xr to the -O3 -XS run; `scripts/analysis/cc900/lib_score.sh model` scores all four:
+
+| set    | exact / functions | share  |
+|--------|-------------------|--------|
+| none   | 142 / 248         | 57.3 % |
+| O3XS   | 190 / 248         | 76.6 % |
+| Xr     | 32 / 159          | 20.1 % |
+| O3XSXr | 33 / 159          | 20.8 % |
+
+Under -Xr cc900 itself refuses 21 of the 123 sources (error 375, "Illegal pointer type, different function
+attribute", and 262, "Redeclaration": the 1997 library mixes adecl and cdecl), so the -Xr totals cover the 102 it
+compiles.  At -Xr the headers must see `__CDECL` as `__cdecl`: cc900 is not `__STDC__`, so their own `#ifndef __CDECL`
+gives `__cdecl`, while clang defines `__STDC__`; with the -O3 -XS harness's `-D__CDECL=` the model's front end refused 29
+files (clang: "function returning 'double' cannot use the 'tlcs900_adecl' calling convention").  The library
+criterion was measured at -O3 -XS only until now; the other three sets are far from it.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
