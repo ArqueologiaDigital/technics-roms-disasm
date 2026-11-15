@@ -3187,6 +3187,16 @@ copy-coalescing step (a copy's source moves into its destination's register when
 source's whole life), `lda` for a 32-bit constant dividend, and a few char and long forms (stdivxr-FAMILIES.md, "-O3
 -XS -Xr: what changes"). stdiv -O3 -XS -Xr 266 -> 750 of 750; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 288 (2026-11-15): probe stdiv2 under -Xr from a predictor.** SD2XR_WHOLE (`compile_unit`) with two new
+modules, `sd2xr_predict.py` (the stdiv2 -Xr predictor a second subagent wrote, research-scratch
+tabulation/stdiv2xr-predict.py and stdiv2xr-FAMILIES.md, 1,020 / 1,020) and `sd2xr.py` (classification and
+substitution, as `sdxr.py`). Under -Xr without -O, a function whose whole body is `L = A / B` or `A % B` over stdiv2's
+kinds (S the destination itself, D a member through a pointer, M a static member, E a constant element, R a
+parameter, G, K, P, X), with parameters `(int c, T d, T e)` for the statement's type T (int, char or unsigned long),
+is written this way; static member and constant element offsets are substituted, members through a pointer keep the
+probe's offsets. stdiv2 -Xr 684 -> 1,020 of 1,020; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50
+unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
