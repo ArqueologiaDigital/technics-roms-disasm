@@ -2897,6 +2897,13 @@ WA,0x10 / ld (XBC),W`), except an unsigned one by a power of two, which is a shi
 XBC,XWA`; at -O it made no difference). rstmt +5 / +3 / +5 / +3, random3 none and -Xr +1; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 248 (2026-11-15): a pointer's member array at an unsigned index.** MEMBER_ARR_UINT (`gen_load_mem` and kind
+'A' of `_cw_addr_raw`): for an int member array reached through a pointer at an unsigned int index, the oracle widens
+and scales the index at 32 bits and adds the member offset to the low byte (rstmt rs_1_09_13_6: `gi2 -= gps->a[a]` ->
+`ld WA,(XSP+0x4) / extz XWA / add XWA,XWA / ld C,A / add C,0xe / ld XWA,(_gps) / ld WA,(XWA+C)`; rs_4_05_08_3: `..
+/ ld E,A / add E,0xe / ld XBC,(_gps) / cp WA,(XBC+E)`); a signed index keeps `add WA,WA / add WA,0xe` (micro m_gps_a).
+rstmt +4 / +2 / +3 / +1, random4 -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

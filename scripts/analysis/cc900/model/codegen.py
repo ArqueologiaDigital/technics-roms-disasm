@@ -3980,6 +3980,12 @@ def _cw_addr_raw(F, k, size, P='XBC', I='BC', B='XDE', combine=False):
     if k[0] == 'A':                                          # ld WA,(c) / add WA,WA / inc 0x8,WA / ld E,A / ld XBC,(_hps) -> (XBC+E)
         pm, off, im = k[1], k[2], k[3]
         I8 = {'XWA': 'C', 'XBC': 'E', 'XDE': 'L', 'XHL': 'H'}[P]
+        if MEMBER_ARR_UINT and size == 2 and len(k) > 4 and not k[4] and off < 0x100:
+            F.emit('ld', 'WA,%s' % im); F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA')   # an unsigned index: widened,
+            F.emit('ld', '%s,A' % I8)                                                    # scaled at 32 bits, the offset
+            if off: F.emit('inc' if off <= 8 else 'add', '%s,%s' % (hx(off), I8) if off <= 8 else '%s,%s' % (I8, hx(off)))
+            F.emit('ld', '%s,%s' % (P, pm)); return '(%s+%s)' % (P, I8)               # added to the low byte (rstmt
+                                                                                         # rs_4_05_08_3: .. / ld E,A / add E,0xe)
         F.emit('ld', 'WA,%s' % im)
         if size == 2: F.emit('add', 'WA,WA')
         elif size == 4: F.emit('sla', '0x2,WA')
@@ -6965,6 +6971,7 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+MEMBER_ARR_UINT = True                                   # see gen_load_mem
 MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
@@ -8839,6 +8846,13 @@ def gen_load_mem(F, v, fam, size):
             pm = mem_operand(F, b.base); ii = strip(i)
             while ii.k == 'cast' and ii.kind == 'IntegralCast': ii = strip(ii.e)
             im = mem_operand(F, ii)
+            if MEMBER_ARR_UINT and pm is not None and im is not None and pm.startswith('(') and esz == 2 and \
+                    ii.ty is not None and ii.ty.size == 2 and not ii.ty.signed and member_offset(b) < 0x100:
+                if im != 'WA': F.emit('ld', 'WA,%s' % im)  # an unsigned int index: widened and scaled at 32 bits, the
+                F.emit('extz', 'XWA'); F.emit('add', 'XWA,XWA'); F.emit('ld', 'C,A')   # member offset added to the low
+                if member_offset(b): F.emit('add', 'C,%s' % hx(member_offset(b)))   # byte (rstmt rs_1_09_13_6: gps->a[a]
+                F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,(XWA+C)' % R); return fam   # -> extz XWA / add XWA,XWA /
+                                                           # ld C,A / add C,0xe / ld XWA,(_gps) / ld WA,(XWA+C))
             if pm is not None and im is not None and pm.startswith('(') and esz in (1, 2, 4, 8):
                 load_index16(F, ii, im)                    # (random r1_03_19: a->a[b] with an unsigned char b ->
                 scale_reg(F, 'WA', esz, 'sla')             # ld A,(XSP+0x8) / extz WA, not a word load)
