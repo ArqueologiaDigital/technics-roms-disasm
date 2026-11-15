@@ -3665,6 +3665,16 @@ functions compile, all equal, none exact).  Random -O3 -XS 128 -> 130, -O3 -XS -
 library 190 (kn5000 188, ide2003 176); no function lost.  Ledger up 9 rows by 11, down 0; pairs 223, semcheck 9 with
 the same verdicts.
 
+**Batch 335 (2026-11-15): -Xr register-parameter refusals; loop counters across long helpers in IZ at -O.**
+lane_nm 06 XR_PARAM_PLACEHOLDER (the model's shift-past-a-live-parameter retry also for statements that read the
+parameter: generated with the parameter in IY, then IX, both must agree; a first version wrote wrong code for
+`guca[a]` with `a` in the spare register and now declines indexes and narrowed parameters) and 07 TEST_SHIFT_TEMP (-Xr
+without -O: an if test's temporary that would overwrite a char / int parameter an arm reads takes the first free
+register).  lane_idx 07 HELPER_IS_CALL_OPT, the allocator lane's first stage (-O: a loop counter whose loop calls a
+long helper is homed in IZ as across a call; without -O the model already did this).  rstmt -O3 -XS +2, -Xr +8, -O3
+-XS -Xr +7; random unchanged; no function lost; newly compiled functions semcheck equal.  Ledger up 3 rows by 17, down
+0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

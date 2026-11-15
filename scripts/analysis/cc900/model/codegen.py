@@ -1453,10 +1453,47 @@ def test_clobber_check(F, n0, n1, cond, arms, wide=False):
                 if getattr(d, 'regtemp', False) and d.kind == 'local':
                     raise LiveClobber('the test writes %s, the home of %s that an arm reads' % (r_, d.name), d)
                 if TEST_IN_BC and r_ == 'WA' and d.kind == 'param' and F.adecl and not F.opt and test_to_bc(F, n0, n1): break
+                if TEST_SHIFT_TEMP and d.kind == 'param' and d.ty.size <= 2 and F.adecl and not F.opt and \
+                        test_shift_temp(F, n0, n1, r_): break
                 # (not under -O3 -XS -Xr: there the arm's own code wrote WA over the parameter too, rs_2_02_15_4)
                 raise Unsupported('the test writes %s, the home of the parameter %s that an arm reads' % (r_, d.name))
 
 TEST_IN_BC = True                                         # see test_to_bc
+TEST_SHIFT_TEMP = True                                    # see test_shift_temp
+
+def test_shift_temp(F, n0, n1, r_):
+    """-Xr without -O: an if's test that loads a temporary into r_, the home of a char or int register parameter an
+    arm reads, takes the first family that holds no live variable and that the test does not name instead, from that
+    load on (rstmt -Xr rs_2_02_10_2: if (gua[b] != 0) .. gua[b] with b in BC -> ld WA,BC / add WA,WA / lda XDE,_gua /
+    cpw (XDE+WA),0x0; the model's base XBC wrote over b).  The first write must be a load (ld / lda) of the family's
+    register or a part of it; reads of the parameter before it stay.  True when the lines were rewritten."""
+    import re as _r
+    seg = F.lines[n0:n1]
+    if any(l and l.startswith(('\tcal', '\tcall', '\tswi')) for l in seg): return False
+    names = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
+             'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E'), 'HL': ('XHL', 'QHL', 'HL', 'QH', 'QL', 'H', 'L')}
+    if r_ not in names: return False
+    rx = lambda f_: _r.compile(r'\b(%s)\b' % '|'.join(names[f_]))
+    k = None
+    for i_, l in enumerate(seg):
+        p_ = l.strip().split('\t') if l else []
+        if len(p_) == 2 and 'X' + r_ in written_fams(p_[0], p_[1]):
+            k = i_; break
+    if k is None: return False
+    p_ = seg[k].strip().split('\t')
+    dst, _, src = p_[1].partition(',')
+    if p_[0] not in ('ld', 'lda') or not rx(r_).fullmatch(dst) or rx(r_).search(src) and not src.startswith('('): return False
+    live = live_regs(F) | set(live_regs_read(F))
+    G = next((f_ for f_ in ('WA', 'BC', 'DE', 'HL') if f_ != r_ and f_ not in live and
+              not any(l and rx(f_).search(l) for l in seg)), None)
+    if G is None: return False
+    mp = dict(zip(names[r_], names[G]))
+    new = list(seg[:k])
+    new.append('\t%s\t%s,%s' % (p_[0], mp[dst], src))
+    for l in seg[k + 1:]:
+        new.append(rx(r_).sub(lambda m_: mp[m_.group(1)], l) if l and l.startswith('\t') else l)
+    F.lines[n0:n1] = new
+    return True
 UIDX_ADDR_XDE = True                                      # see gen_stmt's store: a long element at an unsigned index in XDE
 MUL_K_ELEM_BC = True                                      # see gen_mul_const: an element times a constant, the product in XBC
 UIDX_REGPARAM = True                                      # see elem_addr and lh_reg_uidx: -Xr, an unsigned register-parameter index
@@ -2883,6 +2920,7 @@ STORE_DIV_DD = True                                       # see store_div: a mem
 SP_CONST_ELEM = True                                      # a long helper's constant-element operand in a planned store
 LH_STORE_AFTER = True                                     # a long helper's store through p->m / p[k]: the address after the call
 LH_MEMBER_K = True                                        # lh_member with a constant divisor (without -O)
+HELPER_IS_CALL_OPT = True                                 # see regtemp_candidates (rule 07, random r3_02_00)
 HELPER_IS_CALL = True                                     # a loop counter live across a long helper is homed like across a call
 LOOPCTR = True
 SHIFT_COUNT_GUARD = True                                  # see edit_shift_count_guard.py                                            # see edit_loopctr.py                                       # see edit_l2_char_swap.py                                        # see edit_lh_pk_order.py                                      # plan_store_x's ADDR form (a pointer dividend)
@@ -12487,11 +12525,18 @@ def gen_body_shift(F, s, last):
         return _gen_stmt_body(F, s, last)
     except Unsupported as ex:
         m = re.search(r'over the live parameter (\w+) in (WA|BC|DE)$', str(ex))
+        if not m and XR_PARAM_PLACEHOLDER:
+            m = re.search(r'before the last read of the parameter (\w+) in (WA|BC|DE)$', str(ex))
         if not m: raise
         d = next((x for x in F.f.params if x.name == m.group(1)), None)
-        if d is None or uses_decl(s, d): raise
         def restore():
             F.__dict__.clear(); F.__dict__.update({k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in snap.items()})
+        if d is not None and uses_decl(s, d) and XR_PARAM_PLACEHOLDER:
+            restore()
+            r_ = param_placeholder_stmt(F, s, last, d, n0, restore)
+            if r_ is not None: return r_[0]
+            restore(); raise ex
+        if d is None or uses_decl(s, d): raise
         restore()
         F.shift_free = {d}
         try:
@@ -12503,6 +12548,45 @@ def gen_body_shift(F, s, last):
         if new2 is None: restore(); raise ex
         F.lines[n0:] = new2
         return r_
+
+XR_PARAM_PLACEHOLDER = True                               # see param_placeholder_stmt
+
+def param_placeholder_stmt(F, s, last, d, n0, restore):
+    """-Xr: a statement refused because its code writes the register of a live parameter d that it reads itself is
+    generated with d moved to a spare family (IY, then IX, nothing homed there), its WA / BC / DE temporaries are then
+    renamed in order past the live families (shift_rename) and d's spare family back to d's own (rstmt -Xr
+    rs_2_05_10_1: int t = *gpi + a, a in WA -> ld XBC,(_gpi) / ld BC,(XBC) / add BC,WA / ld (_ji),BC).  The statement
+    is generated with both spare families and the two results must agree (a temporary in the spare family would
+    differ).  An int or pointer parameter only; (result, ) or None"""
+    import copy as _cp
+    if d.ty.size not in (2, 4) or d.reg not in ('WA', 'BC', 'DE'): return None
+    if any(uses_decl(n_.idx, d) for n_ in nodes_in(s, 'index')): return None   # (an index in a spare family took the
+                                                           # unsigned path: random r2_07_14 -Xr, guca[a] -> extz XDE, wrong)
+    if any(n_.ty is not None and n_.ty.size < d.ty.size and uses_decl(n_.e, d) for n_ in nodes_in(s, 'cast')):
+        return None                                        # (a narrowed d: its byte has no name in the spare family)
+    homed = {getattr(x, 'reg', None) for x in list(F.f.params) + list(F.f.decls)} | {'IX', 'IY'} & set(getattr(F, 'pushes', []) or [])
+    outs = []
+    for sp_ in ('IY', 'IX'):
+        if sp_ in homed or any(l and re.search(r'\bX?%s\b' % sp_, l) for l in F.lines): return None
+        restore()
+        real_ = d.reg; d.reg = sp_
+        try:
+            r_ = _gen_stmt_body(F, s, last)
+        except Exception:                                  # (anything the spare family cannot spell: refused)
+            d.reg = real_; return None
+        d.reg = real_
+        new = F.lines[n0:]
+        if any(l and l.startswith(('\tcal', '\tcall', '\tswi')) for l in new): return None
+        new2 = shift_rename(F, new, d, s)
+        if new2 is None: return None
+        fam_ = {'IY': ('XIY', 'IY'), 'IX': ('XIX', 'IX')}[sp_]
+        to_ = ('X' + real_, real_)
+        new3 = [re.sub(r'\b(%s|%s)\b' % fam_, lambda m_: to_[0] if m_.group(1) == fam_[0] else to_[1], l)
+                if l and l.startswith('\t') else l for l in new2]
+        outs.append((r_, new3))
+    if len(outs) != 2 or outs[0][1] != outs[1][1]: return None
+    F.lines[n0:] = outs[1][1]
+    return (outs[1][0],)
 
 LIVE_SHIFT_DECL = True                                    # see shift_decl_close
 
@@ -17681,7 +17765,7 @@ def regtemp_candidates(F):
     def calls_in(n):
         out = []
         walk(n, lambda m, dep: out.append(m) if m.k == 'call' or fpgen.is_fp_op(m) or (
-            HELPER_IS_CALL and not F.opt and getattr(n, 'k', None) in ('for', 'while', 'do') and m.k == 'bin' and
+            HELPER_IS_CALL and (not F.opt or HELPER_IS_CALL_OPT) and getattr(n, 'k', None) in ('for', 'while', 'do') and m.k == 'bin' and
             m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and m.ty.kind == 'int' and
             has_helper_call(m) and lh_plain_operand(m.l) and lh_plain_operand(m.r)) else None)   # (a loop counter across a
                                                            # long helper of plain operands: IZ, random r3_02_00; an operand
