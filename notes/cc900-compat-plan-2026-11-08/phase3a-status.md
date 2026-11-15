@@ -3708,6 +3708,17 @@ register (`ld C,(_gc) / add C,(_hc)`, loc0 lo_c_Bgs; r3_08_07, r3_04_08), not in
 still goes through A (r4_01_00).  Random -O3 -XS 136 -> 137, -O3 -XS -Xr 123 -> 124; no function lost (micro
 included).  Ledger up 2 rows by 2, down 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
 
+**Batch 340 (2026-11-15): switch statements and live parameters.** lane_nm 08 SWITCH_FREE_FAM (a switch compared in a
+chain takes its value in the first of WA, BC, DE, HL that no parameter the body reads holds; a first version wrote wrong
+code for rs_3_05_00_2 and is guarded), 10 CASE_TAIL_JUMP (a `j eq` to a case whose only code is a tail call goes
+straight to the function, `j eq,_v0`; all 20 such jumps in the oracle are switch cases; a first, wider version lost
+r1_02_08, rs_3_03_14_4 and micro switch.c sw_jt6d), 11 CASE_ARM_DEAD (without -O, a register parameter is dead in a
+case arm that does not read it when nothing after the switch reads it).  The lane's 09 SHIFT_DECL_HOME was a measured
+no-op and was left out.  rstmt +2 / +2 / +3 / +1; random unchanged; no function lost (micro included); four functions
+newly compiled, all semcheck equal.  Ledger up 4 rows by 8, down 0; library 190/248, pairs 223, semcheck 9 with the
+same verdicts.  From this batch on, a strategy-observer subagent reviews progress and proposes strategy changes
+(owner's request); proposals and decisions are logged in research-scratch strategy/DECISIONS.md.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

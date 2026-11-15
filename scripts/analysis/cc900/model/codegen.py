@@ -7232,6 +7232,27 @@ PART_HIGH_ONLY = True                                     # see Fn.emit's statem
 BASE_IDX_CLASH = True                                     # see Fn.emit
 UIDX_RMW = True                                           # see lvalue
 SWITCH_WA_PARAM = True                                    # see gen_switch
+SWITCH_FREE_FAM = True                                    # see switch_free_fam
+
+def switch_free_fam(F, s, vals):
+    """-Xr without -O: a switch compared in a chain (not a table) whose body reads a register parameter in WA takes its
+    value in the first of WA, BC, DE, HL that no register parameter the body or the rest reads holds (rstmt -Xr
+    rs_2_00_04_4: switch (gs.c) { .. gca[a] .. } with a in A -> ld C,(_gs) / cp C,0x14 / ..; rs_1_09_18_3: a in XWA
+    only assigned, b in BC read -> ld A,(_gc2)); None when there is none, under -O or for a table"""
+    if F.opt or not vals: return None
+    n = len(vals); lo = min(v for v, _, _ in vals); hi = max(v for v, _, _ in vals)
+    if n >= 6 and hi - lo + 1 <= 2 * n: return None
+    def reads_(n_, d):
+        tg = set(); us = []
+        walk(n_, lambda m, dd: tg.add(id(strip(m.l))) if m.k == 'bin' and m.op == '=' and strip(m.l).k == 'var' else None)
+        walk(n_, lambda m, dd: us.append(m) if m.k == 'var' and m.decl is d and id(m) not in tg else None)
+        return bool(us)
+    busy = set()
+    for d in list(F.f.params) + list(F.f.decls):
+        r_ = getattr(d, 'reg', None)
+        if r_ in ('WA', 'BC', 'DE', 'HL') and d not in F.dead and (reads_(s.body, d) or param_live_after(F, d)):
+            busy.add(r_)
+    return next((f_ for f_ in ('WA', 'BC', 'DE', 'HL') if f_ not in busy), None)
 PTR_INIT_EXTZ = True                                      # see gen_ptr_arith
 DO_PREDEC_IDX = True                                      # see the DEC_CMP_SUB peephole
 RIGHT_READS_HOME = True                                   # see gen_bin
@@ -12254,11 +12275,17 @@ def gen_stmt(F, s, last):
         return
     if s.k == 'switch':
         if F.pending and LOOP_FLUSH_POPS: flush_pops(F)   # fpp7.c m25: the pops before the switch, not in a case arm
-        gen_switch(F, s, last); return
+        sv_sw_ = getattr(F, 'arm_switch', None); F.arm_switch = s if s in getattr(F, 'top_list', ()) else None
+        try: gen_switch(F, s, last)
+        finally:
+            for d_ in getattr(F, 'arm_dead', set()): F.dead.discard(d_)
+            F.arm_dead = set(); F.arm_switch = sv_sw_
+        return
     if s.k in ('case', 'default'):                         # a case label inside a switch body (gen_switch)
         if F.case_labels[id(s)] and id(s) not in F.case_inner:
             if F.pending: flush_pops(F)                    # sw_fall: a case falls into the next one: its pops first
             F.lines.append(F.case_labels[id(s)] + ':')
+        if CASE_ARM_DEAD and id(s) not in getattr(F, 'case_inner', set()): case_arm_dead(F, s)
         if s.body is not None: gen_stmt(F, s.body, False)
         return
     if s.k == 'ulabel':                                    # a user label left by goto_returns (_strcspn's bye: stays)
@@ -14103,12 +14130,20 @@ def gen_switch_(F, s, last):
         elif keep and F.opt and sel is not None and sel.reg in ('IZ', 'QIZ') and (not F.adecl or is_tab):
             F.emit('ld', '%s,%s' % (FAM['WA'][size], R)); R = FAM['WA'][size]   # sw_loop under O3XS: ld WA,IZ
     else:
+        sfam_ = 'WA'
         if SWITCH_WA_PARAM and F.adecl and any(getattr(d_, 'reg', None) == 'WA' and uses_decl(s.body, d_) for d_ in F.f.params):
-            raise Unsupported('a switch value in WA over a parameter its body reads')   # (rstmt -Xr rs_2_05_19_4,
-                                                           # rs_3_05_00_2: the oracle tests in C / BC, ld C,(_gc2) / cp C,0x2)
-        fam = gen(F, e, 'WA', e.ty.size) if not (m and family_of(m) == 'XWA') else 'WA'
-        R = FAM['WA'][size]
-        if ext: F.emit(ext, 'WA')
+            sfam_ = switch_free_fam(F, s, vals) if SWITCH_FREE_FAM else None
+            if sfam_ is None: raise Unsupported('a switch value in WA over a parameter its body reads')   # (rstmt -Xr
+                                                           # rs_2_05_19_4, rs_3_05_00_2: the oracle tests in C / BC,
+                                                           # ld C,(_gc2) / cp C,0x2)
+        n_sw_ = len(F.lines)
+        fam = gen(F, e, sfam_, e.ty.size) if not (m and family_of(m) == 'XWA') else 'WA'
+        if fam != sfam_ or sfam_ != 'WA' and any('XWA' in written_fams(*(l_.strip().split('\t') + [''])[:2])
+                                                 for l_ in F.lines[n_sw_:] if l_ and l_.startswith('\t')):
+            raise Unsupported('a switch value in WA over a parameter its body reads')   # (its own code wrote WA:
+                                                           # rstmt -Xr rs_3_05_00_2, ld XWA,(_gps) over a)
+        R = FAM[sfam_][size]
+        if ext: F.emit(ext, sfam_)
     exit_is_ret = last and not F.pushes and not F.xiz_vars and not getattr(F, 'frame', 0) and not F.pending
     def to_default(cc):
         if deflab == end and exit_is_ret:
@@ -14244,6 +14279,7 @@ def gen_switch_(F, s, last):
         rest_ = items[i_ + 1:]                             # the live guard's remainder: the fall-through path only, up to
         stop_ = next((k for k, x in enumerate(rest_) if x.k in ('break', 'return')), len(rest_))   # the next break
         F.cur_rest = rest_[:stop_]                         # (r1_00_13 -Xr: case 0: ... falls into default: gp = gs.p + a,
+        F.arm_end = rest_[stop_] if stop_ < len(rest_) else None   # (case_arm_dead: the break / return it reaches)
         gen_stmt(F, it, False)                             # a in A across the first arm's ._fsub_d was wrong code; arms
     if F.pending and not F.lines[-1].startswith(('\tret', '\tj\t', '\tretd')): flush_pops(F)   # (r2_06_14)
     F.loops.pop()
@@ -18581,6 +18617,64 @@ def tail_calls_opt(F, lines):
         res.append(l)
     return res
 
+CASE_TAIL_JUMP = True                                     # see case_tail_jump
+
+def case_tail_jump(lines, cases=()):
+    """a conditional jump to a label whose only code is a tail jump to a function goes to the function itself, and the
+    label's block, then unreachable and unreferenced, is not written (rstmt rs_2_00_04_4: switch (gs.c) { .. case 16:
+    v0(); break; ..} -> cp A,0x10 / j eq,_v0 (-Xr j eq,.v0); the oracle: 5 such jumps at none, 3 at -Xr, 5 / 7 under
+    -O, all of them a switch case, j eq from a compare chain; an if's jump keeps its label, random r1_02_08: j eq,L2 /
+    .. / L2: j _rp, and so does a jump table's range check, micro switch.c sw_jt6d -O: j m,L1)"""
+    import re as _r
+    def is_label(l): return l.endswith(':') and not l.startswith('\t')
+    pos = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
+    out = list(lines); moved = set()
+    for i, l in enumerate(lines):
+        m = _r.match(r'^\tj\t(eq),(L\d+)$', l)
+        if not m or m.group(2) not in pos or m.group(2) not in cases: continue
+        k = pos[m.group(2)] + 1
+        if k < len(lines) and _r.match(r'^\tj\t[._][A-Za-z_]\w*$', lines[k]) and \
+                (k + 1 >= len(lines) or is_label(lines[k + 1])):
+            out[i] = '\tj\t%s,%s' % (m.group(1), lines[k].split('\t')[2]); moved.add(m.group(2))
+    for lab in moved:
+        k = pos[lab]
+        if any(_r.search(r'[\t,]%s$' % lab, x) for j_, x in enumerate(out) if j_ != k and x and not is_label(x)): continue
+        prev = next((x for x in reversed(out[:k]) if x is not None), '')
+        if prev == '\tret' or prev.startswith('\tretd') or (prev.startswith('\tj\t') and ',' not in prev):
+            out[k] = None; out[k + 1] = None
+    return [l for l in out if l is not None]
+
+CASE_ARM_DEAD = True                                      # see case_arm_dead
+
+def case_arm_dead(F, s):
+    """without -O, a case arm of a switch at the function's top level: a register parameter that the arm (its
+    statements up to the break or return it reaches, falling through later labels) does not read, and that nothing
+    after the switch reads, is dead while the arm is generated, so the arm's code may use its register (rstmt -Xr
+    rs_2_05_19_4: case 1 computes in A while a, read only in case 2, sits there; rs_2_00_04_4)"""
+    for d_ in getattr(F, 'arm_dead', set()): F.dead.discard(d_)
+    F.arm_dead = set()
+    sw = getattr(F, 'arm_switch', None)
+    if sw is None or F.opt: return
+    arm = ([s.body] if s.body is not None else []) + list(getattr(F, 'cur_rest', []) or [])
+    if any(getattr(x, 'k', None) in ('goto', 'continue') for x in arm): return
+    ae_ = getattr(F, 'arm_end', None)
+    ends = ae_ is not None
+    if ae_ is not None and ae_.k == 'return': arm.append(ae_)
+    def ends_in(n):                                        # the arm's own last statement is a break / return
+        while n is not None and getattr(n, 'k', None) in ('case', 'default'): n = n.body
+        if n is None: return False
+        if n.k in ('break', 'return'): return True
+        return n.k == 'block' and bool(n.body) and ends_in(n.body[-1])
+    if not ends and not any(ends_in(x) for x in arm[-1:]): return
+    if any(nodes_in(x, 'goto') for x in arm if x is not None): return
+    top = list(getattr(F, 'top_list', ()))
+    after = top[top.index(sw) + 1:] if sw in top else None
+    if after is None: return
+    for d in F.f.params:
+        if getattr(d, 'reg', None) not in ('WA', 'BC', 'DE', 'HL') or d in F.dead: continue
+        if any(x is not None and uses_decl(x, d) for x in arm) or any(uses_decl(x, d) for x in after): continue
+        F.dead.add(d); F.arm_dead.add(d)
+
 def tail_calls(lines, keep_end):
     """cal X directly followed by j L, where L leads to ret, becomes j X (switch.c sw_jt6, ctrl.c c_ifchain under
     -Xr; a cal that falls into L: ret stays, cmp_i eq_i_br).  A ret left unreferenced after an unconditional jump is dropped, except a switch
@@ -18774,6 +18868,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 walk(f.body, lambda n, dep: al_.append(id(n)) if n.k == 'var' and n.decl is p_ else None)
                 if al_ and all(x in tg_ for x in al_): F.dead.add(p_)
     F.guard_armed = True                                   # the live-parameter guard, from the real body on (the
+    F.top_list = flat(f.body) if CASE_ARM_DEAD else []   # (case_arm_dead: a switch at the top level)
     gen_stmt(F, f.body, True)                              # planners' trial code runs with the registers undecided)
     if getattr(F, 'sd4', None) and F.sd4['need'][0] == 'lx5' and not F.sd4.get('done'):
         raise Unsupported('lx5: the planned long helper was written by another path')
@@ -18824,6 +18919,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()) | tab, full=False,
                                joins=getattr(F, 'if_joins', set()) | getattr(F, 'cj_labels', set()))
     else: F.lines = tail_calls(F.lines, getattr(F, 'switch_table', False))
+    if CASE_TAIL_JUMP: F.lines = case_tail_jump(F.lines, {v for v in getattr(F, 'case_labels', {}).values() if v})
     if not F.opt and getattr(F, 'tfam', None):           # ot_cmp_anb under -Xr: j eq,L3 ... L3: ret -> ret eq
         import re as _rx
         for i, l in enumerate(F.lines):
