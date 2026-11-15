@@ -7048,6 +7048,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+STVX_D_ZERO = True                                       # see stvx_plan's value
 RIGHT_LONG_LEFT_COMPUTED = True                          # see _gen_bin_body's RIGHT_LONG_FIRST
 CALL_HELPER_ARG_POP = True                               # see gen_stmt's call statements
 NOT_MEMBER_PTR = True                                    # see gen: !
@@ -15401,6 +15402,10 @@ def stvx_plan(F, lk, rv, size):
     def at(f, off): return '(%s+%s)' % (X4(f), hx(off)) if off else '(%s)' % X4(f)
     def value(P, B, V):
         op = OPS.get(sh[1]); lo, ro = sh[2], sh[3]
+        if S_ == 'D' and STVX_D_ZERO and not ro[2] and sh[1] in ('+', '&', '|', '^') and lo[0] == 'M':
+            F.emit('ld', '%s,%s' % (X4(P), ro[1])); F.emit('ld', '%s,%s' % (R(V), at(P, 0)))   # a pointer's target with no
+            F.emit(op, '%s,%s' % (R(V), lo[1])); return V  # displacement is loaded first (random r4_05_14: gpi[2] = gs.i +
+                                                           # *gpi -> ld XWA,(_gpi) / ld BC,(XWA) / add BC,(_gs + 0x2))
         if S_ == 'D':
             F.emit('ld', '%s,%s' % (X4(P), ro[1])); F.emit('ld', '%s,%s' % (R(V), lo[1]))
             F.emit(op, '%s,%s' % (R(V), at(P, ro[2]))); return V

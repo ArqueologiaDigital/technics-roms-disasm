@@ -3022,6 +3022,13 @@ long in memory on the right builds the left first, moves it to C / BC, then load
 or A,C`); a constant or another cast long on the left keeps batch 239's right-first order. rstmt none and -Xr +1,
 random3 none and -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 265 (2026-11-15): a pointer's target with no displacement goes first in a stored sum.** STVX_D_ZERO
+(`stvx_plan`'s value): a store through a pointer whose value is a commutative operation of a plain global and a
+pointer's target with no displacement loads the target first and takes the global as the memory operand (random
+r4_05_14: `gpi[2] = gs.i + *gpi` -> `ld XWA,(_gpi) / ld BC,(XWA) / add BC,(_gs + 0x2) / ld XWA,(_gpi) / ld
+(XWA+0x4),BC`); a displaced target (probe stvx's D rows, `hps->m`) keeps the plain operand first. rstmt +1 at every
+set, random4 none and -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
