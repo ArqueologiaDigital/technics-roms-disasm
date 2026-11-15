@@ -6971,6 +6971,7 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+IF_JOIN_RET_DROP = True                                  # see LABEL_MERGE
 CHAR_DIVK = True                                         # see char_narrow's visit2
 LONG_MULK_OPA = True                                     # see gen_opassign
 MEMBER_ARR_UINT = True                                   # see gen_load_mem
@@ -16477,6 +16478,12 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         k = 1                                            # of its own in front of it
         while k < len(F.lines) - 1:
             a, b = F.lines[k], F.lines[k + 1]
+            if IF_JOIN_RET_DROP and _re.match(r'^L\d+:$', a) and b == '\tret' and k + 1 < len(F.lines) - 1 and \
+                    a[:-1] in {str(x) for x in getattr(F, 'if_joins', set())} and \
+                    not any(_re.search(r'[\t,]%s$' % a[:-1], l_) for l_ in F.lines):
+                del F.lines[k]; continue                   # an inner if's end where the outer then-branch returns: the
+                                                           # if jumps to the outer end, no label of its own (rstmt
+                                                           # rs_2_07_07_6: if (!c) { if (d) ..; } else .. -> ret eq / .. / ret)
             if _re.match(r'^L\d+:$', a) and _re.match(r'^L\d+:$', b):
                 la, lb = a[:-1], b[:-1]
                 la, lb = a[:-1], b[:-1]

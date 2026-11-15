@@ -2913,6 +2913,15 @@ constant 1..127 under `!`, or divided or shifted again, is a byte division (rs_4
 divs WA,0x2 / cp A,0x0`; rs_3_01_10_2: `(gc2 % 2) % 4` -> `divs WA,0x2 / ld A,W / exts WA / divs WA,0x4 / ld L,W`).
 rstmt +8 / +6 / +7 / +6; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 250 (2026-11-15): an inner if's end label where the outer then-branch returns.** IF_JOIN_RET_DROP in
+LABEL_MERGE (without -O): an inner if that ends an outer then-branch jumps to the outer end, so where the then-branch
+returns the inner if's own end label, which nothing names any more, is not written (rstmt rs_2_07_07_6:
+`if (!guca[2]) { if (gu2 != 0) gs.u = gu / gu2; } else ..` -> `cpw (_gu2),0x0 / ret eq / .. / ret / L515:`, not
+`.. / L3: / ret`). Only before a `ret` that is not the function's last line; an if's end label before the final `ret`
+stays (rs_1_00_00_3). Also measured and rejected the same day: dropping a compare-chain switch's unreferenced end
+label (research-scratch `rejected/switch_end_label_drop.md`; it cost rstmt none -11 as placed). rstmt none +2, -Xr
++1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
