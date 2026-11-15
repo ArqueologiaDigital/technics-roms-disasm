@@ -3528,6 +3528,18 @@ the same verdicts.  The lane's rules 05-07 bring `_atan2`, `_tanh` and fpp11 clo
 are left for later; `_tanh`, `_asin` and `_log` are off only by the slot order of double temporaries in functions
 with early returns, which the window rule cannot take without losing `_cosh`, `_exp`, `_sin` and `_sinh`.
 
+**Batch 323 (2026-11-15): the library's _atof and _fwrite exact; nine more none / -Xr rules.** From the integer
+library lane (research-scratch tabulation/lanes-2026-11-15/lane_libint): JOIN_THREAD (an if-join no branch falls
+into, followed by a loop's entry jump, is threaded), POSTINC_SLOT_STORE (-O: `*p++ = v` with p in a frame slot is `ld
+XW,(s) / ld (XW+:N),v / ld (s),XW`; the -O3 listings write it 5 times, the old form 0), L2_LOOP_THEN_CALLS (the L2
+allocator also when all calls follow the loops and nothing is read after them: `_atof`), CHAIN_TEST_SOURCE (after `a
+= b = e;` an `if (a ..)` tests b's register: `_fwrite`'s `cp QIZ`); two rules that let `_memicmp` compile also wrote
+wrong code and were held back.  From lane_none, rebased: CP_HL_SCC, BYTE_STORE_DIRECT_NOOPT, XIZ_BASE_DIRECT,
+CHAR_UIDX_PARAM, FP_ARG_ELEM0 (fpgen.py, edit_batch323_fpgen.py), BYTE_SLOT_DIRECT, EXT_VIA_XWA, UDIV_POW2_SRL,
+IFELSE_INNER_JOIN.  Library 187 -> 189 (kn5000 185 -> 187, ide2003 174 -> 175); rstmt none +14, -O3 -XS +2, -Xr +19,
+-O3 -XS -Xr +2; random unchanged; no function lost at any set, none newly compiled.  Ledger up 7 rows by 42, down 0;
+pairs 223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

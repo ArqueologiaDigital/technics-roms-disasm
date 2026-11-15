@@ -651,6 +651,8 @@ def eval_into(F, e, dest):
     emit_operands(F, dest, [e])
     F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(e.ty)))
 
+FP_ARG_ELEM0 = True                                       # see push_fp_arg
+
 def push_fp_arg(F, a, hint=None):
     """a double argument: high half first, through XIY / XIX (d_call1: lda XIY,XSP+0x18 / ld XIX,(XIY+0x4) /
     push XIX / ld XIX,(XIY) / push XIX)"""
@@ -659,7 +661,14 @@ def push_fp_arg(F, a, hint=None):
         m = C().mem_operand(F, a)                          # probes/adfp.c ac_fi: a float variable -> ld XWA,(_gf) /
         if m is not None and m.startswith('('):            # push XWA
             F.emit('ld', 'XWA,%s' % m); F.emit('push', 'XWA'); F.push += 4; return 4
-    put_addr(F, eval_val(F, a, hint), 'XIY')
+    e0_ = strip(a.e) if a.ty.size == 8 and a.k == 'load' else None
+    b0_ = strip(e0_.base) if e0_ is not None and e0_.k == 'index' else None
+    if FP_ARG_ELEM0 and b0_ is not None and b0_.k == 'var' and b0_.decl.kind == 'global' and \
+            b0_.decl.ty is not None and b0_.decl.ty.kind == 'array' and C().fold(e0_.idx).k == 'const' and \
+            C().fold(e0_.idx).value == 0 and b0_.decl.storage in ('extern', ''):
+        F.emit('lda', 'XWA,_%s' % b0_.decl.name); F.emit('lda', 'XIY,XWA')   # element 0 of a global array: through
+    else:                                                  # XWA (random r1_06_16: vd(gda[0]))
+        put_addr(F, eval_val(F, a, hint), 'XIY')
     if a.ty.size == 8:
         F.emit('ld', 'XIX,(XIY+0x4)'); F.emit('push', 'XIX'); F.push += 4
     F.emit('ld', 'XIX,(XIY)'); F.emit('push', 'XIX'); F.push += 4

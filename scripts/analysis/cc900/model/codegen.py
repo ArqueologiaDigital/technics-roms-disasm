@@ -1538,6 +1538,9 @@ def _cw_load_raw(F, k, size, base='XBC', idx='WA'):
                 if base[1:] == k[2]: raise cw_base_clash(k)
                 F.emit('lda', '%s,%s' % (base, k[1])); F.emit('ld', 'A,(%s+%s)' % (base, k[2])); return 'A'
             I = base[1:]
+            if char_uidx_param(F, k[2], k[3]) and base != 'XWA':   # (an unsigned index: zero-extended in XWA)
+                F.emit('ld', 'WA,%s' % k[2]); F.emit('extz', 'XWA'); F.emit('ld', '%s,%s' % (base, k[1]))
+                F.emit('add', '%s,XWA' % base); F.emit('ld', 'A,(%s)' % base); return 'A'
             F.emit('lda', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (I, k[2])); F.emit('extz', base); F.emit('add', '%s,XWA' % base)
             F.emit('ld', 'A,(%s)' % base); return 'A'
         if len(k) == 5 and base[1:] == idx: raise cw_base_clash(k)
@@ -4052,6 +4055,9 @@ def _cw_addr_raw(F, k, size, P='XBC', I='BC', B='XDE', combine=False):
             X = 'X' + I
             if ' + ' in sym: raise Unsupported('cmp_wide: a char array member at an index')   # (elrd.c er_e_cMaK: the oracle
                                                              #  indexes it with the 16-bit register, lda XDE,_hs + 0x2 / (XDE+BC))
+            if char_uidx_param(F, im, signed) and X != 'XWA':   # (an unsigned index: zero-extended in XWA)
+                F.emit('ld', 'WA,%s' % im); F.emit('extz', 'XWA'); F.emit('ld', '%s,%s' % (X, sym)); F.emit('add', '%s,XWA' % X)
+                return '(%s)' % X
             F.emit('lda', 'XWA,%s' % sym); F.emit('ld', '%s,%s' % (I, im)); F.emit('extz', X); F.emit('add', '%s,XWA' % X)
             return '(%s)' % X
         if len(k) == 5 and B[1:] == I: raise cw_base_clash(k)
@@ -7275,6 +7281,20 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+IFELSE_INNER_JOIN = True                                 # see gen_stmt (if-else)
+UDIV_POW2_SRL = True                                     # see compile_unit
+EXT_VIA_XWA = True                                       # see compile_unit
+BYTE_SLOT_DIRECT = True                                  # see compile_unit
+CHAR_UIDX_PARAM = True                                   # see char_uidx_param
+
+
+def char_uidx_param(F, im, signed):
+    """cdecl without -O: is a char element's index an unsigned int in a stack slot (ld WA,(c) / extz XWA / ld XR,_g /
+    add XR,XWA, rstmt rs_1_02_11_3)?"""
+    return CHAR_UIDX_PARAM and not signed and not F.opt and not F.adecl and isinstance(im, str) and im.startswith('(XSP+')
+XIZ_BASE_DIRECT = True                                   # see compile_unit
+BYTE_STORE_DIRECT_NOOPT = True                                 # see compile_unit
+CP_HL_SCC = True                                         # see compile_unit
 CONST_STORE_IMM = True                                   # see compile_unit
 CHAIN_BC_ADDR_WA = True                                  # see gen_assign (operator = through BC)
 GUARD_ELEM_REGS = True                                   # see compile_unit
@@ -7864,6 +7884,10 @@ REG_KILLS = {'BC': ('BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('DE', 'XDE'), 
 
 REG_PARTS.update({'A': ('A', 'WA', 'XWA'), 'L': ('L', 'HL', 'XHL')})   # (byte registers for reg_dead: CPB_ELEM_K)
 REG_KILLS.update({'A': ('A', 'WA', 'XWA'), 'L': ('L', 'HL', 'XHL')})
+
+REG_PARTS.setdefault('A', ('A', 'WA', 'XWA')); REG_KILLS.setdefault('A', ('A', 'WA', 'XWA'))   # (BYTE_STORE_DIRECT_NOOPT)
+
+REG_PARTS.setdefault('A', ('A', 'WA', 'XWA')); REG_KILLS.setdefault('A', ('A', 'WA', 'XWA'))   # (BYTE_SLOT_DIRECT)
 
 def reg_dead(lines, start, R, lab=None):
     """is register R's value dead from line index start (or from label lab)?  Every path, conditional jumps followed
@@ -9176,6 +9200,9 @@ def elem_addr(F, lv, kind):
                                                            # guca[b] += ..; for (i = b; ..) -> ld DE,(b) / add (XBC+DE),A /
                                                            # ld IZ,DE; this zero-extending form was wrong code there; read
                                                            # once it is right, arr_index.c ai_c_g_add)
+            if ixm_ is not None and char_uidx_param(F, ixm_, ixu_.ty.signed) and ixu_.ty.size == 2:   # (an unsigned index:
+                F.emit('ld', 'WA,%s' % ixm_); F.emit('extz', 'XWA')    # zero-extended in XWA, rstmt rs_1_02_11_3)
+                F.emit('ld', 'XBC,%s' % g); F.emit('add', 'XBC,XWA'); return '(XBC)'
             F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None
@@ -11000,7 +11027,12 @@ def gen_stmt(F, s, last):
         gen_stmt(F, s.els, last)
         if last and not before_trivial_ret and not F.xiz_vars and not F.pushes and not getattr(F, 'frame', 0) and \
                 not F.lines[-1].startswith(('\tret', '\tj\t')) and not F.opt:   # (a frame is released once, at the join: s_if)
-            flush_pops(F); F.emit('ret'); return            # c_ifchain under none: the last arm returns too
+            flush_pops(F)                                  # c_ifchain under none: the last arm returns too
+            th_ = flat(s.then) if s.then.k == 'block' else [s.then]
+            if IFELSE_INNER_JOIN and th_ and th_[-1].k == 'if' and th_[-1].els is None:
+                j_ = F.newulabel(); F.lines.append(j_ + ':')   # (the then arm's last if returned early; its join label
+                F.if_joins = getattr(F, 'if_joins', set()) | {j_}   # is written here: rstmt rs_1_01_07_1 .. / L130: / ret)
+            F.emit('ret'); return
         import re as _re
         jumped = any(_re.search(r'[\t,]%s$' % lend, l) for l in F.lines)
         if not (last and F.lines[-1].startswith('\tret')):
@@ -14358,6 +14390,10 @@ L2_NOLOOP = True                                   # see leaf_l2 (__todigit)
 L2_ONCE_MEM = True                                 # see leaf_l2 (__todigit)
 L2_WIDE = False
 THREAD_ALL = True
+CHAIN_TEST_SOURCE = True                                 # see compile_function_once
+L2_LOOP_THEN_CALLS = True                                # see leaf_l2's caller
+POSTINC_SLOT_STORE = True                                # see compile_unit
+JOIN_THREAD = True                                       # see thread_jumps
 
 def leaf_l2(F):
     """cdecl -O3 -XS leaf functions with a table lookup (ctype.h): rule L2 (l2alloc.py; research-scratch
@@ -14606,6 +14642,36 @@ def last_is_call_return(f):
     while v.k == 'cast': v = strip(v.e)
     return v.k == 'call'
 
+def loops_then_calls(F):
+    """every call of the function comes after its last loop, in top-level statements outside the loops, and no
+    variable is read after a call (_atof: while (isspace(*str)) str++; _setstrchar(str); _afcnv(..))"""
+    f = F.f
+    body = f.body.body if f.body.k == 'block' else [f.body]
+    def has(n, pred):
+        out = []
+        walk(n, lambda m, d: out.append(m) if pred(m) else None)
+        return bool(out) or pred(n)
+    isloop = lambda m: m.k in ('for', 'while', 'do')
+    iscall = lambda m: m.k == 'call' or fpgen.is_fp_op(m) or long_helper_node(m)
+    lp = [i for i, st in enumerate(body) if has(st, isloop)]
+    cl = [i for i, st in enumerate(body) if has(st, iscall)]
+    if not lp or not cl or max(lp) >= min(cl): return False
+    if any(has(st, isloop) and has(st, iscall) for st in body): return False
+    late = []                                             # a register candidate read after the first call
+    for st in body[min(cl):]:
+        walk(st, lambda m, d: late.append(m) if m.k == 'load' and strip(m.e).k == 'var' and
+             strip(m.e).decl.kind in ('param', 'local') and strip(m.e).decl.ty.kind in ('int', 'ptr') and
+             not strip(m.e).decl.addr_taken else None)
+    first = body[min(cl)]                                 # (the first call's own arguments are read before it)
+    args = set()
+    walk(first, lambda m, d: [args.update(id(x) for a in m.args for x in [a]) for _ in [0]] if m.k == 'call' else None)
+    inner = []
+    walk(first, lambda m, d: inner.append(id(m)) if m.k == 'call' else None)
+    first_reads = []
+    walk(first, lambda m, d: first_reads.append(id(m)) if m.k == 'load' and strip(m.e).k == 'var' else None)
+    if len(inner) != 1: return False
+    return all(id(m) in first_reads for m in late)
+
 def one_early_call(F):
     """the function makes one call, outside every loop, and no FP operation (_strrchr, _strrev: strlen first)"""
     calls = []
@@ -14683,7 +14749,8 @@ def plan_leaf(F):
         pk = ptr_kloop(F, lps[0]) if len(lps) == 1 else None
         if pk is not None:
             F.counted = {id(lps[0]): pk}; return True        # arr_index.c ai_div10 (gen_counted)
-    if F.opt and not F.adecl and (not has_call or one_early_call(F)) and leaf_l2(F): return True
+    if F.opt and not F.adecl and (not has_call or one_early_call(F) or (L2_LOOP_THEN_CALLS and loops_then_calls(F))) and \
+            leaf_l2(F): return True
     if F.adecl and not has_call and leaf_r6(F): return True
     if (F.opt or (F.adecl and U1_PLAIN_XR)) and not has_call and leaf_u1(F): return True   # plain -Xr: U1 too
     if F.adecl and (F.opt or U1_PLAIN_XR) and not has_call and u1_down2(F): return True
@@ -15977,6 +16044,9 @@ def sp_address(F, lk, size, P, I, B, vk):
         sym, (im, signed) = lk[1], lk[2]
         if size == 1:                                      # st_c_XG: lda XWA,_gca / ld BC,(c) / extz XBC / add XBC,XWA
             X = 'XDE' if vk in ('S', 'X') else 'XBC'
+            if char_uidx_param(F, im, signed):             # (an unsigned index: zero-extended in XWA)
+                F.emit('ld', 'WA,%s' % im); F.emit('extz', 'XWA'); F.emit('ld', '%s,%s' % (X, sym))
+                F.emit('add', '%s,XWA' % X); return '(%s)' % X
             F.emit('lda', 'XWA,%s' % sym); F.emit('ld', '%s,%s' % (X[1:], im))
             F.emit('extz', X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
         if not signed and UIDX32:                          # an unsigned index is extended whole (r2_03_08, r1_08_00)
@@ -16740,13 +16810,19 @@ def thread_jumps(lines, keep=(), full=True, joins=()):
     def retarget(l, new):
         return re.sub(r'(L\d+)$', new, l)
     lines = [retarget(l, alias[tgt(l).group(3)]) if tgt(l) and tgt(l).group(3) in alias else l for l in lines]
-    for _ in range(8 if full else 0):                  # (not outside L2: _strncpy keeps its L3: j L4 trampoline)
-        where = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}
-        changed = False
+    for _ in range(8 if full else (8 if JOIN_THREAD else 0)):   # (not outside L2: _strncpy keeps its L3: j L4
+        where = {l[:-1]: i for i, l in enumerate(lines) if is_label(l)}       # trampoline; an if's join does go:
+        changed = False                                                         # _fwrite's j ne to the loop's entry)
         for i, l in enumerate(lines):
             m = tgt(l)
             if not m: continue
+            if not full and m.group(3) not in {str(x) for x in joins}: continue
+            if not full and i + 2 < len(lines) and tgt(lines[i + 1]) and tgt(lines[i + 1]).group(2) is None and \
+                    lines[i + 2] == m.group(3) + ':': continue     # (j cc,L / j X / L: is inverted below: _strstr)
             j = where.get(m.group(3))
+            if not full and j is not None:                 # (only a join no arm falls into: random r1_06_09 keeps
+                pv = next((lines[q] for q in range(j - 1, -1, -1) if not is_label(lines[q])), '')   # L1: j L2)
+                if not (pv.startswith('\tret') or (tgt(pv) and tgt(pv).group(2) is None)): continue
             if j is None or j + 1 >= len(lines): continue
             nx = tgt(lines[j + 1])
             if nx and nx.group(2) is None and nx.group(3) != m.group(3):
@@ -17027,6 +17103,19 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
             if m_: F.lines[i_] = '\tret\t' + m_.group(1)        # a conditional jump only (r2_07_14: a ?: arm's j L2 stays)
     import re as _rg
     F.gen_refs = {m for l in F.lines if l.startswith('\t') for m in _rg.findall(r'\b(L\d+)\b', l)}   # labels jumped to
+    if CHAIN_TEST_SOURCE and F.opt:                       # -O: v1 = v2 = e; if (v1 ..) tests v2's register (_fwrite)
+        st_ = F.f.body.body if F.f.body.k == 'block' else []
+        for a_, b_ in zip(st_, st_[1:]):
+            if a_.k != 'expr' or b_.k != 'if': continue
+            e_ = strip(a_.e)
+            if not (e_.k == 'bin' and e_.op == '=' and strip(e_.l).k == 'var' and strip(e_.r).k == 'bin' and
+                    strip(e_.r).op == '=' and strip(strip(e_.r).l).k == 'var'): continue
+            r1_, r2_ = getattr(strip(e_.l).decl, 'reg', None), getattr(strip(strip(e_.r).l).decl, 'reg', None)
+            if not r1_ or not r2_ or r1_ == r2_: continue
+            for k_ in range(len(F.lines) - 1):
+                if F.lines[k_] == '\tld\t%s,%s' % (r1_, r2_) and _rg.match(r'^\tcp\t%s,0x[0-9a-f]+$' % r1_, F.lines[k_ + 1]):
+                    F.lines[k_ + 1] = F.lines[k_ + 1].replace('\tcp\t%s,' % r1_, '\tcp\t%s,' % r2_)
+                    break
     for t in reversed(getattr(F, 'tables', [])): F.lines[1:1] = t     # switch tables right after the label
     if F.opt and getattr(F, 'fp_temps', None) is not None: F.lines = fpgen.hoist_common(F.lines)
     if F.opt and getattr(F, 'l2', None): F.lines = thread_jumps(F.lines, getattr(F, 'user_labels', set()))
@@ -17512,6 +17601,82 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if not reg_dead(full, k_, 'XWA') or not reg_dead(full, k_ + 2, 'X' + m_.group(2)): continue   # BC / ld
                     full[k_:k_ + 2] = ['\tld\tA,%s' % m_.group(2)[1], '\t%s\tWA' % m_.group(1), '\tld\tHL,WA']   # HL,BC:
                                                            # 10, each with WA live: chidx.c bc2, stvxc.c c_i_QX)
+            if CP_HL_SCC and opt == 'none' and alt_ is None:   # without -O a value in L / HL compared with a constant
+                k_ = 0                                     # for a truth value is compared in place: ld A,L / cp A,0x0 /
+                while k_ + 2 < len(full):                  # scc eq,WA -> cp L,0x0 / scc eq,WA (rstmt rs_4_03_12_7 -Xr;
+                    m_ = re.match(r'^\tld\t(A|WA),(L|HL)$', full[k_] or '')   # the oracle never copies there)
+                    mc_ = re.match(r'^\tcp\t%s,(0x[0-9a-f]+)$' % m_.group(1), full[k_ + 1] or '') if m_ else None
+                    ms_ = re.match(r'^\tscc\t\w+,(WA|BC|DE|HL)$', full[k_ + 2] or '') if mc_ else None
+                    if ms_ and (ms_.group(1) == 'WA' or reg_dead(full, k_ + 2, 'XWA' if m_.group(1) == 'WA' else 'A')):
+                        full[k_:k_ + 2] = ['\tcp\t%s,%s' % (m_.group(2), mc_.group(1))]
+                    k_ += 1
+            if BYTE_STORE_DIRECT_NOOPT and opt == 'none' and alt_ is None:   # without -O a byte in C or E stored to a
+                k_ = 0                                     # global goes there directly: ld A,E / ld (_juc),A ->
+                while k_ + 1 < len(full):                  # ld (_juc),E (rstmt rs_1_04_08_1 -Xr; the oracle's copies
+                    m_ = re.match(r'^\tld\tA,([CE])$', full[k_] or '')   # through A all follow a label)
+                    ms_ = re.match(r'^\tld\t(\(_\w+(?: \+ 0x[0-9a-f]+)?\)),A$', full[k_ + 1] or '') if m_ else None
+                    if ms_ and not (k_ > 0 and re.match(r'^L\d+:$', full[k_ - 1] or '')) and reg_dead(full, k_ + 2, 'A'):
+                        full[k_:k_ + 2] = ['\tld\t%s,%s' % (ms_.group(1), m_.group(1))]
+                    k_ += 1
+            if XIZ_BASE_DIRECT and opt == 'none' and alt_ is None:   # without -O a pointer kept in XIZ is read through
+                k_ = 0                                     # XIZ itself: ld XWA,XIZ / ld A,(XWA+0x2) -> ld A,(XIZ+0x2)
+                while k_ + 1 < len(full):                  # (rstmt rs_2_02_05_3; the oracle's copies all come before
+                    m_ = re.match(r'^\tld\tX(WA|BC|DE),XIZ$', full[k_] or '')   # a division)
+                    ml_ = re.match(r'^\tld\t(\w+),\(X%s(\+0x[0-9a-f]+)?\)$' % m_.group(1), full[k_ + 1] or '') if m_ else None
+                    if not ml_ or any(re.match(r'^\t(divs?\t|cal\tC9H_)', l_ or '') for l_ in full[k_ + 2:k_ + 7]):
+                        k_ += 1; continue
+                    R_ = m_.group(1); D_ = ml_.group(1); fam_ = re.compile(r'\b(X%s|Q%s)\b' % (R_, R_))
+                    if D_ == 'X' + R_:
+                        ok_ = True
+                    elif D_ in REG_PARTS.get('X' + R_, ()):        # a part of the copy's register: its other parts
+                        ok_ = True                         # must not be read before a full write, call or return
+                        for l_ in full[k_ + 2:]:
+                            if l_ and (l_.startswith('\tret') or l_.startswith('\tcal\t')) or \
+                                    re.match(r'^\t(ld|lda)\tX%s,' % R_, l_ or '') and not fam_.search((l_ or '').split(',', 1)[1]):
+                                break
+                            if not l_ or not l_.startswith('\t') or l_.startswith('\tj') or fam_.search(l_):
+                                ok_ = False; break
+                    else:
+                        ok_ = reg_dead(full, k_ + 2, 'X' + R_)
+                    if ok_:
+                        full[k_:k_ + 2] = ['\tld\t%s,(XIZ%s)' % (D_, ml_.group(2) or '')]
+                    k_ += 1
+            if BYTE_SLOT_DIRECT and opt == 'none' and alt_ is None:   # without -O a byte in a register other than A
+                k_ = 0                                     # stored to a stack slot goes there directly: ld A,W /
+                while k_ + 1 < len(full):                  # ld (XSP+0x8),A -> ld (XSP+0x8),W (rstmt rs_1_01_00_2; the
+                    m_ = re.match(r'^\tld\tA,([CELWBDH])$', full[k_] or '')   # oracle never copies through A there)
+                    ms_ = re.match(r'^\tld\t(\(XSP\+0x[0-9a-f]+\)),A$', full[k_ + 1] or '') if m_ else None
+                    if ms_ and not (k_ > 0 and re.match(r'^L\d+:$', full[k_ - 1] or '')) and reg_dead(full, k_ + 2, 'A'):
+                        full[k_:k_ + 2] = ['\tld\t%s,%s' % (ms_.group(1), m_.group(1))]
+                    k_ += 1
+            if EXT_VIA_XWA and opt == 'none' and alt_ is None:   # without -O an int in BC / DE widened (and scaled)
+                k_ = 0                                     # for XWA is widened in XWA: exts XDE / add XDE,XDE /
+                while k_ < len(full):                      # ld XWA,XDE -> ld WA,DE / exts XWA / add XWA,XWA (rstmt
+                    m_ = re.match(r'^\t(exts|extz)\tX(BC|DE)$', full[k_] or '')   # rs_1_04_15_0 -Xr; the oracle's
+                    if not m_: k_ += 1; continue           # other order keeps XR, which it reads again)
+                    R_ = m_.group(2); j_ = k_ + 1
+                    while j_ < len(full) and re.match(r'^\t(add\tX%s,X%s|sla\t0x[0-9a-f]+,X%s)$' % (R_, R_, R_), full[j_] or ''):
+                        j_ += 1
+                    if j_ < len(full) and full[j_] == '\tld\tXWA,X%s' % R_ and reg_dead(full, k_, 'XWA') and \
+                            reg_dead(full, j_ + 1, 'X' + R_):
+                        ops_ = [l_.replace('X' + R_, 'XWA') for l_ in full[k_ + 1:j_]]
+                        full[k_:j_ + 1] = ['\tld\tWA,%s' % R_, '\t%s\tXWA' % m_.group(1)] + ops_
+                    k_ += 1
+            if UDIV_POW2_SRL and opt == 'none' and alt_ is None:   # without -O an unsigned int / 2^k is a shift:
+                k_ = 0                                     # extz XWA / div XWA,0x2 -> srl 0x1,WA; returned at once:
+                while k_ + 1 < len(full):                  # ld HL,WA / srl 0x1,HL (rstmt rs_1_09_10_7; no div by 2^k
+                    me_ = re.match(r'^\textz\tX(WA|BC|DE|HL)$', full[k_] or '')   # in the oracle)
+                    md_ = re.match(r'^\tdiv\tX%s,0x([0-9a-f]+)$' % me_.group(1), full[k_ + 1] or '') if me_ else None
+                    v_ = int(md_.group(1), 16) if md_ else 0
+                    nx_ = full[k_ + 2] if k_ + 2 < len(full) else ''
+                    R_ = me_.group(1) if me_ else ''
+                    if md_ and 2 <= v_ <= 0x8000 and not v_ & (v_ - 1) and not re.search(r'\b[XQ]%s\b' % R_, nx_ or ''):
+                        n_ = v_.bit_length() - 1
+                        if nx_ == '\tld\tHL,%s' % R_ and R_ != 'HL':
+                            full[k_:k_ + 3] = ['\tld\tHL,%s' % R_, '\tsrl\t%s,HL' % hx(n_)]
+                        else:
+                            full[k_:k_ + 2] = ['\tsrl\t%s,%s' % (hx(n_), R_)]
+                    k_ += 1
             if SCC_HL_VIA_WA and opt == 'none' and alt_ is None:   # without -O a compare's truth value that an
                 for k_ in range(len(full) - 1):            # operation in HL reads next is set in WA and moved (random
                     m_ = re.match(r'^\tscc\t(\w+),HL$', full[k_] or '')   # r2_01_05: gia[7] & (gl >= ..) -> scc ge,WA
@@ -17770,6 +17935,21 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                             sfx_ = 'b' if m_.group(1) == 'A' else 'w'
                             full[k_:j_] = ['\tld%s\t%s,%s' % (sfx_, l.split('\t')[2].rsplit(',', 1)[0], m_.group(2))
                                            for l in full[k_ + 1:j_]]
+                    k_ += 1
+            if POSTINC_SLOT_STORE and opt != 'none':       # -O: *p++ = v, p in a frame slot: ld XW,(s) / ld (XW+:N),v /
+                k_ = 0                                     # ld (s),XW (the -O3 -XS listings 5 times, the -O0 form never)
+                while k_ < len(full) - 3:
+                    m1_ = re.match(r'^\tld\t(XWA|XBC|XDE),\((XSP\+0x[0-9a-f]+)\)$', full[k_] or '')
+                    m2_ = re.match(r'^\tld\t(XWA|XBC|XDE),0x([124])$', full[k_ + 1] or '')
+                    if m1_ and m2_ and m1_.group(1) != m2_.group(1) and \
+                            full[k_ + 2] == '\tadd\t(%s),%s' % (m1_.group(2), m2_.group(1)):
+                        XB_, XW_, sl_, n_ = m1_.group(1), m2_.group(1), m1_.group(2), m2_.group(2)
+                        m4_ = re.match(r'^\t(ld|ldb|ldw)\t\(%s\),(\w+)$' % XB_, full[k_ + 3] or '')
+                        if m4_ and m4_.group(2) not in REG_PARTS[XW_] and m4_.group(2) not in REG_PARTS[XB_] and \
+                                reg_dead(full, k_ + 4, XB_) and reg_dead(full, k_ + 4, XW_):
+                            full[k_:k_ + 4] = ['\tld\t%s,(%s)' % (XW_, sl_),
+                                               '\t%s\t(%s+:%s),%s' % (m4_.group(1), XW_, n_, m4_.group(2)),
+                                               '\tld\t(%s),%s' % (sl_, XW_)]
                     k_ += 1
             if QIZH_DIRECT:                                # ld A,C / ld QIZH,A -> ld QIZH,C where XWA is dead after (no
                 k_ = 0                                     # oracle listing at any set has ld A,C|E|L then ld QIZH,A;
