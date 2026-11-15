@@ -2820,6 +2820,14 @@ in memory to an int or char loads the whole long) applied only without -O; the o
 rs_1_02_01_0: `((unsigned char)gula[7]) & 128` -> `ld XWA,(_gula + 0x1c) / and A,0x80`). LONG_LOAD_KEPT_OPT lifts the
 exclusion. rstmt -O3 -XS +29, -O3 -XS -Xr +27; random, library 186/248, pairs 223 and semcheck 50 unchanged.
 
+**Batch 239 (2026-11-15): a cast long operand is loaded first.** A cast long in memory (`long_load_kept`) is loaded
+whole into XWA. As the right operand of a simple operation the oracle loads it first and moves it to C / BC, then
+builds the left operand in WA (rstmt rs_1_02_06_3: `233 - (unsigned char)gula[3]` -> `ld XWA,(_gula + 0xc) / ld C,A /
+ld A,0xe9 / sub A,C`); as the left operand it comes after a computed right operand (rs_1_02_05_6:
+`(uchar)gla[6] ^ (uchar)a` -> `ld XWA,(XSP+0x4) / ld C,A / ld XWA,(_gla + 0x18) / xor A,C`). RIGHT_LONG_FIRST, beside
+RIGHT_ELEM_FIRST. rstmt +2 / +2 / +1 / +2, random +1 at every set, elrd -O3 -XS +4; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

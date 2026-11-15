@@ -5157,6 +5157,18 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                     if f_ == 'WA' and not writes_family(F.lines[n_l_:], 'BC'):
                         F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], FAM['BC'][size])); return 'WA'
                 del F.lines[n_rf_:]
+        kl_ = lambda x: strip(narrow(x, size)).k == 'cast' and long_load_kept(strip(narrow(x, size)), size)
+        if RIGHT_LONG_FIRST and fam == 'WA' and size in (1, 2) and op in SIMPLE_OPS and not swapped_ and \
+                (kl_(r) or kl_(l) and mem_operand(F, r) is None and fold(r).k != 'const') and \
+                not nodes_in(e, 'call') and not has_helper_call(e) and not fpgen.is_fp_op(e) and \
+                not ({'WA', 'BC'} & live_regs(F)):
+            n_rf_ = len(F.lines); f_ = gen(F, r, 'WA', size)   # a cast long in memory is loaded whole into XWA: on the
+            if f_ == 'WA':                                  # right it is loaded first and moved to C / BC, the left
+                F.emit('ld', '%s,%s' % (FAM['BC'][size], FAM['WA'][size]))   # then built in WA (rstmt rs_1_02_06_3:
+                n_l_ = len(F.lines); f_ = gen(F, l, 'WA', size)              # 233 - (unsigned char)gula[3] -> ld XWA,
+                if f_ == 'WA' and not writes_family(F.lines[n_l_:], 'BC'):   # (_gula + 0xc) / ld C,A / ld A,0xe9 / sub A,C;
+                    F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], FAM['BC'][size])); return 'WA'   # rs_3_00_17_3:
+            del F.lines[n_rf_:]                             # on the left, after a computed right operand)
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) + [getattr(F, 'cse_tmp', None)]
                   if d is not None and getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
@@ -10543,6 +10555,7 @@ SWEEP_OPT_LIFTS = True                                    # batch 232: LH_ELEM0 
 SWEEP_ALL_LIFTS = True                                    # batch 233: SLOT_INIT_FORMS at every set (random-scored sweep)
 SWEEP_XR_LIFTS = True                                     # batch 232: four rules under -Xr (random-scored sweep)
 FOLDED_K_STORE = True                                     # see gen_stmt's store
+RIGHT_LONG_FIRST = True                                   # see _gen_bin_body
 LONG_LOAD_KEPT_OPT = True                                 # see long_load_kept
 AND_BIT_RES = True                                        # see Fn.emit: and with one bit clear is res
 LIVE_SHIFT = True                                         # see gen_body_shift
