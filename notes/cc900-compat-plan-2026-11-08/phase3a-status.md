@@ -3517,6 +3517,17 @@ semchecked every function its rules newly compile.  Random -Xr 176 -> 177; rstmt
 / -Xr / -O3 -XS -Xr; no function lost at any set.  Ledger up 5 rows by 43, down 0; library 186/248, pairs 223,
 semcheck 17 with the same verdicts.
 
+**Batch 322 (2026-11-15): the library's _cosh exact.** Four rules from a library lane for double code (research-scratch
+tabulation/lanes-2026-11-15/lane_libfp; fpe3.py and fpgen.py only, edit scripts edit_batch322_fpe3.py and
+edit_batch322_fpgen.py): CALL_OPERAND_FIRST (an operation on a call result with no hint takes the call's slot first:
+`_cosh` exact), PREPARE_CALLS_FIRST (the side with more calls first), ZERO_LEFT_CMP (`0.0 < x` uses `._fcmp_zd` with
+the relation mirrored), INNER_POPS_WAIT (a call's pops inside an outer call's first argument wait for the outer
+call).  Library 186 -> 187 (kn5000 personality 184 -> 185), fpp1 -O3 -XS +1; the lane's changed functions semcheck
+equal, none newly compiled.  rstmt and random unchanged.  Ledger up 3 rows by 3, down 0; pairs 223, semcheck 17 with
+the same verdicts.  The lane's rules 05-07 bring `_atan2`, `_tanh` and fpp11 closer without a new exact function and
+are left for later; `_tanh`, `_asin` and `_log` are off only by the slot order of double temporaries in functions
+with early returns, which the window rule cannot take without losing `_cosh`, `_exp`, `_sin` and `_sinh`.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

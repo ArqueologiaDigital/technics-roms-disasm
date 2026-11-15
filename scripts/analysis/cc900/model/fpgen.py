@@ -86,6 +86,9 @@ SRET_HOME_LATE = True                              # the load after the first te
 SRET_HOME_EARLY = True                             # see needs_sret_home (_floor)
 CALL_INTO_LOCAL = True                             # see call_into (_floor)
 WINDOW_RULE = True                                 # fpwindow.plan: the slot order of FP temporaries (E2)
+PREPARE_CALLS_FIRST = True                         # see prepare (_atan2)
+ZERO_LEFT_CMP = True                               # see compare (_tanh)
+INNER_POPS_WAIT = True                             # see inner_pops_wait (_asin)
 CALL_OP_LEFT_FIRST = True                          # see eval_val (fpp7 w5, w7)
 COMMUTE_LAST_XBC = True                            # see eval_into / eval_val (fpp7 w5)
 ROOT_CELL_AFTER_CALL = False                       # the operation after a call takes the root's slot (fpp7 w4)
@@ -296,12 +299,18 @@ def dest_last(F, dest):
         return
     raise C().Unsupported('fp destination')
 
-def prepare(F, ops):
+def prepare(F, ops, op=None):
     """operands that are not in memory are computed into temporaries first, the right one first (d_four,
     t_st_mm: gd4 * gd2 into +0x18, then gd2 * gd3 into +0x10, then the sum into _gd)"""
     out = [None] * len(ops)
     order = list(reversed(range(len(ops))))
     if len(ops) == 2 and holds_xiz(ops[0]) and not holds_xiz(ops[1]): order = [0, 1]   # fo_log: LN2 * n before 2 * s
+    elif PREPARE_CALLS_FIRST and op is not None and len(ops) == 2 and ncalls(ops[0]) > ncalls(ops[1]) and \
+            all(not addressable(F, fp_value_cast(x)) for x in ops):
+        order = [0, 1]                                   # _atan2: _sign(y) * (PAI - x2) -> the call first, and the
+        for i in order:                                  # later value as XBC for * / +
+            out[i] = eval_val(F, ops[i], None)
+        return [out[1], out[0]] if op in ('+', '*') else out
     for i in order:
         out[i] = eval_val(F, ops[i], None)
     return out
@@ -358,10 +367,17 @@ def eval_val(F, e, hint):
     finally: F.cond_operand = False
     return ('slot', cell.off)
 
+def inner_pops_wait(F):
+    """the pops of a call made inside the argument of an outer call, none of whose arguments is pushed yet, wait for
+    the outer call (_asin: atan(x / sqrt(1 - x * x)))"""
+    ab_ = getattr(F, 'arg_bases', None)
+    return bool(INNER_POPS_WAIT and F.pending and ab_ and F.push - F.pending == ab_[-1][0] - ab_[-1][1] and
+                F.pending + 12 <= 32)
+
 def op_into(F, e, vals, dest):
     """the helper call of a +-*/, unary - or float/double conversion node whose operands are ready"""
     if e.k == 'bin':
-        if not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
+        if not inner_pops_wait(F) and not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
             C().flush_pops(F)                              # _log: x /= ldexp(1, nptr) -> cal _ldexp / lda XSP,XSP+0x1e first
         name = '._f%s_%s' % ({'+': 'add', '-': 'sub', '*': 'mul', '/': 'div'}[e.op], sfx(e.ty))
         if fo_plain(F, e, vals, dest, name): return
@@ -499,7 +515,7 @@ def emit_operands(F, dest, ops):
     """the result address and the operand addresses: those that are loaded, copied or computed first, in XWA, XBC,
     XDE order (d_add_gg: ld XWA,(XSP+0x4); _modf: ld XDE,XIZ / lda XBC,XSP+0x24 / lda XWA,XSP+0x14), then the
     named and stack ones in XBC, XDE, XWA order (d_add_st: lda XBC,_gd2 / lda XDE,_gd3 / lda XWA,_gd)"""
-    if not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
+    if not inner_pops_wait(F) and not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and F.pending == getattr(F, 'pend_at_stmt', -1)):
         C().flush_pops(F)                                  # the pending call pops go before a helper's addresses; those
                                                            # of an earlier call statement wait (fpargf.c af_VNCNP: cal _vs /
                                                            # lda XBC,_gd / .. / lda XWA,XSP+0xc / cal ._fmul_d)
@@ -596,7 +612,7 @@ def eval_into(F, e, dest):
                 vals = [vals[1], vals[0]]                    # the operand computed last goes to XBC (fpp7 w5:
             op_into(F, e, vals, dest); return                # lda XBC,<product> / lda XDE,<fd's result>)
     if e.k == 'bin' and e.op in '+-*/' and len(e.op) == 1:
-        op_into(F, e, prepare(F, [e.l, e.r]), dest); return
+        op_into(F, e, prepare(F, [e.l, e.r], e.op), dest); return
     if e.k == 'un' and e.op == '-':
         op_into(F, e, prepare(F, [e.e]), dest); return
     if e.k == 'cond':
@@ -763,6 +779,12 @@ def compare(F, c, value):
     op = c.op if value else NEG[c.op]
     l, r = fp_value_cast(c.l), fp_value_cast(c.r)
     cg.flush_pops(F)
+    def zero_(x):
+        return x.k == 'fconst' and x.value == 0.0 or (strip(x).k == 'cast' and strip(strip(x).e).k == 'const' and
+                                                    strip(strip(x).e).value == 0)
+    if ZERO_LEFT_CMP and zero_(l) and not zero_(r):      # _tanh: 0.0 < xx -> xx with ._fcmp_zd, the relation mirrored
+        l, r = r, l
+        op = {'<': '>', '>': '<', '<=': '>=', '>=': '<=', '==': '==', '!=': '!='}[op]
     if r.k == 'fconst' and r.value == 0.0 or (strip(r).k == 'cast' and strip(strip(r).e).k == 'const' and strip(strip(r).e).value == 0):
         a = prepare(F, [l]); cg.flush_pops(F); put_addr(F, a[0], 'XWA')
         F.emit('ld', 'BC,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_z%s' % sfx(l.ty)); return

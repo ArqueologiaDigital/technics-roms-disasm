@@ -45,7 +45,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-15-micro-fporder, v423/O3XS                          | micro/fp_order.c     | 11 / 18 exact (61.1%)      |
 | run 2026-11-09-18-micro-fpprepass, v423/none                        | probes/fpp1.c        | 37 / 71 exact (52.1%)      |
 | run 2026-11-09-19-micro-fpprepass2, v423/none                       | probes/fpp2.c        | 27 / 49 exact (55.1%)      |
-| run 2026-11-09-18-micro-fpprepass, v423/O3XS                        | probes/fpp1.c        | 36 / 71 exact (50.7%)      |
+| run 2026-11-09-18-micro-fpprepass, v423/O3XS                        | probes/fpp1.c        | 37 / 71 exact (52.1%)      |
 | run 2026-11-09-19-micro-fpprepass2, v423/O3XS                       | probes/fpp2.c        | 27 / 49 exact (55.1%)      |
 | run 2026-11-09-26-micro-fpe2, v423/none                             | probes/fpp3.c        | 58 / 59 exact (98.3%)      |
 | run 2026-11-09-28-micro-fpe2b, v423/none                            | probes/fpp4.c        | 59 / 59 exact (100.0%)     |
@@ -304,8 +304,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c     | 15 / 16 exact (93.8%)      |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c     | 13 / 16 exact (81.2%)      |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 28 / 33 exact (84.8%)      |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 186 / 248 exact (75.0%)    |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 184 / 248 exact (74.2%)    |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 187 / 248 exact (75.4%)    |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 185 / 248 exact (74.6%)    |
 | run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 174 / 248 exact (70.2%)    |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)       |
 | run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 21 / 42 exact (50.0%)      |

@@ -119,7 +119,11 @@ def eval_val(F, e, hint):
             cell = hint if hint is not None else fp.Cell(e.ty.size)
             if comp:
                 c0 = fp.fp_value_cast(ops[comp[0]])
-                if c0.k == 'call':
+                if c0.k == 'call' and CALL_OPERAND_FIRST and hint is None and \
+                        all(fp.addressable(F, fp.fp_value_cast(a)) for a in c0.args if fp.is_fp(fp.strip(a).ty)):
+                    cc = fp.Cell(c0.ty.size); fp.call_into(F, c0, ('cell', cc)); vals[comp[0]] = ('slot', cc.off)
+                    fp.alloc(F, cell)                      # the call's slot first (_cosh: fabs(x) - C1 in a compare)
+                elif c0.k == 'call':
                     fp.alloc(F, cell)
                     cc = fp.Cell(c0.ty.size); fp.call_into(F, c0, ('cell', cc), arg_hint=cell); vals[comp[0]] = ('slot', cc.off)
                 else: vals[comp[0]] = fp.eval_val(F, ops[comp[0]], None)
@@ -263,6 +267,7 @@ def is_reset(F, st):
     return is_memory(F, e.l) and is_memory(F, r)
 
 CONV_ROOT_BIN_ONLY = True
+CALL_OPERAND_FIRST = True                                  # see eval_val (_cosh)
 RESET_COND_BIT = True                                      # see is_reset
 CONV_OPA_NONE = True                                       # without -O an op= reserves no root cell (rstmt rs_4_01_04_2;
                                                            # -O3 -XS keeps it for a product: random r4_01_19)
