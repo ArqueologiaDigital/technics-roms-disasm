@@ -177,10 +177,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-17-micro-evorder_ad, v423/O3XS                       | probes/evorder_ad.c  | 1038 / 1116 exact (93.0%)  |
 | run 2026-11-10-17-micro-evorder_ad, v423/Xr                         | probes/evorder_ad.c  | 1006 / 1116 exact (90.1%)  |
 | run 2026-11-10-17-micro-evorder_ad, v423/O3XSXr                     | probes/evorder_ad.c  | 941 / 1116 exact (84.3%)   |
-| run 2026-11-10-18-micro-cmpordl2, v423/none                         | probes/cmpordl2.c    | 398 / 572 exact (69.6%)    |
-| run 2026-11-10-18-micro-cmpordl2, v423/O3XS                         | probes/cmpordl2.c    | 394 / 572 exact (68.9%)    |
-| run 2026-11-10-18-micro-cmpordl2, v423/Xr                           | probes/cmpordl2.c    | 338 / 572 exact (59.1%)    |
-| run 2026-11-10-18-micro-cmpordl2, v423/O3XSXr                       | probes/cmpordl2.c    | 357 / 572 exact (62.4%)    |
+| run 2026-11-10-18-micro-cmpordl2, v423/none                         | probes/cmpordl2.c    | 572 / 572 exact (100.0%)   |
+| run 2026-11-10-18-micro-cmpordl2, v423/O3XS                         | probes/cmpordl2.c    | 572 / 572 exact (100.0%)   |
+| run 2026-11-10-18-micro-cmpordl2, v423/Xr                           | probes/cmpordl2.c    | 572 / 572 exact (100.0%)   |
+| run 2026-11-10-18-micro-cmpordl2, v423/O3XSXr                       | probes/cmpordl2.c    | 572 / 572 exact (100.0%)   |
 | run 2026-11-12-1-micro-stchain, v423/none                           | probes/stchain.c     | 324 / 392 exact (82.7%)    |
 | run 2026-11-12-1-micro-stchain, v423/O3XS                           | probes/stchain.c     | 326 / 392 exact (83.2%)    |
 | run 2026-11-12-1-micro-stchain, v423/Xr                             | probes/stchain.c     | 213 / 392 exact (54.3%)    |

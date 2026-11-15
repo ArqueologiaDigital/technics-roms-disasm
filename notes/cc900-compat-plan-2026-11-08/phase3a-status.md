@@ -3318,6 +3318,14 @@ writes 188 of 94,082 functions, all exact: evorder_ad +1 / +4 / +1 / +4, lhidx +
 rstmt and random unchanged.  Ledger up 14 rows by 2,577, down 0; library 186/248, pairs 223, semcheck 50 with the
 same verdicts.
 
+**Batch 302 (2026-11-15): probe cmpordl2 at every set.** CMPO2W_WHOLE (`compile_unit`, after lhxw): probe cmpordl2's
+shapes (comparisons with long operands, by operand kind and order) go through `model/cmpo2w.py` (research-scratch
+tabulation/cmpordl2-ast/cmpordl2_ast.py, written by a subagent; register choice partly tabulated, 119 role rows; it
+declines anything outside the probe's grammar).  cmpordl2 398 / 394 / 338 / 357 -> 572 at none / -O3 -XS / -Xr / -O3
+-XS -Xr.  Over every other oracle run it writes 36 of 96,530 functions (cmpx cx_*_GYi, idxloc il_*_R9), all exact.
+semcheck 50 -> 44: the six wrong-code verdicts of cmpordl2 cc_l_YF / cc_e_YF (an older reviewed class) are gone, the
+functions now exact.  rstmt and random unchanged.  Ledger up 4 rows by 801, down 0; library 186/248, pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
