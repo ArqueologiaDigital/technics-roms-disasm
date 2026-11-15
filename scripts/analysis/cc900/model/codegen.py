@@ -95,6 +95,13 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if AND_BIT_RES and op == 'and' and args is not None:     # an AND that clears one bit of a register is res
+            m_ = re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL]),0x([0-9a-f]+)$', args)   # (random r1_04_05: t & 32767
+            if m_:                                                # with t in IZ -> res 0xf,IZ; the oracle's listings
+                w_ = 16 if len(m_.group(1)) == 2 else 8; full_ = (1 << w_) - 1   # have 24 res on a register and no
+                x_ = full_ ^ int(m_.group(2), 16)                 # one-bit-clearing and)
+                if int(m_.group(2), 16) <= full_ and x_ and x_ & (x_ - 1) == 0:
+                    op, args = 'res', '%s,%s' % (hx(x_.bit_length() - 1), m_.group(1))
         if RETD_NO_RETCC and getattr(s, 'retd', 0) and (op == 'ret' and not args or
                                                         op == 'j' and args and re.match(r'^[._][A-Za-z_]\w*$', args)):
             if not getattr(s, 'exit_label', None): s.exit_label = s.newlabel()   # nor a plain ret or a tail jump: the
@@ -3665,6 +3672,19 @@ def store_chain(F, lv, rv, size):
     return True
 
 RET_ASSIGN = True                                         # see ret_assign
+RET_REGVAR_K = True                                       # see ret_regvar_k
+
+def ret_regvar_k(F, e, fam, size):
+    """return (t = K) with t in a register: the constant is loaded into HL again, not copied from t's register (random
+    r1_04_05: ld IZ,0xff / ld HL,0xff).  The constant's text when the assignment's last line loaded it into fam."""
+    e0 = strip(e)
+    while e0.k == 'cast' and strip(e0.e).ty is not None and strip(e0.e).ty.size == size: e0 = strip(e0.e)
+    if e0.k != 'bin' or e0.op != '=' or size not in (1, 2, 4) or not F.lines: return None
+    R = FAM[fam].get(size)
+    if R is None: return None
+    m_ = re.match(r'^\tld\t%s,(0x[0-9a-f]+|[0-9]+)$' % re.escape(R), F.lines[-1])
+    return m_.group(1) if m_ else None
+
 
 def ret_assign(F, x, size):
     """return L = V for a char, int or long, after corpus/probes/stret.c (run 2026-11-12-2-micro-stret): the address
@@ -9987,7 +10007,9 @@ def gen_stmt(F, s, last):
                 flush_pops(F)                              # h_p, h_p_diff: inc 0x4,XSP / ld XHL,XIZ (none too)
             if RET_TWO_LEVEL and True and not getattr(F, 'retd', 0) and not epi and ret_two_level(F, s.value, size): fam = 'HL'
             else: fam = gen(F, s.value, 'HL', size, then_ret=True)
-            if fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:
+            rk_ = ret_regvar_k(F, s.value, fam, size) if RET_REGVAR_K and fam != 'HL' else None
+            if rk_ is not None: F.emit('ld', '%s,%s' % (FAM['HL'][size], rk_))   # return (t = 255), t in IZ: ld IZ,0xff /
+            elif fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:          # ld HL,0xff (random r1_04_05)
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
         if epi and not last:                               # -XS: _calloc: ld XHL,0x0 / j L3 ... L3: pop XIZ / ret
             flush_pops(F)
@@ -10521,6 +10543,7 @@ SWEEP_OPT_LIFTS = True                                    # batch 232: LH_ELEM0 
 SWEEP_ALL_LIFTS = True                                    # batch 233: SLOT_INIT_FORMS at every set (random-scored sweep)
 SWEEP_XR_LIFTS = True                                     # batch 232: four rules under -Xr (random-scored sweep)
 FOLDED_K_STORE = True                                     # see gen_stmt's store
+AND_BIT_RES = True                                        # see Fn.emit: and with one bit clear is res
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -11639,7 +11662,7 @@ def regvar_stmt(F, e):
             # an IZ home's value loaded from memory and then worked on is loaded into IZ (random r2_07_15:
             # int u = gps->a[b] + gi3 -> .. / ld IZ,(XWA+C) / add IZ,(_gi3); r4_01_00: c[3] << 5 -> ld IZ,(XWA+0x6) / sla 0x5,IZ)
             k_ = len(F.lines) - 2
-            while k_ >= n_iz_ and re.match(r'^\t(add|sub|and|or|xor|sla|sra|srl|sll|inc|dec)\t(WA,(\(_[^)]*\)|0x[0-9a-f]+)|0x[0-9a-f]+,WA)$', F.lines[k_]):
+            while k_ >= n_iz_ and re.match(r'^\t(add|sub|and|or|xor|sla|sra|srl|sll|inc|dec|res|set|chg)\t(WA,(\(_[^)]*\)|0x[0-9a-f]+)|0x[0-9a-f]+,WA)$', F.lines[k_]):
                 k_ -= 1
             if k_ >= n_iz_ and k_ < len(F.lines) - 2 and (re.match(r'^\tld\tWA,\((XWA|XBC|XDE|XHL)[^)]*\)$', F.lines[k_]) or
                     IZ_TAIL_GLOBAL and re.match(r'^\tld\tWA,\(_[^)]*\)$', F.lines[k_]) and

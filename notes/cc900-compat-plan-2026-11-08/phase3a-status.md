@@ -2806,6 +2806,14 @@ of a constant element of, or a dereference through, a pointer variable held in a
 operand (helper regptr_mem). Ledger up 7 (random +1 at none, -O3 -XS and -O3 -XS -Xr; rstmt +1 at those sets and more),
 down 0; pairs MATCH 223; semcheck 50. Random 198 / 87 / 152 / 76; library 186 / 248 at -O3 -XS.
 
+**Batch 237 (2026-11-15): one-bit AND as res, and a constant returned through a register variable.** From random
+r1_04_05 (`unsigned int t = gua[c] & 32767; ... return (t = 255);`). AND_BIT_RES writes an `and` that clears exactly
+one bit of a register as `res` (`and IZ,0x7fff` -> `res 0xf,IZ`): the oracle's 342 listings hold 24 `res` on a
+register and no one-bit-clearing `and`. IZ_TAIL_DIRECT now also moves `res` / `set` / `chg` onto IZ
+(`ld IZ,(XBC+A) / res 0xf,IZ`, not through WA). RET_REGVAR_K: `return (t = K)` with t in a register loads K into HL
+again (`ld IZ,0xff / ld HL,0xff`), not `ld HL,IZ`. rstmt none and -Xr +1, random none +1; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
