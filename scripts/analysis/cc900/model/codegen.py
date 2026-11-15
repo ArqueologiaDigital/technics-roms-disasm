@@ -6965,6 +6965,8 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
+MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
 PUSH_CSE = True                                          # see push_cse
@@ -9580,11 +9582,16 @@ def gen_opassign(F, e):
             if 'BC' in live_regs(F): ptr = FAM[free_reg(F, avoid={'WA', 'BC'})][4]      # .as_mul_arr: XDE
             t = lvalue(F, e.l, ptr=ptr, combine=True)
             kq_ = fold(r).value if fold(r).k == 'const' and fold(r).value is not None else 0
-            if MULDIV_ELEM_ADDR and True and strip(e.l).k in ('index', 'member') and size == 2 and \
+            if MULDIV_ELEM_ADDR and True and strip(e.l).k in ('index', 'member') and \
+                    (size == 2 or MULDIV_ELEM_ADDR_CHAR and size == 1 and
+                     not (not signed and kq_ >= 2 and kq_ & (kq_ - 1) == 0)) and \
                     not (DIVSHIFT_DIRECT and op == '/' and DIVU_SHIFT and not signed and kq_ >= 2 and kq_ & (kq_ - 1) == 0) and \
                     re.match(r'^\(_\w+( \+ 0x[0-9a-f]+)?\)$', t):   # (not the divide that is a shift: random r4_08_16,
                                                            # gs.u /= 16 -> ld WA,(_gs + 0x8) / srl 0x4,WA / ld (_gs + 0x8),WA)
-                F.emit('lda', '%s,%s' % (ptr, t[1:-1])); t = '(%s)' % ptr   # a static element or member is multiplied or
+                if MULDIV_ELEM_ZERO and ' + ' not in t and ptr == 'XBC' and not F.opt and 'WA' not in live_regs(F):
+                    F.emit('lda', 'XWA,%s' % t[1:-1]); F.emit('ld', 'XBC,XWA')   # (offset 0: through XWA; random r3_09_18:
+                else: F.emit('lda', '%s,%s' % (ptr, t[1:-1]))                   #  gia[0] /= 16 -> lda XWA,_gia / ld XBC,XWA)
+                t = '(%s)' % ptr                                   # a static element or member is multiplied or
                                                            # divided through its address (random r1_06_13: gua[6] %= 3 ->
                                                            # lda XBC,_gua + 0xc / ld WA,(XBC) / .. / ld (XBC),WA)
         rs = mem_operand(F, r)

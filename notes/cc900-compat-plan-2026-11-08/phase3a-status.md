@@ -2889,6 +2889,14 @@ unsigned char index on an int pointer is scaled at 16 bits and then sign-extende
 argument or a returned value. rstmt none +2, -O3 -XS +2, random none +1; library 186/248, pairs 223, semcheck 50
 unchanged.
 
+**Batch 247 (2026-11-15): a char element divided in place goes through its address.** MULDIV_ELEM_ADDR (an int
+element or member multiplied or divided in place goes through `lda XBC,..`) now covers char elements too
+(MULDIV_ELEM_ADDR_CHAR; rstmt rs_2_09_14_1: `gca[1] %= 16` -> `lda XBC,_gca + 0x1 / ld A,(XBC) / exts WA / divs
+WA,0x10 / ld (XBC),W`), except an unsigned one by a power of two, which is a shift or a mask. MULDIV_ELEM_ZERO: without
+-O an element at offset 0 takes its address through XWA (random r3_09_18: `gia[0] /= 16` -> `lda XWA,_gia / ld
+XBC,XWA`; at -O it made no difference). rstmt +5 / +3 / +5 / +3, random3 none and -Xr +1; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
