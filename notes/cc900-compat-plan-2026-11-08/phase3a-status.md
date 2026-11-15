@@ -3037,6 +3037,13 @@ tests it where it is (random .r4_03_13: `!b` with b in XIZ -> `or XIZ,XIZ / scc 
 XWA,XWA`). rstmt -Xr and -O3 -XS -Xr +1, random3 -Xr +2 and -O3 -XS -Xr +1, homes2a and homes2b -Xr +1; library
 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 267 (2026-11-15): a long constant assigned and used is loaded again.** ASSIGN_K_VALUE_LONG
+(`gen_assign_value`, without -O): a long constant assigned to a global and used as a value goes through XWA and is
+loaded again after the store (random .r3_09_02: `(gul = 54902UL) >= 4UL` -> `ld XWA,0xd676 / ld (_gul),XWA / ld
+XWA,0xd676 / cp XWA,0x4`), the long form of batch 260's ASSIGN_K_VALUE and of RET_ASSIGN's long case. Under -O it
+costs rstmt -1 at both sets, so not there. rstmt none +2, -Xr +1, random3 -Xr +1, stchain none +1; library 186/248,
+pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

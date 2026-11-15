@@ -7053,6 +7053,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+ASSIGN_K_VALUE_LONG = True                               # see gen_assign_value
 NOT_LONG_REGVAR = True                                   # see gen: !
 NO_RELOAD_XR_Q = True                                    # see Fn.emit's NO_RELOAD
 STVX_D_ZERO = True                                       # see stvx_plan's value
@@ -8021,6 +8022,11 @@ def gen_assign_value(F, e, fam, size, in_place=False):
             K_ = hx(kv_.value & ((1 << 8 * vs) - 1))       # a constant assigned and used: stored with ldw / ldb, then
             F.emit('ldb' if vs == 1 else 'ldw', '%s,%s' % (t, K_))   # loaded (random r1_04_06: (gi2 = 256) > 255 ->
             F.emit('ld', '%s,%s' % (FAM[fam][vs], K_)); return fam   # ldw (_gi2),0x100 / ld WA,0x100 / cp WA,0xff)
+        if ASSIGN_K_VALUE_LONG and not F.opt and vs == 4 and kv_.k == 'const' and kv_.value is not None and t.startswith('(_') and \
+                fam in FAM and 4 in FAM[fam] and 'WA' not in live_regs(F):
+            K_ = hx(kv_.value & 0xffffffff)                # a long constant assigned and used: through XWA, then loaded
+            F.emit('ld', 'XWA,%s' % K_); F.emit('ld', '%s,XWA' % t)   # again (random .r3_09_02: (gul = 54902UL) >= 4UL ->
+            F.emit('ld', '%s,%s' % (FAM[fam][4], K_)); return fam     # ld XWA,0xd676 / ld (_gul),XWA / ld XWA,0xd676)
         if strip(rv).k == 'call' and not has_helper_call(strip(rv).fn):   # ae_i_call_g: cal _g / ld (_gi),HL /
             gen_call(F, strip(rv)); flush_pops(F)                        # cp HL,0x0
             F.emit('ld', '%s,%s' % (t, FAM['HL'][vs])); return 'HL'
