@@ -5844,6 +5844,11 @@ def gen_ptr_arith(F, e, fam, size):
             F.emit('ld', 'XBC,%s' % pm); pm = 'XBC'            # a static member's pointer is loaded first (r1_04_02:
                                                                # ld XBC,(_gs + 0xa) / ld XWA,0x0 / ld A,(a) / add XWA,XBC)
         F.emit('ld', 'XWA,0x0'); F.emit('ld', 'A,%s' % im)   # random r1_04_02: vp(gs.p + a), a char a on a char pointer,
+    elif UCHAR_IDX_SCALE16 and ii.ty is not None and ii.ty.size == 1 and not ii.ty.signed and esz == 2 and \
+            e.op == '+' and not getattr(F, 'ptr_arg_ctx', False) and not getattr(F, 'in_return', False):
+        load_index16(F, ii, im); F.emit('add', 'WA,WA')   # an unsigned char index on an int pointer is scaled at 16 bits
+        F.emit('exts', 'XWA'); esz = 1                     # and sign-extended (random r3_05_08: gpi = a + t -> ld A,E /
+                                                           # extz WA / add WA,WA / exts XWA / add XWA,(XSP+0x4))
     else:                                                  # pushed: the byte zero-extended whole (ld XWA,0x0 / ld A,(XSP+0x8));
         load_index16(F, ii, im); F.emit(ext, 'XWA')       # stored it is sign-extended (r1_00_13: gp = gs.p + a -> ld A,.. /
     if esz == 2: F.emit('add', 'XWA,XWA')
@@ -6960,6 +6965,8 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
+ARG_CAST_LOAD = True                                     # see push_arg
 PUSH_CSE = True                                          # see push_cse
 
 def push_cse(lines):
@@ -8142,6 +8149,12 @@ def push_arg(F, a):
             F.emit('ld', 'XWA,%s' % pk_[1]); m = '(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)'
     if size <= 2 and m is not None and family_of(m):    # a register: push IZ (call.c k_seq under O3XS)
         F.emit('push', m if size == 2 else FAM[family_of(m)[1:]][2]); F.push += 2; return 2
+    if ARG_CAST_LOAD and size == 2 and m is not None and m.startswith('(') and a0.k == 'cast' and \
+            a0.kind == 'IntegralCast' and getattr(a0, 'explicit', False) and strip(a0.e).ty is not None and \
+            strip(a0.e).ty.size == 2 and 'WA' not in live_regs(F):
+        F.emit('ld', 'WA,%s' % m); F.emit('push', 'WA'); F.push += 2; return 2   # an explicit cast of an int in memory
+                                                           # is loaded, then pushed (rstmt rs_2_04_07_1: rpi((int)gu) ->
+                                                           # ld WA,(_gu) / push WA, not pushw (_gu))
     if size <= 2 and m is not None:
         F.emit('pushw', m); F.push += 2; return 2
     if ARG_CAST_COPY and size == 4 and m in ('XBC', 'XDE', 'XHL', 'XIZ') and not F.opt and not F.adecl and a0.k == 'cast' and \

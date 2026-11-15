@@ -2881,6 +2881,14 @@ both; library 186/248, pairs 223, semcheck 50 unchanged.
 call comes between; `addr_reg_reuse` then drops the reload. Without -O the oracle pushes from memory (rstmt none
 -7 there). rstmt -O3 -XS +6, random -O3 -XS +2; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 246 (2026-11-15): a cast argument is loaded first; an unsigned char index is scaled at 16 bits.**
+ARG_CAST_LOAD (`push_arg`): an explicit cast of an int in memory is loaded into WA and pushed, not pushed from memory
+(rstmt rs_2_04_07_1, every set: `rpi((int)gu)` -> `ld WA,(_gu) / push WA`). UCHAR_IDX_SCALE16 (`gen_ptr_arith`): an
+unsigned char index on an int pointer is scaled at 16 bits and then sign-extended (random r3_05_08: `gpi = a + t` ->
+`ld A,E / extz WA / add WA,WA / exts XWA / add XWA,(XSP+0x4)`), not `extz XWA / add XWA,XWA`; not for a pushed
+argument or a returned value. rstmt none +2, -O3 -XS +2, random none +1; library 186/248, pairs 223, semcheck 50
+unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
