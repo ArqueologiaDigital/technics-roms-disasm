@@ -2939,6 +2939,14 @@ assignment inside is the constant 0; only the operation is replaced, its consume
 `guc = ~(guc & 0)` -> `ld A,0x0 / cpl A / ld (_guc),A`; the oracle's listings never write `and A,0x0`). rstmt +2 /
 +1 / +2 / +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 254 (2026-11-15): -O loads small 32-bit constants with lda; -O folds x & 0 through its consumer.**
+LDA_SMALL_OPT: under -O a 32-bit register loaded with a constant 9..0xffff is `lda`, applied to the finished listing so
+the L2 allocators' lines are covered too (the oracle's -O3 -XS listings: `lda` 16, `ld` 0; without -O: `ld` 20, `lda`
+0; random r1_00_09: `255 / t` -> `lda XWA,0xff / div XWA,QIZ`). AND_ZERO_FOLD_OPT: under -O `x & 0` without side
+effects is the constant 0 in the tree, so what contains it folds too (random r1_05_11 -O3 -XS: `guc = ~(guc & 0)` ->
+`ldb (_guc),0xff`; without -O the oracle keeps `ld A,0x0 / cpl A`, batch 253). rstmt -O3 -XS +1, -O3 -XS -Xr +2;
+library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

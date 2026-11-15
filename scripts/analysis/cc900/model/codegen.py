@@ -95,6 +95,11 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if LDA_SMALL_OPT and op == 'ld' and args is not None and getattr(s, 'opt', None):
+            m_ = re.match(r'^(X(?:WA|BC|DE|HL|IX|IY|IZ)),0x([0-9a-f]+)$', args)   # -O: a 32-bit register loaded with
+            if m_ and 9 <= int(m_.group(2), 16) <= 0xffff: op = 'lda'     # 9..0xffff is lda (the oracle's -O3 -XS
+                                                           # listings: lda 16, ld 0; without -O: ld 20, lda 0; random
+                                                           # r1_00_09: 255 / t -> lda XWA,0xff / div XWA,QIZ)
         if AND_BIT_RES and op == 'and' and args is not None:     # an AND that clears one bit of a register is res
             m_ = re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL]),0x([0-9a-f]+)$', args)   # (random r1_04_05: t & 32767
             if m_:                                                # with t in IZ -> res 0xf,IZ; the oracle's listings
@@ -6981,6 +6986,8 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+AND_ZERO_FOLD_OPT = True                                 # see compile_function_once
+LDA_SMALL_OPT = True                                     # see Fn.emit
 AND_ZERO = True                                          # see gen
 NEG_LONG_MOVE = True                                     # see gen: - / ~ of a long
 MUL2_SHIFT = True                                        # see gen_stmt
@@ -16337,6 +16344,21 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if F.opt: bool_returns(f.body)
     if CHAR_NARROW: char_narrow(f.body)
     if F.opt and COPY_PROP: copy_propagate(f)
+    if F.opt and AND_ZERO_FOLD_OPT:                       # -O: x & 0 is the constant 0 in the tree, so what contains it
+        from frontend import N                             # folds too (random r1_05_11 -O3 -XS: guc = ~(guc & 0) ->
+        def az_(n, dep):                                   # ldb (_guc),0xff)
+            for key, val in list(n.__dict__.items()):
+                items = val if isinstance(val, list) else [val]
+                for i_, x in enumerate(items):
+                    x0 = strip(x) if hasattr(x, 'k') else None
+                    if x0 is not None and x0.k == 'bin' and x0.op == '&' and x0.ty is not None and x0.ty.kind == 'int' and \
+                            any(fold(y).k == 'const' and fold(y).value == 0 for y in (x0.l, x0.r)) and \
+                            not nodes_in(x0, 'call') and not nodes_in(x0, 'incdec') and not nodes_in(x0, 'opassign') and \
+                            not any(m.k == 'bin' and m.op == '=' for m in nodes_in(x0, 'bin')):
+                        c_ = N('const', value=0, ty=x0.ty)
+                        if isinstance(val, list): val[i_] = c_
+                        else: setattr(n, key, c_)
+        walk(f.body, az_)
     compute_last_uses(F)
     F.lines.append(('.' if adecl else '_') + f.name + ':')
     F.loops = []; F.param_copies = []; F.pushes = []
@@ -16722,6 +16744,10 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 L2_WIDE = True
                 try: full = compile_function(_pickle.loads(spare), opt, fa, personality)
                 finally: L2_WIDE = False
+            if LDA_SMALL_OPT and opt != 'none':          # (every writer of a listing, the L2 allocators too)
+                import re as _rl
+                full = ['\tlda\t' + l[4:] if _rl.match(r'^\tld\tX(WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l) and
+                        9 <= int(l.rsplit('0x', 1)[1], 16) <= 0xffff else l for l in full]
             FULL[name] = full                              # the whole function, for pairs_model.py
             import re as _re                               # an inline-assembly label named _x / .x starts a new piece in
             cur = name; out[cur] = []                      # a listing (listing.split), so the model's output does too
