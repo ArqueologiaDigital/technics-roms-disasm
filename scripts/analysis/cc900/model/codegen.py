@@ -7059,6 +7059,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+STORE_HL_DIRECT = True                                   # see compile_unit
 CHAR_CHAIN_VIA_A = True                                  # see gen: a narrowed char chain widened
 CHAR_SHR_AFTER_NARROW = True                             # see char_narrow's visit2
 QIZH_DIRECT = True                                       # see compile_unit
@@ -16937,6 +16938,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 import re as _rl
                 full = ['\tlda\t' + l[4:] if _rl.match(r'^\tld\tX(WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l) and
                         9 <= int(l.rsplit('0x', 1)[1], 16) <= 0xffff else l for l in full]
+            if STORE_HL_DIRECT and not (opt != 'none' and fa):   # ld WA,HL / ld (m),WA -> ld (m),HL where XWA is dead after
+                k_ = 0                                     # (the oracle has the pair only at -O3 -XS -Xr; fpp3.c k1:
+                while k_ < len(full) - 1:                  # cal ._fcmp_d / ld (_gi),HL)
+                    m_ = re.match(r'^\tld\t(X?WA),(X?HL)$', full[k_])
+                    if m_ and len(m_.group(1)) == len(m_.group(2)):
+                        m2_ = re.match(r'^\tld\t(\([^)]*\)),%s$' % m_.group(1), full[k_ + 1])
+                        if m2_ and 'WA' not in m2_.group(1) and reg_dead(full, k_ + 2, 'XWA'):
+                            full[k_:k_ + 2] = ['\tld\t%s,%s' % (m2_.group(1), m_.group(2))]
+                    k_ += 1
             if QIZH_DIRECT:                                # ld A,C / ld QIZH,A -> ld QIZH,C where XWA is dead after (no
                 k_ = 0                                     # oracle listing at any set has ld A,C|E|L then ld QIZH,A;
                 while k_ < len(full) - 1:                  # random .r3_00_09 -O3 -XS -Xr: sll 0x4,C / ld QIZH,C)

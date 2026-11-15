@@ -3070,6 +3070,12 @@ in L, cb_gu_s1_ri). Found with the new research-scratch `never_pairs.py` (instru
 oracle never does; `extz HL / sra n,HL` was 52 times in the model). chararith +13 at none and -Xr, chararith2 +70 at
 none and +50 at -Xr; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 272 (2026-11-15): a value in HL is stored from HL.** STORE_HL_DIRECT (`compile_unit`, on the finished
+listing; not at -O3 -XS -Xr): `ld WA,HL / ld (m),WA` (or the long form) becomes `ld (m),HL` where XWA is dead
+afterwards (fpp3.c k1: `gi = gd4 > gd` -> `cal ._fcmp_d / ld (_gi),HL`); the oracle has the pair only at -O3 -XS -Xr
+(2 and 5 times), never at the other sets. From `never_pairs.py` (32 model pairs). rstmt -Xr +2, fpp3 +1, fpp7 +4,
+evorder_ad none and -Xr +10; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
