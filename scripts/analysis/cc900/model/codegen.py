@@ -7053,6 +7053,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+QIZH_DIRECT = True                                       # see compile_unit
 XR_CHAR_ARG_INPLACE_OPT = True                           # see gen_call_adecl
 PARAM_WRITE_ONLY_FREE = True                             # see regtemp_candidates
 ASSIGN_K_VALUE_LONG = True                               # see gen_assign_value
@@ -16923,6 +16924,13 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 import re as _rl
                 full = ['\tlda\t' + l[4:] if _rl.match(r'^\tld\tX(WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l) and
                         9 <= int(l.rsplit('0x', 1)[1], 16) <= 0xffff else l for l in full]
+            if QIZH_DIRECT:                                # ld A,C / ld QIZH,A -> ld QIZH,C where XWA is dead after (no
+                k_ = 0                                     # oracle listing at any set has ld A,C|E|L then ld QIZH,A;
+                while k_ < len(full) - 1:                  # random .r3_00_09 -O3 -XS -Xr: sll 0x4,C / ld QIZH,C)
+                    m_ = re.match(r'^\tld\tA,([CEL])$', full[k_])
+                    if m_ and full[k_ + 1] == '\tld\tQIZH,A' and reg_dead(full, k_ + 2, 'XWA'):
+                        full[k_:k_ + 2] = ['\tld\tQIZH,%s' % m_.group(1)]
+                    k_ += 1
             FULL[name] = full                              # the whole function, for pairs_model.py
             import re as _re                               # an inline-assembly label named _x / .x starts a new piece in
             cur = name; out[cur] = []                      # a listing (listing.split), so the model's output does too

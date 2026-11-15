@@ -3057,6 +3057,11 @@ shifted value in C -> `exts BC / ld WA,BC`), not `ld A,C / exts WA`; the -Xr for
 CHAR_ARG_INPLACE_OPT. rstmt -O3 -XS -Xr +1, random1 -O3 -XS -Xr +2, loc0 -O3 -XS -Xr +28; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 270 (2026-11-15): a byte goes into QIZH directly.** QIZH_DIRECT (`compile_unit`, on the finished listing):
+`ld A,C|E|L` followed by `ld QIZH,A` becomes `ld QIZH,C|E|L` where XWA is dead afterwards; no oracle listing at any
+option set has that pair (random .r3_00_09 -O3 -XS -Xr: `unsigned char t = b << 4` with b in C -> `sll 0x4,C / ld
+QIZH,C`). random3 -O3 -XS -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
