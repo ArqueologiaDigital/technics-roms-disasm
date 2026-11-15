@@ -287,7 +287,7 @@ def long_load_kept(c, size):
     """without -O an explicit cast of a long in memory to an int or char loads the 32 bits (random r1_01_07:
     v2(gi2, (int)gul * 8) -> ld XWA,(_gul) / sla 0x3,WA / push WA; r3_05_07: .. | (char)gla[1] -> ld XWA,(_gla + 0x4))"""
     x = strip(c.e)
-    return LONG_LOAD_KEPT and not CUR_OPT[0] and getattr(c, 'explicit', False) and x.k == 'load' and x.ty is not None and \
+    return LONG_LOAD_KEPT and (not CUR_OPT[0] or LONG_LOAD_KEPT_OPT) and getattr(c, 'explicit', False) and x.k == 'load' and x.ty is not None and \
         x.ty.size == 4 and size < 4 and x.ty.kind == 'int'
 
 def narrow(e, size):
@@ -10543,6 +10543,7 @@ SWEEP_OPT_LIFTS = True                                    # batch 232: LH_ELEM0 
 SWEEP_ALL_LIFTS = True                                    # batch 233: SLOT_INIT_FORMS at every set (random-scored sweep)
 SWEEP_XR_LIFTS = True                                     # batch 232: four rules under -Xr (random-scored sweep)
 FOLDED_K_STORE = True                                     # see gen_stmt's store
+LONG_LOAD_KEPT_OPT = True                                 # see long_load_kept
 AND_BIT_RES = True                                        # see Fn.emit: and with one bit clear is res
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),

@@ -2814,6 +2814,12 @@ register and no one-bit-clearing `and`. IZ_TAIL_DIRECT now also moves `res` / `s
 again (`ld IZ,0xff / ld HL,0xff`), not `ld HL,IZ`. rstmt none and -Xr +1, random none +1; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 238 (2026-11-15): a cast long load keeps its 32 bits under -O.** `long_load_kept` (an explicit cast of a long
+in memory to an int or char loads the whole long) applied only without -O; the oracle does the same at -O3 -XS
+(rstmt rs_3_09_14_1: `((unsigned char)gl) % 3` -> `ld XWA,(_gl) / extz WA / div WA,0x3`, not `ld A,(_gl)`;
+rs_1_02_01_0: `((unsigned char)gula[7]) & 128` -> `ld XWA,(_gula + 0x1c) / and A,0x80`). LONG_LOAD_KEPT_OPT lifts the
+exclusion. rstmt -O3 -XS +29, -O3 -XS -Xr +27; random, library 186/248, pairs 223 and semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
