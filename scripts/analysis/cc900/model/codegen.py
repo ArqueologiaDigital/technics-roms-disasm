@@ -739,7 +739,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         return fam
     if e.k == 'cast' and e.kind == 'IntegralCast':
         inner = strip(e.e); isz = inner.ty.size
-        if CALL_CHAR_EXTS_OPT and F.opt and not F.adecl and isz == 1 and size == 2 and inner.k == 'call' and \
+        if CALL_CHAR_EXTS_OPT and F.opt and (not F.adecl or SWEEP_XR_LIFTS) and isz == 1 and size == 2 and inner.k == 'call' and \
                 not has_helper_call(inner.fn) and fam in ('WA', 'HL', 'ANY') and 'HL' not in live_regs(F):
             f_ = gen(F, inner, 'HL', 1)                      # -O: a char call result widened in place (rstmt
             if f_ == 'HL':                                   # rs_1_04_09_3: gi = (int)rc(2) -> cal _rc / inc 0x2,XSP /
@@ -6078,7 +6078,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
         # binop-loc section 6, -O3 -XS -Xr: the register copy first (mul_l_loc: ld XBC,XIZ / ld XWA,(XSP+0x4))
         if family_of(ls): F.emit(*lh_ls_ld(F, l, ls)); F.emit(*rs_ld)
         else: F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))
-    elif F.opt and not F.adecl and BINLOC_XR:
+    elif F.opt and (not F.adecl or SWEEP_XR_LIFTS) and BINLOC_XR:
         # cdecl -O3 -XS: XWA first, except a memory right operand beside a local held in XIZ, which is loaded
         # first (mul_l_loc: ld XBC,(a) / ld XWA,XIZ); a parameter in XIZ keeps XWA first (_ldiv, _ultoa:
         # ld XWA,XIZ / ld XBC,(XSP+0x20))
@@ -6090,7 +6090,7 @@ def gen_long_helper(F, e, l, r, fam, signed):
             (not HELPER_IS_CALL or F.opt or (F.adecl and not LH_XR_ORDER) or family_of(ls) or family_of(rs) or any(
                 d is not None and getattr(d, 'kind', None) == 'local' and d.ty.size == 4 for d in F.xiz_vars)):   # (r3_02_00: only a
         F.emit(*rs_ld); F.emit(*lh_ls_ld(F, l, ls))                                     #  counter in IZ: XWA first)
-    elif LH_ELEM0 and not F.opt and lh_plain(l) == 'G' and lh_plain(r) == 'M' and re.match(r'^\(_\w+\)$', rs) and \
+    elif LH_ELEM0 and (not F.opt or SWEEP_OPT_LIFTS) and lh_plain(l) == 'G' and lh_plain(r) == 'M' and re.match(r'^\(_\w+\)$', rs) and \
             strip(strip(r).e if strip(r).k == 'load' else r).k == 'index':
         F.emit('lda', 'XBC,%s' % rs[1:-1]); F.emit(*lh_ls_ld(F, l, ls)); F.emit('ld', 'XBC,(XBC)')   # element 0 of an array is read
                                                         # through its address (random r1_06_18: gul % gula[0] ->
@@ -9082,7 +9082,7 @@ def gen_opassign(F, e):
             F.emit('ld', 'XWA,%s' % hx(fold(e.r).value - 1)); F.emit('and', '%s,XWA' % lm_); return lm_
     if INCW_GLOBAL and op in ('+', '-') and size == 2 and fold(r).k == 'const' and fold(r).value is not None and \
             1 <= (fold(r).value & 0xffff) <= 8 and strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and \
-            not getattr(strip(e.l).decl, 'reg', None) and not F.adecl and not getattr(F, 'l2', None):
+            not getattr(strip(e.l).decl, 'reg', None) and (not F.adecl or SWEEP_XR_LIFTS) and not getattr(F, 'l2', None):
         t = lvalue(F, e.l)                                 # probes/fpargf.c af_VNNSP: gu += 3 -> incw 0x3,(_gu)
         F.emit('incw' if op == '+' else 'decw', '%s,%s' % (hx(fold(r).value & 0xffff), t)); return t
     if op in SIMPLE_OPS and OPB_GLOBAL and fold(r).k == 'const' and fold(r).value is not None and size == 1 and \
@@ -10488,6 +10488,8 @@ UNREACH_AFTER_RET = True                                  # see gen_stmt's block
 REGVAR_HL_POP = True                                      # see regvar_stmt
 POP_LAZY_DECL = True                                      # see later_call_absorbs
 SLOT_INIT_KCOMM = True                                    # see slot_init: K op m with op commutative
+SWEEP_OPT_LIFTS = True                                    # batch 232: LH_ELEM0 under -O (random-scored sweep)
+SWEEP_XR_LIFTS = True                                     # batch 232: four rules under -Xr (random-scored sweep)
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
@@ -11543,7 +11545,7 @@ def regvar_stmt(F, e):
                 F.emit('ld', 'WA,%s' % Wr); F.emit('exts' if bw.ty.signed else 'extz', 'XWA')
                 fam = gen(F, a0, w.reg, 4)
                 F.emit('ld', '%s,%s' % (R, FAM[fam][4])); F.emit(SIMPLE_OPS[r0.op], '%s,XWA' % R); return True
-        if IZ_PTR_INIT and d.reg == 'IZ' and d.ty.size == 2 and not F.adecl and 'WA' not in live_regs(F):
+        if IZ_PTR_INIT and d.reg == 'IZ' and d.ty.size == 2 and (not F.adecl or SWEEP_XR_LIFTS) and 'WA' not in live_regs(F):
             v0 = strip(narrow(e.r, 2))                      # random r2_00_10: int t = gps->a[0] + gi2 (t in IZ) ->
             def thr(x):                                     # ld XWA,(_gps) / ld IZ,(XWA+0xe) / add IZ,(_gi2), not through WA
                 x = strip(narrow(x, 2))

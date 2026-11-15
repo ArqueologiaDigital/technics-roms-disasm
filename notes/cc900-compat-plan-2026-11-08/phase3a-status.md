@@ -2762,6 +2762,17 @@ variable. The one random function needed a live register and stays out; rstmt ga
 (`edit_batch231_fpgen.py`). Ledger up 2 (rstmt -Xr +2, -O3 -XS -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random
 unchanged, 196 / 84 / 147 / 69.
 
+**Batch 232 (2026-11-15): five option gates lifted after the codegen.py sweeps were re-run scored on random.** Batch 230
+showed that rstmt-scored sweeps cannot see effects across statements. The codegen.py sweeps were therefore re-run scored
+on the four random corpora (research-scratch `gate/xrtry3r.sh` / `xrtry4r.sh`, results in
+`gate/xrtry-results-opt-random-2026-11-15.txt` and `-adecl-random-`). Five gates gain without loss. LH_ELEM0 now holds
+under -O (SWEEP_OPT_LIFTS). CALL_CHAR_EXTS_OPT, BINLOC_XR's cdecl -O3 -XS operand order, INCW_GLOBAL and IZ_PTR_INIT now
+hold under -Xr too (SWEEP_XR_LIFTS). Two more sites gained but were wrong code and stay gated, as their own comments say:
+TEST_IN_BC under -O3 -XS -Xr (rstmt .rs_2_02_15_4) and CHAR_REG_INDEX for a parameter under -O (random r4_03_00). The
+three semcheck verdicts of the first gate came from those two. Ledger up 7 by 104 (fpargf.c -Xr and -O3 -XS -Xr 48 ->
+96, both 96 / 96; random -O3 -XS -Xr +4, -Xr +1; rstmt -O3 -XS -Xr +3), down 0; pairs MATCH 223; semcheck 50. Random
+196 / 84 / 148 / 73; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
