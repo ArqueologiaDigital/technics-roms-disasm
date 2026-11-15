@@ -938,10 +938,28 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         F.lines.append(lfalse + ':'); F.emit('ld', '%s,0x0' % R); F.lines.append(lend + ':'); return fam
     if e.k == 'bin' and e.op in ('&&', '||'):        # c_and / c_or: ld HL,0 / conditions / ld HL,1
         R = FAM[fam][2]
-        if not getattr(F, 'preset_hl', False): F.emit('ld', '%s,0x0' % R)
+        pre_ = getattr(F, 'preset_hl', False)
+        n_lg_ = len(F.lines); lab0_ = F.label
+        if not pre_: F.emit('ld', '%s,0x0' % R)
         F.preset_hl = False
         lend = F.newulabel()
         gen_cond_false(F, e, 'RET' if then_ret else lend)
+        fp_ = re.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (fam, fam, fam[0], fam[1])) if fam in ('WA', 'BC', 'DE', 'HL') else None
+        if LOGIC_VALUE_REG and not pre_ and not then_ret and fp_ is not None and \
+                any(fp_.search(l_.split(',')[0]) for l_ in F.lines[n_lg_ + 1:] if l_.startswith('\t')):
+            cond_ = ' '.join(F.lines[n_lg_ + 1:])           # (the test overwrote the preset: oe_lg_laT)
+            del F.lines[n_lg_:]
+            live_ = set(live_regs(F))
+            R2 = next((x for x in ('BC', 'DE', 'HL', 'WA') if x != fam and x not in live_ and
+                       not re.search(r'\b(X?%s|Q%s|%s|%s)\b' % (x, x, x[0], x[1]), cond_)), None)
+            if R2 is None: raise Unsupported('a && / || value over its own test')
+            W_ = FAM[R2][2]
+            F.emit('ld', '%s,0x0' % W_)
+            lend = F.newulabel()
+            gen_cond_false(F, e, lend)
+            F.emit('ld', '%s,0x1' % W_); F.lines.append(lend + ':')
+            F.emit('ld', '%s,%s' % (FAM[fam][2], W_)); return fam   # (moved to the value's register: right, not the
+                                                                     #  oracle's form, which keeps XBC and the store)
         F.emit('ld', '%s,0x1' % R); F.lines.append(lend + ':'); return fam
     if TERN_CONST_PRE and e.k == 'cond' and not then_ret:
         r_ = tern_const_pre(F, e, fam, size)
@@ -5172,6 +5190,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         if fam != 'HL': F.emit('ld', '%s,HL' % FAM[fam][size])
         return fam
     signed = e.ty.signed if size >= e.ty.size else is_signed(e.l if UNPROMOTED_SIGN else l)   # (before narrowing
+    if BYTE_DIV_KDIVIDEND and size == 1 and e.op in ('/', '%') and fold(e.l).k == 'const' and fold(e.r).k != 'const':
+        signed = is_signed(e.r)                    # (a constant dividend: the divisor's signedness, oe_ar_bdC)
                                                      # drops the cast to unsigned char: mul_uc_loc)
     R = FAM[fam][size]
     wide_l = strip(strip(l).e) if strip(l).k == 'cast' else strip(l)
@@ -6625,6 +6645,8 @@ def gen_compare(F, e):
             (not CMP_CONST_FITS or fits_(fold(r).value, strip(l.e).ty)):   # _itoa: (int)u < 0 (a widening cast only:
         l = strip(l.e)                                     # r4_04_11's (unsigned char)gul != 255 keeps its byte)
     size = l.ty.size; signed = l.ty.signed
+    if BYTE_CMP_UNSIGNED and size == 1 and r.ty is not None and r.ty.size == 1 and not r.ty.signed and fold(r).k != 'const':
+        signed = False                                 # (char against unsigned char at the byte: unsigned, oe_mx_cbC)
     cc = (CC_S if signed else CC_U)[e.op]
     rc = fold(r)
     op = e.op
@@ -6645,7 +6667,14 @@ def gen_compare(F, e):
         saved_ = (getattr(F, 'cw_pins', None), getattr(F, 'cw_start', None), getattr(F, 'cw_opline', None))
         F.cw_pins = []; F.cw_start = len(F.lines)
         try:
-            co = cmp_wide(F, e, l, r, csz, op, CC_S[e.op] if nrw else cc)
+            ccn_ = CC_S[e.op]
+            if BYTE_CMP_UNSIGNED and nrw:                  # (an unsigned char on either side: unsigned, oe_mx_cbC)
+                def bsg_(x):
+                    x = strip(x)
+                    while x.k == 'cast' and x.ty is not None and x.ty.size > 1 and x.kind == 'IntegralCast': x = strip(x.e)
+                    return x.ty.signed if x.ty is not None and x.ty.size == 1 else True
+                if not (bsg_(l) and bsg_(r)): ccn_ = CC_U[e.op]
+            co = cmp_wide(F, e, l, r, csz, op, ccn_ if nrw else cc)
             if co is not None: cw_guard(F, len(F.lines) - 1, 'cmp_wide')
         finally:                                           # (a nested rule keeps its own pins: the outer ones return)
             inner_ = F.cw_pins or []
@@ -7508,6 +7537,9 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+BYTE_CMP_UNSIGNED = True                                 # see gen_compare
+BYTE_DIV_KDIVIDEND = True                                # see _gen_bin_body
+LOGIC_VALUE_REG = True                                   # see gen's && / || value
 CHAR_UNARY_ACC = True                                    # see char_unary_acc
 CHAR_LOCAL_IDX_SIGNED = True                             # see elem_addr
 PARAM_COPY_RET_GUARD = True                              # see Fn.emit's live guard

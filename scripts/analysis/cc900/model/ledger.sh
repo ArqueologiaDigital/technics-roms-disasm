@@ -386,6 +386,11 @@ for c in none O3XS; do    # frame / context minimal pairs (lane_fpframe) (corpus
 done
 row "run 2026-11-15-7-micro-fpctx1, v423/Xr" "probes/fpctx1.c" "$O/2026-11-15-7-micro-fpctx1/out/v423/Xr/probes" corpus/probes/fpctx1.c --opt none --adecl
 row "run 2026-11-15-7-micro-fpctx1, v423/O3XSXr" "probes/fpctx1.c" "$O/2026-11-15-7-micro-fpctx1/out/v423/O3XSXr/probes" corpus/probes/fpctx1.c --opt O3XS --adecl
+for c in none O3XS; do    # -O expression shapes free of undefined behaviour (corpus/probes/oexp.c, a wrong-code hunt)
+  row "run 2026-11-15-9-micro-oexp, v423/$c" "probes/oexp.c" "$O/2026-11-15-9-micro-oexp/out/v423/$c/probes" corpus/probes/oexp.c --opt $c
+done
+row "run 2026-11-15-9-micro-oexp, v423/Xr" "probes/oexp.c" "$O/2026-11-15-9-micro-oexp/out/v423/Xr/probes" corpus/probes/oexp.c --opt none --adecl
+row "run 2026-11-15-9-micro-oexp, v423/O3XSXr" "probes/oexp.c" "$O/2026-11-15-9-micro-oexp/out/v423/O3XSXr/probes" corpus/probes/oexp.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

@@ -3781,6 +3781,16 @@ parameter in XWA, the complement in C); the shp2 probe shows that form in all 12
 uc_* 12 exact at every set; random 232 / 140 / 189 / 126 (+1 / +1 / 0 / 0); ledger up 10, down 0; validation and
 library unchanged; pairs 223; semcheck 9, same verdicts.
 
+**Batch 345 (2026-11-15): wrong-code fixes from the oexp probe.**  lane_o3's oexp.c (1,005 -O expression shapes free of
+undefined behaviour, oracle run 2026-11-15-9) showed 5 DIFFERENT functions of 968 / 957 / 937 / 945 compiled at
+none / O3XS / Xr / O3XSXr, the same 5 at every set: BYTE_CMP_UNSIGNED (char vs unsigned char compares unsigned when
+either side is unsigned char; the model used lt with the char on the left), BYTE_DIV_KDIVIDEND (a byte division with a
+constant dividend follows the divisor's signedness; divs read a divisor of 0xff as -1), LOGIC_VALUE_REG (a && / ||
+value preset in the register its own test then loads is built in the first family the test leaves free).  oexp now
+semchecks clean at every set and joins the ledger: 811 / 674 / 792 / 733 of 1,005 exact.  Old ledger rows, validation
+and library unchanged; semcheck 9, same verdicts.  Expression code is far cleaner than stores: lane_nm's stptr probe
+showed 5-7 % of compiled store shapes DIFFERENT, oexp 0.5 %.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
