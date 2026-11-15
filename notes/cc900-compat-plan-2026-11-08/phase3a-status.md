@@ -3206,6 +3206,13 @@ instead of "used" by default. SHIFT1_MEM_REG: SHIFT1_MEM also shifts in memory t
 register (`*c >>= 1` with c in XDE -> `srab (XDE)`). rstmt +2 at none, -O3 -XS and -Xr; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 290 (2026-11-15): probe stdiv at cdecl -O3 -XS from the predictor.** SDXR_CDECL_OPT (`compile_unit`):
+`sdxr.py` writes probe stdiv's shapes for cdecl -O3 -XS too, from the predictor's new O3XS set (research-scratch
+tabulation/stdivxr-predict.py `--set O3XS`, 750 / 750; the same subagent also checked a `--set none` against the
+cdecl listing). Its families file lists the eight rules that separate cdecl none from -O3 -XS; seven are the -Xr -O
+rules again, and one is new for cdecl: a Q destination's index loaded straight into the address register. stdiv -O3
+-XS 718 -> 750 of 750, so stdiv is now exact at every set; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

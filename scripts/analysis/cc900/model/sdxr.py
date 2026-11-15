@@ -22,7 +22,7 @@ def tkind(ty):
     return {(2, True): 'i', (2, False): 'u', (4, True): 'l', (4, False): 'n', (1, True): 'c'}.get((ty.size, ty.signed))
 
 
-def whole(f, opt='none'):
+def whole(f, opt='none', cdecl=False):
     if not SDXR: return None
     if len(f.params) != 3 or any(tkind(p.ty) != 'i' for p in f.params): return None
     body = cg.flat(f.body)
@@ -99,7 +99,7 @@ def whole(f, opt='none'):
     if ak[0] == 'K' and bk[0] != 'K' and ak[1]['0x64'] == '0x7': return None
     for k_ in (lk, ak, bk): sub.update(k_[1])
     name = 'sd_%s_%s_%s%s%s' % (t, 'd' if rv.op == '/' else 'm', lk[0], ak[0], bk[0])
-    try: lines = P.predict(name, 'O3XSXr' if opt != 'none' else 'Xr')
+    try: lines = P.predict(name, ('O3XS' if opt != 'none' else 'none') if cdecl else ('O3XSXr' if opt != 'none' else 'Xr'))
     except Exception: return None
     if lines is None: return None
     out = []

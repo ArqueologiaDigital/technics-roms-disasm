@@ -2,9 +2,10 @@
 """stdivxr-predict.py -- predict the cc900 oracle's code for the stdiv.c probe compiled with -Xr, from the name alone.
 
     predict('.sd_i_d_XGX') -> ['add DE,DE', 'lda XHL,_wia', ...]      (no function label)
-    python3 stdivxr-predict.py --check [FILTER] [--set Xr|O3XSXr]   score against the oracle listing (per family)
-    python3 stdivxr-predict.py NAME [--set Xr|O3XSXr]               print one prediction
-    predict(name, set='Xr')     set Xr = -Xr, O3XSXr = -O3 -XS -Xr (the -O rules: stdivxr-FAMILIES.md, last section)
+    python3 stdivxr-predict.py --check [FILTER] [--set Xr|O3XSXr|O3XS|none]   score against the oracle listing (per family)
+    python3 stdivxr-predict.py NAME [--set Xr|O3XSXr|O3XS|none]               print one prediction
+    predict(name, set='Xr')     set Xr = -Xr, O3XSXr = -O3 -XS -Xr, O3XS = -O3 -XS (cdecl, `_sd_` names),
+                                none = no options (cdecl; a cross-check of the cdecl paths)
 
 Names: sd_<t>_<op>_<L><A><B>, t = i u l n c, op = d (/) m (%), L = G P D X Q, A = G P X K, B = G P X K
 (stdiv.c header).  -Xr: the parameters c, d, e arrive in WA, BC, DE.
@@ -121,12 +122,22 @@ class Body:
 # int / unsigned int
 
 
-def build_int(t, op, L, A, B, O=False):
+PSLOT = {'pC': '(XSP+0x4)', 'pD': '(XSP+0x6)', 'pE': '(XSP+0x8)'}      # cdecl: c, d, e above the return address
+
+
+def build_int(t, op, L, A, B, O=False, cdecl=False):
     s = 'i' if t == 'i' else 'u'
     ext, dv = ('exts', 'divs') if t == 'i' else ('extz', 'div')
     b = Body()
     e = b.e
     dest_first = B in 'GK'       # RULE dest-first: a divisor that needs no register lets the destination go first
+
+    def par(dst, p):
+        """read parameter p into dst: a register copy at -Xr (dropped when in place), a stack load in cdecl"""
+        if cdecl:
+            e('ld {%s},%s' % (dst, PSLOT[p]))
+        else:
+            e('ld {%s},{%s}' % (dst, p), (dst, p))
 
     def dest():
         if L == 'G':
@@ -138,11 +149,11 @@ def build_int(t, op, L, A, B, O=False):
             e('ld {DPTR:x},(_gs%s)' % s)
             return '({DPTR:x}+0x2)'
         if L == 'X':
-            e('ld {DOFF},{pC}', ('DOFF', 'pC'))
+            par('DOFF', 'pC')
             e('add {DOFF},{DOFF}')
             e('lda {DBASE:x},_g%sa' % s)
             return '({DBASE:x}+{DOFF})'
-        e('ld {DOFF},{pC}', ('DOFF', 'pC'))      # Q
+        par('DOFF', 'pC')                         # Q
         e('exts {DOFF:x}')
         e('add {DOFF:x},{DOFF:x}')
         e('ld {DADDR:x},{DOFF:x}', ('DADDR', 'DOFF'))
@@ -153,14 +164,14 @@ def build_int(t, op, L, A, B, O=False):
     if A == 'P':
         e('ld {APTR:x},(_v%sp)' % s)
     elif A == 'X':
-        e('ld {AOFF},{pD}', ('AOFF', 'pD'))
+        par('AOFF', 'pD')
         e('add {AOFF},{AOFF}')
         e('lda {ABASE:x},_v%sa' % s)
     if B == 'P':
         e('ld {BPTR:x},(_w%sp)' % s)
         bop = '({BPTR:x})'
     elif B == 'X':
-        e('ld {BOFF},{pE}', ('BOFF', 'pE'))
+        par('BOFF', 'pE')
         e('add {BOFF},{BOFF}')
         e('lda {BBASE:x},_w%sa' % s)
         bop = '({BBASE:x}+{BOFF})'
@@ -181,13 +192,16 @@ def build_int(t, op, L, A, B, O=False):
     e('ld %s,{QUOT}' % d)
     e('ret')
 
-    if dest_first:
+    if dest_first and cdecl:      # cdecl: a plain pointer destination is coloured after the dividend's base
+        order = (['DPTR'] if L == 'D' else []) + ['AOFF', 'AVAL', 'ABASE', 'APTR'] + (['DPTR'] if L == 'P' else []) + \
+                ['DOFF', 'DBASE', 'DADDR', 'QUOT']
+    elif dest_first:
         order = (['DPTR'] if L == 'D' else []) + ['AOFF', 'AVAL'] + (['DPTR'] if L == 'P' else []) + \
                 ['ABASE', 'APTR', 'DOFF', 'DBASE', 'DADDR', 'QUOT']
     else:
         order = ['APTR', 'AVAL', 'BOFF', 'BBASE', 'AOFF', 'ABASE', 'BPTR'] + \
                 {'G': ['QUOT'], 'P': ['QUOT', 'DPTR'], 'D': ['DPTR', 'QUOT'], 'X': ['DOFF', 'DBASE', 'QUOT'],
-                 'Q': ['QUOT', 'DOFF', 'DADDR']}[L]
+                 'Q': ['DOFF', 'DADDR', 'QUOT'] if cdecl else ['QUOT', 'DOFF', 'DADDR']}[L]
 
     def width(n):
         if n in ('AOFF', 'BOFF', 'QUOT') or (n == 'DOFF' and L == 'X'):
@@ -196,7 +210,12 @@ def build_int(t, op, L, A, B, O=False):
 
     pref = {'AVAL': 'WA', 'AOFF': 'pD', 'BOFF': 'pE', 'DOFF': 'pC', 'DADDR': 'DOFF', 'QUOT': 'AVAL'}
     # -O: the dividend is retargeted to the quotient's register (no ld QUOT,AVAL) when that is free
-    return b.colour(order, width, pref, [('AVAL', 'QUOT')] if O and op == 'd' else ())
+    co = []
+    if O and op == 'd':
+        co.append(('AVAL', 'QUOT'))
+    if O and cdecl:
+        co.append(('DOFF', 'DADDR'))     # cdecl -O: c is loaded straight into the pointer element's address register
+    return b.colour(order, width, pref, co)
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -295,11 +314,109 @@ def build_char(op, L, A, B, O=False):
     return b.colour(order, width, pref, co)
 
 
+def build_char_cdecl(op, L, A, B, O=False):
+    """char without -Xr: as build_char, but an element address is base + zero-extended index in one register:
+    lda XBASE,_xca / ld IDX,(XSP+n) / extz XIDX / add XIDX,XBASE, then (XIDX)"""
+    b = Body()
+    e = b.e
+    byteform = B == 'G' or (A == 'K' and B in 'PX')
+    wordform = B in 'PX' and A != 'K'
+    dest_first = B == 'K'
+
+    def elem(P, base, slot):
+        e(base.replace('{B}', '{%sBASE:x}' % P))
+        e('ld {%sIDX},%s' % (P, slot))
+        e('extz {%sIDX:x}' % P)
+        e('add {%sIDX:x},{%sBASE:x}' % (P, P))
+        return '({%sIDX:x})' % P
+
+    def dest():
+        if L == 'G':
+            return '(_gc)'
+        if L in 'PD':
+            e('ld {DPTR:x},(%s)' % ('_gsi' if L == 'D' else '_gcp'))
+            return '({DPTR:x})'
+        return elem('D', 'ld {B},(_gcp)' if L == 'Q' else 'lda {B},_gca', PSLOT['pC'])
+
+    d = dest() if dest_first else None
+    if B == 'P':
+        e('ld {BPTR:x},(_wcp)')
+        bmem = '({BPTR:x})'
+    elif B == 'X':
+        bmem = elem('B', 'lda {B},_wca', PSLOT['pE'])
+    if wordform:
+        e('ld {BV8:b},%s' % bmem)
+        e('ld {BEXT:b},{BV8:b}', ('BEXT', 'BV8'))
+        e('exts {BEXT}')
+        bop = '{BEXT}'
+    elif B in 'PX':
+        bop = bmem
+    else:
+        bop = '(_wc)' if B == 'G' else '0x7'
+    if A == 'P':
+        e('ld {APTR:x},(_vcp)')
+        amem = '({APTR:x})'
+    elif A == 'X':
+        amem = elem('A', 'lda {B},_vca', PSLOT['pD'])
+    else:
+        amem = '(_vc)'
+    if A == 'K':
+        e('ld {AVAL},0x64')
+    else:
+        e('ld {AVAL:b},%s' % amem)
+        e('exts {AVAL}')
+    if byteform:
+        e('divs {AVAL},%s' % bop)
+    else:
+        if A != 'K':
+            e('exts {AVAL:x}')
+        e('divs {AVAL:x},%s' % bop)
+    if op == 'd':
+        src, sname = '{AVAL:b}', 'AVAL'
+    elif byteform:
+        src, sname = '{AVAL:h}', None
+    else:
+        e('ld {QR},{AVAL:q}')
+        src, sname = '{QR:b}', 'QR'
+    if L == 'G':
+        e('ld (_gc),%s' % src)
+    else:
+        e('ld {RES8:b},%s' % src, ('RES8', sname) if sname else None)
+        if not dest_first:
+            d = dest()
+        e('ld %s,{RES8:b}' % d)
+    e('ret')
+
+    if dest_first:
+        order = ['AVAL', 'ABASE', 'AIDX', 'APTR', 'DPTR', 'DBASE', 'DIDX', 'QR', 'RES8']
+    else:
+        order = ['AVAL', 'ABASE', 'AIDX', 'APTR', 'BEXT', 'BBASE', 'BIDX', 'BPTR', 'BV8'] + \
+                {'G': ['QR'], 'P': ['QR', 'RES8', 'DPTR'], 'D': ['QR', 'RES8', 'DPTR'],
+                 'X': ['DBASE', 'QR', 'RES8', 'DIDX'], 'Q': ['DBASE', 'QR', 'RES8', 'DIDX']}[L]
+
+    def width(n):
+        if n in ('BV8', 'RES8'):
+            return 8
+        if n in ('BEXT', 'QR') or (n == 'AVAL' and byteform):
+            return 16
+        return 32
+
+    pref = {'AVAL': 'WA', 'QR': 'AVAL', 'RES8': sname or None}
+    co = []
+    if O:
+        co.append(('BV8', 'BEXT'))
+        if sname == 'QR':
+            co.append(('QR', 'RES8'))
+        elif sname == 'AVAL' and A == 'K':
+            co.append(('AVAL', 'RES8'))
+    return b.colour(order, width, pref, co)
+
+
 # ---------------------------------------------------------------------------------------------------------------
 # long / unsigned long: a call to C9H_{div,rem}l{s,u} with the dividend in XWA, the divisor in XBC, the result in XHL
 
 
-def build_long(t, op, L, A, B, O=False):
+def build_long(t, op, L, A, B, O=False, cdecl=False):
     s = 'l' if t == 'l' else 'n'
     st = '_gsi' if t == 'l' else '_gsu'
     helper = 'C9H_%sl%s' % ('div' if op == 'd' else 'rem', 's' if t == 'l' else 'u')
@@ -327,6 +444,8 @@ def build_long(t, op, L, A, B, O=False):
                 dform = 'IZBASE'          # ga[c] = vl op wl: offset in IZ, base in a 4-byte slot
             else:
                 dform = 'XIZIDX'          # with a constant: the index through a 2-byte slot, base in XIZ
+    elif cdecl:
+        dform = 'AFTER'                 # cdecl: c is read again from its stack slot after the call
     else:
         dform = ('CSPILL' if xiz_operand else 'CIZ') if L in 'XQ' else 'AFTER'
 
@@ -347,6 +466,8 @@ def build_long(t, op, L, A, B, O=False):
     use_iz = dform in ('IZBASE', 'CIZ')
     push = 4 if use_xiz else 2 if use_iz else 0
     S = lambda o: '(XSP+%s)' % hx(o + push)
+    PS = lambda k: '(XSP+%s)' % hx(4 + push + frame + 2 * 'cde'.index(k))      # cdecl parameter slot
+    P16 = lambda k, r='WA': ['ld %s,%s' % (r, PS(k))] if cdecl else ([] if r == 'WA' and k == 'c' else None)
 
     out = []
     if frame:
@@ -372,10 +493,10 @@ def build_long(t, op, L, A, B, O=False):
                 out.append('ld XIZ,(%s)' % st)
                 store = ['ld (XIZ+0x4),XHL']
         elif L == 'Q':
-            out += ['exts XWA', 'sll 0x2,XWA', 'ld XIZ,XWA', 'add XIZ,(_g%sp)' % s]
+            out += P16('c') + ['exts XWA', 'sll 0x2,XWA', 'ld XIZ,XWA', 'add XIZ,(_g%sp)' % s]
             store = ['ld (XIZ),XHL']
         else:
-            out += ['sla 0x2,WA', 'lda XBC,_g%sa' % s, 'lda XIZ,XBC+WA']
+            out += P16('c') + ['sla 0x2,WA', 'lda XBC,_g%sa' % s, 'lda XIZ,XBC+WA']
             store = ['ld (XIZ),XHL']
     elif dform == 'SLOT4':
         T = S(slot4)
@@ -384,17 +505,19 @@ def build_long(t, op, L, A, B, O=False):
         elif L == 'D':
             out += ['ld XWA,(%s)' % st, 'inc 0x4,XWA', 'ld %s,XWA' % T]
         elif L == 'Q':
-            out += ['exts XWA', 'sll 0x2,XWA', 'ld %s,XWA' % T, 'ld XWA,(_g%sp)' % s, 'add %s,XWA' % T]
+            out += P16('c') + ['exts XWA', 'sll 0x2,XWA', 'ld %s,XWA' % T, 'ld XWA,(_g%sp)' % s, 'add %s,XWA' % T]
         else:            # X with an element dividend: c*4 + base in XWA (base in the lowest pair free of d)
-            out += ['sla 0x2,WA', 'lda XDE,_g%sa' % s, 'exts XWA', 'add XWA,XDE', 'ld %s,XWA' % T]
+            base = 'XBC' if cdecl else 'XDE'
+            out += P16('c') + ['sla 0x2,WA', 'lda %s,_g%sa' % (base, s), 'exts XWA', 'add XWA,%s' % base,
+                               'ld %s,XWA' % T]
         store = ['ld XWA,%s' % T, 'ld (XWA),XHL']
     elif dform == 'IZBASE':
         T = S(slot4)
-        out += ['ld IZ,WA', 'sla 0x2,IZ', 'lda XWA,_g%sa' % s, 'ld %s,XWA' % T]
+        out += ['ld IZ,%s' % (PS('c') if cdecl else 'WA'), 'sla 0x2,IZ', 'lda XWA,_g%sa' % s, 'ld %s,XWA' % T]
         store = ['ld XWA,%s' % T, 'ld (XWA+IZ),XHL']
     elif dform == 'XIZIDX':
         T = S(slot_idx)
-        out += ['ld %s,WA' % T, 'ld WA,%s' % T, 'sla 0x2,WA', 'ld %s,WA' % T, 'lda XIZ,_g%sa' % s]
+        out += P16('c') + ['ld %s,WA' % T, 'ld WA,%s' % T, 'sla 0x2,WA', 'ld %s,WA' % T, 'lda XIZ,_g%sa' % s]
         store = ['ld WA,%s' % T, 'ld (XIZ+WA),XHL']
 
     # ---- the operands in four phases ---------------------------------------------------------------------------
@@ -402,7 +525,7 @@ def build_long(t, op, L, A, B, O=False):
     idx = S(slot_idx) if slot_idx is not None else None
     if dform == 'XIZIDX':
         idx = None          # (no X operand can share: B in G, K and A in G, K here)
-    a_ptr = 'XHL' if B == 'X' else 'XWA'         # a pointer dividend held across the divisor's index code
+    a_ptr = ('XDE' if cdecl else 'XHL') if B == 'X' else 'XWA'   # held across the divisor's index code (Xr: e in DE)
     if A == 'G':
         ph[4 if O else 2].append('ld XWA,(_v%s)' % s)    # -O: a global leaf is loaded with the finals
     elif A == 'K':
@@ -411,10 +534,15 @@ def build_long(t, op, L, A, B, O=False):
         ph[1].append('ld %s,(_v%sp)' % (a_ptr, s))
         ph[4].append('ld XWA,(%s)' % a_ptr)
     elif xa_reg:
-        ph[1] += ['sla 0x2,BC', 'lda XWA,_v%sa' % s, 'lda XHL,XWA+BC']
-        ph[4].append('ld XWA,(XHL)')
+        if cdecl:
+            ph[1] += ['ld WA,%s' % PS('d'), 'sla 0x2,WA', 'lda XBC,_v%sa' % s, 'lda XDE,XBC+WA']
+            ph[4].append('ld XWA,(XDE)')
+        else:
+            ph[1] += ['sla 0x2,BC', 'lda XWA,_v%sa' % s, 'lda XHL,XWA+BC']
+            ph[4].append('ld XWA,(XHL)')
     else:
-        ph[1] += ['ld %s,BC' % idx, 'ld WA,%s' % idx, 'sla 0x2,WA', 'ld %s,WA' % idx, 'lda XIZ,_v%sa' % s]
+        home = ['ld WA,%s' % PS('d'), 'ld %s,WA' % idx] if cdecl else ['ld %s,BC' % idx]
+        ph[1] += home + ['ld WA,%s' % idx, 'sla 0x2,WA', 'ld %s,WA' % idx, 'lda XIZ,_v%sa' % s]
         ph[3].append('ld WA,%s' % idx)
         ph[4].append('ld XWA,(XIZ+WA)')
     if B == 'G':
@@ -425,7 +553,8 @@ def build_long(t, op, L, A, B, O=False):
         ph[1].append('ld XBC,(_w%sp)' % s)
         ph[4].append('ld XBC,(XBC)')
     else:
-        ph[1] += ['ld %s,DE' % idx, 'ld WA,%s' % idx, 'sla 0x2,WA', 'ld %s,WA' % idx, 'lda XIZ,_w%sa' % s]
+        home = ['ld WA,%s' % PS('e'), 'ld %s,WA' % idx] if cdecl else ['ld %s,DE' % idx]
+        ph[1] += home + ['ld WA,%s' % idx, 'sla 0x2,WA', 'ld %s,WA' % idx, 'lda XIZ,_w%sa' % s]
         ph[3].append('ld BC,%s' % idx)
         ph[4].append('ld XBC,(XIZ+BC)')
     for k in (1, 2, 3, 4):
@@ -435,13 +564,13 @@ def build_long(t, op, L, A, B, O=False):
     # ---- the store ---------------------------------------------------------------------------------------------
     if L == 'G':
         out.append('ld (_g%s),XHL' % s)
-    elif dform == 'AFTER':
+    elif dform == 'AFTER' and L in 'PD':
         if L == 'P':
             out += ['ld XWA,(_g%sp)' % s, 'ld (XWA),XHL']
         else:
             out += ['ld XWA,(%s)' % st, 'ld (XWA+0x4),XHL']
-    elif dform in ('CIZ', 'CSPILL'):
-        out.append('ld WA,IZ' if dform == 'CIZ' else 'ld WA,%s' % S(slot_c))
+    elif dform in ('CIZ', 'CSPILL', 'AFTER'):
+        out.append('ld WA,IZ' if dform == 'CIZ' else 'ld WA,%s' % (S(slot_c) if dform == 'CSPILL' else PS('c')))
         if L == 'X':
             out += ['sla 0x2,WA', 'lda XBC,_g%sa' % s, 'ld (XBC+WA),XHL']
         else:
@@ -456,18 +585,19 @@ def build_long(t, op, L, A, B, O=False):
     return out
 
 
-SETS = {'Xr': False, 'O3XSXr': True}                     # option set -> optimising (-O)
+SETS = {'Xr': (False, False), 'O3XSXr': (True, False),     # option set -> (optimising -O, cdecl)
+        'none': (False, True), 'O3XS': (True, True)}          # (none: the cdecl -O0 set, kept as a cross-check)
 
 
 def predict(name, set='Xr'):
-    O = SETS[set]
-    m = re.fullmatch(r'\.?sd_([iulnc])_([dm])_([GPDXQ])([GPXK])([GPXK])', name)
+    O, cdecl = SETS[set]
+    m = re.fullmatch(r'[._]?sd_([iulnc])_([dm])_([GPDXQ])([GPXK])([GPXK])', name)
     t, op, L, A, B = m.groups()
     if t in 'iu':
-        return build_int(t, op, L, A, B, O)
+        return build_int(t, op, L, A, B, O, cdecl)
     if t == 'c':
-        return build_char(op, L, A, B, O)
-    return build_long(t, op, L, A, B, O)
+        return (build_char_cdecl if cdecl else build_char)(op, L, A, B, O)
+    return build_long(t, op, L, A, B, O, cdecl)
 
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -488,9 +618,9 @@ def check(only=None, set='Xr'):
     orc = load_oracle(set)
     fam, wrong = {}, []
     for n, exp in orc.items():
-        if not n.startswith('.sd_'):
+        if not n[1:].startswith('sd_'):
             continue
-        t, op, shape = n.split('_')[1:4]
+        t, op, shape = n[1:].split('_')[1:4]
         try:
             got = predict(n, set)
         except Exception as ex:          # noqa

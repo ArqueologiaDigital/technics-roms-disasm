@@ -7085,6 +7085,7 @@ MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
 SHIFT1_MEM_REG = True                                    # see SHIFT1_MEM
+SDXR_CDECL_OPT = True                                    # see compile_unit: sdxr for cdecl -O3 -XS
 UAS_NESTED = True                                        # see uses_after_stmt
 UIDX_REGPARAM_STORE = True                               # see the unsigned index path: stores too (-Xr)
 SD2XR_WHOLE = True                                       # see compile_unit and sd2xr.py
@@ -17003,6 +17004,9 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             _sys.setrecursionlimit(max(_sys.getrecursionlimit(), 200000))
             spare = _pickle.dumps(f, -1) if opt != 'none' and not fa else None
             alt_ = None
+            if SDXR_CDECL_OPT and not fa and opt != 'none':   # probe stdiv's shapes, cdecl -O3 -XS (sdxr.py)
+                import sdxr
+                alt_ = sdxr.whole(f, opt, cdecl=True)
             if SDXR_WHOLE and fa and (opt == 'none' or SDXR_OPT):   # probe stdiv's statement shapes under -Xr (sdxr.py)
                 import sdxr
                 alt_ = sdxr.whole(f, opt)
