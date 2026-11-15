@@ -17,7 +17,7 @@ Exit status 1 when --base is given and anything is lost."""
 import sys, os, re, glob, json, subprocess, collections
 from concurrent.futures import ThreadPoolExecutor
 
-RUN = os.path.expanduser('~/compartilhado/cc900-oracle/runs/2026-11-15-2-micro-validation678/out/v423')
+RUN = os.path.expanduser('~/compartilhado/cc900-oracle/runs/2026-11-15-3-micro-validation678/out/v423')
 PAIRS = [('corpus/validation/random%d' % k, 'corpus/validation/rstmt%d.c' % k) for k in (6, 7, 8)]
 
 def child(mdir, SET, run):
