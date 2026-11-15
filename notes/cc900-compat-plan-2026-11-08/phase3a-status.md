@@ -3694,6 +3694,14 @@ uses the immediate form, `xorw (_gu2),0x1`, for and / or / xor and for add / sub
 first).  The lane's loss check now covers the micro corpus too.  Random -O3 -XS 131 -> 133; rstmt +5 / +6 / +4 / +4;
 no function lost.  Ledger up 6 rows by 21, down 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
 
+**Batch 338 (2026-11-15): a static read twice loaded once at -O; a char pushed as an int widened in place.** lane_o3
+28 TWICE_LOAD_ONCE (-O: a static read twice in one expression is loaded once into WA's family -- BC's when the result
+is in WA -- and copied: `v1(gi3 * gi3)` -> `ld BC,(_gi3) / ld WA,BC / muls XWA,BC`; the oracle never reads it twice
+at -O, 10 times per set without) and 29 PUSH_EXT_INPLACE (-O: a char in C / E / L pushed as an int is widened in place,
+`extz BC / push BC`; 64 times at -O3 -XS, never through A, while without -O it goes through A 63 times).  Random -O3
+-XS 133 -> 136, -O3 -XS -Xr 121 -> 123; rstmt +3 / +2; no function lost (micro included).  Ledger up 7 rows by 10, down
+0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

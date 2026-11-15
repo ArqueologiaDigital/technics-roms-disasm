@@ -7461,6 +7461,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+PUSH_EXT_INPLACE = True                                  # see compile_function_once's -O passes
+TWICE_LOAD_ONCE = True                                   # see compile_function_once's -O passes
 MEM_OP_IMM = True                                        # see compile_function_once's finishing passes
 PTR_TEST_KEEP = True                                     # see compile_function_once's -O passes
 ELEM_BASE_KEPT = True                                    # see elem_base_kept
@@ -8044,6 +8046,46 @@ def ptr_test_keep(L):
             L[i] = '\tld\t%s,%s' % (R2, M); L[i + 1] = L[i + 1].replace('(XWA)', '(%s)' % R2)
         del L[k]
         i += 1
+    return L
+
+def twice_load_once(L):
+    """TWICE_LOAD_ONCE (see the flag's note)"""
+    import re as _r
+    L = list(L)
+    FAMS_ = {'WA': ('XWA', 'WA', 'A'), 'BC': ('XBC', 'BC', 'C'), 'DE': ('XDE', 'DE', 'E'), 'HL': ('XHL', 'HL', 'L')}
+    def famof(r):
+        for f, rs in FAMS_.items():
+            if r in rs: return f
+        return None
+    def pt(f): return _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (f, f, f[0], f[1]))
+    i = 0
+    while i < len(L) - 1:
+        a = _r.match(r'^\tld\t(XWA|WA|A|XBC|BC|C|XDE|DE|E|XHL|HL|L),\((_\w+(?: \+ 0x[0-9a-f]+)?)\)$', L[i] or '')
+        if not a: i += 1; continue
+        R2, m = a.groups(); f2 = famof(R2); sz = FAMS_[f2].index(R2)
+        hit = None
+        for k in range(i + 1, min(len(L), i + 4)):
+            l = L[k] or ''
+            if not l.startswith('\t') or _r.match(r'^\t(j|cal|ret|swi)', l): break
+            if _r.match(r'^\t(add|sub|and|or|xor|adc|sbc)\t%s,\(%s\)$' % (R2, _r.escape(m)), l) or \
+                    sz == 1 and _r.match(r'^\t(muls|mul)\tX%s,\(%s\)$' % (R2, _r.escape(m)), l): hit = k; break
+            if '(%s)' % m in l: break
+        if hit is None: i += 1; continue
+        f1 = 'BC' if f2 == 'WA' else 'WA'; R1 = FAMS_[f1][sz]; p1 = pt(f1)
+        if any(p1.search(L[k] or '') for k in range(i + 1, hit)): i += 1; continue
+        dead = False
+        for l in L[hit + 1:]:
+            if not l or not p1.search(l):
+                if l and (l.endswith(':') or l.startswith(('\tj', '\tret', '\tcal'))):
+                    dead = l.startswith('\tcal') or l == '\tret'; break
+                continue
+            mm = _r.match(r'^\t(ld|lda)\t(X?%s|%s|%s),(.*)$' % (f1, f1[0], f1[1]), l)
+            dead = bool(mm and not p1.search(mm.group(3)) and FAMS_[f1].index(mm.group(2)) <= sz if mm and mm.group(2) in FAMS_[f1] else False)
+            break
+        if not dead: i += 1; continue
+        L[hit] = L[hit].replace('(%s)' % m, R1)
+        L[i:i + 1] = ['\tld\t%s,(%s)' % (R1, m), '\tld\t%s,%s' % (R2, R1)]
+        i += 2
     return L
 
 def xbase_cse(F):
@@ -18849,6 +18891,24 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 F.lines[i] = '\tsub\t%s,0x1' % m.group(1); F.lines[i + 1] = None
         F.lines = [l for l in F.lines if l is not None]
     if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)
+    if PUSH_EXT_INPLACE and F.opt:                       # -O: ld A,C / extz WA / push WA -> extz BC / push BC (r4_01_00)
+        i_ = 0
+        while i_ + 2 < len(F.lines):
+            a_ = re.match(r'^\tld\tA,([CEL])$', F.lines[i_] or ''); b_ = re.match(r'^\text([sz])\tWA$', F.lines[i_ + 1] or '')
+            if a_ and b_ and F.lines[i_ + 2] == '\tpush\tWA':
+                W_ = {'C': 'BC', 'E': 'DE', 'L': 'HL'}[a_.group(1)]; hi_ = W_[0]
+                ph_ = re.compile(r'\b(X%s|Q%s|%s|%s)\b' % (W_, W_, W_, hi_))
+                ok_ = True
+                for l_ in F.lines[i_ + 3:]:
+                    if not l_ or not ph_.search(l_):
+                        if l_ and (l_.endswith(':') or l_.startswith(('\tj', '\tret'))): ok_ = l_ == '\tret'; break
+                        continue
+                    m_ = re.match(r'^\t(ld|lda|pop)\t(X%s|%s|%s)(,(.*))?$' % (W_, W_, hi_), l_)
+                    ok_ = bool(m_ and not ph_.search(m_.group(4) or '')); break
+                if ok_:
+                    F.lines[i_:i_ + 3] = ['\text%s\t%s' % (b_.group(1), W_), '\tpush\t%s' % W_]
+            i_ += 1
+    if TWICE_LOAD_ONCE and F.opt: F.lines = twice_load_once(F.lines)
     if MEM_OP_IMM:                                       # op (m),K, not through A / WA (random r2_00_16: xorw (_gu2),0x1)
         i_ = 0
         while i_ + 1 < len(F.lines):
