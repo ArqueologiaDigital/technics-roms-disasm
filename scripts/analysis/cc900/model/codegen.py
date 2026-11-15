@@ -6971,6 +6971,7 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+MUL2_SHIFT = True                                        # see gen_stmt
 IF_JOIN_RET_DROP = True                                  # see LABEL_MERGE
 CHAR_DIVK = True                                         # see char_narrow's visit2
 LONG_MULK_OPA = True                                     # see gen_opassign
@@ -10939,6 +10940,17 @@ def gen_stmt(F, s, last):
     """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
     then knows nothing is read after it (_strlen: if (ss == NULL) return 0xffff; writes ss's HL)"""
     prev = getattr(F, 'in_return', False); F.in_return = prev or s.k == 'return'
+    if MUL2_SHIFT and s.k == 'expr' and s.e.k == 'opassign' and s.e.op == '*' and fold(s.e.r).k == 'const' and \
+            fold(s.e.r).value == 2 and strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and \
+            strip(s.e.l).ty.size in (1, 2):
+        from frontend import N                             # x *= 2 on a char or an int is x <<= 1, which SHIFT1_MEM
+        s.e.op = '<<'; s.e.r = N('const', value=1, ty=s.e.r.ty)   # does in memory (rstmt rs_1_05_01_1: *gp *= 2 ->
+                                                           # ld XWA,(_gp) / slab (XWA); rs_4_07_16_5: gc *= 2 -> slab (_gc))
+    if MUL2_SHIFT and s.k == 'expr' and s.e.k == 'opassign' and s.e.op == '/' and fold(s.e.r).k == 'const' and \
+            fold(s.e.r).value == 2 and strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and \
+            strip(s.e.l).ty.size in (1, 2) and not strip(s.e.l).ty.signed:
+        from frontend import N                             # an unsigned x /= 2 is x >>= 1 (rstmt rs_1_05_00_3: guc /= 2
+        s.e.op = '>>'; s.e.r = N('const', value=1, ty=s.e.r.ty)   # -> srlb (_guc))
     n_ms_ = len(F.lines)
     try:
         r_ = gen_body_shift(F, s, last) if LIVE_SHIFT and F.adecl and s.k in ('expr', 'return', 'decl') and \

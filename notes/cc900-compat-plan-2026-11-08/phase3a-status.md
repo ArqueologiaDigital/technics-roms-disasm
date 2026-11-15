@@ -2922,6 +2922,12 @@ stays (rs_1_00_00_3). Also measured and rejected the same day: dropping a compar
 label (research-scratch `rejected/switch_end_label_drop.md`; it cost rstmt none -11 as placed). rstmt none +2, -Xr
 +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 251 (2026-11-15): x *= 2 and unsigned x /= 2 are one-bit shifts in memory.** MUL2_SHIFT (`gen_stmt`): a
+char or int `x *= 2` is generated as `x <<= 1`, and an unsigned `x /= 2` as `x >>= 1`, so SHIFT1_MEM shifts it in
+memory (rstmt rs_1_05_01_1: `*gp *= 2` -> `ld XWA,(_gp) / slab (XWA)`; rs_4_07_16_5: `gc *= 2` -> `slab (_gc)`;
+rs_1_05_00_3: `guc /= 2` -> `srlb (_guc)`). The oracle's listings hold 123 one-bit shifts of memory. rstmt +4 / +2 /
++5 / +2, random2 none and -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
