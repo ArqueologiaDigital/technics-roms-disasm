@@ -2828,6 +2828,15 @@ ld A,0xe9 / sub A,C`); as the left operand it comes after a computed right opera
 RIGHT_ELEM_FIRST. rstmt +2 / +2 / +1 / +2, random +1 at every set, elrd -O3 -XS +4; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 240 (2026-11-15): a register that still holds a global's address is reused (-O).** ADDR_REG_REUSE, a -O
+post-pass (`addr_reg_reuse`): when a register still holds a global's address on every path to a line (an earlier
+`lda XBC,_gua`, no write to its family and no call since), that global's members are addressed through it:
+`(_gua + 0xa)` -> `(XBC+0xa)` (random r1_04_16 -O3 -XS: `gua[c] >= gu` reads through `lda XBC,_gua`; after the
+branch `gua[5] = ..` stores `ld (XBC+0xa),WA`). A forward dataflow over the listing that meets at labels; a function
+with a jump table or a computed jump is left alone. RET_REGVAR_K_OPT: under -O the dead store of `return (t = K)` with
+t in a register goes (random r1_04_05 -O3 -XS). rstmt -O3 -XS +2, -O3 -XS -Xr +4; random -O3 -XS +2; elrd -O3 -XS +20,
+-O3 -XS -Xr +4; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

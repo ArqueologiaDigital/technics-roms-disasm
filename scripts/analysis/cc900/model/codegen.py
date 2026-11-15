@@ -3672,6 +3672,7 @@ def store_chain(F, lv, rv, size):
     return True
 
 RET_ASSIGN = True                                         # see ret_assign
+RET_REGVAR_K_OPT = True                                   # see gen_stmt's return
 RET_REGVAR_K = True                                       # see ret_regvar_k
 
 def ret_regvar_k(F, e, fam, size):
@@ -6959,6 +6960,93 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+ADDR_REG_REUSE = True                                    # see addr_reg_reuse
+
+def addr_reg_reuse(lines):
+    """-O: a register that still holds a global's address (lda XBC,_gua earlier, on every path to here, with no write
+    to its family and no call since) addresses that global's members: (_gua + 0xa) -> (XBC+0xa) (random r1_04_16
+    -O3 -XS: gua[c] >= gu read through lda XBC,_gua; after the branch, gua[5] = .. -> ld (XBC+0xa),WA).  A forward
+    pass over the listing, the known addresses meeting at each label; nothing in a function with a jump table or a
+    computed jump."""
+    import re as _r
+    L = list(lines)
+    if any(l.startswith('\tdw') or _r.match(r'^\tj\tT,|^\tj\t\(|^\tcal\t\(', l) for l in L): return L
+    PARTS = {}
+    for x in ('WA', 'BC', 'DE', 'HL'):
+        for p_ in ('X' + x, 'Q' + x, x, x[0], x[1], 'Q' + x[0], 'Q' + x[1]): PARTS[p_] = 'X' + x
+    for x in ('IX', 'IY', 'IZ'):
+        for p_ in ('X' + x, 'Q' + x, x, x + 'H', x + 'L', 'Q' + x + 'H', 'Q' + x + 'L'): PARTS[p_] = 'X' + x
+    tok = _r.compile(r'\b(%s)\b' % '|'.join(sorted(PARTS, key=len, reverse=True)))
+    labs = {l[:-1]: i for i, l in enumerate(L) if _r.match(r'^\w+:$', l)}
+    def target(l):
+        m_ = _r.match(r'^\t(j|jr|jrl|djnz)\t(?:.*,)?(\w+)$', l)
+        return m_.group(2) if m_ else None
+    def uncond(l):
+        return bool(_r.match(r'^\t(ret|retd|reti)(\t[^,]*)?$', l) and ',' not in l[4:] and not _r.match(r'^\tret\t\w+$', l)) or \
+            bool(_r.match(r'^\t(j|jr|jrl)\t[^,]+$', l))
+    def kills(l, st):
+        if not l.startswith('\t'): return st
+        m_ = _r.match(r'^\t(\w+)(?:\t(.*))?$', l); op = m_.group(1); args = m_.group(2) or ''
+        if op in ('cal', 'call', 'calr', 'swi'): return {k: v for k, v in st.items() if k == 'XIZ'}
+        if op in ('ldir', 'ldirw', 'lddr', 'lddrw', 'ldi', 'ldiw', 'ldd', 'lddw', 'cpir', 'cpdr', 'cpi', 'cpd'):
+            return {k: v for k, v in st.items() if k not in ('XBC', 'XDE', 'XHL', 'XWA')}
+        if op in ('cp', 'cpb', 'cpw', 'push', 'pushw', 'bit', 'j', 'jr', 'jrl', 'ret', 'retd', 'nop', 'ei', 'di'): return st
+        if op == 'djnz': ops = args.split(',')[:1]
+        else:
+            ops = []; depth = 0; cur = ''
+            for ch in args:
+                if ch == '(': depth += 1
+                if ch == ')': depth -= 1
+                if ch == ',' and depth == 0: ops.append(cur); cur = ''
+                else: cur += ch
+            ops.append(cur)
+            if op in ('ld', 'lda', 'ldw', 'ldb', 'ldc'): ops = ops[:1]
+            elif op in ('inc', 'dec', 'sll', 'sla', 'srl', 'sra', 'rl', 'rr', 'rlc', 'rrc', 'set', 'res', 'chg', 'tset') and len(ops) == 2: ops = ops[1:]
+            elif op == 'scc': ops = ops[1:]
+            elif op != 'ex': ops = ops[:1]
+        w = set()
+        for o in ops:
+            if o.strip().startswith('('): continue
+            for t_ in tok.findall(o): w.add(PARTS[t_])
+        return {k: v for k, v in st.items() if k not in w} if w else st
+    n = len(L); IN = [None] * n
+    preds = [[] for _ in range(n)]
+    for i, l in enumerate(L):
+        t_ = target(l) if l.startswith('\t') else None
+        if t_ is not None and t_ in labs: preds[labs[t_]].append(i)
+        if i + 1 < n and not uncond(l): preds[i + 1].append(i)
+    OUT = [None] * n
+    changed = True; it = 0
+    while changed and it < 50:
+        changed = False; it += 1
+        for i in range(n):
+            if i == 0: inn = {}
+            else:
+                ps = [OUT[j] for j in preds[i] if OUT[j] is not None]
+                if not ps and not preds[i]: inn = {}
+                elif not ps: inn = None
+                else:
+                    inn = dict(ps[0])
+                    for q in ps[1:]: inn = {k: v for k, v in inn.items() if q.get(k) == v}
+            if inn is None: continue
+            l = L[i]; st = kills(l, inn)
+            m_ = _r.match(r'^\tlda\t(X(?:WA|BC|DE|HL|IX|IY|IZ)),(_\w+)(?: \+ (0x[0-9a-f]+))?$', l)
+            if m_: st = dict(st); st[m_.group(1)] = (m_.group(2), int(m_.group(3) or '0', 16))
+            if IN[i] != inn or OUT[i] != st: IN[i] = inn; OUT[i] = st; changed = True
+    out = list(L)
+    for i, l in enumerate(L):
+        if IN[i] is None or not IN[i] or not l.startswith('\t') or l.startswith('\tlda\t'): continue
+        def sub(mm):
+            nm, k = mm.group(1), int(mm.group(2) or '0', 16)
+            for R in ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ'):
+                v = IN[i].get(R)
+                if v and v[0] == nm and k >= v[1]:
+                    d = k - v[1]
+                    return '(%s+%s)' % (R, hx(d)) if d else '(%s)' % R
+            return mm.group(0)
+        out[i] = _r.sub(r'\((_\w+)(?: \+ (0x[0-9a-f]+))?\)', sub, l)
+    return out
+
 def ptr_test_reuse(lines):
     """-O3 -XS: a member tested through a global pointer, the same pointer loaded again into XBC in the block after the
     test: the pointer goes to XBC for the test and stays there (rstmt rs_2_06_00_7: if (gps->c != 0) gc2 = 'a' / gps->c
@@ -10020,6 +10108,7 @@ def gen_stmt(F, s, last):
             if RET_TWO_LEVEL and True and not getattr(F, 'retd', 0) and not epi and ret_two_level(F, s.value, size): fam = 'HL'
             else: fam = gen(F, s.value, 'HL', size, then_ret=True)
             rk_ = ret_regvar_k(F, s.value, fam, size) if RET_REGVAR_K and fam != 'HL' else None
+            if rk_ is not None and F.opt and RET_REGVAR_K_OPT: F.lines.pop()   # (-O: the dead store to t goes)
             if rk_ is not None: F.emit('ld', '%s,%s' % (FAM['HL'][size], rk_))   # return (t = 255), t in IZ: ld IZ,0xff /
             elif fam != 'HL' and FAM[fam].get(size) != FAM['HL'][size]:          # ld HL,0xff (random r1_04_05)
                 F.emit('ld', '%s,%s' % (FAM['HL'][size], FAM[fam].get(size, FAM[fam].get(2))))
@@ -16097,6 +16186,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 if k + 1 < len(F.lines) and F.lines[k + 1] == '\tret': F.lines[i] = '\tret\t' + m.group(1)
     import re                                            # no self-moves: the oracle never writes ld XWA,XWA
     F.lines = [l for l in F.lines if not re.match(r'^\tld\t(\w+),\1$', l)]
+    if ADDR_REG_REUSE and F.opt: F.lines = addr_reg_reuse(F.lines)
     if JUMP_TO_RET_OPT and F.opt and not (F.f.body.k == 'block' and F.f.body.body and F.f.body.body[-1].k == 'return'):
         # -O: a jump to a label whose next line is a bare ret is that ret (not when the function ends with a return
         # statement: switch.c sw_local's breaks keep j L128 to L128: / ret)
