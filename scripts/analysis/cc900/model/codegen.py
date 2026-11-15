@@ -7163,6 +7163,7 @@ LOC0W_WHOLE = True                                       # see compile_unit
 STVXW_WHOLE = True                                       # see compile_unit
 EXT_IN_PLACE_ARG = True                                  # see compile_unit
 DUP_ARG_VIA_BC = True                                    # see compile_unit
+MORE315_WHOLE = True                                     # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17176,7 +17177,9 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                  (EVADW_WHOLE, 'evadw'), (CMPOW_WHOLE, 'cmpow'), (CMPOW_WHOLE, 'cmpolw'),
                                  (STORESW_WHOLE, 'stordw'), (STORESW_WHOLE, 'stretw'), (STORESW_WHOLE, 'stvalw'),
                                  (LHIDXW_WHOLE, 'lhidxw'), (LHIDXW_WHOLE, 'lslw'), (LOC0W_WHOLE, 'loc0w'),
-                                 (LOC0W_WHOLE, 'pcw'), (STVXW_WHOLE, 'stvxw'), (STVXW_WHOLE, 'stvxcw')):   # probes
+                                 (LOC0W_WHOLE, 'pcw'), (STVXW_WHOLE, 'stvxw'), (STVXW_WHOLE, 'stvxcw'),
+                                 (MORE315_WHOLE, 'idxlocw'), (MORE315_WHOLE, 'loopctrw'), (MORE315_WHOLE, 'stvw'),
+                                 (MORE315_WHOLE, 'stv2w'), (MORE315_WHOLE, 'fpopaw'), (MORE315_WHOLE, 'fparggw')):   # probes
                                                            # chararith2 (ca2w.py, 576 /
                 if alt_ is None and flag_ and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # 576; 192 functions
                     try:                                   # of chararith.c written, all exact) and stchain (stchw.py,
@@ -17193,6 +17196,9 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            # (lhidx / lsl: lhidxw / lslw.py, 150 / 126)
                                                            # (loc0 / pc: loc0w / pcw.py, 512 / 48; stvx / stvxc: stvxw /
                                                            #  stvxcw.py, 135 / 294)
+                                                           # (idxloc / loopctr / stv / stv2 / fpopa / fpargg: idxlocw /
+                                                           #  loopctrw / stvw / stv2w / fpopaw / fparggw.py, 108 / 30 /
+                                                           #  96 / 32 / 112 / 44)
             alt_full_ = None
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)

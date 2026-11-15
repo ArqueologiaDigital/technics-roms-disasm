@@ -3438,6 +3438,17 @@ arithmetic in WA.  Random -O3 -XS -Xr 95 -> 97, rstmt -O3 -XS -Xr +3; ledger up 
 other order, while -Xr without -O loads WA first (18).  Random -O3 -XS -Xr 97 -> 99, rstmt -O3 -XS -Xr +5; ledger up 2
 rows by 7, down 0; library 186/248, pairs 223, semcheck 36 with the same verdicts.
 
+**Batch 315 (2026-11-15): probes idxloc, loopctr, stv, stv2, fpopa and fpargg at every set.** MORE315_WHOLE
+(`compile_unit`): `model/idxlocw.py`, `loopctrw.py` (research-scratch tabulation/idxloc-ast, by the lhx subagent),
+`stvw.py`, `stv2w.py` (tabulation/stv-ast, by the elrd subagent; 147 statement templates, `%` derived from `/`),
+`fpopaw.py`, `fparggw.py` (tabulation/fpp_b-ast, by the stchain subagent).  idxloc 85 / 67 / 81 / 69 -> 108, loopctr
+29 / 6 / 23 / 6 -> 30, stv 86 / 58 / 56 / 46 -> 96, stv2 0 -> 32, fpopa 108 / 92 / 108 / 92 -> 112, fpargg 36 / 32 /
+36 / 32 -> 44 at none / -O3 -XS / -Xr / -O3 -XS -Xr; renamed globals score the same; stv writes 76 functions of
+other runs, all exact, the others none.  fpp1 and fpp2 were left: they have no grammar, and an exact override would
+copy the oracle (tabulation/fpp_b-ast/fpp_b-FAMILIES.md).  semcheck 36 -> 17: the 13 idxloc il_c_R4 / RA / T2-T4
+and 6 stv sv_*_d_GG wrong-code verdicts are gone, the functions now exact.  rstmt and random unchanged.  Ledger up
+24 rows by 540, down 0; library 186/248, pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
