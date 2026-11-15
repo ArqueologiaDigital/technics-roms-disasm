@@ -3653,6 +3653,18 @@ was left out.  Random -O3 -XS 127 -> 128, -O3 -XS -Xr 115 -> 117; rstmt +1 / +1;
 inexact functions semcheck equal.  Ledger up 5 rows by 5, down 0; library 189/248, pairs 223, semcheck 9 with the same
 verdicts.
 
+**Batch 334 (2026-11-15): the library's _strspn exact; base registers at the statement start.** lane_libint 05
+L2_NESTED (the L2 allocator also for a leaf whose loop holds another loop and reads no array element; under L2 a label
+stays after a `ret cc`): `_strspn` exact, library 189 -> 190; the lane stopped there, each remaining library function
+needing a one-off allocator decision.  lane_o3 24 BASE_AT_STMT_START (-O: struct_base_cse's lda at the start of the
+first use's statement, never above a label, jump, call, push / pop or stack adjustment) and 25 ELEM_BASE_KEPT (-O:
+`lda XWA,_g / ld A,(XWA+r)` with the global used again in the run keeps the base in XBC / XDE; the oracle reads
+through the register in every such case, XBC 68, XDE 18).  lane_loop 13 LOOP_INV_RENAMED with RET_VOID (a void
+function's `ret` does not read HL).  lane_idx 05-06 (two refusals narrowed to the cases semcheck showed wrong; 11
+functions compile, all equal, none exact).  Random -O3 -XS 128 -> 130, -O3 -XS -Xr 117 -> 120; rstmt +1 / +2;
+library 190 (kn5000 188, ide2003 176); no function lost.  Ledger up 9 rows by 11, down 0; pairs 223, semcheck 9 with
+the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

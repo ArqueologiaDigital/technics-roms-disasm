@@ -122,13 +122,13 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-42-micro-homes2b, v423/Xr                            | probes/homes2b.c     | 86 / 90 exact (95.6%)      |
 | run 2026-11-09-42-micro-homes2b, v423/O3XSXr                        | probes/homes2b.c     | 86 / 90 exact (95.6%)      |
 | run 2026-11-10-1-micro-random1, v423/none                           | random/*.c           | 61 / 200 exact (30.5%)     |
-| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 40 / 200 exact (20.0%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 41 / 200 exact (20.5%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 52 / 200 exact (26.0%)     |
-| run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 36 / 200 exact (18.0%)     |
+| run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 38 / 200 exact (19.0%)     |
 | run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 50 / 200 exact (25.0%)     |
-| run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 30 / 200 exact (15.0%)     |
+| run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 31 / 200 exact (15.5%)     |
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 36 / 200 exact (18.0%)     |
-| run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 26 / 200 exact (13.0%)     |
+| run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 27 / 200 exact (13.5%)     |
 | run 2026-11-10-6-micro-random3, v423/none                           | random3/*.c          | 56 / 200 exact (28.0%)     |
 | run 2026-11-10-6-micro-random3, v423/O3XS                           | random3/*.c          | 27 / 200 exact (13.5%)     |
 | run 2026-11-10-6-micro-random3, v423/Xr                             | random3/*.c          | 46 / 200 exact (23.0%)     |
@@ -256,9 +256,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3743 / 4694 exact (79.7%)  |
-| run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3527 / 4694 exact (75.1%)  |
+| run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3528 / 4694 exact (75.2%)  |
 | run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3551 / 4694 exact (75.6%)  |
-| run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3402 / 4694 exact (72.5%)  |
+| run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3404 / 4694 exact (72.5%)  |
 | run 2026-11-13-8-micro-chararith, v423/none                         | probes/chararith.c   | 238 / 238 exact (100.0%)   |
 | run 2026-11-13-8-micro-chararith, v423/O3XS                         | probes/chararith.c   | 238 / 238 exact (100.0%)   |
 | run 2026-11-13-8-micro-chararith, v423/Xr                           | probes/chararith.c   | 238 / 238 exact (100.0%)   |
@@ -304,9 +304,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-13-micro-fpstmts, v423/none                          | micro/fp_stmts.c     | 15 / 16 exact (93.8%)      |
 | run 2026-11-09-13-micro-fpstmts, v423/O3XS                          | micro/fp_stmts.c     | 13 / 16 exact (81.2%)      |
 | run 2026-11-08-9-micro-optloops, v423/O3XS                          | micro/opt_loops.c    | 28 / 33 exact (84.8%)      |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 189 / 248 exact (76.2%)    |
-| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 187 / 248 exact (75.4%)    |
-| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 175 / 248 exact (70.6%)    |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality v4.23      | 1997 LIB/SRC         | 190 / 248 exact (76.6%)    |
+| run 2026-11-08-5-libsrc97-O3XS, v423/O3XS, --personality kn5000     | 1997 LIB/SRC         | 188 / 248 exact (75.8%)    |
+| run 2026-11-08-5-libsrc97-O3XS, ide2003/O3XS, --personality ide2003 | 1997 LIB/SRC         | 176 / 248 exact (71.0%)    |
 | run 2026-11-09-3-proxy-tiny, v423/O3XSXr                            | firmware/tiny.c      | 6 / 6 exact (100.0%)       |
 | run 2026-11-08-8-micro-ra, v423/O3XS                                | micro/ra_*.c         | 21 / 42 exact (50.0%)      |
 | run 2026-11-08-8-micro-ra, v423/Xr                                  | micro/ra_*.c         | 25 / 42 exact (59.5%)      |
