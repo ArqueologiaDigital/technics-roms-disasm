@@ -7084,6 +7084,8 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+BASE_BEFORE_INDEX_OPT = True                             # see addr_reg_reuse
+POP_BEFORE_BASE = True                                   # see base_hoist
 SDXR_WHOLE = True                                        # see compile_unit and sdxr.py
 OPASSIGN_ZERO_ELEM = True                                # see gen_opassign
 DIVPOW2_SHIFT_CHAR = True                                # see gen_stmt's MUL2_SHIFT
@@ -7304,11 +7306,11 @@ def addr_reg_reuse(lines, adecl=False):
             if inn is None: continue
             l = L[i]; st = kills(l, inn)
             m_ = _r.match(r'^\tlda\t(X(?:WA|BC|DE|HL|IX|IY|IZ)),(_\w+)(?: \+ (0x[0-9a-f]+))?$', l)
-            if m_: st = dict(st); st[m_.group(1)] = ('addr', m_.group(2), int(m_.group(3) or '0', 16))
+            if m_: st = dict(st); st[m_.group(1)] = ('addr', m_.group(2), int(m_.group(3) or '0', 16), i)
             m2_ = _r.match(r'^\tld\t(X?(?:WA|BC|DE|HL|IX|IY|IZ)),\((_\w+)(?: \+ 0x[0-9a-f]+)?\)$', l) if MEM_REG_REUSE else None
             if m2_: st = dict(st); st[PARTS[m2_.group(1)]] = ('mem', m2_.group(2), l)
             if IN[i] != inn or OUT[i] != st: IN[i] = inn; OUT[i] = st; changed = True
-    out = list(L); skip = set()
+    out = list(L); skip = set(); used_lda_ = {}
     for i, l in enumerate(L):
         if i in skip: continue
         if IN[i] is None or not IN[i] or not l.startswith('\t') or l.startswith('\tlda\t'): continue
@@ -7338,12 +7340,23 @@ def addr_reg_reuse(lines, adecl=False):
             for R in ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ'):
                 v = IN[i].get(R)
                 if v and v[0] == 'addr' and v[1] == nm and k >= v[2]:
-                    d = k - v[2]
+                    d = k - v[2]; used_lda_.setdefault(v[3], []).append(i)
                     return '(%s+%s)' % (R, hx(d)) if d else '(%s)' % R
             return mm.group(0)
         out[i] = _r.sub(r'\((_\w+)(?: \+ (0x[0-9a-f]+))?\)', sub, l)
         m2_ = _r.match(r'^\tld\t(X?(?:WA|BC|DE|HL|IX|IY|IZ)),\((_\w+)', l) if MEM_REG_REUSE else None
         if m2_ and IN[i].get(PARTS[m2_.group(1)]) == ('mem', m2_.group(2), l): out[i] = None   # (the value is there:
+    if BASE_BEFORE_INDEX_OPT:                              # a base that serves a later access is loaded before the index
+        idx_ = _r.compile(r'^\t(ld\t(WA|A),\((XSP\+0x[0-9a-f]+|_\w+( \+ 0x[0-9a-f]+)?)\)|add\tWA,WA|extz\tWA|exts\tWA|'
+                          r'sla\t0x[0-9a-f]+,WA)$')        # computed in WA (random r2_00_08 -O3 -XS: gua[4] = -gua[a] ->
+        for j in sorted(used_lda_, reverse=True):          # lda XBC,_gua / ld WA,(XSP+0x4) / add WA,WA / ld WA,(XBC+WA) /
+            if out[j] is None or not out[j].startswith('\tlda\tX') or 'XWA' in out[j]: continue   # neg WA / ld (XBC+0x8),WA)
+            r0_ = min(used_lda_[j])                        # (the reuse in the same straight run only: r1_04_16's reuse
+            if any(not (L[q] or '').startswith('\t') or _r.match(r'^\t(j|jr|jrl|djnz|ret|cal|call)\b', L[q] or '')
+                   for q in range(j + 1, r0_)): continue   #  after a branch keeps the index first)
+            k = j
+            while k > 0 and out[k - 1] is not None and idx_.match(out[k - 1]): k -= 1
+            if k < j: out[k:j + 1] = [out[j]] + out[k:j]
     return [l for l in out if l is not None]                                                  #  random r4_04_15)
 
 def ptr_test_reuse(lines):
@@ -7423,7 +7436,10 @@ def base_hoist(F, s, n0):
         if fam in live or any(l and parts.search(l) for l in seg): continue   # (the statement's code leaves R alone; R
                                                            #  holds no variable across statements)
         new = [pat.sub(lambda m: '(%s+%s)' % (R, m.group(2)) if m.group(2) else '(%s)' % R, l) if l else l for l in seg]
-        F.lines[n0:] = ['\tlda\t%s,_%s' % (R, g)] + new
+        k_ = 0
+        while POP_BEFORE_BASE and k_ < len(new) and _r.match(r'^\t(inc\t0x[0-9a-f]+,XSP|lda\tXSP,XSP\+0x[0-9a-f]+)$', new[k_] or ''):
+            k_ += 1                                        # (the pending pops first: random r2_01_14 -O3 -XS, cal _vu /
+        F.lines[n0:] = new[:k_] + ['\tlda\t%s,_%s' % (R, g)] + new[k_:]   #  inc 0x8,XSP / lda XBC,_guca)
         return
 
 STRUCT_BASE_CSE = True                                    # see struct_base_cse

@@ -3172,6 +3172,14 @@ The predictor's rules are a lifetime colouring of named temporaries with the par
 some colouring orders are fitted to the data (see the families file). stdiv -Xr 286 -> 750 of 750; rstmt and random
 unchanged (their functions do not have this shape); library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 286 (2026-11-15): pending pops before a hoisted base; a reused base before the index (-O).** POP_BEFORE_BASE
+(`base_hoist`): the base `base_hoist` loads at a statement's start goes after the statement's pending pops (random
+r2_01_14 -O3 -XS: `cal _vu / inc 0x8,XSP / lda XBC,_guca`). BASE_BEFORE_INDEX_OPT (`addr_reg_reuse`): an `lda` whose
+register serves a later access in the same straight run moves above the index computation in WA just before it
+(random r2_00_08 -O3 -XS: `gua[4] = -gua[a]` -> `lda XBC,_gua / ld WA,(XSP+0x4) / add WA,WA / ld WA,(XBC+WA) / neg WA
+/ ld (XBC+0x8),WA`); a reuse after a branch keeps the index first (r1_04_16, lost by the first version). rstmt +2 at
+both -O sets, random2 -O3 -XS +2 and -O3 -XS -Xr +1, elrd +6 / +4; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
