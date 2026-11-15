@@ -3146,6 +3146,14 @@ st_c_QT: `gp[c] = hc ? hd : hc` -> `.. / cpw (_hc),0x0 / j eq,L48 / ld WA,(_hd) 
 rstmt none -4 and random none -4. stord none +8 and -Xr +6; rstmt and random unchanged; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 283 (2026-11-15): 0 - (cast long) is neg; !!x is one test.** RIGHT_LONG_ZERO_NEG (`_gen_bin_body`): `0 -` a
+cast long in memory loads the long into XWA and negates there (random r3_01_10: `((unsigned char)!(-72039L)) -
+((unsigned char)a)` -> `ld XWA,(XSP+0x4) / neg A`, not `ld C,A / ld A,0x0 / sub A,C`). NOT_NOT (`gen`): `!!x` tests x
+once and sets with `scc ne` (random r4_07_04: `(unsigned char)!(!(int)guc)` -> `ld A,(_guc) / extz WA / cp WA,0x0 /
+scc ne,WA`), only through widening casts; a narrowing cast between keeps both tests (rstmt rs_3_07_05_3,
+`!(char)!gi2`, lost by the first version). rstmt +2 / +2 / +1 / +1, random3 none and -O3 -XS +1, random4 none and -Xr
++1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

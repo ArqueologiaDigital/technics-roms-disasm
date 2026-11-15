@@ -1075,6 +1075,14 @@ def gen(F, e, fam, size, then_ret=False, store=False):
         if F.pending != pend0: flush_pops(F)
         F.lines.append(lend + ':'); return fam
     if e.k == 'un' and e.op == '!':
+        x_nn_ = strip(e.e)
+        while x_nn_.k == 'cast' and x_nn_.kind == 'IntegralCast' and strip(x_nn_.e).ty is not None and \
+                x_nn_.ty.size >= strip(x_nn_.e).ty.size: x_nn_ = strip(x_nn_.e)   # (a narrowing cast between keeps both:
+        if NOT_NOT and x_nn_.k == 'un' and x_nn_.op == '!' and fam in FAM:      #  rstmt rs_3_07_05_3, !(char)!gi2)
+            n_nn_ = len(F.lines); gen(F, x_nn_, fam, size)   # !!x: x's test once, scc ne (random r4_07_04:
+            if F.lines[-1] == '\tscc\teq,%s' % FAM[fam][2]:     # (unsigned char)!(!(int)guc) -> extz WA / cp WA,0x0 /
+                F.lines[-1] = '\tscc\tne,%s' % FAM[fam][2]; return fam   # scc ne,WA)
+            del F.lines[n_nn_:]
         x = strip(e.e); xs = x.ty.size; m = mem_operand(F, x)
         if m in ('A', 'WA', 'BC', 'DE', 'HL', 'C', 'E', 'L'):                 # .lnot_i: cp WA,0x0
             F.emit('cp', '%s,0x0' % m)
@@ -5251,6 +5259,10 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                     if f_ == 'WA' and not writes_family(F.lines[n_r2_:], 'BC'):   # ld XWA,(_gla + 0x4) / or A,C)
                         F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM['WA'][size], FAM['BC'][size])); return 'WA'
                 del F.lines[n_lf_:]
+            if RIGHT_LONG_ZERO_NEG and op == '-' and fold(l).k == 'const' and fold(l).value == 0 and kl_(r):
+                n_z_ = len(F.lines); f_ = gen(F, r, 'WA', size)   # 0 - (char)long: the long in XWA, negated there
+                if f_ == 'WA': F.emit('neg', FAM['WA'][size]); return 'WA'   # (random r3_01_10: ((unsigned char)!(-72039L))
+                del F.lines[n_z_:]                                          #  - ((unsigned char)a) -> ld XWA,(XSP+0x4) / neg A)
             n_rf_ = len(F.lines); f_ = gen(F, r, 'WA', size)   # a cast long in memory is loaded whole into XWA: on the
             if f_ == 'WA':                                  # right it is loaded first and moved to C / BC, the left
                 F.emit('ld', '%s,%s' % (FAM['BC'][size], FAM['WA'][size]))   # then built in WA (rstmt rs_1_02_06_3:
@@ -7072,6 +7084,8 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+NOT_NOT = True                                           # see gen: !!x
+RIGHT_LONG_ZERO_NEG = True                               # see _gen_bin_body's RIGHT_LONG_FIRST
 NARROW_KEEPS_COND = True                                 # see narrow
 BYTE_SHL1_ADD = True                                     # see compile_unit
 LH_XX_OPT = True                                         # see the long helper with two element operands under -O
