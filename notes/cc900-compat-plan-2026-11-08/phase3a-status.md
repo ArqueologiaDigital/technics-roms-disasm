@@ -3001,6 +3001,13 @@ r1_01_18: `!gps->a[2]` -> `ld WA,(XWA+0x12) / cp WA,0x0`). Also tried and droppe
 global array as `*a` (no effect: the model reads `*a` from `(_a)` directly). rstmt +1 at every set, random2 none +1;
 library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 262 (2026-11-15): a long helper in a call's arguments releases the pending pops first.**
+CALL_HELPER_ARG_POP (`gen_stmt`'s call statements, cdecl): a call statement whose arguments contain a long multiply,
+divide or remainder (a `C9H_` helper) releases the pending pops of earlier calls first (random r4_00_06: `v2((int)234,
+gi); vl((long)gi2 / 4L)` -> `cal _v2 / inc 0x4,XSP / ld WA,(_gi2) / .. / cal C9H_divls / push XHL / cal _vl / inc
+0x4,XSP`). A double helper in the arguments still absorbs them (r1_00_01: `vd(gs.d + gd)`); the first try, any
+helper, lost 5 random functions at none. random4 none +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

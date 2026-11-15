@@ -7037,6 +7037,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+CALL_HELPER_ARG_POP = True                               # see gen_stmt's call statements
 NOT_MEMBER_PTR = True                                    # see gen: !
 ASSIGN_K_VALUE = True                                    # see gen_assign_value
 IMM_WIDTH_MASK = True                                    # see Fn.emit
@@ -10615,6 +10616,12 @@ def gen_stmt(F, s, last):
                                                            # register variable (homes2a B09: sb(b); a = gi; sa(a) ->
                                                            # cal _sb / ld IZ,(_gi) / push IZ / cal _sa / inc 0x8,XSP)
     if s.k == 'expr' and s.e.k == 'call':
+        if F.pending and CALL_HELPER_ARG_POP and not F.adecl and \
+                any(n_.k == 'bin' and n_.op in ('*', '/', '%') and n_.ty is not None and n_.ty.kind == 'int' and
+                    n_.ty.size == 4 for a_ in s.e.args for n_ in [strip(a_)] + nodes_in(a_, 'bin')):
+            flush_pops(F)                                  # a long helper in the arguments: the pops go first (random
+                                                           # r4_00_06: v2(..); vl((long)gi2 / 4L) -> cal _v2 / inc 0x4,XSP /
+                                                           # .. / cal C9H_divls / push XHL / cal _vl / inc 0x4,XSP)
         if F.pending and POP_MERGE_MAX and F.pending + call_arg_bytes(F, s.e) > POP_MERGE_MAX:
             flush_pops(F)                                  # fpp7.c m14: fd(e1); fd(e2); lda XSP,XSP+0x18; fd(e3); ...
         gen_call(F, s.e)                                   # (V4.23 merges call statements' pops up to 32 bytes:
