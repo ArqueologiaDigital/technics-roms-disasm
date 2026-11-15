@@ -6960,6 +6960,31 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+PUSH_CSE = True                                          # see push_cse
+
+def push_cse(lines):
+    """-O: a global pushed as an argument and read again in the same call's arguments is loaded once into WA:
+    pushw (_gi) ... ld WA,(_gi) / pushw (_gi) -> ld WA,(_gi) / push WA ... (rstmt rs_2_03_13_2 -O3 -XS: v2(gi, gi) ->
+    ld WA,(_gi) / push WA / push WA; rs_1_05_18_2: v2(gi >> 7, gi) -> ld WA,(_gi) / push WA / sra 0x7,WA / push WA).
+    Only when nothing between touches WA's family and no label, jump or call comes between; the reload goes in
+    addr_reg_reuse."""
+    import re as _r
+    out = list(lines); fam = _r.compile(r'\b(XWA|QWA|WA|W|A|QW|QA)\b')
+    for i in range(len(out)):
+        m_ = _r.match(r'^\tpushw\t(\(_\w+(?: \+ 0x[0-9a-f]+)?\))$', out[i] or '')
+        if not m_: continue
+        M = m_.group(1); j = i + 1
+        while j < len(out):
+            l = out[j] or ''
+            if not l.startswith('\t') or _r.match(r'^\t(j|jr|jrl|djnz|ret|retd|cal|call)\b', l): j = None; break
+            if l in ('\tld\tWA,%s' % M, '\tpushw\t%s' % M): break
+            if fam.search(l) or M[1:-1] in l and not l.startswith('\tpush'): j = None; break
+            j += 1
+        if j is None or j >= len(out): continue
+        out[i] = '\tld\tWA,%s' % M; out.insert(i + 1, '\tpush\tWA')
+        if out[j + 1] == '\tpushw\t%s' % M: out[j + 1] = '\tpush\tWA'
+    return out
+
 LDA_RUN_BASE = True                                      # see lda_run_base
 
 def lda_run_base(lines):
@@ -16298,6 +16323,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                    i + 1 < len(F.lines) and re.match(r'^L\d+:$', F.lines[i + 1] or ''))]   # (rstmt .rs_2_07_08_5: the
                                                            # if's join L1 before the exit L50001 the test jumps to)
     if TEST_REG_REUSE and F.opt and (not F.adecl or TEST_REG_REUSE_XR): F.lines = test_reg_reuse(F.lines)
+    if PUSH_CSE and F.opt: F.lines = push_cse(F.lines)
     if LDA_RUN_BASE and F.opt: F.lines = lda_run_base(F.lines)
     if ADDR_REG_REUSE and F.opt: F.lines = addr_reg_reuse(F.lines, F.adecl)   # (after test_reg_reuse / ptr_test_reuse, which
                                                          #  expect a pointer's reload still written: rstmt rs_4_01_13_2)

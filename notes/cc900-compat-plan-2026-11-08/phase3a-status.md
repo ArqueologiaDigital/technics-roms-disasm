@@ -2874,6 +2874,13 @@ the global's address once, into the run's last register, and takes the others fr
 Without -O the oracle writes each `lda` (the pass there costs rstmt none -57). rstmt +5 at both -O sets, random +3 at
 both; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 245 (2026-11-15): a global pushed twice in one call is loaded once (-O).** PUSH_CSE, a -O post-pass
+(`push_cse`): a global pushed as an argument and read again in the same call's arguments is loaded once into WA
+(rstmt rs_2_03_13_2 -O3 -XS: `v2(gi, gi)` -> `ld WA,(_gi) / push WA / push WA`; rs_1_05_18_2: `v2(gi >> 7, gi)` ->
+`ld WA,(_gi) / push WA / sra 0x7,WA / push WA`), only when nothing between touches WA's family and no label, jump or
+call comes between; `addr_reg_reuse` then drops the reload. Without -O the oracle pushes from memory (rstmt none
+-7 there). rstmt -O3 -XS +6, random -O3 -XS +2; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
