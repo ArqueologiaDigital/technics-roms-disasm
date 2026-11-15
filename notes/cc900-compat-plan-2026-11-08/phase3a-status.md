@@ -3154,6 +3154,13 @@ scc ne,WA`), only through widening casts; a narrowing cast between keeps both te
 `!(char)!gi2`, lost by the first version). rstmt +2 / +2 / +1 / +1, random3 none and -O3 -XS +1, random4 none and -Xr
 +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 284 (2026-11-15): op= 0 on an element is no code; an unsigned char /= 2^k is a shift.** OPASSIGN_ZERO_ELEM
+(`gen_opassign`): `x op= 0` (`| ^ + -`) is no code for an element or member at a constant index too (random r2_00_02:
+`guca[2] -= 153 % 3`; the model wrote `subb (_guca + 0x2),0x0`, a form in no oracle listing). DIVPOW2_SHIFT_CHAR
+(`gen_stmt`'s MUL2_SHIFT): an unsigned char `/= 2^k` is `>>= k` (random r2_01_05: `guc /= 16` -> `ld A,(_guc) / srl
+0x4,A / ld (_guc),A`, not `extz WA / div WA,0x10`). From `never_forms.py` at none. rstmt +3 / +2 / +2 / +2; library
+186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -7084,6 +7084,8 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+OPASSIGN_ZERO_ELEM = True                                # see gen_opassign
+DIVPOW2_SHIFT_CHAR = True                                # see gen_stmt's MUL2_SHIFT
 NOT_NOT = True                                           # see gen: !!x
 RIGHT_LONG_ZERO_NEG = True                               # see _gen_bin_body's RIGHT_LONG_FIRST
 NARROW_KEEPS_COND = True                                 # see narrow
@@ -9559,7 +9561,10 @@ def gen_opassign(F, e):
     r = narrow(e.r, size)
     signed = strip(e.l).ty.signed
     if OPASSIGN_ZERO and op in ('|', '^', '+', '-') and True and fold(r).k == 'const' and fold(r).value == 0 and \
-            strip(e.l).k == 'var' and strip(e.l).ty.kind == 'int' and not nodes_in(r, 'call'):
+            (strip(e.l).k == 'var' or OPASSIGN_ZERO_ELEM and strip(e.l).k in ('index', 'member') and
+             not nodes_in(e.l, 'call') and not nodes_in(e.l, 'incdec') and
+             (strip(e.l).k != 'index' or fold(strip(e.l).idx).k == 'const')) and \
+            strip(e.l).ty.kind == 'int' and not nodes_in(r, 'call'):   # (random r2_00_02: guca[2] -= 153 % 3 is no code)
         return None                                        # x |= 0 is no code (random r1_04_17: gi2 |= 0 * 1)
     lmx_ = strip(e.l)
     if OPK_MEMBER_GLOBAL and op in '&|^' and fold(r).k == 'const' and size in (1, 2) and lmx_.k == 'member' and lmx_.arrow and \
@@ -11170,10 +11175,14 @@ def gen_stmt(F, s, last):
         s.e.op = '<<'; s.e.r = N('const', value=1, ty=s.e.r.ty)   # does in memory (rstmt rs_1_05_01_1: *gp *= 2 ->
                                                            # ld XWA,(_gp) / slab (XWA); rs_4_07_16_5: gc *= 2 -> slab (_gc))
     if MUL2_SHIFT and s.k == 'expr' and s.e.k == 'opassign' and s.e.op == '/' and fold(s.e.r).k == 'const' and \
-            fold(s.e.r).value == 2 and strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and \
+            fold(s.e.r).value is not None and fold(s.e.r).value >= 2 and fold(s.e.r).value & (fold(s.e.r).value - 1) == 0 and \
+            (fold(s.e.r).value == 2 or DIVPOW2_SHIFT_CHAR and strip(s.e.l).ty is not None and strip(s.e.l).ty.size == 1) and \
+            strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and \
             strip(s.e.l).ty.size in (1, 2) and not strip(s.e.l).ty.signed:
         from frontend import N                             # an unsigned x /= 2 is x >>= 1 (rstmt rs_1_05_00_3: guc /= 2
-        s.e.op = '>>'; s.e.r = N('const', value=1, ty=s.e.r.ty)   # -> srlb (_guc))
+        s.e.op = '>>'; s.e.r = N('const', value=fold(s.e.r).value.bit_length() - 1, ty=s.e.r.ty)   # -> srlb (_guc));
+                                                           # an unsigned char /= 2^k too (random r2_01_05: guc /= 16 ->
+                                                           # ld A,(_guc) / srl 0x4,A / ld (_guc),A)
     if REM_POW2_AND_ALL and s.k == 'expr' and s.e.k == 'opassign' and s.e.op == '%' and fold(s.e.r).k == 'const' and \
             fold(s.e.r).value is not None and fold(s.e.r).value >= 2 and fold(s.e.r).value & (fold(s.e.r).value - 1) == 0 and \
             strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and strip(s.e.l).ty.size in (1, 2) and \
