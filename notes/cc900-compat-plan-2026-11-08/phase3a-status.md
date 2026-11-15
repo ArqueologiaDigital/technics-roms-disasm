@@ -3139,6 +3139,13 @@ in E -> `ld A,E / add A,E / extz WA`; .cb_rs_s1_ri: `ld L,C / add L,C / exts HL`
 -Xr. chararith2 -Xr and -O3 -XS -Xr +10 each; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50
 unchanged.
 
+**Batch 282 (2026-11-15): an int ?: stored to a char is built at its width.** NARROW_KEEPS_COND (`narrow`, without
+-O): an int `?:` whose arms are both int loads, stored to a char, is built at int width and stored from A (probe stord
+st_c_QT: `gp[c] = hc ? hd : hc` -> `.. / cpw (_hc),0x0 / j eq,L48 / ld WA,(_hd) / j L47 / L48: ld WA,(_hc) / L47: ld
+(XBC),A`). Arms that are promoted chars stay bytes (rstmt rs_3_01_06_1); the first version took any int `?:` and lost
+rstmt none -4 and random none -4. stord none +8 and -Xr +6; rstmt and random unchanged; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

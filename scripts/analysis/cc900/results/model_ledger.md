@@ -165,9 +165,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-14-micro-loc0, v423/O3XS                             | probes/loc0.c        | 464 / 512 exact (90.6%)    |
 | run 2026-11-10-14-micro-loc0, v423/Xr                               | probes/loc0.c        | 510 / 512 exact (99.6%)    |
 | run 2026-11-10-14-micro-loc0, v423/O3XSXr                           | probes/loc0.c        | 408 / 512 exact (79.7%)    |
-| run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 357 / 432 exact (82.6%)    |
+| run 2026-11-10-15-micro-stord, v423/none                            | probes/stord.c       | 365 / 432 exact (84.5%)    |
 | run 2026-11-10-15-micro-stord, v423/O3XS                            | probes/stord.c       | 338 / 432 exact (78.2%)    |
-| run 2026-11-10-15-micro-stord, v423/Xr                              | probes/stord.c       | 302 / 432 exact (69.9%)    |
+| run 2026-11-10-15-micro-stord, v423/Xr                              | probes/stord.c       | 308 / 432 exact (71.3%)    |
 | run 2026-11-10-15-micro-stord, v423/O3XSXr                          | probes/stord.c       | 304 / 432 exact (70.4%)    |
 | run 2026-11-10-16-micro-cmpordl, v423/none                          | probes/cmpordl.c     | 676 / 680 exact (99.4%)    |
 | run 2026-11-10-16-micro-cmpordl, v423/O3XS                          | probes/cmpordl.c     | 670 / 680 exact (98.5%)    |

@@ -309,7 +309,12 @@ def narrow(e, size):
             and not (NARROW_KEEPS_CAST and size == 1 and getattr(e, 'explicit', False) and e.ty.size == 1 and
                      strip(e.e).k == 'load' and strip(e.e).ty.size == 2 and strip(strip(e.e).e).k in ('var', 'index', 'member', 'deref')
                      and not (strip(strip(e.e).e).k == 'var' and strip(strip(e.e).e).decl.kind != 'global')) \
-            and not ptrdiff_arith(strip(e.e)) and not long_arith_kept(strip(e.e), size) and not long_load_kept(e, size):
+            and not ptrdiff_arith(strip(e.e)) and not long_arith_kept(strip(e.e), size) and not long_load_kept(e, size) \
+            and not (NARROW_KEEPS_COND and size == 1 and strip(e.e).k == 'cond' and strip(e.e).ty is not None and
+                     strip(e.e).ty.size == 2 and not CUR_OPT[0] and
+                     all(strip(x_).k == 'load' and strip(x_).ty is not None and strip(x_).ty.size == 2
+                         for x_ in (strip(e.e).a, strip(e.e).b))):   # (int loads in both arms; promoted chars stay bytes)   # (an int ?: stored to a char is built at its width:
+                                                                    #  stord.c st_c_QT, gp[c] = hc ? hd : hc -> ld WA,(_hd))
         e = strip(e.e)                                   # / % >> on wide operands keep their width (_ultoa: val % radix)
     if e.k == 'cast' and e.kind == 'IntegralCast' and strip(e.e).ty.size < size:
         return e
@@ -7067,6 +7072,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+NARROW_KEEPS_COND = True                                 # see narrow
 BYTE_SHL1_ADD = True                                     # see compile_unit
 LH_XX_OPT = True                                         # see the long helper with two element operands under -O
 XR_GUARDS_LIFT = True                                    # see the long helper store / save paths and stvx_char_plan: -Xr too
