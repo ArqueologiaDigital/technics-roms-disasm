@@ -2,8 +2,9 @@
 """stdivxr-predict.py -- predict the cc900 oracle's code for the stdiv.c probe compiled with -Xr, from the name alone.
 
     predict('.sd_i_d_XGX') -> ['add DE,DE', 'lda XHL,_wia', ...]      (no function label)
-    python3 stdivxr-predict.py --check [FILTER]     score against the oracle listing (exact matches, per family)
-    python3 stdivxr-predict.py NAME                 print one prediction
+    python3 stdivxr-predict.py --check [FILTER] [--set Xr|O3XSXr]   score against the oracle listing (per family)
+    python3 stdivxr-predict.py NAME [--set Xr|O3XSXr]               print one prediction
+    predict(name, set='Xr')     set Xr = -Xr, O3XSXr = -O3 -XS -Xr (the -O rules: stdivxr-FAMILIES.md, last section)
 
 Names: sd_<t>_<op>_<L><A><B>, t = i u l n c, op = d (/) m (%), L = G P D X Q, A = G P X K, B = G P X K
 (stdiv.c header).  -Xr: the parameters c, d, e arrive in WA, BC, DE.
@@ -24,7 +25,7 @@ PAIRS = ['WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ']
 LOW = {'WA': 'A', 'BC': 'C', 'DE': 'E', 'HL': 'L'}
 HIGH = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}
 PARAMS = {'pC': 'WA', 'pD': 'BC', 'pE': 'DE'}
-ORACLE = '/home/fsanches/compartilhado/cc900-oracle/runs/2026-11-12-5-micro-stdiv/out/v423/Xr/probes/stdiv.asm'
+ORACLE = '/home/fsanches/compartilhado/cc900-oracle/runs/2026-11-12-5-micro-stdiv/out/v423/%s/probes/stdiv.asm'
 LISTING = '/home/fsanches/compartilhado/technics-roms-disasm/scripts/analysis/cc900/model'
 
 
@@ -58,7 +59,7 @@ class Body:
     def e(self, text, copy=None):
         self.seq.append(Ins(text, copy))
 
-    def colour(self, order, width, pref):
+    def colour(self, order, width, pref, coalesce=()):
         iv = {}
         for i, ins in enumerate(self.seq):
             for n in ins.temps:
@@ -93,6 +94,19 @@ class Body:
             if want in reg:
                 want = reg[want]
             reg[n] = want if want in fr else fr[0]
+        # -O: a copy src -> dst disappears when dst's register is free over src's whole interval, the other
+        # temporaries keeping the colours they already have (src is re-targeted, nothing else moves)
+        for src, dst in coalesce:
+            if src not in reg or dst not in reg or reg[src] == reg[dst]:
+                continue
+            s, e_ = iv[src]
+            busy = set()
+            for o, r in reg.items():
+                s2, e2 = iv[o]
+                if o not in (src, dst) and s < e2 and s2 < e_:
+                    busy |= cells(r, wd(o))
+            if not (cells(reg[dst], wd(src)) & busy):
+                reg[src] = reg[dst]
         self.reg = reg
         out = []
         F = {n: Reg(r) for n, r in reg.items()}
@@ -107,7 +121,7 @@ class Body:
 # int / unsigned int
 
 
-def build_int(t, op, L, A, B):
+def build_int(t, op, L, A, B, O=False):
     s = 'i' if t == 'i' else 'u'
     ext, dv = ('exts', 'divs') if t == 'i' else ('extz', 'div')
     b = Body()
@@ -153,7 +167,7 @@ def build_int(t, op, L, A, B):
     else:
         bop = '(_w%s)' % s if B == 'G' else '0x7'
     if A == 'K':
-        e('ld {AVAL:x},0x64')
+        e('%s {AVAL:x},0x64' % ('lda' if O else 'ld'))      # -O: a 32-bit constant is lda
     else:
         e('ld {AVAL},%s' % {'G': '(_v%s)' % s, 'P': '({APTR:x})', 'X': '({ABASE:x}+{AOFF})'}[A])
         e('%s {AVAL:x}' % ext)
@@ -181,14 +195,15 @@ def build_int(t, op, L, A, B):
         return 32
 
     pref = {'AVAL': 'WA', 'AOFF': 'pD', 'BOFF': 'pE', 'DOFF': 'pC', 'DADDR': 'DOFF', 'QUOT': 'AVAL'}
-    return b.colour(order, width, pref)
+    # -O: the dividend is retargeted to the quotient's register (no ld QUOT,AVAL) when that is free
+    return b.colour(order, width, pref, [('AVAL', 'QUOT')] if O and op == 'd' else ())
 
 
 # ---------------------------------------------------------------------------------------------------------------
 # char (computed in int)
 
 
-def build_char(op, L, A, B):
+def build_char(op, L, A, B, O=False):
     b = Body()
     e = b.e
     byteform = B == 'G' or (A == 'K' and B in 'PX')       # divs WA,(mem8): quotient A, remainder W
@@ -270,14 +285,21 @@ def build_char(op, L, A, B):
         return 32
 
     pref = {'AVAL': 'WA', 'QR': 'AVAL', 'RES8': sname or None}
-    return b.colour(order, width, pref)
+    co = []
+    if O:
+        co.append(('BV8', 'BEXT'))         # the divisor byte is loaded straight into the register it is extended in
+        if sname == 'QR':
+            co.append(('QR', 'RES8'))      # the remainder word goes where its byte is stored from: ld DE,QBC
+        elif sname == 'AVAL' and A == 'K':
+            co.append(('AVAL', 'RES8'))    # a constant dividend is built where the quotient byte is stored from
+    return b.colour(order, width, pref, co)
 
 
 # ---------------------------------------------------------------------------------------------------------------
 # long / unsigned long: a call to C9H_{div,rem}l{s,u} with the dividend in XWA, the divisor in XBC, the result in XHL
 
 
-def build_long(t, op, L, A, B):
+def build_long(t, op, L, A, B, O=False):
     s = 'l' if t == 'l' else 'n'
     st = '_gsi' if t == 'l' else '_gsu'
     helper = 'C9H_%sl%s' % ('div' if op == 'd' else 'rem', 's' if t == 'l' else 'u')
@@ -301,7 +323,7 @@ def build_long(t, op, L, A, B):
                 dform = 'XIZ'
             elif A == 'X':
                 dform = 'SLOT4'
-            elif 'K' not in (A, B):
+            elif 'K' not in (A, B) and not O:
                 dform = 'IZBASE'          # ga[c] = vl op wl: offset in IZ, base in a 4-byte slot
             else:
                 dform = 'XIZIDX'          # with a constant: the index through a 2-byte slot, base in XIZ
@@ -382,9 +404,9 @@ def build_long(t, op, L, A, B):
         idx = None          # (no X operand can share: B in G, K and A in G, K here)
     a_ptr = 'XHL' if B == 'X' else 'XWA'         # a pointer dividend held across the divisor's index code
     if A == 'G':
-        ph[2].append('ld XWA,(_v%s)' % s)
+        ph[4 if O else 2].append('ld XWA,(_v%s)' % s)    # -O: a global leaf is loaded with the finals
     elif A == 'K':
-        ph[4].append('ld XWA,0x64')
+        ph[4].append('%s XWA,0x64' % ('lda' if O else 'ld'))
     elif A == 'P':
         ph[1].append('ld %s,(_v%sp)' % (a_ptr, s))
         ph[4].append('ld XWA,(%s)' % a_ptr)
@@ -396,7 +418,7 @@ def build_long(t, op, L, A, B):
         ph[3].append('ld WA,%s' % idx)
         ph[4].append('ld XWA,(XIZ+WA)')
     if B == 'G':
-        ph[2].append('ld XBC,(_w%s)' % s)
+        ph[4 if O else 2].append('ld XBC,(_w%s)' % s)
     elif B == 'K':
         ph[4].append('ld XBC,0x7')
     elif B == 'P':
@@ -434,23 +456,27 @@ def build_long(t, op, L, A, B):
     return out
 
 
-def predict(name):
+SETS = {'Xr': False, 'O3XSXr': True}                     # option set -> optimising (-O)
+
+
+def predict(name, set='Xr'):
+    O = SETS[set]
     m = re.fullmatch(r'\.?sd_([iulnc])_([dm])_([GPDXQ])([GPXK])([GPXK])', name)
     t, op, L, A, B = m.groups()
     if t in 'iu':
-        return build_int(t, op, L, A, B)
+        return build_int(t, op, L, A, B, O)
     if t == 'c':
-        return build_char(op, L, A, B)
-    return build_long(t, op, L, A, B)
+        return build_char(op, L, A, B, O)
+    return build_long(t, op, L, A, B, O)
 
 
 # ---------------------------------------------------------------------------------------------------------------
 
 
-def load_oracle():
+def load_oracle(set='Xr'):
     sys.path.insert(0, LISTING)
     import listing
-    d = listing.split(open(ORACLE, encoding='latin-1').read())
+    d = listing.split(open(ORACLE % set, encoding='latin-1').read())
     out = {}
     for n, ls in d.items():
         body = [l for l in ls if l.startswith('\t')]      # instruction lines (labels and sections dropped)
@@ -458,15 +484,15 @@ def load_oracle():
     return out
 
 
-def check(only=None):
-    orc = load_oracle()
+def check(only=None, set='Xr'):
+    orc = load_oracle(set)
     fam, wrong = {}, []
     for n, exp in orc.items():
         if not n.startswith('.sd_'):
             continue
         t, op, shape = n.split('_')[1:4]
         try:
-            got = predict(n)
+            got = predict(n, set)
         except Exception as ex:          # noqa
             got = ['ERROR %r' % ex]
         ok = got == exp
@@ -476,6 +502,7 @@ def check(only=None):
         if not ok:
             wrong.append((n, exp, got))
     tot = sum(a for a, b in fam.values())
+    print('set', set)
     for t in 'iunlc':
         row = []
         for op in 'dm':
@@ -494,9 +521,15 @@ def check(only=None):
 
 
 if __name__ == '__main__':
-    if len(sys.argv) >= 2 and sys.argv[1] == '--check':
-        check(sys.argv[2] if len(sys.argv) > 2 else None)
-    elif len(sys.argv) == 2:
-        print(' ; '.join(predict(sys.argv[1])))
+    args = sys.argv[1:]
+    set_ = 'Xr'
+    if '--set' in args:
+        i = args.index('--set')
+        set_ = args[i + 1]
+        del args[i:i + 2]
+    if args and args[0] == '--check':
+        check(args[1] if len(args) > 1 else None, set_)
+    elif len(args) == 1:
+        print(' ; '.join(predict(args[0], set_)))
     else:
         print(__doc__)

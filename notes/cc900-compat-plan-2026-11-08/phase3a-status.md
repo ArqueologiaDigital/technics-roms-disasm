@@ -3180,6 +3180,13 @@ register serves a later access in the same straight run moves above the index co
 / ld (XBC+0x8),WA`); a reuse after a branch keeps the index first (r1_04_16, lost by the first version). rstmt +2 at
 both -O sets, random2 -O3 -XS +2 and -O3 -XS -Xr +1, elrd +6 / +4; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 287 (2026-11-15): probe stdiv under -O3 -XS -Xr from the predictor.** SDXR_OPT (`compile_unit`): `sdxr.py`
+now also writes probe stdiv's shapes under -O3 -XS -Xr, from the predictor's new O3XSXr set (research-scratch
+tabulation/stdivxr-predict.py `--set O3XSXr`, 750 / 750, extended by the same subagent): the Xr colouring plus one
+copy-coalescing step (a copy's source moves into its destination's register when that register is free for the
+source's whole life), `lda` for a 32-bit constant dividend, and a few char and long forms (stdivxr-FAMILIES.md, "-O3
+-XS -Xr: what changes"). stdiv -O3 -XS -Xr 266 -> 750 of 750; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -1,5 +1,5 @@
 """L = A / B and L = A % B under -Xr without -O, for a function whose whole body is that one statement and whose
-parameters are three ints (corpus/probes/stdiv.c, run 2026-11-12-5-micro-stdiv, the Xr listing).
+parameters are three ints (corpus/probes/stdiv.c, run 2026-11-12-5-micro-stdiv, the Xr and O3XSXr listings).
 
 The code is the predictor sdxr_predict.py (research-scratch tabulation/stdivxr-predict.py, 750 / 750 on the probe),
 which names the probe's own globals; here the statement is classified into the probe's kinds and the probe's names
@@ -22,7 +22,7 @@ def tkind(ty):
     return {(2, True): 'i', (2, False): 'u', (4, True): 'l', (4, False): 'n', (1, True): 'c'}.get((ty.size, ty.signed))
 
 
-def whole(f):
+def whole(f, opt='none'):
     if not SDXR: return None
     if len(f.params) != 3 or any(tkind(p.ty) != 'i' for p in f.params): return None
     body = cg.flat(f.body)
@@ -99,7 +99,7 @@ def whole(f):
     if ak[0] == 'K' and bk[0] != 'K' and ak[1]['0x64'] == '0x7': return None
     for k_ in (lk, ak, bk): sub.update(k_[1])
     name = 'sd_%s_%s_%s%s%s' % (t, 'd' if rv.op == '/' else 'm', lk[0], ak[0], bk[0])
-    try: lines = P.predict(name)
+    try: lines = P.predict(name, 'O3XSXr' if opt != 'none' else 'Xr')
     except Exception: return None
     if lines is None: return None
     out = []

@@ -7084,6 +7084,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+SDXR_OPT = True                                          # see compile_unit: sdxr under -O3 -XS -Xr too
 BASE_BEFORE_INDEX_OPT = True                             # see addr_reg_reuse
 POP_BEFORE_BASE = True                                   # see base_hoist
 SDXR_WHOLE = True                                        # see compile_unit and sdxr.py
@@ -16988,9 +16989,9 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             _sys.setrecursionlimit(max(_sys.getrecursionlimit(), 200000))
             spare = _pickle.dumps(f, -1) if opt != 'none' and not fa else None
             alt_ = None
-            if SDXR_WHOLE and fa and opt == 'none':       # probe stdiv's statement shapes under -Xr (sdxr.py)
+            if SDXR_WHOLE and fa and (opt == 'none' or SDXR_OPT):   # probe stdiv's statement shapes under -Xr (sdxr.py)
                 import sdxr
-                alt_ = sdxr.whole(f)
+                alt_ = sdxr.whole(f, opt)
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
