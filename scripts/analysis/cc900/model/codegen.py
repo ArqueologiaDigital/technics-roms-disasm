@@ -7053,6 +7053,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+XR_CHAR_ARG_INPLACE_OPT = True                           # see gen_call_adecl
 PARAM_WRITE_ONLY_FREE = True                             # see regtemp_candidates
 ASSIGN_K_VALUE_LONG = True                               # see gen_assign_value
 NOT_LONG_REGVAR = True                                   # see gen: !
@@ -8429,11 +8430,17 @@ def gen_call_adecl(F, fn, args, fam, size):
         a0 = strip(a)
         if a0.ty.size == 1:
             m = mem_operand(F, a0)
-            if m is not None and m != FAM[t][1]: F.emit('ld', '%s,%s' % (FAM[t][1], m))
+            src_ = None                                    # -O: a char already in C / E / L is widened there and moved
+            if XR_CHAR_ARG_INPLACE_OPT and F.opt and m in ('C', 'E', 'L') and {'C': 'BC', 'E': 'DE', 'L': 'HL'}[m] != t:
+                src_ = {'C': 'BC', 'E': 'DE', 'L': 'HL'}[m]   # (random .r4_01_00 -O3 -XS -Xr: v1(t), t in C -> extz BC /
+            elif m is not None and m != FAM[t][1]: F.emit('ld', '%s,%s' % (FAM[t][1], m))   # ld WA,BC)
             elif m is None:
                 f_ = gen(F, a0, t, 1)                    # (r1_06_19: the shifted value in C -> ld A,C / exts WA)
-                if f_ != t: F.emit('ld', '%s,%s' % (FAM[t][1], FAM[f_][1]))
-            F.emit('exts' if a0.ty.signed else 'extz', FAM[t][2])
+                if XR_CHAR_ARG_INPLACE_OPT and F.opt and f_ in ('BC', 'DE', 'HL') and f_ != t: src_ = f_   # (-O: exts BC /
+                elif f_ != t: F.emit('ld', '%s,%s' % (FAM[t][1], FAM[f_][1]))                         #  ld WA,BC)
+            if src_ is not None:
+                F.emit('exts' if a0.ty.signed else 'extz', FAM[src_][2]); F.emit('ld', '%s,%s' % (FAM[t][2], FAM[src_][2]))
+            else: F.emit('exts' if a0.ty.signed else 'extz', FAM[t][2])
         elif XR_CHAR_ARG_VIA_A and t in ('BC', 'DE', 'HL') and a0.ty.size == 2 and a0.k == 'cast' and \
                 a0.kind == 'IntegralCast' and strip(a0.e).ty is not None and strip(a0.e).ty.size == 1 and \
                 (mem_operand(F, strip(a0.e)) or '').startswith('(') and \

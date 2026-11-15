@@ -3050,6 +3050,13 @@ PARAM_WRITE_ONLY_FREE (`regtemp_candidates`, -Xr without -O): a register paramet
 `a = gc2` later, `char u = gs.c; gc = u` takes A: `ld A,(_gs) / ld (_gc),A`, not `ld C,(_gs) / ld (_gc),C`).
 random4 -Xr +2; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 269 (2026-11-15): -O3 -XS -Xr widens a char register argument in place.** XR_CHAR_ARG_INPLACE_OPT
+(`gen_call_adecl`): under -O, a char argument already in C, E or L that goes to a register parameter elsewhere is
+widened in its own register and moved (random .r4_01_00: `v1(t)` with t in C -> `extz BC / ld WA,BC`; .r1_06_19: the
+shifted value in C -> `exts BC / ld WA,BC`), not `ld A,C / exts WA`; the -Xr form of batch 243's
+CHAR_ARG_INPLACE_OPT. rstmt -O3 -XS -Xr +1, random1 -O3 -XS -Xr +2, loc0 -O3 -XS -Xr +28; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
