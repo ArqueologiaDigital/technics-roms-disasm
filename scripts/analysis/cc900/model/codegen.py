@@ -6803,6 +6803,7 @@ MUL_K_ELEM = True                                         # see gen_mul_const
 SHIFT_COUNT_LOCAL = True                                  # see gen_shift_count
 MEMBER_STORE_SWAP = True                                  # see gen_stmt
 KILL_TOP = True                                           # see the across-call planner
+DEAD_INIT_CTR_OPT = True                                  # see regtemp_candidates: DEAD_INIT_CTR under -O
 DEAD_INIT_CTR = True                                      # see regtemp_candidates
 RET_TWO_LEVEL = True                                      # see ret_two_level
 CHAR_IDX_BC = True                                        # see regtemp_candidates
@@ -15209,7 +15210,7 @@ def regtemp_candidates(F):
                 # last use: the local lives in a frame slot, XIZ being the helper's; lsl.c ls_i_g_h_a: ld WA,(_gi) /
                 # ld (XSP+0x4),WA / .. cal C9H_remls / .. / ld WA,(XSP+0x4) / add (_gi),WA)
         dead_init_ = False
-        if DEAD_INIT_CTR and c.init is not None and not F.opt and c.var.ty.kind == 'int' and \
+        if DEAD_INIT_CTR and c.init is not None and (not F.opt or DEAD_INIT_CTR_OPT) and c.var.ty.kind == 'int' and \
                 not nodes_in(c.init, 'call') and not has_helper_call(c.init) and not fpgen.is_fp_op(c.init):
             j_ = next((k for k, x in enumerate(body[i + 1:]) if uses_decl(x, c.var)), None)   # an initialiser nothing reads:
             x_ = body[i + 1 + j_] if j_ is not None else None                                # the variable is planned

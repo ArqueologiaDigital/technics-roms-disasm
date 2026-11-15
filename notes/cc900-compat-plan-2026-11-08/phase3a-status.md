@@ -2781,6 +2781,15 @@ plain operands) hold under -Xr too. SLOT_INIT_FORMS (a slot local across a long 
 every set. Ledger up 8 (random -O3 -XS +1, -Xr +3, -O3 -XS -Xr +1; lsl.c +5 at three sets), down 0; pairs MATCH 223;
 semcheck 50. Random 196 / 85 / 151 / 74; library 186 / 248 at -O3 -XS.
 
+**Batch 234 (2026-11-15): DEAD_INIT_CTR under -O (DEAD_INIT_CTR_OPT).** The largest -O3 -XS -Xr single-statement group is
+again the -O loop family: in rs_3_00_12_4, `int i = ji; v0(); for (i = 4; ..)` is `cal _v0 / ld DE,0x4`, with the loop's
+invariant address hoisted. DEAD_INIT_CTR, which plans a local whose initialiser nothing reads before a call as a register
+temporary from its next assignment, was gated to no -O. Lifting the gate gains two rstmt statements at -O3 -XS -Xr. The
+-O3 -XS counters still get IZ from the home planner, and the invariant hoisting and strength reduction remain the -O loop
+project. Ledger up 1 (rstmt -O3 -XS -Xr +2), down 0; pairs MATCH 223; semcheck 50. Random unchanged, 196 / 85 / 151 /
+74; library 186 / 248 at -O3 -XS. A positive-gate sweep (research-scratch `gate/possweep.sh`) tried each -O-only and
+-Xr-only rule at the other sets, 264 sites. Its one gain cost micro six functions at -O3 -XS and was not kept.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
