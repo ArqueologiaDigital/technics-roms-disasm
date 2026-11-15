@@ -7537,6 +7537,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+OPA_FREE_LIVE = True                                     # see gen_opassign
+STORE_HOME_TOUCH = True                                  # see store_global
 BYTE_CMP_UNSIGNED = True                                 # see gen_compare
 BYTE_DIV_KDIVIDEND = True                                # see _gen_bin_body
 LOGIC_VALUE_REG = True                                   # see gen's && / || value
@@ -11384,7 +11386,9 @@ def gen_opassign(F, e):
         T = getattr(F, 'tfam', 'WA')                        # ot_add_anb: ld E,(XHL+:1) / add (XWA+:1),E
         if STORE_GLOBAL_FREE and T in FAM and held_after(F, T, e):   # lnr3.c s_add_g (-Xr): p in XWA -> not WA
             used_ = set(re.findall(r'X?(WA|BC|DE|HL|IX|IY)', t))
-            T = next((x for x in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY') if x not in used_ and not held_after(F, x, e)), None)
+            lv_ = set(live_regs(F)) if OPA_FREE_LIVE else set()   # (a loop counter is live: fctx fx_lp_c1)
+            T = next((x for x in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY') if x not in used_ and not held_after(F, x, e) and
+                      x not in lv_), None)
             if T is None: raise Unsupported('no free register for the op= value')
         rc = fold(r)
         if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
@@ -11642,6 +11646,8 @@ def store_global(F, name, e, size):
         if not (POP_LAZY and (not F.opt or POP_LAZY_OPT) and not F.adecl and later_call_absorbs(F)): flush_pops(F)   # ld (_gl2),XHL / .. / inc 0x6,XSP:
         F.emit('ld', '(_%s),%s' % (name, FAM['HL'][size])); return        # the pops wait for the next stack access)
     rv = regvar_of(getattr(strip(e), 'e', e)) if strip(e).k == 'load' else None
+    if rv is not None and STORE_HOME_TOUCH and getattr(F, 'lazy_homes', None) and rv in F.lazy_homes:
+        touch_home(F, rv)                              # (a lazily loaded home: load it first, fctx fx_rp_i6)
     if rv is not None and rv.ty.size == size:          # ra_twice: ld (_ga),HL
         if FAM[rv.reg][size] == 'QIZH':                # lo_c_Gcs: ld A,QIZH / ld (_hc2),A (no ld (mem),QIZH)
             F.emit('ld', 'A,QIZH'); F.emit('ld', '(_%s),A' % name); return
@@ -11649,6 +11655,7 @@ def store_global(F, name, e, size):
     xv = strip(strip(e).e) if strip(e).k == 'load' else None
     if XIZ_DIRECT_INIT and (not F.opt or XIZ_DIRECT_OPT) and size == 4 and xv is not None and xv.k == 'var' and \
             getattr(xv.decl, 'reg', None) == 'XIZ':
+        if STORE_HOME_TOUCH and getattr(F, 'lazy_homes', None) and xv.decl in F.lazy_homes: touch_home(F, xv.decl)
         F.emit('ld', '(_%s),XIZ' % name); return         # lo_l_Gcs: ld (_hl2),XIZ (not through XWA)
     F.store_from = None
     cp = cps_shape(F, e) if STVX and size == 4 else None

@@ -3791,6 +3791,14 @@ semchecks clean at every set and joins the ledger: 811 / 674 / 792 / 733 of 1,00
 and library unchanged; semcheck 9, same verdicts.  Expression code is far cleaner than stores: lane_nm's stptr probe
 showed 5-7 % of compiled store shapes DIFFERENT, oexp 0.5 %.
 
+**Batch 346 (2026-11-15): wrong-code fixes from the fctx probe.**  lane_o3's fctx.c (624 functions of 3-8 statements
+free of undefined behaviour, oracle run 2026-11-15-10) showed 0 / 6 / 0 / 2 DIFFERENT of 556 / 504 / 522 / 482
+compiled, all at -O: OPA_FREE_LIVE (an op= value moved off WA took the first family not held after the statement,
+which misses a loop's back edge: `while (n-- > 0) gc2 ^= gc1` put the value in C over the counter in BC and the loop
+never ended) and STORE_HOME_TOUCH (`g1 = a` with a homed in IZ / XIZ and loaded at its first use stored IZ before the
+home load).  fctx now semchecks clean and joins the ledger: 350 / 150 / 277 / 126 of 624 exact.  Old rows,
+validation and library unchanged; semcheck 9, same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
