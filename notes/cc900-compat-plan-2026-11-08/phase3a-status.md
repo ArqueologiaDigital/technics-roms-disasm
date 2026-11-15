@@ -3645,6 +3645,14 @@ draft of rule 01 taken while the lane was editing it.  Random -O3 -XS 125 -> 127
 at the -O sets; no function lost.  Ledger up 4 rows by 13, down 0; library 189/248, pairs 223, semcheck 9 with the
 same verdicts.
 
+**Batch 333 (2026-11-15): a register-held parameter indexes signed at -O.** REG_PARAM_SIGNED_IDX (lane_idx 03): under
+-O a parameter held in IZ / QIZ, or cached by PARAM_IDX_CACHE_OPT, indexes a char element as a signed register with
+the base first (`lda XWA,_gca / ld IZ,(XSP+0xc) / ld A,(XWA+IZ)`); it replaces CHAR_ZX_OPT_GUARD's refusal for a
+parameter homed in IZ.  The lane's 04 (CHIDX_REREAD_REG) compiles three more functions without making one exact and
+was left out.  Random -O3 -XS 127 -> 128, -O3 -XS -Xr 115 -> 117; rstmt +1 / +1; no function lost; the changed
+inexact functions semcheck equal.  Ledger up 5 rows by 5, down 0; library 189/248, pairs 223, semcheck 9 with the same
+verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

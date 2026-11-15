@@ -7172,6 +7172,7 @@ STMT_PARAM_GUARD = True                                   # see Fn.emit
 CHAR_NARROW_MORE = True                                   # see char_narrow's visit2
 ADD_ZERO_DROP = True                                      # see Fn.emit
 UIDX_NO_SIGNED = True                                     # see elem_addr_regs
+REG_PARAM_SIGNED_IDX = True                               # see elem_addr, gen_load_mem (rstmt rs_4_00_14_4)
 CHAR_REG_INDEX_OPT = True                                 # see elem_addr, gen_load_mem
 UIDX_SUM = True                                           # see lvalue
 UCHAR_TO_LONG = True                                      # see gen's cast
@@ -10012,12 +10013,16 @@ def elem_addr(F, lv, kind):
                 while ix_.k == 'cast' and ix_.kind == 'IntegralCast': ix_ = strip(ix_.e)   # ld (XBC+IZ),A)
                 iv_ = regvar_of(strip(ix_.e)) if ix_.k == 'load' else None
                 if iv_ is not None and iv_.ty.size == 2 and iv_.ty.signed and iv_.reg in ('IZ', 'QIZ', 'BC', 'DE', 'HL') and \
-                        (not F.opt or iv_.reg in ('IZ', 'QIZ') and iv_.kind == 'local'):   # (-O too for a local in IZ / QIZ: rstmt rs_2_07_19_4,
+                        (not F.opt or iv_.reg in ('IZ', 'QIZ') and iv_.kind == 'local' or
+                         REG_PARAM_SIGNED_IDX and iv_.kind == 'param' and
+                         (iv_.reg in ('IZ', 'QIZ') or iv_ in getattr(F, 'idx_cache', ()))):   # (-O too for a local in IZ / QIZ: rstmt rs_2_07_19_4,
                                                            # guca[t] -= K -> lda XWA,_guca / subb (XWA+IZ),0xff)
                     B_ = 'XWA' if kind == 'load' or CHAR_IDX_BC and iv_.reg == 'BC' and not F.opt and not F.adecl and \
                         getattr(iv_, 'regtemp', False) else 'XBC'   # (the index in BC: the base in XWA for a store too,
                                                            # rstmt rs_4_01_03_4: gca[t] = 3 -> lda XWA,_gca / ldb (XWA+BC),0x3)
                     if FAM.get(iv_.reg, {}).get(4) != B_ and B_[1:] not in live_regs(F):
+                        if REG_PARAM_SIGNED_IDX and F.opt and iv_.kind == 'param':   # (the base first: rs_4_00_14_4)
+                            F.emit('lda', '%s,%s' % (B_, g)); touch_home(F, iv_); return '(%s+%s)' % (B_, iv_.reg)
                         touch_home(F, iv_); F.emit('lda', '%s,%s' % (B_, g)); return '(%s+%s)' % (B_, iv_.reg)
             ixu_ = unpromote(lv.idx); ixm_ = mem_operand(F, ixu_) if ixu_.k == 'load' and strip(ixu_.e).k == 'var' else None
             if CHAR_REG_LDA and ixm_ is not None and ixu_.ty.signed and strip(ixu_.e).decl.kind == 'local' and \
@@ -10150,16 +10155,21 @@ def gen_load_mem(F, v, fam, size):
             ivl_ = unpromote(i)
             ivl_ = strip(ivl_.e).decl if ivl_.k == 'load' and strip(ivl_.e).k == 'var' else None
             if esz == 1 and (im in ('WA', 'BC', 'DE', 'HL') or CHAR_REG_INDEX and im in ('IZ', 'QIZ') and
-                             (not F.opt or CHAR_REG_INDEX_OPT and ivl_ is not None and ivl_.kind == 'local') and   # (a parameter
+                             (not F.opt or CHAR_REG_INDEX_OPT and ivl_ is not None and (ivl_.kind == 'local' or
+                              REG_PARAM_SIGNED_IDX and ivl_.kind == 'param')) and   # (a parameter
                              # the model homes in IZ is read from memory and zero-extended by the compiler: r4_03_00)
                              unpromote(i).ty is not None and unpromote(i).ty.signed):   # globals.c (an unsigned index
                                                            #  in IZ is extended whole: r2_00_12 -Xr, r4_07_10)
                                                                    # (idxloc.c il_c_L1: lda XWA,_gca / ld A,(XWA+IZ))
                 base = 'XBC' if im == 'WA' else 'XWA'
+                if REG_PARAM_SIGNED_IDX and F.opt and ivl_ is not None and ivl_.kind == 'param' and F.lines and \
+                        re.match(r'^\tld\t%s,\(XSP\+0x[0-9a-f]+\)$' % im, F.lines[-1]):   # (its lazy load after the
+                    ld_ = F.lines.pop(); F.emit('lda', '%s,_%s' % (base, b.decl.name)); F.lines.append(ld_)   # base: rs_4_00_14_4)
+                    F.emit('ld', '%s,(%s+%s)' % (R, base, im)); return fam
                 F.emit('lda', '%s,_%s' % (base, b.decl.name)); F.emit('ld', '%s,(%s+%s)' % (R, base, im)); return fam
             if esz == 1:                                           # m_gca_v
                 if idx_read_again(F, i): raise Unsupported('a char element at an index the function reads again')
-                if CHAR_ZX_OPT_GUARD and F.opt and im in ('IZ', 'QIZ'):   # a parameter both homed in IZ: the oracle
+                if CHAR_ZX_OPT_GUARD and F.opt and im in ('IZ', 'QIZ') and not REG_PARAM_SIGNED_IDX:   # a parameter both homed in IZ: the oracle
                     raise Unsupported('a char element at an int index homed in IZ under -O')   # indexes it signed,
                                                            # ld A,(XWA+IZ) (random r3_07_00 -O3 -XS; the zero-extending
                                                            # form here is right only when the oracle keeps it in memory, r4_03_00)
