@@ -3503,6 +3503,20 @@ code correct, though not yet exact.  The same str() fix alone had been rejected 
 jumped to the unplaced continue label (research-scratch rejected/break_label_str.md, now marked as taken up).  rstmt
 and random unchanged; ledger up 0, down 0; library 186/248, pairs 223, semcheck 17 with the same verdicts.
 
+**Batch 321 (2026-11-15): eleven more lane rules.** From lane_lh (long-helper refusals, none / -Xr): LH_MEMBER_SLOT (a
+loop counter live across a call goes to a frame slot when its loop holds a helper reading through a global pointer,
+which needs XIZ; a wider first version turned 9 random refusals into wrong code), LH_CTR_INIT (such a slot counter
+may have an initialiser), LH_CTR_SLOT_XR (the counter-slot plan also at -Xr when the body reads no parameter).  From
+lane_o3: GUARD_DIV_LONG (`if (D != 0) X = L / D` with a long helper tests D in XBC, the divisor register, and loads
+only L into XWA; 408 of 442 such tests are on XBC at -O3 -XS; refused where it would let a function compile that
+widens a register index with extz, after batch 321's first attempt let random .r1_04_13 compile with wrong code),
+GUARD_ELEM_REGS, CHAIN_BC_ADDR_WA (`g = X = v` with X addressed through BC: the value in WA), CONST_STORE_IMM (-O:
+`ld A|WA,K / ld (m),A` -> `ldb|ldw (m),K`; 0 such pairs at -O, 175 at none).  From lane_st (store-address refusals):
+ELEM_RIGHT_FIRST and VALUE_FIRST_ELEM; that lane reports the rest of those refusals as a long tail.  Each lane
+semchecked every function its rules newly compile.  Random -Xr 176 -> 177; rstmt +9 / +15 / +9 / +9 at none / -O3 -XS
+/ -Xr / -O3 -XS -Xr; no function lost at any set.  Ledger up 5 rows by 43, down 0; library 186/248, pairs 223,
+semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
