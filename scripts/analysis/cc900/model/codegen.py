@@ -6960,6 +6960,42 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+LDA_RUN_BASE = True                                      # see lda_run_base
+
+def lda_run_base(lines):
+    """-O: in a run of consecutive lda that loads two or more addresses inside one global, the global's address is
+    loaded once into the run's last register and the others are taken from it (random r3_02_05 -O3 -XS:
+    gda[3] = gda[3] + gda[1] -> lda XWA,_gda / lda XDE,XWA+0x18 / lda XBC,XWA+0x8 / lda XWA,XSP+0x8; r4_07_03:
+    lda XBC,_gda / lda XWA,XBC+0x8 / lda XBC,XBC+0x10; r2_01_19: lda XWA,_gda / ld XDE,XWA / lda XBC,XWA+0x18)."""
+    import re as _r
+    out = list(lines); i = 0
+    pat = _r.compile(r'^\tlda\t(X(?:WA|BC|DE|HL|IX|IY|IZ)),(.*)$')
+    while i < len(out):
+        if not pat.match(out[i] or ''): i += 1; continue
+        j = i
+        while j < len(out) and pat.match(out[j] or ''): j += 1
+        run = [pat.match(out[k]).groups() for k in range(i, j)]
+        regs = [r for r, _ in run]
+        if len(run) < 2 or len(set(regs)) != len(regs): i = j; continue
+        syms = {}
+        for k, (r, src) in enumerate(run):
+            m_ = _r.match(r'^(_\w+)(?: \+ (0x[0-9a-f]+))?$', src)
+            if m_: syms.setdefault(m_.group(1), []).append((k, int(m_.group(2) or '0', 16)))
+        g = [n for n, v in syms.items() if len(v) >= 2]
+        if len(g) != 1: i = j; continue
+        B = regs[-1]; uses = dict(syms[g[0]])
+        if any(_r.search(r'\b%s\b' % B, src) for _, src in run): i = j; continue
+        new = ['\tlda\t%s,%s' % (B, g[0])]
+        for k, (r, src) in enumerate(run):
+            if k in uses:
+                d = uses[k]
+                if r == B:
+                    if d: new.append('\tlda\t%s,%s+%s' % (B, B, hx(d)))
+                else: new.append('\tlda\t%s,%s+%s' % (r, B, hx(d)) if d else '\tld\t%s,%s' % (r, B))
+            else: new.append(out[i + k])
+        out[i:j] = new; i += len(new)
+    return out
+
 ADDR_REG_REUSE = True                                    # see addr_reg_reuse
 MEM_REG_REUSE = True                                     # see addr_reg_reuse: a global's value still in a register
 CHAR_ARG_INPLACE_OPT = True                              # see push_arg
@@ -16262,6 +16298,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                    i + 1 < len(F.lines) and re.match(r'^L\d+:$', F.lines[i + 1] or ''))]   # (rstmt .rs_2_07_08_5: the
                                                            # if's join L1 before the exit L50001 the test jumps to)
     if TEST_REG_REUSE and F.opt and (not F.adecl or TEST_REG_REUSE_XR): F.lines = test_reg_reuse(F.lines)
+    if LDA_RUN_BASE and F.opt: F.lines = lda_run_base(F.lines)
     if ADDR_REG_REUSE and F.opt: F.lines = addr_reg_reuse(F.lines, F.adecl)   # (after test_reg_reuse / ptr_test_reuse, which
                                                          #  expect a pointer's reload still written: rstmt rs_4_01_13_2)
                                                            # (-O3 -XS -Xr too: 187 register tests read after, 2 memory)

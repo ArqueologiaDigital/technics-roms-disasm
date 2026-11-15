@@ -2866,6 +2866,14 @@ not `ld A,C / exts WA / push WA`. Without -O the oracle goes through A (the rule
 -2 there). rstmt -O3 -XS +1, random -O3 -XS +2, loc0 -O3 -XS +28, elrd -O3 -XS +2; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 244 (2026-11-15): one base for a run of addresses inside one global (-O).** LDA_RUN_BASE, a -O post-pass
+(`lda_run_base`): in a run of consecutive `lda` that loads two or more addresses inside one global, the oracle loads
+the global's address once, into the run's last register, and takes the others from it (random r3_02_05 -O3 -XS:
+`gda[3] = gda[3] + gda[1]` -> `lda XWA,_gda / lda XDE,XWA+0x18 / lda XBC,XWA+0x8 / lda XWA,XSP+0x8`; r4_07_03:
+`lda XBC,_gda / lda XWA,XBC+0x8 / lda XBC,XBC+0x10`; r2_01_19: `lda XWA,_gda / ld XDE,XWA / lda XBC,XWA+0x18`).
+Without -O the oracle writes each `lda` (the pass there costs rstmt none -57). rstmt +5 at both -O sets, random +3 at
+both; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
