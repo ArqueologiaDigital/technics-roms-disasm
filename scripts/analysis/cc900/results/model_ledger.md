@@ -125,7 +125,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-1-micro-random1, v423/O3XS                           | random/*.c           | 34 / 200 exact (17.0%)     |
 | run 2026-11-10-1-micro-random1, v423/Xr                             | random/*.c           | 49 / 200 exact (24.5%)     |
 | run 2026-11-10-1-micro-random1, v423/O3XSXr                         | random/*.c           | 28 / 200 exact (14.0%)     |
-| run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 47 / 200 exact (23.5%)     |
+| run 2026-11-10-5-micro-random2, v423/none                           | random2/*.c          | 48 / 200 exact (24.0%)     |
 | run 2026-11-10-5-micro-random2, v423/O3XS                           | random2/*.c          | 22 / 200 exact (11.0%)     |
 | run 2026-11-10-5-micro-random2, v423/Xr                             | random2/*.c          | 32 / 200 exact (16.0%)     |
 | run 2026-11-10-5-micro-random2, v423/O3XSXr                         | random2/*.c          | 18 / 200 exact (9.0%)      |
@@ -283,7 +283,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-13-micro-stv2, v423/O3XS                             | probes/stv2.c        | 0 / 32 exact (0.0%)        |
 | run 2026-11-13-13-micro-stv2, v423/Xr                               | probes/stv2.c        | 0 / 32 exact (0.0%)        |
 | run 2026-11-13-13-micro-stv2, v423/O3XSXr                           | probes/stv2.c        | 0 / 32 exact (0.0%)        |
-| run 2026-11-13-15-micro-pc, v423/none                               | probes/pc.c          | 17 / 48 exact (35.4%)      |
+| run 2026-11-13-15-micro-pc, v423/none                               | probes/pc.c          | 19 / 48 exact (39.6%)      |
 | run 2026-11-13-15-micro-pc, v423/O3XS                               | probes/pc.c          | 8 / 48 exact (16.7%)       |
 | run 2026-11-13-15-micro-pc, v423/Xr                                 | probes/pc.c          | 12 / 48 exact (25.0%)      |
 | run 2026-11-13-15-micro-pc, v423/O3XSXr                             | probes/pc.c          | 13 / 48 exact (27.1%)      |

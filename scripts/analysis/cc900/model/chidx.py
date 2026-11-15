@@ -295,6 +295,8 @@ def param_mem(F, d):
     if hasattr(d, 'off'): return '(XSP+%s)' % cg.hx(d.off + F.push)
     return None
 
+SIGNED_IDX_NO_COPY = True                                # see element
+
 def element(F, lv, kind, fam='WA'):
     if not CHIDX: return None
     lv = strip(lv)
@@ -313,7 +315,10 @@ def element(F, lv, kind, fam='WA'):
     src = source(F, x, how)
     if src is None: return None
     if how == 'load' and src[0] == 'reg' and not single_use(strip(x.e).decl):
-        if kind == 'load' and esz == 1:
+        if kind == 'load' and esz == 1 and SIGNED_IDX_NO_COPY and signed and not F.adecl:
+            busy = busy | {src[1]}                         # a signed char index is used as it is, no copy (random
+                                                           # r2_09_07: gca[t] with t in E -> lda XWA,_gca / ld A,(XWA+E))
+        elif kind == 'load' and esz == 1:
             T = next((t for t in ('C', 'E', 'L') if t != src[1] and t not in busy and BYTE_FAM[t] not in cg.live_regs(F)), None)
             if T is None: return None                      # -Xr r1_06_01: guca[a] with a read again: ld E,A /
             F.emit('ld', '%s,%s' % (T, src[1])); busy = busy | {src[1]}; src = ('reg', T, True)   # extz DE / lda XHL,_guca

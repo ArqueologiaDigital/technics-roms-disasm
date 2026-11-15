@@ -3008,6 +3008,13 @@ gi); vl((long)gi2 / 4L)` -> `cal _v2 / inc 0x4,XSP / ld WA,(_gi2) / .. / cal C9H
 0x4,XSP`). A double helper in the arguments still absorbs them (r1_00_01: `vd(gs.d + gd)`); the first try, any
 helper, lost 5 random functions at none. random4 none +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 263 (2026-11-15): a signed char index in a register is used as it is.** SIGNED_IDX_NO_COPY (`chidx.py`,
+`element`, cdecl): a signed char index held in a register and read again later is used directly for a char element
+load, with no copy to another byte register (random r2_09_07: `vc(gc & 0x10 ? t : gca[t])` with t in E -> `lda
+XWA,_gca / ld A,(XWA+E)`, not `ld C,E / .. / (XWA+C)`); an unsigned one is still copied, since its zero extension
+writes the register's high byte (-Xr r1_06_01). random2 none +1, pc none +2; library 186/248, pairs 223, semcheck 50
+unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
