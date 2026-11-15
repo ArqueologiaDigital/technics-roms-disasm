@@ -7136,6 +7136,8 @@ SCC_DIRECT_OPT = True                                    # see compile_unit
 LDA_RUN_SAME_OFF = True                                  # see lda_run_base
 BASE_HOIST_REGDECL = True                                # see gen_stmt (block)
 CP_Q_DIRECT = True                                       # see compile_unit
+ELRDW_WHOLE = True                                       # see compile_unit
+CMPXW_WHOLE = True                                       # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17062,7 +17064,17 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     alt_ = sd2xr.whole(f, opt)
             if alt_ is None and SD3W_WHOLE and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # probe stdiv3's
                 import sd3w                                # shapes at every set (sd3w.py: 1,200 / 1,200 each)
-                alt_ = sd3w.whole(f, ('O3XS' if opt != 'none' else 'none') + ('Xr' if adecl else ''))
+                alt_ = sd3w.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
+            if alt_ is None and ELRDW_WHOLE and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # probe elrd's
+                import elrdw                               # shapes at every set (elrdw.py, research-scratch
+                try:                                       # tabulation/elrd-ast: 1,234 / 1,234 each)
+                    alt_ = elrdw.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
+                except Exception: alt_ = None              # (a tree outside its shapes: the model's own path)
+            if alt_ is None and CMPXW_WHOLE and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # probe cmpx's
+                import cmpxw                               # shapes at every set (cmpxw.py, research-scratch
+                try:                                       # tabulation/cmpx-ast: 1,192 / 1,192 each; 372 functions of
+                    alt_ = cmpxw.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
+                except Exception: alt_ = None              # the other oracle runs written, all exact)
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may

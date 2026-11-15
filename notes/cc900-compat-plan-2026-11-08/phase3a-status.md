@@ -3240,7 +3240,7 @@ in memory as the right operand of an operation whose left is not in WA is loaded
 HL,BC`), as batch 239 found for the other orders. rstmt none and -Xr +1, random3 -Xr +1; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
-**Batch 295 (2026-11-15): probe stdiv3 at every set; and R,0xff as ld; inc / ld as lda.** SD3W_WHOLE (`compile_unit`):
+**Batch 295 (2026-11-15): probe stdiv3 at three sets (-Xr only from batch 297: the hook passed the set name `noneXr`); and R,0xff as ld; inc / ld as lda.** SD3W_WHOLE (`compile_unit`):
 probe stdiv3's shapes go through `model/sd3w.py`, which classifies the statement from the tree into the probe's kinds
 and substitutes the real names, offsets and constants into `model/sd3w_predict.py`'s code (research-scratch
 tabulation/stdiv3-predict.py, 1,200 / 1,200 at each set; `python3 -B model/sd3w.py --check SET` from
@@ -3265,6 +3265,21 @@ QIZ,0x0`; the oracle's random and probe listings have no `ld / cp` with an immed
 but eq / ne (the 1997 library's _itoa tests a long's sign as `ld WA,QBC / cp WA,0x0 / j ge`). Random -O3 -XS 106 ->
 110, -O3 -XS -Xr 90 -> 93; rstmt none +1, -O3 -XS +3, -Xr +1, -O3 -XS -Xr +3; fpopa -O sets 84 -> 92; ledger up 14
 rows by 34, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
+
+**Batch 297 (2026-11-15): probes elrd and cmpx at every set; stdiv3 at -Xr.** The overrides now get the right set
+name: batch 295's hook built `noneXr` at -Xr, so sd3w never fired there (stdiv3 -Xr 418 -> 1200). ELRDW_WHOLE and
+CMPXW_WHOLE (`compile_unit`, after sd3w): probe elrd's shapes go through `model/elrdw.py` (research-scratch
+tabulation/elrd-ast/elrd_ast.py) and probe cmpx's through `model/cmpxw.py` (tabulation/cmpx-ast/cmpx_ast.py), both
+written by subagents from the probes' oracle listings: they classify the function from the tree, predict the code for
+the probe's names and substitute the real ones, and decline anything outside the probe's grammar.  elrd 316 / 256 /
+112 / 102 -> 1234 at none / -O3 -XS / -Xr / -O3 -XS -Xr; cmpx 565 / 433 / 323 / 276 -> 1192.  Each was also run over
+every other oracle run's listings (research-scratch `xval_override.py MODULE PROBE`): cmpxw writes 372 of 94,050
+functions, all exact; elrdw writes 164 of 93,882, 156 exact and 8 wrong, all eo_s_GX / eo_s_NX of the superseded run
+2026-11-10-8-micro-evorder, compiled from an older corpus (its eo_s_KE reads `_gia + 0x6` where the source now reads
+`hia[3]`; run 9, which the ledger uses, agrees with elrdw).  A first elrdw wrote 336 there with 120 wrong; its declines
+were tightened before this batch.  Their other firings lift evorder / evorder_st / evorder_ad, cmpord / cmpordl /
+cmpordl2, stchain, stret, lhidx and lhx rows; rstmt and random are unchanged.  Ledger up 34 rows by 8,188, down 0;
+library 186/248, pairs 223, semcheck 50 with the same verdicts.
 
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
