@@ -7067,6 +7067,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+BYTE_SHL1_ADD = True                                     # see compile_unit
 LH_XX_OPT = True                                         # see the long helper with two element operands under -O
 XR_GUARDS_LIFT = True                                    # see the long helper store / save paths and stvx_char_plan: -Xr too
 LX5_XR = True                                            # see lx5_parts: under -Xr too
@@ -16960,6 +16961,19 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                         m2_ = re.match(r'^\tld\t(\([^)]*\)),%s$' % m_.group(1), full[k_ + 1])
                         if m2_ and 'WA' not in m2_.group(1) and reg_dead(full, k_ + 2, 'XWA'):
                             full[k_:k_ + 2] = ['\tld\t%s,%s' % (m2_.group(1), m_.group(2))]
+                    k_ += 1
+            if BYTE_SHL1_ADD:                              # a byte doubled from another register is ld T,R / add T,R:
+                k_ = 0                                     # neither ld T,R / sl 0x1,T nor sl 0x1,R / ld T,R is in any
+                while k_ < len(full) - 1:                  # oracle listing (chararith2 .cb_ru_s1_si -Xr: puc << 1 with
+                    m1_ = re.match(r'^\tld\t([ACELBDHW]),([ACELBDHW])$', full[k_])   # puc in E -> ld A,E / add A,E)
+                    m2_ = re.match(r'^\tsl[al]\t0x1,([ACELBDHW])$', full[k_ + 1])
+                    if m1_ and m2_ and m2_.group(1) == m1_.group(1) and m1_.group(1) != m1_.group(2):
+                        full[k_ + 1] = '\tadd\t%s,%s' % (m1_.group(1), m1_.group(2))
+                    m3_ = re.match(r'^\tsl[al]\t0x1,([CE])$', full[k_])
+                    m4_ = re.match(r'^\tld\t([ACELBDHW]),([CE])$', full[k_ + 1])
+                    if m3_ and m4_ and m4_.group(2) == m3_.group(1) and m4_.group(1) != m3_.group(1) and \
+                            reg_dead(full, k_ + 2, m3_.group(1)):
+                        full[k_:k_ + 2] = ['\tld\t%s,%s' % (m4_.group(1), m3_.group(1)), '\tadd\t%s,%s' % (m4_.group(1), m3_.group(1))]
                     k_ += 1
             if QIZH_DIRECT:                                # ld A,C / ld QIZH,A -> ld QIZH,C where XWA is dead after (no
                 k_ = 0                                     # oracle listing at any set has ld A,C|E|L then ld QIZH,A;

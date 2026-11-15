@@ -269,8 +269,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-9-micro-kfold, v423/O3XSXr                           | probes/kfold.c       | 47 / 47 exact (100.0%)     |
 | run 2026-11-13-10-micro-chararith2, v423/none                       | probes/chararith2.c  | 412 / 576 exact (71.5%)    |
 | run 2026-11-13-10-micro-chararith2, v423/O3XS                       | probes/chararith2.c  | 427 / 576 exact (74.1%)    |
-| run 2026-11-13-10-micro-chararith2, v423/Xr                         | probes/chararith2.c  | 384 / 576 exact (66.7%)    |
-| run 2026-11-13-10-micro-chararith2, v423/O3XSXr                     | probes/chararith2.c  | 381 / 576 exact (66.1%)    |
+| run 2026-11-13-10-micro-chararith2, v423/Xr                         | probes/chararith2.c  | 394 / 576 exact (68.4%)    |
+| run 2026-11-13-10-micro-chararith2, v423/O3XSXr                     | probes/chararith2.c  | 391 / 576 exact (67.9%)    |
 | run 2026-11-13-11-micro-lhy, v423/none                              | probes/lhy.c         | 144 / 360 exact (40.0%)    |
 | run 2026-11-13-11-micro-lhy, v423/O3XS                              | probes/lhy.c         | 56 / 360 exact (15.6%)     |
 | run 2026-11-13-11-micro-lhy, v423/Xr                                | probes/lhy.c         | 56 / 360 exact (15.6%)     |

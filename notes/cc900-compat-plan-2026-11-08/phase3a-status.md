@@ -3132,6 +3132,13 @@ existing forms hold: stdiv -O3 -XS +20, lhidx -O3 -XS and -O3 -XS -Xr +6 each, n
 same kind (an index used by two arrays under -O, a -Xr exclusion in an index path) were lifted on the scratch ledger
 and changed nothing, so they stay. rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 281 (2026-11-15): a byte doubled from another register is ld / add.** BYTE_SHL1_ADD (`compile_unit`, on the
+finished listing): `ld T,R / sl 0x1,T` becomes `ld T,R / add T,R`, and so does `sl 0x1,R / ld T,R` where R (C or E)
+is dead afterwards; neither pair occurs in any oracle listing (chararith2 .cb_ru_s1_si -Xr: `gi = puc << 1` with puc
+in E -> `ld A,E / add A,E / extz WA`; .cb_rs_s1_ri: `ld L,C / add L,C / exts HL`). From `never_pairs.py` at -O3 -XS
+-Xr. chararith2 -Xr and -O3 -XS -Xr +10 each; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50
+unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
