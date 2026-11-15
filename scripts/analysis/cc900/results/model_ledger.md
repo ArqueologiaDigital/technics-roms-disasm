@@ -200,7 +200,7 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-5-micro-stdiv, v423/none                             | probes/stdiv.c       | 750 / 750 exact (100.0%)   |
 | run 2026-11-12-5-micro-stdiv, v423/O3XS                             | probes/stdiv.c       | 698 / 750 exact (93.1%)    |
 | run 2026-11-12-5-micro-stdiv, v423/Xr                               | probes/stdiv.c       | 230 / 750 exact (30.7%)    |
-| run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 214 / 750 exact (28.5%)    |
+| run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 222 / 750 exact (29.6%)    |
 | run 2026-11-12-6-micro-lhidx, v423/none                             | probes/lhidx.c       | 128 / 150 exact (85.3%)    |
 | run 2026-11-12-6-micro-lhidx, v423/O3XS                             | probes/lhidx.c       | 68 / 150 exact (45.3%)     |
 | run 2026-11-12-6-micro-lhidx, v423/Xr                               | probes/lhidx.c       | 74 / 150 exact (49.3%)     |
@@ -248,9 +248,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-4-micro-cmpx, v423/Xr                                | probes/cmpx.c        | 323 / 1192 exact (27.1%)   |
 | run 2026-11-13-4-micro-cmpx, v423/O3XSXr                            | probes/cmpx.c        | 276 / 1192 exact (23.2%)   |
 | run 2026-11-13-5-micro-stdiv3, v423/none                            | probes/stdiv3.c      | 878 / 1200 exact (73.2%)   |
-| run 2026-11-13-5-micro-stdiv3, v423/O3XS                            | probes/stdiv3.c      | 230 / 1200 exact (19.2%)   |
+| run 2026-11-13-5-micro-stdiv3, v423/O3XS                            | probes/stdiv3.c      | 332 / 1200 exact (27.7%)   |
 | run 2026-11-13-5-micro-stdiv3, v423/Xr                              | probes/stdiv3.c      | 418 / 1200 exact (34.8%)   |
-| run 2026-11-13-5-micro-stdiv3, v423/O3XSXr                          | probes/stdiv3.c      | 92 / 1200 exact (7.7%)     |
+| run 2026-11-13-5-micro-stdiv3, v423/O3XSXr                          | probes/stdiv3.c      | 124 / 1200 exact (10.3%)   |
 | run 2026-11-13-6-micro-negk, v423/none                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |

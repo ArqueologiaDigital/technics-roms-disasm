@@ -3100,6 +3100,14 @@ scratch ledger, so -O stays off. The rows still off at -Xr are the register para
 `ld WA,DE / extz XWA / add XWA,XWA / ld XBC,_kia / add XBC,XWA / ld WA,(_hi) / exts XWA / divs XWA,(XBC)`). Found
 from `never_pairs.py` at -Xr. Library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 276 (2026-11-15): sd3.py under -O for int divisions.** SD3_OPT (`sd3.py`): the module also runs under -O, for
+int and unsigned int only, and not when the destination element is also an operand (probe stdiv2's X?S rows,
+`gia[c] = gia[c] / ki`) or both operands are elements (evorder_ad ea_c_div_XX, `gc2 = gca[c] / hca[c]`); those keep
+the older paths at -O. Char divisions stay off under -O: the first gate run gave 14 semcheck verdicts (wrong code) in
+stdiv3's `sd3_c_*_p_X*` rows at -O3 -XS, and the tree was restored before this version. stdiv3 -O3 -XS 230 -> 332,
+-O3 -XS -Xr 92 -> 124, stdiv -O3 -XS -Xr +8; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50
+unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

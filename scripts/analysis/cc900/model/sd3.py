@@ -25,6 +25,7 @@ import re
 import codegen as cg
 
 SD3 = True                                                 # the whole module behind one flag
+SD3_OPT = True                                             # see stmt: under -O as well
 WHY = [None]                                               # why classify declined last (for dbg_sd3.py)
 
 PAIRS = ['WA', 'BC', 'DE', 'HL', 'IX', 'IY']
@@ -384,9 +385,15 @@ def classify(F, lv, rv):
 
 
 def stmt(F, lv, rv):
-    if not SD3 or F.opt: return False
+    if not SD3 or (F.opt and not SD3_OPT): return False
     sp = classify(F, lv, rv)
     if sp is None: return False
+    if F.opt and sp['t'] == 'c': return False             # (-O: char arrays index differently; the none forms were
+                                                           #  wrong code at -O3 -XS, stdiv3 sd3_c_*_p_X* in semcheck)
+    if F.opt and sp['A'][0] == 'X' and sp['B'][0] == 'X': return False   # (-O: two element operands, evorder_ad
+                                                           #  ea_c_div_XX gc2 = gca[c] / hca[c], keep the older paths)
+    if F.opt and (sp['A'] == sp['L'] or sp['B'] == sp['L']): return False   # (-O: the element that is also an operand,
+                                                           # stdiv2's X?S rows, keeps the older paths)
     lines = plan_char(sp) if sp['t'] == 'c' else plan_int(sp)
     if lines is None: return False
     for l in lines:
