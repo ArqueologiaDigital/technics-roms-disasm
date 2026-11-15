@@ -3339,6 +3339,16 @@ rs_4_02_07_1: `*gp = *gp | gc2`), unless the value is widened or multiplied / di
 -> 174; rstmt none +2, -O3 -XS +1, -Xr +2, -O3 -XS -Xr +1; ledger up 6 rows by 8, down 0; library 186/248, pairs
 223, semcheck 44 with the same verdicts.
 
+**Batch 304 (2026-11-15): probes chararith2 and stchain at every set.** CA2W_WHOLE and STCHW_WHOLE (`compile_unit`,
+after cmpo2w): probe chararith2's shapes (char arithmetic kept char-typed for every operand kind) go through
+`model/ca2w.py`, probe stchain's (chained stores `a = b = x`) through `model/stchw.py` (research-scratch
+tabulation/chararith2-ast and stchain-ast, written by subagents; each probe with every global renamed scores the same;
+both decline anything outside the probe's grammar).  chararith2 412 / 427 / 394 / 391 -> 576 and stchain 324 / 326 /
+213 / 206 -> 392 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  Over every other oracle run ca2w writes 192 functions (the
+`(void)` functions of chararith.c, which goes 143 / 142 / 143 / 142 -> 157 / 155 / 157 / 155) and stchw 4, all
+exact.  rstmt and random unchanged.  Ledger up 12 rows by 1,233, down 0; library 186/248, pairs 223, semcheck 44 with
+the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
