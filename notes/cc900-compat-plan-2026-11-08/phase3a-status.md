@@ -3702,6 +3702,12 @@ at -O, 10 times per set without) and 29 PUSH_EXT_INPLACE (-O: a char in C / E / 
 -XS 133 -> 136, -O3 -XS -Xr 121 -> 123; rstmt +3 / +2; no function lost (micro included).  Ledger up 7 rows by 10, down
 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
 
+**Batch 339 (2026-11-15): a char register temporary built in its home at -O.** CHAR_REGTEMP_HOME_OPT (lane_o3 30):
+under -O a char local kept in C / E / L with a computed initial value (`+ - & | ^ *`, also narrowed) is built in its
+register (`ld C,(_gc) / add C,(_hc)`, loc0 lo_c_Bgs; r3_08_07, r3_04_08), not in A and moved; a narrowed plain load
+still goes through A (r4_01_00).  Random -O3 -XS 136 -> 137, -O3 -XS -Xr 123 -> 124; no function lost (micro
+included).  Ledger up 2 rows by 2, down 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

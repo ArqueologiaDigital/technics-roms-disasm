@@ -7461,6 +7461,7 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+CHAR_REGTEMP_HOME_OPT = True                             # see the register home's initialiser
 PUSH_EXT_INPLACE = True                                  # see compile_function_once's -O passes
 TWICE_LOAD_ONCE = True                                   # see compile_function_once's -O passes
 MEM_OP_IMM = True                                        # see compile_function_once's finishing passes
@@ -8087,6 +8088,12 @@ def twice_load_once(L):
         L[i:i + 1] = ['\tld\t%s,(%s)' % (R1, m), '\tld\t%s,%s' % (R2, R1)]
         i += 2
     return L
+
+def char_home_bin(x):
+    """CHAR_REGTEMP_HOME_OPT: an initialiser that is (a narrowing of) + - & | ^ * on plain operands"""
+    x = strip(x)
+    while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+    return x.k == 'bin' and x.op in ('+', '-', '&', '|', '^', '*')
 
 def xbase_cse(F):
     """XBASE_CSE: struct_base_cse across labels and jumps (see the flag's note)"""
@@ -13829,8 +13836,10 @@ def regvar_stmt(F, e):
                     F.emit('ld', 'XWA,%s' % tr[1]); F.emit('ld', 'IZ,%s' % plain(v0.l))            # ld IZ,(_gi) / sub IZ,(XWA+0x8)
                     F.emit(SIMPLE_OPS[v0.op], 'IZ,%s' % at_(tr)); return True
         tgt = d.reg if d.reg in ('BC', 'DE', 'HL', 'WA') else 'WA'      # ra_noloop3: ld DE,(a) / add DE,(b)
-        if getattr(d, 'regtemp', False) and d.ty.size == 1 and strip(e.r).k not in ('load', 'const'):
-            tgt = 'WA'                                     # (lo_c_Bgs: ld A,(_gc) / add A,(_hc) / ld C,A)
+        if getattr(d, 'regtemp', False) and d.ty.size == 1 and strip(e.r).k not in ('load', 'const') and \
+                not (CHAR_REGTEMP_HOME_OPT and F.opt and char_home_bin(e.r)):
+                                                           # (-O builds it in the home: lo_c_Bgs O3XS ld C,(_gc) /
+            tgt = 'WA'                                     #  add C,(_hc); without -O ld A,(_gc) / add A,(_hc) / ld C,A)
         rb_ = strip(e.r)
         tv_ = rb_
         while tv_.k == 'cast' and tv_.kind == 'IntegralCast': tv_ = strip(tv_.e)
