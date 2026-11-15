@@ -2848,6 +2848,17 @@ run before it, `ptr_test_reuse` took away a reload whose register a later line s
 rs_3_04_10_5, random r3_04_10, r4_01_13: 8 semcheck verdicts in the first gate run, none after the move). rstmt
 -O3 -XS +4, -O3 -XS -Xr +2; random4 +2 at both -O sets; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 242 (2026-11-15): a global's value already in another register is read from there (-O).** REG_COPY_REUSE in
+`addr_reg_reuse`: a 32-bit load of a global into XWA / XBC / XDE whose value another register already holds is
+dropped, and the dropped register's address uses read the other one, as long as the other is not written before the
+dropped one is redefined or dead (random r2_06_19 -O3 -XS: XIZ holds gpl -> `ld (XIZ),XHL`, not `ld XWA,(_gpl) /
+ld (XWA),XHL`). HELPER_KEEPS_XIZ: an arithmetic helper call (`cal C9H_*`) writes no memory and leaves XIZ.
+JUMP_TABLE_REUSE: a function with a jump table is no longer skipped; the computed jump ends its block and each case
+label starts with nothing known. The store kill is refined: a byte store kills only byte values, a word or long store
+every value of two bytes or more (micro m_gps_set: `ld (XBC+0x2),WA` then `ld XWA,(_gps)` again; the first gate run
+lost it at both -O sets). reg_dead's tables learn XDE. rstmt +2 at both -O sets, random2 +1 at both; library
+186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -6962,9 +6962,12 @@ PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
 ADDR_REG_REUSE = True                                    # see addr_reg_reuse
 MEM_REG_REUSE = True                                     # see addr_reg_reuse: a global's value still in a register
+JUMP_TABLE_REUSE = True                                  # see addr_reg_reuse
+REG_COPY_REUSE = True                                    # see addr_reg_reuse
+HELPER_KEEPS_XIZ = True                                  # see addr_reg_reuse
 MEM_REUSE_KILL_INDIRECT = False                          # see addr_reg_reuse
 
-def addr_reg_reuse(lines):
+def addr_reg_reuse(lines, adecl=False):
     """-O: a register that still holds a global's address (lda XBC,_gua earlier, on every path to here, with no write
     to its family and no call since) addresses that global's members: (_gua + 0xa) -> (XBC+0xa) (random r1_04_16
     -O3 -XS: gua[c] >= gu read through lda XBC,_gua; after the branch, gua[5] = .. -> ld (XBC+0xa),WA).  A forward
@@ -6972,7 +6975,9 @@ def addr_reg_reuse(lines):
     computed jump."""
     import re as _r
     L = list(lines)
-    if any(l.startswith('\tdw') or _r.match(r'^\tj\tT,|^\tj\t\(|^\tcal\t\(', l) for l in L): return L
+    if any(_r.match(r'^\tj\tT,|^\tj\t\(|^\tcal\t\(', l) for l in L): return L
+    tabl = {m for l in L if l.startswith('\tdw') for m in _r.findall(r'\b(L\d+)\b', l)}   # a switch's case labels: nothing known
+    if tabl and not JUMP_TABLE_REUSE: return L
     PARTS = {}
     for x in ('WA', 'BC', 'DE', 'HL'):
         for p_ in ('X' + x, 'Q' + x, x, x[0], x[1], 'Q' + x[0], 'Q' + x[1]): PARTS[p_] = 'X' + x
@@ -6984,11 +6989,15 @@ def addr_reg_reuse(lines):
         m_ = _r.match(r'^\t(j|jr|jrl|djnz)\t(?:.*,)?(\w+)$', l)
         return m_.group(2) if m_ else None
     def uncond(l):
+        if _r.match(r'^\tj\tX\w+\+\w+$', l): return True   # (a computed jump into a table: j XIX+WA)
         return bool(_r.match(r'^\t(ret|retd|reti)(\t[^,]*)?$', l) and ',' not in l[4:] and not _r.match(r'^\tret\t\w+$', l)) or \
             bool(_r.match(r'^\t(j|jr|jrl)\t[^,]+$', l))
     def kills(l, st):
         if not l.startswith('\t'): return st
         m_ = _r.match(r'^\t(\w+)(?:\t(.*))?$', l); op = m_.group(1); args = m_.group(2) or ''
+        if op == 'cal' and args.startswith('C9H_') and HELPER_KEEPS_XIZ:   # an arithmetic helper writes no memory and
+            return {k: v for k, v in st.items() if k == 'XIZ'}      # leaves XIZ (random r2_06_19 -O3 -XS: ld XIZ,(_gpl) /
+                                                                     # .. / cal C9H_divls / ld (XIZ),XHL)
         if op in ('cal', 'call', 'calr', 'swi'): return {k: v for k, v in st.items() if k == 'XIZ' and v[0] == 'addr'}
         if op in ('ldir', 'ldirw', 'lddr', 'lddrw', 'ldi', 'ldiw', 'ldd', 'lddw', 'cpir', 'cpdr', 'cpi', 'cpd'):
             return {k: v for k, v in st.items() if k not in ('XBC', 'XDE', 'XHL', 'XWA') and v[0] == 'addr'}
@@ -7022,12 +7031,12 @@ def addr_reg_reuse(lines):
                     if g_ is None:                         # a store through a register kills the values of its width
                         lw_ = _r.match(r'^\tld\t(\w+),', v[2]).group(1)   # (random r4_05_18: ld (XDE+BC),XWA, then
                         lw_ = 4 if lw_.startswith('X') else 2 if len(lw_) == 2 else 1   # ld XWA,(_gul) again; r4_04_15:
-                        if sw_ == 0 or sw_ == lw_: return True                       # ldb (XWA),0x0 keeps (_gps))
-                        continue
+                        if sw_ == 0 or sw_ == lw_ or sw_ >= 2 and lw_ >= 2: return True   # ldb (XWA),0x0 keeps (_gps);
+                        continue                                   # micro m_gps_set: ld (XBC+0x2),WA kills it)
                     if g_.group(1) == v[1]: return True
                     lw_ = _r.match(r'^\tld\t(\w+),', v[2]).group(1)   # any store of the value's width kills it (fpp11
                     lw_ = 4 if lw_.startswith('X') else 2 if len(lw_) == 2 else 1   # w29: gi = gi2; gi3 = gi2 ->
-                    if sw_ == 0 or sw_ == lw_: return True             # ld (_gi),WA / ld WA,(_gi2) again)
+                    if sw_ == 0 or sw_ == lw_ or sw_ >= 2 and lw_ >= 2: return True   # ld (_gi),WA / ld WA,(_gi2) again)
                 return False
             st = {k: v for k, v in st.items() if not hit(v)}
         return {k: v for k, v in st.items() if k not in w} if w else st
@@ -7042,7 +7051,7 @@ def addr_reg_reuse(lines):
     while changed and it < 50:
         changed = False; it += 1
         for i in range(n):
-            if i == 0: inn = {}
+            if i == 0 or L[i][:-1] in tabl or not L[i].startswith('\t') and not _r.match(r'^\w+:$', L[i]): inn = {}
             else:
                 ps = [OUT[j] for j in preds[i] if OUT[j] is not None]
                 if not ps and not preds[i]: inn = {}
@@ -7057,9 +7066,31 @@ def addr_reg_reuse(lines):
             m2_ = _r.match(r'^\tld\t(X?(?:WA|BC|DE|HL|IX|IY|IZ)),\((_\w+)(?: \+ 0x[0-9a-f]+)?\)$', l) if MEM_REG_REUSE else None
             if m2_: st = dict(st); st[PARTS[m2_.group(1)]] = ('mem', m2_.group(2), l)
             if IN[i] != inn or OUT[i] != st: IN[i] = inn; OUT[i] = st; changed = True
-    out = list(L)
+    out = list(L); skip = set()
     for i, l in enumerate(L):
+        if i in skip: continue
         if IN[i] is None or not IN[i] or not l.startswith('\t') or l.startswith('\tlda\t'): continue
+        m3_ = _r.match(r'^\tld\t(XWA|XBC|XDE),(\((_\w+)(?: \+ 0x[0-9a-f]+)?\))$', l) if REG_COPY_REUSE else None
+        if m3_:                                            # the value is already in another register: its uses read that
+            R2 = m3_.group(1)                              # one (random r2_06_19 -O3 -XS: XIZ holds gpl -> ld (XIZ),XHL,
+            R1 = next((R for R, v in IN[i].items() if R != R2 and v == ('mem', m3_.group(3), '\tld\t%s,%s' % (R, m3_.group(2)))), None)
+            if R1 is not None:                             # not ld XWA,(_gpl) / ld (XWA),XHL)
+                p2 = _r.compile(r'\b(%s)\b' % '|'.join(k for k, v in PARTS.items() if v == R2))
+                j = i + 1; ok = False; ren = []
+                while j < len(L):
+                    lj = L[j]
+                    if not lj.startswith('\t') or _r.match(r'^\t(j|jr|jrl|djnz|ret|retd|reti|cal|call)\b', lj):
+                        ok = not (adecl and lj.startswith('\tcal')) and reg_dead(L, j, R2); break
+                    if R1 not in kills(lj, {R1: ('x',)}): break
+                    if p2.search(lj):
+                        m4_ = _r.match(r'^\t(ld|lda)\t%s,(.*)$' % R2, lj)
+                        if m4_ and not p2.search(m4_.group(2)): ok = True; break
+                        if p2.search(_r.sub(r'\(%s(?=[+)])' % R2, '(', lj)): break
+                        ren.append(j)
+                    j += 1
+                if ok and ren:
+                    for j_ in ren: out[j_] = _r.sub(r'\(%s(?=[+)])' % R2, '(' + R1, L[j_]); skip.add(j_)
+                    out[i] = None; continue
         def sub(mm):
             nm, k = mm.group(1), int(mm.group(2) or '0', 16)
             for R in ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ'):
@@ -7322,9 +7353,10 @@ def guard_div_plan(F, s):
     return D, D.ty.size, cc
 
 REG_PARTS = {'BC': ('B', 'C', 'BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('D', 'E', 'DE', 'XDE'), 'E': ('E', 'DE', 'XDE'),
-             'XBC': ('B', 'C', 'BC', 'QBC', 'XBC'), 'XWA': ('W', 'A', 'WA', 'QWA', 'XWA')}
+             'XBC': ('B', 'C', 'BC', 'QBC', 'XBC'), 'XWA': ('W', 'A', 'WA', 'QWA', 'XWA'),
+             'XDE': ('D', 'E', 'DE', 'QDE', 'XDE')}
 REG_KILLS = {'BC': ('BC', 'XBC'), 'C': ('C', 'BC', 'XBC'), 'DE': ('DE', 'XDE'), 'E': ('E', 'DE', 'XDE'), 'XBC': ('XBC',),
-             'XWA': ('XWA', 'WA')}                     # (a 16-bit load ends XWA's old value: nothing reads the stale QWA)
+             'XWA': ('XWA', 'WA'), 'XDE': ('XDE',)}                     # (a 16-bit load ends XWA's old value: nothing reads the stale QWA)
 
 def reg_dead(lines, start, R, lab=None):
     """is register R's value dead from line index start (or from label lab)?  Every path, conditional jumps followed
@@ -16225,7 +16257,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                    i + 1 < len(F.lines) and re.match(r'^L\d+:$', F.lines[i + 1] or ''))]   # (rstmt .rs_2_07_08_5: the
                                                            # if's join L1 before the exit L50001 the test jumps to)
     if TEST_REG_REUSE and F.opt and (not F.adecl or TEST_REG_REUSE_XR): F.lines = test_reg_reuse(F.lines)
-    if ADDR_REG_REUSE and F.opt: F.lines = addr_reg_reuse(F.lines)   # (after test_reg_reuse / ptr_test_reuse, which
+    if ADDR_REG_REUSE and F.opt: F.lines = addr_reg_reuse(F.lines, F.adecl)   # (after test_reg_reuse / ptr_test_reuse, which
                                                          #  expect a pointer's reload still written: rstmt rs_4_01_13_2)
                                                            # (-O3 -XS -Xr too: 187 register tests read after, 2 memory)
     if COND_CALL:                                        # a jump around one call is a conditional call: j le,L / cal _rp /
