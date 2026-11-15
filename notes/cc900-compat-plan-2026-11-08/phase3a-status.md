@@ -3624,6 +3624,19 @@ code at none and -O3 -XS, which the gate's semcheck caught.  rstmt -O3 -XS +1; s
 -O3 -XS wrong code is gone; the function is now refused); no function lost.  Ledger up 1 row by 1, down 0; library
 189/248, pairs 223.
 
+**Batch 331 (2026-11-15): more -O loop rules; none / -Xr rules.** lane_loop, delivery 2: LOOP_PTR_HOIST (a global
+pointer read on every iteration is loaded once before the loop; the oracle 33 against 4), LOOP_INV_VALUE (an invariant
+computation moves before the loop; plain loads and constants stay), GUARD_DIV_WALK (in a walked loop an element tested
+for zero is loaded once into BC and reused as the divisor), LOOP_CONST_STORE and a CONST_STORE_IMM for `ld A,K / ld
+(XR),A` (together), DO_PREDEC_CALL (the `do .. while (--i > 0)` refusal only for loops without a call), GPTR_POSTINC_BC
+(`*gpi++ = v` keeps BC free in the leaf planner; 56 against 0).  lane_nm (none / -Xr near misses): NO_FOLD_INTO_BRANCH
+(without -O a local read once is not folded into a use inside a branch), XR_LOAD_BASE_WA, XR_COUNT_IN_PLACE,
+DECL_COPY_PREV (a local initialised from the same global as the previous declaration copies its register),
+RETD_EXIT_PAIR.  Both lanes report the random functions these touch still differ elsewhere (frames, homes across
+calls, about 30 kinds of first difference).  rstmt +7 / +18 / +21 / +7 at none / -O3 -XS / -Xr / -O3 -XS -Xr; random
+unchanged; no function lost; the functions the rules newly compile semcheck equal.  Ledger up 4 rows by 53, down 0;
+library 189/248, pairs 223, semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
