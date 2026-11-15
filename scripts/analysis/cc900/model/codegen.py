@@ -7461,6 +7461,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+MEM_OP_IMM = True                                        # see compile_function_once's finishing passes
+PTR_TEST_KEEP = True                                     # see compile_function_once's -O passes
 ELEM_BASE_KEPT = True                                    # see elem_base_kept
 BASE_AT_STMT_START = True                                # see struct_base_cse
 XBASE_CSE = True                                         # see xbase_cse
@@ -8007,6 +8009,42 @@ def elem_base_kept(F):
         L[i + 1] = '\tld\t%s,(%s+%s)' % (b.group(1), XR, b.group(2))
         for k in later: L[k] = mp.sub(lambda m_: '(%s+%s)' % (XR, m_.group(2)) if m_.group(2) else '(%s)' % XR, L[k])
     F.lines = L
+
+def ptr_test_keep(L):
+    """PTR_TEST_KEEP (see the flag's note)"""
+    import re as _r
+    L = list(L)
+    def fam(r): return r[1:] if r.startswith('X') else r
+    def parts(f): return _r.compile(r'\b(X?%s|Q%s|%s|%s)\b' % (f, f, f[0], f[1]))
+    i = 0
+    while i + 3 < len(L):
+        a = _r.match(r'^\tld\tXWA,(\((?:_\w+|XSP\+0x[0-9a-f]+)\))$', L[i] or '')
+        if not (a and _r.match(r'^\tcp[wb]?\t\(XWA\),0x0$', L[i + 1] or '') and _r.match(r'^\t(j|ret)\t\w+', L[i + 2] or '')):
+            i += 1; continue
+        M = a.group(1); k = i + 3; hit = None
+        while k < len(L) and L[k] and L[k].startswith('\t') and not _r.match(r'^\t(cal|j|ret|swi|ldir|lddr)\b', L[k]):
+            m_ = _r.match(r'^\tld\t(X(?:WA|BC|DE|HL)),%s$' % _r.escape(M), L[k])
+            if m_: hit = (k, m_.group(1)); break
+            if M in L[k] and not L[k].endswith(',' + M): break     # (M written or read some other way)
+            if M.startswith('(_') and _r.match(r'^\t\w+\t\(X', L[k]): break   # (a store through a pointer may alias it)
+            k += 1
+        if not hit: i += 1; continue
+        k, R2 = hit; f2 = fam(R2); pw = parts('WA')
+        between = L[i + 3:k]
+        if f2 != 'WA' and any(parts(f2).search(l) for l in between): i += 1; continue
+        if f2 == 'WA':
+            if any(pw.search(l) for l in between): i += 1; continue
+        else:                                              # XWA's old value: nothing after the test may read it
+            ok = True
+            for l in L[i + 3:]:
+                if not l or not pw.search(l): continue
+                if l.startswith('\t') and _r.match(r'^\t(ld|lda)\t(XWA|WA|A),', l) and not pw.search(l.split(',', 1)[1]): break
+                ok = False; break
+            if not ok: i += 1; continue
+            L[i] = '\tld\t%s,%s' % (R2, M); L[i + 1] = L[i + 1].replace('(XWA)', '(%s)' % R2)
+        del L[k]
+        i += 1
+    return L
 
 def xbase_cse(F):
     """XBASE_CSE: struct_base_cse across labels and jumps (see the flag's note)"""
@@ -18811,6 +18849,25 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
                 F.lines[i] = '\tsub\t%s,0x1' % m.group(1); F.lines[i + 1] = None
         F.lines = [l for l in F.lines if l is not None]
     if F.opt and RET_KNOWN_GLOBAL: F.lines = ret_known_global(F.lines)
+    if MEM_OP_IMM:                                       # op (m),K, not through A / WA (random r2_00_16: xorw (_gu2),0x1)
+        i_ = 0
+        while i_ + 1 < len(F.lines):
+            a_ = re.match(r'^\tld\t(A|WA),(0x[0-9a-f]+)$', F.lines[i_] or '')
+            b_ = re.match(r'^\t(and|or|xor|add|sub)\t(\([^)]*\)),(A|WA)$', F.lines[i_ + 1] or '')
+            if a_ and b_ and a_.group(1) == b_.group(3) and not re.search(r'\b(X?WA|[AW]|QWA)\b', b_.group(2)) and \
+                    (b_.group(1) in ('and', 'or', 'xor') or int(a_.group(2), 16) > 8):
+                dead_ = True
+                for l_ in F.lines[i_ + 2:]:
+                    if not l_ or not re.search(r'\b(X?WA|[AW]|QWA)\b', l_): 
+                        if l_ and (l_.endswith(':') or l_.startswith(('\tj', '\tret', '\tcal'))): dead_ = l_.startswith('\tcal') or l_ == '\tret'; break
+                        continue
+                    m_ = re.match(r'^\t(ld|lda)\t(XWA|WA|A),(.*)$', l_)
+                    dead_ = bool(m_ and not re.search(r'\b(X?WA|[AW]|QWA)\b', m_.group(3)) and
+                                 (m_.group(2) != 'A' or a_.group(1) == 'A')); break
+                if dead_:
+                    F.lines[i_:i_ + 2] = ['\t%s%s\t%s,%s' % (b_.group(1), 'b' if a_.group(1) == 'A' else 'w', b_.group(2), a_.group(2))]
+            i_ += 1
+    if PTR_TEST_KEEP and F.opt: F.lines = ptr_test_keep(F.lines)
     if XR_UNARY_ARG_BC and F.opt and F.adecl:            # -O3 -XS -Xr: neg / cpl of a WA argument in BC, then copied
         i_ = 0                                           # (random .r1_02_10: ld BC,(_gu2) / cpl BC / ld WA,BC / j .ru)
         while i_ + 2 < len(F.lines):

@@ -3686,6 +3686,14 @@ allocator lane's survey: forcing the best across-call home choice makes only 1 r
 other differences being FP frames (about 50 at -O3 -XS), XIZ for a helper's element address (about 20) and true home
 competition (about 12).  Ledger up 4 rows by 4, down 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
 
+**Batch 337 (2026-11-15): a tested pointer kept at -O; constants into memory as immediates.** lane_o3 26
+PTR_TEST_KEEP (-O: after `ld XWA,M / cpw (XWA),0x0 / j cc` the following code no longer reloads the pointer; the test
+loads it into the register that code uses -- the oracle reuses it 58 / 53 times at the -O sets and never reloads it,
+while without -O it reloads 73 / 67 times) and 27 MEM_OP_IMM (every set: a byte or word constant combined into memory
+uses the immediate form, `xorw (_gu2),0x1`, for and / or / xor and for add / sub above 8; the oracle never loads it
+first).  The lane's loss check now covers the micro corpus too.  Random -O3 -XS 131 -> 133; rstmt +5 / +6 / +4 / +4;
+no function lost.  Ledger up 6 rows by 21, down 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
