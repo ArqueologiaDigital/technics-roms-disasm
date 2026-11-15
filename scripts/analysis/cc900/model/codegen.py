@@ -7142,6 +7142,7 @@ DROP_WRITE_ONLY_PTR = True                               # see drop_write_only
 COPY_PROP_OPT = True                                     # see compile_unit
 LHYW_WHOLE = True                                        # see compile_unit
 EVLHW_WHOLE = True                                       # see compile_unit
+LHXW_WHOLE = True                                        # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17096,6 +17097,11 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 import evlhw                               # evorder_lh's shapes at every set (evlhw.py, research-scratch
                 try:                                       # tabulation/evorder_lh-ast: 507 / 507 each; 180 functions of
                     alt_ = evlhw.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
+                except Exception: alt_ = None              # the other oracle runs written, all exact)
+            if alt_ is None and LHXW_WHOLE and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # probe lhx's
+                import lhxw                                # shapes at every set (lhxw.py, research-scratch
+                try:                                       # tabulation/lhx-ast: 1,184 / 1,184 each; 188 functions of
+                    alt_ = lhxw.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
                 except Exception: alt_ = None              # the other oracle runs written, all exact)
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)

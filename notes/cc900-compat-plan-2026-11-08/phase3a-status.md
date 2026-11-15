@@ -3310,6 +3310,14 @@ every global renamed scores the same; it declines anything outside the probe's g
 exact (lhx 168, lhy 12): lhx -O3 -XS 376 -> 394, -Xr 534 -> 552, -O3 -XS -Xr 314 -> 332.  rstmt and random unchanged.
 Ledger up 7 rows by 1,007, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
 
+**Batch 301 (2026-11-15): probe lhx at every set.** LHXW_WHOLE (`compile_unit`, after evlhw): probe lhx's shapes
+(long-helper statements with element, member and pointer operands; groups lxi_, lxo_, lxm_) go through `model/lhxw.py`
+(research-scratch tabulation/lhx-ast/lhx_ast.py, written by a subagent; it declines anything outside the probe's
+grammar).  lhx 914 / 394 / 552 / 332 -> 1184 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  Over every other oracle run it
+writes 188 of 94,082 functions, all exact: evorder_ad +1 / +4 / +1 / +4, lhidx +6 at the -O and -Xr sets, stord.
+rstmt and random unchanged.  Ledger up 14 rows by 2,577, down 0; library 186/248, pairs 223, semcheck 50 with the
+same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
