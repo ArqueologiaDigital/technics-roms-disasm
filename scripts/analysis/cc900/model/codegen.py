@@ -89,6 +89,12 @@ class Fn:
                 p.off = off; off += 2 if p.ty.size <= 2 else (p.ty.size + 1) // 2 * 2
         if s.sret is not None: f.params = [s.sret] + [p for p in f.params if p is not s.sret]
     def emit(s, op, args=None):
+        pend_ = getattr(s, 'idx_cache_pend', None)
+        if pend_ is not None:                              # PARAM_IDX_CACHE_OPT: the base address before the cached
+            s.idx_cache_pend = None                        # index's load (r2_06_17: lda XWA,_gca / ld BC,(XSP+0x4))
+            if op == 'lda' and isinstance(args, str) and s.lines and s.lines[-1] == pend_[0] and \
+                    re.match(r'^X(WA|BC|DE|HL),_', args) and args[1:3] != pend_[1]:
+                last_ = s.lines.pop(); s.emit(op, args); s.lines.append(last_); return
         if isinstance(args, str) and 'None' in args: raise Unsupported('operand None in %s %s' % (op, args))   # (r4_07_06;
                                                    # a loop's LazyLabel is not a string: _fgets's break crashed here)
         if op == 'ld' and args is not None and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ),[WABCDEHL]$', args):
@@ -7173,6 +7179,8 @@ MUL_K_DOUBLE_ADD = True                                   # see gen_mul_const
 XIZ_MEMBER_INIT = True                                     # see gen_stmt's decl
 CMP_MEM_LEFT = True                                       # see gen_compare
 PTRARR_LVALUE = True                                     # see _lvalue_raw
+PARAM_IDX_CACHE_OPT = True                                # see plan_param_cache (random r2_06_17)
+PARAM_IDX_CACHE_CHAR = True                               # see plan_param_cache (rstmt rs_2_08_01_2)
 PARAM_CACHE = True                                       # see param_cache_wanted
 CHAR_IDX_OPT_REFUSE = True                               # see _lvalue_raw
 COPY_EXEMPT_NOT_CHAR = True                              # see Fn.emit's statement guard
@@ -11129,6 +11137,7 @@ def gen_stmt(F, s, last):
                     setup_struct_temps(F, c)
                     F.emit('ld', '%s,(XSP+%s)' % ('XIZ' if d.reg == 'XIZ' else FAM[d.reg][d.ty.size], hx(d.off + F.push)))
                     F.deferred.remove(d)
+                    if d in getattr(F, 'idx_cache', ()): F.idx_cache_pend = (F.lines[-1], d.reg)
             if DEAD_INIT_OPT and F.opt and c.k == 'decl' and c.init is not None and c.var.kind == 'local' and \
                     not c.var.addr_taken and side_effect_free(c.init) and not nodes_in(c.init, 'call') and \
                     i + 1 < len(body) and (init_overwritten_next(body[i + 1], c.var) or
@@ -16996,7 +17005,64 @@ def param_cache_wanted(F, d):
     if n == 2 and d.ty.size == 2 and d.ty.signed and roles[0] == 'I' and roles[1] == 'N': return True
     return False
 
+def opt_idx_cache_wanted(F, d):
+    """PARAM_IDX_CACHE_OPT: does parameter d index two or more different arrays?"""
+    bases_ = set()
+    for n in nodes_in(F.f.body, 'index'):
+        x_ = strip(unpromote(n.idx))
+        if x_.k != 'load' or strip(x_.e).k != 'var' or strip(x_.e).decl is not d: continue
+        b_ = strip(n.base)
+        if b_.k != 'var': return False
+        bases_.add(b_.decl)
+    return len(bases_) >= 2
+
+def char_idx_twice(F, d):
+    """PARAM_IDX_CACHE_CHAR: a signed char parameter read twice or more, once at least as an index"""
+    if d.ty.kind != 'int' or d.ty.size != 1 or not d.ty.signed: return False
+    reads_ = [n for n in nodes_in(F.f.body, 'load') if strip(n.e).k == 'var' and strip(n.e).decl is d]
+    idx_ = [n for n in nodes_in(F.f.body, 'index') if strip(unpromote(n.idx)).k == 'load' and
+            strip(strip(unpromote(n.idx)).e).k == 'var' and strip(strip(unpromote(n.idx)).e).decl is d]
+    if len(reads_) < 2 or not idx_: return False
+    keys_ = set()                                          # (the same element twice is one element, computed once by the
+    for n in idx_:                                         # oracle with the zero-extended sum: rstmt rs_4_01_15_0,
+        b_ = strip(n.base)                                 # (guc + guca[a]) * guca[a])
+        keys_.add(b_.decl if b_.k == 'var' else id(n))
+    if len(reads_) > len(idx_): keys_.add('value')
+    return len(keys_) >= 2
+
+def reads_call_free(F, d):
+    """PARAM_IDX_CACHE_OPT: no call, FP operation or long helper between the first and the last read of d (evaluation
+    order, eval_sequence), and no read of d in a loop that calls"""
+    def unwrap_(y):
+        while y[0] == 'branch': y = y[3]
+        return y
+    seq_ = [unwrap_(y) for y in eval_sequence(F.f.body, [])]
+    us_ = [k for k, y in enumerate(seq_) if y[0] == 'use' and y[1] is d]
+    cl_ = [k for k, y in enumerate(seq_) if y[0] in ('call', 'rcall')]
+    if not us_: return False
+    if any(us_[0] < c < us_[-1] for c in cl_): return False
+    for y in seq_:
+        if y[0] == 'loop' and any(unwrap_(z)[0] in ('call', 'rcall') for z in y[1]) and \
+                any(unwrap_(z)[0] == 'use' and unwrap_(z)[1] is d for z in y[1]): return False
+    return True
+
 def plan_param_cache(F):
+    if PARAM_IDX_CACHE_OPT and not F.adecl and not getattr(F, 'l2', None) and not getattr(F, 'leaf', None):
+        calls_ = []                                        # a signed int parameter indexing two arrays (-O), or a signed
+        walk(F.f.body, lambda n, dep: calls_.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or fpgen.is_fp_copy(n) or
+             long_helper_node(n) else None)               # char read twice (any set), is cached when no call comes
+        for d in F.f.params:                               # between its reads (random r2_06_17, rstmt rs_3_02_08_0)
+            if getattr(d, 'reg', None) or d.ty.kind != 'int' or not d.ty.signed or getattr(d, 'addr_taken', False): continue
+            if not (F.opt and d.ty.size == 2 and opt_idx_cache_wanted(F, d) or PARAM_IDX_CACHE_CHAR and char_idx_twice(F, d)): continue
+            if not reads_call_free(F, d): continue
+            if not F.opt: continue                         # (without -O: the PARAM_CACHE pass below, functions without calls;
+                                                           #  with calls the oracle reads it again, rstmt rs_3_02_08_0 none)
+            k = REGTEMP_PICK[0].get(d.name, 0); cands = ['BC', 'DE', 'HL'] + (['IX', 'IY'] if d.ty.size == 2 else [])
+            if k >= len(cands): continue
+            d.reg = cands[k]; d.regtemp = True
+            F.param_copies.append(d); F.deferred = getattr(F, 'deferred', []) + [d]
+            F.idx_cache = getattr(F, 'idx_cache', set()) | {d}
+        if F.opt: return
     if not PARAM_CACHE or F.opt or F.adecl or getattr(F, 'l2', None) or getattr(F, 'leaf', None): return
     f = F.f; calls = []
     walk(f.body, lambda n, dep: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or fpgen.is_fp_copy(n) or long_helper_node(n) else None)
@@ -17011,11 +17077,13 @@ def plan_param_cache(F):
     if dv: return                                          # (a division by an element at a variable index is sd3's: stdiv3.c)
     for d in f.params:
         if getattr(d, 'reg', None) or d.ty.kind != 'int' or d.ty.size not in (1, 2) or getattr(d, 'addr_taken', False): continue
-        if not param_cache_wanted(F, d): continue
+        ch_ = PARAM_IDX_CACHE_CHAR and char_idx_twice(F, d)   # (a char index read twice: ld C,(b) / (XWA+C), rule 01)
+        if not (param_cache_wanted(F, d) or ch_): continue
         k = REGTEMP_PICK[0].get(d.name, 0); cands = ['BC', 'DE', 'HL', 'IX', 'IY']
-        if k >= len(cands): continue
+        if k >= len(cands) or (ch_ and k >= 3): continue   # (a byte: BC, DE, HL only)
         d.reg = cands[k]; d.regtemp = True
         F.param_copies.append(d); F.deferred = getattr(F, 'deferred', []) + [d]
+        if ch_: F.idx_cache = getattr(F, 'idx_cache', set()) | {d}
 
 def plan_regtemps(F):
     """without -O a local with an initialiser whose value never lives across a call is a register temporary

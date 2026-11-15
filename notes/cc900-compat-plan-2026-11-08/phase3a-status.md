@@ -3613,6 +3613,17 @@ with no call between, the oracle keeps the base in a register in 86 of 117 cases
 helper call, where it uses XIZ).  Random -O3 -XS 124 -> 125, -O3 -XS -Xr 113 -> 114; rstmt +4 / +3; no function lost.
 Ledger up 4 rows by 9, down 0; library 189/248, pairs 223, semcheck 10 with the same verdicts.
 
+**Batch 330 (2026-11-15): a signed int parameter cached as an index register at -O.** PARAM_IDX_CACHE_OPT (lane_idx,
+research-scratch tabulation/lanes-2026-11-15/lane_idx): under -O (cdecl) a signed int parameter that indexes two or
+more different arrays, in a function with no call, FP op or long helper, is loaded once into a register at its first
+statement and indexes as a signed register (r2_06_17: `lda XWA,_gca / ld BC,(XSP+0x4) / ld A,(XWA+BC) / .. / ld
+WA,BC / sla 0x2,WA`); the model never cached a parameter at -O, which is where its zero-extended index sums came
+from.  The lane's rule 02 (lifting drop_write_only's guard on write-only pointers that read other locals) was held
+back: with it, rstmt rs_4_01_15_0 (`guc = (guc + guca[a]) * guca[a]`, a char index read twice) compiled with wrong
+code at none and -O3 -XS, which the gate's semcheck caught.  rstmt -O3 -XS +1; semcheck 10 -> 9 (random r2_07_14's
+-O3 -XS wrong code is gone; the function is now refused); no function lost.  Ledger up 1 row by 1, down 0; library
+189/248, pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
