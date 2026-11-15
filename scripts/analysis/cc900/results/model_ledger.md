@@ -255,9 +255,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-6-micro-negk, v423/O3XS                              | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/Xr                                | probes/negk.c        | 38 / 38 exact (100.0%)     |
 | run 2026-11-13-6-micro-negk, v423/O3XSXr                            | probes/negk.c        | 38 / 38 exact (100.0%)     |
-| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3669 / 4694 exact (78.2%)  |
-| run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3392 / 4694 exact (72.3%)  |
-| run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3459 / 4694 exact (73.7%)  |
+| run 2026-11-13-7-micro-rstmt, v423/none                             | probes/rstmt*.c      | 3671 / 4694 exact (78.2%)  |
+| run 2026-11-13-7-micro-rstmt, v423/O3XS                             | probes/rstmt*.c      | 3394 / 4694 exact (72.3%)  |
+| run 2026-11-13-7-micro-rstmt, v423/Xr                               | probes/rstmt*.c      | 3461 / 4694 exact (73.7%)  |
 | run 2026-11-13-7-micro-rstmt, v423/O3XSXr                           | probes/rstmt*.c      | 3278 / 4694 exact (69.8%)  |
 | run 2026-11-13-8-micro-chararith, v423/none                         | probes/chararith.c   | 143 / 238 exact (60.1%)    |
 | run 2026-11-13-8-micro-chararith, v423/O3XS                         | probes/chararith.c   | 142 / 238 exact (59.7%)    |

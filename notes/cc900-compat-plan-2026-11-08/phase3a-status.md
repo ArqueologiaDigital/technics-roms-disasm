@@ -3197,6 +3197,15 @@ is written this way; static member and constant element offsets are substituted,
 probe's offsets. stdiv2 -Xr 684 -> 1,020 of 1,020; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50
 unchanged.
 
+**Batch 289 (2026-11-15): an unsigned register index for a store; uses after a nested statement; a register pointer
+shifted in memory.** UIDX_REGPARAM_STORE: an unsigned int index held in a -Xr register parameter is widened through
+WA for a store as well as a load (rstmt .rs_1_09_07_4: `gula[b] = gul` with b in BC -> `ld WA,BC / extz XWA / sll
+0x2,XWA / ld XBC,_gula / add XBC,XWA / ld XWA,(_gul) / ld (XBC),XWA`). UAS_NESTED: `uses_after_stmt` answers for a
+statement one level inside a top-level `if`, with no loop, from the rest of its block and what follows the `if`,
+instead of "used" by default. SHIFT1_MEM_REG: SHIFT1_MEM also shifts in memory through a pointer already in its
+register (`*c >>= 1` with c in XDE -> `srab (XDE)`). rstmt +2 at none, -O3 -XS and -Xr; library 186/248, pairs 223,
+semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

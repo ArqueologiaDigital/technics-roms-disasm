@@ -7084,6 +7084,9 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+SHIFT1_MEM_REG = True                                    # see SHIFT1_MEM
+UAS_NESTED = True                                        # see uses_after_stmt
+UIDX_REGPARAM_STORE = True                               # see the unsigned index path: stores too (-Xr)
 SD2XR_WHOLE = True                                       # see compile_unit and sd2xr.py
 SDXR_OPT = True                                          # see compile_unit: sdxr under -O3 -XS -Xr too
 BASE_BEFORE_INDEX_OPT = True                             # see addr_reg_reuse
@@ -8821,7 +8824,8 @@ def elem_addr(F, lv, kind):
             # ld WA,(i) / extz XWA / ld XBC,_guca / add XBC,XWA / ld A,(XBC)
             uv_ = regvar_of(ui.e) if ui.k == 'load' else None
             regp_ = UIDX_REGPARAM and F.adecl and not F.opt and ui.k == 'load' and uv_ is not None and \
-                uv_.kind == 'param' and uv_.reg in ('BC', 'DE') and kind in ('load', 'cmp')
+                uv_.kind == 'param' and uv_.reg in ('BC', 'DE') and (kind in ('load', 'cmp') or
+                                                                    UIDX_REGPARAM_STORE and kind in ('store', 'storek'))
             if (F.opt or F.adecl) and not regp_ and not (ui.k == 'load' and (uv_ is None or uv_.reg in ('IZ', 'QIZ'))):
                 raise Unsupported('unsigned index')        # (-O / -Xr: a register-parameter index's home lives on;
                                                            # an IZ home is copied out first: r1_01_15 O3XS ld WA,IZ /
@@ -9911,7 +9915,13 @@ def uses_after_stmt(F, d):
     if nx is None: return False
     body = flat(F.f.body)
     try: i = body.index(nx)
-    except ValueError: return True
+    except ValueError:
+        tc = getattr(F, 'top_cur', None)                   # one level inside a top-level if, no loop: the rest of its
+        if UAS_NESTED and not getattr(F, 'loops', None) and tc is not None and tc.k == 'if' and \
+                any(b_ is not None and any(x_ is nx for x_ in flat(b_)) for b_ in (tc.then, tc.els)):   # block and
+            return any(uses_decl(x, d) for x in list(getattr(F, 'cur_rest', None) or []) +       # what follows the if
+                       list(getattr(F, 'top_rest', None) or []))   # (rstmt .rs_1_09_07_4)
+        return True
     return any(uses_decl(x, d) for x in body[i:])
 
 def store_global(F, name, e, size):
@@ -11257,6 +11267,9 @@ def gen_stmt(F, s, last):
                     pl_ = re.match(r'^\tld\t(XBC|XDE|XHL),(\(.+\))$', F.lines[-4]) if len(F.lines) >= 4 and pm_ else None
                     if pl_ and pl_.group(1) == pm_.group(1) and 'WA' not in live_regs(F):
                         F.lines[-4:] = ['\tld\tXWA,%s' % pl_.group(2), '\t%s%s\t(XWA%s)' % (b_.group(1), sfx_, pm_.group(2) or '')]
+                    elif SHIFT1_MEM_REG and pm_ and not pl_:   # the pointer already in its register (a -Xr parameter:
+                        F.lines[-3:] = ['\t%s%s\t%s' % (b_.group(1), sfx_, M_)]   # rstmt .rs_1_09_07_4, *c >>= 1 with c in
+                                                           # XDE -> srab (XDE))
         if KOP_IN_PLACE and not F.opt and s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=' and len(F.lines) >= 3:
             lv_ = strip(s.e.l); rv_ = strip(s.e.r)         # g = K op g, a long global: the constant is loaded and the
             if lv_.k == 'var' and lv_.decl.kind == 'global' and lv_.ty is not None and lv_.ty.size == 4 and rv_.k == 'bin' and \
