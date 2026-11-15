@@ -95,6 +95,12 @@ class Fn:
                     op, args = 'set', '%s,%s' % (hx(b_ % 16), t_[1:] if b_ < 16 else 'Q' + t_[1:])
                 elif op == 'or' and re.match(r'^(WA|BC|DE|HL|IX|IY|IZ|[WABCDEHL])$', t_) and b_ < (16 if len(t_) == 2 else 8):
                     op, args = 'set', '%s,%s' % (hx(b_), t_)
+        if IMM_WIDTH_MASK and args is not None and op in ('add', 'sub', 'and', 'or', 'xor', 'cp', 'adc', 'sbc', 'ld'):
+            m_ = re.match(r'^([WABCDEHL]|WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', args)   # an immediate at the register's
+            if m_:                                         # width (random r3_03_16: (0 + gs.c) ^ (-4 / 4) in A ->
+                w_ = 0xff if len(m_.group(1)) == 1 else 0xffff   # xor A,0xff, not xor A,0xffff)
+                v_ = int(m_.group(2), 16)
+                if v_ > w_: args = '%s,%s' % (m_.group(1), hx(v_ & w_))
         if LDA_SMALL_OPT and op == 'ld' and args is not None and getattr(s, 'opt', None):
             m_ = re.match(r'^(X(?:WA|BC|DE|HL|IX|IY|IZ)),0x([0-9a-f]+)$', args)   # -O: a 32-bit register loaded with
             if m_ and 9 <= int(m_.group(2), 16) <= 0xffff: op = 'lda'     # 9..0xffff is lda (the oracle's -O3 -XS
@@ -7024,6 +7030,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
 def elem0_via_xwa(lines):

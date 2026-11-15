@@ -2980,6 +2980,12 @@ XBC,XWA`), where XWA is dead. An indexing base `(XR+WA)` or a displaced use stay
 listings hold 14,926 `lda` of a bare symbol into another register, 21 through XWA). Under -O it costs rstmt -2, so
 not there. rstmt none and -Xr +2; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 259 (2026-11-15): an immediate at its register's width.** IMM_WIDTH_MASK (`Fn.emit`): an immediate operand
+is written at the destination register's width; a byte register's above 0xff and a word register's above 0xffff are
+masked (random r3_03_16: `gc = (0 + gs.c) ^ (-4 / 4)` -> `xor A,0xff`; the model wrote `xor A,0xffff`, the constant
+formatted at the int's width, which the assembler cannot even encode). rstmt +3 / +2 / +3 / +2, random3 +1 at every
+set; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
