@@ -2790,6 +2790,15 @@ project. Ledger up 1 (rstmt -O3 -XS -Xr +2), down 0; pairs MATCH 223; semcheck 5
 74; library 186 / 248 at -O3 -XS. A positive-gate sweep (research-scratch `gate/possweep.sh`) tried each -O-only and
 -Xr-only rule at the other sets, 264 sites. Its one gain cost micro six functions at -O3 -XS and was not kept.
 
+**Batch 235 (2026-11-15): a store whose value folds from an operation to a constant is a constant store
+(FOLDED_K_STORE).** Random r4_05_18 was two lines off at none: `gps->u = 5762 * 6` -> `ld XWA,(_gps) / ldw
+(XWA+0x8),0x870c`. store_plan ran before the constant-store path and computed the product into BC. An int or char store
+whose value, under its casts, is an operation that folds to a constant now skips store_plan. A bare constant stays
+with store_plan (stord.c st_c_XK, `gca[c] = 7`, lost in a first run that also excluded casts of constants). (The batch
+number 235 was first used by a rejected attempt; see research-scratch `rejected/edit_batch235_l2_dead_init.md`.) Ledger
+up 8 (random4 +1 at every set, rstmt +1 / +1 / +1 / +1), down 0; pairs MATCH 223; semcheck 50. Random 197 / 86 / 152 /
+75; library 186 / 248 at -O3 -XS.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

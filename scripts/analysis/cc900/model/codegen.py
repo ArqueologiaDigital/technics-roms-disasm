@@ -10244,7 +10244,11 @@ def gen_stmt(F, s, last):
             if t != '(XIX)': raise Unsupported('struct destination')
             F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'BC,%s' % hx(size // 2))
             F.emit('ldirw', '(XIX+),(XIY+)'); return
-        if STORE_PLAN and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and \
+        kf_ = FOLDED_K_STORE and size <= 2 and fold(narrow(s.e.r, size)).k == 'const' and \
+            fold(narrow(s.e.r, size)).value is not None and uncast_int(s.e.r).k in ('bin', 'un')   # (a value that folds to a
+                                                           # constant is stored as one: random r4_05_18, gps->u = 5762 * 6
+                                                           # -> ldw (XWA+0x8),0x870c)
+        if STORE_PLAN and not kf_ and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and \
                 not getattr(F, 'cl_active', None) and store_plan(F, lv, s.e.r, size): return
         rc = fold(narrow(s.e.r, size))
         if rc.k == 'const' and size <= 2:            # m_gps_set: ldb (XWA),0x0
@@ -10492,6 +10496,7 @@ SLOT_INIT_KCOMM = True                                    # see slot_init: K op 
 SWEEP_OPT_LIFTS = True                                    # batch 232: LH_ELEM0 under -O (random-scored sweep)
 SWEEP_ALL_LIFTS = True                                    # batch 233: SLOT_INIT_FORMS at every set (random-scored sweep)
 SWEEP_XR_LIFTS = True                                     # batch 232: four rules under -Xr (random-scored sweep)
+FOLDED_K_STORE = True                                     # see gen_stmt's store
 LIVE_SHIFT = True                                         # see gen_body_shift
 _SHIFT_PARTS = {'WA': ('XWA', 'QWA', 'WA', 'QW', 'QA', 'W', 'A'), 'BC': ('XBC', 'QBC', 'BC', 'QB', 'QC', 'B', 'C'),
                 'DE': ('XDE', 'QDE', 'DE', 'QD', 'QE', 'D', 'E')}
