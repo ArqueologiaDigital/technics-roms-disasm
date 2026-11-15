@@ -7129,6 +7129,9 @@ RIGHT_LONG_LEFT_COMPUTED = True                          # see _gen_bin_body's R
 CALL_HELPER_ARG_POP = True                               # see gen_stmt's call statements
 NOT_MEMBER_PTR = True                                    # see gen: !
 ASSIGN_K_VALUE = True                                    # see gen_assign_value
+AND_FF_LD = True                                         # see compile_unit
+INC_LD_LDA = True                                        # see compile_unit
+SD3W_WHOLE = True                                        # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17044,6 +17047,9 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 if alt_ is None and SD2XR_WHOLE and (opt == 'none' or SD2XR_OPT):   # probe stdiv2's shapes under -Xr (sd2xr.py)
                     import sd2xr
                     alt_ = sd2xr.whole(f, opt)
+            if alt_ is None and SD3W_WHOLE and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # probe stdiv3's
+                import sd3w                                # shapes at every set (sd3w.py: 1,200 / 1,200 each)
+                alt_ = sd3w.whole(f, ('O3XS' if opt != 'none' else 'none') + ('Xr' if adecl else ''))
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
@@ -17056,6 +17062,21 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 import re as _rl
                 full = ['\tlda\t' + l[4:] if _rl.match(r'^\tld\tX(WA|BC|DE|HL|IX|IY|IZ),0x([0-9a-f]+)$', l) and
                         9 <= int(l.rsplit('0x', 1)[1], 16) <= 0xffff else l for l in full]
+            if AND_FF_LD:                                  # an AND that keeps the low byte (word) of a register and
+                for k_ in range(len(full)):                # whose flags nothing reads clears the high part with ld
+                    m_ = re.match(r'^\tand\t(?:(WA|BC|DE|HL),0xff|X(WA|BC|DE|HL|IX|IY|IZ),0xffff)$', full[k_])   # (random
+                    nx_ = full[k_ + 1] if k_ + 1 < len(full) else ''   # r4_04_12: 255 & (gi + 16) -> ld W,0x0; the
+                    if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
+                        full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
+                                                           # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if INC_LD_LDA and opt != 'none' and not fa:   # -O: inc K,XR / ld XS,XR with XR dead after is lda XS,XR+K
+                for k_ in range(len(full) - 1):            # (random r1_05_17: int *t = gpi + 1 in XIZ -> lda XIZ,XWA+0x2;
+                    m_ = re.match(r'^\tinc\t(0x[1-8]),(X(?:WA|BC|DE))$', full[k_] or '')   # the oracle's -O3 -XS
+                    m2_ = re.match(r'^\tld\t(X(?:WA|BC|DE|HL|IX|IY|IZ)),(X(?:WA|BC|DE))$', full[k_ + 1] or '')   # listings: lda 640,
+                    if m_ and m2_ and m2_.group(2) == m_.group(2) and m2_.group(1) != m_.group(2) and \
+                            not (k_ and (full[k_ - 1] or '').startswith('\tcpl\tQ')) and reg_dead(full, k_ + 2, m_.group(2)):
+                        full[k_:k_ + 2] = ['\tlda\t%s,%s+%s' % (m2_.group(1), m_.group(2), m_.group(1)), None]   # inc / ld 8:
+                full = [l for l in full if l is not None]  # a negation's cpl / cpl / inc, or XR read after)
             if STORE_HL_DIRECT and not (opt != 'none' and fa):   # ld WA,HL / ld (m),WA -> ld (m),HL where XWA is dead after
                 k_ = 0                                     # (the oracle has the pair only at -O3 -XS -Xr; fpp3.c k1:
                 while k_ < len(full) - 1:                  # cal ._fcmp_d / ld (_gi),HL)

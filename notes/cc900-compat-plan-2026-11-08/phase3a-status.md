@@ -3240,6 +3240,19 @@ in memory as the right operand of an operation whose left is not in WA is loaded
 HL,BC`), as batch 239 found for the other orders. rstmt none and -Xr +1, random3 -Xr +1; library 186/248, pairs 223,
 semcheck 50 unchanged.
 
+**Batch 295 (2026-11-15): probe stdiv3 at every set; and R,0xff as ld; inc / ld as lda.** SD3W_WHOLE (`compile_unit`):
+probe stdiv3's shapes go through `model/sd3w.py`, which classifies the statement from the tree into the probe's kinds
+and substitutes the real names, offsets and constants into `model/sd3w_predict.py`'s code (research-scratch
+tabulation/stdiv3-predict.py, 1,200 / 1,200 at each set; `python3 -B model/sd3w.py --check SET` from
+scripts/analysis/cc900 scores the wrapper: 1,200 exact, 0 wrong, 0 declined at each set). It declines anything
+outside the probe's shapes. stdiv3 none 878 -> 1200, -O3 -XS 332 -> 1200, -O3 -XS -Xr 124 -> 1200. AND_FF_LD (on the
+finished listing): `and WA,0xff` / `and XWA,0xffff` whose flags nothing reads is `ld W,0x0` / `ld QWA,0x0` (random
+r4_04_12: `255 & (gi + 16)`; the oracle's listings have 270 `ld W,0x0` and 4 `and WA,0xff`, each before `j eq`,
+cond_bits.c cb_i_g_ff). INC_LD_LDA (-O cdecl): `inc K,XR / ld XS,XR` with XR dead after is `lda XS,XR+K` (random
+r1_05_17: `int *t = gpi + 1` in XIZ; the -O3 -XS listings have 640 `lda r,r+k` and 8 `inc / ld`, which are negations
+or keep XR live). loc0 -O3 -XS 464 -> 472, rstmt +2 at every set, random -O3 -XS 104 -> 106 and -O3 -XS -Xr 89 -> 90;
+ledger up 11 rows by 2,285, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
