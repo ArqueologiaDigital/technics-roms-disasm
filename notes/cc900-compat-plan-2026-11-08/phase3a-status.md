@@ -3408,6 +3408,12 @@ stord st_c_QS / QX / XS / XX wrong-code verdicts (an older reviewed class) are g
 at none, -O3 -XS, -O3 -XS -Xr.  rstmt and random unchanged.  Ledger up 15 rows by 862, down 0; library 186/248,
 pairs 223.
 
+**Batch 311 (2026-11-15): probes lhidx and lsl at every set.** LHIDXW_WHOLE (`compile_unit`): `model/lhidxw.py` and
+`lslw.py` (research-scratch tabulation/lhidx-ast, written by the lhx subagent from lhx's classifier; renamed globals
+score the same; lhidx writes 272 functions of other runs, all exact, lsl none).  lhidx 140 / 97 / 97 / 97 -> 150, lsl
+51 / 49 / 51 / 49 -> 126 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  rstmt and random unchanged.  Ledger up 8 rows by 473,
+down 0; library 186/248, pairs 223, semcheck 40 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

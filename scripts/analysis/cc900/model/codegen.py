@@ -7158,6 +7158,7 @@ SCC_HL_VIA_WA = True                                     # see compile_unit
 HL_OP_VIA_WA = True                                      # see compile_unit
 STORESW_WHOLE = True                                     # see compile_unit
 OVERRIDE_RAW = True                                      # see compile_unit
+LHIDXW_WHOLE = True                                      # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17169,7 +17170,8 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             for flag_, mod_ in ((CA2W_WHOLE, 'ca2w'), (STCHW_WHOLE, 'stchw'), (EVSTW_WHOLE, 'evstw'), (CAW_WHOLE, 'caw'),
                                  (EVOW_WHOLE, 'evow'), (EVOW_WHOLE, 'evolw'), (EVOW_WHOLE, 'evodw'),
                                  (EVADW_WHOLE, 'evadw'), (CMPOW_WHOLE, 'cmpow'), (CMPOW_WHOLE, 'cmpolw'),
-                                 (STORESW_WHOLE, 'stordw'), (STORESW_WHOLE, 'stretw'), (STORESW_WHOLE, 'stvalw')):   # probes
+                                 (STORESW_WHOLE, 'stordw'), (STORESW_WHOLE, 'stretw'), (STORESW_WHOLE, 'stvalw'),
+                                 (LHIDXW_WHOLE, 'lhidxw'), (LHIDXW_WHOLE, 'lslw')):   # probes
                                                            # chararith2 (ca2w.py, 576 /
                 if alt_ is None and flag_ and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # 576; 192 functions
                     try:                                   # of chararith.c written, all exact) and stchain (stchw.py,
@@ -17183,6 +17185,7 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            #  tabulation/*-ast, every other run's written ones exact)
                                                            # (stord / stret / stval: stordw / stretw / stvalw.py, 432 /
                                                            #  280 / 221)
+                                                           # (lhidx / lsl: lhidxw / lslw.py, 150 / 126)
             alt_full_ = None
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
