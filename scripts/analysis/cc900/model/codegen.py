@@ -818,6 +818,10 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             gen(F, e.e, W_, size); F.emit('neg' if e.op == '-' else 'cpl', FAM[W_][size])   # neg BC / ld IZ,BC
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[W_][size])); return fam
         f_ = gen(F, e.e, fam, size)
+        if NEG_LONG_MOVE and size == 4 and f_ in FAM and f_ != fam and fam in ('WA', 'BC', 'DE', 'HL') and \
+                FAM[f_].get(4) and FAM[f_][4] != FAM[fam][4]:
+            F.emit('ld', '%s,%s' % (FAM[fam][4], FAM[f_][4])); f_ = fam   # a long negated where it is wanted (random
+                                                           # r2_05_13: -(gul >> c) left in XBC -> ld XWA,XBC / cpl WA / ..)
         if f_ in FAM and size in FAM[f_] and f_ != fam and FAM[f_][size] != FAM[fam][size]: fam = f_   # (r3_09_14)
         R = FAM[fam][size]
         if size == 4:                          # neg_l: cpl HL / cpl QHL / inc 1,XHL
@@ -6971,6 +6975,7 @@ def test_reg_reuse(lines):
 
 PTR_TEST_REUSE = True                                     # see ptr_test_reuse
 
+NEG_LONG_MOVE = True                                     # see gen: - / ~ of a long
 MUL2_SHIFT = True                                        # see gen_stmt
 IF_JOIN_RET_DROP = True                                  # see LABEL_MERGE
 CHAR_DIVK = True                                         # see char_narrow's visit2

@@ -2928,6 +2928,12 @@ memory (rstmt rs_1_05_01_1: `*gp *= 2` -> `ld XWA,(_gp) / slab (XWA)`; rs_4_07_1
 rs_1_05_00_3: `guc /= 2` -> `srlb (_guc)`). The oracle's listings hold 123 one-bit shifts of memory. rstmt +4 / +2 /
 +5 / +2, random2 none and -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 252 (2026-11-15): a long is negated where it is wanted.** NEG_LONG_MOVE (`gen`, `-` and `~` of a long):
+when the operand ended in another register, the oracle moves it where the value is wanted first and negates it there
+(random r2_05_13: `b = -(gul >> (c & 15))` with the shift left in XBC -> `ld XWA,XBC / cpl WA / cpl QWA / inc
+0x1,XWA / ld (XSP+0x6),XWA`), not `cpl BC / cpl QBC` in place; the oracle's listings never complement BC
+(`never_forms.py`). rstmt none +1, random2 none +1; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
