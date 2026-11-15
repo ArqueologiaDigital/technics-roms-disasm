@@ -1420,6 +1420,9 @@ DEAD_INIT_OPT = True                                      # see gen_stmt's block
 WHILE_KNOWN_FIRST = True                                  # see while_first_true
 FOR_TESTED_NO_EXIT = True                                 # see gen_loop: no unreferenced exit label after a decided first test
 HALVES_BY_USE = True                                      # see plan_homes (rstmt rs_1_00_09_2, homes2b HL03)
+Q_COUNTER_SUB = True                                      # see compile_unit (rstmt rs_1_00_09_2)
+DOUBLE_ADD = True                                         # see compile_unit (library _atan)
+MULS_NO_EXTS = True                                       # see compile_unit (library _atan)
 OPA_NO_HOMES = True                                       # see plan_homes: a double op= in XIZ leaves no register home
 OPA_NO_HOMES_ELEM = False
 SLOT_LOCAL_SIGNED_IDX = True                              # see gen_load_mem: guca[t], t a signed local in a slot
@@ -7291,6 +7294,8 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+SP_MUL_THROUGH = True                                    # see sp_value_kind
+DEAD_COND_INIT_LOAD = True                               # see drop_write_only, UNUSED_LOCAL_INIT
 LDA_SAME_BASE_USE = True                                 # see lda_run_base
 REGTEMP_LAST_READ = True                                 # see Fn.emit's live guard
 IFELSE_TAIL_JOIN = True                                  # see gen_stmt's if .. else and compile_function_once
@@ -10739,6 +10744,20 @@ def gen_stmt(F, s, last):
                                                            # temporaries too (rstmt rs_4_06_15_1: its bit-tested ?: resets
                                                            # the region, D alone)
                 fpgen.eval_into(F, c.init, ('lv', N_var(c.var))); i += 1; continue
+            if LH_DEAD_INIT_FOLD and not F.opt and c.k == 'decl' and c.init is not None and \
+                    (getattr(c.var, 'lh_ctr', False) and not getattr(c.var, 'lh_dead_idx', False) or
+                     getattr(c.var, 'lh_member_ctr', False)) and getattr(c.var, 'slot', None) is not None and \
+                    c.var.ty.kind == 'int' and c.var.ty.size == 2 and not nodes_in(c.init, 'call') and \
+                    not has_helper_call(c.init) and not fpgen.is_fp_op(c.init) and lh_dead_init_k(body, i, c.var) is not None:
+                kv_, nx_ = lh_dead_init_k(body, i, c.var), body[i + 1]
+                fam_ = gen(F, c.init, 'WA', 2)             # (rstmt rs_3_08_10_1: int i = ji; i = 0; -> ld WA,(_ji) /
+                if fam_ != 'WA': raise Unsupported('dead initialiser not in WA')   # ld WA,0x0 / ld (XSP+0x4),WA)
+                from frontend import N
+                F.emit('ld', 'WA,%s' % hx(kv_ & 0xffff))
+                F.emit('ld', '%s,WA' % mem_operand(F, N('load', e=N('var', decl=c.var, ty=c.var.ty), ty=c.var.ty)))
+                if nx_.k == 'for': nx_.init = None; i += 1   # (the for writes no init: rs_4_02_14_1)
+                else: i += 2
+                continue
             if LH_CTR_INIT and c.k == 'decl' and c.init is not None and getattr(c.var, 'lh_ctr', False) and \
                     not getattr(c.var, 'lh_dead_idx', False) and getattr(c.var, 'slot', None) is not None and \
                     c.var.ty.size == 2 and not fpgen.is_fp_op(c.init) and not lh_ctr_overwritten(body, i, c.var):
@@ -10753,7 +10772,9 @@ def gen_stmt(F, s, last):
                 if UNUSED_LOCAL_INIT and not u and not any(uses_decl(x, c.var) for x in rest) and c.var.ty.size in (1, 2, 4) and \
                         getattr(c.var, 'reg', None) is None and not nodes_in(c.init, 'call') and not has_helper_call(c.init) and \
                         not fpgen.is_fp_op(c.init) and not fpgen.is_fp(c.var.ty):
-                    if not (F.opt and UNUSED_LOCAL_DROP_OPT and side_effect_free(c.init)): gen(F, c.init, 'WA', c.var.ty.size)
+                    if not (F.opt and UNUSED_LOCAL_DROP_OPT and side_effect_free(c.init)) or \
+                            (DEAD_COND_INIT_LOAD and F.opt and getattr(c.var, 'dead_init_load', False) and
+                             dead_cond_init_ok(c.init)): gen(F, c.init, 'WA', c.var.ty.size)
                     F.dead.add(c.var); i += 1; continue   # (cmpordl2.c: an unused
                 helper_res = getattr(c.var, 'no_fold', False)                                #  int t = gi; -> ld WA,(_gi))
                 upto = rest[:next((k for k, x in enumerate(rest) if uses_decl(x, c.var)), len(rest)) + 1]
@@ -12076,7 +12097,15 @@ def plan_homes(F):
                     return e_ is not None and strip(e_).k == 'bin' and strip(e_).op == '=' and \
                         strip(strip(e_).l).k == 'var' and strip(strip(e_).l).decl is d
             return False
-        if all(d in ctr_ and not dead_init_(d) for d in locs): locs = []   # (rstmt rs_4_06_13_4: the counter's slot)
+        def kdead_(d):                                     # (LH_DEAD_INIT_FOLD: overwritten by a constant)
+            if not LH_DEAD_INIT_FOLD: return False
+            for k_, c_ in enumerate(top_[:-1]):
+                if c_.k == 'decl' and c_.var is d and c_.init is not None:
+                    return lh_dead_init_k(top_, k_, d) is not None
+            return False
+        if all(d in ctr_ and (not dead_init_(d) or kdead_(d)) for d in locs):
+            for d in locs: d.lh_member_ctr = True
+            locs = []                                      # (rstmt rs_4_06_13_4: the counter's slot)
     vals = pvals + locs
     if OPA_NO_HOMES and fpgen.uses_fp(F.f) and (fpgen.has_opa_hoist(F) or OPA_NO_HOMES_ELEM and fpgen.has_elem_hoist(F)):
         F.opa_lost = [d for d in locs]; vals = []           # (random r3_01_06: gda[1] *= -gd keeps the target in XIZ;
@@ -12172,15 +12201,32 @@ def plan_homes(F):
         if len(l16_) == 2 and not any(d.kind == 'param' or d.ty.size != 2 for d in winners_sorted):   # rs_1_00_09_2,
             try:                                           # homes2b HL03 / HL07, random r1_00_09, library _atan)
                 _, V_, _ = homes2.values(F.f, True)
+                defs_ = {}
+                def coll_(n, dep):
+                    if n.k == 'bin' and n.op == '=' and strip(n.l).k == 'var': defs_.setdefault(strip(n.l).decl, []).append(n.r)
+                    if n.k == 'decl' and getattr(n, 'init', None) is not None: defs_.setdefault(n.var, []).append(n.init)
+                walk(F.f.body, coll_)
+                def allk_(d):                              # every assignment a constant (sign = -1 folds: _atan)
+                    rs_ = defs_.get(d, [])
+                    return bool(rs_) and all(fold(r_).k == 'const' for r_ in rs_)
                 def cls_(d):
                     v = V_.get(d)
                     if v is None: return None
                     if 'c' in v.dk: return 3
                     if 'U' in v.rk: return 1
-                    if 'r' in v.dk: return 2
+                    if 'r' in v.dk and not allk_(d): return 2
                     return 0
                 c0_, c1_ = cls_(l16_[0]), cls_(l16_[1])
-                if c0_ is not None and c1_ is not None and c1_ < c0_:
+                def init_(d):                              # the global a local's declaration copies, if any
+                    for st_ in F.f.body.body if F.f.body.k == 'block' else []:
+                        for x_ in (st_.body if st_.k == 'block' else [st_]):
+                            if x_.k == 'decl' and x_.var is d and x_.init is not None:
+                                i_ = strip(x_.init)
+                                if i_.k == 'load' and strip(i_.e).k == 'var': return strip(i_.e).decl
+                    return None
+                konst_ = any(len(defs_.get(d, [])) == 1 and allk_(d) and cls_(d) == 0 for d in l16_)   # one constant: propagated
+                same_ = init_(l16_[0]) is not None and init_(l16_[0]) is init_(l16_[1])
+                if c0_ is not None and c1_ is not None and c1_ < c0_ and not konst_ and not same_:
                     winners_sorted = [l16_[1], l16_[0]]
             except Exception:
                 pass
@@ -15178,6 +15224,16 @@ def fold_fp_consts(f):
 LH_CTR_SLOT = True                                        # see lh_counter_slots
 LH_CTR_SLOT_XR = True                                     # see lh_counter_slots: -Xr too
 LH_CTR_INIT = True                                        # see gen_block: an lh_ctr counter's initialiser
+LH_DEAD_INIT_FOLD = True                                  # see gen_block: a slot counter's dead initialiser
+
+def lh_dead_init_k(body, i, d):
+    """the constant that overwrites local d's initialiser (declared at body[i]) in the next statement or the init of
+    the for loop that follows, or None (LH_DEAD_INIT_FOLD)"""
+    if not lh_ctr_overwritten(body, i, d): return None
+    nx = body[i + 1]
+    e = strip(nx.e if nx.k == 'expr' else (nx.init.e if getattr(nx.init, 'k', None) == 'expr' else nx.init))
+    k = fold(e.r)
+    return k.value if k.k == 'const' and k.value is not None else None
 
 def lh_ctr_overwritten(body, i, d):
     """is local d, declared with an initialiser at body[i], overwritten by the next statement (`i = 0;`, or the
@@ -15644,6 +15700,9 @@ def sp_value_kind(F, rv, size):
                                                or strip(y.e).k == 'deref' and sp_plain_ptr(F, strip(y.e).e) is not None)
         if x.op in ('+', '-', '&', '|', '^') and size in (2, 4) and (through(lk) and simple(rk) or simple(lk) and through(rk)):
             return 'BP'
+        if SP_MUL_THROUGH and x.op == '*' and size == 2 and x.ty is not None and x.ty.size == 2 and through(lk) and \
+                rk.k == 'const' and rk.value is not None:  # (rstmt rs_3_00_02_3: *gpi * 3, muls XBC,0x3)
+            return 'M'
         if not (simple(lk) and simple(rk)): return None
         if x.op in ('<<', '>>'): return 'S' if rk.k != 'const' else 'B'
         if x.op in ('+', '-', '&', '|', '^'): return 'B'
@@ -15782,6 +15841,12 @@ def store_plan(F, lv, rv, size):
         if vk == 'S' and fam in FAM and size in FAM[fam]: V = fam   # (the shift's own register choice)
         elif byte and fam in FAM: V = fam
         else: raise Unsupported('store_plan: the value landed in %s, not %s [%s %s]' % (fam, V, L, vk))
+    if SP_MUL_THROUGH and vk == 'M' and V in ('BC', 'DE') and clobbers(F.lines[n1:], t) and len(F.lines) - n1 >= 3:
+        a_ = re.match(r'^\tld\tXWA,(\(.*\))$', F.lines[n1]); b_ = re.match(r'^\tld\t%s,\(XWA(\+0x[0-9a-f]+)?\)$' % V, F.lines[n1 + 1])
+        if a_ and b_ and not any(re.search(r'\b(X?WA|[AW]|QWA)\b', l) for l in F.lines[n1 + 2:]):
+            F.lines[n1] = '\tld\tX%s,%s' % (V, a_.group(1))        # the pointer in the value's own register
+            F.lines[n1 + 1] = '\tld\t%s,(X%s%s)' % (V, V, b_.group(1) or '')   # (rs_3_00_02_3: ld XBC,(_gpi) /
+                                                                           #  ld BC,(XBC) / muls XBC,0x3)
     if clobbers(F.lines[n1:], t): raise Unsupported('store_plan: the value overwrote the address [%s %s]' % (L, vk))
     F.emit('ld', '%s,%s' % (t, FAM[V][size])); return True
 
@@ -17095,6 +17160,12 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
 
 DROP_WRITE_ONLY = True                                    # see drop_write_only
 
+def dead_cond_init_ok(x):
+    """DEAD_COND_INIT_LOAD: an initialiser that is a plain load of a global scalar"""
+    x = strip(x) if x is not None else None
+    while x is not None and x.k == 'cast': x = strip(x.e)
+    return x is not None and x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl.kind == 'global'
+
 def drop_write_only(f):
     """-O: an int local or parameter whose only uses are its initialiser and statements outside any loop that only
     write it (++t, t--, t op= x, t = x, x without side effects) is not computed at all (random r1_00_10 -O3 -XS:
@@ -17140,8 +17211,18 @@ def drop_write_only(f):
                      n.decl is not d and n.decl.kind in ('local', 'param') else None) if (x_.e if x_.k == 'expr' else x_.init) is not None else None
             if others_: continue                           # read twice that the model then extends as a memory index,
                                                            # zero for the oracle's signed register index: wrong code)
+        keep_ = set()
+        if DEAD_COND_INIT_LOAD:                            # a ?: arm reading a local initialised from a global: the
+            for _, c in hits:                              # local's load stays (rstmt rs_4_06_08_4: ld A,(_juc) / ret)
+                for cn_ in nodes_in(c.e, 'cond'):
+                    for arm_ in (cn_.a, cn_.b):
+                        for v_ in nodes_in(arm_, 'var'):
+                            if v_.decl.kind == 'local' and not getattr(v_.decl, 'addr_taken', False): keep_.add(v_.decl)
         for b, c in hits: b.body.remove(c)
-        if decl_c is not None: decl_c.init = None
+        if decl_c is not None and d in keep_ and dead_cond_init_ok(decl_c.init): d.dead_init_load = True
+        elif decl_c is not None: decl_c.init = None
+        for v_ in keep_:
+            if v_ is not d: v_.dead_init_load = True
 
 def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_remap):
     if personality not in PERSONALITIES: raise ValueError('unknown personality %s' % personality)
@@ -17868,6 +17949,25 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            #  != 0 tests the assignment's value copied to XWA)
                     if ok_: full[k_:k_ + 2] = ['\tor\t%s,%s' % (m_.group(2), m_.group(2)), None]
                 full = [l for l in full if l is not None]
+            if Q_COUNTER_SUB:                              # dec 0x1,Qrr / ld WA,Qrr / cp WA,0x0 / j cc -> sub Qrr,0x1 /
+                for k_ in range(len(full) - 3):            # j cc (rstmt rs_1_00_09_2: the counter in QIZ)
+                    m_ = re.match(r'^\tdec\t0x1,(Q(?:IZ|BC|DE|HL|IX|IY))$', full[k_] or '')
+                    if not m_: continue
+                    q_ = m_.group(1)
+                    if full[k_ + 1] == '\tld\tWA,%s' % q_ and full[k_ + 2] == '\tcp\tWA,0x0' and \
+                            re.match(r'^\tj\t(gt|ne|ge|lt|le|eq),', full[k_ + 3] or '') and reg_dead(full, k_ + 4, 'XWA') and \
+                            reg_dead(full, int(full.index(full[k_ + 3].split(',')[1] + ':')) + 1, 'XWA') \
+                            if full[k_ + 3].split(',')[1] + ':' in full else False:
+                        full[k_:k_ + 3] = ['\tsub\t%s,0x1' % q_, None, None]
+                full = [l for l in full if l is not None]
+            if DOUBLE_ADD:                                 # sla 0x1,R -> add R,R unless R was just loaded from memory
+                for k_ in range(1, len(full)):             # (the oracle: sla 0x1,R only after ld R,(mem), 46 times;
+                    m_ = re.match(r'^\tsla\t0x1,(WA|BC|DE|HL)$', full[k_] or '')   # add R,R after a register or
+                    if m_ and not (full[k_ - 1] or '').startswith('\tld\t%s,(' % m_.group(1)):   # anything else)
+                        full[k_] = '\tadd\t%s,%s' % (m_.group(1), m_.group(1))
+            if MULS_NO_EXTS:                               # muls XWA,R / exts XWA: the product is already 32 bits (the
+                full = [l for k_, l in enumerate(full) if not (l == '\texts\tXWA' and k_ and   # oracle never extends it)
+                                                              re.match(r'^\tmuls\tXWA,', full[k_ - 1] or ''))]
             if CP_Q_DIRECT:                                # ld R,Qrr / cp R,imm with R dead after is cp Qrr,imm (random
                 for k_ in range(len(full) - 1):            # r1_00_09: unsigned int t in QIZ, t != 0 -> cp QIZ,0x0; the
                     m_ = re.match(r'^\tld\t(WA|BC|DE),(Q(?:WA|BC|DE|HL|IX|IY|IZ))$', full[k_] or '')   # oracle's listings

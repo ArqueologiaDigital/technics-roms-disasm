@@ -298,6 +298,9 @@ def param_mem(F, d):
 SIGNED_IDX_NO_COPY_XR = True                             # see element: under -Xr too
 SIGNED_IDX_NO_COPY = True                                # see element
 
+CHIDX_RMW_XDE = True                                     # see element: rule 04
+
+
 def element(F, lv, kind, fam='WA'):
     if not CHIDX: return None
     lv = strip(lv)
@@ -356,8 +359,12 @@ def element(F, lv, kind, fam='WA'):
                     live = {BYTE_FAM[b] for b in busy} | set(cg.live_regs(F))
                     home = next((t for t in ('E', 'C', 'L') if t != src[1] and BYTE_FAM[t] not in live), None)
                     if home is None: return None
-                else: home = 'C'
-                idx_byte(F, src, esz, home, busy); F.emit('lda', 'XHL,%s' % gsym); return '(XHL+%s)' % home
+                    X_ = 'XHL'
+                else:
+                    home = 'C'
+                    X_ = 'XDE' if CHIDX_RMW_XDE and 'DE' not in cg.live_regs(F) and 'E' not in busy and \
+                        src[1] not in ('D', 'E') else 'XHL'   # (rule 04: rstmt rs_2_06_13_1 gia[a] <<= 4 -> lda XDE,_gia)
+                idx_byte(F, src, esz, home, busy); F.emit('lda', '%s,%s' % (X_, gsym)); return '(%s+%s)' % (X_, home)
             if kind == 'store' or (kind == 'storek' and esz == 4):   # vc2 / sc4: the index to C, the base to XDE
                 idx_byte(F, src, esz, 'C', busy); F.emit('lda', 'XDE,%s' % gsym); return '(XDE+C)'
             r = idx_byte(F, src, esz, None if xr else 'A', busy)

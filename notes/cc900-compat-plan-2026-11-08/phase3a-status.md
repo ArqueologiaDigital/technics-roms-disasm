@@ -3552,6 +3552,17 @@ elements: the shared base in XWA, the values in BC).  Random -O3 -XS 114 -> 115,
 lanes semchecked every function their rules newly compile.  Ledger up 7 rows by 42, down 0; library 189/248, pairs
 223, semcheck 17 with the same verdicts.
 
+**Batch 325 (2026-11-15): nine more lane rules.** lane_lh: LH_DEAD_INIT_FOLD (a slot-kept loop counter whose
+initialiser the next statement overwrites compiles, the dead load kept as the oracle does).  lane_st: CHIDX_RMW_XDE
+(chidx.py, edit_batch325_chidx.py: a word element at a char index read and written in one statement takes its base
+in XDE at the cdecl sets).  lane_o3: DEAD_COND_INIT_LOAD (-O: a dead assignment's ?: arm that reads a local
+initialised from a global keeps the global's load; 4 of 4 rstmt cases with a ?:, 0 of 28 without), SP_MUL_THROUGH
+(store_plan plans `*p * K` / `p->m * K`).  lane_locals: guards on HALVES_BY_USE, Q_COUNTER_SUB (`dec 0x1,Qrr / ld
+WA,Qrr / cp WA,0x0` -> `sub Qrr,0x1`), DOUBLE_ADD (`sla 0x1,R` -> `add R,R` unless R was just loaded from memory: all
+46 of the oracle's `sla 0x1,R` follow such a load, against 2,848 `add R,R`), MULS_NO_EXTS.  Random none 217 -> 218;
+rstmt +6 / +9 / +4 / +6 at none / -O3 -XS / -Xr / -O3 -XS -Xr; no function lost at any set; library 189 (`_atan`
+115 -> 83 lines off).  Ledger up 5 rows by 26, down 0; pairs 223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
