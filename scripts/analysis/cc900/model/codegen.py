@@ -8955,6 +8955,7 @@ RET_CC_KEEPS = True                                       # see knowledge_pass
 TERN_ARM_LAST = True                                      # see compute_last_uses
 TERN_NO_MERGE = True                                      # see cross_jump
 TERN_ARM_WA = True                                        # see gen's plain ?: path
+LONG_RMW_XIZ_ANY = True                                   # see plan_long_rmw_xiz (rule 08, random r1_02_15)
 LONG_RMW_XIZ = True                                       # see gen_opassign
 KCONST_MULTI = True                                       # see gen_counted
 PTR_KLOOP = True                                          # see ptr_kloop
@@ -11168,7 +11169,9 @@ def gen_opassign(F, e):
                 F.emit('ld', '%s,XWA' % t); return t
         if size == 4:
             lvx = strip(e.l); held = False
-            if LONG_RMW_XIZ and lvx.k in ('index', 'deref') and not F.xiz_vars and len(F.lines) == 1:
+            if LONG_RMW_XIZ and lvx.k in ('index', 'deref') and getattr(F, 'long_rmw_xiz', False):
+                held = True                                # (planned: plan_long_rmw_xiz pushed XIZ at entry, rule 08)
+            elif LONG_RMW_XIZ and lvx.k in ('index', 'deref') and not F.xiz_vars and len(F.lines) == 1:
                 F.lines.insert(1, '\tpush\tXIZ'); F.push += 4; F.pushes.append('XIZ'); held = True
                 F.force_base = 'XIZ'                       # arr_index.c ai_l_g_div (-O3 -XS -Xr): the element's
             n_lv_ = len(F.lines)
@@ -17558,6 +17561,26 @@ def sp_address(F, lk, size, P, I, B, vk):
         F.emit('ld', '%s,XWA' % P); F.emit('add', '%s,%s' % (P, pm)); return '(%s)' % P
     return None
 
+def long_rmw_helper(n):
+    """LONG_RMW_XIZ_ANY: a 32-bit int element op= that calls a C9H_ helper (* / %, not a cheap constant)"""
+    if getattr(n, 'k', None) != 'opassign' or n.op not in ('*', '/', '%'): return False
+    lv = strip(n.l)
+    if lv.k not in ('index', 'deref') or lv.ty is None or lv.ty.size != 4 or lv.ty.kind != 'int': return False
+    if lv.k == 'index' and fold(lv.idx).k != 'const': return False   # (a variable index has its own exact path:
+                                                           #  micro arr_index.c ai_l_g_div, gla[i] /= 10)
+    r = fold(n.r)
+    if n.op == '*': return not (r.k == 'const' and r.value is not None and r.value > 0 and bin(r.value).count('1') <= 3)
+    return not (not lv.ty.signed and r.k == 'const' and r.value and r.value & (r.value - 1) == 0)
+
+def plan_long_rmw_xiz(F):
+    """LONG_RMW_XIZ_ANY (rule 08): a statement long_rmw_helper changes keeps its element's address in XIZ; the
+    prologue saves XIZ for it when nothing else holds XIZ (random r1_02_15: push XIZ / .. / lda XIZ,_gla + 0x8)"""
+    if not LONG_RMW_XIZ_ANY or F.xiz_vars or getattr(F, 'sd4', None) or getattr(F, 'store_xiz', False): return
+    hits_ = []
+    walk(F.f.body, lambda n, d: hits_.append(n) if n.k == 'expr' and long_rmw_helper(strip(n.e)) else None)
+    if not hits_: return
+    F.long_rmw_xiz = True; F.xiz_vars.append('rmw'); F.save_reg = 'XIZ'; F.emit('push', 'XIZ'); F.push = 4
+
 def plan_store_xiz(F):
     """before the frame: a long helper stored through a pointer keeps the address in XIZ across the call
     (st_l_DV); when nothing else uses XIZ the prologue saves it for those stores"""
@@ -18645,7 +18668,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     F.loops = []; F.param_copies = []; F.pushes = []
     if adecl and BINLOC_XR: xr_shift_reloc(F)
     F.leaf_planned = plan_leaf(F)
-    if not F.leaf_planned: regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_param_cache(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_lh_call(F)
+    if not F.leaf_planned: regtemp_premark(F); plan_registers(F); plan_homes(F); plan_regtemps(F); plan_param_cache(F); plan_sd4(F); plan_store_x(F); plan_store_xiz(F); plan_long_rmw_xiz(F); plan_lh_call(F)
     plan_frame(F)
     for d in getattr(F, 'l2', {}).get('entry', []) if getattr(F, 'l2', None) else []:
         F.emit('ld', '%s,(XSP+%s)' % (FAM[d.reg][d.ty.size], hx(d.off + F.push)))   # (after the frame: offsets)

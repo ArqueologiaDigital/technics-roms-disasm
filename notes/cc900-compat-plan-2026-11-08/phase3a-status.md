@@ -3675,6 +3675,17 @@ long helper is homed in IZ as across a call; without -O the model already did th
 -XS -Xr +7; random unchanged; no function lost; newly compiled functions semcheck equal.  Ledger up 3 rows by 17, down
 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
 
+**Batch 336 (2026-11-15): a long element changed by a long helper keeps its address in XIZ.** LONG_RMW_XIZ_ANY (the
+allocator lane's rule 08): `gla[2] %= 3L`, `gpl[2] /= 7L` and the like keep the element's address in XIZ across the
+helper, with `push XIZ` at entry, planned before the frame like plan_store_xiz; the model did this only when the
+statement came first in the function.  The lane's version also took a variable index and lost micro arr_index.c /
+arr_index_sz.c `ai_l_g_div` and `ai_l_p_div` (`gla[i] /= 10`, which have their own exact path) at every set -- the
+lane's loss check did not cover the micro corpus; the scratch ledger caught it, and the rule is narrowed here to
+constant indices and dereferences.  Random +1 at every set (r1_03_09: 221 / 131 / 181 / 121); no function lost.  The
+allocator lane's survey: forcing the best across-call home choice makes only 1 random function per -O set exact, the
+other differences being FP frames (about 50 at -O3 -XS), XIZ for a helper's element address (about 20) and true home
+competition (about 12).  Ledger up 4 rows by 4, down 0; library 190/248, pairs 223, semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
