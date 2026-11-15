@@ -384,7 +384,7 @@ def classify(F, lv, rv):
 
 
 def stmt(F, lv, rv):
-    if not SD3 or F.opt or F.adecl: return False
+    if not SD3 or F.opt: return False
     sp = classify(F, lv, rv)
     if sp is None: return False
     lines = plan_char(sp) if sp['t'] == 'c' else plan_int(sp)

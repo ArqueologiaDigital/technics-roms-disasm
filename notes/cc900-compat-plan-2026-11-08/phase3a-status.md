@@ -3092,6 +3092,14 @@ CHAR_CHAIN_VIA_A (a chain of two byte operations, widened, is built in A and mov
 -O3 -XS (`srl n,L / extz HL` 43, `sra n,L / exts HL` 42). chararith +13 / +13, chararith2 +70 / +48 at the -O sets;
 rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 275 (2026-11-15): sd3.py runs under -Xr.** The module for a division or remainder by an element at a variable
+index (`sd3.py`, built from probe stdiv3's none predictors) now runs under -Xr as well; it is still off under -O.
+Enabled as it is: probe stdiv3 -Xr 92 -> 418 of 1,200, stdiv -Xr +8, rstmt -Xr +5. Under -O it would give stdiv3
+-O3 -XS 230 -> 492 and -O3 -XS -Xr 92 -> 218, but it lost stdiv2 -24, stv -8 and evorder_ad -2 at -O3 -XS on the
+scratch ledger, so -O stays off. The rows still off at -Xr are the register parameter's own forms (.sd3_i_d_u_GGX:
+`ld WA,DE / extz XWA / add XWA,XWA / ld XBC,_kia / add XBC,XWA / ld WA,(_hi) / exts XWA / divs XWA,(XBC)`). Found
+from `never_pairs.py` at -Xr. Library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
