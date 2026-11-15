@@ -199,8 +199,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-4-micro-stval, v423/O3XSXr                           | probes/stval.c       | 129 / 221 exact (58.4%)    |
 | run 2026-11-12-5-micro-stdiv, v423/none                             | probes/stdiv.c       | 750 / 750 exact (100.0%)   |
 | run 2026-11-12-5-micro-stdiv, v423/O3XS                             | probes/stdiv.c       | 698 / 750 exact (93.1%)    |
-| run 2026-11-12-5-micro-stdiv, v423/Xr                               | probes/stdiv.c       | 238 / 750 exact (31.7%)    |
-| run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 222 / 750 exact (29.6%)    |
+| run 2026-11-12-5-micro-stdiv, v423/Xr                               | probes/stdiv.c       | 286 / 750 exact (38.1%)    |
+| run 2026-11-12-5-micro-stdiv, v423/O3XSXr                           | probes/stdiv.c       | 266 / 750 exact (35.5%)    |
 | run 2026-11-12-6-micro-lhidx, v423/none                             | probes/lhidx.c       | 128 / 150 exact (85.3%)    |
 | run 2026-11-12-6-micro-lhidx, v423/O3XS                             | probes/lhidx.c       | 68 / 150 exact (45.3%)     |
 | run 2026-11-12-6-micro-lhidx, v423/Xr                               | probes/lhidx.c       | 74 / 150 exact (49.3%)     |
@@ -215,8 +215,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-12-8-micro-stvx, v423/O3XSXr                            | probes/stvx.c        | 63 / 135 exact (46.7%)     |
 | run 2026-11-12-9-micro-stvxc, v423/none                             | probes/stvxc.c       | 255 / 294 exact (86.7%)    |
 | run 2026-11-12-9-micro-stvxc, v423/O3XS                             | probes/stvxc.c       | 254 / 294 exact (86.4%)    |
-| run 2026-11-12-9-micro-stvxc, v423/Xr                               | probes/stvxc.c       | 149 / 294 exact (50.7%)    |
-| run 2026-11-12-9-micro-stvxc, v423/O3XSXr                           | probes/stvxc.c       | 151 / 294 exact (51.4%)    |
+| run 2026-11-12-9-micro-stvxc, v423/Xr                               | probes/stvxc.c       | 155 / 294 exact (52.7%)    |
+| run 2026-11-12-9-micro-stvxc, v423/O3XSXr                           | probes/stvxc.c       | 157 / 294 exact (53.4%)    |
 | run 2026-11-12-10-micro-fpopa, v423/none                            | probes/fpopa.c       | 108 / 112 exact (96.4%)    |
 | run 2026-11-12-10-micro-fpopa, v423/O3XS                            | probes/fpopa.c       | 84 / 112 exact (75.0%)     |
 | run 2026-11-12-10-micro-fpopa, v423/Xr                              | probes/fpopa.c       | 108 / 112 exact (96.4%)    |

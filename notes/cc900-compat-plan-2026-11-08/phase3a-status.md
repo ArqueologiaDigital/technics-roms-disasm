@@ -3120,6 +3120,12 @@ lifting the plain `F.adecl or F.opt: return` guards one at a time, which the ear
 not cover; the other such guards changed nothing measured. lhx -Xr 346 -> 478 of 1,184, stdiv -Xr +8, evorder_lh -Xr
 +5; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 279 (2026-11-15): three more paths run under -Xr.** XR_GUARDS_LIFT: two long helper store paths (guarded by
+`F.adecl or (F.opt and not LH_OPT_CONSTS)`) and `stvx_char_plan` used to refuse -Xr outright and now run there.
+Measured one at a time on the scratch ledger: stdiv -Xr +8 and -O3 -XS -Xr +4, stdiv +40 / +40, stvxc +6 / +6, with no
+losses; a fourth such guard changed nothing and is left as it is. Together stdiv -Xr 238 -> 286 and -O3 -XS -Xr 222 ->
+266, stvxc +6 / +6; rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

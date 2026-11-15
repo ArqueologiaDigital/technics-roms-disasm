@@ -2752,7 +2752,7 @@ def lh_store_post(F, lv, rv):
     value as for a global store, then the address after the call -- a pointer or member in XWA, an element's index in
     WA scaled with sla and its base in XBC, a pointer element built in XWA (sd_l_d_QGP: ... / cal C9H_divls /
     ld WA,(c) / exts XWA / sll 0x2,XWA / add XWA,(_glp) / ld (XWA),XHL).  True when it emitted the statement."""
-    if F.adecl or (F.opt and not LH_OPT_CONSTS): return False
+    if (F.adecl and not XR_GUARDS_LIFT) or (F.opt and not LH_OPT_CONSTS): return False
     ks = lh_post_kinds(F, lv, rv)
     if ks is None: return False
     if any(r_ in ('WA', 'BC', 'DE', 'HL') for r_ in live_regs_read(F)): return False
@@ -3446,7 +3446,7 @@ def store_div_char(F, lv, rv):
     ld DE,(c) / extz XDE / add XDE,XWA / ld (XDE),C), except beside a constant divisor, where the address comes first
     in XBC (XDE beside an element dividend; sd_c_d_PGK: ld XBC,(_gcp) / ld A,(_vc) / ... / ld (XBC),A).  True when it
     emitted the statement."""
-    if F.adecl or (F.opt and not LH_OPT_CONSTS): return False
+    if (F.adecl and not XR_GUARDS_LIFT) or (F.opt and not LH_OPT_CONSTS): return False
     x = strip(rv)
     while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
     if x.k != 'bin' or x.op not in ('/', '%') or x.ty is None or x.ty.size != 2 or not x.ty.signed: return False
@@ -7067,6 +7067,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+XR_GUARDS_LIFT = True                                    # see the long helper store / save paths and stvx_char_plan: -Xr too
 LX5_XR = True                                            # see lx5_parts: under -Xr too
 SD4_XR = True                                            # see sd4_stmt / plan_sd4: under -Xr too
 CHAR_CHAIN_VIA_A_OPT = True                              # see gen: CHAR_CHAIN_VIA_A under -O too
@@ -15354,7 +15355,7 @@ def stvx_char_plan(F, lk, rv):
     plain value and in XDE before an element value (i_c_PX: ld XDE,(_gp) / lda XWA,_vca / ld BC,(b) / extz XBC /
     add XBC,XWA / ld A,(XBC) / or A,0x5 / ld (XDE),A).  Only *p, p->m, gca[c] and gp[c] stores (the static ones are the
     older paths' already); returns False elsewhere."""
-    if F.adecl or not STVX_CHAR: return False
+    if (F.adecl and not XR_GUARDS_LIFT) or not STVX_CHAR: return False
     L = lk[0]
     if L not in ('P', 'D', 'X', 'Q'): return False
     if L in ('X', 'Q') and not (lk[2][1] and lk[2][0].startswith('(XSP')): return False
