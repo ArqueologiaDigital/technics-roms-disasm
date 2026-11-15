@@ -3414,6 +3414,17 @@ score the same; lhidx writes 272 functions of other runs, all exact, lsl none). 
 51 / 49 / 51 / 49 -> 126 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  rstmt and random unchanged.  Ledger up 8 rows by 473,
 down 0; library 186/248, pairs 223, semcheck 40 with the same verdicts.
 
+**Batch 312 (2026-11-15): probes loc0, pc, stvx and stvxc at every set.** LOC0W_WHOLE and STVXW_WHOLE
+(`compile_unit`): `model/loc0w.py` and `pcw.py` (research-scratch tabulation/loc0-ast, by the cmpx subagent: where an
+initialised local lives -- IZ across a call, WA for a -O3 -XS -Xr call argument, HL for a call result, else WA or
+BC -- all rules; pc's parameter-home rules plus a fitted register table), `stvxw.py` and `stvxcw.py`
+(tabulation/stvx-ast, by the elrd subagent).  loc0 510 / 472 / 510 / 408 -> 512, pc 20 / 9 / 12 / 14 -> 48, stvx 93 /
+93 / 63 / 63 -> 135, stvxc 255 / 254 / 155 / 157 -> 294 at none / -O3 -XS / -Xr / -O3 -XS -Xr; renamed globals score
+the same; loc0 writes 400 functions of other runs and pc 12, all exact.  research-scratch `port_override.py` now
+defines HOME_ before a module's first import and removes a block that put the tree's model directory on sys.path.
+semcheck 40 -> 36: the four stvx sx_c_XE / sx_c_XP wrong-code verdicts are gone, the functions now exact.  rstmt and
+random unchanged.  Ledger up 16 rows by 868, down 0; library 186/248, pairs 223.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
