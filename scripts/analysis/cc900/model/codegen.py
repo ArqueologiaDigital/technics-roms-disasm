@@ -2350,7 +2350,7 @@ def lx5_lines(L, a, b, op, signed, T4, T2):
 
 def lx5_parts(F, lv, x):
     """(L kind or None, A kind, B kind) of a long helper for lx5_lines, or None"""
-    if not LX5 or F.adecl or F.opt: return None
+    if not LX5 or (F.adecl and not LX5_XR) or F.opt: return None
     if x.k != 'bin' or x.op not in ('*', '/', '%') or x.ty is None or x.ty.size != 4 or x.ty.kind != 'int': return None
     L = None
     if lv is not None:
@@ -7067,6 +7067,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+LX5_XR = True                                            # see lx5_parts: under -Xr too
 SD4_XR = True                                            # see sd4_stmt / plan_sd4: under -Xr too
 CHAR_CHAIN_VIA_A_OPT = True                              # see gen: CHAR_CHAIN_VIA_A under -O too
 TERN_TRUTH_PLAIN = True                                  # see gen's -O ?:

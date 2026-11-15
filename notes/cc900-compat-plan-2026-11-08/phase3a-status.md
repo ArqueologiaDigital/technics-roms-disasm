@@ -3114,6 +3114,12 @@ and stays off. It now declines `x / x` and `x % x` at every set, which the older
 `if (gl != 0) gs.l = gl % gl` -> `ld XWA,0x0 / ld (_gs + 0x4),XWA`). stdiv2 -Xr 640 -> 684, lhx -Xr +24, stv -Xr +4,
 rstmt -Xr +8 and none +2, random1 -Xr +1; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 278 (2026-11-15): probe lhx's long helper shapes under -Xr.** LX5_XR (`lx5_parts`): the long helper shapes of
+probe lhx (`lx5_lines`) are planned under -Xr as well; under -O the same change does nothing and it stays off. Found by
+lifting the plain `F.adecl or F.opt: return` guards one at a time, which the earlier gate sweeps (named flags only) did
+not cover; the other such guards changed nothing measured. lhx -Xr 346 -> 478 of 1,184, stdiv -Xr +8, evorder_lh -Xr
++5; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
