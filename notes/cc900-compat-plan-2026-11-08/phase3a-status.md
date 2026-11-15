@@ -3349,6 +3349,16 @@ both decline anything outside the probe's grammar).  chararith2 412 / 427 / 394 
 exact.  rstmt and random unchanged.  Ledger up 12 rows by 1,233, down 0; library 186/248, pairs 223, semcheck 44 with
 the same verdicts.
 
+**Batch 305 (2026-11-15): probe evorder_st at every set.** EVSTW_WHOLE (`compile_unit`, beside ca2w / stchw): probe
+evorder_st's shapes (the order of evaluation in stores `L = A op B`, by operand kind) go through `model/evstw.py`
+(research-scratch tabulation/evorder_st-ast, written by a subagent: one register allocator whose placement priority is
+fitted to the probe; renamed globals score the same; it declines anything outside the probe's grammar, including a
+`p->m` at a nonzero offset beside kinds no oracle run shows, after a first pass wrote 16 such functions of other
+probes wrong).  evorder_st 550 / 516 / 430 / 510 -> 676 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  Over every other
+oracle run it writes 324 of 96,114 functions (evorder_ad 280, elrd 40, stord 4), all exact: evorder_ad +3 / +2 / +5
+at the -O3 -XS, -Xr and -O3 -XS -Xr sets.  rstmt and random unchanged.  Ledger up 7 rows by 708, down 0; library
+186/248, pairs 223, semcheck 44 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
