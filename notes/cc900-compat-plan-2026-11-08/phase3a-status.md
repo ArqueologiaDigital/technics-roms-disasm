@@ -3432,6 +3432,12 @@ have the in-place form 73 times, each before a call or a tail jump, and `ld A,r 
 arithmetic in WA.  Random -O3 -XS -Xr 95 -> 97, rstmt -O3 -XS -Xr +3; ledger up 3 rows by 5, down 0; library
 186/248, pairs 223, semcheck 36 with the same verdicts.
 
+**Batch 314 (2026-11-15): one value as the first two -Xr arguments goes through BC at -O.** DUP_ARG_VIA_BC (-O3 -XS
+-Xr, finished listing, not over an override): `ld WA,(m) / ld BC,WA` right before a call is `ld BC,(m) / ld WA,BC`
+(random .r4_03_13: `v2(gi2, gi2)`); the -O3 -XS -Xr listings have BC then WA before a call 16 times and never the
+other order, while -Xr without -O loads WA first (18).  Random -O3 -XS -Xr 97 -> 99, rstmt -O3 -XS -Xr +5; ledger up 2
+rows by 7, down 0; library 186/248, pairs 223, semcheck 36 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -7162,6 +7162,7 @@ LHIDXW_WHOLE = True                                      # see compile_unit
 LOC0W_WHOLE = True                                       # see compile_unit
 STVXW_WHOLE = True                                       # see compile_unit
 EXT_IN_PLACE_ARG = True                                  # see compile_unit
+DUP_ARG_VIA_BC = True                                    # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17216,6 +17217,13 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
                         full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
                                                            # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if DUP_ARG_VIA_BC and opt != 'none' and fa and alt_ is None:   # -O3 -XS -Xr: one value passed as the
+                for k_ in range(len(full) - 2):            # first and the second argument is loaded into BC and copied
+                    m_ = re.match(r'^\tld\tWA,(\([^)]*\))$', full[k_] or '')   # to WA (random .r4_03_13: v2(gi2, gi2)
+                    if m_ and full[k_ + 1] == '\tld\tBC,WA' and re.match(r'^\t(cal|j)\t[._]\w+$', full[k_ + 2] or ''):
+                        full[k_:k_ + 2] = ['\tld\tBC,%s' % m_.group(1), '\tld\tWA,BC']   # -> ld BC,(_gi2) / ld WA,BC;
+                                                           # the -O3 -XS -Xr listings: BC then WA before a call 16, the
+                                                           # other order 0; without -O, WA then BC 18)
             if EXT_IN_PLACE_ARG and opt != 'none' and alt_ is None:   # -O: a char in C / E / L widened for a call
                 for k_ in range(len(full) - 2):            # that follows at once is widened where it is and copied: ld
                     m_ = re.match(r'^\tld\tA,([CEL])$', full[k_] or '')   # A,C / extz WA / cal -> extz BC / ld WA,BC
