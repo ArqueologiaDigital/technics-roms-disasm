@@ -157,10 +157,10 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-10-12-micro-cmpord, v423/O3XS                           | probes/cmpord.c      | 444 / 507 exact (87.6%)    |
 | run 2026-11-10-12-micro-cmpord, v423/Xr                             | probes/cmpord.c      | 410 / 507 exact (80.9%)    |
 | run 2026-11-10-12-micro-cmpord, v423/O3XSXr                         | probes/cmpord.c      | 409 / 507 exact (80.7%)    |
-| run 2026-11-10-13-micro-evorder4, v423/none                         | probes/evorder_lh.c  | 319 / 507 exact (62.9%)    |
-| run 2026-11-10-13-micro-evorder4, v423/O3XS                         | probes/evorder_lh.c  | 261 / 507 exact (51.5%)    |
-| run 2026-11-10-13-micro-evorder4, v423/Xr                           | probes/evorder_lh.c  | 257 / 507 exact (50.7%)    |
-| run 2026-11-10-13-micro-evorder4, v423/O3XSXr                       | probes/evorder_lh.c  | 238 / 507 exact (46.9%)    |
+| run 2026-11-10-13-micro-evorder4, v423/none                         | probes/evorder_lh.c  | 507 / 507 exact (100.0%)   |
+| run 2026-11-10-13-micro-evorder4, v423/O3XS                         | probes/evorder_lh.c  | 507 / 507 exact (100.0%)   |
+| run 2026-11-10-13-micro-evorder4, v423/Xr                           | probes/evorder_lh.c  | 507 / 507 exact (100.0%)   |
+| run 2026-11-10-13-micro-evorder4, v423/O3XSXr                       | probes/evorder_lh.c  | 507 / 507 exact (100.0%)   |
 | run 2026-11-10-14-micro-loc0, v423/none                             | probes/loc0.c        | 510 / 512 exact (99.6%)    |
 | run 2026-11-10-14-micro-loc0, v423/O3XS                             | probes/loc0.c        | 472 / 512 exact (92.2%)    |
 | run 2026-11-10-14-micro-loc0, v423/Xr                               | probes/loc0.c        | 510 / 512 exact (99.6%)    |
@@ -236,9 +236,9 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-13-1-micro-stdiv2, v423/Xr                              | probes/stdiv2.c      | 1020 / 1020 exact (100.0%) |
 | run 2026-11-13-1-micro-stdiv2, v423/O3XSXr                          | probes/stdiv2.c      | 1020 / 1020 exact (100.0%) |
 | run 2026-11-13-2-micro-lhx, v423/none                               | probes/lhx.c         | 914 / 1184 exact (77.2%)   |
-| run 2026-11-13-2-micro-lhx, v423/O3XS                               | probes/lhx.c         | 376 / 1184 exact (31.8%)   |
-| run 2026-11-13-2-micro-lhx, v423/Xr                                 | probes/lhx.c         | 534 / 1184 exact (45.1%)   |
-| run 2026-11-13-2-micro-lhx, v423/O3XSXr                             | probes/lhx.c         | 314 / 1184 exact (26.5%)   |
+| run 2026-11-13-2-micro-lhx, v423/O3XS                               | probes/lhx.c         | 394 / 1184 exact (33.3%)   |
+| run 2026-11-13-2-micro-lhx, v423/Xr                                 | probes/lhx.c         | 552 / 1184 exact (46.6%)   |
+| run 2026-11-13-2-micro-lhx, v423/O3XSXr                             | probes/lhx.c         | 332 / 1184 exact (28.0%)   |
 | run 2026-11-13-3-micro-elrd, v423/none                              | probes/elrd.c        | 1234 / 1234 exact (100.0%) |
 | run 2026-11-13-3-micro-elrd, v423/O3XS                              | probes/elrd.c        | 1234 / 1234 exact (100.0%) |
 | run 2026-11-13-3-micro-elrd, v423/Xr                                | probes/elrd.c        | 1234 / 1234 exact (100.0%) |

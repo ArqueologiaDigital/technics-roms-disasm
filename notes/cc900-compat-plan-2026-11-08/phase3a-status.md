@@ -3302,6 +3302,14 @@ stord, evorder_lh, elrd): lhx none 890 -> 914, -O3 -XS 327 -> 376, -Xr 479 -> 53
 -O sets and -Xr 75 -> 91.  rstmt and random unchanged.  Ledger up 24 rows by 1,419, down 0; library 186/248, pairs
 223, semcheck 50 with the same verdicts.
 
+**Batch 300 (2026-11-15): probe evorder_lh at every set.** EVLHW_WHOLE (`compile_unit`, after lhyw): probe
+evorder_lh's shapes (the order in which a long helper's two operands are evaluated, by operand kind) go through
+`model/evlhw.py` (research-scratch tabulation/evorder_lh-ast/evorder_lh_ast.py, written by a subagent; the probe with
+every global renamed scores the same; it declines anything outside the probe's grammar).  evorder_lh 319 / 261 / 257 /
+238 -> 507 at none / -O3 -XS / -Xr / -O3 -XS -Xr.  Over every other oracle run it writes 180 of 96,790 functions, all
+exact (lhx 168, lhy 12): lhx -O3 -XS 376 -> 394, -Xr 534 -> 552, -O3 -XS -Xr 314 -> 332.  rstmt and random unchanged.
+Ledger up 7 rows by 1,007, down 0; library 186/248, pairs 223, semcheck 50 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

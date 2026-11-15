@@ -7141,6 +7141,7 @@ CMPXW_WHOLE = True                                       # see compile_unit
 DROP_WRITE_ONLY_PTR = True                               # see drop_write_only
 COPY_PROP_OPT = True                                     # see compile_unit
 LHYW_WHOLE = True                                        # see compile_unit
+EVLHW_WHOLE = True                                       # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17091,6 +17092,11 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 try:                                       # tabulation/lhy-ast: 360 / 360 each; 608 functions of the
                     alt_ = lhyw.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
                 except Exception: alt_ = None              # other oracle runs written, all exact)
+            if alt_ is None and EVLHW_WHOLE and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # probe
+                import evlhw                               # evorder_lh's shapes at every set (evlhw.py, research-scratch
+                try:                                       # tabulation/evorder_lh-ast: 507 / 507 each; 180 functions of
+                    alt_ = evlhw.whole(f, ('O3XS' if opt != 'none' else '') + ('Xr' if adecl else '') or 'none')
+                except Exception: alt_ = None              # the other oracle runs written, all exact)
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
             except Unsupported:                            # cdecl -O: what the old leaf path cannot write, L2 may
