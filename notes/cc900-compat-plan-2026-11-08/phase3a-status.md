@@ -3736,6 +3736,16 @@ gives `__cdecl`, while clang defines `__STDC__`; with the -O3 -XS harness's `-D_
 files (clang: "function returning 'double' cannot use the 'tlcs900_adecl' calling convention").  The library
 criterion was measured at -O3 -XS only until now; the other three sets are far from it.
 
+**Batch 341 (2026-11-15): the first batch under the new acceptance rule (P11).**  lane_nm 12 CHAIN_PTR_LAST (`*gp = x =
+v` with v computed: the value and its store first, the pointer last; `gps->m` takes the value in BC, the pointer in XWA),
+13 XREG_BASE_DIRECT (without -O, a load through a copy of a pointer register reads through the register itself), and
+lane_fpframe 07 WINDOW_LONG_ONE (the slot order of double temporaries extended to functions with one long slot;
+fpwindow.py).  Evidence outside random1-4 / rstmt1-4: the stchain / stval / stret probes (value first 52 times per
+set), the oracle never loads through a copied pointer register (0 of 124-276 loads), fpp10 / fpp11 / fp_order.
+Validation (val_agg.py, run 2026-11-15-3): statements +3 / +1 / +2 / +1, functions +1 / 0 / 0 / 0, nothing lost.
+Random 224 / 138 / 184 / 125 (+3 / +1 / +3 / +1), rstmt +7 / +8 / +7 / +6; ledger up 18 rows, down 0; library
+(lib_score.sh, now all four sets) 142 / 190 / 32 / 33 unchanged; pairs 223; semcheck 9 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

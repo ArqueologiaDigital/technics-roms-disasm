@@ -20,6 +20,7 @@ import codegen, fpgen
 
 ARITH = set('+-*/%&|^') | {'<<', '>>'}
 CMP = {'<', '>', '<=', '>=', '==', '!='}
+WINDOW_LONG_ONE = True                               # see unvalidated (rstmt rs_4_01_04_2)
 W_SEQ = (3, 7, 17, 21, 25)                           # window of the k-th operation slot (k >= 3: unmeasured)
 T_SEQ = (3, 7, 15, 21, 25)                           # below this many units in the function it wraps to the bottom
 
@@ -199,17 +200,33 @@ def from_log(log, ident):
     return [(x[0], x[1]) for x in stmts], created
 
 
-def unvalidated(log):
+def long_one_stmt(log):
+    """WINDOW_LONG_ONE: every temporary made by one expression statement / return, no loop, no double-to-integer
+    conversion in it (rstmt rs_4_01_04_2)"""
+    nst = {e[4] for e in log if e[0] == 'get'}
+    if len(nst) != 1: return False
+    if len({e[3] for e in log if e[0] == 'get' and e[1] == 'long'}) != 1: return False   # (fp_order fo_two_conv: two
+                                                                                          #  longs remapped onto one)
+    sts = [e for e in log if e[0] == 'stmt']
+    if any(e[2] in ('while', 'do', 'for') for e in sts): return False
+    st = [e[3] for e in sts if e[1] in nst]
+    if len(st) != 1 or st[0] is None or st[0].k not in ('expr', 'return'): return False
+    root = st[0].e if st[0].k == 'expr' else st[0].value
+    hit = []
+    walk(root, lambda n: hit.append(n) if n.k == 'cast' and n.kind == 'FloatingToIntegral' else None)
+    return not hit
+
+def unvalidated(log, reset=False):
     """a function the window rule is not validated for: a return that is not the last statement, a break /
     continue / goto, or a long slot (README, what is unexplained)"""
     st = [e for e in log if e[0] == 'stmt']
-    if any(e[0] == 'get' and e[1] == 'long' for e in log): return True
+    if any(e[0] == 'get' and e[1] == 'long' for e in log) and not (WINDOW_LONG_ONE and not reset and long_one_stmt(log)): return True
     if any(e[2] in ('break', 'continue', 'goto') for e in st): return True
     return any(e[2] == 'return' for e in st[:-1])
 
-def plan(log, guard=True):
+def plan(log, guard=True, reset=False):
     """{old depth: new depth} for one function's log (the model's second pass remaps with it)"""
-    if guard and unvalidated(log): return {}
+    if guard and unvalidated(log, reset): return {}
     size = {}
     for e in log:
         if e[0] == 'get': size.setdefault(e[3], e[2])

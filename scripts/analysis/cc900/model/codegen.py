@@ -7512,6 +7512,7 @@ def char_uidx_param(F, im, signed):
     add XR,XWA, rstmt rs_1_02_11_3)?"""
     return CHAR_UIDX_PARAM and not signed and not F.opt and not F.adecl and isinstance(im, str) and im.startswith('(XSP+')
 XIZ_BASE_DIRECT = True                                   # see compile_unit
+XREG_BASE_DIRECT = True                                   # see XIZ_BASE_DIRECT in compile_unit
 BYTE_STORE_DIRECT_NOOPT = True                                 # see compile_unit
 CP_HL_SCC = True                                         # see compile_unit
 CONST_STORE_IMM = True                                   # see compile_unit
@@ -9444,6 +9445,49 @@ def chain_elem_base_xwa(F, e, lv, rv, n0):
     F.emit('ld', '(XDE),A')
     return 'WA'
 
+
+CHAIN_PTR_LAST = True                                     # see chain_ptr_last
+
+def chain_ptr_last(F, s, lv, size):
+    """*gp = x = v (or gp[k] = .., gps->m = ..) with v computed: v and its store to x come first, the
+    pointer is loaded after them (rstmt rs_2_09_14_2: *gpi = gia[4] = -(~gs.a[0]) -> ld WA,(_gs + 0xe) / cpl WA /
+    neg WA / ld (_gia + 0x8),WA / ld XBC,(_gpi) / ld (XBC),WA; the model loaded XBC first).  Through a displaced member
+    the value moves to BC before x's store and the pointer takes XWA (rs_3_01_14_3: .. neg WA / ld BC,WA /
+    ld (_gi3),BC / ld XWA,(_gps) / ld (XWA+0x2),BC).  True when written."""
+    inner = strip(s.e.r)
+    if inner.k != 'bin' or inner.op != '=' or inner.ty is None or inner.ty.size != size or size not in (1, 2, 4): return False
+    il = strip(inner.l)
+    if il.k not in ('var', 'index', 'member') or (il.k == 'member' and il.arrow): return False
+    if il.k == 'var' and (getattr(il.decl, 'reg', None) or il.decl.kind != 'global'): return False
+    v = strip(inner.r)
+    while v.k == 'cast': v = strip(v.e)
+    if fold(v).k == 'const' or (v.k == 'load' and strip(v.e).k == 'var'): return False   # (=(G), =(K): pointer first)
+    if v.k == 'load' and strip(v.e).k == 'index' and fold(strip(v.e).idx).k == 'const': return False   # (=(E): exact already)
+    if nodes_in(s.e.r, 'call') or has_helper_call(s.e.r) or fpgen.is_fp_op(s.e.r) or fpgen.is_fp(lv.ty): return False
+    if any(nodes_in(u_.e, 'cast') or getattr(u_.e, 'k', None) == 'cast' for u_ in nodes_in(v, 'un')) or \
+            any(nodes_in(c_.e, 'un') for c_ in nodes_in(v, 'cast')): return False   # (~(int)guca[6] in this path was
+                                                           # cpl C / extz BC, wrong: random r3_07_03)
+    pk = sp_lvalue_kind(F, lv)
+    if pk is None or pk[0] not in ('P', 'D') or not isinstance(pk[1], str) or not pk[1].startswith('(_'): return False
+    if {'WA', 'BC'} & live_regs(F): return False
+    n0 = len(F.lines)
+    try:
+        fv = gen_assign_value(F, inner, 'WA', size)
+    except Unsupported:
+        del F.lines[n0:]; return False
+    W = FAM['WA'][size]
+    if fv != 'WA':
+        del F.lines[n0:]; return False
+    if pk[0] == 'D':
+        if not F.lines or not re.match(r'^\tld\t\((_\w+( \+ 0x[0-9a-f]+)?|X\w+\+\w+|X\w+)\),%s$' % W, F.lines[-1]):
+            del F.lines[n0:]; return False
+        B = FAM['BC'][size]
+        st_ = F.lines[-1]
+        if re.search(r'\b(X?BC|[BC])\b', st_.split('\t')[2].split('),')[0]): del F.lines[n0:]; return False
+        F.lines[-1:] = ['\tld\t%s,%s' % (B, W), st_[:-len(W)] + B]
+        F.emit('ld', 'XWA,%s' % pk[1]); F.emit('ld', '(XWA+%s),%s' % (hx(pk[2]), B)); return True
+    F.emit('ld', 'XBC,%s' % pk[1])
+    F.emit('ld', '%s,%s' % ('(XBC+%s)' % hx(pk[2]) if pk[2] else '(XBC)', W)); return True
 
 def gen_assign_value(F, e, fam, size, in_place=False):
     """an assignment used as a value (assign_expr.c): the value is built once in a register and stored, and the
@@ -12486,6 +12530,7 @@ def gen_stmt(F, s, last):
             pk_ = sp_lvalue_kind(F, lv)                # a register temporary stored through a pointer: the pointer in XWA
             F.emit('ld', 'XWA,%s' % pk_[1])            # (random r2_08_05: gps->l = t, t in XDE -> ld XWA,(_gps) /
             F.emit('ld', '%s,%s' % ('(XWA+%s)' % hx(pk_[2]) if pk_[2] else '(XWA)', FAM[regvar_of(strip(s.e.r).e).reg][size])); return   # ld (XWA+0x4),XDE)
+        elif CHAIN_PTR_LAST and chain_ptr_last(F, s, lv, size): return
         else:                                        # add DE,DE / lda XHL,_gb / ... lda XBC,_ga / ld (XHL+DE),WA
             nl = len(F.lines); F.store_nl = nl
             t = lvalue(F, lv, kind='storev')         # m_ga_set, m_gps_set (a computed value: p[k] through XBC)
@@ -18727,7 +18772,7 @@ def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong
             remap = None
             if fpgen.WINDOW_RULE and '_fa' in F1.__dict__:
                 import fpwindow                             # the slot order of the temporaries (E2), guarded
-                try: remap = fpwindow.plan(F1._fa.log) or None
+                try: remap = fpwindow.plan(F1._fa.log, reset=getattr(F1, '_e3reset', False)) or None
                 except Exception: remap = None
         finally: fpgen.FCONST[0] = save
         return compile_function(f, opt, adecl, personality, fp_temps=need, fp_nlong=nlong, fp_remap=remap).lines
@@ -19505,7 +19550,11 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
             if XIZ_BASE_DIRECT and opt == 'none' and alt_ is None:   # without -O a pointer kept in XIZ is read through
                 k_ = 0                                     # XIZ itself: ld XWA,XIZ / ld A,(XWA+0x2) -> ld A,(XIZ+0x2)
                 while k_ + 1 < len(full):                  # (rstmt rs_2_02_05_3; the oracle's copies all come before
-                    m_ = re.match(r'^\tld\tX(WA|BC|DE),XIZ$', full[k_] or '')   # a division)
+                    m_ = re.match(r'^\tld\tX(WA|BC|DE),(XIZ)$', full[k_] or '') or \
+                        (re.match(r'^\tld\tX(WA|BC|DE),(X(?:BC|DE|HL|IX|IY))$', full[k_] or '') if XREG_BASE_DIRECT else None)
+                    if m_ and m_.group(2) == 'X' + m_.group(1): m_ = None   # a division; XREG_BASE_DIRECT: any pointer
+                                                           # register, rstmt -Xr rs_4_09_07_6: ld XWA,XDE / ld WA,(XWA+0x16)
+                                                           # -> ld WA,(XDE+0x16), the oracle copies 1 / 3 times at none / -Xr)
                     ml_ = re.match(r'^\tld\t(\w+),\(X%s(\+0x[0-9a-f]+)?\)$' % m_.group(1), full[k_ + 1] or '') if m_ else None
                     if not ml_ or any(re.match(r'^\t(divs?\t|cal\tC9H_)', l_ or '') for l_ in full[k_ + 2:k_ + 7]):
                         k_ += 1; continue
@@ -19516,14 +19565,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                         ok_ = True                         # must not be read before a full write, call or return
                         for l_ in full[k_ + 2:]:
                             if l_ and (l_.startswith('\tret') or l_.startswith('\tcal\t')) or \
-                                    re.match(r'^\t(ld|lda)\tX%s,' % R_, l_ or '') and not fam_.search((l_ or '').split(',', 1)[1]):
-                                break
+                                    re.match(r'^\t(ld|lda)\tX%s,' % R_, l_ or '') and not fam_.search((l_ or '').split(',', 1)[1]) or \
+                                    XREG_BASE_DIRECT and re.match(r'^\t(exts|extz)\tX%s$' % R_, l_ or '') and D_ == R_:
+                                break                      # (exts XWA after ld WA,..: the whole register written)
                             if not l_ or not l_.startswith('\t') or l_.startswith('\tj') or fam_.search(l_):
                                 ok_ = False; break
                     else:
                         ok_ = reg_dead(full, k_ + 2, 'X' + R_)
                     if ok_:
-                        full[k_:k_ + 2] = ['\tld\t%s,(XIZ%s)' % (D_, ml_.group(2) or '')]
+                        full[k_:k_ + 2] = ['\tld\t%s,(%s%s)' % (D_, m_.group(2), ml_.group(2) or '')]
                     k_ += 1
             if BYTE_SLOT_DIRECT and opt == 'none' and alt_ is None:   # without -O a byte in a register other than A
                 k_ = 0                                     # stored to a stack slot goes there directly: ld A,W /
