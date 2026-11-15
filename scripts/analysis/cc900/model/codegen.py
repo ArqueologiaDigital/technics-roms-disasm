@@ -810,7 +810,7 @@ def gen(F, e, fam, size, then_ret=False, store=False):
                 (mem_operand(F, inner.l) or '').startswith('('):
             f2 = gen(F, inner, 'WA', 1)        # chnarrow.c cn_sub_k (no -O): ld A,(XSP+0x4) / sub A,0x30 / ld L,A /
             F.emit('ld', '%s,%s' % (FAM[fam][1], FAM[f2][1]))   # exts HL (& | and a char operand work in L; a char
-        elif CHAR_CHAIN_VIA_A and isz == 1 and size == 2 and not F.opt and fam not in ('WA',) and fam in FAM and \
+        elif CHAR_CHAIN_VIA_A and isz == 1 and size == 2 and (not F.opt or CHAR_CHAIN_VIA_A_OPT) and fam not in ('WA',) and fam in FAM and \
                 getattr(inner, 'narrowed', False) and inner.k == 'bin' and strip(inner.l).k == 'bin' and \
                 getattr(strip(inner.l), 'narrowed', False) and 'WA' not in live_regs(F):
             f2 = gen(F, inner, 'WA', 1)        # two byte operations in a chain are built in A, then moved (chararith2
@@ -7066,6 +7066,7 @@ MULDIV_ELEM_ADDR_CHAR = True                             # see gen_opassign
 MULDIV_ELEM_ZERO = True                                  # see gen_opassign
 UCHAR_IDX_SCALE16 = True                                 # see gen_ptr_arith
 ARG_CAST_LOAD = True                                     # see push_arg
+CHAR_CHAIN_VIA_A_OPT = True                              # see gen: CHAR_CHAIN_VIA_A under -O too
 TERN_TRUTH_PLAIN = True                                  # see gen's -O ?:
 STORE_HL_DIRECT = True                                   # see compile_unit
 CHAR_CHAIN_VIA_A = True                                  # see gen: a narrowed char chain widened

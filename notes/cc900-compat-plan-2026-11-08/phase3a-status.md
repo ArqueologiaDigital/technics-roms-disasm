@@ -3086,6 +3086,12 @@ HL,(_g)` then `cpw (_g),0x0`, about 400 model pairs, none in the oracle). 17 led
 (evorder_st +50 / +50, cmpord +54 / +51, evorder_lh +32 / +29, evorder_l +27 / +23, evorder_d +26 / +24, stord +16 /
 +16, cmpx +2 / +2, fpp11 +1); rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
 
+**Batch 274 (2026-11-15): a byte chain is built in A under -O too.** CHAR_CHAIN_VIA_A_OPT: batch 271's
+CHAR_CHAIN_VIA_A (a chain of two byte operations, widened, is built in A and moved) holds under -O as well
+(chararith2 cb_gu_s1_sr -O3 -XS: `ld A,(_guc) / sll 0x1,A / srl 0x3,A / ld L,A / extz HL`). From `never_pairs.py` at
+-O3 -XS (`srl n,L / extz HL` 43, `sra n,L / exts HL` 42). chararith +13 / +13, chararith2 +70 / +48 at the -O sets;
+rstmt and random unchanged; library 186/248, pairs 223, semcheck 50 unchanged.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
