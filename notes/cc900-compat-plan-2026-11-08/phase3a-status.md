@@ -3465,6 +3465,20 @@ sets until stages 2 and 3).  lnr 28 -> 49, lnr2 22 -> 41, lnr3 12 -> 24, lnr4 6 
 lnr's it writes 117 functions, all exact (micro opt_counted.c 28 -> 30, opt_loops.c 28 -> 29).  rstmt and random
 unchanged.  Ledger up 6 rows by 60, down 0; library 186/248, pairs 223, semcheck 17 with the same verdicts.
 
+**Batch 318 (2026-11-15): probes homes2a / homes2b at every set; fpp6..fpp11 where the generator answers.**
+HOMES2W_WHOLE and FPPW_WHOLE (`compile_unit`): `model/homes2w.py` (research-scratch tabulation/homes2-ast, by the lhy
+subagent: the code once homes are known is rules; which value lives in IZ / QIZ or a frame slot is the model's fitted
+homes2 rule plus per-AST-signature corrections, and an unseen function with two values needing a home at once is
+declined) and `model/fppw.py` (tabulation/fpp-ast, by the chararith subagent: one generator for the double probes
+fpp6..fpp11, slot sharing / order / region size as rules, 91 AST shapes the slot-order rule gets wrong declined).
+homes2a 24 / 78 / 41 / 35 -> 204, homes2b 15 / 18 / 24 / 19 -> 86 of 90 at none / -O3 -XS / -Xr / -O3 -XS -Xr; at
+none / -O3 -XS fpp6 33 / 18 -> 53, fpp7 48 / 44 -> 71 / 68, fpp8 46 / 41 -> 103 / 99, fpp9 8 -> 34 / 30, fpp10 73 /
+70 -> 86 / 85, fpp11 46 / 43 -> 60 / 58, and fpp1-fpp5 gain too; over every other oracle run homes2w writes 418
+functions and fppw 1,062, all exact.  Before this batch, making a while loop's break label with str() was tried for
+the library's `_fgets` crash and rejected (it then wrote an undefined label; research-scratch
+rejected/break_label_str.md).  rstmt and random unchanged.  Ledger up 30 rows by 1,272, down 0; library 186/248,
+pairs 223, semcheck 17 with the same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

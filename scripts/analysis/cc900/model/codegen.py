@@ -7166,6 +7166,8 @@ DUP_ARG_VIA_BC = True                                    # see compile_unit
 MORE315_WHOLE = True                                     # see compile_unit
 ONCE_LOCAL_DIRECT = True                                 # see compile_unit
 LNRW_WHOLE = True                                        # see compile_unit
+HOMES2W_WHOLE = True                                     # see compile_unit
+FPPW_WHOLE = True                                        # see compile_unit
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ELEM0_VIA_XWA = True                                     # see elem0_via_xwa
 
@@ -17182,7 +17184,7 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                  (LOC0W_WHOLE, 'pcw'), (STVXW_WHOLE, 'stvxw'), (STVXW_WHOLE, 'stvxcw'),
                                  (MORE315_WHOLE, 'idxlocw'), (MORE315_WHOLE, 'loopctrw'), (MORE315_WHOLE, 'stvw'),
                                  (MORE315_WHOLE, 'stv2w'), (MORE315_WHOLE, 'fpopaw'), (MORE315_WHOLE, 'fparggw'),
-                                 (LNRW_WHOLE, 'lnrw')):   # probes
+                                 (LNRW_WHOLE, 'lnrw'), (HOMES2W_WHOLE, 'homes2w'), (FPPW_WHOLE, 'fppw')):   # probes
                                                            # chararith2 (ca2w.py, 576 /
                 if alt_ is None and flag_ and opt in ('none', 'O3XS') and bool(fa) == bool(adecl):   # 576; 192 functions
                     try:                                   # of chararith.c written, all exact) and stchain (stchw.py,
@@ -17204,6 +17206,8 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            #  96 / 32 / 112 / 44)
                                                            # (lnr / lnr2 / lnr3 / lnr4 without options: lnrw.py, 119 of
                                                            #  136, the rest declined; its other sets come later)
+                                                           # (homes2a / homes2b: homes2w.py, 204 / 84 of 90)
+                                                           # (fpp6..fpp11 at none / -O3 -XS: fppw.py, exact where it answers)
             alt_full_ = None
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
