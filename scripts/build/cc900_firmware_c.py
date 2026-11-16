@@ -136,14 +136,17 @@ def tree_labels(tree):
 
 
 # the trees a tree's sources include (its llvm-mc -I order after itself; Makefile): their names are the C's too
+# (repository-relative): the older HD-AE5000 trees take hdae5000's sources; the main-CPU and sub-CPU programs take
+# the shared kernel, wsa1/kernel/kernel.s (-I wsa1/kernel: Kernel_SemaWait, TaskEvent_Signal ...)
 INCLUDE_TREES = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"],
-                 "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"]}
+                 "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"],
+                 "maincpu": ["wsa1/kernel"], "subcpu": ["wsa1/kernel"]}
 
 
 def tree_chain(tree):
     """TREE and the trees it includes, nearest first"""
     t = os.path.normpath(tree)
-    return [t] + [os.path.join(os.path.dirname(t), x) for x in INCLUDE_TREES.get(os.path.basename(t), [])]
+    return [t] + [os.path.join(REPO, x) for x in INCLUDE_TREES.get(os.path.basename(t), [])]
 
 
 def merged_values(tree):
@@ -211,10 +214,22 @@ class Names(dict):
                 if len(n) > C_NAME_LIMIT:
                     self.cut.setdefault(n[:C_NAME_LIMIT], set()).add(n)
 
-    def resolve(self, n):
+    # The one resolver, in this order: V4.23's `_` / `.` prefix stripped; a `ram_<hex>` cell (a number); the C file's
+    # `cc900-name:` map (cmap, a short C name -> the tree's label, for callees and data as for definitions); the
+    # tree's .equ values; the labels of the tree and of every tree it includes with -I (the shared kernel); a name
+    # V4.23 cut to 31 characters; the tree-scoped runtime names (RUNTIME); the tree's symbols reference (addrs) as
+    # the last resort.  A label is always given with its spelling: its value is only ROM_LABEL, a placeholder that
+    # to_llvm refuses to compute with (to_llvm.PLACEHOLDER).  Anything unresolved is (None, None): the caller fails.
+    cmap = {}
+    addrs = None
+
+    def resolve(self, n, depth=0):
+        n = n.lstrip("_.")
         m = RAM_CELL_RE.match(n)
         if m:
             return int(m.group(1), 16), None
+        if n in self.cmap and self.cmap[n] != n and depth < 4:
+            return self.resolve(self.cmap[n], depth + 1)
         if self.values.get(n) is not None:
             return self.values[n], n
         if n in self.values:
@@ -223,10 +238,12 @@ class Names(dict):
             return self.labels[n], n
         if self.cut and len(self.cut.get(n, ())) == 1:     # a name V4.23 cut to 31 characters: the tree's full name
             full = next(iter(self.cut[n]))
-            return self.resolve(full)[0], full
-        alias = RUNTIME.get(n.lstrip("_."))                 # a runtime routine under the tree's name (C9H_mullu)
-        if alias and alias != n:
-            return self.resolve(alias)
+            return self.resolve(full, depth + 1)[0], full
+        alias = RUNTIME.get(n)                              # a runtime routine under the tree's name (C9H_mullu)
+        if alias and alias != n and depth < 4:
+            return self.resolve(alias, depth + 1)
+        if self.addrs and n in self.addrs:                  # the symbols reference: a label the walk above misses
+            return self.addrs[n], n
         return None, None
 
     def __contains__(self, n):
@@ -310,6 +327,9 @@ def compile_c(path, names, spell=True):
     to_llvm.MODULE = module_names(path)                  # only the marking, never file membership
     check_c_names(path, [f.name for f in unit.functions])
     labels = label_map(path)
+    if isinstance(names, Names):
+        names.cmap = labels                              # cc900-name: for every reference, not only definitions
+    to_llvm.PLACEHOLDER = ROM_LABEL if spell else None   # spell=False: real addresses (fn_diff.py, the coverage)
     funcs = {}
     REFUSED.clear()
     for name, lines in out.items():
@@ -450,6 +470,8 @@ def compile_v423(path, names, cache):
     cdefs = c_functions(path)
     check_c_names(path, cdefs)
     labels = label_map(path)
+    names.cmap = labels                                  # cc900-name: for every reference, not only definitions
+    to_llvm.PLACEHOLDER = ROM_LABEL
     uncut = {n[:C_NAME_LIMIT]: n for n in cdefs}
     text = open(lp, encoding="latin-1").read()
     to_llvm.SPELL = names
@@ -616,14 +638,16 @@ def main():
     global MODEL
     ADDRS.update(tree_addresses(tree))
     RUNTIME.update(runtime_names(tree))
+    names = Names(merged_values(tree), merged_labels(tree), cut=bool(cache))
+    names.addrs = ADDRS                                  # the symbols reference, the resolver's last resort
     if cache:
-        funcs = compile_v423(src, Names(merged_values(tree), merged_labels(tree), cut=True), cache)
+        funcs = compile_v423(src, names, cache)
     else:
         MODEL = True
         if file_flags(src) not in OPTION_SETS:
             sys.exit("%s: cc900-options %r is not one the reference model compiles (%s)%s"
                      % (src, file_flags(src), ", ".join(repr(k) for k in OPTION_SETS), MODEL_HINT))
-        funcs = compile_c(src, Names(merged_values(tree), merged_labels(tree)))
+        funcs = compile_c(src, names)
     if REFUSED:
         sys.exit("%s: the reference model does not compile: %s%s" % (
             src, "; ".join("%s (%s)" % kv for kv in sorted(REFUSED.items())), MODEL_HINT))

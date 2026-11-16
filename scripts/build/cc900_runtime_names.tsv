@@ -2,11 +2,23 @@
 # scripts/build/cc900_firmware_c.py runtime_names() (with results/pairs.tsv's our_label for the matched C library).
 # tree: a shell pattern matched against the tree's path (*/maincpu, hdae5000*, v142/subcpu); the most specific
 # pattern wins.  name: as the listing writes it.
-# Main CPU: C9H_mullu / C9H_divlu, the assembly library's 32-bit multiply / unsigned divide (coordinator, 2026-11-16).
-# HD-AE5000 (all four trees): lane_hd, 2026-11-16.
+# Main CPU (coordinator / lane_vmb, 2026-11-16): the assembly library's LMULL.ASM (C9H_mullu and C9H_mulls are one
+# entry) and LDIVL.ASM, whose entries sit in the ROM in the library's order: remls, divls (SDivMod), remlu, divlu at
+# Math_RemainderSigned32, Math_DivideSigned32, Math_RemainderU32, Math_DivideU32 (0xff0c0a, 0c0e, 0c12, 0c18 in v10).
+# Sub-CPU: lane_sub, each confirmed by matches (Long_SignedDiv / Long_SignedRem: its renames, branch cc900/c-subcpu-hdae).
+# HD-AE5000 (all four trees): lane_hd.
 tree	name	label
 */maincpu	C9H_mullu	Math_Multiply32
+*/maincpu	C9H_mulls	Math_Multiply32
 */maincpu	C9H_divlu	Math_DivideU32
+*/maincpu	C9H_remlu	Math_RemainderU32
+*/maincpu	C9H_divls	Math_DivideSigned32
+*/maincpu	C9H_remls	Math_RemainderSigned32
+*/subcpu	C9H_mullu	Math_Multiply32
+*/subcpu	C9H_mulls	Math_Multiply32
+*/subcpu	C9H_divls	Long_SignedDiv
+*/subcpu	C9H_remls	Long_SignedRem
+*/subcpu	C9H_remlu	Int_UnsignedRemainder
 hdae5000*	C9H_mullu	HDAE5000_Multiply
 hdae5000*	C9H_divlu	HDAE5000_UDivMod32
 hdae5000*	._fdiv_f	HDAE5000_FloatDiv
