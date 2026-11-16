@@ -1547,50 +1547,18 @@ SeMenu_TransferPartValues_End2:
 	ldw hl, 0xffff
 	ret
 
-SeLfo_GetSelectedLfo:
-	cp	a, 1:i3
-	jr	nz, SeMenu_TransferPartValues_EndData_Skip3
-	ld	a, (1678:16)
-	cp	a, 1:i3
-	jr	c, SeMenu_TransferPartValues_EndData_Skip
-	cp	a, 4:i3
-	jr	ule, SeMenu_TransferPartValues_EndData_Skip2
-SeMenu_TransferPartValues_EndData_Skip:
-	ld	(1678:16), 1
-SeMenu_TransferPartValues_EndData_Skip2:
-	ld	a, (1678:16)
-	jr	SeMenu_TransferPartValues_EndData_Join
-SeMenu_TransferPartValues_EndData_Skip3:
-	cp	a, 0:i3
-	jr	nz, SeMenu_TransferPartValues_EndData_Skip6
-	ld	a, (1677:16)
-	cp	a, 1:i3
-	jr	c, SeMenu_TransferPartValues_EndData_Skip4
-	cp	a, 4:i3
-	jr	ule, SeMenu_TransferPartValues_EndData_Skip5
-SeMenu_TransferPartValues_EndData_Skip4:
-	ld	(1677:16), 1
-SeMenu_TransferPartValues_EndData_Skip5:
-	ld	a, (1677:16)
-	jr	SeMenu_TransferPartValues_EndData_Join
-SeMenu_TransferPartValues_EndData_Skip6:
-	cp	a, 2:i3
-	jr	nz, SeMenu_TransferPartValues_EndData_Skip9
-	ld	a, (1679:16)
-	cp	a, 1:i3
-	jr	c, SeMenu_TransferPartValues_EndData_Skip7
-	cp	a, 4:i3
-	jr	ule, SeMenu_TransferPartValues_EndData_Skip8
-SeMenu_TransferPartValues_EndData_Skip7:
-	ld	(1679:16), 1
-SeMenu_TransferPartValues_EndData_Skip8:
-	ld	a, (1679:16)
-	jr	SeMenu_TransferPartValues_EndData_Join
-SeMenu_TransferPartValues_EndData_Skip9:
-	ld	a, 1:opc
-SeMenu_TransferPartValues_EndData_Join:
-	ld	(xbc), a
-	ret
+SeLfo_GetSelectedLfo:	.include "includes/generated/cc900/SeLfo_GetSelectedLfo.s"	; C: cc900/semenu_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_TransferPartValues_EndData_Skip, SeLfo_GetSelectedLfo + 16
+	.set	SeMenu_TransferPartValues_EndData_Skip2, SeLfo_GetSelectedLfo + 21
+	.set	SeMenu_TransferPartValues_EndData_Skip3, SeLfo_GetSelectedLfo + 27
+	.set	SeMenu_TransferPartValues_EndData_Skip4, SeLfo_GetSelectedLfo + 43
+	.set	SeMenu_TransferPartValues_EndData_Skip5, SeLfo_GetSelectedLfo + 48
+	.set	SeMenu_TransferPartValues_EndData_Skip6, SeLfo_GetSelectedLfo + 54
+	.set	SeMenu_TransferPartValues_EndData_Skip7, SeLfo_GetSelectedLfo + 70
+	.set	SeMenu_TransferPartValues_EndData_Skip8, SeLfo_GetSelectedLfo + 75
+	.set	SeMenu_TransferPartValues_EndData_Skip9, SeLfo_GetSelectedLfo + 81
+	.set	SeMenu_TransferPartValues_EndData_Join, SeLfo_GetSelectedLfo + 83
 ; SeLfo1_StepSelector: Steps the 1..4 selector of LFO page A (0 = AMP RAM 0x68D, 1 = PITCH 0x68E, 2 = FILTER 0x68F;
 ;   other A do nothing): C = 0 steps up, C != 0 steps down, wrapping 4 -> 1 and 1 -> 4. Basis: callers + body --
 ;   SeLfo1_StepSelectorAndReload calls it with A = the page and C from the switch value, then re-enters TT_SEAMPLFO1 /
@@ -2046,19 +2014,9 @@ SeMenu_ReadObjParam:
 	ldmi16 (xwa), 0x694
 	ret
 
-SeMenu_CheckObjEnabled:
-	ldw hl, 0xffff
-	cp (0x020c33:24), a
-	ret nz
-	ld hl, 0:i3
-	ret
+SeMenu_CheckObjEnabled:	.include "includes/generated/cc900/SeMenu_CheckObjEnabled.s"	; C: cc900/semenu_routines.c
 
-SeMenu_CheckObjValid:
-	ldw hl, 0xffff
-	cp (0x020c35:24), a
-	ret nz
-	ld hl, 0:i3
-	ret
+SeMenu_CheckObjValid:	.include "includes/generated/cc900/SeMenu_CheckObjValid.s"	; C: cc900/semenu_routines.c
 
 SeMenu_FillEntryTable:
 	lda xhl, (0x020c33:24)
@@ -2389,13 +2347,7 @@ SeMenu_SetWriteMemSlot:	.include "includes/generated/cc900/SeMenu_SetWriteMemSlo
 ;   does nothing. Setter twin of SeMenu_GetNameBufferChar. Basis: callers + body -- SeWrtSnd_ClearName fills positions
 ;   0..15 with C = 32 through it (its header says so), and the WRITE SOUND character-edit handlers store the edited
 ;   character with it.
-SeMenu_SetNameBufferChar:
-	cp	a, 15
-	ret	ugt
-	extz	wa
-	lda	xde, (0x020bf3:24)
-	ld	(xde+wa), c
-	ret
+SeMenu_SetNameBufferChar:	.include "includes/generated/cc900/SeMenu_SetNameBufferChar.s"	; C: cc900/semenu_routines.c
 ; SeMenu_GetNameBufferChar: Copies character A (0..15) of the 16-byte name buffer at 0x20BF3 to (XBC); A > 15 does
 ;   nothing. Basis: callers + body -- only the WRITE SOUND name-entry handlers call it: the side-row-1 handler reads
 ;   all 16 characters to send them, the cursor-left/right handlers read the character at the new cursor (page param 0)
@@ -6310,15 +6262,9 @@ SeMenu_StepNoteParamInRange_Epilogue:
 	lda	xsp, (xsp+12)
 	retd	2
 
-SeMenu_SetEditEnable:
-	cp a, 1:i3
-	jr nz, SeMenu_SetEditEnable_Clear
-	set 2, (SEQ_RTMCFG:16)
-	ret
-
-SeMenu_SetEditEnable_Clear:
-	res 2, (SEQ_RTMCFG:16)
-	ret
+SeMenu_SetEditEnable:	.include "includes/generated/cc900/SeMenu_SetEditEnable.s"	; C: cc900/semenu_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetEditEnable_Clear, SeMenu_SetEditEnable + 9
 
 SeMenu_OrPartConfig:	.include "includes/generated/cc900/SeMenu_OrPartConfig.s"	; C: cc900/semenu_routines.c
 

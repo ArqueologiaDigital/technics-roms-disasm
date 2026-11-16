@@ -71,6 +71,19 @@ def main():
                    if k == 'fn' and lm.get(sp.fn_name(d), sp.fn_name(d)) in have]
             if dup:
                 sys.exit('%s: %s already defined in cc900/ (%s)' % (sp_path, ', '.join(dup), ', '.join(sorted(set(have[d] for d in dup)))))
+            if os.path.exists(dst):                       # a name the built file declares otherwise: a sibling file
+                prev = {}
+                for k, d in sp.items(open(dst, encoding='latin-1').read()):
+                    if k == 'decl':
+                        for n in sp.defines(d):
+                            prev[n] = d
+                if any(n in prev and prev[n] != d for k, d in sp.items(text) if k == 'decl' for n in sp.defines(d)):
+                    for c in 'bcdefgh':
+                        alt = dst[:-2] + '_' + c + '.c'
+                        if not os.path.exists(alt):
+                            print('   %s declares a staged name otherwise: %s instead' % (os.path.basename(dst), os.path.basename(alt)))
+                            dst = alt
+                            break
             if os.path.exists(dst):
                 old = open(dst, encoding='latin-1').read()
                 if built_flags(dst) != flags:

@@ -188,41 +188,13 @@ SmfSave_Return:
 	ld xhl, 0:i3
 	ret
 
-RenderSmfFilename:
-	extz bc
-	ld	(xwa+bc), 0x00
-	ld ix, 0:i3
-	lda xhl, (CType_ClassTable:24)
-	jr RenderSmf_LoopCheck
-
-RenderSmf_CheckSeparator:
-	extz bc
-	ld	c, (xhl+bc)
-	and c, 0x7
-	jr nz, RenderSmf_IncIndex
-	ld (xde), 0x5f
-
-RenderSmf_IncIndex:
-	inc 1, ix
-
-RenderSmf_LoopCheck:
-	cp ix, 0x8
-	jr ge, RenderSmf_PadCheck
-	lda	xde, (xwa+ix)
-	ld c, (xde)
-	cp c, 0:i3
-	jr nz, RenderSmf_CheckSeparator
-
-RenderSmf_PadCheck:
-	cp ix, 0x8
-	ret ge
-
-RenderSmf_PadLoop:
-	ld	(xwa+ix), 0x5f
-	inc 1, ix
-	cp ix, 0x8
-	jr lt, RenderSmf_PadLoop
-	ret
+RenderSmfFilename:	.include "includes/generated/cc900/RenderSmfFilename.s"	; C: cc900/smf_operations.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RenderSmf_CheckSeparator, RenderSmfFilename + 17
+	.set	RenderSmf_IncIndex, RenderSmfFilename + 32
+	.set	RenderSmf_LoopCheck, RenderSmfFilename + 34
+	.set	RenderSmf_PadCheck, RenderSmfFilename + 51
+	.set	RenderSmf_PadLoop, RenderSmfFilename + 57
 
 SaveFileNameSmfFunc:
 	dec	4, xsp

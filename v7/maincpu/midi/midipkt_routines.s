@@ -666,38 +666,11 @@ MidiPkt_SendCtlValueSysEx_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+10)
 	ret
-MidiPkt_CheckGateCondition:
-	ld c, (xwa + 12)
-	cp c, 0:i3
-	jr	z, MidiPkt_CheckGateCondition_Second
-	extz bc
-	muls bc, 0x6
-	lda	xde, (MidiCtl_GateRecords:24)
-	lda	xde, (xde+bc)
-	ld xhl, (xde)
-	ld c, (xde + 4)
-	and c, (xhl)
-	cp (xde + 5), c
-	jr	nz, MidiPkt_CheckGateCondition_Blocked
-MidiPkt_CheckGateCondition_Second:
-	ld a, (xwa + 13)
-	cp a, 0:i3
-	jr	z, MidiPkt_CheckGateCondition_Pass
-	extz wa
-	muls wa, 0x6
-	lda	xbc, (MidiCtl_SecondGateRecords:24)
-	lda	xbc, (xbc+wa)
-	ld xde, (xbc)
-	ld a, (xbc + 4)
-	and a, (xde)
-	cp (xbc + 5), a
-	jr	z, MidiPkt_CheckGateCondition_Pass
-MidiPkt_CheckGateCondition_Blocked:
-	ldw hl, 0xffff
-	ret
-MidiPkt_CheckGateCondition_Pass:
-	ld hl, 0:i3
-	ret
+MidiPkt_CheckGateCondition:	.include "includes/generated/cc900/MidiPkt_CheckGateCondition.s"	; C: cc900/midipkt_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_CheckGateCondition_Second, MidiPkt_CheckGateCondition + 35
+	.set	MidiPkt_CheckGateCondition_Blocked, MidiPkt_CheckGateCondition + 70
+	.set	MidiPkt_CheckGateCondition_Pass, MidiPkt_CheckGateCondition + 74
 MidiPkt_DispatchViaTable_4DCE:
 	dec 8, xsp
 	push xiz

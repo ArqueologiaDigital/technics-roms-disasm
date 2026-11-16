@@ -419,26 +419,7 @@ BmDrEdit_RenderSecondaryHoriz:
 	ld (0x27c8:16), wa
 	ret
 
-BmDrEdit_RenderSecondaryVert:
-	ld wa, (0x281e:16)
-	srl wa, 2
-	add wa, 0x5b
-	ld (0x27c2:16), wa
-	ld wa, (0x0210b2:24)
-	srl wa, 2
-	add wa, (0x27c2:16)
-	ld (0x27c4:16), wa
-	ld a, (0x0210b0:24)
-	extz wa
-	add wa, wa
-	lda xbc, (BmDrEdit_RenderVertical_Table:24)
-	ld	wa, (xbc+wa)
-	ld (0x27c6:16), wa
-	inc 3, wa
-	ld (0x27c8:16), wa
-	decw 2, (0x27c6:16)
-	incw 2, (0x27c8:16)
-	ret
+BmDrEdit_RenderSecondaryVert:	.include "includes/generated/cc900/BmDrEdit_RenderSecondaryVert.s"	; C: cc900/bmdredit_routines.c
 
 BmDrEdit_CalcSecondaryPosition:
 	ld bc, (0x2814:16)
@@ -1763,31 +1744,9 @@ BmDrEdit_RefreshAfterInsert_CheckFull:
 	calr NoteEdit_SendScrollCmds
 	jrl NoteEdit_UpdateScrollAndDisplay
 
-BmDrEdit_SetupScrollRegion:
-	ld xde, xwa
-	bit 0, (0x2742:16)
-	jr z, BmDrEdit_SetupScrollRegion_MelodicMode
-	ld wa, (0x279e:16)
-	ld (xde), a
-	ld wa, (0x279e:16)
-	ld (xbc), a
-	addmi8 (xbc), 0xb
-	ret
-
-BmDrEdit_SetupScrollRegion_MelodicMode:
-	ld a, (NOTEEDIT_BASE_KEY:16)
-	extz wa
-	add wa, wa
-	lda xhl, (WidgetData_DrawbarPositionTable:24)
-	ld	a, (xhl+wa)
-	ld (xde), a
-	ld a, (NOTEEDIT_BASE_KEY:16)
-	extz wa
-	add wa, wa
-	inc 1, wa
-	ld	a, (xhl+wa)
-	ld (xbc), a
-	ret
+BmDrEdit_SetupScrollRegion:	.include "includes/generated/cc900/BmDrEdit_SetupScrollRegion.s"	; C: cc900/bmdredit_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_SetupScrollRegion_MelodicMode, BmDrEdit_SetupScrollRegion + 24
 
 ; -----------------------------------------------------------------------------
 ; BmDrEdit_TestPartTableEntry -- A := RAM 0x2965 (a MIDI channel), code :=

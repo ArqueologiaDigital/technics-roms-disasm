@@ -340,34 +340,13 @@ Delay51T_Loop:
 ;
 ; See: docs/test-modes.md for full documentation
 ; =============================================================================
-CPanel_CheckSpecialCombos:
-	cp (0x8dc2:16), 0x6c
-	jr nz, .Lc_fc39a5
-	ld hl, 3:i3
-	jr t, CPanel_CheckSpecialCombos_Return
-CPanel_Combo_CheckAllInitSetting:
-.Lc_fc39a5:
-	cp (0x8daf:16), 0x70
-	jr nz, .Lc_fc39b0
-	ld hl, 2:i3
-	jr t, CPanel_CheckSpecialCombos_Return
-CPanel_Combo_CheckFactoryReset:
-.Lc_fc39b0:
-	cp (0x8dc4:16), 0x38
-	jr nz, .Lc_fc39bb
-	ld hl, 1:i3
-	jr t, CPanel_CheckSpecialCombos_Return
-CPanel_Combo_CheckFlashUpdate:
-.Lc_fc39bb:
-	cp (0x8db4:16), 0x0f
-	jr nz, CPanel_Combo_NormalBoot
-	ld hl, 4:i3
-	jr t, CPanel_CheckSpecialCombos_Return
-CPanel_Combo_NormalBoot:
-	ld hl, 0:i3		; No combo: normal boot
-
-CPanel_CheckSpecialCombos_Return:
-	ret
+CPanel_CheckSpecialCombos:	.include "includes/generated/cc900/CPanel_CheckSpecialCombos.s"	; C: cc900/cpanel_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CPanel_Combo_CheckAllInitSetting, CPanel_CheckSpecialCombos + 11
+	.set	CPanel_Combo_CheckFactoryReset, CPanel_CheckSpecialCombos + 22
+	.set	CPanel_Combo_CheckFlashUpdate, CPanel_CheckSpecialCombos + 33
+	.set	CPanel_Combo_NormalBoot, CPanel_CheckSpecialCombos + 44
+	.set	CPanel_CheckSpecialCombos_Return, CPanel_CheckSpecialCombos + 46
 
 
 CPanel_PanelDetection:

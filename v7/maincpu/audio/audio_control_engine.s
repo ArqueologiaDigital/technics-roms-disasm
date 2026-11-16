@@ -7322,22 +7322,10 @@ PanelTlv_PayloadOfTag:
 	ret
 ; a = part tag -> xhl = its companion record's payload: PanelTlv_CompanionByPart[a] for a <= 0x1F, tag 0x49's
 ; payload (RAM 0xFF92) for the style record 0x48, else 0xFFFFFFFF
-PanelTlv_CompanionOfPart:
-	cp	a, 0x1f
-	jr	ugt, PanelTlv_CompanionOfPart_Style
-	extz	wa
-	sla	wa, 2
-	lda	xbc, (PanelTlv_CompanionByPart:24)
-	ld	xhl, (xbc+wa)
-	ret
-PanelTlv_CompanionOfPart_Style:
-	cp	a, 0x48
-	jr	nz, PanelTlv_CompanionOfPart_None
-	lda	xhl, (PANEL_VARI_STYLE:16)
-	ret
-PanelTlv_CompanionOfPart_None:
-	ld	xhl, 0xffffffff
-	ret
+PanelTlv_CompanionOfPart:	.include "includes/generated/cc900/PanelTlv_CompanionOfPart.s"	; C: cc900/audio_control_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_CompanionOfPart_Style, PanelTlv_CompanionOfPart + 21
+	.set	PanelTlv_CompanionOfPart_None, PanelTlv_CompanionOfPart + 31
 VoiceChannels_InitPanFromPreset:
 	push	xiz
 	ld	iz, (SEQ_SONG_RECORD+272:16)

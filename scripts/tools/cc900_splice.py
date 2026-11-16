@@ -41,6 +41,20 @@ LABEL_RE = re.compile(rb'^\s*([A-Za-z_.$][\w.$]*):')
 FN_RE = re.compile(r'^[\w][\w\s\*]*?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
 
 
+def encodings(text):
+    """llvm-mc -show-encoding -> [(instruction, its length in bytes)] in order"""
+    import subprocess
+    import check_bytes
+    r = subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-show-encoding"],
+                       input=text, capture_output=True, text=True)
+    out = []
+    for l in r.stdout.splitlines():
+        m = re.match(r'^\s+(.*?)\s*; encoding: \[(.*)\]', l)
+        if m:
+            out.append((m.group(1), len([x for x in m.group(2).split(",") if x])))
+    return out
+
+
 def c_functions(path):
     """the tree labels of the functions FILE.c defines, in order (the front end's names, through `cc900-name:`)"""
     if "--sizes" in sys.argv:                            # C the model may not compile: read the definitions
@@ -127,6 +141,25 @@ def main():
             while j > i + 1 and not lines[j - 1].split(b";")[0].strip():   # the blank and comment lines before
                 j -= 1                                                    # the next label stay with it
             j -= 1
+            # the hand lines up to the next outside label may run past the compiled body (a dead `ret`, code no
+            # label marks): measure them with llvm-mc and cut where their bytes reach the C body's size; the rest
+            # stays after the include line
+            ins = [k for k in range(i + 1, j + 1) if lines[k].split(b";")[0].strip() and not LABEL_RE.match(lines[k])]
+            enc = encodings("\n".join("\t" + lines[k].split(b";")[0].strip().decode("latin-1") for k in ins) + "\n")
+            if len(enc) != len(ins):
+                sys.exit("%s: %s: llvm-mc measured %d of %d hand instructions" % (asm, name, len(enc), len(ins)))
+            total, cut = 0, None
+            for k, (_, n_) in zip(ins, enc):
+                total += n_
+                if total == sizes[name]:
+                    cut = k
+                    break
+                if total > sizes[name]:
+                    break
+            if cut is None:
+                sys.exit("%s: %s: no run of hand instructions from its label is %d bytes long (the compiled size)"
+                         % (asm, name, sizes[name]))
+            j = cut                                      # the lines after the cut stay where they are
         else:
             while True:
                 if j >= len(lines):

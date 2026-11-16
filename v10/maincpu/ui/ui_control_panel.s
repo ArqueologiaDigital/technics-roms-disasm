@@ -3324,24 +3324,7 @@ CtrlPanel_FrameReturn:
 ; Computes the centre point of a rectangle.
 ;   In:  XWA = rectangle {x1, y1, x2, y2} (inclusive), XBC = 4-byte point to fill.
 ;   x = x1 + (x2 - x1 + 1) / 2, y likewise (signed division).
-GetBoxCenter:
-	ld de, (xwa + 4)
-	sub de, (xwa)
-	inc 1, de
-	exts xde
-	divs de, 0x2
-	ld hl, (xwa)
-	add hl, de
-	ld (xbc), hl
-	ld de, (xwa + 2)
-	ld wa, (xwa + 6)
-	sub wa, de
-	inc 1, wa
-	exts xwa
-	divs wa, 0x2
-	add de, wa
-	ld (xbc + 2), de
-	ret
+GetBoxCenter:	.include "includes/generated/cc900/GetBoxCenter.s"	; C: cc900/ui_control_panel.c
 
 GetFrameColor:
 	call GetViewInstance

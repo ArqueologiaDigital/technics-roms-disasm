@@ -3480,28 +3480,12 @@ Flash_InitBytecodeBlock_Helper9_Helper_Helper:
 	ld L,A
 .Lc_f17ce5:
 	ret
-Flash_StoreBaseAndInitAccPatch_Helper2:
-	cp	a, 10
-	jr	nc, Flash_StoreBaseAndInitAccPatch_Skip22
-	ld	l, 48:opc
-	jr	Flash_StoreBaseAndInitAccPatch_Return2
-Flash_StoreBaseAndInitAccPatch_Skip22:
-	cp	a, 20
-	jr	nc, Flash_StoreBaseAndInitAccPatch_Skip23
-	ld	l, 49:opc
-	jr	Flash_StoreBaseAndInitAccPatch_Return2
-Flash_StoreBaseAndInitAccPatch_Skip23:
-	cp	a, 30
-	jr	nc, Flash_StoreBaseAndInitAccPatch_Skip24
-	ld	l, 50:opc
-	jr	Flash_StoreBaseAndInitAccPatch_Return2
-Flash_StoreBaseAndInitAccPatch_Skip24:
-	ld	l, 52:opc
-	cp	a, 40
-	ret	nc
-	ld	l, 51:opc
-Flash_StoreBaseAndInitAccPatch_Return2:
-	ret
+Flash_StoreBaseAndInitAccPatch_Helper2:	.include "includes/generated/cc900/Flash_StoreBaseAndInitAccPatch_Helper2.s"	; C: cc900/flash_floppy_handlers_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Flash_StoreBaseAndInitAccPatch_Skip22, Flash_StoreBaseAndInitAccPatch_Helper2 + 9
+	.set	Flash_StoreBaseAndInitAccPatch_Skip23, Flash_StoreBaseAndInitAccPatch_Helper2 + 18
+	.set	Flash_StoreBaseAndInitAccPatch_Skip24, Flash_StoreBaseAndInitAccPatch_Helper2 + 27
+	.set	Flash_StoreBaseAndInitAccPatch_Return2, Flash_StoreBaseAndInitAccPatch_Helper2 + 36
 Flash_InitBytecodeBlock_Helper11:
 	push	xiz
 	lda	xde, (0x39b3:16)

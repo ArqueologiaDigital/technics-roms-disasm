@@ -10037,38 +10037,9 @@ GetModeNow:	.include "includes/generated/cc900/GetModeNow.s"	; C: cc900/ui_widge
 ; Returns in XHL the previous mode as an object id (MODE_OLD).
 GetModeOld:	.include "includes/generated/cc900/GetModeOld.s"	; C: cc900/ui_widget_defs.c
 
-RegisterMode:
-	ld xhl, xwa
-	ld xwa, xhl
-	sll xwa, 3
-	sub xwa, xhl
-	add xwa, xwa
-	ld xhl, 0x328fc
-	add xhl, xwa
-	ld (xhl), xbc
-	ld (xhl + 4), xde
-	ld wa, (xsp + 8)
-	ld (xhl + 8), wa
-	ld xwa, (xsp + 4)
-	ld (xhl + 10), xwa
-	retd 0x6
+RegisterMode:	.include "includes/generated/cc900/RegisterMode.s"	; C: cc900/ui_widget_defs_o3xr.c
 
-UnregisteredMode:
-	ld xbc, xwa
-	ld xwa, xbc
-	sll xwa, 3
-	sub xwa, xbc
-	add xwa, xwa
-	ld xbc, 0x328fc
-	add xbc, xwa
-	ld xwa, NAKA_APFUNC_DefaultFunction
-	ld (xbc), xwa
-	ld xwa, 0xffffffff
-	ld (xbc + 4), xwa
-	ldw (xbc + 8), 0xffff
-	lda xwa, (Mode_UnregisteredName:24)
-	ld (xbc + 10), xwa
-	ret
+UnregisteredMode:	.include "includes/generated/cc900/UnregisteredMode.s"	; C: cc900/ui_widget_defs_o3xr.c
 
 RegisterTitle:
 	dec 4, xsp
@@ -18905,27 +18876,9 @@ ApTimer_Deliver:
 	lda xsp, (xsp + 12)
 	ret
 
-InitializeTimer:
-	ld xwa, 0:i3
-	ld (0x030444:24), xwa
-	ldw (0x030448:24), 0xffff
-	lda xwa, (0x02f844:24)
-	lda xbc, (xwa + 8)
-	lda xde, (xwa + 2)
-	ld xhl, xwa
-	lda xix, (xwa+3072)
-
-ApTimer_DeliverDone:
-	ldw (xhl), 0xffff
-	ldw (xde), 0xffff
-	ld xwa, 0xffffffff
-	ld (xbc), xwa
-	lda xhl, (xhl + 24)
-	lda xde, (xde + 24)
-	lda xbc, (xbc + 24)
-	cp xhl, xix
-	jr c, ApTimer_DeliverDone
-	ret
+InitializeTimer:	.include "includes/generated/cc900/InitializeTimer.s"	; C: cc900/ui_widget_defs_o3xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ApTimer_DeliverDone, InitializeTimer + 32
 RootContext_InitEventQueue:
 
 ApTimer:

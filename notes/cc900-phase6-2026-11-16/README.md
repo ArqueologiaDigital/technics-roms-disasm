@@ -676,6 +676,25 @@ and takes the tree's value of every address the C names from the same bytes.  A 
 else is left out of that tree: `AudioInit_*` in v7 / v6 / v5, two accompaniment functions in v6 / v5, and
 `PartCtrl_AppendToEventQueue`, which v7 / v6 / v5 lack.  `staged_v423.py` has the last word, per tree.
 
+## The staged C built with V4.23 (2026-11-16)
+
+The V4.23 build landed on main (70c34fd09, lane_vmb) and was merged into this branch.  `promote_staged.py` then moved
+every tree's staged C into `<tree>/cc900/`.  Staged `-O3 -Xr` C was appended to the tree's existing file of that
+hand source.  It went to a sibling file instead (`file_demo_proc_b.c`, `sequencer_engine_b.c`) when that file declares
+one of its names differently, and to `_xr` / `_xs` / `_o3xr` files for other option sets.  Each function was then
+spliced into its hand source (`cc900_splice.py --symbols --sizes staged_v423.tsv`), and the staging files were
+removed in the same commit.
+
+After the promotion, `<tree>/cc900/` defines 226 functions in v10, 226 in v9, 210 in v7, 199 in v6 and 199 in v5.  `make
+gate` is byte-identical with V4.23 building all of them.
+
+The splice learned two things on the way:
+- **The cut is measured.**  A routine's hand lines may run past its compiled body.  `S2cTtl_InitOnTitleChange` has a dead
+  second `ret`, and `AccPatch_ComplexDataBlock_Helper2` is a lone `ret` followed by unlabelled code.  `cc900_splice.py`
+  measures the hand instructions with llvm-mc and cuts where their bytes reach the C body's size; the rest stays.
+- **`--sizes`.**  The sizes come from staged_v423.tsv, and the functions are read from the C's text, so C that only
+  V4.23 compiles can be spliced.
+
 ## Finding candidates
 
 `leaf_candidates.py TREE [N]` lists routines of at most N instructions that end in `ret`, contain no call, jump or
