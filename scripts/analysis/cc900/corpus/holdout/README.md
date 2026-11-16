@@ -10,6 +10,7 @@ the totals, every ~10 batches.  It is deliberately outside model/ledger.sh.
 | batch | random5 none / O3XS / Xr / O3XSXr | rstmt5 none / O3XS / Xr / O3XSXr | random1-4 for comparison     |
 |-------|-----------------------------------|----------------------------------|------------------------------|
 | 340   | 22 / 14 / 21 / 14 of 200          | 884 / 831 / 846 / 805 of 1,182   | 221 / 137 / 181 / 124 of 800 |
+| 352   | 21 / 14 / 22 / 14 of 200          | 885 / 832 / 848 / 806 of 1,182   | 232 / 140 / 189 / 126 of 800 |
 
 ## Transfer curve (P9, 2026-11-15)
 
