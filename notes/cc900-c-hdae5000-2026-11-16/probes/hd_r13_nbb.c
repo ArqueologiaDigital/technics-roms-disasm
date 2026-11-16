@@ -5,7 +5,7 @@
        operand order;
      DirListBP_x / FlsListBP_x: the text through a pointer to 21-byte arrays, ((char (*)[21])Text)[i], whose row
        scaling may differ from run 49's declared [24][21] array.
-   Everything else as in form a (DirName_Address(base + i)).  Options: -Xr.
+   Everything else as in form a (DirName_Address(base + i), the formats as char arrays).  Options: -Xr.
    cc900-name: DirListBP_x=HDAE5000_DirList_BuildPage
    cc900-name: FlsListBP_x=HDAE5000_FlsList_BuildPage
 */
@@ -14,7 +14,7 @@
 
 extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
 extern void *__cdecl HDAE5000_MemFill(void *, int, unsigned int);
-extern int __cdecl HDAE5000_SPrintf(char *, const char *, ...);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
 extern unsigned int __cdecl HDAE5000_StrLen(const char *);
 extern unsigned char *HDAE5000_DirName_Address(unsigned int dir);
 extern unsigned char *HDAE5000_FlsRecord_Address(unsigned int fls);
@@ -29,9 +29,13 @@ extern unsigned int HDAE5000_RAM_DirPageBase;
 extern unsigned int HDAE5000_RAM_FlsPageBase;
 extern char HDAE5000_Str_Chr2020203A2020[];
 extern char HDAE5000_Str_Chr2020203A2020_FlsList_BuildPage[];
-/* the formats are pushed as 32-bit constants (pushw hi16 / pushw lo16), as SeparateOutput_Apply's (hd_r4_g3.c) */
-#define FMT_DIR ((const char *)0x2e23d2L)   /* HDAE5000_Fmt_3_3d, "%3.3d" */
-#define FMT_FLS ((const char *)0x2e2e76L)   /* HDAE5000_Fmt_3_3d_FlsList_BuildPage, "%3.3d" */
+/* the "%3.3d" formats, pushed as `pushw sym@hi16 / pushw sym@lo16`: V4.23 pushes an array symbol that way when the
+   argument needs no conversion (SPrintf's format is a plain char *; run 64's (const char *)0x2e23d2L constant gave
+   `ld xwa,imm; push xwa`, which the ROM does not have) */
+extern char HDAE5000_Fmt_3_3d[];
+extern char HDAE5000_Fmt_3_3d_FlsList_BuildPage[];
+#define FMT_DIR HDAE5000_Fmt_3_3d
+#define FMT_FLS HDAE5000_Fmt_3_3d_FlsList_BuildPage
 
 /* the row length as an address constant (the size of one row struct, offsetof style), not a literal */
 struct Row21 { char t[21]; };

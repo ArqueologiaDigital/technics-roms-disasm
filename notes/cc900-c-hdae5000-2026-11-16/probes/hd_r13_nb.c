@@ -14,6 +14,9 @@
        DirListBP_s / FlsListBP_s: the text as an array of 21-byte row structs, rows[i].t (V4.23's scaling of a
          struct index, which may be a different code path from an explicit multiply);
        DirListBP_p / FlsListBP_p: unary plus on the variable, 21 * +i.
+   - the SPrintf formats (both): the ROM pushes them as `pushw Fmt@hi16 / pushw Fmt@lo16`; run 64's constant pointer
+     gave `ld xwa,imm; push xwa`.  Now the tree's char arrays with a plain char * format parameter (V4.23's pushw
+     pair for an array symbol that needs no conversion, hd_r9_nl's lyrics module);
    - DirList: DirName_Address's argument is base + i in the ROM (`ld wa,(DirPageBase); add wa,iz`); run 64 had
      i + base.  The SPrintf argument stays i + base + 1 (`ld wa,iz; add wa,(base); inc 1,wa`), FlsList's base + i + 1.
    cc900-name: DirListBP_s=HDAE5000_DirList_BuildPage
@@ -26,7 +29,7 @@
 
 extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
 extern void *__cdecl HDAE5000_MemFill(void *, int, unsigned int);
-extern int __cdecl HDAE5000_SPrintf(char *, const char *, ...);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
 extern unsigned int __cdecl HDAE5000_StrLen(const char *);
 extern unsigned char *HDAE5000_DirName_Address(unsigned int dir);
 extern unsigned char *HDAE5000_FlsRecord_Address(unsigned int fls);
@@ -41,9 +44,13 @@ extern unsigned int HDAE5000_RAM_DirPageBase;
 extern unsigned int HDAE5000_RAM_FlsPageBase;
 extern char HDAE5000_Str_Chr2020203A2020[];
 extern char HDAE5000_Str_Chr2020203A2020_FlsList_BuildPage[];
-/* the formats are pushed as 32-bit constants (pushw hi16 / pushw lo16), as SeparateOutput_Apply's (hd_r4_g3.c) */
-#define FMT_DIR ((const char *)0x2e23d2L)   /* HDAE5000_Fmt_3_3d, "%3.3d" */
-#define FMT_FLS ((const char *)0x2e2e76L)   /* HDAE5000_Fmt_3_3d_FlsList_BuildPage, "%3.3d" */
+/* the "%3.3d" formats, pushed as `pushw sym@hi16 / pushw sym@lo16`: V4.23 pushes an array symbol that way when the
+   argument needs no conversion (SPrintf's format is a plain char *; run 64's (const char *)0x2e23d2L constant gave
+   `ld xwa,imm; push xwa`, which the ROM does not have) */
+extern char HDAE5000_Fmt_3_3d[];
+extern char HDAE5000_Fmt_3_3d_FlsList_BuildPage[];
+#define FMT_DIR HDAE5000_Fmt_3_3d
+#define FMT_FLS HDAE5000_Fmt_3_3d_FlsList_BuildPage
 
 /* the same text as rows (variants _s) */
 struct Row21 { char t[21]; };
