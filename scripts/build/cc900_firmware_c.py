@@ -135,6 +135,34 @@ def tree_labels(tree):
     return labs
 
 
+RUNTIME = {}        # main(): {runtime name without `_` / `.`: the tree's label}, runtime_names(tree)
+RUNTIME_TSV = os.path.join(REPO, "scripts", "build", "cc900_runtime_names.tsv")
+PAIRS_TSV = os.path.join(REPO, "scripts", "analysis", "cc900", "results", "pairs.tsv")
+
+
+def runtime_names(tree):
+    """{runtime name: tree label} for TREE (v10/maincpu): V4.23 calls Toshiba's runtime by its library names (C9H_mullu,
+    ._fld_ful), which the trees name otherwise.  From scripts/build/cc900_runtime_names.tsv (`tree<TAB>name<TAB>label`,
+    tree `*` for every tree; the hand-made rows, e.g. the assembly-library C9H_* routines) and from
+    results/pairs.tsv's `our_label` of the tree's image (every library public matched in the ROM).  A name is used
+    only when the tree itself does not define it."""
+    parts = os.path.normpath(tree).split(os.sep)
+    v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
+    image = "%s %s" % (cpu, v)
+    out = {}
+    if os.path.exists(PAIRS_TSV):
+        for l in open(PAIRS_TSV, encoding="utf-8"):
+            c = l.rstrip("\n").split("\t")
+            if len(c) >= 8 and c[0] == image and c[7] and " " not in c[2]:
+                out.setdefault(c[2].lstrip("_."), c[7])
+    if os.path.exists(RUNTIME_TSV):
+        for l in open(RUNTIME_TSV, encoding="utf-8"):
+            c = l.rstrip("\n").split("\t")
+            if len(c) >= 3 and not l.startswith("#") and c[0] in ("*", v, "/".join(parts[-2:])):
+                out[c[1].lstrip("_.")] = c[2]
+    return out
+
+
 class Names(dict):
     """to_llvm's SYMBOLS and SPELL in one: a C name resolves to the tree's value (spelled by its name), to a
     `ram_<hex>` cell (spelled as the number), or to a label of the symbols reference file (spelled by name)."""
@@ -162,6 +190,9 @@ class Names(dict):
         if self.cut and len(self.cut.get(n, ())) == 1:     # a name V4.23 cut to 31 characters: the tree's full name
             full = next(iter(self.cut[n]))
             return self.resolve(full)[0], full
+        alias = RUNTIME.get(n.lstrip("_."))                 # a runtime routine under the tree's name (C9H_mullu)
+        if alias and alias != n:
+            return self.resolve(alias)
         return None, None
 
     def __contains__(self, n):
@@ -472,7 +503,7 @@ def tree_addresses(tree):
     """{label: address} from the tree's symbols reference (symbols/maincpu_<v>_..., subcpu_..._symbols_reference.txt),
     or {} when there is none"""
     parts = os.path.normpath(tree).split(os.sep)
-    v, cpu = parts[-2], parts[-1]
+    v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
     name = {"maincpu": "maincpu_%s_symbols_reference.txt" % v,
             "subcpu": "subcpu_symbols_reference.txt" if v == "v142" else "subcpu_%s_symbols_reference.txt" % v}.get(cpu)
     p = os.path.join(REPO, "symbols", name) if name else None
@@ -549,6 +580,7 @@ def main():
     tree, src, outdir, stamp = args
     global MODEL
     ADDRS.update(tree_addresses(tree))
+    RUNTIME.update(runtime_names(tree))
     if cache:
         funcs = compile_v423(src, Names(tree_values(tree), tree_labels(tree), cut=True), cache)
     else:
