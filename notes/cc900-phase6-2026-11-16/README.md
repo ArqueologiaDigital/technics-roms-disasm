@@ -247,8 +247,10 @@ hand assembly is counted too (`fall-in` also holds do-while loops and retry bran
 - the firmware's compiler at `-O` lacks V4.23's rule that loads a 32-bit constant of 8..0xffff with `lda`.
 
 Telling them apart needs one function that both loads such a constant and is shaped by `-O` (a loop, or a value
-kept in a register).  The candidates (leaf routines with a loop and a 32-bit load of an address below 0x10000) come
-in both forms.  `StyleConv_ClearWorkBuffer` (`sequencer/accompaniment_engine.s`) is `-O`-shaped (the end pointer is
+kept in a register).  The candidates are leaf routines with a loop and a 32-bit load of a value below 0x10000, almost
+all of them addresses of RAM buffers.  There are 59 in v10 (`python3 -B
+notes/cc900-phase6-2026-11-16/const_loop_leaf.py v10/maincpu`, from the repository root), and they come in both
+forms.  `StyleConv_ClearWorkBuffer` (`sequencer/accompaniment_engine.s`) is `-O`-shaped (the end pointer is
 computed from the start register, and the loop has no entry test) and uses the 4-byte `lda xbc, (0x488c:16)`.
 `FloppyIO_ClearTrackParseBuffer` (`sequencer/smf_tonegen_core.s`) uses the 5-byte `ld xix, 0x106e` and `djnz`.
 Probe `corpus/firmware/p6_m4.c` (run `2026-11-16-12-p6-m4`) was to compile both at both option sets.  Instead,
