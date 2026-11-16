@@ -592,7 +592,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - `FLS_FILE_LOAD_Exit_FLS_SELECT` IvExitScreen: opens [FLS_SELECT](#fls_select)
 - `FLS_FILE_LOAD_AcIndexEditSw` AcIndexEditSw: switch Right1
   - `FLS_FILE_LOAD_AcIndexEditSw_LOAD` Label: "LOAD"
-- `FLS_FILE_LOAD_SW_EDIT` AcIndexEditSw (RAM record): switch Right5 -- code: `HDAE5000_Set_Menu_Visibility`, `HDAE5000_Frame_Handler_Status__init_display`
+- `FLS_FILE_LOAD_SW_EDIT` AcIndexEditSw (RAM record): switch Right5 -- code: `HDAE5000_Set_Menu_Visibility`, `HDAE5000_Frame_Handler`
   - `FLS_FILE_LOAD_SW_EDIT_EDIT` Label: "EDIT"
 - `FLS_FILE_LOAD_AcIndexWideES` AcIndexWideES: switch Bottom3; switch Bottom5
 - `FLS_FILE_LOAD_AcIndexEditSw_2` AcIndexEditSw: switch Bottom2

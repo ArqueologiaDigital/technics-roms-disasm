@@ -88,6 +88,15 @@ OWNER'S RULES (strict, 2026-11-16):
   directory and run it.  Edit files with the Edit / Write tools.
 - If anything is denied: stop and report the exact command; never retry it another way.
 
+lane_sub's systematic probes (run 2026-11-16-99-sub-r13-idioms, -Xr like ours; its README, branch
+cc900/c-subcpu-hdae, "Idioms found by systematic probes"):
+- RELOAD AFTER STORE avoided (the ROM keeps the value in a register): give it a second plain local and route later
+  uses through it: `u = P(v,23); t = u; f(v, u[17]);`.
+- A CONSTANT ARGUMENT loaded in argument order: pass the constant through a local (`k = 0x79;`); literals, casts,
+  enum and #define do not do it.
+- A CHAR ARGUMENT passed without extz: declare the callee's parameter plain or signed `char` and pass the unsigned
+  char with no cast.
+
 More idioms found since (runs 66-93):
 - A RETURNED array address loaded as an immediate after the index (`ld xhl,sym; add xhl,xwa`) comes from a
   CONVERTED return value: `return (void *)(arr + (unsigned long)i * 16);` (DirName_Address, run 70).
