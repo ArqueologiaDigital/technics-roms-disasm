@@ -381,3 +381,9 @@ Tempo_DisplayParamCommon	14	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3
 Tempo_DisplayParamFormat	10	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
 Tempo_DisplayParamSkipClear	11	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
 TimeSig_ProcNop	1	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+IconProc	117	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+LineProc	130	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+RenderFilterDisplay	224	2026-11-16-68-p6-r12	p6_G_2a@O3Xr
+SeqDMA_WriteMidi_NoteOn	36	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2a@Xr p6_G_2b@O3Xr p6_G_2b@Xr
+SndParamBank_WriteFlashDefaults	201	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+VwUserBitmapByNameProc	178	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
