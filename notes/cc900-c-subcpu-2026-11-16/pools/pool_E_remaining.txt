@@ -1,0 +1,42 @@
+ 3026  801 DSP_BiquadCoeff_Compute                      core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime FP_SP_CmpZero32,FP_SP_CopyOrNegate4,FP_dadd,FP_ddiv,FP_dmul,FP_dsub,FP_dtof,FP_fadd,FP_fcmp,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow,FP_tan  calr DSP_FilterLUT_Fetch
+ 2593  726 DSP_SOS_Coeff_Compute                        core/14_dsp_control_routines.s             rel  erp 10 nop   0 runtime FP_SP_CmpZero32,FP_SP_CopyOrNegate4,FP_cos,FP_ddiv,FP_dmul,FP_dsub,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow,FP_sin  calr DSP_SOS_LUT_Fetch
+ 1720  608 DSP_Bytecode_Op00_Groups5_ParamMix           core/14_dsp_control_routines.s             rel  erp  4 nop   0 runtime -  calr DSP_Bytecode_NotifyStateChange
+ 1229  428 DSP_WriteOscParam_Offset                     core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime -  calr 
+ 1170  365 DSP_ParamEQ_Curve_FP                         core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_DP_CopyOrNegate8,FP_SP_CallWithBuf8,FP_dadd,FP_dcmp,FP_ddiv,FP_dmul,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
+  889  311 DSP_Op_0x61_LinearEval                       core/14_dsp_control_routines.s             rel  erp  1 nop   0 runtime -  calr DSP_Bytecode_NotifyStateChange
+  787  262 DSP_FilterLUT_Fetch                          core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_Raw4Copy,FP_ScalarToDP,FP_dadd,FP_dmul,FP_dtof  calr 
+  617  203 DSP_BiquadWarp_FP                            core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CopyOrNegate4,FP_ScalarToDP,FP_dmul,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftoi,FP_pow  calr 
+  495  160 DSP_DetuneCurve_SignedFP                     core/14_dsp_control_routines.s             abs  erp  7 nop   0 runtime FP_SP_CallWithBuf8,FP_SP_CopyOrNegate4,FP_ddiv,FP_dsub,FP_dtof,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
+  331  111 DSP_WriteLUTParamSet                         core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_UnpackParam3B DSP_WriteCoeffData_5B DSP_WriteFreqParam
+  329  102 DSP_VolumeCurve_FP                           core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CallWithBuf8,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
+  321  109 DSP_SOS_LUT_Fetch                            core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_Raw4Copy,FP_ScalarToDP,FP_dadd,FP_dmul,FP_dtof  calr 
+  305   98 DSP_ParamInterp_FPComplex                    core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime FP_SP_CallWithBuf8,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
+  297   94 DSP_ReverbCurve_FP                           core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CallWithBuf8,FP_ddiv,FP_dmul,FP_dsub,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
+  255  113 RingBuf_Init_256                             core/03_task_scheduler_kernel.s            rel  erp  0 nop   0 runtime -  calr FIFO_Engine512_Get FIFO_Engine512_Put
+  250   87 DSP_MixerCoeff_Compute                       core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CallWithBuf8,FP_ftoi,Math_Multiply32  calr 
+  224   82 DSP_PerParameterTranslator                   core/14_dsp_control_routines.s             rel  erp  3 nop   0 runtime -  calr DSP_TableWalk_Search
+  213   83 DSP_BytecodeInterpreter_Init                 core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime -  calr 
+  205   69 DSP_WriteOscParam                            core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_WriteParamCmd30
+  195   75 DSP_WriteParameter                           core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime -  calr 
+  174   77 RingBuf_Init_1K                              core/03_task_scheduler_kernel.s            rel  erp  0 nop   0 runtime -  calr FIFO_Engine256_Get FIFO_Engine256_Put
+  167   56 ToneGen_Process_Notes                        core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr Keybed_Read_Event
+  165   56 DSP_AlgoParam_Decode                         core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime FP_DP_DecodeToInt,FP_SP_CallWithBuf8,FP_dmul,FP_ftod  calr 
+  116   41 DSP_ParamInterp_3Point_WithOffset            core/14_dsp_control_routines.s             abs  erp  2 nop   0 runtime Math_Multiply32  calr 
+  114   40 DSP_ParamInterp_Div0xC6                      core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime Math_Multiply32  calr 
+  110   40 MemClear_DRAM_And_ExtRAM                     core/02_audio_system_init.s                abs  erp  4 nop   0 runtime -  calr 
+   90   37 Keybed_Read_Event                            core/14_dsp_control_routines.s             rel  erp  0 nop   2 runtime -  calr Keybed_Decode_Event
+   87   34 FP_cos                                       core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_DP_Raw8Copy,FP_SinCos_Kernel,FP_dadd,FP_fabs  calr 
+   78   27 DSP_ParamInterp_FPScale                      core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime Math_Multiply32  calr 
+   77   27 DSP_PitchParam_Scale                         core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime -  calr 
+   73   31 DSP_Init_Channels                            core/02_audio_system_init.s                rel  erp  0 nop   0 runtime -  calr DSP_Write_Channel
+   73   32 DSP_Write_Channel                            core/02_audio_system_init.s                rel  erp  0 nop   0 runtime -  calr DSP_WriteChannelRegs_Inner
+   72   32 DSP_TableWalk_SearchWithState                core/14_dsp_control_routines.s             leaf erp  1 nop   0 runtime -  calr 
+   70   25 DSP_ParamInterp_Div0xB4                      core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime Math_Multiply32  calr 
+   69   26 Serial1_DataTransmit_Loop                    subcpu_data_tables.s                       rel  erp  0 nop   0 runtime -  calr SAVE_BYTE_TO_RING_BUFFER Serial1_Enable_TX_Interrupt Serial1_HandleEnableCommand
+   69   26 InterCPU_DMA_Send                            core/04_intercpu_link.s                    rel  erp  1 nop   0 runtime -  calr InterCPU_DMA_SendDataPacket
+   48   19 FP_ddiv                                      core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_DP_Decode,FP_DP_DivCore,FP_DP_Encode  calr 
+   36   16 READ_BYTE_FROM_RING_BUFFER                   subcpu_data_tables.s                       leaf erp  0 nop   0 runtime -  calr 
+   36   17 SAVE_BYTE_TO_RING_BUFFER                     subcpu_data_tables.s                       leaf erp  0 nop   0 runtime -  calr 
+   27   10 FIFO_Engine512_Get_Marked                    core/03_task_scheduler_kernel.s            leaf erp  0 nop   0 runtime -  calr 
+   27   10 FIFO_Engine512_Get_From_Mark                 core/03_task_scheduler_kernel.s            leaf erp  0 nop   0 runtime -  calr 
+   14    6 RING_BUFFER_HAS_OVERRUN                      subcpu_data_tables.s                       leaf erp  0 nop   0 runtime -  calr 

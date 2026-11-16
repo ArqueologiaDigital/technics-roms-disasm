@@ -835,37 +835,7 @@ DSP_ApplyAlgoForVoiceType_TypeF:
 ;     DSP_WriteAlgoInitPreset(IZ) then DSP_ApplyAlgoForVoiceType(IZ)
 ;   DSP_MixerCoeff_Compute again with the (now possibly changed) three words.
 ; ★ Does NOT clear 0x4488/0x448A/0x448C, so a DSP reset does not clear the consumer wedge.
-DSP_Reset:
-	pushw iz
-	ldw (17840:16), 1
-	ldw (17842:16), 0
-	ldw (17844:16), 0
-	ldw (17846:16), 0
-	ldw (17848:16), 0
-	ldw (17850:16), 0
-	ld wa, (17842:16)
-	ld bc, (17844:16)
-	ld de, (17846:16)
-	call DSP_MixerCoeff_Compute
-	ld xiy, DSP_DefaultEffectConfig_Image
-	ld xix, DSP_ConfigBuffer
-	ldw bc, 0x91
-	ldirw
-	lda xwa, (DSP_ConfigBuffer:16)
-	call DSP_State_LoadAndApplyAll
-	ldw (17554:16), 0
-	call DSP_State_DmaLoadPresets
-	ld iz, (DSP_DefaultEffectConfig_Image+8:16)
-	ld wa, iz
-	calr DSP_WriteAlgoInitPreset
-	ld wa, iz
-	calr DSP_ApplyAlgoForVoiceType
-	ld wa, (17842:16)
-	ld bc, (17844:16)
-	ld de, (17846:16)
-	call DSP_MixerCoeff_Compute
-	popw iz
-	ret
+DSP_Reset:	.include "includes/generated/cc900/DSP_Reset.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; A lone `ret`: the do-nothing task body that entries 1, 2 and 3 of DSP_ResetTask_PtrTable
 ; (subcpu_data_tables.s) point to, beside entry 0 = DSP_Reset -- the same shape as
@@ -893,64 +863,18 @@ DSP_SlotState_DisplayRestore:	.include "includes/generated/cc900/DSP_SlotState_D
 ;   3 -> BufSelectB (see below); 0 -> DSP_State_ApplyBuf followed by
 ;   DSP_ApplyAlgoForVoiceType(word at 0x4496, i.e. slot 0's algorithm number);
 ;   anything else -> return without doing anything.
-DSP_ApplyConfig:
-	cp e, 0xFF
-	jr nz, DSP_ApplyConfig_ActivePath
-	ldw (DSP_ConfigBuffer:16), 1
-	jr DSP_ApplyConfig_InactivePath
-
-; (0x448E) = 0 -- "this is a real change".
-DSP_ApplyConfig_ActivePath:
-	ldw (DSP_ConfigBuffer:16), 0
-
-; The slot switch.
-DSP_ApplyConfig_InactivePath:
-	cp a, 3:i3
-	jr z, DSP_ApplyConfig_BufSelectB
-	cp a, 4:i3
-	jr z, DSP_ApplyConfig_BufSelectA
-	cp a, 2:i3
-	jr z, DSP_ApplyConfig_BufSelectA
-	cp a, 1:i3
-	jr z, DSP_ApplyConfig_BufSelectA
-	cp a, 0:i3
-	ret nz
-	lda xwa, (DSP_ConfigBuffer:16)
-	call DSP_State_ApplyBuf
-	ld wa, (17558:16)
-	jrl DSP_ApplyAlgoForVoiceType
-
-; Slots 1, 2, 4: jp DSP_State_ApplyBuf(0x448E).
-DSP_ApplyConfig_BufSelectA:
-	lda xwa, (DSP_ConfigBuffer:16)
-	jp DSP_State_ApplyBuf
-
-; Slot 3 only: writes (0x454A) = (0x45B8) if (0x45BA) != 0, else 0, and then applies. Same
-; 0x45B8/0x45BA/0x454A relationship as the global setters at 0x036252/0x03627A -- and
-; 0x454A = 0x453E + 0x0C, i.e. SLOT 3's record at offset +0x0C, which is why this is the
-; slot-3 branch. That cross-check is what makes the 0x4496 + n*0x38 slot layout certain.
-DSP_ApplyConfig_BufSelectB:
-	lda xbc, (17738:16)
-	ld wa, 0:i3
-	cpw (17850:16), 0
-	jr z, DSP_ApplyConfig_Epilogue
-	ld wa, (17848:16)
-
-; Stores the selected word and calls DSP_State_ApplyBuf.
-DSP_ApplyConfig_Epilogue:
-	ld (xbc), wa
-	lda xwa, (DSP_ConfigBuffer:16)
-	call DSP_State_ApplyBuf
-	ret
+DSP_ApplyConfig:	.include "includes/generated/cc900/DSP_ApplyConfig.s"	; C: cc900/audio_process_dsp_and_effects_d_6c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ApplyConfig_ActivePath, DSP_ApplyConfig + 13
+	.set	DSP_ApplyConfig_InactivePath, DSP_ApplyConfig + 19
+	.set	DSP_ApplyConfig_BufSelectA, DSP_ApplyConfig + 54
+	.set	DSP_ApplyConfig_BufSelectB, DSP_ApplyConfig + 62
+	.set	DSP_ApplyConfig_Epilogue, DSP_ApplyConfig + 80
 
 ; ALREADY NAMED -- doc header only. DSP_State_ApplyBuf(0x448E) then
 ; DSP_ApplyAlgoForVoiceType(word at 0x4496). The unconditional form of DSP_ApplyConfig's
 ; slot-0 case; called after a successful whole-preset load in DSP_CmdHandler_2D.
-DSP_ReconfigAndStatus:
-	lda xwa, (DSP_ConfigBuffer:16)
-	call DSP_State_ApplyBuf
-	ld wa, (17558:16)
-	jrl DSP_ApplyAlgoForVoiceType
+DSP_ReconfigAndStatus:	.include "includes/generated/cc900/DSP_ReconfigAndStatus.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; ALREADY NAMED -- doc header only. XHL = 0x448E. Three bytes.
 DSP_GetConfigBuffer:	.include "includes/generated/cc900/DSP_GetConfigBuffer.s"	; C: cc900/audio_process_dsp_and_effects.c
@@ -959,35 +883,11 @@ DSP_GetConfigBuffer:	.include "includes/generated/cc900/DSP_GetConfigBuffer.s"	;
 ; Entry WA = slot. Exit XHL = 0x4496 + slot * 0x38 for slot in 0..4, or 0xFFFFFFFF for any
 ; other slot. The five explicit `cps bc,n / jr z` tests for 0..4 are the range check; the
 ; fall-through to EFF_GetSlotBuffer_LoopBody is the error case.
-EFF_GetSlotBuffer:
-	ld bc, wa
-	cp bc, 4:i3
-	jr z, EFF_GetSlotBuffer_NoSlot
-	cp bc, 3:i3
-	jr z, EFF_GetSlotBuffer_NoSlot
-	cp bc, 2:i3
-	jr z, EFF_GetSlotBuffer_NoSlot
-	cp bc, 1:i3
-	jr z, EFF_GetSlotBuffer_NoSlot
-	cp bc, 0:i3
-	jr nz, EFF_GetSlotBuffer_LoopBody
-
-; The VALID path: XHL = 0x4496 + slot * 0x38. Name is inverted; see [UNCERTAIN].
-EFF_GetSlotBuffer_NoSlot:
-	mul wa, 0x38
-	lda xbc, (17558:16)
-	extz xwa
-	add xwa, xbc
-	ld xhl, xwa
-	jr EFF_GetSlotBuffer_Epilogue
-
-; The INVALID path: XHL = 0xFFFFFFFF. Not a loop; name is wrong. See [UNCERTAIN].
-EFF_GetSlotBuffer_LoopBody:
-	ld xhl, 0xFFFFFFFF
-
-; ret.
-EFF_GetSlotBuffer_Epilogue:
-	ret
+EFF_GetSlotBuffer:	.include "includes/generated/cc900/EFF_GetSlotBuffer.s"	; C: cc900/audio_process_dsp_and_effects_d_7a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_GetSlotBuffer_NoSlot, EFF_GetSlotBuffer + 22
+	.set	EFF_GetSlotBuffer_LoopBody, EFF_GetSlotBuffer + 38
+	.set	EFF_GetSlotBuffer_Epilogue, EFF_GetSlotBuffer + 43
 
 ; ★ NEW MEANING. This address is currently labelled DSP_StateTable_DefaultData and its 256
 ; bytes are emitted as `.byte`. They are ten subroutines; this is the first.
@@ -1084,12 +984,7 @@ DSP_Set_AcousticIllusionOnOff:	.include "includes/generated/cc900/DSP_Set_Acoust
 ;   0x4003, sent as 0/1) at 0x45B0, then DSP_ApplyAlgoForVoiceType copies it into DSP EFFECT slot 0's parameter word
 ;   +0x1E only when slot 0's algorithm is 15 ROCK ROTARY or 53 ROTARY SPEAKER. Basis: caller + main-CPU sender +
 ;   reader.
-DSP_Set_RotarySpeed:
-	ldw	(DSP_ConfigBuffer:16), 0
-	extz	wa
-	ld	(17840:16), wa
-	ld	wa, (17558:16)
-	jrl	DSP_ApplyAlgoForVoiceType
+DSP_Set_RotarySpeed:	.include "includes/generated/cc900/DSP_Set_RotarySpeed.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 ; ★ NEW NAME. Target (0x4574) = 0x4496 + 0xDE = slot 3 record + 0x36. Global sub-command 0x24.
 ; DSP_Set_MicReverbOnOff: Global 0x2C sub-command 0x24: stores WA (0/1) in EFF slot 3's +0x36 link word (0x4574) and
 ;   hands the config block to DSP_State_ApplyBuf -- the microphone reverb (slot 3: ROOM/KARAOKE/BATH ROOM/STAGE)
@@ -1113,27 +1008,10 @@ DSP_Set_EqualizerOnOff:	.include "includes/generated/cc900/DSP_Set_EqualizerOnOf
 ; ★ There is NO iteration cap. If the tick at 0x1040 stops advancing this never returns.
 ; Callers are outside the region (0x039128 and a tail jump at 0x039472, both in the DSP
 ; microprogram download path).
-DSP_WaitForDelay:
-	push xiz
-	extz xwa
-	inc 1, xwa
-	srl xwa, 1
-	add xwa, (4160:16)
-	ld xiz, xwa
-	cp (4160:16), xiz
-	jr nc, DSP_WaitForTaskSlot_Epilogue
-
-; Kernel_YieldRotate(3); re-test.
-DSP_WaitForTaskSlot_Loop:
-	ld wa, 3:i3
-	call Kernel_YieldRotate
-	cp (4160:16), xiz
-	jr c, DSP_WaitForTaskSlot_Loop
-
-; pop; ret.
-DSP_WaitForTaskSlot_Epilogue:
-	pop xiz
-	ret
+DSP_WaitForDelay:	.include "includes/generated/cc900/DSP_WaitForDelay.s"	; C: cc900/audio_process_dsp_and_effects_kernel.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_WaitForTaskSlot_Loop, DSP_WaitForDelay + 20
+	.set	DSP_WaitForTaskSlot_Epilogue, DSP_WaitForDelay + 32
 
 ; --- 0x036327-0x03632A  DSP_WaitForTaskSlot_Data -- four bytes 1b 0f 8e 03
 ; ★ CORRECTED: this is TASK 3's ENTRY POINT, not "an unreachable tail jump".  Record 3 of
@@ -1149,9 +1027,7 @@ Task3_EnterDspApplyLoop:	.include "includes/generated/cc900/Task3_EnterDspApplyL
 
 ; ALREADY NAMED -- doc header only. `Kernel_SemaWait(1)` as a tail jump. Called at the top of
 ; DSP2_Send_Command so the bit-bang burst starts on a fresh scheduler slice.
-DSP_WakeAudioTask:
-	ld wa, 1:i3
-	jp Kernel_SemaWait
+DSP_WakeAudioTask:	.include "includes/generated/cc900/DSP_WakeAudioTask.s"	; C: cc900/audio_process_dsp_and_effects_kernel.c
 
 ; ----------------------------------------------------------------------------
 ; DSP_Send_Command - Send a command byte to DSP chip
@@ -2979,66 +2855,20 @@ DSP2_SendData_Epilogue_Nop16:
 ; BC == 1 -> DSP2_Send_Command (IC310, bit-banged); anything else -> HL = 1 (invalid chip).
 ; Exit HL = 0 ok / 1 error. Eight call sites, all in the DSP microprogram loader outside
 ; this region.
-DSP_DispatchCommand:
-	pushw iz
-	ld iz, 0:i3
-	ld de, bc
-	cp de, 1:i3
-	jr z, DSP_DispatchCommand_DSP2Path
-	cp de, 0:i3
-	jr nz, DSP_DispatchCommand_InvalidChip
-	extz wa
-	calr DSP_Send_Command
-	jr DSP_DispatchCommand_Epilogue
-
-; BC == 1.
-DSP_DispatchCommand_DSP2Path:
-	extz wa
-	calr DSP2_Send_Command
-	jr DSP_DispatchCommand_Epilogue
-
-; ++IZ, i.e. HL = 1.
-DSP_DispatchCommand_InvalidChip:
-	inc 1, iz
-
-; HL = IZ; pop; ret. NOTE: the transports' own return values are DISCARDED here -- IZ is only
-; ever 0 or 1 from the invalid-chip test -- so a DSP_Send_Command timeout is invisible to the
-; caller of DSP_DispatchCommand.
-DSP_DispatchCommand_Epilogue:
-	ld hl, iz
-	popw iz
-	ret
+DSP_DispatchCommand:	.include "includes/generated/cc900/DSP_DispatchCommand.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_DispatchCommand_DSP2Path, DSP_DispatchCommand + 20
+	.set	DSP_DispatchCommand_InvalidChip, DSP_DispatchCommand + 27
+	.set	DSP_DispatchCommand_Epilogue, DSP_DispatchCommand + 29
 
 ; ALREADY NAMED -- doc header only. Same shape for data bytes: BC == 0 -> DSP_Send_Data,
 ; BC == 1 -> DSP2_Send_Data, else HL = 1. The transports' results are discarded in the same
 ; way.
-DSP_DispatchData:
-	pushw iz
-	ld iz, 0:i3
-	ld de, bc
-	cp de, 1:i3
-	jr z, DSP_DispatchData_DSP2Path
-	cp de, 0:i3
-	jr nz, DSP_DispatchData_InvalidChip
-	extz wa
-	calr DSP_Send_Data
-	jr DSP_DispatchData_Epilogue
-
-; BC == 1.
-DSP_DispatchData_DSP2Path:
-	extz wa
-	calr DSP2_Send_Data
-	jr DSP_DispatchData_Epilogue
-
-; ++IZ.
-DSP_DispatchData_InvalidChip:
-	inc 1, iz
-
-; HL = IZ; pop; ret.
-DSP_DispatchData_Epilogue:
-	ld hl, iz
-	popw iz
-	ret
+DSP_DispatchData:	.include "includes/generated/cc900/DSP_DispatchData.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_DispatchData_DSP2Path, DSP_DispatchData + 20
+	.set	DSP_DispatchData_InvalidChip, DSP_DispatchData + 27
+	.set	DSP_DispatchData_Epilogue, DSP_DispatchData + 29
 
 ; ALREADY NAMED -- doc header only. Copies 0x91 words (290 bytes) from XWA to 0x45CA, i.e.
 ; snapshots the live effect configuration into the shadow that all the diff routines compare
@@ -3065,54 +2895,11 @@ DSP_AlgoChange_CheckAndFlag:	.include "includes/generated/cc900/DSP_AlgoChange_C
 ; For each slot n = 0..4: compares the word at slot-record +0x00 (the algorithm number)
 ; against its shadow at 0x45D2 + n*0x38, and writes 1 (differs) or 0 (same) to the per-slot
 ; dirty word at 0x4940 + n*0x32. Pure comparison, nothing is copied.
-DSP_SlotParam_DiffAndFlag:
-	ld hl, 0:i3
-	cp hl, 5:i3
-	ret nc
-
-; Body; the address arithmetic `((n*8)-n)*8 + 8` is the compiler's way of writing n*56 + 8.
-DSP_SlotParam_DiffLoop:
-	ld bc, hl
-	mul bc, 0x38
-	lda xde, (17874:16)
-	ld ix, bc
-	extz xix
-	add xix, xde
-	ld bc, hl
-	extz xbc
-	ld xde, xbc
-	sll xde, 3
-	sub xde, xbc
-	sll xde, 3
-	inc 8, xde
-	add xde, xwa
-	ld bc, (xde)
-	cp bc, (xix)
-	jr z, DSP_SlotParam_DiffMatch
-	ld bc, hl
-	mul bc, 0x32
-	lda xde, (18752:16)
-	extz xbc
-	add xbc, xde
-	ldw (xbc), 0x1
-	jr DSP_SlotParam_DiffMismatch
-
-; Equal: dirty word = 0.
-DSP_SlotParam_DiffMatch:
-	ld bc, hl
-	mul bc, 0x32
-	lda xde, (18752:16)
-	extz xbc
-	add xbc, xde
-	ldw (xbc), 0x0
-
-; Loop increment. (Both branch names are one step off what they do; the "Mismatch" label is
-; actually the loop tail.)
-DSP_SlotParam_DiffMismatch:
-	inc 1, hl
-	cp hl, 5:i3
-	jr c, DSP_SlotParam_DiffLoop
-	ret
+DSP_SlotParam_DiffAndFlag:	.include "includes/generated/cc900/DSP_SlotParam_DiffAndFlag.s"	; C: cc900/audio_process_dsp_and_effects_d_7a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_DiffLoop, DSP_SlotParam_DiffAndFlag + 6
+	.set	DSP_SlotParam_DiffMatch, DSP_SlotParam_DiffAndFlag + 66
+	.set	DSP_SlotParam_DiffMismatch, DSP_SlotParam_DiffAndFlag + 84
 
 ; ALREADY NAMED -- doc header only. The big four-level parameter diff. Entry XWA = live
 ; config buffer; no output register, everything lands in the dirty arrays.
@@ -3422,29 +3209,11 @@ DSP_EFFParam_DiffEpilogue:
 
 ; ALREADY NAMED -- doc header only. XWA = live config buffer; runs, in order,
 ; DSP_AlgoChange_CheckAndFlag, DSP_SlotParam_DiffAndFlag, DSP_EFFParam_DiffAllAndFlag.
-DSP_State_DiffAll:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr DSP_AlgoChange_CheckAndFlag
-	ld xwa, xiz
-	calr DSP_SlotParam_DiffAndFlag
-	ld xwa, xiz
-	calr DSP_EFFParam_DiffAllAndFlag
-	pop xiz
-	ret
+DSP_State_DiffAll:	.include "includes/generated/cc900/DSP_State_DiffAll.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; ALREADY NAMED -- doc header only. DSP_State_DiffAll followed by EFF_StateLoad_Prepare
 ; (outside the region), both with XWA = the live config buffer.
-DSP_State_DiffAndPrepare:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr DSP_State_DiffAll
-	ld xwa, xiz
-	calr EFF_StateLoad_Prepare
-	pop xiz
-	ret
+DSP_State_DiffAndPrepare:	.include "includes/generated/cc900/DSP_State_DiffAndPrepare.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; ALREADY NAMED -- doc header only. Entry XWA = live config buffer.
 ; Clamps the header word at +6 to 0 or 1 (anything above 1 becomes 0), then clamps each of
@@ -3452,45 +3221,11 @@ DSP_State_DiffAndPrepare:
 ; the strongest evidence that slot +0x00 is the DSP algorithm NUMBER: it matches the
 ; instrument's 0..99 effect numbering, and EFF_SlotActive_UpdateFlags tests it against the
 ; specific values 0x33, 0x34, 0x45 and 0x46.
-DSP_Config_ClampLimits:
-	cpw (xwa + 6), 0x1
-	jr ule, DSP_Config_ClampLoop
-	ldw (xwa + 6), 0x0
-
-; Slot loop head, n = 0..4.
-DSP_Config_ClampLoop:
-	ld hl, 0:i3
-	cp hl, 5:i3
-	ret nc
-
-; Reads slot +0x00; if it exceeds 0x63 recomputes the address and writes 0x63 back.
-DSP_Config_ClampApply:
-	ld bc, hl
-	extz xbc
-	ld xde, xbc
-	sll xde, 3
-	sub xde, xbc
-	sll xde, 3
-	inc 8, xde
-	add xde, xwa
-	cpw (xde), 0x63
-	jr ule, DSP_Config_ClampNext
-	ld bc, hl
-	extz xbc
-	ld xde, xbc
-	sll xde, 3
-	sub xde, xbc
-	sll xde, 3
-	inc 8, xde
-	add xde, xwa
-	ldw (xde), 0x63
-
-; ++n while n < 5.
-DSP_Config_ClampNext:
-	inc 1, hl
-	cp hl, 5:i3
-	jr c, DSP_Config_ClampApply
-	ret
+DSP_Config_ClampLimits:	.include "includes/generated/cc900/DSP_Config_ClampLimits.s"	; C: cc900/audio_process_dsp_and_effects_d_7a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_Config_ClampLoop, DSP_Config_ClampLimits + 12
+	.set	DSP_Config_ClampApply, DSP_Config_ClampLimits + 18
+	.set	DSP_Config_ClampNext, DSP_Config_ClampLimits + 64
 
 ; --- 0x036DEA-0x036DF4  DSP_Config_ClampData -- eleven bytes d2 66 55 04 23 d2 44 54 04 83 0e
 ; Disassembles exactly as `ld HL,(0x045566) / add HL,(0x045444) / ret`, i.e. another
@@ -3523,21 +3258,7 @@ CalcSampleAddr:	.include "includes/generated/cc900/CalcSampleAddr.s"	; C: cc900/
 ; So DSP_State_Dispatcher (outside the region) is what actually pushes bytes at the DSPs, and
 ; it reports through 0x45C8. The unconditional DSP_StateTable_Save at the end means the
 ; shadow is updated even if the dispatch failed. Called from 0x040592.
-DSP_State_ApplyAll:
-	push xiz
-	ld xiz, xwa
-	ldw (17864:16), 0
-	ld xwa, xiz
-	calr DSP_Config_ClampLimits
-	ld xwa, xiz
-	calr DSP_State_DiffAndPrepare
-	ld xwa, xiz
-	calr DSP_State_Dispatcher
-	ld xwa, xiz
-	calr DSP_StateTable_Save
-	ld hl, (17864:16)
-	pop xiz
-	ret
+DSP_State_ApplyAll:	.include "includes/generated/cc900/DSP_State_ApplyAll.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; ALREADY NAMED -- doc header only. Entry XWA = live config buffer.
 ; If the global flag (0x493E) == 1 (see DSP_AlgoChange_CheckAndFlag) it simply marks all five
@@ -4493,16 +4214,7 @@ EFF_DspChanInit_AlgoType35_Epilogue:
 ; clobber it: EFF_SlotActive_UpdateFlags (rebuild 0x004930[]), EFF_DSPLink_ResetFlags, and
 ; EFF_DspChannel_InitFlags (the dirty-flag coalescing documented above). Called only from
 ; DSP_State_DiffAndPrepare, which is itself called only from DSP_State_ApplyAll.
-EFF_StateLoad_Prepare:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr EFF_SlotActive_UpdateFlags
-	calr EFF_DSPLink_ResetFlags
-	ld xwa, xiz
-	calr EFF_DspChannel_InitFlags
-	pop xiz
-	ret
+EFF_StateLoad_Prepare:	.include "includes/generated/cc900/EFF_StateLoad_Prepare.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; Mute every ACTIVE effect slot before the reprogramming burst.
 ; Entry: XWA = new config block (accepted but NOT used -- see below). Uses IZ = slot 0..4.
@@ -4736,17 +4448,7 @@ EFF_ParamIter_Epilogue:
 ; without touching the DSP. Called from EFF_Change_Handler's epilogue, so a parameter
 ; sweep only happens for slots whose volume word was marked -- which is why
 ; EFF_DspChannel_InitFlags is so careful to set 0x004970.
-EFF_VolumeChange_Check:
-	ld de, wa
-	mul de, 0x32
-	add de, 0x10
-	lda xhl, (18784:16)
-	extz xde
-	add xde, xhl
-	cpw (xde), 0x1
-	ret nz
-	calr EFF_ParamIterator_Process
-	ret
+EFF_VolumeChange_Check:	.include "includes/generated/cc900/EFF_VolumeChange_Check.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
 
 ; Already correctly named in both sources; documented here only.
 ; Apply one slot's algorithm/data change.
@@ -4759,99 +4461,13 @@ EFF_VolumeChange_Check:
 ;    block[+0x04] == 1, EFF_DataChange_WithDebug otherwise. Slots 0 and 1 always take
 ;    EFF_Change_WithDebug.
 ; 4. Finish with EFF_VolumeChange_Check(slot, block).
-EFF_Change_Handler:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	ld wa, iz
-	mul wa, 0x32
-	lda xbc, (18752:16)
-	extz xwa
-	add xwa, xbc
-	cpw (xwa), 0x1
-	jrl nz, EFF_Change_Handler_Epilogue
-	ld wa, iz
-	cp wa, 2:i3
-	jr nz, EFF_Change_Handler_NonSlot2
-	ld xwa, (xsp + 2)
-	cpw (xwa + 4), 0x1
-	jr nz, EFF_Change_Handler_SlotDispatch
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	ld bc, (xbc + 6)
-	call EFF_Disconnect
-	jr EFF_Change_Handler_SlotDispatch
-
-; Slots other than 2: disconnect unconditionally.
-EFF_Change_Handler_NonSlot2:
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	ld bc, (xbc + 6)
-	call EFF_Disconnect
-
-; Post-disconnect fork on the slot number (2, 3, 4 vs 0, 1).
-EFF_Change_Handler_SlotDispatch:
-	ld wa, iz
-	cp wa, 4:i3
-	jr z, EFF_Change_Handler_Slot234_AlgoPath
-	cp wa, 3:i3
-	jr z, EFF_Change_Handler_Slot234_AlgoPath
-	cp wa, 2:i3
-	jr z, EFF_Change_Handler_Slot234_AlgoPath
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld wa, iz
-	ld bc, (xbc)
-	call EFF_Change_WithDebug
-	jr EFF_Change_Handler_Epilogue
-
-; Slots 2/3/4 with block[+0x04] == 1: full algorithm upload via EFF_Change_WithDebug.
-EFF_Change_Handler_Slot234_AlgoPath:
-	ld xwa, (xsp + 2)
-	cpw (xwa + 4), 0x1
-	jr nz, EFF_Change_Handler_Slot234_AltPath
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld wa, iz
-	ld bc, (xbc)
-	call EFF_Change_WithDebug
-	jr EFF_Change_Handler_Epilogue
-
-; Slots 2/3/4 otherwise: coefficient-only upload via EFF_DataChange_WithDebug.
-EFF_Change_Handler_Slot234_AltPath:
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld wa, iz
-	ld bc, (xbc)
-	call EFF_DataChange_WithDebug
-
-; Tail: EFF_VolumeChange_Check(slot, block), restore IZ, drop the 4-byte frame.
-EFF_Change_Handler_Epilogue:
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	calr EFF_VolumeChange_Check
-	popw iz
-	inc 4, xsp
-	ret
+EFF_Change_Handler:	.include "includes/generated/cc900/EFF_Change_Handler.s"	; C: cc900/audio_process_dsp_and_effects_d_8a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_Change_Handler_NonSlot2, EFF_Change_Handler + 59
+	.set	EFF_Change_Handler_SlotDispatch, EFF_Change_Handler + 71
+	.set	EFF_Change_Handler_Slot234_AlgoPath, EFF_Change_Handler + 114
+	.set	EFF_Change_Handler_Slot234_AltPath, EFF_Change_Handler + 153
+	.set	EFF_Change_Handler_Epilogue, EFF_Change_Handler + 180
 
 ; Already correctly named in both sources; documented here only.
 ; The main reprogramming sweep. Entry: XWA = config block. Frame of 4 bytes; block at
@@ -4866,74 +4482,15 @@ EFF_Change_Handler_Epilogue:
 ;   - call EFF_Change_Handler(slot, block).
 ; When the sweep ends, if the accumulated maximum is non-zero, DSP_ScheduleDelay(max)
 ; blocks the task for that many milliseconds. With the shipped table the worst case is 46.
-EFF_HeaderChangeDataLoop:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-	ldiw_erp 0xFA, 0
-	ld iz, 4:i3
-	cp iz, 0xFFFF
-	jr le, EFF_HeaderChangeLoop_Epilogue
-
-; Slot body: the two header-rewrite tests on block[+0x02] and block[+0x04].
-EFF_HeaderChangeLoop_TestHeaderRewrite:
-	ld xwa, (xsp + 4)
-	cpw (xwa + 2), 0x1
-	jr z, EFF_HeaderChangeLoop_CallAlgo
-	ld xwa, (xsp + 4)
-	cpw (xwa + 4), 0x1
-	jr nz, EFF_HeaderChangeLoop_PostAlgo
-
-; Issue EFF_WriteHeader(slot).
-EFF_HeaderChangeLoop_CallAlgo:
-	ld wa, iz
-	call EFF_WriteHeader
-
-; Dirty test on 0x004940 + 50*slot, then the block[+0x00] fallback test.
-EFF_HeaderChangeLoop_PostAlgo:
-	ld wa, iz
-	mul wa, 0x32
-	lda xbc, (18752:16)
-	extz xwa
-	add xwa, xbc
-	cpw (xwa), 0x1
-	jr z, EFF_HeaderChangeLoop_ActiveSlot
-	ld xwa, (xsp + 4)
-	cpw (xwa), 0x1
-	jr nz, EFF_HeaderChangeLoop_CallChange
-
-; Fold this slot's settle time -- byte (0x01ED72 + slot), read with `ld A,(XWA+IZ)` -- into
-; the QIZ running maximum through Unsigned_Max_Select.
-EFF_HeaderChangeLoop_ActiveSlot:
-	lda xwa, (EFF_SlotSettleTime_Table:24)
-	ld	a, (xwa+iz)
-	ld c, a
-	extz bc
-	ldto_werp WA, 0xFA
-	calr Unsigned_Max_Select
-	ldfr_werp HL, 0xFA
-
-; Call EFF_Change_Handler(slot, block) and step the descending slot counter.
-EFF_HeaderChangeLoop_CallChange:
-	ld wa, iz
-	ld xbc, (xsp + 4)
-	calr EFF_Change_Handler
-	dec 1, iz
-	cp iz, 0xFFFF
-	jr gt, EFF_HeaderChangeLoop_TestHeaderRewrite
-
-; If the accumulated maximum settle time is non-zero, DSP_ScheduleDelay(max).
-EFF_HeaderChangeLoop_Epilogue:
-	cpiw_erp 0xFA, 0
-	jr z, EFF_HeaderChangeLoop_SkipApply
-	ldto_werp WA, 0xFA
-	call DSP_ScheduleDelay
-
-; No slot asked for a settle: restore XIZ, drop the frame, return.
-EFF_HeaderChangeLoop_SkipApply:
-	pop xiz
-	inc 4, xsp
-	ret
+EFF_HeaderChangeDataLoop:	.include "includes/generated/cc900/EFF_HeaderChangeDataLoop.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_HeaderChangeLoop_TestHeaderRewrite, EFF_HeaderChangeDataLoop + 17
+	.set	EFF_HeaderChangeLoop_CallAlgo, EFF_HeaderChangeDataLoop + 37
+	.set	EFF_HeaderChangeLoop_PostAlgo, EFF_HeaderChangeDataLoop + 43
+	.set	EFF_HeaderChangeLoop_ActiveSlot, EFF_HeaderChangeDataLoop + 72
+	.set	EFF_HeaderChangeLoop_CallChange, EFF_HeaderChangeDataLoop + 95
+	.set	EFF_HeaderChangeLoop_Epilogue, EFF_HeaderChangeDataLoop + 111
+	.set	EFF_HeaderChangeLoop_SkipApply, EFF_HeaderChangeDataLoop + 123
 
 ; Already correctly named in both sources; documented here only.
 ; Entry: XWA = config block. Slots 4 down to 0. For each slot whose LINK dirty flag
@@ -5233,108 +4790,16 @@ EFF_DisconnectLoop:	.include "includes/generated/cc900/EFF_DisconnectLoop.s"	; C
 ;      (0x004940 + 50*slot == 1), write 0x0045BC + 2*slot = classtable[effectnumber] + 1,
 ;      or 0 when the class byte is 0.
 ; Everything the chips see comes out of steps 1-9; step 10 is bookkeeping only.
-DSP_State_Dispatcher:
-	push xiz
-	ld xiz, xwa
-	cpw (xiz + 4), 0x1
-	jr nz, DSP_StateDispatcher_MutePath
-	calr DSP_ResetLoop
-	jr DSP_StateDispatcher_PostMute
-
-; Warm path: EFF_MuteLoop instead of a hardware reset.
-DSP_StateDispatcher_MutePath:
-	ld xwa, xiz
-	calr EFF_MuteLoop
-
-; Join: DSP_MuteLoop then DSP_AlgorithmChangeCheck.
-DSP_StateDispatcher_PostMute:
-	calr DSP_MuteLoop
-	ld xwa, xiz
-	calr DSP_AlgorithmChangeCheck
-	cpw (xiz + 4), 0x1
-	jr z, DSP_StateDispatcher_DisconnectPath
-	cpw (xiz + 2), 0x1
-	jr nz, DSP_StateDispatcher_UnmutePath
-
-; EFF_WriteHeader(0) followed by EFF_DisconnectLoop -- the chain teardown.
-DSP_StateDispatcher_DisconnectPath:
-	ld wa, 0:i3
-	call EFF_WriteHeader
-	ld xwa, xiz
-	calr EFF_DisconnectLoop
-
-; The five application loops in sequence: DSP_UnmuteLoop, EFF_HeaderChangeDataLoop,
-; EFF_LinkLoop, EFF_VolumeLoop, EFF_SecondaryLinkPath.
-DSP_StateDispatcher_UnmutePath:
-	calr DSP_UnmuteLoop
-	ld xwa, xiz
-	calr EFF_HeaderChangeDataLoop
-	ld xwa, xiz
-	calr EFF_LinkLoop
-	ld xwa, xiz
-	calr EFF_VolumeLoop
-	ld xwa, xiz
-	calr EFF_SecondaryLinkPath
-	ld de, 4:i3
-	cp de, 0xFFFF
-	jr le, DSP_StateDispatcher_Epilogue
-
-; Class-cache refresh loop, slots 4..0: reads the NEW block's effect number at
-; block + 8 + 56*slot, indexes the class table at 0x012226, stores value+1 into
-; 0x0045BC + 2*slot.
-DSP_StateDispatcher_AlgoLoop:
-	ld wa, de
-	muls wa, 0x38
-	inc 8, wa
-	ld	ix, (xiz+wa)
-	ld wa, de
-	mul wa, 0x32
-	lda xbc, (18752:16)
-	extz xwa
-	add xwa, xbc
-	cpw (xwa), 0x1
-	jr nz, DSP_StateDispatcher_AlgoNext
-	ld wa, ix
-	extz xwa
-	ld xbc, DSP_EffectClass_Table
-	add xbc, xwa
-	cp (xbc), 0x0
-	jr z, DSP_StateDispatcher_AlgoClear
-	ld wa, de
-	add wa, wa
-	lda xbc, (DSP_SlotMuteState:16)
-	ld hl, wa
-	extz xhl
-	add xhl, xbc
-	ld wa, ix
-	extz xwa
-	ld xbc, DSP_EffectClass_Table
-	add xbc, xwa
-	ld a, (xbc)
-	inc 1, a
-	extz wa
-	ld (xhl), wa
-	jr DSP_StateDispatcher_AlgoNext
-
-; Class byte was 0 (the effect needs no DSP program): clear 0x0045BC + 2*slot.
-DSP_StateDispatcher_AlgoClear:
-	ld wa, de
-	add wa, wa
-	lda xbc, (DSP_SlotMuteState:16)
-	extz xwa
-	add xwa, xbc
-	ldw (xwa), 0x0
-
-; Descending slot step of the class-cache loop.
-DSP_StateDispatcher_AlgoNext:
-	dec 1, de
-	cp de, 0xFFFF
-	jr gt, DSP_StateDispatcher_AlgoLoop
-
-; Restore XIZ and return.
-DSP_StateDispatcher_Epilogue:
-	pop xiz
-	ret
+DSP_State_Dispatcher:	.include "includes/generated/cc900/DSP_State_Dispatcher.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_StateDispatcher_MutePath, DSP_State_Dispatcher + 15
+	.set	DSP_StateDispatcher_PostMute, DSP_State_Dispatcher + 20
+	.set	DSP_StateDispatcher_DisconnectPath, DSP_State_Dispatcher + 42
+	.set	DSP_StateDispatcher_UnmutePath, DSP_State_Dispatcher + 53
+	.set	DSP_StateDispatcher_AlgoLoop, DSP_State_Dispatcher + 84
+	.set	DSP_StateDispatcher_AlgoClear, DSP_State_Dispatcher + 168
+	.set	DSP_StateDispatcher_AlgoNext, DSP_State_Dispatcher + 184
+	.set	DSP_StateDispatcher_Epilogue, DSP_State_Dispatcher + 192
 
 ; Already correctly named in both sources; documented here only.
 ; HL = byte at 0x012226 + WA, zero-extended: the DSP class of an effect number. 0 means
@@ -5424,67 +4889,9 @@ EFF_Link:	.include "includes/generated/cc900/EFF_Link.s"	; C: cc900/audio_proces
 ; with block[+0x06] as the argument. Uploads the fixed common-header program at 0x01E63C
 ; to chip 0; if block[+0x04] == 1, releases DSP2 from reset via DSP_AntiReset_WithDebug;
 ; then falls into EFF_LoadConfigs_ForChannel.
-DSP_AlgorithmChange:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	lda xwa, (Str_DspAlgoChange_Msg:24)
-	call Debug_Print_String
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 6)
-	call Debug_Print_Byte
-	ld iz, 0:i3
-	lda xwa, (DSP_AlgoChange_Program:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	ld xwa, (xsp + 2)
-	cpw (xwa + 4), 0x1
-	jr nz, EFF_LoadConfigs_ForChannel
-	ld wa, iz
-	calr DSP_AntiReset_WithDebug
-
-; The fixed boot-time program sequence, in order:
-;   chip 0: 0x01E6BE
-;   chip 1: 0x01E996, 0x01EA12
-;   DSP_WaitForDelay(1 ms)
-;   chip 1: 0x01E7C5, 0x01E8A7, 0x01E891, 0x01E947
-; These seven programs are the resident microcode that everything else assumes is loaded.
-EFF_LoadConfigs_ForChannel:
-	lda xwa, (DSP1_BootProgram:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	ld iz, 1:i3
-	lda xwa, (DSP2_BootProgram_Step1:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	lda xwa, (DSP2_BootProgram_Step2:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	ld wa, 1:i3
-	call DSP_WaitForDelay
-	lda xwa, (DSP2_BootProgram_Step3:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	lda xwa, (DSP2_BootProgram_Step4:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	lda xwa, (DSP2_BootProgram_Step5:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	lda xwa, (DSP2_BootProgram_Step6:24)
-	ld xbc, xwa
-	ld wa, iz
-	call DSP_WriteGlobalConfig
-	popw iz
-	inc 4, xsp
-	ret
+DSP_AlgorithmChange:	.include "includes/generated/cc900/DSP_AlgorithmChange.s"	; C: cc900/audio_process_dsp_and_effects_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_LoadConfigs_ForChannel, DSP_AlgorithmChange + 55
 
 ; Already correctly named in both sources; documented here only.
 ; Entry: WA = effect slot. Traces "EFF %d headder" (sic). Looks up chip =

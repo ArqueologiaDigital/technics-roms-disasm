@@ -1,0 +1,59 @@
+/* hdae5000_v1_15i: the functions of hdae5000/cc900-staged/hdae5000_title_info.c that V4.23 reproduces unchanged in HD-AE5000 v1.15i (port_staged.py).
+   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_title_info.c.
+   cc900-options: -Xr
+   cc900-module: HDAE5000_TitleInfo_Build
+*/
+#include "hdae_ws.h"
+#include "hdae_ids.h"
+
+struct DiskUsage { unsigned long drive; unsigned long system; unsigned long data; unsigned long free; };
+
+extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
+extern unsigned int __cdecl HDAE5000_StrLen(const char *);
+extern void HDAE5000_HD_GetDiskUsage(struct DiskUsage *);
+
+extern unsigned char HDAE5000_RAM_WriteProtect;
+extern unsigned char HDAE5000_RAM_WriteConfirm;
+extern unsigned char HDAE5000_RAM_LoadByNumberMode;
+extern unsigned char HDAE5000_RAM_QuickLoadMode;
+extern unsigned char HDAE5000_RAM_JumpAfterLoad;
+extern char HDAE5000_RAM_TitleInfoText[];
+extern char HDAE5000_TitleInfo_Template[];
+extern char *HDAE5000_TextPtrs_OFF_ON[];
+extern char HDAE5000_Str_HDAE[];
+extern char ram_22adba[], ram_22adec[], ram_22ae1e[], ram_22add1[], ram_22ae03[], ram_22ae35[];
+
+/* the formats as the tree's char arrays: pushed as `pushw sym@hi16 / pushw sym@lo16` (see the header);
+   HDAE5000_Fmt_d_TitleInfo_Build_2 is over 31 characters and spelled by its address */
+extern char HDAE5000_Fmt_s[];
+extern char HDAE5000_Fmt_s_TitleInfo_Build[];
+extern char HDAE5000_Fmt_d[];
+extern char HDAE5000_Fmt_d_TitleInfo_Build[];
+extern char ram_2e2372[];   /* HDAE5000_Fmt_d_TitleInfo_Build_2 */
+extern char HDAE5000_Fmt_4ldMB[];
+#define FMT_S_A HDAE5000_Fmt_s
+#define FMT_S_B HDAE5000_Fmt_s_TitleInfo_Build
+#define FMT_D_A HDAE5000_Fmt_d
+#define FMT_D_B HDAE5000_Fmt_d_TitleInfo_Build
+#define FMT_D_C ram_2e2372
+#define FMT_MB HDAE5000_Fmt_4ldMB
+/* an array read as an lvalue member at offset 0 (hd_r9_b2.c FdList_Clear: `lda xwa,(sym); ld xde,xwa`) */
+struct Wrap { char c[2]; };
+#define WRAP(x) (((struct Wrap *)(x))->c)
+
+long HDAE5000_HdTitleEventCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        HDAE5000_TitleInfo_Build();
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_HDAE);
+        return 0;
+    }
+}

@@ -323,7 +323,11 @@ def compile_c(path, names, spell=True):
     for flag in FIRMWARE_RULES:                          # rules of the firmware's own C, off in the model elsewhere
         if hasattr(codegen, flag):
             setattr(codegen, flag, True)
-    unit = frontend.load(path, ["__near=", "__tiny="], [], adecl=adecl)   # the qualifiers are read by c_widths
+    try:                                                 # the qualifiers are read by c_widths
+        unit = frontend.load(path, ["__near=", "__tiny="], [], adecl=adecl)
+    except (ValueError, KeyError, NotImplementedError, AssertionError) as ex:   # C the model's front end cannot read
+        sys.exit("%s: the reference model's front end does not read it (%s: %s)%s"     # (an anonymous union member)
+                 % (path, type(ex).__name__, ex, MODEL_HINT))
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
     to_llvm.WIDTHS = c_widths(path, model=True)

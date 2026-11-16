@@ -18,6 +18,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 TREE = os.path.join(REPO, 'v142', 'subcpu')
 SCRATCH = os.path.join(os.environ.get('TMPDIR', os.path.expanduser('~/compartilhado/tmp')), 'cc900-tab', 'lane_sub',
                        'expanded')                       # probes with #define, macro-expanded by gcc -E (scratch)
+OPTS = {'Xr': '-Xr', 'O3Xr': '-O3 -Xr', 'O2Xr': '-O2 -Xr', 'O1Xr': '-O1 -Xr'}
 FN_RE = re.compile(r'^[\w][\w\s\*]*?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
 
 
@@ -39,7 +40,8 @@ def hand_source(label):
 
 def main():
     a = sys.argv[1:]
-    staged = defined(glob.glob(os.path.join(TREE, 'cc900-staged', '*.c')))
+    staged = defined(glob.glob(os.path.join(TREE, 'cc900-staged', '*.c')) +     # staged, or already built from C
+                     glob.glob(os.path.join(TREE, 'cc900', '*.c')))
     plan = {}
     for l in open(a[0]):
         c = l.rstrip('\n').split('\t')
@@ -52,13 +54,18 @@ def main():
             got.setdefault(s, form)
         if f in staged:
             continue
-        if 'Xr' not in got:
+        # the payload's option set is -Xr; a function that matches only with -O goes to a file of its own that says
+        # its set (`cc900-options: -O3 -Xr`, the firmware's -O set where it matches there): a module built with -O
+        oset = 'Xr' if 'Xr' in got else next((s for s in ('O3Xr', 'O2Xr', 'O1Xr') if s in got), None)
+        if oset is None:
             print('%s matches only at %s: not staged' % (f, ' '.join(sorted(got)))); continue
         src = hand_source(f)
         if src is None:
             print('no hand source for %s' % f); continue
         base = re.sub(r'^\d+_', '', os.path.basename(src)[:-2])
-        probe = os.path.join(REPO, 'scripts', 'analysis', 'cc900', 'corpus', 'firmware', got['Xr'] + '.c')
+        if oset != 'Xr':
+            base += '_' + oset.lower()
+        probe = os.path.join(REPO, 'scripts', 'analysis', 'cc900', 'corpus', 'firmware', got[oset] + '.c')
         txt = open(probe, encoding='latin-1').read()
         if re.search(r'^\s*#\s*define', txt, re.M):          # macros: stage from the macro-expanded text
             out = os.path.join(SCRATCH, os.path.basename(probe))
@@ -69,11 +76,11 @@ def main():
         cname = next((m.group(1) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', txt)
                       if m.group(2) == f and m.group(1) in defs), f)
         if '--own-file' in a:            # one staging file per hand source AND probe: no clash with earlier rounds'
-            base = '%s_%s' % (base, got['Xr'].replace('sub_', '').lower())   # prototypes or cc900-module: lists
-        plan.setdefault((probe, base, src), []).append(cname)
-    for (probe, name, src), fs in sorted(plan.items()):
+            base = '%s_%s' % (base, got[oset].replace('sub_', '').lower())   # prototypes or cc900-module: lists
+        plan.setdefault((probe, base, src, OPTS[oset]), []).append(cname)
+    for (probe, name, src, opts), fs in sorted(plan.items()):
         cmd = [sys.executable, os.path.join(HERE, 'stage_probe.py'), probe,
-               os.path.join(TREE, 'cc900-staged', name + '.c'), src, '-Xr'] + fs
+               os.path.join(TREE, 'cc900-staged', name + '.c'), src, opts] + fs
         if '--dry-run' in a:
             print('%s <- %s: %s' % (name, os.path.basename(probe), ' '.join(fs)))
         else:
