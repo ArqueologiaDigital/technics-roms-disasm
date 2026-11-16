@@ -56,7 +56,7 @@ extern unsigned char *HDAE5000_DirName_Address(unsigned int dir);
 extern unsigned char *HDAE5000_SongRecord_Address(unsigned int dir, unsigned int song);
 extern unsigned char *HDAE5000_FlsRecord_Address(unsigned int fls);
 extern unsigned int HDAE5000_FlsItem_Get(unsigned int fls, unsigned int item, struct FlsItem *out);
-extern int HDAE5000_FlsItem_IsSet(unsigned int fls, unsigned int item);
+extern unsigned int HDAE5000_FlsItem_IsSet(unsigned int fls, unsigned int item);
 extern unsigned char *HDAE5000_FlsItem_SongRecord(unsigned int fls, unsigned int item);
 extern int HDAE5000_FlsItem_Insert(unsigned int fls, unsigned int item);
 extern int HDAE5000_FlsItem_SetDir(unsigned int fls, unsigned int item, int dir);
@@ -68,7 +68,7 @@ extern unsigned int HDAE5000_Song_IsUsed(unsigned int dir, unsigned int song);
 extern unsigned int HDAE5000_Dir_IsBlankName(unsigned int dir);
 extern unsigned int HDAE5000_Fls_IsBlankName(unsigned int fls);
 extern unsigned int HDAE5000_Dir_CountEmptySongs(unsigned int dir);
-extern int HDAE5000_HD_StoreTables(int keep);
+extern unsigned int HDAE5000_HD_StoreTables(int keep);   /* unsigned: the ROM compares HL with 0xffff unconverted */
 extern unsigned int HDAE5000_FdSong_CheckFiles(char *name, unsigned int mask);
 extern unsigned int HDAE5000_CopyFdSongToHd(unsigned int dir, unsigned int song, const char *name, int a, int b,
                                             unsigned int mask);

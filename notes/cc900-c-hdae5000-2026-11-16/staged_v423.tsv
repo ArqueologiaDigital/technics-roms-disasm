@@ -238,3 +238,12 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem_set.c	fdd6060821c7
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_title_info.c	75204848acebfac97c9068fda5934fa1b05ccbc419eb2afcfcac1d1f1d1f4e8b	Xr	2026-11-16-85-hd-r18-ports	HDAE5000_HdTitleEventCatch	128	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_pport_services2.c	3f68e4e99d43c83355a9fbe0e35585decf0fd193bf19813dec7cd2b7b529379f	Xr	2026-11-16-93-hd-r19-svc	HDAE5000_PPORT_Svc16_InitWholeSongInMemory	232	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_pport_services2.c	3f68e4e99d43c83355a9fbe0e35585decf0fd193bf19813dec7cd2b7b529379f	Xr	2026-11-16-93-hd-r19-svc	HDAE5000_PPORT_Svc20_PreWholeSongInMemory	191	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_boot.c	6bfcacf683d11e4766656935dfbf70ef11ecca094f321a23e923df943906f293	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_Boot_Init	236	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_boot.c	6bfcacf683d11e4766656935dfbf70ef11ecca094f321a23e923df943906f293	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_Frame_Handler	291	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_boot.c	6bfcacf683d11e4766656935dfbf70ef11ecca094f321a23e923df943906f293	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_Get_Init_Flag	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens.c	1b34611f01187863ef11ec08df6b14eb245a2ea8bdea7517bd87f417cb6eb3be	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_AttenDelDirSwCatch	292	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens.c	1b34611f01187863ef11ec08df6b14eb245a2ea8bdea7517bd87f417cb6eb3be	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_HDD_UTIL_PAGE	2025	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46f0191737979e5f28b039815da3cce0bd9b65	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_CP_FD_DIRNAMECheck	297	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46f0191737979e5f28b039815da3cce0bd9b65	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_FlsNamingCheck	296	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46f0191737979e5f28b039815da3cce0bd9b65	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_FlsNamingCheck2	300	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_naming_proc.c	e1c265f15de5705819971c755f0337dda56ba7cc5ae803aadf8823adf5bddc0b	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_IvHddNamingProc	295	MATCH
