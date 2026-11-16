@@ -21,6 +21,7 @@ Add every new one here, in the commit that finds it.
 | 5 | -O: char pointer difference compared with 0 unsigned                                          | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe ptrar.c              | refuses the shape          |
 | 6 | struct pointer + char index, 10-byte element: low word of the product, zero-extended          | all four             | 2026-11-16, probe ptrar.c              | refuses the shape          |
 | 7 | a shifted or divided char compared with a char of the other signedness, at the byte, unsigned | all four             | 2026-11-16, probe shcmp.c              | refuses mixed signedness   |
+| 8 | -O: op= on a 1-bit bit-field at bit 15 flips bit 7 of the unit's low byte                     | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe bitf.c               | refuses the shape          |
 
 ## 1. A char product widened to long keeps only its low byte
 
@@ -117,3 +118,19 @@ Add every new one here, in the commit that finds it.
   phase 6's `VariScreen_IsHalfRangeAbove` shape (p6_m2a), whose operands are both unsigned, a case V4.23 gets right.
 - **Model:** the byte compare is modelled where it is correct (both operands of one signedness); a mixed-signedness
   compare of this shape is refused, under the owner's case-by-case rule (no firmware function is known to need it).
+
+## 8. At -O, op= on a 1-bit bit-field at bit 15 flips the wrong bit
+
+- **Source:** corpus/probes/bitf.c (gen_bitf.py): `struct b1 { unsigned a:1; unsigned b:3; unsigned c:4; unsigned d:8; }
+  gb1; void bf_b1_a_a(void) { gb1.a += 1; }`; likewise `gb4.x += 1` (the 1-bit field of a second unit, at +2), and
+  `if (gb7.m < 0) gb7.m += 1;` / `if (gb7.m > -1) gb7.m -= 1;` on a signed 1-bit field.
+- **C meaning:** the 1-bit field toggles; the other fields are untouched.
+- **V4.23 at -O3 -XS and -O3 -XS -Xr:** turns the op= into a bit flip (valid in itself) but addresses the wrong byte.
+  Bit-fields fill a 16-bit unit from the high end, so these fields are bit 15 of the unit, which on the little-endian
+  TLCS-900 is bit 7 of the byte at unit + 1.  V4.23 flips bit 7 of the byte at unit + 0, i.e. word bit 7: the field never
+  changes and a neighbouring field is corrupted (the top bit of `d` in b1, the low bit of `o` in b7).  The test of the
+  signed variant reads bit 15 correctly.  Without -O (none, -Xr) V4.23 does a full read-modify-write of the unit, which
+  is right.
+- **Evidence:** oracle run 2026-11-16-6-micro-bitf, O3XS / O3XSXr, `bf_b1_a_a`, `bf_b4_x_a`, `bf_b7_m_a`, `bf_b7_m_o`.
+  Found by lane_o3.
+- **Model:** refuses a 1-bit bit-field op= at -O (case by case: no firmware need known).
