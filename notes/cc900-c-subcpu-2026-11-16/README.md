@@ -213,3 +213,17 @@ Two more rules:
 - **A result kept in a parameter's register**: DSP_TuneOffset's `ld xde,xhl` / `ld a,(xde)` after the call is
   not a new pointer local (sub_F_ra01..10 all keep XHL) but most probably the parameter `tbl` (in XDE) reused:
   `tbl = DSP_TableWalk_Search(tbl, ...); v = *tbl;` (round 15, sub_F_ra11..14).
+
+### Round 15 (run 2026-11-16-106-sub-r15)
+
+Four more functions match (939 B): DSP_TuneOffset, DSP_Config_Init, VoiceParam_CustomTone_Apply_Catalog80,
+TVF_Calc_Cutoff_NoKeyFollow.
+
+- **Result kept in a parameter's register: confirmed.**  `tbl = DSP_TableWalk_Search(tbl, k, mode, &st); v = *tbl;`
+  gives the ROM's `ld xde,xhl` / `ld a,(xde)` (sub_F_ra11, ra12, ra14); with a literal constant instead of the local
+  `k` (ra13) the function is back at +8, so idiom (b) is needed with it.
+- **A copy through WA before a store** (`ld wa,iz` / `ld (port),wa`): a temporary, `r = i; port = r;`
+  (DSP_Config_Init, sub_J_15b).
+- **A value computed before the address it is stored to**: the value through a byte temporary first
+  (Catalog80, sub_G_15a).
+- DSP_AlgoDescriptor_Emit still stops at +11 / +13 with the corrected third argument (sub_F_rb15..18): open.
