@@ -12,11 +12,14 @@ reproduce is a function the model can never match byte for byte.
 
 Add every new one here, in the commit that finds it.
 
-| # | bug                                                         | option sets      | found                                  | model                      |
-|---|-------------------------------------------------------------|------------------|----------------------------------------|----------------------------|
-| 1 | a char product widened to long keeps only its low byte      | all four         | 2026-11-13, probe chararith.c          | reproduces it              |
-| 2 | two equal switch arms merged; one case loses its call       | -O3 -XS -Xr      | 2026-11-15, rstmt2.c (semcheck review) | does not reproduce it      |
-| 3 | -Xr small struct: caller and callee disagree on stack order | -Xr, -O3 -XS -Xr | 2026-11-16, probe sxl.c                | reproduces the caller side |
+| # | bug                                                                                  | option sets          | found                                  | model                      |
+|---|--------------------------------------------------------------------------------------|----------------------|----------------------------------------|----------------------------|
+| 1 | a char product widened to long keeps only its low byte                               | all four             | 2026-11-13, probe chararith.c          | reproduces it              |
+| 2 | two equal switch arms merged; one case loses its call                                | -O3 -XS -Xr          | 2026-11-15, rstmt2.c (semcheck review) | does not reproduce it      |
+| 3 | -Xr small struct: caller and callee disagree on stack order                          | -Xr, -O3 -XS -Xr     | 2026-11-16, probe sxl.c                | reproduces the caller side |
+| 4 | char pointer + negative int or char index zero-extended                              | all four             | 2026-11-16, probes ptrar.c, stptr.c    | reproduces it              |
+| 5 | -O: char pointer difference compared with 0 unsigned                                 | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe ptrar.c              | refuses the shape          |
+| 6 | struct pointer + char index, 10-byte element: low word of the product, zero-extended | all four             | 2026-11-16, probe ptrar.c              | refuses the shape          |
 
 ## 1. A char product widened to long keeps only its low byte
 
@@ -51,10 +54,48 @@ Add every new one here, in the commit that finds it.
 - **V4.23 with -Xr (adecl):** a struct of 4 bytes or less in one of the first three (register) argument positions is
   passed on the stack.  The *callee* reads every stack argument at its left-to-right place; the *caller* pushes such a
   struct last, after every other stack argument, among the register loads.  Whenever the struct precedes another stack
-  argument (7 of the 12 lists: a, b, e, h, i, j, k) the two disagree and the struct and the next stack argument
+  argument (7 of the 12 lists: a, b, e, h, i, j, k; first seen in probe stc, `.st_pc_1..4`) the two disagree and the struct and the next stack argument
   exchange places: in `x_b` the caller puts the struct where the callee reads the double.  Structs over 4 bytes, or past
   the third position, keep the left-to-right order on both sides.
 - **Evidence:** oracle run 2026-11-16-2-micro-sxl, Xr and O3XSXr, functions `.sx_c_*` (callers) and `.sx_d_*`
   (callees); lane_o3 fix 12 (batch 350) and research-scratch tabulation/lanes-2026-11-15/lane_o3/RULES.md.
 - **Model:** reproduces the caller side (STRUCT_REG_SLOT_PUSH), so the probe's callers are exact; its callees follow the
   left-to-right layout, as V4.23's do.  Code mixing V4.23-compiled callers and callees of this shape is wrong either way.
+
+## 4. A char pointer plus a negative index is zero-extended
+
+- **Source:** `char *gcp; char *pa_cgpa(int b) { return gcp + b; }` and the like (corpus/probes/ptrar.c: pa_cgpa,
+  pa_cqpa, pa_cgga, and pa_cgca with a signed char index; corpus/probes/stptr.c: sp_cQpa `q[b] = 5`, sp_cQpb;
+  corpus/micro/arr_index.c: ai_c_p_p1 `return p[i + 1]`, ai_c_p_st_m1 `p[i - 1] = x`, at none and -O3 -XS).
+- **C meaning:** `p + i` with a negative `i` points before `p`, which is defined whenever `p` points into the middle of
+  an array.
+- **V4.23:** widens the signed 16-bit (or char) index to 32 bits with a zero extension, so `p + i` for `i < 0` yields
+  `p + (i + 65536)` (or `+ 256` for a char).  The same sum stored into a pointer variable (`gcp2 = gcp + b`) and
+  `p - i` are sign-extended, correctly -- so this is not a uniform "indexes are unsigned" convention; it may still be
+  a documented limitation of V4.23 (to check against the compiler manual).
+- **Evidence:** oracle runs 2026-11-16-3-micro-ptrar (all four sets), 2026-11-15-8-micro-stptr (all four sets),
+  2026-11-09-24-micro-arrindex (none, O3XS).  Reported by lane_nm.
+- **Model:** reproduces it where V4.23 does it (PTR_CTX, chidx, lane_nm rule 15 CHAR_IDX_SIGN; rule 22 sign-extends only
+  where V4.23 does).  Firmware code indexing a char pointer backwards would need this to match.
+
+## 5. Under -O, a char pointer difference compared with 0 is compared unsigned
+
+- **Source:** `int pd_cg(char *q, char *r) { return (q - r) > 0; }` (corpus/probes/ptrar.c).
+- **C meaning:** 1 when `q` is above `r`, else 0.
+- **V4.23 at -O3 -XS and -O3 -XS -Xr:** computes the 32-bit difference and sets the result with an unsigned
+  greater-than, so it returns 1 whenever `q != r`, including `q < r`.  none and -Xr use a signed compare (right); for
+  int pointers the difference is divided first and the signed compare is right at every set (pd_ig).
+- **Evidence:** oracle run 2026-11-16-3-micro-ptrar, O3XS / O3XSXr, `pd_cg`.  Reported by lane_nm.
+- **Model:** refuses the shape at -O (lane_nm rule 23 PTRDIFF_CMP_OPT); does not reproduce it.
+
+## 6. A struct pointer plus a char index with a 10-byte element keeps only the low word of the product
+
+- **Source:** `struct s10 { int a[5]; } *gsp; struct s10 *pa_sgca(char cb) { return gsp + cb; }` (corpus/probes/ptrar.c:
+  pa_sgca, pa_sqca).
+- **C meaning:** `gsp + cb` is `gsp` plus `10 * cb` bytes, negative for a negative `cb`.
+- **V4.23:** sign-extends the char, multiplies by 10 with a 16-bit signed multiply, then keeps only the low word of the
+  product and zero-extends it: for `cb < 0` the result is `p + (10 * cb + 65536)`.  `p - cb` sign-extends the product and
+  is right.
+- **Evidence:** oracle run 2026-11-16-3-micro-ptrar, all four sets.  Reported by lane_nm.
+- **Model:** refuses the shape (lane_nm rule 21 declines a char index over a non-power-of-two element); does not
+  reproduce it.
