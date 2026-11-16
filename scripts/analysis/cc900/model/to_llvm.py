@@ -85,7 +85,31 @@ def branch_target(sym, syms):
 
 # byte registers of XIX / XIY / XIZ, which llvm-mc reaches only through their extended-register code (the ERP forms)
 ERP_BYTE = {'IXL': 0xf0, 'IXH': 0xf1, 'QIXL': 0xf2, 'QIXH': 0xf3, 'IYL': 0xf4, 'IYH': 0xf5, 'QIYL': 0xf6, 'QIYH': 0xf7,
-            'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb}
+            'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb,
+            # the upper bytes of XWA .. XHL (bytes 2 / 3 of the 32-bit register: QA = E2, QW = E3, ...)
+            'QA': 0xe2, 'QW': 0xe3, 'QC': 0xe6, 'QB': 0xe7, 'QE': 0xea, 'QD': 0xeb, 'QL': 0xee, 'QH': 0xef}
+ERP_IMM_OP = {'add': 'add_erpb', 'sub': 'sub_erpb', 'and': 'and_erpb', 'or': 'or_erpb', 'xor': 'xor_erpb'}
+ERP_BIT_OP = {'bit': 'bit_erpb', 'set': 'set_erpb', 'res': 'res_erpb', 'sll': 'sll_erpb', 'srl': 'srl_erpb'}
+
+def erp_byte(op, raw):
+    """an instruction on a byte register llvm-mc names only by its extended code (IXL .. QIZH, QA .. QH) -> its ERP
+    form, or an `untranslated` line: never the generic path, where llvm-mc would read `qa` as a symbol"""
+    b = op[:-1] if op.endswith('b') and op[:-1] in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor') else op
+    if b == 'ld' and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
+        return '\tst_erpb_rr %s, 0x%x' % (raw[1].lower(), ERP_BYTE[raw[0]])   # ld IXL,C = c7 f0 9b
+    if b == 'ld' and len(raw) == 2 and raw[0] in R8 and raw[1] in ERP_BYTE:
+        return '\tld_erpb_rr %s, 0x%x' % (raw[0].lower(), ERP_BYTE[raw[1]])   # ld C,IXL = c7 f0 8b
+    if b in ('ld', 'cp') and len(raw) == 2 and raw[0] in ERP_BYTE and NUM.match(raw[1]):
+        n = num(raw[1]) & 0xff                         # 0..7: the 3-byte short form (ld QIZH,1 = c7 fb a9), as the ROM has
+        if n <= 7: return '\t%s 0x%x, %d' % ('lds_erpb' if b == 'ld' else 'cps_erpb', ERP_BYTE[raw[0]], n)
+        return '\t%s 0x%x, 0x%x' % ('ldi_erpb' if b == 'ld' else 'cp_erpb', ERP_BYTE[raw[0]], n)
+    if b in ERP_IMM_OP and len(raw) == 2 and raw[0] in ERP_BYTE and NUM.match(raw[1]):
+        return '\t%s 0x%x, 0x%x' % (ERP_IMM_OP[b], ERP_BYTE[raw[0]], num(raw[1]) & 0xff)
+    if b in ('cp', 'or') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
+        return '\t%s_erpb_rr %s, 0x%x' % (b, raw[1].lower(), ERP_BYTE[raw[0]])
+    if op in ERP_BIT_OP and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE:
+        return '\t%s 0x%x, %d' % (ERP_BIT_OP[op], ERP_BYTE[raw[1]], num(raw[0]))
+    return '\t; untranslated (a byte register llvm-mc cannot name): ' + op + ' ' + ','.join(raw)
 
 def spelled(sym, a, off=0):
     """the operand text for symbol `sym` (+ off) at address a: the tree's name when SPELL has it, else the number"""
@@ -169,6 +193,7 @@ def translate_line(t, syms, locals_):
         # muls HL,0x3 is the byte form (L x 3 -> HL; chnarrow.c cn_mul_k): llvm-mc names the 8-bit source (cf 09 03);
         # div DE,0x64 too (DE / 100 -> E, remainder D: the ROM's FormatMedleyNumber, cd 0a 64; div de, 100 was the
         # 32 / 16 form da 0a 64 00)
+    if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
     if op == 'cal':
@@ -215,10 +240,6 @@ def translate_line(t, syms, locals_):
             word = bop.endswith('w') and bop not in ('ldd',)
             return '\t.byte 0x%02x, 0x%02x\t; %s' % ((0x90 if word else 0x80) + r, sub, t.strip())
     if op == 'scc': return '\tscc %s, %s' % (CC[raw[0]], raw[1].lower())
-    if op in ('ld', 'ldb') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
-        return '\tst_erpb_rr %s, 0x%x' % (raw[1].lower(), ERP_BYTE[raw[0]])   # ld IXL,C = c7 f0 9b
-    if op in ('ld', 'ldb') and len(raw) == 2 and raw[0] in R8 and raw[1] in ERP_BYTE:
-        return '\tld_erpb_rr %s, 0x%x' % (raw[0].lower(), ERP_BYTE[raw[1]])   # ld C,IXL = c7 f0 8b
     if op in ('push', 'pop') and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
         return '\t%sw %s' % (op, raw[0].lower())                      # the 1-byte 16-bit forms
     if op == 'lda':
