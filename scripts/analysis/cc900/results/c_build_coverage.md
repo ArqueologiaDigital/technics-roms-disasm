@@ -9,8 +9,8 @@ the image is built from it (`.include` of its generated body); library C is chec
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 21202        | 18290             | 0.243 %       | 4082             | 17120           |
-| reference model               | 21894        | 18982             | 0.252 %       | 4502             | 17392           |
+| Toshiba V4.23                 | 21544        | 18632             | 0.247 %       | 4424             | 17120           |
+| reference model               | 22176        | 19264             | 0.256 %       | 4784             | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
 All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an image counts on its own.
@@ -19,17 +19,17 @@ All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996729 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
+| v10        | 2097152 | 996729 | firmware C | 89    | 742 / 742          | 802 / 802          | 0 / 0             | 0.080 %         | 0                     |
 | v10        | 2097152 | 996729 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996394 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
+| v9         | 2097152 | 996394 | firmware C | 89    | 742 / 742          | 802 / 802          | 0 / 0             | 0.080 %         | 0                     |
 | v9         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996394 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
+| v8         | 2097152 | 996394 | firmware C | 89    | 742 / 742          | 802 / 802          | 0 / 0             | 0.080 %         | 0                     |
 | v8         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993980 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
+| v7         | 2097152 | 993980 | firmware C | 89    | 742 / 742          | 802 / 802          | 0 / 0             | 0.081 %         | 0                     |
 | v7         | 2097152 | 993980 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992958 | firmware C | 84    | 671 / 671          | 741 / 741          | 0 / 0             | 0.075 %         | 0                     |
+| v6         | 2097152 | 992958 | firmware C | 87    | 728 / 728          | 788 / 788          | 0 / 0             | 0.079 %         | 0                     |
 | v6         | 2097152 | 992958 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991874 | firmware C | 84    | 671 / 671          | 741 / 741          | 0 / 0             | 0.075 %         | 0                     |
+| v5         | 2097152 | 991874 | firmware C | 87    | 728 / 728          | 788 / 788          | 0 / 0             | 0.079 %         | 0                     |
 | v5         | 2097152 | 991874 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128907 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v141       | 196608  | 128884 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
@@ -55,8 +55,8 @@ found yet.
 |-------|---------------------------------------|--------------------------------------------|-------------|-------|-------|-------|------------------------|---------------------------|
 | v10   | BitMapOut_ByteData_DiskCheck          | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | BitMapOut_GetRenderMode               | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | BitMapOut_PrepareRender_CheckBit1     | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
-| v10   | BitMapOut_PrepareRender_CheckBit2     | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
+| v10   | BitMapOut_PrepareRender_CheckBit1     | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v10   | BitMapOut_PrepareRender_CheckBit2     | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | BitMapOut_SetDefaultTimer             | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | BitMapOut_StorePresetValue            | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | Get_Region_Code                       | v10/maincpu/cc900/boot_routines.c          | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -110,7 +110,10 @@ found yet.
 | v10   | AudioMode_CopyAccentFlags             | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | AudioMode_CopyChannelMode             | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | AccPlay_GetCurrentPart                | v10/maincpu/cc900/seq_event_playback.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SeqData_SetErrorCode                  | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SeqData_SetErrorCode                  | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v10   | SeqScan_ClearNoteRange                | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v10   | Seq_ValidatePartNumber                | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v10   | Seq_ValidateTempoValue                | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
 | v10   | TrimAndPadSmfFilename                 | v10/maincpu/cc900/smf_operations.c         | -O3 -XS -Xr | 60    | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
 | v10   | SeqBuf3_GetTimingValue                | v10/maincpu/cc900/system_handlers.c        | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | SeqBuf_GetWritePos                    | v10/maincpu/cc900/system_handlers.c        | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -141,8 +144,8 @@ found yet.
 | v10   | SetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v9    | BitMapOut_ByteData_DiskCheck          | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | BitMapOut_GetRenderMode               | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
-| v9    | BitMapOut_PrepareRender_CheckBit2     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
+| v9    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v9    | BitMapOut_PrepareRender_CheckBit2     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | BitMapOut_SetDefaultTimer             | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | BitMapOut_StorePresetValue            | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | Get_Region_Code                       | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -196,7 +199,10 @@ found yet.
 | v9    | AudioMode_CopyAccentFlags             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | AudioMode_CopyChannelMode             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | AccPlay_GetCurrentPart                | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SeqData_SetErrorCode                  | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SeqData_SetErrorCode                  | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v9    | SeqScan_ClearNoteRange                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v9    | Seq_ValidatePartNumber                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v9    | Seq_ValidateTempoValue                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
 | v9    | TrimAndPadSmfFilename                 | v9/maincpu/cc900/smf_operations.c          | -O3 -XS -Xr | 60    | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
 | v9    | SeqBuf3_GetTimingValue                | v9/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | SeqBuf_GetWritePos                    | v9/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -227,8 +233,8 @@ found yet.
 | v9    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v8    | BitMapOut_ByteData_DiskCheck          | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | BitMapOut_GetRenderMode               | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
-| v8    | BitMapOut_PrepareRender_CheckBit2     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
+| v8    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v8    | BitMapOut_PrepareRender_CheckBit2     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | BitMapOut_SetDefaultTimer             | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | BitMapOut_StorePresetValue            | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | Get_Region_Code                       | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -282,7 +288,10 @@ found yet.
 | v8    | AudioMode_CopyAccentFlags             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | AudioMode_CopyChannelMode             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | AccPlay_GetCurrentPart                | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SeqData_SetErrorCode                  | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SeqData_SetErrorCode                  | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v8    | SeqScan_ClearNoteRange                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v8    | Seq_ValidatePartNumber                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v8    | Seq_ValidateTempoValue                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
 | v8    | TrimAndPadSmfFilename                 | v9/maincpu/cc900/smf_operations.c          | -O3 -XS -Xr | 60    | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
 | v8    | SeqBuf3_GetTimingValue                | v9/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | SeqBuf_GetWritePos                    | v9/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -313,8 +322,8 @@ found yet.
 | v8    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v7    | BitMapOut_ByteData_DiskCheck          | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | BitMapOut_GetRenderMode               | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | BitMapOut_PrepareRender_CheckBit1     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
-| v7    | BitMapOut_PrepareRender_CheckBit2     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
+| v7    | BitMapOut_PrepareRender_CheckBit1     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v7    | BitMapOut_PrepareRender_CheckBit2     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | BitMapOut_SetDefaultTimer             | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | BitMapOut_StorePresetValue            | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | Get_Region_Code                       | v7/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -368,7 +377,10 @@ found yet.
 | v7    | AudioMode_CopyAccentFlags             | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | AudioMode_CopyChannelMode             | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | AccPlay_GetCurrentPart                | v7/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SeqData_SetErrorCode                  | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SeqData_SetErrorCode                  | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v7    | SeqScan_ClearNoteRange                | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v7    | Seq_ValidatePartNumber                | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v7    | Seq_ValidateTempoValue                | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
 | v7    | TrimAndPadSmfFilename                 | v7/maincpu/cc900/smf_operations.c          | -O3 -XS -Xr | 60    | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
 | v7    | SeqBuf3_GetTimingValue                | v7/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | SeqBuf_GetWritePos                    | v7/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -399,8 +411,8 @@ found yet.
 | v7    | SetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v6    | BitMapOut_ByteData_DiskCheck          | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | BitMapOut_GetRenderMode               | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | BitMapOut_PrepareRender_CheckBit1     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
-| v6    | BitMapOut_PrepareRender_CheckBit2     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
+| v6    | BitMapOut_PrepareRender_CheckBit1     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v6    | BitMapOut_PrepareRender_CheckBit2     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | BitMapOut_SetDefaultTimer             | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | BitMapOut_StorePresetValue            | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | Get_Region_Code                       | v6/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -452,7 +464,10 @@ found yet.
 | v6    | AudioMode_CopyAccentFlags             | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | AudioMode_CopyChannelMode             | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | AccPlay_GetCurrentPart                | v6/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SeqData_SetErrorCode                  | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SeqData_SetErrorCode                  | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v6    | SeqScan_ClearNoteRange                | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v6    | Seq_ValidatePartNumber                | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v6    | Seq_ValidateTempoValue                | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
 | v6    | TrimAndPadSmfFilename                 | v6/maincpu/cc900/smf_operations.c          | -O3 -XS -Xr | 60    | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
 | v6    | SeqBuf3_GetTimingValue                | v6/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | SeqBuf_GetWritePos                    | v6/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -483,8 +498,8 @@ found yet.
 | v6    | SetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v5    | BitMapOut_ByteData_DiskCheck          | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | BitMapOut_GetRenderMode               | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | BitMapOut_PrepareRender_CheckBit1     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
-| v5    | BitMapOut_PrepareRender_CheckBit2     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
+| v5    | BitMapOut_PrepareRender_CheckBit1     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v5    | BitMapOut_PrepareRender_CheckBit2     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | BitMapOut_SetDefaultTimer             | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | BitMapOut_StorePresetValue            | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | Get_Region_Code                       | v5/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -536,7 +551,10 @@ found yet.
 | v5    | AudioMode_CopyAccentFlags             | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | AudioMode_CopyChannelMode             | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | AccPlay_GetCurrentPart                | v5/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SeqData_SetErrorCode                  | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SeqData_SetErrorCode                  | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v5    | SeqScan_ClearNoteRange                | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v5    | Seq_ValidatePartNumber                | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
+| v5    | Seq_ValidateTempoValue                | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-25-p6-firmware |
 | v5    | TrimAndPadSmfFilename                 | v5/maincpu/cc900/smf_operations.c          | -O3 -XS -Xr | 60    | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
 | v5    | SeqBuf3_GetTimingValue                | v5/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | SeqBuf_GetWritePos                    | v5/maincpu/cc900/system_handlers.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
