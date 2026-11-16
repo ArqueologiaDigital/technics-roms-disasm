@@ -273,13 +273,13 @@ def check(a):
                     continue
                 at = ref[full] - BASE
                 try:
-                    mine, short = assemble_fn(full, body, rom, at, '--calr' in a)
+                    mine, relaxed = assemble_fn(full, body, rom, at, '--calr' in a)
                 except Exception:
                     res[key][(stem_k, label)] = (0, 'llvm-mc refused the translation')
                     continue
                 r = rom[at:at + len(mine)]
                 if mine == r:
-                    res[key][(stem_k, label)] = (len(mine), 'MATCH' + (' calr:' + ','.join(short) if short else ''))
+                    res[key][(stem_k, label)] = (len(mine), 'MATCH' + (' calr:' + ','.join(relaxed) if relaxed else ''))
                 else:
                     first = next(i for i in range(len(mine)) if i >= len(r) or mine[i] != r[i])
                     res[key][(stem_k, label)] = (len(mine), 'DIFF at +%d' % first)

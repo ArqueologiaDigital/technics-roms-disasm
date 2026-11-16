@@ -45,12 +45,16 @@ marking; the C? ones can be checked now.
 Every C file that went into a run is committed in `probes/` (or `hdae5000/cc900-staged/`) before the run.  The runs
 are in the private oracle repository (`~/compartilhado/cc900-oracle/runs/`).
 
-| run                    | C                                     | result                                                                     |
-|------------------------|---------------------------------------|----------------------------------------------------------------------------|
-| `2026-11-16-44-hd-r1`  | `hd_r1a.c`, `hd_r1b.c`, 3 option sets | 8 of 23 match, 263 B; the option set is `-Xr` without `-O`                 |
-| `2026-11-16-46-hd-r2`  | `hd_r2_*.c`, staged                   | files with `#include` refused (THC1-Error-310); `TypeSel_BuildMask` again  |
-| `2026-11-16-48-hd-r2b` | `hd_r2_l*/m*.c`, `hd_r2b_v.c`, staged | 3 more match (`SwapBytes16`, `Smf_SwapBytes16/32`); staged 8 recheck       |
-| `2026-11-16-49-hd-r3`  | `hd_r3_*.c`, staged                   | 5 more match with cast table calls; 16 functions, 845 B                    |
+| run                             | C                                     | result                                                                    |
+|---------------------------------|---------------------------------------|---------------------------------------------------------------------------|
+| `2026-11-16-44-hd-r1`           | `hd_r1a.c`, `hd_r1b.c`, 3 option sets | 8 of 23 match, 263 B; the option set is `-Xr` without `-O`                |
+| `2026-11-16-46-hd-r2`           | `hd_r2_*.c`, staged                   | files with `#include` refused (THC1-Error-310); `TypeSel_BuildMask` again |
+| `2026-11-16-48-hd-r2b`          | `hd_r2_l*/m*.c`, `hd_r2b_v.c`, staged | 3 more match (`SwapBytes16`, `Smf_SwapBytes16/32`); staged 8 recheck      |
+| `2026-11-16-49-hd-r3`           | `hd_r3_*.c`, staged                   | 5 more match with cast table calls; 16 functions, 845 B                   |
+| `2026-11-16-50-hd-x1-compilers` | `hd_r2b_v.c`, IDE 2003 and V1.10      | the same bytes as V4.23: the spelling, not the compiler                   |
+| `2026-11-16-52-hd-r4v`          | `hd_r4_v.c`                           | the integer-address idiom: `DeleteSongPart_Sqt`, `FlsItem_Clear` match    |
+| `2026-11-16-54-hd-r5`           | `hd_r5_*.c`                           | all nine `DeleteSongPart_*` and `FlsItem_Clear`, 2,117 B                  |
+| `2026-11-16-56-hd-r6`           | `hd_r4_pp*.c`, `hd_r6_l*.c`, staged   | the 26 staged functions recheck, 2,960 B (`staged_v423.tsv`); PPORT close |
 
 What the runs showed:
 - **Options: `-Xr` without `-O`** (run 44): `HD_GetBlockInfo` (a `switch`) and `SwapBytes32` (a `for` loop) match
@@ -64,8 +68,34 @@ What the runs showed:
 - **Headers in the VM.**  V4.23 could not open a header beside the C (run 46, THC1-Error-310), although `job.sh`
   passes `-I` with the source directory.  This was reported to lane_vmb.  Meanwhile `hd_v423.py --corpus` inlines
   `#include "..."` headers (only the `#define`s a file uses from `hdae_ids.h`).
-- **Unsolved: address constants.**  The ROM folds a field offset into the symbol, `lda xwa,(sym+44:24)`, after
-  computing an index.  V4.23 reassociates every spelling tried (`&arr[44] + ofs`, `arr + 44 + ofs`) to
-  `ld xwa,sym` with the 44 added to the index (runs 46, 48).  For an array base, the ROM has `ld xhl,sym` (an
-  immediate) where V4.23 writes `lda xhl,(sym)` (`DirName_Address`, five spellings, run 48).  This blocks the
-  song-record family: `DeleteSongPart_*` matches its first 47 of 244 bytes, `LoadSong_*` its first 53.
+- **Address constants** (runs 46, 48, 50, 52, 54): see "C idioms" below.  Toshiba IDE 2003 and V1.10 give the same
+  bytes as V4.23 on the same probes (run 50), so nothing points to another compiler for the HD-AE5000.
+
+## C idioms (V4.23 at -Xr) that give the ROM's code
+
+Each was found by a run of several spellings; the run named is where the matching one was first seen.
+
+| ROM shape                                                                             | C that gives it                                                               | run |
+|---------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-----|
+| index computed first, then `lda xR,(sym+field:24)`, `add xR,index`, access `(xR)`     | `*(T *)((unsigned long)&sym[field] + index)`: the address as an INTEGER       | 52  |
+| function pointer from a table loaded once, `ld xhl,(xwa+d16)`, then `call (xhl)`      | member read through a cast to the function type: `((void (*)())tbl->F)(args)` | 49  |
+| `switch` comparing cases in descending order, bodies in source order                  | an ordinary `switch` (`HD_GetBlockInfo`)                                      | 44  |
+| a value returned in HL, built in a register local: `ld hl,wa; ld h,0; ...; add hl,wa` | statements on a local (`r = x & 0xff; x >>= 8; r <<= 8; r += x; return r;`)   | 48  |
+| a parameter copied to XBC before use (`ld xbc,xwa`)                                   | a local copy of the parameter (`t = x;`), then work on `t`                    | 48  |
+
+The integer-address idiom in detail.  The ROM's `DeleteSongPart_Sqt` computes the song record's offset
+(`song*76 + dir*0x4c0 + 0x780`, the multiplies by the library's `C9H_mullu`) and then writes
+`lda xwa,(HDAE5000_RAM_SongRecords-0x780+44:24); add xwa,xhl; ld xwa,(xwa)`: the field offset 44 is folded into the
+symbol, the 0x780 stays in the index.  Every pointer spelling V4.23 was given reassociates the constant into the
+index instead and loads the bare symbol (`add xhl,0x2c; ld xwa,sym`): `&a[44] + ofs`, `a + 44 + ofs`, a struct
+member `p->slot[2]`, full struct indexing.  Only an integer sum keeps it with the symbol:
+
+    #define SONG_OFS(d, s) ((unsigned long)(d) * 0x4c0 + 0x780 + (unsigned long)(s) * 76)
+    #define SLOT(k, d, s) (*(unsigned long *)((unsigned long)&HDAE5000_RAM_DirNames[36 + 4 * (k)] + SONG_OFS(d, s)))
+
+(`(unsigned long)a + 44 + ofs`, with the 44 added as an integer, differs again: run 52's `DelPartSqt_i1`.)  The same
+gives `FlsItem_Clear`'s `lda xde,(HDAE5000_RAM_FlsRecords+16:24)`.
+
+Still open: an array base loaded as an immediate, `ld xhl,sym; add xhl,xwa` (`DirName_Address`,
+`FlsRecord_Address`).  V4.23 writes `lda xhl,(sym)` for every value spelling tried (runs 48, 52, 54), and the
+integer form computes the index into XBC first.
