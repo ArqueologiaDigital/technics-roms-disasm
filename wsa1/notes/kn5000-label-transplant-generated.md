@@ -7,7 +7,7 @@ it is overwritten on every run. Read that script's docstring, including the
 Every row below was byte-verified at emission. 0 candidate(s) were dropped
 because their bytes did not agree. Runs shorter than 48 bytes are withheld.
 
-**105 proposals**, longest-backing-run first.
+**111 proposals**, longest-backing-run first.
 
 | WSA1 image | WSA1 addr | proposed name | run len | KN5000 subcpu addr |
 |---|---|---|---:|---|
@@ -55,18 +55,16 @@ because their bytes did not agree. Runs shorter than 48 bytes are withheld.
 | prom_c | `0xFCC61A` | `ToneGen_Velocity_Input_Curve` | 513 | `0x1F43E` |
 | prom_c | `0xFCC71A` | `ToneGen_Velocity_Output_Curve` | 513 | `0x1F53E` |
 | prom_c | `0xFCCD71` | `DSP_MixerGain_Curve` | 512 | `0x131CF` |
-| prom_c | `0xFE1375` | `Const_ChannelMax` | 319 | `0xF785` |
-| prom_c | `0xFE1376` | `Const_Zero_Byte` | 319 | `0xF786` |
-| prom_c | `0xFE1377` | `PitchDetune_OffsetTable` | 319 | `0xF787` |
+| prom_c | `0xFE136D` | `Voice_Selector_FieldSlot_Table` | 319 | `0xF77D` |
+| prom_c | `0xFE1376` | `Voice_Part_Trim_Table_A` | 319 | `0xF786` |
 | prom_c | `0xFE138A` | `Voice_Part_Trim_Table_B` | 319 | `0xF79A` |
 | prom_c | `0xFE139C` | `Voice_Part_Trim_Addend_1` | 319 | `0xF7AC` |
 | prom_c | `0xFE13AE` | `Voice_Part_Trim_Addend_2` | 319 | `0xF7BE` |
 | prom_c | `0xFE13C2` | `Voice_Part_Trim_Base` | 319 | `0xF7D2` |
 | prom_c | `0xFE13D6` | `Voice_Portamento_Rate_Table` | 319 | `0xF7E6` |
 | prom_c | `0xFE14A0` | `Voice_DefaultToneRecord` | 319 | `0xF8B0` |
-| prom_c | `0xFE1F7A` | `Const_ChannelMax` | 319 | `0xF785` |
-| prom_c | `0xFE1F7B` | `Const_Zero_Byte` | 319 | `0xF786` |
-| prom_c | `0xFE1F7C` | `PitchDetune_OffsetTable` | 319 | `0xF787` |
+| prom_c | `0xFE1F72` | `Voice_Selector_FieldSlot_Table` | 319 | `0xF77D` |
+| prom_c | `0xFE1F7B` | `Voice_Part_Trim_Table_A` | 319 | `0xF786` |
 | prom_c | `0xFE1F8F` | `Voice_Part_Trim_Table_B` | 319 | `0xF79A` |
 | prom_c | `0xFE1FA1` | `Voice_Part_Trim_Addend_1` | 319 | `0xF7AC` |
 | prom_c | `0xFE1FB3` | `Voice_Part_Trim_Addend_2` | 319 | `0xF7BE` |
@@ -81,8 +79,9 @@ because their bytes did not agree. Runs shorter than 48 bytes are withheld.
 | prom_a | `0xFE6914` | `Int_SignedDiv_CallUnsigned` | 169 | `0x3DC35` |
 | prom_a | `0xFE6926` | `Int_SignedDiv_ResultCorr` | 169 | `0x3DC47` |
 | prom_a | `0xFE692A` | `Int_SignedDiv_NegResult` | 169 | `0x3DC4B` |
-| prom_a | `0xFE693A` | `Int_SignedDiv_ConstData` | 169 | `0x3DC5B` |
-| prom_a | `0xFE693E` | `Int_SignedDiv_AltEntry` | 169 | `0x3DC5F` |
+| prom_a | `0xFE693A` | `Long_SignedRem` | 169 | `0x3DC5B` |
+| prom_a | `0xFE693E` | `Long_SignedDiv` | 169 | `0x3DC5F` |
+| prom_a | `0xFE6942` | `Int_UnsignedRemainder` | 169 | `0x3DC63` |
 | prom_a | `0xFE6948` | `FP_UnsignedDiv` | 169 | `0x3DC69` |
 | prom_a | `0xFE696B` | `FP_UnsignedDiv_Overflow` | 169 | `0x3DC8C` |
 | prom_a | `0xFE6981` | `FP_UnsignedDiv_ByOne` | 169 | `0x3DCA2` |
@@ -100,6 +99,13 @@ because their bytes did not agree. Runs shorter than 48 bytes are withheld.
 | prom_c | `0xFE1CF4` | `Voice_PolyphonyLimits_Table` | 123 | `0xF48C` |
 | prom_c | `0xFE1D14` | `Voice_IndexMapping_Table` | 123 | `0xF4AC` |
 | prom_c | `0xFE1D54` | `Voice_CommandIndexTable` | 123 | `0xF4EC` |
+| prom_c | `0xFDA4E7` | `DSP_Op74_LUT_Rows9_Var0` | 110 | `0x1EAFA` |
+| prom_c | `0xFDA554` | `DSP_Op74_LUT_Rows9_Var1` | 110 | `0x1EB67` |
+| prom_c | `0xFDA5C1` | `DSP_Op74_LUT_Rows8_Var0` | 109 | `0x1EC41` |
+| prom_c | `0xFD3B60` | `DSP_Op74_LUT_Rows8_Var2` | 101 | `0x1ED09` |
+| prom_c | `0xFD3BC4` | `EFF_SlotToChip_Table` | 101 | `0x1ED6D` |
+| prom_c | `0xFD28C7` | `DSP_Op74_LUT_Rows8_Var0` | 100 | `0x1EC41` |
+| prom_c | `0xFD4E13` | `DSP_Op74_LUT_Rows8_Var1` | 100 | `0x1ECA5` |
 | prom_c | `0xFD0C4B` | `DSP_Eff65_Param_Values` | 95 | `0x19833` |
 | prom_a | `0xF85F7C` | `DSP_WriteAllChannelRegs` | 68 | `0x1FCFB` |
 | prom_a | `0xF85FA8` | `DSP_WriteChannelRegs_Inner` | 68 | `0x1FD27` |
@@ -108,11 +114,11 @@ because their bytes did not agree. Runs shorter than 48 bytes are withheld.
 | prom_c | `0xFD08CD` | `DSP_Eff64_Param_Values` | 49 | `0x1956C` |
 | prom_c | `0xFD0F98` | `DSP_Eff64_Param_Values` | 49 | `0x1956C` |
 | prom_c | `0xFD1399` | `DSP_Eff68_Param_Values` | 49 | `0x1A399` |
-| prom_c | `0xFE11F0` | `Voice_KeyTable_Remapping` | 48 | `0xF603` |
+| prom_c | `0xFE11F0` | `Voice_StealPoolOrder` | 48 | `0xF603` |
 | prom_c | `0xFE11F8` | `Voice_Search_Order_List_1` | 48 | `0xF60B` |
 | prom_c | `0xFE1207` | `Voice_Search_Order_List_2` | 48 | `0xF61A` |
 | prom_c | `0xFE1215` | `Voice_Search_Order_List_3` | 48 | `0xF628` |
-| prom_c | `0xFE1E1B` | `Voice_KeyTable_Remapping` | 48 | `0xF603` |
+| prom_c | `0xFE1E1B` | `Voice_StealPoolOrder` | 48 | `0xF603` |
 | prom_c | `0xFE1E23` | `Voice_Search_Order_List_1` | 48 | `0xF60B` |
 | prom_c | `0xFE1E32` | `Voice_Search_Order_List_2` | 48 | `0xF61A` |
 | prom_c | `0xFE1E40` | `Voice_Search_Order_List_3` | 48 | `0xF628` |

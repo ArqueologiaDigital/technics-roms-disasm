@@ -10,53 +10,30 @@
 ;   PE.6 = DSP2 chip select (active low)
 ; ============================================================================
 
-DSP1_Assert_Reset:	; 038396h
-	res	1, (PH:8)	; Assert DSP1 reset (active low)
-	ret
+DSP1_Assert_Reset:	.include "includes/generated/cc900/DSP1_Assert_Reset.s"	; C: cc900/dsp_control_routines.c
 
-DSP1_Deassert_Reset:	; 03839Ah
-	set	1, (PH:8)	; Deassert DSP1 reset
-	ret
+DSP1_Deassert_Reset:	.include "includes/generated/cc900/DSP1_Deassert_Reset.s"	; C: cc900/dsp_control_routines.c
 
-DSP2_Assert_Reset:	; 03839Eh
-	res	2, (PH:8)	; Assert DSP2 reset (active low)
-	ret
+DSP2_Assert_Reset:	.include "includes/generated/cc900/DSP2_Assert_Reset.s"	; C: cc900/dsp_control_routines.c
 
-DSP2_Deassert_Reset:	; 0383A2h
-	set	2, (PH:8)	; Deassert DSP2 reset
-	ret
+DSP2_Deassert_Reset:	.include "includes/generated/cc900/DSP2_Deassert_Reset.s"	; C: cc900/dsp_control_routines.c
 
-DSP_Nop:	; 0383A6h - Empty routine, used as placeholder
-	ret
+DSP_Nop:	.include "includes/generated/cc900/DSP_Nop.s"	; C: cc900/dsp_control_routines.c
 
-DSP_Set_Command_Mode:	; 0383A7h
-	res	6, (P7:8)	; DSPCD=0 selects command mode
-	ret
+DSP_Set_Command_Mode:	.include "includes/generated/cc900/DSP_Set_Command_Mode.s"	; C: cc900/dsp_control_routines.c
 
-DSP_Set_Data_Mode:	; 0383ABh
-	set	6, (P7:8)	; DSPCD=1 selects data mode
-	ret
+DSP_Set_Data_Mode:	.include "includes/generated/cc900/DSP_Set_Data_Mode.s"	; C: cc900/dsp_control_routines.c
 
-DSP_Assert_Write:	; 0383AFh
-	res	3, (P7:8)	; Assert write strobe (active low)
-	ret
+DSP_Assert_Write:	.include "includes/generated/cc900/DSP_Assert_Write.s"	; C: cc900/dsp_control_routines.c
 
-DSP_Deassert_Write:	; 0383B3h
-	set	3, (P7:8)	; Deassert write strobe
-	ret
+DSP_Deassert_Write:	.include "includes/generated/cc900/DSP_Deassert_Write.s"	; C: cc900/dsp_control_routines.c
 
 ; DSP_Assert_Read: Asserts the DSP1 read strobe, `res 4,(P7)` (P7.4, active low); the pair of DSP_Deassert_Read. No
 ;   caller in this build -- firmware never reads the DSP1 data bus (status comes from PH.0). Basis: pin-map header +
 ;   paired routine + body; the _Data suffix is a leftover of its former `.byte` spelling.
-DSP_Assert_Read:	; 0383B7h - RES 4,(P7), matching the res_dd8/set_dd8 idiom of every
-	; sibling in this block. Converted from `.byte` to mnemonics 2026-09-01 (lane SUB),
-	; verified byte-identical by an llvm-mc round trip.
-	res	4, (P7:8)	; Assert read strobe (active low)
-	ret
+DSP_Assert_Read:	.include "includes/generated/cc900/DSP_Assert_Read.s"	; C: cc900/dsp_control_routines.c
 
-DSP_Deassert_Read:	; 0383BBh
-	set	4, (P7:8)	; Deassert read strobe
-	ret
+DSP_Deassert_Read:	.include "includes/generated/cc900/DSP_Deassert_Read.s"	; C: cc900/dsp_control_routines.c
 
 ; ----------------------------------------------------------------------------
 ; DSP_Select_Chip - Select DSP chip for communication
@@ -124,26 +101,7 @@ DSP_Read_Status:	; 0383F7h
 ; Entry: XWA = 16-bit value, BC = chip number. Sends the value to the chip as two DATA
 ; bytes, LOW byte first then HIGH byte, each through DSP_DispatchData. Used only by
 ; DSP_WriteParamCmd30, i.e. only on the chip-1 protocol.
-DSP_WriteParamWord:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	ld xwa, xiz
-	sra xwa, 16
-	and xwa, 0xFF
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 8
-	and xwa, 0xFF
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	pop xiz
-	inc 2, xsp
-	ret
+DSP_WriteParamWord:	.include "includes/generated/cc900/DSP_WriteParamWord.s"	; C: cc900/dsp_control_routines.c
 
 ; The chip-1 (IC310 / "DSP2") parameter protocol, and it is completely different from the
 ; IC311 one. Entry: WA = chip, BC = register index, XDE = 16-bit value.
@@ -344,67 +302,14 @@ DSP_WriteFreqParam_Return:
 ; else: 0x0A, (v >> 17) & 0x7F, (v >> 9) & 0xFF, (v >> 1) & 0xFF, ((v << 7) & 0x80) + 0x15.
 ; This is the "bare" coefficient write -- the same tail DSP_WriteFreqParam uses, without
 ; the index header. It is what streams a coefficient bank into the chip.
-DSP_WriteCoeffData_5B:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	ld bc, (xsp + 4)
-	ldw wa, 0xA
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 1
-	sra xwa, 16
-	and xwa, 0x7F
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 9
-	and xwa, 0xFF
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 1
-	and xwa, 0xFF
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sla xwa, 7
-	and xwa, 0x80
-	add xwa, 0x15
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	pop xiz
-	inc 2, xsp
-	ret
+DSP_WriteCoeffData_5B:	.include "includes/generated/cc900/DSP_WriteCoeffData_5B.s"	; C: cc900/dsp_control_routines.c
 
 ; The 24-bit BIG-ENDIAN stream reader. Entry: XWA = address of a 32-bit cursor variable.
 ; Reads three bytes b0,b1,b2 at *cursor and returns XHL = (b0 << 16) | (b1 << 8) | b2,
 ; then advances *cursor by 3. Clobbers XIX, XIY, XBC, XDE.
 ; This is the decoder for the 3-byte Q0.23 coefficient format; every coefficient in the
 ; DSP program blobs is stored big-endian even though the CPU is little-endian.
-DSP_UnpackParam3B:
-	ld xix, (xwa)
-	ld xbc, 0:i3
-	ld c, (xix + 1)
-	ld xde, xbc
-	sla xde, 8
-	ld xbc, 0:i3
-	ld c, (xix)
-	sla xbc, 16
-	ld xiy, xbc
-	add xiy, xde
-	ld c, (xix + 2)
-	ld xhl, 0:i3
-	ld l, c
-	add xhl, xiy
-	lda xbc, (xix + 3)
-	ld (xwa), xbc
-	ret
+DSP_UnpackParam3B:	.include "includes/generated/cc900/DSP_UnpackParam3B.s"	; C: cc900/dsp_control_routines.c
 
 ; Uploads one of six fixed lookup-table programs. Entry: XWA = address of a 32-bit stream
 ; cursor, BC = chip, XDE = variant (0, 1 or 2), plus stacked arguments; frame of 18 bytes;
@@ -663,43 +568,7 @@ DSP_WriteOscParam_Return:
 
 ; Identical to DSP_WriteCoeffData_5B except the trailing tag is 0x26 instead of 0x15, i.e.
 ; the bare-coefficient writer for the oscillator address space.
-DSP_WriteCoeffData_5B_Direct:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	ld bc, (xsp + 4)
-	ldw wa, 0xA
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 1
-	sra xwa, 16
-	and xwa, 0x7F
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 9
-	and xwa, 0xFF
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sra xwa, 1
-	and xwa, 0xFF
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	ld xwa, xiz
-	sla xwa, 7
-	and xwa, 0x80
-	add xwa, 0x26
-	extz wa
-	ld bc, (xsp + 4)
-	call DSP_DispatchData
-	pop xiz
-	inc 2, xsp
-	ret
+DSP_WriteCoeffData_5B_Direct:	.include "includes/generated/cc900/DSP_WriteCoeffData_5B_Direct.s"	; C: cc900/dsp_control_routines.c
 
 ; A third variant: same 0x08 / 0x01 / index / (index<<4)+8 opener as DSP_WriteOscParam but
 ; the selector byte is 0x25 (not 0x21), the 24-bit value has a stacked OFFSET added to it
@@ -1299,20 +1168,7 @@ DSP_State_ApplyBuf_DoCopy:
 ; sets buf[0x0120] = 1, calls DSP_State_ApplyAll (0x036E3D) INLINE on the caller's stack -- no
 ; task, no message queue -- then clears buf[0x0120] and returns.  This is the path that cannot
 ; block, which is why reset uses it.
-DSP_State_LoadAndApplyAll:
-	lda xde, (Payload_Bss_Start+0x64ae:24)
-	ld (19006:16), xde
-	ld xiy, xwa
-	ld xix, xde
-	ldw bc, 0x91
-	ldirw
-	ld xwa, (19006:16)
-	ldw	(xwa+288), 0x0001
-	ld xwa, (19006:16)
-	call DSP_State_ApplyAll
-	ld xwa, (19006:16)
-	ldw	(xwa+288), 0x0000
-	ret
+DSP_State_LoadAndApplyAll:	.include "includes/generated/cc900/DSP_State_LoadAndApplyAll.s"	; C: cc900/dsp_control_routines_b.c
 
 ; NOT data -- a five-instruction table fetch, twin of DSP_ParamFetch_SingleTable.  The name is
 ; wrong (see [UNCERTAIN]).
@@ -1320,23 +1176,13 @@ DSP_State_LoadAndApplyAll:
 ; XBC is the 0..99 parameter value; the table has 100 entries.  This is the decoder for
 ; byte-code opcode 0x61 (arm 0x03CB8E), whose result goes straight to DSP_WriteOscParam.
 ; ★ Renamed 2026-09-25 from DSP_State_LoadAndApply_InlineData: header: table fetch XHL = *(0x0129A3 + 4*XBC), the decoder of byte-code opcode 0x61.
-DSP_ParamFetch_Op61Table:
-	sll	xbc, 2
-	ld	xwa, DSP_OscParamCurve
-	add	xwa, xbc
-	ld	xhl, (xwa)
-	ret
+DSP_ParamFetch_Op61Table:	.include "includes/generated/cc900/DSP_ParamFetch_Op61Table.s"	; C: cc900/dsp_control_routines.c
 
 ; XHL = *(uint32*)(0x012B33 + 4*XBC).  100-entry table; XBC = 0..99 parameter value.
 ; Decoder for opcode 0x62.  The table is monotonically increasing and roughly exponential
 ; (0, 74, 83, 93, 105, 118, 132, 148, ... 4194304, 4706086, 5280316, 5924612), i.e. a
 ; log-spaced Q23 coefficient ladder ending just under 2^23 * 0.706.
-DSP_ParamFetch_SingleTable:
-	sll xbc, 2
-	ld xwa, DSP_CoeffCurve_Op62
-	add xwa, xbc
-	ld xhl, (xwa)
-	ret
+DSP_ParamFetch_SingleTable:	.include "includes/generated/cc900/DSP_ParamFetch_SingleTable.s"	; C: cc900/dsp_control_routines.c
 
 ; Same idea as above but the table is chosen by an algorithm-type byte read from the stream.
 ; In:  XWA = address of the caller's stream cursor, XBC = 0..99 parameter value.
@@ -1346,41 +1192,11 @@ DSP_ParamFetch_SingleTable:
 ;   type 2 -> 0x0127A3[XBC]   (128 entries)
 ;   anything else -> XHL is left UNDEFINED (fall straight through to the epilogue).
 ; Decoder for opcode 0x63; result goes to DSP_WriteFreqParam_AlgoType (0x03846C).
-DSP_ParamFetch_AlgoTypeTable:
-	ld xix, (xwa)
-	ld e, (xix)
-	cp e, 2:i3
-	jr z, DSP_ParamFetch_AlgoType2
-	cp e, 1:i3
-	jr z, DSP_ParamFetch_AlgoType1
-	cp e, 0:i3
-	jr nz, DSP_ParamFetch_AlgoTypeReturn
-	sll xbc, 2
-	ld xde, DSP_FreqParamCurve_Algo0
-	add xde, xbc
-	ld xhl, (xde)
-	jr DSP_ParamFetch_AlgoTypeReturn
-
-; type == 1 arm: fetch from the 0x012613 table.
-DSP_ParamFetch_AlgoType1:
-	sll xbc, 2
-	ld xde, DSP_FreqParamCurve_Algo1
-	add xde, xbc
-	ld xhl, (xde)
-	jr DSP_ParamFetch_AlgoTypeReturn
-
-; type == 2 arm: fetch from the 0x0127A3 table.
-DSP_ParamFetch_AlgoType2:
-	sll xbc, 2
-	ld xde, DSP_FreqParamCurve_Algo2
-	add xde, xbc
-	ld xhl, (xde)
-
-; Common epilogue: advance the caller's cursor past the type byte and return.
-DSP_ParamFetch_AlgoTypeReturn:
-	inc 1, xix
-	ld (xwa), xix
-	ret
+DSP_ParamFetch_AlgoTypeTable:	.include "includes/generated/cc900/DSP_ParamFetch_AlgoTypeTable.s"	; C: cc900/dsp_control_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ParamFetch_AlgoType1, DSP_ParamFetch_AlgoTypeTable + 30
+	.set	DSP_ParamFetch_AlgoType2, DSP_ParamFetch_AlgoTypeTable + 44
+	.set	DSP_ParamFetch_AlgoTypeReturn, DSP_ParamFetch_AlgoTypeTable + 56
 
 ; Decoder for opcode 0x79.  Reads a type byte from the stream, fetches 0x0127A3[XBC], and runs
 ; it through the double-precision helpers before converting back to an integer.
@@ -1484,7 +1300,7 @@ DSP_PitchParam_Scale:
 	sla xwa, 5
 	sla xwa, 16
 	ld xbc, (xsp + 4)
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 2
 	add xhl, 0xFF800000
 	ld xwa, (xsp + 12)
@@ -1530,7 +1346,7 @@ DSP_VolumeParam_Scale:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x6BAA8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 0, 50 < x <= 75: ((x-25)<<23) / 220500.
@@ -1542,7 +1358,7 @@ DSP_VolScale_Algo0_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 0, 75 < x <= 88: ((4x-250)<<23) / 220500.
@@ -1555,7 +1371,7 @@ DSP_VolScale_Algo0_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 0, x > 88: ((9x-690)<<23) / 220500.
@@ -1567,7 +1383,7 @@ DSP_VolScale_Algo0_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 1 entry, x <= 10: (x<<23) / 44100.
@@ -1578,7 +1394,7 @@ DSP_VolScale_Algo1_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 1, 10 < x <= 19: ((10x-90)<<23) / 44100.
@@ -1593,7 +1409,7 @@ DSP_VolScale_Algo1_Seg2:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 1, 19 < x <= 64: ((20x-280)<<15) / 44100, then <<8 (the split <<23).
@@ -1607,7 +1423,7 @@ DSP_VolScale_Algo1_Seg3:
 	sub xwa, 0x118
 	sla xwa, 15
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
@@ -1622,7 +1438,7 @@ DSP_VolScale_Algo1_Seg4:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
@@ -1635,7 +1451,7 @@ DSP_VolScale_Algo1_Seg5:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
@@ -1651,7 +1467,7 @@ DSP_VolScale_Algo2_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 2, 50 < x <= 75: ((x-25)<<23) / (2050 - 2x).
@@ -1668,7 +1484,7 @@ DSP_VolScale_Algo2_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_Return
 
 ; family 2, 75 < x <= 88: ((4x-250)<<23) / (2500 - 8x).
@@ -1686,7 +1502,7 @@ DSP_VolScale_Algo2_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_Return
 
 ; family 2, x > 88: ((9x-690)<<23) / (3380 - 18x).
@@ -1705,7 +1521,7 @@ DSP_VolScale_Algo2_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 
 ; Common epilogue: write the advanced cursor back through the caller's pointer and return.
 ; NOTE the fall-through hazard: on an unrecognised family byte XHL is whatever the callee
@@ -1750,7 +1566,7 @@ DSP_ParamInterp_2Point:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, xhl
 	ld xhl, (xsp + 8)
 	sra xhl, 8
@@ -1788,7 +1604,7 @@ DSP_ParamInterp_FPScale:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	add xhl, (xsp + 4)
 	ld xwa, (xsp + 12)
 	ld (xwa), xiz
@@ -1821,7 +1637,7 @@ DSP_ParamInterp_Div0xB4:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0xB4
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, (xsp + 12)
 	ld (xwa), xiz
 	pop xiz
@@ -1971,7 +1787,7 @@ DSP_FreqCurve_FP:
 	ld xwa, xiz
 	sla xwa, 7
 	sla xwa, 16
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_FreqCurve_FP_Return
 
 ; 20 < x <= 50 segment.
@@ -1987,7 +1803,7 @@ DSP_FreqCurve_FP_Seg2:
 	sub xwa, 0xA
 	sla xwa, 7
 	sla xwa, 16
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_FreqCurve_FP_Return
 
 ; x > 50 segment; the only one that needs Math_Multiply32 (22*x and 11*x) and a two-part shift.
@@ -2006,7 +1822,7 @@ DSP_FreqCurve_FP_Seg3:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, (xsp + 4)
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 
 ; Common epilogue (pop IZ, release the 4-byte frame).
@@ -2043,7 +1859,7 @@ DSP_FreqInterp_2Point:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, xhl
 	ld xhl, (xsp + 8)
 	sra xhl, 8
@@ -2091,7 +1907,7 @@ DSP_ParamInterp_3Point_WithOffset:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, (xsp + 12)
 	add xwa, (xsp + 8)
 	add xwa, xhl
@@ -2349,7 +2165,7 @@ DSP_PanCurve_PiecewiseLin:
 	add xhl, 0x6BAA8
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_PanCurve_Return
 
 ; 20 < x <= 30: 44.1 * (5x - 50) samples.
@@ -2364,7 +2180,7 @@ DSP_PanCurve_Seg2:
 	sub xhl, 0x21A548
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_PanCurve_Return
 
 ; 30 < x <= 70: 44.1 * (10x - 200) samples.
@@ -2380,7 +2196,7 @@ DSP_PanCurve_Seg3:
 	sub xhl, 0x869520
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_PanCurve_Return
 
 ; 70 < x <= 80: 44.1 * (50x - 3000) samples.
@@ -2396,7 +2212,7 @@ DSP_PanCurve_Seg4:
 	sub xhl, 0x7E2BCE0
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_PanCurve_Return
 
 ; x > 80: 44.1 * (100x - 7000) samples; tops out at 2900 ms for x = 99.
@@ -2410,7 +2226,7 @@ DSP_PanCurve_Seg5:
 	sub xhl, 0x12666360
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 
 ; A bare `ret` shared by all five segments.
 DSP_PanCurve_Return:
@@ -2928,7 +2744,7 @@ DSP_ParamInterp_Div0xC6:
 	sub xwa, (xsp + 16)
 	sra xwa, 8
 	ld xbc, 0xC6
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xiz, xhl
 	ld xbc, (xsp + 8)
 	ld xwa, xiz
@@ -3374,7 +3190,7 @@ DSP_ParamInterp_2Point_B:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, xhl
 	ld xhl, (xsp + 8)
 	sra xhl, 8
@@ -3407,7 +3223,7 @@ DSP_VolScale_B:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x6BAA8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo0_Seg2: ((x-25)<<23) / 220500.
@@ -3419,7 +3235,7 @@ DSP_VolScale_B_Algo0_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo0_Seg3: ((4x-250)<<23) / 220500.
@@ -3432,7 +3248,7 @@ DSP_VolScale_B_Algo0_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo0_Seg4: ((9x-690)<<23) / 220500.
@@ -3444,7 +3260,7 @@ DSP_VolScale_B_Algo0_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo1_Seg1: (x<<23) / 44100.
@@ -3455,7 +3271,7 @@ DSP_VolScale_B_Algo1_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo1_Seg2: ((10x-90)<<23) / 44100.
@@ -3470,7 +3286,7 @@ DSP_VolScale_B_Algo1_Seg2:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo1_Seg3: ((20x-280)<<15) / 44100, then <<8.
@@ -3484,7 +3300,7 @@ DSP_VolScale_B_Algo1_Seg3:
 	sub xwa, 0x118
 	sla xwa, 15
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_B_Return
 
@@ -3499,7 +3315,7 @@ DSP_VolScale_B_Algo1_Seg4:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_B_Return
 
@@ -3512,7 +3328,7 @@ DSP_VolScale_B_Algo1_Seg5:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_B_Return
 
@@ -3528,7 +3344,7 @@ DSP_VolScale_B_Algo2_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo2_Seg2: ((x-25)<<23) / (2050 - 2x).
@@ -3545,7 +3361,7 @@ DSP_VolScale_B_Algo2_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo2_Seg3: ((4x-250)<<23) / (2500 - 8x).
@@ -3563,7 +3379,7 @@ DSP_VolScale_B_Algo2_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo2_Seg4: ((9x-690)<<23) / (3380 - 18x).
@@ -3582,7 +3398,7 @@ DSP_VolScale_B_Algo2_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 
 ; Duplicate epilogue: write the advanced cursor back and return.
 DSP_VolScale_B_Return:
@@ -3603,7 +3419,7 @@ DSP_PanScale_Simple:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ret
 
 ; Decoder for opcode 0x24 (arm 0x03CEBC); result -> DSP_WriteOscParam.  Two-point interpolation
@@ -3773,7 +3589,7 @@ DSP_ParamInterp_MultiStep_Compute:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, (xsp + 8)
 	sra xwa, 8
 	add xwa, xhl
@@ -6023,30 +5839,11 @@ DSP_MixerCoeff_Compute:
 ; Looks the slot's CHIP ID up in the byte table at 0x01ED6D, then runs
 ; DSP_BytecodeInterpreter_Init(WA = chip, BC = slot = program index, XDE = 0x014777 program
 ; table, pushed XBC = bytecode stream).  Ten callers in region 11's effect layer.
-DSP_WriteEFFConfig:
-	ld de, wa
-	extz xde
-	ld xhl, EFF_SlotToChip_Table
-	add xhl, xde
-	ld e, (xhl)
-	extz de
-	push xbc
-	ld hl, de
-	ld bc, wa
-	lda xde, (ToneGen_WorkArea:24)
-	ld wa, hl
-	call DSP_BytecodeInterpreter_Init
-	ret
+DSP_WriteEFFConfig:	.include "includes/generated/cc900/DSP_WriteEFFConfig.s"	; C: cc900/dsp_control_routines.c
 
 ; Already named.  Runs program 0 of the descriptor table at 0x0147B3 on the chip in WA, with
 ; the caller's XBC as the bytecode stream.  Thirteen callers.
-DSP_WriteGlobalConfig:
-	ld de, 0:i3
-	push xbc
-	ld bc, de
-	lda xde, (DSP_Bytecode_Global_Config:24)
-	call DSP_BytecodeInterpreter_Init
-	ret
+DSP_WriteGlobalConfig:	.include "includes/generated/cc900/DSP_WriteGlobalConfig.s"	; C: cc900/dsp_control_routines.c
 
 ; Already named.  Front door for "write parameter set N of effect M".
 ; In:  WA = chip/kind selector, BC = effect id, DE = word passed through, XIX = a stack arg
@@ -7620,36 +7417,7 @@ DSP_Op_Unknown_Error:
 ; In:  XWA = stream pointer, XBC = destination.   Out: (XBC) = (b0<<24)|(b1<<16)|(b2<<8),
 ;      each byte sign-extended before shifting (only b0's sign survives); XHL = XWA + 3.
 ; No hardware access.  Fully decoded at 0x03CF07..0x03CF52.
-DSP_StreamDecode_3ByteWord:
-	ld xde, xwa
-	lda xwa, (xde+:1)
-	ld a, (xwa)
-	exts wa
-	exts xwa
-	sla xwa, 8
-	sla xwa, 16
-	and xwa, 0xFF000000
-	ld xhl, xwa
-	lda xwa, (xde+:1)
-	ld a, (xwa)
-	exts wa
-	exts xwa
-	ld xix, xwa
-	sla xix, 16
-	and xix, 0xFF0000
-	lda xwa, (xde+:1)
-	ld a, (xwa)
-	exts wa
-	exts xwa
-	ld xiy, xwa
-	sla xiy, 8
-	and xiy, 0xFF00
-	ld xwa, xhl
-	add xwa, xix
-	add xwa, xiy
-	ld (xbc), xwa
-	ld xhl, xde
-	ret
+DSP_StreamDecode_3ByteWord:	.include "includes/generated/cc900/DSP_StreamDecode_3ByteWord.s"	; C: cc900/dsp_control_routines.c
 
 ; Linear search through a table of TAGGED VARIABLE-LENGTH records, returning a pointer to a
 ; field inside the matching record.
@@ -7664,60 +7432,13 @@ DSP_StreamDecode_3ByteWord:
 ; Out: XHL = &record[3 + DE] (see below); status = 0 found, 3 hit the 0xF0 sentinel,
 ;      4 the requested field lies past the record's own length.
 ; Four callers: three in region 12 and DSP_Translator_ReadOpcode here.
-DSP_TableWalk_Search:
-	ld xhl, xwa
-	jr DSP_TableWalk_ReadHeader
-
-; Computes the next-record address (XIX = XHL + length), reads the ID byte at +2 and compares
-; it with BC; on a match advances XHL by DE+1 and range-checks it against XIX.
-DSP_TableWalk_CheckEntry:
-	ld ix, iy
-	extz xix
-	add xix, xhl
-	inc 2, xhl
-	ld a, (xhl)
-	extz wa
-	cp wa, bc
-	jr nz, DSP_TableWalk_SkipEntry
-	ld wa, de
-	extz xwa
-	inc 1, xwa
-	add xhl, xwa
-	cp xhl, xix
-	jr c, DSP_TableWalk_FoundInRange
-	ld bc, 4:i3
-	jr DSP_TableWalk_Return
-
-; Match, field inside the record: status 0.
-DSP_TableWalk_FoundInRange:
-	ld bc, 0:i3
-	jr DSP_TableWalk_Return
-
-; ID mismatch: XHL = next record.
-DSP_TableWalk_SkipEntry:
-	ld xhl, xix
-
-; Reads the 2-byte length header and tests the 0xF0 end-of-table sentinel.
-DSP_TableWalk_ReadHeader:
-	ld a, (xhl + 1)
-	ldfr_berp A, 0xF0
-	extz ix
-	ld a, (xhl)
-	extz wa
-	ld iy, wa
-	sll iy, 8
-	add iy, ix
-	ld wa, iy
-	srl wa, 8
-	cp wa, 0xF0
-	jr nz, DSP_TableWalk_CheckEntry
-	ld bc, 3:i3
-
-; Stores the status through the pushed pointer and `retd 0x4`.
-DSP_TableWalk_Return:
-	ld xwa, (xsp + 4)
-	ld (xwa), bc
-	retd 0x4
+DSP_TableWalk_Search:	.include "includes/generated/cc900/DSP_TableWalk_Search.s"	; C: cc900/dsp_control_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_TableWalk_CheckEntry, DSP_TableWalk_Search + 4
+	.set	DSP_TableWalk_FoundInRange, DSP_TableWalk_Search + 36
+	.set	DSP_TableWalk_SkipEntry, DSP_TableWalk_Search + 40
+	.set	DSP_TableWalk_ReadHeader, DSP_TableWalk_Search + 42
+	.set	DSP_TableWalk_Return, DSP_TableWalk_Search + 74
 
 ; Positional variant of the same walk: instead of matching an ID it SKIPS BC records and
 ; returns the address of the next one.
@@ -7778,8 +7499,7 @@ DSP_TableWalk_State_Return:
 ; WA = the failing status code at two places (after the table walk and after the translator)
 ; and DSP_ParamLoop_Return then bails out.  The status is therefore never reported anywhere --
 ; DSP parameter-write failures are silent by design in v142.
-DSP_NopReturn:
-	ret
+DSP_NopReturn:	.include "includes/generated/cc900/DSP_NopReturn.s"	; C: cc900/dsp_control_routines.c
 
 
 ; Already named (the reference file spells it AUDIO_CMDHANDLER_A0_BF).  Entry 5 of
@@ -7791,28 +7511,10 @@ DSP_NopReturn:
 ; ★ 0x004A48 is the keybed TOUCH-CURVE index used by Keybed_Decode_Event; 0x004A4A is the
 ; KEYBED->MAIN FORWARDING ENABLE flag tested by ToneGen_Process_Notes.  These two bytes are
 ; the sub-CPU's entire "local control" state and they are only ever written from here.
-Audio_CmdHandler_A0_BF:
-	ld xbc, (xsp + 6)
-	ld a, (xbc)
-	cp a, 1:i3
-	jr z, CmdA0BF_CheckSubByte
-	cp a, 0:i3
-	jr nz, CmdA0BF_Return
-	cp (xbc + 1), 0x1
-	jr nz, CmdA0BF_Return
-	ld (19018:16), 1
-	jr CmdA0BF_Return
-
-; payload[0]==1 arm: range-check payload[1] against 9 and store it to (0x004A48).
-CmdA0BF_CheckSubByte:
-	cp (xbc + 1), 0x9
-	jr ugt, CmdA0BF_Return
-	mrdb5 0x89, 0x01, 0x19, 0x48, 0x4A	; LD (4A48h), (XBC + 001h)
-
-; `lds hl,0 ; ret` -- the handler always reports success.
-CmdA0BF_Return:
-	ld hl, 0:i3
-	ret
+Audio_CmdHandler_A0_BF:	.include "includes/generated/cc900/Audio_CmdHandler_A0_BF.s"	; C: cc900/dsp_control_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CmdA0BF_CheckSubByte, Audio_CmdHandler_A0_BF + 26
+	.set	CmdA0BF_Return, Audio_CmdHandler_A0_BF + 37
 
 ; ----------------------------------------------------------------------------
 ; ToneGen_Init - Initialize tone generator subsystem

@@ -1044,8 +1044,8 @@ FP_SinCos_Kernel_Epilog:
 	lda xsp, (xsp+128:16)
 	ret
 
-; Signed 64-bit divide/modulo helper for the C runtime. Inputs XWA:QWA (dividend) and
-; XBC:QBC (divisor); D selects quotient (0) or remainder (1) and is set by the two
+; Signed 32-bit (long) divide/modulo helper for the C runtime. Inputs XWA (dividend) and
+; XBC (divisor); D selects remainder (0) or quotient (1) and is set by the two
 ; alternate entry points below. Records the operand signs in E, takes absolute values,
 ; calls FP_UnsignedDiv, and re-applies the sign to the quotient (sign(a) xor sign(b))
 ; or to the remainder (sign(a)). Result in XHL. Not floating point despite the
@@ -1096,18 +1096,18 @@ Int_SignedDiv_NegResult:
 	inc 1, xhl
 	ret
 
-; Entry point "signed quotient": D = 0, jump to Int_SignedDiv. Despite the name this is
+; Long_SignedRem, the runtime's C9H_remls (long %): D = 0, jump to Int_SignedDiv. Despite its old name (Int_SignedDiv_ConstData) this is
 ; executable code, not data. Converted from `.byte` to mnemonics 2026-09-01 (lane SUB);
 ; `jr -75` takes the raw signed 8-bit displacement, verified byte-identical by an
 ; llvm-mc round trip.
-Int_SignedDiv_ConstData:
+Long_SignedRem:
 	ld	d, 0:opc
 	jr	Int_SignedDiv
 
-; Entry point "signed remainder": D = 1, jump to Int_SignedDiv. The three bytes at
+; Long_SignedDiv, the runtime's C9H_divls (long /): D = 1, jump to Int_SignedDiv. The three bytes at
 ; 0x03DC63 are a fourth entry point ("unsigned remainder"): call FP_UnsignedDiv and
 ; return XDE in XHL.
-Int_SignedDiv_AltEntry:
+Long_SignedDiv:
 	ld d, 0x1:opc
 	jr Int_SignedDiv
 ; The fourth entry point the header above describes ("unsigned remainder": call FP_UnsignedDiv

@@ -5,9 +5,9 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 5,069
-#   semantic names ........... 5,048 (99.6%)
-#   positional names ......... 21
+#   symbols .................. 5,071
+#   semantic names ........... 5,051 (99.6%)
+#   positional names ......... 20
 #
 PAYLOAD_ENTRY 00000400
 IntTramp_SWI1 00000405
@@ -2096,8 +2096,8 @@ ToneGen_WriteNote6ch_NopCont5 00028090
 ToneGen_WriteNote2ch 00028097
 ToneGen_WriteNote2ch_NopCont1 000280BE
 ToneGen_WriteNote2ch_NopCont2 000280E0
-VoiceCC_DataTable_0280FE 000280E7
-VoiceCC_DataTable_0280FE_Next 00028104
+ToneGen_WriteVoice_Reg21 000280E7
+ToneGen_WriteVoice_Reg21_Next 00028104
 ToneGen_WriteVoice_TvfPair 00028109
 ToneGen_WriteVoice_TvfPair_Next 00028130
 ToneGen_WriteVoice_TvfPair_Next2 00028152
@@ -4232,7 +4232,7 @@ DSP_DispatchData 00036A04
 DSP_DispatchData_DSP2Path 00036A18
 DSP_DispatchData_InvalidChip 00036A1F
 DSP_DispatchData_Epilogue 00036A21
-DSP_StateTable_Reset 00036A25
+DSP_StateTable_Save 00036A25
 DSP_AlgoChange_CheckAndFlag 00036A32
 DSP_AlgoChange_NoChange 00036A49
 DSP_AlgoChange_FlagAndClear 00036A50
@@ -4825,8 +4825,8 @@ Int_SignedDiv_AfterSignA 0003DBD9
 Int_SignedDiv_CallUnsigned 0003DBE9
 Int_SignedDiv_ResultCorr 0003DBFB
 Int_SignedDiv_NegResult 0003DBFF
-Int_SignedDiv_ConstData 0003DC0F
-Int_SignedDiv_AltEntry 0003DC13
+Long_SignedRem 0003DC0F
+Long_SignedDiv 0003DC13
 Int_UnsignedRemainder 0003DC17
 FP_UnsignedDiv 0003DC1D
 FP_UnsignedDiv_Overflow 0003DC40
@@ -5078,3 +5078,5 @@ Part_Record_Base 0004131C
 Part_PresentWord 0004131E
 Part_PatchRecord_Ptr 00041322
 ToneGen_StagingBlock 00045180
+ToneDB_RelBase 000452C4
+ToneDB_RootPtr 000452C8

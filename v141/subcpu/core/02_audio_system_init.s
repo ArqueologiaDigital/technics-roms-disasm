@@ -260,36 +260,18 @@ MemClear_ExtRAM_Finish:
 ; Task2_NeverSpawned: Entry PC of task 2 (TaskSched_TaskDescriptorTable record 2), a bare RET: Kernel_StartTask is
 ;   only ever called with task 1 and task 3, so this slot is unused in v1.42. Basis: descriptor table + the SpawnTask
 ;   call sites.
-Task2_NeverSpawned:
-	ret
+Task2_NeverSpawned:	.include "includes/generated/cc900/Task2_NeverSpawned.s"	; C: cc900/audio_system_init.c
 
 
-Audio_InitRingBuffers:
-	call RingBuf_Init_1K
-	call RingBuf_Init_256
-	jp RingBuf_Init_512
+Audio_InitRingBuffers:	.include "includes/generated/cc900/Audio_InitRingBuffers.s"	; C: cc900/audio_system_init.c
 
 
-Audio_CmdHandler_20_3F:
-	ld hl, 0:i3
-	ret
+Audio_CmdHandler_20_3F:	.include "includes/generated/cc900/Audio_CmdHandler_20_3F.s"	; C: cc900/audio_system_init.c
 
-Audio_CmdHandler_40_5F:
-	ld c, (xsp + 4)
-	ld a, c
-	dec 1, c
-	cp a, 0:i3
-	jr z, AudioCmd_40_5F_Done
-
-AudioCmd_40_5F_SkipLoop:
-	ld a, c
-	dec 1, c
-	cp a, 0:i3
-	jr nz, AudioCmd_40_5F_SkipLoop
-
-AudioCmd_40_5F_Done:
-	ld hl, 0:i3
-	ret
+Audio_CmdHandler_40_5F:	.include "includes/generated/cc900/Audio_CmdHandler_40_5F.s"	; C: cc900/audio_system_init.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioCmd_40_5F_SkipLoop, Audio_CmdHandler_40_5F + 11
+	.set	AudioCmd_40_5F_Done, Audio_CmdHandler_40_5F + 19
 
 ; ----------------------------------------------------------------------------
 ; DSP_Init_Channels - Initialize DSP channel configuration
