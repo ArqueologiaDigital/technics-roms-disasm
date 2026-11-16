@@ -8,3 +8,31 @@ void BlockCopy_Words_BC_to_HL(unsigned char *s, unsigned char *d, unsigned int n
     unsigned int i;
     for (i = 0; i < n; i++) *d++ = *s++;
 }
+
+extern unsigned char ram_41350[];
+extern unsigned char ram_41356[];
+extern unsigned char ram_4135a[];
+extern void Voice_DSP_OutputConfig2(unsigned int part, unsigned int slot);
+#define PART_FLAGS(p)   (*(unsigned int *)(ram_41350 + (p) * 0x11f))
+#define PART_W72(p)     (*(unsigned int *)(ram_4135a + (p) * 0x11f))
+#define PART_PATCH(p)   (*(unsigned char **)(ram_41356 + (p) * 0x11f))
+
+int DSP_EffectStateQuery(unsigned char part, unsigned char *out)
+{
+    if (PART_FLAGS(part) & 1) *out = 1;
+    else *out = 0;
+    return 1;
+}
+
+void Voice_DSPOut_Second_B(unsigned char part)
+{
+    switch (PART_PATCH(part)[93] & 0xf) {
+    case 4:
+    case 5:
+        Voice_DSP_OutputConfig2(part, 1);
+        break;
+    case 7:
+        if (PART_W72(part) & 0x4000) Voice_DSP_OutputConfig2(part, 1);
+        break;
+    }
+}

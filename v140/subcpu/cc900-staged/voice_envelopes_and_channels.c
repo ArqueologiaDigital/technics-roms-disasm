@@ -40,3 +40,121 @@ void ScaleTune_Set_Global_Enabled(unsigned char a)
 }
 
 unsigned int ScaleTune_Is_Global_Enabled(void) { return ram_412f7 & 0x200; }
+
+extern unsigned char ram_4131e[];
+extern int ram_412fb;
+
+void Voice_ClearLFO_ActiveFlag(unsigned char part) { *(unsigned int *)&ram_4131e[part * 0x11f] &= ~0x2000; }
+
+void Voice_SetLFO_ActiveFlag(unsigned char part) { *(unsigned int *)&ram_4131e[part * 0x11f] |= 0x2000; }
+
+void Voice_SetMasterTune(char a) { a -= 0x40; a += a; ram_412fb = a; }
+
+extern unsigned int ram_41310;
+extern unsigned char ram_41312;
+extern unsigned char ram_41313;
+extern unsigned int ram_41314;
+extern unsigned int ram_41316;
+extern int ram_41318;
+extern unsigned char ram_41326[];
+extern unsigned char ram_4132b[];
+extern unsigned char ram_4132e[];
+extern unsigned char ram_4132f[];
+extern unsigned char ram_41333[];
+extern unsigned char ram_41334[];
+extern unsigned char ram_41341[];
+extern unsigned char ram_41342[];
+extern unsigned int ram_4519a;
+extern unsigned int ram_4519c;
+extern unsigned int Voice_RhythmMode_ScalePitch_Table[];
+struct envseg { char pad[62]; unsigned int a; unsigned int b; };
+
+int Audio_Clamp_To_Range(int a, int hi, int lo)
+{
+    if (a < lo) a = lo;
+    else if (a > hi) a = hi;
+    return a;
+}
+
+void VoiceCC_Stub_Ret1(void) { }
+
+void VoiceCC_Stub_Ret2(void) { }
+
+void Voice_CC_SetBendRange(unsigned char part, unsigned char v) { ram_4132f[part * 0x11f] = v; }
+
+void Voice_CC_SetDspEffectSend(unsigned char part, unsigned char v) { ram_4132e[part * 0x11f] = v; }
+
+void Voice_CC_SetGateRoutingMode(unsigned char part, unsigned char v) { ram_41341[part * 0x11f] = v; }
+
+void Voice_CC_SetGlidePedal(unsigned char part, unsigned char v)
+{
+    if (v != 0) *(unsigned int *)&ram_41326[part * 0x11f] |= 4;
+    else *(unsigned int *)&ram_41326[part * 0x11f] &= ~4;
+}
+
+void Voice_CC_SetKeyScaling(unsigned char part, unsigned char v)
+{
+    if (v != 0) *(unsigned int *)&ram_4131e[part * 0x11f] |= 0x100;
+    else *(unsigned int *)&ram_4131e[part * 0x11f] &= ~0x100;
+}
+
+void Voice_CC_SetModWheelRange(unsigned char part, unsigned char v)
+{
+    if (v != 0) *(unsigned int *)&ram_41326[part * 0x11f] |= 2;
+    else *(unsigned int *)&ram_41326[part * 0x11f] &= ~2;
+}
+
+void Voice_CC_SetReverbSend(unsigned char part, unsigned char v) { ram_4132b[part * 0x11f] = v; }
+
+void Voice_CC_SetSostenutoFlag(unsigned char part, unsigned char v)
+{
+    if (v != 0) *(unsigned int *)&ram_41326[part * 0x11f] |= 0x4000;
+    else *(unsigned int *)&ram_41326[part * 0x11f] &= ~0x4000;
+}
+
+void Voice_CC_SetSustain(unsigned char part, unsigned char v)
+{
+    if (v != 0) *(unsigned int *)&ram_41326[part * 0x11f] |= 1;
+    else *(unsigned int *)&ram_41326[part * 0x11f] &= ~1;
+}
+
+void Voice_CC_SetSustainLength(unsigned char part, unsigned char v) { ram_41334[part * 0x11f] = v; }
+
+void Voice_CC_SetTgPanMode(unsigned char part, unsigned char v) { ram_41342[part * 0x11f] = v; }
+
+void Voice_CC_SetVelSwitchConfig(unsigned char part, unsigned char v) { ram_41333[part * 0x11f] = v; }
+
+void Voice_SetKeyShiftEnable(unsigned char on)
+{
+    unsigned int t;
+    if (on != 0) {
+        if (ram_412f7 & 0x1000) return;
+        ram_412f7 |= 0x800;
+        ram_41310 = 0;
+    } else {
+        if (!(ram_412f7 & 0x1000)) return;
+        t = ram_412f7 & ~(0x1000 | 0x4000 | 32768);
+        t |= 0x2000;
+        if (ram_41310 > 20) t |= 0x8000;
+        else t |= 0x4000;
+        ram_412f7 = t;
+        ram_41310 = 0;
+    }
+}
+
+void Voice_SetRhythmMode(unsigned char a)
+{
+    if (a & 8) ram_41312 = 3;
+    else ram_41312 = 1;
+    ram_41313 = 1;
+    ram_41314 = Voice_RhythmMode_ScalePitch_Table[(a & 0xf0) >> 4];
+    if (a & 4) ram_41316 = 0x8000;
+    else ram_41316 = 0xa000;
+    ram_41318 = 200 - ((a & 3) << 3);
+}
+
+void Voice_Stage_EnvSegments(struct envseg *p)
+{
+    ram_4519a = p->a;
+    ram_4519c = p->b;
+}

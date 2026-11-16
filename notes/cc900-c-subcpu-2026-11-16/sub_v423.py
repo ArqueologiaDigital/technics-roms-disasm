@@ -102,6 +102,8 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         except KeyError as e:
             out.append((full, 0, 'cannot resolve %s' % e)); continue
         body = [l.replace('$+', '.+').replace('$-', '.-') for l in body]   # inline asm's `jr $+2` (llvm-mc spells `.`)
+        # a shift by 16: to_llvm writes the raw count field 0, llvm-mc wants 16 (the CPU encodes 16 as 0)
+        body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
         if any('untranslated' in l for l in body):
             out.append((full, 0, 'to_llvm cannot translate a line')); continue
         try:
@@ -133,8 +135,8 @@ def corpus(d, files, sets):
     open(os.path.join(d, 'sources.txt'), 'w').write(''.join(s + '\n' for s in srcs))
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (s, SETS[s]) for s in sets))
     print('%d C files in %s, option sets %s' % (len(srcs), d, ' '.join(sets)))
-    print('run (from scripts/analysis/cc900): flock %s/vm/.runlock bash oracle/run_oracle.sh <name> %s %s/sources.txt '
-          '%s/options.txt v423' % (ORACLE, d, d, d))
+    print('run (from scripts/analysis/cc900; it takes a free slot of the VM pool, no flock): '
+          'bash oracle/run_oracle.sh <name> %s %s/sources.txt %s/options.txt v423' % (d, d, d))
 
 
 def find_c(stem):
