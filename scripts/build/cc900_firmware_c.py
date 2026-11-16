@@ -44,6 +44,15 @@ the C's own qualifiers (listing_widths); the model takes them from the C (c_widt
 the step.  V4.23 qualifies only the first declarator of a declaration, so a qualified declaration names one object
 (scripts/tools/cc900_near_qualifiers.py writes them).  Numeric absolute operands keep the address rule.
 
+Calls.  V4.23 writes `cal` / `j`; asm900 makes them calr / jr (jrl when jr does not reach) for a function in the same
+file and section, call / jp for an extern -- call16 / jp16 for a __near or __tiny one (probe calrel, run
+2026-11-16-42-p6-calrel; scripts/analysis/cc900/calrel_check.py).  Our C files group functions by hand source, not
+by the firmware's original module (lane_sub: functions of one C file that call each other with an absolute call), so
+file membership says nothing: only a comment `cc900-module: Label1 Label2 ...` makes a callee module-local
+(to_llvm.MODULE = module_names).  It names the tree labels that shared the caller's original module and section.  Each
+entry is a claim about the original build that `make gate` checks; its evidence is the hand assembly's calr / jr /
+jrl, and an inferred module map (calr joins, a near absolute call separates) can propose the list.
+
 The environment variables the model reads (CC900_*) are cleared, so the build always runs the model's defaults;
 CC900_MODEL_CLANG is kept (the Makefile sets it to its own clang).
 """
@@ -187,6 +196,21 @@ def file_options(path):
 REFUSED = {}                                             # compile_c: {function: the model's "unsupported" reason}
 
 
+MODULE_RE = re.compile(rb'cc900-module:([^*\n]*)')
+
+
+def module_names(path):
+    """the names FILE.c's `cc900-module:` comments list (blank- or comma-separated; any number of comments): tree
+    labels that were in the same section of the firmware's original source module as this file's functions.  asm900
+    saw them, so it assembled V4.23's CAL / J to them as calr / jr / jrl, which to_llvm.MODULE reproduces.  An entry
+    is a claim about the original build, and `make gate` checks it: a wrong one changes the bytes.  The evidence for
+    one is the ROM itself (the hand assembly's calr / jr / jrl to it)."""
+    out = set()
+    for m in MODULE_RE.finditer(open(path, "rb").read()):
+        out.update(n for n in re.split(r'[\s,]+', m.group(1).decode()) if n)
+    return out
+
+
 def label_map(path):
     """{C name: the tree's label} from FILE.c's `cc900-name:` comments"""
     return {m.group(1).decode(): m.group(2).decode() for m in NAME_RE.finditer(open(path, "rb").read())}
@@ -218,6 +242,7 @@ def compile_c(path, names, spell=True):
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
     to_llvm.WIDTHS = c_widths(path, model=True)
+    to_llvm.MODULE = module_names(path)                  # only the marking, never file membership
     check_c_names(path, [f.name for f in unit.functions])
     labels = label_map(path)
     funcs = {}
@@ -237,8 +262,9 @@ def compile_c(path, names, spell=True):
 QUALIFIER_WIDTH = {"__tiny": 8, "__near": 16}
 
 
-def file_scope_declarations(path):
-    """FILE.c's file-scope declarations without a parameter list (objects, not prototypes), comments removed"""
+def file_scope_declarations(path, prototypes=False):
+    """FILE.c's file-scope declarations without a parameter list (objects), or with prototypes=True those with one
+    (prototypes and function-pointer objects); comments removed"""
     src = open(path, "rb").read().decode("latin-1")
     src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
     src = re.sub(r'//[^\n]*', '', src)
@@ -253,7 +279,7 @@ def file_scope_declarations(path):
             continue
         if ch == ";":
             s = " ".join(cur.split())
-            if s and "(" not in s and not s.startswith("typedef"):
+            if s and ("(" in s) == prototypes and not s.startswith("typedef"):
                 out.append(s)
             cur = ""
         else:
@@ -289,6 +315,18 @@ def c_widths(path, model=False):
                         sys.exit("%s: `%s;`: the reference model does not reproduce V4.23's indexing of a %s "
                                  "array.%s" % (path, s, q, MODEL_HINT))
             out[m.group(1)] = w
+    for s in file_scope_declarations(path, prototypes=True):   # functions: CAL / J take call16 / jp16 for a
+        m = re.search(r'\(\s*\*\s*([A-Za-z_]\w*)', s)           # __near or __tiny one (probe calrel)
+        if m:                                                 # a function-pointer object: a large datum
+            out.setdefault(m.group(1), 24)
+            continue
+        m = re.search(r'([A-Za-z_]\w*)\s*\(', s)
+        if m:
+            head = s[:m.start()]
+            q = [q for q in QUALIFIER_WIDTH if re.search(r'\b%s\b' % q, head)]
+            out[m.group(1)] = 16 if q else 24    # V4.23 declares a __tiny function `medium` too (probe calrel)
+    for f in c_functions(path):                               # defined here: in the code section, large
+        out.setdefault(f, 24)
     return out
 
 
@@ -351,6 +389,7 @@ def compile_v423(path, names, cache):
     text = open(lp, encoding="latin-1").read()
     to_llvm.SPELL = names
     to_llvm.WIDTHS = listing_widths(path, text)
+    to_llvm.MODULE = module_names(path)                  # only the marking, never file membership
     funcs = {}
     for name, lines in listing_functions(text).items():
         n = name.lstrip("_.")

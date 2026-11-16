@@ -762,3 +762,42 @@ Timings (this machine, 2026-11-16, `make -j6`):
 
 Most of a warm gate is the gate's own checks, not the firmware C.  The first make in a fresh worktree builds
 everything else too: 10 min 32 s, model build, before this change.
+
+## Calls and tail calls: asm900 relaxes CAL / J (probe calrel, 2026-11-16, lane_vmb)
+
+V4.23 writes every call `cal` and every tail call `j`.  These are asm900's optimising forms ("J" or "CAL" "used for
+optimization", README/HIS96AE0.TXT; ASM900 `-O` is "No optimization").  The ROM's 9,477 `calr` and its jr / jrl
+tail calls come from asm900, not from the compiler.  Probe calrel (`scripts/analysis/cc900/corpus/firmware/
+p6_calrel*.c`, run `2026-11-16-42-p6-calrel`, assembled with `-l` and `-l -O` through job.sh's new `asmflags.txt`)
+shows the rule:
+
+| V4.23 writes                 | target                                                            | asm900 assembles (llvm-mc spelling) |
+|------------------------------|-------------------------------------------------------------------|-------------------------------------|
+| `cal`                        | a function of the same file (public or static), any distance seen | `calr` (1e d16)                     |
+| `j` (tail call)              | the same, within reach of jr                                      | `jr` (68 d8)                        |
+| `j` (tail call)              | the same, beyond jr (about 200 B in the probe)                    | `jrl` (78 d16)                      |
+| `cal`                        | an extern, large (plain)                                          | `call` (1d a24)                     |
+| `j`                          | an extern, large                                                  | `jp` (1b a24)                       |
+| `cal`                        | an extern `__near` or `__tiny` function (listed `medium`)         | `call16` (1c a16)                   |
+| `j`                          | an extern `__near` function                                       | `jp16` (1a a16)                     |
+| `cal` / `j` with ASM900 `-O` | anything                                                          | `call` / `jp`, 24-bit               |
+
+Static and public targets behave alike.  The >32 KB case is still open: p6_calrel_far.c's 49 KB pad stopped V4.23
+(THC1-Fatal-150, "Too large string", one macro-expanded line); it needs a generated pad, one statement per line.
+
+Our C files group functions by hand source, not by the firmware's original module.  lane_sub found functions of
+one C file that call each other with an absolute call, so they came from different modules.  So file membership
+says nothing.  A callee is module-local only when the comment `cc900-module: Label1 Label2 ...` (blank- or
+comma-separated, any number of comments) names it: a tree label that shared the caller's original module and
+section.  An inferred module map (lane_sub's modules.py, lane_p6's modules_main.py: a calr joins two routines into
+one module, a near absolute call separates them) can propose the list.  For a named callee, `model/to_llvm.py`'s
+MODULE gives `calr` / `jr`, and llvm-mc, which assembles each image as one unit, widens a jr to
+jrl where it does not reach.  It does that only for labels that are not `.globl`, as the trees' are.  An entry is a
+claim about the original build, and `make gate` checks it; its evidence is the hand assembly's calr / jr / jrl to
+that label.  Both paths read it (`cc900_firmware_c.module_names`), so the model and V4.23 still give the same
+bodies.
+
+`python3 -I -B scripts/analysis/cc900/calrel_check.py FILE.asm FILE.lst` translates a whole V4.23 listing the
+build's way and compares every function with ASM900's list file.  On the probe, all 15 functions of p6_calrel.c and
+all 4 of p6_calrel_q.c MATCH.  `c_build_coverage.py` lays a function and its module-local targets out at their ROM
+addresses, so its V4.23 and model columns check such calls too.
