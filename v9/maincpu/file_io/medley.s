@@ -243,63 +243,14 @@ SeqName_Exit:
 	popw iz
 	ret
 
-FormatMedleyNumber:
-	ld (xwa+), e
-	cp c, 0xff
-	jr nz, FmtNum_CheckMarked
-	ld c, 0x20:opc
-	jr FmtNum_WriteSpacePad
-
-FmtNum_CheckMarked:
-	cp c, 0xfe
-	jr nz, FmtNum_FormatNumber
-	ld c, 0x4d:opc
-
-FmtNum_WriteSpacePad:
-	ld (xwa+), c
-	ld (xwa+), 0x20
-	ld (xwa), 0x20
-	ret
-
-FmtNum_FormatNumber:
-	inc 1, c
-	cp c, 0x64
-	jr c, FmtNum_WriteM
-	lda xhl, (xwa+:1)
-	ld e, c
-	extz de
-	div e, 0x64
-	add e, 0x30
-	ld (xhl), e
-	extz bc
-	div c, 0x64
-	ld c, b
-	jr FmtNum_WriteTensUnits
-
-FmtNum_WriteM:
-	ld (xwa+), 0x4d
-
-FmtNum_WriteTensUnits:
-	cp c, 0xa
-	jr nc, FmtNum_WriteTwoDigits
-	ld (xwa+), 0x30
-	add c, 0x30
-	ld (xwa), c
-	ret
-
-FmtNum_WriteTwoDigits:
-	lda xhl, (xwa+:1)
-	ld e, c
-	extz de
-	div e, 0xa
-	add e, 0x30
-	ld (xhl), e
-	extz bc
-	div c, 0xa
-	ld c, b
-	add c, 0x30
-	ld (xwa), c
-	ret
+FormatMedleyNumber:	.include "includes/generated/cc900/FormatMedleyNumber.s"	; C: cc900/medley.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FmtNum_CheckMarked, FormatMedleyNumber + 12
+	.set	FmtNum_WriteSpacePad, FormatMedleyNumber + 19
+	.set	FmtNum_FormatNumber, FormatMedleyNumber + 30
+	.set	FmtNum_WriteM, FormatMedleyNumber + 61
+	.set	FmtNum_WriteTensUnits, FormatMedleyNumber + 65
+	.set	FmtNum_WriteTwoDigits, FormatMedleyNumber + 80
 
 FmmIntMedleyFunc:
 	dec 8, xsp

@@ -227,8 +227,12 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   character and fall into the space padding; any other entry jumps to the number code.  `if` / `else` and `switch`
   forms give the same instructions, but V4.23 then places the padding after the first arm.  Both option sets give
   the same bytes, so this function says nothing about `-O`.  The model refuses the C: without `-O`, `goto` is
-  unsupported; at `-O3 -XS -Xr`, "ld A,C over the live parameter p in WA".  That is a model gap, reported to the
-  coordinator.  The function stays hand assembly until the model compiles it.
+  unsupported; at `-O3 -XS -Xr`, "ld A,C over the live parameter p in WA".  That was a model gap, reported to the
+  coordinator.  **Built since batch 361** (lane_o3 fix 25: `goto` and these shapes): `fmt_e` is now
+  `FormatMedleyNumber` in `medley.c` of all five trees, 108 of 108 bytes (`fn_diff.py`).  Its six inner labels
+  (`FmtNum_CheckMarked` ... `FmtNum_WriteTwoDigits`) keep their names and addresses: `cc900_splice.py --symbols`
+  takes the function's extent from the size of its compiled C and writes each inner label after the include as
+  `.set FmtNum_WriteM, FormatMedleyNumber + 61`, its offset read from the symbols reference.
 - **`TrimAndPadSmfFilename`** (`file_io/smf_operations.s`).  With a character variable and two pointers that start
   equal, V4.23 at `-O3 -XS -Xr` gives the ROM's first 42 bytes:
   - the whole first loop, whose compound `&&` condition is tested at the bottom, entered by a jump;
