@@ -270,6 +270,41 @@ form gave.
 `cc900_splice.py --symbols` now drops an assembler-local `.L` inner label (v6 / v5's `SeMenu_StoreAbsoluteValue`),
 but only when a branch earlier in the same body targets it; otherwise the label ends the body.
 
+## Round 8: probes m9 / m9c (runs `2026-11-16-22-p6-m9`, `-23-p6-m9c`)
+
+15 larger leaf functions of `display/graphics_text_vga.s`, `audio/dsp_config_sysex.s`, `demo/file_demo_proc.s` and
+`sequencer/seq_event_playback.s`, each in two C forms (`corpus/firmware/p6_m9a.c`, `p6_m9b.c`).  The four
+`FileIO_*` bit functions have a third form (`p6_m9c.c`).
+- **V4.23 reproduces the ROM** for `FontGlyph_ByteData` (both forms, both sets) and for
+  `SysEx_ClampVoiceIndex128_49` / `SysEx_ClampVoiceIndex8_49` (form a, both sets).  The model does not:
+  - it refuses `FontGlyph_ByteData`'s form a and differs on form b;
+  - on the clamp functions it differs on form a (it indexes with BC from XDE, the ROM with WA from XBC).
+  
+  These are model gaps.
+- **The model disagrees with V4.23** on the clamp functions' form b (`return T[a < 0x80 ? a : 0];`).  The model
+  gives the ROM's bytes, V4.23 does not.  So form b is not the firmware's C; the clamp functions wait for the gap
+  on form a.
+- **Shift by a variable count.**  For `1 << a` and for `1U << a` alike, V4.23 writes the arithmetic `sla A,BC`.
+  The ROM has the logical `sll A,BC` (`slla bc`) in the `FileIO_*` bit functions.  The model writes `sll` for the
+  unsigned form, in the `v4.23` personality too.  So the model disagrees with V4.23, and agrees with the ROM.
+  v10 holds both forms (126 `slaa`, 44 `slla`, 4 `sraa`, 40 `srla`), which fits a Technics rule "logical shift
+  for an unsigned value", where V4.23 always uses the arithmetic one.  This is a candidate `kn5000` rule, reported
+  to the coordinator.  With `1U << a` and the clear written `&= (1U << a) ^ 0xffff` (the ROM complements with
+  `xor BC,0xffff`, V4.23 and the model with `cpl` for `~`), the model gives the ROM's bytes for three of the four.
+  They are not built until the rule is decided in the model: built now, they would change as soon as the model's
+  `v4.23` personality is corrected.
+- **Memory-to-memory moves.**  `Demo_SelectEntry_LoadPattern` and batch 4's `SeqPlay_WriteErrorToVoiceTable` store
+  an indexed table entry with one `ld (mem),(XBC+WA)`; V4.23 loads it into WA and stores WA.  v10 holds 275
+  memory-to-memory moves (217 `ld`, 58 `ldw`), 38 of them from an indexed source.  This is a candidate
+  `kn5000` rule, or partly hand assembly; reported.
+- **Constant-pointer indexing.**  `SetPaletteRGB`, `Table_LookupDword` and `_Read_VGA_Register` index from a
+  constant address loaded with the 5-byte `ld xR, imm`.  V4.23 differs from both forms at +2 / +5, and the model
+  refuses them.  The C is unknown.
+
+`to_llvm.py` learned the shift-by-A forms: the listing's `sla` / `sll` / `sra` / `srl A,r` become llvm-mc's
+`slaa` / `slla` / `sraa` / `srla r`.  `asm_vs_rom.py` also tries a label with a leading underscore, which the
+listing's name prefix hides (`_Read_VGA_Register`).
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local

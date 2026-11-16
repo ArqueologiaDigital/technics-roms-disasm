@@ -56,7 +56,9 @@ def main():
     for name, lines in funcs.items():
         bare = name.lstrip('_.')
         full = cnames.get(bare) if cnames.get(bare) in ref else bare if bare in ref else \
+            '_' + bare if '_' + bare in ref else \
             (short.get(bare, [None])[0] if len(short.get(bare, [])) == 1 else None)
+        # ('_' + bare: a label with a leading underscore, which the listing's name prefix hides, _Read_VGA_Register)
         if full is None:
             print('%-32s not in the symbols reference' % bare); bad += 1; continue
         try:

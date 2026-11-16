@@ -53,7 +53,9 @@ NAME_RE = re.compile(rb'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
 # Rules of the Technics compiler seen in Matsushita's own code but not in the library it links (which Toshiba's tools
 # built, and which the model's kn5000 ledger rows score): codegen flags that are off in the model and that this
 # build switches on.  KN_LOOP_INVERT: rule loop-entry-copy (notes/cc900-compat-plan-2026-11-08/rules.md).
-FIRMWARE_RULES = ("KN_LOOP_INVERT",)
+# KN_SHIFT_UNSIGNED_SLL: a shift left by a variable count of an unsigned value is sll, where V4.23 writes sla
+# (coordinator decision 2026-11-16; file_demo_proc.s's FileIO_* bit functions, probe p6_m9c.c).
+FIRMWARE_RULES = ("KN_LOOP_INVERT", "KN_SHIFT_UNSIGNED_SLL")
 C_NAME_LIMIT = 31
 EQU_RE = re.compile(rb'^\s*\.(?:equ|set)\s+([A-Za-z_][\w.]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;|$)')
 RAM_CELL_RE = re.compile(r'^ram_([0-9a-f]+)$')

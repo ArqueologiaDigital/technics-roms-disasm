@@ -142,6 +142,9 @@ def translate_line(t, syms, locals_):
         return '\t%s %s' % (op, raw[0]) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], raw[1])
     if op in ('sll', 'srl', 'sla', 'sra', 'rlc', 'rrc', 'rl', 'rr') and len(raw) == 2 and NUM.match(raw[0]):
         return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]))   # Toshiba: count first (srl 2,BC)
+    if op in ('sla', 'sll', 'sra', 'srl') and len(raw) == 2 and raw[0] == 'A' and REGS.match(raw[1]):
+        return '\t%sa %s' % ({'sla': 'sla', 'sll': 'sll', 'sra': 'sra', 'srl': 'srl'}[op], raw[1].lower())
+        # a count in A: llvm-mc's slaa / slla / sraa / srla r (d8+r fc..ff; firmware FileIO_*: slla bc = d9 fe)
     if op in ('cpir', 'cpirw', 'cpdr', 'cpdrw', 'cpi', 'cpiw', 'cpd', 'cpdw') and len(raw) == 2:
         m = re.match(r'^\((X(WA|BC|DE|HL|IX|IY|IZ|SP))[+-]\)$', raw[1])
         if m:                                              # llvm-mc knows only the operand-less form: the bytes
