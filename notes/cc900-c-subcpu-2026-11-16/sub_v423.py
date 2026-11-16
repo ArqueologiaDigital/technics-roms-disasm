@@ -15,7 +15,8 @@ the function's own label.  The comparison is scripts/analysis/cc900/asm_vs_rom.p
     python3 -B notes/cc900-c-subcpu-2026-11-16/sub_v423.py check RUN_DIR [PATTERN] [--tree v142/subcpu] [--tsv OUT]
         one row per function: its size, the files@sets that MATCH, else the furthest first difference
     python3 -B notes/cc900-c-subcpu-2026-11-16/sub_v423.py record RUN_DIR [--tree v142/subcpu]
-        for every <tree>/cc900-staged/*.c whose text the run compiled (same SHA-256), writes its rows into
+        for every <tree>/cc900-staged/*.c (all three trees unless --tree; the corpus put each under sub/<tree>/)
+        that the run compiled at its own option set, writes its rows into
         notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv (tree, C file, sha256, options, run, function, bytes, result)
     python3 -B notes/cc900-c-subcpu-2026-11-16/sub_v423.py one LISTING.asm [--tree v142/subcpu] [--cfile C]
         the comparison for one listing
@@ -121,10 +122,13 @@ def corpus(d, files, sets):
     os.makedirs(os.path.join(d, 'sub'), exist_ok=True)
     srcs = []
     for f in files:
-        shutil.copyfile(f, os.path.join(d, 'sub', os.path.basename(f)))
+        rel = os.path.relpath(os.path.abspath(f), REPO).split(os.sep)
+        sub = 'sub/%s/' % rel[0] if len(rel) == 4 and rel[2] == 'cc900-staged' else 'sub/'   # staged: per tree
+        os.makedirs(os.path.join(d, sub), exist_ok=True)
+        shutil.copyfile(f, os.path.join(d, sub, os.path.basename(f)))
         for h in re.findall(r'#include\s+"([^"]+)"', open(f, encoding='latin-1').read()):
-            shutil.copyfile(os.path.join(os.path.dirname(f), h), os.path.join(d, 'sub', h))
-        srcs.append('sub/' + os.path.basename(f))
+            shutil.copyfile(os.path.join(os.path.dirname(f), h), os.path.join(d, sub, h))
+        srcs.append(sub + os.path.basename(f))
     open(os.path.join(d, 'sources.txt'), 'w').write(''.join(s + '\n' for s in srcs))
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (s, SETS[s]) for s in sets))
     print('%d C files in %s, option sets %s' % (len(srcs), d, ' '.join(sets)))
@@ -183,23 +187,21 @@ def sha256(p):
     return hashlib.sha256(open(p, 'rb').read()).hexdigest()
 
 
-def record(run, tree):
+def record(run, trees):
+    """the staged C of TREES that RUN compiled (listing sub/<tree>/<stem>.asm at the file's option set)"""
     runname = os.path.basename(os.path.normpath(run))
-    compiled = {}
-    for p in glob.glob(os.path.join(run, 'out', 'v423', '*', 'sub', '*.asm')):
-        label = p.split(os.sep)[-3]
-        compiled.setdefault(os.path.basename(p)[:-4], set()).add(label)
-    inputs = {}                     # stem -> sha256 of the C the run compiled (from the run's corpus copy, if kept)
     out = []
-    for c in sorted(glob.glob(os.path.join(REPO, tree, 'cc900-staged', '*.c'))):
-        stem = os.path.basename(c)[:-2]
-        label = LABEL_OF[file_flags(c)]
-        if label not in compiled.get(stem, ()):
-            print('%s: the run has no listing at %s' % (stem, label)); continue
-        lst = os.path.join(run, 'out', 'v423', label, 'sub', stem + '.asm')
-        for fn, n, v in compare(lst, tree, [c]):
-            out.append([tree.split('/')[0], os.path.relpath(c, REPO), sha256(c), label, runname, fn, str(n), v])
-            print('%-5s %-40s %-6s %-36s %4d  %s' % (tree.split('/')[0], os.path.basename(c), label, fn, n, v))
+    for tree in trees:
+        t = tree.split('/')[0]
+        for c in sorted(glob.glob(os.path.join(REPO, tree, 'cc900-staged', '*.c'))):
+            stem = os.path.basename(c)[:-2]
+            label = LABEL_OF[file_flags(c)]
+            lst = os.path.join(run, 'out', 'v423', label, 'sub', t, stem + '.asm')
+            if not os.path.exists(lst):
+                print('%s %s: the run has no listing at %s' % (t, stem, label)); continue
+            for fn, n, v in compare(lst, tree, [c]):
+                out.append([t, os.path.relpath(c, REPO), sha256(c), label, runname, fn, str(n), v])
+                print('%-5s %-36s %-4s %-36s %4d  %s' % (t, os.path.basename(c), label, fn, n, v))
     keep = []
     if os.path.exists(LEDGER):
         done = {r[1] for r in out}
@@ -232,7 +234,7 @@ def main():
         pat = a[2] if len(a) > 2 and not a[2].startswith('--') else '*'
         return check(a[1], pat, tree, opt(a, '--tsv', None))
     if a[0] == 'record':
-        return record(a[1], tree)
+        return record(a[1], [tree] if '--tree' in a else sorted(TREES))
     if a[0] == 'one':
         cf = [a[i + 1] for i, x in enumerate(a) if x == '--cfile']
         for fn, n, v in compare(a[1], tree, cf):
