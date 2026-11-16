@@ -4748,12 +4748,7 @@ SeMenu_DrawEnvGraphLine_Epilogue:
 ;   crosses that edge. Basis: callers + body -- SeMenu_DrawEnvGraphLine calls it four times when it cuts a sloped line
 ;   at the band edge y 59 or 146 and adds HL to the start x; its header: 'a sloped one cut at the band edge with
 ;   interpolated x'.
-SeMenu_InterpolateEdgeX:
-	mul	xwa, bc
-	extz	xwa
-	div	xwa, de
-	ld	hl, wa
-	ret
+SeMenu_InterpolateEdgeX:	.include "includes/generated/cc900/SeMenu_InterpolateEdgeX.s"	; C: cc900/semenu_routines.c
 ; SeMenu_NoteToKeyboardX: Converts MIDI note A (clamped to 20..108) to an x offset on the sound editor's keyboard
 ;   picture and stores it as a word at (XBC): 28 pixels per octave from note 12 plus the key's offset in
 ;   GUI_DisplayStructData_0x1110 (C 0, C# 2, D 4, D# 6, E 8, F 12 ... B 24), minus 18. Basis: callers + body --
@@ -5006,13 +5001,9 @@ SeMenu_DrawKeyScaleGraph_Join4:
 ;   SeMenu_DrawKeyScaleGraph passes the signed key-scale depth (part param 10) and uses its sign separately, and the
 ;   other graph routines pass signed differences of adjacent edit bytes (e.g. `ld a, (xbc+1) / sub a, (xbc)`) to get a
 ;   length.
-SeMenu_StoreAbsoluteValue:
-	cp	a, 0:i3
-	jr	ge, SeMenu_StoreAbsoluteValue_Skip
-	neg	a
-SeMenu_StoreAbsoluteValue_Skip:
-	ld	(xbc), a
-	ret
+SeMenu_StoreAbsoluteValue:	.include "includes/generated/cc900/SeMenu_StoreAbsoluteValue.s"	; C: cc900/semenu_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_StoreAbsoluteValue_Skip, SeMenu_StoreAbsoluteValue + 6
 ; SeMenu_DrawPartRangeGraph: Redraws part C's range graph on the TONE RANGE pages: clears the part's row, maps edit
 ;   bytes E..E+3 to x (A = 0: note on the keyboard picture; A != 0: value*192/127) and draws the three edges of the
 ;   range shape. Skips disabled parts. Basis: callers + body -- SeTonRan1 (A=0) and SeTonRan2 (A=1) column handlers

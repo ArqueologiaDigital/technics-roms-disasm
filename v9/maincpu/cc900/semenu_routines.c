@@ -25,3 +25,6 @@ void SeMenu_StorePartMask(unsigned char v) { SEMENU_PART_MASK = v; }
 void SeMenu_OrPartConfig(unsigned char v) { ram_205f2 |= v; }
 void SeMenu_ClearNotification(unsigned char v) { ram_e3dc = v; ram_e3de |= 0x02; }
 void SeMenu_TriggerNotification(unsigned char v) { GLOBAL_ERROR_CODE = v; ram_e3dc = 238; ram_e3de |= 0x40; }
+
+void SeMenu_StoreAbsoluteValue(char a, char *p) { if (a < 0) a = -a; *p = a; }
+unsigned int SeMenu_InterpolateEdgeX(unsigned int a, unsigned int b, unsigned int d) { return (a * b) / d; }

@@ -236,6 +236,40 @@ Left as hand assembly, with the reason:
 A model refusal met on the way: returning an extern array's name as a pointer (`return ram_25eaa;`, `unsupported:
 var`).  `return &ram_25eaa;` with a byte declaration gives the ROM's `lda` and is what the C uses.
 
+## Batch 4: larger leaf functions, V4.23 first (2026-11-16)
+
+Candidates come from a wider scan (`leaf_routines.py`, in `research-scratch`): leaf routines of 5 to 20 instructions
+with branches, from a called label to the next one.  633 in v10; this round took those in files that already have
+C.  Much of `boot/system_handlers.s` is plainly hand assembly: ring buffers whose comments say "Preserves IX and
+XDE", `pushw` / `popw` around a load and a store.  It was left alone.
+
+| function                         | C file              | bytes | model   | V4.23 (run `2026-11-16-20-p6-m8`, `asm_vs_rom.py`) | option set             |
+|----------------------------------|---------------------|-------|---------|----------------------------------------------------|------------------------|
+| `CheckNotDrawFlag`               | `ui_widget_defs.c`  | 14    | MATCH   | -                                                  | `-Xr` (the file's)     |
+| `SeMenu_InterpolateEdgeX`        | `semenu_routines.c` | 9     | MATCH   | -                                                  | default                |
+| `SeMenu_StoreAbsoluteValue`      | `semenu_routines.c` | 9     | MATCH   | -                                                  | default                |
+| `SeMenu_CheckObjEnabled`         | (not built)         | 13    | DIFF    | MATCH, `int r = -1; if (g == a) r = 0; return r;`  | both                   |
+| `SeMenu_SetEditEnable`           | (not built)         | 14    | DIFF    | MATCH, `if (a == 1) g \|= 4; else g &= ~4;`        | both                   |
+| `Rhythm_CheckHighBitFlag`        | (not built)         | 13    | DIFF    | MATCH, `return (g & 0x80) >> 7;`                   | **`-O3 -XS -Xr` only** |
+| `SeqAcc_UpdateEndPosition`       | (not built)         | 15    | DIFF    | MATCH, a local copy compared and stored            | both                   |
+| `SeMenu_SetNameBufferChar`       | (not built)         | 18    | refused | MATCH, `if (i > 15) return; buf[i] = c;`           | both                   |
+| `SeqPlay_WriteErrorToVoiceTable` | (not built)         | 21    | DIFF    | differs in all 3 forms                             | -                      |
+| `SeMenu_StoreEffectCoeff`        | (not built)         | 13    | refused | differs in all 3 forms                             | -                      |
+
+The five where V4.23 matches and the model does not are model gaps, reported to the coordinator with the run:
+- `res` for `&= ~bit` on a byte;
+- a shifted byte computed in A and moved to L;
+- a local held in WA, not BC;
+- a `-1` preloaded before the compare;
+- the refusal "a byte into a word".
+
+`Rhythm_CheckHighBitFlag` matches only with `-O`, like `TrimAndPadSmfFilename`: `sequencer_engine.c` is at the
+default `-O3 -XS -Xr`.  `SeqPlay_WriteErrorToVoiceTable` uses the memory-to-memory `ld (0x287a),(XBC+WA)`, which no
+form gave.
+
+`cc900_splice.py --symbols` now drops an assembler-local `.L` inner label (v6 / v5's `SeMenu_StoreAbsoluteValue`),
+but only when a branch earlier in the same body targets it; otherwise the label ends the body.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local

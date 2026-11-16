@@ -83,6 +83,12 @@ def main():
                 if j >= len(lines):
                     sys.exit("%s: %s runs past the end of the file" % (asm, name))
                 lm = LABEL_RE.match(lines[j])
+                if lm and lm.group(1).startswith(b".L"):   # an assembler-local label has no symbol: inner (and
+                    if re.search(rb'[\s,]' + re.escape(lm.group(1)) + rb'\s*(;|$)',   # dropped) when a branch of the
+                                 b"\n".join(lines[i:j]), re.M):                     # body so far targets it, else
+                        j += 1                                                       # it starts the next block
+                        continue
+                    break
                 if lm:
                     ln = lm.group(1).decode()
                     if ln not in ref:

@@ -4880,13 +4880,7 @@ SeMenu_ApplyPartEdit_Entry14_Code_Join:
 	pop	xiz
 	lda	xsp, (xsp+28)
 	ret
-SeMenu_StoreAbsoluteValue:
-	cp a, 0:i3
-	jr ge, .Lc_f08c6b
-	neg A
-.Lc_f08c6b:
-	ld (XBC),A
-	ret
+SeMenu_StoreAbsoluteValue:	.include "includes/generated/cc900/SeMenu_StoreAbsoluteValue.s"	; C: cc900/semenu_routines.c
 SeMenu_CopyWriteUpdate_Helper7:
 	lda	xsp, (xsp-28)
 	ld	(xsp+22), e

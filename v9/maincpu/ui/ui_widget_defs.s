@@ -10990,12 +10990,7 @@ EnumList_Reset:
 	popw iz
 	ret
 
-CheckNotDrawFlag:
-	ld wa, (TITLE_FLAGS:24)
-	and wa, 0x4
-	cp wa, 0:i3
-	scc16 z, hl
-	ret
+CheckNotDrawFlag:	.include "includes/generated/cc900/CheckNotDrawFlag.s"	; C: cc900/ui_widget_defs.c
 
 SetVariFlag:
 	cp wa, 0:i3

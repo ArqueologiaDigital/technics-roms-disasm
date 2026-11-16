@@ -11068,12 +11068,7 @@ EnumList_Reset:
 	ret
 
 ; Returns HL = 1 when bit 2 of the word at 0x2bc30 is clear, else 0.
-CheckNotDrawFlag:
-	ld wa, (TITLE_FLAGS:24)
-	and wa, 0x4
-	cp wa, 0:i3
-	scc16 z, hl
-	ret
+CheckNotDrawFlag:	.include "includes/generated/cc900/CheckNotDrawFlag.s"	; C: cc900/ui_widget_defs.c
 
 ; Sets (WA non-zero) or clears (WA = 0) bit 3 of the title flag word through
 ; TitleProc_SetResourceDirtyFlag / TitleProc_ClearResourceDirtyFlag.

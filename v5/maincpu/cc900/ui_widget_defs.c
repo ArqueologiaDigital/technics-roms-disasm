@@ -22,3 +22,6 @@ long GetModeOld(void) { return MODE_OLD; }
 long GetCurrentTarget(void) { return CURRENT_TARGET; }
 void SetCurrentTarget(long t) { if (t != -1) CURRENT_TARGET = t; }
 long GetNamingWindowID(void) { return 10; }
+
+extern unsigned int TITLE_FLAGS;
+int CheckNotDrawFlag(void) { return (TITLE_FLAGS & 0x4) == 0; }
