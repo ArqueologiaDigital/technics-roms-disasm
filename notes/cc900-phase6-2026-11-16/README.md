@@ -198,6 +198,11 @@ lane_dash compiled the 55 milestone-2 C files of all five trees with V4.23, at `
 - `GET_COMPUTER_INTERFACE_SELECTION` (32 characters) compiles: V4.23 cuts its public name to 31 characters, and
   `asm_vs_rom.py` finds it by those.
 
+The coverage page (`c_build_coverage.py`, commit 0794fd6a7) showed `BitMapOut_PrepareRender_CheckBit1` / `2` as
+"V4.23 differs".  That was the page's name lookup, not V4.23: it looked V4.23's functions up by the tree label,
+while the listing names them by the short C names.  Run 18 matches both, 5 of 5 bytes (`asm_vs_rom.py`).
+`c_build_coverage.py` now maps the listing's names through the file's `cc900-name:` comments.
+
 **The fix.**  A C file may give a function a shorter name and map it to the tree's label in a comment:
 `cc900-name: BitMapOut_PrepRender_CheckBit1=BitMapOut_PrepareRender_CheckBit1`.  The generator, the splice,
 `fn_diff.py` and `options_table.py` then use the label.  The generator also stops on two C names that agree in
@@ -304,6 +309,27 @@ but only when a branch earlier in the same body targets it; otherwise the label 
 `to_llvm.py` learned the shift-by-A forms: the listing's `sla` / `sll` / `sra` / `srl A,r` become llvm-mc's
 `slaa` / `slla` / `sraa` / `srla r`.  `asm_vs_rom.py` also tries a label with a leading underscore, which the
 listing's name prefix hides (`_Read_VGA_Register`).
+
+Coordinator decision, same day: the unsigned shift becomes a firmware rule, `KN_SHIFT_UNSIGNED_SLL`.  Like
+`KN_LOOP_INVERT`, it is off in the model and on in `cc900_firmware_c.py`'s `FIRMWARE_RULES`.  The model's `v4.23`
+personality gets `sla`, as V4.23 has.  The three `FileIO_*` functions are built once the rule is in the model.  The
+memory-to-memory move stays a candidate, until more firmware functions need it.
+
+## Round 9: `sequencer_engine.s` (probe m11, run `2026-11-16-24-p6-m11`)
+
+`corpus/firmware/p6_m11.c`: 13 larger leaf functions of `sequencer/sequencer_engine.s`.  The model and V4.23 agree
+with the ROM, at both option sets, on three; they are built in all five trees (`sequencer_engine.c`; v6 / v5 read
+the part count at 0x2885, v10 / v9 / v7 at 0x28a1):
+- `Seq_ValidatePartNumber`: 17 B;
+- `Seq_ValidateTempoValue`: 17 B;
+- `SeqScan_ClearNoteRange`: 13 B.
+
+The rest, with V4.23 also differing, need other C:
+- the six `PartCtrl_*` accessors of the 256-byte part records at 0xb0000, which the model refuses
+  ("complex pointer");
+- `Rhythm_ComputeNoteIndex`;
+- `VoiceAlloc_InitBitMap` and `SeqBuf_ClearRange` (an end pointer computed with `lda`, +155 / +6);
+- `SeqStatus_SetOrClearBit`.
 
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
