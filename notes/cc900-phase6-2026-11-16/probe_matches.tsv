@@ -437,3 +437,20 @@ Tempo_DisplayParamFormat	10	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257
 Tempo_DisplayParamSkipClear	11	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257a@O3Xr p6_C_10m257a@Xr p6_C_10m257b@O3XSXr p6_C_10m257b@O3Xr p6_C_10m257b@Xr
 TimeSig_ProcNop	1	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257a@O3Xr p6_C_10m257a@Xr p6_C_10m257b@O3XSXr p6_C_10m257b@O3Xr p6_C_10m257b@Xr
 TitleProc_ClearResourceDirtyFlag	27	2026-11-16-87-p6-r15	p6_D_9m272@O3XSXr p6_D_9m272@O3Xr
+ExtData_ToneParam_DispatchHandler_Join5	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper	15	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join2	15	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join3	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join4	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join5	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join6	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join7	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_UpdateFlags	57	2026-11-16-88-p6-r16	p6_D_10m280@Xr
+Fade_Cancel	55	2026-11-16-88-p6-r16	p6_F_4m293a@O3Xr p6_F_4m293a@Xr p6_F_4m293b@Xr
+FileIO_CompareFiles	284	2026-11-16-88-p6-r16	p6_F_4m267a@O3XSXr p6_F_4m267a@O3Xr p6_F_4m267b@O3XSXr p6_F_4m267b@O3Xr
+FindFirst_SndTable	54	2026-11-16-88-p6-r16	p6_A_12m240a@Xr
+PanelTlv_ValidateRecord	42	2026-11-16-88-p6-r16	p6_A_12m277a@O3Xr p6_A_12m277b@O3Xr
+SeGfx_StaticOp09_Box	42	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+SeGfx_StaticOp0A_ShadowBox2	225	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+SeGfx_StaticOp13_DottedBox	157	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+SeGfx_StaticOp22_ShadowBox1	135	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr

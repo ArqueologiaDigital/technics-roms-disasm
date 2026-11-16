@@ -94,9 +94,11 @@ def main():
         # relative to this function, so llvm-mc resolves the displacement as it is in the ROM
         fa = ref[full]
         targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', '\n'.join(body))})
-        sets = ''.join('\t.set __cc900_at_%x, %s + %d\n' % (t, full, t - fa) for t in targets)
+        # (relative to an assembler-local label: an expression on the global symbol stays a relocation for a
+        # conditional jr / jrl, which then comes out as an unresolved jrl -- helper G, run 87)
+        sets = ''.join('\t.set __cc900_at_%x, .Lcc900_fn0 + %d\n' % (t, t - fa) for t in targets)
         try:
-            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n%s' % (full, full, '\n'.join(body), sets))[full]
+            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n.Lcc900_fn0:\n%s\n%s' % (full, full, '\n'.join(body), sets))[full]
         except Exception:                                 # e.g. a register to_llvm spells as llvm-mc does not
             print('%-32s llvm-mc cannot assemble the translation' % full); bad += 1; continue
         at = ref[full] - base

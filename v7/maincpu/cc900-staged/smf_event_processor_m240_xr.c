@@ -6,9 +6,15 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
+/* cc900-module: FileIO_ReadNextDirEntry FileIO_ValidateHandle */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern void *__cdecl Memset(void *, int, int);
 extern int FileIO_MatchWildcard(char *name, char *pat);
+extern unsigned int ram_2272c;
+extern void FileIO_ReadAllDirEntries(void *h);
+extern int FileIO_ReadNextDirEntry(void *h, void *name);
+extern void FileIO_ValidateHandle(void *h);
+extern void *FindFirst_SndTable(void *unused, void *name);
 
 int FileIO_MatchWildcard(char *name, char *pat)
 {
@@ -63,4 +69,16 @@ int FileIO_MatchWildcard(char *name, char *pat)
 		}
 	}
 	return r;
+}
+
+void *FindFirst_SndTable(void *unused, void *name)
+{
+    void *h;
+    ram_2272c = 0;
+    h = &ram_2272c;
+    FileIO_ReadAllDirEntries(h);
+    if (FileIO_ReadNextDirEntry(h, name) == 0)
+        return h;
+    FileIO_ValidateHandle(h);
+    return (void *)0xffffffffUL;
 }

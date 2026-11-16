@@ -6,9 +6,22 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: PanelTlv_ApplyFieldRule PanelTlv_ValidateBlock0 PanelTlv_WriteBlock0Headers */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+struct tlvlay { unsigned long off; unsigned char *rules; };
+extern unsigned int PanelTlv_ApplyFieldRule(unsigned char *base, unsigned char *rule);
+extern void PanelTlv_ValidateRecord(unsigned char *base, struct tlvlay *l);
 extern int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r);
 extern void PanelTlv_WriteRecordHeader(unsigned char *buf, unsigned char *rec);
+
+void PanelTlv_ValidateRecord(unsigned char *base, struct tlvlay *l)
+{
+    unsigned char *r;
+    base += l->off + 2;
+    r = l->rules;
+    while (*r != 0xff)
+        r += PanelTlv_ApplyFieldRule(base, r);
+}
 
 int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r)
 {
