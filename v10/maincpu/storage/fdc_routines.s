@@ -1222,75 +1222,23 @@ FDC_SendParams_ReadWrite_Skip17:
 	extz	wa
 	calr	FDC_SendParameterByte
 	ret
-FDC_DETECT_CHECK:
-	cpw	(FDC_REQ_TRACK:16), 0
-	jr	z, FDC_DETECT_CHECK_Skip
-	ld	hl, 0:i3
-	ret
-FDC_DETECT_CHECK_Skip:
-	cpw	(FDC_REQ_HEAD:16), 0
-	jr	z, FDC_DETECT_CHECK_Skip2
-	ld	hl, 0:i3
-	ret
-FDC_DETECT_CHECK_Skip2:
-	cpw	(FDC_COMMAND_INDEX:16), 3
-	jr	z, FDC_DETECT_CHECK_Skip3
-	ld	hl, 0:i3
-	ret
-FDC_DETECT_CHECK_Skip3:
-	cpw	(FDC_REQ_COUNT:16), 1
-	jr	z, FDC_DETECT_CHECK_Skip4
-	ld	hl, 0:i3
-	ret
-FDC_DETECT_CHECK_Skip4:
-	cpw	(FDC_PROBE_FLAG:16), 0xffff
-	jr	z, FDC_DETECT_CHECK_Skip5
-	ld	hl, 0:i3
-	ret
-FDC_DETECT_CHECK_Skip5:
-	cpw	(FDC_REQ_SECTOR:16), 1
-	jr	z, FDC_DETECT_CHECK_Skip6
-	ld	hl, 0:i3
-	ret
-FDC_DETECT_CHECK_Skip6:
-	ldw	hl, 0xffff
-	ret
-FDC_DRIVE_DETECT:
-	cpw	(FDC_REQ_TRACK:16), 0
-	jr	z, FDC_DRIVE_DETECT_Skip
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_DETECT_Skip:
-	cpw	(FDC_REQ_HEAD:16), 0
-	jr	z, FDC_DRIVE_DETECT_Skip2
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_DETECT_Skip2:
-	cpw	(FDC_COMMAND_INDEX:16), 3
-	jr	z, FDC_DRIVE_DETECT_Skip3
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_DETECT_Skip3:
-	cpw	(FDC_REQ_COUNT:16), 1
-	jr	z, FDC_DRIVE_DETECT_Skip4
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_DETECT_Skip4:
-	cpw	(FDC_PROBE_FLAG:16), 0xffff
-	jr	z, FDC_DRIVE_DETECT_Skip5
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_DETECT_Skip5:
-	cpw	(FDC_REQ_SECTOR:16), 2
-	jr	z, FDC_DRIVE_DETECT_Skip6
-	cpw	(FDC_REQ_SECTOR:16), 255
-	jr	nz, FDC_DRIVE_DETECT_Skip7
-FDC_DRIVE_DETECT_Skip6:
-	ldw	hl, 0xffff
-	ret
-FDC_DRIVE_DETECT_Skip7:
-	ld	hl, 0:i3
-	ret
+FDC_DETECT_CHECK:	.include "includes/generated/cc900/FDC_DETECT_CHECK.s"	; C: cc900/fdc_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_DETECT_CHECK_Skip, FDC_DETECT_CHECK + 11
+	.set	FDC_DETECT_CHECK_Skip2, FDC_DETECT_CHECK + 22
+	.set	FDC_DETECT_CHECK_Skip3, FDC_DETECT_CHECK + 33
+	.set	FDC_DETECT_CHECK_Skip4, FDC_DETECT_CHECK + 44
+	.set	FDC_DETECT_CHECK_Skip5, FDC_DETECT_CHECK + 55
+	.set	FDC_DETECT_CHECK_Skip6, FDC_DETECT_CHECK + 66
+FDC_DRIVE_DETECT:	.include "includes/generated/cc900/FDC_DRIVE_DETECT.s"	; C: cc900/fdc_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_DRIVE_DETECT_Skip, FDC_DRIVE_DETECT + 11
+	.set	FDC_DRIVE_DETECT_Skip2, FDC_DRIVE_DETECT + 22
+	.set	FDC_DRIVE_DETECT_Skip3, FDC_DRIVE_DETECT + 33
+	.set	FDC_DRIVE_DETECT_Skip4, FDC_DRIVE_DETECT + 44
+	.set	FDC_DRIVE_DETECT_Skip5, FDC_DRIVE_DETECT + 55
+	.set	FDC_DRIVE_DETECT_Skip6, FDC_DRIVE_DETECT + 71
+	.set	FDC_DRIVE_DETECT_Skip7, FDC_DRIVE_DETECT + 75
 FDC_DRIVE_STATUS:
 	cpw	(FDC_REQ_COUNT:16), 0xffff
 	jr	z, FDC_DRIVE_STATUS_Skip8

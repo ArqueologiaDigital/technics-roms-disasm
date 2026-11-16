@@ -11,6 +11,7 @@ function's own name.  Names resolve as in the build (scripts/build/cc900_firmwar
 offset, and no Toshiba text; never paste its input into the repository.
 
 usage: python3 -I -B asm_vs_rom.py FILE.asm [--tree v10/maincpu] [--rom ROM] [--symbols REF] [--base 0xe00000]
+                                         [--cfile C ...]   (more C whose names to resolve, e.g. a staging dir's)
 From scripts/analysis/cc900.  Defaults: the v10 main CPU.  A name V4.23 cut to 31 characters is looked up by the
 first 31 characters of the symbols reference's names.
 """
@@ -38,7 +39,22 @@ def main():
     rom = open(os.path.join(REPO, opt(a, '--rom', 'original_ROMs/kn5000_v10_program.rom')), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
-    names = fw.Names(fw.tree_values(tree), ref)
+    alias = {}
+    for i, x in enumerate(a):
+        if x == '--cfile':
+            alias.update(fw.label_map(a[i + 1]))
+
+    class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
+        def resolve(self, n):                            # name (value or label) it is the prefix of
+            if n in alias:                               # a short C name (`cc900-name:`) of a callee or object
+                n = alias[n]
+            r = super().resolve(n)
+            if r[0] is None and len(n) == 31:
+                full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == n]
+                if len(set(full)) == 1:
+                    return super().resolve(full[0])
+            return r
+    names = CutNames(fw.tree_values(tree), ref)
     to_llvm.SPELL = None
     text = open(a[0], encoding='latin-1').read()
     to_llvm.WIDTHS = listing.attributes(text)                # operand widths as the listing declares them (probe m16)
@@ -50,7 +66,8 @@ def main():
     # name mapped to the tree's label (`cc900-name:`): resolve both through the tree's cc900/*.c
     import glob, re
     cnames = {}
-    for c in glob.glob(os.path.join(tree, 'cc900', '*.c')):
+    extra = [a[i + 1] for i, x in enumerate(a) if x == '--cfile']      # C not yet in the tree (a staging dir)
+    for c in glob.glob(os.path.join(tree, 'cc900', '*.c')) + extra:
         lm = fw.label_map(c)
         for n in re.findall(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', open(c).read(), re.M):
             cnames[n[:31]] = lm.get(n, n)
@@ -64,12 +81,16 @@ def main():
         if full is None:
             print('%-32s not in the symbols reference' % bare); bad += 1; continue
         try:
-            body = [l for l in to_llvm.translate_function(name, lines, names) if l not in ('\t.globl %s' % bare, bare + ':')]
+            body = [l for l in to_llvm.translate_function(name, lines, names)
+                    if l not in ('\t.globl %s' % bare, bare + ':')]
         except KeyError as e:
             print('%-32s cannot resolve %s' % (bare, e)); bad += 1; continue
         if any('untranslated' in l for l in body):
             print('%-32s to_llvm cannot translate a line' % bare); bad += 1; continue
-        mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+        try:
+            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+        except Exception:                                 # e.g. a register to_llvm spells as llvm-mc does not
+            print('%-32s llvm-mc cannot assemble the translation' % full); bad += 1; continue
         at = ref[full] - base
         r = rom[at:at + len(mine)]
         if mine == r:

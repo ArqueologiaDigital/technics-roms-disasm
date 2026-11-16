@@ -1043,50 +1043,12 @@ Demo_PreSetup:
 	ld (1073:16), 0
 	ret
 
-Demo_ScanActivePartChannels:
-	ld l, 0x0:opc
-	lda xix, (SEQ_TRACK_ASSIGN:16)
-
-Demo_ScanPartLoop:
-	ld a, l
-	extz wa
-	extz xwa
-	add xwa, xix
-	cp (xwa), 0x10
-	jr nz, Demo_ScanPartNext
-	ld a, l
-	extz wa
-	ld bc, wa
-	add bc, bc
-	lda xde, (Demo_PartBitMask:24)
-	ld	bc, (xde+bc)
-	and bc, (SEQ_TRACK_MASK:16)
-	jr z, Demo_ScanPartSkipToEnd
-	muls wa, 0x3
-	lda xbc, (SEQ_TRACK_TABLE:16)
-	bit	7, (xbc+wa)
-	jr z, Demo_ScanPartSkipToEnd
-	ld a, l
-	inc 1, a
-	ld (3414:16), a
-	set 0, (3412:16)
-	set 2, (SEQ_EDIT_FLAGS:16)
-	jr Demo_ScanPartDone
-
-Demo_ScanPartSkipToEnd:
-	ld l, 0xf:opc
-
-Demo_ScanPartNext:
-	inc 1, l
-	cp l, 0x10
-	jr c, Demo_ScanPartLoop
-
-Demo_ScanPartDone:
-	cp l, 0x10
-	ret nz
-	res 0, (3412:16)
-	res 2, (SEQ_EDIT_FLAGS:16)
-	ret
+Demo_ScanActivePartChannels:	.include "includes/generated/cc900/Demo_ScanActivePartChannels.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_ScanPartLoop, Demo_ScanActivePartChannels + 6
+	.set	Demo_ScanPartSkipToEnd, Demo_ScanActivePartChannels + 76
+	.set	Demo_ScanPartNext, Demo_ScanActivePartChannels + 78
+	.set	Demo_ScanPartDone, Demo_ScanActivePartChannels + 85
 
 ; Copies the 16 bytes at 0xf1a0 to 0xcce (Mem_Copy).
 Voice_SavePreset:
@@ -1132,96 +1094,30 @@ Demo_WaitForDisplayBit_Loop:
 	jr nz, Demo_WaitForDisplayBit_Loop
 	ret
 
-Demo_GetPresetBaseForPart:
-	extz wa
-	sla wa, 2
-	extz xwa
-	add xwa, 0x9c4000
-	ld xwa, (xwa)
-	or xwa, xwa
-	jr z, Demo_GetPresetBase_Default
-	ld xhl, 0x69800
-	jr Demo_GetPresetBase_StoreAndRet
+Demo_GetPresetBaseForPart:	.include "includes/generated/cc900/Demo_GetPresetBaseForPart.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_GetPresetBase_Default, Demo_GetPresetBaseForPart + 26
+	.set	Demo_GetPresetBase_StoreAndRet, Demo_GetPresetBaseForPart + 31
 
-Demo_GetPresetBase_Default:
-	lda xhl, (SEQ_SONG_SLOTS:24)
+Demo_GetPresetBaseForPartAlt:	.include "includes/generated/cc900/Demo_GetPresetBaseForPartAlt.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_GetPresetBaseAlt_Default, Demo_GetPresetBaseForPartAlt + 26
+	.set	Demo_GetPresetBaseAlt_StoreAndRet, Demo_GetPresetBaseForPartAlt + 31
 
-Demo_GetPresetBase_StoreAndRet:
-	lda xhl, (xhl+2048)
-	ret
+Demo_GetPresetBaseForPartExt:	.include "includes/generated/cc900/Demo_GetPresetBaseForPartExt.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_GetPresetBaseExt_Default, Demo_GetPresetBaseForPartExt + 26
+	.set	Demo_GetPresetBaseExt_StoreAndRet, Demo_GetPresetBaseForPartExt + 31
 
-Demo_GetPresetBaseForPartAlt:
-	extz wa
-	sla wa, 2
-	extz xwa
-	add xwa, 0x9c4000
-	ld xwa, (xwa)
-	or xwa, xwa
-	jr z, Demo_GetPresetBaseAlt_Default
-	ld xhl, 0x69800
-	jr Demo_GetPresetBaseAlt_StoreAndRet
+Voice_GetPresetFieldWord:	.include "includes/generated/cc900/Voice_GetPresetFieldWord.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_GetPresetField_Default, Voice_GetPresetFieldWord + 26
+	.set	Voice_GetPresetField_Compute, Voice_GetPresetFieldWord + 31
 
-Demo_GetPresetBaseAlt_Default:
-	lda xhl, (SEQ_SONG_SLOTS:24)
-
-Demo_GetPresetBaseAlt_StoreAndRet:
-	lda xhl, (xhl+768)
-	ret
-
-Demo_GetPresetBaseForPartExt:
-	extz wa
-	sla wa, 2
-	extz xwa
-	add xwa, 0x9c4000
-	ld xwa, (xwa)
-	or xwa, xwa
-	jr z, Demo_GetPresetBaseExt_Default
-	ld xwa, 0x69800
-	jr Demo_GetPresetBaseExt_StoreAndRet
-
-Demo_GetPresetBaseExt_Default:
-	lda xwa, (SEQ_SONG_SLOTS:24)
-
-Demo_GetPresetBaseExt_StoreAndRet:
-	lda xhl, (xwa+208:16)
-	ret
-
-Voice_GetPresetFieldWord:
-	extz wa
-	sla wa, 2
-	extz xwa
-	add xwa, 0x9c4000
-	ld xwa, (xwa)
-	or xwa, xwa
-	jr z, Voice_GetPresetField_Default
-	ld xwa, 0x69800
-	jr Voice_GetPresetField_Compute
-
-Voice_GetPresetField_Default:
-	lda xwa, (SEQ_SONG_SLOTS:24)
-
-Voice_GetPresetField_Compute:
-	lda xwa, (xwa + 30)
-	ld hl, (xwa)
-	ret
-
-Voice_GetPresetFieldAddr:
-	extz wa
-	sla wa, 2
-	extz xwa
-	add xwa, 0x9c4000
-	ld xwa, (xwa)
-	or xwa, xwa
-	jr z, Voice_GetPresetFieldAddr_Default
-	ld xwa, 0x69800
-	jr Voice_GetPresetFieldAddr_Compute
-
-Voice_GetPresetFieldAddr_Default:
-	lda xwa, (SEQ_SONG_SLOTS:24)
-
-Voice_GetPresetFieldAddr_Compute:
-	lda xhl, (xwa + 32)
-	ret
+Voice_GetPresetFieldAddr:	.include "includes/generated/cc900/Voice_GetPresetFieldAddr.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_GetPresetFieldAddr_Default, Voice_GetPresetFieldAddr + 26
+	.set	Voice_GetPresetFieldAddr_Compute, Voice_GetPresetFieldAddr + 31
 
 Demo_ProcessRecordEntry:
 	lda xsp, (xsp - 14)
@@ -4812,20 +4708,10 @@ FileIO_ValidateRecord_Return:
 
 ; Copies the NUL-terminated string at XBC to XWA, terminator included.
 ;   Out: XWA points at the destination's terminator, XDE at the source's.
-FileIO_CopyString:
-	ld xde, xbc
-	cp (xde), 0x0
-	jr z, FileIO_CopyString_Done
-
-FileIO_CopyString_Loop:
-	ld C, (xde+)
-	ld (xwa+), c
-	cp (xde), 0x0
-	jr nz, FileIO_CopyString_Loop
-
-FileIO_CopyString_Done:
-	ld (xwa), 0x0
-	ret
+FileIO_CopyString:	.include "includes/generated/cc900/FileIO_CopyString.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_CopyString_Loop, FileIO_CopyString + 7
+	.set	FileIO_CopyString_Done, FileIO_CopyString + 18
 
 ; C strncpy: copies at most DE characters of the string at XBC to XWA and zero-fills the rest of
 ; the DE bytes.  As in C, no terminator is written when the source fills them.
@@ -4855,29 +4741,12 @@ FileIO_CopyString_Return:
 
 ; C strcat: appends the NUL-terminated string at XBC to the one at XWA.
 ;   Out: XWA points at the new terminator, XDE at the source's.
-FileIO_BuildFilePath:
-	ld xde, xbc
-	cp (xwa), 0x0
-	jr z, FileIO_BuildPath_NullDir
-
-FileIO_BuildPath_CopyDir:
-	inc 1, xwa
-	cp (xwa), 0x0
-	jr nz, FileIO_BuildPath_CopyDir
-
-FileIO_BuildPath_NullDir:
-	cp (xde), 0x0
-	jr z, FileIO_BuildPath_Return
-
-FileIO_BuildPath_AddSep:
-	ld C, (xde+)
-	ld (xwa+), c
-	cp (xde), 0x0
-	jr nz, FileIO_BuildPath_AddSep
-
-FileIO_BuildPath_Return:
-	ld (xwa), 0x0
-	ret
+FileIO_BuildFilePath:	.include "includes/generated/cc900/FileIO_BuildFilePath.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BuildPath_CopyDir, FileIO_BuildFilePath + 7
+	.set	FileIO_BuildPath_NullDir, FileIO_BuildFilePath + 14
+	.set	FileIO_BuildPath_AddSep, FileIO_BuildFilePath + 19
+	.set	FileIO_BuildPath_Return, FileIO_BuildFilePath + 30
 
 ; C strcmp of the strings at XWA and XBC.  Out: HL = 0 when equal, else the sign-extended
 ; difference of the first differing characters (XWA's minus XBC's).
@@ -5093,29 +4962,12 @@ FileIO_GetRecordType_Standard:
 ; Makes a file name displayable in place: '~' becomes '_' and control characters become spaces,
 ; up to the terminator.
 ;   In:  XWA = string.
-FileIO_GetRecordType_Extended:
-	cp (xwa), 0x0
-	ret z
-
-FileIO_GetRecordType_Error:
-	cp (xwa), 0x7e
-	jr nz, FileIO_GetRecordType_Return
-	ld c, 0x5f:opc
-	jr FileIO_GetRecordType_ReturnOk
-
-FileIO_GetRecordType_Return:
-	cp (xwa), 0x20
-	jr nc, FileIO_GetRecordType_Alt
-	ld c, 0x20:opc
-
-FileIO_GetRecordType_ReturnOk:
-	ld (xwa), c
-
-FileIO_GetRecordType_Alt:
-	inc 1, xwa
-	cp (xwa), 0x0
-	jr nz, FileIO_GetRecordType_Error
-	ret
+FileIO_GetRecordType_Extended:	.include "includes/generated/cc900/FileIO_GetRecordType_Extended.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_GetRecordType_Error, FileIO_GetRecordType_Extended + 5
+	.set	FileIO_GetRecordType_Return, FileIO_GetRecordType_Extended + 14
+	.set	FileIO_GetRecordType_ReturnOk, FileIO_GetRecordType_Extended + 21
+	.set	FileIO_GetRecordType_Alt, FileIO_GetRecordType_Extended + 23
 
 ; Returns XHL = 0x25eaa, a fixed RAM address; no register selects a type.
 FileIO_GetRecordByType:	.include "includes/generated/cc900/FileIO_GetRecordByType.s"	; C: cc900/file_demo_proc.c
@@ -5171,17 +5023,9 @@ FileIO_FormatRecordName:
 	ret
 
 ; Sets bit A (0..9) of the word at 0x272cc; A >= 10 does nothing.
-FileIO_FormatName_Loop:
-	cp a, 0xa
-	ret nc
-	ld bc, 1:i3
-	and a, 0xf
-	jr z, FileIO_FormatName_NoPrefix
-	slla bc
-
-FileIO_FormatName_NoPrefix:
-	or (0x272cc:24), bc
-	ret
+FileIO_FormatName_Loop:	.include "includes/generated/cc900/FileIO_FormatName_Loop.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_FormatName_NoPrefix, FileIO_FormatName_Loop + 14
 
 FileIO_FormatName_Copy:
 	cp a, 0xa
@@ -5229,46 +5073,19 @@ FileIO_BuildRecordPath_AddExt:
 
 ; Sets bit A (0..9) of the word at 0x272ce; A >= 10 does nothing.  FileIO_BuildRecordPath_Return
 ; clears it.
-FileIO_BuildRecordPath_Done:
-	cp a, 0xa
-	ret nc
-	ld bc, 1:i3
-	and a, 0xf
-	jr z, FileIO_BuildRecordPath_Error
-	slla bc
-
-FileIO_BuildRecordPath_Error:
-	or (0x272ce:24), bc
-	ret
+FileIO_BuildRecordPath_Done:	.include "includes/generated/cc900/FileIO_BuildRecordPath_Done.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BuildRecordPath_Error, FileIO_BuildRecordPath_Done + 14
 
 ; Clears bit A (0..9) of the word at 0x272ce; A >= 10 does nothing.
-FileIO_BuildRecordPath_Return:
-	cp a, 0xa
-	ret nc
-	ld bc, 1:i3
-	and a, 0xf
-	jr z, FileIO_GetRecordAttr
-	slla bc
+FileIO_BuildRecordPath_Return:	.include "includes/generated/cc900/FileIO_BuildRecordPath_Return.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_GetRecordAttr, FileIO_BuildRecordPath_Return + 14
 
-FileIO_GetRecordAttr:
-	xor bc, 0xffff
-	and (0x272ce:24), bc
-	ret
-
-FileIO_GetRecordAttr_Check:
-	ld wa, (0x025ea8:24)
-	cp wa, 0:i3
-	jr lt, FileIO_GetRecordAttr_Return
-	cp wa, 0x14
-	jr lt, FileIO_GetRecordAttr_Default
-
-FileIO_GetRecordAttr_Return:
-	ld l, 0x0:opc
-	ret
-
-FileIO_GetRecordAttr_Default:
-	ld l, (0x0272d0:24)
-	ret
+FileIO_GetRecordAttr_Check:	.include "includes/generated/cc900/FileIO_GetRecordAttr_Check.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_GetRecordAttr_Return, FileIO_GetRecordAttr_Check + 15
+	.set	FileIO_GetRecordAttr_Default, FileIO_GetRecordAttr_Check + 18
 
 FileIO_SetModeFlag_Writing:	.include "includes/generated/cc900/FileIO_SetModeFlag_Writing.s"	; C: cc900/file_demo_proc.c
 
@@ -5362,22 +5179,9 @@ CheckFS_ValidIndex:
 	ld	hl, (xbc+wa)
 	ret
 
-FileIO_GetRecordFlags:
-	cp wa, 0x14
-	jr c, GetRecordFlags_Valid
-	ld hl, 0:i3
-	ret
-
-GetRecordFlags_Valid:
-	extz xwa
-	ld xbc, xwa
-	add xbc, xbc
-	add xbc, xwa
-	sll xbc, 2
-	ld xwa, 0x25db8
-	add xwa, xbc
-	ld hl, (xwa)
-	ret
+FileIO_GetRecordFlags:	.include "includes/generated/cc900/FileIO_GetRecordFlags.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetRecordFlags_Valid, FileIO_GetRecordFlags + 9
 
 FileIO_CheckFileExists:
 	lda xsp, (xsp-266)
@@ -5521,28 +5325,11 @@ SearchLoad_Return:
 
 ; Returns HL = 0 when WA is a valid file index (0..19) and the media type byte at 0x25db6 is 2,
 ; 3 or 4; otherwise 0xffff.
-ValidateFileSelectionIndex:
-	ld c, (0x025db6:24)
-	cp c, 2:i3
-	jr z, ValidateSelection_CheckRange
-	cp c, 3:i3
-	jr z, ValidateSelection_CheckRange
-	cp c, 4:i3
-	jr nz, ValidateSelection_Error
-
-ValidateSelection_CheckRange:
-	cp wa, 0:i3
-	jr lt, ValidateSelection_Error
-	cp wa, 0x14
-	jr lt, ValidateSelection_Ok
-
-ValidateSelection_Error:
-	ldw hl, 0xffff
-	ret
-
-ValidateSelection_Ok:
-	ld hl, 0:i3
-	ret
+ValidateFileSelectionIndex:	.include "includes/generated/cc900/ValidateFileSelectionIndex.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ValidateSelection_CheckRange, ValidateFileSelectionIndex + 17
+	.set	ValidateSelection_Error, ValidateFileSelectionIndex + 27
+	.set	ValidateSelection_Ok, ValidateFileSelectionIndex + 31
 
 ; Returns in HL the selected file index (word at 0x25ea8), or -104 when
 ; ValidateFileSelectionIndex rejects it.
@@ -5749,34 +5536,10 @@ ParseFileExt_Return:
 	inc 6, xsp
 	ret
 
-ParseTwoDigitFileNum:
-	cp (xwa), 0x30
-	jr lt, ParseTwoDigitFileNum_Invalid
-	cp (xwa), 0x32
-	jr gt, ParseTwoDigitFileNum_Invalid
-	ld c, (xwa + 1)
-	cp c, 0x30
-	jr lt, ParseTwoDigitFileNum_Invalid
-	cp c, 0x39
-	jr gt, ParseTwoDigitFileNum_Invalid
-	ld a, (xwa)
-	muls a, 0xa
-	add a, c
-	sub a, 0x10
-	exts wa
-	cp wa, 1:i3
-	jr lt, ParseTwoDigitFileNum_Invalid
-	cp wa, 0x14
-	jr le, ParseTwoDigitFileNum_Return
-
-ParseTwoDigitFileNum_Invalid:
-	ldw hl, 0xffff
-	ret
-
-ParseTwoDigitFileNum_Return:
-	dec 1, wa
-	ld hl, wa
-	ret
+ParseTwoDigitFileNum:	.include "includes/generated/cc900/ParseTwoDigitFileNum.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ParseTwoDigitFileNum_Invalid, ParseTwoDigitFileNum + 45
+	.set	ParseTwoDigitFileNum_Return, ParseTwoDigitFileNum + 49
 
 HandleFilenameChange:
 	lda xsp, (xsp - 10)
@@ -6073,48 +5836,14 @@ IdxRecLookup_Return:
 	ret
 
 
-ValidateFileRange:
-	ld c, (0x025db6:24)
-	cp c, 2:i3
-	jr z, ValidateFileRange_CheckLower
-	cp c, 3:i3
-	jr z, ValidateFileRange_CheckLower
-	cp c, 4:i3
-	jr nz, ValidateFileRange_Invalid
-
-ValidateFileRange_CheckLower:
-	cp wa, 0:i3
-	jr lt, ValidateFileRange_Invalid
-	cp wa, (0x271ec:24)
-	jr le, ValidateFileRange_InRange
-
-ValidateFileRange_Invalid:
-	ldw hl, 0xffff
-	ret
-
-ValidateFileRange_InRange:
-	ld bc, (0x0271ee:24)
-	cp wa, bc
-	jr lt, ValidateFileRange_FirstPage
-	cp wa, (FILE_LIST_LAST:24)
-	jr le, ValidateFileRange_SecondPage
-
-ValidateFileRange_FirstPage:
-	ld hl, 1:i3
-	ret
-
-ValidateFileRange_SecondPage:
-	sub wa, bc
-	muls wa, 0x52
-	lda xbc, (0x025eb2:24)
-	cp	(xbc+wa), 0x00
-	jr nz, ValidateFileRange_Found
-	ld hl, 2:i3
-	ret
-
-ValidateFileRange_Found:
-	ld hl, 0:i3
-	ret
+ValidateFileRange:	.include "includes/generated/cc900/ValidateFileRange.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ValidateFileRange_CheckLower, ValidateFileRange + 17
+	.set	ValidateFileRange_Invalid, ValidateFileRange + 28
+	.set	ValidateFileRange_InRange, ValidateFileRange + 32
+	.set	ValidateFileRange_FirstPage, ValidateFileRange + 48
+	.set	ValidateFileRange_SecondPage, ValidateFileRange + 51
+	.set	ValidateFileRange_Found, ValidateFileRange + 73
 
 ; Returns in HL the word at 0x271ea, or -104 when ValidateFileRange rejects it.
 GetFirstPageBase:
@@ -7201,41 +6930,13 @@ GetFileEntryByIndex_Epilogue8:
 	lda	xsp, (xsp+26)
 	ret
 
-ValidateFileRangeType5:
-	cp (0x025db6:24), 0x05
-	jr nz, ValidateRange_OutOfRange
-	cp wa, 0:i3
-	jr lt, ValidateRange_OutOfRange
-	cp wa, (0x271ec:24)
-	jr le, ValidateRange_CheckPage
-
-ValidateRange_OutOfRange:
-	ldw hl, 0xffff
-	ret
-
-ValidateRange_CheckPage:
-	ld bc, (0x0271ee:24)
-	cp wa, bc
-	jr lt, ValidateRange_NeedPageChange
-	cp wa, (FILE_LIST_LAST:24)
-	jr le, ValidateRange_CheckEmpty
-
-ValidateRange_NeedPageChange:
-	ld hl, 1:i3
-	ret
-
-ValidateRange_CheckEmpty:
-	sub wa, bc
-	muls wa, 0x52
-	lda xbc, (0x025ec0:24)
-	cp	(xbc+wa), 0x00
-	jr nz, ValidateRange_IsValid
-	ld hl, 2:i3
-	ret
-
-ValidateRange_IsValid:
-	ld hl, 0:i3
-	ret
+ValidateFileRangeType5:	.include "includes/generated/cc900/ValidateFileRangeType5.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ValidateRange_OutOfRange, ValidateFileRangeType5 + 19
+	.set	ValidateRange_CheckPage, ValidateFileRangeType5 + 23
+	.set	ValidateRange_NeedPageChange, ValidateFileRangeType5 + 39
+	.set	ValidateRange_CheckEmpty, ValidateFileRangeType5 + 42
+	.set	ValidateRange_IsValid, ValidateFileRangeType5 + 64
 
 ; Returns in HL the word at 0x271ea, or -104 when ValidateFileRangeType5 rejects it.
 GetCurrentFileIndexAlt:
@@ -7541,46 +7242,14 @@ DetectType_NotFound:
 	ldw hl, 0xffff
 	ret
 
-ValidateFileRangeAlt:
-	ld c, (0x025db6:24)
-	cp c, 6:i3
-	jr z, ValidateRangeAlt_CheckType
-	cp c, 7:i3
-	jr nz, ValidateRangeAlt_OutOfRange
-
-ValidateRangeAlt_CheckType:
-	cp wa, 0:i3
-	jr lt, ValidateRangeAlt_OutOfRange
-	cp wa, (0x271ec:24)
-	jr le, ValidateRangeAlt_CheckPage
-
-ValidateRangeAlt_OutOfRange:
-	ldw hl, 0xffff
-	ret
-
-ValidateRangeAlt_CheckPage:
-	ld bc, (0x0271ee:24)
-	cp wa, bc
-	jr lt, ValidateRangeAlt_NeedPageChange
-	cp wa, (FILE_LIST_LAST:24)
-	jr le, ValidateRangeAlt_CheckEmpty
-
-ValidateRangeAlt_NeedPageChange:
-	ld hl, 1:i3
-	ret
-
-ValidateRangeAlt_CheckEmpty:
-	sub wa, bc
-	muls wa, 0x52
-	lda xbc, (0x025eb2:24)
-	cp	(xbc+wa), 0x00
-	jr nz, ValidateRangeAlt_IsValid
-	ld hl, 2:i3
-	ret
-
-ValidateRangeAlt_IsValid:
-	ld hl, 0:i3
-	ret
+ValidateFileRangeAlt:	.include "includes/generated/cc900/ValidateFileRangeAlt.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ValidateRangeAlt_CheckType, ValidateFileRangeAlt + 13
+	.set	ValidateRangeAlt_OutOfRange, ValidateFileRangeAlt + 24
+	.set	ValidateRangeAlt_CheckPage, ValidateFileRangeAlt + 28
+	.set	ValidateRangeAlt_NeedPageChange, ValidateFileRangeAlt + 44
+	.set	ValidateRangeAlt_CheckEmpty, ValidateFileRangeAlt + 47
+	.set	ValidateRangeAlt_IsValid, ValidateFileRangeAlt + 69
 
 ; Returns in HL the word at 0x271ea, or -104 when ValidateFileRangeAlt rejects it.
 FileIO_GetCurrentFileIndex_Alt:
@@ -8385,48 +8054,14 @@ NormalizePath_CheckLoop:
 	ld (xwa), 0x5c
 	ret
 
-FileIO_ValidateModeAndRange:
-	ld c, (0x025db6:24)
-	cp c, 2:i3
-	jr z, ValidateMode_CheckRange
-	cp c, 3:i3
-	jr z, ValidateMode_CheckRange
-	cp c, 4:i3
-	jr nz, ValidateMode_Error
-
-ValidateMode_CheckRange:
-	cp wa, 0:i3
-	jr lt, ValidateMode_Error
-	cp wa, (0x272ca:24)
-	jr le, ValidateMode_InRange
-
-ValidateMode_Error:
-	ldw hl, 0xffff
-	ret
-
-ValidateMode_InRange:
-	ld bc, (0x0271ee:24)
-	cp wa, bc
-	jr lt, ValidateMode_OutOfPage
-	cp wa, (FILE_LIST_LAST:24)
-	jr le, ValidateMode_InPage
-
-ValidateMode_OutOfPage:
-	ld hl, 1:i3
-	ret
-
-ValidateMode_InPage:
-	sub wa, bc
-	muls wa, 0xe
-	lda xbc, (0x02723c:24)
-	cp	(xbc+wa), 0x00
-	jr nz, ValidateMode_Valid
-	ld hl, 2:i3
-	ret
-
-ValidateMode_Valid:
-	ld hl, 0:i3
-	ret
+FileIO_ValidateModeAndRange:	.include "includes/generated/cc900/FileIO_ValidateModeAndRange.s"	; C: cc900/file_demo_proc_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ValidateMode_CheckRange, FileIO_ValidateModeAndRange + 17
+	.set	ValidateMode_Error, FileIO_ValidateModeAndRange + 28
+	.set	ValidateMode_InRange, FileIO_ValidateModeAndRange + 32
+	.set	ValidateMode_OutOfPage, FileIO_ValidateModeAndRange + 48
+	.set	ValidateMode_InPage, FileIO_ValidateModeAndRange + 51
+	.set	ValidateMode_Valid, FileIO_ValidateModeAndRange + 73
 
 FileIO_GetCurrentWallpaperIndex:
 	ld wa, (0x0272c8:24)

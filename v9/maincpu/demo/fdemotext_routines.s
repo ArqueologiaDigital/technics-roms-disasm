@@ -2436,39 +2436,11 @@ FDemoText_TextDispatch_Skip12:
 ;   Basis: callers + body -- the <ACT> tag handler calls it on an opening tag before showing PlainScreen and
 ;   PresentationControl and drawing the wall; the FONT, /FONT, CENTER, /CENTER handlers push and pop those stacks and
 ;   FDemoText_CalcTextExtent scans the 0x54 cells.
-FDemoText_ResetLayoutState:
-	lda	xbc, (0x0251da:24)
-	ld	xwa, xbc
-	lda xbc, (xbc+2400)
-FDemoText_ResetLayoutState_Loop:
-	ld xde, xwa
-	lda	xhl, (xwa+40)
-FDemoText_ResetLayoutState_Loop2:
-	ld (xde+), 84
-	cp	xde, xhl
-	jr	c, FDemoText_ResetLayoutState_Loop2
-	lda	xwa, (xwa+40)
-	cp	xwa, xbc
-	jr	c, FDemoText_ResetLayoutState_Loop
-	lda	xwa, (0x025b3a:24)
-	ldw	(xwa), 0
-	ldw	(xwa+2), 0
-	ldw	(0x025b3e:24), 0
-	ldw	(0x025b60:24), 0
-	ldw	(0x025b72:24), 0
-	lda	xhl, (0x025b40:24)
-	lda	xde, (0x025b62:24)
-	lda	xwa, (0x025b74:24)
-	ld	xbc, xwa
-	lda	xix, (xwa+8)
-FDemoText_ResetLayoutState_Loop3:
-	ld	xwa, 5:i3
-	ld (xhl+), xwa
-	ldw (xde+), 0x00ff
-	ld	(xbc+), 1
-	cp	xbc, xix
-	jr	c, FDemoText_ResetLayoutState_Loop3
-	ret
+FDemoText_ResetLayoutState:	.include "includes/generated/cc900/FDemoText_ResetLayoutState.s"	; C: cc900/fdemotext_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_ResetLayoutState_Loop, FDemoText_ResetLayoutState + 12
+	.set	FDemoText_ResetLayoutState_Loop2, FDemoText_ResetLayoutState + 17
+	.set	FDemoText_ResetLayoutState_Loop3, FDemoText_ResetLayoutState + 87
 
 FDemoText_ScaleDownCoords:
 	ld de, (xwa)
@@ -2907,39 +2879,11 @@ Seq_PostProcessDisplay:
 	ld	wa, (0x025b82:24)
 	jr	Seq_CopyResourcePtrs
 
-Seq_CopyResourcePtrs:
-	lda xde, (0x024fd8:24)
-	lda xhl, (Seq_CopyResourcePtrs_Str_Empty:24)
-	ld xbc, xde
-	lda xde, (xde+508)
-
-Seq_CopyPtrLoop:
-	ld (xbc+), XHL
-	cp xbc, xde
-	jr ule, Seq_CopyPtrLoop
-	cp wa, 0x12
-	jr lt, Seq_UseFallbackAddr
-	cp wa, 0x12
-	jr gt, Seq_UseFallbackAddr
-	sub wa, 0x12
-	exts xwa
-	ld xbc, xwa
-	add xbc, xbc
-	add xbc, xwa
-	sll xbc, 2
-	add xbc, 0x880000
-	ld xwa, (xbc + 4)
-	ld (0x0249cc:24), xwa
-	jr Seq_StoreResultAddr
-
-Seq_UseFallbackAddr:
-	ld xwa, (0x0249d0:24)
-	ld (0x0249cc:24), xwa
-
-Seq_StoreResultAddr:
-	ld xwa, (0x0249cc:24)
-	ld (0x0249d4:24), xwa
-	ret
+Seq_CopyResourcePtrs:	.include "includes/generated/cc900/Seq_CopyResourcePtrs.s"	; C: cc900/fdemotext_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Seq_CopyPtrLoop, Seq_CopyResourcePtrs + 17
+	.set	Seq_UseFallbackAddr, Seq_CopyResourcePtrs + 67
+	.set	Seq_StoreResultAddr, Seq_CopyResourcePtrs + 77
 
 Seq_InitializeAndStart:
 	dec 4, xsp
