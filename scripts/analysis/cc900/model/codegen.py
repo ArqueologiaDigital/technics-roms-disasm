@@ -79,6 +79,8 @@ STRUCT_COPY_BC_TO_DE = True                               # see struct_block_cop
 STRUCT_COPY_COMPOUND = True                               # see struct_compound_copy
 STRUCT_COPY_TWO_ELEMS = True                              # see struct_two_elem_copy
 STRUCT_LOCAL_FRAME = True                                 # see plan_frame
+STRUCT_RETURN_MORE = True                                 # see the return of a struct
+STRUCT_ARG_MORE = True                                    # see push_arg
 ADECL_ARG_CLOBBER_NOOPT = True                            # see gen_call_adecl: ADECL_ARG_CLOBBER_GUARD without -O too
 class _RegBySize(dict):
     """a register family by size: a value over 4 bytes (a struct of 6, 8, 10 .. bytes reaching a register path: probe
@@ -10270,10 +10272,29 @@ def push_arg(F, a):
     a0 = strip(a); size = a0.ty.size
     if a0.ty.kind == 'struct':                       # abi structs.c s_pass_pair / s_pass_big: room on the stack, then
         src = strip(a0.e) if a0.k == 'load' else a0      # a block copy into it (two words: ldiw twice; more: ldirw)
-        if not (src.k == 'var' and src.decl.kind == 'global'): raise Unsupported('struct argument')
+        after_ = None
+        if STRUCT_ARG_MORE and src.k == 'deref' and strip(src.e).k == 'load':   # *p (probe stc st_pd_4: ld XWA,(XSP+0x4) /
+            m_ = mem_operand(F, strip(src.e))              # dec 0x4,XSP / ld XIY,XWA; -Xr, p in XWA: dec / ld XIY,XWA)
+            if m_ is None: raise Unsupported('struct argument')
+            if m_.startswith('('): F.emit('ld', 'XWA,%s' % m_); m_ = 'XWA'
+            elif not family_of(m_): raise Unsupported('struct argument')
+            after_ = ('ld', 'XIY,%s' % m_)
+        elif STRUCT_ARG_MORE and var_elem_parts(src) is not None:   # an element at a variable index (st_pe_4: ld WA,(i) /
+            p_ = var_elem_parts(src)                       # and / sla 0x2,WA / lda XBC,_ga4 / dec 0x4,XSP /
+            f_ = gen(F, p_[2], 'WA', 2)                    # lda XIY,XBC+WA / ld XIX,XSP)
+            if f_ != 'WA': F.emit('ld', 'WA,%s' % FAM[f_][2])
+            es = p_[3]
+            if es == 2: F.emit('add', 'WA,WA')
+            elif es & (es - 1) == 0: F.emit('sla', '%s,WA' % hx(es.bit_length() - 1))
+            else: F.emit('muls', 'XWA,%s' % hx(es))
+            F.emit('lda', 'XBC,_%s' % p_[0] + (' + %s' % hx(p_[1]) if p_[1] else ''))
+            after_ = ('lda', 'XIY,XBC+WA')
+        elif not (src.k == 'var' and src.decl.kind == 'global'): raise Unsupported('struct argument')
         n = (size + 1) // 2 * 2
         F.emit('dec', '%s,XSP' % hx(n)) if n <= 8 else F.emit('lda', 'XSP,XSP-%s' % hx(n))
-        F.emit('ld', 'XIY,_%s' % src.decl.name); F.emit('ld', 'XIX,XSP')
+        if after_: F.emit(*after_)
+        else: F.emit('ld', 'XIY,_%s' % src.decl.name)
+        F.emit('ld', 'XIX,XSP')
         if n // 2 <= 2:
             for _ in range(n // 2): F.emit('ldiw', '(XIX+),(XIY+)')
         else: F.emit('ld', 'BC,%s' % hx(n // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
@@ -10522,7 +10543,9 @@ def gen_call_adecl(F, fn, args, fam, size):
         return 'reg' if family_of(m) else 'mem'
     groups = {'reg': [], 'computed': [], 'mem': [], 'const': []}
     for t, a in inreg:
-        if t is None and kind(a) != 'mem': raise Unsupported('a struct argument in a register position, not in memory')
+        if t is None and kind(a) != 'mem' and not (STRUCT_ARG_MORE and len(inreg) == 1):
+            raise Unsupported('a struct argument in a register position, not in memory')
+        if t is None: groups['mem'].append((t, a)); continue   # (the only register-position argument: stc .st_pe_4)
         groups[kind(a)].append((t, a))
     parked = []
     def in_wa(a):                                      # a * / % is computed in XWA whatever its target
@@ -12723,6 +12746,34 @@ def gen_stmt(F, s, last):
             F.emit('ld', 'BC,%s' % hx(d.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')               # ldirw
             if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
+        if STRUCT_RETURN_MORE and F.f.ret.kind == 'struct' and v.k == 'load' and not F.xiz_vars and not F.pushes:
+            x_ = strip(v.e); src_ = None; pre_ = None      # probe stc: a parameter (st_rq_8: ld XIX,(XSP+0x4) /
+            if x_.k == 'var' and x_.decl.kind == 'param' and not getattr(x_.decl, 'reg', None) and hasattr(x_.decl, 'off'):
+                src_ = ('lda', x_.decl.off)                # lda XIY,XSP+0x8), *p (st_rp_8: ld XIY,(XSP+0x8)), an
+            elif x_.k == 'deref' and strip(x_.e).k == 'load':   # element at a variable index (st_ri_8: ld XIX,(XSP+0x4)
+                m_ = mem_operand(F, strip(x_.e))           # / the index / lda XBC,_ga8 / lda XIY,XBC+WA)
+                if m_ is not None and (m_.startswith('(') or family_of(m_)): src_ = ('ptr', m_)
+            elif var_elem_parts(x_) is not None and not live_regs(F) & {'WA', 'BC', 'XWA', 'XBC'}:
+                src_ = ('elem', var_elem_parts(x_))
+            if src_ is not None:
+                n_ = F.f.ret.size // 2
+                F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push))
+                if src_[0] == 'lda': F.emit('lda', 'XIY,XSP+%s' % hx(src_[1] + F.push))
+                elif src_[0] == 'ptr': F.emit('ld', 'XIY,%s' % src_[1])
+                else:
+                    p_ = src_[1]
+                    f_ = gen(F, p_[2], 'WA', 2)
+                    if f_ != 'WA': F.emit('ld', 'WA,%s' % FAM[f_][2])
+                    es = p_[3]
+                    if es == 2: F.emit('add', 'WA,WA')
+                    elif es & (es - 1) == 0: F.emit('sla', '%s,WA' % hx(es.bit_length() - 1))
+                    else: F.emit('muls', 'XWA,%s' % hx(es))
+                    F.emit('lda', 'XBC,_%s' % p_[0] + (' + %s' % hx(p_[1]) if p_[1] else ''))
+                    F.emit('lda', 'XIY,XBC+WA')
+                if n_ <= 2:
+                    for _ in range(n_): F.emit('ldiw', '(XIX+),(XIY+)')
+                else: F.emit('ld', 'BC,%s' % hx(n_)); F.emit('ldirw', '(XIX+),(XIY+)')
+                epilogue(F); F.emit('ret'); return
         raise Unsupported('struct return')
     if s.k == 'expr' and s.e.k == 'call' and (any(fpgen.is_fp(strip(a).ty) for a in s.e.args) or
                                              fpgen.is_fp(s.e.ty) and s.e.ty.size == 8):
@@ -12734,6 +12785,13 @@ def gen_stmt(F, s, last):
         l = listing.clean(_ast.literal_eval(lit.value))
         if l: F.lines.append(l)
         return
+    if STRUCT_RETURN_MORE and s.k == 'return' and s.value is not None and F.f.ret.kind == 'struct' and \
+            F.f.ret.size in (2, 4) and strip(s.value).k == 'load' and strip(strip(s.value).e).k == 'deref' and \
+            strip(strip(strip(s.value).e).e).k == 'load' and not live_regs(F) & {'IY', 'XIY'}:
+        m_ = mem_operand(F, strip(strip(strip(s.value).e).e))   # a struct of 4 bytes or less returned from *p: the pointer
+        if m_ is not None and (m_.startswith('(') or family_of(m_)):   # in XIY (stc st_rp_4: ld XIY,(XSP+0x4) /
+            F.emit('ld', 'XIY,%s' % m_); F.emit('ld', '%s,(XIY)' % FAM['HL'][F.f.ret.size])   # ld XHL,(XIY))
+            flush_pops(F); epilogue(F); F.emit('ret'); return
     if s.k == 'return' and s.value is not None:
         v = strip(s.value)
         while v.k == 'cast': v = strip(v.e)

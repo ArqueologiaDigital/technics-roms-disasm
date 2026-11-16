@@ -3871,6 +3871,12 @@ code: the product differs only on int overflow), PTR_TEST_REUSE off.  ptrar join
 494 / 468 of 1,799; stc 397 / 341 / 365 / 317 of 552 (+39 / +27 / +39 / +27); validation statements +4 / +2 / +5 / +2,
 nothing lost; random 232 / 140 / 189 / 126 and library unchanged; semcheck 9.
 
+**Batch 354 (2026-11-16).**  lane_o3 fix 18, from the stc listings: STRUCT_RETURN_MORE (a struct over 4 bytes returned
+from a stack parameter, from *p or from a variable-index element, copied into the hidden result pointer; one of 4 bytes
+or less from *p through XIY) and STRUCT_ARG_MORE (a struct argument from *p or from a variable-index element; under -Xr
+in a register position when it is the only register-position argument).  stc 449 / 393 / 417 / 369 of 552 (+52 at
+every set), semcheck clean; validation and library unchanged; semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
