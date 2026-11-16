@@ -828,3 +828,31 @@ The tree includes that file at LABEL, in place of the hand data, the same way a 
 reference to f_const data with no `cc900-data:` place stops the build and names the comment to write.
 `c_build_coverage.py` reads the same comment: it resolves the reference to LABEL's address and checks the
 function's bytes.  The data is checked by `make gate` once it is included.
+
+## The sub-CPU and HD-AE5000 trees build firmware C too (2026-11-16, lane_vmb)
+
+The firmware-C rule now covers more trees than the main CPU's:
+- the sub-CPU payloads v142 / v141 / v140 (`<v>/subcpu/cc900/*.c`);
+- the four HD-AE5000 trees: `hdae5000`, `hdae5000_v2_01i`, `hdae5000_v1_15i`, `hdae5000_v1_10i` (`<tree>/cc900/*.c`).
+
+They share the V4.23 cache, the fill and the coverage page (ROM offsets: the payload's split map, and
+address - 0x280000).
+
+An older HD-AE5000 tree assembles with `-I hdae5000` after its own directory.  Its C therefore reads the names of the
+trees it includes (`cc900_firmware_c.INCLUDE_TREES`), and its image depends on their bodies.  Toshiba's runtime
+routines go by the trees' names through `scripts/build/cc900_runtime_names.tsv`, whose tree patterns pick the most
+specific row:
+- `C9H_*` -> `Math_*` holds for `*/maincpu` only;
+- lane_hd's `HDAE5000_*` names hold for `hdae5000*`.
+
+End-to-end check, reverted afterwards:
+- lane_hd's staged `HDAE5000_Lyrics_ClearBuffer` and `HDAE5000_Lyrics_CheckHeaderChunk` went into `hdae5000/cc900/`.
+  The second calls SwapBytes16 / 32 relatively by `cc900-module:`, the same list `module_calls.py hdae5000` proposes,
+  and MemCmp absolutely.
+- They were spliced into hdae5000_ui_display.s and built through V4.23.  The generated body has `calr
+  HDAE5000_SwapBytes32` / `16` and `call HDAE5000_MemCmp`.
+- `rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom` was byte-identical to the ROM.
+
+The same was done for two of lane_sub's staged dsp2_init.c functions in v142.  cc900_splice.py still refuses some
+hand shapes (for example HDAE5000_SwapBytes32: "no run of hand instructions ... is 37 bytes long"), so the lanes'
+promotion has to check each function.
