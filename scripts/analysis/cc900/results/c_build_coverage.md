@@ -9,8 +9,8 @@ the image is built from it (`.include` of its generated body); library C is chec
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 18326        | 15414             | 0.205 %       | 1206             | 17120           |
-| reference model               | 18784        | 15872             | 0.211 %       | 1392             | 17392           |
+| Toshiba V4.23                 | 18212        | 15300             | 0.203 %       | 1092             | 17120           |
+| reference model               | 19432        | 16520             | 0.219 %       | 2040             | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
 All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an image counts on its own.
@@ -19,17 +19,17 @@ All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996729 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
+| v10        | 2097152 | 996729 | firmware C | 37    | 182 / 182          | 340 / 340          | 0 / 0             | 0.034 %         | 10                    |
 | v10        | 2097152 | 996729 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996394 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
+| v9         | 2097152 | 996394 | firmware C | 37    | 182 / 182          | 340 / 340          | 0 / 0             | 0.034 %         | 10                    |
 | v9         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996394 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
+| v8         | 2097152 | 996394 | firmware C | 37    | 182 / 182          | 340 / 340          | 0 / 0             | 0.034 %         | 10                    |
 | v8         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993980 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
+| v7         | 2097152 | 993980 | firmware C | 37    | 182 / 182          | 340 / 340          | 0 / 0             | 0.034 %         | 10                    |
 | v7         | 2097152 | 993980 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992958 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
+| v6         | 2097152 | 992958 | firmware C | 37    | 182 / 182          | 340 / 340          | 0 / 0             | 0.034 %         | 10                    |
 | v6         | 2097152 | 992958 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991874 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
+| v5         | 2097152 | 991874 | firmware C | 37    | 182 / 182          | 340 / 340          | 0 / 0             | 0.034 %         | 10                    |
 | v5         | 2097152 | 991874 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128907 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v141       | 196608  | 128884 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
@@ -53,18 +53,19 @@ found yet.
 
 | image | function                          | C file                                     | options     | bytes | built | model | V4.23                  | V4.23 run                 |
 |-------|-----------------------------------|--------------------------------------------|-------------|-------|-------|-------|------------------------|---------------------------|
-| v10   | BitMapOut_ByteData_DiskCheck      | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v10   | BitMapOut_GetRenderMode           | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v10   | BitMapOut_PrepareRender_CheckBit1 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v10   | BitMapOut_PrepareRender_CheckBit2 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v10   | BitMapOut_SetDefaultTimer         | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v10   | BitMapOut_StorePresetValue        | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | BitMapOut_ByteData_DiskCheck      | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v10   | BitMapOut_GetRenderMode           | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v10   | BitMapOut_PrepareRender_CheckBit1 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v10   | BitMapOut_PrepareRender_CheckBit2 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v10   | BitMapOut_SetDefaultTimer         | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked        | -                         |
+| v10   | BitMapOut_StorePresetValue        | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
 | v10   | Get_Region_Code                   | v10/maincpu/cc900/boot_routines.c          | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | GET_COMPUTER_INTERFACE_SELECTION  | v10/maincpu/cc900/dsp_config_sysex.c       | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
 | v10   | Display_SetBackgroundColor        | v10/maincpu/cc900/graphics_text_vga.c      | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetPlayState1                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetPlayState2                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SmfMedley_RawData                 | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | FormatMedleyNumber                | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
+| v10   | GetPlayState1                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v10   | GetPlayState2                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v10   | SmfMedley_RawData                 | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
 | v10   | GetDialEnableState                | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | SetDialEnable                     | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | AccPlay_GetCurrentPart            | v10/maincpu/cc900/seq_event_playback.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -89,18 +90,19 @@ found yet.
 | v10   | SetRootEvent                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | SetRootObject                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | SetRootParam                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v9    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v9    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v9    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v9    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v9    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v9    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v9    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v9    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v9    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked        | -                         |
+| v9    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
 | v9    | Get_Region_Code                   | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | GET_COMPUTER_INTERFACE_SELECTION  | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
 | v9    | Display_SetBackgroundColor        | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | FormatMedleyNumber                | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
+| v9    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v9    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v9    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
 | v9    | GetDialEnableState                | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | SetDialEnable                     | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | AccPlay_GetCurrentPart            | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -125,18 +127,19 @@ found yet.
 | v9    | SetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | SetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | SetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v8    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v8    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v8    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v8    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v8    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v8    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v8    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v8    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v8    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked        | -                         |
+| v8    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
 | v8    | Get_Region_Code                   | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | GET_COMPUTER_INTERFACE_SELECTION  | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
 | v8    | Display_SetBackgroundColor        | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | FormatMedleyNumber                | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
+| v8    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v8    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v8    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
 | v8    | GetDialEnableState                | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | SetDialEnable                     | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | AccPlay_GetCurrentPart            | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -161,18 +164,19 @@ found yet.
 | v8    | SetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | SetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | SetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | BitMapOut_ByteData_DiskCheck      | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v7    | BitMapOut_GetRenderMode           | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v7    | BitMapOut_PrepareRender_CheckBit1 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v7    | BitMapOut_PrepareRender_CheckBit2 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v7    | BitMapOut_SetDefaultTimer         | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v7    | BitMapOut_StorePresetValue        | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_ByteData_DiskCheck      | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v7    | BitMapOut_GetRenderMode           | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v7    | BitMapOut_PrepareRender_CheckBit1 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v7    | BitMapOut_PrepareRender_CheckBit2 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v7    | BitMapOut_SetDefaultTimer         | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked        | -                         |
+| v7    | BitMapOut_StorePresetValue        | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
 | v7    | Get_Region_Code                   | v7/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | GET_COMPUTER_INTERFACE_SELECTION  | v7/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
 | v7    | Display_SetBackgroundColor        | v7/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetPlayState1                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetPlayState2                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SmfMedley_RawData                 | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | FormatMedleyNumber                | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
+| v7    | GetPlayState1                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v7    | GetPlayState2                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v7    | SmfMedley_RawData                 | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
 | v7    | GetDialEnableState                | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | SetDialEnable                     | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | AccPlay_GetCurrentPart            | v7/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -197,18 +201,19 @@ found yet.
 | v7    | SetRootEvent                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | SetRootObject                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | SetRootParam                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | BitMapOut_ByteData_DiskCheck      | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v6    | BitMapOut_GetRenderMode           | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v6    | BitMapOut_PrepareRender_CheckBit1 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v6    | BitMapOut_PrepareRender_CheckBit2 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v6    | BitMapOut_SetDefaultTimer         | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v6    | BitMapOut_StorePresetValue        | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_ByteData_DiskCheck      | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v6    | BitMapOut_GetRenderMode           | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v6    | BitMapOut_PrepareRender_CheckBit1 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v6    | BitMapOut_PrepareRender_CheckBit2 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v6    | BitMapOut_SetDefaultTimer         | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked        | -                         |
+| v6    | BitMapOut_StorePresetValue        | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
 | v6    | Get_Region_Code                   | v6/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | GET_COMPUTER_INTERFACE_SELECTION  | v6/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
 | v6    | Display_SetBackgroundColor        | v6/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetPlayState1                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetPlayState2                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SmfMedley_RawData                 | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | FormatMedleyNumber                | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
+| v6    | GetPlayState1                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v6    | GetPlayState2                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v6    | SmfMedley_RawData                 | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
 | v6    | GetDialEnableState                | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | SetDialEnable                     | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | AccPlay_GetCurrentPart            | v6/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -233,18 +238,19 @@ found yet.
 | v6    | SetRootEvent                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | SetRootObject                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | SetRootParam                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | BitMapOut_ByteData_DiskCheck      | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v5    | BitMapOut_GetRenderMode           | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v5    | BitMapOut_PrepareRender_CheckBit1 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v5    | BitMapOut_PrepareRender_CheckBit2 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v5    | BitMapOut_SetDefaultTimer         | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
-| v5    | BitMapOut_StorePresetValue        | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_ByteData_DiskCheck      | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v5    | BitMapOut_GetRenderMode           | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v5    | BitMapOut_PrepareRender_CheckBit1 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v5    | BitMapOut_PrepareRender_CheckBit2 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v5    | BitMapOut_SetDefaultTimer         | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked        | -                         |
+| v5    | BitMapOut_StorePresetValue        | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
 | v5    | Get_Region_Code                   | v5/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | GET_COMPUTER_INTERFACE_SELECTION  | v5/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
 | v5    | Display_SetBackgroundColor        | v5/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetPlayState1                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetPlayState2                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SmfMedley_RawData                 | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | FormatMedleyNumber                | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
+| v5    | GetPlayState1                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v5    | GetPlayState2                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
+| v5    | SmfMedley_RawData                 | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
 | v5    | GetDialEnableState                | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | SetDialEnable                     | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | AccPlay_GetCurrentPart            | v5/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
@@ -269,3 +275,21 @@ found yet.
 | v5    | SetRootEvent                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | SetRootObject                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | SetRootParam                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+
+### V4.23 runs needed
+
+These C files have no V4.23 listing of their current text.  `c_build_coverage.py --v423-corpus DIR` copies
+them into DIR and prints the oracle run (`oracle/run_oracle.sh`) and the command that files its result.
+
+| C file                                  | options     |
+|-----------------------------------------|-------------|
+| v10/maincpu/cc900/bitmap_out_routines.c | -O3 -XS -Xr |
+| v10/maincpu/cc900/medley.c              | -O3 -XS -Xr |
+| v5/maincpu/cc900/bitmap_out_routines.c  | -O3 -XS -Xr |
+| v5/maincpu/cc900/medley.c               | -O3 -XS -Xr |
+| v6/maincpu/cc900/bitmap_out_routines.c  | -O3 -XS -Xr |
+| v6/maincpu/cc900/medley.c               | -O3 -XS -Xr |
+| v7/maincpu/cc900/bitmap_out_routines.c  | -O3 -XS -Xr |
+| v7/maincpu/cc900/medley.c               | -O3 -XS -Xr |
+| v9/maincpu/cc900/bitmap_out_routines.c  | -O3 -XS -Xr |
+| v9/maincpu/cc900/medley.c               | -O3 -XS -Xr |
