@@ -1,0 +1,3 @@
+firmware/p6_m8a.c
+firmware/p6_m8b.c
+firmware/p6_m8c.c
