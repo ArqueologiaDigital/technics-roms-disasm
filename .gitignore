@@ -62,6 +62,8 @@ mame_driver/build_error.txt
 hdae5000*/includes/generated/cc900/
 # Toshiba V4.23's listings of that C, cached by scripts/build/cc900_v423.py (Toshiba output: never committed)
 /build/cc900-v423/
+# each tree's scanned .equ values and labels, kept by content hash by scripts/build/cc900_firmware_c.py tree_scan()
+/build/cc900-names/
 hdae5000/includes/generated/*.bin
 hdae5000_v2_01i/includes/generated/*.bin
 hdae5000_v1_15i/includes/generated/*.bin
