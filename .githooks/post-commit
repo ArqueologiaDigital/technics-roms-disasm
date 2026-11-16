@@ -11,6 +11,8 @@ if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null |
         grep -qE '^scripts/analysis/cc900/(model|results)/'; then
     out="$HOME/compartilhado/tmp/cc900-dashboard"
     mkdir -p "$out" 2>/dev/null
-    ( python3 "$root/scripts/analysis/cc900/dashboard.py" > "$out/build.log" 2>&1 & ) >/dev/null 2>&1
+    # setsid + nohup: a plain background child dies with the committing shell's process group (Claude Code ends the
+    # group when a command finishes), and the page then silently stayed old (2026-11-16)
+    setsid nohup python3 "$root/scripts/analysis/cc900/dashboard.py" > "$out/build.log" 2>&1 < /dev/null &
 fi
 exit 0

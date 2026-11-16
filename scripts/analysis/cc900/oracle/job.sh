@@ -8,6 +8,9 @@
 #   sources.txt    paths of the files to compile, relative to the corpus root, with "/"; a line "path|label"
 #                  compiles that file at option set <label> only (the firmware-C build, scripts/build/cc900_v423.py)
 #   options.txt    "label|cc900 flags" per line
+#   asmflags.txt   optional, "label|ASM900 flags" per line: every listing is ALSO assembled once per line, as a copy
+#                  <base>_<label>.asm (outputs <base>_<label>.rel / .lst / .as.log), e.g. "lst|-l" for ASM900's list
+#                  file with the final encodings, "lstnoopt|-l -O" for the same without its J / CAL optimisation
 # and, for every compiler x option set x source, runs `cc900 <flags> -I<tree>\INCLUDE -S` and then ASM900 with no
 # options on the .asm (a source that is itself .asm is only assembled); and
 # options on the .asm (cc900 -c fails under Wine: its assembler pass reports "No source file found in invocation").
@@ -38,8 +41,19 @@ while IFS='|' read -r name tarball; do
     mkdir -p "$C/CC/$name" && tar -xf "/root/in/$tarball" -C "$C/CC/$name"
     echo "compiler $name: $(sha256sum "/root/in/$tarball" | cut -c1-64) $(ls "$C/CC/$name" | tr '\n' ' ')"
 done < /root/in/compilers.txt
-sha256sum /root/in/corpus.tar /root/in/sources.txt /root/in/options.txt
+curl -sf "$H/asmflags.txt" -o /root/in/asmflags.txt || : > /root/in/asmflags.txt
+sha256sum /root/in/corpus.tar /root/in/sources.txt /root/in/options.txt /root/in/asmflags.txt
 export TMP='C:\W' TEMP='C:\W'
+
+# asm_extra DIR ASM BASE: the extra ASM900 runs of asmflags.txt on a copy of DIR/ASM
+asm_extra() {
+    while IFS='|' read -r alabel aflags; do
+        [ -n "$alabel" ] || continue
+        cp "$1/$2" "$1/${3}_$alabel.asm"
+        ( cd "$1" && timeout 120 wine "C:\\CC\\$name\\BIN\\ASM900.EXE" $aflags "${3}_$alabel.asm" \
+              >"${3}_$alabel.as.log" 2>&1 </dev/null; echo "exit $?" >>"${3}_$alabel.as.log" )
+    done < /root/in/asmflags.txt
+}
 
 while IFS='|' read -r name tarball; do
     [ -n "$name" ] || continue
@@ -55,15 +69,24 @@ while IFS='|' read -r name tarball; do
             case "$file" in *.asm|*.ASM)                  # an assembly listing: assemble it as it is
                 ( cd "$d" && timeout 120 wine "C:\\CC\\$name\\BIN\\ASM900.EXE" "$file" >"$base.as.log" 2>&1
                   echo "exit $?" >>"$base.as.log" )
+                asm_extra "$d" "$file" "$base"
                 continue ;;
             esac
+            # the source's local headers go beside the copy: cc900 resolves `#include "x.h"` against the directory of
+            # the file it compiles, not against -I (THC1-Error-310, run 2026-11-16-46-hd-r2); removed again below
+            sdir=$(dirname "$src")
+            hdrs=$(cd "$C/SRC/$sdir" && find . -type f \( -name '*.h' -o -name '*.H' \) | sed 's|^\./||')
+            for h in $hdrs; do mkdir -p "$d/$(dirname "$h")"; cp "$C/SRC/$sdir/$h" "$d/$h"; done
             winsrc=$(printf '%s' "$src" | tr '/' '\\')
             ( cd "$d" && timeout 120 wine "C:\\CC\\$name\\BIN\\CC900.EXE" $flags -I"C:\\CC\\$name\\INCLUDE" \
                   -I"C:\\SRC\\$(dirname "$winsrc")" -S "$file" >"$base.cc.log" 2>&1; echo "exit $?" >>"$base.cc.log"
               a=$(ls | grep -i -x "$base.asm" | head -1)
               [ -n "$a" ] && timeout 120 wine "C:\\CC\\$name\\BIN\\ASM900.EXE" "$a" >"$base.as.log" 2>&1
               echo "exit $?" >>"$base.as.log" )
+            a=$(ls "$d" | grep -i -x "$base.asm" | head -1)
+            [ -n "$a" ] && asm_extra "$d" "$a" "$base"
             rm -f -- "${d:?}/${file:?}"
+            for h in $hdrs; do rm -f -- "${d:?}/${h:?}"; done
         done < /root/in/sources.txt
         echo "done $name $label: $flags"
     done < /root/in/options.txt

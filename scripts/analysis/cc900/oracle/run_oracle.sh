@@ -11,6 +11,8 @@
 # and run_vm.sh's QEMU_ROOT / BASE_IMAGE defaults below.  vm_slot.sh picks a free slot of the VM pool (its own work
 # directory vm/home/slot-N and HTTP port), run_vm.sh boots the VM; this script prepares the job and files the run.
 # Several runs go at once, one per slot.
+# ASMFLAGS=FILE (optional): job.sh's asmflags.txt, "label|ASM900 flags" per line -- every listing is also assembled
+# with each of those (e.g. "lst|-l" for ASM900's list file with the final encodings); the file is filed with the run.
 #
 # Nothing Toshiba made runs on the host.  The guest (Debian 13 + Wine, disk overlay $ORACLE/vm/home/disk.qcow2) gets
 # everything over HTTP from httpd.py, compiles (job.sh), PUTs results.tar back and powers off.
@@ -45,6 +47,7 @@ for c in "$@"; do
 done
 tar -cf "$S/corpus.tar" -C "$CORPUS" .
 cp "$HERE/job.sh" "$S/job.sh"; cp "$SOURCES" "$S/sources.txt"; cp "$OPTIONS" "$S/options.txt"
+[ -z "${ASMFLAGS:-}" ] || cp "$ASMFLAGS" "$S/asmflags.txt"
 
 echo "run_oracle.sh: VM slot $VM_SLOT (port $VM_PORT)" >&2
 ORACLE=$ORACLE QEMU_ROOT=$QEMU_ROOT BASE_IMAGE=$BASE_IMAGE bash "$HERE/run_vm.sh" "$S" "$OUT"
@@ -59,6 +62,7 @@ mkdir -p "$R/out"
 exec {numfd}>&-
 tar -xf "$OUT/results.tar" -C "$R/out" --no-same-owner
 cp "$OUT/job.log" "$S/sources.txt" "$S/options.txt" "$S/compilers.txt" "$R/"
+[ ! -f "$S/asmflags.txt" ] || cp "$S/asmflags.txt" "$R/"
 ( cd "$OUT" && sha256sum results.tar ) > "$R/results.tar.sha256"
 ( cd "$S" && sha256sum cc-*.tar corpus.tar ) > "$R/inputs.sha256"
 slot_ok "$SLOT" && rm -rf -- "${SLOT:?}/serve" "${SLOT:?}/out"

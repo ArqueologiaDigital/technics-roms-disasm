@@ -762,3 +762,97 @@ Timings (this machine, 2026-11-16, `make -j6`):
 
 Most of a warm gate is the gate's own checks, not the firmware C.  The first make in a fresh worktree builds
 everything else too: 10 min 32 s, model build, before this change.
+
+## Calls and tail calls: asm900 relaxes CAL / J (probe calrel, 2026-11-16, lane_vmb)
+
+V4.23 writes every call `cal` and every tail call `j`.  These are asm900's optimising forms ("J" or "CAL" "used for
+optimization", README/HIS96AE0.TXT; ASM900 `-O` is "No optimization").  The ROM's 9,477 `calr` and its jr / jrl
+tail calls come from asm900, not from the compiler.  Probe calrel (`scripts/analysis/cc900/corpus/firmware/
+p6_calrel*.c`, run `2026-11-16-42-p6-calrel`, assembled with `-l` and `-l -O` through job.sh's new `asmflags.txt`)
+shows the rule:
+
+| V4.23 writes                 | target                                                            | asm900 assembles (llvm-mc spelling) |
+|------------------------------|-------------------------------------------------------------------|-------------------------------------|
+| `cal`                        | a function of the same file (public or static), any distance seen | `calr` (1e d16)                     |
+| `j` (tail call)              | the same, within reach of jr                                      | `jr` (68 d8)                        |
+| `j` (tail call)              | the same, beyond jr (about 200 B in the probe)                    | `jrl` (78 d16)                      |
+| `cal`                        | an extern, large (plain)                                          | `call` (1d a24)                     |
+| `j`                          | an extern, large                                                  | `jp` (1b a24)                       |
+| `cal`                        | an extern `__near` or `__tiny` function (listed `medium`)         | `call16` (1c a16)                   |
+| `j`                          | an extern `__near` function                                       | `jp16` (1a a16)                     |
+| `cal` / `j` with ASM900 `-O` | anything                                                          | `call` / `jp`, 24-bit               |
+
+Static and public targets behave alike.  The >32 KB case is still open: p6_calrel_far.c's 49 KB pad stopped V4.23
+(THC1-Fatal-150, "Too large string", one macro-expanded line); it needs a generated pad, one statement per line.
+
+Our C files group functions by hand source, not by the firmware's original module.  lane_sub found functions of
+one C file that call each other with an absolute call, so they came from different modules.  So file membership
+says nothing.  A callee is module-local only when the comment `cc900-module: Label1 Label2 ...` (blank- or
+comma-separated, any number of comments) names it: a tree label that shared the caller's original module and
+section.  An inferred module map (lane_sub's modules.py, lane_p6's modules_main.py: a calr joins two routines into
+one module, a near absolute call separates them) can propose the list.  For a named callee, `model/to_llvm.py`'s
+MODULE gives `calr` / `jr`, and llvm-mc, which assembles each image as one unit, widens a jr to
+jrl where it does not reach.  It does that only for labels that are not `.globl`, as the trees' are.  An entry is a
+claim about the original build, and `make gate` checks it; its evidence is the hand assembly's calr / jr / jrl to
+that label.  Both paths read it (`cc900_firmware_c.module_names`), so the model and V4.23 still give the same
+bodies.
+
+`python3 -I -B scripts/analysis/cc900/calrel_check.py FILE.asm FILE.lst` translates a whole V4.23 listing the
+build's way and compares every function with ASM900's list file.  On the probe, all 15 functions of p6_calrel.c and
+all 4 of p6_calrel_q.c MATCH.  `c_build_coverage.py` lays a function and its module-local targets out at their ROM
+addresses, so its V4.23 and model columns check such calls too.
+
+Beyond reach (probe calrel-far2, run `2026-11-16-61-p6-calrel-far2`): when a same-file target is more than 16 bits
+away, asm900 writes `cal` as call #24 and `j` as jp #24, in both directions.  `cc900_firmware_c.far_fallback` does the
+same for a module-local callee.  It uses the tree's symbols reference to measure the distance from the instruction's
+own offset, and rewrites calr / jr / jrl as call / jp when the target is out of reach.
+
+## Constant data: switch tables, FP constants, initialised arrays (`cc900-data:`, 2026-11-16, lane_vmb)
+
+V4.23 puts a function's constant data in the `f_const` section, and the linker places that section apart from the
+code.  The data can be:
+- a switch's jump table (`dw L35-L50002`, read through `lda XIX,S50003` / `add XWA,S50000`);
+- an FP constant (`fdatad`);
+- an initialised local array.
+
+In the ROM such an object sits in the module's constant area, at a label of its own: lane_sub's
+`DSP_BytecodeInterpreter_CaseOffsets`, lane_hd's `HDAE5000_LyricBoxProc_CaseTable1`.  A C file names that place with
+a comment `cc900-data: FUNCTION N = LABEL`, where N is the function's N-th f_const object in listing order, starting
+at 1.  The build then:
+- writes the object's code references as LABEL;
+- writes the object itself, translated by `to_llvm.translate_data`, as `includes/generated/cc900/LABEL.s`.  The
+  translation keeps `.balign`, and `.short` differences of the function's local labels (renumbered as the body's).
+  An `fdata` / `fdatad` value becomes its IEEE bytes.
+
+The tree includes that file at LABEL, in place of the hand data, the same way a function's body is included.  A
+reference to f_const data with no `cc900-data:` place stops the build and names the comment to write.
+`c_build_coverage.py` reads the same comment: it resolves the reference to LABEL's address and checks the
+function's bytes.  The data is checked by `make gate` once it is included.
+
+## The sub-CPU and HD-AE5000 trees build firmware C too (2026-11-16, lane_vmb)
+
+The firmware-C rule now covers more trees than the main CPU's:
+- the sub-CPU payloads v142 / v141 / v140 (`<v>/subcpu/cc900/*.c`);
+- the four HD-AE5000 trees: `hdae5000`, `hdae5000_v2_01i`, `hdae5000_v1_15i`, `hdae5000_v1_10i` (`<tree>/cc900/*.c`).
+
+They share the V4.23 cache, the fill and the coverage page (ROM offsets: the payload's split map, and
+address - 0x280000).
+
+An older HD-AE5000 tree assembles with `-I hdae5000` after its own directory.  Its C therefore reads the names of the
+trees it includes (`cc900_firmware_c.INCLUDE_TREES`), and its image depends on their bodies.  Toshiba's runtime
+routines go by the trees' names through `scripts/build/cc900_runtime_names.tsv`, whose tree patterns pick the most
+specific row:
+- `C9H_*` -> `Math_*` holds for `*/maincpu` only;
+- lane_hd's `HDAE5000_*` names hold for `hdae5000*`.
+
+End-to-end check, reverted afterwards:
+- lane_hd's staged `HDAE5000_Lyrics_ClearBuffer` and `HDAE5000_Lyrics_CheckHeaderChunk` went into `hdae5000/cc900/`.
+  The second calls SwapBytes16 / 32 relatively by `cc900-module:`, the same list `module_calls.py hdae5000` proposes,
+  and MemCmp absolutely.
+- They were spliced into hdae5000_ui_display.s and built through V4.23.  The generated body has `calr
+  HDAE5000_SwapBytes32` / `16` and `call HDAE5000_MemCmp`.
+- `rebuilt_ROMs/hd-ae5000_v2_06i.llvm.rom` was byte-identical to the ROM.
+
+The same was done for two of lane_sub's staged dsp2_init.c functions in v142.  cc900_splice.py still refuses some
+hand shapes (for example HDAE5000_SwapBytes32: "no run of hand instructions ... is 37 bytes long"), so the lanes'
+promotion has to check each function.

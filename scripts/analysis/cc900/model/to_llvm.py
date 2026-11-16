@@ -60,9 +60,56 @@ def sym_width(sym):
     if n not in WIDTHS: raise KeyError('no declared width (small / medium / large) for %s' % sym)
     return WIDTHS[n]
 
+# MODULE (phase 6): the names asm900 saw in the same section of the same assembly -- in the firmware build, the ones
+# the C file's `cc900-module:` comment says shared the caller's original module (never merely the C file's other
+# functions: our files group by hand source, not by module) -- or None.  asm900 assembles the
+# optimising CAL / J to such a target as calr / jr, jrl when jr does not reach; to anything else (an extern) as call /
+# jp, 24-bit for a large target and 16-bit (call16 / jp16) for a __near or __tiny one (probe calrel, run
+# 2026-11-16-42-p6-calrel; ASM900 -O turns the optimisation off).  We write jr and let llvm-mc widen it.
+MODULE = None
+
+def module_local(sym):
+    if MODULE is None or sym.startswith('L') and sym[1:].isdigit(): return False
+    b = sym.lstrip('_.')
+    return b in MODULE or (len(b) == 31 and any(m[:31] == b for m in MODULE if len(m) > 31))
+
+def code_width(sym):
+    """a call / jump target's width: the declared one (WIDTHS) when known, else 24 (large)"""
+    return (WIDTHS or {}).get(sym.lstrip('_.'), 24)
+
+def branch_target(sym, syms):
+    """a relative branch's operand: the tree's name, or, without SPELL (an address-only check), a placeholder
+    `__cc900_at_<hex address>` that the checker defines beside the function (c_build_coverage.compare)"""
+    s = SPELL.get(sym.lstrip('_.')) if SPELL is not None else None
+    return s if s else '__cc900_at_%x' % lookup(sym, syms)
+
 # byte registers of XIX / XIY / XIZ, which llvm-mc reaches only through their extended-register code (the ERP forms)
 ERP_BYTE = {'IXL': 0xf0, 'IXH': 0xf1, 'QIXL': 0xf2, 'QIXH': 0xf3, 'IYL': 0xf4, 'IYH': 0xf5, 'QIYL': 0xf6, 'QIYH': 0xf7,
-            'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb}
+            'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb,
+            # the upper bytes of XWA .. XHL (bytes 2 / 3 of the 32-bit register: QA = E2, QW = E3, ...)
+            'QA': 0xe2, 'QW': 0xe3, 'QC': 0xe6, 'QB': 0xe7, 'QE': 0xea, 'QD': 0xeb, 'QL': 0xee, 'QH': 0xef}
+ERP_IMM_OP = {'add': 'add_erpb', 'sub': 'sub_erpb', 'and': 'and_erpb', 'or': 'or_erpb', 'xor': 'xor_erpb'}
+ERP_BIT_OP = {'bit': 'bit_erpb', 'set': 'set_erpb', 'res': 'res_erpb', 'sll': 'sll_erpb', 'srl': 'srl_erpb'}
+
+def erp_byte(op, raw):
+    """an instruction on a byte register llvm-mc names only by its extended code (IXL .. QIZH, QA .. QH) -> its ERP
+    form, or an `untranslated` line: never the generic path, where llvm-mc would read `qa` as a symbol"""
+    b = op[:-1] if op.endswith('b') and op[:-1] in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor') else op
+    if b == 'ld' and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
+        return '\tst_erpb_rr %s, 0x%x' % (raw[1].lower(), ERP_BYTE[raw[0]])   # ld IXL,C = c7 f0 9b
+    if b == 'ld' and len(raw) == 2 and raw[0] in R8 and raw[1] in ERP_BYTE:
+        return '\tld_erpb_rr %s, 0x%x' % (raw[0].lower(), ERP_BYTE[raw[1]])   # ld C,IXL = c7 f0 8b
+    if b in ('ld', 'cp') and len(raw) == 2 and raw[0] in ERP_BYTE and NUM.match(raw[1]):
+        n = num(raw[1]) & 0xff                         # 0..7: the 3-byte short form (ld QIZH,1 = c7 fb a9), as the ROM has
+        if n <= 7: return '\t%s 0x%x, %d' % ('lds_erpb' if b == 'ld' else 'cps_erpb', ERP_BYTE[raw[0]], n)
+        return '\t%s 0x%x, 0x%x' % ('ldi_erpb' if b == 'ld' else 'cp_erpb', ERP_BYTE[raw[0]], n)
+    if b in ERP_IMM_OP and len(raw) == 2 and raw[0] in ERP_BYTE and NUM.match(raw[1]):
+        return '\t%s 0x%x, 0x%x' % (ERP_IMM_OP[b], ERP_BYTE[raw[0]], num(raw[1]) & 0xff)
+    if b in ('cp', 'or') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
+        return '\t%s_erpb_rr %s, 0x%x' % (b, raw[1].lower(), ERP_BYTE[raw[0]])
+    if op in ERP_BIT_OP and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE:
+        return '\t%s 0x%x, %d' % (ERP_BIT_OP[op], ERP_BYTE[raw[1]], num(raw[0]))
+    return '\t; untranslated (a byte register llvm-mc cannot name): ' + op + ' ' + ','.join(raw)
 
 def spelled(sym, a, off=0):
     """the operand text for symbol `sym` (+ off) at address a: the tree's name when SPELL has it, else the number"""
@@ -110,6 +157,11 @@ def operand(o, syms, locals_):
     m = re.match(r'^\(-(X\w+)\)$', o)
     if m: return '(-%s)' % m.group(1).lower()
     if re.match(r'^[_.][A-Za-z0-9_]+$', o): return spelled(o, lookup(o, syms))
+    if o in CONSTS:                                     # an f_const object's address as an immediate (add XWA,S50000)
+        if o in DATA: return DATA[o]
+        if DATA_REQUIRED:
+            raise KeyError('V4.23 constant data %s (a jump table / constant) has no place in the tree: name it with a '
+                           '`cc900-data: FUNCTION N = LABEL` comment' % o)
     return None
 
 def size_suffix(op):
@@ -141,14 +193,20 @@ def translate_line(t, syms, locals_):
         # muls HL,0x3 is the byte form (L x 3 -> HL; chnarrow.c cn_mul_k): llvm-mc names the 8-bit source (cf 09 03);
         # div DE,0x64 too (DE / 100 -> E, remainder D: the ROM's FormatMedleyNumber, cd 0a 64; div de, 100 was the
         # 32 / 16 form da 0a 64 00)
+    if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
-    if op == 'cal': return '\tcall %s' % spelled(raw[0], lookup(raw[0], syms))
+    if op == 'cal':
+        if module_local(raw[0]): return '\tcalr %s' % branch_target(raw[0], syms)
+        if code_width(raw[0]) < 24: return '\tcall16 %s' % spelled(raw[0], lookup(raw[0], syms))
+        return '\tcall %s' % spelled(raw[0], lookup(raw[0], syms))
     if op == 'j':
         if len(raw) == 1:
             if raw[0] in locals_: return '\tjr %s' % raw[0]
             m = re.match(r'^(X\w+)\+(\w+)$', raw[0])
             if m: return '\tjp t, (%s+%s)' % (m.group(1).lower(), m.group(2).lower())
+            if module_local(raw[0]): return '\tjr %s' % branch_target(raw[0], syms)   # llvm-mc widens it to jrl
+            if code_width(raw[0]) < 24: return '\tjp16 %s' % spelled(raw[0], lookup(raw[0], syms))
             return '\tjp %s' % spelled(raw[0], lookup(raw[0], syms))
         return '\tjr %s, %s' % (CC[raw[0]], raw[1])
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
@@ -161,7 +219,8 @@ def translate_line(t, syms, locals_):
     if op in ('jr', 'jrl'):                                # inline assembly writes jr / jrl itself (_MEMSET.C)
         return '\t%s %s' % (op, raw[0]) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], raw[1])
     if op in ('sll', 'srl', 'sla', 'sra', 'rlc', 'rrc', 'rl', 'rr') and len(raw) == 2 and NUM.match(raw[0]):
-        return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]))   # Toshiba: count first (srl 2,BC)
+        return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]) or 16)   # Toshiba: count first (srl 2,BC); V4.23
+        # writes a shift by 16 as the raw count field 0, which llvm-mc refuses (lane_sub: DSP_UnpackParam3B)
     if op in ('sla', 'sll', 'sra', 'srl') and len(raw) == 2 and raw[0] == 'A' and REGS.match(raw[1]):
         return '\t%sa %s' % ({'sla': 'sla', 'sll': 'sll', 'sra': 'sra', 'srl': 'srl'}[op], raw[1].lower())
         # a count in A: llvm-mc's slaa / slla / sraa / srla r (d8+r fc..ff; firmware FileIO_*: slla bc = d9 fe)
@@ -181,10 +240,6 @@ def translate_line(t, syms, locals_):
             word = bop.endswith('w') and bop not in ('ldd',)
             return '\t.byte 0x%02x, 0x%02x\t; %s' % ((0x90 if word else 0x80) + r, sub, t.strip())
     if op == 'scc': return '\tscc %s, %s' % (CC[raw[0]], raw[1].lower())
-    if op in ('ld', 'ldb') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
-        return '\tst_erpb_rr %s, 0x%x' % (raw[1].lower(), ERP_BYTE[raw[0]])   # ld IXL,C = c7 f0 9b
-    if op in ('ld', 'ldb') and len(raw) == 2 and raw[0] in R8 and raw[1] in ERP_BYTE:
-        return '\tld_erpb_rr %s, 0x%x' % (raw[0].lower(), ERP_BYTE[raw[1]])   # ld C,IXL = c7 f0 8b
     if op in ('push', 'pop') and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
         return '\t%sw %s' % (op, raw[0].lower())                      # the 1-byte 16-bit forms
     if op == 'lda':
@@ -202,6 +257,10 @@ def translate_line(t, syms, locals_):
                                             24 if WIDTHS is None else sym_width(m.group(1)))   # _cos: _g_dbltbl + 0x10
         if src.startswith(('_', '.')): return '\tlda %s, (%s:%d)' % (dst, spelled(src, lookup(src, syms)),
                                                                      24 if WIDTHS is None else sym_width(src))
+        if src in CONSTS and src in DATA: return '\tlda %s, (%s:24)' % (dst, DATA[src])   # f_const data in the tree
+        if src in CONSTS and DATA_REQUIRED:
+            raise KeyError('V4.23 constant data %s (a jump table / constant) has no place in the tree: name it with a '
+                           '`cc900-data: FUNCTION N = LABEL` comment' % src)
         if src in syms: return '\tlda %s, (0x%x:24)' % (dst, syms[src])      # an FP constant placed by the linker
         if re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$', src): return '\tlda %s, (%s)' % (dst, src.lower())   # lda XWA,XSP
         if src in locals_: return '\tlda %s, (%s:24)' % (dst, src)
@@ -227,19 +286,43 @@ def translate_line(t, syms, locals_):
     return '\t%s %s' % (base, ', '.join(args)) if args else '\t' + base
 
 CONSTS = {}
+# DATA (phase 6 build): {V4.23 f_const label (S50003): the tree's label for that object}.  V4.23 puts a function's
+# constant data -- a switch's jump table (`dw L35-L50002`), an FP constant (`fdatad`), an initialised local array --
+# in the f_const section, which the linker places apart from the code: the tree has it at its own label.  A code
+# reference to such a label (`lda XIX,S50003`) becomes that tree label; one without an entry stops the translation.
+DATA = {}
+DATA_REQUIRED = False      # the firmware build: an f_const reference without a DATA entry is an error
 
 def split_consts(lines):
-    """the f_const block of FP constants (fpgen.py): {label: (directive, value text)} and the lines without it"""
+    """a function's f_const blocks: {label: [its lines: align, dw / db / dl, fdata / fdatad]} in listing order, and
+    the lines without them"""
     consts = {}; out = []; inconst = False; lab = None
     for l in lines:
         if l.startswith('f_const'): inconst = True; continue
         if l.startswith('f_code'): inconst = False; continue
         if inconst:
-            if l.endswith(':'): lab = l[:-1]
-            elif l.startswith('\tfdata'): consts[lab] = tuple(l.strip().split('\t'))
+            if l.endswith(':') and not l.startswith('\t'): lab = l[:-1]; consts[lab] = []
+            elif lab is not None: consts[lab].append(l)
+            else: consts.setdefault(None, []).append(l)       # an `align` before the first label
             continue
         out.append(l)
+    if None in consts:                                         # it belongs to the first object
+        pre = consts.pop(None)
+        if consts: consts[next(iter(consts))][:0] = pre
     return consts, out
+
+def translate_data(lines, locals_):
+    """an f_const object's lines -> llvm-mc data lines (names of the function's local labels kept as they are)"""
+    import struct
+    out = []
+    for l in lines:
+        p = l.strip().split(None, 1); op = p[0].lower()
+        if op == 'align': out.append('\t.balign %s' % p[1]); continue
+        if op in ('fdata', 'fdatad'):
+            b = struct.pack('<d' if op == 'fdatad' else '<f', float(p[1]))
+            out.append('\t.byte ' + ', '.join('0x%02x' % x for x in b) + '\t; %s %s' % (op, p[1].strip())); continue
+        out.append(translate_line(l, {}, locals_))
+    return out
 
 def translate_function(name, lines, syms):
     consts, lines = split_consts(lines)

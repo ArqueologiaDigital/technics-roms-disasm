@@ -1,0 +1,14 @@
+# Toshiba runtime routines that V4.23 calls by their library names, and the trees' labels for them; read by
+# scripts/build/cc900_firmware_c.py runtime_names() (with results/pairs.tsv's our_label for the matched C library).
+# tree: a shell pattern matched against the tree's path (*/maincpu, hdae5000*, v142/subcpu); the most specific
+# pattern wins.  name: as the listing writes it.
+# Main CPU: C9H_mullu / C9H_divlu, the assembly library's 32-bit multiply / unsigned divide (coordinator, 2026-11-16).
+# HD-AE5000 (all four trees): lane_hd, 2026-11-16.
+tree	name	label
+*/maincpu	C9H_mullu	Math_Multiply32
+*/maincpu	C9H_divlu	Math_DivideU32
+hdae5000*	C9H_mullu	HDAE5000_Multiply
+hdae5000*	C9H_divlu	HDAE5000_UDivMod32
+hdae5000*	._fdiv_f	HDAE5000_FloatDiv
+hdae5000*	._fld_ful	HDAE5000_ULongToFloat
+hdae5000*	._fld_df	HDAE5000_FloatToDouble
