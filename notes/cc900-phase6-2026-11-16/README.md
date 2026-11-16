@@ -482,3 +482,62 @@ branch, are not entered by falling through, and are the target of at least one `
 Some are data decoded as code (`SeMenu_*` rows such as `ld (xwa), (0x6c5)`) and must be skipped.
 
     python3 notes/cc900-phase6-2026-11-16/leaf_candidates.py v10/maincpu 4
+
+## The build compiles with Toshiba V4.23 (2026-11-16, lane_vmb)
+
+By default `make` and `make gate` now compile the firmware C with Toshiba cc900 V4.23, which runs in the oracle VM.
+`make CC900_COMPILER=model ...` builds the same C with the reference model instead, without the VM.  Both give the
+same bodies, and `make gate` passes with either (Makefile, "Firmware C code"; `scripts/build/cc900_firmware_c.py`).
+
+- **Cache.**  `scripts/build/cc900_v423.py fill` keeps V4.23's listings in `build/cc900-v423/` (git-ignored: Toshiba
+  output, never committed).  Each entry is keyed by the SHA-256 of what decides the listing:
+  - the C text and its base name;
+  - the `cc900-options:` flags (any flag string; a file that names none is compiled at `-O3 -Xr`, the firmware's own
+    option set, run `2026-11-16-32-p6-m18`);
+  - the `#include "..."` headers;
+  - the V4.23 tree's id;
+  - `oracle/job.sh`.
+
+  Identical texts in several trees are one compile.
+- **One VM job per make.**  A make compiles all uncached files in ONE VM job: `oracle/run_vm.sh` with
+  `VM_SNAPSHOT=1` (`-snapshot`), under `vm/.runlock`.  The build writes nothing into the oracle tree.  A fully
+  cached make does not touch the VM, so it builds with no VM at all.
+- **No fallback.**  When a file is not cached and the VM is unusable, the build stops.  It lists the files and
+  what the VM lacks, then gives the flag `make CC900_COMPILER=model`.
+- **The model's limits.**  The model is paused, and it does not cover everything V4.23 compiles; near/tiny arrays
+  are one example.  When `CC900_COMPILER=model` meets such C, the step names the C file and the function or
+  declaration, says the model does not support it and the default V4.23 build does, and writes no body.
+- **Operand widths come from the declarations** (probe m16):
+  - `__tiny` gives 8-bit operands, `__near` 16-bit, plain 24-bit;
+  - V4.23 qualifies only the first declarator, so a qualified extern names one object;
+  - V4.23's listing says each width (`extern small|medium|large`), and `model/to_llvm.py` takes it from there,
+    checked against the C;
+  - a symbol without a width stops the build;
+  - `scripts/tools/cc900_near_qualifiers.py` gave the built C its qualifiers, from the widths the hand assembly
+    uses.
+- **C that V4.23 does not reproduce is not built.**  It would go to `<tree>/cc900/unbuilt/`, which `make` skips
+  and `c_build_coverage.py` still checks.  None is there: TrimAndPadSmfFilename, which needed the model's
+  KN_LOOP_INVERT at -O3 -XS -Xr, is reproduced by V4.23 at the firmware's own `-O3 -Xr` (run
+  `2026-11-16-32-p6-m18`).
+
+How make decides.  While it reads the Makefile, `cc900_v423.py index` rewrites `build/cc900-v423/index.tsv` (each
+file's key, cached or missing) only when it changed, and the compiler choice goes to `rebuilt_ROMs/cc900-compiler.txt`
+the same way.  The VM job is the rule for `build/cc900-v423/filled.stamp`, which depends on the index; the bodies
+depend on that stamp and on the choice file.  So `make -q` (which `assert_byte_identical.py` asks) sees an
+up-to-date tree as up to date.  A phony "force" prerequisite would not do that.
+
+Timings (this machine, 2026-11-16, `make -j6`):
+
+| run                                                                       | time           |
+|---------------------------------------------------------------------------|----------------|
+| `make gate`, V4.23, cold cache (whole worktree already built)             | 5 min 38 s     |
+| its one VM job: 26 distinct texts of 75 files                             | 92 s           |
+| VM job after the switch to `-O3 -Xr`: 25 distinct texts                   | 59 s           |
+| VM job for one changed file                                               | 47 s           |
+| `cc900_v423.py fill`, all 80 files cached                                 | 0.4 s          |
+| `make gate`, V4.23, nothing changed (no fill, no body rebuilt)            | 2 min 35 s     |
+| `make CC900_COMPILER=model gate`, after a V4.23 build (80 bodies rebuilt) | 3 min 39 s     |
+| `make CC900_ORACLE=<missing> cc900-firmware-c`, cache complete            | 1.1 s (exit 0) |
+
+Most of a warm gate is the gate's own checks, not the firmware C.  The first make in a fresh worktree builds
+everything else too: 10 min 32 s, model build, before this change.

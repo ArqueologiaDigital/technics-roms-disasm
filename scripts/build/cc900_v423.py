@@ -8,6 +8,7 @@ model/to_llvm.py into the bodies the trees include.  CC900_COMPILER=model builds
 instead and never runs this.
 
 usage: python3 -B scripts/build/cc900_v423.py fill CACHE ORACLE FILE.c [FILE.c ...]
+       python3 -B scripts/build/cc900_v423.py index CACHE FILE.c [FILE.c ...]     (no VM; see index())
     CACHE   the build's cache directory (git-ignored; the Makefile's CC900_V423_CACHE, build/cc900-v423)
     ORACLE  the oracle tree (CC900_ORACLE; its vm/ holds QEMU, the disk overlay and the lock)
     FILE.c  every firmware C file of every tree
@@ -23,9 +24,11 @@ The cache.  CACHE/<key>/ holds one compile: the listing (<base>.asm), the compil
 Identical text in two trees is one compile.  The VM's own image (Debian, Wine) is not in the key: it does not
 change what the compiler writes.
 
-`fill` hashes every FILE.c, compiles the ones whose key is not cached in ONE VM job (all of them, at their own
-options), files the results into CACHE and writes CACHE/index.tsv (one line per FILE.c: path, key), rewriting it
-only when it changed, so make rebuilds no body when nothing changed.  A fully cached fill does not look at the VM,
+`index` (run by the Makefile as it reads itself) writes CACHE/index.tsv, one line per FILE.c: path, key, cached or
+missing, rewriting it only when it changed.  `fill` (the Makefile's rule for CACHE/filled.stamp, which depends on the
+index) hashes every FILE.c, compiles the ones whose key is not cached in ONE VM job (all of them, at their own
+options), files the results into CACHE and rewrites the index; so make runs it, and rebuilds bodies, only when a key
+changed or a listing went missing.  A fully cached fill does not look at the VM,
 so a complete cache builds without it.  When a file is missing and the VM is not usable, fill stops and names what
 is missing and the flag that builds without the VM (`make CC900_COMPILER=model`); there is no automatic fallback.
 The compiler tree's id is recorded in CACHE/compiler-id.txt; when the tree itself is absent, fill uses the recorded
@@ -296,14 +299,34 @@ def fill(cache, oracle, files):
     if failed:
         sys.exit("cc900 V4.23 does not compile:\n%s" % "".join(
             "    %s (logs: %s)\n" % (os.path.relpath(f, REPO), " ".join(logs)) for f, logs in failed))
-    write_if_changed(os.path.join(cache, "index.tsv"),
-                     "".join("%s\t%s\n" % (os.path.relpath(f, REPO), k) for f, k in sorted(keys.items())))
+    index(cache, files)
     print("cc900 V4.23: %d firmware C file(s), %d compiled now, the rest cached in %s"
           % (len(files), len(set(misses.values())), os.path.relpath(cache, REPO)))
 
 
+def index(cache, files):
+    """write CACHE/index.tsv -- per FILE.c its key and whether the cache holds it -- only when that changed.  No VM.
+    The Makefile runs this while it reads itself, so the fill rule (which depends on the index) runs exactly when a
+    key changed or a listing is missing, and `make -q` sees an up-to-date tree as up to date."""
+    cache = os.path.abspath(cache)
+    check_cache_root(cache)
+    os.makedirs(cache, exist_ok=True)
+    ct = compiler_tree()
+    if os.path.isdir(ct):
+        write_if_changed(os.path.join(cache, "compiler-id.txt"), tree_id(ct) + "\n")
+    cid = recorded_compiler_id(cache)
+    rows = []
+    for f in sorted(os.path.abspath(f) for f in files):
+        k = key_of(f, cid) if cid else "no-compiler-id"
+        st = "cached" if cid and os.path.exists(os.path.join(cache, k, "status")) else "missing"
+        rows.append("%s\t%s\t%s\n" % (os.path.relpath(f, REPO), k, st))
+    write_if_changed(os.path.join(cache, "index.tsv"), "".join(rows))
+
+
 def main():
     a = sys.argv[1:]
+    if len(a) >= 2 and a[0] == "index":
+        return index(a[1], a[2:])
     if len(a) < 3 or a[0] != "fill":
         sys.exit(__doc__)
     fill(a[1], a[2], a[3:])

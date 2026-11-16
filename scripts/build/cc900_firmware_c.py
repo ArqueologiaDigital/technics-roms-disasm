@@ -15,8 +15,8 @@ CC900_COMPILER chooses):
 
 Either way model/to_llvm.py writes the listing in our llvm-mc syntax with asm900's encodings, at the options the C
 file names in a comment `cc900-options: -O3 -Xr` (any flag string for V4.23; the model compiles OPTION_SETS), by
-default -O3 -XS -Xr.  `make gate` then proves the result: the tree includes it in place of the function's
-hand-written instructions, and the image must stay byte-identical.
+default DEFAULT_FLAGS, -O3 -Xr.  `make gate` then proves the result: the tree includes it in place of the
+function's hand-written instructions, and the image must stay byte-identical.
 
 usage: python3 -B scripts/build/cc900_firmware_c.py [--v423 CACHE] TREE FILE.c OUT_DIR STAMP
     TREE    the source tree whose names the C uses (v10/maincpu)
@@ -57,7 +57,7 @@ REPO = os.path.dirname(os.path.dirname(HERE))
 MODEL = os.path.join(REPO, "scripts", "analysis", "cc900", "model")
 LLVM_BIN = os.path.join(os.environ.get("PROJECTS_ROOT", os.path.expanduser("~/compartilhado")),
                         "llvm-project", "build", "bin")
-OPTIONS = dict(opt="O3XS", adecl=True, personality="kn5000")   # the default: -O3 -XS -Xr
+OPTIONS = dict(opt="O3XS", adecl=True, personality="kn5000")   # the model's default set (DEFAULT_FLAGS)
 # A C file may name its own options in a comment, `cc900-options: -Xr` (the first such comment counts).  The sets the
 # reference model compiles, as cc900 flags -> (model opt, adecl).  V4.23 (the default build) takes any flag string.
 # -O3 -Xr (without -XS) is how the firmware's -O files were compiled (lane_p6, run 2026-11-16-32-p6-m18): V4.23 then
@@ -65,6 +65,10 @@ OPTIONS = dict(opt="O3XS", adecl=True, personality="kn5000")   # the default: -O
 OPTION_SETS = {"-O3 -XS -Xr": ("O3XS", True), "-O3 -Xr": ("O3XS", True), "-Xr": ("none", True),
                "-O3 -XS": ("O3XS", False), "": ("none", False)}
 OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
+# the flags of a file that names none: -O3 -Xr, how the firmware's own files were compiled (run 2026-11-16-32-p6-m18,
+# coordinator 2026-11-16; until then -O3 -XS -Xr, which V4.23 compiles to the same bytes for every built file but
+# TrimAndPadSmfFilename, lane_p6 run 2026-11-16-33)
+DEFAULT_FLAGS = "-O3 -Xr"
 # cc900 keeps the first 31 characters of an identifier (V4.23: THC1-Error-262 when two agree in them), so a C name
 # may be shorter than the tree's label.  A comment `cc900-name: CNAME=LABEL` (one per pair, anywhere in the file)
 # maps it; the generated file, the splice and the byte checks then use LABEL.
@@ -162,10 +166,10 @@ class Names(dict):
 
 
 def file_flags(path):
-    """the cc900 flags FILE.c asks for (`cc900-options:`, default -O3 -XS -Xr), any flag string: V4.23 takes them as
+    """the cc900 flags FILE.c asks for (`cc900-options:`, default DEFAULT_FLAGS), any flag string: V4.23 takes them as
     they are (scripts/build/cc900_v423.py); file_options() checks that the model compiles them"""
     m = OPT_RE.search(open(path, "rb").read())
-    return " ".join(m.group(1).decode().split()) if m else "-O3 -XS -Xr"
+    return " ".join(m.group(1).decode().split()) if m else DEFAULT_FLAGS
 
 
 def file_options(path):

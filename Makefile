@@ -869,25 +869,30 @@ CC900_FW_GEN = scripts/build/cc900_firmware_c.py
 CC900_TRANSLATE_SRC = scripts/analysis/cc900/model/to_llvm.py scripts/analysis/cc900/model/listing.py
 CC900_CHOICE = rebuilt_ROMs/cc900-compiler.txt
 CC900_V423_INDEX = $(CC900_V423_CACHE)/index.tsv
+CC900_V423_DONE = $(CC900_V423_CACHE)/filled.stamp
 CC900_ALL_C = $(foreach t,v10 v9 v7 v6 v5,$(wildcard $(t)/maincpu/cc900/*.c))
+# The compiler choice and (for V4.23) the cache index are written while make reads this file, each only when its
+# content changes; so the bodies are rebuilt exactly when the choice or a V4.23 cache key changed, and `make -q`
+# (assert_byte_identical.py's staleness check) sees an up-to-date tree as up to date.  Both take well under a second.
+$(shell mkdir -p rebuilt_ROMs; echo '$(CC900_COMPILER)' | cmp -s - $(CC900_CHOICE) || echo '$(CC900_COMPILER)' > $(CC900_CHOICE))
 ifeq ($(CC900_COMPILER),v423)
-CC900_GEN_DEPS = $(CC900_V423_INDEX) $(CC900_TRANSLATE_SRC) scripts/build/cc900_v423.py
+CC900_GEN_DEPS = $(CC900_V423_DONE) $(CC900_TRANSLATE_SRC) scripts/build/cc900_v423.py
 CC900_GEN_CMD = python3 -B $(CC900_FW_GEN) --v423 $(CC900_V423_CACHE)
+$(shell python3 -B scripts/build/cc900_v423.py index $(CC900_V423_CACHE) $(CC900_ALL_C) >&2)
+ifneq ($(.SHELLSTATUS),0)
+$(error cc900_v423.py index failed (above))
+endif
 else ifeq ($(CC900_COMPILER),model)
 CC900_GEN_DEPS = $(CC900_MODEL_SRC) $(CLANG)
 CC900_GEN_CMD = CC900_MODEL_CLANG=$(CLANG) python3 -B $(CC900_FW_GEN)
 else
 $(error CC900_COMPILER=$(CC900_COMPILER): choose v423 (Toshiba V4.23 in the oracle VM, the default) or model (the Python reference model))
 endif
-# Both run on every make and rewrite their file only when its content changes, so the bodies are rebuilt only when
-# the compiler choice or a V4.23 cache key changed.  The fill step is cheap when everything is cached.
-$(CC900_CHOICE): CC900_FORCE
-	@mkdir -p $(@D); echo '$(CC900_COMPILER)' | cmp -s - $@ || echo '$(CC900_COMPILER)' > $@
-$(CC900_V423_INDEX): CC900_FORCE
+# The one VM job: runs when the index changed (a new key, or a listing missing from the cache).
+$(CC900_V423_DONE): $(CC900_V423_INDEX)
 	python3 -B scripts/build/cc900_v423.py fill $(CC900_V423_CACHE) $(CC900_ORACLE) $(CC900_ALL_C)
-# phony, not just a missing file: the Makefile's .SECONDARY would let a missing intermediate stay unmade
-.PHONY: CC900_FORCE
-CC900_FORCE:
+	touch $@
+$(CC900_V423_INDEX): ;
 cc900_stamps = $(patsubst $(1)/maincpu/cc900/%.c,$(1)/maincpu/includes/generated/cc900/%.stamp,$(wildcard $(1)/maincpu/cc900/*.c))
 V10_CC900_STAMPS = $(call cc900_stamps,v10)
 V9_CC900_STAMPS = $(call cc900_stamps,v9)
