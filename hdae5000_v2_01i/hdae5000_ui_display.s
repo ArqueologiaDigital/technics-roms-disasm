@@ -5848,8 +5848,8 @@ HDAE5000_FDFileSelectProc:
 	lda xwa, (HDAE5000_RAM_FdLyricTitles:24)
 	push xwa
 	call HDAE5000_MemFill
-	pushw HDAE5000_ROM_HEADER@hi16
-	pushw HDAE5000_ROM_HEADER@lo16		; low half of HDAE5000_ROM_HEADER
+	pushw 40			; count: 40 bytes (not an address: the pair once read as 0x280000)
+	pushw 0				; fill value
 	lda xwa, (HDAE5000_RAM_FdLyricHasMid:24)
 	push xwa
 	call HDAE5000_MemFill

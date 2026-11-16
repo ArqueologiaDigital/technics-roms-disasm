@@ -4453,6 +4453,17 @@ HDAE5000_LyricJumpEditCheck_Epilogue:
 	pop xiz
 	ret
 
+; ---------------------------------------------------------------------------
+; A second, UNREGISTERED edit-check procedure of the LYRIC JUMP setting: no
+; table entry and no instruction of the image refers to its address (0x285F8B
+; in v2.06i; found 2026-11-16 by lane_hd, cc900 round 27).  It answers
+; EVT_GET_RAM_STRING with SPrintf("%1d", ...) of the argument record,
+; EVT_RAM_DATA_REQ with 0, and on EVT_SW_IN sends EVT_MAKE_EDIT_SW_ID to
+; object 0x02600024.  Its inner labels keep their older
+; HDAE5000_LyricJumpEditCheck_Default_* names.  Not in v2.01i or earlier.
+; In:  XWA = object, XBC = event, XDE = argument.  Out: XHL.
+; ---------------------------------------------------------------------------
+HDAE5000_LyricJumpEditCheck_Unregistered:
 	push xiz
 	ld	xiz, xwa
 	cp	xbc, EVT_SW_IN
