@@ -1,0 +1,947 @@
+file	label	addr	bytes	insns	inner	calr	call	icall	ws	frame	fall	hand	lib	kind	ported
+hd-ae5000_v2_06i.s	HDAE5000_ENTRY_1	280008	24	18	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_Handler_Registration	280020	750	192	0	0	0	12	23	lda xsp,(xsp-14)	1		0	tail	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_Alloc_Memory_1	28030e	45	14	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_Alloc_Memory_2	28033b	45	14	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_Alloc_Memory_3	280368	45	14	3	0	0	0	0		0		0	C?	v2.01i
+hd-ae5000_v2_06i.s	HDAE5000_BitmapHdd_icon	280395	45	14	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_UiState_Reset	2803c2	122	31	2	2	1	0	0		0	ldirw	0	hand?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcWindowPage1Proc	28043c	77	25	1	0	0	2	2	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_TtlScreenRProc	280489	222	69	4	1	3	5	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_TtlScreenR2Proc	280567	222	69	4	1	3	5	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_TtlScreenR3Proc	280645	222	69	4	1	3	5	5	dec 8,xsp	0		0	C-calr	v2.01i
+hd-ae5000_v2_06i.s	HDAE5000_IvScreenR2Proc	280723	182	57	4	1	1	5	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_SelectListProc	2807d9	2641	806	49	0	0	57	57		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_DbMemoClProc	28122a	487	160	5	0	2	9	9		0	ldirw	0	hand?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc	281411	1518	425	18	0	2	25	25		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnPositionLeft	2819ff	76	19	0	0	0	2	2		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnPositionRight	281a4b	81	21	0	0	0	2	2		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnPrevCharacter	281a9c	190	52	0	0	0	4	4		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown	281b5a	604	169	6	0	0	9	9		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnNextCharacter	281db6	254	73	2	0	0	4	4		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnInsert	281eb4	143	42	2	0	0	2	2		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnDelete	281f43	143	42	2	0	0	2	2		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnCenterName	281fd2	392	125	8	0	2	4	4		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_AcHddNamingWindowProc_OnClear	28215a	1319	375	29	0	2	20	20		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_IvHddNamingProc	282681	295	84	4	0	0	9	9	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_HDTitleMenuProc	2827a8	76	20	1	0	0	2	3		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_HardTest_Print	2827f4	29	7	0	0	0	0	1		0		0	other	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_HardTestPage	282811	903	236	0	10	3	24	24	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_PPI_Init	282b98	13	3	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_PPI_LoopbackByte	282ba5	130	41	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_HardTest_PortTest	282c27	71	26	0	4	0	0	0	dec 2,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_HardTest_HddIdRead	282c6e	192	65	0	5	11	0	0	lda xsp,(xsp-124)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_FdList_Clear	282d2e	270	70	0	0	4	6	6		0		0	C?	v2.01i,v1.15i,v1.10i
+hd-ae5000_v2_06i.s	HDAE5000_FdName_SongNumber	282e3c	81	34	0	0	3	0	0	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FdList_Scan	282e8d	640	186	0	4	4	12	12	lda xsp,(xsp-268)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_HDDTitleSwCatch	28310d	110	31	0	2	0	2	2		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenCpToHDSwCatch	28317b	188	53	0	0	0	5	5	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenCpToMarkSwCatch	283237	188	53	0	0	0	5	5	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_TitleInfo_Build	2832f3	421	142	0	0	21	2	2		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_HdTitleEventCatch	283498	128	41	0	1	0	3	3	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_HDAETitleFunc	283518	502	130	0	5	2	7	7		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_DirList_BuildPage	28370e	228	77	0	0	6	2	2		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SEL_DIR_Screen	2837f2	474	119	0	8	1	6	6	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_PartList_Build	2839cc	412	133	0	0	12	2	2	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SongScreen_Refresh	283b68	568	177	6	2	14	4	4		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen	283da0	66	17	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01C00001	283de2	32	8	0	0	0	1	1		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01EA0008	283e02	99	24	0	1	1	2	2		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01EA000D	283e65	52	13	0	1	0	1	1		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01EA000C	283e99	32	8	0	0	0	1	1		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01EA0001	283eb9	62	16	0	1	0	1	1		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01EA0000	283ef7	60	16	0	1	0	1	1		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Ev01EA0002	283f33	72	21	2	3	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_LOAD_Screen_Default	283f7b	4	3	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenDelDirSwCatch	283f7f	292	82	7	3	1	7	7	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenDelFileSwCatch	2840a3	322	88	7	4	1	7	7	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileLoadSwCatch	2841e5	133	34	2	1	0	2	2		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FILE_Naming_Screen	28426a	46	12	1	0	0	1	1		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_HDDNamingCheck	284298	469	134	12	5	6	5	5	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_HDD_DIRNAMECheck	28446d	297	89	7	3	4	4	4	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_HDD_UTIL_PAGE	284596	2025	726	4	31	100	13	13		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_PPORT_Svc26_ShowStatus	284d7f	106	33	1	0	2	2	2	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_PcLink_ShowStatus	284de9	106	33	0	0	2	2	2	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_PC_DATA_LINK_PAGE	284e53	249	71	0	2	2	5	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SeparateOutput_SendPartMsg	284f4c	138	50	0	0	0	2	2	dec 8,xsp	0	ldiw	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SeparateOutput_Apply	284fd6	279	87	0	7	0	1	1		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SeparateOutputModeCheck	2850ed	165	55	0	1	1	2	2	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SeparateDrumPartCheck	285192	169	55	0	1	1	2	2	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SeparateBassPartCheck	28523b	169	55	0	1	1	2	2	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_TypeSel_Init	2852e4	92	36	0	0	0	0	0		0	ldirw	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_TypeSel_BuildMask	285340	95	29	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SaveOptNameCheck	28539f	125	44	0	1	1	0	0	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_TypeSel_ShowSaveFlags	28541c	423	99	0	0	0	8	9		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SaveOptSwEventCatch	2855c3	441	122	13	10	1	6	6	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck	28577c	58	16	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E00047	2857b6	39	13	0	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E0003E	2857dd	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E0003F	2857e1	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E00043	2857e5	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E00044	2857e9	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E00045	2857ed	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Ev01E00046	2857f4	8	4	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FileOptNameCheck_Default	2857fc	6	4	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck	285802	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E00047	28583c	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E0003E	285861	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E0003F	285865	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E00043	285869	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E00044	285877	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E00045	285885	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Ev01E00046	28588c	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxLswBitCheck_Default	2858b4	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck	2858b8	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E00047	2858f2	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E0003E	285917	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E0003F	28591b	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E00043	28591f	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E00044	28592d	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E00045	28593b	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Ev01E00046	285942	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxPmtBitCheck_Default	28596a	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck	28596e	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E00047	2859a8	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E0003E	2859cd	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E0003F	2859d1	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E00043	2859d5	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E00044	2859e3	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E00045	2859f1	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Ev01E00046	2859f8	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxSqtBitCheck_Default	285a20	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck	285a24	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E00047	285a5e	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E0003E	285a83	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E0003F	285a87	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E00043	285a8b	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E00044	285a99	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E00045	285aa7	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Ev01E00046	285aae	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxCmpBitCheck_Default	285ad6	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck	285ada	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E00047	285b14	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E0003E	285b39	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E0003F	285b3d	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E00043	285b41	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E00044	285b4f	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E00045	285b5d	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Ev01E00046	285b64	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTmBitCheck_Default	285b8c	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck	285b90	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E00047	285bca	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E0003E	285bef	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E0003F	285bf3	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E00043	285bf7	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E00044	285c05	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E00045	285c13	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Ev01E00046	285c1a	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMspBitCheck_Default	285c42	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck	285c46	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E00047	285c80	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E0003E	285ca5	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E0003F	285ca9	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E00043	285cad	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E00044	285cbb	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E00045	285cc9	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Ev01E00046	285cd0	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxRcmBitCheck_Default	285cf8	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck	285cfc	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E00047	285d36	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E0003E	285d5b	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E0003F	285d5f	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E00043	285d63	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E00044	285d71	14	5	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E00045	285d7f	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Ev01E00046	285d86	40	12	1	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxMdBitCheck_Default	285dae	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck	285db2	61	16	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E00047	285def	48	17	0	0	1	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E0003E	285e1f	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E0003F	285e23	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E00043	285e27	14	5	1	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E00044	285e35	45	14	3	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E00045	285e62	7	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Ev01E00046	285e69	40	12	1	2	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_SfxTlxBitCheck_Default	285e91	6	4	1	0	0	0	0		0		0	C?	v2.01i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck	285e97	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Ev01E00047	285ece	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Ev01E0003E	285ef3	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Ev01E00043	285ef7	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Ev01E00044	285efb	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Ev01E00045	285eff	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Ev01E00046	285f06	18	7	1	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteProtectEditCheck_Default	285f18	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck	285f1c	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Ev01E00047	285f53	25	10	0	0	1	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Ev01E0003E	285f6c	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Ev01E00043	285f70	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Ev01E00044	285f74	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Ev01E00045	285f78	7	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Ev01E00046	285f7f	8	4	1	0	0	0	0		0		0	other	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricJumpEditCheck_Default	285f87	95	34	5	0	1	1	1		0		0	C?	v2.01i
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck	285fe6	55	15	0	0	0	0	0	push xiz	0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E00047	28601d	37	14	0	0	1	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E0003E	286042	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E0003F	286046	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E00043	28604a	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E00044	28604e	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E00045	286052	7	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Ev01E00046	286059	8	4	1	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricForeColorCheck_Default	286061	4	3	1	0	0	0	0		0		0	C?	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck	286065	55	15	0	0	0	0	0	push xiz	0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E00047	28609c	37	14	0	0	1	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E0003E	2860c1	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E0003F	2860c5	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E00043	2860c9	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E00044	2860cd	4	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E00045	2860d1	7	2	0	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Ev01E00046	2860d8	8	4	1	0	0	0	0		0		0	other	
+hdae5000_hd_driver.s	HDAE5000_LyricBackColorCheck_Default	2860e0	4	3	1	0	0	0	0		0		0	C?	
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck	2860e4	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Ev01E00047	28611b	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Ev01E0003E	286140	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Ev01E00043	286144	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Ev01E00044	286148	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Ev01E00045	28614c	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Ev01E00046	286153	8	4	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_WriteConfirmEditCheck_Default	28615b	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck	28615f	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Ev01E00047	286196	25	10	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Ev01E0003E	2861af	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Ev01E00043	2861b3	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Ev01E00044	2861b7	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Ev01E00045	2861bb	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Ev01E00046	2861c2	8	4	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_QuickLoadModeEditCheck_Default	2861ca	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck	2861ce	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Ev01E00047	286205	25	10	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Ev01E0003E	28621e	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Ev01E00043	286222	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Ev01E00044	286226	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Ev01E00045	28622a	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Ev01E00046	286231	8	4	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LoadByNumberModeEditCheck_Default	286239	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck	28623d	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047	286274	25	10	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E0003E	28628d	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00043	286291	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00044	286295	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00045	286299	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00046	2862a0	8	4	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_JumpAfterLoadModeEditCheck_Default	2862a8	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SetupPage_BuildDriveInfo	2862ac	598	207	0	1	37	2	2		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_SetupP2SwCatch	286502	220	57	0	1	2	5	5		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_FormatDialog_CodeDigit	2865de	136	51	0	0	4	0	0	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch	286666	199	55	0	0	0	4	4	dec 6,xsp	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	28672d	19	8	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit2Or3	286740	19	8	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit4Or5	286753	19	8	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit6Or7	286766	19	8	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit8Or9	286779	21	8	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_AttenHDFormatSwCatch_OnCancel	28678e	666	177	0	7	3	15	15		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit	286a28	38	11	0	0	0	0	0	pushw iz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit_NoDigitTyped	286a4e	3	1	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit_DirHundreds	286a51	27	11	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit_DirTens	286a6c	27	11	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit_DirUnits	286a87	21	9	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit_SongTens	286a9c	27	11	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_StepDigit_SongUnits	286ab7	187	54	0	5	1	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch	286b72	168	47	0	0	0	3	3	dec 8,xsp	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnClear	286c1a	15	6	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnStepDigit	286c29	37	12	0	1	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnDigit0Or1	286c4e	26	11	0	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnDigit2Or3	286c68	26	11	0	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnDigit4Or5	286c82	26	11	0	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnDigit6Or7	286c9c	26	11	0	2	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNPage1SwCatch_OnDigit8Or9	286cb6	55	20	0	2	0	1	1		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_LBNLoadSwCatch	286ced	355	100	0	4	1	5	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_hd_driver.s	HDAE5000_Lbn_TypeDigit	286e50	646	173	0	11	1	5	5	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry	2870d6	43	13	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_NoDigitTyped	287101	85	27	0	0	4	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_DirHundredsTyped	287156	52	20	0	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_DirTensTyped	28718a	52	20	0	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_DirUnitsTyped	2871be	87	32	1	0	5	0	0	pushw iz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_SongTensTyped	287215	53	20	0	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_SongUnitsTyped	28724a	114	40	2	0	5	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_Lbn_ShowEntry_Reset	2872bc	669	161	3	1	4	16	16		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck	287559	59	16	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E00047	287594	66	22	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E0003E	2875d6	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E0003F	2875da	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E00043	2875de	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E00044	2875e2	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E00045	2875e6	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Ev01E00046	2875ed	8	4	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FileLBNNameCheck_Default	2875f5	6	4	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck	2875fb	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E00047	287635	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E0003E	287676	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E0003F	28767b	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E00043	287680	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E00044	28769b	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E00045	2876b6	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Ev01E00046	2876bd	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNLswBitCheck_Default	287701	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck	287705	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E00047	28773f	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E0003E	287780	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E0003F	287785	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E00043	28778a	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E00044	2877a5	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E00045	2877c0	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Ev01E00046	2877c7	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNPmtBitCheck_Default	28780b	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck	28780f	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E00047	287849	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E0003E	28788a	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E0003F	28788f	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E00043	287894	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E00044	2878af	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E00045	2878ca	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Ev01E00046	2878d1	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNSqtBitCheck_Default	287915	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck	287919	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E00047	287953	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E0003E	287994	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E0003F	287999	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E00043	28799e	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E00044	2879b9	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E00045	2879d4	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Ev01E00046	2879db	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNCmpBitCheck_Default	287a1f	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck	287a23	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E00047	287a5d	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E0003E	287a9e	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E0003F	287aa3	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E00043	287aa8	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E00044	287ac3	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E00045	287ade	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Ev01E00046	287ae5	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTmBitCheck_Default	287b29	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck	287b2d	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E00047	287b67	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E0003E	287ba8	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E0003F	287bad	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E00043	287bb2	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E00044	287bcd	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E00045	287be8	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Ev01E00046	287bef	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMspBitCheck_Default	287c33	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck	287c37	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E00047	287c71	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E0003E	287cb2	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E0003F	287cb7	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E00043	287cbc	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E00044	287cd7	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E00045	287cf2	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Ev01E00046	287cf9	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNRcmBitCheck_Default	287d3d	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck	287d41	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E00047	287d7b	65	23	2	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E0003E	287dbc	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E0003F	287dc1	5	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E00043	287dc6	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E00044	287de1	27	9	2	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E00045	287dfc	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Ev01E00046	287e03	68	20	3	3	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNMdBitCheck_Default	287e47	4	3	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered	287e4b	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	287e85	65	23	2	0	2	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E0003E	287ec6	5	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E0003F	287ecb	5	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00043	287ed0	27	9	2	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044	287eeb	27	9	2	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00045	287f06	7	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00046	287f0d	68	20	3	3	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_LBNTlxBitCheck_Unregistered_Default	287f51	4	3	1	0	0	0	0		0		0	C?	v2.01i
+hdae5000_filesystem.s	HDAE5000_FlsList_BuildPage	287f55	236	78	0	0	7	2	2		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsNamingCheck	288041	296	90	0	3	4	4	4	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsNamingCheck2	288169	300	92	0	3	4	4	4	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsScreen_Refresh	288295	982	307	13	2	22	8	8		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_SelectFlsScreen	28866b	439	112	9	8	1	6	6	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsLoadScreen	288822	1022	279	20	8	6	13	13		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsFileLoadSwCatch	288c20	206	59	5	0	0	5	5	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsEditScreen	288cee	767	203	16	9	6	13	13	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsDel1SwCatch	288fed	253	71	7	1	1	6	6	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsDel2SwCatch	2890ea	253	71	7	1	1	6	6	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsDirSelScreen	2891e7	375	94	8	8	0	4	4	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsFileSelScreen	28935e	464	122	8	7	4	7	7	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FlsOverWrSwCatch	28952e	311	84	7	2	2	7	7	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_FdList_Redisplay	289665	284	73	0	0	0	5	6		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_CopyToHDScreen	289781	264	78	0	5	0	2	2	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_CopyToHd_Execute	289889	1257	354	0	1	16	25	25	lda xsp,(xsp-300)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_CopyToHDDirSelScreen	289d72	780	197	0	9	3	13	13	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_CP_FD_DIRNAMECheck	28a07e	297	89	0	3	4	4	4	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_WrConfirmEventCatch	28a1a7	329	92	0	2	0	7	7	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOpt_ShowFlags	28a2f0	423	99	0	0	0	8	9		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptSwEventCatch	28a497	316	89	0	4	2	5	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOpt_InitFromSong	28a5d3	68	19	0	2	1	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck	28a617	58	16	0	0	0	0	0	dec 4,xsp	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E00047	28a651	39	13	0	0	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E0003E	28a678	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E0003F	28a67c	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E00043	28a680	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E00044	28a684	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E00045	28a688	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelOptNameCheck_Ev01E00046	28a68f	14	8	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck	28a69d	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E00047	28a6d4	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E0003E	28a6f9	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E0003F	28a6fd	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E00043	28a701	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E00044	28a70f	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E00045	28a71d	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelLswEditCheck_Ev01E00046	28a724	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck	28a738	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E00047	28a76f	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E0003E	28a794	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E0003F	28a798	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E00043	28a79c	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E00044	28a7aa	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E00045	28a7b8	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelPmtEditCheck_Ev01E00046	28a7bf	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck	28a7d3	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E00047	28a80a	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E0003E	28a82f	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E0003F	28a833	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E00043	28a837	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E00044	28a845	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E00045	28a853	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelSqtEditCheck_Ev01E00046	28a85a	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck	28a86e	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E00047	28a8a5	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E0003E	28a8ca	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E0003F	28a8ce	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E00043	28a8d2	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E00044	28a8e0	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E00045	28a8ee	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelCmpEditCheck_Ev01E00046	28a8f5	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck	28a909	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E00047	28a940	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E0003E	28a965	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E0003F	28a969	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E00043	28a96d	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E00044	28a97b	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E00045	28a989	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTmEditCheck_Ev01E00046	28a990	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck	28a9a4	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E00047	28a9db	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E0003E	28aa00	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E0003F	28aa04	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E00043	28aa08	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E00044	28aa16	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E00045	28aa24	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMspEditCheck_Ev01E00046	28aa2b	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck	28aa3f	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E00047	28aa76	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E0003E	28aa9b	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E0003F	28aa9f	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E00043	28aaa3	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E00044	28aab1	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E00045	28aabf	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelRcmEditCheck_Ev01E00046	28aac6	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck	28aada	55	15	0	0	0	0	0	push xiz	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E00047	28ab11	37	14	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E0003E	28ab36	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E0003F	28ab3a	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E00043	28ab3e	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E00044	28ab4c	14	5	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E00045	28ab5a	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelMdEditCheck_Ev01E00046	28ab61	20	9	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck	28ab75	58	15	0	0	0	0	0	push xiz	0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E00047	28abaf	37	14	0	0	1	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E0003E	28abd4	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E0003F	28abd8	4	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E00043	28abdc	14	5	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E00044	28abea	26	9	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E00045	28ac04	7	2	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_filesystem.s	HDAE5000_DelTlxEditCheck_Ev01E00046	28ac0b	20	9	0	1	0	0	0		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_RequestMode	28ac1f	73	20	0	0	0	2	2	dec 2,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RequestTitle15	28ac68	73	20	0	0	0	2	2	dec 2,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RequestTitle16	28acb1	73	20	0	0	0	2	2	dec 2,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ShowErrorMessageTitle	28acfa	78	18	0	0	0	2	3		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirName_StoreWithUi	28ad48	248	72	0	3	2	5	5	lda xsp,(xsp-22)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsName_StoreWithUi	28ae40	248	72	0	3	2	5	5	lda xsp,(xsp-22)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSongWithUi	28af38	441	123	0	4	1	11	11	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSongWithUi	28b0f1	271	79	0	2	2	5	5	lda xsp,(xsp-34)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyVersionString	28b200	43	18	2	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_YieldUntilSem1Zero	28b22b	45	14	0	0	0	2	2		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Set_Menu_Visibility	28b258	229	62	0	0	0	9	9	pushw iz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_NameHistory_AfterPushNop	28b33d	1	1	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_NameHistory_Push	28b33e	61	27	0	1	1	0	0	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_NameHistory_Recall	28b37b	56	22	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Fls_GetAutoLoadPending	28b3b3	6	2	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Fls_SetSeqStopPending	28b3b9	6	2	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Count_Active_Files	28b3bf	43	16	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_UiObj_SetCaption	28b3ea	25	9	0	0	0	1	1	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ErrMsgTimerCatch	28b403	140	43	4	0	0	4	4	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ErrMsgTimerCatchLBN	28b48f	152	48	4	1	0	4	4	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_BitmapButt01	28b527	45	14	3	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc	28b554	392	106	9	0	3	5	5	lda xsp,(xsp-214)	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg001	28b6dc	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg002	28b725	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg003	28b76e	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg004	28b7b7	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg005	28b800	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg006	28b849	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg007	28b892	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg008	28b8db	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg009	28b924	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg010	28b96d	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg011	28b9b6	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg012	28b9ff	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg013	28ba48	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg014	28ba91	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg015	28bada	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg016	28bb23	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg017	28bb6c	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg018	28bbb5	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg019	28bbfe	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg020	28bc47	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg021	28bc90	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg022	28bcd9	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg023	28bd22	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg024	28bd6b	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg025	28bdb4	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg026	28bdfd	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg027	28be46	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg028	28be8f	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg029	28bed8	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg030	28bf21	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg031	28bf6a	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg032	28bfb3	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg033	28bffc	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg034	28c045	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg035	28c08e	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg036	28c0d7	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg037	28c120	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg038	28c169	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg039	28c1b2	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg040	28c1fb	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg041	28c244	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg042	28c28d	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg043	28c2d6	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg044	28c31f	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg045	28c368	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg046	28c3b1	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg047	28c3fa	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg048	28c443	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg049	28c48c	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg050	28c4d5	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg051	28c51e	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg052	28c567	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg053	28c5b0	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg054	28c5f9	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg055	28c642	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg056	28c68b	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg057	28c6d4	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg058	28c71d	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg059	28c766	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg060	28c7af	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg061	28c7f8	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg062	28c841	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg064	28c88a	73	25	2	0	3	0	0		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg065	28c8d3	73	25	2	0	3	0	0		0		0	other	
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg066	28c91c	73	25	2	0	3	0	0		0		0	other	
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg067	28c965	73	25	2	0	3	0	0		0		0	other	
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg200	28c9ae	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg201	28c9f7	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg202	28ca40	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg203	28ca89	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg206	28cad2	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg207	28cb1b	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg208	28cb64	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg209	28cbad	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg210	28cbf6	73	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg211	28cc3f	71	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_Msg212	28cc86	71	25	2	0	3	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_AcLanguageText1Proc_NoMessage	28cccd	59	19	2	0	1	1	1		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc	28cd08	103	26	0	0	0	0	0		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01C0000D	28cd6f	170	46	1	0	0	6	6		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01CA0003	28ce19	383	104	6	0	0	3	3		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01CA0007	28cf98	156	42	3	5	0	2	2		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01CA0008	28d034	630	182	5	0	1	11	11		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01CA0009	28d2aa	103	28	0	0	0	1	1		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Default1	28d311	270	76	4	0	0	5	5		1		0	tail	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01CA0004	28d41f	96	23	1	1	0	1	1		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Ev01CA0005	28d47f	258	65	4	0	1	4	4		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_OnReset	28d581	68	19	0	1	0	2	2		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_OnLoad	28d5c5	57	14	0	1	0	2	2		0		0	other	v2.01i
+hdae5000_ui_display.s	HDAE5000_LyricBoxProc_Default2	28d5fe	7	4	1	0	0	0	0		1		0	tail	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_ClearBuffer	28d605	32	10	0	0	1	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_CheckFile	28d625	35	13	0	2	0	0	0		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_LoadTestFile	28d648	137	36	0	0	0	6	6		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_PlayToPosition	28d6d1	938	248	0	4	6	7	7	dec 6,xsp	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_ResetState	28da7b	381	98	0	1	3	0	0		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_ReadSongInfo	28dbf8	564	152	0	4	7	1	1		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_FillLines	28de2c	579	187	0	1	12	0	0	lda xsp,(xsp-58)	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_FindEvent	28e06f	280	104	0	5	0	0	0	dec 8,xsp	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_ParseEvent	28e187	656	190	0	3	4	0	0	dec 4,xsp	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Read_Table_Word	28e417	52	19	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Read_Table_Multi	28e44b	64	25	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_ReadVarLen	28e48b	87	33	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_WriteVarLen	28e4e2	91	41	0	0	0	0	0		0	djnz16	0	hand?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_CheckHeaderChunk	28e53d	113	38	0	4	1	0	0		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Lyrics_CheckTrackChunk	28e5ae	59	18	0	1	1	0	0		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_SwapBytes32	28e5e9	37	14	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_SwapBytes16	28e60e	13	6	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_FDFileSelectProc	28e61b	2384	653	0	1	12	43	43	lda xsp,(xsp-130)	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_FdLyricList_Scan	28ef6b	556	172	0	2	9	12	12	lda xsp,(xsp-370)	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_FdLyricList_AddTlx	28f197	352	126	0	0	12	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_LanguageTextReturn	28f2f7	17	6	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc28_FlashXapFile	28f308	59	21	0	0	2	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc29_SleepMainTask	28f343	20	6	0	0	0	1	1		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc30_WakeUpMainTask	28f357	20	6	0	0	0	1	1		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_VarInt_Encode	28f36b	82	32	0	0	0	0	0	dec 6,xsp	0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_VarInt_Decode	28f3bd	64	26	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Smf_SwapBytes32	28f3fd	59	19	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Smf_SwapBytes16	28f438	15	7	0	0	0	0	0		0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Smf_ReadHeader	28f447	138	38	0	1	0	6	6	push xiz	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Smf_CheckHeader	28f4d1	114	35	0	5	0	0	0	push xiz	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Alloc_Memory	28f543	45	14	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Get_Init_Flag	28f570	533	149	6	3	9	10	11		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Clear_Work_Buffer	28f785	88	31	5	0	0	0	0		0	djnz16,ldir83	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Delay_Loop	28f7dd	17	9	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_VGA_Port_Write	28f7ee	37	15	0	1	0	0	0	dec 2,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Palette_Setup	28f813	205	83	9	10	0	0	0	push xiz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Load_Palette	28f8e0	43	19	2	1	0	0	0	dec 4,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Finalize_Init	28f90b	1	1	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FormatDrive	28f90c	114	34	0	0	1	5	5	dec 2,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirName_Address	28f97e	13	5	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirName_SetAndStore	28f98b	34	15	0	1	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Dir_IsBlankName	28f9ad	62	23	0	0	2	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Dir_CountEmptySongs	28f9eb	51	20	0	1	0	0	0	dec 2,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SongRecord_Address	28fa1e	56	20	0	0	2	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SongName_SetAndStore	28fa56	74	26	0	1	3	0	0	dec 4,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsRecord_Address	28faa0	26	9	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsName_SetAndStore	28faba	47	19	0	1	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Fls_IsBlankName	28fae9	61	23	0	1	2	0	0	dec 2,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_SongRecord	28fb26	139	53	0	1	1	0	0	dec 4,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_IsSet	28fbb1	66	27	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_Get	28fbf3	191	78	1	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_Clear	28fcb2	119	48	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_Remove	28fd29	389	152	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_Insert	28feae	384	160	2	0	0	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_Set	29002e	148	61	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_SetDir	2900c2	34	15	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_SetSong	2900e4	34	15	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_SetAutoStart	290106	66	28	1	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsItem_SetAutoLoad	290148	66	28	1	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Song_IsUsed	29018a	553	170	0	0	18	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Song_PartMask	2903b3	566	169	0	1	18	0	0	dec 6,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong	2905e9	362	116	0	9	1	6	5	dec 4,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Lsw	290753	350	109	0	1	8	4	4	lda xsp,(xsp-28)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Pmt	2908b1	335	102	0	0	9	3	3	lda xsp,(xsp-38)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Sqt	290a00	390	119	0	0	8	5	5	lda xsp,(xsp-28)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Cmp	290b86	303	92	0	0	8	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Tm	290cb5	220	67	0	0	5	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Msp	290d91	303	92	0	0	8	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Rcm	290ec0	133	41	0	0	2	1	1	dec 4,xsp	0	ldirw	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Md	290f45	248	75	0	0	5	4	4	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LoadSong_Tlx	29103d	259	82	1	2	9	0	0		0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_SaveSong	291140	764	246	26	29	5	6	5		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Lsw	29143c	359	114	0	1	8	4	4	lda xsp,(xsp-28)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Pmt	2915a3	217	68	0	1	5	3	3	lda xsp,(xsp-20)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Sqt	29167c	226	70	0	0	5	4	4	lda xsp,(xsp-30)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Cmp	29175e	211	66	0	0	5	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Tm	291831	216	67	0	0	5	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Msp	291909	211	66	0	0	5	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Rcm	2919dc	134	40	0	2	2	1	1	push xiz	0	ldirw	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Md	291a62	209	65	0	0	5	3	3	lda xsp,(xsp-20)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SaveSong_Tlx	291b33	171	56	0	2	5	0	0	lda xsp,(xsp-20)	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_TlxPart_Describe	291bde	47	17	0	0	1	0	0	dec 2,xsp	0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_CheckFileSignature	291c0d	75	30	2	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FdSong_CheckFiles	291c58	1273	362	12	9	13	31	31	lda xsp,(xsp-282)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd	292151	823	260	17	20	9	9	8		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Lsw	292488	359	109	0	1	7	5	5	lda xsp,(xsp-42)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Pmt	2925ef	425	125	0	2	10	4	4	lda xsp,(xsp-30)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Sqt	292798	419	123	0	2	10	4	4	lda xsp,(xsp-32)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Cmp	29293b	419	123	0	2	10	4	4	lda xsp,(xsp-32)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Tm	292ade	288	86	0	1	7	4	4	lda xsp,(xsp-34)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Msp	292bfe	280	84	0	1	7	4	4	lda xsp,(xsp-34)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Rcm	292d16	419	123	0	2	10	4	4	lda xsp,(xsp-32)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Md	292eb9	281	84	0	1	7	4	4	lda xsp,(xsp-34)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_CopyFdSongToHd_Tlx	292fd2	329	98	0	1	9	4	4	lda xsp,(xsp-34)	0		0	C-calr	v2.01i
+hdae5000_ui_display.s	HDAE5000_Fls_ForgetSong	29311b	242	99	0	0	0	0	0	pushw iz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteDirectory	29320d	350	106	0	11	6	6	5	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongParts	29336b	349	110	0	11	5	6	5	dec 4,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Lsw	2934c8	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Pmt	2935a6	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Sqt	293684	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Cmp	293762	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Tm	293840	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Msp	29391e	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Rcm	2939fc	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Md	293ada	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeleteSongPart_Tlx	293bb8	222	68	0	0	9	0	0	dec 4,xsp	0		0	C?	v2.01i
+hdae5000_ui_display.s	HDAE5000_Song_CheckFreeSpace	293c96	347	110	0	0	2	9	9	lda xsp,(xsp-12)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RoundUpToSector	293df1	61	25	0	0	1	0	0	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_StoreTables	293e2e	90	28	1	0	3	3	3		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_LoadTables	293e88	90	28	1	0	3	3	3		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_RestoreSettings	293ee2	90	28	1	0	3	3	3		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_StoreSettings	293f3c	90	28	1	0	3	3	3		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RcmStream_Read	293f96	211	60	3	0	6	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RcmStream_Write	294069	227	64	7	2	4	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RcmStream_LastResult	29414c	6	2	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_RcmStream_FreeSpace	294152	19	7	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_GetBlockInfo	294165	71	22	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_GetSongInfo	2941ac	199	69	1	1	7	0	0	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteOpen	294273	43	11	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteClose	29429e	99	27	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteStream	294301	275	86	0	0	5	0	0	lda xsp,(xsp-14)	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DebugTrace	294414	2	2	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc01_GetInfoBlockPointer	294416	56	18	0	3	1	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc02_TurnHdMotorOff	29444e	35	13	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc03_SendInfosAboutHd	294471	253	80	0	7	8	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock	29456e	140	45	0	5	4	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock	2945fa	140	45	0	5	4	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock	294686	175	56	0	6	5	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc07_ReadDirBlockFromHd	294735	37	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc08_ReadFileBlockFromHd	29475a	37	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd	29477f	37	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc10_WriteDirBlockToHd	2947a4	37	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd	2947c9	37	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc12_WriteFlsBlockToHd	2947ee	37	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc13_SendInfosAboutSong	294813	782	214	1	4	8	12	12		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory	294b21	46	16	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd	294b4f	51	17	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc16_InitWholeSongInMemory	294b82	232	67	7	1	0	8	8		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc17_FormatHd	294c6a	35	14	1	2	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc18_RequestNormalMode	294c8d	32	7	0	0	0	0	1		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace	294cad	53	17	0	2	1	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc20_PreWholeSongInMemory	294ce2	191	53	7	1	0	7	7		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc21_WriteOpenHD	294da1	295	92	4	2	9	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc22_WriteCloseHD	294ec8	39	15	1	1	2	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc23_WriteFileHD	294eef	27	11	1	1	1	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc24_ReadOpenHD	294f0a	145	44	3	1	2	0	0	dec 8,xsp	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc25_ReadFileHD	294f9b	110	33	3	1	2	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Svc27_DeleteSongParts	295009	55	19	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_LinkEntry	295040	6	2	0	0	1	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_SwitchToLink	295046	18	8	0	0	0	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_YieldToMain	295058	18	8	0	0	0	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_StartLink	29506a	80	30	0	0	1	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Reset	2950ba	18	7	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_ReturnToLink	2950cc	44	19	1	0	1	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_CallService	2950f8	36	11	0	0	1	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_ServiceDispatch	29511c	42	22	0	0	0	1	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_ServiceTable	295146	400	139	0	0	30	0	0		1	data-in-code	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_LinkMain	2952d6	34	31	0	0	1	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Execute	2952f8	90	45	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_InitPort	295352	124	44	2	0	2	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd01_SendInfosAboutHd	295642	138	47	0	0	7	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd02_ExitPport	2956cc	38	16	0	0	3	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd03_ReadFsbFromHd	2956f2	60	19	0	0	5	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd04_SendFsbToPc	29572e	212	77	0	0	12	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd05_RcvFsbFromPc	295802	212	77	0	0	12	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd06_WriteFsbToHd	2958d6	62	20	0	0	5	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd07_LoadHdToMemory	295914	226	74	0	0	11	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd08_SendDataToPc	2959f6	838	283	0	0	22	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd09_SendFilesToPc	295d3c	798	249	0	0	19	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd10_RcvDataFromPc	29605a	570	200	0	0	12	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd11_SaveMemoryToHd	296294	150	51	0	0	6	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd12_Nothing	29632a	18	6	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd13_RcvDataFromPc	29633c	362	115	0	0	10	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd14_SendInfosToPc	2964a6	226	78	0	0	10	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd15_Nothing	296588	18	6	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd16_DeleteFiles	29659a	230	76	0	0	11	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd17_FormatHd	296680	62	20	0	0	5	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd18_SwitchHdMotorOff	2966be	60	19	0	0	5	0	0		0	ei	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd19_Nothing	2966fa	18	6	0	0	1	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_Cmd20_SendXapFileFlash	29670c	168	58	1	0	7	0	0		0	ei	0	hand?	v2.01i
+hdae5000_ui_display.s	HDAE5000_PPORT_LatchPacketArgs	2967b4	48	20	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_RequestSongInfo	2967e4	30	13	0	0	1	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_GetInfoBlock	296802	18	8	0	0	1	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_RecvPacket	296814	118	41	0	0	3	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_SendPacket	29688a	118	41	0	0	3	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_RecvByte	296900	160	64	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_SendByte	2969a0	144	58	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_EndBlock	296a30	108	45	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_ClearPacket	296a9c	26	10	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_FlagPacketError	296ab6	14	5	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_CopyInfoToPacket	296ac4	52	26	0	0	1	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_SendBlock	296af8	134	47	0	0	3	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_RecvBlock	296b7e	172	61	0	0	3	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_RecvSector	296c2a	118	41	0	0	3	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_SendTwoRegions	296ca0	180	63	0	0	4	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_RecvCustomData	296d54	180	63	0	0	4	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_InitRegionDescriptors	296e08	446	148	0	0	4	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_InitRegionDescriptors_Lookup	296fc6	142	52	0	0	2	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_PPORT_SendRegionToPc	297054	335	113	0	0	7	0	0		1	ei	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Check_HD_Present	2971a3	20	7	0	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_Init	2971b7	641	148	8	0	11	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_WaitReady	297438	46	15	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_SoftReset_Status	297466	20	8	1	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_SoftReset	29747a	59	12	1	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_Standby_Status	2974b5	18	6	1	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_Standby	2974c7	72	25	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_CheckSignature	29750f	100	37	1	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_GetGeometry	297573	58	19	0	0	1	0	0	push xiz	0	ldirw	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ParseIdentify	2975ad	238	60	2	0	5	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_WriteSector	29769b	237	63	4	4	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_ReadSector	297788	252	66	4	4	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ATA_IdentifyDevice	297884	161	49	4	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_Mul32	297925	37	19	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_UDiv32	29794a	53	26	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_InitTables	29797f	249	84	1	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteTables_Status	297a78	21	6	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteTables	297a8d	327	83	1	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadTables_Status	297bd4	21	6	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadTables	297be9	332	84	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_CountFreeClusters_Status	297d35	20	6	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_CountFreeClusters	297d49	205	58	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteFile	297e16	443	110	0	0	9	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_AppendFile	297fd1	52	14	0	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_AppendFile_Worker	298005	279	73	2	0	7	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadFile	29811c	52	14	0	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadFile_Worker	298150	112	35	2	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadFileNext	2981c0	52	14	0	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadFileNext_Worker	2981f4	79	28	2	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FindFreeCluster	298243	216	50	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_WriteCluster	29831b	143	33	2	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FatSetEntry	2983aa	128	33	2	0	6	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FatLoadSector	29842a	37	9	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FatFlushSector	29844f	22	6	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadCluster	298465	7	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ReadClusterFrom	29846c	213	48	3	0	2	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FatNextCluster	298541	79	20	2	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FreeChain	298590	10	3	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_FreeChain_Worker	29859a	136	43	0	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_Format	298622	22	8	0	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_Format_Worker	298638	606	146	6	0	17	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ZeroSector	298896	25	8	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_BuildSettingsSector	2988af	135	39	1	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Block64Differs	298936	49	16	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_CopyName26	298967	44	20	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ResetVersionKeyWord	298993	11	3	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_NameList5_Contains	29899e	68	18	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Name26_IsBlank	2989e2	73	27	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Field12_FillZeros	298a2b	33	12	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Field12_FillSpaces	298a4c	33	12	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Fill40Spaces	298a6d	33	12	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FormatDecimal12_ZeroFill	298a8e	87	35	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Delay6x4095	298ae5	43	15	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Delay70x4095	298b10	46	15	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Delay37x4095	298b3e	46	15	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_GetDiskUsage	298b6c	38	12	0	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ComputeDiskUsage	298b92	131	34	0	0	9	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ClearStatusBytes	298c15	61	11	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_NameBuf_IsNotBlank	298c52	43	16	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_ClusterCount	298c7d	9	5	0	0	1	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_BytesToClusters	298c86	23	6	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_CheckVersionKey	298c9d	86	34	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_FindFreeSlot32	298cf3	51	14	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_SelectNextFile	298d26	105	27	2	0	9	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_SelectNextFlsItem	298d8f	137	35	2	0	11	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_ClearRefsToEntry	298e18	74	20	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_DeleteSlotShift	298e62	51	15	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_FindNextUsedSlot	298e95	64	15	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_FindLastFreeSlot	298ed5	64	15	2	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_InsertSlotShift	298f15	51	15	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_LoadFileName	298f48	46	20	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_StoreFileName	298f76	46	20	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RememberFileName	298fa4	116	35	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RememberEntryName	299018	105	32	1	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RecallRecentFileName	299081	107	34	2	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_CopyEntryNameOut	2990ec	193	70	1	0	11	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_GetRowByte	2991ad	40	16	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_IncRowByte	2991d5	40	16	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_DecRowByte	2991fd	40	16	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_ClearRowByte	299225	86	34	0	0	4	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_LoadDirName	29927b	88	32	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_StoreDirName	2992d3	44	18	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RememberDirName	2992ff	116	35	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RecallRecentDirName	299373	107	34	2	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_CopyDirNameOut	2993de	169	63	1	0	8	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_GetCursor	299487	19	8	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_IncCursor	29949a	42	18	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DirBrowser_ClearCursor	2994c4	61	26	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_LoadFlsName	299501	88	32	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_StoreFlsName	299559	44	18	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RememberFlsName	299585	116	35	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_RecallRecentFlsName	2995f9	107	34	2	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_CopyFlsNameOut	299664	83	31	1	0	3	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_RowAddress	2996b7	136	50	0	0	7	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_GetCursor	29973f	19	8	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_GetRowByte	299752	40	16	0	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_IncCursor	29977a	42	18	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_IncRowByte	2997a4	80	32	0	0	4	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_ClearCursor	2997f4	40	16	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FlsBrowser_ClearRowByte	29981c	82	32	0	0	4	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Copy64Out	29986e	49	16	1	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DeadLib_Copy64Back	29989f	58	20	1	0	2	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_LoadSettings	2998e4	71	20	0	0	1	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_HD_SaveSettings	29992b	135	39	1	0	2	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf	299ae7	495	164	19	0	0	1	0	lda xsp,(xsp-74)	0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Char	299cd6	105	38	7	0	0	3	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_String	299d3f	164	63	11	0	1	3	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Int	299de3	428	152	24	1	1	6	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Unsigned	299f8f	246	96	16	1	1	4	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Pointer	29a085	3	1	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Hex	29a088	360	134	21	1	1	7	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Octal	29a1f0	332	127	20	1	1	6	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Count	29a33c	36	15	1	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_Case_Float	29a360	87	33	2	1	2	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_DoPrintf_NextChar	29a3b7	27	11	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Int_To_Decimal_String	29a3d2	80	30	0	0	2	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_UInt_To_Decimal_String	29a422	63	24	0	0	2	0	0	dec 4,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Int_To_Hex_String	29a461	51	17	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_Int_To_Octal_String	29a494	34	11	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FormatFloat	29a4b6	173	74	0	2	1	0	0	lda xsp,(xsp-26)	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FormatFloat_Fixed	29a563	805	292	56	0	0	13	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_FormatFloat_Exp	29a888	848	298	53	1	1	13	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SPrintf	29abd8	40	15	0	0	1	0	0	dec 4,xsp	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_VSPrintf	29ac00	33	12	0	0	1	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_SPrintf_PutChar	29ac21	26	8	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_IToA	29ac3b	138	56	0	0	1	0	0	lda xsp,(xsp-18)	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LDiv	29acc5	67	26	0	0	2	0	0	lda xsp,(xsp-16)	0	ldirw	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_LToA	29ad08	60	25	0	0	2	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_ULToA	29ad44	136	51	0	0	3	0	0	lda xsp,(xsp-46)	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_MemCCpy	29adcc	64	29	0	0	2	0	0	dec 4,xsp	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_MemChr	29ae0c	24	11	0	0	0	0	0		0	cpir83	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_MemCmp	29ae24	123	52	0	0	0	0	0		0	djnz16	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_MemCopy	29ae9f	40	18	2	0	0	0	0		0	ldi85,ldirw	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_MemFill	29aec7	68	26	5	0	0	0	0		0	djnz16	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_ui_display.s	HDAE5000_StrCat	29af0b	7	14	4	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrPrefixCmp	29af2d	24	12	0	0	2	0	0	push xiz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrCpy	29af45	44	17	0	0	1	0	0	push xiz	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrLen	29af71	30	14	0	0	1	0	0	push xiz	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrNCat	29af8f	47	21	0	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrNCmp	29afbe	50	24	0	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrNCpy	29aff0	43	18	5	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_StrRev	29b01b	51	25	2	0	1	0	0	push xiz	0		1	lib	v2.01i
+hdae5000_utilities.s	HDAE5000_StrUpr	29b04e	44	18	4	0	0	0	0		0		1	lib	v2.01i
+hdae5000_utilities.s	HDAE5000_FltDec_Convert	29b07a	747	259	35	8	1	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_ShiftRightBits	29b365	133	59	7	0	0	0	0	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_ShiftLeftBits	29b3ea	68	30	3	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_FractionDigits	29b42e	160	52	5	2	0	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_AddDigit	29b4ce	71	23	5	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_DivBy10	29b515	41	16	1	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_MulBy10	29b53e	98	43	5	0	0	0	0	pushw iz	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_FracMulBy10	29b5a0	69	26	4	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_NormalizeLeft	29b5e5	114	48	10	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_NormalizeRight	29b657	82	39	8	1	0	0	0	pushw iz	0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FltDec_DecimalExponent	29b6a9	132	49	6	0	3	0	0	dec 8,xsp	0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Multiply	29b72d	23	11	0	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Float_Unpack	29b744	58	23	2	0	0	0	0		1	ex8,ldcf16ri,stcf	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Float_Pack	29b77e	94	35	4	0	0	0	0		1		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Copy8	29b7dc	12	6	0	0	0	0	0		0		0	C?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Copy10	29b7e8	18	8	0	0	0	0	0		1		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_LongToFloat	29b7fa	27	12	0	0	2	0	0	push xiz	1		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_ULongToFloat	29b815	27	12	0	0	2	0	0	push xiz	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FloatDiv_Special	29b830	16	6	0	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FloatDiv	29b840	48	19	0	0	4	0	0	push xiz	0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_SDivMod32_Common	29b870	71	32	4	1	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_SMod32	29b8b7	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_SDiv32	29b8bb	4	2	0	0	0	0	0		0		0	other	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_UMod32	29b8bf	6	3	0	1	0	0	0		0		0	C-calr	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_UDivMod32	29b8c5	125	58	9	0	0	0	0		0	djnz8,stcf16ri	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Double_Pack	29b942	106	38	5	0	0	0	0		0		1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Long_To_Unpacked	29b9ac	25	10	1	1	0	0	0		1	ldcf,stcf8ri	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_ULong_To_Unpacked	29b9c5	91	39	6	0	0	0	0		0	bs1b,bs1b16	1	lib	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_FloatToDouble	29ba20	68	27	1	0	2	0	0	push xiz	1	stcf16ri	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_utilities.s	HDAE5000_Unpacked_Div	29ba64	152	61	10	0	0	0	0		1	stcf16ri	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_tree.s	HDAE5000_Str_Alert_HDFormat	29f174	13538	419	0	0	0	0	0		0	data-in-code	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_tree.s	HDAE5000_Str_CharSet_Symbol_2	2a266a	14018	544	0	0	0	0	0		0	data-in-code	0	hand?	v2.01i,v1.15i,v1.10i
+hdae5000_ui_tree.s	HDAE5000_UiObject_PtrTable	2a5d2c	3160	1	0	0	0	0	0		1		0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_ui_tree.s	HDAE5000_UiObjectName_PtrTable	2a6984	3160	791	1	0	0	0	0		1	data-in-code	0	tail	v2.01i,v1.15i,v1.10i
+hdae5000_init_data.s	HdaeUiVar_WriteIn_child	2f9c48	786	22	0	0	0	0	0		0	data-in-code	0	hand?	v2.01i
