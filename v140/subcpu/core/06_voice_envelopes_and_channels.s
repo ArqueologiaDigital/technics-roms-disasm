@@ -6713,186 +6713,35 @@ AudioChannel_Handler_Cmd18_1B_Epilogue:
 ; to.  Bit 7 of (XDE+1) is NOT part of the id -- it is the bipolar flag the handlers test.
 ; Callers: Voice_ModWheel_Apply (twice), Voice_ChanPressure (twice), Voice_PitchBend
 ; (twice, as a tail `jrl`), and the 0x02A061 block.
-AudioChannel_Dispatch:
-	ld l, (xde + 1)
-	and l, 0x3F
-	extz hl
-	dec 1, hl
-	cp hl, 0:i3
-	ret lt
-	cp hl, 0x1A
-	ret gt
-	add hl, hl
-	lda xix, (AudioChannel_CaseOffsets:24)
-	ld	hl, (xix+hl)
-	lda xix, (AudioChannel_DispatchTable:24)
-	jp	t, (xix+hl)
-; --- AudioChannel_DispatchTable: 25 handler stubs for audio channel commands ---
-; Entry: WA = command parameter, BC = secondary parameter
-; Each stub: zero-extends WA/BC, pushes channel index (0-3),
-; calls a common audio handler via calr, then returns.
-; First 3 entries redirect via jrl to alternate handler routines.
-; Called from jump table indexed by HL.
-; --- 0x029E5B-0x029F72  AudioChannel_DispatchTable
-; 27 entries.  Entries 0..2 are 5 bytes each (`extz WA` + `jrl` to 0x0290E7 / 0x029172 /
-; 0x029134).  Entries 3..26 are 11 bytes each:
-;     extz WA ; extz BC ; push <sub-index 0..3> ; calr <handler> ; ret
-; giving six handler bodies x four sub-indices.  Indexed indirectly through the word offset
-; table at 0x00F703 (values 0x0000,0x0005,0x000A,0x000F, then +0x000B per entry).
-AudioChannel_DispatchTable:
-	extz	wa
-	jrl	AudioChannel_Handler_Cmd01
-AudioChannel_Stub_Cmd02:
-	extz	wa
-	jrl	AudioChannel_Handler_Cmd02
-AudioChannel_Stub_Cmd03:
-	extz	wa
-	jrl	AudioChannel_Handler_Cmd03
-AudioChannel_Stub_Cmd04:
-	extz	wa
-	extz	bc
-	pushw	0
-	calr	AudioChannel_Handler_Cmd04_07
-	ret
-AudioChannel_Stub_Cmd05:
-	extz	wa
-	extz	bc
-	pushw	1
-	calr	AudioChannel_Handler_Cmd04_07
-	ret
-AudioChannel_Stub_Cmd06:
-	extz	wa
-	extz	bc
-	pushw	2
-	calr	AudioChannel_Handler_Cmd04_07
-	ret
-AudioChannel_Stub_Cmd07:
-	extz	wa
-	extz	bc
-	pushw	3
-	calr	AudioChannel_Handler_Cmd04_07
-	ret
-AudioChannel_Stub_Cmd08:
-	extz	wa
-	extz	bc
-	pushw	0
-	calr	AudioChannel_Handler_Cmd08_0B
-	ret
-AudioChannel_Stub_Cmd09:
-	extz	wa
-	extz	bc
-	pushw	1
-	calr	AudioChannel_Handler_Cmd08_0B
-	ret
-AudioChannel_Stub_Cmd0A:
-	extz	wa
-	extz	bc
-	pushw	2
-	calr	AudioChannel_Handler_Cmd08_0B
-	ret
-AudioChannel_Stub_Cmd0B:
-	extz	wa
-	extz	bc
-	pushw	3
-	calr	AudioChannel_Handler_Cmd08_0B
-	ret
-AudioChannel_Stub_Cmd0C:
-	extz	wa
-	extz	bc
-	pushw	0
-	calr	AudioChannel_Handler_Cmd0C_0F
-	ret
-AudioChannel_Stub_Cmd0D:
-	extz	wa
-	extz	bc
-	pushw	1
-	calr	AudioChannel_Handler_Cmd0C_0F
-	ret
-AudioChannel_Stub_Cmd0E:
-	extz	wa
-	extz	bc
-	pushw	2
-	calr	AudioChannel_Handler_Cmd0C_0F
-	ret
-AudioChannel_Stub_Cmd0F:
-	extz	wa
-	extz	bc
-	pushw	3
-	calr	AudioChannel_Handler_Cmd0C_0F
-	ret
-AudioChannel_Stub_Cmd10:
-	extz	wa
-	extz	bc
-	pushw	0
-	calr	AudioChannel_Handler_Cmd10_13
-	ret
-AudioChannel_Stub_Cmd11:
-	extz	wa
-	extz	bc
-	pushw	1
-	calr	AudioChannel_Handler_Cmd10_13
-	ret
-AudioChannel_Stub_Cmd12:
-	extz	wa
-	extz	bc
-	pushw	2
-	calr	AudioChannel_Handler_Cmd10_13
-	ret
-AudioChannel_Stub_Cmd13:
-	extz	wa
-	extz	bc
-	pushw	3
-	calr	AudioChannel_Handler_Cmd10_13
-	ret
-AudioChannel_Stub_Cmd14:
-	extz	wa
-	extz	bc
-	pushw	0
-	calr	AudioChannel_Handler_Cmd14_17
-	ret
-AudioChannel_Stub_Cmd15:
-	extz	wa
-	extz	bc
-	pushw	1
-	calr	AudioChannel_Handler_Cmd14_17
-	ret
-AudioChannel_Stub_Cmd16:
-	extz	wa
-	extz	bc
-	pushw	2
-	calr	AudioChannel_Handler_Cmd14_17
-	ret
-AudioChannel_Stub_Cmd17:
-	extz	wa
-	extz	bc
-	pushw	3
-	calr	AudioChannel_Handler_Cmd14_17
-	ret
-AudioChannel_Stub_Cmd18:
-	extz	wa
-	extz	bc
-	pushw	0
-	calr	AudioChannel_Handler_Cmd18_1B
-	ret
-AudioChannel_Stub_Cmd19:
-	extz	wa
-	extz	bc
-	pushw	1
-	calr	AudioChannel_Handler_Cmd18_1B
-	ret
-AudioChannel_Stub_Cmd1A:
-	extz	wa
-	extz	bc
-	pushw	2
-	calr	AudioChannel_Handler_Cmd18_1B
-	ret
-AudioChannel_Stub_Cmd1B:
-	extz	wa
-	extz	bc
-	pushw	3
-	calr	AudioChannel_Handler_Cmd18_1B
-	ret
-	ret
+AudioChannel_Dispatch:	.include "includes/generated/cc900/AudioChannel_Dispatch.s"	; C: cc900/voice_envelopes_and_channels_d_13a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioChannel_DispatchTable, AudioChannel_Dispatch + 42
+	.set	AudioChannel_Stub_Cmd02, AudioChannel_Dispatch + 47
+	.set	AudioChannel_Stub_Cmd03, AudioChannel_Dispatch + 52
+	.set	AudioChannel_Stub_Cmd04, AudioChannel_Dispatch + 57
+	.set	AudioChannel_Stub_Cmd05, AudioChannel_Dispatch + 68
+	.set	AudioChannel_Stub_Cmd06, AudioChannel_Dispatch + 79
+	.set	AudioChannel_Stub_Cmd07, AudioChannel_Dispatch + 90
+	.set	AudioChannel_Stub_Cmd08, AudioChannel_Dispatch + 101
+	.set	AudioChannel_Stub_Cmd09, AudioChannel_Dispatch + 112
+	.set	AudioChannel_Stub_Cmd0A, AudioChannel_Dispatch + 123
+	.set	AudioChannel_Stub_Cmd0B, AudioChannel_Dispatch + 134
+	.set	AudioChannel_Stub_Cmd0C, AudioChannel_Dispatch + 145
+	.set	AudioChannel_Stub_Cmd0D, AudioChannel_Dispatch + 156
+	.set	AudioChannel_Stub_Cmd0E, AudioChannel_Dispatch + 167
+	.set	AudioChannel_Stub_Cmd0F, AudioChannel_Dispatch + 178
+	.set	AudioChannel_Stub_Cmd10, AudioChannel_Dispatch + 189
+	.set	AudioChannel_Stub_Cmd11, AudioChannel_Dispatch + 200
+	.set	AudioChannel_Stub_Cmd12, AudioChannel_Dispatch + 211
+	.set	AudioChannel_Stub_Cmd13, AudioChannel_Dispatch + 222
+	.set	AudioChannel_Stub_Cmd14, AudioChannel_Dispatch + 233
+	.set	AudioChannel_Stub_Cmd15, AudioChannel_Dispatch + 244
+	.set	AudioChannel_Stub_Cmd16, AudioChannel_Dispatch + 255
+	.set	AudioChannel_Stub_Cmd17, AudioChannel_Dispatch + 266
+	.set	AudioChannel_Stub_Cmd18, AudioChannel_Dispatch + 277
+	.set	AudioChannel_Stub_Cmd19, AudioChannel_Dispatch + 288
+	.set	AudioChannel_Stub_Cmd1A, AudioChannel_Dispatch + 299
+	.set	AudioChannel_Stub_Cmd1B, AudioChannel_Dispatch + 310
 
 ; Entry WA = part index, BC = CC 1 value.  Follows the patch pointer at part+0x06
 ; (0x04136E + part*0x11F) and switches on (patch+0x10) & 0xC0:

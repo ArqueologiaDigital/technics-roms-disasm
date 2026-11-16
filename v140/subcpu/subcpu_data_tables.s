@@ -614,17 +614,7 @@ Voice_LayerClassTable:
 ; Read by Pitch_Get_Patch_Octave_Shift (0x02294E): WA = selector - 0x10, range-checked 0..9
 ; (so 10 entries), doubled, `lda xix,(table:24) / ld r, (xrr+rr) / lda xix,(base:24) / jp t, (xrr+rr)`.
 ; Only selector 0x14 (entry 4) reaches the fallback; the other nine return 0.
-Pitch_OctaveShift_CaseOffsets:
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x10
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x11
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x12
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x13
-	.short Pitch_Get_Patch_Octave_Shift_Fallback - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x14
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x15
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x16
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x17
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x18
-	.short Pitch_Get_Patch_Octave_Shift_JumpTable - Pitch_Get_Patch_Octave_Shift_JumpTable		; selector 0x19
+Pitch_OctaveShift_CaseOffsets:	.include "includes/generated/cc900/Pitch_OctaveShift_CaseOffsets.s"	; C: cc900/voice_params_and_tvf_a_12a.c (cc900-data)
 ; --- 0x00F6A7-0x00F6B2  6 x u16 case offsets from TVF_Build_Dispatch_Table (0x02412B).
 ; Read by TVF_Build_Dispatch (0x024102): index = (tonerec+54) & 7, range-checked 0..5
 ; (6 entries), doubled, then the same ldw_sri / jp t, (xrr+rr) computed goto.
@@ -638,34 +628,16 @@ TVF_Build_CaseOffsets:
 ; --- 0x00F6B3-0x00F6BE  6 x u16 case offsets from TVF_BuildEmit_Short_Dispatch_Table (0x02432C).
 ; Read by TVF_BuildEmit_Short_Dispatch (0x024300): index = (tonerec+0x0F) & 7,
 ; range-checked 0..5 (6 entries), doubled, ldw_sri / jp t, (xrr+rr).
-TVF_BuildEmit_Short_CaseOffsets:
-	.short TVF_BuildEmit_Short_Dispatch_Table - TVF_BuildEmit_Short_Dispatch_Table			; (tonerec+0x0F)&7 = 0
-	.short TVF_BuildEmit_Short_Mode1_SingleCutoff - TVF_BuildEmit_Short_Dispatch_Table				; (tonerec+0x0F)&7 = 1
-	.short TVF_BuildEmit_Short_Mode2_SingleCutoffBit7 - TVF_BuildEmit_Short_Dispatch_Table				; (tonerec+0x0F)&7 = 2
-	.short TVF_BuildEmit_Short_Mode3_SharedCutoff - TVF_BuildEmit_Short_Dispatch_Table				; (tonerec+0x0F)&7 = 3
-	.short TVF_BuildEmit_Short_Mode4_SharedCutoffBit7 - TVF_BuildEmit_Short_Dispatch_Table				; (tonerec+0x0F)&7 = 4
-	.short TVF_BuildEmit_Short_Mode5_DualCutoff - TVF_BuildEmit_Short_Dispatch_Table				; (tonerec+0x0F)&7 = 5
+TVF_BuildEmit_Short_CaseOffsets:	.include "includes/generated/cc900/TVF_BuildEmit_Short_CaseOffsets.s"	; C: cc900/voice_params_and_tvf_a_12a.c (cc900-data)
 ; --- 0x00F6BF-0x00F6CA  6 x u16 case offsets from TVF_Emit_Registers_Table (0x024472).
 ; Read by TVF_Emit_Registers (0x024444): index = (tonerec+54) & 7, range-checked 0..5
 ; (6 entries), doubled, ldw_sri / jp t, (xrr+rr).  Cases 1 and 2 share one body.
-TVF_Emit_Registers_CaseOffsets:
-	.short TVF_Emit_Registers_Table - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 0
-	.short TVF_Emit_Registers_Mode1Or2_OffsetCutoffWord - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 1
-	.short TVF_Emit_Registers_Mode1Or2_OffsetCutoffWord - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 2
-	.short TVF_Emit_Registers_Mode3_OffsetOneOrBothWords - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 3
-	.short TVF_Emit_Registers_Mode4_OffsetBothWords - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 4
-	.short TVF_Emit_Registers_Mode5_OffsetEachWord - TVF_Emit_Registers_Table					; (tonerec+54)&7 = 5
+TVF_Emit_Registers_CaseOffsets:	.include "includes/generated/cc900/TVF_Emit_Registers_CaseOffsets.s"	; C: cc900/voice_params_and_tvf_k_16a.c (cc900-data)
 ; --- 0x00F6CB-0x00F6D6  6 x u16 case offsets from TVF_Emit_Registers_Type2_Table (0x024582); the same six
 ; values as TVF_Emit_Registers_CaseOffsets, for the twin landing pad.
 ; Read by TVF_Emit_Registers_Type2 (0x024554): index = (tonerec+0x0F) & 7, range-checked
 ; 0..5 (6 entries), doubled, ldw_sri / jp t, (xrr+rr).  Cases 1 and 2 share one body.
-TVF_Emit_Registers_Type2_CaseOffsets:
-	.short TVF_Emit_Registers_Type2_Table - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 0
-	.short TVF_Emit_Registers_Type2_Mode1Or2_OffsetCutoffWord - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 1
-	.short TVF_Emit_Registers_Type2_Mode1Or2_OffsetCutoffWord - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 2
-	.short TVF_Emit_Registers_Type2_Mode3_OffsetOneOrBothWords - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 3
-	.short TVF_Emit_Registers_Type2_Mode4_OffsetBothWords - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 4
-	.short TVF_Emit_Registers_Type2_Mode5_OffsetEachWord - TVF_Emit_Registers_Type2_Table			; (tonerec+0x0F)&7 = 5
+TVF_Emit_Registers_Type2_CaseOffsets:	.include "includes/generated/cc900/TVF_Emit_Registers_Type2_CaseOffsets.s"	; C: cc900/voice_params_and_tvf_k_16a.c (cc900-data)
 ; --- 0x00F6D7-0x00F6DE  two 4-byte bit tables, one byte per output bus w = 0..3
 ; Read by AudioMod_Apply_BusRouting (0x02833C): per bus w it loads byte [table + w]
 ; from each (`lda xiy,(table:24) / ld L,(XIY+HL)`, HL = w, loop bound w < 4) and ANDs it
@@ -706,34 +678,7 @@ Voice_RhythmMode_ScalePitch_Table:
 ; destination command id k+1 (entries 0..2 are 5-byte stubs, the rest 11-byte ones).
 ; Read by AudioChannel_Dispatch (0x029E31): index = ((XDE+1) & 0x3F) - 1, range-checked
 ; 0..0x1A (27 entries), doubled, ldw_sri / jp t, (xrr+rr).
-AudioChannel_CaseOffsets:
-	.short AudioChannel_DispatchTable - AudioChannel_DispatchTable					; command id 0x01
-	.short AudioChannel_Stub_Cmd02 - AudioChannel_DispatchTable					; command id 0x02
-	.short AudioChannel_Stub_Cmd03 - AudioChannel_DispatchTable					; command id 0x03
-	.short AudioChannel_Stub_Cmd04 - AudioChannel_DispatchTable					; command id 0x04
-	.short AudioChannel_Stub_Cmd05 - AudioChannel_DispatchTable					; command id 0x05
-	.short AudioChannel_Stub_Cmd06 - AudioChannel_DispatchTable					; command id 0x06
-	.short AudioChannel_Stub_Cmd07 - AudioChannel_DispatchTable					; command id 0x07
-	.short AudioChannel_Stub_Cmd08 - AudioChannel_DispatchTable					; command id 0x08
-	.short AudioChannel_Stub_Cmd09 - AudioChannel_DispatchTable					; command id 0x09
-	.short AudioChannel_Stub_Cmd0A - AudioChannel_DispatchTable					; command id 0x0A
-	.short AudioChannel_Stub_Cmd0B - AudioChannel_DispatchTable					; command id 0x0B
-	.short AudioChannel_Stub_Cmd0C - AudioChannel_DispatchTable					; command id 0x0C
-	.short AudioChannel_Stub_Cmd0D - AudioChannel_DispatchTable					; command id 0x0D
-	.short AudioChannel_Stub_Cmd0E - AudioChannel_DispatchTable					; command id 0x0E
-	.short AudioChannel_Stub_Cmd0F - AudioChannel_DispatchTable					; command id 0x0F
-	.short AudioChannel_Stub_Cmd10 - AudioChannel_DispatchTable					; command id 0x10
-	.short AudioChannel_Stub_Cmd11 - AudioChannel_DispatchTable					; command id 0x11
-	.short AudioChannel_Stub_Cmd12 - AudioChannel_DispatchTable					; command id 0x12
-	.short AudioChannel_Stub_Cmd13 - AudioChannel_DispatchTable					; command id 0x13
-	.short AudioChannel_Stub_Cmd14 - AudioChannel_DispatchTable					; command id 0x14
-	.short AudioChannel_Stub_Cmd15 - AudioChannel_DispatchTable					; command id 0x15
-	.short AudioChannel_Stub_Cmd16 - AudioChannel_DispatchTable					; command id 0x16
-	.short AudioChannel_Stub_Cmd17 - AudioChannel_DispatchTable					; command id 0x17
-	.short AudioChannel_Stub_Cmd18 - AudioChannel_DispatchTable					; command id 0x18
-	.short AudioChannel_Stub_Cmd19 - AudioChannel_DispatchTable					; command id 0x19
-	.short AudioChannel_Stub_Cmd1A - AudioChannel_DispatchTable					; command id 0x1A
-	.short AudioChannel_Stub_Cmd1B - AudioChannel_DispatchTable					; command id 0x1B
+AudioChannel_CaseOffsets:	.include "includes/generated/cc900/AudioChannel_CaseOffsets.s"	; C: cc900/voice_envelopes_and_channels_d_13a.c (cc900-data)
 ; --- 0x00F739-0x00F74E  11 x u16 case offsets for controller numbers 120..130, relative to Voice_CC_ModWheel
 ; (0x02A306, which is only the base of the arithmetic here, not a case).
 ; Read by Voice_CtrlChange (0x02A282) after its explicit compares for the other CCs:
@@ -953,27 +898,7 @@ VOICEPARAM_TONE_OPTION_JUMPTABLE:
 
 ; --- 0x00F973-0x00F99A  AUDIO_CMD_TONEEDIT_JUMPTABLE -- 20 u16 jump offsets, base 0x02EDB9
 ; Computed jump in Audio_Cmd_ToneEdit_TableJump (opcodes 0x00..0x13): `jp T, 0x02EDB9 + table[index*2]`.
-AUDIO_CMD_TONEEDIT_JUMPTABLE:
-	.short Audio_Cmd_ToneEdit_Op00 - Audio_Cmd_ToneEdit_Op00	; index 0
-	.short Audio_Cmd_ToneEdit_Return - Audio_Cmd_ToneEdit_Op00	; index 1
-	.short Audio_Cmd_ToneEdit_Return - Audio_Cmd_ToneEdit_Op00	; index 2
-	.short Audio_Cmd_ToneEdit_Return - Audio_Cmd_ToneEdit_Op00	; index 3
-	.short Audio_Cmd_ToneEdit_Op04 - Audio_Cmd_ToneEdit_Op00	; index 4
-	.short Audio_Cmd_ToneEdit_Op05 - Audio_Cmd_ToneEdit_Op00	; index 5
-	.short Audio_Cmd_ToneEdit_Op06 - Audio_Cmd_ToneEdit_Op00	; index 6
-	.short Audio_Cmd_ToneEdit_Op07 - Audio_Cmd_ToneEdit_Op00	; index 7
-	.short Audio_Cmd_ToneEdit_Op08 - Audio_Cmd_ToneEdit_Op00	; index 8
-	.short Audio_Cmd_ToneEdit_Op09 - Audio_Cmd_ToneEdit_Op00	; index 9
-	.short Audio_Cmd_ToneEdit_Op0A - Audio_Cmd_ToneEdit_Op00	; index 10
-	.short Audio_Cmd_ToneEdit_Op0B - Audio_Cmd_ToneEdit_Op00	; index 11
-	.short Audio_Cmd_ToneEdit_Op0C - Audio_Cmd_ToneEdit_Op00	; index 12
-	.short Audio_Cmd_ToneEdit_Op0D_SelectPart - Audio_Cmd_ToneEdit_Op00	; index 13
-	.short Audio_Cmd_ToneEdit_Op13 - Audio_Cmd_ToneEdit_Op00	; index 14
-	.short Audio_Cmd_ToneEdit_Op14 - Audio_Cmd_ToneEdit_Op00	; index 15
-	.short Audio_Cmd_ToneEdit_Op15 - Audio_Cmd_ToneEdit_Op00	; index 16
-	.short Audio_Cmd_ToneEdit_Op16 - Audio_Cmd_ToneEdit_Op00	; index 17
-	.short Audio_Cmd_ToneEdit_Op17 - Audio_Cmd_ToneEdit_Op00	; index 18
-	.short Audio_Cmd_ToneEdit_Return - Audio_Cmd_ToneEdit_Op00	; index 19
+AUDIO_CMD_TONEEDIT_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_TONEEDIT_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_k_16a.c (cc900-data)
 
 ; --- 0x00F99B-0x00F9B2  DSP_EFFPARAM_APPLY_JUMPTABLE -- 12 u16 jump offsets, base 0x02F2D9
 ; Computed jump in DSP_EffParam_Apply_By_AlgoType (algorithm type 0..11): `jp T, 0x02F2D9 + table[index*2]`.
