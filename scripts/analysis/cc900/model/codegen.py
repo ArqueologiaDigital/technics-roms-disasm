@@ -19071,11 +19071,11 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         for n_ in nodes_in(f.body, 'cast'):
             x_ = strip(n_.e)
             if n_.ty is not None and n_.ty.size == 8 and flt_(getattr(x_, 'ty', None)) and x_.k not in ('load', 'fconst', 'const'):
-                raise Unsupported('a computed float widened to double')
+                if not fpgen.FLOAT_WIDEN_TEMP: raise Unsupported('a computed float widened to double')
         for n_ in nodes_in(f.body, 'call'):
-            if flt_(getattr(n_, 'ty', None)): raise Unsupported('a call returning float')
+            if flt_(getattr(n_, 'ty', None)) and not fpgen.FLOAT_CALL_XHL: raise Unsupported('a call returning float')
         for n_ in nodes_in(f.body, 'cond'):
-            if flt_(getattr(n_, 'ty', None)): raise Unsupported('a float ?: value')
+            if flt_(getattr(n_, 'ty', None)) and not fpgen.FLOAT_COND_COPY: raise Unsupported('a float ?: value')
     merge_address_inits(f)
     drop_dead_call_stores(f, opt != 'none', adecl)
     eval_write_only(f, opt != 'none', adecl)

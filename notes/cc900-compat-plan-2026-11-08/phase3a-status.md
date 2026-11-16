@@ -3808,6 +3808,17 @@ XIZ whose initialiser was added as a long.  FLOAT_SHAPES_REFUSE and FP_INT_PATH_
 oracle's forms are modelled (fpw compiled 449 / 413 / 397 / 357, all semcheck-equal).  fpw joins the ledger: 341 /
 338 / 292 / 288 of 600 exact.  Old rows, validation and library unchanged; semcheck 9.
 
+**Batch 348 (2026-11-16): float forms modelled.**  lane_o3 fix 07 turns batch 347's float refusals into cc900's forms:
+FLOAT_CALL_XHL (a call returning float takes the value in XHL into a 4-byte call temporary), FLOAT_WIDEN_TEMP (a
+computed float widened to double gets its own 8-byte temporary; float op= double is computed as double and narrowed
+back -- the model had called ._fdiv_f on a double operand, wrong code), FLOAT_COND_COPY (a float ?: copies each arm
+through XWA into a 4-byte temporary), FDATAS_F (float constants written as V4.23 writes them, `fdatas ...F`; no
+function with a float constant could be exact before).  The checker side (semcheck reading fdatas / fims) went in on
+its own (820023303).  fpw 406 / 384 / 350 / 332 of 600 exact (+65 / +46 / +58 / +44), semcheck clean, checked 571 /
+535 / 505 / 464; other rows, validation and library unchanged; semcheck 9.  lane_nm's stptr rules 15-20 were in the
+first try of this batch and are held: rule 15 CHAR_IDX_SIGN zero-extended an index through a -Xr register parameter
+homed in a slot (micro ra_homes rh_ptr_int at O3XSXr: p[-1] read p[65535]), caught by the gate's semcheck.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

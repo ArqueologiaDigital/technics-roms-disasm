@@ -111,6 +111,11 @@ def eval_val(F, e, hint):
         elif len(comp) == 2:
             vals[1] = fp.eval_val(F, ops[1], hint); vals[0] = fp.eval_val(F, ops[0], None); dst = ('slot', vals[0][1])
             dst = choose_dst(F, e, vals, dst, hint)
+        elif fp.FLOAT_WIDEN_TEMP and e.k == 'cast' and len(comp) == 1 and e.ty.size > vals[0].ty.size:
+                                                         # a computed float widened to double: the double gets its own
+            vals[0] = fp.eval_val(F, ops[0], None)       # 8-byte temporary (fpw fp_ar_fdG: the product at +0x24,
+            cell = hint if hint is not None and hint.size == e.ty.size else fp.Cell(e.ty.size)   # ._fld_df into +0x1c)
+            fp.op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)
         elif len(comp) == 1 and fp.fp_value_cast(ops[comp[0]]).k != 'call':
             vals[comp[0]] = fp.eval_val(F, ops[comp[0]], hint); dst = vals[comp[0]]
             if SW['R_A'] and slot_off(dst) is not None and is_call_slot(F, dst[1]):   # e.g. -(fd(x) + 1) chains

@@ -72,6 +72,8 @@ def const_block(F):
         if isinstance(size, str) and size.startswith('init'):   # __fint: unsigned short maru[4] = {0, ...} ->
             out += [lab + ':', '\t%s\t%s' % ({'1': 'db', '2': 'dw', '4': 'dd'}[size[4:]], ','.join(v))]   # S1: dw 0,0,0,0
             continue
+        if FDATAS_F and size != 8:                       # V4.23 writes a float constant as fdatas ...e+000F (fpw
+            out += ['\talign\t2', lab + ':', '\tfdatas\t%sF' % fdata(v)]; continue   # fp_ar_faK)
         out += ['\talign\t2', lab + ':', '\t%s\t%s' % ('fdatad' if size == 8 else 'fdataf', fdata(v))]
     return out + ['f_code section code large align=1,1'] + area_block(F)
 
@@ -200,6 +202,11 @@ def fp_value_cast(e):
         if c.k == 'const' and c.value is not None:
             from frontend import N
             return N('fconst', value=float(c.value), ty=e.ty)
+    if FLOAT_WIDEN_TEMP and e.k == 'cast' and e.kind == 'FloatingCast' and is_fp(e.ty) and e.ty.size == 8 and \
+            strip(e.e).k == 'fconst' and strip(e.e).ty.size == 4:   # a float constant widened is a double constant
+        import struct                                    # (fpw fp_ar_fdC: 2.25f / (..) -> lda XBC,S.. a fdatad)
+        from frontend import N
+        return N('fconst', value=struct.unpack('<f', struct.pack('<f', strip(e.e).value))[0], ty=e.ty)
     if e.k == 'un' and e.op == '-' and fp_value_cast(e.e).k == 'fconst':      # _exp: -708.396 is a constant
         from frontend import N
         return N('fconst', value=-fp_value_cast(e.e).value, ty=e.ty)
@@ -349,6 +356,11 @@ def eval_val(F, e, hint):
             # calls against one), its inner sum calling fd(gd3) before fd(gd2) (a tie)
         elif len(comp) == 2:
             vals[1] = eval_val(F, ops[1], hint); vals[0] = eval_val(F, ops[0], None); dst = ('slot', vals[0][1])
+        elif FLOAT_WIDEN_TEMP and e.k == 'cast' and len(comp) == 1 and e.ty.size > vals[0].ty.size:
+            vals[0] = eval_val(F, ops[0], None)              # a computed float widened to double: the double gets its
+            cell = hint if hint is not None and hint.size == e.ty.size else Cell(e.ty.size)   # own 8-byte temporary
+            op_into(F, e, vals, ('cell', cell)); return ('slot', cell.off)   # (fpw fp_ar_fdG: the product at +0x24,
+                                                             #  ._fld_df into +0x1c)
         elif len(comp) == 1 and fp_value_cast(ops[comp[0]]).k != 'call':
             vals[comp[0]] = eval_val(F, ops[comp[0]], hint); dst = vals[comp[0]]
         else:
@@ -705,9 +717,36 @@ def push_fp_arg(F, a, hint=None):
     F.emit('ld', 'XIX,(XIY)'); F.emit('push', 'XIX'); F.push += 4
     return a.ty.size
 
+FLOAT_WIDEN_TEMP = True
+FDATAS_F = True
+FLOAT_COND_COPY = True
+FLOAT_CALL_XHL = True                                     # see call_into_f
+
+def call_into_f(F, e, dest, arg_hint=None):
+    """a call returning float: the value comes back in XHL and is stored into a 4-byte call temporary (fpw fp_ar_fsR:
+    dec 0x8,XSP / cal _rf / ld (XSP+0x4),XHL / lda XBC,XSP+0x4 / lda XDE,_gf1 / lda XWA,_gf3 / cal ._fsub_f)"""
+    cg = C()
+    fn = strip(e.fn)
+    if dest[0] == 'lazyres':
+        off = alloc(F, dest[1], 'call') if dest[1].off is None else temp(F, 4, 'call')
+    elif dest[0] == 'cell': off = alloc(F, dest[1], 'call')
+    elif dest[0] == 'slot': off = dest[1]
+    elif dest[0] == 'discard': off = None
+    else: raise cg.Unsupported('a float call result into %s' % dest[0])
+    n = 0
+    cg.args_begin(F)
+    for a in reversed(e.args):
+        if is_fp(strip(a).ty): n += push_fp_arg(F, a, None)
+        else: n += cg.push_arg(F, a)
+    F.emit('cal', '_' + fn.decl.name); cg.args_end(F)
+    F.pending += n
+    F.last_call_off = off
+    if off is not None: F.emit('ld', '%s,XHL' % slot_mem(F, off))
+
 def call_into(F, e, dest, arg_hint=None):
     """a call returning double: the caller's temporary's address is the hidden first argument"""
     cg = C()
+    if FLOAT_CALL_XHL and e.ty is not None and e.ty.size == 4: return call_into_f(F, e, dest, arg_hint)
     fn = strip(e.fn)
     n = 0
     hints = [arg_hint]
@@ -787,6 +826,14 @@ def gen_assign(F, e):
         lv = strip(e.l)
         ld_ = N('load', e=lv, ty=lv.ty)
         b = N('bin', op=e.op, l=ld_, r=e.r, ty=lv.ty)
+        r_ = strip(e.r)
+        if FLOAT_WIDEN_TEMP and lv.ty.size == 4 and is_fp(getattr(r_, 'ty', None)) and r_.ty.size == 8:
+            w_ = N('cast', kind='FloatingCast', e=ld_, ty=r_.ty)   # a float op= a double: widened, computed as a
+            b = N('cast', kind='FloatingCast', e=N('bin', op=e.op, l=w_, r=e.r, ty=r_.ty), ty=lv.ty)   # double,
+            F.fp_opassign = True                           # narrowed back (fpw fp_oa_fdG: gf1 /= (gf2 * gf2 + 3.0) ->
+            try: eval_into(F, b, ('lv', lv))               # ._fld_df of _gf1 / ._fdiv_d / ._fld_fd into _gf1)
+            finally: F.fp_opassign = False
+            return
         hk = opa_target(F, lv)
         if hk is not None:                                 # probes/fpopa.c fa_m_MGT: gs.d *= hd -> lda XIZ,_gs + 0x4 /
             for d in list(F.f.params) + list(F.f.decls):   # lda XDE,_hd / ld XBC,XIZ / ld XWA,XIZ / cal ._fmul_d
@@ -934,10 +981,50 @@ def needs_xiz(F):
 FP_COND_CELL = True                                        # see cond_into: an operand's ?: in its own temporary
 FP_COND_PRELOAD = True                                     # see cond_into
 
+def f_arm_src(F, x):
+    """the source operand of ld XWA,<src> for a float ?: arm (a float in memory or a constant), else None"""
+    x = fp_value_cast(x)
+    if x.k == 'fconst':
+        import struct
+        return 'fims(%r)' % struct.unpack('<f', struct.pack('<f', x.value))[0]
+    if x.k == 'load':
+        m = C().mem_operand(F, x)
+        if m is not None and m.startswith('('): return m
+    return None
+
+def cond_into_f(F, e, dest):
+    """a ?: of floats: each arm copied through XWA into a 4-byte temporary, then the temporary into the destination
+    (fpw fp_cm_feGT: dec 0x4,XSP / .. cal ._fcmp_f / cp HL,0x0 / j ne,L1 / ld XWA,(_gf1) / ld (XSP),XWA / j L2 / L1: /
+    ld XWA,(_gf2) / ld (XSP),XWA / L2: / ld XWA,(XSP) / ld (_gf3),XWA); a constant second arm is stored first and the
+    test jumps over the first (fp_cm_feKT: ld XWA,fims(1.5) / ld (XSP),XWA / .. / j ne,L / ld XWA,(_gf1) / ..)"""
+    cg = C()
+    from frontend import N
+    if dest[0] != 'lv': raise cg.Unsupported('a float ?: value into %s' % dest[0])
+    if F.adecl and cg.live_regs(F): raise cg.Unsupported('a float ?: value beside live registers')
+    a_, b_ = fp_value_cast(e.a), fp_value_cast(e.b)
+    if f_arm_src(F, a_) is None or f_arm_src(F, b_) is None: raise cg.Unsupported('a float ?: arm')
+    dv = N('load', e=strip(dest[1]), ty=strip(dest[1]).ty)
+    if not (cg.mem_operand(F, dv) or '').startswith('('): raise cg.Unsupported('a float ?: destination')
+    A_, B_ = frame_allocs(F)                              # the temporary takes the region D alone (fp_cm_feGT:
+    d_ = A_.get(4, 'op'); B_.get(0, 'op')                 # dec 0x4,XSP, the temporary at XSP)
+    F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A_.depth + B_.depth)
+    r = Cell(4); r.off = getattr(F, 'ftemp_top', 0) - d_
+    def copy(x):
+        F.emit('ld', 'XWA,%s' % f_arm_src(F, x)); F.emit('ld', '%s,XWA' % slot_mem(F, r.off))
+    lend = F.newulabel()
+    if b_.k == 'fconst' and a_.k != 'fconst':
+        copy(b_); cg.gen_cond_false(F, e.c, lend); copy(a_)
+    else:
+        lelse = F.newulabel()
+        cg.gen_cond_false(F, e.c, lelse); copy(a_); F.emit('j', lend); F.lines.append(lelse + ':'); copy(b_)
+    F.lines.append(lend + ':')
+    F.emit('ld', 'XWA,%s' % slot_mem(F, r.off)); F.emit('ld', '%s,XWA' % cg.mem_operand(F, dv))
+
 def cond_into(F, e, dest):
     """a ?: of doubles: the result in a temporary, then copied (t_cond: ... L1: lda XBC,XSP+0xc / ld XWA,XIZ /
     cal ._fld_dd); the first arm is built in its own temporary and copied, the second built in place (t_cond_e)"""
     cg = C()
+    if FLOAT_COND_COPY and e.ty is not None and e.ty.size == 4: return cond_into_f(F, e, dest)
     if FP_COND_PRELOAD and (not F.adecl or not C().live_regs(F)) and dest[0] in ('cell', 'slot') and strip(e.a).k == 'fconst' and \
             strip(e.a).ty is not None and strip(e.a).ty.size == 8 and not C().nodes_in(e.c, 'call') and \
             not any(is_fp_op(n) for n in C().nodes_in(e.c, 'bin')):
