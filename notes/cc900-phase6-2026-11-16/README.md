@@ -181,12 +181,95 @@ The same probe found three places where the model and V4.23 differ (bitfields, a
 a compare of a promoted shifted char).  They were reported to the coordinator, who assigned them to a model lane.
 None of them is in a built function.
 
-### Tried, not built yet
+## Larger targets and the -O question (2026-11-16, after milestone 2)
 
-`TrimAndPadSmfFilename` (55 B, two loops) through the model: the instruction choices differ from the ROM's from
-the first instruction (counter in HL, not IX; the read pointer in XDE, not XHL; the character compared in memory,
-not first loaded into E).  The C needs a character variable and probably a different loop shape.  This is the next
-kind of target: big enough to tell `-O3 -XS -Xr` from `-Xr`.
+The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
+checking aid.  `scripts/analysis/cc900/rel_vs_rom.py` compares a run's object file (asm900's bytes) with the ROM,
+function by function, and prints only MATCH or the first differing offset.  Three runs:
+- `2026-11-16-9-p6-m3`, `corpus/firmware/p6_m3.c`;
+- `2026-11-16-10-p6-m3b`, `p6_m3b.c`;
+- `2026-11-16-11-p6-m3c`, `p6_m3c.c`.
+
+All at the holdout options.  For example, from `scripts/analysis/cc900`:
+
+    python3 -I -B rel_vs_rom.py ~/compartilhado/cc900-oracle/runs/2026-11-16-10-p6-m3b/out/v423/O3XSXr/firmware/p6_m3b.rel \
+        FormatMedleyNumber fmt
+
+| function (v10)          | C                            | V4.23 -O3 -XS -Xr          | V4.23 -Xr      | reference model                     |
+|-------------------------|------------------------------|----------------------------|----------------|-------------------------------------|
+| `FormatMedleyNumber`    | `p6_m3b.c` `fmt_e`           | MATCH, 108 B               | MATCH, 108 B   | refuses (`goto`; at -O a register)  |
+| `TrimAndPadSmfFilename` | `p6_m3.c` `trim_a` (8 forms) | first 42 of 55 B identical | differs at +0  | refuses                             |
+
+- **`FormatMedleyNumber`.**  The C that gives the ROM's bytes uses `goto`.  The 0xff and 0xfe arms set the
+  character and fall into the space padding; any other entry jumps to the number code.  `if` / `else` and `switch`
+  forms give the same instructions, but V4.23 then places the padding after the first arm.  Both option sets give
+  the same bytes, so this function says nothing about `-O`.  The model refuses the C: without `-O`, `goto` is
+  unsupported; at `-O3 -XS -Xr`, "ld A,C over the live parameter p in WA".  That is a model gap, reported to the
+  coordinator.  The function stays hand assembly until the model compiles it.
+- **`TrimAndPadSmfFilename`** (`file_io/smf_operations.s`).  With a character variable and two pointers that start
+  equal, V4.23 at `-O3 -XS -Xr` gives the ROM's first 42 bytes:
+  - the whole first loop, whose compound `&&` condition is tested at the bottom, entered by a jump;
+  - the counter in IX, the read pointer in XHL, the character in E.
+  
+  At `-Xr` the bytes differ from the first instruction.  So this function was built with `-O`.  Its padding loop is
+  the only difference.  The ROM tests `i < n` before entering and again at the bottom.  V4.23 compiles every form
+  tried to a jump to a bottom test: `while`, `for`, an explicit `if (...) do ... while`, and two hand-made `goto`
+  loops.  That is a candidate `kn5000` rule (loop inversion for a simple condition, not for a compound one),
+  reported to the coordinator for the rule list.  The function stays hand assembly.
+
+**Loop shapes across v10** (the idiom census for that candidate rule): `python3
+notes/cc900-phase6-2026-11-16/loop_shapes.py v10/maincpu`, 2026-11-16.  A loop is a backward conditional branch;
+its entry is read from the instruction before its top (the script's docstring defines each shape):
+
+| shape                  | loops |
+|------------------------|-------|
+| fall-in                |  2113 |
+| inverted, same test    |   332 |
+| jump-to-test, simple   |   270 |
+| inverted, other test   |   229 |
+| djnz                   |   118 |
+| jump-to-test, compound |    74 |
+| total                  |  3136 |
+
+It classifies both of `TrimAndPadSmfFilename`'s loops as the ROM has them: the padding loop "inverted, same test",
+the first "jump-to-test, compound".  Both shapes are common with a simple condition, and both occur in the same
+files (`audio/note_voice_mapping.s` holds 100 inverted and 69 jump-to-test simple loops).  Neither the kind of
+compare (register, immediate or memory) nor the branch condition separates them.  So "a simple condition is
+inverted" is not the rule.  In `TrimAndPadSmfFilename` the ROM's entry test stands exactly where V4.23 put its
+`jr` to the bottom test, which suggests the firmware's compiler replaces a jump to the test with a copy of it.
+What decides is the length of the test (`--test-blocks`).  The block a jump-to-test loop jumps to (from the jump's
+target to the bottom branch) is one instruction in 29 loops, two in 40, three in 75 and four or more in 200.  An
+inverted loop's copied test is a single compare.  So 332 loops whose bottom test is one compare and branch have
+that test copied to the entry.  Only 29 such loops jump to it instead, 7 of them in `audio/sprintf_core.s`, the
+Toshiba library code that V4.23-like tools built.  Two things that do not separate the shapes, checked the same
+day with throwaway queries: whether another branch targets the loop's entry, and the loop body's length (medians
+15 and 17 instructions).
+
+The candidate rule is now: **the firmware's compiler copies a loop test of one compare and branch to the loop
+entry; for a longer test it jumps to the test; V4.23 always jumps**.  Its exceptions are the 22 one-compare
+jump-to-test loops outside the library.  Some of these may be hand assembly (`storage/fdc_routines.s`, the
+self-test bit loops in `ui/ui_mode_handlers.s`); `--list` and the file list name them for checking.
+`--list "<shape>"` prints every loop of a shape with its file, line and label.  The census reads the source, so
+hand assembly is counted too (`fall-in` also holds do-while loops and retry branches).
+
+**What this says about the options.**  `GetNamingWindowID` (`ui/ui_widget_defs.s`) matches only without `-O`, and
+`TrimAndPadSmfFilename` (`file_io/smf_operations.s`) only with it.  Two explanations fit:
+- the source files were built with different options;
+- the firmware's compiler at `-O` lacks V4.23's rule that loads a 32-bit constant of 8..0xffff with `lda`.
+
+Telling them apart needs one function that both loads such a constant and is shaped by `-O` (a loop, or a value
+kept in a register).  The candidates are leaf routines with a loop and a 32-bit load of a value below 0x10000, almost
+all of them addresses of RAM buffers.  There are 59 in v10 (`python3 -B
+notes/cc900-phase6-2026-11-16/const_loop_leaf.py v10/maincpu`, from the repository root), and they come in both
+forms.  `StyleConv_ClearWorkBuffer` (`sequencer/accompaniment_engine.s`) is `-O`-shaped (the end pointer is
+computed from the start register, and the loop has no entry test) and uses the 4-byte `lda xbc, (0x488c:16)`.
+`FloppyIO_ClearTrackParseBuffer` (`sequencer/smf_tonegen_core.s`) uses the 5-byte `ld xix, 0x106e` and `djnz`.
+Probe `corpus/firmware/p6_m4.c` (run `2026-11-16-12-p6-m4`) was to compile both at both option sets.  Instead,
+V4.23's code generator crashed at every option set, before emitting a function (a page fault reading 0x4890, four
+bytes past the C constant pointer 0x488c), and asm900 then refused the output.  The crash is reported to the
+coordinator as a V4.23 bug.  The isolation run (`p6_m4_<function>.c`, `corpus/p6_m4_split-sources.txt`) has not
+run yet: the VM was busy outside its lock.  Until it runs, the question stays open.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
+functions; the choice is recorded in its `cc900-options:` comment.
 
 ## Finding candidates
 

@@ -114,6 +114,9 @@ def file_options(path):
     return (flags,) + OPTION_SETS[flags]
 
 
+REFUSED = {}                                             # compile_c: {function: the model's "unsupported" reason}
+
+
 def compile_c(path, names, spell=True):
     """FILE.c -> {function: [llvm-mc lines]} through the reference model and to_llvm (asm900's jr / jrl choice
     included).  spell=False writes every name as its address (scripts/analysis/cc900/model/fn_diff.py assembles a
@@ -126,7 +129,11 @@ def compile_c(path, names, spell=True):
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
     funcs = {}
+    REFUSED.clear()
     for name, lines in out.items():
+        if lines and lines[0].startswith("; unsupported"):
+            REFUSED[name.lstrip("_.")] = lines[0][2:]      # the model declines this C (fn_diff.py reports it)
+            continue
         if not lines or not lines[0].endswith(":") or lines[0][:-1] != name:
             continue                                       # data objects
         bare = name.lstrip("_.")
@@ -162,6 +169,9 @@ def main():
         sys.exit(__doc__)
     tree, src, outdir, stamp = sys.argv[1:]
     funcs = compile_c(src, Names(tree_values(tree)))
+    if REFUSED:
+        sys.exit("%s: the reference model does not compile: %s" % (
+            src, "; ".join("%s (%s)" % kv for kv in sorted(REFUSED.items()))))
     if not funcs:
         sys.exit("%s: no function compiled" % src)
     os.makedirs(outdir, exist_ok=True)

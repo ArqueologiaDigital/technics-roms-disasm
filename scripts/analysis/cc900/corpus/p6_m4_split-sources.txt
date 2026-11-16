@@ -1,0 +1,10 @@
+firmware/p6_m4_sc_a.c
+firmware/p6_m4_sc_b.c
+firmware/p6_m4_sc_c.c
+firmware/p6_m4_sc_d.c
+firmware/p6_m4_sc_e.c
+firmware/p6_m4_va_a.c
+firmware/p6_m4_va_b.c
+firmware/p6_m4_va_d.c
+firmware/p6_m4_fl_a.c
+firmware/p6_m4_fl_b.c
