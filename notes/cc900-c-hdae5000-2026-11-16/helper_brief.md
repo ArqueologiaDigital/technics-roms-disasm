@@ -56,6 +56,15 @@ do NOT commit, do NOT edit any file except the probe files your prompt names.  l
   still unsolved (DirName_Address).
 - A function whose calr targets are in your file matches only with them there: the checker models asm900's
   shortening (`--calr`), and asm900's own object shows the calr (run 56).
+- A CONVERSION on an argument (a cast, a `const` qualifier, `unsigned char *` to `const void *`, an unsigned field
+  to an `int` parameter) makes V4.23 evaluate it early (`lda xwa,(sym); ld xde,xwa`, or a stack temporary) and
+  reload/convert (`ld wa,hl; cp wa,..`); without one it is loaded late or pushed as a constant (helper h_near,
+  runs 57-66: LoadSong_Md, SaveSong_*, AttenCp* matched that way).
+- Module-local calls: a C file lists the labels its functions call RELATIVELY in the ROM (calr / jr to another
+  routine) in a comment `cc900-module: Label1 Label2 ...` (the build's rule, lane_vmb); only those become calr.
+  Put that comment in your file's header for every calr target the hand source shows.
+- V4.23 puts switch jump tables and initialised local arrays into its own data (S50000, S1); the checker masks
+  those operands and reports `MATCH sdata:<n>`, so write such C naturally.
 - Old-style (K&R) definitions take char parameters in A / C where the caller loads WA / BC (helper h_lyr).
 - Code that is plainly hand assembly (nop padding, `ei`, `push sr`, register juggling no compiler does, data
   between instructions) is left out: list it with the reason.
