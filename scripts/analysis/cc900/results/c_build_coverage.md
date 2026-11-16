@@ -13,28 +13,28 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 21904        | 18992             | 0.252 %       | 4784             | 17120           |
-| reference model               | 22176        | 19264             | 0.256 %       | 4784             | 17392           |
+| Toshiba V4.23                 | 60698        | 57774             | 0.767 %       | 43578            | 17120           |
+| reference model               | 24018        | 21106             | 0.280 %       | 6626             | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
-All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an image counts on its own.
+All 20 images: 20643840 bytes, 7532198 of them census CODE.  Every version of an image counts on its own.
 
 ## Per image
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996729 | firmware C | 89    | 802 / 802          | 802 / 802          | 0 / 0             | 0.080 %         | 0                     |
-| v10        | 2097152 | 996729 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996394 | firmware C | 89    | 802 / 802          | 802 / 802          | 0 / 0             | 0.080 %         | 0                     |
-| v9         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996394 | firmware C | 89    | 802 / 802          | 802 / 802          | 0 / 0             | 0.080 %         | 0                     |
-| v8         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993980 | firmware C | 89    | 802 / 802          | 802 / 802          | 0 / 0             | 0.081 %         | 0                     |
-| v7         | 2097152 | 993980 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992958 | firmware C | 87    | 788 / 788          | 788 / 788          | 0 / 0             | 0.079 %         | 0                     |
-| v6         | 2097152 | 992958 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991874 | firmware C | 87    | 788 / 788          | 788 / 788          | 0 / 0             | 0.079 %         | 0                     |
-| v5         | 2097152 | 991874 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
+| v10        | 2097152 | 996727 | firmware C | 226   | 7939 / 7937        | 1109 / 1109        | 0 / 0             | 0.111 %         | 0                     |
+| v10        | 2097152 | 996727 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v9         | 2097152 | 996392 | firmware C | 226   | 7939 / 7937        | 1109 / 1109        | 0 / 0             | 0.111 %         | 0                     |
+| v9         | 2097152 | 996392 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v8         | 2097152 | 996392 | firmware C | 226   | 7939 / 7937        | 1109 / 1109        | 0 / 0             | 0.111 %         | 0                     |
+| v8         | 2097152 | 996392 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v7         | 2097152 | 993978 | firmware C | 210   | 6837 / 6835        | 1109 / 1109        | 0 / 0             | 0.112 %         | 0                     |
+| v7         | 2097152 | 993978 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
+| v6         | 2097152 | 992956 | firmware C | 199   | 6462 / 6460        | 1095 / 1095        | 0 / 0             | 0.110 %         | 0                     |
+| v6         | 2097152 | 992956 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
+| v5         | 2097152 | 991872 | firmware C | 199   | 6462 / 6460        | 1095 / 1095        | 0 / 0             | 0.110 %         | 0                     |
+| v5         | 2097152 | 991872 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128907 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v141       | 196608  | 128884 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v140       | 196608  | 128832 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
@@ -55,535 +55,1291 @@ found yet.
 
 ## Firmware C functions
 
-| image | function                              | C file                                     | options | bytes | built | model | V4.23                  | V4.23 run                 |
-|-------|---------------------------------------|--------------------------------------------|---------|-------|-------|-------|------------------------|---------------------------|
-| v10   | BitMapOut_ByteData_DiskCheck          | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | BitMapOut_GetRenderMode               | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | BitMapOut_PrepareRender_CheckBit1     | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | BitMapOut_PrepareRender_CheckBit2     | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | BitMapOut_SetDefaultTimer             | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | BitMapOut_StorePresetValue            | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Get_Region_Code                       | v10/maincpu/cc900/boot_routines.c          | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | GET_COMPUTER_INTERFACE_SELECTION      | v10/maincpu/cc900/dsp_config_sysex.c       | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v10   | Demo_ResetCountdownTimer              | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Demo_StoreRecordChainParams           | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 16    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FDemo_ResetAllocBuffer                | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_FormatName_Done                | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_GetRecordByType                | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_GetRecordPtrAlt                | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_ResetCurrentRecord             | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_ReturnError                    | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_SetModeFlag_Reading            | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_SetModeFlag_Writing            | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | FileIO_WriteRecordName_Loop           | v10/maincpu/cc900/file_demo_proc.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Display_SetBackgroundColor            | v10/maincpu/cc900/graphics_text_vga.c      | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | FormatMedleyNumber                    | v10/maincpu/cc900/medley.c                 | -O3 -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Smf_GetMidiOut                        | v10/maincpu/cc900/medley.c                 | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Smf_GetPlayAsGm                       | v10/maincpu/cc900/medley.c                 | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Smf_SetMidiOut                        | v10/maincpu/cc900/medley.c                 | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | GetDialEnableState                    | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SetDialEnable                         | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SeCtr2_SetSelection                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_ClearNotification              | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_CopyWriteUpdate_Step3_Helper14 | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_InterpolateEdgeX               | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_OrPartConfig                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_ResetSubIndex                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_ReturnZero                     | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetConfirmState                | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetCurrentStep                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetDisplayState                | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetFilterCoeff                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetFilterMode                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetFilterParam1                | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetLastSwitch                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetMode                        | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetPatchBank                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetSelectedRow                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetSoundBank                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_SetWriteMemSlot                | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_StoreAbsoluteValue             | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_StoreEventId                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_StorePartMask                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeMenu_TriggerNotification            | v10/maincpu/cc900/semenu_routines.c        | -O3 -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AccTuning_ResetFiveParts_Rec0         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AccTuning_ResetFiveParts_Rec1         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AccTuning_ResetFiveParts_Rec2         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AccTuning_ResetFiveParts_Rec3         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AccTuning_ResetFiveParts_Rec4         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AudioMode_CopyAccentFlags             | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AudioMode_CopyChannelMode             | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | AccPlay_GetCurrentPart                | v10/maincpu/cc900/seq_event_playback.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeqData_SetErrorCode                  | v10/maincpu/cc900/sequencer_engine.c       | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeqScan_ClearNoteRange                | v10/maincpu/cc900/sequencer_engine.c       | -O3 -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Seq_ValidatePartNumber                | v10/maincpu/cc900/sequencer_engine.c       | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | Seq_ValidateTempoValue                | v10/maincpu/cc900/sequencer_engine.c       | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | TrimAndPadSmfFilename                 | v10/maincpu/cc900/smf_operations.c         | -O3 -Xr | 60    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeqBuf3_GetTimingValue                | v10/maincpu/cc900/system_handlers.c        | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SeqBuf_GetWritePos                    | v10/maincpu/cc900/system_handlers.c        | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SeqBuf_MidiOut_GetTimingValue         | v10/maincpu/cc900/system_handlers.c        | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SeqMain_GetTimingValue                | v10/maincpu/cc900/system_handlers.c        | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SubCPU_PayloadErrorStore              | v10/maincpu/cc900/system_handlers.c        | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | SubCPU_Payload_GetErrorFlag           | v10/maincpu/cc900/system_handlers.c        | -O3 -Xr | 8     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | Xapr_GetPresentFlag                   | v10/maincpu/cc900/test_init.c              | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v10   | GetCurrentPartSelect                  | v10/maincpu/cc900/ui_control_panel.c       | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | GetPartSelect                         | v10/maincpu/cc900/ui_control_panel.c       | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | SeqState_HasModeChanged               | v10/maincpu/cc900/ui_control_panel.c       | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v10   | CheckNotDrawFlag                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetCurrentTarget                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetFocusObject                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetModeNow                            | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetModeOld                            | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetNamingWindowID                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetRootEvent                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetRootObject                         | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetTitleNow                           | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | GetTitleOld                           | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | ResetLswFilter                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | SetCurrentTarget                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | SetLswFilter                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | SetRootEvent                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | SetRootObject                         | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v10   | SetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | BitMapOut_ByteData_DiskCheck          | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | BitMapOut_GetRenderMode               | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | BitMapOut_PrepareRender_CheckBit2     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | BitMapOut_SetDefaultTimer             | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | BitMapOut_StorePresetValue            | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Get_Region_Code                       | v9/maincpu/cc900/boot_routines.c           | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | GET_COMPUTER_INTERFACE_SELECTION      | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v9    | Demo_ResetCountdownTimer              | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Demo_StoreRecordChainParams           | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 16    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FDemo_ResetAllocBuffer                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_FormatName_Done                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_GetRecordByType                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_GetRecordPtrAlt                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_ResetCurrentRecord             | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_ReturnError                    | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_SetModeFlag_Reading            | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_SetModeFlag_Writing            | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | FileIO_WriteRecordName_Loop           | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Display_SetBackgroundColor            | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | FormatMedleyNumber                    | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Smf_GetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Smf_GetPlayAsGm                       | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Smf_SetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | GetDialEnableState                    | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SetDialEnable                         | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SeCtr2_SetSelection                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_ClearNotification              | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_InterpolateEdgeX               | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_OrPartConfig                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_ResetSubIndex                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_ReturnZero                     | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetConfirmState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetCurrentStep                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetDisplayState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetFilterCoeff                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetFilterMode                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetFilterParam1                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetLastSwitch                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetMode                        | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetPatchBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetSelectedRow                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetSoundBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_SetWriteMemSlot                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_StoreAbsoluteValue             | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_StoreEventId                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_StorePartMask                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeMenu_TriggerNotification            | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AccTuning_ResetFiveParts_Rec0         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AccTuning_ResetFiveParts_Rec1         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AccTuning_ResetFiveParts_Rec2         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AccTuning_ResetFiveParts_Rec3         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AccTuning_ResetFiveParts_Rec4         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AudioMode_CopyAccentFlags             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AudioMode_CopyChannelMode             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | AccPlay_GetCurrentPart                | v9/maincpu/cc900/seq_event_playback.c      | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeqData_SetErrorCode                  | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeqScan_ClearNoteRange                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Seq_ValidatePartNumber                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | Seq_ValidateTempoValue                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | TrimAndPadSmfFilename                 | v9/maincpu/cc900/smf_operations.c          | -O3 -Xr | 60    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeqBuf3_GetTimingValue                | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SeqBuf_GetWritePos                    | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SeqBuf_MidiOut_GetTimingValue         | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SeqMain_GetTimingValue                | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SubCPU_PayloadErrorStore              | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | SubCPU_Payload_GetErrorFlag           | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 8     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | Xapr_GetPresentFlag                   | v9/maincpu/cc900/test_init.c               | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v9    | GetCurrentPartSelect                  | v9/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | GetPartSelect                         | v9/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | SeqState_HasModeChanged               | v9/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v9    | CheckNotDrawFlag                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetFocusObject                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetModeNow                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetModeOld                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetNamingWindowID                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetTitleNow                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | GetTitleOld                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | ResetLswFilter                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | SetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | SetLswFilter                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | SetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | SetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v9    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | BitMapOut_ByteData_DiskCheck          | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | BitMapOut_GetRenderMode               | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | BitMapOut_PrepareRender_CheckBit2     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | BitMapOut_SetDefaultTimer             | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | BitMapOut_StorePresetValue            | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Get_Region_Code                       | v9/maincpu/cc900/boot_routines.c           | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | GET_COMPUTER_INTERFACE_SELECTION      | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v8    | Demo_ResetCountdownTimer              | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Demo_StoreRecordChainParams           | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 16    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FDemo_ResetAllocBuffer                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_FormatName_Done                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_GetRecordByType                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_GetRecordPtrAlt                | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_ResetCurrentRecord             | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_ReturnError                    | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_SetModeFlag_Reading            | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_SetModeFlag_Writing            | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | FileIO_WriteRecordName_Loop           | v9/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Display_SetBackgroundColor            | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | FormatMedleyNumber                    | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Smf_GetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Smf_GetPlayAsGm                       | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Smf_SetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | GetDialEnableState                    | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SetDialEnable                         | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SeCtr2_SetSelection                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_ClearNotification              | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_InterpolateEdgeX               | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_OrPartConfig                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_ResetSubIndex                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_ReturnZero                     | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetConfirmState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetCurrentStep                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetDisplayState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetFilterCoeff                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetFilterMode                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetFilterParam1                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetLastSwitch                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetMode                        | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetPatchBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetSelectedRow                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetSoundBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_SetWriteMemSlot                | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_StoreAbsoluteValue             | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_StoreEventId                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_StorePartMask                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeMenu_TriggerNotification            | v9/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AccTuning_ResetFiveParts_Rec0         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AccTuning_ResetFiveParts_Rec1         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AccTuning_ResetFiveParts_Rec2         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AccTuning_ResetFiveParts_Rec3         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AccTuning_ResetFiveParts_Rec4         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AudioMode_CopyAccentFlags             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AudioMode_CopyChannelMode             | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | AccPlay_GetCurrentPart                | v9/maincpu/cc900/seq_event_playback.c      | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeqData_SetErrorCode                  | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeqScan_ClearNoteRange                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Seq_ValidatePartNumber                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | Seq_ValidateTempoValue                | v9/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | TrimAndPadSmfFilename                 | v9/maincpu/cc900/smf_operations.c          | -O3 -Xr | 60    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeqBuf3_GetTimingValue                | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SeqBuf_GetWritePos                    | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SeqBuf_MidiOut_GetTimingValue         | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SeqMain_GetTimingValue                | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SubCPU_PayloadErrorStore              | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | SubCPU_Payload_GetErrorFlag           | v9/maincpu/cc900/system_handlers.c         | -O3 -Xr | 8     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | Xapr_GetPresentFlag                   | v9/maincpu/cc900/test_init.c               | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v8    | GetCurrentPartSelect                  | v9/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | GetPartSelect                         | v9/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | SeqState_HasModeChanged               | v9/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v8    | CheckNotDrawFlag                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetFocusObject                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetModeNow                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetModeOld                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetNamingWindowID                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetTitleNow                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | GetTitleOld                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | ResetLswFilter                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | SetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | SetLswFilter                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | SetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | SetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v8    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | BitMapOut_ByteData_DiskCheck          | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | BitMapOut_GetRenderMode               | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | BitMapOut_PrepareRender_CheckBit1     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | BitMapOut_PrepareRender_CheckBit2     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | BitMapOut_SetDefaultTimer             | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | BitMapOut_StorePresetValue            | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Get_Region_Code                       | v7/maincpu/cc900/boot_routines.c           | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | GET_COMPUTER_INTERFACE_SELECTION      | v7/maincpu/cc900/dsp_config_sysex.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v7    | Demo_ResetCountdownTimer              | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Demo_StoreRecordChainParams           | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 16    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FDemo_ResetAllocBuffer                | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_FormatName_Done                | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_GetRecordByType                | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_GetRecordPtrAlt                | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_ResetCurrentRecord             | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_ReturnError                    | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_SetModeFlag_Reading            | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_SetModeFlag_Writing            | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | FileIO_WriteRecordName_Loop           | v7/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Display_SetBackgroundColor            | v7/maincpu/cc900/graphics_text_vga.c       | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | FormatMedleyNumber                    | v7/maincpu/cc900/medley.c                  | -O3 -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Smf_GetMidiOut                        | v7/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Smf_GetPlayAsGm                       | v7/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Smf_SetMidiOut                        | v7/maincpu/cc900/medley.c                  | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | GetDialEnableState                    | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SetDialEnable                         | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SeCtr2_SetSelection                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_ClearNotification              | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_InterpolateEdgeX               | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_OrPartConfig                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_ResetSubIndex                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_ReturnZero                     | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetConfirmState                | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetCurrentStep                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetDisplayState                | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetFilterCoeff                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetFilterMode                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetFilterParam1                | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetLastSwitch                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetMode                        | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetPatchBank                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetSelectedRow                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetSoundBank                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_SetWriteMemSlot                | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_StoreAbsoluteValue             | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_StoreEventId                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_StorePartMask                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeMenu_TriggerNotification            | v7/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AccTuning_ResetFiveParts_Rec0         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AccTuning_ResetFiveParts_Rec1         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AccTuning_ResetFiveParts_Rec2         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AccTuning_ResetFiveParts_Rec3         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AccTuning_ResetFiveParts_Rec4         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AudioMode_CopyAccentFlags             | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AudioMode_CopyChannelMode             | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | AccPlay_GetCurrentPart                | v7/maincpu/cc900/seq_event_playback.c      | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeqData_SetErrorCode                  | v7/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeqScan_ClearNoteRange                | v7/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Seq_ValidatePartNumber                | v7/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | Seq_ValidateTempoValue                | v7/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | TrimAndPadSmfFilename                 | v7/maincpu/cc900/smf_operations.c          | -O3 -Xr | 60    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeqBuf3_GetTimingValue                | v7/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SeqBuf_GetWritePos                    | v7/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SeqBuf_MidiOut_GetTimingValue         | v7/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SeqMain_GetTimingValue                | v7/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SubCPU_PayloadErrorStore              | v7/maincpu/cc900/system_handlers.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | SubCPU_Payload_GetErrorFlag           | v7/maincpu/cc900/system_handlers.c         | -O3 -Xr | 8     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | Xapr_GetPresentFlag                   | v7/maincpu/cc900/test_init.c               | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v7    | GetCurrentPartSelect                  | v7/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | GetPartSelect                         | v7/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | SeqState_HasModeChanged               | v7/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v7    | CheckNotDrawFlag                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetCurrentTarget                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetFocusObject                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetModeNow                            | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetModeOld                            | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetNamingWindowID                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetRootEvent                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetRootObject                         | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetTitleNow                           | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | GetTitleOld                           | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | ResetLswFilter                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | SetCurrentTarget                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | SetLswFilter                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | SetRootEvent                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | SetRootObject                         | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v7    | SetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | BitMapOut_ByteData_DiskCheck          | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | BitMapOut_GetRenderMode               | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | BitMapOut_PrepareRender_CheckBit1     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | BitMapOut_PrepareRender_CheckBit2     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | BitMapOut_SetDefaultTimer             | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | BitMapOut_StorePresetValue            | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Get_Region_Code                       | v6/maincpu/cc900/boot_routines.c           | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | GET_COMPUTER_INTERFACE_SELECTION      | v6/maincpu/cc900/dsp_config_sysex.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v6    | Demo_ResetCountdownTimer              | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Demo_StoreRecordChainParams           | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 16    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FDemo_ResetAllocBuffer                | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_FormatName_Done                | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_GetRecordByType                | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_GetRecordPtrAlt                | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_ResetCurrentRecord             | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_ReturnError                    | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_SetModeFlag_Reading            | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_SetModeFlag_Writing            | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | FileIO_WriteRecordName_Loop           | v6/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Display_SetBackgroundColor            | v6/maincpu/cc900/graphics_text_vga.c       | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | FormatMedleyNumber                    | v6/maincpu/cc900/medley.c                  | -O3 -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Smf_GetMidiOut                        | v6/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Smf_GetPlayAsGm                       | v6/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Smf_SetMidiOut                        | v6/maincpu/cc900/medley.c                  | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | GetDialEnableState                    | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SetDialEnable                         | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SeCtr2_SetSelection                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_ClearNotification              | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_OrPartConfig                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_ResetSubIndex                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_ReturnZero                     | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetConfirmState                | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetCurrentStep                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetDisplayState                | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetFilterCoeff                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetFilterMode                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetFilterParam1                | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetLastSwitch                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetMode                        | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetPatchBank                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetSelectedRow                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetSoundBank                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_SetWriteMemSlot                | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_StoreAbsoluteValue             | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_StoreEventId                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_StorePartMask                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeMenu_TriggerNotification            | v6/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AccTuning_ResetFiveParts_Rec0         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AccTuning_ResetFiveParts_Rec1         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AccTuning_ResetFiveParts_Rec2         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AccTuning_ResetFiveParts_Rec3         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AccTuning_ResetFiveParts_Rec4         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AudioMode_CopyAccentFlags             | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AudioMode_CopyChannelMode             | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | AccPlay_GetCurrentPart                | v6/maincpu/cc900/seq_event_playback.c      | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeqData_SetErrorCode                  | v6/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeqScan_ClearNoteRange                | v6/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Seq_ValidatePartNumber                | v6/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | Seq_ValidateTempoValue                | v6/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | TrimAndPadSmfFilename                 | v6/maincpu/cc900/smf_operations.c          | -O3 -Xr | 60    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeqBuf3_GetTimingValue                | v6/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SeqBuf_GetWritePos                    | v6/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SeqBuf_MidiOut_GetTimingValue         | v6/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SeqMain_GetTimingValue                | v6/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SubCPU_PayloadErrorStore              | v6/maincpu/cc900/system_handlers.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | SubCPU_Payload_GetErrorFlag           | v6/maincpu/cc900/system_handlers.c         | -O3 -Xr | 8     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | Xapr_GetPresentFlag                   | v6/maincpu/cc900/test_init.c               | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v6    | GetCurrentPartSelect                  | v6/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | GetPartSelect                         | v6/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | SeqState_HasModeChanged               | v6/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v6    | CheckNotDrawFlag                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetCurrentTarget                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetFocusObject                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetModeNow                            | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetModeOld                            | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetNamingWindowID                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetRootEvent                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetRootObject                         | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetTitleNow                           | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | GetTitleOld                           | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | ResetLswFilter                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | SetCurrentTarget                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | SetLswFilter                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | SetRootEvent                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | SetRootObject                         | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v6    | SetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | BitMapOut_ByteData_DiskCheck          | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | BitMapOut_GetRenderMode               | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | BitMapOut_PrepareRender_CheckBit1     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | BitMapOut_PrepareRender_CheckBit2     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | BitMapOut_SetDefaultTimer             | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | BitMapOut_StorePresetValue            | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Get_Region_Code                       | v5/maincpu/cc900/boot_routines.c           | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | GET_COMPUTER_INTERFACE_SELECTION      | v5/maincpu/cc900/dsp_config_sysex.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-34-p6-firmware |
-| v5    | Demo_ResetCountdownTimer              | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Demo_StoreRecordChainParams           | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 16    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FDemo_ResetAllocBuffer                | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_FormatName_Done                | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_GetRecordByType                | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_GetRecordPtrAlt                | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_ResetCurrentRecord             | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_ReturnError                    | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_SetModeFlag_Reading            | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_SetModeFlag_Writing            | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | FileIO_WriteRecordName_Loop           | v5/maincpu/cc900/file_demo_proc.c          | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Display_SetBackgroundColor            | v5/maincpu/cc900/graphics_text_vga.c       | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | FormatMedleyNumber                    | v5/maincpu/cc900/medley.c                  | -O3 -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Smf_GetMidiOut                        | v5/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Smf_GetPlayAsGm                       | v5/maincpu/cc900/medley.c                  | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Smf_SetMidiOut                        | v5/maincpu/cc900/medley.c                  | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | GetDialEnableState                    | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SetDialEnable                         | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SeCtr2_SetSelection                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_ClearNotification              | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_OrPartConfig                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_ResetSubIndex                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_ReturnZero                     | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetConfirmState                | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetCurrentStep                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetDisplayState                | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetFilterCoeff                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetFilterMode                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetFilterParam1                | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetLastSwitch                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetMode                        | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetPatchBank                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetSelectedRow                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetSoundBank                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_SetWriteMemSlot                | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_StoreAbsoluteValue             | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_StoreEventId                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_StorePartMask                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeMenu_TriggerNotification            | v5/maincpu/cc900/semenu_routines.c         | -O3 -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AccTuning_ResetFiveParts_Rec0         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AccTuning_ResetFiveParts_Rec1         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AccTuning_ResetFiveParts_Rec2         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AccTuning_ResetFiveParts_Rec3         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AccTuning_ResetFiveParts_Rec4         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AudioMode_CopyAccentFlags             | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AudioMode_CopyChannelMode             | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | AccPlay_GetCurrentPart                | v5/maincpu/cc900/seq_event_playback.c      | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeqData_SetErrorCode                  | v5/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeqScan_ClearNoteRange                | v5/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 13    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Seq_ValidatePartNumber                | v5/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | Seq_ValidateTempoValue                | v5/maincpu/cc900/sequencer_engine.c        | -O3 -Xr | 17    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | TrimAndPadSmfFilename                 | v5/maincpu/cc900/smf_operations.c          | -O3 -Xr | 60    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeqBuf3_GetTimingValue                | v5/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SeqBuf_GetWritePos                    | v5/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SeqBuf_MidiOut_GetTimingValue         | v5/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SeqMain_GetTimingValue                | v5/maincpu/cc900/system_handlers.c         | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SubCPU_PayloadErrorStore              | v5/maincpu/cc900/system_handlers.c         | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | SubCPU_Payload_GetErrorFlag           | v5/maincpu/cc900/system_handlers.c         | -O3 -Xr | 8     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | Xapr_GetPresentFlag                   | v5/maincpu/cc900/test_init.c               | -O3 -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-41-p6-firmware |
-| v5    | GetCurrentPartSelect                  | v5/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | GetPartSelect                         | v5/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | SeqState_HasModeChanged               | v5/maincpu/cc900/ui_control_panel.c        | -O3 -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-34-p6-firmware |
-| v5    | CheckNotDrawFlag                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetCurrentTarget                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetFocusObject                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetModeNow                            | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetModeOld                            | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetNamingWindowID                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetRootEvent                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetRootObject                         | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetRootParam                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetTitleNow                           | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | GetTitleOld                           | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | ResetLswFilter                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | SetCurrentTarget                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | SetLswFilter                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | SetRootEvent                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | SetRootObject                         | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
-| v5    | SetRootParam                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr     | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| image | function                               | C file                                        | options     | bytes | built | model   | V4.23                  | V4.23 run          |
+|-------|----------------------------------------|-----------------------------------------------|-------------|-------|-------|---------|------------------------|--------------------|
+| v10   | AccCh1_RestoreState                    | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccCh2_RestoreState                    | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccCh3_RestoreState                    | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccCh4_RestoreState                    | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccKbd2_RestoreState                   | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccPatch_ComplexDataBlock_Helper2      | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 1     | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccTone_LookupByProgram                | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 56    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccVoice_ComputeParamAddr              | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccVoice_IncrementBarCounter           | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccVoice_RestorePartState1             | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | MIDIChan_ScanForFree                   | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | Part_IsPercussionType                  | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | Part_StoreVoiceTableIndex              | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 27    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | S2cTtl_InitOnTitleChange               | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 82    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | SeqRec_CheckOverflow                   | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | SeqRec_OverflowCleanup                 | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | VoiceTable_ResolveReadAddr             | v10/maincpu/cc900/accompaniment_engine.c      | -O3 -Xr     | 28    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v10   | AccCh1_SaveState                       | v10/maincpu/cc900/accompaniment_engine_xr.c   | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v10   | AccCh2_SaveState                       | v10/maincpu/cc900/accompaniment_engine_xr.c   | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v10   | AccCh3_SaveState                       | v10/maincpu/cc900/accompaniment_engine_xr.c   | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v10   | AccCh4_SaveState                       | v10/maincpu/cc900/accompaniment_engine_xr.c   | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v10   | AccVoice_ClearChannelStates            | v10/maincpu/cc900/accompaniment_engine_xr.c   | -Xr         | 31    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v10   | AccVoice_SavePartState1                | v10/maincpu/cc900/accompaniment_engine_xr.c   | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v10   | PanelTlv_CompanionOfPart               | v10/maincpu/cc900/audio_control_engine.c      | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache c9081aeff744 |
+| v10   | AudioInit_CheckMIDIStatus              | v10/maincpu/cc900/audioinit_routines_xr.c     | -Xr         | 41    | yes   | differs | MATCH                  | cache aff24722c73e |
+| v10   | AudioInit_ClearPartFlags_ByMode        | v10/maincpu/cc900/audioinit_routines_xr.c     | -Xr         | 175   | yes   | differs | MATCH                  | cache aff24722c73e |
+| v10   | AudioInit_SelectPriority               | v10/maincpu/cc900/audioinit_routines_xr.c     | -Xr         | 220   | yes   | differs | MATCH                  | cache aff24722c73e |
+| v10   | BitMapOut_ByteData_DiskCheck           | v10/maincpu/cc900/bitmap_out_routines.c       | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v10   | BitMapOut_GetRenderMode                | v10/maincpu/cc900/bitmap_out_routines.c       | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v10   | BitMapOut_PrepareRender_CheckBit1      | v10/maincpu/cc900/bitmap_out_routines.c       | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v10   | BitMapOut_PrepareRender_CheckBit2      | v10/maincpu/cc900/bitmap_out_routines.c       | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v10   | BitMapOut_SetDefaultTimer              | v10/maincpu/cc900/bitmap_out_routines.c       | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v10   | BitMapOut_StorePresetValue             | v10/maincpu/cc900/bitmap_out_routines.c       | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v10   | BmDrEdit_RenderSecondaryVert           | v10/maincpu/cc900/bmdredit_routines.c         | -O3 -Xr     | 69    | yes   | MATCH   | MATCH                  | cache 6a018d98339e |
+| v10   | BmDrEdit_SetupScrollRegion             | v10/maincpu/cc900/bmdredit_routines.c         | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache 6a018d98339e |
+| v10   | Get_Region_Code                        | v10/maincpu/cc900/boot_routines.c             | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache b9bb660b800c |
+| v10   | CPanel_CheckSpecialCombos              | v10/maincpu/cc900/cpanel_routines_xr.c        | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 0a5b20b24500 |
+| v10   | GET_COMPUTER_INTERFACE_SELECTION       | v10/maincpu/cc900/dsp_config_sysex.c          | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 59f66647a7ac |
+| v10   | FDC_DETECT_CHECK                       | v10/maincpu/cc900/fdc_routines_xr.c           | -Xr         | 70    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v10   | FDC_DRIVE_DETECT                       | v10/maincpu/cc900/fdc_routines_xr.c           | -Xr         | 78    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v10   | FDemoText_ResetLayoutState             | v10/maincpu/cc900/fdemotext_routines.c        | -O3 -Xr     | 106   | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v10   | Seq_CopyResourcePtrs                   | v10/maincpu/cc900/fdemotext_routines.c        | -O3 -Xr     | 88    | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v10   | Demo_ResetCountdownTimer               | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | Demo_StoreRecordChainParams            | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FDemo_ResetAllocBuffer                 | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_FormatName_Done                 | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_GetRecordByType                 | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_GetRecordPtrAlt                 | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_ResetCurrentRecord              | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_ReturnError                     | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_SetModeFlag_Reading             | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_SetModeFlag_Writing             | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | FileIO_WriteRecordName_Loop            | v10/maincpu/cc900/file_demo_proc.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v10   | Demo_GetPresetBaseForPart              | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | Demo_GetPresetBaseForPartAlt           | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | Demo_GetPresetBaseForPartExt           | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | Demo_ScanActivePartChannels            | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 99    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_BuildFilePath                   | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_BuildRecordPath_Done            | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_BuildRecordPath_Return          | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_CopyString                      | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 22    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_FormatName_Loop                 | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_GetRecordAttr_Check             | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_GetRecordFlags                  | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_GetRecordType_Extended          | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | FileIO_ValidateModeAndRange            | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | ParseTwoDigitFileNum                   | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | ValidateFileRange                      | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | ValidateFileRangeAlt                   | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | ValidateFileRangeType5                 | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 67    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | ValidateFileSelectionIndex             | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | Voice_GetPresetFieldAddr               | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 35    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | Voice_GetPresetFieldWord               | v10/maincpu/cc900/file_demo_proc_b.c          | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v10   | Flash_StoreBaseAndInitAccPatch_Helper2 | v10/maincpu/cc900/flash_floppy_handlers_xr.c  | -Xr         | 37    | yes   | MATCH   | MATCH                  | cache 0da71821d482 |
+| v10   | Display_SetBackgroundColor             | v10/maincpu/cc900/graphics_text_vga.c         | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 097367297af5 |
+| v10   | FormatMedleyNumber                     | v10/maincpu/cc900/medley.c                    | -O3 -Xr     | 108   | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v10   | Smf_GetMidiOut                         | v10/maincpu/cc900/medley.c                    | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v10   | Smf_GetPlayAsGm                        | v10/maincpu/cc900/medley.c                    | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v10   | Smf_SetMidiOut                         | v10/maincpu/cc900/medley.c                    | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v10   | ArpQueue_Enqueue                       | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | ArpQueue_InitBuffer                    | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | DataBuf_CheckFormatPair                | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | DataBuf_CheckSubFormat                 | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 46    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | DataBuf_CopyCompressorBlock16          | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 112   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | DataBuf_CopyEQBlock7                   | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 114   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | DataBuf_CopyReverbBlock6               | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 147   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiChan_ClearStorageFields            | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiChan_NibbleLookup_Data             | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferBlock_CurrentSong       | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 23    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferBlock_LivePanel         | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferBlock_PanelMemories     | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 25    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferBlock_SongSlots         | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferBlock_SoundRamData      | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 32    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferBlock_SoundRamId        | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiPkt_SetXferTotal_SoundRam          | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 26    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiSeq_CheckSyncDirty                 | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | Param_SignExtendReturn_Helper3_Helper  | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | Part_ProcessEntry_Data                 | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | SndParam_ApplyModeSpecific             | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | SoundParam_ApplyBit15Toggle            | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | TGReg_ClearTerminator                  | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | VoiceParam_CopyBitfields_TypeC         | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | VoiceQueue_Append                      | v10/maincpu/cc900/midi_dispatch_handlers.c    | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v10   | MidiSeq_UpdateVolumeScale              | v10/maincpu/cc900/midi_dispatch_handlers_xr.c | -Xr         | 59    | yes   | differs | MATCH                  | cache 22a38222e052 |
+| v10   | MidiPkt_CheckGateCondition             | v10/maincpu/cc900/midipkt_routines.c          | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache 26359e9d87fc |
+| v10   | CommPort_StatusCheck_Compare           | v10/maincpu/cc900/note_voice_mapping.c        | -O3 -Xr     | 40    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v10   | Param_SignExtendRetu_Data              | v10/maincpu/cc900/note_voice_mapping.c        | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v10   | Param_SignExtendReturn_Helper          | v10/maincpu/cc900/note_voice_mapping.c        | -O3 -Xr     | 41    | yes   | MATCH   | MATCH                  | cache 4d44ddacf4df |
+| v10   | COMM_SendDataReturn                    | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 134   | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | LinkVoiceSlots_LoadReg                 | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 22    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | MidiRingBuf_WriteByte                  | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | NoteMap_LinkVoiceSlots                 | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 73    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | NoteMap_SwapVoiceLinks                 | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 68    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | RingBuffer_ReadByte                    | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | RingBuffer_WriteByte                   | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | StoreAndAdvance_LoadDRAM               | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | SysexRingBuf_ReadByte                  | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | SysexRingBuf_WriteByte                 | v10/maincpu/cc900/note_voice_mapping_xr.c     | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v10   | GetDialEnableState                     | v10/maincpu/cc900/presentation_sound_nav.c    | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v10   | SetDialEnable                          | v10/maincpu/cc900/presentation_sound_nav.c    | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v10   | SeCtr2_SetSelection                    | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeLfo_GetSelectedLfo                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 86    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_CheckObjEnabled                 | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_CheckObjValid                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_ClearNotification               | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_CopyWriteUpdate_Step3_Helper14  | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache bcaf5d6449fd |
+| v10   | SeMenu_InterpolateEdgeX                | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_OrPartConfig                    | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_ResetSubIndex                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_ReturnZero                      | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 3     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetConfirmState                 | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetCurrentStep                  | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetDisplayState                 | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetEditEnable                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 14    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetFilterCoeff                  | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetFilterMode                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetFilterParam1                 | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetLastSwitch                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetMode                         | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetNameBufferChar               | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 18    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetPatchBank                    | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetSelectedRow                  | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetSoundBank                    | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_SetWriteMemSlot                 | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_StoreAbsoluteValue              | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_StoreEventId                    | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_StorePartMask                   | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | SeMenu_TriggerNotification             | v10/maincpu/cc900/semenu_routines.c           | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v10   | AccTuning_ResetFiveParts_Rec0          | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AccTuning_ResetFiveParts_Rec1          | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AccTuning_ResetFiveParts_Rec2          | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AccTuning_ResetFiveParts_Rec3          | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AccTuning_ResetFiveParts_Rec4          | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AudioMode_CopyAccentFlags              | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AudioMode_CopyChannelMode              | v10/maincpu/cc900/seq_audio_mode.c            | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v10   | AccPlay_GetCurrentPart                 | v10/maincpu/cc900/seq_event_playback.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 0b9680bcf198 |
+| v10   | Chan_IsActive                          | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | MIDI_GetEventSizeFromByte              | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 83    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | PartCtrl_AppendToEventQueue            | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 66    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Part_CheckAndSetModifiedFlags          | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Part_ReadByteDirect                    | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Part_WriteByte                         | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Rhythm_CheckHighBitFlag                | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqAcc_UpdateEndPosition               | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqBuffer_FindMinPosition              | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqData_SetErrorCode                   | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 12    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqParams_InitDefaults                 | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 336   | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqPlay_CheckRepeatActive              | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 63    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqPlay_InitStartState                 | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 92    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqPlay_ResetStartState                | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqScan_ClearMatchingBarSlots          | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqScan_ClearNoteRange                 | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | SeqVoice_FindDrumPartIndex             | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 50    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Seq_ComputePercentClamped99            | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Seq_ValidatePartNumber                 | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | Seq_ValidateTempoValue                 | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | VoiceAlloc_TestBitHigh                 | v10/maincpu/cc900/sequencer_engine.c          | -O3 -Xr     | 57    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v10   | MIDI_GetEventSize                      | v10/maincpu/cc900/sequencer_engine_b.c        | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v10   | Part_CopyBlock16                       | v10/maincpu/cc900/sequencer_engine_b.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v10   | SeqData_CopyBlock2K                    | v10/maincpu/cc900/sequencer_engine_b.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v10   | SeqEvent_GetParamLength                | v10/maincpu/cc900/sequencer_engine_b.c        | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v10   | VoiceAlloc_SetBitInMap                 | v10/maincpu/cc900/sequencer_engine_b.c        | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v10   | VoiceAlloc_TestBitInMap                | v10/maincpu/cc900/sequencer_engine_b.c        | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v10   | RenderSmfFilename                      | v10/maincpu/cc900/smf_operations.c            | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 115b2b10b9d1 |
+| v10   | TrimAndPadSmfFilename                  | v10/maincpu/cc900/smf_operations.c            | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache 115b2b10b9d1 |
+| v10   | SndParam_ClearHashTable                | v10/maincpu/cc900/sndparam_routines.c         | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache b7ebf3769f54 |
+| v10   | SndParam_EncodeAddress                 | v10/maincpu/cc900/sndparam_routines.c         | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache b7ebf3769f54 |
+| v10   | Sprintf_InsertCarry                    | v10/maincpu/cc900/sprintf_core_xs.c           | -O3 -XS -Xr | 71    | yes   | differs | MATCH                  | cache 9c89a705d469 |
+| v10   | Audio_DMA_Transfer                     | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 60    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v10   | RhythmBuf_BytecodeSnippet              | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SeqBuf3_GetTimingValue                 | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SeqBuf_DspSysEx_OrphanData             | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SeqBuf_GetWritePos                     | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SeqBuf_MidiOut_GetTimingValue          | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SeqBuf_NoteEvent_OrphanData            | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SeqMain_GetTimingValue                 | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SubCPU_PayloadErrorStore               | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | SubCPU_Payload_GetErrorFlag            | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | TableData_ROM_Verify                   | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v10   | TempoRingBuf_BytecodeSnippet2          | v10/maincpu/cc900/system_handlers.c           | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v10   | Xapr_GetPresentFlag                    | v10/maincpu/cc900/test_init.c                 | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache ec5f70e03b94 |
+| v10   | GetBoxCenter                           | v10/maincpu/cc900/ui_control_panel.c          | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 5899de83900e |
+| v10   | GetCurrentPartSelect                   | v10/maincpu/cc900/ui_control_panel.c          | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v10   | GetPartSelect                          | v10/maincpu/cc900/ui_control_panel.c          | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v10   | SeqState_HasModeChanged                | v10/maincpu/cc900/ui_control_panel.c          | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v10   | CheckNotDrawFlag                       | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetCurrentTarget                       | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetFocusObject                         | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetModeNow                             | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetModeOld                             | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetNamingWindowID                      | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetRootEvent                           | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetRootObject                          | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetRootParam                           | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetTitleNow                            | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | GetTitleOld                            | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | ResetLswFilter                         | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | SetCurrentTarget                       | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | SetLswFilter                           | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | SetRootEvent                           | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | SetRootObject                          | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | SetRootParam                           | v10/maincpu/cc900/ui_widget_defs.c            | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v10   | InitializeTimer                        | v10/maincpu/cc900/ui_widget_defs_o3xr.c       | -O3 -Xr     | 61    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v10   | RegisterMode                           | v10/maincpu/cc900/ui_widget_defs_o3xr.c       | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v10   | UnregisteredMode                       | v10/maincpu/cc900/ui_widget_defs_o3xr.c       | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v10   | ChangeWall_Impl                        | v10/maincpu/cc900/ui_window_procs_xr.c        | -Xr         | 36    | yes   | differs | MATCH                  | cache c1eea91acef3 |
+| v9    | AccCh1_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccCh2_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccCh3_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccCh4_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccKbd2_RestoreState                   | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccPatch_ComplexDataBlock_Helper2      | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 1     | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccTone_LookupByProgram                | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 56    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccVoice_ComputeParamAddr              | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccVoice_IncrementBarCounter           | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccVoice_RestorePartState1             | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | MIDIChan_ScanForFree                   | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | Part_IsPercussionType                  | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | Part_StoreVoiceTableIndex              | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 27    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | S2cTtl_InitOnTitleChange               | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 82    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | SeqRec_CheckOverflow                   | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | SeqRec_OverflowCleanup                 | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | VoiceTable_ResolveReadAddr             | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 28    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v9    | AccCh1_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v9    | AccCh2_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v9    | AccCh3_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v9    | AccCh4_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v9    | AccVoice_ClearChannelStates            | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 31    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v9    | AccVoice_SavePartState1                | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v9    | PanelTlv_CompanionOfPart               | v9/maincpu/cc900/audio_control_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache c9081aeff744 |
+| v9    | AudioInit_CheckMIDIStatus              | v9/maincpu/cc900/audioinit_routines_xr.c      | -Xr         | 41    | yes   | differs | MATCH                  | cache aff24722c73e |
+| v9    | AudioInit_ClearPartFlags_ByMode        | v9/maincpu/cc900/audioinit_routines_xr.c      | -Xr         | 175   | yes   | differs | MATCH                  | cache aff24722c73e |
+| v9    | AudioInit_SelectPriority               | v9/maincpu/cc900/audioinit_routines_xr.c      | -Xr         | 220   | yes   | differs | MATCH                  | cache aff24722c73e |
+| v9    | BitMapOut_ByteData_DiskCheck           | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v9    | BitMapOut_GetRenderMode                | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v9    | BitMapOut_PrepareRender_CheckBit1      | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v9    | BitMapOut_PrepareRender_CheckBit2      | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v9    | BitMapOut_SetDefaultTimer              | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v9    | BitMapOut_StorePresetValue             | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v9    | BmDrEdit_RenderSecondaryVert           | v9/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 69    | yes   | MATCH   | MATCH                  | cache 6a018d98339e |
+| v9    | BmDrEdit_SetupScrollRegion             | v9/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache 6a018d98339e |
+| v9    | Get_Region_Code                        | v9/maincpu/cc900/boot_routines.c              | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache b9bb660b800c |
+| v9    | CPanel_CheckSpecialCombos              | v9/maincpu/cc900/cpanel_routines_xr.c         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 0a5b20b24500 |
+| v9    | GET_COMPUTER_INTERFACE_SELECTION       | v9/maincpu/cc900/dsp_config_sysex.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 59f66647a7ac |
+| v9    | FDC_DETECT_CHECK                       | v9/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 70    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v9    | FDC_DRIVE_DETECT                       | v9/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 78    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v9    | FDemoText_ResetLayoutState             | v9/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 106   | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v9    | Seq_CopyResourcePtrs                   | v9/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 88    | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v9    | Demo_ResetCountdownTimer               | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | Demo_StoreRecordChainParams            | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FDemo_ResetAllocBuffer                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_FormatName_Done                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_GetRecordByType                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_GetRecordPtrAlt                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_ResetCurrentRecord              | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_ReturnError                     | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_SetModeFlag_Reading             | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_SetModeFlag_Writing             | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | FileIO_WriteRecordName_Loop            | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v9    | Demo_GetPresetBaseForPart              | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | Demo_GetPresetBaseForPartAlt           | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | Demo_GetPresetBaseForPartExt           | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | Demo_ScanActivePartChannels            | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 99    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_BuildFilePath                   | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_BuildRecordPath_Done            | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_BuildRecordPath_Return          | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_CopyString                      | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 22    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_FormatName_Loop                 | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_GetRecordAttr_Check             | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_GetRecordFlags                  | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_GetRecordType_Extended          | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | FileIO_ValidateModeAndRange            | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | ParseTwoDigitFileNum                   | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | ValidateFileRange                      | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | ValidateFileRangeAlt                   | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | ValidateFileRangeType5                 | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 67    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | ValidateFileSelectionIndex             | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | Voice_GetPresetFieldAddr               | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 35    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | Voice_GetPresetFieldWord               | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v9    | Flash_StoreBaseAndInitAccPatch_Helper2 | v9/maincpu/cc900/flash_floppy_handlers_xr.c   | -Xr         | 37    | yes   | MATCH   | MATCH                  | cache 0da71821d482 |
+| v9    | Display_SetBackgroundColor             | v9/maincpu/cc900/graphics_text_vga.c          | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 097367297af5 |
+| v9    | FormatMedleyNumber                     | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 108   | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v9    | Smf_GetMidiOut                         | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v9    | Smf_GetPlayAsGm                        | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v9    | Smf_SetMidiOut                         | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v9    | ArpQueue_Enqueue                       | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | ArpQueue_InitBuffer                    | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | DataBuf_CheckFormatPair                | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | DataBuf_CheckSubFormat                 | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 46    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | DataBuf_CopyCompressorBlock16          | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 112   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | DataBuf_CopyEQBlock7                   | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 114   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | DataBuf_CopyReverbBlock6               | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 147   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiChan_ClearStorageFields            | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiChan_NibbleLookup_Data             | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferBlock_CurrentSong       | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 23    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferBlock_LivePanel         | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferBlock_PanelMemories     | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferBlock_SongSlots         | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferBlock_SoundRamData      | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 32    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferBlock_SoundRamId        | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiPkt_SetXferTotal_SoundRam          | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 26    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiSeq_CheckSyncDirty                 | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | Param_SignExtendReturn_Helper3_Helper  | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | Part_ProcessEntry_Data                 | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | SndParam_ApplyModeSpecific             | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | SoundParam_ApplyBit15Toggle            | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | TGReg_ClearTerminator                  | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | VoiceParam_CopyBitfields_TypeC         | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | VoiceQueue_Append                      | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v9    | MidiSeq_UpdateVolumeScale              | v9/maincpu/cc900/midi_dispatch_handlers_xr.c  | -Xr         | 59    | yes   | differs | MATCH                  | cache 22a38222e052 |
+| v9    | MidiPkt_CheckGateCondition             | v9/maincpu/cc900/midipkt_routines.c           | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache 26359e9d87fc |
+| v9    | CommPort_StatusCheck_Compare           | v9/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 40    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v9    | Param_SignExtendRetu_Data              | v9/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v9    | Param_SignExtendReturn_Helper          | v9/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 41    | yes   | MATCH   | MATCH                  | cache 4d44ddacf4df |
+| v9    | COMM_SendDataReturn                    | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 134   | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | LinkVoiceSlots_LoadReg                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 22    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | MidiRingBuf_WriteByte                  | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | NoteMap_LinkVoiceSlots                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 73    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | NoteMap_SwapVoiceLinks                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 68    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | RingBuffer_ReadByte                    | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | RingBuffer_WriteByte                   | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | StoreAndAdvance_LoadDRAM               | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | SysexRingBuf_ReadByte                  | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | SysexRingBuf_WriteByte                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v9    | GetDialEnableState                     | v9/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v9    | SetDialEnable                          | v9/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v9    | SeCtr2_SetSelection                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeLfo_GetSelectedLfo                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 86    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_CheckObjEnabled                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_CheckObjValid                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_ClearNotification               | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_CopyWriteUpdate_Step3_Helper14  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache bcaf5d6449fd |
+| v9    | SeMenu_InterpolateEdgeX                | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_OrPartConfig                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_ResetSubIndex                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_ReturnZero                      | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 3     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetConfirmState                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetCurrentStep                  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetDisplayState                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetEditEnable                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetFilterCoeff                  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetFilterMode                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetFilterParam1                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetLastSwitch                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetMode                         | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetNameBufferChar               | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 18    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetPatchBank                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetSelectedRow                  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetSoundBank                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_SetWriteMemSlot                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_StoreAbsoluteValue              | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_StoreEventId                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_StorePartMask                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | SeMenu_TriggerNotification             | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v9    | AccTuning_ResetFiveParts_Rec0          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AccTuning_ResetFiveParts_Rec1          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AccTuning_ResetFiveParts_Rec2          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AccTuning_ResetFiveParts_Rec3          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AccTuning_ResetFiveParts_Rec4          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AudioMode_CopyAccentFlags              | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AudioMode_CopyChannelMode              | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v9    | AccPlay_GetCurrentPart                 | v9/maincpu/cc900/seq_event_playback.c         | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 0b9680bcf198 |
+| v9    | Chan_IsActive                          | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | MIDI_GetEventSizeFromByte              | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 83    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | PartCtrl_AppendToEventQueue            | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 66    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Part_CheckAndSetModifiedFlags          | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Part_ReadByteDirect                    | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Part_WriteByte                         | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Rhythm_CheckHighBitFlag                | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqAcc_UpdateEndPosition               | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqBuffer_FindMinPosition              | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqData_SetErrorCode                   | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 12    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqParams_InitDefaults                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 336   | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqPlay_CheckRepeatActive              | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 63    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqPlay_InitStartState                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 92    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqPlay_ResetStartState                | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqScan_ClearMatchingBarSlots          | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqScan_ClearNoteRange                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | SeqVoice_FindDrumPartIndex             | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 50    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Seq_ComputePercentClamped99            | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Seq_ValidatePartNumber                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | Seq_ValidateTempoValue                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | VoiceAlloc_TestBitHigh                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 57    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v9    | MIDI_GetEventSize                      | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v9    | Part_CopyBlock16                       | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v9    | SeqData_CopyBlock2K                    | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v9    | SeqEvent_GetParamLength                | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v9    | VoiceAlloc_SetBitInMap                 | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v9    | VoiceAlloc_TestBitInMap                | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v9    | RenderSmfFilename                      | v9/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 115b2b10b9d1 |
+| v9    | TrimAndPadSmfFilename                  | v9/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache 115b2b10b9d1 |
+| v9    | SndParam_ClearHashTable                | v9/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache b7ebf3769f54 |
+| v9    | SndParam_EncodeAddress                 | v9/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache b7ebf3769f54 |
+| v9    | Sprintf_InsertCarry                    | v9/maincpu/cc900/sprintf_core_xs.c            | -O3 -XS -Xr | 71    | yes   | differs | MATCH                  | cache 9c89a705d469 |
+| v9    | Audio_DMA_Transfer                     | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 60    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v9    | RhythmBuf_BytecodeSnippet              | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SeqBuf3_GetTimingValue                 | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SeqBuf_DspSysEx_OrphanData             | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SeqBuf_GetWritePos                     | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SeqBuf_MidiOut_GetTimingValue          | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SeqBuf_NoteEvent_OrphanData            | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SeqMain_GetTimingValue                 | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SubCPU_PayloadErrorStore               | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | SubCPU_Payload_GetErrorFlag            | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | TableData_ROM_Verify                   | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v9    | TempoRingBuf_BytecodeSnippet2          | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v9    | Xapr_GetPresentFlag                    | v9/maincpu/cc900/test_init.c                  | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache ec5f70e03b94 |
+| v9    | GetBoxCenter                           | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 5899de83900e |
+| v9    | GetCurrentPartSelect                   | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v9    | GetPartSelect                          | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v9    | SeqState_HasModeChanged                | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v9    | CheckNotDrawFlag                       | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetCurrentTarget                       | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetFocusObject                         | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetModeNow                             | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetModeOld                             | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetNamingWindowID                      | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetRootEvent                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetRootObject                          | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetRootParam                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetTitleNow                            | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | GetTitleOld                            | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | ResetLswFilter                         | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | SetCurrentTarget                       | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | SetLswFilter                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | SetRootEvent                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | SetRootObject                          | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | SetRootParam                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v9    | InitializeTimer                        | v9/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 61    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v9    | RegisterMode                           | v9/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v9    | UnregisteredMode                       | v9/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v9    | ChangeWall_Impl                        | v9/maincpu/cc900/ui_window_procs_xr.c         | -Xr         | 36    | yes   | differs | MATCH                  | cache c1eea91acef3 |
+| v8    | AccCh1_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccCh2_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccCh3_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccCh4_RestoreState                    | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccKbd2_RestoreState                   | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccPatch_ComplexDataBlock_Helper2      | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 1     | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccTone_LookupByProgram                | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 56    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccVoice_ComputeParamAddr              | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccVoice_IncrementBarCounter           | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccVoice_RestorePartState1             | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | MIDIChan_ScanForFree                   | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | Part_IsPercussionType                  | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | Part_StoreVoiceTableIndex              | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 27    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | S2cTtl_InitOnTitleChange               | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 82    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | SeqRec_CheckOverflow                   | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | SeqRec_OverflowCleanup                 | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | VoiceTable_ResolveReadAddr             | v9/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 28    | yes   | differs | MATCH                  | cache ed9375f6bac6 |
+| v8    | AccCh1_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v8    | AccCh2_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v8    | AccCh3_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v8    | AccCh4_SaveState                       | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v8    | AccVoice_ClearChannelStates            | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 31    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v8    | AccVoice_SavePartState1                | v9/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 202b6ca02668 |
+| v8    | PanelTlv_CompanionOfPart               | v9/maincpu/cc900/audio_control_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache c9081aeff744 |
+| v8    | AudioInit_CheckMIDIStatus              | v9/maincpu/cc900/audioinit_routines_xr.c      | -Xr         | 41    | yes   | differs | MATCH                  | cache aff24722c73e |
+| v8    | AudioInit_ClearPartFlags_ByMode        | v9/maincpu/cc900/audioinit_routines_xr.c      | -Xr         | 175   | yes   | differs | MATCH                  | cache aff24722c73e |
+| v8    | AudioInit_SelectPriority               | v9/maincpu/cc900/audioinit_routines_xr.c      | -Xr         | 220   | yes   | differs | MATCH                  | cache aff24722c73e |
+| v8    | BitMapOut_ByteData_DiskCheck           | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v8    | BitMapOut_GetRenderMode                | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v8    | BitMapOut_PrepareRender_CheckBit1      | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v8    | BitMapOut_PrepareRender_CheckBit2      | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v8    | BitMapOut_SetDefaultTimer              | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v8    | BitMapOut_StorePresetValue             | v9/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 018986f62278 |
+| v8    | BmDrEdit_RenderSecondaryVert           | v9/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 69    | yes   | MATCH   | MATCH                  | cache 6a018d98339e |
+| v8    | BmDrEdit_SetupScrollRegion             | v9/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache 6a018d98339e |
+| v8    | Get_Region_Code                        | v9/maincpu/cc900/boot_routines.c              | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache b9bb660b800c |
+| v8    | CPanel_CheckSpecialCombos              | v9/maincpu/cc900/cpanel_routines_xr.c         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 0a5b20b24500 |
+| v8    | GET_COMPUTER_INTERFACE_SELECTION       | v9/maincpu/cc900/dsp_config_sysex.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 59f66647a7ac |
+| v8    | FDC_DETECT_CHECK                       | v9/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 70    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v8    | FDC_DRIVE_DETECT                       | v9/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 78    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v8    | FDemoText_ResetLayoutState             | v9/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 106   | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v8    | Seq_CopyResourcePtrs                   | v9/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 88    | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v8    | Demo_ResetCountdownTimer               | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | Demo_StoreRecordChainParams            | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FDemo_ResetAllocBuffer                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_FormatName_Done                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_GetRecordByType                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_GetRecordPtrAlt                 | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_ResetCurrentRecord              | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_ReturnError                     | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_SetModeFlag_Reading             | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_SetModeFlag_Writing             | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | FileIO_WriteRecordName_Loop            | v9/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache c9702bfd7b7e |
+| v8    | Demo_GetPresetBaseForPart              | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | Demo_GetPresetBaseForPartAlt           | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | Demo_GetPresetBaseForPartExt           | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | Demo_ScanActivePartChannels            | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 99    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_BuildFilePath                   | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_BuildRecordPath_Done            | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_BuildRecordPath_Return          | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_CopyString                      | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 22    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_FormatName_Loop                 | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_GetRecordAttr_Check             | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_GetRecordFlags                  | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_GetRecordType_Extended          | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | FileIO_ValidateModeAndRange            | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | ParseTwoDigitFileNum                   | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | ValidateFileRange                      | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | ValidateFileRangeAlt                   | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | ValidateFileRangeType5                 | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 67    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | ValidateFileSelectionIndex             | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | Voice_GetPresetFieldAddr               | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 35    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | Voice_GetPresetFieldWord               | v9/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v8    | Flash_StoreBaseAndInitAccPatch_Helper2 | v9/maincpu/cc900/flash_floppy_handlers_xr.c   | -Xr         | 37    | yes   | MATCH   | MATCH                  | cache 0da71821d482 |
+| v8    | Display_SetBackgroundColor             | v9/maincpu/cc900/graphics_text_vga.c          | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 097367297af5 |
+| v8    | FormatMedleyNumber                     | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 108   | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v8    | Smf_GetMidiOut                         | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v8    | Smf_GetPlayAsGm                        | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v8    | Smf_SetMidiOut                         | v9/maincpu/cc900/medley.c                     | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v8    | ArpQueue_Enqueue                       | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | ArpQueue_InitBuffer                    | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | DataBuf_CheckFormatPair                | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | DataBuf_CheckSubFormat                 | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 46    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | DataBuf_CopyCompressorBlock16          | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 112   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | DataBuf_CopyEQBlock7                   | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 114   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | DataBuf_CopyReverbBlock6               | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 147   | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiChan_ClearStorageFields            | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiChan_NibbleLookup_Data             | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferBlock_CurrentSong       | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 23    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferBlock_LivePanel         | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferBlock_PanelMemories     | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferBlock_SongSlots         | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferBlock_SoundRamData      | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 32    | yes   | differs | MATCH (name cut to 31) | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferBlock_SoundRamId        | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiPkt_SetXferTotal_SoundRam          | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 26    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiSeq_CheckSyncDirty                 | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | Param_SignExtendReturn_Helper3_Helper  | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | Part_ProcessEntry_Data                 | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | SndParam_ApplyModeSpecific             | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | SoundParam_ApplyBit15Toggle            | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | TGReg_ClearTerminator                  | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | VoiceParam_CopyBitfields_TypeC         | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | VoiceQueue_Append                      | v9/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache bf0c9fec4266 |
+| v8    | MidiSeq_UpdateVolumeScale              | v9/maincpu/cc900/midi_dispatch_handlers_xr.c  | -Xr         | 59    | yes   | differs | MATCH                  | cache 22a38222e052 |
+| v8    | MidiPkt_CheckGateCondition             | v9/maincpu/cc900/midipkt_routines.c           | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache 26359e9d87fc |
+| v8    | CommPort_StatusCheck_Compare           | v9/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 40    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v8    | Param_SignExtendRetu_Data              | v9/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v8    | Param_SignExtendReturn_Helper          | v9/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 41    | yes   | MATCH   | MATCH                  | cache 4d44ddacf4df |
+| v8    | COMM_SendDataReturn                    | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 134   | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | LinkVoiceSlots_LoadReg                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 22    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | MidiRingBuf_WriteByte                  | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | NoteMap_LinkVoiceSlots                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 73    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | NoteMap_SwapVoiceLinks                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 68    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | RingBuffer_ReadByte                    | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | RingBuffer_WriteByte                   | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | StoreAndAdvance_LoadDRAM               | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | SysexRingBuf_ReadByte                  | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | SysexRingBuf_WriteByte                 | v9/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 2df41abd9168 |
+| v8    | GetDialEnableState                     | v9/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v8    | SetDialEnable                          | v9/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v8    | SeCtr2_SetSelection                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeLfo_GetSelectedLfo                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 86    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_CheckObjEnabled                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_CheckObjValid                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_ClearNotification               | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_CopyWriteUpdate_Step3_Helper14  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache bcaf5d6449fd |
+| v8    | SeMenu_InterpolateEdgeX                | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_OrPartConfig                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_ResetSubIndex                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_ReturnZero                      | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 3     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetConfirmState                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetCurrentStep                  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetDisplayState                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetEditEnable                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetFilterCoeff                  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetFilterMode                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetFilterParam1                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetLastSwitch                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetMode                         | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetNameBufferChar               | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 18    | yes   | differs | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetPatchBank                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetSelectedRow                  | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetSoundBank                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_SetWriteMemSlot                 | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_StoreAbsoluteValue              | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_StoreEventId                    | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_StorePartMask                   | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | SeMenu_TriggerNotification             | v9/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache bcaf5d6449fd |
+| v8    | AccTuning_ResetFiveParts_Rec0          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AccTuning_ResetFiveParts_Rec1          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AccTuning_ResetFiveParts_Rec2          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AccTuning_ResetFiveParts_Rec3          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AccTuning_ResetFiveParts_Rec4          | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AudioMode_CopyAccentFlags              | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AudioMode_CopyChannelMode              | v9/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache ea1a45a0837d |
+| v8    | AccPlay_GetCurrentPart                 | v9/maincpu/cc900/seq_event_playback.c         | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 0b9680bcf198 |
+| v8    | Chan_IsActive                          | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | MIDI_GetEventSizeFromByte              | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 83    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | PartCtrl_AppendToEventQueue            | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 66    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Part_CheckAndSetModifiedFlags          | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Part_ReadByteDirect                    | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Part_WriteByte                         | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Rhythm_CheckHighBitFlag                | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqAcc_UpdateEndPosition               | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqBuffer_FindMinPosition              | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqData_SetErrorCode                   | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 12    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqParams_InitDefaults                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 336   | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqPlay_CheckRepeatActive              | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 63    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqPlay_InitStartState                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 92    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqPlay_ResetStartState                | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqScan_ClearMatchingBarSlots          | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqScan_ClearNoteRange                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | SeqVoice_FindDrumPartIndex             | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 50    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Seq_ComputePercentClamped99            | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Seq_ValidatePartNumber                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | Seq_ValidateTempoValue                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | VoiceAlloc_TestBitHigh                 | v9/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 57    | yes   | differs | MATCH                  | cache 8223f32861c9 |
+| v8    | MIDI_GetEventSize                      | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v8    | Part_CopyBlock16                       | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v8    | SeqData_CopyBlock2K                    | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v8    | SeqEvent_GetParamLength                | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v8    | VoiceAlloc_SetBitInMap                 | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v8    | VoiceAlloc_TestBitInMap                | v9/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 4f5e3aa53beb |
+| v8    | RenderSmfFilename                      | v9/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 115b2b10b9d1 |
+| v8    | TrimAndPadSmfFilename                  | v9/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache 115b2b10b9d1 |
+| v8    | SndParam_ClearHashTable                | v9/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache b7ebf3769f54 |
+| v8    | SndParam_EncodeAddress                 | v9/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache b7ebf3769f54 |
+| v8    | Sprintf_InsertCarry                    | v9/maincpu/cc900/sprintf_core_xs.c            | -O3 -XS -Xr | 71    | yes   | differs | MATCH                  | cache 9c89a705d469 |
+| v8    | Audio_DMA_Transfer                     | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 60    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v8    | RhythmBuf_BytecodeSnippet              | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SeqBuf3_GetTimingValue                 | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SeqBuf_DspSysEx_OrphanData             | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SeqBuf_GetWritePos                     | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SeqBuf_MidiOut_GetTimingValue          | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SeqBuf_NoteEvent_OrphanData            | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SeqMain_GetTimingValue                 | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SubCPU_PayloadErrorStore               | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | SubCPU_Payload_GetErrorFlag            | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | TableData_ROM_Verify                   | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v8    | TempoRingBuf_BytecodeSnippet2          | v9/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v8    | Xapr_GetPresentFlag                    | v9/maincpu/cc900/test_init.c                  | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache ec5f70e03b94 |
+| v8    | GetBoxCenter                           | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 5899de83900e |
+| v8    | GetCurrentPartSelect                   | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v8    | GetPartSelect                          | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v8    | SeqState_HasModeChanged                | v9/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v8    | CheckNotDrawFlag                       | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetCurrentTarget                       | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetFocusObject                         | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetModeNow                             | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetModeOld                             | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetNamingWindowID                      | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetRootEvent                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetRootObject                          | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetRootParam                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetTitleNow                            | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | GetTitleOld                            | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | ResetLswFilter                         | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | SetCurrentTarget                       | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | SetLswFilter                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | SetRootEvent                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | SetRootObject                          | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | SetRootParam                           | v9/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v8    | InitializeTimer                        | v9/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 61    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v8    | RegisterMode                           | v9/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v8    | UnregisteredMode                       | v9/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v8    | ChangeWall_Impl                        | v9/maincpu/cc900/ui_window_procs_xr.c         | -Xr         | 36    | yes   | differs | MATCH                  | cache c1eea91acef3 |
+| v7    | AccPatch_ComplexDataBlock_Helper2      | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 1     | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | AccTone_LookupByProgram                | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 56    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | AccVoice_ComputeParamAddr              | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | AccVoice_IncrementBarCounter           | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | AccVoice_RestorePartState1             | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | MIDIChan_ScanForFree                   | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | Part_IsPercussionType                  | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | Part_StoreVoiceTableIndex              | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 27    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | S2cTtl_InitOnTitleChange               | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 82    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | SeqRec_CheckOverflow                   | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | SeqRec_OverflowCleanup                 | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | VoiceTable_ResolveReadAddr             | v7/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 28    | yes   | differs | MATCH                  | cache a162cceb2cb5 |
+| v7    | AccVoice_SavePartState1                | v7/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 2e46fb9d5474 |
+| v7    | PanelTlv_CompanionOfPart               | v7/maincpu/cc900/audio_control_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache c9081aeff744 |
+| v7    | BitMapOut_ByteData_DiskCheck           | v7/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache a76fd5d376a9 |
+| v7    | BitMapOut_GetRenderMode                | v7/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache a76fd5d376a9 |
+| v7    | BitMapOut_PrepareRender_CheckBit1      | v7/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache a76fd5d376a9 |
+| v7    | BitMapOut_PrepareRender_CheckBit2      | v7/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache a76fd5d376a9 |
+| v7    | BitMapOut_SetDefaultTimer              | v7/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache a76fd5d376a9 |
+| v7    | BitMapOut_StorePresetValue             | v7/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache a76fd5d376a9 |
+| v7    | BmDrEdit_RenderSecondaryVert           | v7/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 69    | yes   | MATCH   | MATCH                  | cache 6a018d98339e |
+| v7    | BmDrEdit_SetupScrollRegion             | v7/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache 6a018d98339e |
+| v7    | Get_Region_Code                        | v7/maincpu/cc900/boot_routines.c              | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache b9bb660b800c |
+| v7    | CPanel_CheckSpecialCombos              | v7/maincpu/cc900/cpanel_routines_xr.c         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 69991f0d4d78 |
+| v7    | GET_COMPUTER_INTERFACE_SELECTION       | v7/maincpu/cc900/dsp_config_sysex.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 59f66647a7ac |
+| v7    | FDC_DETECT_CHECK                       | v7/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 70    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v7    | FDC_DRIVE_DETECT                       | v7/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 78    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v7    | FDemoText_ResetLayoutState             | v7/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 106   | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v7    | Seq_CopyResourcePtrs                   | v7/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 88    | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v7    | Demo_ResetCountdownTimer               | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | Demo_StoreRecordChainParams            | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FDemo_ResetAllocBuffer                 | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_FormatName_Done                 | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_GetRecordByType                 | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_GetRecordPtrAlt                 | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_ResetCurrentRecord              | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_ReturnError                     | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_SetModeFlag_Reading             | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_SetModeFlag_Writing             | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | FileIO_WriteRecordName_Loop            | v7/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 41c95487c360 |
+| v7    | Demo_GetPresetBaseForPart              | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | Demo_GetPresetBaseForPartAlt           | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | Demo_GetPresetBaseForPartExt           | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | Demo_ScanActivePartChannels            | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 99    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_BuildFilePath                   | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_BuildRecordPath_Done            | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_BuildRecordPath_Return          | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_CopyString                      | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 22    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_FormatName_Loop                 | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_GetRecordAttr_Check             | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_GetRecordFlags                  | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_GetRecordType_Extended          | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | FileIO_ValidateModeAndRange            | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | ParseTwoDigitFileNum                   | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | ValidateFileRange                      | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | ValidateFileRangeAlt                   | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | ValidateFileRangeType5                 | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 67    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | ValidateFileSelectionIndex             | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | Voice_GetPresetFieldAddr               | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 35    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | Voice_GetPresetFieldWord               | v7/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v7    | Flash_StoreBaseAndInitAccPatch_Helper2 | v7/maincpu/cc900/flash_floppy_handlers_xr.c   | -Xr         | 37    | yes   | MATCH   | MATCH                  | cache 0da71821d482 |
+| v7    | Display_SetBackgroundColor             | v7/maincpu/cc900/graphics_text_vga.c          | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 097367297af5 |
+| v7    | FormatMedleyNumber                     | v7/maincpu/cc900/medley.c                     | -O3 -Xr     | 108   | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v7    | Smf_GetMidiOut                         | v7/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v7    | Smf_GetPlayAsGm                        | v7/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v7    | Smf_SetMidiOut                         | v7/maincpu/cc900/medley.c                     | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v7    | ArpQueue_Enqueue                       | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | ArpQueue_InitBuffer                    | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | DataBuf_CheckFormatPair                | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | DataBuf_CheckSubFormat                 | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 46    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | DataBuf_CopyCompressorBlock16          | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 112   | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | DataBuf_CopyEQBlock7                   | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 114   | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | DataBuf_CopyReverbBlock6               | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 147   | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiChan_ClearStorageFields            | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiChan_NibbleLookup_Data             | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferBlock_CurrentSong       | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 23    | yes   | differs | MATCH (name cut to 31) | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferBlock_LivePanel         | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferBlock_PanelMemories     | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH (name cut to 31) | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferBlock_SongSlots         | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferBlock_SoundRamData      | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 32    | yes   | differs | MATCH (name cut to 31) | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferBlock_SoundRamId        | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiPkt_SetXferTotal_SoundRam          | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 26    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiSeq_CheckSyncDirty                 | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | Param_SignExtendReturn_Helper3_Helper  | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | Part_ProcessEntry_Data                 | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | SndParam_ApplyModeSpecific             | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | SoundParam_ApplyBit15Toggle            | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | TGReg_ClearTerminator                  | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | VoiceParam_CopyBitfields_TypeC         | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | VoiceQueue_Append                      | v7/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache 7405eb77d9d1 |
+| v7    | MidiSeq_UpdateVolumeScale              | v7/maincpu/cc900/midi_dispatch_handlers_xr.c  | -Xr         | 59    | yes   | differs | MATCH                  | cache 16a47754090e |
+| v7    | MidiPkt_CheckGateCondition             | v7/maincpu/cc900/midipkt_routines.c           | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache 26359e9d87fc |
+| v7    | CommPort_StatusCheck_Compare           | v7/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 40    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v7    | Param_SignExtendRetu_Data              | v7/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v7    | Param_SignExtendReturn_Helper          | v7/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 41    | yes   | MATCH   | MATCH                  | cache 4d44ddacf4df |
+| v7    | COMM_SendDataReturn                    | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 134   | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | LinkVoiceSlots_LoadReg                 | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 22    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | MidiRingBuf_WriteByte                  | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | NoteMap_LinkVoiceSlots                 | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 73    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | NoteMap_SwapVoiceLinks                 | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 68    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | RingBuffer_ReadByte                    | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | RingBuffer_WriteByte                   | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | StoreAndAdvance_LoadDRAM               | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | SysexRingBuf_ReadByte                  | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | SysexRingBuf_WriteByte                 | v7/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache 23c9641cb5e3 |
+| v7    | GetDialEnableState                     | v7/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v7    | SetDialEnable                          | v7/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v7    | SeCtr2_SetSelection                    | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeLfo_GetSelectedLfo                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 86    | yes   | differs | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_CheckObjEnabled                 | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_CheckObjValid                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_ClearNotification               | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_CopyWriteUpdate_Step3_Helper14  | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 016d2e6182c9 |
+| v7    | SeMenu_InterpolateEdgeX                | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_OrPartConfig                    | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_ResetSubIndex                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_ReturnZero                      | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 3     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetConfirmState                 | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetCurrentStep                  | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetDisplayState                 | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetEditEnable                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | differs | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetFilterCoeff                  | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetFilterMode                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetFilterParam1                 | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetLastSwitch                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetMode                         | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetNameBufferChar               | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 18    | yes   | differs | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetPatchBank                    | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetSelectedRow                  | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetSoundBank                    | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_SetWriteMemSlot                 | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_StoreAbsoluteValue              | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_StoreEventId                    | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_StorePartMask                   | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | SeMenu_TriggerNotification             | v7/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 016d2e6182c9 |
+| v7    | AccTuning_ResetFiveParts_Rec0          | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AccTuning_ResetFiveParts_Rec1          | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AccTuning_ResetFiveParts_Rec2          | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AccTuning_ResetFiveParts_Rec3          | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AccTuning_ResetFiveParts_Rec4          | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AudioMode_CopyAccentFlags              | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AudioMode_CopyChannelMode              | v7/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache 93910fcfbb7f |
+| v7    | AccPlay_GetCurrentPart                 | v7/maincpu/cc900/seq_event_playback.c         | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 05a9044d5377 |
+| v7    | Chan_IsActive                          | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | MIDI_GetEventSizeFromByte              | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 83    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Part_CheckAndSetModifiedFlags          | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Part_ReadByteDirect                    | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Part_WriteByte                         | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Rhythm_CheckHighBitFlag                | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqAcc_UpdateEndPosition               | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqBuffer_FindMinPosition              | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqData_SetErrorCode                   | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 12    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqParams_InitDefaults                 | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 336   | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqPlay_CheckRepeatActive              | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 63    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqPlay_InitStartState                 | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 92    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqPlay_ResetStartState                | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqScan_ClearMatchingBarSlots          | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqScan_ClearNoteRange                 | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | SeqVoice_FindDrumPartIndex             | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 50    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Seq_ComputePercentClamped99            | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Seq_ValidatePartNumber                 | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | Seq_ValidateTempoValue                 | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | VoiceAlloc_TestBitHigh                 | v7/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 57    | yes   | differs | MATCH                  | cache a29a84a4fb0a |
+| v7    | MIDI_GetEventSize                      | v7/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v7    | Part_CopyBlock16                       | v7/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v7    | SeqData_CopyBlock2K                    | v7/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v7    | SeqEvent_GetParamLength                | v7/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v7    | RenderSmfFilename                      | v7/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 115b2b10b9d1 |
+| v7    | TrimAndPadSmfFilename                  | v7/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache 115b2b10b9d1 |
+| v7    | SndParam_ClearHashTable                | v7/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache d2b1a644baf3 |
+| v7    | SndParam_EncodeAddress                 | v7/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache d2b1a644baf3 |
+| v7    | Sprintf_InsertCarry                    | v7/maincpu/cc900/sprintf_core_xs.c            | -O3 -XS -Xr | 71    | yes   | differs | MATCH                  | cache 9c89a705d469 |
+| v7    | Audio_DMA_Transfer                     | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 60    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v7    | RhythmBuf_BytecodeSnippet              | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SeqBuf3_GetTimingValue                 | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SeqBuf_DspSysEx_OrphanData             | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SeqBuf_GetWritePos                     | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SeqBuf_MidiOut_GetTimingValue          | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SeqBuf_NoteEvent_OrphanData            | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SeqMain_GetTimingValue                 | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SubCPU_PayloadErrorStore               | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | SubCPU_Payload_GetErrorFlag            | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | TableData_ROM_Verify                   | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v7    | TempoRingBuf_BytecodeSnippet2          | v7/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v7    | Xapr_GetPresentFlag                    | v7/maincpu/cc900/test_init.c                  | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache ec5f70e03b94 |
+| v7    | GetBoxCenter                           | v7/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 5899de83900e |
+| v7    | GetCurrentPartSelect                   | v7/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v7    | GetPartSelect                          | v7/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v7    | SeqState_HasModeChanged                | v7/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v7    | CheckNotDrawFlag                       | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetCurrentTarget                       | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetFocusObject                         | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetModeNow                             | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetModeOld                             | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetNamingWindowID                      | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetRootEvent                           | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetRootObject                          | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetRootParam                           | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetTitleNow                            | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | GetTitleOld                            | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | ResetLswFilter                         | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | SetCurrentTarget                       | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | SetLswFilter                           | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | SetRootEvent                           | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | SetRootObject                          | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | SetRootParam                           | v7/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v7    | InitializeTimer                        | v7/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 61    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v7    | RegisterMode                           | v7/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v7    | UnregisteredMode                       | v7/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v7    | ChangeWall_Impl                        | v7/maincpu/cc900/ui_window_procs_xr.c         | -Xr         | 36    | yes   | differs | MATCH                  | cache c1eea91acef3 |
+| v6    | AccVoice_ComputeParamAddr              | v6/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v6    | AccVoice_RestorePartState1             | v6/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v6    | Part_StoreVoiceTableIndex              | v6/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 27    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v6    | VoiceTable_ResolveReadAddr             | v6/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 28    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v6    | AccVoice_SavePartState1                | v6/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 2e46fb9d5474 |
+| v6    | PanelTlv_CompanionOfPart               | v6/maincpu/cc900/audio_control_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache c9081aeff744 |
+| v6    | BitMapOut_ByteData_DiskCheck           | v6/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v6    | BitMapOut_GetRenderMode                | v6/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v6    | BitMapOut_PrepareRender_CheckBit1      | v6/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v6    | BitMapOut_PrepareRender_CheckBit2      | v6/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v6    | BitMapOut_SetDefaultTimer              | v6/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v6    | BitMapOut_StorePresetValue             | v6/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v6    | BmDrEdit_RenderSecondaryVert           | v6/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 69    | yes   | MATCH   | MATCH                  | cache d8ea3dbdb772 |
+| v6    | BmDrEdit_SetupScrollRegion             | v6/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache d8ea3dbdb772 |
+| v6    | Get_Region_Code                        | v6/maincpu/cc900/boot_routines.c              | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache b9bb660b800c |
+| v6    | CPanel_CheckSpecialCombos              | v6/maincpu/cc900/cpanel_routines_xr.c         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache bb06befb3e16 |
+| v6    | GET_COMPUTER_INTERFACE_SELECTION       | v6/maincpu/cc900/dsp_config_sysex.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 59f66647a7ac |
+| v6    | FDC_DETECT_CHECK                       | v6/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 70    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v6    | FDC_DRIVE_DETECT                       | v6/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 78    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v6    | FDemoText_ResetLayoutState             | v6/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 106   | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v6    | Seq_CopyResourcePtrs                   | v6/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 88    | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v6    | Demo_ResetCountdownTimer               | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | Demo_StoreRecordChainParams            | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FDemo_ResetAllocBuffer                 | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_FormatName_Done                 | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_GetRecordByType                 | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_GetRecordPtrAlt                 | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_ResetCurrentRecord              | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_ReturnError                     | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_SetModeFlag_Reading             | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_SetModeFlag_Writing             | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | FileIO_WriteRecordName_Loop            | v6/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v6    | Demo_GetPresetBaseForPart              | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | Demo_GetPresetBaseForPartAlt           | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | Demo_GetPresetBaseForPartExt           | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | Demo_ScanActivePartChannels            | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 99    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_BuildFilePath                   | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_BuildRecordPath_Done            | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_BuildRecordPath_Return          | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_CopyString                      | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 22    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_FormatName_Loop                 | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_GetRecordAttr_Check             | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_GetRecordFlags                  | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_GetRecordType_Extended          | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | FileIO_ValidateModeAndRange            | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | ParseTwoDigitFileNum                   | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | ValidateFileRange                      | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | ValidateFileRangeAlt                   | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | ValidateFileRangeType5                 | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 67    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | ValidateFileSelectionIndex             | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | Voice_GetPresetFieldAddr               | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 35    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | Voice_GetPresetFieldWord               | v6/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v6    | Flash_StoreBaseAndInitAccPatch_Helper2 | v6/maincpu/cc900/flash_floppy_handlers_xr.c   | -Xr         | 37    | yes   | MATCH   | MATCH                  | cache 0da71821d482 |
+| v6    | Display_SetBackgroundColor             | v6/maincpu/cc900/graphics_text_vga.c          | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 097367297af5 |
+| v6    | FormatMedleyNumber                     | v6/maincpu/cc900/medley.c                     | -O3 -Xr     | 108   | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v6    | Smf_GetMidiOut                         | v6/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v6    | Smf_GetPlayAsGm                        | v6/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v6    | Smf_SetMidiOut                         | v6/maincpu/cc900/medley.c                     | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v6    | ArpQueue_Enqueue                       | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | ArpQueue_InitBuffer                    | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | DataBuf_CheckFormatPair                | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | DataBuf_CheckSubFormat                 | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 46    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | DataBuf_CopyCompressorBlock16          | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 112   | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | DataBuf_CopyEQBlock7                   | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 114   | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | DataBuf_CopyReverbBlock6               | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 147   | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiChan_ClearStorageFields            | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiChan_NibbleLookup_Data             | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferBlock_CurrentSong       | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 23    | yes   | differs | MATCH (name cut to 31) | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferBlock_LivePanel         | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferBlock_PanelMemories     | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH (name cut to 31) | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferBlock_SongSlots         | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferBlock_SoundRamData      | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 32    | yes   | differs | MATCH (name cut to 31) | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferBlock_SoundRamId        | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiPkt_SetXferTotal_SoundRam          | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 26    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiSeq_CheckSyncDirty                 | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | Param_SignExtendReturn_Helper3_Helper  | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | Part_ProcessEntry_Data                 | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | SndParam_ApplyModeSpecific             | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | SoundParam_ApplyBit15Toggle            | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | TGReg_ClearTerminator                  | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | VoiceParam_CopyBitfields_TypeC         | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | VoiceQueue_Append                      | v6/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v6    | MidiSeq_UpdateVolumeScale              | v6/maincpu/cc900/midi_dispatch_handlers_xr.c  | -Xr         | 59    | yes   | differs | MATCH                  | cache 99f2e15c3f0a |
+| v6    | MidiPkt_CheckGateCondition             | v6/maincpu/cc900/midipkt_routines.c           | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache 26359e9d87fc |
+| v6    | CommPort_StatusCheck_Compare           | v6/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 40    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v6    | Param_SignExtendRetu_Data              | v6/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v6    | Param_SignExtendReturn_Helper          | v6/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 41    | yes   | MATCH   | MATCH                  | cache 4d44ddacf4df |
+| v6    | COMM_SendDataReturn                    | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 134   | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | LinkVoiceSlots_LoadReg                 | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 22    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | MidiRingBuf_WriteByte                  | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | NoteMap_LinkVoiceSlots                 | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 73    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | NoteMap_SwapVoiceLinks                 | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 68    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | RingBuffer_ReadByte                    | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | StoreAndAdvance_LoadDRAM               | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | SysexRingBuf_ReadByte                  | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | SysexRingBuf_WriteByte                 | v6/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v6    | GetDialEnableState                     | v6/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v6    | SetDialEnable                          | v6/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v6    | SeCtr2_SetSelection                    | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeLfo_GetSelectedLfo                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 86    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_CheckObjEnabled                 | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_CheckObjValid                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_ClearNotification               | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_OrPartConfig                    | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_ResetSubIndex                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_ReturnZero                      | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 3     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetConfirmState                 | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetCurrentStep                  | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetDisplayState                 | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetEditEnable                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetFilterCoeff                  | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetFilterMode                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetFilterParam1                 | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetLastSwitch                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetMode                         | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetNameBufferChar               | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 18    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetPatchBank                    | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetSelectedRow                  | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetSoundBank                    | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_SetWriteMemSlot                 | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_StoreAbsoluteValue              | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_StoreEventId                    | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_StorePartMask                   | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | SeMenu_TriggerNotification             | v6/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v6    | AccTuning_ResetFiveParts_Rec0          | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AccTuning_ResetFiveParts_Rec1          | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AccTuning_ResetFiveParts_Rec2          | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AccTuning_ResetFiveParts_Rec3          | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AccTuning_ResetFiveParts_Rec4          | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AudioMode_CopyAccentFlags              | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AudioMode_CopyChannelMode              | v6/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v6    | AccPlay_GetCurrentPart                 | v6/maincpu/cc900/seq_event_playback.c         | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 63f8bcbc63fa |
+| v6    | Chan_IsActive                          | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | MIDI_GetEventSizeFromByte              | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 83    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Part_CheckAndSetModifiedFlags          | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Part_ReadByteDirect                    | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Part_WriteByte                         | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Rhythm_CheckHighBitFlag                | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqAcc_UpdateEndPosition               | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqBuffer_FindMinPosition              | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqData_SetErrorCode                   | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 12    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqParams_InitDefaults                 | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 336   | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqPlay_CheckRepeatActive              | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 63    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqPlay_InitStartState                 | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 92    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqPlay_ResetStartState                | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqScan_ClearMatchingBarSlots          | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqScan_ClearNoteRange                 | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | SeqVoice_FindDrumPartIndex             | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 50    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Seq_ComputePercentClamped99            | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Seq_ValidatePartNumber                 | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | Seq_ValidateTempoValue                 | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | VoiceAlloc_TestBitHigh                 | v6/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 57    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v6    | MIDI_GetEventSize                      | v6/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v6    | Part_CopyBlock16                       | v6/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v6    | SeqData_CopyBlock2K                    | v6/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v6    | SeqEvent_GetParamLength                | v6/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v6    | RenderSmfFilename                      | v6/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 115b2b10b9d1 |
+| v6    | TrimAndPadSmfFilename                  | v6/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache 115b2b10b9d1 |
+| v6    | SndParam_ClearHashTable                | v6/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 81fc4e08a6f5 |
+| v6    | SndParam_EncodeAddress                 | v6/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache 81fc4e08a6f5 |
+| v6    | Sprintf_InsertCarry                    | v6/maincpu/cc900/sprintf_core_xs.c            | -O3 -XS -Xr | 71    | yes   | differs | MATCH                  | cache 9c89a705d469 |
+| v6    | Audio_DMA_Transfer                     | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 60    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v6    | RhythmBuf_BytecodeSnippet              | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SeqBuf3_GetTimingValue                 | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SeqBuf_DspSysEx_OrphanData             | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SeqBuf_GetWritePos                     | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SeqBuf_MidiOut_GetTimingValue          | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SeqBuf_NoteEvent_OrphanData            | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SeqMain_GetTimingValue                 | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SubCPU_PayloadErrorStore               | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | SubCPU_Payload_GetErrorFlag            | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | TableData_ROM_Verify                   | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v6    | TempoRingBuf_BytecodeSnippet2          | v6/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v6    | Xapr_GetPresentFlag                    | v6/maincpu/cc900/test_init.c                  | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache ec5f70e03b94 |
+| v6    | GetBoxCenter                           | v6/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 5899de83900e |
+| v6    | GetCurrentPartSelect                   | v6/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v6    | GetPartSelect                          | v6/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v6    | SeqState_HasModeChanged                | v6/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v6    | CheckNotDrawFlag                       | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetCurrentTarget                       | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetFocusObject                         | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetModeNow                             | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetModeOld                             | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetNamingWindowID                      | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetRootEvent                           | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetRootObject                          | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetRootParam                           | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetTitleNow                            | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | GetTitleOld                            | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | ResetLswFilter                         | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | SetCurrentTarget                       | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | SetLswFilter                           | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | SetRootEvent                           | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | SetRootObject                          | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | SetRootParam                           | v6/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v6    | InitializeTimer                        | v6/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 61    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v6    | RegisterMode                           | v6/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v6    | UnregisteredMode                       | v6/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v6    | ChangeWall_Impl                        | v6/maincpu/cc900/ui_window_procs_xr.c         | -Xr         | 36    | yes   | differs | MATCH                  | cache cd3188356956 |
+| v5    | AccVoice_ComputeParamAddr              | v5/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v5    | AccVoice_RestorePartState1             | v5/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 49    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v5    | Part_StoreVoiceTableIndex              | v5/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 27    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v5    | VoiceTable_ResolveReadAddr             | v5/maincpu/cc900/accompaniment_engine.c       | -O3 -Xr     | 28    | yes   | differs | MATCH                  | cache 98ced08ec556 |
+| v5    | AccVoice_SavePartState1                | v5/maincpu/cc900/accompaniment_engine_xr.c    | -Xr         | 65    | yes   | differs | MATCH                  | cache 2e46fb9d5474 |
+| v5    | PanelTlv_CompanionOfPart               | v5/maincpu/cc900/audio_control_engine.c       | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache c9081aeff744 |
+| v5    | BitMapOut_ByteData_DiskCheck           | v5/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v5    | BitMapOut_GetRenderMode                | v5/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v5    | BitMapOut_PrepareRender_CheckBit1      | v5/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v5    | BitMapOut_PrepareRender_CheckBit2      | v5/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v5    | BitMapOut_SetDefaultTimer              | v5/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v5    | BitMapOut_StorePresetValue             | v5/maincpu/cc900/bitmap_out_routines.c        | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache fa668bddd6a5 |
+| v5    | BmDrEdit_RenderSecondaryVert           | v5/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 69    | yes   | MATCH   | MATCH                  | cache d8ea3dbdb772 |
+| v5    | BmDrEdit_SetupScrollRegion             | v5/maincpu/cc900/bmdredit_routines.c          | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache d8ea3dbdb772 |
+| v5    | Get_Region_Code                        | v5/maincpu/cc900/boot_routines.c              | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache b9bb660b800c |
+| v5    | CPanel_CheckSpecialCombos              | v5/maincpu/cc900/cpanel_routines_xr.c         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache bb06befb3e16 |
+| v5    | GET_COMPUTER_INTERFACE_SELECTION       | v5/maincpu/cc900/dsp_config_sysex.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache 59f66647a7ac |
+| v5    | FDC_DETECT_CHECK                       | v5/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 70    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v5    | FDC_DRIVE_DETECT                       | v5/maincpu/cc900/fdc_routines_xr.c            | -Xr         | 78    | yes   | MATCH   | MATCH                  | cache 275b4560865c |
+| v5    | FDemoText_ResetLayoutState             | v5/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 106   | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v5    | Seq_CopyResourcePtrs                   | v5/maincpu/cc900/fdemotext_routines.c         | -O3 -Xr     | 88    | yes   | differs | MATCH                  | cache 847999d4c020 |
+| v5    | Demo_ResetCountdownTimer               | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | Demo_StoreRecordChainParams            | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FDemo_ResetAllocBuffer                 | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_FormatName_Done                 | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_GetRecordByType                 | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_GetRecordPtrAlt                 | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_ResetCurrentRecord              | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_ReturnError                     | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_SetModeFlag_Reading             | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_SetModeFlag_Writing             | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | FileIO_WriteRecordName_Loop            | v5/maincpu/cc900/file_demo_proc.c             | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 2d3ba5b8243c |
+| v5    | Demo_GetPresetBaseForPart              | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | Demo_GetPresetBaseForPartAlt           | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | Demo_GetPresetBaseForPartExt           | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | Demo_ScanActivePartChannels            | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 99    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_BuildFilePath                   | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_BuildRecordPath_Done            | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_BuildRecordPath_Return          | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_CopyString                      | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 22    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_FormatName_Loop                 | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 20    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_GetRecordAttr_Check             | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_GetRecordFlags                  | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_GetRecordType_Extended          | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | FileIO_ValidateModeAndRange            | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | ParseTwoDigitFileNum                   | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | ValidateFileRange                      | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 76    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | ValidateFileRangeAlt                   | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | ValidateFileRangeType5                 | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 67    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | ValidateFileSelectionIndex             | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | Voice_GetPresetFieldAddr               | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 35    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | Voice_GetPresetFieldWord               | v5/maincpu/cc900/file_demo_proc_b.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 677874345774 |
+| v5    | Flash_StoreBaseAndInitAccPatch_Helper2 | v5/maincpu/cc900/flash_floppy_handlers_xr.c   | -Xr         | 37    | yes   | MATCH   | MATCH                  | cache 0da71821d482 |
+| v5    | Display_SetBackgroundColor             | v5/maincpu/cc900/graphics_text_vga.c          | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 097367297af5 |
+| v5    | FormatMedleyNumber                     | v5/maincpu/cc900/medley.c                     | -O3 -Xr     | 108   | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v5    | Smf_GetMidiOut                         | v5/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v5    | Smf_GetPlayAsGm                        | v5/maincpu/cc900/medley.c                     | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v5    | Smf_SetMidiOut                         | v5/maincpu/cc900/medley.c                     | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache 300d70a4a34c |
+| v5    | ArpQueue_Enqueue                       | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | ArpQueue_InitBuffer                    | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | DataBuf_CheckFormatPair                | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | DataBuf_CheckSubFormat                 | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 46    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | DataBuf_CopyCompressorBlock16          | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 112   | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | DataBuf_CopyEQBlock7                   | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 114   | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | DataBuf_CopyReverbBlock6               | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 147   | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiChan_ClearStorageFields            | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiChan_NibbleLookup_Data             | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferBlock_CurrentSong       | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 23    | yes   | differs | MATCH (name cut to 31) | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferBlock_LivePanel         | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferBlock_PanelMemories     | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH (name cut to 31) | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferBlock_SongSlots         | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferBlock_SoundRamData      | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 32    | yes   | differs | MATCH (name cut to 31) | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferBlock_SoundRamId        | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 24    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiPkt_SetXferTotal_SoundRam          | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 26    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiSeq_CheckSyncDirty                 | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | Param_SignExtendReturn_Helper3_Helper  | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 31    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | Part_ProcessEntry_Data                 | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 25    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | SndParam_ApplyModeSpecific             | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | SoundParam_ApplyBit15Toggle            | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | TGReg_ClearTerminator                  | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | VoiceParam_CopyBitfields_TypeC         | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | VoiceQueue_Append                      | v5/maincpu/cc900/midi_dispatch_handlers.c     | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache a40c421bb3a4 |
+| v5    | MidiSeq_UpdateVolumeScale              | v5/maincpu/cc900/midi_dispatch_handlers_xr.c  | -Xr         | 59    | yes   | differs | MATCH                  | cache 99f2e15c3f0a |
+| v5    | MidiPkt_CheckGateCondition             | v5/maincpu/cc900/midipkt_routines.c           | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache 26359e9d87fc |
+| v5    | CommPort_StatusCheck_Compare           | v5/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 40    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v5    | Param_SignExtendRetu_Data              | v5/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 4d44ddacf4df |
+| v5    | Param_SignExtendReturn_Helper          | v5/maincpu/cc900/note_voice_mapping.c         | -O3 -Xr     | 41    | yes   | MATCH   | MATCH                  | cache 4d44ddacf4df |
+| v5    | COMM_SendDataReturn                    | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 134   | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | LinkVoiceSlots_LoadReg                 | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 22    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | MidiRingBuf_WriteByte                  | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | NoteMap_LinkVoiceSlots                 | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 73    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | NoteMap_SwapVoiceLinks                 | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 68    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | RingBuffer_ReadByte                    | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | StoreAndAdvance_LoadDRAM               | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | SysexRingBuf_ReadByte                  | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 56    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | SysexRingBuf_WriteByte                 | v5/maincpu/cc900/note_voice_mapping_xr.c      | -Xr         | 54    | yes   | differs | MATCH                  | cache d6203b59365a |
+| v5    | GetDialEnableState                     | v5/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v5    | SetDialEnable                          | v5/maincpu/cc900/presentation_sound_nav.c     | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache d2231d1881cb |
+| v5    | SeCtr2_SetSelection                    | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeLfo_GetSelectedLfo                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 86    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_CheckObjEnabled                 | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_CheckObjValid                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_ClearNotification               | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_OrPartConfig                    | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_ResetSubIndex                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_ReturnZero                      | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 3     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetConfirmState                 | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetCurrentStep                  | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetDisplayState                 | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetEditEnable                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetFilterCoeff                  | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetFilterMode                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetFilterParam1                 | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetLastSwitch                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetMode                         | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetNameBufferChar               | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 18    | yes   | differs | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetPatchBank                    | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetSelectedRow                  | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetSoundBank                    | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_SetWriteMemSlot                 | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_StoreAbsoluteValue              | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 9     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_StoreEventId                    | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_StorePartMask                   | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | SeMenu_TriggerNotification             | v5/maincpu/cc900/semenu_routines.c            | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache e50c7c69979e |
+| v5    | AccTuning_ResetFiveParts_Rec0          | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AccTuning_ResetFiveParts_Rec1          | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AccTuning_ResetFiveParts_Rec2          | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AccTuning_ResetFiveParts_Rec3          | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AccTuning_ResetFiveParts_Rec4          | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AudioMode_CopyAccentFlags              | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AudioMode_CopyChannelMode              | v5/maincpu/cc900/seq_audio_mode.c             | -O3 -Xr     | 12    | yes   | MATCH   | MATCH                  | cache 4cd0ac097979 |
+| v5    | AccPlay_GetCurrentPart                 | v5/maincpu/cc900/seq_event_playback.c         | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 63f8bcbc63fa |
+| v5    | Chan_IsActive                          | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 34    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | MIDI_GetEventSizeFromByte              | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 83    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Part_CheckAndSetModifiedFlags          | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Part_ReadByteDirect                    | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Part_WriteByte                         | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 37    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Rhythm_CheckHighBitFlag                | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqAcc_UpdateEndPosition               | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqBuffer_FindMinPosition              | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqData_SetErrorCode                   | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 12    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqParams_InitDefaults                 | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 336   | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqPlay_CheckRepeatActive              | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 63    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqPlay_InitStartState                 | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 92    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqPlay_ResetStartState                | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqScan_ClearMatchingBarSlots          | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 52    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqScan_ClearNoteRange                 | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 13    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | SeqVoice_FindDrumPartIndex             | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 50    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Seq_ComputePercentClamped99            | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 43    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Seq_ValidatePartNumber                 | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | Seq_ValidateTempoValue                 | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 17    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | VoiceAlloc_TestBitHigh                 | v5/maincpu/cc900/sequencer_engine.c           | -O3 -Xr     | 57    | yes   | differs | MATCH                  | cache 13ccf540ad50 |
+| v5    | MIDI_GetEventSize                      | v5/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 74    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v5    | Part_CopyBlock16                       | v5/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v5    | SeqData_CopyBlock2K                    | v5/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v5    | SeqEvent_GetParamLength                | v5/maincpu/cc900/sequencer_engine_b.c         | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache 9d27ed577ea9 |
+| v5    | RenderSmfFilename                      | v5/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 115b2b10b9d1 |
+| v5    | TrimAndPadSmfFilename                  | v5/maincpu/cc900/smf_operations.c             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache 115b2b10b9d1 |
+| v5    | SndParam_ClearHashTable                | v5/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 81fc4e08a6f5 |
+| v5    | SndParam_EncodeAddress                 | v5/maincpu/cc900/sndparam_routines.c          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache 81fc4e08a6f5 |
+| v5    | Sprintf_InsertCarry                    | v5/maincpu/cc900/sprintf_core_xs.c            | -O3 -XS -Xr | 71    | yes   | differs | MATCH                  | cache 9c89a705d469 |
+| v5    | Audio_DMA_Transfer                     | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 60    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v5    | RhythmBuf_BytecodeSnippet              | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SeqBuf3_GetTimingValue                 | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SeqBuf_DspSysEx_OrphanData             | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SeqBuf_GetWritePos                     | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SeqBuf_MidiOut_GetTimingValue          | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SeqBuf_NoteEvent_OrphanData            | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SeqMain_GetTimingValue                 | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SubCPU_PayloadErrorStore               | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | SubCPU_Payload_GetErrorFlag            | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | TableData_ROM_Verify                   | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 33    | yes   | differs | MATCH                  | cache 8309672d0b6a |
+| v5    | TempoRingBuf_BytecodeSnippet2          | v5/maincpu/cc900/system_handlers.c            | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache 8309672d0b6a |
+| v5    | Xapr_GetPresentFlag                    | v5/maincpu/cc900/test_init.c                  | -O3 -Xr     | 6     | yes   | MATCH   | MATCH                  | cache ec5f70e03b94 |
+| v5    | GetBoxCenter                           | v5/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 41    | yes   | differs | MATCH                  | cache 5899de83900e |
+| v5    | GetCurrentPartSelect                   | v5/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v5    | GetPartSelect                          | v5/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 7     | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v5    | SeqState_HasModeChanged                | v5/maincpu/cc900/ui_control_panel.c           | -O3 -Xr     | 11    | yes   | MATCH   | MATCH                  | cache 5899de83900e |
+| v5    | CheckNotDrawFlag                       | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetCurrentTarget                       | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetFocusObject                         | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetModeNow                             | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetModeOld                             | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetNamingWindowID                      | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetRootEvent                           | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetRootObject                          | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetRootParam                           | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetTitleNow                            | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | GetTitleOld                            | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | ResetLswFilter                         | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | SetCurrentTarget                       | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 14    | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | SetLswFilter                           | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 8     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | SetRootEvent                           | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | SetRootObject                          | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | SetRootParam                           | v5/maincpu/cc900/ui_widget_defs.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 7c3238713f84 |
+| v5    | InitializeTimer                        | v5/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 61    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v5    | RegisterMode                           | v5/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 38    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v5    | UnregisteredMode                       | v5/maincpu/cc900/ui_widget_defs_o3xr.c        | -O3 -Xr     | 47    | yes   | differs | MATCH                  | cache bf827f050bd5 |
+| v5    | ChangeWall_Impl                        | v5/maincpu/cc900/ui_window_procs_xr.c         | -Xr         | 36    | yes   | differs | MATCH                  | cache cd3188356956 |
