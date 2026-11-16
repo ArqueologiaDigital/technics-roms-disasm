@@ -76,6 +76,45 @@ def erp_byte(line):
     return line
 
 
+# the upper words of the 32-bit registers (QWA ...): V4.23's `and QWA,0xff` is the ROM's `and_erpw 0xE2,0xFF,0x00`
+ERP_WORD = {'qwa': 0xe2, 'qbc': 0xe6, 'qde': 0xea, 'qhl': 0xee, 'qix': 0xf2, 'qiy': 0xf6, 'qiz': 0xfa}
+ERP_WORD_RE = re.compile(r'^\tand (%s), (0x[0-9a-f]+|\d+)$' % '|'.join(ERP_WORD))
+ERP_MOVE_RE = re.compile(r'^\tld (a|w|c|b|e|d|l|h), (%s)$' % '|'.join(ERP_BYTE))
+
+
+ERP_PUSH_RE = re.compile(r'^\t; untranslated:\s*(push|pop)\s+(%s)\s*$' % '|'.join(ERP_WORD), re.I)
+
+
+ERP_UNTRANSLATED_RE = re.compile(r'^\t; untranslated \(a byte register llvm-mc cannot name\): (\w+)\s+(\S+?)\s*,\s*(\S+)\s*$')
+
+
+def erp_word(line):
+    """`and QWA,imm` -> and_erpw; `ld A,IZL` -> ld_erpb_rr (helper E, round 8: these were left untranslated);
+    `push QIZ` / `pop QIZ` -> pushw_erp / popw_erp (helper A, round 8); and the byte-register lines to_llvm marks
+    as untranslated (`inc 1,QIZH`, `ld QIZH,n`, `cp QIZH,n`, `ld A,QIZH`), through erp_byte's forms"""
+    m = ERP_UNTRANSLATED_RE.match(line)
+    if m:
+        op, x, y = m.group(1).lower(), m.group(2).lower(), m.group(3).lower()
+        if op == 'inc' and y in ERP_BYTE:
+            line = '\tinc %s, %s' % (x, y)
+        elif op in ('ld', 'cp') and x in ERP_BYTE:
+            line = '\t%s %s, %s' % (op, x, y)
+        elif op == 'ld' and y in ERP_BYTE:
+            line = '\tld %s, %s' % (x, y)
+        line = erp_byte(line)
+    m = ERP_PUSH_RE.match(line)
+    if m:
+        return '\t%sw_erp 0x%x' % (m.group(1).lower(), ERP_WORD[m.group(2).lower()])
+    m = ERP_WORD_RE.match(line)
+    if m:
+        v = int(m.group(2), 0)
+        return '\tand_erpw 0x%x, 0x%x, 0x%x' % (ERP_WORD[m.group(1)], v & 0xff, v >> 8)
+    m = ERP_MOVE_RE.match(line)
+    if m:
+        return '\tld_erpb_rr %s, 0x%x' % (m.group(1), ERP_BYTE[m.group(2)])
+    return line
+
+
 def file_flags(path):
     m = OPT_RE.search(open(path, 'rb').read())
     return ' '.join(m.group(1).decode().split()) if m else '-O3 -Xr'
@@ -136,27 +175,41 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         except KeyError as e:
             out.append((full, 0, 'cannot resolve %s' % e)); continue
         body = [l.replace('$+', '.+').replace('$-', '.-') for l in body]   # inline asm's `jr $+2` (llvm-mc spells `.`)
-        body = [erp_byte(l) for l in body]
+        body = [erp_word(erp_byte(l)) for l in body]
         # a shift by 16: to_llvm writes the raw count field 0, llvm-mc wants 16 (the CPU encodes 16 as 0)
         body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
         if any('untranslated' in l for l in body):
+            if os.environ.get('SUB_V423_SHAPES'):          # the offending lines' shapes (numbers masked), no text
+                for l in body:
+                    if 'untranslated' in l:
+                        print('  untranslated shape:', re.sub(r'\b\d+\b', 'N', re.sub(r'0x[0-9a-fA-F]+', 'H',
+                                                                                        l.strip())))
             out.append((full, 0, 'to_llvm cannot translate a line')); continue
-        text_ = to_llvm.relax('\n'.join(body), fw.assembler_errors)
-        targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', text_)})
+        plain = '\n'.join(body)
+        targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', plain)})
         at = ref[full]
-        if targets:   # module-local calls: lay the function and its targets out at their addresses in one unit
-            if any(abs(t - at) > 0x10000 for t in targets):
-                out.append((full, 0, 'a module-local target is out of calr / jrl reach')); continue
+        if targets and any(abs(t - at) > 0x10000 for t in targets):
+            out.append((full, 0, 'a module-local target is out of calr / jrl reach')); continue
+
+        def source(text_):
+            if not targets:
+                return '\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, text_)
+            # module-local calls: lay the function and its targets out at their addresses in one unit
             base = min(targets + [at])
             self_ = '__cc900_at_%x:\n' % at if at in targets else ''
             items = sorted([(t, '__cc900_at_%x:' % t) for t in targets if t != at] +
                            [(at, '%s\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:' % (self_, full, full, text_))])
-            src = '\t.text\n' + '\n'.join('\t.org 0x%x\n%s' % (a - base, txt) for a, txt in items) + '\n'
-        else:
-            src = '\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, text_)
-        try:
-            mine = check_bytes.assemble(src)[full]     # up to the next global label (__cc900_end) or the end
-        except Exception:
+            return '\t.text\n' + '\n'.join('\t.org 0x%x\n%s' % (a - base, txt) for a, txt in items) + '\n'
+        mine = None
+        # asm900's j is jr when the target is in reach: assemble the layout with every jr first (to_llvm.relax would
+        # widen a jr to a not-yet-placed module label into jrl, helper A, round 8), then the relaxed text
+        for text_ in ([plain] if targets else []) + [to_llvm.relax(plain, fw.assembler_errors)]:
+            try:
+                mine = check_bytes.assemble(source(text_))[full]     # up to the next global label or the end
+                break
+            except Exception:
+                continue
+        if mine is None:
             out.append((full, 0, 'llvm-mc cannot assemble the translation')); continue
         at = rom_offset(ref[full])
         r = rom[at:at + len(mine)]
