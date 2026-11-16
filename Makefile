@@ -169,16 +169,47 @@ everything: all wsa1 kn7000 kn2400 kn6000 kn6500 hdsx3 floppy
 # The v141 sub-CPU tree is generated as "v142 + EDITS" and v140 as "v141 + EDITS"; a
 # comment-only v142 change keeps all three images byte-identical, so only these checks notice
 # that v141 or v140 was not regenerated.
-gate: all
+#
+# The checks run in parallel under `make -jN gate` (2026-11-16, lane_vmb).  Each is its own phony target that needs
+# `all`, so none starts before the build is complete, and `gate` needs every one of them: the same checks as the
+# old one-after-another recipe, each still failing the gate on its own.  They only read the tree and the built
+# images (the --check modes write nothing; assert_byte_identical's own `make all` finds nothing to do after `all`),
+# so their order never mattered.  Measured on a built tree: 340 s of checks one after another.  `make gate` without
+# -j runs them one at a time, as before.  .NOTPARALLEL is not set for them on purpose; output of two checks may
+# interleave, so each prints its own PASS / FAIL line, and make reports the failing target by name.
+GATE_CHECKS := gate-assemble gate-bytes gate-references gate-subcpu-generated gate-hdae5000 gate-symbols \
+               gate-gui-headers gate-gui-records gate-gui-model \
+               gate-gui-symbolize-v10 gate-gui-symbolize-v9 gate-gui-symbolize-v7 gate-gui-symbolize-v6 \
+               gate-gui-symbolize-v5 gate-gui-menu-map
+.PHONY: $(GATE_CHECKS)
+gate: $(GATE_CHECKS)
+$(GATE_CHECKS): all
+gate-assemble:
 	python3 scripts/analysis/assert_images_assemble.py
+gate-bytes:
 	python3 scripts/analysis/assert_byte_identical.py
+gate-references:
 	$(MAKE) --no-print-directory verify-v8-reference verify-v6-reference verify-v5-reference verify-hdae5000-v201-reference verify-hdae5000-v115i-reference verify-hdae5000-v110i-reference verify-subprogram-update-images
+gate-subcpu-generated:
 	python3 scripts/generators/create_v141_subcpu_source.py --check
 	python3 scripts/generators/create_v140_subcpu_source.py --check
+gate-hdae5000:
 	python3 scripts/analysis/hdae5000_obj_constants_check.py
 	python3 scripts/analysis/hdae5000_menu_map.py --check
+gate-symbols:
 	python3 scripts/analysis/l2_symbol_reference.py --check
-	$(MAKE) --no-print-directory gui-check
+# gui-check's steps, one target each (gui-check itself stays, for running them alone)
+gate-gui-headers:
+	python3 scripts/generators/gen_naka_gui_headers.py --check
+	python3 scripts/generators/gen_title_mode_index_equs.py --check
+gate-gui-records:
+	for t in v10 v9 v7 v6 v5; do python3 scripts/converters/naka_asm_records.py --tree $$t --gen --check || exit 1; done
+gate-gui-model:
+	python3 scripts/analysis/naka_gui_model.py --check
+$(filter gate-gui-symbolize-%,$(GATE_CHECKS)): gate-gui-symbolize-%:
+	python3 scripts/converters/naka_gui_symbolize.py --check --tree $*
+gate-gui-menu-map:
+	python3 scripts/generators/gen_naka_menu_map.py --check
 
 # The NAKA GUI sources (notes/data-semantics-2026-10-29/gui-kn5000/): the generated class and id
 # headers of every tree, the object enums against the records' links, and the menu map.

@@ -103,39 +103,78 @@ for k in [k for k in os.environ if k.startswith("CC900_") and k != "CC900_MODEL_
 sys.path.insert(0, MODEL)
 
 
-def tree_values(tree):
-    """{name: value} of every numeric `.equ` / `.set` in TREE's .s files; a name set to two values maps to None"""
-    vals = {}
+LABEL_RE = re.compile(rb'^([A-Za-z_][\w]*):')
+ROM_LABEL = 0xE00000          # a label of the tree's code or data: in the main CPU's ROM, so above 0x10000 (24-bit)
+
+# The scan of a tree's .s files (its .equ values and its labels) took 0.7 s of each generator run's 1.1 s, and `make`
+# runs one generator per C file (795 on 2026-11-16).  Its result is kept in build/cc900-names/, one file per tree
+# state, keyed by a hash of the CONTENT of every .s file scanned (path and bytes), the two patterns and SCAN_VERSION:
+# any edit to any scanned file, or to the rules here, is another key, so a kept result is never stale.  The key costs
+# one read of the tree and one hash (about 60 ms).  Writers replace the file atomically; a cache that cannot be read
+# or written is ignored and the tree is scanned.
+SCAN_VERSION = b"cc900 tree scan 1"
+SCAN_CACHE = os.path.join(REPO, "build", "cc900-names")
+SCANNED = {}
+
+
+def tree_scan(tree):
+    """(values, labels) of TREE's .s files: {name: value} of every numeric `.equ` / `.set` (a name set to two values
+    maps to None), and the column-0 labels in file order"""
+    import hashlib
+    import pickle
+    tree = os.path.normpath(tree)
+    if tree in SCANNED:
+        return SCANNED[tree]
+    blobs = []
+    h = hashlib.blake2b(digest_size=20)
+    h.update(SCAN_VERSION + b"\0" + EQU_RE.pattern + b"\0" + LABEL_RE.pattern)
     for dp, dn, fn in os.walk(tree):
         dn[:] = sorted(d for d in dn if d != "generated")
         for f in sorted(fn):
-            if not f.endswith(".s"):
-                continue
-            for ln in open(os.path.join(dp, f), "rb").read().split(b"\n"):
-                m = EQU_RE.match(ln)
-                if m:
-                    n, v = m.group(1).decode(), int(m.group(2), 0)
-                    vals[n] = v if vals.get(n, v) == v else None
-    return vals
+            if f.endswith(".s"):
+                p = os.path.join(dp, f)
+                b = open(p, "rb").read()
+                h.update(b"\0%s\0%d\0" % (os.path.relpath(p, tree).encode(), len(b)))
+                h.update(b)
+                blobs.append(b)
+    kept = os.path.join(SCAN_CACHE, h.hexdigest() + ".pickle")
+    try:
+        with open(kept, "rb") as fh:
+            SCANNED[tree] = pickle.load(fh)
+        return SCANNED[tree]
+    except (OSError, EOFError, pickle.UnpicklingError, ValueError):
+        pass
+    vals, labs = {}, []
+    for b in blobs:
+        for ln in b.split(b"\n"):
+            m = EQU_RE.match(ln)
+            if m:
+                n, v = m.group(1).decode(), int(m.group(2), 0)
+                vals[n] = v if vals.get(n, v) == v else None
+            m = LABEL_RE.match(ln)
+            if m:
+                labs.append(m.group(1).decode())
+    SCANNED[tree] = (vals, labs)
+    try:
+        os.makedirs(SCAN_CACHE, exist_ok=True)
+        tmp = "%s.%d.tmp" % (kept, os.getpid())
+        with open(tmp, "wb") as fh:
+            pickle.dump(SCANNED[tree], fh, protocol=pickle.HIGHEST_PROTOCOL)
+        os.replace(tmp, kept)
+    except OSError:
+        pass
+    return SCANNED[tree]
 
 
-LABEL_RE = re.compile(rb'^([A-Za-z_][\w]*):')
-ROM_LABEL = 0xE00000          # a label of the tree's code or data: in the main CPU's ROM, so above 0x10000 (24-bit)
+def tree_values(tree):
+    """{name: value} of every numeric `.equ` / `.set` in TREE's .s files; a name set to two values maps to None"""
+    return dict(tree_scan(tree)[0])
 
 
 def tree_labels(tree):
     """{label: ROM_LABEL} for every column-0 label of TREE's .s files.  The value only tells to_llvm that the operand
     is 24-bit; the generated code names the label, and the tree's own definition gives the address."""
-    labs = {}
-    for dp, dn, fn in os.walk(tree):
-        dn[:] = sorted(d for d in dn if d != "generated")
-        for f in sorted(fn):
-            if f.endswith(".s"):
-                for ln in open(os.path.join(dp, f), "rb").read().split(b"\n"):
-                    m = LABEL_RE.match(ln)
-                    if m:
-                        labs[m.group(1).decode()] = ROM_LABEL
-    return labs
+    return dict.fromkeys(tree_scan(tree)[1], ROM_LABEL)
 
 
 # the trees a tree's sources include (its llvm-mc -I order after itself; Makefile): their names are the C's too

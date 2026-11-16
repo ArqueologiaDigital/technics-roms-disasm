@@ -356,8 +356,8 @@ def main():
                 nxt += 1
             region = b"\n".join(l.split(b";")[0] for l in lines[i:nxt])
             while True:
-                if j >= len(lines):
-                    sys.exit("%s: %s runs past the end of the file" % (asm, name))
+                if j >= len(lines):                      # the file's last function (HDAE5000_Lbn_TypeDigit): the
+                    break                                # scan ends with the file, and the size check decides
                 lm = LABEL_RE.match(lines[j])
                 if lm and lm.group(1).startswith(b".L"):
                     use = rb'[\s,(]' + re.escape(lm.group(1)) + rb'(?![\w.$])'
