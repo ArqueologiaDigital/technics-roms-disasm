@@ -101,6 +101,7 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
                     if l not in ('\t.globl %s' % bare, bare + ':')]
         except KeyError as e:
             out.append((full, 0, 'cannot resolve %s' % e)); continue
+        body = [l.replace('$+', '.+').replace('$-', '.-') for l in body]   # inline asm's `jr $+2` (llvm-mc spells `.`)
         if any('untranslated' in l for l in body):
             out.append((full, 0, 'to_llvm cannot translate a line')); continue
         try:
