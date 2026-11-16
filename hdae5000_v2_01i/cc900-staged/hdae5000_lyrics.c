@@ -7,14 +7,14 @@
 #include "hdae_ws.h"
 #include "hdae_ids.h"
 
-extern char *__cdecl HDAE5000_StrCpy(char *, const char *);
-extern char *__cdecl HDAE5000_StrNCpy(char *, const char *, unsigned int);
-extern char *__cdecl HDAE5000_StrCat(char *, const char *);
+extern char *__cdecl HDAE5000_StrCpy(char *, char *);
+extern char *__cdecl HDAE5000_StrNCpy(char *, char *, int);
+extern char *__cdecl HDAE5000_StrCat(char *, char *);
 extern unsigned int __cdecl HDAE5000_StrLen(const char *);
 extern void *__cdecl HDAE5000_MemFill(void *, int, unsigned int);
 extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
 extern int __cdecl HDAE5000_MemCmp(const void *, const void *, unsigned int);
-extern int __cdecl HDAE5000_SPrintf(char *, const char *, ...);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
 
 struct Box { int x1, y1, x2, y2; };
 struct Point { int x, y; };
@@ -136,6 +136,14 @@ long HDAE5000_Lyrics_LoadTestFile(void)
         CALLV(ROOT->WakeUpMainTask)();
         return 0L;
     }
+}
+
+unsigned int HDAE5000_Read_Table_Word(pos)
+unsigned int pos;
+{
+    unsigned int lo;
+    lo = LYRIC_EV(pos + 1);
+    return (unsigned int)LYRIC_EV(pos) << 8 | lo;
 }
 
 long HDAE5000_Read_Table_Multi(pos)

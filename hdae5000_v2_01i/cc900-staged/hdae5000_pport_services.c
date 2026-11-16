@@ -2,6 +2,7 @@
    Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
    (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_pport_services.c.
    cc900-options: -Xr
+   cc900-module: HDAE5000_DebugTrace
 */
 #include "hdae_ws.h"
 #include "hdae_ids.h"
