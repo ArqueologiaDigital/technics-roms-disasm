@@ -45,6 +45,15 @@ OPTIONS = dict(opt="O3XS", adecl=True, personality="kn5000")   # the default: -O
 # reference model compiles, as cc900 flags -> (model opt, adecl):
 OPTION_SETS = {"-O3 -XS -Xr": ("O3XS", True), "-Xr": ("none", True), "-O3 -XS": ("O3XS", False), "": ("none", False)}
 OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
+# cc900 keeps the first 31 characters of an identifier (V4.23: THC1-Error-262 when two agree in them), so a C name
+# may be shorter than the tree's label.  A comment `cc900-name: CNAME=LABEL` (one per pair, anywhere in the file)
+# maps it; the generated file, the splice and the byte checks then use LABEL.
+NAME_RE = re.compile(rb'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
+# Rules of the Technics compiler seen in Matsushita's own code but not in the library it links (which Toshiba's tools
+# built, and which the model's kn5000 ledger rows score): codegen flags that are off in the model and that this
+# build switches on.  KN_LOOP_INVERT: rule loop-entry-copy (notes/cc900-compat-plan-2026-11-08/rules.md).
+FIRMWARE_RULES = ("KN_LOOP_INVERT",)
+C_NAME_LIMIT = 31
 EQU_RE = re.compile(rb'^\s*\.(?:equ|set)\s+([A-Za-z_][\w.]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;|$)')
 RAM_CELL_RE = re.compile(r'^ram_([0-9a-f]+)$')
 
@@ -117,6 +126,22 @@ def file_options(path):
 REFUSED = {}                                             # compile_c: {function: the model's "unsupported" reason}
 
 
+def label_map(path):
+    """{C name: the tree's label} from FILE.c's `cc900-name:` comments"""
+    return {m.group(1).decode(): m.group(2).decode() for m in NAME_RE.finditer(open(path, "rb").read())}
+
+
+def check_c_names(path, cnames):
+    """stop when two C names of FILE.c agree in their first 31 characters (V4.23 could not compile the file)"""
+    seen = {}
+    for n in cnames:
+        k = n[:C_NAME_LIMIT]
+        if k in seen and seen[k] != n:
+            sys.exit("%s: %s and %s agree in their first %d characters, which cc900 keeps; give one a shorter C "
+                     "name and a `cc900-name: CNAME=LABEL` comment" % (path, seen[k], n, C_NAME_LIMIT))
+        seen[k] = n
+
+
 def compile_c(path, names, spell=True):
     """FILE.c -> {function: [llvm-mc lines]} through the reference model and to_llvm (asm900's jr / jrl choice
     included).  spell=False writes every name as its address (scripts/analysis/cc900/model/fn_diff.py assembles a
@@ -125,18 +150,27 @@ def compile_c(path, names, spell=True):
     import codegen
     import to_llvm
     _, opt, adecl = file_options(path)
+    for flag in FIRMWARE_RULES:                          # rules of the firmware's own C, off in the model elsewhere
+        if hasattr(codegen, flag):
+            setattr(codegen, flag, True)
     unit = frontend.load(path, [], [], adecl=adecl)
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
+    check_c_names(path, [f.name for f in unit.functions])
+    labels = label_map(path)
     funcs = {}
     REFUSED.clear()
     for name, lines in out.items():
         if lines and lines[0].startswith("; unsupported"):
-            REFUSED[name.lstrip("_.")] = lines[0][2:]      # the model declines this C (fn_diff.py reports it)
+            n = name.lstrip("_.")
+            REFUSED[labels.get(n, n)] = lines[0][2:]       # the model declines this C (fn_diff.py reports it)
             continue
         if not lines or not lines[0].endswith(":") or lines[0][:-1] != name:
             continue                                       # data objects
-        bare = name.lstrip("_.")
+        bare = labels.get(name.lstrip("_."), name.lstrip("_."))
+        if bare != name.lstrip("_."):                      # a short C name: the body is the tree label's
+            lines = [bare + ":" if l == name + ":" else l for l in lines]
+            name = bare
         body = to_llvm.translate_function(name, lines, names)
         locals_ = {l[:-1] for l in lines if l.endswith(":") and not l.startswith("\t") and l[:-1] != name}
         text = []

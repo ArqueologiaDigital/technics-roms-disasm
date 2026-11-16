@@ -181,6 +181,29 @@ The same probe found three places where the model and V4.23 differ (bitfields, a
 a compare of a promoted shifted char).  They were reported to the coordinator, who assigned them to a model lane.
 None of them is in a built function.
 
+### The built C under V4.23 (run `2026-11-16-13-p6-firmware`, lane_dash)
+
+lane_dash compiled the 55 milestone-2 C files of all five trees with V4.23, at `-O3 -XS -Xr` and `-Xr`.
+- **One file refused.**  V4.23 refused `bitmap_out_routines.c` in every tree with THC1-Error-262: cc900 keeps 31
+  characters of an identifier, and `BitMapOut_PrepareRender_CheckBit1` / `_CheckBit2` agree in their first 31.  So
+  those 6 functions were not compiled.
+- **The other 30 functions.**  Against the ROM through the proxy route
+  (`scripts/analysis/cc900/asm_vs_rom.py`: the listing through `to_llvm.py`, which gives each operand the
+  firmware's 16- or 24-bit width), they are 30 of 30 at `-Xr` in each of v10, v9, v7, v6 and v5, and 29 of 30 at
+  `-O3 -XS -Xr`.  The one that differs is `GetNamingWindowID` (finding (a)).
+- **No other function fails.**  The run's "30 of 36" is these 30, and the 6 missing are the refused file.
+- **Why compare through the listing.**  asm900's own objects (`rel_vs_rom.py`) differ wherever a function
+  addresses a RAM cell below 0x10000: the listing declares every extern `large`, so asm900 writes a 24-bit operand
+  where the firmware has a 16-bit one.  That is the address-width question of the preview, not a code difference.
+- `GET_COMPUTER_INTERFACE_SELECTION` (32 characters) compiles: V4.23 cuts its public name to 31 characters, and
+  `asm_vs_rom.py` finds it by those.
+
+**The fix.**  A C file may give a function a shorter name and map it to the tree's label in a comment:
+`cc900-name: BitMapOut_PrepRender_CheckBit1=BitMapOut_PrepareRender_CheckBit1`.  The generator, the splice,
+`fn_diff.py` and `options_table.py` then use the label.  The generator also stops on two C names that agree in
+their first 31 characters, so every built C file stays one that V4.23 can check.  `bitmap_out_routines.c` uses it
+in all five trees; v10, v9, v8, v7, v6 and v5 rebuilt byte-identical.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
@@ -204,8 +227,12 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   character and fall into the space padding; any other entry jumps to the number code.  `if` / `else` and `switch`
   forms give the same instructions, but V4.23 then places the padding after the first arm.  Both option sets give
   the same bytes, so this function says nothing about `-O`.  The model refuses the C: without `-O`, `goto` is
-  unsupported; at `-O3 -XS -Xr`, "ld A,C over the live parameter p in WA".  That is a model gap, reported to the
-  coordinator.  The function stays hand assembly until the model compiles it.
+  unsupported; at `-O3 -XS -Xr`, "ld A,C over the live parameter p in WA".  That was a model gap, reported to the
+  coordinator.  **Built since batch 361** (lane_o3 fix 25: `goto` and these shapes): `fmt_e` is now
+  `FormatMedleyNumber` in `medley.c` of all five trees, 108 of 108 bytes (`fn_diff.py`).  Its six inner labels
+  (`FmtNum_CheckMarked` ... `FmtNum_WriteTwoDigits`) keep their names and addresses: `cc900_splice.py --symbols`
+  takes the function's extent from the size of its compiled C and writes each inner label after the include as
+  `.set FmtNum_WriteM, FormatMedleyNumber + 61`, its offset read from the symbols reference.
 - **`TrimAndPadSmfFilename`** (`file_io/smf_operations.s`).  With a character variable and two pointers that start
   equal, V4.23 at `-O3 -XS -Xr` gives the ROM's first 42 bytes:
   - the whole first loop, whose compound `&&` condition is tested at the bottom, entered by a jump;
@@ -215,7 +242,14 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   the only difference.  The ROM tests `i < n` before entering and again at the bottom.  V4.23 compiles every form
   tried to a jump to a bottom test: `while`, `for`, an explicit `if (...) do ... while`, and two hand-made `goto`
   loops.  That is a candidate `kn5000` rule (loop inversion for a simple condition, not for a compound one),
-  reported to the coordinator for the rule list.  The function stays hand assembly.
+  reported to the coordinator for the rule list.
+  
+  **Since batch 362** (lane_o3 fix 26, `ASSIGN_TARGET_WRITE`), the model compiles `trim_a` as V4.23 does.  With the
+  rule loop-entry-copy (lane_p6 fix p6-02, `KN_LOOP_INVERT`, which only the firmware build switches on), it gives
+  all 60 bytes of `TrimAndPadSmfFilename`, `TrimPad_NullTerminate`'s tail included (`fn_diff.py`).  The first form
+  of the rule (fix p6-01) was on for the whole `kn5000` personality.  It lost library and `ide2003` micro functions
+  in the full ledger and was backed out.  `rules.md` has the account.  The function is identical in all five
+  trees; it is built once fix p6-02 is in the model.
 
 **Loop shapes across v10** (the idiom census for that candidate rule): `python3
 notes/cc900-phase6-2026-11-16/loop_shapes.py v10/maincpu`, 2026-11-16.  A loop is a backward conditional branch;
@@ -267,8 +301,25 @@ computed from the start register, and the loop has no entry test) and uses the 4
 Probe `corpus/firmware/p6_m4.c` (run `2026-11-16-12-p6-m4`) was to compile both at both option sets.  Instead,
 V4.23's code generator crashed at every option set, before emitting a function (a page fault reading 0x4890, four
 bytes past the C constant pointer 0x488c), and asm900 then refused the output.  The crash is reported to the
-coordinator as a V4.23 bug.  The isolation run (`p6_m4_<function>.c`, `corpus/p6_m4_split-sources.txt`) has not
-run yet: the VM was busy outside its lock.  Until it runs, the question stays open.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
+coordinator as a V4.23 bug.  The isolation run `2026-11-16-14-p6-m4-split` compiled one function per file
+(`p6_m4_<function>.c`, `corpus/p6_m4_split-sources.txt`).  Only `sc_b` and `va_b` crash: a `for` loop whose
+condition compares the pointer with a constant pointer plus an offset, `p < (unsigned char *)0x488c + 32`.  The
+crash happens at every option set; at `-O3 -XS` `va_b` stops with exit 1 instead of the page fault.  The same
+loop written with an end pointer variable (`sc_a`, `sc_c`, `va_a`) compiles.
+
+Against the ROM (`rel_vs_rom.py`), no variant is byte-identical, but the first instruction decides the question:
+- the ROM's `StyleConv_ClearWorkBuffer` loads the buffer address with the 4-byte `lda` of an absolute below
+  0x10000, then copies it and adds 32 for the end pointer;
+- V4.23 at `-O3 -XS -Xr` (`sc_a`) writes that same first instruction, then folds the end address differently;
+- V4.23 at `-Xr` writes the 5-byte `ld` of the 32-bit constant and differs from the first byte.
+
+So the firmware's compiler does use V4.23's `-O` rule (`lda` for a 32-bit constant of 8..0xffff) in this
+`-O`-shaped function of `sequencer/accompaniment_engine.s`.  `GetNamingWindowID`'s `ld` then points to its file
+being built without `-O`: **per-file options is the better explanation**, not a compiler without the rule.  The
+caveat: here the constant is a pointer, there an integer.  V4.23 treats both alike at `-O`; a compiler that
+distinguished them would be a new behaviour, and nothing seen so far suggests one.
+`FloppyIO_ClearTrackParseBuffer`'s `ld xix, 0x106e` with `djnz` matches neither option set from `fl_a` / `fl_b`
+(both differ at +0); it may be hand assembly or another C.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
 functions; the choice is recorded in its `cc900-options:` comment.
 
 ## Finding candidates
