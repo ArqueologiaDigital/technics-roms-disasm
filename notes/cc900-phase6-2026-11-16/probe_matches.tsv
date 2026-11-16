@@ -454,3 +454,16 @@ SeGfx_StaticOp09_Box	42	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
 SeGfx_StaticOp0A_ShadowBox2	225	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
 SeGfx_StaticOp13_DottedBox	157	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
 SeGfx_StaticOp22_ShadowBox1	135	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+FDC_Send_Command	6	2026-11-16-72-p6-r13 (lane_nmx re-check)	p6_nm_FDC_Send_Command__1b318ec2@O3XSXr
+FDC_WriteDataRegister	6	2026-11-16-72-p6-r13 (lane_nmx re-check)	p6_nm_FDC_WriteDataRegister__1b318ec2@O3XSXr
+FontGlyph_ByteData	17	2026-11-16-22-p6-m9 (lane_nmx re-check)	p6_nm_FontGlyph_ByteData__d82be996@O3XSXr
+MIDI_SendChannelPressure	33	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_MIDI_SendChannelPressure__51f33f7d@Xr
+MIDI_SendControlChange	32	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_MIDI_SendControlChange__51f33f7d@Xr
+MIDI_SendPitchBend	46	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_MIDI_SendPitchBend__51f33f7d@Xr
+SeqStep_FileSectorProcess	72	2026-11-16-55-p6-r10 (lane_nmx re-check)	p6_nm_SeqStep_FileSectorProcess__7b4aee5b@Xr
+Sprintf_FFixed_DataTable	20	2026-11-16-68-p6-r12 (lane_nmx re-check)	p6_nm_Sprintf_FFixed_DataTable__cea2fdcc@O3Xr
+SysEx_ClampVoiceIndex128_49	20	2026-11-16-22-p6-m9 (lane_nmx re-check)	p6_nm_SysEx_ClampVoiceIndex128_49__d82be996@O3XSXr
+SysEx_ClampVoiceIndex8_49	20	2026-11-16-22-p6-m9 (lane_nmx re-check)	p6_nm_SysEx_ClampVoiceIndex8_49__d82be996@O3XSXr
+TGReg_WriteCC0_AltMask	98	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_TGReg_WriteCC0_AltMask__f87946ba@O3XSXr
+TGReg_WriteCC0_Volume	98	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_TGReg_WriteCC0_Volume__f87946ba@O3XSXr
+Tempo_EditBPM	53	2026-11-16-45-p6-r9 (lane_nmx re-check)	p6_nm_Tempo_EditBPM__f7566970@O3Xr
