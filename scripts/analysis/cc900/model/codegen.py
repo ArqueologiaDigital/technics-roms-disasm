@@ -1169,6 +1169,14 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             f2 = gen(F, inner, 'WA', 1)        # two byte operations in a chain are built in A, then moved (chararith2
             if f2 != 'WA': raise Unsupported('a byte chain outside A')   # cb_gu_s1_sr: (guc << 1) >> 3 -> ld A,(_guc) /
             F.emit('ld', '%s,A' % FAM[fam][1])   # sll 0x1,A / srl 0x3,A / ld L,A / extz HL; one operation stays in L)
+        elif NARROW_LOAD_VIA_WA and isz == 1 and size in (2, 4) and fam in ('BC', 'DE', 'HL') and inner.k == 'cast' and \
+                inner.kind == 'IntegralCast' and strip(inner.e).k == 'load' and strip(inner.e).ty is not None and \
+                strip(inner.e).ty.size in (2, 4) and (mem_operand(F, strip(inner.e)) or '').startswith('(') and \
+                'WA' not in live_regs(F):
+            F.emit('ld', '%s,%s' % (FAM['WA'][strip(inner.e).ty.size], mem_operand(F, strip(inner.e))))   # the source
+            F.emit('ld', '%s,A' % FAM[fam][1])  # read whole into WA, its low byte moved, then extended (phase 6 p6_m2a
+                                                # medley_cast: (unsigned char)w -> ld WA,(_w) / ld L,A / extz HL; 48 such
+                                                # in the oracle's other listings, never ld HL,(m) / extz HL)
         else:
             f2 = gen(F, inner, fam, isz)       # result, binop_c.c add_c_pk, too)
             if isz >= size and f2 in FAM and f2 != fam: return f2   # (the value stayed where the chain built it)
@@ -2268,6 +2276,7 @@ def ret_two_level(F, e, size):
     while x.k == 'cast' and x.kind in ('NoOp', 'BitCast'): x = strip(x.e)
     if size not in (2, 4) or x.ty is None or x.ty.size != size or x.ty.kind != 'int' or live_regs(F) or F.pending or \
             nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x): return False
+    if BITFIELD_READ and getattr(x, 'bf', False): return False   # (a bit-field read is done in HL: and HL / srl HL)
     def computed(y):
         y = strip(y)
         if fold(y).k == 'const': return False              # (a folded constant is a constant: kfold.c kf_a)
@@ -7000,6 +7009,12 @@ def gen_compare(F, e):
     l, r = strip(e.l), strip(e.r)
     if FP_INT_PATH_GUARD and (fpgen.is_fp(getattr(l, 'ty', None)) or fpgen.is_fp(getattr(r, 'ty', None))):
         raise Unsupported('an FP compare in the integer path')   # (probe fpw fp_cm_flGR -O: cp XWA,(_gf2))
+    if BITFIELD_READ and getattr(e, 'bf_bit', None) is not None and 'WA' not in live_regs(F):
+        u_, p_, set_ = e.bf_bit                            # a 1-bit field tested in place (bitfield_lower)
+        if gen(F, u_, 'WA', 2) != 'WA': raise Unsupported('a bit-field unit outside WA')
+        F.emit('bit', '%s,WA' % hx(p_)); return 'ne' if set_ else 'eq'
+    if SHIFT_DIV_CMP_BYTE and getattr(e, 'mixed_byte_cmp', False):   # V4.23 bug 7 (probe shcmp): a shifted or divided
+        raise Unsupported('a mixed-signedness byte compare')   # char against a char of the other signedness
     if PTRDIFF_CMP_OPT and F.opt and e.op in ('<', '<=', '>', '>='):
         def pdiff1_(x):
             x = unpromote(x)
@@ -7869,6 +7884,7 @@ TERN_TRUTH_PLAIN = True                                  # see gen's -O ?:
 STORE_HL_DIRECT = True                                   # see compile_unit
 CHAR_CHAIN_VIA_A = True                                  # see gen: a narrowed char chain widened
 CHAR_SHR_AFTER_NARROW = True                             # see char_narrow's visit2
+SHIFT_DIV_CMP_BYTE = True                                 # see char_narrow's visit2 and gen_compare
 QIZH_DIRECT = True                                       # see compile_unit
 XR_CHAR_ARG_INPLACE_OPT = True                           # see gen_call_adecl
 PARAM_WRITE_ONLY_FREE = True                             # see regtemp_candidates
@@ -7933,6 +7949,66 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+NARROW_LOAD_VIA_WA = True                                 # see gen's widening of a narrowing cast
+BITFIELD_REFUSE = True                                    # see compile_function_once: every bit-field access refuses
+BITFIELD_READ = True                                      # see bitfield_lower: reads of a 16-bit unit are modelled
+
+def bitfield_lower(body):
+    """BITFIELD_READ: a read of a bit-field in a 16-bit unit becomes the unit's word and a shift / mask (probe bitf, run
+    2026-11-16-6-micro-bitf, all four sets): unsigned top field ld HL,(_gb1) / srl 0xf,HL; low field and HL,0xff;
+    middle field and HL,0x7000 / srl 0xc,HL; signed top field sra 0xd,HL; signed other field sll 0x3,HL / sra 0x3,HL;
+    a 16-bit field the plain word.  The unit is read by the field's own member node, marked bf_unit (the record keeps
+    each field at its unit's offset).  Writes and op= still refuse (BITFIELD_REFUSE)."""
+    from frontend import N, Type
+    import copy as _copy
+    def uty(sg): return Type('int', 2, 2, signed=sg, spell='int' if sg else 'unsigned int')
+    def K(v, sg): return N('const', value=v, ty=uty(sg))
+    def visit(n):
+        for key, v in list(n.__dict__.items()):
+            for c in (v if isinstance(v, list) else [v]):
+                if hasattr(c, 'k'): visit(c)
+        if n.k != 'load': return
+        m = strip(n.e)
+        if m.k != 'member' or getattr(m, 'bf_unit', False): return
+        bt = strip(m.base).ty
+        bt = bt.base if m.arrow and bt is not None else bt
+        ft = [t_ for nm, t_, o_ in (getattr(bt, 'rec', None) or []) if nm == m.name]
+        if not ft or getattr(ft[0], 'bitwidth', None) is None or ft[0].size != 2: return
+        ft = ft[0]; pos, w, sg = ft.bitpos, ft.bitwidth, bool(ft.signed)
+        def unit(sg_):
+            m2 = _copy.copy(m); m2.bf_unit = True; m2.ty = uty(sg_)
+            u = _copy.copy(n); u.e = m2; u.ty = uty(sg_); return u
+        if w == 16: e = unit(sg)
+        elif pos + w == 16: e = N('bin', op='>>', l=unit(sg), r=K(pos, sg), ty=uty(sg))
+        elif not sg and pos == 0: e = N('bin', op='&', l=unit(False), r=K((1 << w) - 1, False), ty=uty(False))
+        elif not sg:
+            e = N('bin', op='>>', l=N('bin', op='&', l=unit(False), r=K(((1 << w) - 1) << pos, False), ty=uty(False), bf=True),
+                  r=K(pos, False), ty=uty(False))
+        else:
+            sh = N('bin', op='<<', l=unit(False), r=K(16 - pos - w, False), ty=uty(False), bf=True)
+            e = N('bin', op='>>', l=N('cast', kind='IntegralCast', e=sh, ty=uty(True), bf=True), r=K(16 - w, True), ty=uty(True))
+        ty0 = n.ty; u0 = unit(sg)
+        n.__dict__.clear(); n.__dict__.update(e.__dict__); n.bf = True; n.bf_field = (u0, pos, w, sg)
+        if ty0 is not None and ty0.size == 2: n.ty = ty0
+        if not sg and pos == 0 and w == 8: found['and_ff'] = True
+    found = {}
+    visit(body)
+    def visit_cmp(n):
+        for key, v in list(n.__dict__.items()):
+            for c in (v if isinstance(v, list) else [v]):
+                if hasattr(c, 'k'): visit_cmp(c)
+        if n.k == 'bin' and n.op in ('==', '!='):          # a 1-bit field against 0 or its set value is a bit test
+            for a_, b_ in ((n.l, n.r), (n.r, n.l)):        # (bf_b1_a_c: gb1.a == 1 -> ld WA,(_gb1) / bit 0xf,WA /
+                a0_ = strip(a_)                            # j eq; bf_b7_m_c, signed: gb7.m == 0 -> bit 0xf,WA / j ne)
+                while a0_.k == 'cast' and a0_.kind == 'IntegralCast' and not getattr(a0_, 'bf', False): a0_ = strip(a0_.e)
+                bfd_ = getattr(a0_, 'bf_field', None); kb_ = fold(b_)
+                if bfd_ is None or bfd_[2] != 1 or kb_.k != 'const' or kb_.value is None: continue
+                setv_ = -1 if bfd_[3] else 1
+                if kb_.value not in (0, setv_): continue
+                n.bf_bit = (bfd_[0], bfd_[1], (kb_.value == setv_) == (n.op == '=='))
+                break
+    visit_cmp(body)
+    return found
 FLOAT_SHAPES_REFUSE = True                               # see compile_function_once
 FP_INT_PATH_GUARD = True                                 # see gen_compare, gen_bin
 OPA_FREE_LIVE = True                                     # see gen_opassign
@@ -9754,6 +9830,34 @@ def char_narrow(body):
             wrap(N('bin', op='>>', l=x, r=N('const', value=rk.value, ty=ct0(x.ty.signed)), ty=ct0(x.ty.signed), narrowed=True))
             return                                         # (chararith2 cb_gu_s1_sr: (guc << 1) >> 3 -> sll 0x1,A /
                                                            # srl 0x3,A / ld L,A / extz HL)
+        if SHIFT_DIV_CMP_BYTE and n.op in ('>>', '/') and anyc(x) and x.k != 'cond' and rk.k == 'const' and \
+                rk.value is not None and parent is not None and parent.k == 'bin' and \
+                parent.op in ('<', '<=', '>', '>=', '==', '!=') and (parent.l is n or parent.r is n):
+            # a char shifted or divided by a constant and then compared is done at the byte (probe shcmp, run
+            # 2026-11-16-7-micro-shcmp, all four sets; phase 6 p6_m2a vari_int: (a >> 1) >= c -> ld A,(XSP+0x4) /
+            # srl 0x1,A / cp A,(XSP+0x6) / scc uge,HL; a / 4 -> srl 0x2,A; a / 3 -> extz WA / div WA,0x3; sa / 2 ->
+            # exts WA / divs WA,0x2; against an int the byte result is extended: extz WA / cp WA,(XSP+0x6) / scc ge).
+            # V4.23 compares a char of the other signedness at the byte too, with the unsigned condition (bug 7, wrong
+            # code): those compares refuse.
+            o_ = parent.r if parent.l is n else parent.l
+            oc_ = chr2(o_); ok_ = fold(o_); k_ = rk.value; sg_ = x.ty.signed
+            if ok_.k == 'const' and ok_.value is not None:
+                other_ = 0 <= ok_.value <= 127
+            elif oc_ is not None:
+                other_ = oc_.k != 'cond' and bool(oc_.ty.signed) == bool(sg_)
+                if not other_: parent.mixed_byte_cmp = True
+            else:
+                other_ = strip(o_).ty is not None and strip(o_).ty.kind == 'int' and strip(o_).ty.size == 2
+            if other_:
+                if n.op == '>>' and not sg_ and 1 <= k_ <= 7:
+                    wrap(N('bin', op='>>', l=x, r=N('const', value=k_, ty=ct0(False)), ty=ct0(False), narrowed=True)); return
+                if n.op == '/' and not sg_ and k_ in (2, 4, 8, 16, 32, 64, 128):
+                    wrap(N('bin', op='>>', l=x, r=N('const', value=k_.bit_length() - 1, ty=ct0(False)), ty=ct0(False),
+                           narrowed=True)); return
+                if n.op == '/' and not sg_ and 1 < k_ <= 255:
+                    wrap(N('bin', op='/', l=x, r=N('const', value=k_, ty=ct0(False)), ty=ct0(False), narrowed=True)); return
+                if n.op == '/' and sg_ and 1 < k_ <= 127:
+                    wrap(N('bin', op='/', l=x, r=N('const', value=k_, ty=ct0(True)), ty=ct0(True), narrowed=True)); return
         to_char = parent is not None and parent.k == 'cast' and parent.kind == 'IntegralCast' and \
             getattr(parent, 'ty', None) is not None and parent.ty.size == 1   # (stored to a char: stdiv.c's forms stand)
         if n.op == '/' and plain(x) and plain(y) and x.ty.signed and y.ty.signed and not to_char:
@@ -19770,6 +19874,15 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
             while ix_.k == 'cast' and ix_.kind == 'IntegralCast' and ix_.ty is not None and ix_.ty.size == 4: ix_ = strip(ix_.e)
             if fold(n_.idx).k != 'const' and ix_.ty is not None and ix_.ty.size == 4 and ix_.ty.kind == 'int':
                 raise Unsupported('a long variable index')
+    if BITFIELD_READ and bitfield_lower(f.body).get('and_ff'): f.bf_and_ff = True
+    if BITFIELD_REFUSE:                                    # a bit-field member: the model read it as a whole unit (phase 6
+        for n_ in nodes_in(f.body, 'member'):              # p6_m2a medley_bitfield: ld HL,(_s) without V4.23's srl 0x8,HL,
+            if getattr(n_, 'bf_unit', False): continue
+            bt_ = strip(n_.base).ty                         # wrong code); refused until its accesses are modelled
+            bt_ = bt_.base if n_.arrow and bt_ is not None else bt_
+            rec_ = getattr(bt_, 'rec', None) or []
+            if any(nm == n_.name and getattr(t_, 'bitwidth', None) is not None for nm, t_, o_ in rec_):
+                raise Unsupported('a bit-field')
     if FLOAT_SHAPES_REFUSE:                                # float shapes the model writes wrongly (probe fpw)
         def flt_(t_): return t_ is not None and getattr(t_, 'kind', None) == 'float' and t_.size == 4
         for n_ in nodes_in(f.body, 'cast'):
@@ -20453,7 +20566,9 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                 full = ctr_first_free(full)                # takes the first free register (rs_3_06_09_4: WA)
             if L2_DIA_FIRED[0] and ctr_clobbered(full):     # (the L2 allocator does not see the body's temporaries:
                 raise Unsupported('a loop counter overwritten in its body')   # rs_3_04_07_6 muls WA over i in WA)
-            if AND_FF_LD:                                  # an AND that keeps the low byte (word) of a register and
+            if AND_FF_LD and not getattr(f, 'bf_and_ff', False):   # (not with an 8-bit low bit-field read: and HL,0xff,
+                                                           # bf_b1_d_r; a function-wide exception)
+                                                           # an AND that keeps the low byte (word) of a register and
                 for k_ in range(len(full)):                # whose flags nothing reads clears the high part with ld
                     m_ = re.match(r'^\tand\t(?:(WA|BC|DE|HL),0xff|X(WA|BC|DE|HL|IX|IY|IZ),0xffff)$', full[k_])   # (random
                     nx_ = full[k_ + 1] if k_ + 1 < len(full) else ''   # r4_04_12: 255 & (gi + 16) -> ld W,0x0; the

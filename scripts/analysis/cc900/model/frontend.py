@@ -30,12 +30,34 @@ ALIASES = {'short int': 'short', 'unsigned short int': 'unsigned short', 'long i
            'unsigned long int': 'unsigned long', 'signed int': 'int', 'unsigned': 'unsigned int', 'signed': 'int',
            'signed short': 'short', 'signed long': 'long'}
 
+BITFIELD_LAYOUT = True                                    # see Records.layout
+
 class Records:
     """struct/union layouts, filled from RecordDecl nodes"""
     def __init__(s): s.recs = {}
     def layout(s, name, fields, union=False):
         off = 0; size = 0; out = []
-        for fname, ft in fields:
+        unit = None                                       # the open bit-field unit: [offset, size in bytes, bits used]
+        for fd in fields:
+            fname, ft = fd[0], fd[1]; bw = fd[2] if len(fd) > 2 else None
+            if BITFIELD_LAYOUT and bw is not None and not union:
+                # a bit-field (phase 6, oracle run 2026-11-16-5-p6-m2a: struct { unsigned int status:8; unsigned int
+                # rest:8; } s; s.status -> ld HL,(_s) / srl 0x8,HL): V4.23 fills a unit of the declared type's size from
+                # its HIGH end; a field that does not fit, or a width of 0, starts the next unit (the rest: probe bitf)
+                ub = ft.size * 8
+                if bw == 0: unit = None; continue
+                if unit is None or unit[1] != ft.size or unit[2] + bw > ub:
+                    if unit is not None: off = unit[0] + unit[1]   # a unit is byte aligned: after a char it starts at
+                                                                   # +1 (probe bitf b5 { char c; unsigned f:4, g:12; }:
+                                                                   # ld HL,(_gb5 + 0x1) / srl 0xc,HL; sizeof 4)
+                    unit = [off, ft.size, 0]; off += ft.size
+                import copy as _copy
+                bt = _copy.copy(ft); bt.bitpos = ub - unit[2] - bw; bt.bitwidth = bw
+                unit[2] += bw
+                if fname: out.append((fname, bt, unit[0]))
+                size = max(size, unit[0] + unit[1]); continue
+            unit = None
+            if not fname: continue
             a = min(ft.align, 2)
             if ft.kind == 'array': a = 2                  # an array member starts at an even offset, a char array too
             if union: o = 0                               # (probes/elrd.c: struct { char c; char ca[8]; unsigned char u;
@@ -45,6 +67,13 @@ class Records:
             out.append((fname, ft, o)); size = max(size, o + ft.size)
         size = (size + 1) // 2 * 2
         s.recs[name] = (out, max(size, 2))
+
+def bitwidth(f):
+    """a FieldDecl's bit-field width (clang JSON: isBitfield, the width a ConstantExpr's value), else None"""
+    if not f.get('isBitfield'): return None
+    for c in f.get('inner', []):
+        if c.get('value') is not None: return int(c['value'])
+    return None
 
 def parse_type(spell, recs, typedefs):
     t = spell.strip()
@@ -173,7 +202,7 @@ class Builder:
         return parse_type(t, s.recs, s.typedefs)                                           # union { ... } d;
 
     def record(s, n):
-        fields = [(f['name'], s.ty(f)) for f in n.get('inner', []) if f.get('kind') == 'FieldDecl']
+        fields = [(f.get('name', ''), s.ty(f), bitwidth(f)) for f in n.get('inner', []) if f.get('kind') == 'FieldDecl']
         name = n.get('name', 'anon%s' % n['id'])
         s.recs.layout(name, fields, n.get('tagUsed') == 'union')
         if 'name' not in n: s.last_anon = '%s %s' % ('union' if n.get('tagUsed') == 'union' else 'struct', name)
@@ -188,7 +217,7 @@ class Builder:
                     q = s.last_anon                          # typedef union { ... } DBLBIT; (FLOAT.H)
                 s.typedefs[n['name']] = q
             elif k == 'RecordDecl' and n.get('completeDefinition'):
-                fields = [(f['name'], s.ty(f)) for f in n.get('inner', []) if f.get('kind') == 'FieldDecl']
+                fields = [(f.get('name', ''), s.ty(f), bitwidth(f)) for f in n.get('inner', []) if f.get('kind') == 'FieldDecl']
                 name = n.get('name', 'anon%s' % n['id'])
                 s.recs.layout(name, fields, n.get('tagUsed') == 'union')
                 if 'name' not in n: s.last_anon = '%s %s' % ('union' if n.get('tagUsed') == 'union' else 'struct', name)
