@@ -998,25 +998,9 @@ SndOutput_ReinitByMode_Restore:
 	ld	(36000:16), iz
 	pop	xiz
 	ret
-SndOutput_ReinitByMode_NotifyParam:
-	ld	c, (35996:16)
-	inc	1, c
-	extz	bc
-	ld	xwa, 768
-	ld	de, 3:i3
-	call	SoundParam_NotifyChange
-	ld	a, (35994:16)
-	bit	5, a
-	jr	z, SndOutput_ReinitByMode_CheckBit3
-	set	2, a
-	ld	(35994:16), a
-SndOutput_ReinitByMode_CheckBit3:
-	ld	a, (35994:16)
-	bit	3, a
-	ret	z
-	set	1, a
-	ld	(35994:16), a
-	ret
+SndOutput_ReinitByMode_NotifyParam:	.include "includes/generated/cc900/SndOutput_ReinitByMode_NotifyParam.s"	; C: cc900/ui_mode_handlers_m275.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndOutput_ReinitByMode_CheckBit3, SndOutput_ReinitByMode_NotifyParam + 35
 MainCPU_self_test_routines:
 	set	1, (0x30:8)
 	bit	0, (0x30:8)
@@ -1095,20 +1079,10 @@ Report_BlinkLoop_OffDelayInner:
 	ret
 
 
-A_Short_Pause:
-	ld bc, 0:i3
-
-ShortPause_OuterLoop:
-	ld wa, 0:i3
-
-ShortPause_InnerLoop:
-	inc 1, wa
-	cp wa, 0x100
-	jr c, ShortPause_InnerLoop
-	inc 1, bc
-	cp bc, 0x1000
-	jr c, ShortPause_OuterLoop
-	ret
+A_Short_Pause:	.include "includes/generated/cc900/A_Short_Pause.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ShortPause_OuterLoop, A_Short_Pause + 2
+	.set	ShortPause_InnerLoop, A_Short_Pause + 4
 
 DramTest_Loop:
 	ld wa, 0:i3
@@ -1725,21 +1699,10 @@ EffectMode_PopRetFA:
 	inc	8, xsp
 	ret
 
-SelfTest_PopCount:
-	ld l, 0x0:opc
-	ld c, 0x0:opc
-
-SelfTest_PopCount_Loop:
-	bit 0, a
-	jr z, SelfTest_PopCount_ShiftNext
-	inc 1, l
-
-SelfTest_PopCount_ShiftNext:
-	srl a, 1
-	inc 1, c
-	cp c, 0x8
-	jr c, SelfTest_PopCount_Loop
-	ret
+SelfTest_PopCount:	.include "includes/generated/cc900/SelfTest_PopCount.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SelfTest_PopCount_Loop, SelfTest_PopCount + 4
+	.set	SelfTest_PopCount_ShiftNext, SelfTest_PopCount + 11
 
 EffectMode_CheckAndDispatch:
 	cp (CURRENT_TITLE:16), 0xfb
@@ -1881,84 +1844,14 @@ EffectMode_RestoreSwbWr_NormalMode:
 
 
 
-EffectMode_HandleTimerEvents:
-	call	CtrlPanel_GetSelectionState
-	cp	hl, 0:i3
-	ret	nz
-	ld	a, (DIAG_ANIM_STEP:16)
-	cp	a, 150
-	jrl	z, EffectMode_TimerEvent_Step96
-	cp	a, 120
-	jrl	z, EffectMode_TimerEvent_Step78
-	cp	a, 90
-	jr	z, EffectMode_TimerEvent_Step5A
-	cp	a, 60
-	jr	z, EffectMode_TimerEvent_Step3C
-	cp	a, 30
-	jr	z, EffectMode_TimerEvent_Step1E
-	cp	a, 0:i3
-	jrl	nz, EffectMode_TimerEvent_Default
-	ld	xwa, NAKA_VIEW_TEST54
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	a, (DIAG_ANIM_STEP:16)
-	inc	1, a
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-	ret
-EffectMode_TimerEvent_Step1E:
-	ld	xwa, NAKA_VIEW_TEST55
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	a, (DIAG_ANIM_STEP:16)
-	inc	1, a
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-	ret
-EffectMode_TimerEvent_Step3C:
-	ld	xwa, NAKA_VIEW_TEST56
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	a, (DIAG_ANIM_STEP:16)
-	inc	1, a
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-	ret
-EffectMode_TimerEvent_Step5A:
-	ld	xwa, NAKA_VIEW_TEST51
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	a, (DIAG_ANIM_STEP:16)
-	inc	1, a
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-	ret
-EffectMode_TimerEvent_Step78:
-	ld	xwa, NAKA_VIEW_TEST52
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	a, (DIAG_ANIM_STEP:16)
-	inc	1, a
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-	ret
-EffectMode_TimerEvent_Step96:
-	ld	xwa, NAKA_VIEW_TEST53
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	(DIAG_ANIM_STEP:16), 220
-	ret
-EffectMode_TimerEvent_Default:
-	inc	1, a
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-	ret
+EffectMode_HandleTimerEvents:	.include "includes/generated/cc900/EffectMode_HandleTimerEvents.s"	; C: cc900/ui_mode_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_TimerEvent_Step1E, EffectMode_HandleTimerEvents + 73
+	.set	EffectMode_TimerEvent_Step3C, EffectMode_HandleTimerEvents + 102
+	.set	EffectMode_TimerEvent_Step5A, EffectMode_HandleTimerEvents + 131
+	.set	EffectMode_TimerEvent_Step78, EffectMode_HandleTimerEvents + 160
+	.set	EffectMode_TimerEvent_Step96, EffectMode_HandleTimerEvents + 189
+	.set	EffectMode_TimerEvent_Default, EffectMode_HandleTimerEvents + 211
 EffectMode_RunDiagSequence:
 	ld	a, (DIAG_ANIM_STEP:16)
 	cp	a, 0:i3

@@ -46,9 +46,7 @@ RingBuf_ReadByte_Return:
 ; i.e. "read one byte from THE MIDI ring".  It has no caller in the authoritative source.
 ; The ELF name RingBuf_ReadByte_Data implies data; it is code.
 ; ★ Renamed 2026-09-25 from RingBuf_ReadByte_Data: header: `lda XWA,0x2B0D` then RINGBUF_READBYTE -- read one byte from the MIDI ring.
-RingBuf_ReadByte_MidiRing:
-	lda	xwa, (11021:16)
-	jr	RingBuf_ReadByte
+RingBuf_ReadByte_MidiRing:	.include "includes/generated/cc900/RingBuf_ReadByte_MidiRing.s"	; C: cc900/ringbuf_and_midi_dispatch_b.c
 
 ; Drains a ring buffer completely and then RESETS THE WRITE INDEX to the read index.
 ; Input XWA = ring descriptor base.  Calls RINGBUF_READBYTE until it returns a negative value,
@@ -125,34 +123,10 @@ RingBuf_Write4K:
 ; Returns HL = 0.  6 call sites, all in the inter-CPU command dispatch table.
 ; ★ There is NO check that the count at 0x2B11 stays below 0x1000, and no check that the write
 ; index has not lapped the read index.  See the note under MIDI_Dispatch.
-Audio_CmdHandler_00_1F:
-	ld de, (xsp + 4)
-	cp de, 0:i3
-	jr z, Audio_CmdHandler_00_1F_Done
-
-; Per-byte body: ring push plus source-pointer advance.
-Audio_CmdHandler_00_1F_Loop:
-	lda xwa, (11021:16)
-	ld bc, (xwa)
-	incw 1, (xwa)
-	and bc, 0xFFF
-	lda xwa, (11027:16)
-	extz xbc
-	add xbc, xwa
-	ld xwa, (xsp + 6)
-	ld a, (xwa)
-	ld (xbc), a
-	incw 1, (11025:16)
-	dec 1, de
-	ld xwa, 1:i3
-	add (xsp + 6), xwa
-	cp de, 0:i3
-	jr nz, Audio_CmdHandler_00_1F_Loop
-
-; HL = 0, ret.
-Audio_CmdHandler_00_1F_Done:
-	ld hl, 0:i3
-	ret
+Audio_CmdHandler_00_1F:	.include "includes/generated/cc900/Audio_CmdHandler_00_1F.s"	; C: cc900/ringbuf_and_midi_dispatch.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Audio_CmdHandler_00_1F_Loop, Audio_CmdHandler_00_1F + 7
+	.set	Audio_CmdHandler_00_1F_Done, Audio_CmdHandler_00_1F + 49
 
 ; ===========================================================================
 ; MIDI_Dispatch - MIDI message dispatcher
@@ -193,7 +167,7 @@ Audio_CmdHandler_00_1F_Done:
 ; MIDI_Dispatch returns only when the count at 0x2B11 reaches zero.  See findings.
 MIDI_Dispatch:
 	push xiz
-	lda xiz, (11021:16)
+	lda xiz, (MIDI_RingBuffer:16)
 	ld wa, (xiz + 4)
 	call MIDI_Backlog_Publish
 	jrl MIDI_Dispatch_NextByte
@@ -705,27 +679,9 @@ DSP1_ResolveStreamPtr:
 
 ; Copies the 16 default bytes at 0x0120E3 to the first 16 bytes of the DSP1 image at
 ; (0x04531C).  No arguments.  Sole caller: DSP_Reinit_VoiceSlots_Loop3A (0x035427).
-DSP_ResetAlgoDefaults:
-	ld hl, 0:i3
-	cp hl, 0x10
-	ret nc
-
-; The 16-byte copy loop.
-DSP_ResetAlgoDefaults_Loop:
-	ld wa, hl
-	extz xwa
-	ld xde, xwa
-	add xde, (Payload_Bss_Start+0x64a6:24)
-	ld wa, hl
-	extz xwa
-	ld xbc, DSP1_ImageHeader_SoundRAM
-	add xbc, xwa
-	ld a, (xbc)
-	ld (xde), a
-	inc 1, hl
-	cp hl, 0x10
-	jr c, DSP_ResetAlgoDefaults_Loop
-	ret
+DSP_ResetAlgoDefaults:	.include "includes/generated/cc900/DSP_ResetAlgoDefaults.s"	; C: cc900/ringbuf_and_midi_dispatch.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ResetAlgoDefaults_Loop, DSP_ResetAlgoDefaults + 8
 
 ; Loads one part's effect algorithm into one DSP1 slot and ships the image.
 ; Inputs: A = part index, C = DSP slot index.  Returns L = 0 on success, 2 on rejection.
@@ -1111,12 +1067,7 @@ DSP_VoiceState_Dispatch_Epilogue:
 ; longword pointers into the DSP's own address space, of which these two are the ones that
 ; get rewound. Called from the audio init path (0x032186), right after DSP_Reset. No
 ; hardware touched. No inputs, no outputs.
-DSP_ResetWriteBufferPtr:
-	lda xwa, (0x007800:24)
-	ld (Payload_Bss_Start+0x64aa:24), xwa
-	lda xwa, (0x007800:24)
-	ld (Payload_Bss_Start+0x64a6:24), xwa
-	ret
+DSP_ResetWriteBufferPtr:	.include "includes/generated/cc900/DSP_ResetWriteBufferPtr.s"	; C: cc900/ringbuf_and_midi_dispatch.c
 
 ; Bare `ret`. One of three consecutive 1-byte stubs; all three are still referenced by
 ; pointer tables elsewhere, so they are placeholders for removed features, not padding.
@@ -1124,12 +1075,10 @@ DSP_Stub_RetA:
 	ret
 
 ; Bare `ret`.
-DSP_Stub_RetB:
-	ret
+DSP_Stub_RetB:	.include "includes/generated/cc900/DSP_Stub_RetB.s"	; C: cc900/ringbuf_and_midi_dispatch.c
 
 ; Bare `ret`.
-DSP_Stub_RetC:
-	ret
+DSP_Stub_RetC:	.include "includes/generated/cc900/DSP_Stub_RetC.s"	; C: cc900/ringbuf_and_midi_dispatch.c
 
 ; Square-law velocity -> 12-bit volume curve, computed not tabulated.
 ;   HL = ((WA * WA) >> 2) + 0x3F        (mul XBC,WA is a full 16x16->32; only BC is shifted)
@@ -1137,13 +1086,7 @@ DSP_Stub_RetC:
 ; 0x7F -> 0x0FFF, i.e. exactly the 12-bit full-scale that ToneGen_SetupPercussionVoice
 ; hard-codes with `or (0x3B20), 4095`. Entry WA = velocity, exit HL = level. Sole caller
 ; ToneGen_SetupPolyVoice, which ORs the result into the staging word at 0x3B20.
-DSP_VelocityToVolume:
-	ld bc, wa
-	mul xbc, wa
-	srl bc, 2
-	ld hl, bc
-	add hl, 0x3F
-	ret
+DSP_VelocityToVolume:	.include "includes/generated/cc900/DSP_VelocityToVolume.s"	; C: cc900/ringbuf_and_midi_dispatch.c
 
 ; Builds the per-note effect-send word that both ToneGen setup routines OR into the staging
 ; word at 0x3B22. No inputs; reads two global bytes and returns HL.
@@ -1153,23 +1096,9 @@ DSP_VelocityToVolume:
 ;   HL |= (0x041377)                      <-- reads 0x041377 again, NOT 0x04137A
 ; The second load really is from 0x041377 -- verified at byte level, 0x0355A3 is
 ; `c2 77 13 04 21`, and both toolchains reproduce it. See [UNCERTAIN].
-DSP_GetEffectRouting:
-	ld hl, 0:i3
-	cp (Payload_Bss_Start+0x2501:24), 0x00
-	jr z, DSP_GetEffectRouting_Path
-	ld a, (Payload_Bss_Start+0x2501:24)
-	extz wa
-	sll wa, 8
-	or hl, wa
-
-; Second half of the above: the low-byte send, gated on 0x04137A.
-DSP_GetEffectRouting_Path:
-	cp (Payload_Bss_Start+0x2504:24), 0x00
-	ret z
-	ld a, (Payload_Bss_Start+0x2501:24)
-	extz wa
-	or hl, wa
-	ret
+DSP_GetEffectRouting:	.include "includes/generated/cc900/DSP_GetEffectRouting.s"	; C: cc900/ringbuf_and_midi_dispatch.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_GetEffectRouting_Path, DSP_GetEffectRouting + 22
 
 ; Note-on for the melodic entries of the auxiliary 8-voice pool. Entry: A = tone-generator
 ; voice number (== the pool slot 0..7), C = pool channel 0..5, E = MIDI note, one word of

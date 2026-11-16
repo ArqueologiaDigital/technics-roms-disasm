@@ -188,13 +188,16 @@ Add every new one here, in the commit that finds it.
   file).  Found by lane_p6.
 - **Model:** compiles it (no crash to imitate).
 
-## 12. The pseudo-register `__XIZ` crashes the compiler (candidate, not yet isolated)
+## 12. The pseudo-registers `__XIZ` and `__IZ` crash the compiler next to a pointer kept in memory
 
 - **Source:** the sub-CPU lane's probes that name V4.23's 32-bit pseudo-register `__XIZ`, to keep XIZ live around an
   inline-asm block (corpus/firmware/sub_B_5a.c, sub_B_5b.c, sub_B_5c.c, sub_C_4c.c, sub_C_5b.c, sub_C_5c.c).
 - **C meaning:** `__XIZ` names the register as a variable; the 16-bit `__IZ` works and gives the ROM's save of XIZ
   (ToneGen_WriteVoice_Direct matches with it).
 - **V4.23:** every file using `__XIZ` stops with a page fault reading address 0 under Wine and leaves a truncated
-  listing.  Not yet reduced to a minimal case, so whether the compiler or its use of Wine is at fault is open.
-- **Evidence:** oracle runs 2026-11-16-62-sub-r4 and 2026-11-16-65-sub-r5.  Found by lane_sub.
+  listing.  Bisected further (round 7): `__IZ` crashes too as soon as the same function keeps a pointer in memory --
+  a one-element local array (sub_B_7d, sub_C_7e), a one-member local struct (sub_B_7e), or the address of the
+  parameter taken (sub_C_7d).  The same spellings without `__IZ` compile (sub_C_7g, sub_C_7h), and so does a
+  `register` pointer local (sub_B_7f, sub_C_7f).  Whether the compiler or its use of Wine is at fault is open.
+- **Evidence:** oracle runs 2026-11-16-62-sub-r4, 2026-11-16-65-sub-r5 and 2026-11-16-79-sub-r7.  Found by lane_sub.
 - **Model:** not applicable (paused); the C lanes use `__IZ` instead.

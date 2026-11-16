@@ -4408,105 +4408,16 @@ SeqStep_FileIoClearStatus:
 	ld (xwa + 6), bc
 	jrl SeqStep_FileIoLoop
 
-SeqStep_FileBufferSetup:
-	dec 6, xsp
-	push xiz
-	ld xiz, (xsp + 14)
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xiz + 4)
-	push xwa
-	ld xwa, (xiz)
-	ld xwa, (xwa + 14)
-	ld xwa, (xwa + 20)
-	call (xwa)
-	inc 8, xsp
-	ld (xiz + 20), hl
-	ld a, (xiz + 23)
-	extz wa
-	sla wa, 2
-	lda xbc, (0x0210b4:24)
-	ld	xwa, (xbc+wa)
-	ld (xwa + 6), hl
-	resm 1, (xiz + 22)
-	bitm 2, (xiz + 22)
-	jr z, SeqStep_FileBufferCheck
-	ld xwa, (xiz + 4)
-	ld (xsp + 6), xwa
-	ldw (xsp + 4), 0x1
-	jr SeqStep_FileBufferInit
-
-SeqStep_FileBufferAlloc:
-	ld xwa, (xiz)
-	ld xwa, (xwa + 26)
-	ld wa, (xwa + 48)
-	extz xwa
-	add (xsp + 6), xwa
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xsp + 10)
-	push xwa
-	ld xwa, (xiz)
-	ld xwa, (xwa + 14)
-	ld xwa, (xwa + 20)
-	call (xwa)
-	inc 8, xsp
-	lda xwa, (xiz + 20)
-	or (xwa), hl
-	ld de, (xwa)
-	ld a, (xiz + 23)
-	extz wa
-	sla wa, 2
-	lda xbc, (0x0210b4:24)
-	ld	xwa, (xbc+wa)
-	ld (xwa + 6), de
-	incw 1, (xsp + 4)
-
-SeqStep_FileBufferInit:
-	ld xwa, (xiz)
-	ld xwa, (xwa + 26)
-	ld a, (xwa + 58)
-	extz wa
-	cp (xsp + 4), wa
-	jr lt, SeqStep_FileBufferAlloc
-
-SeqStep_FileBufferCheck:
-	cpw (xiz + 20), 0x0
-	jr nz, SeqStep_FileBufferDone
-	ld hl, 0:i3
-	jr SeqStep_FileBufferExit
-
-SeqStep_FileBufferDone:
-	cpw (xiz + 20), 0x1f
-	jr nz, SeqStep_FileBufferCleanup
-	resm 0, (xiz + 22)
-	lda xwa, (0x02121a:24)
-	ld xbc, xwa
-	ldw (xsp + 4), 0x0
-	cpw (xsp + 4), 0xa
-	jr ge, SeqStep_FileBufferCleanup
-
-SeqStep_FileBufferReturn:
-	bitm 1, (xbc + 22)
-	jr z, SeqStep_FileBufferError
-	ld xwa, (xiz)
-	cp xwa, (xbc)
-	jr nz, SeqStep_FileBufferError
-	resm 0, (xbc + 22)
-
-SeqStep_FileBufferError:
-	incw 1, (xsp + 4)
-	lda xbc, (xbc+538)
-	cpw (xsp + 4), 0xa
-	jr lt, SeqStep_FileBufferReturn
-
-SeqStep_FileBufferCleanup:
-	ld hl, (xiz + 20)
-
-SeqStep_FileBufferExit:
-	pop xiz
-	inc 6, xsp
-	ret
+SeqStep_FileBufferSetup:	.include "includes/generated/cc900/SeqStep_FileBufferSetup.s"	; C: cc900/smf_event_processor_m238_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileBufferAlloc, SeqStep_FileBufferSetup + 70
+	.set	SeqStep_FileBufferInit, SeqStep_FileBufferSetup + 133
+	.set	SeqStep_FileBufferCheck, SeqStep_FileBufferSetup + 148
+	.set	SeqStep_FileBufferDone, SeqStep_FileBufferSetup + 159
+	.set	SeqStep_FileBufferReturn, SeqStep_FileBufferSetup + 188
+	.set	SeqStep_FileBufferError, SeqStep_FileBufferSetup + 202
+	.set	SeqStep_FileBufferCleanup, SeqStep_FileBufferSetup + 217
+	.set	SeqStep_FileBufferExit, SeqStep_FileBufferSetup + 220
 
 ; Flushes the FAT sector cache for one drive: every dirty buffer (state bits 0..1 = 3) among the
 ; 10 at 0x2121a is written back (SeqStep_FileBufferSetup); buffers of the request's drive

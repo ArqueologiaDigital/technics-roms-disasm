@@ -6455,7 +6455,7 @@ Disk_SetDriveGeometry:
 	ld XWA,XHL                                           ; FE3333  eb 88
 	ld (0x605d58:24), xwa                               ; FE3335  f2 58 5d 60 60
 	ld XBC,0x00000100                                    ; FE333A  41 00 01 00 00
-	call Int_SignedDiv_Remainder                                        ; FE333F  1d 3e 69 fe
+	call Long_SignedDiv                                        ; FE333F  1d 3e 69 fe
 	inc 1,XHL                                            ; FE3343  eb 61
 	lda xbc, (0x605d52:24)                               ; FE3345  f2 52 5d 60 31
 	ld WA,(XIZ)                                          ; FE334A  96 20
@@ -13857,15 +13857,15 @@ Int_Mul32:
 ;
 ; WHAT IT COMPUTES (from the sibling's header, which the code here matches):
 ;   64-bit divide/modulo for the C runtime.  Dividend XWA:QWA, divisor XBC:QBC,
-;   quotient in XHL, remainder in XDE.  D selects quotient (0) or remainder (1)
+;   quotient in XHL, remainder in XDE.  D selects remainder (0) or quotient (1)
 ;   and is set by the alternate entry points; E carries the two operand signs.
 
 ; ---------------------------------------------------------------------
 ; Int_SignedDiv -- signed 64-bit divide/modulo
 ;
-; Called from: Int_SignedDiv_Quotient and Int_SignedDiv_Remainder just below;
+; Called from: Long_SignedRem and Long_SignedDiv just below;
 ;          their own callers are not yet traced.
-; Inputs:  XWA:QWA = dividend, XBC:QBC = divisor, D = 0 quotient / 1 remainder
+; Inputs:  XWA:QWA = dividend, XBC:QBC = divisor, D = 0 remainder / 1 quotient
 ; Outputs: XHL = result.  XDE, WA, BC, E clobbered.
 ; Evidence: the sign handling is literal and is what the name rests on -- E is
 ;          zeroed, bit 15 of QWA is tested at 0xFE68F5 and the dividend
@@ -13918,26 +13918,26 @@ Int_SignedDiv_NegResult:
 	ret                                           ; FE6939  0e
 
 ; ---------------------------------------------------------------------
-; Int_SignedDiv_Quotient / _Remainder / Int_UnsignedDiv_Remainder -- entries
+; Long_SignedRem / Long_SignedDiv / Int_UnsignedDiv_Remainder -- entries
 ;
 ; Called from: not yet traced
 ; Inputs:  as Int_SignedDiv
 ; Outputs: as Int_SignedDiv
 ; Evidence: each entry is two instructions -- `ldb d,imm` then `jr
 ;          Int_SignedDiv` -- and D is precisely the quotient/remainder
-;          selector Int_SignedDiv reads, so the names follow from the
-;          immediate: 0 at 0xFE693A, 1 at 0xFE693E. The sibling's own text is
+;          selector Int_SignedDiv reads: D = 0 returns XDE, the remainder, D = 1
+;          XHL, the quotient (0 at 0xFE693A, 1 at 0xFE693E; names corrected 2026-11-16). The sibling's own text is
 ;          cited in Notes for contrast, not as the evidence.
 ; Notes:   three one-line entry points that only set D and fall into the body.
-;          The sibling calls the first of them `Int_SignedDiv_ConstData` and
+;          The sibling called the first of them `Int_SignedDiv_ConstData` (now Long_SignedRem) and
 ;          spells it as four raw bytes with a comment saying it is really code
 ;          (subcpu_fp_math.s:1057-1059); here it is written as the two
 ;          instructions it is, which the byte gate confirms.
 ; ---------------------------------------------------------------------
-Int_SignedDiv_Quotient:
+Long_SignedRem:
 	ld d, 0x00:opc                                   ; FE693A  24 00
 	jr Int_SignedDiv                                   ; FE693C  68 b5
-Int_SignedDiv_Remainder:
+Long_SignedDiv:
 	ld d, 0x01:opc                                   ; FE693E  24 01
 	jr Int_SignedDiv                                   ; FE6940  68 b1
 Int_UnsignedDiv_Remainder:

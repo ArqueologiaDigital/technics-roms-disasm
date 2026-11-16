@@ -950,15 +950,7 @@ MidiSerial_OffsetTable:
 ; `nop` / `push sr` / `pop sr` / `nop`.
 	.byte 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x03, 0x00
 
-SC0Init_ClearContextSlots:
-	ld (MIDI_RX_CONTEXT:16), 0
-	ld (MIDI_RX_CONTEXT+4:16), 0
-	ld (MIDI_RX_CONTEXT+8:16), 0
-	ld (MIDI_RX_CONTEXT+12:16), 0
-	ld (MIDI_RX_CONTEXT+16:16), 0
-	ld (MIDI_RX_CONTEXT+20:16), 0
-	ld (MIDI_RX_CONTEXT+24:16), 0
-	ret
+SC0Init_ClearContextSlots:	.include "includes/generated/cc900/SC0Init_ClearContextSlots.s"	; C: cc900/midi_serial_routines_m283_xr.c
 
 SC0Init_EnableRegisters:
 	ei 6

@@ -1452,34 +1452,10 @@ Label_Epilogue:
 	lda xsp, (xsp + 12)
 	ret
 
-BitmapProc:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_DRAW
-	jr z, BitmapProc_OnDraw
-	ld xwa, xiz
-	call ViewableProc
-	jr Bitmap_Epilogue
-
-BitmapProc_OnDraw:
-	ld xwa, xiz
-	call ViewableProc
-	ld xwa, xiz
-	call GetViewInstance
-	lda xwa, (xsp + 4)
-	ld bc, (xhl + 14)
-	ld (xwa), bc
-	ld bc, (xhl + 16)
-	ld (xwa + 2), bc
-	ld xbc, (xhl + 22)
-	call DrawBitmap
-	ld xhl, 0:i3
-
-Bitmap_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+BitmapProc:	.include "includes/generated/cc900/BitmapProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitmapProc_OnDraw, BitmapProc + 21
+	.set	Bitmap_Epilogue, BitmapProc + 56
 
 VwUserBitmapProc:
 	lda xsp, (xsp - 10)
@@ -1539,23 +1515,10 @@ VwUserBitmap_Epilogue:
 	lda xsp, (xsp + 10)
 	ret
 
-UserBitmapCheck:
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, UserBitmapCheck_ReturnSize
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, UserBitmapCheck_ReturnSize
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, UserBitmapCheck_ReturnTablePtr
-	ld xhl, 0:i3
-	ret
-
-UserBitmapCheck_ReturnTablePtr:
-	lda xhl, (UserBitmapCheck_Bitmap24x24:24)
-	ret
-
-UserBitmapCheck_ReturnSize:
-	ld xhl, 0x18
-	ret
+UserBitmapCheck:	.include "includes/generated/cc900/UserBitmapCheck.s"	; C: cc900/ui_window_procs_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UserBitmapCheck_ReturnTablePtr, UserBitmapCheck + 27
+	.set	UserBitmapCheck_ReturnSize, UserBitmapCheck + 33
 
 VwUserBitmapByNameProc:
 	lda xsp, (xsp - 28)
@@ -3949,44 +3912,16 @@ PsGridBoxProc:
 
 	.include "ui/psgridbox_routines.s"
 	.include "ui/ui_widget_defs.s"
-IsPointOnScreen:
-	cpw (xwa), 0x0
-	jr lt, IsPointOnScreen_OutOfBounds
-	cpw (xwa), 0x140
-	jr ge, IsPointOnScreen_OutOfBounds
-	ld wa, (xwa + 2)
-	cp wa, 0:i3
-	jr lt, IsPointOnScreen_OutOfBounds
-	cp wa, 0xf0
-	jr lt, IsPointOnScreen_InBounds
+IsPointOnScreen:	.include "includes/generated/cc900/IsPointOnScreen.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	IsPointOnScreen_OutOfBounds, IsPointOnScreen + 25
+	.set	IsPointOnScreen_InBounds, IsPointOnScreen + 28
 
-IsPointOnScreen_OutOfBounds:
-	ld hl, 0:i3
-	ret
-
-IsPointOnScreen_InBounds:
-	ld hl, 1:i3
-	ret
-
-IsColorValid:
-	cp wa, 0:i3
-	jr lt, IsColorValid_Check256
-	cp wa, 0xff
-	jr le, IsColorValid_Valid
-
-IsColorValid_Check256:
-	cp wa, 0x100
-	jr lt, IsColorValid_Invalid
-	cp wa, 0x100
-	jr gt, IsColorValid_Invalid
-
-IsColorValid_Valid:
-	ld hl, 1:i3
-	ret
-
-IsColorValid_Invalid:
-	ld hl, 0:i3
-	ret
+IsColorValid:	.include "includes/generated/cc900/IsColorValid.s"	; C: cc900/ui_window_procs_m273_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	IsColorValid_Check256, IsColorValid + 10
+	.set	IsColorValid_Valid, IsColorValid + 22
+	.set	IsColorValid_Invalid, IsColorValid + 25
 
 ClampColorToRange:
 	ld hl, bc

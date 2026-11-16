@@ -1221,19 +1221,10 @@ FDC_DRIVE_DETECT:	.include "includes/generated/cc900/FDC_DRIVE_DETECT.s"	; C: cc
 	.set	FDC_DRIVE_DETECT_Skip5, FDC_DRIVE_DETECT + 55
 	.set	FDC_DRIVE_DETECT_Skip6, FDC_DRIVE_DETECT + 71
 	.set	FDC_DRIVE_DETECT_Skip7, FDC_DRIVE_DETECT + 75
-FDC_DRIVE_STATUS:
-	cpw	(FDC_REQ_COUNT:16), 0xffff
-	jr	z, FDC_DRIVE_STATUS_Skip8
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_STATUS_Skip8:
-	cpw	(FDC_COMMAND_INDEX:16), 0
-	jr	z, FDC_DRIVE_STATUS_Skip9
-	ld	hl, 0:i3
-	ret
-FDC_DRIVE_STATUS_Skip9:
-	ldw HL, 0xffff
-	ret
+FDC_DRIVE_STATUS:	.include "includes/generated/cc900/FDC_DRIVE_STATUS.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_DRIVE_STATUS_Skip8, FDC_DRIVE_STATUS + 11
+	.set	FDC_DRIVE_STATUS_Skip9, FDC_DRIVE_STATUS + 22
 FDC_PRE_OP_CHECK:
 	ret
 FDC_Set_Status:
@@ -1297,22 +1288,9 @@ FDC_POST_OP_Skip2:
 	jr z, FDC_POST_OP_Loop
 	pop XIZ
 	ret
-SOME_DELAY:
-	srl wa, 1
-	ld de, (SYSTEM_TIMESTAMP:16)
-	ld hl, 0:i3
-	cp hl, 0xffff
-	ret nc
-
-SOME_DELAY_Loop:
-	ld bc, (SYSTEM_TIMESTAMP:16)
-	sub bc, de
-	cp bc, wa
-	ret ugt
-	inc 1, hl
-	cp hl, 0xffff
-	jr c, SOME_DELAY_Loop
-	ret
+SOME_DELAY:	.include "includes/generated/cc900/SOME_DELAY.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SOME_DELAY_Loop, SOME_DELAY + 15
 
 
 FDC_InitSequence_Short:

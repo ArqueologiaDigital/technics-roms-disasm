@@ -24,11 +24,7 @@
 ;        chip and not by this firmware. See "WHAT +0x040 SELECTS" near the 0x0451CC staging
 ;        block.
 ; ===========================================================================
-ToneGen_Read_Register:
-	res	7, (P6:8)
-	ld (ToneGen_RegAddrLatch:24), wa
-	ld hl, (ToneGen_RegAddrLatch:24)
-	ret
+ToneGen_Read_Register:	.include "includes/generated/cc900/ToneGen_Read_Register.s"	; C: cc900/voice_params_and_tvf.c
 
 ; MIDI_Backlog_Publish(WA = the MIDI ring's current byte count) -- was
 ; RingBuf_SetOffsetHi, which is not what it does: it stores the count to the word at
@@ -36,101 +32,29 @@ ToneGen_Read_Register:
 ; read back only by RingBuf_CheckOffset_ClearFlags (0x02103B), which compares it against
 ; 0x20/0x30 (or 0x40/0x50 when the byte at 0x27E6 is zero) and drops layer slots 1..3 --
 ; i.e. it is a backpressure threshold that thins the polyphony when MIDI falls behind.
-MIDI_Backlog_Publish:
-	ld (10215:16), wa
-	ret
+MIDI_Backlog_Publish:	.include "includes/generated/cc900/MIDI_Backlog_Publish.s"	; C: cc900/voice_params_and_tvf.c
 
-RingBuf_SetOffsetLo:
-	ld (10214:16), a
-	ret
+RingBuf_SetOffsetLo:	.include "includes/generated/cc900/RingBuf_SetOffsetLo.s"	; C: cc900/voice_params_and_tvf.c
 
-RingBuf_CheckOffset_ClearFlags:
-	cp (10214:16), 0
-	jr z, RingBuf_CheckOffset_LoZero
-	cpw (10215:16), 48
-	jr c, RingBuf_CheckOffset_Level1
-	resm 7, (xwa + 3)
-	resm 7, (xwa + 4)
-	resm 7, (xwa + 5)
-	ret
+RingBuf_CheckOffset_ClearFlags:	.include "includes/generated/cc900/RingBuf_CheckOffset_ClearFlags.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RingBuf_CheckOffset_Level1, RingBuf_CheckOffset_ClearFlags + 25
+	.set	RingBuf_CheckOffset_LoZero, RingBuf_CheckOffset_ClearFlags + 40
+	.set	RingBuf_CheckOffset_LoZero_Level1, RingBuf_CheckOffset_ClearFlags + 58
 
-RingBuf_CheckOffset_Level1:
-	cpw (10215:16), 32
-	ret c
-	resm 7, (xwa + 4)
-	resm 7, (xwa + 5)
-	ret
+Quad_Decode_A_To_L:	.include "includes/generated/cc900/Quad_Decode_A_To_L.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Quad_Decode_Quarter2, Quad_Decode_A_To_L + 9
+	.set	Quad_Decode_Quarter3, Quad_Decode_A_To_L + 18
+	.set	Quad_Decode_Quarter4, Quad_Decode_A_To_L + 27
+	.set	Quad_Decode_Return, Quad_Decode_A_To_L + 29
 
-RingBuf_CheckOffset_LoZero:
-	cpw (10215:16), 80
-	jr c, RingBuf_CheckOffset_LoZero_Level1
-	resm 7, (xwa + 3)
-	resm 7, (xwa + 4)
-	resm 7, (xwa + 5)
-	ret
-
-RingBuf_CheckOffset_LoZero_Level1:
-	cpw (10215:16), 64
-	ret c
-	resm 7, (xwa + 4)
-	resm 7, (xwa + 5)
-	ret
-
-Quad_Decode_A_To_L:
-	cp a, 0x40
-	jr nc, Quad_Decode_Quarter2
-	ld l, 0x0:opc
-	jr Quad_Decode_Return
-
-Quad_Decode_Quarter2:
-	cp a, 0x80
-	jr nc, Quad_Decode_Quarter3
-	ld l, 0x4:opc
-	jr Quad_Decode_Return
-
-Quad_Decode_Quarter3:
-	cp a, 0xC0
-	jr nc, Quad_Decode_Quarter4
-	ld l, 0x8:opc
-	jr Quad_Decode_Return
-
-Quad_Decode_Quarter4:
-	ld l, 0x0:opc
-
-Quad_Decode_Return:
-	ret
-
-ExtVoice_Fold_SlotNumber:
-	and c, 0x3
-	cp c, 3:i3
-	jr z, ExtVoice_Fold_SlotNumber_Group3_IndexInBank2
-	cp c, 2:i3
-	jr z, ExtVoice_Fold_SlotNumber_Group2_IndexFromBank1
-	cp c, 1:i3
-	jr z, ExtVoice_Fold_SlotNumber_Group0Or1_IndexInBank
-	cp c, 0:i3
-	ret nz
-
-; ExtVoice_Fold_SlotNumber_Group0Or1_IndexInBank: Groups 0 and 1 (group 0 falls in from the test above): L = slot &
-;   0x3F, the slot's index inside its 64-slot bank.
-ExtVoice_Fold_SlotNumber_Group0Or1_IndexInBank:
-	and a, 0x3F
-	ld l, a
-	jr SlotPair_Decode_Return
-
-; ExtVoice_Fold_SlotNumber_Group2_IndexFromBank1: Group 2 spans banks 1 and 2: L = (slot - 0x40) & 0x7F.
-ExtVoice_Fold_SlotNumber_Group2_IndexFromBank1:
-	sub a, 0x40
-	ld l, a
-	res 7, l
-	jr SlotPair_Decode_Return
-
-ExtVoice_Fold_SlotNumber_Group3_IndexInBank2:
-	ld l, a
-	res 7, l
-
-SlotPair_Decode_Return:
-	ret
+ExtVoice_Fold_SlotNumber:	.include "includes/generated/cc900/ExtVoice_Fold_SlotNumber.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtVoice_Fold_SlotNumber_Group0Or1_IndexInBank, ExtVoice_Fold_SlotNumber + 19
+	.set	ExtVoice_Fold_SlotNumber_Group2_IndexFromBank1, ExtVoice_Fold_SlotNumber + 26
+	.set	ExtVoice_Fold_SlotNumber_Group3_IndexInBank2, ExtVoice_Fold_SlotNumber + 36
+	.set	SlotPair_Decode_Return, ExtVoice_Fold_SlotNumber + 41
 
 VoiceState_SwapSlot_DE_BC:
 	ld e, c
@@ -424,85 +348,9 @@ VoiceState_SwapSlot_Guarded_Return:
 	inc 8, xsp
 	ret
 
-VoiceRow_FetchPair_WA_SP:
-	ld c, a
-	extz bc
-	muls bc, 0x5
-	lda xde, (8486:16)
-	ld	w, (xde+bc)
-	ld c, a
-	extz bc
-	muls bc, 0x5
-	lda xde, (8487:16)
-	ld	l, (xde+bc)
-	ld c, l
-	extz bc
-	muls bc, 0x5
-	lda xde, (8486:16)
-	ld	(xde+bc), w
-	ld c, w
-	extz bc
-	muls bc, 0x5
-	lda xde, (8487:16)
-	ld	(xde+bc), l
-	ld c, a
-	extz bc
-	muls bc, 0x5
-	lda xde, (8486:16)
-	ld	(xde+bc), a
-	ld c, a
-	extz bc
-	muls bc, 0x5
-	lda xde, (8487:16)
-	ld	(xde+bc), a
-	ret
+VoiceRow_FetchPair_WA_SP:	.include "includes/generated/cc900/VoiceRow_FetchPair_WA_SP.s"	; C: cc900/voice_params_and_tvf.c
 
-VoiceRow_FetchPair_DE_WA:
-	ld e, a
-	extz de
-	muls de, 0x5
-	lda xhl, (8486:16)
-	ld	b, (xhl+de)
-	ld e, a
-	extz de
-	muls de, 0x5
-	lda xhl, (8487:16)
-	ld	w, (xhl+de)
-	ld e, w
-	extz de
-	muls de, 0x5
-	lda xhl, (8486:16)
-	ld	(xhl+de), b
-	ld e, b
-	extz de
-	muls de, 0x5
-	lda xhl, (8487:16)
-	ld	(xhl+de), w
-	ld e, c
-	extz de
-	muls de, 0x5
-	lda xhl, (8487:16)
-	ld	w, (xhl+de)
-	ld e, w
-	extz de
-	muls de, 0x5
-	lda xhl, (8486:16)
-	ld	(xhl+de), a
-	ld e, a
-	extz de
-	muls de, 0x5
-	lda xhl, (8487:16)
-	ld	(xhl+de), w
-	ld e, a
-	extz de
-	muls de, 0x5
-	lda xhl, (8486:16)
-	ld	(xhl+de), c
-	extz bc
-	muls bc, 0x5
-	lda xde, (8487:16)
-	ld	(xde+bc), a
-	ret
+VoiceRow_FetchPair_DE_WA:	.include "includes/generated/cc900/VoiceRow_FetchPair_DE_WA.s"	; C: cc900/voice_params_and_tvf.c
 
 VoiceSlot_UpdateNoteSource:
 	dec 4, xsp
@@ -823,38 +671,12 @@ VoiceState_FullReset_Phase3_Return:
 	pop xiz
 	ret
 
-ExtVoice_Lookup_SlotFallback:
-	lda xbc, (8459:16)
-	and wa, 0x3
-	cp wa, 3:i3
-	jr z, ExtVoice_Lookup_SlotFallback_Group3_Bank2
-	cp wa, 2:i3
-	jr z, ExtVoice_Lookup_SlotFallback_Group2_Bank2ElseBank1
-	cp wa, 1:i3
-	jr z, ExtVoice_Lookup_SlotFallback_Group1_Bank1
-	cp wa, 0:i3
-	ret nz
-	ld l, (xbc)
-	jr ExtVoice_Lookup_SlotFallback_Return
-
-ExtVoice_Lookup_SlotFallback_Group1_Bank1:
-	ld l, (xbc + 4)
-	jr ExtVoice_Lookup_SlotFallback_Return
-
-; ExtVoice_Lookup_SlotFallback_Group2_Bank2ElseBank1: Group 2: the bank-2 column, falling back to the bank-1 column
-;   when it holds no slot (> 0xC0).
-ExtVoice_Lookup_SlotFallback_Group2_Bank2ElseBank1:
-	ld l, (xbc + 8)
-	cp l, 0xC0
-	ret ule
-	ld l, (xbc + 4)
-	jr ExtVoice_Lookup_SlotFallback_Return
-
-ExtVoice_Lookup_SlotFallback_Group3_Bank2:
-	ld l, (xbc + 8)
-
-ExtVoice_Lookup_SlotFallback_Return:
-	ret
+ExtVoice_Lookup_SlotFallback:	.include "includes/generated/cc900/ExtVoice_Lookup_SlotFallback.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtVoice_Lookup_SlotFallback_Group1_Bank1, ExtVoice_Lookup_SlotFallback + 28
+	.set	ExtVoice_Lookup_SlotFallback_Group2_Bank2ElseBank1, ExtVoice_Lookup_SlotFallback + 33
+	.set	ExtVoice_Lookup_SlotFallback_Group3_Bank2, ExtVoice_Lookup_SlotFallback + 46
+	.set	ExtVoice_Lookup_SlotFallback_Return, ExtVoice_Lookup_SlotFallback + 49
 
 ExtVoice_Alloc_StreamSlot:
 	dec 8, xsp
@@ -1418,26 +1240,9 @@ Voice_AdvanceSlotIterator_Return:
 	inc 2, xsp
 	ret
 
-DList_Unlink_SelfLink:
-	ld xde, (xwa)
-	ld xbc, (xwa + 4)
-	ld (xbc), xde
-	ld (xde + 4), xbc
-	ld (xwa), xwa
-	ld (xwa + 4), xwa
-	ret
+DList_Unlink_SelfLink:	.include "includes/generated/cc900/DList_Unlink_SelfLink.s"	; C: cc900/voice_params_and_tvf.c
 
-DList_InsertAfter_Offsets0:
-	ld xhl, (xwa)
-	ld xde, (xwa + 4)
-	ld (xde), xhl
-	ld (xhl + 4), xde
-	ld xde, (xbc + 4)
-	ld (xde), xwa
-	ld (xbc + 4), xwa
-	ld (xwa), xbc
-	ld (xwa + 4), xde
-	ret
+DList_InsertAfter_Offsets0:	.include "includes/generated/cc900/DList_InsertAfter_Offsets0.s"	; C: cc900/voice_params_and_tvf.c
 
 Voice_List_MoveToPool:
 	dec 6, xsp
@@ -1514,26 +1319,9 @@ VoiceNode_PriorityList_Return:
 	inc 6, xsp
 	ret
 
-DList_Unlink_SelfLink_Offsets8:
-	ld xde, (xwa + 8)
-	ld xbc, (xwa + 12)
-	ld (xbc + 8), xde
-	ld (xde + 12), xbc
-	ld (xwa + 8), xwa
-	ld (xwa + 12), xwa
-	ret
+DList_Unlink_SelfLink_Offsets8:	.include "includes/generated/cc900/DList_Unlink_SelfLink_Offsets8.s"	; C: cc900/voice_params_and_tvf.c
 
-DList_InsertAfter_Offsets8:
-	ld xhl, (xwa + 8)
-	ld xde, (xwa + 12)
-	ld (xde + 8), xhl
-	ld (xhl + 12), xde
-	ld xde, (xbc + 12)
-	ld (xde + 8), xwa
-	ld (xbc + 12), xwa
-	ld (xwa + 8), xbc
-	ld (xwa + 12), xde
-	ret
+DList_InsertAfter_Offsets8:	.include "includes/generated/cc900/DList_InsertAfter_Offsets8.s"	; C: cc900/voice_params_and_tvf.c
 
 Voice_List_MoveToPartList:
 	dec 6, xsp
@@ -1610,26 +1398,9 @@ VoiceNode_SecondList_Return:
 	inc 6, xsp
 	ret
 
-DList_Unlink_SelfLink_Offsets16:
-	ld xde, (xwa + 16)
-	ld xbc, (xwa + 20)
-	ld (xbc + 16), xde
-	ld (xde + 20), xbc
-	ld (xwa + 16), xwa
-	ld (xwa + 20), xwa
-	ret
+DList_Unlink_SelfLink_Offsets16:	.include "includes/generated/cc900/DList_Unlink_SelfLink_Offsets16.s"	; C: cc900/voice_params_and_tvf.c
 
-DList_Relink_Adjacent_Offsets16:
-	ld xhl, (xwa + 16)
-	ld xde, (xwa + 20)
-	ld (xde + 16), xhl
-	ld (xhl + 20), xde
-	ld xde, (xbc + 20)
-	ld (xde + 16), xwa
-	ld (xbc + 20), xwa
-	ld (xwa + 16), xbc
-	ld (xwa + 20), xde
-	ret
+DList_Relink_Adjacent_Offsets16:	.include "includes/generated/cc900/DList_Relink_Adjacent_Offsets16.s"	; C: cc900/voice_params_and_tvf.c
 
 Voice_Retire_ToFreePool:
 	push xiz
@@ -2141,64 +1912,13 @@ Voice_Manager_PollBank_Return:
 ; Called only from Voice_Allocate_Nodes (0x0223CF).
 ; *** BUG-RELEVANT: this returning 0 is how 'stops allocating voices' manifests; it is
 ; silent - the caller just writes 0xFF into the slot and no error is reported. ***
-Voice_Find_Candidate:
-	ld xde, (4933:16)
-	or xde, xde
-	jr z, Voice_Find_Candidate_Walk
-	ld xhl, (4933:16)
-	ret
-
-; Set up the walk: XDE = 0x112D+0x1E2 = 0x130F (global pool-head array), XHL = local array at (*XWA)+2, bail out immediately if the list is empty (first byte 0xFF).
-Voice_Find_Candidate_Walk:
-	lda xde, (4397:16)
-	lda xde, (xde+482)
-	ld xwa, (xwa)
-	lda xhl, (xwa + 2)
-	cp (xbc), 0xFF
-	jr z, NoteChain_FindNode_NotFound
-
-; List entry with bit7 set: look the pool head up in the GLOBAL array at 0x130F.
-Voice_Find_Candidate_Secondary:
-	bitm 7, (xbc)
-	jr z, Voice_Find_Candidate_Primary
-	ld a, (xbc)
-	res 7, a
-	ldfr_berp A, 0xF0
-	extz wa
-	sla wa, 2
-	ld	xwa, (xde+wa)
-	or xwa, xwa
-	jr z, Voice_Find_Candidate_Advance
-	ldto_berp A, 0xF0
-	extz wa
-	sla wa, 2
-	ld	xhl, (xde+wa)
-	ret
-
-; List entry with bit7 clear: look the pool head up in the part-descriptor-local array.
-Voice_Find_Candidate_Primary:
-	ld a, (xbc)
-	extz wa
-	sla wa, 2
-	ld	xwa, (xhl+wa)
-	or xwa, xwa
-	jr z, Voice_Find_Candidate_Advance
-	ld a, (xbc)
-	extz wa
-	sla wa, 2
-	ld	xhl, (xhl+wa)
-	ret
-
-; Pool was empty - advance to the next byte of the priority list, stop on 0xFF.
-Voice_Find_Candidate_Advance:
-	inc 1, xbc
-	cp (xbc), 0xFF
-	jr nz, Voice_Find_Candidate_Secondary
-
-; Shared not-found exit: XHL = 0.
-NoteChain_FindNode_NotFound:
-	ld xhl, 0:i3
-	ret
+Voice_Find_Candidate:	.include "includes/generated/cc900/Voice_Find_Candidate.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Find_Candidate_Walk, Voice_Find_Candidate + 13
+	.set	Voice_Find_Candidate_Secondary, Voice_Find_Candidate + 32
+	.set	Voice_Find_Candidate_Primary, Voice_Find_Candidate + 72
+	.set	Voice_Find_Candidate_Advance, Voice_Find_Candidate + 101
+	.set	NoteChain_FindNode_NotFound, Voice_Find_Candidate + 108
 
 ; FREE-VOICE / CANDIDATE-NODE SEARCH, secondary form (voice stealing).
 ; In:  XWA = a 30-byte pool record (node+0x1D: +0 quota, +1 count, +2 seven class heads).
@@ -2207,38 +1927,11 @@ NoteChain_FindNode_NotFound:
 ; then sounding) and, unlike Voice_Find_Candidate, neither pool 16 nor the free list.
 ; Called from Voice_Allocate_Nodes_StealAtQuota (0x0224DF) when the part is already at its
 ; polyphony limit, i.e. this is the steal-a-voice search.
-Voice_FindStealCandidate:
-	inc 2, xwa
-	ld xde, xwa
-	lda xwa, (Voice_StealPoolOrder:24)
-	ld xbc, xwa
-	cp (xbc), 0xFF
-	jr z, Voice_FindStealCandidate_NotFound
-
-; Walk the 0x00F603 list, returning the first non-null local pool head.
-Voice_FindStealCandidate_Walk:
-	ld a, (xbc)
-	extz wa
-	sla wa, 2
-	ld	xwa, (xde+wa)
-	or xwa, xwa
-	jr z, Voice_FindStealCandidate_Advance
-	ld a, (xbc)
-	extz wa
-	sla wa, 2
-	ld	xhl, (xde+wa)
-	ret
-
-; Advance to the next list byte, stop on the 0xFF terminator.
-Voice_FindStealCandidate_Advance:
-	inc 1, xbc
-	cp (xbc), 0xFF
-	jr nz, Voice_FindStealCandidate_Walk
-
-; Not-found exit: XHL = 0.
-Voice_FindStealCandidate_NotFound:
-	ld xhl, 0:i3
-	ret
+Voice_FindStealCandidate:	.include "includes/generated/cc900/Voice_FindStealCandidate.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_FindStealCandidate_Walk, Voice_FindStealCandidate + 16
+	.set	Voice_FindStealCandidate_Advance, Voice_FindStealCandidate + 45
+	.set	Voice_FindStealCandidate_NotFound, Voice_FindStealCandidate + 52
 
 ; NOTE-ON: ALLOCATE UP TO FOUR VOICE NODES FOR ONE NOTE EVENT.
 ; In: XWA = note-event record (kept in local (XSP+0x10)):
@@ -2915,65 +2608,21 @@ NoteOn_RoutePacket_Return:
 ; In: A = velocity (bit7 forced clear), XBC = pointer to three ascending threshold
 ; bytes. Out: L = 0..3, the first band whose threshold is >= the velocity.
 ; Single caller 0x02B76D. Byte-for-byte identical to Velocity_Select_Split_Zone_Alt.
-Velocity_Select_Split_Zone:
-	res 7, a
-	cp a, (xbc)
-	jr ule, Velocity_Select_Split_Zone_Level0
-	cp a, (xbc + 1)
-	jr ule, Velocity_Select_Split_Zone_Level1
-	cp a, (xbc + 2)
-	jr ule, Velocity_Select_Split_Zone_Level2
-	ld l, 0x3:opc
-	jr Velocity_Select_Split_Zone_Return
-
-; Third band: L = 2.
-Velocity_Select_Split_Zone_Level2:
-	ld l, 0x2:opc
-	jr Velocity_Select_Split_Zone_Return
-
-; Second band: L = 1.
-Velocity_Select_Split_Zone_Level1:
-	ld l, 0x1:opc
-	jr Velocity_Select_Split_Zone_Return
-
-; Lowest band: L = 0.
-Velocity_Select_Split_Zone_Level0:
-	ld l, 0x0:opc
-
-; Return.
-Velocity_Select_Split_Zone_Return:
-	ret
+Velocity_Select_Split_Zone:	.include "includes/generated/cc900/Velocity_Select_Split_Zone.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Velocity_Select_Split_Zone_Level2, Velocity_Select_Split_Zone + 21
+	.set	Velocity_Select_Split_Zone_Level1, Velocity_Select_Split_Zone + 25
+	.set	Velocity_Select_Split_Zone_Level0, Velocity_Select_Split_Zone + 29
+	.set	Velocity_Select_Split_Zone_Return, Velocity_Select_Split_Zone + 31
 
 ; Second, identical copy of Velocity_Select_Split_Zone (same code, same semantics).
 ; Callers 0x02B617, 0x02C1B2, 0x02C520. The duplication is in the original ROM.
-Velocity_Select_Split_Zone_Alt:
-	res 7, a
-	cp a, (xbc)
-	jr ule, Velocity_Select_Split_Zone_Alt_Level0
-	cp a, (xbc + 1)
-	jr ule, Velocity_Select_Split_Zone_Alt_Level1
-	cp a, (xbc + 2)
-	jr ule, Velocity_Select_Split_Zone_Alt_Level2
-	ld l, 0x3:opc
-	jr Velocity_Select_Split_Zone_Alt_Return
-
-; Third band: L = 2.
-Velocity_Select_Split_Zone_Alt_Level2:
-	ld l, 0x2:opc
-	jr Velocity_Select_Split_Zone_Alt_Return
-
-; Second band: L = 1.
-Velocity_Select_Split_Zone_Alt_Level1:
-	ld l, 0x1:opc
-	jr Velocity_Select_Split_Zone_Alt_Return
-
-; Lowest band: L = 0.
-Velocity_Select_Split_Zone_Alt_Level0:
-	ld l, 0x0:opc
-
-; Return.
-Velocity_Select_Split_Zone_Alt_Return:
-	ret
+Velocity_Select_Split_Zone_Alt:	.include "includes/generated/cc900/Velocity_Select_Split_Zone_Alt.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Velocity_Select_Split_Zone_Alt_Level2, Velocity_Select_Split_Zone_Alt + 21
+	.set	Velocity_Select_Split_Zone_Alt_Level1, Velocity_Select_Split_Zone_Alt + 25
+	.set	Velocity_Select_Split_Zone_Alt_Level0, Velocity_Select_Split_Zone_Alt + 29
+	.set	Velocity_Select_Split_Zone_Alt_Return, Velocity_Select_Split_Zone_Alt + 31
 
 ; DECODE A 2-BIT FIELD OUT OF THE 0x47-BYTE PER-VOICE PARAMETER RECORD.
 ; In: A = record index. Reads the first word of the record at 0x04308F + index*0x47,
@@ -2986,36 +2635,12 @@ Velocity_Select_Split_Zone_Alt_Return:
 ; own bytes, the few llvm-mc cannot spell stay .byte with unidasm's reading as a comment).
 ; Renamed from VoiceDispatch_OpaqueData.
 ; Note: its internal targets are now labelled, so the [LABEL] proposals above are applied.
-VoiceRec_Decode2BitField:
-	extz	wa
-	muls	wa, 71
-	lda	xbc, (Payload_Bss_Start+0x4219:24)
-	ld	wa, (xbc+wa)
-	and	wa, 192
-	cp	wa, 192
-	jr	z, VoiceRec_Decode2BitField_Is3
-	cp	wa, 128
-	jr	z, VoiceDispatch_Field_Is2
-	cp	wa, 64
-	jr	z, VoiceDispatch_Field_Is1
-	cp	wa, 0:i3
-	ret	nz
-	ld	l, 0:opc
-	jr	VoiceRec_Decode2BitField_Return
-; Field value 0x40: L = 1. Inside a raw .byte blob in the LLVM source, hence unlabelled.
-VoiceDispatch_Field_Is1:
-	ld	l, 1:opc
-	jr	VoiceRec_Decode2BitField_Return
-; Field value 0x80: L = 2.
-VoiceDispatch_Field_Is2:
-	ld	l, 2:opc
-	jr	VoiceRec_Decode2BitField_Return
-; Field value 0xC0: L = 3.
-VoiceRec_Decode2BitField_Is3:
-	ld	l, 3:opc
-; Shared return of the 2-bit field decoder at 0x022864.
-VoiceRec_Decode2BitField_Return:
-	ret
+VoiceRec_Decode2BitField:	.include "includes/generated/cc900/VoiceRec_Decode2BitField.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceDispatch_Field_Is1, VoiceRec_Decode2BitField + 46
+	.set	VoiceDispatch_Field_Is2, VoiceRec_Decode2BitField + 50
+	.set	VoiceRec_Decode2BitField_Is3, VoiceRec_Decode2BitField + 54
+	.set	VoiceRec_Decode2BitField_Return, VoiceRec_Decode2BitField + 56
 
 ; COPY THE HIGH NIBBLE OF A PATCH'S BYTE +0x2A INTO THE PER-PART PROGRAM BYTE.
 ; In: A = part index. Record stride is 0x011F bytes throughout this family:
@@ -3023,108 +2648,33 @@ VoiceRec_Decode2BitField_Return:
 ;   (block+0x2A) high nibble is used as an index into the byte table at 0x011ACF;
 ;   the looked-up byte is stored at 0x0413D5 + part*0x011F.
 ; Called from Voice_Env_VelocityDispatch_Gate (0x0234CC).
-Instrument_LookupProgram_HiNibble:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 42)
-	and c, 0xF0
-	srl c, 4
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x255f:24)
-	ld a, c
-	extz wa
-	lda xbc, (Instrument_OctaveShift_Semitones:24)
-	ld	a, (xbc+wa)
-	ld	(xhl+de), a
-	ret
+Instrument_LookupProgram_HiNibble:	.include "includes/generated/cc900/Instrument_LookupProgram_HiNibble.s"	; C: cc900/voice_params_and_tvf.c
 
 ; As Instrument_LookupProgram_HiNibble but takes the LOW nibble of (block+0x2A).
 ; Called from Voice_Env_Type2_Gate (0x02357E).
-Instrument_LookupProgram_LoNibble:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 42)
-	and c, 0xF
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x255f:24)
-	ld a, c
-	extz wa
-	lda xbc, (Instrument_OctaveShift_Semitones:24)
-	ld	a, (xbc+wa)
-	ld	(xhl+de), a
-	ret
+Instrument_LookupProgram_LoNibble:	.include "includes/generated/cc900/Instrument_LookupProgram_LoNibble.s"	; C: cc900/voice_params_and_tvf.c
 
 ; L = bit0 of A. One of four near-identical predicate helpers used by the velocity dispatchers.
-BitTest_Bit0_L:
-	bit 0, a
-	jr z, BitTest_Bit0_L_Clear
-	ld l, 0x1:opc
-	ret
-
-; Bit clear: L = 0.
-BitTest_Bit0_L_Clear:
-	ld l, 0x0:opc
-	ret
+BitTest_Bit0_L:	.include "includes/generated/cc900/BitTest_Bit0_L.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitTest_Bit0_L_Clear, BitTest_Bit0_L + 8
 
 ; L = 1 only if bit1 of A is clear and bit0 is set; otherwise 0.
-BitTest_Mode2_L:
-	bit 1, a
-	jr z, BitTest_Mode2_L_Bit1Clear
-	ld l, 0x0:opc
-	ret
-
-; bit1 clear - fall through to the bit0 test.
-BitTest_Mode2_L_Bit1Clear:
-	bit 0, a
-	jr z, BitTest_Mode2_L_AllClear
-	ld l, 0x1:opc
-	ret
-
-; Both bits clear: L = 0.
-BitTest_Mode2_L_AllClear:
-	ld l, 0x0:opc
-	ret
+BitTest_Mode2_L:	.include "includes/generated/cc900/BitTest_Mode2_L.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitTest_Mode2_L_Bit1Clear, BitTest_Mode2_L + 8
+	.set	BitTest_Mode2_L_AllClear, BitTest_Mode2_L + 16
 
 ; Duplicate of BitTest_Bit0_L (identical code), used by the Type2 dispatcher.
-BitTest_Bit0_L_v2:
-	bit 0, a
-	jr z, BitTest_Bit0_L_v2_Clear
-	ld l, 0x1:opc
-	ret
-
-; Bit clear: L = 0.
-BitTest_Bit0_L_v2_Clear:
-	ld l, 0x0:opc
-	ret
+BitTest_Bit0_L_v2:	.include "includes/generated/cc900/BitTest_Bit0_L_v2.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitTest_Bit0_L_v2_Clear, BitTest_Bit0_L_v2 + 8
 
 ; Duplicate of BitTest_Mode2_L, used by the Type2 dispatcher.
-BitTest_Mode2_L_v2:
-	bit 1, a
-	jr z, BitTest_Mode2_L_v2_Bit1Clear
-	ld l, 0x0:opc
-	ret
-
-; bit1 clear - fall through to the bit0 test.
-BitTest_Mode2_L_v2_Bit1Clear:
-	bit 0, a
-	jr z, BitTest_Mode2_L_v2_AllClear
-	ld l, 0x1:opc
-	ret
-
-; Both bits clear: L = 0.
-BitTest_Mode2_L_v2_AllClear:
-	ld l, 0x0:opc
-	ret
+BitTest_Mode2_L_v2:	.include "includes/generated/cc900/BitTest_Mode2_L_v2.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitTest_Mode2_L_v2_Bit1Clear, BitTest_Mode2_L_v2 + 8
+	.set	BitTest_Mode2_L_v2_AllClear, BitTest_Mode2_L_v2 + 16
 
 ; PATCH TRANSPOSE / OCTAVE-SHIFT LOOKUP (returns a signed 8.8 semitone offset).
 ; In: WA = a selector byte, C = a patch byte. Out: XHL = offset, 0 when disabled.
@@ -3181,51 +2731,12 @@ Pitch_Get_Patch_Octave_Shift_Return:
 ; rest become 0. Then the result is clamped to [C*256+0x80, E*256+0x80], i.e. the key
 ; limits expressed in the same 8.8 units used everywhere in the pitch chain.
 ; Called from Voice_Pitch_ApplyFineTune_LegatoB (0x0237FB); also 0x02B431.
-Pitch_Clamp_Into_Range:
-	ld hl, wa
-	bit 15, wa
-	jr z, Pitch_Clamp_Into_Range_CompareLo
-	cp hl, 0xC000
-	jr le, Pitch_Clamp_Into_Range_Clamp7FFF
-	ld hl, 0:i3
-	jr Pitch_Clamp_Into_Range_CompareLo
-
-; Wrapped-negative case: clamp to 0x7FFF.
-Pitch_Clamp_Into_Range_Clamp7FFF:
-	ldw hl, 0x7FFF
-
-; Low-limit comparison against C*256+0x80.
-Pitch_Clamp_Into_Range_CompareLo:
-	ld a, c
-	extz wa
-	sla wa, 8
-	add wa, 0x80
-	cp hl, wa
-	jr ge, Pitch_Clamp_Into_Range_CompareHi
-	ld a, c
-	extz wa
-	ld hl, wa
-	sla hl, 8
-	add hl, 0x80
-	jr Pitch_Clamp_Into_Range_Return
-
-; High-limit comparison against E*256+0x80.
-Pitch_Clamp_Into_Range_CompareHi:
-	ld a, e
-	extz wa
-	sla wa, 8
-	add wa, 0x80
-	cp hl, wa
-	ret le
-	ld a, e
-	extz wa
-	ld hl, wa
-	sla hl, 8
-	add hl, 0x80
-
-; Return.
-Pitch_Clamp_Into_Range_Return:
-	ret
+Pitch_Clamp_Into_Range:	.include "includes/generated/cc900/Pitch_Clamp_Into_Range.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Pitch_Clamp_Into_Range_Clamp7FFF, Pitch_Clamp_Into_Range + 17
+	.set	Pitch_Clamp_Into_Range_CompareLo, Pitch_Clamp_Into_Range + 20
+	.set	Pitch_Clamp_Into_Range_CompareHi, Pitch_Clamp_Into_Range + 50
+	.set	Pitch_Clamp_Into_Range_Return, Pitch_Clamp_Into_Range + 78
 
 ; FOLD A PITCH VALUE INTO A KEY RANGE BY WHOLE OCTAVES.
 ; In: WA = signed 16-bit pitch (8.8 semitones), C = low key limit, E = high key limit.
@@ -3233,65 +2744,21 @@ Pitch_Clamp_Into_Range_Return:
 ; [C*256+0x80, E*256+0x80]. This is the transpose-into-range used when a sample zone
 ; cannot cover the played key. Callers: Voice_Pitch_ApplyFineTune (0x0237DA),
 ; Voice_Pitch_CopyBase (0x023841), 0x02B481.
-Pitch_Fold_Octaves_Into_Range:
-	ld hl, wa
-	jr PitchBend_AlignLoop_CheckSign
-
-; Value has wrapped negative: step by +/- one octave to recover.
-PitchBend_AlignLoop_CheckWrapped:
-	cp hl, 0xC000
-	jr le, PitchBend_AlignLoop_SubStep
-	add hl, 0xC00
-	jr PitchBend_AlignLoop_CheckSign
-
-; Subtract one octave.
-PitchBend_AlignLoop_SubStep:
-	sub hl, 0xC00
-
-; Sign test that drives the recovery loop.
-PitchBend_AlignLoop_CheckSign:
-	ld wa, hl
-	bit 15, wa
-	jr nz, PitchBend_AlignLoop_CheckWrapped
-	jr PitchBend_AlignLoop_LoCheck
-
-; Add one octave (raising loop).
-PitchBend_AlignLoop_AddStep:
-	add hl, 0xC00
-
-; Keep adding octaves while below the low limit.
-PitchBend_AlignLoop_LoCheck:
-	ld a, c
-	extz wa
-	sla wa, 8
-	add wa, 0x80
-	cp hl, wa
-	jr lt, PitchBend_AlignLoop_AddStep
-	jr PitchBend_AlignLoop_HiCheck
-
-; Subtract one octave (lowering loop).
-PitchBend_AlignLoop_SubFinal:
-	sub hl, 0xC00
-
-; Keep subtracting octaves while above the high limit.
-PitchBend_AlignLoop_HiCheck:
-	ld a, e
-	extz wa
-	sla wa, 8
-	add wa, 0x80
-	cp hl, wa
-	jr gt, PitchBend_AlignLoop_SubFinal
-	ret
+Pitch_Fold_Octaves_Into_Range:	.include "includes/generated/cc900/Pitch_Fold_Octaves_Into_Range.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PitchBend_AlignLoop_CheckWrapped, Pitch_Fold_Octaves_Into_Range + 4
+	.set	PitchBend_AlignLoop_SubStep, Pitch_Fold_Octaves_Into_Range + 16
+	.set	PitchBend_AlignLoop_CheckSign, Pitch_Fold_Octaves_Into_Range + 20
+	.set	PitchBend_AlignLoop_AddStep, Pitch_Fold_Octaves_Into_Range + 29
+	.set	PitchBend_AlignLoop_LoCheck, Pitch_Fold_Octaves_Into_Range + 33
+	.set	PitchBend_AlignLoop_SubFinal, Pitch_Fold_Octaves_Into_Range + 50
+	.set	PitchBend_AlignLoop_HiCheck, Pitch_Fold_Octaves_Into_Range + 54
 
 ; INDEX A BYTE TABLE BY THE TOP 7 BITS OF A WORD.
 ; In: XWA = table base, BC = word. Out: L = table[(BC & 0x7F00) >> 8] (arithmetic
 ; shift). Used by WaveSel_StageB_Build_Reg040 (0x023880) to turn the current pitch into
 ; a key-zone number.
-WaveSel_KeyTable_Lookup:
-	and bc, 0x7F00
-	sra bc, 8
-	ld	l, (xwa+bc)
-	ret
+WaveSel_KeyTable_Lookup:	.include "includes/generated/cc900/WaveSel_KeyTable_Lookup.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT A KEY-ZONE PARAMETER RECORD OF STRIDE 0x0F.
 ; In: XWA = voice work record, XBC = record table base, DE = zone index.
@@ -3300,17 +2767,7 @@ WaveSel_KeyTable_Lookup:
 ; 0x0451CE and its word at +0x0D to 0x293E.
 ; One of six stride variants selected by WaveSel_StageB_Build_Reg040 from three flag
 ; bits of the zone descriptor.
-WaveSel_Emit_ZoneRecord_S15:
-	extz de
-	muls de, 0xF
-	lda	xbc, (xbc+de)
-	ld (xwa + 15), xbc
-	ormi16 (xwa + 1), 0x7000
-	ld wa, (xbc)
-	ld (Payload_Bss_Start+0x6358:24), wa
-	ld wa, (xbc + 13)
-	ld (10558:16), wa
-	ret
+WaveSel_Emit_ZoneRecord_S15:	.include "includes/generated/cc900/WaveSel_Emit_ZoneRecord_S15.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT A KEY-ZONE PARAMETER RECORD OF STRIDE 0x0C.
 ; In: XWA = voice work record, XBC = record table base, DE = zone index.
@@ -3319,17 +2776,7 @@ WaveSel_Emit_ZoneRecord_S15:
 ; 0x0451CE and its word at +0x0A to 0x293E.
 ; One of six stride variants selected by WaveSel_StageB_Build_Reg040 from three flag
 ; bits of the zone descriptor.
-WaveSel_Emit_ZoneRecord_S12:
-	extz de
-	muls de, 0xC
-	lda	xbc, (xbc+de)
-	ld (xwa + 15), xbc
-	ormi16 (xwa + 1), 0x5000
-	ld wa, (xbc)
-	ld (Payload_Bss_Start+0x6358:24), wa
-	ld wa, (xbc + 10)
-	ld (10558:16), wa
-	ret
+WaveSel_Emit_ZoneRecord_S12:	.include "includes/generated/cc900/WaveSel_Emit_ZoneRecord_S12.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT A KEY-ZONE PARAMETER RECORD OF STRIDE 0x0D.
 ; In: XWA = voice work record, XBC = record table base, DE = zone index.
@@ -3338,16 +2785,7 @@ WaveSel_Emit_ZoneRecord_S12:
 ; 0x0451CE and its word at none (0 is written) to 0x293E.
 ; One of six stride variants selected by WaveSel_StageB_Build_Reg040 from three flag
 ; bits of the zone descriptor.
-WaveSel_Emit_ZoneRecord_S13:
-	extz de
-	muls de, 0xD
-	lda	xbc, (xbc+de)
-	ld (xwa + 15), xbc
-	ormi16 (xwa + 1), 0x3000
-	ld wa, (xbc)
-	ld (Payload_Bss_Start+0x6358:24), wa
-	ldw (10558:16), 0
-	ret
+WaveSel_Emit_ZoneRecord_S13:	.include "includes/generated/cc900/WaveSel_Emit_ZoneRecord_S13.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT A KEY-ZONE PARAMETER RECORD OF STRIDE 0x0A.
 ; In: XWA = voice work record, XBC = record table base, DE = zone index.
@@ -3356,16 +2794,7 @@ WaveSel_Emit_ZoneRecord_S13:
 ; 0x0451CE and its word at none (0 is written) to 0x293E.
 ; One of six stride variants selected by WaveSel_StageB_Build_Reg040 from three flag
 ; bits of the zone descriptor.
-WaveSel_Emit_ZoneRecord_S10:
-	extz de
-	muls de, 0xA
-	lda	xbc, (xbc+de)
-	ld (xwa + 15), xbc
-	ormi16 (xwa + 1), 0x1000
-	ld wa, (xbc)
-	ld (Payload_Bss_Start+0x6358:24), wa
-	ldw (10558:16), 0
-	ret
+WaveSel_Emit_ZoneRecord_S10:	.include "includes/generated/cc900/WaveSel_Emit_ZoneRecord_S10.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT A KEY-ZONE PARAMETER RECORD OF STRIDE 0x06.
 ; In: XWA = voice work record, XBC = record table base, DE = zone index.
@@ -3374,17 +2803,7 @@ WaveSel_Emit_ZoneRecord_S10:
 ; 0x0451CE and its word at +0x04 to 0x293E.
 ; One of six stride variants selected by WaveSel_StageB_Build_Reg040 from three flag
 ; bits of the zone descriptor.
-WaveSel_Emit_ZoneRecord_S6:
-	extz de
-	muls de, 0x6
-	lda	xbc, (xbc+de)
-	ld (xwa + 15), xbc
-	ormi16 (xwa + 1), 0x4000
-	ld wa, (xbc)
-	ld (Payload_Bss_Start+0x6358:24), wa
-	ld wa, (xbc + 4)
-	ld (10558:16), wa
-	ret
+WaveSel_Emit_ZoneRecord_S6:	.include "includes/generated/cc900/WaveSel_Emit_ZoneRecord_S6.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT A KEY-ZONE PARAMETER RECORD OF STRIDE 4 (index shifted left 2 instead of a
 ; multiply). Unlike the other five variants it writes NO type code into (XWA+0x01) and
@@ -3397,58 +2816,25 @@ WaveSel_Emit_ZoneRecord_S6:
 ; downstream: WaveSel_StageB_Store_Reg040 doubles the top nibble when bit 2 of 0x041343 is
 ; set, and Voice_Init_Type1 adds (tick & 7) through WaveSel_AddRandomEntryOffset. See
 ; "WHAT +0x040 SELECTS" in the staging-block header for the format and the open questions.
-WaveSel_Emit_ZoneRecord_S4:
-	extz de
-	sla de, 2
-	lda	xbc, (xbc+de)
-	ld (xwa + 15), xbc
-	ld wa, (xbc)
-	ld (Payload_Bss_Start+0x6358:24), wa
-	ldw (10558:16), 0
-	ret
+WaveSel_Emit_ZoneRecord_S4:	.include "includes/generated/cc900/WaveSel_Emit_ZoneRecord_S4.s"	; C: cc900/voice_params_and_tvf.c
 
 ; SATURATE A SIGNED 16-BIT PITCH VALUE TO [0, 0x7FFF].
 ; In: WA. Out: WA and XHL. Values with bit15 set become 0x7FFF if <= 0xC000 (treated as
 ; a wrap of a large positive) and 0 otherwise. Used all over the pitch chain
 ; (0x02373A, 0x023A85, 0x023AC7) and from 0x02B431.
-Pitch_Saturate_15bit:
-	ld bc, wa
-	bit 15, bc
-	jr z, Pitch_Saturate_15bit_Return
-	cp wa, 0xC000
-	jr ule, Pitch_Saturate_15bit_Clamp7FFF
-	ld wa, 0:i3
-	jr Pitch_Saturate_15bit_Return
-
-; Wrapped-positive case: 0x7FFF.
-Pitch_Saturate_15bit_Clamp7FFF:
-	ldw wa, 0x7FFF
-
-; Copy the result to XHL and return.
-Pitch_Saturate_15bit_Return:
-	ld hl, wa
-	ret
+Pitch_Saturate_15bit:	.include "includes/generated/cc900/Pitch_Saturate_15bit.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Pitch_Saturate_15bit_Clamp7FFF, Pitch_Saturate_15bit + 17
+	.set	Pitch_Saturate_15bit_Return, Pitch_Saturate_15bit + 20
 
 ; CLAMP WA INTO [DE, BC] (signed). Out: WA and XHL. Callers 0x03079E, 0x0307E9 and the
 ; level packer at 0x023C44 / 0x023C92 / 0x023CA2 / 0x023CB2 / 0x023CC0.
 ; Int_ClampSignedToRange: Clamps signed 16-bit WA into [DE, BC] (DE = low bound, BC = high bound); result in WA and
 ;   XHL. Basis: callers + body -- 62 call sites load the bounds first (0..0xFF, 4..0x7F, -50..+50).
-Int_ClampSignedToRange:
-	cp wa, bc
-	jr le, ClampS16_WA_To_DEBC_CheckLo
-	ld wa, bc
-	jr ClampS16_WA_To_DEBC_Return
-
-; Low-bound test against DE.
-ClampS16_WA_To_DEBC_CheckLo:
-	cp wa, de
-	jr ge, ClampS16_WA_To_DEBC_Return
-	ld wa, de
-
-; Copy to XHL and return.
-ClampS16_WA_To_DEBC_Return:
-	ld hl, wa
-	ret
+Int_ClampSignedToRange:	.include "includes/generated/cc900/Int_ClampSignedToRange.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ClampS16_WA_To_DEBC_CheckLo, Int_ClampSignedToRange + 8
+	.set	ClampS16_WA_To_DEBC_Return, Int_ClampSignedToRange + 14
 
 ; SCALE A SIGNED DEPTH BY A CURVE-TABLE COEFFICIENT.
 ; In: A = signed depth, C = curve index (bit7 forced clear), E = shift amount in its
@@ -3489,108 +2875,32 @@ PitchBend_Scale_Multiply:
 ; In: WA = signed amount. |WA| is clamped to 0x32 (50) and used to index the byte table
 ; at 0x0119C8; the result is negated again for negative inputs. Out: XHL.
 ; Called from the level packer (0x023C4D, 0x023CC9, 0x023CD2).
-Detune_ScaleSymmetric:
-	cp wa, 0:i3
-	jr ge, Detune_ScaleSymmetric_PosArm
-	cpl wa
-	inc 1, wa
-	cp wa, 0x32
-	jr le, Detune_ScaleSymmetric_NegArm
-	ldw wa, 0x32
-
-; Negative arm: table lookup then two's-complement negate.
-Detune_ScaleSymmetric_NegArm:
-	extz wa
-	lda xbc, (Detune_Scale_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	cpl wa
-	inc 1, wa
-	jr Detune_ScaleSymmetric_Return
-
-; Positive arm: clamp to 0x32.
-Detune_ScaleSymmetric_PosArm:
-	cp wa, 0x32
-	jr le, Detune_ScaleSymmetric_PosClamp
-	ldw wa, 0x32
-
-; Positive arm table lookup.
-Detune_ScaleSymmetric_PosClamp:
-	extz wa
-	lda xbc, (Detune_Scale_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-
-; Copy to XHL and return.
-Detune_ScaleSymmetric_Return:
-	ld hl, wa
-	ret
+Detune_ScaleSymmetric:	.include "includes/generated/cc900/Detune_ScaleSymmetric.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Detune_ScaleSymmetric_NegArm, Detune_ScaleSymmetric + 17
+	.set	Detune_ScaleSymmetric_PosArm, Detune_ScaleSymmetric + 37
+	.set	Detune_ScaleSymmetric_PosClamp, Detune_ScaleSymmetric + 46
+	.set	Detune_ScaleSymmetric_Return, Detune_ScaleSymmetric + 60
 
 ; Unsigned variant: XHL = byte table 0x0119C8 indexed directly by WA, no clamp, no sign handling.
-Detune_ScaleUnsigned:
-	extz wa
-	lda xbc, (Detune_Scale_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld hl, wa
-	ret
+Detune_ScaleUnsigned:	.include "includes/generated/cc900/Detune_ScaleUnsigned.s"	; C: cc900/voice_params_and_tvf.c
 
 ; INTERPOLATE A PARAMETER BETWEEN TWO LIMITS AND SCALE BY A SIGNED DEPTH.
 ; In: WA = word whose bits 8..14 hold the control value, BC = baseline, E = low limit,
 ; two stacked args: (XSP+0x06) = high limit, (XSP+0x04) = signed depth.
 ; Out: XHL = ((clamp(ctrl, E, hi) - BC) * depth) >> 5. 'retd 4' pops both arguments.
 ; Called from Voice_Level_ApplyVelocityMod (0x023C36) and 0x023C83.
-Pan_ScaleWithVelocity:
-	and wa, 0x7F00
-	srl wa, 8
-	ld l, (xsp + 6)
-	extz hl
-	cp wa, hl
-	jr ule, Pan_ScaleWithVelocity_ClampLo
-	ld a, (xsp + 6)
-	extz wa
-	jr Pan_ScaleWithVelocity_Multiply
-
-; Low-limit clamp against E.
-Pan_ScaleWithVelocity_ClampLo:
-	ld l, e
-	extz hl
-	cp wa, hl
-	jr nc, Pan_ScaleWithVelocity_Multiply
-	ld a, e
-	extz wa
-
-; Signed multiply by the stacked depth, then >> 5.
-Pan_ScaleWithVelocity_Multiply:
-	extz bc
-	ld de, wa
-	sub de, bc
-	ld l, (xsp + 4)
-	exts hl
-	ld wa, hl
-	muls	xwa, de
-	ld hl, wa
-	sra hl, 5
-	retd 0x4
+Pan_ScaleWithVelocity:	.include "includes/generated/cc900/Pan_ScaleWithVelocity.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Pan_ScaleWithVelocity_ClampLo, Pan_ScaleWithVelocity + 23
+	.set	Pan_ScaleWithVelocity_Multiply, Pan_ScaleWithVelocity + 35
 
 ; CLAMP A FILTER-CUTOFF VALUE TO [0, 0x78] (0..120). Out: WA and XHL.
 ; Called by TVF_Calc_Cutoff/_B and from 0x0306C4, 0x03070D, 0x030753.
-TVF_Clamp_Cutoff:
-	cp wa, 0x78
-	jr le, TVF_Clamp_Cutoff_CheckLo
-	ldw wa, 0x78
-	jr TVF_Clamp_Cutoff_Return
-
-; Low-bound test.
-TVF_Clamp_Cutoff_CheckLo:
-	cp wa, 0:i3
-	jr ge, TVF_Clamp_Cutoff_Return
-	ld wa, 0:i3
-
-; Copy to XHL and return.
-TVF_Clamp_Cutoff_Return:
-	ld hl, wa
-	ret
+TVF_Clamp_Cutoff:	.include "includes/generated/cc900/TVF_Clamp_Cutoff.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TVF_Clamp_Cutoff_CheckLo, TVF_Clamp_Cutoff + 11
+	.set	TVF_Clamp_Cutoff_Return, TVF_Clamp_Cutoff + 17
 
 ; COMPUTE A FILTER-CUTOFF CONTRIBUTION WITH KEY FOLLOW AND LEVEL SCALING.
 ; In: XWA = voice work record, BC = running accumulator, DE = key-follow depth,
@@ -3719,16 +3029,9 @@ TVF_Calc_Cutoff_NoKeyFollow_AddBaseline:
 
 ; Add the +0x18 bias to WA and clamp the result to at most 0x78 (no lower clamp).
 ; Out: WA and XHL. Used by the filter builders for the second register field.
-TVF_Bias_Clamp_Amount:
-	add wa, 0x18
-	cp wa, 0x78
-	jr le, TVF_Bias_Clamp_Amount_Return
-	ldw wa, 0x78
-
-; Copy to XHL and return.
-TVF_Bias_Clamp_Amount_Return:
-	ld hl, wa
-	ret
+TVF_Bias_Clamp_Amount:	.include "includes/generated/cc900/TVF_Bias_Clamp_Amount.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TVF_Bias_Clamp_Amount_Return, TVF_Bias_Clamp_Amount + 13
 
 ; LOOK UP A THREE-BYTE FILTER COEFFICIENT RECORD.
 ; In: A - low nibble selects the record, bit7 selects the table:
@@ -3820,52 +3123,19 @@ TVF_Lookup_Depth_Amount_Return:
 ; FILTER BYPASS: write the neutral pair (XWA+0x42) = 0x017F and (XWA+0x44) = 0x7F7F.
 ; This is entry 0 of the filter-mode dispatch table at 0x02412B, selected when
 ; (patch+0x36) & 7 == 0. XWA = voice work record.
-TVF_Set_Bypass:
-	ldw (xwa + 66), 0x17F
-	ldw (xwa + 68), 0x7F7F
-	ret
+TVF_Set_Bypass:	.include "includes/generated/cc900/TVF_Set_Bypass.s"	; C: cc900/voice_params_and_tvf.c
 
 ; Clamp WA into [DE, BC]; identical code to Int_ClampSignedToRange. Callers 0x03083D, 0x03086D, 0x03089D, 0x0308CD, 0x030901, 0x03093F.
-ClampS16_WA_Short:
-	cp wa, bc
-	jr le, ClampS16_WA_Short_CheckLo
-	ld wa, bc
-	jr ClampS16_WA_Short_Return
-
-; Low-bound test against DE.
-ClampS16_WA_Short_CheckLo:
-	cp wa, de
-	jr ge, ClampS16_WA_Short_Return
-	ld wa, de
-
-; Copy to XHL and return.
-ClampS16_WA_Short_Return:
-	ld hl, wa
-	ret
+ClampS16_WA_Short:	.include "includes/generated/cc900/ClampS16_WA_Short.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ClampS16_WA_Short_CheckLo, ClampS16_WA_Short + 8
+	.set	ClampS16_WA_Short_Return, ClampS16_WA_Short + 14
 
 ; ZERO ONE 9-BYTE ENVELOPE SUB-RECORD.
 ; In: WA = sub-record number (0..2), C = voice/part index. Address is
 ; 0x04424E + index*0x1B + sub*9; bytes +0..+5 and +7 are cleared (+6 and +8 are left
 ; alone). Called from 0x034C23. The 0x1B-byte record is exactly three of these.
-NoteState_ClearRecord:
-	extz wa
-	muls wa, 0x9
-	ld de, wa
-	ld a, c
-	extz wa
-	muls wa, 0x1B
-	lda xbc, (Payload_Bss_Start+0x53d8:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 1), 0x0
-	ld (xwa + 2), 0x0
-	ld (xwa + 3), 0x0
-	ld (xwa + 4), 0x0
-	ld (xwa), 0x0
-	ld (xwa + 5), 0x0
-	ld (xwa + 7), 0x0
-	ret
+NoteState_ClearRecord:	.include "includes/generated/cc900/NoteState_ClearRecord.s"	; C: cc900/voice_params_and_tvf.c
 
 ; CAP AN ENVELOPE DEPTH BY A NORMALISED (0x7F - x) FACTOR.
 ; In: XWA = value, C and E = two 0..0x7F parameters. Uses Math_Multiply32 (0x03D8CA)
@@ -4390,71 +3660,22 @@ Voice_Freq_ComputeRight_Raw_Return:
 ; Voice_Freq_ComputeRight_Raw, which is why it carries no symbol at all today.
 ; NAMING NOTE: this proposal follows the CamelCase style of its neighbours rather than
 ; the UPPER_SNAKE house style - see the last [UNCERTAIN] entry.
-Voice_Clamp_Byte_Unsigned:
-	cp	wa, 255
-	jr	ule, Voice_Clamp_Byte_Unsigned_Return
-	ldw	wa, 255
-; Copy the clamped value to XHL and return.
-Voice_Clamp_Byte_Unsigned_Return:
-	ld	hl, wa
-	ret
+Voice_Clamp_Byte_Unsigned:	.include "includes/generated/cc900/Voice_Clamp_Byte_Unsigned.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Clamp_Byte_Unsigned_Return, Voice_Clamp_Byte_Unsigned + 9
 
 ; TWO-STAGE LOOKUP OF A TONE-COLOUR / WAVE INDEX.
 ; In: XWA = a 0..0xFF value, C = a byte whose top 3 bits select the group.
 ; group = C >> 5; the byte table at 0x0106E4 indexed by XWA gives a row offset, and the
 ; final byte is read from the ROM table at 0x00FFE4 at (group << 8) + row.
 ; Out: XHL (zero-extended byte). Four callers at 0x02B316, 0x02B336, 0x02B475, 0x02B492.
-Voice_Colour_LookupIndex:
-	and c, 0xE0
-	srl c, 5
-	extz xwa
-	ld xde, Voice_Colour_RowOffset_Table
-	add xde, xwa
-	ld a, (xde)
-	ld e, a
-	extz de
-	ld a, c
-	extz wa
-	sla wa, 8
-	add wa, de
-	lda xbc, (Voice_Colour_TransferCurves:24)
-	ld	l, (xbc+wa)
-	extz hl
-	ret
+Voice_Colour_LookupIndex:	.include "includes/generated/cc900/Voice_Colour_LookupIndex.s"	; C: cc900/voice_params_and_tvf.c
 
 ; Clamp the control value (WA bits 8..14) against the stacked high limit at (XSP+0x06).
-Voice_Colour_ClampUpper:
-	and wa, 0x7F00
-	srl wa, 8
-	ld l, (xsp + 6)
-	extz hl
-	cp wa, hl
-	jr ule, Voice_Colour_ClampLower
-	ld a, (xsp + 6)
-	extz wa
-	jr Voice_Colour_InterpolateDelta
-
-; Clamp against the low limit in E.
-Voice_Colour_ClampLower:
-	ld l, e
-	extz hl
-	cp wa, hl
-	jr nc, Voice_Colour_InterpolateDelta
-	ld a, e
-	extz wa
-
-; (clamped - BC) * stacked depth (XSP+0x04), >> 5; 'retd 4' pops both stacked args. Structurally identical to Pan_ScaleWithVelocity.
-Voice_Colour_InterpolateDelta:
-	extz bc
-	ld de, wa
-	sub de, bc
-	ld l, (xsp + 4)
-	exts hl
-	ld wa, hl
-	muls	xwa, de
-	ld hl, wa
-	sra hl, 5
-	retd 0x4
+Voice_Colour_ClampUpper:	.include "includes/generated/cc900/Voice_Colour_ClampUpper.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Colour_ClampLower, Voice_Colour_ClampUpper + 23
+	.set	Voice_Colour_InterpolateDelta, Voice_Colour_ClampUpper + 35
 
 ; Clamp WA to [0, 0xFF] (signed compare). Out: WA and XHL.
 Voice_Clamp_Byte_WA:
@@ -4877,23 +4098,10 @@ Voice_Build_OutputLevel_Store:
 	ret
 
 ; Clamp WA to [0, 0xFF] using an unsigned upper compare. Out: WA and XHL.
-Voice_Clamp_Byte_HL:
-	ld bc, wa
-	cp bc, 0xFF
-	jr ule, Voice_Clamp_Byte_HL_LowBound
-	ldw wa, 0xFF
-	jr Voice_Clamp_Byte_HL_Return
-
-; Low-bound test.
-Voice_Clamp_Byte_HL_LowBound:
-	cp wa, 0:i3
-	jr ge, Voice_Clamp_Byte_HL_Return
-	ld wa, 0:i3
-
-; Copy to XHL and return.
-Voice_Clamp_Byte_HL_Return:
-	ld hl, wa
-	ret
+Voice_Clamp_Byte_HL:	.include "includes/generated/cc900/Voice_Clamp_Byte_HL.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Clamp_Byte_HL_LowBound, Voice_Clamp_Byte_HL + 13
+	.set	Voice_Clamp_Byte_HL_Return, Voice_Clamp_Byte_HL + 19
 
 ; AGE A PART'S RETRIGGER/VELOCITY-PHASE COUNTER AGAINST THE MASTER TICK.
 ; In: A = part index. Per-part stride 0x011F:
@@ -4904,75 +4112,12 @@ Voice_Clamp_Byte_HL_Return:
 ; delta >= 0x19 (25 ticks) -> reset both counter and phase to 0; otherwise bump the
 ; counter and map 1 -> 0x10, 0 -> 0x00, anything else -> 0x20.
 ; Callers 0x02C734, 0x02C838, 0x02C93C, 0x02CAA5.
-Voice_Env_UpdateVelocityCounters:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x260b:24)
-	ld xhl, (4160:16)
-	sub	xhl, (xde+bc)
-	jrl z, Voice_Env_UpdateVelocity_Store
-	cp xhl, 0x19
-	jr nc, Voice_Env_UpdateVelocity_Reset
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x260f:24)
-	exts xbc
-	add xbc, xde
-	incm8 1, (xbc)
-	ld c, (xbc)
-	cp c, 1:i3
-	jr z, Voice_Env_UpdateVelocity_SetPhase1
-	cp c, 0:i3
-	jr nz, Voice_Env_UpdateVelocity_SetPhase2
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2610:24)
-	ld	(xde+bc), 0x00
-	jr Voice_Env_UpdateVelocity_Store
-
-; Counter reached 1: phase byte = 0x10.
-Voice_Env_UpdateVelocity_SetPhase1:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2610:24)
-	ld	(xde+bc), 0x10
-	jr Voice_Env_UpdateVelocity_Store
-
-; Counter is neither 0 nor 1: phase byte = 0x20.
-Voice_Env_UpdateVelocity_SetPhase2:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2610:24)
-	ld	(xde+bc), 0x20
-	jr Voice_Env_UpdateVelocity_Store
-
-; Timed out (>= 0x19 ticks): clear both the counter and the phase byte.
-Voice_Env_UpdateVelocity_Reset:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x260f:24)
-	ld	(xde+bc), 0x00
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2610:24)
-	ld	(xde+bc), 0x00
-
-; Refresh the timestamp from the master tick at 0x1040 and return.
-Voice_Env_UpdateVelocity_Store:
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x260b:24)
-	ld xwa, (4160:16)
-	ld	(xde+bc), xwa
-	ret
+Voice_Env_UpdateVelocityCounters:	.include "includes/generated/cc900/Voice_Env_UpdateVelocityCounters.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Env_UpdateVelocity_SetPhase1, Voice_Env_UpdateVelocityCounters + 83
+	.set	Voice_Env_UpdateVelocity_SetPhase2, Voice_Env_UpdateVelocityCounters + 104
+	.set	Voice_Env_UpdateVelocity_Reset, Voice_Env_UpdateVelocityCounters + 125
+	.set	Voice_Env_UpdateVelocity_Store, Voice_Env_UpdateVelocityCounters + 163
 
 ; VELOCITY-SWITCH DISPATCHER, TYPE 0/1 (and entry point for type 2).
 ; In: A = part index (0, 1 or 2 selects the variant), C = sub-case 0..3.
@@ -5576,15 +4721,15 @@ WaveSel_StageB_Build_Reg040:
 	ld xwa, (xsp + 12)
 	ld xiz, (xwa + 31)
 	ld xwa, (xiz + 1)
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xsp + 4), xwa
 	ld xwa, (xiz + 5)
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xsp + 8), xwa
 	ld xwa, (xsp + 4)
 	ld xwa, (xwa)
 	ld xde, xwa
-	add xde, (Payload_Bss_Start+0x649a:24)
+	add xde, (ToneDB_RelBase:24)
 	ld xwa, (xsp + 12)
 	ld bc, (xwa + 6)
 	ld xwa, xde
@@ -5670,7 +4815,7 @@ WaveSel_StageB_Build_Reg040_Footage:
 	ld xiz, xwa
 	ld xwa, (xiz + 31)
 	ld xwa, (xwa + 5)
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xsp + 4), xwa
 	cp (xiz + 3), 0x0
 	jr nz, WaveSel_StageB_Build_Reg040_Footage_StateB
@@ -5792,35 +4937,9 @@ Voice_Vol_ScaleVelocityWord:
 ; Then bit 0x0400 of (record+0x01) is set only when bit1 of (record+0x23)->[0x0A] AND
 ; bit5 of (record+0x13)->[0x10] are both set, and cleared otherwise.
 ; Callers 0x02B504, 0x02BCF7.
-Pitch_Apply_Partial_Detune:
-	ld de, (xwa + 6)
-	add de, (10558:16)
-	ld xbc, (xwa + 23)
-	ld c, (xbc + 5)
-	exts bc
-	add bc, bc
-	add de, bc
-	ld xbc, (xwa + 39)
-	ld c, (xbc + 33)
-	exts bc
-	add de, bc
-	ld xbc, (xwa + 35)
-	add de, (xbc + 20)
-	ld (xwa + 10), de
-	ld xbc, (xwa + 35)
-	ld bc, (xbc + 10)
-	bit 2, bc
-	jr z, Pitch_Apply_Partial_Detune_ClearBit
-	ld xbc, (xwa + 19)
-	bitm 5, (xbc + 16)
-	jr z, Pitch_Apply_Partial_Detune_ClearBit
-	ormi16 (xwa + 1), 0x400
-	ret
-
-; Conditions not met: clear bit 0x0400 of (record+0x01).
-Pitch_Apply_Partial_Detune_ClearBit:
-	andmi16 (xwa + 1), 0xFBFF
-	ret
+Pitch_Apply_Partial_Detune:	.include "includes/generated/cc900/Pitch_Apply_Partial_Detune.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Pitch_Apply_Partial_Detune_ClearBit, Pitch_Apply_Partial_Detune + 63
 
 ; EMIT THE FINAL PITCH REGISTER (primary channel).
 ; In: XWA = voice work record. DE = (record+0x0A) + the global fine-tune word at
@@ -5864,11 +4983,7 @@ Voice_Pitch_Legato_StoreOutput_Return:
 
 ; Simple pitch combine: (record+0x0A) = (record+0x06) + (0x293E). No detune, no
 ; register write. Callers 0x02C0D7, 0x02C3F6.
-Pitch_Apply_Zone_Trim:
-	ld bc, (xwa + 6)
-	add bc, (10558:16)
-	ld (xwa + 10), bc
-	ret
+Pitch_Apply_Zone_Trim:	.include "includes/generated/cc900/Pitch_Apply_Zone_Trim.s"	; C: cc900/voice_params_and_tvf.c
 
 ; EMIT THE FINAL PITCH REGISTER (secondary channel). Same as
 ; Pitch_Emit_Reg400 minus the 0x04135A offset stage; result also goes
@@ -7750,50 +6865,11 @@ Voice_PortaLevel_ScaleAndPack:
 ; +0x9C0, +0xA00, +0xA40, +0x440 and +0x480. What 0x0000 means in those banks is unproved:
 ; under the envelope reading it is a target below the loud end of the curve, while
 ; technics-docs/tone-generator.md reads several of them as effect sends, where 0 = no send.
-Voice_Level_ClearAllOutputRegs:
-	ld xhl, (xwa + 23)
-	ldw (Payload_Bss_Start+0x6374:24), 0x0000
-	ldw (Payload_Bss_Start+0x636c:24), 0x0000
-	ldw (Payload_Bss_Start+0x6376:24), 0x0000
-	ldw (Payload_Bss_Start+0x6378:24), 0x0000
-	ldw (Payload_Bss_Start+0x637a:24), 0x0000
-	ldw (Payload_Bss_Start+0x637c:24), 0x0000
-	ldw (Payload_Bss_Start+0x637e:24), 0x0000
-	ldw (Payload_Bss_Start+0x6380:24), 0x0000
-	ldw (Payload_Bss_Start+0x6366:24), 0x0000
-	ldw (Payload_Bss_Start+0x6368:24), 0x0000
-	ld c, (xwa + 4)
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2518:24)
-	cp	(xde+bc), 0x01
-	jr nz, Voice_Level_ClearAllOutputRegs_Check2
-	ldw (xwa + 43), 0x0
-	jr Voice_Level_ClearAllOutputRegs_Store
-
-; Second routing-byte comparison (== 2 -> voice+43 = 0x7F).
-Voice_Level_ClearAllOutputRegs_Check2:
-	ld c, (xwa + 4)
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2518:24)
-	cp	(xde+bc), 0x02
-	jr nz, Voice_Level_ClearAllOutputRegs_FromTable
-	ldw (xwa + 43), 0x7F
-	jr Voice_Level_ClearAllOutputRegs_Store
-
-; Default arm: voice+43 = first byte of the tone record.
-Voice_Level_ClearAllOutputRegs_FromTable:
-	ld c, (xhl)
-	extz bc
-	ld (xwa + 43), bc
-
-; Store voice+43 to 0x0451D8 (TG reg 0x180), clear 0x0451E0 (TG reg 0x4C0), ret.
-Voice_Level_ClearAllOutputRegs_Store:
-	ld wa, (xwa + 43)
-	ld (Payload_Bss_Start+0x6362:24), wa
-	ldw (Payload_Bss_Start+0x636a:24), 0x0000
-	ret
+Voice_Level_ClearAllOutputRegs:	.include "includes/generated/cc900/Voice_Level_ClearAllOutputRegs.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Level_ClearAllOutputRegs_Check2, Voice_Level_ClearAllOutputRegs + 102
+	.set	Voice_Level_ClearAllOutputRegs_FromTable, Voice_Level_ClearAllOutputRegs + 131
+	.set	Voice_Level_ClearAllOutputRegs_Store, Voice_Level_ClearAllOutputRegs + 138
 
 ; Writes one operator/slot's envelope parameters into the physical slot record.
 ; In: A = channel, E = operator index, C/(xsp+20) = slot number, (xsp+22) = group index,
@@ -8831,189 +7907,34 @@ Voice2_UpdatePitch_Done:
 	lda xsp, (xsp + 22)
 	ret
 
-Level_Build_Reg0C0:
-	ld xbc, (xwa + 35)
-	cp (xbc + 15), 0x0
-	jr z, Level_Build_Reg0C0_ZeroCoarse
-	ld xbc, (xwa + 35)
-	cp (xbc + 18), 0x0
-	jr z, Level_Build_Reg0C0_ZeroCoarse
-	ld c, (Payload_Bss_Start+0x24d6:24)
-	cp c, 6:i3
-	jr nz, Level_Build_Reg0C0_UseCoarse
-	ld de, 0:i3
-	jr Level_Build_Reg0C0_ApplyDetune
-
-; Global mode byte 0x04134C != 6: DE = zext(patchrec+15).
-Level_Build_Reg0C0_UseCoarse:
-	ld xbc, (xwa + 35)
-	ld c, (xbc + 15)
-	extz bc
-	ld de, bc
-	jr Level_Build_Reg0C0_ApplyDetune
-
-; Entered when patchrec+15 == 0 or patchrec+18 == 0; DE = zext(patchrec+15) regardless of
-; the global mode.
-Level_Build_Reg0C0_ZeroCoarse:
-	ld xbc, (xwa + 35)
-	ld c, (xbc + 15)
-	extz bc
-	ld de, bc
-
-; If DE != 0: DE += (partrec+92) - 0x40, DE += s8(patchrec+102); negative results are floored
-; to 0.
-Level_Build_Reg0C0_ApplyDetune:
-	cp de, 0:i3
-	jr z, Level_Build_Reg0C0_CheckExpr
-	ld xbc, (xwa + 19)
-	ld c, (xbc + 92)
-	extz bc
-	sub bc, 0x40
-	add de, bc
-	ld xbc, (xwa + 35)
-	ld c, (xbc + 102)
-	exts bc
-	add de, bc
-	jr ge, Level_Build_Reg0C0_ClampHigh
-	ld de, 0:i3
-	jr Level_Build_Reg0C0_ShiftLeft
-
-; Ceiling at 0x7F.
-Level_Build_Reg0C0_ClampHigh:
-	cp de, 0x7F
-	jr le, Level_Build_Reg0C0_ShiftLeft
-	ldw de, 0x7F
-
-; `sla de, 8` -- the high byte of the reg-0x0C0 word is this 7-bit field.
-Level_Build_Reg0C0_ShiftLeft:
-	sla de, 8
-
-; Selects the low byte: patchrec+18 == 0 -> use patchrec+18 (i.e. 0); global mode 5 or 6 ->
-; force 0x7F; otherwise use patchrec+18.
-Level_Build_Reg0C0_CheckExpr:
-	ld xbc, (xwa + 35)
-	cp (xbc + 18), 0x0
-	jr z, Level_Build_Reg0C0_NoExpr
-	ld c, (Payload_Bss_Start+0x24d6:24)
-	cp c, 6:i3
-	jr z, Level_Build_Reg0C0_FullExpr
-	cp c, 5:i3
-	jr nz, Level_Build_Reg0C0_PartialExpr
-
-; `or de, 0x7F` -- low byte forced to maximum.
-Level_Build_Reg0C0_FullExpr:
-	or de, 0x7F
-	jr Level_Build_Reg0C0_Write
-
-; Low byte = patchrec+18.
-Level_Build_Reg0C0_PartialExpr:
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 18)
-	extz wa
-	or de, wa
-	jr Level_Build_Reg0C0_Write
-
-; Low byte = patchrec+18 (reached with the high field left at 0).
-Level_Build_Reg0C0_NoExpr:
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 18)
-	extz wa
-	or de, wa
-
-; Stores DE to 0x0451D2 (TG reg 0x0C0) and returns.
-Level_Build_Reg0C0_Write:
-	ld (Payload_Bss_Start+0x635c:24), de
-	ret
+Level_Build_Reg0C0:	.include "includes/generated/cc900/Level_Build_Reg0C0.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Level_Build_Reg0C0_UseCoarse, Level_Build_Reg0C0 + 31
+	.set	Level_Build_Reg0C0_ZeroCoarse, Level_Build_Reg0C0 + 43
+	.set	Level_Build_Reg0C0_ApplyDetune, Level_Build_Reg0C0 + 53
+	.set	Level_Build_Reg0C0_ClampHigh, Level_Build_Reg0C0 + 87
+	.set	Level_Build_Reg0C0_ShiftLeft, Level_Build_Reg0C0 + 96
+	.set	Level_Build_Reg0C0_CheckExpr, Level_Build_Reg0C0 + 99
+	.set	Level_Build_Reg0C0_FullExpr, Level_Build_Reg0C0 + 121
+	.set	Level_Build_Reg0C0_PartialExpr, Level_Build_Reg0C0 + 127
+	.set	Level_Build_Reg0C0_NoExpr, Level_Build_Reg0C0 + 139
+	.set	Level_Build_Reg0C0_Write, Level_Build_Reg0C0 + 149
 
 ; Second copy of the routine at 0x0253FE, differing only in that it pre-loads the part
 ; record pointer (voice+19) into XHL on entry and uses it directly for the +92 term rather
 ; than re-loading it. Same output: 0x0451D2 (TG reg 0x0C0).
-Voice_ComputePitchBend2:
-	ld xhl, (xwa + 19)
-	ld xbc, (xwa + 35)
-	cp (xbc + 15), 0x0
-	jr z, Voice_ComputePitchBend2_ZeroCoarse
-	ld xbc, (xwa + 35)
-	cp (xbc + 18), 0x0
-	jr z, Voice_ComputePitchBend2_ZeroCoarse
-	ld c, (Payload_Bss_Start+0x24d6:24)
-	cp c, 6:i3
-	jr nz, Voice_ComputePitchBend2_UseCoarse
-	ld de, 0:i3
-	jr Voice_ComputePitchBend2_ApplyDetune
-
-; As 0x02541D.
-Voice_ComputePitchBend2_UseCoarse:
-	ld xbc, (xwa + 35)
-	ld c, (xbc + 15)
-	extz bc
-	ld de, bc
-	jr Voice_ComputePitchBend2_ApplyDetune
-
-; As 0x025429.
-Voice_ComputePitchBend2_ZeroCoarse:
-	ld xbc, (xwa + 35)
-	ld c, (xbc + 15)
-	extz bc
-	ld de, bc
-
-; As 0x025433.
-Voice_ComputePitchBend2_ApplyDetune:
-	cp de, 0:i3
-	jr z, Voice_ComputePitchBend2_CheckExpr
-	ld c, (xhl + 15)
-	extz bc
-	sub bc, 0x40
-	add de, bc
-	jr ge, Voice_ComputePitchBend2_ClampHigh
-	ld de, 0:i3
-	jr Voice_ComputePitchBend2_ShiftLeft
-
-; As 0x025455.
-Voice_ComputePitchBend2_ClampHigh:
-	cp de, 0x7F
-	jr le, Voice_ComputePitchBend2_ShiftLeft
-	ldw de, 0x7F
-
-; As 0x02545E.
-Voice_ComputePitchBend2_ShiftLeft:
-	sla de, 8
-
-; As 0x025461.
-Voice_ComputePitchBend2_CheckExpr:
-	ld xbc, (xwa + 35)
-	cp (xbc + 18), 0x0
-	jr z, Voice_ComputePitchBend2_NoExpr
-	ld c, (Payload_Bss_Start+0x24d6:24)
-	cp c, 6:i3
-	jr z, Voice_ComputePitchBend2_FullExpr
-	cp c, 5:i3
-	jr nz, Voice_ComputePitchBend2_PartialExpr
-
-; As 0x025477.
-Voice_ComputePitchBend2_FullExpr:
-	or de, 0x7F
-	jr Voice_ComputePitchBend2_Write
-
-; As 0x02547D.
-Voice_ComputePitchBend2_PartialExpr:
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 18)
-	extz wa
-	or de, wa
-	jr Voice_ComputePitchBend2_Write
-
-; As 0x025489.
-Voice_ComputePitchBend2_NoExpr:
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 18)
-	extz wa
-	or de, wa
-
-; Stores DE to 0x0451D2 (TG reg 0x0C0) and returns.
-Voice_ComputePitchBend2_Write:
-	ld (Payload_Bss_Start+0x635c:24), de
-	ret
+Voice_ComputePitchBend2:	.include "includes/generated/cc900/Voice_ComputePitchBend2.s"	; C: cc900/voice_params_and_tvf.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ComputePitchBend2_UseCoarse, Voice_ComputePitchBend2 + 34
+	.set	Voice_ComputePitchBend2_ZeroCoarse, Voice_ComputePitchBend2 + 46
+	.set	Voice_ComputePitchBend2_ApplyDetune, Voice_ComputePitchBend2 + 56
+	.set	Voice_ComputePitchBend2_ClampHigh, Voice_ComputePitchBend2 + 77
+	.set	Voice_ComputePitchBend2_ShiftLeft, Voice_ComputePitchBend2 + 86
+	.set	Voice_ComputePitchBend2_CheckExpr, Voice_ComputePitchBend2 + 89
+	.set	Voice_ComputePitchBend2_FullExpr, Voice_ComputePitchBend2 + 111
+	.set	Voice_ComputePitchBend2_PartialExpr, Voice_ComputePitchBend2 + 117
+	.set	Voice_ComputePitchBend2_NoExpr, Voice_ComputePitchBend2 + 129
+	.set	Voice_ComputePitchBend2_Write, Voice_ComputePitchBend2 + 139
 
 ; A = channel (part), BC = a voice's gate/control word.  Returns HL = BC patched by the part's gate routing
 ; mode byte (CC 0x9B, 0x04138D + part*0x11F): see Voice_CC_SetGateRoutingMode.

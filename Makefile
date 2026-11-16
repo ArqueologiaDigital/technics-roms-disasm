@@ -921,7 +921,7 @@ endef
 # $(1) the version (v10), $(2) the variable naming its sources (V10_SRC), $(3) the CPU directory (default maincpu);
 # eval'd once that variable exists
 define CC900_FIRMWARE_C
-$(1)/$(or $(3),maincpu)/includes/generated/cc900/%.stamp: $(1)/$(or $(3),maincpu)/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
+$(1)/$(or $(3),maincpu)/includes/generated/cc900/%.stamp: $(1)/$(or $(3),maincpu)/cc900/%.c $$($(2)) wsa1/kernel/kernel.s $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
 	$$(CC900_GEN_CMD) $(1)/$(or $(3),maincpu) $$< $(1)/$(or $(3),maincpu)/includes/generated/cc900 $$@
 endef
 $(eval $(call CC900_FIRMWARE_C,v10,V10_SRC))

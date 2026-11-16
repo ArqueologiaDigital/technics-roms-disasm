@@ -1,0 +1,53 @@
+function	bytes	matches	best_diff
+CustomTone_CopySubUnitRecord	85	-	+48 sub_C_6a@Xr
+CustomTone_CopyToneRecord	66	-	+44 sub_C_6a@Xr
+DSP_AlgorithmChange	158	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_ApplyConfig	91	sub_D_6c@Xr	
+DSP_Cmd_DequeueHeader	68	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_Deselect_Chip	28	sub_E_6a@Xr	
+DSP_DispatchCommand	33	sub_D_6a@Xr sub_D_6c@Xr	
+DSP_DispatchData	33	sub_D_6a@Xr sub_D_6c@Xr	
+DSP_FlushAllSlots_ForPart	47	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_PanCurve_PiecewiseLin	219	-	+9 sub_E_6b@Xr
+DSP_ParamInterp_Div0xC6	114	-	+91 sub_E_6a@Xr
+DSP_ParamInterp_MultiStep	361	sub_E_6a@Xr	
+DSP_ParameterWriteEngine	198	-	+41 sub_E_6a@Xr
+DSP_ReconfigAndStatus	15	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_Reset	118	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_RingBuf_Skip	28	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_RingBuf_Write2K	26	-	+17 sub_D_6b@Xr
+DSP_Select_Chip	28	sub_E_6a@Xr	
+DSP_Set_RotarySpeed	19	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_State_ApplyAll	35	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_State_DiffAll	20	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_State_DiffAndPrepare	15	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_State_Dispatcher	194	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+DSP_VolScale_B	542	sub_E_6a@Xr	
+DSP_VolumeParam_Scale	542	sub_E_6a@Xr	
+DSP_WriteFreqParam	203	-	+12 sub_E_6b@Xr
+DSP_WriteFreqParam_AlgoType	203	-	+12 sub_E_6b@Xr
+DSP_WriteLUTParamSet	334	-	+16 sub_E_6c@Xr
+DSP_WriteOscParam	214	-	+3 sub_E_6b@Xr
+DSP_WriteParamCmd30	51	sub_E_6a@Xr	
+DSP_WriteParameter	200	-	+6 sub_E_6b@Xr
+DSP_WriteVoiceParam	152	-	+43 sub_C_6a@Xr
+EFF_Change_Handler	207	-	+27 sub_D_6c@Xr
+EFF_GetSlotBuffer	46	-	+35 sub_D_6c@Xr
+EFF_HeaderChangeDataLoop	127	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+EFF_SecondaryLinkPath	225	-	+6 sub_D_6c@Xr
+EFF_StateLoad_Prepare	18	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+EFF_VolumeChange_Check	28	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+Keybed_Read_Event	88	-	+11 sub_E_6b@Xr
+RingBuf_SkipToEnd	28	sub_D_6a@Xr sub_D_6b@Xr sub_D_6c@Xr	
+RingBuf_Write4K	26	-	+17 sub_D_6b@Xr
+ToneDB_Find_ToneRecord	19	sub_C_6a@Xr	
+ToneGen_Init	8	sub_E_6a@Xr	
+ToneGen_Process_Notes	159	-	+14 sub_E_6b@Xr
+VoiceAlloc_CheckAndInit	180	sub_C_6a@Xr	
+VoiceSlot_ClearAll	250	sub_C_6a@Xr	
+VoiceSubSlot_Init	56	-	+28 sub_C_6a@Xr
+Voice_ActiveFlag_CheckAndLoad	114	sub_C_6a@Xr	
+Voice_NoteOn	167	-	+9 sub_C_6a@Xr
+Voice_ToneTableApply_Pitch	0	-	llvm-mc cannot assemble the translation
+Voice_ToneTableRamp_Down	154	-	+18 sub_B_6c@Xr
+WaveSel_Cache_SetDescPtr	83	-	+66 sub_C_6a@Xr

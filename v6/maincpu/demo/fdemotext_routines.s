@@ -495,133 +495,15 @@ FDemoText_CheckTimer_Done:
 	inc 2, xsp
 	ret
 
-FDemoText_ParseControlMessage:
-	lda xbc, (0x020c33:24)
-	ld A,(XBC+0x01)
-	cp a, (PART_SELECT:16)
-	ret NZ
-	cp	(ACTIVE_TITLE:16), 234
-	ret	nz
-	ld	a, (xbc)
-	cp	a, 131
-	jr	z, FDemoText_ParseCtrl_SecondHalf
-	cp	a, 130
-	ret	nz
-	ld	e, (xbc+2)
-	ld	c, (xbc+7)
-	and	c, 15
-	extz	bc
-	cp	e, 130
-	jr	z, FDemoText_ParseCtrl_Type82
-	cp	e, 2:i3
-	jr	nz, FDemoText_ParseCtrl_SecondHalf
-	ld	wa, 6:i3
-	call	DemoMenu_BuildItemWorkspace
-	ld	a, (134201:24)
-	srl	a, 4
-	and	a, 15
-	ld	c, a
-	extz	bc
-	ld	wa, 2:i3
-	call	DemoMenu_BuildItemWorkspace
-	ld	c, (134201:24)
-	and	c, 15
-	extz	bc
-	ld	wa, 0:i3
-	jr	FDemoText_ParseCtrl_BuildWorkspace
-FDemoText_ParseCtrl_Type82:
-	ldw wa, 0x8
-	call DemoMenu_BuildItemWorkspace
-	ld a, (0x020c39:24)
-	srl a, 4
-	and a, 0xf
-	ld c, a
-	extz bc
-	ld wa, 5:i3
-	call DemoMenu_BuildItemWorkspace
-	ld c, (0x020c39:24)
-	and c, 0xf
-	extz bc
-	ld wa, 3:i3
+FDemoText_ParseControlMessage:	.include "includes/generated/cc900/FDemoText_ParseControlMessage.s"	; C: cc900/fdemotext_routines_m265.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_ParseCtrl_Type82, FDemoText_ParseControlMessage + 94
+	.set	FDemoText_ParseCtrl_BuildWorkspace, FDemoText_ParseControlMessage + 134
+	.set	FDemoText_ParseCtrl_SecondHalf, FDemoText_ParseControlMessage + 138
+	.set	FDemoText_ParseCtrl_FormatC3, FDemoText_ParseControlMessage + 204
+	.set	FDemoText_ParseCtrl_Finalize, FDemoText_ParseControlMessage + 237
 
-FDemoText_ParseCtrl_BuildWorkspace:
-	call DemoMenu_BuildItemWorkspace
-
-FDemoText_ParseCtrl_SecondHalf:
-	lda xwa, (0x020c33:24)
-	ld c, (xwa + 2)
-	cp c, 0x82
-	jr z, FDemoText_ParseCtrl_FormatC3
-	cp c, 2:i3
-	ret nz
-	ld c, (xwa + 7)
-	and c, 0xf
-	extz bc
-	ld wa, 7:i3
-	call DemoMenu_BuildItemWorkspace
-	ld a, (0x020c39:24)
-	srl a, 4
-	and a, 0xf
-	ld c, a
-	extz bc
-	ld wa, 4:i3
-	call DemoMenu_BuildItemWorkspace
-	ld c, (0x020c39:24)
-	and c, 0xf
-	extz bc
-	ld wa, 1:i3
-	jr FDemoText_ParseCtrl_Finalize
-
-FDemoText_ParseCtrl_FormatC3:
-	ld c, (xwa + 6)
-	and c, 0x1
-	extz bc
-	ldw wa, 0xa
-	call DemoMenu_BuildItemWorkspace
-	ld a, (0x020c39:24)
-	srl a, 1
-	and a, 0x1
-	ld c, a
-	extz bc
-	ldw wa, 0x9
-
-FDemoText_ParseCtrl_Finalize:
-	call DemoMenu_BuildItemWorkspace
-	ret
-
-FDemoText_SendResetMessage:
-	dec 6, xsp
-	lda xde, (xsp)
-	ld (xde), 0x82
-	ld (xde + 1), a
-	ld (xde + 2), 0x2
-	ld (xde + 3), 0x2
-	ld (xde + 4), 0x1
-	ld (xde + 5), 0xea
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	lda xde, (xsp)
-	ld (xde + 2), 0x82
-	ld (xde + 3), 0x2
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	lda xde, (xsp)
-	ld (xde), 0x83
-	ld (xde + 2), 0x2
-	ld (xde + 3), 0x2
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	lda xde, (xsp)
-	ld (xde + 2), 0x82
-	ld (xde + 3), 0x2
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	inc 6, xsp
-	ret
+FDemoText_SendResetMessage:	.include "includes/generated/cc900/FDemoText_SendResetMessage.s"	; C: cc900/fdemotext_routines_m265.c
 
 FDemoText_SendVoiceParams:
 	lda xsp, (xsp - 12)
@@ -2500,16 +2382,7 @@ FDemoText_ResetLayoutState:	.include "includes/generated/cc900/FDemoText_ResetLa
 	.set	FDemoText_ResetLayoutState_Loop, FDemoText_ResetLayoutState + 12
 	.set	FDemoText_ResetLayoutState_Loop2, FDemoText_ResetLayoutState + 17
 	.set	FDemoText_ResetLayoutState_Loop3, FDemoText_ResetLayoutState + 87
-FDemoText_ScaleDownCoords:
-	ld de, (xwa)
-	exts xde
-	divs de, 0x8
-	ld (xbc), de
-	ld wa, (xwa + 2)
-	exts xwa
-	divs wa, 0x4
-	ld (xbc + 2), wa
-	ret
+FDemoText_ScaleDownCoords:	.include "includes/generated/cc900/FDemoText_ScaleDownCoords.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
 FDemoText_ScaleUpCoords:
 	ld de, (xwa)

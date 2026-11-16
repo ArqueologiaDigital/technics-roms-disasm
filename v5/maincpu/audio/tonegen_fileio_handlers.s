@@ -1029,40 +1029,7 @@ SndParamBank_RestoreOptionBlock_Return:
 	ret
 ; Copy the five fields of the option block (0x3D3400 +0x00/+0x10/+0x20/+0x30/+0x40; 2, 12, 4, 4, 6 bytes)
 ; to RAM 0x340E4 / 0x340E6 / 0x340F2 / 0x340F6 / 0x340FA.
-SndParamBank_LoadOptionBlock:
-	pushw	0x2
-	ld	xwa, 0x3d3400
-	push	xwa
-	pushw	0x3
-	pushw	0x40e4
-	call	Mem_Copy
-	pushw	0xc
-	ld	xwa, 0x3d3410
-	push	xwa
-	pushw	0x3
-	pushw	0x40e6
-	call	Mem_Copy
-	pushw	0x4
-	ld	xwa, 0x3d3420
-	push	xwa
-	pushw	0x3
-	pushw	0x40f2
-	call	Mem_Copy
-	lda	xsp, (xsp + 30)
-	pushw	0x4
-	ld	xwa, 0x3d3430
-	push	xwa
-	pushw	0x3
-	pushw	0x40f6
-	call	Mem_Copy
-	pushw	0x6
-	ld	xwa, 0x3d3440
-	push	xwa
-	pushw	0x3
-	pushw	0x40fa
-	call	Mem_Copy
-	lda	xsp, (xsp + 20)
-	ret
+SndParamBank_LoadOptionBlock:	.include "includes/generated/cc900/SndParamBank_LoadOptionBlock.s"	; C: cc900/tonegen_fileio_handlers_m0.c
 CtrlPanel_IndicatorJumpTable:
 	extz	wa
 	cp	wa, 0:i3

@@ -2229,16 +2229,7 @@ PanelInput_QueueCpuAdcChanges_Return:
 ; (h & 0x1F)] (0..10 left-panel segments, 11..21 right, 22..24 left headers 0xD1-0xD3, 25 = header 0xD7, the
 ; TEMPO/PROGRAM data wheel -- records {0x19, delta, 0xFF}, as the kn7000_mame data-wheel patch feeds them -- and
 ; 0x1F = none).
-PanelInput_EventIndexOfHeader:
-	ld c, a
-	and c, 0x1f
-	and a, 0xc0
-	srl a, 1
-	or a, c
-	extz wa
-	lda xbc, (PanelInput_EventIndexByHeader:24)
-	ld	l, (xbc+wa)
-	ret
+PanelInput_EventIndexOfHeader:	.include "includes/generated/cc900/PanelInput_EventIndexOfHeader.s"	; C: cc900/audio_control_engine_m277.c
 
 ; xwa -> {event index, state, changed}: append it to PanelInput_ChangeQueue and call SeqStep_TimerDispatchC.
 ; In CURRENT_TITLE 251 only indexes above 0x15 (but 0x19) are queued: index 3 sets RAM 0x8D80 bit 0 from the
@@ -2625,43 +2616,17 @@ MidiDispatch_CheckGroup4:
 MidiDispatch_UpdateLEDs:
 	jrl CPanel_LED_FlushImage
 
-Audio_InitChannelTimers:
-	ld (0x8f4c:16), 5
-	ld (DEMO_PLAY_STATE:16), 5
-	ld (0x8f50:16), 5
-	ld (0x8f52:16), 5
-	ld (0x8f54:16), 5
-	ld (0x8f56:16), 5
-	ret
+Audio_InitChannelTimers:	.include "includes/generated/cc900/Audio_InitChannelTimers.s"	; C: cc900/audio_control_engine_m278.c
 
 Audio_IncrementUpdateCounter:
 	inc 1, (0x8f4a:16)
 	ret
 
-Audio_CheckAndFlagChanges:
-	call GetDialEnableState
-	cp l, (0x8f5e:16)
-	jr z, AudioChange_CheckSelectionState
-	orw (LED_REQUEST_3:16), 64
-	ld (0x8f5e:16), l
-
-AudioChange_CheckSelectionState:
-	call CtrlPanel_GetSelectionState
-	cp l, (0x8f60:16)
-	ret z
-	cp l, 2:i3
-	jr nz, AudioChange_UpdatePreviousSelect
-	orw (LED_REQUEST_HOLD_3:16), 4
-
-AudioChange_UpdatePreviousSelect:
-	cp (0x8f60:16), 2
-	jr nz, AudioChange_SetChannelFlag
-	andw (LED_REQUEST_HOLD_3:16), 0xfffb
-
-AudioChange_SetChannelFlag:
-	orw (LED_REQUEST_3:16), 4
-	ld (0x8f60:16), l
-	ret
+Audio_CheckAndFlagChanges:	.include "includes/generated/cc900/Audio_CheckAndFlagChanges.s"	; C: cc900/audio_control_engine_m278.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioChange_CheckSelectionState, Audio_CheckAndFlagChanges + 20
+	.set	AudioChange_UpdatePreviousSelect, Audio_CheckAndFlagChanges + 40
+	.set	AudioChange_SetChannelFlag, Audio_CheckAndFlagChanges + 53
 
 DispatchBitmaskHandlers:
 	dec 2, xsp
@@ -7306,80 +7271,13 @@ SndParam_FetchDone:
 	inc 6, xsp
 	ret
 
-SndParam_ResolveVoiceEntry:
-	push xiz
-	ld xiz, xwa
-	lda xde, (xiz + 2)
-	ld a, (xde)
-	cp a, 0x1f
-	jr ugt, SndParamResolve_CheckRhythm
-	ld xwa, xiz
-	call SndParam_FetchOscTableEntry
-	jr SndParamResolve_Done
+SndParam_ResolveVoiceEntry:	.include "includes/generated/cc900/SndParam_ResolveVoiceEntry.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParamResolve_CheckRhythm, SndParam_ResolveVoiceEntry + 21
+	.set	SndParamResolve_Done, SndParam_ResolveVoiceEntry + 64
 
-SndParamResolve_CheckRhythm:
-	cp a, 0x48
-	jr nz, SndParamResolve_Done
-	lda xbc, (0x90ea:16)
-	ld a, (xiz + 3)
-	ld (xbc), a
-	ld a, (xiz + 4)
-	ld (xbc + 1), a
-	ld a, (xde)
-	ld (xbc + 2), a
-	call Rhythm_DispatchNote_Finalize
-	lda xbc, (0x90ee:16)
-	ld a, (xbc)
-	ld (xiz), a
-	ld a, (xbc + 1)
-	ld (xiz + 1), a
-
-SndParamResolve_Done:
-	pop xiz
-	ret
-
-SndBuf_WriteParamEntries:
-	dec	6, xsp
-	lda	xwa, (xsp)
-	lda	xde, (0x90ea:16)
-	ld	c, (xde)
-	ld	(xwa), c
-	ld	c, (xde+1)
-	ld	(xwa+1), c
-	ld	c, (xde+2)
-	ld	(xwa+2), c
-	ld	c, (xde+3)
-	ld	(xwa+5), c
-	call	SndParam_CheckAndApplyMode
-	lda	xde, (0x90ee:16)
-	lda	xbc, (xsp)
-	ld	a, (xbc+3)
-	ld	(xde), a
-	ld	a, (xbc+4)
-	ld	(xde+1), a
-	inc	6, xsp
-	ret
-RegBitManip_Handler_4_Helper:
-	dec	6, xsp
-	lda	xwa, (xsp)
-	lda	xde, (0x90ea:16)
-	ld	c, (xde)
-	ld	(xwa+3), c
-	ld	c, (xde+1)
-	ld	(xwa+4), c
-	ld	c, (xde+2)
-	ld	(xwa+5), c
-	call	SndParam_ComputeVoiceIndex
-	lda	xde, (0x90ee:16)
-	lda	xbc, (xsp)
-	ld	a, (xbc)
-	ld	(xde), a
-	ld	a, (xbc+1)
-	ld	(xde+1), a
-	ld	a, (xbc+2)
-	ld	(xde+2), a
-	inc	6, xsp
-	ret
+SndBuf_WriteParamEntries:	.include "includes/generated/cc900/SndBuf_WriteParamEntries.s"	; C: cc900/audio_control_engine_m280.c
+RegBitManip_Handler_4_Helper:	.include "includes/generated/cc900/RegBitManip_Handler_4_Helper.s"	; C: cc900/audio_control_engine_m280.c
 ; MidiStream_ResolveVoiceIndexMode1_Impl: Body of MidiStream_ResolveVoiceIndexMode1: for part (PROGRAM_CHANGE_PART) up to 31 builds
 ;   a selection record (+2 part, +3/+4 the program/bank bytes at 0x916F/0x9170), resolves it
 ;   (SndBuf_WriteParamEntries_Helper) and copies the result to 0x90EE and 0x916B; for part 72 it hands the pair to

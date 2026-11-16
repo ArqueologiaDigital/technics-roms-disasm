@@ -94,29 +94,9 @@ NMI_CopyPayloadToSRAM:
 ;   - SubCPU_Payload_GetErrorFlag - Reads the error flag
 ;   - ErrorDialog_CPUTransmissionError - Error dialog shown on failure
 ; ===========================================================================
-SubCPU_Payload_Verify:
-	ld xwa, 0xf180	; Start of payload region 1
-	ldw bc, 0x800	; Size: 0x800 words
-	call Checksum_ComputeComplement	; Compute checksum -> HL
-	lda xwa, (LIVE_PANEL_BLOCK:24)
-	cp hl, (NMI_CHECKSUM_REGION1:24); Compare with expected checksum
-	jr nz, SubCPU_Payload_Verify_Fail	; First region checksum failed
-	ld (0x01e53e:24), 0x00; Mark as success (so far)
-	ldw bc, 0x280	; Size of second region
-	call Checksum_ComputeComplement	; Compute second checksum
-	cp hl, (NMI_CHECKSUM_REGION2:24); Compare with expected
-	ret z	; Both match -> success
-	ld (0x01e53e:24), 0xff; Second region failed
-	ret
-
-SubCPU_Payload_Verify_Fail:
-	ld (0x01e53e:24), 0xff; Mark as failed
-	ldw bc, 0x280
-	call Checksum_ComputeComplement
-	cp hl, (NMI_CHECKSUM_REGION2:24)
-	ret nz	; Both checksums wrong
-	ld (0x01e53e:24), 0x01; First wrong, second correct (partial)
-	ret
+SubCPU_Payload_Verify:	.include "includes/generated/cc900/SubCPU_Payload_Verify.s"	; C: cc900/system_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SubCPU_Payload_Verify_Fail, SubCPU_Payload_Verify + 51
 
 ; ===========================================================================
 ; SubCPU_Payload_GetErrorFlag - Get Sub-CPU payload transfer error status
@@ -1786,37 +1766,13 @@ SyncTiming_Snapshot_CheckFracOverflow:
 SyncTiming_Snapshot_Return:
 	ret
 
-Seq_FullInit:
-	ld a, 0xff:opc
-	ld (1043:16), a
-	ld (1058:16), a
-	ld (1139:16), a
-	call AudioMix_Init
-	call SeqBuf_Init
-	call TempoRingBuf_Init
-	call SeqMain_InitBuffer
-	call RhythmBuf_Init
-	call SeqBuf_MidiOut_Init
-	call SeqEvtBuf_Init
-	call SeqBuf2_Init
-	call AltEvtBuf_Init
-	call SeqBuf_NoteEvent_Flush
-	call SeqBuf_VoiceMap_Flush
-	call SeqBuf_NoteEvent_InitBuffer
-	call SeqBuf_SoundEdit_Flush
-	call SeqBuf3_Init
-	call SeqBuf_DspSysEx_InitBuffer
-	ld (0xbf39:16), 255
-	ret
+Seq_FullInit:	.include "includes/generated/cc900/Seq_FullInit.s"	; C: cc900/system_handlers_m1_xr.c
 
-Seq_InitStub_Nop1:
-	ret
+Seq_InitStub_Nop1:	.include "includes/generated/cc900/Seq_InitStub_Nop1.s"	; C: cc900/system_handlers_m0.c
 
-Seq_InitStub_Nop2:
-	ret
+Seq_InitStub_Nop2:	.include "includes/generated/cc900/Seq_InitStub_Nop2.s"	; C: cc900/system_handlers_m0.c
 
-Seq_InitStub_Nop3:
-	ret
+Seq_InitStub_Nop3:	.include "includes/generated/cc900/Seq_InitStub_Nop3.s"	; C: cc900/system_handlers_m0.c
 
 AudioMix_Init:
 	link	xiz, 0xfff8
@@ -4032,131 +3988,30 @@ Seq_RingBuf_WriteByte_Store:
 	ret
 
 
-SeqDMA_Nop:
-	ret
+SeqDMA_Nop:	.include "includes/generated/cc900/SeqDMA_Nop.s"	; C: cc900/system_handlers_m0.c
 
 
-SeqDMA_MultiWrite_NoteEvent:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld (xsp + 6), a
-	ld iz, 0:i3
-	ld a, (xsp + 6)
-	extz wa
-	cp wa, 0:i3
-	jr ule, SeqDMA_MultiWrite_NoteEvent_Done
-
-SeqDMA_MultiWrite_NoteEvent_Loop:
-	ld xwa, (xsp + 2)
-	ld C, (xwa+)
-	ld (xsp + 2), xwa
-	extz bc
-	pushw bc
-	call SeqBuf_DmaChan0_WriteByte
-	inc 2, xsp
-	inc 1, iz
-	ld a, (xsp + 6)
-	extz wa
-	cp iz, wa
-	jr c, SeqDMA_MultiWrite_NoteEvent_Loop
-
-SeqDMA_MultiWrite_NoteEvent_Done:
-	popw iz
-	inc 6, xsp
-	ret
+SeqDMA_MultiWrite_NoteEvent:	.include "includes/generated/cc900/SeqDMA_MultiWrite_NoteEvent.s"	; C: cc900/system_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqDMA_MultiWrite_NoteEvent_Loop, SeqDMA_MultiWrite_NoteEvent + 20
+	.set	SeqDMA_MultiWrite_NoteEvent_Done, SeqDMA_MultiWrite_NoteEvent + 49
 
 
-SeqDMA_MultiWrite_VoiceMap:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld (xsp + 6), a
-	ld iz, 0:i3
-	ld a, (xsp + 6)
-	extz wa
-	cp wa, 0:i3
-	jr ule, SeqDMA_MultiWrite_VoiceMap_Done
+SeqDMA_MultiWrite_VoiceMap:	.include "includes/generated/cc900/SeqDMA_MultiWrite_VoiceMap.s"	; C: cc900/system_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqDMA_MultiWrite_VoiceMap_Loop, SeqDMA_MultiWrite_VoiceMap + 20
+	.set	SeqDMA_MultiWrite_VoiceMap_Done, SeqDMA_MultiWrite_VoiceMap + 49
 
-SeqDMA_MultiWrite_VoiceMap_Loop:
-	ld xwa, (xsp + 2)
-	ld C, (xwa+)
-	ld (xsp + 2), xwa
-	extz bc
-	pushw bc
-	call SeqBuf_VoiceMap_WriteByte
-	inc 2, xsp
-	inc 1, iz
-	ld a, (xsp + 6)
-	extz wa
-	cp iz, wa
-	jr c, SeqDMA_MultiWrite_VoiceMap_Loop
-
-SeqDMA_MultiWrite_VoiceMap_Done:
-	popw iz
-	inc 6, xsp
-	ret
-
-SeqDMA_MultiWrite_DspSysEx:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld (xsp + 6), a
-	ld iz, 0:i3
-	ld a, (xsp + 6)
-	extz wa
-	cp wa, 0:i3
-	jr ule, SeqDMA_MultiWrite_DspSysEx_Done
-
-SeqDMA_MultiWrite_DspSysEx_Loop:
-	ld xwa, (xsp + 2)
-	ld C, (xwa+)
-	ld (xsp + 2), xwa
-	extz bc
-	pushw bc
-	call SeqBuf_DspSysEx_WriteByte
-	inc 2, xsp
-	inc 1, iz
-	ld a, (xsp + 6)
-	extz wa
-	cp iz, wa
-	jr c, SeqDMA_MultiWrite_DspSysEx_Loop
-
-SeqDMA_MultiWrite_DspSysEx_Done:
-	popw iz
-	inc 6, xsp
-	ret
+SeqDMA_MultiWrite_DspSysEx:	.include "includes/generated/cc900/SeqDMA_MultiWrite_DspSysEx.s"	; C: cc900/system_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqDMA_MultiWrite_DspSysEx_Loop, SeqDMA_MultiWrite_DspSysEx + 20
+	.set	SeqDMA_MultiWrite_DspSysEx_Done, SeqDMA_MultiWrite_DspSysEx + 49
 
 
-SeqDMA_MultiWrite_SoundEdit:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld (xsp + 6), a
-	ld iz, 0:i3
-	ld a, (xsp + 6)
-	extz wa
-	cp wa, 0:i3
-	jr ule, SeqDMA_MultiWrite_SoundEdit_Done
-
-SeqDMA_MultiWrite_SoundEdit_Loop:
-	ld xwa, (xsp + 2)
-	ld C, (xwa+)
-	ld (xsp + 2), xwa
-	extz bc
-	pushw bc
-	call SeqBuf_SoundEdit_BytecodeBlock
-	inc 2, xsp
-	inc 1, iz
-	ld a, (xsp + 6)
-	extz wa
-	cp iz, wa
-	jr c, SeqDMA_MultiWrite_SoundEdit_Loop
-
-SeqDMA_MultiWrite_SoundEdit_Done:
-	popw iz
-	inc 6, xsp
-	ret
+SeqDMA_MultiWrite_SoundEdit:	.include "includes/generated/cc900/SeqDMA_MultiWrite_SoundEdit.s"	; C: cc900/system_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqDMA_MultiWrite_SoundEdit_Loop, SeqDMA_MultiWrite_SoundEdit + 20
+	.set	SeqDMA_MultiWrite_SoundEdit_Done, SeqDMA_MultiWrite_SoundEdit + 49
 
 
 SeqDMA_WriteMidi_NoteOn:
@@ -6078,37 +5933,7 @@ FDC_InitRecalibrate:
 	lda xsp, (xsp + 20)
 	ret
 
-FDC_SetupSectorParams:
-	lda xsp, (xsp - 14)
-	push xiz
-	ld (xsp + 8), xde
-	ld (xsp + 12), bc
-	ld (xsp + 14), xwa
-	ld xwa, (xsp + 14)
-	ld xbc, 0x12
-	call Math_DivideU32
-	lda xiz, (1582:16)
-	ldw (xiz + 2), 0x0
-	ld wa, hl
-	srl wa, 1
-	ld (xiz + 6), wa
-	and hl, 0x1
-	ld (xiz + 4), hl
-	lda xwa, (xiz + 8)
-	ld (xsp + 4), xwa
-	ld xwa, (xsp + 14)
-	ld xbc, 0x12
-	call Math_RemainderU32
-	inc 1, xhl
-	ld xwa, (xsp + 4)
-	ld (xwa), hl
-	ld wa, (xsp + 12)
-	ld (xiz + 10), wa
-	ld xwa, (xsp + 8)
-	ld (xiz + 12), xwa
-	pop xiz
-	lda xsp, (xsp + 14)
-	ret
+FDC_SetupSectorParams:	.include "includes/generated/cc900/FDC_SetupSectorParams.s"	; C: cc900/system_handlers_m5.c
 
 ; Reads sectors from the floppy, retrying until it succeeds.
 ;   In:  XWA, BC, XDE = the parameters FDC_SetupSectorParams puts in the command block at 0x62e.
@@ -6574,36 +6399,11 @@ FloppyChange_Debounce2_Loop:
 	inc 2, xsp
 	ret
 
-Flash_BurnWithProgress:
-	pushw iz
-	ldw iz, 0x32
-	ld xwa, 0:i3
-	ld (SYSTEM_TIMESTAMP:16), xwa
-	call TableDataFlash_ChipErase
-	call HDAE5000_Status_Check
-	cp hl, 0xffff
-	jr nz, FlashBurn_Done
-
-FlashBurn_ProgressLoop:
-	ld xwa, (SYSTEM_TIMESTAMP:16)
-	cp xwa, 0x1f4
-	jr ule, FlashBurn_CheckDone
-	inc 8, iz
-	ld wa, iz
-	ldw bc, 0xb4
-	ld de, 5:i3
-	call VRAM_FillRect
-	ld xwa, 0:i3
-	ld (SYSTEM_TIMESTAMP:16), xwa
-
-FlashBurn_CheckDone:
-	call HDAE5000_Status_Check
-	cp hl, 0xffff
-	jr z, FlashBurn_ProgressLoop
-
-FlashBurn_Done:
-	popw iz
-	ret
+Flash_BurnWithProgress:	.include "includes/generated/cc900/Flash_BurnWithProgress.s"	; C: cc900/system_handlers_m5.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FlashBurn_ProgressLoop, Flash_BurnWithProgress + 24
+	.set	FlashBurn_CheckDone, Flash_BurnWithProgress + 55
+	.set	FlashBurn_Done, Flash_BurnWithProgress + 65
 
 Erase_and_Burn____when_disk_is_valid:
 	dec 2, xsp
@@ -6842,73 +6642,19 @@ HDAE5000_ROM_Transfer_Return:
 ;   HDAE5000_Init_BytecodeBlock erases that flash when it is not blank, calls this with bit 0 of the LED port 0x160004
 ;   set, then compares 0x300000 against the same window and banks (HDAE5000_VerifyFlashAgainstWindow) and halts blinking bit 3 on
 ;   a mismatch.
-HDAE5000_ProgramCustomDataFlash:
-	lda xsp, (xsp - 10)
-	push xiz
-	lda xwa, (0x300000:24)
-	ld (xsp + 8), xwa
-	ld (xsp + 12), 0x0
-
-HDAE5000_FlashWrite_BankLoop:
-	ld a, (xsp + 12)
-	ld (0x160000:24), a
-	lda xwa, (0x200000:24)
-	ld (xsp + 4), xwa
-	ld xiz, 0:i3
-
-HDAE5000_FlashWrite_WordLoop:
-	ld xwa, (xsp + 8)
-	lda xbc, (xwa+:2)
-	ld (xsp + 8), xwa
-	ld xwa, (xsp + 4)
-	ld DE, (xwa+)
-	ld (xsp + 4), xwa
-	ld wa, 1:i3
-	call Flash_ProgramWord
-	inc 1, xiz
-	cp xiz, 0x40000
-	jr c, HDAE5000_FlashWrite_WordLoop
-	incm8 1, (xsp + 12)
-	cp (xsp + 12), 0x2
-	jr c, HDAE5000_FlashWrite_BankLoop
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+HDAE5000_ProgramCustomDataFlash:	.include "includes/generated/cc900/HDAE5000_ProgramCustomDataFlash.s"	; C: cc900/system_handlers_m5.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FlashWrite_BankLoop, HDAE5000_ProgramCustomDataFlash + 16
+	.set	HDAE5000_FlashWrite_WordLoop, HDAE5000_ProgramCustomDataFlash + 34
 
 ; HDAE5000_ProgramTableDataFlash: Programs the 2 MB table-data flash at 0x800000 from the 512 KB window at 0x280000,
 ;   banks 0-3 through port 0x160000, 32 bits at a time (Flash_ProgramByte); the twin of HDAE5000_ProgramCustomDataFlash.
 ;   Called first by HDAE5000_TableData_Write; HDAE5000_VerifyFlashAgainstWindow checks it.  Was
 ;   HDAE5000_FlashVerify_BytecodeBlock: it verifies nothing.
-HDAE5000_ProgramTableDataFlash:
-	lda	xsp, (xsp-10)
-	push	xiz
-	ld	xwa, 0x800000
-	ld	(xsp+8), xwa
-	ld	(xsp+12), 0
-HDAE5000_FlashVerify_BytecodeBlock_Loop:
-	ld	a, (xsp+12)
-	ld	(0x160000:24), a
-	lda	xwa, (0x280000:24)
-	ld	(xsp+4), xwa
-	ld	xiz, 0:i3
-HDAE5000_FlashVerify_BytecodeBlock_Loop2:
-	ld	xwa, (xsp+8)
-	lda xbc, (xwa+:4)
-	ld (xsp+8), xwa
-	ld xwa, xbc
-	ld	xde, (xsp+4)
-	ld	xbc, (xde+)
-	ld	(xsp+0x4), xde
-	call	Flash_ProgramByte
-	inc	1, xiz
-	cp	xiz, 0x20000
-	jr	c, HDAE5000_FlashVerify_BytecodeBlock_Loop2
-	incm8	1, (xsp+12)
-	cp	(xsp+0xc), 4
-	jr	c, HDAE5000_FlashVerify_BytecodeBlock_Loop
-	pop	xiz
-	lda	xsp, (xsp+10)
-	ret
+HDAE5000_ProgramTableDataFlash:	.include "includes/generated/cc900/HDAE5000_ProgramTableDataFlash.s"	; C: cc900/system_handlers_m5_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FlashVerify_BytecodeBlock_Loop, HDAE5000_ProgramTableDataFlash + 16
+	.set	HDAE5000_FlashVerify_BytecodeBlock_Loop2, HDAE5000_ProgramTableDataFlash + 34
 
 HDAE5000_TableData_Write:
 	lda xsp, (xsp - 10)
@@ -7186,31 +6932,9 @@ Flash_AccumWrite_ByteDone:
 	add (1602:16), xwa
 	ret
 
-Flash_AccumWrite_Word:
-	ld c, (1620:16)
-	extz bc
-	lda xde, (1580:16)
-	extz xbc
-	add xbc, xde
-	ld (xbc), a
-	ld a, (1620:16)
-	ld c, a
-	inc 1, a
-	ld (1620:16), a
-	cp c, 1:i3
-	jr nz, Flash_AccumWrite_WordDone
-	ld xwa, (1622:16)
-	lda xbc, (xwa+:2)
-	ld (1622:16), xwa
-	ld de, (xde)
-	ld wa, 1:i3
-	call Flash_ProgramWord
-	ld (1620:16), 0
-
-Flash_AccumWrite_WordDone:
-	ld xwa, 1:i3
-	add (1602:16), xwa
-	ret
+Flash_AccumWrite_Word:	.include "includes/generated/cc900/Flash_AccumWrite_Word.s"	; C: cc900/system_handlers_m5.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Flash_AccumWrite_WordDone, Flash_AccumWrite_Word + 56
 
 LZSS_Decompress_ToFlash:
 	dec 6, xsp

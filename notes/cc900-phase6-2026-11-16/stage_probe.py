@@ -37,13 +37,20 @@ def items(text):
                 out.append(('name', c))
             i = j
             continue
+        if text[i] == '#' and not buf.strip() and depth == 0:   # a preprocessor line (#define): its own item
+            j = text.find('\n', i)
+            j = len(text) if j < 0 else j
+            out.append(('pp', text[i:j].strip()))
+            i = j
+            continue
         ch = text[i]
         buf += ch
         if ch == '{':
             depth += 1
         elif ch == '}':
             depth -= 1
-            if depth == 0 and re.search(r'\)\s*\{', buf) and not re.match(r'\s*(typedef|struct|union|enum|extern)\b', buf):
+            head = buf[:buf.index('{')] if '{' in buf else buf   # a definition: a parameter list before its first {
+            if depth == 0 and '(' in head and re.search(r'\)\s*$', head) and not re.match(r'\s*(typedef|extern)\b', buf):
                 out.append(('fn', buf.strip())); buf = ''
         elif ch == ';' and depth == 0:
             if buf.strip() != ';':
@@ -58,11 +65,31 @@ def idents(s):
 
 
 def defines(d):
-    """names a declaration introduces"""
+    """names a declaration (or a #define) introduces"""
+    m = re.match(r'#\s*define\s+(\w+)', d)
+    if m:
+        return {m.group(1)}
     m = re.match(r'(?:typedef\s+)?(struct|union|enum)\s+(\w+)\s*\{', d)
     if m and not d.startswith('typedef'):
         return {m.group(2)}
     body = re.sub(r'\{.*\}', ' ', d, flags=re.S)
+    if '(' in body and d.startswith('typedef') and not m:     # typedef of a function (pointer) type
+        m2 = re.search(r'\(\s*\*\s*(\w+)\s*\)\s*\(', body) or re.search(r'(\w+)\s*\(', body)
+        return {m2.group(1)} if m2 else set()
+    if '(' in body and not d.startswith('typedef'):            # function prototypes (and pointers to functions)
+        names, depth, i = set(), 0, 0
+        flat = body.rstrip(';')
+        while re.search(r'\(([^()]*)\)\s*\(([^()]*)\)', flat) is None and re.search(r'(\w+\s*\()[^()]*\([^()]*\)[^()]*\)', flat):
+            flat = re.sub(r'(\w+\s*\()[^()]*\([^()]*\)[^()]*\)', r'\1)', flat, count=1)
+        for part in re.split(r',(?![^()]*\))', flat):
+            m = re.search(r'\(\s*\*\s*(\w+)\s*\)\s*\(', part) or re.search(r'(\w+)\s*\(', part)
+            if m:
+                names.add(m.group(1))
+            else:
+                f = re.findall(r'(\w+)\s*(?:\[[^\]]*\])*\s*(?:=.*)?$', part.strip())
+                if f:
+                    names.add(f[-1])
+        return names - KEYWORDS
     if d.startswith('typedef'):
         tags = {m.group(2)} if m else set()
         return tags | {re.findall(r'(\w+)\s*(?:\[[^\]]*\])*\s*;?$', body.rstrip(';').strip())[-1]}
@@ -84,7 +111,7 @@ def main():
         sys.exit(__doc__)
     probe, staged, src, opts, funcs = a[0], a[1], a[2], a[3], a[4:]
     it = items(open(probe, encoding='latin-1').read())
-    decls = [d for k, d in it if k == 'decl']
+    decls = [d for k, d in it if k in ('decl', 'pp')]
     fns = {fn_name(d): d for k, d in it if k == 'fn'}
     names = [d for k, d in it if k == 'name']
     want, need = [], set()
@@ -109,7 +136,7 @@ def main():
             break
         prev = {}
         for k, d in items(open(staged, encoding='latin-1').read()):
-            if k == 'decl':
+            if k in ('decl', 'pp'):
                 for n in defines(d):
                     prev[n] = d
         if not any(n in prev and prev[n] != d for d in picked for n in defines(d)):
