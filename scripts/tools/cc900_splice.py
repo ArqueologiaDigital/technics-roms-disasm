@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Put firmware C functions into the tree in place of their hand assembly (cc900 phase 6).
 
-usage: python3 scripts/tools/cc900_splice.py TREE FILE.c [--symbols REF] [--dry-run]
-    TREE    v10/maincpu
+usage: python3 scripts/tools/cc900_splice.py TREE FILE.c [--symbols REF] [--sizes TSV] [--elf ELF] [--dry-run]
+    TREE    v10/maincpu, v142/subcpu, hdae5000 ...
     FILE.c  TREE/cc900/<name>.c.  Its first comment names the hand source as "Functions of <path>.s" (relative to
-            TREE).  Every function FILE.c defines is spliced into that file.
+            TREE; else the first <path>.s the comment names).  Every function FILE.c defines is spliced into it.
+    ELF     the built image whose bytes measure the hand lines (default: the tree's rebuilt_ROMs/*.elf when it
+            exists).  Without one, llvm-mc measures the lines on their own, which fails on symbolic displacements
+            (`(xwa + WS_HamaFnTable)`), the tree's macros (ld_sril) and widths only the tree's .equ values decide.
 
 For each function NAME: the line `NAME:` in the hand source, then its instruction lines up to and including the
 first `ret`, with no other label, directive or `.include` in between (comments and blank lines are allowed and
@@ -55,6 +58,80 @@ def encodings(text):
     return out
 
 
+DATA_UNIT = {b".byte": 1, b".short": 2, b".hword": 2, b".word": 2, b".2byte": 2, b".long": 4, b".int": 4, b".4byte": 4}
+
+
+def data_size(c):
+    """the bytes a data directive line emits (.byte / .short / .long ..., .zero N, .fill N[,S], .ascii / .asciz /
+    .string "..."), None for any other directive (.set, .equ, .include, .balign, .if ...): those stop the splice,
+    which cannot know their bytes or must not drop what they define"""
+    p = c.split(None, 1)
+    d, arg = p[0], (p[1] if len(p) > 1 else b"")
+    if d in DATA_UNIT:
+        return DATA_UNIT[d] * len([x for x in re.split(rb',(?![^"]*"[^"]*$)', arg) if x.strip()])
+    if d in (b".zero", b".space", b".skip") and re.match(rb'^\s*(0x[0-9a-fA-F]+|\d+)\s*$', arg):
+        return int(arg.strip(), 0)
+    if d == b".fill":
+        f = [x.strip() for x in arg.split(b",")]
+        if all(re.match(rb'^(0x[0-9a-fA-F]+|\d+)$', x) for x in f[:2]):
+            return int(f[0], 0) * (int(f[1], 0) if len(f) > 1 else 1)
+    if d in (b".ascii", b".asciz", b".string"):
+        try:
+            import ast
+            total = 0
+            for s in re.findall(rb'"(?:[^"\\]|\\.)*"', arg):
+                total += len(ast.literal_eval("b" + s.decode("latin-1"))) + (d != b".ascii")
+            return total
+        except (ValueError, SyntaxError):
+            return None
+    return None
+
+
+def image_sizes(elf, addr, lines):
+    """[(line, its size)] of the hand lines from addr on, measured in the built image: a data line by data_size(),
+    an instruction by llvm-objdump's decoding at its address (re-decoded after data).  None when the image cannot be
+    read there (no ELF, or llvm-objdump finds no instruction at an address)"""
+    import subprocess
+    import check_bytes
+    if not elf or not os.path.exists(elf):
+        return None
+    decoded = {}
+
+    def decode(at):
+        out = subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-objdump"), "-d", "--start-address=0x%x" % at,
+                              "--stop-address=0x%x" % (at + 0x400), elf], capture_output=True, text=True).stdout
+        for l in out.splitlines():
+            m = re.match(r'^\s*([0-9a-f]+):\s+((?:[0-9a-f]{2} )+)', l)
+            if m:
+                decoded.setdefault(int(m.group(1), 16), len(m.group(2).split()))
+    res = []
+    for c in lines:
+        n = data_size(c) if c.startswith(b".") else None
+        if n is None:
+            if addr not in decoded:
+                decode(addr)
+            if addr not in decoded:
+                return None
+            n = decoded[addr]
+        res.append((c, n))
+        addr += n
+    return res
+
+
+ELF_OF_TREE = {"v142/subcpu": "kn5000_subprogram_v142.llvm.elf", "v141/subcpu": "kn5000_subprogram_v141.llvm.elf",
+               "v140/subcpu": "kn5000_subprogram_v140.llvm.elf", "hdae5000": "hd-ae5000_v2_06i.llvm.elf",
+               "hdae5000_v2_01i": "hd-ae5000_v2_01i.llvm.elf", "hdae5000_v1_15i": "hd-ae5000_v1_15i.llvm.elf",
+               "hdae5000_v1_10i": "hd-ae5000_v1_10i.llvm.elf"}
+
+
+def tree_elf(tree):
+    """the built image of TREE (rebuilt_ROMs/...elf), or None"""
+    t = os.path.relpath(os.path.abspath(tree), fw.REPO)
+    name = ELF_OF_TREE.get(t) or ("kn5000_%s_program.llvm.elf" % t.split(os.sep)[0] if t.endswith("maincpu") else None)
+    p = os.path.join(fw.REPO, "rebuilt_ROMs", name) if name else None
+    return p if p and os.path.exists(p) else None
+
+
 def c_functions(path):
     """the tree labels of the functions FILE.c defines, in order (the front end's names, through `cc900-name:`)"""
     if "--sizes" in sys.argv:                            # C the model may not compile: read the definitions
@@ -68,14 +145,20 @@ def c_functions(path):
 
 
 def main():
-    a = [x for i, x in enumerate(sys.argv[1:], 1) if not x.startswith("--") and sys.argv[i - 1] not in ("--symbols", "--sizes")]
+    a = [x for i, x in enumerate(sys.argv[1:], 1)
+         if not x.startswith("--") and sys.argv[i - 1] not in ("--symbols", "--sizes", "--elf")]
     if len(a) != 2:
         sys.exit(__doc__)
     tree, src = a
+    elf = sys.argv[sys.argv.index("--elf") + 1] if "--elf" in sys.argv else tree_elf(tree)
     dry = "--dry-run" in sys.argv
-    m = re.search(rb'Functions of (\S+\.s)', open(src, "rb").read())
+    text = open(src, "rb").read()
+    m = re.search(rb'Functions of (\S+\.s)\b', text)
+    if not m:                                            # lane_hd's headers: "The lyric-display module of X.s ..."
+        first = re.match(rb'\s*/\*(.*?)\*/', text, re.S)
+        m = re.search(rb'\b([\w./-]+\.s)\b', first.group(1)) if first else None
     if not m:
-        sys.exit("%s: no 'Functions of <file>.s' in its header comment" % src)
+        sys.exit("%s: no hand source (<file>.s) named in its header comment" % src)
     asm = os.path.join(tree, m.group(1).decode())
     rel_c = os.path.relpath(src, tree)
     ref = sizes = None
@@ -83,7 +166,9 @@ def main():
         import check_bytes
         ref = check_bytes.load_reference(sys.argv[sys.argv.index("--symbols") + 1])
         if "--sizes" in sys.argv:
-            tname = os.path.normpath(tree).split(os.sep)[-2] if os.path.normpath(tree).endswith("maincpu") else tree
+            # staged_v423.tsv names a tree by its version (v10, v142) or directory (hdae5000)
+            tname = os.path.normpath(tree).split(os.sep)[-2] if os.path.normpath(tree).endswith(("maincpu", "subcpu")) \
+                else os.path.normpath(tree)
             sizes = {}
             for row in open(sys.argv[sys.argv.index("--sizes") + 1]):
                 c = row.rstrip("\n").split("\t")
@@ -116,16 +201,23 @@ def main():
             if name not in sizes:
                 sys.exit("%s: no size for %s" % (src, name))
             end = ref[name] + sizes[name]                # inner labels, kept as offsets from NAME
+            # the hand lines up to the next label of the symbols reference (an assembler-local `.L` label has no
+            # symbol: it is inner when any branch up to that next label targets it, backwards or forwards --
+            # SwapBytes32's `.LSwapBytes32__loop`, reached only by the `jr lt` after it)
+            nxt = i + 1
+            while nxt < len(lines) and not (LABEL_RE.match(lines[nxt]) and
+                                            not LABEL_RE.match(lines[nxt]).group(1).startswith(b".L")):
+                nxt += 1
+            region = b"\n".join(l.split(b";")[0] for l in lines[i:nxt])
             while True:
                 if j >= len(lines):
                     sys.exit("%s: %s runs past the end of the file" % (asm, name))
                 lm = LABEL_RE.match(lines[j])
-                if lm and lm.group(1).startswith(b".L"):   # an assembler-local label has no symbol: inner (and
-                    if re.search(rb'[\s,]' + re.escape(lm.group(1)) + rb'\s*(;|$)',   # dropped) when a branch of the
-                                 b"\n".join(lines[i:j]), re.M):                     # body so far targets it, else
-                        j += 1                                                       # it starts the next block
+                if lm and lm.group(1).startswith(b".L"):
+                    if re.search(rb'[\s,(]' + re.escape(lm.group(1)) + rb'\s*[),]?\s*$', region, re.M):
+                        j += 1                                   # inner (and dropped: no symbol to keep)
                         continue
-                    break
+                    break                                        # it starts the next block
                 if lm:
                     ln = lm.group(1).decode()
                     if ln not in ref:
@@ -135,19 +227,28 @@ def main():
                     inner.append((ln, ref[ln] - ref[name]))
                     if lines[j].split(b";")[0].strip()[len(lm.group(1)) + 1:].strip():
                         sys.exit("%s:%d: %s's line holds more than the label" % (asm, j + 1, ln))
-                elif lines[j].split(b";")[0].strip().startswith(b"."):
-                    sys.exit("%s:%d: a directive inside %s's body" % (asm, j + 1, name))
+                else:
+                    c = lines[j].split(b";")[0].strip()
+                    if c.startswith(b".") and data_size(c) is None:
+                        sys.exit("%s:%d: inside %s's body, a directive that emits no measurable bytes or defines "
+                                 "something (%s): splice it by hand" % (asm, j + 1, name, c.split()[0].decode()))
                 j += 1
             while j > i + 1 and not lines[j - 1].split(b";")[0].strip():   # the blank and comment lines before
                 j -= 1                                                    # the next label stay with it
             j -= 1
             # the hand lines up to the next outside label may run past the compiled body (a dead `ret`, code no
-            # label marks): measure them with llvm-mc and cut where their bytes reach the C body's size; the rest
-            # stays after the include line
+            # label marks): measure them and cut where their bytes reach the C body's size; the rest stays after
+            # the include line.  The sizes come from the built image when there is one (each instruction as the
+            # whole tree assembled it: symbolic displacements such as (xwa + WS_HamaFnTable), macros such as
+            # ld_sril and operand widths only the tree's .equ values decide), else from llvm-mc on the lines alone
             ins = [k for k in range(i + 1, j + 1) if lines[k].split(b";")[0].strip() and not LABEL_RE.match(lines[k])]
-            enc = encodings("\n".join("\t" + lines[k].split(b";")[0].strip().decode("latin-1") for k in ins) + "\n")
-            if len(enc) != len(ins):
-                sys.exit("%s: %s: llvm-mc measured %d of %d hand instructions" % (asm, name, len(enc), len(ins)))
+            enc = image_sizes(elf, ref[name], [lines[k].split(b";")[0].strip() for k in ins]) if elf else None
+            if enc is None:
+                enc = encodings("\n".join("\t" + lines[k].split(b";")[0].strip().decode("latin-1") for k in ins) + "\n")
+                if len(enc) != len(ins):
+                    sys.exit("%s: %s: llvm-mc measured %d of %d hand instructions on their own (a symbolic "
+                             "displacement, a macro or an unknown name stops it); build the image and pass --elf"
+                             % (asm, name, len(enc), len(ins)))
             total, cut = 0, None
             for k, (_, n_) in zip(ins, enc):
                 total += n_
