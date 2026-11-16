@@ -170,6 +170,18 @@ void HDAE5000_Lyrics_ClearBuffer(void)
     HDAE5000_RAM_LyricLoaded = 0;
 }
 
+long HDAE5000_Lyrics_CheckFile(void)
+{
+    if (HDAE5000_Lyrics_CheckHdrChunk() == 0) {
+        if (HDAE5000_Lyrics_CheckTrackChunk() == 0) {
+            HDAE5000_RAM_LyricLoaded = 1;
+            return 0L;
+        } else
+            return -1L;
+    } else
+        return -2L;
+}
+
 /* cc900-name: HDAE5000_Lyrics_CheckHdrChunk=HDAE5000_Lyrics_CheckHeaderChunk */
 long HDAE5000_Lyrics_CheckHdrChunk(void)
 {

@@ -3756,26 +3756,7 @@ HDAE5000_LyricBoxProc_Epilogue:
 ; ---------------------------------------------------------------------------
 HDAE5000_Lyrics_ClearBuffer:	.include "includes/generated/cc900/HDAE5000_Lyrics_ClearBuffer.s"	; C: cc900/hdae5000_lyrics.c
 
-HDAE5000_Lyrics_CheckFile:
-	; Check the lyric file in the buffer: HDAE5000_Lyrics_CheckHeaderChunk (-2
-	; on failure) and HDAE5000_Lyrics_CheckTrackChunk (-1); on success set the
-	; loaded flag (0x23A19C) = 1 and return 0.  No caller was found
-	; (scripts/analysis/hdae5000_reachability.py): the file checks are dead code.
-	calr HDAE5000_Lyrics_CheckHeaderChunk
-	or xhl, xhl			; check result
-	jr nz, .Lde_err2		; if nonzero, error
-	calr HDAE5000_Lyrics_CheckTrackChunk
-	or xhl, xhl			; check result
-	jr nz, .Lde_err1		; if nonzero, error
-	ld (HDAE5000_RAM_LyricLoaded:24), 0x01
-	ld xhl, 0:i3			; return success
-	ret
-.Lde_err1:
-	ld xhl, 0xFFFFFFFF		; return -1
-	ret
-.Lde_err2:
-	ld xhl, 0xFFFFFFFE		; return -2
-	ret
+HDAE5000_Lyrics_CheckFile:	.include "includes/generated/cc900/HDAE5000_Lyrics_CheckFile.s"	; C: cc900/hdae5000_lyrics.c
 
 HDAE5000_Lyrics_LoadTestFile:
 	; Debug loader: when HamaFn_GetMediaType returns 2 or 3, read the file

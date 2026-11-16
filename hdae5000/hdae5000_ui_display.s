@@ -500,27 +500,10 @@ HDAE5000_SaveSongWithUi:
 ; In:  XWA = buffer
 ; Out: HL = 6 (HDAE5000_StrLen of the string).
 ; ---------------------------------------------------------------------------
-HDAE5000_CopyVersionString:
-	ld ix, 0:i3
-	cp ix, 7:i3
-	jr nc, HDAE5000_CopyVersionString__len
-HDAE5000_CopyVersionString__loop:
-	lda xhl, (xwa+:1)
-	ld bc, ix
-	extz xbc
-	ld xde, HDAE5000_Str_V206i		; "V2.06i"
-	add xde, xbc
-	ld c, (xde)
-	ld (xhl), c
-	inc 1, ix
-	cp ix, 7:i3
-	jr c, HDAE5000_CopyVersionString__loop
-HDAE5000_CopyVersionString__len:
-	pushw HDAE5000_Str_V206i@hi16
-	pushw HDAE5000_Str_V206i@lo16
-	call HDAE5000_StrLen
-	inc 4, xsp
-	ret
+HDAE5000_CopyVersionString:	.include "includes/generated/cc900/HDAE5000_CopyVersionString.s"	; C: cc900/hdae5000_setup_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_CopyVersionString__loop, HDAE5000_CopyVersionString + 6
+	.set	HDAE5000_CopyVersionString__len, HDAE5000_CopyVersionString + 30
 
 ; ---------------------------------------------------------------------------
 ; Wait until the main CPU's semaphore 1 is free: HamaFn_ref_sem_X(1) returns
@@ -3784,26 +3767,7 @@ HDAE5000_LyricBoxProc_Epilogue:
 ; ---------------------------------------------------------------------------
 HDAE5000_Lyrics_ClearBuffer:	.include "includes/generated/cc900/HDAE5000_Lyrics_ClearBuffer.s"	; C: cc900/hdae5000_lyrics.c
 
-HDAE5000_Lyrics_CheckFile:
-	; Check the lyric file in the buffer: HDAE5000_Lyrics_CheckHeaderChunk (-2
-	; on failure) and HDAE5000_Lyrics_CheckTrackChunk (-1); on success set the
-	; loaded flag (0x23A19C) = 1 and return 0.  No caller was found
-	; (scripts/analysis/hdae5000_reachability.py): the file checks are dead code.
-	calr HDAE5000_Lyrics_CheckHeaderChunk
-	or xhl, xhl			; check result
-	jr nz, .Lde_err2		; if nonzero, error
-	calr HDAE5000_Lyrics_CheckTrackChunk
-	or xhl, xhl			; check result
-	jr nz, .Lde_err1		; if nonzero, error
-	ld (HDAE5000_RAM_LyricLoaded:24), 0x01
-	ld xhl, 0:i3			; return success
-	ret
-.Lde_err1:
-	ld xhl, 0xFFFFFFFF		; return -1
-	ret
-.Lde_err2:
-	ld xhl, 0xFFFFFFFE		; return -2
-	ret
+HDAE5000_Lyrics_CheckFile:	.include "includes/generated/cc900/HDAE5000_Lyrics_CheckFile.s"	; C: cc900/hdae5000_lyrics.c
 
 HDAE5000_Lyrics_LoadTestFile:
 	; Debug loader: when HamaFn_GetMediaType returns 2 or 3, read the file
@@ -4199,131 +4163,7 @@ HDAE5000_Lyrics_PlayToPosition:
 	; LyricBackColorCheck handlers, which read those bytes).
 	; Sets (0x23A19A) = 1.  Returns XHL = 0.
 	; ============================================================
-HDAE5000_Lyrics_ResetState:	; 0x28DA7B (381 bytes)
-
-	; --- clear the line state ---
-	ld (HDAE5000_RAM_LyricLines_Init+240:24), 0x01		; (0x23A19A) = 1
-	ldw (0x2304e0:24), 0x0000; (0x2304E0) = 0
-	ldw (0x2304e2:24), 0x0000; (0x2304E2) = 0
-	ldw (0x2304e4:24), 0x0000; (0x2304E4) = 0
-	ld (0x2304ee:24), 0x00; (0x2304EE) = 0
-	ldw (0x2304e6:24), 0x0000; (0x2304E6) = 0
-	ld (0x2304ef:24), 0x00; (0x2304EF) = 0
-	ld xwa, 0:i3
-	ld (0x2304d8:24), xwa; (0x2304D8) = 0
-	; blank the text lines: 240 bytes at 0x23A0AA
-	pushw 240		; 240 bytes
-	pushw 32		; fill ' '
-	lda xwa, (HDAE5000_RAM_LyricLines:24)
-	push xwa
-	call HDAE5000_MemFill
-
-	; --- clear the event/position state ---
-	ldw (0x230870:24), 0x0000; (0x230870) = 0
-	ldw (0x23086c:24), 0x0000; (0x23086C) = 0
-	ldw (0x230438:24), 0x0000; (0x230438) = 0
-	ldw (0x23043a:24), 0x0000; (0x23043A) = 0
-	ldw (0x23043c:24), 0x0000; (0x23043C) = 0
-	ld xwa, 0:i3
-	ld (0x230440:24), xwa; (0x230440) = 0
-	ld xwa, 0:i3
-	ld (0x230444:24), xwa; (0x230444) = 0
-	ld xwa, 0:i3
-	ld (0x230448:24), xwa; (0x230448) = 0
-	ld xwa, 0:i3
-	ld (0x23044c:24), xwa; (0x23044C) = 0
-	ld xwa, 0:i3
-	ld (0x230450:24), xwa; (0x230450) = 0
-	ld xwa, 0:i3
-	ld (0x230454:24), xwa; (0x230454) = 0
-	ld xwa, 4294967295		; 0xFFFFFFFF
-	ld (0x230864:24), xwa; (0x230864) = 0xFFFFFFFF
-	ldw (0x230872:24), 0x0000; (0x230872) = 0
-	ldw (0x230874:24), 0x0000; (0x230874) = 0
-	ld xwa, 0:i3
-	ld (0x230876:24), xwa; (0x230876) = 0
-
-	; --- info line = "Info" ---
-	pushw HDAE5000_Str_Info@hi16		; high half of HDAE5000_Str_Info
-	pushw HDAE5000_Str_Info@lo16		; low half of HDAE5000_Str_Info
-	lda xwa, (0x2306b6:24)		; &0x2306B6: info line
-	push xwa
-	call HDAE5000_StrCpy
-	lda xsp, (xsp + 16)		; pop 16 bytes of args
-
-	ldw (0x2307aa:24), 0x0001; (0x2307AA) = 1
-	ldw (0x2307ac:24), 0x0000; (0x2307AC) = 0
-
-	; --- (0x230868) = division / 12 ---
-	ld wa, (HDAE5000_RAM_LyricBuffer+12:24)		; WA = TLhd division (big-endian)
-	calr HDAE5000_SwapBytes16
-	ld wa, hl			; result WA = HL
-	extz xwa			; zero-extend to 32-bit
-	ld xbc, 12			; divisor
-	call HDAE5000_UDivMod32	; divide
-	ld (0x230868:24), xhl		; (0x230868) = division / 12
-
-	; --- LyricForeColor (0x229DAD) -> palette code (0x23087E) ---
-	ld a, (HDAE5000_RAM_LyricForeColor:24)		; A = LyricForeColor
-	cp a, 4:i3
-	jr z, .Lfs_type1_4
-	cp a, 3:i3
-	jr z, .Lfs_type1_3
-	cp a, 2:i3
-	jr z, .Lfs_type1_2
-	cp a, 1:i3
-	jr z, .Lfs_type1_1
-	cp a, 0:i3
-	jr nz, .Lfs_type1_default
-	ld (0x23087e:24), 0xf9; (0x23087E) = 0xF9
-	jr t, .Lfs_type1_done
-.Lfs_type1_1:				; 0x28DB88
-	ld (0x23087e:24), 0x02; (0x23087E) = 0x02
-	jr t, .Lfs_type1_done
-.Lfs_type1_2:				; 0x28DB90
-	ld (0x23087e:24), 0xfc; (0x23087E) = 0xFC
-	jr t, .Lfs_type1_done
-.Lfs_type1_3:				; 0x28DB98
-	ld (0x23087e:24), 0x00; (0x23087E) = 0x00
-	jr t, .Lfs_type1_done
-.Lfs_type1_4:				; 0x28DBA0
-	ld (0x23087e:24), 0xfb; (0x23087E) = 0xFB
-	jr t, .Lfs_type1_done
-.Lfs_type1_default:			; 0x28DBA8
-	ld (0x23087e:24), 0xfc; (0x23087E) = 0xFC
-.Lfs_type1_done:			; 0x28DBAE
-
-	; --- LyricBackColor (0x229DAE) -> palette code (0x230880) ---
-	ld a, (HDAE5000_RAM_LyricBackColor:24)		; A = LyricBackColor
-	cp a, 4:i3
-	jr z, .Lfs_type2_4
-	cp a, 3:i3
-	jr z, .Lfs_type2_3
-	cp a, 2:i3
-	jr z, .Lfs_type2_2
-	cp a, 1:i3
-	jr z, .Lfs_type2_1
-	cp a, 0:i3
-	jr nz, .Lfs_type2_default
-	ld (0x230880:24), 0xf9; (0x230880) = 0xF9
-	jr t, .Lfs_type2_done
-.Lfs_type2_1:				; 0x28DBCF
-	ld (0x230880:24), 0x02; (0x230880) = 0x02
-	jr t, .Lfs_type2_done
-.Lfs_type2_2:				; 0x28DBD7
-	ld (0x230880:24), 0xfc; (0x230880) = 0xFC
-	jr t, .Lfs_type2_done
-.Lfs_type2_3:				; 0x28DBDF
-	ld (0x230880:24), 0x00; (0x230880) = 0x00
-	jr t, .Lfs_type2_done
-.Lfs_type2_4:				; 0x28DBE7
-	ld (0x230880:24), 0xfb; (0x230880) = 0xFB
-	jr t, .Lfs_type2_done
-.Lfs_type2_default:			; 0x28DBEF
-	ld (0x230880:24), 0x00; (0x230880) = 0x00
-.Lfs_type2_done:			; 0x28DBF5
-	ld xhl, 0:i3		; return 0
-	ret
+HDAE5000_Lyrics_ResetState:	.include "includes/generated/cc900/HDAE5000_Lyrics_ResetState.s"	; C: cc900/hdae5000_lyrics.c
 
 	; ============================================================
 	; Read the song information events of the loaded lyric file

@@ -170,6 +170,89 @@ void HDAE5000_Lyrics_ClearBuffer(void)
     HDAE5000_RAM_LyricLoaded = 0;
 }
 
+long HDAE5000_Lyrics_CheckFile(void)
+{
+    if (HDAE5000_Lyrics_CheckHdrChunk() == 0) {
+        if (HDAE5000_Lyrics_CheckTrackChunk() == 0) {
+            HDAE5000_RAM_LyricLoaded = 1;
+            return 0L;
+        } else
+            return -1L;
+    } else
+        return -2L;
+}
+
+long HDAE5000_Lyrics_ResetState(void)
+{
+    ram_23a19a = 1;
+    ram_2304d8.s.w8 = 0;
+    ram_2304d8.s.w10 = 0;
+    ram_2304d8.s.col = 0;
+    ram_2304d8.s.line = 0;
+    ram_2304d8.s.w14 = 0;
+    ram_2304d8.s.b23 = 0;
+    ram_2304d8.s.l0 = 0;
+    HDAE5000_MemFill(HDAE5000_RAM_LyricLines, ' ', 240);
+    ram_230870 = 0;
+    ram_23086c = 0;
+    HDAE5000_RAM_LyricEvent.pos = 0;
+    HDAE5000_RAM_LyricEvent.endpos = 0;
+    HDAE5000_RAM_LyricEvent.prevpos = 0;
+    HDAE5000_RAM_LyricEvent.tick = 0;
+    HDAE5000_RAM_LyricEvent.nexttick = 0;
+    HDAE5000_RAM_LyricEvent.l24 = 0;
+    HDAE5000_RAM_LyricEvent.l28 = 0;
+    HDAE5000_RAM_LyricEvent.l32 = 0;
+    HDAE5000_RAM_LyricEvent.l36 = 0;
+    ram_230864 = 0xffffffffL;
+    ram_230872 = 0;
+    ram_230874 = 0;
+    ram_230876 = 0;
+    HDAE5000_StrCpy((void *)ram_2306b6, HDAE5000_Str_Info);
+    ram_2307aa = 1;
+    ram_2307ac = 0;
+    ram_230868 = (unsigned long)HDAE5000_SwapBytes16(TLX_DIV) / 12;
+    switch (HDAE5000_RAM_LyricForeColor) {
+    case 0:
+        ram_23087e = 0xf9;
+        break;
+    case 1:
+        ram_23087e = 0x02;
+        break;
+    case 2:
+        ram_23087e = 0xfc;
+        break;
+    case 3:
+        ram_23087e = 0x00;
+        break;
+    case 4:
+        ram_23087e = 0xfb;
+        break;
+    default:
+        ram_23087e = 0xfc;
+    }
+    switch (HDAE5000_RAM_LyricBackColor) {
+    case 0:
+        ram_230880 = 0xf9;
+        break;
+    case 1:
+        ram_230880 = 0x02;
+        break;
+    case 2:
+        ram_230880 = 0xfc;
+        break;
+    case 3:
+        ram_230880 = 0x00;
+        break;
+    case 4:
+        ram_230880 = 0xfb;
+        break;
+    default:
+        ram_230880 = 0x00;
+    }
+    return 0L;
+}
+
 /* cc900-name: HDAE5000_Lyrics_CheckHdrChunk=HDAE5000_Lyrics_CheckHeaderChunk */
 long HDAE5000_Lyrics_CheckHdrChunk(void)
 {

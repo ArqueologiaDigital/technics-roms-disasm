@@ -1,8 +1,7 @@
-/* The setup-page module (SETUP_TOOLS_P2) of hdae5000: the functions that match.
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r13_ng4.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_setup.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_setup.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
-   cc900-name: SetupPage_BuildDriveInfo=HDAE5000_SetupPage_BuildDriveInfo
    cc900-module: HDAE5000_SetupPage_BuildDriveInfo HDAE5000_CopyVersionString
 */
 #include "hdae_ws.h"
@@ -45,38 +44,6 @@ struct Wrap { char c[2]; };
 #define WRAP(x) (((struct Wrap *)(x))->c)
 
 int HDAE5000_CopyVersionString(char *dst);
-
-void SetupPage_BuildDriveInfo(void)
-{
-    struct HdGeom geom;
-    struct DiskUsage usage;
-    char buf[16];
-
-    HDAE5000_MemCopy(ram_22b2f6, HDAE5000_DriveInfo_Template, 0x139);
-    HDAE5000_HD_GetGeometry(&geom);
-    HDAE5000_MemCopy(ram_22b30c, geom.model, 16);
-    HDAE5000_IToA(geom.cyl, buf, 10);
-    HDAE5000_MemCopy(ram_22b333, buf, HDAE5000_StrLen(buf));
-    HDAE5000_IToA(geom.heads, buf, 10);
-    HDAE5000_MemCopy(ram_22b35a, buf, HDAE5000_StrLen(buf));
-    HDAE5000_IToA(geom.spt, buf, 10);
-    HDAE5000_MemCopy(ram_22b381, buf, HDAE5000_StrLen(buf));
-    HDAE5000_HD_GetDiskUsage(&usage);
-    HDAE5000_MemFill(buf, 0, 16);
-    HDAE5000_SPrintf(buf, FMT_61F_A, usage.drive / HDAE5000_Float_100_DriveInfo);
-    HDAE5000_MemCopy(ram_22b3a8, buf, HDAE5000_StrLen(buf));
-    HDAE5000_MemFill(buf, 0, 16);
-    HDAE5000_SPrintf(buf, FMT_61F_B, usage.system / HDAE5000_Float_100_DriveInfo_2);
-    HDAE5000_MemCopy(ram_22b3cf, buf, HDAE5000_StrLen(buf));
-    HDAE5000_MemFill(buf, 0, 16);
-    HDAE5000_SPrintf(buf, FMT_61F_C, usage.free / HDAE5000_Float_100_DriveInfo_3);
-    HDAE5000_MemCopy(ram_22b3f6, buf, HDAE5000_StrLen(buf));
-    HDAE5000_MemFill(buf, 0, 16);
-    HDAE5000_CopyVersionString(buf);
-    HDAE5000_MemCopy(ram_22b41d, buf, HDAE5000_StrLen(buf));
-    CALLV(ROOT->ApPostEvent)(OBJ_HD_INFO_LIST, EVT_HDAE_SET_STR_ADR, WRAP(ram_22b2f6));
-    CALLV(ROOT->ApPostEvent)(OBJ_HD_INFO_LIST, EVT_PARA_DRAW, -1L);
-}
 
 int HDAE5000_CopyVersionString(char *dst)
 {
