@@ -400,3 +400,9 @@ hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_song_module2.c	8776a6cf71a
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_fdsong_sig.c	043d4442539f942c4d5509a6c213994ea1ed2a0c7f265c3fad8d8a115b11edb4	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_CheckFileSignature	75	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem_remove.c	0fb88081a23db1ca55bf5a37d8088b17b8daa3988778c25a0028dc9f02191d30	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_FlsItem_Remove	389	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_song_module2.c	ee95beb14d97181a89a2149c86b247c50f21d446ff3244b938f88d26a7308706	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_Dir_CountEmptySongs	51	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens6.c	a0a374449ac3aaec15264a86e0f057aac397ba5e6722241b3f48a58e806f1af6	Xr	2026-11-16-124-hd-r34-staged	HDAE5000_AttenHDFormatSwCatch	962	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens6.c	a0a374449ac3aaec15264a86e0f057aac397ba5e6722241b3f48a58e806f1af6	Xr	2026-11-16-124-hd-r34-staged	HDAE5000_HDAETitleFunc	502	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_hardtest_id.c	0466554ba622343f4ec6d8cda7b59967f3f28d8e4a81686bc0125193a8ada366	Xr	2026-11-16-124-hd-r34-staged	HDAE5000_HardTest_HddIdRead	192	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_show.c	f27f345d779f79b1a6649d33ed3c54da47ca6d89e7e5347de086fc0d50f62b8d	Xr	2026-11-16-124-hd-r34-staged	HDAE5000_Lbn_ShowEntry	1155	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_naming_window.c	1a6a4b95f7800d69a1d1e48395e2e6649e1c733b4b72c72216fc89702768f797	Xr	2026-11-16-124-hd-r34-staged	HDAE5000_AcHddNamingWindowProc	4720	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_saveopt_name.c	9254a6661c51b8396ffc13773b3cc319fa6db5ca53b0e94cfc7f5a4bdc009b6e	Xr	2026-11-16-124-hd-r34-staged	HDAE5000_SaveOptNameCheck	125	MATCH
