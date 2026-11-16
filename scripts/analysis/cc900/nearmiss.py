@@ -14,18 +14,24 @@ usage (from the repository root or anywhere):
           [--src-root DIR] [--model-root DIR] [--out DIR] [--near PCT] [--jobs N]
       index the runs (default: every run whose name has -p6-, -sub- or -hd-) and write OUT/index.tsv, OUT/README.md
       and the near-miss C copies OUT/c/<tree>/<function>__<sha8>.c.
-  python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all] [--update] [same options]
-      no VM: re-translate the listings of the indexed near misses (--all: every non-matching attempt; --class: only
-      those with that class) with the CURRENT to_llvm (--model-root) and compare again.  Prints old -> new per
-      attempt and lists the attempts that now MATCH ("ready to stage").  --update rewrites index.tsv and README.md.
+  python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all] [--update] [--verbose]
+          [--no-derive-module] [same options]
+      no VM: re-translate the listings of the indexed near misses (--all: every attempt but MATCH, ERR-name and
+      ERR-dup; --class: only those with that class) with the CURRENT translator and compare again.  The C is the
+      run's corpus file when it still has the index's sha256, else the near-miss copies.  Each C's `cc900-module:`
+      line is derived from the built image by module_calls.py's rule (derive_module).  Writes OUT/ready.tsv: per
+      lane, the functions that now MATCH with their C copy (written if missing) and module line.  --update rewrites
+      index.tsv and README.md.
   python3 -B scripts/analysis/cc900/nearmiss.py --readme [same options]
       README.md again from index.tsv and runs.tsv (nothing re-translated).
   python3 -B scripts/analysis/cc900/nearmiss.py --explain LISTING FUNCTION [same options]
       print one function's alignment, our translation beside the ROM, both as llvm-objdump reads them (LISTING as
       the index's `listing` column).  For the terminal only: never paste it into the repository.
 
---src-root   the checkout whose trees, symbols references, original_ROMs and scripts/build/cc900_firmware_c.py name
-             the functions (default: this repository); --model-root the checkout whose scripts/analysis/cc900/model
+--src-root   the checkout whose trees, symbols references, original_ROMs, rebuilt_ROMs/*.elf and
+             scripts/build/cc900_firmware_c.py name the functions (default: this repository).  When its build has
+             cc900-module support (module_names), each function is translated by the build's own finish() (runtime
+             names, call relaxation, out-of-reach fallback, f_const placement) and linked at its ROM address; --model-root the checkout whose scripts/analysis/cc900/model
              (to_llvm.py, listing.py) translates (default: --src-root).  A ROM missing there (the git-ignored v6 / v5
              references) is read from the main checkout ~/compartilhado/technics-roms-disasm.
 --near PCT   a non-matching attempt is a NEAR miss when at least PCT % of the ROM's bytes are in equal instructions,
@@ -813,6 +819,8 @@ def analyse_listing(job):
     """job: dict(asm, tree, ctext, only) -> [row dicts] (one per function of the listing)"""
     listing, to_llvm, fw = mods()
     t = Ctx.tree(job['tree'])
+    if BUILD_CHAIN and hasattr(fw, 'module_names'):
+        return analyse_listing_build(job, t)
     text = open(job['asm'], encoding='latin-1').read()
     funcs = fw.listing_functions(text)
     ctext = job.get('ctext') or b''
@@ -877,8 +885,14 @@ def analyse_listing(job):
             bb, dd = obj_bytes(o, d, 'ours'), objdump(o)
             for full in bodies:
                 ok[full] = (bb[full], dd[full])
+    return compare_rows(job, t, ok, {f: b[0] for f, b in bodies.items()}, rows)
+
+
+def compare_rows(job, t, ok, rowof, rows):
+    """ok: {label: (our bytes, our llvm-objdump instructions)}; fills rowof[label] with the comparison"""
+    ref, rom = t['ref'], t['rom']
+    with scratch_dir() as d:
         # the ROM side: one window per function, disassembled in one object
-        rom = t['rom']
         wins = {}
         src = ['\t.text']
         for full, (mine, _) in ok.items():
@@ -889,7 +903,7 @@ def analyse_listing(job):
         o2, err2 = assemble_obj('\n'.join(src) + '\n', d, 'rom')
         romdis = objdump(o2) if o2 else {}
     for full, (mine, ourdis) in ok.items():
-        row = bodies[full][0]
+        row = rowof[full]
         at, w = wins[full]
         r = rom[at:at + len(mine)]
         row['gen_size'] = len(mine)
@@ -911,6 +925,211 @@ def analyse_listing(job):
                    classes=','.join(c for c in CLASSES if c in cls) or 'other',
                    class_bytes=';'.join('%s:%d' % (c, cls[c]) for c in CLASSES if c in cls))
     return rows
+
+
+BUILD_CHAIN = True      # main(): translate as the src-root's build does when it can (cc900_firmware_c.finish)
+TREE_LABELS = {}
+
+
+ELF_OF = {'v10': 'kn5000_v10_program', 'v9': 'kn5000_v9_program', 'v7': 'kn5000_v7_program',
+          'v6': 'kn5000_v6_program', 'v5': 'kn5000_v5_program', 'v142': 'kn5000_subprogram_v142',
+          'v141': 'kn5000_subprogram_v141', 'v140': 'kn5000_subprogram_v140', 'hdae5000': 'hd-ae5000_v2_06i'}
+MODIMG = {}
+
+
+def module_calls_mod():
+    """the src-root's scripts/analysis/cc900/module_calls.py, imported (its rel_target and c_callees)"""
+    import importlib.util
+    p = os.path.join(Ctx.src_root, 'scripts', 'analysis', 'cc900', 'module_calls.py')
+    spec = importlib.util.spec_from_file_location('module_calls_nm', p)
+    m = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(m)
+    return m
+
+
+def derive_module(tree_key, cpath):
+    """module_calls.py's rule (src-root's copy: rel_target, c_callees, its extent rule) for any tree: the callees the
+    C calls that the built image reaches by calr / jr / jrl from outside the function.  The image is disassembled
+    once per tree and process (module_calls.py itself redoes it per file, ~7 s).  -> sorted names, or None when the
+    tree has no built ELF"""
+    listing, to_llvm, fw = mods()
+    mc = module_calls_mod()
+    t = Ctx.tree(tree_key)
+    if tree_key not in MODIMG:
+        elf = rom_path(Ctx.src_root, os.path.join('rebuilt_ROMs', ELF_OF[tree_key] + '.llvm.elf'))
+        if elf is None:
+            MODIMG[tree_key] = None
+        else:
+            insns, base = [], set()
+            outp = llvm('llvm-objdump', '-d', elf).stdout
+            for line in outp.splitlines():
+                m = mc.LINE.match(line)
+                if m:
+                    insns.append((int(m.group(1), 16), len(m.group(2).split()), m.group(3), m.group(4)))
+            for addr, nb, mnem, ops in insns:
+                if mnem == 'calr':
+                    base.add(mc.rel_target(addr, nb, mnem, ops))
+                elif mnem == 'call' and ops.strip().isdigit():
+                    base.add(int(ops.strip()))
+            by_addr = {}
+            for n, a in t['ref'].items():
+                by_addr.setdefault(a, n)
+            MODIMG[tree_key] = (insns, base, by_addr)
+    if MODIMG[tree_key] is None:
+        return None
+    insns, base, by_addr = MODIMG[tree_key]
+    import bisect
+    ref = t['ref']
+    lm = fw.label_map(cpath)
+    callees = mc.c_callees(cpath, lm)
+    fns = [lm.get(c, c) for c in fw.c_functions(cpath)]
+    starts = sorted(base | {ref[f] for f in fns if f in ref})
+    local = set()
+    for fn in fns:
+        if fn not in ref:
+            continue
+        lo = ref[fn]
+        hi = starts[bisect.bisect_right(starts, lo)] if bisect.bisect_right(starts, lo) < len(starts) else lo + 0x10000
+        i = bisect.bisect_left(insns, (lo,))
+        while i < len(insns) and insns[i][0] < hi:
+            addr, nb, mnem, ops = insns[i]
+            i += 1
+            if mnem in ('calr', 'jr', 'jrl'):
+                tg = mc.rel_target(addr, nb, mnem, ops)
+                if tg is not None and not lo <= tg < hi and by_addr.get(tg) in callees:
+                    local.add(by_addr[tg])
+    return sorted(local)
+
+
+def module_line(job, cpath):
+    """the C's `cc900-module:` names: derived from the image (job['derive_module']), else the C's own comments"""
+    listing, to_llvm, fw = mods()
+    if job.get('derive_module'):
+        m = derive_module(job['tree'], cpath)
+        if m is not None:
+            job['module'] = ' '.join(m)
+            return set(m)
+    return fw.module_names(cpath)
+
+
+def analyse_listing_build(job, t):
+    """the build's own chain (src-root's scripts/build/cc900_firmware_c.py): names spelled as the tree spells them,
+    runtime names, cc900-module call relaxation, the out-of-reach fallback, f_const placement; each function then
+    assembled with the tree's values and linked at its ROM address"""
+    listing, to_llvm, fw = mods()
+    tdir = os.path.join(Ctx.src_root, TREES[job['tree']][0])
+    if tdir not in TREE_LABELS:
+        TREE_LABELS[tdir] = fw.tree_labels(tdir)
+    text = open(job['asm'], encoding='latin-1').read()
+    funcs = fw.listing_functions(text)
+    ctext = job.get('ctext') or b''
+    ref = t['ref']
+    rows, bodies = [], {}
+    with scratch_dir() as d:
+        cpath = os.path.join(d, 'c.c')
+        open(cpath, 'wb').write(ctext)
+        cdefs = fw.c_functions(cpath) if ctext else []
+        labels = fw.label_map(cpath)
+        uncut = {n[:C_NAME_LIMIT]: n for n in cdefs}
+        fw.ADDRS.clear(); fw.ADDRS.update(ref)
+        fw.RUNTIME.clear(); fw.RUNTIME.update(fw.runtime_names(tdir))
+        fw.DATA_OUT.clear()
+        names = fw.Names(t['values'], TREE_LABELS[tdir], cut=True)
+        to_llvm.SPELL = names
+        widths = listing.attributes(text)
+        widths.update({uncut[k]: v for k, v in list(widths.items()) if k in uncut})
+        to_llvm.WIDTHS = widths
+        to_llvm.MODULE = module_line(job, cpath)
+        for name, lines in funcs.items():
+            bare = name.lstrip('_.')
+            c = bare if bare in cdefs else uncut.get(bare, bare)
+            cand = [labels.get(c, c), t['cnames'].get(bare), bare, '_' + bare]
+            full = next((x for x in cand if x and x in ref), None)
+            if full is None and len(t['short'].get(bare, [])) == 1:
+                full = t['short'][bare][0]
+            row = dict(function=full or bare, listing_name=bare, status='ERR-other')
+            rows.append(row)
+            if full in bodies:
+                row['status'] = 'ERR-dup'; continue
+            if full is None:
+                row['status'] = 'ERR-name'; continue
+            try:
+                body = fw.finish(cpath, name, full, lines, names)
+            except SystemExit as e:
+                msg = str(e)
+                row['status'] = 'ERR-translate' if 'cannot translate' in msg else 'ERR-resolve'
+                row['why'] = msg[-80:]
+                continue
+            bodies[full] = (row, body)
+        ok = {}
+        if bodies:
+            ok = link_at_addresses(bodies, ref, t['values'], d)
+    for full, (row, b) in bodies.items():
+        if full not in ok:
+            row['status'] = 'ERR-asm'
+    return compare_rows(job, t, ok, {f: b[0] for f, b in bodies.items()}, rows)
+
+
+SYM_TOKEN = re.compile(r'(?<![\w.])([A-Za-z_][A-Za-z0-9_]*)(?![\w])')
+
+
+def link_at_addresses(bodies, ref, values, d):
+    """{label: (row, llvm-mc lines)} -> {label: (bytes, instructions)}: every function in a section of its own,
+    the names it uses set to the tree's values, linked (ld.lld) at its ROM address; a function that does not
+    assemble or link alone is left out"""
+    out = {}
+
+    def build(items, stem):
+        used = set()
+        for f, (row, lines) in items:
+            for l in lines:
+                parts = l.strip().split(None, 1)
+                if len(parts) == 2 and not parts[0].startswith('.'):
+                    used.update(SYM_TOKEN.findall(parts[1]))
+        defined = {f for f, _ in items}
+        pre = []
+        for n in sorted(used - defined):
+            if REG_RE.fullmatch(n.lower()) or n in ('t', 'f', 'z', 'nz', 'c', 'nc'):
+                continue
+            v = ref.get(n, values.get(n))
+            if v is not None:
+                pre.append('\t.set %s, 0x%x' % (n, v))
+        src = pre[:]
+        script = ['SECTIONS {']
+        for k, (f, (row, lines)) in enumerate(items):
+            src += ['\t.section .text.nm%d,"ax",@progbits' % k, '\t.globl %s' % f, '%s:' % f] + list(lines)
+            script.append('  .text.nm%d 0x%x : { *(.text.nm%d) }' % (k, ref[f], k))
+        script.append('}')
+        o, err = assemble_obj('\n'.join(src) + '\n', d, stem)
+        if o is None:
+            return None
+        ld = os.path.join(d, stem + '.ld'); elf = os.path.join(d, stem + '.elf')
+        open(ld, 'w').write('\n'.join(script) + '\n')
+        r = llvm('ld.lld', '-e', '0', '-T', ld, o, '-o', elf)
+        if r.returncode:
+            return None
+        dis = objdump(elf)
+        dump = []
+        for k, (f, _) in enumerate(items):
+            dump += ['--dump-section', '.text.nm%d=%s' % (k, os.path.join(d, '%s.%d.bin' % (stem, k)))]
+        llvm('llvm-objcopy', *dump, elf, os.path.join(d, stem + '.junk'))
+        res = {}
+        for k, (f, _) in enumerate(items):
+            p = os.path.join(d, '%s.%d.bin' % (stem, k))
+            if os.path.exists(p) and f in dis:
+                res[f] = (open(p, 'rb').read(), dis[f])
+        return res
+
+    items = list(bodies.items())
+    res = build(items, 'all')
+    if res is None:
+        res = {}
+        for it in items:
+            r = build([it], 'one')
+            if r:
+                res.update(r)
+    out.update(res)
+    return out
 
 
 def run_job(job):
@@ -1355,21 +1574,44 @@ def main():
     return 0
 
 
+LANES = {'v10': 'lane_p6', 'v9': 'lane_p6', 'v7': 'lane_p6', 'v6': 'lane_p6', 'v5': 'lane_p6',
+         'v142': 'lane_sub', 'v141': 'lane_sub', 'v140': 'lane_sub', 'hdae5000': 'lane_hd'}
+
+
+def source_c(out, rows, runs):
+    """the C a listing was compiled from: the run's corpus file when it still hashes to the index's sha256 (exact),
+    else the near-miss copies of its rows (concatenated), else nothing"""
+    r0 = rows[0]
+    cdir = runs.get(r0['run'], ('', ''))[0]
+    if cdir:
+        p = os.path.join(CORPUS_ROOTS[0], cdir, r0['source'])
+        if os.path.exists(p):
+            b = open(p, 'rb').read()
+            if hashlib.sha256(b).hexdigest() == r0['c_sha256']:
+                return b, 'corpus'
+    copies = sorted({x['c_copy'] for x in rows if x['c_copy'] and os.path.exists(os.path.join(out, x['c_copy']))})
+    if copies:
+        return b''.join(open(os.path.join(out, c), 'rb').read() for c in copies), 'copies'
+    return b'', 'none'
+
+
 def recheck(a, out, pct, jobs_n, src_root, model_root):
     old = read_index(out)
+    runs = read_runs(out)
     cls = opt(a, '--class', None)
-    sel = [r for r in old if (r['status'] == 'NEAR' or ('--all' in a and r['status'] in ('NEAR', 'DIFF')))
-           and (cls is None or cls in r['classes'].split(','))]
+    if '--all' in a:
+        sel = [r for r in old if r['status'] not in ('MATCH', 'ERR-name', 'ERR-dup')]
+    else:
+        sel = [r for r in old if r['status'] == 'NEAR']
+    sel = [r for r in sel if cls is None or cls in r['classes'].split(',')]
     by = {}
     for r in sel:
         by.setdefault(r['listing'], []).append(r)
     jobs = []
     for lst, rs in by.items():
-        r0 = rs[0]
-        ctext = b''
-        if r0['c_copy'] and os.path.exists(os.path.join(out, r0['c_copy'])):
-            ctext = b''.join(open(os.path.join(out, x['c_copy']), 'rb').read() for x in rs if x['c_copy'])
-        jobs.append(dict(asm=os.path.join(ORACLE, lst), tree=r0['tree'], ctext=ctext, listing=lst))
+        ctext, how = source_c(out, rs, runs)
+        jobs.append(dict(asm=os.path.join(ORACLE, lst), tree=rs[0]['tree'], ctext=ctext, c_how=how, listing=lst,
+                         derive_module='--no-derive-module' not in a))
     res, errs = execute(jobs, jobs_n)
     new = {(r['listing'], r['function']): r for r in res}
     for r in res:
@@ -1384,17 +1626,48 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
             ready.append((r, n))
         if (n['status'], str(n.get('eq_pct', ''))) != (r['status'], r['eq_pct']) or n.get('classes', '') != r['classes']:
             changed.append((r, n))
-    print('re-checked %d attempts (%d listings) with %s' % (len(sel), len(jobs), os.path.join(
-        model_root, 'scripts/analysis/cc900/model/to_llvm.py')))
+    print('re-checked %d attempts (%d listings) with %s' % (len(sel), len(jobs), root_label(model_root)))
+    if '--verbose' in a:
+        for r, n in changed:
+            print('%-8s %-40s %-9s %5s%% %-28s -> %-9s %5s%% %s' % (
+                r['tree'], r['function'][:40], r['status'], r['eq_pct'], r['classes'][:28], n['status'],
+                n.get('eq_pct', ''), n.get('classes', '')))
+    trans = {}
     for r, n in changed:
-        print('%-5s %-40s %-5s %5s%% %-28s -> %-6s %5s%% %s' % (r['tree'], r['function'][:40], r['status'], r['eq_pct'],
-                                                            r['classes'][:28], n['status'], n.get('eq_pct', ''),
-                                                            n.get('classes', '')))
-    print('%d changed, %d now MATCH' % (len(changed), len(ready)))
-    if ready:
-        print('ready to stage:')
-        for r, n in ready:
-            print('  %-5s %-40s %s %s  C: %s' % (r['tree'], r['function'], r['run'], r['opt'], r['c_copy'] or r['source']))
+        trans[(r['status'], n['status'])] = trans.get((r['status'], n['status']), 0) + 1
+    print('%d changed (%s), %d attempts now MATCH' % (
+        len(changed), ', '.join('%s->%s %d' % (k[0], k[1], v) for k, v in sorted(trans.items())), len(ready)))
+    # ready to stage: one row per (tree, function), the attempt with the most bytes, its C copy and module line
+    best = {}
+    for r, n in ready:
+        k = (r['tree'], r['function'])
+        if k not in best or run_key(r['run']) > run_key(best[k][0]['run']):
+            best[k] = (r, n)
+    lines = []
+    for (tree, fn), (r, n) in sorted(best.items(), key=lambda kv: (LANES.get(kv[0][0], '?'), kv[0])):
+        job = n.get('_job', {})
+        if not r['c_copy'] and job.get('ctext'):
+            cdefs = c_defs_text(job['ctext'])
+            ln = n.get('listing_name', fn)
+            cname = ln if ln in cdefs else next((c for c in cdefs if c[:C_NAME_LIMIT] == ln[:C_NAME_LIMIT]), ln)
+            r['c_copy'] = write_c_copy(out, tree, fn, cname, job['ctext'], r['c_sha256'],
+                                       r['source'] + ' (' + r['run'] + ')', r['c_provenance'], r['flags'])
+        mod = ''
+        if r['c_copy']:
+            m = derive_module(tree, os.path.join(out, r['c_copy']))
+            mod = ' '.join(m) if m else ''
+        lines.append([LANES.get(tree, '?'), tree, fn, n.get('gen_size', ''), r['flags'], r['run'], r['opt'],
+                      r['c_copy'], mod])
+    if lines:
+        with open(os.path.join(out, 'ready.tsv'), 'w') as f:
+            f.write('lane\ttree\tfunction\tbytes\tflags\trun\topt\tc_copy\tcc900_module\n')
+            for l in lines:
+                f.write('\t'.join(str(x) for x in l) + '\n')
+        per = {}
+        for l in lines:
+            per.setdefault(l[0], [0, 0]); per[l[0]][0] += 1; per[l[0]][1] += int(l[3] or 0)
+        print('ready to stage (%s): %s' % (os.path.join(out, 'ready.tsv'),
+                                           ', '.join('%s %d functions %d B' % (k, v[0], v[1]) for k, v in sorted(per.items()))))
     if '--update' in a:
         for r in old:
             n = new.get((r['listing'], r['function']))
@@ -1402,8 +1675,7 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
                 for k in ('status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct', 'first_diff', 'class_bytes'):
                     r[k] = n.get(k, '')
         write_index(out, old)
-        prov = read_runs(out)
-        write_readme(out, old, prov, pct, src_root, model_root, errs)
+        write_readme(out, old, runs, pct, src_root, model_root, errs)
     return 0
 
 
