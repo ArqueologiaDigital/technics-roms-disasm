@@ -1,0 +1,22 @@
+function	bytes	matches	best_diff
+Audio_Tick_ServiceVoices_A	126	sub_G_14a@Xr sub_G_14b@Xr sub_G_14c@Xr	
+CustomTone_CopyToneRecord	64	-	+34 sub_H_14c@Xr
+DSP_AlgoDescriptor_Emit	402	-	+13 sub_F_rb14@Xr
+DSP_Config_Init	268	-	+37 sub_J_14c@Xr
+DSP_MixSendConfig	30	-	+7 sub_J_14c@Xr
+DSP_ParamInterp_Div0xC6	114	-	+91 sub_J_14b@Xr
+DSP_TableWalk_SearchWithState	72	sub_H_14a@Xr sub_H_14b@Xr sub_H_14c@Xr	
+DSP_TuneOffset	303	-	+24 sub_F_ra10@Xr
+DSP_WriteLUTParamSet	331	-	+14 sub_G_14c@Xr
+EGEnv_Compute_A	140	-	+37 sub_G_14c@Xr
+EGEnv_Compute_B	140	-	+37 sub_G_14c@Xr
+ScaleTune_Get_User_Offset	17	sub_H_14c@Xr	
+ScaleTune_Set_User_Offset	20	sub_H_14c@Xr	
+TVF_Calc_Cutoff_NoKeyFollow	75	-	+2 sub_H_14c@Xr
+ToneGen_Process_Notes	167	sub_J_14b@Xr	
+VoiceParam_CustomTone_Apply_Catalog80	285	-	+232 sub_G_14b@Xr
+VoiceParam_Set_Tone_Option	191	-	+8 sub_H_14c@Xr
+VoiceState_SwapSlot_Guarded	200	sub_H_14b@Xr	
+Voice_AllNotes_SustainRetrigger	335	sub_G_14a@Xr sub_G_14b@Xr sub_G_14c@Xr	
+Voice_Build_OutputLevel	98	-	+36 sub_H_14c@Xr
+Voice_PortamentoTarget_ComputePitch	118	-	+99 sub_J_14c@Xr

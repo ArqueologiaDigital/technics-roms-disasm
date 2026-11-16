@@ -6,6 +6,9 @@ QUESTION ANSWERED: which C spelling of the DSP_TableWalk_Search call makes V4.23
        round 13's local `k = 0x78` fixed this in DSP_TuneOffset but got a register of its own (DE) here;
   (ra) DSP_TuneOffset's `ld xde,xhl` / `ld a,(xde)` after the call: the returned pointer kept in a register local.
 Each file holds one function in one spelling; the rest of the function is round 13's sub_E_ib06.c.
+Round 15 adds ra11..14 (the parameter tbl reused for the result: tbl's register is XDE) and rb15..18 (the stack
+offsets say the ROM's third argument of the call is the LAST parameter, at +14, not type at +18: V4.23 pushes
+stack arguments left to right, so the last parameter has the lowest offset).
 
     python3 -B notes/cc900-c-subcpu-2026-11-16/gen_r14_probes.py     (repository root; writes
     scripts/analysis/cc900/corpus/firmware/sub_F_ra*.c and sub_F_rb*.c)
@@ -81,6 +84,19 @@ RA = [
     ('k declared after p, p = call',
      '    int st;\n    unsigned int v;\n    unsigned char *p;\n    unsigned int k = 0x79;\n\n'
      '    p = DSP_TableWalk_Search(tbl, k, mode, &st);\n    v = *p;\n'),
+    # round 15: the ROM's XDE is tbl's own register: the parameter reused for the result
+    ('round 15: the parameter tbl reused, tbl = call; v = *tbl',
+     '    int st;\n    unsigned int v;\n    unsigned int k = 0x79;\n\n'
+     '    tbl = DSP_TableWalk_Search(tbl, k, mode, &st);\n    v = *tbl;\n'),
+    ('round 15: v = *(tbl = call)',
+     '    int st;\n    unsigned int v;\n    unsigned int k = 0x79;\n\n'
+     '    v = *(tbl = DSP_TableWalk_Search(tbl, k, mode, &st));\n'),
+    ('round 15: tbl reused, literal constant',
+     '    int st;\n    unsigned int v;\n\n'
+     '    tbl = DSP_TableWalk_Search(tbl, 0x79, mode, &st);\n    v = *tbl;\n'),
+    ('round 15: tbl reused, v = tbl[0]',
+     '    int st;\n    unsigned int v;\n    unsigned int k = 0x79;\n\n'
+     '    tbl = DSP_TableWalk_Search(tbl, k, mode, &st);\n    v = tbl[0];\n'),
 ]
 
 ALGO_HEAD = ('int DSP_AlgoDescriptor_Emit(unsigned int a, unsigned int sub, int chip, unsigned char *tbl, '
@@ -120,6 +136,7 @@ ALGO_TAIL = """    st = DSP_DispatchCommand(1, chip);
 """
 
 CALL = 'DSP_TableWalk_Search(%s, %s, type, &st)'
+CALL3 = 'DSP_TableWalk_Search(%s, %s, unused, &st)'
 V3 = '    int st;\n    unsigned int v;\n'
 
 RB = [
@@ -152,6 +169,16 @@ RB = [
      V3 + '    unsigned char *t = tbl;\n    unsigned int k = 0x78;\n\n    v = sub * 3 + (*' + CALL % ('t', 'k') + ' & 0xff);\n'),
     ('register t = tbl, literal constant',
      V3 + '    register unsigned char *t = tbl;\n\n    v = sub * 3 + (*' + CALL % ('t', '0x78') + ' & 0xff);\n'),
+    # round 15: the ROM's third argument is the LAST parameter (lowest stack offset, +14; type is at +18), not type
+    ('round 15: third argument the last parameter, literal constant',
+     V3 + '\n    v = sub * 3 + (*' + CALL3 % ('tbl', '0x78') + ' & 0xff);\n'),
+    ('round 15: third argument the last parameter, k local',
+     V3 + '    unsigned int k = 0x78;\n\n    v = sub * 3 + (*' + CALL3 % ('tbl', 'k') + ' & 0xff);\n'),
+    ('round 15: third argument the last parameter, t = tbl and k locals',
+     V3 + '    unsigned char *t = tbl;\n    unsigned int k = 0x78;\n\n    v = sub * 3 + (*' + CALL3 % ('t', 'k') +
+     ' & 0xff);\n'),
+    ('round 15: third argument the last parameter, returned pointer local p',
+     V3 + '    unsigned char *p;\n\n    p = ' + CALL3 % ('tbl', '0x78') + ';\n    v = sub * 3 + (*p & 0xff);\n'),
 ]
 
 HEADER = """/* spelling %s: %s */
