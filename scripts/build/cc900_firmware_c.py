@@ -135,6 +135,32 @@ def tree_labels(tree):
     return labs
 
 
+# the trees a tree's sources include (its llvm-mc -I order after itself; Makefile): their names are the C's too
+INCLUDE_TREES = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"],
+                 "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"]}
+
+
+def tree_chain(tree):
+    """TREE and the trees it includes, nearest first"""
+    t = os.path.normpath(tree)
+    return [t] + [os.path.join(os.path.dirname(t), x) for x in INCLUDE_TREES.get(os.path.basename(t), [])]
+
+
+def merged_values(tree):
+    """tree_values over tree_chain(TREE): a name the tree itself defines wins over an included tree's"""
+    out = {}
+    for t in reversed(tree_chain(tree)):
+        out.update(tree_values(t))
+    return out
+
+
+def merged_labels(tree):
+    out = {}
+    for t in reversed(tree_chain(tree)):
+        out.update(tree_labels(t))
+    return out
+
+
 RUNTIME = {}        # main(): {runtime name without `_` / `.`: the tree's label}, runtime_names(tree)
 RUNTIME_TSV = os.path.join(REPO, "scripts", "build", "cc900_runtime_names.tsv")
 PAIRS_TSV = os.path.join(REPO, "scripts", "analysis", "cc900", "results", "pairs.tsv")
@@ -142,11 +168,14 @@ PAIRS_TSV = os.path.join(REPO, "scripts", "analysis", "cc900", "results", "pairs
 
 def runtime_names(tree):
     """{runtime name: tree label} for TREE (v10/maincpu): V4.23 calls Toshiba's runtime by its library names (C9H_mullu,
-    ._fld_ful), which the trees name otherwise.  From scripts/build/cc900_runtime_names.tsv (`tree<TAB>name<TAB>label`,
-    tree `*` for every tree; the hand-made rows, e.g. the assembly-library C9H_* routines) and from
-    results/pairs.tsv's `our_label` of the tree's image (every library public matched in the ROM).  A name is used
-    only when the tree itself does not define it."""
-    parts = os.path.normpath(tree).split(os.sep)
+    ._fld_ful), which the trees name otherwise.  From scripts/build/cc900_runtime_names.tsv (`tree<TAB>name<TAB>label`;
+    tree is a shell pattern matched against the tree's path, e.g. `*/maincpu`, `hdae5000*`, `v142/subcpu`; when several
+    rows name one runtime name, the most specific pattern -- the one with the fewest wildcards, then the longest --
+    wins, so a tree's own row beats a general one) and from results/pairs.tsv's `our_label` of the tree's image
+    (every library public matched in the ROM).  A name is used only when the tree itself does not define it."""
+    import fnmatch
+    rel_tree = os.path.relpath(os.path.abspath(tree), REPO)
+    parts = rel_tree.split(os.sep)
     v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
     image = "%s %s" % (cpu, v)
     out = {}
@@ -155,11 +184,16 @@ def runtime_names(tree):
             c = l.rstrip("\n").split("\t")
             if len(c) >= 8 and c[0] == image and c[7] and " " not in c[2]:
                 out.setdefault(c[2].lstrip("_."), c[7])
+    rows = {}
     if os.path.exists(RUNTIME_TSV):
         for l in open(RUNTIME_TSV, encoding="utf-8"):
             c = l.rstrip("\n").split("\t")
-            if len(c) >= 3 and not l.startswith("#") and c[0] in ("*", v, "/".join(parts[-2:])):
-                out[c[1].lstrip("_.")] = c[2]
+            if len(c) >= 3 and not l.startswith("#") and c[0] != "tree" and fnmatch.fnmatchcase(rel_tree, c[0]):
+                rank = (-sum(c[0].count(w) for w in "*?["), len(c[0]))
+                n = c[1].lstrip("_.")
+                if n not in rows or rank > rows[n][0]:
+                    rows[n] = (rank, c[2])
+    out.update({n: label for n, (rank, label) in rows.items()})
     return out
 
 
@@ -500,12 +534,13 @@ ADDRS = {}          # main(): {label: address} of the tree's symbols reference, 
 
 
 def tree_addresses(tree):
-    """{label: address} from the tree's symbols reference (symbols/maincpu_<v>_..., subcpu_..._symbols_reference.txt),
-    or {} when there is none"""
+    """{label: address} from the tree's symbols reference (symbols/maincpu_<v>_..., subcpu_..._, hdae5000[_<v>]_
+    symbols_reference.txt), or {} when there is none"""
     parts = os.path.normpath(tree).split(os.sep)
     v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
     name = {"maincpu": "maincpu_%s_symbols_reference.txt" % v,
-            "subcpu": "subcpu_symbols_reference.txt" if v == "v142" else "subcpu_%s_symbols_reference.txt" % v}.get(cpu)
+            "subcpu": "subcpu_symbols_reference.txt" if v == "v142" else "subcpu_%s_symbols_reference.txt" % v,
+            "": "%s_symbols_reference.txt" % v}.get(cpu)                  # hdae5000, hdae5000_v2_01i, ...
     p = os.path.join(REPO, "symbols", name) if name else None
     out = {}
     if p and os.path.exists(p):
@@ -582,13 +617,13 @@ def main():
     ADDRS.update(tree_addresses(tree))
     RUNTIME.update(runtime_names(tree))
     if cache:
-        funcs = compile_v423(src, Names(tree_values(tree), tree_labels(tree), cut=True), cache)
+        funcs = compile_v423(src, Names(merged_values(tree), merged_labels(tree), cut=True), cache)
     else:
         MODEL = True
         if file_flags(src) not in OPTION_SETS:
             sys.exit("%s: cc900-options %r is not one the reference model compiles (%s)%s"
                      % (src, file_flags(src), ", ".join(repr(k) for k in OPTION_SETS), MODEL_HINT))
-        funcs = compile_c(src, Names(tree_values(tree), tree_labels(tree)))
+        funcs = compile_c(src, Names(merged_values(tree), merged_labels(tree)))
     if REFUSED:
         sys.exit("%s: the reference model does not compile: %s%s" % (
             src, "; ".join("%s (%s)" % kv for kv in sorted(REFUSED.items())), MODEL_HINT))
