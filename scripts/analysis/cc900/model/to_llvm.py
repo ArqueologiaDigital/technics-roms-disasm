@@ -28,6 +28,8 @@ R8 = {'A', 'W', 'B', 'C', 'D', 'E', 'H', 'L'}
 REGS = re.compile(r'^(Q?[WABCDEHL]|Q?(WA|BC|DE|HL|IX|IY|IZ|SP)|X(WA|BC|DE|HL|IX|IY|IZ|SP)|Q?I[XYZ][LH])$')
 NUM = re.compile(r'^-?(0x[0-9a-fA-F]+|\d+)$')
 REG32 = re.compile(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$')
+QIDX = re.compile(r'^\((X(?:WA|BC|DE|HL|IX|IY|IZ|SP))\+(Q(?:WA|BC|DE|HL|IX|IY|IZ|SP))\)$')
+XBASE = {'XWA': 0xe0, 'XBC': 0xe4, 'XDE': 0xe8, 'XHL': 0xec, 'XIX': 0xf0, 'XIY': 0xf4, 'XIZ': 0xf8, 'XSP': 0xfc}
 
 def load_symbols(path):
     out = {}
@@ -216,6 +218,16 @@ def translate_line(t, syms, locals_):
         # muls HL,0x3 is the byte form (L x 3 -> HL; chnarrow.c cn_mul_k): llvm-mc names the 8-bit source (cf 09 03);
         # div DE,0x64 too (DE / 100 -> E, remainder D: the ROM's FormatMedleyNumber, cd 0a 64; div de, 100 was the
         # 32 / 16 form da 0a 64 00)
+    # a byte in memory indexed by an upper word, (XWA+QIZ): llvm-mc assembles the register forms (ld a, (xwa+qiz)) but
+    # not inc / dec / cp / ld with an immediate, which the hand sources write as the raw forms (b0 0x07 = the
+    # 16-bit-index mode, the base's code, the index's code): sprintf_core.s, Sprintf_FormatEScientific (lane_p6)
+    qi = [QIDX.match(a) for a in raw]
+    if any(qi):
+        if op in ('inc', 'dec', 'incb', 'decb') and len(raw) == 2 and qi[1] and NUM.match(raw[0]):
+            return '\t%s_srib %d, 0x07, 0x%x, 0x%x' % (op[:3], num(raw[0]), XBASE[qi[1].group(1)], Q_WORD[qi[1].group(2)])
+        if op in ('cp', 'cpb', 'ld', 'ldb') and len(raw) == 2 and qi[0] and NUM.match(raw[1]):
+            return '\t%s 0x07, 0x%x, 0x%x, 0x%x' % ('cpib_sri' if op.startswith('cp') else 'stib_ind',
+                                                     XBASE[qi[0].group(1)], Q_WORD[qi[0].group(2)], num(raw[1]) & 0xff)
     if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
