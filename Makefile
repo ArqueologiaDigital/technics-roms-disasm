@@ -854,8 +854,8 @@ CUSTOMDATA_SRC = $(wildcard custom_data/*.s custom_data/*/*.s)
 #   v423   (the default) Toshiba cc900 V4.23, the firmware's own compiler, run in the oracle VM
 #          ($(CC900_ORACLE)/vm, scripts/analysis/cc900/oracle/run_vm.sh) by scripts/build/cc900_v423.py.  Its
 #          listings are cached in $(CC900_V423_CACHE) (git-ignored), keyed by the C text, its options and headers,
-#          the compiler tree and the guest's job.sh.  A make compiles all uncached files in ONE VM job, holding the
-#          VM lock; a fully cached make never touches the VM, so it builds without one.  The listing goes through
+#          the compiler tree and the guest's job.sh.  A make compiles all uncached files in ONE VM job, in a slot of
+#          the VM pool (oracle/vm_slot.sh); a fully cached make never touches the VM, so it builds without one.  The listing goes through
 #          model/to_llvm.py into our llvm-mc syntax.  There is no automatic fallback: when a file is not cached and
 #          the VM is unusable, the build stops, names what is missing and the flag below.
 #   model  our Python reference model of cc900 (scripts/analysis/cc900/model/, with the generator's FIRMWARE_RULES)
