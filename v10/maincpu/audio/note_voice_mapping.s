@@ -6006,77 +6006,13 @@ NoteMap_ProcessNoteOff_Done:
 	lda xsp, (xsp+170:16)
 	ret
 
-ProcessNoteOff_Done_Prologue:
-	lda xsp, (xsp - 10)
-	ld (xsp), e
-	ld (xsp + 2), xbc
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	call InitChannelState_Che_InitVal
-	ld a, (xsp)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 6)
-	call NoteMap_AllocNewVoiceEntry
-	ld a, (xsp)
-	extz wa
-	inc 4, wa
-	extz xwa
-	add xwa, (xsp + 2)
-	ld a, (xwa)
-	cp a, (xsp)
-	jr nz, ProcessNoteOff_Done_Epilogue
-	ld a, (xsp)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 6)
-	call NoteMap_SetChannelParam
+ProcessNoteOff_Done_Prologue:	.include "includes/generated/cc900/ProcessNoteOff_Done_Prologue.s"	; C: cc900/note_voice_mapping_m297_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ProcessNoteOff_Done_Epilogue, ProcessNoteOff_Done_Prologue + 61
 
-ProcessNoteOff_Done_Epilogue:
-	lda xsp, (xsp + 10)
-	ret
-
-NoteMap_LookupAllocAndStoreResult:
-	lda xsp, (xsp-170)
-	ld	(xsp+164), e
-	ld	(xsp+166), xbc
-	lda xbc, (xsp)
-	ld xde, xbc
-	ld	c, (xsp+164)
-	extz bc
-	pushw bc
-	ld xbc, xwa
-	ld xwa, xde
-	ld de, 0:i3
-	call NoteMap_LookupVoice
-	cp l, 0:i3
-	jr z, LookupAllocAndStoreR_WriteReg
-	lda xwa, (xsp)
-	ld xde, xwa
-	ld	a, (xsp+164)
-	ld c, a
-	extz bc
-	ld xwa, xde
-	call NoteMap_AllocNewVoiceEntry
-	ld	a, (xsp+164)
-	extz wa
-	inc 4, wa
-	extz xwa
-	add	xwa, (xsp+166)
-	ld a, (xwa)
-	cp	a, (xsp+164)
-	jr nz, LookupAllocAndStoreR_WriteReg
-	lda xwa, (xsp)
-	ld xde, xwa
-	ld	a, (xsp+164)
-	ld c, a
-	extz bc
-	ld xwa, xde
-	call NoteMap_SetChannelParam
-
-LookupAllocAndStoreR_WriteReg:
-	lda xsp, (xsp+170:16)
-	ret
+NoteMap_LookupAllocAndStoreResult:	.include "includes/generated/cc900/NoteMap_LookupAllocAndStoreResult.s"	; C: cc900/note_voice_mapping_m297_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LookupAllocAndStoreR_WriteReg, NoteMap_LookupAllocAndStoreResult + 104
 
 NoteMap_InitVoiceSlots:
 	lda xsp, (xsp-172)
@@ -10562,74 +10498,18 @@ SelectTone_Continue_SetByteFF:
 SelectTone_Continue_Return:
 	ret
 
-SelectTone_Continue_Prologue:
-	dec 6, xsp
-	cp (CURRENT_TITLE:16), 246
-	jr nz, SelectTone_Continue_LoadReg
-	ld wa, 0:i3
-	ld bc, 0:i3
-	call SndParam_LookupViaEncode
-	ld (xsp + 3), l
-	ld wa, 0:i3
-	ldw bc, 0x20
-	call SndParam_LookupViaEncode
-	ld (xsp + 4), l
-	ld (xsp + 2), 0x0
-	lda xwa, (xsp)
-	call SndParam_FetchOscTableEntry
-	ld a, (xsp + 0:8)
-	add a, 0xf0
+SelectTone_Continue_Prologue:	.include "includes/generated/cc900/SelectTone_Continue_Prologue.s"	; C: cc900/note_voice_mapping_m298_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SelectTone_Continue_LoadReg, SelectTone_Continue_Prologue + 48
 
-SelectTone_Continue_LoadReg:
-	ld l, a
-	inc 6, xsp
-	ret
+Rhythm_DispatchCCCommand:	.include "includes/generated/cc900/Rhythm_DispatchCCCommand.s"	; C: cc900/note_voice_mapping_m298_xr.c
 
-Rhythm_DispatchCCCommand:
-	dec 6, xsp
-	ld (xsp + 0:8), 0x4
-	ld (xsp + 1), 0x90
-	ld (xsp + 2), 0x19
-	ld (xsp + 3), a
-	ld (xsp + 4), c
-	lda xwa, (xsp)
-	call MIDI_SendCmdPacket
-	call MIDI_PostSendStub
-	inc 6, xsp
-	ret
-
-Note_CheckTransposeRange:
-	dec 4, xsp
-	ld (xsp), c
-	ld (xsp + 2), a
-	ld l, 0x0:opc
-	ld xwa, 0xc0
-	call SndParam_LookupReadOnly
-	cp hl, 1:i3
-	jr nz, CheckTransposeRange_LoadParam
-	cp (xsp), 0x78
-	jr nz, CheckTransposeRange_ClearByte
-	ld l, 0x1:opc
-	jr UI_CheckControlCode_TestResult
-
-CheckTransposeRange_ClearByte:
-	ld l, 0x0:opc
-	jr UI_CheckControlCode_TestResult
-
-CheckTransposeRange_LoadParam:
-	ld a, (xsp + 2)
-	and a, 0xf0
-	cp a, 0xf0
-	jr nz, CheckTransposeRange_ClearByte2
-	ld l, 0x1:opc
-	jr UI_CheckControlCode_TestResult
-
-CheckTransposeRange_ClearByte2:
-	ld l, 0x0:opc
-
-UI_CheckControlCode_TestResult:
-	inc 4, xsp
-	ret
+Note_CheckTransposeRange:	.include "includes/generated/cc900/Note_CheckTransposeRange.s"	; C: cc900/note_voice_mapping_m298_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CheckTransposeRange_ClearByte, Note_CheckTransposeRange + 31
+	.set	CheckTransposeRange_LoadParam, Note_CheckTransposeRange + 35
+	.set	CheckTransposeRange_ClearByte2, Note_CheckTransposeRange + 50
+	.set	UI_CheckControlCode_TestResult, Note_CheckTransposeRange + 52
 
 CheckControlCode_Tes_WriteReg:
 	lda xsp, (xsp-498)
@@ -19316,18 +19196,7 @@ SeqVoice_CheckAndRet_RestoreReg:
 
 ; Sends the 5-byte command packet {4, 0xf0, A, C, E} (MIDI_SendCmdPacket, then
 ; MIDI_PostSendStub).
-SubCPU_SendSystemRecord:
-	dec 6, xsp
-	ld (xsp + 0:8), 0x4
-	ld (xsp + 1), 0xf0
-	ld (xsp + 2), a
-	ld (xsp + 3), c
-	ld (xsp + 4), e
-	lda xwa, (xsp)
-	call MIDI_SendCmdPacket
-	call MIDI_PostSendStub
-	inc 6, xsp
-	ret
+SubCPU_SendSystemRecord:	.include "includes/generated/cc900/SubCPU_SendSystemRecord.s"	; C: cc900/note_voice_mapping_m301_xr.c
 
 ; ScaleTune_TypeToOffsetTable: Returns in XHL the 12-entry per-pitch-class offset table (0x80 = none) of scale-tune
 ;   type A: SemitoneBias_TableA..N for the preset types, the user table in record 0x92 (RAM 0xFD1E) for 128. Basis:
@@ -24696,36 +24565,11 @@ LookupOscEnvelope_LoadReg3:
 	pop xiz
 	ret
 
-SndParam_ApplyVoiceValue:
-	push xiz
-	ld xiz, xwa
-	ld a, (xiz + 5)
-	cp a, 0xf
-	jr z, SndParam_SetDefaultKeyOff
-	extz wa
-	ldw bc, 0x20
-	call SndParam_LookupViaEncode
-	lda xbc, (xiz + 4)
-	ld a, (xiz + 2)
-	ld (xiz + 3), a
-	cp hl, 0x78
-	jr nz, SndParam_StoreNoteValue
-	ld (xbc), 0x78
-	jr SndParam_ApplyReturn
-
-SndParam_StoreNoteValue:
-	ld a, (xiz + 1)
-	ld (xbc), a
-	jr SndParam_ApplyReturn
-
-SndParam_SetDefaultKeyOff:
-	ld a, (xiz + 2)
-	ld (xiz + 3), a
-	ld (xiz + 4), 0x78
-
-SndParam_ApplyReturn:
-	pop xiz
-	ret
+SndParam_ApplyVoiceValue:	.include "includes/generated/cc900/SndParam_ApplyVoiceValue.s"	; C: cc900/note_voice_mapping_m303.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_StoreNoteValue, SndParam_ApplyVoiceValue + 40
+	.set	SndParam_SetDefaultKeyOff, SndParam_ApplyVoiceValue + 47
+	.set	SndParam_ApplyReturn, SndParam_ApplyVoiceValue + 57
 
 SndParam_CheckAndApplyMode:
 	push	xiz
@@ -25617,92 +25461,16 @@ Param_SignExtendReturn_Join6:
 ; SubCPU_RequestSoundName: Sends sub-CPU request 0x20 {2B 30 7F 20 00 00 02 seq A C} (bank A, program C) on COMM
 ;   channel 3 and returns its sequence number in L; the caller waits for the 17-byte reply, the sound's name. Basis:
 ;   callers + body.
-SubCPU_RequestSoundName:
-	lda xde, (0xe2b8:16)
-	ld (xde), 0x2b
-	ld (xde + 1), 0x30
-	ld (xde + 2), 0x7f
-	ld (xde + 3), 0x20
-	ld (xde + 4), 0x0
-	ld (xde + 5), 0x0
-	ld (xde + 6), 0x2
-	inc 1, (0xe197:16)
-	ld l, (0xe197:16)
-	res 7, l
-	ld (xde + 7), l
-	ld (xde + 8), a
-	ld (xde + 9), c
-	ld wa, 3:i3
-	ldw bc, 0xa
-	call sendCOMM
-	ld l, (0xe2bf:16)
-	ret
+SubCPU_RequestSoundName:	.include "includes/generated/cc900/SubCPU_RequestSoundName.s"	; C: cc900/note_voice_mapping_m304.c
 
-Param_SignExtendRetu_Block4:
-	lda xde, (0xe2c2:16)
-	ld (xde), 0x2b
-	ld (xde + 1), 0x30
-	ld (xde + 2), 0x7f
-	ld (xde + 3), 0x22
-	ld (xde + 4), 0x0
-	ld (xde + 5), 0x0
-	ld (xde + 6), 0x2
-	inc 1, (0xe197:16)
-	ld l, (0xe197:16)
-	res 7, l
-	ld (xde + 7), l
-	ld (xde + 8), a
-	ld (xde + 9), c
-	ld wa, 3:i3
-	ldw bc, 0xa
-	call sendCOMM
-	ld l, (0xe2c9:16)
-	ret
+Param_SignExtendRetu_Block4:	.include "includes/generated/cc900/Param_SignExtendRetu_Block4.s"	; C: cc900/note_voice_mapping_m304.c
 
 ; SubCPU_RequestShortSoundName: Sends sub-CPU request 0x24 {2B 30 7F 24 00 00 02 seq A C} on COMM channel 3 and
 ;   returns its sequence number; the caller waits for a 10-byte reply, substituting 'SName Error!!' on failure. Basis:
 ;   callers + body.
-SubCPU_RequestShortSoundName:
-	lda xde, (0xe2cc:16)
-	ld (xde), 0x2b
-	ld (xde + 1), 0x30
-	ld (xde + 2), 0x7f
-	ld (xde + 3), 0x24
-	ld (xde + 4), 0x0
-	ld (xde + 5), 0x0
-	ld (xde + 6), 0x2
-	inc 1, (0xe197:16)
-	ld l, (0xe197:16)
-	res 7, l
-	ld (xde + 7), l
-	ld (xde + 8), a
-	ld (xde + 9), c
-	ld wa, 3:i3
-	ldw bc, 0xa
-	call sendCOMM
-	ld l, (0xe2d3:16)
-	ret
+SubCPU_RequestShortSoundName:	.include "includes/generated/cc900/SubCPU_RequestShortSoundName.s"	; C: cc900/note_voice_mapping_m304.c
 
-SndParam_LookupPartIndex:
-	lda xde, (0xe2d6:16)
-	ld (xde), 0x2b
-	ld (xde + 1), 0x30
-	ld (xde + 2), 0x7f
-	ld (xde + 3), 0x27
-	ld (xde + 4), 0x0
-	ld (xde + 5), 0x0
-	ld (xde + 6), 0x2
-	inc 1, (0xe197:16)
-	ld l, (0xe197:16)
-	res 7, l
-	ld (xde + 7), l
-	ld (xde + 8), a
-	ld (xde + 9), c
-	ld wa, 3:i3
-	ldw bc, 0xa
-	call sendCOMM
-	ld l, (0xe2dd:16)
-	ret
+SndParam_LookupPartIndex:	.include "includes/generated/cc900/SndParam_LookupPartIndex.s"	; C: cc900/note_voice_mapping_m304.c
 
 LookupPartIndex_Compare:
 	cp wa, 4:i3
@@ -26143,59 +25911,19 @@ SendPartDataBlock_Block2:
 	ret
 ; COMM_SendFadeLevel: Set-if-changed sender of the FADE IN/OUT level: stores A in 0xE353 and sends it as
 ;   COMM packet type 6 (sub-CPU DSP_Set_FadeLevel). Basis: callers + body + receiver.
-COMM_SendFadeLevel:
-	cp	(0xe353:16), a
-	ret z
-	ld	(0xe353:16), a
-	ld xwa, 0x0000e353
-	ld	bc, 6:i3
-	ld	de, 1:i3
-	call SendCOMM_VariableLengthPacket
-	ret
+COMM_SendFadeLevel:	.include "includes/generated/cc900/COMM_SendFadeLevel.s"	; C: cc900/note_voice_mapping_m305.c
 ; COMM_SendMicVolume: Set-if-changed sender of the MIC volume: stores A in 0xE354 and sends it as COMM packet type 7
 ;   (sub-CPU DSP_Set_MicLevel). Basis: callers + body + receiver.
-COMM_SendMicVolume:
-	cp	(0xe354:16), a
-	ret z
-	ld	(0xe354:16), a
-	ld xwa, 0x0000e354
-	ld	bc, 7:i3
-	ld	de, 1:i3
-	call SendCOMM_VariableLengthPacket
-	ret
+COMM_SendMicVolume:	.include "includes/generated/cc900/COMM_SendMicVolume.s"	; C: cc900/note_voice_mapping_m305.c
 
 
-SendPartDataBlock_ClearByte:
-	ld c, 0x0:opc
-	cp a, 0:i3
-	jr z, SendPartDataBlock_ClearByte_Join
-	ld c, 0x1:opc
+SendPartDataBlock_ClearByte:	.include "includes/generated/cc900/SendPartDataBlock_ClearByte.s"	; C: cc900/note_voice_mapping_m305.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SendPartDataBlock_ClearByte_Join, SendPartDataBlock_ClearByte + 8
 
-SendPartDataBlock_ClearByte_Join:
-	cp (0xe357:16), c
-	ret z
-	ld (0xe357:16), c
-	ld xwa, 0xe357
-	ldw bc, 0x21
-	ld de, 1:i3
-	call SendCOMM_VariableLengthPacket
-	ret
-
-SendPartDataBlock_ClearByte2:
-	ld c, 0x0:opc
-	cp a, 0:i3
-	jr z, SendPartDataBlock_ClearByte2_Join
-	ld c, 0x1:opc
-
-SendPartDataBlock_ClearByte2_Join:
-	cp (0xe358:16), c
-	ret z
-	ld (0xe358:16), c
-	ld xwa, 0xe358
-	ldw bc, 0x22
-	ld de, 1:i3
-	call SendCOMM_VariableLengthPacket
-	ret
+SendPartDataBlock_ClearByte2:	.include "includes/generated/cc900/SendPartDataBlock_ClearByte2.s"	; C: cc900/note_voice_mapping_m305.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SendPartDataBlock_ClearByte2_Join, SendPartDataBlock_ClearByte2 + 8
 
 SendPartDataBlock_Block7:
 	cp (0xe35b:16), a
@@ -26213,38 +25941,15 @@ SendPartDataBlock_StoreDRAM:
 	call SendCOMM_VariableLengthPacket
 	ret
 
-SendPartDataBlock_ClearByte3:
-	ld c, 0x0:opc
-	cp a, 0:i3
-	jr z, SendPartDataBlock_ClearByte3_Join
-	ld c, 0x1:opc
-
-SendPartDataBlock_ClearByte3_Join:
-	cp (0xe359:16), c
-	ret z
-	ld (0xe359:16), c
-	ld xwa, 0xe359
-	ldw bc, 0x24
-	ld de, 1:i3
-	call SendCOMM_VariableLengthPacket
-	ret
+SendPartDataBlock_ClearByte3:	.include "includes/generated/cc900/SendPartDataBlock_ClearByte3.s"	; C: cc900/note_voice_mapping_m305.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SendPartDataBlock_ClearByte3_Join, SendPartDataBlock_ClearByte3 + 8
 
 ; COMM_SendEqualizerOnOff: Set-if-changed sender of the EQUALIZER on/off: A != 0 -> 1, stored in 0xE35A and sent as
 ;   COMM packet 0x25 (sub-CPU DSP_Set_EqualizerOnOff). Basis: callers + body + receiver.
-COMM_SendEqualizerOnOff:
-	ld	c, 0:opc
-	cp	a, 0:i3
-	jr	z, COMM_SendEqualizerOnOff_Skip
-	ld	c, 1:opc
-COMM_SendEqualizerOnOff_Skip:
-	cp	(0xe35a:16), c
-	ret	z
-	ld	(0xe35a:16), c
-	ld	xwa, 0xe35a
-	ldw	bc, 37
-	ld	de, 1:i3
-	call	SendCOMM_VariableLengthPacket
-	ret
+COMM_SendEqualizerOnOff:	.include "includes/generated/cc900/COMM_SendEqualizerOnOff.s"	; C: cc900/note_voice_mapping_m305.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	COMM_SendEqualizerOnOff_Skip, COMM_SendEqualizerOnOff + 8
 	ld	(0x3c0fa:24), wa
 	ld	hl, 0:i3
 	ret

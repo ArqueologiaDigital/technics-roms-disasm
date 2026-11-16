@@ -362,15 +362,9 @@ SetDialFocus:
 	call SendEvent
 	ret
 
-GetDialFocus:
-	cpw (DIAL_ENABLE:24), 0
-	jr nz, GetDialFocus_Active
-	ld xhl, 0xffffffff
-	ret
-
-GetDialFocus_Active:
-	ld xhl, (DIAL_FOCUS:24)
-	ret
+GetDialFocus:	.include "includes/generated/cc900/GetDialFocus.s"	; C: cc900/presentation_sound_nav_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetDialFocus_Active, GetDialFocus + 15
 
 SetDialUp:
 	ld	(DIAL_UP_CALLBACK:24), xwa

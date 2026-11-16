@@ -1252,18 +1252,9 @@ SeMenu_BitShiftMask_Loop:
 
 ; Returns L = A >> BC (logical, one bit per pass; BC = 0 returns A).  Counterpart of
 ; SeMenu_BitShiftMask.  Clobbers DE.
-SeMenu_BitShiftMask_End:
-	ld	l, a
-	ld	de, 0:i3
-	extz	bc
-	cp	bc, 0:i3
-	ret	ule
-SeMenu_BitShiftMask_End_Loop3:
-	srl	l, 1
-	inc	1, de
-	cp	de, bc
-	jr	c, SeMenu_BitShiftMask_End_Loop3
-	ret
+SeMenu_BitShiftMask_End:	.include "includes/generated/cc900/SeMenu_BitShiftMask_End.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_BitShiftMask_End_Loop3, SeMenu_BitShiftMask_End + 10
 ; SeMenu_StepParamField: Steps the bit field of edit record XWA (+0 old byte, +6 mask, +7 shift, +8 max, +9 min, +10
 ;   signed step) by the step, clamped to [min,max], and writes the merged byte to +3; L = 1 if the field changed, 0 if
 ;   not or if the record is unusable (mask 0, shift > 7, step 0). min < 0 takes the signed-compare copy. Basis:
@@ -2288,18 +2279,9 @@ SeTitle_DecodeSwitch_Return:
 ;   its only callers are in the WRITE SOUND name-centring handler (side row 2, SeWrtSnd_OnSideRow2 ->
 ;   SeWrtSnd_ClearName_Join), which copies the 16-character name to a scratch buffer and then the non-
 ;   blank run into place.
-SeMenu_CopyNameChars:
-	ld	xhl, xbc
-	ld	b, 0:opc
-	cp	e, 0:i3
-	ret	ule
-SeMenu_CopyNameChars_Loop6:
-	ld c, (xhl+)
-	ld (xwa+), c
-	inc 1, b
-	cp b, e
-	jr	c, SeMenu_CopyNameChars_Loop6
-	ret
+SeMenu_CopyNameChars:	.include "includes/generated/cc900/SeMenu_CopyNameChars.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_CopyNameChars_Loop6, SeMenu_CopyNameChars + 8
 ; SeWrtMem_ChooseInitialSlot: Picks the WRITE TO MEMORY page's destination slot (0..39) into (XWA) and 0x6AD: resolves
 ;   the part's current sound (0xF9D0 / 0xF9EA / 0xF9B6 by part group, SndParam_FetchOscTableEntry); when it is a
 ;   memory sound (resolved bank 16 / 17) and flag 0x6AF is 0 the slot is that sound's own (number + 20 for bank 17)
@@ -2403,14 +2385,7 @@ SeMenu_SetNameBufferChar:	.include "includes/generated/cc900/SeMenu_SetNameBuffe
 ;   all 16 characters to send them, the cursor-left/right handlers read the character at the new cursor (page param 0)
 ;   into param 1. Its twin SeMenu_SetNameBufferChar writes the buffer, and
 ;   SeWrtMem_DrawPage fills it with an entry's name (SeMenu_SetupPartDisplay mode 1).
-SeMenu_GetNameBufferChar:
-	cp a, 15
-	ret	ugt
-	extz	wa
-	lda	xde, (0x020bf3:24)
-	ld	a, (xde+wa)
-	ld	(xbc), a
-	ret
+SeMenu_GetNameBufferChar:	.include "includes/generated/cc900/SeMenu_GetNameBufferChar.s"	; C: cc900/semenu_routines_m129.c
 ; SeMenu_PostDialEnable: Zero-extends A and tail-jumps to UI_PostDialEnable, which posts EVT_VALEN_SET with that value
 ;   (every caller passes 1: dial enabled). Basis: callers + body -- SeMenu_BindDialToColumn calls it first (its
 ;   header: 'posts EVT_VALEN_SET(1)'), and two sound-editor page set-ups call it before posting their dial events.
@@ -2473,17 +2448,9 @@ SeMenu_SwitchToValueStep_Skip8:
 ;   GUI_DisplayStructData_0x1129[A] for A < 97, else a space. Basis: callers + body -- the WRITE SOUND naming page's
 ;   column handlers (SeWrtSnd_OnColumn6 / 8 and the step after them) step page param 1, convert it with this and store
 ;   the character with SeMenu_SetNameBufferChar; SeMenu_CharToNameCharIndex's header calls this routine its reverse.
-SeMenu_NameCharIndexToChar:
-	cp	a, 97
-	jr	c, SeMenu_SetupPartDisplay_End_Skip9
-	ld	(xbc), 32
-	ret
-SeMenu_SetupPartDisplay_End_Skip9:
-	extz	wa
-	lda	xde, (GUI_DisplayStructData_0x1129:24)
-	ld	a, (xde+wa)
-	ld (xbc), a
-	ret
+SeMenu_NameCharIndexToChar:	.include "includes/generated/cc900/SeMenu_NameCharIndexToChar.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetupPartDisplay_End_Skip9, SeMenu_NameCharIndexToChar + 9
 ; SeMenu_CharToNameCharIndex: Converts character code A to its index in the name-entry character set and stores it at
 ;   (XBC): GUI_DisplayStructData_0x118A[A] for A < 130, 0 (the space) for A >= 130 or a result above 95. The table
 ;   inverts GUI_DisplayStructData_0x1129 (index -> character: ' ', A-Z, a-z, 0-9, punctuation; 96 entries, all
@@ -6353,15 +6320,7 @@ SeMenu_StoreParamByte:
 
 ; Copies byte A - 1 of the per-part block at 0x6ba to (XBC).
 ;   In:  A = part (1..4), XBC = destination.
-SeMenu_LoadParamByte:
-	dec 1, a
-	extz wa
-	lda xde, (1722:16)
-	extz xwa
-	add xwa, xde
-	ld a, (xwa)
-	ld (xbc), a
-	ret
+SeMenu_LoadParamByte:	.include "includes/generated/cc900/SeMenu_LoadParamByte.s"	; C: cc900/semenu_routines_m129.c
 
 ; Stores A (0 or 1) in the sound-editor byte 0x6c4, which SeMenu_LoadConfirmData copies back out.
 SeMenu_SetConfirmState:	.include "includes/generated/cc900/SeMenu_SetConfirmState.s"	; C: cc900/semenu_routines.c

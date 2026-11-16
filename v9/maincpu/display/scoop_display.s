@@ -39,25 +39,9 @@ Display_ResetDirtyFlags:
 ;   0x205e4 - DISPLAY_DIRTY_FLAGS: Bitmap of dirty regions
 ;   0x205e6 - DISPLAY_ENABLE_FLAG: Update enable flag
 ;=============================================================================
-Display_UpdateDirtyRegions:
-	ld (DISPLAY_ENABLE_FLAG:24), 0x01
-	cpw (DISPLAY_DIRTY_FLAGS:24), 0
-	jr z, Display_MarkClean
-	call Display_UpdateRegion0	; Status bar area
-	call Display_UpdateRegion5	; Menu area
-	call Display_UpdateRegion7	; Parameter display
-	call Display_UpdateRegion8	; Value display
-	call Display_UpdateRegion9	; Indicator area
-	call Display_UpdateRegion1	; Title bar
-	call Display_UpdateRegion10	; Footer area
-	call Display_UpdateRegion6	; Button labels
-	call Display_UpdateRegion3	; Main content area
-	call Display_UpdateRegion4	; Side panel
-	call Display_UpdateRegion2	; Selection highlight
-
-Display_MarkClean:
-	ldw (DISPLAY_DIRTY_FLAGS:24), 0xffff
-	ret
+Display_UpdateDirtyRegions:	.include "includes/generated/cc900/Display_UpdateDirtyRegions.s"	; C: cc900/scoop_display_m6_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Display_MarkClean, Display_UpdateDirtyRegions + 59
 
 ; Undisassembled data block (18 bytes) - possibly lookup table
 Display_Data_ScoopInit:
@@ -19403,8 +19387,7 @@ Scoop_GlideCalc_Handler2:
 	lda	xsp, (xsp+16)
 	ret
 
-Scoop_Dispatch_Nop:
-	ret
+Scoop_Dispatch_Nop:	.include "includes/generated/cc900/Scoop_Dispatch_Nop.s"	; C: cc900/scoop_display_m128_xr.c
 
 Scoop_Dispatch_CallFAA98A:
 	; --- Routine 1: copy (XWA+2..8) to stack, call FAA98A with DE=0xff (47 bytes) ---
@@ -19426,22 +19409,7 @@ Scoop_Dispatch_CallFAA98A:
 	call DrawLine
 	inc 8, xsp
 	ret
-Scoop_Dispatch_CallFAB273:
-	; --- Routine 2: copy (XWA+2..8) to stack, call FAB273 with BC=0xf5 (38 bytes) ---
-	dec 8, xsp
-	ld bc, (xwa+2)
-	ld (xsp+0:8), bc
-	ld bc, (xwa+4)
-	ld (xsp+2), bc
-	ld bc, (xwa+6)
-	ld (xsp+4), bc
-	ld wa, (xwa+8)
-	ld (xsp+6), wa
-	lda	xwa, (xsp)
-	ldw bc, 0x00f5
-	call DrawBox
-	inc 8, xsp
-	ret
+Scoop_Dispatch_CallFAB273:	.include "includes/generated/cc900/Scoop_Dispatch_CallFAB273.s"	; C: cc900/scoop_display_m0_xr.c
 
 
 Scoop_EventLoop_12Entry:

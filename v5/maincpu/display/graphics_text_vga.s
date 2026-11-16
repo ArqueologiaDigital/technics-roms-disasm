@@ -1899,16 +1899,7 @@ SeGfx_BoundOp08_ColorBlit_Skip2:
 	inc	8, xsp
 	ret
 
-GetFrameSPSize:
-	ld hl, wa
-	extz xhl
-	sll xhl, 3
-	add xhl, 0x934000
-	ld wa, (xhl)
-	ld (xbc), wa
-	ld wa, (xhl + 2)
-	ld (xde), wa
-	ret
+GetFrameSPSize:	.include "includes/generated/cc900/GetFrameSPSize.s"	; C: cc900/graphics_text_vga_m274.c
 
 ; =============================================================================
 ; Font Glyph Table Access Functions
@@ -2218,36 +2209,11 @@ Wordwrap_FreeAndReturn:
 ; HexDigitToValue - Convert ASCII hex digit to 4-bit value
 ; Input:  A = ASCII character ('0'-'9', 'a'-'f', 'A'-'F')
 ; Output: L = 0x00-0x0f (value), or 0x00 if invalid
-HexCharToNibble:
-	cp a, 0x30		; '0'
-	jr c, HexCharToNibble_CheckLower
-	cp a, 0x39		; '9'
-	jr ugt, HexCharToNibble_CheckLower
-	sub a, 0x30		; '0'-'9' -> 0-9
-	ld l, a
-	ret
-
-HexCharToNibble_CheckLower:
-	cp a, 0x61		; 'a'
-	jr c, HexCharToNibble_CheckUpper
-	cp a, 0x66		; 'f'
-	jr ugt, HexCharToNibble_CheckUpper
-	sub a, 0x57		; 'a'-'f' -> 10-15
-	ld l, a
-	ret
-
-HexCharToNibble_CheckUpper:
-	cp a, 0x41		; 'A'
-	jr c, HexCharToNibble_Invalid
-	cp a, 0x46		; 'F'
-	jr ugt, HexCharToNibble_Invalid
-	sub a, 0x37		; 'A'-'F' -> 10-15
-	ld l, a
-	ret
-
-HexCharToNibble_Invalid:
-	ld l, 0x0:opc		; Invalid -> 0
-	ret
+HexCharToNibble:	.include "includes/generated/cc900/HexCharToNibble.s"	; C: cc900/graphics_text_vga_m274.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HexCharToNibble_CheckLower, HexCharToNibble + 16
+	.set	HexCharToNibble_CheckUpper, HexCharToNibble + 32
+	.set	HexCharToNibble_Invalid, HexCharToNibble + 48
 
 FontGlyph_ByteData:
 	ld	a, (xwa)
@@ -2256,35 +2222,13 @@ FontGlyph_ByteData:
 	ld	a, (xde+wa)
 	ld	(xbc), a
 	ret
-Text_GlyphToCharCode:
-	ld	e, (xwa)
-	cp	e, 32
-	jr	z, Text_GlyphToCharCode_Skip
-	cp	e, 0:i3
-	jr	nz, Text_GlyphToCharCode_Skip2
-Text_GlyphToCharCode_Skip:
-	ld	a, (xwa)
-	ld	(xbc), a
-	ret
-Text_GlyphToCharCode_Skip2:
-	ld	de, 0:i3
-	lda	xhl, (Text_CharGlyphMap:24)
-	ld	a, (xwa)
-Text_GlyphToCharCode_Loop:
-	cp	(xhl+de), a
-	jr	nz, Text_GlyphToCharCode_Skip3
-	ld	a, e
-	ld	(xbc), a
-	jr	Text_GlyphToCharCode_Join
-Text_GlyphToCharCode_Skip3:
-	inc	1, de
-	cp	de, 256
-	jr	lt, Text_GlyphToCharCode_Loop
-Text_GlyphToCharCode_Join:
-	cp	de, 256
-	ret	nz
-	ld	(xbc), 32
-	ret
+Text_GlyphToCharCode:	.include "includes/generated/cc900/Text_GlyphToCharCode.s"	; C: cc900/graphics_text_vga_m274.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Text_GlyphToCharCode_Skip, Text_GlyphToCharCode + 11
+	.set	Text_GlyphToCharCode_Skip2, Text_GlyphToCharCode + 16
+	.set	Text_GlyphToCharCode_Loop, Text_GlyphToCharCode + 25
+	.set	Text_GlyphToCharCode_Skip3, Text_GlyphToCharCode + 38
+	.set	Text_GlyphToCharCode_Join, Text_GlyphToCharCode + 46
 
 ; =============================================================================
 ; InitPaletteRGB - Initialize 256-color palette from ROM data

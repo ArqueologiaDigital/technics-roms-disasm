@@ -1602,29 +1602,11 @@ SeqStep_WalkInnerReturn:
 	pop xiz
 	ret
 
-SeqStep_WalkReadNext:
-	ld wa, (SQSTEP_SCAN_OFFSET:16)
-	cp wa, 5:i3
-	jr nz, SeqStep_WalkAdvancePos
-	ld wa, (SQSTEP_SCAN_BLOCK:16)
-	call PartCtrl_ReadWord_Off1
-	cp hl, 0:i3
-	jr nz, SeqStep_WalkUpdatePos
-	ldw hl, 0xffff
-	ret
-
-SeqStep_WalkUpdatePos:
-	ld (SQSTEP_SCAN_BLOCK:16), hl
-	ldw (SQSTEP_SCAN_OFFSET:16), 255
-	jr SeqStep_WalkAdvanceDone
-
-SeqStep_WalkAdvancePos:
-	inc 1, wa
-	ld (SQSTEP_SCAN_OFFSET:16), wa
-
-SeqStep_WalkAdvanceDone:
-	ld hl, 0:i3
-	ret
+SeqStep_WalkReadNext:	.include "includes/generated/cc900/SeqStep_WalkReadNext.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_WalkUpdatePos, SeqStep_WalkReadNext + 24
+	.set	SeqStep_WalkAdvancePos, SeqStep_WalkReadNext + 36
+	.set	SeqStep_WalkAdvanceDone, SeqStep_WalkReadNext + 42
 
 SeqStep_WalkReadByte:
 	ld wa, (SQSTEP_SCAN_OFFSET:16)
@@ -2061,27 +2043,10 @@ SeqStep_SkipToMeasureLoop:
 	ld hl, 0:i3
 	ret
 
-SeqStep_SkipThreeEvents:
-	call PartCtrl_AdvanceReadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqStep_SkipThreeError
-	call PartCtrl_AdvanceReadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqStep_SkipThreeError
-	call PartCtrl_AdvanceReadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqStep_SkipThreeError
-	call SeqPart_ReadByte_Secondary
-	cp l, 0:i3
-	jr z, SeqStep_SkipThreeReturn
-
-SeqStep_SkipThreeError:
-	ldw hl, 0xffff
-	ret
-
-SeqStep_SkipThreeReturn:
-	ld hl, 0:i3
-	ret
+SeqStep_SkipThreeEvents:	.include "includes/generated/cc900/SeqStep_SkipThreeEvents.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_SkipThreeError, SeqStep_SkipThreeEvents + 41
+	.set	SeqStep_SkipThreeReturn, SeqStep_SkipThreeEvents + 45
 
 SeqStep_ProcessC0:
 	dec 4, xsp

@@ -2897,57 +2897,18 @@ GetCurrentPartSelect:	.include "includes/generated/cc900/GetCurrentPartSelect.s"
 ; Requests a change to mode NAKA_MODE_MD_PS + A: removes any queued EVT_CHANGE_MODE
 ; (DeleteEvent) and posts a new one to the current target (ApPostEvent).
 ;   In:  A = mode offset from NAKA_MODE_MD_PS (an MD_* constant).  Was UI_PostPartChangeEvent.
-UI_ChangeModeByIndex:
-	dec 2, xsp
-	ld (xsp), a
-	ld xwa, 0xffffffff
-	ld xbc, EVT_CHANGE_MODE
-	call DeleteEvent
-	ld xde, 0:i3
-	ld e, (xsp)
-	add xde, NAKA_MODE_MD_PS
-	ld xwa, 0xffffffff
-	ld xbc, EVT_CHANGE_MODE
-	call ApPostEvent
-	inc 2, xsp
-	ret
+UI_ChangeModeByIndex:	.include "includes/generated/cc900/UI_ChangeModeByIndex.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Requests a change to title TITLE_PS + A: removes any queued EVT_CHANGE_TITLE (DeleteEvent) and
 ; posts a new one with that title to the current target (ApPostEvent).
 ;   In:  A = title offset from TITLE_PS (a TT_* constant).  Was UI_PostModeChangeEvent.
-UI_ChangeTitleByIndex:
-	dec 2, xsp
-	ld (xsp), a
-	ld xwa, 0xffffffff
-	ld xbc, EVT_CHANGE_TITLE
-	call DeleteEvent
-	ld xde, 0:i3
-	ld e, (xsp)
-	add xde, TITLE_PS
-	ld xwa, 0xffffffff
-	ld xbc, EVT_CHANGE_TITLE
-	call ApPostEvent
-	inc 2, xsp
-	ret
+UI_ChangeTitleByIndex:	.include "includes/generated/cc900/UI_ChangeTitleByIndex.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Shows title TITLE_PS + A on top of the current one (an interrupt title: a message, error or
 ; progress screen): removes any queued EVT_INTERRUPT_TITLE (DeleteEvent) and posts a new one with
 ; that title to the current target (ApPostEvent).  Was SoundCtrl_SendCommand.
 ;   In:  A = title offset from TITLE_PS (a TT_* constant).
-UI_InterruptTitleByIndex:
-	dec 2, xsp
-	ld (xsp), a
-	ld xwa, 0xffffffff
-	ld xbc, EVT_INTERRUPT_TITLE
-	call DeleteEvent
-	ld xde, 0:i3
-	ld e, (xsp)
-	add xde, TITLE_PS
-	ld xwa, 0xffffffff
-	ld xbc, EVT_INTERRUPT_TITLE
-	call ApPostEvent
-	inc 2, xsp
-	ret
+UI_InterruptTitleByIndex:	.include "includes/generated/cc900/UI_InterruptTitleByIndex.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Posts EVT_ALL_PAINT with parameter 0 to the current target (ApPostEvent).
 UI_PostRefreshEvent:

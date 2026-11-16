@@ -867,17 +867,9 @@ MidiSerial_OffsetTable:
 ; every other pattern -> 0.  Previously spelled as 11 x `nop` / `normal` /
 ; `nop` / `push sr` / `pop sr` / `nop`.
 	.byte	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01, 0x00, 0x02, 0x03, 0x00
-SC0Init_ClearContextSlots:
-	ld	(MIDI_RX_CONTEXT:16), 0
-	ld	(MIDI_RX_CONTEXT+4:16), 0
-	ld	(MIDI_RX_CONTEXT+8:16), 0
-	ld	(MIDI_RX_CONTEXT+12:16), 0
-	ld	(MIDI_RX_CONTEXT+16:16), 0
-; (pre-port v7 note about the bytes at 0xFCF164:)
-SC0Init_ClearContextSlots_Part:
-	ld	(MIDI_RX_CONTEXT+20:16), 0
-	ld	(MIDI_RX_CONTEXT+24:16), 0
-	ret
+SC0Init_ClearContextSlots:	.include "includes/generated/cc900/SC0Init_ClearContextSlots.s"	; C: cc900/midi_serial_routines_m283_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SC0Init_ClearContextSlots_Part, SC0Init_ClearContextSlots + 25
 SC0Init_EnableRegisters:
 	ei	6
 	ld	(210:16), 41

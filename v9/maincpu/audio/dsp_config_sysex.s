@@ -2935,21 +2935,9 @@ DSPCfg_Data_001:
 	extz	hl
 	ret
 
-DSPCfg_GetSlotCount:
-	extz xwa
-	ld xbc, DspFxParamCountTable
-	add xbc, xwa
-	ld l, (xbc)
-	extz hl
-	ret
+DSPCfg_GetSlotCount:	.include "includes/generated/cc900/DSPCfg_GetSlotCount.s"	; C: cc900/dsp_config_sysex_m293.c
 
-DSPCfg_Data_002:
-	extz	xwa
-	ld	xbc, DspCfg_Data002_ByteTable
-	add	xbc, xwa
-	ld	l, (xbc)
-	extz	hl
-	ret
+DSPCfg_Data_002:	.include "includes/generated/cc900/DSPCfg_Data_002.s"	; C: cc900/dsp_config_sysex_m0.c
 
 DSPCfg_FindSlot63:
 	dec 2, xsp
@@ -4193,21 +4181,9 @@ DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Join4:
 	lda	xsp, (xsp+10)
 	retd	4
 
-DSPCfg_CheckParamTableEntry:
-	ld hl, 0:i3
-	cp wa, 0x63
-	jr ugt, DSPCfg_CheckParamTableEntry_NotFound
-	extz xwa
-	sll xwa, 2
-	ld xbc, DspFxRecListPtrTable
-	add xbc, xwa
-	ld xwa, (xbc)
-	or xwa, xwa
-	ret nz
-
-DSPCfg_CheckParamTableEntry_NotFound:
-	ldw hl, 0xffff
-	ret
+DSPCfg_CheckParamTableEntry:	.include "includes/generated/cc900/DSPCfg_CheckParamTableEntry.s"	; C: cc900/dsp_config_sysex_m293_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_CheckParamTableEntry_NotFound, DSPCfg_CheckParamTableEntry + 26
 
 DSPCfg_ReadFieldSimple:
 	lda xsp, (xsp - 10)

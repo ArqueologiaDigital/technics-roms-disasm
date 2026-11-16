@@ -1204,18 +1204,9 @@ SeMenu_BitShiftMask_Loop:
 	jr c, SeMenu_BitShiftMask_Loop
 	ret
 
-SeMenu_BitShiftMask_End:
-	ld	l, a
-	ld	de, 0:i3
-	extz	bc
-	cp	bc, 0:i3
-	ret	ule
-SeMenu_BitShiftMask_End_Loop3:
-	srl	l, 1
-	inc	1, de
-	cp	de, bc
-	jr	c, SeMenu_BitShiftMask_End_Loop3
-	ret
+SeMenu_BitShiftMask_End:	.include "includes/generated/cc900/SeMenu_BitShiftMask_End.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_BitShiftMask_End_Loop3, SeMenu_BitShiftMask_End + 10
 SeMenu_RefreshPartDisplay_Data_2:
 	.byte 0x88, 0x06
 	push	xsp
@@ -2218,18 +2209,9 @@ SeTitle_DecodeSwitch_Return:
 ;   its only callers are in the WRITE SOUND name-centring handler (side row 2, SeWrtSnd_OnSideRow2 ->
 ;   SeWrtSnd_ClearName_Join), which copies the 16-character name to a scratch buffer and then the non-
 ;   blank run into place.
-SeMenu_CopyNameChars:
-	ld	xhl, xbc
-	ld	b, 0:opc
-	cp	e, 0:i3
-	ret	ule
-SeMenu_CopyNameChars_Loop6:
-	ld	c, (xhl+)
-	ld	(xwa+), c
-	inc	1, b
-	cp	b, e
-	jr	c, SeMenu_CopyNameChars_Loop6
-	ret
+SeMenu_CopyNameChars:	.include "includes/generated/cc900/SeMenu_CopyNameChars.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_CopyNameChars_Loop6, SeMenu_CopyNameChars + 8
 SeWrtMem_ChooseInitialSlot:
 	lda	xsp, (xsp-16)
 	push	qiz
@@ -2322,14 +2304,7 @@ SeMenu_SetWriteMemSlot:	.include "includes/generated/cc900/SeMenu_SetWriteMemSlo
 ;   0..15 with C = 32 through it (its header says so), and the WRITE SOUND character-edit handlers store the edited
 ;   character with it.
 SeMenu_SetNameBufferChar:	.include "includes/generated/cc900/SeMenu_SetNameBufferChar.s"	; C: cc900/semenu_routines.c
-SeMenu_GetNameBufferChar:
-	cp	a, 15
-	ret	ugt
-	extz	wa
-	lda	xde, (0x20bf3:24)
-	ld	a, (xde+wa)
-	ld	(xbc), a
-	ret
+SeMenu_GetNameBufferChar:	.include "includes/generated/cc900/SeMenu_GetNameBufferChar.s"	; C: cc900/semenu_routines_m129.c
 ; SeMenu_PostDialEnable: Zero-extends A and tail-jumps to UI_PostDialEnable, which posts EVT_VALEN_SET with that value
 ;   (every caller passes 1: dial enabled). Basis: callers + body -- SeMenu_BindDialToColumn calls it first (its
 ;   header: 'posts EVT_VALEN_SET(1)'), and two sound-editor page set-ups call it before posting their dial events.
@@ -2393,17 +2368,9 @@ SeMenu_SwitchToValueStep_Skip8:
 ;   GUI_DisplayStructData_0x1129[A] for A < 97, else a space. Basis: callers + body -- the WRITE SOUND naming page's
 ;   column handlers (SeWrtSnd_OnColumn6 / 8 and the step after them) step page param 1, convert it with this and store
 ;   the character with SeMenu_SetNameBufferChar; SeMenu_CharToNameCharIndex's header calls this routine its reverse.
-SeMenu_NameCharIndexToChar:
-	cp	a, 97
-	jr	c, SeMenu_SetupPartDisplay_End_Skip9
-	ld	(xbc), 32
-	ret
-SeMenu_SetupPartDisplay_End_Skip9:
-	extz	wa
-	lda	xde, (GUI_DisplayStructData_0x1129:24)
-	ld	a, (xde+wa)
-	ld	(xbc), a
-	ret
+SeMenu_NameCharIndexToChar:	.include "includes/generated/cc900/SeMenu_NameCharIndexToChar.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetupPartDisplay_End_Skip9, SeMenu_NameCharIndexToChar + 9
 ; SeMenu_CharToNameCharIndex: Converts character code A to its index in the name-entry character set and stores it at
 ;   (XBC): GUI_DisplayStructData_0x118A[A] for A < 130, 0 (the space) for A >= 130 or a result above 95. The table
 ;   inverts GUI_DisplayStructData_0x1129 (index -> character: ' ', A-Z, a-z, 0-9, punctuation; 96 entries, all
@@ -6186,15 +6153,7 @@ SeMenu_StoreParamByte:
 	ld (xwa), c
 	ret
 
-SeMenu_LoadParamByte:
-	dec 1, a
-	extz wa
-	lda xde, (1722:16)
-	extz xwa
-	add xwa, xde
-	ld a, (xwa)
-	ld (xbc), a
-	ret
+SeMenu_LoadParamByte:	.include "includes/generated/cc900/SeMenu_LoadParamByte.s"	; C: cc900/semenu_routines_m129.c
 
 SeMenu_SetConfirmState:	.include "includes/generated/cc900/SeMenu_SetConfirmState.s"	; C: cc900/semenu_routines.c
 
