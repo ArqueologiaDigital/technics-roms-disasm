@@ -227,3 +227,29 @@ TVF_Calc_Cutoff_NoKeyFollow.
 - **A value computed before the address it is stored to**: the value through a byte temporary first
   (Catalog80, sub_G_15a).
 - DSP_AlgoDescriptor_Emit still stops at +11 / +13 with the corrected third argument (sub_F_rb15..18): open.
+
+### Round 16 (run 2026-11-16-112-sub-r16) and the switches
+
+Ten more functions match (2,150 B): Audio_Cmd_ToneEdit_Dispatch (656 B), TVF_Emit_Registers and
+TVF_Emit_Registers_Type2, DSP_WriteLUTParamSet, DSP_ParamInterp_Div0xC6, DSP_MixSendConfig,
+Voice_PortamentoTarget_ComputePitch, CustomTone_CopyToneRecord, Voice_Build_OutputLevel, Voice_InitVoiceState.
+With AudioChannel_Dispatch, TVF_BuildEmit_Short_Dispatch and Pitch_Get_Patch_Octave_Shift (found by lane_nmx's
+index; `sub_v423.py` left a function's own label address, the `lda xix, <case base>` of a switch, unrelocated until
+then) six jump-table switches now match.  `stage_probe.py` carries the `cc900-data:` lines into the staged file.
+
+Spellings that did it:
+
+- **Doubling by add** (`add wa,wa`, not a shift): `w = table word; b = w + w;` on a local (`* 2` and `<< 1` shift).
+- **A product copied before a sum** (`ld xwa,xhl`, then the other term built in XHL): the product through a
+  conversion or its own local, `r = (v0 >> 8) + (long)(unsigned long)(q * t);`.
+- **Idiom (e) on the second parameter**: DSP_MixSendConfig's pointer is its second parameter (XBC), reassigned
+  from the call's result.
+- **A two-way switch that compares the byte in place** is an `if (c != 1) { } else { }`.
+- **A record pointer in XBC with a store through (XBC+8)**: a byte-pointer local without a struct cast,
+  `*(unsigned long *)(s + 8) = ...`.
+- **Switch bodies in the ROM's order** (case 13 between 11 and 12), a catalogue index in a local evaluated before
+  the other arguments, and a plain `char` parameter for the unextended byte (idiom (c)) made
+  Audio_Cmd_ToneEdit_Dispatch match.
+
+Still open: DSP_AlgoDescriptor_Emit (+17), EGEnv_Compute_A / _B (+129), DSP_VoiceCoeffRoute2 (+2),
+VoiceParam_Set_Tone_Option (+12).

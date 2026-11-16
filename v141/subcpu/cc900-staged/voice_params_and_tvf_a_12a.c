@@ -22,6 +22,8 @@ int Pitch_Get_Patch_Octave_Shift(unsigned char a, unsigned char c);
 void TVF_BuildEmit_Short_Dispatch(unsigned char *v);
 
 /* cc900-module: TVF_Build_Short TVF_Set_Bypass Voice_PitchPack_RouteB Voice_PitchPack_RouteC Voice_PitchPack_RouteD Voice_PitchPack_RouteE */
+/* cc900-data: TVF_BuildEmit_Short_Dispatch 1 = TVF_BuildEmit_Short_CaseOffsets */
+/* cc900-data: Pitch_Get_Patch_Octave_Shift 1 = Pitch_OctaveShift_CaseOffsets */
 int Pitch_Get_Patch_Octave_Shift(unsigned char a, unsigned char c)
 {
     int r;

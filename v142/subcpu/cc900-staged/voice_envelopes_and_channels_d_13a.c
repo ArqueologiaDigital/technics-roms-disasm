@@ -19,6 +19,7 @@ extern int AudioChannel_Handler_Cmd14_17(int, int, unsigned char *, int);
 extern int AudioChannel_Handler_Cmd18_1B(int, int, unsigned char *, int);
 
 /* cc900-module: AudioChannel_Handler_Cmd01 AudioChannel_Handler_Cmd02 AudioChannel_Handler_Cmd03 AudioChannel_Handler_Cmd04_07 AudioChannel_Handler_Cmd08_0B AudioChannel_Handler_Cmd0C_0F AudioChannel_Handler_Cmd10_13 AudioChannel_Handler_Cmd14_17 AudioChannel_Handler_Cmd18_1B */
+/* cc900-data: AudioChannel_Dispatch 1 = AudioChannel_CaseOffsets */
 int AudioChannel_Dispatch(unsigned char a, unsigned char b, unsigned char *d)
 {
     switch (d[1] & 0x3f) {
