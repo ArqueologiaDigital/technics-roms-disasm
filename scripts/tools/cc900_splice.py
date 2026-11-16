@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """Put firmware C functions into the tree in place of their hand assembly (cc900 phase 6).
 
-usage: python3 scripts/tools/cc900_splice.py TREE FILE.c [--symbols REF] [--sizes TSV] [--elf ELF] [--dry-run]
+usage: python3 scripts/tools/cc900_splice.py TREE FILE.c [--symbols REF] [--sizes TSV | --v423 CACHE --work DIR]
+                                             [--elf ELF] [--dry-run]
     TREE    v10/maincpu, v142/subcpu, hdae5000 ...
     FILE.c  TREE/cc900/<name>.c.  Its first comment names the hand source as "Functions of <path>.s" (relative to
             TREE; else the first <path>.s the comment names).  Every function FILE.c defines is spliced into it.
@@ -24,6 +25,11 @@ With --sizes TSV (with --symbols), the sizes come from TSV instead of the refere
 options  run  function  bytes  result` as notes/cc900-phase6-2026-11-16/staged_v423.tsv writes them (the tree is
 taken from TREE), or `function  bytes ...` (probe_v423.py --tsv); and the functions are read from FILE.c's text, so
 C that only V4.23 compiles can be spliced.
+
+With --v423 CACHE --work DIR (with --symbols), the build itself is the size source: the build's generator
+(cc900_firmware_c.py --v423, its V4.23 cache, `make` fills it) writes FILE.c's bodies into DIR, and each function is
+spliced only when its body, assembled at its address, is the built image's bytes there; the others are listed and
+left as hand assembly.  No staged_v423.tsv row is needed.
 
 The header comment above the label stays.  A function whose label line already includes its body is left alone.
 Anything else (no such label, a label inside the body, no `ret`) stops the run before any file is written.  The
@@ -139,7 +145,7 @@ def tree_elf(tree):
 
 def c_functions(path):
     """the tree labels of the functions FILE.c defines, in order (the front end's names, through `cc900-name:`)"""
-    if "--sizes" in sys.argv:                            # C the model may not compile: read the definitions
+    if "--sizes" in sys.argv or "--v423" in sys.argv:    # C the model may not compile: read the definitions
         labels = fw.label_map(path)
         return [labels.get(f, f) for f in fw.c_functions(path)]   # the generator's reader (comments out, K&R)
     sys.path.insert(0, fw.MODEL)
@@ -149,9 +155,61 @@ def c_functions(path):
     return [labels.get(f.name, f.name) for f in frontend.load(path, [], [], adecl=adecl).functions]
 
 
+def v423_sizes(tree, src, cache, work, elf, ref):
+    """the build as the size source: the build's own generator (cc900_firmware_c.py --v423 CACHE) writes FILE.c's
+    bodies into WORK; each is assembled with the names it uses given their values (a relative branch's target placed
+    relative to the function, so jr / jrl / calr come out as at its address; the rest absolute: the symbols reference,
+    then the tree's .equ values) and compared with the built image at the function's address.
+    -> ({function: size} of the bodies that are the image's bytes, [functions whose body differs])"""
+    import subprocess
+    import check_bytes
+    out = os.path.join(work, os.path.splitext(os.path.basename(src))[0])
+    os.makedirs(out, exist_ok=True)
+    stamp = os.path.join(out, "functions.stamp")
+    r = subprocess.run([sys.executable, "-B", os.path.join(fw.REPO, "scripts/build/cc900_firmware_c.py"), "--v423",
+                        cache, tree, src, out, stamp], capture_output=True, text=True)
+    if r.returncode:
+        sys.exit("%s: the build's generator stops:\n%s" % (src, (r.stderr or r.stdout).strip()[-1500:]))
+    if not elf:
+        sys.exit("%s: --v423 compares with the built image: build it first, or pass --elf" % src)
+    image = os.path.join(work, os.path.basename(elf) + ".bin")
+    if not os.path.exists(image) or os.path.getmtime(image) < os.path.getmtime(elf):
+        subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-objcopy"), "-O", "binary", elf, image], check=True)
+    hdr = subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-readelf"), "-l", elf], capture_output=True,
+                         text=True, check=True).stdout
+    base = min(int(m.group(1), 16) for m in re.finditer(r'^\s*LOAD\s+\S+\s+(0x[0-9a-f]+)', hdr, re.M))
+    data = open(image, "rb").read()
+    values = {k: v for k, v in fw.merged_values(tree).items() if v is not None}
+    sizes, differ = {}, []
+    for fn in open(stamp).read().split():
+        body = open(os.path.join(out, fn + ".s")).read()
+        if fn not in ref:
+            differ.append(fn)
+            continue
+        rel = set(re.findall(r'\t(?:jr|jrl|calr)\t(?:\w+,\s*)?([A-Za-z_]\w*)', body))
+        defs = []
+        for n in sorted(set(re.findall(r'\b[A-Za-z_]\w*\b', body)) - {fn}):
+            v = ref.get(n, values.get(n))
+            if v is not None:
+                defs.append("\t.set\t%s, %s\n" % (n, "%s + %d" % (fn, v - ref[fn]) if n in rel and n in ref
+                                                   else "0x%x" % v))
+        try:
+            mine = check_bytes.assemble("".join(defs) + "\t.text\n\t.globl %s\n%s:\n%s\n\t.globl __end\n__end:\n"
+                                        % (fn, fn, body))[fn]
+        except subprocess.CalledProcessError:
+            differ.append(fn)
+            continue
+        at = ref[fn] - base
+        if mine == data[at:at + len(mine)]:
+            sizes[fn] = len(mine)
+        else:
+            differ.append(fn)
+    return sizes, differ
+
+
 def main():
     a = [x for i, x in enumerate(sys.argv[1:], 1)
-         if not x.startswith("--") and sys.argv[i - 1] not in ("--symbols", "--sizes", "--elf")]
+         if not x.startswith("--") and sys.argv[i - 1] not in ("--symbols", "--sizes", "--elf", "--v423", "--work")]
     if len(a) != 2:
         sys.exit(__doc__)
     tree, src = a
@@ -165,10 +223,19 @@ def main():
     named = os.path.join(tree, m.group(1).decode()) if m else None
     rel_c = os.path.relpath(src, tree)
     ref = sizes = None
+    skip = set()                                         # --v423: functions whose body is not the image's bytes
     if "--symbols" in sys.argv:                          # functions with inner labels and several rets
         import check_bytes
         ref = check_bytes.load_reference(sys.argv[sys.argv.index("--symbols") + 1])
-        if "--sizes" in sys.argv:
+        if "--v423" in sys.argv:                         # the build itself is the size source
+            if "--work" not in sys.argv:
+                sys.exit("--v423 needs --work DIR (a scratch directory for the bodies and the image)")
+            sizes, differ = v423_sizes(tree, src, sys.argv[sys.argv.index("--v423") + 1],
+                                       sys.argv[sys.argv.index("--work") + 1], elf, ref)
+            skip = set(differ)
+            if differ:
+                print("%s: not spliced, V4.23's body is not the image's bytes: %s" % (src, " ".join(differ)))
+        elif "--sizes" in sys.argv:
             # staged_v423.tsv names a tree by its version (v10, v142) or directory (hdae5000)
             tname = os.path.normpath(tree).split(os.sep)[-2] if os.path.normpath(tree).endswith(("maincpu", "subcpu")) \
                 else os.path.basename(os.path.normpath(tree))
@@ -220,6 +287,8 @@ def main():
 
     done = {}
     for name in c_functions(src):
+        if name in skip:
+            continue
         n = name.encode()
         asm = source_of(name)
         lines = files[asm]
