@@ -6,13 +6,14 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: SndParamBank_WriteFlashDefaults */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern void SndParamBank_WriteFlashDefaults(void);
 extern void FlashWrite(int, unsigned char *, unsigned int, long);
 extern unsigned char *__cdecl Malloc(unsigned int);
 extern void __cdecl Free(void *);
 extern void *__cdecl Memset(void *, int, unsigned int);
 extern void *__cdecl Mem_Copy(void *, void *, unsigned int);
-extern void SndParamBank_WriteFlashDefaults(void);
 extern unsigned char SndParamBank_DefaultHeader[];
 extern unsigned char SndParamBank_OptionDefault_00[], SndParamBank_OptionDefault_10[], SndParamBank_OptionDefault_20[];
 extern unsigned char SndParamBank_OptionDefault_30[], SndParamBank_OptionDefault_40[];

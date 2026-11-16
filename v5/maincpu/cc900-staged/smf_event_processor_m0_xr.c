@@ -9,6 +9,7 @@
 
 #define LO16(x) ((x) % 256)
 #define HI16(x) ((x) >> 8)
+extern void __cdecl SeqStep_FileSectorDone(unsigned int v, unsigned char **pp);
 
 
 void __cdecl SeqStep_FileSectorDone(unsigned int v, unsigned char **pp)

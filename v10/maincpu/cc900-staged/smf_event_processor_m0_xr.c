@@ -22,8 +22,10 @@ extern int __cdecl FileClose(struct file *);
 extern int FILE_ERROR;
 extern char SeqStep_ByteBlockF245_Str_d[];
 extern char SeqStep_ByteBlockF245_Str_wb[];
+extern int __cdecl SeqStep_ByteBlockF245(char *name);
 #define LO16(x) ((x) % 256)
 #define HI16(x) ((x) >> 8)
+extern void __cdecl SeqStep_FileSectorDone(unsigned int v, unsigned char **pp);
 
 int __cdecl SeqStep_ByteBlockF245(char *name)
 {

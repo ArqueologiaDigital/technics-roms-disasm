@@ -13,6 +13,7 @@ extern int ram_3c220;
 extern int ram_3c222;
 #define E_ISLOWER(c) (CType_ClassTable[(unsigned char)(c)] & 2)
 #define E_TOUPPER(c) (E_ISLOWER(c) ? (c) - 0x20 : (c))
+extern void __cdecl Sprintf_FormatFFixed(char spec, PUTFN *put, int flags, int width, int prec, char *dig, int ex, int neg);
 
 void __cdecl Sprintf_FormatFFixed(char spec, PUTFN *put, int flags, int width, int prec, char *dig, int ex,
 	int neg)

@@ -12,6 +12,7 @@ extern char GetCurrentFileType(void);
 extern char FileIO_CheckRecordValid(int);
 extern char FileIO_WriteRecordName_Done(int);
 extern void FileIO_CopyString(char *, char *);
+extern void RenderFilterDisplay(char *buf, unsigned char type);
 
 /* cc900-name: rf_dash0=RenderFilterDisplay_Str_Dash_Dash_Dash_Dash */
 /* cc900-name: rf_yes1=RenderFilter_CheckType1_Str_YES */

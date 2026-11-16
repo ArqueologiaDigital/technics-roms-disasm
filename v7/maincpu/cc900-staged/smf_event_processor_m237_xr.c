@@ -19,6 +19,7 @@ struct buf { struct vol *vol; long sec; long l8; char pad[6]; int age; int stat;
 	unsigned char idx; unsigned char drv; char pad2; unsigned char data[512]; };
 extern struct file *__cdecl FileOpen(char *, char *);
 extern char FileOpenDefault_Str_w[];
+extern int __cdecl FileOpenDefault(char *name);
 
 int __cdecl FileOpenDefault(char *name)
 {

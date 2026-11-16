@@ -6,10 +6,14 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
-/* cc900-module: GetViewInstance */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: GetNextView GetPrevView GetSubView GetSuperView GetViewInstance SetChange */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 struct box { int x, y, w, h; };
 struct viewable { char hdr[4]; int super, sub, next, prev; unsigned int flags; struct box box; };
+extern struct viewable *GetViewInstance(unsigned long id);
+extern int GetChange(unsigned long id);
+extern int GetMovable(unsigned long id);
+extern void SetMovable(unsigned long id, int f);
 
 int GetChange(unsigned long id)
 {

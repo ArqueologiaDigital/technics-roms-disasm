@@ -7,6 +7,8 @@
    cc900-options: -O3 -Xr
 */
 
+extern int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r);
+extern void PanelTlv_WriteRecordHeader(unsigned char *buf, unsigned char *rec);
 extern void FlashWrite(int, unsigned char *, unsigned int, long);
 extern unsigned char *__cdecl Malloc(unsigned int);
 extern void __cdecl Free(void *);
@@ -15,6 +17,7 @@ extern void *__cdecl Mem_Copy(void *, void *, unsigned int);
 extern void Gfx_ClearFrameBuffers(void);
 extern unsigned char SndParamBank_OptionDefault_00[], SndParamBank_OptionDefault_10[], SndParamBank_OptionDefault_20[];
 extern unsigned char SndParamBank_OptionDefault_30[], SndParamBank_OptionDefault_40[];
+extern void SndParamBank_RestoreOptionBlock(void);
 
 int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r)
 {

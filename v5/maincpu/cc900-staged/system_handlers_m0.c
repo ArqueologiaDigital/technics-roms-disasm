@@ -8,6 +8,7 @@
 */
 
 extern void __cdecl SeqBuf_NoteEvent_WriteByte(int);
+extern void SeqDMA_WriteMidi_NoteOn(unsigned char ch, unsigned char *p);
 
 void SeqDMA_WriteMidi_NoteOn(unsigned char ch, unsigned char *p)
 {

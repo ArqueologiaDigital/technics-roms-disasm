@@ -17,6 +17,7 @@ extern void NoteMap_SendAllNotesOff(void);
 extern void AudioInit_RefreshToneBank(void);
 extern void VoiceAlloc_ProcessAll(void);
 extern void BitMapOut_PrepareAndDisplay(void);
+extern void SeqPlay_EmergencyStopAll(void);
 extern unsigned char __near SEQ_PLAY_FLAGS;
 extern unsigned int __near SEQ_REC_TRACKS;
 extern unsigned char __near ACC_TRANSPORT_STATE;
@@ -34,6 +35,7 @@ extern void AccompSeq_StopSequence(void);
 extern void MidiChannel_ResetAndConfigure(void);
 extern void UI_PostTimerResetEvent(void);
 extern void Demo_SelectEntry_AfterSongLoad(void);
+extern void SeqPlay_StopAndResetAll(void);
 extern unsigned char __near CURRENT_TITLE;
 extern unsigned char __near ram_230a;
 extern unsigned char __near ram_1d94;
@@ -47,6 +49,7 @@ extern void SeqAcc_ProcessTempoEvents(void);
 extern void BitMapOut_PrepareAndDisplaySimple(void);
 extern void SeqSyncPosMidiTiming(void);
 extern void AccWrap_FullStop(void);
+extern unsigned char SeqPlay_HandlePlaybackEvent(void);
 
 void SeqPlay_EmergencyStopAll(void)
 {

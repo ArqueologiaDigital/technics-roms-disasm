@@ -52,7 +52,18 @@ def main():
                 if k == 'name':
                     for m in re.finditer(r'cc900-name:\s*(\w+)\s*=', d):
                         names[m.group(1)] = d
-            probe[f[:-2]] = ([d for k, d in its if k in ('decl', 'pp')], names,
+            # a callee the probe DEFINES (a module neighbour that did not match) still needs a prototype in the
+            # staging file, or V4.23 assumes `int f()` (run 87: GetViewInstance's struct pointer, `->box` refused)
+            protos = []
+            for k, d in its:
+                if k == 'fn':
+                    head = d[:d.index('{')].strip()
+                    if re.search(r'\)\s*$', head):                      # an ANSI head
+                        protos.append('extern %s;' % ' '.join(head.split()))
+                    else:                                              # an old-style head: no parameter types
+                        m = re.match(r'([\s\S]*?\b\w+)\s*\([\w\s,]*\)', head)
+                        protos.append('extern %s();' % ' '.join(m.group(1).split()))
+            probe[f[:-2]] = ([d for k, d in its if k in ('decl', 'pp')] + protos, names,
                              {norm(d) for k, d in its if k == 'fn'})
     def probe_for(label, text):
         for stem in matched.get(label, []) + sorted(probe):
@@ -61,7 +72,7 @@ def main():
         return None
     sdir = os.path.join(REPO, 'v10', 'maincpu', 'cc900-staged')
     groups = collections.OrderedDict()
-    src_of, old_files, missing = {}, [], []
+    src_of, old_files, missing, seen = {}, [], [], set()
     for fn in sorted(os.listdir(sdir)):
         if not fn.endswith('.c'):
             continue
@@ -79,6 +90,9 @@ def main():
                 continue
             cn = sp.fn_name(d)
             label = lm.get(cn, cn)
+            if label in seen:                                    # staged twice (an old-style head the skip missed)
+                continue
+            seen.add(label)
             key = (base, flags, mod.get(label, 0))
             nm = [c for c in names if re.search(r'cc900-name:\s*%s\s*=' % re.escape(cn), c)]
             pr = probe_for(label, d)

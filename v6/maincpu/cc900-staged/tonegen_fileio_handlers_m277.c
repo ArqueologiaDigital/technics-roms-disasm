@@ -7,6 +7,8 @@
    cc900-options: -O3 -Xr
 */
 
+extern int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r);
+extern void PanelTlv_WriteRecordHeader(unsigned char *buf, unsigned char *rec);
 
 int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r)
 {

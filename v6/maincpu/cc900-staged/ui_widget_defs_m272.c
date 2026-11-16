@@ -6,9 +6,21 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: GetNextView GetSubView GetSuperView */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: GetNextView GetPrevView GetSubView GetSuperView GetViewInstance MainFuncCall SetChange */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern unsigned int TITLE_FLAGS;
+extern long MainFuncCall(long, long, long);
+extern long TitleProc_ClearResourceDirtyFlag(unsigned int m);
+extern unsigned long GetNextView(unsigned long id);
+extern unsigned long GetSuperView(unsigned long id);
+extern unsigned long GetSubView(unsigned long id);
+extern unsigned long GetLinkView(unsigned long id);
 
+long TitleProc_ClearResourceDirtyFlag(unsigned int m)
+{
+	TITLE_FLAGS &= ~m;
+	return MainFuncCall(0x1400001L, 0x1e000baL, (unsigned long)TITLE_FLAGS);
+}
 
 unsigned long GetLinkView(unsigned long id)
 {

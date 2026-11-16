@@ -6,42 +6,40 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: FDC_SendParameterByte */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern void FDC_ResultPhase_Read(void);
+void FDC_WriteDataRegister();
+extern void FDC_WriteDataRegister();
+extern void FDC_SendCommandByte();
 extern unsigned char __near FDC_TARGET_TRACK;
 void FDC_SendParameterByte();
-extern unsigned char __near FDC_PARAM_N;
-extern unsigned char __near FDC_FORMAT_SC;
-extern unsigned char __near FDC_FORMAT_GPL;
-extern unsigned char __near FDC_FORMAT_FILL;
+extern void FDC_SendParameterByte();
+extern void FDC_SendParam_SeekTrack();
 void FDC_Send_Command();
-void FDC_WriteDataRegister();
+extern void FDC_Send_Command();
 unsigned char FDC_ReadDataRegister();
+extern unsigned char FDC_ReadDataRegister();
 unsigned char FDC_Read_Status();
+extern unsigned char FDC_Read_Status();
+
+
+void FDC_SendCommandByte(c)
+unsigned char c;
+{
+    FDC_ResultPhase_Read();
+    FDC_WriteDataRegister(c);
+}
 
 void FDC_SendParam_SeekTrack()
 {
     FDC_SendParameterByte(FDC_TARGET_TRACK);
 }
 
-void FDC_SendParams_Format()
-{
-    FDC_SendParameterByte(FDC_PARAM_N & 7);
-    FDC_SendParameterByte(FDC_FORMAT_SC);
-    FDC_SendParameterByte(FDC_FORMAT_GPL);
-    FDC_SendParameterByte(FDC_FORMAT_FILL);
-}
-
 void FDC_Send_Command(c)
 unsigned char c;
 {
     *(unsigned char *)0x110008 = c;
-}
-
-void FDC_WriteDataRegister(c)
-unsigned char c;
-{
-    *(unsigned char *)0x11000a = c;
 }
 
 unsigned char FDC_ReadDataRegister()
@@ -52,16 +50,4 @@ unsigned char FDC_ReadDataRegister()
 unsigned char FDC_Read_Status()
 {
     return *(unsigned char *)0x110008;
-}
-
-void FDC_Send_Command(c)
-unsigned char c;
-{
-    *(unsigned char *)0x110008 = c;
-}
-
-void FDC_WriteDataRegister(c)
-unsigned char c;
-{
-    *(unsigned char *)0x11000a = c;
 }

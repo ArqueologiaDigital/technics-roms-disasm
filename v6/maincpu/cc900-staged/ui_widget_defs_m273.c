@@ -6,11 +6,13 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: DrawLineWithMode_Impl SetChangeRect */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char DRAW_QUEUE[];
 extern unsigned char *DRAW_QUEUE_WRITE_PTR;
 extern void Kernel_SemaWait(int);
 extern void Kernel_SemaSignal(int);
+extern unsigned char *DrawQueue_Alloc(unsigned int n);
 struct ev { long obj; long evt; long par; };
 extern struct ev ram_2ec38[];
 extern int ram_2f838;
@@ -19,15 +21,18 @@ extern unsigned int ram_2f842;
 extern void TaskEvent_Wait(int);
 extern void TaskEvent_Signal(int);
 #define MEVQ(i) ((struct ev *)&((char *)ram_2ec38)[(i) * 12])
+extern int MainGetEvent(long *obj, long *evt, long *par);
 extern struct ev EVENT_QUEUE[];
 extern int ram_2ec34;
 extern int ram_2ec36;
 extern unsigned int ram_2f840;
+extern void PostEvent(long obj, long evt, long par);
 struct rect { int x0, y0, x1, y1; };
 extern int ram_3ef4a;
 extern int DISPLAY_UPDATE_FLAG;
 extern struct rect DIRTY_BBOX;
 extern void Kernel_SetTaskLevel(int, int);
+extern void SetChangeRect(struct rect *r);
 
 unsigned char *DrawQueue_Alloc(unsigned int n)
 {

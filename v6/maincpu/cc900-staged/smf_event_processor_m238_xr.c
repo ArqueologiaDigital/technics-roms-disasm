@@ -12,6 +12,7 @@ extern void *__cdecl Mem_Copy(void *, void *, int);
 #define HI16(x) ((unsigned char)((x) >> 8))
 #define B32(x, n) ((unsigned char)(((x) >> (n)) & 0xff))
 #define LO32(x) ((unsigned char)((x) & 0xff))
+extern void __cdecl SeqStep_FileSectorReturn(unsigned char *e, unsigned char *dst);
 
 void __cdecl SeqStep_FileSectorReturn(unsigned char *e, unsigned char *dst)
 {

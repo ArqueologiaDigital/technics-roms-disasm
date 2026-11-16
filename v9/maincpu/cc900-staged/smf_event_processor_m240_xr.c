@@ -8,6 +8,7 @@
 */
 
 extern void *__cdecl Memset(void *, int, int);
+extern int FileIO_MatchWildcard(char *name, char *pat);
 
 int FileIO_MatchWildcard(char *name, char *pat)
 {

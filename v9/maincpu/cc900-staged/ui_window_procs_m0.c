@@ -6,17 +6,33 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: DrawDesignFrame DrawEditSw GetBoxCenter GetClientBox GetDialFocus GetEditSwPoint LabelProc VwBoxProc */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-#define EVT_DRAW              0x1c0000dL
-struct pt { int x, y; };
-struct rect { int x1, y1, x2, y2; };
-struct vinst { unsigned char pad[14]; struct rect r; long l22; long l26; int i30; };
-extern long ViewableProc(long, long, long);
+#define EVT_SW_IN             0x1c00007L
+#define EVT_INDEXSW_UP        0x1c00017L
+#define EVT_INDEXSW_DOWN      0x1c00018L
+#define EVT_MAKE_EDIT_SW_ID   0x1e00029L
+struct esinst { unsigned char pad[32]; unsigned int id; long func; int dial; };
 extern void *GetViewInstance(long);
+extern long ApFuncCall(long, long, long);
+extern long SendEvent(long, long, long);
+extern long LabelProc(long obj, long evt, long p);
+extern long EditSwProc(long obj, long evt, long p);
+#define EVT_DRAW              0x1c0000dL
+struct rect { int x1, y1, x2, y2; };
+struct frinst { unsigned char pad[14]; struct rect r; int i22, i24, i26; };
+extern void DrawDesignFrame(struct rect *, int, int, int);
+extern long ViewableProc(long, long, long);
+extern int GetVisible(long);
+extern long FrameProc(long obj, long evt, long p);
+struct pt { int x, y; };
+struct vinst { unsigned char pad[14]; struct rect r; long l22; long l26; int i30; };
 extern void DrawDesignBox(struct rect *, int, int);
 extern void DrawIcons(struct pt *, long);
+extern long IconProc(long obj, long evt, long p);
 struct lineinst { unsigned char pad[14]; int x1, y1, x2, y2; int color; unsigned char dir; unsigned char pad2; };
 extern void DrawLine(struct pt *, struct pt *, int);
+extern long LineProc(long obj, long evt, long p);
 #define EVT_SHOW              0x1c00001L
 #define EVT_HIDE              0x1c00002L
 extern void DrawBitmap(struct pt *, unsigned char *);
@@ -26,6 +42,36 @@ extern unsigned char *FDemo_LinkedListLookupField(char *);
 extern void DrawBitmapFile(struct pt *, unsigned char *);
 extern void ChangePalette(int);
 extern char VwUserBitmapByName_Str_BmpExt[];
+extern long VwUserBitmapByNameProc(long obj, long evt, long p);
+
+long EditSwProc(long obj, long evt, long p)
+{
+	struct esinst *h;
+
+	if (evt != EVT_SW_IN) return LabelProc(obj, evt, p);
+	h = GetViewInstance(obj);
+	if (h->id == SendEvent(0x2600024L, EVT_MAKE_EDIT_SW_ID, p)) {
+		ApFuncCall(h->func, evt, p);
+		if (h->dial != -1) {
+			if (p & 0x80) SendEvent(-1L, EVT_INDEXSW_DOWN, (long)h->dial);
+			else SendEvent(-1L, EVT_INDEXSW_UP, (long)h->dial);
+		}
+		return 0;
+	}
+	return LabelProc(obj, evt, p);
+}
+
+long FrameProc(long obj, long evt, long p)
+{
+	struct frinst *h;
+
+	if (evt != EVT_DRAW) return ViewableProc(obj, evt, p);
+	if (GetVisible(obj) == 0) return 1;
+	ViewableProc(obj, evt, p);
+	h = GetViewInstance(obj);
+	DrawDesignFrame(&h->r, h->i22, h->i24, h->i26);
+	return 0;
+}
 
 long IconProc(long obj, long evt, long p)
 {
