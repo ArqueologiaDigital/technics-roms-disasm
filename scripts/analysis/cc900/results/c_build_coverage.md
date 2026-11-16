@@ -9,8 +9,8 @@ the image is built from it (`.include` of its generated body); library C is chec
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 20266        | 17354             | 0.230 %       | 3146             | 17120           |
-| reference model               | 21720        | 18808             | 0.250 %       | 4328             | 17392           |
+| Toshiba V4.23                 | 21202        | 18290             | 0.243 %       | 4082             | 17120           |
+| reference model               | 21894        | 18982             | 0.252 %       | 4502             | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
 All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an image counts on its own.
@@ -19,17 +19,17 @@ All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996729 | firmware C | 83    | 526 / 526          | 723 / 723          | 0 / 0             | 0.073 %         | 4                     |
+| v10        | 2097152 | 996729 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
 | v10        | 2097152 | 996729 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996394 | firmware C | 83    | 526 / 526          | 723 / 723          | 0 / 0             | 0.073 %         | 4                     |
+| v9         | 2097152 | 996394 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
 | v9         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996394 | firmware C | 83    | 526 / 526          | 723 / 723          | 0 / 0             | 0.073 %         | 4                     |
+| v8         | 2097152 | 996394 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
 | v8         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993980 | firmware C | 83    | 526 / 526          | 723 / 723          | 0 / 0             | 0.073 %         | 4                     |
+| v7         | 2097152 | 993980 | firmware C | 86    | 685 / 685          | 755 / 755          | 0 / 0             | 0.076 %         | 0                     |
 | v7         | 2097152 | 993980 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992958 | firmware C | 82    | 521 / 521          | 718 / 718          | 0 / 0             | 0.072 %         | 4                     |
+| v6         | 2097152 | 992958 | firmware C | 84    | 671 / 671          | 741 / 741          | 0 / 0             | 0.075 %         | 0                     |
 | v6         | 2097152 | 992958 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991874 | firmware C | 82    | 521 / 521          | 718 / 718          | 0 / 0             | 0.072 %         | 4                     |
+| v5         | 2097152 | 991874 | firmware C | 84    | 671 / 671          | 741 / 741          | 0 / 0             | 0.075 %         | 0                     |
 | v5         | 2097152 | 991874 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128907 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v141       | 196608  | 128884 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
@@ -73,33 +73,35 @@ found yet.
 | v10   | FileIO_SetModeFlag_Writing            | v10/maincpu/cc900/file_demo_proc.c         | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | FileIO_WriteRecordName_Loop           | v10/maincpu/cc900/file_demo_proc.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | Display_SetBackgroundColor            | v10/maincpu/cc900/graphics_text_vga.c      | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | FormatMedleyNumber                    | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
-| v10   | Smf_GetMidiOut                        | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v10   | Smf_GetPlayAsGm                       | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v10   | Smf_SetMidiOut                        | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
+| v10   | FormatMedleyNumber                    | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | Smf_GetMidiOut                        | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | Smf_GetPlayAsGm                       | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | Smf_SetMidiOut                        | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v10   | GetDialEnableState                    | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | SetDialEnable                         | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SeCtr2_SetSelection                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_ClearNotification              | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_CopyWriteUpdate_Step3_Helper14 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_OrPartConfig                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_ResetSubIndex                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_ReturnZero                     | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetConfirmState                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetCurrentStep                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetDisplayState                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetFilterCoeff                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetFilterMode                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetFilterParam1                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetLastSwitch                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetMode                        | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetPatchBank                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetSelectedRow                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetSoundBank                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_SetWriteMemSlot                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_StoreEventId                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_StorePartMask                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v10   | SeMenu_TriggerNotification            | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v10   | SeCtr2_SetSelection                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_ClearNotification              | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_CopyWriteUpdate_Step3_Helper14 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_InterpolateEdgeX               | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_OrPartConfig                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_ResetSubIndex                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_ReturnZero                     | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetConfirmState                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetCurrentStep                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetDisplayState                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetFilterCoeff                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetFilterMode                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetFilterParam1                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetLastSwitch                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetMode                        | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetPatchBank                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetSelectedRow                 | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetSoundBank                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_SetWriteMemSlot                | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_StoreAbsoluteValue             | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_StoreEventId                   | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_StorePartMask                  | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SeMenu_TriggerNotification            | v10/maincpu/cc900/semenu_routines.c        | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v10   | AccTuning_ResetFiveParts_Rec0         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | AccTuning_ResetFiveParts_Rec1         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v10   | AccTuning_ResetFiveParts_Rec2         | v10/maincpu/cc900/seq_audio_mode.c         | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -120,22 +122,23 @@ found yet.
 | v10   | GetCurrentPartSelect                  | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | GetPartSelect                         | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v10   | SeqState_HasModeChanged               | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetCurrentTarget                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetFocusObject                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetModeNow                            | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetModeOld                            | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetNamingWindowID                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetRootEvent                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetRootObject                         | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetTitleNow                           | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | GetTitleOld                           | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | ResetLswFilter                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SetCurrentTarget                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SetLswFilter                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SetRootEvent                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SetRootObject                         | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v10   | SetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | CheckNotDrawFlag                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetCurrentTarget                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetFocusObject                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetModeNow                            | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetModeOld                            | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetNamingWindowID                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetRootEvent                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetRootObject                         | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetTitleNow                           | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | GetTitleOld                           | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | ResetLswFilter                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SetCurrentTarget                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SetLswFilter                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SetRootEvent                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SetRootObject                         | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v10   | SetRootParam                          | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v9    | BitMapOut_ByteData_DiskCheck          | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | BitMapOut_GetRenderMode               | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
@@ -156,33 +159,35 @@ found yet.
 | v9    | FileIO_SetModeFlag_Writing            | v9/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | FileIO_WriteRecordName_Loop           | v9/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | Display_SetBackgroundColor            | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | FormatMedleyNumber                    | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
-| v9    | Smf_GetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v9    | Smf_GetPlayAsGm                       | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v9    | Smf_SetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
+| v9    | FormatMedleyNumber                    | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | Smf_GetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | Smf_GetPlayAsGm                       | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | Smf_SetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v9    | GetDialEnableState                    | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | SetDialEnable                         | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SeCtr2_SetSelection                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_ClearNotification              | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_OrPartConfig                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_ResetSubIndex                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_ReturnZero                     | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetConfirmState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetCurrentStep                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetDisplayState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetFilterCoeff                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetFilterMode                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetFilterParam1                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetLastSwitch                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetMode                        | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetPatchBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetSelectedRow                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetSoundBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_SetWriteMemSlot                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_StoreEventId                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_StorePartMask                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v9    | SeMenu_TriggerNotification            | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v9    | SeCtr2_SetSelection                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_ClearNotification              | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_InterpolateEdgeX               | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_OrPartConfig                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_ResetSubIndex                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_ReturnZero                     | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetConfirmState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetCurrentStep                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetDisplayState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetFilterCoeff                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetFilterMode                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetFilterParam1                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetLastSwitch                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetMode                        | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetPatchBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetSelectedRow                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetSoundBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_SetWriteMemSlot                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_StoreAbsoluteValue             | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_StoreEventId                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_StorePartMask                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SeMenu_TriggerNotification            | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v9    | AccTuning_ResetFiveParts_Rec0         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | AccTuning_ResetFiveParts_Rec1         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v9    | AccTuning_ResetFiveParts_Rec2         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -203,22 +208,23 @@ found yet.
 | v9    | GetCurrentPartSelect                  | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | GetPartSelect                         | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v9    | SeqState_HasModeChanged               | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetFocusObject                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetModeNow                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetModeOld                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetNamingWindowID                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetTitleNow                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | GetTitleOld                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | ResetLswFilter                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SetLswFilter                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v9    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | CheckNotDrawFlag                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetFocusObject                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetModeNow                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetModeOld                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetNamingWindowID                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetTitleNow                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | GetTitleOld                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | ResetLswFilter                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SetLswFilter                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v9    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v8    | BitMapOut_ByteData_DiskCheck          | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | BitMapOut_GetRenderMode               | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | BitMapOut_PrepareRender_CheckBit1     | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
@@ -239,33 +245,35 @@ found yet.
 | v8    | FileIO_SetModeFlag_Writing            | v9/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | FileIO_WriteRecordName_Loop           | v9/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | Display_SetBackgroundColor            | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | FormatMedleyNumber                    | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
-| v8    | Smf_GetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v8    | Smf_GetPlayAsGm                       | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v8    | Smf_SetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
+| v8    | FormatMedleyNumber                    | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | Smf_GetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | Smf_GetPlayAsGm                       | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | Smf_SetMidiOut                        | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v8    | GetDialEnableState                    | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | SetDialEnable                         | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SeCtr2_SetSelection                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_ClearNotification              | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_OrPartConfig                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_ResetSubIndex                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_ReturnZero                     | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetConfirmState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetCurrentStep                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetDisplayState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetFilterCoeff                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetFilterMode                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetFilterParam1                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetLastSwitch                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetMode                        | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetPatchBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetSelectedRow                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetSoundBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_SetWriteMemSlot                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_StoreEventId                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_StorePartMask                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v8    | SeMenu_TriggerNotification            | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v8    | SeCtr2_SetSelection                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_ClearNotification              | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_InterpolateEdgeX               | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_OrPartConfig                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_ResetSubIndex                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_ReturnZero                     | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetConfirmState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetCurrentStep                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetDisplayState                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetFilterCoeff                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetFilterMode                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetFilterParam1                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetLastSwitch                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetMode                        | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetPatchBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetSelectedRow                 | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetSoundBank                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_SetWriteMemSlot                | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_StoreAbsoluteValue             | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_StoreEventId                   | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_StorePartMask                  | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SeMenu_TriggerNotification            | v9/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v8    | AccTuning_ResetFiveParts_Rec0         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | AccTuning_ResetFiveParts_Rec1         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v8    | AccTuning_ResetFiveParts_Rec2         | v9/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -286,22 +294,23 @@ found yet.
 | v8    | GetCurrentPartSelect                  | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | GetPartSelect                         | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v8    | SeqState_HasModeChanged               | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetFocusObject                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetModeNow                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetModeOld                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetNamingWindowID                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetTitleNow                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | GetTitleOld                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | ResetLswFilter                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SetLswFilter                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v8    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | CheckNotDrawFlag                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetFocusObject                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetModeNow                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetModeOld                            | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetNamingWindowID                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetTitleNow                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | GetTitleOld                           | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | ResetLswFilter                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SetCurrentTarget                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SetLswFilter                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SetRootEvent                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SetRootObject                         | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v8    | SetRootParam                          | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v7    | BitMapOut_ByteData_DiskCheck          | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | BitMapOut_GetRenderMode               | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | BitMapOut_PrepareRender_CheckBit1     | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
@@ -322,33 +331,35 @@ found yet.
 | v7    | FileIO_SetModeFlag_Writing            | v7/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | FileIO_WriteRecordName_Loop           | v7/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | Display_SetBackgroundColor            | v7/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | FormatMedleyNumber                    | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
-| v7    | Smf_GetMidiOut                        | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v7    | Smf_GetPlayAsGm                       | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v7    | Smf_SetMidiOut                        | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
+| v7    | FormatMedleyNumber                    | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | Smf_GetMidiOut                        | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | Smf_GetPlayAsGm                       | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | Smf_SetMidiOut                        | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v7    | GetDialEnableState                    | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | SetDialEnable                         | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SeCtr2_SetSelection                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_ClearNotification              | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_OrPartConfig                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_ResetSubIndex                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_ReturnZero                     | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetConfirmState                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetCurrentStep                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetDisplayState                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetFilterCoeff                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetFilterMode                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetFilterParam1                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetLastSwitch                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetMode                        | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetPatchBank                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetSelectedRow                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetSoundBank                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_SetWriteMemSlot                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_StoreEventId                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_StorePartMask                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v7    | SeMenu_TriggerNotification            | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v7    | SeCtr2_SetSelection                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_ClearNotification              | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_CopyWriteUpdate_Step3_Helper14 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_InterpolateEdgeX               | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_OrPartConfig                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_ResetSubIndex                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_ReturnZero                     | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetConfirmState                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetCurrentStep                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetDisplayState                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetFilterCoeff                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetFilterMode                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetFilterParam1                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetLastSwitch                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetMode                        | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetPatchBank                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetSelectedRow                 | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetSoundBank                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_SetWriteMemSlot                | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_StoreAbsoluteValue             | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_StoreEventId                   | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_StorePartMask                  | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SeMenu_TriggerNotification            | v7/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v7    | AccTuning_ResetFiveParts_Rec0         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | AccTuning_ResetFiveParts_Rec1         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v7    | AccTuning_ResetFiveParts_Rec2         | v7/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -369,22 +380,23 @@ found yet.
 | v7    | GetCurrentPartSelect                  | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | GetPartSelect                         | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v7    | SeqState_HasModeChanged               | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetCurrentTarget                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetFocusObject                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetModeNow                            | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetModeOld                            | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetNamingWindowID                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetRootEvent                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetRootObject                         | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetTitleNow                           | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | GetTitleOld                           | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | ResetLswFilter                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SetCurrentTarget                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SetLswFilter                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SetRootEvent                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SetRootObject                         | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v7    | SetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | CheckNotDrawFlag                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetCurrentTarget                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetFocusObject                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetModeNow                            | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetModeOld                            | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetNamingWindowID                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetRootEvent                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetRootObject                         | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetTitleNow                           | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | GetTitleOld                           | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | ResetLswFilter                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SetCurrentTarget                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SetLswFilter                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SetRootEvent                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SetRootObject                         | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v7    | SetRootParam                          | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v6    | BitMapOut_ByteData_DiskCheck          | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | BitMapOut_GetRenderMode               | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | BitMapOut_PrepareRender_CheckBit1     | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
@@ -405,32 +417,33 @@ found yet.
 | v6    | FileIO_SetModeFlag_Writing            | v6/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | FileIO_WriteRecordName_Loop           | v6/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | Display_SetBackgroundColor            | v6/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | FormatMedleyNumber                    | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
-| v6    | Smf_GetMidiOut                        | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v6    | Smf_GetPlayAsGm                       | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v6    | Smf_SetMidiOut                        | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
+| v6    | FormatMedleyNumber                    | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | Smf_GetMidiOut                        | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | Smf_GetPlayAsGm                       | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | Smf_SetMidiOut                        | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v6    | GetDialEnableState                    | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | SetDialEnable                         | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SeCtr2_SetSelection                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_ClearNotification              | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_OrPartConfig                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_ResetSubIndex                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_ReturnZero                     | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetConfirmState                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetCurrentStep                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetDisplayState                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetFilterCoeff                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetFilterMode                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetFilterParam1                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetLastSwitch                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetMode                        | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetPatchBank                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetSelectedRow                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetSoundBank                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_SetWriteMemSlot                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_StoreEventId                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_StorePartMask                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v6    | SeMenu_TriggerNotification            | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v6    | SeCtr2_SetSelection                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_ClearNotification              | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_OrPartConfig                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_ResetSubIndex                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_ReturnZero                     | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetConfirmState                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetCurrentStep                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetDisplayState                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetFilterCoeff                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetFilterMode                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetFilterParam1                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetLastSwitch                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetMode                        | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetPatchBank                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetSelectedRow                 | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetSoundBank                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_SetWriteMemSlot                | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_StoreAbsoluteValue             | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_StoreEventId                   | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_StorePartMask                  | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SeMenu_TriggerNotification            | v6/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v6    | AccTuning_ResetFiveParts_Rec0         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | AccTuning_ResetFiveParts_Rec1         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v6    | AccTuning_ResetFiveParts_Rec2         | v6/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -451,22 +464,23 @@ found yet.
 | v6    | GetCurrentPartSelect                  | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | GetPartSelect                         | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v6    | SeqState_HasModeChanged               | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetCurrentTarget                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetFocusObject                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetModeNow                            | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetModeOld                            | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetNamingWindowID                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetRootEvent                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetRootObject                         | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetTitleNow                           | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | GetTitleOld                           | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | ResetLswFilter                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SetCurrentTarget                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SetLswFilter                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SetRootEvent                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SetRootObject                         | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v6    | SetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | CheckNotDrawFlag                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetCurrentTarget                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetFocusObject                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetModeNow                            | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetModeOld                            | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetNamingWindowID                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetRootEvent                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetRootObject                         | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetTitleNow                           | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | GetTitleOld                           | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | ResetLswFilter                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SetCurrentTarget                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SetLswFilter                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SetRootEvent                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SetRootObject                         | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v6    | SetRootParam                          | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v5    | BitMapOut_ByteData_DiskCheck          | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | BitMapOut_GetRenderMode               | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | BitMapOut_PrepareRender_CheckBit1     | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | differs                | 2026-11-16-18-p6-firmware |
@@ -487,32 +501,33 @@ found yet.
 | v5    | FileIO_SetModeFlag_Writing            | v5/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | FileIO_WriteRecordName_Loop           | v5/maincpu/cc900/file_demo_proc.c          | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | Display_SetBackgroundColor            | v5/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | FormatMedleyNumber                    | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | not yet checked        | -                         |
-| v5    | Smf_GetMidiOut                        | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v5    | Smf_GetPlayAsGm                       | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked        | -                         |
-| v5    | Smf_SetMidiOut                        | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked        | -                         |
+| v5    | FormatMedleyNumber                    | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 108   | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | Smf_GetMidiOut                        | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | Smf_GetPlayAsGm                       | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | Smf_SetMidiOut                        | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v5    | GetDialEnableState                    | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | SetDialEnable                         | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SeCtr2_SetSelection                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_ClearNotification              | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_OrPartConfig                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_ResetSubIndex                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_ReturnZero                     | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetConfirmState                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetCurrentStep                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetDisplayState                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetFilterCoeff                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetFilterMode                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetFilterParam1                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetLastSwitch                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetMode                        | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetPatchBank                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetSelectedRow                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetSoundBank                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_SetWriteMemSlot                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_StoreEventId                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_StorePartMask                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
-| v5    | SeMenu_TriggerNotification            | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
+| v5    | SeCtr2_SetSelection                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_ClearNotification              | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_OrPartConfig                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_ResetSubIndex                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_ReturnZero                     | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 3     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetConfirmState                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetCurrentStep                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetDisplayState                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetFilterCoeff                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetFilterMode                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetFilterParam1                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetLastSwitch                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetMode                        | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetPatchBank                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetSelectedRow                 | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetSoundBank                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_SetWriteMemSlot                | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_StoreAbsoluteValue             | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_StoreEventId                   | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_StorePartMask                  | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SeMenu_TriggerNotification            | v5/maincpu/cc900/semenu_routines.c         | -O3 -XS -Xr | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
 | v5    | AccTuning_ResetFiveParts_Rec0         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | AccTuning_ResetFiveParts_Rec1         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
 | v5    | AccTuning_ResetFiveParts_Rec2         | v5/maincpu/cc900/seq_audio_mode.c          | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-18-p6-firmware |
@@ -533,32 +548,20 @@ found yet.
 | v5    | GetCurrentPartSelect                  | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | GetPartSelect                         | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
 | v5    | SeqState_HasModeChanged               | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetCurrentTarget                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetFocusObject                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetModeNow                            | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetModeOld                            | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetNamingWindowID                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetRootEvent                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetRootObject                         | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetRootParam                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetTitleNow                           | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | GetTitleOld                           | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | ResetLswFilter                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SetCurrentTarget                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SetLswFilter                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SetRootEvent                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SetRootObject                         | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-| v5    | SetRootParam                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
-
-### V4.23 runs needed
-
-These C files have no V4.23 listing of their current text.  `c_build_coverage.py --v423-corpus DIR` copies
-them into DIR and prints the oracle run (`oracle/run_oracle.sh`) and the command that files its result.
-
-| C file                     | options     |
-|----------------------------|-------------|
-| v10/maincpu/cc900/medley.c | -O3 -XS -Xr |
-| v5/maincpu/cc900/medley.c  | -O3 -XS -Xr |
-| v6/maincpu/cc900/medley.c  | -O3 -XS -Xr |
-| v7/maincpu/cc900/medley.c  | -O3 -XS -Xr |
-| v9/maincpu/cc900/medley.c  | -O3 -XS -Xr |
+| v5    | CheckNotDrawFlag                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetCurrentTarget                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetFocusObject                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetModeNow                            | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetModeOld                            | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetNamingWindowID                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetRootEvent                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetRootObject                         | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetRootParam                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetTitleNow                           | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | GetTitleOld                           | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | ResetLswFilter                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SetCurrentTarget                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SetLswFilter                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SetRootEvent                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SetRootObject                         | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
+| v5    | SetRootParam                          | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-21-p6-firmware |
