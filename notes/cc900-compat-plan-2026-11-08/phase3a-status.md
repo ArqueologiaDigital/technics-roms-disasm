@@ -3891,6 +3891,13 @@ variable other than WA goes through XWA, as micro rules.c r_divmod_i shows (now 
 row -- run 2026-11-09-1-micro-rules -- so the ledger does not move).  Validation, ledger and library unchanged;
 semcheck 9.
 
+**The training pool joins the ledger (2026-11-16, model of batch 356).**  random9-12 + rstmt9-12 (strategy report 04,
+R4a; corpus/pool9-12-README.md; oracle run 2026-11-16-4-micro-pool9-12): random 116 / 78 / 104 / 72 of 800, rstmt
+3,501 / 3,314 / 3,346 / 3,187 of 4,666 -- the same level as validation and the holdout, so the pool stands for unseen
+code.  semcheck on rstmt9-12 shows 85 verdicts of the unchanged model (9 -> 94; listed in
+semcheck-pool9-12-base356-2026-11-16.txt), most expected to be out-of-range-input artefacts; the contract-mode semcheck
+(R4c, in progress) will separate real wrong code from them.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

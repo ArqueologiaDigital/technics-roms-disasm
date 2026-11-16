@@ -421,6 +421,32 @@ for c in none O3XS; do    # pointer arithmetic, compares and indirect calls (cor
 done
 row "run 2026-11-16-3-micro-ptrar, v423/Xr" "probes/ptrar.c" "$O/2026-11-16-3-micro-ptrar/out/v423/Xr/probes" corpus/probes/ptrar.c --opt none --adecl
 row "run 2026-11-16-3-micro-ptrar, v423/O3XSXr" "probes/ptrar.c" "$O/2026-11-16-3-micro-ptrar/out/v423/O3XSXr/probes" corpus/probes/ptrar.c --opt O3XS --adecl
+# the training pool random9-12 + rstmt9-12 (corpus/pool9-12-README.md, strategy report 04 R4a)
+for c in none O3XS; do
+  row "run 2026-11-16-4-micro-pool9-12, v423/$c" "random9/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/$c/random9" corpus/random9/*.c --opt $c
+done
+row "run 2026-11-16-4-micro-pool9-12, v423/Xr" "random9/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/Xr/random9" corpus/random9/*.c --opt none --adecl
+row "run 2026-11-16-4-micro-pool9-12, v423/O3XSXr" "random9/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/O3XSXr/random9" corpus/random9/*.c --opt O3XS --adecl
+for c in none O3XS; do
+  row "run 2026-11-16-4-micro-pool9-12, v423/$c" "random10/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/$c/random10" corpus/random10/*.c --opt $c
+done
+row "run 2026-11-16-4-micro-pool9-12, v423/Xr" "random10/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/Xr/random10" corpus/random10/*.c --opt none --adecl
+row "run 2026-11-16-4-micro-pool9-12, v423/O3XSXr" "random10/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/O3XSXr/random10" corpus/random10/*.c --opt O3XS --adecl
+for c in none O3XS; do
+  row "run 2026-11-16-4-micro-pool9-12, v423/$c" "random11/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/$c/random11" corpus/random11/*.c --opt $c
+done
+row "run 2026-11-16-4-micro-pool9-12, v423/Xr" "random11/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/Xr/random11" corpus/random11/*.c --opt none --adecl
+row "run 2026-11-16-4-micro-pool9-12, v423/O3XSXr" "random11/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/O3XSXr/random11" corpus/random11/*.c --opt O3XS --adecl
+for c in none O3XS; do
+  row "run 2026-11-16-4-micro-pool9-12, v423/$c" "random12/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/$c/random12" corpus/random12/*.c --opt $c
+done
+row "run 2026-11-16-4-micro-pool9-12, v423/Xr" "random12/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/Xr/random12" corpus/random12/*.c --opt none --adecl
+row "run 2026-11-16-4-micro-pool9-12, v423/O3XSXr" "random12/*.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/O3XSXr/random12" corpus/random12/*.c --opt O3XS --adecl
+for c in none O3XS; do
+  row "run 2026-11-16-4-micro-pool9-12, v423/$c" "probes/rstmt9-12.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/$c/probes" corpus/probes/rstmt9.c corpus/probes/rstmt10.c corpus/probes/rstmt11.c corpus/probes/rstmt12.c --opt $c
+done
+row "run 2026-11-16-4-micro-pool9-12, v423/Xr" "probes/rstmt9-12.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/Xr/probes" corpus/probes/rstmt9.c corpus/probes/rstmt10.c corpus/probes/rstmt11.c corpus/probes/rstmt12.c --opt none --adecl
+row "run 2026-11-16-4-micro-pool9-12, v423/O3XSXr" "probes/rstmt9-12.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/O3XSXr/probes" corpus/probes/rstmt9.c corpus/probes/rstmt10.c corpus/probes/rstmt11.c corpus/probes/rstmt12.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
