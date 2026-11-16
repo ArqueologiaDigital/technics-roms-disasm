@@ -12,7 +12,7 @@ and listed.  V4.23 has the last word (staged_v423.py --check).
 
 usage: python3 notes/cc900-phase6-2026-11-16/port_staged.py SIZES.tsv [TREE ...]     (from the repository root)
 """
-import os, re, sys
+import os, re, subprocess, sys
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 sys.path.insert(0, os.path.join(REPO, 'scripts', 'build'))
@@ -129,6 +129,19 @@ def main():
             if not any(k == 'fn' for k, _ in sp.items(out)):
                 print('%s %-30s no function left: not written%s' % (t, fn, ' (an older copy exists: remove it)' if os.path.exists(dst) else ''))
                 continue
+            # the tree may hold these functions in another hand source (v7's SysEx_ClampVoiceIndex*_49 are in
+            # midi/midipkt_routines.s, v10's in audio/dsp_config_sysex.s): name that file in the header
+            hm = re.search(r'Functions of (\S+\.s)', out)
+            lm = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', out)}
+            labels = [lm.get(sp.fn_name(d), sp.fn_name(d)) for k, d in sp.items(out) if k == 'fn']
+            if hm:
+                tree = os.path.join(REPO, t, 'maincpu')
+                where = set()
+                for lab in labels:
+                    r = subprocess.run(['grep', '-rlE', '--include=*.s', '^%s:' % lab, tree], capture_output=True, text=True)
+                    where |= {os.path.relpath(x, tree) for x in r.stdout.split() if '/generated/' not in x}
+                if len(where) == 1 and hm.group(1) not in where:
+                    out = out.replace('Functions of %s' % hm.group(1), 'Functions of %s' % where.pop(), 1)
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             open(dst, 'w', encoding='latin-1').write(out)
             moved = ', '.join('%s->%x' % (k, v) for k, v in sorted(amap.items()) if int(k[4:] if k.startswith('ram_') else k, 16) != v)

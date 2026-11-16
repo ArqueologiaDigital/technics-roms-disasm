@@ -90,6 +90,9 @@ NAME_RE = re.compile(rb'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
 # KN_MEM_TO_MEM: with -O only, a copy of 8 / 16 bits with a 16-bit absolute side whose value is not used again is one
 # memory-to-memory move (ld (#16),(mem) / ld (mem),(#16)); the model's rule must test -O itself, so that the firmware's
 # -Xr files keep their register copies (notes/cc900-phase6-2026-11-16/README.md, the memory-to-memory census).
+# Most probably UNNECESSARY (2026-11-16, later): V4.23 itself writes these moves when one side is a __near cell
+# (run 2026-11-16-92-p6-r18, FDC_CMD_SEND / FDC_MC_EXIT_Code_Helper2); the firmware's moves are then V4.23 with
+# __near declarations.  Kept as the no-op it is until the model work resumes.
 FIRMWARE_RULES = ("KN_LOOP_INVERT", "KN_SHIFT_UNSIGNED_SLL", "KN_MEM_TO_MEM")
 C_NAME_LIMIT = 31
 EQU_RE = re.compile(rb'^\s*\.(?:equ|set)\s+([A-Za-z_][\w.]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;|$)')
@@ -619,10 +622,44 @@ MODEL_HINT = ("\nThe Python reference model (CC900_COMPILER=model) does not supp
               "default build, Toshiba V4.23 in the oracle VM (`make`, CC900_COMPILER=v423), compiles it.")
 
 
+JR_LOCAL_RE = re.compile(r'^\tjr[ \t]+(?:(\w+),\s*)?(\.L\w+)\s*$')
+
+
 def assembler_errors(text):
+    """llvm-mc's errors for to_llvm.relax(), plus one `N:1: error: out of range` per `jr` to a local label that does
+    not reach it.  llvm-mc itself relaxes such a jr to jrl without a word, so the generated body used to keep `jr`
+    and leave the choice to the layout; but a relaxable jr counts 2 bytes in the first layout pass, and the
+    `.org` checks of the hand sources pad for it, so a hand `jr` that crosses an `.org` sees its target that much
+    further away and is relaxed for good (r18 gate, lane_p6: v10/v9 `.org 0xf97d8d` one byte past, with the hand
+    `jr nz` +116 at 0xf97d6b; the same source without that `.org` was byte-identical).  Writing jrl where it is
+    needed keeps the first layout exact."""
     r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-filetype=obj", "-o", os.devnull],
                        input=text, capture_output=True, text=True)
-    return r.stderr
+    return r.stderr + short_jr_out_of_reach(text)
+
+
+def short_jr_out_of_reach(text):
+    lines = text.split("\n")
+    if not any(JR_LOCAL_RE.match(l) for l in lines) or any(l.startswith("\t.") for l in lines):
+        return ""
+    r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-show-encoding"],
+                       input=text + "\n", capture_output=True, text=True)
+    sizes = [len(m.group(1).split(",")) for m in re.finditer(r'encoding: \[([^\]]*)\]', r.stdout)]
+    insn = [i for i, l in enumerate(lines) if l.startswith("\t") and l.strip()]
+    if r.returncode or len(sizes) != len(insn):
+        return ""
+    at, label, off, size = {}, {}, 0, dict(zip(insn, sizes))
+    for i, l in enumerate(lines):
+        if not l.startswith("\t") and l.endswith(":"):
+            label[l[:-1]] = off
+        at[i] = off
+        off += size.get(i, 0)
+    out = ""
+    for i in insn:
+        m = JR_LOCAL_RE.match(lines[i])
+        if m and m.group(2) in label and not -128 <= label[m.group(2)] - (at[i] + size[i]) <= 127:
+            out += "<stdin>:%d:1: error: out of range (jr to a local label, written jrl)\n" % (i + 1)
+    return out
 
 
 def tabbed(line):

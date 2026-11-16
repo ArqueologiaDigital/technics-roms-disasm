@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: BmDrEdit_CalcSongPosition */   /* staged module names, repair_module_lines.py */
 
 extern unsigned char SeqData_ReadNextByte(void);
 extern unsigned int PartCtrl_ReadWord_Off1(unsigned int);
@@ -79,4 +80,39 @@ void BmDrEdit_CountMeasuresAndValidate(void)
 		SeqData_SkipToNextEvent();
 	}
 	if (SEQ_ERROR_CODE != 0) SeqData_SetErrorCode(0xce);
+}
+
+extern unsigned char __near ram_25be;
+extern unsigned char __near ram_276a;
+extern unsigned char __near ram_278a[];
+extern unsigned int __near ram_2780;
+extern unsigned int __near ram_2768;
+extern void BmDrEdit_CalcSongPosition(void);
+void BmDrEdit_CalcBeatMeasure(void);
+extern void BmDrEdit_CalcSongPosition(void);
+
+void BmDrEdit_CalcSongPosition(void);
+
+void BmDrEdit_CalcBeatMeasure(void)
+{
+	unsigned int n, i;
+	unsigned char *t;
+
+	n = ram_2780 / 96;
+	ram_25be = 0;
+	ram_2758 = n;
+	if (n != 0) {
+		i = 1;
+		ram_25be = 1;
+		t = ram_278a;
+		for (;;) {
+			if (t[i] != 0) ram_25be = 0;
+			i++;
+			if ((ram_2758 = ram_2758 - 1) == 0) break;
+			ram_25be++;
+		}
+	}
+	ram_2768 = ram_25be;
+	ram_276a = ram_2780 % 96;
+	BmDrEdit_CalcSongPosition();
 }

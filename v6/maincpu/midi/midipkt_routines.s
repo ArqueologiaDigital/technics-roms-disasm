@@ -1169,15 +1169,9 @@ SysEx_ClampVoiceIndex128_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret
-SysEx_ClampVoiceIndex8_49:
-	cp	a, 8
-	jr	c, SysEx_ClampVoiceIndex8_49_DoLookup
-	ld	a, 0:opc
-SysEx_ClampVoiceIndex8_49_DoLookup:
-	extz	wa
-	lda	xbc, (SysEx49_VoiceIndexMap8:24)
-	ld	l, (xbc+wa)
-	ret
+SysEx_ClampVoiceIndex8_49:	.include "includes/generated/cc900/SysEx_ClampVoiceIndex8_49.s"	; C: cc900/midipkt_routines_m290_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysEx_ClampVoiceIndex8_49_DoLookup, SysEx_ClampVoiceIndex8_49 + 7
 SysEx_ApplyToSlot49_Format_Data:
 	dec	2, xsp
 	push	xiz
@@ -1226,15 +1220,9 @@ SysEx_ApplyToSlot49_Format_Data_Epilogue:
 	pop	xiz
 	inc	2, xsp
 	ret
-SysEx_ClampVoiceIndex128_49:
-	cp	a, 128
-	jr	c, SysEx_ClampVoiceIndex128_49_DoLookup
-	ld	a, 0:opc
-SysEx_ClampVoiceIndex128_49_DoLookup:
-	extz	wa
-	lda	xbc, (SysEx49_LevelCurve128:24)
-	ld	l, (xbc+wa)
-	ret
+SysEx_ClampVoiceIndex128_49:	.include "includes/generated/cc900/SysEx_ClampVoiceIndex128_49.s"	; C: cc900/midipkt_routines_m290_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysEx_ClampVoiceIndex128_49_DoLookup, SysEx_ClampVoiceIndex128_49 + 7
 SysEx_DispatchByChannel:
 	ldw	hl, 0xd8f0
 	ld	e, c

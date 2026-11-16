@@ -315,104 +315,17 @@ CompLoad_Return:
 	inc 2, xsp
 	ret
 
-RenderFilterDisplay:
-	dec 6, xsp
-	ld (xsp), c
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 2)
-	ld c, (xsp)
-	ld (xwa+), c
-	ld (xsp + 2), xwa
-	cp (xsp), 0x0
-	jr nz, RenderFilter_CheckType1
-	call GetCurrentFileType
-	cp l, 0:i3
-	jr z, RenderFilter_CheckType1
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilterDisplay_Str_Dash_Dash_Dash_Dash
-	jrl RenderFilter_CopyAndReturn
-
-RenderFilter_CheckType1:
-	cp (xsp), 0x1
-	jr nz, RenderFilter_CheckGeneric
-	call GetCurrentFileType
-	cp l, 0:i3
-	jr z, RenderFilter_CheckGeneric
-	ld wa, 0:i3
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, RenderFilter_Type1_Unavail
-	ld wa, 0:i3
-	call FileIO_WriteRecordName_Done
-	cp l, 0:i3
-	jr z, RenderFilter_Type1_Restricted
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_CheckType1_Str_YES
-	jrl RenderFilter_CopyAndReturn
-
-RenderFilter_Type1_Restricted:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_Type1_Restricted_Str_NO
-	jr RenderFilter_CopyAndReturn
-
-RenderFilter_Type1_Unavail:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_Type1_Unavail_Str_Dash_Dash_Dash_Dash
-	jr RenderFilter_CopyAndReturn
-
-RenderFilter_CheckGeneric:
-	ld a, (xsp)
-	extz wa
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, RenderFilter_CheckType2
-	ld a, (xsp)
-	extz wa
-	call FileIO_WriteRecordName_Done
-	cp l, 0:i3
-	jr z, RenderFilter_Generic_Restricted
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_CheckGeneric_Str_YES
-	jr RenderFilter_CopyAndReturn
-
-RenderFilter_Generic_Restricted:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_Generic_Restricted_Str_NO
-	jr RenderFilter_CopyAndReturn
-
-RenderFilter_CheckType2:
-	cp (xsp), 0x2
-	jr nz, RenderFilter_Default
-	ldw wa, 0x8
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, RenderFilter_Default
-	ldw wa, 0x9
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, RenderFilter_Default
-	ld a, (xsp)
-	extz wa
-	call FileIO_WriteRecordName_Done
-	cp l, 0:i3
-	jr z, RenderFilter_Type2_Restricted
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_CheckType2_Str_YES
-	jr RenderFilter_CopyAndReturn
-
-RenderFilter_Type2_Restricted:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_Type2_Restricted_Str_NO
-	jr RenderFilter_CopyAndReturn
-
-RenderFilter_Default:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderFilter_Type2_Restricted_Str_Dash_Dash_Dash_Dash
-
-RenderFilter_CopyAndReturn:
-	call FileIO_CopyString
-	inc 6, xsp
-	ret
+RenderFilterDisplay:	.include "includes/generated/cc900/RenderFilterDisplay.s"	; C: cc900/composer_filters_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RenderFilter_CheckType1, RenderFilterDisplay + 42
+	.set	RenderFilter_Type1_Restricted, RenderFilterDisplay + 86
+	.set	RenderFilter_Type1_Unavail, RenderFilterDisplay + 96
+	.set	RenderFilter_CheckGeneric, RenderFilterDisplay + 106
+	.set	RenderFilter_Generic_Restricted, RenderFilterDisplay + 140
+	.set	RenderFilter_CheckType2, RenderFilterDisplay + 150
+	.set	RenderFilter_Type2_Restricted, RenderFilterDisplay + 199
+	.set	RenderFilter_Default, RenderFilterDisplay + 209
+	.set	RenderFilter_CopyAndReturn, RenderFilterDisplay + 217
 
 FmmLoadFilterFunc:
 	dec 6, xsp

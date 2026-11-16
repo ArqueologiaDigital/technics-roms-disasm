@@ -1,7 +1,7 @@
 /* Phase 6, lane_p6 helper C, round 9, module 257 (modules_v10.tsv) of v10 sequencer/accompaniment_engine.s: the two
    parameter editors that call Tempo_DisplayParamCommon by calr, with that callee and its neighbours defined here.
    Round 9: the step is computed from a second copy of the value (the ROM's `ld BC,WA` before the range tests). */
-/* cc900-module: Tempo_DisplayParamCommon */
+/* cc900-module: Tempo_DisplayParamCommon */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char __near ram_e3e2;
 extern unsigned char __near ram_e3e4;

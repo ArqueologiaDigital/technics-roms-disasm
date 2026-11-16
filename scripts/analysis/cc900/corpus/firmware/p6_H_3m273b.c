@@ -1,6 +1,7 @@
 /* lane_p6 helper H, round 3, module 273, form b (other declaration orders; DrawRect_Impl with an explicit &r->y0 pointer).  SetChangeRect and IsPointOnScreen as matched in run 53.  ui_widget_defs.s (KillApTimer, MainDeleteEvent,
    DeleteSpecificEvent, SetChangeRect), kn5000_v10_program.s (DrawRect_Impl), ui_window_procs.s (IsPointOnScreen).
    DrawLineWithMode_Impl is a STUB here: present only so DrawRect_Impl's calls to it come out as calr. */
+/* cc900-module: DrawLineWithMode_Impl SetChangeRect */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 struct aptimer { int prev; int next; long time; long obj; long target; long event; long param; };
 extern struct aptimer ram_2f844[];

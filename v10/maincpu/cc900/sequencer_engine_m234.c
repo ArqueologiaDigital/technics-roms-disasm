@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: PartCtrl_ReadWord */   /* staged module names, repair_module_lines.py */
 
 extern unsigned char __near SEQ_RTMCFG;
 extern unsigned int __near SEQ_TRACK_MASK;
@@ -27,4 +28,12 @@ void SeqAcc_RestorePlaybackState(void)
     ram_28a5 |= 0x01;
   } else ram_28a5 &= ~0x01;
   CtrlPanel_SetIndicatorBit(0x4c);
+}
+
+extern unsigned char ram_b0000[];
+extern unsigned int PartCtrl_ReadWord(unsigned int n);
+
+unsigned int PartCtrl_ReadWord(unsigned int n)
+{
+  return *(unsigned int *)((unsigned long)ram_b0000 + (((unsigned long)(n - 1) << 8) + 3));
 }

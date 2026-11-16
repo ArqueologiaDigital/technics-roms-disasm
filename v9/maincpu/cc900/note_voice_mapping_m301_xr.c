@@ -17,3 +17,31 @@ void SubCPU_SendSystemRecord(unsigned char a, unsigned char c, unsigned char e)
   MIDI_SendCmdPacket(b);
   MIDI_PostSendStub();
 }
+
+extern void MIDI_SendChannelPressure(unsigned char ch, unsigned char v);
+extern void MIDI_SendControlChange(unsigned char ch, unsigned char cc, unsigned char v);
+extern void MIDI_SendPitchBend(unsigned char ch, unsigned int v);
+
+void MIDI_SendChannelPressure(unsigned char ch, unsigned char v)
+{
+  unsigned char b[5];
+  b[0] = 4; b[1] = 0xd0; b[2] = ch; b[3] = 0; b[4] = v;
+  MIDI_SendCmdPacket(b);
+  MIDI_PostSendStub();
+}
+void MIDI_SendControlChange(unsigned char ch, unsigned char cc, unsigned char v)
+{
+  unsigned char b[5];
+  b[0] = 4; b[1] = 0xb0; b[2] = ch; b[3] = cc; b[4] = v;
+  MIDI_SendCmdPacket(b);
+  MIDI_PostSendStub();
+}
+void MIDI_SendPitchBend(unsigned char ch, unsigned int v)
+{
+  unsigned char b[5];
+  b[0] = 4; b[1] = 0xe0; b[2] = ch;
+  b[3] = v & 0x7f;
+  b[4] = (v & 0x3fff) >> 7;
+  MIDI_SendCmdPacket(b);
+  MIDI_PostSendStub();
+}

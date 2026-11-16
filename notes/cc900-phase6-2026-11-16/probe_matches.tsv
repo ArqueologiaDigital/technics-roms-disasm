@@ -365,3 +365,105 @@ Tempo_DisplayParamCommon	14	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3
 Tempo_DisplayParamFormat	10	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
 Tempo_DisplayParamSkipClear	11	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
 TimeSig_ProcNop	1	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
+DataBuf_CopyVoiceBlock24	570	2026-11-16-72-p6-r13	p6_D_8m285@O3XSXr p6_D_8m285@O3Xr p6_D_8m285b@O3XSXr p6_D_8m285b@O3Xr
+FDC_ReadDataRegister	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_Read_Status	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_Send_Command	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_WriteDataRegister	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FileIO_MatchWildcard	221	2026-11-16-72-p6-r13	p6_E_2b@Xr
+FileIO_ReadHeaderAtF	37	2026-11-16-72-p6-r13	p6_F_2m266a@O3Xr p6_F_2m266a@Xr p6_F_2m266b@O3Xr p6_F_2m266b@Xr
+IsPointOnScreen	31	2026-11-16-72-p6-r13	p6_H_3m273a@O3XSXr p6_H_3m273a@O3Xr p6_H_3m273b@O3XSXr p6_H_3m273b@O3Xr
+SeqStep_FileSectorDone	34	2026-11-16-72-p6-r13	p6_E_2a@Xr p6_E_2b@Xr p6_E_2c@Xr
+SeqStep_FileSectorReturn	231	2026-11-16-72-p6-r13	p6_E_2c@Xr
+SetChangeRect	80	2026-11-16-72-p6-r13	p6_H_3m273a@O3XSXr p6_H_3m273a@O3Xr p6_H_3m273b@O3XSXr p6_H_3m273b@O3Xr
+Sprintf_FormatFFixed	785	2026-11-16-72-p6-r13	p6_E_2b@O3XSXr
+Tempo_DisplayParamCommon	14	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+Tempo_DisplayParamFormat	10	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+Tempo_DisplayParamSkipClear	11	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+TimeSig_ProcNop	1	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+IconProc	117	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+LineProc	130	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+RenderFilterDisplay	224	2026-11-16-68-p6-r12	p6_G_2a@O3Xr
+SeqDMA_WriteMidi_NoteOn	36	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2a@Xr p6_G_2b@O3Xr p6_G_2b@Xr
+SndParamBank_WriteFlashDefaults	201	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+VwUserBitmapByNameProc	178	2026-11-16-68-p6-r12	p6_G_2a@O3Xr p6_G_2b@O3Xr
+FDC_SendParam_SeekTrack	9	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_SendParams_Format	39	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+GetBox	17	2026-11-16-72-p6-r13	p6_A_10m272a@O3XSXr p6_A_10m272a@O3Xr p6_A_10m272a@Xr p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+GetChange	15	2026-11-16-72-p6-r13	p6_A_10m272a@O3XSXr p6_A_10m272a@O3Xr p6_A_10m272a@Xr p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+GetConst	15	2026-11-16-72-p6-r13	p6_A_10m272a@O3XSXr p6_A_10m272a@O3Xr p6_A_10m272a@Xr p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+GetLinkView	95	2026-11-16-72-p6-r13	p6_A_10m272a@O3Xr p6_A_10m272b@O3Xr
+GetMovable	15	2026-11-16-72-p6-r13	p6_A_10m272a@O3XSXr p6_A_10m272a@O3Xr p6_A_10m272a@Xr p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+GetVisible	15	2026-11-16-72-p6-r13	p6_A_10m272a@O3XSXr p6_A_10m272a@O3Xr p6_A_10m272a@Xr p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+SetBox	36	2026-11-16-72-p6-r13	p6_A_10m272a@O3XSXr p6_A_10m272a@O3Xr p6_A_10m272a@Xr p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+SetChange	25	2026-11-16-72-p6-r13	p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+SetConst	25	2026-11-16-72-p6-r13	p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+SetMovable	25	2026-11-16-72-p6-r13	p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+SetVisible	25	2026-11-16-72-p6-r13	p6_A_10m272b@O3XSXr p6_A_10m272b@O3Xr p6_A_10m272b@Xr
+BmDrEdit_CalcBeatMeasure	101	2026-11-16-87-p6-r15	p6_D_9m232@O3XSXr p6_D_9m232@O3Xr p6_D_9m232@Xr
+EditSwProc	152	2026-11-16-87-p6-r15	p6_G_3m271a@O3XSXr p6_G_3m271a@O3Xr p6_G_3m271b@O3XSXr p6_G_3m271b@O3Xr
+FDC_Exception_Status_Decoder	139	2026-11-16-87-p6-r15	p6_D_9m270@Xr
+FDC_ReadDataRegister	6	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_Read_Status	6	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendAuxCmd	24	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendAuxCmdReadResult	34	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendCommandByte	17	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendParam_SeekTrack	9	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendParameterByte	17	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendParams_Format	39	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_Send_Command	6	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_ValidateOpcode	79	2026-11-16-87-p6-r15	p6_C_10m270@Xr
+FDC_WriteAuxCmdByte	17	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_WriteDataRegister	6	2026-11-16-87-p6-r15	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FileIO_CheckRegionSignature	114	2026-11-16-87-p6-r15	p6_F_3m266a@O3XSXr p6_F_3m266a@O3Xr p6_F_3m266a@Xr
+FileIO_ReadHeaderAt4	40	2026-11-16-87-p6-r15	p6_F_3m266a@O3XSXr p6_F_3m266a@O3Xr p6_F_3m266a@Xr
+FrameProc	89	2026-11-16-87-p6-r15	p6_G_3m271a@O3XSXr p6_G_3m271a@O3Xr p6_G_3m271b@O3XSXr p6_G_3m271b@O3Xr
+GetBox	17	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+GetChange	15	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+GetConst	15	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+GetMovable	15	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+GetVisible	15	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+PartCtrl_ReadWord	19	2026-11-16-87-p6-r15	p6_B_9m234@O3XSXr p6_B_9m234@O3Xr
+SeqStep_FileBufferSetup	224	2026-11-16-87-p6-r15	p6_E_3m238@Xr p6_E_3m238b@Xr
+SeqStep_FileCloseInner	186	2026-11-16-87-p6-r15	p6_E_3a@Xr
+SetBox	36	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+SetChange	25	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+SetConst	25	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+SetMovable	25	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+SetVisible	25	2026-11-16-87-p6-r15	p6_A_11m272a@O3XSXr p6_A_11m272a@O3Xr p6_A_11m272a@Xr p6_A_11m272b@O3XSXr p6_A_11m272b@O3Xr p6_A_11m272b@Xr
+SndParamBank_WriteFlashDefaults	201	2026-11-16-87-p6-r15	p6_G_3a@O3XSXr p6_G_3a@O3Xr p6_G_3b@O3XSXr p6_G_3b@O3Xr
+Tempo_DisplayParamCommon	14	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257a@O3Xr p6_C_10m257a@Xr p6_C_10m257b@O3XSXr p6_C_10m257b@O3Xr p6_C_10m257b@Xr
+Tempo_DisplayParamFormat	10	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257a@O3Xr p6_C_10m257a@Xr p6_C_10m257b@O3XSXr p6_C_10m257b@O3Xr p6_C_10m257b@Xr
+Tempo_DisplayParamSkipClear	11	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257a@O3Xr p6_C_10m257a@Xr p6_C_10m257b@O3XSXr p6_C_10m257b@O3Xr p6_C_10m257b@Xr
+TimeSig_ProcNop	1	2026-11-16-87-p6-r15	p6_C_10m257a@O3XSXr p6_C_10m257a@O3Xr p6_C_10m257a@Xr p6_C_10m257b@O3XSXr p6_C_10m257b@O3Xr p6_C_10m257b@Xr
+TitleProc_ClearResourceDirtyFlag	27	2026-11-16-87-p6-r15	p6_D_9m272@O3XSXr p6_D_9m272@O3Xr
+ExtData_ToneParam_DispatchHandler_Join5	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper	15	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join2	15	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join3	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join4	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join5	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join6	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_CheckMode3_Helper_Join7	9	2026-11-16-88-p6-r16	p6_D_10m280@O3XSXr p6_D_10m280@O3Xr p6_D_10m280@Xr
+ExtData_Voice_UpdateFlags	57	2026-11-16-88-p6-r16	p6_D_10m280@Xr
+Fade_Cancel	55	2026-11-16-88-p6-r16	p6_F_4m293a@O3Xr p6_F_4m293a@Xr p6_F_4m293b@Xr
+FileIO_CompareFiles	284	2026-11-16-88-p6-r16	p6_F_4m267a@O3XSXr p6_F_4m267a@O3Xr p6_F_4m267b@O3XSXr p6_F_4m267b@O3Xr
+FindFirst_SndTable	54	2026-11-16-88-p6-r16	p6_A_12m240a@Xr
+PanelTlv_ValidateRecord	42	2026-11-16-88-p6-r16	p6_A_12m277a@O3Xr p6_A_12m277b@O3Xr
+SeGfx_StaticOp09_Box	42	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+SeGfx_StaticOp0A_ShadowBox2	225	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+SeGfx_StaticOp13_DottedBox	157	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+SeGfx_StaticOp22_ShadowBox1	135	2026-11-16-88-p6-r16	p6_C_11m273@O3XSXr p6_C_11m273@O3Xr
+FDC_Send_Command	6	2026-11-16-72-p6-r13 (lane_nmx re-check)	p6_nm_FDC_Send_Command__1b318ec2@O3XSXr
+FDC_WriteDataRegister	6	2026-11-16-72-p6-r13 (lane_nmx re-check)	p6_nm_FDC_WriteDataRegister__1b318ec2@O3XSXr
+FontGlyph_ByteData	17	2026-11-16-22-p6-m9 (lane_nmx re-check)	p6_nm_FontGlyph_ByteData__d82be996@O3XSXr
+MIDI_SendChannelPressure	33	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_MIDI_SendChannelPressure__51f33f7d@Xr
+MIDI_SendControlChange	32	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_MIDI_SendControlChange__51f33f7d@Xr
+MIDI_SendPitchBend	46	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_MIDI_SendPitchBend__51f33f7d@Xr
+SeqStep_FileSectorProcess	72	2026-11-16-55-p6-r10 (lane_nmx re-check)	p6_nm_SeqStep_FileSectorProcess__7b4aee5b@Xr
+Sprintf_FFixed_DataTable	20	2026-11-16-68-p6-r12 (lane_nmx re-check)	p6_nm_Sprintf_FFixed_DataTable__cea2fdcc@O3Xr
+SysEx_ClampVoiceIndex128_49	20	2026-11-16-22-p6-m9 (lane_nmx re-check)	p6_nm_SysEx_ClampVoiceIndex128_49__d82be996@O3XSXr
+SysEx_ClampVoiceIndex8_49	20	2026-11-16-22-p6-m9 (lane_nmx re-check)	p6_nm_SysEx_ClampVoiceIndex8_49__d82be996@O3XSXr
+TGReg_WriteCC0_AltMask	98	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_TGReg_WriteCC0_AltMask__f87946ba@O3XSXr
+TGReg_WriteCC0_Volume	98	2026-11-16-40-p6-r8 (lane_nmx re-check)	p6_nm_TGReg_WriteCC0_Volume__f87946ba@O3XSXr
+Tempo_EditBPM	53	2026-11-16-45-p6-r9 (lane_nmx re-check)	p6_nm_Tempo_EditBPM__f7566970@O3Xr

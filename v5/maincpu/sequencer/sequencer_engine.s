@@ -6863,23 +6863,7 @@ SeqStart_FinalInit:
 	res	7, (8952:16)
 	ret
 
-SeqPlay_EmergencyStopAll:
-	ld	a, (0x230a:16)
-	cp a, 0:i3
-	ret NZ
-	ld	(8970:16), 1
-	ldw	(SEQ_TRACK_MASK:16), 0x0000
-	call	Audio_CheckSubsystemReady
-	call	AccWrap_PositionClear
-	res	0, (10378:16)
-	ldw	wa, 50
-	call	SeqBuf_WriteNoteOffEntry
-	call	NoteMap_SendAllNotesOff
-	call	AudioInit_RefreshToneBank
-	call	VoiceAlloc_ProcessAll
-	call	BitMapOut_PrepareAndDisplay
-	ld	(8970:16), 0
-	ret
+SeqPlay_EmergencyStopAll:	.include "includes/generated/cc900/SeqPlay_EmergencyStopAll.s"	; C: cc900/sequencer_engine_m233.c
 Seq_ResetAndRestartAccompaniment:
 	ldw (SEQ_ACTIVE_PARTS:16), 0x0000
 	call SeqTimer_BarReturn
@@ -6898,54 +6882,11 @@ Seq_ResetRestart_NormalPath:
 
 Seq_ResetRestart_CheckSubsystem:
 	jp	Audio_CheckSubsystemReady
-SeqPlay_StopAndResetAll:
-	bit	0, (SEQ_PLAY_FLAGS:16)
-	jr z, SeqPlay_StopReset_NotPlaying
-	cpw	(SEQ_REC_TRACKS:16), 0
-	ret nz
-	ld	(8950:16), 0
-	ret
-
-SeqPlay_StopReset_NotPlaying:
-	ld a, (ACC_TRANSPORT_STATE:16)
-	bit 3, a
-	jr nz, SeqPlay_StopReset_DispatchAccomp
-	bit 2, a
-	jr z, SeqPlay_StopReset_DispatchAccomp
-	bit 2, (SEQ_TRANSPORT_STATE:16)
-	ret z
-	call AccWrap_PlayModeStopExpr
-	ld	(8950:16), 0
-	jr SeqPlay_StopReset_CleanupAll
-
-SeqPlay_StopReset_DispatchAccomp:
-	call AccWrap_PlayModeDispatch
-SeqPlay_StopReset_CleanupAll:
-	res	5, (SEQ_CONTROL_FLAGS:16)
-	ldw	wa, 50
-	call	SeqBuf_WriteNoteOffEntry
-	call	NoteMap_SendAllNotesOff
-	call	AudioInit_RefreshToneBank
-	call	VoiceAlloc_ProcessAll
-	call	AccompSeq_StopSequence
-	res	7, (10386:16)
-	call	MidiChannel_ResetAndConfigure
-	res	3, (SEQ_RTMCFG:16)
-	ldw	(SEQ_START_MEASURE:16), 1
-	ldw	(SEQ_ACTIVE_PARTS:16), 0
-	ld	a, (SEQ_CONTROL_FLAGS:16)
-	set	4, a
-	set	2, a
-	ld	(SEQ_CONTROL_FLAGS:16), a
-	ld	(8950:16), 0
-	cp	(CURRENT_MODE:16), 19
-	ret	nz
-	ldw	(SEQ_TRACK_MASK:16), 0
-	call	Audio_CheckSubsystemReady
-	ldw	(SEQ_ACTIVE_PARTS:16), 0
-	call	UI_PostTimerResetEvent
-	call	Demo_SelectEntry_AfterSongLoad
-	ret
+SeqPlay_StopAndResetAll:	.include "includes/generated/cc900/SeqPlay_StopAndResetAll.s"	; C: cc900/sequencer_engine_m233.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_StopReset_NotPlaying, SeqPlay_StopAndResetAll + 20
+	.set	SeqPlay_StopReset_DispatchAccomp, SeqPlay_StopAndResetAll + 51
+	.set	SeqPlay_StopReset_CleanupAll, SeqPlay_StopAndResetAll + 55
 Part_ReadAndProcessVoiceData:
 	lda xsp, (xsp - 24)
 	ld (xsp + 16), xde
@@ -15703,15 +15644,7 @@ PartCtrl_WriteWord_Off1:
 	ld (xde), bc
 	ret
 
-PartCtrl_ReadWord:
-	dec 1, wa
-	extz xwa
-	sll xwa, 8
-	inc 3, xwa
-	ld xbc, 0xb0000
-	add xbc, xwa
-	ld hl, (xbc)
-	ret
+PartCtrl_ReadWord:	.include "includes/generated/cc900/PartCtrl_ReadWord.s"	; C: cc900/sequencer_engine_m234.c
 
 ; ============================================================================
 ; PartCtrl_WriteWord - Write 16-bit word to part control register

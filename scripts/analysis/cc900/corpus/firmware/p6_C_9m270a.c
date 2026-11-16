@@ -1,8 +1,8 @@
 /* Phase 6, lane_p6 helper C, round 9, module 270 (modules_v10.tsv) of v10 storage/fdc_routines.s, form a:
    FDC_CMD_SEND with the module routines it calls by calr, written here.  Form b (p6_C_9m270b.c) differs only
    in the two wait loops. */
+/* cc900-module: FDC_Read_Status FDC_SendParameterByte FDC_Set_Status */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
-/* cc900-module: FDC_Read_Status FDC_ReadDataRegister FDC_Send_Command FDC_WriteDataRegister FDC_WaitReady FDC_WaitParamByteReady FDC_SendCommandByte FDC_SendParameterByte FDC_WriteAuxCmdByte FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendParams_Specify FDC_SendParams_Format FDC_SendParam_SeekTrack FDC_SendParams_ReadWrite FDC_ValidateOpcode FDC_Set_Status FDC_ResultPhase_Read FDC_Wait_Ready_Timeout */
 
 /* __near: the ROM reaches the cell with a 16-bit absolute operand. */
 extern unsigned int __near SYSTEM_TIMESTAMP;

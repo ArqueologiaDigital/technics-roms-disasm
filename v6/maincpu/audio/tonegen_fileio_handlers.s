@@ -286,28 +286,10 @@ PanelTlv_ValidateBlock1_Loop:
 ; ui_widgets/naka_extension_device.c).  The payload starts at base + record_offset + 2; the rules are
 ; applied in order, each by PanelTlv_ApplyFieldRule, which returns the rule's length in hl, up to the 0xFF
 ; that ends the list.
-PanelTlv_ValidateRecord:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp + 4), xwa
-	ld	xwa, (xbc)
-	inc	2, xwa
-	add	(xsp + 4), xwa
-	ld	xiz, (xbc + 4)
-	cp	(xiz), 0xff
-	jr	z, PanelTlv_ValidateRecord_Return
-PanelTlv_ValidateRecord_Loop:
-	ld	xwa, (xsp + 4)
-	ld	xbc, xiz
-	calr	PanelTlv_ApplyFieldRule
-	extz	xhl
-	add	xiz, xhl
-	cp	(xiz), 0xff
-	jr	nz, PanelTlv_ValidateRecord_Loop
-PanelTlv_ValidateRecord_Return:
-	pop	xiz
-	inc	4, xsp
-	ret
+PanelTlv_ValidateRecord:	.include "includes/generated/cc900/PanelTlv_ValidateRecord.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidateRecord_Loop, PanelTlv_ValidateRecord + 21
+	.set	PanelTlv_ValidateRecord_Return, PanelTlv_ValidateRecord + 38
 ; xwa = record payload, xbc -> one field rule.  Byte 0 is the type; the case named below applies it and
 ; returns its length in hl.  `off` is a payload byte; a reset keeps the bits outside the mask:
 ;   0 {0, off, mask}                  payload[off] &= mask                          KeepBits
@@ -374,15 +356,7 @@ PanelTlv_Rule_KeepBits:
 	and	(xwa+hl), c
 	ld	hl, 3:i3
 	ret
-PanelTlv_Rule_ClearBits:
-	ld	xde, xwa
-	ld	l, (xbc+0x1)
-	extz	hl
-	ld	a, (xbc+0x2)
-	cpl	a
-	and	(xde+hl), a
-	ld	hl, 3:i3
-	ret
+PanelTlv_Rule_ClearBits:	.include "includes/generated/cc900/PanelTlv_Rule_ClearBits.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 PanelTlv_Rule_SetBits:
 	ld	xde, xbc
 	ld	l, (xde+0x1)
@@ -562,15 +536,7 @@ PanelTlv_WriteBlock1Headers_Loop:
 	inc	4, xsp
 	ret
 ; xwa = block base, xbc -> a layout record: base[record_offset] = tag, base[record_offset + 1] = len.
-PanelTlv_WriteRecordHeader:
-	ld	xde, xbc
-	ld	xbc, (xde)
-	add	xwa, xbc
-	ld	c, (xde + 8)
-	ld	(xwa), c
-	ld	c, (xde + 9)
-	ld	(xwa + 1), c
-	ret
+PanelTlv_WriteRecordHeader:	.include "includes/generated/cc900/PanelTlv_WriteRecordHeader.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 DSPCfg_SyncBitmapData:
 	lda	xsp, (xsp-18)
 	push	xiz

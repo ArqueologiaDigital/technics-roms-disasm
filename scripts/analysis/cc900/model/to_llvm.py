@@ -372,6 +372,7 @@ def relax(text, assemble):
         for n in bad:
             l = lines[n - 1]
             if '\tjr ' in l: lines[n - 1] = l.replace('\tjr ', '\tjrl '); changed = True
+            elif '\tjr\t' in l: lines[n - 1] = l.replace('\tjr\t', '\tjrl\t'); changed = True
         if not changed: return '\n'.join(lines)
     return '\n'.join(lines)
 
