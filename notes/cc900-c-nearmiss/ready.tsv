@@ -1,6 +1,10 @@
 lane	tree	function	bytes	flags	run	opt	c_copy	cc900_module	in_lane_worktree
 lane_hd	hdae5000	HDAE5000_AttenCpToHDSwCatch	188	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_AttenCpToHDSwCatch__29268af7.c		chd
 lane_hd	hdae5000	HDAE5000_AttenCpToMarkSwCatch	188	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_AttenCpToMarkSwCatch__a0430947.c		chd
+lane_hd	hdae5000	HDAE5000_AttenDelDirSwCatch	292	-Xr	2026-11-16-96-hd-r21-staged	Xr	c/hdae5000/HDAE5000_AttenDelDirSwCatch__d5aabe56.c	HDAE5000_DirList_BuildPage HDAE5000_SongScreen_Refresh HDAE5000_YieldUntilSem1Zero	chd
+lane_hd	hdae5000	HDAE5000_Boot_Init	236	-Xr	2026-11-16-98-hd-r22	Xr	c/hdae5000/HDAE5000_Boot_Init__05ebfc57.c	HDAE5000_Alloc_Memory HDAE5000_Clear_Work_Buffer HDAE5000_Load_Palette	chd
+lane_hd	hdae5000	HDAE5000_CP_FD_DIRNAMECheck	297	-Xr	2026-11-16-98-hd-r22	Xr	c/hdae5000/HDAE5000_CP_FD_DIRNAMECheck__fc73aed1.c	HDAE5000_DirList_BuildPage HDAE5000_DirName_StoreWithUi HDAE5000_NameHistory_Recall	chd
+lane_hd	hdae5000	HDAE5000_CopyVersionString	43	-Xr	2026-11-16-84-hd-r17-staged	Xr	c/hdae5000/HDAE5000_CopyVersionString__7337b78d.c		chd
 lane_hd	hdae5000	HDAE5000_DebugTrace	1	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_DebugTrace__171b7d74.c		chd
 lane_hd	hdae5000	HDAE5000_Delay_Loop	17	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Delay_Loop__40e3b5d2.c		chd
 lane_hd	hdae5000	HDAE5000_DeleteSongPart_Cmp	222	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_DeleteSongPart_Cmp__40e3b5d2.c		chd
@@ -13,18 +17,27 @@ lane_hd	hdae5000	HDAE5000_DeleteSongPart_Sqt	222	-Xr	2026-11-16-78-hd-r15-ports	
 lane_hd	hdae5000	HDAE5000_DeleteSongPart_Tlx	222	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_DeleteSongPart_Tlx__9ed646e8.c		chd
 lane_hd	hdae5000	HDAE5000_DeleteSongPart_Tm	222	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_DeleteSongPart_Tm__40e3b5d2.c		chd
 lane_hd	hdae5000	HDAE5000_DirName_Address	13	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_DirName_Address__e727d540.c		chd
-lane_hd	hdae5000	HDAE5000_DirName_SetAndStore	34	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_DirName_SetAndStore__c85bbe16.c	HDAE5000_HD_StoreTables	chd
+lane_hd	hdae5000	HDAE5000_DirName_SetAndStore	34	-Xr	2026-11-16-83-hd-r16	Xr	c/hdae5000/HDAE5000_DirName_SetAndStore__0ded6ef7.c	HDAE5000_HD_StoreTables	chd
 lane_hd	hdae5000	HDAE5000_FdList_Clear	270	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_FdList_Clear__2667212f.c		chd
 lane_hd	hdae5000	HDAE5000_FlsItem_Clear	119	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_FlsItem_Clear__40e3b5d2.c		chd
-lane_hd	hdae5000	HDAE5000_FlsItem_IsSet	66	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_FlsItem_IsSet__b3c37196.c		chd
-lane_hd	hdae5000	HDAE5000_FlsName_SetAndStore	47	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_FlsName_SetAndStore__c85bbe16.c	HDAE5000_HD_StoreTables	chd
+lane_hd	hdae5000	HDAE5000_FlsItem_IsSet	66	-Xr	2026-11-16-83-hd-r16	Xr	c/hdae5000/HDAE5000_FlsItem_IsSet__a5d4ae1c.c		chd
+lane_hd	hdae5000	HDAE5000_FlsItem_SetAutoLoad	66	-Xr	2026-11-16-85-hd-r18-ports	Xr	c/hdae5000/HDAE5000_FlsItem_SetAutoLoad__fdd60608.c	HDAE5000_FlsItem_IsSet	chd
+lane_hd	hdae5000	HDAE5000_FlsItem_SetAutoStart	66	-Xr	2026-11-16-85-hd-r18-ports	Xr	c/hdae5000/HDAE5000_FlsItem_SetAutoStart__fdd60608.c	HDAE5000_FlsItem_IsSet	chd
+lane_hd	hdae5000	HDAE5000_FlsName_SetAndStore	47	-Xr	2026-11-16-83-hd-r16	Xr	c/hdae5000/HDAE5000_FlsName_SetAndStore__0ded6ef7.c	HDAE5000_HD_StoreTables	chd
+lane_hd	hdae5000	HDAE5000_FlsNamingCheck	296	-Xr	2026-11-16-98-hd-r22	Xr	c/hdae5000/HDAE5000_FlsNamingCheck__fc73aed1.c	HDAE5000_FlsList_BuildPage HDAE5000_FlsName_StoreWithUi HDAE5000_NameHistory_Recall	chd
+lane_hd	hdae5000	HDAE5000_FlsNamingCheck2	300	-Xr	2026-11-16-98-hd-r22	Xr	c/hdae5000/HDAE5000_FlsNamingCheck2__fc73aed1.c	HDAE5000_FlsName_StoreWithUi HDAE5000_FlsScreen_Refresh HDAE5000_NameHistory_Recall	chd
 lane_hd	hdae5000	HDAE5000_FlsRecord_Address	26	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_FlsRecord_Address__e727d540.c		chd
 lane_hd	hdae5000	HDAE5000_Fls_GetAutoLoadPending	6	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Fls_GetAutoLoadPending__40e3b5d2.c		chd
 lane_hd	hdae5000	HDAE5000_Fls_SetSeqStopPending	6	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Fls_SetSeqStopPending__40e3b5d2.c		chd
+lane_hd	hdae5000	HDAE5000_Frame_Handler	291	-Xr	2026-11-16-98-hd-r22	Xr	c/hdae5000/HDAE5000_Frame_Handler__ffb6932c.c		chd
+lane_hd	hdae5000	HDAE5000_Get_Init_Flag	6	-Xr	2026-11-16-98-hd-r22	Xr	c/hdae5000/HDAE5000_Get_Init_Flag__05ebfc57.c		chd
+lane_hd	hdae5000	HDAE5000_HDD_UTIL_PAGE	2025	-Xr	2026-11-16-96-hd-r21-staged	Xr	c/hdae5000/HDAE5000_HDD_UTIL_PAGE__d5aabe56.c	HDAE5000_HardTest_HddIdRead HDAE5000_HardTest_Print	chd
 lane_hd	hdae5000	HDAE5000_HD_GetBlockInfo	71	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_HD_GetBlockInfo__40e3b5d2.c		chd
 lane_hd	hdae5000	HDAE5000_HD_GetSongInfo	199	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_HD_GetSongInfo__c3f6b17f.c	HDAE5000_Song_PartMask	chd
-lane_hd	hdae5000	HDAE5000_HD_StoreTables	90	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_HD_StoreTables__c85bbe16.c		chd
+lane_hd	hdae5000	HDAE5000_HD_StoreTables	90	-Xr	2026-11-16-83-hd-r16	Xr	c/hdae5000/HDAE5000_HD_StoreTables__0ded6ef7.c		chd
 lane_hd	hdae5000	HDAE5000_HD_WriteStream	275	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_HD_WriteStream__cdcc27e7.c		chd
+lane_hd	hdae5000	HDAE5000_HdTitleEventCatch	128	-Xr	2026-11-16-85-hd-r18-ports	Xr	c/hdae5000/HDAE5000_HdTitleEventCatch__6f4f9fa7.c	HDAE5000_TitleInfo_Build	chd
+lane_hd	hdae5000	HDAE5000_IvHddNamingProc	295	-Xr	2026-11-16-96-hd-r21-staged	Xr	c/hdae5000/HDAE5000_IvHddNamingProc__531f8a37.c		chd
 lane_hd	hdae5000	HDAE5000_LoadSong_Md	248	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_LoadSong_Md__29268af7.c		chd
 lane_hd	hdae5000	HDAE5000_LoadSong_Pmt	335	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_LoadSong_Pmt__31c00d86.c		chd
 lane_hd	hdae5000	HDAE5000_LoadSong_Rcm	133	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_LoadSong_Rcm__c3f6b17f.c		chd
@@ -42,12 +55,13 @@ lane_hd	hdae5000	HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd	37	-Xr	2026-11-16-76-hd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc10_WriteDirBlockToHd	37	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc10_WriteDirBlockToHd__09cddd05.c	HDAE5000_DebugTrace	chd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd	37	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd__09cddd05.c	HDAE5000_DebugTrace	chd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc12_WriteFlsBlockToHd	37	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc12_WriteFlsBlockToHd__09cddd05.c	HDAE5000_DebugTrace	chd
-lane_hd	hdae5000	HDAE5000_PPORT_Svc16_InitWholeSongInMemory	232	-Xr	2026-11-16-56-hd-r6	Xr	c/hdae5000/HDAE5000_PPORT_Svc16_InitWholeSongInMemory__14f8b2f6.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000	HDAE5000_PPORT_Svc16_InitWholeSongInMemory	232	-Xr	2026-11-16-93-hd-r19-svc	Xr	c/hdae5000/HDAE5000_PPORT_Svc16_InitWholeSongInMemory__fd19afa0.c	HDAE5000_DebugTrace	chd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc17_FormatHd	35	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc17_FormatHd__09cddd05.c	HDAE5000_DebugTrace	chd
-lane_hd	hdae5000	HDAE5000_PPORT_Svc20_PreWholeSongInMemory	191	-Xr	2026-11-16-56-hd-r6	Xr	c/hdae5000/HDAE5000_PPORT_Svc20_PreWholeSongInMemory__14f8b2f6.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000	HDAE5000_PPORT_Svc20_PreWholeSongInMemory	191	-Xr	2026-11-16-93-hd-r19-svc	Xr	c/hdae5000/HDAE5000_PPORT_Svc20_PreWholeSongInMemory__fd19afa0.c	HDAE5000_DebugTrace	chd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc22_WriteCloseHD	39	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc22_WriteCloseHD__09cddd05.c	HDAE5000_DebugTrace	chd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc23_WriteFileHD	27	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc23_WriteFileHD__09cddd05.c	HDAE5000_DebugTrace	chd
 lane_hd	hdae5000	HDAE5000_PPORT_Svc25_ReadFileHD	110	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_PPORT_Svc25_ReadFileHD__09cddd05.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000	HDAE5000_PartList_Build	412	-Xr	2026-11-16-85-hd-r18-ports	Xr	c/hdae5000/HDAE5000_PartList_Build__ee7efac5.c		chd
 lane_hd	hdae5000	HDAE5000_RcmStream_LastResult	6	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_RcmStream_LastResult__40e3b5d2.c		chd
 lane_hd	hdae5000	HDAE5000_Read_Table_Multi	64	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Read_Table_Multi__d145a411.c		
 lane_hd	hdae5000	HDAE5000_Read_Table_Word	52	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Read_Table_Word__d145a411.c		
@@ -62,208 +76,607 @@ lane_hd	hdae5000	HDAE5000_SaveSong_Pmt	217	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/h
 lane_hd	hdae5000	HDAE5000_SaveSong_Sqt	226	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_SaveSong_Sqt__29268af7.c		chd
 lane_hd	hdae5000	HDAE5000_SaveSong_Tm	216	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_SaveSong_Tm__29268af7.c		chd
 lane_hd	hdae5000	HDAE5000_Set_Menu_Visibility	229	-Xr	2026-11-16-76-hd-r14-staged	Xr	c/hdae5000/HDAE5000_Set_Menu_Visibility__2610f2d4.c		chd
+lane_hd	hdae5000	HDAE5000_SetupPage_BuildDriveInfo	598	-Xr	2026-11-16-84-hd-r17-staged	Xr	c/hdae5000/HDAE5000_SetupPage_BuildDriveInfo__7337b78d.c	HDAE5000_CopyVersionString	chd
 lane_hd	hdae5000	HDAE5000_Smf_SwapBytes16	15	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Smf_SwapBytes16__9ed646e8.c		chd
 lane_hd	hdae5000	HDAE5000_Smf_SwapBytes32	59	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Smf_SwapBytes32__9ed646e8.c		chd
-lane_hd	hdae5000	HDAE5000_SongName_SetAndStore	74	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_SongName_SetAndStore__c85bbe16.c	HDAE5000_HD_StoreTables	chd
+lane_hd	hdae5000	HDAE5000_SongName_SetAndStore	74	-Xr	2026-11-16-83-hd-r16	Xr	c/hdae5000/HDAE5000_SongName_SetAndStore__0ded6ef7.c	HDAE5000_HD_StoreTables	chd
 lane_hd	hdae5000	HDAE5000_SongRecord_Address	56	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_SongRecord_Address__e727d540.c		chd
 lane_hd	hdae5000	HDAE5000_Song_CheckFreeSpace	347	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Song_CheckFreeSpace__e94908fb.c		chd
 lane_hd	hdae5000	HDAE5000_Song_IsUsed	553	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Song_IsUsed__e94908fb.c		chd
 lane_hd	hdae5000	HDAE5000_Song_PartMask	566	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_Song_PartMask__5008a7fa.c	HDAE5000_Song_IsUsed	chd
 lane_hd	hdae5000	HDAE5000_SwapBytes16	13	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_SwapBytes16__d145a411.c		chd
 lane_hd	hdae5000	HDAE5000_SwapBytes32	37	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_SwapBytes32__d145a411.c		chd
+lane_hd	hdae5000	HDAE5000_TitleInfo_Build	421	-Xr	2026-11-16-84-hd-r17-staged	Xr	c/hdae5000/HDAE5000_TitleInfo_Build__1bb9da3b.c		chd
 lane_hd	hdae5000	HDAE5000_TlxPart_Describe	47	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_TlxPart_Describe__5008a7fa.c		chd
 lane_hd	hdae5000	HDAE5000_TypeSel_BuildMask	95	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_TypeSel_BuildMask__7a85dd03.c		chd
 lane_hd	hdae5000	HDAE5000_UiObj_SetCaption	25	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_UiObj_SetCaption__40e3b5d2.c		chd
 lane_hd	hdae5000	HDAE5000_YieldUntilSem1Zero	45	-Xr	2026-11-16-78-hd-r15-ports	Xr	c/hdae5000/HDAE5000_YieldUntilSem1Zero__40e3b5d2.c		chd
-lane_p6	v10	BmDrEdit_CalcBeatMeasure	101	-O3 -Xr	2026-11-16-35-p6-r3	O3Xr	c/v10/BmDrEdit_CalcBeatMeasure__d3b51256.c	BmDrEdit_CalcSongPosition	phase6
-lane_p6	v10	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/DrawQueue_Alloc__64df5cb9.c		chd
-lane_p6	v10	FDC_Exception_Status_Decoder	139	-Xr	2026-11-16-35-p6-r3	Xr	c/v10/FDC_Exception_Status_Decoder__d3b51256.c	FDC_Set_Status	phase6
-lane_p6	v10	FDC_ReadDataRegister	6	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/FDC_ReadDataRegister__1b318ec2.c		phase6
-lane_p6	v10	FDC_Read_Status	6	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/FDC_Read_Status__1b318ec2.c		phase6
-lane_p6	v10	FDC_SendParam_SeekTrack	9	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/FDC_SendParam_SeekTrack__1b318ec2.c	FDC_SendParameterByte	phase6
-lane_p6	v10	FDC_SendParams_Format	39	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/FDC_SendParams_Format__1b318ec2.c	FDC_SendParameterByte	phase6
-lane_p6	v10	FDC_Send_Command	6	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/FDC_Send_Command__1b318ec2.c		
-lane_p6	v10	FDC_WriteDataRegister	6	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/FDC_WriteDataRegister__1b318ec2.c		
-lane_p6	v10	FileIO_MatchWildcard	221	-Xr	2026-11-16-72-p6-r13	Xr	c/v10/FileIO_MatchWildcard__a7078af9.c		phase6
-lane_p6	v10	FontGlyph_ByteData	17	-O3 -XS -Xr	2026-11-16-22-p6-m9	O3XSXr	c/v10/FontGlyph_ByteData__d82be996.c		phase6
-lane_p6	v10	GetBox	17	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/GetBox__61b8e5a2.c	GetViewInstance	phase6
-lane_p6	v10	GetChange	15	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/GetChange__61b8e5a2.c	GetViewInstance	phase6
-lane_p6	v10	GetConst	15	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/GetConst__61b8e5a2.c	GetViewInstance	phase6
-lane_p6	v10	GetDiskSizeInfo	27	-O3 -XS -Xr	2026-11-16-53-p6-r11	O3XSXr	c/v10/GetDiskSizeInfo__059fc1db.c		chd
-lane_p6	v10	GetEncodedFreeSpaceData	27	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/GetEncodedFreeSpaceData__5ee78830.c		chd
-lane_p6	v10	GetLinkView	95	-O3 -Xr	2026-11-16-72-p6-r13	O3Xr	c/v10/GetLinkView__61b8e5a2.c	GetNextView GetSubView GetSuperView	phase6
-lane_p6	v10	GetMovable	15	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/GetMovable__61b8e5a2.c	GetViewInstance	phase6
-lane_p6	v10	GetVisible	15	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/GetVisible__61b8e5a2.c	GetViewInstance	phase6
-lane_p6	v10	IconProc	117	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/IconProc__142b615f.c		phase6
-lane_p6	v10	LineProc	130	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/LineProc__142b615f.c		phase6
-lane_p6	v10	MIDI_SendChannelPressure	33	-Xr	2026-11-16-40-p6-r8	Xr	c/v10/MIDI_SendChannelPressure__51f33f7d.c		phase6
-lane_p6	v10	MIDI_SendControlChange	32	-Xr	2026-11-16-40-p6-r8	Xr	c/v10/MIDI_SendControlChange__51f33f7d.c		phase6
-lane_p6	v10	MIDI_SendPitchBend	46	-Xr	2026-11-16-40-p6-r8	Xr	c/v10/MIDI_SendPitchBend__51f33f7d.c		phase6
-lane_p6	v10	MainGetEvent	117	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/MainGetEvent__64df5cb9.c		chd
-lane_p6	v10	PanelTlv_Rule_ClearBits	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/PanelTlv_Rule_ClearBits__dfaeaa54.c		chd
-lane_p6	v10	PanelTlv_WriteRecordHeader	18	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/PanelTlv_WriteRecordHeader__dfaeaa54.c		chd
-lane_p6	v10	PostEvent	126	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/PostEvent__64df5cb9.c		chd
-lane_p6	v10	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/ReadVariableLengthInt__5ee78830.c		chd
-lane_p6	v10	RenderFilterDisplay	224	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/RenderFilterDisplay__142b615f.c		phase6
-lane_p6	v10	SeqDMA_WriteMidi_NoteOn	36	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/SeqDMA_WriteMidi_NoteOn__142b615f.c		phase6
-lane_p6	v10	SeqPlay_EmergencyStopAll	60	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/SeqPlay_EmergencyStopAll__4073e375.c		chd
-lane_p6	v10	SeqPlay_HandlePlaybackEvent	213	-O3 -Xr	2026-11-16-53-p6-r11	O3Xr	c/v10/SeqPlay_HandlePlaybackEvent__7868c53b.c		chd
-lane_p6	v10	SeqPlay_StopAndResetAll	157	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/SeqPlay_StopAndResetAll__4073e375.c		chd
-lane_p6	v10	SeqStep_FileSectorDone	34	-Xr	2026-11-16-72-p6-r13	Xr	c/v10/SeqStep_FileSectorDone__27282ed6.c		phase6
-lane_p6	v10	SeqStep_FileSectorProcess	72	-Xr	2026-11-16-55-p6-r10	Xr	c/v10/SeqStep_FileSectorProcess__7b4aee5b.c		phase6
-lane_p6	v10	SeqStep_FileSectorReturn	231	-Xr	2026-11-16-72-p6-r13	Xr	c/v10/SeqStep_FileSectorReturn__327f70e2.c		phase6
-lane_p6	v10	SetBox	36	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/SetBox__61b8e5a2.c	GetViewInstance SetChange	phase6
-lane_p6	v10	SetChange	25	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/SetChange__a98df405.c	GetViewInstance	phase6
-lane_p6	v10	SetChangeRect	80	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/SetChangeRect__5ba1ef31.c		chd
-lane_p6	v10	SetConst	25	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/SetConst__a98df405.c	GetViewInstance	phase6
-lane_p6	v10	SetMovable	25	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/SetMovable__a98df405.c	GetViewInstance	phase6
-lane_p6	v10	SetVisible	25	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/SetVisible__a98df405.c	GetViewInstance	phase6
-lane_p6	v10	SndParamBank_WriteFlashDefaults	201	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/SndParamBank_WriteFlashDefaults__142b615f.c		phase6
-lane_p6	v10	Sprintf_FormatFFixed	785	-O3 -XS -Xr	2026-11-16-72-p6-r13	O3XSXr	c/v10/Sprintf_FormatFFixed__a7078af9.c		phase6
-lane_p6	v10	SysEx_ClampVoiceIndex128_49	20	-O3 -XS -Xr	2026-11-16-22-p6-m9	O3XSXr	c/v10/SysEx_ClampVoiceIndex128_49__d82be996.c		phase6
-lane_p6	v10	SysEx_ClampVoiceIndex8_49	20	-O3 -XS -Xr	2026-11-16-22-p6-m9	O3XSXr	c/v10/SysEx_ClampVoiceIndex8_49__d82be996.c		phase6
-lane_p6	v10	TGReg_WriteCC0_AltMask	98	-O3 -XS -Xr	2026-11-16-40-p6-r8	O3XSXr	c/v10/TGReg_WriteCC0_AltMask__f87946ba.c		phase6
-lane_p6	v10	TGReg_WriteCC0_Volume	98	-O3 -XS -Xr	2026-11-16-40-p6-r8	O3XSXr	c/v10/TGReg_WriteCC0_Volume__f87946ba.c		phase6
-lane_p6	v10	Tempo_EditBPM	53	-O3 -Xr	2026-11-16-45-p6-r9	O3Xr	c/v10/Tempo_EditBPM__f7566970.c	Tempo_DisplayParamReturn Tempo_DisplayParamSkipClear	phase6
-lane_p6	v10	VwUserBitmapByNameProc	178	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v10/VwUserBitmapByNameProc__142b615f.c		phase6
-lane_p6	v5	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/DrawQueue_Alloc__9044e6ea.c		chd
-lane_p6	v5	GetEncodedFreeSpaceData	27	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/GetEncodedFreeSpaceData__5ee78830.c		chd
-lane_p6	v5	MainGetEvent	117	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/MainGetEvent__9044e6ea.c		chd
-lane_p6	v5	PanelTlv_Rule_ClearBits	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/PanelTlv_Rule_ClearBits__71135102.c		chd
-lane_p6	v5	PanelTlv_WriteRecordHeader	18	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/PanelTlv_WriteRecordHeader__71135102.c		chd
-lane_p6	v5	PostEvent	126	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/PostEvent__9044e6ea.c		chd
-lane_p6	v5	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/ReadVariableLengthInt__5ee78830.c		chd
-lane_p6	v5	SeqPlay_EmergencyStopAll	60	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/SeqPlay_EmergencyStopAll__6e7e8d72.c		chd
-lane_p6	v5	SeqPlay_StopAndResetAll	157	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/SeqPlay_StopAndResetAll__6e7e8d72.c		chd
-lane_p6	v5	SetChangeRect	80	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/SetChangeRect__9044e6ea.c		chd
+lane_p6	v10	AcListBoxProc	421	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/AcListBoxProc__bc075ca6.c	PsListBoxProc SetAutoInc SetDialDown SetDialEnable SetDialUp	phase6
+lane_p6	v10	AccPatch_CopySection	55	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/AccPatch_CopySection__7caacf92.c		phase6
+lane_p6	v10	AccTone_InlineBytecodeData_Code_Helper	50	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/AccTone_InlineBytecodeData_Code_Helper__536d68c5.c		phase6
+lane_p6	v10	BmDrEdit_CalcBeatMeasure	101	-O3 -XS -Xr	2026-11-16-87-p6-r15	O3XSXr	c/v10/BmDrEdit_CalcBeatMeasure__2098e074.c	BmDrEdit_CalcSongPosition	phase6
+lane_p6	v10	BmDrEdit_InitDrumMode	48	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/BmDrEdit_InitDrumMode__b5c38cb9.c	BmDrEdit_InitCommon NoteEditSy_ScanAndSortEntries	phase6
+lane_p6	v10	BmDrEdit_LoadAlternateState	29	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/BmDrEdit_LoadAlternateState__b5c38cb9.c		phase6
+lane_p6	v10	BmDrEdit_RenderHorizontal	61	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/BmDrEdit_RenderHorizontal__b5c38cb9.c		phase6
+lane_p6	v10	BmDrEdit_RenderVertical	61	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/BmDrEdit_RenderVertical__b5c38cb9.c		phase6
+lane_p6	v10	BmDrEdit_SelectChannelAndLoadPos	39	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/BmDrEdit_SelectChannelAndLoadPos__b5c38cb9.c	BmDrEdit_SyncChannelAndGetPos	phase6
+lane_p6	v10	BmDrEdit_SyncChannelAndGetPos	33	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/BmDrEdit_SyncChannelAndGetPos__b5c38cb9.c	BmDrEdit_CheckAndSelectChannel BmDrEdit_ValidateAndProcessVoice	phase6
+lane_p6	v10	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v10/DrawQueue_Alloc__d6e8ccc3.c		chd
+lane_p6	v10	DrawRing_Post	48	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/DrawRing_Post__218ad7c3.c	DrawRing_TryPost	
+lane_p6	v10	EditSwProc	152	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/EditSwProc__26ed91b2.c	GetEditSwPoint LabelProc	phase6
+lane_p6	v10	EffectMode_RunDiagSequence	199	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/EffectMode_RunDiagSequence__1fd0ee5b.c	A_Short_Pause	phase6
+lane_p6	v10	ExtData_PostRawValueAndMask	15	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/ExtData_PostRawValueAndMask__7f071965.c	SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_ToneParam_DispatchHandler_Join5	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_ToneParam_DispatchHandler_Join5__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper_Join2	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper_Join2__72847a25.c	ExtData_SetTlvField ExtData_ToggleTlvBits SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper_Join3	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper_Join3__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper_Join4	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper_Join4__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper_Join5	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper_Join5__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper_Join6	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper_Join6__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_CheckMode3_Helper_Join7	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/ExtData_Voice_CheckMode3_Helper_Join7__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	ExtData_Voice_UpdateFlags	57	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/ExtData_Voice_UpdateFlags__42ef26d8.c	ExtData_SetTlvField ExtData_ToggleTlvBits MIDI_WriteResetSequence SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v10	FDC_CheckHead	33	-Xr	2026-11-16-100-p6-r19	Xr	c/v10/FDC_CheckHead__f9afccc9.c	FDC_Set_Status	phase6
+lane_p6	v10	FDC_CmdSeek	51	-Xr	2026-11-16-100-p6-r19	Xr	c/v10/FDC_CmdSeek__56a7606b.c	FDC_CMD_SEND FDC_POST_OP FDC_TIMING_DELAY SOME_DELAY	phase6
+lane_p6	v10	FDC_Exception_Status_Decoder	139	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/FDC_Exception_Status_Decoder__20a84522.c	FDC_Set_Status	phase6
+lane_p6	v10	FDC_INIT	17	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/FDC_INIT__f9afccc9.c	FDC_Send_Command SOME_DELAY	phase6
+lane_p6	v10	FDC_InitStateVars	65	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/FDC_InitStateVars__f9afccc9.c		phase6
+lane_p6	v10	FDC_Pulse_PH0	13	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/FDC_Pulse_PH0__f9afccc9.c	FDC_NOP_Delay	phase6
+lane_p6	v10	FDC_ReadDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FDC_ReadDataRegister__c58de265.c		phase6
+lane_p6	v10	FDC_Read_Status	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FDC_Read_Status__c58de265.c		phase6
+lane_p6	v10	FDC_SendParam_SeekTrack	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FDC_SendParam_SeekTrack__c58de265.c	FDC_SendParameterByte	phase6
+lane_p6	v10	FDC_SendParams_Format	39	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FDC_SendParams_Format__8abe2f0e.c	FDC_SendParameterByte	phase6
+lane_p6	v10	FDC_SendParams_Specify	54	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/FDC_SendParams_Specify__9f8546f0.c	FDC_SendParameterByte	
+lane_p6	v10	FDC_Send_Command	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FDC_Send_Command__c58de265.c		
+lane_p6	v10	FDC_ValidateOpcode	79	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/FDC_ValidateOpcode__20a84522.c		phase6
+lane_p6	v10	FDC_Validate_Drive_Head	23	-Xr	2026-11-16-100-p6-r19	Xr	c/v10/FDC_Validate_Drive_Head__f9afccc9.c	FDC_Set_Status	phase6
+lane_p6	v10	FDC_WriteDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FDC_WriteDataRegister__8abe2f0e.c		
+lane_p6	v10	Fade_Cancel	55	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v10/Fade_Cancel__25373b07.c	Fade_SetLevel	phase6
+lane_p6	v10	Fat_CountContiguousClusters	82	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/Fat_CountContiguousClusters__bab921b6.c	Fat_ReadEntry	
+lane_p6	v10	FileIO_CheckRegionSignature	114	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FileIO_CheckRegionSignature__05287505.c		phase6
+lane_p6	v10	FileIO_CompareFiles	284	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FileIO_CompareFiles__643dd39b.c		phase6
+lane_p6	v10	FileIO_MatchWildcard	221	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/FileIO_MatchWildcard__52e85729.c		phase6
+lane_p6	v10	FileOpenDefault	38	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/FileOpenDefault__ffe3a3bf.c		chd
+lane_p6	v10	FindFirst_SndTable	54	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/FindFirst_SndTable__52e85729.c	FileIO_ReadNextDirEntry FileIO_ValidateHandle	phase6
+lane_p6	v10	FontGlyph_ByteData	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FontGlyph_ByteData__f5c5ed38.c		phase6
+lane_p6	v10	FrameProc	89	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/FrameProc__26ed91b2.c	DrawDesignFrame	phase6
+lane_p6	v10	GetBox	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetBox__97a38892.c	GetViewInstance	phase6
+lane_p6	v10	GetChange	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetChange__eff54295.c	GetViewInstance	phase6
+lane_p6	v10	GetConst	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v10	GetDiskSizeInfo	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetDiskSizeInfo__8b034114.c		chd
+lane_p6	v10	GetEncodedFreeSpaceData	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetEncodedFreeSpaceData__8b034114.c		chd
+lane_p6	v10	GetEvent	152	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetEvent__2779443e.c	GetCurrentTarget	
+lane_p6	v10	GetLinkView	95	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v10/GetLinkView__ec850fa3.c	GetNextView GetSubView GetSuperView	phase6
+lane_p6	v10	GetMovable	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v10	GetVisible	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/GetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v10	IconProc	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/IconProc__673a0bdd.c		phase6
+lane_p6	v10	InitChannelState_Che_InitVal	130	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/InitChannelState_Che_InitVal__aa227558.c		
+lane_p6	v10	LabelProc	90	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/LabelProc__26ed91b2.c		
+lane_p6	v10	LineProc	130	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/LineProc__673a0bdd.c		phase6
+lane_p6	v10	MIDI_SendChannelPressure	33	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/MIDI_SendChannelPressure__f171a1d8.c		phase6
+lane_p6	v10	MIDI_SendControlChange	32	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/MIDI_SendControlChange__f171a1d8.c		phase6
+lane_p6	v10	MIDI_SendPitchBend	46	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/MIDI_SendPitchBend__f171a1d8.c		phase6
+lane_p6	v10	MainGetEvent	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/MainGetEvent__d6e8ccc3.c		chd
+lane_p6	v10	MidiChan_SetStateMode	41	-O3 -Xr	2026-11-16-100-p6-r19	O3Xr	c/v10/MidiChan_SetStateMode__7f95acf3.c		phase6
+lane_p6	v10	MidiSeq_SyncToneStates_Upper	68	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/MidiSeq_SyncToneStates_Upper__7caacf92.c		phase6
+lane_p6	v10	PanelInput_Poll	23	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/PanelInput_Poll__896c2677.c	PanelInput_DrainRxQueue PanelInput_QueueCpuAdcChanges PanelInput_ScanPedalPorts	phase6
+lane_p6	v10	PanelTlv_Rule_ClearBits	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/PanelTlv_Rule_ClearBits__e99b4bac.c		chd
+lane_p6	v10	PanelTlv_ValidatePanelMemories	37	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/PanelTlv_ValidatePanelMemories__12bcc129.c	PanelTlv_ValidateBlock0	phase6
+lane_p6	v10	PanelTlv_ValidateRecord	42	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v10/PanelTlv_ValidateRecord__e99b4bac.c	PanelTlv_ApplyFieldRule	phase6
+lane_p6	v10	PanelTlv_WritePanelMemoryHeaders	37	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/PanelTlv_WritePanelMemoryHeaders__12bcc129.c	PanelTlv_WriteBlock0Headers	phase6
+lane_p6	v10	PanelTlv_WriteRecordHeader	18	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/PanelTlv_WriteRecordHeader__e99b4bac.c		chd
+lane_p6	v10	PartCtrl_ReadWord	19	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/PartCtrl_ReadWord__fbb0b018.c		phase6
+lane_p6	v10	Part_InitVoiceDefaults	239	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/Part_InitVoiceDefaults__d9361ce1.c	Part_WriteByte Part_WriteWord SeqStatus_CheckBit2	phase6
+lane_p6	v10	Part_UnlinkVoiceFromChain	211	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/Part_UnlinkVoiceFromChain__91539ed5.c	PartCtrl_ReadWord PartCtrl_ReadWord_Off1 PartCtrl_SetClearBit7 PartCtrl_TestBit7 PartCtrl_WriteWord PartCtrl_WriteWord_Off1 Part_DecrementVoicePos Part_WriteWordBlock_OffsetAF	phase6
+lane_p6	v10	PostEvent	126	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/PostEvent__d6e8ccc3.c		chd
+lane_p6	v10	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v10/ReadVariableLengthInt__8b034114.c		chd
+lane_p6	v10	RenderFilterDisplay	224	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/RenderFilterDisplay__bd43dcf9.c		phase6
+lane_p6	v10	SLDstBankList_FuncBody	162	-O3 -Xr	2026-11-16-100-p6-r19	O3Xr	c/v10/SLDstBankList_FuncBody__eb69b8d5.c	NumToAscii_FormatNumber SingleLoad_GetFileBankName TrimAndPadSmfFilename	phase6
+lane_p6	v10	SeGfx_StaticOp00_Line	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeGfx_StaticOp00_Line__a5323eb7.c	DrawLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp01_Line	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeGfx_StaticOp01_Line__a5323eb7.c	DrawLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp02_Line	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeGfx_StaticOp02_Line__a5323eb7.c	DrawLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp09_Box	42	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeGfx_StaticOp09_Box__5cc15961.c	DrawRect	phase6
+lane_p6	v10	SeGfx_StaticOp0A_ShadowBox2	225	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeGfx_StaticOp0A_ShadowBox2__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v10	SeGfx_StaticOp11_DottedLine	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeGfx_StaticOp11_DottedLine__a5323eb7.c	DrawDottedLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp12_DottedLine	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeGfx_StaticOp12_DottedLine__a5323eb7.c	DrawDottedLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp13_DottedBox	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeGfx_StaticOp13_DottedBox__8541c394.c	DrawDottedLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp15_DottedLine	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeGfx_StaticOp15_DottedLine__a5323eb7.c	DrawDottedLineWithMode	phase6
+lane_p6	v10	SeGfx_StaticOp22_ShadowBox1	135	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeGfx_StaticOp22_ShadowBox1__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v10	SeMenu_BindDialToColumn	35	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeMenu_BindDialToColumn__701b5086.c	SeMenu_PostDialEnable SeMenu_PostEditUpDownSet	phase6
+lane_p6	v10	SeMenu_InitObjEntry	27	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeMenu_InitObjEntry__0a758bc5.c	SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_SendEvent	31	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeMenu_SendEvent__701b5086.c	SeMenu_StoreEventId	phase6
+lane_p6	v10	SeqDMA_WriteMidi_NoteOn	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeqDMA_WriteMidi_NoteOn__742b5b57.c		phase6
+lane_p6	v10	SeqError_MapToGlobal	14	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqError_MapToGlobal__85fbeeab.c		phase6
+lane_p6	v10	SeqLoad_RestoreFreeBlockList	13	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqLoad_RestoreFreeBlockList__85fbeeab.c		phase6
+lane_p6	v10	SeqPart_PositionEqual	78	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqPart_PositionEqual__85fbeeab.c	SeqPart_UndoAllocOnError	phase6
+lane_p6	v10	SeqPart_SetupLeftPos	44	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqPart_SetupLeftPos__85fbeeab.c		phase6
+lane_p6	v10	SeqPart_SetupRightPos	44	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqPart_SetupRightPos__85fbeeab.c		phase6
+lane_p6	v10	SeqPart_UndoAllocOnError	23	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqPart_UndoAllocOnError__85fbeeab.c	SeqPart_InitClear	phase6
+lane_p6	v10	SeqPlay_EmergencyStopAll	60	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeqPlay_EmergencyStopAll__c5ce8f04.c		chd
+lane_p6	v10	SeqPlay_HandlePlaybackEvent	213	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v10/SeqPlay_HandlePlaybackEvent__c5ce8f04.c		chd
+lane_p6	v10	SeqPlay_StopAndResetAll	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SeqPlay_StopAndResetAll__c5ce8f04.c		chd
+lane_p6	v10	SeqScan_UpdateBestPositionA	41	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqScan_UpdateBestPositionA__85fbeeab.c		phase6
+lane_p6	v10	SeqScan_UpdateBestPositionB	41	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqScan_UpdateBestPositionB__85fbeeab.c		phase6
+lane_p6	v10	SeqStep_ByteBlockF245	138	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/SeqStep_ByteBlockF245__5b788e55.c		chd
+lane_p6	v10	SeqStep_FileCloseInner	186	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/SeqStep_FileCloseInner__67b847f7.c		phase6
+lane_p6	v10	SeqStep_FileIoCheck	573	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/SeqStep_FileIoCheck__bab921b6.c	SeqStep_FileBufferSetup	
+lane_p6	v10	SeqStep_FileSectorDone	34	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/SeqStep_FileSectorDone__5b788e55.c		phase6
+lane_p6	v10	SeqStep_FileSectorProcess	72	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/SeqStep_FileSectorProcess__5e7e1094.c		phase6
+lane_p6	v10	SeqStep_FileSectorReturn	231	-Xr	2026-11-16-92-p6-r18	Xr	c/v10/SeqStep_FileSectorReturn__5e7e1094.c		phase6
+lane_p6	v10	SeqStep_VelNoteBwd	42	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqStep_VelNoteBwd__e8f9aa13.c	SeqStep_MeasureRead	phase6
+lane_p6	v10	SeqVoice_InitEntryForCurrentBank	32	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqVoice_InitEntryForCurrentBank__85fbeeab.c		phase6
+lane_p6	v10	SeqVoice_SetDefaultParams	31	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SeqVoice_SetDefaultParams__85fbeeab.c		phase6
+lane_p6	v10	Seq_HandleModeTransition	78	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/Seq_HandleModeTransition__85fbeeab.c	SeqModeTransit_DemoPath SeqModeTransit_UpdateParts	phase6
+lane_p6	v10	SetBox	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SetBox__97a38892.c	GetViewInstance SetChange	phase6
+lane_p6	v10	SetChange	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SetChange__97a38892.c	GetViewInstance	phase6
+lane_p6	v10	SetChangeRect	80	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SetChangeRect__d6e8ccc3.c		chd
+lane_p6	v10	SetConst	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v10	SetMovable	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v10	SetVisible	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v10	SingleLoadSrc_PanelMemDrawMemoryNumber	170	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SingleLoadSrc_PanelMemDrawMemoryNumber__0b8562a6.c	NumToAscii_FormatNumber TrimAndPadSmfFilename	
+lane_p6	v10	SndParamBank_RestoreOptionBlock	145	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SndParamBank_RestoreOptionBlock__e99b4bac.c		chd
+lane_p6	v10	SndParamBank_WriteFlashDefaults	201	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SndParamBank_WriteFlashDefaults__9ee5895d.c		phase6
+lane_p6	v10	SndParam_ResolveSelectedPartVoice	49	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SndParam_ResolveSelectedPartVoice__896c2677.c		phase6
+lane_p6	v10	SndParam_WriteLookupAndStore	31	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SndParam_WriteLookupAndStore__7f071965.c	PanelTlv_PayloadOfTag	phase6
+lane_p6	v10	Sprintf_FormatFFixed	785	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/Sprintf_FormatFFixed__40410323.c		phase6
+lane_p6	v10	SysEx_ClampVoiceIndex128_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SysEx_ClampVoiceIndex128_49__77e0ac35.c		phase6
+lane_p6	v10	SysEx_ClampVoiceIndex8_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SysEx_ClampVoiceIndex8_49__77e0ac35.c		phase6
+lane_p6	v10	SysEx_ValidateRolandHeader	137	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/SysEx_ValidateRolandHeader__64b6dab0.c	SysEx_ApplyVoiceParam_49 SysEx_ApplyVoiceParam_49_128 SysEx_ApplyVoiceParam_4B SysEx_ApplyVoiceParam_4B_128	
+lane_p6	v10	TGReg_WriteCC0_AltMask	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/TGReg_WriteCC0_AltMask__b97ba37f.c		phase6
+lane_p6	v10	TGReg_WriteCC0_Volume	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/TGReg_WriteCC0_Volume__b97ba37f.c		phase6
+lane_p6	v10	Tempo_EditBPM	53	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/Tempo_EditBPM__d725c7f2.c	Tempo_DisplayParamReturn Tempo_DisplayParamSkipClear	phase6
+lane_p6	v10	TitleProc_ClearResourceDirtyFlag	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/TitleProc_ClearResourceDirtyFlag__ec850fa3.c	MainFuncCall	phase6
+lane_p6	v10	Unlink	205	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/Unlink__a3608831.c	GetNextView GetPrevView GetSubView GetSuperView GetViewInstance SetChange	
+lane_p6	v10	VoiceMap_AllocateSlot	123	-Xr	2026-11-16-100-p6-r19	Xr	c/v10/VoiceMap_AllocateSlot__7fc87c1c.c	Harmony_FindReferenceNote UIParam_ScanAndCollect Voice_ResetSearchState	phase6
+lane_p6	v10	VoiceType_CheckDrumOrControl	81	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/VoiceType_CheckDrumOrControl__d81ab2ed.c		
+lane_p6	v10	VwUserBitmapByNameProc	178	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/VwUserBitmapByNameProc__673a0bdd.c		phase6
+lane_p6	v10	VwUserBitmapProc	137	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v10/VwUserBitmapProc__9ee5895d.c		
+lane_p6	v10	WordwrapStrings	163	-O3 -Xr	2026-11-16-100-p6-r19	O3Xr	c/v10/WordwrapStrings__ad2033fd.c	CalcTotalWidth	phase6
+lane_p6	v5	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v5/DrawQueue_Alloc__7fd41bf4.c		chd
+lane_p6	v5	EditSwProc	152	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/EditSwProc__9cce09ae.c	LabelProc	phase6
+lane_p6	v5	FDC_Exception_Status_Decoder	139	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/FDC_Exception_Status_Decoder__73f691e6.c	FDC_Set_Status	phase6
+lane_p6	v5	FDC_ReadDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/FDC_ReadDataRegister__0fd4b0da.c		phase6
+lane_p6	v5	FDC_Read_Status	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/FDC_Read_Status__0fd4b0da.c		phase6
+lane_p6	v5	FDC_Send_Command	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/FDC_Send_Command__0fd4b0da.c		
+lane_p6	v5	FDC_WriteDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/FDC_WriteDataRegister__17f72c76.c		
+lane_p6	v5	Fade_Cancel	55	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v5/Fade_Cancel__05bed9b1.c	Fade_SetLevel	phase6
+lane_p6	v5	FileIO_MatchWildcard	221	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/FileIO_MatchWildcard__52e85729.c		phase6
+lane_p6	v5	FindFirst_SndTable	54	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/FindFirst_SndTable__52e85729.c	FileIO_ReadNextDirEntry FileIO_ValidateHandle	phase6
+lane_p6	v5	FontGlyph_ByteData	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/FontGlyph_ByteData__f5c5ed38.c		phase6
+lane_p6	v5	FrameProc	89	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/FrameProc__9cce09ae.c	DrawDesignFrame	phase6
+lane_p6	v5	GetBox	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetBox__97a38892.c	GetViewInstance	phase6
+lane_p6	v5	GetChange	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetChange__eff54295.c	GetViewInstance	phase6
+lane_p6	v5	GetConst	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v5	GetDiskSizeInfo	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetDiskSizeInfo__8b034114.c		chd
+lane_p6	v5	GetEncodedFreeSpaceData	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetEncodedFreeSpaceData__8b034114.c		chd
+lane_p6	v5	GetLinkView	95	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v5/GetLinkView__ec850fa3.c	GetNextView GetSubView GetSuperView	phase6
+lane_p6	v5	GetMovable	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v5	GetVisible	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/GetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v5	IconProc	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/IconProc__9cce09ae.c		phase6
+lane_p6	v5	LineProc	130	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/LineProc__9cce09ae.c		phase6
+lane_p6	v5	MIDI_SendChannelPressure	33	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/MIDI_SendChannelPressure__f171a1d8.c		phase6
+lane_p6	v5	MIDI_SendControlChange	32	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/MIDI_SendControlChange__f171a1d8.c		phase6
+lane_p6	v5	MIDI_SendPitchBend	46	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/MIDI_SendPitchBend__f171a1d8.c		phase6
+lane_p6	v5	MainGetEvent	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/MainGetEvent__7fd41bf4.c		chd
+lane_p6	v5	PanelTlv_Rule_ClearBits	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/PanelTlv_Rule_ClearBits__fd7ed361.c		chd
+lane_p6	v5	PanelTlv_ValidateRecord	42	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v5/PanelTlv_ValidateRecord__fd7ed361.c	PanelTlv_ApplyFieldRule	phase6
+lane_p6	v5	PanelTlv_WriteRecordHeader	18	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/PanelTlv_WriteRecordHeader__fd7ed361.c		chd
+lane_p6	v5	PartCtrl_ReadWord	19	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/PartCtrl_ReadWord__fbb0b018.c		phase6
+lane_p6	v5	PostEvent	126	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/PostEvent__7fd41bf4.c		chd
+lane_p6	v5	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v5/ReadVariableLengthInt__8b034114.c		chd
+lane_p6	v5	SeGfx_StaticOp09_Box	42	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeGfx_StaticOp09_Box__5cc15961.c	DrawRect	phase6
+lane_p6	v5	SeGfx_StaticOp0A_ShadowBox2	225	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeGfx_StaticOp0A_ShadowBox2__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v5	SeGfx_StaticOp13_DottedBox	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeGfx_StaticOp13_DottedBox__8541c394.c	DrawDottedLineWithMode	phase6
+lane_p6	v5	SeGfx_StaticOp22_ShadowBox1	135	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeGfx_StaticOp22_ShadowBox1__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v5	SeqDMA_WriteMidi_NoteOn	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeqDMA_WriteMidi_NoteOn__742b5b57.c		phase6
+lane_p6	v5	SeqPlay_EmergencyStopAll	60	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeqPlay_EmergencyStopAll__098ade3a.c		chd
+lane_p6	v5	SeqPlay_StopAndResetAll	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SeqPlay_StopAndResetAll__098ade3a.c		chd
+lane_p6	v5	SeqStep_FileCloseInner	186	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/SeqStep_FileCloseInner__67b847f7.c		phase6
+lane_p6	v5	SeqStep_FileSectorDone	34	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/SeqStep_FileSectorDone__95a486e1.c		phase6
+lane_p6	v5	SeqStep_FileSectorProcess	72	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/SeqStep_FileSectorProcess__5e7e1094.c		phase6
+lane_p6	v5	SeqStep_FileSectorReturn	231	-Xr	2026-11-16-92-p6-r18	Xr	c/v5/SeqStep_FileSectorReturn__5e7e1094.c		phase6
+lane_p6	v5	SetBox	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SetBox__97a38892.c	GetViewInstance SetChange	phase6
+lane_p6	v5	SetChange	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SetChange__97a38892.c	GetViewInstance	phase6
+lane_p6	v5	SetChangeRect	80	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SetChangeRect__7fd41bf4.c		chd
+lane_p6	v5	SetConst	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v5	SetMovable	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v5	SetVisible	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SetVisible__97a38892.c	GetViewInstance	phase6
 lane_p6	v5	Sprintf_FFixed_DataTable	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v5/Sprintf_FFixed_DataTable__cea2fdcc.c		
-lane_p6	v6	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/DrawQueue_Alloc__9044e6ea.c		chd
-lane_p6	v6	GetEncodedFreeSpaceData	27	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/GetEncodedFreeSpaceData__5ee78830.c		chd
-lane_p6	v6	MainGetEvent	117	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/MainGetEvent__9044e6ea.c		chd
-lane_p6	v6	PanelTlv_Rule_ClearBits	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/PanelTlv_Rule_ClearBits__71135102.c		chd
-lane_p6	v6	PanelTlv_WriteRecordHeader	18	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/PanelTlv_WriteRecordHeader__71135102.c		chd
-lane_p6	v6	PostEvent	126	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/PostEvent__9044e6ea.c		chd
-lane_p6	v6	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/ReadVariableLengthInt__5ee78830.c		chd
-lane_p6	v6	SeqPlay_EmergencyStopAll	60	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/SeqPlay_EmergencyStopAll__6e7e8d72.c		chd
-lane_p6	v6	SeqPlay_StopAndResetAll	157	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/SeqPlay_StopAndResetAll__6e7e8d72.c		chd
-lane_p6	v6	SetChangeRect	80	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/SetChangeRect__9044e6ea.c		chd
+lane_p6	v5	SysEx_ClampVoiceIndex128_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SysEx_ClampVoiceIndex128_49__77e0ac35.c		phase6
+lane_p6	v5	SysEx_ClampVoiceIndex8_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/SysEx_ClampVoiceIndex8_49__77e0ac35.c		phase6
+lane_p6	v5	TGReg_WriteCC0_AltMask	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/TGReg_WriteCC0_AltMask__b97ba37f.c		phase6
+lane_p6	v5	TGReg_WriteCC0_Volume	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/TGReg_WriteCC0_Volume__b97ba37f.c		phase6
+lane_p6	v5	TitleProc_ClearResourceDirtyFlag	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/TitleProc_ClearResourceDirtyFlag__ec850fa3.c	MainFuncCall	phase6
+lane_p6	v6	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v6/DrawQueue_Alloc__7fd41bf4.c		chd
+lane_p6	v6	EditSwProc	152	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/EditSwProc__9cce09ae.c	LabelProc	phase6
+lane_p6	v6	FDC_Exception_Status_Decoder	139	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/FDC_Exception_Status_Decoder__73f691e6.c	FDC_Set_Status	phase6
+lane_p6	v6	FDC_ReadDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/FDC_ReadDataRegister__0fd4b0da.c		phase6
+lane_p6	v6	FDC_Read_Status	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/FDC_Read_Status__0fd4b0da.c		phase6
+lane_p6	v6	FDC_Send_Command	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/FDC_Send_Command__0fd4b0da.c		
+lane_p6	v6	FDC_WriteDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/FDC_WriteDataRegister__17f72c76.c		
+lane_p6	v6	Fade_Cancel	55	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v6/Fade_Cancel__05bed9b1.c	Fade_SetLevel	phase6
+lane_p6	v6	FileIO_MatchWildcard	221	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/FileIO_MatchWildcard__52e85729.c		phase6
+lane_p6	v6	FindFirst_SndTable	54	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/FindFirst_SndTable__52e85729.c	FileIO_ReadNextDirEntry FileIO_ValidateHandle	phase6
+lane_p6	v6	FontGlyph_ByteData	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/FontGlyph_ByteData__f5c5ed38.c		phase6
+lane_p6	v6	FrameProc	89	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/FrameProc__9cce09ae.c	DrawDesignFrame	phase6
+lane_p6	v6	GetBox	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetBox__97a38892.c	GetViewInstance	phase6
+lane_p6	v6	GetChange	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetChange__eff54295.c	GetViewInstance	phase6
+lane_p6	v6	GetConst	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v6	GetDiskSizeInfo	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetDiskSizeInfo__8b034114.c		chd
+lane_p6	v6	GetEncodedFreeSpaceData	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetEncodedFreeSpaceData__8b034114.c		chd
+lane_p6	v6	GetLinkView	95	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v6/GetLinkView__ec850fa3.c	GetNextView GetSubView GetSuperView	phase6
+lane_p6	v6	GetMovable	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v6	GetVisible	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/GetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v6	IconProc	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/IconProc__9cce09ae.c		phase6
+lane_p6	v6	LineProc	130	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/LineProc__9cce09ae.c		phase6
+lane_p6	v6	MIDI_SendChannelPressure	33	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/MIDI_SendChannelPressure__f171a1d8.c		phase6
+lane_p6	v6	MIDI_SendControlChange	32	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/MIDI_SendControlChange__f171a1d8.c		phase6
+lane_p6	v6	MIDI_SendPitchBend	46	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/MIDI_SendPitchBend__f171a1d8.c		phase6
+lane_p6	v6	MainGetEvent	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/MainGetEvent__7fd41bf4.c		chd
+lane_p6	v6	PanelTlv_Rule_ClearBits	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/PanelTlv_Rule_ClearBits__fd7ed361.c		chd
+lane_p6	v6	PanelTlv_ValidateRecord	42	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v6/PanelTlv_ValidateRecord__fd7ed361.c	PanelTlv_ApplyFieldRule	phase6
+lane_p6	v6	PanelTlv_WriteRecordHeader	18	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/PanelTlv_WriteRecordHeader__fd7ed361.c		chd
+lane_p6	v6	PartCtrl_ReadWord	19	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/PartCtrl_ReadWord__fbb0b018.c		phase6
+lane_p6	v6	PostEvent	126	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/PostEvent__7fd41bf4.c		chd
+lane_p6	v6	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v6/ReadVariableLengthInt__8b034114.c		chd
+lane_p6	v6	SeGfx_StaticOp09_Box	42	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeGfx_StaticOp09_Box__5cc15961.c	DrawRect	phase6
+lane_p6	v6	SeGfx_StaticOp0A_ShadowBox2	225	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeGfx_StaticOp0A_ShadowBox2__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v6	SeGfx_StaticOp13_DottedBox	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeGfx_StaticOp13_DottedBox__8541c394.c	DrawDottedLineWithMode	phase6
+lane_p6	v6	SeGfx_StaticOp22_ShadowBox1	135	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeGfx_StaticOp22_ShadowBox1__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v6	SeqDMA_WriteMidi_NoteOn	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeqDMA_WriteMidi_NoteOn__742b5b57.c		phase6
+lane_p6	v6	SeqPlay_EmergencyStopAll	60	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeqPlay_EmergencyStopAll__098ade3a.c		chd
+lane_p6	v6	SeqPlay_StopAndResetAll	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SeqPlay_StopAndResetAll__098ade3a.c		chd
+lane_p6	v6	SeqStep_FileCloseInner	186	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/SeqStep_FileCloseInner__67b847f7.c		phase6
+lane_p6	v6	SeqStep_FileSectorDone	34	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/SeqStep_FileSectorDone__95a486e1.c		phase6
+lane_p6	v6	SeqStep_FileSectorProcess	72	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/SeqStep_FileSectorProcess__5e7e1094.c		phase6
+lane_p6	v6	SeqStep_FileSectorReturn	231	-Xr	2026-11-16-92-p6-r18	Xr	c/v6/SeqStep_FileSectorReturn__5e7e1094.c		phase6
+lane_p6	v6	SetBox	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SetBox__97a38892.c	GetViewInstance SetChange	phase6
+lane_p6	v6	SetChange	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SetChange__97a38892.c	GetViewInstance	phase6
+lane_p6	v6	SetChangeRect	80	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SetChangeRect__7fd41bf4.c		chd
+lane_p6	v6	SetConst	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v6	SetMovable	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v6	SetVisible	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SetVisible__97a38892.c	GetViewInstance	phase6
 lane_p6	v6	Sprintf_FFixed_DataTable	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v6/Sprintf_FFixed_DataTable__cea2fdcc.c		
-lane_p6	v7	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/DrawQueue_Alloc__64df5cb9.c		chd
-lane_p6	v7	GetEncodedFreeSpaceData	27	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/GetEncodedFreeSpaceData__5ee78830.c		chd
-lane_p6	v7	MainGetEvent	117	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/MainGetEvent__64df5cb9.c		chd
-lane_p6	v7	PanelTlv_Rule_ClearBits	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/PanelTlv_Rule_ClearBits__dfaeaa54.c		chd
-lane_p6	v7	PanelTlv_WriteRecordHeader	18	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/PanelTlv_WriteRecordHeader__dfaeaa54.c		chd
-lane_p6	v7	PostEvent	126	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/PostEvent__64df5cb9.c		chd
-lane_p6	v7	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/ReadVariableLengthInt__5ee78830.c		chd
-lane_p6	v7	SeqPlay_EmergencyStopAll	60	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/SeqPlay_EmergencyStopAll__00041ea7.c		chd
-lane_p6	v7	SeqPlay_StopAndResetAll	157	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/SeqPlay_StopAndResetAll__00041ea7.c		chd
-lane_p6	v7	SetChangeRect	80	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/SetChangeRect__64df5cb9.c		chd
+lane_p6	v6	SysEx_ClampVoiceIndex128_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SysEx_ClampVoiceIndex128_49__77e0ac35.c		phase6
+lane_p6	v6	SysEx_ClampVoiceIndex8_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/SysEx_ClampVoiceIndex8_49__77e0ac35.c		phase6
+lane_p6	v6	TGReg_WriteCC0_AltMask	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/TGReg_WriteCC0_AltMask__b97ba37f.c		phase6
+lane_p6	v6	TGReg_WriteCC0_Volume	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/TGReg_WriteCC0_Volume__b97ba37f.c		phase6
+lane_p6	v6	TitleProc_ClearResourceDirtyFlag	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/TitleProc_ClearResourceDirtyFlag__ec850fa3.c	MainFuncCall	phase6
+lane_p6	v7	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v7/DrawQueue_Alloc__d6e8ccc3.c		chd
+lane_p6	v7	EditSwProc	152	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/EditSwProc__673a0bdd.c	LabelProc	phase6
+lane_p6	v7	ExtData_ToneParam_DispatchHandler_Join5	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_ToneParam_DispatchHandler_Join5__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper_Join2	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper_Join2__72847a25.c	ExtData_SetTlvField ExtData_ToggleTlvBits SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper_Join3	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper_Join3__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper_Join4	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper_Join4__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper_Join5	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper_Join5__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper_Join6	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper_Join6__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_CheckMode3_Helper_Join7	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/ExtData_Voice_CheckMode3_Helper_Join7__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	ExtData_Voice_UpdateFlags	57	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/ExtData_Voice_UpdateFlags__c66d685a.c	ExtData_SetTlvField ExtData_ToggleTlvBits MIDI_WriteResetSequence SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v7	FDC_Exception_Status_Decoder	139	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/FDC_Exception_Status_Decoder__b7afa918.c	FDC_Set_Status	phase6
+lane_p6	v7	FDC_ReadDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FDC_ReadDataRegister__e7b61cfe.c		phase6
+lane_p6	v7	FDC_Read_Status	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FDC_Read_Status__e7b61cfe.c		phase6
+lane_p6	v7	FDC_SendParam_SeekTrack	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FDC_SendParam_SeekTrack__e7b61cfe.c	FDC_SendParameterByte	phase6
+lane_p6	v7	FDC_SendParams_Format	39	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FDC_SendParams_Format__8abe2f0e.c	FDC_SendParameterByte	phase6
+lane_p6	v7	FDC_Send_Command	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FDC_Send_Command__e7b61cfe.c		
+lane_p6	v7	FDC_ValidateOpcode	79	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/FDC_ValidateOpcode__b7afa918.c		phase6
+lane_p6	v7	FDC_WriteDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FDC_WriteDataRegister__8abe2f0e.c		
+lane_p6	v7	Fade_Cancel	55	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v7/Fade_Cancel__efd0bf2f.c	Fade_SetLevel	phase6
+lane_p6	v7	FileIO_CheckRegionSignature	114	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FileIO_CheckRegionSignature__05287505.c		phase6
+lane_p6	v7	FileIO_CompareFiles	284	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FileIO_CompareFiles__32950b12.c		phase6
+lane_p6	v7	FileIO_MatchWildcard	221	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/FileIO_MatchWildcard__52e85729.c		phase6
+lane_p6	v7	FileOpenDefault	38	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/FileOpenDefault__ffe3a3bf.c		chd
+lane_p6	v7	FindFirst_SndTable	54	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/FindFirst_SndTable__52e85729.c	FileIO_ReadNextDirEntry FileIO_ValidateHandle	phase6
+lane_p6	v7	FontGlyph_ByteData	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FontGlyph_ByteData__f5c5ed38.c		phase6
+lane_p6	v7	FrameProc	89	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/FrameProc__673a0bdd.c	DrawDesignFrame	phase6
+lane_p6	v7	GetBox	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetBox__97a38892.c	GetViewInstance	phase6
+lane_p6	v7	GetChange	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetChange__eff54295.c	GetViewInstance	phase6
+lane_p6	v7	GetConst	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v7	GetDiskSizeInfo	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetDiskSizeInfo__8b034114.c		chd
+lane_p6	v7	GetEncodedFreeSpaceData	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetEncodedFreeSpaceData__8b034114.c		chd
+lane_p6	v7	GetLinkView	95	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v7/GetLinkView__ec850fa3.c	GetNextView GetSubView GetSuperView	phase6
+lane_p6	v7	GetMovable	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v7	GetVisible	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/GetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v7	IconProc	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/IconProc__673a0bdd.c		phase6
+lane_p6	v7	LineProc	130	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/LineProc__673a0bdd.c		phase6
+lane_p6	v7	MIDI_SendChannelPressure	33	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/MIDI_SendChannelPressure__f171a1d8.c		phase6
+lane_p6	v7	MIDI_SendControlChange	32	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/MIDI_SendControlChange__f171a1d8.c		phase6
+lane_p6	v7	MIDI_SendPitchBend	46	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/MIDI_SendPitchBend__f171a1d8.c		phase6
+lane_p6	v7	MainGetEvent	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/MainGetEvent__d6e8ccc3.c		chd
+lane_p6	v7	PanelTlv_Rule_ClearBits	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/PanelTlv_Rule_ClearBits__e99b4bac.c		chd
+lane_p6	v7	PanelTlv_ValidateRecord	42	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v7/PanelTlv_ValidateRecord__e99b4bac.c	PanelTlv_ApplyFieldRule	phase6
+lane_p6	v7	PanelTlv_WriteRecordHeader	18	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/PanelTlv_WriteRecordHeader__e99b4bac.c		chd
+lane_p6	v7	PartCtrl_ReadWord	19	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/PartCtrl_ReadWord__fbb0b018.c		phase6
+lane_p6	v7	PostEvent	126	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/PostEvent__d6e8ccc3.c		chd
+lane_p6	v7	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v7/ReadVariableLengthInt__8b034114.c		chd
+lane_p6	v7	RenderFilterDisplay	224	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/RenderFilterDisplay__bd43dcf9.c		phase6
+lane_p6	v7	SeGfx_StaticOp09_Box	42	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeGfx_StaticOp09_Box__5cc15961.c	DrawRect	phase6
+lane_p6	v7	SeGfx_StaticOp0A_ShadowBox2	225	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeGfx_StaticOp0A_ShadowBox2__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v7	SeGfx_StaticOp13_DottedBox	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeGfx_StaticOp13_DottedBox__8541c394.c	DrawDottedLineWithMode	phase6
+lane_p6	v7	SeGfx_StaticOp22_ShadowBox1	135	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeGfx_StaticOp22_ShadowBox1__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v7	SeqDMA_WriteMidi_NoteOn	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeqDMA_WriteMidi_NoteOn__742b5b57.c		phase6
+lane_p6	v7	SeqPlay_EmergencyStopAll	60	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeqPlay_EmergencyStopAll__ca2876c5.c		chd
+lane_p6	v7	SeqPlay_StopAndResetAll	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SeqPlay_StopAndResetAll__ca2876c5.c		chd
+lane_p6	v7	SeqStep_ByteBlockF245	138	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/SeqStep_ByteBlockF245__5b788e55.c		chd
+lane_p6	v7	SeqStep_FileCloseInner	186	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/SeqStep_FileCloseInner__67b847f7.c		phase6
+lane_p6	v7	SeqStep_FileSectorDone	34	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/SeqStep_FileSectorDone__5b788e55.c		phase6
+lane_p6	v7	SeqStep_FileSectorProcess	72	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/SeqStep_FileSectorProcess__5e7e1094.c		phase6
+lane_p6	v7	SeqStep_FileSectorReturn	231	-Xr	2026-11-16-92-p6-r18	Xr	c/v7/SeqStep_FileSectorReturn__5e7e1094.c		phase6
+lane_p6	v7	SetBox	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SetBox__97a38892.c	GetViewInstance SetChange	phase6
+lane_p6	v7	SetChange	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SetChange__97a38892.c	GetViewInstance	phase6
+lane_p6	v7	SetChangeRect	80	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SetChangeRect__d6e8ccc3.c		chd
+lane_p6	v7	SetConst	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v7	SetMovable	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v7	SetVisible	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v7	SndParamBank_RestoreOptionBlock	145	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SndParamBank_RestoreOptionBlock__e99b4bac.c		chd
+lane_p6	v7	SndParamBank_WriteFlashDefaults	201	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SndParamBank_WriteFlashDefaults__1a864798.c		phase6
 lane_p6	v7	Sprintf_FFixed_DataTable	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v7/Sprintf_FFixed_DataTable__cea2fdcc.c		
-lane_p6	v9	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/DrawQueue_Alloc__64df5cb9.c		chd
-lane_p6	v9	GetEncodedFreeSpaceData	27	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/GetEncodedFreeSpaceData__5ee78830.c		chd
-lane_p6	v9	MainGetEvent	117	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/MainGetEvent__64df5cb9.c		chd
-lane_p6	v9	PanelTlv_Rule_ClearBits	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/PanelTlv_Rule_ClearBits__dfaeaa54.c		chd
-lane_p6	v9	PanelTlv_WriteRecordHeader	18	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/PanelTlv_WriteRecordHeader__dfaeaa54.c		chd
-lane_p6	v9	PostEvent	126	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/PostEvent__64df5cb9.c		chd
-lane_p6	v9	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/ReadVariableLengthInt__5ee78830.c		chd
-lane_p6	v9	SeqPlay_EmergencyStopAll	60	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/SeqPlay_EmergencyStopAll__4073e375.c		chd
-lane_p6	v9	SeqPlay_StopAndResetAll	157	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/SeqPlay_StopAndResetAll__4073e375.c		chd
-lane_p6	v9	SetChangeRect	80	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/SetChangeRect__64df5cb9.c		chd
+lane_p6	v7	Sprintf_FormatFFixed	785	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/Sprintf_FormatFFixed__40410323.c		phase6
+lane_p6	v7	SysEx_ClampVoiceIndex128_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SysEx_ClampVoiceIndex128_49__77e0ac35.c		phase6
+lane_p6	v7	SysEx_ClampVoiceIndex8_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/SysEx_ClampVoiceIndex8_49__77e0ac35.c		phase6
+lane_p6	v7	TGReg_WriteCC0_AltMask	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/TGReg_WriteCC0_AltMask__b97ba37f.c		phase6
+lane_p6	v7	TGReg_WriteCC0_Volume	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/TGReg_WriteCC0_Volume__b97ba37f.c		phase6
+lane_p6	v7	Tempo_EditBPM	53	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/Tempo_EditBPM__4f3afab2.c	Tempo_DisplayParamReturn Tempo_DisplayParamSkipClear	phase6
+lane_p6	v7	TitleProc_ClearResourceDirtyFlag	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/TitleProc_ClearResourceDirtyFlag__ec850fa3.c	MainFuncCall	phase6
+lane_p6	v7	VwUserBitmapByNameProc	178	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v7/VwUserBitmapByNameProc__673a0bdd.c		phase6
+lane_p6	v9	DrawQueue_Alloc	71	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v9/DrawQueue_Alloc__d6e8ccc3.c		chd
+lane_p6	v9	EditSwProc	152	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/EditSwProc__673a0bdd.c	LabelProc	phase6
+lane_p6	v9	ExtData_ToneParam_DispatchHandler_Join5	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_ToneParam_DispatchHandler_Join5__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper_Join2	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper_Join2__72847a25.c	ExtData_SetTlvField ExtData_ToggleTlvBits SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper_Join3	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper_Join3__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper_Join4	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper_Join4__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper_Join5	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper_Join5__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper_Join6	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper_Join6__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_CheckMode3_Helper_Join7	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/ExtData_Voice_CheckMode3_Helper_Join7__72847a25.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	ExtData_Voice_UpdateFlags	57	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/ExtData_Voice_UpdateFlags__4c8689aa.c	ExtData_SetTlvField ExtData_ToggleTlvBits MIDI_WriteResetSequence SwbtWr_FlushAndAppendParams	phase6
+lane_p6	v9	FDC_Exception_Status_Decoder	139	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/FDC_Exception_Status_Decoder__20a84522.c	FDC_Set_Status	phase6
+lane_p6	v9	FDC_ReadDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FDC_ReadDataRegister__c58de265.c		phase6
+lane_p6	v9	FDC_Read_Status	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FDC_Read_Status__c58de265.c		phase6
+lane_p6	v9	FDC_SendParam_SeekTrack	9	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FDC_SendParam_SeekTrack__c58de265.c	FDC_SendParameterByte	phase6
+lane_p6	v9	FDC_SendParams_Format	39	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FDC_SendParams_Format__8abe2f0e.c	FDC_SendParameterByte	phase6
+lane_p6	v9	FDC_Send_Command	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FDC_Send_Command__c58de265.c		
+lane_p6	v9	FDC_ValidateOpcode	79	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/FDC_ValidateOpcode__20a84522.c		phase6
+lane_p6	v9	FDC_WriteDataRegister	6	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FDC_WriteDataRegister__8abe2f0e.c		
+lane_p6	v9	Fade_Cancel	55	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v9/Fade_Cancel__25373b07.c	Fade_SetLevel	phase6
+lane_p6	v9	FileIO_CheckRegionSignature	114	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FileIO_CheckRegionSignature__05287505.c		phase6
+lane_p6	v9	FileIO_CompareFiles	284	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FileIO_CompareFiles__643dd39b.c		phase6
+lane_p6	v9	FileIO_MatchWildcard	221	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/FileIO_MatchWildcard__52e85729.c		phase6
+lane_p6	v9	FileOpenDefault	38	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/FileOpenDefault__ffe3a3bf.c		chd
+lane_p6	v9	FindFirst_SndTable	54	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/FindFirst_SndTable__52e85729.c	FileIO_ReadNextDirEntry FileIO_ValidateHandle	phase6
+lane_p6	v9	FontGlyph_ByteData	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FontGlyph_ByteData__f5c5ed38.c		phase6
+lane_p6	v9	FrameProc	89	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/FrameProc__673a0bdd.c	DrawDesignFrame	phase6
+lane_p6	v9	GetBox	17	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetBox__97a38892.c	GetViewInstance	phase6
+lane_p6	v9	GetChange	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetChange__eff54295.c	GetViewInstance	phase6
+lane_p6	v9	GetConst	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v9	GetDiskSizeInfo	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetDiskSizeInfo__8b034114.c		chd
+lane_p6	v9	GetEncodedFreeSpaceData	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetEncodedFreeSpaceData__8b034114.c		chd
+lane_p6	v9	GetLinkView	95	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v9/GetLinkView__ec850fa3.c	GetNextView GetSubView GetSuperView	phase6
+lane_p6	v9	GetMovable	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v9	GetVisible	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/GetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v9	IconProc	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/IconProc__673a0bdd.c		phase6
+lane_p6	v9	LineProc	130	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/LineProc__673a0bdd.c		phase6
+lane_p6	v9	MIDI_SendChannelPressure	33	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/MIDI_SendChannelPressure__f171a1d8.c		phase6
+lane_p6	v9	MIDI_SendControlChange	32	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/MIDI_SendControlChange__f171a1d8.c		phase6
+lane_p6	v9	MIDI_SendPitchBend	46	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/MIDI_SendPitchBend__f171a1d8.c		phase6
+lane_p6	v9	MainGetEvent	117	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/MainGetEvent__d6e8ccc3.c		chd
+lane_p6	v9	PanelTlv_Rule_ClearBits	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/PanelTlv_Rule_ClearBits__e99b4bac.c		chd
+lane_p6	v9	PanelTlv_ValidateRecord	42	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v9/PanelTlv_ValidateRecord__e99b4bac.c	PanelTlv_ApplyFieldRule	phase6
+lane_p6	v9	PanelTlv_WriteRecordHeader	18	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/PanelTlv_WriteRecordHeader__e99b4bac.c		chd
+lane_p6	v9	PartCtrl_ReadWord	19	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/PartCtrl_ReadWord__fbb0b018.c		phase6
+lane_p6	v9	PostEvent	126	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/PostEvent__d6e8ccc3.c		chd
+lane_p6	v9	ReadVariableLengthInt	56	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v9/ReadVariableLengthInt__8b034114.c		chd
+lane_p6	v9	RenderFilterDisplay	224	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/RenderFilterDisplay__bd43dcf9.c		phase6
+lane_p6	v9	SeGfx_StaticOp09_Box	42	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeGfx_StaticOp09_Box__5cc15961.c	DrawRect	phase6
+lane_p6	v9	SeGfx_StaticOp0A_ShadowBox2	225	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeGfx_StaticOp0A_ShadowBox2__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v9	SeGfx_StaticOp13_DottedBox	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeGfx_StaticOp13_DottedBox__8541c394.c	DrawDottedLineWithMode	phase6
+lane_p6	v9	SeGfx_StaticOp22_ShadowBox1	135	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeGfx_StaticOp22_ShadowBox1__8541c394.c	DrawLineWithMode DrawRect	phase6
+lane_p6	v9	SeqDMA_WriteMidi_NoteOn	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeqDMA_WriteMidi_NoteOn__742b5b57.c		phase6
+lane_p6	v9	SeqPlay_EmergencyStopAll	60	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeqPlay_EmergencyStopAll__c5ce8f04.c		chd
+lane_p6	v9	SeqPlay_HandlePlaybackEvent	213	-O3 -Xr	2026-11-16-92-p6-r18	O3Xr	c/v9/SeqPlay_HandlePlaybackEvent__c5ce8f04.c		chd
+lane_p6	v9	SeqPlay_StopAndResetAll	157	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SeqPlay_StopAndResetAll__c5ce8f04.c		chd
+lane_p6	v9	SeqStep_ByteBlockF245	138	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/SeqStep_ByteBlockF245__5b788e55.c		chd
+lane_p6	v9	SeqStep_FileCloseInner	186	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/SeqStep_FileCloseInner__67b847f7.c		phase6
+lane_p6	v9	SeqStep_FileSectorDone	34	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/SeqStep_FileSectorDone__5b788e55.c		phase6
+lane_p6	v9	SeqStep_FileSectorProcess	72	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/SeqStep_FileSectorProcess__5e7e1094.c		phase6
+lane_p6	v9	SeqStep_FileSectorReturn	231	-Xr	2026-11-16-92-p6-r18	Xr	c/v9/SeqStep_FileSectorReturn__5e7e1094.c		phase6
+lane_p6	v9	SetBox	36	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SetBox__97a38892.c	GetViewInstance SetChange	phase6
+lane_p6	v9	SetChange	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SetChange__97a38892.c	GetViewInstance	phase6
+lane_p6	v9	SetChangeRect	80	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SetChangeRect__d6e8ccc3.c		chd
+lane_p6	v9	SetConst	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SetConst__97a38892.c	GetViewInstance	phase6
+lane_p6	v9	SetMovable	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SetMovable__eff54295.c	GetViewInstance	phase6
+lane_p6	v9	SetVisible	25	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SetVisible__97a38892.c	GetViewInstance	phase6
+lane_p6	v9	SndParamBank_RestoreOptionBlock	145	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SndParamBank_RestoreOptionBlock__e99b4bac.c		chd
+lane_p6	v9	SndParamBank_WriteFlashDefaults	201	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SndParamBank_WriteFlashDefaults__1a864798.c		phase6
 lane_p6	v9	Sprintf_FFixed_DataTable	20	-O3 -Xr	2026-11-16-68-p6-r12	O3Xr	c/v9/Sprintf_FFixed_DataTable__cea2fdcc.c		
-lane_sub	v140	CheckStatusBits_40	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/CheckStatusBits_40__f8caa32a.c		chd
-lane_sub	v140	CheckStatusBits_80	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/CheckStatusBits_80__f8caa32a.c		chd
-lane_sub	v140	DSP_Bytecode_NotifyStateChange	6	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_Bytecode_NotifyStateChange__b93f6a5a.c		chd
-lane_sub	v140	DSP_Config_ClampLimits	71	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	DSP_FreqCurve_FP	146	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_FreqCurve_FP__574cedd8.c		chd
-lane_sub	v140	DSP_FreqInterp_2Point	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_FreqInterp_2Point__574cedd8.c		chd
-lane_sub	v140	DSP_PanCurve_PiecewiseLin	219	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	DSP_PanScale_Simple	23	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_PanScale_Simple__574cedd8.c		chd
-lane_sub	v140	DSP_ParamInterp_2Point	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_ParamInterp_2Point__574cedd8.c		chd
-lane_sub	v140	DSP_ParamInterp_2Point_B	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_ParamInterp_2Point_B__574cedd8.c		chd
-lane_sub	v140	DSP_ParamInterp_MultiStep	361	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	DSP_RingBuf_Write2K	24	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	DSP_SlotParam_DiffAndFlag	91	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_p6	v9	Sprintf_FormatFFixed	785	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/Sprintf_FormatFFixed__40410323.c		phase6
+lane_p6	v9	SysEx_ClampVoiceIndex128_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SysEx_ClampVoiceIndex128_49__77e0ac35.c		phase6
+lane_p6	v9	SysEx_ClampVoiceIndex8_49	20	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/SysEx_ClampVoiceIndex8_49__77e0ac35.c		phase6
+lane_p6	v9	TGReg_WriteCC0_AltMask	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/TGReg_WriteCC0_AltMask__b97ba37f.c		phase6
+lane_p6	v9	TGReg_WriteCC0_Volume	98	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/TGReg_WriteCC0_Volume__b97ba37f.c		phase6
+lane_p6	v9	Tempo_EditBPM	53	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/Tempo_EditBPM__d725c7f2.c	Tempo_DisplayParamReturn Tempo_DisplayParamSkipClear	phase6
+lane_p6	v9	TitleProc_ClearResourceDirtyFlag	27	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/TitleProc_ClearResourceDirtyFlag__ec850fa3.c	MainFuncCall	phase6
+lane_p6	v9	VwUserBitmapByNameProc	178	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v9/VwUserBitmapByNameProc__673a0bdd.c		phase6
+lane_sub	v140	CheckStatusBits_40	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/CheckStatusBits_40__f8caa32a.c		chd
+lane_sub	v140	CheckStatusBits_80	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/CheckStatusBits_80__f8caa32a.c		chd
+lane_sub	v140	DSP_Bytecode_NotifyStateChange	6	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_Bytecode_NotifyStateChange__b93f6a5a.c		chd
+lane_sub	v140	DSP_Config_ClampLimits	71	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_FreqCurve_FP	146	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_FreqCurve_FP__574cedd8.c		chd
+lane_sub	v140	DSP_FreqInterp_2Point	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_FreqInterp_2Point__574cedd8.c		chd
+lane_sub	v140	DSP_InitHandler_NullStub	1	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_PanCurve_PiecewiseLin	219	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_PanScale_Simple	23	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_PanScale_Simple__574cedd8.c		chd
+lane_sub	v140	DSP_ParamInterp_2Point	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_ParamInterp_2Point__574cedd8.c		chd
+lane_sub	v140	DSP_ParamInterp_2Point_B	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_ParamInterp_2Point_B__574cedd8.c		chd
+lane_sub	v140	DSP_ParamInterp_MultiStep	361	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_RingBuf_Write2K	24	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_SetCoeff_CopyDirect	69	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_SetCoeff_CopyDirect2	69	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_SlotParam_DiffAndFlag	91	-Xr	2026-11-16-89-sub-staged3	Xr			csub
 lane_sub	v140	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			
-lane_sub	v140	DSP_State_ApplyBuf	61	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_State_ApplyBuf__64414bc0.c		chd
-lane_sub	v140	DSP_State_ApplyTask	34	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_State_ApplyTask__b93f6a5a.c		chd
-lane_sub	v140	DSP_State_DmaLoadPresets	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_State_DmaLoadPresets__b93f6a5a.c		chd
-lane_sub	v140	DSP_VolScale_B	542	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	DSP_VolumeParam_Scale	542	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	DSP_WaitForDelay	34	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_WaitForDelay__fbec5d26.c		chd
-lane_sub	v140	DSP_WakeAudioTask	6	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/DSP_WakeAudioTask__fbec5d26.c		chd
-lane_sub	v140	EFF_GetSlotBuffer	44	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	EGEnv_Compute_A_Simple	65	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/EGEnv_Compute_A_Simple__e33e40df.c		chd
-lane_sub	v140	EGEnv_Compute_A_Simple_Dup	65	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/EGEnv_Compute_A_Simple_Dup__e33e40df.c		chd
-lane_sub	v140	EnvDepth_Cap	51	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/EnvDepth_Cap__6befbaa6.c		chd
-lane_sub	v140	RingBuf_Write4K	24	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	Voice_Clamp_Byte_WA	20	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v140	Voice_Part_Mode_Is_C0	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/Voice_Part_Mode_Is_C0__f8caa32a.c		chd
-lane_sub	v140	Voice_Vol_ScaleVelocityWord	36	-Xr	2026-11-16-80-sub-staged2	Xr	c/v140/Voice_Vol_ScaleVelocityWord__6befbaa6.c		chd
-lane_sub	v141	CheckStatusBits_40	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/CheckStatusBits_40__f8caa32a.c		chd
-lane_sub	v141	CheckStatusBits_80	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/CheckStatusBits_80__f8caa32a.c		chd
-lane_sub	v141	DSP_Bytecode_NotifyStateChange	6	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_Bytecode_NotifyStateChange__b93f6a5a.c		chd
-lane_sub	v141	DSP_Config_ClampLimits	71	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	DSP_FreqCurve_FP	146	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_FreqCurve_FP__574cedd8.c		chd
-lane_sub	v141	DSP_FreqInterp_2Point	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_FreqInterp_2Point__574cedd8.c		chd
-lane_sub	v141	DSP_PanCurve_PiecewiseLin	219	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	DSP_PanScale_Simple	23	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_PanScale_Simple__574cedd8.c		chd
-lane_sub	v141	DSP_ParamInterp_2Point	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_ParamInterp_2Point__574cedd8.c		chd
-lane_sub	v141	DSP_ParamInterp_2Point_B	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_ParamInterp_2Point_B__574cedd8.c		chd
-lane_sub	v141	DSP_ParamInterp_MultiStep	361	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	DSP_RingBuf_Write2K	24	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	DSP_SlotParam_DiffAndFlag	91	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_sub	v140	DSP_State_ApplyBuf	61	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_State_ApplyBuf__64414bc0.c		chd
+lane_sub	v140	DSP_State_ApplyTask	34	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_State_ApplyTask__b93f6a5a.c		chd
+lane_sub	v140	DSP_State_DmaLoadPresets	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_State_DmaLoadPresets__b93f6a5a.c		chd
+lane_sub	v140	DSP_System_Init	149	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_VolScale_B	542	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_VolumeParam_Scale	542	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	DSP_WaitForDelay	34	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_WaitForDelay__fbec5d26.c		chd
+lane_sub	v140	DSP_WakeAudioTask	6	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/DSP_WakeAudioTask__fbec5d26.c		chd
+lane_sub	v140	EFF_GetSlotBuffer	44	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	EGEnv_Compute_A_Simple	65	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/EGEnv_Compute_A_Simple__e33e40df.c		chd
+lane_sub	v140	EGEnv_Compute_A_Simple_Dup	65	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/EGEnv_Compute_A_Simple_Dup__e33e40df.c		chd
+lane_sub	v140	EGEnv_Compute_B_Simple	66	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	EnvDepth_Cap	51	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/EnvDepth_Cap__6befbaa6.c		chd
+lane_sub	v140	RingBuf_Write4K	24	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	VoiceAlloc_CheckAndInit_FromRecord	134	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	Voice_Clamp_Byte_WA	20	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	Voice_DSP_OutputConfig2	237	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_DSP_OutputConfig2__b1b32a58.c		chd
+lane_sub	v140	Voice_DSP_SimpleCopy	91	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_DSP_SimpleCopy__b1b32a58.c		chd
+lane_sub	v140	Voice_Freq_ComputeLeft_Raw	53	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	Voice_Freq_ComputeRight_Raw	104	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	Voice_Freq_WriteRight	123	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	Voice_Init_Type1	132	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_Init_Type1__ea53322c.c		chd
+lane_sub	v140	Voice_Init_Type2	117	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_Init_Type2__ea53322c.c		chd
+lane_sub	v140	Voice_Part_Mode_Is_C0	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_Part_Mode_Is_C0__f8caa32a.c		chd
+lane_sub	v140	Voice_Release_Type4	177	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_Release_Type4__931dfbeb.c		chd
+lane_sub	v140	Voice_SetPanning	173	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v140	Voice_Vol_ScaleVelocityWord	36	-Xr	2026-11-16-89-sub-staged3	Xr	c/v140/Voice_Vol_ScaleVelocityWord__6befbaa6.c		chd
+lane_sub	v141	CheckStatusBits_40	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/CheckStatusBits_40__f8caa32a.c		chd
+lane_sub	v141	CheckStatusBits_80	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/CheckStatusBits_80__f8caa32a.c		chd
+lane_sub	v141	DSP_Bytecode_NotifyStateChange	6	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_Bytecode_NotifyStateChange__b93f6a5a.c		chd
+lane_sub	v141	DSP_Config_ClampLimits	71	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_FreqCurve_FP	146	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_FreqCurve_FP__574cedd8.c		chd
+lane_sub	v141	DSP_FreqInterp_2Point	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_FreqInterp_2Point__574cedd8.c		chd
+lane_sub	v141	DSP_InitHandler_NullStub	1	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_PanCurve_PiecewiseLin	219	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_PanScale_Simple	23	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_PanScale_Simple__574cedd8.c		chd
+lane_sub	v141	DSP_ParamInterp_2Point	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_ParamInterp_2Point__574cedd8.c		chd
+lane_sub	v141	DSP_ParamInterp_2Point_B	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_ParamInterp_2Point_B__574cedd8.c		chd
+lane_sub	v141	DSP_ParamInterp_MultiStep	361	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_RingBuf_Write2K	24	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_SetCoeff_CopyDirect	69	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_SetCoeff_CopyDirect2	69	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_SlotParam_DiffAndFlag	91	-Xr	2026-11-16-89-sub-staged3	Xr			csub
 lane_sub	v141	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			
-lane_sub	v141	DSP_State_ApplyBuf	61	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_State_ApplyBuf__64414bc0.c		chd
-lane_sub	v141	DSP_State_ApplyTask	34	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_State_ApplyTask__b93f6a5a.c		chd
-lane_sub	v141	DSP_State_DmaLoadPresets	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_State_DmaLoadPresets__b93f6a5a.c		chd
-lane_sub	v141	DSP_VolScale_B	542	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	DSP_VolumeParam_Scale	542	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	DSP_WaitForDelay	34	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_WaitForDelay__fbec5d26.c		chd
-lane_sub	v141	DSP_WakeAudioTask	6	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/DSP_WakeAudioTask__fbec5d26.c		chd
-lane_sub	v141	EFF_GetSlotBuffer	44	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	EGEnv_Compute_A_Simple	65	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/EGEnv_Compute_A_Simple__e33e40df.c		chd
-lane_sub	v141	EGEnv_Compute_A_Simple_Dup	65	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/EGEnv_Compute_A_Simple_Dup__e33e40df.c		chd
-lane_sub	v141	EnvDepth_Cap	51	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/EnvDepth_Cap__6befbaa6.c		chd
-lane_sub	v141	RingBuf_Write4K	24	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	Voice_Clamp_Byte_WA	20	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v141	Voice_Part_Mode_Is_C0	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/Voice_Part_Mode_Is_C0__f8caa32a.c		chd
-lane_sub	v141	Voice_Vol_ScaleVelocityWord	36	-Xr	2026-11-16-80-sub-staged2	Xr	c/v141/Voice_Vol_ScaleVelocityWord__6befbaa6.c		chd
+lane_sub	v141	DSP_State_ApplyBuf	61	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_State_ApplyBuf__64414bc0.c		chd
+lane_sub	v141	DSP_State_ApplyTask	34	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_State_ApplyTask__b93f6a5a.c		chd
+lane_sub	v141	DSP_State_DmaLoadPresets	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_State_DmaLoadPresets__b93f6a5a.c		chd
+lane_sub	v141	DSP_System_Init	149	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_VolScale_B	542	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_VolumeParam_Scale	542	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	DSP_WaitForDelay	34	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_WaitForDelay__fbec5d26.c		chd
+lane_sub	v141	DSP_WakeAudioTask	6	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/DSP_WakeAudioTask__fbec5d26.c		chd
+lane_sub	v141	EFF_GetSlotBuffer	44	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	EGEnv_Compute_A_Simple	65	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/EGEnv_Compute_A_Simple__e33e40df.c		chd
+lane_sub	v141	EGEnv_Compute_A_Simple_Dup	65	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/EGEnv_Compute_A_Simple_Dup__e33e40df.c		chd
+lane_sub	v141	EGEnv_Compute_B_Simple	66	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	EnvDepth_Cap	51	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/EnvDepth_Cap__6befbaa6.c		chd
+lane_sub	v141	RingBuf_Write4K	24	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	VoiceAlloc_CheckAndInit_FromRecord	134	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	Voice_Clamp_Byte_WA	20	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	Voice_DSP_OutputConfig2	237	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_DSP_OutputConfig2__b1b32a58.c		chd
+lane_sub	v141	Voice_DSP_SimpleCopy	91	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_DSP_SimpleCopy__b1b32a58.c		chd
+lane_sub	v141	Voice_Freq_ComputeLeft_Raw	53	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	Voice_Freq_ComputeRight_Raw	104	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	Voice_Freq_WriteRight	123	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	Voice_Init_Type1	132	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_Init_Type1__ea53322c.c		chd
+lane_sub	v141	Voice_Init_Type2	117	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_Init_Type2__ea53322c.c		chd
+lane_sub	v141	Voice_Part_Mode_Is_C0	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_Part_Mode_Is_C0__f8caa32a.c		chd
+lane_sub	v141	Voice_Release_Type4	177	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_Release_Type4__931dfbeb.c		chd
+lane_sub	v141	Voice_SetPanning	173	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v141	Voice_Vol_ScaleVelocityWord	36	-Xr	2026-11-16-89-sub-staged3	Xr	c/v141/Voice_Vol_ScaleVelocityWord__6befbaa6.c		chd
 lane_sub	v142	AudioChannel_AllVoices_Update_PanShift	137	-Xr	2026-11-16-79-sub-r7	Xr	c/v142/AudioChannel_AllVoices_Update_PanShift__ff45951e.c	ToneGen_WriteVoice_Reg21_Reg22	csub
-lane_sub	v142	CheckStatusBits_40	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/CheckStatusBits_40__f8caa32a.c		chd
-lane_sub	v142	CheckStatusBits_80	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/CheckStatusBits_80__f8caa32a.c		chd
-lane_sub	v142	DSP_Bytecode_NotifyStateChange	6	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_Bytecode_NotifyStateChange__b93f6a5a.c		chd
-lane_sub	v142	DSP_Config_ClampLimits	71	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_sub	v142	AudioChannel_Dispatch	321	-O1 -Xr	2026-11-16-99-sub-r13-idioms	O1Xr	c/v142/AudioChannel_Dispatch__07af9208.c	AudioChannel_Handler_Cmd01 AudioChannel_Handler_Cmd02 AudioChannel_Handler_Cmd03 AudioChannel_Handler_Cmd04_07 AudioChannel_Handler_Cmd08_0B AudioChannel_Handler_Cmd0C_0F AudioChannel_Handler_Cmd10_13 AudioChannel_Handler_Cmd14_17 AudioChannel_Handler_Cmd18_1B	
+lane_sub	v142	Audio_Tick_ServiceVoices_A	126	-Xr	2026-11-16-94-sub-r11	Xr	c/v142/Audio_Tick_ServiceVoices_A__417738f3.c	Voice_Step_DelayTimers Voice_UpdateAllLFO	csub
+lane_sub	v142	CheckStatusBits_40	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/CheckStatusBits_40__f8caa32a.c		chd
+lane_sub	v142	CheckStatusBits_80	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/CheckStatusBits_80__f8caa32a.c		chd
+lane_sub	v142	DSP_Bytecode_NotifyStateChange	6	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_Bytecode_NotifyStateChange__b93f6a5a.c		chd
+lane_sub	v142	DSP_Cmd_LoadEffectPreset	163	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/DSP_Cmd_LoadEffectPreset__e67eb7e2.c	DSP_RingBuf_Read DSP_RingBuf_Skip	csub
+lane_sub	v142	DSP_Config_ClampLimits	71	-Xr	2026-11-16-89-sub-staged3	Xr			csub
 lane_sub	v142	DSP_FlushAllSlots_ForPart	47	-Xr	2026-11-16-47-sub-r2	Xr	c/v142/DSP_FlushAllSlots_ForPart__89b3a935.c	DSP_FlushAllSlots	csub
-lane_sub	v142	DSP_FreqCurve_FP	146	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_FreqCurve_FP__574cedd8.c		chd
-lane_sub	v142	DSP_FreqInterp_2Point	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_FreqInterp_2Point__574cedd8.c		chd
-lane_sub	v142	DSP_PanCurve_PiecewiseLin	219	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v142	DSP_PanScale_Simple	23	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_PanScale_Simple__574cedd8.c		chd
-lane_sub	v142	DSP_ParamInterp_2Point	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_ParamInterp_2Point__574cedd8.c		chd
-lane_sub	v142	DSP_ParamInterp_2Point_B	88	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_ParamInterp_2Point_B__574cedd8.c		chd
-lane_sub	v142	DSP_ParamInterp_MultiStep	361	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_sub	v142	DSP_FreqCurve_FP	146	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_FreqCurve_FP__574cedd8.c		chd
+lane_sub	v142	DSP_FreqInterp_2Point	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_FreqInterp_2Point__574cedd8.c		chd
+lane_sub	v142	DSP_InitHandler_NullStub	1	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_PanCurve_PiecewiseLin	219	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_PanScale_Simple	23	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_PanScale_Simple__574cedd8.c		chd
+lane_sub	v142	DSP_ParamInterp_2Point	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_ParamInterp_2Point__574cedd8.c		chd
+lane_sub	v142	DSP_ParamInterp_2Point_B	88	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_ParamInterp_2Point_B__574cedd8.c		chd
+lane_sub	v142	DSP_ParamInterp_MultiStep	361	-Xr	2026-11-16-89-sub-staged3	Xr			csub
 lane_sub	v142	DSP_ReconfigAndStatus	15	-Xr	2026-11-16-47-sub-r2	Xr	c/v142/DSP_ReconfigAndStatus__89b3a935.c	DSP_ApplyAlgoForVoiceType	csub
-lane_sub	v142	DSP_RingBuf_Write2K	24	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_sub	v142	DSP_RingBuf_Write2K	24	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_SetCoeff_CopyDirect	69	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_SetCoeff_CopyDirect2	69	-Xr	2026-11-16-89-sub-staged3	Xr			csub
 lane_sub	v142	DSP_Set_RotarySpeed	19	-Xr	2026-11-16-47-sub-r2	Xr	c/v142/DSP_Set_RotarySpeed__89b3a935.c	DSP_ApplyAlgoForVoiceType	csub
-lane_sub	v142	DSP_SlotParam_DiffAndFlag	91	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_sub	v142	DSP_SlotParam_DiffAndFlag	91	-Xr	2026-11-16-89-sub-staged3	Xr			csub
 lane_sub	v142	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			
-lane_sub	v142	DSP_State_ApplyBuf	61	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_State_ApplyBuf__64414bc0.c		chd
-lane_sub	v142	DSP_State_ApplyTask	34	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_State_ApplyTask__b93f6a5a.c		chd
-lane_sub	v142	DSP_State_DmaLoadPresets	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_State_DmaLoadPresets__b93f6a5a.c		chd
-lane_sub	v142	DSP_VolScale_B	542	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v142	DSP_VolumeParam_Scale	542	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v142	DSP_WaitForDelay	34	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_WaitForDelay__fbec5d26.c		chd
-lane_sub	v142	DSP_WakeAudioTask	6	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/DSP_WakeAudioTask__fbec5d26.c		chd
-lane_sub	v142	EFF_GetSlotBuffer	44	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v142	EGEnv_Compute_A_Simple	65	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/EGEnv_Compute_A_Simple__e33e40df.c		chd
-lane_sub	v142	EGEnv_Compute_A_Simple_Dup	65	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/EGEnv_Compute_A_Simple_Dup__e33e40df.c		chd
-lane_sub	v142	EnvDepth_Cap	51	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/EnvDepth_Cap__6befbaa6.c		chd
-lane_sub	v142	RingBuf_Write4K	24	-Xr	2026-11-16-80-sub-staged2	Xr			csub
+lane_sub	v142	DSP_State_ApplyBuf	61	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_State_ApplyBuf__64414bc0.c		chd
+lane_sub	v142	DSP_State_ApplyTask	34	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_State_ApplyTask__b93f6a5a.c		chd
+lane_sub	v142	DSP_State_DmaLoadPresets	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_State_DmaLoadPresets__b93f6a5a.c		chd
+lane_sub	v142	DSP_System_Init	149	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_VolScale_B	542	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_VolumeParam_Scale	542	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	DSP_WaitForDelay	34	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_WaitForDelay__fbec5d26.c		chd
+lane_sub	v142	DSP_WakeAudioTask	6	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/DSP_WakeAudioTask__fbec5d26.c		chd
+lane_sub	v142	DSP_WriteParameter	194	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/DSP_WriteParameter__ef76bb47.c		csub
+lane_sub	v142	EFF_Change_Handler	192	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/EFF_Change_Handler__9374e9c6.c	EFF_VolumeChange_Check	csub
+lane_sub	v142	EFF_GetSlotBuffer	44	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	EGEnv_Compute_A_Simple	65	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/EGEnv_Compute_A_Simple__e33e40df.c		chd
+lane_sub	v142	EGEnv_Compute_A_Simple_Dup	65	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/EGEnv_Compute_A_Simple_Dup__e33e40df.c		chd
+lane_sub	v142	EGEnv_Compute_B_Simple	66	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	EnvDepth_Cap	51	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/EnvDepth_Cap__6befbaa6.c		chd
+lane_sub	v142	MIDI_Dispatch	595	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/MIDI_Dispatch__9374e9c6.c	RingBuf_ReadByte RingBuf_SkipToEnd	csub
+lane_sub	v142	OutputBuf_Flush_A	45	-Xr	2026-11-16-94-sub-r11	Xr	c/v142/OutputBuf_Flush_A__289f70d2.c		csub
+lane_sub	v142	Pitch_Emit_Reg400	68	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Pitch_Emit_Reg400__bb499c12.c	Pitch_Saturate_15bit	csub
+lane_sub	v142	Pitch_Get_Patch_Octave_Shift	79	-Xr	2026-11-16-97-sub-r12	Xr	c/v142/Pitch_Get_Patch_Octave_Shift__632f36eb.c		
+lane_sub	v142	RingBuf_Write4K	24	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	TVF_BuildEmit_Short_Dispatch	102	-Xr	2026-11-16-97-sub-r12	Xr	c/v142/TVF_BuildEmit_Short_Dispatch__632f36eb.c	TVF_Build_Short TVF_Set_Bypass Voice_PitchPack_RouteB Voice_PitchPack_RouteC Voice_PitchPack_RouteD Voice_PitchPack_RouteE	
+lane_sub	v142	TVF_Build_Short	98	-Xr	2026-11-16-99-sub-r13-idioms	Xr	c/v142/TVF_Build_Short__eed09f0b.c	TVF_Bias_Clamp_Amount TVF_Calc_Cutoff_NoKeyFollow TVF_Lookup_Depth_Amount	csub
+lane_sub	v142	ToneDB_Find_SubToneRecord	62	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/ToneDB_Find_SubToneRecord__55119c10.c	ToneDB_Resolve_NamedToneRecord	csub
 lane_sub	v142	ToneGen_Init	8	-Xr	2026-11-16-58-sub-r3	Xr	c/v142/ToneGen_Init__c62ce5fd.c	ToneGen_Poll_Init	csub
+lane_sub	v142	ToneGen_SetupPercussionVoice	115	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/ToneGen_SetupPercussionVoice__45e152af.c	DSP_GetEffectRouting	csub
+lane_sub	v142	VoiceAlloc_CheckAndInit_FromRecord	134	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	VoiceParam_CustomTone_Apply_Catalog8C	188	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/VoiceParam_CustomTone_Apply_Catalog8C__e78c0151.c	CustomTone_CopySubUnitRecord	csub
+lane_sub	v142	VoiceParam_CustomTone_Apply_Catalog94	128	-Xr	2026-11-16-97-sub-r12	Xr	c/v142/VoiceParam_CustomTone_Apply_Catalog94__2df0d6d3.c		csub
+lane_sub	v142	VoiceSlot_FullInit	216	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/VoiceSlot_FullInit__55119c10.c	AlgoFlag_Write AlgoFlag_Write_Bit3 AlgoType_StateWrite DSP_SlotParam_Write_Slot0 DSP_SlotParam_Write_Slot1 DSP_SlotParam_Write_Slot2 DSP_SlotParam_Write_Slot3 DSP_SlotParam_Write_Slot4 EFF_RoutingInit EnvTranspose_UpdateLoop Partial_Build_Present_Word VoiceNoteParam_UpdateLoop Voice_ActiveFlag_CheckAndLoad	csub
+lane_sub	v142	VoiceSlot_NoteOff	48	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/VoiceSlot_NoteOff__45988cee.c	DList_Unlink_SelfLink_Offsets16 Voice_List_MoveToPartList Voice_Reprioritise	csub
+lane_sub	v142	VoiceSlot_UpdateNoteSource	170	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/VoiceSlot_UpdateNoteSource__88eb9f62.c	VoiceRow_FetchPair_DE_WA VoiceRow_FetchPair_WA_SP	csub
+lane_sub	v142	Voice_AllNotes_SustainRetrigger	335	-Xr	2026-11-16-94-sub-r11	Xr	c/v142/Voice_AllNotes_SustainRetrigger__8ee371e7.c	ToneGen_WriteNote2ch ToneGen_WriteVoice_6Words ToneGen_WriteVoice_Direct	csub
 lane_sub	v142	Voice_ApplyPortamento	77	-Xr	2026-11-16-79-sub-r7	Xr	c/v142/Voice_ApplyPortamento__ed4c32b6.c	Voice_Build_OutputLevel	csub
-lane_sub	v142	Voice_Artic_SetWord2Word1_Nibble0	74	-Xr	2026-11-16-79-sub-r7	Xr	c/v142/Voice_Artic_SetWord2Word1_Nibble0__f70607b5.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
-lane_sub	v142	Voice_Artic_SetWord2Word1_Nibble1	74	-Xr	2026-11-16-79-sub-r7	Xr	c/v142/Voice_Artic_SetWord2Word1_Nibble1__f70607b5.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
-lane_sub	v142	Voice_Clamp_Byte_WA	20	-Xr	2026-11-16-80-sub-staged2	Xr			csub
-lane_sub	v142	Voice_Part_Mode_Is_C0	32	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/Voice_Part_Mode_Is_C0__f8caa32a.c		chd
-lane_sub	v142	Voice_Pitch_WriteOutputReg_Secondary	55	-Xr	2026-11-16-79-sub-r7	Xr	c/v142/Voice_Pitch_WriteOutputReg_Secondary__f70607b5.c	Pitch_Saturate_15bit	csub
-lane_sub	v142	Voice_Release_Type4	177	-Xr	2026-11-16-62-sub-r4	Xr	c/v142/Voice_Release_Type4__8761cd5b.c		chd
-lane_sub	v142	Voice_Vol_ScaleVelocityWord	36	-Xr	2026-11-16-80-sub-staged2	Xr	c/v142/Voice_Vol_ScaleVelocityWord__6befbaa6.c		chd
+lane_sub	v142	Voice_Apply_GateRouting	95	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Voice_Apply_GateRouting__bb499c12.c		csub
+lane_sub	v142	Voice_Artic_SetWord0Word2_Nibble2	78	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Artic_SetWord0Word2_Nibble2__45988cee.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
+lane_sub	v142	Voice_Artic_SetWord1Nibble2_And_Word3	72	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Artic_SetWord1Nibble2_And_Word3__45988cee.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
+lane_sub	v142	Voice_Artic_SetWord2Word1_Nibble0	74	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Artic_SetWord2Word1_Nibble0__45988cee.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
+lane_sub	v142	Voice_Artic_SetWord2Word1_Nibble1	74	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Artic_SetWord2Word1_Nibble1__45988cee.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
+lane_sub	v142	Voice_Build_GateCommand	106	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Voice_Build_GateCommand__bb499c12.c	Voice_Apply_GateRouting	csub
+lane_sub	v142	Voice_Calc_LevelPair_EGA	225	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Voice_Calc_LevelPair_EGA__6def4334.c		csub
+lane_sub	v142	Voice_Calc_LevelPair_EGB	309	-Xr	2026-11-16-97-sub-r12	Xr	c/v142/Voice_Calc_LevelPair_EGB__54554bcc.c	Detune_ScaleSymmetric Int_ClampSignedToRange Pan_ScaleWithVelocity PitchBend_Scale	csub
+lane_sub	v142	Voice_Clamp_Byte_WA	20	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	Voice_ComputePitch_Mono	260	-Xr	2026-11-16-97-sub-r12	Xr	c/v142/Voice_ComputePitch_Mono__54554bcc.c	Voice_Colour_LookupIndex	csub
+lane_sub	v142	Voice_ComputeVolume_CappedLFO	262	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Voice_ComputeVolume_CappedLFO__6def4334.c	Int_ClampSignedToRange Pan_ScaleWithVelocity Voice_Clamp_Byte_HL	csub
+lane_sub	v142	Voice_DSP_OutputConfig2	237	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_DSP_OutputConfig2__b1b32a58.c		chd
+lane_sub	v142	Voice_DSP_SimpleCopy	91	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_DSP_SimpleCopy__b1b32a58.c		chd
+lane_sub	v142	Voice_Demote_Decayed	30	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Demote_Decayed__45988cee.c	Voice_List_MoveToPool	csub
+lane_sub	v142	Voice_Freq_ComputeLeft_Raw	53	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	Voice_Freq_ComputeRight_Raw	104	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	Voice_Freq_WriteRight	123	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	Voice_InitFromSlot	97	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_InitFromSlot__45988cee.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
+lane_sub	v142	Voice_Init_Type1	132	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_Init_Type1__ea53322c.c		chd
+lane_sub	v142	Voice_Init_Type2	117	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_Init_Type2__ea53322c.c		chd
+lane_sub	v142	Voice_List_MoveToPartList	169	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_List_MoveToPartList__45988cee.c	DList_InsertAfter_Offsets8 DList_Unlink_SelfLink_Offsets8	csub
+lane_sub	v142	Voice_List_MoveToPool	167	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_List_MoveToPool__45988cee.c	DList_InsertAfter_Offsets0 DList_Unlink_SelfLink	csub
+lane_sub	v142	Voice_Part_Mode_Is_C0	32	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_Part_Mode_Is_C0__f8caa32a.c		chd
+lane_sub	v142	Voice_PitchPack_Mode5_Dual	197	-Xr	2026-11-16-94-sub-r11	Xr	c/v142/Voice_PitchPack_Mode5_Dual__c82a891d.c	TVF_Calc_Cutoff	csub
+lane_sub	v142	Voice_PitchPack_RouteB	101	-Xr	2026-11-16-99-sub-r13-idioms	Xr	c/v142/Voice_PitchPack_RouteB__eed09f0b.c	TVF_Bias_Clamp_Amount TVF_Calc_Cutoff_NoKeyFollow TVF_Lookup_Depth_Amount	csub
+lane_sub	v142	Voice_PitchPack_RouteC	75	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Voice_PitchPack_RouteC__bb499c12.c	TVF_Calc_Cutoff_NoKeyFollow	csub
+lane_sub	v142	Voice_PitchPack_RouteD	81	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/Voice_PitchPack_RouteD__88eb9f62.c	TVF_Calc_Cutoff_NoKeyFollow	csub
+lane_sub	v142	Voice_PitchPack_RouteE	95	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/Voice_PitchPack_RouteE__88eb9f62.c	TVF_Calc_Cutoff_NoKeyFollow	csub
+lane_sub	v142	Voice_Pitch_CopyBase	64	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Pitch_CopyBase__45988cee.c	Pitch_Fold_Octaves_Into_Range	csub
+lane_sub	v142	Voice_Pitch_WriteOutputReg_Secondary	55	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_Pitch_WriteOutputReg_Secondary__45988cee.c	Pitch_Saturate_15bit	csub
+lane_sub	v142	Voice_ProgChange	257	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/Voice_ProgChange__55119c10.c	VoiceSlot_AltInit VoiceSlot_FullInit Voice_ActiveFlag_Set Voice_NoteState_Clear WaveSel_Rebuild_PartCaches	csub
+lane_sub	v142	Voice_Release_Type4	177	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_Release_Type4__931dfbeb.c		chd
+lane_sub	v142	Voice_Selector_FindBestSlot	175	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/Voice_Selector_FindBestSlot__b3d05a84.c	Voice_Selector_Unpack3Groups	csub
+lane_sub	v142	Voice_SetArticWord0_LowByte	54	-Xr	2026-11-16-82-sub-r8	Xr	c/v142/Voice_SetArticWord0_LowByte__45988cee.c	Voice_Selector_ComputeMixWeights Voice_UpdateFlagsFromSlot	csub
+lane_sub	v142	Voice_SetPanning	173	-Xr	2026-11-16-89-sub-staged3	Xr			csub
+lane_sub	v142	Voice_ToneTableRamp_Down	142	-Xr	2026-11-16-99-sub-r13-idioms	Xr	c/v142/Voice_ToneTableRamp_Down__87669047.c	Voice_LoadFilterTable_Ch Voice_LoadPitchTable_Ch Voice_LoadToneTable_Ch	csub
+lane_sub	v142	Voice_Vol_ScaleVelocityWord	36	-Xr	2026-11-16-89-sub-staged3	Xr	c/v142/Voice_Vol_ScaleVelocityWord__6befbaa6.c		chd
+lane_sub	v142	WaveSel_StageA1_FromToneSlot	52	-Xr	2026-11-16-86-sub-r9	Xr	c/v142/WaveSel_StageA1_FromToneSlot__45e152af.c	WaveSel_StageA1_FindVelSplit	csub
+lane_sub	v142	WaveSel_StageA2_FromVelZone	45	-Xr	2026-11-16-90-sub-r10	Xr	c/v142/WaveSel_StageA2_FromVelZone__55119c10.c	WaveSel_StageA2_FindSetDesc	csub
