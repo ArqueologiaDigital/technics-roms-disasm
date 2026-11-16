@@ -398,29 +398,9 @@ SeqStep_EventAdvancePos:
 	jrl z, SeqStep_EventPosConsumeCheck
 	jrl SeqStep_EventPosConsumeLoop
 
-SeqStep_VelNoteFwd:
-	ld wa, (SEQ_OP_FROM:16)
-	cp wa, 1:i3
-	ret z
-	ld c, (9780:16)
-	ld (0x287f:16), wa
-	extz bc
-	ld wa, bc
-	ld bc, 0:i3
-	call SeqVoice_SeekToBar
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-	calr SeqStep_WalkWithCallback
-	cp hl, 0:i3
-	jr nz, SeqStep_VelNoteFwdApply
-	ldmm16 SEQ_DATA_BLOCK, 0x28bf
-	ldmm16 SEQ_DATA_OFFSET, 0x28c1
-	call SeqData_AdvancePosition
-
-SeqStep_VelNoteFwdApply:
-	ldmm16 0x273e, SEQ_DATA_OFFSET
-	ldmm16 0x273c, SEQ_DATA_BLOCK
-	jrl SeqStep_MeasureRead
+SeqStep_VelNoteFwd:	.include "includes/generated/cc900/SeqStep_VelNoteFwd.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_VelNoteFwdApply, SeqStep_VelNoteFwd + 56
 
 SeqStep_VelNoteBwd:	.include "includes/generated/cc900/SeqStep_VelNoteBwd.s"	; C: cc900/seq_step_routines_m236.c
 
@@ -1449,100 +1429,28 @@ SeqStep_MeasureReadDone:
 	pop xiz
 	ret
 
-SeqStep_SkipToHighBit:
-	ldmm16 SEQ_DATA_OFFSET, 9796
-	ldmm16 SEQ_DATA_BLOCK, 9798
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-
-SeqStep_SkipLoop:
-	call SeqData_ReadNextByte
-	bit 7, l
-	jr nz, SeqStep_SkipCheck
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqStep_SkipLoop
-	ret
-
-SeqStep_SkipCheck:
-	call SeqData_ReadNextByte
-	cp l, 0x82
-	ret z
-	cp l, 0x81
-	jr nz, SeqStep_SkipDone
-	ret
-
-SeqStep_SkipDone:
-	ldmm16 9796, SEQ_DATA_OFFSET
-	ldmm16 9798, SEQ_DATA_BLOCK
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-	call SeqData_ReadNextByte
-	ld (9804:16), l
-	ret
+SeqStep_SkipToHighBit:	.include "includes/generated/cc900/SeqStep_SkipToHighBit.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_SkipLoop, SeqStep_SkipToHighBit + 23
+	.set	SeqStep_SkipCheck, SeqStep_SkipToHighBit + 44
+	.set	SeqStep_SkipDone, SeqStep_SkipToHighBit + 59
 
 ; Steps the read position saved in 0x2648 / 0x264a to the next event: loads it into 0x2666 /
 ; 0x28af, skips data bytes, and unless the next status is an end (0x82) or bar (0x81) marker
 ; stores the new position back and the byte after the status in 0x264e.  Errors stop it.
-SeqStep_AdvanceHelper1:
-	ldmm16 SEQ_DATA_OFFSET, 9800
-	ldmm16 SEQ_DATA_BLOCK, 9802
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-
-SeqStep_AdvanceHelper2:
-	call SeqData_ReadNextByte
-	bit 7, l
-	jr nz, SeqStep_AdvanceHelper2Loop
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqStep_AdvanceHelper2
-	ret
-
-SeqStep_AdvanceHelper2Loop:
-	call SeqData_ReadNextByte
-	cp l, 0x82
-	ret z
-	cp l, 0x81
-	jr nz, SeqStep_AdvanceHelper2Done
-	ret
-
-SeqStep_AdvanceHelper2Done:
-	ldmm16 9800, SEQ_DATA_OFFSET
-	ldmm16 9802, SEQ_DATA_BLOCK
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-	call SeqData_ReadNextByte
-	ld (9806:16), l
-	ret
+SeqStep_AdvanceHelper1:	.include "includes/generated/cc900/SeqStep_AdvanceHelper1.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_AdvanceHelper2, SeqStep_AdvanceHelper1 + 23
+	.set	SeqStep_AdvanceHelper2Loop, SeqStep_AdvanceHelper1 + 44
+	.set	SeqStep_AdvanceHelper2Done, SeqStep_AdvanceHelper1 + 59
 
 ; Steps the step-editor position (block 0x273c, offset 0x273e) one byte back into 0x2726 / 0x2720:
 ; below offset 5 into the previous block (offset 0xff); returns without change at the first
 ; block.  Sets 0x2662 = 1.
-SeqStep_DecrementPos:
-	ld wa, (0x273e:16)
-	cp wa, 5:i3
-	jr z, SeqStep_DecrementCheck
-	dec 1, wa
-	ld (0x2720:16), a
-	ldmm16 0x2726, 0x273c
-	jr SeqStep_DecrementStore
-
-SeqStep_DecrementCheck:
-	ld wa, (0x273c:16)
-	call PartCtrl_ReadWord_Off1
-	cp hl, 0:i3
-	ret z
-	ld (0x2726:16), hl
-	ld (0x2720:16), 255
-
-SeqStep_DecrementStore:
-	ld (9826:16), 1
-	ret
+SeqStep_DecrementPos:	.include "includes/generated/cc900/SeqStep_DecrementPos.s"	; C: cc900/seq_step_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_DecrementCheck, SeqStep_DecrementPos + 22
+	.set	SeqStep_DecrementStore, SeqStep_DecrementPos + 43
 
 SeqStep_WalkWithCallback:
 	dec 2, xsp
@@ -3037,29 +2945,7 @@ SeqStep_RebuildReturn:
 ;  Callers: midi/midi_dispatch_handlers.s calls both by name (v10: the
 ;  `call`s at 0xFD7076 and 0xFD8238).
 ; -----------------------------------------------------------------------------
-SeqStep_ByteBlockEA5F:
-	dec	2, xsp
-	push	xiz
-	ld (SEQ_SONG_RECORD+199:16), (SEQ_CURRENT_SONG:24)
-	ldw (SEQ_SONG_RECORD+200:16), (SEQ_TRACK_MASK_COPY:24)
-	ld	a, (SEQ_CURRENT_SONG:24)
-	extz	wa
-	call	SeqData_CopyBlockToBuffer
-	calr	SeqStep_FindAndCompact
-	ld	wa, (SEQ_SONG_RECORD+78:16)
-	ld	qiz, wa
-	ld	iz, (SEQ_FREE_BLOCKS:16)
-	ldw (xsp+4), (SEQ_FREE_LIST_HEAD)
-	ld	a, (SEQ_CURRENT_SONG:24)
-	extz	wa
-	call	VoicePreset_LoadAndInitPan
-	ld	wa, qiz
-	ld	(SEQ_SONG_RECORD+78:16), wa
-	ld	(SEQ_FREE_BLOCKS:16), iz
-	ldw (SEQ_FREE_LIST_HEAD), (xsp+4)
-	pop	xiz
-	inc	2, xsp
-	ret
+SeqStep_ByteBlockEA5F:	.include "includes/generated/cc900/SeqStep_ByteBlockEA5F.s"	; C: cc900/seq_step_routines_m236.c
 ; MidiSysEx_RestoreSongSelection: Restores the current song slot 0xFFE3 and the word 0xFFEC from the copies
 ;   0xF247/0xF248 that SeqStep_ByteBlockEA5F saved, zeroes the copies, sets word 0x2668 = 1, clears bit 3 of 0x28A7
 ;   and tail-jumps to SeqStep_FindAndCompactEntry. Basis: callers + body -- MidiSysEx_FinishSeqXfer, the end step of

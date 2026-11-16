@@ -3763,16 +3763,7 @@ MidiChannel_CleanupRet:
 	pop xiz
 	ret
 
-MidiChOut_DetectChanges:
-	bit 2, (ACC_TRANSPORT_STATE:16)
-	ret nz
-	ld a, (PLAY_TRANSPORT_STATE:16)
-	xor a, (0x347b:16)
-	bit 2, a
-	ret z
-	orw (LED_REQUEST_2:16), 4
-	ldmm8 0x347b, PLAY_TRANSPORT_STATE
-	ret
+MidiChOut_DetectChanges:	.include "includes/generated/cc900/MidiChOut_DetectChanges.s"	; C: cc900/audio_control_engine_m278.c
 
 MidiChannel_ScanPending:
 	push xiz
@@ -5581,10 +5572,7 @@ ExtData_Voice_CheckMode:
 ;   ExtData_Voice_CheckMode (entry 0x60 of SoundProgram_DispatchTable) calls it for offset 1; the bit meanings are
 ;   docs/kn-disk-file-formats.md:469 (0x4002/0x4004/0x4006 = tag 0x60 +1 bits 7/6/5 for slots 1/2/4), confirmed by
 ;   BitMapOut_RestoreExtra.
-ExtData_ToggleReverbIllusionOnOff:
-	ldw	wa, 192
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_ToggleReverbIllusionOnOff:	.include "includes/generated/cc900/ExtData_ToggleReverbIllusionOnOff.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_Voice_RetEntry:
 	ret
 ExtData_Voice_MixedHandler:

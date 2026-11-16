@@ -553,69 +553,10 @@ FDemoText_SendVoiceParams_Return:
 	lda xsp, (xsp + 12)
 	ret
 
-FDemoText_SendExtVoiceParams:
-	lda xsp, (xsp - 22)
-	pushw_erp 0xfa
-	ld (xsp + 22), a
-	lda xwa, (xsp + 6)
-	ld (xsp + 2), xwa
-	call DemoDesc_BuildCompactParams
-	lda xde, (xsp + 16)
-	ld (xde), 0xb0
-	ld a, (xsp + 22)
-	ld (xde + 1), a
-	ld (xde + 2), 0x78
-	ld (xde + 3), 0x0
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	lda xbc, (xsp + 16)
-	ld (xbc), 0x88
-	ld a, (xsp + 22)
-	ld (xbc + 1), a
-	ld (xbc + 3), 0x0
-	ld (xbc + 5), 0x0
-	ldi_erpb 0xfb, 0x0b
-
-FDemoText_SendExtParams_NoteLoop:
-	lda xde, (xsp + 16)
-	ldto_berp A, 0xfb
-	ld (xde + 2), a
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	ld (xde + 4), a
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	ld xwa, 1:i3
-	add (xsp + 2), xwa
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x0c
-	jr ule, FDemoText_SendExtParams_NoteLoop
-	ldib_erp 0xfb, 4
-
-FDemoText_SendExtParams_LevelLoop:
-	lda xde, (xsp + 16)
-	ldto_berp A, 0xfb
-	ld (xde + 2), a
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	ld (xde + 4), a
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	ld xwa, 1:i3
-	add (xsp + 2), xwa
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x08
-	jr ule, FDemoText_SendExtParams_LevelLoop
-	ld c, (xsp + 22)
-	extz bc
-	ldw wa, 0xff
-	call VoiceEvent_FlushAndReturn
-	popw_erp 0xfa
-	lda xsp, (xsp + 22)
-	ret
+FDemoText_SendExtVoiceParams:	.include "includes/generated/cc900/FDemoText_SendExtVoiceParams.s"	; C: cc900/fdemotext_routines_m265.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_SendExtParams_NoteLoop, FDemoText_SendExtVoiceParams + 71
+	.set	FDemoText_SendExtParams_LevelLoop, FDemoText_SendExtVoiceParams + 113
 
 FDemoText_UpdatePartialVoice:
 	lda xsp, (xsp - 10)

@@ -42,3 +42,17 @@ void Audio_InitChannelTimers(void)
 	ram_8e94 = 5;
 	ram_8e96 = 5;
 }
+
+extern unsigned char __near ACC_TRANSPORT_STATE;
+extern unsigned char __near PLAY_TRANSPORT_STATE;
+extern unsigned char __near ram_33c3;
+extern unsigned int __near LED_REQUEST_2;
+extern void MidiChOut_DetectChanges(void);
+
+void MidiChOut_DetectChanges(void)
+{
+	if (ACC_TRANSPORT_STATE & 4) return;
+	if (!((PLAY_TRANSPORT_STATE ^ ram_33c3) & 4)) return;
+	LED_REQUEST_2 |= 4;
+	ram_33c3 = PLAY_TRANSPORT_STATE;
+}

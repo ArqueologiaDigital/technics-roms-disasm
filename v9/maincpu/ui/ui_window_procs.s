@@ -2215,95 +2215,18 @@ AcRamBox_Epilogue:
 	lda xsp, (xsp + 34)
 	ret
 
-AcTempoBoxProc:
-	lda xsp, (xsp-260)
-	push xiz
-	ld xiz, xde
-	ld	(xsp+260), xwa
-	cp xbc, EVT_LSW_DATA
-	jr z, AcTempoBox_HandleConfirm
-	cp xbc, EVT_REPAINT
-	jr z, AcTempoBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_PAINT
-	jr z, AcTempoBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_HIDE
-	jr z, AcTempoBox_HandleClose
-	cp xbc, EVT_SHOW
-	jr z, AcTempoBox_HandleCreate
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	calr PsParaBoxProc
-	jrl AcTempoBox_Epilogue
-
-AcTempoBox_HandleCreate:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	jr AcTempoBox_CallPsParaBox
-
-AcTempoBox_HandleClose:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-
-AcTempoBox_CallPsParaBox:
-	calr PsParaBoxProc
-	jr PsRadioBox_EventReturn
-
-AcTempoBoxProc_OnPaintOrRepaint:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	calr PsParaBoxProc
-	ld xwa, 4:i3
-	calr MainLswGet
-	jr PsRadioBox_EventReturn
-
-AcTempoBox_HandleConfirm:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	calr PsParaBoxProc
-	ld xwa, (xiz)
-	cp xwa, 0x4
-	jr z, AcTempoBox_MatchTempoID
-	ld xwa, (xiz)
-	cp xwa, 0x2200
-	jr nz, PsRadioBox_EventReturn
-
-AcTempoBox_MatchTempoID:
-	ld xwa, 0x2200
-	call SndParam_LookupReadOnly
-	cp hl, 0:i3
-	jr nz, AcTempoBox_CopyTempoString
-	ld xwa, 4:i3
-	call SndParam_LookupReadOnly
-	pushw hl
-	pushw AcTempoBox_MatchTempoID_Str_aa_Fmt3d@hi16
-	pushw AcTempoBox_MatchTempoID_Str_aa_Fmt3d@lo16
-	lda xwa, (xsp + 10)
-	push xwa
-	call Sprintf_Locked
-	lda xsp, (xsp + 10)
-	jr AcTempoBox_SendConfirmEvent
-
-AcTempoBox_CopyTempoString:
-	pushw AcTempoBox_CopyTempoString_Str_aa@hi16
-	pushw AcTempoBox_CopyTempoString_Str_aa@lo16
-	lda xwa, (xsp + 8)
-	push xwa
-	call Strcpy
-	inc 8, xsp
-
-AcTempoBox_SendConfirmEvent:
-	lda xde, (xsp + 4)
-	ld XWA, (xsp + 0x0104)
-	ld xbc, EVT_PARA_DRAW
-	call SendEvent
-
-PsRadioBox_EventReturn:
-	ld xhl, 0:i3
-
-AcTempoBox_Epilogue:
-	pop xiz
-	lda xsp, (xsp+260)
-	ret
+AcTempoBoxProc:	.include "includes/generated/cc900/AcTempoBoxProc.s"	; C: cc900/ui_window_procs_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AcTempoBox_HandleCreate, AcTempoBoxProc + 66
+	.set	AcTempoBox_HandleClose, AcTempoBoxProc + 75
+	.set	AcTempoBox_CallPsParaBox, AcTempoBoxProc + 82
+	.set	AcTempoBoxProc_OnPaintOrRepaint, AcTempoBoxProc + 87
+	.set	AcTempoBox_HandleConfirm, AcTempoBoxProc + 104
+	.set	AcTempoBox_MatchTempoID, AcTempoBoxProc + 134
+	.set	AcTempoBox_CopyTempoString, AcTempoBoxProc + 173
+	.set	AcTempoBox_SendConfirmEvent, AcTempoBoxProc + 189
+	.set	PsRadioBox_EventReturn, AcTempoBoxProc + 206
+	.set	AcTempoBox_Epilogue, AcTempoBoxProc + 208
 
 PsRadioBoxProc:
 	lda xsp, (xsp-292)

@@ -58,3 +58,14 @@ void SndParam_WriteLookupAndStore(void)
 	if (p == (unsigned char *)-1L) return;
 	EXTDATA_NEW_VALUE = p[EXTDATA_TLV_OFFSET];
 }
+
+/* cc900-module: ExtData_ApplyTransposeEvent ExtData_StepTlvField ExtData_ToggleTlvBits SndParam_WriteLookupAndStore */
+extern void SwbtWr_FlushAndAppendParams(void);
+extern void ExtData_ToggleTlvBits(unsigned int);
+extern void ExtData_ToggleReverbIllusionOnOff(void);
+
+void ExtData_ToggleReverbIllusionOnOff(void)
+{
+	ExtData_ToggleTlvBits(192);
+	SwbtWr_FlushAndAppendParams();
+}
