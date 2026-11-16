@@ -12,7 +12,7 @@ extern unsigned char __near PREVIOUS_TITLE;
 extern unsigned char __near ram_3989;
 extern unsigned char __near ram_398e;
 extern unsigned char SEQ_CURRENT_SONG;
-extern unsigned char __near ram_398f;
+extern unsigned char __near ram_38d7;
 extern unsigned char __near ram_3990;
 extern unsigned char __near ram_3991;
 extern unsigned char __near ram_3992;
@@ -98,5 +98,18 @@ unsigned char *VoiceTable_ResolveReadAddr(void)
     r += 0xb0000;
     r += o;
     return (unsigned char *)r;
+}
+
+
+extern unsigned int __near ram_38c8;
+extern unsigned int __near ram_38cc;
+
+void Part_StoreVoiceTableIndex(unsigned char a)
+{
+    unsigned int x, y;
+    x = a;
+    y = ram_38d7;
+    ram_38c8 = y * 5 + x;
+    ram_38cc = 6;
 }
 

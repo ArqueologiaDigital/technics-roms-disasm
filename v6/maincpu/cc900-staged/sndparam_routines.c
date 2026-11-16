@@ -19,3 +19,14 @@ void SndParam_ClearHashTable(void)
 	for (i = 0; i < 16384; i++) ram_380f8.data[i] = 0;
 	ram_380f8.count = 0;
 }
+
+unsigned long SndParam_EncodeAddress(unsigned int a, unsigned int b)
+{
+	unsigned long r;
+
+	r = 0x8000;
+	r += (unsigned int)((a & 0x3f) << 10);
+	r |= b & 0x3ff;
+	if (b < 0x400) return r;
+	return r + 0x10000;
+}

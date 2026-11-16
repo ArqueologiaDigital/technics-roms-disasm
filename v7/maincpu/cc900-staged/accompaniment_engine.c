@@ -184,3 +184,24 @@ char Part_IsPercussionType(unsigned char a)
         r = 0;
     return r;
 }
+
+extern unsigned int __near ram_38e4;
+extern unsigned int __near ram_38e8;
+
+void Part_StoreVoiceTableIndex(unsigned char a)
+{
+    unsigned int x, y;
+    x = a;
+    y = ram_38f3;
+    ram_38e4 = y * 5 + x;
+    ram_38e8 = 6;
+}
+
+void AccVoice_IncrementBarCounter(void)
+{
+    unsigned char *r;
+    ACC_CUR_MEASURE = ACC_CUR_MEASURE + 1;
+    r = *(unsigned char **)0x338a;
+    if (ACC_CUR_MEASURE > r[13])
+        ACC_CUR_MEASURE = 0;
+}

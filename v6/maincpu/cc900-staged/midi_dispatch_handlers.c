@@ -237,3 +237,29 @@ void SndParam_ApplyModeSpecific(void)
         break;
     }
 }
+
+/* cc900-name: Param_SignExt_H3_Helper=Param_SignExtendReturn_Helper3_Helper */
+int DataBuf_CheckFormatPair(char *p)
+{
+    char e;
+    char c = p[4];
+    char d;
+    p += 5;
+    if (c == 'M') {
+        e = *p;
+        if (e == '4') return 1;
+    }
+    d = *p;
+    if (c == 'M' && d == '6') return 2;
+    if (c == 'N' && d == 'N') return 3;
+    return -1;
+}
+
+unsigned char Param_SignExt_H3_Helper(unsigned char *p, unsigned int n)
+{
+    unsigned char s = 0;
+    p++;
+    n--;
+    while (n--) s += *p++;
+    return -s & 0x7f;
+}

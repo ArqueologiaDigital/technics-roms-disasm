@@ -152,3 +152,34 @@ unsigned int Voice_GetPresetFieldWord(unsigned char i)
     p += 30;
     return *(unsigned int *)p;
 }
+
+extern unsigned char ram_25eb2[];
+extern int ram_271ec;
+
+void FileIO_CopyString(char *d, char *s)
+{
+    if (*s != 0) do *d++ = *s++; while (*s != 0);
+    *d = 0;
+}
+
+int ValidateFileRange(int i)
+{
+    char m = ram_25db6;
+    int b;
+    if ((m != 2 && m != 3 && m != 4) || i < 0 || i > ram_271ec) return -1;
+    b = ram_271ee;
+    if (i < b || i > FILE_LIST_LAST) return 1;
+    if (ram_25eb2[(i - b) * 82] == 0) return 2;
+    return 0;
+}
+
+int ValidateFileRangeAlt(int i)
+{
+    char m = ram_25db6;
+    int b;
+    if ((m != 6 && m != 7) || i < 0 || i > ram_271ec) return -1;
+    b = ram_271ee;
+    if (i < b || i > FILE_LIST_LAST) return 1;
+    if (ram_25eb2[(i - b) * 82] == 0) return 2;
+    return 0;
+}

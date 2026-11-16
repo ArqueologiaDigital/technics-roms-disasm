@@ -29,3 +29,14 @@ unsigned long Param_SignExtendReturn_Helper(unsigned char *p)
   c = p[11] & 0x7f;
   return a | b | c;
 }
+
+unsigned long Param_SignExtendRetu_Data(unsigned char *p)
+{
+  unsigned long a, b, c;
+  a = 0;
+  a = p[6];
+  a <<= 14;
+  b = (unsigned long)(p[7] & 0x7f) << 7;
+  c = p[8] & 0x7f;
+  return a | b | c;
+}

@@ -23,3 +23,21 @@ void BmDrEdit_SetupScrollRegion(unsigned char *a, unsigned char *b)
 	*a = WidgetData_DrawbarPositionTable[(int)NOTEEDIT_BASE_KEY * 2];
 	*b = WidgetData_DrawbarPositionTable[(int)NOTEEDIT_BASE_KEY * 2 + 1];
 }
+
+extern unsigned int __near ram_281e;
+extern unsigned int __near ram_27c2;
+extern unsigned int __near ram_27c4;
+extern unsigned int __near ram_27c6;
+extern unsigned int __near ram_27c8;
+extern unsigned int ram_210b2;
+extern unsigned char ram_210b0;
+extern unsigned int BmDrEdit_RenderVertical_Table[];
+
+void BmDrEdit_RenderSecondaryVert(void)
+{
+	ram_27c2 = (ram_281e >> 2) + 0x5b;
+	ram_27c4 = (ram_210b2 >> 2) + ram_27c2;
+	ram_27c8 = (ram_27c6 = BmDrEdit_RenderVertical_Table[ram_210b0]) + 3;
+	ram_27c6 -= 2;
+	ram_27c8 += 2;
+}

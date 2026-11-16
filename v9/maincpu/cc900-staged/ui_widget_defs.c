@@ -26,3 +26,21 @@ void UnregisteredMode(long id)
 	ram_328fc[id].b = -1;
 	ram_328fc[id].name = Mode_UnregisteredName;
 }
+
+struct aptimer { unsigned int a; unsigned int b; unsigned int pad[2]; long c; unsigned char rest[12]; };
+extern struct aptimer ram_2f844[];
+extern long ram_30444;
+extern unsigned int ram_30448;
+
+void InitializeTimer(void)
+{
+	int i;
+
+	ram_30444 = 0;
+	ram_30448 = 0xffff;
+	for (i = 0; i < 128; i++) {
+		ram_2f844[i].a = 0xffff;
+		ram_2f844[i].b = 0xffff;
+		ram_2f844[i].c = -1;
+	}
+}
