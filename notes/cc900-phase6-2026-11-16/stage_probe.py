@@ -43,7 +43,8 @@ def items(text):
             depth += 1
         elif ch == '}':
             depth -= 1
-            if depth == 0 and re.search(r'\)\s*\{', buf) and not re.match(r'\s*(typedef|struct|union|enum|extern)\b', buf):
+            head = buf[:buf.index('{')] if '{' in buf else buf   # a definition: a parameter list before its first {
+            if depth == 0 and '(' in head and re.search(r'\)\s*$', head) and not re.match(r'\s*(typedef|extern)\b', buf):
                 out.append(('fn', buf.strip())); buf = ''
         elif ch == ';' and depth == 0:
             if buf.strip() != ';':
