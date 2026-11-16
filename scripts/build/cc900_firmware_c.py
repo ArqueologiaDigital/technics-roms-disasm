@@ -430,7 +430,9 @@ def c_functions(path):
     src = open(path, "rb").read().decode("latin-1")
     src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
     src = re.sub(r'//[^\n]*', '', src)
-    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{', src, re.M)
+    # a K&R definition declares its parameters between `)` and `{` (lane_hd's lyrics: `long f(pos) long pos; {`)
+    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*(?:[^;{}()#=]*;\s*)*\{',
+                                  src, re.M)
             if n not in C_KEYWORDS]
 
 

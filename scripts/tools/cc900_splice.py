@@ -41,7 +41,6 @@ import cc900_firmware_c as fw  # noqa: E402
 LABEL_RE = re.compile(rb'^\s*([A-Za-z_.$][\w.$]*):')
 
 
-FN_RE = re.compile(r'^[\w][\w\s\*]*?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
 
 
 def encodings(text):
@@ -101,9 +100,10 @@ def image_sizes(elf, addr, lines):
         out = subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-objdump"), "-d", "--start-address=0x%x" % at,
                               "--stop-address=0x%x" % (at + 0x400), elf], capture_output=True, text=True).stdout
         for l in out.splitlines():
-            m = re.match(r'^\s*([0-9a-f]+):\s+((?:[0-9a-f]{2} )+)', l)
-            if m:
-                decoded.setdefault(int(m.group(1), 16), len(m.group(2).split()))
+            m = re.match(r'^\s*([0-9a-f]+):\s+((?:[0-9a-f]{2} )+)\s*(\S*)', l)
+            if m:                                        # `<unknown>`: an encoding llvm-objdump does not decode
+                decoded.setdefault(int(m.group(1), 16),  # (and (xde+hl), a): measured by llvm-mc below
+                                   None if m.group(3) == "<unknown>" else len(m.group(2).split()))
     res = []
     for c in lines:
         n = data_size(c) if c.startswith(b".") else None
@@ -113,6 +113,11 @@ def image_sizes(elf, addr, lines):
             if addr not in decoded:
                 return None
             n = decoded[addr]
+            if n is None:
+                enc = encodings("\t" + c.decode("latin-1") + "\n")
+                if len(enc) != 1:
+                    return None
+                n = enc[0][1]
         res.append((c, n))
         addr += n
     return res
@@ -136,7 +141,7 @@ def c_functions(path):
     """the tree labels of the functions FILE.c defines, in order (the front end's names, through `cc900-name:`)"""
     if "--sizes" in sys.argv:                            # C the model may not compile: read the definitions
         labels = fw.label_map(path)
-        return [labels.get(f, f) for f in FN_RE.findall(open(path, encoding="latin-1").read())]
+        return [labels.get(f, f) for f in fw.c_functions(path)]   # the generator's reader (comments out, K&R)
     sys.path.insert(0, fw.MODEL)
     import frontend
     _, _, adecl = fw.file_options(path)
@@ -157,9 +162,7 @@ def main():
     if not m:                                            # lane_hd's headers: "The lyric-display module of X.s ..."
         first = re.match(rb'\s*/\*(.*?)\*/', text, re.S)
         m = re.search(rb'\b([\w./-]+\.s)\b', first.group(1)) if first else None
-    if not m:
-        sys.exit("%s: no hand source (<file>.s) named in its header comment" % src)
-    asm = os.path.join(tree, m.group(1).decode())
+    named = os.path.join(tree, m.group(1).decode()) if m else None
     rel_c = os.path.relpath(src, tree)
     ref = sizes = None
     if "--symbols" in sys.argv:                          # functions with inner labels and several rets
@@ -168,24 +171,58 @@ def main():
         if "--sizes" in sys.argv:
             # staged_v423.tsv names a tree by its version (v10, v142) or directory (hdae5000)
             tname = os.path.normpath(tree).split(os.sep)[-2] if os.path.normpath(tree).endswith(("maincpu", "subcpu")) \
-                else os.path.normpath(tree)
+                else os.path.basename(os.path.normpath(tree))
             sizes = {}
-            for row in open(sys.argv[sys.argv.index("--sizes") + 1]):
-                c = row.rstrip("\n").split("\t")
-                if len(c) >= 8 and c[0] == tname and c[6].isdigit():
-                    sizes[c[5]] = int(c[6])
-                elif len(c) >= 2 and c[1].isdigit() and len(c) < 8:
-                    sizes.setdefault(c[0], int(c[1]))
+            # --sizes may repeat: a staged_v423.tsv (tree, file, sha, options, run, function, size, verdict), a
+            # verdicts/<run>.tsv of lane_sub (function, ROM bytes, the probes that match or `-`), or name<TAB>size
+            for k, x in enumerate(sys.argv):
+                if x != "--sizes":
+                    continue
+                for row in open(sys.argv[k + 1]):
+                    c = row.rstrip("\n").split("\t")
+                    if len(c) >= 8 and c[0] == tname and c[6].isdigit():
+                        sizes[c[5]] = int(c[6])
+                    elif len(c) == 4 and c[1].isdigit():
+                        if c[2].strip() not in ("", "-"):    # only a function some probe matches
+                            sizes.setdefault(c[0], int(c[1]))
+                    elif len(c) >= 2 and c[1].isdigit() and len(c) < 8:
+                        sizes.setdefault(c[0], int(c[1]))
         else:
             funcs = fw.compile_c(src, fw.Names(fw.tree_values(tree), ref), spell=False)
             if fw.REFUSED:
                 sys.exit("%s: the model refuses %s" % (src, ", ".join(fw.REFUSED)))
             sizes = {f: len(check_bytes.assemble("\t.text\n\t.globl %s\n%s:\n%s\n" % (f, f, "\n".join(l)))[f])
                      for f, l in funcs.items()}
-    lines = open(asm, "rb").read().split(b"\n")
-    done = []
+    files = {}                                           # each hand source touched: its lines
+    index = {}                                           # label -> the tree's .s files defining it (built on demand)
+
+    def source_of(name):
+        """the hand source defining NAME: the file the header names when it does, else the one file of the tree
+        (os.walk, read as bytes) whose column-0 label it is -- the HD-AE5000 ports' headers name only the C file"""
+        n = name.encode()
+        if named and os.path.exists(named):
+            files.setdefault(named, open(named, "rb").read().split(b"\n"))
+            if any(re.match(rb'^' + re.escape(n) + rb':', l) for l in files[named]):
+                return named
+        if not index:
+            for d, _, fs in os.walk(tree):
+                for f in sorted(fs):
+                    if f.endswith(".s") and "/includes/generated" not in d:
+                        p = os.path.join(d, f)
+                        for lab in re.findall(rb'^([A-Za-z_][\w.]*):', open(p, "rb").read(), re.M):
+                            index.setdefault(lab, []).append(p)
+        where = sorted(set(index.get(n, [])))
+        if len(where) != 1:
+            sys.exit("%s: %s is defined in %d .s files of %s%s" % (src, name, len(where), tree,
+                     "" if named else " (and its header comment names no hand source)"))
+        files.setdefault(where[0], open(where[0], "rb").read().split(b"\n"))
+        return where[0]
+
+    done = {}
     for name in c_functions(src):
         n = name.encode()
+        asm = source_of(name)
+        lines = files[asm]
         idx = [i for i, l in enumerate(lines) if re.match(rb'^' + re.escape(n) + rb':', l)]
         if len(idx) != 1:
             sys.exit("%s: %d lines define %s" % (asm, len(idx), name))
@@ -276,11 +313,13 @@ def main():
             new.append(b"; the hand assembly's labels inside the compiled body, by their offsets")
             new += [b"\t.set\t%s, %s + %d" % (ln.encode(), n, off) for ln, off in inner]
         lines[i:j + 1] = new
-        done.append(name)
-    if done and not dry:
-        open(asm, "wb").write(b"\n".join(lines))
-    print("%s: %s %d function(s)%s" % (asm, "would splice" if dry else "spliced", len(done),
-                                       (": " + " ".join(done)) if done else ""))
+        done.setdefault(asm, []).append(name)
+    for asm, names in sorted(done.items()):
+        if not dry:
+            open(asm, "wb").write(b"\n".join(files[asm]))
+        print("%s: %s %d function(s): %s" % (asm, "would splice" if dry else "spliced", len(names), " ".join(names)))
+    if not done:
+        print("%s: nothing to splice" % src)
 
 
 if __name__ == "__main__":
