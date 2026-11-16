@@ -1681,17 +1681,10 @@ DiskSel_Exit:
 	lda xsp, (xsp + 14)
 	ret
 
-GetPlayState1:
-	ld	l, (34982:16)
-	ret
-GetPlayState2:
-	ld	l, (34984:16)
-	ret
-SmfMedley_RawData:
-	cp a, 0:i3
-	scc NZ,WA
-	ld (0x88a8:16), a
-	ret
+GetPlayState1:	.include "includes/generated/cc900/GetPlayState1.s"	; C: cc900/medley.c
+GetPlayState2:	.include "includes/generated/cc900/GetPlayState2.s"	; C: cc900/medley.c
+; Stores 1 in the byte GetPlayState2 returns when A is non-zero, else 0.
+SmfMedley_RawData:	.include "includes/generated/cc900/SmfMedley_RawData.s"	; C: cc900/medley.c
 NavigateSongList:
 	dec 2, xsp
 	pushw iz

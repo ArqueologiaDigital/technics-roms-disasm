@@ -3904,6 +3904,15 @@ member of a global struct as divisor, guarded and divided through its address). 
 statements at O3XS and at O3XSXr, nothing lost -- the first pool-derived gain on unseen code; pool random +1 / +1 and
 rstmt +5 at the -O sets; o3v +6 / +6; library unchanged; semcheck 94, same verdicts.
 
+**Batch 358 (2026-11-16): phase 6's gaps, and bit-fields.**  lane_o3 fixes 21-22.  NARROW_LOAD_VIA_WA ((unsigned char)w
+of an int in memory, widened: the whole value into WA, low byte moved and extended); SHIFT_DIV_CMP_BYTE (a shifted or
+divided char compared with a char of the same signedness, a constant 0..127 or an int, at the byte; the
+mixed-signedness case is V4.23 bug 7 and is refused).  BITFIELD_LAYOUT (frontend.py: units of the declared type,
+filled from the high end, byte-aligned; :0 no longer crashes), BITFIELD_READ and BITFIELD_REFUSE -- the model had read
+a bit-field as its whole unit, silent wrong code found by phase 6.  shcmp and bitf join the ledger: shcmp 216 of 252
+at every set (the 36 bug-7 rows refused), bitf 82 / 74 / 82 / 74 of 192 (writes refused for now); phase 6's
+medley_cast, vari_* and medley_bitfield exact; validation and library unchanged; semcheck 94; firmware C all MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

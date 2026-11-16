@@ -348,13 +348,9 @@ GroupBox_Epilogue:
 	lda xsp, (xsp + 40)
 	ret
 
-SetDialEnable:
-	ld (DIAL_ENABLE:24), wa
-	ret
+SetDialEnable:	.include "includes/generated/cc900/SetDialEnable.s"	; C: cc900/presentation_sound_nav.c
 
-GetDialEnableState:
-	ld hl, (DIAL_ENABLE:24)
-	ret
+GetDialEnableState:	.include "includes/generated/cc900/GetDialEnableState.s"	; C: cc900/presentation_sound_nav.c
 
 SetDialFocus:
 	ld xde, xwa

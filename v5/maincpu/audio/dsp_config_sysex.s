@@ -1242,9 +1242,7 @@ MidiIn_AcceptClockTransport:
 MidiIn_IgnoreClockTransport:
 	set	6, (0xb722:16)
 	ret
-GET_COMPUTER_INTERFACE_SELECTION:
-	ld	l, (COM_SELECT:16)
-	ret
+GET_COMPUTER_INTERFACE_SELECTION:	.include "includes/generated/cc900/GET_COMPUTER_INTERFACE_SELECTION.s"	; C: cc900/dsp_config_sysex.c
 ; Fade_Tick: FADE IN/OUT engine, once per input pass of the main loop (Encoder_TimingAndOutput tail-jumps here): while
 ;   no fade-out has finished (0xC1F0 bit 3 clear) it steps the level ramp (Fade_Tick_Ramp); once one has, it applies
 ;   the FADE OUT "Rhythm Auto stop" / "SEQ Auto stop" settings (0xC1F0 bits 4/5) to a playing rhythm / sequencer and,

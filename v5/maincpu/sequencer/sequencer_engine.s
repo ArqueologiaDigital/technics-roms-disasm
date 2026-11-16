@@ -19341,11 +19341,7 @@ AccWrap_WaitSync_Loop:
 ; Only stores if DRAM[7520] is currently zero (no existing error).
 ; Called with error values 0xb8, 0xcf, 0xd0, 0xd1 from sequence processing.
 ; ============================================================================
-SeqData_SetErrorCode:
-	cp	(7516:16), 0
-	ret nz
-	ld	(7516:16), a
-	ret
+SeqData_SetErrorCode:	.include "includes/generated/cc900/SeqData_SetErrorCode.s"	; C: cc900/sequencer_engine.c
 
 SeqStatus_CheckBit2:
 	ld l, (PANEL_GM+3:16)

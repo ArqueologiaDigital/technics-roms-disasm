@@ -850,14 +850,25 @@ CUSTOMDATA_SRC = $(wildcard custom_data/*.s custom_data/*/*.s)
 # proof that the C, the model and the translator give the firmware's bytes.  The stamp depends on the tree's
 # sources because the generator reads the tree's .equ values (they choose an operand's 16- or 24-bit width), and
 # on every model module, so a change to the model is checked against these functions by `make gate`.
+# Every main-CPU tree has its own C (the v9 tree's also builds v8): the trees differ in RAM cell addresses.
 CC900_MODEL_SRC = $(wildcard scripts/analysis/cc900/model/*.py)
 CC900_FW_GEN = scripts/build/cc900_firmware_c.py
-V10_CC900_C = $(wildcard v10/maincpu/cc900/*.c)
-V10_CC900_STAMPS = $(patsubst v10/maincpu/cc900/%.c,v10/maincpu/includes/generated/cc900/%.stamp,$(V10_CC900_C))
-v10/maincpu/includes/generated/cc900/%.stamp: v10/maincpu/cc900/%.c $(V10_SRC) $(CC900_MODEL_SRC) $(CC900_FW_GEN) $(CLANG) $(LLVM_MC)
-	CC900_MODEL_CLANG=$(CLANG) python3 -B $(CC900_FW_GEN) v10/maincpu $< v10/maincpu/includes/generated/cc900 $@
+cc900_stamps = $(patsubst $(1)/maincpu/cc900/%.c,$(1)/maincpu/includes/generated/cc900/%.stamp,$(wildcard $(1)/maincpu/cc900/*.c))
+V10_CC900_STAMPS = $(call cc900_stamps,v10)
+V9_CC900_STAMPS = $(call cc900_stamps,v9)
+V7_CC900_STAMPS = $(call cc900_stamps,v7)
+V6_CC900_STAMPS = $(call cc900_stamps,v6)
+V5_CC900_STAMPS = $(call cc900_stamps,v5)
+# $(1) the tree (v10), $(2) the variable naming its sources (V10_SRC); eval'd once that variable exists
+define CC900_FIRMWARE_C
+$(1)/maincpu/includes/generated/cc900/%.stamp: $(1)/maincpu/cc900/%.c $$($(2)) $$(CC900_MODEL_SRC) $$(CC900_FW_GEN) $$(CLANG) $$(LLVM_MC)
+	CC900_MODEL_CLANG=$$(CLANG) python3 -B $$(CC900_FW_GEN) $(1)/maincpu $$< $(1)/maincpu/includes/generated/cc900 $$@
+endef
+$(eval $(call CC900_FIRMWARE_C,v10,V10_SRC))
+$(eval $(call CC900_FIRMWARE_C,v9,V9_SRC))
+$(eval $(call CC900_FIRMWARE_C,v7,V7_SRC))
 .PHONY: cc900-firmware-c
-cc900-firmware-c: $(V10_CC900_STAMPS)
+cc900-firmware-c: $(V10_CC900_STAMPS) $(V9_CC900_STAMPS) $(V7_CC900_STAMPS) $(V6_CC900_STAMPS) $(V5_CC900_STAMPS)
 
 # --- Maincpu ---
 rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) $(V10_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
@@ -871,7 +882,7 @@ rebuilt_ROMs/kn5000_v10_program.llvm.rom: rebuilt_ROMs/kn5000_v10_program.llvm.e
 	$(LLVM_OBJCOPY) -O binary $< $@
 
 # --- V9 Maincpu ---
-rebuilt_ROMs/kn5000_v9_program.llvm.o: $(V9_SRC) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v9_program.rom $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v9_program.llvm.o: $(V9_SRC) $(V9_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v9_program.rom $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v9/maincpu -I wsa1/kernel -o $@ v9/maincpu/kn5000_v9_program.s
 
@@ -915,7 +926,7 @@ verify-v8-reference: original_ROMs/kn5000_v8_program.rom
 	 if [ "$$got" = "$(KN5000_V8_SHA1)" ]; then echo "OK    $< has SHA-1 $(KN5000_V8_SHA1)"; \
 	 else echo "FAIL  $< has SHA-1 $$got, expected $(KN5000_V8_SHA1)"; exit 1; fi
 
-rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(MAINCPU_KERNEL_SRC) $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v8_program.llvm.o: $(V9_SRC) $(V9_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) $(V9_C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj --defsym FW_VERSION_BYTE=0x08 -I v9/maincpu -I wsa1/kernel -o $@ v9/maincpu/kn5000_v9_program.s
 
@@ -944,7 +955,7 @@ v7-extract-bins: $(V7_C_DATA_BINS)
 v7-c-bins-raw: $(V7_C_DATA_BINS)
 v7-c-bins: v7-extract-bins
 
-rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) $(MAINCPU_KERNEL_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v7_program.llvm.o: $(V7_SRC) $(V7_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) v7-extract-bins $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v7/maincpu -I wsa1/kernel -o $@ v7/maincpu/kn5000_v7_program.s
 
@@ -1099,7 +1110,7 @@ $(1)-c-bins-raw: $$($(2)_C_DATA_BINS)
 $(1)-c-bins: $(1)-c-bins-raw
 	python3 scripts/build/apply_c_divergence.py $(1)
 
-rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $(1)-c-bins $$(KN5000_IMAGE_BINS) $$(wildcard $(1)/maincpu/images/*.png) $$(LLVM_MC)
+rebuilt_ROMs/kn5000_$(1)_program.llvm.o: $$($(2)_SRC) $$($(2)_CC900_STAMPS) $(1)-c-bins $$(KN5000_IMAGE_BINS) $$(wildcard $(1)/maincpu/images/*.png) $$(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$$(LLVM_MC) -triple=tlcs900 -filetype=obj -I $(1)/maincpu -o $$@ $(1)/maincpu/kn5000_$(1)_program.s
 
@@ -1116,6 +1127,8 @@ endef
 
 $(eval $(call PORTED_MAINCPU,v6,V6))
 $(eval $(call PORTED_MAINCPU,v5,V5))
+$(eval $(call CC900_FIRMWARE_C,v6,V6_SRC))
+$(eval $(call CC900_FIRMWARE_C,v5,V5_SRC))
 # v6-c-bins (and v5-c-bins) is deliberately not .PHONY: like v7-extract-bins it is an intermediate with no file, so
 # `make -q` (assert_byte_identical.py's staleness check) does not call the ROM out of date.
 .PHONY: v6-progress verify-v6-reference v5-progress verify-v5-reference

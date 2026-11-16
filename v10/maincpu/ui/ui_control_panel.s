@@ -2889,15 +2889,10 @@ CtrlPanel_SelectionReturnZero:
 	ret
 
 ; Returns the selected part (PART_SELECT) zero-extended in HL.
-GetPartSelect:
-	ld l, (PART_SELECT:16)
-	extz hl
-	ret
+GetPartSelect:	.include "includes/generated/cc900/GetPartSelect.s"	; C: cc900/ui_control_panel.c
 
 ; Returns the selected part (PART_SELECT) in L; H is not cleared (GetPartSelect zero-extends).
-GetCurrentPartSelect:
-	ld l, (PART_SELECT:16)
-	ret
+GetCurrentPartSelect:	.include "includes/generated/cc900/GetCurrentPartSelect.s"	; C: cc900/ui_control_panel.c
 
 ; Requests a change to mode NAKA_MODE_MD_PS + A: removes any queued EVT_CHANGE_MODE
 ; (DeleteEvent) and posts a new one to the current target (ApPostEvent).
@@ -2973,11 +2968,7 @@ UI_PostTimerResetEvent:
 	jp ApPostEvent
 
 ; Returns HL = 1 when CURRENT_TITLE differs from ACTIVE_TITLE, else 0.
-SeqState_HasModeChanged:
-	ld a, (CURRENT_TITLE:16)
-	cp a, (ACTIVE_TITLE:16)
-	scc16 nz, hl
-	ret
+SeqState_HasModeChanged:	.include "includes/generated/cc900/SeqState_HasModeChanged.s"	; C: cc900/ui_control_panel.c
 
 ; Posts EVT_VALEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
 UI_PostDialEnable:

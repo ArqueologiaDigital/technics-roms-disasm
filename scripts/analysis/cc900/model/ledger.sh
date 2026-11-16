@@ -447,6 +447,16 @@ for c in none O3XS; do
 done
 row "run 2026-11-16-4-micro-pool9-12, v423/Xr" "probes/rstmt9-12.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/Xr/probes" corpus/probes/rstmt9.c corpus/probes/rstmt10.c corpus/probes/rstmt11.c corpus/probes/rstmt12.c --opt none --adecl
 row "run 2026-11-16-4-micro-pool9-12, v423/O3XSXr" "probes/rstmt9-12.c" "$O/2026-11-16-4-micro-pool9-12/out/v423/O3XSXr/probes" corpus/probes/rstmt9.c corpus/probes/rstmt10.c corpus/probes/rstmt11.c corpus/probes/rstmt12.c --opt O3XS --adecl
+for c in none O3XS; do    # a shifted or divided char compared (phase 6 item 3; bug 7 rows refused) (corpus/probes/shcmp.c)
+  row "run 2026-11-16-7-micro-shcmp, v423/$c" "probes/shcmp.c" "$O/2026-11-16-7-micro-shcmp/out/v423/$c/probes" corpus/probes/shcmp.c --opt $c
+done
+row "run 2026-11-16-7-micro-shcmp, v423/Xr" "probes/shcmp.c" "$O/2026-11-16-7-micro-shcmp/out/v423/Xr/probes" corpus/probes/shcmp.c --opt none --adecl
+row "run 2026-11-16-7-micro-shcmp, v423/O3XSXr" "probes/shcmp.c" "$O/2026-11-16-7-micro-shcmp/out/v423/O3XSXr/probes" corpus/probes/shcmp.c --opt O3XS --adecl
+for c in none O3XS; do    # bit-field layout and access (phase 6) (corpus/probes/bitf.c)
+  row "run 2026-11-16-6-micro-bitf, v423/$c" "probes/bitf.c" "$O/2026-11-16-6-micro-bitf/out/v423/$c/probes" corpus/probes/bitf.c --opt $c
+done
+row "run 2026-11-16-6-micro-bitf, v423/Xr" "probes/bitf.c" "$O/2026-11-16-6-micro-bitf/out/v423/Xr/probes" corpus/probes/bitf.c --opt none --adecl
+row "run 2026-11-16-6-micro-bitf, v423/O3XSXr" "probes/bitf.c" "$O/2026-11-16-6-micro-bitf/out/v423/O3XSXr/probes" corpus/probes/bitf.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
