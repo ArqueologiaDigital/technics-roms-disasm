@@ -203,13 +203,13 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 
 | File                                            | ROM                                               | Symbols | Address Range                                              |
 |-------------------------------------------------|---------------------------------------------------|---------|------------------------------------------------------------|
-| `symbols/maincpu_symbols_reference.txt`         | Main CPU **v10** (identical to `maincpu_v10_...`) | 54,074  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v10_symbols_reference.txt`     | Main CPU v10                                      | 54,074  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 54,072  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 54,072  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 54,080  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,183  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,159  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_symbols_reference.txt`         | Main CPU **v10** (identical to `maincpu_v10_...`) | 54,096  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v10_symbols_reference.txt`     | Main CPU v10                                      | 54,096  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v9_symbols_reference.txt`      | Main CPU v9                                       | 54,094  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v8_symbols_reference.txt`      | Main CPU v8 (same rows as v9: same source, link)  | 54,094  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 54,102  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,195  | 0xE00000 - 0xFFFFE8                                        |
+| `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,171  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,070   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,069   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,069   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
@@ -223,7 +223,9 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 The two HD-AE5000 v1 rows were added 2026-10-30 (lane open/hdae-v1), from
 `l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.  The seven main-CPU rows were re-counted
 2026-11-06 (lane open10/kernel4, the main CPU's kernel joined to `wsa1/kernel/kernel.s`), from
-`l2_symbol_reference.py --regen --only maincpu,maincpu_v10,maincpu_v9,maincpu_v8,maincpu_v7,maincpu_v6,maincpu_v5`.
+`l2_symbol_reference.py --regen --only maincpu,maincpu_v10,maincpu_v9,maincpu_v8,maincpu_v7,maincpu_v6,maincpu_v5`,
+and again 2026-11-16 by the same command (cc900 phase 6: functions built from C keep their inner labels as `.set`
+offsets, and the SMF DIRECT PLAY cells are named, `scripts/renaming/rename_smf_direct_play*.sed`).
 The three sub-CPU payload rows were regenerated 2026-11-06 (lane open9/kernel-a3), when the payload's
 kernel became `wsa1/kernel/kernel.s` and 62 of its labels took that file's names
 (`scripts/renaming/rename_kernel_a3.sed`); `KERNEL_*` equates are not rows.
