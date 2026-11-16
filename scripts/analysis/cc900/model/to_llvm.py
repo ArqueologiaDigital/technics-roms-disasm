@@ -60,6 +60,28 @@ def sym_width(sym):
     if n not in WIDTHS: raise KeyError('no declared width (small / medium / large) for %s' % sym)
     return WIDTHS[n]
 
+# MODULE (phase 6): the names asm900 sees in the same section of the same assembly -- the functions of the C file, and
+# the ones its `cc900-module:` comment says were in the firmware's original module -- or None.  asm900 assembles the
+# optimising CAL / J to such a target as calr / jr, jrl when jr does not reach; to anything else (an extern) as call /
+# jp, 24-bit for a large target and 16-bit (call16 / jp16) for a __near or __tiny one (probe calrel, run
+# 2026-11-16-42-p6-calrel; ASM900 -O turns the optimisation off).  We write jr and let llvm-mc widen it.
+MODULE = None
+
+def module_local(sym):
+    if MODULE is None or sym.startswith('L') and sym[1:].isdigit(): return False
+    b = sym.lstrip('_.')
+    return b in MODULE or (len(b) == 31 and any(m[:31] == b for m in MODULE if len(m) > 31))
+
+def code_width(sym):
+    """a call / jump target's width: the declared one (WIDTHS) when known, else 24 (large)"""
+    return (WIDTHS or {}).get(sym.lstrip('_.'), 24)
+
+def branch_target(sym, syms):
+    """a relative branch's operand: the tree's name, or, without SPELL (an address-only check), a placeholder
+    `__cc900_at_<hex address>` that the checker defines beside the function (c_build_coverage.compare)"""
+    s = SPELL.get(sym.lstrip('_.')) if SPELL is not None else None
+    return s if s else '__cc900_at_%x' % lookup(sym, syms)
+
 # byte registers of XIX / XIY / XIZ, which llvm-mc reaches only through their extended-register code (the ERP forms)
 ERP_BYTE = {'IXL': 0xf0, 'IXH': 0xf1, 'QIXL': 0xf2, 'QIXH': 0xf3, 'IYL': 0xf4, 'IYH': 0xf5, 'QIYL': 0xf6, 'QIYH': 0xf7,
             'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb}
@@ -143,12 +165,17 @@ def translate_line(t, syms, locals_):
         # 32 / 16 form da 0a 64 00)
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
-    if op == 'cal': return '\tcall %s' % spelled(raw[0], lookup(raw[0], syms))
+    if op == 'cal':
+        if module_local(raw[0]): return '\tcalr %s' % branch_target(raw[0], syms)
+        if code_width(raw[0]) < 24: return '\tcall16 %s' % spelled(raw[0], lookup(raw[0], syms))
+        return '\tcall %s' % spelled(raw[0], lookup(raw[0], syms))
     if op == 'j':
         if len(raw) == 1:
             if raw[0] in locals_: return '\tjr %s' % raw[0]
             m = re.match(r'^(X\w+)\+(\w+)$', raw[0])
             if m: return '\tjp t, (%s+%s)' % (m.group(1).lower(), m.group(2).lower())
+            if module_local(raw[0]): return '\tjr %s' % branch_target(raw[0], syms)   # llvm-mc widens it to jrl
+            if code_width(raw[0]) < 24: return '\tjp16 %s' % spelled(raw[0], lookup(raw[0], syms))
             return '\tjp %s' % spelled(raw[0], lookup(raw[0], syms))
         return '\tjr %s, %s' % (CC[raw[0]], raw[1])
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])

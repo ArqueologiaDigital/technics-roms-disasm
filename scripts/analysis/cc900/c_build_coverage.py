@@ -264,7 +264,7 @@ def listing_functions(path):
     return fs
 
 
-def translate(listing_funcs, names, widths=None):
+def translate(listing_funcs, names, widths=None, module=None):
     """{name: listing lines} -> {bare name: llvm-mc lines}, every name written as its address (fn_diff.py's way),
     as cc900_firmware_c.compile_c does for the model's listing.  widths: each symbol's operand width as the listing
     declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None"""
@@ -272,6 +272,7 @@ def translate(listing_funcs, names, widths=None):
     import cc900_firmware_c as fw
     to_llvm.SPELL = None
     to_llvm.WIDTHS = widths
+    to_llvm.MODULE = module    # the build's: the cc900-module: names
     funcs = {}
     for name, lines in listing_funcs.items():
         if not lines or not lines[0].endswith(':') or lines[0][:-1] != name:
@@ -304,8 +305,22 @@ def compare(fn, lines, rom, ref, base=0xe00000):
         return 0, 'untranslated'
     if fn not in ref:
         return 0, 'not in the symbols reference'
+    body = '\n'.join(lines)
+    targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', body)})
+    if targets:      # relative branches to the module's own functions (to_llvm.MODULE): lay the function and its
+        at = ref[fn]     # targets out at their ROM addresses in one unit, so that llvm-mc resolves and sizes them
+        if any(abs(t - at) > 0x10000 for t in targets):
+            return 0, 'a module-local target is out of calr / jrl reach'
+        base = min(targets + [at])
+        self_ = '__cc900_at_%x:\n' % at if at in targets else ''     # a recursive call
+        items = sorted([(t, '__cc900_at_%x:' % t) for t in targets if t != at] +
+                       [(at, '%s\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:' % (self_, fn, fn, body))])
+        body = '\n'.join('\t.org 0x%x\n%s' % (a - base, txt) for a, txt in items)
+        src = '\t.text\n%s\n' % body
+    else:
+        src = '\t.text\n\t.globl %s\n%s:\n%s\n' % (fn, fn, body)
     try:
-        mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (fn, fn, '\n'.join(lines)))[fn]
+        mine = check_bytes.assemble(src)[fn]
     except subprocess.CalledProcessError:
         return 0, 'does not assemble'
     at = ref[fn] - base
@@ -368,7 +383,7 @@ def firmware(key, tree, rom_path, sym_path):
             except SystemExit as ex:                      # the C's qualifiers disagree with the listing
                 sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
                 widths = {}
-            v423 = translate(listing_functions(lp), names, widths)
+            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path))
             v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
         fnames = set(funcs) | {lm_.get(c, c) for c in fw.c_functions(path)}
         for fn in sorted(fnames):
