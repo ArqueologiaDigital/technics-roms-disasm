@@ -11,13 +11,14 @@ How rare the differences are: at `-O3 -XS`, V4.23 and the 2003 compiler give dif
 functions of the general micro corpora (`results/compiler_diff_v423_ide2003.md`), and for 3 of the 11 rule-trigger
 functions built from the library's shapes (`rules.c`, run `2026-11-09-1-micro-rules`).
 
-| rule                | V4.23                                                 | 2003                              | trigger                                    | kn5000 state | evidence                                                                                                              |
-|---------------------|-------------------------------------------------------|-----------------------------------|--------------------------------------------|--------------|-----------------------------------------------------------------------------------------------------------------------|
-| reload-after-store  | `lda XWA,XSP+d` / `ld (XSP+e),XWA` / `ld XWA,(XSP+e)` | the reload is dropped             | `rules.c` `r_buf`                          | **2003**     | pairs `_ldiv`, `_ultoa`, `_ldexp`; census: V4.23 form 0, 2003 form 65 in main CPU v10, 0 / 29 in the HD-AE5000        |
-| djnz-loop           | `djnz r,L`                                            | `sub r,0x1` / `j ne,L`            | `rules.c` `r_countdown2`, `ctrl.c` `c_do`  | **V4.23**    | pair `_strrchr`; census: `djnz` 171 against 1 `sub`/`jr ne` in main CPU v10, 14 / 0 sub CPU, 10 / 0 HD-AE5000         |
-| lda-offset-fold     | `ld XIZ,XWA` / `add XIZ,XHL` / `dec 0x1,XIZ`          | `lda XIZ,XWA-0x1` / `add XIZ,XHL` | `rules.c` `r_rev`                          | **V4.23**    | pair `_strrev` (`HDAE5000_StrRev`: `add xix,xiz` / `dec 1,xix`); census: 1 / 0 in the HD-AE5000, none in main CPU v10 |
-| call-register-alloc | arguments re-read from the frame around calls         | more values kept in XIZ / XBC     | (library `_memccpy`; no micro trigger yet) | **V4.23**    | pair `_memccpy`                                                                                                       |
-| m_gps_a index form  | `add WA,0xc` then the 8-bit index register            | `ld BC,WA` first                  | `mem.c` `m_gps_a`                          | undecided    | none yet                                                                                                              |
+| rule                | V4.23                                                 | 2003                              | trigger                                    | kn5000 state | evidence                                                                                                                  |
+|---------------------|-------------------------------------------------------|-----------------------------------|--------------------------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------|
+| reload-after-store  | `lda XWA,XSP+d` / `ld (XSP+e),XWA` / `ld XWA,(XSP+e)` | the reload is dropped             | `rules.c` `r_buf`                          | **2003**     | pairs `_ldiv`, `_ultoa`, `_ldexp`; census: V4.23 form 0, 2003 form 65 in main CPU v10, 0 / 29 in the HD-AE5000            |
+| djnz-loop           | `djnz r,L`                                            | `sub r,0x1` / `j ne,L`            | `rules.c` `r_countdown2`, `ctrl.c` `c_do`  | **V4.23**    | pair `_strrchr`; census: `djnz` 171 against 1 `sub`/`jr ne` in main CPU v10, 14 / 0 sub CPU, 10 / 0 HD-AE5000             |
+| lda-offset-fold     | `ld XIZ,XWA` / `add XIZ,XHL` / `dec 0x1,XIZ`          | `lda XIZ,XWA-0x1` / `add XIZ,XHL` | `rules.c` `r_rev`                          | **V4.23**    | pair `_strrev` (`HDAE5000_StrRev`: `add xix,xiz` / `dec 1,xix`); census: 1 / 0 in the HD-AE5000, none in main CPU v10     |
+| call-register-alloc | arguments re-read from the frame around calls         | more values kept in XIZ / XBC     | (library `_memccpy`; no micro trigger yet) | **V4.23**    | pair `_memccpy`                                                                                                           |
+| m_gps_a index form  | `add WA,0xc` then the 8-bit index register            | `ld BC,WA` first                  | `mem.c` `m_gps_a`                          | undecided    | none yet                                                                                                                  |
+| loop-entry-copy     | `j L_test` / body / `L_test:` test                    | not probed                        | `p6_m3.c` `trim_a`                         | **firmware** | firmware `TrimAndPadSmfFilename` (runs `2026-11-16-9` to `-11`); census: 332 one-compare tests copied, 29 jumped to (v10) |
 
 Pairs that no rule setting explains yet (`__doprnt`, `__facnv`, `__doform` data, `_vsprintf` in two images, `_sbrk`,
 `__FloatErrorHandle`) are the next source of rules: once the model reproduces V4.23's output for them, the remaining
@@ -80,3 +81,44 @@ functions (209 are already identical), among them `_ldexp`, `_ldiv`, `_fmod`, `_
 (`scripts/analysis/cc900/results/rule_on_listings.md`).  The firmware's `__doprnt` still differs from the 2003
 compiler's (a variable kept in IZ, two `cp (XSP+0x1a),...` / `decw 1,(XSP+0x12)` sequences absent): a later
 revision of `__DOFORM.C`, or a rule neither neighbour has.
+
+## From the firmware's own functions (phase 6, 2026-11-16)
+
+Phase 6 builds Matsushita's functions from guessed C (`notes/cc900-phase6-2026-11-16/README.md`).  Two findings bear
+on this list.  Both come from comparing V4.23's output with the ROM, run in the oracle VM.
+
+**The firmware was built with options per source file.**  V4.23 at `-O` loads a 32-bit constant of 8..0xffff with
+`lda`, which asm900 assembles to the short absolute form; without `-O` it uses the 5-byte `ld`.
+- `GetNamingWindowID` (main CPU v10, `ui/ui_widget_defs.s` in the disassembly) returns 10 with the `ld`.  V4.23
+  reproduces it at `-Xr` only.
+- `StyleConv_ClearWorkBuffer` (`sequencer/accompaniment_engine.s`) is `-O`-shaped: the end pointer is computed from
+  the start register, and the loop has no entry test.  It loads its buffer's address, 0x488c, with the `lda` form,
+  the instruction V4.23 writes only at `-O3 -XS -Xr` (run `2026-11-16-14-p6-m4-split`).
+- `TrimAndPadSmfFilename` (`file_io/smf_operations.s`) matches V4.23 at `-O3 -XS -Xr` for its first 42 of 55 bytes,
+  and at `-Xr` not from its first byte.
+
+So the Technics compiler has the `-O` `lda` rule, and the source files were compiled with different options.  The
+phase-6 C files record theirs (`cc900-options:`; `ui_widget_defs.c` is at `-Xr`).  The caveat: the `lda` evidence is
+a pointer constant and `GetNamingWindowID`'s an integer, which V4.23 treats alike.  Of 36 small functions built so
+far, 35 give the same bytes at either option set, so most files' options are still unknown.
+
+**loop-entry-copy (kn5000 state: firmware).**  The Technics compiler copies a loop's test to the loop's entry when the
+test is one compare and its branch: test, fall into the body, test again at the bottom.  V4.23 jumps to the bottom
+test for every form tried (`while`, `for`, `if` + `do`-`while`, two hand-made `goto` loops: runs `2026-11-16-9` to
+`-11`).  For a longer test, one that loads or has `&&`, the firmware jumps too.
+- **The firmware routine.**  `TrimAndPadSmfFilename` shows both shapes in one function.  Its first loop
+  (`while (i < n && (c = *p) != 0)`) jumps to the test, exactly as V4.23 does.  Its padding loop (`while (i < n)`)
+  is entered by `cp IX,BC / jr nc,exit`, where V4.23 writes `jr T,test`.
+- **The census** (`notes/cc900-phase6-2026-11-16/loop_shapes.py --test-blocks`, v10).  Of 3,136 backward branches:
+  - 332 are loops whose one-compare bottom test is copied to the entry, and 229 more test something else at the
+    entry;
+  - 344 jump to their test.  That test is one instruction in only 29 of them, and 7 of the 29 are in
+    `audio/sprintf_core.s`, the library code Toshiba's tools built;
+  - for the other 315 the test is two instructions or more: 40 of two, 75 of three, 200 of four or more.
+  
+  Neither a branch to the loop's entry nor the body's length separates the shapes.  The 22 one-compare jump-to-test
+  loops outside the library are the rule's exceptions to check; some look hand-written.
+- **The 2003 compiler** has not been asked.
+
+In the reference model the rule is `KN_LOOP_INVERT` / `kn_invert_entry` in `codegen.py`, for the `kn5000`
+personality only, at `-O`, in the generic `while` and `for` paths (lane_p6 fix p6-01).
