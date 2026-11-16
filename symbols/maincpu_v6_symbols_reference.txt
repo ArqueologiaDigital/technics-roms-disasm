@@ -41215,9 +41215,9 @@ DiskSel_GetCurrentIndex 00F926AC
 DiskSel_UpdateDisplay 00F926B0
 DiskSel_PostEvent 00F92701
 DiskSel_Exit 00F92705
-GetPlayState1 00F9270C
-GetPlayState2 00F92711
-SmfMedley_RawData 00F92716
+Smf_GetPlayAsGm 00F9270C
+Smf_GetMidiOut 00F92711
+Smf_SetMidiOut 00F92716
 NavigateSongList 00F9271F
 NavSong_CheckBounds 00F92733
 NavSong_WrapToEnd 00F92752

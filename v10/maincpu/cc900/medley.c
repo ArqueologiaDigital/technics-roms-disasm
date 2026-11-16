@@ -1,11 +1,11 @@
 /* Functions of file_io/medley.s.  Firmware C (cc900 phase 6), built by scripts/build/cc900_firmware_c.py with the cc900 reference model;
    no Toshiba program.  Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet. */
-extern unsigned char ram_8942;
-extern char ram_8944;
+extern unsigned char SmfPlayAsGm;
+extern char SmfMidiOut_OnOff;
 
-unsigned char GetPlayState1(void) { return ram_8942; }
-unsigned char GetPlayState2(void) { return ram_8944; }
-void SmfMedley_RawData(char c) { ram_8944 = (c != 0); }
+unsigned char Smf_GetPlayAsGm(void) { return SmfPlayAsGm; }
+unsigned char Smf_GetMidiOut(void) { return SmfMidiOut_OnOff; }
+void Smf_SetMidiOut(char c) { SmfMidiOut_OnOff = (c != 0); }
 
 /* E, then 'M' and the song number n + 1 in two digits (three, without the 'M', from 100 up); n = 0xff gives three
    spaces, n = 0xfe 'M' and two spaces.  The goto form gives the ROM's block order (corpus/firmware/p6_m3b.c fmt_e;

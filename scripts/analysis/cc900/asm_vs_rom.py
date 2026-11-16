@@ -44,10 +44,19 @@ def main():
     short = {}
     for n in ref:
         short.setdefault(n[:31], []).append(n)
+    # the tree's own firmware C names a function by its first 31 characters (all cc900 keeps), and by a shorter C
+    # name mapped to the tree's label (`cc900-name:`): resolve both through the tree's cc900/*.c
+    import glob, re
+    cnames = {}
+    for c in glob.glob(os.path.join(tree, 'cc900', '*.c')):
+        lm = fw.label_map(c)
+        for n in re.findall(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', open(c).read(), re.M):
+            cnames[n[:31]] = lm.get(n, n)
     bad = 0
     for name, lines in funcs.items():
         bare = name.lstrip('_.')
-        full = bare if bare in ref else (short.get(bare, [None])[0] if len(short.get(bare, [])) == 1 else None)
+        full = cnames.get(bare) if cnames.get(bare) in ref else bare if bare in ref else \
+            (short.get(bare, [None])[0] if len(short.get(bare, [])) == 1 else None)
         if full is None:
             print('%-32s not in the symbols reference' % bare); bad += 1; continue
         try:

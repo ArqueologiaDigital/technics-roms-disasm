@@ -25,7 +25,8 @@ spells them the same way, so the tree's `.equ` (or label) supplies the value.  T
 TREE's `.equ` / `.set` lines, because asm900 chooses an absolute operand's width from it: `(NAME:16)` below
 0x10000, `(NAME:24)` above (model/to_llvm.py).  A RAM cell the tree has not named yet is written in the C as
 `ram_<hex address>` (`extern unsigned char ram_8d3e;`) and comes out as the number, as the hand assembly had it.
-A called function is spelled by name and needs no address.  Local labels become `.Lcc900_<function>_<label>`.
+A called function, and any other label of the tree (ROM data such as `FileIO_DiskInfoInit`), is spelled by name; a
+label is in the ROM, above 0x10000, so its operand is 24-bit.  Local labels become `.Lcc900_<function>_<label>`.
 
 The environment variables the model reads (CC900_*) are cleared, so the build always runs the model's defaults;
 CC900_MODEL_CLANG is kept (the Makefile sets it to its own clang).
@@ -76,6 +77,25 @@ def tree_values(tree):
                     n, v = m.group(1).decode(), int(m.group(2), 0)
                     vals[n] = v if vals.get(n, v) == v else None
     return vals
+
+
+LABEL_RE = re.compile(rb'^([A-Za-z_][\w]*):')
+ROM_LABEL = 0xE00000          # a label of the tree's code or data: in the main CPU's ROM, so above 0x10000 (24-bit)
+
+
+def tree_labels(tree):
+    """{label: ROM_LABEL} for every column-0 label of TREE's .s files.  The value only tells to_llvm that the operand
+    is 24-bit; the generated code names the label, and the tree's own definition gives the address."""
+    labs = {}
+    for dp, dn, fn in os.walk(tree):
+        dn[:] = sorted(d for d in dn if d != "generated")
+        for f in sorted(fn):
+            if f.endswith(".s"):
+                for ln in open(os.path.join(dp, f), "rb").read().split(b"\n"):
+                    m = LABEL_RE.match(ln)
+                    if m:
+                        labs[m.group(1).decode()] = ROM_LABEL
+    return labs
 
 
 class Names(dict):
@@ -202,7 +222,7 @@ def main():
     if len(sys.argv) != 5:
         sys.exit(__doc__)
     tree, src, outdir, stamp = sys.argv[1:]
-    funcs = compile_c(src, Names(tree_values(tree)))
+    funcs = compile_c(src, Names(tree_values(tree), tree_labels(tree)))
     if REFUSED:
         sys.exit("%s: the reference model does not compile: %s" % (
             src, "; ".join("%s (%s)" % kv for kv in sorted(REFUSED.items()))))

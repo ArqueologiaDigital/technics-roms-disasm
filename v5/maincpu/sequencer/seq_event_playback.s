@@ -4590,7 +4590,7 @@ MainVocalistPage1OKFunc_Case5:
 	ld	(46892:16), 1
 	call	SndParam_ApplyAndSync
 	ld	wa, 1:i3
-	call	SmfMedley_RawData
+	call	Smf_SetMidiOut
 	ld	(GLOBAL_ERROR_CODE:16), 35
 	ld	xwa, 4294967295
 	ld	xbc, EVT_INTERRUPT_TITLE

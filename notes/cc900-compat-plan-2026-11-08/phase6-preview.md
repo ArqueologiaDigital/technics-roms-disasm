@@ -10,7 +10,7 @@ disassembly: `scripts/analysis/cc900/corpus/firmware/tiny.c`; oracle run `2026-1
 | `SetLswFilter`               | `LSW_FILTER = a + b;`             | `add XWA,XBC` / `ld (_LSW_FILTER),XWA` / `ret`                   | `add xwa, xbc` / `ld (LSW_FILTER:24), xwa` / `ret`            |
 | `SetRootObject`              | `ROOT_OBJECT = p;`                | `ld (_ROOT_OBJECT),XWA` / `ret`                                  | `ld (ROOT_OBJECT:24), xwa` / `ret`                            |
 | `BitMapOut_StorePresetValue` | `g8d3e = v;` (unsigned char)      | `ld (_g8d3e),A` / `ret`                                          | `ld (0x8d3e:16), a` / `ret`                                   |
-| `SmfMedley_RawData`          | `g35140 = (c != 0);`              | `cp A,0x0` / `scc ne,WA` / `ld (_g35140),A` / `ret`              | `cp a, 0:i3` / `scc nz, wa` / `ld (35140:16), a` / `ret`      |
+| `Smf_SetMidiOut`          | `g35140 = (c != 0);`              | `cp A,0x0` / `scc ne,WA` / `ld (_g35140),A` / `ret`              | `cp a, 0:i3` / `scc nz, wa` / `ld (35140:16), a` / `ret`      |
 | `TrimPad_NullTerminate`      | `*p = 0;`                         | `ldb (XWA),0x0` / `ret`                                          | `ld (xwa), 0x0` / `ret`                                       |
 | `FmtNum_WriteSpacePad`       | `*p++ = c; *p++ = ' '; *p = ' ';` | `ld (XWA+:1),C` / `ldb (XWA+:1),0x20` / `ldb (XWA),0x20` / `ret` | `ld (xwa+), c` / `ld (xwa+), 0x20` / `ld (xwa), 0x20` / `ret` |
 
@@ -41,7 +41,7 @@ commands are in `scripts/analysis/cc900/model/README.md`; the output, 2026-11-09
 | `SetLswFilter`               | 8     | MATCH  |
 | `SetRootObject`              | 6     | MATCH  |
 | `BitMapOut_StorePresetValue` | 5     | MATCH  |
-| `SmfMedley_RawData`          | 9     | MATCH  |
+| `Smf_SetMidiOut`          | 9     | MATCH  |
 | `TrimPad_NullTerminate`      | 4     | MATCH  |
 | `FmtNum_WriteSpacePad`       | 11    | MATCH  |
 

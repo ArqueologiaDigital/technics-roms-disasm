@@ -151,6 +151,9 @@
 ; code: accessors with the firmware's own names (exported name table)
 	.equ DIRMD_FLAG,		0x276c4	; GetDirmdFlag returns it (word)
 	.equ LSW_FILTER,		0x276c6	; SetLswFilter / ResetLswFilter store into it (32-bit)
+; The SMF DIRECT PLAY page's two toggles (ui_widgets/naka_disk_menu_file_io.c)
+	.equ SmfPlayAsGm,		0x88a6	; PLAY AS: 1 = GM, 0 = TECH (widget DiskSmfDirectPlay_AcMonoIndexToggle_2, index 0x14); SeqInit_ResetAndSetupChannels picks SoundParam_InitDefaultBanks(1 / 0) by it
+	.equ SmfMidiOut_OnOff,		0x88a8	; MIDI OUT: 1 = on (the firmware's widget SmfMidiOut, index 0x18); the SMF send paths echo events to SeqOut_WriteTimedBytes while it is on
 	.equ CURRENT_TARGET,		0x2f83c	; GetCurrentTarget returns it (32-bit)
 ; sound-parameter hash table (DRAM, the same address in every version): 2047 slots of
 ; {u32 key, u32 record pointer}.  SndParam_InitHashTable stamps {SNDPARAM_HASH_EMPTY_KEY, 0} over

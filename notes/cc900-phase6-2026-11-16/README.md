@@ -13,7 +13,7 @@ Four v10 main-CPU functions are now assembled from C, by our own tools only:
 | `SetLswFilter`               | `ui_widget_defs.c`       | `ui/ui_widget_defs.s`      | 8     |
 | `SetRootObject`              | `ui_widget_defs.c`       | `ui/ui_widget_defs.s`      | 6     |
 | `BitMapOut_StorePresetValue` | `bitmap_out_routines.c`  | `ui/bitmap_out_routines.s` | 5     |
-| `SmfMedley_RawData`          | `medley.c`               | `file_io/medley.s`         | 9     |
+| `Smf_SetMidiOut`          | `medley.c`               | `file_io/medley.s`         | 9     |
 
 The chain, all of it in this repository or the pinned LLVM build:
 
@@ -69,7 +69,7 @@ regenerated in this lane.
 function assembles on its own:
 
     cd scripts/analysis/cc900/model
-    python3 -I -B fn_diff.py ../../../../v10/maincpu/cc900/medley.c SmfMedley_RawData   # one function, in detail
+    python3 -I -B fn_diff.py ../../../../v10/maincpu/cc900/medley.c Smf_SetMidiOut   # one function, in detail
     python3 -I -B fn_diff.py FILE.c                                                     # one row per function
 
 The detailed form lists the model's instructions with their bytes beside the ROM's (`=` / `!`), MAME's unidasm
@@ -81,7 +81,7 @@ reading of the ROM there, and the first differing offset.
 fell 5344 -> 5343, "call targets without a header" 2592 -> 2591 and "(number) operand elsewhere" 15812 -> 15810.  The
 census does not read `includes/generated/`, so these falls are partly the instructions moving out of its view: the
 two numeric operands now live in the generated bodies, written from the C's `ram_8d3e` / `ram_8944`, and the
-header-less routine that dropped out is a label whose only line is now an `.include`.  `SmfMedley_RawData` was given
+header-less routine that dropped out is a label whose only line is now an `.include`.  `Smf_SetMidiOut` was given
 the header comment it lacked anyway; a second run after that gave the same counts, so the fall is the view, not
 new documentation.
 
@@ -121,9 +121,9 @@ notes/cc900-phase6-2026-11-16/options_table.py` (v10, 2026-11-16):
 | Get_Region_Code                   | boot_routines.c          | yes         | yes | -O3 -XS -Xr |
 | GET_COMPUTER_INTERFACE_SELECTION  | dsp_config_sysex.c       | yes         | yes | -O3 -XS -Xr |
 | Display_SetBackgroundColor        | graphics_text_vga.c      | yes         | yes | -O3 -XS -Xr |
-| GetPlayState1                     | medley.c                 | yes         | yes | -O3 -XS -Xr |
-| GetPlayState2                     | medley.c                 | yes         | yes | -O3 -XS -Xr |
-| SmfMedley_RawData                 | medley.c                 | yes         | yes | -O3 -XS -Xr |
+| Smf_GetPlayAsGm                     | medley.c                 | yes         | yes | -O3 -XS -Xr |
+| Smf_GetMidiOut                     | medley.c                 | yes         | yes | -O3 -XS -Xr |
+| Smf_SetMidiOut                 | medley.c                 | yes         | yes | -O3 -XS -Xr |
 | GetDialEnableState                | presentation_sound_nav.c | yes         | yes | -O3 -XS -Xr |
 | SetDialEnable                     | presentation_sound_nav.c | yes         | yes | -O3 -XS -Xr |
 | AccPlay_GetCurrentPart            | seq_event_playback.c     | yes         | yes | -O3 -XS -Xr |
@@ -204,6 +204,38 @@ lane_dash compiled the 55 milestone-2 C files of all five trees with V4.23, at `
 their first 31 characters, so every built C file stays one that V4.23 can check.  `bitmap_out_routines.c` uses it
 in all five trees; v10, v9, v8, v7, v6 and v5 rebuilt byte-identical.
 
+## Batch 3: 45 more small functions (2026-11-16)
+
+Four more hand sources now take their small leaf functions from C, in all five trees.  The functions come from
+`leaf_candidates.py`'s list:
+- `audio/semenu_routines.s`: 21 setters and two notification routines;
+- `sequencer/seq_audio_mode.s`: 7;
+- `boot/system_handlers.s`: 6;
+- `demo/file_demo_proc.s`: 11.
+
+That is 45 per tree.  v6 and v5 have no `SeMenu_CopyWriteUpdate_Step3_Helper14`, so they have 44.
+`port_c_trees.py` now reads 8-, 16- and 24-bit operands, and the older spellings without a width (v7's
+`stb_d8 (0x6ad), a`).  It drops a one-line function, and the cells only it used, from a tree that lacks the
+function.  Every tree's C was checked against its own ROM with `fn_diff.py` before the splice: 45 of 45 in v10, v9,
+v8 and v7, 44 of 44 in v6 and v5.
+
+Left as hand assembly, with the reason:
+- `SeMenu_AdvanceSubIndex` loads the byte, increments it in L and stores it.  Neither `++x` nor a local copy gives
+  that.
+- `SeMenu_SetupMenuDisplay_Section3_End` and `VariScreen_IsHalfRangeAbove` set A or L with an 8-bit `scc`.  V4.23
+  never does so in the variants tried (finding (c)).
+- `Timer3_Stop` is `res 3,(T8RUN)` on an SFR, where `&= ~8` gives an `and` of memory: hand assembly, or inline asm.
+- `SeMenu_SetPartConfigBit3`, `SeMenu_GetPartConfigBit3`, `SeMenu_LoadMasterPtr` and `Sys_CheckPowerStableFlag`
+  address a cell below 0x10000 with a 24-bit operand (`(58338:24)`, `(PART_SELECT:24)`, `(0xffcc:24)`).  The build
+  chooses the width from the address, as asm900 does for the firmware's own variables.  These accesses look like
+  `extern` declarations of another module (the preview's `large` externs).  They need a per-name width in the C
+  first.
+- The `SeMenu_Get*` / `SeMenu_Load*` rows spelled `ld (xwa), (0x6c5)` / `ldmi16 (xwa), 0x6b4` are misdecoded in the
+  hand source and were not tried.
+
+A model refusal met on the way: returning an extern array's name as a pointer (`return ram_25eaa;`, `unsupported:
+var`).  `return &ram_25eaa;` with a byte declaration gives the ROM's `lda` and is what the C uses.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
@@ -248,8 +280,9 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   rule loop-entry-copy (lane_p6 fix p6-02, `KN_LOOP_INVERT`, which only the firmware build switches on), it gives
   all 60 bytes of `TrimAndPadSmfFilename`, `TrimPad_NullTerminate`'s tail included (`fn_diff.py`).  The first form
   of the rule (fix p6-01) was on for the whole `kn5000` personality.  It lost library and `ide2003` micro functions
-  in the full ledger and was backed out.  `rules.md` has the account.  The function is identical in all five
-  trees; it is built once fix p6-02 is in the model.
+  in the full ledger and was backed out.  `rules.md` has the account.  **Built since batch 363** (p6-02 in the
+  model): `smf_operations.c` in all five trees, the function being identical in each.  Its eight `TrimPad_*` inner
+  labels are kept as `.set` offsets.  `make -j3 gate` passed.
 
 **Loop shapes across v10** (the idiom census for that candidate rule): `python3
 notes/cc900-phase6-2026-11-16/loop_shapes.py v10/maincpu`, 2026-11-16.  A loop is a backward conditional branch;
@@ -321,6 +354,30 @@ distinguished them would be a new behaviour, and nothing seen so far suggests on
 `FloppyIO_ClearTrackParseBuffer`'s `ld xix, 0x106e` with `djnz` matches neither option set from `fl_a` / `fl_b`
 (both differ at +0); it may be hand assembly or another C.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
 functions; the choice is recorded in its `cc900-options:` comment.
+
+## Names from the GUI (2026-11-16, owner)
+
+`medley.c`'s two RAM cells are the SMF DIRECT PLAY page's toggles (`ui_widgets/naka_disk_menu_file_io.c`):
+- PLAY AS (GM 1 / TECH 0) is `SmfPlayAsGm`;
+- MIDI OUT (on / off) is `SmfMidiOut_OnOff`.
+
+The cells are 0x8942 / 0x8944 in v10 and v9, 0x88a6 / 0x88a8 in v7, 0x888a / 0x888c in v6 and v5, each defined in
+the tree's `shared/ram_variables.s`.  Their functions were renamed:
+
+| old name            | new name          |
+|---------------------|-------------------|
+| `GetPlayState1`     | `Smf_GetPlayAsGm` |
+| `GetPlayState2`     | `Smf_GetMidiOut`  |
+| `SmfMedley_RawData` | `Smf_SetMidiOut`  |
+
+- **The C** now uses the names (`extern unsigned char SmfPlayAsGm;`), so `medley.c` is no longer per-tree.
+- **The scripts.**  `scripts/renaming/rename_smf_direct_play.sed` renames the functions.  The cells, and their five
+  numeric operands per tree (`smf_operations.s`, `medley.s`), are renamed by `rename_smf_direct_play_cells_<tree>.sed`,
+  one per tree because the addresses differ.  `ui/password_slot_routines.s`'s header, which called the cells
+  "password values" and their getters `SysData_F92C0E` / `F92C13` "password getters", is corrected by
+  `rename_smf_direct_play_password_header.sed`.
+- **`corpus/firmware/tiny.c`** keeps the C name `SmfMedley_RawData`: it is the input of oracle run
+  `2026-11-09-3-proxy-tiny`, a ledger row.  `check_bytes.py --alias SmfMedley_RawData=Smf_SetMidiOut` maps it.
 
 ## Finding candidates
 

@@ -132,14 +132,9 @@ SubCPU_Payload_Verify_Fail:
 ;   - SubCPU_Payload_Verify - Sets the error flag
 ;   - ErrorDialog_CPUTransmissionError - Error dialog shown when HL != 0
 ; ===========================================================================
-SubCPU_Payload_GetErrorFlag:
-	ld l, (0x01e53e:24)
-	exts hl
-	ret
+SubCPU_Payload_GetErrorFlag:	.include "includes/generated/cc900/SubCPU_Payload_GetErrorFlag.s"	; C: cc900/system_handlers.c
 
-SubCPU_PayloadErrorStore:
-	ld (0x01e53e:24), 0xff
-	ret
+SubCPU_PayloadErrorStore:	.include "includes/generated/cc900/SubCPU_PayloadErrorStore.s"	; C: cc900/system_handlers.c
 
 Sys_CheckPowerStableFlag:
 	cpw (0xffcc:24), 0x5a5a
@@ -2133,9 +2128,7 @@ SeqBuf_InlineBytecode:
 SeqBuf_InlineBytecode_Return:
 	ret
 
-SeqBuf_GetWritePos:
-	ld hl, (0x01e547:24)
-	ret
+SeqBuf_GetWritePos:	.include "includes/generated/cc900/SeqBuf_GetWritePos.s"	; C: cc900/system_handlers.c
 
 SeqBuf_Init:
 	pushw ix
@@ -2613,9 +2606,7 @@ Seq_CheckSongEnd:
 Seq_CheckSongEnd_Return:
 	ret
 
-SeqMain_GetTimingValue:
-	ld hl, (0x01f379:24)
-	ret
+SeqMain_GetTimingValue:	.include "includes/generated/cc900/SeqMain_GetTimingValue.s"	; C: cc900/system_handlers.c
 
 SeqMain_InitBuffer:
 	pushw ix
@@ -2712,9 +2703,7 @@ SeqBuf_MidiOut_CheckEmpty:
 SeqBuf_MidiOut_CheckEmpty_Return:
 	ret
 
-SeqBuf_MidiOut_GetTimingValue:
-	ld hl, (0x01f783:24)
-	ret
+SeqBuf_MidiOut_GetTimingValue:	.include "includes/generated/cc900/SeqBuf_MidiOut_GetTimingValue.s"	; C: cc900/system_handlers.c
 
 SeqBuf_MidiOut_Init:
 	pushw ix
@@ -2918,9 +2907,7 @@ SeqBuf3_InlineBytecode:
 SeqBuf3_InlineBytecode_Return:
 	ret
 
-SeqBuf3_GetTimingValue:
-	ld hl, (0x01fa97:24)
-	ret
+SeqBuf3_GetTimingValue:	.include "includes/generated/cc900/SeqBuf3_GetTimingValue.s"	; C: cc900/system_handlers.c
 
 SeqBuf3_Init:
 	pushw ix
