@@ -17,7 +17,8 @@ It appends one row to results/c_progress.tsv (beside this script, in results/):
                (results/c_build_coverage.md, rows "firmware C", V4.23 MATCH; v8 counts on its own, with v9's C)
     built_b    their bytes
     staged_fn  functions in BRANCH's notes/cc900-phase6-2026-11-16/staged_v423.tsv whose latest check is MATCH and
-               which are not built yet, counted per image the same way (v9's staged C counts for v8 too)
+               which are not built yet, counted per image the same way (v9's staged C counts for v8 too); also
+               the sub-CPU and HD-AE5000 lanes' tables (OTHER_LANES)
     staged_b   their bytes
     v10_fn / v10_b   the same two totals (built + staged) for v10 alone
 The dashboard (dashboard.py) charts this file.  Nothing here reads a Toshiba listing; the figures come from the two
@@ -36,6 +37,9 @@ OUT = os.path.join(HERE, "results", "c_progress.tsv")
 STAGED = "notes/cc900-phase6-2026-11-16/staged_v423.tsv"
 HEADER = "time\trun\tbuilt_fn\tbuilt_b\tstaged_fn\tstaged_b\tv10_fn\tv10_b\n"
 IMAGES_OF_TREE = {"v10": ["v10"], "v9": ["v9", "v8"], "v7": ["v7"], "v6": ["v6"], "v5": ["v5"]}
+# staged-results tables of the other C lanes, same columns as staged_v423.tsv; a missing branch or file counts nothing
+OTHER_LANES = [("cc900/c-subcpu-hdae", "notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv"),
+               ("cc900/c-hdae5000", "notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv")]
 
 
 def built():
@@ -49,10 +53,10 @@ def built():
     return out
 
 
-def staged(branch):
+def staged(branch, path=STAGED):
     """{(image, function): bytes} for staged functions whose latest V4.23 check is MATCH"""
     try:
-        text = subprocess.run(["git", "-C", REPO, "show", "%s:%s" % (branch, STAGED)], check=True,
+        text = subprocess.run(["git", "-C", REPO, "show", "%s:%s" % (branch, path)], check=True,
                               capture_output=True, text=True).stdout
     except subprocess.CalledProcessError:
         return {}
@@ -75,7 +79,10 @@ def staged(branch):
 
 def record(run, branch):
     b = built()
-    s = {k: v for k, v in staged(branch).items() if k not in b}
+    st = staged(branch)
+    for br, path in OTHER_LANES:          # the other images' C lanes (2026-11-16): their staged C counts too
+        st.update(staged(br, path))
+    s = {k: v for k, v in st.items() if k not in b}
     v10 = [v for (img, _), v in list(b.items()) + list(s.items()) if img == "v10"]
     row = [datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), run, len(b), sum(b.values()), len(s),
            sum(s.values()), len(v10), sum(v10)]
