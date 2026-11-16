@@ -264,10 +264,12 @@ def listing_functions(path):
     return fs
 
 
-def translate(listing_funcs, names, widths=None, module=None):
+def translate(listing_funcs, names, widths=None, module=None, places=None, ref=None):
     """{name: listing lines} -> {bare name: llvm-mc lines}, every name written as its address (fn_diff.py's way),
     as cc900_firmware_c.compile_c does for the model's listing.  widths: each symbol's operand width as the listing
-    declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None"""
+    declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None.  places:
+    the C file's `cc900-data:` map (cc900_firmware_c.data_map): a reference to f_const data becomes its tree address
+    (the data itself is not part of the function's bytes); one without a place makes the function None"""
     import to_llvm
     import cc900_firmware_c as fw
     to_llvm.SPELL = None
@@ -278,6 +280,10 @@ def translate(listing_funcs, names, widths=None, module=None):
         if not lines or not lines[0].endswith(':') or lines[0][:-1] != name:
             continue
         bare = name.lstrip('_.')
+        consts, _ = to_llvm.split_consts(lines)
+        pl = (places or {}).get(bare, {})
+        to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and ref and pl[k] in ref}
+        to_llvm.DATA_REQUIRED = True
         try:
             body = to_llvm.translate_function(name, lines, names)
         except KeyError:
@@ -393,7 +399,7 @@ def firmware(key, tree, rom_path, sym_path):
             except SystemExit as ex:                      # the C's qualifiers disagree with the listing
                 sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
                 widths = {}
-            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path))
+            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path), fw.data_map(path), ref)
             v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
         fnames = set(funcs) | {lm_.get(c, c) for c in fw.c_functions(path)}
         for fn in sorted(fnames):

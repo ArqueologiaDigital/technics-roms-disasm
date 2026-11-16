@@ -801,3 +801,30 @@ bodies.
 build's way and compares every function with ASM900's list file.  On the probe, all 15 functions of p6_calrel.c and
 all 4 of p6_calrel_q.c MATCH.  `c_build_coverage.py` lays a function and its module-local targets out at their ROM
 addresses, so its V4.23 and model columns check such calls too.
+
+Beyond reach (probe calrel-far2, run `2026-11-16-61-p6-calrel-far2`): when a same-file target is more than 16 bits
+away, asm900 writes `cal` as call #24 and `j` as jp #24, in both directions.  `cc900_firmware_c.far_fallback` does the
+same for a module-local callee.  It uses the tree's symbols reference to measure the distance from the instruction's
+own offset, and rewrites calr / jr / jrl as call / jp when the target is out of reach.
+
+## Constant data: switch tables, FP constants, initialised arrays (`cc900-data:`, 2026-11-16, lane_vmb)
+
+V4.23 puts a function's constant data in the `f_const` section, and the linker places that section apart from the
+code.  The data can be:
+- a switch's jump table (`dw L35-L50002`, read through `lda XIX,S50003` / `add XWA,S50000`);
+- an FP constant (`fdatad`);
+- an initialised local array.
+
+In the ROM such an object sits in the module's constant area, at a label of its own: lane_sub's
+`DSP_BytecodeInterpreter_CaseOffsets`, lane_hd's `HDAE5000_LyricBoxProc_CaseTable1`.  A C file names that place with
+a comment `cc900-data: FUNCTION N = LABEL`, where N is the function's N-th f_const object in listing order, starting
+at 1.  The build then:
+- writes the object's code references as LABEL;
+- writes the object itself, translated by `to_llvm.translate_data`, as `includes/generated/cc900/LABEL.s`.  The
+  translation keeps `.balign`, and `.short` differences of the function's local labels (renumbered as the body's).
+  An `fdata` / `fdatad` value becomes its IEEE bytes.
+
+The tree includes that file at LABEL, in place of the hand data, the same way a function's body is included.  A
+reference to f_const data with no `cc900-data:` place stops the build and names the comment to write.
+`c_build_coverage.py` reads the same comment: it resolves the reference to LABEL's address and checks the
+function's bytes.  The data is checked by `make gate` once it is included.
