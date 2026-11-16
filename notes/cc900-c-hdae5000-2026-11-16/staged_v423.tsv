@@ -286,3 +286,12 @@ hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b
 hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_DelOptSwEventCatch	316	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_FlsDirSelScreen	375	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_WrConfirmEventCatch	329	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens3.c	b915a72dd5c4b2357454daffd97785d37430dd6c6ab202e6970c5d4bcf5e9cf4	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_AttenDelFileSwCatch	322	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens3.c	b915a72dd5c4b2357454daffd97785d37430dd6c6ab202e6970c5d4bcf5e9cf4	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_HDDNamingCheck	469	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens3.c	b915a72dd5c4b2357454daffd97785d37430dd6c6ab202e6970c5d4bcf5e9cf4	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_SEL_DIR_Screen	474	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens3.c	b915a72dd5c4b2357454daffd97785d37430dd6c6ab202e6970c5d4bcf5e9cf4	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_SaveOptSwEventCatch	441	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens2.c	ef01a5600f105625aabf683b0f5f61fcb412109cde6323ffa20d107c4034f53b	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_FlsEditScreen	767	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens2.c	ef01a5600f105625aabf683b0f5f61fcb412109cde6323ffa20d107c4034f53b	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_FlsFileSelScreen	464	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens2.c	ef01a5600f105625aabf683b0f5f61fcb412109cde6323ffa20d107c4034f53b	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_FlsLoadScreen	1022	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens2.c	ef01a5600f105625aabf683b0f5f61fcb412109cde6323ffa20d107c4034f53b	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_FlsOverWrSwCatch	311	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens2.c	ef01a5600f105625aabf683b0f5f61fcb412109cde6323ffa20d107c4034f53b	Xr	2026-11-16-110-hd-r26-staged	HDAE5000_SelectFlsScreen	439	MATCH
