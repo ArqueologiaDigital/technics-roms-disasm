@@ -142,148 +142,17 @@ DSP_UnpackParam3B:	.include "includes/generated/cc900/DSP_UnpackParam3B.s"	; C: 
 ;    overwritten with the base index at DSP_WriteLUT_MainLoop_Init before any use.
 ;  * The caller's cursor DOES advance, by exactly that one selector byte: 0x0386B0 re-saves the
 ;    post-incremented XWA to (xsp+6), which DSP_WriteLUT_MainLoop_Done writes back.
-DSP_WriteLUTParamSet:
-	lda xsp, (xsp - 18)
-	pushw iz
-	ld (xsp + 14), bc
-	ld (xsp + 16), xwa
-	ld xwa, (xsp + 16)
-	ld xwa, (xwa)
-	ld (xsp + 6), xwa
-	ld C, (xwa+)
-	ld (xsp + 6), xwa
-	cp c, 1:i3
-	jr z, DSP_WriteLUT_AlgoC1
-	ldw (xsp + 2), 0x24
-	cp xde, 0x2
-	jr z, DSP_WriteLUT_AlgoC0_TypeDE2
-	cp xde, 0x1
-	jr z, DSP_WriteLUT_AlgoC0_TypeDE1
-	lda xwa, (DSP_Op74_LUT_Rows9_Var0:24)
-	ld (xsp + 10), xwa
-	jr DSP_WriteLUT_MainLoop_Init
-
-; chip 0, variant 1: select the blob at 0x01EB67.
-DSP_WriteLUT_AlgoC0_TypeDE1:
-	lda xwa, (DSP_Op74_LUT_Rows9_Var1:24)
-	ld (xsp + 10), xwa
-	jr DSP_WriteLUT_MainLoop_Init
-
-; chip 0, variant 2: select the blob at 0x01EBD4.
-DSP_WriteLUT_AlgoC0_TypeDE2:
-	lda xwa, (DSP_Op74_LUT_Rows9_Var2:24)
-	ld (xsp + 10), xwa
-	jr DSP_WriteLUT_MainLoop_Init
-
-; chip 1: table size becomes 0x20 words; select among 0x01EC41 / 0x01ECA5 / 0x01ED09.
-DSP_WriteLUT_AlgoC1:
-	ldw (xsp + 2), 0x20
-	cp xde, 0x2
-	jr z, DSP_WriteLUT_AlgoC1_TypeDE2
-	cp xde, 0x1
-	jr z, DSP_WriteLUT_AlgoC1_TypeDE1
-	lda xwa, (DSP_Op74_LUT_Rows8_Var0:24)
-	ld (xsp + 10), xwa
-	jr DSP_WriteLUT_MainLoop_Init
-
-; chip 1, variant 1: select the blob at 0x01ECA5.
-DSP_WriteLUT_AlgoC1_TypeDE1:
-	lda xwa, (DSP_Op74_LUT_Rows8_Var1:24)
-	ld (xsp + 10), xwa
-	jr DSP_WriteLUT_MainLoop_Init
-
-; chip 1, variant 2: select the blob at 0x01ED09.
-DSP_WriteLUT_AlgoC1_TypeDE2:
-	lda xwa, (DSP_Op74_LUT_Rows8_Var2:24)
-	ld (xsp + 10), xwa
-
-; Read the blob's first byte as the base index, advance the local cursor past it, zero the
-; iteration counter, and compute the trip count as size/4.
-DSP_WriteLUT_MainLoop_Init:
-	ld xbc, (xsp + 10)
-	ld xwa, 1:i3
-	add (xsp + 10), xwa
-	ld a, (xbc)
-	extz wa
-	ld (xsp + 14), wa
-	ldw (xsp + 4), 0x0
-	ld wa, (xsp + 2)
-	srl wa, 2
-	cp (xsp + 4), wa
-	jrl nc, DSP_WriteLUT_MainLoop_Done
-
-; Non-first iterations only: the COMMAND 0x01 / DATA 0x01 / DATA 0x60 row separator.
-DSP_WriteLUT_MainLoop_RowStart:
-	cpw (xsp + 4), 0x0
-	jr z, DSP_WriteLUT_MainLoop_FirstEntry
-	ld bc, (xsp + 26)
-	ld wa, 1:i3
-	call DSP_DispatchCommand
-	ld iz, hl
-	ld bc, (xsp + 26)
-	ld wa, 1:i3
-	call DSP_DispatchData
-	ld iz, hl
-	ld bc, (xsp + 26)
-	ldw wa, 0x60
-	call DSP_DispatchData
-	ld iz, hl
-
-; The four coefficient writes for one row (one DSP_WriteFreqParam plus three
-; DSP_WriteCoeffData_5B), then the COMMAND 0x03 row terminator and the loop step.
-DSP_WriteLUT_MainLoop_FirstEntry:
-	ld wa, (xsp + 4)
-	sll wa, 2
-	ld iz, wa
-	add iz, (xsp + 14)
-	lda xwa, (xsp + 10)
-	calr DSP_UnpackParam3B
-	pushm (xsp + 24)
-	ld wa, iz
-	ld xbc, xhl
-	ld de, (xsp + 28)
-	calr DSP_WriteFreqParam
-	ld iz, hl
-	lda xwa, (xsp + 10)
-	calr DSP_UnpackParam3B
-	ld xwa, xhl
-	ld bc, (xsp + 26)
-	ld de, (xsp + 24)
-	calr DSP_WriteCoeffData_5B
-	ld iz, hl
-	lda xwa, (xsp + 10)
-	calr DSP_UnpackParam3B
-	ld xwa, xhl
-	ld bc, (xsp + 26)
-	ld de, (xsp + 24)
-	calr DSP_WriteCoeffData_5B
-	ld iz, hl
-	lda xwa, (xsp + 10)
-	calr DSP_UnpackParam3B
-	ld xwa, xhl
-	ld bc, (xsp + 26)
-	ld de, (xsp + 24)
-	calr DSP_WriteCoeffData_5B
-	ld iz, hl
-	ld bc, (xsp + 26)
-	ld wa, 3:i3
-	call DSP_DispatchCommand
-	incw 1, (xsp + 4)
-	ld wa, (xsp + 2)
-	srl wa, 2
-	cp (xsp + 4), wa
-	jrl c, DSP_WriteLUT_MainLoop_RowStart
-
-; Restore the caller's stream cursor to its entry value, return HL, unwind the 18-byte
-; frame, `retd 0x4`.
-DSP_WriteLUT_MainLoop_Done:
-	ld xwa, (xsp + 16)
-	ld xbc, (xsp + 6)
-	ld (xwa), xbc
-	ld hl, iz
-	popw iz
-	lda xsp, (xsp + 18)
-	retd 0x4
+DSP_WriteLUTParamSet:	.include "includes/generated/cc900/DSP_WriteLUTParamSet.s"	; C: cc900/dsp_control_routines_l_16a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_WriteLUT_AlgoC0_TypeDE1, DSP_WriteLUTParamSet + 59
+	.set	DSP_WriteLUT_AlgoC0_TypeDE2, DSP_WriteLUTParamSet + 69
+	.set	DSP_WriteLUT_AlgoC1, DSP_WriteLUTParamSet + 79
+	.set	DSP_WriteLUT_AlgoC1_TypeDE1, DSP_WriteLUTParamSet + 110
+	.set	DSP_WriteLUT_AlgoC1_TypeDE2, DSP_WriteLUTParamSet + 120
+	.set	DSP_WriteLUT_MainLoop_Init, DSP_WriteLUTParamSet + 128
+	.set	DSP_WriteLUT_MainLoop_RowStart, DSP_WriteLUTParamSet + 160
+	.set	DSP_WriteLUT_MainLoop_FirstEntry, DSP_WriteLUTParamSet + 201
+	.set	DSP_WriteLUT_MainLoop_Done, DSP_WriteLUTParamSet + 314
 
 ; The oscillator/LFO variant of DSP_WriteFreqParam and by far the most used routine in the
 ; region -- its address appears 24 times in the ROM's dispatch data between 0x039C72 and
@@ -756,129 +625,10 @@ DSP_OscAlgoSelect_Return:
 ; past 0x038CF8. Confidence is medium only because the write sequence itself falls outside
 ; this region and was not read line by line.
 ; DEAD CODE: unreferenced anywhere in the payload, same evidence as the two above.
-DSP_TuneOffset:
-	dec 8, xsp
-	pushw iz
-	ld iz, bc
-	ld (xsp + 6), xwa
-	ldw bc, 0x79
-	lda xwa, (xsp + 4)
-	push xwa
-	ld xwa, xde
-	ld de, (xsp + 20)
-	call DSP_TableWalk_Search
-	ld xde, xhl
-	ld a, (xde)
-	extz wa
-	ld (xsp + 2), wa
-	cpw (xsp + 14), 0x0
-	jr z, DSP_TuneOffset_WriteSequence
-	ld wa, (xsp + 16)
-	cp wa, 1:i3
-	jr z, DSP_TuneOffset_Increment
-	cp wa, 0:i3
-	jr nz, DSP_TuneOffset_WriteSequence
-	decm 1, (xsp + 2)
-	jr DSP_TuneOffset_WriteSequence
-
-; The "+1" adjustment arm of DSP_TuneOffset.
-DSP_TuneOffset_Increment:
-	incw 1, (xsp + 2)
-
-; Tail of the unnamed routine that starts at 0x038CBE (which has NO symbol in either source --
-; see [UNCERTAIN]).  Emits a fixed 15-transfer packet to the DSP selected by IZ:
-;   cmd 0x01, data 0x01, 0x60, 0x00, 0x00,
-;   data ((t>>4)&0x0F)+0x10, data (t<<4)&0xF0,     t = the byte fetched by DSP_TableWalk_Search
-;   data 0x00, data 0x0A,
-;   data (P>>17)&0x7F, data (P>>9)&0xFF, data (P>>1)&0xFF, data ((P<<7)&0x80)+0x15,
-;   cmd 0x03
-; where P is the 32-bit parameter the caller passed in XWA.  Note the coefficient wire format:
-; a 24-bit value split MSB-first over four bytes as P[23:17] / P[16:9] / P[8:1] / P[0]<<7, with
-; 0x15 OR-ed into the last byte as a tag.  The word at (XSP+4) accumulates the status returned
-; by each DSP_DispatchCommand / DSP_DispatchData call and is the routine's return value in HL.
-; Falls in from DSP_TuneOffset_Increment (0x038CF6) and from the +/-1 adjustment above it.
-DSP_TuneOffset_WriteSequence:
-	ld bc, iz
-	ld wa, 1:i3
-	call DSP_DispatchCommand
-	ld (xsp + 4), hl
-	ld bc, iz
-	ld wa, 1:i3
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld bc, iz
-	ldw wa, 0x60
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld bc, iz
-	ld wa, 0:i3
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld bc, iz
-	ld wa, 0:i3
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld wa, (xsp + 2)
-	srl wa, 4
-	and wa, 0xF
-	add wa, 0x10
-	extz wa
-	ld bc, iz
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld wa, (xsp + 2)
-	sll wa, 4
-	and wa, 0xF0
-	extz wa
-	ld bc, iz
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld bc, iz
-	ld wa, 0:i3
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld bc, iz
-	ldw wa, 0xA
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld xwa, (xsp + 6)
-	sra xwa, 1
-	sra xwa, 16
-	and xwa, 0x7F
-	extz wa
-	ld bc, iz
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld xwa, (xsp + 6)
-	sra xwa, 9
-	and xwa, 0xFF
-	extz wa
-	ld bc, iz
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld xwa, (xsp + 6)
-	sra xwa, 1
-	and xwa, 0xFF
-	extz wa
-	ld bc, iz
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld xwa, (xsp + 6)
-	sla xwa, 7
-	and xwa, 0x80
-	add xwa, 0x15
-	extz wa
-	ld bc, iz
-	call DSP_DispatchData
-	ld (xsp + 4), hl
-	ld bc, iz
-	ld wa, 3:i3
-	call DSP_DispatchCommand
-	ld (xsp + 4), hl
-	ld hl, (xsp + 4)
-	popw iz
-	inc 8, xsp
-	retd 0x4
+DSP_TuneOffset:	.include "includes/generated/cc900/DSP_TuneOffset.s"	; C: cc900/dsp_control_routines_f_ra11.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_TuneOffset_Increment, DSP_TuneOffset + 56
+	.set	DSP_TuneOffset_WriteSequence, DSP_TuneOffset + 59
 
 ; Seeds the DSP configuration-buffer POOL and starts the task that consumes it.
 ;   Kernel_StartTask(3)
@@ -1040,34 +790,7 @@ DSP_AlgoParam_Decode_Return:
 ; i.e. a Q23 signed quantity centred on zero: parameter/d relative to 1.0, minus 1.0.  The
 ; `sla 5 / sla 0` pair is <<21 and the later `sla 2` completes the <<23 after the divide.
 ; Writes the advanced cursor back through XWA.
-DSP_PitchParam_Scale:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 8), xbc
-	ld (xsp + 12), xwa
-	ld xwa, (xsp + 12)
-	ld xiz, (xwa)
-	lda xwa, (xsp + 4)
-	ld xbc, xwa
-	ld xwa, xiz
-	call DSP_StreamDecode_3ByteWord
-	ld xiz, xhl
-	ld xwa, (xsp + 4)
-	sra xwa, 8
-	and_erpw 0xE2, 0xFF, 0x00
-	ld (xsp + 4), xwa
-	ld xwa, (xsp + 8)
-	sla xwa, 5
-	sla xwa, 16
-	ld xbc, (xsp + 4)
-	call Long_SignedDiv
-	sla xhl, 2
-	add xhl, 0xFF800000
-	ld xwa, (xsp + 12)
-	ld (xwa), xiz
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+DSP_PitchParam_Scale:	.include "includes/generated/cc900/DSP_PitchParam_Scale.s"	; C: cc900/dsp_control_routines_e_8a_qwa.c
 
 ; Decoder for opcode 0x65 (result -> DSP_WriteOscParam).  BYTE-FOR-BYTE IDENTICAL to
 ; DSP_VolScale_B (0x03A282); see [UNCERTAIN] about the "Volume" in the name.
@@ -1120,34 +843,7 @@ DSP_ParamInterp_2Point:	.include "includes/generated/cc900/DSP_ParamInterp_2Poin
 ;       XHL  = (XBC * 44100) / 1000 + base
 ; 44100/1000 = 44.1 samples per millisecond, so this is "base plus XBC milliseconds expressed
 ; in samples at the 44.1 kHz DSP rate".
-DSP_ParamInterp_FPScale:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 8), xbc
-	ld (xsp + 12), xwa
-	ld xwa, (xsp + 12)
-	ld xiz, (xwa)
-	lda xwa, (xsp + 4)
-	ld xbc, xwa
-	ld xwa, xiz
-	call DSP_StreamDecode_3ByteWord
-	ld xiz, xhl
-	ld xwa, (xsp + 4)
-	sra xwa, 8
-	and_erpw 0xE2, 0xFF, 0x00
-	ld (xsp + 4), xwa
-	ld xwa, (xsp + 8)
-	ld xbc, 0xAC44
-	call Math_Multiply32
-	ld xwa, xhl
-	ld xbc, 0x3E8
-	call Long_SignedDiv
-	add xhl, (xsp + 4)
-	ld xwa, (xsp + 12)
-	ld (xwa), xiz
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+DSP_ParamInterp_FPScale:	.include "includes/generated/cc900/DSP_ParamInterp_FPScale.s"	; C: cc900/dsp_control_routines_e_5a_qwa.c
 
 ; Decoder for opcode 0x68; result -> DSP_WriteFreqParam.
 ; In: XWA = &cursor, XBC = 0..99 value.  Out: XHL; cursor += 3.
@@ -2102,47 +1798,7 @@ DSP_BiquadWarp_ComputeCoeffs:
 ;       XHL = (A >> 8) + t * (XBC + 99)
 ; Note the divide happens BEFORE the multiply here (unlike DSP_ParamInterp_2Point), so the
 ; result is coarser -- that is in the ROM, not a transcription slip.
-DSP_ParamInterp_Div0xC6:
-	lda xsp, (xsp - 24)
-	push xiz
-	ld (xsp + 20), xbc
-	ld (xsp + 24), xwa
-	ld xwa, (xsp + 24)
-	ld xwa, (xwa)
-	ld (xsp + 4), xwa
-	lda xwa, (xsp + 16)
-	ld xbc, xwa
-	ld xwa, (xsp + 4)
-	call DSP_StreamDecode_3ByteWord
-	ld (xsp + 4), xhl
-	lda xwa, (xsp + 12)
-	ld xbc, xwa
-	ld xwa, (xsp + 4)
-	call DSP_StreamDecode_3ByteWord
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 20)
-	ld (xsp + 8), xwa
-	ld xwa, 0x63
-	add (xsp + 8), xwa
-	ld xwa, (xsp + 12)
-	sub xwa, (xsp + 16)
-	sra xwa, 8
-	ld xbc, 0xC6
-	call Long_SignedDiv
-	ld xiz, xhl
-	ld xbc, (xsp + 8)
-	ld xwa, xiz
-	call Math_Multiply32
-	ld xwa, xhl
-	ld xhl, (xsp + 16)
-	sra xhl, 8
-	add xhl, xwa
-	ld xwa, (xsp + 24)
-	ld xbc, (xsp + 4)
-	ld (xwa), xbc
-	pop xiz
-	lda xsp, (xsp + 24)
-	ret
+DSP_ParamInterp_Div0xC6:	.include "includes/generated/cc900/DSP_ParamInterp_Div0xC6.s"	; C: cc900/dsp_control_routines_l_16b.c
 
 ; Decoder for opcode 0x75; result -> DSP_WriteOscParam.  A five-range floating-point curve.
 ; In: XWA = &cursor, XBC = 0..99 value.  Out: XHL; cursor += 3.
@@ -6285,52 +5941,12 @@ DSP_TableWalk_Search:	.include "includes/generated/cc900/DSP_TableWalk_Search.s"
 ;      sentinel was reached first.
 ; Sole caller: DSP_ParameterWriteEngine, which uses the pushed out-pointer as the loop's END
 ; POINTER.
-DSP_TableWalk_SearchWithState:
-	ld xhl, xde
-	jr DSP_TableWalk_State_ReadHeader
-
-; If the skip count has reached zero, publish (base + length) through the out-pointer, advance
-; XWA by 2 and return.
-DSP_TableWalk_State_CheckEntry:
-	cp bc, 0:i3
-	jr nz, DSP_TableWalk_State_Advance
-	ld ix, 0:i3
-	ld xde, (xsp + 4)
-	ld bc, iy
-	extz xbc
-	add xbc, xwa
-	ld (xde), xbc
-	inc 2, xwa
-	jr DSP_TableWalk_State_Return
-
-; Otherwise XWA += record length and BC -= 1.
-DSP_TableWalk_State_Advance:
-	ld de, iy
-	extz xde
-	add xwa, xde
-	dec 1, bc
-
-; Reads the 2-byte length header and tests the 0xF0 sentinel.
-DSP_TableWalk_State_ReadHeader:
-	ld e, (xwa + 1)
-	ldfr_berp E, 0xF0
-	extz ix
-	ld e, (xwa)
-	extz de
-	ld iy, de
-	sll iy, 8
-	add iy, ix
-	ld de, iy
-	srl de, 8
-	cp de, 0xF0
-	jr nz, DSP_TableWalk_State_CheckEntry
-	ld ix, 2:i3
-
-; Stores the status through XDE(saved in XHL), returns XHL = XWA, `retd 0x4`.
-DSP_TableWalk_State_Return:
-	ld (xhl), ix
-	ld xhl, xwa
-	retd 0x4
+DSP_TableWalk_SearchWithState:	.include "includes/generated/cc900/DSP_TableWalk_SearchWithState.s"	; C: cc900/dsp_control_routines_h_14a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_TableWalk_State_CheckEntry, DSP_TableWalk_SearchWithState + 4
+	.set	DSP_TableWalk_State_Advance, DSP_TableWalk_SearchWithState + 25
+	.set	DSP_TableWalk_State_ReadHeader, DSP_TableWalk_SearchWithState + 33
+	.set	DSP_TableWalk_State_Return, DSP_TableWalk_SearchWithState + 65
 
 ; A single `ret`.  ★ It is the project's ERROR HOOK: DSP_ParameterWriteEngine calls it with
 ; WA = the failing status code at two places (after the table walk and after the translator)
@@ -6393,76 +6009,12 @@ ToneGen_Init:	.include "includes/generated/cc900/ToneGen_Init.s"	; C: cc900/dsp_
 ;   then, ONLY IF (0x004A4A) == 1, call InterCPU_DMA_Send(XDE = 0x004A42, WA = 2, BC = 3).
 ; Loops until Keybed_Read_Event returns HL == 0xFFFF ("no more data").
 ; ★ Two properties matter for the open sub->main bug -- see the [UNCERTAIN] notes.
-ToneGen_Process_Notes:	; 03D01Eh
-	dec 2, xsp	; Allocate 2 bytes for result
-	ld wa, 0:i3
-	lda xwa, (xsp)
-	calr Keybed_Read_Event
-	cp hl, 0xFFFF
-	jrl z, ToneGen_Note_Done
-
-; Already named.  Body of the drain loop; back-edge at ToneGen_Note_Continue.
-ToneGen_Note_Loop:	; 03D02Eh
-	cp (xsp + 1), 0x0	; Check velocity
-	jr z, ToneGen_Note_Off_Slot
-	ld a, (xsp + 0:8)	; Get note number
-	extz wa
-	lda xbc, (19020:16)	; Voice slot table
-	extz xwa
-	add xwa, xbc
-	ld (xwa), 0xFF	; Mark slot as note-on
-	ld (19010:16), 144	; DMA command: note on
-	ld a, (xsp + 0:8)
-	ld (19011:16), a	; Store note number
-	ld a, (xsp + 1)
-	ld (19012:16), a	; Store velocity
-	cp (19018:16), 1	; Check if DMA enabled
-	jr nz, ToneGen_Note_Continue
-	ld xde, 0x4A42
-	ld wa, 2:i3
-	ld bc, 3:i3
-	call InterCPU_DMA_Send	; Send via DMA
-	jr ToneGen_Note_Continue
-
-; Already named.  Note-off arm; suppresses the message unless the per-note byte at
-; 0x004A4C + note was 0xFF, so a key-up without a matching key-down sends nothing.
-ToneGen_Note_Off_Slot:	; 03D06Dh
-	ld a, (xsp + 0:8)
-	extz wa
-	lda xbc, (19020:16)
-	extz xwa
-	add xwa, xbc
-	cp (xwa), 0xFF	; Check if slot was active
-	jr nz, ToneGen_Note_Continue
-	ld a, (xsp + 0:8)
-	extz wa
-	lda xbc, (19020:16)
-	extz xwa
-	add xwa, xbc
-	ld (xwa), 0x0	; Clear slot
-	ld (19010:16), 144	; DMA command: note off
-	ld a, (xsp + 0:8)
-	ld (19011:16), a
-	ld a, (xsp + 1)
-	ld (19012:16), a
-	cp (19018:16), 1
-	jr nz, ToneGen_Note_Continue
-	ld xde, 0x4A42
-	ld wa, 2:i3
-	ld bc, 3:i3
-	call InterCPU_DMA_Send
-
-; Already named.  Fetches the next event and loops while HL != 0xFFFF.
-ToneGen_Note_Continue:	; 03D0B6h
-	lda xwa, (xsp)
-	calr Keybed_Read_Event
-	cp hl, 0xFFFF
-	jrl nz, ToneGen_Note_Loop
-
-; Already named.  `inc 2,xsp ; ret`.
-ToneGen_Note_Done:	; 03D0C2h
-	inc 2, xsp
-	ret
+ToneGen_Process_Notes:	.include "includes/generated/cc900/ToneGen_Process_Notes.s"	; C: cc900/dsp_control_routines_j_14b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Note_Loop, ToneGen_Process_Notes + 16
+	.set	ToneGen_Note_Off_Slot, ToneGen_Process_Notes + 79
+	.set	ToneGen_Note_Continue, ToneGen_Process_Notes + 152
+	.set	ToneGen_Note_Done, ToneGen_Process_Notes + 164
 
 ; ----------------------------------------------------------------------------
 ; Keybed_Read_Event - Read one key event from the KEYBED port

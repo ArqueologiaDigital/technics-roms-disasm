@@ -54,6 +54,7 @@ def rom_offset(addr):
     return addr - 0xf000 + 0x100
 
 
+KEEP_BYTES = None          # {function: our bytes} when a caller (first_diff.py) sets it to a dict
 ERP_BYTE = {'ixl': 0xf0, 'ixh': 0xf1, 'qixl': 0xf2, 'qixh': 0xf3, 'iyl': 0xf4, 'iyh': 0xf5, 'qiyl': 0xf6,
             'qiyh': 0xf7, 'izl': 0xf8, 'izh': 0xf9, 'qizl': 0xfa, 'qizh': 0xfb}
 ERP_RE = re.compile(r'^\t(ld|cp|inc) (?:(1|0x1), )?(%s)(?:, (0x[0-9a-f]+|\d+))?$' % '|'.join(ERP_BYTE))
@@ -101,6 +102,8 @@ def erp_word(line):
             line = '\t%s %s, %s' % (op, x, y)
         elif op == 'ld' and y in ERP_BYTE:
             line = '\tld %s, %s' % (x, y)
+        elif op in ('or', 'cp') and y in ERP_BYTE and x in ('a', 'w', 'c', 'b', 'e', 'd', 'l', 'h'):
+            return '\t%s_erpb_rr %s, 0x%x' % (op, x, ERP_BYTE[y])     # `or A,QIZH` = c7 fb e1 (helper B, round 12)
         line = erp_byte(line)
     m = ERP_PUSH_RE.match(line)
     if m:
@@ -155,8 +158,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     names = CutNames(fw.tree_values(os.path.join(REPO, tree)), ref)
     to_llvm.SPELL = None
     module = set()                       # cc900-module: callees asm900 saw in the caller's module (calr / jr / jrl)
+    places = {}                          # cc900-data: {function: {n: tree label}}
     for c in cfiles:
         module |= fw.module_names(c)
+        places.update(fw.data_map(c))
     to_llvm.MODULE = (module | {c for c, l in alias.items() if l in module}) if module else None   # labels and C names
     text = open(lst, encoding='latin-1').read()
     to_llvm.WIDTHS = listing.attributes(text)
@@ -171,6 +176,13 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
             (short.get(bare, [None])[0] if len(short.get(bare, [])) == 1 else None)
         if full is None:
             out.append((bare, 0, 'not in the symbols reference')); continue
+        # f_const data (a switch's jump table ...): the C file's `cc900-data: FUNCTION N = LABEL` places the N-th
+        # object at the tree's LABEL, as the build does; the code is checked with that address (the table's own bytes
+        # are checked by make gate, as in c_build_coverage.translate)
+        consts, _ = to_llvm.split_consts(lines)
+        pl = places.get(bare, places.get(full, {}))
+        to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and pl[k] in ref}
+        to_llvm.DATA_REQUIRED = bool(consts)
         try:
             body = [l for l in to_llvm.translate_function(name, lines, names)
                     if l not in ('\t.globl %s' % bare, bare + ':')]
@@ -189,6 +201,16 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         body = [module_jump(l) for l in body]
         # a shift by 16: to_llvm writes the raw count field 0, llvm-mc wants 16 (the CPU encodes 16 as 0)
         body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
+        # the address of one of the function's own labels as data (a switch's `lda xix, <case base>` before
+        # `jp t, xix+wa`): the unit is assembled at 0, so spell it as the function's ROM address plus the distance
+        own = {m.group(1) for l in body for m in [re.match(r'^([.\w$]+):', l)] if m}
+
+        def own_address(l):
+            m = re.match(r'^(\tlda \w+, )\(([.\w$]+):24\)$', l)
+            if m and m.group(2) in own:
+                return '%s(0x%x + %s - %s:24)' % (m.group(1), ref[full], m.group(2), full)
+            return l
+        body = [own_address(l) for l in body]
         if any('untranslated' in l for l in body):
             if os.environ.get('SUB_V423_SHAPES'):          # the offending lines' shapes (numbers masked), no text
                 for l in body:
@@ -222,6 +244,8 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
                 continue
         if mine is None:
             out.append((full, 0, 'llvm-mc cannot assemble the translation')); continue
+        if KEEP_BYTES is not None:              # first_diff.py: the assembled bytes, for a side-by-side view
+            KEEP_BYTES[full] = mine
         at = rom_offset(ref[full])
         r = rom[at:at + len(mine)]
         if mine == r:

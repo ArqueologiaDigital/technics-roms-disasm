@@ -29,7 +29,7 @@ def sizes(out):
     for p in sorted(glob.glob(os.path.join(NOTES, 'verdicts', '*.tsv'))):
         for l in list(open(p))[1:]:
             c = l.rstrip('\n').split('\t')
-            if len(c) >= 3 and c[2] not in ('-', '') and int(c[1]) > 0:
+            if len(c) >= 3 and c[1].isdigit() and c[2] not in ('-', '') and int(c[1]) > 0:   # not per_file.py's rows
                 got.setdefault(c[0], int(c[1]))
     with open(out, 'w') as fh:
         for n in sorted(got):
@@ -49,7 +49,9 @@ def main():
     if a[:1] == ['sizes'] and len(a) == 2:
         return sizes(a[1])
     if a[:1] == ['list']:
-        return listing([a[i + 1] for i, x in enumerate(a) if x == '--except'])
+        # every word after the first --except is a pattern (the third promotion passed three after one --except
+        # and only the first counted)
+        return listing([x for x in a[a.index('--except') + 1:] if x != '--except'] if '--except' in a else [])
     sys.exit(__doc__)
 
 

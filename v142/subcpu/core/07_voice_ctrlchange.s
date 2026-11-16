@@ -573,25 +573,10 @@ Voice_PerVoice_PortamentoPitchUpdate:	.include "includes/generated/cc900/Voice_P
 
 ; Calls Voice_PerVoice_PortamentoPitchUpdate for parts 0..0x19.  Reached from SysEx dispatch
 ; entry 1 (sub-command 0x92) and from Voice_ResetAllControllers.
-Voice_AllVoices_PortamentoUpdate:
-	pushw_erp 0xFA
-	ldib_erp 0xFB, 0
-	cp_erpb 0xFB, 0x1A
-	jr nc, Voice_AllVoices_PortamentoUpdate_Exit
-
-; loop body of Voice_AllVoices_PortamentoUpdate.
-Voice_AllVoices_PortamentoUpdate_LoopBody:
-	ldto_berp A, 0xFB
-	extz wa
-	calr Voice_PerVoice_PortamentoPitchUpdate
-	inc1b_erp 0xFB
-	cp_erpb 0xFB, 0x1A
-	jr c, Voice_AllVoices_PortamentoUpdate_LoopBody
-
-; common exit of Voice_AllVoices_PortamentoUpdate.
-Voice_AllVoices_PortamentoUpdate_Exit:
-	popw_erp 0xFA
-	ret
+Voice_AllVoices_PortamentoUpdate:	.include "includes/generated/cc900/Voice_AllVoices_PortamentoUpdate.s"	; C: cc900/voice_ctrlchange_a_8a_qizinc.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_AllVoices_PortamentoUpdate_LoopBody, Voice_AllVoices_PortamentoUpdate + 12
+	.set	Voice_AllVoices_PortamentoUpdate_Exit, Voice_AllVoices_PortamentoUpdate + 29
 
 ; MIDI 0xF0 / manufacturer sub-command dispatcher.  XWA -> message, C = (XWA+2) is the
 ; sub-command byte.  Three sub-commands are special-cased first: 0x99 -> DispatchEntry2,
@@ -1051,44 +1036,7 @@ Voice_PortamentoTarget_SetSlot:
 ; 32-bit base from [0x045314]+0x70 and a 16-bit multiplier from [0x045314]+0xEC, computes
 ; base + multiplier*selector + 0x045310, and stores the 32-bit result at slot+0x08.
 ; 0x045314 is a long pointer into the shared DSP/tone parameter block.
-Voice_PortamentoTarget_ComputePitch:
-	ld e, c
-	extz de
-	muls de, 0x25
-	ld ix, de
-	add ix, 0x6E
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_Record_Base:24)
-	exts xde
-	add xde, xhl
-	ld	xde, (xde+ix)
-	ld e, (xde + 3)
-	and e, 0x30
-	srl e, 4
-	ldfr_berp E, 0xF0
-	extz ix
-	ld xde, (ToneDB_RootPtr:24)
-	ld xhl, (xde + 112)
-	ld xde, (ToneDB_RootPtr:24)
-	ld	de, (xde+236)
-	extz bc
-	muls bc, 0x25
-	ld iy, bc
-	add iy, 0x6E
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xbc, (xwa+iy)
-	ld wa, de
-	mul xwa, ix
-	add xwa, xhl
-	add xwa, (ToneDB_RelBase:24)
-	ld (xbc + 8), xwa
-	ret
+Voice_PortamentoTarget_ComputePitch:	.include "includes/generated/cc900/Voice_PortamentoTarget_ComputePitch.s"	; C: cc900/voice_ctrlchange_m_16a.c
 
 ; A = part index.  Compares the four words at part_base+0x00, +0x02, +0x04 and +0x06 of the
 ; slot-selection block against zero and mirrors the results into bits 0..3 of the part flags
