@@ -13,6 +13,7 @@ extern void *__cdecl Mem_Copy(void *, void *, int);
 #define B32(x, n) ((unsigned char)(((x) >> (n)) & 0xff))
 #define LO32(x) ((unsigned char)((x) & 0xff))
 extern void __cdecl SeqStep_FileSectorReturn(unsigned char *e, unsigned char *dst);
+extern unsigned long __cdecl SeqStep_FileSectorProcess(unsigned char **pp);
 
 void __cdecl SeqStep_FileSectorReturn(unsigned char *e, unsigned char *dst)
 {
@@ -32,4 +33,15 @@ void __cdecl SeqStep_FileSectorReturn(unsigned char *e, unsigned char *dst)
 	*p++ = B32(*(unsigned long *)(e + 19), 8);
 	*p++ = B32(*(unsigned long *)(e + 19), 16);
 	*p = *(unsigned long *)(e + 19) >> 24;
+}
+
+unsigned long __cdecl SeqStep_FileSectorProcess(unsigned char **pp)
+{
+	unsigned long v;
+
+	v = *(*pp)++;
+	v += (unsigned long)*(*pp)++ << 8;
+	v += (unsigned long)*(*pp)++ << 16;
+	v += (unsigned long)*(*pp)++ << 24;
+	return v;
 }
