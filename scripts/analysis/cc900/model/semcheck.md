@@ -58,7 +58,7 @@ arguments are on the stack above a 4-byte return address, the first at `(XSP+4)`
 bytes (char extended as its type says), a `long`/pointer/`float` 4, a `double` 8, a struct its even size.  A result
 of `double` or of a struct over 4 bytes goes through a hidden first argument pointing to a result buffer.  With
 `-Xr` (`Xr`, `O3XSXr`), the first three arguments are in A/WA/XWA, C/BC/XBC, E/DE/XDE by size.  The rest (and any
-`double`, which still uses up its position) are on the stack, pushed left to right, and the callee pops them.  The
+`double` or struct, which still uses up its position: stc `.st_pq_4`) are on the stack, pushed left to right, and the callee pops them.  The
 result is read from L, HL or XHL by the return type.  All other register bits start as a fixed junk pattern.
 (`codegen.compile_unit` adds the hidden result pointer to the function's parameters as `__sret`; semcheck skips it.
 Until 2026-11-09 it did not, so every argument of a function returning a double or a struct sat 4 bytes too high, on

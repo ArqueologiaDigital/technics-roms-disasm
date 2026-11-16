@@ -78,8 +78,8 @@ def layout(types, adecl):
             name = ADECL_REGS[i][{1: 0, 2: 1, 4: 2}[n]]
             out[i] = ('reg', name, 8 * n)
         else:
-            if adecl and t.kind == 'struct': raise interp.Unsupported('struct argument under adecl')
-            stack.append(i)
+            stack.append(i)                               # (a struct under adecl: on the stack, its register
+                                                           #  position used up, as a double's; stc .st_pq_4)
     off = 0
     order = reversed(stack) if adecl else stack       # adecl pushes left to right: the last is nearest
     for i in order:
