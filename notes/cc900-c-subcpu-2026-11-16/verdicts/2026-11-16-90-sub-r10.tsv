@@ -1,0 +1,41 @@
+function	bytes	matches	best_diff
+Algo67_LUTOffset_Check	143	-	+45 sub_D_10c@Xr
+Algo_SubTable_DispatchA	93	-	+35 sub_D_10c@Xr
+DSP_ChanFreq_WritePacket2	122	-	+100 sub_D_10c@Xr
+DSP_Config_Init	271	-	+18 sub_C_10c@Xr
+DSP_ParamInterp_Div0xC6	106	-	+1 sub_E_10a@Xr
+DSP_WriteParameter	194	sub_E_10a@Xr	
+DSP_WriteVoiceParam	152	-	+24 sub_D_10c@Xr
+OutputBuf_Flush_A	45	-	+1 sub_A_10c@Xr
+Pitch_Emit_Reg400	68	sub_A_10a@Xr sub_A_10b@Xr sub_A_10c@Xr	
+READ_BYTE_FROM_RING_BUFFER	37	-	+5 sub_E_10b@Xr
+RING_BUFFER_HAS_OVERRUN	15	-	+3 sub_E_10b@Xr
+SAVE_BYTE_TO_RING_BUFFER	42	-	+4 sub_E_10c@O3Xr
+ToneDB_Find_SubToneRecord	62	sub_D_10a@Xr sub_D_10b@Xr sub_D_10c@Xr	
+ToneGen_Process_Notes	165	-	+14 sub_E_10a@Xr
+ToneGen_SelfTest_ProbeVoice0	0	-	llvm-mc cannot assemble the translation
+VoiceParam_CustomTone_Apply_Catalog80	288	-	+20 sub_C_10b@Xr
+VoiceParam_CustomTone_Apply_Catalog8C	188	sub_C_10a@Xr	
+VoiceParam_SubSlot_Apply_Catalog50	204	sub_C_10a@Xr	
+VoiceSlot_AltInit	226	sub_D_10a@Xr sub_D_10b@Xr sub_D_10c@Xr	
+VoiceSlot_FullInit	216	sub_D_10a@Xr	
+VoiceState_SwapSlot_Guarded	196	-	+41 sub_A_10c@Xr
+Voice_AdvanceSlotIterator	103	-	+3 sub_A_10c@O3Xr
+Voice_AllNotes_SustainRetrigger	338	-	+20 sub_B_10c@Xr
+Voice_Apply_GateRouting	95	sub_A_10a@Xr sub_A_10b@Xr	
+Voice_Build_GateCommand	106	sub_A_10a@Xr sub_A_10b@Xr	
+Voice_Calc_LevelPair_EGA	225	sub_B_10a@Xr	
+Voice_Calc_LevelPair_EGB	313	-	+15 sub_B_10b@Xr
+Voice_Calc_LevelPair_EGC	309	-	+15 sub_B_10b@Xr
+Voice_Calc_LevelPair_FixedAtk	312	-	+111 sub_B_10b@Xr
+Voice_ComputePitch_Mono	257	-	+41 sub_B_10b@Xr
+Voice_ComputeVolume_CappedLFO	262	sub_B_10a@Xr	
+Voice_PitchPack_Mode5_Dual	193	-	+156 sub_A_10c@Xr
+Voice_PitchPack_RouteC	75	sub_A_10a@Xr sub_A_10b@Xr sub_A_10c@Xr	
+Voice_ProgChange	257	sub_D_10a@Xr sub_D_10b@Xr sub_D_10c@Xr	
+Voice_Selector_ComputeMixWeights	186	-	+23 sub_A_10c@Xr
+WaveSel_Rebuild_PartCaches	208	sub_D_10a@Xr sub_D_10b@Xr sub_D_10c@Xr	
+WaveSel_StageA1_FromPatchBlock	130	-	+9 sub_D_10c@Xr
+WaveSel_StageA2_FromToneRec	118	-	+9 sub_D_10c@Xr
+WaveSel_StageA2_FromVelZone	45	sub_D_10a@Xr sub_D_10b@Xr sub_D_10c@Xr	
+WaveSel_StageB_Build_Reg040	171	-	+40 sub_A_10c@Xr

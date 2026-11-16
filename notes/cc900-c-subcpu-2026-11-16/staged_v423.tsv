@@ -187,6 +187,7 @@ v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	0d425c63ff6aa4a75
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_7a.c	49e5f4bd23388df4013205226c0a8f62adfbc23da68ecef5812c80a5b74afb1b	Xr	2026-11-16-89-sub-staged3	RingBuf_Write4K	24	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_8a.c	7e04c6323186b0bbfc2b7ce880415f03f5f4b1da3072612abcd5ad7570c63518	Xr	2026-11-16-89-sub-staged3	MIDI_Dispatch	595	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_9a.c	23e50afdfbd0453047d0dc79902d470a5c1b8eab8c4bc6fe2a6a071ad2a95ec8	Xr	2026-11-16-89-sub-staged3	ToneGen_SetupPercussionVoice	115	MATCH
+v140	v140/subcpu/cc900-staged/subcpu_data_tables_o3xr_e_8a.c	46baa6692745e3ddc97bd990d31ece6752432e88f653172df2f5722710b1c795	O3Xr	2026-11-16-90-sub-r10	Serial1_DataTransmit_Loop	69	MATCH
 v140	v140/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_1K	26	MATCH
 v140	v140/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_256	26	MATCH
 v140	v140/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_512	26	MATCH
@@ -571,6 +572,7 @@ v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	d3eb7ccc4c61327da
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_7a.c	49e5f4bd23388df4013205226c0a8f62adfbc23da68ecef5812c80a5b74afb1b	Xr	2026-11-16-89-sub-staged3	RingBuf_Write4K	24	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_8a.c	7e04c6323186b0bbfc2b7ce880415f03f5f4b1da3072612abcd5ad7570c63518	Xr	2026-11-16-89-sub-staged3	MIDI_Dispatch	595	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_9a.c	23e50afdfbd0453047d0dc79902d470a5c1b8eab8c4bc6fe2a6a071ad2a95ec8	Xr	2026-11-16-89-sub-staged3	ToneGen_SetupPercussionVoice	115	MATCH
+v141	v141/subcpu/cc900-staged/subcpu_data_tables_o3xr_e_8a.c	46baa6692745e3ddc97bd990d31ece6752432e88f653172df2f5722710b1c795	O3Xr	2026-11-16-90-sub-r10	Serial1_DataTransmit_Loop	69	MATCH
 v141	v141/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_1K	26	MATCH
 v141	v141/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_256	26	MATCH
 v141	v141/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_512	26	MATCH
@@ -955,6 +957,7 @@ v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	27931c962f8f17d13
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_7a.c	49e5f4bd23388df4013205226c0a8f62adfbc23da68ecef5812c80a5b74afb1b	Xr	2026-11-16-89-sub-staged3	RingBuf_Write4K	24	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_8a.c	7e04c6323186b0bbfc2b7ce880415f03f5f4b1da3072612abcd5ad7570c63518	Xr	2026-11-16-89-sub-staged3	MIDI_Dispatch	595	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_9a.c	23e50afdfbd0453047d0dc79902d470a5c1b8eab8c4bc6fe2a6a071ad2a95ec8	Xr	2026-11-16-89-sub-staged3	ToneGen_SetupPercussionVoice	115	MATCH
+v142	v142/subcpu/cc900-staged/subcpu_data_tables_o3xr_e_8a.c	46baa6692745e3ddc97bd990d31ece6752432e88f653172df2f5722710b1c795	O3Xr	2026-11-16-90-sub-r10	Serial1_DataTransmit_Loop	69	MATCH
 v142	v142/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_1K	26	MATCH
 v142	v142/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_256	26	MATCH
 v142	v142/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_512	26	MATCH
