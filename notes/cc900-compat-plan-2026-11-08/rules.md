@@ -120,5 +120,12 @@ test for every form tried (`while`, `for`, `if` + `do`-`while`, two hand-made `g
   loops outside the library are the rule's exceptions to check; some look hand-written.
 - **The 2003 compiler** has not been asked.
 
-In the reference model the rule is `KN_LOOP_INVERT` / `kn_invert_entry` in `codegen.py`, for the `kn5000`
-personality only, at `-O`, in the generic `while` and `for` paths (lane_p6 fix p6-01).
+The library the firmware links does not follow the rule.  Its loops are V4.23's, built by Toshiba's tools, and the
+model's `kn5000` rows score that library.  Batch 362's first form of the rule (fix p6-01), on for the `kn5000`
+personality, lost library functions there (188 to 177) and, through `ide2003`, which inherits `kn5000`'s rules,
+micro functions (O3XS 672 to 670, O3XSXr 660 to 658); it was backed out.  So the rule belongs to Matsushita's own C
+only.  In the model it is `KN_LOOP_INVERT` / `kn_invert_entry` in `codegen.py` (fix p6-02): off by default, so no
+ledger row or personality sees it.  The firmware build (`scripts/build/cc900_firmware_c.py`, `FIRMWARE_RULES`)
+switches it on for the firmware's C, under `kn5000`, at `-O`, in the generic `while` and `for` paths.  With it on,
+`TrimAndPadSmfFilename` (`trim_a`) is byte-identical to the ROM, 60 of 60 bytes; without it, the model gives
+V4.23's jump at +42.

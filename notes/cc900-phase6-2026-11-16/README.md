@@ -242,7 +242,14 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   the only difference.  The ROM tests `i < n` before entering and again at the bottom.  V4.23 compiles every form
   tried to a jump to a bottom test: `while`, `for`, an explicit `if (...) do ... while`, and two hand-made `goto`
   loops.  That is a candidate `kn5000` rule (loop inversion for a simple condition, not for a compound one),
-  reported to the coordinator for the rule list.  The function stays hand assembly.
+  reported to the coordinator for the rule list.
+  
+  **Since batch 362** (lane_o3 fix 26, `ASSIGN_TARGET_WRITE`), the model compiles `trim_a` as V4.23 does.  With the
+  rule loop-entry-copy (lane_p6 fix p6-02, `KN_LOOP_INVERT`, which only the firmware build switches on), it gives
+  all 60 bytes of `TrimAndPadSmfFilename`, `TrimPad_NullTerminate`'s tail included (`fn_diff.py`).  The first form
+  of the rule (fix p6-01) was on for the whole `kn5000` personality.  It lost library and `ide2003` micro functions
+  in the full ledger and was backed out.  `rules.md` has the account.  The function is identical in all five
+  trees; it is built once fix p6-02 is in the model.
 
 **Loop shapes across v10** (the idiom census for that candidate rule): `python3
 notes/cc900-phase6-2026-11-16/loop_shapes.py v10/maincpu`, 2026-11-16.  A loop is a backward conditional branch;

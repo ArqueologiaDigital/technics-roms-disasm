@@ -49,6 +49,10 @@ OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
 # may be shorter than the tree's label.  A comment `cc900-name: CNAME=LABEL` (one per pair, anywhere in the file)
 # maps it; the generated file, the splice and the byte checks then use LABEL.
 NAME_RE = re.compile(rb'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
+# Rules of the Technics compiler seen in Matsushita's own code but not in the library it links (which Toshiba's tools
+# built, and which the model's kn5000 ledger rows score): codegen flags that are off in the model and that this
+# build switches on.  KN_LOOP_INVERT: rule loop-entry-copy (notes/cc900-compat-plan-2026-11-08/rules.md).
+FIRMWARE_RULES = ("KN_LOOP_INVERT",)
 C_NAME_LIMIT = 31
 EQU_RE = re.compile(rb'^\s*\.(?:equ|set)\s+([A-Za-z_][\w.]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;|$)')
 RAM_CELL_RE = re.compile(r'^ram_([0-9a-f]+)$')
@@ -146,6 +150,9 @@ def compile_c(path, names, spell=True):
     import codegen
     import to_llvm
     _, opt, adecl = file_options(path)
+    for flag in FIRMWARE_RULES:                          # rules of the firmware's own C, off in the model elsewhere
+        if hasattr(codegen, flag):
+            setattr(codegen, flag, True)
     unit = frontend.load(path, [], [], adecl=adecl)
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
