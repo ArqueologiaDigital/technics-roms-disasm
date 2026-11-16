@@ -373,7 +373,11 @@ def translate_data(lines, locals_):
     out = []
     for l in lines:
         p = l.strip().split(None, 1); op = p[0].lower()
-        if op == 'align': out.append('\t.balign %s' % p[1]); continue
+        if op == 'align':
+            # V4.23 aligns within its own f_const section, which the firmware's linker placed where it liked: the
+            # sub-CPU's AudioChannel_CaseOffsets sits at the odd 0xF703.  The tree's label is the object's place, so
+            # no padding is written here (a .balign would shift the table and everything after it by a byte)
+            out.append('\t; V4.23: align %s (within its f_const section; the label places the object)' % p[1]); continue
         if op in ('fdata', 'fdatad'):
             b = struct.pack('<d' if op == 'fdatad' else '<f', float(p[1]))
             out.append('\t.byte ' + ', '.join('0x%02x' % x for x in b) + '\t; %s %s' % (op, p[1].strip())); continue
