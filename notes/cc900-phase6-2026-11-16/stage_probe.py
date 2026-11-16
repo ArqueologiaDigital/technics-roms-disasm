@@ -73,6 +73,23 @@ def defines(d):
     if m and not d.startswith('typedef'):
         return {m.group(2)}
     body = re.sub(r'\{.*\}', ' ', d, flags=re.S)
+    if '(' in body and d.startswith('typedef') and not m:     # typedef of a function (pointer) type
+        m2 = re.search(r'\(\s*\*\s*(\w+)\s*\)\s*\(', body) or re.search(r'(\w+)\s*\(', body)
+        return {m2.group(1)} if m2 else set()
+    if '(' in body and not d.startswith('typedef'):            # function prototypes (and pointers to functions)
+        names, depth, i = set(), 0, 0
+        flat = body.rstrip(';')
+        while re.search(r'\(([^()]*)\)\s*\(([^()]*)\)', flat) is None and re.search(r'(\w+\s*\()[^()]*\([^()]*\)[^()]*\)', flat):
+            flat = re.sub(r'(\w+\s*\()[^()]*\([^()]*\)[^()]*\)', r'\1)', flat, count=1)
+        for part in re.split(r',(?![^()]*\))', flat):
+            m = re.search(r'\(\s*\*\s*(\w+)\s*\)\s*\(', part) or re.search(r'(\w+)\s*\(', part)
+            if m:
+                names.add(m.group(1))
+            else:
+                f = re.findall(r'(\w+)\s*(?:\[[^\]]*\])*\s*(?:=.*)?$', part.strip())
+                if f:
+                    names.add(f[-1])
+        return names - KEYWORDS
     if d.startswith('typedef'):
         tags = {m.group(2)} if m else set()
         return tags | {re.findall(r'(\w+)\s*(?:\[[^\]]*\])*\s*;?$', body.rstrip(';').strip())[-1]}
