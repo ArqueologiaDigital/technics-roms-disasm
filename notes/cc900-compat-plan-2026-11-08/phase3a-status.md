@@ -3854,6 +3854,12 @@ element as destination).  Fix 15: at -Xr a struct copy over a live 2-byte variab
 97 / 77 / 89 / 77 -> 298 / 278 / 266 / 254 of 552; sxl joins the ledger, 24 / 24 / 24 / 24 of 24; semcheck clean on
 both; validation and library unchanged; semcheck 9.  The checker's __cdecl-in-Xr change went in alone (c14cf13c0).
 
+**Batch 352 (2026-11-16).**  lane_o3 fix 16, from the stc listings: STRUCT_COPY_COMPOUND (`lv = (a = b)` and `lv = c ?
+a : b` through a frame temporary of the FP temporaries' region; `lv = *(c ? gp : gq)` loading XIY in each arm) and
+STRUCT_COPY_TWO_ELEMS (`g[i'] = g[i'']` at two variable indexes without -O; refused at -O, where V4.23 shares the index
+and the base).  stc 358 / 314 / 326 / 290 of 552 (+60 / +36 / +60 / +36), semcheck clean; validation and library
+unchanged; semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

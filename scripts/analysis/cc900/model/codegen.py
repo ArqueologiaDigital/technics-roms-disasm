@@ -76,6 +76,8 @@ STRUCT_CALL_STORE = True                                  # see struct_call_stor
 STRUCT_CALL_TEMP = True                                   # see struct_call_temp, compile_function
 STRUCT_VAR_ELEM = True                                    # see struct_var_elem
 STRUCT_COPY_BC_TO_DE = True                               # see struct_block_copy
+STRUCT_COPY_COMPOUND = True                               # see struct_compound_copy
+STRUCT_COPY_TWO_ELEMS = True                              # see struct_two_elem_copy
 ADECL_ARG_CLOBBER_NOOPT = True                            # see gen_call_adecl: ADECL_ARG_CLOBBER_GUARD without -O too
 class _RegBySize(dict):
     """a register family by size: a value over 4 bytes (a struct of 6, 8, 10 .. bytes reaching a register path: probe
@@ -704,6 +706,123 @@ def struct_var_elem(F, x, probe=False):
     F.emit('lda', 'XDE,_%s' % b.decl.name)
     return 'XDE+WA'
 
+def var_elem_parts(x):
+    """(array name, member offset, index expression, element size) for g[i] or g[i].m (a struct), a global array at a
+    variable int index; else None"""
+    x = strip(x); off = 0
+    if x.k == 'member' and not x.arrow and strip(x.base).k == 'index':
+        off = member_offset(x); x = strip(x.base)
+    if x.k != 'index' or fold(x.idx).k == 'const': return None
+    b = strip(x.base)
+    if b.k != 'var' or b.decl.kind != 'global' or getattr(b.decl, 'reg', None): return None
+    ix = strip(x.idx)
+    if ix.ty is None or ix.ty.size != 2 or ix.ty.kind != 'int': return None
+    return (b.decl.name, off, ix, x.ty.size)
+
+def struct_two_elem_copy(F, lv, src):
+    """STRUCT_COPY_TWO_ELEMS: g[i'] = g[i''] (or .m of each), both at variable indexes, without -O (probe stc st_ae_*,
+    st_mw_*): the destination's index first, built in WA (in BC when a variable it reads lives in WA: -Xr), moved to DE
+    and scaled there (add / sla; muls before the move), the array into XHL; then the source's index in WA, the array in
+    XBC; lda XIY,XBC+WA / lda XIX,XHL+DE (st_ae_4: ld WA,(XSP+0x4) / and WA,0x3 / ld DE,WA / sla 0x2,DE / lda XHL,_ga4 /
+    ld WA,(XSP+0x4) / and WA,0x3 / xor WA,0x1 / sla 0x2,WA / lda XBC,_ga4 / lda XIY,XBC+WA / lda XIX,XHL+DE / ldiw x2)"""
+    if F.opt: return False
+    src = strip(src)
+    if src.k == 'load': src = strip(src.e)
+    pd, ps = var_elem_parts(lv), var_elem_parts(src)
+    if pd is None or ps is None: return False
+    lr = live_regs(F)
+    wa_var = {d for d in lr} & {'WA', 'XWA'}
+    if lr - {'WA'}: return False
+    reads_wa = lambda e: any(getattr(strip(n.e).decl, 'reg', None) == 'WA' for n in nodes_in(e, 'load') if strip(n.e).k == 'var')
+    if wa_var and not (reads_wa(pd[2]) and reads_wa(ps[2])): return False
+    n = lv.ty.size // 2
+    def scale(R, es, early):
+        if es == 2: F.emit('add', '%s,%s' % (R, R))
+        elif es & (es - 1) == 0: F.emit('sla', '%s,%s' % (hx(es.bit_length() - 1), R))
+        else: F.emit('muls', 'X%s,%s' % (R, hx(es)))
+    t1 = 'BC' if wa_var else 'WA'
+    f_ = gen(F, pd[2], t1, 2)
+    if f_ != t1: F.emit('ld', '%s,%s' % (t1, FAM[f_][2]))
+    es = pd[3]
+    if es != 2 and es & (es - 1): scale(t1, es, True); F.emit('ld', 'DE,%s' % t1)
+    else: F.emit('ld', 'DE,%s' % t1); scale('DE', es, False)
+    F.emit('lda', 'XHL,_%s' % pd[0] + (' + %s' % hx(pd[1]) if pd[1] else ''))
+    f_ = gen(F, ps[2], 'WA', 2)
+    if f_ != 'WA': F.emit('ld', 'WA,%s' % FAM[f_][2])
+    scale('WA', ps[3], False)
+    F.emit('lda', 'XBC,_%s' % ps[0] + (' + %s' % hx(ps[1]) if ps[1] else ''))
+    struct_emit_copy(F, ('reg', 'XBC+WA'), ('reg', 'XHL+DE'), n)
+    return True
+
+def struct_emit_copy(F, a_s, a_d, n):
+    """the block copy itself: the source's address into XIY, the destination's into XIX; ('sym', '_g'), ('stack', off),
+    ('reg', 'XDE+WA'), ('ptr', '(_gp)') each"""
+    for R, a in (('XIY', a_s), ('XIX', a_d)):
+        if a[0] == 'reg': F.emit('lda', '%s,%s' % (R, a[1]))
+        elif a[0] in ('sym', 'ptr'): F.emit('ld', '%s,%s' % (R, a[1]))
+        elif a[1] + F.push == 0: F.emit('ld', '%s,XSP' % R)
+        else: F.emit('lda', '%s,XSP+%s' % (R, hx(a[1] + F.push)))
+    if n <= 2:
+        for _ in range(n): F.emit('ldiw', '(XIX+),(XIY+)')
+    else: F.emit('ld', 'BC,%s' % hx(n)); F.emit('ldirw', '(XIX+),(XIY+)')
+
+def struct_compound_copy(F, lv, src):
+    """STRUCT_COPY_COMPOUND: lv = (a = b), lv = c ? a : b and lv = *(c ? p : q) for structs (probe stc st_ch_*, st_tc_*,
+    st_tp_*): a chain and a ?: go through a frame temporary of the floating-point temporaries' region (st_ch_8: lda
+    XSP,XSP-0x10, b copied to +0x8, then +0x8 to a, then +0x8 to lv; st_tc_8: the test, each arm into +0x8, then +0x8 to
+    lv); a ?: of global pointers loads XIY in each arm (st_tp_4: cpw (XSP+0x4),0x0 / j eq,L / ld XIY,(_gp41) / j L2 /
+    L: ld XIY,(_gp42) / L2: ld XIX,_g41 / ldiw x2)"""
+    lvs = strip(lv); n = lv.ty.size // 2
+    a_d = struct_obj_addr(F, lvs)
+    if a_d is None or a_d[0] != 'sym' and a_d[0] != 'stack': return False
+    if live_regs(F) & {'IX', 'IY', 'XIX', 'XIY', 'BC', 'XBC', 'QBC'}: return False
+    def simple(x):
+        x = strip(x)
+        if x.k == 'load': x = strip(x.e)
+        a = struct_obj_addr(F, x)
+        return a if a is not None and a[0] in ('sym', 'stack') else None
+    def gptr(x):
+        x = strip(x)
+        if x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl.kind == 'global' and not getattr(strip(x.e).decl, 'reg', None):
+            return ('ptr', '(_%s)' % strip(x.e).decl.name)
+        return None
+    x = strip(src)
+    if x.k == 'load' and strip(x.e).k == 'deref' and strip(strip(x.e).e).k == 'cond':
+        c_ = strip(strip(x.e).e)
+        pa, pb = gptr(c_.a), gptr(c_.b)
+        if pa is None or pb is None: return False
+        lelse = F.newulabel(); lend = F.newulabel()
+        F.cond_joins = getattr(F, 'cond_joins', set()) | {lend}
+        gen_cond_false(F, c_.c, lelse)
+        F.emit('ld', 'XIY,%s' % pa[1]); F.emit('j', lend); F.lines.append(lelse + ':')
+        F.emit('ld', 'XIY,%s' % pb[1]); F.lines.append(lend + ':')
+        if a_d[0] == 'sym': F.emit('ld', 'XIX,%s' % a_d[1])
+        elif a_d[1] + F.push == 0: F.emit('ld', 'XIX,XSP')
+        else: F.emit('lda', 'XIX,XSP+%s' % hx(a_d[1] + F.push))
+        if n <= 2:
+            for _ in range(n): F.emit('ldiw', '(XIX+),(XIY+)')
+        else: F.emit('ld', 'BC,%s' % hx(n)); F.emit('ldirw', '(XIX+),(XIY+)')
+        return True
+    if getattr(F, 'fp_temps', None) is None: return False
+    if x.k == 'bin' and x.op == '=':
+        inner_d = simple(x.l); inner_s = simple(x.r)
+        if inner_d is None or inner_s is None: return False
+        t = ('stack', fpgen.temp(F, lv.ty.size))
+        struct_emit_copy(F, inner_s, t, n); struct_emit_copy(F, t, inner_d, n); struct_emit_copy(F, t, a_d, n)
+        return True
+    if x.k == 'cond':
+        sa, sb = simple(x.a), simple(x.b)
+        if sa is None or sb is None: return False
+        t = ('stack', fpgen.temp(F, lv.ty.size))
+        lelse = F.newulabel(); lend = F.newulabel()
+        F.cond_joins = getattr(F, 'cond_joins', set()) | {lend}
+        gen_cond_false(F, x.c, lelse)
+        struct_emit_copy(F, sa, t, n); F.emit('j', lend); F.lines.append(lelse + ':')
+        struct_emit_copy(F, sb, t, n); F.lines.append(lend + ':')
+        struct_emit_copy(F, t, a_d, n)
+        return True
+    return False
+
 def struct_block_copy(F, lv, src):
     """STRUCT_COPY_BLOCK: a struct assignment between two objects whose addresses are known, as V4.23 writes it at
     every size: the source's address into XIY, the destination's into XIX, then ldiw (XIX+),(XIY+) once per word up to
@@ -817,8 +936,11 @@ def struct_call_temp(F, lv, call):
     return True
 
 def struct_calls(f):
+    """a struct-returning call, a struct ?: or a struct assignment inside an expression (the frame temporaries)"""
     found = []
-    walk(f.body, lambda n, d: found.append(n) if n.k == 'call' and getattr(n, 'ty', None) is not None and n.ty.kind == 'struct' else None)
+    walk(f.body, lambda n, d: found.append(n) if getattr(n, 'ty', None) is not None and n.ty.kind == 'struct' and
+         (n.k in ('call', 'cond') or (STRUCT_COPY_COMPOUND and n.k == 'bin' and n.op == '=' and
+                                      strip(n.r).k == 'bin' and strip(n.r).op == '=')) else None)
     return bool(found)
 
 def member_offset(v):
@@ -12818,6 +12940,8 @@ def gen_stmt(F, s, last):
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
         if STRUCT_COPY_BLOCK and lv.ty is not None and lv.ty.kind == 'struct' and struct_block_copy(F, lv, s.e.r): return
+        if STRUCT_COPY_COMPOUND and lv.ty is not None and lv.ty.kind == 'struct' and struct_compound_copy(F, lv, s.e.r): return
+        if STRUCT_COPY_TWO_ELEMS and lv.ty is not None and lv.ty.kind == 'struct' and struct_two_elem_copy(F, lv, s.e.r): return
         if STRUCT_CALL_STORE and lv.ty is not None and lv.ty.kind == 'struct' and strip(s.e.r).k == 'call' and \
                 struct_call_store(F, lv, strip(s.e.r)): return
         if STRUCT_CALL_TEMP and lv.ty is not None and lv.ty.kind == 'struct' and strip(s.e.r).k == 'call' and \
