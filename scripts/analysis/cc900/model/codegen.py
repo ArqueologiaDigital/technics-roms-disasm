@@ -78,6 +78,7 @@ STRUCT_VAR_ELEM = True                                    # see struct_var_elem
 STRUCT_COPY_BC_TO_DE = True                               # see struct_block_copy
 STRUCT_COPY_COMPOUND = True                               # see struct_compound_copy
 STRUCT_COPY_TWO_ELEMS = True                              # see struct_two_elem_copy
+STRUCT_LOCAL_FRAME = True                                 # see plan_frame
 ADECL_ARG_CLOBBER_NOOPT = True                            # see gen_call_adecl: ADECL_ARG_CLOBBER_GUARD without -O too
 class _RegBySize(dict):
     """a register family by size: a value over 4 bytes (a struct of 6, 8, 10 .. bytes reaching a register path: probe
@@ -1856,6 +1857,7 @@ HALVES_BY_USE = True                                      # see plan_homes (rstm
 Q_COUNTER_SUB = True                                      # see compile_unit (rstmt rs_1_00_09_2)
 DOUBLE_ADD = True                                         # see compile_unit (library _atan)
 MULS_NO_EXTS = True                                       # see compile_unit (library _atan)
+MULS_NO_EXTS_FP = True                                    # see compile_unit: only for an int-to-double conversion
 FP_SLOT_DECL_ORDER = True                                 # see fp_plan_frame (library _sqrt)
 POST_CALL_PARAM = True                                    # see plan_homes (ra_homes.c rh_pp_a2, random r1_01_08)
 OPA_NO_HOMES = True                                       # see plan_homes: a double op= in XIZ leaves no register home
@@ -6397,6 +6399,63 @@ def load_index16(F, ii, im):
         F.emit('ld', 'A,%s' % im); F.emit('exts' if ii.ty.signed else 'extz', 'WA')
     elif im != 'WA': F.emit('ld', 'WA,%s' % im)
 
+PTR_SUB_ORDER = True                                      # see ptr_step
+
+def scale_const(F, T, X, k):
+    """T = X * k (T and X 32-bit registers, T != X; X holds the multiplicand), V4.23's binary method from the top bit:
+    a run of doublings before an add is one sll, a final single doubling add T,T (ptrar.c pa_sgpa, a 10-byte element:
+    ld XHL,XWA / sll 0x2,XHL / add XHL,XWA / add XHL,XHL)"""
+    b = bin(k)[3:]; F.emit('ld', '%s,%s' % (T, X)); run = 0
+    for i, c in enumerate(b):
+        run += 1
+        if c == '1':
+            F.emit('sll', '%s,%s' % (hx(run), T)) if run > 1 else F.emit('add', '%s,%s' % (T, T))
+            F.emit('add', '%s,%s' % (T, X)); run = 0
+    if run == 1: F.emit('add', '%s,%s' % (T, T))
+    elif run > 1: F.emit('sll', '%s,%s' % (hx(run), T))
+
+def ptr_step(F, e, fam, pm, ii, im, esz):
+    """p - i, p + i at a long index, and p + i over an element whose size is not a power of two, as V4.23 writes
+    them (ptrar.c, run micro-ptrar): the index in XWA, sign- or zero-extended by its type (a long one loaded whole),
+    scaled; p - i loads the pointer into the result and subtracts (pa_cgps: ld WA,(b) / exts XWA / ld XHL,(_gcp) /
+    sub XHL,XWA -- the older path computed i - p, wrong code); a long index on a char pointer goes straight into the
+    result (pa_cqla: ld XHL,(lb) / add XHL,(q)); a 10-byte element is scaled by shifts and adds into the result, or
+    into XBC for p - i (pa_sgps: ld XBC,XWA / sll 0x2,XBC / add XBC,XWA / add XBC,XBC / ld XHL,(_gsp) / sub XHL,XBC)."""
+    R = FAM[fam][4]; sub_ = e.op == '-'
+    if ii.ty is None or ii.ty.size not in (1, 2, 4) or esz < 1: raise Unsupported('ptr_step: the index')
+    pms = str(pm)
+    if re.search(r'\bX?(WA|A|W)\b', pms) or (R in pms and not sub_) or R == 'XWA' and (sub_ or esz not in (1, 2, 4, 8)):
+        raise Unsupported('ptr_step: the pointer or the result over XWA')
+    if 'WA' in live_regs(F) and not (im in ('WA', 'XWA') and dies_here(F, ii)):
+        raise Unsupported('ptr_step: the index over a live WA')
+    pow2 = esz in (1, 2, 4, 8)
+    if not pow2 and ii.ty.size == 1:                       # (a char index is multiplied at 16 bits and zero-extended:
+        raise Unsupported('ptr_step: a char index over a non-power-of-two element')   # pa_sgca: muls XWA,0xa / ld HL,WA /
+                                                           # extz XHL; not modelled)
+    if ii.ty.size == 4:
+        if not sub_ and esz == 1 and R != 'XWA' and im != R:
+            F.emit('ld', '%s,%s' % (R, im)); F.emit('add', '%s,%s' % (R, pm)); return fam
+        if im != 'XWA': F.emit('ld', 'XWA,%s' % im)
+    else:
+        load_index16(F, ii, im); F.emit('exts' if ii.ty.signed else 'extz', 'XWA')
+    if pow2:
+        if esz == 2: F.emit('add', 'XWA,XWA')
+        elif esz > 2: F.emit('sll', '%s,XWA' % hx({4: 2, 8: 3}[esz]))
+        if sub_: F.emit('ld', '%s,%s' % (R, pm)); F.emit('sub', '%s,XWA' % R); return fam
+        if F.opt and R != 'XWA': F.emit('add', 'XWA,%s' % pm); F.emit('ld', '%s,XWA' % R); return fam
+        if R != 'XWA': F.emit('ld', '%s,XWA' % R)
+        F.emit('add', '%s,%s' % (R, pm)); return fam
+    T = 'XBC' if sub_ else R
+    if sub_ and (R == 'XBC' or 'BC' in live_regs(F) or 'BC' in pms): raise Unsupported('ptr_step: XBC')
+    scale_const(F, T, 'XWA', esz)
+    if sub_: F.emit('ld', '%s,%s' % (R, pm)); F.emit('sub', '%s,%s' % (R, T)); return fam
+    F.emit('add', '%s,%s' % (R, pm)); return fam
+
+PTR_CHAR_STORE_EXTS = True                                # see gen_ptr_arith
+PTRDIFF_CMP_OPT = True                                    # see gen_compare
+STORE_TEMP_OWN_REG = True                                 # see gen_stmt's store_through_temp path
+OPA_VALUE_OWN_REG = True                                  # see regvar_stmt
+EXIT_LABEL_PLACED = True                                  # see compile_function_once
 def gen_ptr_arith(F, e, fam, size):
     """p + i (mem.c: m_padd): index sign-extended and scaled in XWA, then the pointer added;
     p - q (m_diff): 32-bit difference divided by the element size with C9H_divls"""
@@ -6458,6 +6517,8 @@ def gen_ptr_arith(F, e, fam, size):
     esz = l.ty.base.size
     iv = regvar_of(ii.e) if ii.k == 'load' else None
     opn = 'add' if e.op == '+' else 'sub'
+    if PTR_SUB_ORDER and (e.op == '-' or ii.ty is not None and ii.ty.size == 4 or esz not in (1, 2, 4, 8)):
+        return ptr_step(F, e, fam, pm, ii, im, esz)
     if iv is not None and iv.reg in ('BC', 'DE', 'HL') and dies_here(F, ii) and ii.ty.size == 2 and \
             not (PTR_CTX and esz == 1 and getattr(F, 'in_return', False)):   # (a returned char pointer sum zero-extends its int
                                                            # index: .rs_2_04_03_8, return gp + b -> ld XWA,(_gp) / ld HL,BC / extz XHL /
@@ -6490,6 +6551,13 @@ def gen_ptr_arith(F, e, fam, size):
                                                          # -O: an int pointer's int index in a local's initialiser is
                                                          # zero-extended (rstmt rs_1_04_15_0: int *t = gpi + c ->
                                                          # ld WA,(c) / extz XWA / add XWA,XWA / add XWA,(_gpi))
+    if PTR_CHAR_STORE_EXTS and esz == 1 and e.op == '+' and ii.ty is not None and ii.ty.size == 2 and ii.ty.signed and \
+            (getattr(F, 'ptr_store_ctx', False) or F.adecl and im in ('WA', 'BC', 'DE', 'HL') and
+             any(c_.init is not None and strip(c_.init) is e for c_ in nodes_in(F.f.body, 'decl'))) and \
+            not getattr(F, 'ptr_arg_ctx', False):         # (-Xr, a local's initialiser at a register index: pw_c_r,
+                                                           # char *e = q + b with b in WA -> exts XWA / add XWA,XBC)
+        ext = 'exts'                                     # (stored into a pointer the int index is signed: ptrar.c pa_cqpi,
+                                                         # gcp2 = q + b -> ld WA,(b) / exts XWA / add XWA,(q); was extz)
     R = FAM[fam][4]                                      # (a char pointer's index is zero-extended: h_p_n3's int n,
                                                          # extz XHL; a char index too when the sum is pushed, r1_04_02;
                                                          # a stored char index is sign-extended, r1_00_13)
@@ -6926,6 +6994,15 @@ def gen_compare(F, e):
     l, r = strip(e.l), strip(e.r)
     if FP_INT_PATH_GUARD and (fpgen.is_fp(getattr(l, 'ty', None)) or fpgen.is_fp(getattr(r, 'ty', None))):
         raise Unsupported('an FP compare in the integer path')   # (probe fpw fp_cm_flGR -O: cp XWA,(_gf2))
+    if PTRDIFF_CMP_OPT and F.opt and e.op in ('<', '<=', '>', '>='):
+        def pdiff1_(x):
+            x = unpromote(x)
+            while x.k == 'cast': x = strip(x.e)
+            return x.k == 'bin' and x.op == '-' and strip(x.l).ty is not None and strip(x.l).ty.is_ptr() and \
+                strip(x.r).ty is not None and strip(x.r).ty.is_ptr() and strip(x.l).ty.base.size == 1
+        if pdiff1_(l) or pdiff1_(r):                    # (-O compares a char pointer difference unsigned: ptrar.c pd_cg,
+            raise Unsupported('a char pointer difference compared under -O')   # (q - r) > 0 -> scc ugt; the model's
+                                                           # signed gt was wrong code)
     if F.opt and unpromote(l).k == 'load' and unpromote(r).k == 'load' and strip(unpromote(l).e).k == 'var' and \
             strip(unpromote(r).e).k == 'var' and strip(unpromote(l).e).decl is strip(unpromote(r).e).decl:
         return e.op in ('==', '<=', '>=')                # ae_i_ne_l after copy propagation: y == x -> 1
@@ -7734,7 +7811,9 @@ def test_reg_reuse(lines):
     if PTR_TEST_REUSE: out = ptr_test_reuse(out)
     return out
 
-PTR_TEST_REUSE = True                                     # see ptr_test_reuse
+PTR_TEST_REUSE = False                                    # see ptr_test_reuse (P12: redundant since
+                                                          # rs_2_06_00_7 is exact without it; it cost 2
+                                                          # validation statements)
 
 SD_ELEM_EARLY = True                                     # see sd4_stmt
 MULDIV_MEMBER_PTR = True                                 # see gen_opassign
@@ -11378,6 +11457,18 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
         if m is None: raise Unsupported('complex member base')
         F.emit('ld', '%s,%s' % (ptr, m)); off = member_offset(lv)
         return '(%s+%s)' % (ptr, hx(off)) if off else '(%s)' % ptr
+    if STRUCT_LOCAL_FRAME and lv.k in ('member', 'index'):       # a member of a struct local or parameter (stc st_gl_4:
+        x_ = strip(lv); mem_ = False                                # t.a = 5 -> ldw (XSP+0x0),0x5, the zero kept:
+        while x_.k in ('member', 'index'):                          # ZERO_DISP; st_pm_A: q.v[0] = 7)
+            if x_.k == 'member':
+                if x_.arrow: break
+                mem_ = True
+            x_ = strip(x_.base)
+        if mem_ and x_.k == 'var' and x_.decl.kind in ('local', 'param') and not getattr(x_.decl, 'reg', None):
+            a_ = struct_obj_addr(F, lv)
+            if a_ is not None and a_[0] == 'stack':
+                t_ = a_[1] + F.push
+                return '(XSP+%s)' % hx(t_) if t_ else '(XSP+0x0~)'
     g = global_offset(lv)
     if g and g[0] == '__param__': return '(XSP+%s)' % hx(g[1].off + g[2] + F.push)   # a member of a struct parameter
     if g: return '(_%s + %s)' % g if g[1] != '0x0' else '(_%s)' % g[0]
@@ -12460,6 +12551,11 @@ def gen_stmt(F, s, last):
                              dead_cond_init_ok(c.init)): gen(F, c.init, 'WA', c.var.ty.size)
                     F.dead.add(c.var); i += 1; continue   # (cmpordl2.c: an unused
                 helper_res = getattr(c.var, 'no_fold', False)                                #  int t = gi; -> ld WA,(_gi))
+                if STRUCT_LOCAL_FRAME and c.var.ty.kind == 'struct':   # a struct local's initialiser is a block copy
+                    from frontend import N                             # into its slot, never folded into its uses
+                    if getattr(c.var, 'slot', None) is None or not struct_block_copy(F, N('var', decl=c.var, ty=c.var.ty), c.init):
+                        raise Unsupported('a struct local initialiser')   # (stc st_gl_X: t = gX2, t.c[0] = 5, gX1 = t
+                    i += 1; continue                                   #  was folded to gX1 = gX2: wrong code)
                 upto = rest[:next((k for k, x in enumerate(rest) if uses_decl(x, c.var)), len(rest)) + 1]
                 if len(u) == 1 and (c.var.ty.size >= 2 or (F.opt and not F.adecl)) and not call_before_use(rest, c.var) \
                         and not helper_res and not written_in(upto, c.var) and \
@@ -12615,7 +12711,9 @@ def gen_stmt(F, s, last):
         v = strip(s.value)
         if v.k == 'load' and strip(v.e).k == 'var' and hasattr(strip(v.e).decl, 'slot'):
             d = strip(v.e).decl                        # _ldiv: ld XIX,(sret) / lda XIY,XSP+slot / ld BC,n / ldirw
-            F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push)); F.emit('lda', 'XIY,XSP+%s' % hx(d.slot + F.push))
+            F.emit('ld', 'XIX,(XSP+%s)' % hx(F.sret.off + F.push))
+            if STRUCT_LOCAL_FRAME and d.slot + F.push == 0: F.emit('ld', 'XIY,XSP')   # (stc st_rl_X: ld XIY,XSP)
+            else: F.emit('lda', 'XIY,XSP+%s' % hx(d.slot + F.push))
             F.emit('ld', 'BC,%s' % hx(d.ty.size // 2)); F.emit('ldirw', '(XIX+),(XIY+)')
             if F.xiz_vars: F.emit('pop', F.save_reg)
             epilogue(F); F.emit('ret'); return
@@ -13012,6 +13110,9 @@ def gen_stmt(F, s, last):
         sv = store_through_temp(s.e) if F.opt else None
         if sv is not None and not getattr(sv, 'reg', None) and regvar_of(strip(strip(lv.e).e)) is not None:
             pd = regvar_of(strip(strip(lv.e).e))         # _strset: lda XBC,XDE+:1 / ld WA,(XSP+0x8) / ld (XBC),A
+            if STORE_TEMP_OWN_REG and pd.reg in ('WA', 'BC', 'XWA', 'XBC'):   # (the pointer in XWA: the value's ld WA
+                raise Unsupported('a pointer store through XBC / WA over the pointer')   # overwrote it, ptrar.c pw_cle -O:
+                                                           # p = q; *p++ = b -> lda XBC,XWA+:1 / ld WA,(b))
             F.emit('lda', 'XBC,%s+:%d' % (FAM[pd.reg][4], pd.ty.base.size))
             F.emit('ld', '%s,%s' % (FAM['WA'][sv.ty.size], mem_operand(F, N_load(sv))))
             F.emit('ld', '(XBC),%s' % FAM['WA'][size]); return
@@ -14572,6 +14673,8 @@ def regvar_stmt(F, e):
             if T == 'WA' and 'WA' in live_regs(F, except_decl=d):   # ld BC,(XIX+DE) / muls XBC,IY); else the loop's T
                 T = free_reg(F, avoid={'WA', d.reg})                 # (abi adecl.c d_ptr: ld E,(XWA+:1); A would
                                                                      # overwrite p)
+            if OPA_VALUE_OWN_REG and T == d.reg:                    # (the variable's own register: ptrar.c pw_cgh,
+                T = free_reg(F, avoid={T, d.reg})                    # y += *gp++ with y in A -> ld A,(XBC) / add A,A)
             if strip(e.r).k == 'call' and R.startswith('Q'):
                 gen_call(F, strip(e.r)); flush_pops(F); m = FAM['HL'][d.ty.size]   # (the result stays in HL)
             elif strip(e.r).k == 'call' and not has_helper_call(strip(e.r).fn) and d.ty.size in (2, 4) and \
@@ -14579,7 +14682,13 @@ def regvar_stmt(F, e):
                 gen_call(F, strip(e.r)); m = FAM['HL'][d.ty.size]   # homes2b.c HL05: a += g1(c) -> cal _g1 / add IZ,HL
                                                                      # (the pops wait for the next call's)
             else:
+                n_g_ = len(F.lines)
                 fam = gen(F, e.r, T, d.ty.size); m = FAM[fam][d.ty.size]
+                if OPA_VALUE_OWN_REG and d.reg in FAM and FAM[d.reg].get(4) and \
+                        any(clobbers([l_], '(%s)' % FAM[d.reg][4]) for l_ in F.lines[n_g_:]
+                            if not l_.startswith('\tcal\tC9H_')):   # (ptrar.c pw_lgh: y += *glp++ with y in XWA, the
+                    raise Unsupported('the op= value overwrites the variable')   # step's ld XWA,0x4; a C9H_ helper keeps
+                                                           # its dividend, rstmt .rs_1_08_01_1: a -= a / 10UL)
         if R.startswith('Q') and d.ty.size == 2:           # ra_homes.c rh_loop: s += g1(i) with s in QIZ ->
             W = 'WA' if m not in ('WA', 'A') else 'BC'     # ld WA,QIZ / add WA,HL / ld QIZ,WA (QIZ is never the
             F.emit('ld', '%s,%s' % (W, R)); F.emit(SIMPLE_OPS[e.op], '%s,%s' % (W, m)); F.emit('ld', '%s,%s' % (R, W))
@@ -18808,7 +18917,11 @@ def plan_frame(F):
     walk(f.body, lambda n, d: calls.append(n) if n.k == 'call' or fpgen.is_fp_op(n) or (n.k == 'bin' and n.op in '*/%' and n.ty.size == 4
          and fold(n.r).k != 'const') else None)
     if not calls and not getattr(F, 'lhc', None) and not getattr(F, 'xst', None) and not (getattr(F, 'sd4', None) or {}).get('t2') \
-            and not (getattr(F, 'sd4', None) or {}).get('t4'): F.frame = 0; return                   # leaf functions: every local is in a register or folded
+            and not (getattr(F, 'sd4', None) or {}).get('t4') and \
+            not (STRUCT_LOCAL_FRAME and any(d.kind == 'local' and (d.ty.kind == 'struct' or d.ty.kind == 'array' and
+                                                                   getattr(d.ty.base, 'kind', None) == 'struct')
+                                            for d in f.decls)): F.frame = 0; return                   # leaf functions: every local is in a register or folded
+                                                     # (not a struct local: probe stc st_la_4 dec 0x8,XSP; st_rl_4)
     # D: a struct local written member by member gets two address temporaries below it (_ldiv: (XSP+4), (XSP+8))
     F.struct_temps = {}
     for d in f.decls:
@@ -18824,7 +18937,8 @@ def plan_frame(F):
     from frontend import Decl, Type
     F.array_temps = {}; F.cast_temps = {}
     for d in f.decls:                                    # _ultoa: a local array's address in a compiler temporary
-        if d.kind == 'local' and d.ty.kind == 'array' and d.uses and d not in getattr(F, 'l2', {}).get('arr', {}):
+        if d.kind == 'local' and d.ty.kind == 'array' and d.uses and d not in getattr(F, 'l2', {}).get('arr', {}) and \
+                not (STRUCT_LOCAL_FRAME and getattr(d.ty.base, 'kind', None) == 'struct'):   # (stc st_la_4: no temporary)
             F.array_temps[d] = Decl('__a_' + d.name, Type('ptr', 4, 2, spell='t'), '', 'local')
     loops = []
     walk(f.body, lambda n, dep: loops.append(n) if n.k in ('for', 'while', 'do') else None)
@@ -19333,6 +19447,7 @@ def tail_calls_opt(F, lines):
     return res
 
 CASE_TAIL_JUMP = True                                     # see case_tail_jump
+CASE_TAIL_SINGLE = True                                   # see case_tail_jump: one jump, no fall-through
 
 def case_tail_jump(lines, cases=()):
     """a conditional jump to a label whose only code is a tail jump to a function goes to the function itself, and the
@@ -19347,7 +19462,14 @@ def case_tail_jump(lines, cases=()):
     for i, l in enumerate(lines):
         m = _r.match(r'^\tj\t(eq),(L\d+)$', l)
         if not m or m.group(2) not in pos or m.group(2) not in cases: continue
+        if CASE_TAIL_SINGLE and sum(1 for x in lines if not is_label(x) and _r.search(r'[\t,]%s$' % m.group(2), x)) != 1:
+            continue                                       # (an arm of two case values keeps its label: rstmt
+                                                           #  rs_4_09_17_3 case 5: case 16: v0(); -> j eq,L568 twice)
         k = pos[m.group(2)] + 1
+        prv_ = next((x for x in reversed(lines[:k - 1]) if x is not None), '')
+        if CASE_TAIL_SINGLE and not (prv_ == '\tret' or prv_.startswith('\tretd') or
+                                     (prv_.startswith('\tj\t') and ',' not in prv_)):
+            continue                                       # (and so does an arm the code before it falls into)
         if k < len(lines) and _r.match(r'^\tj\t[._][A-Za-z_]\w*$', lines[k]) and \
                 (k + 1 >= len(lines) or is_label(lines[k + 1])):
             out[i] = '\tj\t%s,%s' % (m.group(1), lines[k].split('\t')[2]); moved.add(m.group(2))
@@ -19614,6 +19736,16 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret')   # op_three: an adecl stack parameter -> retd 0x2
+    import re as _rx
+    xl_ = getattr(F, 'exit_label', None)
+    if EXIT_LABEL_PLACED and xl_ and (xl_ + ':') not in F.lines and \
+            any(_rx.search(r'\b%s\b' % xl_, l_) for l_ in F.lines if l_.startswith('\t')):
+        if not (F.lines[-1].startswith('\tret') and not F.xiz_vars and len(F.lines) >= 2 and
+                not _rx.match(r'^\t(pop|inc|lda)\t', F.lines[-2])):
+            raise Unsupported('the exit label is not placed')
+        F.lines.insert(len(F.lines) - 1, xl_ + ':')     # (-Xr: a function ending in its own retd left the exit label
+                                                           # unwritten, j eq,L50001 to nothing: ptrar.c .pc_cqbv, return
+                                                           # q && r -> ... ld HL,0x1 / L11: retd 0xc)
     import re as _rg
     if JUMP_TO_RET and not F.opt and len(F.lines) >= 2 and F.lines[-1] == '\tret' and _rg.match(r'^L\d+:$', F.lines[-2]):
         lx_ = F.lines[-2][:-1]                             # a jump to the label of the final bare ret returns there, and
@@ -20418,7 +20550,12 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                         full[k_] = '\tadd\t%s,%s' % (m_.group(1), m_.group(1))
             if MULS_NO_EXTS:                               # muls XWA,R / exts XWA: the product is already 32 bits (the
                 full = [l for k_, l in enumerate(full) if not (l == '\texts\tXWA' and k_ and   # oracle never extends it)
-                                                              re.match(r'^\tmuls\tXWA,', full[k_ - 1] or ''))]
+                                                              re.match(r'^\tmuls\tXWA,', full[k_ - 1] or '') and
+                                                              (not MULS_NO_EXTS_FP or (
+                                                                  re.match(r'^\tld\t\(XSP\+0x[0-9a-f]+\),XWA$', full[k_ + 1] if k_ + 1 < len(full) else '')
+                                                                  and '\tcal\t._fld_dl' in full[k_ + 2:k_ + 6])))]
+                                                           # (only when the product is converted to double: _atan;
+                                                           #  an int product widened to long keeps its exts)
             if CP_Q_DIRECT:                                # ld R,Qrr / cp R,imm with R dead after is cp Qrr,imm (random
                 for k_ in range(len(full) - 1):            # r1_00_09: unsigned int t in QIZ, t != 0 -> cp QIZ,0x0; the
                     m_ = re.match(r'^\tld\t(WA|BC|DE),(Q(?:WA|BC|DE|HL|IX|IY|IZ))$', full[k_] or '')   # oracle's listings

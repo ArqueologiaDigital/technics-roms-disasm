@@ -3860,6 +3860,17 @@ STRUCT_COPY_TWO_ELEMS (`g[i'] = g[i'']` at two variable indexes without -O; refu
 and the base).  stc 358 / 314 / 326 / 290 of 552 (+60 / +36 / +60 / +36), semcheck clean; validation and library
 unchanged; semcheck 9.
 
+**Batch 353 (2026-11-16).**  lane_nm rules 21-26 from the ptrar probe (1,799 pointer-arithmetic, compare and
+indirect-call shapes, oracle run 2026-11-16-3; 58 / 58 / 79 / 72 DIFFERENT -> 0, 31-43 KeyError crashes per set -> 0):
+PTR_SUB_ORDER (p - i was computed as i - p, a long index was cut to 16 bits, a 10-byte element crashed), PTR_CHAR_STORE_EXTS,
+PTRDIFF_CMP_OPT, STORE_TEMP_OWN_REG, OPA_VALUE_OWN_REG (op= on a register variable: ld XWA,step clobbered it),
+EXIT_LABEL_PLACED (-Xr: a jump to an exit label never written).  lane_o3 fix 17 STRUCT_LOCAL_FRAME (wrong code: a struct
+local's initialiser was folded into its uses across a member write, `t = gX2; t.c[0] = 5; gX1 = t` -> `gX1 = gX2`; leaf
+functions with a struct local get their frame).  lane_p12b's P12 narrowings: CASE_TAIL_SINGLE, MULS_NO_EXTS_FP (not wrong
+code: the product differs only on int overflow), PTR_TEST_REUSE off.  ptrar joins the ledger, semcheck clean: 575 / 517 /
+494 / 468 of 1,799; stc 397 / 341 / 365 / 317 of 552 (+39 / +27 / +39 / +27); validation statements +4 / +2 / +5 / +2,
+nothing lost; random 232 / 140 / 189 / 126 and library unchanged; semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

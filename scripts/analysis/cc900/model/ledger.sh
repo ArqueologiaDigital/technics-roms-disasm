@@ -416,6 +416,11 @@ for c in none O3XS; do    # adecl stack layout of small structs (corpus/probes/s
 done
 row "run 2026-11-16-2-micro-sxl, v423/Xr" "probes/sxl.c" "$O/2026-11-16-2-micro-sxl/out/v423/Xr/probes" corpus/probes/sxl.c --opt none --adecl
 row "run 2026-11-16-2-micro-sxl, v423/O3XSXr" "probes/sxl.c" "$O/2026-11-16-2-micro-sxl/out/v423/O3XSXr/probes" corpus/probes/sxl.c --opt O3XS --adecl
+for c in none O3XS; do    # pointer arithmetic, compares and indirect calls (corpus/probes/ptrar.c, a wrong-code hunt)
+  row "run 2026-11-16-3-micro-ptrar, v423/$c" "probes/ptrar.c" "$O/2026-11-16-3-micro-ptrar/out/v423/$c/probes" corpus/probes/ptrar.c --opt $c
+done
+row "run 2026-11-16-3-micro-ptrar, v423/Xr" "probes/ptrar.c" "$O/2026-11-16-3-micro-ptrar/out/v423/Xr/probes" corpus/probes/ptrar.c --opt none --adecl
+row "run 2026-11-16-3-micro-ptrar, v423/O3XSXr" "probes/ptrar.c" "$O/2026-11-16-3-micro-ptrar/out/v423/O3XSXr/probes" corpus/probes/ptrar.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
