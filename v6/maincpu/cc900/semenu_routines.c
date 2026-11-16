@@ -43,3 +43,32 @@ void SeMenu_ClearNotification(unsigned char v) { ram_e2f2 = v; ram_e2f4 |= 0x02;
 void SeMenu_TriggerNotification(unsigned char v) { GLOBAL_ERROR_CODE = v; ram_e2f2 = 238; ram_e2f4 |= 0x40; }
 
 void SeMenu_StoreAbsoluteValue(char a, char *p) { if (a < 0) a = -a; *p = a; }
+
+extern unsigned char ram_20c33, ram_20c35, ram_20bf3[];
+extern unsigned char __near SEQ_RTMCFG;
+extern unsigned char __near ram_68d;
+extern unsigned char __near ram_68e;
+extern unsigned char __near ram_68f;
+
+int SeMenu_CheckObjEnabled(unsigned char a) { int r = -1; if (ram_20c33 == a) r = 0; return r; }
+int SeMenu_CheckObjValid(unsigned char a) { int r = -1; if (ram_20c35 == a) r = 0; return r; }
+void SeMenu_SetEditEnable(unsigned char a) { if (a == 1) SEQ_RTMCFG |= 0x04; else SEQ_RTMCFG &= ~0x04; }
+void SeMenu_SetNameBufferChar(unsigned char i, unsigned char c) { if (i > 15) return; ram_20bf3[i] = c; }
+void SeLfo_GetSelectedLfo(unsigned char m, unsigned char *out)
+{
+	unsigned char v;
+
+	if (m == 1) {
+		if (ram_68e < 1 || ram_68e > 4) ram_68e = 1;
+		v = ram_68e;
+	} else if (m == 0) {
+		if (ram_68d < 1 || ram_68d > 4) ram_68d = 1;
+		v = ram_68d;
+	} else if (m == 2) {
+		if (ram_68f < 1 || ram_68f > 4) ram_68f = 1;
+		v = ram_68f;
+	} else {
+		v = 1;
+	}
+	*out = v;
+}

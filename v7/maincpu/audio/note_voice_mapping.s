@@ -6106,76 +6106,11 @@ NoteMap_PopIz_StoreAC2:
 	pop	xiz
 	lda	xsp, (xsp+172:16)
 	ret
-NoteMap_SwapVoiceLinks:
-	ld	e, c
-	extz	de
-	add	de, de
-	ld	e, (xwa+de)
-	extz	de
-	add	de, de
-	lda	xhl, (xwa+de)
-	ld	e, c
-	extz	de
-	add	de, de
-	exts	xde
-	add	xde, xwa
-	ld	e, (xde + 1)
-	ld	(xhl + 1), e
-	ld	e, c
-	extz	de
-	add	de, de
-	exts	xde
-	add	xde, xwa
-	ld	e, (xde + 1)
-	extz	de
-	add	de, de
-	extz	bc
-	add	bc, bc
-	ld	c, (xwa+bc)
-	ld	(xwa+de), c
-	ret
-NoteMap_LinkVoiceSlots:
-	ld	l, c
-	extz	hl
-	add	hl, hl
-	lda	xix, (xwa+hl)
-	ld	l, e
-	extz	hl
-	add	hl, hl
-	exts	xhl
-	add	xhl, xwa
-	ld	l, (xhl + 1)
-	ld	(xix + 1), l
-	ld	l, c
-	extz	hl
-	add	hl, hl
-	ld	(xwa+hl), e
-	ld	l, e
-	extz	hl
-	add	hl, hl
-	exts	xhl
-	add	xhl, xwa
-	ld	l, (xhl + 1)
-	extz	hl
-	add	hl, hl
-	ld	(xwa+hl), c
-	extz	de
-	add	de, de
-	lda	xwa, (xwa+de)
-	ld	(xwa + 1), c
-	ret
-LinkVoiceSlots_LoadReg:
-	ld	e, c
-	extz	de
-	add	de, de
-	lda	xwa, (xwa+de)
-	cp	(xwa + 1), c
-	jr	nz, LinkVoiceSlots_InitVal
-	ld	hl, 0:i3
-	ret
-LinkVoiceSlots_InitVal:
-	ld	hl, 1:i3
-	ret
+NoteMap_SwapVoiceLinks:	.include "includes/generated/cc900/NoteMap_SwapVoiceLinks.s"	; C: cc900/note_voice_mapping_xr.c
+NoteMap_LinkVoiceSlots:	.include "includes/generated/cc900/NoteMap_LinkVoiceSlots.s"	; C: cc900/note_voice_mapping_xr.c
+LinkVoiceSlots_LoadReg:	.include "includes/generated/cc900/LinkVoiceSlots_LoadReg.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LinkVoiceSlots_InitVal, LinkVoiceSlots_LoadReg + 19
 NoteMap_FindLinkedSlotByKey:
 	lda	xix, (0xc52e:16)
 	lda	xiy, (0xe722:16)
@@ -17994,47 +17929,9 @@ SendPartDataBlocks_Send:
 	calr	COMM_SendDataReturn
 	popw	iz
 	ret
-COMM_SendDataReturn:
-	ld	xwa, 0xffffffff
-	ld	(0xcf18:16), xwa
-	ld	xwa, 0xffffffff
-	ld	(0xcf1c:16), xwa
-	ld	xwa, 0xffffffff
-	ld	(0xcf20:16), xwa
-	ld	xwa, 0xffffffff
-	ld	(0xcf24:16), xwa
-	ld	xwa, 0xffffffff
-	ld	(0xcf28:16), xwa
-	ldw	(0xcf2c:16), 0xffff
-	ldw	(0xcf2e:16), 0xffff
-	ldw	(0xcf30:16), 0xffff
-	ldw	(0xcf32:16), 0xffff
-	ld	de, 0:i3
-	cp	de, 0x18
-	ret	gt
-SendDataReturn_LoadReg:
-	ld	wa, de
-	add	wa, wa
-	lda	xbc, (0xcf34:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	(xwa), 0xffff
-	ld	wa, de
-	add	wa, wa
-	lda	xbc, (0xcf74:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	(xwa), 0xffff
-	ld	wa, de
-	add	wa, wa
-	lda	xbc, (0xcfb4:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	(xwa), 0xffff
-	inc	1, de
-	cp	de, 0x18
-	jr	le, SendDataReturn_LoadReg
-	ret
+COMM_SendDataReturn:	.include "includes/generated/cc900/COMM_SendDataReturn.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SendDataReturn_LoadReg, COMM_SendDataReturn + 77
 ; ============================================================================
 ; MIDI_SendControlChange - Send a MIDI Control Change message
 ; ============================================================================
@@ -22105,50 +22002,17 @@ InitTrackSlots_LoopCheck:
 	cp	wa, (0xd010:16)
 	jr	c, InitTrackSlots_LoopBody
 	ret
-RingBuffer_WriteByte:
-	cpw	(0xd010:16), 0
-	jr	nz, InitTrackSlots_LoadDRAM
-	ldw	hl, 0xffff
-	jr	InitTrackSlots_Return
-InitTrackSlots_LoadDRAM:
-	ld	bc, (0xd00c:16)
-	lda	xde, (0xd012:16)
-	extz	xbc
-	add	xbc, xde
-	ld	(xbc), a
-	decw	1, (0xd010:16)
-	cpw	(0xd00c:16), 2047
-	jr	nz, InitTrackSlots_IncDRAM
-	ldw	(0xd00c:16), 0
-	jr	InitTrackSlots_InitVal
-InitTrackSlots_IncDRAM:
-	incw	1, (0xd00c:16)
-InitTrackSlots_InitVal:
-	ld	hl, 0:i3
-InitTrackSlots_Return:
-	ret
-RingBuffer_ReadByte:
-	ld	wa, (0xd00c:16)
-	cp	wa, (0xd00e:16)
-	jr	nz, RingBuffer_ReadByte_LoadDRAM
-	ldw	hl, 0xffff
-	jr	RingBuffer_ReadByte_Return
-RingBuffer_ReadByte_LoadDRAM:
-	ld	wa, (0xd00e:16)
-	lda	xbc, (0xd012:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	l, (xwa)
-	extz	hl
-	incw	1, (0xd010:16)
-	cpw	(0xd00e:16), 2047
-	jr	nz, RingBuffer_ReadByte_IncDRAM
-	ldw	(0xd00e:16), 0
-	jr	RingBuffer_ReadByte_Return
-RingBuffer_ReadByte_IncDRAM:
-	incw	1, (0xd00e:16)
-RingBuffer_ReadByte_Return:
-	ret
+RingBuffer_WriteByte:	.include "includes/generated/cc900/RingBuffer_WriteByte.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	InitTrackSlots_LoadDRAM, RingBuffer_WriteByte + 13
+	.set	InitTrackSlots_IncDRAM, RingBuffer_WriteByte + 47
+	.set	InitTrackSlots_InitVal, RingBuffer_WriteByte + 51
+	.set	InitTrackSlots_Return, RingBuffer_WriteByte + 53
+RingBuffer_ReadByte:	.include "includes/generated/cc900/RingBuffer_ReadByte.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RingBuffer_ReadByte_LoadDRAM, RingBuffer_ReadByte + 15
+	.set	RingBuffer_ReadByte_IncDRAM, RingBuffer_ReadByte + 51
+	.set	RingBuffer_ReadByte_Return, RingBuffer_ReadByte + 55
 Seq_CalcAddrOffset:
 	ldw	hl, 0x7ff
 	sub	hl, (0xd010:16)
@@ -22239,50 +22103,17 @@ SysexRingBuf_ClearCheck:
 	cp	wa, (0xd816:16)
 	jr	c, SysexRingBuf_ClearLoop
 	ret
-SysexRingBuf_WriteByte:
-	cpw	(0xd816:16), 0
-	jr	nz, SysexRingBuf_StoreAndAdvance
-	ldw	hl, 0xffff
-	jr	SysexRingBuf_WriteReturn
-SysexRingBuf_StoreAndAdvance:
-	ld	bc, (0xd812:16)
-	lda	xde, (0xd818:16)
-	extz	xbc
-	add	xbc, xde
-	ld	(xbc), a
-	decw	1, (0xd816:16)
-	cpw	(0xd812:16), 2047
-	jr	nz, SysexRingBuf_IncrementWrite
-	ldw	(0xd812:16), 0
-	jr	SysexRingBuf_WriteSuccess
-SysexRingBuf_IncrementWrite:
-	incw	1, (0xd812:16)
-SysexRingBuf_WriteSuccess:
-	ld	hl, 0:i3
-SysexRingBuf_WriteReturn:
-	ret
-SysexRingBuf_ReadByte:
-	ld	wa, (0xd812:16)
-	cp	wa, (0xd814:16)
-	jr	nz, SysexRingBuf_ReadAndAdvance
-	ldw	hl, 0xffff
-	jr	SysexRingBuf_ReadReturn
-SysexRingBuf_ReadAndAdvance:
-	ld	wa, (0xd814:16)
-	lda	xbc, (0xd818:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	l, (xwa)
-	extz	hl
-	incw	1, (0xd816:16)
-	cpw	(0xd814:16), 2047
-	jr	nz, SysexRingBuf_IncrementRead
-	ldw	(0xd814:16), 0
-	jr	SysexRingBuf_ReadReturn
-SysexRingBuf_IncrementRead:
-	incw	1, (0xd814:16)
-SysexRingBuf_ReadReturn:
-	ret
+SysexRingBuf_WriteByte:	.include "includes/generated/cc900/SysexRingBuf_WriteByte.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysexRingBuf_StoreAndAdvance, SysexRingBuf_WriteByte + 13
+	.set	SysexRingBuf_IncrementWrite, SysexRingBuf_WriteByte + 47
+	.set	SysexRingBuf_WriteSuccess, SysexRingBuf_WriteByte + 51
+	.set	SysexRingBuf_WriteReturn, SysexRingBuf_WriteByte + 53
+SysexRingBuf_ReadByte:	.include "includes/generated/cc900/SysexRingBuf_ReadByte.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysexRingBuf_ReadAndAdvance, SysexRingBuf_ReadByte + 15
+	.set	SysexRingBuf_IncrementRead, SysexRingBuf_ReadByte + 51
+	.set	SysexRingBuf_ReadReturn, SysexRingBuf_ReadByte + 55
 SysexRingBuf_GetFreeSpace:
 	ldw	hl, 0x7ff
 	sub	hl, (0xd816:16)
@@ -22365,50 +22196,17 @@ MidiRingBuf_ClearCheck:
 	cp	wa, (0xe01c:16)
 	jr	c, MidiRingBuf_ClearLoop
 	ret
-MidiRingBuf_WriteByte:
-	cpw	(0xe01c:16), 0
-	jr	nz, MidiRingBuf_StoreAndAdvance
-	ldw	hl, 0xffff
-	jr	StoreAndAdvance_Return
-MidiRingBuf_StoreAndAdvance:
-	ld	bc, (0xe018:16)
-	lda	xde, (0xe01e:16)
-	extz	xbc
-	add	xbc, xde
-	ld	(xbc), a
-	decw	1, (0xe01c:16)
-	cpw	(0xe018:16), 127
-	jr	nz, StoreAndAdvance_IncDRAM
-	ldw	(0xe018:16), 0
-	jr	StoreAndAdvance_InitVal
-StoreAndAdvance_IncDRAM:
-	incw	1, (0xe018:16)
-StoreAndAdvance_InitVal:
-	ld	hl, 0:i3
-StoreAndAdvance_Return:
-	ret
-StoreAndAdvance_LoadDRAM:
-	ld	wa, (0xe018:16)
-	cp	wa, (0xe01a:16)
-	jr	nz, StoreAndAdvance_LoadDRAM2
-	ldw	hl, 0xffff
-	jr	StoreAndAdvance_Return2
-StoreAndAdvance_LoadDRAM2:
-	ld	wa, (0xe01a:16)
-	lda	xbc, (0xe01e:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	l, (xwa)
-	extz	hl
-	incw	1, (0xe01c:16)
-	cpw	(0xe01a:16), 127
-	jr	nz, StoreAndAdvance_IncDRAM2
-	ldw	(0xe01a:16), 0
-	jr	StoreAndAdvance_Return2
-StoreAndAdvance_IncDRAM2:
-	incw	1, (0xe01a:16)
-StoreAndAdvance_Return2:
-	ret
+MidiRingBuf_WriteByte:	.include "includes/generated/cc900/MidiRingBuf_WriteByte.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiRingBuf_StoreAndAdvance, MidiRingBuf_WriteByte + 13
+	.set	StoreAndAdvance_IncDRAM, MidiRingBuf_WriteByte + 47
+	.set	StoreAndAdvance_InitVal, MidiRingBuf_WriteByte + 51
+	.set	StoreAndAdvance_Return, MidiRingBuf_WriteByte + 53
+StoreAndAdvance_LoadDRAM:	.include "includes/generated/cc900/StoreAndAdvance_LoadDRAM.s"	; C: cc900/note_voice_mapping_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	StoreAndAdvance_LoadDRAM2, StoreAndAdvance_LoadDRAM + 15
+	.set	StoreAndAdvance_IncDRAM2, StoreAndAdvance_LoadDRAM + 51
+	.set	StoreAndAdvance_Return2, StoreAndAdvance_LoadDRAM + 55
 StoreAndAdvance_Prologue:
 	dec	6, xsp
 	pushw	iz
@@ -23388,40 +23186,8 @@ Param_SignExtendRetu_Block:
 ;   0) + body.
 SoundData_InitPhase0:
 	jr	Param_SignExtendRetu_Block
-Param_SignExtendReturn_Helper:
-	ld	l, (xwa + 9)
-	res	7, l
-	ld	h, 0x0:opc
-	extz	xhl
-	sll	xhl, 14
-	ld	e, (xwa + 10)
-	res	7, e
-	ld	d, 0x0:opc
-	extz	xde
-	sll	xde, 7
-	ld	c, (xwa + 11)
-	res	7, c
-	ld	b, 0x0:opc
-	extz	xbc
-	or	xhl, xde
-	or	xhl, xbc
-	ret
-Param_SignExtendRetu_Data:
-	ld	xhl, 0:i3
-	ld	l, (xwa+6)
-	sll	xhl, 14
-	ld	e, (xwa+7)
-	res	7, e
-	ld	d, 0:opc
-	extz	xde
-	sll	xde, 7
-	ld	c, (xwa+8)
-	res	7, c
-	ld	b, 0:opc
-	extz	xbc
-	or	xhl, xde
-	or	xhl, xbc
-	ret
+Param_SignExtendReturn_Helper:	.include "includes/generated/cc900/Param_SignExtendReturn_Helper.s"	; C: cc900/note_voice_mapping.c
+Param_SignExtendRetu_Data:	.include "includes/generated/cc900/Param_SignExtendRetu_Data.s"	; C: cc900/note_voice_mapping.c
 Param_SignExtendReturn_Helper2:
 	ld	hl, wa
 	cpl	bc
@@ -24416,27 +24182,11 @@ CommPort_StatusCheckAndSend:
 	ld	de, 1:i3
 	call	SendCOMM_VariableLengthPacket
 	ret
-CommPort_StatusCheck_Compare:
-	cp	a, c
-	jr	nz, CheckValidityReturn_SetByteFF
-	ld	wa, (ACTIVE_TITLE:16)
-	cp	a, 0xd6
-	jr	z, Note_CheckValidityReturn
-	cp	a, 0xe
-	jr	z, Note_CheckValidityReturn
-	cp	a, 0xc
-	jr	z, Note_CheckValidityReturn
-	cp	a, 0xb
-	jr	z, Note_CheckValidityReturn
-	cp	a, 0xa
-	jr	nz, CheckValidityReturn_SetByteFF
-Note_CheckValidityReturn:
-	ld	l, 0x0:opc
-	jr	CheckValidityReturn_Return
-CheckValidityReturn_SetByteFF:
-	ld	l, 0xff:opc
-CheckValidityReturn_Return:
-	ret
+CommPort_StatusCheck_Compare:	.include "includes/generated/cc900/CommPort_StatusCheck_Compare.s"	; C: cc900/note_voice_mapping.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Note_CheckValidityReturn, CommPort_StatusCheck_Compare + 33
+	.set	CheckValidityReturn_SetByteFF, CommPort_StatusCheck_Compare + 37
+	.set	CheckValidityReturn_Return, CommPort_StatusCheck_Compare + 39
 COMM_SendPartDataBlock:
 	dec	2, xsp
 	pushw_erp	0xfa

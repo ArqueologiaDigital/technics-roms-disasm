@@ -999,41 +999,12 @@ AccPart_LookupBoundVoiceParam_Data:
 ; +0xBC  8 x LE16: 0x400, 0x402 ... 0x40E
 AccPart_LookupBoundVoiceParam_Data_2:
 	.short 0x0400, 0x0402, 0x0404, 0x0406, 0x0408, 0x040a, 0x040c, 0x040e
-AccVoice_ComputeParamAddr:
-	cp A,0x0f
-	jr nc, .Lc_f562c9
-	ldw HL, 0x0018
-	bit	0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw HL, 0x001a
-	jr t, AccVoice_ReturnExtHL
-AccVoice_ParamAddr_Range0F_14:
-.Lc_f562c9:
-	cp A,0x14
-	jr nc, .Lc_f562dc
-	ldw HL, 0x001c
-	bit	0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw HL, 0x001e
-	jr t, AccVoice_ReturnExtHL
-AccVoice_ParamAddr_Range14_23:
-.Lc_f562dc:
-	cp A,0x23
-	jr nc, .Lc_f562ef
-	ldw HL, 0x0418
-	bit	0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw HL, 0x041a
-	jr t, AccVoice_ReturnExtHL
-AccVoice_ParamAddr_Range23Plus:
-.Lc_f562ef:
-	ldw HL, 0x041c
-	bit	0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw HL, 0x041e
-AccVoice_ReturnExtHL:
-	extz xhl
-	ret
+AccVoice_ComputeParamAddr:	.include "includes/generated/cc900/AccVoice_ComputeParamAddr.s"	; C: cc900/accompaniment_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AccVoice_ParamAddr_Range0F_14, AccVoice_ComputeParamAddr + 19
+	.set	AccVoice_ParamAddr_Range14_23, AccVoice_ComputeParamAddr + 38
+	.set	AccVoice_ParamAddr_Range23Plus, AccVoice_ComputeParamAddr + 57
+	.set	AccVoice_ReturnExtHL, AccVoice_ComputeParamAddr + 69
 
 AccTuning_SetAllFromLookup:
 	calr	AccTuning_FetchValue
@@ -1072,38 +1043,8 @@ AccVoice_ProcessAllSixParts:
 	calr AccVoice_RestorePartState1
 	ret
 
-AccVoice_SavePartState1:
-	and	(ACC_PART_FLAGS:16), 0xfc
-	ld	(ACC_BAD_EVENT_COUNT:16), 0x00
-	ld A, 0x01:opc
-	ld	(ACC_PART_BIT:16), a
-	ld	wa, (ACC_LANE_BLOCK:16)
-	ld	(ACC_CUR_BLOCK:16), wa
-	ld	wa, (ACC_LANE_READ_POS:16)
-	ld	(ACC_CUR_READ_POS:16), wa
-	ld	a, (ACC_LANE_BAR:16)
-	ld	(ACC_CUR_BAR:16), a
-	ld	a, (ACC_LANE_BEAT_POS:16)
-	ld	(ACC_CUR_BEAT_POS:16), a
-	ld	a, (ACC_LANE_SECTION:16)
-	ld	(ACC_CUR_SECTION:16), a
-	ld	a, (ACC_LANE_MEASURE:16)
-	ld	(ACC_CUR_MEASURE:16), a
-	ret
-AccVoice_RestorePartState1:
-	ld	wa, (ACC_CUR_BLOCK:16)
-	ld	(ACC_LANE_BLOCK:16), wa
-	ld	wa, (ACC_CUR_READ_POS:16)
-	ld	(ACC_LANE_READ_POS:16), wa
-	ld	a, (ACC_CUR_BAR:16)
-	ld	(ACC_LANE_BAR:16), a
-	ld	a, (ACC_CUR_BEAT_POS:16)
-	ld	(ACC_LANE_BEAT_POS:16), a
-	ld	a, (ACC_CUR_SECTION:16)
-	ld	(ACC_LANE_SECTION:16), a
-	ld	a, (ACC_CUR_MEASURE:16)
-	ld	(ACC_LANE_MEASURE:16), a
-	ret
+AccVoice_SavePartState1:	.include "includes/generated/cc900/AccVoice_SavePartState1.s"	; C: cc900/accompaniment_engine_xr.c
+AccVoice_RestorePartState1:	.include "includes/generated/cc900/AccVoice_RestorePartState1.s"	; C: cc900/accompaniment_engine.c
 AccVoice_ProcessEventLoop:
 	bit	0, (ACC_PART_FLAGS:16)
 	jr z, .Lc_f563d1
@@ -27733,16 +27674,7 @@ Part_LoadAndIndexVoiceTable:
 	ld	(CMP_RECORD_PART:16), a
 	pop qiz
 	ret
-Part_StoreVoiceTableIndex:
-	ld	c, a
-	extz	bc
-	ld	a, (14551:16)
-	extz	wa
-	mul	wa, 5
-	add	wa, bc
-	ld	(14536:16), wa
-	ldw	(14540:16), 6
-	ret
+Part_StoreVoiceTableIndex:	.include "includes/generated/cc900/Part_StoreVoiceTableIndex.s"	; C: cc900/accompaniment_engine.c
 SetWall_StoreAndResolve:
 	ld	(0x2863:16), wa
 	ld	a, c
@@ -28020,17 +27952,7 @@ VoiceTable_AdvRead_Done:
 	calr	VoiceTable_ResolveReadAddr
 	ld	xwa, xhl
 	ret
-VoiceTable_ResolveReadAddr:
-	ld	bc, (14538:16)
-	extz	xbc
-	ld	wa, (14534:16)
-	dec	1, wa
-	extz	xwa
-	sll	xwa, 8
-	add	xwa, 720896
-	add	xwa, xbc
-	ld	xhl, xwa
-	ret
+VoiceTable_ResolveReadAddr:	.include "includes/generated/cc900/VoiceTable_ResolveReadAddr.s"	; C: cc900/accompaniment_engine.c
 VoiceTable_AdvanceWritePos:
 	incw	1, (0x38cc:16)
 	cpw	(0x38cc:16), 255

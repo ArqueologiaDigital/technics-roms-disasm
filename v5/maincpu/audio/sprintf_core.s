@@ -2320,35 +2320,13 @@ Sprintf_Normalize_ExtractDigit:
 Sprintf_Normalize_Done:
 	popw	iz
 	ret
-Sprintf_InsertCarry:
-	ld	de, (xsp + 6)
-	cp	de, 0x20
-	jr	ge, Sprintf_InsertCarry_Clamp
-	lda	xbc, (0x03c224:24)
-	ld	wa, (xsp + 4)
-	add	(xbc+de), a
-Sprintf_InsertCarry_Clamp:
-	jr	Sprintf_InsertCarry_Check
-Sprintf_InsertCarry_ClampLoop:
-	dec	1, de
-Sprintf_InsertCarry_Check:
-	cp	de, 0x20
-	jr	ge, Sprintf_InsertCarry_ClampLoop
-	lda	xwa, (0x03c224:24)
-	jr	Sprintf_InsertCarry_PropCheck
-Sprintf_InsertCarry_Propagate:
-	ld	bc, de
-	dec	1, bc
-	inc	1, (xwa+bc)
-	ld	bc, de
-	dec	1, de
-	sub	(xwa+bc), 0x0a
-Sprintf_InsertCarry_PropCheck:
-	cp	(xwa+de), 0x0a
-	ret	lt
-	cp	de, 0:i3
-	jr	gt, Sprintf_InsertCarry_Propagate
-	ret
+Sprintf_InsertCarry:	.include "includes/generated/cc900/Sprintf_InsertCarry.s"	; C: cc900/sprintf_core_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_InsertCarry_Clamp, Sprintf_InsertCarry + 22
+	.set	Sprintf_InsertCarry_ClampLoop, Sprintf_InsertCarry + 24
+	.set	Sprintf_InsertCarry_Check, Sprintf_InsertCarry + 26
+	.set	Sprintf_InsertCarry_Propagate, Sprintf_InsertCarry + 39
+	.set	Sprintf_InsertCarry_PropCheck, Sprintf_InsertCarry + 58
 Sprintf_DivideDigitsByTen:
 	ld	xwa, (xsp + 4)
 	ld	xbc, xwa

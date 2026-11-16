@@ -2621,21 +2621,9 @@ SndParam_BinarySearch_Skip3:
 	ldw	hl, 0xffff
 SndParam_WidgetNotifyType1_Skip3_Part:
 	ret
-SndParam_EncodeAddress:
-UIState_CheckAndRenderBitmap_Helper_Helper:
-	ld	xhl, 0x8000
-	and	wa, 0x3f
-	sll	wa, 10
-	extz	xwa
-	add	xhl, xwa
-	ld	wa, bc
-	and	wa, 0x3ff
-	extz	xwa
-	or	xhl, xwa
-	cp	bc, 0x400
-	ret	c
-	add	xhl, 0x10000
-	ret
+SndParam_EncodeAddress:	.include "includes/generated/cc900/SndParam_EncodeAddress.s"	; C: cc900/sndparam_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UIState_CheckAndRenderBitmap_Helper_Helper, SndParam_EncodeAddress + 0
 SndParam_InitHashTable:
 	lda	xbc, (SNDPARAM_HASH_TABLE:24)
 	ld	xwa, xbc
@@ -2733,25 +2721,10 @@ SndParam_InsertReturn:
 	pop	xiz
 	inc	6, xsp
 	ret
-SndParam_ClearHashTable:
-	lda	xwa, (0x9718:16)
-	ld	xbc, xwa
-	lda	xde, (xwa+8188)
-SndParam_ClearLoop:
-	ld	xwa, 0:i3
-	ld	(xbc+), XWA
-	cp	xbc, xde
-	jr	c, SndParam_ClearLoop
-	lda	xde, (0x0380f8:24)
-	lda	xbc, (xde + 2)
-	ld	xwa, xbc
-	lda	xbc, (xbc+16384)
-SndParam_ClearHeap:
-	ld	(xwa+), 0x00
-	cp	xwa, xbc
-	jr	c, SndParam_ClearHeap
-	ldw	(xde), 0x0
-	ret
+SndParam_ClearHashTable:	.include "includes/generated/cc900/SndParam_ClearHashTable.s"	; C: cc900/sndparam_routines.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_ClearLoop, SndParam_ClearHashTable + 11
+	.set	SndParam_ClearHeap, SndParam_ClearHashTable + 35
 SndParam_ReregisterAll:
 	push	xiz
 	ld	xiz, 0:i3

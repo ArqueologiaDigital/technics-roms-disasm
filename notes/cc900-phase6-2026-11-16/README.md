@@ -331,6 +331,110 @@ The rest, with V4.23 also differing, need other C:
 - `VoiceAlloc_InitBitMap` and `SeqBuf_ClearRange` (an end pointer computed with `lda`, +155 / +6);
 - `SeqStatus_SetOrClearBit`.
 
+## Round 10: files without C yet, 20-80 bytes (probe m13, run `2026-11-16-26-p6-m13`)
+
+The next candidates come from `leaf_routines.py` at 6 to 40 instructions, in hand sources that have no C yet.  There
+are 504 in v10; `sequencer/accompaniment_engine.s` has 133 and `audio/note_voice_mapping.s` 50.  This round took
+`sequencer/bmdredit_routines.s` (`corpus/firmware/p6_m13.c`, 7 functions).
+
+| function                       | bytes | model                                      | V4.23                    |
+|--------------------------------|-------|--------------------------------------------|--------------------------|
+| `BmDrEdit_DecrementDelayA`     | 21    | DIFF: tests bit 7 with `and` + `cp`        | MATCH (both sets)        |
+| `BmDrEdit_DecrementDelayB`     | 21    | DIFF: the same                             | MATCH (both sets)        |
+| `BmDrEdit_LoadAlternateState`  | 35    | DIFF                                       | DIFF: copies through WA  |
+| `BmDrEdit_AlignDisplayGrid`    | 21    | refused ("constant condition")             | DIFF                     |
+| `BmDrEdit_AlignGridBackward`   | 33    | DIFF                                       | DIFF                     |
+| `BmDrEdit_CheckSlotsAvailable` | 30    | refused ("complex pointer index")          | DIFF                     |
+| `BmDrEdit_SaveSongPosition`    | 34    | refused ("local o")                        | DIFF                     |
+
+The two delay functions are a model gap: V4.23 tests `(a & 0x80)` with `bit 7,A` / `ret eq`, where the model
+writes `ld C,A` / `and C,0x80` / `cp C,0`.
+
+`BmDrEdit_LoadAlternateState` copies four globals into four others.  The ROM does it with memory-to-memory moves
+(`ldmm16` / `ldmm8`); V4.23 loads into WA and stores.  v10 holds 397 `ldmm16` and 169 `ldmm8`, besides the 275
+`ld (m),(m)` forms of round 8.  The memory-to-memory candidate rule now has much wider evidence: the Technics
+compiler copies a value from memory to memory directly.
+
+## Round 11: `note_voice_mapping.s` (probe m14, run `2026-11-16-27-p6-m14`)
+
+`corpus/firmware/p6_m14a.c` / `p6_m14b.c`: five larger leaf functions, two C forms each.
+- **`LinkVoiceSlots_LoadReg`** (22 B): V4.23 gives the ROM's bytes with form a
+  (`if (p[c].b == c) return 0; return 1;`) at **`-Xr` only**.  So this part of `note_voice_mapping.s` was built
+  without `-O`: the file carries both `-O` markers (154 `lda` / 150 `ld` constants), like
+  `accompaniment_engine.s`.  The model refuses it ("memory load member"): a gap.
+- **`FileIO_InitTrackSlots` / `SysexRingBuf_Init`**: a 2048-byte ring buffer at a constant address.  V4.23 matches
+  the first 18 of 44 bytes (form a); the clear loop's body differs.  The model refuses both ("lvalue index").
+  V4.23 writes the members of a struct at a constant address as numeric absolute operands (`ldw (0xd0a8),0x0`),
+  which `to_llvm.py` could not translate; it now can (the same 8 / 16 / 24-bit width rule).
+- `Voice_SetDecayTimer` and `SndParam_CompactLookupStub` need other C.
+- The chord routines (`NoteDisplay_*`, `VoiceSlot_Epilogue_Block`) address `CHORD_FLAGS` and the other chord
+  variables (0xcede..) with 24-bit operands.  They wait for a per-name width in the C, the preview's `large`
+  externs.
+
+## The memory-to-memory rule's condition (census, 2026-11-16)
+
+The coordinator decided the moves are the Technics compiler's own idiom, to become the firmware rule
+`KN_MEM_TO_MEM` (off in the model, on in `FIRMWARE_RULES`), and asked when it applies.  The census is
+`python3 notes/cc900-phase6-2026-11-16/mem_copies.py v10/maincpu [--by-file]`.
+
+**The hardware.**  The TLCS-900 has two memory-to-memory moves, byte and word only:
+- `ld (#16),(mem)`: the destination a 16-bit absolute address, the source any mode;
+- `ld (mem),(#16)`: any destination, the source a 16-bit absolute address.
+
+There is no 32-bit form, and no form with two 24-bit sides.
+
+**When the firmware uses them: in the `-O` files.**  The marker of `-O` is a 32-bit constant of 8..0xffff loaded
+with `lda`, which V4.23 writes only with `-O` (round 7).  Per hand source, the moves and the dead register copies
+that have a 16-bit absolute side (8 / 16 bits):
+
+| file                             | moves | reg copies | lda 8..0xffff | ld 8..0xffff |
+|----------------------------------|-------|------------|---------------|--------------|
+| sequencer/sequencer_engine.s     | 406   | 28         | 376           | 188          |
+| sequencer/accompaniment_engine.s | 57    | 218        | 80            | 232          |
+| audio/note_voice_mapping.s       | 92    | 2          | 154           | 150          |
+| audio/audio_control_engine.s     | 68    | 11         | 58            | 137          |
+| sequencer/bmdredit_routines.s    | 67    | 5          | 14            | 2            |
+| sequencer/seq_step_routines.s    | 64    | 1          | 2             | 0            |
+| sequencer/rhythm_routines.s      | 0     | 41         | 0             | 4            |
+| display/scoop_display.s          | 0     | 34         | 0             | 336          |
+| sequencer/accompseq_routines.s   | 0     | 31         | 0             | 15           |
+| storage/flash_floppy_handlers.s  | 23    | 0          | 44            | 25           |
+| sequencer/seq_audio_mode.s       | 0     | 18         | 0             | 50           |
+| audio/semenu_routines.s          | 16    | 0          | 16            | 2            |
+| storage/fdc_routines.s           | 14    | 0          | 4             | 0            |
+| sequencer/smf_event_processor.s  | 0     | 11         | 0             | 50           |
+| midi/midi_dispatch_handlers.s    | 9     | 0          | 32            | 163          |
+| sequencer/smf_tonegen_core.s     | 0     | 8          | 0             | 146          |
+| ui/ui_control_panel.s            | 5     | 0          | 0             | 15           |
+| audio/audioinit_routines.s       | 4     | 0          | 6             | 0            |
+| ui/setwall_routines.s            | 0     | 4          | 0             | 40           |
+| file_io/disk_operations.s        | 3     | 0          | 17            | 29           |
+| audio/sound_editor_ui.s          | 2     | 1          | 16            | 23           |
+| sequencer/smf_playback.s         | 0     | 3          | 0             | 15           |
+
+- **Files without the `-O` marker** (`rhythm_routines`, `scoop_display`, `accompseq_routines`, `seq_audio_mode`,
+  `smf_event_processor`, `smf_tonegen_core`, `setwall_routines`, `smf_playback`) have **no move at all**: 0 of their
+  150 copies.  They copy through a register even when a move was possible.
+- **Files with the marker** move almost everywhere.  `accompaniment_engine.s` has both markers, so it holds code
+  of both kinds; it is large enough to be several original source files.  `ui_control_panel.s` (5 moves, no
+  `lda`) has too few constants to tell.
+- **V4.23 never moves**, at any of the four option sets (run 26's `BmDrEdit_LoadAlternateState`: `ld WA,(src)` /
+  `ld (dst),WA` at none, `-O3 -XS`, `-Xr` and `-O3 -XS -Xr`).
+
+**The condition, as far as the census shows.**  With the Technics compiler's `-O`, a copy whose value is not used
+again is a memory-to-memory move when:
+- its size is 8 or 16 bits (a 32-bit copy always goes through a register: 14 in the `-O` files, no move);
+- one side is a 16-bit absolute address.  With the destination absolute it is `ld (#16),(src)`, and the source
+  may be any mode: absolute (533), indexed `(xrr+rr)` (36), indirect, displacement or stack.  With only the source
+  absolute it is `ld (dst),(#16)`, for example a stack slot (64), indirect (28) or a displacement (11).
+
+Without `-O` it is never a move.  Open:
+- About 110 dead register copies of 16-bit globals remain in `-O` files.  Many of them are in groups just before a
+  call (`audio_control_engine.s` `MidiCtrl_Mode3_Handler`, `VoiceMode3_EvType4`).  Either they come from a source
+  file without `-O` merged into the same hand source, or the following call matters.  A probe can tell.
+- Whether a value used again afterwards (`reused`, kept in its register) prevents the move in `-O` code.  The
+  census sees reused copies only as register copies, as expected, but has not tested the reverse.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
@@ -473,6 +577,123 @@ the tree's `shared/ram_variables.s`.  Their functions were renamed:
   `rename_smf_direct_play_password_header.sed`.
 - **`corpus/firmware/tiny.c`** keeps the C name `SmfMedley_RawData`: it is the input of oracle run
   `2026-11-09-3-proxy-tiny`, a ledger row.  `check_bytes.py --alias SmfMedley_RawData=Smf_SetMidiOut` maps it.
+
+## V4.23 builds the firmware C (owner, 2026-11-16): staging, probes m15 / m16
+
+The owner paused the compiler-modelling research.  A function now counts as done when **Toshiba V4.23** reproduces
+its ROM bytes at its file's option set; the reference model no longer matters.  `make` is being switched to compile
+the firmware C with V4.23 in the oracle VM (lane_vmb).  Until that lands, the build still uses the model, which
+refuses many V4.23-confirmed functions, so those wait in a staging directory:
+
+- `<tree>/maincpu/cc900-staged/*.c`, in all five trees.  Each file holds only the new functions of one hand source
+  (`semenu_routines.c`, `sequencer_engine.c`); a hand source with two option sets gets two C files
+  (`note_voice_mapping_xr.c`, `cc900-options: -Xr`).  The build does not read the directory.
+- `staged_v423.py --corpus DIR` prepares one oracle run for every tree's staged C.  `--check RUN DIR --record`
+  compares each function with its tree's ROM (`asm_vs_rom.py --cfile`) and writes `staged_v423.tsv`.
+- `probe_v423.py RUN [PATTERN]` summarises a probe run: per function, the forms and option sets that match.
+
+Run `2026-11-16-28-p6-m15` checked the staged C.  The six functions of round 7's m8 / m10 and `LinkVoiceSlots_LoadReg`
+matched in all five trees, but only by the operand widths of the old check (below), so they are checked again with
+`__near` declarations.
+
+**Loops (m15 a / b).**  `if (c) do { ... } while (c);` does **not** give the firmware's copied loop test: V4.23 folds
+the guard into a jump to the bottom test, as for `while (c)`.  `TrimAndPadSmfFilename` still differs at +42.
+
+**Shift by a variable count (m15 c).**  The shift instruction V4.23 writes depends on how the C is spelled:
+
+| C spelling                                            | V4.23 writes |
+|-------------------------------------------------------|--------------|
+| `1 << a`, `1U << a`                                   | `sla A,BC`   |
+| `(unsigned int)1 << (unsigned int)a`                  | `sll A,BC`   |
+| `unsigned int m = 1; m <<= a;`                        | `sll A,BC`   |
+
+The ROM's `FileIO_*` bit functions have `sll`, so they are within V4.23's reach after all.
+
+**Operand widths (m16, run `2026-11-16-29-p6-m16`).**  V4.23 does not pick an absolute operand's width from the
+address.  It writes every access to a named object the same way, and declares each object's attribute at the end of the
+listing:
+- a plain extern is `large`: 24-bit operands;
+- `__near` is `medium`: 16-bit;
+- `__tiny` is `small`: 8-bit.
+
+Objects defined in the file go to the matching sections, `f_area`, `n_area` and `t_area`.  asm900 encodes exactly that
+width: the `.rel` has the c2/d2/f2 forms, c1/d1/f1 and c0/f0.  It also uses the 16-bit `lda` (f1 #16 33) for the
+address of a `__near` object.  The qualifier changes the code too: a plain array indexed by a char is read with
+`(XBC+WA)`, a `__near` / `__tiny` one with `extz XWA` / `add XWA,XBC` / `(XWA)`.  A numeric absolute operand (a member
+of a struct at a constant address, `(0xd0a8)`) is narrowed by its value: run 27's `.rel` has f1 for 0xd0a8.
+
+So every RAM cell in firmware C is declared with the qualifier that gives the ROM's operand width: `__tiny` for 8-bit,
+`__near` for 16-bit, plain for 24-bit.  The chord variables (0xcede..), which the ROM reaches with 24-bit operands
+though they lie below 0x10000, are plain.  `asm_vs_rom.py` now takes each named operand's width from the listing's
+attributes; `--by-address` gives the old narrowing.  The earlier V4.23 verdicts were made with that narrowing, and so
+did not check widths.
+
+## The firmware's -O files are `-O3 -Xr` (probe m18, run `2026-11-16-32-p6-m18-olevels`)
+
+**The question.**  At `-O3 -XS -Xr`, V4.23 jumps to a loop's bottom test, whatever the C: m15 and m17 tried a guarded
+do-while, goto, and a reversed guard.  At `-Xr` it copies the test to the entry, as the ROM does, but it then
+allocates other registers than the ROM.
+
+**The run.**  m18 compiled 195 probe functions at seven option sets.  These are the functions that match the ROM at
+each set, with their bytes:
+
+| options        | functions | bytes |
+|----------------|-----------|-------|
+| `-O3 -XS -Xr`  | 35        | 1,838 |
+| `-Xr`          | 37        | 2,110 |
+| `-O1 -Xr`      | 35        | 1,596 |
+| `-O2 -Xr`      | 42        | 2,011 |
+| `-O3 -Xr`      | 48        | 2,381 |
+| `-O2 -XS -Xr`  | 32        | 1,609 |
+| `-O1 -XS -Xr`  | 31        | 1,499 |
+
+**The result.**  Every function that matches at `-O3 -XS -Xr` also matches at `-O3 -Xr`, except one:
+`Sprintf_InsertCarry`, in `sprintf_core.s`, the file whose loops jump to their test.  Nine functions match only
+without `-XS` (474 B), among them `TrimAndPadSmfFilename`: its plain `while` C gives the ROM's copied loop test with
+the `-O` registers.  So the loop-entry copy (`KN_LOOP_INVERT`) is not a Technics rule but V4.23 at `-O3` without
+`-XS`.  The coordinator approved a new option label, `O3Xr` = `-O3 -Xr`, as the firmware's `-O` set.
+- `sprintf_core` stays `-O3 -XS -Xr`.
+- The files without `-O` stay `-Xr`: seven functions match only there, such as `AudioInit_SelectPriority` (220 B).
+
+**The FileIO shifts.**  `(unsigned int)1 << a` gives the ROM's bytes for `FileIO_BuildRecordPath_Done`,
+`FileIO_FormatName_Loop` and `FileIO_BuildRecordPath_Return` at every set.  Casting the count as well adds an
+`extz WA` that the ROM does not have.
+
+**Round 1 of the helpers** was four background agents, each given a pool of leaf routines and the brief
+(`~/compartilhado/tmp/cc900-tab/lane_p6/scan/BRIEF.md`, `ROUND2.md`).  Their probes are `corpus/firmware/p6_{A,B,C,D}_*.c`.
+Run 31 checked them with the listing's own widths: 41 of 165 functions match, 2,632 B.  m18, with `-O3 -Xr`, raised
+that to 56 functions and 3,222 B, counting the m-probes.
+
+**Staging.**  `stage_probe.py` moves each matched function, with the declarations it uses, into
+`v10/maincpu/cc900-staged/<hand source>.c`.  The file's option set decides the suffix:
+- no suffix: `-O3 -Xr`;
+- `_xr`: `-Xr`;
+- `_xs`: `-O3 -XS -Xr`.
+
+A function that matches at both `-O3 -Xr` and `-Xr` goes with the others of its hand source.  `port_staged.py` makes the
+other trees' files from v10's.  It compares each function's v10 bytes with the tree's bytes at the tree's own label,
+and takes the tree's value of every address the C names from the same bytes.  A function whose bytes differ anywhere
+else is left out of that tree: `AudioInit_*` in v7 / v6 / v5, two accompaniment functions in v6 / v5, and
+`PartCtrl_AppendToEventQueue`, which v7 / v6 / v5 lack.  `staged_v423.py` has the last word, per tree.
+
+## The staged C built with V4.23 (2026-11-16)
+
+The V4.23 build landed on main (70c34fd09, lane_vmb) and was merged into this branch.  `promote_staged.py` then moved
+every tree's staged C into `<tree>/cc900/`.  Staged `-O3 -Xr` C was appended to the tree's existing file of that
+hand source.  It went to a sibling file instead (`file_demo_proc_b.c`, `sequencer_engine_b.c`) when that file declares
+one of its names differently, and to `_xr` / `_xs` / `_o3xr` files for other option sets.  Each function was then
+spliced into its hand source (`cc900_splice.py --symbols --sizes staged_v423.tsv`), and the staging files were
+removed in the same commit.
+
+After the promotion, `<tree>/cc900/` defines 226 functions in v10, 226 in v9, 210 in v7, 199 in v6 and 199 in v5.  `make
+gate` is byte-identical with V4.23 building all of them.
+
+The splice learned two things on the way:
+- **The cut is measured.**  A routine's hand lines may run past its compiled body.  `S2cTtl_InitOnTitleChange` has a dead
+  second `ret`, and `AccPatch_ComplexDataBlock_Helper2` is a lone `ret` followed by unlabelled code.  `cc900_splice.py`
+  measures the hand instructions with llvm-mc and cuts where their bytes reach the C body's size; the rest stays.
+- **`--sizes`.**  The sizes come from staged_v423.tsv, and the functions are read from the C's text, so C that only
+  V4.23 compiles can be spliced.
 
 ## Finding candidates
 

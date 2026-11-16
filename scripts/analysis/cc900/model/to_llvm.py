@@ -88,6 +88,8 @@ def operand(o, syms, locals_):
     m = re.match(r'^\(([_.][A-Za-z0-9_]+)(?:\s*\+\s*(0x[0-9a-fA-F]+|\d+))?\)$', o)
     if m: return absaddr(lookup(m.group(1), syms), named=True, sym=m.group(1),
                          off=num(m.group(2)) if m.group(2) else 0)
+    m = re.match(r'^\((0x[0-9a-fA-F]+|\d+)\)$', o)               # a numeric absolute address: a member of a struct at
+    if m: return absaddr(num(m.group(1)))                        # a constant address, V4.23 ldw (0xd0a8),0x0
     m = re.match(r'^\((X\w+)\+:(\d)\)$', o)                     # post-increment
     if m: return '(%s+:%s)' % (m.group(1).lower(), m.group(2))
     m = re.match(r'^\(-(X\w+):(\d)\)$', o)                       # pre-decrement
