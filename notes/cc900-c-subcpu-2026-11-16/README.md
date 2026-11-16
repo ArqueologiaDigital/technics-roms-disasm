@@ -93,13 +93,13 @@ pointers to the DSP state buffer being applied.
 
 ## Near misses and candidate compiler differences
 
-- **Tone-generator writers around inline assembly** (`ToneGen_Write*`, about 30 routines; run 58).  Each register
-  write is followed by inline `nop`s and a `jr` to the next instruction.  Written with `__ASM(" nop")` /
-  `__ASM(" jr $+2")`, V4.23 reproduces the four `*_Mute` writers, which need nothing after the first `nop`.  The others
-  differ at +0: the ROM saves XIZ (`push xiz; ld xiz,xbc`) and keeps the record pointer there across the inline
-  assembly, as it does across a call; V4.23 keeps it in XBC, since it does not treat `__ASM` as clobbering registers.
-  `register` on the pointer did not change that.  Candidate compiler difference: the firmware's compiler treated
-  inline assembly as a call.  Still open: a dummy use or a register variable around the `__ASM`, a few forms per run.
+- **Tone-generator writers around inline assembly** (`ToneGen_Write*`, about 30 routines; runs 58 and 62).  Each
+  register write is followed by inline `nop`s and a `jr` to the next instruction.  Written with `__ASM(" nop")` /
+  `__ASM(" jr $+2")`, V4.23 reproduces the four `*_Mute` writers, which need nothing after the first `nop`.  The
+  others save XIZ (`push xiz; ld xiz,xbc`) and keep the record pointer there across the inline assembly; V4.23 does
+  not treat `__ASM` as clobbering registers, and `register` did not move the pointer.  **Not a compiler difference**:
+  V4.23's pseudo-registers reproduce it.  `ToneGen_WriteVoice_Direct` matches with `__IZ = d; ... = __IZ;` (run 62),
+  and V4.23 then saves and restores IZ itself.  So the firmware's C held these values in `__IZ` / `__XIZ`.
 - **8-bit narrowing** (helpers A and B, runs 47 / 58): V4.23 computes `unsigned char OP constant`, `uchar << 8` and
   `uchar * N` in 8 bits where the ROM extends first; a cast to `int` gives the ROM's code.  A C idiom, not a compiler
   difference.
