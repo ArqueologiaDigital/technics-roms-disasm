@@ -78,5 +78,22 @@ Report: the files, the functions in each, the ones left out and why, and per fun
 unsure of.
 
 Rules: temp files only under /home/fsanches/compartilhado/tmp/cc900-tab/lane_hd/<your helper name>/ (never /tmp);
-no rm with variables or globs; `command grep` for recursive search (the .s files hold high bytes); never run the
-VM; never commit; never copy Toshiba listing text into any file.
+`command grep` for recursive search (the .s files hold high bytes); never run the VM; never commit; never copy
+Toshiba listing text into any file.
+OWNER'S RULES (strict, 2026-11-16):
+- `rm` only as its OWN standalone Bash call, with a literal absolute path, after looking at the target, one path
+  per call.  Never rm / rmdir / find -delete / shutil.rmtree / os.remove inside a heredoc, a `bash -c`,
+  `python -c`, `python3 - <<EOF` script, a loop, a `&&` / `;` chain or any inline code.
+- Avoid inline `python3 -c` / heredoc scripts generally: write a script file with the Write tool under your temp
+  directory and run it.  Edit files with the Edit / Write tools.
+- If anything is denied: stop and report the exact command; never retry it another way.
+
+More idioms found since (runs 66-93):
+- A RETURNED array address loaded as an immediate after the index (`ld xhl,sym; add xhl,xwa`) comes from a
+  CONVERTED return value: `return (void *)(arr + (unsigned long)i * 16);` (DirName_Address, run 70).
+- A call to a cc900-name short name now resolves in the build.
+- Avoid a huge multi-line #define (V4.23 THC1-Fatal-150 "Too large string" for ~2.6 KB): write the code out.
+- Avoid K&R (old-style) definitions for now: the build cannot parse them yet; use prototype-style definitions
+  (for a char parameter the caller loads as a word, try `int` and a cast inside).
+- notes/cc900-c-hdae5000-2026-11-16/hdae5000 staged C (hdae5000/cc900-staged/*.c) and built C
+  (hdae5000/cc900/*.c) are good examples of matched C for this ROM.
