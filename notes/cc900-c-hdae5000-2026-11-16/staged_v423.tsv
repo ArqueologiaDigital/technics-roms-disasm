@@ -228,7 +228,6 @@ hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46
 hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46f0191737979e5f28b039815da3cce0bd9b65	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_FlsNamingCheck2	300	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_naming_proc.c	e1c265f15de5705819971c755f0337dda56ba7cc5ae803aadf8823adf5bddc0b	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_IvHddNamingProc	295	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_fdlyric.c	b808e4988d94dad2379bbf308cbd426d0646f7a31993d575b859b109a4da7fdd	Xr	2026-11-16-104-hd-r24-staged	HDAE5000_FdLyricList_Scan	556	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_fdsong_check.c	481ac828a5383922a912309f4b8395a7662058ffe1e509365626e9bd2751c3d6	Xr	2026-11-16-104-hd-r24-staged	HDAE5000_FdSong_CheckFiles	1255	DIFF at +116
 hdae5000	hdae5000/cc900-staged/hdae5000_load_ui.c	78939708d9dc64649a34a8046e2036abc9756a82710b050a00c03282463da4b0	Xr	2026-11-16-104-hd-r24-staged	HDAE5000_LoadSongWithUi	441	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_song_module.c	68e4d1884f587ec1a3c071ccc436daa8a4a44b259bb71306664ad9c97eb53dd3	Xr	2026-11-16-104-hd-r24-staged	HDAE5000_CopyFdSongToHd_Cmp	419	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_song_module.c	68e4d1884f587ec1a3c071ccc436daa8a4a44b259bb71306664ad9c97eb53dd3	Xr	2026-11-16-104-hd-r24-staged	HDAE5000_CopyFdSongToHd_Lsw	359	MATCH
@@ -374,3 +373,15 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_misc3.c	f3a2f93c90061882c1
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_pport_services3.c	3b9aa21d23358941910f85da8cd6f929d43fac88fb78d82b206b4cce4777cfdc	Xr	2026-11-16-119-hd-r30	HDAE5000_PPORT_Svc27_DeleteSongParts	18	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_smf_palette.c	95cf83e891898efd334eb81c1b68f2c14709028725cdbefeab6552a7fa323e2f	Xr	2026-11-16-119-hd-r30	HDAE5000_Palette_Setup	205	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_vga_port.c	f5ce1af3316e7baaa33858ac9a01b3f3ffca91eaebeccf9b58ef36a1c590439b	Xr	2026-11-16-119-hd-r30	HDAE5000_VGA_Port_Write	37	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens5.c	8379c5223ed3d0864b52b919af7884a54ad92270a01ec24c61034988c56e9eeb	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_Lbn_TypeDigit	646	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fdlyric_addtlx.c	cc7907e6f856d47d1cf740b338651664c39c2533e310a47a32847d12832fef03	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_FdLyricList_AddTlx	352	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fdsong_check.c	bcf4a7b3bafe21d66d0f6d52225446e502c4ed9d69bb63701afc023cb3b16699	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_FdSong_CheckFiles	1255	DIFF at +116
+hdae5000	hdae5000/cc900-staged/hdae5000_fdsong_sig.c	a859e28e8e1d5d69bec287b68453f955b600aa6c9890c6b43b8a51e5a932b705	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_CheckFileSignature	75	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem_remove.c	f580fe0960d1f60202b85c2051af43d39407550c141b221b5574a2fdd3e9d692	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_FlsItem_Remove	389	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_CopyFdSongToHd	823	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_DeleteDirectory	350	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_DeleteSongParts	349	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_Dir_CountEmptySongs	51	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_LoadSong	362	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_SaveSong	764	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_SaveSong_Rcm	134	MATCH

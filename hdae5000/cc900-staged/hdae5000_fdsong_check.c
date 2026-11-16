@@ -25,6 +25,10 @@ extern char ram_2f8ed0[], ram_2f8ed8[], ram_2f8ee2[], ram_2f8eec[], ram_2f8ef4[]
 extern char ram_2f8eae[], ram_2f8eb8[], ram_2f8ec2[], ram_2f8ecc[], ram_2f8ed4[];
 extern char ram_2f8ede[], ram_2f8ee8[], ram_2f8ef0[], ram_2f8efa[];
 
+/* defined in hdae5000_fdsong_sig.c (same original module: cc900-module above); its prototype decides how the
+   buffer argument is converted, so it must be visible here */
+extern int HDAE5000_CheckFileSignature(unsigned int part, const unsigned char *buf);
+
 int HDAE5000_FdSong_CheckFiles(char *name, unsigned int mask)
 {
     long h;
