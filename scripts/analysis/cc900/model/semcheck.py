@@ -598,6 +598,8 @@ def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, 
         blocks = data_blocks_of(want, unit)
         for fn in unit.functions:
             fa = adecl or getattr(fn, 'adecl_attr', False)
+            if adecl and getattr(fn, 'cdecl_attr', False) and not getattr(fn, 'adecl_attr', False): fa = False   # (a
+                                                           # __cdecl function in an -Xr file: _name, cdecl; stc _st_rt_1)
             name = ('.' if fa else '_') + fn.name
             if only and fn.name not in only: continue
             key = cache_key(src_b, ora_b, name, got.get(name), fa, trials, limit, seed0)
