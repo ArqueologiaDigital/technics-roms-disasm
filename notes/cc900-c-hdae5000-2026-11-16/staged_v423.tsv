@@ -1,0 +1,11 @@
+# Staged HD-AE5000 C (hdae5000/cc900-staged/) checked against the ROM with Toshiba V4.23, by
+# notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --check RUN_DIR --record.  The listings stay in the private oracle repo.
+tree	c_file	sha256	options	run	function	bytes	result
+hdae5000	hdae5000/cc900-staged/hdae5000_hd_driver.c	4244554c1fdb4a3f1eb658f10fad1eb34e98395d82f560e6c81af9c1e1b87ac4	Xr	2026-11-16-46-hd-r2	HDAE5000_TypeSel_BuildMask	95	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_Delay_Loop	17	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_Fls_GetAutoLoadPending	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_Fls_SetSeqStopPending	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_HD_GetBlockInfo	71	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_RcmStream_LastResult	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_SwapBytes32	37	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	14735c945621f360d56be28b82b8bf177198ca4693980bd817811400522b37c7	Xr	2026-11-16-48-hd-r2b	HDAE5000_UiObj_SetCaption	25	MATCH

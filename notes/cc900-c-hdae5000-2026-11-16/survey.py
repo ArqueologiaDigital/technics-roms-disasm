@@ -26,6 +26,9 @@ routine of hdae5000/*.s -- a column-0 label up to the next one -- with:
   ported   which of the ported trees (v2.01i, v1.15i, v1.10i) define the label
 
     python3 -B notes/cc900-c-hdae5000-2026-11-16/survey.py [--md OUT.md] [--tsv OUT.tsv] [--kind C?] [--max-bytes N]
+    python3 -B notes/cc900-c-hdae5000-2026-11-16/survey.py --modules
+        groups of functions joined by calr (asm900 writes calr only within one source file, so each group was at
+        least one C file): per group its functions, bytes and kinds
     python3 -B notes/cc900-c-hdae5000-2026-11-16/survey.py --body LABEL [--comments]
         the hand source of one function as the survey delimits it (its label up to the next function), comments
         stripped unless --comments
@@ -256,8 +259,47 @@ def body(label, comments):
 ROWS = []
 
 
+def modules():
+    rows = routines()
+    by = {r['label']: r for r in rows}
+    parent = {r['label']: r['label'] for r in rows}
+
+    def find(x):
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for f in sorted(os.listdir(TREE)):
+        if not f.endswith('.s'):
+            continue
+        cur = None
+        for l in open(os.path.join(TREE, f), encoding='latin-1').read().split('\n'):
+            c = code(l)
+            m = LAB.match(c)
+            if m and m.group(1) in by and by[m.group(1)]['file'] == f:
+                cur = m.group(1)
+                c = m.group(2).strip()
+            m = re.match(r'^calr\s+([A-Za-z_]\w*)\s*$', c)
+            if m and cur and m.group(1) in by:
+                parent[find(cur)] = find(m.group(1))
+    groups = collections.defaultdict(list)
+    for r in rows:
+        if r['kind'] != 'data':
+            groups[find(r['label'])].append(r)
+    out = [g for g in groups.values() if len(g) > 1]
+    out.sort(key=lambda g: -sum(r['bytes'] for r in g))
+    for g in out:
+        kinds = collections.Counter(r['kind'] for r in g)
+        print('%6d B  %3d functions  %s' % (sum(r['bytes'] for r in g), len(g),
+                                           ' '.join('%s:%d' % kv for kv in sorted(kinds.items()))))
+        print('          ' + ' '.join(sorted(r['label'] for r in g)))
+
+
 def main():
     a = sys.argv[1:]
+    if '--modules' in a:
+        modules()
+        return
     if '--body' in a:
         ROWS.extend(routines())
         body(opt(a, '--body'), '--comments' in a)

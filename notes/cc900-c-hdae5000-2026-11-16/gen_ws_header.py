@@ -7,7 +7,10 @@ V4.23 at -Xr reproduces the ROM's single `ld xhl,(xwa+d16)` only for a struct ME
 pointers gives `lda` then `ld`.  So each table is a struct whose members sit at the offsets the tree's `.equ
 RootFn_*` / `.equ HamaFn_*` give (hdae5000/hd-ae5000_v2_06i.s), padded between.  The object-table entry is 14
 bytes with the function table first, and the workspace's entries start at +10 (WS_RootFnTable = 0x0e0a =
-10 + 14 * 0x100, WS_HamaFnTable = 0x0e88 = 10 + 14 * 0x109).
+10 + 14 * 0x100, WS_HamaFnTable = 0x0e88 = 10 + 14 * 0x109).  Run 2026-11-16-48-hd-r2b: even a member gives
+`lda` then `ld` when it is called directly; the ROM's single load needs the member read as a value, through a cast
+to the function type (UiObj_SetCaption matched that way).  So the members are `void *` and every call casts them:
+CALLV(ROOT->F)(args), CALLR(type, ROOT->F)(args).
 
     python3 -B notes/cc900-c-hdae5000-2026-11-16/gen_ws_header.py > OUT.h
 """
@@ -23,9 +26,9 @@ def struct(tag, fields):
     at, pad = 0, 0
     for off, name in sorted(fields):
         if off > at:
-            out.append('    VFN pad%d[%d];' % (pad, (off - at) // 4))
+            out.append('    void *pad%d[%d];' % (pad, (off - at) // 4))
             pad += 1
-        out.append('    VFN %s;' % name.lstrip('_'))
+        out.append('    void *%s;' % name.lstrip('_'))
         at = off + 4
     out.append('};')
     return out
@@ -46,8 +49,9 @@ def main():
     print('extern struct NakaWs *HDAE5000_RAM_MainWorkspacePtr;')
     print('#define ROOT ((struct RootFns *)HDAE5000_RAM_MainWorkspacePtr->tab[0x100].fns)')
     print('#define HAMA ((struct HamaFns *)HDAE5000_RAM_MainWorkspacePtr->tab[0x109].fns)')
-    print('/* a call with a result: CALLR(int, ROOT->GetTitleNow)() */')
+    print('/* every call goes through a cast: CALLR(int, ROOT->GetTitleNow)(), CALLV(ROOT->SendEvent)(obj, ev, arg) */')
     print('#define CALLR(t, f) ((t (*)())(f))')
+    print('#define CALLV(f) ((void (*)())(f))')
 
 
 if __name__ == '__main__':

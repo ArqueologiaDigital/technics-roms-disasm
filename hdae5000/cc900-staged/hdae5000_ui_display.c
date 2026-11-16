@@ -67,3 +67,34 @@ void HDAE5000_HD_GetBlockInfo(int block, struct HdBlockInfo *bi)
         break;
     }
 }
+
+unsigned int HDAE5000_SwapBytes16(unsigned int x)
+{
+    unsigned int r;
+    r = x & 0xff;
+    x >>= 8;
+    r <<= 8;
+    r += x;
+    return r;
+}
+
+unsigned int HDAE5000_Smf_SwapBytes16(unsigned int x)
+{
+    unsigned int r;
+    r = x & 0xff;
+    x >>= 8;
+    r <<= 8;
+    r += x & 0xff;
+    return r;
+}
+
+unsigned long HDAE5000_Smf_SwapBytes32(unsigned long x)
+{
+    unsigned long t, r;
+    t = x;
+    r = t & 0xff;
+    t >>= 8; r <<= 8; r += t & 0xff;
+    t >>= 8; r <<= 8; r += t & 0xff;
+    t >>= 8; r <<= 8; r += t & 0xff;
+    return r;
+}

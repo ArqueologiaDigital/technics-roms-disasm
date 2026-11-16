@@ -17,7 +17,7 @@ bytes are compared with the image at the function's label.
         writes a call to a function of the same source file; such a match is reported `MATCH calr:<targets>`, and
         is only real once those targets are in the same C file.  --tsv
         writes (c_file, options, function, bytes, result) rows.  --record appends the rows of the STAGED files
-        (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree, C file,
+        (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree directory, C file,
         SHA-256 of its text, options, run, function, bytes, result), replacing that file's earlier rows.
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --show RUN_DIR FUNC [--file STEM] [--label O3Xr]
         for working only (never paste its output into the repository: it is derived from Toshiba's listing): our
@@ -162,6 +162,9 @@ def show(a):
                 body = [l for l in to_llvm.translate_function(name, lines, names) if not l.endswith(':') and
                         not l.startswith('\t.globl')]
                 print('== %s %s' % (stem, label))
+                if func not in ref:                      # a variant: its label from the probe's cc900-name comment
+                    src = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'probes', stem + '.c')
+                    func = c_names([src]).get(func[:31], func)
                 at = ref[func] - BASE
                 off = 0
                 for l in body:
@@ -332,7 +335,7 @@ def record(run, image, tree, res):
             # the run, before the staged file changes
             h = hashlib.sha256(open(p, 'rb').read()).hexdigest()
             files.add(c)
-            new.append('\t'.join([image, c, h, label, os.path.basename(run.rstrip('/')), k, str(n), r]))
+            new.append('\t'.join([tree, c, h, label, os.path.basename(run.rstrip('/')), k, str(n), r]))
     rows = [r for r in rows if r.split('\t')[1] not in files] + sorted(new)
     open(LEDGER, 'w').write(HEAD + '\n'.join(rows) + '\n')
 
