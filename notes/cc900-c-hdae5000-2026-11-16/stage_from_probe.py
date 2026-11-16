@@ -68,11 +68,13 @@ def main():
     lead = m.group(0) if m else ''
     names = [l.strip() for l in lead.split('\n') if 'cc900-name:' in l and
              l.split('cc900-name:')[1].split('=')[0].strip() in keep]
+    mods = [l.strip() for l in lead.split('\n') if 'cc900-module:' in l]   # file-level: kept whole
     opts = re.search(r'cc900-options:[^\n*]*', lead)
     head = ['/* %s' % what,
             '   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions\' ROM bytes',
             '   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from %s.' % probe.split('/')[-1],
-            '   ' + (opts.group(0).strip() if opts else 'cc900-options: -Xr')] + ['   ' + n for n in names] + ['*/']
+            '   ' + (opts.group(0).strip() if opts else 'cc900-options: -Xr')] + ['   ' + n for n in names] + \
+        ['   ' + m for m in mods] + ['*/']
     body = []
     for k, n, t in parts:
         if k == 'fn':
