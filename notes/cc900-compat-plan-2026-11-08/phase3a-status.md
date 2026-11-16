@@ -3844,6 +3844,16 @@ ledger, semcheck clean: stptr 538 / 487 / 440 / 400 of 1,266, stc 97 / 77 / 89 /
 (+38 / +38); validation unchanged; semcheck 9.  The checker change for struct arguments under adecl went in alone
 (ecedc766d).
 
+**Batch 351 (2026-11-16): structs as V4.23 writes them.**  lane_o3 fixes 13-15, from the stc and sxl listings.
+STRUCT_COPY_BLOCK: a copy between two struct objects with known addresses takes the source address in XIY, the
+destination in XIX, then ldiw (XIX+),(XIY+) per word up to two words, else ld BC,words / ldirw (the model had copied
+small structs through XWA and refused larger ones; a live IX / IY / BC keeps the older path, since ldiw counts BC
+down).  STRUCT_CALL_STORE / STRUCT_CALL_TEMP / STRUCT_VAR_ELEM: struct results of calls (the destination itself as the
+result pointer; otherwise a frame temporary from the FP temporaries' region, then the block copy; a variable-index
+element as destination).  Fix 15: at -Xr a struct copy over a live 2-byte variable in BC moves it to DE first.  stc
+97 / 77 / 89 / 77 -> 298 / 278 / 266 / 254 of 552; sxl joins the ledger, 24 / 24 / 24 / 24 of 24; semcheck clean on
+both; validation and library unchanged; semcheck 9.  The checker's __cdecl-in-Xr change went in alone (c14cf13c0).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

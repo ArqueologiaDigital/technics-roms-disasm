@@ -71,6 +71,11 @@ CDECL_IN_XR = True                                        # see compile_unit, ge
 UNIT_ADECL = [False]                                      # the file's convention (-Xr), for a __cdecl function's calls
 LONG_OPA_HOME_GUARD = True                                # see the long op= helper path
 STRUCT_REG_SLOT_PUSH = True                              # see gen_call_adecl
+STRUCT_COPY_BLOCK = True                                  # see struct_block_copy
+STRUCT_CALL_STORE = True                                  # see struct_call_store
+STRUCT_CALL_TEMP = True                                   # see struct_call_temp, compile_function
+STRUCT_VAR_ELEM = True                                    # see struct_var_elem
+STRUCT_COPY_BC_TO_DE = True                               # see struct_block_copy
 ADECL_ARG_CLOBBER_NOOPT = True                            # see gen_call_adecl: ADECL_ARG_CLOBBER_GUARD without -O too
 class _RegBySize(dict):
     """a register family by size: a value over 4 bytes (a struct of 6, 8, 10 .. bytes reaching a register path: probe
@@ -655,6 +660,166 @@ def global_offset(v):
             off = [o for n, t, o in b.decl.ty.rec if n == v.name][0]
             return (b.decl.name, hx(off))
     return None
+
+def struct_obj_addr(F, x):
+    """a struct object's address for a block copy: ('sym', '_g + 0x2') for a global (a member at a constant offset, an
+    element at a constant index), ('stack', offset) for a local or a stack parameter; None otherwise"""
+    x = strip(x); off = 0
+    while x.k in ('member', 'index'):
+        if x.k == 'member':
+            if x.arrow: return None
+            off += member_offset(x); x = strip(x.base)
+        else:
+            k = fold(x.idx)
+            if k.k != 'const' or k.value is None: return None
+            off += k.value * x.ty.size; x = strip(x.base)
+    if x.k != 'var': return None
+    d = x.decl
+    if getattr(d, 'reg', None): return None
+    if d.kind == 'global': return ('sym', '_%s' % d.name + (' + %s' % hx(off) if off else ''))
+    if d.kind == 'local' and hasattr(d, 'slot'): return ('stack', d.slot + off)
+    if d.kind == 'param' and hasattr(d, 'slot'): return ('stack', d.slot + off)
+    if d.kind == 'param' and hasattr(d, 'off'): return ('stack', d.off + off)
+    return None
+
+def struct_var_elem(F, x, probe=False):
+    """STRUCT_VAR_ELEM: a struct element of a global array at a variable index as a block copy's destination: the index
+    into WA, scaled (add WA,WA for 2 bytes, sla k,WA for 4, 8, 16 .., else muls XWA,size), the array into XDE; returns
+    'XDE+WA' for lda XIX,.. (stc st_ag_4: ld WA,(_gi1) / and WA,0x3 / sla 0x2,WA / lda XDE,_ga4 / ld XIY,_g42 /
+    lda XIX,XDE+WA; st_ag_6: muls XWA,0x6; st_ag_1: add WA,WA); None when the shape is another"""
+    x = strip(x)
+    if x.k != 'index' or fold(x.idx).k == 'const': return None
+    b = strip(x.base)
+    if b.k != 'var' or b.decl.kind != 'global' or getattr(b.decl, 'reg', None): return None
+    ix = strip(x.idx)
+    if ix.ty is None or ix.ty.size != 2 or ix.ty.kind != 'int': return None
+    if live_regs(F) & {'WA', 'XWA', 'DE', 'XDE', 'QWA', 'QDE'}: return None
+    if probe: return 'XDE+WA'
+    f_ = gen(F, ix, 'WA', 2)
+    if f_ != 'WA': F.emit('ld', 'WA,%s' % FAM[f_][2])
+    es = x.ty.size
+    if es == 2: F.emit('add', 'WA,WA')
+    elif es & (es - 1) == 0: F.emit('sla', '%s,WA' % hx(es.bit_length() - 1))
+    else: F.emit('muls', 'XWA,%s' % hx(es))
+    F.emit('lda', 'XDE,_%s' % b.decl.name)
+    return 'XDE+WA'
+
+def struct_block_copy(F, lv, src):
+    """STRUCT_COPY_BLOCK: a struct assignment between two objects whose addresses are known, as V4.23 writes it at
+    every size: the source's address into XIY, the destination's into XIX, then ldiw (XIX+),(XIY+) once per word up to
+    two words, else ld BC,words / ldirw (probe stc st_gg_4: ld XIY,_g42 / ld XIX,_g41 / ldiw x2; st_pr_4: lda XIY,XSP+0x4;
+    st_lg_4: ld XIY,XSP; st_mb_4: ld XIX,_gw4 + 0x2; st_gg_5: ld BC,0x3 / ldirw; probe sxl .sx_d_a)"""
+    src = strip(src)
+    if src.k == 'load': src = strip(src.e)
+    a_s = struct_obj_addr(F, src); a_d = struct_obj_addr(F, lv)
+    if a_d is None and STRUCT_VAR_ELEM and struct_var_elem(F, lv, probe=True): a_d = ('elem', None)
+    if a_s is None or a_d is None: return False
+    n = lv.ty.size // 2
+    lr = live_regs(F)
+    mv_ = None
+    if STRUCT_COPY_BC_TO_DE and 'BC' in lr and not lr & {'DE', 'XDE', 'QDE', 'XBC', 'QBC'} and a_d[0] != 'elem':
+        bc_ = list({id(d): d for d in list(F.f.params) + list(F.f.decls) if getattr(d, 'reg', None) == 'BC' and
+                    d not in F.dead}.values())     # (the parameters are in f.decls too)
+        if len(bc_) == 1 and bc_[0].ty.size == 2: mv_ = bc_[0]; lr = lr - {'BC'}   # (stc .st_cx_1 -Xr: ld DE,BC first,
+    if lr & {'IX', 'IY', 'XIX', 'XIY', 'BC', 'XBC', 'QBC'}: return False   # b read from DE after the copy; ldiw counts
+    if mv_ is not None:                                    # BC down too)
+        F.emit('ld', 'DE,BC'); mv_.reg = 'DE'
+    if a_d[0] == 'elem':
+        if a_s[0] == 'stack' and a_s[1] + F.push and False: return False
+        a_d = ('reg', struct_var_elem(F, lv))
+    for R, a in (('XIY', a_s), ('XIX', a_d)):
+        if a[0] == 'reg': F.emit('lda', '%s,%s' % (R, a[1])); continue
+        if a[0] == 'sym': F.emit('ld', '%s,%s' % (R, a[1]))
+        elif a[1] + F.push == 0: F.emit('ld', '%s,XSP' % R)
+        else: F.emit('lda', '%s,XSP+%s' % (R, hx(a[1] + F.push)))
+    if n <= 2:
+        for _ in range(n): F.emit('ldiw', '(XIX+),(XIY+)')
+    else: F.emit('ld', 'BC,%s' % hx(n)); F.emit('ldirw', '(XIX+),(XIY+)')
+    return True
+
+def struct_call_store(F, lv, call):
+    """STRUCT_CALL_STORE: x = f() for a struct result, cdecl callee (probe stc).  Over 4 bytes the result pointer is the
+    destination itself: a global's address pushed as two words (st_ug_8: pushw _g81 >> 16 / pushw _g81 & 0xffff / cal _r8
+    / inc 0x4,XSP), a local's taken in XWA (st_ul_8: lda XWA,XSP / push XWA / cal _r8).  Up to 4 bytes the result comes
+    in HL / XHL and a local takes it directly (st_ul_4: cal _r4 / ld (XSP),XHL).  Other destinations: False"""
+    fn = strip(call.fn)
+    if fn.k != 'var' or not getattr(fn.decl.ty, 'cdecl', False) and (F.adecl or UNIT_ADECL[0]): return False
+    if getattr(fn.decl, 'implicit', False): return False
+    size = lv.ty.size
+    a_d = struct_obj_addr(F, lv)
+    if a_d is None or strip(lv).k != 'var': return False
+    if size <= 4:
+        if a_d[0] != 'stack' or size not in (2, 4): return False
+        fam = gen_call(F, call, 'HL', size)
+        if fam != 'HL': return False
+        F.emit('ld', '(XSP+%s),%s' % (hx(a_d[1] + F.push), FAM['HL'][size]) if a_d[1] + F.push else '(XSP),%s' % FAM['HL'][size])
+        return True
+    n = 0
+    if not call.args and F.pending: flush_pops(F)
+    args_begin(F)
+    for a in reversed(call.args):
+        if fpgen.is_fp(strip(a).ty) or strip(a).ty.kind == 'struct': return False
+        n += push_arg(F, a)
+    if a_d[0] == 'sym':
+        F.emit('pushw', '%s >> 16' % a_d[1]); F.emit('pushw', '%s & 0xffff' % a_d[1]); F.push += 4
+    else:
+        F.emit('lda', 'XWA,XSP+%s' % hx(a_d[1] + F.push) if a_d[1] + F.push else 'XWA,XSP'); F.emit('push', 'XWA'); F.push += 4
+    F.emit('cal', '_' + fn.decl.name); args_end(F)
+    F.pending += n + 4
+    return True
+
+def struct_call_temp(F, lv, call):
+    """STRUCT_CALL_TEMP: m = f() for a struct result into a member at a constant offset, an element at a constant index
+    or *gp: the result goes to a frame temporary (the floating-point temporaries' region, D + D': st_um_8 lda XSP,XSP-0x10
+    with the result at +0x8; st_um_4 dec 0x8,XSP, ld (XSP+0x4),XHL), then a block copy to the destination (the source
+    first, st_um_4: lda XIY,XSP+0x4 / ld XIX,_gw4 + 0x2; through a global pointer the destination first, st_up_4:
+    ld XIX,(_gp41) / lda XIY,XSP+0x4)"""
+    fn = strip(call.fn)
+    if fn.k != 'var' or getattr(fn.decl, 'implicit', False): return False
+    if not getattr(fn.decl.ty, 'cdecl', False) and (F.adecl or UNIT_ADECL[0]): return False
+    lvs = strip(lv); size = lv.ty.size; nw = size // 2
+    if lvs.k == 'var' or getattr(F, 'fp_temps', None) is None: return False
+    dst = struct_obj_addr(F, lvs); ptr = None; elem_ = False
+    if dst is None and STRUCT_VAR_ELEM and struct_var_elem(F, lvs, probe=True): elem_ = True
+    elif dst is None:
+        if lvs.k == 'deref' and strip(lvs.e).k == 'load' and strip(strip(lvs.e).e).k == 'var' and \
+                strip(strip(lvs.e).e).decl.kind == 'global' and not getattr(strip(strip(lvs.e).e).decl, 'reg', None):
+            ptr = '(_%s)' % strip(strip(lvs.e).e).decl.name
+        else: return False
+    elif dst[0] != 'sym': return False
+    if live_regs(F) & {'IX', 'IY', 'XIX', 'XIY', 'BC', 'XBC', 'QBC'}: return False
+    if size <= 4 and size not in (2, 4): return False
+    t = fpgen.temp(F, size)
+    if size <= 4:
+        fam = gen_call(F, call, 'HL', size)
+        if fam != 'HL': return False
+        F.emit('ld', '(XSP+%s),%s' % (hx(t + F.push), FAM['HL'][size]) if t + F.push else '(XSP),%s' % FAM['HL'][size])
+    else:
+        n = 0
+        if not call.args and F.pending: flush_pops(F)
+        args_begin(F)
+        for a in reversed(call.args):
+            if fpgen.is_fp(strip(a).ty) or strip(a).ty.kind == 'struct': return False
+            n += push_arg(F, a)
+        F.emit('lda', 'XWA,XSP+%s' % hx(t + F.push) if t + F.push else 'XWA,XSP'); F.emit('push', 'XWA'); F.push += 4
+        F.emit('cal', '_' + fn.decl.name); args_end(F)
+        F.pending += n + 4; flush_pops(F)
+    ea_ = struct_var_elem(F, lvs) if elem_ else None       # (st_ua_4: .. / ld (XSP+0x4),XHL / ld WA,(XSP+0xc) / and /
+    src = 'XIY,XSP+%s' % hx(t + F.push) if t + F.push else None   # sla / lda XDE,_ga4 / lda XIY,XSP+0x4 / lda XIX,XDE+WA)
+    if ptr: F.emit('ld', 'XIX,%s' % ptr)
+    if src: F.emit('lda', src)
+    else: F.emit('ld', 'XIY,XSP')
+    if ea_: F.emit('lda', 'XIX,%s' % ea_)
+    elif not ptr: F.emit('ld', 'XIX,%s' % dst[1])
+    if nw <= 2:
+        for _ in range(nw): F.emit('ldiw', '(XIX+),(XIY+)')
+    else: F.emit('ld', 'BC,%s' % hx(nw)); F.emit('ldirw', '(XIX+),(XIY+)')
+    return True
+
+def struct_calls(f):
+    found = []
+    walk(f.body, lambda n, d: found.append(n) if n.k == 'call' and getattr(n, 'ty', None) is not None and n.ty.kind == 'struct' else None)
+    return bool(found)
 
 def member_offset(v):
     base_ty = strip(v.base).ty
@@ -10096,6 +10261,17 @@ def gen_call(F, e, fam=None, size=0):
         return fam
     if fn.k != 'var': raise Unsupported('indirect call')
     rt_ = getattr(fn.decl.ty, 'ret', None)
+    if STRUCT_CALL_TEMP and rt_ is not None and rt_.kind == 'struct' and rt_.size > 4 and fam is None and \
+            getattr(F, 'fp_temps', None) is not None and (getattr(fn.decl.ty, 'cdecl', False) or not (F.adecl or UNIT_ADECL[0])) \
+            and not getattr(fn.decl, 'implicit', False) and \
+            not any(fpgen.is_fp(strip(a).ty) or strip(a).ty.kind == 'struct' for a in e.args):
+        t_ = fpgen.temp(F, rt_.size); n_ = 0                # a discarded result over 4 bytes still gets a frame temporary
+        if not e.args and F.pending: flush_pops(F)          # (stc st_ud_8: lda XSP,XSP-0x10 / lda XWA,XSP+0x8 / push XWA /
+        args_begin(F)                                       #  cal _r8 / lda XSP,XSP+0x14)
+        for a in reversed(e.args): n_ += push_arg(F, a)
+        F.emit('lda', 'XWA,XSP+%s' % hx(t_ + F.push) if t_ + F.push else 'XWA,XSP'); F.emit('push', 'XWA'); F.push += 4
+        F.emit('cal', '_' + fn.decl.name); args_end(F); F.pending += n_ + 4
+        return None
     if STRUCT_CALL_GUARD and rt_ is not None and rt_.kind == 'struct' and rt_.size > 4:   # its hidden result pointer
         raise Unsupported('a call returning a %d-byte struct' % rt_.size)   # was never passed: the callee wrote through
                                                            # the caller's return address (probe stc st_ud_5: j _r5; the
@@ -12641,6 +12817,11 @@ def gen_stmt(F, s, last):
         gen_incdec(F, s.e, 'WA', 0, value=False); return
     if s.k == 'expr' and s.e.k == 'bin' and s.e.op == '=':
         lv = strip(s.e.l)
+        if STRUCT_COPY_BLOCK and lv.ty is not None and lv.ty.kind == 'struct' and struct_block_copy(F, lv, s.e.r): return
+        if STRUCT_CALL_STORE and lv.ty is not None and lv.ty.kind == 'struct' and strip(s.e.r).k == 'call' and \
+                struct_call_store(F, lv, strip(s.e.r)): return
+        if STRUCT_CALL_TEMP and lv.ty is not None and lv.ty.kind == 'struct' and strip(s.e.r).k == 'call' and \
+                struct_call_temp(F, lv, strip(s.e.r)): return
         if SD_MORE and SD_LONG and lv.ty is not None and lv.ty.size == 4 and not getattr(F, 'l2', None) and not getattr(F, 'u1_i', None) and not getattr(F, 'cl_active', None) and sd4_store(F, lv, strip(s.e.r)): return
         if LH_STORE_SAVE and getattr(F, 'lhc', None) is not None and F.lhc.get('save') and F.lhc['node'] == id(strip(s.e.r)) and lh_store_save(F, lv, strip(s.e.r)): return   # (stdiv.c sd_l_d_PXG)
         if LH_STORE_X and getattr(F, 'xst', None) is not None and F.xst['node'] == id(strip(s.e.r)) and sp_lvalue_kind(F, lv) is not None and lh_store_x(F, sp_lvalue_kind(F, lv), strip(s.e.r)): return   # (stdiv.c sd_l_d_XGG, DPG)
@@ -19127,7 +19308,7 @@ PERSONALITIES = {
 
 def compile_function(f, opt, adecl, personality='v4.23', fp_temps=None, fp_nlong=0, fp_remap=None):
     F_OPT_HINT[0] = opt != 'none'
-    if fp_temps is None and fpgen.uses_fp(f):
+    if fp_temps is None and (fpgen.uses_fp(f) or (STRUCT_CALL_TEMP and struct_calls(f))):
         import pickle, sys                                  # pass 1 measures the floating-point temporaries
         sys.setrecursionlimit(max(sys.getrecursionlimit(), 200000))
         save = fpgen.FCONST[0]
