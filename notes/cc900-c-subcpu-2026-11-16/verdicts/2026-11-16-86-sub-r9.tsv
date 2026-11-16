@@ -1,0 +1,78 @@
+function	bytes	matches	best_diff
+Algo67_LUTOffset_Check	143	-	+26 sub_D_9c@Xr
+Algo_SubTable_DispatchA	89	-	+28 sub_D_9c@Xr
+Audio_Cmd_DSPGlobal_Param_Store	63	-	+16 sub_C_9b@Xr
+DSP_AlgoDescriptor_Emit	406	-	+13 sub_E_5a@Xr
+DSP_BytecodeInterpreter_Init	0	-	to_llvm cannot translate a line
+DSP_ChanFreq_WritePacket2	119	-	+33 sub_D_9c@Xr
+DSP_Cmd_LoadEffectPreset	163	sub_D_9c@Xr	
+DSP_FreqCurve_FP	146	sub_E_5a@O1Xr sub_E_5a@Xr	
+DSP_FreqInterp_2Point	88	sub_E_5a@Xr	
+DSP_OscAlgoSelect	338	-	+13 sub_E_5a@Xr
+DSP_PanCurve_PiecewiseLin	177	-	+7 sub_E_5a@Xr
+DSP_PanScale_Simple	23	sub_E_5a@Xr	
+DSP_ParamInterp_2Point	88	sub_E_5a@Xr	
+DSP_ParamInterp_2Point_B	88	sub_E_5a@Xr	
+DSP_ParamInterp_3Point_WithOffset	119	-	+73 sub_E_8a@Xr
+DSP_ParamInterp_Div0xB4	73	-	+43 sub_E_9a@Xr
+DSP_ParamInterp_Div0xC6	114	-	+91 sub_E_9a@Xr
+DSP_ParamInterp_FPScale	78	sub_E_5a@Xr sub_E_8a@Xr	
+DSP_ParamInterp_MultiStep	361	-	+25 sub_E_5a@Xr
+DSP_PitchParam_Scale	77	sub_E_8a@Xr	
+DSP_SetCoeff_CopyDirect	69	sub_D_9a@Xr sub_D_9c@Xr	
+DSP_SetCoeff_CopyDirect2	69	sub_D_9a@Xr sub_D_9c@Xr	
+DSP_SlotParam_Read_To_Cache	107	-	+43 sub_C_9a@Xr
+DSP_SlotParam_Read_To_Cache_B	118	-	+39 sub_C_9b@Xr
+DSP_SlotParam_Write_From_Cache	366	-	+43 sub_C_9a@Xr
+DSP_SlotParam_Write_From_Cache_B	353	-	+52 sub_C_9a@Xr
+DSP_System_Init	149	sub_D_9a@Xr sub_D_9b@Xr sub_D_9c@Xr	
+DSP_TableWalk_SearchWithState	71	-	+1 sub_E_5a@Xr
+DSP_TuneOffset	321	-	+8 sub_E_5a@Xr
+DSP_WriteParameter	200	-	+6 sub_E_8a@Xr
+EFF_SlotActive_UpdateFlags	371	-	+164 sub_D_9c@Xr
+EFF_VolumeLoop	284	-	+11 sub_D_9c@Xr
+EFF_VolumeUpdate_WithDebug	247	-	+101 sub_D_9c@Xr
+EGEnv_Compute_A	143	-	+21 sub_A_9c@Xr
+EGEnv_Compute_B	143	-	+21 sub_A_9c@Xr
+Keybed_Read_Event	90	-	+11 sub_E_8a@Xr
+Serial1_DataTransmit_Loop	69	sub_E_8a@O1Xr sub_E_8a@O2Xr sub_E_8a@O3Xr sub_E_9a@O1Xr sub_E_9a@O2Xr sub_E_9a@O3Xr sub_E_9b@O1Xr sub_E_9b@O2Xr sub_E_9b@O3Xr	
+TVF_Build_Short	93	-	+15 sub_A_9c@Xr
+TVF_Calc_Cutoff	147	-	+1 sub_A_9c@Xr
+TVF_Calc_Cutoff_NoKeyFollow	75	-	+2 sub_A_9c@Xr
+TVF_Emit_Offset_Both	118	-	+13 sub_A_9c@Xr
+TVF_Emit_Offset_Reg100	102	-	+13 sub_A_9c@Xr
+ToneDB_Find_SubToneRecord	63	-	+30 sub_D_9a@Xr
+ToneDB_Find_ToneRecord_CoeffPath	79	-	+0 sub_D_9c@Xr
+ToneGen_Process_Notes	167	-	+64 sub_E_9a@Xr
+ToneGen_SetupPercussionVoice	115	sub_D_9a@Xr	
+ToneGen_SetupPolyVoice	167	-	+133 sub_D_9c@Xr
+VoiceParam_CustomTone_Apply_Catalog8C	188	-	+36 sub_C_9a@Xr
+VoiceParam_SubSlot_Apply_Catalog50	204	-	+24 sub_C_9b@Xr
+VoiceParam_SubSlot_Apply_Catalog64	190	-	+66 sub_C_9c@Xr
+VoiceSlot_UpdateNoteSource	170	sub_A_9a@Xr sub_A_9b@Xr sub_A_9c@Xr	
+VoiceState_SwapSlot_Guarded	196	-	+41 sub_A_9c@Xr
+VoiceSubSlot_Init	63	-	+32 sub_C_9a@Xr
+Voice_AllVoices_PortamentoUpdate	33	sub_A_9a@Xr sub_A_9b@Xr sub_A_9c@Xr	
+Voice_Build_OutputLevel	101	-	+26 sub_A_9c@Xr
+Voice_Calc_LevelPair_EGA	226	-	+63 sub_B_9a@Xr
+Voice_Calc_LevelPair_EGB	314	-	+15 sub_B_9b@Xr
+Voice_Calc_LevelPair_EGC	310	-	+15 sub_B_9b@Xr
+Voice_Clear_HoldBit	77	-	+32 sub_A_9c@Xr
+Voice_ComputeVolume_CappedLFO	265	-	+28 sub_B_9b@Xr
+Voice_Freq_WriteRight	123	sub_A_9a@Xr sub_A_9b@Xr sub_A_9c@Xr	
+Voice_InitVoiceState	194	-	+167 sub_B_9b@Xr
+Voice_PitchPack_Mode5_Dual	181	-	+43 sub_A_9c@Xr
+Voice_PitchPack_RouteB	100	-	+15 sub_A_9c@Xr
+Voice_PitchPack_RouteC	71	-	+41 sub_A_9c@Xr
+Voice_PitchPack_RouteD	81	sub_A_9a@Xr sub_A_9b@Xr sub_A_9c@Xr	
+Voice_PitchPack_RouteE	95	sub_A_9a@Xr sub_A_9b@Xr sub_A_9c@Xr	
+Voice_Reprioritise	42	sub_A_9a@Xr sub_A_9b@Xr sub_A_9c@Xr	
+Voice_Retire_ToFreePool	82	-	+23 sub_A_9c@O1Xr
+Voice_SecondaryParam_Fetch2	142	-	+47 sub_D_9b@Xr
+Voice_Selector_ComputeMixWeights	191	-	+19 sub_A_9c@Xr
+Voice_Selector_FindBestSlot	175	sub_A_9b@Xr	
+WaveSel_StageA1_FromToneSlot	52	sub_D_9a@Xr	
+WaveSel_StageA1_SelectTables	168	-	+37 sub_D_9c@Xr
+WaveSel_StageA2_FromToneRec	163	-	+0 sub_D_9c@Xr
+WaveSel_StageA2_FromVelZone	45	-	+21 sub_D_9c@Xr
+WaveSel_StageB_Build_Reg040	171	-	+40 sub_A_9c@Xr

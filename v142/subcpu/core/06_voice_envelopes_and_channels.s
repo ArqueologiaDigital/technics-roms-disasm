@@ -1987,46 +1987,12 @@ Voice_ComputePitch_Mono_ApplyLFO:
 ; Callers: Voice_Build_Register_Set, Voice_Release_Type4(_BranchA),
 ; Voice_AllVoices_WriteAmplitude_BranchA, and both portamento ramp write-backs
 ; (Voice_Step_ExprRamp_Ascend_WritePitch / _Release_WritePitch).
-Voice_ApplyPortamento:
-	ld de, (xwa + 13)
-	ld xbc, (xwa + 23)
-	cp (xbc + 23), 0x0
-	jr z, Voice_ApplyPortamento_NoChanDetune
-	ld xbc, (xwa + 23)
-	ld c, (xbc + 23)
-	extz bc
-	sub bc, 0x64
-	add de, bc
-	jr Voice_ApplyPortamento_ApplyDetune
-
-; paramA+23 == 0: apply the fixed -0x200 bias instead of a channel detune.
-Voice_ApplyPortamento_NoChanDetune:
-	sub de, 0x200
-
-; Add the signed byte (slot+39)[+34], then test 0x041343 bit 1 for the key-shift arm.
-Voice_ApplyPortamento_ApplyDetune:
-	ld xbc, (xwa + 39)
-	ld c, (xbc + 34)
-	exts bc
-	add de, bc
-	ld bc, (Voice_GlobalFlags:24)
-	bit 1, bc
-	jr z, Voice_ApplyPortamento_Done
-	cp (xwa + 4), 0x1
-	jr ugt, Voice_ApplyPortamento_HighNote
-	ld xbc, (xwa + 35)
-	sub de, (xbc + 16)
-	dec 8, de
-	jr Voice_ApplyPortamento_Done
-
-; slot+4 > 1 arm of the key-shift correction: subtract a flat 0x10.
-Voice_ApplyPortamento_HighNote:
-	sub de, 0x10
-
-; Move the result to BC and tail-jump to Voice_Build_OutputLevel.
-Voice_ApplyPortamento_Done:
-	ld bc, de
-	jrl Voice_Build_OutputLevel
+Voice_ApplyPortamento:	.include "includes/generated/cc900/Voice_ApplyPortamento.s"	; C: cc900/voice_envelopes_and_channels_b_7i.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ApplyPortamento_NoChanDetune, Voice_ApplyPortamento + 28
+	.set	Voice_ApplyPortamento_ApplyDetune, Voice_ApplyPortamento + 32
+	.set	Voice_ApplyPortamento_HighNote, Voice_ApplyPortamento + 68
+	.set	Voice_ApplyPortamento_Done, Voice_ApplyPortamento + 72
 
 ; Voice_ApplyPortamento2(XWA = voice-slot record). The mono/legato counterpart of
 ; Voice_ApplyPortamento. Channel detune comes from paramA+5 (not +23), there is no
@@ -2149,105 +2115,10 @@ Voice_WriteChPitchWithVib_Done:
 	inc 2, xsp
 	ret
 
-Voice_Calc_LevelPair_EGA:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 108)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 45)
-	extz wa
-	add wa, bc
-	ldw bc, 0x64
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	ldto_berp A, 0xF8
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld iz, wa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld wa, (xwa + 10)
-	bit 0, wa
-	jr z, Voice_Calc_LevelPair_EGA_ApplyLFO
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 1)
-	bit 8, wa
-	jr nz, Voice_Calc_LevelPair_EGA_ApplyLFO
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 24)
-	extz wa
-	lda xbc, (Voice_EnvLevel_IndexMap:24)
-	ld	a, (xbc+wa)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	cp wa, iz
-	jr gt, Voice_Calc_LevelPair_EGA_ApplyLFO
-	ld iz, wa
-
-; Body of Voice_Calc_LevelPair_EGA (entry 0x026769, already named -- left alone).
-; That routine computes the level for register pair 1 from tonerec[108] + paramA+45,
-; clamped 0..0x64 and curved through table_0x0118FE, optionally capped by
-; table_0x0118FE[table_0x011ADF[tonerec+24]] when bit 0 of tonerec+10 is set and bit 8 of
-; slot+1 is clear.
-; This label is the modulation stage: if paramA+53 is non-zero, add
-; Pan_ScaleWithVelocity(paramA+48..+50, depth paramA+53, velocity slot+8) and re-clamp
-; through Voice_Clamp_Byte_HL.
-Voice_Calc_LevelPair_EGA_ApplyLFO:
-	ld xwa, (xsp + 2)
-	cp (xwa + 53), 0x0
-	jr z, Voice_Calc_LevelPair_EGA_WriteDSP
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 48)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 49)
-	ld e, a
-	extz de
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 50)
-	extz wa
-	pushw wa
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 53)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 10)
-	ld wa, (xwa + 8)
-	calr Pan_ScaleWithVelocity
-	add iz, hl
-	ld wa, iz
-	calr Voice_Clamp_Byte_HL
-	ld iz, hl
-
-; Stage the result: 0x0451F8 = (level<<8)|0x0080, 0x0451FA = (level<<8). These are shadow
-; offsets +44/+46, pushed to TG banks 0x800 and 0x840 by ToneGen_WriteLevelBurst*. Bit 7 of the
-; low byte is the "apply now" flag that the note-on/full-dump path leaves clear.
-Voice_Calc_LevelPair_EGA_WriteDSP:
-	ld wa, iz
-	sla wa, 8
-	set 7, wa
-	ld (Payload_Bss_Start+0x6382:24), wa
-	ld wa, iz
-	sla wa, 8
-	ld (Payload_Bss_Start+0x6384:24), wa
-	popw iz
-	inc 8, xsp
-	ret
+Voice_Calc_LevelPair_EGA:	.include "includes/generated/cc900/Voice_Calc_LevelPair_EGA.s"	; C: cc900/voice_envelopes_and_channels_b_10a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Calc_LevelPair_EGA_ApplyLFO, Voice_Calc_LevelPair_EGA + 133
+	.set	Voice_Calc_LevelPair_EGA_WriteDSP, Voice_Calc_LevelPair_EGA + 198
 
 Voice_Stage_EnvSegments:	.include "includes/generated/cc900/Voice_Stage_EnvSegments.s"	; C: cc900/voice_envelopes_and_channels.c
 
@@ -2264,110 +2135,11 @@ Voice_WriteVolume_SetFlag:	.include "includes/generated/cc900/Voice_WriteVolume_
 ; table_0x0118FE[paramA+45] -- i.e. the oscillator ceiling wins outright rather than only
 ; capping. When the bit is clear it falls back to the tonerec[0x010D] + paramA+45 path.
 ; Stages the result to 0x0451F8/0x0451FA exactly as Volume1 does.
-Voice_ComputeVolume_CappedLFO:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld wa, (xwa + 10)
-	bit 0, wa
-	jr z, Voice_ComputeVolume_CappedLFO_UseOscMax
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 24)
-	extz wa
-	lda xbc, (Voice_EnvLevel_IndexMap:24)
-	ld	a, (xbc+wa)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld iz, wa
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 45)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld bc, iz
-	cp bc, wa
-	jr ule, Voice_ComputeVolume_CappedLFO_ApplyLFO
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 45)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld iz, wa
-	jr Voice_ComputeVolume_CappedLFO_ApplyLFO
-
-; tonerec+10 bit 0 clear: level = curve(clamp(tonerec[0x010D] + paramA+45, 0..0x64)).
-Voice_ComputeVolume_CappedLFO_UseOscMax:
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld	a, (xwa+269)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 45)
-	extz wa
-	add wa, bc
-	ldw bc, 0x64
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	ldto_berp A, 0xF8
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld iz, wa
-
-; Optional paramA+53 velocity/LFO term, then Voice_Clamp_Byte_HL.
-Voice_ComputeVolume_CappedLFO_ApplyLFO:
-	ld xwa, (xsp + 2)
-	cp (xwa + 53), 0x0
-	jr z, Voice_ComputeVolume_CappedLFO_WriteDSP
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 48)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 49)
-	ld e, a
-	extz de
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 50)
-	extz wa
-	pushw wa
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 53)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 10)
-	ld wa, (xwa + 8)
-	calr Pan_ScaleWithVelocity
-	add iz, hl
-	ld wa, iz
-	calr Voice_Clamp_Byte_HL
-	ld iz, hl
-
-; Stage 0x0451F8 = (level<<8)|0x0080 and 0x0451FA = (level<<8).
-Voice_ComputeVolume_CappedLFO_WriteDSP:
-	ld wa, iz
-	sla wa, 8
-	set 7, wa
-	ld (Payload_Bss_Start+0x6382:24), wa
-	ld wa, iz
-	sla wa, 8
-	ld (Payload_Bss_Start+0x6384:24), wa
-	popw iz
-	inc 8, xsp
-	ret
+Voice_ComputeVolume_CappedLFO:	.include "includes/generated/cc900/Voice_ComputeVolume_CappedLFO.s"	; C: cc900/voice_envelopes_and_channels_b_10a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ComputeVolume_CappedLFO_UseOscMax, Voice_ComputeVolume_CappedLFO + 116
+	.set	Voice_ComputeVolume_CappedLFO_ApplyLFO, Voice_ComputeVolume_CappedLFO + 170
+	.set	Voice_ComputeVolume_CappedLFO_WriteDSP, Voice_ComputeVolume_CappedLFO + 235
 
 Voice_Calc_LevelPair_EGB:
 	dec 8, xsp
@@ -4411,101 +4183,14 @@ Voice_DSP_OutputConfig:	.include "includes/generated/cc900/Voice_DSP_OutputConfi
 ; ----------------------------------------------------------------------------
 ; NOT PRESENT in symbols/subcpu_symbols_reference.txt -- add it.
 ; Same body as Voice_DSP_OutputConfig but targets shadow words 0x04520A / 0x045208.
-Voice_DSP_OutputConfig2:
-	lda	xsp, (xsp-10)
-	ld	(xsp+6), c
-	ld	(xsp+8), a
-	cp8_imm_rid8	xsp, 0x06, 0x00	; cp (XSP+0x06),0x00
-	jr	nz, Voice_DSP_OutputConfig2_Skip
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	DSP_AlgoType_Dispatch2
-	ld	(Payload_Bss_Start+0x6394:24), hl
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	extz	wa
-	or	wa, 12
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp), xhl
-	ldw	(xsp+4), 0x0000	; ld (XSP+0x04),0x0000
-	jr	Voice_DSP_OutputConfig2_Join
-Voice_DSP_OutputConfig2_Loop:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	ld	w, 0:opc
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_Write_ExtParam_05C0_Strobe
-	incw	1, (xsp+4)
-Voice_DSP_OutputConfig2_Join:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 128
-	jr	c, Voice_DSP_OutputConfig2_Loop
-	jr	Voice_DSP_OutputConfig2_Epilogue
-Voice_DSP_OutputConfig2_Skip:
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	DSP_AlgoType_Dispatch2
-	ld	(Payload_Bss_Start+0x6392:24), hl
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	extz	wa
-	or	wa, 12
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp), xhl
-	ldw	(xsp+4), 0x0000	; ld (XSP+0x04),0x0000
-	jr	Voice_DSP_OutputConfig2_Join2
-Voice_DSP_OutputConfig2_Loop2:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	ld	w, 0:opc
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParams_56_Alt
-	incw	1, (xsp+4)
-Voice_DSP_OutputConfig2_Join2:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 128
-	jr	c, Voice_DSP_OutputConfig2_Loop2
-Voice_DSP_OutputConfig2_Epilogue:
-	lda	xsp, (xsp+10)
-	ret
+Voice_DSP_OutputConfig2:	.include "includes/generated/cc900/Voice_DSP_OutputConfig2.s"	; C: cc900/voice_envelopes_and_channels_b_callnames.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSP_OutputConfig2_Loop, Voice_DSP_OutputConfig2 + 77
+	.set	Voice_DSP_OutputConfig2_Join, Voice_DSP_OutputConfig2 + 102
+	.set	Voice_DSP_OutputConfig2_Skip, Voice_DSP_OutputConfig2 + 125
+	.set	Voice_DSP_OutputConfig2_Loop2, Voice_DSP_OutputConfig2 + 187
+	.set	Voice_DSP_OutputConfig2_Join2, Voice_DSP_OutputConfig2 + 212
+	.set	Voice_DSP_OutputConfig2_Epilogue, Voice_DSP_OutputConfig2 + 233
 ; ----------------------------------------------------------------------------
 ; Voice_DSP_SimpleCopy - Simple voice-to-DSP parameter copy
 ; Entry: A = voice number
@@ -4514,42 +4199,10 @@ Voice_DSP_OutputConfig2_Epilogue:
 ; ----------------------------------------------------------------------------
 ; NOT PRESENT in symbols/subcpu_symbols_reference.txt -- add it.
 ; A = voice.  Calls 0x033B8B, stores to 0x045204, iterates the voice output list (<= 64).
-Voice_DSP_SimpleCopy:
-	dec	8, xsp
-	ld	(xsp+6), a
-	ld	a, (xsp+6)
-	extz	wa
-	call	DSP_ChanFreq_WritePacket1
-	ld	(Payload_Bss_Start+0x638e:24), hl
-	ld	a, (xsp+6)
-	extz	wa
-	ldw	bc, 16
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp), xhl
-	ldw	(xsp+4), 0x0000	; ld (XSP+0x04),0x0000
-	jr	Voice_DSP_SimpleCopy_Join
-Voice_DSP_SimpleCopy_Loop:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	ld	w, 0:opc
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParam_1C0_Single
-	incw	1, (xsp+4)
-Voice_DSP_SimpleCopy_Join:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 64
-	jr	c, Voice_DSP_SimpleCopy_Loop
-	inc	8, xsp
-	ret
+Voice_DSP_SimpleCopy:	.include "includes/generated/cc900/Voice_DSP_SimpleCopy.s"	; C: cc900/voice_envelopes_and_channels_b_callnames.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSP_SimpleCopy_Loop, Voice_DSP_SimpleCopy + 42
+	.set	Voice_DSP_SimpleCopy_Join, Voice_DSP_SimpleCopy + 67
 ; ----------------------------------------------------------------------------
 ; Voice_DSP_SimpleCopy2 - Simple voice-to-DSP parameter copy (type 2)
 ; Entry: A = voice number
@@ -6038,127 +5691,25 @@ ScaleTune_Is_Global_Enabled:	.include "includes/generated/cc900/ScaleTune_Is_Glo
 ; ToneGen_WriteVoice_Long -- which writes TG register 0x10, the PITCH register.
 ; ★ It writes no pan register at all.  The reference file's Pitch_Refresh_Sounding_Voices is
 ; the accurate name; see [UNCERTAIN].
-Pitch_Refresh_Sounding_Voices:
-	dec 4, xsp
-	push xiz
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	ld (xsp + 4), xbc
-	inc 5, xwa
-	ld xiz, xwa
-	cp (xiz), 0x40
-	jr nc, Pitch_Refresh_Sounding_Voices_Exit
-
-; loop body of Pitch_Refresh_Sounding_Voices.
-Pitch_Refresh_Sounding_Voices_LoopBody:
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	ld bc, wa
-	ld xwa, (xsp + 4)
-	exts xbc
-	add xbc, xwa
-	ld wa, (xbc + 1)
-	and wa, 0x3C
-	cp wa, 0x10
-	jr z, Pitch_Refresh_Sounding_Voices_BranchB
-	cp wa, 0x20
-	jr z, Pitch_Refresh_Sounding_Voices_BranchA
-	cp wa, 0x8
-	jr z, Pitch_Refresh_Sounding_Voices_BranchA
-	cp wa, 4:i3
-	jr nz, Pitch_Refresh_Sounding_Voices_LoopStep
-
-; BranchA of Pitch_Refresh_Sounding_Voices.
-Pitch_Refresh_Sounding_Voices_BranchA:
-	ld xwa, xbc
-	call Pitch_Emit_Reg400
-	ld a, (xiz)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	calr ToneGen_WriteVoice_Long
-	jr Pitch_Refresh_Sounding_Voices_LoopStep
-
-; BranchB of Pitch_Refresh_Sounding_Voices.
-Pitch_Refresh_Sounding_Voices_BranchB:
-	ld xwa, xbc
-	call Voice_Pitch_WriteOutputReg_Secondary
-	ld a, (xiz)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	calr ToneGen_WriteVoice_Long
-
-; loop step of Pitch_Refresh_Sounding_Voices.
-Pitch_Refresh_Sounding_Voices_LoopStep:
-	inc 1, xiz
-	cp (xiz), 0x40
-	jr c, Pitch_Refresh_Sounding_Voices_LoopBody
-
-; common exit of Pitch_Refresh_Sounding_Voices.
-Pitch_Refresh_Sounding_Voices_Exit:
-	pop xiz
-	inc 4, xsp
-	ret
+Pitch_Refresh_Sounding_Voices:	.include "includes/generated/cc900/Pitch_Refresh_Sounding_Voices.s"	; C: cc900/voice_envelopes_and_channels_b_7h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Pitch_Refresh_Sounding_Voices_LoopBody, Pitch_Refresh_Sounding_Voices + 20
+	.set	Pitch_Refresh_Sounding_Voices_BranchA, Pitch_Refresh_Sounding_Voices + 66
+	.set	Pitch_Refresh_Sounding_Voices_BranchB, Pitch_Refresh_Sounding_Voices + 86
+	.set	Pitch_Refresh_Sounding_Voices_LoopStep, Pitch_Refresh_Sounding_Voices + 104
+	.set	Pitch_Refresh_Sounding_Voices_Exit, Pitch_Refresh_Sounding_Voices + 111
 
 ; XWA = part record (voice list at +5).  Same walk and same (voice+0x01)&0x3C classification
 ; as Pitch_Refresh_Sounding_Voices, but the hardware call is ToneGen_WriteVoice_Short, i.e. TG
 ; register 0x02 -- amplitude.  This is the routine Voice_CC_Volume and Voice_CC_Expression
 ; call to push a new CC 7 / CC 11 value out to every sounding voice of the part.
-Voice_AllVoices_WriteAmplitude:
-	dec 4, xsp
-	push xiz
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	ld (xsp + 4), xbc
-	inc 5, xwa
-	ld xiz, xwa
-	cp (xiz), 0x40
-	jr nc, Voice_AllVoices_WriteAmplitude_Exit
-
-; loop body of Voice_AllVoices_WriteAmplitude.
-Voice_AllVoices_WriteAmplitude_LoopBody:
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	ld bc, wa
-	ld xwa, (xsp + 4)
-	exts xbc
-	add xbc, xwa
-	ld wa, (xbc + 1)
-	and wa, 0x3C
-	cp wa, 0x10
-	jr z, Voice_AllVoices_WriteAmplitude_BranchB
-	cp wa, 0x20
-	jr z, Voice_AllVoices_WriteAmplitude_BranchA
-	cp wa, 0x8
-	jr z, Voice_AllVoices_WriteAmplitude_BranchA
-	cp wa, 4:i3
-	jr nz, Voice_AllVoices_WriteAmplitude_LoopStep
-
-; BranchA of Voice_AllVoices_WriteAmplitude.
-Voice_AllVoices_WriteAmplitude_BranchA:
-	ld xwa, xbc
-	call Voice_ApplyPortamento
-	jr Voice_AllVoices_WriteAmplitude_LoopStep
-
-; BranchB of Voice_AllVoices_WriteAmplitude.
-Voice_AllVoices_WriteAmplitude_BranchB:
-	ld xwa, xbc
-	call Voice_ApplyPortamento2
-
-; loop step of Voice_AllVoices_WriteAmplitude.
-Voice_AllVoices_WriteAmplitude_LoopStep:
-	ld a, (xiz)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	calr ToneGen_WriteVoice_Short
-	inc 1, xiz
-	cp (xiz), 0x40
-	jr c, Voice_AllVoices_WriteAmplitude_LoopBody
-
-; common exit of Voice_AllVoices_WriteAmplitude.
-Voice_AllVoices_WriteAmplitude_Exit:
-	pop xiz
-	inc 4, xsp
-	ret
+Voice_AllVoices_WriteAmplitude:	.include "includes/generated/cc900/Voice_AllVoices_WriteAmplitude.s"	; C: cc900/voice_envelopes_and_channels_b_7h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_AllVoices_WriteAmplitude_LoopBody, Voice_AllVoices_WriteAmplitude + 20
+	.set	Voice_AllVoices_WriteAmplitude_BranchA, Voice_AllVoices_WriteAmplitude + 66
+	.set	Voice_AllVoices_WriteAmplitude_BranchB, Voice_AllVoices_WriteAmplitude + 74
+	.set	Voice_AllVoices_WriteAmplitude_LoopStep, Voice_AllVoices_WriteAmplitude + 80
+	.set	Voice_AllVoices_WriteAmplitude_Exit, Voice_AllVoices_WriteAmplitude + 99
 
 ; The heaviest routine in the region.  Walks a part's voice list and, per voice, decides
 ; between five outcomes based on (voice+0x01)&0x3C, bit 15 and bit 8 of (voice+0x01), and
@@ -6337,120 +5888,25 @@ Voice_AllNotes_SustainRetrigger_Exit:
 ;   Pitch_Refresh_Sounding_Voices. Basis: caller + body -- AudioChannel_Handler_Cmd03 calls it after storing the
 ;   part's cutoff offset part+0x1F, which TVF_Emit_Offset_Reg100 adds to the cutoff field.
 ;   (scripts/lanes/verify_mislabel_markers.py lists the old name.)
-TVF_Refresh_Sounding_Voices:
-	dec	4, xsp
-	push	xiz
-	lda	xbc, (Payload_Bss_Start+0x4218:24)
-	ld	(xsp+4), xbc
-	inc	5, xwa
-	ld	xiz, xwa
-	cp8_imm_ri	xiz, 0x40	; cp (XIZ),0x40
-	jr	nc, VoiceCC_DataTable_028F75_Epilogue
-VoiceCC_DataTable_028F75_Loop:
-	ld	a, (xiz)
-	extz	wa
-	muls	wa, 71
-	ld	bc, wa
-	ld	xwa, (xsp+4)
-	exts	xbc
-	add	xbc, xwa
-	ld	wa, (xbc+1)
-	and	wa, 60
-	cp	wa, 8
-	jr	z, VoiceCC_DataTable_028F75_Join
-	cp	wa, 16
-	jr	z, VoiceCC_DataTable_028F75_Skip2
-	cp	wa, 32
-	jr	z, VoiceCC_DataTable_028F75_Skip
-	cp	wa, 4:i3
-	jr	nz, VoiceCC_DataTable_028F75_Join
-VoiceCC_DataTable_028F75_Skip:
-	ld	xwa, xbc
-	call	TVF_Emit_Registers
-	ld	a, (xiz)
-	extz	wa
-	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_TvfPair
-	jr	VoiceCC_DataTable_028F75_Join
-VoiceCC_DataTable_028F75_Skip2:
-	ld	xwa, xbc
-	call	TVF_Emit_Registers_Type2
-	ld	a, (xiz)
-	extz	wa
-	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_TvfPair
-VoiceCC_DataTable_028F75_Join:
-	inc	1, xiz
-	cp8_imm_ri	xiz, 0x40	; cp (XIZ),0x40
-	jr	c, VoiceCC_DataTable_028F75_Loop
-VoiceCC_DataTable_028F75_Epilogue:
-	pop	xiz
-	inc	4, xsp
-	ret
+TVF_Refresh_Sounding_Voices:	.include "includes/generated/cc900/TVF_Refresh_Sounding_Voices.s"	; C: cc900/voice_envelopes_and_channels_b_7h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_DataTable_028F75_Loop, TVF_Refresh_Sounding_Voices + 20
+	.set	VoiceCC_DataTable_028F75_Skip, TVF_Refresh_Sounding_Voices + 66
+	.set	VoiceCC_DataTable_028F75_Skip2, TVF_Refresh_Sounding_Voices + 86
+	.set	VoiceCC_DataTable_028F75_Join, TVF_Refresh_Sounding_Voices + 104
+	.set	VoiceCC_DataTable_028F75_Epilogue, TVF_Refresh_Sounding_Voices + 111
 ; Same walk as above with two extra gates: bit 7 of (voice+0x05) must be set, and for class
 ; 0x10 also bit 5 of [voice+0x13]+0x0D.  Calls Voice_WriteChPanShift (0x02591D) or
 ; Voice_WriteChPanShift2 (0x025B6F) with BC = 1 and then
 ; ToneGen_WriteVoice_Reg21_Reg22 (registers 0x21/0x22).
-AudioChannel_AllVoices_Update_PanShift:
-	dec	4, xsp
-	push	xiz
-	lda	xbc, (Payload_Bss_Start+0x4218:24)
-	ld	(xsp+4), xbc
-	inc	5, xwa
-	ld	xiz, xwa
-	cp8_imm_ri	xiz, 0x40	; cp (XIZ),0x40
-	jr	nc, AudioChannel_AllVoices_Update_PanShift_Epilogue
-AudioChannel_AllVoices_Update_PanShift_Loop:
-	ld	a, (xiz)
-	extz	wa
-	muls	wa, 71
-	ld	bc, wa
-	ld	xwa, (xsp+4)
-	exts	xbc
-	add	xbc, xwa
-	ld	wa, (xbc+1)
-	and	wa, 60
-	cp	wa, 8
-	jr	z, AudioChannel_AllVoices_Update_PanShift_Join
-	cp	wa, 16
-	jr	z, AudioChannel_AllVoices_Update_PanShift_Skip2
-	cp	wa, 32
-	jr	z, AudioChannel_AllVoices_Update_PanShift_Skip
-	cp	wa, 4:i3
-	jr	nz, AudioChannel_AllVoices_Update_PanShift_Join
-AudioChannel_AllVoices_Update_PanShift_Skip:
-	bit	7, (xbc+5)	; bit 7,(XBC+0x05)
-	jr	z, AudioChannel_AllVoices_Update_PanShift_Join
-	ld	xwa, xbc
-	ld	bc, 1:i3
-	call	Voice_WriteChPanShift
-	ld	a, (xiz)
-	extz	wa
-	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Reg21_Reg22
-	jr	AudioChannel_AllVoices_Update_PanShift_Join
-AudioChannel_AllVoices_Update_PanShift_Skip2:
-	ld	xwa, (xbc+19)
-	bit	5, (xwa+13)	; bit 5,(XWA+0x0d)
-	jr	z, AudioChannel_AllVoices_Update_PanShift_Skip3
-	bit	7, (xbc+5)	; bit 7,(XBC+0x05)
-	jr	z, AudioChannel_AllVoices_Update_PanShift_Join
-AudioChannel_AllVoices_Update_PanShift_Skip3:
-	ld	xwa, xbc
-	ld	bc, 1:i3
-	call	Voice_WriteChPanShift2
-	ld	a, (xiz)
-	extz	wa
-	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Reg21_Reg22
-AudioChannel_AllVoices_Update_PanShift_Join:
-	inc	1, xiz
-	cp8_imm_ri	xiz, 0x40	; cp (XIZ),0x40
-	jr	c, AudioChannel_AllVoices_Update_PanShift_Loop
-AudioChannel_AllVoices_Update_PanShift_Epilogue:
-	pop	xiz
-	inc	4, xsp
-	ret
+AudioChannel_AllVoices_Update_PanShift:	.include "includes/generated/cc900/AudioChannel_AllVoices_Update_PanShift.s"	; C: cc900/voice_envelopes_and_channels_b_7h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioChannel_AllVoices_Update_PanShift_Loop, AudioChannel_AllVoices_Update_PanShift + 20
+	.set	AudioChannel_AllVoices_Update_PanShift_Skip, AudioChannel_AllVoices_Update_PanShift + 66
+	.set	AudioChannel_AllVoices_Update_PanShift_Skip2, AudioChannel_AllVoices_Update_PanShift + 93
+	.set	AudioChannel_AllVoices_Update_PanShift_Skip3, AudioChannel_AllVoices_Update_PanShift + 106
+	.set	AudioChannel_AllVoices_Update_PanShift_Join, AudioChannel_AllVoices_Update_PanShift + 126
+	.set	AudioChannel_AllVoices_Update_PanShift_Epilogue, AudioChannel_AllVoices_Update_PanShift + 133
 ; Third member of the same family; the ONLY interior address in either code blob that is
 ; reached by an absolute `call` (from 0x0304C1).  Uses `lda XIZ,XWA+BC` to form the voice
 ; pointer rather than the store-to-XIZ idiom of its siblings, and branches on the same
@@ -8205,73 +7661,10 @@ VoiceModWheel_DataTable_02A061_Exit:
 ; A = part index, C = CC 0x5E value.  Reads the patch pointer at part+0x06 and takes a
 ; different path when (patch+0x10) & 0xC0 == 0xC0.  Updates the part's portamento state and
 ; then hands over to Voice_PortamentoSlots_WriteHW.
-Voice_Portamento_OnHandler:
-	dec 4, xsp
-	ld (xsp), c
-	ld (xsp + 2), a
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, Voice_Portamento_OnHandler_Exit
-	cp a, 0x40
-	jr z, Voice_Portamento_OnHandler_Exit
-	cp a, 0xC0
-	jr z, Voice_Portamento_OnHandler_C0Mode
-	cp a, 0:i3
-	jr nz, Voice_Portamento_OnHandler_Exit
-
-; C0Mode of Voice_Portamento_OnHandler.
-Voice_Portamento_OnHandler_C0Mode:
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ld a, (xsp)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetSostenutoFlag
-	ld a, (xsp + 2)
-	extz wa
-	ld bc, 1:i3
-	call AlgoType_StateWrite
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ld a, (xsp)
-	ld c, a
-	extz bc
-	ld wa, de
-	call VoiceAlloc_WithRoutingFlag
-	ld a, (xsp + 2)
-	extz wa
-	call Partial_Build_Present_Word
-	ld a, (xsp + 2)
-	extz wa
-	call EnvTranspose_UpdateLoop
-	ld a, (xsp + 2)
-	extz wa
-	call VoiceNoteParam_UpdateLoop
-	ld a, (xsp + 2)
-	extz wa
-	call Voice_ActiveFlag_CheckAndLoad
-	ld a, (xsp + 2)
-	extz wa
-	call Voice_SecondaryParam_Epilogue
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2558:24)
-	ld	(xbc+wa), l
-
-; common exit of Voice_Portamento_OnHandler.
-Voice_Portamento_OnHandler_Exit:
-	inc 4, xsp
-	ret
+Voice_Portamento_OnHandler:	.include "includes/generated/cc900/Voice_Portamento_OnHandler.s"	; C: cc900/voice_envelopes_and_channels_b_7j.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Portamento_OnHandler_C0Mode, Voice_Portamento_OnHandler + 51
+	.set	Voice_Portamento_OnHandler_Exit, Voice_Portamento_OnHandler + 163
 
 ; Walks a voice list (cursor on the stack, terminated by a byte >= 0x40) and for every voice
 ; writes two LITERAL constants into the tone generator:
