@@ -1117,781 +1117,204 @@ DSP_Send_Cmd_Cleanup:
 ;   ~19 nops
 ;   jp Debug_Print_String(ROM 0x01220D = "\n<sta>\n")
 ; The trace string "<sta>" is the firmware author's own confirmation that this is "start".
-DSP2_SPI_ClockPulseHigh:
-	set	2, (PF:8)
-	jr DSP2_ClkHigh_Nop01
-
-DSP2_ClkHigh_Nop01:
-	nop
-	jr DSP2_ClkHigh_Nop02
-
-DSP2_ClkHigh_Nop02:
-	nop
-	jr DSP2_ClkHigh_Nop03
-
-DSP2_ClkHigh_Nop03:
-	nop
-	jr DSP2_ClkHigh_Nop04
-
-DSP2_ClkHigh_Nop04:
-	nop
-	jr DSP2_ClkHigh_Nop05
-
-DSP2_ClkHigh_Nop05:
-	nop
-	jr DSP2_ClkHigh_Nop06
-
-DSP2_ClkHigh_Nop06:
-	nop
-	jr DSP2_ClkHigh_Nop07
-
-DSP2_ClkHigh_Nop07:
-	nop
-	jr DSP2_ClkHigh_Nop08
-
-DSP2_ClkHigh_Nop08:
-	nop
-	jr DSP2_ClkHigh_Nop09
-
-DSP2_ClkHigh_Nop09:
-	nop
-	jr DSP2_ClkHigh_Nop10
-
-DSP2_ClkHigh_Nop10:
-	nop
-	jr DSP2_ClkHigh_Nop11
-
-DSP2_ClkHigh_Nop11:
-	nop
-	jr DSP2_ClkHigh_Nop12
-
-DSP2_ClkHigh_Nop12:
-	nop
-	jr DSP2_ClkHigh_Nop13
-
-DSP2_ClkHigh_Nop13:
-	nop
-	jr DSP2_ClkHigh_Nop14
-
-DSP2_ClkHigh_Nop14:
-	nop
-	jr DSP2_ClkHigh_Nop15
-
-DSP2_ClkHigh_Nop15:
-	nop
-	jr DSP2_ClkHigh_Nop16
-
-DSP2_ClkHigh_Nop16:
-	nop
-	jr DSP2_ClkHigh_Nop17
-
-DSP2_ClkHigh_Nop17:
-	nop
-	jr DSP2_ClkHigh_Nop18
-
-DSP2_ClkHigh_Nop18:
-	nop
-	jr DSP2_ClkHigh_Nop19
-
-DSP2_ClkHigh_Nop19:
-	nop
-	set	0, (PF:8)
-	jr DSP2_ClkHigh_Nop20
-
-DSP2_ClkHigh_Nop20:
-	nop
-	res	0, (PF:8)
-	jr DSP2_ClkHigh_Nop21
-
-DSP2_ClkHigh_Nop21:
-	nop
-	jr DSP2_ClkHigh_Nop22
-
-DSP2_ClkHigh_Nop22:
-	nop
-	jr DSP2_ClkHigh_Nop23
-
-DSP2_ClkHigh_Nop23:
-	nop
-	jr DSP2_ClkHigh_Nop24
-
-DSP2_ClkHigh_Nop24:
-	nop
-	jr DSP2_ClkHigh_Nop25
-
-DSP2_ClkHigh_Nop25:
-	nop
-	jr DSP2_ClkHigh_Nop26
-
-DSP2_ClkHigh_Nop26:
-	nop
-	jr DSP2_ClkHigh_Nop27
-
-DSP2_ClkHigh_Nop27:
-	nop
-	jr DSP2_ClkHigh_Nop28
-
-DSP2_ClkHigh_Nop28:
-	nop
-	jr DSP2_ClkHigh_Nop29
-
-DSP2_ClkHigh_Nop29:
-	nop
-	jr DSP2_ClkHigh_Nop30
-
-DSP2_ClkHigh_Nop30:
-	nop
-	jr DSP2_ClkHigh_Nop31
-
-DSP2_ClkHigh_Nop31:
-	nop
-	jr DSP2_ClkHigh_Nop32
-
-DSP2_ClkHigh_Nop32:
-	nop
-	jr DSP2_ClkHigh_Nop33
-
-DSP2_ClkHigh_Nop33:
-	nop
-	jr DSP2_ClkHigh_Nop34
-
-DSP2_ClkHigh_Nop34:
-	nop
-	jr DSP2_ClkHigh_Nop35
-
-DSP2_ClkHigh_Nop35:
-	nop
-	jr DSP2_ClkHigh_Nop36
-
-DSP2_ClkHigh_Nop36:
-	nop
-	res	2, (PF:8)
-	jr DSP2_ClkHigh_Nop37
-
-DSP2_ClkHigh_Nop37:
-	nop
-	jr DSP2_ClkHigh_Nop38
-
-DSP2_ClkHigh_Nop38:
-	nop
-	jr DSP2_ClkHigh_Nop39
-
-DSP2_ClkHigh_Nop39:
-	nop
-	jr DSP2_ClkHigh_Nop40
-
-DSP2_ClkHigh_Nop40:
-	nop
-	jr DSP2_ClkHigh_Nop41
-
-DSP2_ClkHigh_Nop41:
-	nop
-	jr DSP2_ClkHigh_Nop42
-
-DSP2_ClkHigh_Nop42:
-	nop
-	jr DSP2_ClkHigh_Nop43
-
-DSP2_ClkHigh_Nop43:
-	nop
-	jr DSP2_ClkHigh_Nop44
-
-DSP2_ClkHigh_Nop44:
-	nop
-	jr DSP2_ClkHigh_Nop45
-
-DSP2_ClkHigh_Nop45:
-	nop
-	jr DSP2_ClkHigh_Nop46
-
-DSP2_ClkHigh_Nop46:
-	nop
-	jr DSP2_ClkHigh_Nop47
-
-DSP2_ClkHigh_Nop47:
-	nop
-	jr DSP2_ClkHigh_Nop48
-
-DSP2_ClkHigh_Nop48:
-	nop
-	jr DSP2_ClkHigh_Nop49
-
-DSP2_ClkHigh_Nop49:
-	nop
-	jr DSP2_ClkHigh_Nop50
-
-DSP2_ClkHigh_Nop50:
-	nop
-	jr DSP2_ClkHigh_Nop51
-
-DSP2_ClkHigh_Nop51:
-	nop
-	jr DSP2_ClkHigh_Nop52
-
-DSP2_ClkHigh_Nop52:
-	nop
-	jr DSP2_ClkHigh_Nop53
-
-DSP2_ClkHigh_Nop53:
-	nop
-	jr DSP2_ClkHigh_Nop54
-
-DSP2_ClkHigh_Nop54:
-	nop
-	jr DSP2_ClkHigh_Nop55
-
-DSP2_ClkHigh_Nop55:
-	nop
-	lda xwa, (Str_DspTrace_Start:24)
-	jp Debug_Print_String
+DSP2_SPI_ClockPulseHigh:	.include "includes/generated/cc900/DSP2_SPI_ClockPulseHigh.s"	; C: cc900/audio_process_dsp_and_effects_inlinejr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP2_ClkHigh_Nop01, DSP2_SPI_ClockPulseHigh + 5
+	.set	DSP2_ClkHigh_Nop02, DSP2_SPI_ClockPulseHigh + 8
+	.set	DSP2_ClkHigh_Nop03, DSP2_SPI_ClockPulseHigh + 11
+	.set	DSP2_ClkHigh_Nop04, DSP2_SPI_ClockPulseHigh + 14
+	.set	DSP2_ClkHigh_Nop05, DSP2_SPI_ClockPulseHigh + 17
+	.set	DSP2_ClkHigh_Nop06, DSP2_SPI_ClockPulseHigh + 20
+	.set	DSP2_ClkHigh_Nop07, DSP2_SPI_ClockPulseHigh + 23
+	.set	DSP2_ClkHigh_Nop08, DSP2_SPI_ClockPulseHigh + 26
+	.set	DSP2_ClkHigh_Nop09, DSP2_SPI_ClockPulseHigh + 29
+	.set	DSP2_ClkHigh_Nop10, DSP2_SPI_ClockPulseHigh + 32
+	.set	DSP2_ClkHigh_Nop11, DSP2_SPI_ClockPulseHigh + 35
+	.set	DSP2_ClkHigh_Nop12, DSP2_SPI_ClockPulseHigh + 38
+	.set	DSP2_ClkHigh_Nop13, DSP2_SPI_ClockPulseHigh + 41
+	.set	DSP2_ClkHigh_Nop14, DSP2_SPI_ClockPulseHigh + 44
+	.set	DSP2_ClkHigh_Nop15, DSP2_SPI_ClockPulseHigh + 47
+	.set	DSP2_ClkHigh_Nop16, DSP2_SPI_ClockPulseHigh + 50
+	.set	DSP2_ClkHigh_Nop17, DSP2_SPI_ClockPulseHigh + 53
+	.set	DSP2_ClkHigh_Nop18, DSP2_SPI_ClockPulseHigh + 56
+	.set	DSP2_ClkHigh_Nop19, DSP2_SPI_ClockPulseHigh + 59
+	.set	DSP2_ClkHigh_Nop20, DSP2_SPI_ClockPulseHigh + 65
+	.set	DSP2_ClkHigh_Nop21, DSP2_SPI_ClockPulseHigh + 71
+	.set	DSP2_ClkHigh_Nop22, DSP2_SPI_ClockPulseHigh + 74
+	.set	DSP2_ClkHigh_Nop23, DSP2_SPI_ClockPulseHigh + 77
+	.set	DSP2_ClkHigh_Nop24, DSP2_SPI_ClockPulseHigh + 80
+	.set	DSP2_ClkHigh_Nop25, DSP2_SPI_ClockPulseHigh + 83
+	.set	DSP2_ClkHigh_Nop26, DSP2_SPI_ClockPulseHigh + 86
+	.set	DSP2_ClkHigh_Nop27, DSP2_SPI_ClockPulseHigh + 89
+	.set	DSP2_ClkHigh_Nop28, DSP2_SPI_ClockPulseHigh + 92
+	.set	DSP2_ClkHigh_Nop29, DSP2_SPI_ClockPulseHigh + 95
+	.set	DSP2_ClkHigh_Nop30, DSP2_SPI_ClockPulseHigh + 98
+	.set	DSP2_ClkHigh_Nop31, DSP2_SPI_ClockPulseHigh + 101
+	.set	DSP2_ClkHigh_Nop32, DSP2_SPI_ClockPulseHigh + 104
+	.set	DSP2_ClkHigh_Nop33, DSP2_SPI_ClockPulseHigh + 107
+	.set	DSP2_ClkHigh_Nop34, DSP2_SPI_ClockPulseHigh + 110
+	.set	DSP2_ClkHigh_Nop35, DSP2_SPI_ClockPulseHigh + 113
+	.set	DSP2_ClkHigh_Nop36, DSP2_SPI_ClockPulseHigh + 116
+	.set	DSP2_ClkHigh_Nop37, DSP2_SPI_ClockPulseHigh + 122
+	.set	DSP2_ClkHigh_Nop38, DSP2_SPI_ClockPulseHigh + 125
+	.set	DSP2_ClkHigh_Nop39, DSP2_SPI_ClockPulseHigh + 128
+	.set	DSP2_ClkHigh_Nop40, DSP2_SPI_ClockPulseHigh + 131
+	.set	DSP2_ClkHigh_Nop41, DSP2_SPI_ClockPulseHigh + 134
+	.set	DSP2_ClkHigh_Nop42, DSP2_SPI_ClockPulseHigh + 137
+	.set	DSP2_ClkHigh_Nop43, DSP2_SPI_ClockPulseHigh + 140
+	.set	DSP2_ClkHigh_Nop44, DSP2_SPI_ClockPulseHigh + 143
+	.set	DSP2_ClkHigh_Nop45, DSP2_SPI_ClockPulseHigh + 146
+	.set	DSP2_ClkHigh_Nop46, DSP2_SPI_ClockPulseHigh + 149
+	.set	DSP2_ClkHigh_Nop47, DSP2_SPI_ClockPulseHigh + 152
+	.set	DSP2_ClkHigh_Nop48, DSP2_SPI_ClockPulseHigh + 155
+	.set	DSP2_ClkHigh_Nop49, DSP2_SPI_ClockPulseHigh + 158
+	.set	DSP2_ClkHigh_Nop50, DSP2_SPI_ClockPulseHigh + 161
+	.set	DSP2_ClkHigh_Nop51, DSP2_SPI_ClockPulseHigh + 164
+	.set	DSP2_ClkHigh_Nop52, DSP2_SPI_ClockPulseHigh + 167
+	.set	DSP2_ClkHigh_Nop53, DSP2_SPI_ClockPulseHigh + 170
+	.set	DSP2_ClkHigh_Nop54, DSP2_SPI_ClockPulseHigh + 173
+	.set	DSP2_ClkHigh_Nop55, DSP2_SPI_ClockPulseHigh + 176
 
 ; ALREADY NAMED. Same bus, the STOP condition: res 2,(PF), res 0,(PF), ~96 nops,
 ; set 2,(PF) (clock high), ~24 nops, set 0,(PF) (data goes HIGH while clock is HIGH = STOP),
 ; then ~134 nops of guaranteed bus-idle time, then jp Debug_Print_String(ROM 0x012215 =
 ; "\n<stp>\n"). Port writes are at 0x0364C4, 0x0364C7, 0x036538, 0x03656B only.
-DSP2_SPI_BusIdle:
-	res	2, (PF:8)
-	res	0, (PF:8)
-	jr DSP2_BusIdle_Nop01
-
-DSP2_BusIdle_Nop01:
-	nop
-	jr DSP2_BusIdle_Nop02
-
-DSP2_BusIdle_Nop02:
-	nop
-	jr DSP2_BusIdle_Nop03
-
-DSP2_BusIdle_Nop03:
-	nop
-	jr DSP2_BusIdle_Nop04
-
-DSP2_BusIdle_Nop04:
-	nop
-	jr DSP2_BusIdle_Nop05
-
-DSP2_BusIdle_Nop05:
-	nop
-	jr DSP2_BusIdle_Nop06
-
-DSP2_BusIdle_Nop06:
-	nop
-	jr DSP2_BusIdle_Nop07
-
-DSP2_BusIdle_Nop07:
-	nop
-	jr DSP2_BusIdle_Nop08
-
-DSP2_BusIdle_Nop08:
-	nop
-	jr DSP2_BusIdle_Nop09
-
-DSP2_BusIdle_Nop09:
-	nop
-	jr DSP2_BusIdle_Nop10
-
-DSP2_BusIdle_Nop10:
-	nop
-	jr DSP2_BusIdle_Nop11
-
-DSP2_BusIdle_Nop11:
-	nop
-	jr DSP2_BusIdle_Nop12
-
-DSP2_BusIdle_Nop12:
-	nop
-	jr DSP2_BusIdle_Nop13
-
-DSP2_BusIdle_Nop13:
-	nop
-	jr DSP2_BusIdle_Nop14
-
-DSP2_BusIdle_Nop14:
-	nop
-	jr DSP2_BusIdle_Nop15
-
-DSP2_BusIdle_Nop15:
-	nop
-	jr DSP2_BusIdle_Nop16
-
-DSP2_BusIdle_Nop16:
-	nop
-	jr DSP2_BusIdle_Nop17
-
-DSP2_BusIdle_Nop17:
-	nop
-	jr DSP2_BusIdle_Nop18
-
-DSP2_BusIdle_Nop18:
-	nop
-	jr DSP2_BusIdle_Nop19
-
-DSP2_BusIdle_Nop19:
-	nop
-	set	2, (PF:8)
-	jr DSP2_BusIdle_Nop20
-
-DSP2_BusIdle_Nop20:
-	nop
-	jr DSP2_BusIdle_Nop21
-
-DSP2_BusIdle_Nop21:
-	nop
-	jr DSP2_BusIdle_Nop22
-
-DSP2_BusIdle_Nop22:
-	nop
-	jr DSP2_BusIdle_Nop23
-
-DSP2_BusIdle_Nop23:
-	nop
-	jr DSP2_BusIdle_Nop24
-
-DSP2_BusIdle_Nop24:
-	nop
-	jr DSP2_BusIdle_Nop25
-
-DSP2_BusIdle_Nop25:
-	nop
-	jr DSP2_BusIdle_Nop26
-
-DSP2_BusIdle_Nop26:
-	nop
-	jr DSP2_BusIdle_Nop27
-
-DSP2_BusIdle_Nop27:
-	nop
-	jr DSP2_BusIdle_Nop28
-
-DSP2_BusIdle_Nop28:
-	nop
-	jr DSP2_BusIdle_Nop29
-
-DSP2_BusIdle_Nop29:
-	nop
-	jr DSP2_BusIdle_Nop30
-
-DSP2_BusIdle_Nop30:
-	nop
-	jr DSP2_BusIdle_Nop31
-
-DSP2_BusIdle_Nop31:
-	nop
-	jr DSP2_BusIdle_Nop32
-
-DSP2_BusIdle_Nop32:
-	nop
-	jr DSP2_BusIdle_Nop33
-
-DSP2_BusIdle_Nop33:
-	nop
-	jr DSP2_BusIdle_Nop34
-
-DSP2_BusIdle_Nop34:
-	nop
-	jr DSP2_BusIdle_Nop35
-
-DSP2_BusIdle_Nop35:
-	nop
-	jr DSP2_BusIdle_Nop36
-
-DSP2_BusIdle_Nop36:
-	nop
-	jr DSP2_BusIdle_Nop37
-
-DSP2_BusIdle_Nop37:
-	nop
-	jr DSP2_BusIdle_Nop38
-
-DSP2_BusIdle_Nop38:
-	nop
-	set	0, (PF:8)
-	jr DSP2_BusIdle_Nop39
-
-DSP2_BusIdle_Nop39:
-	nop
-	jr DSP2_BusIdle_Nop40
-
-DSP2_BusIdle_Nop40:
-	nop
-	jr DSP2_BusIdle_Nop41
-
-DSP2_BusIdle_Nop41:
-	nop
-	jr DSP2_BusIdle_Nop42
-
-DSP2_BusIdle_Nop42:
-	nop
-	jr DSP2_BusIdle_Nop43
-
-DSP2_BusIdle_Nop43:
-	nop
-	jr DSP2_BusIdle_Nop44
-
-DSP2_BusIdle_Nop44:
-	nop
-	jr DSP2_BusIdle_Nop45
-
-DSP2_BusIdle_Nop45:
-	nop
-	jr DSP2_BusIdle_Nop46
-
-DSP2_BusIdle_Nop46:
-	nop
-	jr DSP2_BusIdle_Nop47
-
-DSP2_BusIdle_Nop47:
-	nop
-	jr DSP2_BusIdle_Nop48
-
-DSP2_BusIdle_Nop48:
-	nop
-	jr DSP2_BusIdle_Nop49
-
-DSP2_BusIdle_Nop49:
-	nop
-	jr DSP2_BusIdle_Nop50
-
-DSP2_BusIdle_Nop50:
-	nop
-	jr DSP2_BusIdle_Nop51
-
-DSP2_BusIdle_Nop51:
-	nop
-	jr DSP2_BusIdle_Nop52
-
-DSP2_BusIdle_Nop52:
-	nop
-	jr DSP2_BusIdle_Nop53
-
-DSP2_BusIdle_Nop53:
-	nop
-	jr DSP2_BusIdle_Nop54
-
-DSP2_BusIdle_Nop54:
-	nop
-	jr DSP2_BusIdle_Nop55
-
-DSP2_BusIdle_Nop55:
-	nop
-	jr DSP2_BusIdle_Nop56
-
-DSP2_BusIdle_Nop56:
-	nop
-	jr DSP2_BusIdle_Nop57
-
-DSP2_BusIdle_Nop57:
-	nop
-	jr DSP2_BusIdle_Nop58
-
-DSP2_BusIdle_Nop58:
-	nop
-	jr DSP2_BusIdle_Nop59
-
-DSP2_BusIdle_Nop59:
-	nop
-	jr DSP2_BusIdle_Nop60
-
-DSP2_BusIdle_Nop60:
-	nop
-	jr DSP2_BusIdle_Nop61
-
-DSP2_BusIdle_Nop61:
-	nop
-	jr DSP2_BusIdle_Nop62
-
-DSP2_BusIdle_Nop62:
-	nop
-	jr DSP2_BusIdle_Nop63
-
-DSP2_BusIdle_Nop63:
-	nop
-	jr DSP2_BusIdle_Nop64
-
-DSP2_BusIdle_Nop64:
-	nop
-	jr DSP2_BusIdle_Nop65
-
-DSP2_BusIdle_Nop65:
-	nop
-	jr DSP2_BusIdle_Nop66
-
-DSP2_BusIdle_Nop66:
-	nop
-	jr DSP2_BusIdle_Nop67
-
-DSP2_BusIdle_Nop67:
-	nop
-	jr DSP2_BusIdle_Nop68
-
-DSP2_BusIdle_Nop68:
-	nop
-	jr DSP2_BusIdle_Nop69
-
-DSP2_BusIdle_Nop69:
-	nop
-	jr DSP2_BusIdle_Nop70
-
-DSP2_BusIdle_Nop70:
-	nop
-	jr DSP2_BusIdle_Nop71
-
-DSP2_BusIdle_Nop71:
-	nop
-	jr DSP2_BusIdle_Nop72
-
-DSP2_BusIdle_Nop72:
-	nop
-	jr DSP2_BusIdle_Nop73
-
-DSP2_BusIdle_Nop73:
-	nop
-	jr DSP2_BusIdle_Nop74
-
-DSP2_BusIdle_Nop74:
-	nop
-	jr DSP2_BusIdle_Nop75
-
-DSP2_BusIdle_Nop75:
-	nop
-	jr DSP2_BusIdle_Nop76
-
-DSP2_BusIdle_Nop76:
-	nop
-	jr DSP2_BusIdle_Nop77
-
-DSP2_BusIdle_Nop77:
-	nop
-	jr DSP2_BusIdle_Nop78
-
-DSP2_BusIdle_Nop78:
-	nop
-	jr DSP2_BusIdle_Nop79
-
-DSP2_BusIdle_Nop79:
-	nop
-	jr DSP2_BusIdle_Nop80
-
-DSP2_BusIdle_Nop80:
-	nop
-	jr DSP2_BusIdle_Nop81
-
-DSP2_BusIdle_Nop81:
-	nop
-	jr DSP2_BusIdle_Nop82
-
-DSP2_BusIdle_Nop82:
-	nop
-	jr DSP2_BusIdle_Nop83
-
-DSP2_BusIdle_Nop83:
-	nop
-	jr DSP2_BusIdle_Nop84
-
-DSP2_BusIdle_Nop84:
-	nop
-	jr DSP2_BusIdle_Nop85
-
-DSP2_BusIdle_Nop85:
-	nop
-	jr DSP2_BusIdle_Nop86
-
-DSP2_BusIdle_Nop86:
-	nop
-	jr DSP2_BusIdle_Nop87
-
-DSP2_BusIdle_Nop87:
-	nop
-	jr DSP2_BusIdle_Nop88
-
-DSP2_BusIdle_Nop88:
-	nop
-	jr DSP2_BusIdle_Nop89
-
-DSP2_BusIdle_Nop89:
-	nop
-	jr DSP2_BusIdle_Nop90
-
-DSP2_BusIdle_Nop90:
-	nop
-	jr DSP2_BusIdle_Nop91
-
-DSP2_BusIdle_Nop91:
-	nop
-	jr DSP2_BusIdle_Nop92
-
-DSP2_BusIdle_Nop92:
-	nop
-	jr DSP2_BusIdle_Nop93
-
-DSP2_BusIdle_Nop93:
-	nop
-	jr DSP2_BusIdle_Nop94
-
-DSP2_BusIdle_Nop94:
-	nop
-	jr DSP2_BusIdle_Nop95
-
-DSP2_BusIdle_Nop95:
-	nop
-	jr DSP2_BusIdle_Nop96
-
-DSP2_BusIdle_Nop96:
-	nop
-	jr DSP2_BusIdle_Nop97
-
-DSP2_BusIdle_Nop97:
-	nop
-	jr DSP2_BusIdle_Nop98
-
-DSP2_BusIdle_Nop98:
-	nop
-	jr DSP2_BusIdle_Nop99
-
-DSP2_BusIdle_Nop99:
-	nop
-	jr DSP2_BusIdle_Nop100
-
-DSP2_BusIdle_Nop100:
-	nop
-	jr DSP2_BusIdle_Nop101
-
-DSP2_BusIdle_Nop101:
-	nop
-	jr DSP2_BusIdle_Nop102
-
-DSP2_BusIdle_Nop102:
-	nop
-	jr DSP2_BusIdle_Nop103
-
-DSP2_BusIdle_Nop103:
-	nop
-	jr DSP2_BusIdle_Nop104
-
-DSP2_BusIdle_Nop104:
-	nop
-	jr DSP2_BusIdle_Nop105
-
-DSP2_BusIdle_Nop105:
-	nop
-	jr DSP2_BusIdle_Nop106
-
-DSP2_BusIdle_Nop106:
-	nop
-	jr DSP2_BusIdle_Nop107
-
-DSP2_BusIdle_Nop107:
-	nop
-	jr DSP2_BusIdle_Nop108
-
-DSP2_BusIdle_Nop108:
-	nop
-	jr DSP2_BusIdle_Nop109
-
-DSP2_BusIdle_Nop109:
-	nop
-	jr DSP2_BusIdle_Nop110
-
-DSP2_BusIdle_Nop110:
-	nop
-	jr DSP2_BusIdle_Nop111
-
-DSP2_BusIdle_Nop111:
-	nop
-	jr DSP2_BusIdle_Nop112
-
-DSP2_BusIdle_Nop112:
-	nop
-	jr DSP2_BusIdle_Nop113
-
-DSP2_BusIdle_Nop113:
-	nop
-	jr DSP2_BusIdle_Nop114
-
-DSP2_BusIdle_Nop114:
-	nop
-	jr DSP2_BusIdle_Nop115
-
-DSP2_BusIdle_Nop115:
-	nop
-	jr DSP2_BusIdle_Nop116
-
-DSP2_BusIdle_Nop116:
-	nop
-	jr DSP2_BusIdle_Nop117
-
-DSP2_BusIdle_Nop117:
-	nop
-	jr DSP2_BusIdle_Nop118
-
-DSP2_BusIdle_Nop118:
-	nop
-	jr DSP2_BusIdle_Nop119
-
-DSP2_BusIdle_Nop119:
-	nop
-	jr DSP2_BusIdle_Nop120
-
-DSP2_BusIdle_Nop120:
-	nop
-	jr DSP2_BusIdle_Nop121
-
-DSP2_BusIdle_Nop121:
-	nop
-	jr DSP2_BusIdle_Nop122
-
-DSP2_BusIdle_Nop122:
-	nop
-	jr DSP2_BusIdle_Nop123
-
-DSP2_BusIdle_Nop123:
-	nop
-	jr DSP2_BusIdle_Nop124
-
-DSP2_BusIdle_Nop124:
-	nop
-	jr DSP2_BusIdle_Nop125
-
-DSP2_BusIdle_Nop125:
-	nop
-	jr DSP2_BusIdle_Nop126
-
-DSP2_BusIdle_Nop126:
-	nop
-	jr DSP2_BusIdle_Nop127
-
-DSP2_BusIdle_Nop127:
-	nop
-	jr DSP2_BusIdle_Nop128
-
-DSP2_BusIdle_Nop128:
-	nop
-	jr DSP2_BusIdle_Nop129
-
-DSP2_BusIdle_Nop129:
-	nop
-	jr DSP2_BusIdle_Nop130
-
-DSP2_BusIdle_Nop130:
-	nop
-	jr DSP2_BusIdle_Nop131
-
-DSP2_BusIdle_Nop131:
-	nop
-	jr DSP2_BusIdle_Nop132
-
-DSP2_BusIdle_Nop132:
-	nop
-	jr DSP2_BusIdle_Nop133
-
-DSP2_BusIdle_Nop133:
-	nop
-	jr DSP2_BusIdle_Nop134
-
-DSP2_BusIdle_Nop134:
-	nop
-	lda xwa, (Str_DspTrace_Stop:24)
-	jp Debug_Print_String
+DSP2_SPI_BusIdle:	.include "includes/generated/cc900/DSP2_SPI_BusIdle.s"	; C: cc900/audio_process_dsp_and_effects_inlinejr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP2_BusIdle_Nop01, DSP2_SPI_BusIdle + 8
+	.set	DSP2_BusIdle_Nop02, DSP2_SPI_BusIdle + 11
+	.set	DSP2_BusIdle_Nop03, DSP2_SPI_BusIdle + 14
+	.set	DSP2_BusIdle_Nop04, DSP2_SPI_BusIdle + 17
+	.set	DSP2_BusIdle_Nop05, DSP2_SPI_BusIdle + 20
+	.set	DSP2_BusIdle_Nop06, DSP2_SPI_BusIdle + 23
+	.set	DSP2_BusIdle_Nop07, DSP2_SPI_BusIdle + 26
+	.set	DSP2_BusIdle_Nop08, DSP2_SPI_BusIdle + 29
+	.set	DSP2_BusIdle_Nop09, DSP2_SPI_BusIdle + 32
+	.set	DSP2_BusIdle_Nop10, DSP2_SPI_BusIdle + 35
+	.set	DSP2_BusIdle_Nop11, DSP2_SPI_BusIdle + 38
+	.set	DSP2_BusIdle_Nop12, DSP2_SPI_BusIdle + 41
+	.set	DSP2_BusIdle_Nop13, DSP2_SPI_BusIdle + 44
+	.set	DSP2_BusIdle_Nop14, DSP2_SPI_BusIdle + 47
+	.set	DSP2_BusIdle_Nop15, DSP2_SPI_BusIdle + 50
+	.set	DSP2_BusIdle_Nop16, DSP2_SPI_BusIdle + 53
+	.set	DSP2_BusIdle_Nop17, DSP2_SPI_BusIdle + 56
+	.set	DSP2_BusIdle_Nop18, DSP2_SPI_BusIdle + 59
+	.set	DSP2_BusIdle_Nop19, DSP2_SPI_BusIdle + 62
+	.set	DSP2_BusIdle_Nop20, DSP2_SPI_BusIdle + 68
+	.set	DSP2_BusIdle_Nop21, DSP2_SPI_BusIdle + 71
+	.set	DSP2_BusIdle_Nop22, DSP2_SPI_BusIdle + 74
+	.set	DSP2_BusIdle_Nop23, DSP2_SPI_BusIdle + 77
+	.set	DSP2_BusIdle_Nop24, DSP2_SPI_BusIdle + 80
+	.set	DSP2_BusIdle_Nop25, DSP2_SPI_BusIdle + 83
+	.set	DSP2_BusIdle_Nop26, DSP2_SPI_BusIdle + 86
+	.set	DSP2_BusIdle_Nop27, DSP2_SPI_BusIdle + 89
+	.set	DSP2_BusIdle_Nop28, DSP2_SPI_BusIdle + 92
+	.set	DSP2_BusIdle_Nop29, DSP2_SPI_BusIdle + 95
+	.set	DSP2_BusIdle_Nop30, DSP2_SPI_BusIdle + 98
+	.set	DSP2_BusIdle_Nop31, DSP2_SPI_BusIdle + 101
+	.set	DSP2_BusIdle_Nop32, DSP2_SPI_BusIdle + 104
+	.set	DSP2_BusIdle_Nop33, DSP2_SPI_BusIdle + 107
+	.set	DSP2_BusIdle_Nop34, DSP2_SPI_BusIdle + 110
+	.set	DSP2_BusIdle_Nop35, DSP2_SPI_BusIdle + 113
+	.set	DSP2_BusIdle_Nop36, DSP2_SPI_BusIdle + 116
+	.set	DSP2_BusIdle_Nop37, DSP2_SPI_BusIdle + 119
+	.set	DSP2_BusIdle_Nop38, DSP2_SPI_BusIdle + 122
+	.set	DSP2_BusIdle_Nop39, DSP2_SPI_BusIdle + 128
+	.set	DSP2_BusIdle_Nop40, DSP2_SPI_BusIdle + 131
+	.set	DSP2_BusIdle_Nop41, DSP2_SPI_BusIdle + 134
+	.set	DSP2_BusIdle_Nop42, DSP2_SPI_BusIdle + 137
+	.set	DSP2_BusIdle_Nop43, DSP2_SPI_BusIdle + 140
+	.set	DSP2_BusIdle_Nop44, DSP2_SPI_BusIdle + 143
+	.set	DSP2_BusIdle_Nop45, DSP2_SPI_BusIdle + 146
+	.set	DSP2_BusIdle_Nop46, DSP2_SPI_BusIdle + 149
+	.set	DSP2_BusIdle_Nop47, DSP2_SPI_BusIdle + 152
+	.set	DSP2_BusIdle_Nop48, DSP2_SPI_BusIdle + 155
+	.set	DSP2_BusIdle_Nop49, DSP2_SPI_BusIdle + 158
+	.set	DSP2_BusIdle_Nop50, DSP2_SPI_BusIdle + 161
+	.set	DSP2_BusIdle_Nop51, DSP2_SPI_BusIdle + 164
+	.set	DSP2_BusIdle_Nop52, DSP2_SPI_BusIdle + 167
+	.set	DSP2_BusIdle_Nop53, DSP2_SPI_BusIdle + 170
+	.set	DSP2_BusIdle_Nop54, DSP2_SPI_BusIdle + 173
+	.set	DSP2_BusIdle_Nop55, DSP2_SPI_BusIdle + 176
+	.set	DSP2_BusIdle_Nop56, DSP2_SPI_BusIdle + 179
+	.set	DSP2_BusIdle_Nop57, DSP2_SPI_BusIdle + 182
+	.set	DSP2_BusIdle_Nop58, DSP2_SPI_BusIdle + 185
+	.set	DSP2_BusIdle_Nop59, DSP2_SPI_BusIdle + 188
+	.set	DSP2_BusIdle_Nop60, DSP2_SPI_BusIdle + 191
+	.set	DSP2_BusIdle_Nop61, DSP2_SPI_BusIdle + 194
+	.set	DSP2_BusIdle_Nop62, DSP2_SPI_BusIdle + 197
+	.set	DSP2_BusIdle_Nop63, DSP2_SPI_BusIdle + 200
+	.set	DSP2_BusIdle_Nop64, DSP2_SPI_BusIdle + 203
+	.set	DSP2_BusIdle_Nop65, DSP2_SPI_BusIdle + 206
+	.set	DSP2_BusIdle_Nop66, DSP2_SPI_BusIdle + 209
+	.set	DSP2_BusIdle_Nop67, DSP2_SPI_BusIdle + 212
+	.set	DSP2_BusIdle_Nop68, DSP2_SPI_BusIdle + 215
+	.set	DSP2_BusIdle_Nop69, DSP2_SPI_BusIdle + 218
+	.set	DSP2_BusIdle_Nop70, DSP2_SPI_BusIdle + 221
+	.set	DSP2_BusIdle_Nop71, DSP2_SPI_BusIdle + 224
+	.set	DSP2_BusIdle_Nop72, DSP2_SPI_BusIdle + 227
+	.set	DSP2_BusIdle_Nop73, DSP2_SPI_BusIdle + 230
+	.set	DSP2_BusIdle_Nop74, DSP2_SPI_BusIdle + 233
+	.set	DSP2_BusIdle_Nop75, DSP2_SPI_BusIdle + 236
+	.set	DSP2_BusIdle_Nop76, DSP2_SPI_BusIdle + 239
+	.set	DSP2_BusIdle_Nop77, DSP2_SPI_BusIdle + 242
+	.set	DSP2_BusIdle_Nop78, DSP2_SPI_BusIdle + 245
+	.set	DSP2_BusIdle_Nop79, DSP2_SPI_BusIdle + 248
+	.set	DSP2_BusIdle_Nop80, DSP2_SPI_BusIdle + 251
+	.set	DSP2_BusIdle_Nop81, DSP2_SPI_BusIdle + 254
+	.set	DSP2_BusIdle_Nop82, DSP2_SPI_BusIdle + 257
+	.set	DSP2_BusIdle_Nop83, DSP2_SPI_BusIdle + 260
+	.set	DSP2_BusIdle_Nop84, DSP2_SPI_BusIdle + 263
+	.set	DSP2_BusIdle_Nop85, DSP2_SPI_BusIdle + 266
+	.set	DSP2_BusIdle_Nop86, DSP2_SPI_BusIdle + 269
+	.set	DSP2_BusIdle_Nop87, DSP2_SPI_BusIdle + 272
+	.set	DSP2_BusIdle_Nop88, DSP2_SPI_BusIdle + 275
+	.set	DSP2_BusIdle_Nop89, DSP2_SPI_BusIdle + 278
+	.set	DSP2_BusIdle_Nop90, DSP2_SPI_BusIdle + 281
+	.set	DSP2_BusIdle_Nop91, DSP2_SPI_BusIdle + 284
+	.set	DSP2_BusIdle_Nop92, DSP2_SPI_BusIdle + 287
+	.set	DSP2_BusIdle_Nop93, DSP2_SPI_BusIdle + 290
+	.set	DSP2_BusIdle_Nop94, DSP2_SPI_BusIdle + 293
+	.set	DSP2_BusIdle_Nop95, DSP2_SPI_BusIdle + 296
+	.set	DSP2_BusIdle_Nop96, DSP2_SPI_BusIdle + 299
+	.set	DSP2_BusIdle_Nop97, DSP2_SPI_BusIdle + 302
+	.set	DSP2_BusIdle_Nop98, DSP2_SPI_BusIdle + 305
+	.set	DSP2_BusIdle_Nop99, DSP2_SPI_BusIdle + 308
+	.set	DSP2_BusIdle_Nop100, DSP2_SPI_BusIdle + 311
+	.set	DSP2_BusIdle_Nop101, DSP2_SPI_BusIdle + 314
+	.set	DSP2_BusIdle_Nop102, DSP2_SPI_BusIdle + 317
+	.set	DSP2_BusIdle_Nop103, DSP2_SPI_BusIdle + 320
+	.set	DSP2_BusIdle_Nop104, DSP2_SPI_BusIdle + 323
+	.set	DSP2_BusIdle_Nop105, DSP2_SPI_BusIdle + 326
+	.set	DSP2_BusIdle_Nop106, DSP2_SPI_BusIdle + 329
+	.set	DSP2_BusIdle_Nop107, DSP2_SPI_BusIdle + 332
+	.set	DSP2_BusIdle_Nop108, DSP2_SPI_BusIdle + 335
+	.set	DSP2_BusIdle_Nop109, DSP2_SPI_BusIdle + 338
+	.set	DSP2_BusIdle_Nop110, DSP2_SPI_BusIdle + 341
+	.set	DSP2_BusIdle_Nop111, DSP2_SPI_BusIdle + 344
+	.set	DSP2_BusIdle_Nop112, DSP2_SPI_BusIdle + 347
+	.set	DSP2_BusIdle_Nop113, DSP2_SPI_BusIdle + 350
+	.set	DSP2_BusIdle_Nop114, DSP2_SPI_BusIdle + 353
+	.set	DSP2_BusIdle_Nop115, DSP2_SPI_BusIdle + 356
+	.set	DSP2_BusIdle_Nop116, DSP2_SPI_BusIdle + 359
+	.set	DSP2_BusIdle_Nop117, DSP2_SPI_BusIdle + 362
+	.set	DSP2_BusIdle_Nop118, DSP2_SPI_BusIdle + 365
+	.set	DSP2_BusIdle_Nop119, DSP2_SPI_BusIdle + 368
+	.set	DSP2_BusIdle_Nop120, DSP2_SPI_BusIdle + 371
+	.set	DSP2_BusIdle_Nop121, DSP2_SPI_BusIdle + 374
+	.set	DSP2_BusIdle_Nop122, DSP2_SPI_BusIdle + 377
+	.set	DSP2_BusIdle_Nop123, DSP2_SPI_BusIdle + 380
+	.set	DSP2_BusIdle_Nop124, DSP2_SPI_BusIdle + 383
+	.set	DSP2_BusIdle_Nop125, DSP2_SPI_BusIdle + 386
+	.set	DSP2_BusIdle_Nop126, DSP2_SPI_BusIdle + 389
+	.set	DSP2_BusIdle_Nop127, DSP2_SPI_BusIdle + 392
+	.set	DSP2_BusIdle_Nop128, DSP2_SPI_BusIdle + 395
+	.set	DSP2_BusIdle_Nop129, DSP2_SPI_BusIdle + 398
+	.set	DSP2_BusIdle_Nop130, DSP2_SPI_BusIdle + 401
+	.set	DSP2_BusIdle_Nop131, DSP2_SPI_BusIdle + 404
+	.set	DSP2_BusIdle_Nop132, DSP2_SPI_BusIdle + 407
+	.set	DSP2_BusIdle_Nop133, DSP2_SPI_BusIdle + 410
+	.set	DSP2_BusIdle_Nop134, DSP2_SPI_BusIdle + 413
 
 ; ALREADY NAMED -- doc header only. Sends one command byte to DSP2 over the bit-banged
 ; two-wire bus. Entry BC = chip number, A = byte. Exit HL = 0 (the result word is initialised

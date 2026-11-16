@@ -136,6 +136,14 @@ waiting for a translator form the build lacks (my checker, `sub_v423.py`, has th
 - `*_qwa.c` (2): `and QWA,n` (`and_erpw`);
 - `*_modjump.c` (1): a conditional jump to a module-local function keeps the listing's `.` name.
 
+**Third promotion (after main's splice-robust translator bundle, 642470321).**  Those 13 held-back functions and
+every function verified in rounds 11 .. 16 moved into `cc900/` (`promote_run.sh LIST SIZES`: git mv in the three
+trees, the v142 splice, the v141 / v140 generators): 39 more, **397 functions per tree** built from C, the three
+payloads byte-identical, `make -j2 gate` PASS.  Held back in `cc900-staged/` (4 files): the six jump-table switches
+(AudioChannel_Dispatch, Audio_Cmd_ToneEdit_Dispatch, TVF_Emit_Registers, TVF_Emit_Registers_Type2,
+TVF_BuildEmit_Short_Dispatch, Pitch_Get_Patch_Octave_Shift), until the build splices their generated table at the
+tree's label (lane_vmb's fix: the table began with V4.23's own `align 2`).
+
 | script            | question it answers                                                                      | command                                                                                          |
 |-------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | `hold_back.py`    | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...`               |
