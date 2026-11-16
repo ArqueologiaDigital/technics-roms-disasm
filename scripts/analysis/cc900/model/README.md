@@ -25,7 +25,7 @@ written from it and tested against it.
 | `to_llvm.py`     | the model's listing rewritten in our llvm-mc syntax, with asm900's encodings and the 8/16/24-bit address choice; with `SPELL` set (the phase 6 build) a named operand keeps the tree's name |
 | `check_bytes.py` | assembles `to_llvm.py` output with llvm-mc and compares each function's bytes with a ROM image; `assemble()` / `load_reference()` as a module                                               |
 | `fn_diff.py`     | one firmware function, our C through the model against the ROM: instructions, bytes, first difference (phase 6)                                                                             |
-| `pairs_model.py` | the firmware's library pairs rebuilt by the model + `to_llvm.py` + llvm-mc / ld.lld, compared with each image                                                                               |
+| `pairs_model.py` | the firmware's library pairs rebuilt by the model + `to_llvm.py` + llvm-mc / ld.lld, compared with each image; `--listings DIR` uses a Toshiba listing in place of the model's              |
 
 **From C to ROM bytes without Toshiba's tools** (phase 6 preview; prints `6 of 6 functions byte-identical`):
 
@@ -42,6 +42,12 @@ for `make` (`notes/cc900-phase6-2026-11-16/README.md`); one function against the
 **The firmware's library pairs without Toshiba's tools** (`../results/pairs_model_kn5000.tsv`):
 
     python3 -I -B pairs_model.py ../results/pairs.tsv ~/compartilhado/tmp/cc900-corpus-libsrc97 > ../results/pairs_model_kn5000.tsv
+
+The same pairs from V4.23's own listings of the 1997 library (oracle run `2026-11-08-5`), through the same `to_llvm.py`
+and llvm-mc (`../results/pairs_v423_llvm_kn5000.tsv`; `make cc900-c-coverage` runs both):
+
+    python3 -I -B pairs_model.py ../results/pairs.tsv ~/compartilhado/tmp/cc900-corpus-libsrc97 \
+        --listings ~/compartilhado/cc900-oracle/runs/2026-11-08-5-libsrc97-O3XS/out/v423/O3XS/libsrc > ../results/pairs_v423_llvm_kn5000.tsv
 
 `../results/model_ledger.md` records the scores; `sh model/ledger.sh` (from `scripts/analysis/cc900`) regenerates them.  The oracle
 directories are `~/compartilhado/cc900-oracle/runs/2026-11-08-7-micro/out/<compiler>/<options>`.
