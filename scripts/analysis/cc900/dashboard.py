@@ -167,7 +167,9 @@ def collect_progress():
             if line.startswith('time\t') or len(f) < 8: continue
             v = [int(x) for x in f[2:8]]
             out.append(dict(date=f[0], h=f[1][:24], subject='V4.23 run ' + f[1], moved=(prev is None or v != prev),
-                            built_fn=v[0], built_b=v[1], staged_fn=v[2], staged_b=v[3], v10_fn=v[4], v10_b=v[5]))
+                            built_fn=v[0], built_b=v[1], staged_fn=v[2], staged_b=v[3], v10_fn=v[4], v10_b=v[5],
+                            images={k: [int(x) for x in val.split('/')] for k, val in
+                                    (kv.split('=') for kv in (f[8].split(';') if len(f) > 8 and f[8] else []))}))
             prev = v
     return out
 
@@ -192,16 +194,19 @@ PAGE = r'''<!doctype html>
   --page: #f6f5f2; --surface-1: #fcfcfb; --border: #dddbd4; --grid: #e7e5df;
   --text-primary: #0b0b0b; --text-secondary: #52514e; --text-muted: #7b7a74;
   --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+  --series-5: #8e5cd9; --series-6: #d6457a; --series-7: #0f7f8c; --series-8: #8c5a2b; --series-9: #5b6b84; --series-10: #6f8a1c;
   --good: #1a7f37; --serious: #b3261e; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { color-scheme: dark;
   --page: #121211; --surface-1: #1a1a19; --border: #33322f; --grid: #2a2927;
   --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
   --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+  --series-5: #a47de8; --series-6: #e8689a; --series-7: #2aa5b3; --series-8: #b98450; --series-9: #8a9ab5; --series-10: #97b33a;
   --good: #4cc26b; --serious: #f2867e; } }
 :root[data-theme="dark"] { color-scheme: dark;
   --page: #121211; --surface-1: #1a1a19; --border: #33322f; --grid: #2a2927;
   --text-primary: #f0efec; --text-secondary: #c3c2b7; --text-muted: #8f8e86;
   --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+  --series-5: #a47de8; --series-6: #e8689a; --series-7: #2aa5b3; --series-8: #b98450; --series-9: #8a9ab5; --series-10: #97b33a;
   --good: #4cc26b; --serious: #f2867e; }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--page); color: var(--text-primary);
@@ -414,20 +419,30 @@ const pct3 = v => v == null ? "–" : (v > 0 && v < 0.01 ? v.toFixed(4) : v.toFi
 function covCharts() {
   const PG = DATA.progress || [];
   if (PG.length) {
-    chart("Firmware C confirmed by Toshiba V4.23", "ROM bytes of firmware functions whose C Toshiba V4.23 compiles to exactly the ROM's bytes, over the six main-CPU images: built into the images, and confirmed but still staged on the C lane's branch (results/c_progress.tsv, one point per V4.23 run, even when nothing moved). The tooltip gives the function counts.",
-      [{ name: "built + staged", short: "total", c: "var(--series-2)", v: PG.map(r => r.built_b + r.staged_b), extra: i => `${PG[i].built_fn + PG[i].staged_fn} functions` },
-       { name: "built into the images", short: "built", c: "var(--series-1)", v: PG.map(r => r.built_b), extra: i => `${PG[i].built_fn} functions` },
-       { name: "staged, not yet built", short: "staged", c: "var(--series-3)", v: PG.map(r => r.staged_b), extra: i => `${PG[i].staged_fn} functions` }],
-      { rows: PG, zero: true, into: "cov-charts", right: 110, good: "▲ progress = lines going up; staged bytes move into built at each merge" });
-    chart("Firmware C confirmed by V4.23, v10 alone", "The same for the v10 image only (built + staged).",
-      [{ name: "v10 bytes", short: "v10", c: "var(--series-2)", v: PG.map(r => r.v10_b), extra: i => `${PG[i].v10_fn} functions` }],
-      { rows: PG, zero: true, into: "cov-charts", right: 110, good: "▲ progress = the line going up" });
+    // percentages of ROM size (owner, 2026-11-16): sizes from the newest c_build_coverage.md's per-image table
+    const LASTCV = CV.length ? CV[CV.length - 1] : null, SIZE = {};
+    if (LASTCV) for (const im of LASTCV.images) SIZE[im[0]] = im[1];
+    const ALL = Object.values(SIZE).reduce((a, b) => a + b, 0);
+    const P = (b, n) => n ? 100 * b / n : null;
+    chart("Firmware C confirmed by Toshiba V4.23, % of all ROM bytes", `Bytes of firmware functions whose C Toshiba V4.23 compiles to exactly the ROM's bytes, as a share of all ${Object.keys(SIZE).length} ROM images' bytes (${ALL} B): built into the images, and confirmed but still staged on the C lanes' branches (results/c_progress.tsv, one point per V4.23 run, even when nothing moved). Library C is not included. The tooltip gives bytes and functions.`,
+      [{ name: "built + staged", short: "total", c: "var(--series-2)", v: PG.map(r => P(r.built_b + r.staged_b, ALL)), extra: i => `${PG[i].built_b + PG[i].staged_b} B · ${PG[i].built_fn + PG[i].staged_fn} functions` },
+       { name: "built into the images", short: "built", c: "var(--series-1)", v: PG.map(r => P(r.built_b, ALL)), extra: i => `${PG[i].built_b} B · ${PG[i].built_fn} functions` },
+       { name: "staged, not yet built", short: "staged", c: "var(--series-3)", v: PG.map(r => P(r.staged_b, ALL)), extra: i => `${PG[i].staged_b} B · ${PG[i].staged_fn} functions` }],
+      { rows: PG, zero: true, pct: true, fmt: pct3, into: "cov-charts", right: 110, good: "▲ progress = lines going up; staged moves into built at each merge" });
+    const IMG = [...new Set(PG.flatMap(r => Object.keys(r.images || {})).concat(["v10"]))].sort((a, b) => a.localeCompare(b, undefined, {numeric: true}));
+    const IMGCOL = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(i => `var(--series-${i})`);
+    chart("Firmware C confirmed by V4.23, % of each ROM", "Built + staged bytes for each ROM image (main-CPU versions, sub-CPU payloads, HD-AE5000) as a share of that image's size. Points before the per-image column existed show v10 only. The tooltip gives bytes and functions.",
+      IMG.map((k, j) => ({ name: k, short: k, c: IMGCOL[j % IMGCOL.length],
+        v: PG.map(r => { const e = r.images && r.images[k]; const b = e ? e[1] : (k === "v10" ? r.v10_b : null); return b == null ? null : P(b, SIZE[k]); }),
+        extra: i => { const e = PG[i].images && PG[i].images[k]; return e ? `${e[1]} B of ${SIZE[k]} B · ${e[0]} functions` : (k === "v10" ? `${PG[i].v10_b} B · ${PG[i].v10_fn} functions` : "–"); } })),
+      { rows: PG, zero: true, pct: true, fmt: pct3, into: "cov-charts", right: 110, good: "▲ progress = lines going up; one line per ROM" });
   }
   if (!CV.length) return;
-  chart("Bytes built from C, all images", "ROM bytes that C, through each toolchain, gives exactly: firmware C built into the images plus the Toshiba library routines checked in them. The tooltip splits the two.",
-    TC.map(k => ({ name: TCNAME[k], short: k, c: TCCOL[k], v: CV.map(r => r.tot[k][0]),
-      extra: i => `firmware ${CV[i].fw[k]} B · library ${CV[i].lib[k]} B` })),
-    { rows: CV, zero: true, into: "cov-charts", right: 110, good: "▲ progress = lines going up; LLVM joins the other two once phase 3b works" });
+  const ROMB = r => r.images.reduce((a, im) => a + im[1], 0);
+  chart("Built from C, % of all ROM bytes", "ROM bytes that C, through each toolchain, gives exactly (firmware C built into the images plus the Toshiba library routines checked in them), as a share of all the images' bytes. The tooltip gives the bytes, split into the two.",
+    TC.map(k => ({ name: TCNAME[k], short: k, c: TCCOL[k], v: CV.map(r => ROMB(r) ? 100 * r.tot[k][0] / ROMB(r) : null),
+      extra: i => `${CV[i].tot[k][0]} B: firmware ${CV[i].fw[k]} B · library ${CV[i].lib[k]} B` })),
+    { rows: CV, zero: true, pct: true, fmt: pct3, into: "cov-charts", right: 130, good: "▲ progress = lines going up; LLVM joins the other two once phase 3b works" });
   chart("Share of the images' code built from C", "Bytes from C that the census calls CODE, as a share of all the images' CODE bytes.",
     TC.map(k => ({ name: TCNAME[k], short: k, c: TCCOL[k], v: CV.map(r => r.code ? 100 * r.tot[k][1] / r.code : null), raw: CV.map(r => [r.tot[k][1], r.code]) })),
     { rows: CV, zero: true, pct: true, into: "cov-charts", right: 130, fmt: pct3, good: "▲ progress = lines going up" });

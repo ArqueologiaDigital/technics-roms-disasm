@@ -21,6 +21,8 @@ It appends one row to results/c_progress.tsv (beside this script, in results/):
                the sub-CPU and HD-AE5000 lanes' tables (OTHER_LANES)
     staged_b   their bytes
     v10_fn / v10_b   the same two totals (built + staged) for v10 alone
+    images     every image's built + staged totals, `image=functions/bytes;...` (since 2026-11-16 evening; older
+               rows have no such column)
 The dashboard (dashboard.py) charts this file.  Nothing here reads a Toshiba listing; the figures come from the two
 tables the build and the C lane already record.
 """
@@ -35,8 +37,10 @@ REPO = os.path.abspath(os.path.join(HERE, "..", "..", ".."))
 COVERAGE = os.path.join(HERE, "results", "c_build_coverage.md")
 OUT = os.path.join(HERE, "results", "c_progress.tsv")
 STAGED = "notes/cc900-phase6-2026-11-16/staged_v423.tsv"
-HEADER = "time\trun\tbuilt_fn\tbuilt_b\tstaged_fn\tstaged_b\tv10_fn\tv10_b\n"
-IMAGES_OF_TREE = {"v10": ["v10"], "v9": ["v9", "v8"], "v7": ["v7"], "v6": ["v6"], "v5": ["v5"]}
+HEADER = "time\trun\tbuilt_fn\tbuilt_b\tstaged_fn\tstaged_b\tv10_fn\tv10_b\timages\n"
+IMAGES_OF_TREE = {"v10": ["v10"], "v9": ["v9", "v8"], "v7": ["v7"], "v6": ["v6"], "v5": ["v5"],
+                  # the HD-AE5000 trees under the coverage page's image names
+                  "hdae5000_v2_01i": ["hdae_v201"], "hdae5000_v1_15i": ["hdae_v115"], "hdae5000_v1_10i": ["hdae_v110"]}
 # staged-results tables of the other C lanes, same columns as staged_v423.tsv; a missing branch or file counts nothing
 OTHER_LANES = [("cc900/c-subcpu-hdae", "notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv"),
                ("cc900/c-hdae5000", "notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv")]
@@ -84,14 +88,19 @@ def record(run, branch):
         st.update(staged(br, path))
     s = {k: v for k, v in st.items() if k not in b}
     v10 = [v for (img, _), v in list(b.items()) + list(s.items()) if img == "v10"]
+    per = {}                              # image -> [functions, bytes], built + staged (owner, 2026-11-16: one curve per ROM)
+    for (img, _), v in list(b.items()) + list(s.items()):
+        per.setdefault(img, [0, 0]); per[img][0] += 1; per[img][1] += v
+    images = ";".join("%s=%d/%d" % (img, n, by) for img, (n, by) in sorted(per.items()))
     row = [datetime.datetime.now().strftime("%Y-%m-%dT%H:%M:%S"), run, len(b), sum(b.values()), len(s),
-           sum(s.values()), len(v10), sum(v10)]
+           sum(s.values()), len(v10), sum(v10), images]
     new = not os.path.exists(OUT)
     with open(OUT, "a", encoding="utf-8") as fh:
         if new:
             fh.write(HEADER)
         fh.write("\t".join(str(x) for x in row) + "\n")
-    print("c_progress: built %d functions / %d B, staged %d / %d B; v10 %d / %d B" % tuple(row[2:]))
+    print("c_progress: built %d functions / %d B, staged %d / %d B; v10 %d / %d B" % tuple(row[2:8]))
+    print("c_progress: per image %s" % images)
 
 
 def main():

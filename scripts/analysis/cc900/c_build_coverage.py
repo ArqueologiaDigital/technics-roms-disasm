@@ -21,9 +21,14 @@ Two kinds of C source count (one table row per image and kind):
                scripts/build/cc900_firmware_c.py (notes/cc900-phase6-2026-11-16/README.md).  A function counts for
                the model when the tree includes its generated body (`.include "includes/generated/cc900/F.s"`) and
                the model's bytes equal the ROM's at the symbols reference's address (as model/fn_diff.py checks).
-               It counts for V4.23 when a V4.23 listing of exactly this C file (same SHA-256, recorded in
-               results/c_build_v423_runs.tsv) at the file's options gives the ROM's bytes.  A function with no such
-               listing is "not yet checked", never guessed; --v423-corpus prepares the oracle run that checks it.
+               It counts for V4.23 when a V4.23 listing of exactly this C file at the file's options gives the
+               ROM's bytes.  The listing comes from the build's own V4.23 cache first (build/cc900-v423, or
+               CC900_V423_CACHE; the key of this text, options, headers, compiler and job.sh, as
+               scripts/build/cc900_v423.py computes it): under the default build the build IS the V4.23 check.
+               Otherwise from a recorded oracle run (same SHA-256, results/c_build_v423_runs.tsv).  The "V4.23
+               run" column names the source: `cache <key prefix>` or the run.  A function with neither is "not yet
+               checked", never guessed; `make` (or --v423-corpus and an oracle run) checks it.  A function the
+               model refuses still gets its V4.23 verdict (its name from the C's own definitions).
                When V4.23 refuses the file (listing FAILED in the runs file: an error in its .cc.log, e.g. two names
                alike in their first 31 characters), its functions read "does not compile" and count as not matched.
                A longer name that V4.23 only cuts to 31 characters is compared under the cut name ("name cut to 31").
@@ -115,6 +120,11 @@ IMAGES = [
     ('prom_d', 'wsa1 prom_d', None, None, None),
 ]
 from cc900_v423 import label_of                              # noqa: E402  (-O3 -XS -Xr -> O3XSXr; any flag string)
+import cc900_v423                                            # noqa: E402
+# the build's V4.23 cache (Makefile CC900_V423_CACHE): its listings are the V4.23 check of the C the build compiled
+V423_CACHE = os.environ.get('CC900_V423_CACHE') or os.path.join(REPO, 'build', 'cc900-v423')
+if not os.path.isabs(V423_CACHE):
+    V423_CACHE = os.path.join(REPO, V423_CACHE)
 
 
 def sha256(path):
@@ -254,7 +264,7 @@ def listing_functions(path):
     return fs
 
 
-def translate(listing_funcs, names, widths=None):
+def translate(listing_funcs, names, widths=None, module=None):
     """{name: listing lines} -> {bare name: llvm-mc lines}, every name written as its address (fn_diff.py's way),
     as cc900_firmware_c.compile_c does for the model's listing.  widths: each symbol's operand width as the listing
     declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None"""
@@ -262,6 +272,7 @@ def translate(listing_funcs, names, widths=None):
     import cc900_firmware_c as fw
     to_llvm.SPELL = None
     to_llvm.WIDTHS = widths
+    to_llvm.MODULE = module    # the build's: the cc900-module: names
     funcs = {}
     for name, lines in listing_funcs.items():
         if not lines or not lines[0].endswith(':') or lines[0][:-1] != name:
@@ -294,8 +305,22 @@ def compare(fn, lines, rom, ref, base=0xe00000):
         return 0, 'untranslated'
     if fn not in ref:
         return 0, 'not in the symbols reference'
+    body = '\n'.join(lines)
+    targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', body)})
+    if targets:      # relative branches to the module's own functions (to_llvm.MODULE): lay the function and its
+        at = ref[fn]     # targets out at their ROM addresses in one unit, so that llvm-mc resolves and sizes them
+        if any(abs(t - at) > 0x10000 for t in targets):
+            return 0, 'a module-local target is out of calr / jrl reach'
+        base = min(targets + [at])
+        self_ = '__cc900_at_%x:\n' % at if at in targets else ''     # a recursive call
+        items = sorted([(t, '__cc900_at_%x:' % t) for t in targets if t != at] +
+                       [(at, '%s\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:' % (self_, fn, fn, body))])
+        body = '\n'.join('\t.org 0x%x\n%s' % (a - base, txt) for a, txt in items)
+        src = '\t.text\n%s\n' % body
+    else:
+        src = '\t.text\n\t.globl %s\n%s:\n%s\n' % (fn, fn, body)
     try:
-        mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (fn, fn, '\n'.join(lines)))[fn]
+        mine = check_bytes.assemble(src)[fn]
     except subprocess.CalledProcessError:
         return 0, 'does not assemble'
     at = ref[fn] - base
@@ -331,34 +356,41 @@ def firmware(key, tree, rom_path, sym_path):
     for path in cfiles:
         flags = fw.file_flags(path)
         label = label_of(flags)
+        lm_ = fw.label_map(path)                          # a short C name (`cc900-name: C=LABEL`) is the label's
         try:
             funcs = fw.compile_c(path, names, spell=False)
-        except SystemExit as ex:
+        except SystemExit as ex:                          # the model refuses the file: its functions still count
             sys.stderr.write('%s: the model does not compile it: %s\n' % (rel(path), str(ex)[:200]))
-            funcs = {}
-        run = runs.get((rel(path), sha256(path), label))
-        v423 = {}
-        if run and run[1] == 'FAILED':
-            v423 = None                                    # V4.23 does not compile this text
-        elif run:
-            lp = os.path.join(ORACLE, 'runs', run[0], 'out', run[1])
-            if os.path.exists(lp):
-                text = open(lp, encoding='latin-1').read()
-                try:                                      # the widths the listing declares, as the build reads them
-                    widths = fw.listing_widths(path, text)
-                except SystemExit as ex:                  # the C's qualifiers disagree with the listing
-                    sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
-                    widths = {}
-                v423 = translate(listing_functions(lp), names, widths)
-                lm_ = fw.label_map(path)                  # a short C name (`cc900-name: C=LABEL`) is the label's
-                v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
-            else:
-                run = None
-        for fn, lines in sorted(funcs.items()):
-            n, ok = compare(fn, lines, rom, ref)
+            funcs = {}                                    # for V4.23, from the C's own definitions below
+        # V4.23's listing of this exact text: the build's cache first (the build is the V4.23 check), else a recorded
+        # oracle run (results/c_build_v423_runs.tsv)
+        lp, src, v423 = None, None, {}
+        st, cache_lp, _ = cc900_v423.listing(V423_CACHE, path)
+        if st == 'OK':
+            lp, src = cache_lp, 'cache ' + os.path.basename(os.path.dirname(cache_lp))[:12]
+        elif st == 'FAILED':
+            src, v423 = 'cache ' + os.path.basename(os.path.dirname(cache_lp))[:12], None
+        else:
+            run = runs.get((rel(path), sha256(path), label))
+            if run and run[1] == 'FAILED':
+                src, v423 = run[0], None                  # V4.23 does not compile this text
+            elif run and os.path.exists(os.path.join(ORACLE, 'runs', run[0], 'out', run[1])):
+                lp, src = os.path.join(ORACLE, 'runs', run[0], 'out', run[1]), run[0]
+        if lp:
+            text = open(lp, encoding='latin-1').read()
+            try:                                          # the widths the listing declares, as the build reads them
+                widths = fw.listing_widths(path, text)
+            except SystemExit as ex:                      # the C's qualifiers disagree with the listing
+                sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
+                widths = {}
+            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path))
+            v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
+        fnames = set(funcs) | {lm_.get(c, c) for c in fw.c_functions(path)}
+        for fn in sorted(fnames):
+            n, ok = compare(fn, funcs[fn], rom, ref) if fn in funcs else (0, 'the model refuses it')
             r = dict(function=fn, file=rel(path), options=flags or 'no options', built=fn in built, bytes=n,
-                     model=ok is True, iv=[(ref[fn], ref[fn] + n)] if fn in ref else [])
-            if not run:
+                     model=ok is True)
+            if src is None:
                 r['V4.23'] = None                                 # not yet checked
             elif v423 is None:
                 r['V4.23'] = 'refused'
@@ -366,9 +398,12 @@ def firmware(key, tree, rom_path, sym_path):
                 r['V4.23'] = False
             else:                                         # V4.23 keeps 31 characters of a name (THC1-Warning-515)
                 n2, ok2 = compare(fn, v423.get(fn) or v423[fn[:31]], rom, ref)
-                r['V4.23'] = bool(ok2 is True and n2 == n)
+                r['V4.23'] = ok2 is True
                 r['cut'] = fn not in v423
-            r['run'] = run[0] if run else None
+                if ok2 is True:
+                    r['bytes'] = n2                       # V4.23's length: the model's may be missing or differ
+            r['iv'] = [(ref[fn], ref[fn] + r['bytes'])] if fn in ref and r['bytes'] else []
+            r['run'] = src
             rows.append(r)
     return rows
 

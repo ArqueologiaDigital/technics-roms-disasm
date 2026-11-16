@@ -1,0 +1,2 @@
+lst|-l
+lstnoopt|-l -O

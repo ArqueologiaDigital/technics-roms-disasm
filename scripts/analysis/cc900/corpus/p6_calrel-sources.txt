@@ -1,0 +1,3 @@
+firmware/p6_calrel.c
+firmware/p6_calrel_far.c
+firmware/p6_calrel_q.c
