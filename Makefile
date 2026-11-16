@@ -870,7 +870,8 @@ CC900_TRANSLATE_SRC = scripts/analysis/cc900/model/to_llvm.py scripts/analysis/c
 CC900_CHOICE = rebuilt_ROMs/cc900-compiler.txt
 CC900_V423_INDEX = $(CC900_V423_CACHE)/index.tsv
 CC900_V423_DONE = $(CC900_V423_CACHE)/filled.stamp
-CC900_ALL_C = $(foreach t,v10 v9 v7 v6 v5,$(wildcard $(t)/maincpu/cc900/*.c))
+CC900_ALL_C = $(foreach t,v10 v9 v7 v6 v5,$(wildcard $(t)/maincpu/cc900/*.c)) \
+              $(foreach t,v142 v141 v140,$(wildcard $(t)/subcpu/cc900/*.c))
 # The compiler choice and (for V4.23) the cache index are written while make reads this file, each only when its
 # content changes; so the bodies are rebuilt exactly when the choice or a V4.23 cache key changed, and `make -q`
 # (assert_byte_identical.py's staleness check) sees an up-to-date tree as up to date.  Both take well under a second.
@@ -893,22 +894,31 @@ $(CC900_V423_DONE): $(CC900_V423_INDEX)
 	python3 -B scripts/build/cc900_v423.py fill $(CC900_V423_CACHE) $(CC900_ORACLE) $(CC900_ALL_C)
 	touch $@
 $(CC900_V423_INDEX): ;
-cc900_stamps = $(patsubst $(1)/maincpu/cc900/%.c,$(1)/maincpu/includes/generated/cc900/%.stamp,$(wildcard $(1)/maincpu/cc900/*.c))
+# $(1) the version (v10), $(2) the CPU directory (maincpu, or subcpu for the sub-CPU payloads v142 / v141 / v140)
+cc900_stamps = $(patsubst $(1)/$(or $(2),maincpu)/cc900/%.c,$(1)/$(or $(2),maincpu)/includes/generated/cc900/%.stamp,$(wildcard $(1)/$(or $(2),maincpu)/cc900/*.c))
 V10_CC900_STAMPS = $(call cc900_stamps,v10)
 V9_CC900_STAMPS = $(call cc900_stamps,v9)
 V7_CC900_STAMPS = $(call cc900_stamps,v7)
 V6_CC900_STAMPS = $(call cc900_stamps,v6)
 V5_CC900_STAMPS = $(call cc900_stamps,v5)
-# $(1) the tree (v10), $(2) the variable naming its sources (V10_SRC); eval'd once that variable exists
+V142_CC900_STAMPS = $(call cc900_stamps,v142,subcpu)
+V141_CC900_STAMPS = $(call cc900_stamps,v141,subcpu)
+V140_CC900_STAMPS = $(call cc900_stamps,v140,subcpu)
+# $(1) the version (v10), $(2) the variable naming its sources (V10_SRC), $(3) the CPU directory (default maincpu);
+# eval'd once that variable exists
 define CC900_FIRMWARE_C
-$(1)/maincpu/includes/generated/cc900/%.stamp: $(1)/maincpu/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
-	$$(CC900_GEN_CMD) $(1)/maincpu $$< $(1)/maincpu/includes/generated/cc900 $$@
+$(1)/$(or $(3),maincpu)/includes/generated/cc900/%.stamp: $(1)/$(or $(3),maincpu)/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
+	$$(CC900_GEN_CMD) $(1)/$(or $(3),maincpu) $$< $(1)/$(or $(3),maincpu)/includes/generated/cc900 $$@
 endef
 $(eval $(call CC900_FIRMWARE_C,v10,V10_SRC))
 $(eval $(call CC900_FIRMWARE_C,v9,V9_SRC))
 $(eval $(call CC900_FIRMWARE_C,v7,V7_SRC))
+$(eval $(call CC900_FIRMWARE_C,v142,V142_SRC,subcpu))
+$(eval $(call CC900_FIRMWARE_C,v141,V141_SRC,subcpu))
+$(eval $(call CC900_FIRMWARE_C,v140,V140_SRC,subcpu))
 .PHONY: cc900-firmware-c
-cc900-firmware-c: $(V10_CC900_STAMPS) $(V9_CC900_STAMPS) $(V7_CC900_STAMPS) $(V6_CC900_STAMPS) $(V5_CC900_STAMPS)
+cc900-firmware-c: $(V10_CC900_STAMPS) $(V9_CC900_STAMPS) $(V7_CC900_STAMPS) $(V6_CC900_STAMPS) $(V5_CC900_STAMPS) \
+                  $(V142_CC900_STAMPS) $(V141_CC900_STAMPS) $(V140_CC900_STAMPS)
 
 # --- Maincpu ---
 rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) $(V10_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
@@ -1174,7 +1184,7 @@ $(eval $(call CC900_FIRMWARE_C,v5,V5_SRC))
 .PHONY: v6-progress verify-v6-reference v5-progress verify-v5-reference
 
 # --- Subcpu payload ---
-rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(V142_CC900_STAMPS) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v142/subcpu -I wsa1/kernel -o $@ v142/subcpu/kn5000_subprogram_v142.s
 
@@ -1208,7 +1218,7 @@ rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 # Ported from the v1.42 tree (scripts/generators/create_v141_subcpu_source.py records
 # the semantic delta; notes/v141-subcpu-port/README.md says how it was measured).
 # Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
-rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(V141_CC900_STAMPS) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v141/subcpu -I wsa1/kernel -o $@ v141/subcpu/kn5000_subprogram_v141.s
 
@@ -1236,7 +1246,7 @@ rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 # Ported from the v1.41 tree (scripts/generators/create_v140_subcpu_source.py records
 # the semantic delta; notes/v140-subcpu-port/README.md says what the code change does).
 # Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
-rebuilt_ROMs/kn5000_subprogram_v140.llvm.o: $(V140_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v140.llvm.o: $(V140_SRC) $(V140_CC900_STAMPS) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v140/subcpu -I wsa1/kernel -o $@ v140/subcpu/kn5000_subprogram_v140.s
 

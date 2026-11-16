@@ -104,9 +104,9 @@ IMAGES = [
     ('v7', 'maincpu v7', 'v7/maincpu', 'original_ROMs/kn5000_v7_program.rom', 'symbols/maincpu_v7_symbols_reference.txt'),
     ('v6', 'maincpu v6', 'v6/maincpu', 'original_ROMs/kn5000_v6_program.rom', 'symbols/maincpu_v6_symbols_reference.txt'),
     ('v5', 'maincpu v5', 'v5/maincpu', 'original_ROMs/kn5000_v5_program.rom', 'symbols/maincpu_v5_symbols_reference.txt'),
-    ('v142', 'subcpu v142', None, None, None),
-    ('v141', 'subcpu v141', None, None, None),
-    ('v140', 'subcpu v140', None, None, None),
+    ('v142', 'subcpu v142', 'v142/subcpu', 'original_ROMs/kn5000_subprogram_v142.rom', 'symbols/subcpu_symbols_reference.txt'),
+    ('v141', 'subcpu v141', 'v141/subcpu', 'original_ROMs/kn5000_subprogram_v141.rom', 'symbols/subcpu_v141_symbols_reference.txt'),
+    ('v140', 'subcpu v140', 'v140/subcpu', 'original_ROMs/kn5000_subprogram_v140.rom', 'symbols/subcpu_v140_symbols_reference.txt'),
     ('subboot', 'subcpu boot', None, None, None),
     ('tabledata', 'table data', None, None, None),
     ('customdata', 'custom data', None, None, None),
@@ -264,10 +264,12 @@ def listing_functions(path):
     return fs
 
 
-def translate(listing_funcs, names, widths=None, module=None):
+def translate(listing_funcs, names, widths=None, module=None, places=None, ref=None):
     """{name: listing lines} -> {bare name: llvm-mc lines}, every name written as its address (fn_diff.py's way),
     as cc900_firmware_c.compile_c does for the model's listing.  widths: each symbol's operand width as the listing
-    declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None"""
+    declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None.  places:
+    the C file's `cc900-data:` map (cc900_firmware_c.data_map): a reference to f_const data becomes its tree address
+    (the data itself is not part of the function's bytes); one without a place makes the function None"""
     import to_llvm
     import cc900_firmware_c as fw
     to_llvm.SPELL = None
@@ -278,6 +280,10 @@ def translate(listing_funcs, names, widths=None, module=None):
         if not lines or not lines[0].endswith(':') or lines[0][:-1] != name:
             continue
         bare = name.lstrip('_.')
+        consts, _ = to_llvm.split_consts(lines)
+        pl = (places or {}).get(bare, {})
+        to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and ref and pl[k] in ref}
+        to_llvm.DATA_REQUIRED = True
         try:
             body = to_llvm.translate_function(name, lines, names)
         except KeyError:
@@ -298,8 +304,9 @@ def translate(listing_funcs, names, widths=None, module=None):
     return funcs
 
 
-def compare(fn, lines, rom, ref, base=0xe00000):
-    """-> (length, True when the bytes equal the ROM's at fn's address), or (0, why not)"""
+def compare(fn, lines, rom, ref, base=0xe00000, to_off=None):
+    """-> (length, True when the bytes equal the ROM's at fn's address), or (0, why not).  The ROM offset of an
+    address is address - base, or to_off(address) (the sub-CPU payload's split map, rom_offset)."""
     import check_bytes
     if lines is None:
         return 0, 'untranslated'
@@ -311,11 +318,11 @@ def compare(fn, lines, rom, ref, base=0xe00000):
         at = ref[fn]     # targets out at their ROM addresses in one unit, so that llvm-mc resolves and sizes them
         if any(abs(t - at) > 0x10000 for t in targets):
             return 0, 'a module-local target is out of calr / jrl reach'
-        base = min(targets + [at])
+        org = min(targets + [at])
         self_ = '__cc900_at_%x:\n' % at if at in targets else ''     # a recursive call
         items = sorted([(t, '__cc900_at_%x:' % t) for t in targets if t != at] +
                        [(at, '%s\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:' % (self_, fn, fn, body))])
-        body = '\n'.join('\t.org 0x%x\n%s' % (a - base, txt) for a, txt in items)
+        body = '\n'.join('\t.org 0x%x\n%s' % (a - org, txt) for a, txt in items)
         src = '\t.text\n%s\n' % body
     else:
         src = '\t.text\n\t.globl %s\n%s:\n%s\n' % (fn, fn, body)
@@ -323,8 +330,16 @@ def compare(fn, lines, rom, ref, base=0xe00000):
         mine = check_bytes.assemble(src)[fn]
     except subprocess.CalledProcessError:
         return 0, 'does not assemble'
-    at = ref[fn] - base
+    at = to_off(ref[fn]) if to_off else ref[fn] - base
     return len(mine), mine == rom[at:at + len(mine)]
+
+
+def rom_offset(key):
+    """address -> offset in the image file: the main CPU's ROM starts at 0xe00000; the sub-CPU payload holds
+    0x400-0x4ff at offset 0 and 0xf000 onwards at offset 0x100 (lane_sub)"""
+    if key in ('v142', 'v141', 'v140'):
+        return lambda a: a - 0x400 if a < 0x500 else a - 0xf000 + 0x100
+    return lambda a: a - 0xe00000
 
 
 def v423_runs():
@@ -348,6 +363,7 @@ def firmware(key, tree, rom_path, sym_path):
     if not cfiles:
         return []
     rom = open(os.path.join(REPO, rom_path), 'rb').read()
+    to_off = rom_offset(key)
     ref = check_bytes.load_reference(os.path.join(REPO, sym_path))
     names = fw.Names(fw.tree_values(os.path.join(REPO, tree)), ref)
     built = tree_includes(tree)
@@ -383,11 +399,11 @@ def firmware(key, tree, rom_path, sym_path):
             except SystemExit as ex:                      # the C's qualifiers disagree with the listing
                 sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
                 widths = {}
-            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path))
+            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path), fw.data_map(path), ref)
             v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
         fnames = set(funcs) | {lm_.get(c, c) for c in fw.c_functions(path)}
         for fn in sorted(fnames):
-            n, ok = compare(fn, funcs[fn], rom, ref) if fn in funcs else (0, 'the model refuses it')
+            n, ok = compare(fn, funcs[fn], rom, ref, to_off=to_off) if fn in funcs else (0, 'the model refuses it')
             r = dict(function=fn, file=rel(path), options=flags or 'no options', built=fn in built, bytes=n,
                      model=ok is True)
             if src is None:
@@ -397,7 +413,7 @@ def firmware(key, tree, rom_path, sym_path):
             elif fn not in v423 and fn[:31] not in v423:
                 r['V4.23'] = False
             else:                                         # V4.23 keeps 31 characters of a name (THC1-Warning-515)
-                n2, ok2 = compare(fn, v423.get(fn) or v423[fn[:31]], rom, ref)
+                n2, ok2 = compare(fn, v423.get(fn) or v423[fn[:31]], rom, ref, to_off=to_off)
                 r['V4.23'] = ok2 is True
                 r['cut'] = fn not in v423
                 if ok2 is True:

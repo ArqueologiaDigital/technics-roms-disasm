@@ -1,0 +1,7 @@
+# Toshiba runtime routines that V4.23 calls by their library names, and the trees' labels for them; read by
+# scripts/build/cc900_firmware_c.py runtime_names() (with results/pairs.tsv's our_label for the matched C library).
+# tree: * (every tree), a version (v10), or a tree path (v142/subcpu).  name: as the listing writes it.
+# C9H_mullu / C9H_divlu: the assembly library's 32-bit multiply / unsigned divide (coordinator, 2026-11-16).
+tree	name	label
+*	C9H_mullu	Math_Multiply32
+*	C9H_divlu	Math_DivideU32

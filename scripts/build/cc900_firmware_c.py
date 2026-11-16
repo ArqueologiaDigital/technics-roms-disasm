@@ -135,6 +135,34 @@ def tree_labels(tree):
     return labs
 
 
+RUNTIME = {}        # main(): {runtime name without `_` / `.`: the tree's label}, runtime_names(tree)
+RUNTIME_TSV = os.path.join(REPO, "scripts", "build", "cc900_runtime_names.tsv")
+PAIRS_TSV = os.path.join(REPO, "scripts", "analysis", "cc900", "results", "pairs.tsv")
+
+
+def runtime_names(tree):
+    """{runtime name: tree label} for TREE (v10/maincpu): V4.23 calls Toshiba's runtime by its library names (C9H_mullu,
+    ._fld_ful), which the trees name otherwise.  From scripts/build/cc900_runtime_names.tsv (`tree<TAB>name<TAB>label`,
+    tree `*` for every tree; the hand-made rows, e.g. the assembly-library C9H_* routines) and from
+    results/pairs.tsv's `our_label` of the tree's image (every library public matched in the ROM).  A name is used
+    only when the tree itself does not define it."""
+    parts = os.path.normpath(tree).split(os.sep)
+    v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
+    image = "%s %s" % (cpu, v)
+    out = {}
+    if os.path.exists(PAIRS_TSV):
+        for l in open(PAIRS_TSV, encoding="utf-8"):
+            c = l.rstrip("\n").split("\t")
+            if len(c) >= 8 and c[0] == image and c[7] and " " not in c[2]:
+                out.setdefault(c[2].lstrip("_."), c[7])
+    if os.path.exists(RUNTIME_TSV):
+        for l in open(RUNTIME_TSV, encoding="utf-8"):
+            c = l.rstrip("\n").split("\t")
+            if len(c) >= 3 and not l.startswith("#") and c[0] in ("*", v, "/".join(parts[-2:])):
+                out[c[1].lstrip("_.")] = c[2]
+    return out
+
+
 class Names(dict):
     """to_llvm's SYMBOLS and SPELL in one: a C name resolves to the tree's value (spelled by its name), to a
     `ram_<hex>` cell (spelled as the number), or to a label of the symbols reference file (spelled by name)."""
@@ -162,6 +190,9 @@ class Names(dict):
         if self.cut and len(self.cut.get(n, ())) == 1:     # a name V4.23 cut to 31 characters: the tree's full name
             full = next(iter(self.cut[n]))
             return self.resolve(full)[0], full
+        alias = RUNTIME.get(n.lstrip("_."))                 # a runtime routine under the tree's name (C9H_mullu)
+        if alias and alias != n:
+            return self.resolve(alias)
         return None, None
 
     def __contains__(self, n):
@@ -410,6 +441,10 @@ def finish(path, name, bare, lines, names):
     if bare != name.lstrip("_."):                          # a short (or cut) C name: the body is the tree label's
         lines = [bare + ":" if l == name + ":" else l for l in lines]
         name = bare
+    consts, _ = to_llvm.split_consts(lines)                # the function's f_const objects, in listing order
+    places = data_map(path).get(bare, {})
+    to_llvm.DATA = {s: places[k] for k, s in enumerate(consts, 1) if k in places}
+    to_llvm.DATA_REQUIRED = True
     try:
         body = to_llvm.translate_function(name, lines, names)
     except KeyError as ex:                                 # a name without a value or a declared width
@@ -429,10 +464,93 @@ def finish(path, name, bare, lines, names):
         for lab in order:
             l = re.sub(r'(?<![\w.])%s(?![\w])' % re.escape(lab), new[lab], l)
         text.append(l)
+    for s, label in to_llvm.DATA.items():                  # the f_const objects, each for its place in the tree
+        data = []
+        for l in to_llvm.translate_data(consts[s], set(order)):
+            for lab in order:
+                l = re.sub(r'(?<![\w.])%s(?![\w])' % re.escape(lab), new[lab], l)
+            data.append(l)
+        text_bad = [l for l in data if "untranslated" in l]
+        if text_bad:
+            sys.exit("%s: %s: to_llvm cannot translate the data of %s:\n%s" % (path, bare, label, "\n".join(text_bad)))
+        DATA_OUT[label] = (bare, data)
     bad = [l for l in text if "untranslated" in l]
     if bad:
         sys.exit("%s: %s: to_llvm cannot translate:\n%s%s" % (path, bare, "\n".join(bad), MODEL_HINT if MODEL else ""))
-    return to_llvm.relax("\n".join(text), assembler_errors).split("\n")
+    return far_fallback(bare, to_llvm.relax("\n".join(text), assembler_errors).split("\n"))
+
+
+DATA_OUT = {}       # finish(): {tree label: (function, llvm-mc data lines)} of the f_const objects placed by cc900-data:
+DATA_RE = re.compile(rb'cc900-data:\s*([A-Za-z_]\w*)\s+(\d+)\s*=\s*([A-Za-z_]\w*)')
+
+
+def data_map(path):
+    """{function: {n: tree label}} from FILE.c's `cc900-data: FUNCTION N = LABEL` comments: V4.23 puts a function's
+    constant data (a switch's jump table, an FP constant, an initialised local array) in the f_const section, which
+    the linker places apart from the code; the comment names the tree's label of the function's N-th such object
+    (in listing order, 1-based).  The build writes that object as includes/generated/cc900/LABEL.s, which the tree
+    includes at LABEL, and the code's reference to it becomes LABEL."""
+    out = {}
+    for m in DATA_RE.finditer(open(path, "rb").read()):
+        out.setdefault(m.group(1).decode(), {})[int(m.group(2))] = m.group(3).decode()
+    return out
+
+
+ADDRS = {}          # main(): {label: address} of the tree's symbols reference, for far_fallback
+
+
+def tree_addresses(tree):
+    """{label: address} from the tree's symbols reference (symbols/maincpu_<v>_..., subcpu_..._symbols_reference.txt),
+    or {} when there is none"""
+    parts = os.path.normpath(tree).split(os.sep)
+    v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
+    name = {"maincpu": "maincpu_%s_symbols_reference.txt" % v,
+            "subcpu": "subcpu_symbols_reference.txt" if v == "v142" else "subcpu_%s_symbols_reference.txt" % v}.get(cpu)
+    p = os.path.join(REPO, "symbols", name) if name else None
+    out = {}
+    if p and os.path.exists(p):
+        for l in open(p):
+            c = l.split()
+            if len(c) == 2 and not l.startswith("#"):
+                try:
+                    out[c[0]] = int(c[1], 16)
+                except ValueError:
+                    pass
+    return out
+REL_RE = re.compile(r'^\t(calr|jr|jrl)\s+([A-Za-z_]\w*)\s*$')
+
+
+def far_fallback(fn, lines):
+    """asm900's rule beyond reach (probe calrel-far2, run 2026-11-16-61-p6-calrel-far2): a module-local CAL / J whose
+    target is more than 16 bits away is call / jp.  With the tree's addresses (ADDRS; the function sits at its
+    ROM address), every unconditional calr / jr / jrl to a label is checked from the instruction's own offset and
+    rewritten when out of reach; repeated until nothing changes.  The sizes are llvm-mc's before relaxation (a jr counts 2 bytes), so a
+    target within a few bytes of the limit is judged from a position a byte or so early.  Without ADDRS, or with
+    data directives in the body, lines stay as they are (llvm-mc then stops on an out-of-range calr: a visible
+    failure, never a wrong byte)."""
+    if fn not in ADDRS or not any((REL_RE.match(l) or [0, 0, ""])[2] in ADDRS for l in lines):
+        return lines                                      # nothing relative to a label of the image
+    if any(l.startswith("\t.") for l in lines):
+        return lines
+    for _ in range(5):
+        r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-show-encoding"],
+                           input="\n".join(lines) + "\n", capture_output=True, text=True)
+        sizes = [len(m.group(1).split(",")) for m in re.finditer(r'encoding: \[([^\]]*)\]', r.stdout)]
+        insn = [i for i, l in enumerate(lines) if l.startswith("\t") and l.strip()]
+        if r.returncode or len(sizes) != len(insn):
+            return lines
+        changed, off = False, 0
+        for i, n in zip(insn, sizes):
+            m = REL_RE.match(lines[i])
+            if m and m.group(2) in ADDRS:
+                d = ADDRS[m.group(2)] - (ADDRS[fn] + off + n)
+                if not -0x8000 <= d <= 0x7fff:
+                    lines[i] = "\t%s\t%s" % ("call" if m.group(1) == "calr" else "jp", m.group(2))
+                    changed = True
+            off += n
+        if not changed:
+            return lines
+    return lines
 
 
 MODEL = False                                              # main(): building with the reference model
@@ -461,6 +579,8 @@ def main():
         sys.exit(__doc__)
     tree, src, outdir, stamp = args
     global MODEL
+    ADDRS.update(tree_addresses(tree))
+    RUNTIME.update(runtime_names(tree))
     if cache:
         funcs = compile_v423(src, Names(tree_values(tree), tree_labels(tree), cut=True), cache)
     else:
@@ -487,17 +607,25 @@ def main():
                        "; by scripts/build/cc900_v423.py) and model/to_llvm.py.  The label is on the including line."]
         with open(os.path.join(outdir, f + ".s"), "w") as fh:
             fh.write("\n".join(hdr + [tabbed(l) for l in lines]) + "\n")
+    for label, (f, lines) in DATA_OUT.items():             # f_const objects, each included at its tree label
+        hdr = ["; GENERATED by scripts/build/cc900_firmware_c.py -- do not edit.",
+               "; %s: constant data of %s (V4.23's f_const section), from %s by %s and model/to_llvm.py."
+               % (label, f, relsrc, "Toshiba cc900 V4.23" if cache else "the cc900 reference model"),
+               "; Placed by the file's `cc900-data:` comment; the label is on the including line."]
+        with open(os.path.join(outdir, label + ".s"), "w") as fh:
+            fh.write("\n".join(hdr + [tabbed(l) for l in lines]) + "\n")
+    produced = set(funcs) | set(DATA_OUT)
     if os.path.exists(stamp):
         out_abs = os.path.realpath(outdir)
         for old in open(stamp).read().split():
-            if old in funcs:
+            if old in produced:
                 continue
             p = os.path.realpath(os.path.join(outdir, old + ".s"))
             assert os.path.dirname(p) == out_abs and p.endswith(".s"), p
             if os.path.exists(p):
                 os.remove(p)
     with open(stamp, "w") as fh:
-        fh.write("\n".join(sorted(funcs)) + "\n")
+        fh.write("\n".join(sorted(produced)) + "\n")
     print("%s: %d function(s): %s" % (src, len(funcs), " ".join(sorted(funcs))))
 
 

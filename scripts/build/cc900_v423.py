@@ -31,7 +31,10 @@ options), files the results into CACHE and rewrites the index; so make runs it, 
 changed or a listing went missing.  A fully cached fill does not look at the VM,
 so a complete cache builds without it.  When a file is missing and the VM is not usable, fill stops and names what
 is missing and the flag that builds without the VM (`make CC900_COMPILER=model`); there is no automatic fallback.
-The compiler tree's id is recorded in CACHE/compiler-id.txt; when the tree itself is absent, fill uses the recorded
+A compile that a Wine fault in the guest lost (page fault, recvmsg reset, "starting debugger"; no THC*-Error) is
+never cached as FAILED: fill compiles it again, up to RETRIES more VM jobs, and then stops naming it, with its logs
+in CACHE/wine-faults/<key>/; the next make tries again.  An older FAILED entry whose logs show such a fault is
+compiled again too.  The compiler tree's id is recorded in CACHE/compiler-id.txt; when the tree itself is absent, fill uses the recorded
 id, so a complete cache still builds.
 
 The VM is shared: the job runs in a slot of the VM pool (oracle/vm_slot.sh: VM_POOL_SLOTS slots, each with its own
@@ -191,7 +194,9 @@ def remove_tree(path, root):
 
 
 def run_job(cache, oracle, misses):
-    """compile {key: FILE.c} in one VM job; file each result into CACHE/<key>/"""
+    """compile {key: FILE.c} in one VM job; file each result into CACHE/<key>/.  Returns {key: FILE.c} of the
+    compiles a Wine fault lost (not cached; their logs go to CACHE/wine-faults/<key>/)"""
+    transient = {}
     work = os.path.join(cache, "vm-job")
     remove_tree(work, cache)
     serve, out, corpus, res = (os.path.join(work, x) for x in ("serve", "out", "corpus", "results"))
@@ -250,6 +255,13 @@ def run_job(cache, oracle, misses):
             if os.path.exists(os.path.join(dst_tmp, base + ".as.log")) else ""
         ok = (os.path.exists(os.path.join(dst_tmp, base + ".asm")) and cc.rstrip().endswith("exit 0")
               and asl.rstrip().endswith("exit 0") and not re.search(r"-Error-", cc))
+        if not ok and wine_fault(cc + asl) and not re.search(r"-Error-", cc + asl):
+            transient[key] = path                         # Wine broke, not the compiler: never cached as FAILED
+            faults = os.path.join(cache, "wine-faults", key)  # its logs, for the error message if retries run out
+            remove_tree(faults, cache)
+            os.makedirs(os.path.dirname(faults), exist_ok=True)
+            os.rename(dst_tmp, faults)
+            continue
         open(os.path.join(dst_tmp, "status"), "w").write("OK\n" if ok else "FAILED\n")
         open(os.path.join(dst_tmp, "key.txt"), "w").write(
             "file %s\nflags %s\ncompiler %s %s\n" % (os.path.relpath(path, REPO), flags_of(path), COMPILER,
@@ -258,6 +270,28 @@ def run_job(cache, oracle, misses):
         remove_tree(final, cache)
         os.rename(dst_tmp, final)
     remove_tree(work, cache)
+    return transient
+
+
+# Wine faults inside the VM (main's gate after the call-relax merge: ASM900 "Unhandled page fault on write access";
+# lane_sub run 2026-11-16-47: "wine client error: recvmsg: Connection reset by peer").  They are not the compiler's
+# verdict: such a compile is retried, and never cached as FAILED.  A THC*-Error in the logs still fails at once.
+WINE_FAULT_RE = re.compile(r"Unhandled page fault|wine client error|recvmsg|starting debugger", re.I)
+RETRIES = 2
+
+
+def wine_fault(log):
+    return bool(WINE_FAULT_RE.search(log))
+
+
+def cached_wine_failure(cache, key):
+    """a FAILED entry an older fill cached although its logs show a Wine fault: compiled again"""
+    d = os.path.join(cache, key)
+    st = os.path.join(d, "status")
+    if not os.path.exists(st) or open(st).read().strip() != "FAILED":
+        return False
+    logs = "".join(open(os.path.join(d, f), encoding="latin-1").read() for f in os.listdir(d) if f.endswith(".log"))
+    return wine_fault(logs) and not re.search(r"-Error-", logs)
 
 
 def fill(cache, oracle, files):
@@ -279,14 +313,27 @@ def fill(cache, oracle, files):
             continue
         k = key_of(f, cid)
         keys[f] = k
-        if not os.path.exists(os.path.join(cache, k, "status")):
+        if not os.path.exists(os.path.join(cache, k, "status")) or cached_wine_failure(cache, k):
             misses[k] = f
             missing.add(f)
+    compiled = len(set(misses.values()))
     if misses:
         problems = vm_problems(oracle)
         if problems:
             stop_unavailable(missing, problems, cache)
-        run_job(cache, oracle, misses)
+        todo = dict(misses)
+        for attempt in range(1 + RETRIES):                 # the first job, then up to RETRIES for Wine faults
+            todo = run_job(cache, oracle, todo)
+            if not todo:
+                break
+            print("cc900 V4.23: a Wine fault in the VM lost %d listing(s): %s; %s"
+                  % (len(todo), " ".join(os.path.relpath(p, REPO) for p in sorted(todo.values())),
+                     "compiling them again" if attempt < RETRIES else "no retry left"), flush=True)
+        if todo:
+            sys.exit("cc900 V4.23: Wine faulted in the VM %d times on:\n%s(not cached; their logs are in %s).  The "
+                     "next make tries again." % (1 + RETRIES, "".join("    %s\n" % os.path.relpath(p, REPO)
+                                                                      for p in sorted(todo.values())),
+                                                 os.path.join(cache, "wine-faults")))
     failed = []
     for f, k in sorted(keys.items()):
         st, _, logs = listing(cache, f)
@@ -297,7 +344,7 @@ def fill(cache, oracle, files):
             "    %s (logs: %s)\n" % (os.path.relpath(f, REPO), " ".join(logs)) for f, logs in failed))
     index(cache, files)
     print("cc900 V4.23: %d firmware C file(s), %d compiled now, the rest cached in %s"
-          % (len(files), len(set(misses.values())), os.path.relpath(cache, REPO)))
+          % (len(files), compiled, os.path.relpath(cache, REPO)))
 
 
 def index(cache, files):
