@@ -3959,6 +3959,15 @@ CMP_UNSIZED_GUARD: an int or long element of an unsized global array at a variab
 cmpel exact 100 / 100 / 96 / 92 -> 346 / 226 / 224 / 188; ledger: rstmt none +1, pool rstmt none +1 and O3XS +1; validation
 and library unchanged; semcheck 94; firmware C 80 MATCH.
 
+**Batch 366 (2026-11-16).**  lane_nm rules 27-29.  CONST_IDX_TYPED: a constant index on a global array takes the
+index's own type, and a negative byte offset keeps its low 16 bits, sign-extended, as V4.23 writes it (pool r11_01_05;
+in-range offsets stay whole: probe bigoff.c, run 2026-11-16-15).  CHAR_SUM_HOME: a char pointer + signed int index is
+widened as V4.23 does (bug 4's refined conditions; probe psum.c, run 2026-11-16-16).  UIDX_PTR_EXTZ: an unsigned
+int index through a pointer is zero-extended for stores and op= as for loads; the model sign-extended, wrong code for
+an index >= 32768 (V4.23 zero-extends in all 108 functions of probe ustore.c, run 2026-11-16-19).  psum semcheck
+DIFFERENT 18 / 12 / 28 / 22 -> 0 / 6 / 5 / 15 (the rest are bug 4: the model computes C where V4.23 zero-extends);
+ustore 17 / 29 / 14 / 26 -> 3 / 3 / 4 / 4.  Ledger, validation and library unchanged; semcheck 94; firmware C 80 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -650,12 +650,29 @@ def mem_operand(F, e):
 GLOBAL_MEMBER_ELEM = True                                 # gs.a[3] is a static operand (random r1_02_07, r1_05_12)
 ADDR_GLOBAL_CONST = True                                  # &gia[5], &gs.a[2]: lda R,_gia + 0xa (random r1_01_12)
 
+CONST_IDX_TYPED = True                                    # see const_elem_offset
+
+def const_elem_offset(v, k):
+    """the byte offset of element k of the array that v indexes, as V4.23 writes it: k taken as the index's own type
+    (random11 r11_01_05 -O: int t = (int)41411UL; gula[t] -> t is -24125, the fold had kept 41411: _gula + 0x2870c),
+    and a negative offset kept to its low 16 bits, sign-extended (V4.23's _gula + 0xffff870c for -96500; an
+    out-of-bounds offset, undefined in C; a positive one stays whole, probes/bigoff.c: _gcb + 0x1fffc)"""
+    it = getattr(strip(v.idx), 'ty', None) or getattr(v.idx, 'ty', None)
+    if it is not None and it.kind == 'int' and it.size in (1, 2, 4):
+        k &= (1 << (8 * it.size)) - 1
+        if it.signed and k >= 1 << (8 * it.size - 1): k -= 1 << (8 * it.size)
+    off = k * v.ty.size
+    if off < 0: off = ((off & 0xffff) ^ 0x8000) - 0x8000
+    return off
+
 def global_offset(v):
     """(name, offset) when v is a global object at a constant offset: ga[3], gs.i, gs.a[3] (mem.c: m_ga_k, m_gs_i)"""
     v = strip(v)
     if v.k == 'index':
         b = strip(v.base); i = fold(v.idx)
         if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array' and i.k == 'const':
+            if CONST_IDX_TYPED and i.value is not None:
+                return (b.decl.name, hx(const_elem_offset(v, i.value)))
             return (b.decl.name, hx(i.value * v.ty.size))
         if GLOBAL_MEMBER_ELEM and b.k == 'member' and not b.arrow and i.k == 'const' and i.value is not None and \
                 strip(b.base).k == 'var' and strip(b.base).decl.kind == 'global':   # gs.a[3] -> (_gs + 0x14)
@@ -6575,6 +6592,8 @@ def gen_ptr_arith(F, e, fam, size):
                                                          # -O: an int pointer's int index in a local's initialiser is
                                                          # zero-extended (rstmt rs_1_04_15_0: int *t = gpi + c ->
                                                          # ld WA,(c) / extz XWA / add XWA,XWA / add XWA,(_gpi))
+    if CHAR_SUM_HOME and esz == 1 and e.op == '+' and ii.ty is not None and ii.ty.size == 2 and ii.ty.signed:
+        ext = char_sum_ext(F, l, ii)                     # (see char_sum_ext; probes/psum.c)
     if PTR_CHAR_STORE_EXTS and esz == 1 and e.op == '+' and ii.ty is not None and ii.ty.size == 2 and ii.ty.signed and \
             (getattr(F, 'ptr_store_ctx', False) or F.adecl and im in ('WA', 'BC', 'DE', 'HL') and
              any(c_.init is not None and strip(c_.init) is e for c_ in nodes_in(F.f.body, 'decl'))) and \
@@ -11424,7 +11443,7 @@ def elem_addr(F, lv, kind):
             ii_ = unpromote(lv.idx)                         # (adecl: by the index's own sign; no -Xr listing zero-
             ext_ = 'exts' if ii_.ty is not None and ii_.ty.signed else 'extz'   # extends a signed one: ra_homes.c
             idx_into('WA'); F.emit((char_idx_ext(F, None, pm in stack_param_ops(F), node=lv.idx) if CHAR_IDX_SIGN else ext_ if F.adecl else 'extz')
-                                   if esz == 1 else 'exts', 'XWA')   # rh_ptr_int)
+                                   if esz == 1 else uidx_ext(lv), 'XWA')   # rh_ptr_int)
             scale32(F, 'XWA', esz)
             F.emit('add', 'XWA,%s' % pm); return '(XWA)'
         if IDX_GUARD and (held_after(F, 'BC', lv) or any(
@@ -11443,13 +11462,13 @@ def elem_addr(F, lv, kind):
                    'exts' if STVX and F.adecl and ii_.ty is not None and ii_.ty.signed and ii_.ty.size == 2 else 'extz', 'XBC')
         elif getattr(F, 'force_base', None) and esz == 4:  # ai_l_p_div: ld WA,(i) / exts XWA / sll 0x2,XWA /
             B = F.force_base                               # ld XIZ,XWA / add XIZ,(p) (-O3 -XS too)
-            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
+            idx_into('WA'); F.emit(uidx_ext(lv), 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
             F.emit('add', '%s,%s' % (B, pm)); return '(%s)' % B
         elif F.opt and plain:                              # ai_i_p_add under -O3 -XS: ld BC,(i) / exts XBC /
-            idx_into('BC'); F.emit('exts', 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
+            idx_into('BC'); F.emit(uidx_ext(lv), 'XBC'); scale32(F, 'XBC', esz)   # add XBC,XBC / add XBC,(p)
         else:
             B = getattr(F, 'force_base', None) or 'XBC'    # (lnr3.c s_add_gw: XDE, the value needs XBC)
-            idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
+            idx_into('WA'); F.emit(uidx_ext(lv), 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
             F.emit('add', '%s,%s' % (B, pm)); return '(%s)' % B
         F.emit('add', 'XBC,%s' % pm); return '(XBC)'
     return None
@@ -18945,6 +18964,34 @@ def stvx_plan(F, lk, rv, size):
 
 CHAR_IDX_SIGN = True                                      # see char_idx_ext
 CHAR_ZIDX_OLDER = True                                    # see _lvalue_raw: a zero-extended char index declines
+
+CHAR_SUM_HOME = True                                      # see char_sum_ext
+UIDX_PTR_EXTZ = True                                      # see uidx_ext
+
+def uidx_ext(lv):
+    """the extension of an int or long element's index through a pointer: an unsigned index is zero-extended, at
+    every set and for loads, stores and op= alike (probes/ustore.c, run 2026-11-16-19-micro-ustore, 108 of 108; the
+    model's exts on stores and op= was wrong code for u >= 32768: lane_o3's u3, p[u] = 5)"""
+    t = unpromote(lv.idx).ty
+    return 'extz' if UIDX_PTR_EXTZ and t is not None and not t.signed else 'exts'
+
+def char_sum_ext(F, l, ii):
+    """how V4.23 widens a signed int index added to a char pointer (probes/psum.c, run 2026-11-16-16-micro-psum, all
+    four sets): returned, zero-extended; stored into a pointer, sign-extended; otherwise (an argument, a local's
+    initialiser, a store through the sum) zero-extended when the pointer or the index is a cdecl stack parameter (at
+    -O a local copied from one counts as it), sign-extended when both live elsewhere (locals, globals, -Xr register
+    parameters: rstmt9 rs_9_08_04_3, vp(u + i) with u, i locals -> ld XWA,(u) / ld BC,(i) / lda XWA,XWA+BC)"""
+    if getattr(F, 'in_return', False): return 'extz'
+    if getattr(F, 'ptr_store_ctx', False) and not getattr(F, 'ptr_arg_ctx', False): return 'exts'
+    def sp(x):
+        x = unpromote(x)
+        while x.k == 'cast' and getattr(x, 'e', None) is not None: x = unpromote(x.e)
+        if x.k != 'load' or strip(x.e).k != 'var': return False
+        d = strip(x.e).decl
+        if is_stack_param(d): return True
+        fl = getattr(x, 'from_local', None)
+        return F.opt and hasattr(fl, 'ty') and False
+    return 'extz' if sp(l) or sp(ii) else 'exts'
 
 def is_stack_param(d):
     """d is a cdecl stack parameter: passed on the stack, not a -Xr register parameter homed in a slot"""
