@@ -355,6 +355,22 @@ writes `ld C,A` / `and C,0x80` / `cp C,0`.
 `ld (m),(m)` forms of round 8.  The memory-to-memory candidate rule now has much wider evidence: the Technics
 compiler copies a value from memory to memory directly.
 
+## Round 11: `note_voice_mapping.s` (probe m14, run `2026-11-16-27-p6-m14`)
+
+`corpus/firmware/p6_m14a.c` / `p6_m14b.c`: five larger leaf functions, two C forms each.
+- **`LinkVoiceSlots_LoadReg`** (22 B): V4.23 gives the ROM's bytes with form a
+  (`if (p[c].b == c) return 0; return 1;`) at **`-Xr` only**.  So this part of `note_voice_mapping.s` was built
+  without `-O`: the file carries both `-O` markers (154 `lda` / 150 `ld` constants), like
+  `accompaniment_engine.s`.  The model refuses it ("memory load member"): a gap.
+- **`FileIO_InitTrackSlots` / `SysexRingBuf_Init`**: a 2048-byte ring buffer at a constant address.  V4.23 matches
+  the first 18 of 44 bytes (form a); the clear loop's body differs.  The model refuses both ("lvalue index").
+  V4.23 writes the members of a struct at a constant address as numeric absolute operands (`ldw (0xd0a8),0x0`),
+  which `to_llvm.py` could not translate; it now can (the same 8 / 16 / 24-bit width rule).
+- `Voice_SetDecayTimer` and `SndParam_CompactLookupStub` need other C.
+- The chord routines (`NoteDisplay_*`, `VoiceSlot_Epilogue_Block`) address `CHORD_FLAGS` and the other chord
+  variables (0xcede..) with 24-bit operands.  They wait for a per-name width in the C, the preview's `large`
+  externs.
+
 ## The memory-to-memory rule's condition (census, 2026-11-16)
 
 The coordinator decided the moves are the Technics compiler's own idiom, to become the firmware rule
