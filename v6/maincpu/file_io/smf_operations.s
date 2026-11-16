@@ -390,16 +390,55 @@ SmfLoadAs_Return:
 	ld xhl, 0:i3
 	ret
 
-TrimAndPadSmfFilename:	.include "includes/generated/cc900/TrimAndPadSmfFilename.s"	; C: cc900/smf_operations.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	TrimPad_LoopBody, TrimAndPadSmfFilename + 6
-	.set	TrimPad_CheckCtrl, TrimAndPadSmfFilename + 15
-	.set	TrimPad_StoreChar, TrimAndPadSmfFilename + 24
-	.set	TrimPad_AdvancePointers, TrimAndPadSmfFilename + 26
-	.set	TrimPad_LoopCheck, TrimAndPadSmfFilename + 32
-	.set	TrimPad_PadCheck, TrimAndPadSmfFilename + 42
-	.set	TrimPad_PadLoop, TrimAndPadSmfFilename + 46
-	.set	TrimPad_NullTerminate, TrimAndPadSmfFilename + 56
+; Makes a fixed-width display name in place.
+;   In:  XWA = string, BC = width.
+;   Within the first BC characters: '~' becomes '_' and control characters become spaces; the
+;   string is padded with spaces to BC characters and terminated with a NUL at position BC.
+TrimAndPadSmfFilename:
+	ld	ix, 0:i3
+	ld	xhl, xwa
+	jr	TrimPad_LoopCheck
+
+TrimPad_LoopBody:
+	cp	e, 0x7e
+	jr	nz, TrimPad_CheckCtrl
+	ld	e, 0x5f:opc
+	jr	TrimPad_StoreChar
+
+TrimPad_CheckCtrl:
+	ld	e, (xwa)
+	cp	e, 0x20
+	jr	nc, TrimPad_AdvancePointers
+	ld	e, 0x20:opc
+
+TrimPad_StoreChar:
+	ld	(xwa), e
+
+TrimPad_AdvancePointers:
+	inc	1, ix
+	inc	1, xwa
+	inc	1, xhl
+
+TrimPad_LoopCheck:
+	cp	ix, bc
+	jr	nc, TrimPad_PadCheck
+	ld	e, (xhl)
+	cp	e, 0:i3
+	jr	nz, TrimPad_LoopBody
+
+TrimPad_PadCheck:
+	cp	ix, bc
+	jr	nc, TrimPad_NullTerminate
+
+TrimPad_PadLoop:
+	ld	(xwa+), 0x20
+	inc	1, ix
+	cp	ix, bc
+	jr	c, TrimPad_PadLoop
+
+TrimPad_NullTerminate:
+	ld	(xwa), 0x0
+	ret
 
 DisplaySmfFileList:
 	dec 6, xsp
