@@ -102,6 +102,8 @@ def erp_word(line):
             line = '\t%s %s, %s' % (op, x, y)
         elif op == 'ld' and y in ERP_BYTE:
             line = '\tld %s, %s' % (x, y)
+        elif op in ('or', 'cp') and y in ERP_BYTE and x in ('a', 'w', 'c', 'b', 'e', 'd', 'l', 'h'):
+            return '\t%s_erpb_rr %s, 0x%x' % (op, x, ERP_BYTE[y])     # `or A,QIZH` = c7 fb e1 (helper B, round 12)
         line = erp_byte(line)
     m = ERP_PUSH_RE.match(line)
     if m:
