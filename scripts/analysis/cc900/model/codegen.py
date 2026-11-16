@@ -1865,6 +1865,7 @@ RETD_EXIT_PAIR = True                                     # without -O, a functi
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
 DEAD_INIT_OPT = True                                      # see gen_stmt's block: -O drops a dead initialiser
 WHILE_KNOWN_FIRST = True                                  # see while_first_true
+KN_LOOP_INVERT = False                                    # the firmware build sets it: see kn_invert_entry
 FOR_TESTED_NO_EXIT = True                                 # see gen_loop: no unreferenced exit label after a decided first test
 HALVES_BY_USE = True                                      # see plan_homes (rstmt rs_1_00_09_2, homes2b HL03)
 Q_COUNTER_SUB = True                                      # see compile_unit (rstmt rs_1_00_09_2)
@@ -15417,6 +15418,28 @@ def gen_switch_(F, s, last):
     if reached: F.lines.append(end + ':')                  # unreferenced before the loop's continue label
     F.switch_table = getattr(F, 'switch_table', False) or table
 
+def kn_invert_entry(F, c, target_fn):
+    """firmware rule loop-entry-copy (rules.md; KN_LOOP_INVERT, set only by the firmware build): at a loop's
+    entry, emit its test c inverted, jumping to target_fn() (the loop's exit), and keep it when it is one compare
+    and one conditional jump (or ret cc); otherwise restore F, label counters included, and return False so that
+    the caller jumps to the bottom test as V4.23 does (and as the Toshiba-built library does).
+    (firmware TrimAndPadSmfFilename: cp IX,BC / jr nc,L_exit / L_body: ... / cp IX,BC / jr c,L_body; v10 census:
+    332 one-compare tests copied to the entry, 29 jumped to)"""
+    if not (KN_LOOP_INVERT and F.opt and getattr(F, 'personality', 'v4.23') == 'kn5000') or c is None: return False
+    import copy as _cp
+    snap = {k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in F.__dict__.items()}
+    n0 = len(F.lines)
+    try:
+        loop_cond(F, c, target_fn(), False)
+        new = F.lines[n0:]
+        ok = len(new) == 2 and re.match(r'^\t(cp|cpw|cpb)\t', new[0]) is not None and \
+            re.match(r'^\t(j\t\w+,|ret\t\w+$)', new[1]) is not None
+    except Unsupported:
+        ok = False
+    if not ok:
+        F.__dict__.clear(); F.__dict__.update(snap)
+    return ok
+
 def loop_cond(F, c, target, sense):
     """loop_cond_ with test_clobber_check: a loop's test must not write the home of a parameter its body reads
     (rstmt .rs_3_01_13_4 -Xr: while (gi-- > 0) *a++ = -646 tested with ld WA,(_gi) over a in XWA)"""
@@ -15970,10 +15993,14 @@ def gen_loop(F, s, last):
         if F.pending and LOOP_FLUSH_POPS: flush_pops(F)    # the 1997 library's _fread: fgetc(stream)'s pop went into
         test = F.newulabel(); body = F.newulabel()          # the loop body and ran every iteration (wrong code)
         known_ = WHILE_KNOWN_FIRST and F.opt and s.k == 'while' and while_first_true(F, s)
-        if not known_:
+        cont = [None]; brk = [None]
+        inv_ = False                                       # kn5000: a one-compare test copied to the entry, to the
+        if not known_:                                     # exit (the break label: kn_invert_entry)
+            inv_ = kn_invert_entry(F, s.cond, lambda: brk.__setitem__(0, F.newulabel()) or brk[0])
+            if not inv_: brk[0] = None
+        if not known_ and not inv_:
             F.emit('j', test)                              # (-O: a first test known true is not jumped to, rstmt
         F.lines.append(body + ':')                         #  rs_4_07_00_1: i = 0; while (i < 6) -> ld IZ,0x0 / L: ..)
-        cont = [None]; brk = [None]
         def getc2():                                       # a continue goes to the test (CONT_TO_TEST: the label it
             if cont[0] is None: cont[0] = test if CONT_TO_TEST else F.newulabel()   # made was never placed, _fgets)
             return cont[0]
@@ -15982,7 +16009,7 @@ def gen_loop(F, s, last):
             if brk[0] is None: brk[0] = F.newulabel()
             return brk[0]
         F.loops.append((LazyLabel(getb), getc2)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
-        if not known_ or cont[0] is not None or any(re.search(r'[\t,]%s$' % test, l_) for l_ in F.lines if l_):
+        if not (known_ or inv_) or cont[0] is not None or any(re.search(r'[\t,]%s$' % test, l_) for l_ in F.lines if l_):
             F.lines.append(test + ':')                     # (no jump to it: no label)
         loop_cond(F, s.cond, body, True)
         if brk[0] is not None: F.lines.append(brk[0] + ':')
@@ -16030,6 +16057,8 @@ def gen_loop(F, s, last):
                 tgt = 'RET' if after_ret and not F.loops else exitl
                 F.emit('ret', INV[cc]) if tgt == 'RET' else F.emit('j', '%s,%s' % (INV[cc], tgt))
                 rotated = 'tested'
+        if rotated is None and kn_invert_entry(F, s.cond, lambda: 'RET' if after_ret and not F.loops else exitl):
+            rotated = 'tested'                             # (kn5000: the one-compare test copied to the entry)
         if rotated is None:                                # c_fordown: ld IZ,(n) / j L1 / body / L1: cp IZ,0x0 / j gt
             rotated = F.newulabel(); F.emit('j', rotated)
     if rotated is not None: pass

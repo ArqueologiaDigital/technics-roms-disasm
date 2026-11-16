@@ -3937,6 +3937,13 @@ padding loop needs a kn5000 loop rule; lane_p6's first version, tried as batch 3
 micro rows -- it applied to the Toshiba library sources too -- and was backed out).  Ledger identical on every row
 (all personalities); validation and library unchanged; semcheck 94; firmware C 55 MATCH.
 
+**Batch 363 (2026-11-16): the first rule of the firmware compiler itself.**  lane_p6 fix p6-02 KN_LOOP_INVERT: at -O, a while /
+for loop whose test is one compare and a jump copies the test, inverted, to the loop entry, as the firmware's
+TrimAndPadSmfFilename does (v10 loop census: 332 one-compare loops inverted).  It is off in the model, so no ledger
+row, library pair or personality sees it -- the first version applied to the Toshiba-built library under kn5000 /
+ide2003 and lost those rows -- and the firmware build switches it on (cc900_firmware_c.py FIRMWARE_RULES).  Ledger,
+validation and library unchanged; pairs 223; semcheck 94; firmware C 55 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
