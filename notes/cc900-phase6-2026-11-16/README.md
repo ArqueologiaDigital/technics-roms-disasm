@@ -355,6 +355,70 @@ writes `ld C,A` / `and C,0x80` / `cp C,0`.
 `ld (m),(m)` forms of round 8.  The memory-to-memory candidate rule now has much wider evidence: the Technics
 compiler copies a value from memory to memory directly.
 
+## The memory-to-memory rule's condition (census, 2026-11-16)
+
+The coordinator decided the moves are the Technics compiler's own idiom, to become the firmware rule
+`KN_MEM_TO_MEM` (off in the model, on in `FIRMWARE_RULES`), and asked when it applies.  The census is
+`python3 notes/cc900-phase6-2026-11-16/mem_copies.py v10/maincpu [--by-file]`.
+
+**The hardware.**  The TLCS-900 has two memory-to-memory moves, byte and word only:
+- `ld (#16),(mem)`: the destination a 16-bit absolute address, the source any mode;
+- `ld (mem),(#16)`: any destination, the source a 16-bit absolute address.
+
+There is no 32-bit form, and no form with two 24-bit sides.
+
+**When the firmware uses them: in the `-O` files.**  The marker of `-O` is a 32-bit constant of 8..0xffff loaded
+with `lda`, which V4.23 writes only with `-O` (round 7).  Per hand source, the moves and the dead register copies
+that have a 16-bit absolute side (8 / 16 bits):
+
+| file                             | moves | reg copies | lda 8..0xffff | ld 8..0xffff |
+|----------------------------------|-------|------------|---------------|--------------|
+| sequencer/sequencer_engine.s     | 406   | 28         | 376           | 188          |
+| sequencer/accompaniment_engine.s | 57    | 218        | 80            | 232          |
+| audio/note_voice_mapping.s       | 92    | 2          | 154           | 150          |
+| audio/audio_control_engine.s     | 68    | 11         | 58            | 137          |
+| sequencer/bmdredit_routines.s    | 67    | 5          | 14            | 2            |
+| sequencer/seq_step_routines.s    | 64    | 1          | 2             | 0            |
+| sequencer/rhythm_routines.s      | 0     | 41         | 0             | 4            |
+| display/scoop_display.s          | 0     | 34         | 0             | 336          |
+| sequencer/accompseq_routines.s   | 0     | 31         | 0             | 15           |
+| storage/flash_floppy_handlers.s  | 23    | 0          | 44            | 25           |
+| sequencer/seq_audio_mode.s       | 0     | 18         | 0             | 50           |
+| audio/semenu_routines.s          | 16    | 0          | 16            | 2            |
+| storage/fdc_routines.s           | 14    | 0          | 4             | 0            |
+| sequencer/smf_event_processor.s  | 0     | 11         | 0             | 50           |
+| midi/midi_dispatch_handlers.s    | 9     | 0          | 32            | 163          |
+| sequencer/smf_tonegen_core.s     | 0     | 8          | 0             | 146          |
+| ui/ui_control_panel.s            | 5     | 0          | 0             | 15           |
+| audio/audioinit_routines.s       | 4     | 0          | 6             | 0            |
+| ui/setwall_routines.s            | 0     | 4          | 0             | 40           |
+| file_io/disk_operations.s        | 3     | 0          | 17            | 29           |
+| audio/sound_editor_ui.s          | 2     | 1          | 16            | 23           |
+| sequencer/smf_playback.s         | 0     | 3          | 0             | 15           |
+
+- **Files without the `-O` marker** (`rhythm_routines`, `scoop_display`, `accompseq_routines`, `seq_audio_mode`,
+  `smf_event_processor`, `smf_tonegen_core`, `setwall_routines`, `smf_playback`) have **no move at all**: 0 of their
+  150 copies.  They copy through a register even when a move was possible.
+- **Files with the marker** move almost everywhere.  `accompaniment_engine.s` has both markers, so it holds code
+  of both kinds; it is large enough to be several original source files.  `ui_control_panel.s` (5 moves, no
+  `lda`) has too few constants to tell.
+- **V4.23 never moves**, at any of the four option sets (run 26's `BmDrEdit_LoadAlternateState`: `ld WA,(src)` /
+  `ld (dst),WA` at none, `-O3 -XS`, `-Xr` and `-O3 -XS -Xr`).
+
+**The condition, as far as the census shows.**  With the Technics compiler's `-O`, a copy whose value is not used
+again is a memory-to-memory move when:
+- its size is 8 or 16 bits (a 32-bit copy always goes through a register: 14 in the `-O` files, no move);
+- one side is a 16-bit absolute address.  With the destination absolute it is `ld (#16),(src)`, and the source
+  may be any mode: absolute (533), indexed `(xrr+rr)` (36), indirect, displacement or stack.  With only the source
+  absolute it is `ld (dst),(#16)`, for example a stack slot (64), indirect (28) or a displacement (11).
+
+Without `-O` it is never a move.  Open:
+- About 110 dead register copies of 16-bit globals remain in `-O` files.  Many of them are in groups just before a
+  call (`audio_control_engine.s` `MidiCtrl_Mode3_Handler`, `VoiceMode3_EvType4`).  Either they come from a source
+  file without `-O` merged into the same hand source, or the following call matters.  A probe can tell.
+- Whether a value used again afterwards (`reused`, kept in its register) prevents the move in `-O` code.  The
+  census sees reused copies only as register copies, as expected, but has not tested the reverse.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
