@@ -140,3 +140,5 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a90f7b7382b974b3baa90f26385160d4c3c2a031bf923f500007	Xr	2026-11-16-63-hd-r9s-staged	HDAE5000_RequestTitle16	73	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a90f7b7382b974b3baa90f26385160d4c3c2a031bf923f500007	Xr	2026-11-16-63-hd-r9s-staged	HDAE5000_UiObj_SetCaption	25	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a90f7b7382b974b3baa90f26385160d4c3c2a031bf923f500007	Xr	2026-11-16-63-hd-r9s-staged	HDAE5000_YieldUntilSem1Zero	45	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_check.c	37de30efd918482175f21d1f39895deb3f17c0b95a3e1d9ead6c7b2175016f3e	Xr	2026-11-16-64-hd-r9b	HDAE5000_Song_CheckFreeSpace	347	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_check.c	37de30efd918482175f21d1f39895deb3f17c0b95a3e1d9ead6c7b2175016f3e	Xr	2026-11-16-64-hd-r9b	HDAE5000_Song_IsUsed	553	MATCH
