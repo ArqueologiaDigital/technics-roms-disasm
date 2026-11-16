@@ -31,18 +31,6 @@ void HDAE5000_UiObj_SetCaption(long obj, long caption)
     *(long *)(v + 0x16) = caption;
 }
 
-unsigned long HDAE5000_SwapBytes32(unsigned long x)
-{
-    unsigned long r = x & 0xff;
-    int i;
-    for (i = 0; i < 3; i++) {
-        x >>= 8;
-        r <<= 8;
-        r += x & 0xff;
-    }
-    return r;
-}
-
 void HDAE5000_Delay_Loop(unsigned long n)
 {
     while (n--)
@@ -67,16 +55,6 @@ void HDAE5000_HD_GetBlockInfo(int block, struct HdBlockInfo *bi)
         bi->base = HDAE5000_RAM_FlsRecords; bi->size = 144; bi->count = 120; bi->extra = 32;
         break;
     }
-}
-
-unsigned int HDAE5000_SwapBytes16(unsigned int x)
-{
-    unsigned int r;
-    r = x & 0xff;
-    x >>= 8;
-    r <<= 8;
-    r += x;
-    return r;
 }
 
 unsigned int HDAE5000_Smf_SwapBytes16(unsigned int x)

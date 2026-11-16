@@ -126,6 +126,12 @@ def library_aliases(image):
         if len(f) > 4 and f[0] == tag:
             for n in f[2].split(' | '):
                 out[n.strip().lstrip('_.')] = f[4]
+    # names known by reference only (C9H_divlu = HDAE5000_UDivMod32 ...): image, address, library name, from, label
+    for l in open(os.path.join(REPO, 'notes/toshiba-runtime-xref-2026-11-08/results/xref.inferred.tsv'),
+                  encoding='latin-1'):
+        f = l.rstrip('\n').split('\t')
+        if len(f) > 4 and f[0] == tag and f[4] != '?':
+            out.setdefault(f[2].strip().lstrip('_.'), f[4])
     return out
 
 
@@ -244,6 +250,10 @@ def check(a):
             srcs = glob.glob(os.path.join(REPO, 'notes', 'cc900-c-hdae5000-2026-11-16', 'probes', stem + '.c')) + \
                 glob.glob(os.path.join(REPO, tree, 'cc900-staged', stem + '.c'))
             cn = c_names(srcs)
+            for cname, lab in cn.items():                # a call to a function by its short C name
+                if lab in ref:
+                    for pre in ('', '.', '_'):
+                        names.values.setdefault(pre + cname, ref[lab])
             to_llvm.SPELL = None
             text = open(asm, encoding='latin-1').read()
             to_llvm.WIDTHS = listing.attributes(text)
