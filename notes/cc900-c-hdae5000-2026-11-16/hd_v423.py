@@ -8,10 +8,14 @@ model/to_llvm.py (asm900's encodings, operand widths as the listing declares the
 bytes are compared with the image at the function's label.
 
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --corpus DIR OPTIONS FILE.c [FILE.c ...]
-        copies the C files (and any .h given) into DIR/hd/, writes DIR/sources.txt and DIR/options.txt (OPTIONS: comma-separated labels
+        copies the C files into DIR/hd/ with their #include "..." headers inlined (expand()), writes DIR/sources.txt and DIR/options.txt (OPTIONS: comma-separated labels
         of LABELS below, e.g. O3Xr,Xr) and prints the oracle command (run it under the VM lock)
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --check RUN_DIR [--image v2.06i] [--tsv OUT] [--only GLOB]
-        one row per function: bytes and, per C file and option set, MATCH or the first differing offset.  --tsv
+                                                                          [--calr] [--record]
+        one row per function: bytes and, per C file and option set, MATCH or the first differing offset.  --calr:
+        a `call` (V4.23's `cal`) whose place in the ROM holds a `calr` to the same target is written calr, as asm900
+        writes a call to a function of the same source file; such a match is reported `MATCH calr:<targets>`, and
+        is only real once those targets are in the same C file.  --tsv
         writes (c_file, options, function, bytes, result) rows.  --record appends the rows of the STAGED files
         (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree, C file,
         SHA-256 of its text, options, run, function, bytes, result), replacing that file's earlier rows.
@@ -23,7 +27,7 @@ The Toshiba library's own names in a listing's calls (`C9H_mullu`) resolve to th
 notes/toshiba-runtime-xref-2026-11-08/results/xref.resolved.tsv (`HDAE5000_Multiply`).
 
 C names: a function's C name is the tree's label; a `cc900-name: CNAME=LABEL` comment maps a shorter one (cc900
-keeps 31 characters).  Other names resolve as in the build (scripts/build/cc900_firmware_c.py): the tree's `.equ`
+keeps 31 characters), or several variants of one function in one probe file (reported as FILE:CNAME).  Other names resolve as in the build (scripts/build/cc900_firmware_c.py): the tree's `.equ`
 values, `ram_<hex>` cells, the symbols reference's labels.  No Toshiba text is printed or written: names, sizes and
 verdicts only.  Run from the repository root.
 """
@@ -57,13 +61,38 @@ def corpus(a):
     os.makedirs(os.path.join(d, 'hd'), exist_ok=True)
     names = []
     for f in a[2:]:
-        shutil.copyfile(f, os.path.join(d, 'hd', os.path.basename(f)))
-        if f.endswith('.c'):                     # headers (.h) are copied beside the C, not compiled
+        if f.endswith('.c'):
+            open(os.path.join(d, 'hd', os.path.basename(f)), 'w', encoding='latin-1').write(expand(f))
             names.append('hd/' + os.path.basename(f))
     open(os.path.join(d, 'sources.txt'), 'w').write('\n'.join(names) + '\n')
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, LABELS[l]) for l in labels))
     print('flock /home/fsanches/compartilhado/cc900-oracle/vm/.runlock bash scripts/analysis/cc900/oracle/run_oracle.sh '
           'RUN_NAME %s %s/sources.txt %s/options.txt v423' % (d, d, d))
+
+
+INC_RE = re.compile(r'^[ \t]*#[ \t]*include[ \t]*"([^"]+)"[ \t]*$', re.M)
+HEADER_DIRS = [os.path.join(os.path.dirname(os.path.abspath(__file__)), 'probes'),
+               os.path.join(REPO, 'hdae5000', 'cc900-staged')]
+
+
+def expand(path):
+    """FILE.c with each #include "x.h" replaced by the header's text: V4.23 in the oracle VM did not open a header
+    beside the C (run 2026-11-16-46-hd-r2: THC1-Error-310 although job.sh passes -I with the source directory).
+    Of a header of #defines only (hdae_ids.h) only the macros the file uses are kept."""
+    text = open(path, encoding='latin-1').read()
+
+    def one(m):
+        h = next((os.path.join(x, m.group(1)) for x in [os.path.dirname(os.path.abspath(path))] + HEADER_DIRS
+                  if os.path.exists(os.path.join(x, m.group(1)))), None)
+        if h is None:
+            sys.exit('%s: #include "%s" not found' % (path, m.group(1)))
+        ht = open(h, encoding='latin-1').read()
+        lines = ht.split('\n')
+        if all(l.startswith('#define ') or l.startswith('/*') or not l.strip() for l in lines):
+            words = set(re.findall(r'\w+', INC_RE.sub('', text)))
+            ht = '\n'.join(l for l in lines if l.startswith('/*') or (l.startswith('#define ') and l.split()[1] in words))
+        return '/* ---- %s (inlined) ---- */\n%s\n/* ---- end of %s ---- */' % (m.group(1), ht.rstrip('\n'), m.group(1))
+    return INC_RE.sub(one, text)
 
 
 def c_names(cfiles):
@@ -145,6 +174,53 @@ def show(a):
                     off += len(b)
 
 
+def mc_errors(text):
+    """llvm-mc's stderr for one text (empty when it assembles)"""
+    import subprocess, tempfile
+    import check_bytes
+    with tempfile.TemporaryDirectory() as d:
+        f = os.path.join(d, 'f.s')
+        open(f, 'w').write(text)
+        r = subprocess.run([os.path.join(check_bytes.LLVM_BIN, 'llvm-mc'), '-triple=tlcs900', '-filetype=obj', f, '-o',
+                            os.path.join(d, 'f.o')], capture_output=True, text=True)
+        return r.stderr if r.returncode else ''
+
+
+CALL_RE = re.compile(r'^\s*call\s+(0x[0-9a-fA-F]+)\s*$')
+
+
+def assemble_fn(full, body, rom, at, calr):
+    """the bytes of one translated function, with asm900's jr / jrl choice (to_llvm.relax).  With calr, each absolute
+    `call T` whose place in the ROM holds a `calr` to the same T is written `calr` -- asm900's shortening of a call
+    to a function of the same source file.  Returns (bytes, [relaxed call targets])."""
+    import check_bytes, to_llvm
+    head = '\t.text\n\t.globl %s\n%s:\n' % (full, full)
+    text = to_llvm.relax(head + '\n'.join(body) + '\n', mc_errors)
+    lines = text.split('\n')[3:]
+    shortened = []
+    if calr and any(CALL_RE.match(l) for l in lines):
+        marked = []
+        for i, l in enumerate(lines):
+            marked += ['\t.globl __hdp%d' % i, '__hdp%d:' % i, l]
+        got = check_bytes.assemble(head + '\n'.join(marked) + '\n')
+        off = 0
+        for i, l in enumerate(lines):
+            n = len(got.get('__hdp%d' % i, b''))
+            m = CALL_RE.match(l)
+            if m:
+                t = int(m.group(1), 16)
+                o = at + off
+                if rom[o:o + 1] == b'\x1e':
+                    disp = int.from_bytes(rom[o + 1:o + 3], 'little', signed=True)
+                    if BASE + o + 3 + disp == t:
+                        lines[i] = '\tcalr %s + %d' % (full, t - (BASE + at))
+                        shortened.append('%06x' % t)
+                        n = 3
+            off += n
+        text = to_llvm.relax(head + '\n'.join(lines) + '\n', mc_errors)
+    return check_bytes.assemble(text)[full], shortened
+
+
 def check(a):
     import listing, to_llvm, check_bytes
     run = a[0]
@@ -172,33 +248,37 @@ def check(a):
                 full = cn.get(bare) if cn.get(bare) in ref else bare if bare in ref else \
                     (short.get(bare, [None])[0] if len(short.get(bare, [])) == 1 else None)
                 key = full or bare
+                if full and bare != full and cn.get(bare) == full:
+                    stem_k = '%s:%s' % (stem, bare)      # one of several C variants of one label (cc900-name)
+                else:
+                    stem_k = stem
                 if key not in res:
                     res[key] = {}
                     order.append(key)
                 if full is None:
-                    res[key][(stem, label)] = (0, 'not in the symbols reference')
+                    res[key][(stem_k, label)] = (0, 'not in the symbols reference')
                     continue
                 try:
                     body = [l for l in to_llvm.translate_function(name, lines, names)
                             if l not in ('\t.globl %s' % bare, bare + ':')]
                 except KeyError as e:
-                    res[key][(stem, label)] = (0, 'cannot resolve %s' % e)
+                    res[key][(stem_k, label)] = (0, 'cannot resolve %s' % e)
                     continue
                 if any('untranslated' in l for l in body):
-                    res[key][(stem, label)] = (0, 'to_llvm cannot translate a line')
-                    continue
-                try:
-                    mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
-                except Exception:
-                    res[key][(stem, label)] = (0, 'llvm-mc refused the translation')
+                    res[key][(stem_k, label)] = (0, 'to_llvm cannot translate a line')
                     continue
                 at = ref[full] - BASE
+                try:
+                    mine, short = assemble_fn(full, body, rom, at, '--calr' in a)
+                except Exception:
+                    res[key][(stem_k, label)] = (0, 'llvm-mc refused the translation')
+                    continue
                 r = rom[at:at + len(mine)]
                 if mine == r:
-                    res[key][(stem, label)] = (len(mine), 'MATCH')
+                    res[key][(stem_k, label)] = (len(mine), 'MATCH' + (' calr:' + ','.join(short) if short else ''))
                 else:
                     first = next(i for i in range(len(mine)) if i >= len(r) or mine[i] != r[i])
-                    res[key][(stem, label)] = (len(mine), 'DIFF at +%d' % first)
+                    res[key][(stem_k, label)] = (len(mine), 'DIFF at +%d' % first)
         for log in sorted(glob.glob(os.path.join(base, label, '**', '*.cc.log'), recursive=True)):
             stem = os.path.basename(log)[:-7]
             if fnmatch.fnmatch(stem, only) and not os.path.exists(log[:-7] + '.asm'):
@@ -206,7 +286,7 @@ def check(a):
     rows = []
     for k in order:
         v = res[k]
-        ok = sorted('%s/%s' % s for s, (n, r) in v.items() if r == 'MATCH')
+        ok = sorted('%s/%s%s' % (s + (r[5:],)) for s, (n, r) in v.items() if r.startswith('MATCH'))
         n = max(x for x, _ in v.values())
         if ok:
             best = 'MATCH ' + ' '.join(ok)
