@@ -14,6 +14,7 @@ void Voice_Demote_Decayed(unsigned char *p);
 void Voice_Reprioritise(unsigned char *p);
 
 /* cc900-module: Voice_List_MoveToPool */
+/* cc900-module: Voice_Demote_Decayed */
 void Voice_Reprioritise(unsigned char *p)
 {
     if (p[34] & 0x80) return;
