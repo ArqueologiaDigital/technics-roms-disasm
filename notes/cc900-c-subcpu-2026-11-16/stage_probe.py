@@ -142,6 +142,18 @@ def main():
         opt = '\n   cc900-options: %s' % opts
         old = HEADER % (src, opt)
     add = [d for d in picked if d not in old]
+    # the probe's cc900-module: names that these functions call (lane_sub: a staged tail call lost its calr / jr)
+    mod = set()
+    for m in re.finditer(r'cc900-module:([^*\n]*)', open(probe, encoding='latin-1').read()):
+        mod.update(n for n in re.split(r'[\s,]+', m.group(1)) if n)
+    lmap = {mm.group(1): mm.group(2) for mm in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', ''.join(names))}
+    usedmod = sorted(n for n in mod if n in need or any(lmap.get(k) == n for k in need))
+    have = set()
+    for m in re.finditer(r'cc900-module:([^*\n]*)', old):
+        have.update(n for n in re.split(r'[\s,]+', m.group(1)) if n)
+    usedmod = [n for n in usedmod if n not in have]
+    if usedmod:
+        nm = nm + ['/* cc900-module: %s */' % ' '.join(usedmod)]
     body = '\n'.join(add + [''] + nm + [w + '\n' for w in want])
     os.makedirs(os.path.dirname(staged), exist_ok=True)
     open(staged, 'w', encoding='latin-1').write(old.rstrip('\n') + '\n\n' + body.strip('\n') + '\n')

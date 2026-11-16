@@ -12,4 +12,5 @@ struct ring { unsigned int wr; unsigned int rd; unsigned int count; unsigned cha
 extern struct ring __near MIDI_RingBuffer;
 int RingBuf_ReadByte(struct ring *r);
 
+/* cc900-module: RingBuf_ReadByte */
 int RingBuf_ReadByte_MidiRing(void) { return RingBuf_ReadByte(&MIDI_RingBuffer); }

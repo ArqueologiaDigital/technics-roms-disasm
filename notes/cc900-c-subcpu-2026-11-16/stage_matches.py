@@ -7,7 +7,9 @@ ROM's bytes.  The payload was compiled with -Xr (README, run 2026-11-16-43-sub-r
 its cc900-name comment and the declarations it uses).  A probe that uses #define is expanded first (gcc -E -P -C),
 so that the staged C has no macros.  A function matching only at another set is reported, not staged.  Then run port_staged.py for v141 / v140 and check all three trees with V4.23 (sub_v423.py corpus / record).
 
-usage: python3 -B notes/cc900-c-subcpu-2026-11-16/stage_matches.py VERDICTS.tsv [--dry-run]   (repository root)
+usage: python3 -B notes/cc900-c-subcpu-2026-11-16/stage_matches.py VERDICTS.tsv [--dry-run] [--own-file]   (repo root)
+    --own-file: stage into <hand source>_<probe>.c (e.g. dsp_control_routines_e_6a.c), so that a probe's own
+    prototypes and cc900-module: list stay with the functions they were checked with
 """
 import glob, os, re, subprocess, sys
 
@@ -66,6 +68,8 @@ def main():
         defs = set(FN_RE.findall(txt))                   # a short name may only declare a callee: take a defined one
         cname = next((m.group(1) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', txt)
                       if m.group(2) == f and m.group(1) in defs), f)
+        if '--own-file' in a:            # one staging file per hand source AND probe: no clash with earlier rounds'
+            base = '%s_%s' % (base, got['Xr'].replace('sub_', '').lower())   # prototypes or cc900-module: lists
         plan.setdefault((probe, base, src), []).append(cname)
     for (probe, name, src), fs in sorted(plan.items()):
         cmd = [sys.executable, os.path.join(HERE, 'stage_probe.py'), probe,
