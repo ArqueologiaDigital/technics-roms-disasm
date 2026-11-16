@@ -27,7 +27,9 @@ PORTS = [('v2.01i', 'hdae5000_v2_01i'), ('v1.15i', 'hdae5000_v1_15i'), ('v1.10i'
 
 def matches(run, image):
     """{(file stem, C name)} that MATCH in IMAGE, and the calr targets each needs"""
-    tsv = os.path.join(os.environ.get('TMPDIR', '/tmp'), 'port_staged_%s.tsv' % image)
+    if not os.environ.get('TMPDIR'):             # house rule: scratch goes under $TMPDIR, never /tmp
+        sys.exit('port_staged.py: TMPDIR is not set (scratch goes to $TMPDIR, never /tmp)')
+    tsv = os.path.join(os.environ['TMPDIR'], 'port_staged_%s.tsv' % image)
     subprocess.run([sys.executable, '-B', os.path.join(HERE, 'hd_v423.py'), '--check', run, '--calr', '--only',
                     'hdae5000_*', '--image', image, '--tsv', tsv], cwd=REPO, capture_output=True, check=True)
     ok = {}
