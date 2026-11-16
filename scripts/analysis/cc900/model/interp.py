@@ -255,7 +255,7 @@ def parse_operand(t, symaddr):
 
 # ---------------------------------------------------------------- program
 
-DATA_DIRS = ('db', 'dw', 'dl', 'dd', 'fdatad', 'fdataf', 'fdata', 'ds', 'dsb', 'dsw', 'dsl', 'align')
+DATA_DIRS = ('db', 'dw', 'dl', 'dd', 'fdatad', 'fdataf', 'fdatas', 'fdata', 'ds', 'dsb', 'dsw', 'dsl', 'align')
 DS_UNIT = {'ds': 1, 'dsb': 1, 'dsw': 2, 'dsl': 4}
 LABEL = re.compile(r'^([A-Za-z_.$][\w.$]*):')
 
@@ -291,6 +291,8 @@ class Program:
                 raw.append(('dlabel' if isdata else 'label', m.group(1)))
                 if rest: raise Unsupported('label with text %r' % st)
                 continue
+            if 'fims(' in st:                        # a float immediate (ld XWA,fims(1.5)): its IEEE single bits
+                st = re.sub(r'fims\(([^)]*)\)', lambda m_: '0x%08x' % struct.unpack('<I', struct.pack('<f', float(m_.group(1))))[0], st)
             parts = st.split(None, 1)
             mn = parts[0]; args = parts[1] if len(parts) > 1 else ''
             if mn in DATA_DIRS or mode == 'data':
@@ -331,7 +333,7 @@ class Program:
             a = int(args.split(',')[0], 0); return (-dp) % a
         if mn in DS_UNIT: return DS_UNIT[mn] * int(args, 0)
         if mn in ('fdatad',): return 8 * len(split_operands(args))
-        if mn in ('fdata', 'fdataf'): return 4 * len(split_operands(args))
+        if mn in ('fdata', 'fdataf', 'fdatas'): return 4 * len(split_operands(args))
         w = {'db': 1, 'dw': 2, 'dl': 4, 'dd': 4}[mn]
         n = 0
         for k, v in s._items(args): n += len(v.encode('latin-1')) if k == 'str' else w
@@ -341,9 +343,9 @@ class Program:
         if mn == 'align': return dp + s._data_size(mn, args, dp)
         if mn in DS_UNIT:
             return dp + DS_UNIT[mn] * int(args, 0)
-        if mn in ('fdatad', 'fdata', 'fdataf'):
-            for x in split_operands(args):
-                b = struct.pack('<d' if mn == 'fdatad' else '<f', float(x))
+        if mn in ('fdatad', 'fdata', 'fdataf', 'fdatas'):
+            for x in split_operands(args):           # (V4.23 writes a float constant as fdatas 1.5...e+000F)
+                b = struct.pack('<d' if mn == 'fdatad' else '<f', float(x.strip().rstrip('Ff')))
                 for k, c in enumerate(b): s.data[dp + k] = c
                 dp += len(b)
             return dp
