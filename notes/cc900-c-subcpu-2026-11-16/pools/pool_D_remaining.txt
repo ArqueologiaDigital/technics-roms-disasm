@@ -1,7 +1,6 @@
  1844  626 EFF_DspChannel_InitFlags                     core/13_audio_process_dsp_and_effects.s    leaf erp  0 nop   0 runtime -  calr 
   643  245 DSP_EFFParam_DiffAllAndFlag                  core/13_audio_process_dsp_and_effects.s    leaf erp  0 nop   0 runtime -  calr 
   631  211 CmdHandler2C_TableData                       core/13_audio_process_dsp_and_effects.s    rel  erp 19 nop   0 runtime -  calr DSP_Cmd_LoadEffectPreset DSP_RingBuf_Read DSP_RingBuf_ReadAndCompare DSP_RingBuf_Skip
-  595  192 MIDI_Dispatch                                core/11_ringbuf_and_midi_dispatch.s        rel  erp  0 nop   0 runtime -  calr RingBuf_ReadByte RingBuf_SkipToEnd
   524  181 DSP_Cmd2B_AlgoSelect                         core/13_audio_process_dsp_and_effects.s    rel  erp  7 nop   0 runtime -  calr DSP_RingBuf_ReadAndCompare DSP_RingBuf_Skip Extract_14Bit_PayloadSize Extract_14Bit_VoiceParam
   370  136 EFF_SlotActive_UpdateFlags                   core/13_audio_process_dsp_and_effects.s    leaf erp  0 nop   0 runtime -  calr 
   365  118 DSP_Reinit_VoiceSlots                        core/11_ringbuf_and_midi_dispatch.s        rel  erp 15 nop   0 runtime Math_Multiply32  calr DSP1_ResolveStreamPtr DSP_FlushAllSlots DSP_InitChannelSlot DSP_ResetAlgoDefaults DSP_WriteCount_Compute
@@ -14,11 +13,8 @@
   243   89 DSP_InitChannelSlot                          core/11_ringbuf_and_midi_dispatch.s        abs  erp  0 nop   0 runtime -  calr 
   232   80 EFF_SecondaryLinkPath                        core/13_audio_process_dsp_and_effects.s    rel  erp 15 nop   0 runtime -  calr Unsigned_Max_Select
   207   66 DSP_VoiceState_Dispatch                      core/11_ringbuf_and_midi_dispatch.s        abs  erp 16 nop   0 runtime -  calr 
-  192   77 EFF_Change_Handler                           core/13_audio_process_dsp_and_effects.s    rel  erp  0 nop   0 runtime -  calr EFF_VolumeChange_Check
   185   64 DSP_FlushAllSlots                            core/11_ringbuf_and_midi_dispatch.s        rel  erp  0 nop   0 runtime -  calr DSP_InitChannelSlot
   169   55 ToneGen_SetupPolyVoice                       core/11_ringbuf_and_midi_dispatch.s        rel  erp  0 nop   0 runtime -  calr DSP_GetEffectRouting DSP_VelocityToVolume
-  163   59 DSP_Cmd_LoadEffectPreset                     core/12_dsp2_init.s                        rel  erp  5 nop   0 runtime -  calr DSP_RingBuf_Read DSP_RingBuf_Skip
-  115   37 ToneGen_SetupPercussionVoice                 core/11_ringbuf_and_midi_dispatch.s        rel  erp  0 nop   0 runtime -  calr DSP_GetEffectRouting
    47   19 RingBuf_ReadByte                             core/11_ringbuf_and_midi_dispatch.s        leaf erp  0 nop   0 runtime -  calr 
    47   19 DSP_RingBuf_Read                             core/12_dsp2_init.s                        leaf erp  0 nop   0 runtime -  calr 
    33   13 DSP_WriteCount_Compute                       core/11_ringbuf_and_midi_dispatch.s        leaf erp  0 nop   0 runtime -  calr 
