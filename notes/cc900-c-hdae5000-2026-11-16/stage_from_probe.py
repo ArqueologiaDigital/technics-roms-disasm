@@ -16,6 +16,7 @@ Run from the repository root.  OUT.c is overwritten.
 import re, sys
 
 DEF = re.compile(r'^[A-Za-z_][\w \t\*]*?\b(\w+)\s*\(([^;{]*)$')
+DEF2 = re.compile(r'^[A-Za-z_][\w \t\*]*?\b(\w+)\s*\([^;{]*\)\s*\{\s*$')     # signature line ending in {
 DEF1 = re.compile(r'^[A-Za-z_][\w \t\*]*?\b(\w+)\s*\([^;{]*\)\s*\{.*\}\s*$')     # a one-line definition
 
 
@@ -33,7 +34,7 @@ def split(text):
             out.append(('fn', m1.group(1), lines[i]))
             i += 1
             continue
-        m = DEF.match(lines[i])
+        m = DEF.match(lines[i]) or DEF2.match(lines[i])
         if m and not lines[i].startswith('extern') and not lines[i].rstrip().endswith(';'):
             j = i
             while j < len(lines) and not lines[j].startswith('}'):
