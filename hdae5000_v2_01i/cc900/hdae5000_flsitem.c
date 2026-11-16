@@ -1,6 +1,6 @@
-/* The FLS item module of hdae5000_ui_display.s: the functions that match.
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r4_g1.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_flsitem.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_flsitem.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
 */
 extern unsigned char HDAE5000_RAM_FlsRecords[];

@@ -3446,44 +3446,7 @@ HDAE5000_TypeSel_Init:
 ; In:  XWA = record (HDAE5000_RAM_SaveOptions or _DeleteOptions)
 ; Out: (XWA+0) = mask.  No register changes.
 ; ---------------------------------------------------------------------------
-HDAE5000_TypeSel_BuildMask:
-	ldw (xwa + 0), 0x0000		; clear output flags
-	cp (xwa + 2), 0x02
-	jr nz, .Lhbi_skip0
-	ldw (xwa + 0), 0x0001		; set bit 0
-.Lhbi_skip0:
-	cp (xwa + 3), 0x02
-	jr nz, .Lhbi_skip1
-	ormi16 (xwa + 0), 0x0002	; set bit 1
-.Lhbi_skip1:
-	cp (xwa + 4), 0x02
-	jr nz, .Lhbi_skip2
-	ormi16 (xwa + 0), 0x0004	; set bit 2
-.Lhbi_skip2:
-	cp (xwa + 5), 0x02
-	jr nz, .Lhbi_skip3
-	ormi16 (xwa + 0), 0x0008	; set bit 3
-.Lhbi_skip3:
-	cp (xwa + 6), 0x02
-	jr nz, .Lhbi_skip4
-	ormi16 (xwa + 0), 0x0010	; set bit 4
-.Lhbi_skip4:
-	cp (xwa + 7), 0x02
-	jr nz, .Lhbi_skip5
-	ormi16 (xwa + 0), 0x0020	; set bit 5
-.Lhbi_skip5:
-	cp (xwa + 8), 0x02
-	jr nz, .Lhbi_skip6
-	ormi16 (xwa + 0), 0x0040	; set bit 6
-.Lhbi_skip6:
-	cp (xwa + 9), 0x02
-	jr nz, .Lhbi_skip7
-	ormi16 (xwa + 0), 0x0080	; set bit 7
-.Lhbi_skip7:
-	cp (xwa + 10), 0x02
-	ret nz
-	ormi16 (xwa + 0), 0x0100	; set bit 8
-	ret
+HDAE5000_TypeSel_BuildMask:	.include "includes/generated/cc900/HDAE5000_TypeSel_BuildMask.s"	; C: cc900/hdae5000_hd_driver.c
 	; Sub-routine 2: Command dispatcher with computed jump table
 	; Input: XWA = context pointer (saved as XIZ), XBC = command ID
 	; Returns XHL = result

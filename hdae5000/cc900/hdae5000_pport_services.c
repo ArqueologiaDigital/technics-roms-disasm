@@ -1,7 +1,17 @@
-/* hdae5000_v2_01i: the functions of hdae5000/cc900-staged/hdae5000_pport_services.c that V4.23 reproduces unchanged in HD-AE5000 v2.01i (port_staged.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_pport_services.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_pport_services.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_pport_services.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
+   cc900-name: PP_Svc02=HDAE5000_PPORT_Svc02_TurnHdMotorOff
+   cc900-name: PP_Svc07=HDAE5000_PPORT_Svc07_ReadDirBlockFromHd
+   cc900-name: PP_Svc08=HDAE5000_PPORT_Svc08_ReadFileBlockFromHd
+   cc900-name: PP_Svc09=HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd
+   cc900-name: PP_Svc10=HDAE5000_PPORT_Svc10_WriteDirBlockToHd
+   cc900-name: PP_Svc11=HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd
+   cc900-name: PP_Svc12=HDAE5000_PPORT_Svc12_WriteFlsBlockToHd
+   cc900-name: PP_Svc22=HDAE5000_PPORT_Svc22_WriteCloseHD
+   cc900-name: PP_Svc23=HDAE5000_PPORT_Svc23_WriteFileHD
+   cc900-name: PP_Svc25=HDAE5000_PPORT_Svc25_ReadFileHD
    cc900-module: HDAE5000_DebugTrace
 */
 #include "hdae_ws.h"
@@ -98,4 +108,140 @@ extern int HDAE5000_HD_ReadFileNext(void *dst, unsigned long n, unsigned long *s
 
 void HDAE5000_DebugTrace(char *s)
 {
+}
+
+int PP_Svc02(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_ATA_Standby_Status() == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f8f8e);
+    HDAE5000_DebugTrace(ram_2f8fa8);
+    return ret;
+}
+
+int PP_Svc07(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_LoadTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f910a);
+    HDAE5000_DebugTrace(ram_2f9128);
+    return ret;
+}
+
+int PP_Svc08(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_LoadTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f912a);
+    HDAE5000_DebugTrace(ram_2f9148);
+    return ret;
+}
+
+int PP_Svc09(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_LoadTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f914a);
+    HDAE5000_DebugTrace(ram_2f9168);
+    return ret;
+}
+
+int PP_Svc10(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_StoreTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f916a);
+    HDAE5000_DebugTrace(ram_2f9186);
+    return ret;
+}
+
+int PP_Svc11(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_StoreTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f9188);
+    HDAE5000_DebugTrace(ram_2f91ac);
+    return ret;
+}
+
+int PP_Svc12(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_StoreTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f91ae);
+    HDAE5000_DebugTrace(ram_2f91ca);
+    return ret;
+}
+
+int HDAE5000_PPORT_Svc17_FormatHd(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_FormatDrive(0) != 0)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2f9270);
+    HDAE5000_DebugTrace(ram_2f9284);
+    return ret;
+}
+
+int PP_Svc22(void)
+{
+    int ret;
+
+    ret = 1;
+    if (HDAE5000_HD_WriteClose() != -1 && HDAE5000_HD_StoreTables(1) != -1)
+        ret = 0;
+    HDAE5000_DebugTrace(ram_2f9306);
+    return ret;
+}
+
+int PP_Svc23(void *src, unsigned long n)
+{
+    int ret;
+
+    ret = 1;
+    if (HDAE5000_HD_WriteStream(src, n) != -1)
+        ret = 0;
+    HDAE5000_DebugTrace(ram_2f931e);
+    return ret;
+}
+
+int PP_Svc25(void *dst, unsigned long n)
+{
+    int ret;
+
+    ret = 1;
+    HDAE5000_DebugTrace(ram_2f934c);
+    if (HDAE5000_RAM_PportReadState == 1) {
+        HDAE5000_RAM_PportReadState = 2;
+        if (HDAE5000_HD_ReadFile(dst, n, *(unsigned long **)(PPIB + 206)) != -1)
+            ret = 0;
+    } else if (HDAE5000_RAM_PportReadState == 2) {
+        if (HDAE5000_HD_ReadFileNext(dst, n, *(unsigned long **)(PPIB + 206)) != -1)
+            ret = 0;
+    } else
+        HDAE5000_RAM_PportReadState = 0;
+    return ret;
 }
