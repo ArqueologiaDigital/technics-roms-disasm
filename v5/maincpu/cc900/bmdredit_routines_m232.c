@@ -344,3 +344,89 @@ err:
 		BmDrEdit_RefreshDisplayState();
 	}
 }
+
+extern unsigned char BmDrEdit_ProcessVoiceSection(unsigned int, unsigned int *, unsigned int *);
+extern void EditChannel_LoadVoiceParams(void);
+extern void BmDrEdit_InsertStepEntry(void);
+extern unsigned int __near ram_ce3;
+extern void BmDrEdit_InsertMultiSongSteps(void);
+extern void NoteEditSy_SendWidgetCmdC(void);
+extern void BmDrEdit_SaveEditState(void);
+extern void BmDrEdit_RestoreEditState(void);
+extern void BmDrEdit_SetupScrollRegion(unsigned char *, unsigned char *);
+extern unsigned int __near ram_27f2;
+extern unsigned int __near ram_27f4;
+extern unsigned int __near ram_27f6;
+extern unsigned int __near ram_27f8;
+extern unsigned int __near ram_27fa;
+extern unsigned int __near ram_27fc;
+extern unsigned int __near ram_27fe;
+extern unsigned int __near ram_2800;
+extern unsigned char __near ram_2802;
+extern unsigned char __near ram_280c;
+extern unsigned char __near ram_280e;
+extern unsigned int __near ram_2806;
+extern void BmDrEdit_PrepareSecondaryNoteDisplay(void);
+
+void BmDrEdit_InsertMultiSongSteps(void)
+{
+	unsigned int a, b;
+	unsigned char r;
+
+	ram_ce3 = ram_2758;
+	ram_2744 = ram_2758;
+	for (;;) {
+		r = BmDrEdit_ProcessVoiceSection(BmDrEdit_CheckAndSelectChannel(), &a, &b);
+		if (ram_272a == a) goto out;
+		if (b != 0) r -= b;
+		ram_2758 = r;
+		do {
+			EditChannel_LoadVoiceParams();
+			BmDrEdit_InsertStepEntry();
+			if (SEQ_ERROR_CODE != 0) goto out;
+			ram_2744++;
+		} while (--ram_2758 != 0);
+		ram_ce3 = ram_2744;
+	}
+out:
+	;
+}
+void BmDrEdit_PrepareSecondaryNoteDisplay(void)
+{
+	unsigned char lo, hi;
+	unsigned int v, w;
+
+	if (!(ram_2943 & 1)) return;
+	BmDrEdit_SaveEditState();
+	ram_27f2 = ram_2750;
+	ram_27f4 = ram_2752;
+	ram_27f6 = ram_2754;
+	ram_27f8 = ram_2756;
+	ram_27fa = ram_2744;
+	ram_27fc = ram_2746;
+	ram_27fe = SEQ_DATA_BLOCK;
+	ram_2800 = SEQ_DATA_OFFSET;
+	if ((SeqData_ReadNextByte() & 0xf0) == 0x90) {
+		SeqData_AdvancePosition();
+		ram_27fc = SeqData_ReadNextByte();
+		SeqData_AdvancePosition();
+		ram_2802 = SeqData_ReadNextByte();
+		BmDrEdit_SetupScrollRegion(&lo, &hi);
+		if (ram_2802 >= lo && ram_2802 <= hi) {
+			ram_280c = lo;
+			ram_280e = hi;
+			SeqData_AdvancePosition();
+			SeqData_AdvancePosition();
+			v = SeqData_ReadNextByte();
+			SeqData_AdvancePosition();
+			w = SeqData_ReadNextByte();
+			v &= 0x7f;
+			w &= 0x7f;
+			w *= 0x60;
+			w += v;
+			ram_2806 = w;
+			NoteEditSy_SendWidgetCmdC();
+		}
+	}
+	BmDrEdit_RestoreEditState();
+}

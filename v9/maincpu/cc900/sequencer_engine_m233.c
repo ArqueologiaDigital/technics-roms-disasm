@@ -163,3 +163,29 @@ int VoiceType_CheckDrumOrControl(unsigned char a, unsigned char *p)
   } else if (f != 0) return -1;
   return 0;
 }
+
+/* cc900-module: FileIO_SeekAndRead16BitValue NotePool_InsertEntry SeqAcc_InitPlayback_FreshStart SeqPlay_CheckDrumPartAndClearCounters SeqPlay_ProcessChannelsAndDrum SeqPlay_ReactivatePartsAndResume SeqPlay_RestartWithVoiceConfig */
+extern unsigned char __near ram_1d6a;
+extern unsigned char __near ram_231c;
+extern unsigned char __near ram_28ac;
+extern void SeqPlay_CheckDrumPartAndClearCounters(void);
+extern unsigned char __near ram_2862;
+extern unsigned char __near ram_2864;
+extern unsigned char __near ram_2866;
+extern void SeqPlay_ProcessChannelsAndDrum(void);
+
+void SeqPlay_CheckDrumPartAndClearCounters(void)
+{
+  unsigned char t;
+  int m;
+  t = ram_231c;
+  if (t != 0xff) {
+    m = 1 << (t - 1);
+    if ((m & SEQ_TRACK_MASK) || (m & ram_2314)) ram_28ac |= 0x40;
+  }
+  ram_1d6a = 0;
+  ram_2862 = 0;
+  ram_2864 = 0;
+  ram_2866 = 0;
+  SeqPlay_ProcessChannelsAndDrum();
+}

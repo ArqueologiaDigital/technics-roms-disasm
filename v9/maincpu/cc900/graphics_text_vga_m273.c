@@ -59,3 +59,23 @@ void SeGfx_StaticOp15_DottedLine(struct dsrc *s)
     b.y = s->a8;
     DrawDottedLineWithMode(&a, &b, GFX_FG_COLOR);
 }
+
+struct bsrc { unsigned char op[2]; long bits; unsigned int pos; unsigned int w; int h; };
+extern void ColorBlit2_LargeCodeBlock(struct rect *, long, int);
+extern void SeGfx_StaticOp03_Bitmap(struct bsrc *s);
+
+void SeGfx_StaticOp03_Bitmap(struct bsrc *s)
+{
+    struct rect r;
+    struct rect *q;
+    int *py;
+    unsigned int *pp;
+    q = &r;
+    py = &q->y0;
+    pp = &s->pos;
+    *py = *pp / 40;
+    q->x0 = (*pp % 40) << 3;
+    q->y1 = s->h + q->y0;
+    q->x1 = q->x0 + (s->w << 3);
+    ColorBlit2_LargeCodeBlock(q, s->bits, GFX_FG_COLOR);
+}

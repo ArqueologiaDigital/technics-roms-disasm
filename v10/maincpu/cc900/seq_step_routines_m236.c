@@ -177,3 +177,47 @@ void SeqStep_VelNoteFwd(void)
     ram_273c = SEQ_DATA_BLOCK;
     SeqStep_MeasureRead();
 }
+
+extern unsigned char __near SEQ_EDIT_FLAGS;
+extern void PartCtrl_WriteByte_Indexed(int);
+extern void SeqStep_EventAdvance(void);
+
+void SeqStep_EventAdvance(void)
+{
+    unsigned char c, d;
+    unsigned int blk, off;
+    blk = SEQ_DATA_BLOCK;
+    off = SEQ_DATA_OFFSET;
+    if (!(SEQ_EDIT_FLAGS & 1)) return;
+    SEQ_DATA_BLOCK = ram_273c;
+    SEQ_DATA_OFFSET = ram_273e;
+    for (;;) {
+        SeqData_AdvancePosition();
+        if (SEQ_ERROR_CODE != 0) {
+restore:
+            SEQ_DATA_BLOCK = blk;
+            SEQ_DATA_OFFSET = off;
+            return;
+        }
+        if (SeqData_ReadNextByte() == 0x7f) break;
+        do {
+            SeqData_AdvancePosition();
+            if (SEQ_ERROR_CODE != 0) goto restore;
+        } while (!(SeqData_ReadNextByte() & 0x80));
+        ram_273c = SEQ_DATA_BLOCK;
+        ram_273e = SEQ_DATA_OFFSET;
+    }
+    SEQ_DATA_OFFSET = ram_273e;
+    SEQ_DATA_BLOCK = ram_273c;
+    c = SeqData_ReadNextByte();
+    PartCtrl_WriteByte_Indexed(0x81);
+    for (;;) {
+        if (c == 0x81) goto restore;
+        SeqData_AdvancePosition();
+        if (SEQ_ERROR_CODE != 0) goto restore;
+        d = c;
+        c = SeqData_ReadNextByte();
+        PartCtrl_WriteByte_Indexed(d);
+        if (d & 0x80) c = 0;
+    }
+}

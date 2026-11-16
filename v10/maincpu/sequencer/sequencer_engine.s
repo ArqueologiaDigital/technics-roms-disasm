@@ -1746,32 +1746,11 @@ SeqPlay_TempoVoice_ParseCtrl48_Return:
 ; slot allocation, and MIDI event dispatch.
 ; -----------------------------------------------------------------------------
 
-SeqPlay_CheckDrumPartAndClearCounters:
-	ld a, (8988:16)
-	cp a, 0xff
-	jr z, SeqPlay_ClearCountersAndProcess
-	dec 1, a
-	ld bc, 1:i3
-	and a, 0xf
-	jr z, SeqPlay_DrumPart_ShiftDone
-	slaa bc
-
-SeqPlay_DrumPart_ShiftDone:
-	ld wa, bc
-	and bc, (SEQ_TRACK_MASK:16)
-	jr nz, SeqPlay_DrumPart_SetActiveFlag
-	and wa, (8980:16)
-	jr z, SeqPlay_ClearCountersAndProcess
-
-SeqPlay_DrumPart_SetActiveFlag:
-	set 6, (0x28ac:16)
-
-SeqPlay_ClearCountersAndProcess:
-	ld (7530:16), 0
-	ld (0x2862:16), 0
-	ld (0x2864:16), 0
-	ld (0x2866:16), 0
-	jrl SeqPlay_ProcessChannelsAndDrum
+SeqPlay_CheckDrumPartAndClearCounters:	.include "includes/generated/cc900/SeqPlay_CheckDrumPartAndClearCounters.s"	; C: cc900/sequencer_engine_m233.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_DrumPart_ShiftDone, SeqPlay_CheckDrumPartAndClearCounters + 20
+	.set	SeqPlay_DrumPart_SetActiveFlag, SeqPlay_CheckDrumPartAndClearCounters + 34
+	.set	SeqPlay_ClearCountersAndProcess, SeqPlay_CheckDrumPartAndClearCounters + 38
 
 SeqPlay_IterateAllChannels:
 	lda xsp, (xsp - 22)
@@ -23287,19 +23266,9 @@ SeqMode_SendStatusUpdate:	.include "includes/generated/cc900/SeqMode_SendStatusU
 
 ; On the sequencer screens with title 0x85 or 0x87, asks the widget at 0x2972 to redraw
 ; parameter 2 (EVT_PARA_DRAW).
-SeqAccomp_SendStopNotify:
-	ld a, (ACTIVE_TITLE:16)
-	cp a, 0x85
-	jr z, SeqAccomp_StopNotifyDeliver
-	cp a, 0x87
-	ret nz
-
-SeqAccomp_StopNotifyDeliver:
-	ld xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 2:i3
-	call ApDeliveryEvent
-	ret
+SeqAccomp_SendStopNotify:	.include "includes/generated/cc900/SeqAccomp_SendStopNotify.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqAccomp_StopNotifyDeliver, SeqAccomp_SendStopNotify + 14
 
 SngSelSyori:
 	pushw_erp 0xfa
