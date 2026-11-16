@@ -26,6 +26,28 @@ TREES = {'v10': 'v10', 'v9': 'v9', 'v7': 'v7', 'v6': 'v6', 'v5': 'v5'}
 SYMREF = 'symbols/maincpu_%s_symbols_reference.txt'
 
 
+BUILT_DEFAULT = '-O3 -Xr'      # the V4.23 build's default for a cc900/ file without `cc900-options:` (lane_vmb)
+
+
+def built_flags(path):
+    m = sv.OPT_RE.search(open(path, 'rb').read())
+    return ' '.join(m.group(1).decode().split()) if m else BUILT_DEFAULT
+
+
+def tree_functions(cdir, skip=None):
+    """{function label: C file} over a tree's cc900/*.c (two files must not define the same function)"""
+    out = {}
+    for f in sorted(os.listdir(cdir)) if os.path.isdir(cdir) else []:
+        p = os.path.join(cdir, f)
+        if f.endswith('.c') and p != skip:
+            t = open(p, encoding='latin-1').read()
+            lm = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', t)}
+            for k, d in sp.items(t):
+                if k == 'fn':
+                    out[lm.get(sp.fn_name(d), sp.fn_name(d))] = f
+    return out
+
+
 def main():
     a = sys.argv[1:]
     dry = '--dry-run' in a
@@ -41,14 +63,29 @@ def main():
             text = open(sp_path, encoding='latin-1').read()
             flags = sv.file_flags(sp_path)
             dst = os.path.join(cdir, fn)
-            if os.path.exists(dst) and sv.file_flags(dst) != flags:
+            if os.path.exists(dst) and built_flags(dst) != flags:
                 dst = os.path.join(cdir, fn[:-2] + '_' + sv.LABEL_OF_FLAGS[flags].lower() + '.c')
+            have = tree_functions(cdir)
+            lm = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', text)}
+            dup = [lm.get(sp.fn_name(d), sp.fn_name(d)) for k, d in sp.items(text)
+                   if k == 'fn' and lm.get(sp.fn_name(d), sp.fn_name(d)) in have]
+            if dup:
+                sys.exit('%s: %s already defined in cc900/ (%s)' % (sp_path, ', '.join(dup), ', '.join(sorted(set(have[d] for d in dup)))))
             if os.path.exists(dst):
                 old = open(dst, encoding='latin-1').read()
-                if sv.file_flags(dst) != flags:
+                if built_flags(dst) != flags:
                     sys.exit('%s: option sets differ from %s' % (dst, sp_path))
                 items = sp.items(text)
-                add = [d for k, d in items if k == 'decl' and d not in old]
+                declared = set()
+                for k, d in sp.items(old):
+                    if k == 'decl':
+                        declared |= sp.defines(d)
+                # a name the built file already declares keeps the built declaration (its qualifier is the build's)
+                add = [d for k, d in items if k == 'decl' and d not in old and not (sp.defines(d) & declared)]
+                for k, d in items:
+                    if k == 'decl' and d not in old and sp.defines(d) & declared:
+                        print('   note: %s keeps its declaration in %s, not the staged %r: check with V4.23'
+                              % (', '.join(sorted(sp.defines(d) & declared)), os.path.basename(dst), d))
                 body = [d for k, d in items if k in ('fn', 'name')]
                 new = old.rstrip('\n') + '\n\n' + '\n'.join(add) + ('\n\n' if add else '') + '\n'.join(body) + '\n'
                 what = 'append %d functions to' % sum(1 for k, _ in items if k == 'fn')

@@ -100,6 +100,20 @@ def main():
                 picked.append(d); need |= idents(d); changed = True
     picked = [d for d in decls if d in picked]                     # keep the probe's order
     nm = [c for c in names if any(re.search(r'cc900-name:\s*%s\s*=' % re.escape(f), c) for f in funcs)]
+    # A name the staging file already declares differently (another probe's type for it) would make V4.23 refuse
+    # the whole file (THC1-Error-262): such functions go to a sibling file, <name>_b.c, _c.c, ... instead.
+    base = staged[:-2]
+    for suffix in [''] + ['_' + c for c in 'bcdefgh']:
+        staged = base + suffix + '.c'
+        if not os.path.exists(staged):
+            break
+        prev = {}
+        for k, d in items(open(staged, encoding='latin-1').read()):
+            if k == 'decl':
+                for n in defines(d):
+                    prev[n] = d
+        if not any(n in prev and prev[n] != d for d in picked for n in defines(d)):
+            break
     old = open(staged, encoding='latin-1').read() if os.path.exists(staged) else ''
     if not old:
         opt = '\n   cc900-options: %s' % opts

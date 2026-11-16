@@ -290,3 +290,9 @@ void AccVoice_IncrementBarCounter(void)
     if (ACC_CUR_MEASURE > r[13])
         ACC_CUR_MEASURE = 0;
 }
+
+/* The ROM's routine is a bare ret (the bytes after it are not reached from here).
+   cc900-name: AccPatch_CmplxDataBlk_Helper2=AccPatch_ComplexDataBlock_Helper2 */
+void AccPatch_CmplxDataBlk_Helper2(void)
+{
+}

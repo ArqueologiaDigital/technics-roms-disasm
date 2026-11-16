@@ -183,3 +183,21 @@ int ValidateFileRangeAlt(int i)
     if (ram_25eb2[(i - b) * 82] == 0) return 2;
     return 0;
 }
+
+struct frec { unsigned int w[6]; };
+extern unsigned int ram_25db8[];
+
+unsigned char *Demo_GetPresetBaseForPartAlt(unsigned char i)
+{
+    unsigned char *p;
+    if (((long *)0x9c4000)[i] != 0) p = (unsigned char *)0x69800;
+    else p = SEQ_SONG_SLOTS;
+    p += 768;
+    return p;
+}
+
+unsigned int FileIO_GetRecordFlags(unsigned int i)
+{
+    if (i >= 20) return 0;
+    return ((struct frec *)ram_25db8)[i].w[0];
+}

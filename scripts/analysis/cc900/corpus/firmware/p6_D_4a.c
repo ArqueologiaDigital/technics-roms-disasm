@@ -274,9 +274,9 @@ void SlotTable_ExtendedOpsBlock(void)
 	}
 }
 
-/* cc900-name: Flash_InitBcBlock_Helper4_Helper=Flash_InitBytecodeBlock_Helper4_Helper (the label shares its first 31
+/* cc900-name: Flash_InitBcBlk_Helper4_Helper=Flash_InitBytecodeBlock_Helper4_Helper (the label shares its first 31
    characters with Flash_InitBytecodeBlock_Helper4_Helper2) */
-void Flash_InitBcBlock_Helper4_Helper(void)
+void Flash_InitBcBlk_Helper4_Helper(void)
 {
 	struct eo *p = &ram_86c;
 	int i;

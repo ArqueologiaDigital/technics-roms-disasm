@@ -33,3 +33,16 @@ void Audio_DMA_Transfer(void)
         do d++; while (d < 3);
     }
 }
+
+extern unsigned int ram_1e751;
+extern unsigned int ram_204dd;
+extern unsigned int ram_1fca1;
+extern unsigned int ram_1ef5b;
+
+unsigned int RhythmBuf_BytecodeSnippet(void) { return ram_1ef5b; }
+
+unsigned int SeqBuf_DspSysEx_OrphanData(void) { return ram_1fca1; }
+
+unsigned int SeqBuf_NoteEvent_OrphanData(void) { return ram_204dd; }
+
+unsigned int TempoRingBuf_BytecodeSnippet2(void) { return ram_1e751; }

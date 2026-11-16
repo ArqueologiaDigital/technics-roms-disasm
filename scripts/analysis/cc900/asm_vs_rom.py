@@ -39,8 +39,15 @@ def main():
     rom = open(os.path.join(REPO, opt(a, '--rom', 'original_ROMs/kn5000_v10_program.rom')), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
+    alias = {}
+    for i, x in enumerate(a):
+        if x == '--cfile':
+            alias.update(fw.label_map(a[i + 1]))
+
     class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
         def resolve(self, n):                            # name (value or label) it is the prefix of
+            if n in alias:                               # a short C name (`cc900-name:`) of a callee or object
+                n = alias[n]
             r = super().resolve(n)
             if r[0] is None and len(n) == 31:
                 full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == n]

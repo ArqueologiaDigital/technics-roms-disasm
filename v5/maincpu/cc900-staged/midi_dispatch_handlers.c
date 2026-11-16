@@ -263,3 +263,49 @@ unsigned char Param_SignExt_H3_Helper(unsigned char *p, unsigned int n)
     while (n--) s += *p++;
     return -s & 0x7f;
 }
+
+struct l7 { unsigned char h : 1; unsigned char v : 7; };
+struct b6 { unsigned char h : 1; unsigned char f : 1; unsigned char r : 6; };
+struct l4 { unsigned char h : 4; unsigned char v : 4; };
+struct b10 { unsigned char r : 6; unsigned char b1 : 1; unsigned char b0 : 1; };
+struct r8 { unsigned char h : 1; unsigned char b6 : 1; unsigned char b5 : 1; unsigned char b4 : 1;
+            unsigned char b3 : 1; unsigned char b2 : 1; unsigned char b1 : 1; unsigned char b0 : 1; };
+struct eq2 { unsigned char h : 2; unsigned char f54 : 2; unsigned char b3 : 1; unsigned char b2 : 1; unsigned char l : 2; };
+extern unsigned int __near ram_b72a;
+
+void DataBuf_CopyEQBlock7(unsigned char *s, unsigned char *d)
+{
+    ((struct eq2 *)(d + 2))->f54 = ((struct eq2 *)(s + 2))->f54;
+    ((struct eq2 *)(d + 2))->b3 = ((struct eq2 *)(s + 2))->b3;
+    ((struct eq2 *)(d + 2))->b2 = ((struct eq2 *)(s + 2))->b2;
+    ((struct eq2 *)(d + 2))->l = ((struct eq2 *)(s + 2))->l;
+    ((struct l7 *)(d + 3))->v = ((struct l7 *)(s + 3))->v;
+    d[4] = s[4];
+    ((struct l4 *)(d + 6))->v = ((struct l4 *)(s + 6))->v;
+    if (ram_b72a == 2) d[5] = s[5];
+}
+
+void DataBuf_CopyReverbBlock6(unsigned char *s, unsigned char *d)
+{
+    ((struct r8 *)(d + 2))->b1 = ((struct r8 *)(s + 2))->b1;
+    ((struct r8 *)(d + 2))->b0 = ((struct r8 *)(s + 2))->b0;
+    ((struct r8 *)(d + 3))->b1 = ((struct r8 *)(s + 3))->b1;
+    ((struct r8 *)(d + 4))->b6 = ((struct r8 *)(s + 4))->b6;
+    ((struct r8 *)(d + 4))->b5 = ((struct r8 *)(s + 4))->b5;
+    ((struct r8 *)(d + 4))->b4 = ((struct r8 *)(s + 4))->b4;
+    ((struct r8 *)(d + 4))->b3 = ((struct r8 *)(s + 4))->b3;
+    ((struct r8 *)(d + 4))->b2 = ((struct r8 *)(s + 4))->b2;
+    ((struct r8 *)(d + 4))->b1 = ((struct r8 *)(s + 4))->b1;
+    ((struct r8 *)(d + 4))->b0 = ((struct r8 *)(s + 4))->b0;
+    ((struct r8 *)(d + 5))->b1 = ((struct r8 *)(s + 5))->b1;
+    ((struct r8 *)(d + 5))->b0 = ((struct r8 *)(s + 5))->b0;
+}
+
+void VoiceParam_CopyBitfields_TypeC(unsigned char *s, unsigned char *d)
+{
+    ((struct b10 *)(d + 2))->b0 = ((struct b10 *)(s + 2))->b0;
+    ((struct b10 *)(d + 2))->b1 = ((struct b10 *)(s + 2))->b1;
+    ((struct b10 *)(d + 3))->b1 = ((struct b10 *)(s + 3))->b1;
+    ((struct b10 *)(d + 5))->b0 = ((struct b10 *)(s + 7))->b0;
+    ((struct b10 *)(d + 5))->b1 = ((struct b10 *)(s + 7))->b1;
+}
