@@ -201,6 +201,16 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         body = [module_jump(l) for l in body]
         # a shift by 16: to_llvm writes the raw count field 0, llvm-mc wants 16 (the CPU encodes 16 as 0)
         body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
+        # the address of one of the function's own labels as data (a switch's `lda xix, <case base>` before
+        # `jp t, xix+wa`): the unit is assembled at 0, so spell it as the function's ROM address plus the distance
+        own = {m.group(1) for l in body for m in [re.match(r'^([.\w$]+):', l)] if m}
+
+        def own_address(l):
+            m = re.match(r'^(\tlda \w+, )\(([.\w$]+):24\)$', l)
+            if m and m.group(2) in own:
+                return '%s(0x%x + %s - %s:24)' % (m.group(1), ref[full], m.group(2), full)
+            return l
+        body = [own_address(l) for l in body]
         if any('untranslated' in l for l in body):
             if os.environ.get('SUB_V423_SHAPES'):          # the offending lines' shapes (numbers masked), no text
                 for l in body:
