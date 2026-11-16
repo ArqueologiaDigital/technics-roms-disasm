@@ -1297,17 +1297,7 @@ RecordChain_SkipReadNext:
 	jr nz, RecordChain_SkipCheckBit7
 	ret
 
-Demo_ParseSlideHeader:
-	extz wa
-	sla wa, 2
-	extz xwa
-	add xwa, 0x9c4000
-	ld xwa, (xwa)
-	or xwa, xwa
-	ret z
-	ld xbc, 0x69800
-	call SLIDE_Parse_Header
-	ret
+Demo_ParseSlideHeader:	.include "includes/generated/cc900/Demo_ParseSlideHeader.s"	; C: cc900/file_demo_proc_m266.c
 
 ; Checks that the open file carries the signature of region A.
 ;   In:  A = region.  Seeks to the region's offset (FileIO_FileSigRecs_OffsetCol, 8-byte rows;
@@ -1501,28 +1491,10 @@ FileIO_ValidateOpen_Return:
 	lda xsp, (xsp + 24)
 	ret
 
-FileIO_ReadHeaderAt4:
-	pushw iz
-	ld iz, 1:i3
-	ld xwa, 4:i3
-	ld bc, 0:i3
-	call FileIO_SeekAndReadBlock
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr lt, FileIO_ReadHdr4_Fail
-	ld xwa, (FileIO_HeaderAt4_ExpectedPtr:24)
-	ld a, (xwa)
-	cp l, a
-	jr z, FileIO_ReadHdr4_Success
-
-FileIO_ReadHdr4_Fail:
-	ld iz, 0:i3
-
-FileIO_ReadHdr4_Success:
-	call FileIO_SeekRead_ExtReturn
-	ld hl, iz
-	popw iz
-	ret
+FileIO_ReadHeaderAt4:	.include "includes/generated/cc900/FileIO_ReadHeaderAt4.s"	; C: cc900/file_demo_proc_m266.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_ReadHdr4_Fail, FileIO_ReadHeaderAt4 + 30
+	.set	FileIO_ReadHdr4_Success, FileIO_ReadHeaderAt4 + 32
 
 FileIO_ValidateFileWithRegion:
 	lda xsp, (xsp - 24)
@@ -1571,26 +1543,10 @@ FileIO_ValidateRegion_Return:
 	lda xsp, (xsp + 24)
 	ret
 
-FileIO_ReadHeaderAtF:
-	pushw iz
-	ld iz, 1:i3
-	ld xwa, 0xf
-	ld bc, 0:i3
-	call FileIO_SeekAndReadBlock
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr lt, FileIO_ReadHdrF_Fail
-	cp l, 0x8
-	jr z, FileIO_ReadHdrF_Success
-
-FileIO_ReadHdrF_Fail:
-	ld iz, 0:i3
-
-FileIO_ReadHdrF_Success:
-	call FileIO_SeekRead_ExtReturn
-	ld hl, iz
-	popw iz
-	ret
+FileIO_ReadHeaderAtF:	.include "includes/generated/cc900/FileIO_ReadHeaderAtF.s"	; C: cc900/file_demo_proc_m266.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_ReadHdrF_Fail, FileIO_ReadHeaderAtF + 27
+	.set	FileIO_ReadHdrF_Success, FileIO_ReadHeaderAtF + 29
 
 FileIO_ValidateWithExtHeader:
 	lda xsp, (xsp - 24)
@@ -4030,34 +3986,11 @@ SearchOpen_Return:
 	lda xsp, (xsp+270)
 	ret
 
-LoadFromSecondaryPage:
-	pushw iz
-	call FileIO_GetCurrentWallpaperIndex
-	cp hl, 0:i3
-	jr ge, LoadSecondary_OpenFile
-	ldw hl, 0xff98
-	jr LoadSecondary_Return
-
-LoadSecondary_OpenFile:
-	ld wa, hl
-	call FileIO_GetWallpaperEntry
-	ld xwa, xhl
-	ld xbc, LoadSecondary_OpenFile_Str_rb
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadSecondary_Process
-	call FileIO_ReturnError
-	jr LoadSecondary_Return
-
-LoadSecondary_Process:
-	call Gfx_LoadSplashBMP
-	ld iz, hl
-	call FileIO_CloseHandle
-	ld hl, iz
-
-LoadSecondary_Return:
-	popw iz
-	ret
+LoadFromSecondaryPage:	.include "includes/generated/cc900/LoadFromSecondaryPage.s"	; C: cc900/file_demo_proc_m266_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadSecondary_OpenFile, LoadFromSecondaryPage + 14
+	.set	LoadSecondary_Process, LoadFromSecondaryPage + 41
+	.set	LoadSecondary_Return, LoadFromSecondaryPage + 53
 
 ; Returns in HL the last file I/O error code (the word at 0x7f48, set negative by the FileIO
 ; routines; the C-library ferror).
@@ -4677,23 +4610,10 @@ FileIO_ValidateRecord:
 	ldw (xsp + 10), 0xfffd
 	jr FileIO_ParseHeader_Done
 
-FileIO_ValidateRecord_CheckSize:
-	extz wa
-	call format_FD
-	cp hl, 0:i3
-	jr z, FileIO_ValidateRecord_Fail
-	ld hl, 0:i3
-	ret
-
-FileIO_ValidateRecord_Fail:
-	cpw (FILE_ERROR:24), 31
-	jr nz, FileIO_ValidateRecord_Ok
-	ldw hl, 0xfff5
-	ret
-
-FileIO_ValidateRecord_Ok:
-	ldw hl, 0xfffa
-	ret
+FileIO_ValidateRecord_CheckSize:	.include "includes/generated/cc900/FileIO_ValidateRecord_CheckSize.s"	; C: cc900/file_demo_proc_m267.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_ValidateRecord_Fail, FileIO_ValidateRecord_CheckSize + 13
+	.set	FileIO_ValidateRecord_Ok, FileIO_ValidateRecord_CheckSize + 26
 
 FileIO_ValidateRecord_Return:
 	ldw (0x0272cc:24), 0x003f
@@ -8281,28 +8201,9 @@ FileIO_DiskRemoved:
 ;   AccWrap_PlayModeDispatch, AccompSeq_StopSequence, AudioInit_RefreshToneBank,
 ;   NoteMap_ProcessAndMerge, Voice_InitializeAll, Voice_InitTablePair, Voice_InitTableGroup,
 ;   MIDI_SendAllSoundOff and MidiIn_IgnoreClockTransport.
-InitializeOperationState:
-	dec 2, xsp
-	ld (xsp), a
-	call SeqBuf_Init
-	call NoteMap_SendAllNotesOff
-	call Part_ReinitAllActive
-	call AccWrap_PlayModeDispatch
-	cp (xsp), 0x0
-	jr z, InitOp_SkipSetFlag
-	set 2, (SEQ_RTMCFG:16)
-
-InitOp_SkipSetFlag:
-	call AccompSeq_StopSequence
-	call AudioInit_RefreshToneBank
-	call NoteMap_ProcessAndMerge
-	call Voice_InitializeAll
-	call Voice_InitTablePair
-	call Voice_InitTableGroup
-	call MIDI_SendAllSoundOff
-	call MidiIn_IgnoreClockTransport
-	inc 2, xsp
-	ret
+InitializeOperationState:	.include "includes/generated/cc900/InitializeOperationState.s"	; C: cc900/file_demo_proc_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	InitOp_SkipSetFlag, InitializeOperationState + 29
 
 ; Undoes InitializeOperationState after a disk operation: clears bits 2 and 3 of 0x28a7,
 ; re-initialises the playback state (SeqAcc_InitPlaybackState) and accepts received MIDI clock and transport again

@@ -111,10 +111,19 @@ def erp_byte(op, raw):
         return '\t%s 0x%x, %d' % (ERP_BIT_OP[op], ERP_BYTE[raw[1]], num(raw[0]))
     return '\t; untranslated (a byte register llvm-mc cannot name): ' + op + ' ' + ','.join(raw)
 
+# PLACEHOLDER (the build): the value a label of the tree resolves to before the assembler places it
+# (cc900_firmware_c.ROM_LABEL).  A number computed from it would be a wrong byte, so every such use stops instead.
+PLACEHOLDER = None
+
+def no_placeholder(sym, a):
+    if PLACEHOLDER is not None and a == PLACEHOLDER:
+        raise KeyError('%s: its address would come from the label placeholder; it must be written by name' % sym)
+    return a
+
 def spelled(sym, a, off=0):
     """the operand text for symbol `sym` (+ off) at address a: the tree's name when SPELL has it, else the number"""
     s = SPELL.get(sym.lstrip('_.')) if SPELL is not None else None
-    if s is None: return '0x%x' % (a + off)
+    if s is None: return '0x%x' % (no_placeholder(sym, a) + off)
     return '%s+%d' % (s, off) if off else s
 
 def absaddr(a, named=False, sym=None, off=0):
@@ -212,7 +221,11 @@ def translate_line(t, syms, locals_):
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
     m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff)$', ' '.join(raw)) if op == 'pushw' else None
     if m:                                                # an address pushed as two words (abi returns.c use_d,
+        s = SPELL.get(m.group(1).lstrip('_.')) if SPELL is not None and not m.group(1).startswith('S') else None
+        if s:                                            # a label: the assembler supplies the halves (UPDATE 20)
+            return '\tpushw %s@%s' % (s, 'hi16' if m.group(2) == '>> 16' else 'lo16')
         a = syms[m.group(1)] if m.group(1) in syms else lookup(m.group(1), syms)   # _sprintf: pushw __strOut >> 16)
+        no_placeholder(m.group(1), a)
         return '\tpushw 0x%x' % ((a >> 16) & 0xffff if m.group(2) == '>> 16' else a & 0xffff)
     if op == 'call' and len(raw) == 1 and re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ)$', raw[0]):
         return '\tcall (%s)' % raw[0].lower()                    # an indirect call: call XWA (abi fptr.c fp_call)

@@ -71,9 +71,9 @@ def main():
                 b10 = r10[ref10[label] - BASE:ref10[label] - BASE + n]
                 bt = rt[reft[label] - BASE:reft[label] - BASE + n]
                 covered, local = set(), {}
-                for name in sp.idents(item) | set(re.findall(r'\b0x[0-9a-fA-F]{3,6}\b', item)):
+                for name in sp.idents(item) | set(re.findall(r'\b0x[0-9a-fA-F]{3,6}\b(?![0-9a-fA-FlLuU])', item)):
                     v = int(name, 16) if name.startswith('0x') else value(n10, name)
-                    if v is None or v < 0x100:
+                    if v is None or v < 0x100 or v >= 0x1000000:   # not an address (an event code, a mask)
                         continue
                     for w in ((2, 3) if v < 0x10000 else (3,)):
                         enc = v.to_bytes(w, 'little')
@@ -103,6 +103,22 @@ def main():
                         out = out.replace(item + '\n', '')
                     if kind == 'name' and re.search(r'cc900-name:\s*%s\s*=' % re.escape(cn), item):
                         out = out.replace(item + '\n', '')
+            # declarations that only dropped functions used go too (their ram_<hex> names would collide with remapped
+            # ones): keep a declaration when a kept function, or a kept declaration, uses a name it introduces
+            its = sp.items(out)
+            used = set()
+            for kind, item in its:
+                if kind == 'fn':
+                    used |= sp.idents(item)
+            keep, grew = set(), True
+            while grew:
+                grew = False
+                for n_, (kind, item) in enumerate(its):
+                    if kind in ('decl', 'pp') and n_ not in keep and (sp.defines(item) & used or not sp.defines(item)):
+                        keep.add(n_); used |= sp.idents(item); grew = True
+            for n_, (kind, item) in enumerate(its):
+                if kind in ('decl', 'pp') and n_ not in keep:
+                    out = out.replace(item + '\n', '', 1)
             def sub(m):
                 k = m.group(0)
                 if k not in amap:

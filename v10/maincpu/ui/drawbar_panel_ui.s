@@ -6640,24 +6640,10 @@ AcLswPartPan_Return:
 
 ; Returns in HL the index of BC in a word list ending with 0xffff, or 0xffff when it is absent.
 ;   In:  XWA = list, BC = value.
-SdpartLookupPartId:
-	ld hl, 0:i3
-	cpw (xwa), 0xffff
-	jr z, SdpartLookupPartId_CheckEnd
-
-SdpartLookupPartId_Loop:
-	cp (xwa), bc
-	jr z, SdpartLookupPartId_CheckEnd
-	inc 2, xwa
-	inc 1, hl
-	cpw (xwa), 0xffff
-	jr nz, SdpartLookupPartId_Loop
-
-SdpartLookupPartId_CheckEnd:
-	cpw (xwa), 0xffff
-	ret nz
-	ldw hl, 0xffff
-	ret
+SdpartLookupPartId:	.include "includes/generated/cc900/SdpartLookupPartId.s"	; C: cc900/drawbar_panel_ui_m264_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SdpartLookupPartId_Loop, SdpartLookupPartId + 8
+	.set	SdpartLookupPartId_CheckEnd, SdpartLookupPartId + 22
 
 ; Turns an index-switch event into a step.
 ;   In:  XWA = event, BC = step for EVT_INDEXSW_UP, DE = step for EVT_INDEXSW_UP_AIC.

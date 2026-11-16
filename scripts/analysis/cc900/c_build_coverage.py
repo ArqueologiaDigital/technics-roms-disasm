@@ -110,10 +110,13 @@ IMAGES = [
     ('subboot', 'subcpu boot', None, None, None),
     ('tabledata', 'table data', None, None, None),
     ('customdata', 'custom data', None, None, None),
-    ('hdae5000', 'hdae v2.06i', None, None, None),
-    ('hdae_v201', 'hdae v2.01i', None, None, None),
-    ('hdae_v115', 'hdae v1.15i', None, None, None),
-    ('hdae_v110', 'hdae v1.10i', None, None, None),
+    ('hdae5000', 'hdae v2.06i', 'hdae5000', 'original_ROMs/hd-ae5000_v2_06i.ic4', 'symbols/hdae5000_symbols_reference.txt'),
+    ('hdae_v201', 'hdae v2.01i', 'hdae5000_v2_01i', 'original_ROMs/hd-ae5000_v2_01i.ic4',
+     'symbols/hdae5000_v2_01i_symbols_reference.txt'),
+    ('hdae_v115', 'hdae v1.15i', 'hdae5000_v1_15i', 'original_ROMs/hd-ae5000_v1_15i.ic4',
+     'symbols/hdae5000_v1_15i_symbols_reference.txt'),
+    ('hdae_v110', 'hdae v1.10i', 'hdae5000_v1_10i', 'original_ROMs/hd-ae5000_v1_10i.ic4',
+     'symbols/hdae5000_v1_10i_symbols_reference.txt'),
     ('prom_a', 'wsa1 prom_a', None, None, None),
     ('prom_b', 'wsa1 prom_b', None, None, None),
     ('prom_c', 'wsa1 prom_c', None, None, None),
@@ -335,10 +338,12 @@ def compare(fn, lines, rom, ref, base=0xe00000, to_off=None):
 
 
 def rom_offset(key):
-    """address -> offset in the image file: the main CPU's ROM starts at 0xe00000; the sub-CPU payload holds
-    0x400-0x4ff at offset 0 and 0xf000 onwards at offset 0x100 (lane_sub)"""
+    """address -> offset in the image file: the main CPU's ROM starts at 0xe00000, the HD-AE5000's at 0x280000; the
+    sub-CPU payload holds 0x400-0x4ff at offset 0 and 0xf000 onwards at offset 0x100 (lane_sub)"""
     if key in ('v142', 'v141', 'v140'):
         return lambda a: a - 0x400 if a < 0x500 else a - 0xf000 + 0x100
+    if key.startswith('hdae'):
+        return lambda a: a - 0x280000                       # the HD-AE5000 ROM at 0x280000
     return lambda a: a - 0xe00000
 
 
@@ -365,7 +370,9 @@ def firmware(key, tree, rom_path, sym_path):
     rom = open(os.path.join(REPO, rom_path), 'rb').read()
     to_off = rom_offset(key)
     ref = check_bytes.load_reference(os.path.join(REPO, sym_path))
-    names = fw.Names(fw.tree_values(os.path.join(REPO, tree)), ref)
+    fw.RUNTIME.clear()                                    # runtime routines under this tree's names, as the build
+    fw.RUNTIME.update(fw.runtime_names(os.path.join(REPO, tree)))
+    names = fw.Names(fw.merged_values(os.path.join(REPO, tree)), ref)
     built = tree_includes(tree)
     runs = v423_runs()
     rows = []
@@ -373,6 +380,7 @@ def firmware(key, tree, rom_path, sym_path):
         flags = fw.file_flags(path)
         label = label_of(flags)
         lm_ = fw.label_map(path)                          # a short C name (`cc900-name: C=LABEL`) is the label's
+        names.cmap = lm_                                  # ... for callees and data too (the build's resolver)
         try:
             funcs = fw.compile_c(path, names, spell=False)
         except SystemExit as ex:                          # the model refuses the file: its functions still count

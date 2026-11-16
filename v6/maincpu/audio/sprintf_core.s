@@ -1061,19 +1061,9 @@ Sprintf_HexToStr_Loop:
 	jr	nz, Sprintf_HexToStr_Loop
 	ld	(xhl), 0x0
 	ret
-Sprintf_OctalToStr:
-	ld	xde, (xsp + 8)
-	ld	xhl, (xsp + 4)
-Sprintf_OctalToStr_Loop:
-	lda	xbc, (xhl+:1)
-	ld	xwa, xde
-	and	xwa, 0x7
-	add	xwa, 0x30
-	ld	(xbc), a
-	srl	xde, 3
-	jr	nz, Sprintf_OctalToStr_Loop
-	ld	(xhl), 0x0
-	ret
+Sprintf_OctalToStr:	.include "includes/generated/cc900/Sprintf_OctalToStr.s"	; C: cc900/sprintf_core_m310.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_OctalToStr_Loop, Sprintf_OctalToStr + 6
 Sprintf_FormatFloat:
 	lda	xsp, (xsp - 26)
 	push	xiz

@@ -5086,58 +5086,14 @@ GMNoFunc:
 	ld xhl, 0:i3
 	ret
 
-GMYesFunc:
-	ld	xwa, 5767169
-	ld	xbc, EVT_GET_PARAM
-	ld	xde, 0:i3
-	call	SendEvent
-	ld	xwa, 192
-	ld	bc, hl
-	ld	de, 1:i3
-	call	MainLswPut
-	ld	xwa, 4294967295
-	ld	xbc, EVT_HIDE
-	ld	xde, 0:i3
-	call	PostEvent
-	ld	(GLOBAL_ERROR_CODE:16), 35
-	ld	xwa, 4294967295
-	ld	xbc, EVT_INTERRUPT_TITLE
-	ld	xde, TITLE_MESAGE
-	call	PostEvent
-	ld	xhl, 0:i3
-	ret
-TtMdGm:
-	cp xbc, EVT_SHOW
-	jr nz, TtMdGm_ReturnZero
-	call GetTitleOld
-	cp xhl, TITLE_MESAGE
-	jr nz, TtMdGm_ReturnZero
-	ld xwa, 0xffffffff
-	ld xbc, EVT_SET_NOT_DRAW_FLAG
-	ld xde, 1:i3
-	call SendEvent
-	ld xwa, 0xffffffff
-	ld xbc, EVT_SET_NOT_DRAW_FLAG
-	ld xde, 0:i3
-	call PostEvent
-	ld xwa, 0xffffffff
-	ld xbc, EVT_CHANGE_MODE
-	ld xde, NAKA_MODE_MD_NORMAL
-	call PostEvent
+GMYesFunc:	.include "includes/generated/cc900/GMYesFunc.s"	; C: cc900/seq_event_playback_m264.c
+TtMdGm:	.include "includes/generated/cc900/TtMdGm.s"	; C: cc900/seq_event_playback_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TtMdGm_ReturnZero, TtMdGm + 71
 
-TtMdGm_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-StsSplitCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, StsSplit_ReturnZero
-	lda xhl, (StsSplitCheck_PtrTable:24)
-	ret
-
-StsSplit_ReturnZero:
-	ld xhl, 0:i3
-	ret
+StsSplitCheck:	.include "includes/generated/cc900/StsSplitCheck.s"	; C: cc900/seq_event_playback_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	StsSplit_ReturnZero, StsSplitCheck + 14
 
 SplitPointFunc:
 	lda	xsp, (xsp-12)

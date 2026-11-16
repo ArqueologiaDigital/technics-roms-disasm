@@ -7046,24 +7046,10 @@ AcLswPartPan_Return:
 	lda xsp, (xsp + 36)
 	ret
 
-SdpartLookupPartId:
-	ld hl, 0:i3
-	cpw (xwa), 0xffff
-	jr z, SdpartLookupPartId_CheckEnd
-
-SdpartLookupPartId_Loop:
-	cp (xwa), bc
-	jr z, SdpartLookupPartId_CheckEnd
-	inc 2, xwa
-	inc 1, hl
-	cpw (xwa), 0xffff
-	jr nz, SdpartLookupPartId_Loop
-
-SdpartLookupPartId_CheckEnd:
-	cpw (xwa), 0xffff
-	ret nz
-	ldw hl, 0xffff
-	ret
+SdpartLookupPartId:	.include "includes/generated/cc900/SdpartLookupPartId.s"	; C: cc900/drawbar_panel_ui_m264_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SdpartLookupPartId_Loop, SdpartLookupPartId + 8
+	.set	SdpartLookupPartId_CheckEnd, SdpartLookupPartId + 22
 
 SdpartScrollDelta:
 	ld hl, bc

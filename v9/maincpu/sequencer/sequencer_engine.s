@@ -18971,27 +18971,10 @@ SeqAcc_SetIndicator_PB:
 	ldw wa, 0x4c
 	jp CtrlPanel_SetIndicatorBit
 
-SeqAcc_RestorePlaybackState:
-	pushw iz
-	ld iz, (0x2875:16)
-	ld (SEQ_TRACK_MASK:16), iz
-	call Audio_CheckSubsystemReady
-	cp iz, 0:i3
-	jr z, SeqRestore_ClearIndicator
-	res 3, (SEQ_RTMCFG:16)
-	call SeqAcc_InitPlaybackState
-	call Audio_CheckSubsystemReady
-	set 0, (0x28a5:16)
-	jr SeqRestore_SetIndicator
-
-SeqRestore_ClearIndicator:
-	res 0, (0x28a5:16)
-
-SeqRestore_SetIndicator:
-	ldw wa, 0x4c
-	call CtrlPanel_SetIndicatorBit
-	popw iz
-	ret
+SeqAcc_RestorePlaybackState:	.include "includes/generated/cc900/SeqAcc_RestorePlaybackState.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqRestore_ClearIndicator, SeqAcc_RestorePlaybackState + 35
+	.set	SeqRestore_SetIndicator, SeqAcc_RestorePlaybackState + 39
 
 SeqPlay_JumpCopyVoiceData:
 	jrl Part_CopyVoiceDataToAllChannels
@@ -23359,33 +23342,11 @@ NoteEditSy_DeliverEvent:
 NoteEditSy_DeliverReturn:
 	ret
 
-SeqMode_SendStatusUpdate:
-	ld a, (ACTIVE_TITLE:16)
-	cp a, 0x87
-	jr z, SeqMode_Status87
-	cp a, 0x85
-	jr z, SeqMode_Status85
-	cp a, 0x81
-	ret nz
-	ld xwa, 0x810005
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 1:i3
-	jr SeqMode_StatusDeliver
-
-SeqMode_Status85:
-	ld xwa, 0x850007
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 1:i3
-	jr SeqMode_StatusDeliver
-
-SeqMode_Status87:
-	ld xwa, 0x870003
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 1:i3
-
-SeqMode_StatusDeliver:
-	call ApDeliveryEvent
-	ret
+SeqMode_SendStatusUpdate:	.include "includes/generated/cc900/SeqMode_SendStatusUpdate.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqMode_Status85, SeqMode_SendStatusUpdate + 33
+	.set	SeqMode_Status87, SeqMode_SendStatusUpdate + 47
+	.set	SeqMode_StatusDeliver, SeqMode_SendStatusUpdate + 59
 
 SeqAccomp_SendStopNotify:
 	ld a, (ACTIVE_TITLE:16)
@@ -25248,24 +25209,7 @@ SeqIndicator_HideBoth:
 	ld bc, 0:i3
 	jp SetVisible
 
-VoiceParam_SetD6Group:
-	pushw iz
-	cp a, 0:i3
-	scc16 nz, iz
-	ld xwa, 0xd60003
-	ld bc, iz
-	call SetVisible
-	ld xwa, 0xd60004
-	ld bc, iz
-	call SetVisible
-	ld xwa, 0xd60005
-	ld bc, iz
-	call SetVisible
-	ld xwa, 0xd60006
-	ld bc, iz
-	call SetVisible
-	popw iz
-	ret
+VoiceParam_SetD6Group:	.include "includes/generated/cc900/VoiceParam_SetD6Group.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqLoadPre:
 	call Part_ClearAllVoiceChannels
@@ -25346,35 +25290,11 @@ SeqLoad_AltCheckAutoAccomp:
 	calr SeqLoad_ProcessAllVoiceData
 	jp Seq_ResetAndRestartAccompaniment
 
-SeqSavePre:
-	push xiz
-	call SeqStep_ReinitPartTable
-	ld xiz, xhl
-	ld a, (SEQ_CURRENT_SONG:24)
-	extz wa
-	call SeqData_CopyBlockToBuffer
-	ld wa, 1:i3
-	ld bc, 4:i3
-	ld de, 1:i3
-	call Part_WriteByte
-	ld xhl, xiz
-	pop xiz
-	ret
+SeqSavePre:	.include "includes/generated/cc900/SeqSavePre.s"	; C: cc900/sequencer_engine_m235.c
 
-SeqSavePost:
-	pushw iz
-	ld iz, wa
-	ld wa, 1:i3
-	ld bc, 4:i3
-	ld de, 0:i3
-	call Part_WriteByte
-	cp iz, 0:i3
-	jr lt, SeqSave_PostReturn
-	res 0, (0x8d88:16)
-
-SeqSave_PostReturn:
-	popw iz
-	ret
+SeqSavePost:	.include "includes/generated/cc900/SeqSavePost.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqSave_PostReturn, SeqSavePost + 21
 
 SeqLoad_ProcessDataBlock:
 	dec	6, xsp
@@ -25995,14 +25915,7 @@ SeqLoad_RestoreFreeBlockList:
 ;   is 0. Basis: callers + body -- SingleLoad_FinishSongLoad stores HL at (xsp+6) and adds it to every block number of
 ;   the loaded song that is not 0 / 0xFFFF (the 16 part-chain head/tail words, every block's link words); its header
 ;   calls this the free-block base '(SEQ_FREE_LIST_HEAD) - 1'.
-SeqLoad_GetBlockRelocationOffset:
-	ld	hl, 0:i3
-	ld	wa, (SEQ_FREE_LIST_HEAD:16)
-	cp	wa, 0:i3
-	ret	z
-	ld	hl, wa
-	dec	1, hl
-	ret
+SeqLoad_GetBlockRelocationOffset:	.include "includes/generated/cc900/SeqLoad_GetBlockRelocationOffset.s"	; C: cc900/sequencer_engine_m235.c
 	dec	4, xsp
 	ld	(xsp), bc
 	ld	(xsp+2), a
@@ -26065,26 +25978,7 @@ SeqBar_DataBlock_Code_Skip2:
 	ld	(xde+9), a
 	ret
 
-SeqLoad_RestorePartConfig:
-	ld wa, 1:i3
-	ldw bc, 0xc7
-	call Part_ReadByteDirect
-	ld (SEQ_CURRENT_SONG:24), l
-	ld wa, 1:i3
-	ldw bc, 0xc7
-	ld de, 0:i3
-	call Part_WriteByte
-	ld wa, 1:i3
-	ldw bc, 0xc8
-	call Part_ReadWord
-	ld (SEQ_TRACK_MASK_COPY:24), hl
-	ld wa, 1:i3
-	ldw bc, 0xc8
-	ld de, 0:i3
-	call Part_WriteWord
-	ldw (SEQ_START_MEASURE:16), 1
-	res 3, (SEQ_RTMCFG:16)
-	ret
+SeqLoad_RestorePartConfig:	.include "includes/generated/cc900/SeqLoad_RestorePartConfig.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqSave_ComputeVoiceSize:
 	dec 4, xsp
@@ -26171,22 +26065,9 @@ SeqSave_WriteBlockToFile:
 	ld xbc, 0x800
 	jp FileIO_WriteByte_Impl
 
-FileIO_SeekReadAndCheck:
-	dec 2, xsp
-	ld (xsp), c
-	ld bc, 0:i3
-	call FileIO_SeekAndReadBlock
-	exts xhl
-	or xhl, xhl
-	jr nz, FileIO_SeekReadReturn
-	ld a, (xsp)
-	extz wa
-	call FileIO_ReadByte_BufferHit
-	exts xhl
-
-FileIO_SeekReadReturn:
-	inc 2, xsp
-	ret
+FileIO_SeekReadAndCheck:	.include "includes/generated/cc900/FileIO_SeekReadAndCheck.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_SeekReadReturn, FileIO_SeekReadAndCheck + 26
 
 FileIO_SeekAndRead16BitValue:
 	pushw iz
@@ -26339,172 +26220,19 @@ SeqLoad_ClearAutoAccompBit1:
 	res 1, (SEQ_SONG_RECORD+190:16)
 	ret
 
-SeqLoad_ProcessAllVoiceData:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), 0x1
-
-SeqLoad_ProcessOuterLoop:
-	ld (xsp + 6), 0x1
-
-SeqLoad_ProcessInnerLoop:
-	ld a, (xsp + 4)
-	extz wa
-	ld c, (xsp + 6)
-	extz bc
-	call Part_ReadVoiceBit7
-	cp l, 0:i3
-	jrl z, VoiceData_LoopEnd
-	ld a, (xsp + 4)
-	extz wa
-	ld c, (xsp + 6)
-	extz bc
-	call Part_ReadVoiceWord
-	ld (xsp + 8), hl
-	cpw (xsp + 8), 0xffff
-	jrl z, VoiceData_LoopEnd
-	cpw (xsp + 8), 0xffff
-	jrl z, VoiceData_LoopEnd
-
-SeqLoad_ProcessVoiceFound:
-	cpw (xsp + 8), 0x1
-	jr z, VoiceData_ProcessLoop
-	cpw (xsp + 8), 0x2
-	jrl nz, VoiceData_NextWord
-
-VoiceData_ProcessLoop:
-	call Part_ProcessAndDecrementVoice
-	ld (xsp + 10), hl
-	cpw (xsp + 10), 0x4d8
-	jrl ugt, SeqLoad_ProcessEpilogue
-	cpw (xsp + 10), 0x1
-	jr z, VoiceData_ProcessLoop
-	cpw (xsp + 10), 0x2
-	jr z, VoiceData_ProcessLoop
-	ld xwa, (SEQ_BLOCK_POOL:16)
-	ld xiy, xwa
-	ld ix, (xsp + 8)
-	extz xix
-	dec 1, xix
-	sll xix, 8
-	ld xiz, xwa
-	ld hl, (xsp + 10)
-	extz xhl
-	dec 1, xhl
-	sll xhl, 8
-	ld de, 0:i3
-
-SeqLoad_ProcessNextInner:
-	ld wa, de
-	extz xwa
-	ld xbc, xwa
-	add xbc, xhl
-	add xbc, xiz
-	add xwa, xix
-	add xwa, xiy
-	ld a, (xwa)
-	ld (xbc), a
-	inc 1, de
-	cp de, 0x100
-	jr c, SeqLoad_ProcessNextInner
-	ld wa, (xsp + 8)
-	call PartCtrl_ReadWord_Off1
-	ld wa, hl
-	cp wa, 0:i3
-	jr z, SeqLoad_ProcessNextOuter
-	ld bc, (xsp + 10)
-	call PartCtrl_WriteWord
-	jr SeqLoad_ProcessReturn
-
-SeqLoad_ProcessNextOuter:
-	ld a, (xsp + 4)
-	extz wa
-	ld c, (xsp + 6)
-	extz bc
-	ld de, (xsp + 10)
-	call Part_WriteVoiceWord
-	ld a, (xsp + 4)
-	dec 1, a
-	cp a, (SEQ_CURRENT_SONG:24)
-	jr nz, SeqLoad_ProcessReturn
-	ld c, (xsp + 6)
-	extz bc
-	ld wa, 0:i3
-	ld de, (xsp + 10)
-	call Part_WriteVoiceWord
-
-SeqLoad_ProcessReturn:
-	ld wa, (xsp + 8)
-	call PartCtrl_ReadWord
-	ld wa, hl
-	cp wa, 0xffff
-	jr z, SeqLoad_ProcessCopyLoop
-	ld bc, (xsp + 10)
-	call PartCtrl_WriteWord_Off1
-	jr VoiceData_NextWord
-
-SeqLoad_ProcessCopyLoop:
-	ld a, (xsp + 4)
-	extz wa
-	ld c, (xsp + 6)
-	extz bc
-	ld de, (xsp + 10)
-	call Part_WriteWord_Indexed
-	ld a, (xsp + 4)
-	dec 1, a
-	cp a, (SEQ_CURRENT_SONG:24)
-	jr nz, VoiceData_NextWord
-	ld c, (xsp + 6)
-	extz bc
-	ld wa, 0:i3
-	ld de, (xsp + 10)
-	call Part_WriteWord_Indexed
-
-VoiceData_NextWord:
-	ld wa, (xsp + 8)
-	call PartCtrl_ReadWord
-	ld (xsp + 8), hl
-	cpw (xsp + 8), 0xffff
-	jrl nz, SeqLoad_ProcessVoiceFound
-
-VoiceData_LoopEnd:
-	incm8 1, (xsp + 6)
-	cp (xsp + 6), 0x10
-	jrl ule, SeqLoad_ProcessInnerLoop
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0xa
-	jrl ule, SeqLoad_ProcessOuterLoop
-	ld wa, 1:i3
-	ld bc, 1:i3
-	call PartCtrl_SetClearBit7
-	ld wa, 1:i3
-	ld bc, 0:i3
-	call PartCtrl_WriteWord_Off1
-	ld wa, 1:i3
-	ldw bc, 0xffff
-	call PartCtrl_WriteWord
-	ld wa, 1:i3
-	ld bc, 5:i3
-	ldw de, 0x82
-	call PartCtrl_WriteByteToBuf
-	ld wa, 2:i3
-	ld bc, 1:i3
-	call PartCtrl_SetClearBit7
-	ld wa, 2:i3
-	ld bc, 0:i3
-	call PartCtrl_WriteWord_Off1
-	ld wa, 2:i3
-	ldw bc, 0xffff
-	call PartCtrl_WriteWord
-	ld wa, 2:i3
-	ld bc, 5:i3
-	ldw de, 0x82
-	call PartCtrl_WriteByteToBuf
-
-SeqLoad_ProcessEpilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+SeqLoad_ProcessAllVoiceData:	.include "includes/generated/cc900/SeqLoad_ProcessAllVoiceData.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqLoad_ProcessOuterLoop, SeqLoad_ProcessAllVoiceData + 7
+	.set	SeqLoad_ProcessInnerLoop, SeqLoad_ProcessAllVoiceData + 11
+	.set	SeqLoad_ProcessVoiceFound, SeqLoad_ProcessAllVoiceData + 63
+	.set	VoiceData_ProcessLoop, SeqLoad_ProcessAllVoiceData + 78
+	.set	SeqLoad_ProcessNextInner, SeqLoad_ProcessAllVoiceData + 137
+	.set	SeqLoad_ProcessNextOuter, SeqLoad_ProcessAllVoiceData + 185
+	.set	SeqLoad_ProcessReturn, SeqLoad_ProcessAllVoiceData + 228
+	.set	SeqLoad_ProcessCopyLoop, SeqLoad_ProcessAllVoiceData + 252
+	.set	VoiceData_NextWord, SeqLoad_ProcessAllVoiceData + 295
+	.set	VoiceData_LoopEnd, SeqLoad_ProcessAllVoiceData + 313
+	.set	SeqLoad_ProcessEpilogue, SeqLoad_ProcessAllVoiceData + 405
 
 SeqLoad_InitPartPanPresets:
 	pushw_erp 0xfa
@@ -26777,97 +26505,21 @@ VoiceMap_RebuildNext:
 	pop xiz
 	ret
 
-VoiceChain_LinkAtEnd:
-	dec 2, xsp
-	pushw iz
-	ld iz, wa
-	ld wa, (SEQ_FREE_LIST_HEAD:16)
-	ld (xsp + 2), wa
-	cpw (xsp + 2), 0x0
-	jr nz, VoiceChain_LinkWritePrev
-	ld wa, iz
-	ldw bc, 0xffff
-	jr VoiceChain_LinkWriteNext
+VoiceChain_LinkAtEnd:	.include "includes/generated/cc900/VoiceChain_LinkAtEnd.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceChain_LinkWritePrev, VoiceChain_LinkAtEnd + 26
+	.set	VoiceChain_LinkWriteNext, VoiceChain_LinkAtEnd + 40
 
-VoiceChain_LinkWritePrev:
-	ld wa, (xsp + 2)
-	ld bc, iz
-	call PartCtrl_WriteWord_Off1
-	ld wa, iz
-	ld bc, (xsp + 2)
+PartCtrl_CheckOwnerAndToggle:	.include "includes/generated/cc900/PartCtrl_CheckOwnerAndToggle.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartCtrl_ToggleCheckDE, PartCtrl_CheckOwnerAndToggle + 32
+	.set	PartCtrl_ToggleCheckSet, PartCtrl_CheckOwnerAndToggle + 62
+	.set	PartCtrl_AdjustAndReturn, PartCtrl_CheckOwnerAndToggle + 90
 
-VoiceChain_LinkWriteNext:
-	call PartCtrl_WriteWord
-	ld wa, iz
-	ld bc, 0:i3
-	call PartCtrl_WriteWord_Off1
-	ld wa, iz
-	call Part_WriteWordBlock_OffsetAF
-	popw iz
-	inc 2, xsp
-	ret
-
-PartCtrl_CheckOwnerAndToggle:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 4), de
-	ld (xsp + 6), bc
-	ld iz, wa
-	ldw (xsp + 2), 0x0
-	ld wa, iz
-	call PartCtrl_ReadWord_Off1
-	cp hl, (xsp + 6)
-	jr z, PartCtrl_ToggleCheckDE
-	setm 4, (xsp + 2)
-	jr PartCtrl_AdjustAndReturn
-
-PartCtrl_ToggleCheckDE:
-	cpw (xsp + 4), 0x0
-	jr nz, PartCtrl_ToggleCheckSet
-	ld wa, iz
-	call PartCtrl_TestBit7
-	cp l, 0:i3
-	jr z, PartCtrl_ToggleCheckSet
-	ld wa, iz
-	ld bc, 0:i3
-	call PartCtrl_SetClearBit7
-	setm 1, (xsp + 2)
-	jr PartCtrl_AdjustAndReturn
-
-PartCtrl_ToggleCheckSet:
-	cpw (xsp + 4), 0x1
-	jr nz, PartCtrl_AdjustAndReturn
-	ld wa, iz
-	call PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, PartCtrl_AdjustAndReturn
-	ld wa, iz
-	ld bc, 1:i3
-	call PartCtrl_SetClearBit7
-	setm 2, (xsp + 2)
-
-PartCtrl_AdjustAndReturn:
-	ld hl, (xsp + 2)
-	popw iz
-	inc 6, xsp
-	ret
-
-VoiceAlloc_CheckRangeAndBit7:
-	cp wa, 0x4d8
-	jr ugt, VoiceAlloc_RangeInvalid
-	cp wa, 0:i3
-	jr z, VoiceAlloc_RangeInvalid
-	call PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, VoiceAlloc_RangeValid
-
-VoiceAlloc_RangeInvalid:
-	ldw hl, 0xffff
-	ret
-
-VoiceAlloc_RangeValid:
-	ld hl, 0:i3
-	ret
+VoiceAlloc_CheckRangeAndBit7:	.include "includes/generated/cc900/VoiceAlloc_CheckRangeAndBit7.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_RangeInvalid, VoiceAlloc_CheckRangeAndBit7 + 18
+	.set	VoiceAlloc_RangeValid, VoiceAlloc_CheckRangeAndBit7 + 22
 
 VoiceAlloc_ReadCounterByte:
 	dec 2, xsp
@@ -26911,44 +26563,9 @@ SeqScan_CompareAndAppend:
 	inc 4, xsp
 	ret
 
-Part_ClearVoiceSlot:
-	dec 4, xsp
-	ld (xsp), c
-	ld (xsp + 2), a
-	ld a, (xsp + 2)
-	extz wa
-	ld c, (xsp)
-	extz bc
-	ldw de, 0xffff
-	call Part_WriteWord_Indexed
-	ld a, (xsp + 2)
-	extz wa
-	ld c, (xsp)
-	extz bc
-	ld de, 5:i3
-	call Part_WriteByte_Indexed
-	ld a, (xsp + 2)
-	extz wa
-	ld c, (xsp)
-	extz bc
-	ld de, 0:i3
-	call Part_SetClearVoiceBit7
-	ld a, (xsp + 2)
-	extz wa
-	ld c, (xsp)
-	extz bc
-	ldw de, 0xffff
-	call Part_WriteVoiceWord
-	cp (xsp + 2), 0x0
-	jr nz, VoiceScan_EventQueueBlock
-	ld a, (xsp)
-	extz wa
-	ld bc, 0:i3
-	call Chan_SetActiveBit
-
-VoiceScan_EventQueueBlock:
-	inc 4, xsp
-	ret
+Part_ClearVoiceSlot:	.include "includes/generated/cc900/Part_ClearVoiceSlot.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceScan_EventQueueBlock, Part_ClearVoiceSlot + 85
 
 PartCtrl_AppendToEventQueue:	.include "includes/generated/cc900/PartCtrl_AppendToEventQueue.s"	; C: cc900/sequencer_engine.c
 
@@ -27154,19 +26771,7 @@ SeqNote_QueueFallthrough:
 	jr z, SeqScan_AdvanceToNextPart
 	jr SeqScan_ParsePartEvents
 
-SeqNote_QueueReturn:
-	ld wa, (SEQ_DATA_OFFSET:16)
-	inc 6, wa
-	ld (SEQ_DATA_OFFSET:16), wa
-	cp wa, 0xff
-	ret ule
-	sub wa, 0x100
-	inc 5, wa
-	ld (SEQ_DATA_OFFSET:16), wa
-	ld wa, (SEQ_DATA_BLOCK:16)
-	call PartCtrl_ReadWord
-	ld (SEQ_DATA_BLOCK:16), hl
-	ret
+SeqNote_QueueReturn:	.include "includes/generated/cc900/SeqNote_QueueReturn.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqEvent_AccumulateQueue:
 	call PartCtrl_RefreshWordPeriodic
@@ -29010,86 +28615,10 @@ SeqVoice_InitDefaultsAndReturn:
 SeqVoice_InitJmpNop:
 	jr SeqPart_InitClear
 
-SeqPart_InitClear:
-	pushw iz
-	call SeqVoice_SetDefaultParams
-	ld a, (SEQ_TRACK:16)
-	extz wa
-	call Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr z, SeqPart_InitSlots
-	ld (SEQ_ERROR_CODE:16), 3
-	jr SeqPart_InitFinish
-
-SeqPart_InitSlots:
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld wa, 0:i3
-	ldw de, 0xffff
-	call Part_WriteWord_Indexed
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld wa, 0:i3
-	ld de, 5:i3
-	call Part_WriteByte_Indexed
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld wa, 0:i3
-	call Part_ReadVoiceBit7
-	cp l, 0:i3
-	jr z, SeqPart_InitFinish
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld wa, 0:i3
-	ld de, 0:i3
-	call Part_SetClearVoiceBit7
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld wa, 0:i3
-	call Part_ReadVoiceWord
-	ld iz, hl
-	cp iz, 0xffff
-	jr z, SeqPart_InitFinish
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld wa, 0:i3
-	ldw de, 0xffff
-	call Part_WriteVoiceWord
-	ld wa, iz
-	call Part_StealAndReallocVoices
-
-SeqPart_InitFinish:
-	call SeqVoice_InitReturnZero
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld de, 0:i3
-	call Part_SetClearVoiceBit7
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ldw de, 0xffff
-	call Part_WriteVoiceWord
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ldw de, 0xffff
-	call Part_WriteWord_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld c, (SEQ_TRACK:16)
-	extz bc
-	ld de, 5:i3
-	call Part_WriteByte_Indexed
-	popw iz
-	ret
+SeqPart_InitClear:	.include "includes/generated/cc900/SeqPart_InitClear.s"	; C: cc900/sequencer_engine_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_InitSlots, SeqPart_InitClear + 26
+	.set	SeqPart_InitFinish, SeqPart_InitClear + 126
 
 SeqPart_Compare:
 	dec 6, xsp
@@ -29558,43 +29087,13 @@ SeqPart_ValidateLeftCore:
 	ld wa, hl
 	jr SeqPart_ValidateLeftLoop
 
-SeqPart_InitWithValidation:
-	call SeqVoice_SetDefaultParams
-	call SeqAccPlay_InitAndDispatch
-	cp hl, 0:i3
-	jr z, SeqPart_InitValidOk
-	ld (SEQ_ERROR_CODE:16), 3
-	call SeqError_MapViaTableA
-	call SeqVoice_InitReturnZero
-	ldw hl, 0xffff
-	ret
+SeqPart_InitWithValidation:	.include "includes/generated/cc900/SeqPart_InitWithValidation.s"	; C: cc900/sequencer_engine_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_InitValidOk, SeqPart_InitWithValidation + 29
 
-SeqPart_InitValidOk:
-	ld (SEQ_ERROR_CODE:16), 0
-	res 6, (SEQ_EDIT_FLAGS:16)
-	ld hl, 0:i3
-	ret
-
-SeqPart_CheckVoiceType:
-	dec 1, a
-	extz wa
-	lda xbc, (SEQ_TRACK_ASSIGN:16)
-	extz xwa
-	add xwa, xbc
-	ld l, (xwa)
-	cp l, 0xf
-	jr z, SeqPart_CheckVoiceIsDrum
-	cp l, 0x10
-	jr z, SeqPart_CheckVoiceIsDrum
-	cp l, 0xd
-	ret nz
-
-SeqPart_CheckVoiceIsDrum:
-	ld (SEQ_ERROR_CODE:16), 9
-	call SeqError_MapViaTableA
-	call SeqVoice_InitReturnZero
-	ld l, 0xff:opc
-	ret
+SeqPart_CheckVoiceType:	.include "includes/generated/cc900/SeqPart_CheckVoiceType.s"	; C: cc900/sequencer_engine_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_CheckVoiceIsDrum, SeqPart_CheckVoiceType + 29
 
 SeqPart_CheckBothCompatible:
 	ld a, (SEQ_TRACK:16)
@@ -29692,51 +29191,10 @@ SeqPart_PartChangeError:
 	popw_erp 0xfa
 	ret
 
-SeqPart_AllocNewEntry:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), a
-	call Part_ProcessAndDecrementVoice
-	ld iz, hl
-	cp iz, 0xffff
-	jr nz, SeqPart_AllocDone
-	ldw hl, 0xffff
-	jr SeqPart_AllocReturn
-
-SeqPart_AllocDone:
-	ld a, (9860:16)
-	dec 1, a
-	extz wa
-	lda xbc, (SEQ_TRACK_ASSIGN:16)
-	ld de, wa
-	extz xde
-	add xde, xbc
-	ld a, (xsp + 2)
-	ld (xde), a
-	ld c, (9860:16)
-	extz bc
-	ld wa, 0:i3
-	ld de, 1:i3
-	call Part_SetClearVoiceBit7
-	ld c, (9860:16)
-	extz bc
-	ld wa, 0:i3
-	ld de, iz
-	call Part_WriteVoiceWord
-	ld (SEQOP_PRIMARY_BLOCK:16), iz
-	ldw (SEQOP_PRIMARY_OFFSET:16), 5
-	ld wa, iz
-	ld bc, 0:i3
-	call PartCtrl_WriteWord_Off1
-	ld wa, iz
-	ldw bc, 0xffff
-	call PartCtrl_WriteWord
-	ld hl, 0:i3
-
-SeqPart_AllocReturn:
-	popw iz
-	inc 2, xsp
-	ret
+SeqPart_AllocNewEntry:	.include "includes/generated/cc900/SeqPart_AllocNewEntry.s"	; C: cc900/sequencer_engine_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_AllocDone, SeqPart_AllocNewEntry + 23
+	.set	SeqPart_AllocReturn, SeqPart_AllocNewEntry + 103
 
 SeqPart_ByteBlockA207:
 	push	qiz
@@ -30659,14 +30117,7 @@ SeqPart_ByteBlockA95A_Join:
 SeqPart_ByteBlockA95A_Code_Epilogue:
 	pop qiz
 	ret
-SeqPart_ByteBlockA95A_Code_Helper:
-	call	SeqError_MapViaTableF
-	call	SeqVoice_InitReturnZero
-	res	0, (10361:16)
-	res	1, (10361:16)
-	res	0, (10397:16)
-	res	2, (10397:16)
-	ret
+SeqPart_ByteBlockA95A_Code_Helper:	.include "includes/generated/cc900/SeqPart_ByteBlockA95A_Code_Helper.s"	; C: cc900/sequencer_engine_m236.c
 
 SeqPart_DualCopySetup:
 	jrl SeqPart_MultiPartWalker

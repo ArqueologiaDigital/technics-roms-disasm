@@ -9,7 +9,7 @@ another routine (a symbols-reference label outside the function).  It prints the
 the build give those calls their relative form, and, separately, the absolute call / jp targets (the externs).  The
 evidence is the image: run it on a tree built from the hand assembly (or with the C already giving the ROM's bytes).
 
-usage: python3 -B scripts/analysis/cc900/module_calls.py TREE FILE.c       (TREE: v10, v9, v7, v6, v5)
+usage: python3 -B scripts/analysis/cc900/module_calls.py TREE FILE.c    (TREE: v10 .. v5, v142 / v141 / v140, hdae5000[_v2_01i ...])
 Needs rebuilt_ROMs/kn5000_<TREE>_program.llvm.elf (`make`).  A function's extent runs from its label to the next
 routine (a call / calr target anywhere in the image, or another function of the file); only the callees the C
 itself calls are listed (a jr into the routine's own inner label is no call).
@@ -41,6 +41,15 @@ def rel_target(addr, nbytes, mnem, ops):
     return addr + nbytes + d
 
 
+# the image's ELF and the tree directory (for its symbols reference), when not a main-CPU version
+IMAGE_ELF = {'v142': 'kn5000_subprogram_v142.llvm.elf', 'v141': 'kn5000_subprogram_v141.llvm.elf',
+             'v140': 'kn5000_subprogram_v140.llvm.elf', 'hdae5000': 'hd-ae5000_v2_06i.llvm.elf',
+             'hdae5000_v2_01i': 'hd-ae5000_v2_01i.llvm.elf', 'hdae5000_v1_15i': 'hd-ae5000_v1_15i.llvm.elf',
+             'hdae5000_v1_10i': 'hd-ae5000_v1_10i.llvm.elf'}
+TREE_DIR = {'v142': 'v142/subcpu', 'v141': 'v141/subcpu', 'v140': 'v140/subcpu', 'hdae5000': 'hdae5000',
+            'hdae5000_v2_01i': 'hdae5000_v2_01i', 'hdae5000_v1_15i': 'hdae5000_v1_15i',
+            'hdae5000_v1_10i': 'hdae5000_v1_10i'}
+
 C_WORDS = {'if', 'while', 'for', 'switch', 'return', 'sizeof', 'do', 'else'}
 
 
@@ -66,12 +75,8 @@ def main():
     if len(sys.argv) != 3:
         sys.exit(__doc__)
     tree, path = sys.argv[1], sys.argv[2]
-    elf = os.path.join(REPO, 'rebuilt_ROMs', 'kn5000_%s_program.llvm.elf' % tree)
-    ref = {}
-    for l in open(os.path.join(REPO, 'symbols', 'maincpu_%s_symbols_reference.txt' % tree)):
-        p = l.split()
-        if len(p) == 2 and not l.startswith('#'):
-            ref[p[0]] = int(p[1], 16)
+    elf = os.path.join(REPO, 'rebuilt_ROMs', IMAGE_ELF.get(tree, 'kn5000_%s_program.llvm.elf' % tree))
+    ref = fw.tree_addresses(TREE_DIR.get(tree, '%s/maincpu' % tree))
     by_addr = {}
     for n, a in ref.items():
         by_addr.setdefault(a, n)
