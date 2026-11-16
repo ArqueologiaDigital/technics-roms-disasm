@@ -7012,6 +7012,84 @@ def l2_opassign_value(F, oa):
     if r is None: return None
     R = FAM[v.decl.reg][2]; F.emit('ld', '%s,%s' % (R, FAM[r][2])); return R
 
+def cmp_elem_right(F, e, l, r, size, cc, early):
+    """CMP_ELEM_RIGHT (see the comment in the body); early: called before cmp_order, then only for an element whose
+    base is an incomplete global array or a pointer (cmpel ce_i_g_u_P_eq: ld WA,(i) / exts XWA / add XWA,XWA /
+    ld XBC,_uia / add XBC,XWA / ld WA,(_gi) / cp WA,(XBC); cmp_order's cmpord forms stay for sized arrays).
+    Returns the condition, or None with nothing emitted."""
+    rr_ = strip(r)
+    if early:
+        if not (rr_.k == 'load' and strip(rr_.e).k == 'index'): return None
+        b_ = strip(strip(rr_.e).base)
+        while b_.k in ('decay', 'cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
+        if b_.k == 'var' and b_.decl.kind == 'global' and b_.decl.ty.kind == 'array' and getattr(b_.decl.ty, 'count', 0):
+            return None
+    if CMP_ELEM_RIGHT and size in (1, 2, 4) and mem_operand(F, r) is None and rr_.k == 'load' and \
+            strip(rr_.e).k == 'index' and fold(strip(rr_.e).idx).k != 'const' and rr_.ty is not None and \
+            rr_.ty.size == size and not nodes_in(l, 'call') and not nodes_in(r, 'call') and \
+            not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and getattr(F, 'u1_i', None) is None:
+        # a compare against an element at a variable index (probe cmpel, run 2026-11-16-17-micro-cmpel; the same
+        # forms at none and -O3 -XS; training pool rstmt12 rs_12_02_14_2, rs_12_09_09_3):
+        #   the element's address first; a dereferenced left's pointer before it, in the first of XWA, XBC, XDE
+        #   the element's code leaves free (ce_c_d_a_P_lt: ld XDE,(_gpc) / lda XWA,_aca / .. / add XBC,XWA);
+        #   == and != with a constant element, a member or a dereference on the left: the element into the
+        #   accumulator, compared with the left in memory (ce_c_k_p_P_eq: ld WA,(i) / extz XWA / add XWA,(p) /
+        #   ld A,(XWA) / cp A,(_kca + 0x3));
+        #   otherwise the left into the accumulator, compared with the element (ce_c_k_p_P_lt: ld BC,(i) /
+        #   extz XBC / add XBC,(p) / ld A,(_kca + 0x3) / cp A,(XBC); rs_12_09_09_3: .. / ld XWA,(_gl2) / cp XWA,(XBC))
+        lu_ = strip(l)
+        pm_ = None
+        if lu_.k == 'load' and strip(lu_.e).k == 'deref':
+            pv_ = strip(strip(lu_.e).e)
+            while pv_.k in ('cast', 'noop') and getattr(pv_, 'e', None) is not None: pv_ = strip(pv_.e)
+            if pv_.k == 'load' and strip(pv_.e).k == 'var' and strip(pv_.e).decl.kind == 'global' and \
+                    not getattr(strip(pv_.e).decl, 'reg', None):
+                pm_ = mem_operand(F, pv_)
+        lm_ = None if pm_ else mem_operand(F, l)
+        plain_ = lu_.k == 'load' and strip(lu_.e).k == 'var'
+        swap_ = e.op in ('==', '!=') and not plain_ and (pm_ is not None or (lm_ or '').startswith('(_'))
+        ok_ = pm_ is not None or (lm_ is not None and lm_.startswith('(')) or (fold(l).k == 'const' and not swap_)
+        if ok_:
+            n0_ = len(F.lines); ea_ = None; dead0_ = set(F.dead)
+            for kd_ in (('load', 'store') if swap_ else ('load', 'store')):
+                try: ea_ = elem_addr(F, rr_.e, kd_)
+                except Unsupported: ea_ = None
+                ixu_ = strip(strip(rr_.e).idx)
+                while ixu_.k == 'cast' and ixu_.kind == 'IntegralCast': ixu_ = strip(ixu_.e)
+                if ea_ and ixu_.ty is not None and ixu_.ty.size == 2 and not ixu_.ty.signed and \
+                        any(l_ and l_.startswith('\texts\t') for l_ in F.lines[n0_:]):
+                    del F.lines[n0_:]; ea_ = None; continue   # (an unsigned index sign-extended: wrong code, cmpel U rows)
+                if ea_ and (swap_ or not re.search(r'\b(X?WA|A|W|QWA)\b', ea_)): break
+                del F.lines[n0_:]; ea_ = None
+            if ea_:                                          # (the index's last read is in the address: U rows,
+                for ld_ in loads_in(strip(rr_.e).idx):           #  unsigned int i = ju in WA)
+                    v_ = regvar_of(strip(ld_.e))
+                    if v_ is not None and dies_here(F, ld_): F.dead.add(v_)
+            if ea_ and pm_ is not None:
+                code_ = F.lines[n0_:]
+                used_ = ' '.join(code_ + [ea_])
+                PR_ = next((x for x in (('XBC', 'XDE') if swap_ else ('XWA', 'XBC', 'XDE')) if not re.search(r'\b(X?%s|%s|%s|Q%s)\b' % (
+                    x[1:], x[1], x[2], x[1:]), used_) and x[1:] not in live_regs(F)), None)
+                if PR_ is None or (not swap_ and PR_ != 'XWA' and re.search(r'\b(X?WA|A|W)\b', used_)) or \
+                        (not swap_ and PR_ == 'XWA' and False):
+                    del F.lines[n0_:]; ea_ = None
+                else:
+                    del F.lines[n0_:]; F.emit('ld', '%s,%s' % (PR_, pm_)); F.lines.extend(code_)
+                    lm_ = '(%s)' % PR_
+            if ea_:
+                W_ = FAM['WA'][size]
+                try:
+                    if swap_:
+                        F.emit('ld', '%s,%s' % (W_, ea_)); F.emit('cp', '%s,%s' % (W_, lm_)); return cc
+                    n1_ = len(F.lines)
+                    if pm_ is not None: F.emit('ld', '%s,%s' % (W_, lm_)); f0_ = 'WA'
+                    else: f0_ = gen(F, l, 'WA', size)
+                    if f0_ == 'WA' and not clobbers(F.lines[n1_:], ea_):
+                        F.emit('cp', '%s,%s' % (W_, ea_)); return cc
+                except Unsupported:
+                    pass                               # (a variable still live in WA: the older paths)
+                del F.lines[n0_:]; F.dead = dead0_
+
 def gen_compare(F, e):
     """emit the compare for relational/equality node e; return its condition code, or True/False if constant
     (cmp_*: cp acc,mem; cpw/cpb mem,k; long: ld XWA / cp XWA,k / or XWA,XWA for ==0 and !=0)"""
@@ -7071,7 +7149,22 @@ def gen_compare(F, e):
             and not getattr(F, 'cmp_as_value', False):     # (in a condition only: ci_l_NK cp WA,0x1, cv_l_NK cp WA,0x7)
         from frontend import N                           # V4.23 compares !x with the truth value of the constant:
         r = N('const', value=1, ty=rc.ty); rc = r        # !gi == 7 -> cp WA,0x1 (cmpord.c ci_e_NK, ci_l_NK; imitated)
-    if CMP_WIDE and (size in (1, 4) or size == 2 and (cw_char_derived(l) and cw_char_derived(r) or
+    def uzop_(x):
+        x = unpromote(x)
+        return x.k == 'load' and strip(x.e).k == 'index' and x.ty is not None and x.ty.size >= 2 and \
+            unsized_gidx(strip(x.e)) and mem_operand(F, x) is None   # (an operand already at hand stays: a strength-reduced
+                                                                    #  loop's pointer, arr_index.c ai_mul10 -O: cpw (XBC),0x0)
+    skip16_ = False
+    if CMP_UNSIZED_GUARD and (uzop_(l) or uzop_(r)):
+        # an int or long element of an unsized global array at a variable index: V4.23 widens the index to 32 bits
+        # (probe cmpel ce_l_g_u_P_eq: ld WA,(i) / exts XWA / sll 0x2,XWA / ld XBC,_ula / add XBC,XWA / ld XWA,(_gl) /
+        # cp XWA,(XBC)); cmp_wide's and cmp_order's (XDE+BC) scale it in 16 bits (sla 0x2,BC), wrong code for
+        # |i| >= 8192 (16384 for an int element): CMP_ELEM_RIGHT's form, else the generic path (its element address
+        # is 32-bit: arr_index.c ai_mul10 none, exts XWA / add XWA,XWA / ld XBC,_gsa / add XBC,XWA), never those two
+        ce_ = cmp_elem_right(F, e, l, r, size, cc, True) if CMP_ELEM_RIGHT else None
+        if ce_ is not None: return ce_
+        skip16_ = True
+    if CMP_WIDE and not skip16_ and (size in (1, 4) or size == 2 and (cw_char_derived(l) and cw_char_derived(r) or
                                                        any(k_ is not None and (k_[0] in ('Z', 'A') or k_[0] == 'D' and len(k_) == 4 or k_[0] == 'X' and len(k_) == 5 or
                                                                                k_[0] == 'F' and strip(unpromote(x_)).k == 'call' and strip(unpromote(x_)).args)
                                                            for x_, k_ in ((l, cw_kind(F, l, 2)), (r, cw_kind(F, r, 2)))))) and \
@@ -7098,7 +7191,10 @@ def gen_compare(F, e):
             F.cw_pins, F.cw_start, F.cw_opline = saved_
             if F.cw_pins is not None and co is not None: F.cw_pins.extend(inner_)
         if co is not None: return co
-    if CMP_ORDER and size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
+    if CMP_ELEM_RIGHT:
+        ce_ = cmp_elem_right(F, e, l, r, size, cc, True)
+        if ce_ is not None: return ce_
+    if CMP_ORDER and not skip16_ and size == 2 and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             getattr(F, 'u1_i', None) is None and not getattr(F, 'elem_ops', None) and not any(
                 nodes_in(x, 'call') or has_helper_call(x) or fpgen.is_fp_op(x) or
                 any(regvar_of(strip(y.e)) is not None for y in loads_in(x)) for x in (l, r)):
@@ -7210,6 +7306,9 @@ def gen_compare(F, e):
             strip(l.e).k == 'index':                       # cdecl oc_find: the chain is built once (by mem_operand)
         f0 = 'WA'; F.emit('ld', '%s,%s' % (FAM['WA'][size], lm))   # -> ld WA,(XWA) / cp WA,(XSP+0xa)
     else:
+        if CMP_ELEM_RIGHT:
+            ce_ = cmp_elem_right(F, e, l, r, size, cc, False)
+            if ce_ is not None: return ce_
         if IDX_GUARD and any(getattr(d, 'reg', None) == 'WA' and d not in F.dead and uses_decl(r, d) and
                              not uses_decl(l, d) for d in list(F.f.params) + list(F.f.decls)):
             raise Unsupported('compare operand over a variable in WA')   # (c1 != c2 with c2 in A: ld A,C / cp A,A)
@@ -7962,6 +8061,8 @@ CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ASSIGN_TARGET_WRITE = True                               # see gen_assign_value and Fn.emit's live guard
 LH_XIZ_FREE = True                                       # see lh_xiz_free
+CMP_ELEM_RIGHT = True                                    # see gen_compare: an element at a variable index on the right
+CMP_UNSIZED_GUARD = True                                 # see gen_compare: an unsized array's element, 32-bit index
 GOTO_LABELS = True                                       # see gen_stmt's goto and golab
 STORE_POSTINC_XHL = True                                  # see gen_stmt's store: *p++ = computed char, p in a register
 STORE_DYING_CHARVAR = True                                # see gen_stmt's store: a dying char register variable's value

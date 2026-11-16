@@ -155,6 +155,33 @@ after the return (+4, or +4 + stack arguments under adecl); XIZ (callee-saved). 
 on both sides counts for neither.  When only one side hits it, both are re-run with four times the limit before the
 difference counts.
 
+## Contract mode (`--contract`)
+
+Many DIFFERENT verdicts on random programs are input artefacts, not wrong code: an index the trial drove outside its
+array (edge or full values, or the small mode's -2 and -1), so both sides read or wrote memory C does not define,
+or a function whose body can end without a `return`, whose result is then whatever was in HL.  Strategy report 04
+(R4c) measured it on the validation corpus with every value in 0..3: 37 DIFFERENT at none became 6.  `--contract`
+keeps the inputs inside the program's contract only where semcheck can tell, so that the other values still exercise
+signed and unsigned arithmetic:
+
+- **Index variables.**  `index_contract` reads the function's tree.  Wherever `a[v + c]` indexes an array of `n`
+  elements (a variable or a member of array type, its count known), with `v` an int parameter or global (or a local
+  initialised from one and never written again, or every element of a global array when the index is read from it)
+  and `c` a constant, `v` takes values in `[-c, n - c)`.  A loop `for (..; i < v; ..)` or `while (i < v)` over such
+  an index `i` (offset 0) gives `v` in `[0, n]` (`[0, n)` for `<=`).  Several uses intersect; an empty range is
+  dropped.  These values are drawn in every trial mode, after the ordinary value (so every other input is the
+  default mode's), and again for a global after each call.  An index through a pointer, or computed in any other
+  way, is not restricted.
+- **Every other value** keeps the small / edge / full trials, so a signed versus unsigned difference still shows.
+- **Fall-off.**  A non-void function whose body can end without a `return` (`can_fall_off`: conservative, a loop
+  without a constant condition or a switch without `default` counts as falling through) is reported as **fall-off**
+  instead of DIFFERENT when, in every differing trial, the return value is the only output that differs.  Any other
+  difference in the same function still makes it DIFFERENT.
+
+The output lines add a `fall-off` count and "checked" includes it; `--results` writes the default columns.  The
+verdict cache keys contract verdicts apart from the default ones.  The default mode is unchanged.  `val_sem.sh
+[MODEL_DIR] --contract` prints the validation counts of both modes.
+
 ## Limitations
 
 - The interpreter implements what cc900 emits for the micro and probe corpora.  It does not implement `link`,
