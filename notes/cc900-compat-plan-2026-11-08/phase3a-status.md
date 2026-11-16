@@ -3923,6 +3923,13 @@ clean; validation and library unchanged; semcheck 94; the 55 firmware C files of
 global struct is `incw k,(_g + off)`, as V4.23 writes it (4 times in the training none listings; `incw k,(_g)` 277
 times).  bitf 192 / 170 / 192 / 170 of 192; validation and library unchanged; semcheck 94; firmware C 55 of 55 MATCH.
 
+**Batch 361 (2026-11-16): goto, and phase 6's FormatMedleyNumber.**  lane_o3 fix 25: GOTO_LABELS (a goto whose target is not a
+return jumps to its label), STORE_POSTINC_XHL, STORE_DYING_CHARVAR, CP_CHAR_REG_K_OPT, and to_llvm.py translating
+`div` / `divs RR,imm` in the byte-operand form (it had written the 32/16 form, which would have given wrong ROM bytes
+for the first firmware function that divides).  fmt_e (FormatMedleyNumber, 108 B) compiles byte-identical to the ROM;
+fpp10 +1 / +1 at none / O3XS (a backward goto loop), oexp +4 at O3XSXr; library strtol / strtoul now pass the goto and
+refuse later (counts unchanged); validation and library unchanged; pairs 223; semcheck 94; firmware C 55 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

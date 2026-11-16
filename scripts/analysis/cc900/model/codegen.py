@@ -5539,8 +5539,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         if lv is None and mem_operand(F, l) is not None:   # ch_g3_rep: gi + gi -> ld HL,(_gi) / sla 0x1,HL
             gen(F, l, fam, size); F.emit('sla', '0x1,%s' % R); return fam
     if op in SIMPLE_OPS and F.opt and not e.ty.is_ptr() and (strip(l).k == 'bin' or char_widen(F, l)):
-        T = 'WA' if (chain_wa(l) or natural_wa(l) or char_widen(F, l)) else None
-        lf = strip(l)
+        T = 'WA' if (chain_wa(l) or natural_wa(l) or char_widen(F, l)) and not getattr(F, 'avoid_wa', False) else None
+        lf = strip(l)                                      # (not when WA holds the store's pointer: STORE_POSTINC_XHL)
         while lf.k == 'bin' and lf.op in SIMPLE_OPS: lf = strip(narrow(lf.l, size))
         lv = regvar_of(lf.e) if lf.k == 'load' else None
         if T is None and lv is not None and lv.reg in ('WA', 'BC', 'DE', 'HL') and dies_here(F, lf): T = lv.reg
@@ -5630,7 +5630,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
             else:
                 F.emit(SIMPLE_OPS[op], '%s,%s' % (FAM[lr.reg][size], rs))
             F.emit('ld', '%s,%s' % (FAM[fam][size], FAM[lr.reg][size])); return fam
-        if lr is not None and lr.reg == fam and not dies_here(F, l):
+        if lr is not None and lr.reg == fam and not dies_here(F, l) and \
+                not (getattr(F, 'avoid_wa', False) and lr in F.dead):   # (STORE_DYING_CHARVAR: dead on this path)
             # the target holds a live variable: work in a free register (mul_i_loc under Xr: ld DE,WA)
             other = free_reg(F, avoid={fam})
             gen(F, l, other, size); fam_work = other
@@ -5777,7 +5778,9 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
         wa_var = [d for d in list(F.f.params) + list(F.f.decls) + [getattr(F, 'cse_tmp', None)]
                   if d is not None and getattr(d, 'reg', None) == 'WA' and d not in F.dead
                   and uses_decl(e.r, d)]                   # sv_leaf: a * b + a keeps a in WA -> ld HL,DE / add HL,WA
-        if fam != 'WA' and (natural_wa(l) or chain_wa(l) or char_widen(F, l)) and not wa_var:   # ra_noloop3: inner levels over a multiply stay in WA
+        if fam != 'WA' and (natural_wa(l) or chain_wa(l) or char_widen(F, l)) and not wa_var and \
+                not getattr(F, 'avoid_wa', False):   # ra_noloop3: inner levels over a multiply stay in WA
+                                                   # (not when WA holds the store's pointer: STORE_POSTINC_XHL)
             f0 = gen(F, l, 'WA', size)
             src_ = FAM[f0][size] if f0 in FAM and size in FAM[f0] else FAM['WA'][size]   # (where gen left it)
             if swapped_ and src_ == 'WA' and F.lines[-1] == '\tld\tWA,QWA' and fam in FAM:
@@ -5943,6 +5946,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
                 work = 'HL'                                 # ra_homes.c rh_ll: return a * b with a, b in IZ / QIZ ->
             if held_after(F, work, e):                      # ra_ptr2 (-O3 -XS -Xr): *p++ * *q++ with p in XWA ->
                 work = free_reg(F, avoid={work})            # not WA (ld WA,(XWA+:2) was wrong code)
+            if getattr(F, 'avoid_wa', False) and fam in ('BC', 'DE', 'HL'):
+                work = fam                                  # (STORE_DYING_CHARVAR: n % 10 in n's BC: extz BC / div BC,0xa)
             f1 = gen(F, l, work, size)                      # ld HL,IZ / muls XHL,QIZ
             if f1 != work and f1 in FAM and f1 in ('WA', 'BC', 'DE', 'HL'):
                 work = f1                                   # (where gen left it: ra_noloop's a + b in DE, before
@@ -7188,9 +7193,11 @@ def gen_compare(F, e):
         F.emit('cp', '%s,%s' % (FAM[fl][size], FAM[fr][size])); return cc   # cp BC,WA
     if CMPX and getattr(F, 'u1_i', None) is None and not getattr(F, 'l2', None) and not getattr(F, 'cl_active', None) and \
             mem_operand(F, r) is None and cmpx_elem(F, op, l, r, size): return cc
-    if CP_CHAR_REG_K and size == 1 and rc.k == 'const' and rc.value is not None and not F.opt and \
+    if CP_CHAR_REG_K and size == 1 and rc.k == 'const' and rc.value is not None and \
+            (not F.opt and 'A' not in live_regs(F) or CP_CHAR_REG_K_OPT and F.opt and ({'WA', 'A'} & set(live_regs(F)))) and \
             strip(l).k == 'load' and regvar_of(strip(l).e) is not None and regvar_of(strip(l).e).reg in ('BC', 'DE', 'HL') and \
-            regvar_of(strip(l).e).ty.size == 1 and 'A' not in live_regs(F):
+            regvar_of(strip(l).e).ty.size == 1:            # (-O with WA holding a live variable: p6_m3b fmt_e under
+                                                           # O3XSXr, p in XWA -> cp C,0xff; not ld A,C / cp A,0xff)
         rr_ = FAM[regvar_of(strip(l).e).reg][1]           # a char local in the low byte of a register compares in place
         F.emit('cp', '%s,%s' % (rr_, hx(rc.value & 0xff))); return cc   # (rstmt rs_1_07_18_2: t != 0 -> cp C,0x0)
     if CP_QIZ_K and lm in ('QIZH', 'QIZL') and size == 1 and rc.k == 'const' and rc.value is not None and True:
@@ -7950,6 +7957,10 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+GOTO_LABELS = True                                       # see gen_stmt's goto and golab
+STORE_POSTINC_XHL = True                                  # see gen_stmt's store: *p++ = computed char, p in a register
+STORE_DYING_CHARVAR = True                                # see gen_stmt's store: a dying char register variable's value
+CP_CHAR_REG_K_OPT = True                                  # see gen_compare: -O, WA live
 NARROW_LOAD_VIA_WA = True                                 # see gen's widening of a narrowing cast
 BITFIELD_REFUSE = True                                    # see compile_function_once: every bit-field access refuses
 BITFIELD_READ = True                                      # see bitfield_lower: reads of a 16-bit unit are modelled
@@ -13074,6 +13085,11 @@ def gen_stmt(F, s, last):
         if F.xiz_vars: F.emit('pop', F.save_reg)
         epilogue(F)
         F.emit('retd', hx(F.retd)) if F.retd else F.emit('ret'); return
+    if GOTO_LABELS and s.k == 'if' and s.els is None and goto_only(s.then) is not None:
+        flush_pops(F); gen_cond_true(F, s.cond, golab(F, goto_only(s.then))); return   # if (c) goto L -> j cc,L
+    if GOTO_LABELS and s.k == 'if' and s.els is not None and goto_only(s.els) is not None and goto_only(s.then) is None:
+        flush_pops(F); gen_cond_false(F, s.cond, golab(F, goto_only(s.els)))   # if (c) A; else goto L -> j !cc,L / A
+        gen_stmt(F, s.then, last); return                  # (p6_m3b fmt_e: else goto number -> cp C,0xfe / j ne,L34)
     if s.k == 'if' and s.els is None and F.loops and flat(s.then) and flat(s.then)[0].k == 'continue' and len(flat(s.then)) == 1:
         flush_pops(F); gen_cond_true(F, s.cond, F.loops[-1][1]()); return   # c_cont: j ne,L3 (the continue label)
     if s.k == 'if' and s.els is None and F.loops and flat(s.then) and flat(s.then)[0].k == 'break' and len(flat(s.then)) == 1:
@@ -13316,6 +13332,11 @@ def gen_stmt(F, s, last):
         if CASE_ARM_DEAD and id(s) not in getattr(F, 'case_inner', set()): case_arm_dead(F, s)
         if s.body is not None: gen_stmt(F, s.body, False)
         return
+    if GOTO_LABELS and s.k == 'ulabel' and getattr(s, 'decl', None) in getattr(F, 'goto_targets', ()):
+        if F.pending: flush_pops(F)                        # a goto target: its label (p6_m3b fmt_e's number:, after
+        F.lines.append(golab(F, s.decl) + ':'); return     # the return, where the source has it)
+    if GOTO_LABELS and s.k == 'goto':
+        flush_pops(F); F.emit('j', golab(F, s.target)); return
     if s.k == 'ulabel':                                    # a user label left by goto_returns (_strcspn's bye: stays)
         lab = F.newulabel(); F.lines.append(lab + ':'); F.user_labels = getattr(F, 'user_labels', set()) | {lab}; return
     if s.k == 'break':
@@ -13584,7 +13605,39 @@ def gen_stmt(F, s, last):
             raise Unsupported('a chained store into a char element at a register index')   # (rstmt rs_3_01_16_2:
             # guca[a] = guc = -guc -> the value first, in C, then lda XWA,_guca / ld DE,(a) / extz XDE / add XDE,XWA /
             # ld (XDE),C; the model's (XDE+BC) indexed signed)
+        if STORE_DYING_CHARVAR and size == 1 and F.adecl and re.match(r'^\((XWA|XBC|XDE)(\+:1)?\)$', t) and \
+                cv_.k == 'bin' and not nodes_in(s.e.r, 'call'):
+            vs_ = {id(n_.decl): n_.decl for n_ in nodes_in(s.e.r, 'var')}
+            x_ = list(vs_.values())[0] if len(vs_) == 1 else None
+            if x_ is not None and getattr(x_, 'reg', None) in ('BC', 'DE', 'HL') and x_.ty is not None and \
+                    x_.ty.size == 1 and x_.reg not in t and \
+                    (not uses_after_stmt(F, x_) or not getattr(F, 'loops', None) and
+                     not any(uses_decl(y_, x_) for y_ in list(getattr(F, 'cur_rest', None) or []) +
+                             list(getattr(F, 'top_rest', None) or []))):   # (the last read on its path: an arm's tail)
+                F.avoid_wa = True; dead0_ = x_ in F.dead; F.dead.add(x_)   # *p = n % 10 + '0' with n dead after, in C
+                try: fx_ = gen(F, s.e.r, x_.reg, 1)        # (p6_m3b fmt_e, -Xr): computed in n's own register -> extz BC /
+                finally:                                   # div BC,0xa / ld C,B / add C,0x30 / ld (XWA),C
+                    F.avoid_wa = False
+                    if not dead0_: F.dead.discard(x_)
+                if fx_ == x_.reg and not clobbers(F.lines[n0:], t):
+                    F.emit('ld', '%s,%s' % (t, FAM[fx_][1])); return
+                del F.lines[n0:]
         fam = gen(F, s.e.r, work, size)                    # opt_temps.c ot_cpy_anb: ld E,(XHL+:1) / ld (XWA+:1),E
+        mpi_ = re.match(r'^\((X(WA|BC|DE))\+:1\)$', t)
+        if STORE_POSTINC_XHL and mpi_ and size == 1 and clobbers(F.lines[n0:], t) and F.push == push0 and \
+                not ({'HL'} & set(live_regs(F))) and not nodes_in(s.e.r, 'call'):
+            held_ = {getattr(d, 'reg', None) for d in list(F.f.params) + list(F.f.decls)
+                     if getattr(d, 'reg', None) and d not in F.dead and (uses_after_stmt(F, d) or uses_decl(s.e.r, d))}
+            vr_ = next((r for r in ('DE', 'BC', 'WA') if r != mpi_.group(2) and r not in held_), None)
+            if vr_ is not None:                            # *p++ = n / 100 + '0' with p in XWA (p6_m3b fmt_e, -Xr): the
+                del F.lines[n0:]                           # pointer moves to XHL, post-incremented, and the value is
+                F.emit('lda', 'XHL,%s+:1' % mpi_.group(1))  # built in a free pair: lda XHL,XWA+:1 / ld E,C / extz DE /
+                F.avoid_wa = mpi_.group(2) == 'WA'
+                try: fv_ = gen(F, s.e.r, vr_, 1)           # div DE,0x64 / add E,0x30 / ld (XHL),E
+                finally: F.avoid_wa = False
+                if fv_ in FAM and not clobbers(F.lines[n0 + 1:], '(XHL)') and not clobbers(F.lines[n0 + 1:], '(%s)' % mpi_.group(1)):
+                    F.emit('ld', '(XHL),%s' % FAM[fv_][1]); return
+                raise Unsupported('the value overwrites the store address')
         if STORE_ADDR_GUARD and clobbers(F.lines[n0:], t):
             nl_ = getattr(F, 'store_nl', None); pk_ = sp_lvalue_kind(F, lv)
             if VALUE_FIRST_PK and True and nl_ is not None and nl_ <= n0 and pk_ is not None and \
@@ -14944,7 +14997,16 @@ def regvar_stmt(F, e):
             F.emit('ld', '%s,WA' % FAM[d.reg][2])          # (unsigned long)(1 >= gps->c) -> scc le,WA / ld BC,WA / exts XBC)
             F.emit('exts' if strip(rb_.e).ty.signed else 'extz', R); return True
         n_iz_ = len(F.lines)
-        fam = gen(F, e.r, tgt, d.ty.size)
+        cr_ = strip(e.r)
+        while cr_.k == 'cast' and cr_.kind == 'IntegralCast': cr_ = strip(cr_.e)
+        if STORE_DYING_CHARVAR and F.adecl and d.ty.size == 1 and d.reg in ('BC', 'DE', 'HL') and tgt == d.reg and \
+                'WA' in live_regs(F) and \
+                cr_.k == 'bin' and cr_.op in ('%', '/') and fold(cr_.r).k == 'const' and \
+                {id(n_.decl) for n_ in nodes_in(e.r, 'var')} == {id(d)}:
+            F.avoid_wa = True                              # n = n % 100 with n in C (p6_m3b fmt_e, -Xr): in place ->
+            try: fam = gen(F, e.r, tgt, d.ty.size)         # extz BC / div BC,0x64 / ld C,B
+            finally: F.avoid_wa = False
+        else: fam = gen(F, e.r, tgt, d.ty.size)
         if FAM[fam][d.ty.size] != R: F.emit('ld', '%s,%s' % (R, FAM[fam][d.ty.size]))
         if IZ_TAIL_DIRECT and R == 'IZ' and (not F.opt or IZ_TAIL_DIRECT_OPT) and (not F.adecl or IZ_TAIL_DIRECT_XR) and \
                 F.lines[-1] == '\tld\tIZ,WA':
@@ -17840,9 +17902,23 @@ def propagate_global_copies(f):
             substitute(nx, g.decl, src)
     walk(f.body, visit)
 
-def N_ublock(body):
+def N_ublock(body, decl=None):
     from frontend import N
-    return N('block', body=[N('ulabel'), body])
+    return N('block', body=[N('ulabel', decl=decl), body])
+
+def golab(F, decl):
+    """GOTO_LABELS: the assembler label of a goto target (one per label declaration, made by the first goto or the
+    label itself, from the function's label counter)"""
+    labs = getattr(F, 'goto_labs', None)
+    if labs is None: labs = F.goto_labs = {}
+    if decl not in labs:
+        labs[decl] = F.newlabel(); F.user_labels = getattr(F, 'user_labels', set()) | {labs[decl]}
+    return labs[decl]
+
+def goto_only(x):
+    """the target of a statement that is just a goto (alone in a block), else None"""
+    while x is not None and hasattr(x, 'k') and x.k == 'block' and len(x.body) == 1: x = x.body[0]
+    return x.target if x is not None and hasattr(x, 'k') and x.k == 'goto' else None
 
 def goto_returns(f):
     """`goto L` where L labels a `return` becomes that return (_strcspn: goto bye; ... bye: return (len); ->
@@ -17860,14 +17936,14 @@ def goto_returns(f):
                 if v.k == 'goto' and v.target in labels and ret_of(labels[v.target]) is not None:
                     setattr(n, key, _copy.deepcopy(ret_of(labels[v.target])))
                 elif v.k == 'label' and v in labels.values():
-                    setattr(n, key, N_ublock(v.body)); fix(v.body)
+                    setattr(n, key, N_ublock(v.body, getattr(v, 'decl', None))); fix(v.body)
                 else: fix(v)
             elif isinstance(v, list):
                 for i, x in enumerate(v):
                     if not hasattr(x, 'k'): continue
                     if x.k == 'goto' and x.target in labels and ret_of(labels[x.target]) is not None:
                         v[i] = _copy.deepcopy(ret_of(labels[x.target]))
-                    elif x.k == 'label' and x in labels.values(): v[i] = N_ublock(x.body); fix(x.body)
+                    elif x.k == 'label' and x in labels.values(): v[i] = N_ublock(x.body, getattr(x, 'decl', None)); fix(x.body)
                     else: fix(x)
     fix(f)
 
@@ -20023,6 +20099,10 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     walk(f.body, lambda n, d: gotos.append(n) if n.k == 'goto' else None)
     goto_returns(f)
     F = Fn(f, adecl)
+    if GOTO_LABELS:                                        # the gotos goto_returns left: their targets get labels
+        left_ = []
+        walk(f.body, lambda n, d: left_.append(n.target) if n.k == 'goto' else None)
+        F.goto_targets = set(left_)
     F.fp_temps = fp_temps; F.fp_nlong = fp_nlong; F.fp_remap = fp_remap
     F.personality = personality
     F.opt = opt != 'none'; F.dead = set(); F.had_goto = bool(gotos); CUR_OPT[0] = F.opt
