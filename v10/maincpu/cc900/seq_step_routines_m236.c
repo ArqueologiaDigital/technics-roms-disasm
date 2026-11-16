@@ -44,3 +44,25 @@ int SeqStep_WalkReadNext(void)
 	}
 	return 0;
 }
+
+/* cc900-module: SeqStep_MeasureRead SeqStep_WalkWithCallback */
+extern unsigned char __near ram_2634;
+extern int __near ram_287f;
+extern unsigned int __near SEQ_DATA_BLOCK;
+extern unsigned int __near SEQ_DATA_OFFSET;
+extern unsigned int __near ram_273c;
+extern unsigned int __near ram_273e;
+extern void SeqVoice_SeekToBar(int, int);
+extern void SeqStep_MeasureRead(void);
+extern void SeqStep_VelNoteBwd(int v);
+
+void SeqStep_VelNoteBwd(int v)
+{
+    unsigned char m = ram_2634;
+    ram_287f = v + 1;
+    SeqVoice_SeekToBar(m, 0);
+    if (SEQ_ERROR_CODE != 0) return;
+    ram_273c = SEQ_DATA_BLOCK;
+    ram_273e = SEQ_DATA_OFFSET;
+    SeqStep_MeasureRead();
+}

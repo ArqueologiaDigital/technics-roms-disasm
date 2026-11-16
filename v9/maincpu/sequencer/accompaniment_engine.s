@@ -12077,21 +12077,7 @@ AccTone_InlineBytecodeData_Skip2:
 	ldmm8	13345, 13354
 	ldmm8	13344, 13355
 	ret
-AccTone_InlineBytecodeData_Code_Helper:
-	ld	a, (ACC_CHORD_TYPE:16)
-	extz	wa
-	lda	xbc, (Chord_TypeFamilyTable:24)
-	ld	a, (xbc+wa)
-	ld	(13355:16), a
-	ld	xbc, (ACC_STYLE_RECORD:16)
-	extz	wa
-	ld	a, (xbc+wa)
-	ld	(13354:16), a
-	cp	a, 255
-	ret	nz
-	ld	(0x342a:16), (xbc)
-	ld	(13355:16), 0
-	ret
+AccTone_InlineBytecodeData_Code_Helper:	.include "includes/generated/cc900/AccTone_InlineBytecodeData_Code_Helper.s"	; C: cc900/accompaniment_engine_m249.c
 AccSection_ApplyPendingChange:
 	bit	0, (0x341f:16)
 	ret	z

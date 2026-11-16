@@ -29,3 +29,47 @@ unsigned char SelfTest_PopCount(unsigned char a)
 	}
 	return n;
 }
+
+/* cc900-module: A_Short_Pause */
+extern long ApPostEvent(long, long, long);
+extern void A_Short_Pause(void);
+extern unsigned char __near DIAG_ANIM_STEP;
+extern unsigned char __near ram_8cdc;
+extern unsigned char EffectMode_DiagSeq_TitleCycle[];
+extern void EffectMode_RunDiagSequence(void);
+
+void EffectMode_RunDiagSequence(void)
+{
+	unsigned char c, a;
+
+	a = DIAG_ANIM_STEP;
+	if (a == 0) {
+		ApPostEvent(0xf80006L, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf80008L, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf8000aL, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf8000cL, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf8000eL, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		DIAG_ANIM_STEP++;
+		return;
+	}
+	c = ram_8cdc;
+	if (c == 0) {
+		ApPostEvent(-1L, 0x1c00016L, 0x1a00000L + EffectMode_DiagSeq_TitleCycle[a]);
+		a = DIAG_ANIM_STEP;
+		if (a == 5) DIAG_ANIM_STEP = 1;
+		else DIAG_ANIM_STEP = a + 1;
+		ram_8cdc = 30;
+		return;
+	}
+	ram_8cdc = c - 1;
+}

@@ -156,3 +156,41 @@ void SeqLoad_ProcessAllVoiceData(void)
   PartCtrl_WriteWord(2, 0xffff);
   PartCtrl_WriteByteToBuf(2, 5, 0x82);
 }
+
+/* cc900-module: SeqModeTransit_DemoPath SeqModeTransit_UpdateParts SeqPart_InitClear SeqPart_UndoAllocOnError */
+extern unsigned int __near SEQ_FREE_LIST_HEAD;
+extern unsigned int __near SEQ_FREE_BLOCKS;
+extern unsigned int __near ram_29ca;
+extern unsigned int __near ram_29cc;
+extern void SeqLoad_RestoreFreeBlockList(void);
+extern unsigned char __near ram_2587;
+extern unsigned int __near ram_258e;
+extern unsigned int __near ram_2590;
+extern unsigned char __near ram_2592;
+extern unsigned char __near ram_28a6;
+extern void SeqScan_UpdateBestPositionA(void);
+extern void SeqScan_UpdateBestPositionB(void);
+
+void SeqLoad_RestoreFreeBlockList(void)
+{
+  SEQ_FREE_LIST_HEAD = ram_29ca;
+  SEQ_FREE_BLOCKS = ram_29cc;
+}
+void SeqScan_UpdateBestPositionA(void)
+{
+  unsigned int b = ram_258e, w = ram_2590;
+  if (w > b) return;
+  if (w == b && ram_2592 > ram_2587) return;
+  ram_2590 = b;
+  ram_2592 = ram_2587;
+  ram_28a6 |= 0x01;
+}
+void SeqScan_UpdateBestPositionB(void)
+{
+  unsigned int b = ram_258e, w = ram_2590;
+  if (w > b) return;
+  if (w == b && ram_2592 > ram_2587) return;
+  ram_2590 = b;
+  ram_2592 = ram_2587;
+  ram_28a6 &= ~0x01;
+}

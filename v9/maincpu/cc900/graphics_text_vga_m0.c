@@ -95,3 +95,36 @@ void SeGfx_StaticOp22_ShadowBox1(struct dsrc *s)
     b.y = s->a8 + 1;
     DrawLineWithMode(&a, &b, GFX_FG_COLOR);
 }
+
+/* cc900-module: ColorBlit2_LargeCodeBlock */
+extern void SeGfx_StaticOp01_Line(struct dsrc *s);
+extern void SeGfx_StaticOp11_DottedLine(struct dsrc *s);
+extern void SeGfx_StaticOp12_DottedLine(struct dsrc *s);
+
+void SeGfx_StaticOp01_Line(struct dsrc *s)
+{
+    struct pt a, b;
+    a.x = s->a2;
+    a.y = s->a4;
+    b.x = s->a6;
+    b.y = s->a8;
+    DrawLineWithMode(&a, &b, GFX_FG_COLOR);
+}
+void SeGfx_StaticOp11_DottedLine(struct dsrc *s)
+{
+    struct pt a, b;
+    a.x = s->a2;
+    a.y = s->a4;
+    b.x = s->a6;
+    b.y = s->a8;
+    DrawDottedLineWithMode(&a, &b, GFX_FG_COLOR);
+}
+void SeGfx_StaticOp12_DottedLine(struct dsrc *s)
+{
+    struct pt a, b;
+    a.x = s->a2;
+    a.y = s->a4;
+    b.x = s->a6;
+    b.y = s->a8;
+    DrawDottedLineWithMode(&a, &b, GFX_FG_COLOR);
+}

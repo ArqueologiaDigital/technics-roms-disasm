@@ -45,3 +45,19 @@ unsigned char SelectTone_Continue_Prologue(unsigned char a)
   }
   return a;
 }
+
+struct nent5 { unsigned char e0, e1, e2, e3, e4; };
+#define NM_E(r, i) ((struct nent5 *)((unsigned char *)(r) + ((unsigned long)(i) * 5 + 4)))
+extern void InitChannelState_Che_InitVal(unsigned char *r);
+
+void InitChannelState_Che_InitVal(unsigned char *r)
+{
+  unsigned int i;
+  for (i = 0; i < r[1]; i++) {
+    NM_E(r, i)->e4 = 0;
+    if (NM_E(r, i)->e1 != 0) {
+      NM_E(r, i)->e2 = NM_E(r, i)->e0;
+      NM_E(r, i)->e3 = NM_E(r, i)->e0;
+    }
+  }
+}

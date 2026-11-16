@@ -43,3 +43,18 @@ void SndBuf_WriteParamEntries(void)
   SndParam_CheckAndApplyMode(b);
   ram_902e[0] = b[3]; ram_902e[1] = b[4];
 }
+
+/* cc900-module: PanelTlv_PayloadOfTag SwbtWr_FlushAndAppendParams */
+extern unsigned char *PanelTlv_PayloadOfTag(unsigned int);
+extern unsigned char __near MIDI_MSG_STATUS;
+extern unsigned char __near EXTDATA_TLV_OFFSET;
+extern unsigned char __near EXTDATA_NEW_VALUE;
+extern void SndParam_WriteLookupAndStore(void);
+
+void SndParam_WriteLookupAndStore(void)
+{
+	unsigned char *p = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+
+	if (p == (unsigned char *)-1L) return;
+	EXTDATA_NEW_VALUE = p[EXTDATA_TLV_OFFSET];
+}

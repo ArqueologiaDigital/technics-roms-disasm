@@ -8671,21 +8671,10 @@ MidiChan_ClearAllStates:
 	calr	MidiChan_SetStateMode
 	calr	MidiChan_SetVoiceBaseState
 	jrl	MidiSeq_ApplyPendingParams
-MidiChan_SetStateMode:
-	bit	6, (0xbc7c:16)
-	jr	z, MidiChan_SetStateMode2
-	ld	(0xbc9a:16), 1
-	ld a, 0x1:opc
-	jr	MidiChan_CompareAndFlag
-MidiChan_SetStateMode2:
-	ld	(0xbc9a:16), 2
-	ld	a, (0xbc9a:16)
-MidiChan_CompareAndFlag:
-	cp	a, (0xbc9c:16)
-	ret z
-	set	6, (0xbc80:16)
-	ldmm8	0xbc9c, 0xbc9a
-	ret
+MidiChan_SetStateMode:	.include "includes/generated/cc900/MidiChan_SetStateMode.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChan_SetStateMode2, MidiChan_SetStateMode + 15
+	.set	MidiChan_CompareAndFlag, MidiChan_SetStateMode + 24
 MidiChan_SetVoiceBaseState:
 	bit	6, (0xbc7c:16)
 	jr	z, MidiChan_SetBaseState128
@@ -8708,24 +8697,9 @@ MidiSeq_UpdateAllParams:
 	calr	MidiSeq_ApplyPendingParams
 	call	MainTitle_PrepareAndDispatch
 	ret
-MidiSeq_SyncToneStates_Upper:
-	bit	6, (0xbc7c:16)
-	jr	z, MidiSeq_SyncToneStates_Lower
-	res	7, (0xbc64:16)
-	ldmm8	0xbc66, 0xbc64
-	res	7, (0xbc68:16)
-	ldmm8	0xbc6a, 0xbc68
-	res	7, (0xbc6c:16)
-	ldmm8	0xbc6e, 0xbc6c
-	ret
-MidiSeq_SyncToneStates_Lower:
-	res	7, (0xbc70:16)
-	ldmm8	0xbc72, 0xbc70
-	res	7, (0xbc74:16)
-	ldmm8	0xbc76, 0xbc74
-	res	7, (0xbc78:16)
-	ldmm8	0xbc7a, 0xbc78
-	ret
+MidiSeq_SyncToneStates_Upper:	.include "includes/generated/cc900/MidiSeq_SyncToneStates_Upper.s"	; C: cc900/midi_dispatch_handlers_m286.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiSeq_SyncToneStates_Lower, MidiSeq_SyncToneStates_Upper + 37
 MidiSeq_UpdateToneParam:
 	bit	6, (0xbc7c:16)
 	jr	z, MidiSeq_UpdateToneParam_Lower

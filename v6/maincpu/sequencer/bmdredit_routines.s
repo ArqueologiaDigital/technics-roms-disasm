@@ -336,43 +336,9 @@ BmDrEdit_CalcNotePos_ClampSize:
 	popw_erp 0xfa
 	ret
 
-BmDrEdit_RenderHorizontal:
-	ld	wa, (0x27ee:16)
-	srl wa, 2
-	add wa, 0x16
-	ld	(0x27a0:16), wa
-	ld	wa, (0x27f0:16)
-	srl wa, 2
-	add	wa, (0x27a0:16)
-	ld	(0x27a2:16), wa
-	ld	a, (0x27ec:16)
-	extz wa
-	add wa, wa
-	lda xbc, (BmDrEdit_RenderHorizontal_Table:24)
-	ldw	(0x27a4:16), (xbc+wa)
-	ld	wa, (0x27a4:16)
-	inc 3, wa
-	ld	(0x27a6:16), wa
-	ret
+BmDrEdit_RenderHorizontal:	.include "includes/generated/cc900/BmDrEdit_RenderHorizontal.s"	; C: cc900/bmdredit_routines_m232.c
 
-BmDrEdit_RenderVertical:
-	ld	wa, (0x27ee:16)
-	srl wa, 2
-	add wa, 0x5b
-	ld	(0x27a0:16), wa
-	ld	wa, (0x27f0:16)
-	srl wa, 2
-	add	wa, (0x27a0:16)
-	ld	(0x27a2:16), wa
-	ld	a, (0x27ec:16)
-	extz wa
-	add wa, wa
-	lda xbc, (BmDrEdit_RenderVertical_Table:24)
-	ldw	(0x27a4:16), (xbc+wa)
-	ld	wa, (0x27a4:16)
-	inc 3, wa
-	ld	(0x27a6:16), wa
-	ret
+BmDrEdit_RenderVertical:	.include "includes/generated/cc900/BmDrEdit_RenderVertical.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_RenderSecondaryBlock:
 	dec 8, xsp
@@ -668,25 +634,10 @@ BmDrEdit_CheckNoteType_NotDrum:
 	ld hl, 0:i3
 	ret
 
-BmDrEdit_SaveSequencerState:
-	bit	0, (0x2728:16)
-	jr z, BmDrEdit_SaveSeqState_SetMode95
-	ldw wa, TT_SQDRMEDT
-	jr BmDrEdit_SaveSeqState_Apply
-
-BmDrEdit_SaveSeqState_SetMode95:
-	ldw wa, TT_SQNOTEEDT
-
-BmDrEdit_SaveSeqState_Apply:
-	call	UI_ChangeTitleByIndex
-
-	ldmm16	0x2947, 3407
-	call SeqVoice_FindSingleActive	; call SeqVoice_FindSingleActive (v7 addr)
-	ldmm8	0x1d54, PART_SELECT	; ldmm8 7512, 0x8d3a (v7 patched)
-
-
-
-	ret
+BmDrEdit_SaveSequencerState:	.include "includes/generated/cc900/BmDrEdit_SaveSequencerState.s"	; C: cc900/bmdredit_routines_m232_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_SaveSeqState_SetMode95, BmDrEdit_SaveSequencerState + 11
+	.set	BmDrEdit_SaveSeqState_Apply, BmDrEdit_SaveSequencerState + 14
 
 
 
@@ -1017,14 +968,7 @@ BmDrEdit_ClearAndScanToEnd:	.include "includes/generated/cc900/BmDrEdit_ClearAnd
 	.set	BmDrEdit_ScanToEnd_AdvanceSong, BmDrEdit_ClearAndScanToEnd + 39
 	.set	BmDrEdit_ScanToEnd_CheckEndMark, BmDrEdit_ClearAndScanToEnd + 49
 
-BmDrEdit_LoadAlternateState:
-	ldmm16	0x2744, 0x2750
-	ldmm8	0x2746, 0x2752
-	ldmm16	SEQ_DATA_BLOCK, 0x2754
-	ld	a, (0x2756:16)
-	extz wa
-	ld	(SEQ_DATA_OFFSET:16), wa
-	ret
+BmDrEdit_LoadAlternateState:	.include "includes/generated/cc900/BmDrEdit_LoadAlternateState.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_LoadAlternateAndCountNotes:
 	calr BmDrEdit_LoadAlternateState
@@ -1754,26 +1698,8 @@ BmDrEdit_TestPartTableEntry_Below:
 	ldw hl, 0xffff
 	ret
 
-BmDrEdit_InitDrumMode:
-	pushw 0x06a4
-	call Malloc
-	inc 2,XSP
-	ld	(0x1d4c:16), xhl
-	ld	(0x1d50:16), xhl
-	calr NoteEditSy_ScanAndSortEntries
-	ldw	(0x2774:16), 10
-	ldmm16	0x2778, 0x277c
-	set	0, (0x2728:16)
-	ld	(0x275a:16), 7
-	ld	(0x2788:16), 8
-	jr BmDrEdit_InitCommon
-BmDrEdit_InitMelodicMode:
-	ldmm16	0x2778, 0x277a
-	ldmm16	0x2774, 0x2776
-	res	0, (0x2728:16)
-	ld	(0x275a:16), 10
-	ld	(0x2788:16), 11
-	jr BmDrEdit_InitCommon
+BmDrEdit_InitDrumMode:	.include "includes/generated/cc900/BmDrEdit_InitDrumMode.s"	; C: cc900/bmdredit_routines_m232.c
+BmDrEdit_InitMelodicMode:	.include "includes/generated/cc900/BmDrEdit_InitMelodicMode.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_InitCommon:
 	pushw iz
@@ -3246,32 +3172,9 @@ BmDrEdit_ValidateVoice_Epilog:
 	inc 8, xsp
 	ret
 
-BmDrEdit_SyncChannelAndGetPos:
-	dec 2, xsp
-	ldmm16	0x2863, 0x272a
-	calr BmDrEdit_CheckAndSelectChannel
-	ld	a, (BMDREDIT_CHANNEL:16)
-	inc 1, a
-	extz wa
-	extz hl
-	lda xde, (xsp)
-	ld bc, hl
-	calr BmDrEdit_ValidateAndProcessVoice
-	ld hl, (xsp)
-	inc 2, xsp
-	ret
+BmDrEdit_SyncChannelAndGetPos:	.include "includes/generated/cc900/BmDrEdit_SyncChannelAndGetPos.s"	; C: cc900/bmdredit_routines_m232.c
 
-BmDrEdit_SelectChannelAndLoadPos:
-	ld (SEQ_ERROR_CODE:16), 0
-	calr BmDrEdit_SyncChannelAndGetPos
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-	ld	(0x2750:16), hl
-	ld	(0x2752:16), 0
-	ldmm16	0x2754, SEQ_DATA_BLOCK
-	ld	wa, (SEQ_DATA_OFFSET:16)
-	ld	(0x2756:16), a
-	ret
+BmDrEdit_SelectChannelAndLoadPos:	.include "includes/generated/cc900/BmDrEdit_SelectChannelAndLoadPos.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_LoadAlternatePosition:
 	ld (SEQ_ERROR_CODE:16), 0

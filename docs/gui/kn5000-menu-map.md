@@ -13,33 +13,33 @@ title's procedure, or the function of a menu box, passing the title's `TT_*` ind
 `UI_ChangeTitleByIndex` / `UI_InterruptTitleByIndex` (`scripts/converters/name_title_index_operands.py`)
 or posting `EVT_CHANGE_TITLE` itself.
 
-211 titles (179 with a path; 15 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 361 code transitions and 267 EXIT links.
+211 titles (179 with a path; 14 of the others are opened by code that no traced path reaches), 21 modes, 3260 widget records in 18 C files, 99 menu entries, 361 code transitions and 267 EXIT links.
 
 ## Modes
 
-| mode             | panel button       | home title        | screen title         | also entered by code in                                                                 |
-|------------------|--------------------|-------------------|----------------------|-----------------------------------------------------------------------------------------|
-| `MD_PS`          | -                  | `TITLE_PS`        | -                    | -                                                                                       |
-| `MD_NORMAL`      | -                  | `TITLE_NORMAL`    | NORMAL               | `AccPlay_MainUpdateLoop`, `AccStyle_InlinedBlock_Helper`, `BmDrEdit_InitMelodicMode` +7 |
-| `MD_SOUND`       | MENU SOUND         | `TITLE_SDMENU`    | SOUND MENU           | -                                                                                       |
-| `MD_SOUNDEDIT`   | -                  | `TITLE_SEMENU`    | -                    | -                                                                                       |
-| `MD_CONTROL`     | MENU CONTROL       | `TITLE_CTMENU`    | -                    | -                                                                                       |
-| `MD_MIDI`        | MENU MIDI          | `TITLE_MDMENU`    | MIDI MENU            | -                                                                                       |
-| `MD_DISK`        | MENU DISK          | `TITLE_DKMENU`    | DISK MENU            | `FileIO_ValidateSignedValue`                                                            |
-| `MD_ENTERTAINER` | ENTERTAINER        | `TITLE_ETMENU`    | ENTERTAINER          | -                                                                                       |
-| `MD_SEQ`         | SEQUENCER MENU     | `TITLE_SQMENU`    | SEQUENCER MENU       | -                                                                                       |
-| `MD_SEQ_EREC`    | SEQUENCER EASY REC | `TITLE_SQEASYREC` | EASY RECORD          | -                                                                                       |
-| `MD_SEQ_PLAY`    | -                  | `TITLE_SQPLAY`    | SEQUENCER PLAY       | `FmmFileNameFunc`, `FmmSmfFileNameFunc`, `SeqPlay_ProcessVoiceAndNotes` +1              |
-| `MD_SEQ_REAL`    | -                  | `TITLE_SQREALREC` | REALTIME RECORD      | `MainExe_SequencerStop`                                                                 |
-| `MD_SEQ_EDIT`    | -                  | `TITLE_SQEMENU`   | EDIT                 | -                                                                                       |
-| `MD_SEQ_STEP`    | -                  | `TITLE_SQTRSEL`   | STEP RECORD          | -                                                                                       |
-| `MD_CMP`         | COMPOSER MENU      | `TITLE_CMMENU`    | COMPOSER MENU        | -                                                                                       |
-| `MD_MSP`         | MSP MENU           | `TITLE_MSPMENU`   | MSP MENU             | -                                                                                       |
-| `MD_MSP_REC`     | -                  | `TITLE_MSPREC`    | MSP PHRASE RECORDING | `AccPlay_InitializeStart`                                                               |
-| `MD_SND_ARG`     | SOUND ARRANGER SET | `TITLE_SNDARG`    | SOUND ARRANGER       | -                                                                                       |
-| `MD_OTP`         | -                  | `TITLE_ONETCH`    | -                    | `EffectMode_CopyVoiceParams`                                                            |
-| `MD_DEMO`        | DEMO               | `TITLE_DEMOMENU`  | DEMONSTRATION        | -                                                                                       |
-| `MD_HELP`        | HELP               | `TITLE_SWHELP`    | HELP FUNCTION        | -                                                                                       |
+| mode             | panel button       | home title        | screen title         | also entered by code in                                                                    |
+|------------------|--------------------|-------------------|----------------------|--------------------------------------------------------------------------------------------|
+| `MD_PS`          | -                  | `TITLE_PS`        | -                    | -                                                                                          |
+| `MD_NORMAL`      | -                  | `TITLE_NORMAL`    | NORMAL               | `AccPlay_MainUpdateLoop`, `AccStyle_InlinedBlock_Helper`, `BmDrEdit_RefreshAfterInsert` +7 |
+| `MD_SOUND`       | MENU SOUND         | `TITLE_SDMENU`    | SOUND MENU           | -                                                                                          |
+| `MD_SOUNDEDIT`   | -                  | `TITLE_SEMENU`    | -                    | -                                                                                          |
+| `MD_CONTROL`     | MENU CONTROL       | `TITLE_CTMENU`    | -                    | -                                                                                          |
+| `MD_MIDI`        | MENU MIDI          | `TITLE_MDMENU`    | MIDI MENU            | -                                                                                          |
+| `MD_DISK`        | MENU DISK          | `TITLE_DKMENU`    | DISK MENU            | `FileIO_ValidateSignedValue`                                                               |
+| `MD_ENTERTAINER` | ENTERTAINER        | `TITLE_ETMENU`    | ENTERTAINER          | -                                                                                          |
+| `MD_SEQ`         | SEQUENCER MENU     | `TITLE_SQMENU`    | SEQUENCER MENU       | -                                                                                          |
+| `MD_SEQ_EREC`    | SEQUENCER EASY REC | `TITLE_SQEASYREC` | EASY RECORD          | -                                                                                          |
+| `MD_SEQ_PLAY`    | -                  | `TITLE_SQPLAY`    | SEQUENCER PLAY       | `FmmFileNameFunc`, `FmmSmfFileNameFunc`, `SeqPlay_ProcessVoiceAndNotes` +1                 |
+| `MD_SEQ_REAL`    | -                  | `TITLE_SQREALREC` | REALTIME RECORD      | `MainExe_SequencerStop`                                                                    |
+| `MD_SEQ_EDIT`    | -                  | `TITLE_SQEMENU`   | EDIT                 | -                                                                                          |
+| `MD_SEQ_STEP`    | -                  | `TITLE_SQTRSEL`   | STEP RECORD          | -                                                                                          |
+| `MD_CMP`         | COMPOSER MENU      | `TITLE_CMMENU`    | COMPOSER MENU        | -                                                                                          |
+| `MD_MSP`         | MSP MENU           | `TITLE_MSPMENU`   | MSP MENU             | -                                                                                          |
+| `MD_MSP_REC`     | -                  | `TITLE_MSPREC`    | MSP PHRASE RECORDING | `AccPlay_InitializeStart`                                                                  |
+| `MD_SND_ARG`     | SOUND ARRANGER SET | `TITLE_SNDARG`    | SOUND ARRANGER       | -                                                                                          |
+| `MD_OTP`         | -                  | `TITLE_ONETCH`    | -                    | `EffectMode_CopyVoiceParams`                                                               |
+| `MD_DEMO`        | DEMO               | `TITLE_DEMOMENU`  | DEMONSTRATION        | -                                                                                          |
+| `MD_HELP`        | HELP               | `TITLE_SWHELP`    | HELP FUNCTION        | -                                                                                          |
 
 The panel buttons come from the mode-key maps `PanelButton_ModeKeyCodes*` of
 `ui_widgets/naka_extension_device.c`: `PanelButton_ModeKey` (`audio/audio_control_engine.s`) replaces
@@ -3461,8 +3461,7 @@ the auto-punch variant of the punch-in page.
 
 the sequencer note-edit page. Grid and box code shared with another edit title picks its layout coordinates by whether ...
 
-- Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `BmDrEdit_SaveSequencerState`
+- Path: none found (no data entry, and no traced code, opens it)
 - Registered: `"TT_SQNOTEEDT"`, title id 0x95, function `NAKA_MAINFUNC_SqNoteEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_NoteEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQNOTESEL`
@@ -3517,7 +3516,7 @@ the sequencer note-edit page. Grid and box code shared with another edit title p
 ### `TITLE_SQDRMEDT` -- "DRUM EDIT"
 
 - Path: none found (no data entry opens it; the code that does is reached by no traced path)
-- Opened by code in: `BmDrEdit_SaveSequencerState`, `SeMenu_HandleMenuChange`
+- Opened by code in: `SeMenu_HandleMenuChange`
 - Registered: `"TT_SQDRMEDT"`, title id 0x98, function `NAKA_MAINFUNC_SqDrmEdtTitleFunc`, v10/maincpu/sequencer/sequencer_ui.s
 - View: `OBJ_DrumEdit_TtlScreen_2` (TtlScreen) in `naka_effects_seq.c`
 - EXIT -> `TITLE_SQDRMSEL`

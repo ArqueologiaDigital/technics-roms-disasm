@@ -5390,27 +5390,9 @@ AccPatch_ConvertLegacySectionLayout_Skip30:
 	ld	hl, (xsp+4)
 	inc	6, xsp
 	ret
-AccPatch_CopySection:
-	pushw iz
-	ld iz, 0:i3
-	res 0, (0x3514:16)
-	call DualVoice_ParamLoadDone
-	ld a, (0x3514:16)
-	extz WA
-	bit 0x00,WA
-	jr z, .Lc_f19194
-	ld xwa, (STYLE_DST_IMAGE_PTR:16)
-	ld (STYLE_SRC_IMAGE_PTR:16), xwa
-	ldmm8 STYLE_COPY_SRC_SECTION, STYLE_COPY_DST_SECTION
-	call AccPatch_InitFromSlotIndex
-	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
-	ld (STYLE_SRC_IMAGE_PTR:16), xwa
-	ldw IZ, 0xff95
-.Lc_f19194:
-ToneParam_ExtendedOpsBlock_Epilogue:
-	ld HL,IZ
-	popw iz
-	ret
+AccPatch_CopySection:	.include "includes/generated/cc900/AccPatch_CopySection.s"	; C: cc900/flash_floppy_handlers_m159.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneParam_ExtendedOpsBlock_Epilogue, AccPatch_CopySection + 51
 ; AccPatch_ResetSectionPartByte2Defaults: Writes byte 2 of the four 8-byte accompaniment-part entries
 ;   (+32/+40/+48/+56) of all 30 section records of the style image at (RHYTHM_PATTERN_BUF_PTR) to 64, 12, 116, 64 --
 ;   the values the 'clear' section template AccPatch_DefaultSlotData holds there; what byte 2 means is not

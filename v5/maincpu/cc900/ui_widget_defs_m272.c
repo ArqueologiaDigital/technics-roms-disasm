@@ -35,3 +35,55 @@ unsigned long GetLinkView(unsigned long id)
     }
     return GetNextView(id);
 }
+
+struct box { int x, y, w, h; };
+struct viewable { char hdr[4]; int super, sub, next, prev; unsigned int flags; struct box box; };
+extern void SetChange(unsigned long id, int f);
+extern struct viewable *GetViewInstance(unsigned long id);
+extern unsigned long GetPrevView(unsigned long id);
+extern void Unlink(unsigned long id);
+struct objent { char hdr[10]; struct viewable **data; };
+extern struct objent OBJECT_REGISTRY[];
+
+void Unlink(unsigned long id)
+{
+    unsigned long prev, next;
+    unsigned long x;
+    int n;
+    prev = GetPrevView(id);
+    if (prev != 0xffffffffUL) {
+        x = (unsigned long)GetViewInstance(prev);
+        ((struct viewable *)x)->next = GetNextView(id);
+        SetChange(prev, 1);
+        GetViewInstance(id)->prev = -1;
+        SetChange(id, 1);
+    }
+    next = GetNextView(id);
+    if (next != 0xffffffffUL) {
+        GetViewInstance(next)->prev = prev;
+        SetChange(next, 1);
+        GetViewInstance(id)->next = -1;
+        SetChange(id, 1);
+    }
+    x = GetSuperView(id);
+    if (x != 0xffffffffUL) {
+        prev = (unsigned long)GetViewInstance(x);
+        if (GetSubView(x) == id) {
+            n = next;
+            ((struct viewable *)prev)->sub = n;
+            SetChange(id, 1);
+        }
+        GetViewInstance(id)->super = -1;
+        SetChange(id, 1);
+    }
+}
+struct viewable *GetViewInstance(unsigned long id)
+{
+    unsigned int i;
+    unsigned long t;
+    struct viewable **d;
+    t = (id >> 16) & 0xfff;
+    i = (unsigned int)(id & 0xffff);
+    d = OBJECT_REGISTRY[(unsigned int)t].data;
+    return d[i];
+}
