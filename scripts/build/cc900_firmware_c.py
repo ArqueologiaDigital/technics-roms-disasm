@@ -432,7 +432,64 @@ def finish(path, name, bare, lines, names):
     bad = [l for l in text if "untranslated" in l]
     if bad:
         sys.exit("%s: %s: to_llvm cannot translate:\n%s%s" % (path, bare, "\n".join(bad), MODEL_HINT if MODEL else ""))
-    return to_llvm.relax("\n".join(text), assembler_errors).split("\n")
+    return far_fallback(bare, to_llvm.relax("\n".join(text), assembler_errors).split("\n"))
+
+
+ADDRS = {}          # main(): {label: address} of the tree's symbols reference, for far_fallback
+
+
+def tree_addresses(tree):
+    """{label: address} from the tree's symbols reference (symbols/maincpu_<v>_..., subcpu_..._symbols_reference.txt),
+    or {} when there is none"""
+    parts = os.path.normpath(tree).split(os.sep)
+    v, cpu = parts[-2], parts[-1]
+    name = {"maincpu": "maincpu_%s_symbols_reference.txt" % v,
+            "subcpu": "subcpu_symbols_reference.txt" if v == "v142" else "subcpu_%s_symbols_reference.txt" % v}.get(cpu)
+    p = os.path.join(REPO, "symbols", name) if name else None
+    out = {}
+    if p and os.path.exists(p):
+        for l in open(p):
+            c = l.split()
+            if len(c) == 2 and not l.startswith("#"):
+                try:
+                    out[c[0]] = int(c[1], 16)
+                except ValueError:
+                    pass
+    return out
+REL_RE = re.compile(r'^\t(calr|jr|jrl)\s+([A-Za-z_]\w*)\s*$')
+
+
+def far_fallback(fn, lines):
+    """asm900's rule beyond reach (probe calrel-far2, run 2026-11-16-61-p6-calrel-far2): a module-local CAL / J whose
+    target is more than 16 bits away is call / jp.  With the tree's addresses (ADDRS; the function sits at its
+    ROM address), every unconditional calr / jr / jrl to a label is checked from the instruction's own offset and
+    rewritten when out of reach; repeated until nothing changes.  The sizes are llvm-mc's before relaxation (a jr counts 2 bytes), so a
+    target within a few bytes of the limit is judged from a position a byte or so early.  Without ADDRS, or with
+    data directives in the body, lines stay as they are (llvm-mc then stops on an out-of-range calr: a visible
+    failure, never a wrong byte)."""
+    if fn not in ADDRS or not any((REL_RE.match(l) or [0, 0, ""])[2] in ADDRS for l in lines):
+        return lines                                      # nothing relative to a label of the image
+    if any(l.startswith("\t.") for l in lines):
+        return lines
+    for _ in range(5):
+        r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-show-encoding"],
+                           input="\n".join(lines) + "\n", capture_output=True, text=True)
+        sizes = [len(m.group(1).split(",")) for m in re.finditer(r'encoding: \[([^\]]*)\]', r.stdout)]
+        insn = [i for i, l in enumerate(lines) if l.startswith("\t") and l.strip()]
+        if r.returncode or len(sizes) != len(insn):
+            return lines
+        changed, off = False, 0
+        for i, n in zip(insn, sizes):
+            m = REL_RE.match(lines[i])
+            if m and m.group(2) in ADDRS:
+                d = ADDRS[m.group(2)] - (ADDRS[fn] + off + n)
+                if not -0x8000 <= d <= 0x7fff:
+                    lines[i] = "\t%s\t%s" % ("call" if m.group(1) == "calr" else "jp", m.group(2))
+                    changed = True
+            off += n
+        if not changed:
+            return lines
+    return lines
 
 
 MODEL = False                                              # main(): building with the reference model
@@ -461,6 +518,7 @@ def main():
         sys.exit(__doc__)
     tree, src, outdir, stamp = args
     global MODEL
+    ADDRS.update(tree_addresses(tree))
     if cache:
         funcs = compile_v423(src, Names(tree_values(tree), tree_labels(tree), cut=True), cache)
     else:
