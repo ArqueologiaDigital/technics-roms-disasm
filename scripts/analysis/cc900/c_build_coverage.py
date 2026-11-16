@@ -20,6 +20,9 @@ Two kinds of C source count (one table row per image and kind):
                It counts for V4.23 when a V4.23 listing of exactly this C file (same SHA-256, recorded in
                results/c_build_v423_runs.tsv) at the file's options gives the ROM's bytes.  A function with no such
                listing is "not yet checked", never guessed; --v423-corpus prepares the oracle run that checks it.
+               When V4.23 refuses the file (listing FAILED in the runs file: an error in its .cc.log, e.g. two names
+               alike in their first 31 characters), its functions read "does not compile" and count as not matched.
+               A longer name that V4.23 only cuts to 31 characters is compared under the cut name ("name cut to 31").
   library C    Toshiba's runtime routines linked into the images (results/pairs.tsv, compiled from the 1997
                LIB/SRC at -O3 -XS -DFLOAT, cdecl).  Model: results/pairs_model_kn5000.tsv (MATCH rows).  V4.23:
                results/pairs_v423_llvm_kn5000.tsv, pairs_model.py --listings on V4.23's listings of oracle run
@@ -306,7 +309,9 @@ def firmware(key, tree, rom_path, sym_path):
             funcs = {}
         run = runs.get((rel(path), sha256(path), label))
         v423 = {}
-        if run:
+        if run and run[1] == 'FAILED':
+            v423 = None                                    # V4.23 does not compile this text
+        elif run:
             lp = os.path.join(ORACLE, 'runs', run[0], 'out', run[1])
             if os.path.exists(lp):
                 v423 = translate(listing_functions(lp), names)
@@ -318,11 +323,14 @@ def firmware(key, tree, rom_path, sym_path):
                      model=ok is True, iv=[(ref[fn], ref[fn] + n)] if fn in ref else [])
             if not run:
                 r['V4.23'] = None                                 # not yet checked
-            elif fn not in v423:
+            elif v423 is None:
+                r['V4.23'] = 'refused'
+            elif fn not in v423 and fn[:31] not in v423:
                 r['V4.23'] = False
-            else:
-                n2, ok2 = compare(fn, v423[fn], rom, ref)
-                r['V4.23'] = ok2 is True and n2 == n
+            else:                                         # V4.23 keeps 31 characters of a name (THC1-Warning-515)
+                n2, ok2 = compare(fn, v423.get(fn) or v423[fn[:31]], rom, ref)
+                r['V4.23'] = bool(ok2 is True and n2 == n)
+                r['cut'] = fn not in v423
             r['run'] = run[0] if run else None
             rows.append(r)
     return rows
@@ -447,7 +455,9 @@ def render(cen, rows, fwrows):
         L += ['## Firmware C functions', '']
         t = []
         for r in fwrows:
-            v = 'not yet checked' if r['V4.23'] is None else 'MATCH' if r['V4.23'] else 'differs'
+            v = {None: 'not yet checked', 'refused': 'does not compile', True: 'MATCH', False: 'differs'}[r['V4.23']]
+            if r.get('cut'):
+                v += ' (name cut to 31)'
             t.append([r['image'], r['function'], r['file'], r['options'], r['bytes'], 'yes' if r['built'] else 'no',
                       'MATCH' if r['model'] else 'differs', v, r['run'] or '-'])
         L += [md_table(['image', 'function', 'C file', 'options', 'bytes', 'built', 'model', 'V4.23', 'V4.23 run'], t), '']
@@ -502,8 +512,12 @@ def record_run(run_dir, d):
         h = sha256(os.path.join(d, dst))
         for label in labels:
             lp = 'v423/%s/%s.asm' % (label, dst[:-2])
-            if os.path.exists(os.path.join(run_dir, 'out', lp)) and (src, h, label) not in have:
+            if (src, h, label) in have:
+                continue
+            if os.path.exists(os.path.join(run_dir, 'out', lp)):
                 new.append([src, h, label, run, lp])
+            elif os.path.exists(os.path.join(run_dir, 'out', lp[:-4] + '.cc.log')):
+                new.append([src, h, label, run, 'FAILED'])    # V4.23 compiled it and refused (see its .cc.log)
     exists = os.path.exists(RUNS_TSV)
     with open(RUNS_TSV, 'a', encoding='utf-8') as fh:
         if not exists:

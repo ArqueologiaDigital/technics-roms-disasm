@@ -9,7 +9,7 @@ the image is built from it (`.include` of its generated body); library C is chec
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 17120        | 14208             | 0.189 %       | 0                | 17120           |
+| Toshiba V4.23                 | 18326        | 15414             | 0.205 %       | 1206             | 17120           |
 | reference model               | 18784        | 15872             | 0.211 %       | 1392             | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
@@ -19,17 +19,17 @@ All 20 images: 20643840 bytes, 7532210 of them census CODE.  Every version of an
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996729 | firmware C | 36    | 0 / 0              | 232 / 232          | 0 / 0             | 0.023 %         | 36                    |
+| v10        | 2097152 | 996729 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
 | v10        | 2097152 | 996729 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996394 | firmware C | 36    | 0 / 0              | 232 / 232          | 0 / 0             | 0.023 %         | 36                    |
+| v9         | 2097152 | 996394 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
 | v9         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996394 | firmware C | 36    | 0 / 0              | 232 / 232          | 0 / 0             | 0.023 %         | 36                    |
+| v8         | 2097152 | 996394 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
 | v8         | 2097152 | 996394 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993980 | firmware C | 36    | 0 / 0              | 232 / 232          | 0 / 0             | 0.023 %         | 36                    |
+| v7         | 2097152 | 993980 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
 | v7         | 2097152 | 993980 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992958 | firmware C | 36    | 0 / 0              | 232 / 232          | 0 / 0             | 0.023 %         | 36                    |
+| v6         | 2097152 | 992958 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
 | v6         | 2097152 | 992958 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991874 | firmware C | 36    | 0 / 0              | 232 / 232          | 0 / 0             | 0.023 %         | 36                    |
+| v5         | 2097152 | 991874 | firmware C | 36    | 201 / 201          | 232 / 232          | 0 / 0             | 0.023 %         | 0                     |
 | v5         | 2097152 | 991874 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128907 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v141       | 196608  | 128884 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
@@ -51,284 +51,221 @@ found yet.
 
 ## Firmware C functions
 
-| image | function                          | C file                                     | options     | bytes | built | model | V4.23           | V4.23 run |
-|-------|-----------------------------------|--------------------------------------------|-------------|-------|-------|-------|-----------------|-----------|
-| v10   | BitMapOut_ByteData_DiskCheck      | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | BitMapOut_GetRenderMode           | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | BitMapOut_PrepareRender_CheckBit1 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | BitMapOut_PrepareRender_CheckBit2 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | BitMapOut_SetDefaultTimer         | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | BitMapOut_StorePresetValue        | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | Get_Region_Code                   | v10/maincpu/cc900/boot_routines.c          | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | GET_COMPUTER_INTERFACE_SELECTION  | v10/maincpu/cc900/dsp_config_sysex.c       | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | Display_SetBackgroundColor        | v10/maincpu/cc900/graphics_text_vga.c      | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetPlayState1                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | GetPlayState2                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | SmfMedley_RawData                 | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked | -         |
-| v10   | GetDialEnableState                | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | SetDialEnable                     | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | AccPlay_GetCurrentPart            | v10/maincpu/cc900/seq_event_playback.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | SeqData_SetErrorCode              | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 12    | yes   | MATCH | not yet checked | -         |
-| v10   | Xapr_GetPresentFlag               | v10/maincpu/cc900/test_init.c              | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetCurrentPartSelect              | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v10   | GetPartSelect                     | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 7     | yes   | MATCH | not yet checked | -         |
-| v10   | SeqState_HasModeChanged           | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 11    | yes   | MATCH | not yet checked | -         |
-| v10   | GetCurrentTarget                  | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetFocusObject                    | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetModeNow                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetModeOld                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetNamingWindowID                 | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetRootEvent                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetRootObject                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetRootParam                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetTitleNow                       | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | GetTitleOld                       | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | ResetLswFilter                    | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v10   | SetCurrentTarget                  | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 14    | yes   | MATCH | not yet checked | -         |
-| v10   | SetLswFilter                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v10   | SetRootEvent                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | SetRootObject                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v10   | SetRootParam                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | Get_Region_Code                   | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | GET_COMPUTER_INTERFACE_SELECTION  | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | Display_SetBackgroundColor        | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked | -         |
-| v9    | GetDialEnableState                | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | SetDialEnable                     | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | AccPlay_GetCurrentPart            | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | SeqData_SetErrorCode              | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | not yet checked | -         |
-| v9    | Xapr_GetPresentFlag               | v9/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetCurrentPartSelect              | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v9    | GetPartSelect                     | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | not yet checked | -         |
-| v9    | SeqState_HasModeChanged           | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | not yet checked | -         |
-| v9    | GetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetFocusObject                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetModeNow                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetModeOld                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetNamingWindowID                 | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetTitleNow                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | GetTitleOld                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | ResetLswFilter                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v9    | SetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | not yet checked | -         |
-| v9    | SetLswFilter                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v9    | SetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | SetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v9    | SetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | Get_Region_Code                   | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | GET_COMPUTER_INTERFACE_SELECTION  | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | Display_SetBackgroundColor        | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked | -         |
-| v8    | GetDialEnableState                | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | SetDialEnable                     | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | AccPlay_GetCurrentPart            | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | SeqData_SetErrorCode              | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | not yet checked | -         |
-| v8    | Xapr_GetPresentFlag               | v9/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetCurrentPartSelect              | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v8    | GetPartSelect                     | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | not yet checked | -         |
-| v8    | SeqState_HasModeChanged           | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | not yet checked | -         |
-| v8    | GetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetFocusObject                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetModeNow                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetModeOld                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetNamingWindowID                 | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetTitleNow                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | GetTitleOld                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | ResetLswFilter                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v8    | SetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | not yet checked | -         |
-| v8    | SetLswFilter                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v8    | SetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | SetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v8    | SetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | BitMapOut_ByteData_DiskCheck      | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | BitMapOut_GetRenderMode           | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | BitMapOut_PrepareRender_CheckBit1 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | BitMapOut_PrepareRender_CheckBit2 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | BitMapOut_SetDefaultTimer         | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | BitMapOut_StorePresetValue        | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | Get_Region_Code                   | v7/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | GET_COMPUTER_INTERFACE_SELECTION  | v7/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | Display_SetBackgroundColor        | v7/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetPlayState1                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | GetPlayState2                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | SmfMedley_RawData                 | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked | -         |
-| v7    | GetDialEnableState                | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | SetDialEnable                     | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | AccPlay_GetCurrentPart            | v7/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | SeqData_SetErrorCode              | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | not yet checked | -         |
-| v7    | Xapr_GetPresentFlag               | v7/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetCurrentPartSelect              | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v7    | GetPartSelect                     | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | not yet checked | -         |
-| v7    | SeqState_HasModeChanged           | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | not yet checked | -         |
-| v7    | GetCurrentTarget                  | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetFocusObject                    | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetModeNow                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetModeOld                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetNamingWindowID                 | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetRootEvent                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetRootObject                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetRootParam                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetTitleNow                       | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | GetTitleOld                       | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | ResetLswFilter                    | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v7    | SetCurrentTarget                  | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | not yet checked | -         |
-| v7    | SetLswFilter                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v7    | SetRootEvent                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | SetRootObject                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v7    | SetRootParam                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | BitMapOut_ByteData_DiskCheck      | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | BitMapOut_GetRenderMode           | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | BitMapOut_PrepareRender_CheckBit1 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | BitMapOut_PrepareRender_CheckBit2 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | BitMapOut_SetDefaultTimer         | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | BitMapOut_StorePresetValue        | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | Get_Region_Code                   | v6/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | GET_COMPUTER_INTERFACE_SELECTION  | v6/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | Display_SetBackgroundColor        | v6/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetPlayState1                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | GetPlayState2                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | SmfMedley_RawData                 | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked | -         |
-| v6    | GetDialEnableState                | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | SetDialEnable                     | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | AccPlay_GetCurrentPart            | v6/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | SeqData_SetErrorCode              | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | not yet checked | -         |
-| v6    | Xapr_GetPresentFlag               | v6/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetCurrentPartSelect              | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v6    | GetPartSelect                     | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | not yet checked | -         |
-| v6    | SeqState_HasModeChanged           | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | not yet checked | -         |
-| v6    | GetCurrentTarget                  | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetFocusObject                    | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetModeNow                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetModeOld                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetNamingWindowID                 | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetRootEvent                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetRootObject                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetRootParam                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetTitleNow                       | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | GetTitleOld                       | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | ResetLswFilter                    | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v6    | SetCurrentTarget                  | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | not yet checked | -         |
-| v6    | SetLswFilter                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v6    | SetRootEvent                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | SetRootObject                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v6    | SetRootParam                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | BitMapOut_ByteData_DiskCheck      | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | BitMapOut_GetRenderMode           | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | BitMapOut_PrepareRender_CheckBit1 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | BitMapOut_PrepareRender_CheckBit2 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | BitMapOut_SetDefaultTimer         | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | BitMapOut_StorePresetValue        | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | Get_Region_Code                   | v5/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | GET_COMPUTER_INTERFACE_SELECTION  | v5/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | Display_SetBackgroundColor        | v5/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetPlayState1                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | GetPlayState2                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | SmfMedley_RawData                 | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | not yet checked | -         |
-| v5    | GetDialEnableState                | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | SetDialEnable                     | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | AccPlay_GetCurrentPart            | v5/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | SeqData_SetErrorCode              | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | not yet checked | -         |
-| v5    | Xapr_GetPresentFlag               | v5/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetCurrentPartSelect              | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | not yet checked | -         |
-| v5    | GetPartSelect                     | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | not yet checked | -         |
-| v5    | SeqState_HasModeChanged           | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | not yet checked | -         |
-| v5    | GetCurrentTarget                  | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetFocusObject                    | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetModeNow                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetModeOld                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetNamingWindowID                 | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetRootEvent                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetRootObject                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetRootParam                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetTitleNow                       | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | GetTitleOld                       | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | ResetLswFilter                    | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v5    | SetCurrentTarget                  | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | not yet checked | -         |
-| v5    | SetLswFilter                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | not yet checked | -         |
-| v5    | SetRootEvent                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | SetRootObject                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-| v5    | SetRootParam                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | not yet checked | -         |
-
-### V4.23 runs needed
-
-These C files have no V4.23 listing of their current text.  `c_build_coverage.py --v423-corpus DIR` copies
-them into DIR and prints the oracle run (`oracle/run_oracle.sh`) and the command that files its result.
-
-| C file                                     | options     |
-|--------------------------------------------|-------------|
-| v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr |
-| v10/maincpu/cc900/boot_routines.c          | -O3 -XS -Xr |
-| v10/maincpu/cc900/dsp_config_sysex.c       | -O3 -XS -Xr |
-| v10/maincpu/cc900/graphics_text_vga.c      | -O3 -XS -Xr |
-| v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr |
-| v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr |
-| v10/maincpu/cc900/seq_event_playback.c     | -O3 -XS -Xr |
-| v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr |
-| v10/maincpu/cc900/test_init.c              | -O3 -XS -Xr |
-| v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr |
-| v10/maincpu/cc900/ui_widget_defs.c         | -Xr         |
-| v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr |
-| v5/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr |
-| v5/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr |
-| v5/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr |
-| v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr |
-| v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr |
-| v5/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr |
-| v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr |
-| v5/maincpu/cc900/test_init.c               | -O3 -XS -Xr |
-| v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr |
-| v5/maincpu/cc900/ui_widget_defs.c          | -Xr         |
-| v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr |
-| v6/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr |
-| v6/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr |
-| v6/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr |
-| v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr |
-| v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr |
-| v6/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr |
-| v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr |
-| v6/maincpu/cc900/test_init.c               | -O3 -XS -Xr |
-| v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr |
-| v6/maincpu/cc900/ui_widget_defs.c          | -Xr         |
-| v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr |
-| v7/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr |
-| v7/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr |
-| v7/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr |
-| v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr |
-| v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr |
-| v7/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr |
-| v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr |
-| v7/maincpu/cc900/test_init.c               | -O3 -XS -Xr |
-| v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr |
-| v7/maincpu/cc900/ui_widget_defs.c          | -Xr         |
-| v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr |
-| v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr |
-| v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr |
-| v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr |
-| v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr |
-| v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr |
-| v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr |
-| v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr |
-| v9/maincpu/cc900/test_init.c               | -O3 -XS -Xr |
-| v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr |
-| v9/maincpu/cc900/ui_widget_defs.c          | -Xr         |
+| image | function                          | C file                                     | options     | bytes | built | model | V4.23                  | V4.23 run                 |
+|-------|-----------------------------------|--------------------------------------------|-------------|-------|-------|-------|------------------------|---------------------------|
+| v10   | BitMapOut_ByteData_DiskCheck      | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | BitMapOut_GetRenderMode           | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | BitMapOut_PrepareRender_CheckBit1 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | BitMapOut_PrepareRender_CheckBit2 | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | BitMapOut_SetDefaultTimer         | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | BitMapOut_StorePresetValue        | v10/maincpu/cc900/bitmap_out_routines.c    | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v10   | Get_Region_Code                   | v10/maincpu/cc900/boot_routines.c          | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GET_COMPUTER_INTERFACE_SELECTION  | v10/maincpu/cc900/dsp_config_sysex.c       | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
+| v10   | Display_SetBackgroundColor        | v10/maincpu/cc900/graphics_text_vga.c      | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetPlayState1                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetPlayState2                     | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SmfMedley_RawData                 | v10/maincpu/cc900/medley.c                 | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetDialEnableState                | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SetDialEnable                     | v10/maincpu/cc900/presentation_sound_nav.c | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | AccPlay_GetCurrentPart            | v10/maincpu/cc900/seq_event_playback.c     | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SeqData_SetErrorCode              | v10/maincpu/cc900/sequencer_engine.c       | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | Xapr_GetPresentFlag               | v10/maincpu/cc900/test_init.c              | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetCurrentPartSelect              | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetPartSelect                     | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SeqState_HasModeChanged           | v10/maincpu/cc900/ui_control_panel.c       | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetCurrentTarget                  | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetFocusObject                    | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetModeNow                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetModeOld                        | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetNamingWindowID                 | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetRootEvent                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetRootObject                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetRootParam                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetTitleNow                       | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | GetTitleOld                       | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | ResetLswFilter                    | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SetCurrentTarget                  | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SetLswFilter                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SetRootEvent                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SetRootObject                     | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v10   | SetRootParam                      | v10/maincpu/cc900/ui_widget_defs.c         | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v9    | Get_Region_Code                   | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GET_COMPUTER_INTERFACE_SELECTION  | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
+| v9    | Display_SetBackgroundColor        | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetDialEnableState                | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SetDialEnable                     | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | AccPlay_GetCurrentPart            | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SeqData_SetErrorCode              | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | Xapr_GetPresentFlag               | v9/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetCurrentPartSelect              | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetPartSelect                     | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SeqState_HasModeChanged           | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetFocusObject                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetModeNow                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetModeOld                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetNamingWindowID                 | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetTitleNow                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | GetTitleOld                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | ResetLswFilter                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SetLswFilter                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v9    | SetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_ByteData_DiskCheck      | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_GetRenderMode           | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_PrepareRender_CheckBit1 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_PrepareRender_CheckBit2 | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_SetDefaultTimer         | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | BitMapOut_StorePresetValue        | v9/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v8    | Get_Region_Code                   | v9/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GET_COMPUTER_INTERFACE_SELECTION  | v9/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
+| v8    | Display_SetBackgroundColor        | v9/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetPlayState1                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetPlayState2                     | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SmfMedley_RawData                 | v9/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetDialEnableState                | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SetDialEnable                     | v9/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | AccPlay_GetCurrentPart            | v9/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SeqData_SetErrorCode              | v9/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | Xapr_GetPresentFlag               | v9/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetCurrentPartSelect              | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetPartSelect                     | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SeqState_HasModeChanged           | v9/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetFocusObject                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetModeNow                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetModeOld                        | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetNamingWindowID                 | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetTitleNow                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | GetTitleOld                       | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | ResetLswFilter                    | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SetCurrentTarget                  | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SetLswFilter                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SetRootEvent                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SetRootObject                     | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v8    | SetRootParam                      | v9/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_ByteData_DiskCheck      | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_GetRenderMode           | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_PrepareRender_CheckBit1 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_PrepareRender_CheckBit2 | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_SetDefaultTimer         | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | BitMapOut_StorePresetValue        | v7/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v7    | Get_Region_Code                   | v7/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GET_COMPUTER_INTERFACE_SELECTION  | v7/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
+| v7    | Display_SetBackgroundColor        | v7/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetPlayState1                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetPlayState2                     | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SmfMedley_RawData                 | v7/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetDialEnableState                | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SetDialEnable                     | v7/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | AccPlay_GetCurrentPart            | v7/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SeqData_SetErrorCode              | v7/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | Xapr_GetPresentFlag               | v7/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetCurrentPartSelect              | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetPartSelect                     | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SeqState_HasModeChanged           | v7/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetCurrentTarget                  | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetFocusObject                    | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetModeNow                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetModeOld                        | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetNamingWindowID                 | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetRootEvent                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetRootObject                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetRootParam                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetTitleNow                       | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | GetTitleOld                       | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | ResetLswFilter                    | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SetCurrentTarget                  | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SetLswFilter                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SetRootEvent                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SetRootObject                     | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v7    | SetRootParam                      | v7/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_ByteData_DiskCheck      | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_GetRenderMode           | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_PrepareRender_CheckBit1 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_PrepareRender_CheckBit2 | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_SetDefaultTimer         | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | BitMapOut_StorePresetValue        | v6/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v6    | Get_Region_Code                   | v6/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GET_COMPUTER_INTERFACE_SELECTION  | v6/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
+| v6    | Display_SetBackgroundColor        | v6/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetPlayState1                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetPlayState2                     | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SmfMedley_RawData                 | v6/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetDialEnableState                | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SetDialEnable                     | v6/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | AccPlay_GetCurrentPart            | v6/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SeqData_SetErrorCode              | v6/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | Xapr_GetPresentFlag               | v6/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetCurrentPartSelect              | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetPartSelect                     | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SeqState_HasModeChanged           | v6/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetCurrentTarget                  | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetFocusObject                    | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetModeNow                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetModeOld                        | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetNamingWindowID                 | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetRootEvent                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetRootObject                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetRootParam                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetTitleNow                       | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | GetTitleOld                       | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | ResetLswFilter                    | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SetCurrentTarget                  | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SetLswFilter                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SetRootEvent                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SetRootObject                     | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v6    | SetRootParam                      | v6/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_ByteData_DiskCheck      | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_GetRenderMode           | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_PrepareRender_CheckBit1 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_PrepareRender_CheckBit2 | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_SetDefaultTimer         | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 6     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | BitMapOut_StorePresetValue        | v5/maincpu/cc900/bitmap_out_routines.c     | -O3 -XS -Xr | 5     | yes   | MATCH | does not compile       | 2026-11-16-13-p6-firmware |
+| v5    | Get_Region_Code                   | v5/maincpu/cc900/boot_routines.c           | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GET_COMPUTER_INTERFACE_SELECTION  | v5/maincpu/cc900/dsp_config_sysex.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH (name cut to 31) | 2026-11-16-13-p6-firmware |
+| v5    | Display_SetBackgroundColor        | v5/maincpu/cc900/graphics_text_vga.c       | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetPlayState1                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetPlayState2                     | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SmfMedley_RawData                 | v5/maincpu/cc900/medley.c                  | -O3 -XS -Xr | 9     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetDialEnableState                | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SetDialEnable                     | v5/maincpu/cc900/presentation_sound_nav.c  | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | AccPlay_GetCurrentPart            | v5/maincpu/cc900/seq_event_playback.c      | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SeqData_SetErrorCode              | v5/maincpu/cc900/sequencer_engine.c        | -O3 -XS -Xr | 12    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | Xapr_GetPresentFlag               | v5/maincpu/cc900/test_init.c               | -O3 -XS -Xr | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetCurrentPartSelect              | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 5     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetPartSelect                     | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 7     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SeqState_HasModeChanged           | v5/maincpu/cc900/ui_control_panel.c        | -O3 -XS -Xr | 11    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetCurrentTarget                  | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetFocusObject                    | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetModeNow                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetModeOld                        | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetNamingWindowID                 | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetRootEvent                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetRootObject                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetRootParam                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetTitleNow                       | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | GetTitleOld                       | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | ResetLswFilter                    | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SetCurrentTarget                  | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 14    | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SetLswFilter                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 8     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SetRootEvent                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SetRootObject                     | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
+| v5    | SetRootParam                      | v5/maincpu/cc900/ui_widget_defs.c          | -Xr         | 6     | yes   | MATCH | MATCH                  | 2026-11-16-13-p6-firmware |
