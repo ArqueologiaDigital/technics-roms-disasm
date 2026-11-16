@@ -43,3 +43,46 @@ void Demo_ParseSlideHeader(unsigned char i)
     long v;
     if ((v = ((long *)0x9c4000)[i]) != 0) SLIDE_Parse_Header(v, (unsigned char *)0x69800);
 }
+
+extern unsigned char __near SEQ_RTMCFG;
+
+int FileIO_ReadHeaderAtF(void)
+{
+    int ok = 1;
+    int c;
+    FileIO_SeekAndReadBlock(15, 0);
+    c = FileIO_ReadByte();
+    if (c < 0 || (unsigned char)c != 8) ok = 0;
+    FileIO_SeekRead_ExtReturn();
+    return ok;
+}
+
+void InitializeOperationState(unsigned char a)
+{
+    SeqBuf_Init();
+    NoteMap_SendAllNotesOff();
+    Part_ReinitAllActive();
+    AccWrap_PlayModeDispatch();
+    if (a != 0) SEQ_RTMCFG |= 4;
+    AccompSeq_StopSequence();
+    AudioInit_RefreshToneBank();
+    NoteMap_ProcessAndMerge();
+    Voice_InitializeAll();
+    Voice_InitTablePair();
+    Voice_InitTableGroup();
+    MIDI_SendAllSoundOff();
+    MidiIn_IgnoreClockTransport();
+}
+
+extern unsigned char *FileIO_HeaderAt4_ExpectedPtr;
+
+int FileIO_ReadHeaderAt4(void)
+{
+    int ok = 1;
+    int c;
+    FileIO_SeekAndReadBlock(4, 0);
+    c = FileIO_ReadByte();
+    if (c < 0 || (char)c != (char)*FileIO_HeaderAt4_ExpectedPtr) ok = 0;
+    FileIO_SeekRead_ExtReturn();
+    return ok;
+}

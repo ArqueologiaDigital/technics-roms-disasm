@@ -22,3 +22,106 @@ void Flash_AccumWrite_Word(unsigned char a)
     }
     ram_642 += 1;
 }
+
+extern unsigned char LIVE_PANEL_BLOCK;
+extern unsigned int NMI_CHECKSUM_REGION1;
+extern unsigned int NMI_CHECKSUM_REGION2;
+extern char ram_1e53e;
+extern unsigned char HDAE5000_PPI__PORT_A;
+extern unsigned int CUSTOM_DATA_FLASH__BASE_ADDR;
+extern unsigned int ram_200000;
+extern unsigned long __near SYSTEM_TIMESTAMP;
+
+void Flash_BurnWithProgress(void)
+{
+    int x = 0x32;
+    SYSTEM_TIMESTAMP = 0;
+    TableDataFlash_ChipErase();
+    while (HDAE5000_Status_Check() == -1) {
+        if (SYSTEM_TIMESTAMP > 500) {
+            x += 8;
+            VRAM_FillRect(x, 0xb4, 5);
+            SYSTEM_TIMESTAMP = 0;
+        }
+    }
+}
+
+void HDAE5000_ProgramCustomDataFlash(void)
+{
+    unsigned int *src;
+    unsigned int *dst = &CUSTOM_DATA_FLASH__BASE_ADDR;
+    unsigned char bank;
+    unsigned long i;
+    bank = 0;
+    do {
+        HDAE5000_PPI__PORT_A = bank;
+        src = &ram_200000;
+        i = 0;
+        do {
+            Flash_ProgramWord(1, dst++, *src++);
+            i++;
+        } while (i < 0x40000);
+        bank++;
+    } while (bank < 2);
+}
+
+void Seq_InitStub_Nop1(void)
+{
+}
+
+void Seq_InitStub_Nop2(void)
+{
+}
+
+void Seq_InitStub_Nop3(void)
+{
+}
+
+void SubCPU_Payload_Verify(void)
+{
+    unsigned int s = Checksum_ComputeComplement((unsigned char *)0xf180, 0x800);
+    unsigned char *p = &LIVE_PANEL_BLOCK;
+    if (s == NMI_CHECKSUM_REGION1) {
+        ram_1e53e = 0;
+        if (Checksum_ComputeComplement(p, 0x280) != NMI_CHECKSUM_REGION2) ram_1e53e = -1;
+    } else {
+        ram_1e53e = -1;
+        if (Checksum_ComputeComplement(p, 0x280) == NMI_CHECKSUM_REGION2) ram_1e53e = 1;
+    }
+}
+
+void SeqDMA_MultiWrite_DspSysEx(unsigned char n, unsigned char *p)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		SeqBuf_DspSysEx_WriteByte(*p++);
+}
+
+void SeqDMA_MultiWrite_NoteEvent(unsigned char n, unsigned char *p)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		SeqBuf_DmaChan0_WriteByte(*p++);
+}
+
+void SeqDMA_MultiWrite_SoundEdit(unsigned char n, unsigned char *p)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		SeqBuf_SoundEdit_BytecodeBlock(*p++);
+}
+
+void SeqDMA_MultiWrite_VoiceMap(unsigned char n, unsigned char *p)
+{
+	unsigned int i;
+
+	for (i = 0; i < n; i++)
+		SeqBuf_VoiceMap_WriteByte(*p++);
+}
+
+void SeqDMA_Nop(void)
+{
+}

@@ -12,3 +12,23 @@ int PanelTlv_Rule_ClearBits(unsigned char *rec, unsigned char *r)
 	rec[r[1]] &= ~r[2];
 	return 3;
 }
+
+extern unsigned char HELP_LANGUAGE;
+extern unsigned char ram_340e6[], ram_340f2[], ram_340f6[], ram_340fa[];
+
+void PanelTlv_WriteRecordHeader(unsigned char *buf, unsigned char *rec)
+{
+	buf += *(long *)rec;
+	buf[0] = rec[8];
+	buf[1] = rec[9];
+}
+
+void SndParamBank_LoadOptionBlock(void)
+{
+	Mem_Copy(&HELP_LANGUAGE, (void *)0x3d3400L, 2);
+	Mem_Copy(ram_340e6, (void *)0x3d3410L, 12);
+	Mem_Copy(ram_340f2, (void *)0x3d3420L, 4);
+	Mem_Copy(ram_340f6, (void *)0x3d3430L, 4);
+	Mem_Copy(ram_340fa, (void *)0x3d3440L, 6);
+}
+

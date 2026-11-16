@@ -30,3 +30,62 @@ unsigned char SubCPU_RequestSoundName(unsigned char a, unsigned char c)
   sendCOMM(3, 10);
   return ram_e2b8[7];
 }
+
+extern unsigned char __near ram_e35a;
+extern unsigned char __near ram_e357;
+extern unsigned char __near ram_e358;
+extern unsigned char __near ram_e359;
+extern unsigned char __near ram_e353;
+extern unsigned char __near ram_e354;
+
+void COMM_SendEqualizerOnOff(unsigned char a)
+{
+  unsigned char c = 0;
+  if (a != 0) c = 1;
+  if (ram_e35a != c) { ram_e35a = c; SendCOMM_VariableLengthPacket((unsigned char *)0xe35a, 37, 1); }
+}
+
+void COMM_SendFadeLevel(unsigned char a)
+{
+  if (ram_e353 != a) { ram_e353 = a; SendCOMM_VariableLengthPacket((unsigned char *)0xe353, 6, 1); }
+}
+
+void COMM_SendMicVolume(unsigned char a)
+{
+  if (ram_e354 != a) { ram_e354 = a; SendCOMM_VariableLengthPacket((unsigned char *)0xe354, 7, 1); }
+}
+
+void SendPartDataBlock_ClearByte(unsigned char a)
+{
+  unsigned char c = 0;
+  if (a != 0) c = 1;
+  if (ram_e357 != c) { ram_e357 = c; SendCOMM_VariableLengthPacket((unsigned char *)0xe357, 0x21, 1); }
+}
+
+void SendPartDataBlock_ClearByte2(unsigned char a)
+{
+  unsigned char c = 0;
+  if (a != 0) c = 1;
+  if (ram_e358 != c) { ram_e358 = c; SendCOMM_VariableLengthPacket((unsigned char *)0xe358, 0x22, 1); }
+}
+
+void SendPartDataBlock_ClearByte3(unsigned char a)
+{
+  unsigned char c = 0;
+  if (a != 0) c = 1;
+  if (ram_e359 != c) { ram_e359 = c; SendCOMM_VariableLengthPacket((unsigned char *)0xe359, 0x24, 1); }
+}
+
+void SndParam_ApplyVoiceValue(unsigned char *r)
+{
+  unsigned char *q;
+  if (r[5] != 0x0f) {
+    int h = SndParam_LookupViaEncode(r[5], 0x20);
+    q = r + 4;
+    r[3] = r[2];
+    if (h == 0x78) *q = 0x78; else *q = r[1];
+  } else {
+    r[3] = r[2];
+    r[4] = 0x78;
+  }
+}

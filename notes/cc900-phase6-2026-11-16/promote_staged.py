@@ -74,10 +74,10 @@ def main():
             if os.path.exists(dst):                       # a name the built file declares otherwise: a sibling file
                 prev = {}
                 for k, d in sp.items(open(dst, encoding='latin-1').read()):
-                    if k == 'decl':
+                    if k in ('decl', 'pp'):
                         for n in sp.defines(d):
                             prev[n] = d
-                if any(n in prev and prev[n] != d for k, d in sp.items(text) if k == 'decl' for n in sp.defines(d)):
+                if any(n in prev and prev[n] != d for k, d in sp.items(text) if k in ('decl', 'pp') for n in sp.defines(d)):
                     for c in 'bcdefgh':
                         alt = dst[:-2] + '_' + c + '.c'
                         if not os.path.exists(alt):
@@ -91,12 +91,12 @@ def main():
                 items = sp.items(text)
                 declared = set()
                 for k, d in sp.items(old):
-                    if k == 'decl':
+                    if k in ('decl', 'pp'):
                         declared |= sp.defines(d)
                 # a name the built file already declares keeps the built declaration (its qualifier is the build's)
-                add = [d for k, d in items if k == 'decl' and d not in old and not (sp.defines(d) & declared)]
+                add = [d for k, d in items if k in ('decl', 'pp') and d not in old and not (sp.defines(d) & declared)]
                 for k, d in items:
-                    if k == 'decl' and d not in old and sp.defines(d) & declared:
+                    if k in ('decl', 'pp') and d not in old and sp.defines(d) & declared:
                         print('   note: %s keeps its declaration in %s, not the staged %r: check with V4.23'
                               % (', '.join(sorted(sp.defines(d) & declared)), os.path.basename(dst), d))
                 body = [d for k, d in items if k in ('fn', 'name')]

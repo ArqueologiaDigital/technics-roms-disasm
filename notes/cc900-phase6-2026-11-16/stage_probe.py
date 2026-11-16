@@ -37,6 +37,12 @@ def items(text):
                 out.append(('name', c))
             i = j
             continue
+        if text[i] == '#' and not buf.strip() and depth == 0:   # a preprocessor line (#define): its own item
+            j = text.find('\n', i)
+            j = len(text) if j < 0 else j
+            out.append(('pp', text[i:j].strip()))
+            i = j
+            continue
         ch = text[i]
         buf += ch
         if ch == '{':
@@ -59,7 +65,10 @@ def idents(s):
 
 
 def defines(d):
-    """names a declaration introduces"""
+    """names a declaration (or a #define) introduces"""
+    m = re.match(r'#\s*define\s+(\w+)', d)
+    if m:
+        return {m.group(1)}
     m = re.match(r'(?:typedef\s+)?(struct|union|enum)\s+(\w+)\s*\{', d)
     if m and not d.startswith('typedef'):
         return {m.group(2)}
@@ -85,7 +94,7 @@ def main():
         sys.exit(__doc__)
     probe, staged, src, opts, funcs = a[0], a[1], a[2], a[3], a[4:]
     it = items(open(probe, encoding='latin-1').read())
-    decls = [d for k, d in it if k == 'decl']
+    decls = [d for k, d in it if k in ('decl', 'pp')]
     fns = {fn_name(d): d for k, d in it if k == 'fn'}
     names = [d for k, d in it if k == 'name']
     want, need = [], set()
@@ -110,7 +119,7 @@ def main():
             break
         prev = {}
         for k, d in items(open(staged, encoding='latin-1').read()):
-            if k == 'decl':
+            if k in ('decl', 'pp'):
                 for n in defines(d):
                     prev[n] = d
         if not any(n in prev and prev[n] != d for d in picked for n in defines(d)):

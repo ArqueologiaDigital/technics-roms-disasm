@@ -7,10 +7,6 @@
    cc900-options: -O3 -Xr
 */
 
-extern unsigned char __near ACC_REQ_ENDING;
-extern unsigned char __near ACC_REQ_FILLIN;
-extern unsigned char __near ACC_REQ_INTRO;
-extern unsigned char __near PANEL_STYLE[];
 
 
 

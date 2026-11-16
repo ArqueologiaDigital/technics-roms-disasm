@@ -125,3 +125,161 @@ void SeqNote_QueueReturn(void)
   SEQ_DATA_OFFSET += 5;
   SEQ_DATA_BLOCK = PartCtrl_ReadWord(SEQ_DATA_BLOCK);
 }
+
+extern unsigned char __near ram_8d88;
+extern unsigned char __near ram_2879;
+extern unsigned char __near ram_289d;
+extern unsigned char __near ram_2684;
+extern unsigned int __near SEQOP_PRIMARY_BLOCK;
+extern unsigned int __near SEQOP_PRIMARY_OFFSET;
+
+long FileIO_SeekReadAndCheck(unsigned long a, unsigned char c)
+{
+  long r = FileIO_SeekAndReadBlock(a, 0);
+  if (r == 0) r = FileIO_ReadByte_BufferHit(c);
+  return r;
+}
+
+unsigned int PartCtrl_CheckOwnerAndToggle(unsigned int n, unsigned int o, unsigned int m)
+{
+  unsigned int r = 0;
+  if (PartCtrl_ReadWord_Off1(n) != o) r |= 0x10;
+  else if (m == 0 && PartCtrl_TestBit7(n) != 0) { PartCtrl_SetClearBit7(n, 0); r |= 0x02; }
+  else if (m == 1 && PartCtrl_TestBit7(n) == 0) { PartCtrl_SetClearBit7(n, 1); r |= 0x04; }
+  return r;
+}
+
+void Part_ClearVoiceSlot(unsigned char a, unsigned char c)
+{
+  Part_WriteWord_Indexed(a, c, 0xffff);
+  Part_WriteByte_Indexed(a, c, 5);
+  Part_SetClearVoiceBit7(a, c, 0);
+  Part_WriteVoiceWord(a, c, 0xffff);
+  if (a == 0) Chan_SetActiveBit(c, 0);
+}
+
+int SeqPart_AllocNewEntry(unsigned char a)
+{
+  unsigned int b = Part_ProcessAndDecrementVoice();
+  if (b == 0xffff) return -1;
+  SEQ_TRACK_ASSIGN[(unsigned char)(ram_2684 - 1)] = a;
+  Part_SetClearVoiceBit7(0, ram_2684, 1);
+  Part_WriteVoiceWord(0, ram_2684, b);
+  SEQOP_PRIMARY_BLOCK = b;
+  SEQOP_PRIMARY_OFFSET = 5;
+  PartCtrl_WriteWord_Off1(b, 0);
+  PartCtrl_WriteWord(b, 0xffff);
+  return 0;
+}
+
+void SeqPart_ByteBlockA95A_Code_Helper(void)
+{
+  SeqError_MapViaTableF();
+  SeqVoice_InitReturnZero();
+  ram_2879 &= ~0x01;
+  ram_2879 &= ~0x02;
+  ram_289d &= ~0x01;
+  ram_289d &= ~0x04;
+}
+
+void SeqSavePost(int e)
+{
+  Part_WriteByte(1, 4, 0);
+  if (e >= 0) ram_8d88 &= ~0x01;
+}
+
+unsigned char *SeqSavePre(void)
+{
+  unsigned char *r = SeqStep_ReinitPartTable();
+  SeqData_CopyBlockToBuffer(SEQ_CURRENT_SONG);
+  Part_WriteByte(1, 4, 1);
+  return r;
+}
+
+int VoiceAlloc_CheckRangeAndBit7(unsigned int n)
+{
+  if (n > 0x4d8 || n == 0 || PartCtrl_TestBit7(n) == 0) return -1;
+  return 0;
+}
+
+void VoiceParam_SetD6Group(unsigned char a)
+{
+  unsigned int v = a != 0;
+  SetVisible(0xd60003L, v);
+  SetVisible(0xd60004L, v);
+  SetVisible(0xd60005L, v);
+  SetVisible(0xd60006L, v);
+}
+
+extern unsigned char __near SEQ_TRACK;
+extern unsigned char __near SEQ_PLAY_FLAGS;
+extern unsigned int __near SEQ_REC_TRACKS;
+extern unsigned char __near ACC_TRANSPORT_STATE;
+extern unsigned char __near SEQ_TRANSPORT_STATE;
+extern unsigned char __near SEQ_CONTROL_FLAGS;
+extern unsigned int __near SEQ_ACTIVE_PARTS;
+extern unsigned char __near CURRENT_MODE;
+extern unsigned char __near ram_22fc;
+extern unsigned char __near ram_28ae;
+
+void SeqPart_InitClear(void)
+{
+  unsigned int v;
+  SeqVoice_SetDefaultParams();
+  if (Seq_ValidatePartNumber(SEQ_TRACK) != 0) SEQ_ERROR_CODE = 3;
+  else {
+    Part_WriteWord_Indexed(0, SEQ_TRACK, 0xffff);
+    Part_WriteByte_Indexed(0, SEQ_TRACK, 5);
+    if (Part_ReadVoiceBit7(0, SEQ_TRACK) != 0) {
+      Part_SetClearVoiceBit7(0, SEQ_TRACK, 0);
+      v = Part_ReadVoiceWord(0, SEQ_TRACK);
+      if (v != 0xffff) {
+        Part_WriteVoiceWord(0, SEQ_TRACK, 0xffff);
+        Part_StealAndReallocVoices(v);
+      }
+    }
+  }
+  SeqVoice_InitReturnZero();
+  Part_SetClearVoiceBit7((unsigned char)(SEQ_CURRENT_SONG + 1), SEQ_TRACK, 0);
+  Part_WriteVoiceWord((unsigned char)(SEQ_CURRENT_SONG + 1), SEQ_TRACK, 0xffff);
+  Part_WriteWord_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), SEQ_TRACK, 0xffff);
+  Part_WriteByte_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), SEQ_TRACK, 5);
+}
+
+void SeqPlay_StopAndResetAll(void)
+{
+  unsigned char a, f;
+  if (SEQ_PLAY_FLAGS & 0x01) {
+    if (SEQ_REC_TRACKS == 0) ram_22fc = 0;
+    return;
+  }
+  a = ACC_TRANSPORT_STATE;
+  if (!(a & 0x08) && (a & 0x04)) {
+    if (!(SEQ_TRANSPORT_STATE & 0x04)) return;
+    AccWrap_PlayModeStopExpr();
+    ram_22fc = 0;
+  } else AccWrap_PlayModeDispatch();
+  SEQ_CONTROL_FLAGS &= ~0x20;
+  SeqBuf_WriteNoteOffEntry(0x32);
+  NoteMap_SendAllNotesOff();
+  AudioInit_RefreshToneBank();
+  VoiceAlloc_ProcessAll();
+  AccompSeq_StopSequence();
+  ram_28ae &= ~0x80;
+  MidiChannel_ResetAndConfigure();
+  SEQ_RTMCFG &= ~0x08;
+  SEQ_START_MEASURE = 1;
+  SEQ_ACTIVE_PARTS = 0;
+  f = SEQ_CONTROL_FLAGS;
+  f |= 0x10;
+  f |= 0x04;
+  SEQ_CONTROL_FLAGS = f;
+  ram_22fc = 0;
+  if (CURRENT_MODE == 19) {
+    SEQ_TRACK_MASK = 0;
+    Audio_CheckSubsystemReady();
+    SEQ_ACTIVE_PARTS = 0;
+    UI_PostTimerResetEvent();
+    Demo_SelectEntry_AfterSongLoad();
+  }
+}

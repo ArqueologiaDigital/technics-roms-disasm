@@ -63,3 +63,19 @@ unsigned char PanelInput_EventIndexOfHeader(unsigned char h)
 {
 	return PanelInput_EventIndexByHeader[(h & 0xc0) >> 1 | (h & 0x1f)];
 }
+
+void RegBitManip_Handler_4_Helper(void)
+{
+  unsigned char b[6];
+  b[3] = ram_904e[0]; b[4] = ram_904e[1]; b[5] = ram_904e[2];
+  SndParam_ComputeVoiceIndex(b);
+  ram_9052[0] = b[0]; ram_9052[1] = b[1]; ram_9052[2] = b[2];
+}
+
+void SndBuf_WriteParamEntries(void)
+{
+  unsigned char b[6];
+  b[0] = ram_904e[0]; b[1] = ram_904e[1]; b[2] = ram_904e[2]; b[5] = ram_904e[3];
+  SndParam_CheckAndApplyMode(b);
+  ram_9052[0] = b[3]; ram_9052[1] = b[4];
+}

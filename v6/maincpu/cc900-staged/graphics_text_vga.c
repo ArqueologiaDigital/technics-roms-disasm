@@ -24,3 +24,24 @@ unsigned char HexCharToNibble(unsigned char a)
 	if (a >= 0x41 && a <= 0x46) return a - 0x37;
 	return 0;
 }
+
+extern unsigned char Text_CharGlyphMap[];
+
+void Text_GlyphToCharCode(unsigned char *in, unsigned char *out)
+{
+	int i;
+	unsigned char e;
+
+	e = *in;
+	if (e == 32 || e == 0) {
+		*out = *in;
+		return;
+	}
+	for (i = 0; i < 256; i++)
+		if (*in == Text_CharGlyphMap[i]) {
+			*out = i;
+			break;
+		}
+	if (i != 256) return;
+	*out = 32;
+}

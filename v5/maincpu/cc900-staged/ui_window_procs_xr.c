@@ -6,9 +6,26 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
+#define EVT_GET_BITMAP_DATA 0x1e000a1L
+#define EVT_GET_BITMAP_HEIGHT 0x1e000a3L
+#define EVT_GET_BITMAP_WIDTH 0x1e000a2L
 
 int IsColorValid(int c)
 {
 	if ((c >= 0 && c <= 0xff) || (c >= 0x100 && c <= 0x100)) return 1;
+	return 0;
+}
+
+extern unsigned char UserBitmapCheck_Bitmap24x24[];
+
+long UserBitmapCheck(long obj, long evt, long p)
+{
+	switch (evt) {
+	case EVT_GET_BITMAP_DATA:
+		return (long)UserBitmapCheck_Bitmap24x24;
+	case EVT_GET_BITMAP_WIDTH:
+	case EVT_GET_BITMAP_HEIGHT:
+		return 24;
+	}
 	return 0;
 }
