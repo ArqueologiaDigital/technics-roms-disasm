@@ -76,6 +76,23 @@ def main():
                 print('%s: %s not checked in its current text: left staged' % (t, fn))
                 continue
             flags = sv.file_flags(sp_path)
+            # the functions may live in another hand source in this tree (v7's SysEx_ClampVoiceIndex*_49 are in
+            # midi/midipkt_routines.s, v10's in audio/dsp_config_sysex.s): then name it, and its file
+            hm = re.search(r'Functions of (\S+\.s)', text)
+            lm0 = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', text)}
+            where = set()
+            for k, d in sp.items(text):
+                if k == 'fn':
+                    lab = lm0.get(sp.fn_name(d), sp.fn_name(d))
+                    r = subprocess.run(['grep', '-rlE', '--include=*.s', '^%s:' % lab, os.path.join(REPO, t, 'maincpu')],
+                                       capture_output=True, text=True)
+                    where |= {os.path.relpath(x, os.path.join(REPO, t, 'maincpu')) for x in r.stdout.split()
+                              if '/generated/' not in x}
+            if hm and len(where) == 1 and hm.group(1) not in where:
+                real = where.pop()
+                text = text.replace('Functions of %s' % hm.group(1), 'Functions of %s' % real, 1)
+                fn = os.path.basename(real)[:-2] + fn[len(os.path.basename(hm.group(1))[:-2]):]
+                print('%s: functions live in %s: promoted as %s' % (t, real, fn))
             dst = os.path.join(cdir, fn)
             if os.path.exists(dst) and built_flags(dst) != flags:
                 dst = os.path.join(cdir, fn[:-2] + '_' + sv.LABEL_OF_FLAGS[flags].lower() + '.c')
@@ -118,6 +135,16 @@ def main():
                         print('   note: %s keeps its declaration in %s, not the staged %r: check with V4.23'
                               % (', '.join(sorted(sp.defines(d) & declared)), os.path.basename(dst), d))
                 body = [d for k, d in items if k in ('fn', 'name')]
+                # the staged file's `cc900-module:` comments go along: without them a module-local
+                # call or tail jump compiles to call / jp and the function grows (BmDrEdit_CalcBeatMeasure, r18)
+                have_mod = set(' '.join(re.findall(r'cc900-module:([^*\n]*)', old)).replace(',', ' ').split())
+                mods = []
+                for m in re.finditer(r'cc900-module:([^*\n]*)', text):
+                    names = [n for n in m.group(1).replace(',', ' ').split() if n not in have_mod]
+                    have_mod |= set(names)
+                    if names:
+                        mods.append('/* cc900-module: %s */' % ' '.join(names))
+                add = mods + add
                 new = old.rstrip('\n') + '\n\n' + '\n'.join(add) + ('\n\n' if add else '') + '\n'.join(body) + '\n'
                 what = 'append %d functions to' % sum(1 for k, _ in items if k == 'fn')
             else:

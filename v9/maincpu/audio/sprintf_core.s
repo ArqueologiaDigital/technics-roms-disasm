@@ -1290,398 +1290,62 @@ Sprintf_FormatFloat_Return:
 	lda xsp, (xsp + 26)
 	ret
 
-Sprintf_FormatFFixed:
-	dec 4, xsp
-	pushw iz
-	ldw (xsp + 4), 0xf
-	cpw (xsp + 26), 0x1
-	jr ge, Sprintf_FFixed_SetPrecision
-	ldw (xsp + 2), 0x0
-	jr Sprintf_FFixed_CheckDefaults
-
-Sprintf_FFixed_SetPrecision:
-	ld wa, (xsp + 26)
-	ld (xsp + 2), wa
-
-Sprintf_FFixed_CheckDefaults:
-	ld wa, (xsp + 16)
-	bit 4, wa
-	jr nz, Sprintf_FFixed_CheckLongDouble
-	ldw (xsp + 20), 0x6
-
-Sprintf_FFixed_CheckLongDouble:
-	ld wa, (xsp + 16)
-	bit 7, wa
-	jr z, Sprintf_FFixed_CheckLongDoubleLimit
-	ldw (xsp + 4), 0x12
-
-Sprintf_FFixed_CheckLongDoubleLimit:
-	ld c, (xsp + 10)
-	ld a, c
-	extz wa
-	lda xde, (CType_ClassTable:24)
-	lda	xde, (xde+wa)
-	bitm 1, (xde)
-	jr z, Sprintf_FFixed_SpecNoUpperCase
-	ld a, c
-	sub a, 0x20
-	jr Sprintf_FFixed_CheckSpecG
-
-Sprintf_FFixed_SpecNoUpperCase:
-	ld a, c
-
-Sprintf_FFixed_CheckSpecG:
-	cp a, 0x47
-	jr nz, Sprintf_FFixed_NotG
-	ld iz, (xsp + 20)
-	jr Sprintf_FFixed_RoundCheck
-
-Sprintf_FFixed_NotG:
-	ld iz, (xsp + 20)
-	add iz, (xsp + 26)
-
-Sprintf_FFixed_RoundCheck:
-	ld wa, (xsp + 4)
-	inc 1, wa
-	cp iz, wa
-	jr ge, Sprintf_FFixed_AfterRound
-	ld xwa, (xsp + 22)
-	cp	(xwa+iz), 0x34
-	jr le, Sprintf_FFixed_AfterRound
-	cp iz, 0:i3
-	jr ge, Sprintf_FFixed_RoundLoop
-	jr Sprintf_FFixed_AfterRound
-
-Sprintf_FFixed_RoundCarry:
-	ld xwa, (xsp + 22)
-	ld	(xwa+iz), 0x30
-
-Sprintf_FFixed_RoundLoop:
-	dec 1, iz
-	ld xwa, (xsp + 22)
-	inc	1, (xwa+iz)
-	cp iz, 0:i3
-	jr le, Sprintf_FFixed_AfterRound
-	cp	(xwa+iz), 0x39
-	jr gt, Sprintf_FFixed_RoundCarry
-
-Sprintf_FFixed_AfterRound:
-	ld e, (xde)
-	bit 1, e
-	jr z, Sprintf_FFixed_AfterRound_NoCase
-	ld a, c
-	sub a, 0x20
-	jr Sprintf_FFixed_CheckG_StripZeros
-
-Sprintf_FFixed_AfterRound_NoCase:
-	ld a, c
-
-Sprintf_FFixed_CheckG_StripZeros:
-	cp a, 0x47
-	jr nz, Sprintf_FFixed_CheckG_AltForm
-	ld iz, (xsp + 20)
-	dec 1, iz
-	ld wa, (xsp + 26)
-	neg wa
-	add (xsp + 20), wa
-
-Sprintf_FFixed_CheckG_AltForm:
-	bit 1, e
-	jr z, Sprintf_FFixed_CaseApplied
-	sub c, 0x20
-
-Sprintf_FFixed_CaseApplied:
-	cp c, 0x47
-	jr nz, Sprintf_FFixed_ComputeOutputLen
-	ld wa, (xsp + 16)
-	bit 3, wa
-	jr z, Sprintf_FFixed_StripZeroCheck
-	jr Sprintf_FFixed_ComputeOutputLen
-
-Sprintf_FFixed_StripZeroLoop:
-	dec 1, iz
-	decm 1, (xsp + 20)
-
-Sprintf_FFixed_StripZeroCheck:
-	ld xwa, (xsp + 22)
-	cp	(xwa+iz), 0x30
-	jr z, Sprintf_FFixed_StripZeroLoop
-
-Sprintf_FFixed_ComputeOutputLen:
-	ld wa, (xsp + 16)
-	bit 4, wa
-	jr z, Sprintf_FFixed_CheckPrecZero
-	cpw (xsp + 20), 0x0
-	jr z, Sprintf_FFixed_AdjustForSign
-
-Sprintf_FFixed_CheckPrecZero:
-	decm 1, (xsp + 18)
-
-Sprintf_FFixed_AdjustForSign:
-	ld iz, (xsp + 28)
-	cp iz, 0:i3
-	jr nz, Sprintf_FFixed_AdjustForSign2
-	ld wa, (xsp + 16)
-	and wa, 0x5
-	jr z, Sprintf_FFixed_ComputePadding
-
-Sprintf_FFixed_AdjustForSign2:
-	decm 1, (xsp + 18)
-
-Sprintf_FFixed_ComputePadding:
-	ld wa, (xsp + 2)
-	add wa, (xsp + 20)
-	sub (xsp + 18), wa
-	ld xwa, (xsp + 22)
-	cp (xwa), 0x39
-	jr le, Sprintf_FFixed_CheckOverflow
-	decm 1, (xsp + 18)
-
-Sprintf_FFixed_CheckOverflow:
-	cpw (xsp + 18), 0x0
-	jr ge, Sprintf_FFixed_PadLeftCheck
-	ldw (xsp + 18), 0x0
-
-Sprintf_FFixed_PadLeftCheck:
-	ld wa, (xsp + 16)
-	bit 1, wa
-	jr nz, Sprintf_FFixed_EmitSign
-	cpw (0x3c220:24), 32
-	jr z, Sprintf_FFixed_PadLeftLoop
-	jr Sprintf_FFixed_EmitSign
-
-Sprintf_FFixed_PadLeftSpace:
-	pushw 0x20
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_PadLeftLoop:
-	ld wa, (xsp + 18)
-	decm 1, (xsp + 18)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_PadLeftSpace
-
-Sprintf_FFixed_EmitSign:
-	cp iz, 0:i3
-	jr z, Sprintf_FFixed_SignPlus
-	pushw 0x2d
-	jr Sprintf_FFixed_SignEmit
-
-Sprintf_FFixed_SignPlus:
-	ld wa, (xsp + 16)
-	bit 0, wa
-	jr z, Sprintf_FFixed_SignSpace
-	pushw 0x2b
-	jr Sprintf_FFixed_SignEmit
-
-Sprintf_FFixed_SignSpace:
-	ld wa, (xsp + 16)
-	bit 2, wa
-	jr z, Sprintf_FFixed_ZeroFill
-	pushw 0x20
-
-Sprintf_FFixed_SignEmit:
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_ZeroFill:
-	ld wa, (xsp + 16)
-	bit 1, wa
-	jr nz, Sprintf_FFixed_LeadDigit
-	cpw (0x3c220:24), 48
-	jr z, Sprintf_FFixed_ZeroFillLoop
-	jr Sprintf_FFixed_LeadDigit
-
-Sprintf_FFixed_ZeroFillBody:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_ZeroFillLoop:
-	ld wa, (xsp + 18)
-	decm 1, (xsp + 18)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_ZeroFillBody
-
-Sprintf_FFixed_LeadDigit:
-	ld xwa, (xsp + 22)
-	cp (xwa), 0x39
-	jr le, Sprintf_FFixed_LeadDigitZero
-	cpw (xsp + 26), 0x0
-	jr lt, Sprintf_FFixed_LeadDigitZero
-	pushw 0x31
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	ld xwa, (xsp + 22)
-	ld (xwa), 0x30
-	jr Sprintf_FFixed_LeadDigitDone
-
-Sprintf_FFixed_LeadDigitZero:
-	cpw (xsp + 26), 0x0
-	jr gt, Sprintf_FFixed_IntegerDigits
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-
-Sprintf_FFixed_LeadDigitDone:
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_IntegerDigits:
-	ld iz, 0:i3
-	jr Sprintf_FFixed_IntDigitLoop
-
-Sprintf_FFixed_IntDigitOutput:
-	ld xwa, (xsp + 22)
-	ld	a, (xwa+iz)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	inc 1, iz
-
-Sprintf_FFixed_IntDigitLoop:
-	ld wa, (xsp + 4)
-	inc 1, wa
-	cp iz, wa
-	jr ge, Sprintf_FFixed_IntZeroLoop
-	ld wa, (xsp + 2)
-	decm 1, (xsp + 2)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_IntDigitOutput
-	jr Sprintf_FFixed_IntZeroLoop
-
-Sprintf_FFixed_IntZeroFill:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_IntZeroLoop:
-	ld wa, (xsp + 2)
-	decm 1, (xsp + 2)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_IntZeroFill
-	ld wa, (xsp + 16)
-	bit 3, wa
-	jr nz, Sprintf_FFixed_DecimalPoint
-	cpw (xsp + 20), 0x0
-	jr z, Sprintf_FFixed_FracLeadZeroLoop
-
-Sprintf_FFixed_DecimalPoint:
-	pushw 0x2e
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	jr Sprintf_FFixed_FracLeadZeroLoop
-
-Sprintf_FFixed_FracLeadZeros:
-	ld wa, (xsp + 26)
-	add wa, 0x1
-	jr nz, Sprintf_FFixed_FracLeadZeroBody
-	ld xwa, (xsp + 22)
-	cp (xwa), 0x39
-	jr le, Sprintf_FFixed_FracLeadZeroBody
-	pushw 0x31
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	ld xwa, (xsp + 22)
-	ld (xwa), 0x30
-	jr Sprintf_FFixed_FracLeadZeroDone
-
-Sprintf_FFixed_FracLeadZeroBody:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-
-Sprintf_FFixed_FracLeadZeroDone:
-	incw 1, (0x3c222:24)
-	incw 1, (xsp + 26)
-
-Sprintf_FFixed_FracLeadZeroLoop:
-	cpw (xsp + 26), 0x0
-	jr ge, Sprintf_FFixed_FracDigits
-	ld wa, (xsp + 20)
-	decm 1, (xsp + 20)
-	cp wa, 0:i3
-	jr nz, Sprintf_FFixed_FracLeadZeros
-
-Sprintf_FFixed_FracDigits:
-	ld wa, (xsp + 4)
-	inc 1, wa
-	cp iz, wa
-	jr lt, Sprintf_FFixed_FracDigitLoop
-	jr Sprintf_FFixed_FracTrailLoop
-
-Sprintf_FFixed_FracDigitOutput:
-	ld xwa, (xsp + 22)
-	ld	a, (xwa+iz)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	inc 1, iz
-
-Sprintf_FFixed_FracDigitLoop:
-	ld wa, (xsp + 4)
-	inc 1, wa
-	cp iz, wa
-	jr ge, Sprintf_FFixed_FracTrailLoop
-	ld wa, (xsp + 20)
-	decm 1, (xsp + 20)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_FracDigitOutput
-	jr Sprintf_FFixed_FracTrailLoop
-
-Sprintf_FFixed_FracTrailZeros:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_FracTrailLoop:
-	ld wa, (xsp + 20)
-	decm 1, (xsp + 20)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_FracTrailZeros
-	ld wa, (xsp + 16)
-	bit 1, wa
-	jr nz, Sprintf_FFixed_PadRightLoop
-	jr Sprintf_FFixed_Return
-
-Sprintf_FFixed_PadRightSpace:
-	pushw 0x20
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_FFixed_PadRightLoop:
-	ld wa, (xsp + 18)
-	decm 1, (xsp + 18)
-	cp wa, 0:i3
-	jr gt, Sprintf_FFixed_PadRightSpace
-
-Sprintf_FFixed_Return:
-	popw iz
-	inc 4, xsp
-	ret
+Sprintf_FormatFFixed:	.include "includes/generated/cc900/Sprintf_FormatFFixed.s"	; C: cc900/sprintf_core_m310_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_FFixed_SetPrecision, Sprintf_FormatFFixed + 22
+	.set	Sprintf_FFixed_CheckDefaults, Sprintf_FormatFFixed + 28
+	.set	Sprintf_FFixed_CheckLongDouble, Sprintf_FormatFFixed + 41
+	.set	Sprintf_FFixed_CheckLongDoubleLimit, Sprintf_FormatFFixed + 54
+	.set	Sprintf_FFixed_SpecNoUpperCase, Sprintf_FormatFFixed + 82
+	.set	Sprintf_FFixed_CheckSpecG, Sprintf_FormatFFixed + 84
+	.set	Sprintf_FFixed_NotG, Sprintf_FormatFFixed + 94
+	.set	Sprintf_FFixed_RoundCheck, Sprintf_FormatFFixed + 100
+	.set	Sprintf_FFixed_RoundCarry, Sprintf_FormatFFixed + 126
+	.set	Sprintf_FFixed_RoundLoop, Sprintf_FormatFFixed + 135
+	.set	Sprintf_FFixed_AfterRound, Sprintf_FormatFFixed + 157
+	.set	Sprintf_FFixed_AfterRound_NoCase, Sprintf_FormatFFixed + 171
+	.set	Sprintf_FFixed_CheckG_StripZeros, Sprintf_FormatFFixed + 173
+	.set	Sprintf_FFixed_CheckG_AltForm, Sprintf_FormatFFixed + 191
+	.set	Sprintf_FFixed_CaseApplied, Sprintf_FormatFFixed + 199
+	.set	Sprintf_FFixed_StripZeroLoop, Sprintf_FormatFFixed + 214
+	.set	Sprintf_FFixed_StripZeroCheck, Sprintf_FormatFFixed + 219
+	.set	Sprintf_FFixed_ComputeOutputLen, Sprintf_FormatFFixed + 230
+	.set	Sprintf_FFixed_CheckPrecZero, Sprintf_FormatFFixed + 245
+	.set	Sprintf_FFixed_AdjustForSign, Sprintf_FormatFFixed + 248
+	.set	Sprintf_FFixed_AdjustForSign2, Sprintf_FormatFFixed + 264
+	.set	Sprintf_FFixed_ComputePadding, Sprintf_FormatFFixed + 267
+	.set	Sprintf_FFixed_CheckOverflow, Sprintf_FormatFFixed + 287
+	.set	Sprintf_FFixed_PadLeftCheck, Sprintf_FormatFFixed + 299
+	.set	Sprintf_FFixed_PadLeftSpace, Sprintf_FormatFFixed + 318
+	.set	Sprintf_FFixed_PadLeftLoop, Sprintf_FormatFFixed + 333
+	.set	Sprintf_FFixed_EmitSign, Sprintf_FormatFFixed + 343
+	.set	Sprintf_FFixed_SignPlus, Sprintf_FormatFFixed + 352
+	.set	Sprintf_FFixed_SignSpace, Sprintf_FormatFFixed + 365
+	.set	Sprintf_FFixed_SignEmit, Sprintf_FormatFFixed + 376
+	.set	Sprintf_FFixed_ZeroFill, Sprintf_FormatFFixed + 388
+	.set	Sprintf_FFixed_ZeroFillBody, Sprintf_FormatFFixed + 407
+	.set	Sprintf_FFixed_ZeroFillLoop, Sprintf_FormatFFixed + 422
+	.set	Sprintf_FFixed_LeadDigit, Sprintf_FormatFFixed + 432
+	.set	Sprintf_FFixed_LeadDigitZero, Sprintf_FormatFFixed + 465
+	.set	Sprintf_FFixed_LeadDigitDone, Sprintf_FormatFFixed + 482
+	.set	Sprintf_FFixed_IntegerDigits, Sprintf_FormatFFixed + 487
+	.set	Sprintf_FFixed_IntDigitOutput, Sprintf_FormatFFixed + 491
+	.set	Sprintf_FFixed_IntDigitLoop, Sprintf_FormatFFixed + 516
+	.set	Sprintf_FFixed_IntZeroFill, Sprintf_FormatFFixed + 537
+	.set	Sprintf_FFixed_IntZeroLoop, Sprintf_FormatFFixed + 552
+	.set	Sprintf_FFixed_DecimalPoint, Sprintf_FormatFFixed + 577
+	.set	Sprintf_FFixed_FracLeadZeros, Sprintf_FormatFFixed + 594
+	.set	Sprintf_FFixed_FracLeadZeroBody, Sprintf_FormatFFixed + 629
+	.set	Sprintf_FFixed_FracLeadZeroDone, Sprintf_FormatFFixed + 639
+	.set	Sprintf_FFixed_FracLeadZeroLoop, Sprintf_FormatFFixed + 647
+	.set	Sprintf_FFixed_FracDigits, Sprintf_FormatFFixed + 664
+	.set	Sprintf_FFixed_FracDigitOutput, Sprintf_FormatFFixed + 675
+	.set	Sprintf_FFixed_FracDigitLoop, Sprintf_FormatFFixed + 700
+	.set	Sprintf_FFixed_FracTrailZeros, Sprintf_FormatFFixed + 721
+	.set	Sprintf_FFixed_FracTrailLoop, Sprintf_FormatFFixed + 736
+	.set	Sprintf_FFixed_PadRightSpace, Sprintf_FormatFFixed + 756
+	.set	Sprintf_FFixed_PadRightLoop, Sprintf_FormatFFixed + 771
+	.set	Sprintf_FFixed_Return, Sprintf_FormatFFixed + 781
 
 Sprintf_FFixed_DataTable:
 	.byte 0xaf, 0x04, 0x20, 0x80, 0x3f, 0x00, 0x6e, 0x03

@@ -4014,27 +4014,9 @@ SeqDMA_MultiWrite_SoundEdit:	.include "includes/generated/cc900/SeqDMA_MultiWrit
 	.set	SeqDMA_MultiWrite_SoundEdit_Done, SeqDMA_MultiWrite_SoundEdit + 49
 
 
-SeqDMA_WriteMidi_NoteOn:
-	push xiz
-	ld xiz, xbc
-	ld a, (xiz)
-	cp a, 0x90
-	jr nz, SeqDMA_WriteMidi_NoteOn_Done
-	inc 1, xiz
-	ld a, (xiz)
-	extz wa
-	pushw wa
-	call SeqBuf_NoteEvent_WriteByte
-	inc 1, xiz
-	ld a, (xiz)
-	extz wa
-	pushw wa
-	call SeqBuf_NoteEvent_WriteByte
-	inc 4, xsp
-
-SeqDMA_WriteMidi_NoteOn_Done:
-	pop xiz
-	ret
+SeqDMA_WriteMidi_NoteOn:	.include "includes/generated/cc900/SeqDMA_WriteMidi_NoteOn.s"	; C: cc900/system_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqDMA_WriteMidi_NoteOn_Done, SeqDMA_WriteMidi_NoteOn + 34
 
 
 ; ===========================================================================

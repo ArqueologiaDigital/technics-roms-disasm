@@ -20,7 +20,7 @@ or posting `EVT_CHANGE_TITLE` itself.
 | mode             | panel button       | home title        | screen title         | also entered by code in                                                                 |
 |------------------|--------------------|-------------------|----------------------|-----------------------------------------------------------------------------------------|
 | `MD_PS`          | -                  | `TITLE_PS`        | -                    | -                                                                                       |
-| `MD_NORMAL`      | -                  | `TITLE_NORMAL`    | NORMAL               | `AccPlay_MainUpdateLoop`, `AccStyle_InlinedBlock_Helper`, `BmDrEdit_InitMelodicMode` +8 |
+| `MD_NORMAL`      | -                  | `TITLE_NORMAL`    | NORMAL               | `AccPlay_MainUpdateLoop`, `AccStyle_InlinedBlock_Helper`, `BmDrEdit_InitMelodicMode` +7 |
 | `MD_SOUND`       | MENU SOUND         | `TITLE_SDMENU`    | SOUND MENU           | -                                                                                       |
 | `MD_SOUNDEDIT`   | -                  | `TITLE_SEMENU`    | -                    | -                                                                                       |
 | `MD_CONTROL`     | MENU CONTROL       | `TITLE_CTMENU`    | -                    | -                                                                                       |
@@ -29,7 +29,7 @@ or posting `EVT_CHANGE_TITLE` itself.
 | `MD_ENTERTAINER` | ENTERTAINER        | `TITLE_ETMENU`    | ENTERTAINER          | -                                                                                       |
 | `MD_SEQ`         | SEQUENCER MENU     | `TITLE_SQMENU`    | SEQUENCER MENU       | -                                                                                       |
 | `MD_SEQ_EREC`    | SEQUENCER EASY REC | `TITLE_SQEASYREC` | EASY RECORD          | -                                                                                       |
-| `MD_SEQ_PLAY`    | -                  | `TITLE_SQPLAY`    | SEQUENCER PLAY       | `FmmFileNameFunc`, `FmmSmfFileNameFunc`, `RenderFilterDisplay` +2                       |
+| `MD_SEQ_PLAY`    | -                  | `TITLE_SQPLAY`    | SEQUENCER PLAY       | `FmmFileNameFunc`, `FmmSmfFileNameFunc`, `SeqPlay_ProcessVoiceAndNotes` +1              |
 | `MD_SEQ_REAL`    | -                  | `TITLE_SQREALREC` | REALTIME RECORD      | `MainExe_SequencerStop`                                                                 |
 | `MD_SEQ_EDIT`    | -                  | `TITLE_SQEMENU`   | EDIT                 | -                                                                                       |
 | `MD_SEQ_STEP`    | -                  | `TITLE_SQTRSEL`   | STEP RECORD          | -                                                                                       |

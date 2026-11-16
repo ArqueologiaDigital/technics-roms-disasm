@@ -26815,30 +26815,10 @@ Tempo_EditParam84_Join:
 SeqToComposer_DecMemoryNo_Epilogue:
 	inc	2, xsp
 	ret
-Tempo_EditBPM:
-	cp a, 0:i3
-	ret NZ
-	set 0, (0x8cec:16)
-	calr Tempo_DisplayParamReturn
-	ld (0x38ec:16), l
-	cp l, 1:i3
-	jr z, Tempo_EditBPMDec
-	cp l, 0:i3
-	jr nz, Tempo_EditBPMClamp
-	ldw WA, 0x0023
-	calr Tempo_DisplayParamSkipClear
-	jr t, Tempo_EditBPMClamp
-Tempo_EditBPMDec:
-	ldw	wa, 15
-	calr	Tempo_DisplayParamSkipClear
-	ldw	wa, 8
-	call	MIDI_SendSysExCmd
-Tempo_EditBPMClamp:
-	; setda 7, 0x34cd (v7 patched)
-	set	7, (0x3431:16)
-	; setda 7, 0x34cd (v7 patched)
-	set	7, (0x3431:16)
-	ret
+Tempo_EditBPM:	.include "includes/generated/cc900/Tempo_EditBPM.s"	; C: cc900/accompaniment_engine_m257.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Tempo_EditBPMDec, Tempo_EditBPM + 31
+	.set	Tempo_EditBPMClamp, Tempo_EditBPM + 44
 Tempo_EditBPMApply:
 	cp	a, 0:i3
 	ret	nz

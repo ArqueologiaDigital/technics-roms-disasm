@@ -4863,9 +4863,9 @@ ExtData_ToneParam_DispatchHandler_Epilogue2:
 	ret
 ExtData_Voice_CheckMode3_Helper:
 	ldw	wa, 128
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_DispatchHandler_Join2:
 	dec	6, xsp
@@ -4902,14 +4902,14 @@ ExtData_Voice_CheckMode3_Helper_Skip2:
 ExtData_Voice_CheckMode3_Helper_Skip3:
 	ldw	wa, 104
 ExtData_Voice_CheckMode3_Helper_Join:
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	ld	c, (EXTDATA_MASK:16)
 	ld	a, c
 	and	a, 7
 	cp	a, 7:i3
 	jr	nz, ExtData_ToneParam_DispatchHandler_Skip2
 	ld	wa, 7:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jr	ExtData_ToneParam_DispatchHandler_Join4
 ExtData_ToneParam_DispatchHandler_Skip2:
 	and	c, 3
@@ -4940,37 +4940,37 @@ ExtData_ToneParam_DispatchHandler_Epilogue:
 	ret
 ExtData_ToneParam_DispatchHandler_Join5:
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3_Helper_Join2:
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	ldw	wa, 128
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3_Helper_Join3:
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3_Helper_Join4:
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3_Helper_Join5:
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3_Helper_Join6:
 	ldw	wa, 255
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_CheckMode3_Helper_Join7:
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_DispatchHandler_Helper4:
 	ld	wa, 1:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	jrl	SwbtWr_FlushAndAppendParams
 FileIO_AllocBuffer:
 	ret
@@ -4987,13 +4987,13 @@ ExtData_ToneParam_CheckMode_Skip:
 	ret
 ExtData_ToneParam_CheckMode_Join:
 	ldw	wa, 128
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Tag43_SetByte1Fields:
 	ldw	wa, 128
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	ldw	wa, 127
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltDispatch:
 	calr	SndParam_WriteLookupAndStore
@@ -5021,25 +5021,25 @@ ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches:
 	ret
 ExtData_ToneParam_AltDispatch_Join:
 	ldw	wa, 255
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltDispatch_Join2:
 	ldw	wa, 15
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	ldw	wa, 240
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltDispatch_Join3:
 	ldw	wa, 15
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	ldw	wa, 240
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Drawbar_SetByte7Fields:
 	ldw	wa, 15
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	ldw	wa, 48
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltEntry:
 	ret
@@ -5106,7 +5106,7 @@ ExtData_ToneParam_AltBody_Join2:
 	ld	wa, 7:i3
 	calr	ExtData_ToneParam_AltBody_Helper
 	ldw	wa, 8
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	ld	a, (MIDI_MSG_DATA3:16)
 	and	a, 7
 	jr	z, ExtData_ToneParam_AltBody_Skip2
@@ -5117,7 +5117,7 @@ ExtData_ToneParam_AltBody_Skip2:
 	jrl	MIDI_WriteResetSequence
 ExtData_ToneParam_AltBody_Join3:
 	ldw	wa, 80
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltBody_OnStyleProgram_Skip:
 	ld	(MIDI_MSG_DATA2), (EXTDATA_VALUE:16)
@@ -5125,7 +5125,7 @@ ExtData_ToneParam_AltBody_OnStyleProgram_Skip:
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_ToneParam_AltBody_Join4:
 	ldw	wa, 48
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_SetTempoIfChanged:
 	push	xiz
@@ -5177,7 +5177,7 @@ ExtData_ToneParam_MultiChannel_Skip3:
 	cp	a, 255
 	jr	nz, ExtData_ToneParam_MultiChannel_Skip4
 	ldw	wa, 255
-	jrl	ExtData_ToneParam_DispatchHandler_Helper2
+	jrl	ExtData_SetTlvField
 ExtData_ToneParam_MultiChannel_Skip4:
 	and	c, 3
 	ret	z
@@ -5252,7 +5252,7 @@ ExtData_ToneParam_MultiChannel_Skip11:
 	cp	(EXTDATA_TLV_OFFSET:16), 1
 	jr	nz, ExtData_ToneParam_MultiChannel_Skip13
 	ld	wa, 2:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	bit	1, (MIDI_MSG_DATA3:16)
 	jr	nz, ExtData_ToneParam_MultiChannel_Skip12
 	ret
@@ -5387,9 +5387,9 @@ MIDI_WriteResetSequence:
 ; framing ported from v10's source for the same label (same span length, statement for statement); 23 of 36 slots byte-identical
 ExtData_Voice_UpdateFlags:
 	ld	wa, 2:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	ld	wa, 1:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	calr	SwbtWr_FlushAndAppendParams
 	lda	xbc, (PANEL_CONDUCTOR:16)
 	bit	0, (xbc+3)
@@ -5421,7 +5421,7 @@ ExtData_Voice_CheckMode:
 	ret
 ExtData_ToggleReverbIllusionOnOff:
 	ldw	wa, 192
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	jrl	SwbtWr_FlushAndAppendParams
 ExtData_Voice_RetEntry:
 	ret
@@ -5438,7 +5438,7 @@ ExtData_Voice_MixedHandler_Skip:
 	ret
 ExtData_Voice_MixedHandler_Join:
 	ld	wa, 4:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	calr	SwbtWr_FlushAndAppendParams
 	ld	(0x9093:16), 1
 	ld	(0x9094:16), 4
@@ -5472,7 +5472,7 @@ ExtData_Voice_MixedHandler_Helper:
 	cp	a, 255
 	jr	nz, ExtData_Voice_MixedHandler_Skip6
 	ldw	wa, 255
-	calr	ExtData_ToneParam_DispatchHandler_Helper2
+	calr	ExtData_SetTlvField
 	jr	ExtData_Voice_MixedHandler_Join3
 ExtData_Voice_MixedHandler_Skip6:
 	bit	1, (58104:16)
@@ -5554,7 +5554,7 @@ ExtData_Voice_FullHandler_Skip2:
 	and	a, (EXTDATA_MASK:16)
 	ret	z
 	ld	wa, 1:i3
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	calr	SwbtWr_FlushAndAppendParams
 	ret
 ExtData_Voice_FullHandler_Skip3:
@@ -5572,9 +5572,9 @@ ExtData_Voice_FullHandler_Helper:
 	and	a, 192
 	ldfr_berp	a, 251
 	ldw	wa, 128
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	ldw	wa, 64
-	calr	ExtData_ToneParam_DispatchHandler_Helper
+	calr	ExtData_ToggleTlvBits
 	lda	xde, (PANEL_PMEM_SETTINGS+11:16)
 	ld	c, (xde)
 	ld	a, c
@@ -6508,7 +6508,7 @@ SwbtWr_WriteParamBlock:
 	ldw	(SWBTWR_WRITE_INDEX:16), 0
 SwbtWr_WriteParamBlock_Join:
 	jrl	SwbtWr_AppendFixedParamBlock
-ExtData_ToneParam_DispatchHandler_Helper:
+ExtData_ToggleTlvBits:
 	dec	2, xsp
 	ld	(xsp), a
 	ld	c, (EXTDATA_MASK:16)
@@ -6575,18 +6575,18 @@ VoiceParam_CompareAndUpdate:
 VoiceParam_CompareAndUpdate_Epilogue:
 	inc	2, xsp
 	ret
-ExtData_ToneParam_DispatchHandler_Helper2:
+ExtData_SetTlvField:
 	dec	2, xsp
 	ld	(xsp), a
 	ld	a, (EXTDATA_MASK:16)
 	and	a, (xsp)
 	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC977B-0xFC9795 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+96
-	jr	z, ExtData_ToneParam_DispatchHandler_Helper2_Epilogue
+	jr	z, ExtData_SetTlvField_Epilogue
 	ld	a, (MIDI_MSG_STATUS:16)
 	extz	wa
 	calr	PanelTlv_PayloadOfTag
 	cp	xhl, 4294967295
-	jr	z, ExtData_ToneParam_DispatchHandler_Helper2_Epilogue
+	jr	z, ExtData_SetTlvField_Epilogue
 	ld	a, (EXTDATA_TLV_OFFSET:16)
 	extz	wa
 	lda	xhl, (xhl+wa)
@@ -6597,13 +6597,13 @@ ExtData_ToneParam_DispatchHandler_Helper2:
 	ld	c, a
 	ld	a, (EXTDATA_NEW_VALUE:16)
 	cp	c, a
-	jr	z, ExtData_ToneParam_DispatchHandler_Helper2_Epilogue
+	jr	z, ExtData_SetTlvField_Epilogue
 	ld	(xhl), c
 	ld	(EXTDATA_NEW_VALUE:16), c
 	ld	(MIDI_MSG_DATA2:16), c
 	ld	a, (xsp)
 	or	(MIDI_MSG_DATA3:16), a
-ExtData_ToneParam_DispatchHandler_Helper2_Epilogue:
+ExtData_SetTlvField_Epilogue:
 	inc	2, xsp
 	ret
 	dec	2, xsp

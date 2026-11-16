@@ -1470,23 +1470,7 @@ Fade_SetLevel:
 ;   (0x40C1) off and refreshes their LEDs (0x4D, 0x4E), and restores the level to 127 (Fade_SetLevel). Called at song
 ;   load / playback start (Acc_LoadAndStartPlayback), demo start (DemoMode_Main_Operation) and by
 ;   BitMapOut_PrepareAndRender. It configures no DSP. Basis: callers + body.
-Fade_Cancel:
-	and	(0xc130:16), 243
-	and	(0xc130:16), 252
-	ld	xwa, 0x40c0
-	ld	bc, 0:i3
-	ld	de, 1:i3
-	call	SoundParam_NotifyChange
-	ldw	wa, 0x4d
-	call	CtrlPanel_SetIndicatorLED
-	ld	xwa, 0x40c1
-	ld	bc, 0:i3
-	ld	de, 1:i3
-	call	SoundParam_NotifyChange
-	ldw	wa, 0x4e
-	call	CtrlPanel_SetIndicatorLED
-	ldw	wa, 127
-	jr	Fade_SetLevel
+Fade_Cancel:	.include "includes/generated/cc900/Fade_Cancel.s"	; C: cc900/dsp_config_sysex_m293.c
 ; Fade_ParamListener: Parameter-write listener of the FADE IN/OUT engine (in the SwbtWr listener lists of records
 ;   0x48, 0x70 and 0x98): the tempo (0x48 +8/+9, keys 4/5) and the FADE IN/OUT SETTING values (0x70 +5..+7, keys
 ;   0x2A00/0x2A01/0x2A10-0x2A12) recompute the ramp steps and the Auto reset delay; the FADE IN / FADE OUT switches

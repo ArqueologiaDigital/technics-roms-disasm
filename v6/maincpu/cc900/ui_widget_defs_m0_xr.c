@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
+/* cc900-module: GetNextView GetPrevView GetSubView GetSuperView GetViewInstance SetChange */   /* staged module names, repair_module_lines.py */
 
 extern unsigned int ram_30464;
 extern void VGA_ScreenUnblank(void);
@@ -21,4 +22,31 @@ void LcdOff_Return(void)
 {
     if (ram_30464 != 0)
         VGA_ScreenBlank();
+}
+
+struct box { int x, y, w, h; };
+struct viewable { char hdr[4]; int super, sub, next, prev; unsigned int flags; struct box box; };
+extern struct viewable *GetViewInstance(unsigned long id);
+extern int GetChange(unsigned long id);
+extern int GetMovable(unsigned long id);
+extern void SetMovable(unsigned long id, int f);
+
+int GetChange(unsigned long id)
+{
+    return (GetViewInstance(id)->flags & 0x4) != 0;
+}
+int GetMovable(unsigned long id)
+{
+    return (GetViewInstance(id)->flags & 0x2) == 0;
+}
+void SetMovable(unsigned long id, int f)
+{
+    struct viewable *v;
+    unsigned int *p;
+    v = GetViewInstance(id);
+    p = &v->flags;
+    if (f != 0)
+        *p &= 0xfffd;
+    else
+        *p |= 0x2;
 }

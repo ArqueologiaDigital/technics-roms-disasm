@@ -19061,49 +19061,11 @@ COMM_SendDataReturn:	.include "includes/generated/cc900/COMM_SendDataReturn.s"	;
 ; Output: None (sends via SubCPU comm)
 ; Builds [4, 0xb0, chan, ctrl, val] packet, transmits via MIDI_SendCmdPacket.
 ; ============================================================================
-MIDI_SendControlChange:
-	dec 6, xsp
-	ld (xsp + 0:8), 0x4
-	ld (xsp + 1), 0xb0
-	ld (xsp + 2), a
-	ld (xsp + 3), c
-	ld (xsp + 4), e
-	lda xwa, (xsp)
-	call MIDI_SendCmdPacket
-	call MIDI_PostSendStub
-	inc 6, xsp
-	ret
+MIDI_SendControlChange:	.include "includes/generated/cc900/MIDI_SendControlChange.s"	; C: cc900/note_voice_mapping_m301_xr.c
 
-MIDI_SendPitchBend:
-	dec 6, xsp
-	ld (xsp + 0:8), 0x4
-	ld (xsp + 1), 0xe0
-	ld (xsp + 2), a
-	ld a, c
-	res 7, a
-	ld (xsp + 3), a
-	and bc, 0x3fff
-	srl bc, 7
-	ld a, c
-	ld (xsp + 4), a
-	lda xwa, (xsp)
-	call MIDI_SendCmdPacket
-	call MIDI_PostSendStub
-	inc 6, xsp
-	ret
+MIDI_SendPitchBend:	.include "includes/generated/cc900/MIDI_SendPitchBend.s"	; C: cc900/note_voice_mapping_m301_xr.c
 
-MIDI_SendChannelPressure:
-	dec 6, xsp
-	ld (xsp + 0:8), 0x4
-	ld (xsp + 1), 0xd0
-	ld (xsp + 2), a
-	ld (xsp + 3), 0x0
-	ld (xsp + 4), c
-	lda xwa, (xsp)
-	call MIDI_SendCmdPacket
-	call MIDI_PostSendStub
-	inc 6, xsp
-	ret
+MIDI_SendChannelPressure:	.include "includes/generated/cc900/MIDI_SendChannelPressure.s"	; C: cc900/note_voice_mapping_m301_xr.c
 
 ; SndPart_SendProgramChange: Selects a part's sound in the sub CPU.  In: WA = part, BC = program, DE = bank, and a
 ;   pushed word = the part's DIGITAL EFFECT switch (Lsw 0x05E; 0xFFFF = not set -> 0, other non-zero -> 0x7F,

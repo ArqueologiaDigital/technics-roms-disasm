@@ -291,28 +291,10 @@ PanelTlv_ValidateBlock1_Loop:
 ; ui_widgets/naka_extension_device.c).  The payload starts at base + record_offset + 2; the rules are
 ; applied in order, each by PanelTlv_ApplyFieldRule, which returns the rule's length in hl, up to the 0xFF
 ; that ends the list.
-PanelTlv_ValidateRecord:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp + 4), xwa
-	ld	xwa, (xbc)
-	inc	2, xwa
-	add	(xsp + 4), xwa
-	ld	xiz, (xbc + 4)
-	cp	(xiz), 0xff
-	jr	z, PanelTlv_ValidateRecord_Return
-PanelTlv_ValidateRecord_Loop:
-	ld	xwa, (xsp + 4)
-	ld	xbc, xiz
-	calr	PanelTlv_ApplyFieldRule
-	extz	xhl
-	add	xiz, xhl
-	cp	(xiz), 0xff
-	jr	nz, PanelTlv_ValidateRecord_Loop
-PanelTlv_ValidateRecord_Return:
-	pop	xiz
-	inc	4, xsp
-	ret
+PanelTlv_ValidateRecord:	.include "includes/generated/cc900/PanelTlv_ValidateRecord.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidateRecord_Loop, PanelTlv_ValidateRecord + 21
+	.set	PanelTlv_ValidateRecord_Return, PanelTlv_ValidateRecord + 38
 ; xwa = record payload, xbc -> one field rule.  Byte 0 is the type; the case named below applies it and
 ; returns its length in hl.  `off` is a payload byte; a reset keeps the bits outside the mask:
 ;   0 {0, off, mask}                  payload[off] &= mask                          KeepBits
@@ -379,15 +361,7 @@ PanelTlv_Rule_KeepBits:
 	and	(xwa+hl), c
 	ld	hl, 3:i3
 	ret
-PanelTlv_Rule_ClearBits:
-	ld	xde, xwa
-	ld	l, (xbc+0x1)
-	extz	hl
-	ld	a, (xbc+0x2)
-	cpl	a
-	and	(xde+hl), a
-	ld	hl, 3:i3
-	ret
+PanelTlv_Rule_ClearBits:	.include "includes/generated/cc900/PanelTlv_Rule_ClearBits.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 PanelTlv_Rule_SetBits:
 	ld	xde, xbc
 	ld	l, (xde+0x1)
@@ -567,15 +541,7 @@ PanelTlv_WriteBlock1Headers_Loop:
 	inc	4, xsp
 	ret
 ; xwa = block base, xbc -> a layout record: base[record_offset] = tag, base[record_offset + 1] = len.
-PanelTlv_WriteRecordHeader:
-	ld	xde, xbc
-	ld	xbc, (xde)
-	add	xwa, xbc
-	ld	c, (xde + 8)
-	ld	(xwa), c
-	ld	c, (xde + 9)
-	ld	(xwa + 1), c
-	ret
+PanelTlv_WriteRecordHeader:	.include "includes/generated/cc900/PanelTlv_WriteRecordHeader.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 DSPCfg_SyncBitmapData:
 	lda	xsp, (xsp-18)
 	push	xiz
@@ -900,137 +866,14 @@ SndParamBank_CheckFlash_Loop:
 ; FlashWrite the factory defaults of the sound-parameter banks: header + bank 0 (0xFA bytes) to 0x3D3000,
 ; SndParamBank_Default1 / _Default2 (0xEA each) to 0x3D3110 / 0x3D3210, then the 0x50-byte option block,
 ; assembled in a Malloc'd buffer from the five SndParamBank_OptionDefault_NN pieces, to 0x3D3400.
-SndParamBank_WriteFlashDefaults:
-	push	xiz
-	ld	xwa, 0x3d3000
-	push	xwa
-	ld	wa, 1:i3
-	ld	xbc, SndParamBank_DefaultHeader
-	ldw	de, 0xfa
-	call	FlashWrite
-	lda	xbc, (SndParamBank_Default1:24)
-	ld	xwa, 0x3d3110
-	push	xwa
-	ld	wa, 1:i3
-	ldw	de, 0xea
-	call	FlashWrite
-	lda	xbc, (SndParamBank_Default2:24)
-	ld	xwa, 0x3d3210
-	push	xwa
-	ld	wa, 1:i3
-	ldw	de, 0xea
-	call	FlashWrite
-	pushw	0x50
-	call	Malloc
-	inc	2, xsp
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SndParamBank_WriteFlashDefaults_Return
-	pushw	0x0
-	pushw	0x50
-	push	xiz
-	call	Memset
-	pushw	0x2
-	pushw	SndParamBank_OptionDefault_00@hi16
-	pushw	SndParamBank_OptionDefault_00@lo16
-	push	xiz
-	call	Mem_Copy
-	pushw	0xc
-	pushw	SndParamBank_OptionDefault_10@hi16
-	pushw	SndParamBank_OptionDefault_10@lo16
-	lda	xwa, (xiz + 16)
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp + 28)
-	pushw	0x4
-	pushw	SndParamBank_OptionDefault_20@hi16
-	pushw	SndParamBank_OptionDefault_20@lo16
-	lda	xwa, (xiz + 32)
-	push	xwa
-	call	Mem_Copy
-	pushw	0x4
-	pushw	SndParamBank_OptionDefault_30@hi16
-	pushw	SndParamBank_OptionDefault_30@lo16
-	lda	xwa, (xiz + 48)
-	push	xwa
-	call	Mem_Copy
-	pushw	0x6
-	pushw	SndParamBank_OptionDefault_40@hi16
-	pushw	SndParamBank_OptionDefault_40@lo16
-	lda	xwa, (xiz + 64)
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp + 30)
-	ld	xwa, 0x3d3400
-	push	xwa
-	ld	wa, 1:i3
-	ld	xbc, xiz
-	ldw	de, 0x50
-	call	FlashWrite
-	push	xiz
-	call	Free
-	inc	4, xsp
-SndParamBank_WriteFlashDefaults_Return:
-	pop	xiz
-	ret
+SndParamBank_WriteFlashDefaults:	.include "includes/generated/cc900/SndParamBank_WriteFlashDefaults.s"	; C: cc900/tonegen_fileio_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParamBank_WriteFlashDefaults_Return, SndParamBank_WriteFlashDefaults + 199
 ; Factory reset (Boot_HandleFactoryReset): rebuild the 0x50-byte option block at 0x3D3400 from the
 ; SndParamBank_OptionDefault_NN pieces, keeping the flash's own first 2 bytes, then Gfx_ClearFrameBuffers.
-SndParamBank_RestoreOptionBlock:
-	push	xiz
-	pushw	0x50
-	call	Malloc
-	inc	2, xsp
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SndParamBank_RestoreOptionBlock_Return
-	pushw	0x0
-	pushw	0x50
-	push	xiz
-	call	Memset
-	pushw	0x2
-	ld	xwa, 0x3d3400
-	push	xwa
-	push	xiz
-	call	Mem_Copy
-	pushw	0xc
-	pushw	SndParamBank_OptionDefault_10@hi16
-	pushw	SndParamBank_OptionDefault_10@lo16
-	lda	xwa, (xiz + 16)
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp + 28)
-	pushw	0x4
-	pushw	SndParamBank_OptionDefault_20@hi16
-	pushw	SndParamBank_OptionDefault_20@lo16
-	lda	xwa, (xiz + 32)
-	push	xwa
-	call	Mem_Copy
-	pushw	0x4
-	pushw	SndParamBank_OptionDefault_30@hi16
-	pushw	SndParamBank_OptionDefault_30@lo16
-	lda	xwa, (xiz + 48)
-	push	xwa
-	call	Mem_Copy
-	pushw	0x6
-	pushw	SndParamBank_OptionDefault_40@hi16
-	pushw	SndParamBank_OptionDefault_40@lo16
-	lda	xwa, (xiz + 64)
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp + 30)
-	ld	xwa, 0x3d3400
-	push	xwa
-	ld	wa, 1:i3
-	ld	xbc, xiz
-	ldw	de, 0x50
-	call	FlashWrite
-	push	xiz
-	call	Free
-	inc	4, xsp
-	call	Gfx_ClearFrameBuffers
-SndParamBank_RestoreOptionBlock_Return:
-	pop	xiz
-	ret
+SndParamBank_RestoreOptionBlock:	.include "includes/generated/cc900/SndParamBank_RestoreOptionBlock.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParamBank_RestoreOptionBlock_Return, SndParamBank_RestoreOptionBlock + 143
 ; Copy the five fields of the option block (0x3D3400 +0x00/+0x10/+0x20/+0x30/+0x40; 2, 12, 4, 4, 6 bytes)
 ; to RAM 0x340E4 / 0x340E6 / 0x340F2 / 0x340F6 / 0x340FA.
 SndParamBank_LoadOptionBlock:	.include "includes/generated/cc900/SndParamBank_LoadOptionBlock.s"	; C: cc900/tonegen_fileio_handlers_m0.c

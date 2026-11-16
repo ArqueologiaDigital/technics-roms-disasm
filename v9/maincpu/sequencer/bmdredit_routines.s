@@ -3951,46 +3951,11 @@ BmDrEdit_ReadSeqStoreParams_Error:
 	calr BmDrEdit_RefreshDisplayState
 	ret
 
-BmDrEdit_CalcBeatMeasure:
-	ld wa, (0x279a:16)
-	extz xwa
-	div wa, 0x60
-	ld (9688:16), 0
-	ld (0x2772:16), wa
-	cp wa, 0:i3
-	jr z, BmDrEdit_ComputeMeasureAndBeat
-	ld de, 1:i3
-	ld (9688:16), 1
-	lda xbc, (0x27a4:16)
-
-BmDrEdit_CalcBeatMeasure_ScanLoop:
-	ld wa, de
-	extz xwa
-	add xwa, xbc
-	cp (xwa), 0x0
-	jr z, BmDrEdit_CalcBeatMeasure_IncrementCount
-	ld (9688:16), 0
-
-BmDrEdit_CalcBeatMeasure_IncrementCount:
-	inc 1, de
-	ld wa, (0x2772:16)
-	dec 1, wa
-	ld (0x2772:16), wa
-	cp wa, 0:i3
-	jr z, BmDrEdit_ComputeMeasureAndBeat
-	inc 1, (9688:16)
-	jr BmDrEdit_CalcBeatMeasure_ScanLoop
-
-BmDrEdit_ComputeMeasureAndBeat:
-	ld a, (9688:16)
-	extz wa
-	ld (0x2782:16), wa
-	ld wa, (0x279a:16)
-	extz xwa
-	div wa, 0x60
-	ldto_werp WA, 0xe2
-	ld (0x2784:16), a
-	jr BmDrEdit_CalcSongPosition
+BmDrEdit_CalcBeatMeasure:	.include "includes/generated/cc900/BmDrEdit_CalcBeatMeasure.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_CalcBeatMeasure_ScanLoop, BmDrEdit_CalcBeatMeasure + 34
+	.set	BmDrEdit_CalcBeatMeasure_IncrementCount, BmDrEdit_CalcBeatMeasure + 50
+	.set	BmDrEdit_ComputeMeasureAndBeat, BmDrEdit_CalcBeatMeasure + 72
 
 BmDrEdit_CalcSongPosition:
 	ld bc, (0x279a:16)

@@ -373,6 +373,16 @@ compiler copies a value from memory to memory directly.
 
 ## The memory-to-memory rule's condition (census, 2026-11-16)
 
+**Corrected (2026-11-16, later): V4.23 does write memory-to-memory moves.**  The "V4.23 never moves" below came from
+probes whose RAM cells were plain (`extern large`, 24-bit) externs, for which the TLCS-900 has no such move.  With
+the cell declared `__near` (16-bit, probe m16), V4.23 at `-Xr` writes the `ld (#16),(mem)` / `ld (mem),(#16)` forms
+itself: run `2026-11-16-92-p6-r18`, `FDC_CMD_SEND` (the stacked opcode parameter stored straight into
+`FDC_CMD_OPCODE`) and `FDC_MC_EXIT_Code_Helper2` (`FDC_PARAM_C` copied straight into `FDC_FORMAT_IDS[i]`), probes
+`corpus/firmware/p6_C_12m270a.c` / `_b.c` (helper C).  In those two functions the ROM goes through A, so the cells
+there were presumably plain; the firmware's 566 `ldmm` moves are then most probably V4.23 with `__near` cells, and the
+declaration decides it per cell.  `KN_MEM_TO_MEM` (a no-op in the model) is therefore most probably unnecessary.  The
+census below still describes where the firmware moves; its reading as a Technics-only rule does not hold.
+
 The coordinator decided the moves are the Technics compiler's own idiom, to become the firmware rule
 `KN_MEM_TO_MEM` (off in the model, on in `FIRMWARE_RULES`), and asked when it applies.  The census is
 `python3 notes/cc900-phase6-2026-11-16/mem_copies.py v10/maincpu [--by-file]`.
@@ -856,3 +866,40 @@ End-to-end check, reverted afterwards:
 The same was done for two of lane_sub's staged dsp2_init.c functions in v142.  cc900_splice.py still refuses some
 hand shapes (for example HDAE5000_SwapBytes32: "no run of hand instructions ... is 37 bytes long"), so the lanes'
 promotion has to check each function.
+
+## Two promotion failures after run r18, and their fixes (2026-11-16)
+
+The r18 promotion (140 staged files, five trees; FDC module 270 held back because the build does not parse its K&R
+definitions yet) first stopped the gate at v10 / v9 `.org 0xf97d8d` (storage/fdc_routines.s).  Tools used, one
+per question:
+
+| script                   | question it answers                                                                    |
+|--------------------------|----------------------------------------------------------------------------------------|
+| `org_window.py`          | which files lie between a failing `.org` and the one before it (include order)         |
+| `first_moved.py`         | which label moved first: `llvm-nm` of a probe object against the symbols reference     |
+| `relaxed_jr.py`          | which generated functions hold a `jr` that llvm-mc relaxes to `jrl`                    |
+| `edge_jr.py`             | which generated `jr` sit within 8 bytes of the d8 limits                               |
+| `repair_module_lines.py` | give back `cc900-module:` names an append dropped                                      |
+| `list_promoted.py`       | which tracked staged files are fully promoted (the explicit `git rm` list)             |
+
+The probe object is the program assembled with `-I <scratch> -I v10/maincpu`, the scratch directory holding a copy
+of `storage/fdc_routines.s` whose `.org` line is commented out; `llvm-nm` of it with base `e00000`.
+
+1. **+5 bytes: module lines dropped.**  `first_moved.py` named `BmDrEdit_CalcSongPosition` (+2): the compiled
+   `BmDrEdit_CalcBeatMeasure` ended in `jp` (4 bytes) where the ROM has `jr`.  `promote_staged.py`, when it
+   APPENDED staged functions to an existing `cc900/*.c`, did not carry the staged file's `cc900-module:` comment.
+   Fixed there; `repair_module_lines.py` added the missing names to the 34 appended files of the five trees.
+2. **+1 byte, but the same source without the `.org` is byte-identical to the ROM.**  `llvm-mc -stats` counts 31
+   jr -> jrl relaxations in v10.  In the first layout pass a relaxable `jr` counts 2 bytes, so the `.org` pads for
+   the growth still to come; the hand `jr nz` +116 at 0xf97d6b crosses that `.org` and sees its target 12 or more
+   bytes too far, and a relaxation is never undone.  It became visible because the promotion added generated
+   functions that leave a local `jr` for llvm-mc to relax (`FileIO_MatchWildcard`, `FileIO_CompareFiles`,
+   `RenderFilterDisplay` in that window; 18 such functions in v10).  `to_llvm.relax()` was meant to write `jrl`
+   itself, but it waits for an llvm-mc "out of range" error, and the TLCS-900 backend relaxes silently.  Fix:
+   `cc900_firmware_c.py`'s `assembler_errors()` also reports every `jr` to a local label out of d8 reach (offsets
+   from `-show-encoding` sizes), and `relax()` writes `jrl` for it.  No byte changes; the first layout is exact.
+
+Also: v6 / v5 named `ExtData_ToggleTlvBits` / `ExtData_SetTlvField(_Epilogue)` by older names, so three staged
+audio_control_engine files could not be checked there (`scripts/renaming/rename_v6v5_extdata_toggletlvbits.sed`).
+`make -j2 gate` then passed (with `docs/gui/kn5000-menu-map.md` regenerated: promoted code no longer shows in the
+assembly scan).

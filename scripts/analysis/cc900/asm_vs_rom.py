@@ -57,6 +57,7 @@ def main():
                 if len(set(full)) == 1:
                     return super().resolve(full[0])
             return r
+    fw.RUNTIME.update(fw.runtime_names(tree))           # V4.23's runtime names (C9H_divlu) -> the tree's labels
     names = CutNames(fw.tree_values(tree), ref)
     to_llvm.SPELL = None
     text = open(a[0], encoding='latin-1').read()
