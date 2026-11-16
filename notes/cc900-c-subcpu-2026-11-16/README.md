@@ -141,3 +141,26 @@ waiting for a translator form the build lacks (my checker, `sub_v423.py`, has th
 | `promote.py`      | the sizes (function<TAB>bytes) the splice needs, and the staged files to promote         | `python3 -B notes/cc900-c-subcpu-2026-11-16/promote.py sizes OUT.tsv` / `list --except inlinejr` |
 | `c_duplicates.py` | is any label defined by two C files of cc900/ and cc900-staged/                          | `python3 -B notes/cc900-c-subcpu-2026-11-16/c_duplicates.py`                                     |
 | `bad_lines.py`    | which translated lines of a listing function llvm-mc refuses (by shape)                  | `python3 -B notes/cc900-c-subcpu-2026-11-16/bad_lines.py LISTING.asm FUNCTION`                   |
+
+## Where the helpers stopped (round 11, 2026-11-16)
+
+Rounds 1-11 (runs 43 .. 94) gave 375 sub-CPU labels C that V4.23 reproduces; 358 per tree are built.  The pools
+(`pools/pool_*_remaining.txt`) are close to exhausted for V4.23 as it stands.  What is left, by cause:
+- **Jump-table switches** (`lda XIX,S5000x`): checkable now.  `sub_v423.py` reads `cc900-data: FUNCTION N = LABEL`
+  like the build; e.g. DSP_BytecodeInterpreter_Init with `cc900-data: DSP_BytecodeInterpreter_Init 1 =
+  DSP_BytecodeInterpreter_CaseOffsets` checks to its first difference (+25 / +112 in runs 62 / 65).  The other
+  switches: Audio_Process_DSP, DSP_Cmd2B_AlgoSelect, DSP_AlgoType_Dispatch*, DSP_SetCoeff_MasterConfig,
+  TVF_*_Dispatch, Pitch_Get_Patch_Octave_Shift, the ToneEdit / DSPUnit / EffParam cases.
+- **Register allocation and evaluation order** that no C spelling has moved yet: a value stored to a stack local
+  and still used from its register (V4.23 reloads it), a constant register argument loaded in argument order
+  (V4.23 loads constants last), a char argument passed unextended (V4.23 extends it), the choice of IZ / XIX / XIY
+  for a pointer.  lane_nmx's index classes these.
+- **The V4.23 crash** (bug candidate 12): the tone-generator writers that keep a pointer in XIZ or on the stack next
+  to a value in IZ need __XIZ, or __IZ beside a memory-held pointer.
+- **Bank-register routines** (AudioMod_Apply_Slot_Field29 / 2A, VoiceParam_CustomTone_Apply_Catalog94,
+  DSP_VoiceCoeffRoute2): byte locals in bank registers; not tried in C yet.
+- **Hand assembly**: the kernel ring buffers (RingBuf_Init_*, FIFO_*, READ/SAVE_BYTE_TO_RING_BUFFER,
+  RING_BUFFER_HAS_OVERRUN; helper E's -O3 guesses for the last three did not match), DSP_Init_Channels /
+  DSP_Write_Channel, MemClear_DRAM_And_ExtRAM, core/03 and core/04 apart from the serial loop.
+- **Floating point**: the DSP_*_FP curves and the coefficient routines call the double library; float returns are
+  refused at -Xr, and the FP helpers' runtime names are not mapped.

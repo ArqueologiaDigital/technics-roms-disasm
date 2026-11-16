@@ -155,8 +155,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     names = CutNames(fw.tree_values(os.path.join(REPO, tree)), ref)
     to_llvm.SPELL = None
     module = set()                       # cc900-module: callees asm900 saw in the caller's module (calr / jr / jrl)
+    places = {}                          # cc900-data: {function: {n: tree label}}
     for c in cfiles:
         module |= fw.module_names(c)
+        places.update(fw.data_map(c))
     to_llvm.MODULE = (module | {c for c, l in alias.items() if l in module}) if module else None   # labels and C names
     text = open(lst, encoding='latin-1').read()
     to_llvm.WIDTHS = listing.attributes(text)
@@ -171,6 +173,13 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
             (short.get(bare, [None])[0] if len(short.get(bare, [])) == 1 else None)
         if full is None:
             out.append((bare, 0, 'not in the symbols reference')); continue
+        # f_const data (a switch's jump table ...): the C file's `cc900-data: FUNCTION N = LABEL` places the N-th
+        # object at the tree's LABEL, as the build does; the code is checked with that address (the table's own bytes
+        # are checked by make gate, as in c_build_coverage.translate)
+        consts, _ = to_llvm.split_consts(lines)
+        pl = places.get(bare, places.get(full, {}))
+        to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and pl[k] in ref}
+        to_llvm.DATA_REQUIRED = bool(consts)
         try:
             body = [l for l in to_llvm.translate_function(name, lines, names)
                     if l not in ('\t.globl %s' % bare, bare + ':')]
