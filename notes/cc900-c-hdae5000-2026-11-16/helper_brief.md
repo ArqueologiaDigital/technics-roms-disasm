@@ -80,6 +80,21 @@ unsure of.
 Rules: temp files only under /home/fsanches/compartilhado/tmp/cc900-tab/lane_hd/<your helper name>/ (never /tmp);
 `command grep` for recursive search (the .s files hold high bytes); never run the VM; never commit; never copy
 Toshiba listing text into any file.
+DELETE NOTHING.  Helpers do not delete any file or directory at all: leave every scratch file where it is and
+list it in your report; lane_hd does the cleanup.  The owner rejects any operation with an unverified rm.  The
+rule, word for word:
+- `rm` only as its own standalone Bash call with one literal absolute path, after looking at the target;
+- never rm / rmdir / find -delete / shutil.rmtree / os.remove inside a heredoc, bash -c, python -c, a loop, or an
+  `&&` / `;` chain;
+- no inline scripts; edits through the Edit tool; `git rm -- <explicit paths>` as its own command.
+- NO heredocs at all (no `<<EOF` in any Bash call), and no `sed -i`: write files with the Write tool, change
+  them with the Edit tool, and run scripts as plain commands.
+- NO nested command substitution or shell arithmetic in commands (`$(( 0x$(grep ...) - 0x280000 ))`, `$(...)`
+  inside `$(...)`): look the value up in one plain command, read it, and type the literal number into the next.
+  Better: use the committed checker scripts (notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --show, survey.py
+  --body), which do the lookup inside.
+If a command of yours is denied: stop, report the exact command, never retry it another way.
+
 OWNER'S RULES (strict, 2026-11-16):
 - `rm` only as its OWN standalone Bash call, with a literal absolute path, after looking at the target, one path
   per call.  Never rm / rmdir / find -delete / shutil.rmtree / os.remove inside a heredoc, a `bash -c`,

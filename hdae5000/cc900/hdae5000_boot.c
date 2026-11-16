@@ -34,6 +34,30 @@ extern unsigned int HDAE5000_RAM_LyricPosEvt;     /* +0 of the event block: sqbt
 extern unsigned int HDAE5000_RAM_LyricPosStep;    /* +2 */
 extern unsigned long HDAE5000_RAM_LyricPosition;  /* +4 */
 
+void HDAE5000_Boot_Init(struct NakaWs *ws)
+{
+    unsigned char *bmp;
+    unsigned char *v;
+
+    HDAE5000_Clear_Work_Buffer();
+    HDAE5000_RAM_MainWorkspacePtr = ws;
+    HDAE5000_Handler_Registration();
+    HDAE5000_Load_Palette(HDAE5000_Palette_BootSplash);
+    bmp = HDAE5000_Alloc_Memory(0L, EVT_GET_BITMAP_DATA, 0L);
+    HDAE5000_MemCopy((unsigned char *)0x1a0000L, bmp, 0x9600);     /* converted: ld xwa,imm; push xwa */
+    HDAE5000_MemCopy((unsigned char *)0x1a9600L, bmp + 0x9600, 0x9600);
+    v = CALLR(unsigned char *, ROOT->GetViewInstance)(0x600002L);
+    *(long *)v = NAKA_CLASS_HDTitleMenu;
+    *(char **)(v + 42) = HDAE5000_Display_Params;
+    HDAE5000_RAM_SqSrtcPtr = CALLR(unsigned char *, HAMA->GetAdr_sqsrtc)();
+    HDAE5000_RAM_SqBtofPtr = CALLR(unsigned int *, HAMA->GetAdr_sqbtof)();
+    HDAE5000_RAM_SqBeadtPtr = CALLR(unsigned char *, HAMA->GetAdr_sq_beadt)();
+    if ((HDAE5000_RAM_HdPresent = HDAE5000_Check_HD_Present()) != 0)
+        CALLV(ROOT->ApPostEvent)(-1L, EVT_INTERRUPT_TITLE, TITLE_HDDEXT);
+    HDAE5000_Finalize_Init();
+    HDAE5000_UiState_Reset();
+}
+
 void HDAE5000_Frame_Handler(void)
 {
     unsigned char step;

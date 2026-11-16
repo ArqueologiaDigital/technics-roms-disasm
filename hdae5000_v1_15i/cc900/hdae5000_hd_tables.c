@@ -36,3 +36,16 @@ int HDAE5000_FlsName_SetAndStore(unsigned int fls, char *name, int keep)
     HDAE5000_StrNCpy(&HDAE5000_RAM_DirNames[(unsigned long)fls * 144 + 0x24180L], name, 16);
     return HDAE5000_HD_StoreTables(keep);
 }
+
+int HDAE5000_HD_StoreTables(int keep)
+{
+    int st;
+    CALLV(HAMA->PlayHalt)(1);
+    st = HDAE5000_ATA_SoftReset_Status();
+    st |= HDAE5000_HD_WriteTables_Status();
+    if (keep != 1)
+        st |= HDAE5000_ATA_Standby_Status();
+    CALLV(HAMA->PlayStandBy)();
+    CALLV(HAMA->EditSwRefresh)();
+    return st;
+}

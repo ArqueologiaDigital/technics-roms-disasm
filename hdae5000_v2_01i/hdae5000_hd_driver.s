@@ -261,71 +261,7 @@ HDAE5000_HDDTitleSwCatch:
 	ld xhl, 0:i3					; eb a8
 	ret						; 0e
 	; --- Sub-handler 2: event handler for 0xD9 (0x28317B) ---
-HDAE5000_AttenCpToHDSwCatch:
-	; registered as "AttenCpToHDSwCatch" in HDAE5000_ObjHandler_Table
-	push xiz					; 3e
-	ld xiz, xwa					; e8 8e
-	ld xwa, xbc					; e9 88
-	cp xwa, EVT_SW_IN				; e8 cf 07 00 c0 01
-	jr z, .Lsd_sub2_c00007			; 66 63
-	cp xwa, EVT_DRAW				; e8 cf 0d 00 c0 01
-	jr z, .Lsd_sub2_c0000d			; 66 23
-	cp xwa, EVT_ARE_YOU_CLASS_PROC				; e8 cf 85 00 e0 01
-	jr z, .Lsd_sub2_e00085			; 66 16
-	; Default: call cleanup callback
-	ld xwa, xiz					; ee 88
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 23
-	ld xhl, (xhl + WS_RootFnTable)             ; e3 ed 0a 0e 23
-	ld_sril xix, (xhl + RootFn_InheritedProc)             ; e3 ed dc 00 24
-	call (xix)					; b4 e8
-	jrl t, .Lsd_sub2_done				; 78 87 00
-.Lsd_sub2_e00085:
-	ld xhl, 1:i3					; eb a9
-	jrl t, .Lsd_sub2_done				; 78 82 00
-.Lsd_sub2_c0000d:
-	; Forward event via vtable
-	ld xwa, xiz					; ee 88
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 23
-	ld xhl, (xhl + WS_RootFnTable)             ; e3 ed 0a 0e 23
-	ld_sril xhl, (xhl + RootFn_InheritedProc)             ; e3 ed dc 00 23
-	call (xhl)					; b3 e8
-	lda xwa, (HDAE5000_Str_Cphd:24); f2 c6 1a 2e 30
-	ld xbc, xwa					; e8 89
-	ld xwa, xiz					; ee 88
-	ld xde, xbc					; e9 8a
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 21
-	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21
-	ld_sril xhl, (xbc + RootFn_SendEvent)             ; e3 e5 00 01 23
-	ld xbc, EVT_PARA_DRAW				; 41 0f 00 c0 01
-	call (xhl)					; b3 e8
-	ld xhl, 0:i3					; eb a8
-	jr t, .Lsd_sub2_done				; 68 4a
-.Lsd_sub2_c00007:
-	; Check for events 0x07 or 0x06
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
-	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
-	ld_sril xix, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 24
-	ld xwa, 0x02600024				; 40 24 00 60 02
-	ld xbc, EVT_MAKE_EDIT_SW_ID				; 41 29 00 e0 01
-	call (xix)					; b4 e8
-	cp xhl, 0x00000007				; eb cf 07 00 00 00
-	jr z, .Lsd_sub2_deregister			; 66 08
-	cp xhl, 0x00000006				; eb cf 06 00 00 00
-	jr nz, .Lsd_sub2_skip_dereg			; 6e 1d
-.Lsd_sub2_deregister:
-	; Deregister event via vtable 0x0104
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 20
-	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20
-	ld xhl, (xwa + RootFn_PostEvent)             ; e3 e1 04 01 23
-	ld xwa, HDAE5000_OBJ_HDDMENU				; 40 00 00 7f 00
-	ld xbc, EVT_SHOW				; 41 01 00 c0 01
-	ld xde, 0:i3					; ea a8
-	call (xhl)					; b3 e8
-.Lsd_sub2_skip_dereg:
-	ld xhl, 0:i3					; eb a8
-.Lsd_sub2_done:
-	pop xiz					; 5e
-	ret						; 0e
+HDAE5000_AttenCpToHDSwCatch:	.include "includes/generated/cc900/HDAE5000_AttenCpToHDSwCatch.s"	; C: cc900/hdae5000_song_io_hd_driver.c
 	; --- Sub-handler 3: event handler for 0xD8 (0x283237) ---
 HDAE5000_AttenCpToMarkSwCatch:
 	; registered as "AttenCpToMarkSwCatch" in HDAE5000_ObjHandler_Table
@@ -571,58 +507,7 @@ HDAE5000_TitleInfo_Build:
 	ret					; 0e
 
 ; --- Event handler sub-function ---
-HDAE5000_HdTitleEventCatch:
-	; registered as "HdTitleEventCatch" in HDAE5000_ObjHandler_Table
-	dec 8, xsp				; ef 68 — allocate 4 bytes
-	push xiz				; 3e
-	ld (xsp + 0x04), xde			; bf 04 62
-	ld xiz, xbc				; e9 8e
-	ld (xsp + 0x08), xwa			; bf 08 60
-	ld xwa, xiz				; ee 88
-	cp xwa, EVT_DRAW			; e8 cf 0d 00 c0 01
-	jr z, .Lri_evt_000d			; 66 xx
-	cp xwa, EVT_ARE_YOU_CLASS_PROC			; e8 cf 85 00 e0 01
-	jr z, .Lri_evt_0085			; 66 xx
-
-	; Default: forward to vtable handler at +0x0EDC
-	ld xwa, (xsp + 0x08)			; af 08 20
-	ld xbc, xiz				; ee 89
-	ld xde, (xsp + 0x04)			; af 04 22
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 23
-	ld xhl, (xhl + WS_RootFnTable)             ; e3 ed 0a 0e 23 — ld xhl, (xhl+0x0e0a)
-	ld_sril xix, (xhl + RootFn_InheritedProc)             ; e3 ed dc 00 24 — ld xix, (xhl+0x00dc)
-	call (xix)				; b4 e8
-	jr t, .Lri_evt_done			; 68 xx
-
-.Lri_evt_0085:
-	ld xhl, 1:i3				; eb a9
-	jr t, .Lri_evt_done			; 68 xx
-
-.Lri_evt_000d:
-	calr HDAE5000_TitleInfo_Build		; 1e xx xx — recursive self-call
-	ld xwa, (xsp + 0x08)			; af 08 20
-	ld xbc, xiz				; ee 89
-	ld xde, (xsp + 0x04)			; af 04 22
-	ld xhl, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 23
-	ld xhl, (xhl + WS_RootFnTable)             ; e3 ed 0a 0e 23 — ld xhl, (xhl+0x0e0a)
-	ld_sril xhl, (xhl + RootFn_InheritedProc)             ; e3 ed dc 00 23 — ld xhl, (xhl+0x00dc)
-	call (xhl)				; b3 e8
-	; Re-register event 0x01C0000F with new handler
-	lda xwa, (HDAE5000_Str_HDAE:24); f2 90 1b 2e 30
-	ld xbc, xwa				; e8 89
-	ld xwa, (xsp + 0x08)			; af 08 20
-	ld xde, xbc				; e9 8a
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24); e2 0c a1 23 21
-	ld xbc, (xbc + WS_RootFnTable)             ; e3 e5 0a 0e 21 — ld xbc, (xbc+0x0e0a)
-	ld_sril xhl, (xbc + RootFn_SendEvent)             ; e3 e5 00 01 23 — ld xhl, (xbc+0x0100)
-	ld xbc, EVT_PARA_DRAW			; 41 0f 00 c0 01
-	call (xhl)				; b3 e8
-	ld xhl, 0:i3				; eb a8
-
-.Lri_evt_done:
-	pop xiz					; 5e
-	inc 8, xsp				; ef 60
-	ret					; 0e
+HDAE5000_HdTitleEventCatch:	.include "includes/generated/cc900/HDAE5000_HdTitleEventCatch.s"	; C: cc900/hdae5000_title_info.c
 
 ; --- Jump table dispatcher sub-function ---
 HDAE5000_HDAETitleFunc:
