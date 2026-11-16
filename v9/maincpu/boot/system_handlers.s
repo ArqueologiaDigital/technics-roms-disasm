@@ -2227,9 +2227,7 @@ TempoRingBuf_CheckEmpty:
 TempoRingBuf_CheckEmpty_Return:
 	ret
 
-TempoRingBuf_BytecodeSnippet2:
-	ld	hl, (0x1e751:24)
-	ret
+TempoRingBuf_BytecodeSnippet2:	.include "includes/generated/cc900/TempoRingBuf_BytecodeSnippet2.s"	; C: cc900/system_handlers.c
 
 TempoRingBuf_Init:
 	pushw ix
@@ -2324,9 +2322,7 @@ RhythmBuf_CheckEmpty:
 RhythmBuf_CheckEmpty_Return:
 	ret
 
-RhythmBuf_BytecodeSnippet:
-	ld	hl, (0x1ef5b:24)
-	ret
+RhythmBuf_BytecodeSnippet:	.include "includes/generated/cc900/RhythmBuf_BytecodeSnippet.s"	; C: cc900/system_handlers.c
 
 RhythmBuf_Init:
 	pushw ix
@@ -3002,9 +2998,7 @@ SeqBuf_DspSysEx_CheckSongEnd:
 SeqBuf_DspSysEx_CheckSongEnd_Return:
 	ret
 
-SeqBuf_DspSysEx_OrphanData:
-	ld	hl, (0x1fca1:24)
-	ret
+SeqBuf_DspSysEx_OrphanData:	.include "includes/generated/cc900/SeqBuf_DspSysEx_OrphanData.s"	; C: cc900/system_handlers.c
 
 SeqBuf_DspSysEx_InitBuffer:
 	pushw ix
@@ -3563,9 +3557,7 @@ SeqBuf_NoteEvent_CheckSongEnd:
 SeqBuf_NoteEvent_CheckSongEnd_Return:
 	ret
 
-SeqBuf_NoteEvent_OrphanData:
-	ld	hl, (0x204dd:24)
-	ret
+SeqBuf_NoteEvent_OrphanData:	.include "includes/generated/cc900/SeqBuf_NoteEvent_OrphanData.s"	; C: cc900/system_handlers.c
 
 SeqBuf_NoteEvent_InitBuffer:
 	pushw ix
@@ -4336,35 +4328,11 @@ InterCPU_E2_TimeoutLoop:
 ;        both writing 0, and DMA2V (0x0102) has no in-code write at all.
 ;        The label is not renamed here, so this note stands in for it.
 ; ===========================================================================
-Audio_DMA_Transfer:
-	ld wa, (INTERCPU_XFER_COUNT:16)
-	ld de, wa
-	extz xde
-	cp wa, 0:i3
-	jr nz, Audio_DMA_Transfer_CheckSize
-	ld xde, 0x10000
-
-Audio_DMA_Transfer_CheckSize:
-	ld xhl, 0:i3
-	cp xde, 0x0
-	ret ule
-
-Audio_DMA_Transfer_ByteLoop:
-	ld xwa, (INTERCPU_XFER_PTR:16)
-	lda xbc, (xwa+:1)
-	ld (INTERCPU_XFER_PTR:16), xwa
-	ld a, (xbc)
-	ld (0x140000:24), a
-	ld a, 0x0:opc
-
-Audio_DMA_Transfer_DelayLoop:
-	inc 1, a
-	cp a, 3:i3
-	jr c, Audio_DMA_Transfer_DelayLoop
-	inc 1, xhl
-	cp xhl, xde
-	jr c, Audio_DMA_Transfer_ByteLoop
-	ret
+Audio_DMA_Transfer:	.include "includes/generated/cc900/Audio_DMA_Transfer.s"	; C: cc900/system_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Audio_DMA_Transfer_CheckSize, Audio_DMA_Transfer + 17
+	.set	Audio_DMA_Transfer_ByteLoop, Audio_DMA_Transfer + 27
+	.set	Audio_DMA_Transfer_DelayLoop, Audio_DMA_Transfer + 47
 
 ; ===========================================================================
 ; InterCPU_E1_Bulk_Transfer - E1 two-phase bulk transfer protocol
@@ -6721,24 +6689,10 @@ LED_BlinkBit3Forever:
 ; Notes: Scans ROM in 64-byte blocks checking for erased (0xffffffff) markers
 ;        Used during boot to verify Table Data ROM contents
 ; ===========================================================================
-TableData_ROM_Verify:
-	ld xhl, xwa
-	ld xde, (xhl)
-	cp xde, 0xffffffff
-	ret nz
-
-TableData_ROM_Verify_NextBlock:
-	lda xhl, (xhl + 64)
-	cp xhl, xbc
-	jr nz, TableData_ROM_Verify_CheckBlock
-	ld xhl, 0:i3
-	ret
-
-TableData_ROM_Verify_CheckBlock:
-	ld xde, (xhl)
-	cp xde, 0xffffffff
-	jr z, TableData_ROM_Verify_NextBlock
-	ret
+TableData_ROM_Verify:	.include "includes/generated/cc900/TableData_ROM_Verify.s"	; C: cc900/system_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TableData_ROM_Verify_NextBlock, TableData_ROM_Verify + 12
+	.set	TableData_ROM_Verify_CheckBlock, TableData_ROM_Verify + 22
 
 ; ===========================================================================
 ; HDAE5000_VerifyFlashAgainstWindow - compare flash with a banked window, block by block

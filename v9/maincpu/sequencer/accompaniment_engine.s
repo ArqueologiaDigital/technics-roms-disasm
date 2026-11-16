@@ -1020,42 +1020,12 @@ AccPart_LookupBoundVoiceParam_Data:
 AccPart_LookupBoundVoiceParam_Data_2:
 	.short 0x0400, 0x0402, 0x0404, 0x0406, 0x0408, 0x040a, 0x040c, 0x040e
 
-AccVoice_ComputeParamAddr:
-	cp a, 0xf
-	jr nc, AccVoice_ParamAddr_Range0F_14
-	ldw hl, 0x18
-	bit 0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw hl, 0x1a
-	jr AccVoice_ReturnExtHL
-
-AccVoice_ParamAddr_Range0F_14:
-	cp a, 0x14
-	jr nc, AccVoice_ParamAddr_Range14_23
-	ldw hl, 0x1c
-	bit 0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw hl, 0x1e
-	jr AccVoice_ReturnExtHL
-
-AccVoice_ParamAddr_Range14_23:
-	cp a, 0x23
-	jr nc, AccVoice_ParamAddr_Range23Plus
-	ldw hl, 0x418
-	bit 0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw hl, 0x41a
-	jr AccVoice_ReturnExtHL
-
-AccVoice_ParamAddr_Range23Plus:
-	ldw hl, 0x41c
-	bit 0, (ACC_PENDING_FILLIN:16)
-	jr nz, AccVoice_ReturnExtHL
-	ldw hl, 0x41e
-
-AccVoice_ReturnExtHL:
-	extz xhl
-	ret
+AccVoice_ComputeParamAddr:	.include "includes/generated/cc900/AccVoice_ComputeParamAddr.s"	; C: cc900/accompaniment_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AccVoice_ParamAddr_Range0F_14, AccVoice_ComputeParamAddr + 19
+	.set	AccVoice_ParamAddr_Range14_23, AccVoice_ComputeParamAddr + 38
+	.set	AccVoice_ParamAddr_Range23Plus, AccVoice_ComputeParamAddr + 57
+	.set	AccVoice_ReturnExtHL, AccVoice_ComputeParamAddr + 69
 
 AccTuning_SetAllFromLookup:
 	calr AccTuning_FetchValue
@@ -1095,39 +1065,9 @@ AccVoice_ProcessAllSixParts:
 	calr AccVoice_RestorePartState1
 	ret
 
-AccVoice_SavePartState1:
-	and (ACC_PART_FLAGS:16), 252
-	ld (ACC_BAD_EVENT_COUNT:16), 0
-	ld a, 0x1:opc
-	ld (ACC_PART_BIT:16), a
-	ld wa, (ACC_LANE_BLOCK:16)
-	ld (ACC_CUR_BLOCK:16), wa
-	ld wa, (ACC_LANE_READ_POS:16)
-	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (ACC_LANE_BAR:16)
-	ld (ACC_CUR_BAR:16), a
-	ld a, (ACC_LANE_BEAT_POS:16)
-	ld (ACC_CUR_BEAT_POS:16), a
-	ld a, (ACC_LANE_SECTION:16)
-	ld (ACC_CUR_SECTION:16), a
-	ld a, (ACC_LANE_MEASURE:16)
-	ld (ACC_CUR_MEASURE:16), a
-	ret
+AccVoice_SavePartState1:	.include "includes/generated/cc900/AccVoice_SavePartState1.s"	; C: cc900/accompaniment_engine_xr.c
 
-AccVoice_RestorePartState1:
-	ld wa, (ACC_CUR_BLOCK:16)
-	ld (ACC_LANE_BLOCK:16), wa
-	ld wa, (ACC_CUR_READ_POS:16)
-	ld (ACC_LANE_READ_POS:16), wa
-	ld a, (ACC_CUR_BAR:16)
-	ld (ACC_LANE_BAR:16), a
-	ld a, (ACC_CUR_BEAT_POS:16)
-	ld (ACC_LANE_BEAT_POS:16), a
-	ld a, (ACC_CUR_SECTION:16)
-	ld (ACC_LANE_SECTION:16), a
-	ld a, (ACC_CUR_MEASURE:16)
-	ld (ACC_LANE_MEASURE:16), a
-	ret
+AccVoice_RestorePartState1:	.include "includes/generated/cc900/AccVoice_RestorePartState1.s"	; C: cc900/accompaniment_engine.c
 
 
 ; -----------------------------------------------------------------------------
@@ -2374,20 +2314,7 @@ AccKbd2_SaveState:
 	ld (ACC_CUR_MEASURE:16), a
 	ret
 
-AccKbd2_RestoreState:
-	ld wa, (ACC_CUR_BLOCK:16)
-	ld (ACC_LANE_BLOCK+2:16), wa
-	ld wa, (ACC_CUR_READ_POS:16)
-	ld (ACC_LANE_READ_POS+2:16), wa
-	ld a, (ACC_CUR_BAR:16)
-	ld (ACC_LANE_BAR+1:16), a
-	ld a, (ACC_CUR_BEAT_POS:16)
-	ld (ACC_LANE_BEAT_POS+1:16), a
-	ld a, (ACC_CUR_SECTION:16)
-	ld (ACC_LANE_SECTION+1:16), a
-	ld a, (ACC_CUR_MEASURE:16)
-	ld (ACC_LANE_MEASURE+1:16), a
-	ret
+AccKbd2_RestoreState:	.include "includes/generated/cc900/AccKbd2_RestoreState.s"	; C: cc900/accompaniment_engine.c
 
 AccKbd2_RingBufEntry:
 	calr AccKbd2_CheckEligible
@@ -2624,39 +2551,9 @@ AccCh1_ProcessEntry:
 	calr AccCh1_RestoreState
 	ret
 
-AccCh1_SaveState:
-	and (ACC_PART_FLAGS:16), 252
-	ld (ACC_BAD_EVENT_COUNT:16), 0
-	ld a, 0x4:opc
-	ld (ACC_PART_BIT:16), a
-	ld wa, (ACC_LANE_BLOCK+4:16)
-	ld (ACC_CUR_BLOCK:16), wa
-	ld wa, (ACC_LANE_READ_POS+4:16)
-	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (ACC_LANE_BAR+2:16)
-	ld (ACC_CUR_BAR:16), a
-	ld a, (ACC_LANE_BEAT_POS+2:16)
-	ld (ACC_CUR_BEAT_POS:16), a
-	ld a, (ACC_LANE_SECTION+2:16)
-	ld (ACC_CUR_SECTION:16), a
-	ld a, (ACC_LANE_MEASURE+2:16)
-	ld (ACC_CUR_MEASURE:16), a
-	ret
+AccCh1_SaveState:	.include "includes/generated/cc900/AccCh1_SaveState.s"	; C: cc900/accompaniment_engine_xr.c
 
-AccCh1_RestoreState:
-	ld wa, (ACC_CUR_BLOCK:16)
-	ld (ACC_LANE_BLOCK+4:16), wa
-	ld wa, (ACC_CUR_READ_POS:16)
-	ld (ACC_LANE_READ_POS+4:16), wa
-	ld a, (ACC_CUR_BAR:16)
-	ld (ACC_LANE_BAR+2:16), a
-	ld a, (ACC_CUR_BEAT_POS:16)
-	ld (ACC_LANE_BEAT_POS+2:16), a
-	ld a, (ACC_CUR_SECTION:16)
-	ld (ACC_LANE_SECTION+2:16), a
-	ld a, (ACC_CUR_MEASURE:16)
-	ld (ACC_LANE_MEASURE+2:16), a
-	ret
+AccCh1_RestoreState:	.include "includes/generated/cc900/AccCh1_RestoreState.s"	; C: cc900/accompaniment_engine.c
 
 AccVoice_AssignPerPart:
 	cp (ACC_PART_BIT:16), 1
@@ -3072,39 +2969,9 @@ AccCh2_ProcessEntry:
 	calr AccCh2_RestoreState
 	ret
 
-AccCh2_SaveState:
-	and (ACC_PART_FLAGS:16), 252
-	ld (ACC_BAD_EVENT_COUNT:16), 0
-	ld a, 0x8:opc
-	ld (ACC_PART_BIT:16), a
-	ld wa, (ACC_LANE_BLOCK+6:16)
-	ld (ACC_CUR_BLOCK:16), wa
-	ld wa, (ACC_LANE_READ_POS+6:16)
-	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (ACC_LANE_BAR+3:16)
-	ld (ACC_CUR_BAR:16), a
-	ld a, (ACC_LANE_BEAT_POS+3:16)
-	ld (ACC_CUR_BEAT_POS:16), a
-	ld a, (ACC_LANE_SECTION+3:16)
-	ld (ACC_CUR_SECTION:16), a
-	ld a, (ACC_LANE_MEASURE+3:16)
-	ld (ACC_CUR_MEASURE:16), a
-	ret
+AccCh2_SaveState:	.include "includes/generated/cc900/AccCh2_SaveState.s"	; C: cc900/accompaniment_engine_xr.c
 
-AccCh2_RestoreState:
-	ld wa, (ACC_CUR_BLOCK:16)
-	ld (ACC_LANE_BLOCK+6:16), wa
-	ld wa, (ACC_CUR_READ_POS:16)
-	ld (ACC_LANE_READ_POS+6:16), wa
-	ld a, (ACC_CUR_BAR:16)
-	ld (ACC_LANE_BAR+3:16), a
-	ld a, (ACC_CUR_BEAT_POS:16)
-	ld (ACC_LANE_BEAT_POS+3:16), a
-	ld a, (ACC_CUR_SECTION:16)
-	ld (ACC_LANE_SECTION+3:16), a
-	ld a, (ACC_CUR_MEASURE:16)
-	ld (ACC_LANE_MEASURE+3:16), a
-	ret
+AccCh2_RestoreState:	.include "includes/generated/cc900/AccCh2_RestoreState.s"	; C: cc900/accompaniment_engine.c
 
 AccCh2_NoteOnEntry:
 	calr AccCh2_CheckEligible
@@ -3247,39 +3114,9 @@ AccCh3_ProcessEntry:
 	calr AccCh3_RestoreState
 	ret
 
-AccCh3_SaveState:
-	and (ACC_PART_FLAGS:16), 252
-	ld (ACC_BAD_EVENT_COUNT:16), 0
-	ld a, 0x10:opc
-	ld (ACC_PART_BIT:16), a
-	ld wa, (ACC_LANE_BLOCK+8:16)
-	ld (ACC_CUR_BLOCK:16), wa
-	ld wa, (ACC_LANE_READ_POS+8:16)
-	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (ACC_LANE_BAR+4:16)
-	ld (ACC_CUR_BAR:16), a
-	ld a, (ACC_LANE_BEAT_POS+4:16)
-	ld (ACC_CUR_BEAT_POS:16), a
-	ld a, (ACC_LANE_SECTION+4:16)
-	ld (ACC_CUR_SECTION:16), a
-	ld a, (ACC_LANE_MEASURE+4:16)
-	ld (ACC_CUR_MEASURE:16), a
-	ret
+AccCh3_SaveState:	.include "includes/generated/cc900/AccCh3_SaveState.s"	; C: cc900/accompaniment_engine_xr.c
 
-AccCh3_RestoreState:
-	ld wa, (ACC_CUR_BLOCK:16)
-	ld (ACC_LANE_BLOCK+8:16), wa
-	ld wa, (ACC_CUR_READ_POS:16)
-	ld (ACC_LANE_READ_POS+8:16), wa
-	ld a, (ACC_CUR_BAR:16)
-	ld (ACC_LANE_BAR+4:16), a
-	ld a, (ACC_CUR_BEAT_POS:16)
-	ld (ACC_LANE_BEAT_POS+4:16), a
-	ld a, (ACC_CUR_SECTION:16)
-	ld (ACC_LANE_SECTION+4:16), a
-	ld a, (ACC_CUR_MEASURE:16)
-	ld (ACC_LANE_MEASURE+4:16), a
-	ret
+AccCh3_RestoreState:	.include "includes/generated/cc900/AccCh3_RestoreState.s"	; C: cc900/accompaniment_engine.c
 
 AccCh3_NoteOnEntry:
 	calr AccCh3_CheckEligible
@@ -3422,39 +3259,9 @@ AccCh4_ProcessEntry:
 	calr AccCh4_RestoreState
 	ret
 
-AccCh4_SaveState:
-	and (ACC_PART_FLAGS:16), 252
-	ld (ACC_BAD_EVENT_COUNT:16), 0
-	ld a, 0x20:opc
-	ld (ACC_PART_BIT:16), a
-	ld wa, (ACC_LANE_BLOCK+10:16)
-	ld (ACC_CUR_BLOCK:16), wa
-	ld wa, (ACC_LANE_READ_POS+10:16)
-	ld (ACC_CUR_READ_POS:16), wa
-	ld a, (ACC_LANE_BAR+5:16)
-	ld (ACC_CUR_BAR:16), a
-	ld a, (ACC_LANE_BEAT_POS+5:16)
-	ld (ACC_CUR_BEAT_POS:16), a
-	ld a, (ACC_LANE_SECTION+5:16)
-	ld (ACC_CUR_SECTION:16), a
-	ld a, (ACC_LANE_MEASURE+5:16)
-	ld (ACC_CUR_MEASURE:16), a
-	ret
+AccCh4_SaveState:	.include "includes/generated/cc900/AccCh4_SaveState.s"	; C: cc900/accompaniment_engine_xr.c
 
-AccCh4_RestoreState:
-	ld wa, (ACC_CUR_BLOCK:16)
-	ld (ACC_LANE_BLOCK+10:16), wa
-	ld wa, (ACC_CUR_READ_POS:16)
-	ld (ACC_LANE_READ_POS+10:16), wa
-	ld a, (ACC_CUR_BAR:16)
-	ld (ACC_LANE_BAR+5:16), a
-	ld a, (ACC_CUR_BEAT_POS:16)
-	ld (ACC_LANE_BEAT_POS+5:16), a
-	ld a, (ACC_CUR_SECTION:16)
-	ld (ACC_LANE_SECTION+5:16), a
-	ld a, (ACC_CUR_MEASURE:16)
-	ld (ACC_LANE_MEASURE+5:16), a
-	ret
+AccCh4_RestoreState:	.include "includes/generated/cc900/AccCh4_RestoreState.s"	; C: cc900/accompaniment_engine.c
 
 AccCh4_NoteOnEntry:
 	calr AccCh4_CheckEligible
@@ -11974,23 +11781,7 @@ AccDemo_SectionRecordTail:
 	.zero 247
 	.byte 0x87
 
-AccTone_LookupByProgram:
-	sub a, 0xf0
-	extz wa
-	sla wa, 2
-	lda xbc, (AccTone_LookupByProgram_Table_2:24)
-	ld	xde, (xbc+wa)
-	ld a, (xde)
-	extz wa
-	sla wa, 2
-	lda xbc, (RhythmTiming_OffsetTable:24)
-	ld xde, 0x94860
-	add	xde, (xbc+wa)
-	ld a, (xde + 12)
-	extz wa
-	lda xbc, (AccTone_LookupByProgram_Table:24)
-	ld	l, (xbc+wa)
-	ret
+AccTone_LookupByProgram:	.include "includes/generated/cc900/AccTone_LookupByProgram.s"	; C: cc900/accompaniment_engine.c
 
 AccTone_ReadAndProcess:
 	dec 4, xsp
@@ -12770,24 +12561,9 @@ AccPedal_DirectionA_Wrap_Helper2:
 	ld	(xhl+6), c
 	or	(ACC_LANES_RESYNC:16), a
 	ret
-AccVoice_ClearChannelStates:
-	ld (ACC_LANE_MEASURE:16), 0
-	ld (ACC_LANE_MEASURE+1:16), 0
-	ld (ACC_LANE_MEASURE+2:16), 0
-	ld (ACC_LANE_MEASURE+3:16), 0
-	ld (ACC_LANE_MEASURE+4:16), 0
-	ld (ACC_LANE_MEASURE+5:16), 0
-	ret
+AccVoice_ClearChannelStates:	.include "includes/generated/cc900/AccVoice_ClearChannelStates.s"	; C: cc900/accompaniment_engine_xr.c
 
-AccVoice_IncrementBarCounter:
-	ld a, (ACC_CUR_MEASURE:16)
-	inc 1, a
-	ld (ACC_CUR_MEASURE:16), a
-	ld xbc, (0x3426:16)
-	cp a, (xbc + 13)
-	ret ule
-	ld (ACC_CUR_MEASURE:16), 0
-	ret
+AccVoice_IncrementBarCounter:	.include "includes/generated/cc900/AccVoice_IncrementBarCounter.s"	; C: cc900/accompaniment_engine.c
 AccVoice_BarCounterBytecodeData:
 	ld	(13280:16), 0
 	ld	a, (13345:16)
@@ -26542,8 +26318,7 @@ TimeSig_DisplayStrings_Code_Skip11:
 	jr	CmpNcp_LatchPanelRhythmAsSource_Join
 TimeSig_DisplayStrings_Code_Return:
 	ret
-AccPatch_ComplexDataBlock_Helper2:
-	ret
+AccPatch_ComplexDataBlock_Helper2:	.include "includes/generated/cc900/AccPatch_ComplexDataBlock_Helper2.s"	; C: cc900/accompaniment_engine.c
 	cp	(RHYTHM_LOAD_PROGRAM:16), 128
 	jr	c, TimeSig_DisplayStrings_Code_Return2
 	cp	(RHYTHM_LOAD_PART:16), 10
@@ -27236,27 +27011,7 @@ TimeSig_SlotFieldOffsets:	.byte	37, 45, 53, 61
 ; S2cTtl_InitOnTitleChange -- when CURRENT_TITLE differs from PREVIOUS_TITLE: (0x3989) := (SEQ_CURRENT_SONG) + 1, and if (0x398A)
 ;          is 0, seed 0x398A-0x3995.  Called from S2cTtl_Dispatch.  Was hidden: the table above was decoded as code
 ;          running into its first instruction, and the call used the positional alias TimeSig_DisplayStrings_0x8E2.
-S2cTtl_InitOnTitleChange:
-	ld	a, (CURRENT_TITLE:16)
-	cp	a, (PREVIOUS_TITLE:16)
-	ret	z
-	ld	a, (SEQ_CURRENT_SONG:24)
-	inc	1, a
-	ld	(0x3989:16), a
-	ld	wa, (0x398a:16)
-	cp	wa, 0:i3
-	ret	nz
-	ldw	(0x398a:16), 1
-	ldw	(0x398c:16), 1
-	ld	(0x398e:16), 25
-	ld	(0x398f:16), 0
-	ld	(0x3990:16), 0
-	ld	(0x3991:16), 0
-	ld	(0x3992:16), 0
-	ld	(0x3993:16), 0
-	ld	(0x3994:16), 0
-	ld	(0x3995:16), 0
-	ret
+S2cTtl_InitOnTitleChange:	.include "includes/generated/cc900/S2cTtl_InitOnTitleChange.s"	; C: cc900/accompaniment_engine.c
 	ret
 ; TimeSig_CallProc -- WA = index 0..23 (`cp de, 23 / ret ugt`), BC bit 7 = a flag
 ; passed on in A; calls TimeSig_ProcTable[index] (`ld xde, TimeSig_ProcTable / add
@@ -28127,46 +27882,15 @@ SeqRec_UpdateFlags:
 	inc 8, xsp
 	ret
 
-SeqRec_CheckOverflow:
-	lda xhl, (xwa + 1)
-	cp c, 0xf0
-	jr c, SeqRec_HandleOverflow
-	and c, 0xf
-	ld (xwa), c
-	ld (xhl), e
-	ret
+SeqRec_CheckOverflow:	.include "includes/generated/cc900/SeqRec_CheckOverflow.s"	; C: cc900/accompaniment_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqRec_HandleOverflow, SeqRec_CheckOverflow + 16
 
-SeqRec_HandleOverflow:
-	ld (xwa), 0x0
-	ld (xhl), 0x0
-	ret
-
-SeqRec_OverflowCleanup:
-	lda xhl, (xwa + 1)
-	cp c, 0xf0
-	jr nc, SeqRec_CommitData
-	cp c, 0x80
-	jr c, SeqRec_CommitData
-	cp e, 7:i3
-	jr nz, SeqRec_CommitData
-	ld c, 0x58:opc
-	jr SeqRec_CommitFinalize
-
-SeqRec_CommitData:
-	cp c, 0xf0
-	jr c, SeqRec_Validate
-	ld c, 0x0:opc
-
-SeqRec_CommitFinalize:
-	ld (xwa), c
-	ld (xhl), 0x0
-	ret
-
-SeqRec_Validate:
-	ld (xwa), c
-	res 7, e
-	ld (xhl), e
-	ret
+SeqRec_OverflowCleanup:	.include "includes/generated/cc900/SeqRec_OverflowCleanup.s"	; C: cc900/accompaniment_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqRec_CommitData, SeqRec_OverflowCleanup + 21
+	.set	SeqRec_CommitFinalize, SeqRec_OverflowCleanup + 28
+	.set	SeqRec_Validate, SeqRec_OverflowCleanup + 34
 
 SeqRec_ValidateDone:
 	pushw_erp 0xfa
@@ -28233,16 +27957,7 @@ Part_LoadAndIndexVoiceTable:
 	popw_erp 0xfa
 	ret
 
-Part_StoreVoiceTableIndex:
-	ld c, a
-	extz bc
-	ld a, (0x398f:16)
-	extz wa
-	mul wa, 0x5
-	add wa, bc
-	ld (0x3980:16), wa
-	ldw (0x3984:16), 6
-	ret
+Part_StoreVoiceTableIndex:	.include "includes/generated/cc900/Part_StoreVoiceTableIndex.s"	; C: cc900/accompaniment_engine.c
 
 SetWall_StoreAndResolve:
 	ld (0x287f:16), wa
@@ -28250,27 +27965,11 @@ SetWall_StoreAndResolve:
 	ld wa, bc
 	jp Voice_ResolveSlotAddr
 
-MIDIChan_ScanForFree:
-	ld xbc, 0xf1a0
-	ld a, 0x1:opc
-
-MIDIChan_ScanLoop:
-	cp (xbc), 0x10
-	jr z, MIDIChan_Found
-	inc 1, xbc
-	inc 1, a
-	cp a, 0x11
-	jr ule, MIDIChan_ScanLoop
-
-MIDIChan_Found:
-	cp a, 0x10
-	jr ule, MIDIChan_StoreResult
-	ld (0x3996:16), 0
-	ret
-
-MIDIChan_StoreResult:
-	ld (0x3996:16), a
-	ret
+MIDIChan_ScanForFree:	.include "includes/generated/cc900/MIDIChan_ScanForFree.s"	; C: cc900/accompaniment_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MIDIChan_ScanLoop, MIDIChan_ScanForFree + 7
+	.set	MIDIChan_Found, MIDIChan_ScanForFree + 21
+	.set	MIDIChan_StoreResult, MIDIChan_ScanForFree + 32
 
 VoiceSlot_UpdateState:
 	ld a, (0x3996:16)
@@ -28326,30 +28025,11 @@ VoiceSlot_StoreAndReturn:
 	ldmm8 0x3986, 0x288e
 	ret
 
-Part_IsPercussionType:
-	dec 1, a
-	extz wa
-	extz xwa
-	add xwa, 0xf1a0
-	ld a, (xwa)
-	cp a, 0xd
-	jr z, EventCode_CheckExit
-	cp a, 0xe
-	jr z, EventCode_CheckExit
-	cp a, 0xf
-	jr z, EventCode_CheckExit
-	cp a, 0x10
-	jr nz, PartType_NotPercussion
-
-EventCode_CheckExit:
-	ld l, 0x1:opc
-	jr PartType_Return
-
-PartType_NotPercussion:
-	ld l, 0x0:opc
-
-PartType_Return:
-	ret
+Part_IsPercussionType:	.include "includes/generated/cc900/Part_IsPercussionType.s"	; C: cc900/accompaniment_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EventCode_CheckExit, Part_IsPercussionType + 34
+	.set	PartType_NotPercussion, Part_IsPercussionType + 38
+	.set	PartType_Return, Part_IsPercussionType + 40
 
 Voice_ReadEventBytes:
 	push xiz
@@ -28504,17 +28184,7 @@ VoiceTable_AdvanceReadPos:
 VoiceTable_AdvRead_Done:
 	jr VoiceTable_ResolveReadAddr
 
-VoiceTable_ResolveReadAddr:
-	ld bc, (0x3982:16)
-	extz xbc
-	ld wa, (0x397e:16)
-	dec 1, wa
-	extz xwa
-	sll xwa, 8
-	add xwa, 0xb0000
-	add xwa, xbc
-	ld xhl, xwa
-	ret
+VoiceTable_ResolveReadAddr:	.include "includes/generated/cc900/VoiceTable_ResolveReadAddr.s"	; C: cc900/accompaniment_engine.c
 
 VoiceTable_AdvanceWritePos:
 	ld xhl, xwa

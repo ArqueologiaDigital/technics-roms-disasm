@@ -34,12 +34,11 @@ is missing and the flag that builds without the VM (`make CC900_COMPILER=model`)
 The compiler tree's id is recorded in CACHE/compiler-id.txt; when the tree itself is absent, fill uses the recorded
 id, so a complete cache still builds.
 
-The VM is shared: the job holds $ORACLE/vm/.runlock (flock) while it runs, waiting for other users.  It boots the
-disk overlay with -snapshot (oracle/run_vm.sh, VM_SNAPSHOT=1), so a build writes nothing into the oracle tree: not
-its runs/, not its disk.  The listings are Toshiba's output: they stay in CACHE, which git ignores, and never go
+The VM is shared: the job runs in a slot of the VM pool (oracle/vm_slot.sh: VM_POOL_SLOTS slots, each with its own
+lock, vm/.runlock[.k], and HTTP port), waiting when all are busy.  Every slot boots the disk overlay with -snapshot
+(oracle/run_vm.sh), so a build writes nothing into the oracle tree: not its runs/, not its disk.  The listings are Toshiba's output: they stay in CACHE, which git ignores, and never go
 into a commit.
 """
-import fcntl
 import hashlib
 import os
 import re
@@ -152,7 +151,7 @@ def vm_problems(oracle):
             (os.access(q, os.X_OK), "QEMU %s" % q),
             (os.path.isfile(os.path.join(oracle, "vm", "home", "disk.qcow2")),
              "the VM's disk overlay %s (with Wine; an oracle run makes it)" % os.path.join(oracle, "vm", "home", "disk.qcow2")),
-            (os.path.isfile(os.path.join(oracle, "vm", ".runlock")), "the VM lock %s" % os.path.join(oracle, "vm", ".runlock")),
+            (os.path.isdir(os.path.join(oracle, "vm", "home")), "the VM work directory %s" % os.path.join(oracle, "vm", "home")),
             (os.access("/dev/kvm", os.R_OK | os.W_OK), "read/write access to /dev/kvm"),
             (os.path.isdir(compiler_tree()), "the V4.23 compiler tree %s (oracle/compilers.conf)" % compiler_tree())]
     return [what for ok, what in need if not ok]
@@ -221,18 +220,15 @@ def run_job(cache, oracle, misses):
         t.add(corpus, arcname=".")
     shutil.copyfile(os.path.join(ORACLE_TOOLS, "job.sh"), os.path.join(serve, "job.sh"))
 
-    lockp = os.path.join(oracle, "vm", ".runlock")
-    with open(lockp) as lock:
-        try:
-            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
-        except BlockingIOError:
-            print("cc900 V4.23: waiting for the VM lock %s (another job is using the VM) ..." % lockp, flush=True)
-            fcntl.flock(lock, fcntl.LOCK_EX)
-        print("cc900 V4.23: compiling %d firmware C file(s) in the oracle VM ..." % len(misses), flush=True)
-        t0 = time.time()
-        env = dict(os.environ, ORACLE=oracle, VM_SNAPSHOT="1")
-        r = subprocess.run(["bash", os.path.join(ORACLE_TOOLS, "run_vm.sh"), serve, out], env=env)
-        print("cc900 V4.23: the VM job took %.0f s" % (time.time() - t0), flush=True)
+    # a slot of the VM pool (oracle/vm_slot.sh: the first free one, else it waits); the slot's port goes to run_vm.sh,
+    # but the job's serve / out directories stay here in the cache, so the build writes nothing into the oracle tree
+    print("cc900 V4.23: compiling %d firmware C file(s) in the oracle VM ..." % len(misses), flush=True)
+    t0 = time.time()
+    env = dict(os.environ, ORACLE=oracle)
+    env.pop("VM_SLOT", None)
+    r = subprocess.run(["bash", os.path.join(ORACLE_TOOLS, "vm_slot.sh"), "bash", os.path.join(ORACLE_TOOLS, "run_vm.sh"),
+                        serve, out], env=env)
+    print("cc900 V4.23: the VM job took %.0f s" % (time.time() - t0), flush=True)
     if r.returncode:
         sys.exit("cc900 V4.23: the VM job failed (exit %d); its logs are in %s" % (r.returncode, out))
     with tarfile.open(os.path.join(out, "results.tar")) as t:

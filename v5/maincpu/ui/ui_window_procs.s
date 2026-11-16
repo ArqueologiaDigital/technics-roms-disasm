@@ -7299,19 +7299,7 @@ ChangeWall_QueueCallback:
 	ld	wa, (xwa+4)
 	jr	ChangeWall_Impl
 
-ChangeWall_Impl:
-	ld	(0x03ef98:24), wa
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 2
-	add xbc, xwa
-	add xbc, xbc
-	ld xwa, ChangeWall_WallpaperTable
-	add xwa, xbc
-	ld xwa, (xwa)
-	ld	(0x03ef94:24), xwa
-	ld (WALLPAPER_BITMAP:24), xwa
-	ret
+ChangeWall_Impl:	.include "includes/generated/cc900/ChangeWall_Impl.s"	; C: cc900/ui_window_procs_xr.c
 
 ChangeWallPalette:
 	pushw iz

@@ -632,81 +632,17 @@ AudioInit_ClearDrumModeAlt:
 	and (0x8f58:16), 248
 	ret
 
-AudioInit_ClearPartFlags_ByMode:
-	ld wa, (AUDIO_CONFIG_UPDATE:16)
-	and wa, 0x3
-	jr z, AudioInit_SetPartMasks
-	ld de, 0:i3
-	cp de, 0x1a
-	ret nc
-
-AudioInit_ClearPartFlags_Loop:
-	ld wa, de
-	add wa, wa
-	lda xbc, (AUDIO_STATE+292:16)
-	extz xwa
-	add xwa, xbc
-	resm 5, (xwa)
-	orw (AUDIO_STATE_CHANGES:16), 8
-	inc 1, de
-	cp de, 0x1a
-	jr c, AudioInit_ClearPartFlags_Loop
-	ret
-
-AudioInit_SetPartMasks:
-	ld de, 0:i3
-	cp de, 0x10
-	jr nc, AudioInit_CheckGlobalFlag6
-
-AudioInit_SetPartMasks_Loop:
-	ld wa, de
-	add wa, wa
-	lda xbc, (AUDIO_STATE+292:16)
-	extz xwa
-	add xwa, xbc
-	setm 5, (xwa)
-	inc 1, de
-	cp de, 0x10
-	jr c, AudioInit_SetPartMasks_Loop
-
-AudioInit_CheckGlobalFlag6:
-	bit 6, (PANEL_MIDI+3:16)
-	jr z, AudioInit_ClearVoiceGroupFlags
-	set 5, (AUDIO_STATE+324:16)
-	set 5, (AUDIO_STATE+326:16)
-	set 5, (AUDIO_STATE+328:16)
-	set 5, (AUDIO_STATE+330:16)
-	set 5, (AUDIO_STATE+334:16)
-	jr AudioInit_CheckVoiceFlag6
-
-AudioInit_ClearVoiceGroupFlags:
-	res 5, (AUDIO_STATE+324:16)
-	res 5, (AUDIO_STATE+326:16)
-	res 5, (AUDIO_STATE+328:16)
-	res 5, (AUDIO_STATE+330:16)
-	res 5, (AUDIO_STATE+334:16)
-	orw (AUDIO_STATE_CHANGES:16), 8
-
-AudioInit_CheckVoiceFlag6:
-	bit 6, (PANEL_MIDI:16)
-	jr z, AudioInit_ClearAuxVoiceFlag
-	set 5, (AUDIO_STATE+332:16)
-	jr AudioInit_CheckReverbFlag
-
-AudioInit_ClearAuxVoiceFlag:
-	res 5, (AUDIO_STATE+332:16)
-	orw (AUDIO_STATE_CHANGES:16), 8
-
-AudioInit_CheckReverbFlag:
-	bit 7, (PANEL_MIDI+3:16)
-	jr z, AudioInit_ClearReverbFlag
-	set 5, (AUDIO_STATE+342:16)
-	ret
-
-AudioInit_ClearReverbFlag:
-	res 5, (AUDIO_STATE+342:16)
-	orw (AUDIO_STATE_CHANGES:16), 8
-	ret
+AudioInit_ClearPartFlags_ByMode:	.include "includes/generated/cc900/AudioInit_ClearPartFlags_ByMode.s"	; C: cc900/audioinit_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_ClearPartFlags_Loop, AudioInit_ClearPartFlags_ByMode + 18
+	.set	AudioInit_SetPartMasks, AudioInit_ClearPartFlags_ByMode + 47
+	.set	AudioInit_SetPartMasks_Loop, AudioInit_ClearPartFlags_ByMode + 55
+	.set	AudioInit_CheckGlobalFlag6, AudioInit_ClearPartFlags_ByMode + 77
+	.set	AudioInit_ClearVoiceGroupFlags, AudioInit_ClearPartFlags_ByMode + 105
+	.set	AudioInit_CheckVoiceFlag6, AudioInit_ClearPartFlags_ByMode + 131
+	.set	AudioInit_ClearAuxVoiceFlag, AudioInit_ClearPartFlags_ByMode + 143
+	.set	AudioInit_CheckReverbFlag, AudioInit_ClearPartFlags_ByMode + 153
+	.set	AudioInit_ClearReverbFlag, AudioInit_ClearPartFlags_ByMode + 164
 
 Audio_CheckInitStatus:
 	dec 2, xsp
@@ -1149,84 +1085,17 @@ AudioInit_ApplyOutputRouting:
 	inc 2, xsp
 	ret
 
-AudioInit_SelectPriority:
-	ld a, (CMP_RECORD_PART:16)
-	cp a, 0x10
-	jrl z, AudioInit_Priority_Mode10
-	cp a, 0x8
-	jr z, AudioInit_Priority_Mode8
-	cp a, 4:i3
-	jr z, AudioInit_Priority_Mode4
-	cp a, 2:i3
-	jr z, AudioInit_Priority_Mode2
-	cp a, 1:i3
-	jrl nz, AudioInit_Priority_Default
-	ld (AUDIO_STATE+84:16), 0
-	ld (AUDIO_STATE+85:16), 255
-	ld (AUDIO_STATE+86:16), 255
-	ld (AUDIO_STATE+87:16), 255
-	ld (AUDIO_STATE+88:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 16
-	ret
+AudioInit_SelectPriority:	.include "includes/generated/cc900/AudioInit_SelectPriority.s"	; C: cc900/audioinit_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_Priority_Mode2, AudioInit_SelectPriority + 60
+	.set	AudioInit_Priority_Mode4, AudioInit_SelectPriority + 92
+	.set	AudioInit_Priority_Mode8, AudioInit_SelectPriority + 124
+	.set	AudioInit_Priority_Mode10, AudioInit_SelectPriority + 156
+	.set	AudioInit_Priority_Default, AudioInit_SelectPriority + 188
 
-AudioInit_Priority_Mode2:
-	ld (AUDIO_STATE+84:16), 255
-	ld (AUDIO_STATE+85:16), 1
-	ld (AUDIO_STATE+86:16), 255
-	ld (AUDIO_STATE+87:16), 255
-	ld (AUDIO_STATE+88:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 16
-	ret
-
-AudioInit_Priority_Mode4:
-	ld (AUDIO_STATE+84:16), 255
-	ld (AUDIO_STATE+85:16), 255
-	ld (AUDIO_STATE+86:16), 2
-	ld (AUDIO_STATE+87:16), 255
-	ld (AUDIO_STATE+88:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 16
-	ret
-
-AudioInit_Priority_Mode8:
-	ld (AUDIO_STATE+84:16), 255
-	ld (AUDIO_STATE+85:16), 255
-	ld (AUDIO_STATE+86:16), 255
-	ld (AUDIO_STATE+87:16), 3
-	ld (AUDIO_STATE+88:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 16
-	ret
-
-AudioInit_Priority_Mode10:
-	ld (AUDIO_STATE+84:16), 255
-	ld (AUDIO_STATE+85:16), 255
-	ld (AUDIO_STATE+86:16), 255
-	ld (AUDIO_STATE+87:16), 255
-	ld (AUDIO_STATE+88:16), 4
-	orw (AUDIO_STATE_CHANGES:16), 16
-	ret
-
-AudioInit_Priority_Default:
-	ld (AUDIO_STATE+84:16), 255
-	ld (AUDIO_STATE+85:16), 255
-	ld (AUDIO_STATE+86:16), 255
-	ld (AUDIO_STATE+87:16), 255
-	ld (AUDIO_STATE+88:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 16
-	ret
-
-AudioInit_CheckMIDIStatus:
-	cp (0x7f0b:16), 0
-	jr z, AudioInit_MIDIDisabled
-	ld (AUDIO_STATE+123:16), 0
-	ld (AUDIO_STATE+124:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 32
-	ret
-
-AudioInit_MIDIDisabled:
-	ld (AUDIO_STATE+123:16), 255
-	ld (AUDIO_STATE+124:16), 255
-	orw (AUDIO_STATE_CHANGES:16), 32
-	ret
+AudioInit_CheckMIDIStatus:	.include "includes/generated/cc900/AudioInit_CheckMIDIStatus.s"	; C: cc900/audioinit_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_MIDIDisabled, AudioInit_CheckMIDIStatus + 24
 
 AudioInit_RefreshToneBank:
 	pushw iz

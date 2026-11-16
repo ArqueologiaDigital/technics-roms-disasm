@@ -389,40 +389,13 @@ Delay51T_Loop:
 ;
 ; See: docs/test-modes.md for full documentation
 ; =============================================================================
-CPanel_CheckSpecialCombos:
-	cp (0x8e5e:16), 108; CPL_SEG4 == 0x6c (0110 1100)?
-				; = AUTO PLAY CHORD + SPLIT POINT + VARIATION 4 + VARIATION 3
-	jr nz, CPanel_Combo_CheckAllInitSetting
-	ld hl, 3:i3		; Combo 3: Software version / build numbers screen
-	jr CPanel_CheckSpecialCombos_Return
-
-CPanel_Combo_CheckAllInitSetting:
-	cp (0x8e4b:16), 112; CPR_SEG1 == 0x70 (0111 0000)?
-				; = GM SPECIAL + ACCORDION REGISTER + DIGITAL DRAWBAR
-	jr nz, CPanel_Combo_CheckFactoryReset
-	ld hl, 2:i3		; Combo 2: "ALL INITIAL SETTING!" + LED version display
-	jr CPanel_CheckSpecialCombos_Return
-
-CPanel_Combo_CheckFactoryReset:
-	cp (0x8e60:16), 56; CPL_SEG6 == 0x38 (0011 1000)?
-				; = SHOWTIME & TRAD DANCE + PARTY TIME + MARCH & WALTZ
-				; (three leftmost RHYTHM GROUP buttons)
-	jr nz, CPanel_Combo_CheckFlashUpdate
-	ld hl, 1:i3		; Combo 1: Factory Reset (Initial Setting)
-	jr CPanel_CheckSpecialCombos_Return
-
-CPanel_Combo_CheckFlashUpdate:
-	cp (0x8e50:16), 15; CPR_SEG6 == 0x0f (0000 1111)?
-				; = PM 1 + PM 2 + PM 3 + PM 4 (all 4 Panel Memory buttons)
-	jr nz, CPanel_Combo_NormalBoot
-	ld hl, 4:i3		; Combo 4: Flash Memory Update
-	jr CPanel_CheckSpecialCombos_Return
-
-CPanel_Combo_NormalBoot:
-	ld hl, 0:i3		; No combo: normal boot
-
-CPanel_CheckSpecialCombos_Return:
-	ret
+CPanel_CheckSpecialCombos:	.include "includes/generated/cc900/CPanel_CheckSpecialCombos.s"	; C: cc900/cpanel_routines_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CPanel_Combo_CheckAllInitSetting, CPanel_CheckSpecialCombos + 11
+	.set	CPanel_Combo_CheckFactoryReset, CPanel_CheckSpecialCombos + 22
+	.set	CPanel_Combo_CheckFlashUpdate, CPanel_CheckSpecialCombos + 33
+	.set	CPanel_Combo_NormalBoot, CPanel_CheckSpecialCombos + 44
+	.set	CPanel_CheckSpecialCombos_Return, CPanel_CheckSpecialCombos + 46
 
 
 CPanel_PanelDetection:

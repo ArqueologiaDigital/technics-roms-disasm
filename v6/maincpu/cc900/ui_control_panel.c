@@ -7,3 +7,12 @@ extern unsigned char __near ACTIVE_TITLE;
 unsigned char GetCurrentPartSelect(void) { return PART_SELECT; }
 int GetPartSelect(void) { return PART_SELECT; }
 int SeqState_HasModeChanged(void) { return CURRENT_TITLE != ACTIVE_TITLE; }
+
+struct box { int x0, y0, x1, y1; };
+struct pt { int x, y; };
+
+void GetBoxCenter(struct box *b, struct pt *c)
+{
+	c->x = b->x0 + (b->x1 - b->x0 + 1) / 2;
+	c->y = b->y0 + (b->y1 - b->y0 + 1) / 2;
+}

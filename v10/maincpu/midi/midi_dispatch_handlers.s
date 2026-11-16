@@ -4204,67 +4204,7 @@ DataBuf_CopyFilterBlock12:
 	stcfm 0, (xbc + 11)
 	ret
 
-DataBuf_CopyReverbBlock6:
-	ld xde, xwa
-	lda xix, (xbc + 2)
-	lda xhl, (xde + 2)
-	ldcfm 1, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 1
-	andmi8 (xix), 0xfd
-	or (xix), a
-	ldcfm 0, (xhl)
-	stcfm 0, (xix)
-	ldcfm 1, (xde + 3)
-	stcfm 1, (xbc + 3)
-	lda xix, (xbc + 4)
-	lda xhl, (xde + 4)
-	ldcfm 6, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 6
-	andmi8 (xix), 0xbf
-	or (xix), a
-	ldcfm 5, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 5
-	andmi8 (xix), 0xdf
-	or (xix), a
-	ldcfm 4, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 4
-	andmi8 (xix), 0xef
-	or (xix), a
-	ldcfm 3, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 3
-	andmi8 (xix), 0xf7
-	or (xix), a
-	ldcfm 2, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 2
-	andmi8 (xix), 0xfb
-	or (xix), a
-	ldcfm 1, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 1
-	andmi8 (xix), 0xfd
-	or (xix), a
-	ldcfm 0, (xhl)
-	stcfm 0, (xix)
-	inc 5, xbc
-	lda xwa, (xde + 5)
-	ldcfm 1, (xwa)
-	stcfm 1, (xbc)
-	ldcfm 0, (xwa)
-	stcfm 0, (xbc)
-	ret
+DataBuf_CopyReverbBlock6:	.include "includes/generated/cc900/DataBuf_CopyReverbBlock6.s"	; C: cc900/midi_dispatch_handlers.c
 
 ; Copies byte +2 and bit 7 of byte +3 from the record at XWA to the record at XBC.
 DataBuf_CopySimpleBlock4:
@@ -4529,48 +4469,7 @@ DataBuf_LoadAndDispatchFormat2_Return:
 	inc 6, xsp
 	ret
 
-DataBuf_CopyEQBlock7:
-	ld xde, xwa
-	lda xix, (xbc + 2)
-	lda xhl, (xde + 2)
-	ld a, (xhl)
-	and a, 0x30
-	srl a, 4
-	and a, 0x3
-	sla a, 4
-	andmi8 (xix), 0xcf
-	or (xix), a
-	ldcfm 3, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 3
-	andmi8 (xix), 0xf7
-	or (xix), a
-	ldcfm 2, (xhl)
-	scc8 c, a
-	and a, 0x1
-	sla a, 2
-	andmi8 (xix), 0xfb
-	or (xix), a
-	ld a, (xhl)
-	and a, 0x3
-	andmi8 (xix), 0xfc
-	or (xix), a
-	ld a, (xde + 3)
-	and a, 0x7f
-	andmi8 (xbc + 3), 0x80
-	or (xbc + 3), a
-	ld a, (xde + 4)
-	ld (xbc + 4), a
-	ld a, (xde + 6)
-	and a, 0xf
-	andmi8 (xbc + 6), 0xf0
-	or (xbc + 6), a
-	cpw (0xb7ea:16), 2
-	ret nz
-	ld a, (xde + 5)
-	ld (xbc + 5), a
-	ret
+DataBuf_CopyEQBlock7:	.include "includes/generated/cc900/DataBuf_CopyEQBlock7.s"	; C: cc900/midi_dispatch_handlers.c
 
 DataBuf_CopyChorusBlock16:
 	ld e, (xwa + 2)
@@ -4635,47 +4534,7 @@ DataBuf_CopyChorusBlock16:
 	or (xbc), a
 	ret
 
-DataBuf_CopyCompressorBlock16:
-	ld xde, xbc
-	ld c, (xwa + 2)
-	ld (xde + 2), c
-	lda xix, (xde + 3)
-	lda xhl, (xwa + 3)
-	ldcfm 7, (xhl)
-	scc8 c, c
-	and c, 0x1
-	sla c, 7
-	andmi8 (xix), 0x7f
-	or (xix), c
-	ld c, (xhl)
-	and c, 0xf
-	andmi8 (xix), 0xf0
-	or (xix), c
-	ld c, (xwa + 4)
-	ld (xde + 4), c
-	ld c, (xwa + 5)
-	ld (xde + 5), c
-	ld c, (xwa + 6)
-	ld (xde + 6), c
-	ld c, (xwa + 7)
-	ld (xde + 7), c
-	ld c, (xwa + 8)
-	ld (xde + 8), c
-	ld c, (xwa + 9)
-	ld (xde + 9), c
-	ld c, (xwa + 10)
-	ld (xde + 10), c
-	ld c, (xwa + 11)
-	ld (xde + 11), c
-	ld c, (xwa + 12)
-	ld (xde + 12), c
-	ld c, (xwa + 13)
-	ld (xde + 13), c
-	ld c, (xwa + 14)
-	ld (xde + 14), c
-	ld a, (xwa + 15)
-	ld (xde + 15), a
-	ret
+DataBuf_CopyCompressorBlock16:	.include "includes/generated/cc900/DataBuf_CopyCompressorBlock16.s"	; C: cc900/midi_dispatch_handlers.c
 
 ; Copies bits 1 and 0 of byte +2 from the record at XWA to the record at XBC; both pointers are
 ; advanced by 2.
@@ -6306,26 +6165,7 @@ VoiceParam_CopyBitfields_TypeB_Cont:
 	or (xde + 11), a
 	ret
 
-VoiceParam_CopyBitfields_TypeC:
-	ld xde, xbc
-	lda xix, (xde + 2)
-	lda xhl, (xwa + 2)
-	ldcfm 0, (xhl)
-	scc8 c, c
-	and c, 0x1
-	andmi8 (xix), 0xfe
-	or (xix), c
-	ldcfm 1, (xhl)
-	stcfm 1, (xix)
-	ldcfm 1, (xwa + 3)
-	stcfm 1, (xde + 3)
-	lda xbc, (xde + 5)
-	inc 7, xwa
-	ldcfm 0, (xwa)
-	stcfm 0, (xbc)
-	ldcfm 1, (xwa)
-	stcfm 1, (xbc)
-	ret
+VoiceParam_CopyBitfields_TypeC:	.include "includes/generated/cc900/VoiceParam_CopyBitfields_TypeC.s"	; C: cc900/midi_dispatch_handlers.c
 
 VoiceParam_CopyFields_TypeD:
 	ld e, (xwa + 2)
@@ -7168,66 +7008,18 @@ DataBuf_TransferSlotBitfields_Loop:
 	or	(xde+1047), a
 	ret
 
-DataBuf_CheckFormatPair:
-	; --- Multi-branch lookup: C=(XWA+4), check pairs, return HL=1/2/3/0xffff (52 bytes) ---
-	ld c, (xwa+4)
-	inc 5, xwa
-	cp c, 0x4d
-	jr nz, DataBuf_CheckFormatPair_NotM34
-	ld e, (xwa)
-	cp e, 0x34
-	jr nz, DataBuf_CheckFormatPair_NotM34
-	ld	hl, 1:i3
-	ret
-DataBuf_CheckFormatPair_NotM34:
-	ld a, (xwa)
-	cp c, 0x4d
-	jr nz, DataBuf_CheckFormatPair_NotM36
-	cp a, 0x36
-	jr nz, DataBuf_CheckFormatPair_NotM36
-	ld	hl, 2:i3
-	ret
-DataBuf_CheckFormatPair_NotM36:
-	cp c, 0x4e
-	jr nz, DataBuf_CheckFormatPair_NotN4E
-	cp a, 0x4e
-	jr nz, DataBuf_CheckFormatPair_NotN4E
-	ld	hl, 3:i3
-	ret
-DataBuf_CheckFormatPair_NotN4E:
-	ldw hl, 0xffff
-	ret
+DataBuf_CheckFormatPair:	.include "includes/generated/cc900/DataBuf_CheckFormatPair.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DataBuf_CheckFormatPair_NotM34, DataBuf_CheckFormatPair + 20
+	.set	DataBuf_CheckFormatPair_NotM36, DataBuf_CheckFormatPair + 35
+	.set	DataBuf_CheckFormatPair_NotN4E, DataBuf_CheckFormatPair + 48
 
 
-DataBuf_CheckSubFormat:
-	lda xbc, (xwa + 6)
-	ld a, (xwa + 5)
-	cp a, 1:i3
-	jr nz, DataBuf_CheckSubFormat_Not6
-	cp (xbc), 0x6
-	jr nz, DataBuf_CheckSubFormat_Not6
-	ld hl, 1:i3
-	ret
-
-DataBuf_CheckSubFormat_Not6:
-	cp a, 1:i3
-	jr nz, DataBuf_CheckSubFormat_Not7
-	cp (xbc), 0x7
-	jr nz, DataBuf_CheckSubFormat_Not7
-	ld hl, 2:i3
-	ret
-
-DataBuf_CheckSubFormat_Not7:
-	cp a, 1:i3
-	jr nz, DataBuf_CheckSubFormat_Not3
-	cp (xbc), 0x3
-	jr nz, DataBuf_CheckSubFormat_Not3
-	ld hl, 3:i3
-	ret
-
-DataBuf_CheckSubFormat_Not3:
-	ldw hl, 0xffff
-	ret
+DataBuf_CheckSubFormat:	.include "includes/generated/cc900/DataBuf_CheckSubFormat.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DataBuf_CheckSubFormat_Not6, DataBuf_CheckSubFormat + 18
+	.set	DataBuf_CheckSubFormat_Not7, DataBuf_CheckSubFormat + 30
+	.set	DataBuf_CheckSubFormat_Not3, DataBuf_CheckSubFormat + 42
 
 DataBuf_Data_FormatDispatch:
 	lda	xsp, (xsp-28)
@@ -7534,25 +7326,9 @@ SndParam_ApplyBaseBlock_Next:
 	jr c, SndParam_ApplyBaseBlock_Loop
 	ret
 
-SndParam_ApplyModeSpecific:
-	ld c, (0xb7f0:16)
-	cp c, 2:i3
-	ret z
-	lda xwa, (PANEL_GM+3:16)
-	cp c, 0:i3
-	jr z, SndParam_ClearBits
-	cp c, 1:i3
-	ret nz
-	ld c, (xwa)
-	and c, 0xf8
-	ld (xwa), c
-	set 2, c
-	ld (xwa), c
-	ret
-
-SndParam_ClearBits:
-	andmi8 (xwa), 0xf8
-	ret
+SndParam_ApplyModeSpecific:	.include "includes/generated/cc900/SndParam_ApplyModeSpecific.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_ClearBits, SndParam_ApplyModeSpecific + 33
 
 SndParam_AllocAndCopyPreset:
 	dec 2, xsp
@@ -8504,25 +8280,9 @@ MidiChan_ParseVoiceDone:
 	pop xiz
 	ret
 
-VoiceQueue_Append:
-	ld xbc, (MIDISEQ_ACTIVE_BLOCK_PTR:16)
-	lda xde, (xbc + 10)
-	ld xbc, (xde)
-	lda xhl, (xbc+:1)
-	ld (xde), xbc
-	ld (xhl), a
-	ld xbc, (MIDISEQ_ACTIVE_BLOCK_PTR:16)
-	ld xbc, (xbc + 10)
-	ld (xbc), 0xff
-	ld xbc, (MIDISEQ_ACTIVE_BLOCK_PTR:16)
-	cp a, 0xf0
-	jr nz, VoiceQueue_IncrementCount
-	ldw (xbc), 0x1
-	ret
-
-VoiceQueue_IncrementCount:
-	incw 1, (xbc)
-	ret
+VoiceQueue_Append:	.include "includes/generated/cc900/VoiceQueue_Append.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceQueue_IncrementCount, VoiceQueue_Append + 40
 
 ; Takes the next byte from a 0xff-terminated byte queue whose read pointer is the u32 at (XWA + 2).
 ;   Out: L = the byte (the pointer advances), or 0xff at the end mark (the pointer stays).
@@ -8537,28 +8297,10 @@ MidiChan_DequeueVoiceEntry:
 	ld l, (xde)
 	ret
 
-MidiChan_NibbleLookup_Data:
-	ld	hl, de
-	ld	xde, xwa
-	ld	wa, hl
-	dec	1, hl
-	cp	wa, 0:i3
-	jr	z, MidiChan_DequeueVoiceEntry_Skip
-	lda	xix, (xde+10)
-MidiChan_DequeueVoiceEntry_Loop:
-	ld	xwa, (xix)
-	lda xiy, (xwa+:1)
-	ld (xix), xwa
-	ld a, (xbc+)
-	ld (xiy), a
-	ld wa, hl
-	dec 1, hl
-	cp	wa, 0:i3
-	jr	nz, MidiChan_DequeueVoiceEntry_Loop
-MidiChan_DequeueVoiceEntry_Skip:
-	ld	xwa, (xde+10)
-	ld	(xwa), 255
-	ret
+MidiChan_NibbleLookup_Data:	.include "includes/generated/cc900/MidiChan_NibbleLookup_Data.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChan_DequeueVoiceEntry_Loop, MidiChan_NibbleLookup_Data + 15
+	.set	MidiChan_DequeueVoiceEntry_Skip, MidiChan_NibbleLookup_Data + 35
 
 ; Stores E at (XWA + BC) for BC = 0..15 (a compiled switch with one case per offset); any other
 ; BC returns without a store.  Despite the name nothing is read.
@@ -9855,31 +9597,10 @@ ArpQueue_Pack21BitValue:
 ; Appends BC bytes from (XWA) to the queue whose descriptor pointer is at 0xbc5c.
 ;   The descriptor's +10 u32 is the write pointer, advanced per byte, and its +0 word counts
 ;   the bytes; a 0xff end mark is written after the last byte.  BC = 0 only writes the mark.
-ArpQueue_Enqueue:
-	ld de, bc
-	dec 1, bc
-	cp de, 0:i3
-	jr z, ArpQueue_EnqueueDone
-	ld xhl, (0xbc5c:16)
-	lda xix, (xhl + 10)
-
-ArpQueue_EnqueueLoop:
-	ld xde, (xix)
-	lda xiy, (xde+:1)
-	ld (xix), xde
-	ld E, (xwa+)
-	ld (xiy), e
-	incw 1, (xhl)
-	ld de, bc
-	dec 1, bc
-	cp de, 0:i3
-	jr nz, ArpQueue_EnqueueLoop
-
-ArpQueue_EnqueueDone:
-	ld xwa, (0xbc5c:16)
-	ld xwa, (xwa + 10)
-	ld (xwa), 0xff
-	ret
+ArpQueue_Enqueue:	.include "includes/generated/cc900/ArpQueue_Enqueue.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ArpQueue_EnqueueLoop, ArpQueue_Enqueue + 15
+	.set	ArpQueue_EnqueueDone, ArpQueue_Enqueue + 37
 
 ; Runs the MIDI output passes until the active buffer is busy (+4 of MIDISEQ_ACTIVE_BUF_PTR's
 ; buffer non-zero) or nothing more is pending (the u32 at 0xbcd4 is 0): pre-dispatch, the three
@@ -10285,70 +10006,28 @@ MidiPkt_SetXferTotal_Panel:
 ;   -- MidiPkt_ArpExtHandler_A (command 11, state 0) writes all panel TLV headers, then points the total descriptor
 ;   0xBCDC (MidiPkt_SetXferTotal_Panel) and the block descriptor 0xBCEC (this) and starts step 1; the send side
 ;   MidiPkt_SendBlock_LivePanel uses it for 0xBCCC.
-MidiPkt_SetXferBlock_LivePanel:
-	lda	xde, (LIVE_PANEL_BLOCK:16)
-	ld	(xwa), xde
-	lda	xbc, (0xffbe:16)
-	sub	xbc, xde
-	inc	2, xbc
-	ld	xhl, xbc
-	add	xhl, xde
-	ld	(xwa+4), xhl
-	ld	(xwa+8), xbc
-	ret
+MidiPkt_SetXferBlock_LivePanel:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_LivePanel.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferBlock_PanelMemories: Fills the transfer descriptor at XWA for block 2 of the panel transfer, the 80
 ;   panel memories: {start 0x1ED350, end 0x200000, length 0x12CB0}. Basis: callers + body --
 ;   MidiPkt_XferOnPanelMemBlock (message 12, state 2) points the block descriptor 0xBCEC with it, the send side
 ;   (MidiPkt_SendBlock_PanelMemories) 0xBCCC; MidiPkt_SetXferBlock_LivePanel's header calls it block 2.
-MidiPkt_SetXferBlock_PanelMemories:
-	lda	xbc, (0x1ed350:24)
-	ld	(xwa), xbc
-	add	xbc, 0x12cb0
-	ld	(xwa+4), xbc
-	ld	xbc, 0x12cb0
-	ld	(xwa+8), xbc
-	ret
+MidiPkt_SetXferBlock_PanelMemories:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_PanelMemories.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferTotal_SoundRam: Fills the transfer descriptor at XWA for the whole sound-RAM group: {+0 start
 ;   0x1E0000, +4 end 0x1E72AA, +8 length 0x72AA} (the 16-byte 'KN5000 SOUND RAM' id plus the data). Basis: callers +
 ;   body -- MidiPkt_XferOnSoundRamStart (message 13, state 0) points the receive total 0xBCDC with it before the block
 ;   descriptor 0xBCEC (MidiPkt_SetXferBlock_SoundRamId), and SysEx_SendSoundMemoryData points the send-side total 0xBCBC
 ;   with it; the shape of MidiPkt_SetXferTotal_Panel / _SeqData.
-MidiPkt_SetXferTotal_SoundRam:
-	lda	xbc, (0x1e0000:24)
-	ld	(xwa), xbc
-	ld	xbc, 0x72aa
-	ld	(xwa+8), xbc
-	ld	xbc, (xwa)
-	lda	xbc, (xbc+0x72aa)
-	ld	(xwa+4), xbc
-	ret
+MidiPkt_SetXferTotal_SoundRam:	.include "includes/generated/cc900/MidiPkt_SetXferTotal_SoundRam.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferBlock_SoundRamId: Fills the transfer descriptor at XWA for block 1 of the sound-RAM transfer: {start
 ;   0x1E0000, end 0x1E0010, length 16}, the 'KN5000 SOUND RAM' identifier. Basis: callers + body --
 ;   MidiPkt_XferOnSoundRamStart points the block descriptor 0xBCEC with it after the total, the send side
 ;   (MidiPkt_SendBlock_SoundRamId) 0xBCCC; SysEx_SendSoundMemoryData's header names this 16-byte id.
-MidiPkt_SetXferBlock_SoundRamId:
-	lda	xbc, (0x1e0000:24)
-	ld	(xwa), xbc
-	ld	xbc, 16
-	ld	(xwa+8), xbc
-	ld	xbc, (xwa)
-	lda	xbc, (xbc+16)
-	ld	(xwa+4), xbc
-	ret
+MidiPkt_SetXferBlock_SoundRamId:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SoundRamId.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferBlock_SoundRamData: Fills the transfer descriptor at XWA for block 2 of the sound-RAM transfer:
 ;   {start 0x1E0010, end 0x1E72AA, length 0x729A}, the data after the 16-byte id. Basis: callers + body --
 ;   MidiPkt_XferOnSoundRamDataBlock (message 14, state 5) points the block descriptor 0xBCEC with it, the send side
 ;   (MidiPkt_SendBlock_SoundRamData) 0xBCCC.
-MidiPkt_SetXferBlock_SoundRamData:
-	lda	xbc, (0x1e0000:24)
-	add	xbc, 16
-	ld	(xwa), xbc
-	ld	xbc, 0x729a
-	ld	(xwa+8), xbc
-	ld	xbc, (xwa)
-	lda	xbc, (xbc+0x729a)
-	ld	(xwa+4), xbc
-	ret
+MidiPkt_SetXferBlock_SoundRamData:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SoundRamData.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferTotal_StyleImage: Fills the transfer descriptor at XWA for the whole style-image group: {start
 ;   RHYTHM_PATTERN_BUF_A (0x94800), end 0xAB000, length 0x16800}; with bit 6 of 0xBD18 set the length is the used size
 ;   (MidiPkt_GetUsedSize_StyleImage). Basis: callers + body -- MidiPkt_XferOnStyleImageStart points the receive total
@@ -10469,26 +10148,12 @@ MidiPkt_SetXferTotal_SeqData_Epilogue4:
 ;   memory at 0xB0000). Basis: callers + body -- MidiPkt_ArpExtHandler_K (command 18, state 0) points the total
 ;   descriptor 0xBCDC (MidiPkt_SetXferTotal_SeqData) and the block descriptor 0xBCEC (this) and starts step 11; the
 ;   send side uses it at 11236.
-MidiPkt_SetXferBlock_CurrentSong:
-	lda	xbc, (SEQ_SONG_RECORD:16)
-	ld	(xwa), xbc
-	lda	xbc, (xbc+2048)
-	ld	(xwa+4), xbc
-	ld	xbc, 0x800
-	ld	(xwa+8), xbc
-	ret
+MidiPkt_SetXferBlock_CurrentSong:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_CurrentSong.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferBlock_SongSlots: Fills the transfer descriptor at XWA for the ten song slots: {start SEQ_SONG_SLOTS
 ;   (0xAB000), end 0xB0000, length 0x5000}, block 2 of the sequencer transfer. Basis: callers + body --
 ;   MidiPkt_ArpExtHandler_L (command 19, state 12) points the block descriptor 0xBCEC with it and continues step 12;
 ;   the send side uses it at 11253.
-MidiPkt_SetXferBlock_SongSlots:
-	lda	xbc, (SEQ_SONG_SLOTS:24)
-	ld	(xwa), xbc
-	lda	xbc, (xbc+20480)
-	ld	(xwa+4), xbc
-	ld	xbc, 0x5000
-	ld	(xwa+8), xbc
-	ret
+MidiPkt_SetXferBlock_SongSlots:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SongSlots.s"	; C: cc900/midi_dispatch_handlers.c
 ; MidiPkt_SetXferBlock_SeqEvents: Fills the transfer descriptor at XWA for block 3 of the sequencer transfer, the
 ;   event memory: {start 0xB0000, end 0xFD800, length 0x4D800}; with bit 6 of 0xBD18 set the length is the used size
 ;   (MidiPkt_GetUsedSize_SeqEvents). Basis: callers + body -- MidiPkt_XferOnSeqEventBlock (message 20, state 13)
@@ -10931,38 +10596,13 @@ Part_LookupReturnZero:
 	ld l, 0x0:opc
 	ret
 
-Part_ProcessEntry_Data:
-	ld	xhl, xwa
-	ld	wa, bc
-	dec	1, bc
-	cp	wa, 0:i3
-	ret	z
-Part_LookupTableEntry_Loop:
-	ld a, (xhl+)
-	ld (xde+), a
-	ld wa, bc
-	dec 1, bc
-	cp	wa, 0:i3
-	jr	nz, Part_LookupTableEntry_Loop
-	ret
-Param_SignExtendReturn_Helper3_Helper:
-	inc	1, xwa
-	ld	l, 0:opc
-	dec	1, bc
-	ld	de, bc
-	dec	1, bc
-	cp	de, 0:i3
-	jr	z, Part_LookupTableEntry_Skip
-Part_LookupTableEntry_Loop2:
-	add l, (xwa+)
-	ld de, bc
-	dec 1, bc
-	cp	de, 0:i3
-	jr	nz, Part_LookupTableEntry_Loop2
-Part_LookupTableEntry_Skip:
-	neg	l
-	res	7, l
-	ret
+Part_ProcessEntry_Data:	.include "includes/generated/cc900/Part_ProcessEntry_Data.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Part_LookupTableEntry_Loop, Part_ProcessEntry_Data + 10
+Param_SignExtendReturn_Helper3_Helper:	.include "includes/generated/cc900/Param_SignExtendReturn_Helper3_Helper.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Part_LookupTableEntry_Loop2, Param_SignExtendReturn_Helper3_Helper + 14
+	.set	Part_LookupTableEntry_Skip, Param_SignExtendReturn_Helper3_Helper + 25
 Param_SignExtendReturn_Helper3_Helper2:
 	calr	ArpQueue_Enqueue
 	ld	xwa, (0xbc5c:16)
@@ -11090,31 +10730,10 @@ MidiSeq_UpdateToneParam_Lower:
 	ld (0xbd0c:16), a
 	ret
 
-MidiSeq_UpdateVolumeScale:
-	lda xwa, (0xbd1c:16)
-	bitm 7, (xwa)
-	ret nz
-	bit 6, (0xbd18:16)
-	jr z, MidiSeq_VolScale_Lower
-	lda xbc, (0xbcbc:16)
-	ld xde, (xbc + 8)
-	srl xde, 5
-	ld (xbc + 12), xde
-	ld (0xbd04:16), 160
-	jr MidiSeq_VolScale_SetActive
-
-MidiSeq_VolScale_Lower:
-	lda xbc, (0xbcdc:16)
-	ld xde, (xbc + 8)
-	srl xde, 5
-	ld (xbc + 12), xde
-	ld (0xbd10:16), 160
-
-MidiSeq_VolScale_SetActive:
-	or xde, xde
-	ret z
-	setm 7, (xwa)
-	ret
+MidiSeq_UpdateVolumeScale:	.include "includes/generated/cc900/MidiSeq_UpdateVolumeScale.s"	; C: cc900/midi_dispatch_handlers_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiSeq_VolScale_Lower, MidiSeq_UpdateVolumeScale + 34
+	.set	MidiSeq_VolScale_SetActive, MidiSeq_UpdateVolumeScale + 52
 
 MidiSeq_ComputeExpression:
 	bit 6, (0xbd18:16)
@@ -11162,35 +10781,10 @@ MidiSeq_Expression_Lower:
 	ld (0xbd14:16), a
 	ret
 
-MidiSeq_CheckSyncDirty:
-	lda xbc, (0xbd1c:16)
-	bit 6, (0xbd18:16)
-	jr z, MidiSeq_CheckSyncDirty_Lower
-	ld a, (0xbd00:16)
-	cp a, (0xbd02:16)
-	jr nz, DSP_Init_ErrorFlagSet
-	ld a, (0xbd04:16)
-	cp a, (0xbd06:16)
-	jr nz, DSP_Init_ErrorFlagSet
-	ld a, (0xbd08:16)
-	cp a, (0xbd0a:16)
-	jr nz, DSP_Init_ErrorFlagSet
-	ret
-
-MidiSeq_CheckSyncDirty_Lower:
-	ld a, (0xbd0c:16)
-	cp a, (0xbd0e:16)
-	jr nz, DSP_Init_ErrorFlagSet
-	ld a, (0xbd10:16)
-	cp a, (0xbd12:16)
-	jr nz, DSP_Init_ErrorFlagSet
-	ld a, (0xbd14:16)
-	cp a, (0xbd16:16)
-	ret z
-
-DSP_Init_ErrorFlagSet:
-	setm 6, (xbc)
-	ret
+MidiSeq_CheckSyncDirty:	.include "includes/generated/cc900/MidiSeq_CheckSyncDirty.s"	; C: cc900/midi_dispatch_handlers.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiSeq_CheckSyncDirty_Lower, MidiSeq_CheckSyncDirty + 41
+	.set	DSP_Init_ErrorFlagSet, MidiSeq_CheckSyncDirty + 71
 
 ; MidiPkt_XferShowResult: End of a MIDI bulk transfer (send or receive): posts the ParaLoadOpt event, maps the
 ;   transfer status (field 4) to GLOBAL_ERROR_CODE (0 -> 0x23, else MidiRx_PartLookup_ByteMap[status]) and opens the
@@ -12860,16 +12454,7 @@ SeqBuf_Timing_Data:
 	ei	0
 	ret
 
-MidiChan_ClearStorageFields:
-	lda xwa, (0xbc68:16)
-	ld (xwa), 0xff
-	ld (xwa + 1), 0xff
-	ld (xwa + 2), 0xff
-	lda xwa, (0xbc64:16)
-	ld (xwa), 0xff
-	ld (xwa + 1), 0xff
-	ld (xwa + 2), 0xff
-	ret
+MidiChan_ClearStorageFields:	.include "includes/generated/cc900/MidiChan_ClearStorageFields.s"	; C: cc900/midi_dispatch_handlers.c
 
 MidiChan_InitAllBufferPtrs:
 	lda xwa, (0xb7f4:16)
@@ -12899,19 +12484,7 @@ MidiChan_InitAllBufferPtrs:
 	ld xbc, (0xbcb8:16)
 	jr ArpQueue_InitBuffer
 
-ArpQueue_InitBuffer:
-	ld xde, xbc
-	ldw (xwa), 0x0
-	lda xbc, (xwa + 14)
-	ld (xwa + 2), xbc
-	ld (xwa + 6), xbc
-	ld (xwa + 10), xbc
-	ld (xbc), 0xff
-	ld xiy, ArpQueue_InitTemplate
-	ld xix, xde
-	ldw bc, 0x8
-	ldirw
-	ret
+ArpQueue_InitBuffer:	.include "includes/generated/cc900/ArpQueue_InitBuffer.s"	; C: cc900/midi_dispatch_handlers.c
 
 MidiSeq_SwapActiveBuffers:
 	ld xbc, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -13365,13 +12938,7 @@ SoundMode_ProcessToneAndParams:
 	popw_erp 0xfa
 	ret
 
-TGReg_ClearTerminator:
-	lda xwa, (PANEL_PART_RT1:16)
-	sub xwa, 0xf9b4
-	lda xbc, (PANEL_RECALL_BACKUP:24)
-	add xwa, xbc
-	ld (xwa), 0xff
-	ret
+TGReg_ClearTerminator:	.include "includes/generated/cc900/TGReg_ClearTerminator.s"	; C: cc900/midi_dispatch_handlers.c
 
 TGReg_WriteCC0_Volume:
 	dec 4, xsp
@@ -13704,22 +13271,7 @@ VoiceData_ZeroFillNext:
 	jr c, VoiceData_ZeroFillOuter
 	ret
 
-SoundParam_ApplyBit15Toggle:
-	ld wa, (4597:16)
-	bit 15, wa
-	ret z
-	lda xbc, (PANEL_STYLE:16)
-	ld (xbc + 8), a
-	lda xde, (xbc + 9)
-	ld c, (xde)
-	res 0, c
-	ld (xde), c
-	ld wa, (4597:16)
-	srl wa, 8
-	and a, 0x1
-	or c, a
-	ld (xde), c
-	ret
+SoundParam_ApplyBit15Toggle:	.include "includes/generated/cc900/SoundParam_ApplyBit15Toggle.s"	; C: cc900/midi_dispatch_handlers.c
 
 SoundParam_Bit15Jump:
 	jr SoundParam_ApplyBit15Toggle
