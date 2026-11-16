@@ -63,7 +63,10 @@ def summary(funcs, rom, ref, base):
         else:
             first = next(i for i in range(len(mine)) if i >= len(r) or mine[i] != r[i])
             print('%-40s %4d B  DIFF at +%d' % (fn, len(mine), first)); bad += 1
-    print('%d of %d functions byte-identical' % (len(funcs) - bad, len(funcs)))
+    for fn, why in fw.REFUSED.items():
+        print('%-40s refused by the model: %s' % (fn, why)); bad += 1
+    n = len(funcs) + len(fw.REFUSED)
+    print('%d of %d functions byte-identical' % (n - bad, n))
     return 1 if bad else 0
 
 
@@ -81,6 +84,8 @@ def main():
     funcs = fw.compile_c(src, names, spell=False)
     if fn is None:
         return summary(funcs, rom, ref, base)
+    if fn in fw.REFUSED:
+        sys.exit('%s: the model refuses %s: %s' % (src, fn, fw.REFUSED[fn]))
     if fn not in funcs:
         sys.exit('%s: no function %s (it has: %s)' % (src, fn, ' '.join(funcs)))
     if fn not in ref:

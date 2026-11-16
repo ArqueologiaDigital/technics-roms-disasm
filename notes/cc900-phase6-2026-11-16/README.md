@@ -181,12 +181,50 @@ The same probe found three places where the model and V4.23 differ (bitfields, a
 a compare of a promoted shifted char).  They were reported to the coordinator, who assigned them to a model lane.
 None of them is in a built function.
 
-### Tried, not built yet
+## Larger targets and the -O question (2026-11-16, after milestone 2)
 
-`TrimAndPadSmfFilename` (55 B, two loops) through the model: the instruction choices differ from the ROM's from
-the first instruction (counter in HL, not IX; the read pointer in XDE, not XHL; the character compared in memory,
-not first loaded into E).  The C needs a character variable and probably a different loop shape.  This is the next
-kind of target: big enough to tell `-O3 -XS -Xr` from `-Xr`.
+The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
+checking aid.  `scripts/analysis/cc900/rel_vs_rom.py` compares a run's object file (asm900's bytes) with the ROM,
+function by function, and prints only MATCH or the first differing offset.  Three runs:
+- `2026-11-16-9-p6-m3`, `corpus/firmware/p6_m3.c`;
+- `2026-11-16-10-p6-m3b`, `p6_m3b.c`;
+- `2026-11-16-11-p6-m3c`, `p6_m3c.c`.
+
+All at the holdout options.  For example, from `scripts/analysis/cc900`:
+
+    python3 -I -B rel_vs_rom.py ~/compartilhado/cc900-oracle/runs/2026-11-16-10-p6-m3b/out/v423/O3XSXr/firmware/p6_m3b.rel \
+        FormatMedleyNumber fmt
+
+| function (v10)          | C                            | V4.23 -O3 -XS -Xr          | V4.23 -Xr      | reference model                     |
+|-------------------------|------------------------------|----------------------------|----------------|-------------------------------------|
+| `FormatMedleyNumber`    | `p6_m3b.c` `fmt_e`           | MATCH, 108 B               | MATCH, 108 B   | refuses (`goto`; at -O a register)  |
+| `TrimAndPadSmfFilename` | `p6_m3.c` `trim_a` (8 forms) | first 42 of 55 B identical | differs at +0  | refuses                             |
+
+- **`FormatMedleyNumber`.**  The C that gives the ROM's bytes uses `goto`.  The 0xff and 0xfe arms set the
+  character and fall into the space padding; any other entry jumps to the number code.  `if` / `else` and `switch`
+  forms give the same instructions, but V4.23 then places the padding after the first arm.  Both option sets give
+  the same bytes, so this function says nothing about `-O`.  The model refuses the C: without `-O`, `goto` is
+  unsupported; at `-O3 -XS -Xr`, "ld A,C over the live parameter p in WA".  That is a model gap, reported to the
+  coordinator.  The function stays hand assembly until the model compiles it.
+- **`TrimAndPadSmfFilename`** (`file_io/smf_operations.s`).  With a character variable and two pointers that start
+  equal, V4.23 at `-O3 -XS -Xr` gives the ROM's first 42 bytes:
+  - the whole first loop, whose compound `&&` condition is tested at the bottom, entered by a jump;
+  - the counter in IX, the read pointer in XHL, the character in E.
+  
+  At `-Xr` the bytes differ from the first instruction.  So this function was built with `-O`.  Its padding loop is
+  the only difference.  The ROM tests `i < n` before entering and again at the bottom.  V4.23 compiles every form
+  tried to a jump to a bottom test: `while`, `for`, an explicit `if (...) do ... while`, and two hand-made `goto`
+  loops.  That is a candidate `kn5000` rule (loop inversion for a simple condition, not for a compound one),
+  reported to the coordinator for the rule list.  The function stays hand assembly.
+
+**What this says about the options.**  `GetNamingWindowID` (`ui/ui_widget_defs.s`) matches only without `-O`, and
+`TrimAndPadSmfFilename` (`file_io/smf_operations.s`) only with it.  Two explanations fit:
+- the source files were built with different options;
+- the firmware's compiler at `-O` lacks V4.23's rule that loads a 32-bit constant of 8..0xffff with `lda`.
+
+Telling them apart needs one function that both loads such a constant and is shaped by `-O` (a loop, or a value
+kept in a register).  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
+functions; the choice is recorded in its `cc900-options:` comment.
 
 ## Finding candidates
 
