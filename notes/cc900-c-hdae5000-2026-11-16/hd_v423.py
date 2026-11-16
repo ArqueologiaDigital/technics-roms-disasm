@@ -218,6 +218,17 @@ def assemble_fn(full, body, rom, at, calr):
     `call T` whose place in the ROM holds a `calr` to the same T is written `calr` -- asm900's shortening of a call
     to a function of the same source file.  Returns (bytes, [relaxed call targets])."""
     import check_bytes, to_llvm
+    text = '\n'.join(body)
+    targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', text)})
+    if targets:       # module-local calls (the C file's cc900-module: list, to_llvm.MODULE): lay the function and its
+        at_abs = BASE + at   # targets out at their ROM addresses, as c_build_coverage.compare does
+        lo = min(targets + [at_abs])
+        self_ = '__cc900_at_%x:\n' % at_abs if at_abs in targets else ''
+        items = sorted([(t, '__cc900_at_%x:' % t) for t in targets if t != at_abs] +
+                       [(at_abs, '%s\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:' % (self_, full, full, text))])
+        src = '\t.text\n' + '\n'.join('\t.org 0x%x\n%s' % (a - lo, t) for a, t in items) + '\n'
+        src = to_llvm.relax(src, mc_errors)
+        return check_bytes.assemble(src)[full], ['%06x' % t for t in targets]
     head = '\t.text\n\t.globl %s\n%s:\n.Lhd_base:\n' % (full, full)   # a local base: calr to it resolves
     text = to_llvm.relax(head + '\n'.join(body) + '\n', mc_errors)
     lines = text.split('\n')[4:]
@@ -247,6 +258,7 @@ def assemble_fn(full, body, rom, at, calr):
 
 def check(a):
     import listing, to_llvm, check_bytes
+    import cc900_firmware_c as fw
     run = a[0]
     image = opt(a, '--image', 'v2.06i')
     tree, rom, ref, names = setup(image)
@@ -272,6 +284,10 @@ def check(a):
                     for pre in ('', '.', '_'):
                         names.values.setdefault(pre + cname, ref[lab])
             to_llvm.SPELL = None
+            mods = set()
+            for c in srcs:
+                mods |= set(fw.module_names(c))
+            to_llvm.MODULE = mods or None                # the C file's cc900-module: list
             text = open(asm, encoding='latin-1').read()
             to_llvm.WIDTHS = listing.attributes(text)
             for name, lines in listing.split(text).items():
@@ -323,7 +339,10 @@ def check(a):
                     res[key][(stem_k, label)] = (len(mine), 'MATCH sdata:%d' % len(marks) +
                                                  (' calr:' + ','.join(relaxed) if relaxed else ''))
                 elif mine == r:
-                    res[key][(stem_k, label)] = (len(mine), 'MATCH' + (' calr:' + ','.join(relaxed) if relaxed else ''))
+                    # relative calls the C's cc900-module: list gives are the build's own (a plain MATCH);
+                    # --calr's guessed ones are not
+                    res[key][(stem_k, label)] = (len(mine), 'MATCH' + (' calr:' + ','.join(relaxed)
+                                                                       if relaxed and not to_llvm.MODULE else ''))
                 else:
                     first = next(i for i in range(len(mine)) if i >= len(r) or mine[i] != r[i])
                     res[key][(stem_k, label)] = (len(mine), 'DIFF at +%d' % first)

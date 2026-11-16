@@ -15,6 +15,7 @@
    cc900-name: PP_Svc22=HDAE5000_PPORT_Svc22_WriteCloseHD
    cc900-name: PP_Svc23=HDAE5000_PPORT_Svc23_WriteFileHD
    cc900-name: PP_Svc25=HDAE5000_PPORT_Svc25_ReadFileHD
+   cc900-module: HDAE5000_DebugTrace
 */
 #include "hdae_ws.h"
 #include "hdae_ids.h"
