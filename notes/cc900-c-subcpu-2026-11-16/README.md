@@ -13,6 +13,7 @@ staging ledger.  The HD-AE5000 went to another lane on 2026-11-16; nothing about
 | `pools.py`    | the candidates not yet tried, split by hand source into the helpers' pools (`pools/pool_<TAG>.txt`) | `python3 -B notes/cc900-c-subcpu-2026-11-16/pools.py`                                                                                                  |
 | `modules.py`  | where the original C modules lie: `calr` joins routines, a near absolute `call` separates them      | `python3 -B notes/cc900-c-subcpu-2026-11-16/modules.py --md notes/cc900-c-subcpu-2026-11-16/modules.md`                                                |
 | `sub_v423.py` | which functions V4.23 reproduces from which C and option set (`corpus`, `check`, `record`, `one`)   | see its docstring                                                                                                                                      |
+| `per_file.py` | each probe file's own verdict per option set and function (idiom probes: one spelling per file)     | `python3 -B notes/cc900-c-subcpu-2026-11-16/per_file.py RUN_DIR 'sub_A_ia*' --tsv OUT.tsv`                                                             |
 
 `sub_v423.py` compares a V4.23 listing with the payload ROM through `model/to_llvm.py` and llvm-mc, as
 `scripts/analysis/cc900/asm_vs_rom.py` does for the main CPU, with the payload's address map: ROM offset 0 is
@@ -173,12 +174,17 @@ One probe file per C spelling of the same statement (`scripts/analysis/cc900/cor
 
 | class                                                                                     | probe functions                         | spelling that gives the ROM's form (-Xr)                                                                                                                                                     | evidence                                                                                                                   |
 |-------------------------------------------------------------------------------------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
-| (a) reload after store: ROM stores a value to a stack local and keeps using XWA           | TVF_Build_Short, Voice_PitchPack_RouteB | a `register` temporary that receives the value, the stack local assigned FROM it, later uses through the temporary: `u = P(v,23); t = u; f(v, u[17]);`                                       | ia06 MATCH both; the 17 other spellings (volatile, chains, comma, inner block, casts ...) stay at +15                      |
+| (a) reload after store: ROM stores a value to a stack local and keeps using XWA           | TVF_Build_Short, Voice_PitchPack_RouteB | a second plain local that receives the value, the kept local assigned FROM it, the next uses through the second one: `u = P(v,23); t = u; f(v, u[17]);`                                      | ia06 MATCH both; the 17 other spellings (volatile, chains, comma, inner block, casts ...) stay at +15                      |
 | (b) constant argument loaded in argument order (`ldw bc,0x79` before the other arguments) | DSP_TuneOffset, DSP_AlgoDescriptor_Emit | the constant through a local: `k = 0x79;` (initialised, assigned, const, register all work), with or without a prototype; casts, enum, #define, suffixes do not                              | ib06/07/08/14/19/20 move TuneOffset +8 -> +24 (its next, unrelated difference); the literal spellings stay at +8           |
 | (c) char argument passed unextended (`ld c,(xbc+wa)`, no `extz`)                          | Voice_ToneTableRamp_Down                | the callee's parameter declared plain (signed) `char` (prototype `(int, char)` / `(int, signed char)`, or a K&R definition `char depth;`), the argument an unsigned char expression, no cast | ic03 / ic04 / ic10 MATCH; unsigned char / int parameters, no prototype, casts at the call (ic13), a char table stay at +18 |
 
--O1 -Xr / -O2 -Xr: no spelling matches at either; the probe functions differ from their first bytes there.  So these are
--Xr idioms of the firmware's own C, not an option difference.  The matches are staged
+Class (b) is only half found.  In DSP_TuneOffset the local puts `ld bc,0x79` where the ROM has it, and the next
+difference (+24) is a separate one: the ROM copies the returned pointer XHL to XDE before reading through it.  In
+DSP_AlgoDescriptor_Emit the same local gets a register of its own (DE, loaded early: +13 becomes +11); the ROM loads
+the stack parameter into XHL first and then `ld bc,0x78`, so that function still needs another spelling.
+
+-O1 -Xr / -O2 -Xr: no spelling matches at either (class (a) +15 / +17, class (b) +0, class (c) +1 for every
+spelling).  So these are -Xr idioms of the firmware's own C, not an option difference.  The matches are staged
 (`v142/subcpu/cc900-staged/*_ia06.c`, `*_ic03.c`).  Round 13's switch near misses (sub_C_13*, sub_D_13*) did not
 match: TVF_Emit_Registers / _Type2 stay at +1 (frame size and XIZ vs IZ for the record pointer), DSP_VoiceCoeffRoute2
 at +2 (L vs H for `sel & 15`).
