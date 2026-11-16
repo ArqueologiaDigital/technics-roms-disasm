@@ -37,7 +37,9 @@ def main():
                 if f.endswith('.cc.log') and fnmatch.fnmatch(f[:-7], pat) and not os.path.exists(os.path.join(d, f[:-7] + '.asm')):
                     print('%s %s: V4.23 refused the file (see its .cc.log)' % (label, f[:-7]))
                 continue
-            r = subprocess.run([sys.executable, '-I', '-B', os.path.join(CC, 'asm_vs_rom.py'), os.path.join(d, f)],
+            src = os.path.join(CC, 'corpus', 'firmware', stem + '.c')     # its long names, cut to 31 by cc900
+            r = subprocess.run([sys.executable, '-I', '-B', os.path.join(CC, 'asm_vs_rom.py'), os.path.join(d, f)]
+                               + (['--cfile', src] if os.path.exists(src) else []),
                                capture_output=True, text=True, cwd=CC)
             for l in r.stdout.splitlines():
                 m = re.match(r'^(\S+)\s+(\d+) B\s+(MATCH|DIFF at \+(\d+))$', l)

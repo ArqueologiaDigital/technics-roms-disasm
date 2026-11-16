@@ -102,7 +102,10 @@ def main():
             print('%-32s cannot resolve %s' % (bare, e)); bad += 1; continue
         if any('untranslated' in l for l in body):
             print('%-32s to_llvm cannot translate a line' % bare); bad += 1; continue
-        mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+        try:
+            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+        except Exception:                                 # e.g. a register to_llvm spells as llvm-mc does not
+            print('%-32s llvm-mc cannot assemble the translation' % full); bad += 1; continue
         at = ref[full] - base
         r = rom[at:at + len(mine)]
         if mine == r:
