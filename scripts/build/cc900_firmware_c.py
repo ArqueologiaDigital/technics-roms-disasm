@@ -136,14 +136,17 @@ def tree_labels(tree):
 
 
 # the trees a tree's sources include (its llvm-mc -I order after itself; Makefile): their names are the C's too
+# (repository-relative): the older HD-AE5000 trees take hdae5000's sources; the main-CPU and sub-CPU programs take
+# the shared kernel, wsa1/kernel/kernel.s (-I wsa1/kernel: Kernel_SemaWait, TaskEvent_Signal ...)
 INCLUDE_TREES = {"hdae5000_v2_01i": ["hdae5000"], "hdae5000_v1_15i": ["hdae5000"],
-                 "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"]}
+                 "hdae5000_v1_10i": ["hdae5000_v1_15i", "hdae5000"],
+                 "maincpu": ["wsa1/kernel"], "subcpu": ["wsa1/kernel"]}
 
 
 def tree_chain(tree):
     """TREE and the trees it includes, nearest first"""
     t = os.path.normpath(tree)
-    return [t] + [os.path.join(os.path.dirname(t), x) for x in INCLUDE_TREES.get(os.path.basename(t), [])]
+    return [t] + [os.path.join(REPO, x) for x in INCLUDE_TREES.get(os.path.basename(t), [])]
 
 
 def merged_values(tree):
