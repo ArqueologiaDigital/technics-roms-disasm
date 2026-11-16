@@ -93,7 +93,8 @@ def operand(o, syms, locals_):
     m = re.match(r'^\(-(X\w+):(\d)\)$', o)                       # pre-decrement
     if m: return '(-%s:%s)' % (m.group(1).lower(), m.group(2))
     m = re.match(r'^\((X\w+)\+(0x[0-9a-fA-F]+|\d+)\)$', o)       # (xsp+4)
-    if m: return '(%s+%d)' % (m.group(1).lower(), num(m.group(2)))
+    if m and num(m.group(2)) == 0: return '(%s+0:8)' % m.group(1).lower()   # (XSP+0x0): asm900 keeps the d8 0
+    if m: return '(%s+%d)' % (m.group(1).lower(), num(m.group(2)))           # (MIDI_SendControlChange; `(xsp)` is 1 B shorter)
     m = re.match(r'^\((X\w+)-(0x[0-9a-fA-F]+|\d+)\)$', o)
     if m: return '(%s-%d)' % (m.group(1).lower(), num(m.group(2)))
     m = re.match(r'^\((X\w+)\+(\w+)\)$', o)                     # (xix+hl)
