@@ -46,10 +46,12 @@ the step.  V4.23 qualifies only the first declarator of a declaration, so a qual
 
 Calls.  V4.23 writes `cal` / `j`; asm900 makes them calr / jr (jrl when jr does not reach) for a function in the same
 file and section, call / jp for an extern -- call16 / jp16 for a __near or __tiny one (probe calrel, run
-2026-11-16-42-p6-calrel; scripts/analysis/cc900/calrel_check.py).  A C file holds only part of its original module,
-so a comment `cc900-module: Label1 Label2 ...` names the tree labels that shared the module and section; they count
-as the file's own (to_llvm.MODULE, module_names).  Each entry is a claim about the original build that `make gate`
-checks; its evidence is the hand assembly's calr / jr / jrl.
+2026-11-16-42-p6-calrel; scripts/analysis/cc900/calrel_check.py).  Our C files group functions by hand source, not
+by the firmware's original module (lane_sub: functions of one C file that call each other with an absolute call), so
+file membership says nothing: only a comment `cc900-module: Label1 Label2 ...` makes a callee module-local
+(to_llvm.MODULE = module_names).  It names the tree labels that shared the caller's original module and section.  Each
+entry is a claim about the original build that `make gate` checks; its evidence is the hand assembly's calr / jr /
+jrl, and an inferred module map (calr joins, a near absolute call separates) can propose the list.
 
 The environment variables the model reads (CC900_*) are cleared, so the build always runs the model's defaults;
 CC900_MODEL_CLANG is kept (the Makefile sets it to its own clang).
@@ -240,7 +242,7 @@ def compile_c(path, names, spell=True):
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
     to_llvm.WIDTHS = c_widths(path, model=True)
-    to_llvm.MODULE = {n.lstrip("_.") for n in out} | module_names(path)    # the file's functions and cc900-module:
+    to_llvm.MODULE = module_names(path)                  # only the marking, never file membership
     check_c_names(path, [f.name for f in unit.functions])
     labels = label_map(path)
     funcs = {}
@@ -387,8 +389,7 @@ def compile_v423(path, names, cache):
     text = open(lp, encoding="latin-1").read()
     to_llvm.SPELL = names
     to_llvm.WIDTHS = listing_widths(path, text)
-    import listing
-    to_llvm.MODULE = {n.lstrip("_.") for n in listing.split(text)} | set(cdefs) | module_names(path)
+    to_llvm.MODULE = module_names(path)                  # only the marking, never file membership
     funcs = {}
     for name, lines in listing_functions(text).items():
         n = name.lstrip("_.")

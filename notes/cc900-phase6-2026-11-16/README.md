@@ -785,10 +785,13 @@ shows the rule:
 Static and public targets behave alike.  The >32 KB case is still open: p6_calrel_far.c's 49 KB pad stopped V4.23
 (THC1-Fatal-150, "Too large string", one macro-expanded line); it needs a generated pad, one statement per line.
 
-The firmware's C files hold only part of each original module, so a callee that sat in the same module but is not in
-our C file is an extern to V4.23.  The comment `cc900-module: Label1 Label2 ...` (blank- or comma-separated, any
-number of comments) names such tree labels.  The build then treats them like the file's own functions:
-`model/to_llvm.py`'s MODULE gives `calr` / `jr`, and llvm-mc, which assembles each image as one unit, widens a jr to
+Our C files group functions by hand source, not by the firmware's original module.  lane_sub found functions of
+one C file that call each other with an absolute call, so they came from different modules.  So file membership
+says nothing.  A callee is module-local only when the comment `cc900-module: Label1 Label2 ...` (blank- or
+comma-separated, any number of comments) names it: a tree label that shared the caller's original module and
+section.  An inferred module map (lane_sub's modules.py, lane_p6's modules_main.py: a calr joins two routines into
+one module, a near absolute call separates them) can propose the list.  For a named callee, `model/to_llvm.py`'s
+MODULE gives `calr` / `jr`, and llvm-mc, which assembles each image as one unit, widens a jr to
 jrl where it does not reach.  It does that only for labels that are not `.globl`, as the trees' are.  An entry is a
 claim about the original build, and `make gate` checks it; its evidence is the hand assembly's calr / jr / jrl to
 that label.  Both paths read it (`cc900_firmware_c.module_names`), so the model and V4.23 still give the same

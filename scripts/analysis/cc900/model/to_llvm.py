@@ -60,8 +60,9 @@ def sym_width(sym):
     if n not in WIDTHS: raise KeyError('no declared width (small / medium / large) for %s' % sym)
     return WIDTHS[n]
 
-# MODULE (phase 6): the names asm900 sees in the same section of the same assembly -- the functions of the C file, and
-# the ones its `cc900-module:` comment says were in the firmware's original module -- or None.  asm900 assembles the
+# MODULE (phase 6): the names asm900 saw in the same section of the same assembly -- in the firmware build, the ones
+# the C file's `cc900-module:` comment says shared the caller's original module (never merely the C file's other
+# functions: our files group by hand source, not by module) -- or None.  asm900 assembles the
 # optimising CAL / J to such a target as calr / jr, jrl when jr does not reach; to anything else (an extern) as call /
 # jp, 24-bit for a large target and 16-bit (call16 / jp16) for a __near or __tiny one (probe calrel, run
 # 2026-11-16-42-p6-calrel; ASM900 -O turns the optimisation off).  We write jr and let llvm-mc widen it.
@@ -188,7 +189,8 @@ def translate_line(t, syms, locals_):
     if op in ('jr', 'jrl'):                                # inline assembly writes jr / jrl itself (_MEMSET.C)
         return '\t%s %s' % (op, raw[0]) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], raw[1])
     if op in ('sll', 'srl', 'sla', 'sra', 'rlc', 'rrc', 'rl', 'rr') and len(raw) == 2 and NUM.match(raw[0]):
-        return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]))   # Toshiba: count first (srl 2,BC)
+        return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]) or 16)   # Toshiba: count first (srl 2,BC); V4.23
+        # writes a shift by 16 as the raw count field 0, which llvm-mc refuses (lane_sub: DSP_UnpackParam3B)
     if op in ('sla', 'sll', 'sra', 'srl') and len(raw) == 2 and raw[0] == 'A' and REGS.match(raw[1]):
         return '\t%sa %s' % ({'sla': 'sla', 'sll': 'sll', 'sra': 'sra', 'srl': 'srl'}[op], raw[1].lower())
         # a count in A: llvm-mc's slaa / slla / sraa / srla r (d8+r fc..ff; firmware FileIO_*: slla bc = d9 fe)
