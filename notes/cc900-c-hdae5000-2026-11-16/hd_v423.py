@@ -18,7 +18,8 @@ bytes are compared with the image at the function's label.
         is only real once those targets are in the same C file.  An operand naming the compiler's own data (a
         switch table S50000, an initialiser S1), which to_llvm cannot place, is masked: `MATCH sdata:<n>` means
         the code is identical and the n data operands are not checked.  --tsv
-        writes (c_file, options, function, bytes, result) rows.  --compiler NAME reads another compiler's listings
+        writes (c_file, options, function, bytes, result) rows.  --dir SUB: only the listings of corpus directory SUB
+        (hd, or a ported tree's name: its staged copies).  --compiler NAME reads another compiler's listings
         of the run (ide2003, v110; diagnostics only: a function is done only under V4.23).  --record appends the rows of the STAGED files
         (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree directory, C file,
         SHA-256 of its text, options, run, function, bytes, result), replacing that file's earlier rows.
@@ -65,8 +66,12 @@ def corpus(a):
     names = []
     for f in a[2:]:
         if f.endswith('.c'):
-            open(os.path.join(d, 'hd', os.path.basename(f)), 'w', encoding='latin-1').write(expand(f))
-            names.append('hd/' + os.path.basename(f))
+            # a ported tree's staged copy goes to a directory named after its tree (same base names as v2.06i's)
+            parts = os.path.abspath(f).split(os.sep)
+            sub = parts[-3] if parts[-2] == 'cc900-staged' and parts[-3] != 'hdae5000' else 'hd'
+            os.makedirs(os.path.join(d, sub), exist_ok=True)
+            open(os.path.join(d, sub, os.path.basename(f)), 'w', encoding='latin-1').write(expand(f))
+            names.append(sub + '/' + os.path.basename(f))
     open(os.path.join(d, 'sources.txt'), 'w').write('\n'.join(names) + '\n')
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, LABELS[l]) for l in labels))
     print('flock /home/fsanches/compartilhado/cc900-oracle/vm/.runlock bash scripts/analysis/cc900/oracle/run_oracle.sh '
@@ -255,6 +260,8 @@ def check(a):
         for asm in sorted(glob.glob(os.path.join(base, label, '**', '*.asm'), recursive=True)):
             stem = os.path.basename(asm)[:-4]
             if not fnmatch.fnmatch(stem, only):
+                continue
+            if opt(a, '--dir') and os.path.basename(os.path.dirname(asm)) != opt(a, '--dir'):
                 continue
             srcs = glob.glob(os.path.join(REPO, 'notes', 'cc900-c-hdae5000-2026-11-16', 'probes', stem + '.c')) + \
                 glob.glob(os.path.join(REPO, tree, 'cc900-staged', stem + '.c')) + \
