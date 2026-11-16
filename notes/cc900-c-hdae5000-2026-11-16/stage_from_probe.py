@@ -37,7 +37,8 @@ def split(text):
         m = DEF.match(lines[i]) or DEF2.match(lines[i])
         if m and not lines[i].startswith('extern') and not lines[i].rstrip().endswith(';'):
             j = i
-            while j < len(lines) and not lines[j].startswith('}'):
+            # the closing brace: in column 0, or ` }` as macro expansion left it (hd_r13b_song.c and later)
+            while j < len(lines) and not re.match(r'^ ?\}\s*$', lines[j]):
                 j += 1
             if cur:
                 out.append(('other', None, '\n'.join(cur)))

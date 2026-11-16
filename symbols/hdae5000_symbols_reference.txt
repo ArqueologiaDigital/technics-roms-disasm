@@ -5,8 +5,8 @@
 # scripts/analysis/l2_symbol_reference.py --regen
 # Do not hand-edit: rename in the sources and regenerate.
 #
-#   symbols .................. 7,199
-#   semantic names ........... 7,199 (100.0%)
+#   symbols .................. 7,200
+#   semantic names ........... 7,200 (100.0%)
 #   positional names ......... 0
 #
 HDAE5000_ROM_HEADER 00280000
@@ -456,6 +456,7 @@ HDAE5000_LyricJumpEditCheck_Ev01E00046 00285F7F
 HDAE5000_LyricJumpEditCheck_OnRamDataReq 00285F83
 HDAE5000_LyricJumpEditCheck_Default 00285F87
 HDAE5000_LyricJumpEditCheck_Epilogue 00285F89
+HDAE5000_LyricJumpEditCheck_Unregistered 00285F8B
 HDAE5000_LyricJumpEditCheck_Default_OnRamDataReq 00285FBF
 HDAE5000_LyricJumpEditCheck_Default_OnSwIn 00285FC3
 HDAE5000_LyricJumpEditCheck_Default_Done 00285FE2

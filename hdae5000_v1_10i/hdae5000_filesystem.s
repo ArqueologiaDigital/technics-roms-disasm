@@ -2328,72 +2328,13 @@ HDAE5000_FlsLoadScreen_Done:
 	inc	6, xsp
 	ret
 
-HDAE5000_FlsFileLoadSwCatch:
-	; registered as "FlsFileLoadSwCatch" in HDAE5000_ObjHandler_Table
-	dec 8, xsp
-	push xiz
-	ld (xsp + 0x04), xde
-	ld	xiz, xbc
-	ld (xsp + 0x08), xwa
-	ld	xwa, xiz
-	cp	xwa, EVT_SW_IN
-	jr	z, HDAE5000_FlsFileLoadSwCatch_OnSwIn
-	cp	xwa, EVT_DRAW
-	jr	z, HDAE5000_FlsFileLoadSwCatch_OnDraw
-	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jrl	nz, HDAE5000_FlsFileLoadSwCatch_Join2
-	ld	xhl, 1:i3
-	jrl	t, HDAE5000_FlsFileLoadSwCatch_Epilogue
-HDAE5000_FlsFileLoadSwCatch_OnDraw:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	lda xwa, (HDAE5000_Str_FLS:24)
-	ld	xbc, xwa
-	ld xwa, (xsp + 0x08)
-	ld	xde, xbc
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FlsFileLoadSwCatch_Epilogue
-HDAE5000_FlsFileLoadSwCatch_OnSwIn:
-	ld xde, (xsp + 0x04)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xix, (xwa + RootFn_SendEvent)
-	ld	xwa, 0x02600024
-	ld	xbc, EVT_MAKE_EDIT_SW_ID
-	call	(xix)
-	cp	xhl, 0x00000007
-	jr	z, HDAE5000_FlsFileLoadSwCatch_Join
-	cp	xhl, 0x00000006
-	jr	nz, HDAE5000_FlsFileLoadSwCatch_Join2
-HDAE5000_FlsFileLoadSwCatch_Join:
-	ld	(HDAE5000_RAM_FlsAutoLoadPending:24), 0
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_PlayHalt)
-	ld	wa, 0:i3
-	call	(xhl)
-HDAE5000_FlsFileLoadSwCatch_Join2:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-HDAE5000_FlsFileLoadSwCatch_Epilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+HDAE5000_FlsFileLoadSwCatch:	.include "includes/generated/cc900/HDAE5000_FlsFileLoadSwCatch.s"	; C: cc900/hdae5000_fs_screens3.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FlsFileLoadSwCatch_OnDraw, HDAE5000_FlsFileLoadSwCatch + 43
+	.set	HDAE5000_FlsFileLoadSwCatch_OnSwIn, HDAE5000_FlsFileLoadSwCatch + 106
+	.set	HDAE5000_FlsFileLoadSwCatch_Join, HDAE5000_FlsFileLoadSwCatch + 152
+	.set	HDAE5000_FlsFileLoadSwCatch_Join2, HDAE5000_FlsFileLoadSwCatch + 177
+	.set	HDAE5000_FlsFileLoadSwCatch_Epilogue, HDAE5000_FlsFileLoadSwCatch + 202
 
 HDAE5000_FlsEditScreen:
 	; registered as "FlsEditScreen" in HDAE5000_ScreenProc_Table
