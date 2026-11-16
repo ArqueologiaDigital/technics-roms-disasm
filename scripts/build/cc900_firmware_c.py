@@ -673,8 +673,9 @@ REL_RE = re.compile(r'^\t(calr|jr|jrl)\s+(?:(\w+),\s*)?([A-Za-z_]\w*)\s*$')    #
 def far_fallback(fn, lines):
     """asm900's rule beyond reach (probe calrel-far2, run 2026-11-16-61-p6-calrel-far2): a module-local CAL / J whose
     target is more than 16 bits away is call / jp.  With the tree's addresses (ADDRS; the function sits at its
-    ROM address), every unconditional calr / jr / jrl to a label is checked from the instruction's own offset and
-    rewritten when out of reach; repeated until nothing changes.  The sizes are llvm-mc's before relaxation (a jr counts 2 bytes), so a
+    ROM address), every calr / jr / jrl (conditional too) to a label is checked from the instruction's own offset and
+    rewritten when out of reach: call / jp / jp cc,(F:24) beyond 16 bits, a jr beyond 8 bits as jrl (asm900 picks
+    jrl itself; written here so the first layout pass is exact); repeated until nothing changes.  The sizes are llvm-mc's before relaxation (a jr counts 2 bytes), so a
     target within a few bytes of the limit is judged from a position a byte or so early.  Without ADDRS, or with
     data directives in the body, lines stay as they are (llvm-mc then stops on an out-of-range calr: a visible
     failure, never a wrong byte)."""
@@ -697,6 +698,11 @@ def far_fallback(fn, lines):
                 if not -0x8000 <= d <= 0x7fff:
                     lines[i] = ("\t%s\t%s" % ("call" if m.group(1) == "calr" else "jp", m.group(3)) if not m.group(2)
                                 else "\tjp\t%s, (%s:24)" % (m.group(2), m.group(3)))   # J cc beyond reach: jp cc,#24
+                    changed = True
+                elif m.group(1) == "jr" and not -128 <= d <= 127:
+                    # beyond jr's reach: jrl written here, as short_jr_out_of_reach() does for local labels (lane_p6,
+                    # 188af8276), so the first layout pass counts the 3 bytes the jump will take
+                    lines[i] = "\tjrl\t%s" % ("%s, %s" % (m.group(2), m.group(3)) if m.group(2) else m.group(3))
                     changed = True
             off += n
         if not changed:
