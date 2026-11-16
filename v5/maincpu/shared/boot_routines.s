@@ -61,9 +61,7 @@ Detect_Region_Code__mode4:
 ; Entry: None
 ; Exit:  L = region code (1-4)
 ; -----------------------------------------------------------------------------
-Get_Region_Code:
-	ld l, (REGION_CODE_VAR:16)
-	ret
+Get_Region_Code:	.include "includes/generated/cc900/Get_Region_Code.s"	; C: cc900/boot_routines.c
 
 ; -----------------------------------------------------------------------------
 ; Empty_Handler - Empty interrupt handler

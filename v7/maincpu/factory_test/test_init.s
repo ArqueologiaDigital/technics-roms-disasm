@@ -623,9 +623,7 @@ LoadExtROM_JumpEntry:
 
 ; Xapr_GetPresentFlag: Returns L = XAPR_PRESENT_FLAG (RAM 0x3DD04): 1 when an extension ROM with the "XAPR" id was
 ;   found at 0x280000. Basis: callers + body -- the panel AA event-15 handlers and FileIO_DiskRemoved branch on L.
-Xapr_GetPresentFlag:
-	ld l, (XAPR_PRESENT_FLAG:24)
-	ret
+Xapr_GetPresentFlag:	.include "includes/generated/cc900/Xapr_GetPresentFlag.s"	; C: cc900/test_init.c
 
 Xapr_DetectOnInit:
 	pushw	4

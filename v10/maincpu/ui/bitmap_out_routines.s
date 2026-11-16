@@ -271,16 +271,12 @@ BitMapOut_CheckDiskAndApply:
 	ld xde, 0:i3
 	jp ApPostEvent
 ; Returns in L the byte at 0x8d3e (BitMapOut_StorePresetValue writes it).
-BitMapOut_ByteData_DiskCheck:
-	ld	l, (0x8d3e:16)
-	ret
+BitMapOut_ByteData_DiskCheck:	.include "includes/generated/cc900/BitMapOut_ByteData_DiskCheck.s"	; C: cc900/bitmap_out_routines.c
 
 ; Stores A at 0x8d3e, which BitMapOut_ByteData_DiskCheck reads back.
 BitMapOut_StorePresetValue:	.include "includes/generated/cc900/BitMapOut_StorePresetValue.s"	; C: cc900/bitmap_out_routines.c
 
-BitMapOut_SetDefaultTimer:
-	ld (0x8d3c:16), 64
-	ret
+BitMapOut_SetDefaultTimer:	.include "includes/generated/cc900/BitMapOut_SetDefaultTimer.s"	; C: cc900/bitmap_out_routines.c
 
 BitMapOut_DecrementTimer:
 	call GetTitleNow
@@ -3589,20 +3585,14 @@ BitMapOut_PrepareRender_CheckBit0:
 
 ; Returns in L the byte at 0x8d48, written by BitMapOut_PrepareRender_CheckBit2.  No bit is
 ; tested, despite the name.
-BitMapOut_PrepareRender_CheckBit1:
-	ld l, (0x8d48:16)
-	ret
+BitMapOut_PrepareRender_CheckBit1:	.include "includes/generated/cc900/BitMapOut_PrepareRender_CheckBit1.s"	; C: cc900/bitmap_out_routines.c
 
 ; Stores A at 0x8d48 (BitMapOut_PrepareRender_CheckBit1 reads it back).
-BitMapOut_PrepareRender_CheckBit2:
-	ld (0x8d48:16), a
-	ret
+BitMapOut_PrepareRender_CheckBit2:	.include "includes/generated/cc900/BitMapOut_PrepareRender_CheckBit2.s"	; C: cc900/bitmap_out_routines.c
 
 ; Returns in L the flag byte at 0x8d4a.  BitMapOut_GetRenderMode_CheckBit3 sets bits in it and
 ; BitMapOut_GetRenderMode_Return clears them.
-BitMapOut_GetRenderMode:
-	ld l, (0x8d4a:16)
-	ret
+BitMapOut_GetRenderMode:	.include "includes/generated/cc900/BitMapOut_GetRenderMode.s"	; C: cc900/bitmap_out_routines.c
 
 ; ORs A into the flag byte at 0x8d4a and returns the result in L.
 BitMapOut_GetRenderMode_CheckBit3:
