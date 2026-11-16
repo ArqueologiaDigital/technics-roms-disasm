@@ -351,8 +351,14 @@ def main():
             # symbol: it is inner when any branch up to that next label targets it, backwards or forwards --
             # SwapBytes32's `.LSwapBytes32__loop`, reached only by the `jr lt` after it)
             nxt = i + 1
-            while nxt < len(lines) and not (LABEL_RE.match(lines[nxt]) and
-                                            not LABEL_RE.match(lines[nxt]).group(1).startswith(b".L")):
+            def outside(l):                              # a label that is not the function's own: not a `.L` one,
+                m_ = LABEL_RE.match(l)                   # and not a named label the reference places inside the
+                if not m_ or m_.group(1).startswith(b".L"):   # compiled extent (AttenHDFormatSwCatch_OnCodeDigit0Or1)
+                    return False
+                a_ = ref.get(m_.group(1).decode())
+                return a_ is None or a_ >= end
+
+            while nxt < len(lines) and not outside(lines[nxt]):
                 nxt += 1
             region = b"\n".join(l.split(b";")[0] for l in lines[i:nxt])
             while True:

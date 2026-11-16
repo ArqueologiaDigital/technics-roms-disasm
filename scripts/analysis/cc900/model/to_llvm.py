@@ -396,8 +396,8 @@ def translate_data(lines, locals_):
             # sub-CPU's AudioChannel_CaseOffsets sits at the odd 0xF703.  The tree's label is the object's place, so
             # no padding is written here (a .balign would shift the table and everything after it by a byte)
             out.append('\t; V4.23: align %s (within its f_const section; the label places the object)' % p[1]); continue
-        if op in ('fdata', 'fdatad'):
-            b = struct.pack('<d' if op == 'fdatad' else '<f', float(p[1]))
+        if op in ('fdata', 'fdatas', 'fdatad'):          # fdatas 1.0...e+002F: single precision, the value with an F
+            b = struct.pack('<d' if op == 'fdatad' else '<f', float(p[1].strip().rstrip('FfDdLl')))
             out.append('\t.byte ' + ', '.join('0x%02x' % x for x in b) + '\t; %s %s' % (op, p[1].strip())); continue
         out.append(translate_line(l, {}, locals_))
     return out

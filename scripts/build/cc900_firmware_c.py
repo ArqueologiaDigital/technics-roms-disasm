@@ -221,6 +221,10 @@ def runtime_names(tree):
     import fnmatch
     rel_tree = os.path.relpath(os.path.abspath(tree), REPO)
     parts = rel_tree.split(os.sep)
+    if parts[0] == os.pardir:                            # a copy of a tree outside the repository (a lane's branch
+        k = 2 if parts[-1] in ("maincpu", "subcpu") else 1   # extracted for a check): its own last components,
+        parts = parts[-k:]                                   # v10/maincpu or hdae5000_v2_01i, name it
+        rel_tree = os.sep.join(parts)
     v, cpu = (parts[-2], parts[-1]) if len(parts) >= 2 else (parts[-1], "")
     image = "%s %s" % (cpu, v)
     out = {}
