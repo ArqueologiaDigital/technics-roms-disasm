@@ -688,7 +688,6 @@ v142	v142/subcpu/cc900-staged/voice_ctrlchange.c	c8015690ce5c931c3612d1379a7b5d1
 v142	v142/subcpu/cc900-staged/voice_ctrlchange.c	c8015690ce5c931c3612d1379a7b5d15050fc73bd928c16d9c627252a650cce3	Xr	2026-11-16-73-sub-r6	Voice_Slot_LoadPitchOffset_A	12	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange.c	c8015690ce5c931c3612d1379a7b5d15050fc73bd928c16d9c627252a650cce3	Xr	2026-11-16-73-sub-r6	Voice_Slot_LoadPitchOffset_B	12	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange.c	c8015690ce5c931c3612d1379a7b5d15050fc73bd928c16d9c627252a650cce3	Xr	2026-11-16-73-sub-r6	Voice_UpdateFlagsFromSlot	107	MATCH
-v142	v142/subcpu/cc900-staged/voice_ctrlchange_b.c	0613b5efd53038dd62bc09b3daec89cc628f25e0760e50903e3780acf939cd27	Xr	2026-11-16-51-sub-staged1	Voice_KeyIndex_Pack3Nibbles	39	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels.c	fb2b4ffce98bbd62b94a90a23dda8b3314c7c3755f131a2e958a283c9313b38f	Xr	2026-11-16-73-sub-r6	Audio_Clamp_To_Range	17	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels.c	fb2b4ffce98bbd62b94a90a23dda8b3314c7c3755f131a2e958a283c9313b38f	Xr	2026-11-16-73-sub-r6	Pitch_Bend_Ramp_Tick	231	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels.c	fb2b4ffce98bbd62b94a90a23dda8b3314c7c3755f131a2e958a283c9313b38f	Xr	2026-11-16-73-sub-r6	ScaleTune_Get_Global_Mode	6	MATCH

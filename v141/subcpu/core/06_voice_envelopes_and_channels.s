@@ -2249,24 +2249,13 @@ Voice_Calc_LevelPair_EGA_WriteDSP:
 	inc 8, xsp
 	ret
 
-Voice_Stage_EnvSegments:
-	ld bc, (xwa + 62)
-	ld (Payload_Bss_Start+0x6370:24), bc
-	ld wa, (xwa + 64)
-	ld (Payload_Bss_Start+0x6372:24), wa
-	ret
+Voice_Stage_EnvSegments:	.include "includes/generated/cc900/Voice_Stage_EnvSegments.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Voice_WriteVolume_SetFlag(XWA = voice-slot record). Two-instruction helper: copies the
 ; already-computed pair-1 word from slot+64 into shadow 0x0451F8 with bit 7 forced set,
 ; and the same word verbatim into 0x0451FA. Used to re-assert an existing level without
 ; recomputing it. Sole caller: Voice_AllNotes_SustainRetrigger_BranchE.
-Voice_WriteVolume_SetFlag:
-	ld bc, (xwa + 64)
-	set 7, bc
-	ld (Payload_Bss_Start+0x6382:24), bc
-	ld wa, (xwa + 64)
-	ld (Payload_Bss_Start+0x6384:24), wa
-	ret
+Voice_WriteVolume_SetFlag:	.include "includes/generated/cc900/Voice_WriteVolume_SetFlag.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Voice_ComputeVolume_CappedLFO(XWA = voice-slot record). Variant of
 ; Voice_Calc_LevelPair_EGA used on the voice-cut path (sole caller:
@@ -2658,21 +2647,7 @@ Voice_Calc_LevelPair_EGC_WriteDSP:
 	inc 8, xsp
 	ret
 
-Voice_Calc_LevelPair_Silence:
-	ldw (Payload_Bss_Start+0x6386:24), 0x0000
-	ldw (Payload_Bss_Start+0x6388:24), 0x0000
-	ld c, (xwa + 70)
-	extz bc
-	sll bc, 8
-	set 7, bc
-	ld (Payload_Bss_Start+0x6382:24), bc
-	ld a, (xwa + 70)
-	extz wa
-	sll wa, 8
-	ld (Payload_Bss_Start+0x6384:24), wa
-	ldw (Payload_Bss_Start+0x638a:24), 0x0000
-	ldw (Payload_Bss_Start+0x638c:24), 0x0000
-	ret
+Voice_Calc_LevelPair_Silence:	.include "includes/generated/cc900/Voice_Calc_LevelPair_Silence.s"	; C: cc900/voice_envelopes_and_channels_b.c
 
 ; Voice_WriteVolume_OrPan(XWA = voice-slot record). If bit 5 of (slot+19)[+13] is set,
 ; stage pair 1 from table_0x0118FE[paramA+13]: 0x0451FA = (v<<8), 0x0451F8 = (v<<8)|0x80.
@@ -2683,31 +2658,9 @@ Voice_Calc_LevelPair_Silence:
 ; Curve can produce, so "fully open" is an extrapolation past the end of the curve rather
 ; than a level the builders ever emit.
 ; Sole caller: Voice_AllNotes_SustainRetrigger_BranchF.
-Voice_WriteVolume_OrPan:
-	ld xbc, (xwa + 19)
-	ld xwa, (xwa + 23)
-	bitm 5, (xbc + 13)
-	jr z, Voice_WriteVolume_OrPan_Muted
-	ld a, (xwa + 13)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	sll wa, 8
-	ld (Payload_Bss_Start+0x6384:24), wa
-	set 7, wa
-	ld (Payload_Bss_Start+0x6382:24), wa
-	ret
-
-; Bit-5-clear arm: target 0x00 with the "apply now" bit set. Under the 0xFF = silent
-; polarity that is the loud extreme, not muted -- [INFERENCE] 0x00 lies past the loud end
-; of the level curve, so this is an extrapolation, not a value the builders emit.
-; NO RENAME PROPOSED -- the label is a `jr z` branch target, so only the comment is
-; corrected here.
-Voice_WriteVolume_OrPan_Muted:
-	ldw (Payload_Bss_Start+0x6382:24), 0x0080
-	ldw (Payload_Bss_Start+0x6384:24), 0x0000
-	ret
+Voice_WriteVolume_OrPan:	.include "includes/generated/cc900/Voice_WriteVolume_OrPan.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_WriteVolume_OrPan_Muted, Voice_WriteVolume_OrPan + 45
 
 ; Voice_AdvanceLFOPhase(XWA = 9-byte LFO sub-record) -> HL = phase output.
 ; The sub-record fields used are: +0 flags/mode, +7 period, +8 phase counter.
@@ -2718,61 +2671,13 @@ Voice_WriteVolume_OrPan_Muted:
 ;        flag bit 4 and set bit 3.
 ;   anything else: return 0 (idle).
 ; Called only from the three loops of Voice_UpdateAllLFO.
-Voice_AdvanceLFOPhase:
-	ld c, (xwa)
-	and c, 0x1C
-	cp c, 0x8
-	jr z, Voice_AdvanceLFOPhase_Triangle
-	cp c, 0x10
-	jr nz, Voice_AdvanceLFOPhase_Idle
-	lda xbc, (xwa + 8)
-	incm8 1, (xbc)
-	ld c, (xbc)
-	cp c, (xwa + 7)
-	jr c, Voice_AdvanceLFOPhase_IncDone
-	ld (xwa + 8), 0x0
-	resm 4, (xwa)
-	setm 3, (xwa)
-
-; Ramp/hold mode still running: return 0.
-Voice_AdvanceLFOPhase_IncDone:
-	ld hl, 0:i3
-	jr Voice_AdvanceLFOPhase_Done
-
-; Triangle mode: advance and return the scaled phase (phase<<8)/period.
-Voice_AdvanceLFOPhase_Triangle:
-	lda xbc, (xwa + 8)
-	incm8 1, (xbc)
-	ld c, (xbc)
-	cp c, (xwa + 7)
-	jr nc, Voice_AdvanceLFOPhase_TriangleReset
-	ld l, (xwa + 8)
-	extz hl
-	sll hl, 8
-	ld a, (xwa + 7)
-	ld c, a
-	extz bc
-	ld wa, hl
-	extz xwa
-	div xwa, bc
-	ld hl, wa
-	jr Voice_AdvanceLFOPhase_Done
-
-; Triangle wrap: phase = 0, flag bit 3 -> bit 2, return 0x100 (full scale).
-Voice_AdvanceLFOPhase_TriangleReset:
-	ld (xwa + 8), 0x0
-	resm 3, (xwa)
-	setm 2, (xwa)
-	ldw hl, 0x100
-	jr Voice_AdvanceLFOPhase_Done
-
-; Unrecognised mode: return 0.
-Voice_AdvanceLFOPhase_Idle:
-	ld hl, 0:i3
-
-; Common return.
-Voice_AdvanceLFOPhase_Done:
-	ret
+Voice_AdvanceLFOPhase:	.include "includes/generated/cc900/Voice_AdvanceLFOPhase.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_AdvanceLFOPhase_IncDone, Voice_AdvanceLFOPhase + 35
+	.set	Voice_AdvanceLFOPhase_Triangle, Voice_AdvanceLFOPhase + 39
+	.set	Voice_AdvanceLFOPhase_TriangleReset, Voice_AdvanceLFOPhase + 76
+	.set	Voice_AdvanceLFOPhase_Idle, Voice_AdvanceLFOPhase + 89
+	.set	Voice_AdvanceLFOPhase_Done, Voice_AdvanceLFOPhase + 91
 
 ; Voice_UpdateAllLFO(). The per-tick LFO service; the single heaviest thing in the audio
 ; tick. Sole caller: Audio_Tick_ServiceVoices_A.
@@ -3404,98 +3309,14 @@ Voice_Step_ExprRamp_StoreDone:
 	inc 6, xsp
 	ret
 
-Pitch_Bend_Ramp_Tick:
-	ld wa, (Voice_GlobalFlags:24)
-	bit 11, wa
-	jr z, Pitch_Bend_Ramp_Tick_Bit12
-	incw 1, (Payload_Bss_Start+0x24e6:24)
-	ld a, (Voice_KeyShiftRamp_Steps:24)
-	exts wa
-	add wa, wa
-	ld (Payload_Bss_Start+0x24e4:24), wa
-	andw (Voice_GlobalFlags:24), 63487
-	orw (Voice_GlobalFlags:24), 5120
-	ret
-
-; Body of Pitch_Bend_Ramp_Tick (entry 0x0271BC, already named -- left alone). That
-; routine is the once-per-audio-tick step of the KEY SHIFT / transpose ramp, driven
-; entirely by the global mode word at 0x041343:
-;   bit 11 = "shift requested" (set by Voice_SetKeyShiftEnable). Loads the first entry of
-;            the signed semitone table at 0x011C7C, doubles it into the global pitch
-;            offset word 0x04135A, clears bit 11 and sets bits 10 and 12.
-;   bit 12 = "shift engaged". THIS LABEL: bump the step index 0x04135C and clear bit 10.
-;   bit 13 = "ramping"; bit 14 -> step index += 2, bit 15 -> step index += 1. Each step
-;            reloads 0x04135A = table_0x011C7C[index] * 2 and sets bit 10.
-;   bit 10 = "pitch offset changed" -- consumed by Audio_Tick_ServiceVoices_B, which uses
-;            it to choose the loop arm that re-writes every sounding voice's pitch.
-; The ramp self-terminates when the loaded offset is zero: entries 24 and 25 of the
-; 26-byte table are 0x00, and both the +1 and +2 step sequences from index 0 land on 24.
-; Also read by Voice_ComputePitch (bits 0/1) and Voice_ApplyPortamento (bit 1).
-Pitch_Bend_Ramp_Tick_Bit12:
-	ld wa, (Voice_GlobalFlags:24)
-	bit 12, wa
-	jr z, Pitch_Bend_Ramp_Tick_Bit13Check
-	incw 1, (Payload_Bss_Start+0x24e6:24)
-	andw (Voice_GlobalFlags:24), 64511
-	ret
-
-; bit 13 clear -> ClearMode; set -> choose the +2 (bit 14) or +1 (bit 15) step.
-Pitch_Bend_Ramp_Tick_Bit13Check:
-	ld wa, (Voice_GlobalFlags:24)
-	bit 13, wa
-	jrl z, Pitch_Bend_Ramp_Tick_ClearMode
-	ld wa, (Voice_GlobalFlags:24)
-	bit 14, wa
-	jr z, Pitch_Bend_Ramp_Tick_Bit14Clear
-	incw 2, (Payload_Bss_Start+0x24e6:24)
-	ld wa, (Payload_Bss_Start+0x24e6:24)
-	extz xwa
-	ld xbc, Voice_KeyShiftRamp_Steps
-	add xbc, xwa
-	ld a, (xbc)
-	exts wa
-	add wa, wa
-	ld (Payload_Bss_Start+0x24e4:24), wa
-	orw (Voice_GlobalFlags:24), 1024
-	jr Pitch_Bend_Ramp_Tick_CheckCounter
-
-; bit 14 clear: if bit 15 is set take the +1 step, otherwise zero the offset.
-Pitch_Bend_Ramp_Tick_Bit14Clear:
-	ld wa, (Voice_GlobalFlags:24)
-	extz xwa
-	bit 15, wa
-	jr z, Pitch_Bend_Ramp_Tick_ZeroPitch
-	incw 1, (Payload_Bss_Start+0x24e6:24)
-	ld wa, (Payload_Bss_Start+0x24e6:24)
-	extz xwa
-	ld xbc, Voice_KeyShiftRamp_Steps
-	add xbc, xwa
-	ld a, (xbc)
-	exts wa
-	add wa, wa
-	ld (Payload_Bss_Start+0x24e4:24), wa
-	orw (Voice_GlobalFlags:24), 1024
-	jr Pitch_Bend_Ramp_Tick_CheckCounter
-
-; No direction bit set: force the global pitch offset 0x04135A to 0 and raise bit 10.
-Pitch_Bend_Ramp_Tick_ZeroPitch:
-	ldw (Payload_Bss_Start+0x24e4:24), 0x0000
-	orw (Voice_GlobalFlags:24), 1024
-
-; Termination test: return unless the offset word 0x04135A is now zero; when it is, clear
-; bits 13..15 of 0x041343, reset the step index 0x04135C and raise bit 10 one last time.
-Pitch_Bend_Ramp_Tick_CheckCounter:
-	cpw (Payload_Bss_Start+0x24e4:24), 0
-	ret nz
-	andw (Voice_GlobalFlags:24), 8191
-	ldw (Payload_Bss_Start+0x24e6:24), 0x0000
-	orw (Voice_GlobalFlags:24), 1024
-	ret
-
-; Ramp inactive: clear bit 10 and return.
-Pitch_Bend_Ramp_Tick_ClearMode:
-	andw (Voice_GlobalFlags:24), 64511
-	ret
+Pitch_Bend_Ramp_Tick:	.include "includes/generated/cc900/Pitch_Bend_Ramp_Tick.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Pitch_Bend_Ramp_Tick_Bit12, Pitch_Bend_Ramp_Tick + 44
+	.set	Pitch_Bend_Ramp_Tick_Bit13Check, Pitch_Bend_Ramp_Tick + 67
+	.set	Pitch_Bend_Ramp_Tick_Bit14Clear, Pitch_Bend_Ramp_Tick + 127
+	.set	Pitch_Bend_Ramp_Tick_ZeroPitch, Pitch_Bend_Ramp_Tick + 178
+	.set	Pitch_Bend_Ramp_Tick_CheckCounter, Pitch_Bend_Ramp_Tick + 192
+	.set	Pitch_Bend_Ramp_Tick_ClearMode, Pitch_Bend_Ramp_Tick + 223
 
 ; Voice_InitVoiceState(WA = channel index). Loads the whole 22-word tone-generator shadow
 ; block at 0x0451CC with power-on defaults, immediately before the caller pushes it to
@@ -3705,52 +3526,10 @@ Voice_LoadPitchTable_Ch_LoopCheck:
 ; 0x045208 and 0x04520C (no scaling, no per-part write-back) and broadcasts them with the
 ; same ToneGen_WriteExtParams_56 loop.
 ; Sole caller: Voice_ToneTableRamp_Up, when the pitch ramp has reached its ceiling.
-Voice_LoadPitchTable_All:
-	dec 8, xsp
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	ld bc, 1:i3
-	call DSP_AlgoType_Dispatch2
-	ld (Payload_Bss_Start+0x6392:24), hl
-	ld a, (xsp + 6)
-	extz wa
-	ld bc, 1:i3
-	call DSP_AlgoType_Dispatch1
-	ld (Payload_Bss_Start+0x6396:24), hl
-	ld a, (xsp + 6)
-	extz wa
-	ldw bc, 0xD
-	ld de, 0:i3
-	call Voice_BuildOutputList
-	ld (xsp), xhl
-	ldw (xsp + 4), 0x0
-	jr Voice_LoadPitchTable_All_LoopCheck
-
-; Per-voice broadcast body.
-Voice_LoadPitchTable_All_LoopBody:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	ld w, 0x0:opc
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteExtParams_56
-	incw 1, (xsp + 4)
-
-; Continue while the list entry's low byte is < 0x80.
-Voice_LoadPitchTable_All_LoopCheck:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	and wa, 0xFF
-	cp wa, 0x80
-	jr c, Voice_LoadPitchTable_All_LoopBody
-	inc 8, xsp
-	ret
+Voice_LoadPitchTable_All:	.include "includes/generated/cc900/Voice_LoadPitchTable_All.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_LoadPitchTable_All_LoopBody, Voice_LoadPitchTable_All + 60
+	.set	Voice_LoadPitchTable_All_LoopCheck, Voice_LoadPitchTable_All + 85
 
 ; Voice_LoadFilterTable_Ch(A = part index, C = ramp position). Same shape as
 ; Voice_LoadPitchTable_Ch for the filter parameter set: DSP_AlgoType_Dispatch2(part, 0)
@@ -3855,52 +3634,10 @@ Voice_LoadFilterTable_Ch_LoopCheck:
 ; Voice_LoadFilterTable_All(A = part index). Unscaled counterpart of
 ; Voice_LoadFilterTable_Ch; writes 0x04520A / 0x04520E and broadcasts with
 ; ToneGen_WriteExtParams_56b. Sole caller: Voice_ToneTableRamp_Up_CheckFilter.
-Voice_LoadFilterTable_All:
-	dec 8, xsp
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	ld bc, 0:i3
-	call DSP_AlgoType_Dispatch2
-	ld (Payload_Bss_Start+0x6394:24), hl
-	ld a, (xsp + 6)
-	extz wa
-	ld bc, 0:i3
-	call DSP_AlgoType_Dispatch1
-	ld (Payload_Bss_Start+0x6398:24), hl
-	ld a, (xsp + 6)
-	extz wa
-	ldw bc, 0xC
-	ld de, 0:i3
-	call Voice_BuildOutputList
-	ld (xsp), xhl
-	ldw (xsp + 4), 0x0
-	jr Voice_LoadFilterTable_All_LoopCheck
-
-; Per-voice broadcast body.
-Voice_LoadFilterTable_All_LoopBody:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	ld w, 0x0:opc
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteExtParams_56b
-	incw 1, (xsp + 4)
-
-; Continue while the list entry's low byte is < 0x80.
-Voice_LoadFilterTable_All_LoopCheck:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	and wa, 0xFF
-	cp wa, 0x80
-	jr c, Voice_LoadFilterTable_All_LoopBody
-	inc 8, xsp
-	ret
+Voice_LoadFilterTable_All:	.include "includes/generated/cc900/Voice_LoadFilterTable_All.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_LoadFilterTable_All_LoopBody, Voice_LoadFilterTable_All + 60
+	.set	Voice_LoadFilterTable_All_LoopCheck, Voice_LoadFilterTable_All + 85
 
 ; Voice_LoadToneTable_Ch(A = part index, C = ramp position). Third member of the family.
 ; Uses DSP_ChanFreq_WritePacket2(part) as its source value, scales it by C, floors at
@@ -3979,46 +3716,10 @@ Voice_LoadToneTable_Ch_LoopCheck:
 
 ; Voice_LoadToneTable_All(A = part index). Unscaled counterpart of
 ; Voice_LoadToneTable_Ch. Sole caller: Voice_ToneTableRamp_Up_CheckFilter.
-Voice_LoadToneTable_All:
-	dec 8, xsp
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	call DSP_ChanFreq_WritePacket2
-	ld (Payload_Bss_Start+0x6390:24), hl
-	ld a, (xsp + 6)
-	extz wa
-	ldw bc, 0x10
-	ld de, 0:i3
-	call Voice_BuildOutputList
-	ld (xsp), xhl
-	ldw (xsp + 4), 0x0
-	jr Voice_LoadToneTable_All_LoopCheck
-
-; Per-voice broadcast body.
-Voice_LoadToneTable_All_LoopBody:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	ld w, 0x0:opc
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteExtParams_15_Alt
-	incw 1, (xsp + 4)
-
-; Continue while the list entry's low byte is < 0x40.
-Voice_LoadToneTable_All_LoopCheck:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	and wa, 0xFF
-	cp wa, 0x40
-	jr c, Voice_LoadToneTable_All_LoopBody
-	inc 8, xsp
-	ret
+Voice_LoadToneTable_All:	.include "includes/generated/cc900/Voice_LoadToneTable_All.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_LoadToneTable_All_LoopBody, Voice_LoadToneTable_All + 42
+	.set	Voice_LoadToneTable_All_LoopCheck, Voice_LoadToneTable_All + 67
 
 ; Voice_ToneTableRamp_Up(A = part index, XBC = part record at 0x041368 + part*0x11F).
 ; One step of the "sweep up" of the two DSP-parameter ramps a part owns:
@@ -4677,20 +4378,10 @@ Audio_Tick_ServiceVoices_B_Done:
 
 ; WA = part index.  ORs 0x0020 into the part flags word at part+0x02 (0x04136A + idx*0x11F).
 ; Called once per part from Voice_ResetAllControllers.
-Voice_SetLFO_ActiveFlag:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	orw	(xbc+wa), 0x2000
-	ret
+Voice_SetLFO_ActiveFlag:	.include "includes/generated/cc900/Voice_SetLFO_ActiveFlag.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; WA = part index.  ANDs 0xFFDF into the same word.  Inverse of the above.
-Voice_ClearLFO_ActiveFlag:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	andw	(xbc+wa), 0xdfff
-	ret
+Voice_ClearLFO_ActiveFlag:	.include "includes/generated/cc900/Voice_ClearLFO_ActiveFlag.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; ----------------------------------------------------------------------------
 ; Voice_DSP_OutputConfig - Configure voice-to-DSP output routing
@@ -4705,101 +4396,14 @@ Voice_ClearLFO_ActiveFlag:
 ; Walks the voice output list (Voice_BuildOutputList 0x021A8E), consults
 ; DSP_AlgoType_Dispatch1 (0x0337D2) and writes the effect-routing shadow words at 0x04520E
 ; and then 0x04520C.  Twin of Voice_DSP_OutputConfig2 with different shadow offsets.
-Voice_DSP_OutputConfig:
-	lda	xsp, (xsp-10)
-	ld	(xsp+6), c
-	ld	(xsp+8), a
-	cp8_imm_rid8	xsp, 0x06, 0x00	; cp (XSP+0x06),0x00
-	jr	nz, Voice_DSP_OutputConfig_Skip
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	DSP_AlgoType_Dispatch1
-	ld	(Payload_Bss_Start+0x6398:24), hl
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	extz	wa
-	or	wa, 12
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp), xhl
-	ldw	(xsp+4), 0x0000	; ld (XSP+0x04),0x0000
-	jr	Voice_DSP_OutputConfig_Join
-Voice_DSP_OutputConfig_Loop:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	ld	w, 0:opc
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteReg0640
-	incw	1, (xsp+4)
-Voice_DSP_OutputConfig_Join:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 128
-	jr	c, Voice_DSP_OutputConfig_Loop
-	jr	Voice_DSP_OutputConfig_Epilogue
-Voice_DSP_OutputConfig_Skip:
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	DSP_AlgoType_Dispatch1
-	ld	(Payload_Bss_Start+0x6396:24), hl
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+6)
-	extz	wa
-	or	wa, 12
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp), xhl
-	ldw	(xsp+4), 0x0000	; ld (XSP+0x04),0x0000
-	jr	Voice_DSP_OutputConfig_Join2
-Voice_DSP_OutputConfig_Loop2:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	ld	w, 0:opc
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParam_600
-	incw	1, (xsp+4)
-Voice_DSP_OutputConfig_Join2:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 128
-	jr	c, Voice_DSP_OutputConfig_Loop2
-Voice_DSP_OutputConfig_Epilogue:
-	lda	xsp, (xsp+10)
-	ret
+Voice_DSP_OutputConfig:	.include "includes/generated/cc900/Voice_DSP_OutputConfig.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSP_OutputConfig_Loop, Voice_DSP_OutputConfig + 77
+	.set	Voice_DSP_OutputConfig_Join, Voice_DSP_OutputConfig + 102
+	.set	Voice_DSP_OutputConfig_Skip, Voice_DSP_OutputConfig + 125
+	.set	Voice_DSP_OutputConfig_Loop2, Voice_DSP_OutputConfig + 187
+	.set	Voice_DSP_OutputConfig_Join2, Voice_DSP_OutputConfig + 212
+	.set	Voice_DSP_OutputConfig_Epilogue, Voice_DSP_OutputConfig + 233
 ; ----------------------------------------------------------------------------
 ; Voice_DSP_OutputConfig2 - Configure voice-to-DSP output routing (type 2)
 ; Entry: A = voice number, C = channel
@@ -4953,42 +4557,10 @@ Voice_DSP_SimpleCopy_Join:
 ; ----------------------------------------------------------------------------
 ; NOT PRESENT in symbols/subcpu_symbols_reference.txt -- add it.
 ; As above with target 0x045206 and callee 0x033C6B.
-Voice_DSP_SimpleCopy2:
-	dec	8, xsp
-	ld	(xsp+6), a
-	ld	a, (xsp+6)
-	extz	wa
-	call	DSP_ChanFreq_WritePacket2
-	ld	(Payload_Bss_Start+0x6390:24), hl
-	ld	a, (xsp+6)
-	extz	wa
-	ldw	bc, 16
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp), xhl
-	ldw	(xsp+4), 0x0000	; ld (XSP+0x04),0x0000
-	jr	Voice_DSP_SimpleCopy2_Join
-Voice_DSP_SimpleCopy2_Loop:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	ld	w, 0:opc
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParams_15_Alt
-	incw	1, (xsp+4)
-Voice_DSP_SimpleCopy2_Join:
-	ld	wa, (xsp+4)
-	extz	xwa
-	add	xwa, xwa
-	add32_src_ri	xsp, xwa	; add XWA,(XSP)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 64
-	jr	c, Voice_DSP_SimpleCopy2_Loop
-	inc	8, xsp
-	ret
+Voice_DSP_SimpleCopy2:	.include "includes/generated/cc900/Voice_DSP_SimpleCopy2.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSP_SimpleCopy2_Loop, Voice_DSP_SimpleCopy2 + 42
+	.set	Voice_DSP_SimpleCopy2_Join, Voice_DSP_SimpleCopy2 + 67
 
 ; Writes ONE tone-generator register: latch = voice + 0x0400 (register 0x10 = PITCH),
 ; data = word at XBC+0x0E (normally the staging record 0x0451CC).
@@ -6108,18 +5680,10 @@ AudioMod_Apply_Slot_Field29_Skip3:
 	retd	4
 ; Eleven bytes, no prologue.  HL = min(max(WA, DE), BC), i.e. clamp WA to the inclusive
 ; range [DE, BC] using signed comparisons.  Tail utility of the 0x0280FE block.
-Audio_Clamp_To_Range:
-	cp	wa, de
-	jr	ge, Audio_Clamp_To_Range_Skip
-	ld	wa, de
-	jr	Audio_Clamp_To_Range_Join
-Audio_Clamp_To_Range_Skip:
-	cp	wa, bc
-	jr	le, Audio_Clamp_To_Range_Join
-	ld	wa, bc
-Audio_Clamp_To_Range_Join:
-	ld	hl, wa
-	ret
+Audio_Clamp_To_Range:	.include "includes/generated/cc900/Audio_Clamp_To_Range.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Audio_Clamp_To_Range_Skip, Audio_Clamp_To_Range + 8
+	.set	Audio_Clamp_To_Range_Join, Audio_Clamp_To_Range + 14
 
 ; Voice_CC_SetVolume -- CC 0x07: Store volume via lookup table
 ; Uses non-linear lookup table at ROM 0x011D16. Mute value: 0xFE00.
@@ -6128,235 +5692,64 @@ Audio_Clamp_To_Range_Join:
 ; at 0x011D16; otherwise the raw path stores (value - 0x7F).  Value 0 takes the mute path.
 ; Result is the word at 0x041374 + part*0x11F (part+0x0C).  Does not touch hardware -- the
 ; caller (Voice_CC_Volume) follows up with Voice_AllVoices_WriteAmplitude.
-Voice_CC_SetVolume:
-	cp c, 0:i3
-	jr z, VoiceCC_SetVolume_Mute
-	ld de, (Voice_GlobalFlags:24)
-	bit 0, de
-	jr z, VoiceCC_SetVolume_Bit1Set
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x24fe:24)
-	ld a, c
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_CC_VolumeCurve:24)
-	ld	wa, (xbc+wa)
-	ld	(xhl+de), wa
-	ret
-
-; Bit1Set of VoiceCC_SetVolume.
-VoiceCC_SetVolume_Bit1Set:
-	ld de, (Voice_GlobalFlags:24)
-	bit 1, de
-	jr z, VoiceCC_SetVolume_RawSub
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x24fe:24)
-	ld a, c
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_CC_VolumeCurve:24)
-	ld	wa, (xbc+wa)
-	ld	(xhl+de), wa
-	ret
-
-; RawSub of VoiceCC_SetVolume.
-VoiceCC_SetVolume_RawSub:
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x24fe:24)
-	ld a, c
-	extz wa
-	sub wa, 0x7F
-	ld	(xhl+de), wa
-	ret
-
-; Stores 0xFE00 (full attenuation) into the part volume word.
-VoiceCC_SetVolume_Mute:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fe:24)
-	ldw	(xbc+wa), 0xfe00
-	ret
+Voice_CC_SetVolume:	.include "includes/generated/cc900/Voice_CC_SetVolume.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_SetVolume_Bit1Set, Voice_CC_SetVolume + 49
+	.set	VoiceCC_SetVolume_RawSub, Voice_CC_SetVolume + 94
+	.set	VoiceCC_SetVolume_Mute, Voice_CC_SetVolume + 121
 
 ; Voice_CC_SetPan -- CC 0x0A: Store pan value at voice + 0x0E
 ; WA = part, C = CC 10 value.  Stores the byte at 0x041376 + part*0x11F (part+0x0E); the
 ; hardware side is done by EnvTranspose_UpdateLoop (0x032E1E) from Voice_CC_Pan.
-Voice_CC_SetPan:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2500:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetPan:	.include "includes/generated/cc900/Voice_CC_SetPan.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Voice_CC_SetExpression -- CC 0x0B: Store expression via lookup table
 ; Uses same lookup table as Volume (0x011D16). Mute value: 0xFE00.
 ; WA = part, BC = CC 11 value.  Structurally identical to Voice_CC_SetVolume (same 0x041343
 ; bit 0 / bit 1 selection, same 0x011D16 table) but the destination is the word at
 ; 0x041378 + part*0x11F (part+0x10).  Mute path writes 0xFE00.
-Voice_CC_SetExpression:
-	cp c, 0:i3
-	jr z, VoiceCC_SetExpression_Mute
-	ld de, (Voice_GlobalFlags:24)
-	bit 0, de
-	jr z, VoiceCC_SetExpression_Bit1Set
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x2502:24)
-	ld a, c
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_CC_VolumeCurve:24)
-	ld	wa, (xbc+wa)
-	ld	(xhl+de), wa
-	ret
-
-; Bit1Set of VoiceCC_SetExpression.
-VoiceCC_SetExpression_Bit1Set:
-	ld de, (Voice_GlobalFlags:24)
-	bit 1, de
-	jr z, VoiceCC_SetExpression_RawSub
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x2502:24)
-	ld a, c
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_CC_VolumeCurve:24)
-	ld	wa, (xbc+wa)
-	ld	(xhl+de), wa
-	ret
-
-; RawSub of VoiceCC_SetExpression.
-VoiceCC_SetExpression_RawSub:
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x2502:24)
-	ld a, c
-	extz wa
-	sub wa, 0x7F
-	ld	(xhl+de), wa
-	ret
-
-; Mute of VoiceCC_SetExpression.
-VoiceCC_SetExpression_Mute:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2502:24)
-	ldw	(xbc+wa), 0xfe00
-	ret
+Voice_CC_SetExpression:	.include "includes/generated/cc900/Voice_CC_SetExpression.s"	; C: cc900/voice_envelopes_and_channels_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_SetExpression_Bit1Set, Voice_CC_SetExpression + 49
+	.set	VoiceCC_SetExpression_RawSub, Voice_CC_SetExpression + 94
+	.set	VoiceCC_SetExpression_Mute, Voice_CC_SetExpression + 121
 
 ; Voice_CC_SetSustain -- CC 0x40: Set/clear sustain bit 0 at voice+0x0A
 ; WA = part, BC = CC 64 value.  Sets (BC != 0) or clears bit 0 of the part flags word 2 at
 ; 0x041372 + part*0x11F (part+0x0A).
-Voice_CC_SetSustain:
-	cp c, 0:i3
-	jr z, VoiceCC_SetSustain_ClearBit
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	orw	(xbc+wa), 0x0001
-	ret
-
-; ClearBit of VoiceCC_SetSustain.
-VoiceCC_SetSustain_ClearBit:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	andw	(xbc+wa), 0xfffe
-	ret
+Voice_CC_SetSustain:	.include "includes/generated/cc900/Voice_CC_SetSustain.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_SetSustain_ClearBit, Voice_CC_SetSustain + 23
 
 ; WA = part, C = the part's reverb send level.  Stores the byte at 0x041377 + part*0x11F (part+0x0F).
-Voice_CC_SetReverbSend:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2501:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetReverbSend:	.include "includes/generated/cc900/Voice_CC_SetReverbSend.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; WA = part, C = the part's DSP-effect send level.  Stores the byte at 0x04137A + part*0x11F (part+0x12).
-Voice_CC_SetDspEffectSend:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2504:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetDspEffectSend:	.include "includes/generated/cc900/Voice_CC_SetDspEffectSend.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; WA = part, BC = value.  Sets/clears bit 6 (0x0040) of part flags word 2 (part+0x0A).
-Voice_CC_SetSostenutoFlag:
-	cp c, 0:i3
-	jr z, VoiceCC_SetSostenuto_ClearFlag
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	orw	(xbc+wa), 0x4000
-	ret
-
-; ClearFlag of VoiceCC_SetSostenuto.
-VoiceCC_SetSostenuto_ClearFlag:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	andw	(xbc+wa), 0xbfff
-	ret
+Voice_CC_SetSostenutoFlag:	.include "includes/generated/cc900/Voice_CC_SetSostenutoFlag.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_SetSostenuto_ClearFlag, Voice_CC_SetSostenutoFlag + 23
 
 ; WA = part, C = the part's BEND RANGE (main-CPU Lsw 0x080, 0..12; was read as a portamento rate).  Stores the
 ; byte at 0x04137B + part*0x11F (part+0x13).  This is the byte AudioMod_Apply_Porta_Curve falls back to.
-Voice_CC_SetBendRange:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2505:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetBendRange:	.include "includes/generated/cc900/Voice_CC_SetBendRange.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; WA = part, C = the part's TUNING (main-CPU Lsw 0x081, 0..255 centred on 0x80).  Stores the word
 ; ((C - 0x80) * 2) at 0x04137C + part*0x11F (part+0x14); Voice_CC_Tuning then refreshes the sounding pitches.
-Voice_CC_SetTuning:
-	ld e, c
-	extz de
-	sub de, 0x80
-	add de, de
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2506:24)
-	ld	(xbc+wa), de
-	ret
+Voice_CC_SetTuning:	.include "includes/generated/cc900/Voice_CC_SetTuning.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; WA = part, C = the part's KEY SHIFT (main-CPU Lsw 0x082, 52..76 = 64 +- 12 semitones).  Stores (C - 0x40) at
 ; 0x04137E + part*0x11F (part+0x16).
-Voice_CC_SetKeyShift:
-	ld e, c
-	sub e, 0x40
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2508:24)
-	ld	(xbc+wa), e
-	ret
+Voice_CC_SetKeyShift:	.include "includes/generated/cc900/Voice_CC_SetKeyShift.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Ordinary code, not data: if C != 0 stores +2 into the word at
 ; 0x041372 + part*0x11F, otherwise stores -3 (0xFFFD).  Two-valued, so "range" is a guess --
 ; what it really does is force a small signed constant into part flags word 2.
-Voice_CC_SetModWheelRange:
-	cp	c, 0:i3
-	jr	z, Voice_CC_SetModWheelRange_Else
-	extz	wa
-	muls	wa, 0x11F
-	lda	xbc, (Payload_Bss_Start+0x24fc:24)
-	orw	(xbc+wa), 0x0002
-	ret
-Voice_CC_SetModWheelRange_Else:
-	extz	wa
-	muls	wa, 0x11F
-	lda	xbc, (Payload_Bss_Start+0x24fc:24)
-	andw	(xbc+wa), 0xfffd
-	ret
+Voice_CC_SetModWheelRange:	.include "includes/generated/cc900/Voice_CC_SetModWheelRange.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_CC_SetModWheelRange_Else, Voice_CC_SetModWheelRange + 23
 
 ; WA = part, C = CC 0x91 value.  Stores the byte at 0x04137F + part*0x11F (part+0x17): the part's own
 ; velocity-switch configuration, the per-part twin of the global byte 0x04134B (Voice_SetVelSwitchConfig,
@@ -6364,84 +5757,38 @@ Voice_CC_SetModWheelRange_Else:
 ; bit 3 (type 0/1) or bit 4 (type 2) set = do nothing, else bit 0 (case 2) or bit 0 with bit 1 clear
 ; (case 3) installs the patch's +0x2A octave-shift nibble.  Main-CPU sender: SwbtB2_Code9A_Listener (parts
 ; 0..2).  Was called "reverb depth" (no reader supports that), renamed 2026-10-31.
-Voice_CC_SetVelSwitchConfig:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2509:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetVelSwitchConfig:	.include "includes/generated/cc900/Voice_CC_SetVelSwitchConfig.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Voice_CC_SetGlidePedal -- CC 0x95 (GLIDE PEDAL, called chorus enable until 2026-10-17): set/clear bit 2 at voice+0x0A
 ; WA = part, BC = CC 0x95 value.  Sets/clears bit 2 (0x0004) of part flags word 2.
-Voice_CC_SetGlidePedal:
-	cp c, 0:i3
-	jr z, VoiceCC_SetGlidePedal_ClearBit
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	orw	(xbc+wa), 0x0004
-	ret
-
-; ClearBit of VoiceCC_SetChorus.
-VoiceCC_SetGlidePedal_ClearBit:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	andw	(xbc+wa), 0xfffb
-	ret
+Voice_CC_SetGlidePedal:	.include "includes/generated/cc900/Voice_CC_SetGlidePedal.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_SetGlidePedal_ClearBit, Voice_CC_SetGlidePedal + 23
 
 ; Voice_CC_SetSustainLength -- CC 0x97 (SUSTAIN LENGTH, called chorus depth until 2026-10-17): store at voice+0x18
 ; WA = part, C = CC 0x97 value.  Stores the byte at 0x041380 + part*0x11F (part+0x18).
-Voice_CC_SetSustainLength:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x250a:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetSustainLength:	.include "includes/generated/cc900/Voice_CC_SetSustainLength.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; WA = part, C = CC 0x9B value.  Stores the byte at 0x04138D + part*0x11F (part+0x25).  Its only reader is
 ; Voice_Apply_GateRouting, which patches the gate/control word of every voice of the part: low nibble 0 = force
 ; bits [11:9] to 7, 1 = leave them, 2 = force them to 1; high nibble 0x00 / 0x10 / 0x20 does the same to
 ; [14:12].  Reset value 1.  No main-CPU sender was found in v10 (the CC numbers above 0x7F cannot arrive
 ; from MIDI IN).  Was called "delay depth", renamed 2026-10-31.
-Voice_CC_SetGateRoutingMode:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2517:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetGateRoutingMode:	.include "includes/generated/cc900/Voice_CC_SetGateRoutingMode.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Voice_CC_SetKeyScaling -- CC 0x9C (KEY SCALING, called delay enable until 2026-10-17): set/clear bit 8 at voice+0x02
 ; WA = part, BC = CC 0x9C value.  Sets/clears bit 0 of the part flags word at
 ; 0x04136A + part*0x11F (part+0x02).
-Voice_CC_SetKeyScaling:
-	cp c, 0:i3
-	jr z, VoiceCC_SetKeyScaling_ClearBit
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	orw	(xbc+wa), 0x0100
-	ret
-
-; ClearBit of VoiceCC_SetDelay.
-VoiceCC_SetKeyScaling_ClearBit:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	andw	(xbc+wa), 0xfeff
-	ret
+Voice_CC_SetKeyScaling:	.include "includes/generated/cc900/Voice_CC_SetKeyScaling.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceCC_SetKeyScaling_ClearBit, Voice_CC_SetKeyScaling + 23
 
 ; WA = part, C = CC 0x9D value.  Stores the byte at 0x04138E + part*0x11F (part+0x26).  Its readers
 ; (Voice_Level_ClearAllOutputRegs, Voice1_UpdatePitch_WriteStereoField, Voice_Step_ExprRamp) choose the low 7
 ; bits of the voice's TG register 0x180 (pan on technics-docs/tone-generator.md, 0x40 = centre): 1 = 0x00,
 ; 2 = 0x7F, anything else = the voice's own value.  Reset value 0.  No main-CPU sender was found in v10.
 ; Was called "delay feedback", renamed 2026-10-31.
-Voice_CC_SetTgPanMode:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x2518:24)
-	ld	(xde+wa), c
-	ret
+Voice_CC_SetTgPanMode:	.include "includes/generated/cc900/Voice_CC_SetTgPanMode.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; A = mode.  A == 1 sets bit 0 of the global flag word 0x041343 and calls
 ; Voice_Reset_Engine (0x021ECB) with WA = 1; anything else clears bit 0 and calls it
@@ -6487,77 +5834,32 @@ Voice_SetPolyphonyMode_LoopExit:
 
 ; A bare `ret`.  Reached from SysEx dispatch-table entry 1 and from
 ; Voice_ResetAllControllers_PostLoop with WA = 0x7F.  Deliberate no-op, not padding.
-VoiceCC_Stub_Ret1:
-	ret
+VoiceCC_Stub_Ret1:	.include "includes/generated/cc900/VoiceCC_Stub_Ret1.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; Second bare `ret`, dispatch entry 2, likewise called with WA = 0x7F.
-VoiceCC_Stub_Ret2:
-	ret
+VoiceCC_Stub_Ret2:	.include "includes/generated/cc900/VoiceCC_Stub_Ret2.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; A = raw value.  Stores sign-extended ((A - 0x40) * 2) as a word at 0x041347.
-Voice_SetMasterTune:
-	sub a, 0x40
-	add a, a
-	exts wa
-	ld (Payload_Bss_Start+0x24d1:24), wa
-	ret
+Voice_SetMasterTune:	.include "includes/generated/cc900/Voice_SetMasterTune.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; A = semitones.  Stores (sign-extended A) << 8 at 0x041349.
-Voice_SetPitchBendRange:
-	exts wa
-	sla wa, 8
-	ld (Payload_Bss_Start+0x24d3:24), wa
-	ret
+Voice_SetPitchBendRange:	.include "includes/generated/cc900/Voice_SetPitchBendRange.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; A = 0 falls through into Voice_SetKeyShiftRange (disable).  Otherwise, if bit 12 of the
 ; global flag word 0x041343 is already set it returns; else it sets bit 11 (0x0800) and
 ; zeroes the word at 0x04135C.
-Voice_SetKeyShiftEnable:
-	cp a, 0:i3
-	jr z, Voice_SetKeyShiftRange
-	ld wa, (Voice_GlobalFlags:24)
-	bit 12, wa
-	ret nz
-	orw (Voice_GlobalFlags:24), 2048
-	ldw (Payload_Bss_Start+0x24e6:24), 0x0000
-	ret
-
-; Returns immediately unless global flag 0x041343 bit 12 is set.  Rewrites the flag word:
-; clears bits 12/13 (mask 0xFFFF2FFF), sets bit 13, and then sets bit 15 if the word at
-; 0x04135C is > 20, bit 14 otherwise.  Finally zeroes 0x04135C.
-Voice_SetKeyShiftRange:
-	ld wa, (Voice_GlobalFlags:24)
-	bit 12, wa
-	ret z
-	ld wa, (Voice_GlobalFlags:24)
-	extz xwa
-	and xwa, 0xFFFF2FFF
-	set 13, wa
-	cpw (Payload_Bss_Start+0x24e6:24), 20
-	jr ule, Voice_SetKeyShiftRange_BranchA
-	set 15, wa
-	jr Voice_SetKeyShiftRange_BranchB
-
-; BranchA of Voice_SetKeyShiftRange.
-Voice_SetKeyShiftRange_BranchA:
-	set 14, wa
-
-; BranchB of Voice_SetKeyShiftRange.
-Voice_SetKeyShiftRange_BranchB:
-	ld (Voice_GlobalFlags:24), wa
-	ldw (Payload_Bss_Start+0x24e6:24), 0x0000
-	ret
+Voice_SetKeyShiftEnable:	.include "includes/generated/cc900/Voice_SetKeyShiftEnable.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SetKeyShiftRange, Voice_SetKeyShiftEnable + 29
+	.set	Voice_SetKeyShiftRange_BranchA, Voice_SetKeyShiftEnable + 69
+	.set	Voice_SetKeyShiftRange_BranchB, Voice_SetKeyShiftEnable + 72
 
 ; A -> byte 0x04134D.  Reached from SysEx dispatch entry 6 and from
 ; Voice_ResetAllControllers with A = 0.  The reference file calls the getter
 ; ScaleTune_Get_Global_Mode; see [UNCERTAIN].
-ScaleTune_Set_Global_Mode:
-	ld (Payload_Bss_Start+0x24d7:24), a
-	ret
+ScaleTune_Set_Global_Mode:	.include "includes/generated/cc900/ScaleTune_Set_Global_Mode.s"	; C: cc900/voice_envelopes_and_channels.c
 
-ScaleTune_Get_Global_Mode:
-	ld l, (Payload_Bss_Start+0x24d7:24)
-	ret
+ScaleTune_Get_Global_Mode:	.include "includes/generated/cc900/ScaleTune_Get_Global_Mode.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; A = packed rhythm-mode byte from a SysEx message.  Decodes it into the 0x04135E block:
 ;   bit 3      -> 0x04135E = 3 (else 1)
@@ -6566,66 +5868,23 @@ ScaleTune_Get_Global_Mode:
 ;   bit 2      -> 0x041362 = 0x8000 (else 0xA000)
 ;   bits 1..0  -> 0x041364 = 0xC8 - ((A & 3) << 3)
 ; Pure state; no hardware touched here.
-Voice_SetRhythmMode:
-	bit 3, a
-	jr z, Voice_SetRhythmMode_BranchA
-	ld (Payload_Bss_Start+0x24e8:24), 0x03
-	jr Voice_SetRhythmMode_BranchB
-
-; BranchA of Voice_SetRhythmMode.
-Voice_SetRhythmMode_BranchA:
-	ld (Payload_Bss_Start+0x24e8:24), 0x01
-
-; BranchB of Voice_SetRhythmMode.
-Voice_SetRhythmMode_BranchB:
-	ld (Payload_Bss_Start+0x24e9:24), 0x01
-	ld c, a
-	and c, 0xF0
-	srl c, 4
-	extz bc
-	add bc, bc
-	lda xde, (Voice_RhythmMode_ScalePitch_Table:24)
-	ld	bc, (xde+bc)
-	ld (Payload_Bss_Start+0x24ea:24), bc
-	bit 2, a
-	jr z, Voice_SetRhythmMode_BranchC
-	ldw (Payload_Bss_Start+0x24ec:24), 0x8000
-	jr Voice_SetRhythmMode_BranchD
-
-; BranchC of Voice_SetRhythmMode.
-Voice_SetRhythmMode_BranchC:
-	ldw (Payload_Bss_Start+0x24ec:24), 0xa000
-
-; BranchD of Voice_SetRhythmMode.
-Voice_SetRhythmMode_BranchD:
-	and a, 0x3
-	sll a, 3
-	ld c, a
-	ld a, 0xC8:opc
-	sub a, c
-	extz wa
-	ld (Payload_Bss_Start+0x24ee:24), wa
-	ret
+Voice_SetRhythmMode:	.include "includes/generated/cc900/Voice_SetRhythmMode.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SetRhythmMode_BranchA, Voice_SetRhythmMode + 13
+	.set	Voice_SetRhythmMode_BranchB, Voice_SetRhythmMode + 19
+	.set	Voice_SetRhythmMode_BranchC, Voice_SetRhythmMode + 66
+	.set	Voice_SetRhythmMode_BranchD, Voice_SetRhythmMode + 73
 
 ; A -> byte 0x04134B.  SysEx dispatch entry 0 (sub-command 0x91).
 ; That byte is read only by the Voice_Env_ApplyVelocity_* velocity-switch dispatchers (bits 0,
 ; 1, 3 and 4 select their predicates).  Renamed 2026-09-25 from Voice_SetParam_04134B.
-Voice_SetVelSwitchConfig:
-	ld (Payload_Bss_Start+0x24d5:24), a
-	ret
+Voice_SetVelSwitchConfig:	.include "includes/generated/cc900/Voice_SetVelSwitchConfig.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; A == 0x7F sets bit 1 of the global flag word 0x041343, anything else clears it.
 ; Bit 1 is one of the two selectors Voice_CC_SetVolume / Voice_CC_SetExpression test.
-Voice_SetCCMaxFlag:
-	cp a, 0x7F
-	jr nz, Voice_SetCCMaxFlag_Clear
-	orw (Voice_GlobalFlags:24), 2
-	ret
-
-; Clear of Voice_SetCCMaxFlag.
-Voice_SetCCMaxFlag_Clear:
-	andw (Voice_GlobalFlags:24), 65533
-	ret
+Voice_SetCCMaxFlag:	.include "includes/generated/cc900/Voice_SetCCMaxFlag.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SetCCMaxFlag_Clear, Voice_SetCCMaxFlag + 13
 
 ; WA = index, C = value.  Stores (C - 0x80) at 0x041342 + (index + 0x0C), i.e. into the
 ; 12-byte array 0x04134E..0x041359.  Voice_ResetAllControllers zeroes exactly indices 0..0x0B,
@@ -6765,22 +6024,12 @@ Voice_AllVoices_UpdateVelocity_Exit:
 
 ; A == 0 SETS bit 9 (0x0200) of the global flag word 0x041343; any other value clears it.
 ; The inverted sense makes the "MonoMode" reading doubtful -- see [UNCERTAIN].
-ScaleTune_Set_Global_Enabled:
-	cp a, 0:i3
-	jr nz, ScaleTune_Set_Global_Enabled_Clear
-	orw (Voice_GlobalFlags:24), 512
-	ret
-
-; Clear of ScaleTune_Set_Global_Enabled.
-ScaleTune_Set_Global_Enabled_Clear:
-	andw (Voice_GlobalFlags:24), 65023
-	ret
+ScaleTune_Set_Global_Enabled:	.include "includes/generated/cc900/ScaleTune_Set_Global_Enabled.s"	; C: cc900/voice_envelopes_and_channels.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ScaleTune_Set_Global_Enabled_Clear, ScaleTune_Set_Global_Enabled + 12
 
 ; Returns HL = 0x041343 & 0x0200.  Getter for the bit the routine above writes.
-ScaleTune_Is_Global_Enabled:
-	ld hl, (Voice_GlobalFlags:24)
-	and hl, 0x200
-	ret
+ScaleTune_Is_Global_Enabled:	.include "includes/generated/cc900/ScaleTune_Is_Global_Enabled.s"	; C: cc900/voice_envelopes_and_channels.c
 
 ; XWA = the part record whose voice list starts at +5 (as returned by Voice_AllocateFor*).
 ; Walks the list; for each voice whose (voice+0x01) & 0x3C is 4, 8 or 0x20 it calls

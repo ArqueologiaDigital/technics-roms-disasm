@@ -124,79 +124,14 @@ DSP_MixSendConfig_Return:
 ; that word as a 16-byte-stride row index into the block at (0x045314)+0x50.  Copies 0x0D
 ; bytes of the selected row into the staging buffer at 0x045210+6.
 ; Caller: 0x031865.
-DSP_RouteCoeffs_TypeA:
-	push	xiz
-	and	wa, 127
-	ld	de, bc
-	and	bc, 15
-	and	de, 192
-	cp	de, 192
-	jr	z, DSP_RouteCoeffs_TypeA_Sel3
-	cp	de, 128
-	jr	z, DSP_RouteCoeffs_TypeA_Sel2
-	cp	de, 64
-	jr	z, DSP_RouteCoeffs_TypeA_Sel1
-	cp	de, 0:i3
-	jr	nz, DSP_RouteCoeffs_TypeA_Fetch
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+68)
-	jr	DSP_RouteCoeffs_TypeA_Fetch
-; Selector bits 7:6 == 01 -> descriptor pointer at (0x045314)+0x4C.
-DSP_RouteCoeffs_TypeA_Sel1:
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+76)
-	jr	DSP_RouteCoeffs_TypeA_Fetch
-; Selector bits 7:6 == 10 -> descriptor pointer at (0x045314)+0x48.
-DSP_RouteCoeffs_TypeA_Sel2:
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+72)
-	jr	DSP_RouteCoeffs_TypeA_Fetch
-; Selector bits 7:6 == 11 -> same pointer as selector 00, (0x045314)+0x44.
-DSP_RouteCoeffs_TypeA_Sel3:
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+68)
-; Common tail: compute the row number and set up the 0x0D-byte copy.
-DSP_RouteCoeffs_TypeA_Fetch:
-	sll	bc, 7
-	add	bc, wa
-	add	bc, bc
-	ld	wa, bc
-	extz	xwa
-	add	xwa, xhl
-	add	xwa, (ToneDB_RelBase:24)
-	ld	xwa, (xwa)
-	ld	ix, wa
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xhl, (xwa+80)
-	ld	xiy, (ToneDB_RelBase:24)
-	add	xiy, xhl
-	ldw	hl, 13
-	ld	de, 0:i3
-	cp	de, hl
-	jr	nc, DSP_RouteCoeffs_TypeA_Epilogue
-; 0x0D-byte copy into 0x045210+6.
-DSP_RouteCoeffs_TypeA_CopyLoop:
-	ld	bc, de
-	extz	xbc
-	ld	wa, ix
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xbc
-	ld	xbc, xwa
-	add	xbc, xiy
-	ld	wa, de
-	inc	6, wa
-	extz	xwa
-	ld	xiz, Payload_Bss_Start+0x639a
-	add	xiz, xwa
-	ld	a, (xbc)
-	ld	(xiz), a
-	inc	1, de
-	cp	de, hl
-	jr	c, DSP_RouteCoeffs_TypeA_CopyLoop
-DSP_RouteCoeffs_TypeA_Epilogue:
-	pop	xiz
-	ret
+DSP_RouteCoeffs_TypeA:	.include "includes/generated/cc900/DSP_RouteCoeffs_TypeA.s"	; C: cc900/dsp_algo_select.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_RouteCoeffs_TypeA_Sel1, DSP_RouteCoeffs_TypeA + 47
+	.set	DSP_RouteCoeffs_TypeA_Sel2, DSP_RouteCoeffs_TypeA + 57
+	.set	DSP_RouteCoeffs_TypeA_Sel3, DSP_RouteCoeffs_TypeA + 67
+	.set	DSP_RouteCoeffs_TypeA_Fetch, DSP_RouteCoeffs_TypeA + 75
+	.set	DSP_RouteCoeffs_TypeA_CopyLoop, DSP_RouteCoeffs_TypeA + 121
+	.set	DSP_RouteCoeffs_TypeA_Epilogue, DSP_RouteCoeffs_TypeA + 161
 ; ----------------------------------------------------------------------------
 ; DSP_RouteCoeffs_TypeB - Route DSP coefficients via type-B table
 ; Entry: Same as TypeA
@@ -206,79 +141,14 @@ DSP_RouteCoeffs_TypeA_Epilogue:
 ; pointers at (0x045314)+0x58/+0x5C/+0x60 and the row block at (0x045314)+0x64.
 ; Caller: 0x031883.  The ELF already carries this name; the reference file simply lacks the
 ; line, so this is an "add", not a supersede.
-DSP_RouteCoeffs_TypeB:
-	push	xiz
-	and	wa, 127
-	ld	de, bc
-	and	bc, 15
-	and	de, 192
-	cp	de, 192
-	jr	z, DSP_RouteCoeffs_TypeB_Sel3
-	cp	de, 128
-	jr	z, DSP_RouteCoeffs_TypeB_Sel2
-	cp	de, 64
-	jr	z, DSP_RouteCoeffs_TypeB_Sel1
-	cp	de, 0:i3
-	jr	nz, DSP_RouteCoeffs_TypeB_Fetch
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+88)
-	jr	DSP_RouteCoeffs_TypeB_Fetch
-; Selector bits 7:6 == 01 -> (0x045314)+0x60.
-DSP_RouteCoeffs_TypeB_Sel1:
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+96)
-	jr	DSP_RouteCoeffs_TypeB_Fetch
-; Selector bits 7:6 == 10 -> (0x045314)+0x5C.
-DSP_RouteCoeffs_TypeB_Sel2:
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+92)
-	jr	DSP_RouteCoeffs_TypeB_Fetch
-; Selector bits 7:6 == 11 -> (0x045314)+0x58.
-DSP_RouteCoeffs_TypeB_Sel3:
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xhl, (xde+88)
-; Common tail: row number and copy setup.
-DSP_RouteCoeffs_TypeB_Fetch:
-	sll	bc, 7
-	add	bc, wa
-	add	bc, bc
-	ld	wa, bc
-	extz	xwa
-	add	xwa, xhl
-	add	xwa, (ToneDB_RelBase:24)
-	ld	xwa, (xwa)
-	ld	ix, wa
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xhl, (xwa+100)
-	ld	xiy, (ToneDB_RelBase:24)
-	add	xiy, xhl
-	ldw	hl, 13
-	ld	de, 0:i3
-	cp	de, hl
-	jr	nc, DSP_RouteCoeffs_TypeB_Epilogue
-; 0x0D-byte copy into 0x045210+6.
-DSP_RouteCoeffs_TypeB_CopyLoop:
-	ld	bc, de
-	extz	xbc
-	ld	wa, ix
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xbc
-	ld	xbc, xwa
-	add	xbc, xiy
-	ld	wa, de
-	inc	6, wa
-	extz	xwa
-	ld	xiz, Payload_Bss_Start+0x639a
-	add	xiz, xwa
-	ld	a, (xbc)
-	ld	(xiz), a
-	inc	1, de
-	cp	de, hl
-	jr	c, DSP_RouteCoeffs_TypeB_CopyLoop
-DSP_RouteCoeffs_TypeB_Epilogue:
-	pop	xiz
-	ret
+DSP_RouteCoeffs_TypeB:	.include "includes/generated/cc900/DSP_RouteCoeffs_TypeB.s"	; C: cc900/dsp_algo_select.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_RouteCoeffs_TypeB_Sel1, DSP_RouteCoeffs_TypeB + 47
+	.set	DSP_RouteCoeffs_TypeB_Sel2, DSP_RouteCoeffs_TypeB + 57
+	.set	DSP_RouteCoeffs_TypeB_Sel3, DSP_RouteCoeffs_TypeB + 67
+	.set	DSP_RouteCoeffs_TypeB_Fetch, DSP_RouteCoeffs_TypeB + 75
+	.set	DSP_RouteCoeffs_TypeB_CopyLoop, DSP_RouteCoeffs_TypeB + 121
+	.set	DSP_RouteCoeffs_TypeB_Epilogue, DSP_RouteCoeffs_TypeB + 161
 ; ----------------------------------------------------------------------------
 ; DSP_CopyCoeffs_TypeA - Direct coefficient copy (type A)
 ; Entry: WA = voice parameter
@@ -289,40 +159,10 @@ DSP_RouteCoeffs_TypeB_Epilogue:
 ; (16-byte stride, offset by the window base at 0x045310) into the staging buffer at
 ; 0x045210+6.  Same arithmetic as DSP_RouteCoeffs_TypeA but with the row supplied directly
 ; instead of looked up through a descriptor.  Caller: 0x0318A2.
-DSP_CopyCoeffs_TypeA:
-	push	xiz
-	ld	xbc, (ToneDB_RootPtr:24)
-	ld	xbc, (xbc+80)
-	ld	xiy, (ToneDB_RelBase:24)
-	add	xiy, xbc
-	ldw	hl, 13
-	ld	ix, 0:i3
-	cp	ix, hl
-	jr	nc, DSP_CopyCoeffs_TypeA_Return
-; 0x0D-byte copy loop, counter in IX.
-DSP_CopyCoeffs_TypeA_Loop:
-	ld	de, ix
-	extz	xde
-	ld	bc, wa
-	extz	xbc
-	sll	xbc, 4
-	add	xbc, xde
-	ld	xde, xbc
-	add	xde, xiy
-	ld	bc, ix
-	inc	6, bc
-	extz	xbc
-	ld	xiz, Payload_Bss_Start+0x639a
-	add	xiz, xbc
-	ld	c, (xde)
-	ld	(xiz), c
-	inc	1, ix
-	cp	ix, hl
-	jr	c, DSP_CopyCoeffs_TypeA_Loop
-; Restore XIZ and return.
-DSP_CopyCoeffs_TypeA_Return:
-	pop	xiz
-	ret
+DSP_CopyCoeffs_TypeA:	.include "includes/generated/cc900/DSP_CopyCoeffs_TypeA.s"	; C: cc900/dsp_algo_select.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_CopyCoeffs_TypeA_Loop, DSP_CopyCoeffs_TypeA + 25
+	.set	DSP_CopyCoeffs_TypeA_Return, DSP_CopyCoeffs_TypeA + 65
 ; ----------------------------------------------------------------------------
 ; DSP_CopyCoeffs_TypeB - Direct coefficient copy (type B)
 ; Entry: WA = voice parameter
@@ -330,40 +170,10 @@ DSP_CopyCoeffs_TypeA_Return:
 ;        Copies 13 bytes from source to DSP buffer at 0x45210
 ; ----------------------------------------------------------------------------
 ; The (0x045314)+0x64 flavour of DSP_CopyCoeffs_TypeA.  Caller: 0x0318C1.
-DSP_CopyCoeffs_TypeB:
-	push	xiz
-	ld	xbc, (ToneDB_RootPtr:24)
-	ld	xbc, (xbc+100)
-	ld	xiy, (ToneDB_RelBase:24)
-	add	xiy, xbc
-	ldw	hl, 13
-	ld	ix, 0:i3
-	cp	ix, hl
-	jr	nc, DSP_CopyCoeffs_TypeB_Return
-; 0x0D-byte copy loop, counter in IX.
-DSP_CopyCoeffs_TypeB_Loop:
-	ld	de, ix
-	extz	xde
-	ld	bc, wa
-	extz	xbc
-	sll	xbc, 4
-	add	xbc, xde
-	ld	xde, xbc
-	add	xde, xiy
-	ld	bc, ix
-	inc	6, bc
-	extz	xbc
-	ld	xiz, Payload_Bss_Start+0x639a
-	add	xiz, xbc
-	ld	c, (xde)
-	ld	(xiz), c
-	inc	1, ix
-	cp	ix, hl
-	jr	c, DSP_CopyCoeffs_TypeB_Loop
-; Restore XIZ and return.
-DSP_CopyCoeffs_TypeB_Return:
-	pop	xiz
-	ret
+DSP_CopyCoeffs_TypeB:	.include "includes/generated/cc900/DSP_CopyCoeffs_TypeB.s"	; C: cc900/dsp_algo_select.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_CopyCoeffs_TypeB_Loop, DSP_CopyCoeffs_TypeB + 25
+	.set	DSP_CopyCoeffs_TypeB_Return, DSP_CopyCoeffs_TypeB + 65
 ; ----------------------------------------------------------------------------
 ; DSP_VoiceCoeffRoute - Voice-specific coefficient routing
 ; Entry: A = voice number, C = channel (low 4 bits)

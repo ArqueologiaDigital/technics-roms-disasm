@@ -116,15 +116,7 @@ DSP_VoiceParamReadWrite_Return:
 ; Input XDE = one-byte result buffer.  Calls ToneDB_Find_ToneRecord (0x03206F) and returns
 ; byte +0x5D of that buffer -- the algorithm-type byte this whole region dispatches on.
 ; Returns HL = 1.  Callers: 0x031966 and AUDIO_PROCESS_DSP 0x035CD4.
-DSP_ReadVoiceParam5D:
-	push xiz
-	ld xiz, xde
-	call ToneDB_Find_ToneRecord
-	ld a, (xhl + 93)
-	ld (xiz), a
-	ld hl, 1:i3
-	pop xiz
-	ret
+DSP_ReadVoiceParam5D:	.include "includes/generated/cc900/DSP_ReadVoiceParam5D.s"	; C: cc900/dsp_voice_params.c
 
 ; ----------------------------------------------------------------------------
 ; DSP_VoiceParam_Dispatch - Voice parameter dispatch with routing type check
@@ -925,35 +917,10 @@ DSP_SetCoeff_FullPipeline_Epilogue:
 ; 0x045216 = Part_PatchRecord_Ptr[part][+0x10].
 ; 0x045217 = patchrec[+0x5F] if (patchrec[+0x5D] & 0x0F) == 0x0C, else 0.
 ; Reached only from ToneDB_Query_Dispatch case 23 (0x031A44).
-DSP_SetCoeff_WriteParams:
-	ld	hl, 2:i3
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld	c, (xbc+16)
-	ld	(Payload_Bss_Start+0x63a0:24), c
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld	c, (xbc+93)
-	and	c, 15
-	cp	c, 12
-	jr	nz, DSP_SetCoeff_WriteParams_Skip
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+95)
-	ld	(Payload_Bss_Start+0x63a1:24), a
-	jr	DSP_SetCoeff_WriteParams_Return
-DSP_SetCoeff_WriteParams_Skip:
-	ld	(Payload_Bss_Start+0x63a1:24), 0
-DSP_SetCoeff_WriteParams_Return:
-	ret
+DSP_SetCoeff_WriteParams:	.include "includes/generated/cc900/DSP_SetCoeff_WriteParams.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SetCoeff_WriteParams_Skip, DSP_SetCoeff_WriteParams + 83
+	.set	DSP_SetCoeff_WriteParams_Return, DSP_SetCoeff_WriteParams + 89
 ; ----------------------------------------------------------------------------
 ; DSP_SetCoeff_MasterConfig - Master coefficient configuration routine
 ; Notes: Largest DSP coefficient function (706 bytes)
@@ -1283,20 +1250,9 @@ DSP_SetCoeff_MasterConfig_Epilogue:
 ; payload, whose next allocated neighbour is ToneDB_RelBase at 0x045310 --
 ; only 0xFA bytes away.  See [UNCERTAIN]/findings: a length byte >= 0xFA
 ; overwrites ToneDB_RelBase / ToneDB_RootPtr.
-DSP_ParamWrite_BlockCopy:
-	ld xhl, xbc
-	ld ix, 0:i3
-	cp ix, wa
-	ret nc
-
-; ld C,(XHL+) / ld (XDE+),C with IX as the counter.
-DSP_ParamWrite_BlockCopy_Loop:
-	ld C, (xhl+)
-	ld (xde+), c
-	inc 1, ix
-	cp ix, wa
-	jr c, DSP_ParamWrite_BlockCopy_Loop
-	ret
+DSP_ParamWrite_BlockCopy:	.include "includes/generated/cc900/DSP_ParamWrite_BlockCopy.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ParamWrite_BlockCopy_Loop, DSP_ParamWrite_BlockCopy + 8
 
 ; Six consecutive 'ret' bytes; alignment padding, no caller.
 DSP_ParamWrite_NopPad:
@@ -1860,15 +1816,7 @@ DSP_WriteVoiceParam_Return:
 ; Exit:  *XDE = tonerec[+0x11]; HL = 1.
 ; Calls ToneDB_Find_ToneRecord 0x03206F.  Sole caller: DSP_Cmd2B_ReadParam11
 ; 0x035D0A.  tonerec+0x11 is the bit-per-partial presence byte (bits 0/2/4/6).
-DSP_ReadVoiceParam11:
-	push xiz
-	ld xiz, xde
-	call ToneDB_Find_ToneRecord
-	ld a, (xhl + 17)
-	ld (xiz), a
-	ld hl, 1:i3
-	pop xiz
-	ret
+DSP_ReadVoiceParam11:	.include "includes/generated/cc900/DSP_ReadVoiceParam11.s"	; C: cc900/dsp_voice_params.c
 
 ; The alternate preset resolver selected by ToneGen_GlobalFlags (0x041343) bit 0.
 ; Entry: WA = selector low byte, BC = selector high byte.
@@ -3396,22 +3344,10 @@ VoiceFlags_Bit6Set:
 ; Clamp a signed 16-bit value to 0..0x7F.
 ; Entry: WA = value.  Exit: HL = clamped value.
 ; Used only by Part_Apply_KeyTranspose (5 call sites).
-SignedClamp_Zero:
-	cp wa, 0x7F
-	jr le, SignedClamp_Max
-	ldw wa, 0x7F
-	jr SignedClamp_InRange
-
-; Negative -> 0.
-SignedClamp_Max:
-	cp wa, 0:i3
-	jr ge, SignedClamp_InRange
-	ld wa, 0:i3
-
-; HL = WA; ret.
-SignedClamp_InRange:
-	ld hl, wa
-	ret
+SignedClamp_Zero:	.include "includes/generated/cc900/SignedClamp_Zero.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SignedClamp_Max, SignedClamp_Zero + 11
+	.set	SignedClamp_InRange, SignedClamp_Zero + 17
 
 ; Fetch the base key number of one partial from its cached partial-block
 ; pointer, honouring the unison substitution recorded in Part_PresentWord.
@@ -3423,92 +3359,13 @@ SignedClamp_InRange:
 ; p == 2 / 3: read 0x041420 / 0x041445 directly.
 ; Sole caller: Part_Apply_KeyTranspose 0x032E6E.
 ; ★ Renamed 2026-09-25 from AlgoType_TableLookup: header: fetch the base key number of one partial (HL = block[+1]).
-Partial_GetBaseKey:
-	cp c, 3:i3
-	jrl z, Partial_GetBaseKey_P3
-	cp c, 2:i3
-	jrl z, Partial_GetBaseKey_P2
-	cp c, 1:i3
-	jr z, Partial_GetBaseKey_P1
-	cp c, 0:i3
-	ret nz
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PresentWord:24)
-	ld	bc, (xde+bc)
-	bit 14, bc
-	jr z, Partial_GetBaseKey_P0Own
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2585:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 1)
-	extz hl
-	ret
-
-; Non-unison p = 0: read Part_Slot_Sub_Base[0] (0x0413D6).
-; ★ Renamed 2026-09-25 from AlgoType_Table0: arm: p = 0, non-unison, partial 0's block.
-Partial_GetBaseKey_P0Own:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2560:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 1)
-	extz hl
-	ret
-
-; p = 1 entry; test Part_PresentWord bit 15.
-; ★ Renamed 2026-09-25 from AlgoType_Table1: arm: p = 1 entry, tests Part_PresentWord bit 15.
-Partial_GetBaseKey_P1:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PresentWord:24)
-	ld	bc, (xde+bc)
-	extz xbc
-	bit 15, bc
-	jr z, Partial_GetBaseKey_P1Own
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2560:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 1)
-	extz hl
-	ret
-
-; Non-unison p = 1: read Part_Slot_Sub_Base[1] (0x0413FB).
-; ★ Renamed 2026-09-25 from AlgoType_Table2: arm: p = 1, non-unison, partial 1's block.
-Partial_GetBaseKey_P1Own:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2585:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 1)
-	extz hl
-	ret
-
-; p = 2: read Part_Slot_Sub_Base[2] (0x041420).
-; ★ Renamed 2026-09-25 from AlgoType_Table3: arm: p = 2, block at 0x041420.
-Partial_GetBaseKey_P2:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25aa:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 1)
-	extz hl
-	ret
-
-; p = 3: read Part_Slot_Sub_Base[3] (0x041445).
-; ★ Renamed 2026-09-25 from AlgoType_TableCommon: arm: p = 3, block at 0x041445.
-Partial_GetBaseKey_P3:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25cf:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 1)
-	extz hl
-	ret
+Partial_GetBaseKey:	.include "includes/generated/cc900/Partial_GetBaseKey.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Partial_GetBaseKey_P0Own, Partial_GetBaseKey + 63
+	.set	Partial_GetBaseKey_P1, Partial_GetBaseKey + 85
+	.set	Partial_GetBaseKey_P1Own, Partial_GetBaseKey + 132
+	.set	Partial_GetBaseKey_P2, Partial_GetBaseKey + 154
+	.set	Partial_GetBaseKey_P3, Partial_GetBaseKey + 176
 
 ; Recompute the cached key-range of every partial of one part after a
 ; transpose change, then apply the two-partial key spread.
@@ -4097,118 +3954,25 @@ RoutingFlag_Epilogue:
 ; That guard -- bit5 = "slot enabled", bits 7:6 = "which effect section owns the slot" -- is
 ; repeated verbatim in all three siblings; only the constants and the target word differ.
 ; Caller: EFF_RoutingInit_SlotPath (0x0334BF).  retd 0x0002.
-SlotRouting_WriteSingle:
-	ld b, (xsp + 4)
-	bit 5, b
-	jr z, SlotRouting_Chan1PreWrite
-	ld l, b
-	and l, 0xC0
-	srl l, 6
-	cp l, e
-	jr nz, SlotRouting_Chan1PreWrite
-	bit 4, b
-	jr z, SlotRouting_Chan0
-	extz bc
-	add bc, bc
-	ld hl, bc
-	add hl, 0x1A
-	ld c, e
-	extz bc
-	or bc, 0xC0
-	ld	(xwa+hl), bc
-	jr SlotRouting_Chan1PreWrite
-
-; B bit4 clear branch of SlotRouting_WriteSingle: value = E with bit 6 set.
-SlotRouting_Chan0:
-	extz bc
-	add bc, bc
-	ld hl, bc
-	add hl, 0x1A
-	ld c, e
-	extz bc
-	set 6, bc
-	ld	(xwa+hl), bc
-
-; Exit of SlotRouting_WriteSingle (retd 0x0002); also its "guard failed" target.
-SlotRouting_Chan1PreWrite:
-	retd 0x2
+SlotRouting_WriteSingle:	.include "includes/generated/cc900/SlotRouting_WriteSingle.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SlotRouting_Chan0, SlotRouting_WriteSingle + 50
+	.set	SlotRouting_Chan1PreWrite, SlotRouting_WriteSingle + 72
 
 ; Routing-word writer #1.  Same guard and same argument layout as SlotRouting_WriteSingle;
 ; the payload constants are 0xC000 (B bit4 set) and bit 14 (clear).
 ; Caller: EFF_RoutingInit_LoopNext (0x033502), which supplies slot-record byte +0x26.
-SlotRouting_Chan1:
-	ld b, (xsp + 4)
-	bit 5, b
-	jr z, SlotRouting_Chan3PreWrite
-	ld l, b
-	and l, 0xC0
-	srl l, 6
-	cp l, e
-	jr nz, SlotRouting_Chan3PreWrite
-	bit 4, b
-	jr z, SlotRouting_Chan2
-	extz bc
-	add bc, bc
-	ld hl, bc
-	add hl, 0x1A
-	ld c, e
-	extz bc
-	or bc, 0xC000
-	ld	(xwa+hl), bc
-	jr SlotRouting_Chan3PreWrite
-
-; B bit4 clear branch of SlotRouting_Chan1: value = E with bit 14 set.
-SlotRouting_Chan2:
-	extz bc
-	add bc, bc
-	ld hl, bc
-	add hl, 0x1A
-	ld c, e
-	extz bc
-	set 14, bc
-	ld	(xwa+hl), bc
-
-; Exit of SlotRouting_Chan1 (retd 0x0002).
-SlotRouting_Chan3PreWrite:
-	retd 0x2
+SlotRouting_Chan1:	.include "includes/generated/cc900/SlotRouting_Chan1.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SlotRouting_Chan2, SlotRouting_Chan1 + 50
+	.set	SlotRouting_Chan3PreWrite, SlotRouting_Chan1 + 72
 
 ; Routing-word writer #2.  Constants 0x3300 (B bit4 set) and 0x1100 (clear).
 ; Caller: EFF_RoutingInit_SubLoop (0x033544), which supplies slot-record byte +0x38.
-SlotRouting_Chan3:
-	ld b, (xsp + 4)
-	bit 5, b
-	jr z, SlotRouting_Epilogue
-	ld l, b
-	and l, 0xC0
-	srl l, 6
-	cp l, e
-	jr nz, SlotRouting_Epilogue
-	bit 4, b
-	jr z, SlotRouting_Chan4
-	extz bc
-	add bc, bc
-	ld hl, bc
-	add hl, 0x1A
-	ld c, e
-	extz bc
-	or bc, 0x3300
-	ld	(xwa+hl), bc
-	jr SlotRouting_Epilogue
-
-; B bit4 clear branch of SlotRouting_Chan3: value = E | 0x1100.
-SlotRouting_Chan4:
-	extz bc
-	add bc, bc
-	ld hl, bc
-	add hl, 0x1A
-	ld c, e
-	extz bc
-	or bc, 0x1100
-	ld	(xwa+hl), bc
-
-; Exit of SlotRouting_Chan3 (retd 0x0002).
-SlotRouting_Epilogue:
-	retd 0x2
+SlotRouting_Chan3:	.include "includes/generated/cc900/SlotRouting_Chan3.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SlotRouting_Chan4, SlotRouting_Chan3 + 50
+	.set	SlotRouting_Epilogue, SlotRouting_Chan3 + 73
 
 ; Rebuilds the routing words of ONE output slot of ONE part for all four DSP sub-slots.
 ; Inputs: A = part index (0..0x19), C = output-slot index (0..3), E = routing word selector
@@ -4992,31 +4756,9 @@ DSP_AlgoType_Dispatch2_Store:
 ; 0x0A or 0x0B, and returns with HL = 0 (and the flags from the compare) for every other type.
 ; Used by callers outside the region to ask "is this part running one of the two multi-tap
 ; algorithms, and if so which variant".
-AlgoType_AB_Checker:
-	ld hl, 0:i3
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	cp c, 0xB
-	jr z, AlgoType_AB_LoadIndex
-	cp c, 0xA
-	ret nz
-
-; The type-0x0A/0x0B path: HL = descriptor[0x5F] & 0x3F.
-AlgoType_AB_LoadIndex:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 95)
-	and a, 0x3F
-	ld l, a
-	extz hl
-	ret
+AlgoType_AB_Checker:	.include "includes/generated/cc900/AlgoType_AB_Checker.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AlgoType_AB_LoadIndex, AlgoType_AB_Checker + 36
 
 ; Input A = part index.  Stores a 16-bit word at part+0x5F (0x0413C7).
 ; Only algorithm types 6 and 7 produce a value; every other type stores 0.
@@ -5165,46 +4907,11 @@ DSP_ChanFreq_WritePacket2_Epilogue:
 ; Returns 0xFF unless part+0x0A bit 15 is set AND the algorithm type is exactly 9; in that case
 ; it returns the byte at 0x012038 + descriptor[0x5E].  The 0xFF is a sentinel meaning "this
 ; part has no secondary parameter", not a value.
-Voice_SecondaryParam_Fetch:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xde+bc)
-	extz xbc
-	bit 15, bc
-	jr z, Voice_SecondaryParam_FallbackB
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	cp c, 0x9
-	jr nz, Voice_SecondaryParam_FallbackA
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 94)
-	extz wa
-	lda xbc, (Voice_SecondaryParam_Curve:24)
-	ld	l, (xbc+wa)
-	jr Voice_SecondaryParam_FallbackC
-
-; Algorithm type != 9: L = 0xFF.
-Voice_SecondaryParam_FallbackA:
-	ld l, 0xFF:opc
-	jr Voice_SecondaryParam_FallbackC
-
-; part+0x0A bit 15 clear: L = 0xFF.
-Voice_SecondaryParam_FallbackB:
-	ld l, 0xFF:opc
-
-; Shared `ret`.
-Voice_SecondaryParam_FallbackC:
-	ret
+Voice_SecondaryParam_Fetch:	.include "includes/generated/cc900/Voice_SecondaryParam_Fetch.s"	; C: cc900/dsp_voice_params_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SecondaryParam_FallbackA, Voice_SecondaryParam_Fetch + 87
+	.set	Voice_SecondaryParam_FallbackB, Voice_SecondaryParam_Fetch + 91
+	.set	Voice_SecondaryParam_FallbackC, Voice_SecondaryParam_Fetch + 93
 
 ; Input A = part index.  Returns L = 0 when part+0x0A bit 15 is clear.
 ; For algorithm types 0x0A/0x0B it returns the algorithm-descriptor byte at 0x011E24+0x27*type
@@ -5274,22 +4981,7 @@ Voice_SecondaryParam_Path4:
 ; NOT an epilogue -- this is a separate one-line accessor with its own entry point.
 ; Input A = part index; returns L = descriptor[0x65] when part+0x0A bit 15 is set, else 0.
 ; See [UNCERTAIN]: the name is misleading but I am leaving it alone per the rules.
-Voice_SecondaryParam_Epilogue:
-	ld l, 0x0:opc
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xde+bc)
-	extz xbc
-	bit 15, bc
-	ret z
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 101)
-	ret
+Voice_SecondaryParam_Epilogue:	.include "includes/generated/cc900/Voice_SecondaryParam_Epilogue.s"	; C: cc900/dsp_voice_params.c
 
 ; Input A = part index, C = channel, E = a sub-selector.  Returns HL = 0x0000, 0x0040 or
 ; 0x00C0 -- a two-bit routing/level field for the effect's send.
@@ -5643,30 +5335,12 @@ Algo_SubTable_DispatchB_Return:
 ; when part+0x02 (the flags word, zero-extended to 32 bits) has any of bits 0x00C000 set;
 ; otherwise L = 0.  Signed offsets, so this reads as a small negative trim applied to the
 ; DispatchC parameter when a particular part flag pair is engaged.
-Algo_SubTable_PanTrim_From_PartFlags:
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_PresentWord:24)
-	ld	wa, (xde+wa)
-	extz	xwa
-	and	xwa, 49152
-	jr	z, Algo_SubTable_PanTrim_From_PartFlags_Skip3
-	cp	c, 1:i3
-	jr	z, Algo_SubTable_PanTrim_From_PartFlags_Skip
-	cp	c, 0:i3
-	jr	nz, Algo_SubTable_PanTrim_From_PartFlags_Skip2
-	ld	l, 252:opc
-	jr	Algo_SubTable_PanTrim_From_PartFlags_Return
-Algo_SubTable_PanTrim_From_PartFlags_Skip:
-	ld	l, 240:opc
-	jr	Algo_SubTable_PanTrim_From_PartFlags_Return
-Algo_SubTable_PanTrim_From_PartFlags_Skip2:
-	ld	l, 0:opc
-	jr	Algo_SubTable_PanTrim_From_PartFlags_Return
-Algo_SubTable_PanTrim_From_PartFlags_Skip3:
-	ld	l, 0:opc
-Algo_SubTable_PanTrim_From_PartFlags_Return:
-	ret
+Algo_SubTable_PanTrim_From_PartFlags:	.include "includes/generated/cc900/Algo_SubTable_PanTrim_From_PartFlags.s"	; C: cc900/dsp_voice_params_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Algo_SubTable_PanTrim_From_PartFlags_Skip, Algo_SubTable_PanTrim_From_PartFlags + 38
+	.set	Algo_SubTable_PanTrim_From_PartFlags_Skip2, Algo_SubTable_PanTrim_From_PartFlags + 42
+	.set	Algo_SubTable_PanTrim_From_PartFlags_Skip3, Algo_SubTable_PanTrim_From_PartFlags + 46
+	.set	Algo_SubTable_PanTrim_From_PartFlags_Return, Algo_SubTable_PanTrim_From_PartFlags + 48
 
 ; Input A = part index, C = sub-slot.  Returns L.
 ; Base value = sub-record byte +0x03 (0x011E16 + 0x27*type + 0x13 + 5*C + 0x03), then a
@@ -6194,165 +5868,35 @@ Voice_Part_ResetSlotRouting_Epilogue:
 ;   slot 4 -> part+0x6C from 0x0451AC << 2
 ; Note there are FIVE of these but only FOUR output-slot records; the fifth is a separate
 ; global send.  Callers: VoiceSlot_FullInit and VoiceSlot_AltInit, all five in sequence.
-DSP_SlotParam_Write_Slot0:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	ld	bc, (xde+bc)
-	bit 0, bc
-	jr z, DSP_SlotParam_Write_Slot0_Path
-	cp (Payload_Bss_Start+0x632e:24), a
-	jr nz, DSP_SlotParam_Write_Slot0_Path
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x255a:24)
-	ld a, (Payload_Bss_Start+0x6331:24)
-	sla a, 1
-	ld	(xde+bc), a
-	ret
-
-; Gate failed: part+0x68 = 0.
-DSP_SlotParam_Write_Slot0_Path:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x255a:24)
-	ld	(xbc+wa), 0x00
-	ret
+DSP_SlotParam_Write_Slot0:	.include "includes/generated/cc900/DSP_SlotParam_Write_Slot0.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_Slot0_Path, DSP_SlotParam_Write_Slot0 + 57
 
 ; As slot 0 but destination part+0x69 (0x0413D1) and source global 0x0451A8, shifted left 1.
-DSP_SlotParam_Write_Slot1:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	ld	bc, (xde+bc)
-	bit 0, bc
-	jr z, DSP_SlotParam_Write_Slot1_Path
-	cp (Payload_Bss_Start+0x632e:24), a
-	jr nz, DSP_SlotParam_Write_Slot1_Path
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x255b:24)
-	ld a, (Payload_Bss_Start+0x6332:24)
-	sla a, 1
-	ld	(xde+bc), a
-	ret
-
-; Gate failed: part+0x69 = 0.
-DSP_SlotParam_Write_Slot1_Path:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x255b:24)
-	ld	(xbc+wa), 0x00
-	ret
+DSP_SlotParam_Write_Slot1:	.include "includes/generated/cc900/DSP_SlotParam_Write_Slot1.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_Slot1_Path, DSP_SlotParam_Write_Slot1 + 57
 
 ; As slot 0 but destination part+0x6A (0x0413D2) and source global 0x0451A9, shifted left 1.
-DSP_SlotParam_Write_Slot2:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	ld	bc, (xde+bc)
-	bit 0, bc
-	jr z, DSP_SlotParam_Write_Slot2_Path
-	cp (Payload_Bss_Start+0x632e:24), a
-	jr nz, DSP_SlotParam_Write_Slot2_Path
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x255c:24)
-	ld a, (Payload_Bss_Start+0x6333:24)
-	sla a, 1
-	ld	(xde+bc), a
-	ret
-
-; Gate failed: part+0x6A = 0.
-DSP_SlotParam_Write_Slot2_Path:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x255c:24)
-	ld	(xbc+wa), 0x00
-	ret
+DSP_SlotParam_Write_Slot2:	.include "includes/generated/cc900/DSP_SlotParam_Write_Slot2.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_Slot2_Path, DSP_SlotParam_Write_Slot2 + 57
 
 ; As slot 0 but destination part+0x6B (0x0413D3) and source global 0x0451AB, shifted left 2.
-DSP_SlotParam_Write_Slot3:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	ld	bc, (xde+bc)
-	bit 0, bc
-	jr z, DSP_SlotParam_Write_Slot3_Path
-	cp (Payload_Bss_Start+0x632e:24), a
-	jr nz, DSP_SlotParam_Write_Slot3_Path
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x255d:24)
-	ld a, (Payload_Bss_Start+0x6335:24)
-	sla a, 2
-	ld	(xde+bc), a
-	ret
-
-; Gate failed: part+0x6B = 0.
-DSP_SlotParam_Write_Slot3_Path:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x255d:24)
-	ld	(xbc+wa), 0x00
-	ret
+DSP_SlotParam_Write_Slot3:	.include "includes/generated/cc900/DSP_SlotParam_Write_Slot3.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_Slot3_Path, DSP_SlotParam_Write_Slot3 + 57
 
 ; As slot 0 but destination part+0x6C (0x0413D4) and source global 0x0451AC, shifted left 2.
-DSP_SlotParam_Write_Slot4:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	ld	bc, (xde+bc)
-	bit 0, bc
-	jr z, DSP_SlotParam_Write_Slot4_Path
-	cp (Payload_Bss_Start+0x632e:24), a
-	jr nz, DSP_SlotParam_Write_Slot4_Path
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x255e:24)
-	ld a, (Payload_Bss_Start+0x6336:24)
-	sla a, 2
-	ld	(xde+bc), a
-	ret
-
-; Gate failed: part+0x6C = 0.
-DSP_SlotParam_Write_Slot4_Path:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x255e:24)
-	ld	(xbc+wa), 0x00
-	ret
+DSP_SlotParam_Write_Slot4:	.include "includes/generated/cc900/DSP_SlotParam_Write_Slot4.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_Slot4_Path, DSP_SlotParam_Write_Slot4 + 57
 
 ; Input A = part index.  part+0x00 &= 0xFFFC then |= 0x0004, and part+0x04 = 0.
 ; I.e. it clears the two low status bits (including the bit-0 panel-target gate that
 ; Voice_ActiveFlag_CheckAndLoad and the five DSP_SlotParam_Write_SlotN routines test) and sets
 ; bit 2 instead.  Caller: Voice_ProgChange_Path2 (0x034AD2).
-Voice_ActiveFlag_Set:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	andw	(xde+bc), 0xfffc
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	orw	(xde+bc), 0x0004
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24f6:24)
-	ld	(xbc+wa), 0x00
-	ret
+Voice_ActiveFlag_Set:	.include "includes/generated/cc900/Voice_ActiveFlag_Set.s"	; C: cc900/dsp_voice_params.c
 
 ; Input A = part index.  Early-outs if bit 0 of the global word at 0x041343 is set (a global
 ; "audio engine suspended" latch also written by DSP_System_Init).
@@ -6360,91 +5904,11 @@ Voice_ActiveFlag_Set:
 ; 0x40 (mid-scale), and then clears bytes +0x29 and +0x2A of all twelve 4-byte note-state
 ; records (i = 0..3 x j = 0..2 at part + 0x10*j + 4*i).
 ; Callers: 6 sites including Voice_ProgChange_Path2 and VoiceSlot_ClearAll_MidNext.
-Voice_NoteState_Clear:
-	ld bc, (Voice_GlobalFlags:24)
-	bit 0, bc
-	ret nz
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x250f:24)
-	ldw	(xde+bc), 0x0000
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2511:24)
-	ld	(xde+bc), 0x00
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x2512:24)
-	ld	(xde+bc), 0x00
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x250d:24)
-	ld	(xde+bc), 0x40
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x250e:24)
-	ld	(xde+bc), 0x40
-	ld ix, 0:i3
-	cp ix, 4:i3
-	ret nc
-
-; Outer (i) loop head of the 4x3 note-state clear.
-Voice_NoteState_InnerLoopA:
-	ld hl, 0:i3
-	cp hl, 3:i3
-	jr nc, Voice_NoteState_Epilogue
-
-; Inner (j) loop body: clears record bytes +0x29 and +0x2A.
-Voice_NoteState_InnerLoopB:
-	ld bc, ix
-	extz xbc
-	ld xde, xbc
-	sll xde, 2
-	ld bc, hl
-	extz xbc
-	sll xbc, 4
-	ld xiy, xbc
-	add xiy, xde
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	exts xbc
-	add xbc, xde
-	add xbc, xiy
-	ld (xbc + 41), 0x0
-	ld bc, ix
-	extz xbc
-	ld xde, xbc
-	sll xde, 2
-	ld bc, hl
-	extz xbc
-	sll xbc, 4
-	ld xiy, xbc
-	add xiy, xde
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_Record_Base:24)
-	exts xbc
-	add xbc, xde
-	add xbc, xiy
-	ld (xbc + 42), 0x0
-	inc 1, hl
-	cp hl, 3:i3
-	jr c, Voice_NoteState_InnerLoopB
-
-; Outer-loop increment and back-edge, then ret.
-Voice_NoteState_Epilogue:
-	inc 1, ix
-	cp ix, 4:i3
-	jr c, Voice_NoteState_InnerLoopA
-	ret
+Voice_NoteState_Clear:	.include "includes/generated/cc900/Voice_NoteState_Clear.s"	; C: cc900/dsp_voice_params.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_NoteState_InnerLoopA, Voice_NoteState_Clear + 112
+	.set	Voice_NoteState_InnerLoopB, Voice_NoteState_Clear + 118
+	.set	Voice_NoteState_Epilogue, Voice_NoteState_Clear + 210
 
 ; Full re-initialisation of one part's effect/routing state.  Input A = part index.
 ; Sequence: AlgoType_StateWrite(part, C=0) -> Voice_ActiveFlag_CheckAndLoad ->

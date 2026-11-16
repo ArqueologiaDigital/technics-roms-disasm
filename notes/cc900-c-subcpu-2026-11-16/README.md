@@ -106,3 +106,26 @@ pointers to the DSP state buffer being applied.
 - **Odd record strides** (287, 71, 39, 37, 5 bytes): V4.23 rounds a struct to an even size, so these records cannot be
   arrays of structs; the C indexes char arrays.  Whether the firmware's C had a packing option is open.
 - **`DSP_Set_MixParam_45B2`** matches only at `-O3 -Xr` (run 47), the payload's only non-`-Xr` match so far.
+
+## Promotion into the build (2026-11-16)
+
+With the sub-CPU build support in main (adfc47c94), the staged C moved into `<tree>/subcpu/cc900/` for v142, v141 and
+v140: 239 functions per tree are now built from C by `make` (Toshiba V4.23 in the VM).  v142's hand sources were
+spliced with `scripts/tools/cc900_splice.py v142/subcpu FILE.c --symbols symbols/subcpu_symbols_reference.txt --sizes
+SIZES` (SIZES: function<TAB>bytes, from `staged_v423.tsv`'s MATCH rows); v141 and v140 were regenerated from v142 by
+their generators, which carry the `.include` lines over, and each tree builds from its own C (`port_staged.py`'s
+cells).  The three payload ROMs are byte-identical and `make -j2 gate` passes.
+
+Held back in `<tree>/subcpu/cc900-staged/`: 28 functions that V4.23 reproduces (checked by `sub_v423.py`) but the
+build cannot yet build, each file with a note saying why (`hold_back.py` moves them):
+- `*_kernel.c` (6): calls into the shared kernel (`wsa1/kernel/kernel.s`), whose labels the build's lookup does not
+  see;
+- `*_runtime.c` (12): calls to the C runtime (C9H_mulls / C9H_divls ...), which the build does not map to
+  Math_Multiply32 / Long_SignedDiv;
+- `*_callnames*.c` (5): calls a callee by its short `cc900-name`, which the build's call lookup does not apply;
+- `*_inlinejr.c` (5): inline `jr $+2`, whose `$` the build's translation does not map to llvm-mc's `.`.
+These are tool gaps reported to lane_vmb; the functions move into `cc900/` when they close.
+
+| script         | question it answers                                                                      | command                                                                            |
+|----------------|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
+| `hold_back.py` | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...` |

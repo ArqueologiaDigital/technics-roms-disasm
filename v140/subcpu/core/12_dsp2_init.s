@@ -16,12 +16,7 @@
 ; 0x448C, which is relevant to the wedge described under Audio_Process_DSP. Called once from
 ; the boot path (kn5000_subprogram_v142.s:148) after the primary DSP is initialised. The name
 ; is a slight misnomer -- the block is the ring for BOTH DSPs' command traffic, not DSP2 state.
-DSP2_Init:
-	ldw (15204:16), 0
-	ld wa, 0:i3
-	ld (15202:16), wa
-	ld (DSP2_RingBuffer:16), wa
-	ret
+DSP2_Init:	.include "includes/generated/cc900/DSP2_Init.s"	; C: cc900/dsp2_init.c
 
 ; --- 0x03582E-0x03582F  Voice_Poly_NoteOn_Data -- two bytes 0x0E 0x0E
 ; Two `ret` opcodes stranded between Voice_Poly_NoteOn's epilogue and DSP_RingBuf_Read.
@@ -33,8 +28,7 @@ DSP2_Init:
 ; second 0x0E is the unreferenced one.  Renamed from Voice_Poly_NoteOn_Data.  (The pointer
 ; table itself has no reader in the payload -- see its header -- so this stub is reached, if at
 ; all, only through a computed address.)
-DSP2_InitTask_NullStub:
-	ret
+DSP2_InitTask_NullStub:	.include "includes/generated/cc900/DSP2_InitTask_NullStub.s"	; C: cc900/dsp2_init.c
 	ret				; not referenced (padding)
 
 ; ALREADY NAMED -- doc header only.
@@ -140,101 +134,20 @@ DSP_RingBuf_Write2K:
 ; ★ This routine contains the ONLY two instructions in the whole firmware that can clear
 ;   0x448C: `ld (0x448C),0x0000` at 0x0358C7 and at 0x035904. See the wedge note under
 ;   Audio_Process_DSP.
-Audio_CmdHandler_60_7F:
-	ld xhl, (xsp + 6)
-	ld de, (xsp + 4)
-	cpw (17548:16), 0
-	jr z, CmdHandler60_StreamSizeC
-	cpw (17548:16), 1
-	jr ule, CmdHandler60_StreamSizeA
-	ld ix, 0:i3
-
-; Accumulate: if (0x448A) + count >= (0x4488) go to StreamSizeB (stream complete), else
-; (0x448A) += count and ++(0x448C), then enqueue.
-CmdHandler60_StreamSizeA:
-	ld wa, (17546:16)
-	add wa, de
-	cp wa, (17544:16)
-	jr nc, CmdHandler60_StreamSizeB
-	add (17546:16), de
-	incw 1, (17548:16)
-	jr DSP_EnqueueOrReturn
-
-; Stream complete: (0x448A) = 0, (0x448C) = 0, then enqueue. One of the two clear sites.
-CmdHandler60_StreamSizeB:
-	ldw (17546:16), 0
-	ldw (17548:16), 0
-	jr DSP_EnqueueOrReturn
-
-; Stream header: only accepted when count == 0x20 exactly (otherwise StateReset). Computes
-; (0x4488) = (hdr[5] << 7) + hdr[6] + 8 at 0x0358D5..0x0358EC, then (0x448A) += 32
-; (0x0358F0) and (0x448C) = 1 (0x0358F6), then enqueues.
-CmdHandler60_StreamSizeC:
-	cp de, 0x20
-	jr nz, DSP_CmdHandler_StateReset
-	ld a, (xhl + 5)
-	extz wa
-	and wa, 0x7FF
-	ld bc, wa
-	sll bc, 7
-	ld a, (xhl + 6)
-	extz wa
-	add wa, bc
-	inc 8, wa
-	ld (17544:16), wa
-	addw (17546:16), 32
-	ldw (17548:16), 1
-	jr DSP_EnqueueOrReturn
-
-; Malformed opening chunk: (0x448A) = 0, (0x448C) = 0. The other clear site.
-DSP_CmdHandler_StateReset:
-	ldw (17546:16), 0
-	ldw (17548:16), 0
-
-; IX = 0; if count == 0 return HL = 0, else fall into the enqueue loop.
-DSP_EnqueueOrReturn:
-	ld ix, 0:i3
-	cp ix, de
-	jr nc, DSP_Enqueue_ReturnOK
-
-; ALREADY NAMED -- doc header only.
-; Inlined 2 KB ring writer, byte at a time, source read with `ld A,(XHL+)` (XHL was loaded
-; from the caller's (XSP+6) at entry): (0x3B60) is the write index, masked 0x7FF, data at
-; 0x3B66; (0x3B64) is incremented per byte. Loops until IX reaches the byte count in DE.
-DSP_RingBuf_Enqueue:
-	lda xwa, (DSP2_RingBuffer:16)
-	ld bc, (xwa)
-	incw 1, (xwa)
-	and bc, 0x7FF
-	lda xwa, (15206:16)
-	extz xbc
-	add xbc, xwa
-	ld A, (xhl+)
-	ld (xbc), a
-	incw 1, (15204:16)
-	inc 1, ix
-	cp ix, de
-	jr c, DSP_RingBuf_Enqueue
-
-; HL = 0; ret.
-DSP_Enqueue_ReturnOK:
-	ld hl, 0:i3
-	ret
+Audio_CmdHandler_60_7F:	.include "includes/generated/cc900/Audio_CmdHandler_60_7F.s"	; C: cc900/dsp2_init.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CmdHandler60_StreamSizeA, Audio_CmdHandler_60_7F + 24
+	.set	CmdHandler60_StreamSizeB, Audio_CmdHandler_60_7F + 46
+	.set	CmdHandler60_StreamSizeC, Audio_CmdHandler_60_7F + 60
+	.set	DSP_CmdHandler_StateReset, Audio_CmdHandler_60_7F + 107
+	.set	DSP_EnqueueOrReturn, Audio_CmdHandler_60_7F + 119
+	.set	DSP_RingBuf_Enqueue, Audio_CmdHandler_60_7F + 125
+	.set	DSP_Enqueue_ReturnOK, Audio_CmdHandler_60_7F + 160
 
 ; ALREADY NAMED -- doc header only.
 ; HL = ((XWA[5] & 0x7F) << 7) | (XWA[6] & 0x7F). Applied to the 8-byte header copy at 0x4368,
 ; so it reads header bytes 0x436D and 0x436E. MIDI-style 7-bits-per-byte packing.
-Extract_14Bit_PayloadSize:
-	ld c, (xwa + 6)
-	extz bc
-	and bc, 0x7F
-	ld a, (xwa + 5)
-	extz wa
-	and wa, 0x7F
-	sll wa, 7
-	ld hl, wa
-	or hl, bc
-	ret
+Extract_14Bit_PayloadSize:	.include "includes/generated/cc900/Extract_14Bit_PayloadSize.s"	; C: cc900/dsp2_init.c
 
 ; --- Pack3x7bit: Extract and pack three 7-bit fields ---
 ; Entry: XWA = pointer to a 4-byte structure
@@ -245,41 +158,12 @@ Extract_14Bit_PayloadSize:
 ; ALREADY NAMED -- doc header only.
 ; XHL = (XWA[1] & 0x7F) << 14 | (XWA[2] & 0x7F) << 7 | (XWA[3] & 0x7F), a 21-bit value. Used
 ; where a DSP parameter needs more than 14 bits. No caller inside this region.
-DSP_Pack3x7bitFields:
-	ld	c, (xwa+2)
-	res	7, c
-	ld	b, 0:opc
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 7
-	ld	c, (xwa+1)
-	res	7, c
-	ld	b, 0:opc
-	extz	xbc
-	sll	xbc, 14
-	or	xbc, xde
-	ld	a, (xwa+3)
-	res	7, a
-	ld	w, 0:opc
-	extz	xwa
-	ld	xhl, xwa
-	or	xhl, xbc
-	ret
+DSP_Pack3x7bitFields:	.include "includes/generated/cc900/DSP_Pack3x7bitFields.s"	; C: cc900/dsp2_init.c
 
 ; ALREADY NAMED -- doc header only.
 ; HL = ((XWA[2] & 0x7F) << 7) | (XWA[3] & 0x7F). On the header copy that is bytes 0x436A and
 ; 0x436B. Used by DSP_Cmd2B_VoiceParamWrite for the parameter index.
-Extract_14Bit_VoiceParam:
-	ld c, (xwa + 3)
-	extz bc
-	and bc, 0x7F
-	ld a, (xwa + 2)
-	extz wa
-	and wa, 0x7F
-	sll wa, 7
-	ld hl, wa
-	or hl, bc
-	ret
+Extract_14Bit_VoiceParam:	.include "includes/generated/cc900/Extract_14Bit_VoiceParam.s"	; C: cc900/dsp2_init.c
 
 ; ALREADY NAMED -- doc header only.
 ; Pops exactly seven bytes from the ring (XWA = control block) into 0x4369..0x436F. It does
