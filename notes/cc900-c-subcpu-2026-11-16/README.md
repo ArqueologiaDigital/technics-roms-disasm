@@ -90,3 +90,19 @@ The C names a cell below 0x10000 by its `.equ`; the ToneDB_* cells are expressio
 C cannot resolve yet, so the C keeps `ram_45310` / `ram_45314` for them.  Proposed but not applied (not yet checked
 here): `ram_4531c` the edit-buffer pointer, `ram_4a48` the tone-generator poll state, `ram_4a3a` / `ram_4a3e` the
 pointers to the DSP state buffer being applied.
+
+## Near misses and candidate compiler differences
+
+- **Tone-generator writers around inline assembly** (`ToneGen_Write*`, about 30 routines; run 58).  Each register
+  write is followed by inline `nop`s and a `jr` to the next instruction.  Written with `__ASM(" nop")` /
+  `__ASM(" jr $+2")`, V4.23 reproduces the four `*_Mute` writers, which need nothing after the first `nop`.  The others
+  differ at +0: the ROM saves XIZ (`push xiz; ld xiz,xbc`) and keeps the record pointer there across the inline
+  assembly, as it does across a call; V4.23 keeps it in XBC, since it does not treat `__ASM` as clobbering registers.
+  `register` on the pointer did not change that.  Candidate compiler difference: the firmware's compiler treated
+  inline assembly as a call.  Still open: a dummy use or a register variable around the `__ASM`, a few forms per run.
+- **8-bit narrowing** (helpers A and B, runs 47 / 58): V4.23 computes `unsigned char OP constant`, `uchar << 8` and
+  `uchar * N` in 8 bits where the ROM extends first; a cast to `int` gives the ROM's code.  A C idiom, not a compiler
+  difference.
+- **Odd record strides** (287, 71, 39, 37, 5 bytes): V4.23 rounds a struct to an even size, so these records cannot be
+  arrays of structs; the C indexes char arrays.  Whether the firmware's C had a packing option is open.
+- **`DSP_Set_MixParam_45B2`** matches only at `-O3 -Xr` (run 47), the payload's only non-`-Xr` match so far.
