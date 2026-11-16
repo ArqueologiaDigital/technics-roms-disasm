@@ -40,18 +40,20 @@ or that it falls into, are its inner blocks.  Its kind:
 choice also tells which functions shared a source file.  C-calr functions wait for lane_vmb's `cc900-module:`
 marking; the C? ones can be checked now.
 
-## Status (staged_v423.tsv, run `2026-11-16-60-hd-r9a`)
+## Status (staged_v423.tsv, runs `2026-11-16-67-hd-r11-staged` and `-69-hd-r12-ports`)
 
-| tree              | functions | bytes | note                                                          |
-|-------------------|-----------|-------|---------------------------------------------------------------|
-| `hdae5000`        | 49        | 4,393 | 15 of them call a same-module routine (`cc900-module:` lists) |
-| `hdae5000_v2_01i` | 36        | 3,609 | the v2.06i C unchanged (`port_staged.py`)                     |
-| `hdae5000_v1_15i` | 26        | 2,822 | the same                                                      |
-| `hdae5000_v1_10i` | 26        | 2,822 | the same                                                      |
+| tree              | functions | bytes  | note                                                  |
+|-------------------|-----------|--------|-------------------------------------------------------|
+| `hdae5000`        | 61        | 7,361  | 15 call a same-module routine (`cc900-module:` lists) |
+| `hdae5000_v2_01i` | 46        | 6,119  | the v2.06i C unchanged (`port_staged.py`)             |
+| `hdae5000_v1_15i` | 32        | 4,105  | the same                                              |
+| `hdae5000_v1_10i` | 32        | 4,105  | the same                                              |
+| total             | 171       | 21,690 |                                                       |
 
 The staged files are one per original module (a calr group, `survey.py --modules`): `hdae5000_lyrics.c`,
-`hdae5000_pport_services.c`, `hdae5000_hd_tables.c`, `hdae5000_flsitem.c`, `hdae5000_song_io.c`; functions that call
-nothing of their module are in `hdae5000_ui_display.c`, `hdae5000_hd_driver.c` and `hdae5000_song_check.c`.  A
+`hdae5000_pport_services.c`, `hdae5000_hd_tables.c`, `hdae5000_flsitem.c`; functions that call nothing of their module
+are in `hdae5000_ui_display.c`, `hdae5000_hd_driver.c`, `hdae5000_song_check.c`, `hdae5000_song_io.c` and
+`hdae5000_fd_stream.c`.  A
 module's relative calls are named in a `cc900-module:` comment (the build's rule since 7d0361673); `hd_v423.py`
 reads it as the build does.  Before that rule, `hd_v423.py --calr` modelled the shortening from the ROM (a `call`
 becomes `calr` where the ROM has a `calr` to the same target), and asm900's own object file of run 56 showed the
