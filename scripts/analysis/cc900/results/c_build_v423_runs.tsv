@@ -1,0 +1,6 @@
+# V4.23 listings of firmware C (cc900 phase 6), one row per C file text and option set; read by
+# c_build_coverage.py, written by its --record-v423-run.  The listings stay in the private oracle repo.
+c_file	sha256	options	run	listing
+v10/maincpu/cc900/bitmap_out_routines.c	a0bcfc511ff88db3e24f08aafbbc3a72a6e59fdcb586fdcb3ec41acff5cad87f	O3XSXr	2026-11-16-8-p6-firmware	v423/O3XSXr/v10/bitmap_out_routines.asm
+v10/maincpu/cc900/medley.c	8da4193233f96759835bf0eaf550d31ed74ee8d4726f881fd977c8fa66586ea7	O3XSXr	2026-11-16-8-p6-firmware	v423/O3XSXr/v10/medley.asm
+v10/maincpu/cc900/ui_widget_defs.c	bd97974ee96ccbece6ced0d368843a0da73cbb3372e25de43724297f5151237e	O3XSXr	2026-11-16-8-p6-firmware	v423/O3XSXr/v10/ui_widget_defs.asm

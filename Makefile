@@ -1948,6 +1948,23 @@ doc-quality:
 semantic-score:
 	python3 scripts/analysis/semantic_score.py
 
+# How much of each image is built from C, per toolchain (Toshiba V4.23, the cc900 reference model, our LLVM backend):
+# scripts/analysis/cc900/c_build_coverage.py, whose docstring defines it.  Needs a built tree (make all), the 1997
+# library copy CC900_LIBCOPY (as in scripts/analysis/cc900/results/model_ledger.md) and the private oracle repo.
+# Refreshes the model's and V4.23's library-pair results (pairs_model.py, about 1.5 min each, run side by side),
+# then writes scripts/analysis/cc900/results/c_build_coverage.md (the census is cached in $TMPDIR; a cold census took
+# 7 min on 2026-11-16, a warm run 8 s).  Commit the three results files; the cc900 dashboard charts
+# c_build_coverage.md over commits.  Needs `make wsa1` too: the census assembles the SX-WSA1R images.
+CC900_LIBCOPY ?= $(PROJECTS_ROOT)/tmp/cc900-corpus-libsrc97
+CC900_V423_LIBRUN ?= $(PROJECTS_ROOT)/cc900-oracle/runs/2026-11-08-5-libsrc97-O3XS/out/v423/O3XS/libsrc
+.PHONY: cc900-c-coverage
+cc900-c-coverage:
+	cd scripts/analysis/cc900/model && \
+	  { python3 -I -B pairs_model.py ../results/pairs.tsv $(CC900_LIBCOPY) > ../results/pairs_model_kn5000.tsv & m=$$!; \
+	    python3 -I -B pairs_model.py ../results/pairs.tsv $(CC900_LIBCOPY) --listings $(CC900_V423_LIBRUN) \
+	      > ../results/pairs_v423_llvm_kn5000.tsv & v=$$!; wait $$m && wait $$v; }
+	python3 -B scripts/analysis/cc900/c_build_coverage.py
+
 website: gallery rom-status
 	@echo "Website content updated. Don't forget to commit technics-docs."
 
