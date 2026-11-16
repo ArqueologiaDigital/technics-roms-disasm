@@ -3930,6 +3930,13 @@ for the first firmware function that divides).  fmt_e (FormatMedleyNumber, 108 B
 fpp10 +1 / +1 at none / O3XS (a backward goto loop), oexp +4 at O3XSXr; library strtol / strtoul now pass the goto and
 refuse later (counts unchanged); validation and library unchanged; pairs 223; semcheck 94; firmware C 55 MATCH.
 
+**Batch 362 (2026-11-16).**  lane_o3 fix 26 ASSIGN_TARGET_WRITE: an assignment `x = value` (value not reading x) builds into
+x's own register; the live-variable guard had refused it in a loop condition generated after the body.  It unblocks
+phase 6's TrimAndPadSmfFilename: trim_a now matches V4.23 exactly, whose first 42 of 55 bytes are the ROM's (the
+padding loop needs a kn5000 loop rule; lane_p6's first version, tried as batch 362, lost kn5000 / ide2003 library and
+micro rows -- it applied to the Toshiba library sources too -- and was backed out).  Ledger identical on every row
+(all personalities); validation and library unchanged; semcheck 94; firmware C 55 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
