@@ -1,0 +1,45 @@
+/* Functions of sequencer/bmdredit_routines.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+   Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
+/* cc900-module: BmDrEdit_CheckAndSelectChannel BmDrEdit_InsertStepEntry BmDrEdit_ProcessVoiceSection BmDrEdit_RestoreEditState BmDrEdit_SaveEditState BmDrEdit_SetupScrollRegion EditChannel_LoadVoiceParams */   /* scripts/analysis/cc900/module_calls.py v10 */
+
+extern void NoteEditSy_UpdateChordDisplay(void);
+extern void BmDrEdit_SetupScrollRegion(unsigned char *, unsigned char *);
+extern unsigned char __near ram_2742;
+extern unsigned char __near ram_2962;
+extern unsigned char __near ram_27ca;
+extern unsigned char __near NOTEEDIT_BASE_KEY;
+extern void BmDrEdit_AdjustScrollToView(void);
+
+void BmDrEdit_AdjustScrollToView(void)
+{
+	unsigned char lo, hi;
+	unsigned char c, k;
+
+	if (ram_2742 & 1) return;
+	ram_27ca = NOTEEDIT_BASE_KEY;
+	for (;;) {
+		BmDrEdit_SetupScrollRegion(&lo, &hi);
+		c = ram_2962;
+		k = NOTEEDIT_BASE_KEY;
+		if (c < lo) {
+			c = k;
+			if (k == 0) return;
+			c--;
+			NOTEEDIT_BASE_KEY = c;
+		} else if (c > hi) {
+			c = k;
+			if (k >= 9) return;
+			c++;
+			NOTEEDIT_BASE_KEY = c;
+		} else
+			break;
+	}
+	if (ram_27ca == NOTEEDIT_BASE_KEY) return;
+	NoteEditSy_UpdateChordDisplay();
+}
