@@ -16,7 +16,7 @@ usage (from the repository root or anywhere):
       and the near-miss C copies OUT/c/<tree>/<function>__<sha8>.c.  --add-new: only the runs runs.tsv lacks,
       their rows added to the existing index (the hourly refresh).
   python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all] [--update] [--verbose]
-          [--no-derive-module] [same options]
+          [--status STATUS[,STATUS]] [--no-derive-module] [same options]
       no VM: re-translate the listings of the indexed near misses (--all: every attempt but MATCH, ERR-name and
       ERR-dup; --class: only those with that class) with the CURRENT translator and compare again.  The C is the
       run's corpus file when it still has the index's sha256, else the near-miss copies.  Each C's `cc900-module:`
@@ -1642,6 +1642,8 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
     else:
         sel = [r for r in old if r['status'] == 'NEAR']
     sel = [r for r in sel if cls is None or cls in r['classes'].split(',')]
+    if '--status' in a:                   # only rows of these statuses (comma-separated, e.g. ERR-resolve)
+        sel = [r for r in sel if r['status'] in opt(a, '--status', '').split(',')]
     by = {}
     for r in sel:
         by.setdefault(r['listing'], []).append(r)
