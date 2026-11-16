@@ -77,6 +77,9 @@ def defines(d):
     if m and not d.startswith('typedef'):
         return {m.group(2)}
     body = re.sub(r'\{.*\}', ' ', d, flags=re.S)
+    m = re.search(r'(\w+)\s*\([^()]*\)\s*;?\s*$', body)      # a function prototype (lane_sub fix: it was not
+    if m and not d.startswith('typedef'):                       # picked, so the staged C called it undeclared)
+        return {m.group(1)}
     if d.startswith('typedef'):
         tags = {m.group(2)} if m else set()
         return tags | {re.findall(r'(\w+)\s*(?:\[[^\]]*\])*\s*;?$', body.rstrip(';').strip())[-1]}

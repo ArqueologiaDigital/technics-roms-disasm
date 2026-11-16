@@ -19,6 +19,11 @@ extern int ram_451bc;
 extern int ram_451be;
 extern int ram_451c0;
 extern int ram_451c2;
+extern int DSP_AlgoType_Dispatch1(int, int);
+extern int DSP_AlgoType_Dispatch2(int, int);
+extern unsigned int *Voice_BuildOutputList(int, int, int);
+extern void ToneGen_WriteExtParams_56(int, unsigned int *);
+extern void ToneGen_WriteExtParams_56b(int, unsigned int *);
 struct lvl70 { char pad[70]; unsigned char v; };
 
 void Voice_Calc_LevelPair_Silence(struct lvl70 *p)

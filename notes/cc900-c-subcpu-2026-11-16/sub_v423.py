@@ -64,7 +64,8 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     romf, symf = TREES[tree]
     rom = open(os.path.join(REPO, romf), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, symf))
-    alias, cnames = {}, {}
+    # Toshiba runtime routines V4.23 calls, by the payload's label for them (subcpu_fp_math.s headers)
+    alias, cnames = {'C9H_mulls': 'Math_Multiply32', 'C9H_mullu': 'Math_Multiply32'}, {}
     for c in list(cfiles) + glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')):
         lm = fw.label_map(c)
         alias.update(lm)
@@ -76,8 +77,11 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
             if n in alias:
                 n = alias[n]
             r = super().resolve(n)
-            if r[0] is None and len(n) == 31:
-                full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == n]
+            b = n.lstrip('._')                   # a callee keeps the listing's '.' / '_' prefix (helper A, round 3)
+            if r[0] is None and b != n:
+                r = super().resolve(alias.get(b, b))
+            if r[0] is None and len(b) == 31:
+                full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == b]
                 if len(set(full)) == 1:
                     return super().resolve(full[0])
             return r

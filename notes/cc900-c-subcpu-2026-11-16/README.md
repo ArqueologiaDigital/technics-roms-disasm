@@ -34,7 +34,7 @@ parts of the index registers, so they do not mark hand assembly.
 `-O3 -Xr`, `-Xr` and `-O3 -XS -Xr`.  24 match the ROM (343 B).  Every one matches at `-Xr`; ten match only there
 (the clamps, `Unsigned_Max_Select`, `BitTest_Bit0_L`, `DList_Unlink_SelfLink`, `DSP_VelocityToVolume`,
 `BlockCopy_Words_BC_to_HL`, whose loop test is copied to the entry as `-Xr` does); none matches only with `-O`.
-`DSP_StateTable_Reset` loads its constant address with the 5-byte `ld xix, 0x45ca`, which `-O` would write as
+`DSP_StateTable_Save` (then `DSP_StateTable_Reset`) loads its constant address with the 5-byte `ld xix, 0x45ca`, which `-O` would write as
 `lda`.  So the payload was compiled **without `-O`, with `-Xr`**; staged C states `cc900-options: -Xr`.
 Verdicts: `verdicts/2026-11-16-43-sub-r1.tsv`.
 
@@ -47,3 +47,46 @@ make 27 modules (`modules.md`: address ranges and first routines); a real file m
 lies inside a `calr`-joined span.  Nine near calls contradict the rule, all inside the kernel's ring-buffer
 routines of `core/03_task_scheduler_kernel.s` (hand assembly).  This is the input a `cc900-module:` marking
 needs: functions that call each other with `calr` must be compiled in one C file.
+
+## Rules for C writers (runs 43 and 47)
+
+- **`-Xr`, no `-O`.**  Only a match at `-Xr` counts; staged files say `cc900-options: -Xr`.
+- **No escapes inside `__ASM("...")`.**  V4.23 copies a `\t` into its listing literally and asm900 then stops with a
+  syntax error, so the whole file is lost (sub_B_2c, sub_C_2c).  Write the instruction with a leading space or a
+  real TAB character.  `__WA = 0;` (V4.23's register pseudo-variable) is accepted and matched.
+- **No float / double return type at `-Xr`.**  V4.23 refuses it (THC1-Error-373), and the file is lost (sub_2rt).
+- **One `__near` / `__tiny` declaration per name**, as on the main CPU; a plain extern is a 24-bit operand.
+- **cc900 keeps 31 characters of a name**: a longer label gets a short C name and `/* cc900-name: SHORT=Label */`.
+- **Calls are checked as absolute `call`s.**  V4.23 writes `cal`; asm900 shortens a call to `calr` only inside one
+  module, so a function whose ROM calls are `calr` waits for a module marking, and a staged C file must not join
+  functions the ROM calls absolutely into one module (`modules.md`).
+- The 287-byte part records and 71-byte voice records have word fields at odd offsets, which a cc900 struct cannot
+  give (alignment 2): the C reads them through char arrays and casts.
+
+## Names (2026-11-16)
+
+The helpers' C made these purposes plain; `scripts/renaming/rename_subcpu_dsp_cells.sed` applies them to
+`v142/subcpu` (v141 / v140 through their generators; `create_v140_subcpu_source.py`'s pinned span re-pinned), and
+`rename_subcpu_dsp_cells_c.sed` to the staged C.  The cells' meanings are in `kn5000_subprogram_v142.s`'s header.
+
+| old                                  | new                        | evidence                                                      |
+|--------------------------------------|----------------------------|---------------------------------------------------------------|
+| `VoiceCC_DataTable_0280FE` (routine) | `ToneGen_WriteVoice_Reg21` | writes TG register 0x21 (latch voice + 0x840); its own header |
+| `DSP_StateTable_Reset` (routine)     | `DSP_StateTable_Save`      | `ldirw` copies 0x91 words from the argument to 0x45ca         |
+| `(10215:16)`                         | `MIDI_BacklogCount`        | MIDI_Backlog_Publish / RingBuf_CheckOffset_ClearFlags         |
+| `(10214:16)`                         | `RingBuf_OffsetLo`         | RingBuf_SetOffsetLo                                           |
+| `(11021:16)`                         | `MIDI_RingBuffer`          | MIDI_Dispatch, RingBuf_ReadByte_MidiRing (mask 0xfff)         |
+| `(15200:16)`                         | `DSP2_RingBuffer`          | DSP_RingBuf_Enqueue (mask 0x7ff)                              |
+| `(17550:16)`, `0x448E`               | `DSP_ConfigBuffer`         | DSP_GetConfigBuffer, DSP_State_ApplyBuf                       |
+| `0x45CA`                             | `DSP_ConfigBuffer_Shadow`  | DSP_StateTable_Save's destination                             |
+| `(17852:16)`                         | `DSP_SlotMuteState`        | DSP_SlotMuteState_ReadAndClear                                |
+| `(18736:16)`                         | `EFF_SlotActiveFlags`      | one word per effect slot                                      |
+| `(18746:16)`                         | `DSP_ChipActiveFlags`      | one word per DSP chip                                         |
+| `(18750:16)`                         | `DSP_AlgoChangedFlag`      | DSP_AlgoChange_CheckAndFlag                                   |
+| `Payload_Bss_Start+0x649a`           | `ToneDB_RelBase`           | the name core/10's headers already used                       |
+| `Payload_Bss_Start+0x649e`           | `ToneDB_RootPtr`           | the name core/10's headers already used                       |
+
+The C names a cell below 0x10000 by its `.equ`; the ToneDB_* cells are expressions of Payload_Bss_Start, which the
+C cannot resolve yet, so the C keeps `ram_45310` / `ram_45314` for them.  Proposed but not applied (not yet checked
+here): `ram_4531c` the edit-buffer pointer, `ram_4a48` the tone-generator poll state, `ram_4a3a` / `ram_4a3e` the
+pointers to the DSP state buffer being applied.

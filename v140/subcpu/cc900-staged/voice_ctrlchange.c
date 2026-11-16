@@ -1,8 +1,13 @@
 /* Functions of core/07_voice_ctrlchange.s.
-   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function at -Xr (notes/cc900-c-subcpu-2026-11-16/);
+   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
    the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
    as a number or as Payload_Bss_Start+offset.
-   cc900-options: -Xr */
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
+
 int Voice_Pitch_ClampRange(int a, int hi, int lo)
 {
     if (a < lo) a = lo;
@@ -17,11 +22,13 @@ extern unsigned char ram_41335[];
 extern unsigned char ram_41336[];
 struct pkt { unsigned char op; unsigned char key[2]; unsigned char mask[2]; };
 extern struct pkt __near ram_2a5e;
+void NoteOn_RoutePacket(struct pkt *q);
+void Voice_NoteState_Clear(int n);
+void Voice_SetLFO_ActiveFlag(int n);
 void WaveSel_Rebuild_PartCaches(int n, int a, int b);
-void ToneGen_WriteLevelBurst(int n, unsigned char *blk);
-void ToneGen_WriteVoiceParams(int n, unsigned char *blk);
-void Voice_WriteChPanShift2(unsigned char *v, int s);
-void Voice_WriteChPanShift(unsigned char *v, int s);
+void VoiceSlot_FullInit(int n);
+void VoiceSlot_AltInit(int n);
+void Voice_PortamentoTargets_SetAll(int n);
 #define PKW(q, o) (*(unsigned int *)((unsigned char *)(q) + (o)))
 
 struct pkt *Voice_Allocate(unsigned char part, unsigned char key)
@@ -106,3 +113,12 @@ struct pkt *Voice_Query_PartVoices_Mask7F(unsigned char part)
 void Voice_Slot_LoadPitchOffset_A(unsigned char *v) { SW(v, 13) += SW(P(v, 35), 270); }
 
 void Voice_Slot_LoadPitchOffset_B(unsigned char *v) { SW(v, 13) += SW(P(v, 35), 272); }
+
+unsigned int Voice_KeyIndex_Pack3Nibbles(unsigned int a)
+{
+    unsigned int r;
+    r = ((a >> 8) & 0xf) * 81;
+    r += ((a >> 4) & 0xf) * 9;
+    r += a & 0xf;
+    return r;
+}

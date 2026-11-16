@@ -1,8 +1,13 @@
 /* Functions of core/10_dsp_voice_params.s.
-   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function at -Xr (notes/cc900-c-subcpu-2026-11-16/);
+   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
    the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
    as a number or as Payload_Bss_Start+offset.
-   cc900-options: -Xr */
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
+
 int SignedClamp_Zero(int a)
 {
     if (a > 0x7f) a = 0x7f;
@@ -17,8 +22,6 @@ extern unsigned char ram_4135a[];
 extern unsigned char ram_451fe;
 extern unsigned char ram_451ff;
 extern unsigned char *ToneDB_Find_ToneRecord(unsigned int a, unsigned int b);
-extern void InterCPU_E1_DMA_Transfer(unsigned char *src, unsigned int n, unsigned char *dst);
-extern void Voice_DSP_OutputConfig2(unsigned int part, unsigned int slot);
 #define PART_FLAGS(p)   (*(unsigned int *)(ram_41350 + (p) * 0x11f))
 #define PART_W72(p)     (*(unsigned int *)(ram_4135a + (p) * 0x11f))
 #define PART_PATCH(p)   (*(unsigned char **)(ram_41356 + (p) * 0x11f))

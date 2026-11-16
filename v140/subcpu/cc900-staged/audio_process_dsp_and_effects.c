@@ -1,8 +1,13 @@
 /* Functions of core/13_audio_process_dsp_and_effects.s.
-   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function at -Xr (notes/cc900-c-subcpu-2026-11-16/);
+   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
    the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
    as a number or as Payload_Bss_Start+offset.
-   cc900-options: -Xr */
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
+
 unsigned int Unsigned_Max_Select(unsigned int a, unsigned int b)
 {
     if (b > a) a = b;
@@ -11,42 +16,17 @@ unsigned int Unsigned_Max_Select(unsigned int a, unsigned int b)
 
 struct st { int w[0x91]; };
 
-void DSP_StateTable_Reset(struct st *p) { *(struct st *)0x45ca = *p; }
-
-struct slot { unsigned int type; int f2; int param[25]; int on; };
-struct cfg { unsigned int f0, f2, f4, f6; struct slot s[5]; };
-struct e50 { unsigned int f0; char pad[48]; };
-struct cfgimg { int w[0x91]; };
-extern struct cfg __near ram_448e;
-extern struct slot __near ram_45d2[];
-extern unsigned int __near ram_45d0;
-extern unsigned int __near ram_45bc[];
-extern unsigned int __near ram_4504;
-extern unsigned int __near ram_453c;
-extern unsigned int __near ram_4574;
-extern unsigned int __near ram_45ac;
-extern unsigned int __near ram_45b2;
-extern unsigned int __near ram_45b4;
-extern unsigned int __near ram_45b6;
-extern unsigned int __near ram_4930[];
-extern unsigned int __near ram_493a[];
-extern unsigned int __near ram_493e;
-extern struct e50 __near ram_4940[];
-extern int ram_4551a;
-extern int ram_453f8;
-extern unsigned char DSP_EffectClass_Table[];
-
 void DSP_AlgoChange_CheckAndFlag(struct cfg *p)
 {
     if (p->f6 != ram_45d0 || p->f2 == 1 || p->f4 == 1)
-        ram_493e = 1;
+        DSP_AlgoChangedFlag = 1;
     else
-        ram_493e = 0;
+        DSP_AlgoChangedFlag = 0;
 }
 
 void DSP_AlgorithmChangeCheck(void)
 {
-    if (ram_493e == 1)
+    if (DSP_AlgoChangedFlag == 1)
         DSP_AlgorithmChange();
 }
 
@@ -57,7 +37,7 @@ int DSP_Config_DeadTail_SumWords(void)
 
 struct cfg *DSP_GetConfigBuffer(void)
 {
-    return &ram_448e;
+    return &DSP_ConfigBuffer;
 }
 
 void DSP_MuteLoop(void)
@@ -65,7 +45,7 @@ void DSP_MuteLoop(void)
     unsigned int i;
 
     for (i = 0; i < 2; i++)
-        if (ram_493a[i] == 1)
+        if (DSP_ChipActiveFlags[i] == 1)
             DSP_Mute_WithDebug(i);
 }
 
@@ -83,23 +63,23 @@ void DSP_ResetTask_NullStub(void)
 
 void DSP_Set_AcousticIllusionOnOff(unsigned char v)
 {
-    ram_448e.f0 = 0;
+    DSP_ConfigBuffer.f0 = 0;
     ram_453c = v;
-    DSP_State_ApplyBuf(&ram_448e);
+    DSP_State_ApplyBuf(&DSP_ConfigBuffer);
 }
 
 void DSP_Set_DigitalReverbOnOff(unsigned char v)
 {
-    ram_448e.f0 = 0;
+    DSP_ConfigBuffer.f0 = 0;
     ram_4504 = v;
-    DSP_State_ApplyBuf(&ram_448e);
+    DSP_State_ApplyBuf(&DSP_ConfigBuffer);
 }
 
 void DSP_Set_EqualizerOnOff(unsigned char v)
 {
-    ram_448e.f0 = 0;
+    DSP_ConfigBuffer.f0 = 0;
     ram_45ac = v;
-    DSP_State_ApplyBuf(&ram_448e);
+    DSP_State_ApplyBuf(&DSP_ConfigBuffer);
 }
 
 int DSP_Set_FadeLevel(unsigned char v)
@@ -111,9 +91,9 @@ int DSP_Set_FadeLevel(unsigned char v)
 
 void DSP_Set_MicReverbOnOff(unsigned char v)
 {
-    ram_448e.f0 = 0;
+    DSP_ConfigBuffer.f0 = 0;
     ram_4574 = v;
-    DSP_State_ApplyBuf(&ram_448e);
+    DSP_State_ApplyBuf(&DSP_ConfigBuffer);
 }
 
 int DSP_Set_MixParam_45B4(unsigned char v)
@@ -127,8 +107,8 @@ unsigned int DSP_SlotMuteState_ReadAndClear(unsigned int i)
 {
     unsigned int r;
 
-    r = ram_45bc[i];
-    ram_45bc[i] = 0;
+    r = DSP_SlotMuteState[i];
+    DSP_SlotMuteState[i] = 0;
     return r;
 }
 
@@ -142,7 +122,7 @@ void DSP_UnmuteLoop(void)
     unsigned int i;
 
     for (i = 0; i < 2; i++)
-        if (ram_493a[i] == 1)
+        if (DSP_ChipActiveFlags[i] == 1)
             DSP_Unmute_WithDebug(i);
 }
 
@@ -167,13 +147,13 @@ void EFF_DSPLink_ResetFlags(void)
 {
     unsigned int i;
 
-    if (ram_493e == 1) {
-        ram_493a[0] = 1;
+    if (DSP_AlgoChangedFlag == 1) {
+        DSP_ChipActiveFlags[0] = 1;
         for (i = 1; i < 2; i++)
-            ram_493a[i] = 0;
+            DSP_ChipActiveFlags[i] = 0;
     } else {
         for (i = 0; i < 2; i++)
-            ram_493a[i] = 0;
+            DSP_ChipActiveFlags[i] = 0;
     }
 }
 
@@ -193,9 +173,9 @@ void EFF_MuteLoop(void)
 
     muted = 0;
     for (i = 0; i < 5; i++) {
-        if (ram_4930[i] == 1) {
+        if (EFF_SlotActiveFlags[i] == 1) {
             if (ram_4940[i].f0 == 1 && DSP_EffectClass_Table[ram_45d2[i].type] != 0)
-                ram_45bc[i] = 1;
+                DSP_SlotMuteState[i] = 1;
             EFF_Mute_WithDebug(i);
             muted = 1;
         }
@@ -208,6 +188,9 @@ void Task3_EnterDspApplyLoop(void)
 {
     DSP_State_ApplyTask();
 }
+
+extern void BootROM_DEBUG_OUTPUT_STRING(char *);
+extern void BootROM_HEX_BYTE_TO_ASCII(int);
 
 void Debug_Print_Byte(unsigned char b)
 {

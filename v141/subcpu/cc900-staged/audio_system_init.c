@@ -8,9 +8,9 @@
    cc900-options: -Xr
 */
 
-struct bcfg { int a; int b; int c; int d; long e; };
-extern int DSP_DispatchData(int d, int chip);
-extern int DSP_BytecodeInterpreter_Init(int chip, unsigned int idx, struct bcfg *cfg, unsigned char *code);
+extern void RingBuf_Init_1K(void);
+extern void RingBuf_Init_256(void);
+extern void RingBuf_Init_512(void);
 
 int __cdecl Audio_CmdHandler_20_3F(unsigned char cmd, unsigned char *d) { return 0; }
 

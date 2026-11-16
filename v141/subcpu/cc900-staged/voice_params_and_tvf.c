@@ -1,13 +1,30 @@
 /* Functions of core/05_voice_params_and_tvf.s.
-   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function at -Xr (notes/cc900-c-subcpu-2026-11-16/);
+   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
    the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
    as a number or as Payload_Bss_Start+offset.
-   cc900-options: -Xr */
-extern int __near ram_293e;
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
 
+extern int __near ram_293e;
 struct tvf { char pad[66]; int a; int b; };
 struct zone { char pad[6]; int base; char pad2[2]; int out; };
 struct dl { struct dl *next; struct dl *prev; };
+
+unsigned char BitTest_Bit0_L(unsigned char a)
+{
+    if (a & 1) return 1;
+    return 0;
+}
+
+int ClampS16_WA_Short(int a, int hi, int lo)
+{
+    if (a > hi) a = hi;
+    else if (a < lo) a = lo;
+    return a;
+}
 
 void DList_Unlink_SelfLink(struct dl *p)
 {
@@ -19,18 +36,19 @@ void DList_Unlink_SelfLink(struct dl *p)
     p->prev = p;
 }
 
-unsigned char BitTest_Bit0_L(unsigned char a)
-{
-    if (a & 1) return 1;
-    return 0;
-}
-
-unsigned char WaveSel_KeyTable_Lookup(unsigned char *t, int k) { return t[(k & 0x7f00) >> 8]; }
-
 int Int_ClampSignedToRange(int a, int hi, int lo)
 {
     if (a > hi) a = hi;
     else if (a < lo) a = lo;
+    return a;
+}
+
+void Pitch_Apply_Zone_Trim(struct zone *p) { p->out = p->base + ram_293e; }
+
+int TVF_Bias_Clamp_Amount(int a)
+{
+    a += 0x18;
+    if (a > 0x78) a = 0x78;
     return a;
 }
 
@@ -41,23 +59,9 @@ int TVF_Clamp_Cutoff(int a)
     return a;
 }
 
-int TVF_Bias_Clamp_Amount(int a)
-{
-    a += 0x18;
-    if (a > 0x78) a = 0x78;
-    return a;
-}
-
 void TVF_Set_Bypass(struct tvf *p) { p->a = 0x17f; p->b = 0x7f7f; }
 
-int ClampS16_WA_Short(int a, int hi, int lo)
-{
-    if (a > hi) a = hi;
-    else if (a < lo) a = lo;
-    return a;
-}
-
-void Pitch_Apply_Zone_Trim(struct zone *p) { p->out = p->base + ram_293e; }
+unsigned char WaveSel_KeyTable_Lookup(unsigned char *t, int k) { return t[(k & 0x7f00) >> 8]; }
 
 extern unsigned char Detune_Scale_Curve[];
 
@@ -66,8 +70,8 @@ unsigned int Detune_ScaleUnsigned(unsigned int a) { a = Detune_Scale_Curve[(unsi
 #define B(p, o) (*(unsigned char *)((p) + (o)))
 #define SW(p, o) (*(int *)((p) + (o)))
 #define P(p, o) (*(unsigned char **)((p) + (o)))
-extern unsigned char __near ram_27e6;
-extern unsigned int __near ram_27e7;
+extern unsigned char __near RingBuf_OffsetLo;
+extern unsigned int __near MIDI_BacklogCount;
 extern unsigned char Voice_StealPoolOrder[];
 extern unsigned char Instrument_OctaveShift_Semitones[];
 extern unsigned char ram_41356[];
@@ -86,11 +90,7 @@ extern int ram_451d8;
 extern int ram_451da;
 extern int ram_451dc;
 extern int ram_451de;
-void WaveSel_Rebuild_PartCaches(int n, int a, int b);
-void ToneGen_WriteLevelBurst(int n, unsigned char *blk);
-void ToneGen_WriteVoiceParams(int n, unsigned char *blk);
-void Voice_WriteChPanShift2(unsigned char *v, int s);
-void Voice_WriteChPanShift(unsigned char *v, int s);
+void Voice_Level_ClearAllOutputRegs(unsigned char *v);
 struct dl8 { char pad[8]; struct dl8 *next; struct dl8 *prev; };
 struct dl16 { char pad[16]; struct dl16 *next; struct dl16 *prev; };
 struct dl0 { struct dl0 *next; struct dl0 *prev; };
@@ -219,7 +219,7 @@ void Instrument_LookupProgram_LoNibble(unsigned char part)
     ram_413bd[part * 287] = Instrument_OctaveShift_Semitones[n];
 }
 
-void MIDI_Backlog_Publish(unsigned int a) { ram_27e7 = a; }
+void MIDI_Backlog_Publish(unsigned int a) { MIDI_BacklogCount = a; }
 
 unsigned char Quad_Decode_A_To_L(unsigned char a)
 {
@@ -233,16 +233,16 @@ unsigned char Quad_Decode_A_To_L(unsigned char a)
 
 void RingBuf_CheckOffset_ClearFlags(unsigned char *p)
 {
-    if (ram_27e6 != 0) {
-        if (ram_27e7 >= 48) { p[3] &= 0x7f; p[4] &= 0x7f; p[5] &= 0x7f; }
-        else if (ram_27e7 >= 32) { p[4] &= 0x7f; p[5] &= 0x7f; }
+    if (RingBuf_OffsetLo != 0) {
+        if (MIDI_BacklogCount >= 48) { p[3] &= 0x7f; p[4] &= 0x7f; p[5] &= 0x7f; }
+        else if (MIDI_BacklogCount >= 32) { p[4] &= 0x7f; p[5] &= 0x7f; }
     } else {
-        if (ram_27e7 >= 80) { p[3] &= 0x7f; p[4] &= 0x7f; p[5] &= 0x7f; }
-        else if (ram_27e7 >= 64) { p[4] &= 0x7f; p[5] &= 0x7f; }
+        if (MIDI_BacklogCount >= 80) { p[3] &= 0x7f; p[4] &= 0x7f; p[5] &= 0x7f; }
+        else if (MIDI_BacklogCount >= 64) { p[4] &= 0x7f; p[5] &= 0x7f; }
     }
 }
 
-void RingBuf_SetOffsetLo(unsigned char a) { ram_27e6 = a; }
+void RingBuf_SetOffsetLo(unsigned char a) { RingBuf_OffsetLo = a; }
 
 unsigned char Velocity_Select_Split_Zone(unsigned char a, unsigned char *t)
 {
@@ -305,6 +305,18 @@ void Voice_Level_ClearAllOutputRegs(unsigned char *v)
     else SW(v, 43) = *t;
     ram_451c0 = SW(v, 43);
     ram_451c8 = 0;
+}
+
+unsigned char ExtVoice_Fold_SlotNumber(unsigned char a, unsigned char g)
+{
+    unsigned char r;
+    switch (g & 3) {
+    case 0:
+    case 1: r = a & 0x3f; break;
+    case 2: r = (a - 0x40) & 0x7f; break;
+    case 3: r = a & 0x7f; break;
+    }
+    return r;
 }
 
 extern unsigned char __near ram_112d[];

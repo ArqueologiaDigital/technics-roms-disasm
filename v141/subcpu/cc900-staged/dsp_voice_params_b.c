@@ -12,7 +12,6 @@ extern unsigned char ram_41352[];
 extern unsigned char ram_41356[];
 extern unsigned char ram_4135a[];
 extern unsigned char Voice_SecondaryParam_Curve[];
-extern void Voice_DSP_OutputConfig2(unsigned int part, unsigned int slot);
 #define PART_PRESENT(p) (((unsigned int *)(ram_41352 + (p) * 0x11f))[0])
 #define PART_W72(p)     (((unsigned int *)(ram_4135a + (p) * 0x11f))[0])
 #define PART_PATCH(p)   (((unsigned char **)(ram_41356 + (p) * 0x11f))[0])

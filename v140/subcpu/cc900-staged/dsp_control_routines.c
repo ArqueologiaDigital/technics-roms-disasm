@@ -1,8 +1,13 @@
 /* Functions of core/14_dsp_control_routines.s.
-   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function at -Xr (notes/cc900-c-subcpu-2026-11-16/);
+   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
    the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
    as a number or as Payload_Bss_Start+offset.
-   cc900-options: -Xr */
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
+
 extern long DSP_OscParamCurve[];
 
 long DSP_ParamFetch_Op61Table(int x, unsigned long i) { return DSP_OscParamCurve[i]; }
@@ -18,8 +23,7 @@ extern long DSP_FreqParamCurve_Algo1[];
 extern long DSP_FreqParamCurve_Algo2[];
 extern int DSP_DispatchData(int d, int chip);
 extern int DSP_BytecodeInterpreter_Init(int chip, unsigned int idx, struct bcfg *cfg, unsigned char *code);
-extern void DSP_ParameterWriteEngine(unsigned int slot, struct bcfg *work, unsigned char *desc, unsigned char *rec,
-                                     int v, unsigned char *vals);
+extern void Kernel_SemaSignal(int n);
 
 void DSP1_Assert_Reset(void) { ram_44 &= ~2; }
 
@@ -113,6 +117,10 @@ void DSP_WriteParamWord(long v, int chip)
 struct dspstate { int w[0x90]; int busy; };
 extern struct dspstate ram_452d8;
 extern struct dspstate ram_453fa;
+extern void DSP_State_ApplyAll(struct dspstate *s);
+extern void Kernel_StartTask(int n);
+extern void MsgQueue_Send(int q, void *m);
+extern void *MsgQueue_ReceiveBlocking(int q);
 
 void DSP_State_ApplyTask(void)
 {
@@ -131,15 +139,4 @@ void DSP_State_DmaLoadPresets(void)
     Kernel_StartTask(3);
     MsgQueue_Send(1, &ram_452d8);
     MsgQueue_Send(1, &ram_453fa);
-}
-
-extern struct dspstate *__near ram_4a3a;
-
-void DSP_State_ApplyBuf(struct dspstate *src)
-{
-    if ((ram_4a3a = MsgQueue_Receive_NoBlock(2)) == 0)
-        ram_4a3a = MsgQueue_ReceiveBlocking(1);
-    *ram_4a3a = *src;
-    ram_4a3a->busy = 1;
-    MsgQueue_Send(2, ram_4a3a);
 }
