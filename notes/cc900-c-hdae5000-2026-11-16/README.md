@@ -40,15 +40,20 @@ or that it falls into, are its inner blocks.  Its kind:
 choice also tells which functions shared a source file.  C-calr functions wait for lane_vmb's `cc900-module:`
 marking; the C? ones can be checked now.
 
-## Status (staged_v423.tsv, runs `2026-11-16-67-hd-r11-staged` and `-69-hd-r12-ports`)
+## Status (staged_v423.tsv after run `2026-11-16-93-hd-r19-svc`; build at 0f4e6224e)
 
-| tree              | functions | bytes  | note                                                  |
-|-------------------|-----------|--------|-------------------------------------------------------|
-| `hdae5000`        | 61        | 7,361  | 15 call a same-module routine (`cc900-module:` lists) |
-| `hdae5000_v2_01i` | 46        | 6,119  | the v2.06i C unchanged (`port_staged.py`)             |
-| `hdae5000_v1_15i` | 32        | 4,105  | the same                                              |
-| `hdae5000_v1_10i` | 32        | 4,105  | the same                                              |
-| total             | 171       | 21,690 |                                                       |
+| tree              | V4.23 MATCH (functions) | bytes  | built from C (`<tree>/cc900/`, `make gate` passes) |
+|-------------------|-------------------------|--------|----------------------------------------------------|
+| `hdae5000`        | 86                      | 12,716 | 60                                                 |
+| `hdae5000_v2_01i` | 64                      | 9,044  | 44                                                 |
+| `hdae5000_v1_15i` | 44                      | 5,631  | 30                                                 |
+| `hdae5000_v1_10i` | 43                      | 5,296  | 30                                                 |
+| total             | 237                     | 32,687 | 164                                                |
+
+The older trees reuse the v2.06i C unchanged where it matches (`port_staged.py`).  `promote_hd.py` moves the
+matching C into the build, one C file per module and hand source, and holds back what the splice or the build
+refuses (the K&R definitions of the lyric module; "llvm-mc measured 0 of N hand instructions" and "no run of hand
+instructions ... is N bytes long" from `cc900_splice.py`): those stay in `<tree>/cc900-staged/`, with lane_vmb.
 
 The staged files are one per original module (a calr group, `survey.py --modules`): `hdae5000_lyrics.c`,
 `hdae5000_pport_services.c`, `hdae5000_hd_tables.c`, `hdae5000_flsitem.c`; functions that call nothing of their module
