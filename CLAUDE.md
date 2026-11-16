@@ -425,14 +425,15 @@ Always commit both repositories together when making website updates.
 The file `scripts/build/generate_rom_status_diagram.py` generates a PNG (`<DOCS_DIR>/assets/images/rom-status-diagram.png`, `DOCS_DIR` defaulting to `../technics-docs`) showing, byte by byte, what kind of source emits each of six KN5000 images (main CPU v10, table data, sub-CPU boot, sub-CPU payload v1.42, custom data, HD-AE5000). This diagram provides an at-a-glance view of project progress.
 
 **Status categories** (since 2026-10-24 taken from `scripts/analysis/data_range_census.py`'s per-byte map; the script refuses to draw if any byte falls in no bucket):
-| Color       | Category                  | Description                                                                                     |
-|-------------|---------------------------|-------------------------------------------------------------------------------------------------|
-| Green       | Assembly code             | census bucket CODE: instruction statements                                                      |
-| Light Green | Compiled C                | data whose every line is an `.incbin` of byte-exact clang output (`<tree>/includes/generated/`) |
-| Blue        | Data, purpose explained   | census grade KNOWN-A: purpose stated, evidence cited                                            |
-| Cyan        | Data, named               | census grade KNOWN-B: descriptive name and header                                               |
-| Red         | Data, purpose unexplained | census grade UNKNOWN                                                                            |
-| Gray        | Filler                    | census grade FILLER: verified uniform fill, >= 16 B                                             |
+| Color       | Category                  | Description                                                                                                        |
+|-------------|---------------------------|--------------------------------------------------------------------------------------------------------------------|
+| Green       | Assembly code             | census bucket CODE: instruction statements                                                                         |
+| Olive       | Compiled C code           | census CODE in `<tree>/includes/generated/cc900/`: firmware C compiled by the cc900 reference model (phase 6)      |
+| Light Green | Compiled C data           | data whose every line is an `.incbin` of byte-exact clang output (`<tree>/includes/generated/`)                    |
+| Blue        | Data, purpose explained   | census grade KNOWN-A: purpose stated, evidence cited                                                               |
+| Cyan        | Data, named               | census grade KNOWN-B: descriptive name and header                                                                  |
+| Red         | Data, purpose unexplained | census grade UNKNOWN                                                                                               |
+| Gray        | Filler                    | census grade FILLER: verified uniform fill, >= 16 B                                                                |
 
 **Regeneration triggers:**
 - After disassembling new code sections
@@ -1482,6 +1483,10 @@ See `../technics-docs/rom-reconstruction.md` for the narrative breakdown.
 - `v10/maincpu/images/` (and the `v9/`, `v7/`, `v6/`, `v5/` twins): the main CPU's pictures as committed PNGs (and
   the palette `.bin`s); the `.bin` beside a PNG is a git-ignored build product
 - `v10/maincpu/includes/`: binary includes; `includes/generated/` is build output (compiled C, picture `.inc`s)
+- `v10/maincpu/cc900/`: firmware functions reconstructed as C (phase 6 of the cc900 plan); `make` compiles them with
+  the cc900 reference model (`scripts/build/cc900_firmware_c.py`, our tools only, no Toshiba program) into
+  `includes/generated/cc900/`, which the hand source includes on the function's label line.  `scripts/analysis/cc900/model/fn_diff.py FILE.c`
+  checks one file against the ROM.  Notes: `notes/cc900-phase6-2026-11-16/README.md`
 - `table_data/images/`: the table data's pictures as committed PNGs (wallpapers, UI bitmaps, icons, fonts, the
   Feature Demo pictures, whose `.BMP` files the build writes from PNG + `ftbmp_headers.json`)
 - `waveform/wav/`, `kn7000/wav/`: the wave ROMs' recordings as committed WAV files
