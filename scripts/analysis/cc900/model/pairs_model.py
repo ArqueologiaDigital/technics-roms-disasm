@@ -165,7 +165,8 @@ def main():
                 continue
             if code is None:
                 tally['assembler'] += 1
-                print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + err.strip().splitlines()[0][:90], r[5]])); continue
+                msg = re.sub(r'\S*/(f\.s:)', r'\1', err.strip().splitlines()[0])   # no scratch path: the output
+                print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + msg[:90], r[5]])); continue    # is committed
             ref = read(addr, len(code))
             if ref is None: tally['outside image'] += 1; continue
             diff = [i for i in range(len(code)) if code[i] != ref[i]]

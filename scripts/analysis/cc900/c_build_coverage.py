@@ -485,7 +485,9 @@ def v423_corpus(d):
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, flags[l]) for l in sorted(labels)))
     open(os.path.join(d, 'manifest.tsv'), 'w').write(''.join('%s\t%s\n' % p for p in picked))
     print('%d C files in %s, option sets %s' % (len(picked), d, ' '.join(sorted(labels))))
-    print('run:    scripts/analysis/cc900/oracle/run_oracle.sh p6-firmware %s %s/sources.txt %s/options.txt v423' % (d, d, d))
+    print('run:    flock %s/vm/.runlock bash scripts/analysis/cc900/oracle/run_oracle.sh p6-firmware %s %s/sources.txt '
+          '%s/options.txt v423' % (ORACLE, d, d, d))
+    print('        (the VM is shared: every run goes through that lock; the oracle repo is committed by the coordinator)')
     print('file:   python3 -B scripts/analysis/cc900/c_build_coverage.py --record-v423-run %s/runs/<the run> %s' % (ORACLE, d))
 
 

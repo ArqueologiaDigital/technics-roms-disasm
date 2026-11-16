@@ -104,4 +104,5 @@ firmware C file counts for V4.23 only when `results/c_build_v423_runs.tsv` recor
 (SHA-256); until then its functions are "not yet checked" and the results file lists the run needed.  To make it:
 
     python3 -B scripts/analysis/cc900/c_build_coverage.py --v423-corpus ~/compartilhado/tmp/<lane>/v423corpus
-    # then the two commands it prints: oracle/run_oracle.sh ..., and --record-v423-run <run> <dir>
+    # then the two commands it prints: flock .../vm/.runlock bash oracle/run_oracle.sh ..., and
+    # --record-v423-run <run> <dir> once the run is filed (the oracle repo is committed by the coordinator)
