@@ -280,3 +280,9 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_song_module.c	258128734ac9
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_song_module.c	258128734ac9386f2a87cc9f23e4ff253129d947a9caab7a25c750bd2d357e71	Xr	2026-11-16-105-hd-r23b	HDAE5000_RoundUpToSector	61	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_song_module.c	258128734ac9386f2a87cc9f23e4ff253129d947a9caab7a25c750bd2d357e71	Xr	2026-11-16-105-hd-r23b	HDAE5000_SaveSong_Lsw	359	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_song_module.c	258128734ac9386f2a87cc9f23e4ff253129d947a9caab7a25c750bd2d357e71	Xr	2026-11-16-105-hd-r23b	HDAE5000_SaveSong_Pmt	217	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens2.c	58d76e971ab2a08dd622e6087168579c6dc7b3f521900a849bc1c60241c48c36	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_HDD_DIRNAMECheck	297	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens2.c	58d76e971ab2a08dd622e6087168579c6dc7b3f521900a849bc1c60241c48c36	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_LBNLoadSwCatch	355	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_CopyToHDDirSelScreen	780	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_DelOptSwEventCatch	316	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_FlsDirSelScreen	375	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fs_screens.c	2b2b8fcd2946cf1f9d49216da6b583585ef0d717e6e49b97b7a2840e3b4cd03e	Xr	2026-11-16-108-hd-r25-staged	HDAE5000_WrConfirmEventCatch	329	MATCH
