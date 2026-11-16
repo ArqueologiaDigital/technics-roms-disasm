@@ -236,3 +236,5 @@ hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_title_info.c	38970ca51c764
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem_set.c	fdd6060821c74795b045f47dbc7f318d39b1b758d9feebf5deb3f932d6d29df8	Xr	2026-11-16-85-hd-r18-ports	HDAE5000_FlsItem_SetAutoLoad	66	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem_set.c	fdd6060821c74795b045f47dbc7f318d39b1b758d9feebf5deb3f932d6d29df8	Xr	2026-11-16-85-hd-r18-ports	HDAE5000_FlsItem_SetAutoStart	66	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_title_info.c	75204848acebfac97c9068fda5934fa1b05ccbc419eb2afcfcac1d1f1d1f4e8b	Xr	2026-11-16-85-hd-r18-ports	HDAE5000_HdTitleEventCatch	128	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services2.c	3f68e4e99d43c83355a9fbe0e35585decf0fd193bf19813dec7cd2b7b529379f	Xr	2026-11-16-93-hd-r19-svc	HDAE5000_PPORT_Svc16_InitWholeSongInMemory	232	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services2.c	3f68e4e99d43c83355a9fbe0e35585decf0fd193bf19813dec7cd2b7b529379f	Xr	2026-11-16-93-hd-r19-svc	HDAE5000_PPORT_Svc20_PreWholeSongInMemory	191	MATCH
