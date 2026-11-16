@@ -39,7 +39,15 @@ def main():
     rom = open(os.path.join(REPO, opt(a, '--rom', 'original_ROMs/kn5000_v10_program.rom')), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
-    names = fw.Names(fw.tree_values(tree), ref)
+    class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
+        def resolve(self, n):                            # name (value or label) it is the prefix of
+            r = super().resolve(n)
+            if r[0] is None and len(n) == 31:
+                full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == n]
+                if len(set(full)) == 1:
+                    return super().resolve(full[0])
+            return r
+    names = CutNames(fw.tree_values(tree), ref)
     import re
     text = open(a[0], encoding='latin-1').read()
     # Operand widths.  V4.23 writes every access to a named object alike ((_x), lda XR,_x); the width is the
