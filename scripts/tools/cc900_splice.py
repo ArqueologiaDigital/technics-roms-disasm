@@ -17,6 +17,11 @@ labels inside it (FormatMedleyNumber's FmtNum_*): its extent is the size of its 
 assembled), every label whose address lies inside it is an inner label, and each is kept by name after the include
 as `.set INNER, NAME + offset`, its offset taken from REF; the blank and comment lines before the next label stay.
 
+With --sizes TSV (with --symbols), the sizes come from TSV instead of the reference model: rows `tree  c_file  sha
+options  run  function  bytes  result` as notes/cc900-phase6-2026-11-16/staged_v423.tsv writes them (the tree is
+taken from TREE), or `function  bytes ...` (probe_v423.py --tsv); and the functions are read from FILE.c's text, so
+C that only V4.23 compiles can be spliced.
+
 The header comment above the label stays.  A function whose label line already includes its body is left alone.
 Anything else (no such label, a label inside the body, no `ret`) stops the run before any file is written.  The
 splice proves nothing by itself: `make gate` must still find the image byte-identical.  The files are read and
@@ -33,8 +38,14 @@ import cc900_firmware_c as fw  # noqa: E402
 LABEL_RE = re.compile(rb'^\s*([A-Za-z_.$][\w.$]*):')
 
 
+FN_RE = re.compile(r'^[\w][\w\s\*]*?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
+
+
 def c_functions(path):
     """the tree labels of the functions FILE.c defines, in order (the front end's names, through `cc900-name:`)"""
+    if "--sizes" in sys.argv:                            # C the model may not compile: read the definitions
+        labels = fw.label_map(path)
+        return [labels.get(f, f) for f in FN_RE.findall(open(path, encoding="latin-1").read())]
     sys.path.insert(0, fw.MODEL)
     import frontend
     _, _, adecl = fw.file_options(path)
@@ -43,7 +54,7 @@ def c_functions(path):
 
 
 def main():
-    a = [x for i, x in enumerate(sys.argv[1:], 1) if not x.startswith("--") and sys.argv[i - 1] != "--symbols"]
+    a = [x for i, x in enumerate(sys.argv[1:], 1) if not x.startswith("--") and sys.argv[i - 1] not in ("--symbols", "--sizes")]
     if len(a) != 2:
         sys.exit(__doc__)
     tree, src = a
@@ -57,11 +68,21 @@ def main():
     if "--symbols" in sys.argv:                          # functions with inner labels and several rets
         import check_bytes
         ref = check_bytes.load_reference(sys.argv[sys.argv.index("--symbols") + 1])
-        funcs = fw.compile_c(src, fw.Names(fw.tree_values(tree), ref), spell=False)
-        if fw.REFUSED:
-            sys.exit("%s: the model refuses %s" % (src, ", ".join(fw.REFUSED)))
-        sizes = {f: len(check_bytes.assemble("\t.text\n\t.globl %s\n%s:\n%s\n" % (f, f, "\n".join(l)))[f])
-                 for f, l in funcs.items()}
+        if "--sizes" in sys.argv:
+            tname = os.path.normpath(tree).split(os.sep)[-2] if os.path.normpath(tree).endswith("maincpu") else tree
+            sizes = {}
+            for row in open(sys.argv[sys.argv.index("--sizes") + 1]):
+                c = row.rstrip("\n").split("\t")
+                if len(c) >= 8 and c[0] == tname and c[6].isdigit():
+                    sizes[c[5]] = int(c[6])
+                elif len(c) >= 2 and c[1].isdigit() and len(c) < 8:
+                    sizes.setdefault(c[0], int(c[1]))
+        else:
+            funcs = fw.compile_c(src, fw.Names(fw.tree_values(tree), ref), spell=False)
+            if fw.REFUSED:
+                sys.exit("%s: the model refuses %s" % (src, ", ".join(fw.REFUSED)))
+            sizes = {f: len(check_bytes.assemble("\t.text\n\t.globl %s\n%s:\n%s\n" % (f, f, "\n".join(l)))[f])
+                     for f, l in funcs.items()}
     lines = open(asm, "rb").read().split(b"\n")
     done = []
     for name in c_functions(src):
@@ -78,6 +99,8 @@ def main():
         j = i + 1
         inner = []
         if ref is not None:                              # the extent is the C function's size; labels inside it are
+            if name not in sizes:
+                sys.exit("%s: no size for %s" % (src, name))
             end = ref[name] + sizes[name]                # inner labels, kept as offsets from NAME
             while True:
                 if j >= len(lines):

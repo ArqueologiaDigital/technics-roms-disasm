@@ -628,6 +628,54 @@ though they lie below 0x10000, are plain.  `asm_vs_rom.py` now takes each named 
 attributes; `--by-address` gives the old narrowing.  The earlier V4.23 verdicts were made with that narrowing, and so
 did not check widths.
 
+## The firmware's -O files are `-O3 -Xr` (probe m18, run `2026-11-16-32-p6-m18-olevels`)
+
+**The question.**  At `-O3 -XS -Xr`, V4.23 jumps to a loop's bottom test, whatever the C: m15 and m17 tried a guarded
+do-while, goto, and a reversed guard.  At `-Xr` it copies the test to the entry, as the ROM does, but it then
+allocates other registers than the ROM.
+
+**The run.**  m18 compiled 195 probe functions at seven option sets.  These are the functions that match the ROM at
+each set, with their bytes:
+
+| options        | functions | bytes |
+|----------------|-----------|-------|
+| `-O3 -XS -Xr`  | 35        | 1,838 |
+| `-Xr`          | 37        | 2,110 |
+| `-O1 -Xr`      | 35        | 1,596 |
+| `-O2 -Xr`      | 42        | 2,011 |
+| `-O3 -Xr`      | 48        | 2,381 |
+| `-O2 -XS -Xr`  | 32        | 1,609 |
+| `-O1 -XS -Xr`  | 31        | 1,499 |
+
+**The result.**  Every function that matches at `-O3 -XS -Xr` also matches at `-O3 -Xr`, except one:
+`Sprintf_InsertCarry`, in `sprintf_core.s`, the file whose loops jump to their test.  Nine functions match only
+without `-XS` (474 B), among them `TrimAndPadSmfFilename`: its plain `while` C gives the ROM's copied loop test with
+the `-O` registers.  So the loop-entry copy (`KN_LOOP_INVERT`) is not a Technics rule but V4.23 at `-O3` without
+`-XS`.  The coordinator approved a new option label, `O3Xr` = `-O3 -Xr`, as the firmware's `-O` set.
+- `sprintf_core` stays `-O3 -XS -Xr`.
+- The files without `-O` stay `-Xr`: seven functions match only there, such as `AudioInit_SelectPriority` (220 B).
+
+**The FileIO shifts.**  `(unsigned int)1 << a` gives the ROM's bytes for `FileIO_BuildRecordPath_Done`,
+`FileIO_FormatName_Loop` and `FileIO_BuildRecordPath_Return` at every set.  Casting the count as well adds an
+`extz WA` that the ROM does not have.
+
+**Round 1 of the helpers** was four background agents, each given a pool of leaf routines and the brief
+(`~/compartilhado/tmp/cc900-tab/lane_p6/scan/BRIEF.md`, `ROUND2.md`).  Their probes are `corpus/firmware/p6_{A,B,C,D}_*.c`.
+Run 31 checked them with the listing's own widths: 41 of 165 functions match, 2,632 B.  m18, with `-O3 -Xr`, raised
+that to 56 functions and 3,222 B, counting the m-probes.
+
+**Staging.**  `stage_probe.py` moves each matched function, with the declarations it uses, into
+`v10/maincpu/cc900-staged/<hand source>.c`.  The file's option set decides the suffix:
+- no suffix: `-O3 -Xr`;
+- `_xr`: `-Xr`;
+- `_xs`: `-O3 -XS -Xr`.
+
+A function that matches at both `-O3 -Xr` and `-Xr` goes with the others of its hand source.  `port_staged.py` makes the
+other trees' files from v10's.  It compares each function's v10 bytes with the tree's bytes at the tree's own label,
+and takes the tree's value of every address the C names from the same bytes.  A function whose bytes differ anywhere
+else is left out of that tree: `AudioInit_*` in v7 / v6 / v5, two accompaniment functions in v6 / v5, and
+`PartCtrl_AppendToEventQueue`, which v7 / v6 / v5 lack.  `staged_v423.py` has the last word, per tree.
+
 ## Finding candidates
 
 `leaf_candidates.py TREE [N]` lists routines of at most N instructions that end in `ret`, contain no call, jump or

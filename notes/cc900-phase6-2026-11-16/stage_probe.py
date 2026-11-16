@@ -102,7 +102,7 @@ def main():
     nm = [c for c in names if any(re.search(r'cc900-name:\s*%s\s*=' % re.escape(f), c) for f in funcs)]
     old = open(staged, encoding='latin-1').read() if os.path.exists(staged) else ''
     if not old:
-        opt = '' if opts == '-O3 -XS -Xr' else '\n   cc900-options: %s' % opts
+        opt = '\n   cc900-options: %s' % opts
         old = HEADER % (src, opt)
     add = [d for d in picked if d not in old]
     body = '\n'.join(add + [''] + nm + [w + '\n' for w in want])

@@ -25,7 +25,16 @@ import cc900_firmware_c as fw                                # noqa: E402
 
 TREES = [('v10', 'kn5000_v10_program.rom'), ('v9', 'kn5000_v9_program.rom'), ('v7', 'kn5000_v7_program.rom'),
          ('v6', 'kn5000_v6_program.rom'), ('v5', 'kn5000_v5_program.rom')]
-LABEL_OF_FLAGS = {'-O3 -XS -Xr': 'O3XSXr', '-Xr': 'Xr', '-O3 -XS': 'O3XS', '': 'none'}
+LABEL_OF_FLAGS = {'-O3 -XS -Xr': 'O3XSXr', '-Xr': 'Xr', '-O3 -XS': 'O3XS', '': 'none', '-O3 -Xr': 'O3Xr'}
+OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
+
+
+def file_flags(path):
+    """the cc900 options FILE.c asks for (its `cc900-options:` comment; default -O3 -XS -Xr, as the build's).  Read here,
+    not through cc900_firmware_c.file_options, which knows only the option sets the reference model compiles: staged C
+    may ask for -O3 -Xr (run 2026-11-16-32-p6-m18-olevels)."""
+    m = OPT_RE.search(open(path, 'rb').read())
+    return ' '.join(m.group(1).decode().split()) if m else '-O3 -XS -Xr'
 LEDGER = os.path.join(REPO, 'notes', 'cc900-phase6-2026-11-16', 'staged_v423.tsv')
 ORACLE = os.path.expanduser('~/compartilhado/cc900-oracle')
 
@@ -50,7 +59,7 @@ def corpus(d):
         os.makedirs(os.path.join(d, t), exist_ok=True)
         shutil.copyfile(p, os.path.join(d, dst))
         rows.append((os.path.relpath(p, REPO), dst))
-        labels.add(LABEL_OF_FLAGS[fw.file_options(p)[0]])
+        labels.add(LABEL_OF_FLAGS[file_flags(p)])
     flags = {v: k for k, v in LABEL_OF_FLAGS.items()}
     open(os.path.join(d, 'sources.txt'), 'w').write(''.join(dst + '\n' for _, dst in rows))
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, flags[l]) for l in sorted(labels)))
@@ -67,7 +76,7 @@ def check(run_dir, d, record):
         src, dst = line.rstrip('\n').split('\t')
         t = dst.split('/')[0]
         rom = dict(TREES)[t]
-        label = LABEL_OF_FLAGS[fw.file_options(os.path.join(d, dst))[0]]
+        label = LABEL_OF_FLAGS[file_flags(os.path.join(d, dst))]
         lst = os.path.join(run_dir, 'out', 'v423', label, dst[:-2] + '.asm')
         if not os.path.exists(lst):
             print('%-4s %-28s no listing at %s' % (t, os.path.basename(src), label)); bad += 1
