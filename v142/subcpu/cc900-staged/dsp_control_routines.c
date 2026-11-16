@@ -191,3 +191,16 @@ void DSP_WriteGlobalConfig(int chip, unsigned char *code)
     i = 0;
     DSP_BytecodeInterpreter_Init(chip, i, DSP_Bytecode_Global_Config, code);
 }
+
+unsigned char *DSP_StreamDecode_3ByteWord(unsigned char *p, long *out)
+{
+    long a;
+    long b;
+    long c;
+
+    a = ((long)*(char *)p++ << 24) & 0xff000000;
+    b = ((long)*(char *)p++ << 16) & 0xff0000;
+    c = ((long)*(char *)p++ << 8) & 0xff00;
+    *out = a + b + c;
+    return p;
+}

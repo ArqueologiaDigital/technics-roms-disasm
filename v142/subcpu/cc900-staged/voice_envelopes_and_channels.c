@@ -175,3 +175,72 @@ void Voice_CC_SetTuning(unsigned char part, unsigned char v)
     t += t;
     *(int *)&ram_4137c[part * 0x11f] = t;
 }
+
+extern int ram_4135a;
+extern unsigned char ram_4137e[];
+extern char Voice_KeyShiftRamp_Steps[];
+
+void Pitch_Bend_Ramp_Tick(void)
+{
+    int t;
+    if (ram_41343 & 0x800) {
+        ram_4135c++;
+        t = Voice_KeyShiftRamp_Steps[0];
+        t += t;
+        ram_4135a = t;
+        ram_41343 &= ~0x800;
+        ram_41343 |= 0x1400;
+    } else if (ram_41343 & 0x1000) {
+        ram_4135c++;
+        ram_41343 &= ~0x400;
+    } else if (ram_41343 & 0x2000) {
+        if (ram_41343 & 0x4000) {
+            ram_4135c += 2;
+            t = Voice_KeyShiftRamp_Steps[ram_4135c];
+            t += t;
+            ram_4135a = t;
+            ram_41343 |= 0x400;
+        } else if (ram_41343 & 32768) {
+            ram_4135c++;
+            t = Voice_KeyShiftRamp_Steps[ram_4135c];
+            t += t;
+            ram_4135a = t;
+            ram_41343 |= 0x400;
+        } else {
+            ram_4135a = 0;
+            ram_41343 |= 0x400;
+        }
+        if (ram_4135a != 0) return;
+        ram_41343 &= 0x1fff;
+        ram_4135c = 0;
+        ram_41343 |= 0x400;
+    } else {
+        ram_41343 &= ~0x400;
+    }
+}
+
+void Voice_CC_SetKeyShift(unsigned char part, unsigned char v)
+{
+    unsigned char t;
+    t = v;
+    t -= 0x40;
+    ram_4137e[part * 0x11f] = t;
+}
+
+extern unsigned char __tiny ram_18;
+extern unsigned int ram_100000;
+extern unsigned int ram_100002;
+
+void ToneGen_WriteVoice_Direct(unsigned int a, unsigned int d)
+{
+    __IZ = d;
+    ram_18 &= ~0x80;
+    ram_100000 = a;
+    __ASM(" nop");
+    ram_18 |= 0x80;
+    ram_100002 = __IZ;
+    __ASM(" jr $+2");
+    __ASM(" nop");
+    __ASM(" nop");
+    __ASM(" nop");
+}

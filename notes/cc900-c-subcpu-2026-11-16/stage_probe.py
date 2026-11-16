@@ -116,7 +116,13 @@ def main():
             if d not in picked and defines(d) & need:
                 picked.append(d); need |= idents(d); changed = True
     picked = [d for d in decls if d in picked]                     # keep the probe's order
-    nm = [c for c in names if any(re.search(r'cc900-name:\s*%s\s*=' % re.escape(f), c) for f in funcs)]
+    # a callee DEFINED in the probe but not staged with it: give the staging file its prototype (lane_sub: without
+    # it a __cdecl callee was called as a register-argument one, run 2026-11-16-62)
+    for n, d in fns.items():
+        if n in need and n not in funcs and not any(n in defines(x) for x in picked):
+            picked.append(d[:d.index('{')].strip() + ';')
+    nm = [c for c in names if any(re.search(r'cc900-name:\s*%s\s*=' % re.escape(f), c) for f in funcs)
+          or any(re.search(r'cc900-name:\s*%s\s*=' % re.escape(n), c) for n in need)]   # a callee's short name too
     # A name the staging file already declares differently (another probe's type for it) would make V4.23 refuse
     # the whole file (THC1-Error-262): such functions go to a sibling file, <name>_b.c, _c.c, ... instead.
     base = staged[:-2]

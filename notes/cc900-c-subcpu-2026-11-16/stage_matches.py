@@ -63,7 +63,9 @@ def main():
             os.makedirs(SCRATCH, exist_ok=True)
             subprocess.run(['gcc', '-E', '-P', '-C', '-std=c89', '-o', out, probe], check=True)
             probe, txt = out, open(out, encoding='latin-1').read()
-        cname = next((m.group(1) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', txt) if m.group(2) == f), f)
+        defs = set(FN_RE.findall(txt))                   # a short name may only declare a callee: take a defined one
+        cname = next((m.group(1) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', txt)
+                      if m.group(2) == f and m.group(1) in defs), f)
         plan.setdefault((probe, base, src), []).append(cname)
     for (probe, name, src), fs in sorted(plan.items()):
         cmd = [sys.executable, os.path.join(HERE, 'stage_probe.py'), probe,

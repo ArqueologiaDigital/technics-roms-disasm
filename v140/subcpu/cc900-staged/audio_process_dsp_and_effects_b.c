@@ -179,3 +179,18 @@ void EFF_Mute_WithDebug(unsigned int slot)
     Debug_Print_String(Str_EffMute_Suffix);
     DSP_WriteEFFConfig(slot, EFF_Mute_Program_PtrTable[slot]);
 }
+
+extern char Str_EffHeader_Prefix[], Str_EffHeader_Suffix[];
+extern unsigned char EFF_Header_Program[];
+
+void EFF_WriteHeader(unsigned int slot)
+{
+    unsigned int chip;
+
+    Debug_Print_String(Str_EffHeader_Prefix);
+    Debug_Print_Byte(slot + 1);
+    Debug_Print_String(Str_EffHeader_Suffix);
+    chip = EFF_SlotToChip_Table[slot];
+    if (chip == 0)
+        DSP_WriteGlobalConfig(chip, (unsigned char *)(unsigned long)EFF_Header_Program);
+}

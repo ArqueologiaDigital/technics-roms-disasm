@@ -546,3 +546,82 @@ void Pitch_Apply_Partial_Detune(unsigned char *v)
     if ((W(P(v, 35), 10) & 4) && (B(P(v, 19), 16) & 0x20)) W(v, 1) |= 0x400;
     else W(v, 1) &= ~0x400;
 }
+
+extern int ram_451d2;
+extern int ram_41366;
+extern unsigned char ram_4134c;
+
+unsigned long EnvDepth_Cap(unsigned long a, unsigned char c, unsigned char e)
+{
+    unsigned long t, r;
+    t = (unsigned long)e * (0x7fUL - c);
+    r = (t * a) >> 12;
+    if (r > a) r = a;
+    return r;
+}
+
+void Level_Build_Reg0C0(unsigned char *v)
+{
+    int d;
+    if ((*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (15))) != 0 && (*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18))) != 0) {
+        switch (ram_4134c) {
+        case 6: d = 0; break;
+        default: d = (unsigned int)(*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (15))); break;
+        }
+    } else d = (unsigned int)(*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (15)));
+    if (d != 0) {
+        d += (int)(*(unsigned char *)(((*(unsigned char **)((v) + (19)))) + (92))) - 0x40;
+        d += (char)(*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (102)));
+        if (d < 0) d = 0;
+        else if (d > 0x7f) d = 0x7f;
+        d <<= 8;
+    }
+    if ((*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18))) != 0) {
+        switch (ram_4134c) {
+        case 5:
+        case 6: d |= 0x7f; break;
+        default: d |= (*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18))); break;
+        }
+    } else d |= (*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18)));
+    ram_451d2 = d;
+}
+
+unsigned int Voice_Clamp_Byte_Unsigned(unsigned int a)
+{
+    if (a > 255) a = 255;
+    return a;
+}
+
+void Voice_ComputePitchBend2(unsigned char *v)
+{
+    unsigned char *q;
+    int d;
+    q = (*(unsigned char **)((v) + (19)));
+    if ((*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (15))) != 0 && (*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18))) != 0) {
+        switch (ram_4134c) {
+        case 6: d = 0; break;
+        default: d = (unsigned int)(*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (15))); break;
+        }
+    } else d = (unsigned int)(*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (15)));
+    if (d != 0) {
+        d += (int)(*(unsigned char *)((q) + (15))) - 0x40;
+        if (d < 0) d = 0;
+        else if (d > 0x7f) d = 0x7f;
+        d <<= 8;
+    }
+    if ((*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18))) != 0) {
+        switch (ram_4134c) {
+        case 5:
+        case 6: d |= 0x7f; break;
+        default: d |= (*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18))); break;
+        }
+    } else d |= (*(unsigned char *)(((*(unsigned char **)((v) + (35)))) + (18)));
+    ram_451d2 = d;
+}
+
+void Voice_Vol_ScaleVelocityWord(void)
+{
+    unsigned long t;
+    t = ram_1040;
+    ram_41366 = (int)(char)((t * t >> 2) & 0xff) * 13 >> 7;
+}

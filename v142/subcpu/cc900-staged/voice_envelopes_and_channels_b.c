@@ -8,6 +8,9 @@
    cc900-options: -Xr
 */
 
+/* cc900-name: ToneGen_WriteExtParam_1C0_Sgl=ToneGen_WriteExtParam_1C0_Single */
+/* cc900-name: ToneGen_Write_ExtParam_05C0_Stb=ToneGen_Write_ExtParam_05C0_Strobe */
+
 extern unsigned int ram_451cc[];
 extern unsigned int ram_451f8;
 extern unsigned int ram_451fa;

@@ -127,3 +127,69 @@ unsigned int Partial_GetBaseKey(unsigned char part, unsigned char partial)
         return PART_PTR(ram_413f9, part)[1];
     }
 }
+
+extern unsigned int ram_412f7;
+extern unsigned char ram_41337[];
+extern unsigned char ram_41338[];
+extern unsigned char ram_41339[];
+extern unsigned char ram_4133b[];
+extern unsigned char ram_4133c[];
+extern unsigned char ram_41387[];
+extern unsigned char ram_41388[];
+extern char ram_4515f;
+extern char ram_45160;
+struct slotrt { unsigned char pad[26]; unsigned int w[256]; };
+
+void DSP_SlotParam_Write_Slot3(unsigned char part)
+{
+    if ((*(unsigned int *)(ram_4131c + part * 0x11f) & 1) && ram_45158 == part) ram_41387[part * 0x11f] = ram_4515f << 2;
+    else ram_41387[part * 0x11f] = 0;
+}
+
+void DSP_SlotParam_Write_Slot4(unsigned char part)
+{
+    if ((*(unsigned int *)(ram_4131c + part * 0x11f) & 1) && ram_45158 == part) ram_41388[part * 0x11f] = ram_45160 << 2;
+    else ram_41388[part * 0x11f] = 0;
+}
+
+void SlotRouting_Chan1(struct slotrt *p, unsigned char slot, unsigned char ch, unsigned char f)
+{
+    if ((f & 0x20) && ((f & 0xc0) >> 6) == ch) {
+        if (f & 0x10) p->w[slot] = ch | 0xc000;
+        else p->w[slot] = ch | 0x4000;
+    }
+}
+
+void SlotRouting_Chan3(struct slotrt *p, unsigned char slot, unsigned char ch, unsigned char f)
+{
+    if ((f & 0x20) && ((f & 0xc0) >> 6) == ch) {
+        if (f & 0x10) p->w[slot] = ch | 0x3300;
+        else p->w[slot] = ch | 0x1100;
+    }
+}
+
+void SlotRouting_WriteSingle(struct slotrt *p, unsigned char slot, unsigned char ch, unsigned char f)
+{
+    if ((f & 0x20) && ((f & 0xc0) >> 6) == ch) {
+        if (f & 0x10) p->w[slot] = (unsigned int)ch | 0xc0;
+        else p->w[slot] = (unsigned int)ch | 0x40;
+    }
+}
+
+void Voice_NoteState_Clear(unsigned char part)
+{
+    unsigned int i;
+    unsigned int j;
+    if (ram_412f7 & 1) return;
+    *(unsigned int *)(ram_41339 + part * 0x11f) = 0;
+    ram_4133b[part * 0x11f] = 0;
+    ram_4133c[part * 0x11f] = 0;
+    ram_41337[part * 0x11f] = 0x40;
+    ram_41338[part * 0x11f] = 0x40;
+    for (i = 0; i < 4; i++) {
+        for (j = 0; j < 3; j++) {
+            ((unsigned char *)((unsigned long)(ram_4131c + part * 0x11f) + (((unsigned long)j << 4) + ((unsigned long)i << 2))))[41] = 0;
+            ((unsigned char *)((unsigned long)(ram_4131c + part * 0x11f) + (((unsigned long)j << 4) + ((unsigned long)i << 2))))[42] = 0;
+        }
+    }
+}

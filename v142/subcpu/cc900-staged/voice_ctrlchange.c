@@ -223,3 +223,200 @@ void Voice_SignedClamp(unsigned char *p, char d, int hi, int lo)
     if (v < lo) v = lo;
     *p = v;
 }
+
+extern int ram_451ce;
+extern unsigned char ram_41368[];
+extern unsigned char ram_41472[];
+extern unsigned char ram_41473[];
+extern unsigned char ram_41474[];
+extern unsigned char ram_41475[];
+extern unsigned char ram_43094[];
+void ToneGen_WriteSegRegs_SameLevel(int n, unsigned char *blk);
+void ToneGen_WriteEnvSegments(int n, unsigned char *blk);
+void ToneGen_WriteSingleReg(int n, int v);
+void Voice_Clear_HoldBit(int n);
+void Voice_Stage_EnvSegments(unsigned char *v);
+void WaveSel_AddRandomEntryOffset(int *p);
+void Pitch_Apply_Zone_Trim(unsigned char *v);
+void Voice_Pitch_WriteOutReg_Sec(unsigned char *v);
+void TVF_BuildEmit_Short_Dispatch(unsigned char *v);
+void TVF_Emit_Registers_Type2(unsigned char *v);
+void Voice_Build_GateCmd_NoPartial(unsigned char *v);
+void Voice_Calc_LevelPair_FixedAtk(unsigned char *v);
+void Voice_WriteChPanShift2(unsigned char *v, int s);
+void Voice_Level_ClearAllOutputRegs(unsigned char *v);
+void Voice_ComputePitch_Mono(unsigned char *v);
+void Voice_ApplyPortamento2(unsigned char *v);
+void Voice_Slot_LoadPitchOffset_A(unsigned char *v);
+void Voice_Slot_LoadPitchOffset_B(unsigned char *v);
+void Voice_Calc_LevelPair_Full(unsigned char *v);
+void Voice_Calc_LevelPair_Mono(unsigned char *v);
+void Voice_Slot_ApplyPortamentoDelta(unsigned char *v);
+void Voice_ComputePitchBend2(unsigned char *v);
+void Level_Build_Reg0C0(unsigned char *v);
+void WaveSel_StageB_Reg040_Footage(unsigned char *v);
+
+/* cc900-name: Voice_Pitch_WriteOutReg_Sec=Voice_Pitch_WriteOutputReg_Secondary */
+/* cc900-name: Voice_Build_GateCmd_NoPartial=Voice_Build_GateCommand_NoPartial */
+/* cc900-name: WaveSel_StageB_Reg040_Footage=WaveSel_StageB_Build_Reg040_Footage */
+void Voice_Artic_SetDepthPair_A(unsigned char part, unsigned char v)
+{
+    ram_41472[part * 287] = ((char)v >> 4) << 2;
+    ram_41473[part * 287] = ((char)((char)v << 4) >> 4) * 2;
+}
+
+void Voice_Artic_SetDepthPair_B(unsigned char part, unsigned char v)
+{
+    ram_41474[part * 287] = ((char)v >> 4) << 2;
+    ram_41475[part * 287] = ((char)((char)v << 4) >> 4) << 3;
+}
+
+void Voice_Init_Type1(unsigned char n)
+{
+    unsigned char *v;
+    v = &ram_4308e[(int)n * 71];
+    WaveSel_StageB_Build_Reg040(v);
+    WaveSel_AddRandomEntryOffset(&ram_451ce);
+    Pitch_Apply_Zone_Trim(v);
+    Voice_Pitch_WriteOutReg_Sec(v);
+    TVF_BuildEmit_Short_Dispatch(v);
+    TVF_Emit_Registers_Type2(v);
+    Voice_ComputePitchBend2(v);
+    Voice_Build_GateCmd_NoPartial(v);
+    Voice_Calc_LevelPair_FixedAtk(v);
+    Voice_WriteChPanShift2(v, 0);
+    Voice_Level_ClearAllOutputRegs(v);
+    Voice_ComputePitch_Mono(v);
+    Voice_Slot_LoadPitchOffset_B(v);
+    Voice_ApplyPortamento2(v);
+    ToneGen_WriteVoiceParams(n, ram_451cc);
+}
+
+void Voice_Init_Type2(unsigned char n)
+{
+    unsigned char *v;
+    v = &ram_4308e[(int)n * 71];
+    WaveSel_StageB_Build_Reg040(v);
+    Pitch_Apply_Zone_Trim(v);
+    Voice_Pitch_WriteOutReg_Sec(v);
+    TVF_BuildEmit_Short_Dispatch(v);
+    TVF_Emit_Registers_Type2(v);
+    Voice_ComputePitchBend2(v);
+    Voice_Build_GateCmd_NoPartial(v);
+    Voice_Calc_LevelPair_FixedAtk(v);
+    Voice_WriteChPanShift2(v, 0);
+    Voice_Level_ClearAllOutputRegs(v);
+    Voice_ComputePitch_Mono(v);
+    Voice_ApplyPortamento2(v);
+    ToneGen_WriteVoiceParams(n, ram_451cc);
+}
+
+void Voice_Release_Type4(unsigned char n)
+{
+    unsigned char *v;
+    v = &ram_4308e[(int)n * 71];
+    WaveSel_StageB_Reg040_Footage(v);
+    Pitch_Apply_Partial_Detune(v);
+    Pitch_Emit_Reg400(v);
+    Voice_Level_ComputeTriplet(v);
+    TVF_Build_Dispatch(v);
+    TVF_Emit_Registers(v);
+    Voice_StereoLevel_Compute(v);
+    Voice_PortaLevel_Compute(v);
+    ExtVoice_Build_SlotRegisters(v);
+    Voice_SubVoice_ComputeAndTrigger(v);
+    Voice2_UpdatePitch(v);
+    Level_Build_Reg0C0(v);
+    Voice_Build_GateCommand(v);
+    if (v[3] < 3) {
+        Voice_Calc_LevelPair_Full(v);
+        Voice_ComputePitch(v);
+        Voice_Slot_LoadPitchOffset_A(v);
+        Voice_ApplyPortamento(v);
+    } else {
+        Voice_Calc_LevelPair_Mono(v);
+        Voice_ComputePitch(v);
+        Voice_Slot_ApplyPortamentoDelta(v);
+        Voice_ApplyPortamento(v);
+    }
+    ToneGen_WriteVoiceParams(n, ram_451cc);
+}
+
+void Voice_Reload_Levels(unsigned char n)
+{
+    unsigned char *v;
+    v = &ram_4308e[(int)n * 71];
+    v[5] &= 0x7f;
+    if (((*(unsigned int *)((v) + (1))) & 0x8000L) || !((*(unsigned int *)(((*(unsigned char **)((v) + (35)))) + (10))) & 1)) {
+        if ((*(unsigned int *)((v) + (1))) & 0x100) {
+            Voice_Calc_LevelPair_EGA(v);
+            ToneGen_WriteSegRegs_SameLevel(n, ram_451cc);
+            ToneGen_WriteSingleReg(n, (*(int *)((v) + (45))));
+            Voice_Clear_HoldBit(n);
+            (*(unsigned int *)((v) + (1))) &= ~0x100;
+        } else {
+            Voice_Calc_LevelPair_EGA(v);
+            Voice_Calc_LevelPair_EGB(v);
+            Voice_Calc_LevelPair_EGC(v);
+            ToneGen_WriteLevelBurst(n, ram_451cc);
+        }
+    } else {
+        if ((*(unsigned int *)((v) + (1))) & 0x100) {
+            Voice_Calc_LevelPair_EGA(v);
+            ToneGen_WriteSegRegs_SameLevel(n, ram_451cc);
+            ToneGen_WriteSingleReg(n, (*(int *)((v) + (45))));
+            Voice_Clear_HoldBit(n);
+            (*(unsigned int *)((v) + (1))) &= ~0x100;
+        } else {
+            Voice_Stage_EnvSegments(v);
+            ToneGen_WriteEnvSegments(n, ram_451cc);
+        }
+    }
+}
+
+unsigned int Voice_Slot_CalcAmpNibble(unsigned char part, unsigned char n, unsigned char e)
+{
+    unsigned int *q;
+    unsigned int lo;
+    unsigned int r;
+    q = (unsigned int *)&ram_41368[part * 287];
+    q += 129;
+    if ((*(unsigned int *)&ram_43094[(int)n * 71] >> 8) + 12 >= 36) r = q[e];
+    else {
+        lo = q[e] & 0xf;
+        if (lo < ((q[e] >> 4) & 0xf)) r = q[e] & 0xff0;
+        else r = (q[e] & 0xf00) | (lo << 4);
+    }
+    return r;
+}
+
+unsigned int Voice_Slot_FindOctaveOffset(unsigned char part, unsigned char n, unsigned char e)
+{
+    unsigned int *q;
+    unsigned char k;
+    unsigned int w, r, b, c;
+    q = (unsigned int *)&ram_41368[part * 287];
+    q += 129;
+    k = 0;
+    w = (*(unsigned int *)&ram_43094[(int)n * 71] >> 8) - 12;
+    while (w >= 0x54) {
+        w -= 12;
+        k++;
+    }
+    if (k == 0) r = q[e];
+    else if (k == 1) {
+        r = q[e] & 0xff;
+        b = (q[e] >> 4) & 0xf;
+        c = (q[e] >> 8) & 0xf;
+        if (b < c) r = (r & 0xf) | (c << 4);
+    } else {
+        r = q[e] & 0xf;
+        b = (q[e] >> 4) & 0xf;
+        c = (q[e] >> 8) & 0xf;
+        if (r < b) {
+            if (b < c) r = c;
+            else r = b;
+        } else if (r < c) r = c;
+    }
+    return r;
+}

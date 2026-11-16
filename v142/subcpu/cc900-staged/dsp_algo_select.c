@@ -37,3 +37,49 @@ void DSP_CopyCoeffs_TypeB(unsigned int row)
     for (i = 0; i < n; i++)
         ram_45210[i + 6] = t[row][i];
 }
+
+void DSP_RouteCoeffs_TypeA(unsigned int a, unsigned int c)
+{
+    unsigned int s, row;
+    unsigned long off;
+    unsigned char (*t)[16];
+    unsigned int n, i;
+    a &= 0x7f;
+    s = c;
+    c &= 0x0f;
+    switch (s & 0xc0) {
+    case 0: off = ram_45314->o68; break;
+    case 0x40: off = ram_45314->o76; break;
+    case 0x80: off = ram_45314->o72; break;
+    case 0xc0: off = ram_45314->o68; break;
+    }
+    row = *(unsigned long *)(((c << 7) + a) * 2 + off + ram_45310);
+    off = ram_45314->o80;
+    t = (unsigned char (*)[16])(ram_45310 + off);
+    n = 13;
+    for (i = 0; i < n; i++)
+        ram_45210[i + 6] = t[row][i];
+}
+
+void DSP_RouteCoeffs_TypeB(unsigned int a, unsigned int c)
+{
+    unsigned int s, row;
+    unsigned long off;
+    unsigned char (*t)[16];
+    unsigned int n, i;
+    a &= 0x7f;
+    s = c;
+    c &= 0x0f;
+    switch (s & 0xc0) {
+    case 0: off = ram_45314->o88; break;
+    case 0x40: off = ram_45314->o96; break;
+    case 0x80: off = ram_45314->o92; break;
+    case 0xc0: off = ram_45314->o88; break;
+    }
+    row = *(unsigned long *)(((c << 7) + a) * 2 + off + ram_45310);
+    off = ram_45314->o100;
+    t = (unsigned char (*)[16])(ram_45310 + off);
+    n = 13;
+    for (i = 0; i < n; i++)
+        ram_45210[i + 6] = t[row][i];
+}

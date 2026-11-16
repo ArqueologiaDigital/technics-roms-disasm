@@ -43,10 +43,10 @@ void Voice_DSPOut_Second_B(unsigned char part)
 }
 
 extern unsigned char __tiny ram_18;
-extern unsigned int ram_fffb4;
-extern unsigned int ram_fffb6;
+extern unsigned int ram_100000;
+extern unsigned int ram_100002;
 #define TG_WAIT2 __ASM("	db	0x68,0x00"); __ASM("	nop"); __ASM("	nop"); __ASM("	nop")
-#define TG_WRITE(r, v) ram_18 &= ~0x80; ram_fffb4 = (r); __ASM("	nop"); ram_18 |= 0x80; ram_fffb6 = (v); TG_WAIT2
+#define TG_WRITE(r, v) ram_18 &= ~0x80; ram_100000 = (r); __ASM("	nop"); ram_18 |= 0x80; ram_100002 = (v); TG_WAIT2
 
 /* cc900-name: TG_WriteExtParam_Mute_TypeDisp=ToneGen_WriteExtParam_Mute_TypeDispatch */
 void ToneGen_Mute_Reg05C0(unsigned int reg)

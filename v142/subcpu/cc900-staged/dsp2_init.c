@@ -36,3 +36,39 @@ unsigned int Extract_14Bit_VoiceParam(unsigned char *p)
 {
     return (((unsigned int)p[2] & 0x7f) << 7) | ((unsigned int)p[3] & 0x7f);
 }
+
+extern unsigned int __near ram_4488;
+extern unsigned int __near ram_448a;
+extern unsigned int __near ram_448c;
+
+int __cdecl Audio_CmdHandler_60_7F(unsigned int n, unsigned char *p)
+{
+    unsigned int i;
+    unsigned int size;
+
+    if (ram_448c != 0) {
+        if (ram_448c > 1)
+            i = 0;
+        if (ram_448a + n < ram_4488) {
+            ram_448a += n;
+            ram_448c++;
+        } else {
+            ram_448a = 0;
+            ram_448c = 0;
+        }
+    } else if (n == 0x20) {
+        size = p[5] & 0x7ff;
+        size <<= 7;
+        ram_4488 = p[6] + size + 8;
+        ram_448a += 32;
+        ram_448c = 1;
+    } else {
+        ram_448a = 0;
+        ram_448c = 0;
+    }
+    for (i = 0; i < n; i++) {
+        DSP2_RingBuffer.buf[DSP2_RingBuffer.w++ & 0x7ff] = *p++;
+        DSP2_RingBuffer.n++;
+    }
+    return 0;
+}
