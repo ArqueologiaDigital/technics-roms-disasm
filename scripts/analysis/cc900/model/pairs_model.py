@@ -103,7 +103,7 @@ def main():
             if not lines or not lines[0].endswith(':'):
                 res = 'model: ' + (lines[0][:40] if lines else 'no function')
                 tally['model cannot'] += 1; print('\t'.join([img, r[1], pub, src, '-', res, r[5]])); continue
-            consts, _ = to_llvm.split_consts(lines)
+            consts = to_llvm.fp_consts(to_llvm.split_consts(lines)[0])
             PH = 0xfffff0                                  # FP constants: the linker placed them; take each address from
             for k, lab in enumerate(consts): syms[lab] = PH - 8 * k   # the image's own operand, check the double there
             statics = {}                                   # a static (no public symbol): placed by the linker; its
