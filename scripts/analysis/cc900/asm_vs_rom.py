@@ -90,8 +90,13 @@ def main():
             print('%-32s cannot resolve %s' % (bare, e)); bad += 1; continue
         if any('untranslated' in l for l in body):
             print('%-32s to_llvm cannot translate a line' % bare); bad += 1; continue
+        # relative calls / jumps to other routines (cc900-module callees) name `__cc900_at_<hex>`: define each
+        # relative to this function, so llvm-mc resolves the displacement as it is in the ROM
+        fa = ref[full]
+        targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', '\n'.join(body))})
+        sets = ''.join('\t.set __cc900_at_%x, %s + %d\n' % (t, full, t - fa) for t in targets)
         try:
-            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n%s' % (full, full, '\n'.join(body), sets))[full]
         except Exception:                                 # e.g. a register to_llvm spells as llvm-mc does not
             print('%-32s llvm-mc cannot assemble the translation' % full); bad += 1; continue
         at = ref[full] - base

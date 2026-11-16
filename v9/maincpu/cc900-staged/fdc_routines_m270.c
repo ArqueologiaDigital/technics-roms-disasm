@@ -6,11 +6,43 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: FDC_SendParameterByte */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-unsigned char FDC_ReadDataRegister();
-unsigned char FDC_Read_Status();
+extern unsigned char __near FDC_TARGET_TRACK;
+void FDC_SendParameterByte();
+extern unsigned char __near FDC_PARAM_N;
+extern unsigned char __near FDC_FORMAT_SC;
+extern unsigned char __near FDC_FORMAT_GPL;
+extern unsigned char __near FDC_FORMAT_FILL;
 void FDC_Send_Command();
 void FDC_WriteDataRegister();
+unsigned char FDC_ReadDataRegister();
+unsigned char FDC_Read_Status();
+
+void FDC_SendParam_SeekTrack()
+{
+    FDC_SendParameterByte(FDC_TARGET_TRACK);
+}
+
+void FDC_SendParams_Format()
+{
+    FDC_SendParameterByte(FDC_PARAM_N & 7);
+    FDC_SendParameterByte(FDC_FORMAT_SC);
+    FDC_SendParameterByte(FDC_FORMAT_GPL);
+    FDC_SendParameterByte(FDC_FORMAT_FILL);
+}
+
+void FDC_Send_Command(c)
+unsigned char c;
+{
+    *(unsigned char *)0x110008 = c;
+}
+
+void FDC_WriteDataRegister(c)
+unsigned char c;
+{
+    *(unsigned char *)0x11000a = c;
+}
 
 unsigned char FDC_ReadDataRegister()
 {
