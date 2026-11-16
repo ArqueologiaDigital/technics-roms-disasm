@@ -375,7 +375,6 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_smf_palette.c	95cf83e89189
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_vga_port.c	f5ce1af3316e7baaa33858ac9a01b3f3ffca91eaebeccf9b58ef36a1c590439b	Xr	2026-11-16-119-hd-r30	HDAE5000_VGA_Port_Write	37	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_drv_screens5.c	8379c5223ed3d0864b52b919af7884a54ad92270a01ec24c61034988c56e9eeb	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_Lbn_TypeDigit	646	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_fdlyric_addtlx.c	cc7907e6f856d47d1cf740b338651664c39c2533e310a47a32847d12832fef03	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_FdLyricList_AddTlx	352	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_fdsong_check.c	bcf4a7b3bafe21d66d0f6d52225446e502c4ed9d69bb63701afc023cb3b16699	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_FdSong_CheckFiles	1255	DIFF at +116
 hdae5000	hdae5000/cc900-staged/hdae5000_fdsong_sig.c	a859e28e8e1d5d69bec287b68453f955b600aa6c9890c6b43b8a51e5a932b705	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_CheckFileSignature	75	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_flsitem_remove.c	f580fe0960d1f60202b85c2051af43d39407550c141b221b5574a2fdd3e9d692	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_FlsItem_Remove	389	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_CopyFdSongToHd	823	MATCH
@@ -385,3 +384,19 @@ hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4a
 hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_LoadSong	362	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_SaveSong	764	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_song_module2.c	1deec2143bb45fbff1ca3ef4ade976c6f3aa64b4f238c8d9582807bae9c9f450	Xr	2026-11-16-120-hd-r31-staged	HDAE5000_SaveSong_Rcm	134	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fdsong_check.c	f1676b4e36f6ca5fd71d811ae3f4b08b605d820afb02d05bd15a06188e9c8199	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_FdSong_CheckFiles	1273	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_fdsong_sig.c	5c7175df704362aac0d94cd632489e157c025402a31dfde2f41b08a4b003eeff	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_CheckFileSignature	75	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_flsitem_remove.c	cf8397158691f8de3e8e293082a20478d3b421891b841c0f77d4599e70e8c088	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_FlsItem_Remove	389	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_module2.c	c6f5579536cea404ff4c0bd8b7a98c9628e626dc4a8572448f665c143a79323c	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_DeleteDirectory	350	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_module2.c	c6f5579536cea404ff4c0bd8b7a98c9628e626dc4a8572448f665c143a79323c	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_DeleteSongParts	349	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_module2.c	c6f5579536cea404ff4c0bd8b7a98c9628e626dc4a8572448f665c143a79323c	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_Dir_CountEmptySongs	51	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_module2.c	c6f5579536cea404ff4c0bd8b7a98c9628e626dc4a8572448f665c143a79323c	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_LoadSong	362	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_module2.c	c6f5579536cea404ff4c0bd8b7a98c9628e626dc4a8572448f665c143a79323c	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_SaveSong	764	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_song_module2.c	c6f5579536cea404ff4c0bd8b7a98c9628e626dc4a8572448f665c143a79323c	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_SaveSong_Rcm	134	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_fdsong_sig.c	05103252f25ee8292cbf72fd935fd2c8828bf464e1fe078176f6b1dcb1c93eb4	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_CheckFileSignature	75	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_flsitem_remove.c	d04a84b4815ea38d9dae0a2a9d7e03f583acc3a73a0f8db5c407d153c3acea8d	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_FlsItem_Remove	389	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_song_module2.c	8776a6cf71a7f55e5494250749c95972a7b6218d59d978cd41a61dbb09e418f2	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_Dir_CountEmptySongs	51	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_song_module2.c	8776a6cf71a7f55e5494250749c95972a7b6218d59d978cd41a61dbb09e418f2	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_SaveSong_Rcm	134	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_fdsong_sig.c	043d4442539f942c4d5509a6c213994ea1ed2a0c7f265c3fad8d8a115b11edb4	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_CheckFileSignature	75	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem_remove.c	0fb88081a23db1ca55bf5a37d8088b17b8daa3988778c25a0028dc9f02191d30	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_FlsItem_Remove	389	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_song_module2.c	ee95beb14d97181a89a2149c86b247c50f21d446ff3244b938f88d26a7308706	Xr	2026-11-16-121-hd-r32-staged	HDAE5000_Dir_CountEmptySongs	51	MATCH
