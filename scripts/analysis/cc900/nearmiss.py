@@ -24,6 +24,9 @@ usage (from the repository root or anywhere):
       index.tsv and README.md.
   python3 -B scripts/analysis/cc900/nearmiss.py --readme [same options]
       README.md again from index.tsv and runs.tsv (nothing re-translated).
+  python3 -B scripts/analysis/cc900/nearmiss.py --ready [same options]
+      OUT/ready.tsv again from index.tsv: every MATCH not yet built from C in the src-root's tree, per lane, with a
+      C copy and its own cc900-module line (also written by a full index run and by --recheck --update).
   python3 -B scripts/analysis/cc900/nearmiss.py --explain LISTING FUNCTION [same options]
       print one function's alignment, our translation beside the ROM, both as llvm-objdump reads them (LISTING as
       the index's `listing` column).  For the terminal only: never paste it into the repository.
@@ -150,7 +153,7 @@ CLASS_NEEDS = {
 }
 
 INDEX_COLS = ('tree', 'function', 'status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct', 'first_diff',
-              'class_bytes', 'run', 'opt', 'flags', 'source', 'c_sha256', 'c_provenance', 'c_copy', 'listing')
+              'class_bytes', 'run', 'opt', 'flags', 'source', 'c_sha256', 'c_provenance', 'c_copy', 'listing', 'why')
 
 
 # --------------------------------------------------------------------------------------------- tool chain imports
@@ -335,9 +338,12 @@ ABS_RE = re.compile(r'^\((-?\d+):(8|16|24)\)$')
 
 def objdump(obj):
     """{symbol: [(offset, length, mnemonic, [operands])]} from llvm-objdump -d"""
-    r = llvm('llvm-objdump', '-d', obj)
+    return objdump_text(llvm('llvm-objdump', '-d', obj).stdout)
+
+
+def objdump_text(text):
     out = {}; cur = None; base = 0
-    for l in r.stdout.splitlines():
+    for l in text.splitlines():
         m = SYM_RE.match(l)
         if m:
             cur = m.group(1); out[cur] = []; base = int(l.split()[0], 16); continue
@@ -947,11 +953,11 @@ def module_calls_mod():
     return m
 
 
-def derive_module(tree_key, cpath):
+def derive_module(tree_key, cpath, only=None):
     """module_calls.py's rule (src-root's copy: rel_target, c_callees, its extent rule) for any tree: the callees the
     C calls that the built image reaches by calr / jr / jrl from outside the function.  The image is disassembled
-    once per tree and process (module_calls.py itself redoes it per file, ~7 s).  -> sorted names, or None when the
-    tree has no built ELF"""
+    once per tree and process (module_calls.py itself redoes it per file, ~7 s).  only: just that function's.
+    -> sorted names, or None when the tree has no built ELF"""
     listing, to_llvm, fw = mods()
     mc = module_calls_mod()
     t = Ctx.tree(tree_key)
@@ -986,7 +992,7 @@ def derive_module(tree_key, cpath):
     starts = sorted(base | {ref[f] for f in fns if f in ref})
     local = set()
     for fn in fns:
-        if fn not in ref:
+        if fn not in ref or only is not None and fn != only:
             continue
         lo = ref[fn]
         hi = starts[bisect.bisect_right(starts, lo)] if bisect.bisect_right(starts, lo) < len(starts) else lo + 0x10000
@@ -1057,8 +1063,9 @@ def analyse_listing_build(job, t):
                 body = fw.finish(cpath, name, full, lines, names)
             except SystemExit as e:
                 msg = str(e)
-                row['status'] = 'ERR-translate' if 'cannot translate' in msg else 'ERR-resolve'
-                row['why'] = msg[-80:]
+                row['status'] = 'ERR-translate' if 'cannot translate' in msg else \
+                    'ERR-data' if 'cc900-data' in msg else 'ERR-resolve'
+                row['why'] = msg.split(': ', 2)[-1][:100].replace('\t', ' ').replace('\n', ' ')
                 continue
             bodies[full] = (row, body)
         ok = {}
@@ -1073,54 +1080,70 @@ def analyse_listing_build(job, t):
 SYM_TOKEN = re.compile(r'(?<![\w.])([A-Za-z_][A-Za-z0-9_]*)(?![\w])')
 
 
+BRANCH_MN = re.compile(r'^\t(jr|jrl|calr|call|jp|djnz\w*)\s+(?:\w+\s*,\s*)?([A-Za-z_]\w*)\s*$')
+
+
 def link_at_addresses(bodies, ref, values, d):
-    """{label: (row, llvm-mc lines)} -> {label: (bytes, instructions)}: every function in a section of its own,
-    the names it uses set to the tree's values, linked (ld.lld) at its ROM address; a function that does not
-    assemble or link alone is left out"""
-    out = {}
+    """{label: (row, llvm-mc lines)} -> {label: (bytes, instructions)}.  As in the tree, the functions and the
+    labels they branch to sit in ONE section at their ROM offsets (`.org`), so llvm-mc measures and widens the
+    jr / calr itself; the section is linked (ld.lld) at its ROM address; other names are `.set` to the tree's
+    values.  A function that does not assemble or link with the others is tried alone, else left out."""
 
     def build(items, stem):
-        used = set()
+        used, targets = set(), set()
         for f, (row, lines) in items:
             for l in lines:
                 parts = l.strip().split(None, 1)
                 if len(parts) == 2 and not parts[0].startswith('.'):
                     used.update(SYM_TOKEN.findall(parts[1]))
+                m = BRANCH_MN.match(l)
+                if m and m.group(2) in ref:
+                    targets.add(m.group(2))
         defined = {f for f, _ in items}
-        pre = []
-        for n in sorted(used - defined):
+        targets -= defined
+        lo = min(ref[f] for f, _ in items)
+        body = dict(items)
+        src = []
+        for n in sorted(used - defined - targets):
             if REG_RE.fullmatch(n.lower()) or n in ('t', 'f', 'z', 'nz', 'c', 'nc'):
                 continue
             v = ref.get(n, values.get(n))
             if v is not None:
-                pre.append('\t.set %s, 0x%x' % (n, v))
-        src = pre[:]
-        script = ['SECTIONS {']
-        for k, (f, (row, lines)) in enumerate(items):
-            src += ['\t.section .text.nm%d,"ax",@progbits' % k, '\t.globl %s' % f, '%s:' % f] + list(lines)
-            script.append('  .text.nm%d 0x%x : { *(.text.nm%d) }' % (k, ref[f], k))
-        script.append('}')
+                src.append('\t.set %s, 0x%x' % (n, v))
+        src += ['\t.section .text.nm,"ax",@progbits', 'nm__base:']
+        for x in sorted(targets):                # branch targets: section-relative, so llvm-mc measures the reach
+            src.append('\t.set %s, nm__base + %d' % (x, ref[x] - lo))
+        for f, _ in items:
+            src += ['\t.org 0x%x, 0xff' % (ref[f] - lo), '\t.globl %s' % f, '%s:' % f] + list(body[f][1]) + \
+                   ['\t.globl %s__nmend' % f, '%s__nmend:' % f]
         o, err = assemble_obj('\n'.join(src) + '\n', d, stem)
         if o is None:
+            if os.environ.get('NEARMISS_DEBUG'):
+                sys.stderr.write(err[:2000])
             return None
         ld = os.path.join(d, stem + '.ld'); elf = os.path.join(d, stem + '.elf')
-        open(ld, 'w').write('\n'.join(script) + '\n')
+        open(ld, 'w').write('SECTIONS { .text.nm 0x%x : { *(.text.nm) } }\n' % lo)
         r = llvm('ld.lld', '-e', '0', '-T', ld, o, '-o', elf)
         if r.returncode:
+            if os.environ.get('NEARMISS_DEBUG'):
+                sys.stderr.write(r.stderr[:2000])
             return None
-        dis = objdump(elf)
-        dump = []
-        for k, (f, _) in enumerate(items):
-            dump += ['--dump-section', '.text.nm%d=%s' % (k, os.path.join(d, '%s.%d.bin' % (stem, k)))]
-        llvm('llvm-objcopy', *dump, elf, os.path.join(d, stem + '.junk'))
+        nm = llvm('llvm-nm', '--defined-only', elf).stdout
+        sym = {p[2]: int(p[0], 16) for p in (l.split() for l in nm.splitlines()) if len(p) == 3}
+        binp = os.path.join(d, stem + '.bin')
+        llvm('llvm-objcopy', '--dump-section', '.text.nm=' + binp, elf, os.path.join(d, stem + '.junk'))
+        code = open(binp, 'rb').read() if os.path.exists(binp) else b''
+        r = llvm('llvm-objdump', '-d', '--disassemble-symbols=' + ','.join(f for f, _ in items), elf)
+        tmp = os.path.join(d, stem + '.dis')
+        dis = objdump_text(r.stdout)
         res = {}
-        for k, (f, _) in enumerate(items):
-            p = os.path.join(d, '%s.%d.bin' % (stem, k))
-            if os.path.exists(p) and f in dis:
-                res[f] = (open(p, 'rb').read(), dis[f])
+        for f, _ in items:
+            if f in sym and f + '__nmend' in sym and f in dis:
+                a0, a1 = sym[f] - lo, sym[f + '__nmend'] - lo
+                res[f] = (code[a0:a1], [x for x in dis[f] if x[0] < a1 - a0])
         return res
 
-    items = list(bodies.items())
+    items = sorted(bodies.items(), key=lambda kv: ref[kv[0]])
     res = build(items, 'all')
     if res is None:
         res = {}
@@ -1128,8 +1151,7 @@ def link_at_addresses(bodies, ref, values, d):
             r = build([it], 'one')
             if r:
                 res.update(r)
-    out.update(res)
-    return out
+    return res
 
 
 def run_job(job):
@@ -1341,7 +1363,7 @@ def build_jobs(runs, oracle, src_root):
                         cand_cache[key] = find_source(src, fns, run_time, corpus, cand_cache)
                     ctext, csha, cprov, cref = cand_cache[key]
                     jobs.append(dict(asm=asm, run=run, opt=lab, flags=flags, source=src, ctext=ctext, c_sha256=csha,
-                                     c_provenance=cprov, c_ref=cref, tree=tree_of(src, ctext),
+                                     c_provenance=cprov, c_ref=cref, tree=tree_of(src, ctext), derive_module=True,
                                      listing=os.path.relpath(asm, oracle)))
     return jobs, prov
 
@@ -1546,13 +1568,19 @@ def main():
         old = [r for r in read_index(out) if r['listing'] == lst] if os.path.exists(os.path.join(out, 'index.tsv')) else []
         tree = opt(a, '--tree', old[0]['tree'] if old else 'v10')
         ctext = b''.join(open(os.path.join(out, r['c_copy']), 'rb').read() for r in old if r['c_copy'])
-        for r in analyse_listing(dict(asm=os.path.join(ORACLE, lst), tree=tree, ctext=ctext, explain=fn)):
+        for r in analyse_listing(dict(asm=os.path.join(ORACLE, lst), tree=tree, ctext=ctext, explain=fn,
+                                      derive_module=True)):
             if fn in (r['function'], r['listing_name']):
                 print({k: r.get(k) for k in ('status', 'rom_size', 'gen_size', 'eq_bytes', 'first_diff', 'class_bytes')})
         return 0
     if '--readme' in a:                   # README.md again from index.tsv and runs.tsv, nothing re-translated
         rows = read_index(out)
         write_readme(out, rows, read_runs(out), pct, src_root, model_root, [])
+        return 0
+    if '--ready' in a:                    # ready.tsv again from index.tsv, nothing re-translated
+        rows = read_index(out)
+        write_ready(out, rows, read_runs(out))
+        write_index(out, rows)            # the C copies written for it
         return 0
     if '--recheck' in a:
         return recheck(a, out, pct, jobs_n, src_root, model_root)
@@ -1570,6 +1598,7 @@ def main():
             f.write('%s\t%s\t%s\n' % (run, prov[run][1], os.path.relpath(prov[run][0], CORPUS_ROOTS[0])
                                        if prov[run][0] else ''))
     write_readme(out, rows, prov, pct, src_root, model_root, errs)
+    write_ready(out, read_index(out), read_runs(out))
     print('%d attempts, %.0f s; %s' % (len(rows), time.time() - t0, os.path.join(out, 'index.tsv')), file=sys.stderr)
     return 0
 
@@ -1637,46 +1666,85 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
         trans[(r['status'], n['status'])] = trans.get((r['status'], n['status']), 0) + 1
     print('%d changed (%s), %d attempts now MATCH' % (
         len(changed), ', '.join('%s->%s %d' % (k[0], k[1], v) for k, v in sorted(trans.items())), len(ready)))
-    # ready to stage: one row per (tree, function), the attempt with the most bytes, its C copy and module line
-    best = {}
-    for r, n in ready:
-        k = (r['tree'], r['function'])
-        if k not in best or run_key(r['run']) > run_key(best[k][0]['run']):
-            best[k] = (r, n)
-    lines = []
-    for (tree, fn), (r, n) in sorted(best.items(), key=lambda kv: (LANES.get(kv[0][0], '?'), kv[0])):
-        job = n.get('_job', {})
-        if not r['c_copy'] and job.get('ctext'):
-            cdefs = c_defs_text(job['ctext'])
-            ln = n.get('listing_name', fn)
-            cname = ln if ln in cdefs else next((c for c in cdefs if c[:C_NAME_LIMIT] == ln[:C_NAME_LIMIT]), ln)
-            r['c_copy'] = write_c_copy(out, tree, fn, cname, job['ctext'], r['c_sha256'],
-                                       r['source'] + ' (' + r['run'] + ')', r['c_provenance'], r['flags'])
-        mod = ''
-        if r['c_copy']:
-            m = derive_module(tree, os.path.join(out, r['c_copy']))
-            mod = ' '.join(m) if m else ''
-        lines.append([LANES.get(tree, '?'), tree, fn, n.get('gen_size', ''), r['flags'], r['run'], r['opt'],
-                      r['c_copy'], mod])
-    if lines:
-        with open(os.path.join(out, 'ready.tsv'), 'w') as f:
-            f.write('lane\ttree\tfunction\tbytes\tflags\trun\topt\tc_copy\tcc900_module\n')
-            for l in lines:
-                f.write('\t'.join(str(x) for x in l) + '\n')
-        per = {}
-        for l in lines:
-            per.setdefault(l[0], [0, 0]); per[l[0]][0] += 1; per[l[0]][1] += int(l[3] or 0)
-        print('ready to stage (%s): %s' % (os.path.join(out, 'ready.tsv'),
-                                           ', '.join('%s %d functions %d B' % (k, v[0], v[1]) for k, v in sorted(per.items()))))
+    if ready:
+        print('now MATCH: %s' % ' '.join(sorted({'%s:%s' % (r['tree'], r['function']) for r, n in ready})))
     if '--update' in a:
         for r in old:
             n = new.get((r['listing'], r['function']))
             if n is not None:
-                for k in ('status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct', 'first_diff', 'class_bytes'):
+                for k in ('status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct', 'first_diff', 'class_bytes',
+                          'why'):
                     r[k] = n.get(k, '')
         write_index(out, old)
         write_readme(out, old, runs, pct, src_root, model_root, errs)
+        write_ready(out, old, runs)
     return 0
+
+
+def lane_staged():
+    """{(tree key, label): worktree} of the functions the lanes' worktrees already build from C (<tree>/cc900/ and
+    cc900-staged/), by their C definitions and cc900-name maps"""
+    listing, to_llvm, fw = mods()
+    out = {}
+    for wt in sorted(glob.glob(os.path.join(LANE_WORKTREES, '*', ''))):
+        for key, (tdir, _r, _s, _b) in TREES.items():
+            for c in glob.glob(os.path.join(wt, tdir, 'cc900', '*.c')) + glob.glob(os.path.join(wt, tdir, 'cc900-staged', '*.c')):
+                b = open(c, 'rb').read()
+                lm = label_map_text(b)
+                for n in c_defs_text(b):
+                    out.setdefault((key, lm.get(n, n)), os.path.basename(os.path.dirname(wt)))
+    return out
+
+
+def write_ready(out, rows, runs):
+    """OUT/ready.tsv: every (tree, function) that MATCHes in the index and is not built from C in the src-root's tree,
+    per lane, with its newest matching attempt, a C copy (written when missing) and that function's cc900-module
+    line (derive_module); `in_lane_worktree` names a lane worktree whose tree already has it"""
+    best = {}
+    for r in rows:
+        if r['status'] != 'MATCH':
+            continue
+        k = (r['tree'], r['function'])
+        if k not in best or run_key(r['run']) > run_key(best[k]['run']):
+            best[k] = r
+    lanes = lane_staged()
+    cand_cache = {}
+    lines, staged = [], 0
+    for (tree, fn), r in sorted(best.items(), key=lambda kv: (LANES.get(kv[0][0], '?'), kv[0])):
+        if fn in set(Ctx.tree(tree)['cnames'].values()):
+            staged += 1
+            continue
+        if not r['c_copy'] or not os.path.exists(os.path.join(out, r['c_copy'])):
+            ctext, how = source_c(out, [r], runs)
+            if not ctext and r['c_provenance'] == 'name+funcs':
+                fns = [k.lstrip('_.') for k in mods()[2].listing_functions(
+                    open(os.path.join(ORACLE, r['listing']), encoding='latin-1').read())]
+                b, sha, prov, ref = find_source(r['source'], fns, os.path.getmtime(os.path.join(
+                    ORACLE, 'runs', r['run'], 'job.log')), None, cand_cache)
+                ctext = b if sha == r['c_sha256'] else b''
+            if ctext:
+                cdefs = c_defs_text(ctext)
+                lm = label_map_text(ctext)
+                cname = next((c for c in cdefs if lm.get(c, c) == fn), None) or \
+                    next((c for c in cdefs if c[:C_NAME_LIMIT] == fn[:C_NAME_LIMIT]), fn)
+                r['c_copy'] = write_c_copy(out, tree, fn, cname, ctext, r['c_sha256'],
+                                           r['source'] + ' (' + r['run'] + ')', r['c_provenance'], r['flags'])
+        mod = ''
+        if r['c_copy']:
+            m = derive_module(tree, os.path.join(out, r['c_copy']), only=fn)
+            mod = ' '.join(m) if m else ''
+        lines.append([LANES.get(tree, '?'), tree, fn, r['gen_size'], r['flags'], r['run'], r['opt'], r['c_copy'], mod,
+                      lanes.get((tree, fn), '')])
+    with open(os.path.join(out, 'ready.tsv'), 'w') as f:
+        f.write('lane\ttree\tfunction\tbytes\tflags\trun\topt\tc_copy\tcc900_module\tin_lane_worktree\n')
+        for l in lines:
+            f.write('\t'.join(str(x) for x in l) + '\n')
+    per = {}
+    for l in lines:
+        k = (l[0], 'new' if not l[9] else 'in a worktree')
+        per.setdefault(k, [0, 0]); per[k][0] += 1; per[k][1] += int(l[3] or 0)
+    print('ready.tsv: %d functions already built from C in the tree left out; %s' % (
+        staged, ', '.join('%s %s %d functions %d B' % (k[0], k[1], v[0], v[1]) for k, v in sorted(per.items()))))
 
 
 if __name__ == '__main__':
