@@ -198,9 +198,9 @@ def assemble_fn(full, body, rom, at, calr):
     `call T` whose place in the ROM holds a `calr` to the same T is written `calr` -- asm900's shortening of a call
     to a function of the same source file.  Returns (bytes, [relaxed call targets])."""
     import check_bytes, to_llvm
-    head = '\t.text\n\t.globl %s\n%s:\n' % (full, full)
+    head = '\t.text\n\t.globl %s\n%s:\n.Lhd_base:\n' % (full, full)   # a local base: calr to it resolves
     text = to_llvm.relax(head + '\n'.join(body) + '\n', mc_errors)
-    lines = text.split('\n')[3:]
+    lines = text.split('\n')[4:]
     shortened = []
     if calr and any(CALL_RE.match(l) for l in lines):
         marked = []
@@ -217,7 +217,7 @@ def assemble_fn(full, body, rom, at, calr):
                 if rom[o:o + 1] == b'\x1e':
                     disp = int.from_bytes(rom[o + 1:o + 3], 'little', signed=True)
                     if BASE + o + 3 + disp == t:
-                        lines[i] = '\tcalr %s + %d' % (full, t - (BASE + at))
+                        lines[i] = '\tcalr .Lhd_base + %d' % (t - (BASE + at))
                         shortened.append('%06x' % t)
                         n = 3
             off += n
