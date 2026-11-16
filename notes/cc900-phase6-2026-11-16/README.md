@@ -267,8 +267,25 @@ computed from the start register, and the loop has no entry test) and uses the 4
 Probe `corpus/firmware/p6_m4.c` (run `2026-11-16-12-p6-m4`) was to compile both at both option sets.  Instead,
 V4.23's code generator crashed at every option set, before emitting a function (a page fault reading 0x4890, four
 bytes past the C constant pointer 0x488c), and asm900 then refused the output.  The crash is reported to the
-coordinator as a V4.23 bug.  The isolation run (`p6_m4_<function>.c`, `corpus/p6_m4_split-sources.txt`) has not
-run yet: the VM was busy outside its lock.  Until it runs, the question stays open.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
+coordinator as a V4.23 bug.  The isolation run `2026-11-16-14-p6-m4-split` compiled one function per file
+(`p6_m4_<function>.c`, `corpus/p6_m4_split-sources.txt`).  Only `sc_b` and `va_b` crash: a `for` loop whose
+condition compares the pointer with a constant pointer plus an offset, `p < (unsigned char *)0x488c + 32`.  The
+crash happens at every option set; at `-O3 -XS` `va_b` stops with exit 1 instead of the page fault.  The same
+loop written with an end pointer variable (`sc_a`, `sc_c`, `va_a`) compiles.
+
+Against the ROM (`rel_vs_rom.py`), no variant is byte-identical, but the first instruction decides the question:
+- the ROM's `StyleConv_ClearWorkBuffer` loads the buffer address with the 4-byte `lda` of an absolute below
+  0x10000, then copies it and adds 32 for the end pointer;
+- V4.23 at `-O3 -XS -Xr` (`sc_a`) writes that same first instruction, then folds the end address differently;
+- V4.23 at `-Xr` writes the 5-byte `ld` of the 32-bit constant and differs from the first byte.
+
+So the firmware's compiler does use V4.23's `-O` rule (`lda` for a 32-bit constant of 8..0xffff) in this
+`-O`-shaped function of `sequencer/accompaniment_engine.s`.  `GetNamingWindowID`'s `ld` then points to its file
+being built without `-O`: **per-file options is the better explanation**, not a compiler without the rule.  The
+caveat: here the constant is a pointer, there an integer.  V4.23 treats both alike at `-O`; a compiler that
+distinguished them would be a new behaviour, and nothing seen so far suggests one.
+`FloppyIO_ClearTrackParseBuffer`'s `ld xix, 0x106e` with `djnz` matches neither option set from `fl_a` / `fl_b`
+(both differ at +0); it may be hand assembly or another C.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
 functions; the choice is recorded in its `cc900-options:` comment.
 
 ## Finding candidates
