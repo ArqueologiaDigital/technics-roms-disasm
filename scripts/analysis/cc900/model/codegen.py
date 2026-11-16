@@ -1865,6 +1865,7 @@ RETD_EXIT_PAIR = True                                     # without -O, a functi
 CMP_WIDE_LEFT_ELEM = True                                 # see gen_compare: (long)int against a long element
 DEAD_INIT_OPT = True                                      # see gen_stmt's block: -O drops a dead initialiser
 WHILE_KNOWN_FIRST = True                                  # see while_first_true
+KN_LOOP_INVERT = False                                    # the firmware build sets it: see kn_invert_entry
 FOR_TESTED_NO_EXIT = True                                 # see gen_loop: no unreferenced exit label after a decided first test
 HALVES_BY_USE = True                                      # see plan_homes (rstmt rs_1_00_09_2, homes2b HL03)
 Q_COUNTER_SUB = True                                      # see compile_unit (rstmt rs_1_00_09_2)
@@ -7960,6 +7961,7 @@ FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ASSIGN_TARGET_WRITE = True                               # see gen_assign_value and Fn.emit's live guard
+LH_XIZ_FREE = True                                       # see lh_xiz_free
 GOTO_LABELS = True                                       # see gen_stmt's goto and golab
 STORE_POSTINC_XHL = True                                  # see gen_stmt's store: *p++ = computed char, p in a register
 STORE_DYING_CHARVAR = True                                # see gen_stmt's store: a dying char register variable's value
@@ -14443,7 +14445,7 @@ def plan_homes(F):
     if FP_OPA_NO_XIZ and not F.opt and not F.adecl:      # a double op= on a non-local target needs XIZ for its address:
         walk(F.f.body, lambda n_, dd: fpopa_.append(n_) if n_.k == 'opassign' and fpgen.is_fp(getattr(strip(n_.l), 'ty', None))
              and not (strip(n_.l).k == 'var' and strip(n_.l).decl.kind in ('local', 'param')) else None)
-    winners_sorted = [d for d in winners_sorted if not getattr(d, 'lh_slot', False)]
+    winners_sorted = [d for d in winners_sorted if not getattr(d, 'lh_slot', False) and not getattr(d, 'no_xiz_home', False)]
     if HALVES_BY_USE and F.opt and h2home is None:         # two 16-bit locals: plain < counter < arithmetic < call
         l16_ = [d for d in winners_sorted if d.kind == 'local' and d.ty.size == 2]   # result for IZ (rstmt
         if len(l16_) == 2 and not any(d.kind == 'param' or d.ty.size != 2 for d in winners_sorted):   # rs_1_00_09_2,
@@ -15417,6 +15419,28 @@ def gen_switch_(F, s, last):
     if reached: F.lines.append(end + ':')                  # unreferenced before the loop's continue label
     F.switch_table = getattr(F, 'switch_table', False) or table
 
+def kn_invert_entry(F, c, target_fn):
+    """firmware rule loop-entry-copy (rules.md; KN_LOOP_INVERT, set only by the firmware build): at a loop's
+    entry, emit its test c inverted, jumping to target_fn() (the loop's exit), and keep it when it is one compare
+    and one conditional jump (or ret cc); otherwise restore F, label counters included, and return False so that
+    the caller jumps to the bottom test as V4.23 does (and as the Toshiba-built library does).
+    (firmware TrimAndPadSmfFilename: cp IX,BC / jr nc,L_exit / L_body: ... / cp IX,BC / jr c,L_body; v10 census:
+    332 one-compare tests copied to the entry, 29 jumped to)"""
+    if not (KN_LOOP_INVERT and F.opt and getattr(F, 'personality', 'v4.23') == 'kn5000') or c is None: return False
+    import copy as _cp
+    snap = {k: (_cp.copy(v) if isinstance(v, (list, set, dict)) else v) for k, v in F.__dict__.items()}
+    n0 = len(F.lines)
+    try:
+        loop_cond(F, c, target_fn(), False)
+        new = F.lines[n0:]
+        ok = len(new) == 2 and re.match(r'^\t(cp|cpw|cpb)\t', new[0]) is not None and \
+            re.match(r'^\t(j\t\w+,|ret\t\w+$)', new[1]) is not None
+    except Unsupported:
+        ok = False
+    if not ok:
+        F.__dict__.clear(); F.__dict__.update(snap)
+    return ok
+
 def loop_cond(F, c, target, sense):
     """loop_cond_ with test_clobber_check: a loop's test must not write the home of a parameter its body reads
     (rstmt .rs_3_01_13_4 -Xr: while (gi-- > 0) *a++ = -646 tested with ld WA,(_gi) over a in XWA)"""
@@ -15970,10 +15994,14 @@ def gen_loop(F, s, last):
         if F.pending and LOOP_FLUSH_POPS: flush_pops(F)    # the 1997 library's _fread: fgetc(stream)'s pop went into
         test = F.newulabel(); body = F.newulabel()          # the loop body and ran every iteration (wrong code)
         known_ = WHILE_KNOWN_FIRST and F.opt and s.k == 'while' and while_first_true(F, s)
-        if not known_:
+        cont = [None]; brk = [None]
+        inv_ = False                                       # kn5000: a one-compare test copied to the entry, to the
+        if not known_:                                     # exit (the break label: kn_invert_entry)
+            inv_ = kn_invert_entry(F, s.cond, lambda: brk.__setitem__(0, F.newulabel()) or brk[0])
+            if not inv_: brk[0] = None
+        if not known_ and not inv_:
             F.emit('j', test)                              # (-O: a first test known true is not jumped to, rstmt
         F.lines.append(body + ':')                         #  rs_4_07_00_1: i = 0; while (i < 6) -> ld IZ,0x0 / L: ..)
-        cont = [None]; brk = [None]
         def getc2():                                       # a continue goes to the test (CONT_TO_TEST: the label it
             if cont[0] is None: cont[0] = test if CONT_TO_TEST else F.newulabel()   # made was never placed, _fgets)
             return cont[0]
@@ -15982,7 +16010,7 @@ def gen_loop(F, s, last):
             if brk[0] is None: brk[0] = F.newulabel()
             return brk[0]
         F.loops.append((LazyLabel(getb), getc2)); gen_stmt(F, s.body, False); flush_pops(F); F.loops.pop()
-        if not known_ or cont[0] is not None or any(re.search(r'[\t,]%s$' % test, l_) for l_ in F.lines if l_):
+        if not (known_ or inv_) or cont[0] is not None or any(re.search(r'[\t,]%s$' % test, l_) for l_ in F.lines if l_):
             F.lines.append(test + ':')                     # (no jump to it: no label)
         loop_cond(F, s.cond, body, True)
         if brk[0] is not None: F.lines.append(brk[0] + ':')
@@ -16030,6 +16058,8 @@ def gen_loop(F, s, last):
                 tgt = 'RET' if after_ret and not F.loops else exitl
                 F.emit('ret', INV[cc]) if tgt == 'RET' else F.emit('j', '%s,%s' % (INV[cc], tgt))
                 rotated = 'tested'
+        if rotated is None and kn_invert_entry(F, s.cond, lambda: 'RET' if after_ret and not F.loops else exitl):
+            rotated = 'tested'                             # (kn5000: the one-compare test copied to the entry)
         if rotated is None:                                # c_fordown: ld IZ,(n) / j L1 / body / L1: cp IZ,0x0 / j gt
             rotated = F.newulabel(); F.emit('j', rotated)
     if rotated is not None: pass
@@ -17747,6 +17777,29 @@ def lh_ctr_overwritten(body, i, d):
     if e is None: return False
     e = strip(e)
     return e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and strip(e.l).decl is d
+
+def lh_xiz_free(f, opt):
+    """LH_XIZ_FREE: a function whose one long * / % has an element at a variable index for an operand keeps XIZ for
+    that element's base (plan_lh_call0), so no local is homed in XIZ / IZ (rstmt9 rs_9_08_04_3: char *u = jp stays in
+    its slot, ld (XSP+0x6),XWA, and the helper reads lda XIZ,_gula / .. / ld XWA,(XIZ+WA) / cal C9H_divlu; the model
+    homed u in XIZ and refused, complex long helper operands)"""
+    if not LH_XIZ_FREE or opt: return                      # (-O: plan_lh_call0 seldom plans these; homes kept)
+    hits = []
+    def h(m, dd):
+        if m.k == 'bin' and m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and \
+                m.ty.kind == 'int': hits.append(m)
+    walk(f.body, h)
+    if len(hits) != 1: return
+    def var_elem(x):
+        x = strip(x)
+        while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+        if x.k != 'load' or strip(x.e).k != 'index': return False
+        ix = strip(strip(x.e).idx)                         # a signed int variable index (an unsigned one is LH_REG_UIDX's
+        while ix.k == 'cast' and ix.kind == 'IntegralCast': ix = strip(ix.e)   # register form: rstmt3 rs_3_04_14_4)
+        return ix.k == 'load' and strip(ix.e).k == 'var' and ix.ty is not None and ix.ty.size == 2 and bool(ix.ty.signed)
+    if not (var_elem(hits[0].l) or var_elem(hits[0].r)): return
+    for d in f.decls:
+        if d.kind == 'local': d.no_xiz_home = True
 
 def lh_counter_slots(f, opt, adecl):
     """without -O (cdecl) a loop counter that indexes an element operand of a long * / % helper inside its loop stays
@@ -20099,6 +20152,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     eval_write_only(f, opt != 'none', adecl)
     if opt != 'none' and DROP_WRITE_ONLY: drop_write_only(f)
     lh_counter_slots(f, opt != 'none', adecl)
+    lh_xiz_free(f, opt != 'none')
     fold_fp_consts(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
     gotos = []
