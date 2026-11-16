@@ -1,29 +1,52 @@
 # Staged HD-AE5000 C (hdae5000/cc900-staged/) checked against the ROM with Toshiba V4.23, by
 # notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --check RUN_DIR --record.  The listings stay in the private oracle repo.
 tree	c_file	sha256	options	run	function	bytes	result
-hdae5000	hdae5000/cc900-staged/hdae5000_hd_driver.c	4244554c1fdb4a3f1eb658f10fad1eb34e98395d82f560e6c81af9c1e1b87ac4	Xr	2026-11-16-56-hd-r6	HDAE5000_TypeSel_BuildMask	95	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_Delay_Loop	17	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Cmp	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Lsw	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Md	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Msp	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Pmt	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Rcm	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Sqt	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Tlx	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_DeleteSongPart_Tm	222	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_FlsItem_Clear	119	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_Fls_GetAutoLoadPending	6	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_Fls_SetSeqStopPending	6	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_HD_GetBlockInfo	71	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_RcmStream_LastResult	6	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_RequestMode	73	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_RequestTitle15	73	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_RequestTitle16	73	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_Set_Menu_Visibility	229	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_Smf_SwapBytes16	15	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_Smf_SwapBytes32	59	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_SwapBytes16	13	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_SwapBytes32	37	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_UiObj_SetCaption	25	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	fa529ece87ee14095529dd6eeb161a9dee804118ab12db3b3cc309da9bb3aae3	Xr	2026-11-16-56-hd-r6	HDAE5000_YieldUntilSem1Zero	45	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem.c	6cb15bd13ce8a62b10fadf79e86ed6d036c10aa99f5c65d4ea411f19005f9e7f	Xr	2026-11-16-59-hd-r8	HDAE5000_FlsItem_IsSet	66	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_hd_driver.c	4244554c1fdb4a3f1eb658f10fad1eb34e98395d82f560e6c81af9c1e1b87ac4	Xr	2026-11-16-59-hd-r8	HDAE5000_TypeSel_BuildMask	95	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_hd_tables.c	3b41a856b31430198ac31741527f6c00710f8fec65aa8bb19745c9d8552983ee	Xr	2026-11-16-59-hd-r8	HDAE5000_DirName_SetAndStore	34	MATCH calr:293e2e
+hdae5000	hdae5000/cc900-staged/hdae5000_hd_tables.c	3b41a856b31430198ac31741527f6c00710f8fec65aa8bb19745c9d8552983ee	Xr	2026-11-16-59-hd-r8	HDAE5000_FlsName_SetAndStore	47	MATCH calr:293e2e
+hdae5000	hdae5000/cc900-staged/hdae5000_hd_tables.c	3b41a856b31430198ac31741527f6c00710f8fec65aa8bb19745c9d8552983ee	Xr	2026-11-16-59-hd-r8	HDAE5000_HD_StoreTables	90	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_hd_tables.c	3b41a856b31430198ac31741527f6c00710f8fec65aa8bb19745c9d8552983ee	Xr	2026-11-16-59-hd-r8	HDAE5000_SongName_SetAndStore	74	MATCH calr:293e2e
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_Lyrics_CheckHeaderChunk	113	MATCH calr:28e5e9,28e60e,28e60e,28e60e
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_Lyrics_ClearBuffer	32	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_Lyrics_LoadTestFile	137	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_Lyrics_ReadVarLen	87	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_Read_Table_Multi	64	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_SwapBytes16	13	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics.c	8f89d6f841c64fec0cd8b2f35bed27416ff0699ec84bf53345f62a12868af0e0	Xr	2026-11-16-59-hd-r8	HDAE5000_SwapBytes32	37	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_DebugTrace	1	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc02_TurnHdMotorOff	35	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc07_ReadDirBlockFromHd	37	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc08_ReadFileBlockFromHd	37	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd	37	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc10_WriteDirBlockToHd	37	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd	37	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc12_WriteFlsBlockToHd	37	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc17_FormatHd	35	MATCH calr:294414,294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc22_WriteCloseHD	39	MATCH calr:294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc23_WriteFileHD	27	MATCH calr:294414
+hdae5000	hdae5000/cc900-staged/hdae5000_pport_services.c	ff3c5e2dfb73e8f33b5f874265c0a7d2a0c5c06d7db420deca114008c1e72b8b	Xr	2026-11-16-59-hd-r8	HDAE5000_PPORT_Svc25_ReadFileHD	110	MATCH calr:294414
+hdae5000	hdae5000/cc900-staged/hdae5000_song_io.c	ef2b2c225a690d745038e90779b2d501e2b989e5d3fe3b243f9833ac304b1fe4	Xr	2026-11-16-59-hd-r8	HDAE5000_LoadSong_Tm	220	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_Delay_Loop	17	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Cmp	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Lsw	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Md	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Msp	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Pmt	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Rcm	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Sqt	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Tlx	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_DeleteSongPart_Tm	222	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_FlsItem_Clear	119	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_Fls_GetAutoLoadPending	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_Fls_SetSeqStopPending	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_HD_GetBlockInfo	71	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_RcmStream_LastResult	6	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_RequestMode	73	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_RequestTitle15	73	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_RequestTitle16	73	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_Set_Menu_Visibility	229	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_Smf_SwapBytes16	15	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_Smf_SwapBytes32	59	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_UiObj_SetCaption	25	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_ui_display.c	d086faff63ef4b02ac26dc5a0cdd3553daf3fdc913db878fc0c839b020f85aad	Xr	2026-11-16-59-hd-r8	HDAE5000_YieldUntilSem1Zero	45	MATCH

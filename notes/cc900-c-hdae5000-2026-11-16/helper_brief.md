@@ -29,7 +29,9 @@ do NOT commit, do NOT edit any file except the probe files your prompt names.  l
   loads WA/BC/DE.
 - `#include "hdae_ids.h"`: EVT_*/NAKA_*/TITLE_* event codes and UI object ids as OBJ_<name> (the tree's
   HDAE5000_OBJ_<name>); ids missing there (names over 31 characters) are written as numbers.
-- `switch` compares cases in descending order and lays out the bodies in source order (HD_GetBlockInfo matched).
+- `switch` compares the cases in REVERSE SOURCE order (not by value) and lays out the bodies in source order; the
+  first source case is the one whose compare is inverted to fall into its body (AttenCpToHDSwCatch, run 49;
+  HD_GetBlockInfo matched).
 - Loops: `for (i = 0; i < n; i++)` keeps its entry test (`ld ix,0; cp ix,4; jr nc,...` even with constants), and
   the test is repeated at the bottom.  `while (cond) body;` with a call in cond compiles to `jr` to the test at the
   bottom (YieldUntilSem1Zero matched).  A do-while has only the bottom test.  Unsigned compares give c/nc/ugt/ule,
@@ -47,10 +49,14 @@ do NOT commit, do NOT edit any file except the probe files your prompt names.  l
   library.  So your file holds exactly the functions of one calr group (your prompt lists it); declare everything
   else `extern` with a prototype from its register use (read its header comment).  Order the functions in the file
   in ROM address order.
-- Unsolved (do not spend long on it): the ROM folds a field offset into the symbol, `lda xwa,(sym+44:24)` after
-  computing an index; V4.23 reassociates `&arr[44] + ofs`, `arr + 44 + ofs` to `arr + (44 + ofs)` and writes
-  `ld xwa, sym; add xwa, xhl` with the 44 in the index.  Likewise the ROM's `ld xhl, sym` (immediate) for an array
-  base where V4.23 writes `lda`.  If a function hits this, still write your best C and say so.
+- SOLVED (run 52): the ROM's `lda xR,(sym+N:24)` after an index comes from an INTEGER address:
+  `*(T *)((unsigned long)&sym[N] + index)`.  Every pointer spelling folds N into the index instead.
+- `ld xR, sym` (immediate) after an index: `&arr[i]` (unsigned index) passed as a call ARGUMENT gives it; the same
+  address returned or assigned gives `lda` (helper h_small, runs 49 and micro tests).  A returned base with `ld` is
+  still unsolved (DirName_Address).
+- A function whose calr targets are in your file matches only with them there: the checker models asm900's
+  shortening (`--calr`), and asm900's own object shows the calr (run 56).
+- Old-style (K&R) definitions take char parameters in A / C where the caller loads WA / BC (helper h_lyr).
 - Code that is plainly hand assembly (nop padding, `ei`, `push sr`, register juggling no compiler does, data
   between instructions) is left out: list it with the reason.
 - Names: the C function name is the tree label exactly; over 31 characters, write a short C name and a comment

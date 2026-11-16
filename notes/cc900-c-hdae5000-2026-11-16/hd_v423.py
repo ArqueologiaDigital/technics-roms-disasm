@@ -15,7 +15,9 @@ bytes are compared with the image at the function's label.
         one row per function: bytes and, per C file and option set, MATCH or the first differing offset.  --calr:
         a `call` (V4.23's `cal`) whose place in the ROM holds a `calr` to the same target is written calr, as asm900
         writes a call to a function of the same source file; such a match is reported `MATCH calr:<targets>`, and
-        is only real once those targets are in the same C file.  --tsv
+        is only real once those targets are in the same C file.  An operand naming the compiler's own data (a
+        switch table S50000, an initialiser S1), which to_llvm cannot place, is masked: `MATCH sdata:<n>` means
+        the code is identical and the n data operands are not checked.  --tsv
         writes (c_file, options, function, bytes, result) rows.  --compiler NAME reads another compiler's listings
         of the run (ide2003, v110; diagnostics only: a function is done only under V4.23).  --record appends the rows of the STAGED files
         (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree directory, C file,
@@ -132,6 +134,9 @@ def library_aliases(image):
         f = l.rstrip('\n').split('\t')
         if len(f) > 4 and f[0] == tag and f[4] != '?':
             out.setdefault(f[2].strip().lstrip('_.'), f[4])
+    # names V4.23 calls that the xref tables give another name: ._fld_ful (unsigned long to float) is the routine
+    # the xref calls ._fld_fl_tail, our HDAE5000_ULongToFloat (0x29b815, entered after ._fld_fl's sign handling)
+    out.setdefault('fld_ful', 'HDAE5000_ULongToFloat')
     return out
 
 
@@ -196,6 +201,8 @@ def mc_errors(text):
         return r.stderr if r.returncode else ''
 
 
+SDATA_RE = re.compile(r'untranslated: (\w+)\t(\w+),S\d+\s*$')
+SDATA_MARK = 0x5a5a5a00
 CALL_RE = re.compile(r'^\s*call\s+(0x[0-9a-fA-F]+)\s*$')
 
 
@@ -278,6 +285,12 @@ def check(a):
                 except KeyError as e:
                     res[key][(stem_k, label)] = (0, 'cannot resolve %s' % e)
                     continue
+                marks = []
+                for i, l in enumerate(body):
+                    m = SDATA_RE.search(l)
+                    if m:                            # an operand naming the compiler's own data (S50000: a switch
+                        marks.append(len(marks))     # table, S1: an initialiser); masked, reported `sdata:<n>`
+                        body[i] = '\t%s %s, 0x%x' % (m.group(1), m.group(2).lower(), SDATA_MARK + len(marks) - 1)
                 if any('untranslated' in l for l in body):
                     res[key][(stem_k, label)] = (0, 'to_llvm cannot translate a line')
                     continue
@@ -288,7 +301,18 @@ def check(a):
                     res[key][(stem_k, label)] = (0, 'llvm-mc refused the translation')
                     continue
                 r = rom[at:at + len(mine)]
-                if mine == r:
+                if marks:
+                    mine = bytearray(mine)
+                    for k in marks:
+                        mk = (SDATA_MARK + k).to_bytes(4, 'little')
+                        j = mine.find(mk)
+                        if j >= 0 and len(r) >= j + 4:
+                            mine[j:j + 4] = r[j:j + 4]
+                    mine = bytes(mine)
+                if mine == r and marks:
+                    res[key][(stem_k, label)] = (len(mine), 'MATCH sdata:%d' % len(marks) +
+                                                 (' calr:' + ','.join(relaxed) if relaxed else ''))
+                elif mine == r:
                     res[key][(stem_k, label)] = (len(mine), 'MATCH' + (' calr:' + ','.join(relaxed) if relaxed else ''))
                 else:
                     first = next(i for i in range(len(mine)) if i >= len(r) or mine[i] != r[i])
@@ -338,7 +362,7 @@ def record(run, image, tree, res):
     new, files = [], set()
     for k, v in res.items():
         for (stem, label), (n, r) in v.items():
-            c = os.path.join(tree, 'cc900-staged', stem + '.c')
+            c = os.path.join(tree, 'cc900-staged', stem.split(':')[0] + '.c')   # FILE:CNAME for a short C name
             p = os.path.join(REPO, c)
             if not os.path.exists(p):
                 continue
