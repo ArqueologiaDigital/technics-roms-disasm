@@ -6,6 +6,7 @@
    `register`.  Scalar locals are declared in ascending
    stack order (V4.23 gives the first-declared scalar the lowest slot, the first-declared array the highest).
    __near: 16-bit absolute operand; plain: 24-bit (or a ROM label).  One declarator per __near declaration. */
+/* cc900-module: FileIO_CheckRegionSignature FileIO_ReadHeaderAt4 */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 extern int GetCurrentFileIndex(void);
 extern void *GetFileEntryPtr(int);

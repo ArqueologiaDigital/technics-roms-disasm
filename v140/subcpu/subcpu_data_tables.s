@@ -13215,41 +13215,12 @@ Audio_DMA_RingBuf_Done:
 	popw iz
 	ret
 
-Serial1_DataTransmit_Loop:
-	ld a, (xsp + 4)
-	decm8 1, (xsp + 4)
-	cp a, 0:i3
-	jr z, Serial1_TX_Done
-
-Serial1_TX_LoopBody:
-	bit 2, (SERIAL_1_VAR_1034:16)
-	jr nz, Serial1_TX_ViaRingBuf
-	ld xwa, (xsp + 6)
-	ld C, (xwa+)
-	ld (xsp + 6), xwa
-	extz bc
-	ld wa, bc
-	calr Serial1_HandleEnableCommand
-	jr Serial1_TX_CheckNext
-
-Serial1_TX_ViaRingBuf:
-	ld xwa, (xsp + 6)
-	ld C, (xwa+)
-	ld (xsp + 6), xwa
-	extz bc
-	ld xwa, 0x1016
-	calr SAVE_BYTE_TO_RING_BUFFER
-	calr Serial1_Enable_TX_Interrupt
-
-Serial1_TX_CheckNext:
-	ld a, (xsp + 4)
-	decm8 1, (xsp + 4)
-	cp a, 0:i3
-	jr nz, Serial1_TX_LoopBody
-
-Serial1_TX_Done:
-	ld hl, 0:i3
-	ret
+Serial1_DataTransmit_Loop:	.include "includes/generated/cc900/Serial1_DataTransmit_Loop.s"	; C: cc900/subcpu_data_tables_o3xr_e_8a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Serial1_TX_LoopBody, Serial1_DataTransmit_Loop + 10
+	.set	Serial1_TX_ViaRingBuf, Serial1_DataTransmit_Loop + 34
+	.set	Serial1_TX_CheckNext, Serial1_DataTransmit_Loop + 56
+	.set	Serial1_TX_Done, Serial1_DataTransmit_Loop + 66
 
 Audio_Process_Final:
 	push	sr

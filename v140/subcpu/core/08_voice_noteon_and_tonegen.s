@@ -16,59 +16,10 @@
 ; Velocity != 0 -> RingBuf_SetOffsetLo(status & 8), then VOICE_SETVELOCITY and VOICE_SETPITCH.
 ; Velocity == 0 -> VOICE_ALLOCATE(part, note), VOICE_PARAMINIT on the returned packet, then
 ; VOICE_NOTEOFF. The pushed word for all four calls is (status & 7).
-Voice_NoteOn:
-	dec 2, xsp
-	push xiz
-	ld xiz, xwa
-	cp (xiz + 1), 0x1A
-	jr ge, Voice_NoteOn_Exit
-	ld a, (xiz)
-	and a, 0x7
-	ld (xsp + 4), a
-	ld a, (xiz + 3)
-	res 7, a
-	cp a, 0:i3
-	jr z, Voice_NoteOn_ZeroVelocity
-	ld a, (xiz)
-	and a, 0x8
-	call RingBuf_SetOffsetLo
-	ld l, (xiz + 1)
-	ld c, (xiz + 2)
-	ld e, (xiz + 3)
-	ld a, (xsp + 4)
-	extz wa
-	pushw wa
-	ld a, l
-	calr Voice_SetVelocity
-	ld l, (xiz + 1)
-	ld c, (xiz + 2)
-	ld e, (xiz + 3)
-	ld a, (xsp + 4)
-	extz wa
-	pushw wa
-	ld a, l
-	calr Voice_SetPitch
-	jr Voice_NoteOn_Exit
-
-Voice_NoteOn_ZeroVelocity:
-	ld a, (xiz + 1)
-	ld c, (xiz + 2)
-	calr Voice_Allocate
-	ld xwa, xhl
-	calr Voice_ParamInit
-	ld l, (xiz + 1)
-	ld c, (xiz + 2)
-	ld e, (xiz + 3)
-	ld a, (xsp + 4)
-	extz wa
-	pushw wa
-	ld a, l
-	calr Voice_NoteOff
-
-Voice_NoteOn_Exit:
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_NoteOn:	.include "includes/generated/cc900/Voice_NoteOn.s"	; C: cc900/voice_noteon_and_tonegen_c_7b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_NoteOn_ZeroVelocity, Voice_NoteOn + 80
+	.set	Voice_NoteOn_Exit, Voice_NoteOn + 114
 
 ; XWA = a request packet buffer. Fills it with selector = (word at 0x041360 >> 8) | 0x1480,
 ; +2 = 0x80, +3..+6 = 0, calls Voice_Allocate_Nodes (0x022340), and reads the granted TG channel
@@ -79,60 +30,9 @@ Voice_NoteOn_Exit:
 ; +0x36/+0x38/+0x3A = 0.
 ; The LLVM build calls this Voice_SetPanning; nothing in the body supports that -- it is an
 ; acquire-and-zero-the-struct routine. See [UNCERTAIN].
-Voice_SetPanning:
-	push xiz
-	ld xiz, xwa
-	ld wa, (Payload_Bss_Start+0x24ea:24)
-	srl wa, 8
-	or wa, 0x1480
-	ld (xiz), wa
-	ld (xiz + 2), 0x80
-	ld (xiz + 6), 0x0
-	ld (xiz + 3), 0x0
-	ld (xiz + 4), 0x0
-	ld (xiz + 5), 0x0
-	ld xwa, xiz
-	call Voice_Allocate_Nodes
-	cp (xiz + 10), 0x40
-	jr nc, Voice_SetPanning_Exit
-	ld a, (xiz + 10)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	lda	xbc, (xbc+wa)
-	ld wa, (Payload_Bss_Start+0x24ea:24)
-	ld (xbc + 8), wa
-	ld wa, (Payload_Bss_Start+0x24ea:24)
-	ld (xbc + 6), wa
-	ldw (xbc + 1), 0x1
-	ld xwa, 0:i3
-	ld (xbc + 19), xwa
-	ld xwa, 0:i3
-	ld (xbc + 23), xwa
-	ld xwa, 0:i3
-	ld (xbc + 27), xwa
-	ld xwa, 0:i3
-	ld (xbc + 31), xwa
-	ld xwa, 0:i3
-	ld (xbc + 39), xwa
-	ld (xbc + 12), 0x0
-	ld (xbc + 4), 0x14
-	ld wa, (Payload_Bss_Start+0x24ea:24)
-	srl wa, 8
-	ld (xbc + 5), a
-	ld a, (xiz + 10)
-	ld (xbc), a
-	ld (xbc + 3), 0x0
-	ldw (xbc + 47), 0x0
-	ldw (xbc + 49), 0xFF
-	ld (xbc + 53), 0x0
-	ldw (xbc + 54), 0x0
-	ldw (xbc + 58), 0x0
-	ldw (xbc + 56), 0x0
-
-Voice_SetPanning_Exit:
-	pop xiz
-	ret
+Voice_SetPanning:	.include "includes/generated/cc900/Voice_SetPanning.s"	; C: cc900/voice_noteon_and_tonegen_c_8a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SetPanning_Exit, Voice_SetPanning + 171
 
 ; WA = TG channel, XBC = shadow block. Writes exactly one register: 0x0400 + ch <- shadow
 ; +0x0E.
@@ -2532,51 +2432,18 @@ CheckStatusBits_Zero:
 
 ; Identical predicate for part mode 0x40. Called from 0x0317F2 and 0x035BC8 -- the only member
 ; of this family of four with live callers.
-CheckStatusBits_40:
-	extz xwa
-	ld xbc, 0x11F
-	call Math_Multiply32
-	lda xwa, (Part_PatchRecord_Ptr:24)
-	add xwa, xhl
-	ld xwa, (xwa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x40
-	scc16 z, hl
-	ret
+CheckStatusBits_40:	.include "includes/generated/cc900/CheckStatusBits_40.s"	; C: cc900/voice_noteon_and_tonegen_runtime.c
 
 ; --- CheckStatusBits_80: Check if status bits [7:6] are 0b10 ---
 ; Entry: WA = index
 ; Exit: HL = 1 if status bits are 0x80, else HL = 0
 ; Identical predicate for part mode 0x80. Unreferenced in v142.
-CheckStatusBits_80:
-	extz	xwa
-	ld	xbc, 287
-	call	Math_Multiply32
-	lda	xwa, (Part_PatchRecord_Ptr:24)
-	add	xwa, xhl
-	ld	xwa, (xwa)
-	ld	a, (xwa+16)
-	and	a, 192
-	cp	a, 128
-	scc16	z, hl
-	ret
+CheckStatusBits_80:	.include "includes/generated/cc900/CheckStatusBits_80.s"	; C: cc900/voice_noteon_and_tonegen_runtime.c
 ; --- CheckStatusBits_C0: Check if status bits [7:6] are 0b11 ---
 ; ** Has no symbol in the reference file OR the LLVM build -- it is the fourth, unnamed member
 ; of the part-mode predicate family. ** Identical predicate for part mode 0xC0.
 ; Unreferenced in v142.
-Voice_Part_Mode_Is_C0:
-	extz	xwa
-	ld	xbc, 287
-	call	Math_Multiply32
-	lda	xwa, (Part_PatchRecord_Ptr:24)
-	add	xwa, xhl
-	ld	xwa, (xwa)
-	ld	a, (xwa+16)
-	and	a, 192
-	cp	a, 192
-	scc16	z, hl
-	ret
+Voice_Part_Mode_Is_C0:	.include "includes/generated/cc900/Voice_Part_Mode_Is_C0.s"	; C: cc900/voice_noteon_and_tonegen_runtime.c
 
 ; The region's block-copy helper. XWA = source, XBC = destination, DE = BYTE count (returns
 ; immediately when DE == 0). Copies with post-incrementing byte loads/stores through XHL.
@@ -3476,77 +3343,7 @@ VoiceParam_CustomTone_Apply_Catalog80_Skip:
 ; C low nibble = unit index; catalogue = (0x045310) + (0x045314)[0x8C]. Calls
 ; VOICEPARAM_CUSTOMTONE_LOAD_SUBUNIT, then writes catalogue entry +0x0E into
 ; (0x04531C) + slot*0x50 + unit*0x15 + 0x4AB7 + 1 and (entry +0x0F & 0x0F) | 0x50 into +2.
-VoiceParam_CustomTone_Apply_Catalog8C:
-	dec	6, xsp
-	push xiz
-	ld	(xsp+8), wa
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	e, (xwa+29351)
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xwa, (xwa+140)
-	ld	xhl, (ToneDB_RelBase:24)
-	add	xhl, xwa
-	ld	xiz, xhl
-	ld	l, c
-	and	l, 15
-	ld	a, l
-	extz	wa
-	muls	wa, 21
-	ld	bc, wa
-	ld	a, e
-	extz	wa
-	muls	wa, 80
-	ld	ix, wa
-	add	ix, bc
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xwa, (xwa+ix)
-	ld	(xsp+4), xwa
-	ld	xwa, 19127
-	add	(xsp+4), xwa
-	ld	c, l
-	extz	bc
-	ld	wa, (xsp+8)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xiz
-	ld	a, (xwa+14)
-	ldfr_berp	a, 240
-	extz	ix
-	ld	wa, (xsp+8)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xiz
-	ld	a, (xwa+15)
-	ld	l, a
-	extz	hl
-	ld	a, e
-	extz	wa
-	pushw wa
-	ld	wa, bc
-	ld	bc, ix
-	ld	de, hl
-	calr	CustomTone_CopySubUnitRecord
-	ld	wa, (xsp+8)
-	extz	xwa
-	sll	xwa, 4
-	ld	xbc, xwa
-	add	xbc, xiz
-	ld	xwa, (xsp+4)
-	ld	c, (xbc+14)
-	ld	(xwa+1), c
-	ld	wa, (xsp+8)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xiz
-	ld	a, (xwa+15)
-	and	a, 15
-	or	a, 80
-	ld	c, a
-	ld	xwa, (xsp+4)
-	ld	(xwa+2), c
-	pop xiz
-	inc	6, xsp
-	ret
+VoiceParam_CustomTone_Apply_Catalog8C:	.include "includes/generated/cc900/VoiceParam_CustomTone_Apply_Catalog8C.s"	; C: cc900/voice_noteon_and_tonegen_c_10a.c
 ; ** Same blob; unnamed in both sources. ** Called from 0x02EFF6. WA = catalogue index,
 ; C low nibble = sub-unit (stride 0x0B), C high nibble = pair index k;
 ; catalogue = (0x045310) + (0x045314)[0x94]. Writes entry +0x0E into
@@ -3609,80 +3406,11 @@ VoiceParam_CustomTone_Apply_Catalog94:
 ; 0x031AAE, 0x031ABE, 0x031AEA and 0x02EC7D's neighbourhood) silently becomes a no-op whenever
 ; that latch does not match. Beyond the guard the routine calls
 ; VOICEPARAM_BUILD_TONE_STAGING (0x02EC7D) and continues into 0x02EC38.
-VoiceAlloc_CheckAndInit:
-	dec 2, xsp
-	ld (xsp), a
-	ld a, (Payload_Bss_Start+0x632e:24)
-	cp a, (xsp)
-	jrl nz, VoiceAlloc_CheckAndInit_Return
-	cp (xsp), 0x2
-	jr ule, VoiceAlloc_SetFlagBit0
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	ld	wa, (xbc+wa)
-	and wa, 0x3
-	cp wa, 3:i3
-	jrl nz, VoiceAlloc_CheckAndInit_Return
-
-; Second stage of VoiceAlloc_CheckAndInit (0x02EC0A).  Re-reads the part's flag word at
-; PART+0x00; if bit 0 is already set the part is merely re-marked (OR 0x0001) and the routine
-; returns; otherwise control falls to VoiceAlloc_InitNewAllocation.  Part index is on the
-; stack at (XSP).
-VoiceAlloc_SetFlagBit0:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	ld	wa, (xbc+wa)
-	bit 0, wa
-	jr z, VoiceAlloc_InitNewAllocation
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	orw	(xbc+wa), 0x0001
-	jr VoiceAlloc_CheckAndInit_Return
-
-; First-time allocation of a part: set PART+0x00 bit 0, call VoiceParam_FullSetup (0x02E3E9)
-; with the part index, then call WaveSel_Rebuild_PartCaches (0x032938) with
-; WA = part, BC = PART+0x19 (Part_UserToneIndex), DE = PART+0x1A.  This is the only path in
-; this region that actually creates voices.
-VoiceAlloc_InitNewAllocation:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	orw	(xbc+wa), 0x0001
-	ld a, (xsp)
-	extz wa
-	calr VoiceParam_FullSetup
-	ld a, (xsp)
-	ld l, a
-	extz hl
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250b:24)
-	ld	a, (xbc+wa)
-	ldfr_berp A, 0xF0
-	extz ix
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	ld	a, (xbc+wa)
-	ld e, a
-	extz de
-	ld wa, hl
-	ld bc, ix
-	call WaveSel_Rebuild_PartCaches
-
-; Pop the one-word part-index frame and return.
-VoiceAlloc_CheckAndInit_Return:
-	inc 2, xsp
-	ret
+VoiceAlloc_CheckAndInit:	.include "includes/generated/cc900/VoiceAlloc_CheckAndInit.s"	; C: cc900/voice_noteon_and_tonegen_c_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_SetFlagBit0, VoiceAlloc_CheckAndInit + 46
+	.set	VoiceAlloc_InitNewAllocation, VoiceAlloc_CheckAndInit + 91
+	.set	VoiceAlloc_CheckAndInit_Return, VoiceAlloc_CheckAndInit + 177
 
 ; Register-argument twin of VoiceAlloc_CheckAndInit: entry with XWA = pointer to the 6-byte
 ; command record; the part index is taken from (XWA+1) into E and kept there throughout.
@@ -3693,55 +3421,10 @@ VoiceAlloc_CheckAndInit_Return:
 ; Single caller: tone-edit opcode 0x13 at 0x02EF71.  Despite the "_ExtData" suffix this is
 ; ordinary code, not a data table.
 ; ★ Renamed 2026-09-25 from VoiceAlloc_CheckAndInit_ExtData: header: register-argument twin of VoiceAlloc_CheckAndInit, part from the record.
-VoiceAlloc_CheckAndInit_FromRecord:
-	ld	e, (xwa+1)
-	cp	e, 2:i3
-	jr	ule, VoiceAlloc_Cmd_MarkPresent
-	ld	a, e
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	ld	wa, (xbc+wa)
-	and	wa, 3
-	cp	wa, 3:i3
-	ret	nz
-; Common continuation for parts 0..2 and for parts that passed the (flags & 3) == 3 test:
-; re-read PART+0x00 and branch on bit 0.
-VoiceAlloc_Cmd_MarkPresent:
-	ld	a, e
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	ld	wa, (xbc+wa)
-	bit	0, wa
-	jr	z, VoiceAlloc_Cmd_FirstAlloc
-	ld	a, e
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	or_rrw_im	xbc, wa, 1, 0
-	ret
-; Part was not yet allocated: set PART+0x00 bit 0, then range-check PART+0x1A against
-; [0x40,0x50) before calling DSP_FlushAllSlots_ForPart.
-VoiceAlloc_Cmd_FirstAlloc:
-	ld	a, e
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	or_rrw_im	xbc, wa, 1, 0
-	ld	a, e
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x250c:24)
-	ld	a, (xbc+wa)
-	cp	a, 64
-	ret	c
-	cp	a, 80
-	ret	nc
-	ld	a, e
-	extz	wa
-	call	DSP_FlushAllSlots_ForPart
-	ret
+VoiceAlloc_CheckAndInit_FromRecord:	.include "includes/generated/cc900/VoiceAlloc_CheckAndInit_FromRecord.s"	; C: cc900/voice_noteon_and_tonegen_c_8a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_Cmd_MarkPresent, VoiceAlloc_CheckAndInit_FromRecord + 33
+	.set	VoiceAlloc_Cmd_FirstAlloc, VoiceAlloc_CheckAndInit_FromRecord + 77
 ; Ships one whole tone-edit buffer from sub to main.  Input: A = edit-buffer index.
 ;   src = (ToneDB_RamBankA) + 0x4AA7 + index*0x50
 ;   dst = 0x001E0000  + 0x4AA7 + index*0x50      (the main CPU's window)
@@ -4609,24 +4292,10 @@ Voice_DSPOut_Second_B:	.include "includes/generated/cc900/Voice_DSPOut_Second_B.
 ; Input A = part, C = flag.  Calls VoiceAlloc_CheckAndInit(part) and then sets or clears
 ; bit 7 of the parameter-shadow byte 0x04502B (= UserTone_VelSplit_Base + 0x5D, i.e. the
 ; cached value of opcode 0x5D) according to C.  Single caller: 0x02A148.
-VoiceAlloc_WithRoutingFlag:
-	dec 2, xsp
-	ld (xsp), c
-	extz wa
-	calr VoiceAlloc_CheckAndInit
-	cp (xsp), 0x0
-	jr z, VoiceAlloc_WithRoutingFlag_Clear
-	set 7, (Payload_Bss_Start+0x61b5:24)
-	jr VoiceAlloc_WithRoutingFlag_Return
-
-; C == 0 -> res 7,(0x04502B).
-VoiceAlloc_WithRoutingFlag_Clear:
-	res 7, (Payload_Bss_Start+0x61b5:24)
-
-; Pop the frame and return.
-VoiceAlloc_WithRoutingFlag_Return:
-	inc 2, xsp
-	ret
+VoiceAlloc_WithRoutingFlag:	.include "includes/generated/cc900/VoiceAlloc_WithRoutingFlag.s"	; C: cc900/voice_noteon_and_tonegen_c_7a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_WithRoutingFlag_Clear, VoiceAlloc_WithRoutingFlag + 21
+	.set	VoiceAlloc_WithRoutingFlag_Return, VoiceAlloc_WithRoutingFlag + 26
 
 ; ALGORITHM GROUP 0 APPLY.  Input A = part, C = algorithm slot 0..3.  Not data: this is the
 ; first of three structurally identical routines (the others are 0x02F630 and 0x02F735).

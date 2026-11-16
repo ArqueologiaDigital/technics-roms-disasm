@@ -90,6 +90,9 @@ NAME_RE = re.compile(rb'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
 # KN_MEM_TO_MEM: with -O only, a copy of 8 / 16 bits with a 16-bit absolute side whose value is not used again is one
 # memory-to-memory move (ld (#16),(mem) / ld (mem),(#16)); the model's rule must test -O itself, so that the firmware's
 # -Xr files keep their register copies (notes/cc900-phase6-2026-11-16/README.md, the memory-to-memory census).
+# Most probably UNNECESSARY (2026-11-16, later): V4.23 itself writes these moves when one side is a __near cell
+# (run 2026-11-16-92-p6-r18, FDC_CMD_SEND / FDC_MC_EXIT_Code_Helper2); the firmware's moves are then V4.23 with
+# __near declarations.  Kept as the no-op it is until the model work resumes.
 FIRMWARE_RULES = ("KN_LOOP_INVERT", "KN_SHIFT_UNSIGNED_SLL", "KN_MEM_TO_MEM")
 C_NAME_LIMIT = 31
 EQU_RE = re.compile(rb'^\s*\.(?:equ|set)\s+([A-Za-z_][\w.]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;|$)')
@@ -223,8 +226,17 @@ class Names(dict):
     cmap = {}
     addrs = None
 
+    ccut = {}                                            # {31-character cut: the C file's own longer names}
+
     def resolve(self, n, depth=0):
-        n = n.lstrip("_.")
+        """V4.23's name first without its `_` / `.` prefix, then with only its first character dropped (a C name of
+        its own that begins with `_`: `._findfirst` is the tree's _findfirst)"""
+        a = self.resolve1(n.lstrip("_."), depth)
+        if a[0] is None and n[:1] in "._" and n[1:] != n.lstrip("_.") and n[1:]:
+            a = self.resolve1(n[1:], depth)
+        return a
+
+    def resolve1(self, n, depth):
         m = RAM_CELL_RE.match(n)
         if m:
             return int(m.group(1), 16), None
@@ -236,9 +248,18 @@ class Names(dict):
             raise KeyError("%s has two values in the tree; cannot choose its operand width" % n)
         if n in self.labels:
             return self.labels[n], n
-        if self.cut and len(self.cut.get(n, ())) == 1:     # a name V4.23 cut to 31 characters: the tree's full name
+        if len(n) == C_NAME_LIMIT and len(self.ccut.get(n, ())) == 1:   # a name V4.23 cut to 31 characters: the
+            full = next(iter(self.ccut[n]))                             # C file's own longer name for it, first
+            if full in self.labels or full in self.values or full in self.cmap:
+                return self.resolve(full, depth + 1)
+        if self.cut and len(self.cut.get(n, ())) == 1:     # else the tree's one label with that cut
             full = next(iter(self.cut[n]))
             return self.resolve(full, depth + 1)[0], full
+        if self.cut and len(self.cut.get(n, ())) > 1 and len(n) == C_NAME_LIMIT:
+            raise KeyError("%s is V4.23's 31-character cut of %d tree labels (%s): the C must declare the one it means, "
+                           "or name it with a `cc900-name: SHORT=LABEL` line"
+                           % (n, len(self.cut[n]), ", ".join(sorted(self.cut[n])[:4])
+                              + (" ..." if len(self.cut[n]) > 4 else "")))
         alias = RUNTIME.get(n)                              # a runtime routine under the tree's name (C9H_mullu)
         if alias and alias != n and depth < 4:
             return self.resolve(alias, depth + 1)
@@ -262,6 +283,7 @@ class Names(dict):
 def file_flags(path):
     """the cc900 flags FILE.c asks for (`cc900-options:`, default DEFAULT_FLAGS), any flag string: V4.23 takes them as
     they are (scripts/build/cc900_v423.py); file_options() checks that the model compiles them"""
+    check_markers(path)
     m = OPT_RE.search(open(path, "rb").read())
     return " ".join(m.group(1).decode().split()) if m else DEFAULT_FLAGS
 
@@ -281,6 +303,56 @@ REFUSED = {}                                             # compile_c: {function:
 MODULE_RE = re.compile(rb'cc900-module:([^*\n]*)')
 
 
+LABEL_LIKE = re.compile(r'^(ram_[0-9a-fA-F]+|[A-Za-z_]\w*_\w*|[A-Za-z]\w*[a-z0-9][A-Z]\w*)$')
+MARKER_CHECKED = set()
+
+
+def check_markers(path):
+    """stop when a `cc900-module:` / `-options:` / `-name:` / `-data:` marker wraps onto the next line of its comment.
+    Each reader takes one line, so the wrapped part would be lost silently (lane_sub: a module list's callees on its
+    second line became absolute calls, which only the gate caught).  A wrapped line is: for a module list, a line of
+    label-like names only (an underscore or an inner capital in every one: never prose); for options, flags only; for
+    a name or data marker, a marker whose own line does not hold the whole `C=LABEL` / `FUNCTION N = LABEL`."""
+    if path in MARKER_CHECKED:
+        return
+    text = open(path, "rb").read().decode("latin-1")
+    for c in re.finditer(r'/\*.*?\*/', text, re.S):
+        lines = c.group(0).split("\n")
+        for k, l in enumerate(lines):
+            m = re.search(r'cc900-(module|options|name|data):(.*)', l)
+            if not m:
+                continue
+            kind, rest = m.group(1), m.group(2).replace("*/", "").strip()
+            nxt = lines[k + 1].replace("*/", "").strip(" \t*") if k + 1 < len(lines) else ""
+            toks = [t for t in re.split(r'[\s,]+', nxt) if t]
+            wrapped = None
+            if kind == "name" and not re.match(r'^[A-Za-z_]\w*\s*=\s*[A-Za-z_]\w*', rest):
+                wrapped = "its `C=LABEL` is not whole on this line"
+            elif kind == "data" and not re.match(r'^[A-Za-z_]\w*\s+\d+\s*=\s*[A-Za-z_]\w*', rest):
+                wrapped = "its `FUNCTION N = LABEL` is not whole on this line"
+            elif toks and "cc900-" not in nxt:
+                if kind == "module" and all(LABEL_LIKE.match(t) for t in toks):
+                    wrapped = "the next line continues the list (%s ...)" % " ".join(toks[:3])
+                elif kind == "options" and all(t.startswith("-") for t in toks):
+                    wrapped = "the next line continues the flags (%s)" % " ".join(toks)
+            if wrapped:
+                sys.exit("%s:%d: a cc900-%s: marker wraps: %s.  Each marker is read from its own line only: repeat the "
+                         "keyword on every line (`cc900-%s: ...`)" % (path, text[:c.start()].count("\n") + k + 1, kind,
+                                                                       wrapped, kind))
+    MARKER_CHECKED.add(path)
+
+
+def c_long_names(path):
+    """{31-character cut: the identifiers longer than 31 characters FILE.c writes outside comments}: the names
+    V4.23 cuts, so a cut reference resolves to the one the C declares (SingleLoad_LoadPanelMemory_Str_ has five
+    labels in v10; the C names one)"""
+    src = re.sub(r'/\*.*?\*/', ' ', open(path, "rb").read().decode("latin-1"), flags=re.S)
+    out = {}
+    for n in set(re.findall(r'\b[A-Za-z_]\w{%d,}' % C_NAME_LIMIT, src)):
+        out.setdefault(n[:C_NAME_LIMIT], set()).add(n)
+    return out
+
+
 def module_names(path):
     """the names FILE.c's `cc900-module:` comments list (blank- or comma-separated; any number of comments): tree
     labels that were in the same section of the firmware's original source module as this file's functions.  asm900
@@ -288,13 +360,20 @@ def module_names(path):
     is a claim about the original build, and `make gate` checks it: a wrong one changes the bytes.  The evidence for
     one is the ROM itself (the hand assembly's calr / jr / jrl to it)."""
     out = set()
+    check_markers(path)
     for m in MODULE_RE.finditer(open(path, "rb").read()):
         out.update(n for n in re.split(r'[\s,]+', m.group(1).decode()) if n)
+    # a listed label the C calls by a short `cc900-name:` (Voice_PerVoice_PortaPitchUpd = ..._PortamentoPitchUpdate):
+    # V4.23's listing writes the short name, so it is module-local too, and either spelling may be listed
+    for c, lab in label_map(path).items():
+        if lab in out or c in out:
+            out.update((c, lab))
     return out
 
 
 def label_map(path):
     """{C name: the tree's label} from FILE.c's `cc900-name:` comments"""
+    check_markers(path)
     return {m.group(1).decode(): m.group(2).decode() for m in NAME_RE.finditer(open(path, "rb").read())}
 
 
@@ -320,7 +399,15 @@ def compile_c(path, names, spell=True):
     for flag in FIRMWARE_RULES:                          # rules of the firmware's own C, off in the model elsewhere
         if hasattr(codegen, flag):
             setattr(codegen, flag, True)
-    unit = frontend.load(path, ["__near=", "__tiny="], [], adecl=adecl)   # the qualifiers are read by c_widths
+    try:                                                 # the qualifiers are read by c_widths
+        unit = frontend.load(path, ["__near=", "__tiny="], [], adecl=adecl)
+    except Exception as ex:                              # ANY front-end failure is the model's refusal: an anonymous
+        detail = str(ex)                                 # union member (ValueError), clang -fsyntax-only refusing
+        err = getattr(ex, "stderr", None)                # the file (CalledProcessError: hdae5000_ui_display.c) ...
+        if err:
+            detail += ": " + (err.decode("latin-1") if isinstance(err, bytes) else err).strip()[-300:]
+        sys.exit("%s: the reference model's front end does not read it (%s: %s)%s"
+                 % (path, type(ex).__name__, detail, MODEL_HINT))
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
     to_llvm.WIDTHS = c_widths(path, model=True)
@@ -329,6 +416,7 @@ def compile_c(path, names, spell=True):
     labels = label_map(path)
     if isinstance(names, Names):
         names.cmap = labels                              # cc900-name: for every reference, not only definitions
+        names.ccut = c_long_names(path)
     to_llvm.PLACEHOLDER = ROM_LABEL if spell else None   # spell=False: real addresses (fn_diff.py, the coverage)
     funcs = {}
     REFUSED.clear()
@@ -423,7 +511,10 @@ def c_functions(path):
     src = open(path, "rb").read().decode("latin-1")
     src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
     src = re.sub(r'//[^\n]*', '', src)
-    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{', src, re.M)
+    # a K&R definition declares its parameters between `)` and `{` (lane_hd's lyrics: `long f(pos) long pos; {`)
+    # (each declaration of the list ends at its own `;`, so the pattern cannot backtrack exponentially)
+    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)(?:[^;{}()#=]*;)*\s*\{',
+                                  src, re.M)
             if n not in C_KEYWORDS]
 
 
@@ -471,6 +562,7 @@ def compile_v423(path, names, cache):
     check_c_names(path, cdefs)
     labels = label_map(path)
     names.cmap = labels                                  # cc900-name: for every reference, not only definitions
+    names.ccut = c_long_names(path)
     to_llvm.PLACEHOLDER = ROM_LABEL
     uncut = {n[:C_NAME_LIMIT]: n for n in cdefs}
     text = open(lp, encoding="latin-1").read()
@@ -547,6 +639,7 @@ def data_map(path):
     (in listing order, 1-based).  The build writes that object as includes/generated/cc900/LABEL.s, which the tree
     includes at LABEL, and the code's reference to it becomes LABEL."""
     out = {}
+    check_markers(path)
     for m in DATA_RE.finditer(open(path, "rb").read()):
         out.setdefault(m.group(1).decode(), {})[int(m.group(2))] = m.group(3).decode()
     return out
@@ -574,18 +667,19 @@ def tree_addresses(tree):
                 except ValueError:
                     pass
     return out
-REL_RE = re.compile(r'^\t(calr|jr|jrl)\s+([A-Za-z_]\w*)\s*$')
+REL_RE = re.compile(r'^\t(calr|jr|jrl)\s+(?:(\w+),\s*)?([A-Za-z_]\w*)\s*$')    # (cc,) target
 
 
 def far_fallback(fn, lines):
     """asm900's rule beyond reach (probe calrel-far2, run 2026-11-16-61-p6-calrel-far2): a module-local CAL / J whose
     target is more than 16 bits away is call / jp.  With the tree's addresses (ADDRS; the function sits at its
-    ROM address), every unconditional calr / jr / jrl to a label is checked from the instruction's own offset and
-    rewritten when out of reach; repeated until nothing changes.  The sizes are llvm-mc's before relaxation (a jr counts 2 bytes), so a
+    ROM address), every calr / jr / jrl (conditional too) to a label is checked from the instruction's own offset and
+    rewritten when out of reach: call / jp / jp cc,(F:24) beyond 16 bits, a jr beyond 8 bits as jrl (asm900 picks
+    jrl itself; written here so the first layout pass is exact); repeated until nothing changes.  The sizes are llvm-mc's before relaxation (a jr counts 2 bytes), so a
     target within a few bytes of the limit is judged from a position a byte or so early.  Without ADDRS, or with
     data directives in the body, lines stay as they are (llvm-mc then stops on an out-of-range calr: a visible
     failure, never a wrong byte)."""
-    if fn not in ADDRS or not any((REL_RE.match(l) or [0, 0, ""])[2] in ADDRS for l in lines):
+    if fn not in ADDRS or not any((REL_RE.match(l) or [0, 0, 0, ""])[3] in ADDRS for l in lines):
         return lines                                      # nothing relative to a label of the image
     if any(l.startswith("\t.") for l in lines):
         return lines
@@ -599,10 +693,16 @@ def far_fallback(fn, lines):
         changed, off = False, 0
         for i, n in zip(insn, sizes):
             m = REL_RE.match(lines[i])
-            if m and m.group(2) in ADDRS:
-                d = ADDRS[m.group(2)] - (ADDRS[fn] + off + n)
+            if m and m.group(3) in ADDRS:
+                d = ADDRS[m.group(3)] - (ADDRS[fn] + off + n)
                 if not -0x8000 <= d <= 0x7fff:
-                    lines[i] = "\t%s\t%s" % ("call" if m.group(1) == "calr" else "jp", m.group(2))
+                    lines[i] = ("\t%s\t%s" % ("call" if m.group(1) == "calr" else "jp", m.group(3)) if not m.group(2)
+                                else "\tjp\t%s, (%s:24)" % (m.group(2), m.group(3)))   # J cc beyond reach: jp cc,#24
+                    changed = True
+                elif m.group(1) == "jr" and not -128 <= d <= 127:
+                    # beyond jr's reach: jrl written here, as short_jr_out_of_reach() does for local labels (lane_p6,
+                    # 188af8276), so the first layout pass counts the 3 bytes the jump will take
+                    lines[i] = "\tjrl\t%s" % ("%s, %s" % (m.group(2), m.group(3)) if m.group(2) else m.group(3))
                     changed = True
             off += n
         if not changed:
@@ -615,10 +715,44 @@ MODEL_HINT = ("\nThe Python reference model (CC900_COMPILER=model) does not supp
               "default build, Toshiba V4.23 in the oracle VM (`make`, CC900_COMPILER=v423), compiles it.")
 
 
+JR_LOCAL_RE = re.compile(r'^\tjr[ \t]+(?:(\w+),\s*)?(\.L\w+)\s*$')
+
+
 def assembler_errors(text):
+    """llvm-mc's errors for to_llvm.relax(), plus one `N:1: error: out of range` per `jr` to a local label that does
+    not reach it.  llvm-mc itself relaxes such a jr to jrl without a word, so the generated body used to keep `jr`
+    and leave the choice to the layout; but a relaxable jr counts 2 bytes in the first layout pass, and the
+    `.org` checks of the hand sources pad for it, so a hand `jr` that crosses an `.org` sees its target that much
+    further away and is relaxed for good (r18 gate, lane_p6: v10/v9 `.org 0xf97d8d` one byte past, with the hand
+    `jr nz` +116 at 0xf97d6b; the same source without that `.org` was byte-identical).  Writing jrl where it is
+    needed keeps the first layout exact."""
     r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-filetype=obj", "-o", os.devnull],
                        input=text, capture_output=True, text=True)
-    return r.stderr
+    return r.stderr + short_jr_out_of_reach(text)
+
+
+def short_jr_out_of_reach(text):
+    lines = text.split("\n")
+    if not any(JR_LOCAL_RE.match(l) for l in lines) or any(l.startswith("\t.") for l in lines):
+        return ""
+    r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-show-encoding"],
+                       input=text + "\n", capture_output=True, text=True)
+    sizes = [len(m.group(1).split(",")) for m in re.finditer(r'encoding: \[([^\]]*)\]', r.stdout)]
+    insn = [i for i, l in enumerate(lines) if l.startswith("\t") and l.strip()]
+    if r.returncode or len(sizes) != len(insn):
+        return ""
+    at, label, off, size = {}, {}, 0, dict(zip(insn, sizes))
+    for i, l in enumerate(lines):
+        if not l.startswith("\t") and l.endswith(":"):
+            label[l[:-1]] = off
+        at[i] = off
+        off += size.get(i, 0)
+    out = ""
+    for i in insn:
+        m = JR_LOCAL_RE.match(lines[i])
+        if m and m.group(2) in label and not -128 <= label[m.group(2)] - (at[i] + size[i]) <= 127:
+            out += "<stdin>:%d:1: error: out of range (jr to a local label, written jrl)\n" % (i + 1)
+    return out
 
 
 def tabbed(line):

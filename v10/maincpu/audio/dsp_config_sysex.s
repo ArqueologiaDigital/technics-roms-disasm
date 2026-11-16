@@ -142,16 +142,9 @@ SysEx_ClampVoiceIndex128_Epilogue:
 	ret
 
 ; Returns in L entry A of SysEx49_VoiceIndexMap8 (8 entries); A >= 8 is taken as 0.
-SysEx_ClampVoiceIndex8_49:
-	cp a, 0x8
-	jr c, SysEx_ClampVoiceIndex8_49_DoLookup
-	ld a, 0x0:opc
-
-SysEx_ClampVoiceIndex8_49_DoLookup:
-	extz wa
-	lda xbc, (SysEx49_VoiceIndexMap8:24)
-	ld	l, (xbc+wa)
-	ret
+SysEx_ClampVoiceIndex8_49:	.include "includes/generated/cc900/SysEx_ClampVoiceIndex8_49.s"	; C: cc900/dsp_config_sysex_m290_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysEx_ClampVoiceIndex8_49_DoLookup, SysEx_ClampVoiceIndex8_49 + 7
 
 ; SysEx_ApplyGsChorusLevel: Roland GS CHORUS LEVEL (40 01 3A): maps the data value (field 11 of the active MIDISEQ
 ;   buffer) through SysEx49_LevelCurve128 (the same 0..127 -> 0..94 curve as the reverb's) and writes it to the first
@@ -208,16 +201,9 @@ SysEx_ApplyGsChorusLevel_Epilogue:
 	ret
 
 ; Returns in L entry A of SysEx49_LevelCurve128; A >= 0x80 is taken as 0.
-SysEx_ClampVoiceIndex128_49:
-	cp a, 0x80
-	jr c, SysEx_ClampVoiceIndex128_49_DoLookup
-	ld a, 0x0:opc
-
-SysEx_ClampVoiceIndex128_49_DoLookup:
-	extz wa
-	lda xbc, (SysEx49_LevelCurve128:24)
-	ld	l, (xbc+wa)
-	ret
+SysEx_ClampVoiceIndex128_49:	.include "includes/generated/cc900/SysEx_ClampVoiceIndex128_49.s"	; C: cc900/dsp_config_sysex_m290_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysEx_ClampVoiceIndex128_49_DoLookup, SysEx_ClampVoiceIndex128_49 + 7
 
 SysEx_DispatchByChannel:
 	ldw hl, 0xd8f0
@@ -2196,23 +2182,7 @@ Fade_SetLevel:
 ;   (0x40C1) off and refreshes their LEDs (0x4D, 0x4E), and restores the level to 127 (Fade_SetLevel). Called at song
 ;   load / playback start (Acc_LoadAndStartPlayback), demo start (DemoMode_Main_Operation) and by
 ;   BitMapOut_PrepareAndRender. It configures no DSP. Basis: callers + body.
-Fade_Cancel:
-	and (0xc1f0:16), 243
-	and (0xc1f0:16), 252
-	ld xwa, 0x40c0
-	ld bc, 0:i3
-	ld de, 1:i3
-	call SoundParam_NotifyChange
-	ldw wa, 0x4d
-	call CtrlPanel_SetIndicatorLED
-	ld xwa, 0x40c1
-	ld bc, 0:i3
-	ld de, 1:i3
-	call SoundParam_NotifyChange
-	ldw wa, 0x4e
-	call CtrlPanel_SetIndicatorLED
-	ldw wa, 0x7f
-	jr Fade_SetLevel
+Fade_Cancel:	.include "includes/generated/cc900/Fade_Cancel.s"	; C: cc900/dsp_config_sysex_m293.c
 ; Fade_ParamListener: Parameter-write listener of the FADE IN/OUT engine (in the SwbtWr listener lists of records
 ;   0x48, 0x70 and 0x98): the tempo (0x48 +8/+9, keys 4/5) and the FADE IN/OUT SETTING values (0x70 +5..+7, keys
 ;   0x2A00/0x2A01/0x2A10-0x2A12) recompute the ramp steps and the Auto reset delay; the FADE IN / FADE OUT switches

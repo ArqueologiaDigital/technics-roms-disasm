@@ -55,27 +55,10 @@ RingBuf_ReadByte_MidiRing:	.include "includes/generated/cc900/RingBuf_ReadByte_M
 ; MIDI_Dispatch jumps here, so ONE malformed or short event discards the ENTIRE ring content
 ; (up to 4096 bytes of queued MIDI), not just the bad message.  8 call sites, all in
 ; MIDI_Dispatch.
-RingBuf_SkipToEnd:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	cp hl, 0:i3
-	jr lt, RingBuf_SkipToEnd_Epilogue
-
-; Drain loop; exits when RINGBUF_READBYTE returns negative.
-RingBuf_SkipToEnd_Loop:
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	cp hl, 0:i3
-	jr ge, RingBuf_SkipToEnd_Loop
-
-; write index := read index, pop XIZ, ret.
-RingBuf_SkipToEnd_Epilogue:
-	ld wa, (xiz + 2)
-	ld (xiz), wa
-	pop xiz
-	ret
+RingBuf_SkipToEnd:	.include "includes/generated/cc900/RingBuf_SkipToEnd.s"	; C: cc900/ringbuf_and_midi_dispatch_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RingBuf_SkipToEnd_Loop, RingBuf_SkipToEnd + 12
+	.set	RingBuf_SkipToEnd_Epilogue, RingBuf_SkipToEnd + 21
 
 ; --- RingBuffer_Write4K: Write a byte to a 4KB circular buffer ---
 ; Entry: XWA = pointer to buffer control block
@@ -90,18 +73,7 @@ RingBuf_SkipToEnd_Epilogue:
 ; sequence against the fixed 0x2B0D ring instead.  Proposed rename because the existing name
 ; asserts "const data"; see [UNCERTAIN] if you would rather keep it.
 ; ★ Renamed 2026-09-25 from Audio_CmdHandler_ConstData: header: stores C at payload[write index & 0x0FFF] of a 4 KB ring (its own banner's name).
-RingBuf_Write4K:
-	ld	xde, xwa
-	ld	hl, (xde)
-	incw	1, (xde)
-	and	hl, 4095
-	ld	de, hl
-	extz	xde
-	inc	6, xde
-	add	xde, xwa
-	ld	(xde), c
-	incw	1, (xwa+4)
-	ret
+RingBuf_Write4K:	.include "includes/generated/cc900/RingBuf_Write4K.s"	; C: cc900/ringbuf_and_midi_dispatch_d_7a.c
 
 ; ===========================================================================
 ; Audio_CmdHandler_00_1F - Audio command handler for DSP/audio control
@@ -165,256 +137,27 @@ Audio_CmdHandler_00_1F:	.include "includes/generated/cc900/Audio_CmdHandler_00_1
 ; MIDI wire bytes; running status is never handled.
 ; ★ THE DRAIN LOOP IS UNBOUNDED.  There is no iteration cap and no "stop after N events" check;
 ; MIDI_Dispatch returns only when the count at 0x2B11 reaches zero.  See findings.
-MIDI_Dispatch:
-	push xiz
-	lda xiz, (MIDI_RingBuffer:16)
-	ld wa, (xiz + 4)
-	call MIDI_Backlog_Publish
-	jrl MIDI_Dispatch_NextByte
-
-; Status-byte switch (top nibble), tried from 0xF0 downwards.
-MIDI_Dispatch_ParseStatus:
-	ld wa, hl
-	and wa, 0xF0
-	cp wa, 0xF0
-	jrl z, MIDI_Status_System
-	cp wa, 0xE0
-	jrl z, MIDI_Status_PitchBend
-	cp wa, 0xD0
-	jrl z, MIDI_Status_ChanPressure
-	cp wa, 0xC0
-	jrl z, MIDI_Status_ProgChange
-	cp wa, 0xB0
-	jrl z, MIDI_Status_CtrlChange
-	cp wa, 0x90
-	jrl z, MIDI_Status_NoteOn
-	cp wa, 0x80
-	jrl nz, MIDI_Status_Unknown
-	cpw (xiz + 4), 0x5
-	jr c, MIDI_Status_Incomplete
-	bit 3, hl
-	jr nz, MIDI_Status_NoteOn_Extended
-	ld (10984:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10985:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10986:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10987:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10988:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10989:16), l
-	lda xwa, (10984:16)
-	call Voice_ParamFinalize
-	jrl MIDI_Dispatch_Exit
-
-; Note-off variant taken when bit 3 of the status byte is set: 6-byte record staged at 0x2AEE.
-MIDI_Status_NoteOn_Extended:
-	ld (10990:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10991:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10992:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10993:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10994:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10995:16), l
-	lda xwa, (10990:16)
-	call Voice_ParamFinalize
-	jrl MIDI_Dispatch_Exit
-
-; Fewer than 5 bytes left for a note-off: discard the whole ring via RINGBUF_SKIPTOEND.
-MIDI_Status_Incomplete:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jrl MIDI_Dispatch_NextByte
-
-; 0x90: stage 4 bytes at 0x2AF4; staging byte +0x01 >= 0xF0 selects the poly handler.
-MIDI_Status_NoteOn:
-	cpw (xiz + 4), 0x3
-	jr c, MIDI_Status_NoteOn_Skip
-	ld (10996:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10997:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10998:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (10999:16), l
-	ld a, (10997:16)
-	cp a, 0xF0
-	jr nc, MIDI_Status_NoteOn_Poly
-	lda xwa, (10996:16)
-	call Voice_NoteOn
-	jrl MIDI_Dispatch_Exit
-
-; Voice_Poly_NoteOn (0x0356C9) path.
-MIDI_Status_NoteOn_Poly:
-	lda xwa, (10996:16)
-	call Voice_Poly_NoteOn
-	jrl MIDI_Dispatch_Exit
-
-; Truncated note-on: discard the ring.
-MIDI_Status_NoteOn_Skip:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jrl MIDI_Dispatch_NextByte
-
-; 0xB0: stage 4 bytes at 0x2AF8, call Voice_CtrlChange.
-MIDI_Status_CtrlChange:
-	cpw (xiz + 4), 0x3
-	jr c, MIDI_Status_CtrlChange_Skip
-	ld (11000:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11001:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11002:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11003:16), l
-	lda xwa, (11000:16)
-	call Voice_CtrlChange
-	jrl MIDI_Dispatch_Exit
-
-; Truncated control change: discard the ring.
-MIDI_Status_CtrlChange_Skip:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jrl MIDI_Dispatch_NextByte
-
-; 0xC0: stage 5 bytes at 0x2AFC, call Voice_ProgChange.
-MIDI_Status_ProgChange:
-	cpw (xiz + 4), 0x4
-	jr c, MIDI_Status_ProgChange_Skip
-	ld (11004:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11005:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11006:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11007:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11008:16), l
-	lda xwa, (11004:16)
-	call Voice_ProgChange
-	jrl MIDI_Dispatch_Exit
-
-; Truncated program change: discard the ring.
-MIDI_Status_ProgChange_Skip:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jrl MIDI_Dispatch_NextByte
-
-; 0xD0: stage 4 bytes at 0x2B01, call Voice_ChanPressure.
-MIDI_Status_ChanPressure:
-	cpw (xiz + 4), 0x3
-	jr c, MIDI_Status_ChanPressure_Skip
-	ld (11009:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11010:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11011:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11012:16), l
-	lda xwa, (11009:16)
-	call Voice_ChanPressure
-	jrl MIDI_Dispatch_Exit
-
-; Truncated channel pressure: discard the ring.
-MIDI_Status_ChanPressure_Skip:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jr MIDI_Dispatch_NextByte
-
-; 0xE0: stage 4 bytes at 0x2B05, call Voice_PitchBend.
-MIDI_Status_PitchBend:
-	cpw (xiz + 4), 0x3
-	jr c, MIDI_Status_PitchBend_Skip
-	ld (11013:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11014:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11015:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11016:16), l
-	lda xwa, (11013:16)
-	call Voice_PitchBend
-	jr MIDI_Dispatch_Exit
-
-; Truncated pitch bend: discard the ring.
-MIDI_Status_PitchBend_Skip:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jr MIDI_Dispatch_NextByte
-
-; 0xF0: stage 4 bytes at 0x2B09, call Voice_SystemMsg.
-MIDI_Status_System:
-	cpw (xiz + 4), 0x3
-	jr c, MIDI_Status_System_Skip
-	ld (11017:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11018:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11019:16), l
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld (11020:16), l
-	lda xwa, (11017:16)
-	call Voice_SystemMsg
-	jr MIDI_Dispatch_Exit
-
-; Truncated system message: discard the ring.
-MIDI_Status_System_Skip:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-	jr MIDI_Dispatch_NextByte
-
-; Status byte with an unrecognised top nibble (< 0x80): discard the ring.
-MIDI_Status_Unknown:
-	ld xwa, xiz
-	calr RingBuf_SkipToEnd
-
-; ★ The unbounded drain back-edge: read one byte, and if it is non-negative go round again.
-MIDI_Dispatch_NextByte:
-	ld xwa, xiz
-	calr RingBuf_ReadByte
-	ld wa, hl
-	cp wa, 0:i3
-	jrl ge, MIDI_Dispatch_ParseStatus
-
-; pop XIZ, ret.
-MIDI_Dispatch_Exit:
-	pop xiz
-	ret
+MIDI_Dispatch:	.include "includes/generated/cc900/MIDI_Dispatch.s"	; C: cc900/ringbuf_and_midi_dispatch_d_8a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MIDI_Dispatch_ParseStatus, MIDI_Dispatch + 15
+	.set	MIDI_Status_NoteOn_Extended, MIDI_Dispatch + 142
+	.set	MIDI_Status_Incomplete, MIDI_Dispatch + 202
+	.set	MIDI_Status_NoteOn, MIDI_Dispatch + 210
+	.set	MIDI_Status_NoteOn_Poly, MIDI_Dispatch + 268
+	.set	MIDI_Status_NoteOn_Skip, MIDI_Dispatch + 279
+	.set	MIDI_Status_CtrlChange, MIDI_Dispatch + 287
+	.set	MIDI_Status_CtrlChange_Skip, MIDI_Dispatch + 336
+	.set	MIDI_Status_ProgChange, MIDI_Dispatch + 344
+	.set	MIDI_Status_ProgChange_Skip, MIDI_Dispatch + 402
+	.set	MIDI_Status_ChanPressure, MIDI_Dispatch + 410
+	.set	MIDI_Status_ChanPressure_Skip, MIDI_Dispatch + 459
+	.set	MIDI_Status_PitchBend, MIDI_Dispatch + 466
+	.set	MIDI_Status_PitchBend_Skip, MIDI_Dispatch + 514
+	.set	MIDI_Status_System, MIDI_Dispatch + 521
+	.set	MIDI_Status_System_Skip, MIDI_Dispatch + 569
+	.set	MIDI_Status_Unknown, MIDI_Dispatch + 576
+	.set	MIDI_Dispatch_NextByte, MIDI_Dispatch + 581
+	.set	MIDI_Dispatch_Exit, MIDI_Dispatch + 593
 
 ; Computes the checksum word that trails the DSP1 image before it is DMAed out.
 ; No arguments.  Sums 0x24B8 words (0x4970 / 2) starting at (0x04531C) + 0x10 and returns
@@ -640,22 +383,7 @@ DSP_FlushAllSlots_Loop3Next:
 ; So this is "flush the DSP using the program currently assigned to this part".
 ; It has no caller in the authoritative source; either dead or reached from the boot ROM.
 ; ★ Renamed 2026-09-25 from DSP_FlushAllSlots_Data: header: flush the DSP with the program-change bytes of part A.
-DSP_FlushAllSlots_ForPart:
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Payload_Bss_Start+0x250b:24)
-	ld	c, (xde+bc)
-	ld	e, c
-	extz	de
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x250c:24)
-	ld	a, (xbc+wa)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	jrl	DSP_FlushAllSlots
+DSP_FlushAllSlots_ForPart:	.include "includes/generated/cc900/DSP_FlushAllSlots_ForPart.s"	; C: cc900/ringbuf_and_midi_dispatch_d_6a.c
 
 ; Resolves one DSP1 microprogram/parameter stream out of the blob whose base is the constant
 ; 0x00050000 (also installed at 0x045310/0x045314 by DSP_System_Init).
@@ -1184,44 +912,7 @@ ToneGen_SetupPolyVoice_Path:
 ; indexes the word table at 0x012195 which is ORed into staging 0x3B1C; the volume is the
 ; fixed full-scale 0xFFF rather than a velocity curve; and staging 0x3B1E takes the single
 ; word at 0x01217D instead of an octave-indexed one. Then the same two ToneGen writers.
-ToneGen_SetupPercussionVoice:
-	dec 2, xsp
-	ld (xsp), a
-	ld xiy, ToneGen_Voice_Param_Template
-	ld xix, 0x3B1C
-	ldw bc, 0x22
-	ldirw
-	ld a, e
-	extz wa
-	div a, 0xC
-	ld c, w
-	sub e, c
-	res 7, e
-	ld a, e
-	extz wa
-	sll wa, 8
-	or (15146:16), wa
-	ld a, c
-	extz wa
-	add wa, wa
-	lda xbc, (ToneGen_Octave_Pitch_Table:24)
-	ld	wa, (xbc+wa)
-	or (15132:16), wa
-	calr DSP_GetEffectRouting
-	or (15138:16), hl
-	orw (15136:16), 4095
-	ld wa, (ToneGen_Semitone_Pitch_Table:24)
-	ld (15134:16), wa
-	ld a, (xsp)
-	extz wa
-	lda xbc, (15132:16)
-	call ToneGen_WriteVoiceParams
-	ld a, (xsp)
-	extz wa
-	ld bc, (15132:16)
-	call ToneGen_WriteSingleReg
-	inc 2, xsp
-	retd 0x2
+ToneGen_SetupPercussionVoice:	.include "includes/generated/cc900/ToneGen_SetupPercussionVoice.s"	; C: cc900/ringbuf_and_midi_dispatch_d_9a.c
 
 ; ALREADY NAMED in the reference file -- doc header only, no rename.
 ; Handler for internal pseudo-MIDI packets whose status byte is >= 0xF0. Reached from

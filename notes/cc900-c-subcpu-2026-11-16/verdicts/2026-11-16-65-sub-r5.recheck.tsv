@@ -1,0 +1,75 @@
+function	bytes	matches	best_diff
+AudioMod_Apply_Porta_Curve	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_4137b'
+AudioMod_Scale_To_LevelPairShift	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41388'
+AudioMod_Scale_To_Part_1B	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41383'
+AudioMod_Scale_To_Part_1C	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41384'
+AudioMod_Scale_To_Part_1F	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41387'
+Audio_Cmd_DSPGlobal_Param_Store	55	-	+15 sub_C_5a@Xr
+Audio_Cmd_PatchByte_Write_And_Echo	69	-	+18 sub_C_5a@Xr
+CheckStatusBits_40	32	sub_C_5a@Xr	
+CheckStatusBits_80	32	sub_C_5a@Xr	
+DSP1_ResolveStreamPtr	33	-	+14 sub_D_5b@Xr
+DSP_AlgoDescriptor_Emit	397	-	+13 sub_E_5b@Xr
+DSP_BytecodeInterpreter_Init	0	-	to_llvm cannot translate a line
+DSP_Config_ClampLimits	75	-	+35 sub_D_5b@Xr
+DSP_EFFParam_DiffAllAndFlag	667	-	+6 sub_D_5c@Xr
+DSP_FreqCurve_FP	146	sub_E_5a@Xr sub_E_5b@Xr	
+DSP_FreqInterp_2Point	88	sub_E_5a@Xr	
+DSP_OscAlgoSelect	338	-	+13 sub_E_5b@Xr
+DSP_PanCurve_PiecewiseLin	177	-	+7 sub_E_5b@Xr
+DSP_PanScale_Simple	23	sub_E_5a@Xr sub_E_5b@Xr	
+DSP_ParamInterp_2Point	88	sub_E_5a@Xr	
+DSP_ParamInterp_2Point_B	88	sub_E_5a@Xr	
+DSP_ParamInterp_3Point_WithOffset	119	-	+73 sub_E_5a@Xr
+DSP_ParamInterp_Div0xB4	73	-	+43 sub_E_5a@Xr
+DSP_ParamInterp_Div0xC6	114	-	+16 sub_E_5b@Xr
+DSP_ParamInterp_FPScale	78	sub_E_5a@Xr	
+DSP_ParamInterp_MultiStep	361	-	+25 sub_E_5c@Xr
+DSP_PitchParam_Scale	77	-	+62 sub_E_5a@Xr
+DSP_RingBuf_Read	41	-	+25 sub_D_5c@Xr
+DSP_SlotParam_DiffAndFlag	91	-	+36 sub_D_5c@Xr
+DSP_TableWalk_SearchWithState	71	-	+1 sub_E_5b@Xr
+DSP_TuneOffset	303	-	+8 sub_E_5b@Xr
+DSP_WriteParameter	200	-	+6 sub_E_5b@Xr
+Debug_Print_Word	31	-	+3 sub_D_5c@Xr
+EFF_DspChannel_InitFlags	1871	-	+51 sub_D_5c@Xr
+EFF_GetSlotBuffer	45	-	+21 sub_D_5c@Xr
+EFF_ParamEdit_WithDebug	110	sub_D_5c@Xr	
+EFF_ParamIterator_Process	338	-	+28 sub_D_5b@Xr
+EFF_SlotActive_UpdateFlags	377	-	+62 sub_D_5b@Xr
+EFF_VolumeLoop	302	-	+11 sub_D_5b@Xr
+EFF_VolumeUpdate_WithDebug	259	-	+17 sub_D_5b@Xr
+EGEnv_Compute_A_Simple	65	sub_A_5a@Xr sub_A_5b@Xr sub_A_5c@Xr	
+EGEnv_Compute_A_Simple_Dup	65	sub_A_5a@Xr sub_A_5b@Xr sub_A_5c@Xr	
+EGEnv_Compute_B_Simple	68	-	+11 sub_A_5b@Xr
+InterCPU_SendEditBufferToMain	58	-	+0 sub_C_5a@Xr
+Pan_ScaleWithVelocity	58	sub_A_5c@Xr	
+PitchBend_Scale	64	-	+25 sub_A_5c@Xr
+RingBuf_ReadByte	41	-	+25 sub_D_5c@Xr
+RingBuf_ReadByte_MidiRing	6	sub_5t@Xr	
+TVF_Calc_Cutoff_NoKeyFollow	76	-	+2 sub_A_5c@Xr
+TVF_Lookup_Depth_Amount	168	-	+5 sub_A_5c@Xr
+ToneGen_SilenceChannel	71	-	+0 sub_A_5c@Xr
+ToneGen_WriteExprReg	31	sub_C_5a@Xr	
+ToneGen_WriteSingleReg	27	sub_C_5a@Xr	
+ToneGen_WriteVoice_Long	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_18'
+VoiceParam_CustomTone_Select	154	-	+26 sub_C_5a@Xr
+VoiceState_SwapSlot_DE_BC	173	-	+6 sub_A_5c@Xr
+Voice_AllVoices_PortamentoReset	126	-	+0 sub_A_5c@Xr
+Voice_Clear_HoldBit	76	-	+1 sub_A_5c@Xr
+Voice_Colour_ClampUpper	58	sub_A_5c@Xr	
+Voice_Freq_ComputeLeft_Raw	55	-	+11 sub_A_5b@Xr
+Voice_Freq_ComputeRight_Raw	106	-	+17 sub_A_5b@Xr
+Voice_Freq_WriteRight	127	-	+20 sub_A_5b@Xr
+Voice_InitVoiceState	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_451ce'
+Voice_LoadFilterTable_Ch	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_4520a'
+Voice_LoadPitchTable_Ch	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_45208'
+Voice_LoadToneTable_Ch	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_45206'
+Voice_Part_Mode_Is_C0	32	sub_C_5a@Xr	
+Voice_Poly_NoteOn	0	-	to_llvm cannot translate a line
+Voice_PortamentoTarget_ComputePitch	117	-	+99 sub_A_5c@Xr
+Voice_PortamentoTarget_SetSlot	41	-	+31 sub_A_5c@Xr
+Voice_PortamentoTargets_SetAll	182	-	+13 sub_A_5b@Xr
+Voice_Slot_ComputePitch	180	-	+40 sub_A_5c@Xr
+Voice_UpdateFlagsFromSlot	107	sub_A_5a@Xr	
+WaveSel_StageB_Build_Reg040_Footage	230	-	+73 sub_A_5c@Xr

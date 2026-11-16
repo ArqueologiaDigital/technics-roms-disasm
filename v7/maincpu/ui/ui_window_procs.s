@@ -1623,234 +1623,33 @@ UserBitmapCheck:	.include "includes/generated/cc900/UserBitmapCheck.s"	; C: cc90
 	.set	UserBitmapCheck_ReturnTablePtr, UserBitmapCheck + 27
 	.set	UserBitmapCheck_ReturnSize, UserBitmapCheck + 33
 
-VwUserBitmapByNameProc:
-	lda xsp, (xsp - 28)
-	push xiz
-	ld (xsp + 24), xde
-	ld xiz, xbc
-	ld (xsp + 28), xwa
-	cp xiz, EVT_HIDE
-	jrl z, VwUserBitmapByName_HandleClose
-	cp xiz, EVT_DRAW
-	jr z, VwUserBitmapByName_HandlePaint
-	cp xiz, EVT_SHOW
-	jr z, VwUserBitmapByName_HandleCreate
-	ld xwa, (xsp + 28)
-	ld xbc, xiz
-	ld xde, (xsp + 24)
-	call ViewableProc
-	jr VwUserBitmapByName_Epilogue
+VwUserBitmapByNameProc:	.include "includes/generated/cc900/VwUserBitmapByNameProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VwUserBitmapByName_HandleCreate, VwUserBitmapByNameProc + 51
+	.set	VwUserBitmapByName_HandlePaint, VwUserBitmapByNameProc + 61
+	.set	VwUserBitmapByName_DrawDefault, VwUserBitmapByNameProc + 145
+	.set	VwUserBitmapByName_HandleClose, VwUserBitmapByNameProc + 153
+	.set	VwUserBitmapByName_CallViewable, VwUserBitmapByNameProc + 167
+	.set	VwUserBitmapByName_ReturnZero, VwUserBitmapByNameProc + 171
+	.set	VwUserBitmapByName_Epilogue, VwUserBitmapByNameProc + 173
 
-VwUserBitmapByName_HandleCreate:
-	ld xwa, (xsp + 28)
-	ld xbc, xiz
-	ld xde, (xsp + 24)
-	jr VwUserBitmapByName_CallViewable
+IconProc:	.include "includes/generated/cc900/IconProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	IconProc_OnDraw, IconProc + 22
+	.set	Icon_Epilogue, IconProc + 112
 
-VwUserBitmapByName_HandlePaint:
-	ld	xwa, (xsp+28)
-	ld	xbc, xiz
-	ld	xde, (xsp+24)
-	call	ViewableProc
-	ld	xwa, (xsp+28)
-	call	GetViewInstance
-	lda	xbc, (xsp+20)
-	ld	wa, (xhl+14)
-	ld	(xbc), wa
-	ld	wa, (xhl+16)
-	ld	(xbc+2), wa
-	ld	xwa, (xhl+22)
-	push	xwa
-	lda	xwa, (xsp+8)
-	push	xwa
-	call	Strcpy
-	pushw	VwUserBitmapByName_Str_BmpExt@hi16
-	pushw	VwUserBitmapByName_Str_BmpExt@lo16
-	lda	xwa, (xsp+16)
-	push	xwa
-	call	Strcat
-	lda	xsp, (xsp+16)
-	lda	xwa, (xsp+4)
-	call	FDemo_LinkedListLookupField
-	ld	xbc, xhl
-	lda	xwa, (xsp+20)
-	or	xbc, xbc
-	jr	z, VwUserBitmapByName_DrawDefault
-	call	DrawBitmapFile
-	jr	VwUserBitmapByName_ReturnZero
-VwUserBitmapByName_DrawDefault:
-	ld xbc, 0:i3
-	call DrawBitmap
-	jr VwUserBitmapByName_ReturnZero
+LineProc:	.include "includes/generated/cc900/LineProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LineProc_OnDraw, LineProc + 24
+	.set	Line_DrawHorizontal, LineProc + 96
+	.set	Line_DrawAndReturn, LineProc + 116
+	.set	Line_Epilogue, LineProc + 125
 
-VwUserBitmapByName_HandleClose:
-	ld wa, 2:i3
-	call ChangePalette
-	ld xwa, (xsp + 28)
-	ld xbc, xiz
-	ld xde, (xsp + 24)
-
-VwUserBitmapByName_CallViewable:
-	call ViewableProc
-
-VwUserBitmapByName_ReturnZero:
-	ld xhl, 0:i3
-
-VwUserBitmapByName_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 28)
-	ret
-
-IconProc:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_DRAW
-	jr z, IconProc_OnDraw
-	ld xwa, xiz
-	call ViewableProc
-	jr Icon_Epilogue
-
-IconProc_OnDraw:
-	ld xwa, xiz
-	call ViewableProc
-	ld xwa, xiz
-	call GetViewInstance
-	ld xiz, xhl
-	lda xhl, (xsp + 4)
-	ld wa, (xiz + 14)
-	inc 2, wa
-	ld (xhl), wa
-	lda xde, (xhl + 2)
-	ld wa, (xiz + 16)
-	inc 2, wa
-	ld (xde), wa
-	lda xwa, (xsp + 8)
-	ld bc, (xhl)
-	dec 2, bc
-	ld (xwa), bc
-	ld bc, (xhl)
-	add bc, 0x19
-	ld (xwa + 4), bc
-	ld bc, (xde)
-	dec 2, bc
-	ld (xwa + 2), bc
-	ld bc, (xde)
-	add bc, 0x19
-	ld (xwa + 6), bc
-	ldw bc, 0xc4
-	ldw de, 0xf0
-	call DrawDesignBox
-	lda xwa, (xsp + 4)
-	ld xbc, (xiz + 22)
-	call DrawIcons
-	ld xhl, 0:i3
-
-Icon_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
-
-LineProc:
-	lda xsp, (xsp - 20)
-	push xiz
-	ld (xsp + 20), xwa
-	cp xbc, EVT_DRAW
-	jr z, LineProc_OnDraw
-	ld xwa, (xsp + 20)
-	call ViewableProc
-	jr Line_Epilogue
-
-LineProc_OnDraw:
-	ld xwa, (xsp + 20)
-	call ViewableProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	lda xwa, (xhl + 16)
-	ld (xsp + 8), xwa
-	lda xwa, (xhl + 18)
-	ld (xsp + 4), xwa
-	lda xiz, (xhl + 20)
-	ld de, (xhl + 14)
-	lda xwa, (xsp + 16)
-	lda xbc, (xsp + 12)
-	lda xix, (xbc + 2)
-	lda xiy, (xwa + 2)
-	cp (xhl + 24), 0x1
-	jr nz, Line_DrawHorizontal
-	ld (xwa), de
-	ld xde, (xsp + 8)
-	ld de, (xde)
-	ld (xiy), de
-	ld xde, (xsp + 4)
-	ld de, (xde)
-	ld (xbc), de
-	ld de, (xiz)
-	ld (xix), de
-	jr Line_DrawAndReturn
-
-Line_DrawHorizontal:
-	ld (xwa), de
-	ld de, (xiz)
-	ld (xiy), de
-	ld xde, (xsp + 4)
-	ld de, (xde)
-	ld (xbc), de
-	ld xde, (xsp + 8)
-	ld de, (xde)
-	ld (xix), de
-
-Line_DrawAndReturn:
-	ld de, (xhl + 22)
-	call DrawLine
-	ld xhl, 0:i3
-
-Line_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 20)
-	ret
-
-FrameProc:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), xbc
-	ld xiz, xwa
-	ld xwa, (xsp + 8)
-	cp xwa, EVT_DRAW
-	jr z, FrameProc_OnDraw
-	ld xwa, xiz
-	ld xbc, (xsp + 8)
-	ld xde, (xsp + 4)
-	call ViewableProc
-	jr Frame_Epilogue
-
-FrameProc_OnDraw:
-	ld xwa, xiz
-	call GetVisible
-	cp hl, 0:i3
-	jr nz, Frame_DrawVisible
-	ld xhl, 1:i3
-	jr Frame_Epilogue
-
-Frame_DrawVisible:
-	ld xwa, xiz
-	ld xbc, (xsp + 8)
-	ld xde, (xsp + 4)
-	call ViewableProc
-	ld xwa, xiz
-	call GetViewInstance
-	lda xwa, (xhl + 14)
-	pushw	(xhl+26)
-	ld bc, (xhl + 22)
-	ld de, (xhl + 24)
-	calr DrawDesignFrame
-	ld xhl, 0:i3
-
-Frame_Epilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+FrameProc:	.include "includes/generated/cc900/FrameProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FrameProc_OnDraw, FrameProc + 36
+	.set	Frame_DrawVisible, FrameProc + 50
+	.set	Frame_Epilogue, FrameProc + 85
 
 GetClientFrame:
 	dec 8, xsp
@@ -1949,72 +1748,15 @@ DesignFrame_Epilogue:
 	lda xsp, (xsp + 10)
 	retd 0x2
 
-EditSwProc:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 8), xde
-	ld (xsp + 12), xbc
-	ld xiz, xwa
-	ld xwa, (xsp + 12)
-	cp xwa, EVT_SW_IN
-	jr z, EditSw_HandleOK
-	ld xwa, xiz
-	ld xbc, (xsp + 12)
-	ld xde, (xsp + 8)
-	jr EditSw_CallLabelProc
-
-EditSw_HandleOK:
-	ld xwa, xiz
-	call GetViewInstance
-	ld (xsp + 4), xhl
-	ld xwa, 0x2600024
-	ld xbc, EVT_MAKE_EDIT_SW_ID
-	ld xde, (xsp + 8)
-	call SendEvent
-	ld xbc, (xsp + 4)
-	ld wa, (xbc + 32)
-	extz xwa
-	cp xwa, xhl
-	jr nz, EditSw_ForwardToLabel
-	ld xwa, (xbc + 34)
-	ld xbc, (xsp + 12)
-	ld xde, (xsp + 8)
-	call ApFuncCall
-	ld xwa, (xsp + 4)
-	ld de, (xwa + 38)
-	cp de, 0xffff
-	jr z, EditSw_ReturnZero
-	exts xde
-	ld xwa, (xsp + 8)
-	bit 7, wa
-	jr z, EditSw_SendDialDown
-	ld xwa, 0xffffffff
-	ld xbc, EVT_INDEXSW_DOWN
-	jr EditSw_SendDialEvent
-
-EditSw_SendDialDown:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_INDEXSW_UP
-
-EditSw_SendDialEvent:
-	call SendEvent
-
-EditSw_ReturnZero:
-	ld xhl, 0:i3
-	jr EditSw_Epilogue
-
-EditSw_ForwardToLabel:
-	ld xwa, xiz
-	ld xbc, (xsp + 12)
-	ld xde, (xsp + 8)
-
-EditSw_CallLabelProc:
-	calr LabelProc
-
-EditSw_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+EditSwProc:	.include "includes/generated/cc900/EditSwProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EditSw_HandleOK, EditSwProc + 33
+	.set	EditSw_SendDialDown, EditSwProc + 118
+	.set	EditSw_SendDialEvent, EditSwProc + 128
+	.set	EditSw_ReturnZero, EditSwProc + 132
+	.set	EditSw_ForwardToLabel, EditSwProc + 136
+	.set	EditSw_CallLabelProc, EditSwProc + 144
+	.set	EditSw_Epilogue, EditSwProc + 147
 EditSw_ByteData:
 	lda	xsp, (xsp-28)
 	pushw	iz

@@ -556,22 +556,12 @@ Voice_AllVoices_PortamentoReset_Exit:
 ; Voice_Query_AllChannels, not Voice_PerVoice_PortamentoPitchUpdate; and its table slot is
 ; Voice_SystemMsg_CaseOffsets index 2 (sub-command 0x82).  Renamed from
 ; Voice_SetPitchBendRangeAndApply to Voice_SetMasterTuneAndApply to say what it calls.
-Voice_SetMasterTuneAndApply:
-	exts wa
-	calr Voice_SetMasterTune
-	call Voice_Query_AllChannels
-	ld xwa, xhl
-	jrl Pitch_Refresh_Sounding_Voices
+Voice_SetMasterTuneAndApply:	.include "includes/generated/cc900/Voice_SetMasterTuneAndApply.s"	; C: cc900/voice_ctrlchange_a_7a.c
 
 ; A = enable flag: Voice_SetKeyShiftEnable(A), then Pitch_Refresh_Sounding_Voices over
 ; Voice_Query_AllChannels -- the "...AndApply" shape of the entry above.  It had no label; no
 ; caller in v1.42 (address as 3-byte LE value, calr displacement searched).
-Voice_SetKeyShiftEnableAndApply:
-	extz wa
-	calr Voice_SetKeyShiftEnable
-	call Voice_Query_AllChannels
-	ld xwa, xhl
-	jrl Pitch_Refresh_Sounding_Voices
+Voice_SetKeyShiftEnableAndApply:	.include "includes/generated/cc900/Voice_SetKeyShiftEnableAndApply.s"	; C: cc900/voice_ctrlchange_a_7a.c
 
 ; WA = part index.  Recomputes the part's portamento pitch state; two internal branches
 ; (0x02A771, 0x02A77B) select between the target-reached and still-gliding cases.
@@ -1132,93 +1122,14 @@ Voice_Selector_Unpack3Groups:	.include "includes/generated/cc900/Voice_Selector_
 ; index goes to *XDE and the corresponding array value to *(XSP+26).  Returns with `retd 4`.
 ; ★ Both candidates start at 0xFF and there is NO fallback: if all nine entries are zero,
 ; 0xFF is written out as the selected index.  See findings.
-Voice_Selector_FindBestSlot:
-	lda xsp, (xsp - 18)
-	push xiz
-	ld (xsp + 14), xde
-	ld (xsp + 18), xbc
-	ld xiz, xwa
-	lda xwa, (xsp + 4)
-	ld bc, (xiz)
-	ld de, 0:i3
-	calr Voice_Selector_Unpack3Groups
-	lda xwa, (xsp + 4)
-	ld bc, (xiz + 2)
-	ld de, 1:i3
-	calr Voice_Selector_Unpack3Groups
-	lda xwa, (xsp + 4)
-	ld bc, (xiz + 4)
-	ld de, 2:i3
-	calr Voice_Selector_Unpack3Groups
-	ld e, 0xFF:opc
-	ld l, 0xFF:opc
-	ld xwa, (xsp + 18)
-	ld (xwa), 0x0
-	ld d, 0x0:opc
-	cp d, 0x9
-	jr nc, Voice_Selector_FindBestSlot_InnerStep
-
-; inner loop body of Voice_Selector_FindBestSlot.
-Voice_Selector_FindBestSlot_InnerLoop:
-	cp l, 0xFF
-	jr nz, Voice_Selector_FindBestSlot_SlotCheck
-	ld a, d
-	extz wa
-	lda xbc, (xsp + 4)
-	cp	(xbc+wa), 0x00
-	jr z, Voice_Selector_FindBestSlot_SlotCheck
-	ld l, d
-
-; SlotCheck of Voice_Selector_FindBestSlot.
-Voice_Selector_FindBestSlot_SlotCheck:
-	ld a, d
-	extz wa
-	lda xbc, (xsp + 4)
-	cp	(xbc+wa), 0x04
-	jr c, Voice_Selector_FindBestSlot_Update
-	ld xwa, (xsp + 18)
-	incm8 1, (xwa)
-	cp e, 0xFF
-	jr nz, Voice_Selector_FindBestSlot_Update
-	ld e, d
-
-; Update of Voice_Selector_FindBestSlot.
-Voice_Selector_FindBestSlot_Update:
-	inc 1, d
-	cp d, 0x9
-	jr c, Voice_Selector_FindBestSlot_InnerLoop
-
-; Post-loop: pick E if it is not 0xFF, else fall through to the L candidate.
-Voice_Selector_FindBestSlot_InnerStep:
-	cp e, 0xFF
-	jr z, Voice_Selector_FindBestSlot_OuterStep
-	ld xwa, (xsp + 14)
-	ld (xwa), e
-	ld a, e
-	extz wa
-	lda xbc, (xsp + 4)
-	ld xde, (xsp + 26)
-	ld	a, (xbc+wa)
-	ld (xde), a
-	jr Voice_Selector_FindBestSlot_Exit
-
-; The "no entry reached 4" path -- writes the L candidate, which may still be 0xFF.
-Voice_Selector_FindBestSlot_OuterStep:
-	ld xwa, (xsp + 14)
-	ld (xwa), l
-	ld a, l
-	extz wa
-	lda xbc, (xsp + 4)
-	ld xde, (xsp + 26)
-	ld	a, (xbc+wa)
-	ld (xde), a
-
-; Last symbol inside this region.  Its only caller, Voice_Selector_ComputeMixWeights, begins
-; one byte past the region end at 0x02AD03.
-Voice_Selector_FindBestSlot_Exit:
-	pop xiz
-	lda xsp, (xsp + 18)
-	retd 0x4
+Voice_Selector_FindBestSlot:	.include "includes/generated/cc900/Voice_Selector_FindBestSlot.s"	; C: cc900/voice_ctrlchange_a_9b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Selector_FindBestSlot_InnerLoop, Voice_Selector_FindBestSlot + 61
+	.set	Voice_Selector_FindBestSlot_SlotCheck, Voice_Selector_FindBestSlot + 83
+	.set	Voice_Selector_FindBestSlot_Update, Voice_Selector_FindBestSlot + 110
+	.set	Voice_Selector_FindBestSlot_InnerStep, Voice_Selector_FindBestSlot + 117
+	.set	Voice_Selector_FindBestSlot_OuterStep, Voice_Selector_FindBestSlot + 146
+	.set	Voice_Selector_FindBestSlot_Exit, Voice_Selector_FindBestSlot + 168
 
 ; Recomputes the three mix-weight / pitch-offset words of one part from that part's four
 ; articulation words.
@@ -1329,37 +1240,7 @@ Voice_Selector_ComputeMixWeights:
 ; articulation words is non-zero, then Voice_Selector_ComputeMixWeights, then zeroes the
 ; four articulation depth bytes part+0x10A..+0x10D (0x041472..0x041475).
 ; Called from VoiceSlot_AltInit (0x02F7C4 region). Touches no hardware.
-Voice_InitFromSlot:
-	dec 2, xsp
-	ld (xsp), a
-	ld a, (xsp)
-	extz wa
-	calr Voice_UpdateFlagsFromSlot
-	ld a, (xsp)
-	extz wa
-	calr Voice_Selector_ComputeMixWeights
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25fc:24)
-	ld	(xbc+wa), 0x00
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25fd:24)
-	ld	(xbc+wa), 0x00
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25fe:24)
-	ld	(xbc+wa), 0x00
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25ff:24)
-	ld	(xbc+wa), 0x00
-	inc 2, xsp
-	ret
+Voice_InitFromSlot:	.include "includes/generated/cc900/Voice_InitFromSlot.s"	; C: cc900/voice_ctrlchange_a_8a.c
 
 ; NOT a data table -- it is the first of seven articulation-parameter setter routines that
 ; run from 0x02AE22 to 0x02AFF6 (see [UNCERTAIN] on the name).
@@ -1371,158 +1252,32 @@ Voice_InitFromSlot:
 ; record byte +0x01 (part) and C from byte +0x04 (value) -- i.e. it is the handler for one
 ; parameter number of the external/SysEx parameter-change dispatcher.
 ; ★ Renamed 2026-09-25 from VoiceSlot_DataTable_02AE22: header: replaces the low byte of articulation word 0, part+0x102 = (.. & 0xFF00) | C.
-Voice_SetArticWord0_LowByte:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	lda	xde, (xde+wa)
-	lda	xde, (xde+258)
-	andmi16	(xde), 0xff00
-	ld	a, c
-	extz	wa
-	or	(xde), wa
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_UpdateFlagsFromSlot
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_Selector_ComputeMixWeights
-	inc	2, xsp
-	ret
+Voice_SetArticWord0_LowByte:	.include "includes/generated/cc900/Voice_SetArticWord0_LowByte.s"	; C: cc900/voice_ctrlchange_a_8a.c
 ; Second of the seven articulation setters. IN: A = part index, C = value byte.
 ; part+0x106 = (part+0x106 & 0xFFF0) | (C & 0x0F)   (articulation word 2, bits 0..3)
 ; part+0x104 = (part+0x104 & 0xFFF0) | (C >> 4)     (articulation word 1, bits 0..3)
 ; Then Voice_UpdateFlagsFromSlot + Voice_Selector_ComputeMixWeights.
 ; Called from 0x02EE06. No symbol exists for this address in either the LLVM build or the
 ; reference file -- this is a new name.
-Voice_Artic_SetWord2Word1_Nibble0:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	lda	xde, (xde+wa)
-	lda	xde, (xde+258)
-	andmi16	(xde+4), 0xfff0
-	ld	a, c
-	and	a, 15
-	extz	wa
-	or	(xde+4), wa
-	andmi16	(xde+2), 0xfff0
-	srl	c, 4
-	ld	a, c
-	extz	wa
-	or	(xde+2), wa
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_UpdateFlagsFromSlot
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_Selector_ComputeMixWeights
-	inc	2, xsp
-	ret
+Voice_Artic_SetWord2Word1_Nibble0:	.include "includes/generated/cc900/Voice_Artic_SetWord2Word1_Nibble0.s"	; C: cc900/voice_ctrlchange_a_8a.c
 ; Third setter. IN: A = part index, C = value byte.
 ; part+0x106 = (part+0x106 & 0xFF0F) | ((C & 0x0F) << 4)
 ; part+0x104 = (part+0x104 & 0xFF0F) | (C & 0xF0)
 ; Then Voice_UpdateFlagsFromSlot + Voice_Selector_ComputeMixWeights. Called from 0x02EE25.
 ; New name -- no symbol at this address in either source.
-Voice_Artic_SetWord2Word1_Nibble1:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	lda	xde, (xde+wa)
-	lda	xde, (xde+258)
-	andmi16	(xde+4), 0xff0f
-	ld	a, c
-	sll	a, 4
-	extz	wa
-	or	(xde+4), wa
-	andmi16	(xde+2), 0xff0f
-	and	c, 240
-	ld	a, c
-	extz	wa
-	or	(xde+2), wa
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_UpdateFlagsFromSlot
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_Selector_ComputeMixWeights
-	inc	2, xsp
-	ret
+Voice_Artic_SetWord2Word1_Nibble1:	.include "includes/generated/cc900/Voice_Artic_SetWord2Word1_Nibble1.s"	; C: cc900/voice_ctrlchange_a_8a.c
 ; Fourth setter. IN: A = part index, C = value byte.
 ; part+0x102 = (part+0x102 & 0xF0FF) | ((C & 0x0F) << 8)
 ; part+0x106 = (part+0x106 & 0xF0FF) | ((C & 0xF0) << 4)
 ; Then Voice_UpdateFlagsFromSlot + Voice_Selector_ComputeMixWeights. Called from 0x02EE44.
 ; New name -- no symbol at this address in either source.
-Voice_Artic_SetWord0Word2_Nibble2:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	lda	xde, (xde+wa)
-	lda	xde, (xde+258)
-	andmi16	(xde), 0xf0ff
-	ld	a, c
-	and	a, 15
-	extz	wa
-	sll	wa, 8
-	or	(xde), wa
-	andmi16	(xde+4), 0xf0ff
-	and	c, 240
-	ld	a, c
-	extz	wa
-	sll	wa, 4
-	or	(xde+4), wa
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_UpdateFlagsFromSlot
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_Selector_ComputeMixWeights
-	inc	2, xsp
-	ret
+Voice_Artic_SetWord0Word2_Nibble2:	.include "includes/generated/cc900/Voice_Artic_SetWord0Word2_Nibble2.s"	; C: cc900/voice_ctrlchange_a_8a.c
 ; Fifth setter. IN: A = part index, C = value byte.
 ; part+0x104 = (part+0x104 & 0xF0FF) | ((C & 0x0F) << 8)
 ; part+0x108 = C >> 4                               (articulation word 3, whole word)
 ; Then Voice_UpdateFlagsFromSlot + Voice_Selector_ComputeMixWeights. Called from 0x02EE63.
 ; New name -- no symbol at this address in either source.
-Voice_Artic_SetWord1Nibble2_And_Word3:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	lda	xde, (xde+wa)
-	lda	xde, (xde+258)
-	andmi16	(xde+2), 0xf0ff
-	ld	a, c
-	and	a, 15
-	extz	wa
-	sll	wa, 8
-	or	(xde+2), wa
-	srl	c, 4
-	ld	a, c
-	extz	wa
-	ld	(xde+6), wa
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_UpdateFlagsFromSlot
-	ld	a, (xsp)
-	extz	wa
-	calr	Voice_Selector_ComputeMixWeights
-	inc	2, xsp
-	ret
+Voice_Artic_SetWord1Nibble2_And_Word3:	.include "includes/generated/cc900/Voice_Artic_SetWord1Nibble2_And_Word3.s"	; C: cc900/voice_ctrlchange_a_8a.c
 ; Sixth setter, and the first that writes DEPTH bytes rather than articulation nibbles.
 ; IN: A = part index, C = packed value byte. Signed, and it does NOT refresh the derived
 ; words (no Voice_UpdateFlagsFromSlot / ComputeMixWeights call), unlike the five above.
@@ -2808,73 +2563,10 @@ Voice_Build_Four_Partials_Exit:
 ; Voice_Calc_LevelPair_Mono + Voice_ComputePitch + Voice_Slot_ApplyPortamentoDelta +
 ; Voice_ApplyPortamento. Ends with ToneGen_WriteVoiceParams(slot, 0x0451CC), which is the
 ; only hardware contact. Only caller: Voice_SetVelocity_Type40_NopCont2.
-Voice_Release_Type4:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	lda	xiz, (xbc+wa)
-	ld xwa, xiz
-	call WaveSel_StageB_Build_Reg040_Footage
-	ld xwa, xiz
-	call Pitch_Apply_Partial_Detune
-	ld xwa, xiz
-	call Pitch_Emit_Reg400
-	ld xwa, xiz
-	call Voice_Level_ComputeTriplet
-	ld xwa, xiz
-	call TVF_Build_Dispatch
-	ld xwa, xiz
-	call TVF_Emit_Registers
-	ld xwa, xiz
-	call Voice_StereoLevel_Compute
-	ld xwa, xiz
-	call Voice_PortaLevel_Compute
-	ld xwa, xiz
-	call ExtVoice_Build_SlotRegisters
-	ld xwa, xiz
-	call Voice_SubVoice_ComputeAndTrigger
-	ld xwa, xiz
-	call Voice2_UpdatePitch
-	ld xwa, xiz
-	call Level_Build_Reg0C0
-	ld xwa, xiz
-	call Voice_Build_GateCommand
-	cp (xiz + 3), 0x3
-	jr nc, Voice_Release_Type4_BranchA
-	ld xwa, xiz
-	call Voice_Calc_LevelPair_Full
-	ld xwa, xiz
-	call Voice_ComputePitch
-	ld xwa, xiz
-	call Voice_Slot_LoadPitchOffset_A
-	ld xwa, xiz
-	call Voice_ApplyPortamento
-	jr Voice_Release_Type4_BranchB
-
-; Layer index >= 3: mono pan path and the time-based portamento sweep.
-Voice_Release_Type4_BranchA:
-	ld xwa, xiz
-	call Voice_Calc_LevelPair_Mono
-	ld xwa, xiz
-	call Voice_ComputePitch
-	ld xwa, xiz
-	call Voice_Slot_ApplyPortamentoDelta
-	ld xwa, xiz
-	call Voice_ApplyPortamento
-
-; Join point; emit the staged register block for this slot.
-Voice_Release_Type4_BranchB:
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteVoiceParams
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_Release_Type4:	.include "includes/generated/cc900/Voice_Release_Type4.s"	; C: cc900/voice_ctrlchange_callnames2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Release_Type4_BranchA, Voice_Release_Type4 + 135
+	.set	Voice_Release_Type4_BranchB, Voice_Release_Type4 + 159
 
 ; Single-layer note-on worker used by the type-2 path -- the leaner sibling of
 ; Voice_Build_Partial_Descriptor. IN: XWA = note request record, C = part index, DE = layer bit to test,
@@ -3222,47 +2914,7 @@ Voice_NoteOn_Type2_Exit:
 ; Voice_ComputePitch_Mono, Voice_ApplyPortamento2, then
 ; ToneGen_WriteVoiceParams(slot, 0x0451CC). Callers: Voice_SetVelocity_Type0_NopCont2 and
 ; Voice_SetVelocity_Type80_NopCont2.
-Voice_Init_Type2:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	lda	xiz, (xbc+wa)
-	ld xwa, xiz
-	call WaveSel_StageB_Build_Reg040
-	ld xwa, xiz
-	call Pitch_Apply_Zone_Trim
-	ld xwa, xiz
-	call Voice_Pitch_WriteOutputReg_Secondary
-	ld xwa, xiz
-	call TVF_BuildEmit_Short_Dispatch
-	ld xwa, xiz
-	call TVF_Emit_Registers_Type2
-	ld xwa, xiz
-	call Voice_ComputePitchBend2
-	ld xwa, xiz
-	call Voice_Build_GateCommand_NoPartial
-	ld xwa, xiz
-	call Voice_Calc_LevelPair_FixedAtk
-	ld xwa, xiz
-	ld bc, 0:i3
-	call Voice_WriteChPanShift2
-	ld xwa, xiz
-	call Voice_Level_ClearAllOutputRegs
-	ld xwa, xiz
-	call Voice_ComputePitch_Mono
-	ld xwa, xiz
-	call Voice_ApplyPortamento2
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteVoiceParams
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_Init_Type2:	.include "includes/generated/cc900/Voice_Init_Type2.s"	; C: cc900/voice_ctrlchange_callnames.c
 
 ; The type-2 per-layer staging builder -- the counterpart of Voice_Allocate_Typed.
 ; IN : XWA = note request record, C = part index, DE = a capability mask, plus stacked
@@ -3546,51 +3198,7 @@ Voice_NoteOn_Type1_Exit:
 ; (tick & 7), and (b) it uses Voice_Slot_LoadPitchOffset_B instead of the mono pitch step.
 ; Ends with ToneGen_WriteVoiceParams(slot, 0x0451CC). Callers: the tails of Voice_SetPitch
 ; and Voice_NoteOff.
-Voice_Init_Type1:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	lda	xiz, (xbc+wa)
-	ld xwa, xiz
-	call WaveSel_StageB_Build_Reg040
-	lda xwa, (Payload_Bss_Start+0x6358:24)
-	call WaveSel_AddRandomEntryOffset
-	ld xwa, xiz
-	call Pitch_Apply_Zone_Trim
-	ld xwa, xiz
-	call Voice_Pitch_WriteOutputReg_Secondary
-	ld xwa, xiz
-	call TVF_BuildEmit_Short_Dispatch
-	ld xwa, xiz
-	call TVF_Emit_Registers_Type2
-	ld xwa, xiz
-	call Voice_ComputePitchBend2
-	ld xwa, xiz
-	call Voice_Build_GateCommand_NoPartial
-	ld xwa, xiz
-	call Voice_Calc_LevelPair_FixedAtk
-	ld xwa, xiz
-	ld bc, 0:i3
-	call Voice_WriteChPanShift2
-	ld xwa, xiz
-	call Voice_Level_ClearAllOutputRegs
-	ld xwa, xiz
-	call Voice_ComputePitch_Mono
-	ld xwa, xiz
-	call Voice_Slot_LoadPitchOffset_B
-	ld xwa, xiz
-	call Voice_ApplyPortamento2
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteVoiceParams
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_Init_Type1:	.include "includes/generated/cc900/Voice_Init_Type1.s"	; C: cc900/voice_ctrlchange_callnames.c
 
 ; Single-layer staging builder for the Voice_NoteOn_Rhythm path.
 ; IN : XWA = note request record, C = part index, DE = capability mask, plus stacked

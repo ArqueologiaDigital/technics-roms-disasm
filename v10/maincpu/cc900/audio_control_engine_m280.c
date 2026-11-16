@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: ExtData_SetTlvField ExtData_ToggleTlvBits MIDI_WriteResetSequence SwbtWr_FlushAndAppendParams */   /* staged module names, repair_module_lines.py */
 
 extern unsigned char __near ram_90ea[];
 extern unsigned char __near ram_90ee[];
@@ -42,4 +43,19 @@ void SndBuf_WriteParamEntries(void)
   b[0] = ram_90ea[0]; b[1] = ram_90ea[1]; b[2] = ram_90ea[2]; b[5] = ram_90ea[3];
   SndParam_CheckAndApplyMode(b);
   ram_90ee[0] = b[3]; ram_90ee[1] = b[4];
+}
+
+extern void ExtData_SetTlvField(unsigned int);
+extern void SwbtWr_FlushAndAppendParams(void);
+extern void MIDI_WriteResetSequence(void);
+void ExtData_Voice_CheckMode3_Helper(void);
+extern void MIDI_WriteResetSequence(void);
+
+void MIDI_WriteResetSequence(void);
+
+void ExtData_Voice_CheckMode3_Helper(void)
+{
+	ExtData_SetTlvField(128);
+	ExtData_SetTlvField(127);
+	SwbtWr_FlushAndAppendParams();
 }

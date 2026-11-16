@@ -3507,86 +3507,15 @@ FileClose:
 	inc 4, xsp
 	jp SeqStep_ParseHeaderContinue
 
-SeqStep_FileCloseInner:
-	dec 4, xsp
-	push xiz
-	ld xiz, (xsp + 12)
-	or xiz, xiz
-	jr z, SeqStep_FileCloseCheck
-	cp (xiz + 4), 0x0
-	jr z, SeqStep_FileCloseCheck
-	ld a, (xiz + 5)
-	extz wa
-	sla wa, 2
-	lda xbc, (0x0210b4:24)
-	cp	(xbc+wa), xiz
-	jr z, SeqStep_FileCloseProcess
-
-SeqStep_FileCloseCheck:
-	ldw (FILE_ERROR:24), 0x0011
-	ldw hl, 0xffff
-	jrl SeqStep_FileCloseFinal
-
-SeqStep_FileCloseProcess:
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xiz + 14)
-	ld xwa, (xwa + 20)
-	call (xwa)
-	inc 4, xsp
-	ld (xsp + 4), hl
-	cpw (xsp + 4), 0x0
-	jr z, SeqStep_FileCloseReturn
-	ld wa, (xsp + 4)
-	exts wa
-	ld (FILE_ERROR:24), wa
-
-SeqStep_FileCloseReturn:
-	inc 1, (0x210f4:24)
-	ld a, (xiz + 5)
-	extz wa
-	ld bc, wa
-	sla bc, 2
-	lda xde, (0x0210b4:24)
-	ld xwa, 0:i3
-	ld	(xde+bc), xwa
-	ld a, (xiz + 5)
-	extz wa
-	ld (xsp + 6), wa
-	ld xwa, xiz
-	push xwa
-	call SeqStep_FreeMemory
-	inc 4, xsp
-	ld iz, hl
-	cp iz, 0:i3
-	jr z, SeqStep_FileCloseCleanup
-	cpw (xsp + 4), 0x0
-	jr nz, SeqStep_FileCloseCleanup
-	ldw (FILE_ERROR:24), 0x0026
-
-SeqStep_FileCloseCleanup:
-	ld wa, (xsp + 6)
-	add wa, 0x64
-	pushw wa
-	call SeqStep_FileNopA
-	inc 2, xsp
-	call SeqStep_FileNopB
-	cpw (xsp + 4), 0x0
-	jr nz, SeqStep_FileCloseDone
-	cp iz, 0:i3
-	jr z, SeqStep_FileCloseComplete
-
-SeqStep_FileCloseDone:
-	ldw hl, 0xffff
-	jr SeqStep_FileCloseFinal
-
-SeqStep_FileCloseComplete:
-	ld hl, 0:i3
-
-SeqStep_FileCloseFinal:
-	pop xiz
-	inc 4, xsp
-	ret
+SeqStep_FileCloseInner:	.include "includes/generated/cc900/SeqStep_FileCloseInner.s"	; C: cc900/smf_event_processor_m236_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileCloseCheck, SeqStep_FileCloseInner + 36
+	.set	SeqStep_FileCloseProcess, SeqStep_FileCloseInner + 49
+	.set	SeqStep_FileCloseReturn, SeqStep_FileCloseInner + 82
+	.set	SeqStep_FileCloseCleanup, SeqStep_FileCloseInner + 146
+	.set	SeqStep_FileCloseDone, SeqStep_FileCloseInner + 175
+	.set	SeqStep_FileCloseComplete, SeqStep_FileCloseInner + 180
+	.set	SeqStep_FileCloseFinal, SeqStep_FileCloseInner + 182
 
 SeqStep_FileCloseExit:
 	dec	4, xsp
@@ -3703,83 +3632,16 @@ SeqStep_MallocWrapper:
 ; Opens a file for writing: FileOpen(name, "w") with the name as stack argument, then calls the
 ; handle's device method at +32.
 ;   Out: HL = that method's result, or 0xffff when the open failed.
-FileOpenDefault:
-	pushw FileOpenDefault_Str_w@hi16
-	pushw FileOpenDefault_Str_w@lo16
-	ld xwa, (xsp + 8)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	or xhl, xhl
-	jr nz, SeqStep_FileOpenSetupVtable
-	ldw hl, 0xffff
-	ret
+FileOpenDefault:	.include "includes/generated/cc900/FileOpenDefault.s"	; C: cc900/smf_event_processor_m237_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileOpenSetupVtable, FileOpenDefault + 24
 
-SeqStep_FileOpenSetupVtable:
-	ld xwa, xhl
-	push xwa
-	ld xwa, (xhl + 14)
-	ld xwa, (xwa + 32)
-	call (xwa)
-	inc 4, xsp
-	ret
-
-SeqStep_ByteBlockF245:
-	dec	2, xsp
-	push	xiz
-	ld	wa, (FILE_ERROR:24)
-	ld	(xsp+4), wa
-	ldw	(FILE_ERROR:24), 0
-	pushw	SeqStep_ByteBlockF245_Str_d@hi16
-	pushw	SeqStep_ByteBlockF245_Str_d@lo16
-	ld	xwa, (xsp+14)
-	push	xwa
-	call	FileOpen
-	inc	8, xsp
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqStep_ByteBlockF245_Skip3
-	push	xiz
-	call	FileClose
-	inc	4, xsp
-	ldw	(FILE_ERROR:24), 21
-	ldw	hl, 0xffff
-	jr	SeqStep_ByteBlockF245_Epilogue
-SeqStep_ByteBlockF245_Skip3:
-	cpw	(FILE_ERROR:24), 5
-	jr	z, SeqStep_ByteBlockF245_Skip4
-	ldw	hl, 0xffff
-	jr	SeqStep_ByteBlockF245_Epilogue
-SeqStep_ByteBlockF245_Skip4:
-	ld	wa, (xsp+4)
-	exts	wa
-	ld	(FILE_ERROR:24), wa
-	pushw	SeqStep_ByteBlockF245_Str_wb@hi16
-	pushw	SeqStep_ByteBlockF245_Str_wb@lo16
-	ld	xwa, (xsp+14)
-	push	xwa
-	call	FileOpen
-	inc	8, xsp
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	nz, SeqStep_ByteBlockF245_Skip
-	ldw	hl, 0xffff
-	jr	SeqStep_ByteBlockF245_Epilogue
-SeqStep_ByteBlockF245_Skip:
-	ld	xwa, xiz
-	push	xwa
-	ld	xwa, (xiz+14)
-	ld	xwa, (xwa+28)
-	call	(xwa)
-	ld	(xsp+8), hl
-	push	xiz
-	call	FileClose
-	inc	8, xsp
-	ld	hl, (xsp+4)
-SeqStep_ByteBlockF245_Epilogue:
-	pop	xiz
-	inc	2, xsp
-	ret
+SeqStep_ByteBlockF245:	.include "includes/generated/cc900/SeqStep_ByteBlockF245.s"	; C: cc900/smf_event_processor_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_ByteBlockF245_Skip3, SeqStep_ByteBlockF245 + 59
+	.set	SeqStep_ByteBlockF245_Skip4, SeqStep_ByteBlockF245 + 73
+	.set	SeqStep_ByteBlockF245_Skip, SeqStep_ByteBlockF245 + 110
+	.set	SeqStep_ByteBlockF245_Epilogue, SeqStep_ByteBlockF245 + 134
 	ld	xde, (xsp+4)
 	or	xde, xde
 	jr	z, SeqStep_ByteBlockF245_Skip5
@@ -4483,58 +4345,9 @@ SeqStep_FileSectorRead:
 
 ; Reads a little-endian 32-bit value from a byte stream and advances the stream.
 ;   Stack argument: pointer to the stream pointer, which is advanced by 4.  Out: XHL = value.
-SeqStep_FileSectorProcess:
-	ld xix, (xsp + 4)
-	ld xbc, xix
-	ld xde, (xbc)
-	ld xwa, 1:i3
-	add (xbc), xwa
-	ld a, (xde)
-	ld xhl, 0:i3
-	ld l, a
-	ld xbc, xix
-	ld xde, (xbc)
-	ld xwa, 1:i3
-	add (xbc), xwa
-	ld xwa, 0:i3
-	ld a, (xde)
-	sll xwa, 8
-	add xhl, xwa
-	ld xbc, xix
-	ld xde, (xbc)
-	ld xwa, 1:i3
-	add (xbc), xwa
-	ld xwa, 0:i3
-	ld a, (xde)
-	sll xwa, 16
-	add xhl, xwa
-	ld xbc, xix
-	ld xde, (xbc)
-	ld xwa, 1:i3
-	add (xbc), xwa
-	ld xwa, 0:i3
-	ld a, (xde)
-	sll xwa, 8
-	sll xwa, 16
-	add xhl, xwa
-	ret
+SeqStep_FileSectorProcess:	.include "includes/generated/cc900/SeqStep_FileSectorProcess.s"	; C: cc900/smf_event_processor_m238_xr.c
 
-SeqStep_FileSectorDone:
-	ld	xbc, (xsp+6)
-	ld	xde, (xbc)
-	ld	xwa, 1:i3
-	add	(xbc), xwa
-	ld	wa, (xsp+4)
-	ld	w, 0:opc
-	ld	(xde), a
-	ld	xbc, (xsp+6)
-	ld	xde, (xbc)
-	ld	xwa, 1:i3
-	add	(xbc), xwa
-	ld	wa, (xsp+4)
-	srl	wa, 8
-	ld	(xde), a
-	ret
+SeqStep_FileSectorDone:	.include "includes/generated/cc900/SeqStep_FileSectorDone.s"	; C: cc900/smf_event_processor_m0_xr.c
 	ld	xbc, (xsp+8)
 	ld	xhl, (xsp+4)
 	ld	xde, xbc
@@ -4613,89 +4426,7 @@ SeqStep_FileSectorComplete:
 	inc 4, xsp
 	ret
 
-SeqStep_FileSectorReturn:
-	dec	4, xsp
-	push	xiz
-	ld	xiz, (xsp+12)
-	ld	xwa, (xsp+16)
-	ld	(xsp+4), xwa
-	pushw	11
-	ld	xwa, xiz
-	push	xwa
-	ld	xwa, (xsp+22)
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp+10)
-	ld	xwa, (xsp+4)
-	ld	c, (xiz+12)
-	ld	(xwa+11), c
-	ld	xwa, 22
-	add	(xsp+4), xwa
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	wa, (xiz+13)
-	ld	w, 0:opc
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	wa, (xiz+13)
-	srl	wa, 8
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	wa, (xiz+15)
-	ld	w, 0:opc
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	wa, (xiz+15)
-	srl	wa, 8
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	wa, (xiz+17)
-	ld	w, 0:opc
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	wa, (xiz+17)
-	srl	wa, 8
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	xwa, (xiz+19)
-	and	xwa, 255
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	xwa, (xiz+19)
-	srl	xwa, 8
-	and	xwa, 255
-	ld	(xbc), a
-	ld	xwa, (xsp+4)
-	lda	xbc, (xwa+:1)
-	ld	(xsp+4), xwa
-	ld	xwa, (xiz+19)
-	srl	xwa, 16
-	and	xwa, 255
-	ld	(xbc), a
-	ld	xwa, (xiz+19)
-	srl	xwa, 8
-	srl	xwa, 16
-	ld	c, a
-	ld	xwa, (xsp+4)
-	ld	(xwa), c
-	pop	xiz
-	inc	4, xsp
-	ret
+SeqStep_FileSectorReturn:	.include "includes/generated/cc900/SeqStep_FileSectorReturn.s"	; C: cc900/smf_event_processor_m238_xr.c
 
 ; Fat_ReadEntry(file, n)  -- named 2026-09-25 (lane seqeng; was
 ; SeqStep_FileSectorError, which it is not).  Returns HL = FAT entry n of the
@@ -9963,147 +9694,29 @@ FindNext_Epilogue:
 	lda xsp, (xsp + 64)
 	ret
 
-FileIO_MatchWildcard:
-	lda xsp, (xsp - 16)
-	push xiz
-	ld xiz, xbc
-	ld (xsp + 16), xwa
-	ld wa, 0:i3
-	cp (xiz), 0x0
-	jr nz, WildMatch_InitBuffer
-	ld hl, 0:i3
-	jrl WildMatch_Return
+FileIO_MatchWildcard:	.include "includes/generated/cc900/FileIO_MatchWildcard.s"	; C: cc900/smf_event_processor_m240_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	WildMatch_InitBuffer, FileIO_MatchWildcard + 21
+	.set	WildMatch_ScanLoop, FileIO_MatchWildcard + 51
+	.set	WildMatch_CopyChar, FileIO_MatchWildcard + 65
+	.set	WildMatch_CheckEnd, FileIO_MatchWildcard + 71
+	.set	WildMatch_FillName, FileIO_MatchWildcard + 76
+	.set	WildMatch_NameLoop, FileIO_MatchWildcard + 84
+	.set	WildMatch_StarFillName, FileIO_MatchWildcard + 101
+	.set	WildMatch_NameNext, FileIO_MatchWildcard + 118
+	.set	WildMatch_FillExt, FileIO_MatchWildcard + 126
+	.set	WildMatch_ExtLoop, FileIO_MatchWildcard + 135
+	.set	WildMatch_StarFillExt, FileIO_MatchWildcard + 152
+	.set	WildMatch_ExtNext, FileIO_MatchWildcard + 169
+	.set	WildMatch_Compare, FileIO_MatchWildcard + 177
+	.set	WildMatch_CompareLoop, FileIO_MatchWildcard + 192
+	.set	WildMatch_CompareAdvance, FileIO_MatchWildcard + 207
+	.set	WildMatch_Return, FileIO_MatchWildcard + 216
 
-WildMatch_InitBuffer:
-	pushw 0xb
-	pushw 0x3f
-	lda xwa, (xsp + 8)
-	push xwa
-	call Memset
-	inc 8, xsp
-	ld (xsp + 15), 0x0
-	lda xwa, (xsp + 4)
-	ld xbc, xwa
-	cp (xiz), 0x0
-	jr z, WildMatch_FillName
-
-WildMatch_ScanLoop:
-	cp (xiz), 0x2e
-	jr nz, WildMatch_CopyChar
-	lda xwa, (xsp + 12)
-	ld xbc, xwa
-	inc 1, xiz
-	jr WildMatch_CheckEnd
-
-WildMatch_CopyChar:
-	ld A, (xiz+)
-	ld (xbc+), a
-
-WildMatch_CheckEnd:
-	cp (xiz), 0x0
-	jr nz, WildMatch_ScanLoop
-
-WildMatch_FillName:
-	ld bc, 0:i3
-	cp bc, 0x8
-	jr ge, WildMatch_FillExt
-
-WildMatch_NameLoop:
-	lda xwa, (xsp + 4)
-	cp	(xwa+bc), 0x2a
-	jr nz, WildMatch_NameNext
-	cp bc, 0x8
-	jr ge, WildMatch_NameNext
-
-WildMatch_StarFillName:
-	lda xwa, (xsp + 4)
-	ld	(xwa+bc), 0x3f
-	inc 1, bc
-	cp bc, 0x8
-	jr lt, WildMatch_StarFillName
-
-WildMatch_NameNext:
-	inc 1, bc
-	cp bc, 0x8
-	jr lt, WildMatch_NameLoop
-
-WildMatch_FillExt:
-	ldw bc, 0x8
-	cp bc, 0xb
-	jr ge, WildMatch_Compare
-
-WildMatch_ExtLoop:
-	lda xwa, (xsp + 4)
-	cp	(xwa+bc), 0x2a
-	jr nz, WildMatch_ExtNext
-	cp bc, 0xb
-	jr ge, WildMatch_ExtNext
-
-WildMatch_StarFillExt:
-	lda xwa, (xsp + 4)
-	ld	(xwa+bc), 0x3f
-	inc 1, bc
-	cp bc, 0xb
-	jr lt, WildMatch_StarFillExt
-
-WildMatch_ExtNext:
-	inc 1, bc
-	cp bc, 0xb
-	jr lt, WildMatch_ExtLoop
-
-WildMatch_Compare:
-	ld hl, 1:i3
-	ld xde, (xsp + 16)
-	lda xwa, (xsp + 4)
-	ld xbc, xwa
-	cp (xde), 0x0
-	jr z, WildMatch_Return
-
-WildMatch_CompareLoop:
-	cp (xbc), 0x3f
-	jr z, WildMatch_CompareAdvance
-	ld a, (xbc)
-	cp a, (xde)
-	jr z, WildMatch_CompareAdvance
-	ld hl, 0:i3
-	jr WildMatch_Return
-
-WildMatch_CompareAdvance:
-	inc 1, xde
-	inc 1, xbc
-	cp (xde), 0x0
-	jr nz, WildMatch_CompareLoop
-
-WildMatch_Return:
-	pop xiz
-	lda xsp, (xsp + 16)
-	ret
-
-FindFirst_SndTable:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ldw (0x02272c:24), 0x0000
-	lda xwa, (0x02272c:24)
-	ld xiz, xwa
-	call FileIO_ReadAllDirEntries
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr FileIO_ReadNextDirEntry
-	cp hl, 0:i3
-	jr nz, FindFirst_SndTable_Fail
-	ld xhl, xiz
-	jr FindFirst_SndTable_Return
-
-FindFirst_SndTable_Fail:
-	ld xwa, xiz
-	calr FileIO_ValidateHandle
-	ld xhl, 0xffffffff
-
-FindFirst_SndTable_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+FindFirst_SndTable:	.include "includes/generated/cc900/FindFirst_SndTable.s"	; C: cc900/smf_event_processor_m240_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FindFirst_SndTable_Fail, FindFirst_SndTable + 40
+	.set	FindFirst_SndTable_Return, FindFirst_SndTable + 50
 
 ; Out: HL = 0 when XWA is not null, 0xffff when it is.
 FileIO_ValidateHandle:

@@ -50,9 +50,15 @@ def items(text):
         elif ch == '}':
             depth -= 1
             head = buf[:buf.index('{')] if '{' in buf else buf   # a definition: a parameter list before its first {
-            if depth == 0 and '(' in head and re.search(r'\)\s*$', head) and not re.match(r'\s*(typedef|extern)\b', buf):
+            if depth == 0 and '(' in head and (re.search(r'\)\s*$', head) or re.search(r'\)[^()]*;\s*$', head)) \
+                    and not re.match(r'\s*(typedef|extern)\b', buf):
                 out.append(('fn', buf.strip())); buf = ''
         elif ch == ';' and depth == 0:
+            # an old-style definition's parameter declarations (`void f(c) unsigned char c; {`): keep reading
+            if re.match(r'^\s*[\w\s\*]*\b\w+\s*\(\s*\w+(\s*,\s*\w+)*\s*\)\s*[^;()]*(;[^;()]*)*;$', buf) and \
+                    not re.match(r'\s*(typedef|extern)\b', buf):
+                i += 1
+                continue
             if buf.strip() != ';':
                 out.append(('decl', buf.strip()))
             buf = ''
@@ -102,7 +108,8 @@ def defines(d):
 
 
 def fn_name(f):
-    return re.search(r'(\w+)\s*\([^)]*\)\s*\{', f).group(1)
+    m = re.search(r'(\w+)\s*\([^)]*\)\s*\{', f) or re.search(r'(\w+)\s*\([\w\s,]*\)[^()]*;\s*\{', f)
+    return m.group(1)
 
 
 def main():

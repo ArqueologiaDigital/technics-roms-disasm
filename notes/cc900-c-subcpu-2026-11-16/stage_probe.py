@@ -154,7 +154,10 @@ def main():
     usedmod = [n for n in usedmod if n not in have]
     if usedmod:
         nm = nm + ['/* cc900-module: %s */' % ' '.join(usedmod)]
-    body = '\n'.join(add + [''] + nm + [w + '\n' for w in want])
+    # prototypes of the staged functions first: one may call another defined after it (lane_sub: an implicit
+    # declaration followed by a void definition is V4.23's THC1-Error-262)
+    protos = [w[:w.index('{')].strip() + ';' for w in want if len(want) > 1]
+    body = '\n'.join(add + protos + [''] + nm + [w + '\n' for w in want])
     os.makedirs(os.path.dirname(staged), exist_ok=True)
     open(staged, 'w', encoding='latin-1').write(old.rstrip('\n') + '\n\n' + body.strip('\n') + '\n')
     print('%s: +%d functions, +%d declarations' % (staged, len(want), len(add)))

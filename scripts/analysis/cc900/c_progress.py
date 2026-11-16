@@ -72,7 +72,8 @@ def staged(branch, path=STAGED):
         if len(f) < 8:
             continue
         tree, fn, size, result = f[0], f[5], f[6], f[7]
-        latest[(tree, fn)] = (int(size), result)     # later rows are later checks
+        # later rows are later checks; a row without a size ("-": the file did not compile) counts 0 bytes
+        latest[(tree, fn)] = (int(size) if size.isdigit() else 0, result)
     out = {}
     for (tree, fn), (size, result) in latest.items():
         if result == "MATCH":

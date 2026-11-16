@@ -48,6 +48,12 @@ LARGE_DATA = False                                       # named absolute operan
 # own definitions supply the value; the address from SYMBOLS still picks the 8/16/24-bit width.  A name SPELL lacks
 # is written as its address, as before.
 SPELL = None
+
+def spell_of(sym):
+    """SPELL's name for `sym`: the build's resolver (Names) takes V4.23's name as it is and drops the prefix itself,
+    trying `_name` too (`._findfirst` is the tree's _findfirst); a plain mapping is asked without the prefix"""
+    if SPELL is None: return None
+    return SPELL.get(sym) if hasattr(SPELL, 'resolve') else SPELL.get(sym.lstrip('_.'))
 # WIDTHS (phase 6 firmware C): {symbol without `_` / `.`: 8, 16 or 24}, the width cc900 gives the symbol's absolute
 # operand from its declaration -- `__tiny` (listing `small`), `__near` (`medium`) or plain (`large`) -- not from its
 # address (probe m16, run 2026-11-16-29-p6-m16).  When set, a named operand or `lda` of a symbol takes that width, and
@@ -80,7 +86,7 @@ def code_width(sym):
 def branch_target(sym, syms):
     """a relative branch's operand: the tree's name, or, without SPELL (an address-only check), a placeholder
     `__cc900_at_<hex address>` that the checker defines beside the function (c_build_coverage.compare)"""
-    s = SPELL.get(sym.lstrip('_.')) if SPELL is not None else None
+    s = spell_of(sym)
     return s if s else '__cc900_at_%x' % lookup(sym, syms)
 
 # byte registers of XIX / XIY / XIZ, which llvm-mc reaches only through their extended-register code (the ERP forms)
@@ -88,6 +94,8 @@ ERP_BYTE = {'IXL': 0xf0, 'IXH': 0xf1, 'QIXL': 0xf2, 'QIXH': 0xf3, 'IYL': 0xf4, '
             'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb,
             # the upper bytes of XWA .. XHL (bytes 2 / 3 of the 32-bit register: QA = E2, QW = E3, ...)
             'QA': 0xe2, 'QW': 0xe3, 'QC': 0xe6, 'QB': 0xe7, 'QE': 0xea, 'QD': 0xeb, 'QL': 0xee, 'QH': 0xef}
+# the upper words of the 32-bit registers, by extended code (and / or / add with an immediate: the *_erpw forms)
+Q_WORD = {'QWA': 0xe2, 'QBC': 0xe6, 'QDE': 0xea, 'QHL': 0xee, 'QIX': 0xf2, 'QIY': 0xf6, 'QIZ': 0xfa, 'QSP': 0xfe}
 ERP_IMM_OP = {'add': 'add_erpb', 'sub': 'sub_erpb', 'and': 'and_erpb', 'or': 'or_erpb', 'xor': 'xor_erpb'}
 ERP_BIT_OP = {'bit': 'bit_erpb', 'set': 'set_erpb', 'res': 'res_erpb', 'sll': 'sll_erpb', 'srl': 'srl_erpb'}
 
@@ -107,6 +115,8 @@ def erp_byte(op, raw):
         return '\t%s 0x%x, 0x%x' % (ERP_IMM_OP[b], ERP_BYTE[raw[0]], num(raw[1]) & 0xff)
     if b in ('cp', 'or') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
         return '\t%s_erpb_rr %s, 0x%x' % (b, raw[1].lower(), ERP_BYTE[raw[0]])
+    if op in ('inc', 'dec') and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE and 1 <= num(raw[0]) <= 8:
+        return '\t%sb_erp 0x%x, %d' % (op, ERP_BYTE[raw[1]], num(raw[0]))   # inc 0x1,QIZH = c7 fb 61 (lane_sub)
     if op in ERP_BIT_OP and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE:
         return '\t%s 0x%x, %d' % (ERP_BIT_OP[op], ERP_BYTE[raw[1]], num(raw[0]))
     return '\t; untranslated (a byte register llvm-mc cannot name): ' + op + ' ' + ','.join(raw)
@@ -122,7 +132,7 @@ def no_placeholder(sym, a):
 
 def spelled(sym, a, off=0):
     """the operand text for symbol `sym` (+ off) at address a: the tree's name when SPELL has it, else the number"""
-    s = SPELL.get(sym.lstrip('_.')) if SPELL is not None else None
+    s = spell_of(sym)
     if s is None: return '0x%x' % (no_placeholder(sym, a) + off)
     return '%s+%d' % (s, off) if off else s
 
@@ -183,6 +193,9 @@ def translate_line(t, syms, locals_):
     if t.endswith(':') and not t.startswith('\t'): return t
     parts = t.strip().split(None, 1); op = parts[0]
     raw = [a.strip() for a in re.split(r',(?![^()]*\))', parts[1])] if len(parts) > 1 else []
+    # V4.23 (inline assembly) writes the current location as `$` (jr $+2); llvm-mc writes it `.`.  Only a `$` standing
+    # alone in an operand expression: never inside a quoted string, a symbol name or a `$`-prefixed number.
+    raw = [a if "'" in a or '"' in a else re.sub(r'(?<![\w$.])\$(?![\w$])', '.', a) for a in raw]
     if op == 'align': return '\t.balign %s' % raw[0]
     if op == 'dfb' and len(raw) == 2: return '\t.fill %s, 1, %s' % (raw[0], raw[1])   # _CTYPE.C: dfb 128,0
     if op == 'dsb' and len(raw) == 1: return '\t.zero %s' % raw[0]
@@ -205,6 +218,9 @@ def translate_line(t, syms, locals_):
     if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
+    if op == 'cal' and len(raw) == 2:                    # CAL cc,F: no relative form, call cc,(F) -- 24-bit, or 16
+        t = spelled(raw[1], lookup(raw[1], syms))        # for a __near / __tiny F (hdae5000_ui_display.s: call nz,
+        return '\tcall %s, (%s:%d)' % (CC[raw[0]], t, 16 if code_width(raw[1]) < 24 else 24)   # (..._Status:24))
     if op == 'cal':
         if module_local(raw[0]): return '\tcalr %s' % branch_target(raw[0], syms)
         if code_width(raw[0]) < 24: return '\tcall16 %s' % spelled(raw[0], lookup(raw[0], syms))
@@ -217,11 +233,17 @@ def translate_line(t, syms, locals_):
             if module_local(raw[0]): return '\tjr %s' % branch_target(raw[0], syms)   # llvm-mc widens it to jrl
             if code_width(raw[0]) < 24: return '\tjp16 %s' % spelled(raw[0], lookup(raw[0], syms))
             return '\tjp %s' % spelled(raw[0], lookup(raw[0], syms))
-        return '\tjr %s, %s' % (CC[raw[0]], raw[1])
+        # J cc,F: a local label, or a module-local F as the unconditional J (jr, llvm-mc widens it to jrl; out of
+        # 16-bit reach far_fallback makes it jp cc); an extern F as jp cc,(F), 24-bit or (F:16) for a __near / __tiny
+        # one (lane_p6: SndParamBank_CheckFlash's `j nz,SndParamBank_WriteFlashDefaults`, the ROM's jr nz)
+        if raw[1] in locals_: return '\tjr %s, %s' % (CC[raw[0]], raw[1])
+        if module_local(raw[1]): return '\tjr %s, %s' % (CC[raw[0]], branch_target(raw[1], syms))
+        t = spelled(raw[1], lookup(raw[1], syms))
+        return '\tjp %s, (%s:%d)' % (CC[raw[0]], t, 16 if code_width(raw[1]) < 24 else 24)
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
     m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff)$', ' '.join(raw)) if op == 'pushw' else None
     if m:                                                # an address pushed as two words (abi returns.c use_d,
-        s = SPELL.get(m.group(1).lstrip('_.')) if SPELL is not None and not m.group(1).startswith('S') else None
+        s = spell_of(m.group(1)) if not m.group(1).startswith('S') else None
         if s:                                            # a label: the assembler supplies the halves (UPDATE 20)
             return '\tpushw %s@%s' % (s, 'hi16' if m.group(2) == '>> 16' else 'lo16')
         a = syms[m.group(1)] if m.group(1) in syms else lookup(m.group(1), syms)   # _sprintf: pushw __strOut >> 16)
@@ -230,7 +252,10 @@ def translate_line(t, syms, locals_):
     if op == 'call' and len(raw) == 1 and re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ)$', raw[0]):
         return '\tcall (%s)' % raw[0].lower()                    # an indirect call: call XWA (abi fptr.c fp_call)
     if op in ('jr', 'jrl'):                                # inline assembly writes jr / jrl itself (_MEMSET.C)
-        return '\t%s %s' % (op, raw[0]) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], raw[1])
+        t = raw[-1]                                        # a module-local function keeps V4.23's `.` name
+        if t not in locals_ and module_local(t):           # (lane_sub: jr cc,.Voice_Reprioritise): the tree's name
+            t = branch_target(t, syms)
+        return '\t%s %s' % (op, t) if len(raw) == 1 else '\t%s %s, %s' % (op, CC[raw[0].lower()], t)
     if op in ('sll', 'srl', 'sla', 'sra', 'rlc', 'rrc', 'rl', 'rr') and len(raw) == 2 and NUM.match(raw[0]):
         return '\t%s %s, %d' % (op, raw[1].lower(), num(raw[0]) or 16)   # Toshiba: count first (srl 2,BC); V4.23
         # writes a shift by 16 as the raw count field 0, which llvm-mc refuses (lane_sub: DSP_UnpackParam3B)
@@ -292,6 +317,12 @@ def translate_line(t, syms, locals_):
         # ea cf 00 00 00 00, not ea d8)
         if raw[0].startswith('Q'): return '\t%s %s, %d' % (base, args[0], num(raw[1]))   # cp QBC,0 -> d7 e6 d8
         return '\t%s %s, %d:i3' % (base, args[0], num(raw[1]))
+    if base in ('and', 'or', 'add') and len(args) == 2 and raw[0] in Q_WORD and NUM.match(raw[1]):
+        n = num(raw[1]) & 0xffff                         # and QWA,n = d7 e2 cc lo hi (lane_sub's sub_v423.py)
+        return '\t%s_erpw 0x%x, 0x%x, 0x%x' % (base, Q_WORD[raw[0]], n & 0xff, n >> 8)
+    if base in ('ld', 'cp') and len(args) == 2 and re.match(r'^Q(WA|BC|DE|HL|IX|IY|IZ|SP)$', raw[0]) \
+            and NUM.match(raw[1]):                     # a word of the upper halves beyond 0..7: the long immediate,
+        return '\t%sw %s, 0x%x' % (base, args[0], num(raw[1]) & 0xffff)   # cp QIZ,0x8 = d7 fa cf 08 00 (FDC_*)
     if base == 'ld' and len(args) == 2 and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'SP') and NUM.match(raw[1]):
         return '\tldw %s, 0x%x' % (args[0], num(raw[1]) & 0xffff)            # _strlen: ld HL,0xffff -> 33 ff ff
     if sz == 'w' and base in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor'):
@@ -323,6 +354,16 @@ def split_consts(lines):
         pre = consts.pop(None)
         if consts: consts[next(iter(consts))][:0] = pre
     return consts, out
+
+def fp_consts(consts):
+    """split_consts' objects -> {label: (directive, value text)} of the FP constants only (fdata / fdatad, the last
+    one of an object), the form pairs_model.py checks against the image (split_consts' result before cc900-data)"""
+    out = {}
+    for lab, ls in consts.items():
+        for l in ls:
+            if l.startswith('\tfdata'):
+                out[lab] = tuple(l.strip().split('\t'))
+    return out
 
 def translate_data(lines, locals_):
     """an f_const object's lines -> llvm-mc data lines (names of the function's local labels kept as they are)"""
@@ -362,6 +403,7 @@ def relax(text, assemble):
         for n in bad:
             l = lines[n - 1]
             if '\tjr ' in l: lines[n - 1] = l.replace('\tjr ', '\tjrl '); changed = True
+            elif '\tjr\t' in l: lines[n - 1] = l.replace('\tjr\t', '\tjrl\t'); changed = True
         if not changed: return '\n'.join(lines)
     return '\n'.join(lines)
 

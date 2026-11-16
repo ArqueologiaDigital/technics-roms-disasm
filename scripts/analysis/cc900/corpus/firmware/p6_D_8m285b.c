@@ -4,6 +4,7 @@
    runtime helper for a long product, so the call is written out).  The copies after the loop are generated from the
    hand assembly, the destination and source pointers coming back from their stack slots.  Form b spells i * 32 as a
    shift. */
+/* cc900-module: DataBuf_CopyVoiceBlock24 */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned long Math_Multiply32(unsigned long, unsigned long);
 

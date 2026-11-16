@@ -11209,14 +11209,7 @@ TitleProc_SetResourceDirtyFlag:
 	ld xbc, EVT_SET_TITLE_FLAG
 	jrl MainFuncCall
 
-TitleProc_ClearResourceDirtyFlag:
-	cpl wa
-	and (TITLE_FLAGS:24), wa
-	ld de, (TITLE_FLAGS:24)
-	extz xde
-	ld xwa, NAKA_MAINFUNC_MainTitleControl
-	ld xbc, EVT_SET_TITLE_FLAG
-	jrl MainFuncCall
+TitleProc_ClearResourceDirtyFlag:	.include "includes/generated/cc900/TitleProc_ClearResourceDirtyFlag.s"	; C: cc900/ui_widget_defs_m272.c
 
 ResEventProc:
 	ld xhl, xwa
@@ -11768,105 +11761,33 @@ Viewable_Return:
 	lda xsp, (xsp + 20)
 	ret
 
-SetChange:
-	pushw iz
-	ld iz, bc
-	calr GetViewInstance
-	lda xwa, (xhl + 12)
-	cp iz, 0:i3
-	jr z, DrawWidget_Hline_0_Setup
-	ormi16 (xwa), 0x4
-	jr DrawWidget_Hline_0_Draw
+SetChange:	.include "includes/generated/cc900/SetChange.s"	; C: cc900/ui_widget_defs_m272_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_0_Setup, SetChange + 19
+	.set	DrawWidget_Hline_0_Draw, SetChange + 23
 
-DrawWidget_Hline_0_Setup:
-	andmi16 (xwa), 0xfffb
+GetChange:	.include "includes/generated/cc900/GetChange.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
-DrawWidget_Hline_0_Draw:
-	popw iz
-	ret
+SetConst:	.include "includes/generated/cc900/SetConst.s"	; C: cc900/ui_widget_defs_m272_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_1_Setup, SetConst + 19
+	.set	DrawWidget_Hline_1_Draw, SetConst + 23
 
-GetChange:
-	calr GetViewInstance
-	ld wa, (xhl + 12)
-	and wa, 0x4
-	cp wa, 0:i3
-	scc16 nz, hl
-	ret
+GetConst:	.include "includes/generated/cc900/GetConst.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
-SetConst:
-	pushw iz
-	ld iz, bc
-	calr GetViewInstance
-	lda xwa, (xhl + 12)
-	cp iz, 0:i3
-	jr z, DrawWidget_Hline_1_Setup
-	ormi16 (xwa), 0x8
-	jr DrawWidget_Hline_1_Draw
+SetVisible:	.include "includes/generated/cc900/SetVisible.s"	; C: cc900/ui_widget_defs_m272_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_2_Setup, SetVisible + 19
+	.set	DrawWidget_Hline_2_Draw, SetVisible + 23
 
-DrawWidget_Hline_1_Setup:
-	andmi16 (xwa), 0xfff7
+GetVisible:	.include "includes/generated/cc900/GetVisible.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
-DrawWidget_Hline_1_Draw:
-	popw iz
-	ret
+SetMovable:	.include "includes/generated/cc900/SetMovable.s"	; C: cc900/ui_widget_defs_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_3_Setup, SetMovable + 19
+	.set	DrawWidget_Hline_3_Draw, SetMovable + 23
 
-GetConst:
-	calr GetViewInstance
-	ld wa, (xhl + 12)
-	and wa, 0x8
-	cp wa, 0:i3
-	scc16 nz, hl
-	ret
-
-SetVisible:
-	pushw iz
-	ld iz, bc
-	calr GetViewInstance
-	lda xwa, (xhl + 12)
-	cp iz, 0:i3
-	jr z, DrawWidget_Hline_2_Setup
-	andmi16 (xwa), 0xfffe
-	jr DrawWidget_Hline_2_Draw
-
-DrawWidget_Hline_2_Setup:
-	ormi16 (xwa), 0x1
-
-DrawWidget_Hline_2_Draw:
-	popw iz
-	ret
-
-GetVisible:
-	calr GetViewInstance
-	ld wa, (xhl + 12)
-	and wa, 0x1
-	cp wa, 0:i3
-	scc16 z, hl
-	ret
-
-SetMovable:
-	pushw iz
-	ld iz, bc
-	calr GetViewInstance
-	lda xwa, (xhl + 12)
-	cp iz, 0:i3
-	jr z, DrawWidget_Hline_3_Setup
-	andmi16 (xwa), 0xfffd
-	jr DrawWidget_Hline_3_Draw
-
-DrawWidget_Hline_3_Setup:
-	ormi16 (xwa), 0x2
-
-DrawWidget_Hline_3_Draw:
-	popw iz
-	ret
-
-GetMovable:
-	calr GetViewInstance
-	ld wa, (xhl + 12)
-	and wa, 0x2
-	cp wa, 0:i3
-	scc16 z, hl
-	ret
+GetMovable:	.include "includes/generated/cc900/GetMovable.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 NextView:
 	push xiz
@@ -12265,55 +12186,15 @@ FrameDraw_DefaultInit_Alt:
 	inc 8, xsp
 	ret
 
-GetLinkView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetSubView
-	cp xhl, 0xffffffff
-	jr z, FrameDraw_DefaultCalcWidth
-	ld xwa, xiz
-	calr GetSubView
-	jr FrameDraw_Return
-
-FrameDraw_DefaultCalcWidth:
-	ld xwa, xiz
-	calr GetNextView
-	cp xhl, 0xffffffff
-	jr z, FrameDraw_DefaultCalcHeight
-	ld xwa, xiz
-	jr FrameDraw_DefaultReturn
-
-FrameDraw_DefaultCalcHeight:
-	ld xwa, xiz
-	calr GetNextView
-	cp xhl, 0xffffffff
-	jr nz, FrameDraw_DefaultDone
-
-FrameDraw_DefaultSetup:
-	ld xwa, xiz
-	calr GetSuperView
-	ld xiz, xhl
-	cp xiz, 0xffffffff
-	jr nz, FrameDraw_DefaultExecute
-	ld xhl, 0xffffffff
-	jr FrameDraw_Return
-
-FrameDraw_DefaultExecute:
-	ld xwa, xiz
-	calr GetNextView
-	cp xhl, 0xffffffff
-	jr z, FrameDraw_DefaultSetup
-
-FrameDraw_DefaultDone:
-	ld xwa, xiz
-
-FrameDraw_DefaultReturn:
-	calr GetNextView
-
-FrameDraw_Return:
-	pop xiz
-	ret
+GetLinkView:	.include "includes/generated/cc900/GetLinkView.s"	; C: cc900/ui_widget_defs_m272.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FrameDraw_DefaultCalcWidth, GetLinkView + 23
+	.set	FrameDraw_DefaultCalcHeight, GetLinkView + 40
+	.set	FrameDraw_DefaultSetup, GetLinkView + 53
+	.set	FrameDraw_DefaultExecute, GetLinkView + 75
+	.set	FrameDraw_DefaultDone, GetLinkView + 88
+	.set	FrameDraw_DefaultReturn, GetLinkView + 90
+	.set	FrameDraw_Return, GetLinkView + 93
 
 GetViewInstance:
 	ld xbc, xwa
@@ -12336,35 +12217,9 @@ GetViewInstance:
 	ld xhl, (xde)
 	ret
 
-GetBox:
-	push xiz
-	ld xiz, xbc
-	calr GetViewInstance
-	lda xiy, (xhl + 14)
-	ld xix, xiz
-	ld bc, 4:i3
-	ldirw
-	pop xiz
-	ret
+GetBox:	.include "includes/generated/cc900/GetBox.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
-SetBox:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	lda xix, (xhl + 14)
-	ld bc, 4:i3
-	ldirw
-	ld xwa, xiz
-	ld bc, 1:i3
-	calr SetChange
-	pop xiz
-	inc 4, xsp
-	ret
+SetBox:	.include "includes/generated/cc900/SetBox.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
 ResNameProc:
 	cp xbc, EVT_GET_CLASS_SP
@@ -18001,62 +17856,13 @@ EventRoute_DispatchJump:
 	pop xiz
 	lda xsp, (xsp + 24)
 	ret
-PostEvent:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), xbc
-	ld xiz, xwa
-	ld wa, 4:i3
-	call TaskEvent_Wait
-	ld bc, (0x02ec34:24)
-	ld de, (0x02ec36:24)
-	ld wa, de
-	inc 1, wa
-	cp wa, bc
-	jr z, EventRoute_CheckOwner
-	ld wa, de
-	sub wa, 0x3ff
-	cp wa, bc
-	jr nz, EventRoute_OwnerMatchDone
-
-EventRoute_CheckOwner:
-	ld wa, 4:i3
-	call TaskEvent_Signal
-	pop xiz
-	inc 8, xsp
-
-EventRoute_OwnerMatch:
-	jr EventRoute_OwnerMatch
-
-EventRoute_OwnerMatchDone:
-	incw 1, (0x02f840:24)
-	ld bc, de
-	muls bc, 0xc
-	lda xwa, (EVENT_QUEUE:24)
-	exts xbc
-	add xbc, xwa
-	ld (xbc), xiz
-	ld xwa, (xsp + 8)
-	ld (xbc + 4), xwa
-	ld xwa, (xsp + 4)
-	ld (xbc + 8), xwa
-	cp de, 0x3ff
-	jr nz, PostEvent_Prologue
-	ldw (0x02ec36:24), 0x0000
-	jr PostEvent_AllocSlot
-
-PostEvent_Prologue:
-	incw 1, (0x02ec36:24)
-
-PostEvent_AllocSlot:
-	ld wa, 4:i3
-	call TaskEvent_Signal
-	ld wa, 2:i3
-	call TaskEvent_Signal
-	pop xiz
-	inc 8, xsp
-	ret
+PostEvent:	.include "includes/generated/cc900/PostEvent.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EventRoute_CheckOwner, PostEvent + 45
+	.set	EventRoute_OwnerMatch, PostEvent + 54
+	.set	EventRoute_OwnerMatchDone, PostEvent + 56
+	.set	PostEvent_Prologue, PostEvent + 105
+	.set	PostEvent_AllocSlot, PostEvent + 110
 
 GetEvent:
 	lda xsp, (xsp - 10)
@@ -18550,54 +18356,12 @@ MainGetEvent_ScanMatch:
 	inc 8, xsp
 	ret
 
-MainGetEvent:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), xbc
-	ld xiz, xwa
-	ld wa, 7:i3
-	call TaskEvent_Wait
-	ld wa, (0x02f838:24)
-	cp wa, (0x02f83a:24)
-	jr nz, MainGetEvent_ScanDone
-	ld wa, 7:i3
-	call TaskEvent_Signal
-	ld hl, 0:i3
-	jr MainGetEvent_Return
-
-MainGetEvent_ScanDone:
-	decw 1, (0x02f842:24)
-	ld de, (0x02f838:24)
-	ld bc, de
-	muls bc, 0xc
-	lda xwa, (0x02ec38:24)
-	lda	xhl, (xwa+bc)
-	ld xwa, (xhl)
-	ld (xiz), xwa
-	ld xwa, (xsp + 8)
-	ld xbc, (xhl + 4)
-	ld (xwa), xbc
-	ld xwa, (xsp + 4)
-	ld xbc, (xhl + 8)
-	ld (xwa), xbc
-	cp de, 0xff
-	jr nz, MainGetEvent_ReturnOne
-	ldw (0x02f838:24), 0x0000
-	jr MainGetEvent_ReturnOneAlt
-
-MainGetEvent_ReturnOne:
-	incw 1, (0x02f838:24)
-
-MainGetEvent_ReturnOneAlt:
-	ld wa, 7:i3
-	call TaskEvent_Signal
-	ld hl, 1:i3
-
-MainGetEvent_Return:
-	pop xiz
-	inc 8, xsp
-	ret
+MainGetEvent:	.include "includes/generated/cc900/MainGetEvent.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MainGetEvent_ScanDone, MainGetEvent + 39
+	.set	MainGetEvent_ReturnOne, MainGetEvent + 100
+	.set	MainGetEvent_ReturnOneAlt, MainGetEvent + 105
+	.set	MainGetEvent_Return, MainGetEvent + 113
 
 MainDeleteEvent:
 	dec 4, xsp
@@ -19433,39 +19197,10 @@ DrawQueue_Alloc_FindSlot:
 ; Wraps around when the write pointer would exceed the buffer end.
 ; Protected by event 4 acquire/release for thread safety.
 ; ============================================================================
-DrawQueue_Alloc:
-	push xiz
-	ld iz, wa
-	ld wa, 4:i3
-	call Kernel_SemaWait
-	ld de, iz
-	extz xde
-	lda xhl, (DRAW_QUEUE:24)
-	ld xbc, (DRAW_QUEUE_WRITE_PTR:24)
-	ld xwa, xbc
-	sub xwa, xhl
-	add xwa, xde
-	ld de, iz
-	extz xde
-	cp xwa, 0x2000
-	jr ge, DrawFunc_Prologue
-	ld xiz, xbc
-	add xbc, xde
-	ld (DRAW_QUEUE_WRITE_PTR:24), xbc
-	jr DrawFunc_CallHandler
-
-DrawFunc_Prologue:
-	ld xiz, xhl
-	add xhl, xde
-	ld (DRAW_QUEUE_WRITE_PTR:24), xhl
-
-; DrawFunc handler with audio lock release
-DrawFunc_CallHandler:
-	ld wa, 4:i3
-	call Kernel_SemaSignal
-	ld xhl, xiz
-	pop xiz
-	ret
+DrawQueue_Alloc:	.include "includes/generated/cc900/DrawQueue_Alloc.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawFunc_Prologue, DrawQueue_Alloc + 52
+	.set	DrawFunc_CallHandler, DrawQueue_Alloc + 61
 
 DrawFunc_Return:
 	ret
@@ -19829,48 +19564,13 @@ SetNeedUpdate:
 ; Input:
 ;   XWA = pointer to 8-byte rect structure {x_min, y_min, x_max, y_max}
 ; =============================================================================
-SetChangeRect:
-	push xiz
-	ld xiz, xwa
-	cpw (0x03ef4e:24), 0
-	jr z, SetChangeRect_ClampLeft
-	ld wa, 5:i3
-	ld bc, 3:i3
-	call Kernel_SetTaskLevel
-
-SetChangeRect_ClampLeft:
-	ldw (DISPLAY_UPDATE_FLAG:24), 0x0001
-	lda xde, (DIRTY_BBOX:24)
-	lda xbc, (xde + 2)
-	ld wa, (xiz + 2)
-	cp (xbc), wa
-	jr le, SetChangeRect_ClampTop
-	ld (xbc), wa
-
-SetChangeRect_ClampTop:
-	ld wa, (xde)
-	cp wa, (xiz)
-	jr le, SetChangeRect_ClampRight
-	ld wa, (xiz)
-	ld (xde), wa
-
-SetChangeRect_ClampRight:
-	lda xbc, (xde + 4)
-	ld wa, (xiz + 4)
-	cp (xbc), wa
-	jr ge, SetChangeRect_ClampBottom
-	ld (xbc), wa
-
-SetChangeRect_ClampBottom:
-	lda xbc, (xde + 6)
-	ld wa, (xiz + 6)
-	cp (xbc), wa
-	jr ge, SetChangeRect_Apply
-	ld (xbc), wa
-
-SetChangeRect_Apply:
-	pop xiz
-	ret
+SetChangeRect:	.include "includes/generated/cc900/SetChangeRect.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SetChangeRect_ClampLeft, SetChangeRect + 20
+	.set	SetChangeRect_ClampTop, SetChangeRect + 44
+	.set	SetChangeRect_ClampRight, SetChangeRect + 54
+	.set	SetChangeRect_ClampBottom, SetChangeRect + 66
+	.set	SetChangeRect_Apply, SetChangeRect + 78
 
 ; =============================================================================
 ; ReadPixel - Read a pixel color from offscreen buffer 1

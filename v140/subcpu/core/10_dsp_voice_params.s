@@ -307,38 +307,10 @@ DSP_SetCoeff_Return:
 ; Exit:  HL = 13 (bytes written), payload at 0x045216..0x045222.
 ; src = ToneDB_RelBase + Root->+0x80 + 16*WA; the row stride is 16 but only 13
 ; bytes are shipped.  Reached only from ToneDB_Query_Dispatch case 15 (0x031993).
-DSP_SetCoeff_CopyDirect:
-	push	xiz
-	ld	xbc, (ToneDB_RootPtr:24)
-	ld	xbc, (xbc+128)
-	ld	xiy, (ToneDB_RelBase:24)
-	add	xiy, xbc
-	ldw	hl, 13
-	ld	ix, 0:i3
-	cp	ix, hl
-	jr	nc, DSP_SetCoeff_CopyDirect_Epilogue
-DSP_SetCoeff_CopyDirect_Loop:
-	ld	de, ix
-	extz	xde
-	ld	bc, wa
-	extz	xbc
-	sll	xbc, 4
-	add	xbc, xde
-	ld	xde, xbc
-	add	xde, xiy
-	ld	bc, ix
-	inc	6, bc
-	extz	xbc
-	ld	xiz, Payload_Bss_Start+0x639a
-	add	xiz, xbc
-	ld	c, (xde)
-	ld	(xiz), c
-	inc	1, ix
-	cp	ix, hl
-	jr	c, DSP_SetCoeff_CopyDirect_Loop
-DSP_SetCoeff_CopyDirect_Epilogue:
-	pop	xiz
-	ret
+DSP_SetCoeff_CopyDirect:	.include "includes/generated/cc900/DSP_SetCoeff_CopyDirect.s"	; C: cc900/dsp_voice_params_d_9a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SetCoeff_CopyDirect_Loop, DSP_SetCoeff_CopyDirect + 27
+	.set	DSP_SetCoeff_CopyDirect_Epilogue, DSP_SetCoeff_CopyDirect + 67
 ; ----------------------------------------------------------------------------
 ; DSP_SetCoeff_RouteComplex - Complex coefficient routing with table lookup
 ; Notes: Multiple table lookups via (0x45314) and (0x45310)
@@ -504,38 +476,10 @@ DSP_SetCoeff_RouteComplex_Join:
 ; Same shape as 0x03122F but reads the table at Root->+0x8C.
 ; Entry: WA = row index.  Exit: HL = 13, payload 0x045216..0x045222.
 ; Reached only from ToneDB_Query_Dispatch case 17 (0x0319D0).
-DSP_SetCoeff_CopyDirect2:
-	push	xiz
-	ld	xbc, (ToneDB_RootPtr:24)
-	ld	xbc, (xbc+140)
-	ld	xiy, (ToneDB_RelBase:24)
-	add	xiy, xbc
-	ldw	hl, 13
-	ld	ix, 0:i3
-	cp	ix, hl
-	jr	nc, DSP_SetCoeff_CopyDirect2_Epilogue
-DSP_SetCoeff_CopyDirect2_Loop:
-	ld	de, ix
-	extz	xde
-	ld	bc, wa
-	extz	xbc
-	sll	xbc, 4
-	add	xbc, xde
-	ld	xde, xbc
-	add	xde, xiy
-	ld	bc, ix
-	inc	6, bc
-	extz	xbc
-	ld	xiz, Payload_Bss_Start+0x639a
-	add	xiz, xbc
-	ld	c, (xde)
-	ld	(xiz), c
-	inc	1, ix
-	cp	ix, hl
-	jr	c, DSP_SetCoeff_CopyDirect2_Loop
-DSP_SetCoeff_CopyDirect2_Epilogue:
-	pop	xiz
-	ret
+DSP_SetCoeff_CopyDirect2:	.include "includes/generated/cc900/DSP_SetCoeff_CopyDirect2.s"	; C: cc900/dsp_voice_params_d_9a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SetCoeff_CopyDirect2_Loop, DSP_SetCoeff_CopyDirect2 + 27
+	.set	DSP_SetCoeff_CopyDirect2_Epilogue, DSP_SetCoeff_CopyDirect2 + 67
 ; ----------------------------------------------------------------------------
 ; DSP_SetCoeff_RouteWithCallback - Coefficient routing with callback function
 ; Notes: Calls 0x032AE0 for parameter transformation
@@ -1959,20 +1903,10 @@ ToneDB_Find_PatchRecord_Return:
 ; ToneDB_Find_ToneRecord -- Resolve voice buffer pointer
 ; Checks flag at 0x041343 and dispatches to one of two lookup functions.
 ; Referenced 10 times throughout the DSP processing code.
-ToneDB_Find_ToneRecord:
-	ld de, (Voice_GlobalFlags:24)
-	bit 0, de
-	jr z, VoiceBuf_TypeSelector_EFFMatch
-	calr ToneDB_Find_ToneRecord_CoeffPath
-	jr VoiceBuf_TypeSelector_NoMatch
-
-; ToneGen_GlobalFlags bit 0 clear: use ToneDB_Find_PatchRecord 0x031F71.
-VoiceBuf_TypeSelector_EFFMatch:
-	calr ToneDB_Find_PatchRecord
-
-; Shared 'ret'; XHL already holds the record pointer.
-VoiceBuf_TypeSelector_NoMatch:
-	ret
+ToneDB_Find_ToneRecord:	.include "includes/generated/cc900/ToneDB_Find_ToneRecord.s"	; C: cc900/dsp_voice_params_c_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceBuf_TypeSelector_EFFMatch, ToneDB_Find_ToneRecord + 15
+	.set	VoiceBuf_TypeSelector_NoMatch, ToneDB_Find_ToneRecord + 18
 
 ; Map a logical partial index to its packed position inside a tone record, or
 ; report that the partial is absent.
@@ -2618,30 +2552,7 @@ WaveSel_StageA1_FromPatchBlock:
 	calr WaveSel_StageA1_FindVelSplit
 	ret
 
-WaveSel_StageA1_FromToneSlot:
-	ld l, (xbc + 1)
-	ldfr_berp L, 0xF4
-	extz iy
-	ld c, (xbc + 2)
-	ld l, c
-	extz hl
-	ldfr_berp A, 0xF0
-	extz ix
-	ldto_berp A, 0xF4
-	ld c, a
-	extz bc
-	ld a, l
-	extz hl
-	ld a, e
-	extz wa
-	pushw wa
-	ld a, (xsp + 6)
-	extz wa
-	pushw wa
-	ld wa, ix
-	ld de, hl
-	calr WaveSel_StageA1_FindVelSplit
-	retd 0x2
+WaveSel_StageA1_FromToneSlot:	.include "includes/generated/cc900/WaveSel_StageA1_FromToneSlot.s"	; C: cc900/dsp_voice_params_d_9a.c
 
 WaveSel_Cache_VelSplitPtr:
 	dec 4, xsp
@@ -2859,63 +2770,9 @@ WaveSel_StageA2_FromToneRec:
 	ld wa, de
 	jrl WaveSel_StageA2_FindSetDesc
 
-WaveSel_StageA2_FromVelZone:
-	ld e, a
-	extz de
-	add de, de
-	inc 3, de
-	ld	e, (xbc+de)
-	extz de
-	extz wa
-	add wa, wa
-	inc 3, wa
-	exts xwa
-	add xwa, xbc
-	ld a, (xwa + 1)
-	ld c, a
-	extz bc
-	ld a, e
-	extz de
-	ld a, c
-	extz bc
-	ld wa, de
-	jrl WaveSel_StageA2_FindSetDesc
+WaveSel_StageA2_FromVelZone:	.include "includes/generated/cc900/WaveSel_StageA2_FromVelZone.s"	; C: cc900/dsp_voice_params_d_10a.c
 
-WaveSel_Cache_SetDescPtr:
-	dec 6, xsp
-	ld (xsp), e
-	ld (xsp + 2), c
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ld a, (xsp + 2)
-	ld c, a
-	extz bc
-	ld a, (xsp)
-	ld e, a
-	extz de
-	ld wa, hl
-	calr WaveSel_StageA2_FromToneRec
-	ld a, (xsp)
-	extz wa
-	ld bc, wa
-	sla bc, 2
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, bc
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 118), xhl
-	inc 6, xsp
-	ret
+WaveSel_Cache_SetDescPtr:	.include "includes/generated/cc900/WaveSel_Cache_SetDescPtr.s"	; C: cc900/dsp_voice_params_c_7a.c
 
 WaveSel_Rebuild_PartCaches:
 	dec 2, xsp
@@ -3101,32 +2958,7 @@ ToneDB_Resolve_NamedToneRecord_Return:
 	popw iz
 	retd 0x2
 
-ToneDB_Find_SubToneRecord:
-	ld l, c
-	extz hl
-	add hl, hl
-	add hl, 0x27
-	ld	l, (xwa+hl)
-	ldfr_berp L, 0xF4
-	extz iy
-	ld l, c
-	extz hl
-	add hl, hl
-	add hl, 0x27
-	lda	xwa, (xwa+hl)
-	ld a, (xwa + 1)
-	ldfr_berp A, 0xF0
-	extz ix
-	ld l, c
-	extz hl
-	ld a, e
-	extz wa
-	pushw wa
-	ld wa, iy
-	ld bc, ix
-	ld de, hl
-	calr ToneDB_Resolve_NamedToneRecord
-	ret
+ToneDB_Find_SubToneRecord:	.include "includes/generated/cc900/ToneDB_Find_SubToneRecord.s"	; C: cc900/dsp_voice_params_d_10a.c
 
 Partial_Build_Present_Word:
 	ld c, a
@@ -5691,50 +5523,10 @@ VoiceNoteParam_Epilogue:
 ; 0x0451A4 is the "part currently selected in the effect edit UI" and 0x0451A6 one of its live
 ; edit values, so part+0x67 is "the DSP parameter with the front-panel override folded in".
 ; Callers: VoiceSlot_FullInit (0x0348A5), VoiceSlot_AltInit (0x03497F).
-Voice_ActiveFlag_CheckAndLoad:
-	dec 4, xsp
-	ld (xsp + 2), a
-	ld (xsp), 0x0
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	ld	wa, (xbc+wa)
-	bit 0, wa
-	jr z, Voice_ActiveFlag_ActivePath
-	ld a, (Payload_Bss_Start+0x632e:24)
-	cp a, (xsp + 2)
-	jr nz, Voice_ActiveFlag_ActivePath
-	ld a, (Payload_Bss_Start+0x6330:24)
-	sla a, 2
-	ld (xsp), a
-
-; Joins after the panel-override test; adds the secondary parameter if bit 15 is set.
-Voice_ActiveFlag_ActivePath:
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	ld	wa, (xbc+wa)
-	extz xwa
-	bit 15, wa
-	jr z, Voice_ActiveFlag_InactivePath
-	ld a, (xsp + 2)
-	extz wa
-	calr Voice_SecondaryParam_Fetch2
-	add (xsp), l
-
-; The single store to part+0x67 and the return.
-Voice_ActiveFlag_InactivePath:
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x2559:24)
-	ld a, (xsp)
-	ld	(xde+bc), a
-	inc 4, xsp
-	ret
+Voice_ActiveFlag_CheckAndLoad:	.include "includes/generated/cc900/Voice_ActiveFlag_CheckAndLoad.s"	; C: cc900/dsp_voice_params_c_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ActiveFlag_ActivePath, Voice_ActiveFlag_CheckAndLoad + 52
+	.set	Voice_ActiveFlag_InactivePath, Voice_ActiveFlag_CheckAndLoad + 88
 
 ; ★ THIS IS CODE, not a table.  The ELF calls it Voice_ProgChange_TableData; that name is a
 ; converter artifact (the whole body was emitted as `.byte`).  I propose the new name because
@@ -5917,113 +5709,14 @@ Voice_NoteState_Clear:	.include "includes/generated/cc900/Voice_NoteState_Clear.
 ; (0x0330D5) and AlgoFlag_Write (0x032FD5) -> a second 3 x 4 loop calling EFF_RoutingInit ->
 ; VoiceNoteParam_UpdateLoop.
 ; Entered from Voice_ProgChange_InnerDispatch1 when descriptor[0x10] & 0xC0 == 0xC0.
-VoiceSlot_FullInit:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	ld bc, 0:i3
-	calr AlgoType_StateWrite
-	ld a, (xsp + 4)
-	extz wa
-	calr Voice_ActiveFlag_CheckAndLoad
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot0
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot1
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot2
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot3
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot4
-	ld a, (xsp + 4)
-	extz wa
-	calr Partial_Build_Present_Word
-	ld a, (xsp + 4)
-	extz wa
-	calr EnvTranspose_UpdateLoop
-	ldw (xsp + 2), 0x0
-	cpw (xsp + 2), 0x3
-	jr nc, VoiceSlot_FullInit_Epilogue
-
-; Head of the inner (0..3) loop of the AlgoFlag_Write pass.
-VoiceSlot_FullInit_Loop1:
-	ld iz, 0:i3
-	cp iz, 4:i3
-	jr nc, VoiceSlot_FullInit_Loop2
-
-; Body: AlgoFlag_Write_Bit3 then AlgoFlag_Write for (word, slot).
-VoiceSlot_FullInit_Loop1Next:
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ld wa, (xsp + 2)
-	ld c, a
-	extz bc
-	ldto_berp A, 0xF8
-	ld e, a
-	extz de
-	ld wa, hl
-	calr AlgoFlag_Write_Bit3
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ld wa, (xsp + 2)
-	ld c, a
-	extz bc
-	ldto_berp A, 0xF8
-	ld e, a
-	extz de
-	ld wa, hl
-	calr AlgoFlag_Write
-	inc 1, iz
-	cp iz, 4:i3
-	jr c, VoiceSlot_FullInit_Loop1Next
-
-; Head of the inner (0..3) loop of the EFF_RoutingInit pass.
-VoiceSlot_FullInit_Loop2:
-	ld iz, 0:i3
-	cp iz, 4:i3
-	jr nc, VoiceSlot_FullInit_Loop3
-
-; Body: EFF_RoutingInit(part, slot, word).
-VoiceSlot_FullInit_Loop2Next:
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ldto_berp A, 0xF8
-	ld c, a
-	extz bc
-	ld wa, (xsp + 2)
-	ld e, a
-	extz de
-	ld wa, hl
-	calr EFF_RoutingInit
-	inc 1, iz
-	cp iz, 4:i3
-	jr c, VoiceSlot_FullInit_Loop2Next
-
-; Outer (word 0..2) increment and back-edge.
-VoiceSlot_FullInit_Loop3:
-	incw 1, (xsp + 2)
-	cpw (xsp + 2), 0x3
-	jr c, VoiceSlot_FullInit_Loop1
-
-; VoiceNoteParam_UpdateLoop, then pop IZ / inc 4,XSP / ret.
-VoiceSlot_FullInit_Epilogue:
-	ld a, (xsp + 4)
-	extz wa
-	calr VoiceNoteParam_UpdateLoop
-	popw iz
-	inc 4, xsp
-	ret
+VoiceSlot_FullInit:	.include "includes/generated/cc900/VoiceSlot_FullInit.s"	; C: cc900/dsp_voice_params_d_10a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceSlot_FullInit_Loop1, VoiceSlot_FullInit + 92
+	.set	VoiceSlot_FullInit_Loop1Next, VoiceSlot_FullInit + 98
+	.set	VoiceSlot_FullInit_Loop2, VoiceSlot_FullInit + 156
+	.set	VoiceSlot_FullInit_Loop2Next, VoiceSlot_FullInit + 162
+	.set	VoiceSlot_FullInit_Loop3, VoiceSlot_FullInit + 194
+	.set	VoiceSlot_FullInit_Epilogue, VoiceSlot_FullInit + 204
 
 ; The second re-init variant, entered from Voice_ProgChange_InnerDispatch2 when
 ; descriptor[0x10] & 0xC0 == 0x40.  Identical to VoiceSlot_FullInit except that
@@ -6154,107 +5847,13 @@ VoiceSlot_AltInit_Epilogue:
 ; ★ This is where a bad or unmapped program number silently leaves the part with NO algorithm
 ;   engaged (bit 14 clear) -- AlgoType_StateWrite will then clear bit 15 and zero every
 ;   coefficient, and every routine in this region becomes a no-op for that part.
-Voice_ProgChange:
-	dec 4, xsp
-	pushw_erp 0xFA
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 2)
-	cp (xwa + 1), 0x1A
-	jrl ge, Voice_ProgChange_InnerDispatch3
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 1)
-	ldfr_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x250b:24)
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 2)
-	ld	(xde+bc), a
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x250c:24)
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 3)
-	ld	(xde+bc), a
-	ld xwa, (xsp + 2)
-	cp (xwa + 4), 0x0
-	jr z, Voice_ProgChange_Path1
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	orw	(xbc+wa), 0x4000
-	jr Voice_ProgChange_Path2
-
-; Staging byte +0x04 == 0: clears part+0x0A bit 14.
-Voice_ProgChange_Path1:
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	andw	(xbc+wa), 0xbfff
-
-; Common tail: Voice_ActiveFlag_Set, Voice_NoteState_Clear, Voice_SetLFO_ActiveFlag,
-; WaveSel_Rebuild_PartCaches, then the descriptor[0x10] switch.
-Voice_ProgChange_Path2:
-	ldto_berp A, 0xFB
-	extz wa
-	calr Voice_ActiveFlag_Set
-	ldto_berp A, 0xFB
-	extz wa
-	calr Voice_NoteState_Clear
-	ldto_berp A, 0xFB
-	extz wa
-	call Voice_SetLFO_ActiveFlag
-	ldto_berp A, 0xFB
-	ld l, a
-	extz hl
-	ld xwa, (xsp + 2)
-	ld c, (xwa + 2)
-	ld xwa, (xsp + 2)
-	ld e, (xwa + 3)
-	ld wa, hl
-	calr WaveSel_Rebuild_PartCaches
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, Voice_ProgChange_InnerDispatch3
-	cp a, 0x40
-	jr z, Voice_ProgChange_InnerDispatch2
-	cp a, 0xC0
-	jr z, Voice_ProgChange_InnerDispatch1
-	cp a, 0:i3
-	jr nz, Voice_ProgChange_InnerDispatch3
-
-; descriptor[0x10] & 0xC0 == 0xC0: VoiceSlot_FullInit.
-Voice_ProgChange_InnerDispatch1:
-	ldto_berp A, 0xFB
-	extz wa
-	calr VoiceSlot_FullInit
-	jr Voice_ProgChange_InnerDispatch3
-
-; descriptor[0x10] & 0xC0 == 0x40: Voice_PortamentoTargets_SetAll then VoiceSlot_AltInit.
-Voice_ProgChange_InnerDispatch2:
-	ldto_berp A, 0xFB
-	extz wa
-	call Voice_PortamentoTargets_SetAll
-	ldto_berp A, 0xFB
-	extz wa
-	calr VoiceSlot_AltInit
-
-; Shared exit (also the >= 0x1A and 0x80/0x00 early-outs).
-Voice_ProgChange_InnerDispatch3:
-	popw_erp 0xFA
-	inc 4, xsp
-	ret
+Voice_ProgChange:	.include "includes/generated/cc900/Voice_ProgChange.s"	; C: cc900/dsp_voice_params_d_10a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ProgChange_Path1, Voice_ProgChange + 110
+	.set	Voice_ProgChange_Path2, Voice_ProgChange + 131
+	.set	Voice_ProgChange_InnerDispatch1, Voice_ProgChange + 224
+	.set	Voice_ProgChange_InnerDispatch2, Voice_ProgChange + 234
+	.set	Voice_ProgChange_InnerDispatch3, Voice_ProgChange + 251
 
 ; Global reset of all per-part effect state.  No arguments.
 ; Pass 1: for every part 0..0x19, for every i 0..3 and j 0..2, zero the note-state byte at
@@ -6265,118 +5864,18 @@ Voice_ProgChange_InnerDispatch3:
 ;   (0x022DBD).
 ; Finally sets the panel-target global 0x0451A4 to 0xFF ("no part selected").
 ; Callers: DSP_System_Init (0x034CCC) and one site outside the region.
-VoiceSlot_ClearAll:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 8), 0x0
-	cp (xsp + 8), 0x1A
-	jrl nc, VoiceSlot_ClearAll_OuterNext
-
-; Per-part head; initialises the i (output-slot) counter.
-VoiceSlot_ClearAll_OuterLoop:
-	ldw (xsp + 4), 0x0
-	cpw (xsp + 4), 0x4
-	jrl nc, VoiceSlot_ClearAll_MidNext
-
-; Per-i head; initialises the j counter.
-VoiceSlot_ClearAll_MidLoop:
-	ldw (xsp + 6), 0x0
-	cpw (xsp + 6), 0x3
-	jr nc, VoiceSlot_ClearAll_InnerNext
-
-; Body: zero note-state byte +0x27+4i+0x10j and routing word +0x88+0x25i+2j.
-VoiceSlot_ClearAll_InnerLoop:
-	ld wa, (xsp + 4)
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 2
-	ld wa, (xsp + 6)
-	extz xwa
-	sll xwa, 4
-	ld xde, xwa
-	add xde, xbc
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	add xwa, xde
-	ld (xwa + 39), 0x0
-	ld wa, (xsp + 6)
-	extz xwa
-	ld xiz, xwa
-	add xiz, xiz
-	ld wa, (xsp + 4)
-	extz xwa
-	ld xbc, 0x25
-	call Math_Multiply32
-	add xhl, xiz
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	add xwa, xhl
-	ldw	(xwa+136), 0x0000
-	incw 1, (xsp + 6)
-	cpw (xsp + 6), 0x3
-	jr c, VoiceSlot_ClearAll_InnerLoop
-
-; i-loop increment and back-edge.
-VoiceSlot_ClearAll_InnerNext:
-	incw 1, (xsp + 4)
-	cpw (xsp + 4), 0x4
-	jrl c, VoiceSlot_ClearAll_MidLoop
-
-; Voice_NoteState_Clear for the part, then the part-loop increment and back-edge.
-VoiceSlot_ClearAll_MidNext:
-	ld a, (xsp + 8)
-	extz wa
-	calr Voice_NoteState_Clear
-	incm8 1, (xsp + 8)
-	cp (xsp + 8), 0x1A
-	jrl c, VoiceSlot_ClearAll_OuterLoop
-
-; Head of pass 2 (the 64-voice loop).
-VoiceSlot_ClearAll_OuterNext:
-	ldw (xsp + 4), 0x0
-	cpw (xsp + 4), 0x40
-	jr nc, VoiceSlot_ClearAll_Epilogue
-
-; Per-voice head; initialises the j counter.
-VoiceSlot_ClearAll_SubLoop1:
-	ldw (xsp + 6), 0x0
-	cpw (xsp + 6), 0x3
-	jr nc, VoiceSlot_ClearAll_SubLoop2
-
-; Body: NoteState_ClearRecord(voice, j).
-VoiceSlot_ClearAll_SubLoop1Next:
-	ld wa, (xsp + 4)
-	ld e, a
-	extz de
-	ld wa, (xsp + 6)
-	ld c, a
-	extz bc
-	ld wa, de
-	call NoteState_ClearRecord
-	incw 1, (xsp + 6)
-	cpw (xsp + 6), 0x3
-	jr c, VoiceSlot_ClearAll_SubLoop1Next
-
-; Voice-loop increment and back-edge.
-VoiceSlot_ClearAll_SubLoop2:
-	incw 1, (xsp + 4)
-	cpw (xsp + 4), 0x40
-	jr c, VoiceSlot_ClearAll_SubLoop1
-
-; 0x0451A4 = 0xFF, pop XIZ, inc 6,XSP, ret.
-VoiceSlot_ClearAll_Epilogue:
-	ld (Payload_Bss_Start+0x632e:24), 0xff
-	pop xiz
-	inc 6, xsp
-	ret
+VoiceSlot_ClearAll:	.include "includes/generated/cc900/VoiceSlot_ClearAll.s"	; C: cc900/dsp_voice_params_c_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceSlot_ClearAll_OuterLoop, VoiceSlot_ClearAll + 14
+	.set	VoiceSlot_ClearAll_MidLoop, VoiceSlot_ClearAll + 27
+	.set	VoiceSlot_ClearAll_InnerLoop, VoiceSlot_ClearAll + 39
+	.set	VoiceSlot_ClearAll_InnerNext, VoiceSlot_ClearAll + 147
+	.set	VoiceSlot_ClearAll_MidNext, VoiceSlot_ClearAll + 158
+	.set	VoiceSlot_ClearAll_OuterNext, VoiceSlot_ClearAll + 176
+	.set	VoiceSlot_ClearAll_SubLoop1, VoiceSlot_ClearAll + 188
+	.set	VoiceSlot_ClearAll_SubLoop1Next, VoiceSlot_ClearAll + 200
+	.set	VoiceSlot_ClearAll_SubLoop2, VoiceSlot_ClearAll + 230
+	.set	VoiceSlot_ClearAll_Epilogue, VoiceSlot_ClearAll + 240
 
 ; ----------------------------------------------------------------------------
 ; DSP_System_Init - Initialize DSP subsystem state and buffers
@@ -6397,70 +5896,18 @@ VoiceSlot_ClearAll_Epilogue:
 ; Then: DSP_Config_Init (0x02DFA8), DSP_Reset (0x0360A7), Voice_Reset_Engine (0x021ECB),
 ; DSP_ResetWriteBufferPtr (0x03555F), VoiceSlot_ClearAll, (0x041342) = 0, and tail-jumps to
 ; Voice_ResetAllControllers (0x02A8F3).
-DSP_System_Init:	; 034C45h
-	ld bc, 0:i3
-	lda xwa, (Payload_Bss_Start+0x24cc:24)                  ; DSP state buffer 1
-	cp bc, 0x26	; 38 bytes
-	jr nc, DSP_System_Init_Clear2
-
-; Zero-fill loop over 0x041342..0x041367 (0x26 bytes of global audio flags).
-DSP_System_Init_Clear1:
-	ld (xwa+), 0x00	; Clear byte
-	inc 1, bc
-	cp bc, 0x26
-	jr c, DSP_System_Init_Clear1
-
-; Head of the part-table zero-fill (0x1D26 bytes at 0x041368).
-DSP_System_Init_Clear2:
-	ld bc, 0:i3
-	lda xwa, (Part_Record_Base:24)                  ; DSP state buffer 2
-	cp bc, 0x1D26	; 7462 bytes
-	jr nc, DSP_System_Init_Vars
-
-; Body of the part-table zero-fill.
-DSP_System_Init_Clear2_Loop:
-	ld (xwa+), 0x00
-	inc 1, bc
-	cp bc, 0x1D26
-	jr c, DSP_System_Init_Clear2_Loop
-
-; ★ Resets the MIDI event ring (write 0x2B0D, read 0x2B0F, count 0x2B11 all zero) and reads
-; the SFR-0x44 bit-3 strap.
-DSP_System_Init_Vars:
-	ldw (11025:16), 0	; Clear DSP control variable
-	ld wa, 0:i3
-	ld (11023:16), wa	; Clear control variable
-	ld (MIDI_RingBuffer:16), wa	; Clear control variable
-	bit	3, (PH:8)	; Check hardware config pin
-	jr z, DSP_System_Init_SetBit
-	andw (Voice_GlobalFlags:24), 65527	; Clear bit 3 of DSP config
-	jr DSP_System_Init_Continue
-
-; Strap clear: sets bit 3 of the global word at 0x041343.
-DSP_System_Init_SetBit:
-	orw (Voice_GlobalFlags:24), 8	; Set bit 3 of DSP config
-
-; Installs the three long pointers and runs the six-call init chain.
-DSP_System_Init_Continue:
-	ld xwa, 0x50000
-	ld (ToneDB_RelBase:24), xwa
-	ld xwa, 0x50000
-	ld (ToneDB_RootPtr:24), xwa
-	lda xwa, (0x0a0000:24)
-	ld (Payload_Bss_Start+0x64a2:24), xwa
-	call DSP_Config_Init
-	call DSP_Reset
-	ld wa, 0:i3
-	call Voice_Reset_Engine
-	call DSP_ResetWriteBufferPtr
-	call VoiceSlot_ClearAll
-	ld (Payload_Bss_Start+0x24cc:24), 0x00
-	jp Voice_ResetAllControllers
+DSP_System_Init:	.include "includes/generated/cc900/DSP_System_Init.s"	; C: cc900/dsp_voice_params_d_9a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_System_Init_Clear1, DSP_System_Init + 13
+	.set	DSP_System_Init_Clear2, DSP_System_Init + 25
+	.set	DSP_System_Init_Clear2_Loop, DSP_System_Init + 38
+	.set	DSP_System_Init_Vars, DSP_System_Init + 50
+	.set	DSP_System_Init_SetBit, DSP_System_Init + 80
+	.set	DSP_System_Init_Continue, DSP_System_Init + 87
 ; DSP_InitHandler_NullStub: A lone `ret`: the do-nothing handler that entries 1-3 of
 ;   DSP_InitHandler_Pointers point to beside entry 0 = DSP_System_Init -- same shape as DSP2_InitTask_NullStub /
 ;   DSP_ResetTask_NullStub. Basis: table + body; the old header's 'no caller and no table reference' is wrong.
-DSP_InitHandler_NullStub:
-	ret
+DSP_InitHandler_NullStub:	.include "includes/generated/cc900/DSP_InitHandler_NullStub.s"	; C: cc900/dsp_voice_params_d_8a.c
 
 ; The per-tick audio housekeeping alternator.  Already named in the reference file.
 ; Reads the global byte 0x041342 and runs ONE of two halves per call, then flips every bit of
