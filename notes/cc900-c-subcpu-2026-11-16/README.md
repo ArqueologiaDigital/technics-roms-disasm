@@ -188,3 +188,28 @@ spelling).  So these are -Xr idioms of the firmware's own C, not an option diffe
 (`v142/subcpu/cc900-staged/*_ia06.c`, `*_ic03.c`).  Round 13's switch near misses (sub_C_13*, sub_D_13*) did not
 match: TVF_Emit_Registers / _Type2 stay at +1 (frame size and XIZ vs IZ for the record pointer), DSP_VoiceCoeffRoute2
 at +2 (L vs H for `sel & 15`).
+
+### Applying them (run 2026-11-16-101-sub-r14)
+
+`idiom_scan.py` sorts the unmatched functions' best attempts by the bytes at their first difference
+(`idiom_scan.tsv`: 22 of 159 looked like one of the idioms).  Helpers G, H and J applied the idioms to them
+(`sub_G_14*`, `sub_H_14*`, `sub_J_14*`).  Five new functions match:
+
+- ToneGen_Process_Notes: the ROM loads a constant POINTER argument first; a register local `m = (unsigned char *)0x4a42;`
+  set before the call does it (idiom (b) for a pointer).
+- VoiceState_SwapSlot_Guarded: the byte compared unsigned in 8 bits (`(unsigned char)k`), not through `(int)k`.
+- ScaleTune_Get_User_Offset / ScaleTune_Set_User_Offset: an index built as `extz wa; add wa,12` comes from an
+  unsigned initializer `unsigned int i = n;` indexed with `(int)i + 12` (round 2's form plus the cast).
+- DSP_TableWalk_SearchWithState: the parameter itself, not a copy of it, holds the pointer the result is stored through.
+
+Only one of the eight "extend" functions was really idiom (c); the bytes-only guess is a pointer, not a verdict.
+
+Two more rules:
+
+- **Stack arguments are pushed left to right** (lane_hd's finding, confirmed here): in a non-`__cdecl` function the
+  LAST parameter has the lowest stack offset (`__cdecl` library calls are the reverse).  Read the parameters' order
+  from the ROM's `(xsp+N)` offsets.  DSP_AlgoDescriptor_Emit's search length is its last parameter (+14), not `type`
+  (+18): our C passed the wrong parameter.
+- **A result kept in a parameter's register**: DSP_TuneOffset's `ld xde,xhl` / `ld a,(xde)` after the call is
+  not a new pointer local (sub_F_ra01..10 all keep XHL) but most probably the parameter `tbl` (in XDE) reused:
+  `tbl = DSP_TableWalk_Search(tbl, ...); v = *tbl;` (round 15, sub_F_ra11..14).
