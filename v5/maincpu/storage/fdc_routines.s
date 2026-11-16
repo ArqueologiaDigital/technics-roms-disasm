@@ -18,30 +18,22 @@
 ;   - Requires FDC_MAP__BASE_ADDR and FDC__DMA_ACKNOWLEDGE
 ; =============================================================================
 
-FDC_Read_Status:
-	ld l, (0x110008:24)
-	ret
+FDC_Read_Status:	.include "includes/generated/cc900/FDC_Read_Status.s"	; C: cc900/fdc_routines_m270.c
 
-FDC_ReadDataRegister:
-	ld l, (0x11000a:24)
-	ret
+FDC_ReadDataRegister:	.include "includes/generated/cc900/FDC_ReadDataRegister.s"	; C: cc900/fdc_routines_m270.c
 
 ; --- FDC_Send_Command: Write command byte to FDC data register ---
 ; Stores accumulator A to FDC data port (0x110008),
 ; waits for FDC ready via status register polling,
 ; then returns. Uses (R+d16) addressing for FDC port access.
-FDC_Send_Command:
-	ld (0x110008:24), a
-	ret
+FDC_Send_Command:	.include "includes/generated/cc900/FDC_Send_Command.s"	; C: cc900/fdc_routines_m270_b.c
 FDC_Write_Data_Entry_Helper:
 	ldmm8	0x8a68, 0x8a6a
 	ld	(0x8a6a:16), a
 	ret
 ; FDC_WriteDataRegister: Writes A to the uPD72068 data register (0x11000A): command and parameter bytes. Basis:
 ;   callers + body -- FDC_SendCommandByte, FDC_SendParameterByte, INT4_SendSpecifyCmd and FDC_CONFIG_VERIFY call it.
-FDC_WriteDataRegister:
-	ld (0x11000a:24), a
-	ret
+FDC_WriteDataRegister:	.include "includes/generated/cc900/FDC_WriteDataRegister.s"	; C: cc900/fdc_routines_m270_c.c
 
 ; --- FDC_WaitReady: Wait for FDC ready with timeout and DMA transfer ---
 ; Two-phase wait loop (masks 0x1f and 0x90) checking FDC status register.
@@ -126,13 +118,7 @@ FDC_WaitParamByteReady_Skip6:
 FDC_WaitParamByteReady_Epilogue2:
 	pop XIZ
 	ret
-FDC_INIT:
-	ldw WA, 0x0036
-	calr FDC_Send_Command
-	ld wa, 2:i3
-	calr SOME_DELAY
-	ld	(FDC_CURRENT_CYLINDER:16), 0xff
-	ret
+FDC_INIT:	.include "includes/generated/cc900/FDC_INIT.s"	; C: cc900/fdc_routines_m270.c
 FDC_CONFIG_VERIFY:
 	push	xiz
 	calr	FDC_ClearStatus_InitTimer
@@ -487,50 +473,11 @@ FDC_FormatUnknown:
 	ldw wa, 0xfe
 	calr FDC_Set_Status
 
-FDC_InitStateVars:
-	ld	a, (35254:16)
-	srl	a, 4
-	and	a, 15
-	ld	(FDC_SPECIFY_SRT:16), a
-	ld	(FDC_PARAM_DTL:16), 255
-	ld	(FDC_FORMAT_FILL:16), 0
-	ld	(FDC_SPECIFY_HUT:16), 15
-	ld	(FDC_SPECIFY_HLT:16), 1
-	ld	(35204:16), 0
-	ld	(35203:16), 0
-	ld	(35205:16), 0
-	ld	(35206:16), 0
-	ld	(35207:16), 0
-	ld	(FDC_SPECIFY_ND:16), 0
-	ret
-FDC_CheckHead:
-	ld	wa, (FDC_REQ_HEAD:16)
-	ld	(FDC_PARAM_H:16), a
-	ld	(FDC_HEAD:16), a
-	cp	(FDC_HEAD:16), 0x00
-	ret Z
-	cp	(FDC_HEAD:16), 1
-	ret	z
-	ldw	wa, 0xfe
-	calr	FDC_Set_Status
-	ret
+FDC_InitStateVars:	.include "includes/generated/cc900/FDC_InitStateVars.s"	; C: cc900/fdc_routines_m0.c
+FDC_CheckHead:	.include "includes/generated/cc900/FDC_CheckHead.s"	; C: cc900/fdc_routines_m270_xr.c
 FDC_Command5_Epilogue:
 	ret
-FDC_Validate_Drive_Head:
-	cpw	(FDC_REQ_HEAD:16), 0
-
-	ret z
-
-; cpdi16 0x8a44, 1 (v7 patched)
-	cpw	(FDC_REQ_HEAD:16), 1
-
-	ret z
-
-	ldw wa, 0xfe
-
-	calr FDC_Set_Status
-
-	ret
+FDC_Validate_Drive_Head:	.include "includes/generated/cc900/FDC_Validate_Drive_Head.s"	; C: cc900/fdc_routines_m270_xr.c
 
 
 
@@ -565,12 +512,7 @@ FDC_NOP_Delay_Exit:
 	ret
 
 
-FDC_Pulse_PH0:
-	set	0, (PH:8)
-	ldw wa, 0xa
-	calr FDC_NOP_Delay
-	res	0, (PH:8)
-	ret
+FDC_Pulse_PH0:	.include "includes/generated/cc900/FDC_Pulse_PH0.s"	; C: cc900/fdc_routines_m270.c
 
 
 FDC_Init_Sequence_1:
@@ -783,37 +725,13 @@ FDC_ResultPhase_Read_Epilogue3:
 ; FDC_SendCommandByte: Drains any pending result phase (FDC_ResultPhase_Read) and writes A to the uPD72068 data
 ;   register 0x11000A -- the first byte of a uPD765-style command. Basis: callers + body + twin -- FDC_CMD_SEND sends
 ;   every non-auxiliary opcode through it before the parameter bytes; bootloader twin FDC_SendCommandByte.
-FDC_SendCommandByte:
-	dec 2,XSP
-	ld (XSP),A
-	calr FDC_ResultPhase_Read
-	ld A,(XSP)
-	extz WA
-	calr FDC_WriteDataRegister
-	inc 2,XSP
-	ret
+FDC_SendCommandByte:	.include "includes/generated/cc900/FDC_SendCommandByte.s"	; C: cc900/fdc_routines_m270.c
 ; FDC_SendParameterByte: Waits (500-tick timeout, status 1) until the main status register shows RQM|CB (0x90) and
 ;   writes A to the data register 0x11000A -- one command parameter byte. Basis: callers + body + twin -- FDC_CMD_SEND
 ;   sends the unit/head byte through it and the SPECIFY / SEEK / FORMAT / READ-WRITE parameter senders call it once
 ;   per byte; bootloader twin FDC_SendParameterByte.
-FDC_SendParameterByte:
-	dec	2, xsp
-	ld	(xsp), a
-	calr	FDC_WaitParamByteReady
-	ld	a, (xsp)
-	extz	wa
-	calr	FDC_WriteDataRegister
-	inc	2, xsp
-	ret
-FDC_WriteAuxCmdByte:
-	dec 2,XSP
-	ld (XSP),A
-	calr FDC_ResultPhase_Read
-	ld A,(XSP)
-	extz WA
-	calr FDC_Send_Command
-	inc 2,XSP
-	ret
+FDC_SendParameterByte:	.include "includes/generated/cc900/FDC_SendParameterByte.s"	; C: cc900/fdc_routines_m270_b.c
+FDC_WriteAuxCmdByte:	.include "includes/generated/cc900/FDC_WriteAuxCmdByte.s"	; C: cc900/fdc_routines_m270_c.c
 FDC_HardwareSetup_Helper3:
 	dec	2, xsp
 	ld	(xsp), a
@@ -841,85 +759,20 @@ FDC_HardwareSetup_Helper4:
 FDC_ResultPhase_Read_Epilogue2:
 	inc	2, xsp
 	ret
-FDC_Exception_Status_Decoder:
-	lda	xde, (FDC_RESULT:16)
-	ld	c, (xde+1)
-	ld	a, c
-	and	a, 192
-	cp	a, 64
-	jr	z, FDC_StatusDecode_AbnormalTerm
-	cp	a, 128
-	jr	z, FDC_StatusDecode_InvalidCommand
-	cp	a, 192
-	jr	z, FDC_StatusDecode_DriveNotReady
-	cp	a, 0:i3
-	jr	nz, FDC_StatusDecode_UnknownIC
-	ld	l, 0:opc
-	ret
-FDC_StatusDecode_DriveNotReady:
-	ld	(35400:16), 255
-	ld	l, 0:opc
-	ret
-FDC_StatusDecode_InvalidCommand:
-	ld l, 0x0:opc
-	ret
-
-FDC_StatusDecode_AbnormalTerm:
-	bit 3, c
-	jr z, FDC_StatusDecode_Overrun
-	ld l, 0x31:opc
-	ret
-
-FDC_StatusDecode_Overrun:
-	bit 4, c
-	jr z, FDC_StatusDecode_CheckST2
-	ld l, 0x32:opc
-	ret
-
-FDC_StatusDecode_CheckST2:
-	ld c, (xde + 2)
-	bit 0, c
-	jr z, FDC_StatusDecode_BadCylinder
-	ldw wa, 0x35
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_BadCylinder:
-	bit 1, c
-	jr z, FDC_StatusDecode_WrongCylinder
-	ldw wa, 0x2f
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_WrongCylinder:
-	bit 2, c
-	jr z, FDC_StatusDecode_ScanEqual
-	ldw wa, 0x33
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_ScanEqual:
-	bit 4, c
-	jr z, FDC_StatusDecode_DataFieldError
-	ldw wa, 0x34
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_DataFieldError:
-	bit 5, c
-	jr z, FDC_StatusDecode_ControlMark
-	ldw wa, 0x36
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_ControlMark:
-	bit 7, c
-	jr z, FDC_StatusDecode_DefaultError
-	ldw wa, 0x37
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_DefaultError:
-	ldw wa, 0x8
-	jrl FDC_Set_Status
-
-FDC_StatusDecode_UnknownIC:
-	ld l, 0x8:opc
-	ret
+FDC_Exception_Status_Decoder:	.include "includes/generated/cc900/FDC_Exception_Status_Decoder.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_StatusDecode_DriveNotReady, FDC_Exception_Status_Decoder + 34
+	.set	FDC_StatusDecode_InvalidCommand, FDC_Exception_Status_Decoder + 42
+	.set	FDC_StatusDecode_AbnormalTerm, FDC_Exception_Status_Decoder + 45
+	.set	FDC_StatusDecode_Overrun, FDC_Exception_Status_Decoder + 53
+	.set	FDC_StatusDecode_CheckST2, FDC_Exception_Status_Decoder + 61
+	.set	FDC_StatusDecode_BadCylinder, FDC_Exception_Status_Decoder + 75
+	.set	FDC_StatusDecode_WrongCylinder, FDC_Exception_Status_Decoder + 86
+	.set	FDC_StatusDecode_ScanEqual, FDC_Exception_Status_Decoder + 97
+	.set	FDC_StatusDecode_DataFieldError, FDC_Exception_Status_Decoder + 108
+	.set	FDC_StatusDecode_ControlMark, FDC_Exception_Status_Decoder + 119
+	.set	FDC_StatusDecode_DefaultError, FDC_Exception_Status_Decoder + 130
+	.set	FDC_StatusDecode_UnknownIC, FDC_Exception_Status_Decoder + 136
 
 
 ;==================== (guessed) start of floppy routines =======================
@@ -1331,24 +1184,9 @@ FDC_CmdRecalibrate_Skip:
 	calr	SOME_DELAY
 	pop	qiz
 	ret
-FDC_CmdSeek:
-	ld a, (FDC_TARGET_TRACK:16)
-	cp	a, (FDC_CURRENT_CYLINDER:16)
-	ret Z
-; (was .incbin "includes/romslices/v7_transplant_FDC_CmdRecalibrate_tail.bin")
-	.byte	0xc1, 0x7e, 0x89, 0x19, 0x4c, 0x8a
-	ld	wa, 2:i3
-	calr	SOME_DELAY
-	calr	FDC_TIMING_DELAY
-	ldw	wa, 15
-	calr	FDC_CMD_SEND
-	calr	FDC_POST_OP
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CmdSeek_Skip
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-FDC_CmdSeek_Skip:
-	ldw	wa, 16
-	jrl	SOME_DELAY
+FDC_CmdSeek:	.include "includes/generated/cc900/FDC_CmdSeek.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CmdSeek_Skip, FDC_CmdSeek + 45
 FDC_CMD_EXEC_Helper6:
 	ld	(FDC_CMD_OPCODE:16), 198
 	calr	FDC_Setup_DMA_Mode

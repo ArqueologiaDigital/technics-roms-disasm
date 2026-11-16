@@ -149,3 +149,17 @@ unsigned char SeqPlay_HandlePlaybackEvent(void)
   }
   return 0;
 }
+
+extern int VoiceType_CheckDrumOrControl(unsigned char a, unsigned char *p);
+
+int VoiceType_CheckDrumOrControl(unsigned char a, unsigned char *p)
+{
+  unsigned char f = 0;
+  if (p[0] == 0x82) return 0;
+  if ((p[0] & 0xf0) == 0xc0) { if (p[2] == 0x48 && p[3] == 0) f = 1; }
+  else if ((p[0] & 0xf0) == 0xb0 && p[2] == 0x48 && p[3] == 7) f = 1;
+  if (a == 0x15) {
+    if (f != 1) return -1;
+  } else if (f != 0) return -1;
+  return 0;
+}

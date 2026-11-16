@@ -46,3 +46,49 @@ void SeMenu_NameCharIndexToChar(unsigned char c, unsigned char *out)
 	}
 	*out = GUI_DisplayStructData_0x1129[c];
 }
+
+/* cc900-module: SeCtr2_StepPartField SeMenu_BindDialToColumn SeMenu_BitShiftMask SeMenu_FillObjTable SeMenu_FlushDisplayObj SeMenu_IsPartEnabled SeMenu_LoadMasterPtr SeMenu_PostDialEnable SeMenu_PostEditUpDownSet SeMenu_SetCurrentPart SeMenu_SetupMenuDisplay SeMenu_SetupMenuDisplay_Finalize SeMenu_SetupMenuDisplay_Section3_End SeMenu_SetupPartDisplay SeMenu_StepParamFieldSigned SeMenu_StepParamFieldUnsigned SeMenu_StoreEventId SeMenu_ValidatePartNumber */
+extern void SeMenu_ValidatePartNumber(unsigned char *part);
+extern int SeMenu_IsPartEnabled(unsigned char a);
+extern void SeMenu_SetCurrentPart(unsigned char part);
+extern unsigned char SeMenu_SelectPartIfEnabled(unsigned char p);
+extern void SeMenu_PostDialEnable(int on);
+extern void SeMenu_PostEditUpDownSet(int which, int col, int flag);
+extern void SeMenu_BindDialToColumn(unsigned char col);
+extern void UI_ChangeTitleByIndex(unsigned char i);
+extern void UI_PostRefreshEvent(void);
+extern void SeMenu_StoreEventId(unsigned char id);
+extern void SeMenu_SendEvent(unsigned char title, unsigned char refresh);
+extern void SeMenu_InitObjEntry(unsigned char *e);
+
+unsigned char SeMenu_SelectPartIfEnabled(unsigned char p)
+{
+    unsigned char cur;
+    SeMenu_ValidatePartNumber(&cur);
+    if (cur == p || SeMenu_IsPartEnabled(p) == 0)
+        return 0;
+    SeMenu_SetCurrentPart(p);
+    return 1;
+}
+void SeMenu_BindDialToColumn(unsigned char col)
+{
+    SeMenu_PostDialEnable(1);
+    SeMenu_PostEditUpDownSet(0, col, 0);
+    SeMenu_PostEditUpDownSet(1, col, 128);
+}
+void SeMenu_SendEvent(unsigned char title, unsigned char refresh)
+{
+    if (refresh == 0)
+        UI_ChangeTitleByIndex(title);
+    else
+        UI_PostRefreshEvent();
+    SeMenu_StoreEventId(refresh);
+}
+void SeMenu_InitObjEntry(unsigned char *e)
+{
+    unsigned char p;
+    SeMenu_ValidatePartNumber(&p);
+    *e = p;
+    *e <<= 4;
+    ++*e;
+}

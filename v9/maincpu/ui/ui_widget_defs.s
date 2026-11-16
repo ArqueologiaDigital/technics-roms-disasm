@@ -11822,85 +11822,12 @@ DrawWidget_Hline_Return:
 	inc 8, xsp
 	ret
 
-Unlink:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 12), xwa
-	ld xwa, (xsp + 12)
-	calr GetPrevView
-	ld (xsp + 8), xhl
-	ld xwa, (xsp + 8)
-	cp xwa, 0xffffffff
-	jr z, FrameDraw_TopEdge
-	ld xwa, (xsp + 8)
-	calr GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xsp + 12)
-	calr GetNextView
-	ld (xiz + 8), hl
-	ld xwa, (xsp + 8)
-	ld bc, 1:i3
-	calr SetChange
-	ld xwa, (xsp + 12)
-	calr GetViewInstance
-	ldw (xhl + 10), 0xffff
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_TopEdge:
-	ld xwa, (xsp + 12)
-	calr GetNextView
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	cp xwa, 0xffffffff
-	jr z, FrameDraw_BottomEdge
-	ld xwa, (xsp + 4)
-	calr GetViewInstance
-	ld xwa, (xsp + 8)
-	ld (xhl + 10), wa
-	ld xwa, (xsp + 4)
-	ld bc, 1:i3
-	calr SetChange
-	ld xwa, (xsp + 12)
-	calr GetViewInstance
-	ldw (xhl + 8), 0xffff
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_BottomEdge:
-	ld xwa, (xsp + 12)
-	calr GetSuperView
-	ld xiz, xhl
-	cp xiz, 0xffffffff
-	jr z, FrameDraw_InnerFill
-	ld xwa, xiz
-	calr GetViewInstance
-	ld (xsp + 8), xhl
-	ld xwa, xiz
-	calr GetSubView
-	cp xhl, (xsp + 12)
-	jr nz, FrameDraw_CheckInner
-	ld xbc, (xsp + 4)
-	ld xwa, (xsp + 8)
-	ld (xwa + 6), bc
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_CheckInner:
-	ld xwa, (xsp + 12)
-	calr GetViewInstance
-	ldw (xhl + 4), 0xffff
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_InnerFill:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+Unlink:	.include "includes/generated/cc900/Unlink.s"	; C: cc900/ui_widget_defs_m272.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FrameDraw_TopEdge, Unlink + 71
+	.set	FrameDraw_BottomEdge, Unlink + 130
+	.set	FrameDraw_CheckInner, Unlink + 181
+	.set	FrameDraw_InnerFill, Unlink + 200
 
 SetSuperView:
 	dec 8, xsp
@@ -11967,26 +11894,7 @@ GetLinkView:	.include "includes/generated/cc900/GetLinkView.s"	; C: cc900/ui_wid
 	.set	FrameDraw_DefaultReturn, GetLinkView + 90
 	.set	FrameDraw_Return, GetLinkView + 93
 
-GetViewInstance:
-	ld xbc, xwa
-	srl xbc, 16
-	and xbc, 0xfff
-	ldiw_erp 0xe2, 0
-	ld de, wa
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ret
+GetViewInstance:	.include "includes/generated/cc900/GetViewInstance.s"	; C: cc900/ui_widget_defs_m272.c
 
 GetBox:	.include "includes/generated/cc900/GetBox.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
@@ -17700,64 +17608,13 @@ PostEvent:	.include "includes/generated/cc900/PostEvent.s"	; C: cc900/ui_widget_
 	.set	PostEvent_Prologue, PostEvent + 105
 	.set	PostEvent_AllocSlot, PostEvent + 110
 
-GetEvent:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 6), xde
-	ld (xsp + 10), xbc
-	ld xiz, xwa
-	ld wa, 4:i3
-	call TaskEvent_Wait
-	ld wa, (0x02ec34:24)
-	cp wa, (0x02ec36:24)
-	jr nz, PostEvent_FillSlot
-	ld wa, 4:i3
-	call TaskEvent_Signal
-	ld hl, 0:i3
-	jr GetEvent_Prologue
-
-PostEvent_FillSlot:
-	decw 1, (0x02f840:24)
-	ld wa, (0x02ec34:24)
-	ld (xsp + 4), wa
-	ld bc, (xsp + 4)
-	muls bc, 0xc
-	lda xwa, (EVENT_QUEUE:24)
-	ld	xwa, (xwa+bc)
-	ld (xiz), xwa
-	cp xwa, 0xffffffff
-	jr nz, PostEvent_LinkSlot
-	calr GetCurrentTarget
-	ld (xiz), xhl
-
-PostEvent_LinkSlot:
-	ld bc, (xsp + 4)
-	muls bc, 0xc
-	lda xwa, (EVENT_QUEUE:24)
-	lda	xde, (xwa+bc)
-	ld xwa, (xsp + 10)
-	ld xbc, (xde + 4)
-	ld (xwa), xbc
-	ld xwa, (xsp + 6)
-	ld xbc, (xde + 8)
-	ld (xwa), xbc
-	cpw (xsp + 4), 0x3ff
-	jr nz, PostEvent_ReturnOne
-	ldw (0x02ec34:24), 0x0000
-	jr PostEvent_Return
-
-PostEvent_ReturnOne:
-	incw 1, (0x02ec34:24)
-
-PostEvent_Return:
-	ld wa, 4:i3
-	call TaskEvent_Signal
-	ld hl, 1:i3
-
-GetEvent_Prologue:
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+GetEvent:	.include "includes/generated/cc900/GetEvent.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PostEvent_FillSlot, GetEvent + 40
+	.set	PostEvent_LinkSlot, GetEvent + 85
+	.set	PostEvent_ReturnOne, GetEvent + 134
+	.set	PostEvent_Return, GetEvent + 139
+	.set	GetEvent_Prologue, GetEvent + 147
 
 DeleteEvent:
 	dec 4, xsp
@@ -18927,32 +18784,10 @@ DrawTask_Dispatch:
 ; 5, 2) and tries again.  The draw task takes entries with DrawRing_TryTake and runs them
 ; through DrawTask_FuncDispatch.  Named DisplayCmd_DequeueAndExecute until 2026-10-02.
 ; ============================================================================
-DrawRing_Post:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-
-DrawRing_Post_Retry:
-	ld wa, 3:i3
-	call TaskEvent_Wait
-	ld xwa, (xsp + 4)
-	calr DrawRing_TryPost
-	ld xiz, xhl
-	ld wa, 3:i3
-	call TaskEvent_Signal
-	or xiz, xiz
-	jr nz, DrawRing_Post_Check
-	ld wa, 5:i3
-	ld bc, 2:i3
-	call Kernel_SetTaskLevel
-
-DrawRing_Post_Check:
-	or xiz, xiz
-	jr z, DrawRing_Post_Retry
-	ld xhl, xiz
-	pop xiz
-	inc 4, xsp
-	ret
+DrawRing_Post:	.include "includes/generated/cc900/DrawRing_Post.s"	; C: cc900/ui_widget_defs_m273_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawRing_Post_Retry, DrawRing_Post + 6
+	.set	DrawRing_Post_Check, DrawRing_Post + 38
 
 DrawRing_Post_Return:
 	ret

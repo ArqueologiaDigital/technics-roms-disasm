@@ -68,3 +68,26 @@ void AccVoice_BarCntBcData_Helper9(void)
     PANEL_STYLE[5] &= ~0x20;
     AddswbWr(72, 5, 0, 0);
 }
+
+extern unsigned char __near ACC_CHORD_TYPE;
+extern unsigned char __near ram_342a;
+extern unsigned char __near ram_342b;
+extern unsigned char Chord_TypeFamilyTable[];
+extern unsigned char *__near ACC_STYLE_RECORD;
+extern void AccTone_IBDC_Helper(void);
+
+/* cc900-name: AccTone_IBDC_Helper=AccTone_InlineBytecodeData_Code_Helper */
+void AccTone_IBDC_Helper(void)
+{
+    unsigned char a;
+    unsigned char *p;
+    a = Chord_TypeFamilyTable[ACC_CHORD_TYPE];
+    ram_342b = a;
+    p = ACC_STYLE_RECORD;
+    a = p[a];
+    ram_342a = a;
+    if (a != 255)
+        return;
+    ram_342a = *p;
+    ram_342b = 0;
+}

@@ -34,36 +34,12 @@ PanelTlv_ValidateLivePanel:
 	jp SwbtWr_NullRet
 
 ; Validate block 0 of each of the 80 panel memories (RAM 0x1ED400 + 960*n).
-PanelTlv_ValidatePanelMemories:
-	dec 2, xsp
-	push xiz
-	ldw (xsp + 4), 0x0
-	lda xiz, (0x1ed400:24)
-
-PanelTlv_ValidatePanelMemories_Loop:
-	ld xwa, xiz
-	calr PanelTlv_ValidateBlock0
-	incw 1, (xsp + 4)
-	lda xiz, (xiz+960)
-	cpw (xsp + 4), 0x50
-	jr c, PanelTlv_ValidatePanelMemories_Loop
-	pop xiz
-	inc 2, xsp
-	ret
+PanelTlv_ValidatePanelMemories:	.include "includes/generated/cc900/PanelTlv_ValidatePanelMemories.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidatePanelMemories_Loop, PanelTlv_ValidatePanelMemories + 13
 
 ; Validate block 0 of panel memory wa, at RAM 0x1ED400 + 960*wa (wa >= 80 returns at once).
-PanelTlv_ValidatePanelMemory:
-	cp	wa, 80
-	ret	nc
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 4
-	sub	xbc, xwa
-	sll	xbc, 6
-	lda	xwa, (0x1ed400:24)
-	add	xwa, xbc
-	calr	PanelTlv_ValidateBlock0
-	ret
+PanelTlv_ValidatePanelMemory:	.include "includes/generated/cc900/PanelTlv_ValidatePanelMemory.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 
 ; Validate the live panel, then the 80 panel memories.
 PanelTlv_ValidateAll:
@@ -185,22 +161,9 @@ PanelTlv_WriteLivePanelHeaders:
 	jrl PanelTlv_WriteBlock1Headers
 
 ; Write the block-0 record headers of each of the 80 panel memories (RAM 0x1ED400 + 960*n).
-PanelTlv_WritePanelMemoryHeaders:
-	dec 2, xsp
-	push xiz
-	ldw (xsp + 4), 0x0
-	lda xiz, (0x1ed400:24)
-
-PanelTlv_WritePanelMemoryHeaders_Loop:
-	ld xwa, xiz
-	calr PanelTlv_WriteBlock0Headers
-	incw 1, (xsp + 4)
-	lda xiz, (xiz+960)
-	cpw (xsp + 4), 0x50
-	jr c, PanelTlv_WritePanelMemoryHeaders_Loop
-	pop xiz
-	inc 2, xsp
-	ret
+PanelTlv_WritePanelMemoryHeaders:	.include "includes/generated/cc900/PanelTlv_WritePanelMemoryHeaders.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_WritePanelMemoryHeaders_Loop, PanelTlv_WritePanelMemoryHeaders + 13
 
 ; xwa = a block-0 base.  PanelTlv_WriteRecordHeader for each of the 46 PanelTlv_Block0_Layout records
 ; (10 bytes each: index*5*2).

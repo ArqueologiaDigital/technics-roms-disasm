@@ -883,3 +883,18 @@ void FileData_ConvertNNBlock1Fields(struct U4_s *s, struct U4_d *d)
 	d->b1590 = s->b1070;
 	d->b1591 = s->b1071;
 }
+
+extern unsigned char __near ram_bc58;
+extern unsigned char __near ram_bc5c;
+extern unsigned char __near ram_bc76;
+extern unsigned char __near ram_bc78;
+extern void MidiChan_SetStateMode(void);
+
+void MidiChan_SetStateMode(void)
+{
+    if (ram_bc58 & 0x40) ram_bc76 = 1;
+    else ram_bc76 = 2;
+    if (ram_bc76 == ram_bc78) return;
+    ram_bc5c |= 0x40;
+    ram_bc78 = ram_bc76;
+}

@@ -44,3 +44,43 @@ void Text_GlyphToCharCode(unsigned char *in, unsigned char *out)
 	if (i != 256) return;
 	*out = 32;
 }
+
+/* cc900-module: CalcTotalWidth */
+extern int __cdecl Strlen(char *);
+extern char *__cdecl Malloc(unsigned int);
+extern char *__cdecl Strcpy(char *, char *);
+extern void __cdecl Free(void *);
+extern int CalcTotalWidth(char *, long);
+extern int WordwrapStrings(char *s, long font, int width);
+
+int WordwrapStrings(char *s, long font, int width)
+{
+	int n;
+	char *b2;
+	int best;
+	char *buf;
+	char *p;
+
+	n = 0;
+	best = 0;
+	p = s;
+	buf = Malloc(Strlen(p) + 1);
+	b2 = buf;
+	if (*p != 0) do {
+		while (*p != 0) {
+			if (*p == 0x20) break;
+			p++;
+			n++;
+		}
+		while (*p != 0) {
+			if (*p != 0x20) break;
+			p++;
+			n++;
+		}
+		Strcpy(b2, s);
+		b2[n] = 0;
+		if (CalcTotalWidth(b2, font) <= width) best = n;
+	} while (*p != 0);
+	Free(buf);
+	return best;
+}

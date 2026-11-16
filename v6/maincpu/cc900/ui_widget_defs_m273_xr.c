@@ -15,3 +15,23 @@ void LcdOn_Return(void)
     VGA_ScreenBlank();
     ram_30464 = 0;
 }
+
+/* cc900-module: DrawRing_TryPost GetCurrentTarget */
+extern void TaskEvent_Wait(int);
+extern void TaskEvent_Signal(int);
+extern void Kernel_SetTaskLevel(int level, int how);
+extern void *DrawRing_TryPost(void *cmd);
+extern void *DrawRing_Post(void *cmd);
+
+void *DrawRing_Post(void *cmd)
+{
+    void *s;
+    do {
+        TaskEvent_Wait(3);
+        s = DrawRing_TryPost(cmd);
+        TaskEvent_Signal(3);
+        if (s == 0)
+            Kernel_SetTaskLevel(5, 2);
+    } while (s == 0);
+    return s;
+}

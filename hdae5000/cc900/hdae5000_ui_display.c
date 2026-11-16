@@ -95,6 +95,12 @@ void HDAE5000_RequestTitle16(unsigned char title)
     CALLV(ROOT->ApPostEvent)(-1L, EVT_INTERRUPT_TITLE, (long)title + TITLE_PS);
 }
 
+void HDAE5000_YieldUntilSem1Zero(void)
+{
+    while (CALLR(int, HAMA->ref_sem_X)(1) != 0)
+        CALLV(HAMA->rot_rdq_X)(3);
+}
+
 void HDAE5000_Set_Menu_Visibility(unsigned char hide)
 {
     int v;

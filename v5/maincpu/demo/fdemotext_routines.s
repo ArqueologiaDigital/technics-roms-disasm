@@ -418,51 +418,11 @@ FDemoText_SyncPreset_Return:
 	inc 6, xsp
 	ret
 
-FDemoText_UpdateChannelVoice:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	calr FDemoText_LookupTableEntry
-	ld xiz, xhl
-	inc 5, xiz
-	ld a, (xsp + 4)
-	extz wa
-	calr FDemoText_CheckVoiceState
-	ld a, (xsp + 4)
-	extz wa
-	cp l, 1:i3
-	jr z, FDemoText_UpdateChannel_Active
-	ld (xiz), 0x0
-	pushw 0x7f
-	ld bc, 5:i3
-	ld de, 0:i3
-	jr FDemoText_UpdateChannel_SendCmd
-
-FDemoText_UpdateChannel_Active:
-	cp	(xiz), 0x0
-	jr	nz, FDemoText_UpdateChannel_Done
-	ld	(xiz), 0x50
-	pushw	0x7f
-	ld	bc, 5:i3
-	ldw	de, 0x50
-	call	AddswbWr
-	lda	xwa, (xiz + 2)
-	cp	(xwa), 0x0
-	jr	z, FDemoText_UpdateChannel_Done
-	ld	(xwa), 0x0
-	ld	a, (xsp + 4)
-	extz	wa
-	pushw	0x7f
-	ld	bc, 7:i3
-	ld	de, 0:i3
-FDemoText_UpdateChannel_SendCmd:
-	call	AddswbWr
-FDemoText_UpdateChannel_Done:
-	pop xiz
-	inc 2, xsp
-	ret
+FDemoText_UpdateChannelVoice:	.include "includes/generated/cc900/FDemoText_UpdateChannelVoice.s"	; C: cc900/fdemotext_routines_m265.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_UpdateChannel_Active, FDemoText_UpdateChannelVoice + 47
+	.set	FDemoText_UpdateChannel_SendCmd, FDemoText_UpdateChannelVoice + 90
+	.set	FDemoText_UpdateChannel_Done, FDemoText_UpdateChannelVoice + 94
 
 FDemoText_CheckAndSetTimer:
 	dec 2,XSP
