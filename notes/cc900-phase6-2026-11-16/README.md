@@ -217,13 +217,45 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   loops.  That is a candidate `kn5000` rule (loop inversion for a simple condition, not for a compound one),
   reported to the coordinator for the rule list.  The function stays hand assembly.
 
+**Loop shapes across v10** (the idiom census for that candidate rule): `python3
+notes/cc900-phase6-2026-11-16/loop_shapes.py v10/maincpu`, 2026-11-16.  A loop is a backward conditional branch;
+its entry is read from the instruction before its top (the script's docstring defines each shape):
+
+| shape                  | loops |
+|------------------------|-------|
+| fall-in                |  2113 |
+| inverted, same test    |   332 |
+| jump-to-test, simple   |   270 |
+| inverted, other test   |   229 |
+| djnz                   |   118 |
+| jump-to-test, compound |    74 |
+| total                  |  3136 |
+
+It classifies both of `TrimAndPadSmfFilename`'s loops as the ROM has them: the padding loop "inverted, same test",
+the first "jump-to-test, compound".  Both shapes are common with a simple condition, and both occur in the same
+files (`audio/note_voice_mapping.s` holds 100 inverted and 69 jump-to-test simple loops).  Neither the kind of
+compare (register, immediate or memory) nor the branch condition separates them.  So "a simple condition is
+inverted" is not the rule.  In `TrimAndPadSmfFilename` the ROM's entry test stands exactly where V4.23 put its
+`jr` to the bottom test, which suggests the firmware's compiler sometimes replaces a jump to a short test block
+with a copy of the test.  When it does is still open: it needs probes that vary what precedes the loop.
+`--list "<shape>"` prints every loop of a shape with its file, line and label.  The census reads the source, so
+hand assembly is counted too (`fall-in` also holds do-while loops and retry branches).
+
 **What this says about the options.**  `GetNamingWindowID` (`ui/ui_widget_defs.s`) matches only without `-O`, and
 `TrimAndPadSmfFilename` (`file_io/smf_operations.s`) only with it.  Two explanations fit:
 - the source files were built with different options;
 - the firmware's compiler at `-O` lacks V4.23's rule that loads a 32-bit constant of 8..0xffff with `lda`.
 
 Telling them apart needs one function that both loads such a constant and is shaped by `-O` (a loop, or a value
-kept in a register).  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
+kept in a register).  The candidates (leaf routines with a loop and a 32-bit load of an address below 0x10000) come
+in both forms.  `StyleConv_ClearWorkBuffer` (`sequencer/accompaniment_engine.s`) is `-O`-shaped (the end pointer is
+computed from the start register, and the loop has no entry test) and uses the 4-byte `lda xbc, (0x488c:16)`.
+`FloppyIO_ClearTrackParseBuffer` (`sequencer/smf_tonegen_core.s`) uses the 5-byte `ld xix, 0x106e` and `djnz`.
+Probe `corpus/firmware/p6_m4.c` (run `2026-11-16-12-p6-m4`) was to compile both at both option sets.  Instead,
+V4.23's code generator crashed at every option set, before emitting a function (a page fault reading 0x4890, four
+bytes past the C constant pointer 0x488c), and asm900 then refused the output.  The crash is reported to the
+coordinator as a V4.23 bug.  The isolation run (`p6_m4_<function>.c`, `corpus/p6_m4_split-sources.txt`) has not
+run yet: the VM was busy outside its lock.  Until it runs, the question stays open.  `ui_widget_defs.c` stays at `-Xr` because that is the set that reproduces all 16 of its
 functions; the choice is recorded in its `cc900-options:` comment.
 
 ## Finding candidates
