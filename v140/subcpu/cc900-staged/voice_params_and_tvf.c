@@ -625,3 +625,29 @@ void Voice_Vol_ScaleVelocityWord(void)
     t = ram_1040;
     ram_4131a = (int)(char)((t * t >> 2) & 0xff) * 13 >> 7;
 }
+
+int Pan_ScaleWithVelocity(unsigned int a, unsigned char b, unsigned char lo, unsigned char hi, char s)
+{
+    int d, r;
+    a = (a & 0x7f00) >> 8;
+    if (a > hi) a = hi;
+    else if (a < lo) a = lo;
+    d = (int)a - (int)b;
+    r = s;
+    r *= d;
+    r >>= 5;
+    return r;
+}
+
+int Voice_Colour_ClampUpper(unsigned int a, unsigned char b, unsigned char lo, unsigned char hi, char s)
+{
+    int d, r;
+    a = (a & 0x7f00) >> 8;
+    if (a > hi) a = hi;
+    else if (a < lo) a = lo;
+    d = (int)a - (int)b;
+    r = s;
+    r *= d;
+    r >>= 5;
+    return r;
+}

@@ -8,6 +8,8 @@
    cc900-options: -Xr
 */
 
+void Level_Build_Reg0C0(unsigned char *v);
+
 int Voice_Pitch_ClampRange(int a, int hi, int lo)
 {
     if (a < lo) a = lo;
@@ -253,7 +255,6 @@ void Voice_Calc_LevelPair_Full(unsigned char *v);
 void Voice_Calc_LevelPair_Mono(unsigned char *v);
 void Voice_Slot_ApplyPortamentoDelta(unsigned char *v);
 void Voice_ComputePitchBend2(unsigned char *v);
-void Level_Build_Reg0C0(unsigned char *v);
 void WaveSel_StageB_Reg040_Footage(unsigned char *v);
 
 /* cc900-name: Voice_Pitch_WriteOutReg_Sec=Voice_Pitch_WriteOutputReg_Secondary */
@@ -419,4 +420,17 @@ unsigned int Voice_Slot_FindOctaveOffset(unsigned char part, unsigned char n, un
         } else if (r < c) r = c;
     }
     return r;
+}
+
+void Voice_UpdateFlagsFromSlot(unsigned char part)
+{
+    unsigned char *q;
+    unsigned int *f;
+    q = &ram_41368[part * 287];
+    q += 258;
+    f = (unsigned int *)(ram_41368 + part * 287) + 1;
+    if ((*(unsigned int *)((q) + (0))) != 0) *f |= 1; else *f &= ~1;
+    if ((*(unsigned int *)((q) + (2))) != 0) *f |= 2; else *f &= ~2;
+    if ((*(unsigned int *)((q) + (4))) != 0) *f |= 4; else *f &= ~4;
+    if ((*(unsigned int *)((q) + (6))) != 0) *f |= 8; else *f &= ~8;
 }

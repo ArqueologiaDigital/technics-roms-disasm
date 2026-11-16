@@ -72,3 +72,46 @@ void TG_WriteExtParam_Mute_TypeDisp(unsigned int reg)
         TG_WRITE(reg + 0x580, 0x8100);
     }
 }
+
+int CheckStatusBits_40(unsigned int part)
+{
+    return ((*(unsigned char **)((unsigned long)ram_4136e + (unsigned long)part * 0x11f))[16] & 0xc0) == 0x40;
+}
+
+int CheckStatusBits_80(unsigned int part)
+{
+    return ((*(unsigned char **)((unsigned long)ram_4136e + (unsigned long)part * 0x11f))[16] & 0xc0) == 0x80;
+}
+
+void ToneGen_WriteExprReg(unsigned int reg, unsigned int v)
+{
+    __IZ = v;
+    ram_18 &= ~0x80;
+    ram_100000 = reg + 0x180;
+    __ASM(" nop");
+    ram_18 |= 0x80;
+    ram_100002 = __IZ;
+    __ASM(" jr $+2");
+    __ASM(" nop");
+    __ASM(" nop");
+    __ASM(" nop");
+}
+
+void ToneGen_WriteSingleReg(unsigned int reg, unsigned int v)
+{
+    __IZ = v;
+    ram_18 &= ~0x80;
+    ram_100000 = reg;
+    __ASM(" nop");
+    ram_18 |= 0x80;
+    ram_100002 = __IZ;
+    __ASM(" jr $+2");
+    __ASM(" nop");
+    __ASM(" nop");
+    __ASM(" nop");
+}
+
+int Voice_Part_Mode_Is_C0(unsigned int part)
+{
+    return ((*(unsigned char **)((unsigned long)ram_4136e + (unsigned long)part * 0x11f))[16] & 0xc0) == 0xc0;
+}

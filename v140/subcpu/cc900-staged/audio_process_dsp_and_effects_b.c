@@ -194,3 +194,18 @@ void EFF_WriteHeader(unsigned int slot)
     if (chip == 0)
         DSP_WriteGlobalConfig(chip, (unsigned char *)(unsigned long)EFF_Header_Program);
 }
+
+extern char Str_EffParamEdit_Prefix[], Str_EffParamEdit_Mid[], Str_EffParamEdit_Suffix[];
+extern void DSP_WriteParameter(unsigned int, unsigned int, unsigned int, unsigned long);
+void Debug_Print_Word(unsigned int w);
+
+void EFF_ParamEdit_WithDebug(unsigned int slot, unsigned int b, unsigned int idx, unsigned long p)
+{
+    Debug_Print_String(Str_EffParamEdit_Prefix);
+    Debug_Print_Byte(slot + 1);
+    Debug_Print_String(Str_EffParamEdit_Mid);
+    Debug_Print_Byte(idx);
+    Debug_Print_String(Str_EffParamEdit_Suffix);
+    Debug_Print_Word(((int *)(((unsigned long)slot * 56 + (unsigned long)idx * 2) + p))[6]);
+    DSP_WriteParameter(slot, b, idx, p);
+}

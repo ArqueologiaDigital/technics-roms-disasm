@@ -8,18 +8,29 @@
    cc900-options: -Xr
 */
 
-void WaveSel_Rebuild_PartCaches(int n, int a, int b);
-void ToneGen_WriteLevelBurst(int n, unsigned char *blk);
-void ToneGen_WriteVoiceParams(int n, unsigned char *blk);
+extern unsigned int EGEnv_ValueCurve_Simple[];
+extern unsigned char ram_44202[];
 
-unsigned char ExtVoice_Fold_SlotNumber(unsigned char a, unsigned char g)
+unsigned long EGEnv_Compute_A_Simple(unsigned char n)
 {
-    unsigned char r;
-    switch (g & 3) {
-    case 0:
-    case 1: r = a & 0x3f; break;
-    case 2: r = (a - 0x40) & 0x7f; break;
-    case 3: r = a & 0x7f; break;
-    }
+    unsigned char *p;
+    unsigned long r;
+    p = &ram_44202[(int)n * 27];
+    r = EGEnv_ValueCurve_Simple[p[3]];
+    r *= p[4];
+    r >>= 7;
+    if (r > 0x3fff) r = 0x3fff;
+    return r;
+}
+
+unsigned long EGEnv_Compute_A_Simple_Dup(unsigned char n)
+{
+    unsigned char *p;
+    unsigned long r;
+    p = &ram_44202[(int)n * 27];
+    r = EGEnv_ValueCurve_Simple[p[3]];
+    r *= p[4];
+    r >>= 7;
+    if (r > 0x3fff) r = 0x3fff;
     return r;
 }
