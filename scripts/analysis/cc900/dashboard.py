@@ -16,6 +16,12 @@ last committed ledger.  The output is regenerable and is not committed.
 .githooks/post-commit runs this script in the background after every commit that changes either results file, and the
 page reloads itself every two minutes, so a tab left open on `--serve` follows the rounds.
 
+A second section, "ROM bytes built from C", charts results/c_build_coverage.md (scripts/analysis/cc900/c_build_coverage.py,
+`make cc900-c-coverage`) at every commit that changed it: the bytes of the Technics images that C gives exactly, and
+their share of the images' census CODE, one series per toolchain (Toshiba V4.23, the reference model, the LLVM
+backend), with the latest per-image table.  Commits before the file existed simply have no point; with no such commit
+the section says so.
+
 Three tiles count the rounds, give the time of the last one and the mean time of the last ten, and a chart and a
 table column give every round's: a round's time is the wall-clock gap between its
 commit and the round commit before it (author dates), so a pause between sessions counts as part of the next round."""
@@ -107,6 +113,59 @@ def collect():
     return rows
 
 
+COVERAGE = 'scripts/analysis/cc900/results/c_build_coverage.md'
+TOOLCHAINS = ['V4.23', 'model', 'LLVM']
+
+
+def md_tables(text):
+    """{section heading: [{column: cell}]} for every Markdown table of a file"""
+    out, head, cols = {}, None, None
+    for line in text.splitlines():
+        if line.startswith('## '): head, cols = line[3:].strip(), None; continue
+        if not line.startswith('|'): cols = None; continue
+        cells = [c.strip() for c in line.strip().strip('|').split('|')]
+        if cols is None: cols = cells; out.setdefault(head, []); continue
+        if all(set(c) <= set('-:') for c in cells): continue
+        out[head].append(dict(zip(cols, cells)))
+    return out
+
+
+def coverage_scores(text):
+    """one version of c_build_coverage.md -> {'tot': {toolchain: [bytes, code bytes]}, 'fw' / 'lib': {toolchain: bytes},
+    'code': all images' CODE bytes, 'images': [[image, size, code, category, items, {toolchain: [b, cb]}, unchecked]]}"""
+    t = md_tables(text).get('Per image', [])
+    if not t: return None
+    num = lambda c: int(re.sub(r'[^0-9]', '', c) or 0)
+    pair = lambda c: [num(x) for x in (c.split('/') + ['0'])[:2]]
+    d = {'tot': {k: [0, 0] for k in TOOLCHAINS}, 'fw': {k: 0 for k in TOOLCHAINS}, 'lib': {k: 0 for k in TOOLCHAINS},
+         'code': 0, 'size': 0, 'unchecked': 0, 'images': []}
+    seen = set()
+    for r in t:
+        img = r.get('image', '')
+        if img not in seen:
+            seen.add(img); d['code'] += num(r.get('code', '0')); d['size'] += num(r.get('size', '0'))
+        v = {k: pair(r.get('%s bytes / code' % k, '0 / 0')) for k in TOOLCHAINS}
+        for k in TOOLCHAINS:
+            d['tot'][k][0] += v[k][0]; d['tot'][k][1] += v[k][1]
+            if r.get('category') == 'firmware C': d['fw'][k] += v[k][0]
+            elif r.get('category') == 'library C': d['lib'][k] += v[k][0]
+        un = num(r.get('V4.23 not yet checked', '0')); d['unchecked'] += un
+        d['images'].append([img, num(r.get('size', '0')), num(r.get('code', '0')), r.get('category', '-'),
+                            num(r.get('items', '0')), v, un])
+    return d
+
+
+def collect_coverage():
+    """one row per commit that changed c_build_coverage.md, with its figures; none before the file existed"""
+    rows = []
+    for line in git('log', '--reverse', '--format=%H%x1f%aI%x1f%s', '--', COVERAGE).splitlines():
+        h, d, s = line.split('\x1f', 2)
+        blob = git('show', '%s:%s' % (h, COVERAGE))
+        sc = coverage_scores(blob) if blob else None
+        if sc: rows.append(dict(h=h[:9], date=d, subject=s, moved=True, **sc))
+    return rows
+
+
 PAGE = r'''<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="refresh" content="120">
@@ -166,6 +225,7 @@ th, td { padding: 3px 8px; border-bottom: 1px solid var(--grid); text-align: rig
 th:first-child, td:first-child, th:nth-child(2), td:nth-child(2) { text-align: left; }
 td.sj { max-width: 380px; overflow: hidden; text-overflow: ellipsis; text-align: left; }
 .scroll { overflow-x: auto; }
+h1.sec { font-size: 18px; margin: 32px 0 4px; } p.empty { color: var(--text-muted); }
 </style></head>
 <body><main>
 <h1>cc900 model: scores over time</h1>
@@ -178,6 +238,16 @@ commit and reloads itself every two minutes.</p>
 <div class="tiles" id="tiles"></div>
 <div class="grid" id="charts"></div>
 <details><summary>Table view (every commit, newest first)</summary><div class="scroll"><table id="tbl"></table></div></details>
+<h1 class="sec" id="c-coverage">ROM bytes built from C</h1>
+<p class="sub">How many bytes of the Technics ROM images (KN5000 and SX-WSA1R, every version counted on its own) C gives
+exactly, checked byte for byte against each image, per toolchain: Toshiba's own V4.23 compiler, our Python reference
+model (what <code>make</code> builds today), and our LLVM backend with <code>-mcc900-compat</code> (not working yet:
+0 until it is). Firmware C is Matsushita's functions rebuilt in phase 6 and built into the image; library C is
+Toshiba's runtime routines linked into the images, checked but not yet built from C. One point per commit that changed
+<code>results/c_build_coverage.md</code> (<code>make cc900-c-coverage</code>).</p>
+<div class="tiles" id="cov-tiles"></div>
+<div class="grid" id="cov-charts"></div>
+<div class="card" style="margin-top:12px"><h2>Per image, at the latest commit</h2><p id="cov-note"></p><div class="scroll"><table id="cov-tbl"></table></div></div>
 </main>
 <script>
 const DATA = __DATA__;
@@ -186,7 +256,9 @@ const COLOR = {none:"var(--series-1)", O3XS:"var(--series-2)", Xr:"var(--series-
 const R = DATA.rows, n = R.length;
 let AXIS = "commit"; try { AXIS = localStorage.getItem("cc900-axis") || "commit"; } catch (e) {}
 const T0 = new Date(R[0].date).getTime(), T1 = new Date(R[n - 1].date).getTime();
-const frac = i => n === 1 ? 0.5 : AXIS === "time" && T1 > T0 ? (new Date(R[i].date).getTime() - T0) / (T1 - T0) : i / (n - 1);
+const fracOf = (RR, i) => { const m = RR.length, a = new Date(RR[0].date).getTime(), b = new Date(RR[m - 1].date).getTime();
+  return m === 1 ? 0.5 : AXIS === "time" && b > a ? (new Date(RR[i].date).getTime() - a) / (b - a) : i / (m - 1); };
+const frac = i => fracOf(R, i);
 const val = (r, key, pct) => { const s = r.scores[key]; if (!s) return null; return pct ? 100 * s[0] / s[1] : s[0]; };
 const fmt = (v, pct) => v == null ? "–" : pct ? v.toFixed(1) + " %" : String(v);
 const esc = s => s.replace(/[&<>]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;"}[c]));
@@ -245,19 +317,20 @@ const fmtMin = m => m >= 90 ? `${Math.floor(m / 60)} h ${String(Math.round(m % 6
 // ---- line charts
 function chart(title, note, series, opts) {
   opts = opts || {};
-  const W = 560, H = 250, L = 44, Rm = 96, Tp = 10, B = 26, pw = W - L - Rm, ph = H - Tp - B;
+  const RR = opts.rows || R, nn = RR.length;
+  const W = 560, H = 250, L = opts.left || 44, Rm = opts.right || 96, Tp = 10, B = 26, pw = W - L - Rm, ph = H - Tp - B;
   const card = document.createElement("div"); card.className = "card";
   let lo = Infinity, hi = -Infinity;
   for (const s of series) for (const v of s.v) if (v != null) { lo = Math.min(lo, v); hi = Math.max(hi, v); }
   if (opts.zero) lo = 0; if (opts.max != null) hi = Math.max(hi, opts.max);
   const pad = (hi - lo) * 0.06 || 1; if (!opts.zero) lo = Math.max(0, lo - pad); hi = hi + pad;
-  const x = i => L + pw * frac(i), y = v => Tp + ph * (1 - (v - lo) / (hi - lo));
+  const x = i => L + pw * fracOf(RR, i), y = v => Tp + ph * (1 - (v - lo) / (hi - lo));
   const step = (() => { const raw = (hi - lo) / 4, p = Math.pow(10, Math.floor(Math.log10(raw))); return [1, 2, 5, 10].map(m => m * p).find(m => m >= raw); })();
   let g = "";
   for (let t = Math.ceil(lo / step) * step; t <= hi; t += step)
-    g += `<line x1="${L}" x2="${L + pw}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${opts.pct ? t.toFixed(0) + " %" : opts.cap != null && t >= opts.cap ? "≥ " + t : t}</text>`;
+    g += `<line x1="${L}" x2="${L + pw}" y1="${y(t)}" y2="${y(t)}" stroke="var(--grid)"/><text x="${L - 6}" y="${y(t) + 4}" text-anchor="end">${opts.pct ? +t.toFixed(4) + " %" : opts.cap != null && t >= opts.cap ? "≥ " + t : t}</text>`;
   let lastDay = "", lastX = -99;
-  R.forEach((r, i) => { const d = r.date.slice(5, 10); if (d !== lastDay) { lastDay = d;
+  RR.forEach((r, i) => { const d = r.date.slice(5, 10); if (d !== lastDay) { lastDay = d;
     if (x(i) - lastX > 28) { g += `<line x1="${x(i)}" x2="${x(i)}" y1="${Tp + ph}" y2="${Tp + ph + 4}" stroke="var(--border)"/><text x="${x(i)}" y="${H - 6}" text-anchor="middle">${d}</text>`; lastX = x(i); } } });
   if (opts.marks) R.forEach((r, i) => { if (r.newprobes && (r.newprobes.length || r.grown.length))
     g += `<line x1="${x(i)}" x2="${x(i)}" y1="${Tp}" y2="${Tp + ph}" stroke="var(--text-muted)" stroke-width="1" stroke-dasharray="2 3" opacity="0.7"/>`; });
@@ -279,19 +352,19 @@ function chart(title, note, series, opts) {
   const svg = card.querySelector("svg"), tip = card.querySelector(".tip"), cross = card.querySelector(".cross"), plot = card.querySelector(".plot");
   svg.addEventListener("mousemove", ev => {
     const bb = svg.getBoundingClientRect(), sx = (ev.clientX - bb.left) * W / bb.width;
-    let i = 0, best = 1e9; for (let k = 0; k < n; k++) { const dd = Math.abs(x(k) - sx); if (dd < best) { best = dd; i = k; } }
-    const r = R[i];
+    let i = 0, best = 1e9; for (let k = 0; k < nn; k++) { const dd = Math.abs(x(k) - sx); if (dd < best) { best = dd; i = k; } }
+    const r = RR[i];
     cross.setAttribute("x1", x(i)); cross.setAttribute("x2", x(i)); cross.setAttribute("visibility", "visible");
     tip.innerHTML = `<div class="s">${r.date.slice(0, 16).replace("T", " ")} · ${r.h}${r.moved ? "" : " · no score changed"}<br>${esc(r.subject.slice(0, 110))}</div>` +
       (opts.marks && r.newprobes && (r.newprobes.length || r.grown.length) ? `<div class="s"><b>probe rows added here</b> (+${r.added} functions): ${esc(r.newprobes.concat(r.grown.map(x => x + " (more sets)")).join(", ").slice(0, 160))}</div>` : "") +
-      series.map(s => `<div><i style="background:${s.c}"></i>${esc(s.name)}: <b>${opts.fmt ? opts.fmt(s.tv ? s.tv[i] : s.v[i]) : fmt(s.v[i], opts.pct)}</b>${s.raw && s.raw[i] ? ` <span class="s">(${s.raw[i][0]} / ${s.raw[i][1]})</span>` : ""}</div>`).join("");
+      series.map(s => `<div><i style="background:${s.c}"></i>${esc(s.name)}: <b>${opts.fmt ? opts.fmt(s.tv ? s.tv[i] : s.v[i]) : fmt(s.v[i], opts.pct)}</b>${s.raw && s.raw[i] ? ` <span class="s">(${s.raw[i][0]} / ${s.raw[i][1]})</span>` : ""}${s.extra ? ` <span class="s">${s.extra(i)}</span>` : ""}</div>`).join("");
     tip.style.display = "block";
     const px = x(i) * bb.width / W; tip.style.left = (px > bb.width / 2 ? px - tip.offsetWidth - 12 : px + 12) + "px"; tip.style.top = "8px";
   });
   svg.addEventListener("mouseleave", () => { tip.style.display = "none"; cross.setAttribute("visibility", "hidden"); });
-  document.getElementById("charts").appendChild(card);
+  document.getElementById(opts.into || "charts").appendChild(card);
 }
-function drawAll() { document.getElementById("charts").innerHTML = ""; charts(); }
+function drawAll() { document.getElementById("charts").innerHTML = ""; document.getElementById("cov-charts").innerHTML = ""; charts(); covCharts(); }
 for (const [id, v] of [["ax-commit", "commit"], ["ax-time", "time"]]) document.getElementById(id).addEventListener("click", () => {
   AXIS = v; try { localStorage.setItem("cc900-axis", v); } catch (e) {}
   document.getElementById("ax-commit").setAttribute("aria-pressed", v === "commit"); document.getElementById("ax-time").setAttribute("aria-pressed", v === "time"); drawAll(); });
@@ -315,6 +388,42 @@ chart("Wall-clock time of each round", `Minutes from the round before to this ro
   { zero: true, cap: CAP, max: CAP, fmt: g => g == null ? "–" : fmtMin(g), good: "▼ progress = shorter rounds; the prompts and idle lines show time that was not model work" });
 }
 charts();
+
+// ---- ROM bytes built from C (results/c_build_coverage.md over the commits that changed it)
+const CV = DATA.coverage || [], TC = ["V4.23", "model", "LLVM"];
+const TCNAME = {"V4.23": "Toshiba V4.23", model: "reference model", LLVM: "LLVM backend (-mcc900-compat)"};
+const TCCOL = {"V4.23": "var(--series-2)", model: "var(--series-1)", LLVM: "var(--series-3)"};
+const pct3 = v => v == null ? "–" : (v > 0 && v < 0.01 ? v.toFixed(4) : v.toFixed(3)) + " %";
+function covCharts() {
+  if (!CV.length) return;
+  chart("Bytes built from C, all images", "ROM bytes that C, through each toolchain, gives exactly: firmware C built into the images plus the Toshiba library routines checked in them. The tooltip splits the two.",
+    TC.map(k => ({ name: TCNAME[k], short: k, c: TCCOL[k], v: CV.map(r => r.tot[k][0]),
+      extra: i => `firmware ${CV[i].fw[k]} B · library ${CV[i].lib[k]} B` })),
+    { rows: CV, zero: true, into: "cov-charts", right: 110, good: "▲ progress = lines going up; LLVM joins the other two once phase 3b works" });
+  chart("Share of the images' code built from C", "Bytes from C that the census calls CODE, as a share of all the images' CODE bytes.",
+    TC.map(k => ({ name: TCNAME[k], short: k, c: TCCOL[k], v: CV.map(r => r.code ? 100 * r.tot[k][1] / r.code : null), raw: CV.map(r => [r.tot[k][1], r.code]) })),
+    { rows: CV, zero: true, pct: true, into: "cov-charts", right: 130, fmt: pct3, good: "▲ progress = lines going up" });
+}
+(function () {
+  const note = document.getElementById("cov-note");
+  if (!CV.length) { document.getElementById("cov-tiles").innerHTML = `<p class="empty">No results/c_build_coverage.md has been committed yet: run <code>make cc900-c-coverage</code> and commit its results.</p>`; return; }
+  const last = CV[CV.length - 1], prev = CV.length > 1 ? CV[CV.length - 2] : null;
+  const T = [];
+  for (const k of TC) {
+    const d = prev ? last.tot[k][0] - prev.tot[k][0] : null, cls = d ? (d > 0 ? "up" : "down") : "";
+    T.push(`<div class="tile"><div class="k">Bytes from C, ${esc(TCNAME[k])}</div><div class="v">${last.tot[k][0]} B</div><div class="t">${pct3(last.code ? 100 * last.tot[k][1] / last.code : 0)} of all code · firmware ${last.fw[k]} B · library ${last.lib[k]} B</div>` +
+      (d == null ? "" : `<div class="d ${cls}">${d > 0 ? "▲ +" : d < 0 ? "▼ " : "■ "}${d} B since the commit before</div>`) + `</div>`);
+  }
+  T.push(`<div class="tile"><div class="k">Firmware C functions V4.23 has not checked</div><div class="v">${last.unchecked}</div><div class="t">each needs an oracle run of its C (c_build_coverage.py --v423-corpus)</div></div>`);
+  document.getElementById("cov-tiles").innerHTML = T.join("");
+  covCharts();
+  note.innerHTML = `${last.date.slice(0, 16).replace("T", " ")} · ${last.h} · ${esc(last.subject.slice(0, 120))}. Each cell: bytes from C / of them census CODE; the % is of the image's CODE.`;
+  let h = "<tr><th>image</th><th>category</th><th>size</th><th>code</th><th>items</th>" + TC.map(k => `<th>${esc(TCNAME[k])}</th><th>%</th>`).join("") + "<th>V4.23 not yet checked</th></tr>";
+  for (const [img, size, code, cat, items, v, un] of last.images)
+    h += `<tr><td>${esc(img)}</td><td>${esc(cat)}</td><td>${size}</td><td>${code}</td><td>${items}</td>` +
+      TC.map(k => `<td>${v[k][0]} / ${v[k][1]}</td><td>${pct3(code ? 100 * v[k][1] / code : 0)}</td>`).join("") + `<td>${un}</td></tr>`;
+  document.getElementById("cov-tbl").innerHTML = h;
+})();
 
 // ---- table view
 (function () {
@@ -348,7 +457,8 @@ def main():
     rows = collect()
     if not rows: sys.exit('no ledger history found')
     import datetime
-    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions()}))
+    cov = collect_coverage()
+    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions(), 'coverage': cov}))
             .replace('__FLAT__', str(sum(1 for r in rows if not r['moved'])))
             .replace('__N__', str(len(rows))).replace('__FIRST__', rows[0]['date'][:10]).replace('__LAST__', rows[-1]['date'][:10])
             .replace('__NOW__', datetime.datetime.now().strftime('%Y-%m-%d %H:%M')))
@@ -357,6 +467,9 @@ def main():
     last = rows[-1]['scores']
     print('%s: %d commits; latest random/none %s, library/O3XS %s, micro/none %s' % (
         out, len(rows), last.get('random/none'), last.get('library/O3XS'), last.get('micro/none')))
+    if cov:
+        print('C build coverage: %d commits; latest bytes from C: %s' % (
+            len(cov), ', '.join('%s %d' % (k, cov[-1]['tot'][k][0]) for k in TOOLCHAINS)))
     if '--serve' in sys.argv:
         import http.server, functools
         d = os.path.dirname(os.path.abspath(out))
