@@ -3886,6 +3886,11 @@ operands that semcheck's interpreter accepts and no other check sees), DEAD_CALL
 ablation found costly are settled with nothing lost.  Validation +3 / +2 / +2 / +2 statements and +1 function at none,
 nothing lost; ledger rows and library unchanged; semcheck 9.
 
+**Batch 356 (2026-11-16).**  lane_o3 fix 19 ADDR_LOCAL_VIA_WA: without -O, a local's address assigned to a register
+variable other than WA goes through XWA, as micro rules.c r_divmod_i shows (now exact at none; rules.c is not a ledger
+row -- run 2026-11-09-1-micro-rules -- so the ledger does not move).  Validation, ledger and library unchanged;
+semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

@@ -81,6 +81,7 @@ STRUCT_COPY_TWO_ELEMS = True                              # see struct_two_elem_
 STRUCT_LOCAL_FRAME = True                                 # see plan_frame
 STRUCT_RETURN_MORE = True                                 # see the return of a struct
 STRUCT_ARG_MORE = True                                    # see push_arg
+ADDR_LOCAL_VIA_WA = True                                  # see regvar_stmt
 ADECL_ARG_CLOBBER_NOOPT = True                            # see gen_call_adecl: ADECL_ARG_CLOBBER_GUARD without -O too
 class _RegBySize(dict):
     """a register family by size: a value over 4 bytes (a struct of 6, 8, 10 .. bytes reaching a register path: probe
@@ -14434,6 +14435,14 @@ def u1_load_node(lv):
 
 def regvar_stmt(F, e):
     """assignments to register variables: v = x, v op= x, v++ (ra_leaf, ctrl)"""
+    if ADDR_LOCAL_VIA_WA and not F.opt and e.k == 'bin' and e.op == '=' and regvar_of(e.l) is not None and \
+            regvar_of(e.l).reg in ('BC', 'DE', 'HL', 'IX', 'IY', 'IZ') and regvar_of(e.l).ty.size == 4 and \
+            strip(e.r).k == 'addr' and strip(strip(e.r).e).k == 'var' and 'WA' not in live_regs(F):
+        d_ = strip(strip(e.r).e).decl                       # without -O a local's address goes to a register variable
+        off_ = getattr(d_, 'slot', None) if d_.kind == 'local' and not getattr(d_, 'reg', None) else None   # through XWA
+        if off_ is not None:                                # (micro rules.c r_divmod_i: p = &r -> lda XWA,XSP /
+            F.emit('lda', 'XWA,XSP+%s' % hx(off_ + F.push) if off_ + F.push else 'XWA,XSP')   # ld XBC,XWA; the library's
+            F.emit('ld', '%s,XWA' % FAM[regvar_of(e.l).reg][4]); return True                # __fint, _ultoa, _strtod, _ldiv)
     if e.k in ('opassign', 'incdec') and regvar_of(e.l if e.k == 'opassign' else e.e):
         touch_home(F, regvar_of(e.l if e.k == 'opassign' else e.e))   # (r2_08_15)
     if e.k == 'bin' and e.op == '=' and regvar_of(e.l) and regvar_of(e.l).reg == 'QIZH':
