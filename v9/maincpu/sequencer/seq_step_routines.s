@@ -422,19 +422,7 @@ SeqStep_VelNoteFwdApply:
 	ldmm16 0x273c, SEQ_DATA_BLOCK
 	jrl SeqStep_MeasureRead
 
-SeqStep_VelNoteBwd:
-	ld c, (9780:16)
-	inc 1, wa
-	ld (0x287f:16), wa
-	extz bc
-	ld wa, bc
-	ld bc, 0:i3
-	call SeqVoice_SeekToBar
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-	ldmm16 0x273c, SEQ_DATA_BLOCK
-	ldmm16 0x273e, SEQ_DATA_OFFSET
-	jrl SeqStep_MeasureRead
+SeqStep_VelNoteBwd:	.include "includes/generated/cc900/SeqStep_VelNoteBwd.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_DeleteEvent:
 	dec 4, xsp

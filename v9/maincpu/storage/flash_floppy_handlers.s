@@ -5222,26 +5222,9 @@ AccPatch_ConvertLegacySectionLayout_Skip30:
 ;   and returns HL = 0xFF95, else HL = 0. Basis: callers + body -- AccPatch_ConvertLegacySectionLayout calls it for
 ;   each old -> new section pair (0x39AC / 0x39AD) and keeps the first 0xFF95; its header calls this 'copies each old
 ;   section into its new place(s)'.
-AccPatch_CopySection:
-	pushw	iz
-	ld	iz, 0:i3
-	res	0, (0x35b0:16)
-	call	DualVoice_ParamLoadDone
-	ld	a, (0x35b0:16)
-	extz	wa
-	bit	0, wa
-	jr	z, ToneParam_ExtendedOpsBlock_Epilogue
-	ld	xwa, (STYLE_DST_IMAGE_PTR:16)
-	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
-	ldmm8	STYLE_COPY_SRC_SECTION, STYLE_COPY_DST_SECTION
-	call	AccPatch_InitFromSlotIndex
-	ld	xwa, (STYLE_WORK_IMAGE_PTR:16)
-	ld	(STYLE_SRC_IMAGE_PTR:16), xwa
-	ldw	iz, 0xff95
-ToneParam_ExtendedOpsBlock_Epilogue:
-	ld	hl, iz
-	popw	iz
-	ret
+AccPatch_CopySection:	.include "includes/generated/cc900/AccPatch_CopySection.s"	; C: cc900/flash_floppy_handlers_m159.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneParam_ExtendedOpsBlock_Epilogue, AccPatch_CopySection + 51
 ; AccPatch_ResetSectionPartByte2Defaults: Writes byte 2 of the four 8-byte accompaniment-part entries
 ;   (+32/+40/+48/+56) of all 30 section records of the style image at (RHYTHM_PATTERN_BUF_PTR) to 64, 12, 116, 64 --
 ;   the values the 'clear' section template AccPatch_DefaultSlotData holds there; what byte 2 means is not

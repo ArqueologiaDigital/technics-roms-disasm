@@ -12834,21 +12834,7 @@ AccTone_InlineBytecodeData_Skip2:
 ; Chord_TypeFamilyTable, then 0x342a = byte (0x342b) of the table at (ACC_STYLE_RECORD) --
 ; the second lookup is indexed by the first one's result, not by n.  When that byte is 0xff,
 ; 0x342a gets the table's first byte instead and 0x342b is cleared.
-AccTone_InlineBytecodeData_Code_Helper:
-	ld	a, (ACC_CHORD_TYPE:16)
-	extz	wa
-	lda	xbc, (Chord_TypeFamilyTable:24)
-	ld	a, (xbc+wa)
-	ld	(13355:16), a
-	ld	xbc, (ACC_STYLE_RECORD:16)
-	extz	wa
-	ld	a, (xbc+wa)
-	ld	(13354:16), a
-	cp	a, 255
-	ret	nz
-	ld	(0x342a:16), (xbc)
-	ld	(13355:16), 0
-	ret
+AccTone_InlineBytecodeData_Code_Helper:	.include "includes/generated/cc900/AccTone_InlineBytecodeData_Code_Helper.s"	; C: cc900/accompaniment_engine_m249.c
 ; When bit 0 of 0x341f is set: sends channel pressure reset, neutralises the four ring buffers,
 ; points 0x3426 at user-style record (0x3421) (0x94860 + RhythmTiming_OffsetTable[...]), copies its
 ; tuning, marks all parts changed in 0x332c (bit 7 too), runs

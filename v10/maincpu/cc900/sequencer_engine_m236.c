@@ -107,3 +107,94 @@ void SeqPart_InitClear(void)
   Part_WriteWord_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), SEQ_TRACK, 0xffff);
   Part_WriteByte_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), SEQ_TRACK, 5);
 }
+
+/* cc900-module: SeqModeTransit_DemoPath SeqModeTransit_UpdateParts SeqPart_InitClear SeqPart_UndoAllocOnError */
+extern unsigned int __near SEQOP_SECONDARY_BLOCK;
+extern unsigned int __near SEQOP_SECONDARY_OFFSET;
+extern unsigned int __near ram_265c;
+extern unsigned int __near ram_265e;
+extern unsigned long __near ram_25da;
+extern void PartCtrl_WriteByte_ZeroExtended(unsigned int, unsigned int, unsigned int);
+extern void PartCtrl_ReadWordWithBoundsCheck(unsigned int *, unsigned int *);
+extern void SeqPart_ReplayForward(void);
+extern unsigned char __near SEQ_OP_DEST_TRACK;
+extern unsigned char __near ram_282a;
+extern unsigned int __near ram_27e8;
+extern unsigned int __near ram_27ea;
+extern unsigned int __near ram_27ec;
+extern unsigned int __near ram_27ee;
+extern unsigned int PartCtrl_ReadWord_Off1(unsigned int);
+extern void SeqPart_UndoAllocOnError(void);
+extern void SeqPart_PositionEqual(void);
+extern unsigned int __near SEQ_DATA_BLOCK;
+extern unsigned int __near ram_27d4;
+extern unsigned int __near ram_27d6;
+extern void Part_ValidateVoiceChannel(unsigned int);
+extern int SeqPart_SetupLeftPos(void);
+extern unsigned int __near ram_27d8;
+extern unsigned int __near ram_27da;
+extern int SeqPart_SetupRightPos(void);
+extern unsigned char __near ram_2652;
+extern void SeqPart_InitClear(void);
+
+void SeqPart_ReplayForward(void)
+{
+  unsigned long i;
+  SEQ_ERROR_CODE = 0;
+  SEQOP_SECONDARY_BLOCK = ram_265c;
+  SEQOP_SECONDARY_OFFSET = ram_265e;
+  ram_25da = ram_25da - 1;
+  i = 0;
+  while (ram_25da != i) {
+    PartCtrl_WriteByte_ZeroExtended(SEQOP_SECONDARY_BLOCK, SEQOP_SECONDARY_OFFSET, 0x81);
+    i++;
+    PartCtrl_ReadWordWithBoundsCheck(&SEQOP_SECONDARY_BLOCK, &SEQOP_SECONDARY_OFFSET);
+    if (SEQ_ERROR_CODE != 0) return;
+  }
+  PartCtrl_WriteByte_ZeroExtended(SEQOP_SECONDARY_BLOCK, SEQOP_SECONDARY_OFFSET, 0x82);
+}
+void SeqPart_PositionEqual(void)
+{
+  unsigned int b = ram_27ea;
+  if ((SEQ_TRACK == 0x7f || SEQ_TRACK == SEQ_OP_DEST_TRACK) && (ram_282a & 0x01) && (SEQ_EDIT_FLAGS & 0x08)) {
+    b--;
+    if (b <= 4) {
+      ram_27e8 = PartCtrl_ReadWord_Off1(ram_27e8);
+      if (ram_27e8 == 0) { SEQ_ERROR_CODE = 11; SeqPart_UndoAllocOnError(); return; }
+      b = 0xff;
+    }
+  }
+  ram_27ee = b;
+  ram_27ec = ram_27e8;
+}
+int SeqPart_SetupLeftPos(void)
+{
+  Part_ValidateVoiceChannel(SEQ_TRACK);
+  if (SEQ_ERROR_CODE != 0) {
+    SeqError_MapViaTableA();
+    SeqVoice_InitReturnZero();
+    return -1;
+  }
+  ram_27d4 = SEQ_DATA_BLOCK;
+  ram_27d6 = 5;
+  return 0;
+}
+int SeqPart_SetupRightPos(void)
+{
+  Part_ValidateVoiceChannel(SEQ_OP_DEST_TRACK);
+  if (SEQ_ERROR_CODE != 0) {
+    SeqError_MapViaTableA();
+    SeqVoice_InitReturnZero();
+    return -1;
+  }
+  ram_27d8 = SEQ_DATA_BLOCK;
+  ram_27da = 5;
+  return 0;
+}
+void SeqPart_UndoAllocOnError(void)
+{
+  if ((SEQ_EDIT_FLAGS & 0x80) && SEQ_ERROR_CODE != 0) {
+    SEQ_TRACK = ram_2652;
+    SeqPart_InitClear();
+  }
+}

@@ -1852,69 +1852,12 @@ EffectMode_HandleTimerEvents:	.include "includes/generated/cc900/EffectMode_Hand
 	.set	EffectMode_TimerEvent_Step78, EffectMode_HandleTimerEvents + 160
 	.set	EffectMode_TimerEvent_Step96, EffectMode_HandleTimerEvents + 189
 	.set	EffectMode_TimerEvent_Default, EffectMode_HandleTimerEvents + 211
-EffectMode_RunDiagSequence:
-	ld	a, (DIAG_ANIM_STEP:16)
-	cp	a, 0:i3
-	jr	nz, EffectMode_DiagSeq_AnimFrame
-	ld	xwa, NAKA_VIEW_TEST51
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	calr	A_Short_Pause
-	calr	A_Short_Pause
-	ld	xwa, NAKA_VIEW_TEST52
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	calr	A_Short_Pause
-	calr	A_Short_Pause
-	ld	xwa, NAKA_VIEW_TEST53
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	calr	A_Short_Pause
-	calr	A_Short_Pause
-	ld	xwa, NAKA_VIEW_TEST54
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	calr	A_Short_Pause
-	calr	A_Short_Pause
-	ld	xwa, NAKA_VIEW_TEST55
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	ApPostEvent
-	calr	A_Short_Pause
-	calr	A_Short_Pause
-	inc	1, (DIAG_ANIM_STEP:16)
-	ret
-EffectMode_DiagSeq_AnimFrame:
-	ld	c, (36060:16)
-	cp	c, 0:i3
-	jr	nz, EffectMode_DiagSeq_DecrementDelay	; -> 0xFB7385
-	extz	wa
-	lda	xbc, (EffectMode_DiagSeq_TitleCycle:24)
-	ld	xde, 0:i3
-	ld	e, (xbc+wa)
-	add	xde, TITLE_PS
-	ld	xwa, 4294967295
-	ld	xbc, EVT_INTERRUPT_TITLE
-	call	ApPostEvent
-	ld	a, (DIAG_ANIM_STEP:16)
-	cp	a, 5:i3
-	jr	nz, EffectMode_DiagSeq_IncFrame	; -> 0xFB7379
-	ld	(DIAG_ANIM_STEP:16), 1
-	jr	EffectMode_DiagSeq_SetDelay	; -> 0xFB737F
-EffectMode_DiagSeq_IncFrame:
-	inc	1, a
-	ld	(DIAG_ANIM_STEP:16), a
-EffectMode_DiagSeq_SetDelay:
-	ld	(36060:16), 30
-	ret
-EffectMode_DiagSeq_DecrementDelay:
-	dec	1, c
-	ld	(36060:16), c
-	ret
+EffectMode_RunDiagSequence:	.include "includes/generated/cc900/EffectMode_RunDiagSequence.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_DiagSeq_AnimFrame, EffectMode_RunDiagSequence + 123
+	.set	EffectMode_DiagSeq_IncFrame, EffectMode_RunDiagSequence + 180
+	.set	EffectMode_DiagSeq_SetDelay, EffectMode_RunDiagSequence + 186
+	.set	EffectMode_DiagSeq_DecrementDelay, EffectMode_RunDiagSequence + 192
 EffectMode_ByteData_DiagEvents:
 	push QIZ
 	push XDE

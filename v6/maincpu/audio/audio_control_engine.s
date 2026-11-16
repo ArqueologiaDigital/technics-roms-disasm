@@ -2006,14 +2006,7 @@ Encoder_IncrementAndDispatch:
 ; Each periodic tick (unless CURRENT_TITLE 247): drain the control-panel RX queue into change records, scan the
 ; pedal ports, queue the CPU A/D controls' changes (expression pedal, after touch).  The records go to PanelInput_ChangeQueue (RAM 0x8E94, 3 bytes
 ; each, count at 0x8EC4); PanelButton_ProcessChanges dispatches them later.
-PanelInput_Poll:
-	ldmm16	0x8e02, SYSTEM_TIMESTAMP
-	cp	(CURRENT_TITLE:16), 247
-	ret	z
-	calr	PanelInput_DrainRxQueue
-	calr	PanelInput_ScanPedalPorts
-	calr	PanelInput_QueueCpuAdcChanges
-	ret
+PanelInput_Poll:	.include "includes/generated/cc900/PanelInput_Poll.s"	; C: cc900/audio_control_engine_m277.c
 ; While fewer than 7 records are queued, read one {header, state, changed} from CPANEL_RX_EVENT_QUEUE
 ; (PanelInput_ReadRxRecord) and queue it (PanelInput_QueueChange).
 PanelInput_DrainRxQueue:
@@ -4938,36 +4931,13 @@ ExtData_ToneParam_DispatchHandler_Join4:
 ExtData_ToneParam_DispatchHandler_Epilogue:
 	inc	6, xsp
 	ret
-ExtData_ToneParam_DispatchHandler_Join5:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join2:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	ldw	wa, 128
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join3:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join4:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join5:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join6:
-	ldw	wa, 255
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join7:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_ToneParam_DispatchHandler_Join5:	.include "includes/generated/cc900/ExtData_ToneParam_DispatchHandler_Join5.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join2:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join2.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join3:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join3.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join4:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join4.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join5:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join5.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join6:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join6.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join7:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join7.s"	; C: cc900/audio_control_engine_m0.c
 ExtData_ToneParam_DispatchHandler_Helper4:
 	ld	wa, 1:i3
 	calr	ExtData_ToggleTlvBits
@@ -5385,29 +5355,7 @@ MIDI_WriteResetSequence:
 	ret
 ; (pre-port v7 note about the bytes at 0xFC8384:)
 ; framing ported from v10's source for the same label (same span length, statement for statement); 23 of 36 slots byte-identical
-ExtData_Voice_UpdateFlags:
-	ld	wa, 2:i3
-	calr	ExtData_ToggleTlvBits
-	ld	wa, 1:i3
-	calr	ExtData_SetTlvField
-	calr	SwbtWr_FlushAndAppendParams
-	lda	xbc, (PANEL_CONDUCTOR:16)
-	bit	0, (xbc+3)
-	ret	nz
-	ld	a, (PANEL_STYLE+3:16)
-	and	a, 7
-	cp	a, 1:i3
-	ret	nz
-	inc	1, xbc
-	ld	a, (xbc)
-	bit	1, a
-	ret	z
-	set	0, (0x9039:16)
-	ld	a, (xbc)
-	res	1, a
-	ld	(xbc), a
-	calr	MIDI_WriteResetSequence
-	ret
+ExtData_Voice_UpdateFlags:	.include "includes/generated/cc900/ExtData_Voice_UpdateFlags.s"	; C: cc900/audio_control_engine_m0_xr.c
 ExtData_ToneParam_MultiChannel_Helper:
 	ld	(MIDI_MSG_DATA2), (EXTDATA_VALUE:16)
 	ld	(MIDI_MSG_DATA3), (EXTDATA_MASK:16)
@@ -6450,16 +6398,7 @@ SndParam_FetchSequencerParams:
 	mrib4	0x82, 0x19, 0x71, 0x90
 	ld	(MIDI_MSG_DATA3:16), 0
 	ret
-SndParam_WriteLookupAndStore:
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 0xffffffff
-	ret	z
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	ld	(EXTDATA_NEW_VALUE), (xhl+wa)
-	ret
+SndParam_WriteLookupAndStore:	.include "includes/generated/cc900/SndParam_WriteLookupAndStore.s"	; C: cc900/audio_control_engine_m280.c
 SwbtWr_FlushAndAppendParams:
 	cp	(MIDI_MSG_DATA3:16), 0
 	ret	z
