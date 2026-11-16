@@ -843,16 +843,49 @@ TABLEDATA_SRC = $(wildcard table_data/*.s table_data/*/*.s)
 CUSTOMDATA_SRC = $(wildcard custom_data/*.s custom_data/*/*.s)
 
 # --- Firmware C code (cc900 phase 6; notes/cc900-phase6-2026-11-16/README.md) ---
-# <tree>/cc900/*.c is C for firmware functions.  scripts/build/cc900_firmware_c.py compiles each file with the
-# cc900 reference model (scripts/analysis/cc900/model/, the firmware's -O3 -XS -Xr) and model/to_llvm.py -- our
-# own tools only, no Toshiba program -- into one body per function, includes/generated/cc900/<function>.s, which
-# the tree includes on the function's label line in place of its hand-written instructions.  The byte gate is the
-# proof that the C, the model and the translator give the firmware's bytes.  The stamp depends on the tree's
-# sources because the generator reads the tree's .equ values (they choose an operand's 16- or 24-bit width), and
-# on every model module, so a change to the model is checked against these functions by `make gate`.
-# Every main-CPU tree has its own C (the v9 tree's also builds v8): the trees differ in RAM cell addresses.
+# <tree>/cc900/*.c is C for firmware functions.  scripts/build/cc900_firmware_c.py turns each file into one body per
+# function, includes/generated/cc900/<function>.s, which the tree includes on the function's label line in place of
+# its hand-written instructions.  The byte gate is the proof that the C, the compiler and the translator give the
+# firmware's bytes.  Every main-CPU tree has its own C (the v9 tree's also builds v8): the trees differ in RAM cell
+# addresses.  The stamp depends on the tree's sources because the generator reads the tree's .equ values (they
+# choose an operand's 16- or 24-bit width).  C that V4.23 does not reproduce is not built: <tree>/cc900/unbuilt/.
+#
+# CC900_COMPILER chooses the compiler (the bodies are the same either way; `make gate` passes with both):
+#   v423   (the default) Toshiba cc900 V4.23, the firmware's own compiler, run in the oracle VM
+#          ($(CC900_ORACLE)/vm, scripts/analysis/cc900/oracle/run_vm.sh) by scripts/build/cc900_v423.py.  Its
+#          listings are cached in $(CC900_V423_CACHE) (git-ignored), keyed by the C text, its options and headers,
+#          the compiler tree and the guest's job.sh.  A make compiles all uncached files in ONE VM job, holding the
+#          VM lock; a fully cached make never touches the VM, so it builds without one.  The listing goes through
+#          model/to_llvm.py into our llvm-mc syntax.  There is no automatic fallback: when a file is not cached and
+#          the VM is unusable, the build stops, names what is missing and the flag below.
+#   model  our Python reference model of cc900 (scripts/analysis/cc900/model/, with the generator's FIRMWARE_RULES)
+#          and model/to_llvm.py: our own tools only, no VM.  `make CC900_COMPILER=model gate`.
+# Changing CC900_COMPILER rebuilds every body (rebuilt_ROMs/cc900-compiler.txt records the last choice).
+CC900_COMPILER ?= v423
+CC900_ORACLE ?= $(PROJECTS_ROOT)/cc900-oracle
+CC900_V423_CACHE ?= build/cc900-v423
 CC900_MODEL_SRC = $(wildcard scripts/analysis/cc900/model/*.py)
 CC900_FW_GEN = scripts/build/cc900_firmware_c.py
+CC900_TRANSLATE_SRC = scripts/analysis/cc900/model/to_llvm.py scripts/analysis/cc900/model/listing.py
+CC900_CHOICE = rebuilt_ROMs/cc900-compiler.txt
+CC900_V423_INDEX = $(CC900_V423_CACHE)/index.tsv
+CC900_ALL_C = $(foreach t,v10 v9 v7 v6 v5,$(wildcard $(t)/maincpu/cc900/*.c))
+ifeq ($(CC900_COMPILER),v423)
+CC900_GEN_DEPS = $(CC900_V423_INDEX) $(CC900_TRANSLATE_SRC) scripts/build/cc900_v423.py
+CC900_GEN_CMD = python3 -B $(CC900_FW_GEN) --v423 $(CC900_V423_CACHE)
+else ifeq ($(CC900_COMPILER),model)
+CC900_GEN_DEPS = $(CC900_MODEL_SRC) $(CLANG)
+CC900_GEN_CMD = CC900_MODEL_CLANG=$(CLANG) python3 -B $(CC900_FW_GEN)
+else
+$(error CC900_COMPILER=$(CC900_COMPILER): choose v423 (Toshiba V4.23 in the oracle VM, the default) or model (the Python reference model))
+endif
+# Both run on every make and rewrite their file only when its content changes, so the bodies are rebuilt only when
+# the compiler choice or a V4.23 cache key changed.  The fill step is cheap when everything is cached.
+$(CC900_CHOICE): CC900_FORCE
+	@mkdir -p $(@D); echo '$(CC900_COMPILER)' | cmp -s - $@ || echo '$(CC900_COMPILER)' > $@
+$(CC900_V423_INDEX): CC900_FORCE
+	python3 -B scripts/build/cc900_v423.py fill $(CC900_V423_CACHE) $(CC900_ORACLE) $(CC900_ALL_C)
+CC900_FORCE:
 cc900_stamps = $(patsubst $(1)/maincpu/cc900/%.c,$(1)/maincpu/includes/generated/cc900/%.stamp,$(wildcard $(1)/maincpu/cc900/*.c))
 V10_CC900_STAMPS = $(call cc900_stamps,v10)
 V9_CC900_STAMPS = $(call cc900_stamps,v9)
@@ -861,8 +894,8 @@ V6_CC900_STAMPS = $(call cc900_stamps,v6)
 V5_CC900_STAMPS = $(call cc900_stamps,v5)
 # $(1) the tree (v10), $(2) the variable naming its sources (V10_SRC); eval'd once that variable exists
 define CC900_FIRMWARE_C
-$(1)/maincpu/includes/generated/cc900/%.stamp: $(1)/maincpu/cc900/%.c $$($(2)) $$(CC900_MODEL_SRC) $$(CC900_FW_GEN) $$(CLANG) $$(LLVM_MC)
-	CC900_MODEL_CLANG=$$(CLANG) python3 -B $$(CC900_FW_GEN) $(1)/maincpu $$< $(1)/maincpu/includes/generated/cc900 $$@
+$(1)/maincpu/includes/generated/cc900/%.stamp: $(1)/maincpu/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
+	$$(CC900_GEN_CMD) $(1)/maincpu $$< $(1)/maincpu/includes/generated/cc900 $$@
 endef
 $(eval $(call CC900_FIRMWARE_C,v10,V10_SRC))
 $(eval $(call CC900_FIRMWARE_C,v9,V9_SRC))

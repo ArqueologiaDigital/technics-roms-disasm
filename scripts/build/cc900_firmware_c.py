@@ -1,14 +1,24 @@
 #!/usr/bin/env python3
-"""Firmware C code to assembly, with our own tools only: the build step of cc900 phase 6.
+"""Firmware C code to assembly: the build step of cc900 phase 6.
 
 QUESTION ANSWERED: which instructions does our C for a firmware function compile to, under the compiler the
-firmware was built with?  The compiler here is the cc900 reference model (scripts/analysis/cc900/model/: clang's
-front end, then the model's code generator), personality `kn5000`, at the options the C file names in a comment
-`cc900-options: -Xr` (one of OPTION_SETS), by default -O3 -XS -Xr (`--opt O3XS --adecl`); model/to_llvm.py writes its listing in our llvm-mc syntax with asm900's encodings.  No
-Toshiba program is involved.  `make gate` then proves the result: the tree includes it in place of the function's
+firmware was built with?  Two compilers give the same bodies (`make gate` passes with either; the Makefile's
+CC900_COMPILER chooses):
+
+  --v423 CACHE  (CC900_COMPILER=v423, the default) Toshiba cc900 V4.23 itself.  scripts/build/cc900_v423.py has
+                compiled FILE.c in the oracle VM and cached its listing in CACHE (git-ignored); this reads it.
+  (no option)   (CC900_COMPILER=model) the cc900 reference model (scripts/analysis/cc900/model/: clang's front end,
+                then the model's code generator, personality `kn5000`, with FIRMWARE_RULES switched on); our own tools
+                only.  The model is paused and does not cover all the C V4.23 compiles: when it refuses a function,
+                its options or a declaration, the step stops, names the file and the function or declaration, says
+                the model does not support it and that the default V4.23 build does, and writes nothing.
+
+Either way model/to_llvm.py writes the listing in our llvm-mc syntax with asm900's encodings, at the options the C
+file names in a comment `cc900-options: -O3 -Xr` (any flag string for V4.23; the model compiles OPTION_SETS), by
+default -O3 -XS -Xr.  `make gate` then proves the result: the tree includes it in place of the function's
 hand-written instructions, and the image must stay byte-identical.
 
-usage: python3 -B scripts/build/cc900_firmware_c.py TREE FILE.c OUT_DIR STAMP
+usage: python3 -B scripts/build/cc900_firmware_c.py [--v423 CACHE] TREE FILE.c OUT_DIR STAMP
     TREE    the source tree whose names the C uses (v10/maincpu)
     FILE.c  firmware C, one or more functions (TREE/cc900/*.c)
     OUT_DIR where each function's assembly goes, as OUT_DIR/<function>.s (TREE/includes/generated/cc900)
@@ -21,12 +31,18 @@ the body on the label's line:
     SetLswFilter:	.include "includes/generated/cc900/SetLswFilter.s"
 
 Names.  The C names the tree's symbols by their own names (`extern long LSW_FILTER;`), and the generated assembly
-spells them the same way, so the tree's `.equ` (or label) supplies the value.  The value is still read here, from
-TREE's `.equ` / `.set` lines, because asm900 chooses an absolute operand's width from it: `(NAME:16)` below
-0x10000, `(NAME:24)` above (model/to_llvm.py).  A RAM cell the tree has not named yet is written in the C as
-`ram_<hex address>` (`extern unsigned char ram_8d3e;`) and comes out as the number, as the hand assembly had it.
-A called function, and any other label of the tree (ROM data such as `FileIO_DiskInfoInit`), is spelled by name; a
-label is in the ROM, above 0x10000, so its operand is 24-bit.  Local labels become `.Lcc900_<function>_<label>`.
+spells them the same way, so the tree's `.equ` (or label) supplies the value.  A RAM cell the tree has not named yet
+is written in the C as `ram_<hex address>` (`extern unsigned char __near ram_8d3e;`) and comes out as the number, as
+the hand assembly had it.  A called function, and any other label of the tree (ROM data such as
+`FileIO_DiskInfoInit`), is spelled by name.  V4.23 keeps 31 characters of a name; a cut name is mapped back to the
+tree's full one.  Local labels become `.Lcc900_<function>_L<n>`, numbered in order of appearance.
+
+Operand widths.  cc900 gives a symbol's absolute operand the width of its declaration, not of its address: `__tiny`
+8-bit, `__near` 16-bit, plain (large) 24-bit (probe m16, run 2026-11-16-29-p6-m16).  V4.23's listing declares them
+(`extern small|medium|large`, model/listing.attributes) and to_llvm.WIDTHS takes them from there, checked against
+the C's own qualifiers (listing_widths); the model takes them from the C (c_widths).  A symbol without one stops
+the step.  V4.23 qualifies only the first declarator of a declaration, so a qualified declaration names one object
+(scripts/tools/cc900_near_qualifiers.py writes them).  Numeric absolute operands keep the address rule.
 
 The environment variables the model reads (CC900_*) are cleared, so the build always runs the model's defaults;
 CC900_MODEL_CLANG is kept (the Makefile sets it to its own clang).
@@ -43,8 +59,11 @@ LLVM_BIN = os.path.join(os.environ.get("PROJECTS_ROOT", os.path.expanduser("~/co
                         "llvm-project", "build", "bin")
 OPTIONS = dict(opt="O3XS", adecl=True, personality="kn5000")   # the default: -O3 -XS -Xr
 # A C file may name its own options in a comment, `cc900-options: -Xr` (the first such comment counts).  The sets the
-# reference model compiles, as cc900 flags -> (model opt, adecl):
-OPTION_SETS = {"-O3 -XS -Xr": ("O3XS", True), "-Xr": ("none", True), "-O3 -XS": ("O3XS", False), "": ("none", False)}
+# reference model compiles, as cc900 flags -> (model opt, adecl).  V4.23 (the default build) takes any flag string.
+# -O3 -Xr (without -XS) is how the firmware's -O files were compiled (lane_p6, run 2026-11-16-32-p6-m18): V4.23 then
+# copies a loop's test to its entry, which the model writes as its O3XS code plus the firmware rule KN_LOOP_INVERT.
+OPTION_SETS = {"-O3 -XS -Xr": ("O3XS", True), "-O3 -Xr": ("O3XS", True), "-Xr": ("none", True),
+               "-O3 -XS": ("O3XS", False), "": ("none", False)}
 OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
 # cc900 keeps the first 31 characters of an identifier (V4.23: THC1-Error-262 when two agree in them), so a C name
 # may be shorter than the tree's label.  A comment `cc900-name: CNAME=LABEL` (one per pair, anywhere in the file)
@@ -104,9 +123,15 @@ class Names(dict):
     """to_llvm's SYMBOLS and SPELL in one: a C name resolves to the tree's value (spelled by its name), to a
     `ram_<hex>` cell (spelled as the number), or to a label of the symbols reference file (spelled by name)."""
 
-    def __init__(self, values, labels=None):
+    def __init__(self, values, labels=None, cut=False):
         super().__init__()
         self.values, self.labels = values, labels or {}
+        self.cut = None
+        if cut:                                  # V4.23 keeps 31 characters of a name: {cut name: [full names]}
+            self.cut = {}
+            for n in set(labels or ()) | {k for k, v in values.items() if v is not None}:
+                if len(n) > C_NAME_LIMIT:
+                    self.cut.setdefault(n[:C_NAME_LIMIT], set()).add(n)
 
     def resolve(self, n):
         m = RAM_CELL_RE.match(n)
@@ -118,6 +143,9 @@ class Names(dict):
             raise KeyError("%s has two values in the tree; cannot choose its operand width" % n)
         if n in self.labels:
             return self.labels[n], n
+        if self.cut and len(self.cut.get(n, ())) == 1:     # a name V4.23 cut to 31 characters: the tree's full name
+            full = next(iter(self.cut[n]))
+            return self.resolve(full)[0], full
         return None, None
 
     def __contains__(self, n):
@@ -133,12 +161,16 @@ class Names(dict):
         return self.resolve(n)[1] if n in self else default
 
 
+def file_flags(path):
+    """the cc900 flags FILE.c asks for (`cc900-options:`, default -O3 -XS -Xr), any flag string: V4.23 takes them as
+    they are (scripts/build/cc900_v423.py); file_options() checks that the model compiles them"""
+    m = OPT_RE.search(open(path, "rb").read())
+    return " ".join(m.group(1).decode().split()) if m else "-O3 -XS -Xr"
+
+
 def file_options(path):
     """the options FILE.c asks for: (cc900 flags, model opt, adecl)"""
-    m = OPT_RE.search(open(path, "rb").read())
-    if not m:
-        return "-O3 -XS -Xr", OPTIONS["opt"], OPTIONS["adecl"]
-    flags = " ".join(m.group(1).decode().split())
+    flags = file_flags(path)
     if flags not in OPTION_SETS:
         sys.exit("%s: cc900-options %r is not one the reference model compiles (%s)"
                  % (path, flags, ", ".join(repr(k) for k in OPTION_SETS)))
@@ -175,9 +207,10 @@ def compile_c(path, names, spell=True):
     for flag in FIRMWARE_RULES:                          # rules of the firmware's own C, off in the model elsewhere
         if hasattr(codegen, flag):
             setattr(codegen, flag, True)
-    unit = frontend.load(path, [], [], adecl=adecl)
+    unit = frontend.load(path, ["__near=", "__tiny="], [], adecl=adecl)   # the qualifiers are read by c_widths
     out = codegen.compile_unit(unit, opt=opt, adecl=adecl, personality=OPTIONS["personality"])
     to_llvm.SPELL = names if spell else None
+    to_llvm.WIDTHS = c_widths(path, model=True)
     check_c_names(path, [f.name for f in unit.functions])
     labels = label_map(path)
     funcs = {}
@@ -190,23 +223,175 @@ def compile_c(path, names, spell=True):
         if not lines or not lines[0].endswith(":") or lines[0][:-1] != name:
             continue                                       # data objects
         bare = labels.get(name.lstrip("_."), name.lstrip("_."))
-        if bare != name.lstrip("_."):                      # a short C name: the body is the tree label's
-            lines = [bare + ":" if l == name + ":" else l for l in lines]
-            name = bare
-        body = to_llvm.translate_function(name, lines, names)
-        locals_ = {l[:-1] for l in lines if l.endswith(":") and not l.startswith("\t") and l[:-1] != name}
-        text = []
-        for l in body:
-            if l in ("\t.globl %s" % bare, bare + ":"):
-                continue
-            for lab in locals_:
-                l = re.sub(r'(?<![\w.])%s(?![\w])' % re.escape(lab), ".Lcc900_%s_%s" % (bare, lab), l)
-            text.append(l)
-        bad = [l for l in text if "untranslated" in l]
-        if bad:
-            sys.exit("%s: %s: to_llvm cannot translate:\n%s" % (path, bare, "\n".join(bad)))
-        funcs[bare] = to_llvm.relax("\n".join(text), assembler_errors).split("\n")
+        funcs[bare] = finish(path, name, bare, lines, names)
     return funcs
+
+
+QUALIFIER_WIDTH = {"__tiny": 8, "__near": 16}
+
+
+def file_scope_declarations(path):
+    """FILE.c's file-scope declarations without a parameter list (objects, not prototypes), comments removed"""
+    src = open(path, "rb").read().decode("latin-1")
+    src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
+    src = re.sub(r'//[^\n]*', '', src)
+    src = re.sub(r'^\s*#[^\n]*', '', src, flags=re.M)
+    out, cur, depth = [], "", 0
+    for ch in src:
+        if depth == 0 and ch == "{" and ")" in cur:          # a function body: drop its head and skip the body
+            cur, depth = "", 1
+            continue
+        if depth:
+            depth += {"{": 1, "}": -1}.get(ch, 0)
+            continue
+        if ch == ";":
+            s = " ".join(cur.split())
+            if s and "(" not in s and not s.startswith("typedef"):
+                out.append(s)
+            cur = ""
+        else:
+            cur += ch
+    return out
+
+
+def c_widths(path, model=False):
+    """{object name: 8, 16 or 24}: the absolute-operand width cc900 gives each file-scope object FILE.c declares --
+    `__tiny` 8, `__near` 16, else 24 (probe m16).  V4.23 applies a qualifier to the first declarator only (run
+    2026-11-16-30-p6-r1), so a qualified declaration must name one object; a qualifier before a `*` qualifies what
+    the pointer points to, not the pointer.  model=True also refuses a qualified array: V4.23 indexes one with
+    other code than a large array, which the reference model does not reproduce."""
+    out = {}
+    for s in file_scope_declarations(path):
+        s = re.sub(r'=\s*\{.*\}', '', s)
+        decls = [d.strip() for d in s.split(",")]
+        quals = [q for q in QUALIFIER_WIDTH if re.search(r'\b%s\b' % q, s)]
+        if quals and len(decls) > 1:
+            sys.exit("%s: `%s;`: V4.23 applies %s to the first name only; declare one name per declaration"
+                     % (path, s, quals[0]))
+        for d in decls:
+            d = d.split("=")[0].strip()
+            m = re.search(r'([A-Za-z_]\w*)\s*(\[[^\]]*\]\s*)*$', d)
+            if not m:
+                continue
+            w = 24
+            for q in quals:
+                at = re.search(r'\b%s\b' % q, d)
+                if at and "*" not in d[at.end():]:              # the object itself is qualified
+                    w = QUALIFIER_WIDTH[q]
+                    if model and "[" in d:
+                        sys.exit("%s: `%s;`: the reference model does not reproduce V4.23's indexing of a %s "
+                                 "array.%s" % (path, s, q, MODEL_HINT))
+            out[m.group(1)] = w
+    return out
+
+
+C_KEYWORDS = {"if", "while", "for", "switch", "return", "sizeof", "do", "else"}
+
+
+def c_functions(path):
+    """the names of the functions FILE.c defines (definitions start in column 0, as in every firmware C file)"""
+    src = open(path, "rb").read().decode("latin-1")
+    src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
+    src = re.sub(r'//[^\n]*', '', src)
+    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{', src, re.M)
+            if n not in C_KEYWORDS]
+
+
+def listing_functions(text):
+    """a cc900 listing (`.asm`) -> {function: [lines]} as model/listing.py's split gives them, with the section lines
+    before each label dropped and a label that is not public kept inside the function before it"""
+    import listing
+    pubs = set(re.findall(r'(?im)^\s*public\s+([._\w]+)', text))
+    fs = {}
+    for k, v in listing.split(text).items():
+        v = v[[i for i, l in enumerate(v) if l == k + ":"][0]:]
+        if k not in pubs and fs:
+            fs[list(fs)[-1]] += v
+        else:
+            fs[k] = v
+    return fs
+
+
+def listing_widths(path, text):
+    """the operand widths V4.23's listing declares ({symbol: 8 / 16 / 24}, model/listing.attributes; a name it cut to
+    31 characters stands for the C's full name), checked against FILE.c's own declarations (c_widths): a disagreement
+    means the C does not say what the listing did, and stops the build"""
+    import listing
+    attrs = listing.attributes(text)
+    cw = c_widths(path)
+    uncut = {n[:C_NAME_LIMIT]: n for n in cw if len(n) > C_NAME_LIMIT}
+    attrs.update({uncut[k]: v for k, v in list(attrs.items()) if k in uncut})     # both spellings
+    bad = ["%s: C %d-bit, listing %d-bit" % (n, cw[n], attrs[n]) for n in sorted(cw) if n in attrs and attrs[n] != cw[n]]
+    if bad:
+        sys.exit("%s: the operand widths V4.23 declares differ from the C's qualifiers:\n    %s" % (path, "\n    ".join(bad)))
+    return attrs
+
+
+def compile_v423(path, names, cache):
+    """FILE.c -> {function: [llvm-mc lines]} from Toshiba V4.23's listing of it, which scripts/build/cc900_v423.py
+    fill has put in CACHE; the same to_llvm path as compile_c (finish)."""
+    import cc900_v423
+    import to_llvm
+    status, lp, logs = cc900_v423.listing(cache, path)
+    if status != "OK":
+        sys.exit("%s: %s" % (path, "V4.23 does not compile it; see %s" % " ".join(logs) if status else
+                             "no V4.23 listing of its current text in %s; `make` fills the cache first "
+                             "(scripts/build/cc900_v423.py fill)" % cache))
+    cdefs = c_functions(path)
+    check_c_names(path, cdefs)
+    labels = label_map(path)
+    uncut = {n[:C_NAME_LIMIT]: n for n in cdefs}
+    text = open(lp, encoding="latin-1").read()
+    to_llvm.SPELL = names
+    to_llvm.WIDTHS = listing_widths(path, text)
+    funcs = {}
+    for name, lines in listing_functions(text).items():
+        n = name.lstrip("_.")
+        c = n if n in cdefs else uncut.get(n, n)          # V4.23 keeps 31 characters of a name
+        bare = labels.get(c, c)
+        funcs[bare] = finish(path, name, bare, lines, names)
+    want = {labels.get(c, c) for c in cdefs}
+    if set(funcs) != want:
+        sys.exit("%s: V4.23's listing has functions %s, the C defines %s" % (path, sorted(funcs), sorted(want)))
+    return funcs
+
+
+def finish(path, name, bare, lines, names):
+    """one function's listing lines (cc900 syntax, model or V4.23) -> its llvm-mc body for the tree label `bare`:
+    model/to_llvm.py, local labels made `.Lcc900_<bare>_<label>`, asm900's jr / jrl choice.  Raises SystemExit on a
+    line to_llvm cannot translate."""
+    import to_llvm
+    if bare != name.lstrip("_."):                          # a short (or cut) C name: the body is the tree label's
+        lines = [bare + ":" if l == name + ":" else l for l in lines]
+        name = bare
+    try:
+        body = to_llvm.translate_function(name, lines, names)
+    except KeyError as ex:                                 # a name without a value or a declared width
+        sys.exit("%s: %s: %s%s" % (path, bare, ex.args[0] if ex.args else ex, MODEL_HINT if MODEL else ""))
+    # local labels renumbered in order of appearance (L1, L2 ..., S1 ...), so that the model's listing and V4.23's,
+    # which number them differently, give the same text
+    order = [l[:-1] for l in lines if l.endswith(":") and not l.startswith("\t") and l[:-1] != name]
+    new, count = {}, {}
+    for lab in order:
+        k = lab[0] if lab[0].isalpha() else "L"
+        count[k] = count.get(k, 0) + 1
+        new[lab] = ".Lcc900_%s_%s%d" % (bare, k, count[k])
+    text = []
+    for l in body:
+        if l in ("\t.globl %s" % bare, bare + ":"):
+            continue
+        for lab in order:
+            l = re.sub(r'(?<![\w.])%s(?![\w])' % re.escape(lab), new[lab], l)
+        text.append(l)
+    bad = [l for l in text if "untranslated" in l]
+    if bad:
+        sys.exit("%s: %s: to_llvm cannot translate:\n%s%s" % (path, bare, "\n".join(bad), MODEL_HINT if MODEL else ""))
+    return to_llvm.relax("\n".join(text), assembler_errors).split("\n")
+
+
+MODEL = False                                              # main(): building with the reference model
+MODEL_HINT = ("\nThe Python reference model (CC900_COMPILER=model) does not support this C; nothing was written.  The "
+              "default build, Toshiba V4.23 in the oracle VM (`make`, CC900_COMPILER=v423), compiles it.")
 
 
 def assembler_errors(text):
@@ -221,22 +406,39 @@ def tabbed(line):
 
 
 def main():
-    if len(sys.argv) != 5:
+    args = sys.argv[1:]
+    cache = None
+    if args[:1] == ["--v423"] and len(args) > 1:
+        cache = args[1]
+        args = args[2:]
+    if len(args) != 4:
         sys.exit(__doc__)
-    tree, src, outdir, stamp = sys.argv[1:]
-    funcs = compile_c(src, Names(tree_values(tree), tree_labels(tree)))
+    tree, src, outdir, stamp = args
+    global MODEL
+    if cache:
+        funcs = compile_v423(src, Names(tree_values(tree), tree_labels(tree), cut=True), cache)
+    else:
+        MODEL = True
+        if file_flags(src) not in OPTION_SETS:
+            sys.exit("%s: cc900-options %r is not one the reference model compiles (%s)%s"
+                     % (src, file_flags(src), ", ".join(repr(k) for k in OPTION_SETS), MODEL_HINT))
+        funcs = compile_c(src, Names(tree_values(tree), tree_labels(tree)))
     if REFUSED:
-        sys.exit("%s: the reference model does not compile: %s" % (
-            src, "; ".join("%s (%s)" % kv for kv in sorted(REFUSED.items()))))
+        sys.exit("%s: the reference model does not compile: %s%s" % (
+            src, "; ".join("%s (%s)" % kv for kv in sorted(REFUSED.items())), MODEL_HINT))
     if not funcs:
         sys.exit("%s: no function compiled" % src)
     os.makedirs(outdir, exist_ok=True)
     relsrc = os.path.relpath(src, tree)
-    flags = file_options(src)[0] or "no options"
+    flags = file_flags(src) or "no options"
     for f, lines in funcs.items():
         hdr = ["; GENERATED by scripts/build/cc900_firmware_c.py -- do not edit.",
                "; %s, compiled from %s by the cc900 reference model (scripts/analysis/cc900/model/," % (f, relsrc),
                "; %s, personality kn5000) and model/to_llvm.py.  The label is on the including line." % flags]
+        if cache:
+            hdr[1:] = ["; %s, compiled from %s by Toshiba cc900 V4.23 (%s; its listing from the oracle VM, cached"
+                       % (f, relsrc, flags),
+                       "; by scripts/build/cc900_v423.py) and model/to_llvm.py.  The label is on the including line."]
         with open(os.path.join(outdir, f + ".s"), "w") as fh:
             fh.write("\n".join(hdr + [tabbed(l) for l in lines]) + "\n")
     if os.path.exists(stamp):

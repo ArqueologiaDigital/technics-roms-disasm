@@ -48,6 +48,21 @@ LARGE_DATA = False                                       # named absolute operan
 # own definitions supply the value; the address from SYMBOLS still picks the 8/16/24-bit width.  A name SPELL lacks
 # is written as its address, as before.
 SPELL = None
+# WIDTHS (phase 6 firmware C): {symbol without `_` / `.`: 8, 16 or 24}, the width cc900 gives the symbol's absolute
+# operand from its declaration -- `__tiny` (listing `small`), `__near` (`medium`) or plain (`large`) -- not from its
+# address (probe m16, run 2026-11-16-29-p6-m16).  When set, a named operand or `lda` of a symbol takes that width, and
+# a symbol it lacks stops the translation (no guess from the address).  scripts/build/cc900_firmware_c.py sets it from
+# V4.23's listing (listing.attributes) or, for the model, from the C's declarations.  None: the address rule above.
+WIDTHS = None
+
+def sym_width(sym):
+    n = sym.lstrip('_.')
+    if n not in WIDTHS: raise KeyError('no declared width (small / medium / large) for %s' % sym)
+    return WIDTHS[n]
+
+# byte registers of XIX / XIY / XIZ, which llvm-mc reaches only through their extended-register code (the ERP forms)
+ERP_BYTE = {'IXL': 0xf0, 'IXH': 0xf1, 'QIXL': 0xf2, 'QIXH': 0xf3, 'IYL': 0xf4, 'IYH': 0xf5, 'QIYL': 0xf6, 'QIYH': 0xf7,
+            'IZL': 0xf8, 'IZH': 0xf9, 'QIZL': 0xfa, 'QIZH': 0xfb}
 
 def spelled(sym, a, off=0):
     """the operand text for symbol `sym` (+ off) at address a: the tree's name when SPELL has it, else the number"""
@@ -56,6 +71,8 @@ def spelled(sym, a, off=0):
     return '%s+%d' % (s, off) if off else s
 
 def absaddr(a, named=False, sym=None, off=0):
+    if named and sym and WIDTHS is not None:
+        return '(%s:%d)' % (spelled(sym, a, off), sym_width(sym))
     w = 24 if named and LARGE_DATA else 8 if a + off < 0x100 else 16 if a + off < 0x10000 else 24
     return '(%s:%d)' % (spelled(sym, a, off) if sym else '0x%x' % (a + off), w)
 
@@ -161,6 +178,10 @@ def translate_line(t, syms, locals_):
             word = bop.endswith('w') and bop not in ('ldd',)
             return '\t.byte 0x%02x, 0x%02x\t; %s' % ((0x90 if word else 0x80) + r, sub, t.strip())
     if op == 'scc': return '\tscc %s, %s' % (CC[raw[0]], raw[1].lower())
+    if op in ('ld', 'ldb') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
+        return '\tst_erpb_rr %s, 0x%x' % (raw[1].lower(), ERP_BYTE[raw[0]])   # ld IXL,C = c7 f0 9b
+    if op in ('ld', 'ldb') and len(raw) == 2 and raw[0] in R8 and raw[1] in ERP_BYTE:
+        return '\tld_erpb_rr %s, 0x%x' % (raw[0].lower(), ERP_BYTE[raw[1]])   # ld C,IXL = c7 f0 8b
     if op in ('push', 'pop') and raw[0] in ('WA', 'BC', 'DE', 'HL', 'IX', 'IY', 'IZ'):
         return '\t%sw %s' % (op, raw[0].lower())                      # the 1-byte 16-bit forms
     if op == 'lda':
@@ -174,8 +195,10 @@ def translate_line(t, syms, locals_):
         # lda of a symbol takes the 24-bit address whatever its value (sub CPU _exp: lda XBC,_g_mathtbl at 0xf420 is
         # f2 20 f4 00 31, not the 16-bit form)
         m = re.match(r'^([_.]\w+) \+ (0x[0-9a-fA-F]+|\d+)$', src)
-        if m: return '\tlda %s, (%s:24)' % (dst, spelled(m.group(1), lookup(m.group(1), syms), num(m.group(2))))   # _cos: _g_dbltbl + 0x10
-        if src.startswith(('_', '.')): return '\tlda %s, (%s:24)' % (dst, spelled(src, lookup(src, syms)))
+        if m: return '\tlda %s, (%s:%d)' % (dst, spelled(m.group(1), lookup(m.group(1), syms), num(m.group(2))),
+                                            24 if WIDTHS is None else sym_width(m.group(1)))   # _cos: _g_dbltbl + 0x10
+        if src.startswith(('_', '.')): return '\tlda %s, (%s:%d)' % (dst, spelled(src, lookup(src, syms)),
+                                                                     24 if WIDTHS is None else sym_width(src))
         if src in syms: return '\tlda %s, (0x%x:24)' % (dst, syms[src])      # an FP constant placed by the linker
         if re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$', src): return '\tlda %s, (%s)' % (dst, src.lower())   # lda XWA,XSP
         if src in locals_: return '\tlda %s, (%s:24)' % (dst, src)

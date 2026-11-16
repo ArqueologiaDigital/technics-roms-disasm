@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Does V4.23's code for our firmware C give the ROM's bytes, once addresses get the firmware's widths?
 
-QUESTION ANSWERED: rel_vs_rom.py compares asm900's object, in which every extern is `large` and so takes a 24-bit
-operand; the firmware addresses its variables below 0x10000 with 16-bit operands, so a correct function still
-differs there.  This tool takes the oracle's listing (`.asm`) instead, rewrites each function with
-model/to_llvm.py (asm900's encodings, the operand width chosen from the address: the "proxy route" of
-notes/cc900-compat-plan-2026-11-08/phase6-preview.md), assembles it with llvm-mc and compares it with the ROM at the
+QUESTION ANSWERED: does V4.23's listing (`.asm`) of our firmware C give the ROM's bytes?  The tool rewrites each
+function with model/to_llvm.py (asm900's encodings; each symbol's operand width the one the listing declares,
+`extern small|medium|large` = the C's __tiny / __near / plain, probe m16 -- until 2026-11-16 it was chosen from the
+address, the "proxy route" of notes/cc900-compat-plan-2026-11-08/phase6-preview.md, which hid that the C lacked its
+__near qualifiers), assembles it with llvm-mc and compares it with the ROM at the
 function's own name.  Names resolve as in the build (scripts/build/cc900_firmware_c.py: the tree's `.equ` values,
 `ram_<hex>` cells, the symbols reference's labels).  It prints one line per function, MATCH or the first differing
 offset, and no Toshiba text; never paste its input into the repository.
@@ -40,7 +40,9 @@ def main():
     base = int(opt(a, '--base', '0xe00000'), 0)
     names = fw.Names(fw.tree_values(tree), ref)
     to_llvm.SPELL = None
-    funcs = listing.split(open(a[0], encoding='latin-1').read())
+    text = open(a[0], encoding='latin-1').read()
+    to_llvm.WIDTHS = listing.attributes(text)                # operand widths as the listing declares them (probe m16)
+    funcs = listing.split(text)
     short = {}
     for n in ref:
         short.setdefault(n[:31], []).append(n)

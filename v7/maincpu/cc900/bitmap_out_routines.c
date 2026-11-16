@@ -4,7 +4,10 @@
    names are shorter:
    cc900-name: BitMapOut_PrepRender_CheckBit1=BitMapOut_PrepareRender_CheckBit1
    cc900-name: BitMapOut_PrepRender_CheckBit2=BitMapOut_PrepareRender_CheckBit2 */
-extern unsigned char ram_8ca0, ram_8ca2, ram_8cac, ram_8cae;
+extern unsigned char __near ram_8ca0;
+extern unsigned char __near ram_8ca2;
+extern unsigned char __near ram_8cac;
+extern unsigned char __near ram_8cae;
 
 unsigned char BitMapOut_ByteData_DiskCheck(void) { return ram_8ca2; }
 void BitMapOut_StorePresetValue(unsigned char v) { ram_8ca2 = v; }
