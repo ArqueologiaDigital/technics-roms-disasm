@@ -13,7 +13,8 @@ usage (from the repository root or anywhere):
   python3 -B scripts/analysis/cc900/nearmiss.py [--runs-re REGEX | --runs RUN,RUN] [--oracle DIR]
           [--src-root DIR] [--model-root DIR] [--out DIR] [--near PCT] [--jobs N]
       index the runs (default: every run whose name has -p6-, -sub- or -hd-) and write OUT/index.tsv, OUT/README.md
-      and the near-miss C copies OUT/c/<tree>/<function>__<sha8>.c.
+      and the near-miss C copies OUT/c/<tree>/<function>__<sha8>.c.  --add-new: only the runs runs.tsv lacks,
+      their rows added to the existing index (the hourly refresh).
   python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all] [--update] [--verbose]
           [--no-derive-module] [same options]
       no VM: re-translate the listings of the indexed near misses (--all: every attempt but MATCH, ERR-name and
@@ -1481,7 +1482,8 @@ def write_readme(out, rows, prov, pct, src_root, model_root, errs):
         L.append('Errors: ' + ', '.join('%s %d' % (k, sum(1 for r in rows if r['status'] == k)) for k in errk) +
                  ' attempts (ERR-name: the listing\'s function is not a label of the tree; ERR-resolve: a name '
                  'without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc '
-                 'refuses the translation).\n')
+                 'refuses the translation; ERR-data: an f_const object (switch table, FP constant) without a '
+                 '`cc900-data:` line; the `why` column has the reason).\n')
     L.append('## By class (each non-matching function\'s best attempt)\n')
     L.append('`sole`: functions whose only class it is, so fixing the class alone would make them MATCH; `sole ROM B`: '
              'their ROM bytes (what a fix recovers outright).  `diff B`: bytes this class covers in all functions.  '
@@ -1586,11 +1588,18 @@ def main():
         return recheck(a, out, pct, jobs_n, src_root, model_root)
     t0 = time.time()
     runs = run_list(a, ORACLE)
+    keep, keep_prov = [], {}
+    if '--add-new' in a and os.path.exists(os.path.join(out, 'runs.tsv')):   # only the runs the index lacks
+        keep_prov = {k: (os.path.join(CORPUS_ROOTS[0], v[0]) if v[0] else '', v[1]) for k, v in read_runs(out).items()}
+        runs = [r for r in runs if r not in keep_prov]
+        keep = read_index(out)
     jobs, prov = build_jobs(runs, ORACLE, src_root)
     print('%d runs, %d listings' % (len(runs), len(jobs)), file=sys.stderr)
     rows, errs = execute(jobs, jobs_n)
     finalise(rows, pct)
     copy_c(out, rows, pct)
+    rows = keep + rows
+    prov.update(keep_prov)
     write_index(out, rows)
     with open(os.path.join(out, 'runs.tsv'), 'w') as f:
         f.write('run\tcorpus_tar_sha256\tcorpus_dir\n')
