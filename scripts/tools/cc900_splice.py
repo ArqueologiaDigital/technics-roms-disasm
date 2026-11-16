@@ -360,10 +360,14 @@ def main():
                     sys.exit("%s: %s runs past the end of the file" % (asm, name))
                 lm = LABEL_RE.match(lines[j])
                 if lm and lm.group(1).startswith(b".L"):
+                    use = rb'[\s,(]' + re.escape(lm.group(1)) + rb'(?![\w.$])'
                     if re.search(rb'[\s,(]' + re.escape(lm.group(1)) + rb'\s*[),]?\s*$', region, re.M):
                         j += 1                                   # inner (and dropped: no symbol to keep)
                         continue
-                    break                                        # it starts the next block
+                    if not any(re.search(use, l.split(b";")[0]) for l in lines[:i] + lines[nxt:]):
+                        j += 1                                   # nothing in the file uses it (a name for the reader,
+                        continue                                 # HardTestPage's .Leh_xde_09): inner too, dropped
+                    break                                        # used from outside: it starts the next block
                 if lm:
                     ln = lm.group(1).decode()
                     if ln not in ref:
@@ -376,8 +380,11 @@ def main():
                 else:
                     c = lines[j].split(b";")[0].strip()
                     if c.startswith(b".") and data_size(c) is None:
-                        sys.exit("%s:%d: inside %s's body, a directive that emits no measurable bytes or defines "
-                                 "something (%s): splice it by hand" % (asm, j + 1, name, c.split()[0].decode()))
+                        # a directive that emits no measurable bytes or defines something (.equ, .include): the scan
+                        # stops before it, and it stays where it is.  It is past the function when the lines before
+                        # it reach the compiled size (HDAE5000_Get_Init_Flag: a .equ block 30 lines after its ret);
+                        # when they do not, the size check below refuses the splice
+                        break
                 j += 1
             while j > i + 1 and not lines[j - 1].split(b";")[0].strip():   # the blank and comment lines before
                 j -= 1                                                    # the next label stay with it

@@ -27,6 +27,7 @@ CC = {'eq': 'z', 'ne': 'nz', 'lt': 'lt', 'le': 'le', 'gt': 'gt', 'ge': 'ge', 'ul
 R8 = {'A', 'W', 'B', 'C', 'D', 'E', 'H', 'L'}
 REGS = re.compile(r'^(Q?[WABCDEHL]|Q?(WA|BC|DE|HL|IX|IY|IZ|SP)|X(WA|BC|DE|HL|IX|IY|IZ|SP)|Q?I[XYZ][LH])$')
 NUM = re.compile(r'^-?(0x[0-9a-fA-F]+|\d+)$')
+REG32 = re.compile(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$')
 
 def load_symbols(path):
     out = {}
@@ -218,6 +219,11 @@ def translate_line(t, syms, locals_):
     if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
+    if op in ('j', 'cal', 'call', 'jp') and raw and REG32.match(raw[-1]):
+        # through a register: a tail call `j XHL` is jp (xhl) = b3 d8 (lane_hd: HDAE5000_HardTest_Print), call XHL is
+        # call (xhl) = b3 e8; with a condition, jp / call cc, (xhl)
+        cc = '%s, ' % CC[raw[0].lower()] if len(raw) == 2 else ''
+        return '\t%s %s(%s)' % ('jp' if op in ('j', 'jp') else 'call', cc, raw[-1].lower())
     if op == 'cal' and len(raw) == 2:                    # CAL cc,F: no relative form, call cc,(F) -- 24-bit, or 16
         t = spelled(raw[1], lookup(raw[1], syms))        # for a __near / __tiny F (hdae5000_ui_display.s: call nz,
         return '\tcall %s, (%s:%d)' % (CC[raw[0]], t, 16 if code_width(raw[1]) < 24 else 24)   # (..._Status:24))
