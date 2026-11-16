@@ -219,3 +219,10 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a90f7b7382b974b3baa90f26385160d4c3c2a031bf923f500007	Xr	2026-11-16-78-hd-r15-ports	HDAE5000_RequestTitle16	73	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a90f7b7382b974b3baa90f26385160d4c3c2a031bf923f500007	Xr	2026-11-16-78-hd-r15-ports	HDAE5000_UiObj_SetCaption	25	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_ui_display.c	c974b8474f10a90f7b7382b974b3baa90f26385160d4c3c2a031bf923f500007	Xr	2026-11-16-78-hd-r15-ports	HDAE5000_YieldUntilSem1Zero	45	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem_set.c	395043d60f1995b7257daf06cbbd48d903adb2f8ebc81db828218b575fdd1cc6	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_FlsItem_SetAutoLoad	66	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem_set.c	395043d60f1995b7257daf06cbbd48d903adb2f8ebc81db828218b575fdd1cc6	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_FlsItem_SetAutoStart	66	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_partlist.c	e2ffb9f32d414a5318dd68892402434005d69e69b6313a36e890f224a72f4a7f	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_PartList_Build	412	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_setup.c	425eeeb3588bd410024cba985531865aae696d5356fdc9afd833c3bf749916e4	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_CopyVersionString	43	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_setup.c	425eeeb3588bd410024cba985531865aae696d5356fdc9afd833c3bf749916e4	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_SetupPage_BuildDriveInfo	598	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_title_info.c	e6acbba9d331edbc59a630229e68b8234a67655b5dd398b2c67c32e4050cc0ea	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_HdTitleEventCatch	128	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_title_info.c	e6acbba9d331edbc59a630229e68b8234a67655b5dd398b2c67c32e4050cc0ea	Xr	2026-11-16-84-hd-r17-staged	HDAE5000_TitleInfo_Build	421	MATCH
