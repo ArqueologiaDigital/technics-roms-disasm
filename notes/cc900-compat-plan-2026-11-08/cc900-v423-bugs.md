@@ -74,14 +74,25 @@ Add every new one here, in the commit that finds it.
   corpus/micro/arr_index.c: ai_c_p_p1 `return p[i + 1]`, ai_c_p_st_m1 `p[i - 1] = x`, at none and -O3 -XS).
 - **C meaning:** `p + i` with a negative `i` points before `p`, which is defined whenever `p` points into the middle of
   an array.
-- **V4.23:** widens the signed 16-bit (or char) index to 32 bits with a zero extension, so `p + i` for `i < 0` yields
-  `p + (i + 65536)` (or `+ 256` for a char).  The same sum stored into a pointer variable (`gcp2 = gcp + b`) and
-  `p - i` are sign-extended, correctly -- so this is not a uniform "indexes are unsigned" convention; it may still be
-  a documented limitation of V4.23 (to check against the compiler manual).
-- **Evidence:** oracle runs 2026-11-16-3-micro-ptrar (all four sets), 2026-11-15-8-micro-stptr (all four sets),
+- **V4.23:** widens the index to 32 bits with a zero extension in some homes and contexts and with a sign extension in
+  others.  For `p + i` with `p` a char pointer and `i` a signed int (probe psum.c, 140 functions, all four sets):
+  - **returned** (`return p + i`): zero-extended, whatever the operands' homes;
+  - **stored into a pointer** (`gp2 = p + i`): sign-extended, correctly;
+  - **in an argument, a local's initialiser, or a store through the sum** (`vp(p + i)`, `char *w = p + i`,
+    `*(p + i) = 5`): zero-extended when the pointer or the index is a cdecl stack parameter (under -O, a local copied
+    from a stack parameter counts as one); sign-extended, correctly, when both are locals, globals or -Xr register
+    parameters (`ld XWA,(u) / ld BC,(i) / lda XWA,XWA+BC`, or the (XR+R16) indexed form for a store).
+  A signed char index is zero-extended as a byte (`+ 256` for a negative one) except when the sum is stored into a
+  pointer.  An unsigned index is zero-extended (correct), and `p - i` is sign-extended (correct).  So `p + i` for `i < 0`
+  yields `p + (i + 65536)` exactly in the zero-extending cases.  This is not a uniform "indexes are unsigned"
+  convention; it may still be a documented limitation of V4.23 (to check against the compiler manual).
+- **Evidence:** oracle runs 2026-11-16-16-micro-psum (the home and context split, all four sets: `_ps_qba` / `_ps_gba`
+  zero-extend and `_ps_gga` / `_ps_lla` sign-extend at none, `_ps_*r` zero-extend and `_ps_*s` sign-extend everywhere,
+  `.ps_gba` sign-extends at -Xr), 2026-11-16-3-micro-ptrar (all four sets), 2026-11-15-8-micro-stptr (all four sets),
   2026-11-09-24-micro-arrindex (none, O3XS); and in random code, run 2026-11-16-4-micro-pool9-12: rstmt10.c
-  `rs_10_02_13_2` (`char *u = gs.p + a;`, none and O3XS) and rstmt11.c `rs_11_05_01_5` (`return gp + t;` with a char t,
-  Xr and O3XSXr).  Reported by lane_nm.
+  `rs_10_02_13_2` (`char *u = gs.p + a;` with `a` a stack parameter, none and O3XS), rstmt11.c `rs_11_05_01_5`
+  (`return gp + t;` with a char t, Xr and O3XSXr), and rstmt9.c `rs_9_08_04_3` (`vp(u + i)` with locals u and i:
+  sign-extended, no bug).  Reported by lane_nm.
 - **Model:** reproduces it where V4.23 does it (PTR_CTX, chidx, lane_nm rule 15 CHAR_IDX_SIGN; rule 22 sign-extends only
   where V4.23 does).  Firmware code indexing a char pointer backwards would need this to match.
 
