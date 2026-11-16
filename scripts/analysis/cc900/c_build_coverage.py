@@ -380,6 +380,7 @@ def firmware(key, tree, rom_path, sym_path):
         flags = fw.file_flags(path)
         label = label_of(flags)
         lm_ = fw.label_map(path)                          # a short C name (`cc900-name: C=LABEL`) is the label's
+        names.cmap = lm_                                  # ... for callees and data too (the build's resolver)
         try:
             funcs = fw.compile_c(path, names, spell=False)
         except SystemExit as ex:                          # the model refuses the file: its functions still count
