@@ -852,19 +852,9 @@ ToneGen_FileIO_RestoreFromBackup:
 
 ; Compare the first 3 bytes of Custom Data Flash 0x3D3000 with SndParamBank_DefaultHeader ("HK "); on any
 ; difference fall into SndParamBank_WriteFlashDefaults.
-SndParamBank_CheckFlash:
-	lda xhl, (SndParamBank_DefaultHeader:24)
-	ld xde, 0x3d3000
-	ld bc, 0:i3
-
-SndParamBank_CheckFlash_Loop:
-	ld A, (xhl+)
-	cp A, (xde+)
-	jr nz, SndParamBank_WriteFlashDefaults
-	inc 1, bc
-	cp bc, 3:i3
-	jr c, SndParamBank_CheckFlash_Loop
-	ret
+SndParamBank_CheckFlash:	.include "includes/generated/cc900/SndParamBank_CheckFlash.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParamBank_CheckFlash_Loop, SndParamBank_CheckFlash + 12
 
 ; FlashWrite the factory defaults of the sound-parameter banks: header + bank 0 (0xFA bytes) to 0x3D3000,
 ; SndParamBank_Default1 / _Default2 (0xEA each) to 0x3D3110 / 0x3D3210, then the 0x50-byte option block,

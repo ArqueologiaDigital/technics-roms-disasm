@@ -6,7 +6,7 @@ together.  This copies each named probe (scripts/analysis/cc900/corpus/firmware/
 lane_nmx matches a run's sources by SHA-256) into DIR/firmware/, appends it to DIR/sources.txt, checks it with
 gcc -fsyntax-only -std=c89, and makes sure DIR/options.txt holds the three option sets.
 
-usage: python3 -B notes/cc900-phase6-2026-11-16/add_probes.py DIR STEM [STEM ...]
+usage: python3 -B notes/cc900-phase6-2026-11-16/add_probes.py DIR STEM|@STEMFILE [STEM ...]
 """
 import os, shutil, subprocess, sys
 
@@ -16,7 +16,9 @@ SETS = ['O3Xr|-O3 -Xr', 'Xr|-Xr', 'O3XSXr|-O3 -XS -Xr']
 
 
 def main():
-    d, stems = sys.argv[1], sys.argv[2:]
+    d, stems = sys.argv[1], []
+    for s in sys.argv[2:]:                  # @FILE: one stem per line (no shell substitution needed)
+        stems += open(s[1:]).read().split() if s.startswith('@') else [s]
     os.makedirs(os.path.join(d, 'firmware'), exist_ok=True)
     src = os.path.join(d, 'sources.txt')
     have = open(src).read().split() if os.path.exists(src) else []
