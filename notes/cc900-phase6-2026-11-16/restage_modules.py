@@ -123,11 +123,13 @@ def main():
           % (len(old_files), len(new), len(missing), ' '.join(missing)))
     if dry:
         return
-    for p in old_files:                                      # this script's own outputs replace them
-        assert os.path.realpath(p).startswith(os.path.realpath(sdir) + os.sep) and p.endswith('.c')
-        os.remove(p)
+    # Nothing is deleted here (owner's rule, 2026-11-16: removals only as standalone commands with literal paths):
+    # files whose names the new grouping no longer produces are listed, for `git rm -- <path>` by hand.
     for n, body in new.items():
         open(os.path.join(sdir, n), 'w', encoding='latin-1').write(body)
+    for p in old_files:
+        if os.path.basename(p) not in new:
+            print('obsolete, remove by hand: %s' % os.path.relpath(p, REPO))
 
 
 if __name__ == '__main__':

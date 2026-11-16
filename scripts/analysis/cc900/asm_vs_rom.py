@@ -40,9 +40,12 @@ def main():
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
     alias = {}
+    module = set()
     for i, x in enumerate(a):
         if x == '--cfile':
             alias.update(fw.label_map(a[i + 1]))
+            module |= fw.module_names(a[i + 1])     # the C's `cc900-module:` callees: calr / jr / jrl, as the build
+    to_llvm.MODULE = module or None
 
     class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
         def resolve(self, n):                            # name (value or label) it is the prefix of

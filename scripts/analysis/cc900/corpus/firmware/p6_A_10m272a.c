@@ -1,6 +1,7 @@
 /* Phase 6, lane_p6 helper A, round 10, form a: module 272 of modules_v10.tsv (ui/ui_widget_defs.s): the view
    accessors (calr to GetViewInstance and to each other), with Link and Unlink.  Every callee is defined here.
    Object id: bits 16..27 = object table entry, bits 0..15 = index into that entry's instance array. */
+/* cc900-module: GetNextView GetPrevView GetSubView GetSuperView GetViewInstance SetChange */   /* from scripts/analysis/cc900/module_calls.py v10 */
 struct box { int x, y, w, h; };
 struct viewable { char hdr[4]; int super, sub, next, prev; unsigned int flags; struct box box; };
 struct objent { char hdr[10]; struct viewable **data; };

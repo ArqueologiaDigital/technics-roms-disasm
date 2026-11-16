@@ -365,3 +365,19 @@ Tempo_DisplayParamCommon	14	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3
 Tempo_DisplayParamFormat	10	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
 Tempo_DisplayParamSkipClear	11	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
 TimeSig_ProcNop	1	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
+DataBuf_CopyVoiceBlock24	570	2026-11-16-72-p6-r13	p6_D_8m285@O3XSXr p6_D_8m285@O3Xr p6_D_8m285b@O3XSXr p6_D_8m285b@O3Xr
+FDC_ReadDataRegister	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_Read_Status	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_Send_Command	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FDC_WriteDataRegister	6	2026-11-16-72-p6-r13	p6_C_9m270a@O3XSXr p6_C_9m270a@O3Xr p6_C_9m270a@Xr p6_C_9m270b@O3XSXr p6_C_9m270b@O3Xr p6_C_9m270b@Xr
+FileIO_MatchWildcard	221	2026-11-16-72-p6-r13	p6_E_2b@Xr
+FileIO_ReadHeaderAtF	37	2026-11-16-72-p6-r13	p6_F_2m266a@O3Xr p6_F_2m266a@Xr p6_F_2m266b@O3Xr p6_F_2m266b@Xr
+IsPointOnScreen	31	2026-11-16-72-p6-r13	p6_H_3m273a@O3XSXr p6_H_3m273a@O3Xr p6_H_3m273b@O3XSXr p6_H_3m273b@O3Xr
+SeqStep_FileSectorDone	34	2026-11-16-72-p6-r13	p6_E_2a@Xr p6_E_2b@Xr p6_E_2c@Xr
+SeqStep_FileSectorReturn	231	2026-11-16-72-p6-r13	p6_E_2c@Xr
+SetChangeRect	80	2026-11-16-72-p6-r13	p6_H_3m273a@O3XSXr p6_H_3m273a@O3Xr p6_H_3m273b@O3XSXr p6_H_3m273b@O3Xr
+Sprintf_FormatFFixed	785	2026-11-16-72-p6-r13	p6_E_2b@O3XSXr
+Tempo_DisplayParamCommon	14	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+Tempo_DisplayParamFormat	10	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+Tempo_DisplayParamSkipClear	11	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr
+TimeSig_ProcNop	1	2026-11-16-72-p6-r13	p6_C_9m257@O3XSXr p6_C_9m257@O3Xr p6_C_9m257@Xr

@@ -1,5 +1,6 @@
 /* Phase 6, lane_p6 helper C, round 8, module 257 (modules_v10.tsv) of v10 sequencer/accompaniment_engine.s: the two
    parameter editors that call Tempo_DisplayParamCommon by calr, with that callee and its neighbours defined here. */
+/* cc900-module: Tempo_DisplayParamCommon */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char __near ram_e3e2;
 extern unsigned char __near ram_e3e4;

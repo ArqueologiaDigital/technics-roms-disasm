@@ -2,7 +2,8 @@
    cache of v10 sequencer/smf_event_processor.s (built -Xr), under the firmware names.  Fat_ReadEntry calls
    SeqStep_FileIoCheck, which calls SeqStep_FileBufferSetup, both with calr, so the three are in one file.
    SeqStep_FileBufferSetup is round 1's form b, which V4.23 matched (run 55, -Xr).
-   cc900-module: SeqStep_FileBufferSetup SeqStep_FileIoCheck */
+   module callees: see the cc900-module line*/
+/* cc900-module: SeqStep_FileBufferSetup SeqStep_FileIoCheck */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 struct buf;
 
