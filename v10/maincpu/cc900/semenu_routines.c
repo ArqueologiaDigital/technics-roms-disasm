@@ -1,8 +1,26 @@
 /* Functions of audio/semenu_routines.s.  Firmware C (cc900 phase 6), built by scripts/build/cc900_firmware_c.py with the cc900 reference model;
    no Toshiba program.  Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet. */
-extern unsigned char ram_65a, ram_693, ram_694, ram_695, ram_698, ram_6ad, ram_6af, ram_6b4, ram_6b5;
-extern unsigned char ram_6b6, ram_6b7, ram_6b8, ram_6b9, ram_6c4, ram_6c5, ram_e3dc, ram_e3de, ram_205f2;
-extern unsigned char SEMENU_PART_MODE, SEMENU_PART_MASK, GLOBAL_ERROR_CODE;
+extern unsigned char __near ram_65a;
+extern unsigned char __near ram_693;
+extern unsigned char __near ram_694;
+extern unsigned char __near ram_695;
+extern unsigned char __near ram_698;
+extern unsigned char __near ram_6ad;
+extern unsigned char __near ram_6af;
+extern unsigned char __near ram_6b4;
+extern unsigned char __near ram_6b5;
+extern unsigned char __near ram_6b6;
+extern unsigned char __near ram_6b7;
+extern unsigned char __near ram_6b8;
+extern unsigned char __near ram_6b9;
+extern unsigned char __near ram_6c4;
+extern unsigned char __near ram_6c5;
+extern unsigned char __near ram_e3dc;
+extern unsigned char __near ram_e3de;
+extern unsigned char ram_205f2;
+extern unsigned char __near SEMENU_PART_MODE;
+extern unsigned char __near SEMENU_PART_MASK;
+extern unsigned char __near GLOBAL_ERROR_CODE;
 
 void SeCtr2_SetSelection(unsigned char v) { ram_695 = v; }
 void SeMenu_CopyWriteUpdate_Step3_Helper14(unsigned char v) { ram_6b7 = v; }

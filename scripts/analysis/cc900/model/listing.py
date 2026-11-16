@@ -4,7 +4,8 @@ split(text) -> {function name: [normalised lines]}: comments, `public`/`extern`/
 lines dropped, whitespace collapsed to one tab between mnemonic and operands.  A function starts at a column-0 label
 named `_x` or `.x` and runs to the next such label; section switches and data inside it (string literals, switch
 tables) stay in its lines.  `normalise_labels` renames local labels (`L<n>`, `S<n>`) in order of appearance, for
-comparisons that ignore label numbering.
+comparisons that ignore label numbering.  `attributes(text)` reads the width class of each symbol (`extern
+small|medium|large`, and the section of a symbol the file defines), which split() drops.
 """
 import re
 
@@ -32,6 +33,27 @@ def split(text):
             continue
         if cur is None: pending.append(l)                # section line before the first function
         else: out[cur].append(l)
+    return out
+
+ATTR_WIDTH = {'small': 8, 'medium': 16, 'large': 24}
+EXTERN = re.compile(r'^\s*extern\s+(small|medium|large)\s+(.*?)\s*(;.*)?$', re.I)
+SECTION = re.compile(r'^(\w+)\s+section\s+\w+\s+(small|medium|large)\b', re.I)
+
+def attributes(text):
+    """{symbol without `_` / `.`: 8, 16 or 24} from a cc900 listing: the attribute of each `extern small|medium|large`
+    declaration (__tiny, __near, plain; probe m16) and, for a symbol the file defines, its section's attribute
+    (t_area small, n_area medium, f_area large, f_code large)"""
+    out = {}; cur = None
+    for raw in text.splitlines():
+        m = EXTERN.match(raw)
+        if m:
+            for s in m.group(2).split(','):
+                if s.strip(): out[s.strip().lstrip('_.')] = ATTR_WIDTH[m.group(1).lower()]
+            continue
+        m = SECTION.match(raw)
+        if m: cur = ATTR_WIDTH[m.group(2).lower()]; continue
+        m = FUNC.match(raw)
+        if m and cur is not None: out.setdefault(m.group(1).lstrip('_.'), cur)
     return out
 
 def normalise_labels(lines):
