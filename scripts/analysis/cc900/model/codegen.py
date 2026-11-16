@@ -2017,7 +2017,8 @@ def bin_wide(F, e, op, l, r, fam, size):
     the same at the byte (ld A,(_gc) / sub A,(XBC); exts WA / divs WA,(_hc)); a constant left loads the right (ld A,(_hc)
     / inc 0x7,A).  Returns the register family of the result, or None where the pair is not in the table."""
     gr_ = getattr(F, 'guard_reg', None)
-    if gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'].get(size), FAM['DE'].get(size) if GUARD_DIV_DE else None) and \
+    if gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'].get(size), FAM['DE'].get(size) if GUARD_DIV_DE else None,
+                                                           '(XBC)' if GUARD_DIV_ADDR else None) and \
             expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     lk, rk = cw_kind(F, l, size), cw_kind(F, r, size)
     if lk is None or rk is None: return None
@@ -5114,7 +5115,8 @@ def evorder_bin(F, e, op, l, r, fam, size, ctx='HL'):
     (s_PX), a left g[i] keeps WA / XBC and a right *p takes XDE (s_XP).  Returns None where the shape is not one
     of these (a ?: beside a member or element, two indexed elements, a shift beside an indexed element, ...)."""
     gr_ = getattr(F, 'guard_reg', None)
-    if gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'].get(size), FAM['DE'].get(size) if GUARD_DIV_DE else None) and \
+    if gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'].get(size), FAM['DE'].get(size) if GUARD_DIV_DE else None,
+                                                           '(XBC)' if GUARD_DIV_ADDR else None) and \
             expr_key(r) == gr_[0]: return None   # (GUARD_DIV)
     cl, cr = ev_class(F, l), ev_class(F, r)
     if cl is None or cr is None: return None
@@ -5853,7 +5855,8 @@ def _gen_bin_body(F, e, fam, size, then_ret, store=False):
     if op in ('*', '/', '%'):
         if size == 4: return gen_long_helper(F, e, l, r, fam, signed)
         gr_ = getattr(F, 'guard_reg', None)
-        guard_ = gr_ is not None and op in ('/', '%') and FAM['BC'][size] == gr_[1] and expr_key(r) == gr_[0] and \
+        guard_ = gr_ is not None and op in ('/', '%') and gr_[1] in (FAM['BC'][size], '(XBC)' if GUARD_DIV_ADDR else None) and \
+            expr_key(r) == gr_[0] and \
             not writes_family(F.lines[gr_[2]:], 'BC')
         if GUARD_DIV_DE and not guard_ and gr_ is not None and op in ('/', '%') and FAM['DE'].get(size) == gr_[1] and \
                 expr_key(r) == gr_[0] and not writes_family(F.lines[gr_[2]:], 'DE'): guard_ = True
@@ -7954,6 +7957,8 @@ XBASE_CSE = True                                         # see xbase_cse
 SHIFT_RMW_XBC = True                                     # see gen_opassign
 XR_UNARY_ARG_BC = True                                   # see compile_function_once's -O passes
 GUARD_DIV_DE = True                                      # see gen_stmt's GUARD_DIV
+GUARD_DIV_DE_MORE = True                                 # see gen_stmt's GUARD_DIV: % too, and a constant element
+GUARD_DIV_ADDR = True                                     # see gen_stmt's GUARD_DIV: a byte member of a global struct
 TERN_PLAIN_ON_CLOBBER = True                             # see gen's -O ?: preload
 COND_ASSIGN = True                                       # see gen_cond_false
 SP_MUL_THROUGH = True                                    # see sp_value_kind
@@ -8910,10 +8915,17 @@ def guard_div_plan(F, s):
     if cc != 'eq': return None
     while D.k == 'cast' and D.kind == 'IntegralCast' and D.ty is not None and strip(D.e).ty is not None and strip(D.e).ty.size == D.ty.size:
         D = strip(D.e)
+    if GUARD_DIV_ADDR and D.k == 'cast' and D.kind == 'IntegralCast':   # a byte member promoted to int (stc-free
+        d_ = strip(D.e)                                                  # rstmt rs_9_09_14_4: if (gs.c != 0) ..)
+        if d_.k == 'load' and d_.ty is not None and d_.ty.size == 1 and strip(d_.e).k == 'member' and \
+                not strip(d_.e).arrow and strip(strip(d_.e).base).k == 'var' and strip(strip(d_.e).base).decl.kind == 'global':
+            D = d_
     if D.k != 'load' or D.ty is None or D.ty.kind != 'int' or D.ty.size not in ((1, 2, 4) if GUARD_DIV_LONG else (1, 2)): return None
     v = strip(D.e)
     if v.k == 'var':
         if v.decl.kind != 'global' or getattr(v.decl, 'reg', None): return None
+    elif GUARD_DIV_ADDR and v.k == 'member' and not v.arrow and D.ty.size == 1 and strip(v.base).k == 'var' and \
+            strip(v.base).decl.kind == 'global' and not getattr(strip(v.base).decl, 'reg', None): pass
     elif v.k == 'member' and v.arrow:
         b = strip(v.base)
         if not (b.k == 'load' and strip(b.e).k == 'var' and strip(b.e).decl.kind == 'global'): return None
@@ -8928,8 +8940,10 @@ def guard_div_plan(F, s):
     if not body or body[0].k != 'expr': return None
     e0 = strip(body[0].e)
     if not (e0.k == 'bin' and e0.op == '=') and e0.k != 'opassign': return None
+    bm_ = GUARD_DIV_ADDR and D.ty.size == 1 and strip(D.e).k == 'member' and not strip(D.e).arrow
     divs = [n for n in nodes_in(e0, 'bin') + ([e0] if e0.k == 'opassign' else []) if n.op in ('/', '%') and
-            getattr(n, 'ty', None) is not None and n.ty.size == D.ty.size and expr_key(unpromote(n.r) if n.k == 'bin' else n.r) == expr_key(D)]
+            getattr(n, 'ty', None) is not None and (n.ty.size == D.ty.size or bm_ and n.ty.size == 2) and
+            expr_key(unpromote(n.r) if n.k == 'bin' else n.r) == expr_key(D)]
     divs = [n for n in divs if n.k == 'bin' and expr_key(unpromote(n.l)) != expr_key(D)]   # (D / D: left to test_reg_reuse,
                                                            # random r1_02_08 -> ld WA,BC / exts XWA / divs XWA,BC)
     if D.ty.size == 4:                                   # GUARD_DIV_LONG: X = L / D with L a plain load or constant
@@ -12936,10 +12950,26 @@ def gen_stmt(F, s, last):
                 G_ = 'BC'
                 if GUARD_DIV_DE and sz_ == 2:            # p->m = X / D: the quotient computes in BC, D waits in DE
                     e0_ = strip(flat(s.then)[0].e)       # (random r2_09_09: ld DE,(_gi3) / cp DE,0x0 / .. / divs XBC,DE)
-                    if e0_.k == 'bin' and e0_.op == '=' and strip(e0_.r).k == 'bin' and strip(e0_.r).op == '/' and \
-                            (sp_lvalue_kind(F, e0_.l) or ('',))[0] == 'D' and sp_value_kind(F, e0_.r, 2) == 'M' and \
+                    r_ = strip(e0_.r) if e0_.k == 'bin' and e0_.op == '=' else None
+                    def ck_(y):
+                        y = strip(y)
+                        while y.k == 'cast' and y.kind == 'IntegralCast': y = strip(y.e)
+                        return y.k == 'load' and strip(y.e).k == 'index' and fold(strip(y.e).idx).k == 'const' and \
+                            (mem_operand(F, y) or '').startswith('(_')
+                    if r_ is not None and r_.k == 'bin' and (r_.op == '/' or GUARD_DIV_DE_MORE and r_.op == '%') and \
+                            (sp_lvalue_kind(F, e0_.l) or ('',))[0] == 'D' and \
+                            (sp_value_kind(F, e0_.r, 2) == 'M' or GUARD_DIV_DE_MORE and ck_(r_.l)) and \
                             'DE' not in live_regs(F): G_ = 'DE'
-                f_ = gen(F, D_, G_, sz_)                 # -> ld XWA,(_gps) / ld BC,(XWA+0x2) / cp BC,0x0 / j eq,L /
+                v_ = strip(D_.e)
+                if GUARD_DIV_ADDR and sz_ == 1 and v_.k == 'member' and not v_.arrow:   # a byte member of a global struct:
+                    a_ = '_%s' % strip(v_.base).decl.name + (' + %s' % hx(member_offset(v_)) if member_offset(v_) else '')
+                    F.emit('lda', 'XBC,%s' % a_); F.emit('cpb', '(XBC),0x0'); F.emit('j', '%s,%s' % (cc_, lab))   # its address
+                    F.guard_reg = (expr_key(D_), '(XBC)', len(F.lines)); f_ = None   # in XBC, the test and the division
+                else: f_ = gen(F, D_, G_, sz_)          # through it (rstmt rs_9_09_14_4: lda XBC,_gs / cpb (XBC),0x0 /
+                                                         # ret eq / ld WA,0x3 / divs WA,(XBC))
+            if gp_ is not None and (getattr(F, 'guard_reg', None) or ('', ''))[1] == '(XBC)': pass
+            elif gp_ is not None:
+                f_ = f_                                  # -> ld XWA,(_gps) / ld BC,(XWA+0x2) / cp BC,0x0 / j eq,L /
                 if f_ != G_ or G_ in live_regs(F):       # lda XWA,0x64 / divs XWA,BC / ld (_gi3),WA)
                     del F.lines[n_if0_:]; gp_ = None
                 else:
@@ -17925,7 +17955,11 @@ def sp_value_kind(F, rv, size):
         simple = lambda y: y.k == 'const' or (y.k == 'load' and mem_operand(F, y) is not None and
                                               strip(y.e).k in ('var', 'member') and not (strip(y.e).k == 'member' and strip(y.e).arrow)) or \
             (SP_CONST_ELEM and x.op in ('*', '/', '%') and size == 4 and y.k == 'load' and strip(y.e).k == 'index' and
-             fold(strip(y.e).idx).k == 'const' and (mem_operand(F, y) or '').startswith('(_'))   # (random r1_09_04:
+             fold(strip(y.e).idx).k == 'const' and (mem_operand(F, y) or '').startswith('(_')) or \
+            (GUARD_DIV_DE_MORE and x.op in ('/', '%') and size == 2 and (getattr(F, 'guard_reg', None) or ('', ''))[1] == 'DE' and
+             y.k == 'load' and strip(y.e).k == 'index' and fold(strip(y.e).idx).k == 'const' and
+             (mem_operand(F, y) or '').startswith('(_'))   # (the -O guarded p->m = ga[k] % D, D in DE: rstmt rs_9_09_17_1)
+                                                                 # (random r1_09_04:
                                                                  # *gpl = gla[4] / 7L, a constant element as a plain operand)
         through = lambda y: y.k == 'load' and (strip(y.e).k == 'member' and strip(y.e).arrow and sp_plain_ptr(F, strip(y.e).base) is not None
                                                or strip(y.e).k == 'deref' and sp_plain_ptr(F, strip(y.e).e) is not None)

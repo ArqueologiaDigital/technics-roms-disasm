@@ -3898,6 +3898,12 @@ code.  semcheck on rstmt9-12 shows 85 verdicts of the unchanged model (9 -> 94; 
 semcheck-pool9-12-base356-2026-11-16.txt), most expected to be out-of-range-input artefacts; the contract-mode semcheck
 (R4c, in progress) will separate real wrong code from them.
 
+**Batch 357 (2026-11-16): the first rule from the training pool.**  lane_o3 fix 20, the -O guarded division:
+GUARD_DIV_DE_MORE (the divisor waits in DE also for % and for a constant-element dividend) and GUARD_DIV_ADDR (a byte
+member of a global struct as divisor, guarded and divided through its address).  Validation +1 function and +4
+statements at O3XS and at O3XSXr, nothing lost -- the first pool-derived gain on unseen code; pool random +1 / +1 and
+rstmt +5 at the -O sets; o3v +6 / +6; library unchanged; semcheck 94, same verdicts.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
