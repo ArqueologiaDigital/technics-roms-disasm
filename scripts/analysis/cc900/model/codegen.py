@@ -3274,6 +3274,7 @@ FPCMP_CAST = True                                         # see gen: a same-size
 PTR_MEM_OPS = True                                        # cpw / pushw straight from a plain pointer's memory
 LABEL_MERGE = True                                        # two labels at one place are one (without -O)
 INCW_GLOBAL = True                                        # g += k (1..8) on an int global: incw k,(_g)
+INCW_MEMBER = True                                        # gs.m += k too: incw k,(_gs + off)
 PTR_K_LDA = True                                          # return g + k on a global pointer: ld XWA,(_g) / lda XHL,XWA+k
 IZ_PTR_INIT = True                                        # an IZ home's initialiser read through a pointer: computed in IZ
 STORE_DIV_DD = True                                       # see store_div: a member store of a displaced dividend
@@ -12027,8 +12028,13 @@ def gen_opassign(F, e):
         if lm_ is not None and lm_.startswith('(_'):       # random r2_07_00: gul %= 16UL -> ld XWA,0xf / and (_gul),XWA
             F.emit('ld', 'XWA,%s' % hx(fold(e.r).value - 1)); F.emit('and', '%s,XWA' % lm_); return lm_
     if INCW_GLOBAL and op in ('+', '-') and size == 2 and fold(r).k == 'const' and fold(r).value is not None and \
-            1 <= (fold(r).value & 0xffff) <= 8 and strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and \
-            not getattr(strip(e.l).decl, 'reg', None) and (not F.adecl or SWEEP_XR_LIFTS) and not getattr(F, 'l2', None):
+            1 <= (fold(r).value & 0xffff) <= 8 and (strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and
+            not getattr(strip(e.l).decl, 'reg', None) or
+            INCW_MEMBER and strip(e.l).k == 'member' and not strip(e.l).arrow and strip(strip(e.l).base).k == 'var' and
+            strip(strip(e.l).base).decl.kind == 'global') and \
+            (not F.adecl or SWEEP_XR_LIFTS) and not getattr(F, 'l2', None):   # (a member: probe bitf bf_b4_w_a, gb4.w
+                                                           # += 1 -> incw 0x1,(_gb4); training none listings: incw
+                                                           # k,(_g + off) 4, ld R,k / add (_g + off),R 0)
         t = lvalue(F, e.l)                                 # probes/fpargf.c af_VNNSP: gu += 3 -> incw 0x3,(_gu)
         F.emit('incw' if op == '+' else 'decw', '%s,%s' % (hx(fold(r).value & 0xffff), t)); return t
     if op in SIMPLE_OPS and OPB_GLOBAL and fold(r).k == 'const' and fold(r).value is not None and size == 1 and \

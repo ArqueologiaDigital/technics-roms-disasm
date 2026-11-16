@@ -3919,6 +3919,10 @@ variable, op= with + - | through the extracted field; at -O an unsigned field wi
 1-bit op= at -O stays refused, V4.23 bug 8).  bitf 191 / 169 / 191 / 169 of 192 (was 82 / 74 / 82 / 74), semcheck
 clean; validation and library unchanged; semcheck 94; the 55 firmware C files of the five main-CPU trees all MATCH.
 
+**Batch 360 (2026-11-16).**  lane_o3 fix 24 INCW_MEMBER: `g.m += k` / `-= k` (k = 1..8) on a non-arrow member of a
+global struct is `incw k,(_g + off)`, as V4.23 writes it (4 times in the training none listings; `incw k,(_g)` 277
+times).  bitf 192 / 170 / 192 / 170 of 192; validation and library unchanged; semcheck 94; firmware C 55 of 55 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
