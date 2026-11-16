@@ -247,3 +247,10 @@ hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46
 hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46f0191737979e5f28b039815da3cce0bd9b65	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_FlsNamingCheck	296	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_fs_naming.c	c4f3445e9786c7e0040753e49b46f0191737979e5f28b039815da3cce0bd9b65	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_FlsNamingCheck2	300	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_naming_proc.c	e1c265f15de5705819971c755f0337dda56ba7cc5ae803aadf8823adf5bddc0b	Xr	2026-11-16-96-hd-r21-staged	HDAE5000_IvHddNamingProc	295	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_boot.c	f6f7ccd94514280c435f68a6aebff1367ab1be06e9dc3bea61c69142533dc26a	Xr	2026-11-16-98-hd-r22	HDAE5000_Boot_Init	236	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_boot.c	f6f7ccd94514280c435f68a6aebff1367ab1be06e9dc3bea61c69142533dc26a	Xr	2026-11-16-98-hd-r22	HDAE5000_Frame_Handler	291	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_boot.c	f6f7ccd94514280c435f68a6aebff1367ab1be06e9dc3bea61c69142533dc26a	Xr	2026-11-16-98-hd-r22	HDAE5000_Get_Init_Flag	6	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_boot.c	e40f882191ec26a4bee94bfdf33e62cfe51ef1650173e3095171c799f9a79992	Xr	2026-11-16-98-hd-r22	HDAE5000_Boot_Init	236	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_boot.c	e40f882191ec26a4bee94bfdf33e62cfe51ef1650173e3095171c799f9a79992	Xr	2026-11-16-98-hd-r22	HDAE5000_Get_Init_Flag	6	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_boot.c	811f800d1b3d1ec7fc43b186c7b224a8829a7083b5b57f85bbc883915de453ba	Xr	2026-11-16-98-hd-r22	HDAE5000_Boot_Init	236	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_boot.c	811f800d1b3d1ec7fc43b186c7b224a8829a7083b5b57f85bbc883915de453ba	Xr	2026-11-16-98-hd-r22	HDAE5000_Get_Init_Flag	6	MATCH
