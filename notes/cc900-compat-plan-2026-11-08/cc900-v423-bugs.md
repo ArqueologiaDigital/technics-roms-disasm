@@ -12,16 +12,18 @@ reproduce is a function the model can never match byte for byte.
 
 Add every new one here, in the commit that finds it.
 
-| # | bug                                                                                           | option sets          | found                                  | model                      |
-|---|-----------------------------------------------------------------------------------------------|----------------------|----------------------------------------|----------------------------|
-| 1 | a char product widened to long keeps only its low byte                                        | all four             | 2026-11-13, probe chararith.c          | reproduces it              |
-| 2 | two equal switch arms merged; one case loses its call                                         | -O3 -XS -Xr          | 2026-11-15, rstmt2.c (semcheck review) | does not reproduce it      |
-| 3 | -Xr small struct: caller and callee disagree on stack order                                   | -Xr, -O3 -XS -Xr     | 2026-11-16, probe sxl.c                | reproduces the caller side |
-| 4 | char pointer + negative int or char index zero-extended                                       | all four             | 2026-11-16, probes ptrar.c, stptr.c    | reproduces it              |
-| 5 | -O: char pointer difference compared with 0 unsigned                                          | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe ptrar.c              | refuses the shape          |
-| 6 | struct pointer + char index, 10-byte element: low word of the product, zero-extended          | all four             | 2026-11-16, probe ptrar.c              | refuses the shape          |
-| 7 | a shifted or divided char compared with a char of the other signedness, at the byte, unsigned | all four             | 2026-11-16, probe shcmp.c              | refuses mixed signedness   |
-| 8 | -O: op= on a 1-bit bit-field at bit 15 flips bit 7 of the unit's low byte                     | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe bitf.c               | refuses the shape          |
+| #  | bug                                                                                           | option sets          | found                                  | model                      |
+|----|-----------------------------------------------------------------------------------------------|----------------------|----------------------------------------|----------------------------|
+| 1  | a char product widened to long keeps only its low byte                                        | all four             | 2026-11-13, probe chararith.c          | reproduces it              |
+| 2  | two equal switch arms merged; one case loses its call                                         | -O3 -XS -Xr          | 2026-11-15, rstmt2.c (semcheck review) | does not reproduce it      |
+| 3  | -Xr small struct: caller and callee disagree on stack order                                   | -Xr, -O3 -XS -Xr     | 2026-11-16, probe sxl.c                | reproduces the caller side |
+| 4  | char pointer + negative int or char index zero-extended                                       | all four             | 2026-11-16, probes ptrar.c, stptr.c    | reproduces it              |
+| 5  | -O: char pointer difference compared with 0 unsigned                                          | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe ptrar.c              | refuses the shape          |
+| 6  | struct pointer + char index, 10-byte element: low word of the product, zero-extended          | all four             | 2026-11-16, probe ptrar.c              | refuses the shape          |
+| 7  | a shifted or divided char compared with a char of the other signedness, at the byte, unsigned | all four             | 2026-11-16, probe shcmp.c              | refuses mixed signedness   |
+| 8  | -O: op= on a 1-bit bit-field at bit 15 flips bit 7 of the unit's low byte                     | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe bitf.c               | refuses the shape          |
+| 9  | an unsigned char plus a constant computed at the byte, wrapping at 256                        | all four             | 2026-11-16, training pool rstmt11.c    | computes correct C         |
+| 10 | -O3 -XS -Xr: an argument register overwritten before it is read (a shift count)               | -O3 -XS -Xr          | 2026-11-16, training pool rstmt10.c    | refuses or computes C      |
 
 ## 1. A char product widened to long keeps only its low byte
 
@@ -76,7 +78,9 @@ Add every new one here, in the commit that finds it.
   `p - i` are sign-extended, correctly -- so this is not a uniform "indexes are unsigned" convention; it may still be
   a documented limitation of V4.23 (to check against the compiler manual).
 - **Evidence:** oracle runs 2026-11-16-3-micro-ptrar (all four sets), 2026-11-15-8-micro-stptr (all four sets),
-  2026-11-09-24-micro-arrindex (none, O3XS).  Reported by lane_nm.
+  2026-11-09-24-micro-arrindex (none, O3XS); and in random code, run 2026-11-16-4-micro-pool9-12: rstmt10.c
+  `rs_10_02_13_2` (`char *u = gs.p + a;`, none and O3XS) and rstmt11.c `rs_11_05_01_5` (`return gp + t;` with a char t,
+  Xr and O3XSXr).  Reported by lane_nm.
 - **Model:** reproduces it where V4.23 does it (PTR_CTX, chidx, lane_nm rule 15 CHAR_IDX_SIGN; rule 22 sign-extends only
   where V4.23 does).  Firmware code indexing a char pointer backwards would need this to match.
 
@@ -134,3 +138,24 @@ Add every new one here, in the commit that finds it.
 - **Evidence:** oracle run 2026-11-16-6-micro-bitf, O3XS / O3XSXr, `bf_b1_a_a`, `bf_b4_x_a`, `bf_b7_m_a`, `bf_b7_m_o`.
   Found by lane_o3.
 - **Model:** refuses a 1-bit bit-field op= at -O (case by case: no firmware need known).
+
+## 9. An unsigned char plus a constant is computed at the byte and wraps
+
+- **Source:** the training pool, corpus/probes/rstmt11.c `rs_11_00_05_2`: `guc = (255 + guc) / 7;` with `unsigned char guc`.
+- **C meaning:** `255 + guc` is an int addition: `guc = 1` gives 256 / 7 = 36.
+- **V4.23, all four option sets:** adds 0xff to `guc` in the byte register (A), so the sum wraps at 256, then
+  zero-extends it and divides unsigned: `guc = 1` gives 0 / 7 = 0.
+- **Evidence:** oracle run 2026-11-16-4-micro-pool9-12, `_rs_11_00_05_2` (and its `-Xr` forms).  Found by lane_nm in the
+  pool's semcheck triage.
+- **Model:** adds in a word (correct C); semcheck reports the function DIFFERENT, a known V4.23 bug.
+
+## 10. At -O3 -XS -Xr an argument register is overwritten before it is read
+
+- **Source:** the training pool, corpus/probes/rstmt10.c `rs_10_04_19_4`: `guca[6] = a = (3 >> (b & 7)) ^ guc;` with
+  `unsigned char a` (in A) and `unsigned int b` (in BC) as -Xr register parameters.
+- **C meaning:** the shift count is `b & 7`.
+- **V4.23 at -O3 -XS -Xr only:** first copies `a` into C, over the low byte of `b`, then takes the shift count from BC,
+  so the count is `a & 7` instead of `b & 7`.
+- **Evidence:** oracle run 2026-11-16-4-micro-pool9-12, O3XSXr, `.rs_10_04_19_4`.  Reported by lane_nm from the pool's
+  semcheck triage.
+- **Model:** reads `b`, as C requires; semcheck reports the function DIFFERENT, a known V4.23 bug.
