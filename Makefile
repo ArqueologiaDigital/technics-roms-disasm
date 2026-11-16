@@ -885,6 +885,8 @@ $(CC900_CHOICE): CC900_FORCE
 	@mkdir -p $(@D); echo '$(CC900_COMPILER)' | cmp -s - $@ || echo '$(CC900_COMPILER)' > $@
 $(CC900_V423_INDEX): CC900_FORCE
 	python3 -B scripts/build/cc900_v423.py fill $(CC900_V423_CACHE) $(CC900_ORACLE) $(CC900_ALL_C)
+# phony, not just a missing file: the Makefile's .SECONDARY would let a missing intermediate stay unmade
+.PHONY: CC900_FORCE
 CC900_FORCE:
 cc900_stamps = $(patsubst $(1)/maincpu/cc900/%.c,$(1)/maincpu/includes/generated/cc900/%.stamp,$(wildcard $(1)/maincpu/cc900/*.c))
 V10_CC900_STAMPS = $(call cc900_stamps,v10)
