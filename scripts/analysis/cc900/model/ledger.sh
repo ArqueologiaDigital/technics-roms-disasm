@@ -457,6 +457,23 @@ for c in none O3XS; do    # bit-field layout and access (phase 6) (corpus/probes
 done
 row "run 2026-11-16-6-micro-bitf, v423/Xr" "probes/bitf.c" "$O/2026-11-16-6-micro-bitf/out/v423/Xr/probes" corpus/probes/bitf.c --opt none --adecl
 row "run 2026-11-16-6-micro-bitf, v423/O3XSXr" "probes/bitf.c" "$O/2026-11-16-6-micro-bitf/out/v423/O3XSXr/probes" corpus/probes/bitf.c --opt O3XS --adecl
+# corpus/probes/bigoff.c (run 2026-11-16-15-micro-bigoff) has no row: its arrays are larger than 64 KB, which our
+# clang tlcs900 front end rejects ("array is too large"; V4.23 accepts them), so the model cannot read it
+for c in none O3XS; do    # char pointer + index sums, bug 4 conditions (lane_nm; CHAR_SUM_HOME) (corpus/probes/psum.c)
+  row "run 2026-11-16-16-micro-psum, v423/$c" "probes/psum.c" "$O/2026-11-16-16-micro-psum/out/v423/$c/probes" corpus/probes/psum.c --opt $c
+done
+row "run 2026-11-16-16-micro-psum, v423/Xr" "probes/psum.c" "$O/2026-11-16-16-micro-psum/out/v423/Xr/probes" corpus/probes/psum.c --opt none --adecl
+row "run 2026-11-16-16-micro-psum, v423/O3XSXr" "probes/psum.c" "$O/2026-11-16-16-micro-psum/out/v423/O3XSXr/probes" corpus/probes/psum.c --opt O3XS --adecl
+for c in none O3XS; do    # compares against an element at a variable index (lane_o3; CMP_ELEM_RIGHT, a wrong-code hunt) (corpus/probes/cmpel.c)
+  row "run 2026-11-16-17-micro-cmpel, v423/$c" "probes/cmpel.c" "$O/2026-11-16-17-micro-cmpel/out/v423/$c/probes" corpus/probes/cmpel.c --opt $c
+done
+row "run 2026-11-16-17-micro-cmpel, v423/Xr" "probes/cmpel.c" "$O/2026-11-16-17-micro-cmpel/out/v423/Xr/probes" corpus/probes/cmpel.c --opt none --adecl
+row "run 2026-11-16-17-micro-cmpel, v423/O3XSXr" "probes/cmpel.c" "$O/2026-11-16-17-micro-cmpel/out/v423/O3XSXr/probes" corpus/probes/cmpel.c --opt O3XS --adecl
+for c in none O3XS; do    # elements through a pointer at an unsigned index (lane_nm; UIDX_PTR_EXTZ, a wrong-code hunt) (corpus/probes/ustore.c)
+  row "run 2026-11-16-19-micro-ustore, v423/$c" "probes/ustore.c" "$O/2026-11-16-19-micro-ustore/out/v423/$c/probes" corpus/probes/ustore.c --opt $c
+done
+row "run 2026-11-16-19-micro-ustore, v423/Xr" "probes/ustore.c" "$O/2026-11-16-19-micro-ustore/out/v423/Xr/probes" corpus/probes/ustore.c --opt none --adecl
+row "run 2026-11-16-19-micro-ustore, v423/O3XSXr" "probes/ustore.c" "$O/2026-11-16-19-micro-ustore/out/v423/O3XSXr/probes" corpus/probes/ustore.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do
