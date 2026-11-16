@@ -57,6 +57,8 @@ mame_driver/build_error.txt
 */maincpu/includes/generated/pictures/
 # the bodies of firmware C functions, written from <tree>/cc900/*.c by scripts/build/cc900_firmware_c.py (cc900 phase 6)
 */maincpu/includes/generated/cc900/
+# ... and of the sub-CPU payloads' firmware C (v142 / v141 / v140)
+*/subcpu/includes/generated/cc900/
 # Toshiba V4.23's listings of that C, cached by scripts/build/cc900_v423.py (Toshiba output: never committed)
 /build/cc900-v423/
 hdae5000/includes/generated/*.bin
