@@ -11,6 +11,7 @@ function's own name.  Names resolve as in the build (scripts/build/cc900_firmwar
 offset, and no Toshiba text; never paste its input into the repository.
 
 usage: python3 -I -B asm_vs_rom.py FILE.asm [--tree v10/maincpu] [--rom ROM] [--symbols REF] [--base 0xe00000]
+                                         [--cfile C ...]   (more C whose names to resolve, e.g. a staging dir's)
 From scripts/analysis/cc900.  Defaults: the v10 main CPU.  A name V4.23 cut to 31 characters is looked up by the
 first 31 characters of the symbols reference's names.
 """
@@ -39,8 +40,40 @@ def main():
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
     names = fw.Names(fw.tree_values(tree), ref)
-    to_llvm.SPELL = None
-    funcs = listing.split(open(a[0], encoding='latin-1').read())
+    import re
+    text = open(a[0], encoding='latin-1').read()
+    # Operand widths.  V4.23 writes every access to a named object alike ((_x), lda XR,_x); the width is the
+    # object's attribute, declared at the end of the listing (probe m16, run 2026-11-16-29-p6-m16): `extern large`
+    # 24-bit (plain C), `medium` 16-bit (__near), `small` 8-bit (__tiny); objects defined in the file take their
+    # section's (f_area / n_area / t_area).  asm900 encodes exactly that width.  So each named operand gets its
+    # attribute's width here, not one chosen from its address; --by-address restores the old narrowing (to_llvm's own).
+    attr = {}
+    for kind, lst in re.findall(r'^\s*extern\s+(large|medium|small)\s+(.+)$', text, re.M):
+        for n in lst.split(','):
+            attr[n.strip().lstrip('_.')] = kind
+    sect = None
+    for l in text.split('\n'):
+        m = re.match(r'^\s*\w+\s+section\s+\w+\s+(large|medium|small)\b', l)
+        if m:
+            sect = m.group(1); continue
+        m = re.match(r'^_(\w+):', l)
+        if m and sect:
+            attr.setdefault(m.group(1), sect)
+    width = {'large': 24, 'medium': 16, 'small': 8}
+    by_address = '--by-address' in a
+
+    class Mark(dict):                                     # to_llvm writes every named operand as S_<name>, so the
+        def get(self, k, d=None):                         # width can be set per name below
+            return 'S_' + k
+    to_llvm.SPELL = None if by_address else Mark()
+
+    def unmark(line):
+        def opnd(m):
+            n, off, w = m.group(1), int(m.group(2) or 0), int(m.group(3))
+            return '(0x%x:%d)' % (to_llvm.lookup(n, names) + off, width[attr[n]] if n in attr else w)
+        line = re.sub(r'\(S_(\w+)(?:\+(\d+))?:(\d+)\)', opnd, line)
+        return re.sub(r'\bS_(\w+)(?:\+(\d+))?', lambda m: '0x%x' % (to_llvm.lookup(m.group(1), names) + int(m.group(2) or 0)), line)
+    funcs = listing.split(text)
     short = {}
     for n in ref:
         short.setdefault(n[:31], []).append(n)
@@ -48,7 +81,8 @@ def main():
     # name mapped to the tree's label (`cc900-name:`): resolve both through the tree's cc900/*.c
     import glob, re
     cnames = {}
-    for c in glob.glob(os.path.join(tree, 'cc900', '*.c')):
+    extra = [a[i + 1] for i, x in enumerate(a) if x == '--cfile']      # C not yet in the tree (a staging dir)
+    for c in glob.glob(os.path.join(tree, 'cc900', '*.c')) + extra:
         lm = fw.label_map(c)
         for n in re.findall(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', open(c).read(), re.M):
             cnames[n[:31]] = lm.get(n, n)
@@ -62,7 +96,8 @@ def main():
         if full is None:
             print('%-32s not in the symbols reference' % bare); bad += 1; continue
         try:
-            body = [l for l in to_llvm.translate_function(name, lines, names) if l not in ('\t.globl %s' % bare, bare + ':')]
+            body = [unmark(l) for l in to_llvm.translate_function(name, lines, names)
+                    if l not in ('\t.globl %s' % bare, bare + ':')]
         except KeyError as e:
             print('%-32s cannot resolve %s' % (bare, e)); bad += 1; continue
         if any('untranslated' in l for l in body):

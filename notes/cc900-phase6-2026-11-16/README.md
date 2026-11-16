@@ -578,6 +578,56 @@ the tree's `shared/ram_variables.s`.  Their functions were renamed:
 - **`corpus/firmware/tiny.c`** keeps the C name `SmfMedley_RawData`: it is the input of oracle run
   `2026-11-09-3-proxy-tiny`, a ledger row.  `check_bytes.py --alias SmfMedley_RawData=Smf_SetMidiOut` maps it.
 
+## V4.23 builds the firmware C (owner, 2026-11-16): staging, probes m15 / m16
+
+The owner paused the compiler-modelling research.  A function now counts as done when **Toshiba V4.23** reproduces
+its ROM bytes at its file's option set; the reference model no longer matters.  `make` is being switched to compile
+the firmware C with V4.23 in the oracle VM (lane_vmb).  Until that lands, the build still uses the model, which
+refuses many V4.23-confirmed functions, so those wait in a staging directory:
+
+- `<tree>/maincpu/cc900-staged/*.c`, in all five trees.  Each file holds only the new functions of one hand source
+  (`semenu_routines.c`, `sequencer_engine.c`); a hand source with two option sets gets two C files
+  (`note_voice_mapping_xr.c`, `cc900-options: -Xr`).  The build does not read the directory.
+- `staged_v423.py --corpus DIR` prepares one oracle run for every tree's staged C.  `--check RUN DIR --record`
+  compares each function with its tree's ROM (`asm_vs_rom.py --cfile`) and writes `staged_v423.tsv`.
+- `probe_v423.py RUN [PATTERN]` summarises a probe run: per function, the forms and option sets that match.
+
+Run `2026-11-16-28-p6-m15` checked the staged C.  The six functions of round 7's m8 / m10 and `LinkVoiceSlots_LoadReg`
+matched in all five trees, but only by the operand widths of the old check (below), so they are checked again with
+`__near` declarations.
+
+**Loops (m15 a / b).**  `if (c) do { ... } while (c);` does **not** give the firmware's copied loop test: V4.23 folds
+the guard into a jump to the bottom test, as for `while (c)`.  `TrimAndPadSmfFilename` still differs at +42.
+
+**Shift by a variable count (m15 c).**  The shift instruction V4.23 writes depends on how the C is spelled:
+
+| C spelling                                            | V4.23 writes |
+|-------------------------------------------------------|--------------|
+| `1 << a`, `1U << a`                                   | `sla A,BC`   |
+| `(unsigned int)1 << (unsigned int)a`                  | `sll A,BC`   |
+| `unsigned int m = 1; m <<= a;`                        | `sll A,BC`   |
+
+The ROM's `FileIO_*` bit functions have `sll`, so they are within V4.23's reach after all.
+
+**Operand widths (m16, run `2026-11-16-29-p6-m16`).**  V4.23 does not pick an absolute operand's width from the
+address.  It writes every access to a named object the same way, and declares each object's attribute at the end of the
+listing:
+- a plain extern is `large`: 24-bit operands;
+- `__near` is `medium`: 16-bit;
+- `__tiny` is `small`: 8-bit.
+
+Objects defined in the file go to the matching sections, `f_area`, `n_area` and `t_area`.  asm900 encodes exactly that
+width: the `.rel` has the c2/d2/f2 forms, c1/d1/f1 and c0/f0.  It also uses the 16-bit `lda` (f1 #16 33) for the
+address of a `__near` object.  The qualifier changes the code too: a plain array indexed by a char is read with
+`(XBC+WA)`, a `__near` / `__tiny` one with `extz XWA` / `add XWA,XBC` / `(XWA)`.  A numeric absolute operand (a member
+of a struct at a constant address, `(0xd0a8)`) is narrowed by its value: run 27's `.rel` has f1 for 0xd0a8.
+
+So every RAM cell in firmware C is declared with the qualifier that gives the ROM's operand width: `__tiny` for 8-bit,
+`__near` for 16-bit, plain for 24-bit.  The chord variables (0xcede..), which the ROM reaches with 24-bit operands
+though they lie below 0x10000, are plain.  `asm_vs_rom.py` now takes each named operand's width from the listing's
+attributes; `--by-address` gives the old narrowing.  The earlier V4.23 verdicts were made with that narrowing, and so
+did not check widths.
+
 ## Finding candidates
 
 `leaf_candidates.py TREE [N]` lists routines of at most N instructions that end in `ret`, contain no call, jump or
