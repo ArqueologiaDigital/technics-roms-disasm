@@ -27,7 +27,7 @@
      ram_23a04e (both .set in hdae5000_init_data.s); HDAE5000_Str_Chr3A_SongScreen_Refresh pushed as a constant is
      ram_2e2512 (its 31-character listing name is not translated);
    - SongScreen_Refresh takes unsigned char parameters (the ROM stores C and A to its stack: drvb's char prototype
-     matched that prologue).  It is defined as SongScrRefresh_c (cc900-name: SongScrRefresh_c=
+     matched that prologue).  It is defined as SongScrRefresh_c (the name marker below maps it to
      HDAE5000_SongScreen_Refresh), so that the callers in this file, which load WA / BC, can call the label through
      an int prototype (hd_v423.py resolves a cc900-name only for a defined function);
    - see each function's comment for the rest.

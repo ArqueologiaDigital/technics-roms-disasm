@@ -1,6 +1,6 @@
-/* FdSong_CheckFiles of hdae5000_ui_display.s: h_nm3b's C (module-local calls in cc900-module).
+/* FdSong_CheckFiles (hdae5000_ui_display.s): helper h_r27b's C that matches (module-local calls in cc900-module).
    Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r23_uig.c.
+   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r27_b_uig.c.
    cc900-options: -Xr
    cc900-module: HDAE5000_CheckFileSignature
 */
