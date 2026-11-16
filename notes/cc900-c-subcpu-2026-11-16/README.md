@@ -164,3 +164,21 @@ Rounds 1-11 (runs 43 .. 94) gave 375 sub-CPU labels C that V4.23 reproduces; 358
   DSP_Write_Channel, MemClear_DRAM_And_ExtRAM, core/03 and core/04 apart from the serial loop.
 - **Floating point**: the DSP_*_FP curves and the coefficient routines call the double library; float returns are
   refused at -Xr, and the FP helpers' runtime names are not mapped.
+
+## Idioms found by systematic probes (run 2026-11-16-99-sub-r13-idioms)
+
+One probe file per C spelling of the same statement (`scripts/analysis/cc900/corpus/firmware/sub_A_ia*.c`,
+`sub_E_ib*.c`, `sub_B_ic*.c`), each compiled at -Xr, -O1 -Xr and -O2 -Xr; per-file verdicts in
+`verdicts/2026-11-16-99-idioms-{ia,ib,ic}.tsv` (`per_file.py`).
+
+| class                                                                                     | probe functions                         | spelling that gives the ROM's form (-Xr)                                                                                                                                                     | evidence                                                                                                                   |
+|-------------------------------------------------------------------------------------------|-----------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------|
+| (a) reload after store: ROM stores a value to a stack local and keeps using XWA           | TVF_Build_Short, Voice_PitchPack_RouteB | a `register` temporary that receives the value, the stack local assigned FROM it, later uses through the temporary: `u = P(v,23); t = u; f(v, u[17]);`                                       | ia06 MATCH both; the 17 other spellings (volatile, chains, comma, inner block, casts ...) stay at +15                      |
+| (b) constant argument loaded in argument order (`ldw bc,0x79` before the other arguments) | DSP_TuneOffset, DSP_AlgoDescriptor_Emit | the constant through a local: `k = 0x79;` (initialised, assigned, const, register all work), with or without a prototype; casts, enum, #define, suffixes do not                              | ib06/07/08/14/19/20 move TuneOffset +8 -> +24 (its next, unrelated difference); the literal spellings stay at +8           |
+| (c) char argument passed unextended (`ld c,(xbc+wa)`, no `extz`)                          | Voice_ToneTableRamp_Down                | the callee's parameter declared plain (signed) `char` (prototype `(int, char)` / `(int, signed char)`, or a K&R definition `char depth;`), the argument an unsigned char expression, no cast | ic03 / ic04 / ic10 MATCH; unsigned char / int parameters, no prototype, casts at the call (ic13), a char table stay at +18 |
+
+-O1 -Xr / -O2 -Xr: no spelling matches at either; the probe functions differ from their first bytes there.  So these are
+-Xr idioms of the firmware's own C, not an option difference.  The matches are staged
+(`v142/subcpu/cc900-staged/*_ia06.c`, `*_ic03.c`).  Round 13's switch near misses (sub_C_13*, sub_D_13*) did not
+match: TVF_Emit_Registers / _Type2 stay at +1 (frame size and XIZ vs IZ for the record pointer), DSP_VoiceCoeffRoute2
+at +2 (L vs H for `sel & 15`).
