@@ -1025,8 +1025,9 @@ def analyse_listing_build(job, t):
     assembled with the tree's values and linked at its ROM address"""
     listing, to_llvm, fw = mods()
     tdir = os.path.join(Ctx.src_root, TREES[job['tree']][0])
-    if tdir not in TREE_LABELS:
-        TREE_LABELS[tdir] = fw.tree_labels(tdir)
+    if tdir not in TREE_LABELS:                  # as the build's main(): the tree with its includes (the kernel)
+        TREE_LABELS[tdir] = (fw.merged_values(tdir) if hasattr(fw, 'merged_values') else t['values'],
+                             fw.merged_labels(tdir) if hasattr(fw, 'merged_labels') else fw.tree_labels(tdir))
     text = open(job['asm'], encoding='latin-1').read()
     funcs = fw.listing_functions(text)
     ctext = job.get('ctext') or b''
@@ -1041,7 +1042,12 @@ def analyse_listing_build(job, t):
         fw.ADDRS.clear(); fw.ADDRS.update(ref)
         fw.RUNTIME.clear(); fw.RUNTIME.update(fw.runtime_names(tdir))
         fw.DATA_OUT.clear()
-        names = fw.Names(t['values'], TREE_LABELS[tdir], cut=True)
+        values, tlabels = TREE_LABELS[tdir]
+        names = fw.Names(values, tlabels, cut=True)
+        names.addrs = fw.ADDRS                   # the symbols reference, the resolver's last resort
+        names.cmap = labels                      # cc900-name: for every reference, callees too
+        if hasattr(fw, 'ROM_LABEL'):
+            to_llvm.PLACEHOLDER = fw.ROM_LABEL
         to_llvm.SPELL = names
         widths = listing.attributes(text)
         widths.update({uncut[k]: v for k, v in list(widths.items()) if k in uncut})
@@ -1071,7 +1077,7 @@ def analyse_listing_build(job, t):
             bodies[full] = (row, body)
         ok = {}
         if bodies:
-            ok = link_at_addresses(bodies, ref, t['values'], d)
+            ok = link_at_addresses(bodies, ref, {k: v for k, v in values.items() if v is not None}, d)
     for full, (row, b) in bodies.items():
         if full not in ok:
             row['status'] = 'ERR-asm'
