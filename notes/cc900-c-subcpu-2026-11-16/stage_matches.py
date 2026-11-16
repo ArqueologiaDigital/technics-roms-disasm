@@ -39,7 +39,8 @@ def hand_source(label):
 
 def main():
     a = sys.argv[1:]
-    staged = defined(glob.glob(os.path.join(TREE, 'cc900-staged', '*.c')))
+    staged = defined(glob.glob(os.path.join(TREE, 'cc900-staged', '*.c')) +     # staged, or already built from C
+                     glob.glob(os.path.join(TREE, 'cc900', '*.c')))
     plan = {}
     for l in open(a[0]):
         c = l.rstrip('\n').split('\t')

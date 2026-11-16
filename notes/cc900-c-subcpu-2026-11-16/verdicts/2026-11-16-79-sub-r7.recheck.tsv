@@ -1,0 +1,91 @@
+function	bytes	matches	best_diff
+AudioChannel_AllVoices_Update_PanShift	137	sub_B_7h@Xr	
+AudioMod_Apply_Porta_Curve	0	-	to_llvm cannot translate a line
+AudioMod_Scale_To_LevelPairShift	74	-	+4 sub_B_7b@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_B_7b@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_B_7b@Xr
+AudioMod_Scale_To_Part_1F	77	-	+4 sub_B_7b@Xr
+Audio_Tick_ServiceVoices_A	129	-	+16 sub_B_7i@Xr
+CustomTone_CopySubUnitRecord	90	-	+66 sub_C_7a@Xr
+CustomTone_CopyToneRecord	66	-	+44 sub_C_7b@Xr
+DSP_AlgoSelect	138	sub_B_7j@Xr	
+DSP_Cmd_LoadEffectPreset	163	-	+37 sub_D_7c@Xr
+DSP_Config_ClampLimits	71	sub_D_7a@Xr	
+DSP_PanCurve_PiecewiseLin	219	sub_E_7a@Xr	
+DSP_ParamInterp_Div0xC6	106	-	+1 sub_E_7a@Xr
+DSP_ParameterWriteEngine	200	sub_E_7a@Xr	
+DSP_RingBuf_Write2K	24	sub_D_7a@Xr	
+DSP_SlotParam_DiffAndFlag	91	sub_D_7a@Xr	
+DSP_WriteFreqParam	205	sub_E_7a@Xr	
+DSP_WriteFreqParam_AlgoType	205	sub_E_7a@Xr	
+DSP_WriteLUTParamSet	334	-	+18 sub_E_7c@Xr
+DSP_WriteOscParam	214	-	+3 sub_E_7b@Xr
+DSP_WriteParameter	196	-	+2 sub_E_7c@Xr
+DSP_WriteVoiceParam	152	-	+43 sub_C_7a@Xr
+EFF_Change_Handler	192	-	+180 sub_D_7a@Xr
+EFF_GetSlotBuffer	44	sub_D_7a@Xr sub_D_7b@Xr sub_D_7c@Xr	
+EFF_SecondaryLinkPath	225	-	+6 sub_D_7c@Xr
+EGEnv_Compute_A	144	-	+21 sub_A_7c@Xr
+EGEnv_Compute_B	144	-	+21 sub_A_7c@Xr
+EGEnv_Compute_B_Simple	68	-	+6 sub_A_7c@Xr
+InterCPU_DMA_Send	0	-	llvm-mc cannot assemble the translation
+Keybed_Read_Event	88	-	+11 sub_E_7b@Xr
+MIDI_Dispatch	593	-	+13 sub_D_7c@Xr
+Pitch_Refresh_Sounding_Voices	115	sub_B_7h@Xr	
+RingBuf_Write4K	24	sub_D_7a@Xr	
+Serial1_DataTransmit_Loop	73	-	+9 sub_E_7b@Xr
+TVF_Build_Short	96	-	+15 sub_A_7c@Xr
+TVF_Calc_Cutoff	148	-	+1 sub_A_7c@Xr
+TVF_Calc_Cutoff_NoKeyFollow	76	-	+2 sub_A_7c@Xr
+TVF_Emit_Offset_Both	117	-	+13 sub_A_7c@Xr
+TVF_Emit_Offset_Reg100	101	-	+13 sub_A_7c@Xr
+TVF_Refresh_Sounding_Voices	115	sub_B_7h@Xr	
+ToneDB_Find_SubToneRecord	61	-	+30 sub_C_7a@Xr
+ToneGen_Process_Notes	167	-	+64 sub_E_7b@Xr
+ToneGen_SetupPercussionVoice	113	-	+81 sub_D_7c@Xr
+ToneGen_SetupPolyVoice	166	-	+39 sub_D_7c@Xr
+ToneGen_WriteExtParam_600	30	-	+0 sub_C_7f@Xr
+ToneGen_WriteExtParams_15_Alt	88	-	+2 sub_C_7h@Xr
+ToneGen_WriteExtParams_56_Alt	84	-	+2 sub_C_7g@Xr
+ToneGen_WriteVoicePitch	30	-	+0 sub_C_7f@Xr
+ToneGen_WriteVoice_Long	30	-	+0 sub_B_7f@Xr
+ToneGen_WriteVoice_Short	33	-	+0 sub_B_7f@Xr
+VoiceAlloc_WithRoutingFlag	29	sub_C_7a@Xr	
+VoiceSlot_NoteOff	51	-	+5 sub_A_7c@Xr
+VoiceSubSlot_Init	63	-	+32 sub_C_7a@Xr
+Voice_AllVoices_PortamentoUpdate	0	-	llvm-mc cannot assemble the translation
+Voice_AllVoices_WriteAmplitude	103	sub_B_7h@Xr	
+Voice_ApplyPortamento	77	sub_B_7i@Xr	
+Voice_ApplyPortamento2	80	-	+38 sub_B_7i@Xr
+Voice_Artic_SetWord0Word2_Nibble2	80	-	+65 sub_A_7c@Xr
+Voice_Artic_SetWord1Nibble2_And_Word3	74	-	+59 sub_A_7c@Xr
+Voice_Artic_SetWord2Word1_Nibble0	76	-	+61 sub_A_7c@Xr
+Voice_Artic_SetWord2Word1_Nibble1	76	-	+61 sub_A_7c@Xr
+Voice_Build_OutputLevel	102	-	+20 sub_A_7c@Xr
+Voice_Clamp_Byte_WA	20	sub_A_7a@Xr sub_A_7b@Xr sub_A_7c@Xr	
+Voice_Clear_HoldBit	78	-	+32 sub_A_7c@Xr
+Voice_Demote_Decayed	30	sub_A_7c@Xr	
+Voice_Freq_ComputeLeft_Raw	55	-	+6 sub_A_7c@Xr
+Voice_Freq_ComputeRight_Raw	106	-	+12 sub_A_7c@Xr
+Voice_Freq_WriteRight	127	-	+15 sub_A_7c@Xr
+Voice_InitFromSlot	99	-	+8 sub_A_7c@Xr
+Voice_InitVoiceState	192	-	+153 sub_B_7b@Xr
+Voice_LoadFilterTable_Ch	233	-	+22 sub_B_7b@Xr
+Voice_LoadPitchTable_Ch	233	-	+22 sub_B_7b@Xr
+Voice_LoadToneTable_Ch	169	-	+20 sub_B_7b@Xr
+Voice_NoteOn	118	sub_C_7b@Xr	
+Voice_PitchPack_RouteB	99	-	+15 sub_A_7c@Xr
+Voice_PitchPack_RouteC	72	-	+22 sub_A_7c@Xr
+Voice_PitchPack_RouteD	78	-	+22 sub_A_7c@Xr
+Voice_PitchPack_RouteE	93	-	+22 sub_A_7c@Xr
+Voice_Pitch_CopyBase	65	-	+56 sub_A_7c@Xr
+Voice_Pitch_WriteOutputReg_Secondary	56	-	+46 sub_A_7c@Xr
+Voice_Portamento_OnHandler	166	sub_B_7j@Xr	
+Voice_Reprioritise	43	-	+9 sub_A_7c@Xr
+Voice_Retire_ToFreePool	81	-	+7 sub_A_7c@Xr
+Voice_SetArticWord0_LowByte	56	-	+41 sub_A_7c@Xr
+Voice_SetKeyShiftEnableAndApply	14	sub_A_7a@Xr sub_A_7b@Xr sub_A_7c@Xr	
+Voice_SetMasterTuneAndApply	14	sub_A_7a@Xr sub_A_7b@Xr sub_A_7c@Xr	
+Voice_SetPolyphonyMode	0	-	llvm-mc cannot assemble the translation
+WaveSel_Cache_SetDescPtr	86	sub_C_7a@Xr sub_C_7b@Xr	
+WaveSel_StageB_Build_Reg040_Footage	233	sub_A_7a@Xr	

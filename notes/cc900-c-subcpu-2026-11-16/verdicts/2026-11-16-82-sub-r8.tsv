@@ -1,0 +1,85 @@
+function	bytes	matches	best_diff
+Algo_SubTable_DispatchA	94	-	+32 sub_D_8c@Xr
+AudioMod_Scale_To_LevelPairShift	88	-	+0 sub_B_8c@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_B_8c@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_B_8c@Xr
+AudioMod_Scale_To_Part_1F	93	-	+0 sub_B_8c@Xr
+Audio_Cmd_DSPGlobal_Param_Store	58	-	+5 sub_C_8b@Xr
+Audio_Tick_ServiceVoices_A	129	-	+16 sub_B_8b@Xr
+DSP_Cmd_LoadEffectPreset	163	-	+11 sub_D_8c@Xr
+DSP_EFFParam_DiffAllAndFlag	659	-	+6 sub_D_8c@Xr
+DSP_InitHandler_NullStub	1	sub_D_8a@Xr sub_D_8b@Xr sub_D_8c@Xr	
+DSP_ParamInterp_3Point_WithOffset	119	-	+73 sub_E_8a@Xr
+DSP_ParamInterp_Div0xB4	73	-	+43 sub_E_8a@Xr
+DSP_ParamInterp_Div0xC6	106	-	+1 sub_E_8b@Xr
+DSP_ParamInterp_FPScale	78	sub_E_8a@Xr	
+DSP_PitchParam_Scale	77	sub_E_8a@Xr	
+DSP_SetCoeff_CopyDirect	67	-	+6 sub_D_8c@Xr
+DSP_SetCoeff_CopyDirect2	67	-	+6 sub_D_8c@Xr
+DSP_SlotParam_Read_To_Cache	101	-	+42 sub_C_8a@Xr
+DSP_SlotParam_Read_To_Cache_B	112	-	+39 sub_C_8a@Xr
+DSP_SlotParam_Write_From_Cache	328	-	+42 sub_C_8a@Xr
+DSP_SlotParam_Write_From_Cache_B	337	-	+51 sub_C_8a@Xr
+DSP_System_Init	149	-	+0 sub_D_8c@Xr
+DSP_WriteLUTParamSet	334	-	+18 sub_E_8c@Xr
+DSP_WriteParameter	193	-	+6 sub_E_8b@Xr
+EFF_Change_Handler	192	sub_D_8a@Xr sub_D_8b@Xr sub_D_8c@Xr	
+EFF_DspChannel_InitFlags	1857	-	+51 sub_D_8c@Xr
+EFF_ParamIterator_Process	0	-	llvm-mc cannot assemble the translation
+EFF_SlotActive_UpdateFlags	371	-	+164 sub_D_8c@Xr
+EFF_VolumeLoop	284	-	+11 sub_D_8c@Xr
+EFF_VolumeUpdate_WithDebug	247	-	+101 sub_D_8c@Xr
+EGEnv_Compute_A	143	-	+21 sub_A_8c@Xr
+EGEnv_Compute_B	143	-	+21 sub_A_8c@Xr
+EGEnv_Compute_B_Simple	66	sub_A_8b@Xr	
+Keybed_Read_Event	88	-	+11 sub_E_8a@Xr
+MIDI_Dispatch	595	sub_D_8a@Xr	
+ScaleTune_Get_User_Offset	19	-	+2 sub_B_8a@Xr
+ScaleTune_Set_User_Offset	22	-	+2 sub_B_8a@Xr
+Serial1_DataTransmit_Loop	73	-	+9 sub_E_8b@Xr
+TVF_Build_Short	93	-	+15 sub_A_8c@Xr
+TVF_Calc_Cutoff	147	-	+1 sub_A_8c@Xr
+TVF_Calc_Cutoff_NoKeyFollow	75	-	+2 sub_A_8c@Xr
+TVF_Emit_Offset_Both	116	-	+13 sub_A_8c@Xr
+TVF_Emit_Offset_Reg100	100	-	+13 sub_A_8c@Xr
+ToneDB_Find_SubToneRecord	59	-	+2 sub_D_8c@Xr
+ToneDB_Find_ToneRecord_CoeffPath	79	-	+0 sub_D_8c@Xr
+ToneGen_Process_Notes	165	-	+14 sub_E_8b@Xr
+ToneGen_SetupPercussionVoice	119	-	+87 sub_D_8a@Xr
+ToneGen_SetupPolyVoice	165	-	+39 sub_D_8c@Xr
+VoiceAlloc_CheckAndInit_FromRecord	134	sub_C_8a@Xr	
+VoiceParam_FullSetup	0	-	llvm-mc cannot assemble the translation
+VoiceSlot_NoteOff	48	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+VoiceStruct_BulkInit	0	-	llvm-mc cannot assemble the translation
+VoiceSubSlot_Init	56	-	+28 sub_C_8b@Xr
+Voice_AllVoices_PortamentoUpdate	0	-	llvm-mc cannot assemble the translation
+Voice_ApplyPortamento2	82	-	+38 sub_B_8b@Xr
+Voice_Artic_SetWord0Word2_Nibble2	78	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Artic_SetWord1Nibble2_And_Word3	72	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Artic_SetWord2Word1_Nibble0	74	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Artic_SetWord2Word1_Nibble1	74	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Build_OutputLevel	101	-	+26 sub_A_8c@Xr
+Voice_Calc_LevelPair_EGA	222	-	+23 sub_B_8b@Xr
+Voice_Clear_HoldBit	75	-	+1 sub_A_8c@Xr
+Voice_Demote_Decayed	30	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Freq_ComputeLeft_Raw	53	sub_A_8b@Xr	
+Voice_Freq_ComputeRight_Raw	104	sub_A_8b@Xr	
+Voice_Freq_WriteRight	125	-	+66 sub_A_8b@Xr
+Voice_InitFromSlot	97	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_InitVoiceState	194	-	+155 sub_B_8b@Xr
+Voice_List_MoveToPartList	169	sub_A_8a@Xr	
+Voice_List_MoveToPool	167	sub_A_8a@Xr	
+Voice_PitchPack_RouteB	96	-	+15 sub_A_8c@Xr
+Voice_PitchPack_RouteC	71	-	+41 sub_A_8c@Xr
+Voice_PitchPack_RouteD	77	-	+41 sub_A_8c@Xr
+Voice_PitchPack_RouteE	91	-	+57 sub_A_8c@Xr
+Voice_Pitch_CopyBase	64	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Pitch_WriteOutputReg_Secondary	55	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_Reprioritise	43	-	+9 sub_A_8c@Xr
+Voice_Retire_ToFreePool	79	-	+7 sub_A_8c@Xr
+Voice_SetArticWord0_LowByte	54	sub_A_8a@Xr sub_A_8b@Xr sub_A_8c@Xr	
+Voice_SetPanning	173	sub_C_8a@Xr sub_C_8b@Xr	
+Voice_WriteChPanShift	274	-	+22 sub_B_8b@Xr
+Voice_WriteChPanShift2	274	-	+22 sub_B_8b@Xr
+WaveSel_StageA1_FromToneSlot	43	-	+0 sub_D_8c@Xr
+WaveSel_StageA2_FromVelZone	43	-	+2 sub_D_8c@Xr
