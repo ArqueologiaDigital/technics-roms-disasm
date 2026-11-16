@@ -1411,109 +1411,22 @@ StringBox_Epilogue:
 	lda xsp, (xsp + 20)
 	ret
 
-LabelProc:	; SysData_F9C4B6
-	lda xsp, (xsp - 12)
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_DRAW
-	jr z, LabelProc_OnDraw
-	ld xwa, xiz
-	call ViewableProc
-	jr Label_Epilogue
-
-LabelProc_OnDraw:
-	ld xwa, xiz
-	call ViewableProc
-	ld xwa, xiz
-	call GetViewInstance
-	lda xwa, (xhl + 14)	; <-- pointer to bounding box(?), (x1, y1, x2, y2 - 16bits each)
-	ld xiy, xwa
-	lda xix, (xsp + 4)
-	ld bc, 4:i3
-	ldirw
-	lda xbc, (xsp + 12)
-	ld wa, (xwa)
-	inc 2, wa
-	ld (xbc), wa
-	ld wa, (xhl + 16)	; <-- y1(?)
-	inc 1, wa
-	ld (xbc + 2), wa
-	lda xwa, (xsp + 4)
-	ld xde, (xhl + 26)	; <-- font selection
-	push xde
-	pushw	(xhl+30)	; <-- foreground color
-	pushw 0xf7	; <-- background color
-	ld xde, (xhl + 22)	; <-- string pointer
-	call DrawString
-	ld xhl, 0:i3
-
-Label_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+LabelProc:	.include "includes/generated/cc900/LabelProc.s"	; C: cc900/ui_window_procs_m271.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LabelProc_OnDraw, LabelProc + 22
+	.set	Label_Epilogue, LabelProc + 85
 
 BitmapProc:	.include "includes/generated/cc900/BitmapProc.s"	; C: cc900/ui_window_procs_m0.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	BitmapProc_OnDraw, BitmapProc + 21
 	.set	Bitmap_Epilogue, BitmapProc + 56
 
-VwUserBitmapProc:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_DRAW
-	jr z, VwUserBitmapProc_OnDraw
-	ld xwa, xiz
-	call ViewableProc
-	jr VwUserBitmap_Epilogue
-
-VwUserBitmapProc_OnDraw:
-	ld xwa, xiz
-	call ViewableProc
-	ld xwa, xiz
-	call GetViewInstance
-	ld xiz, xhl
-	lda xbc, (xsp + 10)
-	ld wa, (xiz + 14)
-	ld (xbc), wa
-	ld wa, (xiz + 16)
-	ld (xbc + 2), wa
-	ld xwa, (xiz + 22)
-	ld xbc, EVT_GET_BITMAP_DATA
-	ld xde, 0:i3
-	call ApFuncCall
-	ld (xsp + 6), xhl
-	ld xwa, (xsp + 6)
-	or xwa, xwa
-	jr z, VwUserBitmap_DrawFallback
-	ld xwa, (xiz + 22)
-	ld xbc, EVT_GET_BITMAP_WIDTH
-	ld xde, 0:i3
-	call ApFuncCall
-	ld (xsp + 4), hl
-	ld xwa, (xiz + 22)
-	ld xbc, EVT_GET_BITMAP_HEIGHT
-	ld xde, 0:i3
-	call ApFuncCall
-	lda xwa, (xsp + 10)
-	pushw hl
-	ld xbc, (xsp + 8)
-	ld de, (xsp + 6)
-	call DrawBitmapSPFast
-	jr VwUserBitmap_ReturnZero
-
-VwUserBitmap_DrawFallback:
-	lda xwa, (xsp + 10)
-	ld xbc, 0:i3
-	call DrawBitmap
-
-VwUserBitmap_ReturnZero:
-	ld xhl, 0:i3
-
-VwUserBitmap_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+VwUserBitmapProc:	.include "includes/generated/cc900/VwUserBitmapProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VwUserBitmapProc_OnDraw, VwUserBitmapProc + 22
+	.set	VwUserBitmap_DrawFallback, VwUserBitmapProc + 121
+	.set	VwUserBitmap_ReturnZero, VwUserBitmapProc + 130
+	.set	VwUserBitmap_Epilogue, VwUserBitmapProc + 132
 
 UserBitmapCheck:	.include "includes/generated/cc900/UserBitmapCheck.s"	; C: cc900/ui_window_procs_m0_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -1776,104 +1689,15 @@ DrawDesignFrame_Skip6:
 	lda	xsp, (xsp+28)
 	ret
 
-DrawEditSw:
-	lda xsp, (xsp - 18)
-	pushw iz
-	cp wa, 0xff
-	jrl z, DrawEditSw_SkipDraw
-	cp wa, 0xf
-	jrl z, DrawEditSw_SkipDraw
-	lda xbc, (xsp + 8)
-	calr GetEditSwPoint
-	lda xwa, (xsp + 8)
-	lda xbc, (xsp + 2)
-	cpw (xwa + 2), 0xef
-	jr z, DrawEditSw_SelectVariantC
-	cpw (xwa), 0x0
-	jr nz, DrawEditSw_SelectVariantA
-	ld xwa, DrawEditSw_Str_N7f
-	jr DrawEditSw_CopyVariant
-
-DrawEditSw_SelectVariantA:
-	ld xwa, DrawEditSw_SelectVariantA_Str_N80
-	jr DrawEditSw_CopyVariant
-
-DrawEditSw_SelectVariantC:
-	ld xwa, DrawEditSw_SelectVariantC_Str_N81
-
-DrawEditSw_CopyVariant:
-	push xwa
-	push xbc
-	call Strcpy
-	inc 8, xsp
-	lda xwa, (xsp + 2)
-	ld xbc, 0:i3
-	call CalcTotalWidth
-	ld iz, hl
-	ld xwa, 0:i3
-	call GetCharHeight
-	lda xbc, (xsp + 8)
-	ld de, hl
-	exts xde
-	divs de, 0x2
-	lda xwa, (xsp + 12)
-	cpw (xbc), 0x0
-	jr nz, DrawEditSw_PositionLeft
-	ldw (xwa), 0xfffe
-	ld ix, (xbc + 2)
-	sub ix, de
-	ld (xwa + 2), ix
-
-DrawEditSw_PositionLeft:
-	cpw (xbc), 0x13f
-	jr nz, DrawEditSw_PositionRight
-	ldw ix, 0x13e
-	sub ix, iz
-	ld (xwa), ix
-	ld ix, (xbc + 2)
-	sub ix, de
-	ld (xwa + 2), ix
-
-DrawEditSw_PositionRight:
-	lda xix, (xbc + 2)
-	cpw (xix), 0xef
-	jr nz, DrawEditSw_FinalPosition
-	ld de, iz
-	exts xde
-	divs de, 0x2
-	ld iy, (xbc)
-	sub iy, de
-	dec 1, iy
-	ld (xwa), iy
-	ldw de, 0xf5
-	sub de, hl
-	ld (xwa + 2), de
-
-DrawEditSw_FinalPosition:
-	ld de, (xwa)
-	inc 2, de
-	ld (xbc), de
-	lda xiy, (xwa + 2)
-	ld de, (xiy)
-	inc 1, de
-	ld (xix), de
-	ld de, iz
-	add de, (xwa)
-	inc 1, de
-	ld (xwa + 4), de
-	add hl, (xiy)
-	ld (xwa + 6), hl
-	lda xde, (xsp + 2)
-	ld xhl, 0:i3
-	push xhl
-	pushw 0xf4
-	pushw 0xf7
-	call DrawString
-
-DrawEditSw_SkipDraw:
-	popw iz
-	lda xsp, (xsp + 18)
-	ret
+DrawEditSw:	.include "includes/generated/cc900/DrawEditSw.s"	; C: cc900/ui_window_procs_m271.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawEditSw_SelectVariantA, DrawEditSw + 50
+	.set	DrawEditSw_SelectVariantC, DrawEditSw + 57
+	.set	DrawEditSw_CopyVariant, DrawEditSw + 62
+	.set	DrawEditSw_PositionLeft, DrawEditSw + 119
+	.set	DrawEditSw_PositionRight, DrawEditSw + 140
+	.set	DrawEditSw_FinalPosition, DrawEditSw + 173
+	.set	DrawEditSw_SkipDraw, DrawEditSw + 218
 
 TextBoxProc:
 	lda xsp, (xsp - 38)
@@ -2199,187 +2023,21 @@ PsParaBox_Epilogue:
 	lda xsp, (xsp+276)
 	ret
 
-AcLswBoxProc:
-	lda xsp, (xsp - 20)
-	push xiz
-	ld (xsp + 16), xde
-	ld (xsp + 20), xwa
-	cp xbc, EVT_INDEXSW_DOWN
-	jrl z, AcLswBox_HandlePageDown
-	cp xbc, EVT_INDEXSW_DOWN_AIC
-	jrl z, AcLswBoxProc_OnIndexswDownAic
-	cp xbc, EVT_INDEXSW_UP
-	jrl z, AcLswBoxProc_OnIndexswUp
-	cp xbc, EVT_INDEXSW_UP_AIC
-	jrl z, AcLswBox_HandleScrollUp
-	cp xbc, EVT_LSW_DATA
-	jrl z, AcLswBox_HandleWriteBack
-	cp xbc, EVT_REPAINT
-	jr z, AcLswBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_PAINT
-	jr z, AcLswBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_HIDE
-	jr z, AcLswBox_HandleClose
-	cp xbc, EVT_SHOW
-	jr z, AcLswBox_HandleCreate
-	cp xbc, EVT_GET_STRING
-	jrl nz, AcLswBox_DefaultHandler
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_LSW_ADDRESS
-	ld xde, 0:i3
-	call ApFuncCall
-	lda xde, (xsp + 4)
-	ld (xde), xhl
-	ld xwa, (xiz + 40)
-	ld wa, (xwa)
-	ld (xde + 4), wa
-	ld xwa, (xsp + 16)
-	ld (xde + 8), xwa
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_LSW_STRING
-	call ApFuncCall
-	jrl AcLswBox_ReturnZeroJmp
-
-AcLswBox_HandleCreate:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	jr AcLswBox_CallPsParaBox
-
-AcLswBox_HandleClose:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-
-AcLswBox_CallPsParaBox:
-	calr PsParaBoxProc
-	jrl AcLswBox_ReturnZeroJmp
-
-AcLswBoxProc_OnPaintOrRepaint:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_LSW_ADDRESS
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xwa, xhl
-	calr MainLswGet
-	jrl AcLswBox_ReturnZeroJmp
-
-AcLswBox_HandleWriteBack:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_LSW_ADDRESS
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xwa, (xsp + 16)
-	cp (xwa), xhl
-	jrl nz, AcLswBox_ReturnZeroJmp
-	lda xde, (xiz + 40)
-	ld xbc, (xde)
-	ld wa, (xwa + 4)
-	ld (xbc), wa
-	ld xwa, (xde)
-	ld de, (xwa)
-	exts xde
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_LSW_DATA_REQ
-	call ApFuncCall
-	ld xwa, (xsp + 20)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0:i3
-	jrl Ac_SendUIEvent_Common
-
-AcLswBox_HandleScrollUp:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_LARGE_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xde, xhl
-	ld xwa, (xsp + 20)
-	ld xbc, EVT_CALC_PARAM
-	jrl Ac_SendUIEvent_Common
-
-AcLswBoxProc_OnIndexswUp:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_SMALL_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xde, xhl
-	ld xwa, (xsp + 20)
-	ld xbc, EVT_CALC_PARAM
-	jr Ac_SendUIEvent_Common
-
-AcLswBoxProc_OnIndexswDownAic:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_LARGE_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	cpl hl
-	cplw_erp 0xee
-	inc 1, xhl
-	ld xwa, (xsp + 20)
-	ld xbc, EVT_CALC_PARAM
-	ld xde, xhl
-	jr Ac_SendUIEvent_Common
-
-AcLswBox_HandlePageDown:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 20)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_SMALL_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	cpl hl
-	cplw_erp 0xee
-	inc 1, xhl
-	ld xwa, (xsp + 20)
-	ld xbc, EVT_CALC_PARAM
-	ld xde, xhl
-
-Ac_SendUIEvent_Common:
-	call SendEvent
-
-AcLswBox_ReturnZeroJmp:
-	ld xhl, 0:i3
-	jr AcLswBox_Epilogue
-
-AcLswBox_DefaultHandler:
-	ld xwa, (xsp + 20)
-	ld xde, (xsp + 16)
-	calr PsParaBoxProc
-
-AcLswBox_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 20)
-	ret
+AcLswBoxProc:	.include "includes/generated/cc900/AcLswBoxProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AcLswBox_HandleCreate, AcLswBoxProc + 153
+	.set	AcLswBox_HandleClose, AcLswBoxProc + 161
+	.set	AcLswBox_CallPsParaBox, AcLswBoxProc + 167
+	.set	AcLswBoxProc_OnPaintOrRepaint, AcLswBoxProc + 173
+	.set	AcLswBox_HandleWriteBack, AcLswBoxProc + 211
+	.set	AcLswBox_HandleScrollUp, AcLswBoxProc + 292
+	.set	AcLswBoxProc_OnIndexswUp, AcLswBoxProc + 335
+	.set	AcLswBoxProc_OnIndexswDownAic, AcLswBoxProc + 377
+	.set	AcLswBox_HandlePageDown, AcLswBoxProc + 426
+	.set	Ac_SendUIEvent_Common, AcLswBoxProc + 473
+	.set	AcLswBox_ReturnZeroJmp, AcLswBoxProc + 477
+	.set	AcLswBox_DefaultHandler, AcLswBoxProc + 481
+	.set	AcLswBox_Epilogue, AcLswBoxProc + 490
 
 AcRamBoxProc:
 	lda xsp, (xsp - 34)
@@ -2557,95 +2215,18 @@ AcRamBox_Epilogue:
 	lda xsp, (xsp + 34)
 	ret
 
-AcTempoBoxProc:
-	lda xsp, (xsp-260)
-	push xiz
-	ld xiz, xde
-	ld	(xsp+260), xwa
-	cp xbc, EVT_LSW_DATA
-	jr z, AcTempoBox_HandleConfirm
-	cp xbc, EVT_REPAINT
-	jr z, AcTempoBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_PAINT
-	jr z, AcTempoBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_HIDE
-	jr z, AcTempoBox_HandleClose
-	cp xbc, EVT_SHOW
-	jr z, AcTempoBox_HandleCreate
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	calr PsParaBoxProc
-	jrl AcTempoBox_Epilogue
-
-AcTempoBox_HandleCreate:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	jr AcTempoBox_CallPsParaBox
-
-AcTempoBox_HandleClose:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-
-AcTempoBox_CallPsParaBox:
-	calr PsParaBoxProc
-	jr PsRadioBox_EventReturn
-
-AcTempoBoxProc_OnPaintOrRepaint:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	calr PsParaBoxProc
-	ld xwa, 4:i3
-	calr MainLswGet
-	jr PsRadioBox_EventReturn
-
-AcTempoBox_HandleConfirm:
-	ld XWA, (xsp + 0x0104)
-	ld xde, xiz
-	calr PsParaBoxProc
-	ld xwa, (xiz)
-	cp xwa, 0x4
-	jr z, AcTempoBox_MatchTempoID
-	ld xwa, (xiz)
-	cp xwa, 0x2200
-	jr nz, PsRadioBox_EventReturn
-
-AcTempoBox_MatchTempoID:
-	ld xwa, 0x2200
-	call SndParam_LookupReadOnly
-	cp hl, 0:i3
-	jr nz, AcTempoBox_CopyTempoString
-	ld xwa, 4:i3
-	call SndParam_LookupReadOnly
-	pushw hl
-	pushw AcTempoBox_MatchTempoID_Str_aa_Fmt3d@hi16
-	pushw AcTempoBox_MatchTempoID_Str_aa_Fmt3d@lo16
-	lda xwa, (xsp + 10)
-	push xwa
-	call Sprintf_Locked
-	lda xsp, (xsp + 10)
-	jr AcTempoBox_SendConfirmEvent
-
-AcTempoBox_CopyTempoString:
-	pushw AcTempoBox_CopyTempoString_Str_aa@hi16
-	pushw AcTempoBox_CopyTempoString_Str_aa@lo16
-	lda xwa, (xsp + 8)
-	push xwa
-	call Strcpy
-	inc 8, xsp
-
-AcTempoBox_SendConfirmEvent:
-	lda xde, (xsp + 4)
-	ld XWA, (xsp + 0x0104)
-	ld xbc, EVT_PARA_DRAW
-	call SendEvent
-
-PsRadioBox_EventReturn:
-	ld xhl, 0:i3
-
-AcTempoBox_Epilogue:
-	pop xiz
-	lda xsp, (xsp+260)
-	ret
+AcTempoBoxProc:	.include "includes/generated/cc900/AcTempoBoxProc.s"	; C: cc900/ui_window_procs_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AcTempoBox_HandleCreate, AcTempoBoxProc + 66
+	.set	AcTempoBox_HandleClose, AcTempoBoxProc + 75
+	.set	AcTempoBox_CallPsParaBox, AcTempoBoxProc + 82
+	.set	AcTempoBoxProc_OnPaintOrRepaint, AcTempoBoxProc + 87
+	.set	AcTempoBox_HandleConfirm, AcTempoBoxProc + 104
+	.set	AcTempoBox_MatchTempoID, AcTempoBoxProc + 134
+	.set	AcTempoBox_CopyTempoString, AcTempoBoxProc + 173
+	.set	AcTempoBox_SendConfirmEvent, AcTempoBoxProc + 189
+	.set	PsRadioBox_EventReturn, AcTempoBoxProc + 206
+	.set	AcTempoBox_Epilogue, AcTempoBoxProc + 208
 
 PsRadioBoxProc:
 	lda xsp, (xsp-292)
@@ -3453,152 +3034,15 @@ PsListBox_Return:
 	lda xsp, (xsp+298)
 	ret
 
-AcListBoxProc:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 8), xde
-	ld (xsp + 12), xwa
-	cp xbc, EVT_GET_STRING
-	jrl z, AcListBox_GetText
-	cp xbc, EVT_INDEXSW_DOWN
-	jrl z, AcListBoxProc_OnIndexswDownAny
-	cp xbc, EVT_INDEXSW_DOWN_AIC
-	jrl z, AcListBoxProc_OnIndexswDownAny
-	cp xbc, EVT_INDEXSW_UP
-	jr z, AcListBoxProc_OnIndexswUpAny
-	cp xbc, EVT_INDEXSW_UP_AIC
-	jr z, AcListBoxProc_OnIndexswUpAny
-	cp xbc, EVT_SHOW
-	jrl nz, AcListBox_Default
-	ld xwa, (xsp + 12)
-	ld xde, (xsp + 8)
-	calr PsListBoxProc
-	ld xwa, (xsp + 12)
-	call GetViewInstance
-	ld xiz, xhl
-	cpw (xiz + 46), 0x0
-	jrl z, AcListBox_ReturnZero
-	ld de, (xiz + 26)
-	exts xde
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_DOWN
-	calr SetDialUp
-	ld de, (xiz + 26)
-	exts xde
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_UP
-	calr SetDialDown
-	ld wa, 1:i3
-	jrl AcListBox_EnableDials
-
-AcListBoxProc_OnIndexswUpAny:
-	ld xwa, (xsp + 12)
-	ld xde, (xsp + 8)
-	calr PsListBoxProc
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_CHECK_INDEX
-	ld xde, (xsp + 8)
-	call SendEvent
-	or xhl, xhl
-	jrl z, AcListBox_ReturnZero
-	ld xwa, (xsp + 12)
-	call GetViewInstance
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_GET_SELECTED
-	ld xde, 0:i3
-	call SendEvent
-	dec 1, hl
-	exts xhl
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_SET_SELECTED
-	ld xde, xhl
-	call SendEvent
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_UP_AIC
-	ld xde, (xsp + 8)
-	calr SetAutoInc
-	ld xwa, (xsp + 4)
-	cpw (xwa + 46), 0x0
-	jrl z, AcListBox_ReturnZero
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_DOWN
-	ld xde, (xsp + 8)
-	calr SetDialUp
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_UP
-	ld xde, (xsp + 8)
-	calr SetDialDown
-	ld wa, 1:i3
-	jr AcListBox_EnableDials
-
-AcListBoxProc_OnIndexswDownAny:
-	ld xwa, (xsp + 12)
-	ld xde, (xsp + 8)
-	calr PsListBoxProc
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_CHECK_INDEX
-	ld xde, (xsp + 8)
-	call SendEvent
-	or xhl, xhl
-	jr z, AcListBox_ReturnZero
-	ld xwa, (xsp + 12)
-	call GetViewInstance
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_GET_SELECTED
-	ld xde, 0:i3
-	call SendEvent
-	inc 1, hl
-	exts xhl
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_SET_SELECTED
-	ld xde, xhl
-	call SendEvent
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_DOWN_AIC
-	ld xde, (xsp + 8)
-	calr SetAutoInc
-	ld xwa, (xsp + 4)
-	cpw (xwa + 46), 0x0
-	jr z, AcListBox_ReturnZero
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_DOWN
-	ld xde, (xsp + 8)
-	calr SetDialUp
-	ld xwa, (xsp + 12)
-	ld xbc, EVT_INDEXSW_UP
-	ld xde, (xsp + 8)
-	calr SetDialDown
-	ld wa, 1:i3
-
-AcListBox_EnableDials:
-	calr SetDialEnable
-	jr AcListBox_ReturnZero
-
-AcListBox_GetText:
-	ld xwa, (xsp + 12)
-	call GetViewInstance
-	ld xwa, (xhl + 42)
-	push xwa
-	ld xwa, (xsp + 12)
-	push xwa
-	call Strcpy
-	inc 8, xsp
-
-AcListBox_ReturnZero:
-	ld xhl, 0:i3
-	jr AcListBox_Return
-
-AcListBox_Default:
-	ld xwa, (xsp + 12)
-	ld xde, (xsp + 8)
-	calr PsListBoxProc
-
-AcListBox_Return:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+AcListBoxProc:	.include "includes/generated/cc900/AcListBoxProc.s"	; C: cc900/ui_window_procs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AcListBoxProc_OnIndexswUpAny, AcListBoxProc + 125
+	.set	AcListBoxProc_OnIndexswDownAny, AcListBoxProc + 253
+	.set	AcListBox_EnableDials, AcListBoxProc + 377
+	.set	AcListBox_GetText, AcListBoxProc + 382
+	.set	AcListBox_ReturnZero, AcListBoxProc + 403
+	.set	AcListBox_Default, AcListBoxProc + 407
+	.set	AcListBox_Return, AcListBoxProc + 416
 
 PsGridBoxProc:
 	lda xsp, (xsp-334)

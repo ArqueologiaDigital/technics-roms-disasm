@@ -1292,24 +1292,7 @@ PanelEvent_FillSelectedPart:
 ;   part, +3 part param 0, +4 part param 32} on its stack frame, runs SndParam_ResolveVoiceEntry and returns XHL ->
 ;   that record (+0/+1 = resolved entry; the frame is already released, so read it at once). Basis: callers + body --
 ;   the DIGITAL EFFECT and SUSTAIN button handlers test byte +0 for 0x0F / 0x0C right after the call.
-SndParam_ResolveSelectedPartVoice:
-	dec	6, xsp
-	ld	a, (PART_SELECT:16)
-	extz	wa
-	ld	bc, 0:i3
-	call	SndParam_LookupViaEncode
-	ld	(xsp+3), l
-	ld	a, (PART_SELECT:16)
-	extz	wa
-	ldw	bc, 32
-	call	SndParam_LookupViaEncode
-	lda	xwa, (xsp)
-	ld	(xwa+4), l
-	ld	(xwa+2), (PART_SELECT)
-	call	SndParam_ResolveVoiceEntry
-	lda	xhl, (xsp)
-	inc	6, xsp
-	ret
+SndParam_ResolveSelectedPartVoice:	.include "includes/generated/cc900/SndParam_ResolveSelectedPartVoice.s"	; C: cc900/audio_control_engine_m277.c
 	dec	6, xsp
 	ld	xwa, 163840
 	call	SndParam_LookupReadOnly
@@ -2029,14 +2012,7 @@ Encoder_IncrementAndDispatch:
 ; Each periodic tick (unless CURRENT_TITLE 247): drain the control-panel RX queue into change records, scan the
 ; pedal ports, queue the CPU A/D controls' changes (expression pedal, after touch).  The records go to PanelInput_ChangeQueue (RAM 0x8E94, 3 bytes
 ; each, count at 0x8EC4); PanelButton_ProcessChanges dispatches them later.
-PanelInput_Poll:
-	ldmm16 0x8ec2, SYSTEM_TIMESTAMP
-	cp (CURRENT_TITLE:16), 247
-	ret z
-	calr PanelInput_DrainRxQueue
-	calr PanelInput_ScanPedalPorts
-	calr PanelInput_QueueCpuAdcChanges
-	ret
+PanelInput_Poll:	.include "includes/generated/cc900/PanelInput_Poll.s"	; C: cc900/audio_control_engine_m277.c
 
 ; While fewer than 7 records are queued, read one {header, state, changed} from CPANEL_RX_EVENT_QUEUE
 ; (PanelInput_ReadRxRecord) and queue it (PanelInput_QueueChange).
@@ -3787,16 +3763,7 @@ MidiChannel_CleanupRet:
 	pop xiz
 	ret
 
-MidiChOut_DetectChanges:
-	bit 2, (ACC_TRANSPORT_STATE:16)
-	ret nz
-	ld a, (PLAY_TRANSPORT_STATE:16)
-	xor a, (0x347b:16)
-	bit 2, a
-	ret z
-	orw (LED_REQUEST_2:16), 4
-	ldmm8 0x347b, PLAY_TRANSPORT_STATE
-	ret
+MidiChOut_DetectChanges:	.include "includes/generated/cc900/MidiChOut_DetectChanges.s"	; C: cc900/audio_control_engine_m278.c
 
 MidiChannel_ScanPending:
 	push xiz
@@ -5591,10 +5558,7 @@ ExtData_Voice_UpdateFlags:	.include "includes/generated/cc900/ExtData_Voice_Upda
 ;   mask (EXTDATA_MASK), then SwbtWr_FlushAndAppendParams (which appends it when the mask is non-zero); no panel record byte
 ;   is touched. Basis: callers + body -- ExtData_ToneParam_MultiChannel (entry 0x90 of SoundProgram_DispatchTable)
 ;   calls it for offset 16, outside tag 0x90's 6-byte record; ExtData_Voice_CopyAndJump (entry 0xA8) is the same body.
-ExtData_PostRawValueAndMask:
-	ld	(MIDI_MSG_DATA2), (EXTDATA_VALUE:16)
-	ld	(MIDI_MSG_DATA3), (EXTDATA_MASK:16)
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_PostRawValueAndMask:	.include "includes/generated/cc900/ExtData_PostRawValueAndMask.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_Voice_CheckMode:
 	calr	SndParam_WriteLookupAndStore
 	ld	a, (EXTDATA_TLV_OFFSET:16)
@@ -5608,10 +5572,7 @@ ExtData_Voice_CheckMode:
 ;   ExtData_Voice_CheckMode (entry 0x60 of SoundProgram_DispatchTable) calls it for offset 1; the bit meanings are
 ;   docs/kn-disk-file-formats.md:469 (0x4002/0x4004/0x4006 = tag 0x60 +1 bits 7/6/5 for slots 1/2/4), confirmed by
 ;   BitMapOut_RestoreExtra.
-ExtData_ToggleReverbIllusionOnOff:
-	ldw	wa, 192
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_ToggleReverbIllusionOnOff:	.include "includes/generated/cc900/ExtData_ToggleReverbIllusionOnOff.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_Voice_RetEntry:
 	ret
 ExtData_Voice_MixedHandler:
@@ -6669,16 +6630,7 @@ SndParam_FetchSequencerParams:
 	ld (MIDI_MSG_DATA3:16), 0
 	ret
 
-SndParam_WriteLookupAndStore:
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 0xffffffff
-	ret	z
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	ld	(EXTDATA_NEW_VALUE), (xhl+wa)
-	ret
+SndParam_WriteLookupAndStore:	.include "includes/generated/cc900/SndParam_WriteLookupAndStore.s"	; C: cc900/audio_control_engine_m280.c
 
 SwbtWr_FlushAndAppendParams:
 	cp (MIDI_MSG_DATA3:16), 0

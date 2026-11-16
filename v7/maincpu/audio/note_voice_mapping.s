@@ -9614,69 +9614,11 @@ Synth_InitChannelState_Check:
 	popw_erp	0xfa
 	lda	xsp, (xsp + 16)
 	ret
-InitChannelState_Che_InitVal:
-	ld	hl, 0:i3
-	jr	InitChannelState_Che_LoopCheck
-InitChannelState_Che_LoopBody:
-	ld	bc, hl
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 2
-	add	xde, xbc
-	inc	4, xde
-	add	xde, xwa
-	ld	(xde + 4), 0x0
-	ld	bc, hl
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 2
-	add	xde, xbc
-	inc	4, xde
-	add	xde, xwa
-	cp	(xde + 1), 0x0
-	jr	z, InitChannelState_Che_NextIter
-	ld	bc, hl
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 2
-	add	xde, xbc
-	inc	4, xde
-	ld	xix, xde
-	add	xix, xwa
-	ld	bc, hl
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 2
-	add	xde, xbc
-	inc	4, xde
-	add	xde, xwa
-	ld	c, (xde)
-	ld	(xix + 2), c
-	ld	bc, hl
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 2
-	add	xde, xbc
-	inc	4, xde
-	ld	xix, xde
-	add	xix, xwa
-	ld	bc, hl
-	extz	xbc
-	ld	xde, xbc
-	sll	xde, 2
-	add	xde, xbc
-	inc	4, xde
-	add	xde, xwa
-	ld	c, (xde)
-	ld	(xix + 3), c
-InitChannelState_Che_NextIter:
-	inc	1, hl
-InitChannelState_Che_LoopCheck:
-	ld	c, (xwa + 1)
-	extz	bc
-	cp	hl, bc
-	jr	c, InitChannelState_Che_LoopBody
-	ret
+InitChannelState_Che_InitVal:	.include "includes/generated/cc900/InitChannelState_Che_InitVal.s"	; C: cc900/note_voice_mapping_m298_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	InitChannelState_Che_LoopBody, InitChannelState_Che_InitVal + 4
+	.set	InitChannelState_Che_NextIter, InitChannelState_Che_InitVal + 118
+	.set	InitChannelState_Che_LoopCheck, InitChannelState_Che_InitVal + 120
 Voice_SetTransposeAndAlloc:
 	ld	l, e
 	extz	hl
@@ -12962,50 +12904,14 @@ SeqPerformance_Event_Send:
 	ret
 SndParam_DispatchReturn:
 	ret
-VoiceMap_AllocateSlot:
-	ld	l, 0xff:opc
-	cpw	(0xcdca:16), 0
-	jr	nz, VoiceMap_AllocateSlo_Block
-	lda	xwa, (HARMONY_NOTE_LIST:16)
-	calr	Harmony_FindReferenceNote
-	cp	l, 0xff
-	jr	z, VoiceMap_AllocateSlo_SetByteFF
-	calr	UIParam_ScanAndCollect
-	ldmm8	0xce12, CHORD_TYPE
-	ldmm8	0xce14, CHORD_ROOT
-	ld	wa, (0xcd88:16)
-	ld	l, a
-	jr	NoteMap_FindBestMatch_Return
-VoiceMap_AllocateSlo_SetByteFF:
-	ld	l, 0xff:opc
-	jr	NoteMap_FindBestMatch_Return
-VoiceMap_AllocateSlo_Block:
-	cpw	(HARMONY_NOTE_LIST:16), 0
-	jr	nz, VoiceMap_AllocateSlo_Block2
-	calr	Voice_ResetSearchState
-	ld	(0xce12:16), 255
-	ld	(0xce14:16), 255
-	ld	wa, (0xcd88:16)
-	ld	l, a
-	jr	NoteMap_FindBestMatch_Return
-VoiceMap_AllocateSlo_Block2:
-	lda	xwa, (HARMONY_NOTE_LIST:16)
-	calr	Harmony_FindReferenceNote
-	cp	l, 0xff
-	jr	z, VoiceMap_AllocateSlo_SetByteFF2
-	ld	(0xe8f6:16), 10
-	ld	a, (HARMONY_PREV_REF_NOTE:16)
-	cp	a, (HARMONY_REF_NOTE:16)
-	jr	nz, VoiceMap_AllocateSlo_SetByteFF_Join
-	ld	wa, (0xcd88:16)
-	cp	wa, (0xcdcc:16)
-	jr	z, VoiceMap_AllocateSlo_SetByteFF2
-VoiceMap_AllocateSlo_SetByteFF_Join:
-	ld	(0xce16:16), 1
-VoiceMap_AllocateSlo_SetByteFF2:
-	ld	l, 0xff:opc
-NoteMap_FindBestMatch_Return:
-	ret
+VoiceMap_AllocateSlot:	.include "includes/generated/cc900/VoiceMap_AllocateSlot.s"	; C: cc900/note_voice_mapping_m300_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceMap_AllocateSlo_SetByteFF, VoiceMap_AllocateSlot + 45
+	.set	VoiceMap_AllocateSlo_Block, VoiceMap_AllocateSlot + 49
+	.set	VoiceMap_AllocateSlo_Block2, VoiceMap_AllocateSlot + 78
+	.set	VoiceMap_AllocateSlo_SetByteFF_Join, VoiceMap_AllocateSlot + 115
+	.set	VoiceMap_AllocateSlo_SetByteFF2, VoiceMap_AllocateSlot + 120
+	.set	NoteMap_FindBestMatch_Return, VoiceMap_AllocateSlot + 122
 ; ============================================================================
 ; NoteMap_FindBestMatch - Find the best voice to steal for a new note
 ; ============================================================================

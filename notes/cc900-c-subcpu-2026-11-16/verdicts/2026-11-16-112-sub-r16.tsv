@@ -1,0 +1,16 @@
+function	bytes	matches	best_diff
+Audio_Cmd_ToneEdit_Dispatch	656	sub_K_16a@Xr	
+CustomTone_CopyToneRecord	69	sub_M_16a@Xr sub_M_16b@Xr sub_M_16c@Xr	
+DSP_AlgoDescriptor_Emit	397	-	+17 sub_L_16d@Xr
+DSP_MixSendConfig	32	sub_L_16a@Xr sub_L_16b@Xr	
+DSP_ParamInterp_Div0xC6	114	sub_L_16b@Xr sub_L_16c@Xr	
+DSP_VoiceCoeffRoute2	431	-	+2 sub_K_16b@Xr
+DSP_WriteLUTParamSet	331	sub_L_16a@Xr sub_L_16d@Xr	
+EGEnv_Compute_A	144	-	+129 sub_M_16c@Xr
+EGEnv_Compute_B	144	-	+129 sub_M_16c@Xr
+TVF_Emit_Registers	272	sub_K_16a@Xr sub_K_16b@Xr sub_K_16c@Xr	
+TVF_Emit_Registers_Type2	272	sub_K_16a@Xr sub_K_16b@Xr sub_K_16c@Xr	
+VoiceParam_Set_Tone_Option	195	-	+12 sub_K_16c@Xr
+Voice_Build_OutputLevel	97	sub_M_16a@Xr sub_M_16b@Xr sub_M_16c@Xr	
+Voice_InitVoiceState	192	sub_M_16b@Xr sub_M_16c@Xr	
+Voice_PortamentoTarget_ComputePitch	115	sub_M_16a@Xr sub_M_16b@Xr sub_M_16c@Xr	

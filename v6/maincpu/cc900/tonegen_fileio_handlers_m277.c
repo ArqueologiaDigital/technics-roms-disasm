@@ -36,3 +36,51 @@ void PanelTlv_WriteRecordHeader(unsigned char *buf, unsigned char *rec)
 	buf[1] = rec[9];
 }
 
+extern unsigned char ram_1ed400[];
+extern void PanelTlv_ValidateBlock0(unsigned char *mem);
+extern void PanelTlv_ValidatePanelMemory(unsigned int n);
+extern void PanelTlv_ValidatePanelMemories(void);
+extern void PanelTlv_WriteBlock0Headers(unsigned char *mem);
+extern void PanelTlv_WritePanelMemoryHeaders(void);
+
+void PanelTlv_ValidatePanelMemory(unsigned int n)
+{
+    unsigned char *p;
+    if (n < 80) {
+        p = ram_1ed400 + (unsigned long)n * 960;
+        PanelTlv_ValidateBlock0(p);
+    }
+}
+void PanelTlv_ValidatePanelMemories(void)
+{
+    unsigned int i;
+    unsigned char *p;
+    for (i = 0, p = ram_1ed400; i < 80; i++, p += 960)
+        PanelTlv_ValidateBlock0(p);
+}
+void PanelTlv_WritePanelMemoryHeaders(void)
+{
+    unsigned int i;
+    unsigned char *p;
+    for (i = 0, p = ram_1ed400; i < 80; i++, p += 960)
+        PanelTlv_WriteBlock0Headers(p);
+}
+
+/* cc900-module: SndParamBank_WriteFlashDefaults */
+extern void SndParamBank_WriteFlashDefaults(void);
+extern unsigned char SndParamBank_DefaultHeader[];
+extern void SndParamBank_CheckFlash(void);
+
+void SndParamBank_CheckFlash(void)
+{
+	unsigned char *s, *d;
+	unsigned int i;
+
+	s = SndParamBank_DefaultHeader;
+	d = (unsigned char *)0x3d3000L;
+	for (i = 0; i < 3; i++)
+		if (*d++ != *s++) {
+			SndParamBank_WriteFlashDefaults();
+			return;
+		}
+}

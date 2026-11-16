@@ -342,68 +342,13 @@ SysEx_DispatchByChannel_49_Entry:
 	ld	hl, (xwa+de)
 	ret
 
-SysEx_ValidateRolandHeader:
-	cp c, 0xa
-	ret ugt
-	cp (xwa+), 0xf0
-	ret nz
-	inc 1, xwa
-	cp (xwa+), 0x41
-	ret nz
-	inc 1, xwa
-	cp (xwa+), 0x42
-	ret nz
-	cp (xwa+), 0x12
-	ret nz
-	cp (xwa+), 0x40
-	ret nz
-	cp (xwa+), 0x01
-	ret nz
-	cp c, 0:i3
-	jr nz, SysEx_ValidateRolandHeader_NonZeroChan
-	lda xbc, (SEQ_SONG_RECORD:24)
-	add xbc, 0x2e0
-	jr SysEx_ValidateRolandHeader_Dispatch
-
-SysEx_ValidateRolandHeader_NonZeroChan:
-	dec 1, c
-	extz bc
-	sla bc, 11
-	ld de, bc
-	exts xde
-	lda xbc, (SEQ_SONG_SLOTS:24)
-	add xbc, xde
-	add xbc, 0x2e0
-
-SysEx_ValidateRolandHeader_Dispatch:
-	ld E, (xwa+)
-	cp e, 0x3a
-	jr z, SysEx_ValidateRolandHeader_Cmd3A
-	cp e, 0x38
-	jr z, SysEx_ValidateRolandHeader_Cmd38
-	cp e, 0x33
-	jr z, SysEx_ValidateRolandHeader_Cmd33
-	cp e, 0x30
-	ret nz
-	ld a, (xwa)
-	extz wa
-	jr SysEx_ApplyVoiceParam_4B
-
-SysEx_ValidateRolandHeader_Cmd33:
-	ld a, (xwa)
-	extz wa
-	jrl SysEx_ApplyVoiceParam_4B_128
-
-SysEx_ValidateRolandHeader_Cmd38:
-	ld a, (xwa)
-	extz wa
-	jrl SysEx_ApplyVoiceParam_49
-
-SysEx_ValidateRolandHeader_Cmd3A:
-	ld a, (xwa)
-	extz wa
-	calr SysEx_ApplyVoiceParam_49_128
-	ret
+SysEx_ValidateRolandHeader:	.include "includes/generated/cc900/SysEx_ValidateRolandHeader.s"	; C: cc900/dsp_config_sysex_m290.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysEx_ValidateRolandHeader_NonZeroChan, SysEx_ValidateRolandHeader + 62
+	.set	SysEx_ValidateRolandHeader_Dispatch, SysEx_ValidateRolandHeader + 86
+	.set	SysEx_ValidateRolandHeader_Cmd33, SysEx_ValidateRolandHeader + 115
+	.set	SysEx_ValidateRolandHeader_Cmd38, SysEx_ValidateRolandHeader + 122
+	.set	SysEx_ValidateRolandHeader_Cmd3A, SysEx_ValidateRolandHeader + 129
 
 SysEx_ApplyVoiceParam_4B:
 	dec 8, xsp

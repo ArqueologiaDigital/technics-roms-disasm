@@ -59,3 +59,39 @@ void ExtData_Voice_CheckMode3_Helper(void)
 	ExtData_SetTlvField(127);
 	SwbtWr_FlushAndAppendParams();
 }
+
+/* cc900-module: PanelTlv_PayloadOfTag */
+extern unsigned char __near MIDI_MSG_DATA2;
+extern unsigned char __near MIDI_MSG_DATA3;
+extern unsigned char __near EXTDATA_VALUE;
+extern unsigned char __near EXTDATA_MASK;
+extern void ExtData_PostRawValueAndMask(void);
+extern unsigned char *PanelTlv_PayloadOfTag(unsigned int);
+extern unsigned char __near MIDI_MSG_STATUS;
+extern unsigned char __near EXTDATA_TLV_OFFSET;
+extern unsigned char __near EXTDATA_NEW_VALUE;
+extern void SndParam_WriteLookupAndStore(void);
+
+void ExtData_PostRawValueAndMask(void)
+{
+	MIDI_MSG_DATA2 = EXTDATA_VALUE;
+	MIDI_MSG_DATA3 = EXTDATA_MASK;
+	SwbtWr_FlushAndAppendParams();
+}
+void SndParam_WriteLookupAndStore(void)
+{
+	unsigned char *p = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+
+	if (p == (unsigned char *)-1L) return;
+	EXTDATA_NEW_VALUE = p[EXTDATA_TLV_OFFSET];
+}
+
+/* cc900-module: ExtData_ApplyTransposeEvent ExtData_StepTlvField SndParam_WriteLookupAndStore */
+extern void ExtData_ToggleTlvBits(unsigned int);
+extern void ExtData_ToggleReverbIllusionOnOff(void);
+
+void ExtData_ToggleReverbIllusionOnOff(void)
+{
+	ExtData_ToggleTlvBits(192);
+	SwbtWr_FlushAndAppendParams();
+}

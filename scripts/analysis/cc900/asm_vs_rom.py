@@ -48,14 +48,14 @@ def main():
     to_llvm.MODULE = module or None
 
     class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
-        def resolve(self, n):                            # name (value or label) it is the prefix of
+        def resolve(self, n, depth=0):                   # name (value or label) it is the prefix of
             if n in alias:                               # a short C name (`cc900-name:`) of a callee or object
                 n = alias[n]
-            r = super().resolve(n)
+            r = super().resolve(n, depth)
             if r[0] is None and len(n) == 31:
                 full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == n]
                 if len(set(full)) == 1:
-                    return super().resolve(full[0])
+                    return super().resolve(full[0], depth)
             return r
     fw.RUNTIME.update(fw.runtime_names(tree))           # V4.23's runtime names (C9H_divlu) -> the tree's labels
     names = CutNames(fw.tree_values(tree), ref)

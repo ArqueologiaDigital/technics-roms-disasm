@@ -27,6 +27,7 @@ CC = {'eq': 'z', 'ne': 'nz', 'lt': 'lt', 'le': 'le', 'gt': 'gt', 'ge': 'ge', 'ul
 R8 = {'A', 'W', 'B', 'C', 'D', 'E', 'H', 'L'}
 REGS = re.compile(r'^(Q?[WABCDEHL]|Q?(WA|BC|DE|HL|IX|IY|IZ|SP)|X(WA|BC|DE|HL|IX|IY|IZ|SP)|Q?I[XYZ][LH])$')
 NUM = re.compile(r'^-?(0x[0-9a-fA-F]+|\d+)$')
+REG32 = re.compile(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$')
 
 def load_symbols(path):
     out = {}
@@ -218,6 +219,11 @@ def translate_line(t, syms, locals_):
     if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
+    if op in ('j', 'cal', 'call', 'jp') and raw and REG32.match(raw[-1]):
+        # through a register: a tail call `j XHL` is jp (xhl) = b3 d8 (lane_hd: HDAE5000_HardTest_Print), call XHL is
+        # call (xhl) = b3 e8; with a condition, jp / call cc, (xhl)
+        cc = '%s, ' % CC[raw[0].lower()] if len(raw) == 2 else ''
+        return '\t%s %s(%s)' % ('jp' if op in ('j', 'jp') else 'call', cc, raw[-1].lower())
     if op == 'cal' and len(raw) == 2:                    # CAL cc,F: no relative form, call cc,(F) -- 24-bit, or 16
         t = spelled(raw[1], lookup(raw[1], syms))        # for a __near / __tiny F (hdae5000_ui_display.s: call nz,
         return '\tcall %s, (%s:%d)' % (CC[raw[0]], t, 16 if code_width(raw[1]) < 24 else 24)   # (..._Status:24))
@@ -241,7 +247,9 @@ def translate_line(t, syms, locals_):
         t = spelled(raw[1], lookup(raw[1], syms))
         return '\tjp %s, (%s:%d)' % (CC[raw[0]], t, 16 if code_width(raw[1]) < 24 else 24)
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
-    m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff)$', ' '.join(raw)) if op == 'pushw' else None
+    # `& 0xfff`: V4.23's listing cuts a long line at its column limit, so a 32-character name's `& 0xffff` loses its
+    # last digit (lane_p6: pushw _FDemo_DisplayResourceData_Str_S & 0xfff, after the `>> 16` push of the same name)
+    m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff?)$', ' '.join(raw)) if op == 'pushw' else None
     if m:                                                # an address pushed as two words (abi returns.c use_d,
         s = spell_of(m.group(1)) if not m.group(1).startswith('S') else None
         if s:                                            # a label: the assembler supplies the halves (UPDATE 20)
@@ -371,7 +379,11 @@ def translate_data(lines, locals_):
     out = []
     for l in lines:
         p = l.strip().split(None, 1); op = p[0].lower()
-        if op == 'align': out.append('\t.balign %s' % p[1]); continue
+        if op == 'align':
+            # V4.23 aligns within its own f_const section, which the firmware's linker placed where it liked: the
+            # sub-CPU's AudioChannel_CaseOffsets sits at the odd 0xF703.  The tree's label is the object's place, so
+            # no padding is written here (a .balign would shift the table and everything after it by a byte)
+            out.append('\t; V4.23: align %s (within its f_const section; the label places the object)' % p[1]); continue
         if op in ('fdata', 'fdatad'):
             b = struct.pack('<d' if op == 'fdatad' else '<f', float(p[1]))
             out.append('\t.byte ' + ', '.join('0x%02x' % x for x in b) + '\t; %s %s' % (op, p[1].strip())); continue

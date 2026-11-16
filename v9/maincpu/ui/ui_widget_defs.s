@@ -8658,163 +8658,12 @@ ObjectProc_Join5:
 	lda xsp, (xsp+144:16)
 	ret
 
-InitializeObjectTable:
-	lda xsp, (xsp - 14)
-	pushw iz
-	ldw (0x02bc12:24), 0x0000
-	lda xwa, (OBJECT_REGISTRY:24)
-	lda xbc, (xwa + 10)
-	lda xde, (xwa + 8)
-	lda xhl, (xwa + 4)
-	ld xix, xwa
-	lda xiy, (xwa+15680)
-
-; InitializeObjectTable_Loop: Local loop label of InitializeObjectTable (its first loop): clears the 1120 x 14-byte
-;   view records from RAM 0x27ED2 (+0 = 0xFFFFFFFF, +4 = 0, +8 word = 0, +10 = 0). Referenced only by its own `jr c`
-;   back-branch. Basis: body.
-InitializeObjectTable_Loop:
-	ld xwa, 0xffffffff
-	ld (xix), xwa
-	ld xwa, 0:i3
-	ld (xhl), xwa
-	ldw (xde), 0x0
-	ld (xbc), xwa
-	lda xix, (xix + 14)
-	lda xhl, (xhl + 14)
-	lda xde, (xde + 14)
-	lda xbc, (xbc + 14)
-	cp xix, xiy
-	jr c, InitializeObjectTable_Loop
-	lda xbc, (0x0328fc:24)
-	ld xwa, xbc
-	lda xde, (xbc+448)
-
-; InitializeObjectTable_Loop2: Local loop label of InitializeObjectTable (second loop): copies NakaMode_InitRecord (7
-;   words) into each of the 32 x 14-byte mode records at RAM 0x328FC. Referenced only by its own back-branch (a
-;   comment in disk_warning_strings.s names it). Basis: body.
-InitializeObjectTable_Loop2:
-	ld xiy, NakaMode_InitRecord
-	ld xix, xwa
-	ld bc, 7:i3
-	ldirw
-	lda xwa, (xwa + 14)
-	cp xwa, xde
-	jr c, InitializeObjectTable_Loop2
-	lda xbc, (0x032abc:24)
-	ld xwa, xbc
-	lda xde, (xbc+5632)
-
-; InitializeObjectTable_Loop3: Local loop label of InitializeObjectTable (third loop): copies Title_RecordTemplate (11
-;   words) into each of the 256 x 22-byte title records at RAM 0x32ABC; the SupportClass registration follows the
-;   loop, it is not part of it. Referenced only by its own back-branch. Basis: body.
-InitializeObjectTable_Loop3:
-	ld xiy, Title_RecordTemplate
-	ld xix, xwa
-	ldw bc, 0xb
-	ldirw
-	lda xwa, (xwa + 22)
-	cp xwa, xde
-	jr c, InitializeObjectTable_Loop3
-	lda xbc, (xsp + 2)
-	ld xwa, NAKA_CLASS_SupportClass
-	ld (xbc), xwa
-	lda xwa, (SupportClassProc:24)
-	ld (xbc + 4), xwa
-	ldw (xbc + 8), 0x37
-	lda xwa, (SupportClass_PropTypeRecords:24)
-	ld (xbc + 10), xwa
-	ldw wa, 0x260
-	calr RegisterObjectTable
-	lda xbc, (xsp + 2)
-	ld xwa, NAKA_CLASS_Mode
-	ld (xbc), xwa
-	lda xwa, (ModeProc:24)
-	ld (xbc + 4), xwa
-	ldw (xbc + 8), 0x20
-	lda xwa, (0x0328fc:24)
-	ld (xbc + 10), xwa
-	ldw wa, 0x180
-	calr RegisterObjectTable
-	lda xbc, (xsp + 2)
-	ld xwa, NAKA_CLASS_Title
-	ld (xbc), xwa
-	lda xwa, (TitleProc:24)
-	ld (xbc + 4), xwa
-	ldw (xbc + 8), 0x100
-	lda xwa, (0x032abc:24)
-	ld (xbc + 10), xwa
-	ldw wa, 0x1a0
-	calr RegisterObjectTable
-	ld iz, 0:i3
-
-; InitializeObjectTable_Loop4: Local loop label of InitializeObjectTable (fourth loop): for IZ = 0..255 registers two
-;   Viewable object tables, slot IZ with base 0x276D2 + 4 * IZ and slot IZ + 0x300 with base 0x27AD2 + 4 * IZ (count
-;   0). Referenced only by its own back-branch. Basis: body.
-InitializeObjectTable_Loop4:
-	lda xbc, (xsp + 2)
-	ld xwa, NAKA_CLASS_Viewable
-	ld (xbc), xwa
-	lda xwa, (ViewableProc:24)
-	ld (xbc + 4), xwa
-	ldw (xbc + 8), 0x0
-	ld wa, iz
-	extz xwa
-	sll xwa, 2
-	ld xde, 0x276d2
-	add xde, xwa
-	ld (xbc + 10), xde
-	ld wa, iz
-	calr RegisterObjectTable
-	lda xbc, (xsp + 2)
-	ld wa, iz
-	extz xwa
-	sll xwa, 2
-	ld xde, 0x27ad2
-	add xde, xwa
-	ld (xbc + 10), xde
-	ld wa, iz
-	add wa, 0x300
-	calr RegisterObjectTable
-	inc 1, iz
-	cp iz, 0x100
-	jr c, InitializeObjectTable_Loop4
-	ld xwa, 0:i3
-	call SetCurrentTarget
-	call InitializeMurai
-	call InitializeToshi
-	call InitializeEast
-	call InitializeSuna
-	call InitializeCheap
-	call InitializeScoop
-	call InitializeYoko
-	call InitializeKubo
-	call InitializeHama
-	call InitializeKSS
-	call InitializeNaka
-	call InitializeUser12
-	call InitializeUser13
-	call InitializeUser14
-	call InitializeUser15
-	call InitializeUser16
-	call InitializeUser17
-	call InitializeUser18
-	call InitializeUser19
-	call InitializeUser20
-	call InitializeUser21
-	call InitializeUser22
-	call InitializeUser23
-	call InitializeUser24
-	call InitializeUser25
-	call InitializeUser26
-	call InitializeUser27
-	call InitializeUser28
-	call InitializeUser29
-	call InitializeUser30
-	call InitializeUser31
-	call InitializeRoot
-	popw iz
-	lda xsp, (xsp + 14)
-	ret
+InitializeObjectTable:	.include "includes/generated/cc900/InitializeObjectTable.s"	; C: cc900/ui_widget_defs_m272_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	InitializeObjectTable_Loop, InitializeObjectTable + 32
+	.set	InitializeObjectTable_Loop2, InitializeObjectTable + 77
+	.set	InitializeObjectTable_Loop3, InitializeObjectTable + 107
+	.set	InitializeObjectTable_Loop4, InitializeObjectTable + 239
 
 CountObject:
 	dec 6, xsp
@@ -11560,115 +11409,31 @@ SetMovable:	.include "includes/generated/cc900/SetMovable.s"	; C: cc900/ui_widge
 
 GetMovable:	.include "includes/generated/cc900/GetMovable.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
-NextView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 8)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_4_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_4_Draw
-
-DrawWidget_Hline_4_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_4_Draw:
-	pop xiz
-	ret
+NextView:	.include "includes/generated/cc900/NextView.s"	; C: cc900/ui_widget_defs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_4_Setup, NextView + 43
+	.set	DrawWidget_Hline_4_Draw, NextView + 48
 
 ; Returns in XHL the id of view XWA's next sibling: the same object table with the index in the
 ; instance's +8 word, or 0xffffffff when that word is 0xffff (last sibling).  Viewable +4 super, +6 sub,
 ; +8 next, +10 prev (naka_cls_Viewable_t).
-GetNextView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 8)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_5_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_5_Draw
+GetNextView:	.include "includes/generated/cc900/GetNextView.s"	; C: cc900/ui_widget_defs_m272_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_5_Setup, GetNextView + 43
+	.set	DrawWidget_Hline_5_Draw, GetNextView + 48
 
-DrawWidget_Hline_5_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_5_Draw:
-	pop xiz
-	ret
-
-PrevView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 10)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_6_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_6_Draw
-
-DrawWidget_Hline_6_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_6_Draw:
-	pop xiz
-	ret
+PrevView:	.include "includes/generated/cc900/PrevView.s"	; C: cc900/ui_widget_defs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_6_Setup, PrevView + 43
+	.set	DrawWidget_Hline_6_Draw, PrevView + 48
 
 ; Returns in XHL the id of view XWA's previous sibling: the same object table with the index in the
 ; instance's +10 word, or 0xffffffff when that word is 0xffff (first sibling).  Viewable +4 super, +6 sub,
 ; +8 next, +10 prev (naka_cls_Viewable_t).
-GetPrevView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 10)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_7_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_7_Draw
-
-DrawWidget_Hline_7_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_7_Draw:
-	pop xiz
-	ret
+GetPrevView:	.include "includes/generated/cc900/GetPrevView.s"	; C: cc900/ui_widget_defs_m272_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_7_Setup, GetPrevView + 43
+	.set	DrawWidget_Hline_7_Draw, GetPrevView + 48
 
 SuperView:
 	push xiz
@@ -11699,86 +11464,23 @@ DrawWidget_Hline_8_Draw:
 ; Returns in XHL the id of view XWA's superview: the same object table with the index in the
 ; instance's +4 word, or 0xffffffff when that word is 0xffff (no superview).  Viewable +4 super, +6 sub,
 ; +8 next, +10 prev (naka_cls_Viewable_t).
-GetSuperView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 4)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_9_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_9_Draw
+GetSuperView:	.include "includes/generated/cc900/GetSuperView.s"	; C: cc900/ui_widget_defs_m272_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_9_Setup, GetSuperView + 43
+	.set	DrawWidget_Hline_9_Draw, GetSuperView + 48
 
-DrawWidget_Hline_9_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_9_Draw:
-	pop xiz
-	ret
-
-SubView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 6)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_10_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_10_Draw
-
-DrawWidget_Hline_10_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_10_Draw:
-	pop xiz
-	ret
+SubView:	.include "includes/generated/cc900/SubView.s"	; C: cc900/ui_widget_defs_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_10_Setup, SubView + 43
+	.set	DrawWidget_Hline_10_Draw, SubView + 48
 
 ; Returns in XHL the id of view XWA's first subview: the same object table with the index in the
 ; instance's +6 word, or 0xffffffff when that word is 0xffff (no subview).  Viewable +4 super, +6 sub,
 ; +8 next, +10 prev (naka_cls_Viewable_t).
-GetSubView:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr GetViewInstance
-	lda xwa, (xhl + 6)
-	cpw (xwa), 0xffff
-	jr z, DrawWidget_Hline_11_Setup
-	ld bc, (xwa)
-	exts xbc
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	sll xwa, 16
-	add xwa, xbc
-	ld xhl, xwa
-	jr DrawWidget_Hline_11_Draw
-
-DrawWidget_Hline_11_Setup:
-	ld xhl, 0xffffffff
-
-DrawWidget_Hline_11_Draw:
-	pop xiz
-	ret
+GetSubView:	.include "includes/generated/cc900/GetSubView.s"	; C: cc900/ui_widget_defs_m272_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWidget_Hline_11_Setup, GetSubView + 43
+	.set	DrawWidget_Hline_11_Draw, GetSubView + 48
 
 Link:
 	dec 8, xsp
@@ -11822,85 +11524,12 @@ DrawWidget_Hline_Return:
 	inc 8, xsp
 	ret
 
-Unlink:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 12), xwa
-	ld xwa, (xsp + 12)
-	calr GetPrevView
-	ld (xsp + 8), xhl
-	ld xwa, (xsp + 8)
-	cp xwa, 0xffffffff
-	jr z, FrameDraw_TopEdge
-	ld xwa, (xsp + 8)
-	calr GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xsp + 12)
-	calr GetNextView
-	ld (xiz + 8), hl
-	ld xwa, (xsp + 8)
-	ld bc, 1:i3
-	calr SetChange
-	ld xwa, (xsp + 12)
-	calr GetViewInstance
-	ldw (xhl + 10), 0xffff
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_TopEdge:
-	ld xwa, (xsp + 12)
-	calr GetNextView
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	cp xwa, 0xffffffff
-	jr z, FrameDraw_BottomEdge
-	ld xwa, (xsp + 4)
-	calr GetViewInstance
-	ld xwa, (xsp + 8)
-	ld (xhl + 10), wa
-	ld xwa, (xsp + 4)
-	ld bc, 1:i3
-	calr SetChange
-	ld xwa, (xsp + 12)
-	calr GetViewInstance
-	ldw (xhl + 8), 0xffff
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_BottomEdge:
-	ld xwa, (xsp + 12)
-	calr GetSuperView
-	ld xiz, xhl
-	cp xiz, 0xffffffff
-	jr z, FrameDraw_InnerFill
-	ld xwa, xiz
-	calr GetViewInstance
-	ld (xsp + 8), xhl
-	ld xwa, xiz
-	calr GetSubView
-	cp xhl, (xsp + 12)
-	jr nz, FrameDraw_CheckInner
-	ld xbc, (xsp + 4)
-	ld xwa, (xsp + 8)
-	ld (xwa + 6), bc
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_CheckInner:
-	ld xwa, (xsp + 12)
-	calr GetViewInstance
-	ldw (xhl + 4), 0xffff
-	ld xwa, (xsp + 12)
-	ld bc, 1:i3
-	calr SetChange
-
-FrameDraw_InnerFill:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+Unlink:	.include "includes/generated/cc900/Unlink.s"	; C: cc900/ui_widget_defs_m272.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FrameDraw_TopEdge, Unlink + 71
+	.set	FrameDraw_BottomEdge, Unlink + 130
+	.set	FrameDraw_CheckInner, Unlink + 181
+	.set	FrameDraw_InnerFill, Unlink + 200
 
 SetSuperView:
 	dec 8, xsp
@@ -11967,26 +11596,7 @@ GetLinkView:	.include "includes/generated/cc900/GetLinkView.s"	; C: cc900/ui_wid
 	.set	FrameDraw_DefaultReturn, GetLinkView + 90
 	.set	FrameDraw_Return, GetLinkView + 93
 
-GetViewInstance:
-	ld xbc, xwa
-	srl xbc, 16
-	and xbc, 0xfff
-	ldiw_erp 0xe2, 0
-	ld de, wa
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ret
+GetViewInstance:	.include "includes/generated/cc900/GetViewInstance.s"	; C: cc900/ui_widget_defs_m272.c
 
 GetBox:	.include "includes/generated/cc900/GetBox.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
@@ -17700,64 +17310,13 @@ PostEvent:	.include "includes/generated/cc900/PostEvent.s"	; C: cc900/ui_widget_
 	.set	PostEvent_Prologue, PostEvent + 105
 	.set	PostEvent_AllocSlot, PostEvent + 110
 
-GetEvent:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 6), xde
-	ld (xsp + 10), xbc
-	ld xiz, xwa
-	ld wa, 4:i3
-	call TaskEvent_Wait
-	ld wa, (0x02ec34:24)
-	cp wa, (0x02ec36:24)
-	jr nz, PostEvent_FillSlot
-	ld wa, 4:i3
-	call TaskEvent_Signal
-	ld hl, 0:i3
-	jr GetEvent_Prologue
-
-PostEvent_FillSlot:
-	decw 1, (0x02f840:24)
-	ld wa, (0x02ec34:24)
-	ld (xsp + 4), wa
-	ld bc, (xsp + 4)
-	muls bc, 0xc
-	lda xwa, (EVENT_QUEUE:24)
-	ld	xwa, (xwa+bc)
-	ld (xiz), xwa
-	cp xwa, 0xffffffff
-	jr nz, PostEvent_LinkSlot
-	calr GetCurrentTarget
-	ld (xiz), xhl
-
-PostEvent_LinkSlot:
-	ld bc, (xsp + 4)
-	muls bc, 0xc
-	lda xwa, (EVENT_QUEUE:24)
-	lda	xde, (xwa+bc)
-	ld xwa, (xsp + 10)
-	ld xbc, (xde + 4)
-	ld (xwa), xbc
-	ld xwa, (xsp + 6)
-	ld xbc, (xde + 8)
-	ld (xwa), xbc
-	cpw (xsp + 4), 0x3ff
-	jr nz, PostEvent_ReturnOne
-	ldw (0x02ec34:24), 0x0000
-	jr PostEvent_Return
-
-PostEvent_ReturnOne:
-	incw 1, (0x02ec34:24)
-
-PostEvent_Return:
-	ld wa, 4:i3
-	call TaskEvent_Signal
-	ld hl, 1:i3
-
-GetEvent_Prologue:
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+GetEvent:	.include "includes/generated/cc900/GetEvent.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PostEvent_FillSlot, GetEvent + 40
+	.set	PostEvent_LinkSlot, GetEvent + 85
+	.set	PostEvent_ReturnOne, GetEvent + 134
+	.set	PostEvent_Return, GetEvent + 139
+	.set	GetEvent_Prologue, GetEvent + 147
 
 DeleteEvent:
 	dec 4, xsp
@@ -18783,76 +18342,15 @@ KillApTimer_Return:
 	lda xsp, (xsp + 12)
 	retd 0x8
 
-KillApTimer:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld ix, (0x030448:24)
-	cp ix, 0xffff
-	jrl z, KillApTimer_CheckNextEntry_Return
-	lda xiy, (0x02f844:24)
-
-KillApTimer_CheckNextEntry_Loop:
-	ld wa, ix
-	muls wa, 0x18
-	lda	xhl, (xiy+wa)
-	lda xde, (xhl + 8)
-	lda xiz, (xhl + 2)
-	cp (xde), xbc
-	jr nz, ApTimer_KillApTimer_CheckNextEntry
-	ld xwa, (xhl + 12)
-	cp xwa, (xsp + 4)
-	jr nz, ApTimer_KillApTimer_CheckNextEntry
-	ld xwa, (xhl + 16)
-	cp xwa, (xsp + 16)
-	jr nz, ApTimer_KillApTimer_CheckNextEntry
-	ld xwa, (xhl + 20)
-	cp xwa, (xsp + 12)
-	jr nz, ApTimer_KillApTimer_CheckNextEntry
-	ld xbc, xiz
-	ld wa, (xiz)
-	cp wa, 0xffff
-	jr z, KillApTimer_CheckNextEntry_Match
-	muls wa, 0x18
-	ld iz, wa
-	ld wa, (xhl)
-	ld	(xiy+iz), wa
-
-KillApTimer_CheckNextEntry_Match:
-	cpw (xhl), 0xffff
-	jr z, KillApTimer_CheckNextEntry_Unlink
-	ld wa, (xhl)
-	muls wa, 0x18
-	lda	xiy, (xiy+wa)
-	ld wa, (xbc)
-	ld (xiy + 2), wa
-
-KillApTimer_CheckNextEntry_Unlink:
-	cp ix, (0x030448:24)
-	jr nz, KillApTimer_CheckNextEntry_Done
-	ld wa, (xbc)
-	ld (0x030448:24), wa
-
-KillApTimer_CheckNextEntry_Done:
-	ld xwa, 0xffffffff
-	ld (xde), xwa
-	ldw (xbc), 0xffff
-	ldw (xhl), 0xffff
-	ld hl, 1:i3
-	jr KillApTimer_CheckNextEntry_Epilogue
-
-ApTimer_KillApTimer_CheckNextEntry:
-	ld ix, (xiz)
-	cp ix, 0xffff
-	jrl nz, KillApTimer_CheckNextEntry_Loop
-
-KillApTimer_CheckNextEntry_Return:
-	ld hl, 0:i3
-
-KillApTimer_CheckNextEntry_Epilogue:
-	pop xiz
-	inc 4, xsp
-	retd 0x8
+KillApTimer:	.include "includes/generated/cc900/KillApTimer.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	KillApTimer_CheckNextEntry_Loop, KillApTimer + 23
+	.set	KillApTimer_CheckNextEntry_Match, KillApTimer + 91
+	.set	KillApTimer_CheckNextEntry_Unlink, KillApTimer + 113
+	.set	KillApTimer_CheckNextEntry_Done, KillApTimer + 127
+	.set	ApTimer_KillApTimer_CheckNextEntry, KillApTimer + 146
+	.set	KillApTimer_CheckNextEntry_Return, KillApTimer + 155
+	.set	KillApTimer_CheckNextEntry_Epilogue, KillApTimer + 157
 ; DrawTask_Main: Entry point of task (screen group) 5, the draw task: loops forever taking draw commands from the draw
 ;   ring (DrawTask_Dispatch -> DrawRing_TryTake under event 3) and calling each command's function (+0) with XWA = the
 ;   command, lowering its priority (Kernel_SetTaskLevel 5, 3) while word 0x3EF4E is non-zero. Basis: callers +
@@ -18927,32 +18425,10 @@ DrawTask_Dispatch:
 ; 5, 2) and tries again.  The draw task takes entries with DrawRing_TryTake and runs them
 ; through DrawTask_FuncDispatch.  Named DisplayCmd_DequeueAndExecute until 2026-10-02.
 ; ============================================================================
-DrawRing_Post:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-
-DrawRing_Post_Retry:
-	ld wa, 3:i3
-	call TaskEvent_Wait
-	ld xwa, (xsp + 4)
-	calr DrawRing_TryPost
-	ld xiz, xhl
-	ld wa, 3:i3
-	call TaskEvent_Signal
-	or xiz, xiz
-	jr nz, DrawRing_Post_Check
-	ld wa, 5:i3
-	ld bc, 2:i3
-	call Kernel_SetTaskLevel
-
-DrawRing_Post_Check:
-	or xiz, xiz
-	jr z, DrawRing_Post_Retry
-	ld xhl, xiz
-	pop xiz
-	inc 4, xsp
-	ret
+DrawRing_Post:	.include "includes/generated/cc900/DrawRing_Post.s"	; C: cc900/ui_widget_defs_m273_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawRing_Post_Retry, DrawRing_Post + 6
+	.set	DrawRing_Post_Check, DrawRing_Post + 38
 
 DrawRing_Post_Return:
 	ret

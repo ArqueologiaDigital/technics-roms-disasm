@@ -3949,250 +3949,29 @@ SeqStep_FileIoHelper:
 	ldw (xwa + 6), 0x0
 	ret
 
-SeqStep_FileIoCheck:
-	dec 2, xsp
-	push xiz
-	ld xhl, (xsp + 18)
-	or xhl, xhl
-	jr z, SeqStep_FileIoDone
-	ld wa, (xsp + 22)
-	bit 6, a
-	jr z, SeqStep_FileIoAdvance
-	ld xiz, xhl
-
-SeqStep_FileIoProcess:
-	ld a, (xiz + 22)
-	and a, 0x3
-	cp a, 3:i3
-	jrl nz, SeqStep_FileIoLoopReturn
-	push xiz
-	calr SeqStep_FileBufferSetup
-	inc 4, xsp
-	ld (xiz + 20), hl
-	ld xwa, (xsp + 10)
-	ld (xwa + 6), hl
-	cp hl, 0:i3
-	jrl z, SeqStep_FileIoLoopReturn
-	ld (xiz + 22), 0x0
-	ld xhl, xiz
-	jrl SeqStep_FileIoPopReturn
-
-SeqStep_FileIoAdvance:
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	cp xwa, (xhl)
-	jr nz, SeqStep_FileIoDone
-	ld xwa, (xhl + 4)
-	cp xwa, (xsp + 14)
-	jr nz, SeqStep_FileIoDone
-	incw 2, (xhl + 18)
-	ld wa, (xsp + 22)
-	or (xhl + 22), a
-	jrl SeqStep_FileIoPopReturn
-
-SeqStep_FileIoDone:
-	ld xwa, (xsp + 14)
-	cp xwa, 0x1
-	jr nz, SeqStep_FileIoReturn
-	ldw (xsp + 4), 0x1
-
-SeqStep_FileIoReturn:
-	lda xwa, (0x02121a:24)
-	ld xix, xwa
-	ld xhl, 0:i3
-	ld xiz, 0:i3
-	ldw de, 0x8000
-	ldw (xsp + 4), 0x0
-	cpw (xsp + 4), 0xa
-	jr ge, SeqStep_FileIoUpdate
-
-SeqStep_FileIoError:
-	cp (0x03e3e0:24), 0x00
-	jr z, SeqStep_FileIoCleanup
-	mrdw3 0x9c, 0x12, 0x7f
-
-SeqStep_FileIoCleanup:
-	cpw (xix + 18), 0x0
-	jr z, SeqStep_FileIoExit
-	decm 1, (xix + 18)
-
-SeqStep_FileIoExit:
-	cp (xix + 18), de
-	jr nc, SeqStep_FileIoComplete
-	ld a, (xix + 22)
-	and a, 0x88
-	jr nz, SeqStep_FileIoComplete
-	ld xiz, xix
-	ld de, (xix + 18)
-
-SeqStep_FileIoComplete:
-	bitm 0, (xix + 22)
-	jr z, SeqStep_FileIoFinal
-	ld xbc, (xix)
-	ld xwa, (xsp + 10)
-	cp xbc, (xwa + 18)
-	jr nz, SeqStep_FileIoFinal
-	ld xwa, (xsp + 14)
-	cp xwa, (xix + 4)
-	jr nz, SeqStep_FileIoFinal
-	ld xhl, xix
-
-SeqStep_FileIoFinal:
-	incw 1, (xsp + 4)
-	lda xix, (xix+538)
-	cpw (xsp + 4), 0xa
-	jr lt, SeqStep_FileIoError
-
-SeqStep_FileIoUpdate:
-	ld (0x03e3e0:24), 0x00
-	or xhl, xhl
-	jr z, SeqStep_FileIoValidate
-	addiw_da (xhl + 18), 0x14
-	ld wa, (xhl + 18)
-	bit 15, wa
-	jr z, SeqStep_FileIoStore
-	ld (0x03e3e0:24), 0x01
-
-SeqStep_FileIoStore:
-	ld wa, (xsp + 22)
-	or (xhl + 22), a
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 5)
-	ld (xhl + 23), a
-	jrl SeqStep_FileIoPopReturn
-
-SeqStep_FileIoValidate:
-	or xiz, xiz
-	jrl nz, SeqStep_FileIoProcess
-	ld xwa, (xsp + 10)
-	ldw (xwa + 6), 0xa
-
-SeqStep_FileIoLoop:
-	ld xhl, 0:i3
-	jrl SeqStep_FileIoPopReturn
-
-SeqStep_FileIoLoopReturn:
-	ld xwa, (xsp + 14)
-	ld (xiz + 4), xwa
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	ld (xiz), xwa
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 5)
-	ld (xiz + 23), a
-	ld xwa, (xsp + 10)
-	ld a, (xwa)
-	ld (xiz + 24), a
-	ldw (xiz + 20), 0x0
-	ld wa, (xsp + 22)
-	bit 5, a
-	jrl nz, SeqStep_FileIoSetupResult
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xsp + 18)
-	push xwa
-	ld xwa, (xsp + 18)
-	ld xwa, (xwa + 10)
-	ld xwa, (xwa + 16)
-	call (xwa)
-	inc 8, xsp
-	ld (xiz + 20), hl
-	ld xwa, (xsp + 10)
-	ld (xwa + 6), hl
-	cpw (xiz + 20), 0x0
-	jr z, SeqStep_FileIoSetSuccess
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	bitm 1, (xwa + 2)
-	jr z, SeqStep_FileIoSetSuccess
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xsp + 18)
-	push xwa
-	ld xwa, (xsp + 18)
-	ld xwa, (xwa + 10)
-	ld xwa, (xwa + 16)
-	call (xwa)
-	inc 8, xsp
-	ld (xiz + 20), hl
-	ld xwa, (xsp + 10)
-	ld (xwa + 6), hl
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	resm 1, (xwa + 2)
-
-SeqStep_FileIoSetSuccess:
-	ldw (xsp + 4), 0x1
-	jr SeqStep_FileIoRetryCheck
-
-SeqStep_FileIoRetryLoop:
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	ld xwa, (xwa + 26)
-	ld wa, (xwa + 48)
-	extz xwa
-	add (xsp + 14), xwa
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xsp + 18)
-	push xwa
-	ld xwa, (xsp + 18)
-	ld xwa, (xwa + 10)
-	ld xwa, (xwa + 16)
-	call (xwa)
-	inc 8, xsp
-	ld (xiz + 20), hl
-	ld xwa, (xsp + 10)
-	ld (xwa + 6), hl
-
-SeqStep_FileIoRetryCheck:
-	cpw (xiz + 20), 0x0
-	jr z, SeqStep_FileIoSetupResult
-	ld wa, (xsp + 22)
-	bit 2, a
-	jr z, SeqStep_FileIoSetupResult
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	ld xwa, (xwa + 26)
-	ld a, (xwa + 58)
-	extz wa
-	ld bc, (xsp + 4)
-	incw 1, (xsp + 4)
-	cp bc, wa
-	jr lt, SeqStep_FileIoRetryLoop
-
-SeqStep_FileIoSetupResult:
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 18)
-	ld xwa, (xwa + 26)
-	ld xwa, (xwa + 12)
-	ld (xiz + 8), xwa
-	cpw (xiz + 20), 0x0
-	jr nz, SeqStep_FileIoClearStatus
-	ld wa, (xsp + 22)
-	res 5, wa
-	set 0, wa
-	ld (xiz + 22), a
-	ldw (xiz + 18), 0x14
-	ldw wa, 0x14
-	bit 15, wa
-	jr z, SeqStep_FileIoSetFlag
-	ld (0x03e3e0:24), 0x01
-
-SeqStep_FileIoSetFlag:
-	ld xhl, xiz
-
-SeqStep_FileIoPopReturn:
-	pop xiz
-	inc 2, xsp
-	ret
-
-SeqStep_FileIoClearStatus:
-	ld (xiz + 22), 0x0
-	ld xwa, (xsp + 10)
-	ld bc, (xiz + 20)
-	ld (xwa + 6), bc
-	jrl SeqStep_FileIoLoop
+SeqStep_FileIoCheck:	.include "includes/generated/cc900/SeqStep_FileIoCheck.s"	; C: cc900/smf_event_processor_m238_xr_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileIoProcess, SeqStep_FileIoCheck + 20
+	.set	SeqStep_FileIoAdvance, SeqStep_FileIoCheck + 60
+	.set	SeqStep_FileIoDone, SeqStep_FileIoCheck + 90
+	.set	SeqStep_FileIoReturn, SeqStep_FileIoCheck + 106
+	.set	SeqStep_FileIoError, SeqStep_FileIoCheck + 132
+	.set	SeqStep_FileIoCleanup, SeqStep_FileIoCheck + 143
+	.set	SeqStep_FileIoExit, SeqStep_FileIoCheck + 153
+	.set	SeqStep_FileIoComplete, SeqStep_FileIoCheck + 171
+	.set	SeqStep_FileIoFinal, SeqStep_FileIoCheck + 196
+	.set	SeqStep_FileIoUpdate, SeqStep_FileIoCheck + 211
+	.set	SeqStep_FileIoStore, SeqStep_FileIoCheck + 240
+	.set	SeqStep_FileIoValidate, SeqStep_FileIoCheck + 258
+	.set	SeqStep_FileIoLoop, SeqStep_FileIoCheck + 271
+	.set	SeqStep_FileIoLoopReturn, SeqStep_FileIoCheck + 276
+	.set	SeqStep_FileIoSetSuccess, SeqStep_FileIoCheck + 406
+	.set	SeqStep_FileIoRetryLoop, SeqStep_FileIoCheck + 413
+	.set	SeqStep_FileIoRetryCheck, SeqStep_FileIoCheck + 459
+	.set	SeqStep_FileIoSetupResult, SeqStep_FileIoCheck + 498
+	.set	SeqStep_FileIoSetFlag, SeqStep_FileIoCheck + 551
+	.set	SeqStep_FileIoPopReturn, SeqStep_FileIoCheck + 553
+	.set	SeqStep_FileIoClearStatus, SeqStep_FileIoCheck + 557
 
 SeqStep_FileBufferSetup:	.include "includes/generated/cc900/SeqStep_FileBufferSetup.s"	; C: cc900/smf_event_processor_m238_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -4660,44 +4439,13 @@ SeqStep_FileSectorPopReturn_Epilogue:
 ; the FAT with Fat_ReadEntry while each next cluster is the current one + 1 and
 ; not above (volume +36) - 8; the length of that contiguous run is stored in
 ; word +44 and returned in HL (0 for an empty file, first cluster 0).
-Fat_CountContiguousClusters:
-	dec	4, xsp
-	push	xiz
-	ld	xiz, (xsp+12)
-	ld	xwa, (xiz+30)
-	ld	wa, (xwa+36)
-	dec	8, wa
-	ld	(xsp+6), wa
-	ld	wa, (xiz+42)
-	ld	(xsp+4), wa
-	cpw	(xsp+4), 0
-	jr	nz, Fat_CountContiguousClusters_NonEmpty
-	ldw (xiz+44), 0
-	ld	hl, 0:i3
-	jr	Fat_CountContiguousClusters_Return
-Fat_CountContiguousClusters_NonEmpty:
-	ldw	(xiz+44), 1
-	jr	Fat_CountContiguousClusters_ReadFat
-Fat_CountContiguousClusters_Next:
-	incw	1, (xsp+4)
-	ld	wa, (xsp+4)
-	cp	wa, hl
-	jr	nz, Fat_CountContiguousClusters_Done
-	incw	1, (xiz+44)
-Fat_CountContiguousClusters_ReadFat:
-	pushm	(xsp+4)
-	push	xiz
-	calr	Fat_ReadEntry
-	inc	6, xsp
-	ld	wa, hl
-	cp	wa, (xsp+6)
-	jr	ule, Fat_CountContiguousClusters_Next
-Fat_CountContiguousClusters_Done:
-	ld	hl, (xiz+44)
-Fat_CountContiguousClusters_Return:
-	pop	xiz
-	inc	4, xsp
-	ret
+Fat_CountContiguousClusters:	.include "includes/generated/cc900/Fat_CountContiguousClusters.s"	; C: cc900/smf_event_processor_m238_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Fat_CountContiguousClusters_NonEmpty, Fat_CountContiguousClusters + 39
+	.set	Fat_CountContiguousClusters_Next, Fat_CountContiguousClusters + 46
+	.set	Fat_CountContiguousClusters_ReadFat, Fat_CountContiguousClusters + 59
+	.set	Fat_CountContiguousClusters_Done, Fat_CountContiguousClusters + 75
+	.set	Fat_CountContiguousClusters_Return, Fat_CountContiguousClusters + 78
 ; Fat_AllocateClusters: Fat_AllocateClusters(file, zero, count): finds `count` free clusters (Fat_ReadEntry == 0),
 ;   searching up from the file's cluster word +42 to the volume's cluster limit (vol +54) and then from 2; marks each
 ;   end-of-chain (vol +36), links it after the previous one (or sets the first cluster +69), and when `zero` is set

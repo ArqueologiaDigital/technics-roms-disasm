@@ -1,0 +1,9 @@
+file	set	function	bytes	verdict
+sub_F_ra11	Xr	DSP_TuneOffset	305	MATCH
+sub_F_ra12	Xr	DSP_TuneOffset	305	MATCH
+sub_F_ra13	Xr	DSP_TuneOffset	305	DIFF at +8
+sub_F_ra14	Xr	DSP_TuneOffset	305	MATCH
+sub_F_rb15	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +13
+sub_F_rb16	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb17	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +13
+sub_F_rb18	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +13

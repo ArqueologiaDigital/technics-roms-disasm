@@ -6,57 +6,75 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
-/* cc900-module: FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_ValidateOpcode FDC_WaitReady */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-extern unsigned char __near FDC_CMD_OPCODE;
-extern unsigned char FDC_ValidateOpcode();
-extern unsigned char __near FDC_RESULT[];
-extern unsigned char __near ram_8a64;
-extern unsigned char FDC_Set_Status(int);
-extern unsigned char FDC_Exception_Status_Decoder(void);
+extern unsigned char __near FDC_ERROR_CODE;
+extern volatile unsigned char __near FDC_CMD_OPCODE;
+extern unsigned char __near FDC_HEAD;
+extern unsigned char __near FDC_DRIVE;
+extern void FDC_WaitReady(void);
+extern unsigned char FDC_ValidateOpcode(void);
+extern void FDC_SendAuxCmd(int);
+extern void FDC_SendAuxCmdReadResult(int);
+extern void FDC_SendCommandByte(int);
+extern void FDC_SendParameterByte(int);
+extern void FDC_SendParams_Specify(void);
+extern void FDC_SendParams_Format(void);
+extern void FDC_SendParam_SeekTrack(void);
+extern void FDC_SendParams_ReadWrite(void);
+extern void FDC_CMD_SEND(unsigned char c);
 
-unsigned char FDC_ValidateOpcode()
+void FDC_CMD_SEND(unsigned char c)
 {
-    unsigned char t;
-    switch (FDC_CMD_OPCODE) {
-    case 53:
+    unsigned char hi, lo, t;
+    FDC_WaitReady();
+    if (FDC_ERROR_CODE != 0) return;
+    FDC_CMD_OPCODE = c;
+    if (FDC_ValidateOpcode() != 0) return;
+    switch (c) {
     case 71:
+    case 53:
+    case 54:
+        FDC_SendAuxCmd(c);
+        return;
     case 52:
     case 51:
-    case 79:
-        return 0;
+        FDC_SendAuxCmdReadResult(c);
+        return;
     default:
-        t = FDC_CMD_OPCODE & 31;
-        if (t == 30 || t == 29 || t == 25 || (t != 16 && (t == 17 || (t <= 15 && t >= 2)))) return 0;
-        return 1;
+        break;
     }
-}
-
-unsigned char FDC_Exception_Status_Decoder(void)
-{
-	unsigned char *r = FDC_RESULT;
-	unsigned char c = r[1];
-
-	switch (c & 0xc0) {
-	case 0:
-		return 0;
-	case 0xc0:
-		ram_8a64 = 255;
-		return 0;
-	case 0x80:
-		return 0;
-	case 0x40:
-		if (c & 8) return 0x31;
-		if (c & 0x10) return 0x32;
-		c = r[2];
-		if (c & 1) return FDC_Set_Status(0x35);
-		if (c & 2) return FDC_Set_Status(0x2f);
-		if (c & 4) return FDC_Set_Status(0x33);
-		if (c & 0x10) return FDC_Set_Status(0x34);
-		if (c & 0x20) return FDC_Set_Status(0x36);
-		if (c & 0x80) return FDC_Set_Status(0x37);
-		return FDC_Set_Status(8);
-	default:
-		return 8;
-	}
+    if ((unsigned char)(c & 0xef) == 79) {
+        FDC_SendAuxCmdReadResult(c);
+        return;
+    }
+    if ((c & 15) == 14 || (c & 15) == 11) {
+        FDC_SendAuxCmdReadResult(c);
+        return;
+    }
+    FDC_SendCommandByte(c);
+    if (FDC_ERROR_CODE != 0) return;
+    if (c == 8) return;
+    if (c == 3) {
+        FDC_SendParams_Specify();
+        return;
+    }
+    hi = (FDC_HEAD & 1) << 2;
+    lo = FDC_DRIVE & 3;
+    t = hi | lo;
+    FDC_SendParameterByte(hi | 1);
+    switch (c) {
+    case 74:
+    case 4:
+    case 7:
+        return;
+    case 77:
+        FDC_SendParams_Format();
+        return;
+    case 15:
+        FDC_SendParam_SeekTrack();
+        return;
+    default:
+        FDC_SendParams_ReadWrite();
+    }
 }

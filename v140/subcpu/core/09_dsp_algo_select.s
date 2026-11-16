@@ -26,28 +26,10 @@ DSP_AlgoSelect:	.include "includes/generated/cc900/DSP_AlgoSelect.s"	; C: cc900/
 ; Input XDE = destination buffer.  Calls ToneDB_Find_ToneRecord (0x03206F) and copies the
 ; first 0x11 bytes of the returned buffer into the caller's buffer.  Callers: 0x031847 and
 ; AUDIO_PROCESS_DSP at 0x035CB8.
-DSP_MixSendConfig:
-	push xiz
-	ld xiz, xde
-	call ToneDB_Find_ToneRecord
-	ld xbc, xhl
-	ldw hl, 0x11
-	ld de, 0:i3
-	cp de, hl
-	jr nc, DSP_MixSendConfig_Return
-
-; 0x11-byte post-increment copy loop.
-DSP_MixSendConfig_CopyLoop:
-	ld A, (xbc+)
-	ld (xiz+), a
-	inc 1, de
-	cp de, hl
-	jr c, DSP_MixSendConfig_CopyLoop
-
-; Restore XIZ and return.
-DSP_MixSendConfig_Return:
-	pop xiz
-	ret
+DSP_MixSendConfig:	.include "includes/generated/cc900/DSP_MixSendConfig.s"	; C: cc900/dsp_algo_select_l_16a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_MixSendConfig_CopyLoop, DSP_MixSendConfig + 18
+	.set	DSP_MixSendConfig_Return, DSP_MixSendConfig + 30
 
 ; ----------------------------------------------------------------------------
 ; DSP_RouteCoeffs_TypeA - Route DSP coefficients via type-A table

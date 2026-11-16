@@ -552,14 +552,7 @@ SndParam_ReadRegAddress:
 	and	wa, 0x1ff
 	ld	hl, wa
 	ret
-SndParam_ResetDefaultTable:
-	ld	xiy, SndParam_ClearRecordTemplate
-	ld	xix, 0x9638
-	ld	bc, 6:i3
-	ldirw
-	lda	xhl, (0x9638:16)
-	ldw	(xhl), 0xffff
-	ret
+SndParam_ResetDefaultTable:	.include "includes/generated/cc900/SndParam_ResetDefaultTable.s"	; C: cc900/sndparam_routines_m0_xr.c
 SndParam_RegisterEntry_Data:
 	lda	xsp, (xsp-10)
 	push	xiz
@@ -2588,39 +2581,14 @@ SndParam_Widget1_CallType4:
 SndParam_Widget1_Done:
 	pop	xiz
 	ret
-SndParam_BinarySearch:
-	ld	iy, 0:i3
-	ld	ix, de
-	sub	ix, 1
-	jr	c, SndParam_BinarySearch_Skip3
-SndParam_BinarySearch_Loop:
-	ld	hl, iy
-	add	hl, ix
-	srl	hl, 1
-	ld	de, hl
-	extz	xde
-	add	xde, xbc
-	ld	e, (xde)
-	cp	a, e
-	jr	nz, SndParam_BinarySearch_Skip
-	ld	hl, 0:i3
-	ret
-SndParam_BinarySearch_Skip:
-	cp	a, e
-	jr	ule, SndParam_BinarySearch_Skip2
-	ld	iy, hl
-	inc	1, iy
-	jr	SndParam_BinarySearch_Join
-SndParam_BinarySearch_Skip2:
-	ld	ix, hl
-	dec	1, ix
-SndParam_BinarySearch_Join:
-	cp	iy, ix
-	jr	ule, SndParam_BinarySearch_Loop
-SndParam_BinarySearch_Skip3:
-	ldw	hl, 0xffff
-SndParam_WidgetNotifyType1_Skip3_Part:
-	ret
+SndParam_BinarySearch:	.include "includes/generated/cc900/SndParam_BinarySearch.s"	; C: cc900/sndparam_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_BinarySearch_Loop, SndParam_BinarySearch + 10
+	.set	SndParam_BinarySearch_Skip, SndParam_BinarySearch + 32
+	.set	SndParam_BinarySearch_Skip2, SndParam_BinarySearch + 42
+	.set	SndParam_BinarySearch_Join, SndParam_BinarySearch + 46
+	.set	SndParam_BinarySearch_Skip3, SndParam_BinarySearch + 50
+	.set	SndParam_WidgetNotifyType1_Skip3_Part, SndParam_BinarySearch + 53
 SndParam_EncodeAddress:	.include "includes/generated/cc900/SndParam_EncodeAddress.s"	; C: cc900/sndparam_routines.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	UIState_CheckAndRenderBitmap_Helper_Helper, SndParam_EncodeAddress + 0

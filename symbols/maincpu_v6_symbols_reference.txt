@@ -52199,7 +52199,7 @@ CheckVoiceReuse_SetByteFF 00FE8286
 CheckVoiceReuse_SetByteFF2 00FE828A
 CheckVoiceReuse_Block 00FE828E
 NoteMap_GetVoiceData_Return 00FE82A1
-NoteMap_GetVoiceData_Entry 00FE82A2
+Harmony_FindReferenceNote 00FE82A2
 GetVoiceData_Entry_LoopBody 00FE82C4
 GetVoiceData_Entry_LoopCheck 00FE82EC
 GetVoiceData_Entry_Compare 00FE82F2

@@ -1,0 +1,24 @@
+function	bytes	matches	best_diff
+Algo_SubTable_Bit15Dispatch	241	-	+74 sub_D_12b@Xr
+Algo_SubTable_DispatchB	184	-	+48 sub_D_12b@Xr
+Algo_SubTable_DispatchC	203	-	+51 sub_D_12b@Xr
+AudioChannel_Dispatch	274	-	+2 sub_B_12b@Xr
+AudioMod_Apply_Slot_Field29	0	-	to_llvm cannot translate a line
+AudioMod_Apply_Slot_Field2A	0	-	to_llvm cannot translate a line
+Audio_Cmd_ToneEdit_Dispatch	621	-	+11 sub_C_12a@Xr
+DSP_AlgoType_Dispatch1	457	-	+0 sub_D_12c@Xr
+DSP_AlgoType_Dispatch2	427	-	+0 sub_D_12c@Xr
+DSP_BytecodeInterpreter_Init	1942	-	+112 sub_E_12b@Xr
+DSP_PerParameterTranslator	1144	-	+104 sub_E_12b@Xr
+DSP_VoiceCoeffRoute2	428	-	+2 sub_D_12c@Xr
+Pitch_Get_Patch_Octave_Shift	79	-	+43 sub_A_12c@Xr
+TVF_BuildEmit_Short_Dispatch	102	-	+35 sub_A_12c@Xr
+TVF_Build_Dispatch	62	-	+32 sub_A_12c@Xr
+TVF_Emit_Registers	328	-	+1 sub_A_12c@Xr
+TVF_Emit_Registers_Type2	328	-	+1 sub_A_12c@Xr
+VoiceParam_CustomTone_Apply_Catalog94	128	sub_C_12b@Xr sub_C_12c@Xr	
+VoiceParam_Set_Tone_Option	187	-	+8 sub_C_12c@Xr
+Voice_Calc_LevelPair_EGB	309	sub_B_12a@Xr sub_B_12b@Xr	
+Voice_Calc_LevelPair_EGC	308	-	+29 sub_B_12b@Xr
+Voice_Calc_LevelPair_FixedAtk	312	-	+111 sub_B_12b@Xr
+Voice_ComputePitch_Mono	260	sub_B_12a@Xr sub_B_12b@Xr	

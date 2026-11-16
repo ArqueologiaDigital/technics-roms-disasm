@@ -7,24 +7,10 @@
 ; and display flushing for sound editing screens.
 ; =============================================================================
 
-SeMenu_SendEvent:
-	dec 2, xsp
-	ld (xsp), c
-	cp (xsp), 0x0
-	jr nz, SeMenu_SendEvent_Indirect
-	extz wa
-	call UI_ChangeTitleByIndex
-	jr SeMenu_SendEvent_StoreAndReturn
-
-SeMenu_SendEvent_Indirect:
-	call UI_PostRefreshEvent
-
-SeMenu_SendEvent_StoreAndReturn:
-	ld a, (xsp)
-	extz wa
-	calr SeMenu_StoreEventId
-	inc 2, xsp
-	ret
+SeMenu_SendEvent:	.include "includes/generated/cc900/SeMenu_SendEvent.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SendEvent_Indirect, SeMenu_SendEvent + 17
+	.set	SeMenu_SendEvent_StoreAndReturn, SeMenu_SendEvent + 21
 
 SeMenu_LoadRawAddr:
 	ld	(xwa), (ACTIVE_TITLE)	; v10/v9: (0x8d38)
@@ -1101,53 +1087,14 @@ SeMenu_PartMask_Data:
 ;   0x65E), then sends the new mask (as edit element 17, or display object 13 when the object entry is non-zero); A
 ;   outside 1..4 does nothing. Basis: callers + body -- SeMenuTitleFunc_DispatchSwitch and SeTonTon1_OnColumn1 test
 ;   SeMenu_IsPartEnabled and call it with C = 0 to turn an enabled part off or C = 1 to turn a disabled one on.
-SeMenu_SetPartEnabled:
-	dec	8, xsp
-	ld	(xsp+4), c
-	ld	(xsp+6), a
-	cp	(xsp+6), 1
-	jr	c, SeMenu_SetPartEnabled_Skip
-	cp	(xsp+6), 4
-	jr	ule, SeMenu_SetPartEnabled_Skip2
-SeMenu_SetPartEnabled_Skip:
-	jr	SeMenu_PartMask_Data_Code_Epilogue
-SeMenu_SetPartEnabled_Skip2:
-	lda	xwa, (xsp)
-	calr	SeMenu_LoadObjEntries
-	ld	a, (xsp+6)
-	add	a, (xsp+6)
-	dec	2, a
-	ld	c, a
-	extz	bc
-	ld	wa, 1:i3
-	calr	SeMenu_BitShiftMask
-	cp	(xsp+4), 0
-	jr	nz, SeMenu_PartMask_Data_Code_Skip
-	ld	a, l
-	cpl	a
-	and	(SEMENU_PART_MASK:16), a
-	jr	SeMenu_SetPartEnabled_Join
-SeMenu_PartMask_Data_Code_Skip:
-	or	(SEMENU_PART_MASK:16), l
-SeMenu_SetPartEnabled_Join:
-	ld	(xsp+2), (SEMENU_PART_MASK)
-	extz	hl
-	lda	xde, (xsp+2)
-	cp	(xsp), 0
-	jr	nz, SeMenu_PartMask_Data_Code_Skip2
-	pushw	hl
-	ld	wa, 0:i3
-	ldw	bc, 17
-	calr	SeMenu_RegisterElement_Extended
-	jr	SeMenu_PartMask_Data_Code_Epilogue
-SeMenu_PartMask_Data_Code_Skip2:
-	pushw	hl
-	ld	wa, 0:i3
-	ldw	bc, 13
-	calr	SeMenu_SetupDisplayObject_Alt1
-SeMenu_PartMask_Data_Code_Epilogue:
-	inc	8, xsp
-	ret
+SeMenu_SetPartEnabled:	.include "includes/generated/cc900/SeMenu_SetPartEnabled.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetPartEnabled_Skip, SeMenu_SetPartEnabled + 20
+	.set	SeMenu_SetPartEnabled_Skip2, SeMenu_SetPartEnabled + 22
+	.set	SeMenu_PartMask_Data_Code_Skip, SeMenu_SetPartEnabled + 60
+	.set	SeMenu_SetPartEnabled_Join, SeMenu_SetPartEnabled + 64
+	.set	SeMenu_PartMask_Data_Code_Skip2, SeMenu_SetPartEnabled + 90
+	.set	SeMenu_PartMask_Data_Code_Epilogue, SeMenu_SetPartEnabled + 99
 
 SeMenu_IsPartEnabled:
 	cp a, 1:i3
@@ -1411,23 +1358,10 @@ SeMenu_StepParamFieldSigned_Join4:
 ; SeMenu_ToggleSolo: Toggles the sound-editor SOLO flag (RAM 0x65C), re-sends the per-part level (code 0x17, only the
 ;   edited part non-zero while SOLO is on) and redraws the SOLO button. Basis: callers + body -- every page's
 ;   OnSideRow1 handler calls it on press (A != 0).
-SeMenu_ToggleSolo:
-	dec	2, xsp
-	lda	xwa, (xsp)
-	calr	SeMenu_SetupMenuDisplay_Finalize
-	cp	(xsp), 0
-	jr	z, SeMenu_ToggleSolo_Skip7
-	ld	wa, 0:i3
-	jr	SeMenu_ToggleSolo_Join5
-SeMenu_ToggleSolo_Skip7:
-	ld	wa, 1:i3
-SeMenu_ToggleSolo_Join5:
-	calr	SeMenu_SetupMenuDisplay_Section3_End
-	ld	wa, 1:i3
-	calr	SeMenu_SetupMenuDisplay
-	call	SeMenu_DrawSoloButton
-	inc	2, xsp
-	ret
+SeMenu_ToggleSolo:	.include "includes/generated/cc900/SeMenu_ToggleSolo.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_ToggleSolo_Skip7, SeMenu_ToggleSolo + 16
+	.set	SeMenu_ToggleSolo_Join5, SeMenu_ToggleSolo + 18
 ; SeMenu_SetFilterType: Sets the filter type: sends the low-3-bit field (code 54, mask 7) of A for the selected part
 ;   to the tone generator and keeps A in RAM 0x68C; returns HL = 0. Basis: callers + body -- each
 ;   SeFil<type>1_OnSideRow4 passes edit byte 0 with its own type number in bits 0-2.
@@ -1754,30 +1688,11 @@ SeMenu_StepParamFieldAndSend_Epilogue2:
 ; SeMenu_SelectPartIfEnabled: Makes part A (1..4) the sound editor's current part (RAM 0x65D) when it is enabled and
 ;   not already current; L = 1 if it changed, else 0. Basis: callers + body -- every Se*_OnSideRow2..5 handler passes
 ;   its row's part (1..4) and sends the page's redraw event only when L = 1.
-SeMenu_SelectPartIfEnabled:
-	dec	4, xsp
-	ld	(xsp+2), a
-	lda	xwa, (xsp)
-	calr	SeMenu_ValidatePartNumber
-	ld	a, (xsp)
-	cp	a, (xsp+2)
-	jr	z, SeMenu_SelectPartIfEnabled_Skip21
-	ld	a, (xsp+2)
-	extz	wa
-	calr	SeMenu_IsPartEnabled
-	cp	hl, 0:i3
-	jr	nz, SeMenu_SelectPartIfEnabled_Skip22
-SeMenu_SelectPartIfEnabled_Skip21:
-	ld	l, 0:opc
-	jr	SeMenu_SelectPartIfEnabled_Epilogue3
-SeMenu_SelectPartIfEnabled_Skip22:
-	ld	a, (xsp+2)
-	extz	wa
-	calr	SeMenu_SetCurrentPart
-	ld	l, 1:opc
-SeMenu_SelectPartIfEnabled_Epilogue3:
-	inc	4, xsp
-	ret
+SeMenu_SelectPartIfEnabled:	.include "includes/generated/cc900/SeMenu_SelectPartIfEnabled.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SelectPartIfEnabled_Skip21, SeMenu_SelectPartIfEnabled + 29
+	.set	SeMenu_SelectPartIfEnabled_Skip22, SeMenu_SelectPartIfEnabled + 33
+	.set	SeMenu_SelectPartIfEnabled_Epilogue3, SeMenu_SelectPartIfEnabled + 43
 ; SeMenu_CyclePartLfoState: LFO pages: cycles part C's (1..4) LFO byte (page param C+4) off -> on (bit 5, bits 6-7 =
 ;   the kind's current number - 1) -> on + bit 4 -> off, then redraws and stores it; WA = 0 amp, 1 pitch, 2 filter.
 ;   Basis: callers + body -- only SeAmpLfo1/SePitLfo1/SeFilLfo1 OnSideRow2..5 call it, with WA = page kind and C =
@@ -1958,20 +1873,7 @@ SeCtr2_StepPartField_Epilogue5:
 	lda	xsp, (xsp+12)
 	ret
 
-SeMenu_InitObjEntry:
-	dec 2, xsp
-	push xiz
-	ld xiz, xwa
-	lda xwa, (xsp + 4)
-	calr SeMenu_ValidatePartNumber
-	ld a, (xsp + 4)
-	ld (xiz), a
-	sll a, 4
-	ld (xiz), a
-	incm8 1, (xiz)
-	pop xiz
-	inc 2, xsp
-	ret
+SeMenu_InitObjEntry:	.include "includes/generated/cc900/SeMenu_InitObjEntry.s"	; C: cc900/semenu_routines_m129.c
 
 SeMenu_ReadObjData:
 	ldmi16 (xwa), 0x693
@@ -2350,23 +2252,7 @@ SeMenu_PostEditUpDownSet_Skip:
 ; SeMenu_BindDialToColumn: Points the dial at sound-editor column A (1..8): posts EVT_VALEN_SET(1),
 ;   EVT_EDIT_UP_SET(A-1) and EVT_EDIT_DOWN_SET((A-1)|0x80). Basis: callers + body -- every SeXxx_OnColumnN handler
 ;   ends with `ld wa, N` + this call.
-SeMenu_BindDialToColumn:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	wa, 1:i3
-	calr	SeMenu_PostDialEnable
-	ld	c, (xsp)
-	extz	bc
-	ld	wa, 0:i3
-	ld	de, 0:i3
-	calr	SeMenu_PostEditUpDownSet
-	ld	c, (xsp)
-	extz	bc
-	ld	wa, 1:i3
-	ldw	de, 128
-	calr	SeMenu_PostEditUpDownSet
-	inc	2, xsp
-	ret
+SeMenu_BindDialToColumn:	.include "includes/generated/cc900/SeMenu_BindDialToColumn.s"	; C: cc900/semenu_routines_m129.c
 ; SeMenu_SwitchToValueStep: Writes the signed value step for a column switch to (XBC) (edit-descriptor byte +10): +1
 ;   when A's bits 0-6 are 0 (first bank), -1 otherwise, tripled when A bit 7 is set (switches 17..24). Basis: callers
 ;   + body -- the OnColumn handlers fill the descriptor's mask/shift/max/min (+6..+9) and pass their bank byte A from
@@ -3614,22 +3500,7 @@ SeMenu_ApplyPartEdit_AltStore_Join22:
 ;   12 through 0, 1, 3 (up for a first-bank switch, down otherwise) via SeCtr2_StepPartField, then posts dial
 ;   events with SeMenu_BindDialToColumn(A+4). Basis: callers + body -- only SeCtr2_OnColumn5..8 call it, passing
 ;   part 1..4 in WA and the bank byte in C.
-SeCtr2_OnPartColumn:
-	dec	2, xsp
-	ld	(xsp), a
-	res	7, c
-	cp	c, 0:i3
-	scc	nz, c
-	ld	a, (xsp)
-	extz	wa
-	extz	bc
-	calr	SeCtr2_StepPartField
-	ld	a, (xsp)
-	inc	4, a
-	extz	wa
-	calr	SeMenu_BindDialToColumn
-	inc	2, xsp
-	ret
+SeCtr2_OnPartColumn:	.include "includes/generated/cc900/SeCtr2_OnPartColumn.s"	; C: cc900/semenu_routines_m129.c
 SeMenu_DrawAmpEnvGraph:
 	lda	xsp, (xsp-22)
 	push	xiz

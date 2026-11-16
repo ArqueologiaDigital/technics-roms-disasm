@@ -686,108 +686,12 @@ DrawText_LayoutAndRender_Variant1_Skip5:
 	pop	xiz
 	lda	xsp, (xsp+274)
 	ret
-SeGfx_StaticOp00_Line:
-	dec	8, xsp
-	ld	xde, xwa
-	lda	xwa, (xsp+4)
-	ld	bc, (xde+2)
-	ld	(xwa), bc
-	ld	bc, (xde+4)
-	ld	(xwa+2), bc
-	lda	xbc, (xsp)
-	ld	hl, (xde+6)
-	ld	(xbc), hl
-	ld	de, (xde+8)
-	ld	(xbc+2), de
-	ld	de, (GFX_FG_COLOR:24)
-	calr	DrawLineWithMode
-	inc	8, xsp
-	ret
-SeGfx_StaticOp01_Line:
-	dec	8, xsp
-	ld	xde, xwa
-	lda	xwa, (xsp+4)
-	ld	bc, (xde+2)
-	ld	(xwa), bc
-	ld	bc, (xde+4)
-	ld	(xwa+2), bc
-	lda	xbc, (xsp)
-	ld	hl, (xde+6)
-	ld	(xbc), hl
-	ld	de, (xde+8)
-	ld	(xbc+2), de
-	ld	de, (GFX_FG_COLOR:24)
-	calr	DrawLineWithMode
-	inc	8, xsp
-	ret
-SeGfx_StaticOp02_Line:
-	dec	8, xsp
-	ld	xde, xwa
-	lda	xwa, (xsp+4)
-	ld	bc, (xde+2)
-	ld	(xwa), bc
-	ld	bc, (xde+4)
-	ld	(xwa+2), bc
-	lda	xbc, (xsp)
-	ld	hl, (xde+6)
-	ld	(xbc), hl
-	ld	de, (xde+8)
-	ld	(xbc+2), de
-	ld	de, (GFX_FG_COLOR:24)
-	calr	DrawLineWithMode
-	inc	8, xsp
-	ret
-SeGfx_StaticOp11_DottedLine:
-	dec	8, xsp
-	ld	xde, xwa
-	lda	xwa, (xsp+4)
-	ld	bc, (xde+2)
-	ld	(xwa), bc
-	ld	bc, (xde+4)
-	ld	(xwa+2), bc
-	lda	xbc, (xsp)
-	ld	hl, (xde+6)
-	ld	(xbc), hl
-	ld	de, (xde+8)
-	ld	(xbc+2), de
-	ld	de, (GFX_FG_COLOR:24)
-	calr	DrawDottedLineWithMode
-	inc	8, xsp
-	ret
-SeGfx_StaticOp12_DottedLine:
-	dec	8, xsp
-	ld	xde, xwa
-	lda	xwa, (xsp+4)
-	ld	bc, (xde+2)
-	ld	(xwa), bc
-	ld	bc, (xde+4)
-	ld	(xwa+2), bc
-	lda	xbc, (xsp)
-	ld	hl, (xde+6)
-	ld	(xbc), hl
-	ld	de, (xde+8)
-	ld	(xbc+2), de
-	ld	de, (GFX_FG_COLOR:24)
-	calr	DrawDottedLineWithMode
-	inc	8, xsp
-	ret
-SeGfx_StaticOp15_DottedLine:
-	dec	8, xsp
-	ld	xde, xwa
-	lda	xwa, (xsp+4)
-	ld	bc, (xde+2)
-	ld	(xwa), bc
-	ld	bc, (xde+4)
-	ld	(xwa+2), bc
-	lda	xbc, (xsp)
-	ld	hl, (xde+6)
-	ld	(xbc), hl
-	ld	de, (xde+8)
-	ld	(xbc+2), de
-	ld	de, (GFX_FG_COLOR:24)
-	calr	DrawDottedLineWithMode
-	inc	8, xsp
-	ret
+SeGfx_StaticOp00_Line:	.include "includes/generated/cc900/SeGfx_StaticOp00_Line.s"	; C: cc900/graphics_text_vga_m273.c
+SeGfx_StaticOp01_Line:	.include "includes/generated/cc900/SeGfx_StaticOp01_Line.s"	; C: cc900/graphics_text_vga_m0.c
+SeGfx_StaticOp02_Line:	.include "includes/generated/cc900/SeGfx_StaticOp02_Line.s"	; C: cc900/graphics_text_vga_m273.c
+SeGfx_StaticOp11_DottedLine:	.include "includes/generated/cc900/SeGfx_StaticOp11_DottedLine.s"	; C: cc900/graphics_text_vga_m0.c
+SeGfx_StaticOp12_DottedLine:	.include "includes/generated/cc900/SeGfx_StaticOp12_DottedLine.s"	; C: cc900/graphics_text_vga_m0.c
+SeGfx_StaticOp15_DottedLine:	.include "includes/generated/cc900/SeGfx_StaticOp15_DottedLine.s"	; C: cc900/graphics_text_vga_m273.c
 SeGfx_StaticOp09_Box:	.include "includes/generated/cc900/SeGfx_StaticOp09_Box.s"	; C: cc900/graphics_text_vga_m273.c
 SeGfx_StaticOp0A_ShadowBox2:	.include "includes/generated/cc900/SeGfx_StaticOp0A_ShadowBox2.s"	; C: cc900/graphics_text_vga_m0.c
 SeGfx_StaticOp13_DottedBox:	.include "includes/generated/cc900/SeGfx_StaticOp13_DottedBox.s"	; C: cc900/graphics_text_vga_m0.c
@@ -1946,82 +1850,15 @@ CalcTotalWidth_FreeAndReturn:
 ; Output:
 ;   HL = character offset of the word-wrap break point
 ; =============================================================================
-WordwrapStrings:
-	lda xsp, (xsp - 22)
-	push xiz
-	ld (xsp + 16), de
-	ld (xsp + 18), xbc
-	ld (xsp + 22), xwa
-	ldw (xsp + 4), 0x0
-	ldw (xsp + 10), 0x0
-	ld xiz, (xsp + 22)
-	push xiz
-	call Strlen
-	inc 1, hl
-	pushw hl
-	call Malloc
-	inc 6, xsp
-	ld (xsp + 12), xhl
-	ld xwa, (xsp + 12)
-	ld (xsp + 6), xwa
-	cp (xiz), 0x0
-	jr z, Wordwrap_FreeAndReturn
-
-Wordwrap_ScanWordStart:
-	cp (xiz), 0x0
-	jr z, Wordwrap_CheckSpaces
-
-Wordwrap_ScanWordChars:
-	cp (xiz), 0x20
-	jr z, Wordwrap_CheckSpaces
-	inc 1, xiz
-	incw 1, (xsp + 4)
-	cp (xiz), 0x0
-	jr nz, Wordwrap_ScanWordChars
-
-Wordwrap_CheckSpaces:
-	cp (xiz), 0x0
-	jr z, Wordwrap_MeasureWidth
-
-Wordwrap_SkipSpaces:
-	cp (xiz), 0x20
-	jr nz, Wordwrap_MeasureWidth
-	inc 1, xiz
-	incw 1, (xsp + 4)
-	cp (xiz), 0x0
-	jr nz, Wordwrap_SkipSpaces
-
-Wordwrap_MeasureWidth:
-	ld xwa, (xsp + 22)
-	push xwa
-	ld xwa, (xsp + 10)
-	push xwa
-	call Strcpy
-	inc 8, xsp
-	ld xwa, (xsp + 6)
-	ld bc, (xsp + 4)
-	ld	(xwa+bc), 0x00
-	ld xwa, (xsp + 6)
-	ld xbc, (xsp + 18)
-	calr CalcTotalWidth
-	cp hl, (xsp + 16)
-	jr gt, Wordwrap_CheckEndOfString
-	ld wa, (xsp + 4)
-	ld (xsp + 10), wa
-
-Wordwrap_CheckEndOfString:
-	cp (xiz), 0x0
-	jr nz, Wordwrap_ScanWordStart
-
-Wordwrap_FreeAndReturn:
-	ld xwa, (xsp + 12)
-	push xwa
-	call Free
-	inc 4, xsp
-	ld hl, (xsp + 10)
-	pop xiz
-	lda xsp, (xsp + 22)
-	ret
+WordwrapStrings:	.include "includes/generated/cc900/WordwrapStrings.s"	; C: cc900/graphics_text_vga_m274.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Wordwrap_ScanWordStart, WordwrapStrings + 54
+	.set	Wordwrap_ScanWordChars, WordwrapStrings + 59
+	.set	Wordwrap_CheckSpaces, WordwrapStrings + 74
+	.set	Wordwrap_SkipSpaces, WordwrapStrings + 79
+	.set	Wordwrap_MeasureWidth, WordwrapStrings + 94
+	.set	Wordwrap_CheckEndOfString, WordwrapStrings + 140
+	.set	Wordwrap_FreeAndReturn, WordwrapStrings + 145
 
 ; HexDigitToValue - Convert ASCII hex digit to 4-bit value
 ; Input:  A = ASCII character ('0'-'9', 'a'-'f', 'A'-'F')

@@ -29,7 +29,9 @@ C that only V4.23 compiles can be spliced.
 With --v423 CACHE --work DIR (with --symbols), the build itself is the size source: the build's generator
 (cc900_firmware_c.py --v423, its V4.23 cache, `make` fills it) writes FILE.c's bodies into DIR, and each function is
 spliced only when its body, assembled at its address, is the built image's bytes there; the others are listed and
-left as hand assembly.  No staged_v423.tsv row is needed.
+left as hand assembly.  No staged_v423.tsv row is needed.  A function's `cc900-data:` objects (a switch's offset table)
+are checked with it, at their own labels, and spliced too: the hand data lines from the label that make up the
+object's size become `LABEL: .include "includes/generated/cc900/LABEL.s"`.
 
 The header comment above the label stays.  A function whose label line already includes its body is left alone.
 Anything else (no such label, a label inside the body, no `ret`) stops the run before any file is written.  The
@@ -174,37 +176,74 @@ def v423_sizes(tree, src, cache, work, elf, ref):
         sys.exit("%s: --v423 compares with the built image: build it first, or pass --elf" % src)
     image = os.path.join(work, os.path.basename(elf) + ".bin")
     if not os.path.exists(image) or os.path.getmtime(image) < os.path.getmtime(elf):
-        subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-objcopy"), "-O", "binary", elf, image], check=True)
-    hdr = subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-readelf"), "-l", elf], capture_output=True,
+        subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-objcopy"), "-O", "binary", "-j", ".text", elf,
+                        image], check=True)
+    hdr = subprocess.run([os.path.join(check_bytes.LLVM_BIN, "llvm-readelf"), "-S", elf], capture_output=True,
                          text=True, check=True).stdout
-    base = min(int(m.group(1), 16) for m in re.finditer(r'^\s*LOAD\s+\S+\s+(0x[0-9a-f]+)', hdr, re.M))
+    # the image is the .text section alone, based at its address (the sub-CPU payload's first LOAD segment starts
+    # at 0 with the ELF header, but .text, and so the binary, at 0x400)
+    base = int(re.search(r'\]\s+\.text\s+PROGBITS\s+([0-9a-f]+)', hdr).group(1), 16)
     data = open(image, "rb").read()
     values = {k: v for k, v in fw.merged_values(tree).items() if v is not None}
-    sizes, differ = {}, []
+    labels = fw.label_map(src)
+    owned = {}                                           # {function label: [its cc900-data labels]}
+    for cfn, objs in fw.data_map(src).items():
+        owned[labels.get(cfn, cfn)] = [objs[k] for k in sorted(objs)]
+    is_data = {d for ds in owned.values() for d in ds}
+    sizes, differ, dsizes = {}, [], {}
+    bin_ = check_bytes.LLVM_BIN
     for fn in open(stamp).read().split():
+        if fn in is_data:
+            continue                                     # checked with its function, below
         body = open(os.path.join(out, fn + ".s")).read()
-        if fn not in ref:
+        if fn not in ref or any(d not in ref for d in owned.get(fn, [])):
             differ.append(fn)
             continue
+        # the function is linked at its own address, so an absolute reference to one of its own labels (a switch's
+        # `lda xix, (base:24)`) comes out right.  A relative branch's target is placed relative to the function
+        # (llvm-mc then picks jr / jrl as in the tree); every other name gets its value from the linker.  The
+        # function's f_const objects follow it in the same unit (their entries are differences of its labels) and
+        # are compared with the image at their own labels.
+        chunks = [open(os.path.join(out, d + ".s")).read() for d in owned.get(fn, [])]
+        used = set(re.findall(r'\b[A-Za-z_]\w*\b', body + "".join(chunks))) - {fn}
         rel = set(re.findall(r'\t(?:jr|jrl|calr)\t(?:\w+,\s*)?([A-Za-z_]\w*)', body))
-        defs = []
-        for n in sorted(set(re.findall(r'\b[A-Za-z_]\w*\b', body)) - {fn}):
-            v = ref.get(n, values.get(n))
-            if v is not None:
-                defs.append("\t.set\t%s, %s\n" % (n, "%s + %d" % (fn, v - ref[fn]) if n in rel and n in ref
-                                                   else "0x%x" % v))
-        try:
-            mine = check_bytes.assemble("".join(defs) + "\t.text\n\t.globl %s\n%s:\n%s\n\t.globl __end\n__end:\n"
-                                        % (fn, fn, body))[fn]
-        except subprocess.CalledProcessError:
+        text = "".join("\t.set\t%s, %s + %d\n" % (n, fn, ref[n] - ref[fn]) for n in sorted(used & rel) if n in ref)
+        text += "\t.text\n\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:\n" % (fn, fn, body)
+        for k, c in enumerate(chunks):
+            text += "\t.globl __cc900_d%d\n__cc900_d%d:\n%s\n" % (k, k, c)
+        text += "\t.globl __cc900_dend\n__cc900_dend:\n"
+        syms = {n: ref.get(n, values.get(n)) for n in used - rel}
+        s, o, e, b = (os.path.join(out, fn + x) for x in (".check.s", ".check.o", ".check.elf", ".check.bin"))
+        open(s, "w").write(text)
+        ld = os.path.join(out, fn + ".check.ld")         # SUBALIGN(1): .text starts at the function's own address,
+        open(ld, "w").write("SECTIONS { .text 0x%x : SUBALIGN(1) { *(.text) } }\n" % ref[fn])   # odd ones too
+        ok = subprocess.run([os.path.join(bin_, "llvm-mc"), "-triple=tlcs900", "-filetype=obj", s, "-o", o],
+                            capture_output=True).returncode == 0
+        ok = ok and subprocess.run(
+            [os.path.join(bin_, "ld.lld"), "-T", ld, "-e", fn, "-o", e, o]
+            + ["--defsym=%s=0x%x" % (n, v) for n, v in sorted(syms.items()) if v is not None],
+            capture_output=True).returncode == 0
+        ok = ok and subprocess.run([os.path.join(bin_, "llvm-objcopy"), "-O", "binary", "-j", ".text", e, b],
+                                   capture_output=True).returncode == 0
+        if not ok:
             differ.append(fn)
             continue
-        at = ref[fn] - base
-        if mine == data[at:at + len(mine)]:
-            sizes[fn] = len(mine)
+        nm = subprocess.run([os.path.join(bin_, "llvm-nm"), e], capture_output=True, text=True).stdout
+        at_ = {p[2]: int(p[0], 16) - ref[fn] for p in (l.split() for l in nm.splitlines()) if len(p) == 3}
+        mine = open(b, "rb").read()
+        code = mine[:at_["__cc900_end"]]
+        good = code == data[ref[fn] - base:ref[fn] - base + len(code)]
+        dd = {}
+        for k, d in enumerate(owned.get(fn, [])):
+            lo, hi = at_["__cc900_d%d" % k], at_.get("__cc900_d%d" % (k + 1), at_["__cc900_dend"])
+            dd[d] = hi - lo
+            good = good and mine[lo:hi] == data[ref[d] - base:ref[d] - base + hi - lo]
+        if good:
+            sizes[fn] = len(code)
+            dsizes.update(dd)
         else:
             differ.append(fn)
-    return sizes, differ
+    return sizes, differ, dsizes
 
 
 def main():
@@ -224,14 +263,15 @@ def main():
     rel_c = os.path.relpath(src, tree)
     ref = sizes = None
     skip = set()                                         # --v423: functions whose body is not the image's bytes
+    dsizes = {}                                          # --v423: {cc900-data label: its size}, checked with its function
     if "--symbols" in sys.argv:                          # functions with inner labels and several rets
         import check_bytes
         ref = check_bytes.load_reference(sys.argv[sys.argv.index("--symbols") + 1])
         if "--v423" in sys.argv:                         # the build itself is the size source
             if "--work" not in sys.argv:
                 sys.exit("--v423 needs --work DIR (a scratch directory for the bodies and the image)")
-            sizes, differ = v423_sizes(tree, src, sys.argv[sys.argv.index("--v423") + 1],
-                                       sys.argv[sys.argv.index("--work") + 1], elf, ref)
+            sizes, differ, dsizes = v423_sizes(tree, src, sys.argv[sys.argv.index("--v423") + 1],
+                                               sys.argv[sys.argv.index("--work") + 1], elf, ref)
             skip = set(differ)
             if differ:
                 print("%s: not spliced, V4.23's body is not the image's bytes: %s" % (src, " ".join(differ)))
@@ -320,10 +360,14 @@ def main():
                     sys.exit("%s: %s runs past the end of the file" % (asm, name))
                 lm = LABEL_RE.match(lines[j])
                 if lm and lm.group(1).startswith(b".L"):
+                    use = rb'[\s,(]' + re.escape(lm.group(1)) + rb'(?![\w.$])'
                     if re.search(rb'[\s,(]' + re.escape(lm.group(1)) + rb'\s*[),]?\s*$', region, re.M):
                         j += 1                                   # inner (and dropped: no symbol to keep)
                         continue
-                    break                                        # it starts the next block
+                    if not any(re.search(use, l.split(b";")[0]) for l in lines[:i] + lines[nxt:]):
+                        j += 1                                   # nothing in the file uses it (a name for the reader,
+                        continue                                 # HardTestPage's .Leh_xde_09): inner too, dropped
+                    break                                        # used from outside: it starts the next block
                 if lm:
                     ln = lm.group(1).decode()
                     if ln not in ref:
@@ -336,8 +380,11 @@ def main():
                 else:
                     c = lines[j].split(b";")[0].strip()
                     if c.startswith(b".") and data_size(c) is None:
-                        sys.exit("%s:%d: inside %s's body, a directive that emits no measurable bytes or defines "
-                                 "something (%s): splice it by hand" % (asm, j + 1, name, c.split()[0].decode()))
+                        # a directive that emits no measurable bytes or defines something (.equ, .include): the scan
+                        # stops before it, and it stays where it is.  It is past the function when the lines before
+                        # it reach the compiled size (HDAE5000_Get_Init_Flag: a .equ block 30 lines after its ret);
+                        # when they do not, the size check below refuses the splice
+                        break
                 j += 1
             while j > i + 1 and not lines[j - 1].split(b";")[0].strip():   # the blank and comment lines before
                 j -= 1                                                    # the next label stay with it
@@ -382,6 +429,39 @@ def main():
             new.append(b"; the hand assembly's labels inside the compiled body, by their offsets")
             new += [b"\t.set\t%s, %s + %d" % (ln.encode(), n, off) for ln, off in inner]
         lines[i:j + 1] = new
+        done.setdefault(asm, []).append(name)
+    # the functions' f_const objects (`cc900-data: FUNCTION N = LABEL`): the hand data lines from LABEL that make up
+    # the object's size become the include of the generated object; anything else between them stops the run
+    for name, size in sorted(dsizes.items()):
+        n = name.encode()
+        asm = source_of(name)
+        lines = files[asm]
+        idx = [i for i, l in enumerate(lines) if re.match(rb'^' + re.escape(n) + rb':', l)]
+        if len(idx) != 1:
+            sys.exit("%s: %d lines define %s" % (asm, len(idx), name))
+        i = idx[0]
+        inc = b'.include "includes/generated/cc900/' + n + b'.s"'
+        if inc in lines[i]:
+            continue
+        if lines[i].split(b";")[0].strip() != n + b":":
+            sys.exit("%s:%d: %s's label line holds more than the label" % (asm, i + 1, name))
+        j, total = i, 0
+        while total < size:
+            j += 1
+            if j >= len(lines):
+                sys.exit("%s: %s runs past the end of the file" % (asm, name))
+            c = lines[j].split(b";")[0].strip()
+            if not c:
+                continue
+            k = data_size(c) if c.startswith(b".") else None
+            if k is None:
+                sys.exit("%s:%d: inside the data of %s, a line that is not a measurable data directive (%s)"
+                         % (asm, j + 1, name, c.decode("latin-1")[:60]))
+            total += k
+        if total != size:
+            sys.exit("%s: %s: no run of hand data lines from its label is %d bytes long (the compiled object)"
+                     % (asm, name, size))
+        lines[i:j + 1] = [n + b":\t" + inc + b"\t; C: " + rel_c.encode() + b" (cc900-data)"]
         done.setdefault(asm, []).append(name)
     for asm, names in sorted(done.items()):
         if not dry:

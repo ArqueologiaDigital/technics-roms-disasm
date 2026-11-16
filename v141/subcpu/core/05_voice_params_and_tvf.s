@@ -263,90 +263,12 @@ VoiceState_SwapSlot_HL_IY:
 	ld (xde), a
 	ret
 
-VoiceState_SwapSlot_Guarded:
-	dec 8, xsp
-	ld (xsp + 4), e
-	ld (xsp + 6), c
-	ld c, a
-	extz bc
-	muls bc, 0xC
-	lda xde, (9446:16)
-	exts xbc
-	add xbc, xde
-	ld (xsp), xbc
-	ld c, (xsp + 6)
-	extz bc
-	ld de, bc
-	inc 8, de
-	ld xbc, (xsp)
-	ld	e, (xbc+de)
-	ld c, e
-	cp c, 0xC0
-	jr nc, VoiceState_SwapSlot_Guarded_WriteDst
-	ld c, e
-	extz bc
-	muls bc, 0x5
-	lda xde, (8486:16)
-	lda	xix, (xde+bc)
-	cp (xix + 4), a
-	jr nz, VoiceState_SwapSlot_Guarded_WriteDst
-	ld c, (xsp + 6)
-	ld e, c
-	extz de
-	ld xbc, (xsp)
-	cp	(xbc+de), a
-	jr z, VoiceState_SwapSlot_Guarded_MarkInactive
-	ld c, (xsp + 6)
-	ld e, c
-	extz de
-	ld xbc, (xsp)
-	ld	c, (xbc+de)
-	ld (xix + 4), c
-	jr VoiceState_SwapSlot_Guarded_WriteDst
-
-VoiceState_SwapSlot_Guarded_MarkInactive:
-	ld (xix + 4), 0xFF
-
-VoiceState_SwapSlot_Guarded_WriteDst:
-	ld c, (xsp + 4)
-	extz bc
-	muls bc, 0x5
-	lda xde, (8486:16)
-	lda	xix, (xde+bc)
-	cp (xix + 4), 0x40
-	jr ule, VoiceState_SwapSlot_Guarded_UseHL_IY
-	ld (xix + 4), a
-	ld e, a
-	extz de
-	ld a, (xsp + 6)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr VoiceState_SwapSlot_DE_BC
-	jr VoiceState_SwapSlot_Guarded_Return
-
-VoiceState_SwapSlot_Guarded_UseHL_IY:
-	ld l, a
-	extz hl
-	ld a, (xsp + 6)
-	ld c, a
-	extz bc
-	ld a, (xix + 4)
-	ld e, a
-	extz de
-	ld wa, hl
-	calr VoiceState_SwapSlot_HL_IY
-
-VoiceState_SwapSlot_Guarded_Return:
-	ld a, (xsp + 6)
-	extz wa
-	ld de, wa
-	inc 8, de
-	ld xwa, (xsp)
-	ld c, (xsp + 4)
-	ld	(xwa+de), c
-	inc 8, xsp
-	ret
+VoiceState_SwapSlot_Guarded:	.include "includes/generated/cc900/VoiceState_SwapSlot_Guarded.s"	; C: cc900/voice_params_and_tvf_h_14b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceState_SwapSlot_Guarded_MarkInactive, VoiceState_SwapSlot_Guarded + 106
+	.set	VoiceState_SwapSlot_Guarded_WriteDst, VoiceState_SwapSlot_Guarded + 110
+	.set	VoiceState_SwapSlot_Guarded_UseHL_IY, VoiceState_SwapSlot_Guarded + 155
+	.set	VoiceState_SwapSlot_Guarded_Return, VoiceState_SwapSlot_Guarded + 178
 
 VoiceRow_FetchPair_WA_SP:	.include "includes/generated/cc900/VoiceRow_FetchPair_WA_SP.s"	; C: cc900/voice_params_and_tvf.c
 
@@ -1244,24 +1166,7 @@ Voice_Retire_ToFreePool_Return:
 
 Voice_Demote_Decayed:	.include "includes/generated/cc900/Voice_Demote_Decayed.s"	; C: cc900/voice_params_and_tvf_a_7c.c
 
-Voice_Reprioritise:
-	bitm 7, (xwa + 34)
-	ret nz
-	cp (xwa + 37), 0x80
-	jr c, Voice_Demote_Decayed
-	bitm 3, (xwa + 34)
-	ret z
-	resm 3, (xwa + 34)
-	setm 2, (xwa + 34)
-	ld c, (xwa + 38)
-	ld e, c
-	extz de
-	ld xbc, xwa
-	ld xhl, (xwa + 29)
-	ld xwa, xbc
-	ld xbc, xhl
-	calr Voice_List_MoveToPool
-	ret
+Voice_Reprioritise:	.include "includes/generated/cc900/Voice_Reprioritise.s"	; C: cc900/voice_params_and_tvf_a_7b_modjump.c
 
 Voice_Reset_Engine:
 	dec 4, xsp
@@ -2068,38 +1973,12 @@ VoiceSlot_NoteOff:	.include "includes/generated/cc900/VoiceSlot_NoteOff.s"	; C: 
 ; (node+0x24) - the hardware voice index - for every node whose (node+0x23) equals E
 ; (or for all nodes when the flag is non-zero). Terminates the buffer with 0xFF.
 ; 'retd 2' pops the stacked argument. Called only from NoteOn_RoutePacket.
-OutputBuf_Flush_A:
-	ld xhl, xbc
-	or xhl, xhl
-	jr z, OutputBuf_Flush_A_Done
-	ld xiy, xhl
-
-; Chain walk: emit unconditionally when the flag is set, otherwise only when (node+0x23) == E.
-OutputBuf_Flush_A_Loop:
-	cp (xsp + 4), 0x0
-	jr nz, OutputBuf_Flush_A_Emit
-	cp (xiy + 35), e
-	jr nz, OutputBuf_Flush_A_Next
-
-; Append (node+0x24) at the cursor and advance the cursor by one.
-OutputBuf_Flush_A_Emit:
-	ld xix, (xwa)
-	ld c, (xiy + 36)
-	ld (xix), c
-	ld xbc, 1:i3
-	add (xwa), xbc
-
-; Follow (node+0x08); stop when the walk wraps to the head.
-OutputBuf_Flush_A_Next:
-	ld xiy, (xiy + 8)
-	cp xiy, xhl
-	jr nz, OutputBuf_Flush_A_Loop
-
-; Write the 0xFF terminator at the cursor and return.
-OutputBuf_Flush_A_Done:
-	ld xwa, (xwa)
-	ld (xwa), 0xFF
-	retd 0x2
+OutputBuf_Flush_A:	.include "includes/generated/cc900/OutputBuf_Flush_A.s"	; C: cc900/voice_params_and_tvf_a_11c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	OutputBuf_Flush_A_Loop, OutputBuf_Flush_A + 8
+	.set	OutputBuf_Flush_A_Emit, OutputBuf_Flush_A + 19
+	.set	OutputBuf_Flush_A_Next, OutputBuf_Flush_A + 30
+	.set	OutputBuf_Flush_A_Done, OutputBuf_Flush_A + 37
 
 ; ENUMERATE A VOICE CHAIN INTO A BYTE BUFFER *AND RELEASE* EACH MATCH (destructive).
 ; Same interface as OutputBuf_Flush_A but for every match it first calls
@@ -2762,40 +2641,9 @@ TVF_Calc_Cutoff_AddBaseline:
 ; and there is no level-scaling stage and no stacked argument. Ends with the same +0x18
 ; bias and TVF_Clamp_Cutoff (reached by tail jump). No in-ROM caller was found by a
 ; call/calr scan, so it may be reachable only through a table this pass did not decode.
-TVF_Calc_Cutoff_NoKeyFollow:
-	ld xix, (xwa + 23)
-	ld e, (xix + 16)
-	ld l, e
-	exts hl
-	cp hl, 0:i3
-	jr z, TVF_Calc_Cutoff_NoKeyFollow_AddBaseline
-	ld e, (xix + 15)
-	and e, 0xE0
-	srl e, 5
-	extz de
-	sla de, 7
-	ld a, (xwa + 12)
-	extz wa
-	and wa, 0x7F
-	extz xwa
-	lda	xwa, (xwa+de)
-	ld xde, TVF_KeyFollow_Curves
-	add xde, xwa
-	ld a, (xde)
-	ld e, a
-	exts de
-	ld wa, hl
-	muls	xwa, de
-	ld hl, wa
-	sra hl, 5
-	ld wa, hl
-	add bc, wa
-
-; Add the +0x18 bias and tail-jump into TVF_Clamp_Cutoff.
-TVF_Calc_Cutoff_NoKeyFollow_AddBaseline:
-	add bc, 0x18
-	ld wa, bc
-	jrl TVF_Clamp_Cutoff
+TVF_Calc_Cutoff_NoKeyFollow:	.include "includes/generated/cc900/TVF_Calc_Cutoff_NoKeyFollow.s"	; C: cc900/voice_params_and_tvf_h_15b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TVF_Calc_Cutoff_NoKeyFollow_AddBaseline, TVF_Calc_Cutoff_NoKeyFollow + 70
 
 ; Add the +0x18 bias to WA and clamp the result to at most 0x78 (no lower clamp).
 ; Out: WA and XHL. Used by the filter builders for the second register field.
@@ -3619,51 +3467,10 @@ Voice_Clamp_Byte_WA:	.include "includes/generated/cc900/Voice_Clamp_Byte_WA.s"	;
 ; SET is redundant with the writer's own.
 ;
 ; No caller found by a call/calr scan over the ROM (reached indirectly).
-Voice_Build_OutputLevel:
-	push xiz
-	ld xiz, xwa
-	ld xwa, (xiz + 35)
-	add bc, (xwa + 12)
-	ld xwa, (xiz + 35)
-	add bc, (xwa + 16)
-	add bc, (xiz + 51)
-	ld wa, bc
-	calr Voice_Clamp_Byte_WA
-	ld bc, hl
-	add bc, bc
-	lda xwa, (Voice_OutputLevel_Table:24)
-	ld	wa, (xwa+bc)
-	add wa, wa
-	ld bc, wa
-	ld xwa, (xiz + 15)
-	bitm 7, (xwa + 2)
-	jr z, Voice_Build_OutputLevel_NoPanOverride
-	ld xwa, (xiz + 15)
-	ld a, (xwa + 2)
-	extz wa
-	and wa, 0x70
-	sll wa, 8
-	jr Voice_Build_OutputLevel_Store
-
-; No descriptor override (bit 7 of zone_record[+0x02] clear): take bits 14..12 from the
-; 0x00FBE4 table, indexed by the folded note.
-Voice_Build_OutputLevel_NoPanOverride:
-	ld wa, (xiz + 6)
-	srl wa, 8
-	extz xwa
-	add xwa, xwa
-	ld xde, Voice_Reg080_NoteField_Table
-	add xde, xwa
-	ld wa, (xde)
-
-; OR the level and the bits-14..12 field together, force the commit strobe and store to
-; 0x0451D0 (tone generator register +0x080).
-Voice_Build_OutputLevel_Store:
-	or bc, wa
-	set 15, bc
-	ld (Payload_Bss_Start+0x635a:24), bc
-	pop xiz
-	ret
+Voice_Build_OutputLevel:	.include "includes/generated/cc900/Voice_Build_OutputLevel.s"	; C: cc900/voice_params_and_tvf_m_16a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Build_OutputLevel_NoPanOverride, Voice_Build_OutputLevel + 66
+	.set	Voice_Build_OutputLevel_Store, Voice_Build_OutputLevel + 85
 
 ; Clamp WA to [0, 0xFF] using an unsigned upper compare. Out: WA and XHL.
 Voice_Clamp_Byte_HL:	.include "includes/generated/cc900/Voice_Clamp_Byte_HL.s"	; C: cc900/voice_params_and_tvf.c
@@ -5075,94 +4882,10 @@ Voice_PitchPack_Mode4_Finalize:
 ; *** THIS ROUTINE EXTENDS PAST THE END OF THE REGION: its body continues at
 ; Voice_PitchPack_Mode5_ApplyDetune (0x024069) and
 ; Voice_PitchPack_Mode5_Finalize (0x024097), which belong to the next region. ***
-Voice_PitchPack_Mode5_Dual:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 8), xwa
-	ld xwa, (xsp + 8)
-	ld xiz, (xwa + 23)
-	ld xwa, (xsp + 8)
-	ld xwa, (xwa + 35)
-	ld wa, (xwa + 2)
-	bit 9, wa
-	jr z, Voice_PitchPack_Mode5_ApplyDetune
-	ld a, (xiz + 77)
-	extz wa
-	ld (xsp + 4), wa
-	ld a, (xiz + 79)
-	extz wa
-	ld (xsp + 6), wa
-	jr Voice_PitchPack_Mode5_Finalize
-
-; Detune arm of Voice_PitchPack_Mode5_Dual: adds the signed byte (tonerec+103) to each of
-; the two zero-extended coarse values (tonerec+77, tonerec+79) into the frames at (xsp+4)/(xsp+6).
-Voice_PitchPack_Mode5_ApplyDetune:
-	ld xwa, (xsp + 8)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 103)
-	ld c, a
-	exts bc
-	ld a, (xiz + 77)
-	extz wa
-	add wa, bc
-	ld (xsp + 4), wa
-	ld xwa, (xsp + 8)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 103)
-	ld c, a
-	exts bc
-	ld a, (xiz + 79)
-	extz wa
-	add wa, bc
-	ld (xsp + 6), wa
-
-; Common tail of pitch-pack mode 5. Runs TVF_Calc_Cutoff twice (once per coarse
-; value) then packs word = (tonerec+78)<<13 | (tonerec+78)<<10 | contrib, sets bit 7, and
-; stores the pair to voice+66 / voice+68 (later emitted as TG regs 0x100 / 0x140).
-; Clears the 16-bit flag at 0x2940 on exit, as every pitch-pack mode does.
-Voice_PitchPack_Mode5_Finalize:
-	ld a, (xiz + 55)
-	ld e, a
-	exts de
-	ld a, (xiz + 60)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 10)
-	ld bc, (xsp + 6)
-	calr TVF_Calc_Cutoff
-	ld (xsp + 4), hl
-	ld a, (xiz + 55)
-	ld e, a
-	exts de
-	ld a, (xiz + 60)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 10)
-	ld bc, (xsp + 8)
-	calr TVF_Calc_Cutoff
-	ld (xsp + 6), hl
-	ld a, (xiz + 80)
-	extz wa
-	ld bc, wa
-	sll bc, 10
-	ld a, (xiz + 78)
-	extz wa
-	ld de, wa
-	sll de, 13
-	or de, bc
-	ld wa, (xsp + 4)
-	or wa, de
-	ld bc, wa
-	set 7, bc
-	ld xwa, (xsp + 8)
-	ld (xwa + 66), bc
-	ld xwa, (xsp + 8)
-	ld bc, (xsp + 6)
-	ld (xwa + 68), bc
-	ldw (10560:16), 0
-	pop xiz
-	inc 8, xsp
-	ret
+Voice_PitchPack_Mode5_Dual:	.include "includes/generated/cc900/Voice_PitchPack_Mode5_Dual.s"	; C: cc900/voice_params_and_tvf_a_11a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_PitchPack_Mode5_ApplyDetune, Voice_PitchPack_Mode5_Dual + 44
+	.set	Voice_PitchPack_Mode5_Finalize, Voice_PitchPack_Mode5_Dual + 90
 
 TVF_Build_Dispatch:
 	ld xbc, (xwa + 23)
@@ -5199,95 +4922,14 @@ TVF_Build_Dispatch_Mode5_DualCutoff:
 	calr Voice_PitchPack_Mode5_Dual
 	ret
 
-TVF_Build_Short:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld a, (xwa + 17)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 6)
-	calr TVF_Calc_Cutoff_NoKeyFollow
-	ld iz, hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 18)
-	extz wa
-	sll wa, 13
-	ld de, wa
-	set 10, de
-	ld wa, iz
-	ld bc, wa
-	or bc, de
-	ld xwa, (xsp + 6)
-	ld (xwa + 66), bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 19)
-	extz wa
-	calr TVF_Bias_Clamp_Amount
-	ld iz, hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 20)
-	extz wa
-	calr TVF_Lookup_Depth_Amount
-	ld wa, iz
-	ld bc, wa
-	or bc, hl
-	ld xwa, (xsp + 6)
-	ld (xwa + 68), bc
-	popw iz
-	inc 8, xsp
-	ret
+TVF_Build_Short:	.include "includes/generated/cc900/TVF_Build_Short.s"	; C: cc900/voice_params_and_tvf_a_ia06.c
 
 ; Pitch-pack route B. In: XWA = per-voice record. Out: voice+66, voice+68.
 ; Identical to route A (0x02413E) except that bit 7 is additionally set in the reg-0x100
 ; word. voice+66 = TVF_Calc_Cutoff_NoKeyFollow(tonerec+0x11) | (tonerec+0x12)<<13 | bit10 | bit7;
 ; voice+68 = TVF_Bias_Clamp_Amount(tonerec+0x13) | TVF_Lookup_Depth_Amount(tonerec+0x14).
 ; Touches no hardware. Reached only through TVF_BuildEmit_Short_Dispatch's table.
-Voice_PitchPack_RouteB:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld a, (xwa + 17)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 6)
-	calr TVF_Calc_Cutoff_NoKeyFollow
-	ld iz, hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 18)
-	extz wa
-	sll wa, 13
-	ld bc, wa
-	set 10, bc
-	ld wa, iz
-	or wa, bc
-	ld bc, wa
-	set 7, bc
-	ld xwa, (xsp + 6)
-	ld (xwa + 66), bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 19)
-	extz wa
-	calr TVF_Bias_Clamp_Amount
-	ld iz, hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 20)
-	extz wa
-	calr TVF_Lookup_Depth_Amount
-	ld wa, iz
-	ld bc, wa
-	or bc, hl
-	ld xwa, (xsp + 6)
-	ld (xwa + 68), bc
-	popw iz
-	inc 8, xsp
-	ret
+Voice_PitchPack_RouteB:	.include "includes/generated/cc900/Voice_PitchPack_RouteB.s"	; C: cc900/voice_params_and_tvf_a_ia06.c
 
 ; Pitch-pack route C. In: XWA = per-voice record; XIZ is loaded with the tone record.
 ; voice+66 = TVF_Calc_Cutoff_NoKeyFollow(tonerec+0x11) | (tonerec+0x12)<<10 | (tonerec+0x12)<<13;

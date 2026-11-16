@@ -341,44 +341,10 @@ BmDrEdit_CalcNotePos_ClampSize:
 
 ; Note box for the horizontal editor: x1 0x27ba = (0x2808) / 4 + 0x16, x2 0x27bc = (0x280a) / 4 +
 ; x1, y1 0x27be = BmDrEdit_RenderHorizontal_Table[(0x2806)], y2 0x27c0 = y1 + 3.
-BmDrEdit_RenderHorizontal:
-	ld wa, (0x2808:16)
-	srl wa, 2
-	add wa, 0x16
-	ld (0x27ba:16), wa
-	ld wa, (0x280a:16)
-	srl wa, 2
-	add wa, (0x27ba:16)
-	ld (0x27bc:16), wa
-	ld a, (0x2806:16)
-	extz wa
-	add wa, wa
-	lda xbc, (BmDrEdit_RenderHorizontal_Table:24)
-	ldw	(0x27be:16), (xbc+wa)
-	ld wa, (0x27be:16)
-	inc 3, wa
-	ld (0x27c0:16), wa
-	ret
+BmDrEdit_RenderHorizontal:	.include "includes/generated/cc900/BmDrEdit_RenderHorizontal.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; BmDrEdit_RenderHorizontal with x1 = (0x2808) / 4 + 0x5b and BmDrEdit_RenderVertical_Table.
-BmDrEdit_RenderVertical:
-	ld wa, (0x2808:16)
-	srl wa, 2
-	add wa, 0x5b
-	ld (0x27ba:16), wa
-	ld wa, (0x280a:16)
-	srl wa, 2
-	add wa, (0x27ba:16)
-	ld (0x27bc:16), wa
-	ld a, (0x2806:16)
-	extz wa
-	add wa, wa
-	lda xbc, (BmDrEdit_RenderVertical_Table:24)
-	ldw	(0x27be:16), (xbc+wa)
-	ld wa, (0x27be:16)
-	inc 3, wa
-	ld (0x27c0:16), wa
-	ret
+BmDrEdit_RenderVertical:	.include "includes/generated/cc900/BmDrEdit_RenderVertical.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; Copies byte 0x281c to 0x210b0 and word 0x2820 to 0x210b2, places the box
 ; (BmDrEdit_CalcSecondaryPosition, then BmDrEdit_RenderSecondaryHoriz on TITLE_SQNOTEEDT, else
@@ -504,71 +470,14 @@ BmDrEdit_TempoAnimTimer_Reset:
 	calr BmDrEdit_DelayBExpired
 	jrl BmDrEdit_DelayReturn
 
-BmDrEdit_CheckTempoData:
-	call TempoRingBuf_CheckEmpty
-	cp hl, 0:i3
-	ret z
-	ld a, (ACTIVE_TITLE:16)
-	cp a, 0x95
-	jr z, BmDrEdit_CheckTempoData_ReadyToProcess
-	cp a, 0x98
-	ret nz
-
-BmDrEdit_CheckTempoData_ReadyToProcess:
-	bit 7, (0x295c:16)
-	ret nz
-	cpw (SEQ_FREE_BLOCKS:16), 0
-	jr z, BmDrEdit_ClearNoteAndRefresh
-	call TempoRingBuf_CheckEmpty
-	cp hl, 0:i3
-	ret z
-
-BmDrEdit_ProcessTempoEvent:
-	call TempoRingBuf_ReadByte
-	bit 7, l
-	jr z, BmDrEdit_TempoEventLoop
-	and l, 0xf0
-	cp l, 0x90
-	jr nz, BmDrEdit_TempoEventLoop
-	call TempoRingBuf_ReadByte
-	call TempoRingBuf_ReadByte
-	ld (0x2960:16), l
-	call TempoRingBuf_ReadByte
-	ld (0x2961:16), l
-	call TempoRingBuf_ReadByte
-	cp (0x2961:16), 0
-	jr z, BmDrEdit_ProcessTempoEvent_NoteOff
-	calr BmDrEdit_AllocateNoteSlot
-	jr BmDrEdit_TempoEventLoop
-
-BmDrEdit_ProcessTempoEvent_NoteOff:
-	calr BmDrEdit_FindNoteInSlots
-	cp hl, 0xff
-	jr z, BmDrEdit_TempoEventLoop
-	calr BmDrEdit_CheckSlotsAvailable
-	cp hl, 0:i3
-	jr nz, BmDrEdit_TempoEventLoop
-	res 0, (0x295f:16)
-	ldmm8 0x2962, 0x2960
-	calr BmDrEdit_AdjustScrollToView
-	calr BmDrEdit_InsertNotesFromSlots
-	calr BmDrEdit_CountMeasuresInit
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_ClearSlotAndRedraw
-
-BmDrEdit_ClearNoteAndRefresh:
-	res 0, (0x295f:16)
-	jrl BmDrEdit_RefreshDisplayState
-
-BmDrEdit_ClearSlotAndRedraw:
-	calr BmDrEdit_ClearAllSlotsAlt
-	calr BmDrEdit_RefreshAfterInsert
-
-BmDrEdit_TempoEventLoop:
-	call TempoRingBuf_CheckEmpty
-	cp hl, 0:i3
-	jr nz, BmDrEdit_ProcessTempoEvent
-	ret
+BmDrEdit_CheckTempoData:	.include "includes/generated/cc900/BmDrEdit_CheckTempoData.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_CheckTempoData_ReadyToProcess, BmDrEdit_CheckTempoData + 22
+	.set	BmDrEdit_ProcessTempoEvent, BmDrEdit_CheckTempoData + 44
+	.set	BmDrEdit_ProcessTempoEvent_NoteOff, BmDrEdit_CheckTempoData + 97
+	.set	BmDrEdit_ClearNoteAndRefresh, BmDrEdit_CheckTempoData + 139
+	.set	BmDrEdit_ClearSlotAndRedraw, BmDrEdit_CheckTempoData + 146
+	.set	BmDrEdit_TempoEventLoop, BmDrEdit_CheckTempoData + 152
 
 ; Counts the editor timer 0x295c down while bit 7 is set, stopping at 0x80.
 BmDrEdit_DecrementDelayA:
@@ -699,21 +608,10 @@ BmDrEdit_CheckNoteType_NotDrum:
 
 ; UI_ChangeTitleByIndex with WA = 0x98 in drum mode (bit 0 of 0x2742), else 0x95; then word 0xd4f
 ; -> 0x2963, SeqVoice_FindSingleActive, and PART_SELECT -> 0x1d58.
-BmDrEdit_SaveSequencerState:
-	bit 0, (0x2742:16)
-	jr z, BmDrEdit_SaveSeqState_SetMode95
-	ldw wa, TT_SQDRMEDT
-	jr BmDrEdit_SaveSeqState_Apply
-
-BmDrEdit_SaveSeqState_SetMode95:
-	ldw wa, TT_SQNOTEEDT
-
-BmDrEdit_SaveSeqState_Apply:
-	call UI_ChangeTitleByIndex
-	ldmm16 0x2963, 3407
-	call SeqVoice_FindSingleActive
-	ldmm8 7512, PART_SELECT
-	ret
+BmDrEdit_SaveSequencerState:	.include "includes/generated/cc900/BmDrEdit_SaveSequencerState.s"	; C: cc900/bmdredit_routines_m232_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_SaveSeqState_SetMode95, BmDrEdit_SaveSequencerState + 11
+	.set	BmDrEdit_SaveSeqState_Apply, BmDrEdit_SaveSequencerState + 14
 
 ; HL = 0xffff while the editor timer runs (bit 7 of 0x295c) with action 0x295d non-zero.  Otherwise
 ; moves the measure 0x2744 one on (at most 999) with BmDrEdit_ScrollReset, HL = 0.
@@ -1080,14 +978,7 @@ BmDrEdit_ClearAndScanToEnd:	.include "includes/generated/cc900/BmDrEdit_ClearAnd
 ; Restores the drum/bass editor's saved cursor: 0x276a -> 0x275e (count), byte 0x276c ->
 ; 0x2760 (ticks), 0x276e -> 0x28af (data block) and byte 0x2770 -> 0x2666 (offset).
 ; BmDrEdit_SaveEditState keeps a second copy at 0x2762..0x2768.
-BmDrEdit_LoadAlternateState:
-	ldmm16 0x275e, 0x276a
-	ldmm8 0x2760, 0x276c
-	ldmm16 SEQ_DATA_BLOCK, 0x276e
-	ld a, (0x2770:16)
-	extz wa
-	ld (SEQ_DATA_OFFSET:16), wa
-	ret
+BmDrEdit_LoadAlternateState:	.include "includes/generated/cc900/BmDrEdit_LoadAlternateState.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; Restores the saved cursor (BmDrEdit_LoadAlternateState) and counts beat markers 0x81 in 0x2772
 ; while reading events (SeqData_ReadNextByte, SeqData_SkipToNextEvent), until 0x82 or 0x84 or the
@@ -1881,27 +1772,9 @@ BmDrEdit_TestPartTableEntry_Below:
 ; Enters the drum editor: Malloc(0x6a4) into 0x1d50 and 0x1d54, NoteEditSy_ScanAndSortEntries,
 ; 0x278e = 10, grid step 0x2792 = (0x2796), drum mode (bit 0 of 0x2742) set, 0x2774 = 7, 0x27a2 = 8;
 ; then BmDrEdit_InitCommon.
-BmDrEdit_InitDrumMode:
-	pushw 0x6a4
-	call Malloc
-	inc 2, xsp
-	ld (7504:16), xhl
-	ld (7508:16), xhl
-	calr NoteEditSy_ScanAndSortEntries
-	ldw (0x278e:16), 10
-	ldmm16 0x2792, 0x2796
-	set 0, (0x2742:16)
-	ld (0x2774:16), 7
-	ld (0x27a2:16), 8
-	jr BmDrEdit_InitCommon
+BmDrEdit_InitDrumMode:	.include "includes/generated/cc900/BmDrEdit_InitDrumMode.s"	; C: cc900/bmdredit_routines_m232.c
 
-BmDrEdit_InitMelodicMode:
-	ldmm16 0x2792, 0x2794
-	ldmm16 0x278e, 0x2790
-	res 0, (0x2742:16)
-	ld (0x2774:16), 10
-	ld (0x27a2:16), 11
-	jr BmDrEdit_InitCommon
+BmDrEdit_InitMelodicMode:	.include "includes/generated/cc900/BmDrEdit_InitMelodicMode.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_InitCommon:
 	pushw iz
@@ -2097,52 +1970,13 @@ BmDrEdit_CleanupCommon:
 	calr BmDrEdit_ClearAllSlotsAlt
 	jrl BmDrEdit_ClearAllSlots
 
-BmDrEdit_InsertNotesFromSlots:
-	pushw iz
-	bit 0, (0x2742:16)
-	jr z, BmDrEdit_InsertNotesFromSlots_MelodicInit
-	ldmm8 0x2960, 0x2786
-	ldmm8 0x2961, 0x2748
-	calr BmDrEdit_WalkEventsOrSetError
-	jr BmDrEdit_InsertNotesFromSlots_Done
-
-BmDrEdit_InsertNotesFromSlots_MelodicInit:
-	ld iz, 0:i3
-
-BmDrEdit_InsertNotesFromSlots_Loop:
-	ld de, iz
-	mul de, 0x3
-	ld wa, 1:i3
-	add wa, de
-	lda xbc, (0x2746:16)
-	extz xwa
-	add xwa, xbc
-	ld a, (xwa)
-	cp a, 0:i3
-	jr z, BmDrEdit_InsertNotesFromSlots_Next
-	ld (0x2960:16), a
-	ld wa, 2:i3
-	add wa, de
-	extz xwa
-	add xwa, xbc
-	mrib4 0x80, 0x19, 0x61, 0x29
-	calr BmDrEdit_PrepareAndInsertNote
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_InsertNotesFromSlots_CalcBeat
-	calr BmDrEdit_RefreshDisplayState
-	jr BmDrEdit_InsertNotesFromSlots_Done
-
-BmDrEdit_InsertNotesFromSlots_CalcBeat:
-	calr BmDrEdit_CalcBeatFromGridPos
-
-BmDrEdit_InsertNotesFromSlots_Next:
-	inc 1, iz
-	cp iz, 0x8
-	jr c, BmDrEdit_InsertNotesFromSlots_Loop
-
-BmDrEdit_InsertNotesFromSlots_Done:
-	popw iz
-	ret
+BmDrEdit_InsertNotesFromSlots:	.include "includes/generated/cc900/BmDrEdit_InsertNotesFromSlots.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_InsertNotesFromSlots_MelodicInit, BmDrEdit_InsertNotesFromSlots + 24
+	.set	BmDrEdit_InsertNotesFromSlots_Loop, BmDrEdit_InsertNotesFromSlots + 26
+	.set	BmDrEdit_InsertNotesFromSlots_CalcBeat, BmDrEdit_InsertNotesFromSlots + 81
+	.set	BmDrEdit_InsertNotesFromSlots_Next, BmDrEdit_InsertNotesFromSlots + 84
+	.set	BmDrEdit_InsertNotesFromSlots_Done, BmDrEdit_InsertNotesFromSlots + 92
 
 ; Inserts the note being edited (BmDrEdit_PrepareAndInsertNote); on success continues in
 ; BmDrEdit_CalcBeatFromGridPos, on failure records 0xcf and leaves through
@@ -3382,34 +3216,7 @@ BmDrEdit_InsertStepEntry:
 ; Builds a 6-byte note-on at 0x2967 for the cursor position and inserts it into part (BMDREDIT_CHANNEL) + 1
 ; (BmDrEdit_ApplyVelocityChange): 0x90, cursor tick mod 96, the bytes 0x2960 / 0x2961, and the
 ; length 0x278e as (mod 96, / 96).  BmDrEdit_WalkToGridPosition positions first.
-BmDrEdit_PrepareAndInsertNote:
-	calr BmDrEdit_WalkToGridPosition
-	ld (0x2967:16), 144
-	ld wa, (0x279a:16)
-	extz xwa
-	div wa, 0x60
-	ldto_werp WA, 0xe2
-	ld (0x2968:16), a
-	ldmm8 0x2969, 0x2960
-	ldmm8 0x296a, 0x2961
-	ld wa, (0x278e:16)
-	extz xwa
-	div wa, 0x60
-	ldto_werp WA, 0xe2
-	res 7, a
-	ld (0x296b:16), a
-	ld wa, (0x278e:16)
-	extz xwa
-	div wa, 0x60
-	res 7, a
-	ld (0x296c:16), a
-	calr BmDrEdit_SaveSongPosition
-	ld a, (BMDREDIT_CHANNEL:16)
-	inc 1, a
-	extz wa
-	ld xbc, 0x2967
-	ld de, 6:i3
-	jrl BmDrEdit_ApplyVelocityChange
+BmDrEdit_PrepareAndInsertNote:	.include "includes/generated/cc900/BmDrEdit_PrepareAndInsertNote.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_ValidateAndProcessVoice:
 	dec 8, xsp
@@ -3471,35 +3278,12 @@ BmDrEdit_ValidateVoice_Epilog:
 ; (BmDrEdit_CheckAndSelectChannel) and seeks part (BMDREDIT_CHANNEL) + 1 to it
 ; (BmDrEdit_ValidateAndProcessVoice).  Out: HL = the word that routine returns through its
 ; DE pointer.
-BmDrEdit_SyncChannelAndGetPos:
-	dec 2, xsp
-	ldmm16 0x287f, 0x2744
-	calr BmDrEdit_CheckAndSelectChannel
-	ld a, (BMDREDIT_CHANNEL:16)
-	inc 1, a
-	extz wa
-	extz hl
-	lda xde, (xsp)
-	ld bc, hl
-	calr BmDrEdit_ValidateAndProcessVoice
-	ld hl, (xsp)
-	inc 2, xsp
-	ret
+BmDrEdit_SyncChannelAndGetPos:	.include "includes/generated/cc900/BmDrEdit_SyncChannelAndGetPos.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; Synchronises the editor channel (BmDrEdit_SyncChannelAndGetPos) and stores its position as
 ; the alternate cursor: 0x276a = HL, 0x276c = 0, 0x276e = block (SEQ_DATA_BLOCK), 0x2770 = offset.
 ; Nothing is stored when SEQ_ERROR_CODE is set.
-BmDrEdit_SelectChannelAndLoadPos:
-	ld (SEQ_ERROR_CODE:16), 0
-	calr BmDrEdit_SyncChannelAndGetPos
-	cp (SEQ_ERROR_CODE:16), 0
-	ret nz
-	ld (0x276a:16), hl
-	ld (0x276c:16), 0
-	ldmm16 0x276e, SEQ_DATA_BLOCK
-	ld wa, (SEQ_DATA_OFFSET:16)
-	ld (0x2770:16), a
-	ret
+BmDrEdit_SelectChannelAndLoadPos:	.include "includes/generated/cc900/BmDrEdit_SelectChannelAndLoadPos.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; Synchronises the editor channel (BmDrEdit_SyncChannelAndGetPos) and stores the result as the
 ; editor position: 0x275e = HL, 0x2760 = 0.  Nothing is stored when SEQ_ERROR_CODE is set.
@@ -4180,44 +3964,9 @@ BmDrEdit_ClampScrollPos:
 ; and re-inserts a 6-byte note-on (0x90, 0x2784 note, then those bytes) at the right position
 ; (BmDrEdit_SeekForwardToEvent, BmDrEdit_ApplyVelocityChange), then recounts
 ; (BmDrEdit_CountMeasuresInit).  Errors go to BmDrEdit_RefreshDisplayState.
-ReadSeqData_StoreParams:
-	call SeqData_AdvancePosition
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld (0x2969:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld (0x296a:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld (0x296b:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld (0x296c:16), l
-	calr BmDrEdit_ClearAndScanToEnd
-	ld a, (BMDREDIT_CHANNEL:16)
-	inc 1, a
-	extz wa
-	calr BmDrEdit_CopyEventDataBetweenParts
-	calr BmDrEdit_SeekForwardToEvent
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, BmDrEdit_ReadSeqStoreParams_Error
-	ld (0x2967:16), 144
-	ldmm8 0x2968, 0x2784
-	calr BmDrEdit_SaveSongPosition
-	ld a, (BMDREDIT_CHANNEL:16)
-	inc 1, a
-	extz wa
-	ld xbc, 0x2967
-	ld de, 6:i3
-	calr BmDrEdit_ApplyVelocityChange
-	calr BmDrEdit_CountMeasuresInit
-	cp (SEQ_ERROR_CODE:16), 0
-	ret z
-
-BmDrEdit_ReadSeqStoreParams_Error:
-	calr BmDrEdit_RefreshDisplayState
-	ret
+ReadSeqData_StoreParams:	.include "includes/generated/cc900/ReadSeqData_StoreParams.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ReadSeqStoreParams_Error, ReadSeqData_StoreParams + 118
 
 BmDrEdit_CalcBeatMeasure:	.include "includes/generated/cc900/BmDrEdit_CalcBeatMeasure.s"	; C: cc900/bmdredit_routines_m232.c
 ; the hand assembly's labels inside the compiled body, by their offsets

@@ -2829,107 +2829,14 @@ WaveSel_StageA2_FromVelZone:	.include "includes/generated/cc900/WaveSel_StageA2_
 
 WaveSel_Cache_SetDescPtr:	.include "includes/generated/cc900/WaveSel_Cache_SetDescPtr.s"	; C: cc900/dsp_voice_params_c_7a.c
 
-WaveSel_Rebuild_PartCaches:
-	dec 2, xsp
-	pushw_erp 0xFA
-	ld (xsp + 2), a
-	ld a, (xsp + 2)
-	extz wa
-	extz bc
-	extz de
-	calr VoiceParam_Update
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0xC0
-	jrl z, VoiceInit_Epilogue
-	cp a, 0x80
-	jrl z, VoiceInit_Epilogue
-	cp a, 0x40
-	jr z, VoiceInit_AltPath
-	cp a, 0:i3
-	jrl nz, VoiceInit_Epilogue
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jr nc, VoiceInit_Epilogue
-
-; p = 0..3: WaveSel_Cache_VelSplitPtr 0x0326B6 for each partial.
-VoiceInit_EFFScanLoop:
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	calr WaveSel_Cache_VelSplitPtr
-	ldib_erp 0xFA, 0
-	cpib_erp 0xFA, 4
-	jr nc, VoiceInit_EFFScanNext
-
-; z = 0..3 inside each partial: WaveSel_Cache_SetDescPtr 0x0328E2.
-VoiceInit_EFFScanMatch:
-	ld a, (xsp + 2)
-	ld l, a
-	extz hl
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ldto_berp A, 0xFA
-	ld e, a
-	extz de
-	ld wa, hl
-	calr WaveSel_Cache_SetDescPtr
-	inc1b_erp 0xFA
-	cpib_erp 0xFA, 4
-	jr c, VoiceInit_EFFScanMatch
-
-; p++ and loop while p < 4.
-VoiceInit_EFFScanNext:
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jr c, VoiceInit_EFFScanLoop
-	jr VoiceInit_Epilogue
-
-; Patch-record format byte (+0x10) & 0xC0 == 0x40: skip the cache rebuild and
-; run the portamento-target refresh instead.
-VoiceInit_AltPath:
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jr nc, VoiceInit_Epilogue
-
-; p = 0..3: Voice_PortamentoTarget_SetSlot 0x02AAE7 then
-; Voice_PortamentoTarget_ComputePitch 0x02AB10.
-VoiceInit_AltPath2:
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	call Voice_PortamentoTarget_SetSlot
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	call Voice_PortamentoTarget_ComputePitch
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jr c, VoiceInit_AltPath2
-
-; Shared exit; also taken directly for format bytes 0x80 and 0xC0.
-VoiceInit_Epilogue:
-	popw_erp 0xFA
-	inc 2, xsp
-	ret
+WaveSel_Rebuild_PartCaches:	.include "includes/generated/cc900/WaveSel_Rebuild_PartCaches.s"	; C: cc900/dsp_voice_params_d_10a_qizinc2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceInit_EFFScanLoop, WaveSel_Rebuild_PartCaches + 75
+	.set	VoiceInit_EFFScanMatch, WaveSel_Rebuild_PartCaches + 102
+	.set	VoiceInit_EFFScanNext, WaveSel_Rebuild_PartCaches + 136
+	.set	VoiceInit_AltPath, WaveSel_Rebuild_PartCaches + 146
+	.set	VoiceInit_AltPath2, WaveSel_Rebuild_PartCaches + 154
+	.set	VoiceInit_Epilogue, WaveSel_Rebuild_PartCaches + 202
 
 ToneDB_Resolve_NamedToneRecord:
 	pushw iz
@@ -5778,113 +5685,14 @@ VoiceSlot_FullInit:	.include "includes/generated/cc900/VoiceSlot_FullInit.s"	; C
 ; Partial_Build_Present_Word is replaced by Voice_InitFromSlot (0x02ADC1) -- i.e. the tone-generator
 ; voice records are rebuilt from the slot instead of being merely re-aggregated -- and the loop
 ; counters live in QIZH rather than IZ.
-VoiceSlot_AltInit:
-	dec 4, xsp
-	pushw_erp 0xFA
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	ld bc, 0:i3
-	calr AlgoType_StateWrite
-	ld a, (xsp + 4)
-	extz wa
-	calr Voice_ActiveFlag_CheckAndLoad
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot0
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot1
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot2
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot3
-	ld a, (xsp + 4)
-	extz wa
-	calr DSP_SlotParam_Write_Slot4
-	ld a, (xsp + 4)
-	extz wa
-	call Voice_InitFromSlot
-	ld a, (xsp + 4)
-	extz wa
-	calr EnvTranspose_UpdateLoop
-	ld (xsp + 2), 0x0
-	cp (xsp + 2), 0x3
-	jr nc, VoiceSlot_AltInit_Epilogue
-
-; Head of the inner (0..3) AlgoFlag_Write loop.
-VoiceSlot_AltInit_Loop1:
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jr nc, VoiceSlot_AltInit_Loop2
-
-; Body: AlgoFlag_Write_Bit3 then AlgoFlag_Write.
-VoiceSlot_AltInit_Loop1Next:
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ld a, (xsp + 2)
-	ld c, a
-	extz bc
-	ldto_berp A, 0xFB
-	ld e, a
-	extz de
-	ld wa, hl
-	calr AlgoFlag_Write_Bit3
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ld a, (xsp + 2)
-	ld c, a
-	extz bc
-	ldto_berp A, 0xFB
-	ld e, a
-	extz de
-	ld wa, hl
-	calr AlgoFlag_Write
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jr c, VoiceSlot_AltInit_Loop1Next
-
-; Head of the inner (0..3) EFF_RoutingInit loop.
-VoiceSlot_AltInit_Loop2:
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jr nc, VoiceSlot_AltInit_Loop3
-
-; Body: EFF_RoutingInit(part, slot, word).
-VoiceSlot_AltInit_Loop2Next:
-	ld a, (xsp + 4)
-	ld l, a
-	extz hl
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ld wa, hl
-	calr EFF_RoutingInit
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jr c, VoiceSlot_AltInit_Loop2Next
-
-; Outer (word 0..2) increment and back-edge.
-VoiceSlot_AltInit_Loop3:
-	incm8 1, (xsp + 2)
-	cp (xsp + 2), 0x3
-	jr c, VoiceSlot_AltInit_Loop1
-
-; VoiceNoteParam_UpdateLoop, then pop QIZ / inc 4,XSP / ret.
-VoiceSlot_AltInit_Epilogue:
-	ld a, (xsp + 4)
-	extz wa
-	calr VoiceNoteParam_UpdateLoop
-	popw_erp 0xFA
-	inc 4, xsp
-	ret
+VoiceSlot_AltInit:	.include "includes/generated/cc900/VoiceSlot_AltInit.s"	; C: cc900/dsp_voice_params_d_10a_qizinc.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceSlot_AltInit_Loop1, VoiceSlot_AltInit + 93
+	.set	VoiceSlot_AltInit_Loop1Next, VoiceSlot_AltInit + 101
+	.set	VoiceSlot_AltInit_Loop2, VoiceSlot_AltInit + 161
+	.set	VoiceSlot_AltInit_Loop2Next, VoiceSlot_AltInit + 169
+	.set	VoiceSlot_AltInit_Loop3, VoiceSlot_AltInit + 203
+	.set	VoiceSlot_AltInit_Epilogue, VoiceSlot_AltInit + 212
 
 ; MIDI program-change handler.  Input XWA = pointer to the 6-byte staging buffer at 0x2AFC
 ; filled by MIDI_Status_ProgChange:  +0x01 = part index, +0x02 and +0x03 = the two program

@@ -111,3 +111,65 @@ void SetChangeRect(struct rect *r)
     if (DIRTY_BBOX.y1 < r->y1)
         DIRTY_BBOX.y1 = r->y1;
 }
+
+/* cc900-module: DrawRing_TryPost GetCurrentTarget */
+extern long GetCurrentTarget(void);
+#define EVQ(i) ((struct ev *)&((char *)EVENT_QUEUE)[(i) * 12])
+extern int GetEvent(long *obj, long *evt, long *par);
+
+int GetEvent(long *obj, long *evt, long *par)
+{
+    int r;
+    struct ev *e;
+    TaskEvent_Wait(4);
+    if (ram_2ec34 == ram_2ec36) {
+        TaskEvent_Signal(4);
+        return 0;
+    }
+    --ram_2f840;
+    r = ram_2ec34;
+    *obj = EVQ(r)->obj;
+    if (*obj == -1L)
+        *obj = GetCurrentTarget();
+    e = EVQ(r);
+    *evt = e->evt;
+    *par = e->par;
+    if (r == 0x3ff)
+        ram_2ec34 = 0;
+    else
+        ram_2ec34++;
+    TaskEvent_Signal(4);
+    return 1;
+}
+
+struct aptimer { int prev; int next; long time; long obj; long target; long event; long param; };
+extern struct aptimer ram_2f844[];
+extern int ram_30448;
+#define APTIMER(n) ((struct aptimer *)((char *)ram_2f844 + (n) * 24))
+extern int KillApTimer(long time, long obj, long target, long event, long param);
+
+int KillApTimer(long time, long obj, long target, long event, long param)
+{
+    int i;
+    int n;
+
+    i = ram_30448;
+    while (i != -1) {
+        if (APTIMER(i)->obj == obj && APTIMER(i)->target == target && APTIMER(i)->event == event &&
+            APTIMER(i)->param == param) {
+            n = APTIMER(i)->next;
+            if (n != -1)
+                APTIMER(n)->prev = APTIMER(i)->prev;
+            if (APTIMER(i)->prev != -1)
+                APTIMER(APTIMER(i)->prev)->next = APTIMER(i)->next;
+            if (i == ram_30448)
+                ram_30448 = APTIMER(i)->next;
+            APTIMER(i)->obj = -1;
+            APTIMER(i)->next = -1;
+            APTIMER(i)->prev = -1;
+            return 1;
+        }
+        i = APTIMER(i)->next;
+    }
+    return 0;
+}

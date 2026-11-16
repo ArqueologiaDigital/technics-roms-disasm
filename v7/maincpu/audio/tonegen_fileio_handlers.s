@@ -36,34 +36,11 @@ PanelTlv_ValidateLivePanel:
 	call	ToneGen_DispatchByMode
 	jp	SwbtWr_NullRet
 ; Validate block 0 of each of the 80 panel memories (RAM 0x1ED400 + 960*n).
-PanelTlv_ValidatePanelMemories:
-	dec	2, xsp
-	push	xiz
-	ldw	(xsp + 4), 0x0
-	lda	xiz, (0x1ed400:24)
-PanelTlv_ValidatePanelMemories_Loop:
-	ld	xwa, xiz
-	calr	PanelTlv_ValidateBlock0
-	incw	1, (xsp + 4)
-	lda	xiz, (xiz+960)
-	cpw	(xsp + 4), 0x50
-	jr	c, PanelTlv_ValidatePanelMemories_Loop
-	pop	xiz
-	inc	2, xsp
-	ret
+PanelTlv_ValidatePanelMemories:	.include "includes/generated/cc900/PanelTlv_ValidatePanelMemories.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidatePanelMemories_Loop, PanelTlv_ValidatePanelMemories + 13
 ; Validate block 0 of panel memory wa, at RAM 0x1ED400 + 960*wa (wa >= 80 returns at once).
-PanelTlv_ValidatePanelMemory:
-	cp	wa, 80
-	ret	nc
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 4
-	sub	xbc, xwa
-	sll	xbc, 6
-	lda	xwa, (0x1ed400:24)
-	add	xwa, xbc
-	calr	PanelTlv_ValidateBlock0
-	ret
+PanelTlv_ValidatePanelMemory:	.include "includes/generated/cc900/PanelTlv_ValidatePanelMemory.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 ; Validate the live panel, then the 80 panel memories.
 PanelTlv_ValidateAll:
 	calr	PanelTlv_ValidateLivePanel
@@ -174,21 +151,9 @@ PanelTlv_WriteLivePanelHeaders:
 	ld	xwa, 0xfd60
 	jrl	PanelTlv_WriteBlock1Headers
 ; Write the block-0 record headers of each of the 80 panel memories (RAM 0x1ED400 + 960*n).
-PanelTlv_WritePanelMemoryHeaders:
-	dec	2, xsp
-	push	xiz
-	ldw	(xsp + 4), 0x0
-	lda	xiz, (0x1ed400:24)
-PanelTlv_WritePanelMemoryHeaders_Loop:
-	ld	xwa, xiz
-	calr	PanelTlv_WriteBlock0Headers
-	incw	1, (xsp + 4)
-	lda	xiz, (xiz+960)
-	cpw	(xsp + 4), 0x50
-	jr	c, PanelTlv_WritePanelMemoryHeaders_Loop
-	pop	xiz
-	inc	2, xsp
-	ret
+PanelTlv_WritePanelMemoryHeaders:	.include "includes/generated/cc900/PanelTlv_WritePanelMemoryHeaders.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_WritePanelMemoryHeaders_Loop, PanelTlv_WritePanelMemoryHeaders + 13
 ; xwa = a block-0 base.  PanelTlv_WriteRecordHeader for each of the 46 PanelTlv_Block0_Layout records
 ; (10 bytes each: index*5*2).
 PanelTlv_WriteBlock0Headers:
@@ -851,18 +816,9 @@ ToneGen_FileIO_RestoreFromBackup:
 	ret
 ; Compare the first 3 bytes of Custom Data Flash 0x3D3000 with SndParamBank_DefaultHeader ("HK "); on any
 ; difference fall into SndParamBank_WriteFlashDefaults.
-SndParamBank_CheckFlash:
-	lda	xhl, (SndParamBank_DefaultHeader:24)
-	ld	xde, 0x3d3000
-	ld	bc, 0:i3
-SndParamBank_CheckFlash_Loop:
-	ld	A, (xhl+)
-	cp	A, (xde+)
-	jr	nz, SndParamBank_WriteFlashDefaults
-	inc	1, bc
-	cp	bc, 3:i3
-	jr	c, SndParamBank_CheckFlash_Loop
-	ret
+SndParamBank_CheckFlash:	.include "includes/generated/cc900/SndParamBank_CheckFlash.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParamBank_CheckFlash_Loop, SndParamBank_CheckFlash + 12
 ; FlashWrite the factory defaults of the sound-parameter banks: header + bank 0 (0xFA bytes) to 0x3D3000,
 ; SndParamBank_Default1 / _Default2 (0xEA each) to 0x3D3110 / 0x3D3210, then the 0x50-byte option block,
 ; assembled in a Malloc'd buffer from the five SndParamBank_OptionDefault_NN pieces, to 0x3D3400.

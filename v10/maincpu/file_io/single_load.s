@@ -236,61 +236,10 @@ SingleLoadSrc_PanelMemDrawBankName:
 ;   omitted when ALL flag 0x89FA is set), posts it, and when 0x89FA is set writes cell 3 (0x898D) as 'ALL' and posts
 ;   it. Basis: callers + body -- SingleLoadSrc_PanelMemListProc calls it on EVT_PAINT and after every cursor move
 ;   (parameters 5 and 6), which change the memory number.
-SingleLoadSrc_PanelMemDrawMemoryNumber:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	(xsp+6), xwa
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld	(xwa+42), 2
-	lda	xwa, (xwa+43)
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (StorageArea_UnitNames:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+43:16)
-	ld	xbc, SLSrcBankList_FuncBody_Str_Colon_2
-	call	FileIO_BuildFilePath
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	nz, SingleLoadSrc_PanelMemDrawMemoryNumber_Skip
-	lda	xiz, (SINGLE_LOAD_SRC_ROWS+43:16)
-	ld	a, (SLOAD_SRC_PMEM_POS:16)
-	extz	wa
-	div	wa, (xsp+0x4)
-	ld	a, w
-	inc	1, a
-	extz	wa
-	ld	bc, 0:i3
-	calr	NumToAscii_FormatNumber
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-SingleLoadSrc_PanelMemDrawMemoryNumber_Skip:
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+43:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+42:16)
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	z, SingleLoadSrc_PanelMemDrawMemoryNumber_Epilogue
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld	(xwa+63), 3
-	lda	xwa, (xwa+64)
-	ld	xbc, SLSrcBankList_FuncBody_Str_ALL
-	call	FileIO_CopyString
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+63:16)
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-SingleLoadSrc_PanelMemDrawMemoryNumber_Epilogue:
-	pop	xiz
-	inc	6, xsp
-	ret
+SingleLoadSrc_PanelMemDrawMemoryNumber:	.include "includes/generated/cc900/SingleLoadSrc_PanelMemDrawMemoryNumber.s"	; C: cc900/single_load_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadSrc_PanelMemDrawMemoryNumber_Skip, SingleLoadSrc_PanelMemDrawMemoryNumber + 97
+	.set	SingleLoadSrc_PanelMemDrawMemoryNumber_Epilogue, SingleLoadSrc_PanelMemDrawMemoryNumber + 166
 ; SingleLoadSrc_PanelMemDrawMemoryName: PANEL MEMORY source list, row 3: unless ALL mode (0x89FA set), writes cell 3
 ;   (0x898D) with the name of panel memory (SLOAD_SRC_PMEM_POS) read from the selected .PMT file (SingleLoadSrc_ReadPmtMemoryName:
 ;   16 bytes at 178 + index * entry size, the size being the file's word at offset 13), pads it and posts
@@ -1638,58 +1587,7 @@ SLSrc_Epilogue:
 	inc 4, xsp
 	ret
 
-SLDstBankList_FuncBody:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	(xsp+6), xwa
-	lda	xwa, (SINGLE_LOAD_DST_ROWS:16)
-	ld (xwa+), 0
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (SingleLoad_BankCaptionByMode:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+1:16)
-	ld	xbc, SLDstBankList_FuncBody_Str_Colon
-	call	FileIO_BuildFilePath
-	lda	xiz, (SINGLE_LOAD_DST_ROWS+1:16)
-	ld	a, (SLOAD_DST_PMEM_POS:16)
-	extz	wa
-	div	wa, (xsp+0x4)
-	inc	1, a
-	extz	wa
-	ld	bc, 0:i3
-	calr	NumToAscii_FormatNumber
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+1:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+21:16)
-	ld	c, (SLOAD_DST_PMEM_POS:16)
-	extz	bc
-	div	bc, (xsp+0x4)
-	extz	bc
-	ld	de, 1:i3
-	calr	SingleLoad_GetFileBankName
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+22:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0x89a2
-	call	ApPostEvent
-	lda	xde, (SINGLE_LOAD_DST_ROWS+21:16)
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	pop	xiz
-	inc	6, xsp
-	ret
+SLDstBankList_FuncBody:	.include "includes/generated/cc900/SLDstBankList_FuncBody.s"	; C: cc900/single_load_m269.c
 ; SingleLoadDst_DrawPanelMemItemRows: Fills rows 2-3 of the single-load PANEL MEMORY destination list (RAM 0x89CC /
 ;   0x89E1): row 2 = StorageArea_UnitNames[mode] ("MEMORY") + ": " + ((0x8A02 mod C) + 1), row 3 = that panel memory's
 ;   name from RAM (SingleLoad_GetFileMemoryName(0x8A02, marker 3): 0x1ED350 + entry size x n + 178); with the ALL flag 0x89FA

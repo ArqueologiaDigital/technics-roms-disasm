@@ -1,0 +1,25 @@
+file	set	function	bytes	verdict
+sub_F_ra01	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra02	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra03	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra04	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra05	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra06	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra07	Xr	DSP_TuneOffset	303	DIFF at +8
+sub_F_ra08	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra09	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_ra10	Xr	DSP_TuneOffset	303	DIFF at +24
+sub_F_rb01	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb02	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb03	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb04	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +13
+sub_F_rb05	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +13
+sub_F_rb06	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb07	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +11
+sub_F_rb08	Xr	DSP_AlgoDescriptor_Emit	398	DIFF at +11
+sub_F_rb09	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb10	Xr	DSP_AlgoDescriptor_Emit	402	DIFF at +11
+sub_F_rb11	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +11
+sub_F_rb12	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +13
+sub_F_rb13	Xr	DSP_AlgoDescriptor_Emit	399	DIFF at +13
+sub_F_rb14	Xr	DSP_AlgoDescriptor_Emit	397	DIFF at +13

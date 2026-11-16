@@ -77,3 +77,71 @@ void FDemoText_ParseControlMessage(void)
         break;
     }
 }
+
+/* cc900-module: FDemoText_CheckVoiceState FDemoText_LookupTableEntry */
+extern unsigned char *FDemoText_LookupTableEntry(unsigned int);
+extern unsigned char FDemoText_CheckVoiceState(unsigned int);
+extern void AddswbWr(unsigned int, unsigned int, unsigned int, unsigned int);
+extern void FDemoText_UpdateChannelVoice(unsigned char ch);
+
+void FDemoText_UpdateChannelVoice(unsigned char ch)
+{
+	unsigned char *e, *e2;
+	unsigned char s;
+	unsigned int w;
+
+	e = FDemoText_LookupTableEntry(ch);
+	e += 5;
+	s = FDemoText_CheckVoiceState(ch);
+	w = ch;
+	if (s != 1) {
+		*e = 0;
+		AddswbWr(w, 5, 0, 0x7f);
+		return;
+	}
+	if (*e != 0) return;
+	*e = 0x50;
+	AddswbWr(w, 5, 0x50, 0x7f);
+	e2 = e + 2;
+	if (*e2 == 0) return;
+	*e2 = 0;
+	AddswbWr(ch, 7, 0, 0x7f);
+}
+
+/* cc900-module: FDemoText_CalcTextExtent FDemo_LinkedListSearchInsert */
+extern void DemoDesc_BuildCompactParams(unsigned char *);
+extern void VoiceEvent_FlushAndReturn(int, int);
+extern void FDemoText_SendExtVoiceParams(unsigned char part);
+
+void FDemoText_SendExtVoiceParams(unsigned char part)
+{
+    unsigned char msg[6];
+    unsigned char params[10];
+    unsigned char *p;
+    unsigned char k;
+
+    p = params;
+    DemoDesc_BuildCompactParams(p);
+    msg[0] = 0xb0;
+    msg[1] = part;
+    msg[2] = 0x78;
+    msg[3] = 0;
+    sendCOMM(0, 4, msg);
+    msg[0] = 0x88;
+    msg[1] = part;
+    msg[3] = 0;
+    msg[5] = 0;
+    for (k = 11; k <= 12; k++) {
+        msg[2] = k;
+        msg[4] = *p;
+        sendCOMM(0, 6, msg);
+        p++;
+    }
+    for (k = 4; k <= 8; k++) {
+        msg[2] = k;
+        msg[4] = *p;
+        sendCOMM(0, 6, msg);
+        p++;
+    }
+    VoiceEvent_FlushAndReturn(0xff, part);
+}
