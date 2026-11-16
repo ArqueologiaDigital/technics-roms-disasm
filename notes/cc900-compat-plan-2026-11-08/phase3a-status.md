@@ -3877,6 +3877,15 @@ or less from *p through XIY) and STRUCT_ARG_MORE (a struct argument from *p or f
 in a register position when it is the only register-position argument).  stc 449 / 393 / 417 / 369 of 552 (+52 at
 every set), semcheck clean; validation and library unchanged; semcheck 9.
 
+**Batch 355 (2026-11-16): the P12 audit closes.**  lane_p12b's last narrowings: BASE_INDEX_SAME_STMT
+(BASE_BEFORE_INDEX_OPT does not hoist the base past a store into a later statement; half of its validation cost
+recovered, the other half could not be told apart from its good cases), LOC0W_WHOLE narrowed in loc0w.py to the loc0
+probe's encoding (it had written `inc 0x14,XWA` and `srl 0x14,XWA`, which are not TLCS-900 instructions -- invalid
+operands that semcheck's interpreter accepts and no other check sees), DEAD_CALL_DROP_INT and LHRES_STRAIGHT
+(DEAD_CALL_STORE's two parts).  With 353's CASE_TAIL_SINGLE, MULS_NO_EXTS_FP and PTR_TEST_REUSE off, all six flags the
+ablation found costly are settled with nothing lost.  Validation +3 / +2 / +2 / +2 statements and +1 function at none,
+nothing lost; ledger rows and library unchanged; semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

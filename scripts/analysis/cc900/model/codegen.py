@@ -7847,6 +7847,7 @@ UIDX_REGPARAM_STORE = True                               # see the unsigned inde
 SD2XR_WHOLE = True                                       # see compile_unit and sd2xr.py
 SDXR_OPT = True                                          # see compile_unit: sdxr under -O3 -XS -Xr too
 BASE_BEFORE_INDEX_OPT = True                             # see addr_reg_reuse
+BASE_INDEX_SAME_STMT = True                              # see addr_reg_reuse: not across a store (a later statement)
 POP_BEFORE_BASE = True                                   # see base_hoist
 SDXR_WHOLE = True                                        # see compile_unit and sdxr.py
 OPASSIGN_ZERO_ELEM = True                                # see gen_opassign
@@ -8251,6 +8252,11 @@ def addr_reg_reuse(lines, adecl=False):
             r0_ = min(used_lda_[j])                        # (the reuse in the same straight run only: r1_04_16's reuse
             if any(not (L[q] or '').startswith('\t') or _r.match(r'^\t(j|jr|jrl|djnz|ret|cal|call)\b', L[q] or '')
                    for q in range(j + 1, r0_)): continue   #  after a branch keeps the index first)
+            if BASE_INDEX_SAME_STMT and any(_r.match(r'^\t(ld|ldb|ldw|ldi|ldir|ldirw)\t\(', L[q] or '')
+                                            for q in range(j + 1, r0_)): continue
+                                                   # (and so does a reuse after a store: a later statement's,
+                                                   #  random r1_04_00 -O3 -XS: gul = gula[a]; return gula[6] << 13
+                                                   #  -> ld WA,(XSP+0x4) / sla 0x2,WA / lda XBC,_gula / ..)
             k = j
             while k > 0 and out[k - 1] is not None and idx_.match(out[k - 1]): k -= 1
             if k < j: out[k:j + 1] = [out[j]] + out[k:j]
@@ -17469,6 +17475,8 @@ def plan_lh_call(F):
             if hasattr(d, 'slot'): del d.slot
 
 DEAD_CALL_STORE = True                                    # see drop_dead_call_stores
+DEAD_CALL_DROP_INT = True                                 # see drop_dead_call_stores: not an int the call reads
+LHRES_STRAIGHT = True                                     # see plan_regtemps' lhres_: straight-line uses only
 
 def eval_write_only(f, opt, adecl):
     """WRITE_ONLY_EVAL: without -O (cdecl) a local that is only ever assigned -- never read -- has no slot; each
@@ -17509,6 +17517,8 @@ def drop_dead_call_stores(f, opt, adecl):
         c = strip(e.r)
         while c.k == 'cast' and c.kind in ('NoOp', 'BitCast'): c = strip(c.e)
         if c.k != 'call' or c.ty is None or c.ty.size != d.ty.size: continue
+        if DEAD_CALL_DROP_INT and d.ty.size != 4 and uses_decl(c, d): continue   # (t = f(t) with an int t keeps its
+                                                           #  store; P12, validation aggregate)
         if any(uses_decl(x, d) for x in body[i + 1:]): continue
         st.e = e.r
 
@@ -18908,6 +18918,8 @@ def regtemp_candidates(F):
         ci0_ = strip(c.init)                               # (a long * / % helper's result stays in XHL like a call's:
         lhres_ = DEAD_CALL_STORE and not F.opt and not F.adecl and ci0_.k == 'bin' and ci0_.op in ('*', '/', '%') and \
             ci0_.ty is not None and ci0_.ty.size == 4 and ci0_.ty.kind == 'int' and not nodes_in(c.init, 'call')   # r2_07_02)
+        if lhres_ and LHRES_STRAIGHT and any(x_.k != 'expr' for x_ in rest[:last + 1]): lhres_ = False
+                                                           # (only through expression statements: P12, validation)
         if has_helper_call(c.init) and strip(c.init).k != 'call' and not lhres_: continue   # (a long helper's result stays in
         nx_ = rest[0]                                                                       #  XHL like a call's: r2_07_02)
         nxcall_ = nx_.k == 'expr' and strip(nx_.e).k == 'call'

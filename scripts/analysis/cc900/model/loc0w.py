@@ -128,7 +128,7 @@ def classify_init(n, t):
     need(x.k == 'bin' and x.op in ('+', '-', '>>'))
     a = unc(x.l)
     need(a.k == 'load' and tl(a.ty) == t)
-    amem, _ = gmem(a)
+    amem, ak_ = gmem(a)
     k = const_of(x.r)
     if k is not None:
         if t in ('p', 'pi'):
@@ -137,7 +137,9 @@ def classify_init(n, t):
         return Init('B', op=x.op, a=amem, kc=k, b=None)
     b = unc(x.r)
     need(b.k == 'load' and tl(b.ty) == t and x.op == '+')
-    return Init('B', op='+', a=amem, b=gmem(b)[0], kc=None)
+    bmem, bk_ = gmem(b)
+    need(ak_ == 'G' and bk_ == 'G')                      # (plain globals, as the probe's gc + hc; P12)
+    return Init('B', op='+', a=amem, b=bmem, kc=None)
 
 
 class Use:
@@ -297,6 +299,10 @@ def gen(f, s):
     if init.k == 'B':
         need((t, init.op, 'K' if init.b is None else 'G') in B_SHAPES)
         need(init.op != '-' or init.kc == 1)
+        if init.b is None:                                 # a constant in the encoding the probe shows: a pointer
+            need(init.kc <= 8 if t in ('p', 'pi') else       # step inc 0x1..0x8 (gp + 1, gpi + 1), an unsigned char
+                 init.kc > 8 if t == 'uc' else             # add of a byte past inc's range (guc + 212), a shift
+                 1 <= init.kc <= 16)                        # count srl 0x1..0x10 (gul >> 3); P12 (lane_p12b)
     for d in CALLEES:
         need(not cdecl_mismatch(d, xr))
     opt = s.startswith('O3')
