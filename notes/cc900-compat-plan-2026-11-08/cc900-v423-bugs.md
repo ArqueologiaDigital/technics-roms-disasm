@@ -93,8 +93,10 @@ Add every new one here, in the commit that finds it.
   `rs_10_02_13_2` (`char *u = gs.p + a;` with `a` a stack parameter, none and O3XS), rstmt11.c `rs_11_05_01_5`
   (`return gp + t;` with a char t, Xr and O3XSXr), and rstmt9.c `rs_9_08_04_3` (`vp(u + i)` with locals u and i:
   sign-extended, no bug).  Reported by lane_nm.
-- **Model:** reproduces it where V4.23 does it (PTR_CTX, chidx, lane_nm rule 15 CHAR_IDX_SIGN; rule 22 sign-extends only
-  where V4.23 does).  Firmware code indexing a char pointer backwards would need this to match.
+- **Model:** reproduces it where V4.23 does it (PTR_CTX, chidx; lane_nm rules 15 and 28, CHAR_IDX_SIGN and
+  CHAR_SUM_HOME, batch 366: the home and context conditions above), except under -O for a local copied from a stack
+  parameter, where the model computes correct C.  Firmware code indexing a char pointer backwards would need this to
+  match.
 
 ## 5. Under -O, a char pointer difference compared with 0 is compared unsigned
 
