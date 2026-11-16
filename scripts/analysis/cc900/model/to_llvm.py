@@ -324,6 +324,16 @@ def split_consts(lines):
         if consts: consts[next(iter(consts))][:0] = pre
     return consts, out
 
+def fp_consts(consts):
+    """split_consts' objects -> {label: (directive, value text)} of the FP constants only (fdata / fdatad, the last
+    one of an object), the form pairs_model.py checks against the image (split_consts' result before cc900-data)"""
+    out = {}
+    for lab, ls in consts.items():
+        for l in ls:
+            if l.startswith('\tfdata'):
+                out[lab] = tuple(l.strip().split('\t'))
+    return out
+
 def translate_data(lines, locals_):
     """an f_const object's lines -> llvm-mc data lines (names of the function's local labels kept as they are)"""
     import struct
