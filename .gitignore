@@ -55,6 +55,8 @@ mame_driver/build_error.txt
 */maincpu/includes/generated/*.bin.patched
 # the pixels of the NAKA GUI C pictures, written from images/*.png by scripts/build/c_bitmaps.py
 */maincpu/includes/generated/pictures/
+# the bodies of firmware C functions, written from <tree>/cc900/*.c by scripts/build/cc900_firmware_c.py (cc900 phase 6)
+*/maincpu/includes/generated/cc900/
 hdae5000/includes/generated/*.bin
 hdae5000_v2_01i/includes/generated/*.bin
 hdae5000_v1_15i/includes/generated/*.bin

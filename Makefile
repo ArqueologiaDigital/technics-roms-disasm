@@ -842,8 +842,25 @@ HDAE_SRC = $(wildcard hdae5000/*.s hdae5000/*/*.s)
 TABLEDATA_SRC = $(wildcard table_data/*.s table_data/*/*.s)
 CUSTOMDATA_SRC = $(wildcard custom_data/*.s custom_data/*/*.s)
 
+# --- Firmware C code (cc900 phase 6; notes/cc900-phase6-2026-11-16/README.md) ---
+# <tree>/cc900/*.c is C for firmware functions.  scripts/build/cc900_firmware_c.py compiles each file with the
+# cc900 reference model (scripts/analysis/cc900/model/, the firmware's -O3 -XS -Xr) and model/to_llvm.py -- our
+# own tools only, no Toshiba program -- into one body per function, includes/generated/cc900/<function>.s, which
+# the tree includes on the function's label line in place of its hand-written instructions.  The byte gate is the
+# proof that the C, the model and the translator give the firmware's bytes.  The stamp depends on the tree's
+# sources because the generator reads the tree's .equ values (they choose an operand's 16- or 24-bit width), and
+# on every model module, so a change to the model is checked against these functions by `make gate`.
+CC900_MODEL_SRC = $(wildcard scripts/analysis/cc900/model/*.py)
+CC900_FW_GEN = scripts/build/cc900_firmware_c.py
+V10_CC900_C = $(wildcard v10/maincpu/cc900/*.c)
+V10_CC900_STAMPS = $(patsubst v10/maincpu/cc900/%.c,v10/maincpu/includes/generated/cc900/%.stamp,$(V10_CC900_C))
+v10/maincpu/includes/generated/cc900/%.stamp: v10/maincpu/cc900/%.c $(V10_SRC) $(CC900_MODEL_SRC) $(CC900_FW_GEN) $(CLANG) $(LLVM_MC)
+	CC900_MODEL_CLANG=$(CLANG) python3 -B $(CC900_FW_GEN) v10/maincpu $< v10/maincpu/includes/generated/cc900 $@
+.PHONY: cc900-firmware-c
+cc900-firmware-c: $(V10_CC900_STAMPS)
+
 # --- Maincpu ---
-rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) $(V10_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v10/maincpu -I wsa1/kernel -o $@ v10/maincpu/kn5000_v10_program.s
 

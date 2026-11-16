@@ -14,6 +14,12 @@ WHERE THE CLASSES COME FROM
     This script reuses its functions and adds one split of its own:
 
         Assembly code     census bucket CODE (instruction statements)
+        Compiled C code   census bucket CODE whose lines are the generated bodies of
+                          firmware C functions (the census's compiled_c flag: files
+                          under <tree>/includes/generated/cc900/, which
+                          scripts/build/cc900_firmware_c.py compiles from
+                          <tree>/cc900/*.c with the cc900 reference model; phase 6
+                          of notes/cc900-compat-plan-2026-11-08/PLAN.md, 2026-11-16)
         Compiled C        a data region all of whose lines are `.incbin` of a file
                           that kn5000_source_coverage.classify_incbin() calls
                           'clang' (the byte-exact clang -target tlcs900 output
@@ -36,7 +42,8 @@ DOCS PAGE (follow-up, not yet done)
     (strings, pointer tables, binary includes, orange, yellow) and a "This image
     is stale" box.  The first commit in technics-docs that publishes a diagram
     from this script must replace both with this legend, which is CLASSES below:
-        green = assembly code · light green = compiled C (clang `.incbin`) ·
+        green = assembly code · olive = compiled C code (cc900 reference model) ·
+        light green = compiled C data (clang `.incbin`) ·
         blue = data, purpose explained (census A) · cyan = data, named
         (census B) · red = data, purpose unexplained · gray = verified filler.
 
@@ -70,13 +77,14 @@ BYTES_PER_PIXEL = 8
 # class id -> (legend text, RGB)
 CLASSES = [
     ("Assembly code", (0, 150, 0)),
-    ("Compiled C (clang .incbin)", (120, 210, 60)),
+    ("Compiled C data (clang .incbin)", (120, 210, 60)),
     ("Data, purpose explained (census A)", (0, 100, 220)),
     ("Data, named (census B)", (0, 190, 190)),
     ("Data, purpose unexplained", (220, 40, 40)),
     ("Filler (verified uniform)", (150, 150, 150)),
+    ("Compiled C code (cc900 model)", (150, 130, 0)),
 ]
-ASM, CC, KA, KB, UNK, FILL = range(len(CLASSES))
+ASM, CC, KA, KB, UNK, FILL, CCODE = range(len(CLASSES))
 # Internal sentinel for "no census bucket yet"; class_map() refuses to return a
 # map that still holds it, so it is never drawn and has no legend entry.
 NONE = len(CLASSES)
@@ -115,6 +123,8 @@ def class_map(img, tmp):
     cls = bytearray([NONE]) * img["size"]
     for reg, rec in zip(regions, recs):
         k = GRADE_CLASS[rec["grade"]]
+        if k == ASM and rec.get("compiled_c"):
+            k = CCODE
         if k in (KA, KB, UNK) and ".incbin" in reg["details"] and region_is_clang(img, reg):
             k = CC
         cls[rec["lo"]:rec["hi"]] = bytes([k]) * (rec["hi"] - rec["lo"])
@@ -190,7 +200,9 @@ def draw(blocks, out_path):
         size = "%dMB" % (size_kb // 1024) if size_kb >= 1024 else "%dKB" % size_kb
         centred("%s (%s)" % (b["title"], size), y + b["height"] + 4, label_f, (0, 0, 0), cx)
         pct = lambda k: 100.0 * b["counts"][k] / b["size"]
-        centred("code %.1f%% (asm %.1f%% + C %.1f%%)" % (pct(ASM) + pct(CC), pct(ASM), pct(CC)),
+        ccode = ("%.1f%%" % pct(CCODE)) if pct(CCODE) >= 0.1 else "{:,} B".format(b["counts"][CCODE])
+        centred("code %.1f%% (asm %.1f%% + C code %s + C data %.1f%%)"
+                % (pct(ASM) + pct(CCODE) + pct(CC), pct(ASM), ccode, pct(CC)),
                 y + b["height"] + 22, info_f, (0, 110, 0), cx)
         return b["height"] + label_h + gap_v
 
@@ -245,12 +257,13 @@ def main():
 
     W, H = draw(blocks, out_path)
     print("\nwrote %s (%dx%d)\n" % (out_path, W, H))
-    heads = ["image", "bytes"] + ["asm", "C", "data A", "data B", "data ?", "filler"]
+    heads = ["image", "bytes"] + ["asm", "C data", "data A", "data B", "data ?", "filler", "C code"]
     rows = []
     for key, title in LAYOUT_LEFT + LAYOUT_RIGHT:
         b = blocks[key]
         rows.append([title, "{:,}".format(b["size"])] +
-                    ["%.1f%%" % (100.0 * b["counts"][k] / b["size"]) for k in range(len(CLASSES))])
+                    ["%.1f%%" % (100.0 * b["counts"][k] / b["size"]) for k in range(len(CLASSES) - 1)] +
+                    ["{:,} B".format(b["counts"][CCODE])])
     widths = [max(len(r[i]) for r in rows + [heads]) for i in range(len(heads))]
     fmt = lambda r: "| " + " | ".join(c.ljust(widths[i]) for i, c in enumerate(r)) + " |"
     print(fmt(heads))

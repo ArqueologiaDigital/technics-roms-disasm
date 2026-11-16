@@ -27,6 +27,13 @@ BUCKETS
     FILLER          fill directives (.fill/.space/.zero/.org/.align) whose ROM
                     bytes are VERIFIED uniform and at least 16 bytes long
 
+    CODE has one sub-count, COMPILED-C CODE (cc900 phase 6, added 2026-11-16):
+    instructions whose source line is in a file under <tree>/includes/generated/
+    cc900/, the bodies scripts/build/cc900_firmware_c.py compiles from the tree's
+    firmware C (<tree>/cc900/*.c) with the cc900 reference model.  They are
+    still CODE (the BUCKETS do not change); records carry compiled_c=True, the
+    results a "CODE-C" total, and the ROM status diagram paints them apart.
+
 HOW THE MAP IS BUILT (and why it can be trusted)
     The same instrument as scripts/analysis/address_line_map.py, generalised to
     all twenty images: mirror each image's source tree, insert a synthetic label
@@ -933,9 +940,13 @@ def annotate(c, regions, ctrl_targets, label_index):
                    code_suspect=False, admits=False, embedded_in_code=False,
                    code_name=False,
                    words=len(re.findall(r'[A-Za-z]{2,}', normalise_header(header) or "")))
+        rec["compiled_c"] = False
         if r["bucket"] == "code":
             rec["grade"] = "CODE"
             rec["reason"] = "instruction statements"
+            if is_compiled_c(r["rel"]):
+                rec["compiled_c"] = True
+                rec["reason"] = "instruction statements compiled from firmware C (cc900 reference model)"
         elif r["bucket"] == "fill":
             uniform = len(set(blob)) <= 1
             if uniform and n >= 16:
@@ -1010,6 +1021,12 @@ def scan_refs(srcroot, extra=()):
 
 # --------------------------------------------------------------------- report
 BUCKETS = ["CODE", "KNOWN-A", "KNOWN-B", "UNKNOWN", "FILLER"]
+# The generated bodies of firmware C functions (scripts/build/cc900_firmware_c.py), relative to a tree.
+COMPILED_C_DIR = "includes/generated/cc900/"
+
+
+def is_compiled_c(rel):
+    return rel.replace(os.sep, "/").startswith(COMPILED_C_DIR)
 
 
 def run(keys, verbose=True):
@@ -1034,9 +1051,10 @@ def run(keys, verbose=True):
             for r in recs:
                 tot[r["grade"]] += r["size"]
             covered = sum(tot.values())
+            code_c = sum(r["size"] for r in recs if r["compiled_c"])
             results.append(dict(key=img["key"], title=img["title"],
                                 size=img["size"], inert=c["inert"],
-                                totals=tot, covered=covered,
+                                totals=tot, covered=covered, code_c=code_c,
                                 nregions=len(recs)))
             allrecs += recs
             if verbose:
@@ -1090,6 +1108,12 @@ def report(results, recs):
     print("  " + "-" * 62)
     print("  %-12s %9d %9d %9d %9d %9d" % ("TOTAL", agg["CODE"], agg["KNOWN-A"],
                                           agg["KNOWN-B"], agg["UNKNOWN"], agg["FILLER"]))
+    cc = [r for r in results if r.get("code_c")]
+    print("\n  of CODE, compiled from firmware C (cc900 reference model, %s):" % COMPILED_C_DIR)
+    for r in cc:
+        print("    %-12s %9d B" % (r["key"], r["code_c"]))
+    if not cc:
+        print("    none")
     print("\n  per-image share explained by the raw census (before the "
           "false-positive correction):")
     for r in results:

@@ -276,9 +276,7 @@ BitMapOut_ByteData_DiskCheck:
 	ret
 
 ; Stores A at 0x8d3e, which BitMapOut_ByteData_DiskCheck reads back.
-BitMapOut_StorePresetValue:
-	ld (0x8d3e:16), a
-	ret
+BitMapOut_StorePresetValue:	.include "includes/generated/cc900/BitMapOut_StorePresetValue.s"	; C: cc900/bitmap_out_routines.c
 
 BitMapOut_SetDefaultTimer:
 	ld (0x8d3c:16), 64

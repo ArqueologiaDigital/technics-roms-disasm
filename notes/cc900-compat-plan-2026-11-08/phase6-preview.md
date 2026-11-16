@@ -133,3 +133,7 @@ every image that has it; `pairs_model.py` reports it as `alias of __ctype` and t
 - `_sbrk` (main CPU v10 and v7, table data) is the last bytes of the routine before `.sbrk` (`pop XIZ` / `ret`);
 - the main CPU's `_vsprintf`;
 - `__facnv` (main CPU v10 and v7, HD-AE5000 v2.06i and v1.10i), which the model cannot compile yet.  The SX-WSA1R images have no pairs in `pairs.tsv`.
+
+**Phase 6 started 2026-11-16** (lane_p6): four of these functions are now built from C by `make`, through the model
+and our own tools only, with `TrimPad_NullTerminate` and `FmtNum_WriteSpacePad` left out because they are the tails of
+larger routines, not functions.  See `notes/cc900-phase6-2026-11-16/README.md`.

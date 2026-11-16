@@ -1660,10 +1660,7 @@ MainLswPartGet:
 	ret
 
 ; Stores XWA + XBC in LSW_FILTER.
-SetLswFilter:
-	add xwa, xbc
-	ld (LSW_FILTER:24), xwa
-	ret
+SetLswFilter:	.include "includes/generated/cc900/SetLswFilter.s"	; C: cc900/ui_widget_defs.c
 
 ; Stores XWA + XBC in LSW_FILTER (the same code as SetLswFilter; callers pass the values that
 ; clear the filter).
@@ -9150,9 +9147,7 @@ GetRootParam:
 
 ; Overrides the top-level dispatch's object (ROOT_OBJECT, see GetRootObject) with XWA;
 ; GroupBoxProc_StartSSFPresentation sets it, and the event with SetRootEvent, this way.
-SetRootObject:
-	ld (ROOT_OBJECT:24), xwa
-	ret
+SetRootObject:	.include "includes/generated/cc900/SetRootObject.s"	; C: cc900/ui_widget_defs.c
 
 SetRootEvent:
 	ld (ROOT_EVENT:24), xwa

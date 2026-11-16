@@ -1770,11 +1770,8 @@ GetPlayState2:
 	ld l, (0x8944:16)
 	ret
 
-SmfMedley_RawData:
-	cp	a, 0:i3
-	scc	nz, wa
-	ld	(35140:16), a
-	ret
+; Stores 1 at 0x8944 when A is non-zero, else 0; GetPlayState2 reads it back.
+SmfMedley_RawData:	.include "includes/generated/cc900/SmfMedley_RawData.s"	; C: cc900/medley.c
 
 NavigateSongList:
 	dec 2, xsp

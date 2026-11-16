@@ -43,10 +43,21 @@ def lookup(sym, syms):
     raise KeyError('no address for %s' % sym)
 
 LARGE_DATA = False                                       # named absolute operands are `extern large`: 24-bit
+# SPELL (phase 6 build, scripts/build/cc900_firmware_c.py): {C name without `_` / `.`: its spelling in the source
+# tree}.  When set, a named operand is written by that spelling (`(LSW_FILTER:24)`, `call FuncName`), so the tree's
+# own definitions supply the value; the address from SYMBOLS still picks the 8/16/24-bit width.  A name SPELL lacks
+# is written as its address, as before.
+SPELL = None
 
-def absaddr(a, named=False):
-    if named and LARGE_DATA: return '(0x%x:24)' % a
-    return '(0x%x:%d)' % (a, 8 if a < 0x100 else 16 if a < 0x10000 else 24)
+def spelled(sym, a, off=0):
+    """the operand text for symbol `sym` (+ off) at address a: the tree's name when SPELL has it, else the number"""
+    s = SPELL.get(sym.lstrip('_.')) if SPELL is not None else None
+    if s is None: return '0x%x' % (a + off)
+    return '%s+%d' % (s, off) if off else s
+
+def absaddr(a, named=False, sym=None, off=0):
+    w = 24 if named and LARGE_DATA else 8 if a + off < 0x100 else 16 if a + off < 0x10000 else 24
+    return '(%s:%d)' % (spelled(sym, a, off) if sym else '0x%x' % (a + off), w)
 
 def num(s):
     s = s.strip(); neg = s.startswith('-'); s = s.lstrip('-')
@@ -58,7 +69,8 @@ def operand(o, syms, locals_):
     o = o.strip()
     if REGS.match(o): return o.lower()
     m = re.match(r'^\(([_.][A-Za-z0-9_]+)(?:\s*\+\s*(0x[0-9a-fA-F]+|\d+))?\)$', o)
-    if m: return absaddr(lookup(m.group(1), syms) + (num(m.group(2)) if m.group(2) else 0), named=True)
+    if m: return absaddr(lookup(m.group(1), syms), named=True, sym=m.group(1),
+                         off=num(m.group(2)) if m.group(2) else 0)
     m = re.match(r'^\((X\w+)\+:(\d)\)$', o)                     # post-increment
     if m: return '(%s+:%s)' % (m.group(1).lower(), m.group(2))
     m = re.match(r'^\(-(X\w+):(\d)\)$', o)                       # pre-decrement
@@ -77,7 +89,7 @@ def operand(o, syms, locals_):
     if m: return '(%s+)' % m.group(1).lower()
     m = re.match(r'^\(-(X\w+)\)$', o)
     if m: return '(-%s)' % m.group(1).lower()
-    if re.match(r'^[_.][A-Za-z0-9_]+$', o): return '0x%x' % lookup(o, syms)
+    if re.match(r'^[_.][A-Za-z0-9_]+$', o): return spelled(o, lookup(o, syms))
     return None
 
 def size_suffix(op):
@@ -109,13 +121,13 @@ def translate_line(t, syms, locals_):
         # muls HL,0x3 is the byte form (L x 3 -> HL; chnarrow.c cn_mul_k): llvm-mc names the 8-bit source (cf 09 03)
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])
-    if op == 'cal': return '\tcall 0x%x' % lookup(raw[0], syms)
+    if op == 'cal': return '\tcall %s' % spelled(raw[0], lookup(raw[0], syms))
     if op == 'j':
         if len(raw) == 1:
             if raw[0] in locals_: return '\tjr %s' % raw[0]
             m = re.match(r'^(X\w+)\+(\w+)$', raw[0])
             if m: return '\tjp t, (%s+%s)' % (m.group(1).lower(), m.group(2).lower())
-            return '\tjp 0x%x' % lookup(raw[0], syms)
+            return '\tjp %s' % spelled(raw[0], lookup(raw[0], syms))
         return '\tjr %s, %s' % (CC[raw[0]], raw[1])
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
     m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff)$', ' '.join(raw)) if op == 'pushw' else None
@@ -157,8 +169,8 @@ def translate_line(t, syms, locals_):
         # lda of a symbol takes the 24-bit address whatever its value (sub CPU _exp: lda XBC,_g_mathtbl at 0xf420 is
         # f2 20 f4 00 31, not the 16-bit form)
         m = re.match(r'^([_.]\w+) \+ (0x[0-9a-fA-F]+|\d+)$', src)
-        if m: return '\tlda %s, (0x%x:24)' % (dst, lookup(m.group(1), syms) + num(m.group(2)))   # _cos: _g_dbltbl + 0x10
-        if src.startswith(('_', '.')): return '\tlda %s, (0x%x:24)' % (dst, lookup(src, syms))
+        if m: return '\tlda %s, (%s:24)' % (dst, spelled(m.group(1), lookup(m.group(1), syms), num(m.group(2))))   # _cos: _g_dbltbl + 0x10
+        if src.startswith(('_', '.')): return '\tlda %s, (%s:24)' % (dst, spelled(src, lookup(src, syms)))
         if src in syms: return '\tlda %s, (0x%x:24)' % (dst, syms[src])      # an FP constant placed by the linker
         if re.match(r'^X(WA|BC|DE|HL|IX|IY|IZ|SP)$', src): return '\tlda %s, (%s)' % (dst, src.lower())   # lda XWA,XSP
         if src in locals_: return '\tlda %s, (%s:24)' % (dst, src)
