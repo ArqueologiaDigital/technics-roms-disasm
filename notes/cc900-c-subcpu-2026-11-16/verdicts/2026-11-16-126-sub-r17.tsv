@@ -1,0 +1,103 @@
+function	bytes	matches	best_diff
+Algo67_LUTOffset_Check	147	sub_R_17a@Xr sub_R_17b@Xr sub_R_17c@Xr	
+Algo_SubTable_Bit15Dispatch	241	sub_R_17a@Xr sub_R_17c@Xr	
+Algo_SubTable_DispatchA	96	sub_R_17a@Xr sub_R_17c@Xr	
+Algo_SubTable_DispatchB	184	-	+123 sub_R_17c@Xr
+Algo_SubTable_DispatchC	203	sub_R_17a@Xr sub_R_17c@Xr	
+AudioChannel_AllVoices_Update_Variant3	115	-	+16 sub_Q_17c@Xr
+AudioChannel_Handler_Cmd01	77	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+AudioChannel_Handler_Cmd02	124	sub_Q_17a@Xr sub_Q_17c@Xr	
+AudioChannel_Handler_Cmd03	62	sub_Q_17a@Xr sub_Q_17c@Xr	
+AudioMod_Apply_BusRouting	234	sub_Q_17b@Xr	
+AudioMod_Scale_To_LevelPairShift	74	-	+4 sub_Q_17c@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_Q_17c@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_Q_17c@Xr
+AudioMod_Scale_To_Part_1F	77	-	+4 sub_Q_17c@Xr
+Audio_Cmd_DSPGlobal_Param_Store	60	-	+19 sub_R_17b@Xr
+Audio_Cmd_PatchByte_Write_And_Echo	65	-	+18 sub_R_17c@Xr
+CustomTone_CopySubUnitRecord	89	sub_R_17c@Xr	
+DSP1_ResolveStreamPtr	31	-	+12 sub_N_17b@Xr
+DSP_AlgoDescriptor_Emit	396	sub_N_17a@Xr sub_N_17b@Xr sub_N_17c@Xr	
+DSP_BytecodeInterpreter_Init	1933	-	+423 sub_S_17a@Xr
+DSP_ChanFreq_WritePacket1	224	-	+33 sub_R_17b@Xr
+DSP_ChanFreq_WritePacket2	122	-	+100 sub_R_17c@Xr
+DSP_EFFParam_DiffAllAndFlag	699	-	+6 sub_N_17c@Xr
+DSP_FlushAllSlots	197	-	+30 sub_N_17c@Xr
+DSP_OscAlgoSelect	337	sub_N_17a@Xr sub_N_17b@Xr sub_N_17c@Xr	
+DSP_ParamInterp_3Point_WithOffset	119	-	+93 sub_S_17c@Xr
+DSP_ParamInterp_Div0xB4	70	sub_S_17a@Xr sub_S_17c@Xr	
+DSP_PerParameterTranslator	1113	sub_S_17a@Xr sub_S_17c@Xr	
+DSP_RingBuf_Read	41	-	+15 sub_N_17c@Xr
+DSP_SlotParam_Read_To_Cache	105	sub_R_17a@Xr	
+DSP_SlotParam_Read_To_Cache_B	118	-	+39 sub_R_17c@Xr
+DSP_SlotParam_Write_From_Cache	332	sub_R_17a@Xr	
+DSP_SlotParam_Write_From_Cache_B	341	sub_R_17a@Xr	
+DSP_VoiceCoeffRoute2	431	-	+302 sub_N_17b@Xr
+DSP_WriteCount_Compute	40	-	+0 sub_N_17c@Xr
+DSP_WriteOscParam	205	sub_S_17a@Xr sub_S_17b@Xr	
+DSP_WriteOscParam_Offset	191	sub_S_17a@Xr sub_S_17b@Xr sub_S_17c@Xr	
+DSP_WriteVoiceParam	152	-	+43 sub_R_17c@Xr
+Debug_Print_Word	31	-	+18 sub_N_17c@Xr
+EFF_DspChannel_InitFlags	1965	-	+51 sub_N_17a@Xr
+EFF_ParamIterator_Process	334	-	+36 sub_N_17c@Xr
+EFF_SecondaryLinkPath	225	-	+6 sub_N_17c@Xr
+EFF_SlotActive_UpdateFlags	428	-	+164 sub_N_17a@Xr
+EFF_VolumeLoop	294	-	+11 sub_N_17a@Xr
+EFF_VolumeUpdate_WithDebug	247	sub_N_17a@Xr sub_N_17b@Xr	
+EGEnv_Compute_A	144	sub_N_17a@Xr sub_N_17b@Xr	
+EGEnv_Compute_B	144	-	+133 sub_N_17c@Xr
+InterCPU_DMA_Send	67	-	+22 sub_S_17b@Xr
+InterCPU_SendEditBufferToMain	58	-	+0 sub_R_17c@Xr
+Keybed_Read_Event	84	-	+11 sub_S_17c@Xr
+OutputBuf_Flush_B	97	sub_P_17a@Xr sub_P_17b@Xr sub_P_17c@Xr	
+PitchBend_Scale	59	-	+25 sub_P_17c@Xr
+RingBuf_ReadByte	43	-	+25 sub_N_17c@Xr
+TVF_Build_Dispatch	60	sub_P_17a@Xr sub_P_17b@Xr sub_P_17c@Xr	
+TVF_Calc_Cutoff	147	-	+1 sub_P_17c@Xr
+TVF_Emit_Offset_Both	122	-	+71 sub_P_17b@Xr
+TVF_Emit_Offset_Reg100	102	sub_P_17a@Xr sub_P_17b@Xr	
+TVF_Lookup_Depth_Amount	168	-	+5 sub_P_17c@Xr
+ToneDB_Find_PatchRecord	240	-	+21 sub_R_17c@Xr
+ToneDB_Find_ToneRecord_CoeffPath	85	-	+0 sub_R_17c@Xr
+ToneGen_SetupPolyVoice	169	sub_N_17a@Xr sub_N_17b@Xr	
+ToneGen_SilenceChannel	69	-	+2 sub_P_17c@Xr
+VoiceNoteParam_UpdateLoop	386	sub_R_17a@Xr sub_R_17c@Xr	
+VoiceParam_CustomTone_Select	152	-	+26 sub_R_17c@Xr
+VoiceParam_Set_Tone_Option	192	-	+13 sub_N_17c@Xr
+VoiceParam_SubSlot_Apply_Catalog64	184	-	+5 sub_R_17c@Xr
+VoiceState_SwapSlot_DE_BC	155	-	+1 sub_P_17c@Xr
+VoiceStruct_BulkInit	133	-	+17 sub_R_17c@Xr
+VoiceSubSlot_Init	61	sub_R_17c@Xr	
+Voice_AdvanceSlotIterator	102	sub_P_17a@Xr sub_P_17c@Xr	
+Voice_AllVoices_UpdateVelocity	245	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+Voice_ApplyPortamento2	84	sub_Q_17a@Xr	
+Voice_Calc_LevelPair_EGC	306	sub_Q_17a@Xr sub_Q_17c@Xr	
+Voice_Calc_LevelPair_FixedAtk	320	-	+225 sub_Q_17b@Xr
+Voice_Clear_HoldBit	77	-	+41 sub_P_17c@Xr
+Voice_ComputePitch	392	-	+22 sub_Q_17c@Xr
+Voice_ComputePitch_InlineData	17	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+Voice_Freq_WriteLeft	284	-	+143 sub_P_17a@Xr
+Voice_InterpolateNoteCurve	138	-	+2 sub_Q_17c@Xr
+Voice_InterpolatePanCurve	139	-	+32 sub_Q_17b@Xr
+Voice_LoadFilterTable_Ch	235	-	+75 sub_Q_17b@Xr
+Voice_LoadPitchTable_Ch	235	-	+75 sub_Q_17b@Xr
+Voice_LoadToneTable_Ch	171	-	+73 sub_Q_17b@Xr
+Voice_Part_ResetSlotRouting	259	sub_R_17b@Xr sub_R_17c@Xr	
+Voice_PitchBend	130	sub_P_17a@Xr	
+Voice_PortaLevel_Compute	240	-	+16 sub_P_17a@Xr
+Voice_PortamentoTarget_SetSlot	41	sub_P_17a@Xr sub_P_17b@Xr sub_P_17c@Xr	
+Voice_PortamentoTargets_SetAll	175	sub_P_17c@Xr	
+Voice_Retire_ToFreePool	80	-	+7 sub_P_17c@Xr
+Voice_ScanSlots_ReassignSources	207	-	+33 sub_P_17b@Xr
+Voice_SecondaryParam_Fetch2	142	-	+62 sub_R_17b@Xr
+Voice_Selector_ComputeMixWeights	190	sub_P_17a@Xr sub_P_17c@Xr	
+Voice_Slot_ComputePitch	179	sub_P_17b@Xr	
+Voice_Step_DelayTimers	104	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+Voice_ToneTableRamp_Up	165	sub_Q_17c@Xr	
+Voice_WriteChPanShift	280	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+Voice_WriteChPanShift2	280	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+Voice_WriteChPitchWithVib	145	sub_Q_17a@Xr sub_Q_17b@Xr sub_Q_17c@Xr	
+WaveSel_StageA1_FromPatchBlock	134	sub_R_17a@Xr sub_R_17b@Xr	
+WaveSel_StageA1_SelectTables	168	-	+152 sub_R_17b@Xr
+WaveSel_StageA2_FromToneRec	124	sub_R_17a@Xr sub_R_17c@Xr	
+WaveSel_StageB_Build_Reg040	177	-	+40 sub_P_17c@Xr
