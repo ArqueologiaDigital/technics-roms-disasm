@@ -7961,6 +7961,7 @@ FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
 ASSIGN_TARGET_WRITE = True                               # see gen_assign_value and Fn.emit's live guard
+LH_XIZ_FREE = True                                       # see lh_xiz_free
 GOTO_LABELS = True                                       # see gen_stmt's goto and golab
 STORE_POSTINC_XHL = True                                  # see gen_stmt's store: *p++ = computed char, p in a register
 STORE_DYING_CHARVAR = True                                # see gen_stmt's store: a dying char register variable's value
@@ -14444,7 +14445,7 @@ def plan_homes(F):
     if FP_OPA_NO_XIZ and not F.opt and not F.adecl:      # a double op= on a non-local target needs XIZ for its address:
         walk(F.f.body, lambda n_, dd: fpopa_.append(n_) if n_.k == 'opassign' and fpgen.is_fp(getattr(strip(n_.l), 'ty', None))
              and not (strip(n_.l).k == 'var' and strip(n_.l).decl.kind in ('local', 'param')) else None)
-    winners_sorted = [d for d in winners_sorted if not getattr(d, 'lh_slot', False)]
+    winners_sorted = [d for d in winners_sorted if not getattr(d, 'lh_slot', False) and not getattr(d, 'no_xiz_home', False)]
     if HALVES_BY_USE and F.opt and h2home is None:         # two 16-bit locals: plain < counter < arithmetic < call
         l16_ = [d for d in winners_sorted if d.kind == 'local' and d.ty.size == 2]   # result for IZ (rstmt
         if len(l16_) == 2 and not any(d.kind == 'param' or d.ty.size != 2 for d in winners_sorted):   # rs_1_00_09_2,
@@ -17777,6 +17778,29 @@ def lh_ctr_overwritten(body, i, d):
     e = strip(e)
     return e.k == 'bin' and e.op == '=' and strip(e.l).k == 'var' and strip(e.l).decl is d
 
+def lh_xiz_free(f, opt):
+    """LH_XIZ_FREE: a function whose one long * / % has an element at a variable index for an operand keeps XIZ for
+    that element's base (plan_lh_call0), so no local is homed in XIZ / IZ (rstmt9 rs_9_08_04_3: char *u = jp stays in
+    its slot, ld (XSP+0x6),XWA, and the helper reads lda XIZ,_gula / .. / ld XWA,(XIZ+WA) / cal C9H_divlu; the model
+    homed u in XIZ and refused, complex long helper operands)"""
+    if not LH_XIZ_FREE or opt: return                      # (-O: plan_lh_call0 seldom plans these; homes kept)
+    hits = []
+    def h(m, dd):
+        if m.k == 'bin' and m.op in ('*', '/', '%') and getattr(m, 'ty', None) is not None and m.ty.size == 4 and \
+                m.ty.kind == 'int': hits.append(m)
+    walk(f.body, h)
+    if len(hits) != 1: return
+    def var_elem(x):
+        x = strip(x)
+        while x.k == 'cast' and x.kind == 'IntegralCast': x = strip(x.e)
+        if x.k != 'load' or strip(x.e).k != 'index': return False
+        ix = strip(strip(x.e).idx)                         # a signed int variable index (an unsigned one is LH_REG_UIDX's
+        while ix.k == 'cast' and ix.kind == 'IntegralCast': ix = strip(ix.e)   # register form: rstmt3 rs_3_04_14_4)
+        return ix.k == 'load' and strip(ix.e).k == 'var' and ix.ty is not None and ix.ty.size == 2 and bool(ix.ty.signed)
+    if not (var_elem(hits[0].l) or var_elem(hits[0].r)): return
+    for d in f.decls:
+        if d.kind == 'local': d.no_xiz_home = True
+
 def lh_counter_slots(f, opt, adecl):
     """without -O (cdecl) a loop counter that indexes an element operand of a long * / % helper inside its loop stays
     in its frame slot (corpus/probes/lhidx.c lx_l_d_LGX: ldw (XSP+0x4),0x0 / cpw (XSP+0x4),0x4 / j ge / ld WA,(XSP+0x4) /
@@ -20128,6 +20152,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     eval_write_only(f, opt != 'none', adecl)
     if opt != 'none' and DROP_WRITE_ONLY: drop_write_only(f)
     lh_counter_slots(f, opt != 'none', adecl)
+    lh_xiz_free(f, opt != 'none')
     fold_fp_consts(f)
     if opt != 'none' and not adecl: propagate_global_copies(f); forward_single_use(f)
     gotos = []
