@@ -3819,6 +3819,13 @@ its own (820023303).  fpw 406 / 384 / 350 / 332 of 600 exact (+65 / +46 / +58 / 
 first try of this batch and are held: rule 15 CHAR_IDX_SIGN zero-extended an index through a -Xr register parameter
 homed in a slot (micro ra_homes rh_ptr_int at O3XSXr: p[-1] read p[65535]), caught by the gate's semcheck.
 
+**Batch 349 (2026-11-16).**  lane_o3 fix 08, float listing forms (no wrong code involved): CMP_EQ_COMPUTED_LEFT (`==` /
+`!=` with a converted right operand converts first, into XWA; micro fpp1 d1-d3 show the same), FLOAT_COND_D (a float
+?: statement takes every temporary in the region D alone), FLOAT_COPY_XWA (a float copy goes through XWA, never
+._fld_ff, which no oracle listing calls; a double constant narrowed to float is `fims(x)`), FLOAT_OPA_XIZ (a float op=
+on a constant element or static member keeps the address in XIZ, as for double).  fpw 467 / 463 / 402 / 396 of 600
+(+61 / +79 / +52 / +64), fpp1 +1 / +1 at none / O3XS; nothing down; validation and library unchanged; semcheck 9.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

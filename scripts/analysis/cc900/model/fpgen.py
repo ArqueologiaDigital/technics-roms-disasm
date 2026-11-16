@@ -175,7 +175,8 @@ def temp(F, size, kind='op'):
         C().walk(F.f.body, lambda n, d_: sw.append(n) if n.k == 'switch' and getattr(C().strip(n.value), 'ty', None) is not None
                  and C().strip(n.value).ty.size <= 2 else None)   # the temporary at XSP); not a long selector (random r4_03_19)
         F.fp_has_switch = bool(sw)
-    lab = (FP_SWITCH_HALF and F.fp_has_switch) or (FP_UNARY_HALF and not F.opt and not getattr(F, 'fp_stmt_bin', True))
+    lab = (FP_SWITCH_HALF and F.fp_has_switch) or (FP_UNARY_HALF and not F.opt and not getattr(F, 'fp_stmt_bin', True)) or \
+        getattr(F, 'fp_d_alone', False)                  # (FLOAT_COND_D: a float ?:'s statement, fpw fp_cx_fec)
     d = A.get(size, kind); B.get(0 if lab else size, kind)
     F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A.depth + B.depth)
     return getattr(F, 'ftemp_top', 0) - d
@@ -205,6 +206,11 @@ def fp_value_cast(e):
     if FLOAT_WIDEN_TEMP and e.k == 'cast' and e.kind == 'FloatingCast' and is_fp(e.ty) and e.ty.size == 8 and \
             strip(e.e).k == 'fconst' and strip(e.e).ty.size == 4:   # a float constant widened is a double constant
         import struct                                    # (fpw fp_ar_fdC: 2.25f / (..) -> lda XBC,S.. a fdatad)
+        from frontend import N
+        return N('fconst', value=struct.unpack('<f', struct.pack('<f', strip(e.e).value))[0], ty=e.ty)
+    if FLOAT_COPY_XWA and e.k == 'cast' and e.kind == 'FloatingCast' and is_fp(e.ty) and e.ty.size == 4 and \
+            strip(e.e).k == 'fconst' and strip(e.e).ty.size == 8:   # a double constant narrowed is a float constant
+        import struct                                    # (fpw fp_cm_feGI: gf3 = 1.0 -> ld XWA,fims(1) / ld (_gf3),XWA)
         from frontend import N
         return N('fconst', value=struct.unpack('<f', struct.pack('<f', strip(e.e).value))[0], ty=e.ty)
     if e.k == 'un' and e.op == '-' and fp_value_cast(e.e).k == 'fconst':      # _exp: -708.396 is a constant
@@ -689,6 +695,16 @@ def eval_into(F, e, dest):
         if not lvalue_addr(F, dest[1], 'XWA'): raise C().Unsupported('fp destination')   # too (random r4_07_03:
         put_addr(F, e, 'XBC'); F.emit('cal', '._fld_dd'); return                         # gda[1] = gda[2] ->
                                                            # lda XWA,_gda + 0x8 / lda XBC,_gda + 0x10 / cal ._fld_dd)
+    if FLOAT_COPY_XWA and e.ty.size == 4:               # a float copy goes through XWA, never ._fld_ff (fpw fp_oa_faL:
+        from frontend import N                           # float t = gf1 -> ld XWA,(_gf1) / ld (XSP),XWA; V4.23 never
+        s_ = f_arm_src(F, e)                             # calls ._fld_ff in any listing)
+        d_ = slot_mem(F, alloc(F, dest[1])) if dest[0] == 'cell' else slot_mem(F, dest[1]) if dest[0] == 'slot' else \
+            C().mem_operand(F, N('load', e=strip(dest[1]), ty=strip(dest[1]).ty)) if dest[0] == 'lv' else None
+        if s_ is not None and d_ is not None and d_.startswith('('):
+            if not inner_pops_wait(F) and not (FP_PEND_KEEP and (not F.opt or FP_PEND_KEEP_OPT) and F.pending and
+                                               F.pending == getattr(F, 'pend_at_stmt', -1)):
+                C().flush_pops(F)
+            F.emit('ld', 'XWA,%s' % s_); F.emit('ld', '%s,XWA' % d_); return
     emit_operands(F, dest, [e])
     F.emit('cal', '._fld_%s%s' % (sfx(e.ty), sfx(e.ty)))
 
@@ -720,6 +736,10 @@ def push_fp_arg(F, a, hint=None):
 FLOAT_WIDEN_TEMP = True
 FDATAS_F = True
 FLOAT_COND_COPY = True
+FLOAT_COND_D = True
+FLOAT_COPY_XWA = True
+FLOAT_OPA_XIZ = True
+CMP_EQ_COMPUTED_LEFT = True
 FLOAT_CALL_XHL = True                                     # see call_into_f
 
 def call_into_f(F, e, dest, arg_hint=None):
@@ -880,6 +900,11 @@ def compare(F, c, value):
     if CMP_K_SWAP and not F.opt and op in ('==', '!=') and l.k == 'fconst' and r.k != 'fconst':
         l, r = r, l                                        # a constant on the left of == / != is the right operand
                                                            # (random r1_03_18: 100.0 == gd -> lda XWA,_gd / lda XBC,S1)
+    if CMP_EQ_COMPUTED_LEFT and op in ('==', '!=') and addressable(F, l) and not addressable(F, r) and \
+            r.k == 'cast' and r.kind == 'IntegralToFloating':
+        l, r = r, l                                        # == / != with a converted right operand: the conversion is
+                                                           # the left one (fpw fp_cx_dec: gd1 == gc1 -> lda XWA,<conv> /
+                                                           # lda XBC,_gd1 / ld DE,0x5; the ordered relations keep it right)
     a = prepare(F, [l, r]); cg.flush_pops(F)              # fpp1.c b1: fd(..) >= 0.5 -> cal _fd / lda XSP,XSP+0xc
     put_addr(F, a[0], 'XWA'); put_addr(F, a[1], 'XBC')     # before the compare (inside the then arm was wrong code)
     F.emit('ld', 'DE,%s' % cg.hx(REL[op])); F.emit('cal', '._fcmp_%s' % sfx(l.ty))
@@ -986,7 +1011,8 @@ def f_arm_src(F, x):
     x = fp_value_cast(x)
     if x.k == 'fconst':
         import struct
-        return 'fims(%r)' % struct.unpack('<f', struct.pack('<f', x.value))[0]
+        v_ = repr(struct.unpack('<f', struct.pack('<f', x.value))[0])
+        return 'fims(%s)' % (v_[:-2] if FLOAT_COPY_XWA and v_.endswith('.0') else v_)   # (fp_cm_feGI: fims(1))
     if x.k == 'load':
         m = C().mem_operand(F, x)
         if m is not None and m.startswith('('): return m
@@ -1005,14 +1031,25 @@ def cond_into_f(F, e, dest):
     if f_arm_src(F, a_) is None or f_arm_src(F, b_) is None: raise cg.Unsupported('a float ?: arm')
     dv = N('load', e=strip(dest[1]), ty=strip(dest[1]).ty)
     if not (cg.mem_operand(F, dv) or '').startswith('('): raise cg.Unsupported('a float ?: destination')
-    A_, B_ = frame_allocs(F)                              # the temporary takes the region D alone (fp_cm_feGT:
-    d_ = A_.get(4, 'op'); B_.get(0, 'op')                 # dec 0x4,XSP, the temporary at XSP)
-    F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A_.depth + B_.depth)
-    r = Cell(4); r.off = getattr(F, 'ftemp_top', 0) - d_
+    if FLOAT_COND_D:                                       # the temporaries of the whole ?: take the region D alone,
+        F.fp_d_alone = True                                # the test's conversions too (fp_cx_fec: the long at +0x8,
+        try: return cond_into_f1(F, e, dest, a_, b_, dv)   # the result at +0x4, (float)gc1 at XSP: lda XSP,XSP-0xc)
+        finally: F.fp_d_alone = False
+    return cond_into_f1(F, e, dest, a_, b_, dv)
+
+def cond_into_f1(F, e, dest, a_, b_, dv):
+    cg = C()
+    if FLOAT_COND_D: r = Cell(4); alloc(F, r)
+    else:
+        A_, B_ = frame_allocs(F)                          # the temporary takes the region D alone (fp_cm_feGT:
+        d_ = A_.get(4, 'op'); B_.get(0, 'op')             # dec 0x4,XSP, the temporary at XSP)
+        F.ftemp_max = max(getattr(F, 'ftemp_max', 0), A_.depth + B_.depth)
+        r = Cell(4); r.off = getattr(F, 'ftemp_top', 0) - d_
     def copy(x):
         F.emit('ld', 'XWA,%s' % f_arm_src(F, x)); F.emit('ld', '%s,XWA' % slot_mem(F, r.off))
     lend = F.newulabel()
-    if b_.k == 'fconst' and a_.k != 'fconst':
+    if FLOAT_COND_D: F.cond_joins = getattr(F, 'cond_joins', set()) | {lend}   # -O keeps both arms' stores (fpw
+    if b_.k == 'fconst' and a_.k != 'fconst':                                 # fp_cm_feGT O3XS: no tail merge)
         copy(b_); cg.gen_cond_false(F, e.c, lend); copy(a_)
     else:
         lelse = F.newulabel()
@@ -1244,7 +1281,7 @@ def opa_target(F, lv):
     array's element at a signed int variable in memory; None for a plain variable (addressed directly) and for what
     is not modelled.  cdecl."""
     cg = C()
-    if not OPA_XIZ or not is_fp(getattr(lv, 'ty', None)) or lv.ty.size != 8: return None
+    if not OPA_XIZ or not is_fp(getattr(lv, 'ty', None)) or (lv.ty.size != 8 and not FLOAT_OPA_XIZ): return None
     lv = strip(lv)
     if lv.k not in ('member', 'index'): return None
     sip = getattr(F, 'sp_index_param', None)
