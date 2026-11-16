@@ -11,6 +11,7 @@ staging ledger.  The HD-AE5000 went to another lane on 2026-11-16; nothing about
 |---------------|-----------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `survey.py`   | which routines look compiled from C, their size, calls and marks; leaf / absolute-call candidates   | `python3 -B notes/cc900-c-subcpu-2026-11-16/survey.py --md notes/cc900-c-subcpu-2026-11-16/survey.md --tsv notes/cc900-c-subcpu-2026-11-16/survey.tsv` |
 | `pools.py`    | the candidates not yet tried, split by hand source into the helpers' pools (`pools/pool_<TAG>.txt`) | `python3 -B notes/cc900-c-subcpu-2026-11-16/pools.py`                                                                                                  |
+| `modules.py`  | where the original C modules lie: `calr` joins routines, a near absolute `call` separates them      | `python3 -B notes/cc900-c-subcpu-2026-11-16/modules.py --md notes/cc900-c-subcpu-2026-11-16/modules.md`                                                |
 | `sub_v423.py` | which functions V4.23 reproduces from which C and option set (`corpus`, `check`, `record`, `one`)   | see its docstring                                                                                                                                      |
 
 `sub_v423.py` compares a V4.23 listing with the payload ROM through `model/to_llvm.py` and llvm-mc, as
@@ -36,3 +37,13 @@ parts of the index registers, so they do not mark hand assembly.
 `DSP_StateTable_Reset` loads its constant address with the 5-byte `ld xix, 0x45ca`, which `-O` would write as
 `lda`.  So the payload was compiled **without `-O`, with `-Xr`**; staged C states `cc900-options: -Xr`.
 Verdicts: `verdicts/2026-11-16-43-sub-r1.tsv`.
+
+## Modules (`modules.py`, `modules.md`)
+
+V4.23 writes every call as `cal`; asm900 shortens it to `calr` only for a target in the same module.  So a `calr`
+joins two routines into one original C file, and an absolute `call` to a routine within `calr` reach separates
+them.  The payload has 905 `calr` pairs and 1,756 such near absolute calls.  The fewest boundaries that satisfy both
+make 27 modules (`modules.md`: address ranges and first routines); a real file may be smaller, but no file boundary
+lies inside a `calr`-joined span.  Nine near calls contradict the rule, all inside the kernel's ring-buffer
+routines of `core/03_task_scheduler_kernel.s` (hand assembly).  This is the input a `cc900-module:` marking
+needs: functions that call each other with `calr` must be compiled in one C file.
