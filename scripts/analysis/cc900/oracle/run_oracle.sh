@@ -28,10 +28,11 @@ ORACLE=${ORACLE:-$HOME/compartilhado/cc900-oracle}
 QEMU_ROOT=${QEMU_ROOT:-$ORACLE/vm/qemu}
 BASE_IMAGE=${BASE_IMAGE:-$ORACLE/vm/debian-13-generic-amd64.qcow2}
 SLOT=${VM_SLOT_DIR:?VM_SLOT_DIR}                 # $ORACLE/vm/home/slot-N, this slot's own work directory
-case "$SLOT" in "$ORACLE"/vm/home/slot-[0-9]*) ;; *) echo "bad VM_SLOT_DIR $SLOT" >&2; exit 2 ;; esac
+. "$HERE/slot_ok.sh"                             # slot_ok: exactly $ORACLE/vm/home/slot-<digits>, resolved
+slot_ok "$SLOT" || { echo "run_oracle.sh: refusing VM_SLOT_DIR $SLOT: not $ORACLE/vm/home/slot-<N>" >&2; exit 2; }
 
 S=$SLOT/serve; OUT=$SLOT/out
-rm -rf -- "${SLOT:?}/serve" "${SLOT:?}/out"
+slot_ok "$SLOT" && rm -rf -- "${SLOT:?}/serve" "${SLOT:?}/out"
 mkdir -p "$S" "$OUT"
 
 : > "$S/compilers.txt"
@@ -60,6 +61,6 @@ tar -xf "$OUT/results.tar" -C "$R/out" --no-same-owner
 cp "$OUT/job.log" "$S/sources.txt" "$S/options.txt" "$S/compilers.txt" "$R/"
 ( cd "$OUT" && sha256sum results.tar ) > "$R/results.tar.sha256"
 ( cd "$S" && sha256sum cc-*.tar corpus.tar ) > "$R/inputs.sha256"
-rm -rf -- "${SLOT:?}/serve" "${SLOT:?}/out"
+slot_ok "$SLOT" && rm -rf -- "${SLOT:?}/serve" "${SLOT:?}/out"
 echo "run filed: $R"
 echo "commit it: git -C $ORACLE add runs/$(basename "$R") && git -C $ORACLE commit -m 'run $(basename "$R")'"

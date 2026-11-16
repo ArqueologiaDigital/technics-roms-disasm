@@ -26,10 +26,13 @@ EXCLUSIVE=0
 if [ "${1:-}" = --exclusive ]; then EXCLUSIVE=1; shift; fi
 [ $# -ge 1 ] || { echo "usage: vm_slot.sh [--exclusive] COMMAND [ARG ...]" >&2; exit 2; }
 [ -d "$ORACLE/vm" ] || { echo "vm_slot.sh: no VM directory $ORACLE/vm" >&2; exit 2; }
+. "$(dirname "$(realpath "$0")")/slot_ok.sh"     # slot_ok: exactly $ORACLE/vm/home/slot-<digits>, resolved
 
 run_in() {                       # run_in SLOT SNAPSHOT COMMAND...: the lock fds are open; exec the command
     local k=$1 snap=$2; shift 2
+    [[ $k =~ ^[0-9]+$ ]] || { echo "vm_slot.sh: bad slot number $k" >&2; exit 2; }
     export ORACLE VM_SLOT=$k VM_PORT=$((8931 + k)) VM_SLOT_DIR="$ORACLE/vm/home/slot-$k" VM_SNAPSHOT=$snap
+    slot_ok "$VM_SLOT_DIR" || { echo "vm_slot.sh: refusing slot directory $VM_SLOT_DIR" >&2; exit 2; }
     mkdir -p "$VM_SLOT_DIR"
     exec "$@"
 }
