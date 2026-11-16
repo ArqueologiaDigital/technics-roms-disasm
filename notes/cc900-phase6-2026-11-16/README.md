@@ -236,8 +236,19 @@ the first "jump-to-test, compound".  Both shapes are common with a simple condit
 files (`audio/note_voice_mapping.s` holds 100 inverted and 69 jump-to-test simple loops).  Neither the kind of
 compare (register, immediate or memory) nor the branch condition separates them.  So "a simple condition is
 inverted" is not the rule.  In `TrimAndPadSmfFilename` the ROM's entry test stands exactly where V4.23 put its
-`jr` to the bottom test, which suggests the firmware's compiler sometimes replaces a jump to a short test block
-with a copy of the test.  When it does is still open: it needs probes that vary what precedes the loop.
+`jr` to the bottom test, which suggests the firmware's compiler replaces a jump to the test with a copy of it.
+What decides is the length of the test (`--test-blocks`).  The block a jump-to-test loop jumps to (from the jump's
+target to the bottom branch) is one instruction in 29 loops, two in 40, three in 75 and four or more in 200.  An
+inverted loop's copied test is a single compare.  So 332 loops whose bottom test is one compare and branch have
+that test copied to the entry.  Only 29 such loops jump to it instead, 7 of them in `audio/sprintf_core.s`, the
+Toshiba library code that V4.23-like tools built.  Two things that do not separate the shapes, checked the same
+day with throwaway queries: whether another branch targets the loop's entry, and the loop body's length (medians
+15 and 17 instructions).
+
+The candidate rule is now: **the firmware's compiler copies a loop test of one compare and branch to the loop
+entry; for a longer test it jumps to the test; V4.23 always jumps**.  Its exceptions are the 22 one-compare
+jump-to-test loops outside the library.  Some of these may be hand assembly (`storage/fdc_routines.s`, the
+self-test bit loops in `ui/ui_mode_handlers.s`); `--list` and the file list name them for checking.
 `--list "<shape>"` prints every loop of a shape with its file, line and label.  The census reads the source, so
 hand assembly is counted too (`fall-in` also holds do-while loops and retry branches).
 

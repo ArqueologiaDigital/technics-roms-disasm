@@ -18,8 +18,11 @@ The bottom test is "simple" when one compare and one branch decide it, "compound
 jump-to-test target to the bottom branch holds more than one conditional branch.  This reads the source, so it
 counts hand assembly too: a census of shapes, not of compiler output.
 
-usage: python3 notes/cc900-phase6-2026-11-16/loop_shapes.py [TREE] [--list SHAPE]
+usage: python3 notes/cc900-phase6-2026-11-16/loop_shapes.py [TREE] [--list SHAPE] [--test-blocks]
     TREE defaults to v10/maincpu.  --list prints file:line and top label of every loop of that shape.
+    --test-blocks adds the jump-to-test loops by the length of the test they jump to (from the jump's target to
+    the bottom branch), and the files of those whose test is a single instruction: an inverted loop's copied
+    test is one compare, so a one-instruction test reached by a jump is the exception to the candidate rule.
 """
 import collections, os, re, sys
 
@@ -44,6 +47,10 @@ def items(path):
         elif c.startswith('.'):
             pend = []
     return out
+
+
+TEST_BLOCKS = collections.Counter()   # jump-to-test loops by the length of the block they jump to
+ONE_COMPARE = collections.Counter()   # jump-to-test loops whose test is one compare and its branch, per file
 
 
 def census(tree):
@@ -75,6 +82,10 @@ def census(tree):
                         conds = sum(1 for _, _, x in it[at[u.group(2).lower()]:k + 1] if COND.match(x) and
                                     COND.match(x).group(2) != 't')
                         shape = 'jump-to-test, %s' % ('simple' if conds == 1 else 'compound')
+                        t = k - at[u.group(2).lower()]       # instructions of the test block before its branch
+                        TEST_BLOCKS['%s instruction%s' % (t if t < 4 else '4+', '' if t == 1 else 's')] += 1
+                        if t == 1:
+                            ONE_COMPARE[os.path.relpath(p, tree)] += 1
                     elif c and c.group(2) != 't' and c.group(3).lower() in at and at[c.group(3).lower()] == k + 1:
                         same = top >= 2 and k >= 1 and it[top - 2][2] == it[k - 1][2]
                         shape = 'inverted, %s' % ('same test' if same else 'other test')
@@ -99,6 +110,13 @@ def main():
     for s, n in rows:
         print('| %s | %5d |' % (s.ljust(w), n))
     print('| %s | %5d |' % ('total'.ljust(w), sum(shapes.values())))
+    if '--test-blocks' in a:
+        print('\njump-to-test loops by the instructions of the test block before its branch:')
+        for s, n in sorted(TEST_BLOCKS.items()):
+            print('  %-16s %5d' % (s, n))
+        print('those whose test is one instruction, by file:')
+        for f, n in ONE_COMPARE.most_common():
+            print('  %5d  %s' % (n, f))
 
 
 if __name__ == '__main__':
