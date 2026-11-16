@@ -401,6 +401,16 @@ for c in none O3XS; do    # floating point free of undefined behaviour (corpus/p
 done
 row "run 2026-11-15-11-micro-fpw, v423/Xr" "probes/fpw.c" "$O/2026-11-15-11-micro-fpw/out/v423/Xr/probes" corpus/probes/fpw.c --opt none --adecl
 row "run 2026-11-15-11-micro-fpw, v423/O3XSXr" "probes/fpw.c" "$O/2026-11-15-11-micro-fpw/out/v423/O3XSXr/probes" corpus/probes/fpw.c --opt O3XS --adecl
+for c in none O3XS; do    # element and pointer stores (corpus/probes/stptr.c, a wrong-code hunt)
+  row "run 2026-11-15-8-micro-stptr, v423/$c" "probes/stptr.c" "$O/2026-11-15-8-micro-stptr/out/v423/$c/probes" corpus/probes/stptr.c --opt $c
+done
+row "run 2026-11-15-8-micro-stptr, v423/Xr" "probes/stptr.c" "$O/2026-11-15-8-micro-stptr/out/v423/Xr/probes" corpus/probes/stptr.c --opt none --adecl
+row "run 2026-11-15-8-micro-stptr, v423/O3XSXr" "probes/stptr.c" "$O/2026-11-15-8-micro-stptr/out/v423/O3XSXr/probes" corpus/probes/stptr.c --opt O3XS --adecl
+for c in none O3XS; do    # struct copies, parameters and returns (corpus/probes/stc.c, a wrong-code hunt)
+  row "run 2026-11-16-1-micro-stc, v423/$c" "probes/stc.c" "$O/2026-11-16-1-micro-stc/out/v423/$c/probes" corpus/probes/stc.c --opt $c
+done
+row "run 2026-11-16-1-micro-stc, v423/Xr" "probes/stc.c" "$O/2026-11-16-1-micro-stc/out/v423/Xr/probes" corpus/probes/stc.c --opt none --adecl
+row "run 2026-11-16-1-micro-stc, v423/O3XSXr" "probes/stc.c" "$O/2026-11-16-1-micro-stc/out/v423/O3XSXr/probes" corpus/probes/stc.c --opt O3XS --adecl
 row "run 2026-11-09-3-proxy-tiny, v423/O3XSXr" "firmware/tiny.c" "$O/2026-11-09-3-proxy-tiny/out/v423/O3XSXr" corpus/firmware/tiny.c
 # counted loops (rule U1, 2026-11-09): the other option sets of runs 2026-11-08-8 and 2026-11-08-9
 for c in O3XS Xr; do

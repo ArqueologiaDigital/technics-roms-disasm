@@ -217,6 +217,8 @@ class Builder:
                     tree = s.stmt(body[0])
                     fn = Function(n['name'], d.ty.ret, params, tree, s.fdecls)
                     fn.adecl_attr = 'tlcs900_adecl' in n.get('type', {}).get('qualType', '')   # __SBRK.C: __adecl sbrk
+                    fn.cdecl_attr = 'tlcs900_cdecl' in n.get('type', {}).get('qualType', '')   # (only an explicit __cdecl
+                                                     # carries it under -Xr: the library's __CDECL functions, probe stc)
                     u.functions.append(fn)
         return u
 

@@ -3826,6 +3826,24 @@ homed in a slot (micro ra_homes rh_ptr_int at O3XSXr: p[-1] read p[65535]), caug
 on a constant element or static member keeps the address in XIZ, as for double).  fpw 467 / 463 / 402 / 396 of 600
 (+61 / +79 / +52 / +64), fpp1 +1 / +1 at none / O3XS; nothing down; validation and library unchanged; semcheck 9.
 
+**Batch 350 (2026-11-16): struct and -Xr wrong code, __cdecl in -Xr files.**  lane_o3 fixes 09-12 and lane_nm rules
+15-20.  Wrong code removed (found by the stc / stptr probes and by semchecking the library at -Xr): a discarded struct
+result over 4 bytes was a tail jump with no result pointer (STRUCT_CALL_GUARD); shape tables called a __cdecl callee by
+its adecl name (WHOLE_CALLEE_CONV); an adecl argument was built in another plain argument's register, `y(a, 5, a + 1)`
+passing a + 1 twice (ADECL_ARG_CLOBBER_GUARD / _NOOPT, also the library's .frccal); a long op= stored to the slot while
+the loop tested the register home, an endless loop in __doodigit (LONG_OPA_HOME_GUARD); stptr's 47 / 52 / 35 / 40
+store shapes (lane_nm: CHAR_IDX_SIGN -- a char index extended as cc900 does, with only true cdecl stack parameters,
+is_stack_param, zero-extending -- CHAR_ZIDX_OLDER, CHAR_GIDX_OLDER, UNSIZED_IDX_OLDER, INCDEC_LONG_WA_GUARD,
+OPA_VALUE_OVER_ADDR); struct-size KeyError crashes are clean refusals (STRUCT_VALUE_REFUSE).  Fix 10: a __cdecl
+function defined in an -Xr file is compiled as cdecl and named _name, as V4.23 does (116 of the library's 123 sources
+define their functions __CDECL): library Xr 32 -> 58, O3XSXr 33 -> 95 of 159.  Fix 12 STRUCT_REG_SLOT_PUSH (sxl probe):
+at -Xr a struct of 4 bytes or less in a register position is pushed after every stack argument while V4.23's callee
+reads it left to right -- a V4.23 miscompile the model reproduces on the caller side (open question for the owner:
+reproduce V4.23 bugs or not; the switch-arm merge of rstmt2 rs_2_04_03_3 is not reproduced).  stptr and stc join the
+ledger, semcheck clean: stptr 538 / 487 / 440 / 400 of 1,266, stc 97 / 77 / 89 / 77 of 552; fpw Xr / O3XSXr 440 / 434
+(+38 / +38); validation unchanged; semcheck 9.  The checker change for struct arguments under adecl went in alone
+(ecedc766d).
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat

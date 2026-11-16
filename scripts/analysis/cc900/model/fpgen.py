@@ -1156,7 +1156,8 @@ def call_stmt(F, e):
     if is_fp(e.ty) and e.ty.size == 8:
         call_into(F, e, ('discard',)); return
     fn = strip(e.fn); n = 0
-    if F.adecl and fn.k == 'var' and not getattr(fn.decl.ty, 'cdecl', False):
+    if (F.adecl or (getattr(cg, 'CDECL_IN_XR', False) and cg.UNIT_ADECL[0])) and fn.k == 'var' and \
+            not getattr(fn.decl.ty, 'cdecl', False):
         cg.gen_call(F, e); return                          # probes/adfp.c ac_*: the adecl sequence (gen_call_adecl)
     for a in reversed(e.args):
         if is_fp(strip(a).ty): n += push_fp_arg(F, a)

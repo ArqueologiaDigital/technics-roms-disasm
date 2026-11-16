@@ -62,6 +62,23 @@ FAM = {'WA': {1: 'A', 2: 'WA', 4: 'XWA'}, 'BC': {1: 'C', 2: 'BC', 4: 'XBC'},
        'QBC': {2: 'QBC'}, 'QDE': {2: 'QDE'}, 'QHL': {2: 'QHL'}, 'QIX': {2: 'QIX'}, 'QIY': {2: 'QIY'},   # _itoa: u in QBC
        'W': {1: 'W'}, 'B': {1: 'B'}, 'D': {1: 'D'}, 'H': {1: 'H'},   # a char in a high half (U1: ol_c_acc2's s1 in B)
        'QIZH': {1: 'QIZH'}}                                         # a char live across a call (r1_05_05)
+STRUCT_VALUE_REFUSE = True                                # see _RegBySize
+STRUCT_CALL_GUARD = True                                  # see gen_call
+WHOLE_CALLEE_CONV = True                                  # see compile_unit
+ADECL_ARG_CLOBBER_GUARD = True                            # see gen_call_adecl
+ADECL_SMALL_STRUCT_STACK = True                           # see gen_call_adecl
+CDECL_IN_XR = True                                        # see compile_unit, gen_call
+UNIT_ADECL = [False]                                      # the file's convention (-Xr), for a __cdecl function's calls
+LONG_OPA_HOME_GUARD = True                                # see the long op= helper path
+STRUCT_REG_SLOT_PUSH = True                              # see gen_call_adecl
+ADECL_ARG_CLOBBER_NOOPT = True                            # see gen_call_adecl: ADECL_ARG_CLOBBER_GUARD without -O too
+class _RegBySize(dict):
+    """a register family by size: a value over 4 bytes (a struct of 6, 8, 10 .. bytes reaching a register path: probe
+    stc st_gg_5 / st_tp_8 / st_ug_C ..) refuses instead of crashing with a KeyError"""
+    def __missing__(s, k):
+        if STRUCT_VALUE_REFUSE and isinstance(k, int) and k > 4: raise Unsupported('a %d-byte value in a register' % k)
+        raise KeyError(k)
+FAM = {k_: _RegBySize(v_) for k_, v_ in FAM.items()}
 LEAF_SEQ = ['BC', 'DE', 'HL', 'IX', 'IY', 'IZ', 'QWA']        # regalloc_notes.md
 HI = {'WA': 'W', 'BC': 'B', 'DE': 'D', 'HL': 'H'}            # high byte (char remainder)
 Q = {'WA': 'QWA', 'BC': 'QBC', 'DE': 'QDE', 'HL': 'QHL'}       # upper word (int remainder)
@@ -3181,7 +3198,8 @@ def sc_char(F, ok_, ik, v, V, vc):
     if O in ('X', 'Q') and I in ('X', 'Q'): return False
     def elem(k, reg):                                       # a char element / pointer element into reg (XBC / XDE)
         F.emit('lda' if k[0] == 'X' else 'ld', 'XWA,%s' % k[1]); F.emit('ld', '%s,%s' % (reg[1:], k[2]))
-        F.emit('extz', reg); F.emit('add', '%s,XWA' % reg); return '(%s)' % reg
+        F.emit(char_idx_ext(F, k[2], k[0] != 'X' and str(k[1]) in stack_param_ops(F)), reg)
+        F.emit('add', '%s,XWA' % reg); return '(%s)' % reg
     def ptr(k, reg): F.emit('ld', '%s,%s' % (reg, k[1])); return '(%s)' % reg
     def addr(k, reg):
         if k[0] in ('G', 'M'): return k[1]
@@ -3812,6 +3830,7 @@ def store_chain(F, lv, rv, size):
     if x.k != 'bin' or x.op != '=' or x.ty is None or x.ty.size != size or lv.ty is None or lv.ty.size != size: return False
     if strip(lv).ty is not None and strip(lv).ty.kind not in ('int', 'ptr') or strip(x.l).ty.kind not in ('int', 'ptr'): return False
     if fpgen.is_fp(x.ty): return False
+    if UNSIZED_IDX_OLDER and size >= 2 and (unsized_gidx(lv) or unsized_gidx(x.l)): return False   # (UNSIZED_IDX_OLDER)
     ok_, ik = sc_lkind(F, lv), sc_lkind(F, x.l)
     if ok_ is None or ik is None: return False
     if size == 4 and 'Q' in (ok_[0], ik[0]): return False
@@ -10057,6 +10076,10 @@ def gen_call(F, e, fam=None, size=0):
     fn = strip(e.fn)
     if fn.k == 'deref' and strip(fn.e).ty is not None and strip(fn.e).ty.is_ptr():
         fn = strip(fn.e)                               # _fputc: (*stream->out)(c) calls through the pointer itself
+    if CDECL_IN_XR and UNIT_ADECL[0] and not F.adecl and fn.k != 'var' and \
+            'tlcs900_cdecl' not in (getattr(getattr(fn, 'ty', None), 'spell', '') or ''):
+        raise Unsupported('an adecl call through a pointer')   # (from a __cdecl function of an -Xr file: the library's
+                                                           # _fputc (*stream->out)(c), V4.23 passes c in WA)
     if fn.k != 'var' and not F.adecl and fn.ty is not None and fn.ty.is_ptr():
         n = 0                                          # abi fptr.c fp_call: pushw (XSP+0x4) / ld XWA,(_gfp) /
         if not e.args and F.pending: flush_pops(F)     # call XWA / inc 0x2,XSP
@@ -10072,13 +10095,19 @@ def gen_call(F, e, fam=None, size=0):
         if fam and fam != 'HL': F.emit('ld', '%s,%s' % (FAM[fam][size], FAM['HL'][size]))
         return fam
     if fn.k != 'var': raise Unsupported('indirect call')
+    rt_ = getattr(fn.decl.ty, 'ret', None)
+    if STRUCT_CALL_GUARD and rt_ is not None and rt_.kind == 'struct' and rt_.size > 4:   # its hidden result pointer
+        raise Unsupported('a call returning a %d-byte struct' % rt_.size)   # was never passed: the callee wrote through
+                                                           # the caller's return address (probe stc st_ud_5: j _r5; the
+                                                           # oracle: lda XWA,XSP+0x6 / push XWA / cal _r5)
     n = 0
     args = e.args
     if getattr(fn.decl, 'implicit', False):            # _ultoa: memcpy undeclared -> the long difference is pushed whole
         args = [strip(a.e) if strip(a).k == 'cast' and strip(a).kind == 'IntegralCast' and strip(a.e).ty.size > strip(a).ty.size
                 else a for a in args]
-    if F.adecl and not getattr(fn.decl.ty, 'cdecl', False):
-        return gen_call_adecl(F, fn, args, fam, size)
+    if (F.adecl or (CDECL_IN_XR and UNIT_ADECL[0])) and (not getattr(fn.decl.ty, 'cdecl', False) or
+                                                         (CDECL_IN_XR and UNIT_ADECL[0] and getattr(fn.decl, 'implicit', False))):
+        return gen_call_adecl(F, fn, args, fam, size)   # (from a __cdecl function of an -Xr file too: fpw fp_pr_d7's vd(a))
     if not args and F.pending: flush_pops(F)           # h_p_only: cal _fp / inc 0x2,XSP / ld XIZ,XHL / cal _g0
     args_begin(F)
     for a in reversed(args): n += push_arg(F, a)
@@ -10097,6 +10126,14 @@ def gen_call_adecl(F, fn, args, fam, size):
     regs = ['WA', 'BC', 'DE']; inreg = []; stack = []
     for i, a in enumerate(args):
         if i < 3 and strip(a).ty.kind != 'struct' and strip(a).ty.size <= 4: inreg.append((regs[i], a))
+        elif STRUCT_REG_SLOT_PUSH and i < 3 and strip(a).ty.kind == 'struct' and strip(a).ty.size <= 4:
+            inreg.append((None, a))                    # a struct of 4 bytes or less in a register position is pushed
+                                                       # with the memory arguments, after every stack argument (probe sxl
+                                                       # .sx_c_a: x_a(gl, s4, gd) -> push the double / ld XWA,(_gi_L0) /
+                                                       # dec 0x4,XSP / ldiw.. ; .sx_c_e: ld XWA / the struct / ld XDE),
+                                                       # though V4.23's callee reads it at its left-to-right place (.sx_d_a:
+                                                       # the struct at (XSP+0xc), the double at (XSP+0x4)): V4.23's own
+                                                       # caller and callee disagree, and the model writes the caller's form
         else: stack.append(a)
     def kind(a):
         a0 = strip(a)
@@ -10107,7 +10144,9 @@ def gen_call_adecl(F, fn, args, fam, size):
         if m is None: return 'computed'
         return 'reg' if family_of(m) else 'mem'
     groups = {'reg': [], 'computed': [], 'mem': [], 'const': []}
-    for t, a in inreg: groups[kind(a)].append((t, a))
+    for t, a in inreg:
+        if t is None and kind(a) != 'mem': raise Unsupported('a struct argument in a register position, not in memory')
+        groups[kind(a)].append((t, a))
     parked = []
     def in_wa(a):                                      # a * / % is computed in XWA whatever its target
         a0 = strip(a)
@@ -10121,9 +10160,15 @@ def gen_call_adecl(F, fn, args, fam, size):
                 if tmp is None: continue
                 gen(F, strip(a), 'WA', 2); F.emit('ld', '%s,WA' % tmp)
                 parked.append((t, tmp)); groups['computed'].remove((t, a)); busy.add(tmp)
+    if ADECL_SMALL_STRUCT_STACK and not STRUCT_REG_SLOT_PUSH and len(stack) > 1 and any(strip(a).ty.kind == 'struct' and strip(a).ty.size <= 4
+                                                           for a in stack):
+        raise Unsupported('a struct of 4 bytes or less among adecl stack arguments')   # (probe stc .st_pc_4: z4(gl1,
+                                                           # g42, gd1) -> V4.23 pushes the double first and the struct
+                                                           # last, against the left-to-right order of .st_pc_8)
     for t, a in groups['reg']:
         sz = strip(a).ty.size; m = mem_operand(F, strip(a))
         if m != FAM[t][sz]: F.emit('ld', '%s,%s' % (FAM[t][sz], m))
+    n0_guard_ = len(F.lines)
     pre_cse_ = {}                                          # (XR_ARG_CSE_COMPUTED: a computed argument over a global that a
     if XR_ARG_CSE_COMPUTED and not F.opt:                   #  plain argument loads too: built through the plain one's
         for t, a in list(groups['computed']):               #  register, which is loaded again (random .r3_04_17: v2(gi2,
@@ -10170,6 +10215,18 @@ def gen_call_adecl(F, fn, args, fam, size):
             f_ = gen(F, a0, t, a0.ty.size)
             if f_ != t and f_ in FAM and a0.ty.size in FAM[f_] and f_ != 'HL' or (f_ == 'HL' and strip(a0).k != 'call' and f_ != t):
                 F.emit('ld', '%s,%s' % (FAM[t][a0.ty.size], FAM[f_][a0.ty.size]))   # (r2_09_00: the difference in BC)
+    if ADECL_ARG_CLOBBER_GUARD and (F.opt or ADECL_ARG_CLOBBER_NOOPT):   # a computed argument built in a plain argument's
+                                                           # register (without -O: the library's .frccal at -Xr,
+                                                           # bufcal(ftbl[8-p], i) -> ld BC,IZ / .. / lda XBC,_ftbl)
+        regs_ = {t for t, _ in groups['reg']}             # (probe stc .st_pb_4 -O3 -XS -Xr: y4(a, g42, a + 1) ->
+        for l_ in F.lines[n0_guard_:]:                    # inc 0x1,WA / ld DE,WA: a passed as a + 1; the oracle
+            m_ = re.match(r'^\t(\w+)\t(.*)$', l_)           # ld DE,WA / inc 0x1,DE): refused
+            if not m_ or m_.group(1) in ('cp', 'push', 'bit', 'cal', 'call', 'j', 'jr', 'jp', 'pushw'): continue
+            ops_ = [x.strip() for x in m_.group(2).split(',')]
+            dst_ = ops_[1] if m_.group(1) in ('inc', 'dec') and len(ops_) == 2 else ops_[0]
+            fam_ = family_of(dst_) or ''                  # (family_of names the 32-bit register: XWA)
+            if (fam_[1:] if fam_.startswith('X') else fam_) in regs_:
+                raise Unsupported('a computed adecl argument over a plain one in %s' % dst_)
     for t, tmp in parked: F.emit('ld', '%s,%s' % (t, tmp))
     n = 0
     held = {t for t, _ in groups['reg']} | {t for t, _ in groups['computed']} | {t for t, _ in parked}
@@ -10186,6 +10243,7 @@ def gen_call_adecl(F, fn, args, fam, size):
     seen_m_ = {}
     fslot = getattr(F, 'farg_slot', None); fwa = False   # probes/adfp.c ac_fi: a float in a register goes through a
     for k_, (t, a) in enumerate(order):                       # frame temporary: ld XWA,(_gf) / ld (XSP),XWA / ld BC,(_gi)
+        if t is None: n += push_arg(F, a); continue        # (STRUCT_REG_SLOT_PUSH: the struct, in its order)
         sz = strip(a).ty.size                                # / ld XWA,(XSP) (XWA reloaded after later loads; ac_if,
         if fold(strip(a)).k == 'const':                      # ac_ifi: XBC is not)
             sz = max(2, sz); v = fold(strip(a)).value & ((1 << (8 * sz)) - 1)
@@ -10214,6 +10272,8 @@ def global_name(e):
     return None
 
 POSTINC_LONG_BC = True                                    # see gen_incdec
+INCDEC_LONG_WA_GUARD = True                               # see gen_incdec's bump
+OPA_VALUE_OVER_ADDR = True                                # see gen_opassign: a value register that the address uses
 
 def gen_incdec(F, e, fam, size, value):
     """++/-- on a global: incb/incw in memory, long through XWA (unop_*: preinc, postinc_val); *p++ (deref_inc)"""
@@ -10254,6 +10314,10 @@ def gen_incdec(F, e, fam, size, value):
     step = vt.base.size if vt.kind == 'ptr' else 1
     def bump():
         if vt.size == 4:
+            if INCDEC_LONG_WA_GUARD and re.search(r'\b(XWA|WA|A|W|QWA)\b', g):   # (stptr.c sp_lAcp: gla[cb]++ -> ld A,(cb) /
+                raise Unsupported('a long ++/-- over an address in XWA')   # sla 0x2,A / lda XBC,_gla / ld XWA,0x1 /
+                                                         # add (XBC+A),XWA: the step overwrote the index; the oracle
+                                                         # indexes with C and XDE)
             F.emit('ld', 'XWA,%s' % hx(step)); F.emit('add' if e.op == '++' else 'sub', '(%s),XWA' % g)
         else:
             F.emit(('inc' if e.op == '++' else 'dec') + ('b' if vt.size == 1 else 'w'), '%s,(%s)' % (hx(step), g))
@@ -10570,7 +10634,8 @@ def elem_addr(F, lv, kind):
                         if B_ is not None: F.emit('lda', 'X%s,%s' % (B_, g)); return '(X%s+%s)' % (B_, r_)
                     elif not (lv_ & {'BC', 'DE'}):         # folded or in a slot: loaded into DE
                         idx_into('DE'); F.emit('lda', 'XBC,%s' % g); return '(XBC+DE)'
-            F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit('extz', 'XBC'); F.emit('add', 'XBC,XWA'); return '(XBC)'
+            F.emit('lda', 'XWA,%s' % g); idx_into('BC'); F.emit(char_idx_ext(F, None, False, node=lv.idx), 'XBC')
+            F.emit('add', 'XBC,XWA'); return '(XBC)'
         if not sized:
             if kind == 'rmw' and esz == 4: return None
             if kind == 'cmp': return None
@@ -10602,7 +10667,8 @@ def elem_addr(F, lv, kind):
         if kind in ('load', 'storek'):                    # ai_clear: p[i] = 0 -> add XWA,(XSP+0x4) / ldw (XWA),0x0
             ii_ = unpromote(lv.idx)                         # (adecl: by the index's own sign; no -Xr listing zero-
             ext_ = 'exts' if ii_.ty is not None and ii_.ty.signed else 'extz'   # extends a signed one: ra_homes.c
-            idx_into('WA'); F.emit(ext_ if F.adecl and esz == 1 else 'extz' if esz == 1 else 'exts', 'XWA')   # rh_ptr_int)
+            idx_into('WA'); F.emit((char_idx_ext(F, None, pm in stack_param_ops(F), node=lv.idx) if CHAR_IDX_SIGN else ext_ if F.adecl else 'extz')
+                                   if esz == 1 else 'exts', 'XWA')   # rh_ptr_int)
             scale32(F, 'XWA', esz)
             F.emit('add', 'XWA,%s' % pm); return '(XWA)'
         if IDX_GUARD and (held_after(F, 'BC', lv) or any(
@@ -10617,7 +10683,8 @@ def elem_addr(F, lv, kind):
             if plain or F.opt: idx_into('BC')              # ld XDE,0x0 / ld E,A / add XDE,XBC)
             else: idx_into('WA'); F.emit('ld', 'BC,WA')
             ii_ = unpromote(lv.idx)                        # (-Xr: a signed index is sign-extended, ai_c_p_div: exts XBC /
-            F.emit('exts' if STVX and F.adecl and ii_.ty is not None and ii_.ty.signed and ii_.ty.size == 2 else 'extz', 'XBC')
+            F.emit(char_idx_ext(F, None, pm in stack_param_ops(F), node=lv.idx) if CHAR_IDX_SIGN else
+                   'exts' if STVX and F.adecl and ii_.ty is not None and ii_.ty.signed and ii_.ty.size == 2 else 'extz', 'XBC')
         elif getattr(F, 'force_base', None) and esz == 4:  # ai_l_p_div: ld WA,(i) / exts XWA / sll 0x2,XWA /
             B = F.force_base                               # ld XIZ,XWA / add XIZ,(p) (-O3 -XS too)
             idx_into('WA'); F.emit('exts', 'XWA'); scale32(F, 'XWA', esz); F.emit('ld', '%s,XWA' % B)
@@ -11077,6 +11144,10 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                     F.emit('ld', 'XDE,0x0'); F.emit('ld', 'E,A'); F.emit('add', 'XDE,XBC'); return '(XDE)'
                 raise Unsupported('a char index in memory')
             ut_ = unpromote(i).ty
+            if CHAR_IDX_SIGN and CHAR_ZIDX_OLDER and esz == 1 and not combine and ut_ is not None and ut_.size == 2 and \
+                    char_idx_ext(F, None, False, node=i) == 'extz':   # (stptr.c sp_cApg: gca[b] = gu ? gc : gc2 with b a
+                raise Unsupported('a zero-extended char index')   # stack parameter -> lda XWA,_gca / ld BC,(b) / extz XBC /
+                                                           # add XBC,XWA; the 16-bit (XDE+BC) read it signed)
             if UIDX_SUM and (not combine or ptr == 'XBC') and esz in (2, 4) and ut_ is not None and ut_.size == 2 and not ut_.signed and \
                     im in ('IZ', 'WA', 'BC', 'DE', 'HL') and (im == 'WA' or 'WA' not in live_regs(F)) and \
                     (im == 'BC' or 'BC' not in live_regs(F)) and (im == 'IZ' or dies_here(F, i)):
@@ -11107,6 +11178,8 @@ def _lvalue_raw(F, lv, ptr='XBC', idx='BC', base='XDE', combine=False, kind='sto
                     getattr(d, 'reg', None) == base[1:] and d not in F.dead and d in getattr(F, 'in_loop', ())
                     for d in list(F.f.params) + list(F.f.decls))):   # opt_loops.c ol_i_copy (none): lda XDE,_gb
                 raise Unsupported('array base over a live register')   # over i in DE (wrong code)
+            if UNSIZED_IDX_OLDER and esz >= 2 and unsized_gidx(lv):   # (stptr.c sp_lUpo: glu[b] <<= 1 widens b to 32
+                raise Unsupported('an unsized array at a variable index')   # bits, exts XWA; the 16-bit sum wrapped)
             if esz == 2: F.emit('add', '%s,%s' % (I, I))
             elif esz == 4: F.emit('sla', '0x2,%s' % I)
             if combine:
@@ -11397,6 +11470,11 @@ def gen_opassign(F, e):
                       x not in lv_), None)
             if T is None: raise Unsupported('no free register for the op= value')
         rc = fold(r)
+        if OPA_VALUE_OVER_ADDR and F.opt and size == 4 and rc.k == 'const' and rc.value is not None and \
+                0 <= rc.value < 0x10000 and T in FAM and re.search(r'\b(%s)\b' % '|'.join(
+                re.escape(x) for x in set(FAM[T].values()) | {'Q' + T} if isinstance(x, str)), t):
+            raise Unsupported('the op= value over its own address')   # (stptr.c sp_lPkn -O3 -XS: glp[3] -= 9 ->
+                                                           # ld XWA,(_glp) / lda XWA,0x9 / sub (XWA+0xc),XWA)
         if F.opt and size == 4 and rc.k == 'const' and rc.value is not None and 0 <= rc.value < 0x10000:
             F.emit('lda', '%s,%s' % (FAM[T][4], hx(rc.value)))   # ai_l_g_and under -O3 -XS: lda XWA,0xff
         elif OPA_IZ_OPERAND and strip(r).k == 'load' and regvar_of(strip(r).e) is not None and \
@@ -11531,6 +11609,10 @@ def gen_opassign(F, e):
                 F.emit('lda', 'XIZ,%s' % t[1:-1]); t = '(XIZ)'   # a constant element: its address into XIZ (rstmt
                                                            # rs_1_03_09_2: gla[2] /= 3L -> push XIZ / lda XIZ,_gla + 0x8 / ..)
             elif held: t = combine_indexed(F, t, 'XIZ')
+            if LONG_OPA_HOME_GUARD and lvx.k == 'var' and getattr(lvx.decl, 'reg', None) and t.startswith('('):
+                raise Unsupported('a long op= to the slot of a variable homed in %s' % lvx.decl.reg)   # (the library's
+                                                           # __doodigit: val /= 8 -> cal C9H_divlu / ld (XSP+0x8),XHL
+                                                           # while the loop tests XDE: an endless loop)
             if re.search(r'\(X(WA|BC|DE|HL|IX|IY)', t) or (held and 'XIZ' not in t):   # lda XBC,0xa / cal C9H_divls /
                 raise Unsupported('long element address across a helper')        # ld (XIZ),XHL / pop XIZ
             rs = mem_operand(F, r)
@@ -17396,6 +17478,7 @@ def store_plan(F, lv, rv, size):
         lk = stvx_char_index(F, lv)
         return lk is not None and stvx_plan(F, lk, rv, size)
     if lk is None: return False
+    if UNSIZED_IDX_OLDER and lk[0] == 'X' and size >= 2 and unsized_gidx(lv): return False   # (see UNSIZED_IDX_OLDER)
     if STVX and stvx_plan(F, lk, rv, size): return True
     vk = sp_value_kind(F, rv, size)
     if vk is None: return False
@@ -17411,12 +17494,22 @@ def store_plan(F, lv, rv, size):
     if ip is not None and vk == 'C': return False          # (-Xr st_i_XC: c is saved in IZ around the call: unmodelled)
     if ip is not None and size == 1 and L in ('X', 'Q'):   # -Xr st_c_QG: ld XDE,(_gp) / ld BC,(_hc) / ld (XDE+WA),C;
         if vk not in ('L', 'B', 'M'): return False         # st_c_XG: lda XDE,_gca / ...: the index stays in WA
+        if CHAR_IDX_SIGN and L == 'Q' and str(lk[1]) in stack_param_ops(F): return False   # (a stack pointer: the index
+                                                           # zero-extended, char_idx_ext; stptr.c -Xr sp_cQpb)
         if L == 'Q': F.emit('ld', 'XDE,%s' % lk[1])
         else: F.emit('lda', 'XDE,%s' % lk[1])
         F.dead.add(ip); n1 = len(F.lines)
         fam = gen(F, rv, 'BC', 1)
         if fam != 'BC' or clobbers(F.lines[n1:], '(XDE+WA)'): raise Unsupported('store_plan: the -Xr char element value')
         F.emit('ld', '(XDE+WA),C'); return True
+    if UNSIZED_IDX_OLDER and L == 'X' and size >= 2 and strip(lv).k == 'index':
+        b_ = strip(strip(lv).base)
+        while b_.k in ('decay', 'cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
+        if b_.k == 'var' and b_.decl.kind == 'global' and b_.decl.ty.kind == 'array' and not getattr(b_.decl.ty, 'count', 0):
+            return False                                   # (see UNSIZED_IDX_OLDER)
+    if CHAR_GIDX_OLDER and size == 1 and L in ('X', 'Q') and vk != 'T' and isinstance(lk[-1], tuple) and \
+            isinstance(lk[-1][0], str) and re.match(r'^\(_\w+', lk[-1][0]):
+        return False                                       # (see CHAR_GIDX_OLDER)
     x = strip(rv)
     while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp', 'BitCast'): x = strip(x.e)
     if L == 'S' and vk not in ('T', 'C'): return False     # (a static lvalue with a plain value: the older paths)
@@ -17866,6 +17959,77 @@ def stvx_plan(F, lk, rv, size):
             t = address(None, None); V = value('WA', 'BC', 'DE')
     F.emit('ld', '%s,%s' % (t, R(V))); return True
 
+CHAR_IDX_SIGN = True                                      # see char_idx_ext
+CHAR_ZIDX_OLDER = True                                    # see _lvalue_raw: a zero-extended char index declines
+
+def is_stack_param(d):
+    """d is a cdecl stack parameter: passed on the stack, not a -Xr register parameter homed in a slot"""
+    return getattr(d, 'kind', None) == 'param' and hasattr(d, 'off') and not getattr(d, 'reg', None) and \
+        not getattr(d, 'home_slot', False)
+
+def stack_param_ops(F):
+    """the memory operands of F's cdecl stack parameters (is_stack_param), as mem_operand spells them now"""
+    ops_ = set()
+    for p_ in F.f.params:
+        if is_stack_param(p_):
+            try: ops_.add(mem_operand(F, N_load(p_)))
+            except Exception: pass
+    return ops_
+
+def char_idx_ext(F, im, mem_ptr, signed=True, node=None):
+    """the extension of an int index into a char element's 32-bit address sum, as the oracle writes it (stptr.c,
+    run micro-stptr; mem_ptr: the pointer is a cdecl stack parameter, stack_param_ops -- a -Xr register parameter
+    homed in a slot is not one, ra_homes.c rh_ptr_int -O3 -XS -Xr: exts XWA / add XWA,(XSP+0x2)): a stack parameter is zero-extended (cdecl st_c_XG: ld BC,(c) / extz XBC), a -Xr register
+    parameter too when the pointer is itself a stack parameter, added from memory (sp_cQpa: extz XWA /
+    add XWA,(XSP+0x4)), and stays signed into a global array or through a global pointer (sp_cApg: lda XBC,XBC+WA;
+    sp_cPpg: ld XBC,(_gcp) / lda XBC,XBC+WA); a global or a local is sign-extended (sp_cPlg: ld BC,(_gi3) / exts XBC; the model's extz was wrong
+    code for a negative index: sp_cAga, sp_cPla).  An unsigned index is zero-extended."""
+    if not CHAR_IDX_SIGN or not signed or mem_ptr: return 'extz'   # (a stack pointer: zero-extended whatever the index,
+    if node is not None:                                   # arr_index.c ai_c_p_p1: p[i + 1] -> inc 0x1,WA / extz XWA)
+        x = unpromote(node)
+        while x.k == 'cast' and x.kind in ('IntegralCast', 'NoOp') and strip(x.e).ty is not None and \
+                strip(x.e).ty.size == x.ty.size: x = unpromote(x.e)
+        if x.ty is not None and not x.ty.signed: return 'extz'
+        par = x.k == 'load' and strip(x.e).k == 'var' and strip(x.e).decl.kind == 'param' and \
+            not hasattr(getattr(x, 'from_local', None), 'ty')
+        reg = par and not is_stack_param(strip(x.e).decl)
+    else:
+        im = im or ''
+        pops_ = set()
+        for p_ in F.f.params:
+            r_ = getattr(p_, 'reg', None)
+            if r_: pops_ |= {r_, FAM.get(r_, {}).get(1, r_)}
+            else:
+                try: pops_.add(mem_operand(F, N_load(p_)))
+                except Exception: pass
+        par = im in pops_
+        reg = par and im not in stack_param_ops(F)
+    if par: return 'extz' if (mem_ptr or not reg) else 'exts'
+    return 'exts'
+
+def unsized_gidx(lv):
+    """lv is an element of an unsized global array at a non-constant index (see UNSIZED_IDX_OLDER)"""
+    lv = strip(lv)
+    if lv.k != 'index' or fold(lv.idx).k == 'const': return False
+    u_ = unpromote(lv.idx)                                 # (a char index stays 16-bit: sp_lUcp, (XDE+BC))
+    if u_.ty is None or u_.ty.size != 2: return False
+    b_ = strip(lv.base)
+    while b_.k in ('decay', 'cast', 'noop') and getattr(b_, 'e', None) is not None: b_ = strip(b_.e)
+    return b_.k == 'var' and b_.decl.kind == 'global' and b_.decl.ty.kind == 'array' and not getattr(b_.decl.ty, 'count', 0)
+
+UNSIZED_IDX_OLDER = True                                  # an int or long element of an unsized global array at a
+                                                          # variable index is store_plan's no more: the older paths
+                                                          # widen the index to 32 bits (stptr.c sp_iUpa: giu[b] = 5 ->
+                                                          # ld WA,(b) / exts XWA / add XWA,XWA / ld XBC,_giu / add XBC,XWA;
+                                                          # the model's 16-bit (XBC+WA) wrapped past 0x4000 elements)
+CHAR_GIDX_OLDER = True                                    # a char element of a global array or through a global
+                                                          # pointer at an int index held in a global (or a local folded
+                                                          # to one) is indexed directly, (XBC+WA) / (XWA+BC), the index
+                                                          # signed: store_plan's zero-extended sum is the parameter
+                                                          # index's form only (stptr.c sp_cAga: gca[gi2] = 5 -> lda XBC,_gca /
+                                                          # ld WA,(_gi2) / ldb (XBC+WA),0x5; the model's extz XBC / add
+                                                          # XBC,XWA was wrong for a negative index); a ?: value keeps it
+
 def sp_address(F, lk, size, P, I, B, vk):
     """emit the address of the lvalue lk (sp_lvalue_kind) and return its operand: P the pointer register, I the index
     register, B the base register (None = not used by this shape)"""
@@ -17887,7 +18051,7 @@ def sp_address(F, lk, size, P, I, B, vk):
                 F.emit('ld', 'WA,%s' % im); F.emit('extz', 'XWA'); F.emit('ld', '%s,%s' % (X, sym))
                 F.emit('add', '%s,XWA' % X); return '(%s)' % X
             F.emit('lda', 'XWA,%s' % sym); F.emit('ld', '%s,%s' % (X[1:], im))
-            F.emit('extz', X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
+            F.emit(char_idx_ext(F, im, False, signed), X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
         if not signed and UIDX32:                          # an unsigned index is extended whole (r2_03_08, r1_08_00)
             if vk == 'T': return None
             F.emit('ld', 'WA,%s' % im); F.emit('extz', 'XWA'); scale32(F, 'XWA', size)
@@ -17918,7 +18082,7 @@ def sp_address(F, lk, size, P, I, B, vk):
         if size == 1:                                      # st_c_QG: ld XWA,(_gp) / ld BC,(c) / extz XBC / add XBC,XWA
             X = 'XDE' if vk in ('S', 'X') else 'XBC'
             F.emit('ld', 'XWA,%s' % pm); F.emit('ld', '%s,%s' % (X[1:], im))
-            F.emit('extz', X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
+            F.emit(char_idx_ext(F, im, pm in stack_param_ops(F), signed), X); F.emit('add', '%s,XWA' % X); return '(%s)' % X
         if F.opt and P != 'XWA' and im != 'WA':            # -O: built in its own register (st_i_QG O3XS: ld BC,(c) /
             I_ = P[1:]                                     # exts XBC / add XBC,XBC / add XBC,(_gpi))
             F.emit('ld', '%s,%s' % (I_, im)); F.emit('exts' if signed else 'extz', P)
@@ -19595,6 +19759,11 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
     emit_data(unit, out)
     for f in unit.functions:
         fa = adecl or getattr(f, 'adecl_attr', False)        # an __adecl function in a cdecl file (__SBRK.C: .sbrk)
+        if CDECL_IN_XR and adecl and getattr(f, 'cdecl_attr', False) and not getattr(f, 'adecl_attr', False):
+            fa = False                                     # a __cdecl function in an -Xr file is a cdecl one: _name, its
+                                                           # arguments on the stack (library _abs at Xr: ld HL,(XSP+0x4);
+                                                           # probe stc _st_rt_1)
+        UNIT_ADECL[0] = adecl
         name = ('.' if fa else '_') + f.name
         GUARD_LONG_FIRED[0] = False                       # (GUARD_DIV_LONG fired in this function)
         L2_DIA_FIRED[0] = False
@@ -19682,6 +19851,15 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                                                            # (homes2a / homes2b: homes2w.py, 204 / 84 of 90)
                                                            # (fpp6..fpp11 at none / -O3 -XS: fppw.py, exact where it answers)
             alt_full_ = None
+            if alt_ is not None and WHOLE_CALLEE_CONV:     # a shape table's call the table cannot have meant: an adecl
+                for l_ in alt_:                             # call (.r1) to a __cdecl function (probe stc st_ud_1 -Xr:
+                    m_ = re.match(r'^\t(?:cal|j)\t([._])(\w+)', l_)   # homes2w's j .r1, the oracle j _r1), or a call
+                    d_ = unit.decls.get(m_.group(2)) if m_ else None   # returning a struct in memory with no result
+                    t_ = getattr(d_, 'ty', None)                       # pointer (st_ud_5: j _r5): the model's own
+                    r_ = getattr(t_, 'ret', None)                      # path then
+                    if (m_ and m_.group(1) == '.' and getattr(t_, 'cdecl', False)) or \
+                            (r_ is not None and r_.kind == 'struct' and r_.size > 4):
+                        alt_ = None; break
             try:
                 full = [name + ':'] + alt_ if alt_ is not None else compile_function(f, opt, fa, personality)
                 alt_full_ = list(full) if alt_ is not None and OVERRIDE_RAW else None   # a probe override's code is
