@@ -1,20 +1,20 @@
-/* The lyric-display module of hdae5000_ui_display.s (0x28cd08-0x28e623 in v2.06i): the functions that match; Lyrics_CheckHdrChunk calls SwapBytes32 / SwapBytes16 with calr (same file).
+/* The lyric-display module of hdae5000_ui_display.s (0x28cd08-0x28e623 in v2.06i): the functions that match; Lyrics_CheckHdrChunk calls SwapBytes32 / SwapBytes16 relatively (cc900-module).
    Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r4_lyra.c.
+   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r9_nl.c.
    cc900-options: -Xr
    cc900-module: HDAE5000_SwapBytes16 HDAE5000_SwapBytes32
 */
 #include "hdae_ws.h"
 #include "hdae_ids.h"
 
-extern char *__cdecl HDAE5000_StrCpy(char *, const char *);
-extern char *__cdecl HDAE5000_StrNCpy(char *, const char *, unsigned int);
-extern char *__cdecl HDAE5000_StrCat(char *, const char *);
+extern char *__cdecl HDAE5000_StrCpy(char *, char *);
+extern char *__cdecl HDAE5000_StrNCpy(char *, char *, int);
+extern char *__cdecl HDAE5000_StrCat(char *, char *);
 extern unsigned int __cdecl HDAE5000_StrLen(const char *);
 extern void *__cdecl HDAE5000_MemFill(void *, int, unsigned int);
 extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
 extern int __cdecl HDAE5000_MemCmp(const void *, const void *, unsigned int);
-extern int __cdecl HDAE5000_SPrintf(char *, const char *, ...);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
 
 struct Box { int x1, y1, x2, y2; };
 struct Point { int x, y; };
@@ -136,6 +136,14 @@ long HDAE5000_Lyrics_LoadTestFile(void)
         CALLV(ROOT->WakeUpMainTask)();
         return 0L;
     }
+}
+
+unsigned int HDAE5000_Read_Table_Word(pos)
+unsigned int pos;
+{
+    unsigned int lo;
+    lo = LYRIC_EV(pos + 1);
+    return (unsigned int)LYRIC_EV(pos) << 8 | lo;
 }
 
 long HDAE5000_Read_Table_Multi(pos)

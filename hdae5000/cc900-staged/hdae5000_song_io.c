@@ -1,6 +1,6 @@
-/* The song part loaders and savers of hdae5000_ui_display.s: the functions that match.
+/* The song part loaders / savers and the AttenCp switch procedures of hdae5000_ui_display.s (no calls inside a module): the functions that match.
    Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r7_la.c.
+   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r9_na.c.
    cc900-options: -Xr
 */
 #include "hdae_ws.h"
@@ -42,4 +42,114 @@ int HDAE5000_LoadSong_Tm(unsigned int dir, unsigned int song)
         CALLV(HAMA->PostTmLoad)(ret);
     }
     return ret;
+}
+
+int HDAE5000_LoadSong_Md(unsigned int dir, unsigned int song)
+{
+    int ret = 0;
+    struct ResInfo info;
+
+    if (SLOT(7, dir, song) != -1L) {
+        CALLV(HAMA->GetResouceInfo)(9, (char *)&info);
+        CALLV(HAMA->PreMidiLoad)();
+        ret = HDAE5000_HD_ReadFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, info.size, &SLOT(7, dir, song));
+        CALLV(HAMA->FlashWrite)(1, (unsigned long)HDAE5000_RAM_HdStreamBuffer, (unsigned int)info.size, 0x3d3000L);
+        CALLV(HAMA->PostMidiLoad)(ret);
+    }
+    return ret;
+}
+
+int HDAE5000_SaveSong_Tm(unsigned int dir, unsigned int song)
+{
+    int ret;
+    struct ResInfo info;
+
+    CALLV(HAMA->GetResouceInfo)(6, (char *)&info);
+    info.size = 0x72aaL;
+    CALLV(HAMA->PreTmSave)();
+    if ((ret = HDAE5000_HD_WriteFile(info.addr, info.size, &SLOT(4, dir, song))) != -1)
+        HAS(4, dir, song) = 1;
+    CALLV(HAMA->PostTmSave)(ret);
+    return ret;
+}
+
+int HDAE5000_SaveSong_Cmp(unsigned int dir, unsigned int song)
+{
+    int ret;
+    struct ResInfo info;
+
+    CALLV(HAMA->GetResouceInfo)(5, (char *)&info);
+    info.size = CALLR(unsigned long, HAMA->cmp_sv_mae)();
+    if ((ret = HDAE5000_HD_WriteFile(info.addr, info.size, &SLOT(3, dir, song))) != -1)
+        HAS(3, dir, song) = 1;
+    CALLV(HAMA->cmp_sv_ato)(ret);
+    return ret;
+}
+
+int HDAE5000_SaveSong_Msp(unsigned int dir, unsigned int song)
+{
+    int ret;
+    struct ResInfo info;
+
+    CALLV(HAMA->GetResouceInfo)(7, (char *)&info);
+    info.size = CALLR(unsigned long, HAMA->msp_sv_mae)();
+    if ((ret = HDAE5000_HD_WriteFile(info.addr, info.size, &SLOT(5, dir, song))) != -1)
+        HAS(5, dir, song) = 1;
+    CALLV(HAMA->msp_sv_ato)(ret);
+    return ret;
+}
+
+int HDAE5000_SaveSong_Md(unsigned int dir, unsigned int song)
+{
+    int ret;
+    struct ResInfo info;
+
+    CALLV(HAMA->GetResouceInfo)(9, (char *)&info);
+    CALLV(HAMA->PreMidiSave)();
+    if ((ret = HDAE5000_HD_WriteFile(info.addr, info.size, &SLOT(7, dir, song))) != -1)
+        HAS(7, dir, song) = 1;
+    CALLV(HAMA->PostMidiSave)(ret);
+    return ret;
+}
+
+long HDAE5000_AttenCpToHDSwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_Cphd);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_HDDMENU, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
+}
+
+long HDAE5000_AttenCpToMarkSwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_Cphd_AttenCpToMarkSwCatch);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_CP_FD, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
 }
