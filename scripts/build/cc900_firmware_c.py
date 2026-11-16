@@ -55,7 +55,10 @@ NAME_RE = re.compile(rb'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
 # build switches on.  KN_LOOP_INVERT: rule loop-entry-copy (notes/cc900-compat-plan-2026-11-08/rules.md).
 # KN_SHIFT_UNSIGNED_SLL: a shift left by a variable count of an unsigned value is sll, where V4.23 writes sla
 # (coordinator decision 2026-11-16; file_demo_proc.s's FileIO_* bit functions, probe p6_m9c.c).
-FIRMWARE_RULES = ("KN_LOOP_INVERT", "KN_SHIFT_UNSIGNED_SLL")
+# KN_MEM_TO_MEM: with -O only, a copy of 8 / 16 bits with a 16-bit absolute side whose value is not used again is one
+# memory-to-memory move (ld (#16),(mem) / ld (mem),(#16)); the model's rule must test -O itself, so that the firmware's
+# -Xr files keep their register copies (notes/cc900-phase6-2026-11-16/README.md, the memory-to-memory census).
+FIRMWARE_RULES = ("KN_LOOP_INVERT", "KN_SHIFT_UNSIGNED_SLL", "KN_MEM_TO_MEM")
 C_NAME_LIMIT = 31
 EQU_RE = re.compile(rb'^\s*\.(?:equ|set)\s+([A-Za-z_][\w.]*)\s*,\s*(0x[0-9a-fA-F]+|\d+)\s*(?:;|$)')
 RAM_CELL_RE = re.compile(r'^ram_([0-9a-f]+)$')
