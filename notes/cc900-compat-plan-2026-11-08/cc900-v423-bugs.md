@@ -24,6 +24,7 @@ Add every new one here, in the commit that finds it.
 | 8  | -O: op= on a 1-bit bit-field at bit 15 flips bit 7 of the unit's low byte                     | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe bitf.c               | refuses the shape          |
 | 9  | an unsigned char plus a constant computed at the byte, wrapping at 256                        | all four             | 2026-11-16, training pool rstmt11.c    | computes correct C         |
 | 10 | -O3 -XS -Xr: an argument register overwritten before it is read (a shift count)               | -O3 -XS -Xr          | 2026-11-16, training pool rstmt10.c    | refuses or computes C      |
+| 11 | the code generator crashes on a loop bound of a constant pointer plus an offset               | all four             | 2026-11-16, phase 6 (p6_m4)            | the model compiles it      |
 
 ## 1. A char product widened to long keeps only its low byte
 
@@ -159,3 +160,17 @@ Add every new one here, in the commit that finds it.
 - **Evidence:** oracle run 2026-11-16-4-micro-pool9-12, O3XSXr, `.rs_10_04_19_4`.  Reported by lane_nm from the pool's
   semcheck triage.
 - **Model:** reads `b`, as C requires; semcheck reports the function DIFFERENT, a known V4.23 bug.
+
+## 11. The code generator crashes on a loop bound of a constant pointer plus an offset
+
+- **Source:** phase 6's reconstruction of StyleConv_ClearWorkBuffer's neighbours, corpus/firmware/p6_m4_sc_b.c:
+  `void sc_b(void) { unsigned char *p; for (p = (unsigned char *)0x488c; p < (unsigned char *)0x488c + 32; p++) *p = 0; }`,
+  and the same with `0x29f8 + 155` (p6_m4_va_b.c).
+- **C meaning:** clears 32 bytes from address 0x488c.
+- **V4.23, all four option sets:** thc2 (code generator 0.8n.04.11) takes a page fault reading the host address
+  constant + 4 (0x4890): it dereferences the C constant pointer as a host pointer.  No code is emitted for the file;
+  asm900 then rejects the output.  va_b at -O3 -XS exits 1 instead.  The same loop with an end-pointer variable
+  compiles (sc_a, sc_c, va_a), so the firmware's own source must have been written that other way.
+- **Evidence:** oracle runs 2026-11-16-12-p6-m4 (the crash, whole file) and 2026-11-16-14-p6-m4-split (one function per
+  file).  Found by lane_p6.
+- **Model:** compiles it (no crash to imitate).

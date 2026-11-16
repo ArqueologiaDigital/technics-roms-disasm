@@ -3274,6 +3274,7 @@ FPCMP_CAST = True                                         # see gen: a same-size
 PTR_MEM_OPS = True                                        # cpw / pushw straight from a plain pointer's memory
 LABEL_MERGE = True                                        # two labels at one place are one (without -O)
 INCW_GLOBAL = True                                        # g += k (1..8) on an int global: incw k,(_g)
+INCW_MEMBER = True                                        # gs.m += k too: incw k,(_gs + off)
 PTR_K_LDA = True                                          # return g + k on a global pointer: ld XWA,(_g) / lda XHL,XWA+k
 IZ_PTR_INIT = True                                        # an IZ home's initialiser read through a pointer: computed in IZ
 STORE_DIV_DD = True                                       # see store_div: a member store of a displaced dividend
@@ -7952,6 +7953,100 @@ IMM_WIDTH_MASK = True                                    # see Fn.emit
 NARROW_LOAD_VIA_WA = True                                 # see gen's widening of a narrowing cast
 BITFIELD_REFUSE = True                                    # see compile_function_once: every bit-field access refuses
 BITFIELD_READ = True                                      # see bitfield_lower: reads of a 16-bit unit are modelled
+BITFIELD_WRITE = True                                     # see bf_write: stores and op= of a 16-bit unit's field
+
+def bf_info(m):
+    """(bit position, width, signed, unit offset, unit size) of a bit-field member node, else None"""
+    bt = strip(m.base).ty
+    bt = bt.base if m.arrow and bt is not None else bt
+    ft = [(t_, o_) for nm, t_, o_ in (getattr(bt, 'rec', None) or []) if nm == m.name]
+    if not ft or getattr(ft[0][0], 'bitwidth', None) is None: return None
+    t_, o_ = ft[0]
+    return (t_.bitpos, t_.bitwidth, bool(t_.signed), o_, t_.size)
+
+def bf_write_shape(e):
+    """the bit-field store or op= statement bf_write models, else None: g.f = K, g.f = x, gp->f = x (gp a global pointer),
+    g.f op= K for + - | (g a global struct; a unit of 16 bits, a field narrower than 16)"""
+    if not (e.k == 'bin' and e.op == '=' or e.k == 'opassign' and e.op in ('+', '-', '|')): return None
+    m = strip(e.l)
+    if m.k != 'member': return None
+    bi = bf_info(m)
+    if bi is None or bi[4] != 2 or bi[1] >= 16: return None
+    base = strip(m.base); k_ = fold(e.r)
+    isk = k_.k == 'const' and k_.value is not None
+    if m.arrow:
+        if not (base.k == 'load' and strip(base.e).k == 'var' and strip(base.e).decl.kind == 'global'): return None
+        if e.k != 'bin' or isk: return None
+    elif not (base.k == 'var' and base.decl.kind == 'global'): return None
+    if e.k == 'opassign' and not (isk and (e.op == '|' or 1 <= k_.value <= 8)): return None
+    if not isk and (nodes_in(e.r, 'call') or has_helper_call(e.r)): return None
+    return bi
+
+def bf_write(F, e):
+    """BITFIELD_WRITE (probe bitf, run 2026-11-16-6-micro-bitf, all four sets), a field of a 16-bit unit at bit pos:
+    g.f = all ones -> orw (_g),M; = 0 -> andw (_g),~M; other K -> the unit through XBC (no -O, offset 0: lda XWA,_g /
+    ld XBC,XWA; else lda XBC,_g + off) / ld WA,(XBC) / and WA,~M / or WA,K<<pos / ld (XBC),WA;  g.f = x -> x in WA /
+    and WA,m / sla pos,WA / andw (_g),~M / or (_g),WA;  gp->f = x -> ld XBC,(_gp) first (at a non-zero offset, x not in
+    WA: ld XWA,(_gp) and x in BC);  g.f op= K -> the unit through XBC, the field extracted in WA as a read does, the
+    operation, then as a store.  -O: an unsigned field wider than 1 bit, += / -= K: and WA,M / add WA,K<<pos / and WA,M,
+    no shifts; a 1-bit field op= refuses (V4.23 bug 8: chg 0x7,(XBC) flips the low byte's bit 7).  An 8-bit mask is
+    emitted 0x00ff so that AND_FF_LD keeps it (and WA,0xff before the andw)."""
+    m = strip(e.l); pos, w, sg, off, _ = bf_info(m)
+    mask = (1 << w) - 1; M16 = mask << pos; NM = ~M16 & 0xffff
+    live_ = set(live_regs(F)); ids_ = set()
+    walk(e.r, lambda n_, d_: ids_.add(id(n_)))
+    for d_ in list(F.f.params) + list(F.f.decls):          # (a variable whose last read is the value: -Xr .bf_b1_a_v,
+        if getattr(d_, 'reg', None) in live_ and F.last_use.get(d_, 'x') in ids_:   # v in WA -> and WA,0x1 / ..)
+            live_.discard(d_.reg)
+    if {'WA', 'BC'} & live_: raise Unsupported('a bit-field write over live registers')
+    def mk(v): return '0x00ff' if v == 0xff else hx(v)
+    def combine(Mop, V):
+        F.emit('and', '%s,%s' % (V, mk(mask)))
+        if pos: emit_shift(F, 'sla', pos, V)
+        F.emit('andw', '%s,%s' % (Mop, hx(NM))); F.emit('or', '%s,%s' % (Mop, V))
+    k_ = fold(e.r); isk = k_.k == 'const' and k_.value is not None
+    if m.arrow:
+        P = strip(m.base); rv_ = strip(e.r)
+        while rv_.k == 'cast' and rv_.kind == 'IntegralCast': rv_ = strip(rv_.e)
+        wa_ = rv_.k == 'load' and getattr(strip(rv_.e), 'decl', None) is not None and \
+            getattr(strip(rv_.e).decl, 'reg', None) == 'WA'
+        PR, V = ('XBC', 'WA') if off == 0 or wa_ else ('XWA', 'BC')
+        F.emit('ld', '%s,%s' % (PR, mem_operand(F, P)))
+        if gen(F, e.r, V, 2) != V: raise Unsupported('a bit-field value outside its register')
+        combine('(%s+%s)' % (PR, hx(off)) if off else '(%s)' % PR, V); return True
+    gsym = '_%s' % strip(m.base).decl.name + (' + %s' % hx(off) if off else '')
+    def addr_xbc():
+        if F.opt or off: F.emit('lda', 'XBC,%s' % gsym)
+        else: F.emit('lda', 'XWA,%s' % gsym); F.emit('ld', 'XBC,XWA')
+    if e.k == 'bin' and isk:
+        kv = k_.value & mask
+        if kv == mask: F.emit('orw', '(%s),%s' % (gsym, hx(M16))); return True
+        if kv == 0: F.emit('andw', '(%s),%s' % (gsym, hx(NM))); return True
+        addr_xbc(); F.emit('ld', 'WA,(XBC)')
+        if NM == 0xff00: F.emit('ld', 'A,0x0')
+        else: F.emit('and', 'WA,%s' % hx(NM))
+        F.emit('or', 'WA,%s' % hx(kv << pos)); F.emit('ld', '(XBC),WA'); return True
+    if e.k == 'bin':
+        if gen(F, e.r, 'WA', 2) != 'WA': raise Unsupported('a bit-field value outside WA')
+        combine('(%s)' % gsym, 'WA'); return True
+    if F.opt and w == 1: raise Unsupported('a 1-bit bit-field op= under -O')   # (V4.23 bug 8)
+    kv = k_.value
+    def addk(v):
+        if e.op == '+': F.emit('inc', '%s,WA' % hx(v)) if v <= 8 else F.emit('add', 'WA,%s' % hx(v))
+        else: F.emit('dec', '%s,WA' % hx(v)) if v <= 8 else F.emit('sub', 'WA,%s' % hx(v))
+    addr_xbc(); F.emit('ld', 'WA,(XBC)')
+    if F.opt and not sg and e.op in ('+', '-') and w > 1:
+        F.emit('and', 'WA,%s' % hx(M16)); addk(kv << pos); F.emit('and', 'WA,%s' % mk(M16))
+        F.emit('andw', '(XBC),%s' % hx(NM)); F.emit('or', '(XBC),WA'); return True
+    if not sg:
+        if pos + w == 16: emit_shift(F, 'srl', pos, 'WA')
+        elif pos == 0: F.emit('and', 'WA,%s' % hx(mask))
+        else: F.emit('and', 'WA,%s' % hx(M16)); emit_shift(F, 'srl', pos, 'WA')
+    elif pos + w == 16: emit_shift(F, 'sra', pos, 'WA')
+    else: emit_shift(F, 'sll', 16 - pos - w, 'WA'); emit_shift(F, 'sra', 16 - w, 'WA')
+    if e.op == '|': F.emit('or', 'WA,%s' % hx(kv & 0xffff))
+    else: addk(kv)
+    combine('(XBC)', 'WA'); return True
 
 def bitfield_lower(body):
     """BITFIELD_READ: a read of a bit-field in a 16-bit unit becomes the unit's word and a shift / mask (probe bitf, run
@@ -7992,6 +8087,22 @@ def bitfield_lower(body):
         if ty0 is not None and ty0.size == 2: n.ty = ty0
         if not sg and pos == 0 and w == 8: found['and_ff'] = True
     found = {}
+    if BITFIELD_WRITE:
+        def mark(n):
+            for key, v in list(n.__dict__.items()):
+                for c in (v if isinstance(v, list) else [v]):
+                    if hasattr(c, 'k'): mark(c)
+            if n.k == 'expr' and bf_write_shape(n.e) is not None:
+                n.bf_write = True; strip(n.e.l).bf_ok = True
+        mark(body)
+        def visit16(n):                                   # a 16-bit field is a plain member (bf_b4_w_*: ldw, incw, orw)
+            for key, v in list(n.__dict__.items()):
+                for c in (v if isinstance(v, list) else [v]):
+                    if hasattr(c, 'k'): visit16(c)
+            if n.k == 'member':
+                bi_ = bf_info(n)
+                if bi_ is not None and bi_[4] == 2 and bi_[1] == 16: n.bf_unit = True
+        visit16(body)
     visit(body)
     def visit_cmp(n):
         for key, v in list(n.__dict__.items()):
@@ -11917,8 +12028,13 @@ def gen_opassign(F, e):
         if lm_ is not None and lm_.startswith('(_'):       # random r2_07_00: gul %= 16UL -> ld XWA,0xf / and (_gul),XWA
             F.emit('ld', 'XWA,%s' % hx(fold(e.r).value - 1)); F.emit('and', '%s,XWA' % lm_); return lm_
     if INCW_GLOBAL and op in ('+', '-') and size == 2 and fold(r).k == 'const' and fold(r).value is not None and \
-            1 <= (fold(r).value & 0xffff) <= 8 and strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and \
-            not getattr(strip(e.l).decl, 'reg', None) and (not F.adecl or SWEEP_XR_LIFTS) and not getattr(F, 'l2', None):
+            1 <= (fold(r).value & 0xffff) <= 8 and (strip(e.l).k == 'var' and strip(e.l).decl.kind == 'global' and
+            not getattr(strip(e.l).decl, 'reg', None) or
+            INCW_MEMBER and strip(e.l).k == 'member' and not strip(e.l).arrow and strip(strip(e.l).base).k == 'var' and
+            strip(strip(e.l).base).decl.kind == 'global') and \
+            (not F.adecl or SWEEP_XR_LIFTS) and not getattr(F, 'l2', None):   # (a member: probe bitf bf_b4_w_a, gb4.w
+                                                           # += 1 -> incw 0x1,(_gb4); training none listings: incw
+                                                           # k,(_g + off) 4, ld R,k / add (_g + off),R 0)
         t = lvalue(F, e.l)                                 # probes/fpargf.c af_VNNSP: gu += 3 -> incw 0x3,(_gu)
         F.emit('incw' if op == '+' else 'decw', '%s,%s' % (hx(fold(r).value & 0xffff), t)); return t
     if op in SIMPLE_OPS and OPB_GLOBAL and fold(r).k == 'const' and fold(r).value is not None and size == 1 and \
@@ -13697,6 +13813,9 @@ def gen_stmt(F, s, last):
     """gen_stmt with F.in_return raised while a return statement (at any depth) is generated: the live-local guard
     then knows nothing is read after it (_strlen: if (ss == NULL) return 0xffff; writes ss's HL)"""
     prev = getattr(F, 'in_return', False); F.in_return = prev or s.k == 'return'
+    if BITFIELD_WRITE and s.k == 'expr' and getattr(s, 'bf_write', False):
+        try: bf_write(F, s.e); return None
+        finally: F.in_return = prev
     if MUL2_SHIFT and s.k == 'expr' and s.e.k == 'opassign' and s.e.op == '*' and fold(s.e.r).k == 'const' and \
             fold(s.e.r).value == 2 and strip(s.e.l).ty is not None and strip(s.e.l).ty.kind == 'int' and \
             strip(s.e.l).ty.size in (1, 2):
@@ -19877,7 +19996,7 @@ def compile_function_once(f, opt, adecl, personality, fp_temps, fp_nlong, fp_rem
     if BITFIELD_READ and bitfield_lower(f.body).get('and_ff'): f.bf_and_ff = True
     if BITFIELD_REFUSE:                                    # a bit-field member: the model read it as a whole unit (phase 6
         for n_ in nodes_in(f.body, 'member'):              # p6_m2a medley_bitfield: ld HL,(_s) without V4.23's srl 0x8,HL,
-            if getattr(n_, 'bf_unit', False): continue
+            if getattr(n_, 'bf_unit', False) or getattr(n_, 'bf_ok', False): continue
             bt_ = strip(n_.base).ty                         # wrong code); refused until its accesses are modelled
             bt_ = bt_.base if n_.arrow and bt_ is not None else bt_
             rec_ = getattr(bt_, 'rec', None) or []
@@ -20575,6 +20694,8 @@ def compile_unit(unit, opt='none', adecl=False, personality='v4.23'):
                     if m_ and not re.match(r'^\t(j|scc|cal|ret)\t\w+,|^\tret\t\w+$', nx_):   # oracle: ld W,0x0 270;
                         full[k_] = '\tld\t%s,0x0' % (m_.group(1)[0] if m_.group(1) else 'Q' + m_.group(2))   # and WA,0xff
                                                            # 4, each before j eq: cond_bits.c cb_i_g_ff)
+            if BITFIELD_WRITE:                             # (bf_write's 8-bit mask, kept from AND_FF_LD)
+                full = [l[:-6] + '0xff' if l and l.startswith('\tand\t') and l.endswith(',0x00ff') else l for l in full]
             if DUP_ARG_VIA_BC and opt != 'none' and fa and alt_ is None:   # -O3 -XS -Xr: one value passed as the
                 for k_ in range(len(full) - 2):            # first and the second argument is loaded into BC and copied
                     m_ = re.match(r'^\tld\tWA,(\([^)]*\))$', full[k_] or '')   # to WA (random .r4_03_13: v2(gi2, gi2)
