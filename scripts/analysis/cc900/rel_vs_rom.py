@@ -8,6 +8,8 @@ line per function: MATCH, or the first differing offset, with no Toshiba-made te
 repository.
 
 usage: python3 -I -B rel_vs_rom.py FILE.rel ROM_FUNCTION PREFIX [--rom ROM] [--symbols REF] [--base 0xe00000]
+ROM_FUNCTION `=` compares each function with the ROM at its own name (firmware C named like the tree); PREFIX ''
+then takes every function.
 From the repository root's scripts/analysis/cc900.  Defaults: the v10 main CPU (original_ROMs/kn5000_v10_program.rom,
 symbols/maincpu_v10_symbols_reference.txt).  A function's extent in the object is from its public to the next one
 (or the end of the section).  A relocated field (an extern or section-relative address) compares as a wildcard and
@@ -36,7 +38,7 @@ def main():
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
     m = ieee695.Module(open(rel, 'rb').read())
-    at = ref[romfn] - base
+    at = ref[romfn] - base if romfn != '=' else None
     pubs = sorted(((v[0], v[1], m.publics[i]) for i, v in m.pubval.items() if isinstance(v, tuple) and len(v) == 2
                    and isinstance(v[1], int)), key=lambda t: (t[0], t[1]))
     bad = 0
@@ -46,6 +48,10 @@ def main():
         code = m.code(sec)
         end = pubs[k + 1][1] if k + 1 < len(pubs) and pubs[k + 1][0] == sec else len(code)
         mine = code[off:end]
+        if romfn == '=':                                 # each function against the ROM at its own name
+            if name.lstrip('_.') not in ref:
+                print('%-32s not in the symbols reference' % name); bad += 1; continue
+            at = ref[name.lstrip('_.')] - base
         r = rom[at:at + len(mine)]
         wild = sum(1 for x in mine if not (isinstance(x, int) and x >= 0))
         diff = [i for i, x in enumerate(mine) if isinstance(x, int) and x >= 0 and (i >= len(r) or x != r[i])]

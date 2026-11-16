@@ -29,11 +29,12 @@ LABEL_RE = re.compile(rb'^\s*([A-Za-z_.$][\w.$]*):')
 
 
 def c_functions(path):
-    """the function names FILE.c defines, in order, read by the reference model's front end"""
+    """the tree labels of the functions FILE.c defines, in order (the front end's names, through `cc900-name:`)"""
     sys.path.insert(0, fw.MODEL)
     import frontend
     _, _, adecl = fw.file_options(path)
-    return [f.name for f in frontend.load(path, [], [], adecl=adecl).functions]
+    labels = fw.label_map(path)
+    return [labels.get(f.name, f.name) for f in frontend.load(path, [], [], adecl=adecl).functions]
 
 
 def main():

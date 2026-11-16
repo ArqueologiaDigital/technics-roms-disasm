@@ -181,6 +181,29 @@ The same probe found three places where the model and V4.23 differ (bitfields, a
 a compare of a promoted shifted char).  They were reported to the coordinator, who assigned them to a model lane.
 None of them is in a built function.
 
+### The built C under V4.23 (run `2026-11-16-13-p6-firmware`, lane_dash)
+
+lane_dash compiled the 55 milestone-2 C files of all five trees with V4.23, at `-O3 -XS -Xr` and `-Xr`.
+- **One file refused.**  V4.23 refused `bitmap_out_routines.c` in every tree with THC1-Error-262: cc900 keeps 31
+  characters of an identifier, and `BitMapOut_PrepareRender_CheckBit1` / `_CheckBit2` agree in their first 31.  So
+  those 6 functions were not compiled.
+- **The other 30 functions.**  Against the ROM through the proxy route
+  (`scripts/analysis/cc900/asm_vs_rom.py`: the listing through `to_llvm.py`, which gives each operand the
+  firmware's 16- or 24-bit width), they are 30 of 30 at `-Xr` in each of v10, v9, v7, v6 and v5, and 29 of 30 at
+  `-O3 -XS -Xr`.  The one that differs is `GetNamingWindowID` (finding (a)).
+- **No other function fails.**  The run's "30 of 36" is these 30, and the 6 missing are the refused file.
+- **Why compare through the listing.**  asm900's own objects (`rel_vs_rom.py`) differ wherever a function
+  addresses a RAM cell below 0x10000: the listing declares every extern `large`, so asm900 writes a 24-bit operand
+  where the firmware has a 16-bit one.  That is the address-width question of the preview, not a code difference.
+- `GET_COMPUTER_INTERFACE_SELECTION` (32 characters) compiles: V4.23 cuts its public name to 31 characters, and
+  `asm_vs_rom.py` finds it by those.
+
+**The fix.**  A C file may give a function a shorter name and map it to the tree's label in a comment:
+`cc900-name: BitMapOut_PrepRender_CheckBit1=BitMapOut_PrepareRender_CheckBit1`.  The generator, the splice,
+`fn_diff.py` and `options_table.py` then use the label.  The generator also stops on two C names that agree in
+their first 31 characters, so every built C file stays one that V4.23 can check.  `bitmap_out_routines.c` uses it
+in all five trees; v10, v9, v8, v7, v6 and v5 rebuilt byte-identical.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
