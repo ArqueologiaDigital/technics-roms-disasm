@@ -137,6 +137,8 @@ def library_aliases(image):
     # names V4.23 calls that the xref tables give another name: ._fld_ful (unsigned long to float) is the routine
     # the xref calls ._fld_fl_tail, our HDAE5000_ULongToFloat (0x29b815, entered after ._fld_fl's sign handling)
     out.setdefault('fld_ful', 'HDAE5000_ULongToFloat')
+    # ._fld_df (float to double): SetupPage_BuildDriveInfo calls it where the hand source calls HDAE5000_FloatToDouble
+    out.setdefault('fld_df', 'HDAE5000_FloatToDouble')
     return out
 
 
@@ -255,7 +257,8 @@ def check(a):
             if not fnmatch.fnmatch(stem, only):
                 continue
             srcs = glob.glob(os.path.join(REPO, 'notes', 'cc900-c-hdae5000-2026-11-16', 'probes', stem + '.c')) + \
-                glob.glob(os.path.join(REPO, tree, 'cc900-staged', stem + '.c'))
+                glob.glob(os.path.join(REPO, tree, 'cc900-staged', stem + '.c')) + \
+                glob.glob(os.path.join(REPO, 'hdae5000', 'cc900-staged', stem + '.c'))   # v2.06i's C, any image
             cn = c_names(srcs)
             for cname, lab in cn.items():                # a call to a function by its short C name
                 if lab in ref:
