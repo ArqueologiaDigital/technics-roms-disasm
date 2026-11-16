@@ -53,7 +53,7 @@ ToneGen_WriteVoice_Short	33	-	+0 sub_B_7f@Xr
 VoiceAlloc_WithRoutingFlag	29	sub_C_7a@Xr	
 VoiceSlot_NoteOff	51	-	+5 sub_A_7c@Xr
 VoiceSubSlot_Init	63	-	+32 sub_C_7a@Xr
-Voice_AllVoices_PortamentoUpdate	0	-	llvm-mc cannot assemble the translation
+Voice_AllVoices_PortamentoUpdate	34	-	+11 sub_A_7c@Xr
 Voice_AllVoices_WriteAmplitude	103	sub_B_7h@Xr	
 Voice_ApplyPortamento	77	sub_B_7i@Xr	
 Voice_ApplyPortamento2	80	-	+38 sub_B_7i@Xr
@@ -81,11 +81,11 @@ Voice_PitchPack_RouteE	93	-	+22 sub_A_7c@Xr
 Voice_Pitch_CopyBase	65	-	+56 sub_A_7c@Xr
 Voice_Pitch_WriteOutputReg_Secondary	56	-	+46 sub_A_7c@Xr
 Voice_Portamento_OnHandler	166	sub_B_7j@Xr	
-Voice_Reprioritise	43	-	+9 sub_A_7c@Xr
+Voice_Reprioritise	42	sub_A_7b@Xr	
 Voice_Retire_ToFreePool	81	-	+7 sub_A_7c@Xr
 Voice_SetArticWord0_LowByte	56	-	+41 sub_A_7c@Xr
 Voice_SetKeyShiftEnableAndApply	14	sub_A_7a@Xr sub_A_7b@Xr sub_A_7c@Xr	
 Voice_SetMasterTuneAndApply	14	sub_A_7a@Xr sub_A_7b@Xr sub_A_7c@Xr	
-Voice_SetPolyphonyMode	0	-	llvm-mc cannot assemble the translation
+Voice_SetPolyphonyMode	69	sub_B_7j@Xr	
 WaveSel_Cache_SetDescPtr	86	sub_C_7a@Xr sub_C_7b@Xr	
 WaveSel_StageB_Build_Reg040_Footage	233	sub_A_7a@Xr	

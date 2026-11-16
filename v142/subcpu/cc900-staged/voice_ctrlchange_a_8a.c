@@ -99,3 +99,13 @@ void Voice_SetArticWord0_LowByte(unsigned char part, unsigned char b)
     Voice_UpdateFlagsFromSlot(part);
     Voice_Selector_ComputeMixWeights(part);
 }
+
+void Voice_PerVoice_PortaPitchUpd(int n);
+
+/* cc900-name: Voice_PerVoice_PortaPitchUpd=Voice_PerVoice_PortamentoPitchUpdate */
+/* cc900-module: Voice_PerVoice_PortamentoPitchUpdate */
+void Voice_AllVoices_PortamentoUpdate(void)
+{
+    unsigned char i;
+    for (i = 0; i < 0x1a; i++) Voice_PerVoice_PortaPitchUpd(i);
+}

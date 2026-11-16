@@ -56,7 +56,7 @@ def rom_offset(addr):
 
 ERP_BYTE = {'ixl': 0xf0, 'ixh': 0xf1, 'qixl': 0xf2, 'qixh': 0xf3, 'iyl': 0xf4, 'iyh': 0xf5, 'qiyl': 0xf6,
             'qiyh': 0xf7, 'izl': 0xf8, 'izh': 0xf9, 'qizl': 0xfa, 'qizh': 0xfb}
-ERP_RE = re.compile(r'^\t(ld|cp|inc) (?:(1), )?(%s)(?:, (0x[0-9a-f]+|\d+))?$' % '|'.join(ERP_BYTE))
+ERP_RE = re.compile(r'^\t(ld|cp|inc) (?:(1|0x1), )?(%s)(?:, (0x[0-9a-f]+|\d+))?$' % '|'.join(ERP_BYTE))
 
 
 def erp_byte(line):
@@ -176,6 +176,15 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
             out.append((full, 0, 'cannot resolve %s' % e)); continue
         body = [l.replace('$+', '.+').replace('$-', '.-') for l in body]   # inline asm's `jr $+2` (llvm-mc spells `.`)
         body = [erp_word(erp_byte(l)) for l in body]
+
+        def module_jump(l):          # a conditional jump to a module-local function keeps the listing's '.' name
+            m = re.match(r'^\t(jrl?) (\w+), \.([A-Za-z_]\w*)$', l)      # (helper A, round 9: Voice_Reprioritise)
+            if m:
+                tgt = alias.get(m.group(3), m.group(3))
+                if tgt in ref:
+                    return '\t%s %s, __cc900_at_%x' % (m.group(1), m.group(2), ref[tgt])
+            return l
+        body = [module_jump(l) for l in body]
         # a shift by 16: to_llvm writes the raw count field 0, llvm-mc wants 16 (the CPU encodes 16 as 0)
         body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
         if any('untranslated' in l for l in body):
