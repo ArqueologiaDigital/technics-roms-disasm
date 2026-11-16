@@ -161,6 +161,7 @@ def code_refs(tree):
     out = collections.defaultdict(list)
     lab = re.compile(r"^([A-Za-z_][A-Za-z0-9_]*):")
     use = re.compile(r"HDAE5000_OBJ_([A-Za-z0-9_]+)")
+    pos = {}                                     # label -> its place in the scan, to order every list
     for pat in CODE:
         for f in sorted(glob.glob(os.path.join(ROOT, tree, pat))):
             cur = None
@@ -168,12 +169,35 @@ def code_refs(tree):
                 m = lab.match(ln)
                 if m and not re.search(r"_(Skip|Loop)\d+$", m.group(1)):
                     cur = m.group(1)
+                    pos.setdefault(cur, len(pos))
                 code = strip_comment(ln)
                 if code.lstrip().startswith(".equ"):
                     continue
                 for n in use.findall(code):
                     if cur and cur not in out[n]:
                         out[n].append(cur)
+    # functions built from firmware C (cc900 phase 6, <tree>/cc900/*.c) name the objects as OBJ_<name>
+    # (hdae_ids.h) and keep only an .include line in the hand source, so read their C too; a short C name maps
+    # to the tree's label through its `cc900-name:` comment
+    fdef = re.compile(r"^[A-Za-z_][\w \t\*]*?\b(\w+)\s*\([^;]*$")
+    cuse = re.compile(r"\b(?:HDAE5000_)?OBJ_([A-Za-z0-9_]+)")
+    for f in sorted(glob.glob(os.path.join(ROOT, tree, "cc900", "*.c"))):
+        text = open(f, "rb").read().decode("latin-1")
+        names = dict(re.findall(r"cc900-name:\s*(\w+)\s*=\s*(\w+)", text))
+        cur = None
+        for ln in text.split("\n"):
+            m = fdef.match(ln)
+            if m and not ln.startswith(("extern", "#", "typedef", "struct")):
+                cur = names.get(m.group(1), m.group(1))
+            if ln.startswith("}"):
+                cur = None
+            if cur is None or ln.lstrip().startswith(("/*", "*", "#")):
+                continue
+            for n in cuse.findall(ln):
+                if cur not in out[n]:
+                    out[n].append(cur)
+    for n in out:                                # hand-source order, wherever the routine's code now lives
+        out[n].sort(key=lambda r: pos.get(r, len(pos)))
     return out
 
 

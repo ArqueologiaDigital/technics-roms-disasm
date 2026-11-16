@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: Tempo_DisplayParamReturn Tempo_DisplayParamSkipClear */   /* staged module names, repair_module_lines.py */
 
 extern unsigned char __near ram_e3e2;
 extern unsigned char __near ram_e3e4;
@@ -24,4 +25,32 @@ void Tempo_DisplayParamSkipClear(unsigned char a)
 {
     GLOBAL_ERROR_CODE = a;
     UI_InterruptTitleByIndex(0xee);
+}
+
+extern unsigned char __near ram_8d88;
+extern unsigned char __near ram_3988;
+extern unsigned char __near ram_34cd;
+extern unsigned char Tempo_DisplayParamReturn(void);
+extern void Tempo_DisplayParamSkipClear(int);
+extern void MIDI_SendSysExCmd(int);
+extern void Tempo_EditBPM(unsigned char a);
+
+void Tempo_EditBPM(unsigned char a)
+{
+    unsigned char r;
+    if (a != 0) return;
+    ram_8d88 |= 1;
+    r = Tempo_DisplayParamReturn();
+    ram_3988 = r;
+    switch (r) {
+    case 0:
+        Tempo_DisplayParamSkipClear(0x23);
+        break;
+    case 1:
+        Tempo_DisplayParamSkipClear(0xf);
+        MIDI_SendSysExCmd(8);
+        break;
+    }
+    ram_34cd |= 0x80;
+    ram_34cd |= 0x80;
 }

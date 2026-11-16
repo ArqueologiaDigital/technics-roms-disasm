@@ -40,9 +40,12 @@ def main():
     ref = check_bytes.load_reference(os.path.join(REPO, opt(a, '--symbols', 'symbols/maincpu_v10_symbols_reference.txt')))
     base = int(opt(a, '--base', '0xe00000'), 0)
     alias = {}
+    module = set()
     for i, x in enumerate(a):
         if x == '--cfile':
             alias.update(fw.label_map(a[i + 1]))
+            module |= fw.module_names(a[i + 1])     # the C's `cc900-module:` callees: calr / jr / jrl, as the build
+    to_llvm.MODULE = module or None
 
     class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
         def resolve(self, n):                            # name (value or label) it is the prefix of
@@ -54,6 +57,7 @@ def main():
                 if len(set(full)) == 1:
                     return super().resolve(full[0])
             return r
+    fw.RUNTIME.update(fw.runtime_names(tree))           # V4.23's runtime names (C9H_divlu) -> the tree's labels
     names = CutNames(fw.tree_values(tree), ref)
     to_llvm.SPELL = None
     text = open(a[0], encoding='latin-1').read()
@@ -87,8 +91,15 @@ def main():
             print('%-32s cannot resolve %s' % (bare, e)); bad += 1; continue
         if any('untranslated' in l for l in body):
             print('%-32s to_llvm cannot translate a line' % bare); bad += 1; continue
+        # relative calls / jumps to other routines (cc900-module callees) name `__cc900_at_<hex>`: define each
+        # relative to this function, so llvm-mc resolves the displacement as it is in the ROM
+        fa = ref[full]
+        targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', '\n'.join(body))})
+        # (relative to an assembler-local label: an expression on the global symbol stays a relocation for a
+        # conditional jr / jrl, which then comes out as an unresolved jrl -- helper G, run 87)
+        sets = ''.join('\t.set __cc900_at_%x, .Lcc900_fn0 + %d\n' % (t, t - fa) for t in targets)
         try:
-            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n.Lcc900_fn0:\n%s\n%s' % (full, full, '\n'.join(body), sets))[full]
         except Exception:                                 # e.g. a register to_llvm spells as llvm-mc does not
             print('%-32s llvm-mc cannot assemble the translation' % full); bad += 1; continue
         at = ref[full] - base

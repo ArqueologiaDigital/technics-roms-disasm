@@ -28679,30 +28679,10 @@ SeqToComposer_DecMemoryNo_Epilogue:
 ; Only for A = 0: sets bit 0 of 0x8d88 and runs Tempo_DisplayParamReturn; its result L goes to
 ; 0x3988.  L = 1: Tempo_DisplayParamSkipClear with 15 and MIDI_SendSysExCmd with 8; L = 0:
 ; Tempo_DisplayParamSkipClear with 0x23.  Sets bit 7 of 0x34cd.
-Tempo_EditBPM:
-	cp a, 0:i3
-	ret nz
-	set 0, (0x8d88:16)
-	calr Tempo_DisplayParamReturn
-	ld (0x3988:16), l
-	cp l, 1:i3
-	jr z, Tempo_EditBPMDec
-	cp l, 0:i3
-	jr nz, Tempo_EditBPMClamp
-	ldw wa, 0x23
-	calr Tempo_DisplayParamSkipClear
-	jr Tempo_EditBPMClamp
-
-Tempo_EditBPMDec:
-	ldw wa, 0xf
-	calr Tempo_DisplayParamSkipClear
-	ldw wa, 0x8
-	call MIDI_SendSysExCmd
-
-Tempo_EditBPMClamp:
-	set 7, (0x34cd:16)
-	set 7, (0x34cd:16)
-	ret
+Tempo_EditBPM:	.include "includes/generated/cc900/Tempo_EditBPM.s"	; C: cc900/accompaniment_engine_m257.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Tempo_EditBPMDec, Tempo_EditBPM + 31
+	.set	Tempo_EditBPMClamp, Tempo_EditBPM + 44
 
 Tempo_EditBPMApply:
 	cp	a, 0:i3

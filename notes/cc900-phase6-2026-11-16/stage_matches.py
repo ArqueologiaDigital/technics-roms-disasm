@@ -26,7 +26,9 @@ def defined(paths):
     out = set()
     for p in paths:
         s = open(p, encoding='latin-1').read()
-        names = set(FN_RE.findall(s))
+        sys.path.insert(0, HERE)
+        import stage_probe as sp                             # reads old-style definitions too
+        names = {sp.fn_name(d) for k, d in sp.items(s) if k == 'fn'}
         lm = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', s)}
         out |= {lm.get(n, n) for n in names}
     return out

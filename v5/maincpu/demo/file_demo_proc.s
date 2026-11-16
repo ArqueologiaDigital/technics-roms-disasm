@@ -5030,28 +5030,13 @@ InitRecordTable_ExtLoop:
 	ldw (0x0272ca:24), 0x0000
 	ret
 
-GetDiskSizeInfo:
-	ld a, (FileIO_DiskInfoInit_MediaType:24)
-	cp a, (0x25db6:24)
-	jr nz, GetDiskSize_Return
-	call GetMediaType
-	ld (0x025db6:24), l
+GetDiskSizeInfo:	.include "includes/generated/cc900/GetDiskSizeInfo.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetDiskSize_Return, GetDiskSizeInfo + 21
 
-GetDiskSize_Return:
-	ld l, (0x025db6:24)
-	ret
-
-GetEncodedFreeSpaceData:
-	lda xwa, (0x025d6c:24)
-	ld xbc, (FileIO_DiskInfoInit:24)
-	cp xbc, (xwa)
-	jr nz, GetEncoded_Return
-	lda xbc, (xwa + 4)
-	call GetDiskFreeSpace
-
-GetEncoded_Return:
-	ld xhl, (0x025d6c:24)
-	ret
+GetEncodedFreeSpaceData:	.include "includes/generated/cc900/GetEncodedFreeSpaceData.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetEncoded_Return, GetEncodedFreeSpaceData + 21
 
 FileIO_GetDiskFreeSpace:
 	lda xwa, (0x025d6c:24)
@@ -5819,37 +5804,12 @@ GetFileCount_StoreAndClamp:
 	ld (FILE_LIST_LAST:24), wa
 	ret
 
-ReadVariableLengthInt:
-	push xiz
-	ld xiz, 0:i3
-	jr ReadVarLen_ReadNext
-
-ReadVarLen_AccumulateLoop:
-	and hl, 0x7f
-	exts xhl
-	add xiz, xhl
-	sll xiz, 7
-
-ReadVarLen_ReadNext:
-	call FileIO_ReadByte
-	cp hl, 0x7f
-	jr gt, ReadVarLen_AccumulateLoop
-	cp hl, 0:i3
-	jr ge, ReadVarLen_Negative
-	ldw hl, 0xffff
-	jr ReadVarLen_Return
-
-ReadVarLen_Negative:
-	exts xhl
-	add xiz, xhl
-	ld xhl, 0x7fff
-	cp xiz, 0x7fff
-	jr ugt, ReadVarLen_Return
-	ld xhl, xiz
-
-ReadVarLen_Return:
-	pop xiz
-	ret
+ReadVariableLengthInt:	.include "includes/generated/cc900/ReadVariableLengthInt.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadVarLen_AccumulateLoop, ReadVariableLengthInt + 5
+	.set	ReadVarLen_ReadNext, ReadVariableLengthInt + 16
+	.set	ReadVarLen_Negative, ReadVariableLengthInt + 35
+	.set	ReadVarLen_Return, ReadVariableLengthInt + 54
 
 ReadFieldToBuffer:
 	dec 8, xsp

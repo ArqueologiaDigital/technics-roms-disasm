@@ -10665,76 +10665,14 @@ SoundMode_ProcessToneAndParams:
 	popw_erp 0xfa
 	ret
 TGReg_ClearTerminator:	.include "includes/generated/cc900/TGReg_ClearTerminator.s"	; C: cc900/midi_dispatch_handlers.c
-TGReg_WriteCC0_Volume:
-	dec 4, xsp
-	ld (xsp + 0:8), 0x0
-	jr	TGReg_WriteCC0_Check
-TGReg_WriteCC0_Body:
-	ld (xbc), 0x0
-	ld (xde), 0x0
-	ld (xhl), 0xff
-	call	MidiTG_WriteRegByDescriptor
-	lda xwa, (xsp)
-	ld (xwa + 1), 0x1
-	ld (xwa + 2), 0x0
-	ld (xwa + 3), 0x7f
-	call	MidiTG_WriteRegByDescriptor
-	incm8 1, (xsp + 0:8)
-TGReg_WriteCC0_Check:
-	lda xwa, (xsp)
-	lda xbc, (xwa + 1)
-	lda xde, (xwa + 2)
-	lda xhl, (xwa + 3)
-	cp (xwa), 0xf
-	jr	ule, TGReg_WriteCC0_Body
-	ld (xwa), 0xf
-	ld (xbc), 0x0
-	ld (xde), 0x0
-	ld (xhl), 0xff
-	call	MidiTG_WriteRegByDescriptor
-	lda xwa, (xsp)
-	ld (xwa), 0xf
-	ld (xwa + 1), 0x1
-	ld (xwa + 2), 0x78
-	ld (xwa + 3), 0x7f
-	call	MidiTG_WriteRegByDescriptor
-	inc 4, xsp
-	ret
-TGReg_WriteCC0_AltMask:
-	dec 4, xsp
-	ld (xsp + 0:8), 0x0
-	jr	TGReg_WriteCC0_AltCheck
-TGReg_WriteCC0_AltBody:
-	ld (xbc), 0x0
-	ld (xde), 0x0
-	ld (xhl), 0xff
-	call	MidiTG_WriteRegByDescriptor
-	lda xwa, (xsp)
-	ld (xwa + 1), 0x1
-	ld (xwa + 2), 0x0
-	ld (xwa + 3), 0x7f
-	call	MidiTG_WriteRegByDescriptor
-	incm8 1, (xsp + 0:8)
-TGReg_WriteCC0_AltCheck:
-	lda xwa, (xsp)
-	lda xbc, (xwa + 1)
-	lda xde, (xwa + 2)
-	lda xhl, (xwa + 3)
-	cp (xwa), 0xf
-	jr	ule, TGReg_WriteCC0_AltBody
-	ld (xwa), 0xf
-	ld (xbc), 0x0
-	ld (xde), 0xf0
-	ld (xhl), 0xff
-	call	MidiTG_WriteRegByDescriptor
-	lda xwa, (xsp)
-	ld (xwa), 0xf
-	ld (xwa + 1), 0x1
-	ld (xwa + 2), 0x0
-	ld (xwa + 3), 0x7f
-	call	MidiTG_WriteRegByDescriptor
-	inc 4, xsp
-	ret
+TGReg_WriteCC0_Volume:	.include "includes/generated/cc900/TGReg_WriteCC0_Volume.s"	; C: cc900/midi_dispatch_handlers_m288_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TGReg_WriteCC0_Body, TGReg_WriteCC0_Volume + 8
+	.set	TGReg_WriteCC0_Check, TGReg_WriteCC0_Volume + 42
+TGReg_WriteCC0_AltMask:	.include "includes/generated/cc900/TGReg_WriteCC0_AltMask.s"	; C: cc900/midi_dispatch_handlers_m288_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TGReg_WriteCC0_AltBody, TGReg_WriteCC0_AltMask + 8
+	.set	TGReg_WriteCC0_AltCheck, TGReg_WriteCC0_AltMask + 42
 TGReg_WriteCC3_Expression:	.include "includes/generated/cc900/TGReg_WriteCC3_Expression.s"	; C: cc900/midi_dispatch_handlers_m288.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	TGReg_WriteCC3_Body, TGReg_WriteCC3_Expression + 21

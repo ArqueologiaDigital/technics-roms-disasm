@@ -65,8 +65,8 @@ def corpus(d):
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, flags[l]) for l in sorted(labels)))
     open(os.path.join(d, 'manifest.tsv'), 'w').write(''.join('%s\t%s\n' % r for r in rows))
     print('%d staged C files in %s, option sets %s' % (len(rows), d, ' '.join(sorted(labels))))
-    print('run (from scripts/analysis/cc900): flock %s/vm/.runlock bash oracle/run_oracle.sh p6-staged %s %s/sources.txt '
-          '%s/options.txt v423' % (ORACLE, d, d, d))
+    print('run (from scripts/analysis/cc900; it takes a free VM slot itself): bash oracle/run_oracle.sh p6-staged %s '
+          '%s/sources.txt %s/options.txt v423' % (d, d, d))
 
 
 def check(run_dir, d, record):

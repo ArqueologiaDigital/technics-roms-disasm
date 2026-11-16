@@ -1,6 +1,7 @@
 /* Phase 6, lane_p6 helper G, round 2, module 271 (notes/cc900-phase6-2026-11-16/modules_v10.tsv): EditSwProc
    (ui/ui_window_procs.s), which reaches LabelProc with calr, so both are in this one file.  LabelProc is the
    p6_G_2a.c form.  Event codes are their .equ values from v10/maincpu/shared/event_codes.s. */
+/* cc900-module: LabelProc */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 #define EVT_SW_IN             0x1c00007L
 #define EVT_DRAW              0x1c0000dL

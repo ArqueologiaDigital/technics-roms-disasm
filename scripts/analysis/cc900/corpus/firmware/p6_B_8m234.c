@@ -3,6 +3,7 @@
    that asm900 writes the call relative.  -O3 -Xr.
    Part control blocks: 256-byte records at 0xb0000, block n at 0xb0000 + (n - 1) * 0x100; word +3 = next block
    (0xffff ends the chain); event data from offset 5 to 0xff. */
+/* cc900-module: PartCtrl_ReadWord */   /* from scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char ram_b0000[];
 

@@ -5063,12 +5063,7 @@ ExtData_ToneParam_DispatchHandler_Skip4:
 ExtData_ToneParam_DispatchHandler_Epilogue2:
 	inc	6, xsp
 	ret
-ExtData_Voice_CheckMode3_Helper:
-	ldw	wa, 128
-	calr	ExtData_SetTlvField
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_Voice_CheckMode3_Helper:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_ToneParam_DispatchHandler_Join2:
 	dec	6, xsp
 	ld	a, (MIDI_MSG_STATUS:16)
@@ -5143,36 +5138,13 @@ ExtData_ToneParam_DispatchHandler_Join4:
 ExtData_ToneParam_DispatchHandler_Epilogue:
 	inc	6, xsp
 	ret
-ExtData_ToneParam_DispatchHandler_Join5:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join2:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	ldw	wa, 128
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join3:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join4:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join5:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join6:
-	ldw	wa, 255
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
-ExtData_Voice_CheckMode3_Helper_Join7:
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_ToneParam_DispatchHandler_Join5:	.include "includes/generated/cc900/ExtData_ToneParam_DispatchHandler_Join5.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join2:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join2.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join3:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join3.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join4:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join4.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join5:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join5.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join6:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join6.s"	; C: cc900/audio_control_engine_m0.c
+ExtData_Voice_CheckMode3_Helper_Join7:	.include "includes/generated/cc900/ExtData_Voice_CheckMode3_Helper_Join7.s"	; C: cc900/audio_control_engine_m0.c
 ExtData_ToneParam_DispatchHandler_Helper4:
 	ld	wa, 1:i3
 	calr	ExtData_ToggleTlvBits
@@ -5614,29 +5586,7 @@ MIDI_WriteResetSequence:
 	ld (0x90f9:16), a
 	ret
 
-ExtData_Voice_UpdateFlags:
-	ld	wa, 2:i3
-	calr	ExtData_ToggleTlvBits
-	ld	wa, 1:i3
-	calr	ExtData_SetTlvField
-	calr	SwbtWr_FlushAndAppendParams
-	lda	xbc, (PANEL_CONDUCTOR:16)
-	bit	0, (xbc+3)
-	ret	nz
-	ld	a, (PANEL_STYLE+3:16)
-	and	a, 7
-	cp	a, 1:i3
-	ret	nz
-	inc	1, xbc
-	ld	a, (xbc)
-	bit	1, a
-	ret	z
-	set	0, (0x90f9:16)
-	ld	a, (xbc)
-	res	1, a
-	ld	(xbc), a
-	calr	MIDI_WriteResetSequence
-	ret
+ExtData_Voice_UpdateFlags:	.include "includes/generated/cc900/ExtData_Voice_UpdateFlags.s"	; C: cc900/audio_control_engine_m0_xr.c
 ; ExtData_PostRawValueAndMask: Posts the incoming event unchanged: MIDI_MSG_DATA2 := value (EXTDATA_VALUE), MIDI_MSG_DATA3 :=
 ;   mask (EXTDATA_MASK), then SwbtWr_FlushAndAppendParams (which appends it when the mask is non-zero); no panel record byte
 ;   is touched. Basis: callers + body -- ExtData_ToneParam_MultiChannel (entry 0x90 of SoundProgram_DispatchTable)

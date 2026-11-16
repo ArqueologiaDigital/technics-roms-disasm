@@ -1303,57 +1303,13 @@ Demo_ParseSlideHeader:	.include "includes/generated/cc900/Demo_ParseSlideHeader.
 ;   In:  A = region.  Seeks to the region's offset (FileIO_FileSigRecs_OffsetCol, 8-byte rows;
 ;   FileIO_SeekAndReadBlock from the start) and compares the bytes read (FileIO_ReadByte) with
 ;   FileIO_RegionSignatures[A].  A read error counts as a mismatch.
-FileIO_CheckRegionSignature:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	sla wa, 3
-	lda xbc, (FileIO_FileSigRecs_OffsetCol:24)
-	ld	wa, (xbc+wa)
-	extz xwa
-	ld bc, 0:i3
-	call FileIO_SeekAndReadBlock
-	ldiw_erp 0xfa, 1
-	ld iz, 0:i3
-	jr FileIO_CheckSig_LoopTest
-
-FileIO_CheckSig_ReadLoop:
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr lt, FileIO_CheckSig_Fail
-	ld a, (xsp + 4)
-	extz wa
-	sla wa, 3
-	lda xbc, (FileIO_RegionSignatures:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+iz)
-	cp l, a
-	jr z, FileIO_CheckSig_Match
-
-FileIO_CheckSig_Fail:
-	ldiw_erp 0xfa, 0
-	jr FileIO_CheckSig_Return
-
-FileIO_CheckSig_Match:
-	inc 1, iz
-
-FileIO_CheckSig_LoopTest:
-	ld a, (xsp + 4)
-	extz wa
-	sla wa, 3
-	lda xbc, (FileIO_FileSigRecs_LengthCol:24)
-	ld de, iz
-	cp	de, (xbc+wa)
-	jr c, FileIO_CheckSig_ReadLoop
-
-FileIO_CheckSig_Return:
-	call FileIO_SeekRead_ExtReturn
-	ldto_werp HL, 0xfa
-	pop xiz
-	inc 2, xsp
-	ret
+FileIO_CheckRegionSignature:	.include "includes/generated/cc900/FileIO_CheckRegionSignature.s"	; C: cc900/file_demo_proc_m266_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_CheckSig_ReadLoop, FileIO_CheckRegionSignature + 39
+	.set	FileIO_CheckSig_Fail, FileIO_CheckRegionSignature + 74
+	.set	FileIO_CheckSig_Match, FileIO_CheckRegionSignature + 79
+	.set	FileIO_CheckSig_LoopTest, FileIO_CheckRegionSignature + 81
+	.set	FileIO_CheckSig_Return, FileIO_CheckRegionSignature + 103
 
 FileIO_ValidateFileSignature:
 	lda xsp, (xsp - 26)
@@ -4491,124 +4447,16 @@ FileIO_SeekWriteBlock_Done:
 	ld (0x7f48:16), wa
 	ret
 
-FileIO_CompareFiles:
-	lda xsp, (xsp - 50)
-	pushw iz
-	ld (xsp + 48), xbc
-	ld xde, xwa
-	ldw (xsp + 10), 0x0
-	ld xiy, FileIO_CompareFiles_Path2Init
-	lda xix, (xsp + 32)
-	ldw bc, 0x8
-	ldirw
-	ld xiy, FileIO_CompareFiles_PathInitB
-	lda xix, (xsp + 16)
-	ldw bc, 0x8
-	ldirw
-	lda xwa, (xsp + 16)
-	ld xbc, xde
-	call FileIO_BuildFilePath
-	pushw FileIO_CompareFiles_Str_wb@hi16
-	pushw FileIO_CompareFiles_Str_wb@lo16
-	lda xwa, (xsp + 20)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld (xsp + 6), xhl
-	ld xwa, (xsp + 6)
-	or xwa, xwa
-	jr nz, FileIO_Compare_Return
-	cpw (FILE_ERROR:24), 31
-	jr nz, FileIO_Compare_Mismatch
-	ldw hl, 0xfff5
-	jrl FileIO_ParseHeader_Error
-
-FileIO_Compare_Mismatch:
-	ldw hl, 0xfffd
-	jrl FileIO_ParseHeader_Error
-
-FileIO_Compare_Return:
-	lda xwa, (xsp + 32)
-	ld xbc, (xsp + 48)
-	call FileIO_BuildFilePath
-	pushw FileIO_Compare_Mismatch_Str_rb@hi16
-	pushw FileIO_Compare_Mismatch_Str_rb@lo16
-	lda xwa, (xsp + 36)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld (xsp + 2), xhl
-	ld xwa, (xsp + 2)
-	or xwa, xwa
-	jr nz, FileIO_ParseHeader_CheckType
-	ld xwa, (xsp + 6)
-	push xwa
-	call FileClose
-	inc 4, xsp
-	ldw hl, 0xfffe
-	jr FileIO_ParseHeader_Error
-
-FileIO_ParseHeader_CheckType:
-	lda xwa, (0x069800:24)
-	ld (xsp + 12), xwa
-
-FileIO_ParseHeader_ReadFields:
-	ld xwa, (xsp + 2)
-	push xwa
-	pushw 0x1000
-	pushw 0x1
-	ld xwa, (xsp + 20)
-	push xwa
-	call FileRead
-	lda xsp, (xsp + 12)
-	ld iz, hl
-	cp iz, 0:i3
-	jr gt, FileIO_ParseHeader_Return
-	cpw (xsp + 10), 0x0
-	jr lt, FileIO_ParseHeader_Done
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 6)
-	bit 15, wa
-	jr nz, FileIO_ParseHeader_Done
-	ldw (xsp + 10), 0xfffe
-
-FileIO_ParseHeader_Done:
-	ld xwa, (xsp + 2)
-	push xwa
-	call FileClose
-	ld xwa, (xsp + 10)
-	push xwa
-	call FileClose
-	inc 8, xsp
-	ld hl, (xsp + 10)
-
-FileIO_ParseHeader_Error:
-	popw iz
-	lda xsp, (xsp + 50)
-	ret
-
-FileIO_ParseHeader_Return:
-	ld xwa, (xsp + 6)
-	push xwa
-	pushw iz
-	pushw 0x1
-	ld xwa, (xsp + 20)
-	push xwa
-	call FileWrite
-	lda xsp, (xsp + 12)
-	cp hl, iz
-	jr z, FileIO_ParseHeader_ReadFields
-	ld xwa, (0x7f44:16)
-	ld wa, (xwa + 6)
-	res 15, wa
-	cp wa, 0x1f
-	jr nz, FileIO_ValidateRecord
-	ldw (xsp + 10), 0xfff5
-	jr FileIO_ParseHeader_Done
-
-FileIO_ValidateRecord:
-	ldw (xsp + 10), 0xfffd
-	jr FileIO_ParseHeader_Done
+FileIO_CompareFiles:	.include "includes/generated/cc900/FileIO_CompareFiles.s"	; C: cc900/file_demo_proc_m267_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_Compare_Mismatch, FileIO_CompareFiles + 90
+	.set	FileIO_Compare_Return, FileIO_CompareFiles + 96
+	.set	FileIO_ParseHeader_CheckType, FileIO_CompareFiles + 147
+	.set	FileIO_ParseHeader_ReadFields, FileIO_CompareFiles + 155
+	.set	FileIO_ParseHeader_Done, FileIO_CompareFiles + 205
+	.set	FileIO_ParseHeader_Error, FileIO_CompareFiles + 226
+	.set	FileIO_ParseHeader_Return, FileIO_CompareFiles + 231
+	.set	FileIO_ValidateRecord, FileIO_CompareFiles + 277
 
 FileIO_ValidateRecord_CheckSize:	.include "includes/generated/cc900/FileIO_ValidateRecord_CheckSize.s"	; C: cc900/file_demo_proc_m267.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -5161,31 +5009,16 @@ InitRecordTable_ExtLoop:
 
 ; Returns in L the inserted disk's media type, reading it (GetMediaType) into 0x25db6 first
 ; when that byte still holds FileIO_DiskInfoInit_MediaType's initial value.
-GetDiskSizeInfo:
-	ld a, (FileIO_DiskInfoInit_MediaType:24)
-	cp a, (0x25db6:24)
-	jr nz, GetDiskSize_Return
-	call GetMediaType
-	ld (0x025db6:24), l
-
-GetDiskSize_Return:
-	ld l, (0x025db6:24)
-	ret
+GetDiskSizeInfo:	.include "includes/generated/cc900/GetDiskSizeInfo.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetDiskSize_Return, GetDiskSizeInfo + 21
 
 ; Returns in XHL the u32 at 0x25d6c, the cached result of GetDiskFreeSpace, first calling
 ; GetDiskFreeSpace (XWA = 0x25d6c, XBC = 0x25d70) when it still holds FileIO_DiskInfoInit's
 ; initial value.
-GetEncodedFreeSpaceData:
-	lda xwa, (0x025d6c:24)
-	ld xbc, (FileIO_DiskInfoInit:24)
-	cp xbc, (xwa)
-	jr nz, GetEncoded_Return
-	lda xbc, (xwa + 4)
-	call GetDiskFreeSpace
-
-GetEncoded_Return:
-	ld xhl, (0x025d6c:24)
-	ret
+GetEncodedFreeSpaceData:	.include "includes/generated/cc900/GetEncodedFreeSpaceData.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetEncoded_Return, GetEncodedFreeSpaceData + 21
 
 ; Refreshes the cached disk free-space value at 0x25d6c (GetDiskFreeSpace with XWA = 0x25d6c,
 ; XBC = 0x25d70) and returns it in XHL.  GetEncodedFreeSpaceData does the same only when the
@@ -5982,37 +5815,12 @@ GetFileCount_StoreAndClamp:
 ; Reads a MIDI variable-length number from the open file (FileIO_ReadByte per byte, seven bits
 ; per byte while bit 7 is set).  Out: HL = the value, clamped to 0x7fff, or 0xffff on a read
 ; error.
-ReadVariableLengthInt:
-	push xiz
-	ld xiz, 0:i3
-	jr ReadVarLen_ReadNext
-
-ReadVarLen_AccumulateLoop:
-	and hl, 0x7f
-	exts xhl
-	add xiz, xhl
-	sll xiz, 7
-
-ReadVarLen_ReadNext:
-	call FileIO_ReadByte
-	cp hl, 0x7f
-	jr gt, ReadVarLen_AccumulateLoop
-	cp hl, 0:i3
-	jr ge, ReadVarLen_Negative
-	ldw hl, 0xffff
-	jr ReadVarLen_Return
-
-ReadVarLen_Negative:
-	exts xhl
-	add xiz, xhl
-	ld xhl, 0x7fff
-	cp xiz, 0x7fff
-	jr ugt, ReadVarLen_Return
-	ld xhl, xiz
-
-ReadVarLen_Return:
-	pop xiz
-	ret
+ReadVariableLengthInt:	.include "includes/generated/cc900/ReadVariableLengthInt.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadVarLen_AccumulateLoop, ReadVariableLengthInt + 5
+	.set	ReadVarLen_ReadNext, ReadVariableLengthInt + 16
+	.set	ReadVarLen_Negative, ReadVariableLengthInt + 35
+	.set	ReadVarLen_Return, ReadVariableLengthInt + 54
 
 ReadFieldToBuffer:
 	dec 8, xsp

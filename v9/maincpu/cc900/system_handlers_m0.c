@@ -77,3 +77,19 @@ void SeqDMA_MultiWrite_VoiceMap(unsigned char n, unsigned char *p)
 void SeqDMA_Nop(void)
 {
 }
+
+extern void __cdecl SeqBuf_NoteEvent_WriteByte(int);
+extern void SeqDMA_WriteMidi_NoteOn(unsigned char ch, unsigned char *p);
+
+void SeqDMA_WriteMidi_NoteOn(unsigned char ch, unsigned char *p)
+{
+	unsigned char c;
+
+	c = *p;
+	if (c == 0x90) {
+		p++;
+		SeqBuf_NoteEvent_WriteByte(*p);
+		p++;
+		SeqBuf_NoteEvent_WriteByte(*p);
+	}
+}
