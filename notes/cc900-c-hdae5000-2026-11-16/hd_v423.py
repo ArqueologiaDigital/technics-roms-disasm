@@ -16,7 +16,8 @@ bytes are compared with the image at the function's label.
         a `call` (V4.23's `cal`) whose place in the ROM holds a `calr` to the same target is written calr, as asm900
         writes a call to a function of the same source file; such a match is reported `MATCH calr:<targets>`, and
         is only real once those targets are in the same C file.  --tsv
-        writes (c_file, options, function, bytes, result) rows.  --record appends the rows of the STAGED files
+        writes (c_file, options, function, bytes, result) rows.  --compiler NAME reads another compiler's listings
+        of the run (ide2003, v110; diagnostics only: a function is done only under V4.23).  --record appends the rows of the STAGED files
         (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree directory, C file,
         SHA-256 of its text, options, run, function, bytes, result), replacing that file's earlier rows.
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --show RUN_DIR FUNC [--file STEM] [--label O3Xr]
@@ -145,7 +146,7 @@ def show(a):
     import listing, to_llvm, check_bytes
     run, func = a[0], a[1]
     tree, rom, ref, names = setup(opt(a, '--image', 'v2.06i'))
-    base = os.path.join(run, 'out', 'v423')
+    base = os.path.join(run, 'out', opt(a, '--compiler', 'v423'))
     for label in sorted(os.listdir(base)):
         if opt(a, '--label') not in (None, label):
             continue
@@ -234,7 +235,7 @@ def check(a):
         short.setdefault(n[:31], []).append(n)
     only = opt(a, '--only', '*')
     res, order = {}, []
-    base = os.path.join(run, 'out', 'v423')
+    base = os.path.join(run, 'out', opt(a, '--compiler', 'v423'))
     for label in sorted(os.listdir(base)):
         for asm in sorted(glob.glob(os.path.join(base, label, '**', '*.asm'), recursive=True)):
             stem = os.path.basename(asm)[:-4]
