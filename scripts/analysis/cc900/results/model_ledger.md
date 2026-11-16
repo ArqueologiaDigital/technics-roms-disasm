@@ -61,8 +61,8 @@ Regenerate the rows with `sh model/ledger.sh` (from `scripts/analysis/cc900`).
 | run 2026-11-09-40-micro-fpe2f, v423/O3XS                            | probes/fpp8.c        | 99 / 108 exact (91.7%)     |
 | run 2026-11-09-41-micro-fpe2g, v423/none                            | probes/fpp9.c        | 34 / 60 exact (56.7%)      |
 | run 2026-11-09-41-micro-fpe2g, v423/O3XS                            | probes/fpp9.c        | 30 / 60 exact (50.0%)      |
-| run 2026-11-10-2-micro-fpe3a, v423/none                             | probes/fpp10.c       | 89 / 102 exact (87.3%)     |
-| run 2026-11-10-2-micro-fpe3a, v423/O3XS                             | probes/fpp10.c       | 88 / 102 exact (86.3%)     |
+| run 2026-11-10-2-micro-fpe3a, v423/none                             | probes/fpp10.c       | 90 / 102 exact (88.2%)     |
+| run 2026-11-10-2-micro-fpe3a, v423/O3XS                             | probes/fpp10.c       | 89 / 102 exact (87.3%)     |
 | run 2026-11-10-3-micro-fpe3b, v423/none                             | probes/fpp11.c       | 61 / 99 exact (61.6%)      |
 | run 2026-11-10-3-micro-fpe3b, v423/O3XS                             | probes/fpp11.c       | 59 / 99 exact (59.6%)      |
 | run 2026-11-09-22-micro-condbits, v423/none                         | micro/cond_bits.c    | 114 / 117 exact (97.4%)    |

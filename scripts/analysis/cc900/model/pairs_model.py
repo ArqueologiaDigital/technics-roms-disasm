@@ -2,6 +2,7 @@
 """Which firmware library pairs does our own toolchain rebuild from Toshiba's C, with no Toshiba program involved?
 
 usage: python3 -I -B pairs_model.py PAIRS.tsv LIBCOPY [--personality kn5000] [--image NAME ...] [--show N]
+                                   [--listings DIR]
 For each source/binary pair of PAIRS.tsv (../pairs.py) whose source is a function the reference model compiles, the
 model compiles LIBCOPY/libsrc/<SOURCE> as the library was built (cdecl, -O3 -XS, -DFLOAT; LIBCOPY as in
 ../results/model_ledger.md), to_llvm.py translates the function with asm900's encoding choices, llvm-mc assembles it
@@ -10,13 +11,18 @@ ELF, which make gate proves equal to the reference image).  Absolute operands re
 addresses: the other pairs' publics (pairs.tsv), the image's labels (llvm-nm), the library's data objects.
 Prints a TSV row per pair: image, address, public, source, length, result (`MATCH`, `N diff first +OFF`, or why not
 compared), then a summary.  Scratch files go to $TMPDIR.
+
+--listings DIR takes each function from a Toshiba compiler's own listing instead of the model's: DIR/<SOURCE>.asm (an
+oracle run's `out/<compiler>/<set>/libsrc`, e.g. V4.23's), split by listing.py, then the same to_llvm.py, llvm-mc and
+comparison.  That answers "does the original compiler's code for this C give the ROM's bytes, through our assembler?"
+(scripts/analysis/cc900/c_build_coverage.py, column "Toshiba V4.23").  Its output holds names and counts only.
 """
 import os, re, sys, subprocess, tempfile, collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 R = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(HERE))))
 sys.path.insert(0, os.path.join(R, 'notes/toshiba-runtime-xref-2026-11-08'))
-import frontend, codegen, to_llvm, cache
+import frontend, codegen, to_llvm, cache, listing
 import xref_runtime as X
 
 BIN = os.path.expanduser('~/compartilhado/llvm-project/build/bin')
@@ -40,6 +46,7 @@ def main():
     pers = a[a.index('--personality') + 1] if '--personality' in a else 'kn5000'
     show = int(a[a.index('--show') + 1]) if '--show' in a else 0
     want = [a[i + 1] for i, x in enumerate(a) if x == '--image']
+    lst = a[a.index('--listings') + 1] if '--listings' in a else None
     rows = [l.rstrip('\n').split('\t') for l in open(pairs)][1:]
     byimg = collections.defaultdict(list)
     for r in rows: byimg[r[0]].append(r)
@@ -73,12 +80,22 @@ def main():
             if ' data' in pub or not pub.startswith(('_', '.')): continue
             path = os.path.join(lib, 'libsrc', src)
             if not os.path.exists(path): tally['no source'] += 1; continue
-            if path not in units:
+            if path not in units and lst:                  # the Toshiba compiler's listing of this source
+                f = os.path.join(lst, src[:-2] + '.asm')
+                text = open(f, encoding='latin-1').read() if os.path.exists(f) else ''
+                pubs = set(re.findall(r'(?im)^\s*public\s+([._\w]+)', text)); fs = {}
+                for k, v in listing.split(text).items():         # a label that is not public (`__Skip` of the
+                    v = v[[i for i, l in enumerate(v) if l == k + ':'][0]:]   # inline assembly in _memcpy) stays
+                    if k not in pubs and fs: fs[list(fs)[-1]] += v           # inside the function before it
+                    else: fs[k] = v
+                units[path] = fs
+            elif path not in units:
                 try:
                     u, units[path] = cache.compile(path, defines, [os.path.join(lib, 'inc')], 'O3XS', False, pers)
                 except Exception as ex: units[path] = {'__error__': str(ex)}
             out = units[path]
-            lines = codegen.FULL.get(pub) or out.get(pub)    # whole function (inline-assembly labels included), or data
+            lines = (None if lst else codegen.FULL.get(pub)) or out.get(pub)   # the whole function (inline-assembly
+                                                           # labels included), or data
             if not lines:                                  # ___ctype: a second public at __ctype's address
                 twin = [q[2] for q in rs if q[1] == r[1] and q[2] != pub and (codegen.FULL.get(q[2]) or out.get(q[2]))]
                 if twin:
@@ -148,7 +165,8 @@ def main():
                 continue
             if code is None:
                 tally['assembler'] += 1
-                print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + err.strip().splitlines()[0][:90], r[5]])); continue
+                msg = re.sub(r'\S*/(f\.s:)', r'\1', err.strip().splitlines()[0])   # no scratch path: the output
+                print('\t'.join([img, r[1], pub, src, '-', 'llvm: ' + msg[:90], r[5]])); continue    # is committed
             ref = read(addr, len(code))
             if ref is None: tally['outside image'] += 1; continue
             diff = [i for i in range(len(code)) if code[i] != ref[i]]
