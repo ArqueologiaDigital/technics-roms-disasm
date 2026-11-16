@@ -241,7 +241,9 @@ def translate_line(t, syms, locals_):
         t = spelled(raw[1], lookup(raw[1], syms))
         return '\tjp %s, (%s:%d)' % (CC[raw[0]], t, 16 if code_width(raw[1]) < 24 else 24)
     if op == 'djnz': return '\tdjnz %s, %s' % (raw[0].lower(), raw[1])
-    m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff)$', ' '.join(raw)) if op == 'pushw' else None
+    # `& 0xfff`: V4.23's listing cuts a long line at its column limit, so a 32-character name's `& 0xffff` loses its
+    # last digit (lane_p6: pushw _FDemo_DisplayResourceData_Str_S & 0xfff, after the `>> 16` push of the same name)
+    m = re.match(r'^([_.]\w+|S\d+) (>> 16|& 0xffff?)$', ' '.join(raw)) if op == 'pushw' else None
     if m:                                                # an address pushed as two words (abi returns.c use_d,
         s = spell_of(m.group(1)) if not m.group(1).startswith('S') else None
         if s:                                            # a label: the assembler supplies the halves (UPDATE 20)
@@ -371,7 +373,11 @@ def translate_data(lines, locals_):
     out = []
     for l in lines:
         p = l.strip().split(None, 1); op = p[0].lower()
-        if op == 'align': out.append('\t.balign %s' % p[1]); continue
+        if op == 'align':
+            # V4.23 aligns within its own f_const section, which the firmware's linker placed where it liked: the
+            # sub-CPU's AudioChannel_CaseOffsets sits at the odd 0xF703.  The tree's label is the object's place, so
+            # no padding is written here (a .balign would shift the table and everything after it by a byte)
+            out.append('\t; V4.23: align %s (within its f_const section; the label places the object)' % p[1]); continue
         if op in ('fdata', 'fdatad'):
             b = struct.pack('<d' if op == 'fdatad' else '<f', float(p[1]))
             out.append('\t.byte ' + ', '.join('0x%02x' % x for x in b) + '\t; %s %s' % (op, p[1].strip())); continue
