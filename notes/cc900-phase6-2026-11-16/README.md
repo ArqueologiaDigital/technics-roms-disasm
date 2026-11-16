@@ -280,8 +280,9 @@ All at the holdout options.  For example, from `scripts/analysis/cc900`:
   rule loop-entry-copy (lane_p6 fix p6-02, `KN_LOOP_INVERT`, which only the firmware build switches on), it gives
   all 60 bytes of `TrimAndPadSmfFilename`, `TrimPad_NullTerminate`'s tail included (`fn_diff.py`).  The first form
   of the rule (fix p6-01) was on for the whole `kn5000` personality.  It lost library and `ide2003` micro functions
-  in the full ledger and was backed out.  `rules.md` has the account.  The function is identical in all five
-  trees; it is built once fix p6-02 is in the model.
+  in the full ledger and was backed out.  `rules.md` has the account.  **Built since batch 363** (p6-02 in the
+  model): `smf_operations.c` in all five trees, the function being identical in each.  Its eight `TrimPad_*` inner
+  labels are kept as `.set` offsets.  `make -j3 gate` passed.
 
 **Loop shapes across v10** (the idiom census for that candidate rule): `python3
 notes/cc900-phase6-2026-11-16/loop_shapes.py v10/maincpu`, 2026-11-16.  A loop is a backward conditional branch;
