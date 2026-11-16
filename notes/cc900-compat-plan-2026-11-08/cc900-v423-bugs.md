@@ -12,14 +12,15 @@ reproduce is a function the model can never match byte for byte.
 
 Add every new one here, in the commit that finds it.
 
-| # | bug                                                                                  | option sets          | found                                  | model                      |
-|---|--------------------------------------------------------------------------------------|----------------------|----------------------------------------|----------------------------|
-| 1 | a char product widened to long keeps only its low byte                               | all four             | 2026-11-13, probe chararith.c          | reproduces it              |
-| 2 | two equal switch arms merged; one case loses its call                                | -O3 -XS -Xr          | 2026-11-15, rstmt2.c (semcheck review) | does not reproduce it      |
-| 3 | -Xr small struct: caller and callee disagree on stack order                          | -Xr, -O3 -XS -Xr     | 2026-11-16, probe sxl.c                | reproduces the caller side |
-| 4 | char pointer + negative int or char index zero-extended                              | all four             | 2026-11-16, probes ptrar.c, stptr.c    | reproduces it              |
-| 5 | -O: char pointer difference compared with 0 unsigned                                 | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe ptrar.c              | refuses the shape          |
-| 6 | struct pointer + char index, 10-byte element: low word of the product, zero-extended | all four             | 2026-11-16, probe ptrar.c              | refuses the shape          |
+| # | bug                                                                                           | option sets          | found                                  | model                      |
+|---|-----------------------------------------------------------------------------------------------|----------------------|----------------------------------------|----------------------------|
+| 1 | a char product widened to long keeps only its low byte                                        | all four             | 2026-11-13, probe chararith.c          | reproduces it              |
+| 2 | two equal switch arms merged; one case loses its call                                         | -O3 -XS -Xr          | 2026-11-15, rstmt2.c (semcheck review) | does not reproduce it      |
+| 3 | -Xr small struct: caller and callee disagree on stack order                                   | -Xr, -O3 -XS -Xr     | 2026-11-16, probe sxl.c                | reproduces the caller side |
+| 4 | char pointer + negative int or char index zero-extended                                       | all four             | 2026-11-16, probes ptrar.c, stptr.c    | reproduces it              |
+| 5 | -O: char pointer difference compared with 0 unsigned                                          | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe ptrar.c              | refuses the shape          |
+| 6 | struct pointer + char index, 10-byte element: low word of the product, zero-extended          | all four             | 2026-11-16, probe ptrar.c              | refuses the shape          |
+| 7 | a shifted or divided char compared with a char of the other signedness, at the byte, unsigned | all four             | 2026-11-16, probe shcmp.c              | refuses mixed signedness   |
 
 ## 1. A char product widened to long keeps only its low byte
 
@@ -99,3 +100,20 @@ Add every new one here, in the commit that finds it.
 - **Evidence:** oracle run 2026-11-16-3-micro-ptrar, all four sets.  Reported by lane_nm.
 - **Model:** refuses the shape (lane_nm rule 21 declines a char index over a non-power-of-two element); does not
   reproduce it.
+
+## 7. A shifted or divided char compared with a char of the other signedness is compared at the byte, unsigned
+
+- **Source:** corpus/probes/shcmp.c (gen_shcmp.py), e.g. `int sc_p_s1_ge_S_v(unsigned char a, signed char sc) { return
+  (a >> 1) >= sc; }` and `int sc_p_D2_ge_c_v(signed char sa, unsigned char c) { return (sa / 2) >= c; }`; the same with
+  `<` and `==`, `/ 2`, globals instead of parameters, and as a branch.
+- **C meaning:** both sides are promoted to int and compared signed: `(a >> 1) >= sc` with `sc = -1` is true;
+  `(sa / 2) >= c` with `sa = -2, c = 0` is false (-1 >= 0); `(sa / 2) == c` with `sa = -2, c = 255` is false.
+- **V4.23, all four option sets:** keeps the shifted / divided char in A and compares it with the other char at the
+  byte, with an unsigned condition whenever either side is unsigned: the three examples give false, true and true.
+  Signed against signed (a signed condition) and unsigned against unsigned are right, and so is equality of `a >> 1`
+  with a signed char (a byte of at most 127 never equals a negative one).
+- **Evidence:** oracle run 2026-11-16-7-micro-shcmp, functions `sc_p_s1_ge_S_v`, `sc_p_s1_lt_S_v`, `sc_p_d2_ge_S_v`,
+  `sc_p_D2_ge_c_v`, `sc_p_D2_eq_c_v`, `sc_p_D2_lt_c_v` and their `_b` / `sc_g_` forms.  Found by lane_o3 while checking
+  phase 6's `VariScreen_IsHalfRangeAbove` shape (p6_m2a), whose operands are both unsigned, a case V4.23 gets right.
+- **Model:** the byte compare is modelled where it is correct (both operands of one signedness); a mixed-signedness
+  compare of this shape is refused, under the owner's case-by-case rule (no firmware function is known to need it).
