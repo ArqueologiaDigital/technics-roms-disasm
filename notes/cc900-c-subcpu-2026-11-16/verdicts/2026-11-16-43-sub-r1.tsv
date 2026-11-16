@@ -1,0 +1,32 @@
+function	bytes	matches	best_diff
+BitTest_Bit0_L	11	sub_1a@Xr sub_1b@Xr	
+BlockCopy_Words_BC_to_HL	21	sub_1a@Xr	
+ClampS16_WA_Short	17	sub_1a@Xr	
+DList_Unlink_SelfLink	16	sub_1a@Xr	
+DSP_ParamFetch_Op61Table	13	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	
+DSP_StateTable_Reset	13	-	+0 sub_1b@Xr
+DSP_VelocityToVolume	14	sub_1a@Xr	
+Detune_ScaleUnsigned	15	-	+11 sub_1b@Xr
+Int_ClampSignedToRange	17	sub_1a@Xr	
+Pitch_Apply_Zone_Trim	11	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr	
+ScaleTune_Get_Global_Mode	6	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	
+ScaleTune_Get_User_Offset	16	-	+0 sub_1b@Xr
+ScaleTune_Is_Global_Enabled	10	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	
+ScaleTune_Set_Global_Enabled	20	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	
+ScaleTune_Set_Global_Mode	6	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr	
+ScaleTune_Set_User_Offset	19	-	+0 sub_1b@Xr
+SignedClamp_Zero	20	sub_1a@Xr	
+TVF_Bias_Clamp_Amount	16	sub_1a@Xr	
+TVF_Clamp_Cutoff	20	sub_1a@Xr	
+TVF_Set_Bypass	11	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr	
+Unsigned_Max_Select	9	sub_1a@Xr	
+Voice_CC_SetPan	17	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	
+Voice_ClearLFO_ActiveFlag	21	-	+6 sub_1a@Xr
+Voice_Pitch_ClampRange	17	sub_1a@Xr	
+Voice_SetCCMaxFlag	21	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr	
+Voice_SetLFO_ActiveFlag	21	-	+6 sub_1a@Xr
+Voice_SetMasterTune	17	-	+3 sub_1b@Xr
+Voice_SetPitchBendRange	11	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	
+Voice_SetVelSwitchConfig	6	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr	
+Voice_WriteVolume_SetFlag	20	sub_1a@Xr sub_1b@Xr	
+WaveSel_KeyTable_Lookup	13	sub_1a@O3XSXr sub_1a@O3Xr sub_1a@Xr sub_1b@O3XSXr sub_1b@O3Xr sub_1b@Xr	

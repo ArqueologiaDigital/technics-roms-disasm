@@ -60,6 +60,35 @@
 ; Payload_Bss_Size: bytes of zero-initialised RAM that MemClear_DRAM_And_ExtRAM clears from
 ;   Payload_Bss_Start (the first even address after the program image) at reset.
 	.equ	Payload_Bss_Size, 0x66f2
+; ToneDB_RelBase / ToneDB_RootPtr: the tone database's base address and its root (header) pointer, the two
+;   longs every ToneDB_* lookup reads (headers of core/10_dsp_voice_params.s); DSP_System_Init stores
+;   0x00050000 in both.
+	.equ	ToneDB_RelBase, Payload_Bss_Start+0x649a
+	.equ	ToneDB_RootPtr, Payload_Bss_Start+0x649e
+
+; --- Internal-RAM cells named from the cc900 C of the routines that use them (2026-11-16, lane_sub;
+; notes/cc900-c-subcpu-2026-11-16/README.md, "Names"; scripts/renaming/rename_subcpu_dsp_cells.sed). ---
+; MIDI_BacklogCount: the MIDI ring's byte count as MIDI_Backlog_Publish stores it; RingBuf_CheckOffset_ClearFlags
+;   compares it with 0x20 / 0x30 (0x40 / 0x50 when RingBuf_OffsetLo is 0) to drop layer slots.
+; RingBuf_OffsetLo: the byte RingBuf_SetOffsetLo stores, which picks those thresholds.
+; MIDI_RingBuffer / DSP2_RingBuffer: the MIDI ring (index mask 0xfff) and the DSP2 ring (mask 0x7ff): write
+;   index, read index and count words, then the data.  DSP_System_Init / the DSP2 init clear the three words.
+; DSP_ConfigBuffer: the DSP configuration record (four words, then five 56-byte effect-slot records);
+;   DSP_GetConfigBuffer returns it, DSP_State_ApplyBuf pushes it.  DSP_ConfigBuffer_Shadow: the 145-word copy
+;   DSP_StateTable_Save keeps of it.
+; DSP_SlotMuteState: one word per effect slot, read and cleared by DSP_SlotMuteState_ReadAndClear.
+; EFF_SlotActiveFlags: one word per effect slot; DSP_ChipActiveFlags: one word per DSP chip;
+; DSP_AlgoChangedFlag: set by DSP_AlgoChange_CheckAndFlag.
+	.equ	MIDI_BacklogCount, 0x27e7
+	.equ	RingBuf_OffsetLo, 0x27e6
+	.equ	MIDI_RingBuffer, 0x2b0d
+	.equ	DSP2_RingBuffer, 0x3b60
+	.equ	DSP_ConfigBuffer, 0x448e
+	.equ	DSP_ConfigBuffer_Shadow, 0x45ca
+	.equ	DSP_SlotMuteState, 0x45bc
+	.equ	EFF_SlotActiveFlags, 0x4930
+	.equ	DSP_ChipActiveFlags, 0x493a
+	.equ	DSP_AlgoChangedFlag, 0x493e
 
 ; --- Interrupt Vector Table & Handlers ---
 	.include "subcpu_vectors.s"

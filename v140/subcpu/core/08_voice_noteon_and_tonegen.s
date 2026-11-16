@@ -1690,20 +1690,9 @@ ToneGen_WriteExtParams_56_Alt_NopCont2:
 ; WA = channel. Writes the literal 0x8100 to 0x0580 + ch. 0x8100 is the constant this whole
 ; family uses to mean "release/mute this slot"; it also appears mid-burst in
 ; ToneGen_WriteVoiceParams and in the EXT writers, always aimed at a strobed bank.
-ToneGen_WriteExtParam_600_Mute:
-	res	7, (P6:8)
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x8100
-	jr ToneGen_WriteExtParam_600_Mute_NopCont
-
-ToneGen_WriteExtParam_600_Mute_NopCont:
-	nop
-	nop
-	nop
-	ret
+ToneGen_WriteExtParam_600_Mute:	.include "includes/generated/cc900/ToneGen_WriteExtParam_600_Mute.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParam_600_Mute_NopCont, ToneGen_WriteExtParam_600_Mute + 25
 
 ; Existing name kept. Identical to ToneGen_WriteExtParams_56 but on the second bank pair:
 ; strobe on 0x05C0 + ch from shadow +0x3E, companion write 0x0640 + ch <- +0x42.
@@ -1836,19 +1825,9 @@ ToneGen_Write_ExtParam_05C0_Strobe_Next2:
 	inc	4, xsp
 	ret
 ; Third routine in the same blob. Writes 0x8100 to 0x05C0 + ch. Unreferenced in v142.
-ToneGen_Mute_Reg05C0:
-	res	7, (P6:8)
-	add	wa, 1472
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw	(ToneGen_RegDataPort:24), 33024
-	jr	ToneGen_Mute_Reg05C0_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Mute_Reg05C0_Next:
-	nop
-	nop
-	nop
-	ret
+ToneGen_Mute_Reg05C0:	.include "includes/generated/cc900/ToneGen_Mute_Reg05C0.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Mute_Reg05C0_Next, ToneGen_Mute_Reg05C0 + 25
 
 ; Existing name kept. Strobe on 0x0540 + ch from shadow +0x3A, companion write
 ; 0x01C0 + ch <- shadow +0x38.
@@ -1981,20 +1960,9 @@ ToneGen_WriteExtParams_15_Alt_NopCont2:
 	ret
 
 ; Writes 0x8100 to 0x0540 + ch.
-ToneGen_WriteExtParam_540_Mute:
-	res	7, (P6:8)
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x8100
-	jr ToneGen_WriteExtParam_540_Mute_NopCont
-
-ToneGen_WriteExtParam_540_Mute_NopCont:
-	nop
-	nop
-	nop
-	ret
+ToneGen_WriteExtParam_540_Mute:	.include "includes/generated/cc900/ToneGen_WriteExtParam_540_Mute.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParam_540_Mute_NopCont, ToneGen_WriteExtParam_540_Mute + 25
 
 ; ** MISIDENTIFIED AS DATA (LLVM: ToneGen_ExtParams15_DataTable .byte) BUT IT IS LIVE: CALLed
 ; from 0x02F80F, the only reference to it in the ROM. **
@@ -2247,37 +2215,11 @@ ToneGen_WriteExtParams_TypeDispatch_Exit:
 	ret
 
 ; WA = channel. Writes 0x8100 to 0x0540 + ch (ch < 0x40) or to 0x0580 + ch (ch >= 0x40).
-ToneGen_WriteExtParam_Mute_TypeDispatch:
-	cp wa, 0x40
-	jr nc, ToneGen_WriteExtParam_Mute_TypeDispatch_HiPath
-	res	7, (P6:8)
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x8100
-	jr ToneGen_WriteExtParam_Mute_TypeDispatch_NopCont1
-
-ToneGen_WriteExtParam_Mute_TypeDispatch_NopCont1:
-	nop
-	nop
-	nop
-	ret
-
-ToneGen_WriteExtParam_Mute_TypeDispatch_HiPath:
-	res	7, (P6:8)
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x8100
-	jr ToneGen_WriteExtParam_Mute_TypeDispatch_NopCont2
-
-ToneGen_WriteExtParam_Mute_TypeDispatch_NopCont2:
-	nop
-	nop
-	nop
-	ret
+ToneGen_WriteExtParam_Mute_TypeDispatch:	.include "includes/generated/cc900/ToneGen_WriteExtParam_Mute_TypeDispatch.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParam_Mute_TypeDispatch_NopCont1, ToneGen_WriteExtParam_Mute_TypeDispatch + 31
+	.set	ToneGen_WriteExtParam_Mute_TypeDispatch_HiPath, ToneGen_WriteExtParam_Mute_TypeDispatch + 35
+	.set	ToneGen_WriteExtParam_Mute_TypeDispatch_NopCont2, ToneGen_WriteExtParam_Mute_TypeDispatch + 60
 
 ; Existing name kept, but see [UNCERTAIN] -- this routine initialises the TONE GENERATOR, not a
 ; DSP. Called once, from 0x034CBA.
@@ -2640,19 +2582,9 @@ Voice_Part_Mode_Is_C0:
 ; immediately when DE == 0). Copies with post-incrementing byte loads/stores through XHL.
 ; The LLVM name BlockCopy_Words_BC_to_HL is doubly wrong -- the transfers are byte-sized and
 ; the destination is XBC, not XHL. Used by all five VOICEPARAM_*_LOAD_* routines below.
-BlockCopy_Words_BC_to_HL:
-	ld xhl, xbc
-	ld ix, 0:i3
-	cp ix, de
-	ret nc
-
-BlockCopy_Words_BC_to_HL_Loop:
-	ld C, (xwa+)
-	ld (xhl+), c
-	inc 1, ix
-	cp ix, de
-	jr c, BlockCopy_Words_BC_to_HL_Loop
-	ret
+BlockCopy_Words_BC_to_HL:	.include "includes/generated/cc900/BlockCopy_Words_BC_to_HL.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BlockCopy_Words_BC_to_HL_Loop, BlockCopy_Words_BC_to_HL + 8
 
 ; A = part index. Populates the tone staging buffer at 0x044FCE:
 ;   0x66 bytes from the pointer at part+0x06        -> 0x044FCE + 0x0000
@@ -2736,7 +2668,7 @@ CustomTone_CopyToneRecord:
 	ld	xwa, (Payload_Bss_Start+0x64a6:24)
 	lda	xwa, (xwa+bc)
 	ld	xbc, xwa
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xwa, xhl
 	ld	de, (xde+238)
 	calr	BlockCopy_Words_BC_to_HL
@@ -2764,7 +2696,7 @@ VoiceSubSlot_Init:
 	exts xwa
 	add xwa, xbc
 	ld xbc, xwa
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xwa, xhl
 	ld	de, (xde+234)
 	calr BlockCopy_Words_BC_to_HL
@@ -2804,7 +2736,7 @@ CustomTone_CopySubUnitRecord:
 	lda	xwa, (xwa+de)	; lda XWA,XWA+DE
 	lda	xwa, (xwa+19169)
 	ld	xbc, xwa
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xwa, xhl
 	ld	de, (xde+240)
 	calr	BlockCopy_Words_BC_to_HL
@@ -3126,9 +3058,9 @@ VoiceParam_SubSlot_Apply_Catalog50:
 	dec	2, xsp
 	push qiz
 	ld	(xsp+2), a
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+80)
-	ld	xhl, (Payload_Bss_Start+0x649a:24)
+	ld	xhl, (ToneDB_RelBase:24)
 	add	xhl, xwa
 	ldfr_berp	e, 251
 	and_erpb	251, 15
@@ -3204,9 +3136,9 @@ VoiceParam_SubSlot_Apply_Catalog50_Epilogue:
 ; indexed by 3 + 2*k, and entry +0x0F into the following byte, then tail-jumps into
 ; WaveSel_Cache_SetDescPtr (0x0328E2).
 VoiceParam_SubSlot_Apply_Catalog64:
-	ld	xhl, (Payload_Bss_Start+0x649e:24)
+	ld	xhl, (ToneDB_RootPtr:24)
 	ld	xhl, (xhl+100)
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add	xix, xhl
 	ldfr_berp	e, 226
 	and_erpb	226, 15
@@ -3454,9 +3386,9 @@ VoiceParam_CustomTone_Apply_Catalog80:
 	ld	xwa, (Payload_Bss_Start+0x64a6:24)
 	lda	xwa, (xwa+bc)
 	ld	(xsp+4), xwa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+128)
-	ld	xbc, (Payload_Bss_Start+0x649a:24)
+	ld	xbc, (ToneDB_RelBase:24)
 	add	xbc, xwa
 	ld	(xsp+8), xbc
 	ld	wa, (xsp+16)
@@ -3550,9 +3482,9 @@ VoiceParam_CustomTone_Apply_Catalog8C:
 	ld	(xsp+8), wa
 	ld	xwa, (Payload_Bss_Start+0x64a6:24)
 	ld	e, (xwa+29351)
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+140)
-	ld	xhl, (Payload_Bss_Start+0x649a:24)
+	ld	xhl, (ToneDB_RelBase:24)
 	add	xhl, xwa
 	ld	xiz, xhl
 	ld	l, c
@@ -3623,9 +3555,9 @@ VoiceParam_CustomTone_Apply_Catalog8C:
 VoiceParam_CustomTone_Apply_Catalog94:
 	ld	xde, (Payload_Bss_Start+0x64a6:24)
 	ld	b, (xde+29351)
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xde, (xde+148)
-	ld	xhl, (Payload_Bss_Start+0x649a:24)
+	ld	xhl, (ToneDB_RelBase:24)
 	add	xhl, xde
 	ld	e, c
 	and	e, 15
@@ -4669,37 +4601,10 @@ Voice_DSPOut_Second_A_None:
 ; Second-bank twin of Voice_DSPOut_Second_A, written as an if-chain instead of a table:
 ; algorithm types 4 and 5 -> Voice_DSP_OutputConfig2(part, 1); type 7 -> the same but only
 ; when PART+0x0A bit 14 is set; every other type returns.  Called from 0x02FC8B, 0x02FD22.
-Voice_DSPOut_Second_B:
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld	c, (xbc+93)
-	and	c, 15
-	cp	c, 7:i3
-	jr	z, Voice_DSPOut_Second_B_Gated
-	cp	c, 5:i3
-	jr	z, Voice_DSPOut_Second_B_Slot1
-	cp	c, 4:i3
-	ret	nz
-; Tail-jump Voice_DSP_OutputConfig2(part, 1).
-Voice_DSPOut_Second_B_Slot1:
-	extz	wa
-	ld	bc, 1:i3
-	jp	Voice_DSP_OutputConfig2
-; Algorithm type 7: gate on PART+0x0A bit 14 before the same call.
-Voice_DSPOut_Second_B_Gated:
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xde+bc)
-	bit	14, bc
-	ret	z
-	extz	wa
-	ld	bc, 1:i3
-	jp	Voice_DSP_OutputConfig2
+Voice_DSPOut_Second_B:	.include "includes/generated/cc900/Voice_DSPOut_Second_B.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSPOut_Second_B_Slot1, Voice_DSPOut_Second_B + 36
+	.set	Voice_DSPOut_Second_B_Gated, Voice_DSPOut_Second_B + 44
 
 ; Input A = part, C = flag.  Calls VoiceAlloc_CheckAndInit(part) and then sets or clears
 ; bit 7 of the parameter-shadow byte 0x04502B (= UserTone_VelSplit_Base + 0x5D, i.e. the
@@ -6643,24 +6548,10 @@ Audio_Cmd_ToneEdit_Field_Write_And_Reply:
 ; (the part is allocated), 0 otherwise, and returns HL = 1.
 ; Called from DSP_SetCoeff_MasterConfig at 0x0317E2 with XBC = 0x045216, and from
 ; AUDIO_PROCESS_DSP at 0x035BFC.
-DSP_EffectStateQuery:
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Part_Record_Base:24)
-	ld	wa, (xde+wa)
-	bit 0, wa
-	jr z, DSP_EffectStateQuery_WriteZero
-	ld (xbc), 0x1
-	jr DSP_EffectStateQuery_SetResult
-
-; Part not allocated: store 0.
-DSP_EffectStateQuery_WriteZero:
-	ld (xbc), 0x0
-
-; Return HL = 1 (success).
-DSP_EffectStateQuery_SetResult:
-	ld hl, 1:i3
-	ret
+DSP_EffectStateQuery:	.include "includes/generated/cc900/DSP_EffectStateQuery.s"	; C: cc900/voice_noteon_and_tonegen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_EffectStateQuery_WriteZero, DSP_EffectStateQuery + 26
+	.set	DSP_EffectStateQuery_SetResult, DSP_EffectStateQuery + 29
 
 ; Input XWA = PART record base.  Applies the five global offset bytes at 0x0451A6..0x0451AC
 ; to a part's four operator slots and to the part's patch record:

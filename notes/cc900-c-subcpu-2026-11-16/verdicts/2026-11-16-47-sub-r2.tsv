@@ -1,0 +1,281 @@
+function	bytes	matches	best_diff
+AlgoType_AB_Checker	63	sub_C_2a@Xr sub_C_2b@Xr	
+Algo_SubTable_DispatchA	94	-	+32 sub_C_2b@Xr
+Algo_SubTable_PanTrim_From_PartFlags	49	sub_C_2b@Xr	
+AudioMod_Scale_To_LevelPairShift	63	-	+4 sub_B_2b@Xr
+AudioMod_Scale_To_Part_1F	66	-	+4 sub_B_2b@Xr
+Audio_Clamp_To_Range	17	sub_B_2a@Xr sub_B_2b@Xr	
+Audio_CmdHandler_00_1F	54	-	+6 sub_D_2c@Xr
+Audio_CmdHandler_20_3F	3	sub_E_2a@O3Xr sub_E_2a@Xr	
+Audio_CmdHandler_40_5F	22	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2b@O3Xr sub_E_2b@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+Audio_CmdHandler_60_7F	172	-	+24 sub_D_2b@Xr
+Audio_Cmd_DSPGlobal_Param_Store	45	-	+5 sub_C_2b@Xr
+Audio_Cmd_PatchByte_Write_And_Echo	68	-	+9 sub_C_2b@Xr
+Audio_InitRingBuffers	12	sub_E_2a@O3Xr sub_E_2a@Xr	
+BitTest_Bit0_L_v2	11	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+BitTest_Mode2_L	19	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+BitTest_Mode2_L_v2	19	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+CalcSampleAddr	45	-	+7 sub_D_2c@Xr
+DList_InsertAfter_Offsets0	24	sub_A_2a@Xr sub_A_2c@Xr	
+DList_InsertAfter_Offsets8	28	sub_A_2a@Xr sub_A_2c@Xr	
+DList_Relink_Adjacent_Offsets16	28	sub_A_2a@Xr sub_A_2c@Xr	
+DList_Unlink_SelfLink_Offsets16	19	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+DList_Unlink_SelfLink_Offsets8	19	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+DSP1_Assert_Reset	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2b@O3Xr sub_E_2b@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP1_Deassert_Reset	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP1_ResolveStreamPtr	44	-	+12 sub_D_2c@Xr
+DSP2_Assert_Reset	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2b@O3Xr sub_E_2b@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP2_Deassert_Reset	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP2_Init	19	-	+6 sub_D_2c@Xr
+DSP2_InitTask_NullStub	1	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_AlgoChange_CheckAndFlag	37	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_AlgorithmChangeCheck	13	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_AntiReset_WithDebug	34	-	+12 sub_D_2c@Xr
+DSP_ApplyConfig	89	-	+22 sub_D_2c@Xr
+DSP_Assert_Read	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2b@O3Xr sub_E_2b@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_Assert_Write	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2b@O3Xr sub_E_2b@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_Bytecode_NotifyStateChange	6	sub_E_2a@O3Xr sub_E_2a@Xr	
+DSP_Config_ClampLimits	73	-	+32 sub_D_2c@Xr
+DSP_Config_DeadTail_SumWords	11	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_CopyCoeffs_TypeA	76	-	+6 sub_B_2b@Xr
+DSP_CopyCoeffs_TypeB	76	-	+6 sub_B_2b@Xr
+DSP_Deassert_Read	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_Deassert_Write	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_EffectStateQuery	32	sub_C_2a@Xr sub_C_2b@Xr	
+DSP_FlushAllSlots_ForPart	48	-	+44 sub_D_2c@Xr
+DSP_GetConfigBuffer	5	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_GetEffectRouting	40	-	+15 sub_D_2c@Xr
+DSP_MixSendConfig	30	-	+7 sub_B_2b@Xr
+DSP_MuteLoop	39	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Mute_WithDebug	52	-	+12 sub_D_2c@Xr
+DSP_Nop	1	sub_E_2a@O3Xr sub_E_2a@Xr	
+DSP_NopReturn	1	sub_E_2a@O3Xr sub_E_2a@Xr	
+DSP_Pack3x7bitFields	45	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_ParamFetch_AlgoTypeTable	61	sub_E_2a@Xr	
+DSP_ParamFetch_SingleTable	13	sub_E_2a@O3Xr sub_E_2a@Xr	
+DSP_ParamWrite_BlockCopy	21	sub_C_2a@Xr sub_C_2b@Xr	
+DSP_ReadVoiceParam11	16	sub_C_2a@O3Xr sub_C_2a@Xr sub_C_2b@O3Xr sub_C_2b@Xr	
+DSP_ReadVoiceParam5D	16	sub_C_2a@O3Xr sub_C_2a@Xr sub_C_2b@O3Xr sub_C_2b@Xr	
+DSP_ReconfigAndStatus	17	-	+12 sub_D_2c@Xr
+DSP_ResetAlgoDefaults	43	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_ResetLoop	21	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_ResetTask_NullStub	1	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_ResetWriteBufferPtr	21	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Reset_WithDebug	50	-	+12 sub_D_2c@Xr
+DSP_RingBuf_Read	49	-	+6 sub_D_2c@Xr
+DSP_RouteCoeffs_TypeA	199	-	+96 sub_B_2a@Xr
+DSP_RouteCoeffs_TypeB	199	-	+96 sub_B_2a@Xr
+DSP_SetCoeff_CopyDirect	72	-	+6 sub_C_2b@Xr
+DSP_SetCoeff_CopyDirect2	72	-	+6 sub_C_2b@Xr
+DSP_SetCoeff_WriteParams	90	sub_C_2a@Xr sub_C_2b@Xr	
+DSP_Set_AcousticIllusionOnOff	20	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Set_Command_Mode	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2b@O3Xr sub_E_2b@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_Set_Data_Mode	4	sub_E_2a@O3Xr sub_E_2a@Xr sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_Set_DigitalReverbOnOff	20	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Set_EqualizerOnOff	20	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Set_FadeLevel	22	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_Set_MicReverbOnOff	20	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Set_MixParam_45B2	18	sub_D_2a@O3Xr sub_D_2c@O3Xr	
+DSP_Set_MixParam_45B4	22	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_Set_RotarySpeed	20	-	+16 sub_D_2c@Xr
+DSP_SlotMuteState_ReadAndClear	29	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_SlotParam_DiffAndFlag	92	-	+36 sub_D_2b@Xr
+DSP_SlotParam_Write_Slot0	75	-	+49 sub_C_2a@Xr
+DSP_SlotParam_Write_Slot1	75	-	+49 sub_C_2a@Xr
+DSP_SlotParam_Write_Slot2	75	-	+49 sub_C_2a@Xr
+DSP_SlotParam_Write_Slot3	75	-	+49 sub_C_2a@Xr
+DSP_SlotParam_Write_Slot4	75	-	+49 sub_C_2a@Xr
+DSP_SlotState_DisplayRestore	76	-	+10 sub_D_2c@Xr
+DSP_StateTable_Reset	13	sub_2a@O3Xr sub_2a@Xr sub_2b@O3Xr sub_2c@O3Xr sub_2c@Xr	
+DSP_State_ApplyBuf	61	sub_E_2c@O3Xr sub_E_2c@Xr	
+DSP_State_ApplyTask	34	sub_E_2b@Xr	
+DSP_State_DmaLoadPresets	32	sub_E_2b@Xr	
+DSP_State_LoadAndApplyAll	47	-	+18 sub_E_2c@O3Xr
+DSP_State_LookupAlgoIndex	14	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_StreamDecode_3ByteWord	70	-	+0 sub_E_2b@Xr
+DSP_Stub_RetB	1	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_Stub_RetC	1	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_TableWalk_Search	92	-	+3 sub_E_2c@O3Xr
+DSP_TableWalk_SearchWithState	76	-	+3 sub_E_2c@O3Xr
+DSP_UnmuteLoop	39	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+DSP_Unmute_WithDebug	52	-	+12 sub_D_2c@Xr
+DSP_UnpackParam3B	38	sub_E_2a@Xr	
+DSP_WaitForDelay	36	-	+6 sub_D_2c@Xr
+DSP_WakeAudioTask	6	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+DSP_WriteAlgoInitPreset	65	-	+5 sub_D_2c@Xr
+DSP_WriteCoeffData_5B	111	sub_E_2a@Xr	
+DSP_WriteCoeffData_5B_Direct	111	sub_E_2a@Xr	
+DSP_WriteEFFConfig	32	sub_E_2a@Xr sub_E_2b@Xr	
+DSP_WriteGlobalConfig	13	-	+0 sub_E_2b@Xr
+DSP_WriteOscParam_Offset	203	-	+3 sub_E_2b@Xr
+DSP_WriteParamWord	52	sub_E_2a@O3Xr sub_E_2a@Xr	
+DSP_WriteParameter	222	-	+0 sub_E_2b@Xr
+Debug_Print_Byte	9	sub_D_2c@O3Xr sub_D_2c@Xr	
+Debug_Print_String	7	sub_D_2c@O3Xr sub_D_2c@Xr	
+Debug_Print_Word	31	-	+18 sub_D_2c@Xr
+Detune_ScaleSymmetric	63	sub_A_2a@Xr sub_A_2c@Xr	
+Detune_ScaleUnsigned	17	sub_2c@O3Xr sub_2c@Xr	
+EFF_Change_WithDebug	209	-	+17 sub_D_2c@Xr
+EFF_ConfigSnapshot_Restore	18	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+EFF_ConfigSnapshot_Save	18	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+EFF_DSPLink_ResetFlags	72	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+EFF_DataChange_WithDebug	71	-	+20 sub_D_2c@Xr
+EFF_Disconnect	96	-	+17 sub_D_2c@Xr
+EFF_DisconnectLoop	46	sub_D_2a@Xr sub_D_2c@Xr	
+EFF_GetSlotBuffer	44	-	+30 sub_D_2b@Xr
+EFF_Link	96	-	+17 sub_D_2c@Xr
+EFF_LinkLoop	83	-	+13 sub_D_2c@Xr
+EFF_MuteLoop	120	sub_D_2a@Xr sub_D_2b@Xr sub_D_2c@Xr	
+EFF_Mute_WithDebug	56	-	+12 sub_D_2c@Xr
+EFF_ParamEdit_WithDebug	119	-	+20 sub_D_2c@Xr
+EFF_SlotActive_UpdateFlags	354	-	+59 sub_D_2c@Xr
+EFF_VolumeLoop	325	-	+11 sub_D_2c@Xr
+EFF_VolumeUpdate_WithDebug	288	-	+17 sub_D_2c@Xr
+EFF_WriteHeader	62	-	+12 sub_D_2c@Xr
+ExtVoice_Fold_SlotNumber	42	sub_A_2b@O3Xr sub_A_2b@Xr	
+ExtVoice_Lookup_SlotFallback	50	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+Extract_14Bit_PayloadSize	22	-	+3 sub_D_2c@Xr
+Extract_14Bit_VoiceParam	22	-	+3 sub_D_2c@Xr
+Instrument_LookupProgram_HiNibble	60	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+Instrument_LookupProgram_LoNibble	57	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+InterCPU_SendEditBufferToMain	53	-	+10 sub_C_2a@Xr
+Level_Build_Reg0C0	156	-	+37 sub_A_2c@Xr
+MIDI_Backlog_Publish	5	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+NoteState_ClearRecord	54	-	+0 sub_A_2c@Xr
+Pan_ScaleWithVelocity	56	-	+8 sub_A_2c@Xr
+Pitch_Bend_Ramp_Tick	234	-	+9 sub_B_2b@Xr
+Pitch_Clamp_Into_Range	75	-	+22 sub_A_2c@Xr
+Pitch_Fold_Octaves_Into_Range	68	-	+35 sub_A_2a@Xr
+Pitch_Saturate_15bit	22	-	+3 sub_A_2b@Xr
+Quad_Decode_A_To_L	30	sub_A_2a@Xr	
+RingBuf_CheckOffset_ClearFlags	73	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+RingBuf_ReadByte	49	-	+6 sub_D_2c@Xr
+RingBuf_Reset_1K	26	sub_E_2a@O3Xr sub_E_2a@Xr	
+RingBuf_Reset_256	26	sub_E_2a@O3Xr sub_E_2a@Xr	
+RingBuf_Reset_512	26	sub_E_2a@O3Xr sub_E_2a@Xr	
+RingBuf_SetOffsetLo	5	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+ScaleTune_Get_User_Offset	18	-	+6 sub_2b@Xr
+ScaleTune_Set_User_Offset	21	-	+6 sub_2b@Xr
+SlotRouting_Chan1	73	-	+7 sub_C_2b@Xr
+SlotRouting_Chan3	74	-	+7 sub_C_2b@Xr
+SlotRouting_WriteSingle	72	-	+7 sub_C_2b@Xr
+Task2_NeverSpawned	1	sub_E_2a@O3Xr sub_E_2a@Xr	
+Task3_EnterDspApplyLoop	4	sub_D_2a@O3Xr sub_D_2a@Xr sub_D_2b@O3Xr sub_D_2b@Xr sub_D_2c@O3Xr sub_D_2c@Xr	
+ToneGen_Mute_Reg05C0	0	-	llvm-mc cannot assemble the translation
+ToneGen_Read_Register	11	-	+8 sub_A_2c@Xr
+ToneGen_WriteEnvSegments	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExprReg	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParam_1C0_Single	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParam_540_Mute	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParam_600	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParam_600_Mute	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParam_Mute_TypeDispatch	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParam_TypeDispatch_Single	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParams_56	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteExtParams_56_Alt	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteNote2ch	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteReg0080_StrobeClear	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteReg0640	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteSegRegs_SameLevel	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteSingleReg	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoicePitch	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_6Words	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Direct	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_EnvLevel	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Long	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg07	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg07_Or_Reg18	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg11	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg13	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg15	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg15_Or_Reg16	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg16	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg18	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Reg21_Reg22	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_Short	0	-	llvm-mc cannot assemble the translation
+ToneGen_WriteVoice_TvfPair	0	-	llvm-mc cannot assemble the translation
+ToneGen_Write_ExtParam_05C0_Strobe	0	-	llvm-mc cannot assemble the translation
+Velocity_Select_Split_Zone	32	sub_A_2a@O3Xr sub_A_2a@Xr	
+Velocity_Select_Split_Zone_Alt	32	sub_A_2a@O3Xr sub_A_2a@Xr	
+VoiceCC_DataTable_0280FE	0	-	llvm-mc cannot assemble the translation
+VoiceCC_Stub_Ret1	1	sub_B_2a@O3Xr sub_B_2a@Xr sub_B_2b@O3Xr sub_B_2b@Xr	
+VoiceCC_Stub_Ret2	1	sub_B_2a@O3Xr sub_B_2a@Xr sub_B_2b@O3Xr sub_B_2b@Xr	
+VoiceRec_Decode2BitField	56	-	+0 sub_A_2c@Xr
+VoiceRow_FetchPair_DE_WA	134	-	+2 sub_A_2c@Xr
+VoiceRow_FetchPair_WA_SP	91	-	+2 sub_A_2c@Xr
+Voice_ActiveFlag_Set	58	sub_C_2a@Xr sub_C_2b@Xr	
+Voice_AdvanceLFOPhase	92	-	+16 sub_B_2b@Xr
+Voice_AllVoices_UpdateVelocity	247	-	+20 sub_B_2b@Xr
+Voice_Allocate	38	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_AllocateForRelease	34	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_AllocateForSustain	31	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_Artic_SetDepthPair_A	63	-	+42 sub_A_2b@Xr
+Voice_Artic_SetDepthPair_B	58	-	+42 sub_A_2c@Xr
+Voice_Build_Register_Set	146	-	+9 sub_A_2c@Xr
+Voice_CC_SetBendRange	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetDspEffectSend	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetExpression	139	-	+3 sub_B_2a@Xr
+Voice_CC_SetGateRoutingMode	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetGlidePedal	42	sub_B_2a@Xr	
+Voice_CC_SetKeyScaling	42	sub_B_2a@Xr	
+Voice_CC_SetKeyShift	20	-	+0 sub_B_2a@Xr
+Voice_CC_SetModWheelRange	42	sub_B_2a@Xr	
+Voice_CC_SetReverbSend	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetSostenutoFlag	42	sub_B_2a@Xr	
+Voice_CC_SetSustain	42	sub_B_2a@Xr	
+Voice_CC_SetSustainLength	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetTgPanMode	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetTuning	28	-	+0 sub_B_2a@Xr
+Voice_CC_SetVelSwitchConfig	17	sub_B_2a@O3Xr sub_B_2a@Xr	
+Voice_CC_SetVolume	139	-	+3 sub_B_2a@Xr
+Voice_Calc_LevelPair_Silence	58	sub_B_2b@Xr	
+Voice_Clamp_Byte_HL	22	sub_A_2a@Xr sub_A_2c@Xr	
+Voice_ClearLFO_ActiveFlag	19	sub_2a@O3Xr sub_2a@Xr sub_2c@O3Xr sub_2c@Xr	
+Voice_Colour_ClampUpper	56	-	+8 sub_A_2c@Xr
+Voice_ComputePitchBend2	144	-	+40 sub_A_2c@Xr
+Voice_Cut	136	-	+9 sub_A_2c@Xr
+Voice_DSPOut_Second_B	75	sub_C_2a@Xr sub_C_2b@Xr	
+Voice_DSP_OutputConfig	231	-	+14 sub_B_2b@Xr
+Voice_DSP_OutputConfig2	231	-	+14 sub_B_2b@Xr
+Voice_DSP_SimpleCopy	91	-	+53 sub_B_2b@Xr
+Voice_DSP_SimpleCopy2	91	-	+53 sub_B_2b@Xr
+Voice_FindStealCandidate	55	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+Voice_Find_Candidate	111	sub_A_2c@Xr	
+Voice_InitVoiceState	194	-	+154 sub_B_2b@Xr
+Voice_Init_Type1	0	-	cannot resolve 'no address for .Voice_Build_GateCommand_NoParti'
+Voice_Init_Type2	0	-	cannot resolve 'no address for .Voice_Build_GateCommand_NoParti'
+Voice_InterpolateNoteCurve	121	-	+4 sub_B_2b@O3Xr
+Voice_InterpolatePanCurve	123	-	+18 sub_B_2b@Xr
+Voice_KeyIndex_Pack3Nibbles	39	sub_A_2b@Xr	
+Voice_Level_ClearAllOutputRegs	154	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+Voice_LoadFilterTable_All	109	sub_B_2b@Xr	
+Voice_LoadPitchTable_All	109	sub_B_2b@Xr	
+Voice_LoadToneTable_All	91	-	+53 sub_B_2b@Xr
+Voice_PerVoice_PortamentoPitchUpdate	151	sub_A_2a@Xr sub_A_2b@Xr sub_A_2c@Xr	
+Voice_PortamentoTarget_SetSlot	0	-	cannot resolve 'no address for C9H_mullu'
+Voice_Query_AllChannels	28	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_Query_PartVoices	31	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_Query_PartVoices_Mask7F	34	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_ReleaseSingle	49	-	+6 sub_A_2c@Xr
+Voice_SecondaryParam_Epilogue	47	sub_C_2a@Xr sub_C_2b@Xr	
+Voice_SecondaryParam_Fetch	94	sub_C_2b@Xr	
+Voice_Selector_Unpack3Groups	99	-	+23 sub_A_2c@Xr
+Voice_SetKeyShiftEnable	85	sub_B_2a@Xr	
+Voice_SetLFO_ActiveFlag	19	sub_2a@O3Xr sub_2a@Xr sub_2c@O3Xr sub_2c@Xr	
+Voice_SetMasterTune	13	sub_2a@O3Xr sub_2a@Xr sub_2c@O3Xr sub_2c@Xr	
+Voice_SetRhythmMode	93	sub_B_2a@O3Xr sub_B_2a@Xr sub_B_2b@O3Xr sub_B_2b@Xr	
+Voice_SignedClamp	26	-	+0 sub_A_2c@Xr
+Voice_Slot_CalcAmpNibble	0	-	cannot resolve 'no address for C9H_mullu'
+Voice_Slot_LoadPitchOffset_A	12	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_Slot_LoadPitchOffset_B	12	sub_A_2a@O3Xr sub_A_2a@Xr sub_A_2b@O3Xr sub_A_2b@Xr sub_A_2c@O3Xr sub_A_2c@Xr	
+Voice_Stage_EnvSegments	17	sub_B_2a@O3Xr sub_B_2a@Xr sub_B_2b@O3Xr sub_B_2b@Xr	
+Voice_Step_DelayTimers	108	-	+20 sub_B_2a@Xr
+Voice_UpdateFlagsFromSlot	0	-	cannot resolve 'no address for C9H_mullu'
+Voice_WriteChPitchWithVib	148	-	+22 sub_B_2b@Xr
+Voice_WriteVolume_OrPan	60	-	+1 sub_B_2b@Xr
+WaveSel_Emit_ZoneRecord_S10	32	-	+0 sub_A_2c@Xr
+WaveSel_Emit_ZoneRecord_S12	31	-	+0 sub_A_2c@Xr
+WaveSel_Emit_ZoneRecord_S13	32	-	+0 sub_A_2c@Xr
+WaveSel_Emit_ZoneRecord_S15	31	-	+0 sub_A_2c@Xr
+WaveSel_Emit_ZoneRecord_S4	27	-	+0 sub_A_2c@Xr
+WaveSel_Emit_ZoneRecord_S6	31	-	+0 sub_A_2c@Xr

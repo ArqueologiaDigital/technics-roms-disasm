@@ -478,13 +478,7 @@ FIFO512_Set_Commit:
 	popw	hl
 	ret
 
-RingBuf_Reset_256:
-	ldw (xde - 10), 0x0
-	ldw (xde - 8), 0x0
-	ldw (xde - 4), 0x0
-	ldw (xde - 6), 0x0
-	ldw (xde - 2), 0xFF
-	ret
+RingBuf_Reset_256:	.include "includes/generated/cc900/RingBuf_Reset_256.s"	; C: cc900/task_scheduler_kernel.c
 
 ; 2026-09-25: CODE, converted from a .byte run (scripts/converters/convert_v142_byte_block.py:
 ; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its
@@ -555,13 +549,7 @@ FIFO_Engine256_Put_HasRoom:
 	ld	hl, (xde-2)
 	ret
 
-RingBuf_Reset_512:
-	ldw (xde - 10), 0x0
-	ldw (xde - 8), 0x0
-	ldw (xde - 4), 0x0
-	ldw (xde - 6), 0x0
-	ldw (xde - 2), 0x1FF
-	ret
+RingBuf_Reset_512:	.include "includes/generated/cc900/RingBuf_Reset_512.s"	; C: cc900/task_scheduler_kernel.c
 
 ; 2026-09-25: CODE, converted from a .byte run (scripts/converters/convert_v142_byte_block.py:
 ; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its
@@ -625,13 +613,7 @@ FIFO_Engine512_Put_HasRoom:
 	ld	hl, (xde-2)
 	ret
 
-RingBuf_Reset_1K:
-	ldw (xde - 10), 0x0
-	ldw (xde - 8), 0x0
-	ldw (xde - 4), 0x0
-	ldw (xde - 6), 0x0
-	ldw (xde - 2), 0x3FF
-	ret
+RingBuf_Reset_1K:	.include "includes/generated/cc900/RingBuf_Reset_1K.s"	; C: cc900/task_scheduler_kernel.c
 
 ; 2026-09-25: CODE, converted from a .byte run (scripts/converters/convert_v142_byte_block.py:
 ; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its

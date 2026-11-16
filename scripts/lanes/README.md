@@ -87,7 +87,7 @@ some of them already.
 Result: `VoiceCC_DataTable_028F75` (3,772 B) was ALREADY fully code -- its
 marker was pure stale text, rewritten rather than left claiming a debt that
 no longer existed. The other two still had real `.byte` residue: 134 B in
-`VoiceCC_DataTable_0280FE` (the `AudioMod_Scale_To_Part_1C`/`_1B` pair, which
+`VoiceCC_DataTable_0280FE` (since 2026-11-16 `ToneGen_WriteVoice_Reg21`; the `AudioMod_Scale_To_Part_1C`/`_1B` pair, which
 also contains the separately-named 42 B `Voice_CC_SetModWheelRange`) and all
 136 B of `VoiceModWheel_DataTable_02A061`. All three resisted the automated
 convert/audit pipeline for the SAME reason: llvm-mc's own `--disassemble`
