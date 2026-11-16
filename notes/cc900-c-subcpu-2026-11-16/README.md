@@ -126,6 +126,18 @@ build cannot yet build, each file with a note saying why (`hold_back.py` moves t
 - `*_inlinejr.c` (5): inline `jr $+2`, whose `$` the build's translation does not map to llvm-mc's `.`.
 These are tool gaps reported to lane_vmb; the functions move into `cc900/` when they close.
 
-| script         | question it answers                                                                      | command                                                                            |
-|----------------|------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| `hold_back.py` | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...` |
+**Second promotion (after main's name resolver, 9d5299ac5).**  The kernel, runtime and short-name files, and every
+function verified since (rounds 6 .. 10, the -O3 -Xr serial loop), moved into `cc900/` (`promote.py` writes the sizes
+and the list): **358 functions per tree** are built from C, the three payloads byte-identical.  Still held back, each
+waiting for a translator form the build lacks (my checker, `sub_v423.py`, has them):
+- `*_inlinejr.c` (5): `jr $+2` in inline assembly;
+- `*_qizinc*.c` (5): `inc 0x1,QIZH` / `QIZL` (llvm-mc's `inc1b_erp`);
+- `*_qwa.c` (2): `and QWA,n` (`and_erpw`);
+- `*_modjump.c` (1): a conditional jump to a module-local function keeps the listing's `.` name.
+
+| script            | question it answers                                                                      | command                                                                                          |
+|-------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| `hold_back.py`    | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...`               |
+| `promote.py`      | the sizes (function<TAB>bytes) the splice needs, and the staged files to promote         | `python3 -B notes/cc900-c-subcpu-2026-11-16/promote.py sizes OUT.tsv` / `list --except inlinejr` |
+| `c_duplicates.py` | is any label defined by two C files of cc900/ and cc900-staged/                          | `python3 -B notes/cc900-c-subcpu-2026-11-16/c_duplicates.py`                                     |
+| `bad_lines.py`    | which translated lines of a listing function llvm-mc refuses (by shape)                  | `python3 -B notes/cc900-c-subcpu-2026-11-16/bad_lines.py LISTING.asm FUNCTION`                   |

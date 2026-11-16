@@ -79,27 +79,10 @@ DSP_RingBuf3B60_Read:
 ; write index is copied over the ring's index-0 word. Entry XWA = control block, no output.
 ; This is the recovery action for every malformed or unhandled message in Audio_Process_DSP.
 ; Note the consequence: one bad length byte discards everything currently queued.
-DSP_RingBuf_Skip:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	cp hl, 0:i3
-	jr lt, DSP_RingBuf_Skip_Epilogue
-
-; Read-until-empty loop body.
-DSP_RingBuf_Skip_Loop:
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	cp hl, 0:i3
-	jr ge, DSP_RingBuf_Skip_Loop
-
-; (XIZ) = (XIZ+2); pop; ret.
-DSP_RingBuf_Skip_Epilogue:
-	ld wa, (xiz + 2)
-	ld (xiz), wa
-	pop xiz
-	ret
+DSP_RingBuf_Skip:	.include "includes/generated/cc900/DSP_RingBuf_Skip.s"	; C: cc900/dsp2_init_d_6a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_RingBuf_Skip_Loop, DSP_RingBuf_Skip + 12
+	.set	DSP_RingBuf_Skip_Epilogue, DSP_RingBuf_Skip + 21
 
 ; --- RingBuffer_Write2K: Write a byte to a 2KB circular buffer ---
 ; Entry: XWA = pointer to buffer control block
@@ -109,18 +92,7 @@ DSP_RingBuf_Skip_Epilogue:
 ; increments (XWA+4); index masked with 0x7FF. No caller reaches it by name in this build --
 ; Audio_CmdHandler_60_7F has the same code inlined at DSP_RingBuf_Enqueue -- so it is either
 ; dead or reached through a pointer table outside this region.
-DSP_RingBuf_Write2K:
-	ld	xde, xwa
-	ld	hl, (xde)
-	incw	1, (xde)
-	and	hl, 2047
-	ld	de, hl
-	extz	xde
-	inc	6, xde
-	add	xde, xwa
-	ld	(xde), c
-	incw	1, (xwa+4)
-	ret
+DSP_RingBuf_Write2K:	.include "includes/generated/cc900/DSP_RingBuf_Write2K.s"	; C: cc900/dsp2_init_d_7a.c
 
 ; ALREADY NAMED -- doc header only.
 ; Entry 3 of CMD_DISPATCH_TABLE, i.e. every inter-CPU command byte in 0x60..0x7F.
@@ -171,32 +143,7 @@ Extract_14Bit_VoiceParam:	.include "includes/generated/cc900/Extract_14Bit_Voice
 ; so a starved ring yields a header of all-0xFF rather than an error. The caller has already
 ; range-checked the message length, which is why this is safe in the normal case -- and why
 ; it is not safe if the length byte itself is garbage.
-DSP_Cmd_DequeueHeader:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17257:16), l
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17258:16), l
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17259:16), l
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17260:16), l
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17261:16), l
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17262:16), l
-	ld xwa, xiz
-	calr DSP_RingBuf_Read
-	ld (17263:16), l
-	pop xiz
-	ret
+DSP_Cmd_DequeueHeader:	.include "includes/generated/cc900/DSP_Cmd_DequeueHeader.s"	; C: cc900/dsp2_init_d_6a.c
 
 ; ALREADY NAMED -- doc header only.
 ; Loads a complete 290-byte effect configuration out of the ring into the live config buffer.
@@ -207,90 +154,16 @@ DSP_Cmd_DequeueHeader:
 ; of the five slots 0x38 bytes into EFF_GetSlotBuffer(slot), then two trailing bytes that are
 ; read and thrown away. 8 + 5*56 + 2 = 290, which is where the size guard comes from.
 ; Called only from DSP_CmdHandler_2D when header byte 0x4369 == 0 and 0x436A == 0x09.
-DSP_Cmd_LoadEffectPreset:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 10), xwa
-	ld a, (17261:16)
-	extz wa
-	ld bc, wa
-	sll bc, 7
-	ld a, (17262:16)
-	extz wa
-	add wa, bc
-	cp wa, 0x122
-	jr nz, DSP_LoadEffPreset_Loop3Next
-	call DSP_GetConfigBuffer
-	ld (xsp + 6), xhl
-	ldw (xsp + 4), 0x8
-	ld iz, 0:i3
-	cp iz, (xsp + 4)
-	jr nc, DSP_LoadEffPreset_Loop1Next
-
-; The 8 header bytes.
-DSP_LoadEffPreset_Loop1:
-	ld xwa, (xsp + 10)
-	calr DSP_RingBuf_Read
-	ld xwa, (xsp + 6)
-	ld (xwa+), l
-	ld (xsp + 6), xwa
-	inc 1, iz
-	cp iz, (xsp + 4)
-	jr c, DSP_LoadEffPreset_Loop1
-
-; Sets the per-slot byte count to 0x38 and starts the slot loop (slot < 5).
-DSP_LoadEffPreset_Loop1Next:
-	ldw (xsp + 4), 0x38
-	ldiw_erp 0xFA, 0
-	cpi3_erpw 5, 0xFA
-	jr nc, DSP_LoadEffPreset_Loop3A
-
-; Per-slot: buffer = EFF_GetSlotBuffer(slot).
-DSP_LoadEffPreset_Loop2:
-	ldto_werp WA, 0xFA
-	call EFF_GetSlotBuffer
-	ld (xsp + 6), xhl
-	ld iz, 0:i3
-	cp iz, (xsp + 4)
-	jr nc, DSP_LoadEffPreset_Loop3
-
-; Inner byte loop for one slot.
-DSP_LoadEffPreset_Loop2Next:
-	ld xwa, (xsp + 10)
-	calr DSP_RingBuf_Read
-	ld xwa, (xsp + 6)
-	ld (xwa+), l
-	ld (xsp + 6), xwa
-	inc 1, iz
-	cp iz, (xsp + 4)
-	jr c, DSP_LoadEffPreset_Loop2Next
-
-; ++slot; repeat while slot < 5.
-DSP_LoadEffPreset_Loop3:
-	inc1w_erp 0xFA
-	cpi3_erpw 5, 0xFA
-	jr c, DSP_LoadEffPreset_Loop2
-
-; Two trailing bytes consumed and discarded; HL = 0.
-DSP_LoadEffPreset_Loop3A:
-	ld xwa, (xsp + 10)
-	calr DSP_RingBuf_Read
-	ld xwa, (xsp + 10)
-	calr DSP_RingBuf_Read
-	ld hl, 0:i3
-	jr DSP_LoadEffPreset_Epilogue
-
-; Size-guard failure: DSP_RingBuf_Skip, HL = 0xFFFF.
-DSP_LoadEffPreset_Loop3Next:
-	ld xwa, (xsp + 10)
-	calr DSP_RingBuf_Skip
-	ldw hl, 0xFFFF
-
-; Restore frame, ret.
-DSP_LoadEffPreset_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+DSP_Cmd_LoadEffectPreset:	.include "includes/generated/cc900/DSP_Cmd_LoadEffectPreset.s"	; C: cc900/dsp2_init_d_9c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_LoadEffPreset_Loop1, DSP_Cmd_LoadEffectPreset + 51
+	.set	DSP_LoadEffPreset_Loop1Next, DSP_Cmd_LoadEffectPreset + 73
+	.set	DSP_LoadEffPreset_Loop2, DSP_Cmd_LoadEffectPreset + 86
+	.set	DSP_LoadEffPreset_Loop2Next, DSP_Cmd_LoadEffectPreset + 103
+	.set	DSP_LoadEffPreset_Loop3, DSP_Cmd_LoadEffectPreset + 125
+	.set	DSP_LoadEffPreset_Loop3A, DSP_Cmd_LoadEffectPreset + 133
+	.set	DSP_LoadEffPreset_Loop3Next, DSP_Cmd_LoadEffectPreset + 149
+	.set	DSP_LoadEffPreset_Epilogue, DSP_Cmd_LoadEffectPreset + 158
 
 ; ALREADY NAMED -- doc header only.
 ; Reads (0x436E) payload bytes from the ring into the buffer at XBC, byte by byte, and counts

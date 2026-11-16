@@ -47,16 +47,4 @@ extern void Voice_PerVoice_PortaPitchUpd(int);
 
 /* cc900-name: Voice_PerVoice_PortaPitchUpd=Voice_PerVoice_PortamentoPitchUpdate */
 /* cc900-module: Voice_PerVoice_PortamentoPitchUpdate */
-void Voice_SetPolyphonyMode(unsigned char m)
-{
-    unsigned char i;
-    if (m == 1) {
-        ram_4132b |= 1;
-        Voice_Reset_Engine(1);
-    } else {
-        ram_4132b &= ~1;
-        Voice_Reset_Engine(0);
-    }
-    VoiceSlot_ClearAll();
-    for (i = 0; i <= 15; i++) Voice_PerVoice_PortaPitchUpd(i);
-}
+

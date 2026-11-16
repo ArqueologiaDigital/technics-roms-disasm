@@ -6,10 +6,11 @@
    a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
    qualifier to the first declarator only.
    cc900-options: -Xr
+   Held back from subcpu/cc900/ (2026-11-16): V4.23 increments a byte of QIZ (inc 0x1,QIZH / QIZL), which the build's translation does not write as llvm-mc's inc1b_erp yet.
 */
 
-extern unsigned char ram_41368[];
-extern unsigned char *ram_4531c;
+extern unsigned char ram_41350[];
+extern unsigned char *ram_45304;
 extern unsigned char *ToneDB_RootPtr;
 extern unsigned char *ToneDB_RelBase;
 struct partrec { unsigned char pad[110]; unsigned char partial[4][37]; };
@@ -23,22 +24,7 @@ void SubSlot_Apply_Catalog50(unsigned char part, unsigned int idx, unsigned char
 /* cc900-name: SubSlot_Apply_Catalog50=VoiceParam_SubSlot_Apply_Catalog50 */
 /* cc900-name: CustomTone_Apply_Catalog8C=VoiceParam_CustomTone_Apply_Catalog8C */
 /* cc900-module: CustomTone_CopySubUnitRecord VoiceSubSlot_Init */
-void CustomTone_Apply_Catalog8C(unsigned int idx, unsigned char c)
-{
-    unsigned char e;
-    struct e16 *tbl;
-    unsigned char lo;
-    unsigned char *rec;
-    e = ram_4531c[29351];
-    tbl = (struct e16 *)((unsigned long)ToneDB_RelBase + *(long *)(ToneDB_RootPtr + 140));
-    lo = c;
-    lo &= 15;
-    rec = ram_4531c + ((int)e * 80 + (int)lo * 21);
-    rec += 19127;
-    CustomTone_CopySubUnitRecord(lo, tbl[idx].a, tbl[idx].b, e);
-    rec[1] = tbl[idx].a;
-    rec[2] = (tbl[idx].b & 15) | 80;
-}
+
 
 void SubSlot_Apply_Catalog50(unsigned char part, unsigned int idx, unsigned char sel)
 {
@@ -48,8 +34,8 @@ void SubSlot_Apply_Catalog50(unsigned char part, unsigned int idx, unsigned char
     tbl = (struct e16 *)((unsigned long)ToneDB_RelBase + *(long *)(ToneDB_RootPtr + 80));
     k = sel;
     k &= 15;
-    (*(unsigned char **)((struct partrec *)(ram_41368 + part * 0x11f))->partial[k])[2] = tbl[idx].a;
-    (*(unsigned char **)((struct partrec *)(ram_41368 + part * 0x11f))->partial[k])[3] = tbl[idx].b;
+    (*(unsigned char **)((struct partrec *)(ram_41350 + part * 0x11f))->partial[k])[2] = tbl[idx].a;
+    (*(unsigned char **)((struct partrec *)(ram_41350 + part * 0x11f))->partial[k])[3] = tbl[idx].b;
     VoiceSubSlot_Init(part, k);
     for (j = 0; j < 4; j++) WaveSel_Cache_SetDescPtr(part, k, j);
 }

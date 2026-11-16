@@ -6,11 +6,12 @@
    a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
    qualifier to the first declarator only.
    cc900-options: -Xr
+   Held back from subcpu/cc900/ (2026-11-16): V4.23 writes `and QWA,n` (an upper-word register), which the build's translation does not write as llvm-mc's and_erpw yet.
 */
 
 extern unsigned char *DSP_StreamDecode_3ByteWord(unsigned char *p, void *out);
 
-long DSP_ParamInterp_FPScale(unsigned char **pp, long b)
+long DSP_PitchParam_Scale(unsigned char **pp, long b)
 {
     long v;
     unsigned char *p;
@@ -19,7 +20,7 @@ long DSP_ParamInterp_FPScale(unsigned char **pp, long b)
     p = *pp;
     p = DSP_StreamDecode_3ByteWord(p, &v);
     v = (v >> 8) & 0xffffff;
-    r = b * 0xac44 / 0x3e8 + v;
+    r = ((b << 21) / v << 2) + 0xff800000;
     *pp = p;
     return r;
 }

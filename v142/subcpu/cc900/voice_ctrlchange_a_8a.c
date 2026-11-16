@@ -104,8 +104,4 @@ void Voice_PerVoice_PortaPitchUpd(int n);
 
 /* cc900-name: Voice_PerVoice_PortaPitchUpd=Voice_PerVoice_PortamentoPitchUpdate */
 /* cc900-module: Voice_PerVoice_PortamentoPitchUpdate */
-void Voice_AllVoices_PortamentoUpdate(void)
-{
-    unsigned char i;
-    for (i = 0; i < 0x1a; i++) Voice_PerVoice_PortaPitchUpd(i);
-}
+

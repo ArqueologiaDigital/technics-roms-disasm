@@ -8,11 +8,11 @@
    cc900-options: -Xr
 */
 
-extern unsigned char ram_41350[];
-extern unsigned char ram_4145a[];
-extern unsigned char ram_4145b[];
-extern unsigned char ram_4145c[];
-extern unsigned char ram_4145d[];
+extern unsigned char ram_4131c[];
+extern unsigned char ram_41426[];
+extern unsigned char ram_41427[];
+extern unsigned char ram_41428[];
+extern unsigned char ram_41429[];
 void Voice_UpdateFlagsFromSlot(int part);
 void Voice_Selector_ComputeMixWeights(int part);
 void Voice_Artic_SetWord0Word2_Nibble2(unsigned char part, unsigned char b);
@@ -27,7 +27,7 @@ void Voice_SetArticWord0_LowByte(unsigned char part, unsigned char b);
 void Voice_Artic_SetWord0Word2_Nibble2(unsigned char part, unsigned char b)
 {
     unsigned char *q;
-    q = &ram_41350[(int)part * 287];
+    q = &ram_4131c[(int)part * 287];
     q += 258;
     (*(unsigned int *)((q) + (0))) &= 0xf0ff;
     (*(unsigned int *)((q) + (0))) |= (unsigned int)(b & 0xf) << 8;
@@ -41,7 +41,7 @@ void Voice_Artic_SetWord0Word2_Nibble2(unsigned char part, unsigned char b)
 void Voice_Artic_SetWord1Nibble2_And_Word3(unsigned char part, unsigned char b)
 {
     unsigned char *q;
-    q = &ram_41350[(int)part * 287];
+    q = &ram_4131c[(int)part * 287];
     q += 258;
     (*(unsigned int *)((q) + (2))) &= 0xf0ff;
     (*(unsigned int *)((q) + (2))) |= (unsigned int)(b & 0xf) << 8;
@@ -54,7 +54,7 @@ void Voice_Artic_SetWord1Nibble2_And_Word3(unsigned char part, unsigned char b)
 void Voice_Artic_SetWord2Word1_Nibble0(unsigned char part, unsigned char b)
 {
     unsigned char *q;
-    q = &ram_41350[(int)part * 287];
+    q = &ram_4131c[(int)part * 287];
     q += 258;
     (*(unsigned int *)((q) + (4))) &= 0xfff0;
     (*(unsigned int *)((q) + (4))) |= b & 0xf;
@@ -68,7 +68,7 @@ void Voice_Artic_SetWord2Word1_Nibble0(unsigned char part, unsigned char b)
 void Voice_Artic_SetW2W1_Nibble1(unsigned char part, unsigned char b)
 {
     unsigned char *q;
-    q = &ram_41350[(int)part * 287];
+    q = &ram_4131c[(int)part * 287];
     q += 258;
     (*(unsigned int *)((q) + (4))) &= 0xff0f;
     (*(unsigned int *)((q) + (4))) |= (unsigned char)(b << 4);
@@ -83,16 +83,16 @@ void Voice_InitFromSlot(unsigned char part)
 {
     Voice_UpdateFlagsFromSlot(part);
     Voice_Selector_ComputeMixWeights(part);
-    ram_4145a[(int)part * 287] = 0;
-    ram_4145b[(int)part * 287] = 0;
-    ram_4145c[(int)part * 287] = 0;
-    ram_4145d[(int)part * 287] = 0;
+    ram_41426[(int)part * 287] = 0;
+    ram_41427[(int)part * 287] = 0;
+    ram_41428[(int)part * 287] = 0;
+    ram_41429[(int)part * 287] = 0;
 }
 
 void Voice_SetArticWord0_LowByte(unsigned char part, unsigned char b)
 {
     unsigned char *q;
-    q = &ram_41350[(int)part * 287];
+    q = &ram_4131c[(int)part * 287];
     q += 258;
     (*(unsigned int *)((q) + (0))) &= 0xff00;
     (*(unsigned int *)((q) + (0))) |= b;
@@ -104,8 +104,4 @@ void Voice_PerVoice_PortaPitchUpd(int n);
 
 /* cc900-name: Voice_PerVoice_PortaPitchUpd=Voice_PerVoice_PortamentoPitchUpdate */
 /* cc900-module: Voice_PerVoice_PortamentoPitchUpdate */
-void Voice_AllVoices_PortamentoUpdate(void)
-{
-    unsigned char i;
-    for (i = 0; i < 0x1a; i++) Voice_PerVoice_PortaPitchUpd(i);
-}
+

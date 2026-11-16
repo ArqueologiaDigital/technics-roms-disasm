@@ -56,30 +56,7 @@ unsigned char *ToneDB_Find_SubToneRecord(unsigned char *rec, unsigned char k, un
     return ToneDB_Resolve_NamedToneRecord(x, y, k, e);
 }
 
-void VoiceSlot_AltInit(unsigned char part)
-{
-    unsigned char g;
-    unsigned char k;
 
-    AlgoType_StateWrite(part, 0);
-    Voice_ActiveFlag_CheckAndLoad(part);
-    DSP_SlotParam_Write_Slot0(part);
-    DSP_SlotParam_Write_Slot1(part);
-    DSP_SlotParam_Write_Slot2(part);
-    DSP_SlotParam_Write_Slot3(part);
-    DSP_SlotParam_Write_Slot4(part);
-    Voice_InitFromSlot(part);
-    EnvTranspose_UpdateLoop(part);
-    for (g = 0; g < 3; g++) {
-        for (k = 0; k < 4; k++) {
-            AlgoFlag_Write_Bit3(part, g, k);
-            AlgoFlag_Write(part, g, k);
-        }
-        for (k = 0; k < 4; k++)
-            EFF_RoutingInit(part, k, g);
-    }
-    VoiceNoteParam_UpdateLoop(part);
-}
 
 void VoiceSlot_FullInit(unsigned char part)
 {
@@ -136,32 +113,7 @@ void Voice_ProgChange(char *m)
     }
 }
 
-void WaveSel_Rebuild_PartCaches(unsigned char part, unsigned char b, unsigned char c)
-{
-    unsigned char i;
-    unsigned char j;
 
-    VoiceParam_Update(part, b, c);
-    switch ((*(unsigned char **)&ram_4136e[part * 0x11f])[16] & 0xc0) {
-    case 0x00:
-        for (i = 0; i < 4; i++) {
-            WaveSel_Cache_VelSplitPtr(part, i);
-            for (j = 0; j < 4; j++)
-                WaveSel_Cache_SetDescPtr(part, i, j);
-        }
-        break;
-    case 0x40:
-        for (i = 0; i < 4; i++) {
-            Voice_PortamentoTarget_SetSlot(part, i);
-            Voice_PortaTgt_ComputePitch(part, i);
-        }
-        break;
-    case 0x80:
-        break;
-    case 0xc0:
-        break;
-    }
-}
 
 void WaveSel_StageA2_FromVelZone(unsigned char z, unsigned char *p)
 {

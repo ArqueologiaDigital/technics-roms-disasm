@@ -6,6 +6,7 @@
    a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
    qualifier to the first declarator only.
    cc900-options: -Xr
+   Held back from subcpu/cc900/ (2026-11-16): its conditional jump to a module-local function (jr c,.Voice_Demote_Decayed) keeps the listing's '.' name in the build's translation.
 */
 
 void Voice_List_MoveToPool(unsigned char *n, unsigned char *list, int k);

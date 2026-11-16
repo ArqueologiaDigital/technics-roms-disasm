@@ -78,7 +78,7 @@ def erp_byte(line):
 
 # the upper words of the 32-bit registers (QWA ...): V4.23's `and QWA,0xff` is the ROM's `and_erpw 0xE2,0xFF,0x00`
 ERP_WORD = {'qwa': 0xe2, 'qbc': 0xe6, 'qde': 0xea, 'qhl': 0xee, 'qix': 0xf2, 'qiy': 0xf6, 'qiz': 0xfa}
-ERP_WORD_RE = re.compile(r'^\tand (%s), (0x[0-9a-f]+|\d+)$' % '|'.join(ERP_WORD))
+ERP_WORD_RE = re.compile(r'^\t(and|cp) (%s), (0x[0-9a-f]+|\d+)$' % '|'.join(ERP_WORD))
 ERP_MOVE_RE = re.compile(r'^\tld (a|w|c|b|e|d|l|h), (%s)$' % '|'.join(ERP_BYTE))
 
 
@@ -107,8 +107,10 @@ def erp_word(line):
         return '\t%sw_erp 0x%x' % (m.group(1).lower(), ERP_WORD[m.group(2).lower()])
     m = ERP_WORD_RE.match(line)
     if m:
-        v = int(m.group(2), 0)
-        return '\tand_erpw 0x%x, 0x%x, 0x%x' % (ERP_WORD[m.group(1)], v & 0xff, v >> 8)
+        op, v = m.group(1), int(m.group(3), 0)
+        if op == 'cp' and v < 8:                       # asm900's 3-bit compare form
+            return '\tcpiw_erp 0x%x, %d' % (ERP_WORD[m.group(2)], v)
+        return '\t%s_erpw 0x%x, 0x%x, 0x%x' % (op, ERP_WORD[m.group(2)], v & 0xff, v >> 8)   # `cp QIZ,1000` (helper C)
     m = ERP_MOVE_RE.match(line)
     if m:
         return '\tld_erpb_rr %s, 0x%x' % (m.group(1), ERP_BYTE[m.group(2)])

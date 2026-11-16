@@ -14,71 +14,12 @@
 ; DSP_WriteAlgoBuffer (0x03522E) and DSP_VoiceState_Dispatch (0x035490) with WA = BC = 0xFF,
 ; writes status 0 and returns HL = 1.
 ; Callers: 0x031822 (DSP_SetCoeff_MasterConfig) and 0x035BEA (AUDIO_PROCESS_DSP).
-DSP_AlgoSelect:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), bc
-	ld (xsp + 10), a
-	cpw (xsp + 8), 0x28
-	jr nc, DSP_AlgoSelect_InvalidParam
-	ld a, (xsp + 10)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	lda	xiz, (xbc+wa)
-	ld wa, (xiz)
-	bit 0, wa
-	jr nz, DSP_AlgoSelect_AlreadyAllocated
-	ormi16 (xiz), 0x1
-	ld a, (xsp + 10)
-	extz wa
-	calr VoiceParam_FullSetup
-	ld a, (xsp + 10)
-	ld l, a
-	extz hl
-	ld a, (xiz + 25)
-	ld c, a
-	extz bc
-	ld a, (xiz + 26)
-	ld e, a
-	extz de
-	ld wa, hl
-	call WaveSel_Rebuild_PartCaches
-
-; Part already had bit 0 set: apply the global offsets via DSP_AdjustVoiceParams instead of
-; re-initialising.
-DSP_AlgoSelect_AlreadyAllocated:
-	ld wa, (xiz)
-	bit 0, wa
-	jr z, DSP_AlgoSelect_WriteAndDispatch
-	ld xwa, xiz
-	calr DSP_AdjustVoiceParams
-
-; Push the algorithm to the DSP and report status 0.
-DSP_AlgoSelect_WriteAndDispatch:
-	ld a, (xsp + 10)
-	extz wa
-	ld bc, (xsp + 8)
-	call DSP_WriteAlgoBuffer
-	ldw wa, 0xFF
-	ldw bc, 0xFF
-	call DSP_VoiceState_Dispatch
-	ld xwa, (xsp + 4)
-	ld (xwa), 0x0
-	jr DSP_AlgoSelect_Return
-
-; Algorithm number out of range: status byte = 2.
-DSP_AlgoSelect_InvalidParam:
-	ld xwa, (xsp + 4)
-	ld (xwa), 0x2
-
-; HL = 1, restore XIZ, return.
-DSP_AlgoSelect_Return:
-	ld hl, 1:i3
-	pop xiz
-	inc 8, xsp
-	ret
+DSP_AlgoSelect:	.include "includes/generated/cc900/DSP_AlgoSelect.s"	; C: cc900/dsp_algo_select_b_7j.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_AlgoSelect_AlreadyAllocated, DSP_AlgoSelect + 84
+	.set	DSP_AlgoSelect_WriteAndDispatch, DSP_AlgoSelect + 96
+	.set	DSP_AlgoSelect_InvalidParam, DSP_AlgoSelect + 126
+	.set	DSP_AlgoSelect_Return, DSP_AlgoSelect + 132
 
 ; DSP_MixSendConfig -- Configure DSP mix/send routing
 ; Copies 0x11 bytes of routing data via ToneDB_Find_ToneRecord.

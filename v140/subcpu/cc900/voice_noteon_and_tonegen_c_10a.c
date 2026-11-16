@@ -40,16 +40,4 @@ void CustomTone_Apply_Catalog8C(unsigned int idx, unsigned char c)
     rec[2] = (tbl[idx].b & 15) | 80;
 }
 
-void SubSlot_Apply_Catalog50(unsigned char part, unsigned int idx, unsigned char sel)
-{
-    struct e16 *tbl;
-    unsigned char j;
-    unsigned char k;
-    tbl = (struct e16 *)((unsigned long)ToneDB_RelBase + *(long *)(ToneDB_RootPtr + 80));
-    k = sel;
-    k &= 15;
-    (*(unsigned char **)((struct partrec *)(ram_4131c + part * 0x11f))->partial[k])[2] = tbl[idx].a;
-    (*(unsigned char **)((struct partrec *)(ram_4131c + part * 0x11f))->partial[k])[3] = tbl[idx].b;
-    VoiceSubSlot_Init(part, k);
-    for (j = 0; j < 4; j++) WaveSel_Cache_SetDescPtr(part, k, j);
-}
+
