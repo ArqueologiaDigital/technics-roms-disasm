@@ -99,13 +99,15 @@ What the runs showed:
 
 Each was found by a run of several spellings; the run named is where the matching one was first seen.
 
-| ROM shape                                                                             | C that gives it                                                               | run |
-|---------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-----|
-| index computed first, then `lda xR,(sym+field:24)`, `add xR,index`, access `(xR)`     | `*(T *)((unsigned long)&sym[field] + index)`: the address as an INTEGER       | 52  |
-| function pointer from a table loaded once, `ld xhl,(xwa+d16)`, then `call (xhl)`      | member read through a cast to the function type: `((void (*)())tbl->F)(args)` | 49  |
-| `switch` comparing cases in descending order, bodies in source order                  | an ordinary `switch` (`HD_GetBlockInfo`)                                      | 44  |
-| a value returned in HL, built in a register local: `ld hl,wa; ld h,0; ...; add hl,wa` | statements on a local (`r = x & 0xff; x >>= 8; r <<= 8; r += x; return r;`)   | 48  |
-| a parameter copied to XBC before use (`ld xbc,xwa`)                                   | a local copy of the parameter (`t = x;`), then work on `t`                    | 48  |
+| ROM shape                                                                                | C that gives it                                                               | run |
+|------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------|-----|
+| index computed first, then `lda xR,(sym+field:24)`, `add xR,index`, access `(xR)`        | `*(T *)((unsigned long)&sym[field] + index)`: the address as an INTEGER       | 52  |
+| function pointer from a table loaded once, `ld xhl,(xwa+d16)`, then `call (xhl)`         | member read through a cast to the function type: `((void (*)())tbl->F)(args)` | 49  |
+| `switch` comparing cases in reverse source order, bodies in source order                 | an ordinary `switch` (`HD_GetBlockInfo`, `AttenCpToHDSwCatch`)                | 44  |
+| a value returned in HL, built in a register local: `ld hl,wa; ld h,0; ...; add hl,wa`    | statements on a local (`r = x & 0xff; x >>= 8; r <<= 8; r += x; return r;`)   | 48  |
+| a parameter copied to XBC before use (`ld xbc,xwa`)                                      | a local copy of the parameter (`t = x;`), then work on `t`                    | 48  |
+| an address evaluated early (`lda xwa,(sym); ld xde,xwa`), a result reloaded (`ld wa,hl`) | a conversion on the argument or result: a cast, `const`, `void *`             | 66  |
+| a returned array base loaded as an immediate after the index (`ld xhl,sym`)              | the return value converted: `return (void *)(arr + (unsigned long)i * 16);`   | 70  |
 
 The integer-address idiom in detail.  The ROM's `DeleteSongPart_Sqt` computes the song record's offset
 (`song*76 + dir*0x4c0 + 0x780`, the multiplies by the library's `C9H_mullu`) and then writes
@@ -120,6 +122,8 @@ member `p->slot[2]`, full struct indexing.  Only an integer sum keeps it with th
 (`(unsigned long)a + 44 + ofs`, with the 44 added as an integer, differs again: run 52's `DelPartSqt_i1`.)  The same
 gives `FlsItem_Clear`'s `lda xde,(HDAE5000_RAM_FlsRecords+16:24)`.
 
-Still open: an array base loaded as an immediate, `ld xhl,sym; add xhl,xwa` (`DirName_Address`,
-`FlsRecord_Address`).  V4.23 writes `lda xhl,(sym)` for every value spelling tried (runs 48, 52, 54), and the
-integer form computes the index into XBC first.
+An array base returned after its index, loaded as an immediate (`ld xhl,sym; add xhl,xwa`, `DirName_Address`):
+V4.23 writes `lda xhl,(sym)` for every plain pointer return, but the ROM's immediate for a return value that is
+CONVERTED, to `void *` or to an integer (run 70: `return (void *)(HDAE5000_RAM_DirNames + (unsigned long)dir * 16);`;
+run 71: `DirName_`, `FlsRecord_` and `SongRecord_Address` all match).  It is the rule helper h_near found for
+arguments: a conversion changes how V4.23 materialises an address.
