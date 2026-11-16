@@ -138,22 +138,22 @@ DSP_RouteCoeffs_TypeA:
 	jr	z, DSP_RouteCoeffs_TypeA_Sel1
 	cp	de, 0:i3
 	jr	nz, DSP_RouteCoeffs_TypeA_Fetch
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+68)
 	jr	DSP_RouteCoeffs_TypeA_Fetch
 ; Selector bits 7:6 == 01 -> descriptor pointer at (0x045314)+0x4C.
 DSP_RouteCoeffs_TypeA_Sel1:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+76)
 	jr	DSP_RouteCoeffs_TypeA_Fetch
 ; Selector bits 7:6 == 10 -> descriptor pointer at (0x045314)+0x48.
 DSP_RouteCoeffs_TypeA_Sel2:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+72)
 	jr	DSP_RouteCoeffs_TypeA_Fetch
 ; Selector bits 7:6 == 11 -> same pointer as selector 00, (0x045314)+0x44.
 DSP_RouteCoeffs_TypeA_Sel3:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+68)
 ; Common tail: compute the row number and set up the 0x0D-byte copy.
 DSP_RouteCoeffs_TypeA_Fetch:
@@ -163,12 +163,12 @@ DSP_RouteCoeffs_TypeA_Fetch:
 	ld	wa, bc
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	ix, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+80)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xhl
 	ldw	hl, 13
 	ld	de, 0:i3
@@ -220,22 +220,22 @@ DSP_RouteCoeffs_TypeB:
 	jr	z, DSP_RouteCoeffs_TypeB_Sel1
 	cp	de, 0:i3
 	jr	nz, DSP_RouteCoeffs_TypeB_Fetch
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+88)
 	jr	DSP_RouteCoeffs_TypeB_Fetch
 ; Selector bits 7:6 == 01 -> (0x045314)+0x60.
 DSP_RouteCoeffs_TypeB_Sel1:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+96)
 	jr	DSP_RouteCoeffs_TypeB_Fetch
 ; Selector bits 7:6 == 10 -> (0x045314)+0x5C.
 DSP_RouteCoeffs_TypeB_Sel2:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+92)
 	jr	DSP_RouteCoeffs_TypeB_Fetch
 ; Selector bits 7:6 == 11 -> (0x045314)+0x58.
 DSP_RouteCoeffs_TypeB_Sel3:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+88)
 ; Common tail: row number and copy setup.
 DSP_RouteCoeffs_TypeB_Fetch:
@@ -245,12 +245,12 @@ DSP_RouteCoeffs_TypeB_Fetch:
 	ld	wa, bc
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	ix, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+100)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xhl
 	ldw	hl, 13
 	ld	de, 0:i3
@@ -291,9 +291,9 @@ DSP_RouteCoeffs_TypeB_Epilogue:
 ; instead of looked up through a descriptor.  Caller: 0x0318A2.
 DSP_CopyCoeffs_TypeA:
 	push	xiz
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xbc, (xbc+80)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xbc
 	ldw	hl, 13
 	ld	ix, 0:i3
@@ -332,9 +332,9 @@ DSP_CopyCoeffs_TypeA_Return:
 ; The (0x045314)+0x64 flavour of DSP_CopyCoeffs_TypeA.  Caller: 0x0318C1.
 DSP_CopyCoeffs_TypeB:
 	push	xiz
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xbc, (xbc+100)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xbc
 	ldw	hl, 13
 	ld	ix, 0:i3
@@ -436,23 +436,23 @@ DSP_VoiceCoeffRoute:
 	jr	z, DSP_VoiceCoeffRoute_Sel1
 	cp	wa, 0:i3
 	jr	nz, DSP_VoiceCoeffRoute_Fetch
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+68)
 	jr	DSP_VoiceCoeffRoute_Fetch
 ; Inside DSP_VoiceCoeffRoute: slot descriptor byte +0x03, bits 7:6 == 01 ->
 ; descriptor pointer (0x045314)+0x4C.
 DSP_VoiceCoeffRoute_Sel1:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+76)
 	jr	DSP_VoiceCoeffRoute_Fetch
 ; Bits 7:6 == 10 -> (0x045314)+0x48.
 DSP_VoiceCoeffRoute_Sel2:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+72)
 	jr	DSP_VoiceCoeffRoute_Fetch
 ; Bits 7:6 == 11 -> (0x045314)+0x44.
 DSP_VoiceCoeffRoute_Sel3:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+68)
 ; Common tail: row = ((desc+0x03 & 0x0F) << 7 | (desc+0x02 & 0x7F)) * 2.
 DSP_VoiceCoeffRoute_Fetch:
@@ -462,12 +462,12 @@ DSP_VoiceCoeffRoute_Fetch:
 	ld	wa, iy
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	de, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+80)
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add	xix, xhl
 	ldw	hl, 13
 	ld	iy, 0:i3
@@ -622,22 +622,22 @@ DSP_VoiceCoeffRoute2:
 	jr	z, DSP_VoiceCoeffRoute2_Sel1
 	cp	wa, 0:i3
 	jr	nz, DSP_VoiceCoeffRoute2_Fetch
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+88)
 	jr	DSP_VoiceCoeffRoute2_Fetch
 ; Inside DSP_VoiceCoeffRoute2: bits 7:6 == 01 -> (0x045314)+0x60.
 DSP_VoiceCoeffRoute2_Sel1:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+96)
 	jr	DSP_VoiceCoeffRoute2_Fetch
 ; Bits 7:6 == 10 -> (0x045314)+0x5C.
 DSP_VoiceCoeffRoute2_Sel2:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+92)
 	jr	DSP_VoiceCoeffRoute2_Fetch
 ; Bits 7:6 == 11 -> (0x045314)+0x58.
 DSP_VoiceCoeffRoute2_Sel3:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+88)
 ; Common tail; row block is (0x045314)+0x64.
 DSP_VoiceCoeffRoute2_Fetch:
@@ -647,12 +647,12 @@ DSP_VoiceCoeffRoute2_Fetch:
 	ld	wa, iz
 	extz	xwa
 	add	xwa, xix
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	de, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+100)
-	ld	xwa, (Payload_Bss_Start+0x649a:24)
+	ld	xwa, (ToneDB_RelBase:24)
 	add	xwa, xix
 	ld	xix, xwa
 	ldw	hl, 13
@@ -735,37 +735,37 @@ DSP_AlgoCoeffLookup:
 	jr	z, DSP_AlgoCoeffLookup_Bank1
 	cp	a, 0:i3
 	jr	nz, DSP_AlgoCoeffLookup_BankDefault
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+84)
 	jr	t, DSP_AlgoCoeffLookup_CopyLoop
 ; Bank 1 -> (0x045314)+0x68.
 DSP_AlgoCoeffLookup_Bank1:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+104)
 	jr	t, DSP_AlgoCoeffLookup_CopyLoop
 ; Bank 2 -> (0x045314)+0x0084.
 DSP_AlgoCoeffLookup_Bank2:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+132)
 	jr	t, DSP_AlgoCoeffLookup_CopyLoop
 ; Bank 3 -> (0x045314)+0x0090.
 DSP_AlgoCoeffLookup_Bank3:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+144)
 	jr	t, DSP_AlgoCoeffLookup_CopyLoop
 ; Bank 4 -> (0x045314)+0x0098.
 DSP_AlgoCoeffLookup_Bank4:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+152)
 	jr	t, DSP_AlgoCoeffLookup_CopyLoop
 ; Bank 0 or out of range -> (0x045314)+0x54.
 DSP_AlgoCoeffLookup_BankDefault:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+84)
 ; Copies (block+0x02)+3 bytes from the selected block into 0x045210+6; the length is stored
 ; in the block's own third byte.
 DSP_AlgoCoeffLookup_CopyLoop:
-	ld	xwa, (Payload_Bss_Start+0x649a:24)
+	ld	xwa, (ToneDB_RelBase:24)
 	add	xwa, xix
 	ld	xix, xwa
 	ld	a, (xwa+2)

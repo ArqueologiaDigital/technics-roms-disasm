@@ -54,7 +54,7 @@
 Audio_Process_DSP:
 	lda xsp, (xsp - 10)
 	push xiz
-	lda xwa, (15200:16)
+	lda xwa, (DSP2_RingBuffer:16)
 	ld (xsp + 4), xwa
 	ld wa, (xwa + 4)
 	calr DSP_StoreBufferCount
@@ -816,7 +816,7 @@ DSP_ApplyAlgoForVoiceType:
 ; The shared body for both accepted voice types.
 DSP_ApplyAlgoForVoiceType_TypeF:
 	ldmm16 17588, 17840	; LDW_16_16 (044b4h), (045b0h)
-	lda xwa, (17550:16)
+	lda xwa, (DSP_ConfigBuffer:16)
 	call DSP_State_ApplyBuf
 	ret
 
@@ -844,10 +844,10 @@ DSP_Reset:
 	ld de, (17846:16)
 	call DSP_MixerCoeff_Compute
 	ld xiy, DSP_DefaultEffectConfig_Image
-	ld xix, 0x448E
+	ld xix, DSP_ConfigBuffer
 	ldw bc, 0x91
 	ldirw
-	lda xwa, (17550:16)
+	lda xwa, (DSP_ConfigBuffer:16)
 	call DSP_State_LoadAndApplyAll
 	ldw (17554:16), 0
 	call DSP_State_DmaLoadPresets
@@ -923,12 +923,12 @@ DSP_SlotState_DisplayRestore_Epilogue:
 DSP_ApplyConfig:
 	cp e, 0xFF
 	jr nz, DSP_ApplyConfig_ActivePath
-	ldw (17550:16), 1
+	ldw (DSP_ConfigBuffer:16), 1
 	jr DSP_ApplyConfig_InactivePath
 
 ; (0x448E) = 0 -- "this is a real change".
 DSP_ApplyConfig_ActivePath:
-	ldw (17550:16), 0
+	ldw (DSP_ConfigBuffer:16), 0
 
 ; The slot switch.
 DSP_ApplyConfig_InactivePath:
@@ -942,14 +942,14 @@ DSP_ApplyConfig_InactivePath:
 	jr z, DSP_ApplyConfig_BufSelectA
 	cp a, 0:i3
 	ret nz
-	lda xwa, (17550:16)
+	lda xwa, (DSP_ConfigBuffer:16)
 	call DSP_State_ApplyBuf
 	ld wa, (17558:16)
 	jrl DSP_ApplyAlgoForVoiceType
 
 ; Slots 1, 2, 4: jp DSP_State_ApplyBuf(0x448E).
 DSP_ApplyConfig_BufSelectA:
-	lda xwa, (17550:16)
+	lda xwa, (DSP_ConfigBuffer:16)
 	jp DSP_State_ApplyBuf
 
 ; Slot 3 only: writes (0x454A) = (0x45B8) if (0x45BA) != 0, else 0, and then applies. Same
@@ -966,7 +966,7 @@ DSP_ApplyConfig_BufSelectB:
 ; Stores the selected word and calls DSP_State_ApplyBuf.
 DSP_ApplyConfig_Epilogue:
 	ld (xbc), wa
-	lda xwa, (17550:16)
+	lda xwa, (DSP_ConfigBuffer:16)
 	call DSP_State_ApplyBuf
 	ret
 
@@ -974,14 +974,14 @@ DSP_ApplyConfig_Epilogue:
 ; DSP_ApplyAlgoForVoiceType(word at 0x4496). The unconditional form of DSP_ApplyConfig's
 ; slot-0 case; called after a successful whole-preset load in DSP_CmdHandler_2D.
 DSP_ReconfigAndStatus:
-	lda xwa, (17550:16)
+	lda xwa, (DSP_ConfigBuffer:16)
 	call DSP_State_ApplyBuf
 	ld wa, (17558:16)
 	jrl DSP_ApplyAlgoForVoiceType
 
 ; ALREADY NAMED -- doc header only. XHL = 0x448E. Three bytes.
 DSP_GetConfigBuffer:
-	lda xhl, (17550:16)
+	lda xhl, (DSP_ConfigBuffer:16)
 	ret
 
 ; ALREADY NAMED -- doc header only.
@@ -1081,9 +1081,9 @@ DSP_Set_MicLevel:
 	ld	(17848:16), wa
 	cpw	(17850:16), 0
 	ret	z
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	ldmm16	17738, 17848
-	lda	xwa, (17550:16)
+	lda	xwa, (DSP_ConfigBuffer:16)
 	call	DSP_State_ApplyBuf
 	ret
 	ld	hl, (17848:16)
@@ -1099,7 +1099,7 @@ DSP_Set_MicSense:
 	ld	c, a
 	extz	bc
 	ld	(17850:16), bc
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	cp	a, 0:i3
 	jr	z, DSP_Set_Enable_45BA_Skip
 	ldmm16	17738, 17848
@@ -1107,7 +1107,7 @@ DSP_Set_MicSense:
 DSP_Set_Enable_45BA_Skip:
 	ldw	(17738:16), 0
 DSP_Set_Enable_45BA_Join:
-	lda	xwa, (17550:16)
+	lda	xwa, (DSP_ConfigBuffer:16)
 	jp	DSP_State_ApplyBuf
 ; ★ NEW NAME. (0x448E) = 0 ; (0x4504) = WA ; tail-jump DSP_State_ApplyBuf(0x448E).
 ; 0x4504 = 0x4496 + 0x6E = slot 1 record + 0x36. CmdHandler2C global sub-command 0x21.
@@ -1115,10 +1115,10 @@ DSP_Set_Enable_45BA_Join:
 ;   and hands the config block to DSP_State_ApplyBuf -- the DIGITAL REVERB on/off switch. Basis: caller + main-CPU
 ;   sender + readers -- 1 = EFF_LinkLoop links the slot into the chain, 0 = EFF_SecondaryLinkPath disconnects it.
 DSP_Set_DigitalReverbOnOff:
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	extz	wa
 	ld	(17668:16), wa
-	lda	xwa, (17550:16)
+	lda	xwa, (DSP_ConfigBuffer:16)
 	jp	DSP_State_ApplyBuf
 ; ★ NEW NAME. Same shape, target (0x453C) = 0x4496 + 0xA6 = slot 2 record + 0x36.
 ; CmdHandler2C global sub-command 0x22.
@@ -1127,10 +1127,10 @@ DSP_Set_DigitalReverbOnOff:
 ;   main-CPU sender + readers -- 1 = EFF_LinkLoop links the slot into the chain, 0 = EFF_SecondaryLinkPath disconnects
 ;   it.
 DSP_Set_AcousticIllusionOnOff:
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	extz	wa
 	ld	(17724:16), wa
-	lda	xwa, (17550:16)
+	lda	xwa, (DSP_ConfigBuffer:16)
 	jp	DSP_State_ApplyBuf
 ; ★ NEW NAME. (0x448E) = 0 ; (0x45B0) = WA ; then WA = (0x4496) (slot 0's algorithm number)
 ; and a long jump to DSP_ApplyAlgoForVoiceType (0x03608C) -- the only one of the ten setters
@@ -1141,7 +1141,7 @@ DSP_Set_AcousticIllusionOnOff:
 ;   +0x1E only when slot 0's algorithm is 15 ROCK ROTARY or 53 ROTARY SPEAKER. Basis: caller + main-CPU sender +
 ;   reader.
 DSP_Set_RotarySpeed:
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	extz	wa
 	ld	(17840:16), wa
 	ld	wa, (17558:16)
@@ -1152,10 +1152,10 @@ DSP_Set_RotarySpeed:
 ;   on/off switch. Basis: caller + main-CPU sender + readers -- 1 = EFF_LinkLoop links the slot into the chain, 0 =
 ;   EFF_SecondaryLinkPath disconnects it.
 DSP_Set_MicReverbOnOff:
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	extz	wa
 	ld	(17780:16), wa
-	lda	xwa, (17550:16)
+	lda	xwa, (DSP_ConfigBuffer:16)
 	jp	DSP_State_ApplyBuf
 ; ★ NEW NAME. Target (0x45AC) = 0x4496 + 0x116 = slot 4 record + 0x36. Global sub-command
 ; 0x25. Note the four addresses 0x4504/0x453C/0x4574/0x45AC together with 0x44CC (slot 0)
@@ -1166,10 +1166,10 @@ DSP_Set_MicReverbOnOff:
 ;   hands the config block to DSP_State_ApplyBuf -- the EQUALIZER on/off switch. Basis: caller + main-CPU sender +
 ;   readers -- 1 = EFF_LinkLoop links the slot into the chain, 0 = EFF_SecondaryLinkPath disconnects it.
 DSP_Set_EqualizerOnOff:
-	ldw	(17550:16), 0
+	ldw	(DSP_ConfigBuffer:16), 0
 	extz	wa
 	ld	(17836:16), wa
-	lda	xwa, (17550:16)
+	lda	xwa, (DSP_ConfigBuffer:16)
 	jp	DSP_State_ApplyBuf
 
 ; ALREADY NAMED -- doc header only.
@@ -3111,9 +3111,9 @@ DSP_DispatchData_Epilogue:
 ; snapshots the live effect configuration into the shadow that all the diff routines compare
 ; against. Called at the end of DSP_State_ApplyAll, so "shadow" means "state as of the last
 ; successful apply". Uses `ldirw` with XIX = destination, XIY = source.
-DSP_StateTable_Reset:
+DSP_StateTable_Save:
 	ld xiy, xwa
-	ld xix, 0x45CA
+	ld xix, DSP_ConfigBuffer_Shadow
 	ldw bc, 0x91
 	ldirw
 	ret
@@ -3139,12 +3139,12 @@ DSP_AlgoChange_CheckAndFlag:
 
 ; (0x493E) = 1.
 DSP_AlgoChange_NoChange:
-	ldw (18750:16), 1
+	ldw (DSP_AlgoChangedFlag:16), 1
 	ret
 
 ; (0x493E) = 0.
 DSP_AlgoChange_FlagAndClear:
-	ldw (18750:16), 0
+	ldw (DSP_AlgoChangedFlag:16), 0
 	ret
 
 ; ALREADY NAMED -- doc header only. Entry XWA = live config buffer.
@@ -3593,12 +3593,12 @@ DSP_Config_DeadTail_SumWords:
 DSP_SlotMuteState_ReadAndClear:
 	ld bc, wa
 	add bc, bc
-	lda xde, (17852:16)
+	lda xde, (DSP_SlotMuteState:16)
 	extz xbc
 	add xbc, xde
 	ld hl, (xbc)
 	add wa, wa
-	lda xbc, (17852:16)
+	lda xbc, (DSP_SlotMuteState:16)
 	extz xwa
 	add xwa, xbc
 	ldw (xwa), 0x0
@@ -3637,10 +3637,10 @@ DSP_SlotMuteState_ReadAndClear_Skip:
 ; ALREADY NAMED -- doc header only. The whole apply pipeline. Entry XWA = live config buffer.
 ;   (0x45C8) = 0
 ;   DSP_Config_ClampLimits ; DSP_State_DiffAndPrepare ; DSP_State_Dispatcher ;
-;   DSP_StateTable_Reset
+;   DSP_StateTable_Save
 ;   HL = (0x45C8)
 ; So DSP_State_Dispatcher (outside the region) is what actually pushes bytes at the DSPs, and
-; it reports through 0x45C8. The unconditional DSP_StateTable_Reset at the end means the
+; it reports through 0x45C8. The unconditional DSP_StateTable_Save at the end means the
 ; shadow is updated even if the dispatch failed. Called from 0x040592.
 DSP_State_ApplyAll:
 	push xiz
@@ -3653,7 +3653,7 @@ DSP_State_ApplyAll:
 	ld xwa, xiz
 	calr DSP_State_Dispatcher
 	ld xwa, xiz
-	calr DSP_StateTable_Reset
+	calr DSP_StateTable_Save
 	ld hl, (17864:16)
 	pop xiz
 	ret
@@ -3670,7 +3670,7 @@ DSP_State_ApplyAll:
 ; 0x4958 + n*0x32 + 0x10 = 1 unless slot +0x30 equals 0x63. Otherwise (0x4930 + n*2) = 0.
 EFF_SlotActive_UpdateFlags:
 	ld de, 0:i3
-	cpw (18750:16), 1
+	cpw (DSP_AlgoChangedFlag:16), 1
 	jr nz, EFF_SlotActive_SlotActive
 	ld hl, 0:i3
 	cp hl, 5:i3
@@ -3680,7 +3680,7 @@ EFF_SlotActive_UpdateFlags:
 EFF_SlotActive_CheckSlot:
 	ld wa, hl
 	add wa, wa
-	lda xbc, (18736:16)
+	lda xbc, (EFF_SlotActiveFlags:16)
 	extz xwa
 	add xwa, xbc
 	ldw (xwa), 0x1
@@ -3756,7 +3756,7 @@ EFF_SlotActive_AlgoCheck:
 EFF_SlotActive_LoopNext:
 	ld bc, hl
 	add bc, bc
-	lda xix, (18736:16)
+	lda xix, (EFF_SlotActiveFlags:16)
 	extz xbc
 	add xbc, xix
 	ldw (xbc), 0x1
@@ -3821,7 +3821,7 @@ EFF_SlotActive_LoopNext:
 EFF_SlotActive_InnerLoopNext:
 	ld bc, hl
 	add bc, bc
-	lda xix, (18736:16)
+	lda xix, (EFF_SlotActiveFlags:16)
 	extz xbc
 	add xbc, xix
 	ldw (xbc), 0x0
@@ -3839,9 +3839,9 @@ EFF_SlotActive_Epilogue:
 ; Called from 0x038078, immediately after EFF_SlotActive_UpdateFlags and immediately before
 ; EFF_DspChannel_InitFlags -- the three form one "prepare the dirty state" block.
 EFF_DSPLink_ResetFlags:
-	cpw (18750:16), 1
+	cpw (DSP_AlgoChangedFlag:16), 1
 	jr nz, EFF_DSPLink_ResetFlags_LoopNext
-	ldw (18746:16), 1
+	ldw (DSP_ChipActiveFlags:16), 1
 	ld de, 1:i3
 	cp de, 2:i3
 	ret nc
@@ -3850,7 +3850,7 @@ EFF_DSPLink_ResetFlags:
 EFF_DSPLink_ResetFlags_ZeroPath:
 	ld wa, de
 	add wa, wa
-	lda xbc, (18746:16)
+	lda xbc, (DSP_ChipActiveFlags:16)
 	extz xwa
 	add xwa, xbc
 	ldw (xwa), 0x0
@@ -3869,7 +3869,7 @@ EFF_DSPLink_ResetFlags_LoopNext:
 EFF_DSPLink_ResetFlags_InnerBody:
 	ld wa, de
 	add wa, wa
-	lda xbc, (18746:16)
+	lda xbc, (DSP_ChipActiveFlags:16)
 	extz xwa
 	add xwa, xbc
 	ldw (xwa), 0x0
@@ -3895,7 +3895,7 @@ EFF_DspChannel_InitFlags:
 
 ; (0x493E) == 1 -> force this slot's dirty word to 1.
 EFF_DspChannel_Init_AlgoCheck:
-	cpw (18750:16), 1
+	cpw (DSP_AlgoChangedFlag:16), 1
 	jr nz, EFF_DspChannel_Init_SlotNext
 	ld bc, de
 	mul bc, 0x32
@@ -4030,7 +4030,7 @@ EFF_DspChannel_Init_MultiTableDirty:
 	jr z, EFF_DspChannel_Init_AlgoTypePath
 	add bc, bc
 	add bc, 0x14
-	lda xhl, (18736:16)
+	lda xhl, (EFF_SlotActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x1
@@ -4042,7 +4042,7 @@ EFF_DspChannel_Init_AlgoTypePath:
 	inc 1, bc
 	add bc, bc
 	add bc, 0x14
-	lda xhl, (18736:16)
+	lda xhl, (EFF_SlotActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x1
@@ -4119,7 +4119,7 @@ EFF_DspChanInit_AlgoType1_Dirty:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18746:16)
+	lda xhl, (DSP_ChipActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	cpw (xbc), 0x1
@@ -4135,7 +4135,7 @@ EFF_DspChanInit_AlgoType1_Dirty:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18750:16)
+	lda xhl, (DSP_AlgoChangedFlag:16)
 	extz xbc
 	add xbc, xhl
 	cpw (xbc), 0x1
@@ -4146,7 +4146,7 @@ EFF_DspChanInit_AlgoType2_Dirty:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18746:16)
+	lda xhl, (DSP_ChipActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x1
@@ -4160,7 +4160,7 @@ EFF_DspChanInit_AlgoType2_Dirty:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18750:16)
+	lda xhl, (DSP_AlgoChangedFlag:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x0
@@ -4361,7 +4361,7 @@ EFF_DspChanInit_AlgoType4F_SubA:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18746:16)
+	lda xhl, (DSP_ChipActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	cpw (xbc), 0x1
@@ -4376,7 +4376,7 @@ EFF_DspChanInit_AlgoType4F_SubA:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18746:16)
+	lda xhl, (DSP_ChipActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x0
@@ -4386,7 +4386,7 @@ EFF_DspChanInit_AlgoType4F_SubB:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18750:16)
+	lda xhl, (DSP_AlgoChangedFlag:16)
 	extz xbc
 	add xbc, xhl
 	cpw (xbc), 0x1
@@ -4401,7 +4401,7 @@ EFF_DspChanInit_AlgoType4F_SubB:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18750:16)
+	lda xhl, (DSP_AlgoChangedFlag:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x0
@@ -4482,7 +4482,7 @@ EFF_DspChanInit_AlgoType35_Dirty:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18746:16)
+	lda xhl, (DSP_ChipActiveFlags:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x1
@@ -4496,7 +4496,7 @@ EFF_DspChanInit_AlgoType35_Dirty:
 	ld bc, de
 	mul bc, 0x32
 	add bc, 0x10
-	lda xhl, (18750:16)
+	lda xhl, (DSP_AlgoChangedFlag:16)
 	extz xbc
 	add xbc, xhl
 	ldw (xbc), 0x1
@@ -4681,7 +4681,7 @@ EFF_MuteLoop:
 EFF_MuteLoop_SlotBody:
 	ld wa, iz
 	add wa, wa
-	lda xbc, (18736:16)
+	lda xbc, (EFF_SlotActiveFlags:16)
 	extz xwa
 	add xwa, xbc
 	cpw (xwa), 0x1
@@ -4706,7 +4706,7 @@ EFF_MuteLoop_SlotBody:
 	jr z, EFF_MuteLoop_NoMute
 	ld wa, iz
 	add wa, wa
-	lda xbc, (17852:16)
+	lda xbc, (DSP_SlotMuteState:16)
 	extz xwa
 	add xwa, xbc
 	ldw (xwa), 0x1
@@ -4774,7 +4774,7 @@ DSP_MuteLoop:
 DSP_MuteLoop_MuteActiveChip:
 	ld wa, iz
 	add wa, wa
-	lda xbc, (18746:16)
+	lda xbc, (DSP_ChipActiveFlags:16)
 	extz xwa
 	add xwa, xbc
 	cpw (xwa), 0x1
@@ -4806,7 +4806,7 @@ DSP_UnmuteLoop:
 DSP_UnmuteLoop_UnmuteActiveChip:
 	ld wa, iz
 	add wa, wa
-	lda xbc, (18746:16)
+	lda xbc, (DSP_ChipActiveFlags:16)
 	extz xwa
 	add xwa, xbc
 	cpw (xwa), 0x1
@@ -4830,7 +4830,7 @@ DSP_UnmuteLoop_Epilogue:
 ; DSP_AlgorithmChange (0x03800D) with XWA still pointing at the config block; otherwise
 ; return immediately. The flag is set by DSP_AlgoChange_CheckAndFlag, outside this region.
 DSP_AlgorithmChangeCheck:
-	cpw (18750:16), 1
+	cpw (DSP_AlgoChangedFlag:16), 1
 	ret nz
 	call DSP_AlgorithmChange
 	ret
@@ -5648,7 +5648,7 @@ DSP_StateDispatcher_AlgoLoop:
 	jr z, DSP_StateDispatcher_AlgoClear
 	ld wa, de
 	add wa, wa
-	lda xbc, (17852:16)
+	lda xbc, (DSP_SlotMuteState:16)
 	ld hl, wa
 	extz xhl
 	add xhl, xbc
@@ -5666,7 +5666,7 @@ DSP_StateDispatcher_AlgoLoop:
 DSP_StateDispatcher_AlgoClear:
 	ld wa, de
 	add wa, wa
-	lda xbc, (17852:16)
+	lda xbc, (DSP_SlotMuteState:16)
 	extz xwa
 	add xwa, xbc
 	ldw (xwa), 0x0

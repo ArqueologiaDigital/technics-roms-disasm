@@ -120,7 +120,7 @@ V140_BANNER = (
 # --- v1.41 DSP_SetVoiceCoefficients (header + body), replaced as one span -----------------
 SVC_FIRST = b"; DSP_SetVoiceCoefficients -- Write DSP voice coefficients\n"
 SVC_LAST = b"DSP_SetCoeff_Return:\n\tpop xiz\n\tlda xsp, (xsp + 10)\n\tret\n"
-SVC_SHA1 = "4596d2ee707c07c5867a7508afeda0586849b437"   # of the v1.41 span, 3,841 bytes
+SVC_SHA1 = "0fe564e47f12f3161026a555a4e0a0baf91339b7"   # of the v1.41 span (renamed ToneDB_* cells, 2026-11-16)
 SVC_V140 = b"""\
 ; DSP_SetVoiceCoefficients -- v1.40 form (the v1.41 one takes a part and an index instead)
 ; Copy the 10-byte ToneDB record named by ONE sub-tone reference into a caller-supplied
@@ -161,7 +161,7 @@ DSP_SetVoiceCoefficients:
 ; Every value of hi & 0xc0 arrives here, so the four-way compare is vestigial.
 ; XHL = ToneDB_RootPtr->+0x7c, the sub-tone index table.
 DSP_SetCoeff_LoadTableBase:
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xhl, (xbc+124)
 
 ; e = u16 table[((hi & 0x1f) << 7) | lo]; XIX = ToneDB_RelBase + Root->+0xb0 + 10*e.
@@ -173,12 +173,12 @@ DSP_SetCoeff_ComputeIndex:
 	ld	wa, bc
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	bc, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+176:16)
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add	xix, xhl
 	ld	wa, bc
 	mul	wa, 10

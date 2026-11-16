@@ -47,7 +47,7 @@ RingBuf_ReadByte_Return:
 ; The ELF name RingBuf_ReadByte_Data implies data; it is code.
 ; ★ Renamed 2026-09-25 from RingBuf_ReadByte_Data: header: `lda XWA,0x2B0D` then RINGBUF_READBYTE -- read one byte from the MIDI ring.
 RingBuf_ReadByte_MidiRing:
-	lda	xwa, (11021:16)
+	lda	xwa, (MIDI_RingBuffer:16)
 	jr	RingBuf_ReadByte
 
 ; Drains a ring buffer completely and then RESETS THE WRITE INDEX to the read index.
@@ -132,7 +132,7 @@ Audio_CmdHandler_00_1F:
 
 ; Per-byte body: ring push plus source-pointer advance.
 Audio_CmdHandler_00_1F_Loop:
-	lda xwa, (11021:16)
+	lda xwa, (MIDI_RingBuffer:16)
 	ld bc, (xwa)
 	incw 1, (xwa)
 	and bc, 0xFFF
@@ -193,7 +193,7 @@ Audio_CmdHandler_00_1F_Done:
 ; MIDI_Dispatch returns only when the count at 0x2B11 reaches zero.  See findings.
 MIDI_Dispatch:
 	push xiz
-	lda xiz, (11021:16)
+	lda xiz, (MIDI_RingBuffer:16)
 	ld wa, (xiz + 4)
 	call MIDI_Backlog_Publish
 	jrl MIDI_Dispatch_NextByte

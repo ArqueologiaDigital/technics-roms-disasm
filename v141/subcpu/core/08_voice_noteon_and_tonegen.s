@@ -2736,7 +2736,7 @@ CustomTone_CopyToneRecord:
 	ld	xwa, (Payload_Bss_Start+0x64a6:24)
 	lda	xwa, (xwa+bc)
 	ld	xbc, xwa
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xwa, xhl
 	ld	de, (xde+238)
 	calr	BlockCopy_Words_BC_to_HL
@@ -2764,7 +2764,7 @@ VoiceSubSlot_Init:
 	exts xwa
 	add xwa, xbc
 	ld xbc, xwa
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xwa, xhl
 	ld	de, (xde+234)
 	calr BlockCopy_Words_BC_to_HL
@@ -2804,7 +2804,7 @@ CustomTone_CopySubUnitRecord:
 	lda	xwa, (xwa+de)	; lda XWA,XWA+DE
 	lda	xwa, (xwa+19169)
 	ld	xbc, xwa
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xwa, xhl
 	ld	de, (xde+240)
 	calr	BlockCopy_Words_BC_to_HL
@@ -3126,9 +3126,9 @@ VoiceParam_SubSlot_Apply_Catalog50:
 	dec	2, xsp
 	push qiz
 	ld	(xsp+2), a
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+80)
-	ld	xhl, (Payload_Bss_Start+0x649a:24)
+	ld	xhl, (ToneDB_RelBase:24)
 	add	xhl, xwa
 	ldfr_berp	e, 251
 	and_erpb	251, 15
@@ -3204,9 +3204,9 @@ VoiceParam_SubSlot_Apply_Catalog50_Epilogue:
 ; indexed by 3 + 2*k, and entry +0x0F into the following byte, then tail-jumps into
 ; WaveSel_Cache_SetDescPtr (0x0328E2).
 VoiceParam_SubSlot_Apply_Catalog64:
-	ld	xhl, (Payload_Bss_Start+0x649e:24)
+	ld	xhl, (ToneDB_RootPtr:24)
 	ld	xhl, (xhl+100)
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add	xix, xhl
 	ldfr_berp	e, 226
 	and_erpb	226, 15
@@ -3454,9 +3454,9 @@ VoiceParam_CustomTone_Apply_Catalog80:
 	ld	xwa, (Payload_Bss_Start+0x64a6:24)
 	lda	xwa, (xwa+bc)
 	ld	(xsp+4), xwa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+128)
-	ld	xbc, (Payload_Bss_Start+0x649a:24)
+	ld	xbc, (ToneDB_RelBase:24)
 	add	xbc, xwa
 	ld	(xsp+8), xbc
 	ld	wa, (xsp+16)
@@ -3550,9 +3550,9 @@ VoiceParam_CustomTone_Apply_Catalog8C:
 	ld	(xsp+8), wa
 	ld	xwa, (Payload_Bss_Start+0x64a6:24)
 	ld	e, (xwa+29351)
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+140)
-	ld	xhl, (Payload_Bss_Start+0x649a:24)
+	ld	xhl, (ToneDB_RelBase:24)
 	add	xhl, xwa
 	ld	xiz, xhl
 	ld	l, c
@@ -3623,9 +3623,9 @@ VoiceParam_CustomTone_Apply_Catalog8C:
 VoiceParam_CustomTone_Apply_Catalog94:
 	ld	xde, (Payload_Bss_Start+0x64a6:24)
 	ld	b, (xde+29351)
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xde, (xde+148)
-	ld	xhl, (Payload_Bss_Start+0x649a:24)
+	ld	xhl, (ToneDB_RelBase:24)
 	add	xhl, xde
 	ld	e, c
 	and	e, 15

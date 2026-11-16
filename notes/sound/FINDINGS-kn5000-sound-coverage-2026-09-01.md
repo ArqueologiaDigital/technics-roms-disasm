@@ -178,6 +178,8 @@ each form and calls it spellable only if the bytes come back identical.
   `ToneGen_ExtParams15_DataTable`, `Voice_ProgChange_TableData` and the rest name code, and
   each block's header already records both a rename proposal and an explicit decision to
   leave the choice to the maintainer. Decoding the bytes does not make that call ours.
+  (2026-11-16: `VoiceCC_DataTable_0280FE` was renamed `ToneGen_WriteVoice_Reg21` at the coordinator's request,
+  `scripts/renaming/rename_subcpu_dsp_cells.sed`.)
 
 ---
 

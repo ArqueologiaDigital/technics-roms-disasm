@@ -165,7 +165,7 @@ DSP_VoiceParam_Dispatch:
 ; All four values of (BC & 0xC0) load the same pointer, (0x045314)+0x7C -- the four-way
 ; compare is vestigial.
 DSP_VoiceParam_Dispatch_LoadRowBase:
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xde, (xbc+124)
 ; row = ((BC & 0x1F) << 7 | (WA & 0x7F)) * 2, then a 16-byte-stride row address.
 DSP_VoiceParam_Dispatch_ComputeRow:
@@ -176,12 +176,12 @@ DSP_VoiceParam_Dispatch_ComputeRow:
 	ld	wa, bc
 	extz	xwa
 	add	xwa, xde
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	bc, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xde, (xwa+128)
-	ld	xwa, (Payload_Bss_Start+0x649a:24)
+	ld	xwa, (ToneDB_RelBase:24)
 	add	xwa, xde
 	ld	xde, xwa
 	ld	wa, bc
@@ -255,7 +255,7 @@ DSP_SetVoiceCoefficients:
 ; Every value of hi & 0xc0 arrives here, so the four-way compare is vestigial.
 ; XHL = ToneDB_RootPtr->+0x7c, the sub-tone index table.
 DSP_SetCoeff_LoadTableBase:
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xhl, (xbc+124)
 
 ; e = u16 table[((hi & 0x1f) << 7) | lo]; XIX = ToneDB_RelBase + Root->+0xb0 + 10*e.
@@ -267,12 +267,12 @@ DSP_SetCoeff_ComputeIndex:
 	ld	wa, bc
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	bc, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+176:16)
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add	xix, xhl
 	ld	wa, bc
 	mul	wa, 10
@@ -317,9 +317,9 @@ DSP_SetCoeff_Return:
 ; bytes are shipped.  Reached only from ToneDB_Query_Dispatch case 15 (0x031993).
 DSP_SetCoeff_CopyDirect:
 	push	xiz
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xbc, (xbc+128)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xbc
 	ldw	hl, 13
 	ld	ix, 0:i3
@@ -401,7 +401,7 @@ DSP_SetCoeff_RouteComplex:
 	ldfr_berp	a, 240
 	extz	ix
 	and	ix, 32
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+124)
 	ld	wa, iy
 	sll	wa, 7
@@ -409,12 +409,12 @@ DSP_SetCoeff_RouteComplex:
 	add	wa, wa
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	de, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+128)
-	ld	xwa, (Payload_Bss_Start+0x649a:24)
+	ld	xwa, (ToneDB_RelBase:24)
 	add	xwa, xhl
 	ld	(xsp+4), xwa
 	ldw	hl, 13
@@ -514,9 +514,9 @@ DSP_SetCoeff_RouteComplex_Join:
 ; Reached only from ToneDB_Query_Dispatch case 17 (0x0319D0).
 DSP_SetCoeff_CopyDirect2:
 	push	xiz
-	ld	xbc, (Payload_Bss_Start+0x649e:24)
+	ld	xbc, (ToneDB_RootPtr:24)
 	ld	xbc, (xbc+140)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xbc
 	ldw	hl, 13
 	ld	ix, 0:i3
@@ -601,7 +601,7 @@ DSP_SetCoeff_RouteWithCallback:
 	cp	wa, 0:i3
 	jr	nz, DSP_SetCoeff_RouteWithCallback_Skip2
 DSP_SetCoeff_RouteWithCallback_Skip:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+76)
 	ld	(xsp+4), xwa
 DSP_SetCoeff_RouteWithCallback_Skip2:
@@ -611,13 +611,13 @@ DSP_SetCoeff_RouteWithCallback_Skip2:
 	add	wa, wa
 	extz	xwa
 	add32_src_rid8	xsp, 0x04, xwa	; add XWA,(XSP+0x04)
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	de, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+140)
 	ld	(xsp+4), xwa
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add32_src_rid8	xsp, 0x04, xix	; add XIX,(XSP+0x04)
 	ldw	hl, 13
 	ld	iy, 0:i3
@@ -771,7 +771,7 @@ DSP_SetCoeff_FullPipeline:
 	cp	wa, 0:i3
 	jr	nz, DSP_SetCoeff_FullPipeline_Skip2
 DSP_SetCoeff_FullPipeline_Skip:
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+96)
 	ld	(xsp+4), xwa
 DSP_SetCoeff_FullPipeline_Skip2:
@@ -781,13 +781,13 @@ DSP_SetCoeff_FullPipeline_Skip2:
 	add	wa, wa
 	extz	xwa
 	add	xwa, (xsp+4)
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	de, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+148)
 	ld	(xsp+4), xwa
-	ld	xix, (Payload_Bss_Start+0x649a:24)
+	ld	xix, (ToneDB_RelBase:24)
 	add	xix, (xsp+4)
 	ldw	hl, 13
 	ld	iy, 0:i3
@@ -872,7 +872,7 @@ DSP_SetCoeff_WithDispatch:
 	cp	de, 0:i3
 	jr	nz, DSP_SetCoeff_FullPipeline_Skip5
 DSP_SetCoeff_FullPipeline_Skip4:
-	ld	xde, (Payload_Bss_Start+0x649e:24)
+	ld	xde, (ToneDB_RootPtr:24)
 	ld	xhl, (xde+76)
 DSP_SetCoeff_FullPipeline_Skip5:
 	sll	bc, 7
@@ -881,12 +881,12 @@ DSP_SetCoeff_FullPipeline_Skip5:
 	ld	wa, bc
 	extz	xwa
 	add	xwa, xhl
-	add	xwa, (Payload_Bss_Start+0x649a:24)
+	add	xwa, (ToneDB_RelBase:24)
 	ld	xwa, (xwa)
 	ld	ix, wa
-	ld	xwa, (Payload_Bss_Start+0x649e:24)
+	ld	xwa, (ToneDB_RootPtr:24)
 	ld	xhl, (xwa+140)
-	ld	xiy, (Payload_Bss_Start+0x649a:24)
+	ld	xiy, (ToneDB_RelBase:24)
 	add	xiy, xhl
 	ldw	hl, 13
 	ld	de, 0:i3
@@ -1884,13 +1884,13 @@ DSP_ReadVoiceParam11:
 ToneDB_Find_ToneRecord_CoeffPath:
 	ld de, bc
 	extz xde
-	ld xbc, (Payload_Bss_Start+0x649e:24)
+	ld xbc, (ToneDB_RootPtr:24)
 	ld xbc, (xbc + 108)
 	add xbc, xde
-	add xbc, (Payload_Bss_Start+0x649a:24)
+	add xbc, (ToneDB_RelBase:24)
 	ld c, (xbc)
 	extz bc
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 108)
 	add xhl, 0x80
 	sll bc, 7
@@ -1899,17 +1899,17 @@ ToneDB_Find_ToneRecord_CoeffPath:
 	ld wa, bc
 	extz xwa
 	add xwa, xhl
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld bc, (xwa)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xhl, (xwa + 8)
 	ld wa, bc
 	sll wa, 2
 	extz xwa
 	add xwa, xhl
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld xhl, (xwa)
-	ld xwa, (Payload_Bss_Start+0x649a:24)
+	ld xwa, (ToneDB_RelBase:24)
 	add xwa, xhl
 	ld xhl, xwa
 	ret
@@ -1927,13 +1927,13 @@ ToneDB_Find_PatchRecord:
 ToneDB_Find_PatchRecord_Preset:
 	ld de, bc
 	extz xde
-	ld xbc, (Payload_Bss_Start+0x649e:24)
+	ld xbc, (ToneDB_RootPtr:24)
 	ld xbc, (xbc + 4)
 	add xbc, xde
-	add xbc, (Payload_Bss_Start+0x649a:24)
+	add xbc, (ToneDB_RelBase:24)
 	ld c, (xbc)
 	extz bc
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 4)
 	add xhl, 0x80
 	sll bc, 7
@@ -1942,17 +1942,17 @@ ToneDB_Find_PatchRecord_Preset:
 	ld wa, bc
 	extz xwa
 	add xwa, xhl
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld bc, (xwa)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xhl, (xwa + 8)
 	ld wa, bc
 	sll wa, 2
 	extz xwa
 	add xwa, xhl
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld xhl, (xwa)
-	ld xwa, (Payload_Bss_Start+0x649a:24)
+	ld xwa, (ToneDB_RelBase:24)
 	add xwa, xhl
 	ld xhl, xwa
 	jrl ToneDB_Find_PatchRecord_Return
@@ -1996,12 +1996,12 @@ ToneDB_Find_PatchRecord_KitB:
 	jr ToneDB_Find_PatchRecord_Return
 
 ToneDB_Find_PatchRecord_Default:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xhl, (xwa + 8)
-	ld xwa, (Payload_Bss_Start+0x649a:24)
+	ld xwa, (ToneDB_RelBase:24)
 	add xwa, xhl
 	ld xhl, (xwa)
-	ld xwa, (Payload_Bss_Start+0x649a:24)
+	ld xwa, (ToneDB_RelBase:24)
 	add xwa, xhl
 	ld xhl, xwa
 
@@ -2268,8 +2268,8 @@ EFFSlotScan_LoopBody:
 	muls wa, 0x11F
 	lda xbc, (Part_Record_Base:24)
 	lda	xhl, (xbc+wa)
-	ld xbc, (Payload_Bss_Start+0x649a:24)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xbc, (ToneDB_RelBase:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+172)
 	add xwa, xbc
 	ld	(xhl+de), xwa
@@ -2361,8 +2361,8 @@ EFFSlotScan_AltLoopNext:
 	muls wa, 0x11F
 	lda xbc, (Part_Record_Base:24)
 	lda	xhl, (xbc+wa)
-	ld xbc, (Payload_Bss_Start+0x649a:24)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xbc, (ToneDB_RelBase:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	xwa, (xwa+172)
 	add xwa, xbc
 	ld	(xhl+de), xwa
@@ -2415,42 +2415,42 @@ WaveSel_StageA1_SelectTables:
 	jr z, VoiceBufIdx_TableA
 	cp de, 0:i3
 	jr nz, WaveSel_StageA1_IndexLookup
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 12)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xix, (xde + 24)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld	iy, (xde+234)
 	jr WaveSel_StageA1_IndexLookup
 
 ; SET family 0x40: index table Root->+0x14, VSEL array Root->+0x20,
 ; stride Root->+0xF0.
 VoiceBufIdx_TableA:
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 20)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xix, (xde + 32)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld	iy, (xde+240)
 	jr WaveSel_StageA1_IndexLookup
 
 ; SET family 0x80: Root->+0x10 / Root->+0x1C / stride Root->+0xEA.
 VoiceBufIdx_TableB:
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 16)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xix, (xde + 28)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld	iy, (xde+234)
 	jr WaveSel_StageA1_IndexLookup
 
 ; SET family 0xC0: same triple as family 0x00 (Root->+0x0C / +0x18 / +0xEA).
 VoiceBufIdx_TableC:
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 12)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xix, (xde + 24)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld	iy, (xde+234)
 
 WaveSel_StageA1_IndexLookup:
@@ -2460,13 +2460,13 @@ WaveSel_StageA1_IndexLookup:
 	ld wa, bc
 	extz xwa
 	add xwa, xhl
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld xwa, (xwa)
 	ld bc, iy
 	mul xbc, wa
 	add xbc, xix
 	ld xhl, xbc
-	add xhl, (Payload_Bss_Start+0x649a:24)
+	add xhl, (ToneDB_RelBase:24)
 	ret
 
 WaveSel_StageA1_FindVelSplit:
@@ -2785,20 +2785,20 @@ VoiceTablePtr_Select:
 	ld wa, (Voice_GlobalFlags:24)
 	bit 2, wa
 	jr z, VoiceTablePtr_SelectA
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+156)
 	jr VoiceTablePtr_SelectB
 
 ; Standard index table Root->+0x24.
 VoiceTablePtr_SelectA:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xix, (xwa + 36)
 
 ; SET array Root->+0x30, stride Root->+0xEC.
 VoiceTablePtr_SelectB:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xiy, (xwa + 48)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	iz, (xwa+236)
 	jr WaveSel_StageA2_IndexLookup
 
@@ -2807,20 +2807,20 @@ VoiceTablePtr_SelectC:
 	ld wa, (Voice_GlobalFlags:24)
 	bit 2, wa
 	jr z, VoiceTablePtr_SelectD
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+164)
 	jr VoiceTablePtr_Common
 
 ; Standard index table Root->+0x2C.
 VoiceTablePtr_SelectD:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xix, (xwa + 44)
 
 ; SET array Root->+0x38, stride Root->+0xF2.
 VoiceTablePtr_Common:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xiy, (xwa + 56)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	iz, (xwa+242)
 	jr WaveSel_StageA2_IndexLookup
 
@@ -2829,21 +2829,21 @@ VoiceTablePtr_Epilogue:
 	ld wa, (Voice_GlobalFlags:24)
 	bit 2, wa
 	jr z, VoiceTablePtr_StdIndex28
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	xix, (xwa+160)
 	jr VoiceTablePtr_Select2
 
 ; Standard index table Root->+0x28.
 ; ★ Renamed 2026-09-25 from VoiceTablePtr_Data: arm selecting the standard index table Root->+0x28.
 VoiceTablePtr_StdIndex28:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xix, (xwa + 40)
 
 ; SET array Root->+0x34, stride Root->+0xEC.
 VoiceTablePtr_Select2:
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xiy, (xwa + 52)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	iz, (xwa+236)
 
 WaveSel_StageA2_IndexLookup:
@@ -2853,14 +2853,14 @@ WaveSel_StageA2_IndexLookup:
 	ld wa, de
 	extz xwa
 	add xwa, xix
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld xwa, (xwa)
 	ld hl, wa
 	ld wa, iz
 	mul xwa, hl
 	add xwa, xiy
 	ld xhl, xwa
-	add xhl, (Payload_Bss_Start+0x649a:24)
+	add xhl, (ToneDB_RelBase:24)
 	popw iz
 	ret
 
@@ -3084,11 +3084,11 @@ ToneDB_Resolve_NamedToneRecord:
 	jr z, ToneDB_Resolve_NamedToneRecord_User
 	cp wa, 0:i3
 	jrl nz, ToneDB_Resolve_NamedToneRecord_Return
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xde, (xwa + 116)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld xbc, (xwa + 120)
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	ld	hl, (xwa+238)
 	ld wa, iz
 	sll wa, 7
@@ -3096,13 +3096,13 @@ ToneDB_Resolve_NamedToneRecord:
 	add wa, wa
 	extz xwa
 	add xwa, xde
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld xwa, (xwa)
 	ld iy, wa
 	ld wa, hl
 	mul xwa, iy
 	add xwa, xbc
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld xix, xwa
 	jr ToneDB_Resolve_NamedToneRecord_Return
 
@@ -6966,7 +6966,7 @@ DSP_System_Init_Vars:
 	ldw (11025:16), 0	; Clear DSP control variable
 	ld wa, 0:i3
 	ld (11023:16), wa	; Clear control variable
-	ld (11021:16), wa	; Clear control variable
+	ld (MIDI_RingBuffer:16), wa	; Clear control variable
 	bit	3, (PH:8)	; Check hardware config pin
 	jr z, DSP_System_Init_SetBit
 	andw (Voice_GlobalFlags:24), 65527	; Clear bit 3 of DSP config
@@ -6979,9 +6979,9 @@ DSP_System_Init_SetBit:
 ; Installs the three long pointers and runs the six-call init chain.
 DSP_System_Init_Continue:
 	ld xwa, 0x50000
-	ld (Payload_Bss_Start+0x649a:24), xwa
+	ld (ToneDB_RelBase:24), xwa
 	ld xwa, 0x50000
-	ld (Payload_Bss_Start+0x649e:24), xwa
+	ld (ToneDB_RootPtr:24), xwa
 	lda xwa, (0x0a0000:24)
 	ld (Payload_Bss_Start+0x64a2:24), xwa
 	call DSP_Config_Init

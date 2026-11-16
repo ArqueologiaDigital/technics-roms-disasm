@@ -1139,9 +1139,9 @@ Voice_PortamentoTarget_ComputePitch:
 	srl e, 4
 	ldfr_berp E, 0xF0
 	extz ix
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld xhl, (xde + 112)
-	ld xde, (Payload_Bss_Start+0x649e:24)
+	ld xde, (ToneDB_RootPtr:24)
 	ld	de, (xde+236)
 	extz bc
 	muls bc, 0x25
@@ -1156,7 +1156,7 @@ Voice_PortamentoTarget_ComputePitch:
 	ld wa, de
 	mul xwa, ix
 	add xwa, xhl
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xbc + 8), xwa
 	ret
 

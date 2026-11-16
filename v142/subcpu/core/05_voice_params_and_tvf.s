@@ -37,17 +37,17 @@ ToneGen_Read_Register:
 ; 0x20/0x30 (or 0x40/0x50 when the byte at 0x27E6 is zero) and drops layer slots 1..3 --
 ; i.e. it is a backpressure threshold that thins the polyphony when MIDI falls behind.
 MIDI_Backlog_Publish:
-	ld (10215:16), wa
+	ld (MIDI_BacklogCount:16), wa
 	ret
 
 RingBuf_SetOffsetLo:
-	ld (10214:16), a
+	ld (RingBuf_OffsetLo:16), a
 	ret
 
 RingBuf_CheckOffset_ClearFlags:
-	cp (10214:16), 0
+	cp (RingBuf_OffsetLo:16), 0
 	jr z, RingBuf_CheckOffset_LoZero
-	cpw (10215:16), 48
+	cpw (MIDI_BacklogCount:16), 48
 	jr c, RingBuf_CheckOffset_Level1
 	resm 7, (xwa + 3)
 	resm 7, (xwa + 4)
@@ -55,14 +55,14 @@ RingBuf_CheckOffset_ClearFlags:
 	ret
 
 RingBuf_CheckOffset_Level1:
-	cpw (10215:16), 32
+	cpw (MIDI_BacklogCount:16), 32
 	ret c
 	resm 7, (xwa + 4)
 	resm 7, (xwa + 5)
 	ret
 
 RingBuf_CheckOffset_LoZero:
-	cpw (10215:16), 80
+	cpw (MIDI_BacklogCount:16), 80
 	jr c, RingBuf_CheckOffset_LoZero_Level1
 	resm 7, (xwa + 3)
 	resm 7, (xwa + 4)
@@ -70,7 +70,7 @@ RingBuf_CheckOffset_LoZero:
 	ret
 
 RingBuf_CheckOffset_LoZero_Level1:
-	cpw (10215:16), 64
+	cpw (MIDI_BacklogCount:16), 64
 	ret c
 	resm 7, (xwa + 4)
 	resm 7, (xwa + 5)
@@ -5576,15 +5576,15 @@ WaveSel_StageB_Build_Reg040:
 	ld xwa, (xsp + 12)
 	ld xiz, (xwa + 31)
 	ld xwa, (xiz + 1)
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xsp + 4), xwa
 	ld xwa, (xiz + 5)
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xsp + 8), xwa
 	ld xwa, (xsp + 4)
 	ld xwa, (xwa)
 	ld xde, xwa
-	add xde, (Payload_Bss_Start+0x649a:24)
+	add xde, (ToneDB_RelBase:24)
 	ld xwa, (xsp + 12)
 	ld bc, (xwa + 6)
 	ld xwa, xde
@@ -5670,7 +5670,7 @@ WaveSel_StageB_Build_Reg040_Footage:
 	ld xiz, xwa
 	ld xwa, (xiz + 31)
 	ld xwa, (xwa + 5)
-	add xwa, (Payload_Bss_Start+0x649a:24)
+	add xwa, (ToneDB_RelBase:24)
 	ld (xsp + 4), xwa
 	cp (xiz + 3), 0x0
 	jr nz, WaveSel_StageB_Build_Reg040_Footage_StateB

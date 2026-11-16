@@ -1800,7 +1800,7 @@ Voice_ComputePitch_ApplyLFO:
 	ld a, (xwa + 3)
 	exts wa
 	add iz, wa
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	add	iz, (xwa+224)
 	add iz, (10560:16)
 	ld xwa, (xsp + 6)
@@ -1965,7 +1965,7 @@ Voice_ComputePitch_Mono_ApplyLFO:
 	ld a, (xwa + 3)
 	exts wa
 	add hl, wa
-	ld xwa, (Payload_Bss_Start+0x649e:24)
+	ld xwa, (ToneDB_RootPtr:24)
 	add	hl, (xwa+224)
 	add hl, (10560:16)
 	ld xwa, (xsp + 4)
@@ -5229,7 +5229,7 @@ ToneGen_WriteNote2ch_NopCont2:
 	inc 4, xsp
 	ret
 
-; --- 0x0280FE-0x028838  VoiceCC_DataTable_0280FE -- was MISLABELLED, now fully code
+; --- 0x0280FE-0x028838  ToneGen_WriteVoice_Reg21 -- was MISLABELLED, now fully code
 ; All 1851 bytes are TLCS-900H instructions, byte-for-byte (round-trip verified against
 ; kn5000_subprogram_v142.rom).  Most of this span had already been converted from `.byte` by
 ; an earlier pass; the last 134 bytes (AudioMod_Scale_To_Part_1C/1B) resisted the automated
@@ -5237,12 +5237,12 @@ ToneGen_WriteNote2ch_NopCont2:
 ; forms it can ENCODE -- MAME unidasm framing plus a hand round trip closed them 2026-09-02.
 ; It contains 21 subroutines, every one of them reached by `calr` from named code or from the
 ; 0x028F75 block.  The 21 entry points are proposed individually below.  Nothing in here is data.
-; ⚠ RENAME PROPOSAL, NOT A PLACEHOLDER FILL: this address already carries the real name
-; VoiceCC_DataTable_0280FE.  I have left that name alone; applying this one is a decision for
-; the maintainer.  See the matching [UNCERTAIN] at the end.
+; RENAME APPLIED.
+; ToneGen_WriteVoice_Reg21, the name this note proposed for VoiceCC_DataTable_0280FE, was applied on
+; 2026-11-16 (scripts/renaming/rename_subcpu_dsp_cells.sed, lane_sub).
 ; WA = voice 0..0x3F, XBC = source record.  Writes TG register 0x21 (latch = voice + 0x0840)
 ; with the word at XBC+0x2E.  Single-register writer, same 5-step strobe as all the others.
-VoiceCC_DataTable_0280FE:
+ToneGen_WriteVoice_Reg21:
 	push	xiz
 	ld	xiz, xbc
 	res	7, (P6:8)
@@ -5252,8 +5252,8 @@ VoiceCC_DataTable_0280FE:
 	set	7, (P6:8)
 	ld	wa, (xiz+46)
 	ld	(ToneGen_RegDataPort:24), wa
-	jr	VoiceCC_DataTable_0280FE_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-VoiceCC_DataTable_0280FE_Next:
+	jr	ToneGen_WriteVoice_Reg21_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
+ToneGen_WriteVoice_Reg21_Next:
 	nop
 	nop
 	nop

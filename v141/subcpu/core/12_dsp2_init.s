@@ -20,7 +20,7 @@ DSP2_Init:
 	ldw (15204:16), 0
 	ld wa, 0:i3
 	ld (15202:16), wa
-	ld (15200:16), wa
+	ld (DSP2_RingBuffer:16), wa
 	ret
 
 ; --- 0x03582E-0x03582F  Voice_Poly_NoteOn_Data -- two bytes 0x0E 0x0E
@@ -202,7 +202,7 @@ DSP_EnqueueOrReturn:
 ; from the caller's (XSP+6) at entry): (0x3B60) is the write index, masked 0x7FF, data at
 ; 0x3B66; (0x3B64) is incremented per byte. Loops until IX reaches the byte count in DE.
 DSP_RingBuf_Enqueue:
-	lda xwa, (15200:16)
+	lda xwa, (DSP2_RingBuffer:16)
 	ld bc, (xwa)
 	incw 1, (xwa)
 	and bc, 0x7FF
