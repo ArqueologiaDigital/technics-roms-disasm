@@ -54,6 +54,7 @@ def rom_offset(addr):
     return addr - 0xf000 + 0x100
 
 
+KEEP_BYTES = None          # {function: our bytes} when a caller (first_diff.py) sets it to a dict
 ERP_BYTE = {'ixl': 0xf0, 'ixh': 0xf1, 'qixl': 0xf2, 'qixh': 0xf3, 'iyl': 0xf4, 'iyh': 0xf5, 'qiyl': 0xf6,
             'qiyh': 0xf7, 'izl': 0xf8, 'izh': 0xf9, 'qizl': 0xfa, 'qizh': 0xfb}
 ERP_RE = re.compile(r'^\t(ld|cp|inc) (?:(1|0x1), )?(%s)(?:, (0x[0-9a-f]+|\d+))?$' % '|'.join(ERP_BYTE))
@@ -231,6 +232,8 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
                 continue
         if mine is None:
             out.append((full, 0, 'llvm-mc cannot assemble the translation')); continue
+        if KEEP_BYTES is not None:              # first_diff.py: the assembled bytes, for a side-by-side view
+            KEEP_BYTES[full] = mine
         at = rom_offset(ref[full])
         r = rom[at:at + len(mine)]
         if mine == r:
