@@ -3,7 +3,7 @@
 same functions (before splicing).  usage: port_c_trees.py SRC_DIR(v10 C) OUT_ROOT"""
 import os, re, sys, glob
 src, out = sys.argv[1:]
-NUM = re.compile(r'\((0x[0-9a-f]+|\d+):16\)')
+NUM = re.compile(r'\((0x[0-9a-f]+|\d+)(?::(?:8|16|24))?\)')
 def bodies(tree):
     res = {}
     for dp, dn, fn in os.walk(tree):
@@ -30,10 +30,12 @@ funcs = []
 for c in cfiles:
     funcs += re.findall(r'^[\w\s\*]+?\b(\w+)\s*\([^)]*\)\s*\{', open(c).read(), re.M)
 for t in ('v9', 'v7', 'v6', 'v5'):
-    amap = {}
+    amap = {}; missing = set()
     for f in funcs:
         a, b = B['v10'].get(f, []), B[t].get(f, [])
         if not a or a[0].startswith('.include'): continue
+        if not b:                                         # the tree has no such label: drop the function there
+            missing.add(f); continue
         na = [int(x, 0) for x in NUM.findall(' '.join(a))]; nb = [int(x, 0) for x in NUM.findall(' '.join(b))]
         assert len(na) == len(nb), (t, f, a, b)
         for x, y in zip(na, nb):
@@ -42,9 +44,19 @@ for t in ('v9', 'v7', 'v6', 'v5'):
     os.makedirs(os.path.join(out, t), exist_ok=True)
     for c in cfiles:
         s = open(c).read()
+        for f in missing:                                 # one-line functions only
+            lines = [l for l in s.split('\n') if re.search(r'\b%s\s*\(' % f, l)]
+            if not lines: continue
+            assert len(lines) == 1 and lines[0].rstrip().endswith('}'), (t, f, lines)
+            s = s.replace(lines[0] + '\n', '')
+        for name in set(re.findall(r'\bram_[0-9a-f]+\b', s)):   # a cell only a dropped function used: undeclare it
+            v = int(name[4:], 16)
+            if v in amap or any(name in l for l in s.split('\n') if not l.startswith('extern')): continue
+            s = re.sub(r'\b%s, ' % name, '', s); s = re.sub(r', %s\b' % name, '', s)
         def sub(m):
             v = int(m.group(1), 16)
             if v not in amap: raise SystemExit('%s: %s: no %s address for ram_%x' % (t, c, t, v))
             return 'ram_%x' % amap[v]
         open(os.path.join(out, t, os.path.basename(c)), 'w').write(re.sub(r'\bram_([0-9a-f]+)\b', sub, s))
-    print(t, 'cells:', ', '.join('%x->%x' % kv for kv in sorted(amap.items()) if kv[0] != kv[1]) or 'unchanged')
+    print(t, 'cells:', ', '.join('%x->%x' % kv for kv in sorted(amap.items()) if kv[0] != kv[1]) or 'unchanged',
+          '| not in this tree: %s' % ' '.join(sorted(missing)) if missing else '')

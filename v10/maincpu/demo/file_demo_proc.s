@@ -115,10 +115,7 @@ FDemo_DisplayResourceData_Skip6:
 ; FDemo_ResetAllocBuffer: Resets the feature-demo load arena: stores SEQ_SONG_SLOTS (the arena start) in the next-free
 ;   pointer at RAM 0x25B7E that FDemo_AllocBuffer bumps. Basis: callers + body -- FDemo_DisplayResourceData calls it
 ;   once after opening the .SQT file and before allocating a 256-byte FDemo_AllocBuffer block per file block.
-FDemo_ResetAllocBuffer:
-	lda	xwa, (SEQ_SONG_SLOTS:24)
-	ld	(0x25b7e:24), xwa
-	ret
+FDemo_ResetAllocBuffer:	.include "includes/generated/cc900/FDemo_ResetAllocBuffer.s"	; C: cc900/file_demo_proc.c
 ; FDemo_AllocBuffer: Bump-allocates XWA bytes from the feature-demo load arena SEQ_SONG_SLOTS..0xFD800 (next-free
 ;   pointer at RAM 0x25B7E); returns XHL = the block, or 0 when it does not fit. Basis: callers + body -- the feature-
 ;   demo loaders reset the pointer (FDemo_ResetAllocBuffer), then call this per 256-byte file block or for a
@@ -927,9 +924,7 @@ Audio_WaitForReady_Dispatch:
 	pop xde
 	ret
 
-Demo_ResetCountdownTimer:
-	ld (DEMO_TIMER_COUNTDOWN:16), 15
-	ret
+Demo_ResetCountdownTimer:	.include "includes/generated/cc900/Demo_ResetCountdownTimer.s"	; C: cc900/file_demo_proc.c
 
 ; Demo_ReleaseGlidePedal: Releases the GLIDE pedal at demo start: clears bit 7 of record 0x98 +2 in RAM (0xFD98: key
 ;   0x4080, the GLIDE gate) and queues the record write (AddswbWr 0x98, 2, mask 0x80), which SndParam_ApplySystemParam
@@ -1357,11 +1352,7 @@ Demo_RecordChainReturn:
 	lda xsp, (xsp + 14)
 	ret
 
-Demo_StoreRecordChainParams:
-	ld (0x025b8a:24), xwa
-	ld (0x03ec4e:24), bc
-	ld (0x025b8e:24), de
-	ret
+Demo_StoreRecordChainParams:	.include "includes/generated/cc900/Demo_StoreRecordChainParams.s"	; C: cc900/file_demo_proc.c
 
 ; Reads the next byte of a record stored as a chain of 256-byte blocks.
 ;   The block number is the word at 0x3ec4e (0xffff = end of chain) and the offset the word at
@@ -4174,9 +4165,7 @@ LoadSecondary_Return:
 
 ; Returns in HL the last file I/O error code (the word at 0x7f48, set negative by the FileIO
 ; routines; the C-library ferror).
-FileIO_ReturnError:
-	ld hl, (0x7f48:16)
-	ret
+FileIO_ReturnError:	.include "includes/generated/cc900/FileIO_ReturnError.s"	; C: cc900/file_demo_proc.c
 
 ; Opens a file by name for the C-library fopen and makes it the current file (handle at 0x7f44).
 ;   In:  XWA = file name, XBC = mode string ("r..." / "w...").
@@ -5129,9 +5118,7 @@ FileIO_GetRecordType_Alt:
 	ret
 
 ; Returns XHL = 0x25eaa, a fixed RAM address; no register selects a type.
-FileIO_GetRecordByType:
-	lda xhl, (0x025eaa:24)
-	ret
+FileIO_GetRecordByType:	.include "includes/generated/cc900/FileIO_GetRecordByType.s"	; C: cc900/file_demo_proc.c
 
 FileIO_GetRecordByType_Lookup:
 	ld xbc, xwa
@@ -5142,9 +5129,7 @@ FileIO_GetRecordByType_Lookup:
 	ret
 
 ; Returns XHL = 0x271f2, a fixed RAM address.
-FileIO_GetRecordPtrAlt:
-	lda xhl, (0x0271f2:24)
-	ret
+FileIO_GetRecordPtrAlt:	.include "includes/generated/cc900/FileIO_GetRecordPtrAlt.s"	; C: cc900/file_demo_proc.c
 
 ; Copies at most 12 characters of the string at XWA to 0x271f2 (FileIO_CopyString_WriteNull) and
 ; terminates it at 0x271fe.
@@ -5157,9 +5142,7 @@ FileIO_WriteRecordName:
 	ret
 
 ; Returns in HL the bit word at 0x272cc (FileIO_FormatName_Loop sets its bits).
-FileIO_WriteRecordName_Loop:
-	ld hl, (0x0272cc:24)
-	ret
+FileIO_WriteRecordName_Loop:	.include "includes/generated/cc900/FileIO_WriteRecordName_Loop.s"	; C: cc900/file_demo_proc.c
 
 FileIO_WriteRecordName_Done:
 	ld bc, (0x025ea8:24)
@@ -5216,9 +5199,7 @@ FileIO_FormatName_CopyLoop:
 ; Returns in HL the bit word at 0x272ce: FileIO_BuildRecordPath_Done sets its bits 0..9,
 ; FileIO_BuildRecordPath_Return clears them and FileIO_FormatName_Return tests one.  No name is
 ; formatted, despite the label.
-FileIO_FormatName_Done:
-	ld hl, (0x0272ce:24)
-	ret
+FileIO_FormatName_Done:	.include "includes/generated/cc900/FileIO_FormatName_Done.s"	; C: cc900/file_demo_proc.c
 
 FileIO_FormatName_Return:
 	ld bc, (0x025ea8:24)
@@ -5289,15 +5270,11 @@ FileIO_GetRecordAttr_Default:
 	ld l, (0x0272d0:24)
 	ret
 
-FileIO_SetModeFlag_Writing:
-	ld (0x0272d0:24), 0x01
-	ret
+FileIO_SetModeFlag_Writing:	.include "includes/generated/cc900/FileIO_SetModeFlag_Writing.s"	; C: cc900/file_demo_proc.c
 
 ; Clears the mode byte at 0x272d0.  FileIO_SetModeFlag_Writing sets it to 1, and
 ; FileIO_GetRecordAttr_Check returns it while the selected file index is valid.
-FileIO_SetModeFlag_Reading:
-	ld (0x0272d0:24), 0x00
-	ret
+FileIO_SetModeFlag_Reading:	.include "includes/generated/cc900/FileIO_SetModeFlag_Reading.s"	; C: cc900/file_demo_proc.c
 
 ; Tests bit A of the selected file's attribute word.
 ;   In:  A = bit (0..9).  Out: L = 1 when the selected file index (word at 0x25ea8, valid
@@ -5498,10 +5475,7 @@ FileIO_GetDiskFreeSpace:
 
 ; Invalidates the cached disk free-space value: stores FileIO_DiskInfoInit's initial value at
 ; 0x25d6c, so the next GetEncodedFreeSpaceData asks GetDiskFreeSpace again.
-FileIO_ResetCurrentRecord:
-	ld xwa, (FileIO_DiskInfoInit:24)
-	ld (0x025d6c:24), xwa
-	ret
+FileIO_ResetCurrentRecord:	.include "includes/generated/cc900/FileIO_ResetCurrentRecord.s"	; C: cc900/file_demo_proc.c
 
 FileIO_GetDiskRecordPtr:
 	lda xwa, (0x025d6c:24)

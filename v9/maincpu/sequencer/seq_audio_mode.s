@@ -36,17 +36,9 @@ AudioMode_MergeOutputBits:
 	ld (0x3310:16), a
 	ret
 
-AudioMode_CopyChannelMode:
-	ld a, (SEQ_METRO_FLAGS:16)
-	and a, 0x3
-	ld (0x3335:16), a
-	ret
+AudioMode_CopyChannelMode:	.include "includes/generated/cc900/AudioMode_CopyChannelMode.s"	; C: cc900/seq_audio_mode.c
 
-AudioMode_CopyAccentFlags:
-	ld a, (CMP_SOLO:16)
-	and a, 0x3d
-	ld (0x3362:16), a
-	ret
+AudioMode_CopyAccentFlags:	.include "includes/generated/cc900/AudioMode_CopyAccentFlags.s"	; C: cc900/seq_audio_mode.c
 
 ; -----------------------------------------------------------------------------
 ; AccPedal_LoadFlagFromStyleMem -- bit 0 of RAM 0x3363 (13155) :=
@@ -1446,26 +1438,11 @@ AccTuning_ResetFiveParts:
 	calr AccTuning_ResetFiveParts_Rec3
 	calr AccTuning_ResetFiveParts_Rec4
 	ret
-AccTuning_ResetFiveParts_Rec0:
-	ld (0x3246:16), 6
-	ld (0x3247:16), 0
-	ret
-AccTuning_ResetFiveParts_Rec1:
-	ld (0x324d:16), 0
-	ld (0x324e:16), 0
-	ret
-AccTuning_ResetFiveParts_Rec2:
-	ld (0x3254:16), 0
-	ld (0x3255:16), 0
-	ret
-AccTuning_ResetFiveParts_Rec3:
-	ld (0x325b:16), 0
-	ld (0x325c:16), 0
-	ret
-AccTuning_ResetFiveParts_Rec4:
-	ld (0x3262:16), 0
-	ld (0x3263:16), 0
-	ret
+AccTuning_ResetFiveParts_Rec0:	.include "includes/generated/cc900/AccTuning_ResetFiveParts_Rec0.s"	; C: cc900/seq_audio_mode.c
+AccTuning_ResetFiveParts_Rec1:	.include "includes/generated/cc900/AccTuning_ResetFiveParts_Rec1.s"	; C: cc900/seq_audio_mode.c
+AccTuning_ResetFiveParts_Rec2:	.include "includes/generated/cc900/AccTuning_ResetFiveParts_Rec2.s"	; C: cc900/seq_audio_mode.c
+AccTuning_ResetFiveParts_Rec3:	.include "includes/generated/cc900/AccTuning_ResetFiveParts_Rec3.s"	; C: cc900/seq_audio_mode.c
+AccTuning_ResetFiveParts_Rec4:	.include "includes/generated/cc900/AccTuning_ResetFiveParts_Rec4.s"	; C: cc900/seq_audio_mode.c
 
 ; RAM 0x32F5 := 15 and the low 3 bits of 0x32F7 := 0 -- the two bytes
 ; AccChannel_StoreCurrentState copies out.

@@ -30,20 +30,11 @@ SeMenu_LoadRawAddr:
 	ldmi16 (xwa), 0x8d38
 	ret
 
-SeMenu_TriggerNotification:
-	ld (GLOBAL_ERROR_CODE:16), a
-	ld (0xe3dc:16), 238
-	set 6, (0xe3de:16)
-	ret
+SeMenu_TriggerNotification:	.include "includes/generated/cc900/SeMenu_TriggerNotification.s"	; C: cc900/semenu_routines.c
 
-SeMenu_ClearNotification:
-	ld (0xe3dc:16), a
-	set 1, (0xe3de:16)
-	ret
+SeMenu_ClearNotification:	.include "includes/generated/cc900/SeMenu_ClearNotification.s"	; C: cc900/semenu_routines.c
 
-SeMenu_StoreEventId:
-	ld (1688:16), a
-	ret
+SeMenu_StoreEventId:	.include "includes/generated/cc900/SeMenu_StoreEventId.s"	; C: cc900/semenu_routines.c
 
 SeMenu_LoadObjectPtr_Data:
 	ld	(xwa), (0x698)
@@ -1104,9 +1095,7 @@ SeMenu_ValidatePartNumber_End:
 	inc 4, xsp
 	ret
 
-SeMenu_StorePartMask:
-	ld (SEMENU_PART_MASK:16), a
-	ret
+SeMenu_StorePartMask:	.include "includes/generated/cc900/SeMenu_StorePartMask.s"	; C: cc900/semenu_routines.c
 
 SeMenu_PartMask_Data:
 	ld	(xwa), (SEMENU_PART_MASK)
@@ -1651,9 +1640,7 @@ SeMenu_TransferPartValues_EndData_Skip29:
 ;   6), which the page draw reads back (clamped to 1..6, default 1) into page param 0 and highlights. Basis: callers +
 ;   body -- SeCtr2_OnSideRow2 (choices 2/1) and SeCtr2_OnSideRow3 (6/5) store their choice here and send event 59;
 ;   only SeCtr2_GetSelection reads 0x695.
-SeCtr2_SetSelection:
-	ld	(1685:16), a
-	ret
+SeCtr2_SetSelection:	.include "includes/generated/cc900/SeCtr2_SetSelection.s"	; C: cc900/semenu_routines.c
 SeCtr2_GetGroupBase:
 	cp	a, 6:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Skip14
@@ -2041,13 +2028,9 @@ SeMenu_ReadObjData:
 	ldmi16 (xwa), 0x693
 	ret
 
-SeMenu_SetCurrentStep:
-	ld (1683:16), a
-	ret
+SeMenu_SetCurrentStep:	.include "includes/generated/cc900/SeMenu_SetCurrentStep.s"	; C: cc900/semenu_routines.c
 
-SeMenu_ResetSubIndex:
-	ld (1684:16), 0
-	ret
+SeMenu_ResetSubIndex:	.include "includes/generated/cc900/SeMenu_ResetSubIndex.s"	; C: cc900/semenu_routines.c
 
 SeMenu_AdvanceSubIndex:
 	ld l, (1684:16)
@@ -2401,9 +2384,7 @@ SeMenu_GetWriteMemSlot:
 ; SeMenu_SetWriteMemSlot: Stores A as the WRITE TO MEMORY page's selected destination slot (RAM 0x6AD, 0..39): the
 ;   setter of SeMenu_GetWriteMemSlot. Basis: callers + body -- SeWrtMem_OnSideRow3/4 read the slot with
 ;   SeMenu_GetWriteMemSlot, step it up (max 39) or down (min 0) and store it back with this routine.
-SeMenu_SetWriteMemSlot:
-	ld	(1709:16), a
-	ret
+SeMenu_SetWriteMemSlot:	.include "includes/generated/cc900/SeMenu_SetWriteMemSlot.s"	; C: cc900/semenu_routines.c
 ; SeMenu_SetNameBufferChar: Writes character C at position A (0..15) of the 16-byte name buffer at 0x20BF3; A > 15
 ;   does nothing. Setter twin of SeMenu_GetNameBufferChar. Basis: callers + body -- SeWrtSnd_ClearName fills positions
 ;   0..15 with C = 32 through it (its header says so), and the WRITE SOUND character-edit handlers store the edited
@@ -5961,9 +5942,7 @@ SeMenu_CopyWriteUpdate_Step3_Helper11_Join:
 	inc	2, xsp
 	ret
 
-SeMenu_SetSelectedRow:
-	ld (1711:16), a
-	ret
+SeMenu_SetSelectedRow:	.include "includes/generated/cc900/SeMenu_SetSelectedRow.s"	; C: cc900/semenu_routines.c
 
 SeMenu_SetSelectedRow_Data:
 	ld	(xwa), (0x6af)
@@ -5973,9 +5952,7 @@ SeMenu_LoadObjEntries:
 	ldmi16 (xwa), 0x6ae
 	ret
 
-SeMenu_SetMode:
-	ld (SEMENU_PART_MODE:16), a
-	ret
+SeMenu_SetMode:	.include "includes/generated/cc900/SeMenu_SetMode.s"	; C: cc900/semenu_routines.c
 
 SeMenu_SetMode_Data:
 	ld	(1712:16), wa
@@ -5993,29 +5970,21 @@ SeMenu_LoadSoundBankCfg:
 	ldmi16 (xwa), 0x6b4
 	ret
 
-SeMenu_SetSoundBank:
-	ld (1716:16), a
-	ret
+SeMenu_SetSoundBank:	.include "includes/generated/cc900/SeMenu_SetSoundBank.s"	; C: cc900/semenu_routines.c
 
 SeMenu_LoadFilterType:
 	ldmi16 (xwa), 0x6b5
 	ret
 
-SeMenu_SetFilterParam1:
-	ld (1717:16), a
-	ret
+SeMenu_SetFilterParam1:	.include "includes/generated/cc900/SeMenu_SetFilterParam1.s"	; C: cc900/semenu_routines.c
 
 SeMenu_LoadFilterParam2:
 	ldmi16 (xwa), 0x6b6
 	ret
 
-SeMenu_SetFilterMode:
-	ld (1718:16), a
-	ret
+SeMenu_SetFilterMode:	.include "includes/generated/cc900/SeMenu_SetFilterMode.s"	; C: cc900/semenu_routines.c
 
-SeMenu_SetFilterCoeff:
-	ld (1721:16), a
-	ret
+SeMenu_SetFilterCoeff:	.include "includes/generated/cc900/SeMenu_SetFilterCoeff.s"	; C: cc900/semenu_routines.c
 
 SeMenu_LoadEditParam:
 	ldmi16 (xwa), 0x6b9
@@ -6193,17 +6162,13 @@ SeMenu_HandleMenuChange_End:
 SeMenu_HandleMenuChange_Data:
 	ld	(xwa), (0x6b7)
 	ret
-SeMenu_CopyWriteUpdate_Step3_Helper14:
-	ld	(1719:16), a
-	ret
+SeMenu_CopyWriteUpdate_Step3_Helper14:	.include "includes/generated/cc900/SeMenu_CopyWriteUpdate_Step3_Helper14.s"	; C: cc900/semenu_routines.c
 
 SeMenu_LoadPatchStatus:
 	ldmi16 (xwa), 0x6b8
 	ret
 
-SeMenu_SetPatchBank:
-	ld (1720:16), a
-	ret
+SeMenu_SetPatchBank:	.include "includes/generated/cc900/SeMenu_SetPatchBank.s"	; C: cc900/semenu_routines.c
 
 ; SeMenu_SetPartRecordBits: Sets (E = 1) or clears (E = 0) the bits C of byte A of the current part's panel record
 ;   (part 0/1/2 -> tag 0 at 0xF9B6, tag 1 at 0xF9D0, tag 2 at 0xF9EA). Basis: callers + body.
@@ -6364,9 +6329,7 @@ SeMenu_SetEditEnable_Clear:
 	res 2, (SEQ_RTMCFG:16)
 	ret
 
-SeMenu_OrPartConfig:
-	or (0x0205f2:24), a
-	ret
+SeMenu_OrPartConfig:	.include "includes/generated/cc900/SeMenu_OrPartConfig.s"	; C: cc900/semenu_routines.c
 
 SeMenu_SetPartConfigBit3:
 	set	3, (58338:24)
@@ -6395,21 +6358,15 @@ SeMenu_LoadParamByte:
 	ld (xbc), a
 	ret
 
-SeMenu_SetConfirmState:
-	ld (1732:16), a
-	ret
+SeMenu_SetConfirmState:	.include "includes/generated/cc900/SeMenu_SetConfirmState.s"	; C: cc900/semenu_routines.c
 
 SeMenu_LoadConfirmData:
 	ldmi16 (xwa), 0x6c4
 	ret
 
-SeMenu_ReturnZero:
-	ld l, 0x0:opc
-	ret
+SeMenu_ReturnZero:	.include "includes/generated/cc900/SeMenu_ReturnZero.s"	; C: cc900/semenu_routines.c
 
-SeMenu_SetDisplayState:
-	ld (1733:16), a
-	ret
+SeMenu_SetDisplayState:	.include "includes/generated/cc900/SeMenu_SetDisplayState.s"	; C: cc900/semenu_routines.c
 
 ; SeMenu_GetDisplayState: Copies RAM 0x6C5 to (XWA): the getter twin of SeMenu_SetDisplayState. Basis: callers + body.
 SeMenu_GetDisplayState:
@@ -6419,9 +6376,7 @@ SeMenu_GetDisplayState:
 ;   SeMenuTitleFunc_DispatchSwitch stores each decoded switch here right before calling its handler from
 ;   GUI_DisplayStructData_0x13FF; while 0xE3E2 bit 3 is set it reads 0x065A back
 ;   (SeMenu_GetLastSwitch) and ignores any other switch.
-SeMenu_SetLastSwitch:
-	ld	(1626:16), a
-	ret
+SeMenu_SetLastSwitch:	.include "includes/generated/cc900/SeMenu_SetLastSwitch.s"	; C: cc900/semenu_routines.c
 ; SeMenu_GetLastSwitch: Copies RAM 0x065A, the last switch SeMenuTitleFunc_DispatchSwitch dispatched, to (XWA). Basis:
 ;   callers + body -- SeMenuTitleFunc_DispatchSwitch reads it when SeMenu_GetPartConfigBit3 (0xE3E2 bit 3) is set and
 ;   then dispatches only a switch equal to it; the setter beside it (SeMenu_SetLastSwitch) stores

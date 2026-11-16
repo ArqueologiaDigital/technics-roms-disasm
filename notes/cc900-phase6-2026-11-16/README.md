@@ -204,6 +204,38 @@ lane_dash compiled the 55 milestone-2 C files of all five trees with V4.23, at `
 their first 31 characters, so every built C file stays one that V4.23 can check.  `bitmap_out_routines.c` uses it
 in all five trees; v10, v9, v8, v7, v6 and v5 rebuilt byte-identical.
 
+## Batch 3: 45 more small functions (2026-11-16)
+
+Four more hand sources now take their small leaf functions from C, in all five trees.  The functions come from
+`leaf_candidates.py`'s list:
+- `audio/semenu_routines.s`: 21 setters and two notification routines;
+- `sequencer/seq_audio_mode.s`: 7;
+- `boot/system_handlers.s`: 6;
+- `demo/file_demo_proc.s`: 11.
+
+That is 45 per tree.  v6 and v5 have no `SeMenu_CopyWriteUpdate_Step3_Helper14`, so they have 44.
+`port_c_trees.py` now reads 8-, 16- and 24-bit operands, and the older spellings without a width (v7's
+`stb_d8 (0x6ad), a`).  It drops a one-line function, and the cells only it used, from a tree that lacks the
+function.  Every tree's C was checked against its own ROM with `fn_diff.py` before the splice: 45 of 45 in v10, v9,
+v8 and v7, 44 of 44 in v6 and v5.
+
+Left as hand assembly, with the reason:
+- `SeMenu_AdvanceSubIndex` loads the byte, increments it in L and stores it.  Neither `++x` nor a local copy gives
+  that.
+- `SeMenu_SetupMenuDisplay_Section3_End` and `VariScreen_IsHalfRangeAbove` set A or L with an 8-bit `scc`.  V4.23
+  never does so in the variants tried (finding (c)).
+- `Timer3_Stop` is `res 3,(T8RUN)` on an SFR, where `&= ~8` gives an `and` of memory: hand assembly, or inline asm.
+- `SeMenu_SetPartConfigBit3`, `SeMenu_GetPartConfigBit3`, `SeMenu_LoadMasterPtr` and `Sys_CheckPowerStableFlag`
+  address a cell below 0x10000 with a 24-bit operand (`(58338:24)`, `(PART_SELECT:24)`, `(0xffcc:24)`).  The build
+  chooses the width from the address, as asm900 does for the firmware's own variables.  These accesses look like
+  `extern` declarations of another module (the preview's `large` externs).  They need a per-name width in the C
+  first.
+- The `SeMenu_Get*` / `SeMenu_Load*` rows spelled `ld (xwa), (0x6c5)` / `ldmi16 (xwa), 0x6b4` are misdecoded in the
+  hand source and were not tried.
+
+A model refusal met on the way: returning an extern array's name as a pointer (`return ram_25eaa;`, `unsupported:
+var`).  `return &ram_25eaa;` with a byte declaration gives the ROM's `lda` and is what the C uses.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local

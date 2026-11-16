@@ -132,17 +132,12 @@ SubCPU_Payload_Verify_Fail:
 ;   - SubCPU_Payload_Verify - Sets the error flag
 ;   - ErrorDialog_CPUTransmissionError - Error dialog shown when HL != 0
 ; ===========================================================================
-SubCPU_Payload_GetErrorFlag:
-	ld l, (0x01e53e:24)
-	exts hl
-	ret
+SubCPU_Payload_GetErrorFlag:	.include "includes/generated/cc900/SubCPU_Payload_GetErrorFlag.s"	; C: cc900/system_handlers.c
 
 ; Marks the sub-CPU payload as failed: stores 0xff in the error byte at 0x1e53e, as
 ; SubCPU_Payload_Verify does on a mismatch, so SubCPU_Payload_GetErrorFlag then returns -1.
 ; Callers: SelfTest_FirmwareVersionCheck, SelfTest_CheckBit4 and MainSysControl (EVT_SYS_INI).
-SubCPU_PayloadErrorStore:
-	ld (0x01e53e:24), 0xff
-	ret
+SubCPU_PayloadErrorStore:	.include "includes/generated/cc900/SubCPU_PayloadErrorStore.s"	; C: cc900/system_handlers.c
 
 Sys_CheckPowerStableFlag:
 	cpw (0xffcc:24), 0x5a5a
@@ -2156,9 +2151,7 @@ SeqBuf_InlineBytecode_Return:
 
 ; Returns in HL the word at 0x1e547: the -2 word of the sequencer event buffer's descriptor (which
 ; ends at 0x1e549), its free count.
-SeqBuf_GetWritePos:
-	ld hl, (0x01e547:24)
-	ret
+SeqBuf_GetWritePos:	.include "includes/generated/cc900/SeqBuf_GetWritePos.s"	; C: cc900/system_handlers.c
 
 ; Resets the sequencer event buffer: Seq_RingBuf_Init_512 on the ring descriptor ending at
 ; 0x1e549.  Preserves IX and XDE.
@@ -2664,9 +2657,7 @@ Seq_CheckSongEnd:
 Seq_CheckSongEnd_Return:
 	ret
 
-SeqMain_GetTimingValue:
-	ld hl, (0x01f379:24)
-	ret
+SeqMain_GetTimingValue:	.include "includes/generated/cc900/SeqMain_GetTimingValue.s"	; C: cc900/system_handlers.c
 
 ; Empties the 1024-byte ring buffer whose descriptor ends at 0x1f37b (Seq_RingBuf_Init_1024).
 ; Preserves IX and XDE.
@@ -2769,9 +2760,7 @@ SeqBuf_MidiOut_CheckEmpty_Return:
 
 ; Returns in HL the word at 0x1f783: the free count (-2 word) of the ring buffer whose descriptor
 ; ends at 0x1f785.  SeqOut_WriteTimedBytes writes only when it is at least the byte count.
-SeqBuf_MidiOut_GetTimingValue:
-	ld hl, (0x01f783:24)
-	ret
+SeqBuf_MidiOut_GetTimingValue:	.include "includes/generated/cc900/SeqBuf_MidiOut_GetTimingValue.s"	; C: cc900/system_handlers.c
 
 ; Empties the 256-byte ring buffer whose descriptor ends at 0x1f785 (Seq_RingBuf_Init_256).
 ; Preserves IX and XDE.
@@ -2979,9 +2968,7 @@ SeqBuf3_InlineBytecode:
 SeqBuf3_InlineBytecode_Return:
 	ret
 
-SeqBuf3_GetTimingValue:
-	ld hl, (0x01fa97:24)
-	ret
+SeqBuf3_GetTimingValue:	.include "includes/generated/cc900/SeqBuf3_GetTimingValue.s"	; C: cc900/system_handlers.c
 
 SeqBuf3_Init:
 	pushw ix
