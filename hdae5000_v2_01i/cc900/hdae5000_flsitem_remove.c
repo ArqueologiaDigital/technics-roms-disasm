@@ -1,6 +1,6 @@
-/* FlsItem_Remove (hdae5000_ui_display.s): helper h_r27b's C that matches (module-local calls in cc900-module).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r27_b_uia.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_flsitem_remove.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_flsitem_remove.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FlsRm_e=HDAE5000_FlsItem_Remove
 */

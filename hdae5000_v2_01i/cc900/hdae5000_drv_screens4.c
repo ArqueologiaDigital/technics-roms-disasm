@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: the functions of hdae5000/cc900-staged/hdae5000_drv_screens4.c that V4.23 reproduces unchanged in HD-AE5000 v1.10i (port_staged.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_drv_screens4.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_drv_screens4.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_drv_screens4.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_FdList_Scan HDAE5000_Lbn_ShowEntry HDAE5000_TypeSel_BuildMask
    cc900-module: HDAE5000_LoadSongWithUi HDAE5000_TypeSel_Init HDAE5000_PartList_Build

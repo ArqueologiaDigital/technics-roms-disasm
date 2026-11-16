@@ -1,6 +1,6 @@
-/* hdae5000_v1_15i: the functions of hdae5000/cc900-staged/hdae5000_song_module2.c that V4.23 reproduces unchanged in HD-AE5000 v1.15i (port_staged.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_song_module2.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_song_module2.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_song_module2.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_Song_IsUsed HDAE5000_Song_CheckFreeSpace HDAE5000_Song_PartMask
    cc900-module: HDAE5000_LoadSong_Lsw HDAE5000_LoadSong_Pmt HDAE5000_LoadSong_Sqt HDAE5000_LoadSong_Cmp HDAE5000_LoadSong_Tm
@@ -133,6 +133,40 @@ int HDAE5000_LoadSong_Tlx(unsigned int dir, unsigned int song);
 
 /* the stacked words (retd 4; V4.23 puts the last parameter lowest): keep = 1 leaves the drive spinning (xsp+12),
    sleep = 1 puts the main task to sleep (xsp+14) */
+int HDAE5000_LoadSong(unsigned int dir, unsigned int song, unsigned int mask, int sleep, int keep)
+{
+    int ret;
+
+    CALLV(HAMA->PlayHalt)(1);
+    if (sleep == 1)
+        CALLV(ROOT->SleepMainTask)();
+    HDAE5000_ATA_SoftReset_Status();
+    if (mask & 0x001)
+        ret = HDAE5000_LoadSong_Lsw(dir, song);
+    if (ret != -1 && (mask & 0x002))
+        ret = HDAE5000_LoadSong_Pmt(dir, song);
+    if (ret != -1 && (mask & 0x004))
+        ret = HDAE5000_LoadSong_Sqt(dir, song);
+    if (ret != -1 && (mask & 0x008))
+        ret = HDAE5000_LoadSong_Cmp(dir, song);
+    if (ret != -1 && (mask & 0x010))
+        ret = HDAE5000_LoadSong_Tm(dir, song);
+    if (ret != -1 && (mask & 0x020))
+        ret = HDAE5000_LoadSong_Msp(dir, song);
+    if (ret != -1 && (mask & 0x040))
+        ret = HDAE5000_LoadSong_Rcm(dir, song);
+    if (ret != -1 && (mask & 0x080))
+        ret = HDAE5000_LoadSong_Md(dir, song);
+    if (ret != -1 && (mask & 0x100))
+        ret = HDAE5000_LoadSong_Tlx(dir, song);
+    if (keep != 1)
+        HDAE5000_ATA_Standby_Status();
+    if (sleep == 1)
+        CALLV(ROOT->WakeUpMainTask)();
+    CALLV(HAMA->PlayStandBy)();
+    CALLV(HAMA->EditSwRefresh)();
+    return ret;
+}
 
 int HDAE5000_SaveSong_Lsw(unsigned int dir, unsigned int song);
 int HDAE5000_SaveSong_Pmt(unsigned int dir, unsigned int song);
@@ -140,6 +174,77 @@ int HDAE5000_SaveSong_Rcm(unsigned int dir, unsigned int song);
 int HDAE5000_SaveSong_Tlx(unsigned int dir, unsigned int song);
 
 /* stacked words (retd 6), lowest first: keep (xsp+18), sleep, mask (xsp+22) */
+int HDAE5000_SaveSong(unsigned int dir, unsigned int song, char *name, unsigned int mask, int sleep, int keep)
+{
+    int ret = 0;
+
+    if (mask == 0)
+        return ret;
+    if (HDAE5000_Song_CheckFreeSpace(mask) != -1) {
+        CALLV(HAMA->PlayHalt)(1);
+        if (sleep == 1)
+            CALLV(ROOT->SleepMainTask)();
+        HDAE5000_ATA_SoftReset_Status();
+        if (mask & 0x001) {
+            if ((ret = HDAE5000_SaveSong_Lsw(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Lsw(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Lsw(dir, song);
+        if (ret != -1 && (mask & 0x002)) {
+            if ((ret = HDAE5000_SaveSong_Pmt(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Pmt(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Pmt(dir, song);
+        if (ret != -1 && (mask & 0x004)) {
+            if ((ret = HDAE5000_SaveSong_Sqt(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Sqt(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Sqt(dir, song);
+        if (ret != -1 && (mask & 0x008)) {
+            if ((ret = HDAE5000_SaveSong_Cmp(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Cmp(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Cmp(dir, song);
+        if (ret != -1 && (mask & 0x010)) {
+            if ((ret = HDAE5000_SaveSong_Tm(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Tm(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Tm(dir, song);
+        if (ret != -1 && (mask & 0x020)) {
+            if ((ret = HDAE5000_SaveSong_Msp(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Msp(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Msp(dir, song);
+        if (ret != -1 && (mask & 0x040)) {
+            if ((ret = HDAE5000_SaveSong_Rcm(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Rcm(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Rcm(dir, song);
+        if (ret != -1 && (mask & 0x080)) {
+            if ((ret = HDAE5000_SaveSong_Md(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Md(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Md(dir, song);
+        if (ret != -1 && (mask & 0x100)) {
+            if ((ret = HDAE5000_SaveSong_Tlx(dir, song)) == -1)
+                HDAE5000_DeleteSongPart_Tlx(dir, song);
+        } else
+            HDAE5000_DeleteSongPart_Tlx(dir, song);
+        if (ret != -1) {
+            HDAE5000_StrNCpy(&HDAE5000_RAM_DirNames[SONG_OFS(dir, song)], name, 26);
+            HDAE5000_HD_WriteTables_Status();
+        } else
+            HDAE5000_DeleteSongParts(dir, song, 0x1ff, 0, keep);
+        if (keep != 1)
+            HDAE5000_ATA_Standby_Status();
+        if (sleep == 1)
+            CALLV(ROOT->WakeUpMainTask)();
+        CALLV(HAMA->EditSwRefresh)();
+        CALLV(HAMA->PlayStandBy)();
+    } else
+        ret = -1;
+    return ret;
+}
 
 int HDAE5000_SaveSong_Rcm(unsigned int dir, unsigned int song)
 {
@@ -179,8 +284,78 @@ int HDAE5000_CopyFdSongToHd_Tlx(unsigned int dir, unsigned int song, char *fdnam
 /* TLX: the 22-byte TLhd header first (after clearing the buffer), then the TLtr chunk behind it */
 
 /* WA = directory, BC = sleep, DE = keep */
+void HDAE5000_DeleteDirectory(unsigned int dir, int sleep, int keep)
+{
+    unsigned int song;
+
+    CALLV(HAMA->PlayHalt)(1);
+    if (sleep == 1)
+        CALLV(ROOT->SleepMainTask)();
+    HDAE5000_ATA_SoftReset_Status();
+    for (song = 0; song < 16; song++) {
+        if (HDAE5000_Song_IsUsed(dir, song) != -1) {
+            HDAE5000_DeleteSongPart_Lsw(dir, song);
+            HDAE5000_DeleteSongPart_Pmt(dir, song);
+            HDAE5000_DeleteSongPart_Sqt(dir, song);
+            HDAE5000_DeleteSongPart_Cmp(dir, song);
+            HDAE5000_DeleteSongPart_Tm(dir, song);
+            HDAE5000_DeleteSongPart_Msp(dir, song);
+            HDAE5000_DeleteSongPart_Rcm(dir, song);
+            HDAE5000_DeleteSongPart_Md(dir, song);
+            HDAE5000_DeleteSongPart_Tlx(dir, song);
+            HDAE5000_Fls_ForgetSong(dir, song);
+        }
+        HDAE5000_MemFill(&HDAE5000_RAM_DirNames[SONG_OFS(dir, song)], ' ', 26);
+    }
+    HDAE5000_MemFill(&HDAE5000_RAM_DirNames[(unsigned long)dir * 16], ' ', 16);
+    HDAE5000_HD_WriteTables_Status();
+    if (keep != 1)
+        HDAE5000_ATA_Standby_Status();
+    if (sleep == 1)
+        CALLV(ROOT->WakeUpMainTask)();
+    CALLV(HAMA->PlayStandBy)();
+    CALLV(HAMA->EditSwRefresh)();
+}
 
 /* stacked words (retd 4), lowest first: keep (xsp+12), sleep (xsp+14) */
+void HDAE5000_DeleteSongParts(unsigned int dir, unsigned int song, unsigned int mask, int sleep, int keep)
+{
+    if (mask != 0) {
+        CALLV(HAMA->PlayHalt)(1);
+        if (sleep == 1)
+            CALLV(ROOT->SleepMainTask)();
+        HDAE5000_ATA_SoftReset_Status();
+        if (mask & 0x001)
+            HDAE5000_DeleteSongPart_Lsw(dir, song);
+        if (mask & 0x002)
+            HDAE5000_DeleteSongPart_Pmt(dir, song);
+        if (mask & 0x004)
+            HDAE5000_DeleteSongPart_Sqt(dir, song);
+        if (mask & 0x008)
+            HDAE5000_DeleteSongPart_Cmp(dir, song);
+        if (mask & 0x010)
+            HDAE5000_DeleteSongPart_Tm(dir, song);
+        if (mask & 0x020)
+            HDAE5000_DeleteSongPart_Msp(dir, song);
+        if (mask & 0x040)
+            HDAE5000_DeleteSongPart_Rcm(dir, song);
+        if (mask & 0x080)
+            HDAE5000_DeleteSongPart_Md(dir, song);
+        if (mask & 0x100)
+            HDAE5000_DeleteSongPart_Tlx(dir, song);
+        if (HDAE5000_Song_IsUsed(dir, song) == -1) {
+            HDAE5000_MemFill(&HDAE5000_RAM_DirNames[SONG_OFS(dir, song)], ' ', 26);
+            HDAE5000_Fls_ForgetSong(dir, song);
+        }
+        HDAE5000_HD_WriteTables_Status();
+        if (keep != 1)
+            HDAE5000_ATA_Standby_Status();
+        if (sleep == 1)
+            CALLV(ROOT->WakeUpMainTask)();
+        CALLV(HAMA->PlayStandBy)();
+        CALLV(HAMA->EditSwRefresh)();
+    }
+}
 
 /* bytes rounded up to whole 512-byte sectors, 0 counting as one sector */
 

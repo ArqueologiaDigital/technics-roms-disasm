@@ -1,6 +1,6 @@
-/* FdLyricList_AddTlx (hdae5000_ui_display.s): helper h_r27b's C that matches (module-local calls in cc900-module).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r27_b_uih.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_fdlyric_addtlx.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_fdlyric_addtlx.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: AddTlx_b=HDAE5000_FdLyricList_AddTlx
    cc900-module: HDAE5000_FdLyricList_AddTlx
