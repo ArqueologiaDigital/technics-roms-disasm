@@ -6,7 +6,6 @@
    - HDAE5000_CopyToHd_Execute: sel[i] through pointer arithmetic, *(sel member + i), instead of form a's unsigned
      long subscript (the same alternative as hd_r23_drvb.c's FdList_Scan).
    cc900-options: -Xr
-   cc900-name: FlsScrRefresh_w=HDAE5000_FlsScreen_Refresh
    cc900-module: HDAE5000_FlsScreen_Refresh HDAE5000_LoadSongWithUi HDAE5000_UiObj_SetCaption
 */
 #include "hdae_ws.h"
@@ -35,7 +34,7 @@ extern unsigned int HDAE5000_CopyFdSongToHd(unsigned int dir, unsigned int song,
                                             int a, int b);
 extern unsigned int HDAE5000_LoadSongWithUi(unsigned int dir, unsigned int song, unsigned int mask, int flag, long obj);
 extern void HDAE5000_UiObj_SetCaption(long obj, long caption);
-extern void FlsScrRefresh_w(int variant, int mode);     /* = HDAE5000_FlsScreen_Refresh, for the callers (WA, BC) */
+extern void HDAE5000_FlsScreen_Refresh(int variant, int mode);   /* the callers load WA, BC (see form a) */
 
 extern unsigned int HDAE5000_RAM_CurFls;
 extern unsigned int HDAE5000_RAM_CurFlsItem;
@@ -113,7 +112,7 @@ long HDAE5000_FlsLoadScreen(long obj, long ev, long arg)
         break;
     case EVT_HDAE_SELECT_SAVE:
         HDAE5000_RAM_CurFlsItem = HDAE5000_RAM_FlsItemPageBase + (unsigned int)arg;
-        FlsScrRefresh_w(1, 0);
+        HDAE5000_FlsScreen_Refresh(1, 0);
         if (HDAE5000_Fls_IsBlankName(HDAE5000_RAM_CurFls) != 0xffff)
             CALLV(ROOT->ApPostEvent)(OBJ_FLS_EDIT, EVT_SHOW, 0L);
         else {
@@ -127,12 +126,12 @@ long HDAE5000_FlsLoadScreen(long obj, long ev, long arg)
             if (HDAE5000_RAM_CurFls != 0) {
                 HDAE5000_RAM_CurFls--;
                 HDAE5000_RAM_FlsItemPageBase = 16;
-                FlsScrRefresh_w(0, 0);
+                HDAE5000_FlsScreen_Refresh(0, 0);
                 CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_BOX, EVT_HDAE_SET_SEL_NUM, arg + 16);
             }
         } else {
             HDAE5000_RAM_FlsItemPageBase = 0;
-            FlsScrRefresh_w(0, 0);
+            HDAE5000_FlsScreen_Refresh(0, 0);
             CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_BOX, EVT_HDAE_SET_SEL_NUM, arg + 16);
         }
         break;
@@ -141,18 +140,18 @@ long HDAE5000_FlsLoadScreen(long obj, long ev, long arg)
             if (HDAE5000_RAM_CurFls < 119) {
                 HDAE5000_RAM_CurFls++;
                 HDAE5000_RAM_FlsItemPageBase = 0;
-                FlsScrRefresh_w(0, 0);
+                HDAE5000_FlsScreen_Refresh(0, 0);
                 CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_BOX, EVT_HDAE_SET_SEL_NUM, arg - 16);
             }
         } else {
             HDAE5000_RAM_FlsItemPageBase = 16;
-            FlsScrRefresh_w(0, 0);
+            HDAE5000_FlsScreen_Refresh(0, 0);
             CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_BOX, EVT_HDAE_SET_SEL_NUM, arg - 16);
         }
         break;
     case EVT_HDAE_CHANGE_SEL_NUM:
         HDAE5000_RAM_CurFlsItem = HDAE5000_RAM_FlsItemPageBase + (unsigned int)arg;
-        FlsScrRefresh_w(0, 1);
+        HDAE5000_FlsScreen_Refresh(0, 1);
         break;
     }
     return 0;

@@ -9,7 +9,6 @@
    - HDAE5000_Lbn_TypeDigit: m (int) assigned in a statement of its own, then compared: tests whether the int ->
      unsigned conversion of the compare alone gives the ROM's `ld wa,iz; cp wa,0xffff`.
    cc900-options: -Xr
-   cc900-name: SongScrRefresh_w=HDAE5000_SongScreen_Refresh
    cc900-module: HDAE5000_FdList_Clear HDAE5000_FdName_SongNumber HDAE5000_ShowErrorMessageTitle
    cc900-module: HDAE5000_SongScreen_Refresh HDAE5000_FlsScreen_Refresh HDAE5000_DirList_BuildPage
    cc900-module: HDAE5000_FlsList_BuildPage HDAE5000_Lbn_ShowEntry HDAE5000_PartList_Build
@@ -27,7 +26,7 @@ struct TypeSel { unsigned int mask; unsigned char flag[10]; };
 extern void HDAE5000_FdList_Clear(void);
 extern int HDAE5000_FdName_SongNumber(char *name);
 extern void HDAE5000_ShowErrorMessageTitle(int code);
-extern void SongScrRefresh_w(int page, int skip);       /* = HDAE5000_SongScreen_Refresh (callers load WA, BC) */
+extern void HDAE5000_SongScreen_Refresh(int page, int skip);   /* the callers load WA, BC (see form a) */
 extern void HDAE5000_FlsScreen_Refresh(int page, int skip);
 extern void HDAE5000_DirList_BuildPage(long obj);
 extern void HDAE5000_FlsList_BuildPage(void);
@@ -164,7 +163,7 @@ long HDAE5000_AttenHDFormatSwCatch(long obj, long ev, register long arg)
             if (HDAE5000_HD_FormatDrive(1) == 0) {
                 CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
                 HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
-                SongScrRefresh_w(0, 0);
+                HDAE5000_SongScreen_Refresh(0, 0);
                 HDAE5000_FlsList_BuildPage();
                 HDAE5000_FlsScreen_Refresh(0, 2);
             } else {

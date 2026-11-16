@@ -15,12 +15,13 @@
      ram_23a04e (both .set in hdae5000_init_data.s); HDAE5000_Str_Chr3A_SongScreen_Refresh pushed as a constant is
      ram_2e2512 (its 31-character listing name is not translated);
    - SongScreen_Refresh takes unsigned char parameters (the ROM stores C and A to its stack: drvb's char prototype
-     matched that prologue); the callers in this file, which load WA / BC, call it through an int-typed alias
-     (cc900-name: SongScrRefresh_w=HDAE5000_SongScreen_Refresh; declared, never defined);
+     matched that prologue).  It is defined as SongScrRefresh_c (cc900-name: SongScrRefresh_c=
+     HDAE5000_SongScreen_Refresh), so that the callers in this file, which load WA / BC, can call the label through
+     an int prototype (hd_v423.py resolves a cc900-name only for a defined function);
    - see each function's comment for the rest.
    Unsolved, kept: SongScreen_Refresh's row offset `ld wa,30; muls xwa,iz` (V4.23: `ld wa,iz; muls wa,30`).
    r20's header follows.
-   cc900-name: SongScrRefresh_w=HDAE5000_SongScreen_Refresh
+   cc900-name: SongScrRefresh_c=HDAE5000_SongScreen_Refresh
 
    hd_r20_drva.c (helper h_drv, lane_hd round 20), form a: thirteen functions of hdae5000_hd_driver.s (v2.06i), in ROM
    address order -- FdList_Scan, HDAETitleFunc, SEL_DIR_Screen, SongScreen_Refresh, AttenDelDirSwCatch,
@@ -70,8 +71,10 @@ struct TypeSel { unsigned int mask; unsigned char flag[10]; };
 extern void HDAE5000_FdList_Clear(void);
 extern int HDAE5000_FdName_SongNumber(char *name);
 extern void HDAE5000_ShowErrorMessageTitle(int code);
-void HDAE5000_SongScreen_Refresh(unsigned char page, unsigned char skip);
-extern void SongScrRefresh_w(int page, int skip);       /* = HDAE5000_SongScreen_Refresh, for the callers (WA, BC) */
+/* the callers load WA / BC: they call the label through an int prototype; the definition, with the ROM's
+   unsigned char parameters, is SongScrRefresh_c (cc900-name, same label) */
+extern void HDAE5000_SongScreen_Refresh(int page, int skip);
+void SongScrRefresh_c(unsigned char page, unsigned char skip);
 extern void HDAE5000_FlsScreen_Refresh(int page, int skip);
 extern void HDAE5000_DirList_BuildPage(long obj);
 extern void HDAE5000_FlsList_BuildPage(void);
@@ -260,7 +263,7 @@ long HDAE5000_HDAETitleFunc(long obj, long ev, long arg)
         case 2:
             HDAE5000_RAM_TitleInfoText[150] = 0;
             CALLV(ROOT->ApPostEvent)(OBJ_HARD_DISK_OPT, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_TitleInfoText));
-            SongScrRefresh_w(0, 0);
+            HDAE5000_SongScreen_Refresh(0, 0);
             HDAE5000_RAM_FlsListText[1920] = 0;
             CALLV(ROOT->ApPostEvent)(OBJ_SEL_FLS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_FlsListText));
             HDAE5000_FlsScreen_Refresh(0, 2);
@@ -335,7 +338,7 @@ long HDAE5000_SEL_DIR_Screen(long obj, long ev, long arg)
         /* r23: the int base is converted to unsigned, so V4.23 loads it first (`ld bc,(base); ld wa,iz;
            add wa,bc`), as the ROM; r20's (int)arg + base added it as a memory operand */
         HDAE5000_RAM_CurDir = (unsigned int)arg + HDAE5000_RAM_DirPageBase;
-        SongScrRefresh_w(0, 0);
+        HDAE5000_SongScreen_Refresh(0, 0);
         CALLV(ROOT->ApPostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
         break;
     case EVT_HDAE_SELECT_SAVE:
@@ -364,12 +367,12 @@ long HDAE5000_SEL_DIR_Screen(long obj, long ev, long arg)
 
 /* page: which of the three object sets (ObjIds tables); skip != 0: only the part list.  The ROM takes the two
    parameters as bytes (A, C) and keeps them in stack slots (`ld (xsp+24),c; ld (xsp+26),a`): r23 declares them
-   unsigned char (r20's drvb form, whose prologue matched); the callers use SongScrRefresh_w.
+   unsigned char (r20's drvb form, whose prologue matched), defined as SongScrRefresh_c (cc900-name).
    r23 also: ObjIds unsigned long (see the declaration); the row address with the product on the left (the ROM loads
    the base after the product and extends the product last); the song record a local assigned before the MemCopy
    (the ROM calls SongRecord_Address before pushing the count and pushes XHL); the ":" string as ram_2e2512.
    Open: `ld wa,30; muls xwa,iz` (V4.23 writes `ld wa,iz; muls wa,30`). */
-void HDAE5000_SongScreen_Refresh(unsigned char page, unsigned char skip)
+void SongScrRefresh_c(unsigned char page, unsigned char skip)
 {
     char buf[22];
     int i;
@@ -424,7 +427,7 @@ long HDAE5000_AttenDelDirSwCatch(long obj, long ev, long arg)
             HDAE5000_YieldUntilSem1Zero();
             HDAE5000_DeleteDirectory(HDAE5000_RAM_CurDir, 1, 0);
             HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
-            SongScrRefresh_w(0, 0);
+            HDAE5000_SongScreen_Refresh(0, 0);
             CALLV(ROOT->PostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
             break;
         case 6:
@@ -456,7 +459,7 @@ long HDAE5000_AttenDelFileSwCatch(long obj, long ev, long arg)
             HDAE5000_DeleteSongParts(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_DeleteOptions.mask, 1, 0);
             HDAE5000_DelOpt_InitFromSong(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, 1);
             HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
-            SongScrRefresh_w(0, 0);
+            HDAE5000_SongScreen_Refresh(0, 0);
             CALLV(ROOT->ApPostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
             break;
         case 6:
@@ -508,7 +511,7 @@ long HDAE5000_HDDNamingCheck(long obj, long ev, long arg)
             else
                 HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
                                         ram_23a04e, 1, OBJ_SELECT_FILE);
-            SongScrRefresh_w(0, 0);
+            HDAE5000_SongScreen_Refresh(0, 0);
             break;
         }
         break;
@@ -731,7 +734,7 @@ long HDAE5000_SaveOptSwEventCatch(long obj, long ev, long arg)
             else
                 HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
                                         ram_23a04e, 1, OBJ_SELECT_FILE);
-            SongScrRefresh_w(0, 0);
+            HDAE5000_SongScreen_Refresh(0, 0);
             break;
         case 9:
             HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x3f, HDAE5000_TypeSel_TemplateAllNo, 2);
@@ -836,7 +839,7 @@ long HDAE5000_AttenHDFormatSwCatch(long obj, long ev, register long arg)
             if (HDAE5000_HD_FormatDrive(1) == 0) {
                 CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
                 HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
-                SongScrRefresh_w(0, 0);
+                HDAE5000_SongScreen_Refresh(0, 0);
                 HDAE5000_FlsList_BuildPage();
                 HDAE5000_FlsScreen_Refresh(0, 2);
             } else {
