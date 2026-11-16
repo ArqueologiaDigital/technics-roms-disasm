@@ -3950,6 +3950,15 @@ before the helper call), so no local is homed in XIZ / IZ and the long-helper pl
 index keeps the IZ form.  The first of the "complex long helper operands" refusals (100 on validation): validation +1
 function at none (96 / 47 / 77 / 41 of 600), 0 lost; ledger identical; library unchanged; semcheck 94; firmware C 55 MATCH.
 
+**Batch 365 (2026-11-16): compares against an element; wrong code removed.**  lane_o3 fix 28.  CMP_ELEM_RIGHT: a compare
+whose right operand is an element at a variable index takes V4.23's forms at every set (the element's address first; ==
+/ != with a constant-index element, a member or a dereference on the left loads the element and compares memory-first,
+otherwise the left is loaded and compared with the element), from probe cmpel.c (576 functions, run 2026-11-16-17).
+CMP_UNSIZED_GUARD: an int or long element of an unsized global array at a variable index is never compared through the
+16-bit-scaled `(XDE+BC)` forms, which gave wrong code for |i| >= 8192 (cmpel semcheck DIFFERENT 31 / 31 / 30 / 30 -> 0).
+cmpel exact 100 / 100 / 96 / 92 -> 346 / 226 / 224 / 188; ledger: rstmt none +1, pool rstmt none +1 and O3XS +1; validation
+and library unchanged; semcheck 94; firmware C 80 MATCH.
+
 **A gap for phase 3b**: cc900 writes the byte halves of IX / IY / IZ as `IXL`, `IYL`, `IZL` (`_fputc`:
 `ld A,IZL`).  Our llvm-mc does not know those names: it takes `izl` for a symbol and emits a fixup
 (`[0xc9,0x03,A]`).  The backend needs those registers (the extended-register `C7 r` form) before the compat
