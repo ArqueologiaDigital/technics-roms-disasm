@@ -3,6 +3,10 @@
 # (scripts/analysis/cc900/dashboard.py -> ~/compartilhado/tmp/cc900-dashboard/index.html) in the background, so the
 # page served by `dashboard.py --serve` shows the new round without anyone re-running it.  Never fails a commit.
 root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
+# Only the main checkout on branch main rebuilds the page.  Lane worktrees share this hook (core.hooksPath), and a
+# commit on a lane branch used to rebuild the page from that branch's history, hiding main's newer points (2026-11-16).
+[ "$root" = "$HOME/compartilhado/technics-roms-disasm" ] || exit 0
+[ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" = main ] || exit 0
 if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null |
         grep -qE '^scripts/analysis/cc900/(model|results)/'; then
     out="$HOME/compartilhado/tmp/cc900-dashboard"
