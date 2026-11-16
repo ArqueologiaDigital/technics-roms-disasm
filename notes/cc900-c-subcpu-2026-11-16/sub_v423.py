@@ -54,6 +54,28 @@ def rom_offset(addr):
     return addr - 0xf000 + 0x100
 
 
+ERP_BYTE = {'ixl': 0xf0, 'ixh': 0xf1, 'qixl': 0xf2, 'qixh': 0xf3, 'iyl': 0xf4, 'iyh': 0xf5, 'qiyl': 0xf6,
+            'qiyh': 0xf7, 'izl': 0xf8, 'izh': 0xf9, 'qizl': 0xfa, 'qizh': 0xfb}
+ERP_RE = re.compile(r'^\t(ld|cp|inc) (?:(1), )?(%s)(?:, (0x[0-9a-f]+|\d+))?$' % '|'.join(ERP_BYTE))
+
+
+def erp_byte(line):
+    """V4.23 allocates the index registers' byte parts (QIZH ...), which to_llvm passes through as plain register names
+    that llvm-mc does not take; write the ROM's own extended-register forms (ldib_erp / cpib_erp / inc1b_erp)"""
+    m = ERP_RE.match(line)
+    if not m:
+        return line
+    op, one, r, imm = m.groups()
+    small = imm is not None and int(imm, 0) < 8            # asm900's 3-bit immediate forms (c7 rr a8+n / d8+n)
+    if op == 'ld' and imm is not None and one is None:
+        return '\t%s 0x%x, %s' % ('ldib_erp' if small else 'lds_erpb', ERP_BYTE[r], imm)
+    if op == 'cp' and imm is not None and one is None:
+        return '\t%s 0x%x, %s' % ('cpib_erp' if small else 'cp_erpb', ERP_BYTE[r], imm)
+    if op == 'inc' and one and imm is None:
+        return '\tinc1b_erp 0x%x' % ERP_BYTE[r]
+    return line
+
+
 def file_flags(path):
     m = OPT_RE.search(open(path, 'rb').read())
     return ' '.join(m.group(1).decode().split()) if m else '-O3 -Xr'
@@ -65,7 +87,11 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     rom = open(os.path.join(REPO, romf), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, symf))
     # Toshiba runtime routines V4.23 calls, by the payload's label for them (subcpu_fp_math.s headers)
-    alias, cnames = {'C9H_mulls': 'Math_Multiply32', 'C9H_mullu': 'Math_Multiply32'}, {}
+    # (the division entries as subcpu_fp_math.s's headers describe them: D = 0 quotient, D = 1 remainder; the first
+    # function that matches through one of them confirms it)
+    alias, cnames = {'C9H_mulls': 'Math_Multiply32', 'C9H_mullu': 'Math_Multiply32',
+                     'C9H_divls': 'Int_SignedDiv_ConstData', 'C9H_remls': 'Int_SignedDiv_AltEntry',
+                     'C9H_remlu': 'Int_UnsignedRemainder'}, {}
     for c in list(cfiles) + glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')):
         lm = fw.label_map(c)
         alias.update(lm)
@@ -106,6 +132,7 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         except KeyError as e:
             out.append((full, 0, 'cannot resolve %s' % e)); continue
         body = [l.replace('$+', '.+').replace('$-', '.-') for l in body]   # inline asm's `jr $+2` (llvm-mc spells `.`)
+        body = [erp_byte(l) for l in body]
         # a shift by 16: to_llvm writes the raw count field 0, llvm-mc wants 16 (the CPU encodes 16 as 0)
         body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
         if any('untranslated' in l for l in body):
