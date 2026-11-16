@@ -87,10 +87,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     rom = open(os.path.join(REPO, romf), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, symf))
     # Toshiba runtime routines V4.23 calls, by the payload's label for them (subcpu_fp_math.s headers)
-    # (the division entries by their code, helper E, round 5: D = 1 keeps XHL, the quotient; D = 0 XDE, the remainder --
-    # the opposite of subcpu_fp_math.s's comments; the first function that matches through one confirms it)
+    # (the division entries by their code, helper E, round 5: D = 1 keeps XHL, the quotient; D = 0 XDE, the remainder;
+    # confirmed by DSP_PanScale_Simple in run 2026-11-16-65-sub-r5, renamed by scripts/renaming/rename_subcpu_long_div.sed)
     alias, cnames = {'C9H_mulls': 'Math_Multiply32', 'C9H_mullu': 'Math_Multiply32',
-                     'C9H_divls': 'Int_SignedDiv_AltEntry', 'C9H_remls': 'Int_SignedDiv_ConstData',
+                     'C9H_divls': 'Long_SignedDiv', 'C9H_remls': 'Long_SignedRem',
                      'C9H_remlu': 'Int_UnsignedRemainder'}, {}
     for c in list(cfiles) + glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')):
         lm = fw.label_map(c)

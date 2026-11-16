@@ -4825,8 +4825,8 @@ Int_SignedDiv_AfterSignA 0003DC0D
 Int_SignedDiv_CallUnsigned 0003DC1D
 Int_SignedDiv_ResultCorr 0003DC2F
 Int_SignedDiv_NegResult 0003DC33
-Int_SignedDiv_ConstData 0003DC43
-Int_SignedDiv_AltEntry 0003DC47
+Long_SignedRem 0003DC43
+Long_SignedDiv 0003DC47
 Int_UnsignedRemainder 0003DC4B
 FP_UnsignedDiv 0003DC51
 FP_UnsignedDiv_Overflow 0003DC74

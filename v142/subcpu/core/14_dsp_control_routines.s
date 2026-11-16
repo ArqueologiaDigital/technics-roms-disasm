@@ -1484,7 +1484,7 @@ DSP_PitchParam_Scale:
 	sla xwa, 5
 	sla xwa, 16
 	ld xbc, (xsp + 4)
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 2
 	add xhl, 0xFF800000
 	ld xwa, (xsp + 12)
@@ -1530,7 +1530,7 @@ DSP_VolumeParam_Scale:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x6BAA8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 0, 50 < x <= 75: ((x-25)<<23) / 220500.
@@ -1542,7 +1542,7 @@ DSP_VolScale_Algo0_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 0, 75 < x <= 88: ((4x-250)<<23) / 220500.
@@ -1555,7 +1555,7 @@ DSP_VolScale_Algo0_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 0, x > 88: ((9x-690)<<23) / 220500.
@@ -1567,7 +1567,7 @@ DSP_VolScale_Algo0_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 1 entry, x <= 10: (x<<23) / 44100.
@@ -1578,7 +1578,7 @@ DSP_VolScale_Algo1_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 1, 10 < x <= 19: ((10x-90)<<23) / 44100.
@@ -1593,7 +1593,7 @@ DSP_VolScale_Algo1_Seg2:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 1, 19 < x <= 64: ((20x-280)<<15) / 44100, then <<8 (the split <<23).
@@ -1607,7 +1607,7 @@ DSP_VolScale_Algo1_Seg3:
 	sub xwa, 0x118
 	sla xwa, 15
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
@@ -1622,7 +1622,7 @@ DSP_VolScale_Algo1_Seg4:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
@@ -1635,7 +1635,7 @@ DSP_VolScale_Algo1_Seg5:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_Return
 
@@ -1651,7 +1651,7 @@ DSP_VolScale_Algo2_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_Return
 
 ; family 2, 50 < x <= 75: ((x-25)<<23) / (2050 - 2x).
@@ -1668,7 +1668,7 @@ DSP_VolScale_Algo2_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_Return
 
 ; family 2, 75 < x <= 88: ((4x-250)<<23) / (2500 - 8x).
@@ -1686,7 +1686,7 @@ DSP_VolScale_Algo2_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_Return
 
 ; family 2, x > 88: ((9x-690)<<23) / (3380 - 18x).
@@ -1705,7 +1705,7 @@ DSP_VolScale_Algo2_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 
 ; Common epilogue: write the advanced cursor back through the caller's pointer and return.
 ; NOTE the fall-through hazard: on an unrecognised family byte XHL is whatever the callee
@@ -1750,7 +1750,7 @@ DSP_ParamInterp_2Point:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, xhl
 	ld xhl, (xsp + 8)
 	sra xhl, 8
@@ -1788,7 +1788,7 @@ DSP_ParamInterp_FPScale:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	add xhl, (xsp + 4)
 	ld xwa, (xsp + 12)
 	ld (xwa), xiz
@@ -1821,7 +1821,7 @@ DSP_ParamInterp_Div0xB4:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0xB4
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, (xsp + 12)
 	ld (xwa), xiz
 	pop xiz
@@ -1971,7 +1971,7 @@ DSP_FreqCurve_FP:
 	ld xwa, xiz
 	sla xwa, 7
 	sla xwa, 16
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_FreqCurve_FP_Return
 
 ; 20 < x <= 50 segment.
@@ -1987,7 +1987,7 @@ DSP_FreqCurve_FP_Seg2:
 	sub xwa, 0xA
 	sla xwa, 7
 	sla xwa, 16
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_FreqCurve_FP_Return
 
 ; x > 50 segment; the only one that needs Math_Multiply32 (22*x and 11*x) and a two-part shift.
@@ -2006,7 +2006,7 @@ DSP_FreqCurve_FP_Seg3:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, (xsp + 4)
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 
 ; Common epilogue (pop IZ, release the 4-byte frame).
@@ -2043,7 +2043,7 @@ DSP_FreqInterp_2Point:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, xhl
 	ld xhl, (xsp + 8)
 	sra xhl, 8
@@ -2091,7 +2091,7 @@ DSP_ParamInterp_3Point_WithOffset:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, (xsp + 12)
 	add xwa, (xsp + 8)
 	add xwa, xhl
@@ -2349,7 +2349,7 @@ DSP_PanCurve_PiecewiseLin:
 	add xhl, 0x6BAA8
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_PanCurve_Return
 
 ; 20 < x <= 30: 44.1 * (5x - 50) samples.
@@ -2364,7 +2364,7 @@ DSP_PanCurve_Seg2:
 	sub xhl, 0x21A548
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_PanCurve_Return
 
 ; 30 < x <= 70: 44.1 * (10x - 200) samples.
@@ -2380,7 +2380,7 @@ DSP_PanCurve_Seg3:
 	sub xhl, 0x869520
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_PanCurve_Return
 
 ; 70 < x <= 80: 44.1 * (50x - 3000) samples.
@@ -2396,7 +2396,7 @@ DSP_PanCurve_Seg4:
 	sub xhl, 0x7E2BCE0
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_PanCurve_Return
 
 ; x > 80: 44.1 * (100x - 7000) samples; tops out at 2900 ms for x = 99.
@@ -2410,7 +2410,7 @@ DSP_PanCurve_Seg5:
 	sub xhl, 0x12666360
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 
 ; A bare `ret` shared by all five segments.
 DSP_PanCurve_Return:
@@ -2928,7 +2928,7 @@ DSP_ParamInterp_Div0xC6:
 	sub xwa, (xsp + 16)
 	sra xwa, 8
 	ld xbc, 0xC6
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xiz, xhl
 	ld xbc, (xsp + 8)
 	ld xwa, xiz
@@ -3374,7 +3374,7 @@ DSP_ParamInterp_2Point_B:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, xhl
 	ld xhl, (xsp + 8)
 	sra xhl, 8
@@ -3407,7 +3407,7 @@ DSP_VolScale_B:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x6BAA8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo0_Seg2: ((x-25)<<23) / 220500.
@@ -3419,7 +3419,7 @@ DSP_VolScale_B_Algo0_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo0_Seg3: ((4x-250)<<23) / 220500.
@@ -3432,7 +3432,7 @@ DSP_VolScale_B_Algo0_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo0_Seg4: ((9x-690)<<23) / 220500.
@@ -3444,7 +3444,7 @@ DSP_VolScale_B_Algo0_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0x35D54
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo1_Seg1: (x<<23) / 44100.
@@ -3455,7 +3455,7 @@ DSP_VolScale_B_Algo1_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo1_Seg2: ((10x-90)<<23) / 44100.
@@ -3470,7 +3470,7 @@ DSP_VolScale_B_Algo1_Seg2:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo1_Seg3: ((20x-280)<<15) / 44100, then <<8.
@@ -3484,7 +3484,7 @@ DSP_VolScale_B_Algo1_Seg3:
 	sub xwa, 0x118
 	sla xwa, 15
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_B_Return
 
@@ -3499,7 +3499,7 @@ DSP_VolScale_B_Algo1_Seg4:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_B_Return
 
@@ -3512,7 +3512,7 @@ DSP_VolScale_B_Algo1_Seg5:
 	sla xhl, 15
 	ld xwa, xhl
 	ld xbc, 0xAC44
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	sla xhl, 8
 	jrl DSP_VolScale_B_Return
 
@@ -3528,7 +3528,7 @@ DSP_VolScale_B_Algo2_Seg1:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jrl DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo2_Seg2: ((x-25)<<23) / (2050 - 2x).
@@ -3545,7 +3545,7 @@ DSP_VolScale_B_Algo2_Seg2:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo2_Seg3: ((4x-250)<<23) / (2500 - 8x).
@@ -3563,7 +3563,7 @@ DSP_VolScale_B_Algo2_Seg3:
 	sla xbc, 16
 	ld xwa, xbc
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	jr DSP_VolScale_B_Return
 
 ; Duplicate of DSP_VolScale_Algo2_Seg4: ((9x-690)<<23) / (3380 - 18x).
@@ -3582,7 +3582,7 @@ DSP_VolScale_B_Algo2_Seg4:
 	sla xwa, 7
 	sla xwa, 16
 	ld xbc, xde
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 
 ; Duplicate epilogue: write the advanced cursor back and return.
 DSP_VolScale_B_Return:
@@ -3603,7 +3603,7 @@ DSP_PanScale_Simple:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x3E8
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ret
 
 ; Decoder for opcode 0x24 (arm 0x03CEBC); result -> DSP_WriteOscParam.  Two-point interpolation
@@ -3773,7 +3773,7 @@ DSP_ParamInterp_MultiStep_Compute:
 	call Math_Multiply32
 	ld xwa, xhl
 	ld xbc, 0x63
-	call Int_SignedDiv_AltEntry
+	call Long_SignedDiv
 	ld xwa, (xsp + 8)
 	sra xwa, 8
 	add xwa, xhl

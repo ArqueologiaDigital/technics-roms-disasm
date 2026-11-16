@@ -5713,7 +5713,7 @@ AudioMod_Scale_To_Part_1B_Common:
 ; 10-way jump through the word table at 0x00F6DF with base 0x028500 to apply a per-curve
 ; shaping step.  The default path (index out of range) instead scales by the part's
 ; portamento-rate byte at 0x04137B.  Result is clamped to +/-0x4000 through
-; Int_SignedDiv_AltEntry (0x03DC5F) and stored as a word at 0x041385 + part*0x11F
+; Long_SignedDiv (0x03DC5F) and stored as a word at 0x041385 + part*0x11F
 ; (part+0x1D).
 AudioMod_Apply_Porta_Curve:
 	dec	2, xsp
@@ -5771,12 +5771,12 @@ AudioMod_Apply_Porta_Curve_Join2:
 	jr	le, AudioMod_Apply_Porta_Curve_Skip3
 	ld	xwa, xhl
 	ld	xbc, 16384
-	call	Int_SignedDiv_AltEntry
+	call	Long_SignedDiv
 	jr	AudioMod_Apply_Porta_Curve_Join3
 AudioMod_Apply_Porta_Curve_Skip3:
 	ld	xwa, xhl
 	ld	xbc, 16383
-	call	Int_SignedDiv_AltEntry
+	call	Long_SignedDiv
 AudioMod_Apply_Porta_Curve_Join3:
 	ld	a, (xsp)
 	extz	wa
