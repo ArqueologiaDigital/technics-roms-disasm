@@ -6,7 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
-/* cc900-module: FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FDC_CMD_SEND FDC_NOP_Delay FDC_POST_OP FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_TIMING_DELAY FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister SOME_DELAY */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char __near FDC_CMD_OPCODE;
 extern unsigned char FDC_ValidateOpcode();
@@ -14,6 +14,19 @@ extern unsigned char __near FDC_RESULT[];
 extern unsigned char __near ram_8a64;
 extern unsigned char FDC_Set_Status(int);
 extern unsigned char FDC_Exception_Status_Decoder(void);
+extern unsigned int __near FDC_REQ_HEAD;
+extern unsigned char __near FDC_PARAM_H;
+extern unsigned char __near FDC_HEAD;
+extern void FDC_CheckHead(void);
+extern void FDC_Validate_Drive_Head(void);
+extern unsigned char __near FDC_TARGET_TRACK;
+extern unsigned char __near FDC_CURRENT_CYLINDER;
+extern unsigned char __near FDC_ERROR_CODE;
+extern void SOME_DELAY(int);
+extern void FDC_TIMING_DELAY(void);
+extern void FDC_CMD_SEND(int);
+extern void FDC_POST_OP(void);
+extern void FDC_CmdSeek(void);
 
 unsigned char FDC_ValidateOpcode()
 {
@@ -59,4 +72,27 @@ unsigned char FDC_Exception_Status_Decoder(void)
 	default:
 		return 8;
 	}
+}
+
+void FDC_CheckHead(void)
+{
+    FDC_HEAD = FDC_PARAM_H = FDC_REQ_HEAD;
+    if (FDC_HEAD != 0 && FDC_HEAD != 1) FDC_Set_Status(0xfe);
+}
+
+void FDC_Validate_Drive_Head(void)
+{
+    if (FDC_REQ_HEAD != 0 && FDC_REQ_HEAD != 1) FDC_Set_Status(0xfe);
+}
+
+void FDC_CmdSeek(void)
+{
+    if (FDC_TARGET_TRACK == FDC_CURRENT_CYLINDER) return;
+    FDC_CURRENT_CYLINDER = FDC_TARGET_TRACK;
+    SOME_DELAY(2);
+    FDC_TIMING_DELAY();
+    FDC_CMD_SEND(15);
+    FDC_POST_OP();
+    if (FDC_ERROR_CODE != 0) FDC_CURRENT_CYLINDER = 255;
+    SOME_DELAY(16);
 }

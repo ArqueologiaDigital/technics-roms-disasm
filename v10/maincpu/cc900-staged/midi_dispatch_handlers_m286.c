@@ -1,0 +1,42 @@
+/* Functions of midi/midi_dispatch_handlers.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+   Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -O3 -Xr
+*/
+
+extern unsigned char __near ram_bd18;
+extern unsigned char __near ram_bd00;
+extern unsigned char __near ram_bd02;
+extern unsigned char __near ram_bd04;
+extern unsigned char __near ram_bd06;
+extern unsigned char __near ram_bd08;
+extern unsigned char __near ram_bd0a;
+extern unsigned char __near ram_bd0c;
+extern unsigned char __near ram_bd0e;
+extern unsigned char __near ram_bd10;
+extern unsigned char __near ram_bd12;
+extern unsigned char __near ram_bd14;
+extern unsigned char __near ram_bd16;
+extern void MidiSeq_SyncToneStates_Upper(void);
+
+void MidiSeq_SyncToneStates_Upper(void)
+{
+    if (ram_bd18 & 0x40) {
+        ram_bd00 &= ~0x80;
+        ram_bd02 = ram_bd00;
+        ram_bd04 &= ~0x80;
+        ram_bd06 = ram_bd04;
+        ram_bd08 &= ~0x80;
+        ram_bd0a = ram_bd08;
+    } else {
+        ram_bd0c &= ~0x80;
+        ram_bd0e = ram_bd0c;
+        ram_bd10 &= ~0x80;
+        ram_bd12 = ram_bd10;
+        ram_bd14 &= ~0x80;
+        ram_bd16 = ram_bd14;
+    }
+}

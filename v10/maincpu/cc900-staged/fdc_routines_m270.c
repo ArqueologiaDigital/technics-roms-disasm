@@ -6,8 +6,15 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FDC_NOP_Delay FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister SOME_DELAY */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern unsigned char __near FDC_CURRENT_CYLINDER;
+extern void FDC_Send_Command(int);
+extern void SOME_DELAY(int);
+extern void FDC_INIT(void);
+extern unsigned char __tiny PH;
+extern void FDC_NOP_Delay(int);
+extern void FDC_Pulse_PH0(void);
 extern unsigned char __near FDC_ERROR_CODE;
 extern void FDC_ResultPhase_Read(void);
 void FDC_WriteAuxCmdByte();
@@ -20,12 +27,24 @@ extern unsigned char __near FDC_TARGET_TRACK;
 void FDC_SendParameterByte();
 extern void FDC_SendParameterByte();
 extern void FDC_SendParam_SeekTrack();
-void FDC_Send_Command();
-extern void FDC_Send_Command();
 unsigned char FDC_ReadDataRegister();
 extern unsigned char FDC_ReadDataRegister();
 unsigned char FDC_Read_Status();
 extern unsigned char FDC_Read_Status();
+
+void FDC_INIT(void)
+{
+    FDC_Send_Command(54);
+    SOME_DELAY(2);
+    FDC_CURRENT_CYLINDER = 255;
+}
+
+void FDC_Pulse_PH0(void)
+{
+    PH |= 1;
+    FDC_NOP_Delay(10);
+    PH &= ~1;
+}
 
 void FDC_SendAuxCmd(c)
 unsigned char c;
@@ -45,12 +64,6 @@ unsigned char c;
 void FDC_SendParam_SeekTrack()
 {
     FDC_SendParameterByte(FDC_TARGET_TRACK);
-}
-
-void FDC_Send_Command(c)
-unsigned char c;
-{
-    *(unsigned char *)0x110008 = c;
 }
 
 unsigned char FDC_ReadDataRegister()

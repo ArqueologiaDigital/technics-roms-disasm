@@ -1,0 +1,52 @@
+/* Functions of ui/ui_mode_handlers.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+   Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -O3 -Xr
+*/
+/* cc900-module: A_Short_Pause */   /* scripts/analysis/cc900/module_calls.py v10 */
+
+extern long ApPostEvent(long, long, long);
+extern void A_Short_Pause(void);
+extern unsigned char __near DIAG_ANIM_STEP;
+extern unsigned char __near ram_8d78;
+extern unsigned char EffectMode_DiagSeq_TitleCycle[];
+extern void EffectMode_RunDiagSequence(void);
+
+void EffectMode_RunDiagSequence(void)
+{
+	unsigned char c, a;
+
+	a = DIAG_ANIM_STEP;
+	if (a == 0) {
+		ApPostEvent(0xf80006L, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf80008L, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf8000aL, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf8000cL, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		ApPostEvent(0xf8000eL, 0x1c00001L, 0);
+		A_Short_Pause();
+		A_Short_Pause();
+		DIAG_ANIM_STEP++;
+		return;
+	}
+	c = ram_8d78;
+	if (c == 0) {
+		ApPostEvent(-1L, 0x1c00016L, 0x1a00000L + EffectMode_DiagSeq_TitleCycle[a]);
+		a = DIAG_ANIM_STEP;
+		if (a == 5) DIAG_ANIM_STEP = 1;
+		else DIAG_ANIM_STEP = a + 1;
+		ram_8d78 = 30;
+		return;
+	}
+	ram_8d78 = c - 1;
+}

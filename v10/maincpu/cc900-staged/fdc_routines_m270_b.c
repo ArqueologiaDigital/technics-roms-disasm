@@ -8,6 +8,8 @@
 */
 /* cc900-module: FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+void FDC_Send_Command();
+extern void FDC_Send_Command();
 extern unsigned char __near FDC_ERROR_CODE;
 extern unsigned char __near FDC_RESULT[];
 extern void FDC_ResultPhase_Read(void);
@@ -22,6 +24,12 @@ void FDC_SendParameterByte();
 extern void FDC_WriteDataRegister();
 extern void FDC_WaitParamByteReady();
 extern void FDC_SendParameterByte();
+
+void FDC_Send_Command(c)
+unsigned char c;
+{
+    *(unsigned char *)0x110008 = c;
+}
 
 void FDC_SendAuxCmdReadResult(c)
 unsigned char c;

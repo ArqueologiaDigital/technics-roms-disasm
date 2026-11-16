@@ -6,18 +6,19 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: ExtData_SetTlvField ExtData_ToggleTlvBits MIDI_WriteResetSequence SwbtWr_FlushAndAppendParams */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: PanelTlv_PayloadOfTag SwbtWr_FlushAndAppendParams */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-extern void ExtData_SetTlvField(unsigned int);
-extern void SwbtWr_FlushAndAppendParams(void);
-extern void MIDI_WriteResetSequence(void); void ExtData_Voice_CheckMode3_Helper(void);
-extern void MIDI_WriteResetSequence(void);
+extern unsigned char *PanelTlv_PayloadOfTag(unsigned int);
+extern unsigned char __near MIDI_MSG_STATUS;
+extern unsigned char __near EXTDATA_TLV_OFFSET;
+extern unsigned char __near EXTDATA_NEW_VALUE;
+extern void SndParam_WriteLookupAndStore(void);
 
-void MIDI_WriteResetSequence(void);
 
-void ExtData_Voice_CheckMode3_Helper(void)
+void SndParam_WriteLookupAndStore(void)
 {
-	ExtData_SetTlvField(128);
-	ExtData_SetTlvField(127);
-	SwbtWr_FlushAndAppendParams();
+	unsigned char *p = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+
+	if (p == (unsigned char *)-1L) return;
+	EXTDATA_NEW_VALUE = p[EXTDATA_TLV_OFFSET];
 }
