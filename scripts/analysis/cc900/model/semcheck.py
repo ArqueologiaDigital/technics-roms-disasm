@@ -3,9 +3,9 @@
 
 usage: python3 -I -B semcheck.py ORACLE_DIR FILE.c [FILE.c ...] [--opt none|O3XS] [--adecl] [--personality P]
                                   [-DNAME[=V] ...] [-IDIR ...] [--trials N] [--limit STEPS] [--only NAME[,NAME]]
-                                  [--model-dir DIR] [--verbose]
+                                  [--model-dir DIR] [--verbose] [--contract]
        python3 -I -B semcheck.py --ledger [--all-compilers] [--library] [--results FILE.md] [--trials N] [--jobs N]
-                                 [--model-dir DIR]
+                                 [--model-dir DIR] [--contract]
 
 The first form takes the same arguments as score.py.  For every function of every FILE.c it compiles the function
 with the model (codegen.compile_unit, the options score.py would use) and takes the oracle's code from ORACLE_DIR's
@@ -20,6 +20,11 @@ when any function is DIFFERENT.
 helpers (`._f*`) are computed as IEEE arithmetic (semcheck.md, "FP helpers").  --model-dir DIR imports
 codegen/frontend/listing from DIR instead (an older revision extracted with `git archive`), to see whether a known
 bug is caught.
+
+--contract (semcheck.md, "Contract mode") keeps the inputs inside the program's contract where it can tell: a
+parameter or global that indexes an array of n elements takes values in [0, n) (with the index's constant offset and
+loop bounds), every other value keeps the small / edge / full trials; a function whose body can end without a return
+statement and whose only difference is the return value is reported as "fall-off", not DIFFERENT.
 """
 import os, sys, re, struct, zlib, random, subprocess
 
@@ -97,6 +102,133 @@ def gen_int(rng, bits, signed, mode):
     else: v = rng.getrandbits(bits)
     return v & mask
 
+# ---------------------------------------------------------------- contract mode (--contract; semcheck.md)
+
+def _bare(n):
+    """n without casts, decays and no-op conversions"""
+    while isinstance(n, frontend.N) and n.k in ('cast', 'noop', 'decay') and getattr(n, 'e', None) is not None: n = n.e
+    return n
+
+def _nodes(n):
+    if isinstance(n, list):
+        for x in n: yield from _nodes(x)
+        return
+    if not isinstance(n, frontend.N): return
+    yield n
+    for k, v in n.__dict__.items():
+        if k in ('decl', 'var', 'ty', 'cty'): continue
+        yield from _nodes(v)
+
+def _count(base):
+    """the element count of an indexed array (a variable or a member of array type), else None"""
+    b = _bare(base)
+    t = b.decl.ty if b.k == 'var' else getattr(b, 'ty', None) if b.k == 'member' else None
+    return t.count if t is not None and t.kind == 'array' and t.count else None
+
+def _source(x):
+    """an index expression v + c (v a scalar variable, or any element of a global array) -> (key, c), else None"""
+    x = _bare(x); off = 0
+    if x.k == 'bin' and x.op in ('+', '-'):
+        l, r = _bare(x.l), _bare(x.r)
+        if r.k == 'const' and isinstance(r.value, int): off = r.value if x.op == '+' else -r.value; x = l
+        elif x.op == '+' and l.k == 'const' and isinstance(l.value, int): off = l.value; x = r
+        else: return None
+    x = _bare(x)
+    if x.k != 'load': return None
+    e = _bare(x.e)
+    if e.k == 'var': return ('var', e.decl), off
+    if e.k == 'index':
+        b = _bare(e.base)
+        if b.k == 'var' and b.decl.kind == 'global' and b.decl.ty.kind == 'array': return ('elems', b.decl), off
+    return None
+
+def index_contract(fn):
+    """(kind, decl) -> (lo, hi): the values a parameter, a global, or every element of a global array may take so that
+    each array index it feeds stays in [0, n): a[v + c] gives v in [-c, n - c); a local initialised from v and never
+    written again stands for v; a loop `for (..; i < v; ..)` (or `<=`, while too) over an index i of a[n] gives v in
+    [0, n] ([0, n) for <=).  Ranges of several uses intersect; an empty one is dropped.  Only int variables."""
+    written = set()
+    for n in _nodes(fn.body):
+        if n.k in ('opassign', 'incdec') or n.k == 'bin' and n.op == '=':
+            t = _bare(n.l if n.k != 'incdec' else n.e)
+            if t.k == 'var': written.add(t.decl)
+        if n.k == 'addr':
+            t = _bare(n.e)
+            if t.k == 'var': written.add(t.decl)
+    alias = {}
+    for n in _nodes(fn.body):
+        if n.k == 'decl' and n.init is not None and n.var not in written:
+            s_ = _source(n.init)
+            if s_ is not None and s_[1] == 0 and s_[0][0] == 'var' and s_[0][1].kind in ('param', 'global'):
+                alias[n.var] = s_[0][1]
+    out = {}; idx_bound = {}
+    def add(key, lo, hi):
+        d = key[1]
+        if key[0] == 'var' and d in alias: key = ('var', alias[d]); d = key[1]
+        t = d.ty.base if key[0] == 'elems' else d.ty
+        if t is None or t.kind != 'int' or d.kind not in ('param', 'global'): return
+        if key in out: lo, hi = max(lo, out[key][0]), min(hi, out[key][1])
+        out[key] = (lo, hi)
+    for n in _nodes(fn.body):
+        if n.k != 'index': continue
+        cnt = _count(n.base); s_ = _source(n.idx)
+        if cnt is None or s_ is None: continue
+        key, off = s_
+        add(key, -off, cnt - off)
+        if key[0] == 'var' and off == 0: idx_bound[key[1]] = min(idx_bound.get(key[1], cnt), cnt)
+    for n in _nodes(fn.body):
+        if n.k not in ('for', 'while') or getattr(n, 'cond', None) is None: continue
+        c = _bare(n.cond)
+        if c.k != 'bin' or c.op not in ('<', '<='): continue
+        i_, v_ = _source(c.l), _source(c.r)
+        if i_ is None or v_ is None or i_[1] or v_[1] or i_[0][0] != 'var' or i_[0][1] not in idx_bound: continue
+        cnt = idx_bound[i_[0][1]]
+        add(v_[0], 0, cnt + 1 if c.op == '<' else cnt)
+    return {k: v for k, v in out.items() if v[0] < v[1]}
+
+def _falls(s):
+    """can control leave statement s at its end (conservative: True when unsure)"""
+    if s is None: return True
+    if isinstance(s, list): return _falls_seq(s)
+    k = s.k
+    if k in ('return', 'goto', 'break', 'continue'): return False
+    if k == 'block': return _falls_seq(s.body)
+    if k == 'if': return s.els is None or _falls(s.then) or _falls(s.els)
+    if k in ('label', 'case', 'default'): return _falls(s.body)
+    if k in ('while', 'for', 'do'):
+        c = getattr(s, 'cond', None)
+        forever = c is None or (_bare(c).k == 'const' and _bare(c).value not in (0, None))
+        return not forever or _has_break(s.body)
+    if k == 'switch':
+        has_default = any(x.k == 'default' for x in _nodes(s.body) if isinstance(x, frontend.N))
+        return not has_default or _has_break(s.body) or _falls(s.body)
+    return True
+
+def _falls_seq(body):
+    reach = True
+    for x in body:
+        if isinstance(x, frontend.N) and (x.k in ('label', 'case', 'default') or any(y.k == 'label' for y in _nodes(x))):
+            reach = True                                   # (a case / default / goto label makes it reachable again)
+        if reach: reach = _falls(x)
+    return reach
+
+def _has_break(s):
+    """a break that leaves s (not one inside a nested loop or switch)"""
+    if isinstance(s, list): return any(_has_break(x) for x in s)
+    if not isinstance(s, frontend.N): return False
+    if s.k == 'break': return True
+    if s.k in ('while', 'for', 'do', 'switch'): return False
+    return any(_has_break(v) for k, v in s.__dict__.items() if k not in ('decl', 'var', 'ty', 'cty'))
+
+def can_fall_off(fn):
+    """a non-void function whose body can end without a return statement"""
+    return fn.ret is not None and fn.ret.kind != 'void' and _falls(fn.body)
+
+def contract_bytes(rng, t, rg):
+    """the little-endian bytes of an int of type t drawn from range rg = (lo, hi)"""
+    v = rng.randint(rg[0], rg[1] - 1) & ((1 << (8 * t.size)) - 1)
+    return [(v >> (8 * k)) & 0xFF for k in range(t.size)]
+
 FP_EDGE = [0.0, -0.0, 1.0, -1.0, 0.5, -2.5, 1.5, 3.0, 1e-310, 1e-40, 3.4e38, 3.5e38, 1e308, -1e308,
            2147483647.5, -2147483648.0, 4294967295.0, 4294967296.0, float('inf'), float('-inf'), float('nan')]
 
@@ -139,9 +271,9 @@ class World:
         return '0x%06x' % a
 
 class Trial:
-    def __init__(s, world, seed, mode):
+    def __init__(s, world, seed, mode, contract=None):
         s.w = world; s.seed = seed; s.mode = mode; s.preset = {}; s.nbuf = 0
-        s.consts = set()
+        s.consts = set(); s.contract = contract or {}
         for n, d in world.globals:
             base = world.addr['_' + n]
             blk = world.data_blocks.get('_' + n)
@@ -150,6 +282,19 @@ class Trial:
                 if getattr(d, 'const', False): s.consts.add(n)
                 continue
             s.fill(d.ty, base, random.Random(mix(seed, n)), s.preset)
+            s.fill_contract(d, base, mix(seed, n), s.preset)
+
+    def fill_contract(s, d, base, h, out):
+        """--contract: a global that indexes an array takes a value in its range (index_contract), drawn after its
+        ordinary value so that every other value is the default mode's"""
+        for key, rg in s.contract.items():
+            if key[1] is not d: continue
+            rng = random.Random(mix(h, 'contract'))
+            if key[0] == 'var':
+                for k, b in enumerate(contract_bytes(rng, d.ty, rg)): out[base + k] = b
+            else:
+                for i in range(min(d.ty.count or 0, 256)):
+                    for k, b in enumerate(contract_bytes(rng, d.ty.base, rg)): out[base + i * d.ty.base.size + k] = b
 
     def new_buf(s):
         s.nbuf += 1
@@ -387,6 +532,7 @@ class Hooks:
             if n in s.t.consts or getattr(d, 'const', False) or d.ty.size > 256: continue
             out = {}
             s.t.fill(d.ty, s.w.addr['_' + n], random.Random(mix(h, n, 'callee')), out)
+            if s.t.contract: s.t.fill_contract(d, s.w.addr['_' + n], mix(h, n, 'callee'), out)
             for a, b in out.items(): m.wr8(a, b)
         return pop
 
@@ -469,8 +615,8 @@ def memdiff(x, y, w):
 
 FP_CALL = re.compile(r'\b(?:cal|call|j|jp|jr|jrl|calr)\s+(?:\w+\s*,\s*)?(\._f\w+)')
 
-def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, limit, seed0):
-    """-> ('equal', None) | ('DIFFERENT', reason) | ('not checked', reason)"""
+def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, limit, seed0, contract=False):
+    """-> ('equal', None) | ('DIFFERENT', reason) | ('not checked', reason) | ('fall-off', reason) (--contract only)"""
     if mlines is None: return 'not checked', 'model has no code for it'
     if olines is None: return 'not checked', 'no oracle code'
     for side, lines in (('model', mlines), ('oracle', olines)):
@@ -494,33 +640,49 @@ def check_function(fn, name, mlines, olines, unit, data_blocks, adecl, trials, l
     except interp.Unsupported as ex: return 'not checked', str(ex)
     inconclusive = 0; done = 0; ndiff = 0; dmodes = set(); first = None
     modes = ['small', 'edge', 'full', 'small']
+    cmap = index_contract(fn) if contract else {}
+    pkeys = {i: rg for i, p in enumerate(c_params(fn)) for key, rg in cmap.items() if key == ('var', p)}
+    foff = can_fall_off(fn) if contract else False; nfoff = 0; ffirst = None
+    def args_(tr, seed):
+        rng = random.Random(mix(seed, 'args'))
+        vals = [tr.arg_value(p.ty, rng) for p in c_params(fn)]
+        for i, rg in pkeys.items():                       # --contract: an index parameter in its range
+            p = c_params(fn)[i]
+            bs = contract_bytes(random.Random(mix(seed, 'contract', i)), p.ty, rg)
+            vals[i] = sum(b << (8 * k) for k, b in enumerate(bs))
+        return vals
     for t in range(trials):
         seed = mix(seed0, name, t); mode = modes[t % 4]
         try:
             outs = []
             for prog in (pm, po):
-                tr = Trial(w, seed, mode)
-                rng = random.Random(mix(seed, 'args'))
-                vals = [tr.arg_value(p.ty, rng) for p in c_params(fn)]
+                tr = Trial(w, seed, mode, cmap)
+                vals = args_(tr, seed)
                 outs.append(run_one(prog, tr, fn, adecl, vals, limit))
             a, b = outs
             if (a['status'] == 'steps') != (b['status'] == 'steps'):     # one side may just be slower
                 outs = []
                 for prog in (pm, po):
-                    tr = Trial(w, seed, mode); rng = random.Random(mix(seed, 'args'))
-                    vals = [tr.arg_value(p.ty, rng) for p in c_params(fn)]
+                    tr = Trial(w, seed, mode, cmap)
+                    vals = args_(tr, seed)
                     outs.append(run_one(prog, tr, fn, adecl, vals, limit * 4))
                 a, b = outs
         except interp.Unsupported as ex: return 'not checked', 'interp: %s' % ex
         if a['status'] == 'steps' and b['status'] == 'steps': inconclusive += 1; continue
         d = compare(a, b, w)
         done += 1
+        if d and foff and d.startswith('return value') and compare(dict(a, ret=None), dict(b, ret=None), w) is None:
+            nfoff += 1                                    # --contract: only the result of a body that can fall off
+            if ffirst is None: ffirst = '%s [trial %d, %s; %s]' % (d, t, mode, describe_args(fn, vals))
+            continue
         if d:
             ndiff += 1; dmodes.add(mode)
             if first is None: first = '%s [trial %d, %s; %s]' % (d, t, mode, describe_args(fn, vals))
     if first is not None:
         return 'DIFFERENT', '%s; %d of %d trials differ (%s)' % (first, ndiff, done, '/'.join(
             x for x in ('small', 'edge', 'full') if x in dmodes))
+    if ffirst is not None:
+        return 'fall-off', 'the body can end without a return; %s; %d of %d trials' % (ffirst, nfoff, done)
     if done == 0: return 'not checked', 'step limit on every trial'
     return 'equal', None
 
@@ -542,7 +704,7 @@ def data_blocks_of(want, unit):
 
 _CACHE = None; _TOOLS = None
 
-def cache_key(src_bytes, oracle_bytes, name, mlines, fa, trials, limit, seed0):
+def cache_key(src_bytes, oracle_bytes, name, mlines, fa, trials, limit, seed0, contract=False):
     """what a verdict depends on: the C file, the oracle's listing file, the function, the model's listing of it, the
     convention, the trial parameters, and this checker's own code (semcheck.py, interp.py, listing.py)"""
     import hashlib
@@ -555,7 +717,7 @@ def cache_key(src_bytes, oracle_bytes, name, mlines, fa, trials, limit, seed0):
         _TOOLS = h.hexdigest()
     h = hashlib.sha256()
     for part in (_TOOLS.encode(), src_bytes, oracle_bytes, name.encode(), '\n'.join(mlines or ['<none>']).encode('latin-1', 'replace'),
-                 repr((bool(fa), trials, limit, seed0)).encode()):
+                 repr((bool(fa), trials, limit, seed0) + (('contract',) if contract else ())).encode()):
         h.update(hashlib.sha256(part).digest())
     return h.hexdigest()
 
@@ -581,7 +743,8 @@ def cache_put(key, v, why):
     import json
     with open(path, 'a', encoding='utf-8') as fh: fh.write(json.dumps([key, [v, why]]) + '\n')   # (one short line per append)
 
-def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, only=None, verbose=False, seed0=1):
+def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, only=None, verbose=False, seed0=1,
+            contract=False):
     """-> list of (file, function, verdict, reason)"""
     import score
     res = []
@@ -602,11 +765,12 @@ def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, 
                                                            # __cdecl function in an -Xr file: _name, cdecl; stc _st_rt_1)
             name = ('.' if fa else '_') + fn.name
             if only and fn.name not in only: continue
-            key = cache_key(src_b, ora_b, name, got.get(name), fa, trials, limit, seed0)
+            key = cache_key(src_b, ora_b, name, got.get(name), fa, trials, limit, seed0, contract)
             if key in seen: v, why = seen[key]
             else:
                 try:
-                    v, why = check_function(fn, name, got.get(name), want.get(name), unit, blocks, fa, trials, limit, seed0)
+                    v, why = check_function(fn, name, got.get(name), want.get(name), unit, blocks, fa, trials, limit, seed0,
+                                            contract)
                 except Exception as ex:
                     v, why = 'not checked', 'semcheck error: %s: %s' % (type(ex).__name__, str(ex)[:80])
                 cache_put(key, v, why)
@@ -615,7 +779,7 @@ def run_set(odir, files, opt, adecl, personality, defines, incs, trials, limit, 
     return res
 
 def summarise(res):
-    c = {'equal': 0, 'DIFFERENT': 0, 'not checked': 0}
+    c = {'equal': 0, 'DIFFERENT': 0, 'not checked': 0, 'fall-off': 0}
     for _, _, v, _ in res: c[v] += 1
     return c
 
@@ -657,7 +821,8 @@ def main():
     a = ARGV
     trials = int(_arg(a, '--trials', 48)); limit = int(_arg(a, '--limit', LIMIT))
     only = set(_arg(a, '--only').split(',')) if '--only' in a else None
-    verbose = '--verbose' in a
+    verbose = '--verbose' in a; contract = '--contract' in a
+    fo_ = lambda c: '  fall-off %3d' % c['fall-off'] if contract else ''
     if '--ledger' in a:
         rows = ledger_rows('--all-compilers' in a, '--library' in a)
         seen = set(); table_rows = []; diffs = []; totals = {}; reasons = {}; todo = []
@@ -667,13 +832,13 @@ def main():
             seen.add(key); todo.append(r)
         jobs = int(_arg(a, '--jobs', 1))
         work = [(r['odir'], r['files'], r['opt'], r['adecl'], r['personality'], r['defines'], r['incs'],
-                 trials, limit, only, verbose) for r in todo]
+                 trials, limit, only, verbose, 1, contract) for r in todo]
         if jobs > 1:
             import multiprocessing
             with multiprocessing.Pool(jobs) as pool: results = pool.starmap(run_set, work, chunksize=1)
         else: results = [run_set(*w) for w in work]
         for r, res in zip(todo, results):
-            c = summarise(res); n = c['equal'] + c['DIFFERENT']
+            c = summarise(res); n = c['equal'] + c['DIFFERENT'] + c['fall-off']
             run = r['label'].split(',')[0].replace('run ', '')
             comp = r['label'].split(',')[1].strip().split()[0]
             table_rows.append([run, comp, r['corpus'], n, c['equal'], c['DIFFERENT'], c['not checked']])
@@ -684,11 +849,15 @@ def main():
                 if v == 'not checked':
                     k = re.sub(r'(0x[0-9a-f]+|\d+)', 'N', why.split(':')[0] if why.startswith('interp') else why)[:70]
                     reasons[(comp, k)] = reasons.get((comp, k), 0) + 1
-            print('%-44s %-12s %-22s checked %4d  equal %4d  DIFFERENT %3d  not checked %3d' % (
-                run, comp, r['corpus'], n, c['equal'], c['DIFFERENT'], c['not checked']), flush=True)
+            print('%-44s %-12s %-22s checked %4d  equal %4d  DIFFERENT %3d  not checked %3d%s' % (
+                run, comp, r['corpus'], n, c['equal'], c['DIFFERENT'], c['not checked'], fo_(c)), flush=True)
+            if contract: totals.setdefault(comp + ' fall-off', [0])[0] += c['fall-off']
         print()
+        foffs = {k[:-len(' fall-off')]: v[0] for k, v in totals.items() if k.endswith(' fall-off')}
+        totals = {k: v for k, v in totals.items() if not k.endswith(' fall-off')}
         for comp, t in totals.items():
-            print('TOTAL %-14s checked %5d  equal %5d  DIFFERENT %4d  not checked %4d' % (comp, *t))
+            print('TOTAL %-14s checked %5d  equal %5d  DIFFERENT %4d  not checked %4d%s' % (
+                comp, *t, '  fall-off %4d' % foffs.get(comp, 0) if contract else ''))
         for d in diffs: print('DIFFERENT %s %s %s: %s' % tuple(d))
         out = _arg(a, '--results')
         if out:
@@ -705,10 +874,11 @@ def main():
     if base.endswith('Xr'): adecl = True
     anydiff = False
     for f in files:
-        res = run_set(odir, [f], opt, adecl, personality, defines, incs, trials, limit, only, verbose)
+        res = run_set(odir, [f], opt, adecl, personality, defines, incs, trials, limit, only, verbose, 1, contract)
         c = summarise(res)
-        print('%-24s %-8s checked %3d  equal %3d  DIFFERENT %3d  not checked %3d' % (
-            os.path.basename(f), base, c['equal'] + c['DIFFERENT'], c['equal'], c['DIFFERENT'], c['not checked']))
+        print('%-24s %-8s checked %3d  equal %3d  DIFFERENT %3d  not checked %3d%s' % (
+            os.path.basename(f), base, c['equal'] + c['DIFFERENT'] + c['fall-off'], c['equal'], c['DIFFERENT'],
+            c['not checked'], fo_(c)))
         for fl, fn, v, why in res:
             if v == 'DIFFERENT': anydiff = True; print('  DIFFERENT %s: %s' % (fn, why))
             elif v == 'not checked' and verbose is False and '--why' in a: print('  not checked %s: %s' % (fn, why))
