@@ -36,7 +36,7 @@ element, except where the model mis-extends the index (see below).
 
 Commands, from `scripts/analysis/cc900` (`R=~/compartilhado/cc900-oracle/runs/2026-11-10-1-micro-random1/out/v423`):
 
-    flock ~/compartilhado/cc900-oracle/vm/.runlock bash oracle/run_oracle.sh micro-random1 corpus \
+    bash oracle/run_oracle.sh micro-random1 corpus \
         corpus/random-sources.txt corpus/options-micro.txt v423          # the oracle run (the VM is shared)
     python3 -I -B model/score.py    $R/none/random   corpus/random/*.c --opt none
     python3 -I -B model/score.py    $R/O3XS/random   corpus/random/*.c --opt O3XS

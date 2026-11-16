@@ -721,7 +721,7 @@ same bodies, and `make gate` passes with either (Makefile, "Firmware C code"; `s
 
   Identical texts in several trees are one compile.
 - **One VM job per make.**  A make compiles all uncached files in ONE VM job: `oracle/run_vm.sh` with
-  `VM_SNAPSHOT=1` (`-snapshot`), under `vm/.runlock`.  The build writes nothing into the oracle tree.  A fully
+  `VM_SNAPSHOT=1` (`-snapshot`), in a slot of the VM pool (`oracle/vm_slot.sh`).  The build writes nothing into the oracle tree.  A fully
   cached make does not touch the VM, so it builds with no VM at all.
 - **No fallback.**  When a file is not cached and the VM is unusable, the build stops.  It lists the files and
   what the VM lacks, then gives the flag `make CC900_COMPILER=model`.
