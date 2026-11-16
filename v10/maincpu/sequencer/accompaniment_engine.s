@@ -13222,75 +13222,19 @@ AccTone_InlineBytecodeData_Code_Helper3_Epilogue:
 	inc	2, xsp
 	ret
 ; Clears bit 1 of 0x32ff and bit 3 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
-AccTone_InlineBytecodeData_Code_Helper3_Helper:
-	res	1, (ACC_REQ_INTRO:16)
-	res	3, (PANEL_STYLE+5:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 5:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccTone_InlineBytecodeData_Code_Helper3_Helper:	.include "includes/generated/cc900/AccTone_InlineBytecodeData_Code_Helper3_Helper.s"	; C: cc900/accompaniment_engine_m249.c
 ; Clears bit 0 of 0x32ff and bit 2 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
-AccTone_InlineBytecodeData_Code_Helper3_Helper2:
-	res	0, (ACC_REQ_INTRO:16)
-	res	2, (PANEL_STYLE+5:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 5:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccTone_InlineBytecodeData_Code_Helper3_Helper2:	.include "includes/generated/cc900/AccTone_InlineBytecodeData_Code_Helper3_Helper2.s"	; C: cc900/accompaniment_engine_m249.c
 ; Clears bit 2 of 0x32ff and bit 2 of 0xfc60 and sends AddswbWr(72, 6, 0, 0).
-AccTone_InlineBytecodeData_Code_Helper3_Helper3:
-	res	2, (ACC_REQ_INTRO:16)
-	res	2, (PANEL_STYLE+6:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 6:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccTone_InlineBytecodeData_Code_Helper3_Helper3:	.include "includes/generated/cc900/AccTone_InlineBytecodeData_Code_Helper3_Helper3.s"	; C: cc900/accompaniment_engine_m249.c
 ; Clears bit 0 of 0x32fd and bit 4 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
-AccVoice_BarCounterBytecodeData_Helper8:
-	res	0, (ACC_REQ_ENDING:16)
-	res	4, (PANEL_STYLE+5:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 5:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccVoice_BarCounterBytecodeData_Helper8:	.include "includes/generated/cc900/AccVoice_BarCounterBytecodeData_Helper8.s"	; C: cc900/accompaniment_engine_m249.c
 ; Clears bit 1 of 0x32fd and bit 5 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
-AccVoice_BarCounterBytecodeData_Helper9:
-	res	1, (ACC_REQ_ENDING:16)
-	res	5, (PANEL_STYLE+5:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 5:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccVoice_BarCounterBytecodeData_Helper9:	.include "includes/generated/cc900/AccVoice_BarCounterBytecodeData_Helper9.s"	; C: cc900/accompaniment_engine_m249.c
 ; Clears bit 0 of 0x32fb and bit 6 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
-AccVoice_BarCounterBytecodeData_Helper3:
-	res	0, (ACC_REQ_FILLIN:16)
-	res	6, (PANEL_STYLE+5:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 5:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccVoice_BarCounterBytecodeData_Helper3:	.include "includes/generated/cc900/AccVoice_BarCounterBytecodeData_Helper3.s"	; C: cc900/accompaniment_engine_m249.c
 ; Clears bit 1 of 0x32fb and bit 7 of 0xfc5f and sends AddswbWr(72, 5, 0, 0).
-AccVoice_BarCounterBytecodeData_Helper10:
-	res	1, (ACC_REQ_FILLIN:16)
-	res	7, (PANEL_STYLE+5:16)
-	pushw	0
-	ldw	wa, 72
-	ld	bc, 5:i3
-	ld	de, 0:i3
-	call	AddswbWr
-	ret
+AccVoice_BarCounterBytecodeData_Helper10:	.include "includes/generated/cc900/AccVoice_BarCounterBytecodeData_Helper10.s"	; C: cc900/accompaniment_engine_m249.c
 ; Sets the working cursor for part bit A: A = 2 gives page 0xfffe (empty); otherwise the page is
 ; the word for that part (AccPart_BitToIndexTable) in the record at (0x3426).  Offset 0x33d8 = 6.
 AccPedal_DirectionA_Wrap_Helper:
@@ -28875,23 +28819,12 @@ Tempo_AdjustEffect_WideArg:
 
 ; Records a parameter change for the composer's display: sets bits 0 and 3 of 0xe3e2 and
 ; stores A in 0xe3e4 and C in 0xe3e6.
-Tempo_DisplayParamCommon:
-	or (0xe3e2:16), 9
-	ld (0xe3e4:16), a
-	ld (0xe3e6:16), c
-	ret
+Tempo_DisplayParamCommon:	.include "includes/generated/cc900/Tempo_DisplayParamCommon.s"	; C: cc900/accompaniment_engine_m257.c
 
 ; Stores A in GLOBAL_ERROR_CODE and sends sound-controller command 0xee.
-Tempo_DisplayParamSkipClear:
-	ld (GLOBAL_ERROR_CODE:16), a
-	ldw wa, TT_MESAGE
-	jp UI_InterruptTitleByIndex
-Tempo_DisplayParamFormat:
-	ld	(0xe3de:16), 0x80
-	ld	(0xe3dc:16), a
-	ret
-TimeSig_ProcNop:
-	ret
+Tempo_DisplayParamSkipClear:	.include "includes/generated/cc900/Tempo_DisplayParamSkipClear.s"	; C: cc900/accompaniment_engine_m257.c
+Tempo_DisplayParamFormat:	.include "includes/generated/cc900/Tempo_DisplayParamFormat.s"	; C: cc900/accompaniment_engine_m0.c
+TimeSig_ProcNop:	.include "includes/generated/cc900/TimeSig_ProcNop.s"	; C: cc900/accompaniment_engine_m0.c
 
 Tempo_DisplayParamReturn:
 	pushw_erp 0xfa
@@ -34963,14 +34896,7 @@ MainMspBnkNameFunc:
 	ret
 
 ; On ACTIVE_TITLE 181 only: delivers EVT_PAINT with XWA = 0xb5001e, XDE = 0 (ApDeliveryEvent).
-SoundCtrl_SendAccTempo:
-	cp (ACTIVE_TITLE:16), 181
-	ret nz
-	ld xwa, 0xb5001e
-	ld xbc, EVT_PAINT
-	ld xde, 0:i3
-	call ApDeliveryEvent
-	ret
+SoundCtrl_SendAccTempo:	.include "includes/generated/cc900/SoundCtrl_SendAccTempo.s"	; C: cc900/accompaniment_engine_m259.c
 
 ; On title 181 only: SoundCtrl_CalcScaledTempo, then EVT_PAINT with 0xb50002 to that screen.
 SoundCtrl_SendTempoScaled:
@@ -35039,14 +34965,7 @@ AccGuard_SendProgramChange:
 
 
 ; On ACTIVE_TITLE 201 only: delivers EVT_PAINT with XWA = 0xc90009, XDE = 0 (ApDeliveryEvent).
-AccSeq_DeliverC9_0009:
-	cp (ACTIVE_TITLE:16), 201
-	ret nz
-	ld xwa, 0xc90009
-	ld xbc, EVT_PAINT
-	ld xde, 0:i3
-	call ApDeliveryEvent
-	ret
+AccSeq_DeliverC9_0009:	.include "includes/generated/cc900/AccSeq_DeliverC9_0009.s"	; C: cc900/accompaniment_engine_m259.c
 
 ; On ACTIVE_TITLE 201 only: delivers EVT_PAINT with XWA = 0xc9000a, XDE = 0 (ApDeliveryEvent).
 AccSeq_DeliverC9_000A:

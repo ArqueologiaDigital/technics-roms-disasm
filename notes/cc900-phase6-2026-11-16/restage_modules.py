@@ -35,15 +35,30 @@ def main():
             mod[c[1]] = int(c[2])
     # every probe function's text -> that probe's declarations (a staged function takes its own probe's, since a
     # staging file assembled from several probes can lack a prototype: run 55's 16 differences)
-    probe_decls = {}
+    # the probe that matched (probe_matches.tsv, the latest run first) is preferred over any other probe with the
+    # same function text: another probe's declarations of the same names can differ (GetDiskSizeInfo, run 68)
+    matched = {}
+    for l in open(os.path.join(HERE, 'probe_matches.tsv')):
+        c = l.rstrip('\n').split('\t')
+        if len(c) == 4 and c[0] != 'function':
+            matched[c[0]] = [x.split('@')[0] for x in c[3].split()]
+    probe = {}                                               # stem -> (decls, {short name: comment}, {fn text})
     pdir = os.path.join(REPO, 'scripts', 'analysis', 'cc900', 'corpus', 'firmware')
     for f in sorted(os.listdir(pdir)):
         if f.startswith('p6_') and f.endswith('.c'):
             its = sp.items(open(os.path.join(pdir, f), encoding='latin-1').read())
-            ds = [d for k, d in its if k in ('decl', 'pp')]
+            names = {}
             for k, d in its:
-                if k == 'fn':
-                    probe_decls.setdefault(norm(d), ds)
+                if k == 'name':
+                    for m in re.finditer(r'cc900-name:\s*(\w+)\s*=', d):
+                        names[m.group(1)] = d
+            probe[f[:-2]] = ([d for k, d in its if k in ('decl', 'pp')], names,
+                             {norm(d) for k, d in its if k == 'fn'})
+    def probe_for(label, text):
+        for stem in matched.get(label, []) + sorted(probe):
+            if stem in probe and norm(text) in probe[stem][2]:
+                return probe[stem]
+        return None
     sdir = os.path.join(REPO, 'v10', 'maincpu', 'cc900-staged')
     groups = collections.OrderedDict()
     src_of, old_files, missing = {}, [], []
@@ -66,15 +81,19 @@ def main():
             label = lm.get(cn, cn)
             key = (base, flags, mod.get(label, 0))
             nm = [c for c in names if re.search(r'cc900-name:\s*%s\s*=' % re.escape(cn), c)]
-            ds = probe_decls.get(norm(d))
-            if ds is None:
-                missing.append(cn); ds = own
+            pr = probe_for(label, d)
+            if pr is None:
+                missing.append(cn); ds, pnames = own, {}
+            else:
+                ds, pnames = pr[0], pr[1]
             need, picked, changed = sp.idents(d), [], True
             while changed:
                 changed = False
                 for x in ds:
                     if x not in picked and sp.defines(x) & need:
                         picked.append(x); need |= sp.idents(x); changed = True
+            # cc900-name comments of the callees and objects it uses (its own comes with it in nm)
+            nm = nm + [c for n, c in pnames.items() if n in need and c not in nm]
             groups.setdefault(key, []).append((d, nm, [x for x in ds if x in picked]))
             src_of[key] = src
         old_files.append(p)

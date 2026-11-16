@@ -11,8 +11,8 @@ extern long ram_25d6c;
 extern long FileIO_DiskInfoInit;
 extern void GetDiskFreeSpace(long *, long *);
 extern int FileIO_ReadByte(void);
+extern unsigned char ram_25db6;
 extern unsigned char FileIO_DiskInfoInit_MediaType;
-extern char ram_25db6;
 extern unsigned char GetMediaType(void);
 
 long GetEncodedFreeSpaceData(void)

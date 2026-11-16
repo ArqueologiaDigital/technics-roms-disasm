@@ -367,15 +367,9 @@ SetDialFocus:
 
 ; Returns in XHL the object the data dial is focused on (DIAL_FOCUS), or 0xffffffff while the dial
 ; is disabled (DIAL_ENABLE = 0).
-GetDialFocus:
-	cpw (DIAL_ENABLE:24), 0
-	jr nz, GetDialFocus_Active
-	ld xhl, 0xffffffff
-	ret
-
-GetDialFocus_Active:
-	ld xhl, (DIAL_FOCUS:24)
-	ret
+GetDialFocus:	.include "includes/generated/cc900/GetDialFocus.s"	; C: cc900/presentation_sound_nav_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetDialFocus_Active, GetDialFocus + 15
 
 ; Sets what the data dial's up direction sends: DIAL_UP_CALLBACK = XWA, DIAL_UP_EVENT = XBC,
 ; DIAL_UP_PARAM = XDE, then moves the dial focus to object XWA (SetDialFocus, which broadcasts

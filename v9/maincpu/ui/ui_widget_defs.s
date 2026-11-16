@@ -19495,26 +19495,13 @@ LcdOff:
 LcdOff_Done2:
 	jr LcdOn_Return
 
-LcdOn_Return:
-	call VGA_ScreenBlank
-	ldw (0x030464:24), 0x0000
-	ret
+LcdOn_Return:	.include "includes/generated/cc900/LcdOn_Return.s"	; C: cc900/ui_widget_defs_m273_xr.c
 
 
-LcdOff_Done:
-	cpw (0x030464:24), 0
-	ret z
-
-	call VGA_ScreenUnblank
-	ret
+LcdOff_Done:	.include "includes/generated/cc900/LcdOff_Done.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 
-LcdOff_Return:
-	cpw (0x030464:24), 0
-	ret z
-
-	call VGA_ScreenBlank
-	ret
+LcdOff_Return:	.include "includes/generated/cc900/LcdOff_Return.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 
 ; =============================================================================

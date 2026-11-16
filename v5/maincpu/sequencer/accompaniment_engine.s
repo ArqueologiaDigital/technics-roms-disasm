@@ -26999,21 +26999,10 @@ SeqToComposer_StepTranspose_WideArg:
 Tempo_AdjustEffect_WideArg:
 	extz	wa
 	jrl	Tempo_AdjustEffect
-Tempo_DisplayParamCommon:
-	or	(0xe2f8:16), 0x09
-	ld	(0xe2fa:16), a
-	ld	(0xe2fc:16), c
-	ret
-Tempo_DisplayParamSkipClear:
-	ld	(GLOBAL_ERROR_CODE:16), a
-	ldw	wa, TT_MESAGE
-	jp	UI_InterruptTitleByIndex
-Tempo_DisplayParamFormat:
-	ld	(0xe2f4:16), 0x80
-	ld	(0xe2f2:16), a
-	ret
-TimeSig_ProcNop:
-	ret
+Tempo_DisplayParamCommon:	.include "includes/generated/cc900/Tempo_DisplayParamCommon.s"	; C: cc900/accompaniment_engine_m257.c
+Tempo_DisplayParamSkipClear:	.include "includes/generated/cc900/Tempo_DisplayParamSkipClear.s"	; C: cc900/accompaniment_engine_m257.c
+Tempo_DisplayParamFormat:	.include "includes/generated/cc900/Tempo_DisplayParamFormat.s"	; C: cc900/accompaniment_engine_m0.c
+TimeSig_ProcNop:	.include "includes/generated/cc900/TimeSig_ProcNop.s"	; C: cc900/accompaniment_engine_m0.c
 Tempo_DisplayParamReturn:
 	push QIZ
 	lds_erpb 0xfb, 0
@@ -33203,20 +33192,7 @@ MainMspBnkNameFunc:
 	ld xhl, 0:i3
 	ret
 
-SoundCtrl_SendAccTempo:
-	; cpdi8 (0x8d38), 181 (v7 patched)
-	cp	(ACTIVE_TITLE:16), 181
-	ret nz
-
-	ld xwa, 0xb5001e
-
-	ld xbc, EVT_PAINT
-
-	ld xde, 0:i3
-
-	; call ApDeliveryEvent (v7 addr)
-	call	ApDeliveryEvent
-	ret
+SoundCtrl_SendAccTempo:	.include "includes/generated/cc900/SoundCtrl_SendAccTempo.s"	; C: cc900/accompaniment_engine_m259.c
 
 
 
@@ -33301,20 +33277,7 @@ AccGuard_SendProgramChange:
 	ldw	wa, TT_APCSEL
 	call	UI_InterruptTitleByIndex
 	ret
-AccSeq_DeliverC9_0009:
-	; cpdi8 (0x8d38), 201 (v7 patched)
-	cp	(ACTIVE_TITLE:16), 201
-	ret nz
-
-	ld xwa, 0xc90009
-
-	ld xbc, EVT_PAINT
-
-	ld xde, 0:i3
-
-	; call ApDeliveryEvent (v7 addr)
-	call	ApDeliveryEvent
-	ret
+AccSeq_DeliverC9_0009:	.include "includes/generated/cc900/AccSeq_DeliverC9_0009.s"	; C: cc900/accompaniment_engine_m259.c
 
 
 

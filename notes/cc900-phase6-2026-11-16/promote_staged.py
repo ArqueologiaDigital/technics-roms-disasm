@@ -52,7 +52,18 @@ def main():
     a = sys.argv[1:]
     dry = '--dry-run' in a
     trees = [x for x in a if not x.startswith('--')] or list(TREES)
+    trees = [x for x in trees if x in TREES]
     ledger = os.path.join(HERE, 'staged_v423.tsv')
+    # --checked-only: promote a staged file only when staged_v423.tsv holds V4.23 rows for its CURRENT text (same
+    # SHA-256) and every one of them is a MATCH; the others wait for the next check
+    ok = None
+    if '--checked-only' in a:
+        rows = {}
+        for l in open(ledger):
+            c = l.rstrip('\n').split('\t')
+            if len(c) >= 8 and c[0] in TREES:
+                rows.setdefault((c[0], c[1], c[2]), []).append(c[7])
+        ok = {k for k, v in rows.items() if v and all(x == 'MATCH' for x in v)}
     for t in trees:
         sdir = os.path.join(REPO, t, 'maincpu', 'cc900-staged')
         cdir = os.path.join(REPO, t, 'maincpu', 'cc900')
@@ -61,6 +72,9 @@ def main():
                 continue
             sp_path = os.path.join(sdir, fn)
             text = open(sp_path, encoding='latin-1').read()
+            if ok is not None and (t, os.path.relpath(sp_path, REPO), sv.sha256(sp_path)) not in ok:
+                print('%s: %s not checked in its current text: left staged' % (t, fn))
+                continue
             flags = sv.file_flags(sp_path)
             dst = os.path.join(cdir, fn)
             if os.path.exists(dst) and built_flags(dst) != flags:
@@ -69,6 +83,10 @@ def main():
             lm = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', text)}
             dup = [lm.get(sp.fn_name(d), sp.fn_name(d)) for k, d in sp.items(text)
                    if k == 'fn' and lm.get(sp.fn_name(d), sp.fn_name(d)) in have]
+            nfn = sum(1 for k, _ in sp.items(text) if k == 'fn')
+            if dup and len(dup) == nfn and all(have[d] == os.path.basename(dst) or True for d in dup):
+                print('%s: %s already promoted' % (t, fn))  # a re-run after a stop
+                continue
             if dup:
                 sys.exit('%s: %s already defined in cc900/ (%s)' % (sp_path, ', '.join(dup), ', '.join(sorted(set(have[d] for d in dup)))))
             if os.path.exists(dst):                       # a name the built file declares otherwise: a sibling file

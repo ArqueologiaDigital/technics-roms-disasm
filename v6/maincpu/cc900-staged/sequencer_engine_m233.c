@@ -89,3 +89,4 @@ void SeqPlay_StopAndResetAll(void)
   }
 }
 
+/* cc900-name: SeqSyncPosMidiTiming=Seq_SyncPositionAndOutputMIDITiming */

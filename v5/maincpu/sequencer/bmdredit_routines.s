@@ -1003,34 +1003,12 @@ BmDrEdit_RestoreEditState:
 	ldmm16	SEQ_DATA_OFFSET, 0x274e
 	ret
 
-BmDrEdit_ClearAndScanToEnd:
-	ld (SEQ_ERROR_CODE:16), 0
-
-BmDrEdit_ScanToEnd_Loop:
-	ld	wa, (SEQ_DATA_OFFSET:16)
-	cp wa, 5:i3
-	jr ule, BmDrEdit_ScanToEnd_CheckNextSong
-	dec 1, wa
-	ld	(SEQ_DATA_OFFSET:16), wa
-	jr BmDrEdit_ScanToEnd_CheckEndMark
-
-BmDrEdit_ScanToEnd_CheckNextSong:
-	ld	wa, (SEQ_DATA_BLOCK:16)
-	call PartCtrl_ReadWord_Off1
-	cp hl, 0:i3
-	jr nz, BmDrEdit_ScanToEnd_AdvanceSong
-	ld (SEQ_ERROR_CODE:16), 255
-	ret
-
-BmDrEdit_ScanToEnd_AdvanceSong:
-	ld	(SEQ_DATA_BLOCK:16), hl
-	ldw	(SEQ_DATA_OFFSET:16), 255
-
-BmDrEdit_ScanToEnd_CheckEndMark:
-	call SeqData_ReadNextByte
-	bit 7, l
-	jr z, BmDrEdit_ScanToEnd_Loop
-	ret
+BmDrEdit_ClearAndScanToEnd:	.include "includes/generated/cc900/BmDrEdit_ClearAndScanToEnd.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ScanToEnd_Loop, BmDrEdit_ClearAndScanToEnd + 5
+	.set	BmDrEdit_ScanToEnd_CheckNextSong, BmDrEdit_ClearAndScanToEnd + 21
+	.set	BmDrEdit_ScanToEnd_AdvanceSong, BmDrEdit_ClearAndScanToEnd + 39
+	.set	BmDrEdit_ScanToEnd_CheckEndMark, BmDrEdit_ClearAndScanToEnd + 49
 
 BmDrEdit_LoadAlternateState:
 	ldmm16	0x2744, 0x2750
@@ -2760,35 +2738,12 @@ BmDrEdit_LoadAlternateAndValidate:
 BmDrEdit_LoadAlternateAndValidate_Done:
 	jr BmDrEdit_CountMeasuresAndValidate
 
-BmDrEdit_CountMeasuresAndValidate:
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_CountMeasures_Init
-	ldw wa, 0xd1
-	call SeqData_SetErrorCode
-
-BmDrEdit_CountMeasures_Init:
-	ldw	(0x2758:16), 0
-
-BmDrEdit_CountMeasures_Loop:
-	call SeqData_ReadNextByte
-	cp l, 0x82
-	jr z, BmDrEdit_CheckAndReportScanError
-	cp l, 0x84
-	jr z, BmDrEdit_CheckAndReportScanError
-	cp l, 0x81
-	jr nz, BmDrEdit_CountMeasures_SkipEvent
-	incw	1, (0x2758:16)
-
-BmDrEdit_CountMeasures_SkipEvent:
-	call SeqData_SkipToNextEvent
-	jr BmDrEdit_CountMeasures_Loop
-
-BmDrEdit_CheckAndReportScanError:
-	cp (SEQ_ERROR_CODE:16), 0
-	ret z
-	ldw wa, 0xce
-	call SeqData_SetErrorCode
-	ret
+BmDrEdit_CountMeasuresAndValidate:	.include "includes/generated/cc900/BmDrEdit_CountMeasuresAndValidate.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_CountMeasures_Init, BmDrEdit_CountMeasuresAndValidate + 14
+	.set	BmDrEdit_CountMeasures_Loop, BmDrEdit_CountMeasuresAndValidate + 20
+	.set	BmDrEdit_CountMeasures_SkipEvent, BmDrEdit_CountMeasuresAndValidate + 43
+	.set	BmDrEdit_CheckAndReportScanError, BmDrEdit_CountMeasuresAndValidate + 49
 
 BmDrEdit_NavigateBackwardWithEdit:
 	dec 4, xsp
@@ -3164,67 +3119,17 @@ BmDrEdit_VelChange_Epilog:
 	lda xsp, (xsp + 20)
 	ret
 
-BmDrEdit_DecrementAndValidateCounter:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ld xwa, (xsp + 4)
-	decm 1, (xwa)
-	cpw (xwa), 0x5
-	jr nc, BmDrEdit_DecrValidate_ReturnZero
-	ld wa, (xiz)
-	call PartCtrl_ReadWord_Off1
-	ld (xiz), hl
-	cpw (xiz), 0x4d8
-	jr ule, BmDrEdit_DecrValidate_LinkNext
-	ldw wa, 0xa0
-	call SeqData_SetErrorCode
-	ldw hl, 0xffff
-	jr BmDrEdit_DecrValidate_Epilog
+BmDrEdit_DecrementAndValidateCounter:	.include "includes/generated/cc900/BmDrEdit_DecrementAndValidateCounter.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_DecrValidate_LinkNext, BmDrEdit_DecrementAndValidateCounter + 45
+	.set	BmDrEdit_DecrValidate_ReturnZero, BmDrEdit_DecrementAndValidateCounter + 52
+	.set	BmDrEdit_DecrValidate_Epilog, BmDrEdit_DecrementAndValidateCounter + 54
 
-BmDrEdit_DecrValidate_LinkNext:
-	ld xwa, (xsp + 4)
-	ldw (xwa), 0xff
-
-BmDrEdit_DecrValidate_ReturnZero:
-	ld hl, 0:i3
-
-BmDrEdit_DecrValidate_Epilog:
-	pop xiz
-	inc 4, xsp
-	ret
-
-PartCtrl_ReadWordWithBoundsCheck:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ld xwa, (xsp + 4)
-	incw 1, (xwa)
-	cpw (xwa), 0xff
-	jr ule, BmDrEdit_BoundsCheck_ReturnZero
-	ld wa, (xiz)
-	call PartCtrl_ReadWord
-	ld (xiz), hl
-	cpw (xiz), 0x4d8
-	jr ule, BmDrEdit_BoundsCheck_ResetCounter
-	ldw wa, 0xa1
-	call SeqData_SetErrorCode
-	ldw hl, 0xffff
-	jr BmDrEdit_BoundsCheck_Epilog
-
-BmDrEdit_BoundsCheck_ResetCounter:
-	ld xwa, (xsp + 4)
-	ldw (xwa), 0x5
-
-BmDrEdit_BoundsCheck_ReturnZero:
-	ld hl, 0:i3
-
-BmDrEdit_BoundsCheck_Epilog:
-	pop xiz
-	inc 4, xsp
-	ret
+PartCtrl_ReadWordWithBoundsCheck:	.include "includes/generated/cc900/PartCtrl_ReadWordWithBoundsCheck.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_BoundsCheck_ResetCounter, PartCtrl_ReadWordWithBoundsCheck + 45
+	.set	BmDrEdit_BoundsCheck_ReturnZero, PartCtrl_ReadWordWithBoundsCheck + 52
+	.set	BmDrEdit_BoundsCheck_Epilog, PartCtrl_ReadWordWithBoundsCheck + 54
 
 PartCtrl_ReadByteExtended:
 	extz bc

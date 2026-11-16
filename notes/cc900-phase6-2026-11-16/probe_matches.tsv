@@ -1,0 +1,367 @@
+# Probe functions Toshiba V4.23 reproduced (probe_v423.py --tsv of each run): function, bytes, oracle run, matches (probe@set)
+function	bytes	run	matches
+AccVoice_ComputeParamAddr	72	2026-11-16-32-p6-m18-olevels	p6_A_1a@O1XSXr p6_A_1a@O1Xr p6_A_1a@O2XSXr p6_A_1a@O2Xr p6_A_1a@O3XSXr p6_A_1a@O3Xr p6_A_1a@Xr
+ArpQueue_Enqueue	48	2026-11-16-32-p6-m18-olevels	p6_C_1a@O3Xr p6_C_1b@O3Xr
+ArpQueue_InitBuffer	34	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1XSXr p6_C_1b@O1Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr
+AudioInit_ClearPartFlags_ByMode	175	2026-11-16-32-p6-m18-olevels	p6_D_1a@Xr
+AudioInit_SelectPriority	220	2026-11-16-32-p6-m18-olevels	p6_D_1a@Xr
+COMM_SendDataReturn	134	2026-11-16-32-p6-m18-olevels	p6_B_1a@Xr
+DataBuf_CheckSubFormat	46	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr
+Demo_GetPresetBaseForPartExt	37	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr
+FDC_DRIVE_DETECT	78	2026-11-16-32-p6-m18-olevels	p6_D_1a@O1XSXr p6_D_1a@O1Xr p6_D_1a@Xr
+FDemoText_ResetLayoutState	106	2026-11-16-32-p6-m18-olevels	p6_D_1b@O3XSXr p6_D_1b@O3Xr
+FileIO_BuildFilePath	34	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1Xr p6_C_1b@O2Xr p6_C_1b@O3Xr p6_C_1b@Xr
+FileIO_BuildRecordPath_Done	20	2026-11-16-32-p6-m18-olevels	p6_m18a@O1XSXr p6_m18a@O1Xr p6_m18a@O2XSXr p6_m18a@O2Xr p6_m18a@O3XSXr p6_m18a@O3Xr p6_m18a@Xr p6_m18b@O1XSXr p6_m18b@O1Xr p6_m18b@O2XSXr p6_m18b@O2Xr p6_m18b@O3XSXr p6_m18b@O3Xr p6_m18b@Xr
+FileIO_BuildRecordPath_Return	24	2026-11-16-32-p6-m18-olevels	p6_m18a@O1XSXr p6_m18a@O1Xr p6_m18a@O2XSXr p6_m18a@O2Xr p6_m18a@O3XSXr p6_m18a@O3Xr p6_m18a@Xr p6_m18b@O1XSXr p6_m18b@O1Xr p6_m18b@O2XSXr p6_m18b@O2Xr p6_m18b@O3XSXr p6_m18b@O3Xr
+FileIO_FormatName_Loop	20	2026-11-16-32-p6-m18-olevels	p6_m18a@O1XSXr p6_m18a@O1Xr p6_m18a@O2XSXr p6_m18a@O2Xr p6_m18a@O3XSXr p6_m18a@O3Xr p6_m18a@Xr p6_m18b@O1XSXr p6_m18b@O1Xr p6_m18b@O2XSXr p6_m18b@O2Xr p6_m18b@O3XSXr p6_m18b@O3Xr p6_m18b@Xr
+FileIO_GetRecordAttr_Check	24	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr
+FileIO_GetRecordType_Extended	31	2026-11-16-32-p6-m18-olevels	p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr
+LinkVoiceSlots_LoadReg	22	2026-11-16-32-p6-m18-olevels	p6_m14a@Xr
+MidiChan_ClearStorageFields	31	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1XSXr p6_C_1b@O1Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr
+MidiChan_NibbleLookup_Data	42	2026-11-16-32-p6-m18-olevels	p6_C_1a@O3Xr p6_C_1b@O3Xr
+MidiPkt_SetXferBlock_CurrentSong	23	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1Xr p6_C_1a@O2Xr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1Xr p6_C_1b@O2Xr p6_C_1b@O3Xr p6_C_1b@Xr
+MidiPkt_SetXferBlock_PanelMemories	25	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1XSXr p6_C_1b@O1Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr p6_C_1b@Xr
+MidiPkt_SetXferBlock_SongSlots	24	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1Xr p6_C_1a@O2Xr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1Xr p6_C_1b@O2Xr p6_C_1b@O3Xr p6_C_1b@Xr
+MidiPkt_SetXferBlock_SoundRamId	24	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1Xr p6_C_1a@O2Xr p6_C_1a@O3Xr p6_C_1a@Xr
+MidiPkt_SetXferTotal_SoundRam	26	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1Xr p6_C_1a@O2Xr p6_C_1a@O3Xr p6_C_1a@Xr
+MidiSeq_CheckSyncDirty	74	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1XSXr p6_C_1b@O1Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr p6_C_1b@Xr
+NoteMap_LinkVoiceSlots	73	2026-11-16-32-p6-m18-olevels	p6_B_1a@Xr p6_B_1b@Xr
+NoteMap_SwapVoiceLinks	68	2026-11-16-32-p6-m18-olevels	p6_B_1a@Xr p6_B_1b@Xr
+PartCtrl_AppendToEventQueue	66	2026-11-16-32-p6-m18-olevels	p6_B_1a@O2Xr p6_B_1a@O3Xr p6_B_1b@O2Xr p6_B_1b@O3Xr
+Part_CheckAndSetModifiedFlags	52	2026-11-16-32-p6-m18-olevels	p6_B_1a@O2Xr p6_B_1a@O3Xr p6_B_1b@O2Xr p6_B_1b@O3Xr
+Part_ProcessEntry_Data	25	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O1Xr p6_C_1b@O2Xr p6_C_1b@O3Xr p6_C_1b@Xr
+Part_ReadByteDirect	37	2026-11-16-32-p6-m18-olevels	p6_B_1b@O1XSXr p6_B_1b@O1Xr p6_B_1b@O2XSXr p6_B_1b@O2Xr p6_B_1b@O3XSXr p6_B_1b@O3Xr p6_B_1b@Xr
+Part_WriteByte	37	2026-11-16-32-p6-m18-olevels	p6_B_1b@O1XSXr p6_B_1b@O1Xr p6_B_1b@O2XSXr p6_B_1b@O2Xr p6_B_1b@O3XSXr p6_B_1b@O3Xr p6_B_1b@Xr
+RegisterMode	38	2026-11-16-32-p6-m18-olevels	p6_D_1b@O1XSXr p6_D_1b@O1Xr p6_D_1b@O2XSXr p6_D_1b@O2Xr p6_D_1b@O3XSXr p6_D_1b@O3Xr
+RenderSmfFilename	72	2026-11-16-32-p6-m18-olevels	p6_D_1a@O3Xr p6_D_1b@O3Xr
+S2cTtl_InitOnTitleChange	82	2026-11-16-32-p6-m18-olevels	p6_A_1a@O2XSXr p6_A_1a@O2Xr p6_A_1a@O3XSXr p6_A_1a@O3Xr p6_A_1b@O2XSXr p6_A_1b@O2Xr p6_A_1b@O3XSXr p6_A_1b@O3Xr
+SeLfo_GetSelectedLfo	86	2026-11-16-32-p6-m18-olevels	p6_D_1a@O2XSXr p6_D_1a@O2Xr p6_D_1a@O3XSXr p6_D_1a@O3Xr
+SeqParams_InitDefaults	336	2026-11-16-32-p6-m18-olevels	p6_B_1a@O1XSXr p6_B_1a@O1Xr p6_B_1a@O2XSXr p6_B_1a@O2Xr p6_B_1a@O3XSXr p6_B_1a@O3Xr p6_B_1a@Xr p6_B_1b@O1XSXr p6_B_1b@O1Xr p6_B_1b@O2XSXr p6_B_1b@O2Xr p6_B_1b@O3XSXr p6_B_1b@O3Xr p6_B_1b@Xr
+SeqPlay_InitStartState	92	2026-11-16-32-p6-m18-olevels	p6_B_1a@O2XSXr p6_B_1a@O2Xr p6_B_1a@O3XSXr p6_B_1a@O3Xr
+SeqPlay_ResetStartState	38	2026-11-16-32-p6-m18-olevels	p6_B_1a@O1XSXr p6_B_1a@O1Xr p6_B_1a@O2XSXr p6_B_1a@O2Xr p6_B_1a@O3XSXr p6_B_1a@O3Xr p6_B_1a@Xr p6_B_1b@O1XSXr p6_B_1b@O1Xr p6_B_1b@O2XSXr p6_B_1b@O2Xr p6_B_1b@O3XSXr p6_B_1b@O3Xr p6_B_1b@Xr
+SeqRec_OverflowCleanup	42	2026-11-16-32-p6-m18-olevels	p6_A_1a@O1XSXr p6_A_1a@O1Xr p6_A_1a@O2XSXr p6_A_1a@O2Xr p6_A_1a@O3XSXr p6_A_1a@O3Xr p6_A_1a@Xr
+SeqScan_ClearMatchingBarSlots	52	2026-11-16-32-p6-m18-olevels	p6_B_1b@O3XSXr p6_B_1b@O3Xr
+SeqScan_ClearNoteRange	13	2026-11-16-32-p6-m18-olevels	p6_m11@O1XSXr p6_m11@O1Xr p6_m11@O2XSXr p6_m11@O2Xr p6_m11@O3XSXr p6_m11@O3Xr p6_m11@Xr
+SeqVoice_FindDrumPartIndex	50	2026-11-16-32-p6-m18-olevels	p6_B_1a@O3Xr p6_B_1b@O3Xr
+Seq_ComputePercentClamped99	43	2026-11-16-32-p6-m18-olevels	p6_B_1a@O1XSXr p6_B_1a@O1Xr p6_B_1a@O2Xr p6_B_1a@O3Xr p6_B_1a@Xr p6_B_1b@O1XSXr p6_B_1b@O1Xr p6_B_1b@O2Xr p6_B_1b@O3Xr p6_B_1b@Xr
+Seq_ValidateTempoValue	17	2026-11-16-32-p6-m18-olevels	p6_m11@O1XSXr p6_m11@O1Xr p6_m11@O2XSXr p6_m11@O2Xr p6_m11@O3XSXr p6_m11@O3Xr p6_m11@Xr
+SoundParam_ApplyBit15Toggle	41	2026-11-16-32-p6-m18-olevels	p6_C_1a@O2Xr p6_C_1a@O3Xr p6_C_1b@O2Xr p6_C_1b@O3Xr
+Sprintf_InsertCarry	71	2026-11-16-32-p6-m18-olevels	p6_D_1a@O3XSXr
+TGReg_ClearTerminator	21	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr
+TableData_ROM_Verify	33	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr
+TrimAndPadSmfFilename	60	2026-11-16-32-p6-m18-olevels	p6_m18a@O1XSXr p6_m18a@O1Xr p6_m18a@O2Xr p6_m18a@O3Xr
+UnregisteredMode	47	2026-11-16-32-p6-m18-olevels	p6_D_1b@O1XSXr p6_D_1b@O1Xr p6_D_1b@O2XSXr p6_D_1b@O2Xr p6_D_1b@O3XSXr p6_D_1b@O3Xr
+ValidateFileRangeType5	67	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr
+ValidateFileSelectionIndex	34	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr p6_C_1b@O2XSXr p6_C_1b@O2Xr p6_C_1b@O3XSXr p6_C_1b@O3Xr
+VoiceAlloc_TestBitHigh	57	2026-11-16-32-p6-m18-olevels	p6_B_1a@O1XSXr p6_B_1a@O1Xr p6_B_1a@O2XSXr p6_B_1a@O2Xr p6_B_1a@O3XSXr p6_B_1a@O3Xr p6_B_1a@Xr p6_B_1b@O1XSXr p6_B_1b@O1Xr p6_B_1b@O2XSXr p6_B_1b@O2Xr p6_B_1b@O3XSXr p6_B_1b@O3Xr p6_B_1b@Xr
+VoiceQueue_Append	43	2026-11-16-32-p6-m18-olevels	p6_C_1a@O2Xr p6_C_1a@O3Xr p6_C_1b@O2Xr p6_C_1b@O3Xr
+Voice_GetPresetFieldAddr	35	2026-11-16-32-p6-m18-olevels	p6_C_1a@O1XSXr p6_C_1a@O1Xr p6_C_1a@O2XSXr p6_C_1a@O2Xr p6_C_1a@O3XSXr p6_C_1a@O3Xr p6_C_1a@Xr
+AccVoice_ComputeParamAddr	72	2026-11-16-31-p6-r1b	p6_A_1a@O3XSXr p6_A_1a@Xr
+ArpQueue_InitBuffer	34	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr
+AudioInit_ClearPartFlags_ByMode	175	2026-11-16-31-p6-r1b	p6_D_1a@Xr
+AudioInit_SelectPriority	220	2026-11-16-31-p6-r1b	p6_D_1a@Xr
+COMM_SendDataReturn	134	2026-11-16-31-p6-r1b	p6_B_1a@Xr
+DataBuf_CheckSubFormat	46	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr
+Demo_GetPresetBaseForPartExt	37	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr
+FDC_DRIVE_DETECT	78	2026-11-16-31-p6-r1b	p6_D_1a@Xr
+FDemoText_ResetLayoutState	106	2026-11-16-31-p6-r1b	p6_D_1b@O3XSXr
+FileIO_BuildFilePath	34	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@Xr
+FileIO_GetRecordAttr_Check	24	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr
+FileIO_GetRecordType_Extended	31	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1b@O3XSXr
+MidiChan_ClearStorageFields	31	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr
+MidiPkt_SetXferBlock_CurrentSong	23	2026-11-16-31-p6-r1b	p6_C_1a@Xr p6_C_1b@Xr
+MidiPkt_SetXferBlock_PanelMemories	25	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr p6_C_1b@Xr
+MidiPkt_SetXferBlock_SongSlots	24	2026-11-16-31-p6-r1b	p6_C_1a@Xr p6_C_1b@Xr
+MidiPkt_SetXferBlock_SoundRamId	24	2026-11-16-31-p6-r1b	p6_C_1a@Xr
+MidiPkt_SetXferTotal_SoundRam	26	2026-11-16-31-p6-r1b	p6_C_1a@Xr
+MidiSeq_CheckSyncDirty	74	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr p6_C_1b@Xr
+NoteMap_LinkVoiceSlots	73	2026-11-16-31-p6-r1b	p6_B_1a@Xr p6_B_1b@Xr
+NoteMap_SwapVoiceLinks	68	2026-11-16-31-p6-r1b	p6_B_1a@Xr p6_B_1b@Xr
+Part_ProcessEntry_Data	25	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@Xr
+Part_ReadByteDirect	37	2026-11-16-31-p6-r1b	p6_B_1b@O3XSXr p6_B_1b@Xr
+Part_WriteByte	37	2026-11-16-31-p6-r1b	p6_B_1b@O3XSXr p6_B_1b@Xr
+RegisterMode	38	2026-11-16-31-p6-r1b	p6_D_1b@O3XSXr
+S2cTtl_InitOnTitleChange	82	2026-11-16-31-p6-r1b	p6_A_1a@O3XSXr p6_A_1b@O3XSXr
+SeLfo_GetSelectedLfo	86	2026-11-16-31-p6-r1b	p6_D_1a@O3XSXr
+SeqParams_InitDefaults	336	2026-11-16-31-p6-r1b	p6_B_1a@O3XSXr p6_B_1a@Xr p6_B_1b@O3XSXr p6_B_1b@Xr
+SeqPlay_InitStartState	92	2026-11-16-31-p6-r1b	p6_B_1a@O3XSXr
+SeqPlay_ResetStartState	38	2026-11-16-31-p6-r1b	p6_B_1a@O3XSXr p6_B_1a@Xr p6_B_1b@O3XSXr p6_B_1b@Xr
+SeqRec_OverflowCleanup	42	2026-11-16-31-p6-r1b	p6_A_1a@O3XSXr p6_A_1a@Xr
+SeqScan_ClearMatchingBarSlots	52	2026-11-16-31-p6-r1b	p6_B_1b@O3XSXr
+Seq_ComputePercentClamped99	43	2026-11-16-31-p6-r1b	p6_B_1a@Xr p6_B_1b@Xr
+Sprintf_InsertCarry	71	2026-11-16-31-p6-r1b	p6_D_1a@O3XSXr
+TGReg_ClearTerminator	21	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr
+TableData_ROM_Verify	33	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr
+UnregisteredMode	47	2026-11-16-31-p6-r1b	p6_D_1b@O3XSXr
+ValidateFileRangeType5	67	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr
+ValidateFileSelectionIndex	34	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr p6_C_1b@O3XSXr
+VoiceAlloc_TestBitHigh	57	2026-11-16-31-p6-r1b	p6_B_1a@O3XSXr p6_B_1a@Xr p6_B_1b@O3XSXr p6_B_1b@Xr
+Voice_GetPresetFieldAddr	35	2026-11-16-31-p6-r1b	p6_C_1a@O3XSXr p6_C_1a@Xr
+AccCh1_RestoreState	49	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+AccCh1_SaveState	65	2026-11-16-33-p6-r2	p6_A_2a@Xr p6_A_2b@Xr
+AccCh2_RestoreState	49	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+AccCh2_SaveState	65	2026-11-16-33-p6-r2	p6_A_2a@Xr p6_A_2b@Xr
+AccCh3_RestoreState	49	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+AccCh3_SaveState	65	2026-11-16-33-p6-r2	p6_A_2a@Xr p6_A_2b@Xr
+AccCh4_RestoreState	49	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+AccCh4_SaveState	65	2026-11-16-33-p6-r2	p6_A_2a@Xr p6_A_2b@Xr
+AccKbd2_RestoreState	49	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+AccTone_LookupByProgram	56	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr
+AccVoice_ClearChannelStates	31	2026-11-16-33-p6-r2	p6_A_2a@Xr p6_A_2b@Xr
+AccVoice_RestorePartState1	49	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+AccVoice_SavePartState1	65	2026-11-16-33-p6-r2	p6_A_2a@Xr p6_A_2b@Xr
+DataBuf_CopyCompressorBlock16	112	2026-11-16-33-p6-r2	p6_C_2a@O3XSXr p6_C_2a@O3Xr p6_C_2b@O3XSXr p6_C_2b@O3Xr
+Demo_GetPresetBaseForPart	37	2026-11-16-33-p6-r2	p6_C_2a@O3XSXr p6_C_2a@O3Xr p6_C_2a@Xr
+Demo_ScanActivePartChannels	99	2026-11-16-33-p6-r2	p6_C_2b@O3XSXr p6_C_2b@O3Xr
+FileIO_BuildRecordPath_Done	20	2026-11-16-33-p6-r2	p6_m18a@O3XSXr p6_m18a@O3Xr p6_m18a@Xr
+FileIO_BuildRecordPath_Return	24	2026-11-16-33-p6-r2	p6_m18a@O3XSXr p6_m18a@O3Xr p6_m18a@Xr
+FileIO_FormatName_Loop	20	2026-11-16-33-p6-r2	p6_m18a@O3XSXr p6_m18a@O3Xr p6_m18a@Xr
+FileIO_ValidateModeAndRange	76	2026-11-16-33-p6-r2	p6_C_2a@O3XSXr p6_C_2a@O3Xr p6_C_2a@Xr p6_C_2b@O3XSXr p6_C_2b@O3Xr
+MIDIChan_ScanForFree	37	2026-11-16-33-p6-r2	p6_A_2a@O3Xr p6_A_2a@Xr
+MidiPkt_SetXferBlock_LivePanel	25	2026-11-16-33-p6-r2	p6_C_2a@O3XSXr p6_C_2a@O3Xr
+MidiPkt_SetXferBlock_SoundRamData	32	2026-11-16-33-p6-r2	p6_C_2a@O3Xr p6_C_2a@Xr
+MidiSeq_UpdateVolumeScale	59	2026-11-16-33-p6-r2	p6_C_2a@Xr
+ParseTwoDigitFileNum	54	2026-11-16-33-p6-r2	p6_C_2a@O3XSXr p6_C_2a@O3Xr p6_C_2b@O3XSXr p6_C_2b@O3Xr
+Part_IsPercussionType	41	2026-11-16-33-p6-r2	p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+SeqRec_CheckOverflow	23	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr p6_A_2a@Xr p6_A_2b@O3XSXr p6_A_2b@O3Xr p6_A_2b@Xr
+SndParam_ApplyModeSpecific	37	2026-11-16-33-p6-r2	p6_C_2a@O3Xr
+TrimAndPadSmfFilename	60	2026-11-16-33-p6-r2	p6_m18a@O3Xr
+VoiceTable_ResolveReadAddr	28	2026-11-16-33-p6-r2	p6_A_2a@O3XSXr p6_A_2a@O3Xr
+Voice_GetPresetFieldWord	37	2026-11-16-33-p6-r2	p6_C_2a@Xr p6_C_2b@O3XSXr p6_C_2b@O3Xr p6_C_2b@Xr
+AudioInit_CheckMIDIStatus	41	2026-11-16-35-p6-r3	p6_D_2a@Xr
+BmDrEdit_SetupScrollRegion	62	2026-11-16-35-p6-r3	p6_D_2b@O3Xr
+CPanel_CheckSpecialCombos	47	2026-11-16-35-p6-r3	p6_D_2a@Xr
+Chan_IsActive	34	2026-11-16-35-p6-r3	p6_B_2b@O3Xr p6_B_2b@Xr
+CommPort_StatusCheck_Compare	40	2026-11-16-35-p6-r3	p6_B_2a@O3Xr
+FDC_DETECT_CHECK	70	2026-11-16-35-p6-r3	p6_D_2a@Xr
+GetBoxCenter	41	2026-11-16-35-p6-r3	p6_D_2b@O3Xr
+MIDI_GetEventSizeFromByte	83	2026-11-16-35-p6-r3	p6_B_2a@O3Xr
+MidiPkt_CheckGateCondition	77	2026-11-16-35-p6-r3	p6_D_2b@O3Xr
+MidiRingBuf_WriteByte	54	2026-11-16-35-p6-r3	p6_B_2a@Xr
+Param_SignExtendReturn_Helper	41	2026-11-16-35-p6-r3	p6_B_2b@O3Xr
+PartCtrl_AppendToEventQueue	66	2026-11-16-35-p6-r3	p6_B_2a@O3Xr p6_B_2b@O3Xr
+Part_CheckAndSetModifiedFlags	52	2026-11-16-35-p6-r3	p6_B_2b@O3Xr
+RenderSmfFilename	72	2026-11-16-35-p6-r3	p6_D_2b@O3Xr
+RingBuffer_ReadByte	56	2026-11-16-35-p6-r3	p6_B_2a@Xr
+RingBuffer_WriteByte	54	2026-11-16-35-p6-r3	p6_B_2a@Xr
+SeqBuffer_FindMinPosition	48	2026-11-16-35-p6-r3	p6_B_2b@O3Xr
+SeqPlay_CheckRepeatActive	63	2026-11-16-35-p6-r3	p6_B_2a@O3Xr
+Seq_CopyResourcePtrs	88	2026-11-16-35-p6-r3	p6_D_2a@O3Xr
+SndParam_ClearHashTable	48	2026-11-16-35-p6-r3	p6_D_2b@O3Xr
+StoreAndAdvance_LoadDRAM	56	2026-11-16-35-p6-r3	p6_B_2a@Xr
+SysexRingBuf_ReadByte	56	2026-11-16-35-p6-r3	p6_B_2a@Xr
+SysexRingBuf_WriteByte	54	2026-11-16-35-p6-r3	p6_B_2a@Xr
+AccVoice_IncrementBarCounter	25	2026-11-16-37-p6-r5	p6_A_3b@O3Xr
+Audio_DMA_Transfer	60	2026-11-16-37-p6-r5	p6_C_3a@O3Xr p6_C_3b@O3Xr
+BmDrEdit_RenderSecondaryVert	69	2026-11-16-37-p6-r5	p6_D_3a@O3Xr p6_D_3a@Xr p6_D_3b@O3Xr
+ChangeWall_Impl	36	2026-11-16-37-p6-r5	p6_D_3a@O3Xr p6_D_3a@Xr p6_D_3b@O3Xr p6_D_3b@Xr
+DataBuf_CheckFormatPair	52	2026-11-16-37-p6-r5	p6_C_3a@O3Xr p6_C_3a@Xr
+FileIO_CopyString	22	2026-11-16-37-p6-r5	p6_C_3a@O3Xr p6_C_3a@Xr p6_C_3b@O3Xr p6_C_3b@Xr
+Flash_StoreBaseAndInitAccPatch_Helper2	37	2026-11-16-37-p6-r5	p6_D_3a@Xr
+InitializeTimer	61	2026-11-16-37-p6-r5	p6_D_3a@O3Xr
+PanelTlv_CompanionOfPart	37	2026-11-16-37-p6-r5	p6_D_3a@O3Xr p6_D_3a@Xr
+Param_SignExtendReturn_Helper3_Helper	31	2026-11-16-37-p6-r5	p6_C_3a@O3Xr p6_C_3b@O3Xr
+Part_StoreVoiceTableIndex	27	2026-11-16-37-p6-r5	p6_A_3a@O3Xr p6_A_3a@Xr p6_A_3b@O3Xr p6_A_3b@Xr
+SndParam_EncodeAddress	39	2026-11-16-37-p6-r5	p6_D_3a@O3Xr p6_D_3a@Xr
+ValidateFileRange	76	2026-11-16-37-p6-r5	p6_C_3a@O3Xr p6_C_3a@Xr
+ValidateFileRangeAlt	72	2026-11-16-37-p6-r5	p6_C_3a@O3Xr p6_C_3a@Xr
+MIDI_GetEventSize	74	2026-11-16-38-p6-r6	p6_B_3a@O3XSXr p6_B_3a@O3Xr
+Param_SignExtendRetu_Data	36	2026-11-16-38-p6-r6	p6_B_3b@O3XSXr p6_B_3b@O3Xr
+Part_CopyBlock16	47	2026-11-16-38-p6-r6	p6_B_3a@O3XSXr p6_B_3a@O3Xr
+SeqData_CopyBlock2K	47	2026-11-16-38-p6-r6	p6_B_3a@O3XSXr p6_B_3a@O3Xr
+SeqEvent_GetParamLength	94	2026-11-16-38-p6-r6	p6_B_3a@O3XSXr p6_B_3a@O3Xr
+VoiceAlloc_SetBitInMap	31	2026-11-16-38-p6-r6	p6_B_3a@O3XSXr p6_B_3a@O3Xr p6_B_3b@O3XSXr p6_B_3b@O3Xr
+VoiceAlloc_TestBitInMap	33	2026-11-16-38-p6-r6	p6_B_3a@O3XSXr p6_B_3a@O3Xr
+AccPatch_ComplexDataBlock_Helper2	1	2026-11-16-39-p6-r7	p6_A_4a@O3XSXr p6_A_4a@O3Xr p6_A_4a@Xr p6_A_4b@O3XSXr p6_A_4b@O3Xr p6_A_4b@Xr
+DataBuf_CopyEQBlock7	114	2026-11-16-39-p6-r7	p6_C_4b@O3XSXr p6_C_4b@O3Xr
+DataBuf_CopyReverbBlock6	147	2026-11-16-39-p6-r7	p6_C_4b@O3XSXr p6_C_4b@O3Xr
+Demo_GetPresetBaseForPartAlt	37	2026-11-16-39-p6-r7	p6_C_4a@O3XSXr p6_C_4a@O3Xr p6_C_4a@Xr
+FileIO_GetRecordFlags	30	2026-11-16-39-p6-r7	p6_C_4a@O3XSXr p6_C_4a@O3Xr
+RhythmBuf_BytecodeSnippet	6	2026-11-16-39-p6-r7	p6_C_4a@O3XSXr p6_C_4a@O3Xr p6_C_4a@Xr p6_C_4b@O3XSXr p6_C_4b@O3Xr p6_C_4b@Xr
+SeqBuf_DspSysEx_OrphanData	6	2026-11-16-39-p6-r7	p6_C_4a@O3XSXr p6_C_4a@O3Xr p6_C_4a@Xr p6_C_4b@O3XSXr p6_C_4b@O3Xr p6_C_4b@Xr
+SeqBuf_NoteEvent_OrphanData	6	2026-11-16-39-p6-r7	p6_C_4a@O3XSXr p6_C_4a@O3Xr p6_C_4a@Xr p6_C_4b@O3XSXr p6_C_4b@O3Xr p6_C_4b@Xr
+TempoRingBuf_BytecodeSnippet2	6	2026-11-16-39-p6-r7	p6_C_4a@O3XSXr p6_C_4a@O3Xr p6_C_4a@Xr p6_C_4b@O3XSXr p6_C_4b@O3Xr p6_C_4b@Xr
+VoiceParam_CopyBitfields_TypeC	44	2026-11-16-39-p6-r7	p6_C_4b@O3XSXr p6_C_4b@O3Xr
+A_Short_Pause	21	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+AccSeq_DeliverC9_0009	24	2026-11-16-40-p6-r8	p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccTone_InlineBytecodeData_Code_Helper3_Helper	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccTone_InlineBytecodeData_Code_Helper3_Helper2	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccTone_InlineBytecodeData_Code_Helper3_Helper3	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccVoice_BarCounterBytecodeData_Helper10	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccVoice_BarCounterBytecodeData_Helper3	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccVoice_BarCounterBytecodeData_Helper8	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+AccVoice_BarCounterBytecodeData_Helper9	23	2026-11-16-40-p6-r8	p6_A_5a@O3XSXr p6_A_5a@O3Xr p6_A_5a@Xr p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+Audio_CheckAndFlagChanges	64	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4a@Xr
+Audio_InitChannelTimers	31	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+DSPCfg_CheckParamTableEntry	30	2026-11-16-40-p6-r8	p6_D_4b@Xr
+DSPCfg_Data_002	14	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+DSPCfg_GetSlotCount	14	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+Demo_ParseSlideHeader	29	2026-11-16-40-p6-r8	p6_C_5b@O3XSXr p6_C_5b@O3Xr
+FDC_DRIVE_STATUS	26	2026-11-16-40-p6-r8	p6_D_4a@Xr p6_D_4b@Xr
+FDemoText_ScaleDownCoords	23	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+FileIO_ValidateRecord_CheckSize	30	2026-11-16-40-p6-r8	p6_C_5a@O3XSXr p6_C_5a@O3Xr p6_C_5a@Xr
+Flash_AccumWrite_Word	63	2026-11-16-40-p6-r8	p6_C_5a@O3Xr p6_C_5b@O3Xr
+Flash_StoreBaseAndInitAccPatch_Helper	53	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+GetDialFocus	21	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+GetEncodedFreeSpaceData	27	2026-11-16-40-p6-r8	p6_C_5a@O3XSXr p6_C_5a@O3Xr
+GetFrameSPSize	23	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr
+HexCharToNibble	51	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr
+IsColorValid	28	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr
+Pack12BitValueWithBank	20	2026-11-16-40-p6-r8	p6_D_4b@O3XSXr p6_D_4b@O3Xr
+PanelInput_EventIndexOfHeader	26	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+PanelTlv_Rule_ClearBits	20	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr
+ReadVariableLengthInt	56	2026-11-16-40-p6-r8	p6_C_5a@O3Xr p6_C_5b@O3Xr
+SC0Init_ClearContextSlots	36	2026-11-16-40-p6-r8	p6_D_4a@Xr p6_D_4b@Xr
+SOME_DELAY	34	2026-11-16-40-p6-r8	p6_D_4a@Xr p6_D_4b@Xr
+SdpartLookupPartId	32	2026-11-16-40-p6-r8	p6_D_4a@O3Xr p6_D_4a@Xr
+SeMenu_BitShiftMask_End	20	2026-11-16-40-p6-r8	p6_D_4a@O3Xr p6_D_4b@O3Xr
+SeMenu_CopyNameChars	21	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr
+SeMenu_GetNameBufferChar	20	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+SeMenu_LoadParamByte	17	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+SeMenu_NameCharIndexToChar	24	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4a@Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr p6_D_4b@Xr
+SelfTest_PopCount	22	2026-11-16-40-p6-r8	p6_D_4a@O3XSXr p6_D_4a@O3Xr p6_D_4b@O3XSXr p6_D_4b@O3Xr
+SeqAcc_RestorePlaybackState	48	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4a@Xr p6_B_4b@O3XSXr p6_B_4b@O3Xr p6_B_4b@Xr
+SeqBuf_WaitForEmpty	22	2026-11-16-40-p6-r8	p6_C_5a@O3XSXr p6_C_5a@O3Xr p6_C_5a@Xr p6_C_5b@O3XSXr p6_C_5b@O3Xr p6_C_5b@Xr
+SeqLoad_GetBlockRelocationOffset	15	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4a@Xr
+SeqLoad_RestorePartConfig	61	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4a@Xr p6_B_4b@O3XSXr p6_B_4b@O3Xr p6_B_4b@Xr
+SeqMode_SendStatusUpdate	64	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr
+SeqNote_QueueReturn	39	2026-11-16-40-p6-r8	p6_B_4b@O3Xr
+SeqPart_CheckVoiceType	45	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4a@Xr p6_B_4b@O3XSXr p6_B_4b@O3Xr p6_B_4b@Xr
+SeqPart_InitWithValidation	41	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4a@Xr
+SeqPlay_EmergencyStopAll	60	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4b@O3XSXr p6_B_4b@O3Xr
+SndParam_LookupPartIndex	65	2026-11-16-40-p6-r8	p6_B_4b@O3XSXr p6_B_4b@O3Xr
+SndParam_ResolveVoiceEntry	66	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr p6_B_4b@O3XSXr p6_B_4b@O3Xr
+SoundCtrl_SendAccTempo	24	2026-11-16-40-p6-r8	p6_A_5b@O3XSXr p6_A_5b@O3Xr p6_A_5b@Xr
+Sprintf_OctalToStr	34	2026-11-16-40-p6-r8	p6_D_4b@O3XSXr p6_D_4b@O3Xr
+SubCPU_RequestSoundName	65	2026-11-16-40-p6-r8	p6_B_4b@O3XSXr p6_B_4b@O3Xr
+VoiceChain_LinkAtEnd	62	2026-11-16-40-p6-r8	p6_B_4a@O3XSXr p6_B_4a@O3Xr
+BitmapProc	60	2026-11-16-45-p6-r9	p6_G_1a@O3Xr
+BmDrEdit_ClearAndScanToEnd	59	2026-11-16-45-p6-r9	p6_D_5a@O3Xr p6_D_5a@Xr p6_D_5b@O3Xr p6_D_5b@Xr
+BmDrEdit_DecrementAndValidateCounter	58	2026-11-16-45-p6-r9	p6_D_5a@O3Xr
+COMM_SendEqualizerOnOff	33	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+COMM_SendFadeLevel	24	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr
+COMM_SendMicVolume	24	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr
+DataBuf_CopyEffectBlock12	225	2026-11-16-45-p6-r9	p6_D_6a@O3Xr p6_D_6b@O3Xr p6_D_6c@O3Xr
+DataBuf_CopyMixerBlock12	644	2026-11-16-45-p6-r9	p6_D_6a@O3Xr p6_D_6c@O3Xr
+DataBuf_CopyVoiceBlock24	570	2026-11-16-45-p6-r9	p6_D_6a@O3Xr p6_D_6c@O3Xr
+Display_UpdateDirtyRegions	67	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+FDemoText_SendResetMessage	94	2026-11-16-45-p6-r9	p6_D_5a@O3Xr p6_D_5b@O3Xr
+FileIO_ReadHeaderAt4	40	2026-11-16-45-p6-r9	p6_C_6b@O3Xr p6_C_6b@Xr
+FileIO_ReadHeaderAtF	37	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+FileIO_SeekReadAndCheck	29	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+Flash_BurnWithProgress	67	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+FtLangText01	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText01S	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText02	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText03	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText04	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText05	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText06	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText07	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText08	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText09	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText10	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText11	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText12	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText13	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText14	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText15	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText16	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+FtLangText17	17	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+HDAE5000_ProgramCustomDataFlash	82	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+HDAE5000_ProgramTableDataFlash	82	2026-11-16-45-p6-r9	p6_C_6a@Xr p6_C_6b@Xr
+InitializeOperationState	64	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+LcdOff_Done	14	2026-11-16-45-p6-r9	p6_A_7b@O3Xr p6_A_7b@Xr
+LcdOff_Return	14	2026-11-16-45-p6-r9	p6_A_7b@O3Xr p6_A_7b@Xr
+LcdOn_Return	12	2026-11-16-45-p6-r9	p6_A_7a@O3Xr p6_A_7a@Xr p6_A_7b@O3Xr p6_A_7b@Xr
+NAKA_InitDataBlock	1	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr p6_G_1b@O3Xr p6_G_1b@Xr
+Note_CheckTransposeRange	55	2026-11-16-45-p6-r9	p6_B_5a@Xr
+PanelTlv_WriteRecordHeader	18	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+PartCtrl_CheckOwnerAndToggle	97	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+PartCtrl_ReadWordWithBoundsCheck	58	2026-11-16-45-p6-r9	p6_D_5a@O3Xr
+Part_ClearVoiceSlot	88	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5b@O3Xr
+RegBitManip_Handler_4_Helper	54	2026-11-16-45-p6-r9	p6_B_5b@O3Xr
+Rhythm_DispatchCCCommand	33	2026-11-16-45-p6-r9	p6_B_5a@Xr p6_B_5b@Xr
+Scoop_Dispatch_CallFAB273	38	2026-11-16-45-p6-r9	p6_C_6a@Xr p6_C_6b@Xr
+Scoop_Dispatch_Nop	1	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+SelectTone_Continue_Prologue	53	2026-11-16-45-p6-r9	p6_B_5a@Xr
+SendPartDataBlock_ClearByte	33	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+SendPartDataBlock_ClearByte2	33	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+SendPartDataBlock_ClearByte3	33	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+SeqDMA_MultiWrite_DspSysEx	53	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1b@O3Xr
+SeqDMA_MultiWrite_NoteEvent	53	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1b@O3Xr
+SeqDMA_MultiWrite_SoundEdit	53	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1b@O3Xr
+SeqDMA_MultiWrite_VoiceMap	53	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1b@O3Xr
+SeqDMA_Nop	1	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr p6_G_1b@O3Xr p6_G_1b@Xr
+SeqPart_AllocNewEntry	107	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5b@O3Xr
+SeqPart_ByteBlockA95A_Code_Helper	25	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+SeqPart_InitClear	218	2026-11-16-45-p6-r9	p6_B_6a@O3Xr p6_B_6b@O3Xr
+SeqPlay_StopAndResetAll	157	2026-11-16-45-p6-r9	p6_B_6a@O3Xr p6_B_6a@Xr p6_B_6b@O3Xr
+SeqSavePost	23	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+SeqSavePre	32	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr p6_B_5b@O3Xr p6_B_5b@Xr
+SeqStep_SkipThreeEvents	48	2026-11-16-45-p6-r9	p6_D_5a@O3Xr p6_D_5a@Xr p6_D_5b@O3Xr
+SeqStep_WalkReadNext	45	2026-11-16-45-p6-r9	p6_D_5a@O3Xr p6_D_5a@Xr p6_D_5b@O3Xr
+Seq_FullInit	80	2026-11-16-45-p6-r9	p6_C_6b@Xr
+Seq_InitStub_Nop1	1	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+Seq_InitStub_Nop2	1	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+Seq_InitStub_Nop3	1	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr p6_C_6b@Xr
+SndBuf_WriteParamEntries	54	2026-11-16-45-p6-r9	p6_B_5b@O3Xr
+SndOutput_ReinitByMode_NotifyParam	52	2026-11-16-45-p6-r9	p6_D_5a@O3Xr p6_D_5b@O3Xr
+SndParamBank_LoadOptionBlock	102	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1b@O3Xr
+SndParamBank_RestoreOptionBlock	145	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1b@O3Xr
+SndParam_ApplyVoiceValue	59	2026-11-16-45-p6-r9	p6_B_5a@O3Xr
+SubCPU_Payload_Verify	78	2026-11-16-45-p6-r9	p6_C_6a@O3Xr p6_C_6a@Xr p6_C_6b@O3Xr
+SubCPU_SendSystemRecord	32	2026-11-16-45-p6-r9	p6_B_5a@Xr p6_B_5b@Xr
+TGReg_WriteCC12_Assign	37	2026-11-16-45-p6-r9	p6_C_6a@O3Xr
+TGReg_WriteCC3_Expression	38	2026-11-16-45-p6-r9	p6_C_6a@O3Xr
+Text_GlyphToCharCode	56	2026-11-16-45-p6-r9	p6_D_5a@O3Xr
+UI_ChangeModeByIndex	45	2026-11-16-45-p6-r9	p6_D_5b@O3Xr
+UI_ChangeTitleByIndex	45	2026-11-16-45-p6-r9	p6_D_5b@O3Xr
+UI_InterruptTitleByIndex	45	2026-11-16-45-p6-r9	p6_D_5b@O3Xr
+UserBitmapCheck	39	2026-11-16-45-p6-r9	p6_G_1a@O3Xr p6_G_1a@Xr
+VoiceAlloc_CheckRangeAndBit7	25	2026-11-16-45-p6-r9	p6_B_5a@O3Xr p6_B_5a@Xr
+VoiceParam_CopyBitfields_LargeBlock	39	2026-11-16-45-p6-r9	p6_D_6a@O3Xr p6_D_6b@O3Xr p6_D_6c@O3Xr
+VoiceParam_SetD6Group	51	2026-11-16-45-p6-r9	p6_B_5a@O3Xr
+EffectMode_HandleTimerEvents	220	2026-11-16-55-p6-r10	p6_F_1b@O3Xr
+FileOpenDefault	38	2026-11-16-55-p6-r10	p6_E_1a@Xr
+GMYesFunc	72	2026-11-16-55-p6-r10	p6_F_1a@O3Xr p6_F_1b@O3Xr
+SeqStep_ByteBlockF245	138	2026-11-16-55-p6-r10	p6_E_1b@Xr
+SeqStep_FileBufferSetup	224	2026-11-16-55-p6-r10	p6_E_1b@Xr
+Sprintf_FFixed_DataTable	20	2026-11-16-55-p6-r10	p6_E_1a@O3Xr p6_E_1a@Xr
+StsSplitCheck	17	2026-11-16-55-p6-r10	p6_F_1a@O3Xr p6_F_1a@Xr p6_F_1b@O3Xr p6_F_1b@Xr
+TtMdGm	74	2026-11-16-55-p6-r10	p6_F_1a@O3Xr p6_F_1a@Xr p6_F_1b@O3Xr p6_F_1b@Xr
+BmDrEdit_CountMeasuresAndValidate	64	2026-11-16-53-p6-r11	p6_D_7a@O3XSXr p6_D_7a@O3Xr p6_D_7a@Xr p6_D_7b@O3XSXr p6_D_7b@O3Xr p6_D_7b@Xr
+DataBuf_CopyBulkBitfields_944	381	2026-11-16-53-p6-r11	p6_D_7a@O3XSXr p6_D_7a@O3Xr p6_D_7b@O3XSXr p6_D_7b@O3Xr
+DataBuf_CopyBulkBitfields_960	381	2026-11-16-53-p6-r11	p6_D_7a@O3XSXr p6_D_7a@O3Xr p6_D_7b@O3XSXr p6_D_7b@O3Xr
+DrawQueue_Alloc	71	2026-11-16-53-p6-r11	p6_A_9a@O3Xr p6_A_9b@O3Xr
+FDC_SetupSectorParams	91	2026-11-16-53-p6-r11	p6_C_8a@O3Xr
+FDemoText_ParseControlMessage	242	2026-11-16-53-p6-r11	p6_H_2m265a@O3XSXr p6_H_2m265a@O3Xr
+FileData_ConvertNNBlock1Fields	875	2026-11-16-53-p6-r11	p6_D_7a@O3XSXr p6_D_7a@O3Xr p6_D_7b@O3XSXr p6_D_7b@O3Xr
+FileOpenDefault	38	2026-11-16-53-p6-r11	p6_E_1a@Xr
+GetDiskSizeInfo	27	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8a@Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr p6_C_8b@Xr
+IsPointOnScreen	31	2026-11-16-53-p6-r11	p6_H_2m273a@O3XSXr p6_H_2m273a@O3Xr
+LoadFromSecondaryPage	55	2026-11-16-53-p6-r11	p6_C_8a@Xr p6_C_8b@Xr
+MainGetEvent	117	2026-11-16-53-p6-r11	p6_A_9a@O3XSXr p6_A_9a@O3Xr p6_A_9b@O3XSXr p6_A_9b@O3Xr
+NoteMap_LookupAllocAndStoreResult	110	2026-11-16-53-p6-r11	p6_B_7a@Xr
+Param_SignExtendRetu_Block4	65	2026-11-16-53-p6-r11	p6_B_7a@O3XSXr p6_B_7a@O3Xr
+PostEvent	126	2026-11-16-53-p6-r11	p6_A_9a@O3XSXr p6_A_9a@O3Xr p6_A_9b@O3XSXr p6_A_9b@O3Xr
+ProcessNoteOff_Done_Prologue	65	2026-11-16-53-p6-r11	p6_B_7a@Xr
+SeqLoad_ProcessAllVoiceData	409	2026-11-16-53-p6-r11	p6_B_7a@O3Xr
+SeqPlay_HandlePlaybackEvent	213	2026-11-16-53-p6-r11	p6_B_7a@O3Xr
+SeqStep_ByteBlockF245	138	2026-11-16-53-p6-r11	p6_E_1b@Xr
+SeqStep_FileBufferSetup	224	2026-11-16-53-p6-r11	p6_E_1b@Xr
+SetChangeRect	80	2026-11-16-53-p6-r11	p6_H_2m273a@O3XSXr p6_H_2m273a@O3Xr
+Sprintf_FFixed_DataTable	20	2026-11-16-53-p6-r11	p6_E_1a@O3XSXr p6_E_1a@O3Xr p6_E_1a@Xr p6_E_1b@O3XSXr
+SubCPU_RequestShortSoundName	65	2026-11-16-53-p6-r11	p6_B_7a@O3XSXr p6_B_7a@O3Xr
+TGReg_WriteCC10_KeyShift	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC11_PartMode	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC4_Pan	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC4_Sustain	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC5_Modulation	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC7_Reverb	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC8_Chorus	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+TGReg_WriteCC9_Variation	38	2026-11-16-53-p6-r11	p6_C_8a@O3XSXr p6_C_8a@O3Xr p6_C_8b@O3XSXr p6_C_8b@O3Xr
+Tempo_DisplayParamCommon	14	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
+Tempo_DisplayParamFormat	10	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
+Tempo_DisplayParamSkipClear	11	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr
+TimeSig_ProcNop	1	2026-11-16-53-p6-r11	p6_C_8m257@O3XSXr p6_C_8m257@O3Xr p6_C_8m257@Xr

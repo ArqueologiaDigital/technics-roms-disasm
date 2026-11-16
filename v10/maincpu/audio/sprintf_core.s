@@ -1194,20 +1194,9 @@ Sprintf_HexToStr_Loop:
 	ld (xhl), 0x0
 	ret
 
-Sprintf_OctalToStr:
-	ld xde, (xsp + 8)
-	ld xhl, (xsp + 4)
-
-Sprintf_OctalToStr_Loop:
-	lda xbc, (xhl+:1)
-	ld xwa, xde
-	and xwa, 0x7
-	add xwa, 0x30
-	ld (xbc), a
-	srl xde, 3
-	jr nz, Sprintf_OctalToStr_Loop
-	ld (xhl), 0x0
-	ret
+Sprintf_OctalToStr:	.include "includes/generated/cc900/Sprintf_OctalToStr.s"	; C: cc900/sprintf_core_m310.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_OctalToStr_Loop, Sprintf_OctalToStr + 6
 
 Sprintf_FormatFloat:
 	lda xsp, (xsp - 26)
@@ -1694,18 +1683,10 @@ Sprintf_FFixed_Return:
 	inc 4, xsp
 	ret
 
-Sprintf_FFixed_DataTable:
-	ld	xwa, (xsp+4)
-Sprintf_FFixed_DataTable_Loop:
-	cp	(xwa), 0
-	jr	nz, Sprintf_FormatFFixed_Skip
-	ld	hl, 1:i3
-	ret
-Sprintf_FormatFFixed_Skip:
-	cp	(xwa+), 48
-	jr	z, Sprintf_FFixed_DataTable_Loop
-	ld	hl, 0:i3
-	ret
+Sprintf_FFixed_DataTable:	.include "includes/generated/cc900/Sprintf_FFixed_DataTable.s"	; C: cc900/sprintf_core_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_FFixed_DataTable_Loop, Sprintf_FFixed_DataTable + 3
+	.set	Sprintf_FormatFFixed_Skip, Sprintf_FFixed_DataTable + 11
 
 Sprintf_FormatEScientific:
 	dec 2, xsp
