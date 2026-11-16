@@ -183,6 +183,9 @@ def translate_line(t, syms, locals_):
     if t.endswith(':') and not t.startswith('\t'): return t
     parts = t.strip().split(None, 1); op = parts[0]
     raw = [a.strip() for a in re.split(r',(?![^()]*\))', parts[1])] if len(parts) > 1 else []
+    # V4.23 (inline assembly) writes the current location as `$` (jr $+2); llvm-mc writes it `.`.  Only a `$` standing
+    # alone in an operand expression: never inside a quoted string, a symbol name or a `$`-prefixed number.
+    raw = [a if "'" in a or '"' in a else re.sub(r'(?<![\w$.])\$(?![\w$])', '.', a) for a in raw]
     if op == 'align': return '\t.balign %s' % raw[0]
     if op == 'dfb' and len(raw) == 2: return '\t.fill %s, 1, %s' % (raw[0], raw[1])   # _CTYPE.C: dfb 128,0
     if op == 'dsb' and len(raw) == 1: return '\t.zero %s' % raw[0]
