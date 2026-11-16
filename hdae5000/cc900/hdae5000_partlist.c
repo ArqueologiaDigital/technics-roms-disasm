@@ -1,6 +1,6 @@
-/* The part-list builder of hdae5000 (no calls inside a module): helper h_near2's C that matches.
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r13_nc.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_partlist.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_partlist.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
 */
 #include "hdae_ws.h"

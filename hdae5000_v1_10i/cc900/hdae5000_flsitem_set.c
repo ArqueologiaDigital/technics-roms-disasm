@@ -1,6 +1,6 @@
-/* The FLS item module of hdae5000_ui_display.s: the setters that match (they call FlsItem_IsSet relatively, cc900-module).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r13_ng1.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_flsitem_set.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_flsitem_set.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FlsItemSetAS_u=HDAE5000_FlsItem_SetAutoStart
    cc900-name: FlsItemSetAL_u=HDAE5000_FlsItem_SetAutoLoad

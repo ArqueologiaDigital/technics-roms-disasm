@@ -4415,36 +4415,9 @@ HDAE5000_FlsItem_SetSong:
 ; mark it with "*" (owner's manual: "AUTO START (AS)").
 ; In:  WA = FLS, BC = item, E = value
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetAutoStart:
-	dec	4, xsp
-	pushw iz
-	ld	(xsp+2), e
-	ld	iz, bc
-	ld (xsp + 0x04), wa
-	ld	wa, (xsp+4)
-	ld	bc, iz
-	calr	HDAE5000_FlsItem_IsSet
-	ld	wa, hl
-	cp	wa, 0xffff
-	jr	z, HDAE5000_FlsItem_SetAutoStart_Epilogue
-	ld	bc, iz
-	extz xbc
-	ld	wa, (xsp+4)
-	extz xwa
-	ld	xde, xwa
-	sll	xde, 0x03
-	add	xde, xwa
-	sll	xde, 0x04
-	add	xde, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+80:24)
-	ld	xbc, xwa
-	add	xbc, xde
-	ld	a, (xsp+2)
-	ld	(xbc), a
-HDAE5000_FlsItem_SetAutoStart_Epilogue:
-	popw iz
-	inc 4, xsp
-	ret
+HDAE5000_FlsItem_SetAutoStart:	.include "includes/generated/cc900/HDAE5000_FlsItem_SetAutoStart.s"	; C: cc900/hdae5000_flsitem_set.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FlsItem_SetAutoStart_Epilogue, HDAE5000_FlsItem_SetAutoStart + 62
 
 ; ---------------------------------------------------------------------------
 ; Item BC of FLS record WA, when set: its AL (AUTO LOAD) option byte at +112 =
@@ -4453,36 +4426,9 @@ HDAE5000_FlsItem_SetAutoStart_Epilogue:
 ; is loaded (owner's manual: "AUTO LOAD (AL)").
 ; In:  WA = FLS, BC = item, E = value
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetAutoLoad:
-	dec	4, xsp
-	pushw iz
-	ld	(xsp+2), e
-	ld	iz, bc
-	ld (xsp + 0x04), wa
-	ld	wa, (xsp+4)
-	ld	bc, iz
-	calr	HDAE5000_FlsItem_IsSet
-	ld	wa, hl
-	cp	wa, 0xffff
-	jr	z, HDAE5000_FlsItem_SetAutoLoad_Epilogue
-	ld	bc, iz
-	extz xbc
-	ld	wa, (xsp+4)
-	extz xwa
-	ld	xde, xwa
-	sll	xde, 0x03
-	add	xde, xwa
-	sll	xde, 0x04
-	add	xde, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
-	ld	xbc, xwa
-	add	xbc, xde
-	ld	a, (xsp+2)
-	ld	(xbc), a
-HDAE5000_FlsItem_SetAutoLoad_Epilogue:
-	popw iz
-	inc 4, xsp
-	ret
+HDAE5000_FlsItem_SetAutoLoad:	.include "includes/generated/cc900/HDAE5000_FlsItem_SetAutoLoad.s"	; C: cc900/hdae5000_flsitem_set.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FlsItem_SetAutoLoad_Epilogue, HDAE5000_FlsItem_SetAutoLoad + 62
 
 
 ; ---------------------------------------------------------------------------

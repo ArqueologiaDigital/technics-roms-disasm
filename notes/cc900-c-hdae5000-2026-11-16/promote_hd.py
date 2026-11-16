@@ -99,6 +99,7 @@ def main():
             if not f.endswith('.c'):
                 continue
             staged = os.path.join(sdir, f)
+            written = set()
             text = open(staged, encoding='latin-1').read()
             label = dict(NAME_RE.findall(text))
             groups = {}
@@ -143,8 +144,18 @@ def main():
                     if r.returncode != 0:
                         sys.exit('%s: splice failed after a clean dry run: %s' % (out, r.stderr[-300:]))
                 print('%s: %s (%d functions, from %s)' % (tree, rel, len(keep), f))
+                written.add(os.path.basename(out))
                 if dry:
                     remove_generated(out, cdir)
+            # a C file an earlier run made from this staged file whose functions are all held now: no hand source
+            # includes it any more, so it goes (only files whose header names this staged file)
+            for old in sorted(os.listdir(cdir)):
+                mark = 'promoted from cc900-staged/%s ' % f
+                if old.endswith('.c') and old not in written and \
+                        mark in open(os.path.join(cdir, old), encoding='latin-1').read(600):
+                    print('%s: removing cc900/%s (all its functions are held now)' % (tree, old))
+                    if not dry:
+                        remove_generated(os.path.join(cdir, old), cdir)
     for t, lab, why in held:
         print('HELD %s %s: %s' % (t, lab, why))
 
