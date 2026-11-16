@@ -27,6 +27,12 @@ extern void FDC_TIMING_DELAY(void);
 extern void FDC_CMD_SEND(int);
 extern void FDC_POST_OP(void);
 extern void FDC_CmdSeek(void);
+extern unsigned char __near FDC_SPECIFY_SRT;
+extern unsigned char __near FDC_SPECIFY_HUT;
+extern unsigned char __near FDC_SPECIFY_HLT;
+extern unsigned char __near FDC_SPECIFY_ND;
+extern void FDC_SendParameterByte(int);
+extern void FDC_SendParams_Specify(void);
 
 unsigned char FDC_ValidateOpcode()
 {
@@ -95,4 +101,15 @@ void FDC_CmdSeek(void)
     FDC_POST_OP();
     if (FDC_ERROR_CODE != 0) FDC_CURRENT_CYLINDER = 255;
     SOME_DELAY(16);
+}
+
+void FDC_SendParams_Specify(void)
+{
+    unsigned char hi, lo;
+    hi = FDC_SPECIFY_SRT << 4;
+    lo = FDC_SPECIFY_HUT & 15;
+    FDC_SendParameterByte(hi | lo);
+    hi = FDC_SPECIFY_HLT << 1;
+    lo = FDC_SPECIFY_ND & 1;
+    FDC_SendParameterByte(hi | lo);
 }

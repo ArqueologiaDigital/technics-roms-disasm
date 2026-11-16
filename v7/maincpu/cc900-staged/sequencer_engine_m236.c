@@ -9,6 +9,14 @@
 /* cc900-module: SeqModeTransit_DemoPath SeqModeTransit_UpdateParts SeqPart_InitClear SeqPart_UndoAllocOnError */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char __near SEQ_ERROR_CODE;
+extern unsigned int __near SEQOP_SECONDARY_BLOCK;
+extern unsigned int __near SEQOP_SECONDARY_OFFSET;
+extern unsigned int __near ram_265c;
+extern unsigned int __near ram_265e;
+extern unsigned long __near ram_25da;
+extern void PartCtrl_WriteByte_ZeroExtended(unsigned int, unsigned int, unsigned int);
+extern void PartCtrl_ReadWordWithBoundsCheck(unsigned int *, unsigned int *);
+extern void SeqPart_ReplayForward(void);
 extern unsigned char __near SEQ_TRACK;
 extern unsigned char __near SEQ_OP_DEST_TRACK;
 extern unsigned char __near SEQ_EDIT_FLAGS;
@@ -32,6 +40,23 @@ extern unsigned int __near ram_27da;
 extern int SeqPart_SetupRightPos(void);
 extern unsigned char __near ram_2652;
 extern void SeqPart_InitClear(void);
+
+void SeqPart_ReplayForward(void)
+{
+  unsigned long i;
+  SEQ_ERROR_CODE = 0;
+  SEQOP_SECONDARY_BLOCK = ram_265c;
+  SEQOP_SECONDARY_OFFSET = ram_265e;
+  ram_25da = ram_25da - 1;
+  i = 0;
+  while (ram_25da != i) {
+    PartCtrl_WriteByte_ZeroExtended(SEQOP_SECONDARY_BLOCK, SEQOP_SECONDARY_OFFSET, 0x81);
+    i++;
+    PartCtrl_ReadWordWithBoundsCheck(&SEQOP_SECONDARY_BLOCK, &SEQOP_SECONDARY_OFFSET);
+    if (SEQ_ERROR_CODE != 0) return;
+  }
+  PartCtrl_WriteByte_ZeroExtended(SEQOP_SECONDARY_BLOCK, SEQOP_SECONDARY_OFFSET, 0x82);
+}
 
 void SeqPart_PositionEqual(void)
 {

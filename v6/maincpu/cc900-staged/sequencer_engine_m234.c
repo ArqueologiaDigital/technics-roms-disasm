@@ -6,8 +6,19 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: PartCtrl_ReadWord PartCtrl_ReadWord_Off1 PartCtrl_SetClearBit7 PartCtrl_TestBit7 PartCtrl_WriteWord PartCtrl_WriteWord_Off1 Part_DecrementVoicePos Part_WriteByte Part_WriteWord Part_WriteWordBlock_OffsetAF SeqModeTransit_DemoPath SeqModeTransit_UpdateParts SeqPart_InitClear SeqPart_UndoAllocOnError SeqStatus_CheckBit2 */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: Accomp_ValidateAutoPlayChordVoice PartCtrl_ReadWord PartCtrl_ReadWord_Off1 PartCtrl_SetClearBit7 PartCtrl_TestBit7 PartCtrl_WriteWord PartCtrl_WriteWord_Off1 Part_DeactivateChannel Part_DecrementVoicePos Part_IsVoiceActive Part_WriteByte Part_WriteWord Part_WriteWordBlock_OffsetAF SeqModeTransit_DemoPath SeqModeTransit_UpdateParts SeqPart_InitClear SeqPart_UndoAllocOnError SeqPlay_DeactivateChannelFull SeqPlay_HandleChannelSolo SeqPlay_InitStartState SeqStatus_CheckBit2 SeqVoice_ActivateWithBarSync Seq_ValidatePartNumber Seq_ValidateTempoValue */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern unsigned int __near SEQ_TRACK_MASK;
+extern unsigned char __near SEQ_TRANSPORT_STATE;
+extern unsigned int __near ram_281e;
+extern unsigned char __near SEQ_TRACK;
+extern unsigned int __near SEQ_OP_FROM;
+extern unsigned int __near SEQ_OP_MEASURES;
+extern unsigned char __near ram_25fc;
+extern unsigned char __near ram_263e;
+extern int Seq_ValidatePartNumber();
+extern int Seq_ValidateTempoValue(unsigned int);
+extern int Seq_ValidatePartTempoAndRange(void);
 extern unsigned char PartCtrl_TestBit7(unsigned int);
 extern void PartCtrl_SetClearBit7(unsigned int, unsigned int);
 extern int Part_DecrementVoicePos(void);
@@ -29,18 +40,25 @@ extern unsigned long __near SEQ_BLOCK_POOL;
 extern unsigned long __near ram_ce8;
 extern unsigned int __near ram_d30;
 extern void SeqVoice_SetDefaultParams(void);
-extern unsigned int __near SEQ_TRACK_MASK;
 extern unsigned char __near SEQ_CHORD_FROM_SONG;
 extern unsigned char __near SEQ_RTMCFG;
 extern unsigned char __near PLAY_TRANSPORT_STATE;
 extern unsigned char __near ACC_TRANSPORT_STATE;
-extern unsigned char __near SEQ_TRANSPORT_STATE;
 extern unsigned char __near CURRENT_MODE;
 extern unsigned char __near ram_2890;
-extern unsigned int __near ram_281e;
 extern void SeqModeTransit_DemoPath(void);
 extern void SeqModeTransit_UpdateParts(void);
 extern void Seq_HandleModeTransition(void);
+
+
+int Seq_ValidatePartTempoAndRange(void)
+{
+  if (SEQ_TRACK != 0x11 && Seq_ValidatePartNumber(SEQ_TRACK) != 0) return -1;
+  if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0) return -1;
+  if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0) return -1;
+  if (ram_25fc > 127 || ram_263e > 127) return -1;
+  return 0;
+}
 
 
 void Part_UnlinkVoiceFromChain(void)

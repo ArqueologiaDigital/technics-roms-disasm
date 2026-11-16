@@ -6,20 +6,23 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: BmDrEdit_CheckAndSelectChannel BmDrEdit_InitCommon BmDrEdit_SyncChannelAndGetPos BmDrEdit_ValidateAndProcessVoice NoteEditSy_ScanAndSortEntries */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: BmDrEdit_ApplyVelocityChange BmDrEdit_CheckAndSelectChannel BmDrEdit_ClearAndScanToEnd BmDrEdit_CopyEventDataBetweenParts BmDrEdit_CountMeasuresInit BmDrEdit_InitCommon BmDrEdit_RefreshDisplayState BmDrEdit_SaveSongPosition BmDrEdit_SeekForwardToEvent BmDrEdit_SyncChannelAndGetPos BmDrEdit_ValidateAndProcessVoice NoteEditSy_ScanAndSortEntries */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-extern void NoteEditSy_ScanAndSortEntries(void);
-extern void BmDrEdit_InitCommon(void);
-extern unsigned char *__cdecl Malloc(unsigned int);
-typedef unsigned char *ucp;
 extern unsigned char __near ram_2742;
-extern ucp __near ram_1d50;
-extern ucp __near ram_1d54;
-extern unsigned int __near ram_278e;
+extern void BmDrEdit_InitCommon(void);
 extern unsigned int __near ram_2792;
-extern unsigned int __near ram_2796;
+extern unsigned int __near ram_2794;
+extern unsigned int __near ram_278e;
+extern unsigned int __near ram_2790;
 extern unsigned char __near ram_2774;
 extern unsigned char __near ram_27a2;
+extern void BmDrEdit_InitMelodicMode(void);
+extern void NoteEditSy_ScanAndSortEntries(void);
+extern unsigned char *__cdecl Malloc(unsigned int);
+typedef unsigned char *ucp;
+extern ucp __near ram_1d50;
+extern ucp __near ram_1d54;
+extern unsigned int __near ram_2796;
 extern void BmDrEdit_InitDrumMode(void);
 extern unsigned int __near ram_275e;
 extern unsigned int __near ram_276a;
@@ -48,6 +51,16 @@ extern void BmDrEdit_ValidateAndProcessVoice(unsigned int, unsigned int, unsigne
 extern unsigned int __near ram_287f;
 extern unsigned int __near ram_2744;
 extern unsigned char __near BMDREDIT_CHANNEL;
+
+void BmDrEdit_InitMelodicMode(void)
+{
+	ram_2792 = ram_2794;
+	ram_278e = ram_2790;
+	ram_2742 &= ~1;
+	ram_2774 = 10;
+	ram_27a2 = 11;
+	BmDrEdit_InitCommon();
+}
 
 void BmDrEdit_InitDrumMode(void)
 {

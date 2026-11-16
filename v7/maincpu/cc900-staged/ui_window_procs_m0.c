@@ -6,14 +6,45 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: DrawEditSw GetBoxCenter GetClientBox GetDialFocus GetEditSwPoint MainLswGet MainRamGet PsListBoxProc PsParaBoxProc SetAutoInc SetDialDown SetDialEnable SetDialUp VwBoxProc */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: DrawEditSw GetBoxCenter GetClientBox GetDialFocus GetEditSwPoint MainLswGet MainRamGet PsListBoxProc PsParaBoxProc SetAutoInc SetDialDown SetDialEnable SetDialUp SndParamBank_WriteFlashDefaults VwBoxProc */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+#define EVT_DRAW              0x1c0000dL
+#define EVT_GET_BITMAP_DATA   0x1e000a1L
+#define EVT_GET_BITMAP_WIDTH  0x1e000a2L
+#define EVT_GET_BITMAP_HEIGHT 0x1e000a3L
+struct pt { int x, y; };
+struct rect { int x1, y1, x2, y2; };
+struct vinst { unsigned char pad[14]; struct rect r; long l22; long l26; int i30; };
+extern long ViewableProc(long, long, long);
+extern void *GetViewInstance(long);
+extern void DrawBitmap(struct pt *, unsigned char *);
+extern void DrawBitmapSPFast(struct pt *, unsigned char *, int, int);
+extern long ApFuncCall(long, long, long);
+extern long VwUserBitmapProc(long obj, long evt, long p);
 #define EVT_SHOW              0x1c00001L
+#define EVT_HIDE              0x1c00002L
+#define EVT_PAINT             0x1c0000bL
+#define EVT_REPAINT           0x1c0000cL
+#define EVT_PARA_DRAW         0x1c0000fL
 #define EVT_INDEXSW_UP        0x1c00017L
 #define EVT_INDEXSW_DOWN      0x1c00018L
 #define EVT_INDEXSW_UP_AIC    0x1c00019L
 #define EVT_INDEXSW_DOWN_AIC  0x1c0001aL
+#define EVT_LSW_DATA          0x1c0001cL
 #define EVT_GET_STRING        0x1e0003aL
+#define EVT_CALC_PARAM        0x1e0003dL
+#define EVT_GET_LARGE_STEP    0x1e0003eL
+#define EVT_GET_SMALL_STEP    0x1e0003fL
+#define EVT_GET_LSW_ADDRESS   0x1e00040L
+#define EVT_GET_LSW_STRING    0x1e00042L
+#define EVT_LSW_DATA_REQ      0x1e00083L
+struct pbinst { unsigned char pad[36]; long func; void *value; };
+struct lswreq { long addr; int val; int pad; long str; };
+extern long PsParaBoxProc(long, long, long);
+extern int MainLswGet(long);
+extern long SendEvent(long, long, long);
+extern long AcLswBoxProc(long obj, long evt, long p);
+extern long PsParaBoxProc(long obj, long evt, long p);
 #define EVT_SET_SELECTED      0x1e0004dL
 #define EVT_CHECK_INDEX       0x1e00050L
 #define EVT_GET_SELECTED      0x1e00090L
@@ -23,10 +54,92 @@ extern void SetDialUp(long, long, long);
 extern void SetDialDown(long, long, long);
 extern void SetAutoInc(long, long, long);
 extern void SetDialEnable(unsigned int);
-extern void *GetViewInstance(long);
-extern long SendEvent(long, long, long);
 extern char *__cdecl Strcpy(char *, char *);
 extern long AcListBoxProc(long obj, long evt, long p);
+
+long VwUserBitmapProc(long obj, long evt, long p)
+{
+	int w;
+	unsigned char *data;
+	struct pt pt;
+	struct vinst *h;
+	int hg;
+
+	if (evt != EVT_DRAW) return ViewableProc(obj, evt, p);
+	ViewableProc(obj, evt, p);
+	h = GetViewInstance(obj);
+	pt.x = h->r.x1;
+	pt.y = h->r.y1;
+	data = (unsigned char *)ApFuncCall(h->l22, EVT_GET_BITMAP_DATA, 0);
+	if (data != 0) {
+		w = ApFuncCall(h->l22, EVT_GET_BITMAP_WIDTH, 0);
+		hg = ApFuncCall(h->l22, EVT_GET_BITMAP_HEIGHT, 0);
+		DrawBitmapSPFast((struct pt *)&pt.x, data, w, hg);
+	} else
+		DrawBitmap(&pt, 0);
+	return 0;
+}
+
+long AcLswBoxProc(long obj, long evt, long p)
+{
+	struct lswreq req;
+	struct pbinst *h;
+	int **pv;
+
+	switch (evt) {
+	case EVT_GET_STRING:
+		h = GetViewInstance(obj);
+		req.addr = ApFuncCall(h->func, EVT_GET_LSW_ADDRESS, 0);
+		req.val = *(int *)h->value;
+		req.str = p;
+		ApFuncCall(h->func, EVT_GET_LSW_STRING, (long)&req);
+		return 0;
+	case EVT_SHOW:
+		PsParaBoxProc(obj, evt, p);
+		return 0;
+	case EVT_HIDE:
+		PsParaBoxProc(obj, evt, p);
+		return 0;
+	case EVT_PAINT:
+	case EVT_REPAINT:
+		PsParaBoxProc(obj, evt, p);
+		h = GetViewInstance(obj);
+		MainLswGet(ApFuncCall(h->func, EVT_GET_LSW_ADDRESS, 0));
+		return 0;
+	case EVT_LSW_DATA:
+		PsParaBoxProc(obj, evt, p);
+		h = GetViewInstance(obj);
+		if (((struct lswreq *)p)->addr == ApFuncCall(h->func, EVT_GET_LSW_ADDRESS, 0)) {
+			pv = (int **)&h->value;
+			**pv = ((struct lswreq *)p)->val;
+			ApFuncCall(h->func, EVT_LSW_DATA_REQ, (long)**pv);
+			SendEvent(obj, EVT_PARA_DRAW, 0);
+		}
+		return 0;
+	case EVT_INDEXSW_UP_AIC:
+		PsParaBoxProc(obj, evt, p);
+		h = GetViewInstance(obj);
+		SendEvent(obj, EVT_CALC_PARAM, ApFuncCall(h->func, EVT_GET_LARGE_STEP, 0));
+		return 0;
+	case EVT_INDEXSW_UP:
+		PsParaBoxProc(obj, evt, p);
+		h = GetViewInstance(obj);
+		SendEvent(obj, EVT_CALC_PARAM, ApFuncCall(h->func, EVT_GET_SMALL_STEP, 0));
+		return 0;
+	case EVT_INDEXSW_DOWN_AIC:
+		PsParaBoxProc(obj, evt, p);
+		h = GetViewInstance(obj);
+		SendEvent(obj, EVT_CALC_PARAM, -ApFuncCall(h->func, EVT_GET_LARGE_STEP, 0));
+		return 0;
+	case EVT_INDEXSW_DOWN:
+		PsParaBoxProc(obj, evt, p);
+		h = GetViewInstance(obj);
+		SendEvent(obj, EVT_CALC_PARAM, -ApFuncCall(h->func, EVT_GET_SMALL_STEP, 0));
+		return 0;
+	default:
+		return PsParaBoxProc(obj, evt, p);
+	}
+}
 
 long AcListBoxProc(long obj, long evt, long p)
 {

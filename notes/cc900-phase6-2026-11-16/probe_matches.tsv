@@ -517,3 +517,30 @@ SndParam_ResolveSelectedPartVoice	49	2026-11-16-100-p6-r19	p6_D_14m277@O3XSXr p6
 SndParam_WriteLookupAndStore	31	2026-11-16-100-p6-r19	p6_D_14m280@O3XSXr p6_D_14m280@O3Xr p6_D_14m280@Xr
 VoiceMap_AllocateSlot	123	2026-11-16-100-p6-r19	p6_A_16m300b@Xr
 WordwrapStrings	163	2026-11-16-100-p6-r19	p6_D_13m274@O3Xr p6_D_13m274@Xr
+DrawRing_Post	48	2026-11-16-92-p6-r18	p6_A_13m273a@O3XSXr p6_A_13m273a@O3Xr p6_A_13m273a@Xr p6_A_13m273b@O3XSXr p6_A_13m273b@O3Xr p6_A_13m273b@Xr
+EditSwProc	152	2026-11-16-92-p6-r18	p6_G_5m271a@O3XSXr p6_G_5m271a@O3Xr p6_G_5m271b@O3XSXr p6_G_5m271b@O3Xr
+FDC_SendParams_Specify	54	2026-11-16-92-p6-r18	p6_C_12m270a@Xr
+Fat_CountContiguousClusters	82	2026-11-16-92-p6-r18	p6_E_5m238@Xr p6_E_5m238b@Xr
+FrameProc	89	2026-11-16-92-p6-r18	p6_G_5m271a@O3XSXr p6_G_5m271a@O3Xr p6_G_5m271b@O3XSXr p6_G_5m271b@O3Xr
+GetEvent	152	2026-11-16-92-p6-r18	p6_A_13m273b@O3XSXr p6_A_13m273b@O3Xr
+InitChannelState_Che_InitVal	130	2026-11-16-92-p6-r18	p6_B_11a@Xr
+LabelProc	90	2026-11-16-92-p6-r18	p6_G_5m271a@O3XSXr p6_G_5m271a@O3Xr p6_G_5m271b@O3XSXr p6_G_5m271b@O3Xr
+SeqStep_FileIoCheck	573	2026-11-16-92-p6-r18	p6_E_5m238@Xr p6_E_5m238b@Xr
+SingleLoadSrc_PanelMemDrawMemoryNumber	170	2026-11-16-92-p6-r18	p6_D_11m269@O3XSXr p6_D_11m269@O3Xr
+SndParamBank_WriteFlashDefaults	201	2026-11-16-92-p6-r18	p6_G_5a@O3XSXr p6_G_5a@O3Xr p6_G_5b@O3XSXr p6_G_5b@O3Xr
+SysEx_ValidateRolandHeader	137	2026-11-16-92-p6-r18	p6_D_11m290@O3XSXr p6_D_11m290@O3Xr
+Unlink	205	2026-11-16-92-p6-r18	p6_A_13m272a@O3XSXr p6_A_13m272a@O3Xr
+VoiceType_CheckDrumOrControl	81	2026-11-16-92-p6-r18	p6_B_11b@O3XSXr p6_B_11b@O3Xr
+VwUserBitmapProc	137	2026-11-16-92-p6-r18	p6_G_5a@O3XSXr p6_G_5a@O3Xr p6_G_5b@O3XSXr p6_G_5b@O3Xr
+AcListBoxProc	421	2026-11-16-107-p6-r21	p6_G_8m271a@O3XSXr p6_G_8m271a@O3Xr p6_G_8m271b@O3XSXr p6_G_8m271b@O3Xr
+AcLswBoxProc	495	2026-11-16-107-p6-r21	p6_G_8m271a@O3XSXr p6_G_8m271a@O3Xr
+BmDrEdit_InitMelodicMode	28	2026-11-16-107-p6-r21	p6_D_15m232@O3XSXr p6_D_15m232@O3Xr p6_D_15m232@Xr
+BmDrEdit_SaveSequencerState	35	2026-11-16-107-p6-r21	p6_D_15m232@Xr
+DrawEditSw	223	2026-11-16-107-p6-r21	p6_G_8m271a@O3XSXr p6_G_8m271a@O3Xr p6_G_8m271b@O3XSXr p6_G_8m271b@O3Xr
+FDemoText_UpdateChannelVoice	98	2026-11-16-107-p6-r21	p6_D_15m265b@O3XSXr p6_D_15m265b@O3Xr
+GetViewInstance	48	2026-11-16-107-p6-r21	p6_A_17m272b@O3XSXr p6_A_17m272b@O3Xr
+PanelTlv_ValidatePanelMemory	29	2026-11-16-107-p6-r21	p6_A_17m277a@O3XSXr p6_A_17m277a@O3Xr p6_A_17m277a@Xr p6_A_17m277b@O3XSXr p6_A_17m277b@O3Xr p6_A_17m277b@Xr
+SeMenu_SelectPartIfEnabled	46	2026-11-16-107-p6-r21	p6_A_17m129a@O3XSXr p6_A_17m129a@O3Xr p6_A_17m129a@Xr
+SeqPart_ReplayForward	95	2026-11-16-107-p6-r21	p6_B_15a@O3Xr
+SeqPlay_HandleChannelToggle	94	2026-11-16-107-p6-r21	p6_B_15m234@O3XSXr p6_B_15m234@O3Xr
+Seq_ValidatePartTempoAndRange	61	2026-11-16-107-p6-r21	p6_B_15m234@O3XSXr p6_B_15m234@O3Xr

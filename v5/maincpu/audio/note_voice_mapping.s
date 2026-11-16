@@ -12965,7 +12965,7 @@ VoiceMap_AllocateSlot:
 	cpw	(0xcda6:16), 0
 	jr	nz, VoiceMap_AllocateSlo_Block
 	lda	xwa, (HARMONY_NOTE_LIST:16)
-	calr	NoteMap_GetVoiceData_Entry
+	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, VoiceMap_AllocateSlo_SetByteFF
 	calr	UIParam_ScanAndCollect
@@ -12988,7 +12988,7 @@ VoiceMap_AllocateSlo_Block:
 	jr	NoteMap_FindBestMatch_Return
 VoiceMap_AllocateSlo_Block2:
 	lda	xwa, (HARMONY_NOTE_LIST:16)
-	calr	NoteMap_GetVoiceData_Entry
+	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, VoiceMap_AllocateSlo_SetByteFF2
 	ld	(0xe8d2:16), 10
@@ -13032,7 +13032,7 @@ NoteMap_FindBestMatch:
 	jr	z, CheckVoiceReuse_SetByteFF2
 NoteMap_CheckVoiceReuse:
 	lda	xwa, (HARMONY_NOTE_LIST:16)
-	calr	NoteMap_GetVoiceData_Entry
+	calr	Harmony_FindReferenceNote
 	cp	l, 0xff
 	jr	z, CheckVoiceReuse_SetByteFF
 	calr	UIParam_ScanAndCollect
@@ -13055,7 +13055,7 @@ CheckVoiceReuse_Block:
 	ld	l, a
 NoteMap_GetVoiceData_Return:
 	ret
-NoteMap_GetVoiceData_Entry:
+Harmony_FindReferenceNote:
 	ld	c, (HARMONY_REF_NOTE:16)
 	ld	(HARMONY_PREV_REF_NOTE:16), c
 	ld	c, (HARMONY_REF_BYTE:16)

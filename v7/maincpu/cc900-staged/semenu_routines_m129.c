@@ -6,8 +6,12 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: SeCtr2_StepPartField SeMenu_BindDialToColumn SeMenu_BitShiftMask SeMenu_FillObjTable SeMenu_IsPartEnabled SeMenu_PostDialEnable SeMenu_PostEditUpDownSet SeMenu_SetCurrentPart SeMenu_SetupMenuDisplay SeMenu_SetupMenuDisplay_Finalize SeMenu_SetupMenuDisplay_Section3_End SeMenu_SetupPartDisplay SeMenu_StepParamFieldSigned SeMenu_StepParamFieldUnsigned SeMenu_StoreEventId SeMenu_ValidatePartNumber */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: SeCtr2_StepPartField SeMenu_BindDialToColumn SeMenu_BitShiftMask SeMenu_FillObjTable SeMenu_FlushDisplayObj SeMenu_IsPartEnabled SeMenu_LoadMasterPtr SeMenu_PostDialEnable SeMenu_PostEditUpDownSet SeMenu_SetCurrentPart SeMenu_SetupMenuDisplay SeMenu_SetupMenuDisplay_Finalize SeMenu_SetupMenuDisplay_Section3_End SeMenu_SetupPartDisplay SeMenu_StepParamFieldSigned SeMenu_StepParamFieldUnsigned SeMenu_StoreEventId SeMenu_ValidatePartNumber */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern void SeMenu_ValidatePartNumber(unsigned char *part);
+extern int SeMenu_IsPartEnabled(unsigned char a);
+extern void SeMenu_SetCurrentPart(unsigned char part);
+extern unsigned char SeMenu_SelectPartIfEnabled(unsigned char p);
 extern void SeMenu_PostDialEnable(int on);
 extern void SeMenu_PostEditUpDownSet(int which, int col, int flag);
 extern void SeMenu_BindDialToColumn(unsigned char col);
@@ -15,8 +19,17 @@ extern void UI_ChangeTitleByIndex(unsigned char i);
 extern void UI_PostRefreshEvent(void);
 extern void SeMenu_StoreEventId(unsigned char id);
 extern void SeMenu_SendEvent(unsigned char title, unsigned char refresh);
-extern void SeMenu_ValidatePartNumber(unsigned char *part);
 extern void SeMenu_InitObjEntry(unsigned char *e);
+
+unsigned char SeMenu_SelectPartIfEnabled(unsigned char p)
+{
+    unsigned char cur;
+    SeMenu_ValidatePartNumber(&cur);
+    if (cur == p || SeMenu_IsPartEnabled(p) == 0)
+        return 0;
+    SeMenu_SetCurrentPart(p);
+    return 1;
+}
 
 void SeMenu_BindDialToColumn(unsigned char col)
 {

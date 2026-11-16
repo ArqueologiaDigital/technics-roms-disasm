@@ -52175,7 +52175,7 @@ CheckVoiceReuse_SetByteFF 00FE7E32
 CheckVoiceReuse_SetByteFF2 00FE7E36
 CheckVoiceReuse_Block 00FE7E3A
 NoteMap_GetVoiceData_Return 00FE7E4D
-NoteMap_GetVoiceData_Entry 00FE7E4E
+Harmony_FindReferenceNote 00FE7E4E
 GetVoiceData_Entry_LoopBody 00FE7E70
 GetVoiceData_Entry_LoopCheck 00FE7E98
 GetVoiceData_Entry_Compare 00FE7E9E
