@@ -1703,15 +1703,9 @@ MainLswPartGet:
 
 
 
-SetLswFilter:
-	add xwa, xbc
-	ld (LSW_FILTER:24), xwa
-	ret
+SetLswFilter:	.include "includes/generated/cc900/SetLswFilter.s"	; C: cc900/ui_widget_defs.c
 
-ResetLswFilter:
-	add xwa, xbc
-	ld (LSW_FILTER:24), xwa
-	ret
+ResetLswFilter:	.include "includes/generated/cc900/ResetLswFilter.s"	; C: cc900/ui_widget_defs.c
 
 AcRamEditBoxProc:
 	lda xsp, (xsp - 34)
@@ -5470,9 +5464,7 @@ IvNaming_Return:
 	inc 8, xsp
 	ret
 
-GetNamingWindowID:
-	ld xhl, 0xa
-	ret
+GetNamingWindowID:	.include "includes/generated/cc900/GetNamingWindowID.s"	; C: cc900/ui_widget_defs.c
 
 NamingCheck:
 	push	xiz
@@ -9174,33 +9166,19 @@ RootObject_GetterBlock:
 	inc 4, xsp
 	ret
 
-GetRootObject:
-	ld xhl, (ROOT_OBJECT:24)
-	ret
+GetRootObject:	.include "includes/generated/cc900/GetRootObject.s"	; C: cc900/ui_widget_defs.c
 
-GetRootEvent:
-	ld xhl, (ROOT_EVENT:24)
-	ret
+GetRootEvent:	.include "includes/generated/cc900/GetRootEvent.s"	; C: cc900/ui_widget_defs.c
 
-GetRootParam:
-	ld xhl, (ROOT_PARAM:24)
-	ret
+GetRootParam:	.include "includes/generated/cc900/GetRootParam.s"	; C: cc900/ui_widget_defs.c
 
-SetRootObject:
-	ld (ROOT_OBJECT:24), xwa
-	ret
+SetRootObject:	.include "includes/generated/cc900/SetRootObject.s"	; C: cc900/ui_widget_defs.c
 
-SetRootEvent:
-	ld (ROOT_EVENT:24), xwa
-	ret
+SetRootEvent:	.include "includes/generated/cc900/SetRootEvent.s"	; C: cc900/ui_widget_defs.c
 
-SetRootParam:
-	ld (ROOT_PARAM:24), xwa
-	ret
+SetRootParam:	.include "includes/generated/cc900/SetRootParam.s"	; C: cc900/ui_widget_defs.c
 
-GetFocusObject:
-	ld xhl, (FOCUS_OBJECT:24)
-	ret
+GetFocusObject:	.include "includes/generated/cc900/GetFocusObject.s"	; C: cc900/ui_widget_defs.c
 
 GetFocusEvent:
 	ld xhl, (FOCUS_EVENT:24)
@@ -10067,13 +10045,9 @@ GetMode_Epilogue10:
 	lda xsp, (xsp + 10)
 	ret
 
-GetModeNow:
-	ld xhl, (MODE_NOW:24)
-	ret
+GetModeNow:	.include "includes/generated/cc900/GetModeNow.s"	; C: cc900/ui_widget_defs.c
 
-GetModeOld:
-	ld xhl, (MODE_OLD:24)
-	ret
+GetModeOld:	.include "includes/generated/cc900/GetModeOld.s"	; C: cc900/ui_widget_defs.c
 
 RegisterMode:
 	ld xhl, xwa
@@ -11208,13 +11182,9 @@ TitleFunc_Epilogue34:
 	lda xsp, (xsp + 34)
 	ret
 
-GetTitleNow:
-	ld xhl, (TITLE_NOW:24)
-	ret
+GetTitleNow:	.include "includes/generated/cc900/GetTitleNow.s"	; C: cc900/ui_widget_defs.c
 
-GetTitleOld:
-	ld xhl, (TITLE_OLD:24)
-	ret
+GetTitleOld:	.include "includes/generated/cc900/GetTitleOld.s"	; C: cc900/ui_widget_defs.c
 
 SetInterruptTime:
 	pushw iz
@@ -18448,15 +18418,9 @@ MainSendEvent_Prologue:
 	ret
 
 
-GetCurrentTarget:
-	ld xhl, (CURRENT_TARGET:24)
-	ret
+GetCurrentTarget:	.include "includes/generated/cc900/GetCurrentTarget.s"	; C: cc900/ui_widget_defs.c
 
-SetCurrentTarget:
-	cp xwa, 0xffffffff
-	ret z
-	ld (CURRENT_TARGET:24), xwa
-	ret
+SetCurrentTarget:	.include "includes/generated/cc900/SetCurrentTarget.s"	; C: cc900/ui_widget_defs.c
 
 MainDispatchEvent:
 	lda xsp, (xsp - 12)

@@ -1664,10 +1664,7 @@ SetLswFilter:	.include "includes/generated/cc900/SetLswFilter.s"	; C: cc900/ui_w
 
 ; Stores XWA + XBC in LSW_FILTER (the same code as SetLswFilter; callers pass the values that
 ; clear the filter).
-ResetLswFilter:
-	add xwa, xbc
-	ld (LSW_FILTER:24), xwa
-	ret
+ResetLswFilter:	.include "includes/generated/cc900/ResetLswFilter.s"	; C: cc900/ui_widget_defs.c
 
 AcRamEditBoxProc:
 	lda xsp, (xsp - 34)
@@ -5384,9 +5381,7 @@ IvNaming_Return:
 
 ; Returns XHL = 10, the naming window's id, for the file-naming screens (TechnicsFileNaming,
 ; SmfFileRename, FormatDiskNaming ...).
-GetNamingWindowID:
-	ld xhl, 0xa
-	ret
+GetNamingWindowID:	.include "includes/generated/cc900/GetNamingWindowID.s"	; C: cc900/ui_widget_defs.c
 
 NamingCheck:
 	push xiz
@@ -9131,36 +9126,24 @@ RootObject_GetterBlock:
 ; Returns in XHL ROOT_OBJECT: the object of the event that DispatchEvent (or the AP-timer
 ; dispatch at RootContext_Setup) is handling.  Unlike FOCUS_OBJECT, nested SendEvent calls leave
 ; it alone.
-GetRootObject:
-	ld xhl, (ROOT_OBJECT:24)
-	ret
+GetRootObject:	.include "includes/generated/cc900/GetRootObject.s"	; C: cc900/ui_widget_defs.c
 
 ; Returns in XHL ROOT_EVENT, the event code of the top-level dispatch (see GetRootObject).
-GetRootEvent:
-	ld xhl, (ROOT_EVENT:24)
-	ret
+GetRootEvent:	.include "includes/generated/cc900/GetRootEvent.s"	; C: cc900/ui_widget_defs.c
 
 ; Returns in XHL ROOT_PARAM, the parameter of the top-level dispatch (see GetRootObject).
-GetRootParam:
-	ld xhl, (ROOT_PARAM:24)
-	ret
+GetRootParam:	.include "includes/generated/cc900/GetRootParam.s"	; C: cc900/ui_widget_defs.c
 
 ; Overrides the top-level dispatch's object (ROOT_OBJECT, see GetRootObject) with XWA;
 ; GroupBoxProc_StartSSFPresentation sets it, and the event with SetRootEvent, this way.
 SetRootObject:	.include "includes/generated/cc900/SetRootObject.s"	; C: cc900/ui_widget_defs.c
 
-SetRootEvent:
-	ld (ROOT_EVENT:24), xwa
-	ret
+SetRootEvent:	.include "includes/generated/cc900/SetRootEvent.s"	; C: cc900/ui_widget_defs.c
 
-SetRootParam:
-	ld (ROOT_PARAM:24), xwa
-	ret
+SetRootParam:	.include "includes/generated/cc900/SetRootParam.s"	; C: cc900/ui_widget_defs.c
 
 ; Returns in XHL the object of the event SendEvent is dispatching (FOCUS_OBJECT).
-GetFocusObject:
-	ld xhl, (FOCUS_OBJECT:24)
-	ret
+GetFocusObject:	.include "includes/generated/cc900/GetFocusObject.s"	; C: cc900/ui_widget_defs.c
 
 GetFocusEvent:
 	ld xhl, (FOCUS_EVENT:24)
@@ -10049,14 +10032,10 @@ GetMode_Epilogue10:
 	ret
 
 ; Returns in XHL the current mode as an object id (MODE_NOW).
-GetModeNow:
-	ld xhl, (MODE_NOW:24)
-	ret
+GetModeNow:	.include "includes/generated/cc900/GetModeNow.s"	; C: cc900/ui_widget_defs.c
 
 ; Returns in XHL the previous mode as an object id (MODE_OLD).
-GetModeOld:
-	ld xhl, (MODE_OLD:24)
-	ret
+GetModeOld:	.include "includes/generated/cc900/GetModeOld.s"	; C: cc900/ui_widget_defs.c
 
 RegisterMode:
 	ld xhl, xwa
@@ -11061,14 +11040,10 @@ TitleFunc_Epilogue34:
 	ret
 
 ; Returns in XHL the current title as an object id (0x01a0nnnn, TITLE_NOW).
-GetTitleNow:
-	ld xhl, (TITLE_NOW:24)
-	ret
+GetTitleNow:	.include "includes/generated/cc900/GetTitleNow.s"	; C: cc900/ui_widget_defs.c
 
 ; Returns in XHL the previous title as an object id (TITLE_OLD).
-GetTitleOld:
-	ld xhl, (TITLE_OLD:24)
-	ret
+GetTitleOld:	.include "includes/generated/cc900/GetTitleOld.s"	; C: cc900/ui_widget_defs.c
 
 SetInterruptTime:
 	pushw iz
@@ -18419,17 +18394,11 @@ MainSendEvent_Prologue:
 
 
 ; Returns in XHL the object that events addressed to 0xffffffff go to (CURRENT_TARGET).
-GetCurrentTarget:
-	ld xhl, (CURRENT_TARGET:24)
-	ret
+GetCurrentTarget:	.include "includes/generated/cc900/GetCurrentTarget.s"	; C: cc900/ui_widget_defs.c
 
 ; Makes XWA the object that events addressed to 0xffffffff go to (CURRENT_TARGET); 0xffffffff
 ; itself is ignored.
-SetCurrentTarget:
-	cp xwa, 0xffffffff
-	ret z
-	ld (CURRENT_TARGET:24), xwa
-	ret
+SetCurrentTarget:	.include "includes/generated/cc900/SetCurrentTarget.s"	; C: cc900/ui_widget_defs.c
 
 MainDispatchEvent:
 	lda xsp, (xsp - 12)

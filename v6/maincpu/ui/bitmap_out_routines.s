@@ -268,15 +268,9 @@ BitMapOut_CheckDiskAndApply:
 	ld XBC,EVT_CHORD_SHOW
 	ld xde, 0:i3
 	jp ApPostEvent
-BitMapOut_ByteData_DiskCheck:
-	ld	l, (35974:16)
-	ret
-BitMapOut_StorePresetValue:
-	ld	(35974:16), a
-	ret
-BitMapOut_SetDefaultTimer:
-	ld	(35972:16), 64
-	ret
+BitMapOut_ByteData_DiskCheck:	.include "includes/generated/cc900/BitMapOut_ByteData_DiskCheck.s"	; C: cc900/bitmap_out_routines.c
+BitMapOut_StorePresetValue:	.include "includes/generated/cc900/BitMapOut_StorePresetValue.s"	; C: cc900/bitmap_out_routines.c
+BitMapOut_SetDefaultTimer:	.include "includes/generated/cc900/BitMapOut_SetDefaultTimer.s"	; C: cc900/bitmap_out_routines.c
 BitMapOut_DecrementTimer:
 	call	GetTitleNow
 	cp	xhl, TITLE_WELCOM
@@ -3321,15 +3315,9 @@ BitMapOut_PrepareRender_CheckBit0:
 	pop xiz
 	ret
 
-BitMapOut_PrepareRender_CheckBit1:
-	ld	l, (35984:16)
-	ret
-BitMapOut_PrepareRender_CheckBit2:
-	ld	(35984:16), a
-	ret
-BitMapOut_GetRenderMode:
-	ld	l, (35986:16)
-	ret
+BitMapOut_PrepareRender_CheckBit1:	.include "includes/generated/cc900/BitMapOut_PrepareRender_CheckBit1.s"	; C: cc900/bitmap_out_routines.c
+BitMapOut_PrepareRender_CheckBit2:	.include "includes/generated/cc900/BitMapOut_PrepareRender_CheckBit2.s"	; C: cc900/bitmap_out_routines.c
+BitMapOut_GetRenderMode:	.include "includes/generated/cc900/BitMapOut_GetRenderMode.s"	; C: cc900/bitmap_out_routines.c
 BitMapOut_GetRenderMode_CheckBit3:
 	lda	xbc, (35986:16)
 	or	(xbc), a

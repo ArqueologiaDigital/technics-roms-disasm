@@ -2924,13 +2924,8 @@ CtrlPanel_SelectionReturnZero:
 	ld hl, 0:i3
 	ret
 
-GetPartSelect:
-	ld	l, (PART_SELECT:16)
-	extz	hl
-	ret
-GetCurrentPartSelect:
-	ld	l, (PART_SELECT:16)
-	ret
+GetPartSelect:	.include "includes/generated/cc900/GetPartSelect.s"	; C: cc900/ui_control_panel.c
+GetCurrentPartSelect:	.include "includes/generated/cc900/GetCurrentPartSelect.s"	; C: cc900/ui_control_panel.c
 UI_ChangeModeByIndex:
 	dec 2, xsp
 	ld (xsp), a
@@ -2996,14 +2991,7 @@ UI_PostTimerResetEvent:
 	ld xde, 0:i3
 	jp ApPostEvent
 
-SeqState_HasModeChanged:
-	ld a, (CURRENT_TITLE:16)
-
-	cp a, (ACTIVE_TITLE:16)
-
-	scc16 nz, hl
-
-	ret
+SeqState_HasModeChanged:	.include "includes/generated/cc900/SeqState_HasModeChanged.s"	; C: cc900/ui_control_panel.c
 
 
 

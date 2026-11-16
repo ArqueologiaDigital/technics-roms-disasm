@@ -88,9 +88,7 @@ TextRender_PopAndReturn:
 ; Display_SetBackgroundColor: Sets the graphics background colour word (RAM 0x3EFA2) to WA; text and mono-bitmap
 ;   drawing use it for 0 bits (0xF5 = copy the wallpaper pixel). Basis: callers + body -- the four screen-init
 ;   sequences call it with WA = 0xF5 next to GraphicsRender_ByteData (foreground colour, 0x3EFA4 = 0xFF).
-Display_SetBackgroundColor:
-	ld (GFX_BG_COLOR:24), wa
-	ret
+Display_SetBackgroundColor:	.include "includes/generated/cc900/Display_SetBackgroundColor.s"	; C: cc900/graphics_text_vga.c
 
 GraphicsRender_ByteData:
 	ld	(GFX_FG_COLOR:24), wa

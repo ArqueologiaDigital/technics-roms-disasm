@@ -4609,9 +4609,7 @@ VocalistPage2_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-AccPlay_GetCurrentPart:
-	ld	l, (32420:16)
-	ret
+AccPlay_GetCurrentPart:	.include "includes/generated/cc900/AccPlay_GetCurrentPart.s"	; C: cc900/seq_event_playback.c
 RevSelFunc:
 	dec 4, xsp
 	push xiz
