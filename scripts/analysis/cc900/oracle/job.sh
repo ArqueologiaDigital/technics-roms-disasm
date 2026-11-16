@@ -5,7 +5,8 @@
 #   compilers.txt  "name|tarball" per line; each tarball holds one cc900 install tree at its top level
 #                  (BIN/ or bin/, INCLUDE/ or include/, ...), unpacked to C:\CC\<name>
 #   corpus.tar     the C files to compile, unpacked to C:\SRC (subdirectories allowed)
-#   sources.txt    paths of the files to compile, relative to the corpus root, with "/"
+#   sources.txt    paths of the files to compile, relative to the corpus root, with "/"; a line "path|label"
+#                  compiles that file at option set <label> only (the firmware-C build, scripts/build/cc900_v423.py)
 #   options.txt    "label|cc900 flags" per line
 # and, for every compiler x option set x source, runs `cc900 <flags> -I<tree>\INCLUDE -S` and then ASM900 with no
 # options on the .asm (a source that is itself .asm is only assembled); and
@@ -45,8 +46,9 @@ while IFS='|' read -r name tarball; do
     export THOME="C:\\CC\\$name" THOME900="C:\\CC\\$name" WINEPATH="C:\\CC\\$name\\BIN"
     while IFS='|' read -r label flags; do
         [ -n "$label" ] || continue
-        while read -r src; do
+        while IFS='|' read -r src only; do
             [ -n "$src" ] || continue
+            [ -z "$only" ] || [ "$only" = "$label" ] || continue
             rel=${src%.*}; dir=$(dirname "$rel"); base=$(basename "$rel"); file=$(basename "$src")
             d="$C/W/$name/$label/$dir"; mkdir -p "$d"
             cp "$C/SRC/$src" "$d/$file"

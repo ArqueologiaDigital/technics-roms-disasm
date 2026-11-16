@@ -97,6 +97,11 @@ make all
 make gate
 make gate-all           # KN5000 + WSA1R + KN7000 gates
 
+# The firmware C (<tree>/maincpu/cc900/*.c) is compiled by Toshiba cc900 V4.23 in the oracle VM by default
+# (listings cached in build/cc900-v423/, git-ignored; a fully cached make needs no VM).  Without the VM and the
+# cache the build stops; build with our Python model of cc900 instead, no VM:
+make CC900_COMPILER=model gate
+
 # Build specific ROM targets
 make rebuilt_ROMs/kn5000_v10_program.llvm.rom         # Main CPU
 make rebuilt_ROMs/kn5000_subprogram_v142.llvm.rom     # Sub CPU payload

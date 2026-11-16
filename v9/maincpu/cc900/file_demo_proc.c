@@ -1,7 +1,9 @@
 /* Functions of demo/file_demo_proc.s.  Firmware C (cc900 phase 6), built by scripts/build/cc900_firmware_c.py with the cc900 reference model;
    no Toshiba program.  Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet. */
-extern unsigned int ram_272cc, ram_272ce, ram_7f48;
-extern unsigned char ram_272d0, ram_25eaa, ram_271f2, SEQ_SONG_SLOTS, DEMO_TIMER_COUNTDOWN;
+extern unsigned int ram_272cc, ram_272ce;
+extern unsigned int __near ram_7f48;
+extern unsigned char ram_272d0, ram_25eaa, ram_271f2, SEQ_SONG_SLOTS;
+extern unsigned char __near DEMO_TIMER_COUNTDOWN;
 extern void *ram_25b7e;
 extern long ram_25d6c, ram_25b8a, FileIO_DiskInfoInit;
 extern unsigned int ram_3ec4e, ram_25b8e;

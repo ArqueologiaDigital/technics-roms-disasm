@@ -5,15 +5,19 @@ QUESTION ANSWERED: for every TLCS-900 image of the KN5000 and the SX-WSA1R, how 
 compiler turns into exactly the ROM's bytes, checked byte for byte against the image, per toolchain:
 
   Toshiba V4.23    the C compiled by the original compiler (thc2 listing from the oracle VM), translated by
-                   model/to_llvm.py and assembled by our llvm-mc at the function's address;
+                   model/to_llvm.py and assembled by our llvm-mc at the function's address.  Each symbol's operand
+                   width is the one the listing declares (`extern small|medium|large`: the C's __tiny / __near /
+                   plain), as the build reads it (cc900_firmware_c.listing_widths), never a guess from the address.
+                   For firmware C this is what `make` builds (CC900_COMPILER=v423, the default);
   reference model  the same C through the Python reference model (scripts/analysis/cc900/model/), then the same
-                   to_llvm.py and llvm-mc.  For firmware C this is what `make` builds today;
+                   to_llvm.py and llvm-mc, widths from the C's qualifiers.  `make CC900_COMPILER=model` builds it;
   LLVM backend     clang -mcc900-compat (phase 3b of notes/cc900-compat-plan-2026-11-08/PLAN.md).  It does not
                    exist yet, so the column is 0; see llvm_backend_results() for the hook.
 
 Two kinds of C source count (one table row per image and kind):
 
-  firmware C   Matsushita's functions reconstructed in cc900 phase 6, <tree>/cc900/*.c, built into the image by
+  firmware C   Matsushita's functions reconstructed in cc900 phase 6, <tree>/cc900/*.c (and <tree>/cc900/unbuilt/*.c,
+               C that V4.23 does not reproduce, checked but never built), built into the image by
                scripts/build/cc900_firmware_c.py (notes/cc900-phase6-2026-11-16/README.md).  A function counts for
                the model when the tree includes its generated body (`.include "includes/generated/cc900/F.s"`) and
                the model's bytes equal the ROM's at the symbols reference's address (as model/fn_diff.py checks).
@@ -110,7 +114,7 @@ IMAGES = [
     ('prom_c', 'wsa1 prom_c', None, None, None),
     ('prom_d', 'wsa1 prom_d', None, None, None),
 ]
-LABEL_OF_FLAGS = {'-O3 -XS -Xr': 'O3XSXr', '-Xr': 'Xr', '-O3 -XS': 'O3XS', '': 'none'}
+from cc900_v423 import label_of                              # noqa: E402  (-O3 -XS -Xr -> O3XSXr; any flag string)
 
 
 def sha256(path):
@@ -216,6 +220,24 @@ def tree_includes(tree):
     return names
 
 
+BUILT_BY = ['?']
+
+
+def build_compiler():
+    """which compiler made the firmware-C bodies the measured build includes (their GENERATED headers): 'Toshiba
+    V4.23', 'reference model', 'mixed' or 'none built'"""
+    seen = set()
+    for key, pname, tree, *_ in IMAGES:
+        if not tree:
+            continue
+        for fn in tree_includes(tree):
+            p = os.path.join(REPO, tree, 'includes', 'generated', 'cc900', fn + '.s')
+            head = open(p, encoding='latin-1').read(600) if os.path.exists(p) else ''
+            seen.add('Toshiba V4.23' if 'by Toshiba cc900 V4.23' in head else
+                     'reference model' if 'by the cc900 reference model' in head else 'not built yet')
+    return 'none built' if not seen else seen.pop() if len(seen) == 1 else 'mixed (%s)' % ', '.join(sorted(seen))
+
+
 def listing_functions(path):
     """a thc2 listing -> {function: [lines]}, as listing.split gives them, with the section lines before each label
     dropped and a label that is not public kept inside the function before it"""
@@ -232,18 +254,24 @@ def listing_functions(path):
     return fs
 
 
-def translate(listing_funcs, names):
+def translate(listing_funcs, names, widths=None):
     """{name: listing lines} -> {bare name: llvm-mc lines}, every name written as its address (fn_diff.py's way),
-    as cc900_firmware_c.compile_c does for the model's listing"""
+    as cc900_firmware_c.compile_c does for the model's listing.  widths: each symbol's operand width as the listing
+    declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None"""
     import to_llvm
     import cc900_firmware_c as fw
     to_llvm.SPELL = None
+    to_llvm.WIDTHS = widths
     funcs = {}
     for name, lines in listing_funcs.items():
         if not lines or not lines[0].endswith(':') or lines[0][:-1] != name:
             continue
         bare = name.lstrip('_.')
-        body = to_llvm.translate_function(name, lines, names)
+        try:
+            body = to_llvm.translate_function(name, lines, names)
+        except KeyError:
+            funcs[bare] = None
+            continue
         locals_ = {l[:-1] for l in lines if l.endswith(':') and not l.startswith('\t') and l[:-1] != name}
         text = []
         for l in body:
@@ -290,7 +318,8 @@ def firmware(key, tree, rom_path, sym_path):
     """[{function, file, options, built, bytes, model, V4.23, iv}] for one image's tree"""
     import check_bytes
     import cc900_firmware_c as fw
-    cfiles = sorted(glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')))
+    cfiles = sorted(glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')) +
+                    glob.glob(os.path.join(REPO, tree, 'cc900', 'unbuilt', '*.c')))   # unbuilt: checked, not built
     if not cfiles:
         return []
     rom = open(os.path.join(REPO, rom_path), 'rb').read()
@@ -300,8 +329,8 @@ def firmware(key, tree, rom_path, sym_path):
     runs = v423_runs()
     rows = []
     for path in cfiles:
-        flags = fw.file_options(path)[0]
-        label = LABEL_OF_FLAGS[flags]
+        flags = fw.file_flags(path)
+        label = label_of(flags)
         try:
             funcs = fw.compile_c(path, names, spell=False)
         except SystemExit as ex:
@@ -314,7 +343,13 @@ def firmware(key, tree, rom_path, sym_path):
         elif run:
             lp = os.path.join(ORACLE, 'runs', run[0], 'out', run[1])
             if os.path.exists(lp):
-                v423 = translate(listing_functions(lp), names)
+                text = open(lp, encoding='latin-1').read()
+                try:                                      # the widths the listing declares, as the build reads them
+                    widths = fw.listing_widths(path, text)
+                except SystemExit as ex:                  # the C's qualifiers disagree with the listing
+                    sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
+                    widths = {}
+                v423 = translate(listing_functions(lp), names, widths)
                 lm_ = fw.label_map(path)                  # a short C name (`cc900-name: C=LABEL`) is the label's
                 v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
             else:
@@ -423,7 +458,10 @@ def render(cen, rows, fwrows):
          'Generated by `scripts/analysis/cc900/c_build_coverage.py` (its docstring defines every column; regenerate with',
          '`make cc900-c-coverage`).  Do not edit by hand.  A byte counts when the C, through that toolchain, gives exactly',
          'the ROM\'s bytes there.  "code" is the census CODE part (`data_range_census.py`).  Firmware C counts only where',
-         'the image is built from it (`.include` of its generated body); library C is checked, not yet built from C.', '']
+         'the image is built from it (`.include` of its generated body); library C is checked, not yet built from C.', '',
+         'The measured build compiled its firmware C with: **%s** (`make` uses Toshiba V4.23 in the oracle VM;' % BUILT_BY[0],
+         '`make CC900_COMPILER=model` the reference model).  The V4.23 column is the progress measure: a function is',
+         'built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc900/unbuilt/`).', '']
     # totals
     tot_size = sum(cen[k]['size'] for k, *_ in IMAGES)
     tot_code = sum(cen[k]['code'] for k, *_ in IMAGES)
@@ -477,14 +515,15 @@ def v423_corpus(d):
     import cc900_firmware_c as fw
     d = os.path.abspath(d)
     runs = v423_runs()
-    picked, labels = [], set()
+    picked, labels = [], {}
     for key, pname, tree, *_ in IMAGES:
-        for path in sorted(glob.glob(os.path.join(REPO, tree or '-', 'cc900', '*.c'))):
-            label = LABEL_OF_FLAGS[fw.file_options(path)[0]]
+        for path in sorted(glob.glob(os.path.join(REPO, tree or '-', 'cc900', '*.c')) +
+                           glob.glob(os.path.join(REPO, tree or '-', 'cc900', 'unbuilt', '*.c'))):
+            label = label_of(fw.file_flags(path))
             if (rel(path), sha256(path), label) in runs or rel(path) in [p for p, _ in picked]:
                 continue
-            picked.append((rel(path), os.path.join(tree.split('/')[0], os.path.basename(path))))
-            labels.add(label)
+            picked.append((rel(path), os.path.join(tree.split('/')[0], os.path.relpath(path, os.path.join(REPO, tree, 'cc900')))))
+            labels[label] = fw.file_flags(path)
     if not picked:
         print('every firmware C file has a V4.23 listing of its current text')
         return
@@ -492,9 +531,8 @@ def v423_corpus(d):
     for src, dst in picked:
         os.makedirs(os.path.join(d, os.path.dirname(dst)), exist_ok=True)
         shutil.copyfile(os.path.join(REPO, src), os.path.join(d, dst))
-    flags = {v: k for k, v in LABEL_OF_FLAGS.items()}
     open(os.path.join(d, 'sources.txt'), 'w').write(''.join(dst + '\n' for _, dst in picked))
-    open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, flags[l]) for l in sorted(labels)))
+    open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, labels[l]) for l in sorted(labels)))
     open(os.path.join(d, 'manifest.tsv'), 'w').write(''.join('%s\t%s\n' % p for p in picked))
     print('%d C files in %s, option sets %s' % (len(picked), d, ' '.join(sorted(labels))))
     print('run:    flock %s/vm/.runlock bash scripts/analysis/cc900/oracle/run_oracle.sh p6-firmware %s %s/sources.txt '
@@ -564,6 +602,7 @@ def main():
         SEED.update(census_results(j['results'], j['regions']))
     for k in [k for k in os.environ if k.startswith('CC900_') and k not in ('CC900_MODEL_CLANG', 'CC900_ORACLE')]:
         del os.environ[k]                                  # the model's defaults, as the build runs it
+    BUILT_BY[0] = build_compiler()
     cen, rows, fwrows = measure()
     text = render(cen, rows, fwrows)
     if '--print' in a:

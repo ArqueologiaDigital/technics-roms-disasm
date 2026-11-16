@@ -390,6 +390,10 @@ SmfLoadAs_Return:
 	ld xhl, 0:i3
 	ret
 
+; Makes a fixed-width display name in place.
+;   In:  XWA = string, BC = width.
+;   Within the first BC characters: '~' becomes '_' and control characters become spaces; the
+;   string is padded with spaces to BC characters and terminated with a NUL at position BC.
 TrimAndPadSmfFilename:	.include "includes/generated/cc900/TrimAndPadSmfFilename.s"	; C: cc900/smf_operations.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	TrimPad_LoopBody, TrimAndPadSmfFilename + 6

@@ -1,7 +1,7 @@
 /* Functions of file_io/medley.s.  Firmware C (cc900 phase 6), built by scripts/build/cc900_firmware_c.py with the cc900 reference model;
    no Toshiba program.  Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet. */
-extern unsigned char SmfPlayAsGm;
-extern char SmfMidiOut_OnOff;
+extern unsigned char __near SmfPlayAsGm;
+extern char __near SmfMidiOut_OnOff;
 
 unsigned char Smf_GetPlayAsGm(void) { return SmfPlayAsGm; }
 unsigned char Smf_GetMidiOut(void) { return SmfMidiOut_OnOff; }

@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Does V4.23's code for our firmware C give the ROM's bytes, once addresses get the firmware's widths?
 
-QUESTION ANSWERED: rel_vs_rom.py compares asm900's object, in which every extern is `large` and so takes a 24-bit
-operand; the firmware addresses its variables below 0x10000 with 16-bit operands, so a correct function still
-differs there.  This tool takes the oracle's listing (`.asm`) instead, rewrites each function with
-model/to_llvm.py (asm900's encodings, the operand width chosen from the address: the "proxy route" of
-notes/cc900-compat-plan-2026-11-08/phase6-preview.md), assembles it with llvm-mc and compares it with the ROM at the
+QUESTION ANSWERED: does V4.23's listing (`.asm`) of our firmware C give the ROM's bytes?  The tool rewrites each
+function with model/to_llvm.py (asm900's encodings; each symbol's operand width the one the listing declares,
+`extern small|medium|large` = the C's __tiny / __near / plain, probe m16 -- until 2026-11-16 it was chosen from the
+address, the "proxy route" of notes/cc900-compat-plan-2026-11-08/phase6-preview.md, which hid that the C lacked its
+__near qualifiers), assembles it with llvm-mc and compares it with the ROM at the
 function's own name.  Names resolve as in the build (scripts/build/cc900_firmware_c.py: the tree's `.equ` values,
 `ram_<hex>` cells, the symbols reference's labels).  It prints one line per function, MATCH or the first differing
 offset, and no Toshiba text; never paste its input into the repository.
@@ -55,39 +55,9 @@ def main():
                     return super().resolve(full[0])
             return r
     names = CutNames(fw.tree_values(tree), ref)
-    import re
+    to_llvm.SPELL = None
     text = open(a[0], encoding='latin-1').read()
-    # Operand widths.  V4.23 writes every access to a named object alike ((_x), lda XR,_x); the width is the
-    # object's attribute, declared at the end of the listing (probe m16, run 2026-11-16-29-p6-m16): `extern large`
-    # 24-bit (plain C), `medium` 16-bit (__near), `small` 8-bit (__tiny); objects defined in the file take their
-    # section's (f_area / n_area / t_area).  asm900 encodes exactly that width.  So each named operand gets its
-    # attribute's width here, not one chosen from its address; --by-address restores the old narrowing (to_llvm's own).
-    attr = {}
-    for kind, lst in re.findall(r'^\s*extern\s+(large|medium|small)\s+(.+)$', text, re.M):
-        for n in lst.split(','):
-            attr[n.strip().lstrip('_.')] = kind
-    sect = None
-    for l in text.split('\n'):
-        m = re.match(r'^\s*\w+\s+section\s+\w+\s+(large|medium|small)\b', l)
-        if m:
-            sect = m.group(1); continue
-        m = re.match(r'^_(\w+):', l)
-        if m and sect:
-            attr.setdefault(m.group(1), sect)
-    width = {'large': 24, 'medium': 16, 'small': 8}
-    by_address = '--by-address' in a
-
-    class Mark(dict):                                     # to_llvm writes every named operand as S_<name>, so the
-        def get(self, k, d=None):                         # width can be set per name below
-            return 'S_' + k
-    to_llvm.SPELL = None if by_address else Mark()
-
-    def unmark(line):
-        def opnd(m):
-            n, off, w = m.group(1), int(m.group(2) or 0), int(m.group(3))
-            return '(0x%x:%d)' % (to_llvm.lookup(n, names) + off, width[attr[n]] if n in attr else w)
-        line = re.sub(r'\(S_(\w+)(?:\+(\d+))?:(\d+)\)', opnd, line)
-        return re.sub(r'\bS_(\w+)(?:\+(\d+))?', lambda m: '0x%x' % (to_llvm.lookup(m.group(1), names) + int(m.group(2) or 0)), line)
+    to_llvm.WIDTHS = listing.attributes(text)                # operand widths as the listing declares them (probe m16)
     funcs = listing.split(text)
     short = {}
     for n in ref:
@@ -111,7 +81,7 @@ def main():
         if full is None:
             print('%-32s not in the symbols reference' % bare); bad += 1; continue
         try:
-            body = [unmark(l) for l in to_llvm.translate_function(name, lines, names)
+            body = [l for l in to_llvm.translate_function(name, lines, names)
                     if l not in ('\t.globl %s' % bare, bare + ':')]
         except KeyError as e:
             print('%-32s cannot resolve %s' % (bare, e)); bad += 1; continue

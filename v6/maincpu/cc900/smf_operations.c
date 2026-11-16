@@ -1,8 +1,9 @@
-/* Functions of file_io/smf_operations.s.  Firmware C (cc900 phase 6), built by scripts/build/cc900_firmware_c.py with
-   the cc900 reference model; no Toshiba program.
-   Built at -O3 -XS -Xr (the default): V4.23 reproduces TrimAndPadSmfFilename's first 42 bytes only with -O
-   (corpus/firmware/p6_m3.c trim_a, run 2026-11-16-9-p6-m3).  Its padding loop's entry test is the firmware rule
-   loop-entry-copy (KN_LOOP_INVERT, notes/cc900-compat-plan-2026-11-08/rules.md), which the build switches on. */
+/* Functions of file_io/smf_operations.s.  Firmware C (cc900 phase 6), built by scripts/build/cc900_firmware_c.py.
+   cc900-options: -O3 -Xr
+   The firmware's -O files were compiled with -O3 -Xr, without -XS (lane_p6, run 2026-11-16-32-p6-m18): V4.23 then
+   copies the padding loop's test to its entry and gives all of TrimAndPadSmfFilename (at -O3 -XS -Xr only its first
+   42 bytes, run 2026-11-16-18-p6-firmware).  The reference model writes that as the firmware rule loop-entry-copy
+   (KN_LOOP_INVERT, notes/cc900-compat-plan-2026-11-08/rules.md). */
 
 /* The name, in place: '~' becomes '_', a control character a space; then spaces up to the width n and a NUL at
    n.  p reads, s writes; they start equal. */

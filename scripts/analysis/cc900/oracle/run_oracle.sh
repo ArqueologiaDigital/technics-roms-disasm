@@ -8,7 +8,7 @@
 #   OPTIONS     "label|cc900 flags" per line
 #   COMPILER    a name from compilers.conf (v423, ide2003, v110)
 # Environment: ORACLE (default ~/compartilhado/cc900-oracle), PORT (default 8931), and run_vm.sh's
-# QEMU_ROOT / BASE_IMAGE defaults below.
+# QEMU_ROOT / BASE_IMAGE defaults below.  run_vm.sh boots the VM; this script prepares the job and files the run.
 #
 # Nothing Toshiba made runs on the host.  The guest (Debian 13 + Wine, disk overlay $ORACLE/vm/home/disk.qcow2) gets
 # everything over HTTP from httpd.py, compiles (job.sh), PUTs results.tar back and powers off.
@@ -21,13 +21,10 @@ QEMU_ROOT=${QEMU_ROOT:-$ORACLE/vm/qemu}
 BASE_IMAGE=${BASE_IMAGE:-$ORACLE/vm/debian-13-generic-amd64.qcow2}
 PORT=${PORT:-8931}
 WORK=$ORACLE/vm/home
-export LD_LIBRARY_PATH=$QEMU_ROOT/usr/lib/x86_64-linux-gnu
-Q=$QEMU_ROOT/usr/bin
 
 S=$WORK/serve; OUT=$WORK/out
-rm -rf -- "$WORK/serve" "$WORK/out"
+rm -rf -- "${WORK:?}/serve" "${WORK:?}/out"
 mkdir -p "$S" "$OUT"
-[ -f "$WORK/disk.qcow2" ] || "$Q/qemu-img" create -q -f qcow2 -F qcow2 -b "$BASE_IMAGE" "$WORK/disk.qcow2" 8G
 
 : > "$S/compilers.txt"
 for c in "$@"; do
@@ -39,27 +36,8 @@ for c in "$@"; do
 done
 tar -cf "$S/corpus.tar" -C "$CORPUS" .
 cp "$HERE/job.sh" "$S/job.sh"; cp "$SOURCES" "$S/sources.txt"; cp "$OPTIONS" "$S/options.txt"
-printf 'instance-id: cc900-%s\nlocal-hostname: cc900vm\n' "$(date +%s%N)" > "$S/meta-data"
-: > "$S/vendor-data"
-cat > "$S/user-data" <<EOF
-#cloud-config
-runcmd:
-  - [sh, -c, "export PORT=$PORT; curl -sf http://10.0.2.2:$PORT/job.sh -o /root/job.sh && sh /root/job.sh >/root/job.log 2>&1; curl -sf -T /root/job.log http://10.0.2.2:$PORT/out/job.log; poweroff"]
-EOF
 
-python3 -I "$HERE/httpd.py" "$S" "$OUT" "$PORT" 2>"$OUT/httpd.log" &
-HTTPD=$!
-trap 'kill $HTTPD 2>/dev/null || true' EXIT
-sleep 1
-timeout 7200 "$Q/qemu-system-x86_64" -L "$QEMU_ROOT/usr/share/qemu" -L "$QEMU_ROOT/usr/share/seabios" \
-    -machine q35,accel=kvm -cpu host -smp 4 -m 4096 -no-reboot \
-    -drive file="$WORK/disk.qcow2",if=virtio,format=qcow2 \
-    -netdev user,id=n0 -device virtio-net-pci,netdev=n0 \
-    -smbios "type=1,serial=ds=nocloud;s=http://10.0.2.2:$PORT/" \
-    -serial file:"$OUT/serial.log" -monitor none -display none
-
-[ -f "$OUT/results.tar" ] || { echo "no results.tar; see $OUT/job.log and $OUT/serial.log" >&2; exit 1; }
-tail -1 "$OUT/job.log" | grep -q JOB-OK || { echo "job did not finish; see $OUT/job.log" >&2; exit 1; }
+ORACLE=$ORACLE QEMU_ROOT=$QEMU_ROOT BASE_IMAGE=$BASE_IMAGE PORT=$PORT bash "$HERE/run_vm.sh" "$S" "$OUT"
 
 day=$(date +%F); n=1
 while compgen -G "$ORACLE/runs/$day-$(printf %d $n)-*" >/dev/null; do n=$((n + 1)); done
@@ -69,6 +47,6 @@ tar -xf "$OUT/results.tar" -C "$R/out" --no-same-owner
 cp "$OUT/job.log" "$S/sources.txt" "$S/options.txt" "$S/compilers.txt" "$R/"
 ( cd "$OUT" && sha256sum results.tar ) > "$R/results.tar.sha256"
 ( cd "$S" && sha256sum cc-*.tar corpus.tar ) > "$R/inputs.sha256"
-rm -rf -- "$WORK/serve" "$WORK/out"
+rm -rf -- "${WORK:?}/serve" "${WORK:?}/out"
 echo "run filed: $R"
 echo "commit it: git -C $ORACLE add runs/$(basename "$R") && git -C $ORACLE commit -m 'run $(basename "$R")'"
