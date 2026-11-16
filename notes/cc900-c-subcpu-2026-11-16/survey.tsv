@@ -582,7 +582,7 @@ addr	bytes	insns	name	file	cls	kind	call	calr	outj	cmark	hand	erp	nop	mm	group
 0368ba	372	213	DSP2_Send_Data	core/13_audio_process_dsp_and_effects.s	hand	abs	4	0	0	1	2	3	88	0	186
 036a2e	33	17	DSP_DispatchCommand	core/13_audio_process_dsp_and_effects.s	C	rel	0	2	0	2	0	0	0	0	184
 036a4f	33	17	DSP_DispatchData	core/13_audio_process_dsp_and_effects.s	C	rel	0	2	0	2	0	0	0	0	186
-036a70	13	5	DSP_StateTable_Reset	core/13_audio_process_dsp_and_effects.s	?	leaf	0	0	0	0	0	0	0	0	187
+036a70	13	5	DSP_StateTable_Save	core/13_audio_process_dsp_and_effects.s	?	leaf	0	0	0	0	0	0	0	0	187
 036a7d	37	11	DSP_AlgoChange_CheckAndFlag	core/13_audio_process_dsp_and_effects.s	?	leaf	0	0	0	0	0	0	0	0	187
 036aa2	91	37	DSP_SlotParam_DiffAndFlag	core/13_audio_process_dsp_and_effects.s	C	leaf	0	0	0	7	0	0	0	0	187
 036afd	643	245	DSP_EFFParam_DiffAllAndFlag	core/13_audio_process_dsp_and_effects.s	C	leaf	0	0	0	47	0	0	0	0	187

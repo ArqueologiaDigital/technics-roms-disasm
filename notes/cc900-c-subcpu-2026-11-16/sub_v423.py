@@ -87,10 +87,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     rom = open(os.path.join(REPO, romf), 'rb').read()
     ref = check_bytes.load_reference(os.path.join(REPO, symf))
     # Toshiba runtime routines V4.23 calls, by the payload's label for them (subcpu_fp_math.s headers)
-    # (the division entries as subcpu_fp_math.s's headers describe them: D = 0 quotient, D = 1 remainder; the first
-    # function that matches through one of them confirms it)
+    # (the division entries by their code, helper E, round 5: D = 1 keeps XHL, the quotient; D = 0 XDE, the remainder --
+    # the opposite of subcpu_fp_math.s's comments; the first function that matches through one confirms it)
     alias, cnames = {'C9H_mulls': 'Math_Multiply32', 'C9H_mullu': 'Math_Multiply32',
-                     'C9H_divls': 'Int_SignedDiv_ConstData', 'C9H_remls': 'Int_SignedDiv_AltEntry',
+                     'C9H_divls': 'Int_SignedDiv_AltEntry', 'C9H_remls': 'Int_SignedDiv_ConstData',
                      'C9H_remlu': 'Int_UnsignedRemainder'}, {}
     for c in list(cfiles) + glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')):
         lm = fw.label_map(c)
@@ -113,6 +113,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
             return r
     names = CutNames(fw.tree_values(os.path.join(REPO, tree)), ref)
     to_llvm.SPELL = None
+    module = set()                       # cc900-module: callees asm900 saw in the caller's module (calr / jr / jrl)
+    for c in cfiles:
+        module |= fw.module_names(c)
+    to_llvm.MODULE = (module | {c for c, l in alias.items() if l in module}) if module else None   # labels and C names
     text = open(lst, encoding='latin-1').read()
     to_llvm.WIDTHS = listing.attributes(text)
     short = {}
@@ -137,8 +141,21 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         body = [re.sub(r'^(\t(?:sla|sll|sra|srl|rlc|rrc|rl|rr) \w+), 0$', r'\1, 16', l) for l in body]
         if any('untranslated' in l for l in body):
             out.append((full, 0, 'to_llvm cannot translate a line')); continue
+        text_ = to_llvm.relax('\n'.join(body), fw.assembler_errors)
+        targets = sorted({int(m.group(1), 16) for m in re.finditer(r'__cc900_at_([0-9a-f]+)', text_)})
+        at = ref[full]
+        if targets:   # module-local calls: lay the function and its targets out at their addresses in one unit
+            if any(abs(t - at) > 0x10000 for t in targets):
+                out.append((full, 0, 'a module-local target is out of calr / jrl reach')); continue
+            base = min(targets + [at])
+            self_ = '__cc900_at_%x:\n' % at if at in targets else ''
+            items = sorted([(t, '__cc900_at_%x:' % t) for t in targets if t != at] +
+                           [(at, '%s\t.globl %s\n%s:\n%s\n\t.globl __cc900_end\n__cc900_end:' % (self_, full, full, text_))])
+            src = '\t.text\n' + '\n'.join('\t.org 0x%x\n%s' % (a - base, txt) for a, txt in items) + '\n'
+        else:
+            src = '\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, text_)
         try:
-            mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n%s\n' % (full, full, '\n'.join(body)))[full]
+            mine = check_bytes.assemble(src)[full]     # up to the next global label (__cc900_end) or the end
         except Exception:
             out.append((full, 0, 'llvm-mc cannot assemble the translation')); continue
         at = rom_offset(ref[full])

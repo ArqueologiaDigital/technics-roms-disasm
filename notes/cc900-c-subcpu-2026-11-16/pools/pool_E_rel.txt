@@ -1,0 +1,21 @@
+ 3026  801 DSP_BiquadCoeff_Compute                      core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime FP_SP_CmpZero32,FP_SP_CopyOrNegate4,FP_dadd,FP_ddiv,FP_dmul,FP_dsub,FP_dtof,FP_fadd,FP_fcmp,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow,FP_tan  calr DSP_FilterLUT_Fetch
+ 2593  726 DSP_SOS_Coeff_Compute                        core/14_dsp_control_routines.s             rel  erp 10 nop   0 runtime FP_SP_CmpZero32,FP_SP_CopyOrNegate4,FP_cos,FP_ddiv,FP_dmul,FP_dsub,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow,FP_sin  calr DSP_SOS_LUT_Fetch
+ 1720  608 DSP_Bytecode_Op00_Groups5_ParamMix           core/14_dsp_control_routines.s             rel  erp  4 nop   0 runtime -  calr DSP_Bytecode_NotifyStateChange
+  889  311 DSP_Op_0x61_LinearEval                       core/14_dsp_control_routines.s             rel  erp  1 nop   0 runtime -  calr DSP_Bytecode_NotifyStateChange
+  331  111 DSP_WriteLUTParamSet                         core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_UnpackParam3B DSP_WriteCoeffData_5B DSP_WriteFreqParam
+  255  113 RingBuf_Init_256                             core/03_task_scheduler_kernel.s            rel  erp  0 nop   0 runtime -  calr FIFO_Engine512_Get FIFO_Engine512_Put
+  224   82 DSP_PerParameterTranslator                   core/14_dsp_control_routines.s             rel  erp  3 nop   0 runtime -  calr DSP_TableWalk_Search
+  205   69 DSP_WriteFreqParam_AlgoType                  core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_WriteParamCmd30
+  205   69 DSP_WriteFreqParam                           core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_WriteParamCmd30
+  205   69 DSP_WriteOscParam                            core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_WriteParamCmd30
+  200   73 DSP_ParameterWriteEngine                     core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_NopReturn DSP_PerParameterTranslator DSP_TableWalk_SearchWithState
+  174   77 RingBuf_Init_1K                              core/03_task_scheduler_kernel.s            rel  erp  0 nop   0 runtime -  calr FIFO_Engine256_Get FIFO_Engine256_Put
+  167   56 ToneGen_Process_Notes                        core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr Keybed_Read_Event
+   90   37 Keybed_Read_Event                            core/14_dsp_control_routines.s             rel  erp  0 nop   2 runtime -  calr Keybed_Decode_Event
+   73   31 DSP_Init_Channels                            core/02_audio_system_init.s                rel  erp  0 nop   0 runtime -  calr DSP_Write_Channel
+   73   32 DSP_Write_Channel                            core/02_audio_system_init.s                rel  erp  0 nop   0 runtime -  calr DSP_WriteChannelRegs_Inner
+   69   26 Serial1_DataTransmit_Loop                    subcpu_data_tables.s                       rel  erp  0 nop   0 runtime -  calr SAVE_BYTE_TO_RING_BUFFER Serial1_Enable_TX_Interrupt Serial1_HandleEnableCommand
+   69   26 InterCPU_DMA_Send                            core/04_intercpu_link.s                    rel  erp  1 nop   0 runtime -  calr InterCPU_DMA_SendDataPacket
+   51   21 DSP_WriteParamCmd30                          core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_WriteParamWord
+   28   14 DSP_Select_Chip                              core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_Nop
+   28   14 DSP_Deselect_Chip                            core/14_dsp_control_routines.s             rel  erp  0 nop   0 runtime -  calr DSP_Nop

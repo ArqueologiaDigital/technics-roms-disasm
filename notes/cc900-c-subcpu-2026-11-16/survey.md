@@ -12,12 +12,12 @@
 | core/08_voice_noteon_and_tonegen.s      | 80       | 13985  | 9657    | 0          | 34   | 4957          | 1        | 18      |
 | core/09_dsp_algo_select.s               | 9        | 1425   | 1393    | 0          | 7    | 1255          | 0        | 0       |
 | core/10_dsp_voice_params.s              | 83       | 15710  | 15415   | 0          | 39   | 5719          | 0        | 17      |
-| core/11_ringbuf_and_midi_dispatch.s     | 22       | 2844   | 2192    | 0          | 12   | 621           | 18       | 5       |
-| core/12_dsp2_init.s                     | 10       | 609    | 522     | 0          | 6    | 326           | 3        | 0       |
-| core/13_audio_process_dsp_and_effects.s | 79       | 10442  | 7769    | 1180       | 14   | 3333          | 151      | 6       |
+| core/11_ringbuf_and_midi_dispatch.s     | 22       | 2844   | 2192    | 0          | 12   | 621           | 15       | 5       |
+| core/12_dsp2_init.s                     | 10       | 609    | 522     | 0          | 6    | 326           | 2        | 0       |
+| core/13_audio_process_dsp_and_effects.s | 79       | 10442  | 7769    | 1180       | 14   | 3333          | 112      | 4       |
 | core/14_dsp_control_routines.s          | 77       | 20542  | 17940   | 572        | 21   | 437           | 3        | 54      |
 | subcpu_fp_math.s                        | 36       | 6496   | 1939    | 4293       | 10   | 369           | 0        | 0       |
-| total                                   | 742      | 123145 | 103236  | 7720       | 308  | 25752         | 304      | 136     |
+| total                                   | 742      | 123145 | 103236  | 7720       | 308  | 25752         | 261      | 134     |
 
 ## Candidates: leaf or absolute-call-only, not hand, no memory-to-memory move (largest 80 of 480, 54802 B)
 
