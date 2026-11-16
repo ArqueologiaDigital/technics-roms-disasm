@@ -11,13 +11,19 @@ bytes are compared with the image at the function's label.
         copies the C files into DIR/hd/ with their #include "..." headers inlined (expand()), writes DIR/sources.txt and DIR/options.txt (OPTIONS: comma-separated labels
         of LABELS below, e.g. O3Xr,Xr) and prints the oracle command (run it under the VM lock)
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --check RUN_DIR [--image v2.06i] [--tsv OUT] [--only GLOB]
-                                                                          [--calr] [--record]
+                                                                          [--calr] [--record] [--csrc STEM=PATH]
         one row per function: bytes and, per C file and option set, MATCH or the first differing offset.  --calr:
         a `call` (V4.23's `cal`) whose place in the ROM holds a `calr` to the same target is written calr, as asm900
         writes a call to a function of the same source file; such a match is reported `MATCH calr:<targets>`, and
         is only real once those targets are in the same C file.  An operand naming the compiler's own data (a
-        switch table S50000, an initialiser S1), which to_llvm cannot place, is masked: `MATCH sdata:<n>` means
-        the code is identical and the n data operands are not checked.  --tsv
+        switch table S50000, an FP constant, an initialiser S1) takes the address of the tree label that the C
+        file's `cc900-data: FUNCTION N = LABEL` comment gives it, as in the build (data_places(); only the
+        operand is compared, the data's own bytes are the build's to check).  Without such a comment an
+        `OP reg,S<n>` operand is masked: `MATCH sdata:<n>` means the code is identical and the n data operands
+        are not checked.  A switch's base (`lda xix, (L50001:24)`, the absolute address of a local label) is
+        written as the function's ROM address plus the distance, since the function is assembled unlinked
+        (--check only; --show assembles line by line and still shows zeros there).  --csrc STEM=PATH (repeatable, --show too) reads the C of listing STEM (its cc900-name,
+        cc900-module and cc900-data comments) from PATH instead of probes/STEM.c or the staged file.  --tsv
         writes (c_file, options, function, bytes, result) rows.  --dir SUB: only the listings of corpus directory SUB
         (hd, or a ported tree's name: its staged copies).  --compiler NAME reads another compiler's listings
         of the run (ide2003, v110; diagnostics only: a function is done only under V4.23).  --record appends the rows of the STAGED files
@@ -178,12 +184,18 @@ def show(a):
             for name, lines in listing.split(text).items():
                 if name.lstrip('_.') != func[:31]:
                     continue
+                src = csrc_map(a).get(stem, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'probes',
+                                                         stem + '.c'))
+                if func not in ref:                      # a variant: its label from the probe's cc900-name comment
+                    func = c_names([src]).get(func[:31], func)
+                if os.path.exists(src):                  # the C's cc900-data: places, as in --check
+                    to_llvm.DATA, bad = data_places([src], func, lines, ref)
+                    if bad:
+                        print(bad)
                 body = [l for l in to_llvm.translate_function(name, lines, names) if not l.endswith(':') and
                         not l.startswith('\t.globl')]
+                to_llvm.DATA = {}
                 print('== %s %s' % (stem, label))
-                if func not in ref:                      # a variant: its label from the probe's cc900-name comment
-                    src = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'probes', stem + '.c')
-                    func = c_names([src]).get(func[:31], func)
                 at = ref[func] - BASE
                 off = 0
                 for l in body:
@@ -208,8 +220,40 @@ def mc_errors(text):
         return r.stderr if r.returncode else ''
 
 
+def csrc_map(a):
+    """{listing stem: C path} from every `--csrc STEM=PATH` argument"""
+    out = {}
+    for i, x in enumerate(a[:-1]):
+        if x == '--csrc':
+            stem, _, path = a[i + 1].partition('=')
+            if not path or not os.path.exists(path):
+                sys.exit('--csrc %s: want STEM=PATH of an existing C file' % a[i + 1])
+            out[stem] = os.path.abspath(path)
+    return out
+
+
+def data_places(srcs, func, lines, ref):
+    """to_llvm.DATA for one function, as the build's finish() sets it, with addresses for names: {V4.23's f_const
+    label (S50000): '0x<address of the tree label>'} from the C files' `cc900-data: FUNCTION N = LABEL` comments
+    (N = the function's N-th f_const object in listing order).  Returns (DATA, error text or None)."""
+    import to_llvm
+    import cc900_firmware_c as fw
+    places = {}
+    for c in srcs:
+        places.update(fw.data_map(c).get(func, {}))
+    consts, _ = to_llvm.split_consts(lines)
+    out = {}
+    for k, s in enumerate(consts, 1):
+        if k in places:
+            if places[k] not in ref:
+                return {}, 'cc900-data: %s is not in the symbols reference' % places[k]
+            out[s] = '0x%x' % ref[places[k]]
+    return out, None
+
+
 SDATA_RE = re.compile(r'untranslated: (\w+)\t(\w+),S\d+\s*$')
 SDATA_MARK = 0x5a5a5a00
+LOCAL_ABS_RE = re.compile(r'^(\tlda \w+, )\(([A-Za-z_.]\w*):24\)$')
 CALL_RE = re.compile(r'^\s*call\s+(0x[0-9a-fA-F]+)\s*$')
 
 
@@ -266,6 +310,7 @@ def check(a):
     for n in ref:
         short.setdefault(n[:31], []).append(n)
     only = opt(a, '--only', '*')
+    csrc = csrc_map(a)
     res, order = {}, []
     base = os.path.join(run, 'out', opt(a, '--compiler', 'v423'))
     for label in sorted(os.listdir(base)):
@@ -278,6 +323,8 @@ def check(a):
             srcs = glob.glob(os.path.join(REPO, 'notes', 'cc900-c-hdae5000-2026-11-16', 'probes', stem + '.c')) + \
                 glob.glob(os.path.join(REPO, tree, 'cc900-staged', stem + '.c')) + \
                 glob.glob(os.path.join(REPO, 'hdae5000', 'cc900-staged', stem + '.c'))   # v2.06i's C, any image
+            if stem in csrc:
+                srcs = [csrc[stem]]
             cn = c_names(srcs)
             for cname, lab in cn.items():                # a call to a function by its short C name
                 if lab in ref:
@@ -305,12 +352,23 @@ def check(a):
                 if full is None:
                     res[key][(stem_k, label)] = (0, 'not in the symbols reference')
                     continue
+                to_llvm.DATA, bad = data_places(srcs, full, lines, ref)
+                if bad:
+                    res[key][(stem_k, label)] = (0, bad)
+                    continue
                 try:
                     body = [l for l in to_llvm.translate_function(name, lines, names)
                             if l not in ('\t.globl %s' % bare, bare + ':')]
                 except KeyError as e:
                     res[key][(stem_k, label)] = (0, 'cannot resolve %s' % e)
                     continue
+                finally:
+                    to_llvm.DATA = {}
+                # a switch's base, `lda xix, (L50001:24)`: the absolute address of a local label.  The function is
+                # assembled unlinked, so the address is written as the ROM address of the function plus the distance
+                own = {l[:-1] for l in body if l.endswith(':') and not l.startswith('\t')}
+                body = [LOCAL_ABS_RE.sub(lambda m: '%s(%s-%s+0x%x:24)' % (m.group(1), m.group(2), full, ref[full])
+                                         if m.group(2) in own else m.group(0), l) for l in body]
                 marks = []
                 for i, l in enumerate(body):
                     m = SDATA_RE.search(l)
