@@ -331,6 +331,30 @@ The rest, with V4.23 also differing, need other C:
 - `VoiceAlloc_InitBitMap` and `SeqBuf_ClearRange` (an end pointer computed with `lda`, +155 / +6);
 - `SeqStatus_SetOrClearBit`.
 
+## Round 10: files without C yet, 20-80 bytes (probe m13, run `2026-11-16-26-p6-m13`)
+
+The next candidates come from `leaf_routines.py` at 6 to 40 instructions, in hand sources that have no C yet.  There
+are 504 in v10; `sequencer/accompaniment_engine.s` has 133 and `audio/note_voice_mapping.s` 50.  This round took
+`sequencer/bmdredit_routines.s` (`corpus/firmware/p6_m13.c`, 7 functions).
+
+| function                       | bytes | model                                      | V4.23                    |
+|--------------------------------|-------|--------------------------------------------|--------------------------|
+| `BmDrEdit_DecrementDelayA`     | 21    | DIFF: tests bit 7 with `and` + `cp`        | MATCH (both sets)        |
+| `BmDrEdit_DecrementDelayB`     | 21    | DIFF: the same                             | MATCH (both sets)        |
+| `BmDrEdit_LoadAlternateState`  | 35    | DIFF                                       | DIFF: copies through WA  |
+| `BmDrEdit_AlignDisplayGrid`    | 21    | refused ("constant condition")             | DIFF                     |
+| `BmDrEdit_AlignGridBackward`   | 33    | DIFF                                       | DIFF                     |
+| `BmDrEdit_CheckSlotsAvailable` | 30    | refused ("complex pointer index")          | DIFF                     |
+| `BmDrEdit_SaveSongPosition`    | 34    | refused ("local o")                        | DIFF                     |
+
+The two delay functions are a model gap: V4.23 tests `(a & 0x80)` with `bit 7,A` / `ret eq`, where the model
+writes `ld C,A` / `and C,0x80` / `cp C,0`.
+
+`BmDrEdit_LoadAlternateState` copies four globals into four others.  The ROM does it with memory-to-memory moves
+(`ldmm16` / `ldmm8`); V4.23 loads into WA and stores.  v10 holds 397 `ldmm16` and 169 `ldmm8`, besides the 275
+`ld (m),(m)` forms of round 8.  The memory-to-memory candidate rule now has much wider evidence: the Technics
+compiler copies a value from memory to memory directly.
+
 ## Larger targets and the -O question (2026-11-16, after milestone 2)
 
 The reference model refuses the C of both larger targets, so V4.23 in the oracle VM was used as the local
