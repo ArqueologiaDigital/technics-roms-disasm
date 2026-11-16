@@ -38,7 +38,9 @@ COVERAGE = os.path.join(HERE, "results", "c_build_coverage.md")
 OUT = os.path.join(HERE, "results", "c_progress.tsv")
 STAGED = "notes/cc900-phase6-2026-11-16/staged_v423.tsv"
 HEADER = "time\trun\tbuilt_fn\tbuilt_b\tstaged_fn\tstaged_b\tv10_fn\tv10_b\timages\n"
-IMAGES_OF_TREE = {"v10": ["v10"], "v9": ["v9", "v8"], "v7": ["v7"], "v6": ["v6"], "v5": ["v5"]}
+IMAGES_OF_TREE = {"v10": ["v10"], "v9": ["v9", "v8"], "v7": ["v7"], "v6": ["v6"], "v5": ["v5"],
+                  # the HD-AE5000 trees under the coverage page's image names
+                  "hdae5000_v2_01i": ["hdae_v201"], "hdae5000_v1_15i": ["hdae_v115"], "hdae5000_v1_10i": ["hdae_v110"]}
 # staged-results tables of the other C lanes, same columns as staged_v423.tsv; a missing branch or file counts nothing
 OTHER_LANES = [("cc900/c-subcpu-hdae", "notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv"),
                ("cc900/c-hdae5000", "notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv")]

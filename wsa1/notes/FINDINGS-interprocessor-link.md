@@ -190,3 +190,21 @@ lucky, not proven, and `prom_a_addr_census.py --selftest` now asserts both lists
   transmitter at `0xF8E26F`. All disassembled while decoding the above, none
   converted.
 * The eight prom_b handlers the selector-1 table names.
+
+## ★ The hardware: write strobe = INT0 — added 2026-11-16
+
+From the service manual (`technics_roms/sources/wsa1/SX-WSA1R Service Manual.pdf`, MAIN (A),
+pages 19-20, sheets II-8/II-9; crops and probes in
+`KN7000/tools/mame-pr-planning/probes/tlcs900-iimc-i0le/`):
+
+| latch | direction      | CK (= reader's INT0)                                            | /OE         |
+|-------|----------------|-----------------------------------------------------------------|-------------|
+| IC25  | CPU 1 -> CPU 2 | IFINT = WR OR MIF (IC26 1,2 -> 3), CPU 2 pin 43                 | SMIF OR SRD |
+| IC24  | CPU 2 -> CPU 1 | SIFINT = SMIF OR SWR (IC26 8,9 -> 10), via R156 to CPU 1 pin 43 | MIF OR RD   |
+
+Both are D74HC374GS; IC26 is a D74HC32GS. So every write gives the reader a rising edge,
+read or not, and a read only enables the outputs — the KN5000's IC20/IC22/IC23 arrangement.
+Both CPUs select rising-edge INT0: CPU 1 writes IIMC = 0x05 (prom_a 0xF8277B, also NMI on both
+edges), CPU 2 writes 0x04 (prom_c 0xFFF00B); per the TMP95C061 data sheet p. 20, I0LE = 0 is
+rising edge.  MAME's TMP95C061 core had I0LE backwards and its WSA1 driver held INT0 while the
+latch was full; both are fixed together on MAME branch `tlcs900-iimc-i0le`.

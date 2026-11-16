@@ -870,7 +870,9 @@ CC900_TRANSLATE_SRC = scripts/analysis/cc900/model/to_llvm.py scripts/analysis/c
 CC900_CHOICE = rebuilt_ROMs/cc900-compiler.txt
 CC900_V423_INDEX = $(CC900_V423_CACHE)/index.tsv
 CC900_V423_DONE = $(CC900_V423_CACHE)/filled.stamp
-CC900_ALL_C = $(foreach t,v10 v9 v7 v6 v5,$(wildcard $(t)/maincpu/cc900/*.c))
+CC900_ALL_C = $(foreach t,v10 v9 v7 v6 v5,$(wildcard $(t)/maincpu/cc900/*.c)) \
+              $(foreach t,v142 v141 v140,$(wildcard $(t)/subcpu/cc900/*.c)) \
+              $(foreach t,hdae5000 hdae5000_v2_01i hdae5000_v1_15i hdae5000_v1_10i,$(wildcard $(t)/cc900/*.c))
 # The compiler choice and (for V4.23) the cache index are written while make reads this file, each only when its
 # content changes; so the bodies are rebuilt exactly when the choice or a V4.23 cache key changed, and `make -q`
 # (assert_byte_identical.py's staleness check) sees an up-to-date tree as up to date.  Both take well under a second.
@@ -893,22 +895,45 @@ $(CC900_V423_DONE): $(CC900_V423_INDEX)
 	python3 -B scripts/build/cc900_v423.py fill $(CC900_V423_CACHE) $(CC900_ORACLE) $(CC900_ALL_C)
 	touch $@
 $(CC900_V423_INDEX): ;
-cc900_stamps = $(patsubst $(1)/maincpu/cc900/%.c,$(1)/maincpu/includes/generated/cc900/%.stamp,$(wildcard $(1)/maincpu/cc900/*.c))
+# $(1) the version (v10), $(2) the CPU directory (maincpu, or subcpu for the sub-CPU payloads v142 / v141 / v140)
+cc900_stamps = $(patsubst $(1)/$(or $(2),maincpu)/cc900/%.c,$(1)/$(or $(2),maincpu)/includes/generated/cc900/%.stamp,$(wildcard $(1)/$(or $(2),maincpu)/cc900/*.c))
 V10_CC900_STAMPS = $(call cc900_stamps,v10)
 V9_CC900_STAMPS = $(call cc900_stamps,v9)
 V7_CC900_STAMPS = $(call cc900_stamps,v7)
 V6_CC900_STAMPS = $(call cc900_stamps,v6)
 V5_CC900_STAMPS = $(call cc900_stamps,v5)
-# $(1) the tree (v10), $(2) the variable naming its sources (V10_SRC); eval'd once that variable exists
+V142_CC900_STAMPS = $(call cc900_stamps,v142,subcpu)
+V141_CC900_STAMPS = $(call cc900_stamps,v141,subcpu)
+V140_CC900_STAMPS = $(call cc900_stamps,v140,subcpu)
+# a tree that is one directory (the HD-AE5000's: hdae5000, hdae5000_v2_01i, ...): $(1) that directory
+cc900_dir_stamps = $(patsubst $(1)/cc900/%.c,$(1)/includes/generated/cc900/%.stamp,$(wildcard $(1)/cc900/*.c))
+HDAE_CC900_STAMPS      = $(call cc900_dir_stamps,hdae5000)
+HDAE_V201_CC900_STAMPS = $(call cc900_dir_stamps,hdae5000_v2_01i)
+HDAE_V115_CC900_STAMPS = $(call cc900_dir_stamps,hdae5000_v1_15i)
+HDAE_V110_CC900_STAMPS = $(call cc900_dir_stamps,hdae5000_v1_10i)
+# $(1) the tree directory (hdae5000), $(2) the variable naming its sources; eval'd once that variable exists.  The
+# older HD-AE5000 trees assemble with -I hdae5000 after their own directory, so a shared hdae5000/*.s that includes
+# a generated body takes the tree's own one first, else hdae5000's: each tree needs its own C for its own bytes.
+define CC900_FIRMWARE_C_DIR
+$(1)/includes/generated/cc900/%.stamp: $(1)/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
+	$$(CC900_GEN_CMD) $(1) $$< $(1)/includes/generated/cc900 $$@
+endef
+# $(1) the version (v10), $(2) the variable naming its sources (V10_SRC), $(3) the CPU directory (default maincpu);
+# eval'd once that variable exists
 define CC900_FIRMWARE_C
-$(1)/maincpu/includes/generated/cc900/%.stamp: $(1)/maincpu/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
-	$$(CC900_GEN_CMD) $(1)/maincpu $$< $(1)/maincpu/includes/generated/cc900 $$@
+$(1)/$(or $(3),maincpu)/includes/generated/cc900/%.stamp: $(1)/$(or $(3),maincpu)/cc900/%.c $$($(2)) $$(CC900_GEN_DEPS) $$(CC900_FW_GEN) $$(CC900_CHOICE) $$(LLVM_MC)
+	$$(CC900_GEN_CMD) $(1)/$(or $(3),maincpu) $$< $(1)/$(or $(3),maincpu)/includes/generated/cc900 $$@
 endef
 $(eval $(call CC900_FIRMWARE_C,v10,V10_SRC))
 $(eval $(call CC900_FIRMWARE_C,v9,V9_SRC))
 $(eval $(call CC900_FIRMWARE_C,v7,V7_SRC))
+$(eval $(call CC900_FIRMWARE_C,v142,V142_SRC,subcpu))
+$(eval $(call CC900_FIRMWARE_C,v141,V141_SRC,subcpu))
+$(eval $(call CC900_FIRMWARE_C,v140,V140_SRC,subcpu))
 .PHONY: cc900-firmware-c
-cc900-firmware-c: $(V10_CC900_STAMPS) $(V9_CC900_STAMPS) $(V7_CC900_STAMPS) $(V6_CC900_STAMPS) $(V5_CC900_STAMPS)
+cc900-firmware-c: $(V10_CC900_STAMPS) $(V9_CC900_STAMPS) $(V7_CC900_STAMPS) $(V6_CC900_STAMPS) $(V5_CC900_STAMPS) \
+                  $(V142_CC900_STAMPS) $(V141_CC900_STAMPS) $(V140_CC900_STAMPS) \
+                  $(HDAE_CC900_STAMPS) $(HDAE_V201_CC900_STAMPS) $(HDAE_V115_CC900_STAMPS) $(HDAE_V110_CC900_STAMPS)
 
 # --- Maincpu ---
 rebuilt_ROMs/kn5000_v10_program.llvm.o: $(V10_SRC) $(V10_CC900_STAMPS) $(MAINCPU_KERNEL_SRC) original_ROMs/kn5000_v10_program.rom $(C_DATA_BINS) $(KN5000_IMAGE_BINS) $(INDEXED_IMAGE_SRC) $(LLVM_MC)
@@ -1174,7 +1199,7 @@ $(eval $(call CC900_FIRMWARE_C,v5,V5_SRC))
 .PHONY: v6-progress verify-v6-reference v5-progress verify-v5-reference
 
 # --- Subcpu payload ---
-rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v142.llvm.o: $(V142_SRC) $(V142_CC900_STAMPS) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v142/subcpu -I wsa1/kernel -o $@ v142/subcpu/kn5000_subprogram_v142.s
 
@@ -1208,7 +1233,7 @@ rebuilt_ROMs/kn5000_subprogram_v142_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 # Ported from the v1.42 tree (scripts/generators/create_v141_subcpu_source.py records
 # the semantic delta; notes/v141-subcpu-port/README.md says how it was measured).
 # Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
-rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v141.llvm.o: $(V141_SRC) $(V141_CC900_STAMPS) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v141/subcpu -I wsa1/kernel -o $@ v141/subcpu/kn5000_subprogram_v141.s
 
@@ -1236,7 +1261,7 @@ rebuilt_ROMs/kn5000_subprogram_v141_compressed.rom: rebuilt_ROMs/kn5000_subprogr
 # Ported from the v1.41 tree (scripts/generators/create_v140_subcpu_source.py records
 # the semantic delta; notes/v140-subcpu-port/README.md says what the code change does).
 # Same layout as v142: image = [0x400..0x4FF] + [0xF000..0x3EEFF].
-rebuilt_ROMs/kn5000_subprogram_v140.llvm.o: $(V140_SRC) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
+rebuilt_ROMs/kn5000_subprogram_v140.llvm.o: $(V140_SRC) $(V140_CC900_STAMPS) $(SUBCPU_KERNEL_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I v140/subcpu -I wsa1/kernel -o $@ v140/subcpu/kn5000_subprogram_v140.s
 
@@ -1381,7 +1406,7 @@ $(TABLEDATA_IMAGE_BINS) &: $(wildcard table_data/images/ui_bitmaps/*.png table_d
 # scripts/build/indexed_images.py, whose `verify` asserts the round trip.
 tabledata-images: $(TABLEDATA_IMAGE_BINS) $(KN5000_IMAGE_BINS)
 
-rebuilt_ROMs/hd-ae5000_v2_06i.llvm.o: $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/hd-ae5000_v2_06i.llvm.o: $(HDAE_SRC) $(HDAE_CC900_STAMPS) hdae5000-images $(HDAE_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000 -o $@ hdae5000/hd-ae5000_v2_06i.s
 
@@ -1427,7 +1452,7 @@ verify-hdae5000-v201-reference: original_ROMs/hd-ae5000_v2_01i.ic4
 	 if [ "$$got" = "$(HDAE5000_V201_SHA1)" ]; then echo "OK    $< has SHA-1 $(HDAE5000_V201_SHA1)"; \
 	 else echo "FAIL  $< has SHA-1 $$got, expected $(HDAE5000_V201_SHA1)"; exit 1; fi
 
-rebuilt_ROMs/hd-ae5000_v2_01i.llvm.o: $(HDAE_V201_SRC) $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V201_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/hd-ae5000_v2_01i.llvm.o: $(HDAE_V201_SRC) $(HDAE_SRC) $(HDAE_V201_CC900_STAMPS) $(HDAE_CC900_STAMPS) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V201_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000_v2_01i -I hdae5000 -o $@ hdae5000_v2_01i/hd-ae5000_v2_01i.s
 
@@ -1478,7 +1503,7 @@ $(eval $(call HDAE_V1_REFERENCE,v1_10i,HDAE5000_V110_REF,HDAE5000_V110_SHA1))
 HDAE_V115_SRC       = $(wildcard hdae5000_v1_15i/*.s hdae5000_v1_15i/shared/*.s)
 HDAE_V115_IMAGE_SRC := $(shell find hdae5000_v1_15i/images -name '*.png' -o -name '*.txt' 2>/dev/null)
 
-rebuilt_ROMs/hd-ae5000_v1_15i.llvm.o: $(HDAE_V115_SRC) $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
+rebuilt_ROMs/hd-ae5000_v1_15i.llvm.o: $(HDAE_V115_SRC) $(HDAE_SRC) $(HDAE_V115_CC900_STAMPS) $(HDAE_CC900_STAMPS) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000_v1_15i -I hdae5000 -o $@ hdae5000_v1_15i/hd-ae5000_v1_15i.s
 
@@ -1494,7 +1519,17 @@ rebuilt_ROMs/hd-ae5000_v1_15i.llvm.rom: rebuilt_ROMs/hd-ae5000_v1_15i.llvm.elf
 # hdae5000/ (third -I).
 HDAE_V110_SRC = $(wildcard hdae5000_v1_10i/*.s)
 
-rebuilt_ROMs/hd-ae5000_v1_10i.llvm.o: $(HDAE_V110_SRC) $(HDAE_V115_SRC) $(HDAE_SRC) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
+# Firmware C of the four HD-AE5000 trees (lane_hd): a tree's C may name what the trees it includes define, so its
+# bodies depend on those sources too (cc900_firmware_c.py reads them in the same order: INCLUDE_TREES)
+HDAE_V201_C_DEPS = $(HDAE_V201_SRC) $(HDAE_SRC)
+HDAE_V115_C_DEPS = $(HDAE_V115_SRC) $(HDAE_SRC)
+HDAE_V110_C_DEPS = $(HDAE_V110_SRC) $(HDAE_V115_SRC) $(HDAE_SRC)
+$(eval $(call CC900_FIRMWARE_C_DIR,hdae5000,HDAE_SRC))
+$(eval $(call CC900_FIRMWARE_C_DIR,hdae5000_v2_01i,HDAE_V201_C_DEPS))
+$(eval $(call CC900_FIRMWARE_C_DIR,hdae5000_v1_15i,HDAE_V115_C_DEPS))
+$(eval $(call CC900_FIRMWARE_C_DIR,hdae5000_v1_10i,HDAE_V110_C_DEPS))
+
+rebuilt_ROMs/hd-ae5000_v1_10i.llvm.o: $(HDAE_V110_SRC) $(HDAE_V115_SRC) $(HDAE_SRC) $(HDAE_V110_CC900_STAMPS) $(HDAE_V115_CC900_STAMPS) $(HDAE_CC900_STAMPS) hdae5000-images $(HDAE_IMAGE_SRC) $(HDAE_V115_IMAGE_SRC) $(LLVM_MC)
 	mkdir -p rebuilt_ROMs
 	$(LLVM_MC) -triple=tlcs900 -filetype=obj -I hdae5000_v1_10i -I hdae5000_v1_15i -I hdae5000 -o $@ hdae5000_v1_10i/hd-ae5000_v1_10i.s
 
