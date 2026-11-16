@@ -4,8 +4,8 @@
 QUESTION ANSWERED / WHY: sub_v423.py check --tsv lists, per function, the probe files and option sets that give the
 ROM's bytes.  The payload was compiled with -Xr (README, run 2026-11-16-43-sub-r1), so a function that matches at
 `-Xr` goes to v142/subcpu/cc900-staged/<hand source without its NN_ prefix>.c through stage_probe.py (the function,
-its cc900-name comment and the declarations it uses).  A function matching only at another set is reported, not
-staged.  Then run port_staged.py for v141 / v140 and check all three trees with V4.23 (sub_v423.py corpus / record).
+its cc900-name comment and the declarations it uses).  A probe that uses #define is expanded first (gcc -E -P -C),
+so that the staged C has no macros.  A function matching only at another set is reported, not staged.  Then run port_staged.py for v141 / v140 and check all three trees with V4.23 (sub_v423.py corpus / record).
 
 usage: python3 -B notes/cc900-c-subcpu-2026-11-16/stage_matches.py VERDICTS.tsv [--dry-run]   (repository root)
 """
@@ -14,6 +14,8 @@ import glob, os, re, subprocess, sys
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 HERE = os.path.dirname(os.path.abspath(__file__))
 TREE = os.path.join(REPO, 'v142', 'subcpu')
+SCRATCH = os.path.join(os.environ.get('TMPDIR', os.path.expanduser('~/compartilhado/tmp')), 'cc900-tab', 'lane_sub',
+                       'expanded')                       # probes with #define, macro-expanded by gcc -E (scratch)
 FN_RE = re.compile(r'^[\w][\w\s\*]*?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
 
 
@@ -56,6 +58,11 @@ def main():
         base = re.sub(r'^\d+_', '', os.path.basename(src)[:-2])
         probe = os.path.join(REPO, 'scripts', 'analysis', 'cc900', 'corpus', 'firmware', got['Xr'] + '.c')
         txt = open(probe, encoding='latin-1').read()
+        if re.search(r'^\s*#\s*define', txt, re.M):          # macros: stage from the macro-expanded text
+            out = os.path.join(SCRATCH, os.path.basename(probe))
+            os.makedirs(SCRATCH, exist_ok=True)
+            subprocess.run(['gcc', '-E', '-P', '-C', '-std=c89', '-o', out, probe], check=True)
+            probe, txt = out, open(out, encoding='latin-1').read()
         cname = next((m.group(1) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', txt) if m.group(2) == f), f)
         plan.setdefault((probe, base, src), []).append(cname)
     for (probe, name, src), fs in sorted(plan.items()):

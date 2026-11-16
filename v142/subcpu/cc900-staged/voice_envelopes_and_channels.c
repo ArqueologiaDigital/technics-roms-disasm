@@ -164,3 +164,14 @@ void Voice_Stage_EnvSegments(struct envseg *p)
     ram_451e6 = p->a;
     ram_451e8 = p->b;
 }
+
+extern unsigned char ram_4137c[];
+
+void Voice_CC_SetTuning(unsigned char part, unsigned char v)
+{
+    int t;
+    t = v;
+    t -= 0x80;
+    t += t;
+    *(int *)&ram_4137c[part * 0x11f] = t;
+}

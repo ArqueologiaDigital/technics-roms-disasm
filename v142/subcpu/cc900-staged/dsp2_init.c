@@ -18,3 +18,21 @@ unsigned long DSP_Pack3x7bitFields(unsigned char *p)
     return (unsigned long)(unsigned char)(p[3] & 0x7f)
         | ((unsigned long)(unsigned char)(p[1] & 0x7f) << 14 | (unsigned long)(unsigned char)(p[2] & 0x7f) << 7);
 }
+
+struct ring2k { unsigned int w, r, n; unsigned char buf[2048]; };
+extern struct ring2k __near DSP2_RingBuffer;
+
+void DSP2_Init(void)
+{
+    DSP2_RingBuffer.w = DSP2_RingBuffer.r = DSP2_RingBuffer.n = 0;
+}
+
+unsigned int Extract_14Bit_PayloadSize(unsigned char *p)
+{
+    return (((unsigned int)p[5] & 0x7f) << 7) | ((unsigned int)p[6] & 0x7f);
+}
+
+unsigned int Extract_14Bit_VoiceParam(unsigned char *p)
+{
+    return (((unsigned int)p[2] & 0x7f) << 7) | ((unsigned int)p[3] & 0x7f);
+}

@@ -22,3 +22,16 @@ void DSP_State_ApplyBuf(struct dspstate *src)
     ram_4a3a->busy = 1;
     MsgQueue_Send(2, ram_4a3a);
 }
+
+extern struct dspstate *__near ram_4a3e;
+extern int ram_45324[];
+extern void DSP_State_ApplyAll(struct dspstate *s);
+
+void DSP_State_LoadAndApplyAll(struct dspstate *src)
+{
+    ram_4a3e = (struct dspstate *)ram_45324;
+    *ram_4a3e = *src;
+    ram_4a3e->busy = 1;
+    DSP_State_ApplyAll(ram_4a3e);
+    ram_4a3e->busy = 0;
+}

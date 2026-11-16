@@ -122,3 +122,104 @@ unsigned int Voice_KeyIndex_Pack3Nibbles(unsigned int a)
     r += a & 0xf;
     return r;
 }
+
+#define W(p, o) (*(unsigned int *)((p) + (o)))
+extern unsigned char ram_45180[];
+extern unsigned char Voice_Selector_FieldSlot_Table[][3];
+extern unsigned char ram_43042[];
+void Voice_Calc_LevelPair_Silence(unsigned char *v);
+void ToneGen_WriteLevelBurst(int n, unsigned char *blk);
+void ToneGen_WriteVoiceParams(int n, unsigned char *blk);
+void Voice_ComputeVolume_CappedLFO(unsigned char *v);
+void Voice_Calc_LevelPair_EGA(unsigned char *v);
+void Voice_Calc_LevelPair_EGB(unsigned char *v);
+void Voice_Calc_LevelPair_EGC(unsigned char *v);
+void WaveSel_StageB_Build_Reg040(unsigned char *v);
+void Pitch_Emit_Reg400(unsigned char *v);
+void Pitch_Apply_Partial_Detune(unsigned char *v);
+void Voice_Level_ComputeTriplet(unsigned char *v);
+void TVF_Build_Dispatch(unsigned char *v);
+void TVF_Emit_Registers(unsigned char *v);
+void Voice_StereoLevel_Compute(unsigned char *v);
+void Voice_PortaLevel_Compute(unsigned char *v);
+void ExtVoice_Build_SlotRegisters(unsigned char *v);
+void Voice_SubVoice_ComputeAndTrigger(unsigned char *v);
+void Voice2_UpdatePitch(unsigned char *v);
+void Voice_Build_GateCommand(unsigned char *v);
+void Voice_Calc_LevelPair_PatchAtk(unsigned char *v);
+void Voice_WriteChPanShift(unsigned char *v, int s);
+void Voice_ComputePitch(unsigned char *v);
+void Voice_ApplyPortamento(unsigned char *v);
+
+void Voice_Build_Register_Set(unsigned char n)
+{
+    unsigned char *v;
+    v = &ram_43042[(int)n * 71];
+    WaveSel_StageB_Build_Reg040(v);
+    Pitch_Apply_Partial_Detune(v);
+    Pitch_Emit_Reg400(v);
+    Voice_Level_ComputeTriplet(v);
+    TVF_Build_Dispatch(v);
+    TVF_Emit_Registers(v);
+    Voice_StereoLevel_Compute(v);
+    Voice_PortaLevel_Compute(v);
+    ExtVoice_Build_SlotRegisters(v);
+    Voice_SubVoice_ComputeAndTrigger(v);
+    Voice2_UpdatePitch(v);
+    Level_Build_Reg0C0(v);
+    Voice_Build_GateCommand(v);
+    Voice_Calc_LevelPair_PatchAtk(v);
+    Voice_WriteChPanShift(v, 0);
+    Voice_ComputePitch(v);
+    Voice_ApplyPortamento(v);
+    ToneGen_WriteVoiceParams(n, ram_45180);
+}
+
+void Voice_Cut(unsigned char n)
+{
+    unsigned char *v;
+    unsigned char *s;
+    unsigned int w;
+    v = &ram_43042[(int)n * 71];
+    s = P(v, 35);
+    v[5] &= 0x7f;
+    w = W(s, 10);
+    if (v[3] == 3) W(s, 10) &= ~1;
+    if ((W(v, 1) & 0x8000L) || !(W(P(v, 35), 10) & 1)) {
+        if (v[3] < 3) Voice_ComputeVolume_CappedLFO(v);
+        else Voice_Calc_LevelPair_EGA(v);
+        Voice_Calc_LevelPair_EGB(v);
+        Voice_Calc_LevelPair_EGC(v);
+        ToneGen_WriteLevelBurst(n, ram_45180);
+    }
+    W(s, 10) = w;
+}
+
+void Voice_ReleaseSingle(unsigned char n)
+{
+    unsigned char *v;
+    v = ram_43042 + (int)n * 71;
+    v[5] &= 0x7f;
+    if (v[70] != 0) {
+        Voice_Calc_LevelPair_Silence(v);
+        ToneGen_WriteLevelBurst(n, ram_45180);
+    }
+}
+
+void Voice_Selector_Unpack3Groups(unsigned char *p, unsigned int v, unsigned char e)
+{
+    p[Voice_Selector_FieldSlot_Table[e][0]] = v % 16;
+    v >>= 4;
+    p[Voice_Selector_FieldSlot_Table[e][1]] = v % 16;
+    v >>= 4;
+    p[Voice_Selector_FieldSlot_Table[e][2]] = v % 16;
+}
+
+void Voice_SignedClamp(unsigned char *p, char d, int hi, int lo)
+{
+    int v;
+    v = (int)*p + d;
+    if (v > hi) v = hi;
+    if (v < lo) v = lo;
+    *p = v;
+}

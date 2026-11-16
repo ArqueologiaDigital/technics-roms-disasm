@@ -27,8 +27,9 @@ def ref(t):
 
 
 def split_functions(text):
-    """(head, [(name, text)]) -- a function runs from its definition line to its closing brace at column 0, or to
-    the end of its one-line body"""
+    """(head, [(name, function text, the declarations after it)]) -- a function runs from its definition line to
+    its matching closing brace; what follows it up to the next definition (declarations) is kept apart, so that
+    leaving a function out never drops a declaration a later function needs"""
     ms = list(FUNC.finditer(text))
     if not ms:
         return text, []
@@ -36,7 +37,13 @@ def split_functions(text):
     out = []
     for i, m in enumerate(ms):
         end = ms[i + 1].start() if i + 1 < len(ms) else len(text)
-        out.append((m.group(1), text[m.start():end]))
+        j, depth = text.index('{', m.start()), 0
+        while True:
+            depth += {'{': 1, '}': -1}.get(text[j], 0)
+            j += 1
+            if depth == 0:
+                break
+        out.append((m.group(1), text[m.start():j], text[j:end]))
     return head, out
 
 
@@ -52,8 +59,8 @@ def main():
             text = open(c).read()
             names = dict(re.findall(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', text))
             head, funcs = split_functions(text)
-            keep = [(n, b) for n, b in funcs if names.get(n, n) in tr and names.get(n, n) not in DROP.get(t, ())]
-            body = head + ''.join(b for _, b in keep)
+            keep = [n for n, _, _ in funcs if names.get(n, n) in tr and names.get(n, n) not in DROP.get(t, ())]
+            body = head + ''.join((f if n in keep else '') + rest for n, f, rest in funcs)
 
             def cell(m):
                 a = int(m.group(1), 16)

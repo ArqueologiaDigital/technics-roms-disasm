@@ -77,3 +77,53 @@ unsigned char Voice_SecondaryParam_Epilogue(unsigned char part)
     if (PART_W72(part) & 0x8000L) r = PART_PATCH(part)[101];
     return r;
 }
+
+extern unsigned char ram_4136a[];
+extern unsigned char ram_413d0[];
+extern unsigned char ram_413d1[];
+extern unsigned char ram_413d2[];
+extern unsigned char ram_413d6[];
+extern unsigned char ram_413fb[];
+extern unsigned char ram_41420[];
+extern unsigned char ram_41445[];
+extern unsigned char ram_451a4;
+extern char ram_451a7;
+extern char ram_451a8;
+extern char ram_451a9;
+struct partial { unsigned char pad[54]; unsigned char f54; unsigned char pad2[22]; unsigned char a77[4]; };
+#define PART_PRESENT(p) (*(unsigned int *)(ram_4136a + (p) * 0x11f))
+#define PART_PTR(a, p)  (*(unsigned char **)((a) + (p) * 0x11f))
+
+void DSP_SlotParam_Write_Slot0(unsigned char part)
+{
+    if ((PART_FLAGS(part) & 1) && ram_451a4 == part) ram_413d0[part * 0x11f] = ram_451a7 << 1;
+    else ram_413d0[part * 0x11f] = 0;
+}
+
+void DSP_SlotParam_Write_Slot1(unsigned char part)
+{
+    if ((PART_FLAGS(part) & 1) && ram_451a4 == part) ram_413d1[part * 0x11f] = ram_451a8 << 1;
+    else ram_413d1[part * 0x11f] = 0;
+}
+
+void DSP_SlotParam_Write_Slot2(unsigned char part)
+{
+    if ((PART_FLAGS(part) & 1) && ram_451a4 == part) ram_413d2[part * 0x11f] = ram_451a9 << 1;
+    else ram_413d2[part * 0x11f] = 0;
+}
+
+unsigned int Partial_GetBaseKey(unsigned char part, unsigned char partial)
+{
+    switch (partial) {
+    case 0:
+        if (PART_PRESENT(part) & 0x4000) return PART_PTR(ram_413fb, part)[1];
+        return PART_PTR(ram_413d6, part)[1];
+    case 1:
+        if (PART_PRESENT(part) & 0x8000L) return PART_PTR(ram_413d6, part)[1];
+        return PART_PTR(ram_413fb, part)[1];
+    case 2:
+        return PART_PTR(ram_41420, part)[1];
+    case 3:
+        return PART_PTR(ram_41445, part)[1];
+    }
+}

@@ -234,3 +234,42 @@ void Debug_Print_String(char *s)
     BootROM_DEBUG_OUTPUT_STRING(s);
     __WA = 0;
 }
+
+extern unsigned char DSP_AlgoInit_NoteOnMsg_Algo1[];
+extern unsigned char DSP_AlgoInit_NoteOnMsg_Algo2[];
+extern unsigned char DSP_AlgoInit_NoteOnMsg_Default[];
+extern unsigned int DSP_State_LookupAlgoIndex(unsigned int);
+extern unsigned int DSP_SlotMuteState_ReadAndClear(unsigned int);
+extern void MIDI_Dispatch(void);
+
+void DSP_SlotState_DisplayRestore(void)
+{
+    unsigned int s;
+    s = DSP_SlotMuteState_ReadAndClear(0);
+    if (s == 3) {
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo2)[0]));
+        MIDI_Dispatch();
+        return;
+    }
+    if (s == 2) {
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo1)[0]));
+        MIDI_Dispatch();
+        return;
+    }
+    if (s == 1) {
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Default)[0]));
+        MIDI_Dispatch();
+    }
+}
+
+void DSP_WriteAlgoInitPreset(unsigned int x)
+{
+    x = DSP_State_LookupAlgoIndex(x);
+    if (x == 2)
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo2)[0]));
+    else if (x == 1)
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo1)[0]));
+    else
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Default)[0]));
+    MIDI_Dispatch();
+}

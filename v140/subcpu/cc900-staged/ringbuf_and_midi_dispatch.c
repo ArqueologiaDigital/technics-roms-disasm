@@ -36,3 +36,30 @@ void DSP_Stub_RetB(void)
 void DSP_Stub_RetC(void)
 {
 }
+
+struct ring4k { unsigned int w, r, n; unsigned char buf[4096]; };
+extern struct ring4k __near MIDI_RingBuffer;
+extern unsigned char ram_4132b;
+extern unsigned char ram_4132e;
+
+int __cdecl Audio_CmdHandler_00_1F(int n, const unsigned char *p)
+{
+    while (n != 0) {
+        MIDI_RingBuffer.buf[MIDI_RingBuffer.w++ & 0xfff] = *p;
+        MIDI_RingBuffer.n++;
+        n--;
+        p++;
+    }
+    return 0;
+}
+
+unsigned int DSP_GetEffectRouting(void)
+{
+    unsigned int r;
+    r = 0;
+    if (ram_4132b != 0)
+        r |= (unsigned int)ram_4132b << 8;
+    if (ram_4132e != 0)
+        r |= ram_4132b;
+    return r;
+}

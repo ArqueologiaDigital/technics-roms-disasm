@@ -16,6 +16,37 @@ unsigned int Unsigned_Max_Select(unsigned int a, unsigned int b)
 
 struct st { int w[0x91]; };
 
+void DSP_StateTable_Save(struct st *p) { *(struct st *)0x45ca = *p; }
+
+struct slot { unsigned int type; int f2; int param[25]; int on; };
+struct cfg { unsigned int f0, f2, f4, f6; struct slot s[5]; };
+struct e50 { unsigned int f0; char pad[48]; };
+struct cfgimg { int w[0x91]; };
+extern struct cfg __near DSP_ConfigBuffer;
+extern struct slot __near ram_45d2[];
+extern unsigned int __near ram_45d0;
+extern unsigned int __near DSP_SlotMuteState[];
+extern unsigned int __near ram_4504;
+extern unsigned int __near ram_453c;
+extern unsigned int __near ram_4574;
+extern unsigned int __near ram_45ac;
+extern unsigned int __near ram_45b2;
+extern unsigned int __near ram_45b4;
+extern unsigned int __near ram_45b6;
+extern unsigned int __near EFF_SlotActiveFlags[];
+extern unsigned int __near DSP_ChipActiveFlags[];
+extern unsigned int __near DSP_AlgoChangedFlag;
+extern struct e50 __near ram_4940[];
+extern int ram_4554e;
+extern int ram_4542c;
+extern unsigned char DSP_EffectClass_Table[];
+extern void DSP_State_ApplyBuf(struct cfg *);
+extern int DSP_MixerCoeff_Compute(unsigned int, unsigned int, unsigned int);
+extern void DSP_AlgorithmChange(void);
+extern void DSP_State_ApplyTask(void);
+extern void Kernel_SemaWait(int);
+extern void DSP_ScheduleDelay(int);
+
 void DSP_AlgoChange_CheckAndFlag(struct cfg *p)
 {
     if (p->f6 != ram_45d0 || p->f2 == 1 || p->f4 == 1)
@@ -202,4 +233,43 @@ void Debug_Print_String(char *s)
 {
     BootROM_DEBUG_OUTPUT_STRING(s);
     __WA = 0;
+}
+
+extern unsigned char DSP_AlgoInit_NoteOnMsg_Algo1[];
+extern unsigned char DSP_AlgoInit_NoteOnMsg_Algo2[];
+extern unsigned char DSP_AlgoInit_NoteOnMsg_Default[];
+extern unsigned int DSP_State_LookupAlgoIndex(unsigned int);
+extern unsigned int DSP_SlotMuteState_ReadAndClear(unsigned int);
+extern void MIDI_Dispatch(void);
+
+void DSP_SlotState_DisplayRestore(void)
+{
+    unsigned int s;
+    s = DSP_SlotMuteState_ReadAndClear(0);
+    if (s == 3) {
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo2)[0]));
+        MIDI_Dispatch();
+        return;
+    }
+    if (s == 2) {
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo1)[0]));
+        MIDI_Dispatch();
+        return;
+    }
+    if (s == 1) {
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Default)[0]));
+        MIDI_Dispatch();
+    }
+}
+
+void DSP_WriteAlgoInitPreset(unsigned int x)
+{
+    x = DSP_State_LookupAlgoIndex(x);
+    if (x == 2)
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo2)[0]));
+    else if (x == 1)
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Algo1)[0]));
+    else
+        Audio_CmdHandler_00_1F(4, (&(DSP_AlgoInit_NoteOnMsg_Default)[0]));
+    MIDI_Dispatch();
 }

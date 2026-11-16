@@ -140,3 +140,54 @@ void DSP_State_DmaLoadPresets(void)
     MsgQueue_Send(1, &ram_4530c);
     MsgQueue_Send(1, &ram_4542e);
 }
+
+extern unsigned char __near ram_4a48;
+extern unsigned char __near ram_4a4a;
+extern struct bcfg DSP_Bytecode_Global_Config[];
+extern unsigned char *DSP_TableWalk_Search(unsigned char *p, unsigned int key, unsigned int len, int *out);
+
+int __cdecl Audio_CmdHandler_A0_BF(unsigned char cmd, unsigned char *p)
+{
+    switch (p[0]) {
+    case 0:
+        if (p[1] == 1) ram_4a4a = 1;
+        break;
+    case 1:
+        if (p[1] <= 9) ram_4a48 = p[1];
+        break;
+    }
+    return 0;
+}
+
+unsigned char *DSP_TableWalk_Search(unsigned char *p, unsigned int key, unsigned int len, int *out)
+{
+    unsigned char *q;
+    unsigned char *next;
+    unsigned int w;
+    int r;
+
+    q = p;
+    while (((w = ((unsigned int)q[0] << 8) + q[1]) >> 8) != 0xf0) {
+        next = q + w;
+        q += 2;
+        if (*q == key) {
+            q += len + 1L;
+            if (q >= next) r = 4;
+            else r = 0;
+            goto done;
+        }
+        q = next;
+    }
+    r = 3;
+done:
+    *out = r;
+    return q;
+}
+
+void DSP_WriteGlobalConfig(int chip, unsigned char *code)
+{
+    unsigned int i;
+
+    i = 0;
+    DSP_BytecodeInterpreter_Init(chip, i, DSP_Bytecode_Global_Config, code);
+}

@@ -41,3 +41,34 @@ void Voice_DSPOut_Second_B(unsigned char part)
         break;
     }
 }
+
+extern unsigned char __tiny ram_18;
+extern unsigned int ram_fffb4;
+extern unsigned int ram_fffb6;
+#define TG_WAIT2 __ASM("	db	0x68,0x00"); __ASM("	nop"); __ASM("	nop"); __ASM("	nop")
+#define TG_WRITE(r, v) ram_18 &= ~0x80; ram_fffb4 = (r); __ASM("	nop"); ram_18 |= 0x80; ram_fffb6 = (v); TG_WAIT2
+
+/* cc900-name: TG_WriteExtParam_Mute_TypeDisp=ToneGen_WriteExtParam_Mute_TypeDispatch */
+void ToneGen_Mute_Reg05C0(unsigned int reg)
+{
+    TG_WRITE(reg + 0x5c0, 0x8100);
+}
+
+void ToneGen_WriteExtParam_540_Mute(unsigned int reg)
+{
+    TG_WRITE(reg + 0x540, 0x8100);
+}
+
+void ToneGen_WriteExtParam_600_Mute(unsigned int reg)
+{
+    TG_WRITE(reg + 0x580, 0x8100);
+}
+
+void TG_WriteExtParam_Mute_TypeDisp(unsigned int reg)
+{
+    if (reg < 0x40) {
+        TG_WRITE(reg + 0x540, 0x8100);
+    } else {
+        TG_WRITE(reg + 0x580, 0x8100);
+    }
+}

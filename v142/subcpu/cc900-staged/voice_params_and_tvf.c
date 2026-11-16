@@ -341,3 +341,208 @@ void *Voice_Find_Candidate(unsigned char **p, unsigned char *s)
     }
     return 0;
 }
+
+#define W(p, o) (*(unsigned int *)((p) + (o)))
+extern unsigned char __tiny ram_18;
+extern volatile unsigned int ram_100000;
+extern unsigned long __near ram_1040;
+extern int ram_451ce;
+extern unsigned char Voice_Colour_RowOffset_Table[];
+extern unsigned char Voice_Colour_TransferCurves[];
+extern unsigned char ram_41481[];
+extern unsigned char ram_41485[];
+extern unsigned char ram_41486[];
+extern unsigned char ram_4308f[];
+extern unsigned char __near ram_2126[];
+extern unsigned char __near ram_2127[];
+
+int Pitch_Clamp_Into_Range(int a, unsigned char lo, unsigned char hi)
+{
+    int v;
+    v = a;
+    if (a & 0x8000) {
+        if (v > -0x4000) v = 0;
+        else v = 0x7fff;
+    }
+    if (v < ((int)lo << 8) + 0x80) v = ((int)lo << 8) + 0x80;
+    else if (v > ((int)hi << 8) + 0x80) v = ((int)hi << 8) + 0x80;
+    return v;
+}
+
+int Pitch_Fold_Octaves_Into_Range(int a, unsigned char lo, unsigned char hi)
+{
+    int v;
+    v = a;
+    while (v & 0x8000) {
+        if (v > -0x4000) v += 0xc00;
+        else v -= 0xc00;
+    }
+    while (v < ((int)lo << 8) + 0x80) v += 0xc00;
+    while (v > ((int)hi << 8) + 0x80) v -= 0xc00;
+    return v;
+}
+
+unsigned int Pitch_Saturate_15bit(unsigned int a)
+{
+    if ((int)a & 0x8000) {
+        if (a > 0xc000) a = 0;
+        else a = 0x7fff;
+    }
+    return a;
+}
+
+unsigned int ToneGen_Read_Register(unsigned int r)
+{
+    ram_18 &= 0x7f;
+    ram_100000 = r;
+    return ram_100000;
+}
+
+unsigned char VoiceRec_Decode2BitField(unsigned char n)
+{
+    unsigned char r;
+    switch (*(unsigned int *)&ram_4308f[(int)n * 71] & 0xc0) {
+    case 0: r = 0; break;
+    case 0x40: r = 1; break;
+    case 0x80: r = 2; break;
+    case 0xc0: r = 3; break;
+    }
+    return r;
+}
+
+void VoiceRow_FetchPair_DE_WA(unsigned char a, unsigned char c)
+{
+    unsigned char x, y;
+    x = ram_2126[(int)a * 5];
+    y = ram_2127[(int)a * 5];
+    ram_2126[(int)y * 5] = x;
+    ram_2127[(int)x * 5] = y;
+    y = ram_2127[(int)c * 5];
+    ram_2126[(int)y * 5] = a;
+    ram_2127[(int)a * 5] = y;
+    ram_2126[(int)a * 5] = c;
+    ram_2127[(int)c * 5] = a;
+}
+
+void VoiceRow_FetchPair_WA_SP(unsigned char a)
+{
+    unsigned char x, y;
+    x = ram_2126[(int)a * 5];
+    y = ram_2127[(int)a * 5];
+    ram_2126[(int)y * 5] = x;
+    ram_2127[(int)x * 5] = y;
+    ram_2126[(int)a * 5] = a;
+    ram_2127[(int)a * 5] = a;
+}
+
+unsigned int Voice_Colour_LookupIndex(unsigned int a, unsigned char b)
+{
+    b = (b & 0xe0) >> 5;
+    return Voice_Colour_TransferCurves[((int)b << 8) + Voice_Colour_RowOffset_Table[a]];
+}
+
+void Voice_Env_UpdateVelocityCounters(unsigned char a)
+{
+    unsigned long d;
+    d = ram_1040 - *(unsigned long *)&ram_41481[a * 287];
+    if (d != 0) {
+        if (d < 0x19) {
+            switch (++*(ram_41485 + a * 287)) {
+            case 0: ram_41486[a * 287] = 0; break;
+            case 1: ram_41486[a * 287] = 0x10; break;
+            default: ram_41486[a * 287] = 0x20; break;
+            }
+        } else {
+            ram_41485[a * 287] = 0;
+            ram_41486[a * 287] = 0;
+        }
+    }
+    *(unsigned long *)&ram_41481[a * 287] = ram_1040;
+}
+
+void WaveSel_Emit_ZoneRecord_S10(unsigned char *v, unsigned char *t, unsigned char i)
+{
+    t += (int)i * 10;
+    P(v, 15) = t;
+    W(v, 1) |= 0x1000;
+    ram_451ce = SW(t, 0);
+    ram_293e = 0;
+}
+
+void WaveSel_Emit_ZoneRecord_S12(unsigned char *v, unsigned char *t, unsigned char i)
+{
+    int x;
+    t += (int)i * 12;
+    P(v, 15) = t;
+    W(v, 1) |= 0x5000;
+    ram_451ce = SW(t, 0);
+    x = SW(t, 10);
+    ram_293e = x;
+}
+
+void WaveSel_Emit_ZoneRecord_S13(unsigned char *v, unsigned char *t, unsigned char i)
+{
+    t += (int)i * 13;
+    P(v, 15) = t;
+    W(v, 1) |= 0x3000;
+    ram_451ce = SW(t, 0);
+    ram_293e = 0;
+}
+
+void WaveSel_Emit_ZoneRecord_S15(unsigned char *v, unsigned char *t, unsigned char i)
+{
+    int x;
+    t += (int)i * 15;
+    P(v, 15) = t;
+    W(v, 1) |= 0x7000;
+    ram_451ce = SW(t, 0);
+    x = SW(t, 13);
+    ram_293e = x;
+}
+
+void WaveSel_Emit_ZoneRecord_S4(unsigned char *v, unsigned char *t, unsigned char i)
+{
+    t += (int)i * 4;
+    P(v, 15) = t;
+    ram_451ce = SW(t, 0);
+    ram_293e = 0;
+}
+
+void WaveSel_Emit_ZoneRecord_S6(unsigned char *v, unsigned char *t, unsigned char i)
+{
+    int x;
+    t += (int)i * 6;
+    P(v, 15) = t;
+    W(v, 1) |= 0x4000;
+    ram_451ce = SW(t, 0);
+    x = SW(t, 4);
+    ram_293e = x;
+}
+
+extern unsigned char ram_4424e[][27];
+void Pitch_Apply_Partial_Detune(unsigned char *v);
+
+void NoteState_ClearRecord(unsigned char i, unsigned char j)
+{
+    unsigned char *p;
+    p = (unsigned char *)(ram_4424e + j) + (int)i * 9;
+    p[1] = 0;
+    p[2] = 0;
+    p[3] = 0;
+    p[4] = 0;
+    p[0] = 0;
+    p[5] = 0;
+    p[7] = 0;
+}
+
+void Pitch_Apply_Partial_Detune(unsigned char *v)
+{
+    int d;
+    d = SW(v, 6) + ram_293e;
+    d += (int)(char)B(P(v, 23), 5) * 2;
+    d += (char)B(P(v, 39), 33);
+    d += SW(P(v, 35), 20);
+    SW(v, 10) = d;
+    if ((W(P(v, 35), 10) & 4) && (B(P(v, 19), 16) & 0x20)) W(v, 1) |= 0x400;
+    else W(v, 1) &= ~0x400;
+}

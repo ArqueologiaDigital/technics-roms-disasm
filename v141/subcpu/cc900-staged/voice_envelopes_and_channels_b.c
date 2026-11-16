@@ -57,3 +57,148 @@ void Voice_LoadPitchTable_All(unsigned char ch)
     for (i = 0; (list[i] & 0xff) < 0x80; i++)
         ToneGen_WriteExtParams_56(list[i] & 0xff, ram_451b4);
 }
+
+extern unsigned int ram_4132b;
+extern unsigned char ram_4135c[];
+extern unsigned char ram_41360[];
+extern int ram_451ec;
+extern int ram_451ee;
+extern unsigned int Voice_CC_VolumeCurve[];
+extern unsigned char Voice_EnvelopeLevel_Curve[];
+extern int DSP_ChanFreq_WritePacket1(int);
+extern int DSP_ChanFreq_WritePacket2(int);
+extern void ToneGen_WriteExtParams_15_Alt(int, unsigned int *);
+extern void ToneGen_WriteExtParam_1C0_Sgl(int, unsigned int *);
+extern void ToneGen_WriteReg0640(int, unsigned int *);
+extern void ToneGen_WriteExtParam_600(int, unsigned int *);
+extern void ToneGen_Write_ExtParam_05C0_Stb(int, unsigned int *);
+extern void ToneGen_WriteExtParams_56_Alt(int, unsigned int *);
+
+unsigned int Voice_AdvanceLFOPhase(unsigned char *p)
+{
+    unsigned int r;
+    switch (p[0] & 0x1c) {
+    case 0x10:
+        if (++p[8] >= p[7]) {
+            p[8] = 0;
+            p[0] &= ~0x10;
+            p[0] |= 8;
+        }
+        r = 0;
+        break;
+    case 8:
+        if (++p[8] < p[7]) {
+            r = (unsigned int)p[8] << 8;
+            r /= p[7];
+        } else {
+            p[8] = 0;
+            p[0] &= ~8;
+            p[0] |= 4;
+            r = 0x100;
+        }
+        break;
+    default:
+        r = 0;
+        break;
+    }
+    return r;
+}
+
+void Voice_CC_SetExpression(unsigned char part, unsigned char v)
+{
+    if (v != 0) {
+        if (ram_4132b & 1) *(unsigned int *)&ram_41360[part * 0x11f] = Voice_CC_VolumeCurve[v];
+        else if (ram_4132b & 2) *(unsigned int *)&ram_41360[part * 0x11f] = Voice_CC_VolumeCurve[v];
+        else *(unsigned int *)&ram_41360[part * 0x11f] = (unsigned int)v - 0x7f;
+    } else *(unsigned int *)&ram_41360[part * 0x11f] = 0xfe00;
+}
+
+void Voice_CC_SetVolume(unsigned char part, unsigned char v)
+{
+    if (v != 0) {
+        if (ram_4132b & 1) *(unsigned int *)&ram_4135c[part * 0x11f] = Voice_CC_VolumeCurve[v];
+        else if (ram_4132b & 2) *(unsigned int *)&ram_4135c[part * 0x11f] = Voice_CC_VolumeCurve[v];
+        else *(unsigned int *)&ram_4135c[part * 0x11f] = (unsigned int)v - 0x7f;
+    } else *(unsigned int *)&ram_4135c[part * 0x11f] = 0xfe00;
+}
+
+void Voice_DSP_OutputConfig(unsigned char ch, unsigned char mode)
+{
+    unsigned int *list;
+    unsigned int i;
+    if (mode == 0) {
+        ram_451f6 = DSP_AlgoType_Dispatch1(ch, mode);
+        list = Voice_BuildOutputList(ch, (unsigned char)((unsigned int)mode | 12), 0);
+        for (i = 0; (list[i] & 0xff) < 0x80; i++)
+            ToneGen_WriteReg0640(list[i] & 0xff, ram_451b4);
+    } else {
+        ram_451f4 = DSP_AlgoType_Dispatch1(ch, mode);
+        list = Voice_BuildOutputList(ch, (unsigned char)((unsigned int)mode | 12), 0);
+        for (i = 0; (list[i] & 0xff) < 0x80; i++)
+            ToneGen_WriteExtParam_600(list[i] & 0xff, ram_451b4);
+    }
+}
+
+void Voice_DSP_OutputConfig2(unsigned char ch, unsigned char mode)
+{
+    unsigned int *list;
+    unsigned int i;
+    if (mode == 0) {
+        ram_451f2 = DSP_AlgoType_Dispatch2(ch, mode);
+        list = Voice_BuildOutputList(ch, (unsigned char)((unsigned int)mode | 12), 0);
+        for (i = 0; (list[i] & 0xff) < 0x80; i++)
+            ToneGen_Write_ExtParam_05C0_Stb(list[i] & 0xff, ram_451b4);
+    } else {
+        ram_451f0 = DSP_AlgoType_Dispatch2(ch, mode);
+        list = Voice_BuildOutputList(ch, (unsigned char)((unsigned int)mode | 12), 0);
+        for (i = 0; (list[i] & 0xff) < 0x80; i++)
+            ToneGen_WriteExtParams_56_Alt(list[i] & 0xff, ram_451b4);
+    }
+}
+
+void Voice_DSP_SimpleCopy(unsigned char ch)
+{
+    unsigned int *list;
+    unsigned int i;
+    ram_451ec = DSP_ChanFreq_WritePacket1(ch);
+    list = Voice_BuildOutputList(ch, 16, 0);
+    for (i = 0; (list[i] & 0xff) < 0x40; i++)
+        ToneGen_WriteExtParam_1C0_Sgl(list[i] & 0xff, ram_451b4);
+}
+
+void Voice_DSP_SimpleCopy2(unsigned char ch)
+{
+    unsigned int *list;
+    unsigned int i;
+    ram_451ee = DSP_ChanFreq_WritePacket2(ch);
+    list = Voice_BuildOutputList(ch, 16, 0);
+    for (i = 0; (list[i] & 0xff) < 0x40; i++)
+        ToneGen_WriteExtParams_15_Alt(list[i] & 0xff, ram_451b4);
+}
+
+void Voice_LoadToneTable_All(unsigned char ch)
+{
+    unsigned int *list;
+    unsigned int i;
+    ram_451ee = DSP_ChanFreq_WritePacket2(ch);
+    list = Voice_BuildOutputList(ch, 16, 0);
+    for (i = 0; (list[i] & 0xff) < 0x40; i++)
+        ToneGen_WriteExtParams_15_Alt(list[i] & 0xff, ram_451b4);
+}
+
+void Voice_WriteVolume_OrPan(unsigned char *v)
+{
+    unsigned char *f;
+    unsigned char *l;
+    unsigned int t;
+    f = *(unsigned char **)(v + 19);
+    l = *(unsigned char **)(v + 23);
+    if (f[13] & 0x20) {
+        t = (unsigned int)Voice_EnvelopeLevel_Curve[l[13]] << 8;
+        ram_451e2 = t;
+        ram_451e0 = t | 0x80;
+    } else {
+        ram_451e0 = 0x80;
+        ram_451e2 = 0;
+    }
+}
