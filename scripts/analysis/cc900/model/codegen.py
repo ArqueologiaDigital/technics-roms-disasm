@@ -247,6 +247,8 @@ class Fn:
                         continue                         # (the read that consumes it: lo_i_G0e add WA,(_hi))
                     if DEAD_INIT_CTR and rt_ and op == 'cal' and dead_until_redef(s, d): continue   # (its value is not
                                                          # read again before it is assigned: rs_1_00_03_5)
+                    if ASSIGN_TARGET_WRITE and d is getattr(s, 'assign_target', None): continue   # (c = *p builds c in
+                                                         # its own register: trim_a's loop condition, ld E,(XHL))
                     if getattr(d, 'reg', None) in ('WA', 'BC', 'DE', 'HL') and 'X' + d.reg == fam_ and d not in s.dead and \
                             (param_live_after(s, d) or rt_ and uses_decl(getattr(s, 'cur_stmt', None), d) or
                              LOOP_LIVE_GUARD and getattr(getattr(s, 'top_cur', None), 'k', None) in ('while', 'do', 'for') and
@@ -7957,6 +7959,7 @@ HOMES2W_WHOLE = True                                     # see compile_unit
 FPPW_WHOLE = True                                        # see compile_unit
 CONT_TO_TEST = True                                      # see gen_stmt (while)
 IMM_WIDTH_MASK = True                                    # see Fn.emit
+ASSIGN_TARGET_WRITE = True                               # see gen_assign_value and Fn.emit's live guard
 GOTO_LABELS = True                                       # see gen_stmt's goto and golab
 STORE_POSTINC_XHL = True                                  # see gen_stmt's store: *p++ = computed char, p in a register
 STORE_DYING_CHARVAR = True                                # see gen_stmt's store: a dying char register variable's value
@@ -10308,7 +10311,10 @@ def gen_assign_value(F, e, fam, size, in_place=False):
             F.emit('exts' if inner.ty.signed else 'extz', d.reg); return d.reg
     if lv.k == 'var' and getattr(lv.decl, 'reg', None) in FAM and lv.decl.reg != 'XIZ':
         d = lv.decl                                        # ae_c_ne_l: (y = x) with y in C -> ld C,(XSP+0x4)
-        f2 = gen(F, rv, d.reg, vs)
+        at0_ = getattr(F, 'assign_target', None)
+        if ASSIGN_TARGET_WRITE and not uses_decl(rv, d): F.assign_target = d
+        try: f2 = gen(F, rv, d.reg, vs)
+        finally: F.assign_target = at0_
         if f2 != d.reg: F.emit('ld', '%s,%s' % (FAM[d.reg][vs], FAM[f2][vs]))
         return d.reg
     if lv.k == 'var' and getattr(lv.decl, 'reg', None):
