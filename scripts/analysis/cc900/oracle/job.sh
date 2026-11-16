@@ -57,6 +57,11 @@ while IFS='|' read -r name tarball; do
                   echo "exit $?" >>"$base.as.log" )
                 continue ;;
             esac
+            # the source's local headers go beside the copy: cc900 resolves `#include "x.h"` against the directory of
+            # the file it compiles, not against -I (THC1-Error-310, run 2026-11-16-46-hd-r2); removed again below
+            sdir=$(dirname "$src")
+            hdrs=$(cd "$C/SRC/$sdir" && find . -type f \( -name '*.h' -o -name '*.H' \) | sed 's|^\./||')
+            for h in $hdrs; do mkdir -p "$d/$(dirname "$h")"; cp "$C/SRC/$sdir/$h" "$d/$h"; done
             winsrc=$(printf '%s' "$src" | tr '/' '\\')
             ( cd "$d" && timeout 120 wine "C:\\CC\\$name\\BIN\\CC900.EXE" $flags -I"C:\\CC\\$name\\INCLUDE" \
                   -I"C:\\SRC\\$(dirname "$winsrc")" -S "$file" >"$base.cc.log" 2>&1; echo "exit $?" >>"$base.cc.log"
@@ -64,6 +69,7 @@ while IFS='|' read -r name tarball; do
               [ -n "$a" ] && timeout 120 wine "C:\\CC\\$name\\BIN\\ASM900.EXE" "$a" >"$base.as.log" 2>&1
               echo "exit $?" >>"$base.as.log" )
             rm -f -- "${d:?}/${file:?}"
+            for h in $hdrs; do rm -f -- "${d:?}/${h:?}"; done
         done < /root/in/sources.txt
         echo "done $name $label: $flags"
     done < /root/in/options.txt
