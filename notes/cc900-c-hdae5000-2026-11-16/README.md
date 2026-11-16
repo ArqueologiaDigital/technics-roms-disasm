@@ -40,6 +40,28 @@ or that it falls into, are its inner blocks.  Its kind:
 choice also tells which functions shared a source file.  C-calr functions wait for lane_vmb's `cc900-module:`
 marking; the C? ones can be checked now.
 
+## Status (staged_v423.tsv, run `2026-11-16-60-hd-r9a`)
+
+| tree              | functions | bytes | note                                                          |
+|-------------------|-----------|-------|---------------------------------------------------------------|
+| `hdae5000`        | 49        | 4,393 | 15 of them call a same-module routine (`cc900-module:` lists) |
+| `hdae5000_v2_01i` | 36        | 3,609 | the v2.06i C unchanged (`port_staged.py`)                     |
+| `hdae5000_v1_15i` | 26        | 2,822 | the same                                                      |
+| `hdae5000_v1_10i` | 26        | 2,822 | the same                                                      |
+
+The staged files are one per original module (a calr group, `survey.py --modules`): `hdae5000_lyrics.c`,
+`hdae5000_pport_services.c`, `hdae5000_hd_tables.c`, `hdae5000_flsitem.c`, `hdae5000_song_io.c`; functions that call
+nothing of their module are in `hdae5000_ui_display.c`, `hdae5000_hd_driver.c` and `hdae5000_song_check.c`.  A
+module's relative calls are named in a `cc900-module:` comment (the build's rule since 7d0361673); `hd_v423.py`
+reads it as the build does.  Before that rule, `hd_v423.py --calr` modelled the shortening from the ROM (a `call`
+becomes `calr` where the ROM has a `calr` to the same target), and asm900's own object file of run 56 showed the
+`calr`.
+
+In the older images, the v2.06i C fails where it writes a v2.06i number: string addresses (`ram_2f...`, labels
+longer than 31 characters that share their first 31), the RAM cell `ram_23085e`, a UI object id
+(`Set_Menu_Visibility`).  `TypeSel_BuildMask` changed between v1.15i and v2.01i.  The lyrics functions do not exist
+before v2.01i.
+
 ## Rounds
 
 Every C file that went into a run is committed in `probes/` (or `hdae5000/cc900-staged/`) before the run.  The runs
