@@ -155,6 +155,23 @@ def coverage_scores(text):
     return d
 
 
+PROGRESS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'c_progress.tsv')
+
+
+def collect_progress():
+    """results/c_progress.tsv (c_progress.py record): one point per V4.23 run of the firmware-C work, built + staged"""
+    out, prev = [], None
+    if os.path.exists(PROGRESS):
+        for line in open(PROGRESS, encoding='utf-8'):
+            f = line.rstrip('\n').split('\t')
+            if line.startswith('time\t') or len(f) < 8: continue
+            v = [int(x) for x in f[2:8]]
+            out.append(dict(date=f[0], h=f[1][:24], subject='V4.23 run ' + f[1], moved=(prev is None or v != prev),
+                            built_fn=v[0], built_b=v[1], staged_fn=v[2], staged_b=v[3], v10_fn=v[4], v10_b=v[5]))
+            prev = v
+    return out
+
+
 def collect_coverage():
     """one row per commit that changed c_build_coverage.md, with its figures; none before the file existed"""
     rows = []
@@ -395,6 +412,17 @@ const TCNAME = {"V4.23": "Toshiba V4.23", model: "reference model", LLVM: "LLVM 
 const TCCOL = {"V4.23": "var(--series-2)", model: "var(--series-1)", LLVM: "var(--series-3)"};
 const pct3 = v => v == null ? "–" : (v > 0 && v < 0.01 ? v.toFixed(4) : v.toFixed(3)) + " %";
 function covCharts() {
+  const PG = DATA.progress || [];
+  if (PG.length) {
+    chart("Firmware C confirmed by Toshiba V4.23", "ROM bytes of firmware functions whose C Toshiba V4.23 compiles to exactly the ROM's bytes, over the six main-CPU images: built into the images, and confirmed but still staged on the C lane's branch (results/c_progress.tsv, one point per V4.23 run, even when nothing moved). The tooltip gives the function counts.",
+      [{ name: "built + staged", short: "total", c: "var(--series-2)", v: PG.map(r => r.built_b + r.staged_b), extra: i => `${PG[i].built_fn + PG[i].staged_fn} functions` },
+       { name: "built into the images", short: "built", c: "var(--series-1)", v: PG.map(r => r.built_b), extra: i => `${PG[i].built_fn} functions` },
+       { name: "staged, not yet built", short: "staged", c: "var(--series-3)", v: PG.map(r => r.staged_b), extra: i => `${PG[i].staged_fn} functions` }],
+      { rows: PG, zero: true, into: "cov-charts", right: 110, good: "▲ progress = lines going up; staged bytes move into built at each merge" });
+    chart("Firmware C confirmed by V4.23, v10 alone", "The same for the v10 image only (built + staged).",
+      [{ name: "v10 bytes", short: "v10", c: "var(--series-2)", v: PG.map(r => r.v10_b), extra: i => `${PG[i].v10_fn} functions` }],
+      { rows: PG, zero: true, into: "cov-charts", right: 110, good: "▲ progress = the line going up" });
+  }
   if (!CV.length) return;
   chart("Bytes built from C, all images", "ROM bytes that C, through each toolchain, gives exactly: firmware C built into the images plus the Toshiba library routines checked in them. The tooltip splits the two.",
     TC.map(k => ({ name: TCNAME[k], short: k, c: TCCOL[k], v: CV.map(r => r.tot[k][0]),
@@ -458,7 +486,7 @@ def main():
     if not rows: sys.exit('no ledger history found')
     import datetime
     cov = collect_coverage()
-    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions(), 'coverage': cov}))
+    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions(), 'coverage': cov, 'progress': collect_progress()}))
             .replace('__FLAT__', str(sum(1 for r in rows if not r['moved'])))
             .replace('__N__', str(len(rows))).replace('__FIRST__', rows[0]['date'][:10]).replace('__LAST__', rows[-1]['date'][:10])
             .replace('__NOW__', datetime.datetime.now().strftime('%Y-%m-%d %H:%M')))
