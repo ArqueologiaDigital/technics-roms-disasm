@@ -982,11 +982,11 @@ SmfFN_IgnoredEvents:
 	ld xwa, (xsp + 28)
 	cp xwa, EVT_INDEXSW_UP
 	jr nz, SmfFN_SetScrollDir0
-	ld (0x8942:16), 1
+	ld (SmfPlayAsGm:16), 1
 	jrl SmfFN_UpdateDisplay
 
 SmfFN_SetScrollDir0:
-	ld (0x8942:16), 0
+	ld (SmfPlayAsGm:16), 0
 	jrl SmfFN_UpdateDisplay
 
 SmfFN_HandleScrollFlag1:
@@ -1045,11 +1045,11 @@ SmfFN_HandleScrollFlag4:
 	jr nz, SmfFN_HandleSeqSongNum
 	cp xwa, EVT_INDEXSW_UP
 	jr nz, SmfFN_SetFlag35140_0
-	ld (0x8944:16), 1
+	ld (SmfMidiOut_OnOff:16), 1
 	jrl SmfFN_UpdateDisplay
 
 SmfFN_SetFlag35140_0:
-	ld (0x8944:16), 0
+	ld (SmfMidiOut_OnOff:16), 0
 	jrl SmfFN_UpdateDisplay
 
 SmfFN_HandleSeqSongNum:

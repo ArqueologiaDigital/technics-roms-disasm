@@ -4088,7 +4088,7 @@ MainVocalistPage1OKFunc_OnSmfHarmonyPreset:
 	ld	(0xb7ec:16), 1
 	call	SndParam_ApplyAndSync
 	ld	wa, 1:i3
-	call	SmfMedley_RawData
+	call	Smf_SetMidiOut
 	ld	(GLOBAL_ERROR_CODE:16), 35
 	ld	xwa, 0xffffffff
 	ld	xbc, EVT_INTERRUPT_TITLE

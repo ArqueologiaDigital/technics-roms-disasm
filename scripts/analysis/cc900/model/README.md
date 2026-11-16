@@ -31,7 +31,10 @@ written from it and tested against it.
 
     python3 -I -B to_llvm.py ../corpus/firmware/tiny.c ../corpus/firmware/tiny.syms --adecl > "$TMPDIR/tiny.s"
     python3 -I -B check_bytes.py "$TMPDIR/tiny.s" ../../../../original_ROMs/kn5000_v10_program.rom \
-        ../../../../symbols/maincpu_v10_symbols_reference.txt 0xe00000
+        ../../../../symbols/maincpu_v10_symbols_reference.txt 0xe00000 --alias SmfMedley_RawData=Smf_SetMidiOut
+
+(`tiny.c` keeps the C names its oracle run compiled, and that run is a ledger row; the firmware label
+`SmfMedley_RawData` is `Smf_SetMidiOut` since 2026-11-16, hence `--alias`.)
 
 **Firmware functions in the build (phase 6):** `scripts/build/cc900_firmware_c.py` compiles `v10/maincpu/cc900/*.c`
 for `make` (`notes/cc900-phase6-2026-11-16/README.md`); one function against the ROM, or every function of a file:

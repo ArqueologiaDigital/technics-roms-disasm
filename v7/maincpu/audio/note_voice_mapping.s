@@ -19197,7 +19197,7 @@ SendSinglePacket_LoadReg:
 	inc	6, xsp
 	ei	0
 SendSinglePacket_DoGetPlayS:
-	call	GetPlayState2
+	call	Smf_GetMidiOut
 	cp	l, 0:i3
 	jr	z, SendSinglePacket_Epilogue
 	cp	(0xe91e:16), 1
@@ -19476,7 +19476,7 @@ SeqFile_Epilogue:
 	ret
 SeqInit_ResetAndSetupChannels:
 	calr	MIDI_ResetAllChannels
-	call	GetPlayState1
+	call	Smf_GetPlayAsGm
 	cp	l, 0:i3
 	jr	z, SeqInit_SetDefaultMode
 	ld	wa, 1:i3
@@ -19808,7 +19808,7 @@ SeekRecord_Done_Block2:
 	calr	MIDI_SendSinglePacket
 	jr	FileIO_SeekRecord_Return
 SeekRecord_Done_DoGetPlayS:
-	call	GetPlayState2
+	call	Smf_GetMidiOut
 	cp	l, 0:i3
 	jr	z, FileIO_SeekRecord_Return
 	cp	(0xe91e:16), 1

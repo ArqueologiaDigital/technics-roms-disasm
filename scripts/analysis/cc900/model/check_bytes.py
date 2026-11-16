@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Do the model's functions assemble to the ROM's bytes?  Byte compare of to_llvm.py output against a ROM image.
 
-usage: python3 -I -B check_bytes.py FILE.s ROM SYMBOLS_REFERENCE BASE [--llvm-bin DIR]
+usage: python3 -I -B check_bytes.py FILE.s ROM SYMBOLS_REFERENCE BASE [--llvm-bin DIR] [--alias OLD=NEW ...]
+--alias: a function of FILE.s whose firmware label has since been renamed is looked up under the new name (the
+oracle corpus keeps its C as compiled: tiny.c's SmfMedley_RawData is the firmware's Smf_SetMidiOut since 2026-11-16).
 FILE.s is to_llvm.py's output.  It is assembled with llvm-mc (default ~/compartilhado/llvm-project/build/bin);
 each global label's bytes run to the next label (the last to the end of .text) and are compared with the ROM at
 the address SYMBOLS_REFERENCE gives the same name (symbols/*_symbols_reference.txt rows `NAME 00ADDRESS`), BASE
@@ -42,6 +44,10 @@ def main():
     bindir = a[a.index('--llvm-bin') + 1] if '--llvm-bin' in a else LLVM_BIN
     funcs = assemble(open(src).read(), bindir)
     ref = load_reference(symf)
+    for i, x in enumerate(a):                            # --alias OLD=NEW: OLD's address is NEW's
+        if x == '--alias' and '=' in a[i + 1]:
+            old, new = a[i + 1].split('=', 1)
+            if new in ref: ref[old] = ref[new]
     img = open(rom, 'rb').read()
     bad = 0
     for n, mine in funcs.items():

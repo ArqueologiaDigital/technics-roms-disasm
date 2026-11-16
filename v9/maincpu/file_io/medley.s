@@ -1709,12 +1709,12 @@ DiskSel_Exit:
 	lda xsp, (xsp + 14)
 	ret
 
-GetPlayState1:	.include "includes/generated/cc900/GetPlayState1.s"	; C: cc900/medley.c
+Smf_GetPlayAsGm:	.include "includes/generated/cc900/Smf_GetPlayAsGm.s"	; C: cc900/medley.c
 
-GetPlayState2:	.include "includes/generated/cc900/GetPlayState2.s"	; C: cc900/medley.c
+Smf_GetMidiOut:	.include "includes/generated/cc900/Smf_GetMidiOut.s"	; C: cc900/medley.c
 
-; Stores 1 in the byte GetPlayState2 returns when A is non-zero, else 0.
-SmfMedley_RawData:	.include "includes/generated/cc900/SmfMedley_RawData.s"	; C: cc900/medley.c
+; Stores 1 in the byte Smf_GetMidiOut returns when A is non-zero, else 0.
+Smf_SetMidiOut:	.include "includes/generated/cc900/Smf_SetMidiOut.s"	; C: cc900/medley.c
 
 NavigateSongList:
 	dec 2, xsp
@@ -2107,7 +2107,7 @@ SmfMed_ClearPlaying:
 
 SmfMed_InitFromDisk:
 	ld xde, 0:i3
-	ld e, (0x8944:16)
+	ld e, (SmfMidiOut_OnOff:16)
 	ld xwa, 0x6c0018
 	ld xbc, EVT_SET_PARAM
 	call ApPostEvent
