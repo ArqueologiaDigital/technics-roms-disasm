@@ -11692,33 +11692,15 @@ SeqParams_InitDefaults:
 	ld	(9714:16), 0
 	ret
 
-Seq_ValidatePartNumber:
-	cp a, 1:i3
-	jr c, SeqValidate_PartFail
-	cp	a, (0x2885:16)
-	jr ule, SeqValidate_PartOK
+Seq_ValidatePartNumber:	.include "includes/generated/cc900/Seq_ValidatePartNumber.s"	; C: cc900/sequencer_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValidate_PartFail, Seq_ValidatePartNumber + 10
+	.set	SeqValidate_PartOK, Seq_ValidatePartNumber + 14
 
-SeqValidate_PartFail:
-	ldw hl, 0xffff
-	ret
-
-SeqValidate_PartOK:
-	ld hl, 0:i3
-	ret
-
-Seq_ValidateTempoValue:
-	cp wa, 1:i3
-	jr c, SeqValidate_TempoFail
-	cp wa, 0x3e7
-	jr ule, SeqValidate_TempoOK
-
-SeqValidate_TempoFail:
-	ldw hl, 0xffff
-	ret
-
-SeqValidate_TempoOK:
-	ld hl, 0:i3
-	ret
+Seq_ValidateTempoValue:	.include "includes/generated/cc900/Seq_ValidateTempoValue.s"	; C: cc900/sequencer_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValidate_TempoFail, Seq_ValidateTempoValue + 10
+	.set	SeqValidate_TempoOK, Seq_ValidateTempoValue + 14
 
 Seq_ValidateAllParams_DataBlock:
 	ld	a, (SEQ_TRACK:16)
@@ -14175,15 +14157,9 @@ SeqVoice_WriteErrorAndReturn:
 	inc 6, xsp
 	ret
 
-SeqScan_ClearNoteRange:
-	ld xbc, xwa
-	inc 6, xwa
-
-SeqScan_ClearNoteLoop:
-	ld (xbc+), 0x00
-	cp xbc, xwa
-	jr c, SeqScan_ClearNoteLoop
-	ret
+SeqScan_ClearNoteRange:	.include "includes/generated/cc900/SeqScan_ClearNoteRange.s"	; C: cc900/sequencer_engine.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqScan_ClearNoteLoop, SeqScan_ClearNoteRange + 4
 
 SeqValidate_PartAndTempoCombined:
 	ld	a, (SEQ_TRACK:16)

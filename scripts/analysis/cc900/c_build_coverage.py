@@ -315,6 +315,8 @@ def firmware(key, tree, rom_path, sym_path):
             lp = os.path.join(ORACLE, 'runs', run[0], 'out', run[1])
             if os.path.exists(lp):
                 v423 = translate(listing_functions(lp), names)
+                lm_ = fw.label_map(path)                  # a short C name (`cc900-name: C=LABEL`) is the label's
+                v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
             else:
                 run = None
         for fn, lines in sorted(funcs.items()):
