@@ -8034,108 +8034,27 @@ MidiOutSend_Return:
 	inc 2, xsp
 	ret
 
-FileIO_DiskEventDispatch:
-	dec 4,XSP
-	ld (XSP),C
-	ld (XSP+0x02),A
-	cpw	(DISK_MEDIA_TYPE:16), 0x0000
-	jr ge, DiskEvt_CheckMediaType
-	call GetDiskSizeInfo
-	extz HL
-	ld	(DISK_MEDIA_TYPE:16), hl
-DiskEvt_CheckMediaType:
-	ld	wa, (DISK_MEDIA_TYPE:16)
-	cp	wa, 1:i3
-	jr	z, DiskEvt_TypeIsCard
-	cp	wa, 0:i3
-	jr	z, DiskEvt_TypeIsNone
-	cp	wa, 5:i3
-	jr	z, DiskEvt_TypeIsUSB
-	cp	wa, 2:i3
-	jr	z, DiskEvt_TypeIsFloppyOrHD
-	cp	wa, 3:i3
-	jr	nz, DiskEvt_Return
-DiskEvt_TypeIsFloppyOrHD:
-	bit 0, (0x340f4:24)
-	jr z, DiskEvt_UseAltChannel
-	ld a, (xsp)
-	extz wa
-	jr DiskEvt_PostModeEvent
+FileIO_DiskEventDispatch:	.include "includes/generated/cc900/FileIO_DiskEventDispatch.s"	; C: cc900/file_demo_proc_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DiskEvt_CheckMediaType, FileIO_DiskEventDispatch + 25
+	.set	DiskEvt_TypeIsFloppyOrHD, FileIO_DiskEventDispatch + 49
+	.set	DiskEvt_UseAltChannel, FileIO_DiskEventDispatch + 62
+	.set	DiskEvt_TypeIsUSB, FileIO_DiskEventDispatch + 69
+	.set	DiskEvt_TypeIsNone, FileIO_DiskEventDispatch + 79
+	.set	DiskEvt_PostModeEvent, FileIO_DiskEventDispatch + 82
+	.set	DiskEvt_TypeIsCard, FileIO_DiskEventDispatch + 88
+	.set	DiskEvt_SendSoundCmd, FileIO_DiskEventDispatch + 99
+	.set	DiskEvt_Return, FileIO_DiskEventDispatch + 103
 
-DiskEvt_UseAltChannel:
-	ld a, (xsp + 2)
-	extz wa
-	jr DiskEvt_PostModeEvent
-
-DiskEvt_TypeIsUSB:
-	ld	(GLOBAL_ERROR_CODE:16), 0
-	ldw	wa, TT_MESAGE
-	jr	DiskEvt_SendSoundCmd
-DiskEvt_TypeIsNone:
-	ldw wa, TT_DKUTFRMT
-
-DiskEvt_PostModeEvent:
-	call UI_ChangeTitleByIndex
-	jr DiskEvt_Return
-
-DiskEvt_TypeIsCard:
-	calr	ResetProgressIndication
-	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, TT_MESAGE
-DiskEvt_SendSoundCmd:
-	call UI_InterruptTitleByIndex
-
-DiskEvt_Return:
-	inc 4, xsp
-	ret
-
-FileIO_DetectFileTypeAndPost:
-	cpw	(DISK_MEDIA_TYPE:16), 0x0000
-	jr ge, DetectType_CheckMediaType
-	call GetDiskSizeInfo
-	extz HL
-	ld	(DISK_MEDIA_TYPE:16), hl
-DetectType_CheckMediaType:
-	ld	wa, (DISK_MEDIA_TYPE:16)
-	cp	wa, 1:i3
-	jr	z, DetectType_IsCardReset
-	cp	wa, 0:i3
-	jr	z, DetectType_IsNone
-	cp	wa, 5:i3
-	jr	z, DetectType_IsPdFormat
-	cp	wa, 2:i3
-	jr	z, DetectType_TypeIsFloppy
-	cp	wa, 3:i3
-	ret	nz
-	ldw	wa, TT_DKDPSMF
-	jr	UI_PostEventCommon
-DetectType_TypeIsFloppy:
-	call DetectFileType
-	cp hl, 0:i3
-	jr ge, DetectType_IsDocFormat
-	ldw wa, TT_DKDPSMF
-	jr UI_PostEventCommon
-
-DetectType_IsDocFormat:
-	ldw wa, TT_DKDPDOC
-	jr UI_PostEventCommon
-
-DetectType_IsPdFormat:
-	ldw wa, TT_DKDPPD
-	jr UI_PostEventCommon
-
-DetectType_IsNone:
-	ldw wa, TT_DKUTFRMT
-
-UI_PostEventCommon:
-	jp UI_ChangeTitleByIndex
-
-DetectType_IsCardReset:
-	calr	ResetProgressIndication
-	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, TT_MESAGE
-	call	UI_InterruptTitleByIndex
-	ret
+FileIO_DetectFileTypeAndPost:	.include "includes/generated/cc900/FileIO_DetectFileTypeAndPost.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DetectType_CheckMediaType, FileIO_DetectFileTypeAndPost + 18
+	.set	DetectType_TypeIsFloppy, FileIO_DetectFileTypeAndPost + 47
+	.set	DetectType_IsDocFormat, FileIO_DetectFileTypeAndPost + 60
+	.set	DetectType_IsPdFormat, FileIO_DetectFileTypeAndPost + 65
+	.set	DetectType_IsNone, FileIO_DetectFileTypeAndPost + 70
+	.set	UI_PostEventCommon, FileIO_DetectFileTypeAndPost + 73
+	.set	DetectType_IsCardReset, FileIO_DetectFileTypeAndPost + 77
 FileIO_GetDiskCapacity:
 	dec 2,XSP
 	ld (XSP),A

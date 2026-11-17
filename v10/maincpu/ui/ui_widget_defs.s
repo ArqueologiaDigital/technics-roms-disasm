@@ -8455,20 +8455,7 @@ InputDialog_Paint:
 ;
 ; note: Each object in the registry takes up 14 bytes.
 ;
-RegisterObjectTable:
-	cp wa, 0x45f
-	ret ugt
-	extz xwa
-	ld xde, xwa
-	sll xde, 3
-	sub xde, xwa
-	add xde, xde
-	ld xix, OBJECT_REGISTRY
-	add xix, xde	; XIX = 27ed2h + 14 * XWA
-	ld xiy, xbc
-	ld bc, 7:i3
-	ldirw
-	ret
+RegisterObjectTable:	.include "includes/generated/cc900/RegisterObjectTable.s"	; C: cc900/ui_widget_defs_m272_xr.c
 
 RegisterObject:
 	lda xsp, (xsp - 20)

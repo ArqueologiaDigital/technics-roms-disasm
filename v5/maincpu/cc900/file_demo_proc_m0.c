@@ -1,5 +1,5 @@
-/* Functions of demo/file_demo_proc.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+/* Functions of demo/file_demo_proc.s.  Firmware C (cc900 phase 6), built with Toshiba V4.23; checked function by function
+   against the ROM (notes/cc900-phase6-2026-11-16/staged_v423.tsv).
    Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
    __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
    a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
@@ -10,27 +10,31 @@
 
 #define TT_MESAGE   0xee
 #define TT_DKUTFRMT 0x7d
+#define TT_DKDPSMF  0x6c
+#define TT_DKDPDOC  0x6d
+#define TT_DKDPPD   0x6e
 extern unsigned char GetDiskSizeInfo(void);
 extern void UI_ChangeTitleByIndex(unsigned int);
 extern void UI_InterruptTitleByIndex(unsigned int);
 extern void ResetProgressIndication(void);
+extern int DetectFileType(void);
 extern int __near DISK_MEDIA_TYPE;
 extern unsigned char __near GLOBAL_ERROR_CODE;
-extern unsigned char ram_340f4;
-extern void FileIO_DiskEventDispatch(unsigned char a, unsigned char c);
+extern void FileIO_DetectFileTypeAndPost(void);
 
-void FileIO_DiskEventDispatch(unsigned char a, unsigned char c)
+void FileIO_DetectFileTypeAndPost(void)
 {
 	if (DISK_MEDIA_TYPE < 0) DISK_MEDIA_TYPE = GetDiskSizeInfo();
 	switch (DISK_MEDIA_TYPE) {
 	case 3:
+		UI_ChangeTitleByIndex(TT_DKDPSMF);
+		break;
 	case 2:
-		if (ram_340f4 & 1) UI_ChangeTitleByIndex(c);
-		else UI_ChangeTitleByIndex(a);
+		if (DetectFileType() < 0) UI_ChangeTitleByIndex(TT_DKDPSMF);
+		else UI_ChangeTitleByIndex(TT_DKDPDOC);
 		break;
 	case 5:
-		GLOBAL_ERROR_CODE = 0;
-		UI_InterruptTitleByIndex(TT_MESAGE);
+		UI_ChangeTitleByIndex(TT_DKDPPD);
 		break;
 	case 0:
 		UI_ChangeTitleByIndex(TT_DKUTFRMT);

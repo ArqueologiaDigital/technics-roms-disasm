@@ -75,3 +75,14 @@ void SetVisible(unsigned long id, int f)
     else
         *p |= 0x1;
 }
+
+struct objreg { long cls; void *proc; int count; void *base; };
+extern struct objreg OBJECT_REGISTRY[];
+extern void RegisterObjectTable(unsigned int n, struct objreg *r);
+
+void RegisterObjectTable(unsigned int n, struct objreg *r)
+{
+    if (n > 0x45f)
+        return;
+    OBJECT_REGISTRY[n] = *r;
+}

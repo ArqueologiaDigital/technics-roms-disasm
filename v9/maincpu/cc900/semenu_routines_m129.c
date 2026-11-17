@@ -145,3 +145,39 @@ void SeMenu_SetPartEnabled(unsigned char part, unsigned char on)
 	if (obj == 0) SeMenu_RegisterElement_Extended(0, 17, &v, m);
 	else SeMenu_SetupDisplayObject_Alt1(0, 13, &v, m);
 }
+
+/* cc900-module: SeLfo_GetSelectedLfo SeMenu_GetLfoPartSwitchParamId SeMenu_LoadPartParam SeMenu_StorePartParam */
+extern void SeMenu_LoadPartParam(int, unsigned char *);
+extern void SeMenu_StorePartParam(int, int);
+extern void SeLfo_GetSelectedLfo(unsigned char m, unsigned char *out);
+extern void SeMenu_GetLfoPartSwitchParamId(unsigned char kind, unsigned char *id);
+extern void __cdecl SeTitle_DrawField(int, int);
+extern void SeMenu_CyclePartLfoState(unsigned char kind, unsigned char part);
+
+void SeMenu_CyclePartLfoState(unsigned char kind, unsigned char part)
+{
+    unsigned char val[3];
+    unsigned char lfo;
+    unsigned char id;
+    unsigned char p;
+    unsigned char *pv;
+    if (SeMenu_IsPartEnabled(part) != 0) {
+        p = part + 4;
+        SeMenu_LoadPartParam(p, val);
+        pv = val;
+        if ((*pv & 0x20) == 0) {
+            *pv |= 0x20;
+            SeLfo_GetSelectedLfo(kind, &lfo);
+            pv = val;
+            *pv &= 0x3f;
+            *pv |= (unsigned char)(lfo - 1) << 6;
+        } else if (*pv & 0x10)
+            *pv &= 0x0f;
+        else
+            *pv |= 0x10;
+        SeMenu_GetLfoPartSwitchParamId(kind, &id);
+        SeMenu_RegisterElement_Extended(part, id, &val[0], 240);
+        SeMenu_StorePartParam(p, val[0]);
+        SeTitle_DrawField(42, p);
+    }
+}
