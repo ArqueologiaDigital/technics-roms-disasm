@@ -696,35 +696,7 @@ SeGfx_StaticOp09_Box:	.include "includes/generated/cc900/SeGfx_StaticOp09_Box.s"
 SeGfx_StaticOp0A_ShadowBox2:	.include "includes/generated/cc900/SeGfx_StaticOp0A_ShadowBox2.s"	; C: cc900/graphics_text_vga_m0.c
 SeGfx_StaticOp13_DottedBox:	.include "includes/generated/cc900/SeGfx_StaticOp13_DottedBox.s"	; C: cc900/graphics_text_vga_m0.c
 SeGfx_StaticOp22_ShadowBox1:	.include "includes/generated/cc900/SeGfx_StaticOp22_ShadowBox1.s"	; C: cc900/graphics_text_vga_m0.c
-SeGfx_StaticOp03_Bitmap:
-	dec	8, xsp
-	lda	xhl, (xsp)
-	lda	xde, (xhl+2)
-	lda	xix, (xwa+6)
-	ld	bc, (xix)
-	extz	xbc
-	div	bc, 40
-	ld	(xde), bc
-	ld	bc, (xix)
-	extz	xbc
-	div	bc, 40
-	ld bc, qbc
-	sll bc, 3
-	ld	(xhl), bc
-	ld	bc, (xde)
-	add	bc, (xwa+10)
-	ld	(xhl+6), bc
-	ld	bc, (xwa+8)
-	sll	bc, 3
-	ld	de, (xhl)
-	add	de, bc
-	ld	(xhl+4), de
-	ld	xbc, (xwa+2)
-	ld	de, (GFX_FG_COLOR:24)
-	ld	xwa, xhl
-	calr	ColorBlit2_LargeCodeBlock
-	inc	8, xsp
-	ret
+SeGfx_StaticOp03_Bitmap:	.include "includes/generated/cc900/SeGfx_StaticOp03_Bitmap.s"	; C: cc900/graphics_text_vga_m273.c
 SeGfx_StaticOp23_DesignBox:
 	lda	xsp, (xsp-12)
 	pushw	iz

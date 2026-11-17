@@ -1,0 +1,33 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of firmware/p6_D_2a.c (2026-11-16-35-p6-r3)
+   sha256 d3b51256cb6766ba5ee356b2f9ad6f2a91b76a80223fa8ae1385d53c17b0fdaa (tar-sha256); compiled at -Xr */
+extern unsigned char __near FDC_RESULT[];
+extern unsigned char __near ram_8b00;
+extern unsigned char FDC_Set_Status(int);
+unsigned char FDC_Exception_Status_Decoder(void)
+{
+	unsigned char *r = FDC_RESULT;
+	unsigned char c = r[1];
+
+	switch (c & 0xc0) {
+	case 0:
+		return 0;
+	case 0xc0:
+		ram_8b00 = 255;
+		return 0;
+	case 0x80:
+		return 0;
+	case 0x40:
+		if (c & 8) return 0x31;
+		if (c & 0x10) return 0x32;
+		c = r[2];
+		if (c & 1) return FDC_Set_Status(0x35);
+		if (c & 2) return FDC_Set_Status(0x2f);
+		if (c & 4) return FDC_Set_Status(0x33);
+		if (c & 0x10) return FDC_Set_Status(0x34);
+		if (c & 0x20) return FDC_Set_Status(0x36);
+		if (c & 0x80) return FDC_Set_Status(0x37);
+		return FDC_Set_Status(8);
+	default:
+		return 8;
+	}
+}

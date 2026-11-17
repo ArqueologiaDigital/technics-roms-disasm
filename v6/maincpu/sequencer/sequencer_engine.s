@@ -22880,18 +22880,9 @@ SeqMode_SendStatusUpdate:	.include "includes/generated/cc900/SeqMode_SendStatusU
 	.set	SeqMode_Status87, SeqMode_SendStatusUpdate + 47
 	.set	SeqMode_StatusDeliver, SeqMode_SendStatusUpdate + 59
 
-SeqAccomp_SendStopNotify:
-	ld	a, (ACTIVE_TITLE:16)
-	cp	a, 133
-	jr	z, SeqAccomp_StopNotifyDeliver
-	cp	a, 135
-	ret	nz
-SeqAccomp_StopNotifyDeliver:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 2:i3
-	call ApDeliveryEvent
-	ret
+SeqAccomp_SendStopNotify:	.include "includes/generated/cc900/SeqAccomp_SendStopNotify.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqAccomp_StopNotifyDeliver, SeqAccomp_SendStopNotify + 14
 
 SngSelSyori:
 	pushw_erp 0xfa

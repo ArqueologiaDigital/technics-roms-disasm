@@ -3585,46 +3585,12 @@ BmDrEdit_FindNextPage_Return:
 ; In melodic mode, scrolls the note editor (index 0x2798, 0..9) until the note 0x2962 lies in the
 ; visible row range (BmDrEdit_SetupScrollRegion), then redraws when the index changed
 ; (NoteEditSy_UpdateChordDisplay).  Nothing in drum mode.
-BmDrEdit_AdjustScrollToView:
-	dec 4, xsp
-	bit 0, (0x2742:16)
-	jr nz, NoteEditSy_ScrollComplete_Return
-	ldmm8 0x27ca, NOTEEDIT_BASE_KEY
-
-BmDrEdit_ScrollAdjustLoop:
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr BmDrEdit_SetupScrollRegion
-	ld c, (0x2962:16)
-	ld a, (NOTEEDIT_BASE_KEY:16)
-	cp c, (xsp + 2)
-	jr nc, BmDrEdit_ScrollAdjust_CheckUpper
-	ld c, a
-	cp a, 0:i3
-	jr z, NoteEditSy_ScrollComplete_Return
-	dec 1, c
-	ld (NOTEEDIT_BASE_KEY:16), c
-	jr BmDrEdit_ScrollAdjustLoop
-
-BmDrEdit_ScrollAdjust_CheckUpper:
-	cp c, (xsp)
-	jr ule, BmDrEdit_ScrollAdjust_CompareAndUpdate
-	ld c, a
-	cp a, 0x9
-	jr nc, NoteEditSy_ScrollComplete_Return
-	inc 1, c
-	ld (NOTEEDIT_BASE_KEY:16), c
-	jr BmDrEdit_ScrollAdjustLoop
-
-BmDrEdit_ScrollAdjust_CompareAndUpdate:
-	ld a, (0x27ca:16)
-	cp a, (NOTEEDIT_BASE_KEY:16)
-	jr z, NoteEditSy_ScrollComplete_Return
-	call NoteEditSy_UpdateChordDisplay
-
-NoteEditSy_ScrollComplete_Return:
-	inc 4, xsp
-	ret
+BmDrEdit_AdjustScrollToView:	.include "includes/generated/cc900/BmDrEdit_AdjustScrollToView.s"	; C: cc900/bmdredit_routines_m232_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ScrollAdjustLoop, BmDrEdit_AdjustScrollToView + 14
+	.set	BmDrEdit_ScrollAdjust_CheckUpper, BmDrEdit_AdjustScrollToView + 49
+	.set	BmDrEdit_ScrollAdjust_CompareAndUpdate, BmDrEdit_AdjustScrollToView + 68
+	.set	NoteEditSy_ScrollComplete_Return, BmDrEdit_AdjustScrollToView + 82
 
 BmDrEdit_CountMeasuresInit:
 	pushw_erp 0xfa
@@ -3767,47 +3733,12 @@ BmDrEdit_ProcessVoice_Epilog:
 ; frame word +2, inserts L (less frame word +0 when that is non-zero) bar markers
 ; (EditChannel_LoadVoiceParams, BmDrEdit_InsertStepEntry), counting 0x275e up and stopping on an
 ; error, and copies 0x275e to 0xce3.
-BmDrEdit_InsertMultiSongSteps:
-	dec 4, xsp
-	ldmm16 3299, 0x2772
-	ldmm16 0x275e, 0x2772
-
-BmDrEdit_MultiSong_SelectAndProcess:
-	calr BmDrEdit_CheckAndSelectChannel
-	extz hl
-	lda xbc, (xsp + 2)
-	lda xde, (xsp)
-	ld wa, hl
-	calr BmDrEdit_ProcessVoiceSection
-	ld wa, (0x2744:16)
-	cp wa, (xsp + 2)
-	jr z, BmDrEdit_MultiSong_Return
-	cpw (xsp), 0x0
-	jr z, BmDrEdit_MultiSong_CalcRemaining
-	ld wa, (xsp)
-	sub l, a
-
-BmDrEdit_MultiSong_CalcRemaining:
-	extz hl
-	ld (0x2772:16), hl
-
-BmDrEdit_MultiSong_InsertLoop:
-	calr EditChannel_LoadVoiceParams
-	calr BmDrEdit_InsertStepEntry
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, BmDrEdit_MultiSong_Return
-	incw 1, (0x275e:16)
-	ld wa, (0x2772:16)
-	dec 1, wa
-	ld (0x2772:16), wa
-	cp wa, 0:i3
-	jr nz, BmDrEdit_MultiSong_InsertLoop
-	ldmm16 3299, 0x275e
-	jr BmDrEdit_MultiSong_SelectAndProcess
-
-BmDrEdit_MultiSong_Return:
-	inc 4, xsp
-	ret
+BmDrEdit_InsertMultiSongSteps:	.include "includes/generated/cc900/BmDrEdit_InsertMultiSongSteps.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_MultiSong_SelectAndProcess, BmDrEdit_InsertMultiSongSteps + 14
+	.set	BmDrEdit_MultiSong_CalcRemaining, BmDrEdit_InsertMultiSongSteps + 48
+	.set	BmDrEdit_MultiSong_InsertLoop, BmDrEdit_InsertMultiSongSteps + 54
+	.set	BmDrEdit_MultiSong_Return, BmDrEdit_InsertMultiSongSteps + 93
 
 ; Sends the note editor's widget updates after a cursor move.  Drum mode (bit 0 of 0x2742)
 ; and melodic mode each send a shorter set when no note is under the cursor (bit 0 of
@@ -4280,71 +4211,10 @@ BmDrEdit_PopIzRet:
 	pop xiz
 	ret
 
-BmDrEdit_PrepareSecondaryNoteDisplay:
-	dec 4, xsp
-	pushw iz
-	bit 0, (0x295f:16)
-	jrl z, BmDrEdit_SecondaryNote_PopIzReturn
-	calr BmDrEdit_SaveEditState
-	ldmm16 0x280c, 0x276a
-	ld a, (0x276c:16)
-	extz wa
-	ld (0x280e:16), wa
-	ldmm16 0x2810, 0x276e
-	ld a, (0x2770:16)
-	extz wa
-	ld (0x2812:16), wa
-	ldmm16 0x2814, 0x275e
-	ld a, (0x2760:16)
-	extz wa
-	ld (0x2816:16), wa
-	ldmm16 0x2818, SEQ_DATA_BLOCK
-	ldmm16 0x281a, SEQ_DATA_OFFSET
-	call SeqData_ReadNextByte
-	and l, 0xf0
-	cp l, 0x90
-	jr nz, BmDrEdit_RestoreReturn
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	extz hl
-	ld (0x2816:16), hl
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld (0x281c:16), l
-	lda xwa, (xsp + 4)
-	lda xbc, (xsp + 2)
-	calr BmDrEdit_SetupScrollRegion
-	ld a, (0x281c:16)
-	cp a, (xsp + 4)
-	jr c, BmDrEdit_RestoreReturn
-	cp a, (xsp + 2)
-	jr ugt, BmDrEdit_RestoreReturn
-	mrdb5 0x8f, 0x04, 0x19, 0x26, 0x28
-	mrdb5 0x8f, 0x02, 0x19, 0x28, 0x28
-	call SeqData_AdvancePosition
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ldfr_berp L, 0xf8
-	extz iz
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	extz hl
-	and iz, 0x7f
-	and hl, 0x7f
-	ld wa, hl
-	mul wa, 0x60
-	ld hl, wa
-	add hl, iz
-	ld (0x2820:16), hl
-	call NoteEditSy_SendWidgetCmdC
-
-BmDrEdit_RestoreReturn:
-	calr BmDrEdit_RestoreEditState
-
-BmDrEdit_SecondaryNote_PopIzReturn:
-	popw iz
-	inc 4, xsp
-	ret
+BmDrEdit_PrepareSecondaryNoteDisplay:	.include "includes/generated/cc900/BmDrEdit_PrepareSecondaryNoteDisplay.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_RestoreReturn, BmDrEdit_PrepareSecondaryNoteDisplay + 197
+	.set	BmDrEdit_SecondaryNote_PopIzReturn, BmDrEdit_PrepareSecondaryNoteDisplay + 200
 
 ; Only when CURRENT_TITLE differs from PREVIOUS_TITLE: saves 0x28b1 in 0x283c and sets its bit 0;
 ; the active-part mask 0xf19e = word 0xffec (when 0x283a = 0) or (0x2963);

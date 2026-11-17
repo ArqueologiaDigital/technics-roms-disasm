@@ -6792,119 +6792,15 @@ SeWrtSnd_OnSwitch15_Epilogue:
 ;   up/down edit switches. Basis: callers + body -- the title's draw method (SeWrtSndTitleFunc_OnDraw ->
 ;   SeMenu_CopyWriteUpdate_Step3_Join) calls it with A = 13 or 16; the batch attributed the call to SeWrtMem_DrawPage,
 ;   the nearest named label above.
-SeWrtSnd_SetupNamingPage:
-	dec	4, xsp
-	ld	c, a
-	and	c, 31
-	cp	c, 16
-	jr	ule, SeWrtSnd_SetupNamingPage_Skip2
-	ld	c, 16:opc
-SeWrtSnd_SetupNamingPage_Skip2:
-	extz	bc
-	ld	wa, 2:i3
-	call	SeMenu_StorePartParam
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_GetNameBufferChar
-	ld	a, (xsp+2)
-	extz	wa
-	lda	xbc, (xsp)
-	call	SeMenu_CharToNameCharIndex
-	ld	c, (xsp)
-	extz	bc
-	ld	wa, 1:i3
-	call	SeMenu_StorePartParam
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_StorePartParam
-	pushw	63
-	call	SeTitle_DrawStaticScreen
-	inc	2, xsp
-	ld	wa, 1:i3
-	call	SeMenu_PostDialEnable
-	ld	wa, 0:i3
-	ldw	bc, 8
-	ld	de, 0:i3
-	call	SeMenu_PostEditUpDownSet
-	ld	wa, 1:i3
-	ld	bc, 6:i3
-	ld	de, 0:i3
-	call	SeMenu_PostEditUpDownSet
-	inc	4, xsp
-	ret
-SeWrtSnd_SetupNamingPage_Join6:
-	dec	6, xsp
-	lda	xbc, (xsp+4)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	cp	(xsp+4), 0
-	jr	z, SeWrtSnd_SetupNamingPage_Epilogue5
-	decm8	1, (xsp+4)
-	ld	c, (xsp+4)
-	extz	bc
-	ld	wa, 0:i3
-	call	SeMenu_StorePartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_GetNameBufferChar
-	ld	a, (xsp+2)
-	extz	wa
-	lda	xbc, (xsp)
-	call	SeMenu_CharToNameCharIndex
-	ld	c, (xsp)
-	extz	bc
-	ld	wa, 1:i3
-	call	SeMenu_StorePartParam
-	pushw	0
-	pushw	63
-	call	SeTitle_DrawField
-	pushw	1
-	pushw	63
-	call	SeTitle_DrawField
-	inc	8, xsp
-SeWrtSnd_SetupNamingPage_Epilogue5:
-	inc	6, xsp
-	ret
-SeWrtSnd_SetupNamingPage_Join7:
-	dec	8, xsp
-	lda	xbc, (xsp+6)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp)
-	dec	1, a
-	cp	(xsp+6), a
-	jr	nc, SeWrtSnd_SetupNamingPage_Epilogue6
-	incm8	1, (xsp+6)
-	ld	c, (xsp+6)
-	extz	bc
-	ld	wa, 0:i3
-	call	SeMenu_StorePartParam
-	ld	a, (xsp+6)
-	extz	wa
-	lda	xbc, (xsp+4)
-	call	SeMenu_GetNameBufferChar
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_CharToNameCharIndex
-	ld	c, (xsp+2)
-	extz	bc
-	ld	wa, 1:i3
-	call	SeMenu_StorePartParam
-	pushw	0
-	pushw	63
-	call	SeTitle_DrawField
-	pushw	1
-	pushw	63
-	call	SeTitle_DrawField
-	inc	8, xsp
-SeWrtSnd_SetupNamingPage_Epilogue6:
-	inc	8, xsp
-	ret
+SeWrtSnd_SetupNamingPage:	.include "includes/generated/cc900/SeWrtSnd_SetupNamingPage.s"	; C: cc900/sound_editor_ui_m132.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeWrtSnd_SetupNamingPage_Skip2, SeWrtSnd_SetupNamingPage + 14
+SeWrtSnd_SetupNamingPage_Join6:	.include "includes/generated/cc900/SeWrtSnd_SetupNamingPage_Join6.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeWrtSnd_SetupNamingPage_Epilogue5, SeWrtSnd_SetupNamingPage_Join6 + 86
+SeWrtSnd_SetupNamingPage_Join7:	.include "includes/generated/cc900/SeWrtSnd_SetupNamingPage_Join7.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeWrtSnd_SetupNamingPage_Epilogue6, SeWrtSnd_SetupNamingPage_Join7 + 99
 SeWrtSnd_SetupNamingPage_Join8:
 	lda	xsp, (xsp-24)
 	push	qiz

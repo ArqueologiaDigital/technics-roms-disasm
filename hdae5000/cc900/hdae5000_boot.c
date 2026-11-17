@@ -34,6 +34,11 @@ extern unsigned int HDAE5000_RAM_LyricPosEvt;     /* +0 of the event block: sqbt
 extern unsigned int HDAE5000_RAM_LyricPosStep;    /* +2 */
 extern unsigned long HDAE5000_RAM_LyricPosition;  /* +4 */
 
+unsigned char HDAE5000_Get_Init_Flag(void)
+{
+    return HDAE5000_RAM_HdPresent;
+}
+
 void HDAE5000_Boot_Init(struct NakaWs *ws)
 {
     unsigned char *bmp;

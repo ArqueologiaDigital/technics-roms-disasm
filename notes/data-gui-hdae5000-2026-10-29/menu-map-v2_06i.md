@@ -369,7 +369,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `LBN_P1_PsMenuBox` PsMenuBox: switch Right5
   - `LBN_P1_PsMenuBox_CLEAR` Label: "CLEAR"
-- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit_SongUnits`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry_Reset`
+- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit_SongUnits`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_AcIndexEditSw` AcIndexEditSw: switch Right1
   - `LBN_P1_AcIndexEditSw_LOAD` Label: "LOAD"
 - `LBN_P1_80` EditSw: "~80"; switch Right2
@@ -385,10 +385,10 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - `LBN_P1_7` StringBox: "7"
 - `LBN_P1_8` StringBox: "8"
 - `LBN_P1_9` StringBox: "9"
-- `LBN_DIRNO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_DIRNAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_FILENO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
+- `LBN_DIRNO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_DIRNAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_FILENO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_LBNPage1SwCatch`
 - `LBN_P1_AcIndexWideES` AcIndexWideES: switch Bottom6; switch Bottom8
 - `LBN_P1_Press_3_digits_for_direc` AcLanguageText1: text "Press 3 digits for directory and 2 digits for the file."
@@ -763,14 +763,14 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - `HddNamingWindow_AcIndexEditSw_5` AcIndexEditSw: switch Bottom1
 - `HddNamingWindow_AcIndexEditSw_6` AcIndexEditSw: switch Bottom2
 - `HddNamingWindow_POSITION` Label: "POSITION"
-- `HddNamingCursorBox` PsCursorBox -- code: `HDAE5000_AcHddNamingWindowProc_OnPrevCharacter`, `HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join`, `HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown_Join4`, `HDAE5000_AcHddNamingWindowProc_OnNextCharacter_Join`, `HDAE5000_AcHddNamingWindowProc_OnInsert_Join`, `HDAE5000_AcHddNamingWindowProc_OnDelete_Join`, `HDAE5000_AcHddNamingWindowProc_OnCenterName_Join4`, `HDAE5000_AcHddNamingWindowProc_OnClear_Join`, `HDAE5000_AcHddNamingWindowProc_OnSetCursor`
-- `HddNamingABC` AcIndexToggle (RAM record): `HDAE5000_Str_CharSet_Upper_2`; switch Bottom3 -- code: `HDAE5000_AcHddNamingWindowProc_Join3`, `HDAE5000_AcHddNamingWindowProc_Skip`
-- `HddNamingabc` AcIndexToggle (RAM record): `HDAE5000_Str_CharSet_Lower_2`; switch Bottom4 -- code: `HDAE5000_AcHddNamingWindowProc_Join3`, `HDAE5000_AcHddNamingWindowProc_Skip`
-- `HddNamingSymbol` AcIndexToggle (RAM record): `HDAE5000_Str_CharSet_Symbol_2`; switch Bottom5 -- code: `HDAE5000_AcHddNamingWindowProc_Join3`, `HDAE5000_AcHddNamingWindowProc_Skip`
+- `HddNamingCursorBox` PsCursorBox -- code: `HDAE5000_AcHddNamingWindowProc`
+- `HddNamingABC` AcIndexToggle (RAM record): `HDAE5000_Str_CharSet_Upper_2`; switch Bottom3 -- code: `HDAE5000_AcHddNamingWindowProc`
+- `HddNamingabc` AcIndexToggle (RAM record): `HDAE5000_Str_CharSet_Lower_2`; switch Bottom4 -- code: `HDAE5000_AcHddNamingWindowProc`
+- `HddNamingSymbol` AcIndexToggle (RAM record): `HDAE5000_Str_CharSet_Symbol_2`; switch Bottom5 -- code: `HDAE5000_AcHddNamingWindowProc`
 - `HddNamingWindow_AcIndexEditSw_7` AcIndexEditSw: switch Bottom6
 - `HddNamingWindow_AcIndexEditSw_8` AcIndexEditSw: switch Bottom7
 - `HddNamingWindow_AcIndexEditSw_9` AcIndexEditSw: switch Bottom8
-- `HddNamingLabel` PsParaBox -- code: `HDAE5000_AcHddNamingWindowProc_OnClear_Join2`
+- `HddNamingLabel` PsParaBox -- code: `HDAE5000_AcHddNamingWindowProc`
 
 ## FILE_DEL_SCREEN
 

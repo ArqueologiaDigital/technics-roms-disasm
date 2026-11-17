@@ -1283,73 +1283,16 @@ SeqStep_VoiceReassignFinalExit:
 	lda xsp, (xsp + 22)
 	ret
 
-SeqStep_EventAdvance:
-	dec 2, xsp
-	push xiz
-	ldmw2 (xsp + 4), 0x28af
-	ld iz, (SEQ_DATA_OFFSET:16)
-	bit 0, (SEQ_EDIT_FLAGS:16)
-	jr z, SeqStep_EventAdvanceRead
-	ldmm16 SEQ_DATA_BLOCK, 0x273c
-	ldmm16 SEQ_DATA_OFFSET, 0x273e
-
-SeqStep_EventAdvanceCheck:
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqStep_EventAdvanceBit7
-
-SeqStep_EventAdvanceLoop:
-	mrdw5 0x9f, 0x04, 0x19, 0xaf, 0x28
-	ld (SEQ_DATA_OFFSET:16), iz
-
-SeqStep_EventAdvanceRead:
-	pop xiz
-	inc 2, xsp
-	ret
-
-SeqStep_EventAdvanceBit7:
-	call SeqData_ReadNextByte
-	cp l, 0x7f
-	jr z, SeqStep_EventAdvanceDone
-
-SeqStep_EventAdvanceStore:
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqStep_EventAdvanceLoop
-	call SeqData_ReadNextByte
-	bit 7, l
-	jr z, SeqStep_EventAdvanceStore
-	ldmm16 0x273c, SEQ_DATA_BLOCK
-	ldmm16 0x273e, SEQ_DATA_OFFSET
-	jr SeqStep_EventAdvanceCheck
-
-SeqStep_EventAdvanceDone:
-	ldmm16 SEQ_DATA_OFFSET, 0x273e
-	ldmm16 SEQ_DATA_BLOCK, 0x273c
-	call SeqData_ReadNextByte
-	ldfr_berp L, 0xfa
-	ldw wa, 0x81
-	call PartCtrl_WriteByte_Indexed
-
-SeqStep_EventAdvanceReturn:
-	cp_erpb 0xfa, 0x81
-	jr z, SeqStep_EventAdvanceLoop
-
-SeqStep_EventAdvanceError:
-	call SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqStep_EventAdvanceLoop
-	ldto_berp A, 0xfa
-	ldfr_berp A, 0xfb
-	call SeqData_ReadNextByte
-	ldfr_berp L, 0xfa
-	ldto_berp A, 0xfb
-	extz wa
-	call PartCtrl_WriteByte_Indexed
-	bit_erpb 0xfb, 0x07
-	jr z, SeqStep_EventAdvanceReturn
-	ldib_erp 0xfa, 0
-	jr SeqStep_EventAdvanceError
+SeqStep_EventAdvance:	.include "includes/generated/cc900/SeqStep_EventAdvance.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_EventAdvanceCheck, SeqStep_EventAdvance + 30
+	.set	SeqStep_EventAdvanceLoop, SeqStep_EventAdvance + 41
+	.set	SeqStep_EventAdvanceRead, SeqStep_EventAdvance + 50
+	.set	SeqStep_EventAdvanceBit7, SeqStep_EventAdvance + 54
+	.set	SeqStep_EventAdvanceStore, SeqStep_EventAdvance + 63
+	.set	SeqStep_EventAdvanceDone, SeqStep_EventAdvance + 97
+	.set	SeqStep_EventAdvanceReturn, SeqStep_EventAdvance + 123
+	.set	SeqStep_EventAdvanceError, SeqStep_EventAdvance + 129
 
 SeqStep_MeasureRead:
 	push xiz

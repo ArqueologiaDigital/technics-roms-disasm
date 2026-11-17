@@ -1,0 +1,17 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of firmware/p6_D_2b.c (2026-11-16-35-p6-r3)
+   sha256 b13624c69fcb835af433e38ef56581fa94d5aa79da286905b3f16a25d5e2a17d (tar-sha256); compiled at -Xr */
+extern unsigned char __near ram_2742;
+extern unsigned char __near NOTEEDIT_BASE_KEY;
+extern unsigned int __near ram_279e;
+extern unsigned char WidgetData_DrawbarPositionTable[];
+void BmDrEdit_SetupScrollRegion(unsigned char *a, unsigned char *b)
+{
+	if (ram_2742 & 1) {
+		*a = ram_279e;
+		*b = ram_279e;
+		*b += 11;
+		return;
+	}
+	*a = WidgetData_DrawbarPositionTable[(int)NOTEEDIT_BASE_KEY * 2];
+	*b = WidgetData_DrawbarPositionTable[(int)NOTEEDIT_BASE_KEY * 2 + 1];
+}
