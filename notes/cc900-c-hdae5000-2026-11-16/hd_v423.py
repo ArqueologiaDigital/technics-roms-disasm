@@ -381,7 +381,9 @@ def check(a):
                 at = ref[full] - BASE
                 try:
                     mine, relaxed = assemble_fn(full, body, rom, at, '--calr' in a)
-                except Exception:
+                except Exception as e:
+                    if os.environ.get('HD_V423_DEBUG'):     # say why (stderr), for the function being worked on
+                        sys.stderr.write('HD_V423_DEBUG %s: %s\n' % (full, str(e)[-600:]))
                     res[key][(stem_k, label)] = (0, 'llvm-mc refused the translation')
                     continue
                 r = rom[at:at + len(mine)]
