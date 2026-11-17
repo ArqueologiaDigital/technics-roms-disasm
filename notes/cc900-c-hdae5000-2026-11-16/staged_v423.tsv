@@ -514,3 +514,6 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56c2491dd150c7817f8a84715aaa667857864a17956dbcea9d9	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_SongRecord	139	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_sepout.c	f35ab83338a3e8d96cc7bfece07226898e34855e757c99a26ca42531af6cf9a2	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_SeparateOutput_Apply	279	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_fd_file_select.c	c5158f93b266522d6f69ba7adca9b26f32e8ce029de3a9bfa747a7fe7f55d2ae	Xr	2026-11-17-18-hd-r46-staged	HDAE5000_FDFileSelectProc	2384	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_loadsong_sqt.c	e503cccbcca99836bb580de7a2801ca1fdc4a4a2a3bb2009346126e596c2f201	Xr	2026-11-17-21-hd-r48-staged	HDAE5000_LoadSong_Sqt	390	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics_play.c	b20a6dcf539813a1420b4fe8960837ccec7d2339486af29633a005df41c44de7	Xr	2026-11-17-21-hd-r48-staged	HDAE5000_Lyrics_PlayToPosition	938	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_sepout_msg.c	e1f849c17c120d8aac818716f69411a842ceb7bf1894a520ce007953020631f3	Xr	2026-11-17-21-hd-r48-staged	HDAE5000_SeparateOutput_SendPartMsg	138	MATCH
