@@ -40,15 +40,36 @@ or that it falls into, are its inner blocks.  Its kind:
 choice also tells which functions shared a source file.  C-calr functions wait for lane_vmb's `cc900-module:`
 marking; the C? ones can be checked now.
 
-## Status (staged_v423.tsv after run `2026-11-16-93-hd-r19-svc`; build at 0f4e6224e)
+## Status (staged_v423.tsv after run `2026-11-16-124-hd-r34-staged`; build at 33dd5d82f)
 
-| tree              | V4.23 MATCH (functions) | bytes  | built from C (`<tree>/cc900/`, `make gate` passes) |
-|-------------------|-------------------------|--------|----------------------------------------------------|
-| `hdae5000`        | 86                      | 12,716 | 60                                                 |
-| `hdae5000_v2_01i` | 64                      | 9,044  | 44                                                 |
-| `hdae5000_v1_15i` | 44                      | 5,631  | 30                                                 |
-| `hdae5000_v1_10i` | 43                      | 5,296  | 30                                                 |
-| total             | 237                     | 32,687 | 164                                                |
+| tree              | V4.23 MATCH (ledger rows) | bytes  | built from C (`<tree>/cc900/`, `make gate` passes) |
+|-------------------|---------------------------|--------|----------------------------------------------------|
+| `hdae5000`        | 176                       | 47,416 | 175                                                |
+| `hdae5000_v2_01i` | 97                        | 15,141 | 97                                                 |
+| `hdae5000_v1_15i` | 67                        | 8,922  | 67                                                 |
+| `hdae5000_v1_10i` | 65                        | 8,453  | 65                                                 |
+| total             | 405                       | 79,932 | 404                                                |
+
+The MATCH column is `awk -F'\t' '$8=="MATCH"'` over `staged_v423.tsv`, per tree; the built column is what
+`staged_done.py` prints.  Four matched v2.06i functions are still staged (HardTest_HddIdRead, Lbn_TypeDigit,
+AttenHDFormatSwCatch, HDAETitleFunc), waiting for the splice fixes of main 4506e8731.
+
+### Not compiled by us: the disk driver and the library (2026-11-17)
+
+`remaining.py` lists the v2.06i functions without matching C: 110 functions, 20,478 B at 33dd5d82f.  It leaves out
+every survey row from 0x2971a3 (`HDAE5000_Check_HD_Present`) up, whatever kind the survey gave it:
+
+- **0x2971a3 .. 0x299ae6, the hard disk driver, is hand assembly** (`HD_*`, `ATA_*`, `DeadLib_*`, `FlsBrowser_*`,
+  `DirBrowser_*` rows of `hdae5000_ui_display.s`).  Read by three helpers (h_hd1, h_hd2, h_dead; 70 bodies), no V4.23
+  run: every routine pushes and pops the registers it touches (often all seven), arguments go in XHL / XIX / XDE
+  and results come back in A or XWA, branches are absolute `jp cc` with no `jr` or `calr` even to the neighbour,
+  XIX / XIY walk pointers, and `HD_Mul32` / `HD_UDiv32` have a private XWA, XBC protocol.  No ledger row of this
+  range ever matched.  The C layer above it is the `*_Status` wrappers and the callers in the modules below 0x2971a3.
+- **0x299ae7 up is the C library**, and it runs further than the 0x29b07a first assumed: `FormatFloat`,
+  `FormatFloat_Fixed`, `FormatFloat_Exp` (0x29a4b6) are called only from the printf core's float case, and the
+  `FltDec_*` block (0x29b07a .. 0x29b72c) only from `FormatFloat`, with stack arguments the caller pops and merged
+  stack cleanups (optimised code).  `Int_To_Decimal_String` (0x29a3d2) is in the same range.  Helper h_flt; no C is
+  written for library routines.
 
 The older trees reuse the v2.06i C unchanged where it matches (`port_staged.py`).  `promote_hd.py` moves the
 matching C into the build, one C file per module and hand source, and holds back what the splice or the build

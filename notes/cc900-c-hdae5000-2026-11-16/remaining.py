@@ -12,6 +12,7 @@ Run from the repository root.
 import glob, os, re, sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+NOT_C_FROM = 0x2971a3      # HDAE5000_Check_HD_Present: first routine of the hand-assembly disk driver
 
 
 def opt(a, n, d):
@@ -36,12 +37,18 @@ def main():
     for p in glob.glob(os.path.join(HERE, '..', '..', 'hdae5000', '*.s')):
         t = open(p, 'rb').read().decode('latin-1')
         done |= set(re.findall(r'^\s*\.set\s+(HDAE5000_\w+),\s*HDAE5000_\w+ \+ \d+', t, re.M))
-    rows = []
+    rows, skipped = [], [0, 0]
     for l in open(os.path.join(HERE, 'survey.tsv')).read().split('\n')[1:]:
         f = l.split('\t')
         if len(f) < 16:
             continue
         name, size, kind = f[1], int(f[3] or 0), f[14]
+        # Not the application's C, whatever the survey's kind says (README, "Not compiled by us"):
+        # 0x2971a3..0x299ae6 is the hard disk driver, a hand-assembly module; 0x299ae7 up is the C library.
+        if '--all' not in a and f[2] != '-' and int(f[2], 16) >= NOT_C_FROM:
+            skipped[0] += 1
+            skipped[1] += size if kind in kinds else 0
+            continue
         if kind in kinds and name not in done and size >= minb:
             if '--untried' in a and name in tried:
                 continue
@@ -50,6 +57,9 @@ def main():
     for size, name, kind, src, t in rows:
         print('%6d  %-6s  %-44s  %-24s  %s' % (size, kind, name, src, t))
     print('%d functions, %d B' % (len(rows), sum(r[0] for r in rows)))
+    if skipped[0]:
+        print('left out: %d survey rows from 0x%06x up (hand-assembly disk driver and C library), %d B of these kinds;'
+              ' --all lists them' % (skipped[0], NOT_C_FROM, skipped[1]))
 
 
 if __name__ == '__main__':
