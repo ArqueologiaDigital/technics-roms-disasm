@@ -182,6 +182,87 @@ long HDAE5000_Lyrics_CheckFile(void)
         return -2L;
 }
 
+long HDAE5000_Lyrics_LoadTestFile(void)
+{
+    switch (CALLR(unsigned char, HAMA->GetMediaType)()) {
+    default:
+        return -1L;
+    case 2:
+    case 3:
+        CALLV(ROOT->SleepMainTask)();
+        CALLV(HAMA->fopen_ext)(HDAE5000_Str_TESTTESTTLX, HDAE5000_Str_Rb);
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_LyricBuffer, 0x5000L);
+        CALLV(HAMA->fclose_ext)();
+        CALLV(ROOT->WakeUpMainTask)();
+        return 0L;
+    }
+}
+
+long HDAE5000_Lyrics_FindEvent(type, flags, start, at)
+unsigned char type;
+unsigned char flags;
+int start;
+long at;
+{
+    unsigned int pos;
+    int i;
+    unsigned int n;
+
+    if (start >= 0) {
+        pos = 0;
+        HDAE5000_RAM_LyricEvent.tick = 0;
+        for (i = 0; i < start; i++) {
+            pos += (n = HDAE5000_Lyrics_ParseEvent(0, pos));
+            if (n == 0)
+                return -1L;
+        }
+        if (type == 0x7c) {
+            if ((n = HDAE5000_Lyrics_ParseEvent(flags, pos)) != 0)
+                return (unsigned long)n + pos;
+            return -1L;
+        }
+        do {
+            pos += (n = HDAE5000_Lyrics_ParseEvent(flags, pos));
+        } while (n != 0 && type != HDAE5000_RAM_LyricEvent.type);
+        if (n != 0)
+            return pos;
+        return -1L;
+    }
+    if (start == -1)
+        return -1L;
+    if (start == -2) {
+        if (type == 0x7c)
+            return HDAE5000_Lyrics_ParseEvent(flags, (unsigned int)at);
+        pos = at;
+        do {
+            pos += (n = HDAE5000_Lyrics_ParseEvent(flags, pos));
+        } while (n != 0 && type != HDAE5000_RAM_LyricEvent.type);
+        if (n != 0)
+            return pos;
+        return -1L;
+    }
+    return 0L;
+}
+
+unsigned int HDAE5000_Read_Table_Word(pos)
+unsigned int pos;
+{
+    unsigned int lo;
+    lo = LYRIC_EV(pos + 1);
+    return (unsigned int)LYRIC_EV(pos) << 8 | lo;
+}
+
+long HDAE5000_Read_Table_Multi(pos)
+unsigned int pos;
+{
+    long v;
+    unsigned int i;
+    v = LYRIC_EV(pos);
+    for (i = 0; i < 3; i++)
+        v = (v << 8) + LYRIC_EV(pos + i);
+    return v;
+}
+
 /* cc900-name: HDAE5000_Lyrics_CheckHdrChunk=HDAE5000_Lyrics_CheckHeaderChunk */
 long HDAE5000_Lyrics_CheckHdrChunk(void)
 {
@@ -209,6 +290,17 @@ long HDAE5000_Lyrics_CheckTrackChunk(void)
 }
 
 /* SwapBytes32 / SwapBytes16: hdae5000/cc900-staged/hdae5000_ui_display.c, unchanged (they match) */
+unsigned long HDAE5000_SwapBytes32(unsigned long x)
+{
+    unsigned long r = x & 0xff;
+    int i;
+    for (i = 0; i < 3; i++) {
+        x >>= 8;
+        r <<= 8;
+        r += x & 0xff;
+    }
+    return r;
+}
 
 unsigned int HDAE5000_SwapBytes16(unsigned int x)
 {

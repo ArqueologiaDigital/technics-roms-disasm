@@ -1,0 +1,15 @@
+function	bytes	matches	best_diff
+CustomTone_CopyToneRecord	69	-	+37 sub_H_15c@Xr
+DSP_AlgoDescriptor_Emit	399	-	+13 sub_F_rb18@Xr
+DSP_Config_Init	270	sub_J_15b@Xr	
+DSP_MixSendConfig	30	-	+7 sub_J_15c@Xr
+DSP_ParamInterp_Div0xC6	112	-	+91 sub_J_15c@Xr
+DSP_TuneOffset	305	sub_F_ra11@Xr sub_F_ra12@Xr sub_F_ra14@Xr	
+DSP_WriteLUTParamSet	333	-	+25 sub_G_15c@Xr
+EGEnv_Compute_A	142	-	+129 sub_G_15c@Xr
+EGEnv_Compute_B	142	-	+129 sub_G_15c@Xr
+TVF_Calc_Cutoff_NoKeyFollow	79	sub_H_15b@Xr	
+VoiceParam_CustomTone_Apply_Catalog80	285	sub_G_15a@Xr sub_G_15c@Xr	
+VoiceParam_Set_Tone_Option	193	-	+12 sub_H_15c@Xr
+Voice_Build_OutputLevel	96	-	+36 sub_H_15c@Xr
+Voice_PortamentoTarget_ComputePitch	117	-	+99 sub_J_15c@Xr

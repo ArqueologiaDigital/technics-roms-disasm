@@ -1,0 +1,20 @@
+function	bytes	matches	best_diff
+Algo_SubTable_Bit15Dispatch	242	-	+61 sub_D_13a@Xr
+Algo_SubTable_DispatchB	182	-	+35 sub_D_13a@Xr
+Algo_SubTable_DispatchC	204	-	+38 sub_D_13a@Xr
+AudioChannel_Dispatch	322	-	+33 sub_D_13c@Xr
+Audio_Cmd_ToneEdit_Dispatch	658	-	+11 sub_C_13a@Xr
+DSP_AlgoDescriptor_Emit	406	-	+13 sub_E_ib17@Xr
+DSP_AlgoType_Dispatch1	448	-	+33 sub_D_13b@Xr
+DSP_AlgoType_Dispatch2	410	-	+33 sub_D_13b@Xr
+DSP_TuneOffset	321	-	+24 sub_E_ib20@Xr
+DSP_VoiceCoeffRoute2	428	-	+2 sub_D_13c@Xr
+TVF_Build_Short	98	sub_A_ia06@Xr	
+TVF_Emit_Registers	328	-	+1 sub_C_13c@Xr
+TVF_Emit_Registers_Type2	328	-	+1 sub_C_13c@Xr
+VoiceParam_Set_Tone_Option	192	-	+12 sub_C_13c@Xr
+Voice_LoadFilterTable_Ch	1	-	+0 sub_B_ic11@Xr
+Voice_LoadPitchTable_Ch	1	-	+0 sub_B_ic11@Xr
+Voice_LoadToneTable_Ch	1	-	+0 sub_B_ic11@Xr
+Voice_PitchPack_RouteB	101	sub_A_ia06@Xr	
+Voice_ToneTableRamp_Down	142	sub_B_ic03@Xr sub_B_ic04@Xr sub_B_ic10@Xr	

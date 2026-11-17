@@ -1,0 +1,1101 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the whole file of hd/hd_r20_drva.c (2026-11-16-95-hd-r20)
+   sha256 52299880ef55452831005febf88bc22479a9c23830760f7ad274360fc90241f2 (tar-sha256); compiled at -Xr */
+/* hd_r20_drva.c (helper h_drv, lane_hd round 20), form a: thirteen functions of hdae5000_hd_driver.s (v2.06i), in ROM
+   address order -- FdList_Scan, HDAETitleFunc, SEL_DIR_Screen, SongScreen_Refresh, AttenDelDirSwCatch,
+   AttenDelFileSwCatch, HDDNamingCheck, HDD_DIRNAMECheck, HDD_UTIL_PAGE, SaveOptSwEventCatch, AttenHDFormatSwCatch,
+   LBNLoadSwCatch, Lbn_TypeDigit.  All are in the one big calr module (0x280008-0x28f543).
+   - HDAE5000_AttenHDFormatSwCatch is the whole function at 0x286666: the survey's "HDAE5000_AttenHDFormatSwCatch_OnCancel"
+     (0x28678e) is its jump-table case 6/7 plus the code after the inner switch, not a function of its own.  Its
+     inner switch is a V4.23 jump table (HDAE5000_AttenHDFormatSwCatch_CaseTable, 8 x u16, case 5 = default).
+   - The UI procedures take (obj, ev, arg) as longs and switch on ev; the cases are written in the order that makes
+     V4.23's reverse-order compares match the ROM (AttenCpToHDSwCatch, run 49): the case compared LAST in the ROM
+     is the first in the source.  A procedure whose unmatched events reach InheritedProc after the switch has no
+     default: the cases break and `return InheritedProc(...)` follows the switch.
+   - Addresses passed to the main CPU with a constant first argument are WRAP(x) (TitleInfo_Build, matched); with a
+     non-constant first argument (long)x (AttenCpToHDSwCatch, matched); FdList.label as the plain member
+     (FdList_Clear, matched).
+   - Library string routines: plain char * destinations and sources (lyrics module); StrNCpy's source const char *,
+     because the ROM pushes the name buffer as a constant when it is the destination and loads it (lda/push) when it
+     is the source.
+   - Names over 31 characters whose first 31 are not unique are written as ram_<address> with the label in a comment.
+   - The row offset of SongScreen_Refresh (`ldw wa,30; muls xwa,iz`) is the open idiom of DirList_BuildPage
+     (hd_r13_nb.c): written here as 30 * i, which V4.23 is known to compile as `ld wa,iz; muls wa,30`.
+   cc900-options: -Xr
+   cc900-module: HDAE5000_FdList_Clear HDAE5000_FdName_SongNumber HDAE5000_ShowErrorMessageTitle
+   cc900-module: HDAE5000_SongScreen_Refresh HDAE5000_FlsScreen_Refresh HDAE5000_DirList_BuildPage
+   cc900-module: HDAE5000_FlsList_BuildPage HDAE5000_Lbn_ShowEntry HDAE5000_PartList_Build
+   cc900-module: HDAE5000_YieldUntilSem1Zero HDAE5000_DelOpt_InitFromSong HDAE5000_NameHistory_Recall
+   cc900-module: HDAE5000_DirName_StoreWithUi HDAE5000_TypeSel_Init HDAE5000_TypeSel_ShowSaveFlags
+   cc900-module: HDAE5000_SaveSongWithUi HDAE5000_LoadSongWithUi HDAE5000_HardTest_HddIdRead
+   cc900-module: HDAE5000_HardTest_Print HDAE5000_FormatDialog_CodeDigit HDAE5000_UiObj_SetCaption
+*/
+/* ---- hdae_ws.h (inlined) ---- */
+/* the main CPU workspace and its function tables (gen_ws_header.py, from the RootFn_* / HamaFn_* .equ) */
+typedef void (*VFN)();
+struct RootFns {
+    void *pad0[33];
+    void *UpdateScreen;
+    void *pad1[5];
+    void *DrawLine;
+    void *pad2[1];
+    void *DrawBox;
+    void *DrawFrame;
+    void *pad3[1];
+    void *MovePixels;
+    void *pad4[4];
+    void *DrawString;
+    void *pad5[5];
+    void *InheritedProc;
+    void *pad6[1];
+    void *RegisterObjectTable;
+    void *pad7[6];
+    void *SendEvent;
+    void *PostEvent;
+    void *pad8[7];
+    void *ApPostEvent;
+    void *pad9[5];
+    void *ResEventProc;
+    void *ResMethodProc;
+    void *pad10[1];
+    void *ResNameProc;
+    void *pad11[1];
+    void *GetCharHeight;
+    void *GetCharDescent;
+    void *GetCenteredDelta;
+    void *ConvertStrings;
+    void *pad12[2];
+    void *ClassProc;
+    void *pad13[54];
+    void *FunctionProc;
+    void *ApFunctionProc;
+    void *MainFunctionProc;
+    void *ApFuncCall;
+    void *MainFuncCall;
+    void *pad14[6];
+    void *RegisterTitle;
+    void *pad15[1];
+    void *GetTitleNow;
+    void *pad16[1];
+    void *ViewableProc;
+    void *pad17[4];
+    void *SetVisible;
+    void *pad18[11];
+    void *GetViewInstance;
+    void *pad19[3];
+    void *GetClientBox;
+    void *pad20[1];
+    void *DrawDesignBox;
+    void *pad21[57];
+    void *SetDialEnable;
+    void *SetDialUp;
+    void *SetDialDown;
+    void *pad22[16];
+    void *SetApTimer;
+    void *pad23[1];
+    void *KillApTimer;
+    void *pad24[4];
+    void *SetAutoInc;
+    void *pad25[55];
+    void *GetNamingWindowID;
+    void *pad26[9];
+    void *DeleteEvent;
+    void *SleepMainTask;
+    void *WakeUpMainTask;
+};
+struct HamaFns {
+    void *pad0[1];
+    void *FDLoadSaveTest;
+    void *GetMediaType;
+    void *PreLswLoad;
+    void *PostLswLoad;
+    void *PreLswSave;
+    void *PostLswSave;
+    void *PrePmLoad;
+    void *PostPmLoad;
+    void *PrePmSave;
+    void *PostPmSave;
+    void *SeqLoadPre;
+    void *SeqLoadPost;
+    void *SeqSavePre;
+    void *SeqSavePost;
+    void *cmp_ld_mae;
+    void *cmp_ld_ato;
+    void *cmp_sv_mae;
+    void *cmp_sv_ato;
+    void *PreTmLoad;
+    void *PostTmLoad;
+    void *PreTmSave;
+    void *PostTmSave;
+    void *msp_ld_mae;
+    void *msp_ld_ato;
+    void *msp_sv_mae;
+    void *msp_sv_ato;
+    void *PreMidiLoad;
+    void *PostMidiLoad;
+    void *PreMidiSave;
+    void *PostMidiSave;
+    void *FlashWrite;
+    void *GetResouceInfo;
+    void *SetSepaOutMode;
+    void *pad1[2];
+    void *GetVolumeLabel;
+    void *findfirst;
+    void *findnext;
+    void *findclose;
+    void *fopen_ext;
+    void *pad2[1];
+    void *fread_ext;
+    void *fclose_ext;
+    void *rcm_ld_XAPR_j;
+    void *rcm_sv_XAPR_j;
+    void *rot_rdq_X;
+    void *pad3[5];
+    void *ref_sem_X;
+    void *pad4[4];
+    void *pdly_tim_X;
+    void *PlayHalt;
+    void *PlayStandBy;
+    void *EditSwRefresh;
+    void *pad5[3];
+    void *GetAdr_sqbtof;
+    void *GetAdr_sq_beadt;
+    void *GetAdr_sqsrtc;
+    void *pad6[2];
+    void *sendCOMM;
+    void *pad7[2];
+    void *SwbtWr;
+    void *pad8[2];
+    void *SetGlobalError;
+    void *malloc_X;
+    void *free_X;
+    void *ChangePalette;
+    void *ChangeWall;
+};
+struct ObjTab { void *fns; char rest[10]; };
+struct NakaWs { char hdr[10]; struct ObjTab tab[0x10a]; };
+extern struct NakaWs *HDAE5000_RAM_MainWorkspacePtr;
+#define ROOT ((struct RootFns *)HDAE5000_RAM_MainWorkspacePtr->tab[0x100].fns)
+#define HAMA ((struct HamaFns *)HDAE5000_RAM_MainWorkspacePtr->tab[0x109].fns)
+/* every call goes through a cast: CALLR(int, ROOT->GetTitleNow)(), CALLV(ROOT->SendEvent)(obj, ev, arg) */
+#define CALLR(t, f) ((t (*)())(f))
+#define CALLV(f) ((void (*)())(f))
+/* ---- end of hdae_ws.h ---- */
+/* ---- hdae_ids.h (inlined) ---- */
+/* HD-AE5000 UI object ids and event codes (gen_ids_header.py) */
+#define EVT_SHOW 0x1c00001L
+#define EVT_DRAW 0x1c0000dL
+#define EVT_PARA_DRAW 0x1c0000fL
+#define EVT_ACTIVATE_STATE 0x1c00013L
+#define EVT_HDAE_SEQ_STOP 0x1ca0000L
+#define EVT_HDAE_TIMER_BACK 0x1ca0002L
+#define EVT_SW_IN 0x1c00007L
+#define EVT_INDEXSW_DOWN 0x1c00018L
+#define EVT_MAKE_EDIT_SW_ID 0x1e00029L
+#define EVT_GET_STRING 0x1e0003aL
+#define EVT_GET_STRING_LENGTH 0x1e0007cL
+#define EVT_GET_NAMING_MODE 0x1e00084L
+#define EVT_ARE_YOU_CLASS_PROC 0x1e00085L
+#define EVT_SET_STRING 0x1e00086L
+#define EVT_HDAE_OVER_FLOW 0x1ea0000L
+#define EVT_HDAE_UNDER_FLOW 0x1ea0001L
+#define EVT_HDAE_SET_SEL_NUM 0x1ea0003L
+#define EVT_HDAE_SELECT_OK 0x1ea0006L
+#define EVT_HDAE_SELECT_OK2 0x1ea0007L
+#define EVT_HDAE_SELECT_SAVE 0x1ea0008L
+#define EVT_HDAE_SET_STR_ADR 0x1ea000aL
+#define OBJ_AGAIN_HD_FORMAT 0x7f02cbL
+#define OBJ_AGAIN_HD_FORMAT_CATCH 0x7f02cdL
+#define OBJ_ATTEN_HD_FORMAT 0x7f021aL
+#define OBJ_ATTEN_OVER_FILE 0x7f023bL
+#define OBJ_CP_FD 0x7f00d2L
+#define OBJ_CP_FD_LINE1 0x7f00d9L
+#define OBJ_CP_FD_LINE2 0x7f00d8L
+#define OBJ_CP_FD_LIST 0x7f00d7L
+#define OBJ_CP_FD_VOLLABEL 0x7f00deL
+#define OBJ_DIR_OUT_RANGE 0x7f02b7L
+#define OBJ_DIR_OUT_RANGE_CATCH 0x7f02b8L
+#define OBJ_ERR_HD_FORMAT 0x7f02c4L
+#define OBJ_ERR_HD_FORMAT_CATCH 0x7f02c6L
+#define OBJ_ERR_SAVE 0x7f0297L
+#define OBJ_ERR_SAVE_CATCH 0x7f0299L
+#define OBJ_ERR_SAVE_EXIT 0x7f0298L
+#define OBJ_FILE_DEL_SCREEN 0x7f01c2L
+#define OBJ_FILE_OUT_RANGE 0x7f02bcL
+#define OBJ_FILE_OUT_RANGE_CATCH 0x7f02bdL
+#define OBJ_FLS_FILE_LOAD 0x7f013aL
+#define OBJ_HARD_DISK_OPT 0x7f000aL
+#define OBJ_HDDMENU 0x7f0000L
+#define OBJ_HDD_DIR_NAMING 0x7f0058L
+#define OBJ_HddNamingWindow 0x7f01aeL
+#define OBJ_LBN_OPTION 0x7f0098L
+#define OBJ_LOAD_BY_NUM 0x7f008fL
+#define OBJ_PP_STATUS 0x7f0068L
+#define OBJ_SAVE_OPT_SCREEN 0x7f0182L
+#define OBJ_SELECT_DIR 0x7f0022L
+#define OBJ_SELECT_FILE 0x7f0018L
+#define OBJ_SEL_DIR 0x7f0025L
+#define OBJ_SEL_FLS 0x7f00fbL
+#define OBJ_SETUPS_TOOLS 0x7f0013L
+#define OBJ_Tech_lyrics 0x7f02f0L
+#define OBJ_WAIT_DEL_DIR 0x7f01f8L
+#define OBJ_WAIT_DEL_FILE 0x7f0217L
+#define OBJ_WAIT_HD_FORMAT 0x7f0223L
+#define OBJ_WAIT_TR0_RECOVER 0x7f0294L
+/* ---- end of hdae_ids.h ---- */
+
+/* ---- library (stack arguments, caller pops) ---- */
+extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
+extern void *__cdecl HDAE5000_MemFill(void *, int, unsigned int);
+extern unsigned int __cdecl HDAE5000_StrLen(const char *);
+extern char *__cdecl HDAE5000_StrCpy(char *, char *);
+extern char *__cdecl HDAE5000_StrCat(char *, char *);
+extern char *__cdecl HDAE5000_StrNCat(char *, char *, int);
+extern char *__cdecl HDAE5000_StrNCpy(char *, const char *, unsigned int);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
+extern char *__cdecl HDAE5000_LToA(unsigned long, char *, int);
+
+/* ---- this module (calr) ---- */
+struct TypeSel { unsigned int mask; unsigned char flag[10]; };
+extern void HDAE5000_FdList_Clear(void);
+extern int HDAE5000_FdName_SongNumber(char *name);
+extern void HDAE5000_ShowErrorMessageTitle(int code);
+void HDAE5000_SongScreen_Refresh(int page_arg, int skip_arg);
+extern void HDAE5000_FlsScreen_Refresh(int page, int skip);
+extern void HDAE5000_DirList_BuildPage(long obj);
+extern void HDAE5000_FlsList_BuildPage(void);
+extern int HDAE5000_Lbn_ShowEntry(unsigned int dir, unsigned int song, unsigned int pos, int draw);
+extern void HDAE5000_PartList_Build(long obj, int dir, int song, unsigned int mask);
+extern void HDAE5000_YieldUntilSem1Zero(void);
+extern void HDAE5000_DelOpt_InitFromSong(unsigned int dir, unsigned int song, int all);
+extern char *HDAE5000_NameHistory_Recall(unsigned char *hist);
+extern int HDAE5000_DirName_StoreWithUi(unsigned int dir, char *name, long obj);
+extern void HDAE5000_TypeSel_Init(void *rec, unsigned int mask, unsigned char *tmpl, int n);
+extern void HDAE5000_TypeSel_ShowSaveFlags(void);
+extern int HDAE5000_SaveSongWithUi(unsigned int dir, unsigned int song, unsigned int mask, long obj, int ui, char *name);
+extern int HDAE5000_LoadSongWithUi(unsigned int dir, unsigned int song, unsigned int mask, long obj, int ui);
+extern void HDAE5000_HardTest_HddIdRead(void);
+extern void HDAE5000_HardTest_Print(char *line);
+extern int HDAE5000_FormatDialog_CodeDigit(int digit);
+extern void HDAE5000_UiObj_SetCaption(long obj, long caption);
+
+/* ---- other modules (call) ---- */
+extern unsigned int HDAE5000_Song_PartMask(unsigned int dir, unsigned int song);
+extern int HDAE5000_Song_IsUsed(unsigned int dir, unsigned int song);
+/* DirName_Address as char *: StrNCat takes it with no conversion (the ROM pushes the count before the call);
+   SongRecord_Address as unsigned char *, int song: MemCopy's const void * and the int index are conversions, which
+   is why the ROM calls it before pushing the count and loads BC (the index) before WA */
+extern char *HDAE5000_DirName_Address(unsigned int dir);
+extern unsigned char *HDAE5000_SongRecord_Address(unsigned int dir, unsigned int song);
+extern void HDAE5000_DeleteDirectory(unsigned int dir, int ui, int keep);
+extern void HDAE5000_DeleteSongParts(unsigned int dir, unsigned int song, unsigned int mask, int keep, int sleep);
+extern int HDAE5000_HD_FormatDrive(int ui);
+extern int HDAE5000_HD_StoreSettings(int keep);
+extern unsigned char HDAE5000_Get_Init_Flag(void);
+
+/* ---- RAM ---- */
+struct FdList { char label[14]; char rows[242]; char line1[20]; char line2[20]; };
+struct BrowserState { char pad[12]; long next; };
+extern struct FdList HDAE5000_RAM_FdList;
+extern struct BrowserState HDAE5000_RAM_Browser_State;
+extern struct TypeSel HDAE5000_RAM_SaveOptions;
+extern struct TypeSel HDAE5000_RAM_DeleteOptions;
+extern unsigned int HDAE5000_RAM_CurDir;
+extern unsigned int HDAE5000_RAM_CurSong;
+extern int HDAE5000_RAM_DirPageBase;
+extern unsigned int HDAE5000_RAM_LbnDigitPos;
+extern unsigned int HDAE5000_RAM_LbnDir;
+extern unsigned int HDAE5000_RAM_LbnSong;
+extern unsigned char HDAE5000_RAM_QuickLoadMode;
+extern unsigned char HDAE5000_RAM_LoadByNumberMode;
+extern unsigned char HDAE5000_RAM_JumpAfterLoad;
+extern unsigned char HDAE5000_RAM_LyricJump;
+extern unsigned char HDAE5000_RAM_WriteConfirm;
+extern unsigned char HDAE5000_RAM_FlsAutoLoadPending;
+extern unsigned char HDAE5000_RAM_FlsSeqStopPending;
+extern char HDAE5000_RAM_TitleInfoText[];
+extern char HDAE5000_RAM_FlsListText[];
+extern char HDAE5000_RAM_DirListText[];
+extern char HDAE5000_RAM_PcLinkStatusText[];
+extern char HDAE5000_RAM_SongScreenTitle[];
+extern char HDAE5000_RAM_SongListText[];
+extern char HDAE5000_RAM_NameEditBuffer[];       /* 0x23a06e */
+extern char HDAE5000_RAM_Name_ColumnRuler[];     /* 0x23a04e */
+extern unsigned char HDAE5000_RAM_DirNameHistory[];
+extern unsigned char ram_22ac7e[];               /* the song-name history (NameHistory_Recall layout) */
+extern unsigned char ram_22ad9c[];               /* format-code dialog: count, pad, HDAE5000_RAM_FormatCodeDigits */
+
+/* ---- ROM ---- */
+extern char HDAE5000_Str_STATUS[];
+extern char HDAE5000_Str_AllFilesPattern[];
+extern char HDAE5000_Str_DIRECTORY[];
+extern char HDAE5000_Str_Chr3A_SongScreen_Refresh[];
+extern char HDAE5000_Str_Blank0Tab[];
+extern char HDAE5000_Str_Chr3A2020202020[];
+extern char HDAE5000_Str_DELD[];
+extern char HDAE5000_Str_DELF[];
+extern char HDAE5000_Str_UTIL[];
+extern char HDAE5000_Str_SVOP[];
+extern char HDAE5000_Str_FMT[];
+extern char HDAE5000_Str_LBN[];
+extern char ram_2e250c[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh, "%2.2d" */
+extern char ram_2e2534[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh_2 */
+extern long ram_2e24e8[];   /* HDAE5000_SongScreen_Refresh_ObjIds */
+extern long ram_2e24f0[];   /* HDAE5000_SongScreen_Refresh_ObjIds_2 */
+extern long ram_2e24f8[];   /* HDAE5000_SongScreen_Refresh_ObjIds_3 */
+extern long HDAE5000_HDAETitleFunc_ObjIds[];
+extern unsigned char HDAE5000_TypeSel_TemplateBlank[];
+extern unsigned char HDAE5000_TypeSel_TemplateAllNo[];
+extern char HDAE5000_Str_LSWFileInfo[], HDAE5000_Str_SDAFileInfo[], HDAE5000_Str_PMTFileInfo[];
+extern char HDAE5000_Str_SQFFileInfo[], HDAE5000_Str_SEQFileInfo[], HDAE5000_Str_CMPFileInfo[];
+extern char HDAE5000_Str_TMFileInfo[], HDAE5000_Str_MSPFileInfo[], HDAE5000_Str_RCMFileInfo[];
+extern char HDAE5000_Str_MDFileInfo[];
+extern char HDAE5000_Str_Adr[], HDAE5000_Str_Size[], HDAE5000_Str_Adr_HDD_UTIL_PAGE[];
+extern char ram_2e25b4[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2.._9 names' prefix) */
+extern char ram_2e25d6[], ram_2e25de[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
+extern char ram_2e2600[], ram_2e2608[];   /* _3 */
+extern char ram_2e262a[], ram_2e2632[];   /* _4 */
+extern char ram_2e2654[], ram_2e265c[];   /* _5 */
+extern char ram_2e267c[], ram_2e2684[];   /* _6 */
+extern char ram_2e26a6[], ram_2e26ae[];   /* _7 */
+extern char ram_2e26d0[], ram_2e26d8[];   /* _8 */
+extern char ram_2e26f8[], ram_2e2700[];   /* _9 */
+
+/* an array read as an lvalue member at offset 0: `lda xwa,(sym); ld xde,xwa` (hd_r9_b2.c, TitleInfo_Build) */
+struct Wrap { char c[2]; };
+#define WRAP(x) (((struct Wrap *)(x))->c)
+
+/* NAKA_APFUNC_HDD_DIRNAMECheck (hdae5000_ui_tree.s, not in hdae_ids.h) */
+#define APFUNC_HDD_DIRNAMECHECK 0x012a0002L
+
+/* the main CPU's FAT driver's find block: the name at +6 */
+struct FindBlk { char head[6]; char name[260]; };
+
+/* ------------------------------------------------------------------------------------------------------------- */
+
+int HDAE5000_FdList_Scan(void)
+{
+    struct FindBlk blk;
+    int ret;
+    char *label;
+    long h;
+    int n;
+    unsigned int i;
+
+    ret = 0;
+    switch (CALLR(unsigned char, HAMA->GetMediaType)()) {
+    case 2:
+    case 3:
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD, EVT_SHOW, -1L);
+        HDAE5000_FdList_Clear();
+        label = CALLR(char *, HAMA->GetVolumeLabel)();
+        if (label != 0)
+            HDAE5000_MemCopy(HDAE5000_RAM_FdList.label, label, HDAE5000_StrLen(label));
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_VOLLABEL, EVT_HDAE_SET_STR_ADR, HDAE5000_RAM_FdList.label);
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_VOLLABEL, EVT_PARA_DRAW, -1L);
+        h = CALLR(long, HAMA->findfirst)((long)HDAE5000_Str_AllFilesPattern, (char *)&blk);
+        if (h >= 0) {
+            n = HDAE5000_FdName_SongNumber(blk.name);
+            if (n != -1) {
+                HDAE5000_RAM_FdList.line1[n] = 1;
+                HDAE5000_MemCopy((void *)((unsigned long)&HDAE5000_RAM_FdList.rows[3] + n * 12), &blk.name[2], 6);
+            }
+            while (CALLR(int, HAMA->findnext)(h, (char *)&blk) == 0) {
+                n = HDAE5000_FdName_SongNumber(blk.name);
+                if (n != -1) {
+                    HDAE5000_RAM_FdList.line1[n] = 1;
+                    HDAE5000_MemCopy((void *)((unsigned long)&HDAE5000_RAM_FdList.rows[3] + n * 12), &blk.name[2], 6);
+                }
+            }
+            CALLV(HAMA->findclose)(h);
+        }
+        for (i = 0; i < 20; i++) {
+            HDAE5000_RAM_FdList.rows[i * 12 + 10] = ' ';
+            if (HDAE5000_RAM_FdList.line2[i] == 1)
+                HDAE5000_RAM_FdList.rows[i * 12 + 10] = '*';
+        }
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_LIST, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_FdList.rows));
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_LIST, EVT_PARA_DRAW, -1L);
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_LINE1, EVT_DRAW, 0L);
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_LINE2, EVT_DRAW, 0L);
+        break;
+    default:
+        HDAE5000_ShowErrorMessageTitle(2);
+        ret = -1;
+    }
+    return ret;
+}
+
+long HDAE5000_HDAETitleFunc(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ACTIVATE_STATE:
+        switch (arg) {
+        case 2:
+            HDAE5000_RAM_TitleInfoText[150] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_HARD_DISK_OPT, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_TitleInfoText));
+            HDAE5000_SongScreen_Refresh(0, 0);
+            HDAE5000_RAM_FlsListText[1920] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_FLS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_FlsListText));
+            HDAE5000_FlsScreen_Refresh(0, 2);
+            HDAE5000_RAM_DirListText[504] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_DIR, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_DirListText));
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            HDAE5000_FlsList_BuildPage();
+            HDAE5000_Lbn_ShowEntry(0, 0, 6, 0);
+            HDAE5000_MemCopy(HDAE5000_RAM_PcLinkStatusText, HDAE5000_Str_STATUS, 0x21);
+            CALLV(ROOT->ApPostEvent)(OBJ_PP_STATUS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_PcLinkStatusText));
+            HDAE5000_RAM_Browser_State.next = OBJ_HDDMENU;
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1)
+                HDAE5000_RAM_Browser_State.next = OBJ_FLS_FILE_LOAD;
+            break;
+        case 9:
+            switch (HDAE5000_RAM_QuickLoadMode) {
+            case 1:
+                HDAE5000_RAM_Browser_State.next = OBJ_SELECT_FILE;
+                break;
+            case 2:
+                HDAE5000_RAM_Browser_State.next = OBJ_LOAD_BY_NUM;
+                break;
+            case 3:
+                HDAE5000_RAM_Browser_State.next = OBJ_FLS_FILE_LOAD;
+                break;
+            }
+            break;
+        case 8:
+            CALLV(ROOT->ApPostEvent)(HDAE5000_RAM_Browser_State.next, EVT_SHOW, 0L);
+            CALLV(ROOT->ApPostEvent)(-1L, EVT_INDEXSW_DOWN, 0L);
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1) {
+                HDAE5000_RAM_FlsSeqStopPending = 0;
+                CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD, EVT_HDAE_SEQ_STOP, 0L);
+            }
+            break;
+        case 6:
+            HDAE5000_RAM_Browser_State.next = HDAE5000_HDAETitleFunc_ObjIds[HDAE5000_Get_Init_Flag()];
+        }
+    }
+    return 0;
+}
+
+long HDAE5000_SEL_DIR_Screen(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 0:
+            HDAE5000_RAM_DirPageBase = 0;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            break;
+        case 1:
+            HDAE5000_RAM_DirPageBase = 24;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            break;
+        case 5:
+            HDAE5000_RAM_DirPageBase = 48;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            break;
+        case 6:
+            HDAE5000_RAM_DirPageBase = 72;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            break;
+        case 7:
+            HDAE5000_RAM_DirPageBase = 96;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            break;
+        }
+        break;
+    case EVT_HDAE_SELECT_OK:
+    case EVT_HDAE_SELECT_OK2:
+        HDAE5000_RAM_CurDir = (int)arg + HDAE5000_RAM_DirPageBase;
+        HDAE5000_SongScreen_Refresh(0, 0);
+        CALLV(ROOT->ApPostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
+        break;
+    case EVT_HDAE_SELECT_SAVE:
+        CALLV(ROOT->ApFuncCall)(APFUNC_HDD_DIRNAMECHECK, EVT_SET_STRING,
+                                HDAE5000_DirName_Address(HDAE5000_RAM_CurDir = (int)arg + HDAE5000_RAM_DirPageBase));
+        CALLV(ROOT->ApPostEvent)(OBJ_HDD_DIR_NAMING, EVT_SHOW, 0L);
+        break;
+    case EVT_HDAE_UNDER_FLOW:
+        if (HDAE5000_RAM_DirPageBase >= 24) {
+            HDAE5000_RAM_DirPageBase -= 24;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_DIR, EVT_HDAE_SET_SEL_NUM, arg + 24);
+        }
+        break;
+    case EVT_HDAE_OVER_FLOW:
+        if (HDAE5000_RAM_DirPageBase < 96) {
+            HDAE5000_RAM_DirPageBase += 24;
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_DIR, EVT_HDAE_SET_SEL_NUM, arg - 24);
+        }
+        break;
+    }
+    return 0;
+}
+
+/* page: which of the three object sets (ObjIds tables); skip != 0: only the part list.  The ROM takes the two
+   parameters as bytes (A, C) while every caller loads WA, BC: int parameters stored to char locals. */
+void HDAE5000_SongScreen_Refresh(int page_arg, int skip_arg)
+{
+    unsigned char page;
+    unsigned char skip;
+    char buf[22];
+    int i;
+    unsigned int m;
+
+    skip = skip_arg;
+    page = page_arg;
+    if (skip == 0) {
+        HDAE5000_MemFill(HDAE5000_RAM_SongScreenTitle, 0, 32);
+        HDAE5000_StrCat(HDAE5000_RAM_SongScreenTitle, HDAE5000_Str_DIRECTORY);
+        HDAE5000_SPrintf(buf, ram_2e250c, HDAE5000_RAM_CurDir + 1);
+        HDAE5000_StrCat(HDAE5000_RAM_SongScreenTitle, buf);
+        HDAE5000_StrCat(HDAE5000_RAM_SongScreenTitle, HDAE5000_Str_Chr3A_SongScreen_Refresh);
+        HDAE5000_StrNCat(HDAE5000_RAM_SongScreenTitle, HDAE5000_DirName_Address(HDAE5000_RAM_CurDir), 16);
+        HDAE5000_StrCat(HDAE5000_RAM_SongScreenTitle, HDAE5000_Str_Blank0Tab);
+        CALLV(ROOT->ApPostEvent)(ram_2e24e8[page], EVT_HDAE_SET_STR_ADR, (long)HDAE5000_RAM_SongScreenTitle);
+        CALLV(ROOT->ApPostEvent)(ram_2e24e8[page], EVT_PARA_DRAW, -1L);
+    }
+    if (skip == 0) {
+        for (i = 0; i < 16; i++) {
+            HDAE5000_MemCopy((void *)((unsigned long)&HDAE5000_RAM_SongListText[2] + 30 * i),
+                             HDAE5000_Str_Chr3A2020202020, 28);
+            HDAE5000_SPrintf(buf, ram_2e2534, i + 1);
+            HDAE5000_MemCopy((void *)((unsigned long)&HDAE5000_RAM_SongListText[0] + 30 * i), buf, 2);
+            HDAE5000_MemCopy((void *)((unsigned long)&HDAE5000_RAM_SongListText[3] + 30 * i),
+                             HDAE5000_SongRecord_Address(HDAE5000_RAM_CurDir, i), 26);
+        }
+        CALLV(ROOT->ApPostEvent)(ram_2e24f0[page], EVT_HDAE_SET_STR_ADR, (long)HDAE5000_RAM_SongListText);
+        CALLV(ROOT->ApPostEvent)(ram_2e24f0[page], EVT_PARA_DRAW, -1L);
+    }
+    if ((m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong)) != 0xffff)
+        HDAE5000_PartList_Build(ram_2e24f8[page], HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, m);
+    else
+        HDAE5000_PartList_Build(ram_2e24f8[page], 0xffff, 0xffff, 0xffff);
+}
+
+long HDAE5000_AttenDelDirSwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_DELD);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 0:
+        case 1:
+            CALLV(ROOT->SendEvent)(OBJ_WAIT_DEL_DIR, EVT_SHOW, 3L);
+            HDAE5000_YieldUntilSem1Zero();
+            HDAE5000_DeleteDirectory(HDAE5000_RAM_CurDir, 1, 0);
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            CALLV(ROOT->PostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
+            break;
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
+}
+
+long HDAE5000_AttenDelFileSwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_DELF);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 0:
+        case 1:
+            CALLV(ROOT->SendEvent)(OBJ_WAIT_DEL_FILE, EVT_SHOW, 3L);
+            HDAE5000_YieldUntilSem1Zero();
+            HDAE5000_DeleteSongParts(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_DeleteOptions.mask, 0, 1);
+            HDAE5000_DelOpt_InitFromSong(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, 1);
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            CALLV(ROOT->ApPostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
+            break;
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_FILE_DEL_SCREEN, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
+}
+
+long HDAE5000_HDDNamingCheck(long obj, long ev, long arg)
+{
+    char *p;
+    unsigned int m;
+
+    switch (ev) {
+    case EVT_GET_STRING:
+        HDAE5000_StrNCpy((char *)arg, HDAE5000_RAM_Name_ColumnRuler, 26);
+        return obj;
+    case EVT_SET_STRING:
+        HDAE5000_StrNCpy(HDAE5000_RAM_Name_ColumnRuler, (char *)arg, 26);
+        return obj;
+    case EVT_GET_NAMING_MODE:
+        return 0;
+    case EVT_GET_STRING_LENGTH:
+        return 26;
+    case EVT_SW_IN:
+        switch (arg) {
+        case 0x8a:
+            p = HDAE5000_NameHistory_Recall(ram_22ac7e);
+            if (p != 0) {
+                HDAE5000_MemCopy(HDAE5000_RAM_Name_ColumnRuler, p, HDAE5000_StrLen(p));
+                CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_SET_STRING, WRAP(HDAE5000_RAM_Name_ColumnRuler));
+            }
+            break;
+        case 0x0a:
+            if ((m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong)) == 0xffff)
+                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x3f, HDAE5000_TypeSel_TemplateAllNo, 2);
+            else
+                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateAllNo, 2);
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(HDAE5000_RAM_Name_ColumnRuler));
+            CALLV(ROOT->PostEvent)(OBJ_SAVE_OPT_SCREEN, EVT_SHOW, 0L);
+            break;
+        case 0x0b:
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(HDAE5000_RAM_Name_ColumnRuler));
+            if (HDAE5000_RAM_WriteConfirm == 1 && HDAE5000_Song_IsUsed(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong) != -1)
+                CALLV(ROOT->PostEvent)(OBJ_ATTEN_OVER_FILE, EVT_SHOW, 0L);
+            else
+                HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                        OBJ_SELECT_FILE, 1, HDAE5000_RAM_Name_ColumnRuler);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            break;
+        }
+        break;
+    }
+    return 0;
+}
+
+long HDAE5000_HDD_DIRNAMECheck(long obj, long ev, long arg)
+{
+    char *p;
+
+    switch (ev) {
+    case EVT_GET_STRING:
+        HDAE5000_StrNCpy((char *)arg, HDAE5000_RAM_NameEditBuffer, 16);
+        return obj;
+    case EVT_SET_STRING:
+        HDAE5000_StrNCpy(HDAE5000_RAM_NameEditBuffer, (char *)arg, 16);
+        HDAE5000_RAM_NameEditBuffer[16] = 0;
+        return obj;
+    case EVT_GET_NAMING_MODE:
+        return 0;
+    case EVT_GET_STRING_LENGTH:
+        return 16;
+    case EVT_SW_IN:
+        switch (arg) {
+        case 0x8a:
+            p = HDAE5000_NameHistory_Recall(HDAE5000_RAM_DirNameHistory);
+            if (p != 0) {
+                HDAE5000_MemCopy(HDAE5000_RAM_NameEditBuffer, p, HDAE5000_StrLen(p));
+                CALLV(ROOT->SendEvent)(CALLR(long, ROOT->GetNamingWindowID)(), EVT_SET_STRING,
+                                       (long)HDAE5000_RAM_NameEditBuffer);
+            }
+            break;
+        case 0x0b:
+            CALLV(ROOT->SendEvent)(CALLR(long, ROOT->GetNamingWindowID)(), EVT_GET_STRING,
+                                   (long)HDAE5000_RAM_NameEditBuffer);
+            HDAE5000_DirName_StoreWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_NameEditBuffer, OBJ_SELECT_DIR);
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            break;
+        }
+        break;
+    }
+    return 0;
+}
+
+long HDAE5000_HDD_UTIL_PAGE(long obj, long ev, long arg)
+{
+    char line[64];
+    char num[32];
+    struct { unsigned long addr; unsigned long size; } info;
+
+    switch (ev) {
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_UTIL);
+        return 0;
+    case EVT_SW_IN:
+        if (arg == 0x0b) {
+            HDAE5000_HardTest_HddIdRead();
+
+            CALLV(HAMA->GetResouceInfo)(0, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_LSWFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_Adr);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_Size);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(1, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_SDAFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_Adr_HDD_UTIL_PAGE);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e25b4);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(2, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_PMTFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e25d6);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e25de);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(3, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_SQFFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e2600);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e2608);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(4, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_SEQFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e262a);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e2632);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(5, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_CMPFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e2654);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e265c);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(6, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_TMFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e267c);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e2684);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(7, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_MSPFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e26a6);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e26ae);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(8, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_RCMFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e26d0);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e26d8);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+
+            CALLV(HAMA->GetResouceInfo)(9, (char *)&info);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, HDAE5000_Str_MDFileInfo);
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e26f8);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
+            HDAE5000_HardTest_Print(line);
+            HDAE5000_MemFill(line, 0, 64);
+            HDAE5000_StrCpy(line, ram_2e2700);
+            HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
+            HDAE5000_HardTest_Print(line);
+        }
+        break;
+    }
+    return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+}
+
+long HDAE5000_SaveOptSwEventCatch(long obj, long ev, long arg)
+{
+    unsigned int m;
+
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_SVOP);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 8:
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(HDAE5000_RAM_Name_ColumnRuler));
+            if (HDAE5000_RAM_WriteConfirm == 1 && HDAE5000_Song_IsUsed(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong) != -1)
+                CALLV(ROOT->PostEvent)(OBJ_ATTEN_OVER_FILE, EVT_SHOW, 0L);
+            else
+                HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                        OBJ_SELECT_FILE, 1, HDAE5000_RAM_Name_ColumnRuler);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            break;
+        case 9:
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x3f, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        case 0x0a:
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x1ff, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        case 0x0b:
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        case 0x8b:
+            m = HDAE5000_RAM_SaveOptions.mask;
+            if ((m & 0x100) == 0x100)
+                m -= 0x100;
+            else
+                m += 0x100;
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        }
+        return 0;
+    }
+}
+
+long HDAE5000_AttenHDFormatSwCatch(long obj, long ev, long arg)
+{
+    int res;
+
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_FMT);
+        return 0;
+    case EVT_SW_IN:
+        res = 0;
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 0:
+            res = HDAE5000_FormatDialog_CodeDigit((arg & 0x80) ? 0 : 1);
+            break;
+        case 1:
+            res = HDAE5000_FormatDialog_CodeDigit((arg & 0x80) ? 2 : 3);
+            break;
+        case 2:
+            res = HDAE5000_FormatDialog_CodeDigit((arg & 0x80) ? 4 : 5);
+            break;
+        case 3:
+            res = HDAE5000_FormatDialog_CodeDigit((arg & 0x80) ? 6 : 7);
+            break;
+        case 4:
+            res = HDAE5000_FormatDialog_CodeDigit((arg & 0x80) ? 8 : 9);
+            break;
+        case 6:
+        case 7:
+            HDAE5000_MemFill(ram_22ad9c, 0, 10);
+            CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
+        }
+        switch (res) {
+        case 1:
+            CALLV(ROOT->SendEvent)(OBJ_AGAIN_HD_FORMAT, EVT_SHOW, 3L);
+            CALLV(ROOT->KillApTimer)(0x14dL, OBJ_AGAIN_HD_FORMAT_CATCH, -1L, OBJ_ATTEN_HD_FORMAT, EVT_HDAE_TIMER_BACK);
+            CALLV(ROOT->SetApTimer)(0x14dL, OBJ_AGAIN_HD_FORMAT_CATCH, -1L, OBJ_ATTEN_HD_FORMAT, EVT_HDAE_TIMER_BACK);
+            break;
+        case 2:
+            CALLV(ROOT->SendEvent)(OBJ_WAIT_HD_FORMAT, EVT_SHOW, 0L);
+            HDAE5000_YieldUntilSem1Zero();
+            if (HDAE5000_HD_FormatDrive(1) == 0) {
+                CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
+                HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+                HDAE5000_SongScreen_Refresh(0, 0);
+                HDAE5000_FlsList_BuildPage();
+                HDAE5000_FlsScreen_Refresh(0, 2);
+            } else {
+                CALLV(ROOT->PostEvent)(OBJ_ERR_HD_FORMAT, EVT_SHOW, 3L);
+                CALLV(ROOT->KillApTimer)(0x14dL, OBJ_ERR_HD_FORMAT_CATCH, -1L, OBJ_ATTEN_HD_FORMAT, EVT_HDAE_TIMER_BACK);
+                CALLV(ROOT->SetApTimer)(0x14dL, OBJ_ERR_HD_FORMAT_CATCH, -1L, OBJ_ATTEN_HD_FORMAT, EVT_HDAE_TIMER_BACK);
+            }
+            break;
+        case 3:
+            HDAE5000_RAM_QuickLoadMode = 1;
+            HDAE5000_RAM_LoadByNumberMode = 1;
+            HDAE5000_RAM_JumpAfterLoad = 1;
+            CALLV(ROOT->SendEvent)(OBJ_WAIT_TR0_RECOVER, EVT_SHOW, 0L);
+            HDAE5000_YieldUntilSem1Zero();
+            if (HDAE5000_HD_StoreSettings(0) != -1) {
+                CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
+            } else {
+                CALLV(ROOT->PostEvent)(OBJ_ERR_SAVE, EVT_SHOW, 3L);
+                HDAE5000_UiObj_SetCaption(OBJ_ERR_SAVE_EXIT, OBJ_ATTEN_HD_FORMAT);
+                CALLV(ROOT->KillApTimer)(0x14dL, OBJ_ERR_SAVE_CATCH, -1L, OBJ_ATTEN_HD_FORMAT, EVT_HDAE_TIMER_BACK);
+                CALLV(ROOT->SetApTimer)(0x14dL, OBJ_ERR_SAVE_CATCH, -1L, OBJ_ATTEN_HD_FORMAT, EVT_HDAE_TIMER_BACK);
+            }
+            break;
+        }
+        return 0;
+    case EVT_HDAE_TIMER_BACK:
+        CALLV(ROOT->PostEvent)(OBJ_ATTEN_HD_FORMAT, EVT_SHOW, 0L);
+        return 0;
+    }
+}
+
+long HDAE5000_LBNLoadSwCatch(long obj, long ev, long arg)
+{
+    unsigned int m;
+
+    switch (ev) {
+    case EVT_SHOW:
+        if ((m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong)) != 0xffff)
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateBlank, 2);
+        else
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0, HDAE5000_TypeSel_TemplateBlank, 2);
+        break;
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_LBN);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 8:
+        case 9:
+            if (HDAE5000_RAM_LbnDigitPos == 5) {
+                HDAE5000_LoadSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                        OBJ_LOAD_BY_NUM, 1);
+                HDAE5000_Lbn_ShowEntry(0, 0, 6, 1);
+                if (HDAE5000_RAM_LyricJump == 2 && (HDAE5000_RAM_SaveOptions.mask & 0x100) == 0x100)
+                    CALLV(ROOT->ApPostEvent)(OBJ_Tech_lyrics, EVT_SHOW, 0L);
+            }
+        }
+        break;
+    }
+    return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+}
+
+/* r in QIZ, m in IZ in the ROM */
+void HDAE5000_Lbn_TypeDigit(long obj, unsigned int digit)
+{
+    int r;
+    unsigned int m;
+
+    r = 0;
+    switch (HDAE5000_RAM_LbnDigitPos) {
+    case 0:
+        HDAE5000_RAM_LbnDir = digit * 100;
+        HDAE5000_RAM_LbnSong = 0;
+        HDAE5000_RAM_LbnDigitPos = 1;
+        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
+        break;
+    case 1:
+        HDAE5000_RAM_LbnDir += digit * 10;
+        HDAE5000_RAM_LbnDigitPos = 2;
+        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
+        break;
+    case 2:
+        HDAE5000_RAM_LbnDir += digit;
+        HDAE5000_RAM_LbnDigitPos = 3;
+        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
+        break;
+    case 3:
+        HDAE5000_RAM_LbnSong = digit * 10;
+        HDAE5000_RAM_LbnDigitPos = 4;
+        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
+        break;
+    case 4:
+        HDAE5000_RAM_LbnSong += digit;
+        HDAE5000_RAM_LbnDigitPos = 5;
+        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
+        if (r == 0) {
+            HDAE5000_RAM_CurDir = HDAE5000_RAM_LbnDir - 1;
+            HDAE5000_RAM_CurSong = HDAE5000_RAM_LbnSong - 1;
+            m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong);
+            if (m != 0xffff) {
+                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateBlank, 2);
+                HDAE5000_PartList_Build(OBJ_LBN_OPTION, HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, m);
+            } else {
+                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0, HDAE5000_TypeSel_TemplateBlank, 2);
+                HDAE5000_PartList_Build(OBJ_LBN_OPTION, 0xffff, 0xffff, 0xffff);
+            }
+            if (HDAE5000_RAM_LoadByNumberMode == 2) {
+                HDAE5000_LoadSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                        OBJ_LOAD_BY_NUM, 1);
+                HDAE5000_Lbn_ShowEntry(0, 0, 6, 1);
+                if (HDAE5000_RAM_LyricJump == 2 && (HDAE5000_RAM_SaveOptions.mask & 0x100) == 0x100)
+                    CALLV(ROOT->ApPostEvent)(OBJ_Tech_lyrics, EVT_SHOW, 0L);
+            }
+        }
+    }
+    switch (r) {
+    case -1:
+        CALLV(ROOT->PostEvent)(OBJ_DIR_OUT_RANGE, EVT_SHOW, 5L);
+        CALLV(ROOT->SetApTimer)(0x21L, OBJ_DIR_OUT_RANGE_CATCH, -1L, OBJ_LOAD_BY_NUM, EVT_HDAE_TIMER_BACK);
+        break;
+    case -2:
+        CALLV(ROOT->PostEvent)(OBJ_FILE_OUT_RANGE, EVT_SHOW, 5L);
+        CALLV(ROOT->SetApTimer)(0x21L, OBJ_FILE_OUT_RANGE_CATCH, -1L, OBJ_LOAD_BY_NUM, EVT_HDAE_TIMER_BACK);
+    }
+}

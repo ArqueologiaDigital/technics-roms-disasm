@@ -1,0 +1,24 @@
+function	bytes	matches	best_diff
+Algo67_LUTOffset_Check	147	-	+58 sub_D_11b@Xr
+Algo_SubTable_DispatchA	96	-	+48 sub_D_11b@Xr
+Audio_Tick_ServiceVoices_A	126	sub_B_11a@Xr sub_B_11b@Xr	
+DSP_ChanFreq_WritePacket2	122	-	+87 sub_D_11b@Xr
+DSP_Config_Init	271	-	+18 sub_C_11b@Xr
+DSP_WriteVoiceParam	152	-	+43 sub_D_11c@Xr
+OutputBuf_Flush_A	45	sub_A_11c@Xr	
+VoiceNoteParam_UpdateLoop	386	-	+87 sub_D_11b@Xr
+VoiceParam_CustomTone_Apply_Catalog80	288	-	+20 sub_C_11b@Xr
+VoiceState_SwapSlot_Guarded	203	-	+44 sub_A_11b@Xr
+Voice_AdvanceSlotIterator	109	-	+3 sub_A_11c@Xr
+Voice_AllNotes_SustainRetrigger	335	sub_B_11c@Xr	
+Voice_Calc_LevelPair_EGB	310	-	+254 sub_B_11b@Xr
+Voice_Calc_LevelPair_EGC	306	-	+253 sub_B_11b@Xr
+Voice_Calc_LevelPair_FixedAtk	310	-	+106 sub_B_11b@Xr
+Voice_ComputePitch_Mono	262	-	+64 sub_B_11b@Xr
+Voice_Part_ResetSlotRouting	259	-	+48 sub_D_11b@Xr
+Voice_PitchPack_Mode5_Dual	197	sub_A_11a@Xr sub_A_11b@Xr sub_A_11c@Xr	
+Voice_ScanSlots_ReassignSources	209	-	+33 sub_A_11c@Xr
+Voice_Selector_ComputeMixWeights	186	-	+23 sub_A_11c@Xr
+WaveSel_StageA1_FromPatchBlock	134	-	+22 sub_D_11b@Xr
+WaveSel_StageA2_FromToneRec	124	-	+22 sub_D_11b@Xr
+WaveSel_StageB_Build_Reg040	171	-	+40 sub_A_11c@Xr

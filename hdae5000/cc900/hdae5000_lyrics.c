@@ -182,6 +182,22 @@ long HDAE5000_Lyrics_CheckFile(void)
         return -2L;
 }
 
+long HDAE5000_Lyrics_LoadTestFile(void)
+{
+    switch (CALLR(unsigned char, HAMA->GetMediaType)()) {
+    default:
+        return -1L;
+    case 2:
+    case 3:
+        CALLV(ROOT->SleepMainTask)();
+        CALLV(HAMA->fopen_ext)(HDAE5000_Str_TESTTESTTLX, HDAE5000_Str_Rb);
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_LyricBuffer, 0x5000L);
+        CALLV(HAMA->fclose_ext)();
+        CALLV(ROOT->WakeUpMainTask)();
+        return 0L;
+    }
+}
+
 long HDAE5000_Lyrics_ResetState(void)
 {
     ram_23a19a = 1;
@@ -253,6 +269,153 @@ long HDAE5000_Lyrics_ResetState(void)
     return 0L;
 }
 
+long HDAE5000_Lyrics_ReadSongInfo(unused)
+long unused;
+{
+    if (HDAE5000_Lyrics_FindEvent(2, 2, -2, 0L) > 0) {
+        if (HDAE5000_RAM_LyricEvent.len >= 50) {
+            HDAE5000_StrNCpy((void *)ram_230736, (char *)ram_230636, 50);
+            ram_230736[49] = 0;
+        } else {
+            HDAE5000_StrNCpy((void *)ram_230736, (char *)ram_230636, HDAE5000_RAM_LyricEvent.len);
+            ram_230736[HDAE5000_RAM_LyricEvent.len] = 0;
+        }
+    } else
+        HDAE5000_StrCpy((void *)ram_230736, HDAE5000_Str_NoCopyrightInfo);
+    if (HDAE5000_Lyrics_FindEvent(3, 2, -2, 0L) > 0) {
+        if (HDAE5000_RAM_LyricEvent.len >= 40) {
+            HDAE5000_StrNCpy((void *)ram_230768, (char *)ram_230636, 40);
+            ram_230768[39] = 0;
+        } else {
+            HDAE5000_StrNCpy((void *)ram_230768, (char *)ram_230636, HDAE5000_RAM_LyricEvent.len);
+            ram_230768[HDAE5000_RAM_LyricEvent.len] = 0;
+        }
+    } else
+        HDAE5000_StrCpy((void *)ram_230736, HDAE5000_Str_NoSongTitle);
+    if (HDAE5000_Lyrics_FindEvent(88, 2, -2, 0L) > 0) {
+        ram_2307a6 = ram_2307a4 = ram_230636[0];
+        if (ram_230636[1] == 1) {
+            ram_2307a8 = 2;
+            ram_2307ae = 24;
+            ram_2307b0 = 24;
+        }
+        if (ram_230636[1] == 2) {
+            ram_2307a8 = 4;
+            ram_2307ae = 12;
+            ram_2307b0 = 12;
+        }
+        if (ram_230636[1] == 3) {
+            ram_2307a8 = 8;
+            ram_2307ae = 6;
+            ram_2307b0 = 6;
+        }
+        if (ram_230636[1] == 4) {
+            ram_2307a8 = 16;
+            ram_2307ae = 3;
+            ram_2307b0 = 3;
+        }
+    } else {
+        ram_2307a6 = 4;
+        ram_2307a4 = 4;
+        ram_2307a8 = 4;
+        ram_2307ae = 12;
+        ram_2307b0 = 12;
+    }
+    HDAE5000_SPrintf((void *)ram_230790, HDAE5000_Fmt_i_i_File_Load, ram_2307a4, ram_2307a8);
+    CALLV(ROOT->SendEvent)(HDAE5000_RAM_LyricBoxObj, EVT_HDAE_BEAT_MESSAGE, 0L);
+    HDAE5000_RAM_LyricEvent.type = 0xff;
+    HDAE5000_RAM_LyricEvent.w2 = 0;
+    HDAE5000_RAM_LyricEvent.eot = 0;
+    HDAE5000_RAM_LyricEvent.len = 0;
+    ram_2304d8.s.hilite = 0;
+    ram_23086e = 0;
+    HDAE5000_RAM_LyricEvent.tick = 0;
+    HDAE5000_Lyrics_FindEvent(0x7c, 2, -2, 0L);
+    HDAE5000_RAM_LyricEvent.tick = 0;
+    return 0L;
+}
+
+long HDAE5000_Lyrics_FindEvent(type, flags, start, at)
+unsigned char type;
+unsigned char flags;
+int start;
+long at;
+{
+    unsigned int pos;
+    int i;
+    unsigned int n;
+
+    if (start >= 0) {
+        pos = 0;
+        HDAE5000_RAM_LyricEvent.tick = 0;
+        for (i = 0; i < start; i++) {
+            pos += (n = HDAE5000_Lyrics_ParseEvent(0, pos));
+            if (n == 0)
+                return -1L;
+        }
+        if (type == 0x7c) {
+            if ((n = HDAE5000_Lyrics_ParseEvent(flags, pos)) != 0)
+                return (unsigned long)n + pos;
+            return -1L;
+        }
+        do {
+            pos += (n = HDAE5000_Lyrics_ParseEvent(flags, pos));
+        } while (n != 0 && type != HDAE5000_RAM_LyricEvent.type);
+        if (n != 0)
+            return pos;
+        return -1L;
+    }
+    if (start == -1)
+        return -1L;
+    if (start == -2) {
+        if (type == 0x7c)
+            return HDAE5000_Lyrics_ParseEvent(flags, (unsigned int)at);
+        pos = at;
+        do {
+            pos += (n = HDAE5000_Lyrics_ParseEvent(flags, pos));
+        } while (n != 0 && type != HDAE5000_RAM_LyricEvent.type);
+        if (n != 0)
+            return pos;
+        return -1L;
+    }
+    return 0L;
+}
+
+unsigned int HDAE5000_Read_Table_Word(pos)
+unsigned int pos;
+{
+    unsigned int lo;
+    lo = LYRIC_EV(pos + 1);
+    return (unsigned int)LYRIC_EV(pos) << 8 | lo;
+}
+
+long HDAE5000_Read_Table_Multi(pos)
+unsigned int pos;
+{
+    long v;
+    unsigned int i;
+    v = LYRIC_EV(pos);
+    for (i = 0; i < 3; i++)
+        v = (v << 8) + LYRIC_EV(pos + i);
+    return v;
+}
+
+long HDAE5000_Lyrics_ReadVarLen(pos)
+unsigned int pos;
+{
+    unsigned long v = 0;
+    unsigned int i;
+    for (i = 0; i < 4; i++) {
+        v += LYRIC_EV(pos + i) & 0x7f;
+        if (LYRIC_EV(pos + i) < 0x80) {
+            ram_23085e = i + 1;
+            return v;
+        }
+        v <<= 7;
+    }
+    return -1L;
+}
+
 /* cc900-name: HDAE5000_Lyrics_CheckHdrChunk=HDAE5000_Lyrics_CheckHeaderChunk */
 long HDAE5000_Lyrics_CheckHdrChunk(void)
 {
@@ -280,6 +443,17 @@ long HDAE5000_Lyrics_CheckTrackChunk(void)
 }
 
 /* SwapBytes32 / SwapBytes16: hdae5000/cc900-staged/hdae5000_ui_display.c, unchanged (they match) */
+unsigned long HDAE5000_SwapBytes32(unsigned long x)
+{
+    unsigned long r = x & 0xff;
+    int i;
+    for (i = 0; i < 3; i++) {
+        x >>= 8;
+        r <<= 8;
+        r += x & 0xff;
+    }
+    return r;
+}
 
 unsigned int HDAE5000_SwapBytes16(unsigned int x)
 {

@@ -154,6 +154,12 @@ def main():
     usedmod = [n for n in usedmod if n not in have]
     if usedmod:
         nm = nm + ['/* cc900-module: %s */' % ' '.join(usedmod)]
+    # the probe's cc900-data: lines of these functions (a switch's jump table placed at the tree's label; lane_sub,
+    # round 16: the first staged switches lost theirs)
+    for m in re.finditer(r'cc900-data:\s*(\w+)\s+(\d+)\s*=\s*(\w+)', open(probe, encoding='latin-1').read()):
+        line = '/* cc900-data: %s %s = %s */' % m.groups()
+        if m.group(1) in funcs and line not in old and line not in nm:
+            nm = nm + [line]
     # prototypes of the staged functions first: one may call another defined after it (lane_sub: an implicit
     # declaration followed by a void definition is V4.23's THC1-Error-262)
     protos = [w[:w.index('{')].strip() + ';' for w in want if len(want) > 1]

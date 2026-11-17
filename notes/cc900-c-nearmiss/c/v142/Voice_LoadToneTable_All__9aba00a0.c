@@ -1,0 +1,16 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of sub/sub_B_2b.c (2026-11-16-47-sub-r2)
+   sha256 9aba00a0c3e557e6d713bd84f64750019cb84970fa0099d1aa9e45ad5763c846 (name+funcs); compiled at -Xr */
+extern unsigned int ram_451cc[];
+extern int ram_45206;
+extern int DSP_ChanFreq_WritePacket2(int);
+extern unsigned int *Voice_BuildOutputList(int, int, int);
+extern void ToneGen_WriteExtParams_15_Alt(int, unsigned int *);
+void Voice_LoadToneTable_All(unsigned char ch)
+{
+    unsigned int *list;
+    unsigned int i;
+    ram_45206 = DSP_ChanFreq_WritePacket2(ch);
+    list = Voice_BuildOutputList(ch, 16, 0);
+    for (i = 0; (list[i] & 0xff) < 0x40; i++)
+        ToneGen_WriteExtParams_15_Alt((unsigned char)list[i], ram_451cc);
+}

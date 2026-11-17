@@ -95,6 +95,12 @@ void HDAE5000_RequestTitle16(unsigned char title)
     CALLV(ROOT->ApPostEvent)(-1L, EVT_INTERRUPT_TITLE, (long)title + TITLE_PS);
 }
 
+void HDAE5000_YieldUntilSem1Zero(void)
+{
+    while (CALLR(int, HAMA->ref_sem_X)(1) != 0)
+        CALLV(HAMA->rot_rdq_X)(3);
+}
+
 /* Song-record fields: part byte k at +26+k, first-cluster slot k at +36+4k; k = 0 LSW, 1 PMT, 2 SQT, 3 CMP,
    4 TM, 5 MSP, 6 RCM, 7 MD, 8 TLX.  The address is written as an integer, (unsigned long)&sym[field] + offset:
    that is what gives the ROM's lda xR,(sym+field) after the offset (run 2026-11-16-52-hd-r4v). */

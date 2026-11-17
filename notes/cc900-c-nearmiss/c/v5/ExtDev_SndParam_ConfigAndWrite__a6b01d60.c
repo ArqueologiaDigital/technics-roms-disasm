@@ -1,0 +1,19 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of v5/audio_control_engine_m0.c (2026-11-16-125-p6-r26-staged)
+   sha256 a6b01d6069afdc83f7c9f29a667a198dd9ccc4e0ed611ca6836cb5e7d3cc3447 (tar-sha256); compiled at -Xr
+   cc900-options: -O3 -Xr */
+extern void PanelEvent_Post(unsigned char *);
+extern unsigned char __near ram_9039;
+extern int SndParam_LookupViaEncode(unsigned int, unsigned int);
+extern unsigned char __near ram_90cd[];
+extern unsigned char __near PART_SELECT;
+void ExtDev_SndParam_ConfigAndWrite(unsigned char *e)
+{
+	if (!(e[2] & e[3])) return;
+	ram_9039 |= 2;
+	e[0] = PART_SELECT;
+	e[1] = 5;
+	if (SndParam_LookupViaEncode(PART_SELECT, 93) == 0) e[2] = ram_90cd[PART_SELECT];
+	else e[2] = 0;
+	e[3] = 127;
+	PanelEvent_Post(e);
+}

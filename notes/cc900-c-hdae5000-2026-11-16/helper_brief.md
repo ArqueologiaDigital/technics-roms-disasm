@@ -78,5 +78,46 @@ Report: the files, the functions in each, the ones left out and why, and per fun
 unsure of.
 
 Rules: temp files only under /home/fsanches/compartilhado/tmp/cc900-tab/lane_hd/<your helper name>/ (never /tmp);
-no rm with variables or globs; `command grep` for recursive search (the .s files hold high bytes); never run the
-VM; never commit; never copy Toshiba listing text into any file.
+`command grep` for recursive search (the .s files hold high bytes); never run the VM; never commit; never copy
+Toshiba listing text into any file.
+DELETE NOTHING.  Helpers do not delete any file or directory at all: leave every scratch file where it is and
+list it in your report; lane_hd does the cleanup.  The owner rejects any operation with an unverified rm.  The
+rule, word for word:
+- `rm` only as its own standalone Bash call with one literal absolute path, after looking at the target;
+- never rm / rmdir / find -delete / shutil.rmtree / os.remove inside a heredoc, bash -c, python -c, a loop, or an
+  `&&` / `;` chain;
+- no inline scripts; edits through the Edit tool; `git rm -- <explicit paths>` as its own command.
+- NO heredocs at all (no `<<EOF` in any Bash call), and no `sed -i`: write files with the Write tool, change
+  them with the Edit tool, and run scripts as plain commands.
+- NO nested command substitution or shell arithmetic in commands (`$(( 0x$(grep ...) - 0x280000 ))`, `$(...)`
+  inside `$(...)`): look the value up in one plain command, read it, and type the literal number into the next.
+  Better: use the committed checker scripts (notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --show, survey.py
+  --body), which do the lookup inside.
+If a command of yours is denied: stop, report the exact command, never retry it another way.
+
+OWNER'S RULES (strict, 2026-11-16):
+- `rm` only as its OWN standalone Bash call, with a literal absolute path, after looking at the target, one path
+  per call.  Never rm / rmdir / find -delete / shutil.rmtree / os.remove inside a heredoc, a `bash -c`,
+  `python -c`, `python3 - <<EOF` script, a loop, a `&&` / `;` chain or any inline code.
+- Avoid inline `python3 -c` / heredoc scripts generally: write a script file with the Write tool under your temp
+  directory and run it.  Edit files with the Edit / Write tools.
+- If anything is denied: stop and report the exact command; never retry it another way.
+
+lane_sub's systematic probes (run 2026-11-16-99-sub-r13-idioms, -Xr like ours; its README, branch
+cc900/c-subcpu-hdae, "Idioms found by systematic probes"):
+- RELOAD AFTER STORE avoided (the ROM keeps the value in a register): give it a second plain local and route later
+  uses through it: `u = P(v,23); t = u; f(v, u[17]);`.
+- A CONSTANT ARGUMENT loaded in argument order: pass the constant through a local (`k = 0x79;`); literals, casts,
+  enum and #define do not do it.
+- A CHAR ARGUMENT passed without extz: declare the callee's parameter plain or signed `char` and pass the unsigned
+  char with no cast.
+
+More idioms found since (runs 66-93):
+- A RETURNED array address loaded as an immediate after the index (`ld xhl,sym; add xhl,xwa`) comes from a
+  CONVERTED return value: `return (void *)(arr + (unsigned long)i * 16);` (DirName_Address, run 70).
+- A call to a cc900-name short name now resolves in the build.
+- Avoid a huge multi-line #define (V4.23 THC1-Fatal-150 "Too large string" for ~2.6 KB): write the code out.
+- Avoid K&R (old-style) definitions for now: the build cannot parse them yet; use prototype-style definitions
+  (for a char parameter the caller loads as a word, try `int` and a cast inside).
+- notes/cc900-c-hdae5000-2026-11-16/hdae5000 staged C (hdae5000/cc900-staged/*.c) and built C
+  (hdae5000/cc900/*.c) are good examples of matched C for this ROM.

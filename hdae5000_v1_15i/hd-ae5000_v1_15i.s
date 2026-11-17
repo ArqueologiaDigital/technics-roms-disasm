@@ -695,25 +695,11 @@ HDAE5000_Handler_Registration:
 ; Output: XHL = the answer, or 0 for any other request
 ; ----------------------------------------------------------------------------
 
-HDAE5000_Alloc_Memory_1:
-	; Returns 0x2A898E for A1, 0x140 for A2, 0xF0 for A3
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_Alloc_Memory_1__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_Alloc_Memory_1__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_Alloc_Memory_1__type_A1
-	ld xhl, 0:i3
-	ret
-HDAE5000_Alloc_Memory_1__type_A1:
-	lda xhl, (HDAE5000_Bitmap_TitleLogo:24); Palette data pointer 1
-	ret
-HDAE5000_Alloc_Memory_1__type_A2:
-	ld xhl, 0x140	; 320 (width)
-	ret
-HDAE5000_Alloc_Memory_1__type_A3:
-	ld xhl, 0xF0	; 240 (height)
-	ret
+HDAE5000_Alloc_Memory_1:	.include "includes/generated/cc900/HDAE5000_Alloc_Memory_1.s"	; C: cc900/hdae5000_ttl_r1.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Alloc_Memory_1__type_A1, HDAE5000_Alloc_Memory_1 + 27
+	.set	HDAE5000_Alloc_Memory_1__type_A2, HDAE5000_Alloc_Memory_1 + 33
+	.set	HDAE5000_Alloc_Memory_1__type_A3, HDAE5000_Alloc_Memory_1 + 39
 
 ; ---------------------------------------------------------------------------
 ; Bitmap resource descriptor of HDAE5000_Bitmap_DriveMech, as
@@ -721,24 +707,11 @@ HDAE5000_Alloc_Memory_1__type_A3:
 ; In:  XBC = EVT_GET_BITMAP_DATA / _WIDTH / _HEIGHT
 ; Out: XHL = the bitmap, 0x140 (320) or 0xF0 (240); 0 for any other event.
 ; ---------------------------------------------------------------------------
-HDAE5000_Alloc_Memory_2:
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_Alloc_Memory_2__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_Alloc_Memory_2__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_Alloc_Memory_2__type_A1
-	ld xhl, 0:i3
-	ret
-HDAE5000_Alloc_Memory_2__type_A1:
-	lda xhl, (HDAE5000_Bitmap_DriveMech:24)
-	ret
-HDAE5000_Alloc_Memory_2__type_A2:
-	ld xhl, 0x140
-	ret
-HDAE5000_Alloc_Memory_2__type_A3:
-	ld xhl, 0xF0
-	ret
+HDAE5000_Alloc_Memory_2:	.include "includes/generated/cc900/HDAE5000_Alloc_Memory_2.s"	; C: cc900/hdae5000_ttl_r2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Alloc_Memory_2__type_A1, HDAE5000_Alloc_Memory_2 + 27
+	.set	HDAE5000_Alloc_Memory_2__type_A2, HDAE5000_Alloc_Memory_2 + 33
+	.set	HDAE5000_Alloc_Memory_2__type_A3, HDAE5000_Alloc_Memory_2 + 39
 
 
 ; --- HDAE5000_BitmapHdd_icon (was HDAE5000_Alloc_Memory_4) -------------------
@@ -859,222 +832,27 @@ HDAE5000_AcWindowPage1Proc_Join:
 	inc 8, xsp
 	ret
 
-HDAE5000_TtlScreenRProc:
-	; registered as "TtlScreenRProc" in HDAE5000_ClassProc_Table
-	dec 8, xsp
-	push xiz
-	ld (xsp + 0x04), xde
-	ld	xiz, xbc
-	ld (xsp + 0x08), xwa
-	ld	xwa, xiz
-	cp	xwa, EVT_HIDE
-	jrl	z, HDAE5000_TtlScreenRProc_OnHide
-	cp	xwa, EVT_DRAW
-	jrl	nz, HDAE5000_TtlScreenRProc_Join2
-	ld	xwa, 0:i3
-	ld	xbc, EVT_GET_BITMAP_DATA
-	ld	xde, 0:i3
-	calr	HDAE5000_Alloc_Memory_1
-	or xhl, xhl
-	jr	z, HDAE5000_TtlScreenRProc_Join
-	pushw 0x9600
-	lda xwa, (HDAE5000_Bitmap_TitleLogo:24)
-	push xwa
-	ld	xwa, 0x00056800
-	push xwa
-	call HDAE5000_MemCopy
-	pushw 0x9600
-	lda xwa, (HDAE5000_Bitmap_TitleLogo+0x9600:24)	; its second half (0x12C00 bytes in two 0x9600 copies)
-	push xwa
-	ld	xwa, 0x0005fe00
-	push xwa
-	call HDAE5000_MemCopy
-	pushw 0x0400
-	lda xwa, (HDAE5000_Palette_TitleLogo:24)
-	push xwa
-	ld	xwa, 0x00069400
-	push xwa
-	call HDAE5000_MemCopy
-	lda	xsp, (xsp+30)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangeWall)
-	ld	wa, 3:i3
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangePalette)
-	ld	wa, 3:i3
-	call	(xhl)
-HDAE5000_TtlScreenRProc_Join:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_TtlScreenRProc_Epilogue
-HDAE5000_TtlScreenRProc_OnHide:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangePalette)
-	ld	wa, 2:i3
-	call	(xhl)
-HDAE5000_TtlScreenRProc_Join2:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-HDAE5000_TtlScreenRProc_Epilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+HDAE5000_TtlScreenRProc:	.include "includes/generated/cc900/HDAE5000_TtlScreenRProc.s"	; C: cc900/hdae5000_ttl_r1.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_TtlScreenRProc_Join, HDAE5000_TtlScreenRProc + 145
+	.set	HDAE5000_TtlScreenRProc_OnHide, HDAE5000_TtlScreenRProc + 174
+	.set	HDAE5000_TtlScreenRProc_Join2, HDAE5000_TtlScreenRProc + 193
+	.set	HDAE5000_TtlScreenRProc_Epilogue, HDAE5000_TtlScreenRProc + 218
 
-HDAE5000_TtlScreenR2Proc:
-	; registered as "TtlScreenR2Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp
-	push xiz
-	ld (xsp + 0x04), xde
-	ld	xiz, xbc
-	ld (xsp + 0x08), xwa
-	ld	xwa, xiz
-	cp	xwa, EVT_HIDE
-	jrl	z, HDAE5000_TtlScreenR2Proc_OnHide
-	cp	xwa, EVT_DRAW
-	jrl	nz, HDAE5000_TtlScreenR2Proc_Join2
-	ld	xwa, 0:i3
-	ld	xbc, EVT_GET_BITMAP_DATA
-	ld	xde, 0:i3
-	calr	HDAE5000_Alloc_Memory_2
-	or xhl, xhl
-	jr	z, HDAE5000_TtlScreenR2Proc_Join
-	pushw 0x9600
-	lda xwa, (HDAE5000_Bitmap_DriveMech:24)
-	push xwa
-	ld	xwa, 0x00056800
-	push xwa
-	call HDAE5000_MemCopy
-	pushw 0x9600
-	lda xwa, (HDAE5000_Bitmap_DriveMech+0x9600:24)	; its second half
-	push xwa
-	ld	xwa, 0x0005fe00
-	push xwa
-	call HDAE5000_MemCopy
-	pushw 0x0400
-	lda xwa, (HDAE5000_Palette_DriveMech:24)
-	push xwa
-	ld	xwa, 0x00069400
-	push xwa
-	call HDAE5000_MemCopy
-	lda	xsp, (xsp+30)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangeWall)
-	ld	wa, 3:i3
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangePalette)
-	ld	wa, 3:i3
-	call	(xhl)
-HDAE5000_TtlScreenR2Proc_Join:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_TtlScreenR2Proc_Epilogue
-HDAE5000_TtlScreenR2Proc_OnHide:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangePalette)
-	ld	wa, 2:i3
-	call	(xhl)
-HDAE5000_TtlScreenR2Proc_Join2:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-HDAE5000_TtlScreenR2Proc_Epilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+HDAE5000_TtlScreenR2Proc:	.include "includes/generated/cc900/HDAE5000_TtlScreenR2Proc.s"	; C: cc900/hdae5000_ttl_r2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_TtlScreenR2Proc_Join, HDAE5000_TtlScreenR2Proc + 145
+	.set	HDAE5000_TtlScreenR2Proc_OnHide, HDAE5000_TtlScreenR2Proc + 174
+	.set	HDAE5000_TtlScreenR2Proc_Join2, HDAE5000_TtlScreenR2Proc + 193
+	.set	HDAE5000_TtlScreenR2Proc_Epilogue, HDAE5000_TtlScreenR2Proc + 218
 
 
-HDAE5000_IvScreenR2Proc:
-	; registered as "IvScreenR2Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp
-	push xiz
-	ld (xsp + 0x04), xde
-	ld	xiz, xbc
-	ld (xsp + 0x08), xwa
-	ld	xwa, xiz
-	cp	xwa, EVT_HIDE
-	jr	z, HDAE5000_IvScreenR2Proc_OnHide
-	cp	xwa, EVT_DRAW
-	jr	nz, HDAE5000_IvScreenR2Proc_Join2
-	ld	xwa, 0:i3
-	ld	xbc, EVT_GET_BITMAP_DATA
-	ld	xde, 0:i3
-	calr	HDAE5000_Alloc_Memory_2
-	or xhl, xhl
-	jr	z, HDAE5000_IvScreenR2Proc_Join
-	pushw 0x0400
-	lda xwa, (HDAE5000_Palette_DriveMech:24)
-	push xwa
-	ld	xwa, 0x00069400
-	push xwa
-	call HDAE5000_MemCopy
-	lda	xsp, (xsp+10)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangeWall)
-	ld	wa, 3:i3
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangePalette)
-	ld	wa, 3:i3
-	call	(xhl)
-HDAE5000_IvScreenR2Proc_Join:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_IvScreenR2Proc_Epilogue
-HDAE5000_IvScreenR2Proc_OnHide:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld	xhl, (xwa + HamaFn_ChangePalette)
-	ld	wa, 2:i3
-	call	(xhl)
-HDAE5000_IvScreenR2Proc_Join2:
-	ld xwa, (xsp + 0x08)
-	ld	xbc, xiz
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-HDAE5000_IvScreenR2Proc_Epilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+HDAE5000_IvScreenR2Proc:	.include "includes/generated/cc900/HDAE5000_IvScreenR2Proc.s"	; C: cc900/hdae5000_ttl_r2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_IvScreenR2Proc_Join, HDAE5000_IvScreenR2Proc + 105
+	.set	HDAE5000_IvScreenR2Proc_OnHide, HDAE5000_IvScreenR2Proc + 134
+	.set	HDAE5000_IvScreenR2Proc_Join2, HDAE5000_IvScreenR2Proc + 153
+	.set	HDAE5000_IvScreenR2Proc_Epilogue, HDAE5000_IvScreenR2Proc + 178
 
 HDAE5000_SelectListProc:
 	; registered as "SelectListProc" in HDAE5000_ClassProc_Table
@@ -3923,12 +3701,7 @@ HDAE5000_HardTestPage:
 	ret						; 0e
 
 ; --- PPI/IDE Low-Level I/O ---
-HDAE5000_PPI_Init:	; (13 bytes)
-	; 8255 control word 0x90: mode 0, port A input, ports B and C output;
-	; then 0xFF to port A.
-	ld (HDAE5000_IO_PpiControl:24), 0x90
-	ld (HDAE5000_IO_PpiPortA:24), 0xff
-	ret
+HDAE5000_PPI_Init:	.include "includes/generated/cc900/HDAE5000_PPI_Init.s"	; C: cc900/hdae5000_hardtest.c
 
 ; ---------------------------------------------------------------------------
 ; Send byte A through the 8255 in two nibbles (ports B and C, handshake on
@@ -3992,37 +3765,7 @@ HDAE5000_PPI_LoopbackByte:
 ; prints HDAE5000_Str_PortTestOK when none failed, else
 ; HDAE5000_Str_PortTestError (HDAE5000_HardTest_Print).  IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_HardTest_PortTest:
-	dec 2, xsp
-	pushw iz
-	ldw (xsp + 2), 0x0000
-	calr HDAE5000_PPI_Init
-	ld iz, 0:i3
-	cp iz, 0x0100
-	jr ge, .Lppi_rd_loop_end
-.Lppi_rd_loop:
-	ldto_berp a, 0xf8
-	extz wa
-	calr HDAE5000_PPI_LoopbackByte
-	ld a, l
-	exts wa
-	or (xsp + 2), wa
-	inc 1, iz
-	cp iz, 0x0100
-	jr lt, .Lppi_rd_loop
-.Lppi_rd_loop_end:
-	cpw (xsp + 2), 0x0000
-	jr nz, .Lppi_rd_nonzero
-	lda xwa, (HDAE5000_Str_PortTestOK:24)
-	calr HDAE5000_HardTest_Print
-	jr t, .Lppi_rd_done
-.Lppi_rd_nonzero:
-	lda xwa, (HDAE5000_Str_PortTestError:24)
-	calr HDAE5000_HardTest_Print
-.Lppi_rd_done:
-	popw iz
-	inc 2, xsp
-	ret
+HDAE5000_HardTest_PortTest:	.include "includes/generated/cc900/HDAE5000_HardTest_PortTest.s"	; C: cc900/hdae5000_hardtest_port.c
 
 ; ---------------------------------------------------------------------------
 ; "HDD ID READ" of the hardware-test page: HDAE5000_HD_LoadTables,

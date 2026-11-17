@@ -66,7 +66,17 @@ def write(tree, staged, out, hand, keep):
 
 def splice(tree, cfile, dry):
     cmd = [sys.executable, '-B', os.path.join(REPO, 'scripts', 'tools', 'cc900_splice.py'), tree, cfile,
-           '--symbols', os.path.join('symbols', '%s_symbols_reference.txt' % tree), '--sizes', LEDGER]
+           '--symbols', os.path.join('symbols', '%s_symbols_reference.txt' % tree)]
+    if b'cc900-data:' in open(os.path.join(REPO, cfile), 'rb').read():
+        # a function with its own constant data (a switch table): only the splice's --v423 mode replaces the hand
+        # data lines at the cc900-data label too; it needs the file in the V4.23 cache (a `make` fills it)
+        if not os.environ.get('TMPDIR'):
+            sys.exit('promote_hd.py: TMPDIR is not set (scratch goes to $TMPDIR, never /tmp)')
+        work = os.path.join(os.environ['TMPDIR'], 'cc900-tab', 'lane_hd', 'splice-work')
+        os.makedirs(work, exist_ok=True)
+        cmd += ['--v423', os.path.join('build', 'cc900-v423'), '--work', work]
+    else:
+        cmd += ['--sizes', LEDGER]
     if dry:
         cmd.append('--dry-run')
     return subprocess.run(cmd, cwd=REPO, capture_output=True, text=True)

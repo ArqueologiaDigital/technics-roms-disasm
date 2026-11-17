@@ -37,7 +37,8 @@ def split(text):
         m = DEF.match(lines[i]) or DEF2.match(lines[i])
         if m and not lines[i].startswith('extern') and not lines[i].rstrip().endswith(';'):
             j = i
-            while j < len(lines) and not lines[j].startswith('}'):
+            # the closing brace: in column 0, or ` }` as macro expansion left it (hd_r13b_song.c and later)
+            while j < len(lines) and not re.match(r'^ ?\}\s*$', lines[j]):
                 j += 1
             if cur:
                 out.append(('other', None, '\n'.join(cur)))
@@ -70,6 +71,13 @@ def main():
     names = [l.strip() for l in lead.split('\n') if 'cc900-name:' in l and
              l.split('cc900-name:')[1].split('=')[0].strip() in keep]
     mods = [l.strip() for l in lead.split('\n') if 'cc900-module:' in l]   # file-level: kept whole
+    # cc900-data: FUNCTION N = LABEL (the function's own constant data): kept for the kept functions, whose marker
+    # names the tree label (a C name maps to it through cc900-name)
+    labels = dict(re.findall(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', lead))
+    kept_labels = {labels.get(k, k) for k in keep}
+    mods += [l.strip() for l in lead.split('\n')
+             if re.search(r'cc900-data:\s*(\w+)\s+\d+\s*=', l) and
+             re.search(r'cc900-data:\s*(\w+)', l).group(1) in kept_labels]
     opts = re.search(r'cc900-options:[^\n*]*', lead)
     head = ['/* %s' % what,
             '   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions\' ROM bytes',

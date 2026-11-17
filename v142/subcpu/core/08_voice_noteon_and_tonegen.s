@@ -677,22 +677,9 @@ ToneGen_WriteVoiceParams_Exit:
 ; receives are F0FF, F000, F1D7 and F187, and their LOW BYTE is an output level (0xFF full,
 ; 0x00 silent). See Voice_Build_GateCommand for the value-by-value reconciliation.
 ; The bit-15-CLEARED counterpart is emitted by ToneGen_ReadPitch_AndScale (0x02E18D).
-ToneGen_WriteSingleReg:
-	pushw iz
-	ld iz, bc
-	res	7, (P6:8)
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld (ToneGen_RegDataPort:24), iz
-	jr ToneGen_WriteSingleReg_NopCont
-
-ToneGen_WriteSingleReg_NopCont:
-	nop
-	nop
-	nop
-	popw iz
-	ret
+ToneGen_WriteSingleReg:	.include "includes/generated/cc900/ToneGen_WriteSingleReg.s"	; C: cc900/voice_noteon_and_tonegen_inlinejr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteSingleReg_NopCont, ToneGen_WriteSingleReg + 22
 
 ; Existing curated name kept. WA = channel, XBC = shadow. Writes six envelope/level registers:
 ;   0x0840 <- +0x2E, 0x0940 <- +0x32, 0x0A00 <- +0x36, 0x0800 <- +0x2C, 0x0900 <- +0x30,
@@ -987,23 +974,9 @@ ToneGen_WriteSegRegs_SameLevel_NopCont2:
 ; Existing curated name kept. WA = channel, BC = value; writes 0x0180 + ch <- BC. Bank 0x0180
 ; is the same bank the hardware exposes for per-voice envelope-level READBACK (memory map:
 ; latch 0x0180+ch, read 0x100000).
-ToneGen_WriteExprReg:
-	pushw iz
-	ld iz, bc
-	res	7, (P6:8)
-	add wa, 0x180
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld (ToneGen_RegDataPort:24), iz
-	jr ToneGen_WriteExprReg_NopCont
-
-ToneGen_WriteExprReg_NopCont:
-	nop
-	nop
-	nop
-	popw iz
-	ret
+ToneGen_WriteExprReg:	.include "includes/generated/cc900/ToneGen_WriteExprReg.s"	; C: cc900/voice_noteon_and_tonegen_inlinejr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExprReg_NopCont, ToneGen_WriteExprReg + 26
 
 ; WA = channel, XDE = shadow A, XBC = shadow B. Four writes:
 ;   0x0800+ch <- A+0x3C, (0x0000+ch) <- 0x8100, 0x0840+ch <- A+0x3E,
@@ -2126,132 +2099,16 @@ ToneGen_WriteExtParam_Mute_TypeDispatch:	.include "includes/generated/cc900/Tone
 ; Sequence: ToneGen_WriteGlobalConfig(ROM 0x00F8BB) to program the 13 global registers, then
 ; ldirw 0x22 words from ROM 0x00F8D5 into DRAM 0x2AA4 (the default voice-parameter shadow),
 ; then loop channel 0..0x3F running ToneGen_Config_Init.
-DSP_Config_Init:
-	dec 4, xsp
-	pushw iz
-	lda xwa, (ToneGen_GlobalConfig_Defaults:24)
-	calr ToneGen_WriteGlobalConfig
-	lda xwa, (10916:16)
-	ld (xsp + 2), xwa
-	ld xiy, ToneGen_VoiceParamShadow_Defaults
-	ld xix, xwa
-	ldw bc, 0x22
-	ldirw
-	ld iz, 0:i3
-	cp iz, 0x40
-	jrl nc, ToneGen_ConfigInit_Return
-
-; Existing name kept. The per-channel body of DSP_CONFIG_INIT (IZ = channel, (XSP+2) = the
-; 0x2AA4 template). For each channel:
-;   mute       0x0840+ch <- 0xFF00, 0x0800+ch <- 0xFF80
-;   program    ToneGen_WriteVoiceParams(ch, 0x2AA4); ToneGen_WriteSingleReg(ch, word@0x2AA4)
-;   mute again 0x0840+ch <- 0xFF00, 0x0800+ch <- 0xFF80
-;   clear      0x00C0+ch <- 0x0000
-;   FREE       (0x0000+ch) <- 0x7E00      <-- the documented "free a voice" command
-;   then ToneGen_WriteExtParams_15, _56 and _56b on the same channel.
-; After this runs, all 64 TG voices are silent, freed and holding the default parameter set.
-ToneGen_Config_Init:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff00
-	jr ToneGen_Config_Init_NopCont1
-
-ToneGen_Config_Init_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff80
-	jr ToneGen_ConfigInit_WriteVoiceRegs
-
-ToneGen_ConfigInit_WriteVoiceRegs:
-	nop
-	nop
-	nop
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	calr ToneGen_WriteVoiceParams
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	ld bc, (xbc)
-	calr ToneGen_WriteSingleReg
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff00
-	jr ToneGen_ConfigInit_WriteAddr800
-
-ToneGen_ConfigInit_WriteAddr800:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff80
-	jr ToneGen_ConfigInit_WriteAddrC0
-
-ToneGen_ConfigInit_WriteAddrC0:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0xC0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x0000
-	jr ToneGen_ConfigInit_WriteAddr00
-
-ToneGen_ConfigInit_WriteAddr00:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x7e00
-	jr ToneGen_ConfigInit_WriteExtParams
-
-ToneGen_ConfigInit_WriteExtParams:
-	nop
-	nop
-	nop
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	calr ToneGen_WriteExtParams_15
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	calr ToneGen_WriteExtParams_56
-	ld wa, iz
-	ld xbc, (xsp + 2)
-	calr ToneGen_WriteExtParams_56b
-	inc 1, iz
-	cp iz, 0x40
-	jrl c, ToneGen_Config_Init
-
-ToneGen_ConfigInit_Return:
-	popw iz
-	inc 4, xsp
-	ret
+DSP_Config_Init:	.include "includes/generated/cc900/DSP_Config_Init.s"	; C: cc900/voice_noteon_and_tonegen_j_15b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Config_Init, DSP_Config_Init + 39
+	.set	ToneGen_Config_Init_NopCont1, DSP_Config_Init + 66
+	.set	ToneGen_ConfigInit_WriteVoiceRegs, DSP_Config_Init + 96
+	.set	ToneGen_ConfigInit_WriteAddr800, DSP_Config_Init + 144
+	.set	ToneGen_ConfigInit_WriteAddrC0, DSP_Config_Init + 174
+	.set	ToneGen_ConfigInit_WriteAddr00, DSP_Config_Init + 204
+	.set	ToneGen_ConfigInit_WriteExtParams, DSP_Config_Init + 230
+	.set	ToneGen_ConfigInit_Return, DSP_Config_Init + 266
 
 ; ** MISIDENTIFIED AS DATA (LLVM: ToneGen_ConfigInit_AltData .byte). It is code, and it is the
 ; only bounded TG-status polling loop in this region. It is UNREFERENCED in v142 -- no call
@@ -2515,32 +2372,7 @@ VoiceStruct_BulkInit_Return:
 ; ToneDB_Resolve_NamedToneRecord (0x032A08) to obtain XHL = the source record, then copies
 ; (0x045314)[0xEE] bytes into (0x04531C) + slot*0x50 + 0x4AA7 using MEMCPY_BYTES_XWA_TO_XBC.
 ; ★ Renamed 2026-09-25 from VoiceStruct_BulkInit_AltData: header: copies a resolved tone record (0xEE bytes) into a custom-tone slot.
-CustomTone_CopyToneRecord:
-	dec	2, xsp
-	ld	(xsp), e
-	ld	l, a
-	extz	hl
-	extz	bc
-	ld	a, (xsp)
-	ld	e, a
-	extz	de
-	pushw 255
-	ld	wa, hl
-	call	ToneDB_Resolve_NamedToneRecord
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 80
-	ld	bc, wa
-	add	bc, 19111
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xwa, (xwa+bc)
-	ld	xbc, xwa
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xwa, xhl
-	ld	de, (xde+238)
-	calr	BlockCopy_Words_BC_to_HL
-	inc	2, xsp
-	ret
+CustomTone_CopyToneRecord:	.include "includes/generated/cc900/CustomTone_CopyToneRecord.s"	; C: cc900/voice_noteon_and_tonegen_m_16a.c
 
 ; A = part index, C = sub-slot (0..3). Calls WaveSel_StageA1_FromPatchBlock (0x0325FC) to obtain XHL = the
 ; source record, then copies (0x045314)[0xEA] bytes into 0x044FCE + 0x1AA + slot*0x0B.
@@ -2921,82 +2753,10 @@ Voice_Part_SetStateAndReinit_Epilogue:
 ; WaveSel_Cache_SetDescPtr (0x0328E2) for j = 0..3.
 ; The +0x0E/+0x0F pair recurs in all four "catalogue" routines below and is almost certainly
 ; the wave/sample selector; that reading is inference, not proof.
-VoiceParam_SubSlot_Apply_Catalog50:
-	dec	2, xsp
-	push qiz
-	ld	(xsp+2), a
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xwa, (xwa+80)
-	ld	xhl, (ToneDB_RelBase:24)
-	add	xhl, xwa
-	ldfr_berp	e, 251
-	and_erpb	251, 15
-	ldto_berp	a, 251
-	extz	wa
-	muls	wa, 37
-	ld	ix, wa
-	add	ix, 110
-	ld	a, (xsp+2)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xde
-	ld	xde, (xwa+ix)
-	ld	wa, bc
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xhl
-	ld	a, (xwa+14)
-	ld	(xde+2), a
-	ldto_berp	a, 251
-	extz	wa
-	muls	wa, 37
-	ld	ix, wa
-	add	ix, 110
-	ld	a, (xsp+2)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xde
-	ld	xde, (xwa+ix)
-	ld	wa, bc
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xhl
-	ld	a, (xwa+15)
-	ld	(xde+3), a
-	ld	a, (xsp+2)
-	ld	e, a
-	extz	de
-	ldto_berp	a, 251
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	VoiceSubSlot_Init
-	ldib_erp	250, 0
-	cpib_erp	250, 4
-	jr	nc, VoiceParam_SubSlot_Apply_Catalog50_Epilogue
-VoiceParam_SubSlot_Apply_Catalog50_Loop:
-	ld	a, (xsp+2)
-	ld	l, a
-	extz	hl
-	ldto_berp	a, 251
-	ld	c, a
-	extz	bc
-	ldto_berp	a, 250
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	call	WaveSel_Cache_SetDescPtr
-	incb_erp	250, 1
-	cpib_erp	250, 4
-	jr	c, VoiceParam_SubSlot_Apply_Catalog50_Loop
-VoiceParam_SubSlot_Apply_Catalog50_Epilogue:
-	pop qiz
-	inc	2, xsp
-	ret
+VoiceParam_SubSlot_Apply_Catalog50:	.include "includes/generated/cc900/VoiceParam_SubSlot_Apply_Catalog50.s"	; C: cc900/voice_noteon_and_tonegen_c_10a_qizinc.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceParam_SubSlot_Apply_Catalog50_Loop, VoiceParam_SubSlot_Apply_Catalog50 + 163
+	.set	VoiceParam_SubSlot_Apply_Catalog50_Epilogue, VoiceParam_SubSlot_Apply_Catalog50 + 198
 ; ** Same blob; unnamed in both sources. ** Called from 0x02EECA. Catalogue is
 ; (0x045310) + (0x045314)[0x64]. E low nibble = sub-slot, E high nibble = a pair index k,
 ; A = part, BC = catalogue index. Writes catalogue entry +0x0E into (sub-slot record +0x04)
@@ -3239,106 +2999,10 @@ VoiceParam_CustomTone_Select_Epilogue:
 ; VOICEPARAM_CUSTOMTONE_LOAD_SUBUNIT for the sub-record at base + 0x10 + k*0x15 and rewrites
 ; that record's +0x02 as (value & 0x0F) | 0x50. Finally stores entry +0x0E and
 ; (entry +0x0F & 0x1F) | 0x60 into (0x04531C) + slot*2 + 0x49A7.
-VoiceParam_CustomTone_Apply_Catalog80:
-	lda	xsp, (xsp-14)
-	push xiz
-	ld	(xsp+16), wa
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	ld	(xsp+12), a
-	extz	wa
-	muls	wa, 80
-	ld	bc, wa
-	add	bc, 19111
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xwa, (xwa+bc)
-	ld	(xsp+4), xwa
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xwa, (xwa+128)
-	ld	xbc, (ToneDB_RelBase:24)
-	add	xbc, xwa
-	ld	(xsp+8), xbc
-	ld	wa, (xsp+16)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, (xsp+8)
-	ld	a, (xwa+14)
-	ld	l, a
-	extz	hl
-	ld	wa, (xsp+16)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, (xsp+8)
-	ld	a, (xwa+15)
-	ld	c, a
-	extz	bc
-	ld	a, (xsp+12)
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	calr	CustomTone_CopyToneRecord
-	ld	(xsp+14), 0
-	cp	(xsp+14), 2
-	jr	nc, VoiceParam_CustomTone_Apply_Catalog80_Skip
-VoiceParam_CustomTone_Apply_Catalog80_Loop:
-	ld	a, (xsp+14)
-	extz	wa
-	muls	wa, 21
-	ld	bc, wa
-	add	bc, 16
-	ld	xwa, (xsp+4)
-	lda	xiz, (xwa+bc)
-	ld	a, (xsp+14)
-	ld	l, a
-	extz	hl
-	ld	a, (xiz+1)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+2)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+12)
-	extz	wa
-	pushw wa
-	ld	wa, hl
-	calr	CustomTone_CopySubUnitRecord
-	andmi8	(xiz+2), 15
-	ormi8	(xiz+2), 80
-	incm8	1, (xsp+14)
-	cp	(xsp+14), 2
-	jr	c, VoiceParam_CustomTone_Apply_Catalog80_Loop
-VoiceParam_CustomTone_Apply_Catalog80_Skip:
-	ld	a, (xsp+12)
-	extz	wa
-	add	wa, wa
-	ld	de, wa
-	add	de, 18855
-	ld	xbc, (Payload_Bss_Start+0x64a6:24)
-	ld	wa, (xsp+16)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, (xsp+8)
-	ld	a, (xwa+14)
-	ld	(xbc+de), a
-	ld	wa, (xsp+16)
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, (xsp+8)
-	ld	a, (xwa+15)
-	and	a, 31
-	or	a, 96
-	ld	e, a
-	ld	a, (xsp+12)
-	extz	wa
-	add	wa, wa
-	ld	bc, wa
-	add	bc, 18855
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xwa, (xwa+bc)
-	ld	(xwa+1), e
-	pop xiz
-	lda	xsp, (xsp+14)
-	ret
+VoiceParam_CustomTone_Apply_Catalog80:	.include "includes/generated/cc900/VoiceParam_CustomTone_Apply_Catalog80.s"	; C: cc900/voice_noteon_and_tonegen_g_15a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceParam_CustomTone_Apply_Catalog80_Loop, VoiceParam_CustomTone_Apply_Catalog80 + 123
+	.set	VoiceParam_CustomTone_Apply_Catalog80_Skip, VoiceParam_CustomTone_Apply_Catalog80 + 195
 ; ** Same blob; unnamed in both sources. ** Called from 0x02EFC6. WA = catalogue index,
 ; C low nibble = unit index; catalogue = (0x045310) + (0x045314)[0x8C]. Calls
 ; VOICEPARAM_CUSTOMTONE_LOAD_SUBUNIT, then writes catalogue entry +0x0E into
@@ -3349,51 +3013,7 @@ VoiceParam_CustomTone_Apply_Catalog8C:	.include "includes/generated/cc900/VoiceP
 ; catalogue = (0x045310) + (0x045314)[0x94]. Writes entry +0x0E into
 ; (0x04531C) + slot*0x50 + unit*0x0B + 0x4AE1 + 3 + 2*k and entry +0x0F into the next byte.
 ; No copy and no further calls -- the smallest of the four catalogue appliers.
-VoiceParam_CustomTone_Apply_Catalog94:
-	ld	xde, (Payload_Bss_Start+0x64a6:24)
-	ld	b, (xde+29351)
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xde, (xde+148)
-	ld	xhl, (ToneDB_RelBase:24)
-	add	xhl, xde
-	ld	e, c
-	and	e, 15
-	extz	de
-	muls	de, 11
-	ld	ix, de
-	ld	e, b
-	extz	de
-	muls	de, 80
-	ld	iy, de
-	add	iy, ix
-	ld	xde, (Payload_Bss_Start+0x64a6:24)
-	lda	xde, (xde+iy)
-	lda	xde, (xde+19169)
-	and	c, 240
-	srl	c, 4
-	ldfr_berp	c, 226
-	extz	bc
-	add	bc, bc
-	ld	ix, bc
-	inc	3, ix
-	ld	bc, wa
-	extz	xbc
-	sll	xbc, 4
-	add	xbc, xhl
-	ld	c, (xbc+14)
-	ld	(xde+ix), c
-	ldto_berp	c, 226
-	extz	bc
-	add	bc, bc
-	inc	3, bc
-	exts	xbc
-	add	xbc, xde
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xhl
-	ld	a, (xwa+15)
-	ld	(xbc+1), a
-	ret
+VoiceParam_CustomTone_Apply_Catalog94:	.include "includes/generated/cc900/VoiceParam_CustomTone_Apply_Catalog94.s"	; C: cc900/voice_noteon_and_tonegen_c_12b.c
 
 ; A = part index. Only the first 0x2E bytes of this routine fall inside region 8 (it continues
 ; past 0x02EC37 to 0x02ECBD); documented here for its GUARD, which is the part everyone using
@@ -3465,304 +3085,27 @@ InterCPU_SendEditBufferToMain:
 ; base 0x02EDB9.  Nine of the sixteen live cases begin by calling VoiceAlloc_CheckAndInit,
 ; which is why almost every one of them is a no-op unless 0x0451A4 already names this part.
 ; Sole caller: 0x031AA3, inside DSP_SetCoeff_MasterConfig's command tree.
-Audio_Cmd_ToneEdit_Dispatch:
-	push xiz
-	ld	xiz, xwa
-	ld	a, (xiz+2)
-	extz	wa
-	cp	wa, 0:i3
-	jrl	mi, Audio_Cmd_ToneEdit_Return
-	cp	wa, 13
-	jr	le, Audio_Cmd_ToneEdit_TableJump
-	dec	5, wa
-	cp	wa, 14
-	jrl	lt, Audio_Cmd_ToneEdit_Return
-	cp	wa, 19
-	jrl	gt, Audio_Cmd_ToneEdit_Return
-; Common tail of the range checks: WA*2 indexes AUDIO_CMD_TONEEDIT_JUMPTABLE, the fetched
-; offset is added to 0x02EDB9 and jumped to.
-Audio_Cmd_ToneEdit_TableJump:
-	add	wa, wa
-	lda	xix, (AUDIO_CMD_TONEEDIT_JUMPTABLE:24)
-	ld	wa, (xix+wa)
-	lda	xix, (Audio_Cmd_ToneEdit_Op00:24)
-	jp	t, (xix+wa)
-; Opcode 0x00: Voice_Part_SetStateAndReinit(WA = part from rec+1, BC = value from rec+4).
-Audio_Cmd_ToneEdit_Op00:
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	Voice_Part_SetStateAndReinit
-	jrl	Audio_Cmd_ToneEdit_Return
-; Opcode 0x04: VoiceAlloc_CheckAndInit(part) then 0x02AE22 (Voice_SetArticWord0_LowByte)
-; with WA = part, BC = rec+4.
-Audio_Cmd_ToneEdit_Op04:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_SetArticWord0_LowByte
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x05: VoiceAlloc_CheckAndInit(part) then 0x02AE58 with WA = part, BC = rec+4.
-Audio_Cmd_ToneEdit_Op05:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_Artic_SetWord2Word1_Nibble0
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x06: VoiceAlloc_CheckAndInit(part) then 0x02AEA2 with WA = part, BC = rec+4.
-Audio_Cmd_ToneEdit_Op06:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_Artic_SetWord2Word1_Nibble1
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x07: VoiceAlloc_CheckAndInit(part) then 0x02AEEC with WA = part, BC = rec+4.
-Audio_Cmd_ToneEdit_Op07:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_Artic_SetWord0Word2_Nibble2
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x08: VoiceAlloc_CheckAndInit(part) then 0x02AF3A with WA = part, BC = rec+4.
-Audio_Cmd_ToneEdit_Op08:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_Artic_SetWord1Nibble2_And_Word3
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x09: VoiceAlloc_CheckAndInit(part), then 0x02E6D4 with WA = part,
-; BC = (rec+3)<<8 | (rec+4) -- the only opcodes that carry a 16-bit value -- and DE = rec+5.
-Audio_Cmd_ToneEdit_Op09:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+3)
-	extz	wa
-	ld	hl, wa
-	sll	hl, 8
-	or	hl, bc
-	ld	a, (xiz+1)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+5)
-	ld	e, a
-	extz	de
-	ld	wa, bc
-	ld	bc, hl
-	calr	VoiceParam_SubSlot_Apply_Catalog50
-	jrl	Audio_Cmd_ToneEdit_Return
-; Opcode 0x0A: same 16-bit decode as opcode 0x09 but the callee is 0x02E7A0.
-Audio_Cmd_ToneEdit_Op0A:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+3)
-	extz	wa
-	ld	hl, wa
-	sll	hl, 8
-	or	hl, bc
-	ld	a, (xiz+1)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+5)
-	ld	e, a
-	extz	de
-	ld	wa, bc
-	ld	bc, hl
-	calr	VoiceParam_SubSlot_Apply_Catalog64
-	jrl	Audio_Cmd_ToneEdit_Return
-; Opcode 0x0B: reads the patch record (PART+0x06) and tests (patch+0x10) & 0xC0 == 0x40.
-; If so, calls 0x02AF82(WA = part, BC = rec+4) and returns; otherwise falls through to
-; Audio_Cmd_ToneEdit_Op0B_Alt.
-Audio_Cmd_ToneEdit_Op0B:
-	ld	a, (xiz+1)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+16)
-	and	a, 192
-	cp	a, 64
-	jr	nz, Audio_Cmd_ToneEdit_Op0B_Alt
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_Artic_SetDepthPair_A
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x0B, ordinary patch: VoiceAlloc_CheckAndInit(part) then 0x02E85A with
-; WA = part, BC = rec+3, E = rec+4.
-Audio_Cmd_ToneEdit_Op0B_Alt:
-	ld	a, (xiz+1)
-	extz	wa
-	calr	VoiceAlloc_CheckAndInit
-	ld	a, (xiz+1)
-	ld	l, a
-	extz	hl
-	ld	a, (xiz+3)
-	ld	c, a
-	extz	bc
-	ld	e, (xiz+4)
-	ld	wa, hl
-	calr	VoiceParam_Set_Tone_Option
-	jrl	Audio_Cmd_ToneEdit_Return
-; Opcode 0x0D -- SELECT THE PART TO EDIT.  Copies 0x0451A4 to 0x0451A5 and then stores
-; (rec+1) into 0x0451A4.  This is the ONLY writer of 0x0451A4 apart from the 0xFF
-; initialisation at 0x034C3B, and 0x0451A5 is never read anywhere in the ROM.  Everything
-; gated on VoiceAlloc_CheckAndInit is inert until this opcode arrives.
-Audio_Cmd_ToneEdit_Op0D_SelectPart:
-	ld	a, (Payload_Bss_Start+0x632e:24)
-	ld	(Payload_Bss_Start+0x632f:24), a
-	ld	a, (xiz+1)
-	ld	(Payload_Bss_Start+0x632e:24), a
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x0C: only acts when (patch+0x10) & 0xC0 == 0x40; then calls 0x02AFBD with
-; WA = part, BC = rec+4.  No allocation, no reply.
-Audio_Cmd_ToneEdit_Op0C:
-	ld	a, (xiz+1)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+16)
-	and	a, 192
-	cp	a, 64
-	jrl	nz, Audio_Cmd_ToneEdit_Return
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	call	Voice_Artic_SetDepthPair_B
-	jrl	t, Audio_Cmd_ToneEdit_Return
-; Opcode 0x13: VoiceAlloc_CheckAndInit_FromRecord(XWA = record) followed by 0x02E91B with
-; WA = rec+4.
-Audio_Cmd_ToneEdit_Op13:
-	ld	xwa, xiz
-	calr	VoiceAlloc_CheckAndInit_FromRecord
-	ld	a, (xiz+4)
-	extz	wa
-	calr	VoiceParam_CustomTone_Select
-	jrl	Audio_Cmd_ToneEdit_Return
-; Opcode 0x14: 0x02E9B1 with the 16-bit value (rec+3)<<8|(rec+4), then reads the edit-buffer
-; index from (ToneDB_RamBankA + 0x72A7) and calls InterCPU_SendEditBufferToMain.
-; One of only three opcodes in this dispatcher that produce sub->main traffic.
-Audio_Cmd_ToneEdit_Op14:
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+3)
-	extz	wa
-	ld	hl, wa
-	sll	hl, 8
-	or	hl, bc
-	ld	wa, hl
-	calr	VoiceParam_CustomTone_Apply_Catalog80
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	extz	wa
-	calr	InterCPU_SendEditBufferToMain
-	jr	Audio_Cmd_ToneEdit_Return
-; Opcode 0x15: 0x02EACE with the 16-bit value and BC = rec+5, then the same
-; InterCPU_SendEditBufferToMain reply.
-Audio_Cmd_ToneEdit_Op15:
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+3)
-	extz	wa
-	ld	hl, wa
-	sll	hl, 8
-	or	hl, bc
-	ld	a, (xiz+5)
-	ld	c, a
-	extz	bc
-	ld	wa, hl
-	calr	VoiceParam_CustomTone_Apply_Catalog8C
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	extz	wa
-	calr	InterCPU_SendEditBufferToMain
-	jr	Audio_Cmd_ToneEdit_Return
-; Opcode 0x16: 0x02EB8A with the 16-bit value and BC = rec+5, then the same
-; InterCPU_SendEditBufferToMain reply.
-Audio_Cmd_ToneEdit_Op16:
-	ld	a, (xiz+4)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+3)
-	extz	wa
-	ld	hl, wa
-	sll	hl, 8
-	or	hl, bc
-	ld	a, (xiz+5)
-	ld	c, a
-	extz	bc
-	ld	wa, hl
-	calr	VoiceParam_CustomTone_Apply_Catalog94
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	extz	wa
-	calr	InterCPU_SendEditBufferToMain
-	jr	Audio_Cmd_ToneEdit_Return
-; Opcode 0x17: calls DSP_Stub_RetB (0x035575) -- a stub.  Opcode 0x18 and opcodes 0x01..0x03
-; jump straight to the return.
-Audio_Cmd_ToneEdit_Op17:
-	call	DSP_Stub_RetB
-; Restore XIZ and return.  Every case joins here.
-Audio_Cmd_ToneEdit_Return:
-	pop xiz
-	ret
+Audio_Cmd_ToneEdit_Dispatch:	.include "includes/generated/cc900/Audio_Cmd_ToneEdit_Dispatch.s"	; C: cc900/voice_noteon_and_tonegen_k_16a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Audio_Cmd_ToneEdit_TableJump, Audio_Cmd_ToneEdit_Dispatch + 35
+	.set	Audio_Cmd_ToneEdit_Op00, Audio_Cmd_ToneEdit_Dispatch + 57
+	.set	Audio_Cmd_ToneEdit_Op04, Audio_Cmd_ToneEdit_Dispatch + 79
+	.set	Audio_Cmd_ToneEdit_Op05, Audio_Cmd_ToneEdit_Dispatch + 110
+	.set	Audio_Cmd_ToneEdit_Op06, Audio_Cmd_ToneEdit_Dispatch + 141
+	.set	Audio_Cmd_ToneEdit_Op07, Audio_Cmd_ToneEdit_Dispatch + 172
+	.set	Audio_Cmd_ToneEdit_Op08, Audio_Cmd_ToneEdit_Dispatch + 203
+	.set	Audio_Cmd_ToneEdit_Op09, Audio_Cmd_ToneEdit_Dispatch + 234
+	.set	Audio_Cmd_ToneEdit_Op0A, Audio_Cmd_ToneEdit_Dispatch + 285
+	.set	Audio_Cmd_ToneEdit_Op0B, Audio_Cmd_ToneEdit_Dispatch + 336
+	.set	Audio_Cmd_ToneEdit_Op0B_Alt, Audio_Cmd_ToneEdit_Dispatch + 389
+	.set	Audio_Cmd_ToneEdit_Op0D_SelectPart, Audio_Cmd_ToneEdit_Dispatch + 422
+	.set	Audio_Cmd_ToneEdit_Op0C, Audio_Cmd_ToneEdit_Dispatch + 443
+	.set	Audio_Cmd_ToneEdit_Op13, Audio_Cmd_ToneEdit_Dispatch + 497
+	.set	Audio_Cmd_ToneEdit_Op14, Audio_Cmd_ToneEdit_Dispatch + 513
+	.set	Audio_Cmd_ToneEdit_Op15, Audio_Cmd_ToneEdit_Dispatch + 554
+	.set	Audio_Cmd_ToneEdit_Op16, Audio_Cmd_ToneEdit_Dispatch + 602
+	.set	Audio_Cmd_ToneEdit_Op17, Audio_Cmd_ToneEdit_Dispatch + 650
+	.set	Audio_Cmd_ToneEdit_Return, Audio_Cmd_ToneEdit_Dispatch + 654
 ; First of eight near-identical copiers.  Input WA = part, C = descriptor index.
 ; XDE = the part's patch record (from PART+0x06); XBC = DSP_EFFECT_DESCRIPTOR_TABLE +
 ; index*0x27.  Copies descriptor fields into patch+0x5E..+0x65; this variant takes
