@@ -1,0 +1,86 @@
+/* hd_r46_n2.c (lane_hd round 46, helper h_n2): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), the class
+   procedure of the select lists, and four variants.  It calls nothing relatively.  From hd_r39_m5a.c, whose three
+   forms were compiled in run 2026-11-17-15-hd-r44.
+   cc900-options: -Xr
+   cc900-name: SelList_d=HDAE5000_SelectListProc
+   cc900-name: SelList_e=HDAE5000_SelectListProc
+   cc900-name: SelList_f=HDAE5000_SelectListProc
+   cc900-name: SelList_g=HDAE5000_SelectListProc
+
+   The "difference at +23" of the index is not one: it is the first `jrl z` of the event compares, whose distance
+   `--show` leaves unresolved.  The frame (104 bytes) and every stack offset are the ROM's in all three forms.
+
+   Read-out of run 15 (forms of hd_r39_m5a.c: label, b = SelList_b, c = SelList_c), item numbers as in that file:
+
+   | #  | item                              | state     | spelling that gives the ROM's code (run 15)                    |
+   |----|-----------------------------------|-----------|----------------------------------------------------------------|
+   | 1  | frame layout                      | settled   | scalars declared v, i, j, cw, ch, str, k after the aggregates  |
+   | 2  | k as index register               | settled   | `int k`                                                        |
+   | 3  | registers of a / column / t / n   | UNSETTLED | none: see below                                                |
+   | 4  | view pointer copied to XWA        | UNSETTLED | none: see below                                                |
+   | 5  | PAINT / cell coordinates          | settled   | a local: `t = ..; p1.x = t; p2.x = t;` and `box.y0 = t; ..`    |
+   | 6  | `cw * column`                     | settled   | the column in an `unsigned int` (b's `col`): cw loaded first   |
+   | 7  | `arg == i`                        | settled   | `(unsigned long)arg == i` (label; b's spelling gives the same) |
+   | 8  | rows * cols operand order         | settled   | `V_ROWS * V_COLS` in the loop test, the reverse in CHANGE      |
+   | 9  | DrawString addresses loaded first | settled   | `&box.x0, &p1.x, &buf[0]` (label), all three calls             |
+   | 10 | CHANGE_SEL_NUM add and test       | settled   | `n = *sel; n += (int)arg; if (n < 0)` (label)                  |
+
+   Notes on the settled ones.  5: c's `p2.x = p1.x = ..` also gives PAINT's two stores from BC, but its
+   `box.y1 = (box.y0 = ..) + ch - 1` adds into BC where the ROM copies BC to WA; b's local gives both.  6: an int
+   column, as `cw * n` and as `n * cw`, loads the column first and multiplies by cw in memory.  7: c's `i == arg`
+   compares XWA with arg in memory.  9: b's three spellings (comma expressions, a prototyped call, same-type casts)
+   all load the addresses after the pushes; c's (void *) and (long) casts give the ROM's code at the 2nd and 3rd
+   call, its `&box.x0, &p1.x, buf` does not.  10: b's `(n = *sel + (int)arg) < 0` copies n and compares with 0; c's
+   `n = *sel + (int)arg;` loads arg first and adds the cell from memory.
+
+   3, unsettled.  ROM: row (a) in HL, column in DE, t in BC, n of CHANGE / SET_SEL_NUM in DE, d in WA.
+     label (t, n, a, d, u declared; n is also the column; u in XHL): a DE, n BC, t DE with a copy `ld de,bc`.
+       Run 113 declared u, a, n, t, d and got the same, so declaration order alone did not move these.
+     b (t, col, a, n, d; no u): t BC, col HL, a DE, n DE: right but for a and col exchanged.
+     c (n, a, d; no t, no u; n is also the column): a HL, n DE: right, but it has no t and the int column.
+     A local that receives the view pointer (u, in XHL) seems to keep HL from the others.
+   4, unsettled.  ROM: `ld xix,(GetViewInstance); call (xix); ld (xsp+4),xhl; ld xwa,xhl; ld xwa,(xwa+N)`, and
+     in the INDEXSW case, where the pointer is not used at once, no `ld xwa,xhl`.
+     label (`u = GETVIEW; v = u;` then `*V_SHOWN((char *)u)`): XIX and the store are right, but the access is
+       `ld xwa,(xhl+N)`: a pointer-to-pointer cast is no conversion.
+     b, c (`V_X(v = GETVIEW(obj))`, with and without a cast): the function pointer in XHL and v reloaded from the
+       stack.  So the ROM has a register local in XHL and a real conversion on its use.
+
+   The five forms here hold the settled spellings and differ only in items 3 and 4:
+     label      4: `long u; v = (unsigned char *)u;`, used as `(unsigned char *)u`.   3: declared t, col, a, n, d, u.
+     SelList_d  4: `long u; long v; v = u;`, both cast at every use.
+                3: c's allocation plus t: declared n, a, t; the column is n, spelled `cw * (unsigned int)n`; PAINT
+                   without t (`p2.x = p1.x = ..`), so that the locals first appear in the order a, n, t.
+     SelList_e  4: `void *u; v = u;`, used as `(unsigned char *)u`.
+                3: a, col, t declared in the block of the cell (and t in PAINT's loop block); n, d, u outside.
+     SelList_f  4: as the label, but u declared in a block of each case (does it still keep HL?).
+                3: declared t, a, col, n, d (a and col exchanged against b).
+     SelList_g  4: `unsigned char *u; v = u;`, used as `(unsigned char *)(unsigned long)u`.   3: as the label.
+   Reading them: item 4 shows right after each GetViewInstance call (9 places); item 3 in the cell arithmetic of
+   PARA_DRAW (after the two `div`) and in CHANGE / SET_SEL_NUM.  label against g isolates item 4.
+*/
+#include "hdae_ws.h"
+#include "hdae_ids.h"
+
+struct Point { int x; int y; };
+struct Rect { int x0; int y0; int x1; int y1; };
+
+/* the view instance's fields, by offset (longs sit at odd word offsets, so no struct) */
+#define V_COLOR(p)   (*(int *)((p) + 22))
+#define V_FONT(p)    (*(long *)((p) + 28))
+#define V_FG(p)      (*(int *)((p) + 32))
+#define V_OWNER(p)   (*(long *)((p) + 34))
+#define V_STRP(p)    (*(char ***)((p) + 38))
+#define V_COLS(p)    (*(int *)((p) + 42))
+#define V_ROWS(p)    (*(int *)((p) + 44))
+#define V_SEL(p)     (*(int **)((p) + 46))
+#define V_DIAL(p)    (*(int *)((p) + 50))
+#define V_AUTOINC(p) (*(int *)((p) + 52))
+#define V_SHOWN(p)   (*(int **)((p) + 54))
+#define V_STYLE(p)   (*(int *)((p) + 58))
+
+#define GETVIEW(o) CALLR(unsigned char *, ROOT->GetViewInstance)(o)
+#define GETVIEWL(o) CALLR(long, ROOT->GetViewInstance)(o)
+#define GETVIEWV(o) CALLR(void *, ROOT->GetViewInstance)(o)
+
+extern char *HDAE5000_TextPtrs_01Selectlist0203040506070809[];
