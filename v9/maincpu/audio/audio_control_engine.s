@@ -44,99 +44,23 @@ PanelButton_DispatchChange_Loop:
 
 ; xwa -> a 4-byte panel event; an id of 0xFF is no event.  Append it to the event queue at (PANEL_EVENT_QUEUE),
 ; count at RAM 0x8E8E, 16 deep; when full, mark the event 0xFF instead.
-PanelEvent_Post:
-	cp	(xwa), 0xff	; an id of 0xFF is no event
-	ret	z
-	ld	c, (36494:16)
-	cp	c, 15
-	jr	ugt, PanelEvent_Post_Skip
-	ld	e, c
-	inc	1, c
-	ld	(36494:16), c
-	ld	c, e
-	extz	bc
-	sll	bc, 2
-	lda	xde, (PANEL_EVENT_QUEUE:16)
-	ld	ix, bc
-	extz	xix
-	add	xix, xde
-	ld	xiy, xwa
-	ldiw
-	ldiw
-PanelEvent_Post_Skip:
-	ld	(xwa), 255
-	ret
+PanelEvent_Post:	.include "includes/generated/cc900/PanelEvent_Post.s"	; C: cc900/audio_control_engine_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelEvent_Post_Skip, PanelEvent_Post + 45
 ; unless MD_DEMO: PanelEvent_FillSelectedPart on the frame, then post both events
-PanelAction_PostUnlessDemo:
-	push	xiz
-	ld	xiz, xwa
-	cp	(CURRENT_MODE:16), 19
-	jr	z, PanelAction_PostUnlessDemo_Epilogue
-	ld	xwa, xiz
-	calr	PanelEvent_FillSelectedPart
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-	inc	4, xiz
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-PanelAction_PostUnlessDemo_Epilogue:
-	pop	xiz
-	ret
+PanelAction_PostUnlessDemo:	.include "includes/generated/cc900/PanelAction_PostUnlessDemo.s"	; C: cc900/audio_control_engine_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelAction_PostUnlessDemo_Epilogue, PanelAction_PostUnlessDemo + 27
 ; unless MD_DEMO or panel parameter 0xC0 (tag 0x91 +3 bit 2) is 1: post both
-PanelAction_PostUnlessDemoOrParamC0:
-	push	xiz
-	ld	xiz, xwa
-	cp	(CURRENT_MODE:16), 19
-	jr	z, PanelAction_PostUnlessDemoOrParamC0_Epilogue
-	ld	xwa, 192
-	call	SndParam_LookupReadOnly
-	cp	hl, 1:i3
-	jr	z, PanelAction_PostUnlessDemoOrParamC0_Epilogue
-	ld	xwa, xiz
-	calr	PanelEvent_FillSelectedPart
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-	inc	4, xiz
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-PanelAction_PostUnlessDemoOrParamC0_Epilogue:
-	pop	xiz
-	ret
-PanelButton_PanelMemorySet:
-	push	xiz
-	ld	xiz, xwa
-	ld	a, (CURRENT_MODE:16)
-	cp	a, 14
-	jr	z, PanelButton_PanelMemorySet_Skip
-	cp	a, 19
-	jr	z, PanelButton_PanelMemorySet_Skip
-	ld	xwa, 192
-	call	SndParam_LookupReadOnly
-	cp	hl, 1:i3
-	jr	nz, PanelButton_PanelMemorySet_Skip2
-PanelButton_PanelMemorySet_Skip:
-	jr	PanelButton_PanelMemorySet_Epilogue
-PanelButton_PanelMemorySet_Skip2:
-	ld	xwa, xiz
-	calr	PanelEvent_FillSelectedPart
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-	inc	4, xiz
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-PanelButton_PanelMemorySet_Epilogue:
-	pop	xiz
-	ret
-PanelButton_AcousticIllusion:
-	push	xiz
-	ld	xiz, xwa
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-	inc	4, xiz
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-	pop	xiz
-	ret
+PanelAction_PostUnlessDemoOrParamC0:	.include "includes/generated/cc900/PanelAction_PostUnlessDemoOrParamC0.s"	; C: cc900/audio_control_engine_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelAction_PostUnlessDemoOrParamC0_Epilogue, PanelAction_PostUnlessDemoOrParamC0 + 40
+PanelButton_PanelMemorySet:	.include "includes/generated/cc900/PanelButton_PanelMemorySet.s"	; C: cc900/audio_control_engine_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelButton_PanelMemorySet_Skip, PanelButton_PanelMemorySet + 30
+	.set	PanelButton_PanelMemorySet_Skip2, PanelButton_PanelMemorySet + 32
+	.set	PanelButton_PanelMemorySet_Epilogue, PanelButton_PanelMemorySet + 49
+PanelButton_AcousticIllusion:	.include "includes/generated/cc900/PanelButton_AcousticIllusion.s"	; C: cc900/audio_control_engine_m0_b.c
 PanelButton_ModeKey:
 	push	xiz
 	ld	xiz, xwa
@@ -5003,31 +4927,10 @@ ExtData_ToneParam_AltBody_Join4:
 ;   (SeqTimer_UpdateTempoReg); XIZ preserved. Basis: callers + body -- ExtData_ToneParam_AltBody_OnTempo (offset 8 of
 ;   record 0x48, header: 'stores a changed tempo into 0xFC62/0xFC63, posts it and calls SeqTimer_UpdateTempoReg') is
 ;   only this call.
-ExtData_SetTempoIfChanged:
-	push	xiz
-	lda	xiz, (PANEL_STYLE:16)
-	lda	xbc, (xiz+8)
-	lda	xhl, (xiz+9)
-	ld	e, (EXTDATA_VALUE:16)
-	cp	(xbc), e
-	jr	nz, ExtData_SetTempoIfChanged_Skip
-	ld	a, (xhl)
-	cp a, (EXTDATA_MASK:16)
-	jr	z, ExtData_SetTempoIfChanged_Epilogue
-ExtData_SetTempoIfChanged_Skip:
-	ld	(xbc), e
-	ld	(xhl), (EXTDATA_MASK)
-	ld	(MIDI_MSG_DATA2), (xbc)
-	ld	(MIDI_MSG_DATA3:16), 255
-	calr	SwbtWr_FlushAndAppendParams
-	ld	(MIDI_MSG_DATA1:16), 9
-	ld	(MIDI_MSG_DATA2), (xiz+9)
-	ld	(MIDI_MSG_DATA3:16), 1
-	calr	SwbtWr_FlushAndAppendParams
-	call	SeqTimer_UpdateTempoReg
-ExtData_SetTempoIfChanged_Epilogue:
-	pop	xiz
-	ret
+ExtData_SetTempoIfChanged:	.include "includes/generated/cc900/ExtData_SetTempoIfChanged.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtData_SetTempoIfChanged_Skip, ExtData_SetTempoIfChanged + 27
+	.set	ExtData_SetTempoIfChanged_Epilogue, ExtData_SetTempoIfChanged + 67
 ExtData_ToneParam_MultiChannel:
 	calr	SndParam_WriteLookupAndStore
 	ld	a, (EXTDATA_TLV_OFFSET:16)

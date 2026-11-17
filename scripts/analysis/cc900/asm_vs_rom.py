@@ -41,9 +41,11 @@ def main():
     base = int(opt(a, '--base', '0xe00000'), 0)
     alias = {}
     module = set()
+    places = {}                                     # the C's `cc900-data:` map, as the build and c_build_coverage use it
     for i, x in enumerate(a):
         if x == '--cfile':
             alias.update(fw.label_map(a[i + 1]))
+            places.update(fw.data_map(a[i + 1]))
             module |= fw.module_names(a[i + 1])     # the C's `cc900-module:` callees: calr / jr / jrl, as the build
     to_llvm.MODULE = module or None
 
@@ -85,6 +87,10 @@ def main():
         # ('_' + bare: a label with a leading underscore, which the listing's name prefix hides, _Read_VGA_Register)
         if full is None:
             print('%-32s not in the symbols reference' % bare); bad += 1; continue
+        # a reference to the function's f_const data (a switch table) becomes the tree address its `cc900-data:` names
+        consts, _ = to_llvm.split_consts(lines)
+        pl = places.get(full, places.get(bare, {}))
+        to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and pl[k] in ref}
         try:
             body = [l for l in to_llvm.translate_function(name, lines, names)
                     if l not in ('\t.globl %s' % bare, bare + ':')]

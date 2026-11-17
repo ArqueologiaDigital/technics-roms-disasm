@@ -40,3 +40,17 @@ int FileIO_ReadHeaderAt4(void)
     FileIO_SeekRead_ExtReturn();
     return ok;
 }
+
+struct democol { unsigned char title; unsigned char entry; };
+extern unsigned char __near DEMO_CONTROL_FLAGS;
+extern unsigned char __near ACTIVE_TITLE;
+extern unsigned char __near DEMO_CURRENT_SONG;
+extern struct democol DemoSong_TitleCol[];
+extern void UI_ChangeTitleByIndex(char i);
+extern void Demo_SelectEntry_DrawSecondary(void);
+
+void Demo_SelectEntry_DrawSecondary(void)
+{
+    if (!(DEMO_CONTROL_FLAGS & 8)) return;
+    if (ACTIVE_TITLE != 0xe4) UI_ChangeTitleByIndex(DemoSong_TitleCol[DEMO_CURRENT_SONG].title);
+}

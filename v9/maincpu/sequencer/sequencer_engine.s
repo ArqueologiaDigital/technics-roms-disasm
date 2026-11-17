@@ -1208,93 +1208,18 @@ SeqPlay_Reactivate_LoopNext:
 	inc 4, xsp
 	ret
 
-SeqAcc_InitPlaybackState:
-	res 5, (SEQ_CONTROL_FLAGS:16)
-	ldw wa, 0x32
-	call SeqNotePool_Init
-	res 0, (1115:16)
-	call SeqPlay_CheckRepeatActive
-	ld (7570:16), l
-	cpw (SEQ_TRACK_MASK:16), 0
-	jr nz, SeqAcc_InitPlayback_HasActiveVoices
-	cpw (SEQ_REC_TRACKS:16), 0
-	jrl nz, SeqAcc_ClearStepCounter
-	ld a, (SEQ_RTMCFG:16)
-	res 0, a
-	set 1, a
-	ld (SEQ_RTMCFG:16), a
-	jr SeqAcc_InitPlayback_SetState0
-
-SeqAcc_InitPlayback_HasActiveVoices:
-	bit 1, (ACC_RUN_FLAGS:16)
-	jr z, SeqAcc_InitPlayback_FindVoices
-	set 4, (SEQ_CONTROL_FLAGS:16)
-	jrl SeqAcc_InitPlayback_ReturnZero
-
-SeqAcc_InitPlayback_FindVoices:
-	ld wa, 0:i3
-	ldw bc, 0xd
-	call Part_FindVoiceByByte
-	ld (8988:16), l
-	ld wa, 0:i3
-	ldw bc, 0x10
-	call Part_FindVoiceByByte
-	ld (8990:16), l
-	ld wa, 0:i3
-	ldw bc, 0xc
-	call Part_FindVoiceByByte
-	ld (8992:16), l
-	ld wa, 0:i3
-	ldw bc, 0xe
-	call Part_FindVoiceByByte
-	ld (8994:16), l
-	ld wa, 0:i3
-	ldw bc, 0xf
-	call Part_FindVoiceByByte
-	ld (8996:16), l
-	call BitMapOut_PrepareAndDisplay
-	call BitMapOut_PrepareAndDisplaySimple
-	set 4, (0x28ac:16)
-	bit 3, (SEQ_RTMCFG:16)
-	jr nz, SeqAcc_InitPlayback_RestartPath
-	calr SeqAcc_InitPlayback_FreshStart
-	jr SeqAcc_InitPlayback_CheckDrum
-
-SeqAcc_InitPlayback_RestartPath:
-	calr SeqPlay_RestartWithVoiceConfig
-
-SeqAcc_InitPlayback_CheckDrum:
-	res 4, (0x28ac:16)
-	cpw (8982:16), 0
-	jr nz, SeqAcc_InitPlayback_DrumActive
-	cpw (SEQ_REC_TRACKS:16), 0
-	jr nz, SeqAcc_ClearStepCounter
-
-SeqAcc_InitPlayback_SetState0:
-	ld (8956:16), 0
-
-SeqAcc_ClearStepCounter:
-	ld (SEQ_CHORD_FROM_SONG:16), 0
-	jr SeqPlay_StateSetExit
-
-SeqAcc_InitPlayback_DrumActive:
-	calr SeqPlay_CheckDrumPartAndClearCounters
-	cpw (SEQ_REC_TRACKS:16), 0
-	jr nz, SeqPlay_StateSetExit
-	cp (7570:16), 0
-	jr nz, SeqAcc_InitPlayback_SetState4
-	ld (8956:16), 1
-	jr SeqPlay_StateSetExit
-
-SeqAcc_InitPlayback_SetState4:
-	ld (8956:16), 4
-
-SeqPlay_StateSetExit:
-	call SeqPlay_ResetStartState
-
-SeqAcc_InitPlayback_ReturnZero:
-	ld l, 0x0:opc
-	ret
+SeqAcc_InitPlaybackState:	.include "includes/generated/cc900/SeqAcc_InitPlaybackState.s"	; C: cc900/sequencer_engine_m233.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqAcc_InitPlayback_HasActiveVoices, SeqAcc_InitPlaybackState + 56
+	.set	SeqAcc_InitPlayback_FindVoices, SeqAcc_InitPlaybackState + 69
+	.set	SeqAcc_InitPlayback_RestartPath, SeqAcc_InitPlaybackState + 157
+	.set	SeqAcc_InitPlayback_CheckDrum, SeqAcc_InitPlaybackState + 160
+	.set	SeqAcc_InitPlayback_SetState0, SeqAcc_InitPlaybackState + 180
+	.set	SeqAcc_ClearStepCounter, SeqAcc_InitPlaybackState + 185
+	.set	SeqAcc_InitPlayback_DrumActive, SeqAcc_InitPlaybackState + 192
+	.set	SeqAcc_InitPlayback_SetState4, SeqAcc_InitPlaybackState + 217
+	.set	SeqPlay_StateSetExit, SeqAcc_InitPlaybackState + 222
+	.set	SeqAcc_InitPlayback_ReturnZero, SeqAcc_InitPlaybackState + 226
 
 SeqAcc_InitPlayback_FreshStart:
 	res 0, (0x28a6:16)
@@ -10154,80 +10079,19 @@ SeqBuffer_RemoveLast_Fixup:
 	ld (0x2868:16), l
 	ret
 
-SeqPlay_AllocBuffersAndInit:
-	ld c, (CURRENT_TITLE:16)
-	cp c, 0x85
-	jr z, SeqPlay_AllocBuf_Mode85_86
-	cp c, 0x86
-	jr nz, SeqPlay_AllocBuf_Mode87_88
-
-SeqPlay_AllocBuf_Mode85_86:
-	bit 1, (SEQ_CYCLE_FLAGS:16)
-	jr nz, SeqPlay_AllocBuf_HasRepeat
-	ldw (9000:16), 0
-	ldw (SEQ_BEAT_COUNT:16), 0
-	ld (SEQ_BEAT_TICK:16), 0
-	res 3, (SEQ_RTMCFG:16)
-	jr SeqPlay_AllocBuf_InitPlayback
-
-SeqPlay_AllocBuf_HasRepeat:
-	ld wa, (9504:16)
-	calr SeqBuf_AllocNextSlot
-	ld (9000:16), hl
-	ld (SEQ_BEAT_COUNT:16), hl
-	ld (SEQ_BEAT_TICK:16), 0
-	cp hl, 0:i3
-	jr nz, SeqPlay_AllocBuf_SetRepeatBit
-	res 3, (SEQ_RTMCFG:16)
-	jr SeqPlay_AllocBuf_AllocSecond
-
-SeqPlay_AllocBuf_SetRepeatBit:
-	set 3, (SEQ_RTMCFG:16)
-
-SeqPlay_AllocBuf_AllocSecond:
-	ld wa, (9506:16)
-	calr SeqBuf_AllocNextSlotAdjusted
-	ld (9002:16), hl
-	jr SeqPlay_AllocBuf_InitPlayback
-
-SeqPlay_AllocBuf_Mode87_88:
-	ld wa, (SEQ_START_MEASURE:16)
-	cp c, 0x87
-	jr z, SeqPlay_AllocBuf_Mode87_88_Alloc
-	cp c, 0x88
-	jr nz, SeqAllocBuf_CheckBit3
-
-SeqPlay_AllocBuf_Mode87_88_Alloc:
-	calr SeqBuf_AllocNextSlot
-	ld (SEQ_BEAT_COUNT:16), hl
-	ld (SEQ_BEAT_TICK:16), 0
-
-SeqPlay_AllocBuf_InitPlayback:
-	call SeqPlay_InitializePlayback
-	jr SeqAllocBuf_ResetStartState
-
-SeqAllocBuf_CheckBit3:
-	bit 3, (SEQ_RTMCFG:16)
-	jr z, SeqAllocBuf_CheckMode17
-	calr SeqBuf_AllocNextSlot
-	ld (SEQ_BEAT_COUNT:16), hl
-	ld (SEQ_BEAT_TICK:16), 0
-
-SeqAllocBuf_CheckMode17:
-	bit 0, (SEQ_CYCLE_FLAGS:16)
-	jr z, SeqAllocBuf_InitPlayback
-	ld wa, (9500:16)
-	calr SeqBuf_AllocNextSlot
-	ld (9000:16), hl
-	ld wa, (9502:16)
-	calr SeqBuf_AllocNextSlotAdjusted
-	ld (9002:16), hl
-
-SeqAllocBuf_InitPlayback:
-	call SeqAcc_InitPlaybackState
-
-SeqAllocBuf_ResetStartState:
-	jr SeqPlay_ResetStartState
+SeqPlay_AllocBuffersAndInit:	.include "includes/generated/cc900/SeqPlay_AllocBuffersAndInit.s"	; C: cc900/sequencer_engine_m234_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_AllocBuf_Mode85_86, SeqPlay_AllocBuffersAndInit + 14
+	.set	SeqPlay_AllocBuf_HasRepeat, SeqPlay_AllocBuffersAndInit + 43
+	.set	SeqPlay_AllocBuf_SetRepeatBit, SeqPlay_AllocBuffersAndInit + 73
+	.set	SeqPlay_AllocBuf_AllocSecond, SeqPlay_AllocBuffersAndInit + 77
+	.set	SeqPlay_AllocBuf_Mode87_88, SeqPlay_AllocBuffersAndInit + 90
+	.set	SeqPlay_AllocBuf_Mode87_88_Alloc, SeqPlay_AllocBuffersAndInit + 104
+	.set	SeqPlay_AllocBuf_InitPlayback, SeqPlay_AllocBuffersAndInit + 116
+	.set	SeqAllocBuf_CheckBit3, SeqPlay_AllocBuffersAndInit + 122
+	.set	SeqAllocBuf_CheckMode17, SeqPlay_AllocBuffersAndInit + 140
+	.set	SeqAllocBuf_InitPlayback, SeqPlay_AllocBuffersAndInit + 168
+	.set	SeqAllocBuf_ResetStartState, SeqPlay_AllocBuffersAndInit + 172
 
 SeqPlay_InitStartState:	.include "includes/generated/cc900/SeqPlay_InitStartState.s"	; C: cc900/sequencer_engine.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -24487,51 +24351,14 @@ MainExe_SetAllPartsMask:
 	ldw (0x2875:16), 0xffff
 	jrl MainExe_ReturnZero
 
-MainExe_SequencerStop:
-	ld (7572:16), 0
-	call SeqPlay_SaveStateAndCleanup
-	ldw wa, 0x4c
-	call CtrlPanel_SetIndicatorBit
-	res 1, (SEQ_CYCLE_FLAGS:16)
-	call SeqStatus_CheckBit2
-	cp l, 0:i3
-	jr nz, MainExe_SeqStopMode1
-	ld wa, 0:i3
-	call Part_WriteAllVoiceSubBlocks_A
-	jr MainExe_SeqStopFinish
+MainExe_SequencerStop:	.include "includes/generated/cc900/MainExe_SequencerStop.s"	; C: cc900/sequencer_engine_m235_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MainExe_SeqStopMode1, MainExe_SequencerStop + 36
+	.set	MainExe_SeqStopFinish, MainExe_SequencerStop + 42
 
-MainExe_SeqStopMode1:
-	ld wa, 0:i3
-	call Part_WriteAllVoiceSubBlocks_B
-
-MainExe_SeqStopFinish:
-	ld wa, 0:i3
-	ldw bc, 0x50
-	ldw de, 0xffff
-	call Part_WriteWord
-	ld wa, 0:i3
-	ldw bc, 0x32
-	call Part_ReleaseVoicesForRange
-	ldw (SEQ_TRACK_MASK:16), 0
-	call Audio_CheckSubsystemReady
-	call AccWrap_PositionClear
-	res 0, (0x28a6:16)
-	ldw (SEQ_TRACK_MASK_COPY:24), 0x0000
-	ld (9980:16), 1
-	call Part_DetectSingleVoiceType
-	ldw wa, MD_SEQ_REAL
-	jp UI_ChangeModeByIndex
-
-MainPanic:
-	cp xbc, EVT_PANIC
-	jr nz, MainPanic_ReturnZero
-	call NoteMap_ProcessAndMerge
-	call MIDI_BroadcastControlChange
-	call SeqData_SendVoiceTableBlock
-
-MainPanic_ReturnZero:
-	ld xhl, 0:i3
-	ret
+MainPanic:	.include "includes/generated/cc900/MainPanic.s"	; C: cc900/sequencer_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MainPanic_ReturnZero, MainPanic + 20
 
 HelpLang_DispatchDataBlock:
 	ld	a, (SWBTWR_PAYLOAD_1:16)
@@ -24616,78 +24443,19 @@ HelpLang_DispatchDataBlock_Join2:
 	call	ApPostEvent
 	ret
 
-HelpLangChkMain:
-	cp xbc, EVT_SET_LANG
-	jr z, HelpLang_LoadSlide
-	cp xbc, EVT_SHOW
-	jr nz, HelpLangChk_ReturnZero
-	cp (ACTIVE_TITLE:16), 231
-	jr nz, HelpLang_SetFlashAndLoadSlide
-	cp (ACTIVE_TITLE_PREVIOUS:16), 238
-	jr z, HelpLang_SetFlashAndLoadSlide
-	call Get_Region_Code
-	cp l, 3:i3
-	jr nz, HelpLang_SetRegion5
-	ld xwa, NAKA_VIEW_HelpXWin
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	jr HelpLang_PostEvent
+HelpLangChkMain:	.include "includes/generated/cc900/HelpLangChkMain.s"	; C: cc900/sequencer_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HelpLang_SetRegion5, HelpLangChkMain + 52
+	.set	HelpLang_PostEvent, HelpLangChkMain + 64
+	.set	HelpLang_SetFlashAndLoadSlide, HelpLangChkMain + 68
+	.set	HelpLang_LoadSlide, HelpLangChkMain + 100
+	.set	HelpLang_ParseSlideHeader, HelpLangChkMain + 125
+	.set	HelpLangChk_ReturnZero, HelpLangChkMain + 129
 
-HelpLang_SetRegion5:
-	ld xwa, NAKA_VIEW_HelpNotXWin
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-
-HelpLang_PostEvent:
-	call ApPostEvent
-
-HelpLang_SetFlashAndLoadSlide:
-	ld (0x2970:16), 255
-	ld a, (HELP_LANGUAGE:24)
-	sll a, 2
-	ld w, 0x0:opc
-	extz xwa
-	add xwa, 0x988018
-	ld xwa, (xwa)
-	ld xbc, 0x69800
-	jr HelpLang_ParseSlideHeader
-
-HelpLang_LoadSlide:
-	ld a, (HELP_LANGUAGE:24)
-	sll a, 2
-	ld w, 0x0:opc
-	extz xwa
-	add xwa, 0x988018
-	ld xwa, (xwa)
-	ld xbc, 0x69800
-
-HelpLang_ParseSlideHeader:
-	call SLIDE_Parse_Header
-
-HelpLangChk_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-HelpFlashFunc:
-	cp xbc, EVT_KUBO_FLASH_LOAD
-	jr z, HelpFlash_DispatchAudio
-	cp xbc, EVT_KUBO_FLASH_WRITE
-	jr nz, HelpFlash_ReturnZero
-	ldw wa, 0x25
-	calr SoundCtrl_SaveAndSendCmd_EE
-	ld wa, 4:i3
-	call CtrlPanel_IndicatorJumpTable
-	ldw wa, 0x23
-	calr SoundCtrl_SaveAndSendCmd_EE
-	jr HelpFlash_ReturnZero
-
-HelpFlash_DispatchAudio:
-	ld wa, 4:i3
-	call Audio_DispatchCommand
-
-HelpFlash_ReturnZero:
-	ld xhl, 0:i3
-	ret
+HelpFlashFunc:	.include "includes/generated/cc900/HelpFlashFunc.s"	; C: cc900/sequencer_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HelpFlash_DispatchAudio, HelpFlashFunc + 36
+	.set	HelpFlash_ReturnZero, HelpFlashFunc + 42
 
 SeqIndicator_HideBoth:
 	ld xwa, 0x850013
@@ -25579,105 +25347,19 @@ FileIO_Read16Return:
 	popw iz
 	ret
 
-SeqLoad_ReadPartDataBlock:
-	lda	xsp, (xsp-10)
-	push	xiz
-	ld	(xsp+12), a
-	ld	a, (xsp+12)
-	extz	wa
-	add	wa, wa
-	lda	xde, (0x29ce:16)
-	cpw	(xde+wa), 0x0000
-	jr	nz, SeqLoad_ReadPartDataBlock_Skip2
-	ld	xhl, 0:i3
-	jrl	SeqLoad_ReadPartDataBlock_Epilogue
-SeqLoad_ReadPartDataBlock_Skip2:
-	ld	xwa, 2048
-	ld	(xsp+4), xwa
-	ldw (xsp+10), 0
-	ldw (xsp+8), 0
-	ld	c, (xsp+12)
-	extz	bc
-	cp	bc, 0:i3
-	jr	ule, SeqLoad_ReadPartDataBlock_Skip3
-SeqLoad_ReadPartDataBlock_Loop:
-	ld	wa, (xsp+8)
-	add	wa, wa
-	extz	xwa
-	add	xwa, xde
-	ld	hl, (xwa)
-	extz	xhl
-	sll	xhl, 8
-	add	(xsp+4), xhl
-	ld	wa, (xwa)
-	add	(xsp+10), wa
-	incw	1, (xsp+8)
-	cp	(xsp+8), bc
-	jr	c, SeqLoad_ReadPartDataBlock_Loop
-SeqLoad_ReadPartDataBlock_Skip3:
-	ld	xwa, 1:i3
-	add	(xsp+4), xwa
-	ldw	(xsp+8), 1
-	jr	SeqLoad_ReadPartDataBlock_Join
-SeqLoad_ReadPartDataBlock_Loop2:
-	ld	xwa, (xsp+4)
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip4
-	ldw	wa, 200
-	jr	SeqLoad_ReadPartDataBlock_Join2
-SeqLoad_ReadPartDataBlock_Skip4:
-	ld	xwa, (xsp+4)
-	inc	2, xwa
-	ld	bc, (xsp+10)
-	add	bc, (xsp+8)
-	inc	1, bc
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip5
-	ldw	wa, 201
-	jr	SeqLoad_ReadPartDataBlock_Join2
-SeqLoad_ReadPartDataBlock_Skip5:
-	ld	xwa, 256
-	add	(xsp+4), xwa
-	incw	1, (xsp+8)
-SeqLoad_ReadPartDataBlock_Join:
-	ld	l, (xsp+12)
-	extz	hl
-	add	hl, hl
-	lda	xde, (0x29ce:16)
-	ld	bc, (xsp+10)
-	add	bc, (xsp+8)
-	dec	1, bc
-	ld	wa, (xsp+8)
-	cp	wa, (xde+hl)
-	jr	c, SeqLoad_ReadPartDataBlock_Loop2
-	ld	xwa, (xsp+4)
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip6
-	ldw	wa, 202
-	jr	SeqLoad_ReadPartDataBlock_Join2
-SeqLoad_ReadPartDataBlock_Skip6:
-	ld	xwa, (xsp+4)
-	inc	2, xwa
-	ldw	bc, 0xffff
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip
-	ldw	wa, 203
-SeqLoad_ReadPartDataBlock_Join2:
-	call	SeqData_SetErrorCode
-SeqLoad_ReadPartDataBlock_Skip:
-	ld	xhl, xiz
-SeqLoad_ReadPartDataBlock_Epilogue:
-	pop	xiz
-	lda	xsp, (xsp+10)
-	ret
+SeqLoad_ReadPartDataBlock:	.include "includes/generated/cc900/SeqLoad_ReadPartDataBlock.s"	; C: cc900/sequencer_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqLoad_ReadPartDataBlock_Skip2, SeqLoad_ReadPartDataBlock + 32
+	.set	SeqLoad_ReadPartDataBlock_Loop, SeqLoad_ReadPartDataBlock + 59
+	.set	SeqLoad_ReadPartDataBlock_Skip3, SeqLoad_ReadPartDataBlock + 91
+	.set	SeqLoad_ReadPartDataBlock_Loop2, SeqLoad_ReadPartDataBlock + 103
+	.set	SeqLoad_ReadPartDataBlock_Skip4, SeqLoad_ReadPartDataBlock + 120
+	.set	SeqLoad_ReadPartDataBlock_Skip5, SeqLoad_ReadPartDataBlock + 147
+	.set	SeqLoad_ReadPartDataBlock_Join, SeqLoad_ReadPartDataBlock + 158
+	.set	SeqLoad_ReadPartDataBlock_Skip6, SeqLoad_ReadPartDataBlock + 204
+	.set	SeqLoad_ReadPartDataBlock_Join2, SeqLoad_ReadPartDataBlock + 224
+	.set	SeqLoad_ReadPartDataBlock_Skip, SeqLoad_ReadPartDataBlock + 228
+	.set	SeqLoad_ReadPartDataBlock_Epilogue, SeqLoad_ReadPartDataBlock + 230
 
 SeqLoad_CheckAutoAccompFlag:
 	ld wa, 0:i3

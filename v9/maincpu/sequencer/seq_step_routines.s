@@ -1546,97 +1546,15 @@ SeqStep_PrepareDone:
 	pop xiz
 	ret
 
-SeqStep_DeleteShiftEvents:
-	dec 8, xsp
-	push xiz
-	ldmm16 SEQOP_SECONDARY_BLOCK, 9802
-	ldmm16 SEQOP_SECONDARY_OFFSET, 9800
-	call SeqPart_ReadByte_Secondary
-	ld wa, 0:i3
-	ldiw_erp 0xfa, 1
-	extz xwa
-	lda xbc, (xsp + 4)
-	add xbc, xwa
-	ld (xbc), l
-	call PartCtrl_AdvanceReadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqStep_DeleteShiftAdvance
-	jrl SeqStep_DeleteShiftCleanup
-
-SeqStep_DeleteShiftLoop:
-	call PartCtrl_AdvanceReadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jrl nz, SeqStep_DeleteShiftCleanup
-
-SeqStep_DeleteShiftAdvance:
-	call SeqPart_ReadByte_Secondary
-	ldto_werp WA, 0xfa
-	inc1w_erp 0xfa
-	extz xwa
-	lda xbc, (xsp + 4)
-	add xbc, xwa
-	ld (xbc), l
-	bit 7, l
-	jr z, SeqStep_DeleteShiftLoop
-	dec1w_erp 0xfa
-	call PartCtrl_NavigateBackward
-	ldmm16 SEQOP_PRIMARY_BLOCK, SEQOP_SECONDARY_BLOCK
-	ldmm16 SEQOP_PRIMARY_OFFSET, SEQOP_SECONDARY_OFFSET
-	ldmm16 SEQOP_SECONDARY_BLOCK, 9802
-	ldmm16 SEQOP_SECONDARY_OFFSET, 9800
-	call PartCtrl_NavigateBackward
-
-SeqStep_DeleteShiftDone:
-	call SeqPart_ReadByte_Secondary
-	ld wa, (SEQOP_SECONDARY_BLOCK:16)
-	cp wa, (9798:16)
-	jr nz, SeqStep_DeleteShiftReturn
-	ld wa, (SEQOP_SECONDARY_OFFSET:16)
-	cp wa, (9796:16)
-	jr nz, SeqStep_DeleteShiftReturn
-	extz hl
-	ld wa, hl
-	call SeqPart_WriteByte_Primary
-	ldmm16 SEQOP_PRIMARY_BLOCK, 9798
-	ldmm16 SEQOP_PRIMARY_OFFSET, 9796
-	ld iz, 0:i3
-	cpiw_erp 0xfa, 0
-	jr ule, SeqStep_DeleteShiftCleanup
-
-SeqStep_DeleteShiftUpdate:
-	ld wa, iz
-	extz xwa
-	lda xbc, (xsp + 4)
-	add xbc, xwa
-	ld a, (xbc)
-	extz wa
-	call SeqPart_WriteByte_Primary
-	call PartCtrl_AdvanceToNextEntry
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqStep_DeleteShiftError
-	jr SeqStep_DeleteShiftCleanup
-
-SeqStep_DeleteShiftReturn:
-	extz hl
-	ld wa, hl
-	call SeqPart_WriteByte_Primary
-	call PartCtrl_NavigateBackward
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqStep_DeleteShiftCleanup
-	call PartCtrl_NavigateBackwardAlt
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqStep_DeleteShiftDone
-	jr SeqStep_DeleteShiftCleanup
-
-SeqStep_DeleteShiftError:
-	inc 1, iz
-	cpw_erp IZ, 0xfa
-	jr c, SeqStep_DeleteShiftUpdate
-
-SeqStep_DeleteShiftCleanup:
-	pop xiz
-	inc 8, xsp
-	ret
+SeqStep_DeleteShiftEvents:	.include "includes/generated/cc900/SeqStep_DeleteShiftEvents.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_DeleteShiftLoop, SeqStep_DeleteShiftEvents + 47
+	.set	SeqStep_DeleteShiftAdvance, SeqStep_DeleteShiftEvents + 59
+	.set	SeqStep_DeleteShiftDone, SeqStep_DeleteShiftEvents + 118
+	.set	SeqStep_DeleteShiftUpdate, SeqStep_DeleteShiftEvents + 169
+	.set	SeqStep_DeleteShiftReturn, SeqStep_DeleteShiftEvents + 199
+	.set	SeqStep_DeleteShiftError, SeqStep_DeleteShiftEvents + 231
+	.set	SeqStep_DeleteShiftCleanup, SeqStep_DeleteShiftEvents + 238
 
 SeqStep_DeleteShiftExit:
 	pushw iz

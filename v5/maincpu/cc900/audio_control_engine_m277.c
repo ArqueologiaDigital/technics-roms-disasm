@@ -32,3 +32,18 @@ void PanelInput_Poll(void)
 		PanelInput_QueueCpuAdcChanges();
 	}
 }
+
+/* cc900-module: PanelButton_ModeKey_FilterTarget PanelEvent_FillSelectedPart PanelEvent_Post */
+struct pevt {
+	unsigned char b0, b1, b2, b3;
+};
+extern struct pevt __near PANEL_EVENT_QUEUE[];
+extern unsigned char __near ram_8dce;
+extern void PanelEvent_Post(struct pevt *e);
+
+void PanelEvent_Post(struct pevt *e)
+{
+	if (e->b0 == 0xff) return;
+	if (ram_8dce <= 15) PANEL_EVENT_QUEUE[(unsigned int)ram_8dce++] = *e;
+	e->b0 = 255;
+}

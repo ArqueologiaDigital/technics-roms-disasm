@@ -1183,56 +1183,9 @@ BmDrEdit_SetupCoordinates:
 	add (xbc), wa
 	ret
 
-BmDrEdit_SetupAndWalkToNote:
-	dec 4, xsp
-	pushw_erp 0xfa
-	res	0, (0x2943:16)
-	lda xwa, (xsp + 4)
-	lda xbc, (xsp + 2)
-	calr BmDrEdit_SetupCoordinates
-	ld wa, (xsp + 2)
-	sub (xsp + 4), wa
-	ld wa, (xsp + 4)
-	cp	wa, (0x2780:16)
-	jr nz, BmDrEdit_SetupAndWalkDone
-	call SeqData_ReadNextByte
-	and l, 0xf0
-	cp l, 0x90
-	jr nz, BmDrEdit_SetupAndWalkDone
-	calr BmDrEdit_CompareVelocity
-	cp l, 0:i3
-	jr nz, BmDrEdit_SetupAndWalkDone
-	set	0, (0x2943:16)
-	call SeqData_AdvancePosition
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld	(0x276c:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld	(0x276e:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ldfr_berp L, 0xfb
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	res 7, l
-	res_erpb 0xfb, 0x07
-	extz hl
-	ld bc, hl
-	mul bc, 0x60
-	ld hl, bc
-	ldto_berp A, 0xfb
-	extz wa
-	add hl, wa
-	ld	(0x2772:16), hl
-	calr BmDrEdit_ClearAndScanToEnd
-	ldmm8	0x2946, 0x276c
-	calr BmDrEdit_AdjustScrollToView
-
-BmDrEdit_SetupAndWalkDone:
-	popw_erp 0xfa
-	inc 4, xsp
-	ret
+BmDrEdit_SetupAndWalkToNote:	.include "includes/generated/cc900/BmDrEdit_SetupAndWalkToNote.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_SetupAndWalkDone, BmDrEdit_SetupAndWalkToNote + 143
 
 BmDrEdit_SaveAndFindNote:
 	calr BmDrEdit_SaveEditState
@@ -2260,76 +2213,14 @@ BmDrEdit_PitchOverflow_UpdateDisplay:
 NoteEditSy_CallFarRoutine:
 	jrl BmDrEdit_BuildVoiceList
 
-BmDrEdit_AdjustViewAndInsert:
-	dec 4, xsp
-	bit	7, (0x2940:16)
-	jrl nz, BmDrEdit_AdjustViewReturn
-	calr BmDrEdit_SaveEditState
-	ldmm16	0x2782, 0x2780
-	calr BmDrEdit_AlignDisplayGrid
-	ld	a, (0x275a:16)
-	mul a, 0x60
-	cp	(0x2780:16), wa
-	call c, (BmDrEdit_CalcBeatMeasure:24)
-	bit	0, (0x2943:16)
-	jr nz, BmDrEdit_WalkTrackLoop
-	calr BmDrEdit_LoadAndCheckNote
-	call SeqData_ReadNextByte
-	and l, 0xf0
-	cp l, 0x90
-	jr nz, BmDrEdit_WalkTrackLoop
-	calr BmDrEdit_CompareVelocity
-	cp l, 0:i3
-	jr nz, BmDrEdit_WalkTrackLoop
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr BmDrEdit_SetupCoordinates
-	ld wa, (xsp + 2)
-	sub wa, (xsp)
-	cp	wa, (0x2780:16)
-	jr ule, BmDrEdit_AdjustView_InitAndNavigate
-	bit	1, (0x2943:16)
-	jr z, BmDrEdit_WalkTrackLoop
-	calr BmDrEdit_InsertNoteSequence
-	bit	2, (0x2943:16)
-	jr nz, BmDrEdit_AdjustView_RefreshDisplay
-	jr BmDrEdit_AdjustViewPath
-
-BmDrEdit_WalkTrackLoop:
-	calr BmDrEdit_WalkTrackForward
-	ld	a, (0x2943:16)
-	bit 4, a
-	jr nz, BmDrEdit_AdjustViewPath
-	bit 1, a
-	jr z, BmDrEdit_AdjustView_CheckCoords
-	calr BmDrEdit_InsertNoteSequence
-	bit	2, (0x2943:16)
-	jr z, BmDrEdit_AdjustViewPath
-
-BmDrEdit_AdjustView_RefreshDisplay:
-	calr BmDrEdit_RefreshDisplayState
-	jr BmDrEdit_AdjustViewReturn
-
-BmDrEdit_AdjustView_CheckCoords:
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr BmDrEdit_SetupCoordinates
-	ld	wa, (0x2780:16)
-	add (xsp), wa
-	ld wa, (xsp + 2)
-	cp wa, (xsp)
-	jr ule, BmDrEdit_AdjustView_InitAndNavigate
-
-BmDrEdit_AdjustViewPath:
-	calr BmDrEdit_AdjustViewToPosition
-	jr BmDrEdit_AdjustViewReturn
-
-BmDrEdit_AdjustView_InitAndNavigate:
-	calr BmDrEdit_InitViewAndNavigate
-
-BmDrEdit_AdjustViewReturn:
-	inc 4, xsp
-	ret
+BmDrEdit_AdjustViewAndInsert:	.include "includes/generated/cc900/BmDrEdit_AdjustViewAndInsert.s"	; C: cc900/bmdredit_routines_m232_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_WalkTrackLoop, BmDrEdit_AdjustViewAndInsert + 101
+	.set	BmDrEdit_AdjustView_RefreshDisplay, BmDrEdit_AdjustViewAndInsert + 127
+	.set	BmDrEdit_AdjustView_CheckCoords, BmDrEdit_AdjustViewAndInsert + 132
+	.set	BmDrEdit_AdjustViewPath, BmDrEdit_AdjustViewAndInsert + 153
+	.set	BmDrEdit_AdjustView_InitAndNavigate, BmDrEdit_AdjustViewAndInsert + 158
+	.set	BmDrEdit_AdjustViewReturn, BmDrEdit_AdjustViewAndInsert + 161
 
 BmDrEdit_LoadAndCheckNote:
 	dec 4, xsp
@@ -3542,23 +3433,9 @@ NoteEdit_UpdateScrollAndDisplay:
 ; BmDrEdit_InitDrumMode) RAM 0x27CC := 11 - A, otherwise 0x27CC := A, plus 3
 ; when RAM 0x2798 is 0 (the same rule BmDrEdit_ChordScrollUp applies).
 ; Called only from BmDrEdit_CompoundWidgetUpdate.
-BmDrEdit_SetRowOffsetFromDelta:
-	sub a, c
-	bit	0, (0x2728:16)
-	jr z, BmDrEdit_UpdateDisplay_MelodicOffset
-	ld c, 0xb:opc
-	sub c, a
-	ld	(0x27b2:16), c
-	ret
-
-BmDrEdit_UpdateDisplay_MelodicOffset:
-	ld c, a
-	ld	(0x27b2:16), a
-	cp	(NOTEEDIT_BASE_KEY:16), 0
-	ret nz
-	inc 3, c
-	ld	(0x27b2:16), c
-	ret
+BmDrEdit_SetRowOffsetFromDelta:	.include "includes/generated/cc900/BmDrEdit_SetRowOffsetFromDelta.s"	; C: cc900/bmdredit_routines_m232_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_UpdateDisplay_MelodicOffset, BmDrEdit_SetRowOffsetFromDelta + 17
 
 ; -----------------------------------------------------------------------------
 ; BmDrEdit_CompoundWidgetUpdate (inherited name, formerly

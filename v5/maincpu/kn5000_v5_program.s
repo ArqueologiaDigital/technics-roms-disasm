@@ -1469,78 +1469,12 @@ Boot_ClearAllInterruptEnables:
 ;        Includes 0x2000 and 0x100000 iteration delay loops for timing
 ;        Called during boot sequence after SubCPU_Init_DMA_Channels
 ; ===========================================================================
-SubCPU_Send_Payload:
-	push xiz
-	cp (SubCPU_SendPayloadEnableFlag:24), 0xff
-	jrl nz, SubCPU_Payload_Done
-	ld xiz, 0:i3
-
-SubCPU_Payload_DelayLoop_Short:
-	inc 1, xiz
-	cp xiz, 0x2000
-	jr c, SubCPU_Payload_DelayLoop_Short
-	ld xwa, 0x830000
-	ld xbc, 0x10000
-	ld xde, 0x50000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, 0x840000
-	ld xbc, 0x10000
-	ld xde, 0x60000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, 0x850000
-	ld xbc, 0x10000
-	ld xde, 0x70000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, 0x860000
-	ld xbc, 0x10000
-	ld xde, 0x80000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, 0x870000
-	ld xbc, 0x10000
-	ld xde, 0x90000
-	call InterCPU_E1_Bulk_Transfer
-	ld xiz, 0x800000
-	cp (SubCPU_FlashPayloadEnableFlag:24), 0xff
-	jr nz, SubCPU_Payload_TransferPart2
-	ld xiz, 0x50000
-	ld xwa, 0x3e0000
-	ld xbc, 0x50000
-	call SLIDE_Parse_Header
-	cp hl, 0xffff
-	jr nz, SubCPU_Payload_TransferPart2
-	ld xiz, 0x800000
-
-SubCPU_Payload_TransferPart2:
-	ldw	(0x0404:16), (xiz+256)
-	ld xwa, xiz
-	add xwa, 0x100
-	ld xbc, 0x10000
-	ld xde, 0xf000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, xiz
-	add xwa, 0x10100
-	ld xbc, 0x10000
-	ld xde, 0x1f000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, xiz
-	add xwa, 0x20100
-	ldw bc, 0xff00
-	ld xde, 0x2f000
-	call InterCPU_E1_Bulk_Transfer
-	ld xwa, xiz
-	ldw bc, 0x100
-	ld xde, 0x400
-	call InterCPU_E1_Bulk_Transfer
-	ld xiz, 0:i3
-
-SubCPU_Payload_DelayLoop_Long:
-	inc 1, xiz
-	cp xiz, 0x100000
-	jr c, SubCPU_Payload_DelayLoop_Long
-
-SubCPU_Payload_Done:
-	pop xiz
-	ret
+SubCPU_Send_Payload:	.include "includes/generated/cc900/SubCPU_Send_Payload.s"	; C: cc900/kn5000_v10_program_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SubCPU_Payload_DelayLoop_Short, SubCPU_Send_Payload + 12
+	.set	SubCPU_Payload_TransferPart2, SubCPU_Send_Payload + 160
+	.set	SubCPU_Payload_DelayLoop_Long, SubCPU_Send_Payload + 247
+	.set	SubCPU_Payload_Done, SubCPU_Send_Payload + 257
 
 Boot_ClearConfigFlag7:
 	res 7, (BOOT_CONFIG_FLAGS:16)

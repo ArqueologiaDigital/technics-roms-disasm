@@ -1347,416 +1347,63 @@ Sprintf_FormatFFixed:	.include "includes/generated/cc900/Sprintf_FormatFFixed.s"
 	.set	Sprintf_FFixed_PadRightLoop, Sprintf_FormatFFixed + 771
 	.set	Sprintf_FFixed_Return, Sprintf_FormatFFixed + 781
 
-Sprintf_FFixed_DataTable:
-	.byte 0xaf, 0x04, 0x20, 0x80, 0x3f, 0x00, 0x6e, 0x03
-	.byte 0xdb, 0xa9, 0x0e, 0xc5, 0xe0, 0x3f, 0x30, 0x66
-	.byte 0xf2, 0xdb, 0xa8, 0x0e
+Sprintf_FFixed_DataTable:	.include "includes/generated/cc900/Sprintf_FFixed_DataTable.s"	; C: cc900/sprintf_core_m0.c
 
-Sprintf_FormatEScientific:
-	dec 2, xsp
-	push xiz
-	ldw (xsp + 4), 0xf
-	ld wa, (xsp + 16)
-	bit 4, wa
-	jr nz, Sprintf_ESci_ApplyDefaults
-	ldw (xsp + 20), 0x6
-
-Sprintf_ESci_ApplyDefaults:
-	ld a, (xsp + 10)
-	extz wa
-	lda xbc, (CType_ClassTable:24)
-	lda	xbc, (xbc+wa)
-	bitm 1, (xbc)
-	jr z, Sprintf_ESci_SpecNoUpperCase
-	ld a, (xsp + 10)
-	sub a, 0x20
-	jr Sprintf_ESci_CheckSpecG
-
-Sprintf_ESci_SpecNoUpperCase:
-	ld a, (xsp + 10)
-
-Sprintf_ESci_CheckSpecG:
-	cp a, 0x47
-	jr nz, Sprintf_ESci_SetDigitCount
-	cpw (xsp + 20), 0x0
-	jr z, Sprintf_ESci_SetDigitCount
-	decm 1, (xsp + 20)
-
-Sprintf_ESci_SetDigitCount:
-	ld wa, (xsp + 20)
-	inc 1, wa
-	ldfr_werp WA, 0xfa
-	ld wa, (xsp + 16)
-	bit 7, wa
-	jr z, Sprintf_ESci_RoundCheck
-	ldw (xsp + 4), 0x12
-
-Sprintf_ESci_RoundCheck:
-	ld de, (xsp + 4)
-	inc 1, de
-	ldto_werp WA, 0xfa
-	cp wa, de
-	jr ge, Sprintf_ESci_AfterRound
-	ldto_werp DE, 0xfa
-	dec1w_erp 0xfa
-	ld xwa, (xsp + 22)
-	cp	(xwa+de), 0x34
-	jr gt, Sprintf_ESci_RoundLoop
-	jr Sprintf_ESci_AfterRound
-
-Sprintf_ESci_RoundCarry:
-	ld xwa, (xsp + 22)
-	stib_ind 0x07, 0xe0, 0xfa, 0x30
-	dec1w_erp 0xfa
-
-Sprintf_ESci_RoundLoop:
-	ld xwa, (xsp + 22)
-	inc_srib 1, 0x07, 0xe0, 0xfa
-	cpiw_erp 0xfa, 0
-	jr le, Sprintf_ESci_AfterRound
-	cpib_sri 0x07, 0xe0, 0xfa, 0x39
-	jr gt, Sprintf_ESci_RoundCarry
-
-Sprintf_ESci_AfterRound:
-	bitm 1, (xbc)
-	jr z, Sprintf_ESci_AfterRound_NoCase
-	ld a, (xsp + 10)
-	sub a, 0x20
-	jr Sprintf_ESci_StripTrailZeros
-
-Sprintf_ESci_AfterRound_NoCase:
-	ld a, (xsp + 10)
-
-Sprintf_ESci_StripTrailZeros:
-	cp a, 0x47
-	jr nz, Sprintf_ESci_ComputeOutputLen
-	ld wa, (xsp + 16)
-	bit 3, wa
-	jr nz, Sprintf_ESci_ComputeOutputLen
-	ld wa, (xsp + 20)
-	ldfr_werp WA, 0xfa
-	jr Sprintf_ESci_StripCheck
-
-Sprintf_ESci_StripLoop:
-	dec1w_erp 0xfa
-	decm 1, (xsp + 20)
-
-Sprintf_ESci_StripCheck:
-	cpiw_erp 0xfa, 0
-	jr le, Sprintf_ESci_ComputeOutputLen
-	ld xwa, (xsp + 22)
-	cpib_sri 0x07, 0xe0, 0xfa, 0x30
-	jr z, Sprintf_ESci_StripLoop
-
-Sprintf_ESci_ComputeOutputLen:
-	decm 5, (xsp + 18)
-	ld wa, (xsp + 16)
-	bit 4, wa
-	jr z, Sprintf_ESci_CheckPrecZero
-	cpw (xsp + 20), 0x0
-	jr z, Sprintf_ESci_AdjustForSign
-
-Sprintf_ESci_CheckPrecZero:
-	decm 1, (xsp + 18)
-
-Sprintf_ESci_AdjustForSign:
-	ld iz, (xsp + 28)
-	cp iz, 0:i3
-	jr nz, Sprintf_ESci_AdjustForSign2
-	ld wa, (xsp + 16)
-	and wa, 0x5
-	jr z, Sprintf_ESci_ComputePadding
-
-Sprintf_ESci_AdjustForSign2:
-	decm 1, (xsp + 18)
-
-Sprintf_ESci_ComputePadding:
-	ld wa, (xsp + 20)
-	sub (xsp + 18), wa
-	jr ge, Sprintf_ESci_PadLeftCheck
-	ldw (xsp + 18), 0x0
-
-Sprintf_ESci_PadLeftCheck:
-	ld wa, (xsp + 16)
-	bit 1, wa
-	jr nz, Sprintf_ESci_EmitSign
-	cpw (0x3c220:24), 32
-	jr z, Sprintf_ESci_PadLeftLoop
-	jr Sprintf_ESci_EmitSign
-
-Sprintf_ESci_PadLeftSpace:
-	pushw 0x20
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_PadLeftLoop:
-	decm 1, (xsp + 18)
-	cpw (xsp + 18), 0x0
-	jr gt, Sprintf_ESci_PadLeftSpace
-
-Sprintf_ESci_EmitSign:
-	cp iz, 0:i3
-	jr z, Sprintf_ESci_SignPlus
-	pushw 0x2d
-	jr Sprintf_ESci_SignEmit
-
-Sprintf_ESci_SignPlus:
-	ld wa, (xsp + 16)
-	bit 0, wa
-	jr z, Sprintf_ESci_SignSpace
-	pushw 0x2b
-	jr Sprintf_ESci_SignEmit
-
-Sprintf_ESci_SignSpace:
-	ld wa, (xsp + 16)
-	bit 2, wa
-	jr z, Sprintf_ESci_ZeroFill
-	pushw 0x20
-
-Sprintf_ESci_SignEmit:
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_ZeroFill:
-	ld wa, (xsp + 16)
-	bit 1, wa
-	jr nz, Sprintf_ESci_LeadDigit
-	cpw (0x3c220:24), 48
-	jr z, Sprintf_ESci_ZeroFillLoop
-	jr Sprintf_ESci_LeadDigit
-
-Sprintf_ESci_ZeroFillBody:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_ZeroFillLoop:
-	decm 1, (xsp + 18)
-	cpw (xsp + 18), 0x0
-	jr gt, Sprintf_ESci_ZeroFillBody
-
-Sprintf_ESci_LeadDigit:
-	ld xwa, (xsp + 22)
-	cp (xwa), 0x39
-	jr le, Sprintf_ESci_LeadDigitNormal
-	pushw 0x31
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	ld xwa, (xsp + 22)
-	ld (xwa), 0x30
-	ldiw_erp 0xfa, 0
-	incw 1, (0x3c222:24)
-	cpw (xsp + 26), 0x0
-	jr ge, Sprintf_ESci_Overflow_DecExp
-	incw 1, (xsp + 26)
-	jr Sprintf_ESci_DecimalPoint
-
-Sprintf_ESci_Overflow_DecExp:
-	decm 1, (xsp + 26)
-	jr Sprintf_ESci_DecimalPoint
-
-Sprintf_ESci_LeadDigitNormal:
-	ld xwa, (xsp + 22)
-	ld a, (xwa)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	ldiw_erp 0xfa, 1
-
-Sprintf_ESci_DecimalPoint:
-	cpw (xsp + 20), 0x0
-	jr nz, Sprintf_ESci_DecimalPointEmit
-	ld wa, (xsp + 16)
-	bit 3, wa
-	jr z, Sprintf_ESci_MantissaDigits
-
-Sprintf_ESci_DecimalPointEmit:
-	pushw 0x2e
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_MantissaDigits:
-	ld c, (xsp + 10)
-	extz bc
-	lda xwa, (CType_ClassTable:24)
-	bit	1, (xwa+bc)
-	jr z, Sprintf_ESci_MantissaNoCase
-	ld a, (xsp + 10)
-	sub a, 0x20
-	jr Sprintf_ESci_CheckGTrim
-
-Sprintf_ESci_MantissaNoCase:
-	ld a, (xsp + 10)
-
-Sprintf_ESci_CheckGTrim:
-	cp a, 0x47
-	jr nz, Sprintf_ESci_OutputMantissa
-	cpw (xsp + 20), 0x0
-	jr nz, Sprintf_ESci_OutputMantissa
-	cpw (xsp + 26), 0x1
-	jrl z, Sprintf_ESci_Return
-
-Sprintf_ESci_OutputMantissa:
-	ld bc, (xsp + 4)
-	inc 1, bc
-	ldto_werp WA, 0xfa
-	cp wa, bc
-	jr lt, Sprintf_ESci_MantDigitLoop
-	jr Sprintf_ESci_MantTrailLoop
-
-Sprintf_ESci_MantDigitOutput:
-	ld xwa, (xsp + 22)
-	ld	a, (xwa+qiz)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	inc1w_erp 0xfa
-
-Sprintf_ESci_MantDigitLoop:
-	ld bc, (xsp + 4)
-	inc 1, bc
-	ldto_werp WA, 0xfa
-	cp wa, bc
-	jr ge, Sprintf_ESci_MantTrailLoop
-	ld wa, (xsp + 20)
-	decm 1, (xsp + 20)
-	cp wa, 0:i3
-	jr gt, Sprintf_ESci_MantDigitOutput
-	jr Sprintf_ESci_MantTrailLoop
-
-Sprintf_ESci_MantTrailZeros:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_MantTrailLoop:
-	ld wa, (xsp + 20)
-	decm 1, (xsp + 20)
-	cp wa, 0:i3
-	jr gt, Sprintf_ESci_MantTrailZeros
-	decm 1, (xsp + 26)
-	ld wa, (xsp + 26)
-	exts xwa
-	push xwa
-	ld xwa, (xsp + 26)
-	push xwa
-	calr Sprintf_IntToStr
-	ld xwa, (xsp + 30)
-	push xwa
-	call Strlen
-	lda xsp, (xsp + 12)
-	ld iz, hl
-	ld c, (xsp + 10)
-	extz bc
-	lda xwa, (CType_ClassTable:24)
-	bit	1, (xwa+bc)
-	jr z, Sprintf_ESci_ExpNoCase
-	ld a, (xsp + 10)
-	sub a, 0x20
-	jr Sprintf_ESci_CheckExpG
-
-Sprintf_ESci_ExpNoCase:
-	ld a, (xsp + 10)
-
-Sprintf_ESci_CheckExpG:
-	cp a, 0x47
-	jr nz, Sprintf_ESci_ExpLetterNormal
-	ld a, (xsp + 10)
-	dec 2, a
-	jr Sprintf_ESci_EmitExpLetter
-
-Sprintf_ESci_ExpLetterNormal:
-	ld a, (xsp + 10)
-
-Sprintf_ESci_EmitExpLetter:
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	cpw (xsp + 26), 0x0
-	jr ge, Sprintf_ESci_ExpSignPositive
-	pushw 0x2d
-	jr Sprintf_ESci_EmitExpSign
-
-Sprintf_ESci_ExpSignPositive:
-	pushw 0x2b
-
-Sprintf_ESci_EmitExpSign:
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-	ldfr_werp IZ, 0xfa
-	jr Sprintf_ESci_ExpLeadZeroLoop
-
-Sprintf_ESci_ExpLeadZeros:
-	pushw 0x30
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_ExpLeadZeroLoop:
-	ldto_werp WA, 0xfa
-	inc1w_erp 0xfa
-	cp wa, 3:i3
-	jr lt, Sprintf_ESci_ExpLeadZeros
-	jr Sprintf_ESci_ExpDigitLoop
-
-Sprintf_ESci_ExpDigitOutput:
-	dec 1, iz
-	ld xwa, (xsp + 22)
-	ld	a, (xwa+iz)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_ExpDigitLoop:
-	cp iz, 0:i3
-	jr nz, Sprintf_ESci_ExpDigitOutput
-	ld wa, (xsp + 16)
-	bit 1, wa
-	jr nz, Sprintf_ESci_PadRightLoop
-	jr Sprintf_ESci_Return
-
-Sprintf_ESci_PadRightSpace:
-	pushw 0x20
-	ld xwa, (xsp + 14)
-	call (xwa)
-	inc 2, xsp
-	incw 1, (0x3c222:24)
-
-Sprintf_ESci_PadRightLoop:
-	decm 1, (xsp + 18)
-	cpw (xsp + 18), 0x0
-	jr gt, Sprintf_ESci_PadRightSpace
-
-Sprintf_ESci_Return:
-	pop xiz
-	inc 2, xsp
-	ret
+Sprintf_FormatEScientific:	.include "includes/generated/cc900/Sprintf_FormatEScientific.s"	; C: cc900/sprintf_core_m310_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_ESci_ApplyDefaults, Sprintf_FormatEScientific + 21
+	.set	Sprintf_ESci_SpecNoUpperCase, Sprintf_FormatEScientific + 48
+	.set	Sprintf_ESci_CheckSpecG, Sprintf_FormatEScientific + 51
+	.set	Sprintf_ESci_SetDigitCount, Sprintf_FormatEScientific + 66
+	.set	Sprintf_ESci_RoundCheck, Sprintf_FormatEScientific + 87
+	.set	Sprintf_ESci_RoundCarry, Sprintf_FormatEScientific + 118
+	.set	Sprintf_ESci_RoundLoop, Sprintf_FormatEScientific + 130
+	.set	Sprintf_ESci_AfterRound, Sprintf_FormatEScientific + 151
+	.set	Sprintf_ESci_AfterRound_NoCase, Sprintf_FormatEScientific + 163
+	.set	Sprintf_ESci_StripTrailZeros, Sprintf_FormatEScientific + 166
+	.set	Sprintf_ESci_StripLoop, Sprintf_FormatEScientific + 187
+	.set	Sprintf_ESci_StripCheck, Sprintf_FormatEScientific + 193
+	.set	Sprintf_ESci_ComputeOutputLen, Sprintf_FormatEScientific + 209
+	.set	Sprintf_ESci_CheckPrecZero, Sprintf_FormatEScientific + 227
+	.set	Sprintf_ESci_AdjustForSign, Sprintf_FormatEScientific + 230
+	.set	Sprintf_ESci_AdjustForSign2, Sprintf_FormatEScientific + 246
+	.set	Sprintf_ESci_ComputePadding, Sprintf_FormatEScientific + 249
+	.set	Sprintf_ESci_PadLeftCheck, Sprintf_FormatEScientific + 262
+	.set	Sprintf_ESci_PadLeftSpace, Sprintf_FormatEScientific + 281
+	.set	Sprintf_ESci_PadLeftLoop, Sprintf_FormatEScientific + 296
+	.set	Sprintf_ESci_EmitSign, Sprintf_FormatEScientific + 306
+	.set	Sprintf_ESci_SignPlus, Sprintf_FormatEScientific + 315
+	.set	Sprintf_ESci_SignSpace, Sprintf_FormatEScientific + 328
+	.set	Sprintf_ESci_SignEmit, Sprintf_FormatEScientific + 339
+	.set	Sprintf_ESci_ZeroFill, Sprintf_FormatEScientific + 351
+	.set	Sprintf_ESci_ZeroFillBody, Sprintf_FormatEScientific + 370
+	.set	Sprintf_ESci_ZeroFillLoop, Sprintf_FormatEScientific + 385
+	.set	Sprintf_ESci_LeadDigit, Sprintf_FormatEScientific + 395
+	.set	Sprintf_ESci_Overflow_DecExp, Sprintf_FormatEScientific + 439
+	.set	Sprintf_ESci_LeadDigitNormal, Sprintf_FormatEScientific + 444
+	.set	Sprintf_ESci_DecimalPoint, Sprintf_FormatEScientific + 467
+	.set	Sprintf_ESci_DecimalPointEmit, Sprintf_FormatEScientific + 482
+	.set	Sprintf_ESci_MantissaDigits, Sprintf_FormatEScientific + 497
+	.set	Sprintf_ESci_MantissaNoCase, Sprintf_FormatEScientific + 522
+	.set	Sprintf_ESci_CheckGTrim, Sprintf_FormatEScientific + 525
+	.set	Sprintf_ESci_OutputMantissa, Sprintf_FormatEScientific + 545
+	.set	Sprintf_ESci_MantDigitOutput, Sprintf_FormatEScientific + 559
+	.set	Sprintf_ESci_MantDigitLoop, Sprintf_FormatEScientific + 585
+	.set	Sprintf_ESci_MantTrailZeros, Sprintf_FormatEScientific + 609
+	.set	Sprintf_ESci_MantTrailLoop, Sprintf_FormatEScientific + 624
+	.set	Sprintf_ESci_ExpNoCase, Sprintf_FormatEScientific + 688
+	.set	Sprintf_ESci_CheckExpG, Sprintf_FormatEScientific + 691
+	.set	Sprintf_ESci_ExpLetterNormal, Sprintf_FormatEScientific + 703
+	.set	Sprintf_ESci_EmitExpLetter, Sprintf_FormatEScientific + 706
+	.set	Sprintf_ESci_ExpSignPositive, Sprintf_FormatEScientific + 733
+	.set	Sprintf_ESci_EmitExpSign, Sprintf_FormatEScientific + 736
+	.set	Sprintf_ESci_ExpLeadZeros, Sprintf_FormatEScientific + 753
+	.set	Sprintf_ESci_ExpLeadZeroLoop, Sprintf_FormatEScientific + 768
+	.set	Sprintf_ESci_ExpDigitOutput, Sprintf_FormatEScientific + 780
+	.set	Sprintf_ESci_ExpDigitLoop, Sprintf_FormatEScientific + 805
+	.set	Sprintf_ESci_PadRightSpace, Sprintf_FormatEScientific + 819
+	.set	Sprintf_ESci_PadRightLoop, Sprintf_FormatEScientific + 834
+	.set	Sprintf_ESci_Return, Sprintf_FormatEScientific + 844
 
 Sprintf_FormatGGeneral:
 	lda xsp, (xsp - 16)

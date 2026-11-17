@@ -1188,173 +1188,28 @@ SeMenu_StepParamField_Return:
 ;   Basis: callers + body -- SeMenu_StepParamField calls it when (+9) >= 0 and the signed-compare copy
 ;   SeMenu_StepParamFieldSigned otherwise; its header describes the step and says 'min < 0 takes
 ;   the signed-compare copy'.
-SeMenu_StepParamFieldUnsigned:
-	lda	xsp, (xsp-16)
-	push	xiz
-	ld	xiz, xwa
-	lda	xbc, (xwa+3)
-	ld	(xsp+6), xbc
-	ld	c, (xwa+6)
-	ld	(xsp+10), c
-	ld	c, (xwa+7)
-	ld	(xsp+12), c
-	ld	c, (xwa+8)
-	ld	(xsp+14), c
-	ld	c, (xwa+9)
-	ld	(xsp+16), c
-	ld	a, (xwa+10)
-	ld	(xsp+18), a
-	ld	a, (xiz)
-	ld	(xsp+4), a
-	ld	a, (xsp+10)
-	extz	wa
-	ld	c, (xsp+12)
-	extz	bc
-	calr	SeMenu_BitShiftMask
-	cpl	l
-	and	(xsp+4), l
-	ld	a, (xiz)
-	extz	wa
-	ld	c, (xsp+12)
-	extz	bc
-	calr	SeMenu_BitShiftMask_End
-	ld	(xiz), l
-	ld	a, (xsp+10)
-	and	(xiz), a
-	ld	c, (xsp+18)
-	cp	(xsp+18), 0
-	jr	le, SeMenu_StepParamFieldUnsigned_Skip
-	ld	a, (xiz)
-	cp	a, (xsp+14)
-	jr	z, SeMenu_StepParamFieldUnsigned_Skip2
-	ld	a, (xsp+14)
-	sub	a, (xiz)
-	cp	a, c
-	jr	ugt, SeMenu_StepParamFieldUnsigned_Loop
-	ld	a, (xsp+14)
-	jr	SeMenu_StepParamFieldUnsigned_Join2
-SeMenu_StepParamFieldUnsigned_Loop:
-	ld	a, (xsp+18)
-	add	(xiz), a
-SeMenu_StepParamFieldUnsigned_Join:
-	ld	a, (xiz)
-	and	a, (xsp+10)
-	extz	wa
-	ld	c, (xsp+12)
-	extz	bc
-	calr	SeMenu_BitShiftMask
-	ld	xwa, (xsp+6)
-	ld	(xwa), l
-	ld	c, (xsp+4)
-	or	(xwa), c
-	ld	hl, 1:i3
-	jr	SeMenu_StepParamFieldUnsigned_Epilogue
-SeMenu_StepParamFieldUnsigned_Skip:
-	ld	a, (xiz)
-	cp	a, (xsp+16)
-	jr	nz, SeMenu_StepParamFieldUnsigned_Skip3
-SeMenu_StepParamFieldUnsigned_Skip2:
-	ld	hl, 0:i3
-SeMenu_StepParamFieldUnsigned_Epilogue:
-	pop	xiz
-	lda	xsp, (xsp+16)
-	ret
-SeMenu_StepParamFieldUnsigned_Skip3:
-	ld	a, (xsp+16)
-	sub	a, c
-	cp	a, (xiz)
-	jr	c, SeMenu_StepParamFieldUnsigned_Loop
-	ld	a, (xsp+16)
-SeMenu_StepParamFieldUnsigned_Join2:
-	ld	(xiz), a
-	jr	SeMenu_StepParamFieldUnsigned_Join
+SeMenu_StepParamFieldUnsigned:	.include "includes/generated/cc900/SeMenu_StepParamFieldUnsigned.s"	; C: cc900/semenu_routines_m129_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_StepParamFieldUnsigned_Loop, SeMenu_StepParamFieldUnsigned + 114
+	.set	SeMenu_StepParamFieldUnsigned_Join, SeMenu_StepParamFieldUnsigned + 119
+	.set	SeMenu_StepParamFieldUnsigned_Skip, SeMenu_StepParamFieldUnsigned + 148
+	.set	SeMenu_StepParamFieldUnsigned_Skip2, SeMenu_StepParamFieldUnsigned + 155
+	.set	SeMenu_StepParamFieldUnsigned_Epilogue, SeMenu_StepParamFieldUnsigned + 157
+	.set	SeMenu_StepParamFieldUnsigned_Skip3, SeMenu_StepParamFieldUnsigned + 162
+	.set	SeMenu_StepParamFieldUnsigned_Join2, SeMenu_StepParamFieldUnsigned + 174
 ; SeMenu_StepParamFieldSigned: SeMenu_StepParamField for an edit record whose min (+9) is negative: the same field
 ;   step as SeMenu_StepParamFieldUnsigned (extract, add the signed step +10, clamp to [min, max],
 ;   merge, write to +3; L = 1 if it moved), but the lower-bound test is a signed compare. Basis: callers + body --
 ;   SeMenu_StepParamField calls it when (+9) < 0; its header says 'min < 0 takes the signed-compare copy'.
-SeMenu_StepParamFieldSigned:
-	lda	xsp, (xsp-16)
-	push	xiz
-	ld	xiz, xwa
-	lda	xbc, (xwa+3)
-	ld	(xsp+6), xbc
-	ld	c, (xwa+6)
-	ld	(xsp+10), c
-	ld	c, (xwa+7)
-	ld	(xsp+12), c
-	ld	c, (xwa+8)
-	ld	(xsp+14), c
-	ld	c, (xwa+9)
-	ld	(xsp+16), c
-	ld	a, (xwa+10)
-	ld	(xsp+18), a
-	ld	a, (xiz)
-	ld	(xsp+4), a
-	ld	a, (xsp+10)
-	extz	wa
-	ld	c, (xsp+12)
-	extz	bc
-	calr	SeMenu_BitShiftMask
-	cpl	l
-	and	(xsp+4), l
-	ld	a, (xiz)
-	extz	wa
-	ld	c, (xsp+12)
-	extz	bc
-	calr	SeMenu_BitShiftMask_End
-	ld	(xiz), l
-	ld	a, (xsp+10)
-	and	(xiz), a
-	cp	(xsp+18), 0
-	jr	le, SeMenu_StepParamFieldSigned_Skip4
-	ld	a, (xiz)
-	cp	a, (xsp+14)
-	jr	z, SeMenu_StepParamFieldSigned_Skip5
-	ld	c, (xiz)
-	ld	a, (xsp+14)
-	sub	a, c
-	ld	c, a
-	ld	a, (xsp+18)
-	cp	c, a
-	jr	ugt, SeMenu_StepParamFieldSigned_Loop2
-	ld	a, (xsp+14)
-	jr	SeMenu_StepParamFieldSigned_Join4
-SeMenu_StepParamFieldSigned_Loop2:
-	ld	a, (xsp+18)
-	add	(xiz), a
-SeMenu_StepParamFieldSigned_Join3:
-	ld	a, (xiz)
-	and	a, (xsp+10)
-	extz	wa
-	ld	c, (xsp+12)
-	extz	bc
-	calr	SeMenu_BitShiftMask
-	ld	xwa, (xsp+6)
-	ld	(xwa), l
-	ld	c, (xsp+4)
-	or	(xwa), c
-	ld	hl, 1:i3
-	jr	SeMenu_StepParamFieldSigned_Epilogue2
-SeMenu_StepParamFieldSigned_Skip4:
-	ld	a, (xiz)
-	cp	a, (xsp+16)
-	jr	nz, SeMenu_StepParamFieldSigned_Skip6
-SeMenu_StepParamFieldSigned_Skip5:
-	ld	hl, 0:i3
-SeMenu_StepParamFieldSigned_Epilogue2:
-	pop	xiz
-	lda	xsp, (xsp+16)
-	ret
-SeMenu_StepParamFieldSigned_Skip6:
-	ld	c, (xiz)
-	ld	a, (xsp+16)
-	sub	a, (xsp+18)
-	cp	a, c
-	jr	lt, SeMenu_StepParamFieldSigned_Loop2
-	ld	a, (xsp+16)
-SeMenu_StepParamFieldSigned_Join4:
-	ld	(xiz), a
-	jr	SeMenu_StepParamFieldSigned_Join3
+SeMenu_StepParamFieldSigned:	.include "includes/generated/cc900/SeMenu_StepParamFieldSigned.s"	; C: cc900/semenu_routines_m129_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_StepParamFieldSigned_Loop2, SeMenu_StepParamFieldSigned + 118
+	.set	SeMenu_StepParamFieldSigned_Join3, SeMenu_StepParamFieldSigned + 123
+	.set	SeMenu_StepParamFieldSigned_Skip4, SeMenu_StepParamFieldSigned + 152
+	.set	SeMenu_StepParamFieldSigned_Skip5, SeMenu_StepParamFieldSigned + 159
+	.set	SeMenu_StepParamFieldSigned_Epilogue2, SeMenu_StepParamFieldSigned + 161
+	.set	SeMenu_StepParamFieldSigned_Skip6, SeMenu_StepParamFieldSigned + 166
+	.set	SeMenu_StepParamFieldSigned_Join4, SeMenu_StepParamFieldSigned + 181
 ; SeMenu_ToggleSolo: Toggles the sound-editor SOLO flag (RAM 0x65C), re-sends the per-part level (code 0x17, only the
 ;   edited part non-zero while SOLO is on) and redraws the SOLO button. Basis: callers + body -- every page's
 ;   OnSideRow1 handler calls it on press (A != 0).

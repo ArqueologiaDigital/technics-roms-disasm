@@ -448,3 +448,43 @@ void BmDrEdit_PrepareSecondaryNoteDisplay(void)
 	}
 	BmDrEdit_RestoreEditState();
 }
+
+/* cc900-module: BmDrEdit_AdvanceStreamPos BmDrEdit_CompareVelocity BmDrEdit_SetupCoordinates */
+extern unsigned char BmDrEdit_CompareVelocity(void);
+extern void BmDrEdit_SetupCoordinates(unsigned int *, unsigned int *);
+extern unsigned char __near ram_2788;
+extern unsigned int __near ram_278c;
+extern void BmDrEdit_SetupAndWalkToNote(void);
+
+void BmDrEdit_SetupAndWalkToNote(void)
+{
+	unsigned int a, b;
+	unsigned char v, w;
+	unsigned int x;
+
+	ram_295f &= ~1;
+	BmDrEdit_SetupCoordinates(&a, &b);
+	a -= b;
+	if (a != ram_279a) return;
+	if ((SeqData_ReadNextByte() & 0xf0) != 0x90) return;
+	if (BmDrEdit_CompareVelocity() != 0) return;
+	ram_295f |= 1;
+	SeqData_AdvancePosition();
+	SeqData_AdvancePosition();
+	ram_2786 = SeqData_ReadNextByte();
+	SeqData_AdvancePosition();
+	ram_2788 = SeqData_ReadNextByte();
+	SeqData_AdvancePosition();
+	v = SeqData_ReadNextByte();
+	SeqData_AdvancePosition();
+	w = SeqData_ReadNextByte();
+	w &= 0x7f;
+	v &= 0x7f;
+	x = w;
+	x *= 0x60;
+	x += v;
+	ram_278c = x;
+	BmDrEdit_ClearAndScanToEnd();
+	ram_2962 = ram_2786;
+	BmDrEdit_AdjustScrollToView();
+}

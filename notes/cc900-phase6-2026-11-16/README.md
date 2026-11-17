@@ -901,5 +901,12 @@ of `storage/fdc_routines.s` whose `.org` line is commented out; `llvm-nm` of it 
 
 Also: v6 / v5 named `ExtData_ToggleTlvBits` / `ExtData_SetTlvField(_Epilogue)` by older names, so three staged
 audio_control_engine files could not be checked there (`scripts/renaming/rename_v6v5_extdata_toggletlvbits.sed`).
-`make -j2 gate` then passed (with `docs/gui/kn5000-menu-map.md` regenerated: promoted code no longer shows in the
-assembly scan).
+`make -j2 gate` then passed (with `docs/gui/kn5000-menu-map.md` regenerated).
+
+**Corrected (2026-11-17): a promotion must not lose menu-map references.**  The regenerated map above did lose some:
+the map's title / mode analysis (scripts/converters/name_title_index_operands.py) skipped a function's
+`.include "includes/generated/cc900/F.s"` line, so a function that became C lost its title / mode operands.  The
+analysis now reads the generated body in place (f1884d220), and `menu_map_diff.py OLD.md NEW.md` (kept /
+re-credited / hidden / DROPPED / added; exit 1 on a drop) must show 0 dropped against the previous map before a
+promotion is committed.  Against the map before phase 6's first promotion (4d6c02d82~1) the fixed map keeps all 330
+references.

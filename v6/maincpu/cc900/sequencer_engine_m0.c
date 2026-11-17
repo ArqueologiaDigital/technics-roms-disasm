@@ -16,3 +16,99 @@ void SeqError_MapToGlobal(unsigned char *t)
 {
   GLOBAL_ERROR_CODE = t[SEQ_ERROR_CODE];
 }
+
+/* cc900-module: FileIO_SeekAndRead16BitValue NotePool_InsertEntry SeqAcc_InitPlayback_FreshStart SeqPlay_CheckDrumPartAndClearCounters SeqPlay_ReactivatePartsAndResume SeqPlay_RestartWithVoiceConfig */
+extern unsigned int __near ram_29b2[];
+#define TBL_29CE ((unsigned int *)ram_29b2)
+extern long FileIO_SeekAndRead16BitValue(unsigned long, unsigned int);
+extern void SeqData_SetErrorCode(unsigned char);
+extern long SeqLoad_ReadPartDataBlock(unsigned char a);
+
+long SeqLoad_ReadPartDataBlock(unsigned char a)
+{
+  unsigned long pos;
+  unsigned int i, sum;
+  long r;
+  if (TBL_29CE[a] == 0) return 0;
+  pos = 0x800;
+  sum = 0;
+  for (i = 0; i < a; i++) {
+    pos += (unsigned long)ram_29b2[i] << 8;
+    sum += ram_29b2[i];
+  }
+  pos += 1;
+  for (i = 1; i < TBL_29CE[a]; i++) {
+    if ((r = FileIO_SeekAndRead16BitValue(pos, sum + i - 1)) != 0) { SeqData_SetErrorCode(200); return r; }
+    if ((r = FileIO_SeekAndRead16BitValue(pos + 2, sum + i + 1)) != 0) { SeqData_SetErrorCode(201); return r; }
+    pos += 256;
+  }
+  if ((r = FileIO_SeekAndRead16BitValue(pos, sum + i - 1)) != 0) { SeqData_SetErrorCode(202); return r; }
+  if ((r = FileIO_SeekAndRead16BitValue(pos + 2, 0xffff)) != 0) { SeqData_SetErrorCode(203); return r; }
+  return r;
+}
+
+/* cc900-module: SoundCtrl_SaveAndSendCmd_EE */
+#define EVT_KUBO_FLASH_WRITE     0x1e80074L
+#define EVT_KUBO_FLASH_LOAD      0x1e80075L
+extern void SoundCtrl_SaveAndSendCmd_EE(unsigned int);
+extern void CtrlPanel_IndicatorJumpTable(unsigned int);
+extern void Audio_DispatchCommand(unsigned int);
+extern long HelpFlashFunc(long obj, long ev);
+#define EVT_SHOW                 0x1c00001L
+#define EVT_SET_LANG             0x1e80070L
+#define NAKA_VIEW_HelpNotXWin    0xe70005L
+#define NAKA_VIEW_HelpXWin       0xe7000aL
+extern long ApPostEvent(long, long, long);
+extern unsigned char Get_Region_Code(void);
+extern void SLIDE_Parse_Header(long, unsigned char *);
+extern unsigned char __near ram_2954;
+extern unsigned char __near ACTIVE_TITLE;
+extern unsigned char __near ACTIVE_TITLE_PREVIOUS;
+extern unsigned char HELP_LANGUAGE;
+extern long HelpLangChkMain(long obj, long ev);
+#define EVT_PANIC                0x1e80076L
+extern void NoteMap_ProcessAndMerge(void);
+extern void MIDI_BroadcastControlChange(void);
+extern void SeqData_SendVoiceTableBlock(void);
+extern long MainPanic(long obj, long ev);
+
+long HelpFlashFunc(long obj, long ev)
+{
+	switch (ev) {
+	case EVT_KUBO_FLASH_WRITE:
+		SoundCtrl_SaveAndSendCmd_EE(0x25);
+		CtrlPanel_IndicatorJumpTable(4);
+		SoundCtrl_SaveAndSendCmd_EE(0x23);
+		break;
+	case EVT_KUBO_FLASH_LOAD:
+		Audio_DispatchCommand(4);
+		break;
+	}
+	return 0;
+}
+long HelpLangChkMain(long obj, long ev)
+{
+	switch (ev) {
+	case EVT_SHOW:
+		if (ACTIVE_TITLE == 231 && ACTIVE_TITLE_PREVIOUS != 238) {
+			if (Get_Region_Code() == 3) ApPostEvent(NAKA_VIEW_HelpXWin, EVT_SHOW, 0);
+			else ApPostEvent(NAKA_VIEW_HelpNotXWin, EVT_SHOW, 0);
+		}
+		ram_2954 = 255;
+		SLIDE_Parse_Header(*(long *)(0x988018L + (unsigned char)(HELP_LANGUAGE << 2)), (unsigned char *)0x69800L);
+		break;
+	case EVT_SET_LANG:
+		SLIDE_Parse_Header(*(long *)(0x988018L + (unsigned char)(HELP_LANGUAGE << 2)), (unsigned char *)0x69800L);
+		break;
+	}
+	return 0;
+}
+long MainPanic(long obj, long ev)
+{
+	if (ev == EVT_PANIC) {
+		NoteMap_ProcessAndMerge();
+		MIDI_BroadcastControlChange();
+		SeqData_SendVoiceTableBlock();
+	}
+	return 0;
+}
