@@ -422,7 +422,9 @@ def firmware(key, tree, rom_path, sym_path):
             elif fn not in v423 and fn[:31] not in v423:
                 r['V4.23'] = False
             else:                                         # V4.23 keeps 31 characters of a name (THC1-Warning-515)
-                n2, ok2 = compare(fn, v423.get(fn) or v423[fn[:31]], rom, ref, to_off=to_off)
+                # by presence, not truth: an entry that is present but empty must not fall through to the cut name,
+                # which a `cc900-name:` rename never has (KeyError on HDAE5000_SeparateOutputModeCheck, 2026-11-17)
+                n2, ok2 = compare(fn, v423[fn] if fn in v423 else v423[fn[:31]], rom, ref, to_off=to_off)
                 r['V4.23'] = ok2 is True
                 r['cut'] = fn not in v423
                 if ok2 is True:
