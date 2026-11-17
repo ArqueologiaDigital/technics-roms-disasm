@@ -617,36 +617,7 @@ HDAE5000_NameHistory_AfterPushNop:	; (1 bytes)
 ; HDAE5000_RAM_DirNameHistory and HDAE5000_RAM_FlsNameHistory.
 ; In:  XWA = history, XBC = name
 ; ---------------------------------------------------------------------------
-HDAE5000_NameHistory_Push:
-	push xiz
-	ld xiz, xwa		; XIZ = the history
-	push xbc
-	ld a, (xiz + 2)		; A = next slot
-	extz wa
-	muls wa, 0x001B			; offset = index * 27 (entry size)
-	inc 4, wa		; past the 4-byte header
-	exts xwa			; sign-extend to 32-bit
-	add xwa, xiz		; XWA = &name[slot]
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp			; clean up 8 bytes (arg + saved XBC)
-	ld a, (xiz + 2)		; recall index = the slot just written
-	ld (xiz + 1), a
-	lda xwa, (xiz + 2)
-	incm8 1, (xwa)		; next slot
-	ld a, (xwa)			; read new index value
-	cp a, 5:i3
-	jr c, .Lgte_no_wrap
-	ld (xiz + 2), 0x00		; reset to 0
-.Lgte_no_wrap:
-	cp (xiz), 0x05		; count < 5?
-	jr nc, .Lgte_no_inc
-	incm8 1, (xiz)		; count++
-.Lgte_no_inc:
-	ld xwa, xiz
-	calr HDAE5000_NameHistory_AfterPushNop	; NOP call (returns immediately)
-	pop xiz
-	ret
+HDAE5000_NameHistory_Push:	.include "includes/generated/cc900/HDAE5000_NameHistory_Push.s"	; C: cc900/hdae5000_small2_ui_display.c
 
 ; ---------------------------------------------------------------------------
 ; The name at a history's recall index; the index steps back (from 0 to
@@ -6247,33 +6218,7 @@ HDAE5000_LanguageTextReturn:
 	; ============================================================
 	; Format + ROM region setup helper
 	; ============================================================
-HDAE5000_PPORT_Svc28_FlashXapFile:
-	; PC-link service 28 (HDAE5000_PPORT_ServiceTable[28]; no trace banner):
-	; builds a descriptor on the stack -- "XAP" (0x2E5DC6), XBC, 0x280000,
-	; 0x2F0000 (this ROM's own range) -- and calls RAM 0x23FEB0 with it;
-	; command 20 is "Send XapFile flash".  Nothing in this ROM puts code at
-	; 0x23FEB0, so what runs there is not established here.
-	lda	xsp, (xsp-24)
-	push xiz
-	ld xiz, xbc			; save XBC in XIZ
-	ld (xsp + 0x18), xwa		; save arg1
-	pushw HDAE5000_Str_XAP@hi16
-	pushw	HDAE5000_Str_XAP@lo16		; low half of HDAE5000_Str_XAP
-	lda xwa, (xsp + 0x08)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-	ld (xsp + 0x08), xiz		; store XIZ to stack
-	ld xwa, HDAE5000_ROM_HEADER
-	ld (xsp + 0x14), xwa
-	ld xwa, HDAE5000_XAP_DESC_LIMIT
-	ld (xsp + 0x0c), xwa
-	ld xwa, (xsp + 0x18)
-	ld xbc, (xsp + 0x04)
-	call HDAE5000_RAM_XAP_FLASH_ENTRY
-	pop xiz
-	lda xsp, (xsp + 0x18)
-	ret
+HDAE5000_PPORT_Svc28_FlashXapFile:	.include "includes/generated/cc900/HDAE5000_PPORT_Svc28_FlashXapFile.s"	; C: cc900/hdae5000_small2_ui_display.c
 
 	; ============================================================
 	; Vtable helper: call method 0x0538 (flush), return HL=0
@@ -6635,43 +6580,7 @@ HDAE5000_Finalize_Init:
 ; In:  WA = 1 to put the main task to sleep during the format
 ; Out: HL = HDAE5000_HD_Format's result (0 = formatted).  IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_FormatDrive:
-	dec 2, xsp
-	pushw iz
-	ld iz, wa
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld_sril xhl, (xwa + HamaFn_PlayHalt)
-	ld wa, 1:i3
-	call (xhl)
-	cp iz, 1:i3
-	jr nz, .Ldi_skip1
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SleepMainTask)
-	call (xhl)
-.Ldi_skip1:
-	call HDAE5000_HD_Format
-	ld (xsp + 2), hl
-	cp iz, 1:i3
-	jr nz, .Ldi_skip2
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_WakeUpMainTask)
-	call (xhl)
-.Ldi_skip2:
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld_sril xhl, (xwa + HamaFn_PlayStandBy)
-	call (xhl)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld_sril xhl, (xwa + HamaFn_EditSwRefresh)
-	call (xhl)
-	ld hl, (xsp + 2)
-	popw iz
-	inc 2, xsp
-	ret
+HDAE5000_HD_FormatDrive:	.include "includes/generated/cc900/HDAE5000_HD_FormatDrive.s"	; C: cc900/hdae5000_small2_ui_display.c
 
 ; ---------------------------------------------------------------------------
 ; Address of a directory's 16-byte name in HDAE5000_RAM_DirNames.
@@ -6792,65 +6701,7 @@ HDAE5000_Fls_IsBlankName:
 ; In:  WA = FLS record, BC = item
 ; Out: XHL = the record (its name comes first), or the blank name.
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SongRecord:
-	dec 4, xsp		; allocate 4 bytes
-	pushw iz		; save IZ
-	ld iz, bc		; IZ = column
-	ld (xsp + 4), wa	; save row on stack
-	; First: validate the cell
-	ld wa, (xsp + 4)	; WA = row
-	ld bc, iz		; BC = column
-	calr HDAE5000_FlsItem_IsSet
-	cp hl, 0xFFFF		; invalid?
-	jr z, .Lrca_fail	; if -1, use fallback address
-	; song offset: the item's song+1 byte (FLS record +48+item, 0x2257E2 base)
-	ld bc, iz		; BC = column
-	extz xbc		; zero-extend column
-	ld wa, (xsp + 4)	; WA = row
-	extz xwa		; zero-extend row
-	ld xde, xwa		; XDE = row
-	sll xde, 3		; XDE = row * 8
-	add xde, xwa		; XDE = row * 9
-	sll xde, 4		; XDE = row * 144
-	add xde, xbc		; XDE = row*144 + col
-	lda xwa, (HDAE5000_RAM_FlsRecords+48:24); song+1 bytes of the FLS items
-	add xwa, xde		; XWA = table + row*144 + col
-	ld a, (xwa)		; A = dimension value
-	dec 1, a		; A -= 1
-	extz wa			; zero-extend A to WA
-	muls wa, 0x004C		; WA = (dim-1) * 76
-	ld (xsp + 2), wa	; save row_offset
-	; directory offset: the item's dir+1 byte (FLS record +16+item, 0x2257C2 base)
-	ld bc, iz		; BC = column
-	extz xbc		; zero-extend
-	ld wa, (xsp + 4)	; WA = row
-	extz xwa		; zero-extend
-	ld xde, xwa		; XDE = row
-	sll xde, 3		; XDE = row * 8
-	add xde, xwa		; XDE = row * 9
-	sll xde, 4		; XDE = row * 144
-	add xde, xbc		; XDE = row*144 + col
-	lda xwa, (HDAE5000_RAM_FlsRecords+16:24); dir+1 bytes of the FLS items
-	add xwa, xde		; XWA = table + index
-	ld a, (xwa)		; A = directory + 1
-	dec 1, a		; A -= 1
-	ld w, 0x00:opc		; W = 0 (zero-extend A to WA manually)
-	extz xwa		; zero-extend WA to XWA
-	ld xbc, 0x000004C0	; multiplier = 1216
-	call HDAE5000_Multiply	; XHL = col_dim * 1216
-	add xhl, 0x780		; XHL += 1920
-	ld wa, (xsp + 2)	; WA = row_offset
-	exts xwa		; sign-extend WA to XWA
-	add xwa, xhl		; XWA = total offset
-	ld xhl, HDAE5000_RAM_DirNames	; table base address
-	add xhl, xwa		; XHL = final entry address
-	jr t, .Lrca_done	; jump to epilogue
-.Lrca_fail:
-	lda xhl, (HDAE5000_FlsItem_SongRecord_Str_Blank26:24); lda XHL, (0x2F82FA) - fallback/error address
-.Lrca_done:
-	popw iz			; restore IZ
-	inc 4, xsp		; deallocate 4 bytes
-	ret
+HDAE5000_FlsItem_SongRecord:	.include "includes/generated/cc900/HDAE5000_FlsItem_SongRecord.s"	; C: cc900/hdae5000_flsitem2.c
 
 ; ============================================================================
 ; Display Table Management and UI Cell Rendering (0x28FBB1-0x295008)
@@ -6878,86 +6729,9 @@ HDAE5000_FlsItem_IsSet:	.include "includes/generated/cc900/HDAE5000_FlsItem_IsSe
 ; 32 items as parallel byte arrays at +16 (dir + 1), +48 (song + 1), +80 (AS), +112 (AL).
 ; In:  WA = FLS, BC = item, XDE = destination
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_Get:
-	dec	6, xsp
-	pushw iz
-	ld (xsp + 0x02), xde
-	ld	iz, bc
-	ld (xsp + 0x06), wa
-	ld	wa, (xsp+6)
-	ld	bc, iz
-	calr	HDAE5000_FlsItem_IsSet
-	ld	wa, hl
-	cp	wa, 0xffff
-	jrl	z, HDAE5000_FlsItem_Get_Epilogue
-	ld	bc, iz
-	extz xbc
-	ld	wa, (xsp+6)
-	extz xwa
-	ld	xde, xwa
-	sll	xde, 0x03
-	add	xde, xwa
-	sll	xde, 0x04
-	add	xde, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
-	add	xwa, xde
-	ld	a, (xwa)
-	dec	1, a
-	ld	c, a
-	extz bc
-	ld xwa, (xsp + 0x02)
-	ld (xwa), bc
-	ld	bc, iz
-	extz xbc
-	ld	wa, (xsp+6)
-	extz xwa
-	ld	xde, xwa
-	sll	xde, 0x03
-	add	xde, xwa
-	sll	xde, 0x04
-	add	xde, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
-	add	xwa, xde
-	ld	a, (xwa)
-	dec	1, a
-	ld	c, a
-	extz bc
-	ld xwa, (xsp + 0x02)
-	ld (xwa + 0x02), bc
-	ld	bc, iz
-	extz xbc
-	ld	wa, (xsp+6)
-	extz xwa
-	ld	xde, xwa
-	sll	xde, 0x03
-	add	xde, xwa
-	sll	xde, 0x04
-	add	xde, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+80:24)
-	ld	xbc, xwa
-	add	xbc, xde
-	ld xwa, (xsp + 0x02)
-	ld	c, (xbc)
-	ld	(xwa+4), c
-	ld	bc, iz
-	extz xbc
-	ld	wa, (xsp+6)
-	extz xwa
-	ld	xde, xwa
-	sll	xde, 0x03
-	add	xde, xwa
-	sll	xde, 0x04
-	add	xde, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
-	ld	xbc, xwa
-	add	xbc, xde
-	ld xwa, (xsp + 0x02)
-	ld	c, (xbc)
-	ld	(xwa+5), c
-HDAE5000_FlsItem_Get_Epilogue:
-	popw iz
-	inc	6, xsp
-	ret
+HDAE5000_FlsItem_Get:	.include "includes/generated/cc900/HDAE5000_FlsItem_Get.s"	; C: cc900/hdae5000_flsitem2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FlsItem_Get_Epilogue, HDAE5000_FlsItem_Get + 187
 
 ; ---------------------------------------------------------------------------
 ; Zero the four bytes of item BC of FLS record WA (+16, +48, +80, +112).
@@ -7147,73 +6921,7 @@ HDAE5000_FlsItem_Insert_Join:
 	pop xiz
 	ret
 
-HDAE5000_FlsItem_Set:
-	; item BC of FLS record WA = XDE {u16 dir; u16 song; u8 byte80; u8 byte112}
-	; (stored as dir+1, song+1), then HDAE5000_HD_StoreTables(stacked word);
-	; retd 2.  No reference to 0x29002E was found: the one LE32 hit of a
-	; nearby address (0x290030, at 0x29E158) lies inside a UI object
-	; descriptor record, so this looks unreachable.
-	ld	hl, wa
-	ld	ix, bc
-	extz xix
-	ld	wa, hl
-	extz xwa
-	ld	xiy, xwa
-	sll	xiy, 0x03
-	add	xiy, xwa
-	sll	xiy, 0x04
-	add	xiy, xix
-	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
-	ld	xix, xwa
-	add	xix, xiy
-	ld	wa, (xde)
-	inc	1, a
-	ld	(xix), a
-	ld	ix, bc
-	extz xix
-	ld	wa, hl
-	extz xwa
-	ld	xiy, xwa
-	sll	xiy, 0x03
-	add	xiy, xwa
-	sll	xiy, 0x04
-	add	xiy, xix
-	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
-	ld	xix, xwa
-	add	xix, xiy
-	ld	wa, (xde+2)
-	inc	1, a
-	ld	(xix), a
-	ld	ix, bc
-	extz xix
-	ld	wa, hl
-	extz xwa
-	ld	xiy, xwa
-	sll	xiy, 0x03
-	add	xiy, xwa
-	sll	xiy, 0x04
-	add	xiy, xix
-	lda xwa, (HDAE5000_RAM_FlsRecords+80:24)
-	ld	xix, xwa
-	add	xix, xiy
-	ld	a, (xde+4)
-	ld	(xix), a
-	extz xbc
-	ld	wa, hl
-	extz xwa
-	ld	xhl, xwa
-	sll	xhl, 0x03
-	add	xhl, xwa
-	sll	xhl, 0x04
-	add	xhl, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+112:24)
-	ld	xbc, xwa
-	add	xbc, xhl
-	ld	a, (xde+5)
-	ld	(xbc), a
-	ld	wa, (xsp+4)
-	calr	HDAE5000_HD_StoreTables
-	retd 0x0002
+HDAE5000_FlsItem_Set:	.include "includes/generated/cc900/HDAE5000_FlsItem_Set.s"	; C: cc900/hdae5000_flsitem2.c
 
 ; ---------------------------------------------------------------------------
 ; Item BC of FLS record WA: its directory byte (+16) = E + 1.
@@ -7493,109 +7201,7 @@ HDAE5000_LoadSong_Sqt:
 ; Main CPU: HamaFn_GetResouceInfo, HamaFn_cmp_ld_mae, HamaFn_cmp_ld_ato
 ; Calls: HDAE5000_HD_ReadFile
 ; ---------------------------------------------------------------------------
-HDAE5000_LoadSong_Cmp:
-	lda xsp, (xsp - 20)
-	push xiz
-	ld (xsp + 20), bc	; save file number
-	ld (xsp + 22), wa	; save directory
-	ldw (xsp + 10), 0x0000	; init result = 0
-	; 1st multiply: check entry existence
-	ld wa, (xsp + 20)
-	extz xwa
-	ld xbc, 0x0000004C
-	call HDAE5000_Multiply
-	ld xiz, xhl
-	ld wa, (xsp + 22)
-	extz xwa
-	ld xbc, 0x000004C0
-	call HDAE5000_Multiply
-	add xhl, 0x780
-	add xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24)	; table base
-	add xwa, xhl
-	ld xwa, (xwa)
-	cp xwa, 0xFFFFFFFF
-	jrl z, .Lts90b_load
-	; Workspace dispatch with WA=5
-	lda xwa, (xsp + 12)
-	ld xbc, xwa
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); workspace ptr
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld_sril xhl, (xwa + HamaFn_GetResouceInfo)             ; (XWA+0x0080)
-	ld wa, 5:i3
-	call (xhl)
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld (xsp + 8), xwa
-	; 2nd multiply: table lookup
-	ld wa, (xsp + 20)
-	extz xwa
-	ld xbc, 0x0000004C
-	call HDAE5000_Multiply
-	ld xiz, xhl
-	ld wa, (xsp + 22)
-	extz xwa
-	ld xbc, 0x000004C0
-	call HDAE5000_Multiply
-	add xhl, 0x780
-	add xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24)
-	add xwa, xhl
-	ld xbc, xwa
-	ld xwa, (xsp + 8)
-	ld xde, xbc
-	ld xbc, 0x00000200
-	call HDAE5000_HD_ReadFile
-	cp hl, 0xFFFF
-	jr nz, .Lts90b_ok
-	ldw hl, 0xFFFF
-	jr .Lts90b_exit
-.Lts90b_ok:
-	; Load workspace param and shift
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld wa, (xwa + 46)	; workspace offset 0x2E
-	extz xwa
-	ld (xsp + 4), xwa
-	sll xwa, 4
-	ld (xsp + 4), xwa
-	; Dispatch workspace handler
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld xhl, (xwa + HamaFn_cmp_ld_mae)	; handler at offset 0x3C
-	call (xhl)
-	; 3rd multiply: final table lookup
-	lda xwa, (xsp + 12)
-	ld (xsp + 8), xwa
-	ld wa, (xsp + 20)
-	extz xwa
-	ld xbc, 0x0000004C
-	call HDAE5000_Multiply
-	ld xiz, xhl
-	ld wa, (xsp + 22)
-	extz xwa
-	ld xbc, 0x000004C0
-	call HDAE5000_Multiply
-	add xhl, 0x780
-	add xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+48:24)
-	add xwa, xhl
-	ld xde, xwa
-	ld xwa, (xsp + 8)
-	ld xwa, (xwa)
-	ld xbc, (xsp + 4)
-	call HDAE5000_HD_ReadFile
-	ld (xsp + 10), hl
-	; Post-processing dispatch
-	ld wa, (xsp + 10)
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_HamaFnTable)
-	ld xhl, (xbc + HamaFn_cmp_ld_ato)	; post offset 0x40
-	call (xhl)
-.Lts90b_load:
-	ld hl, (xsp + 10)	; load result
-.Lts90b_exit:
-	pop xiz
-	lda xsp, (xsp + 20)
-	ret
+HDAE5000_LoadSong_Cmp:	.include "includes/generated/cc900/HDAE5000_LoadSong_Cmp.s"	; C: cc900/hdae5000_loadsong2.c
 
 ; ---------------------------------------------------------------------------
 ; Load part 4 (TM) of a song: when its first-cluster slot (song record
@@ -7619,102 +7225,7 @@ HDAE5000_LoadSong_Tm:	.include "includes/generated/cc900/HDAE5000_LoadSong_Tm.s"
 ; Main CPU: HamaFn_GetResouceInfo, HamaFn_msp_ld_mae, HamaFn_msp_ld_ato
 ; Calls: HDAE5000_HD_ReadFile
 ; ---------------------------------------------------------------------------
-HDAE5000_LoadSong_Msp:
-	lda xsp, (xsp - 20)
-	push xiz
-	ld (xsp + 20), bc
-	ld (xsp + 22), wa
-	ldw (xsp + 10), 0x0000
-	ld wa, (xsp + 20)
-	extz xwa
-	ld xbc, 0x0000004C
-	call HDAE5000_Multiply
-	ld xiz, xhl
-	ld wa, (xsp + 22)
-	extz xwa
-	ld xbc, 0x000004C0
-	call HDAE5000_Multiply
-	add xhl, 0x780
-	add xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24)	; table base
-	add xwa, xhl
-	ld xwa, (xwa)
-	cp xwa, 0xFFFFFFFF
-	jrl z, .Lts90d_load
-	lda xwa, (xsp + 12)
-	ld xbc, xwa
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld_sril xhl, (xwa + HamaFn_GetResouceInfo)
-	ld wa, 7:i3
-	call (xhl)
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld (xsp + 8), xwa
-	ld wa, (xsp + 20)
-	extz xwa
-	ld xbc, 0x0000004C
-	call HDAE5000_Multiply
-	ld xiz, xhl
-	ld wa, (xsp + 22)
-	extz xwa
-	ld xbc, 0x000004C0
-	call HDAE5000_Multiply
-	add xhl, 0x780
-	add xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24)
-	add xwa, xhl
-	ld xbc, xwa
-	ld xwa, (xsp + 8)
-	ld xde, xbc
-	ld xbc, 0x00000200
-	call HDAE5000_HD_ReadFile
-	cp hl, 0xFFFF
-	jr nz, .Lts90d_ok
-	ldw hl, 0xFFFF
-	jr .Lts90d_exit
-.Lts90d_ok:
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld wa, (xwa + 28)	; workspace offset 0x1C
-	extz xwa
-	ld (xsp + 4), xwa
-	sll xwa, 4
-	ld (xsp + 4), xwa
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld xhl, (xwa + HamaFn_msp_ld_mae)	; handler at offset 0x5C
-	call (xhl)
-	lda xwa, (xsp + 12)
-	ld (xsp + 8), xwa
-	ld wa, (xsp + 20)
-	extz xwa
-	ld xbc, 0x0000004C
-	call HDAE5000_Multiply
-	ld xiz, xhl
-	ld wa, (xsp + 22)
-	extz xwa
-	ld xbc, 0x000004C0
-	call HDAE5000_Multiply
-	add xhl, 0x780
-	add xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+56:24)
-	add xwa, xhl
-	ld xde, xwa
-	ld xwa, (xsp + 8)
-	ld xwa, (xwa)
-	ld xbc, (xsp + 4)
-	call HDAE5000_HD_ReadFile
-	ld (xsp + 10), hl
-	ld wa, (xsp + 10)
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_HamaFnTable)
-	ld xhl, (xbc + HamaFn_msp_ld_ato)	; post offset 0x60
-	call (xhl)
-.Lts90d_load:
-	ld hl, (xsp + 10)
-.Lts90d_exit:
-	pop xiz
-	lda xsp, (xsp + 20)
-	ret
+HDAE5000_LoadSong_Msp:	.include "includes/generated/cc900/HDAE5000_LoadSong_Msp.s"	; C: cc900/hdae5000_loadsong2.c
 
 ; ---------------------------------------------------------------------------
 ; Load part 6 (RCM) of a song by letting the main CPU pull it: when slot +60
@@ -9745,119 +9256,7 @@ HDAE5000_CopyFdSongToHd_Tlx:
 ; bytes cleared.
 ; In:  WA = directory, BC = song
 ; ---------------------------------------------------------------------------
-HDAE5000_Fls_ForgetSong:
-	pushw iz
-	ld iz, 0:i3
-	cp iz, 0x0078
-	jrl nc, .Lwh_outer_done
-.Lwh_outer_loop:
-	ld iy, 0:i3
-	cp iy, 0x0020
-	jrl nc, .Lwh_inner_done
-.Lwh_inner_loop:
-	; Compute table index: XIX = IZ * 144 + IY
-	ld hl, iy
-	extz xhl
-	ld de, iz
-	extz xde
-	ld xix, xde
-	sll xix, 3
-	add xix, xde
-	sll xix, 4
-	add xix, xhl
-	; Check WA match at base 0x2257C2
-	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
-	add xde, xix
-	ld e, (xde)
-	ld l, e
-	extz hl
-	ld de, wa
-	inc 1, de
-	cp de, hl
-	jrl nz, .Lwh_next_inner
-	; Check BC match at base 0x2257E2
-	ld hl, iy
-	extz xhl
-	ld de, iz
-	extz xde
-	ld xix, xde
-	sll xix, 3
-	add xix, xde
-	sll xix, 4
-	add xix, xhl
-	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
-	add xde, xix
-	ld e, (xde)
-	ld l, e
-	extz hl
-	ld de, bc
-	inc 1, de
-	cp de, hl
-	jr nz, .Lwh_next_inner
-	; Both match — clear 4 table entries
-	; Clear entry at base 0x2257C2
-	ld hl, iy
-	extz xhl
-	ld de, iz
-	extz xde
-	ld xix, xde
-	sll xix, 3
-	add xix, xde
-	sll xix, 4
-	add xix, xhl
-	lda xde, (HDAE5000_RAM_FlsRecords+16:24)
-	add xde, xix
-	ld (xde), 0x00
-	; Clear entry at base 0x2257E2
-	ld hl, iy
-	extz xhl
-	ld de, iz
-	extz xde
-	ld xix, xde
-	sll xix, 3
-	add xix, xde
-	sll xix, 4
-	add xix, xhl
-	lda xde, (HDAE5000_RAM_FlsRecords+48:24)
-	add xde, xix
-	ld (xde), 0x00
-	; Clear entry at base 0x225802
-	ld hl, iy
-	extz xhl
-	ld de, iz
-	extz xde
-	ld xix, xde
-	sll xix, 3
-	add xix, xde
-	sll xix, 4
-	add xix, xhl
-	lda xde, (HDAE5000_RAM_FlsRecords+80:24)
-	add xde, xix
-	ld (xde), 0x00
-	; Clear entry at base 0x225822
-	ld hl, iy
-	extz xhl
-	ld de, iz
-	extz xde
-	ld xix, xde
-	sll xix, 3
-	add xix, xde
-	sll xix, 4
-	add xix, xhl
-	lda xde, (HDAE5000_RAM_FlsRecords+112:24)
-	add xde, xix
-	ld (xde), 0x00
-.Lwh_next_inner:
-	inc 1, iy
-	cp iy, 0x0020
-	jrl c, .Lwh_inner_loop
-.Lwh_inner_done:
-	inc 1, iz
-	cp iz, 0x0078
-	jrl c, .Lwh_outer_loop
-.Lwh_outer_done:
-	popw iz
-	ret
+HDAE5000_Fls_ForgetSong:	.include "includes/generated/cc900/HDAE5000_Fls_ForgetSong.s"	; C: cc900/hdae5000_loadsong2.c
 	; Part 2: Main workspace handler entry (0x29320D)
 	; Called by firmware — saves regs, dispatches through handler chain
 HDAE5000_DeleteDirectory:	.include "includes/generated/cc900/HDAE5000_DeleteDirectory.s"	; C: cc900/hdae5000_song_module2.c
@@ -9988,36 +9387,9 @@ HDAE5000_HD_StoreTables:	.include "includes/generated/cc900/HDAE5000_HD_StoreTab
 ; In:  WA = 1 to leave the drive spinning
 ; Out: HL = the OR of the statuses (0 = ok).
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_LoadTables:
-	dec	2, xsp
-	pushw iz
-	ld (xsp + 0x02), wa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_PlayHalt)
-	ld	wa, 1:i3
-	call	(xhl)
-	call HDAE5000_ATA_SoftReset_Status
-	ld	iz, hl
-	call HDAE5000_HD_ReadTables_Status
-	or	iz, hl
-	cpw	(xsp+2), 0x0001
-	jr	z, HDAE5000_HD_LoadTables_Join
-	call HDAE5000_ATA_Standby_Status
-	or	iz, hl
-HDAE5000_HD_LoadTables_Join:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_PlayStandBy)
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_EditSwRefresh)
-	call	(xhl)
-	ld	hl, iz
-	popw iz
-	inc 2, xsp
-	ret
+HDAE5000_HD_LoadTables:	.include "includes/generated/cc900/HDAE5000_HD_LoadTables.s"	; C: cc900/hdae5000_small2_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_HD_LoadTables_Join, HDAE5000_HD_LoadTables + 50
 
 HDAE5000_HD_RestoreSettings:	.include "includes/generated/cc900/HDAE5000_HD_RestoreSettings.s"	; C: cc900/hdae5000_misc3.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -10030,185 +9402,25 @@ HDAE5000_HD_RestoreSettings:	.include "includes/generated/cc900/HDAE5000_HD_Rest
 ; In:  WA = 1 to leave the drive spinning
 ; Out: HL = the OR of the statuses (0 = ok).
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_StoreSettings:
-	dec	2, xsp
-	pushw iz
-	ld (xsp + 0x02), wa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_PlayHalt)
-	ld	wa, 1:i3
-	call	(xhl)
-	call HDAE5000_ATA_SoftReset_Status
-	ld	iz, hl
-	call HDAE5000_HD_SaveSettings
-	or	iz, hl
-	cpw	(xsp+2), 0x0001
-	jr	z, HDAE5000_HD_StoreSettings_Join
-	call HDAE5000_ATA_Standby_Status
-	or	iz, hl
-HDAE5000_HD_StoreSettings_Join:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_PlayStandBy)
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_HamaFnTable)
-	ld_sril	xhl, (xwa + HamaFn_EditSwRefresh)
-	call	(xhl)
-	ld	hl, iz
-	popw iz
-	inc 2, xsp
-	ret
+HDAE5000_HD_StoreSettings:	.include "includes/generated/cc900/HDAE5000_HD_StoreSettings.s"	; C: cc900/hdae5000_small2_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_HD_StoreSettings_Join, HDAE5000_HD_StoreSettings + 50
 
-HDAE5000_RcmStream_Read:
-	; Read callback handed to the main CPU by HDAE5000_LoadSong_Rcm (workspace
-	; 0x0E88 table +0xB0, with HDAE5000_RcmStream_LastResult): XWA = buffer,
-	; XBC = byte count.  The first call (state 0x238F1C = 0) starts
-	; HDAE5000_HD_ReadFile on the RCM slot (+60) of song (0x238F1E dir,
-	; 0x238F20 song), later calls continue with HDAE5000_HD_ReadFileNext
-	; (state 1); the result goes to 0x238F22.  Returns XHL = XBC.
-	lda	xsp, (xsp-12)
-	push xiz
-	ld (xsp + 0x0c), xbc
-	ld	bc, (HDAE5000_RAM_RcmStreamState:24)
-	cp	bc, 1:i3
-	jr	z, HDAE5000_RcmStream_Read_Skip
-	cp	bc, 0:i3
-	jrl	nz, HDAE5000_RcmStream_Read_Skip2
-	ld (xsp + 0x04), xwa
-	ld xwa, (xsp + 0x0c)
-	ld (xsp + 0x08), xwa
-	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24)
-	add	xwa, xhl
-	ld	xde, xwa
-	ld xwa, (xsp + 0x04)
-	ld xbc, (xsp + 0x08)
-	call HDAE5000_HD_ReadFile
-	ld	(HDAE5000_RAM_RcmStreamResult), hl
-	ldw	(HDAE5000_RAM_RcmStreamState:24), 1
-	jr	t, HDAE5000_RcmStream_Read_Done
-HDAE5000_RcmStream_Read_Skip:
-	ld (xsp + 0x04), xwa
-	ld xwa, (xsp + 0x0c)
-	ld (xsp + 0x08), xwa
-	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+60:24)
-	add	xwa, xhl
-	ld	xde, xwa
-	ld xwa, (xsp + 0x04)
-	ld xbc, (xsp + 0x08)
-	call HDAE5000_HD_ReadFileNext
-	ld	(HDAE5000_RAM_RcmStreamResult), hl
-	ldw	(HDAE5000_RAM_RcmStreamState:24), 1
-	jr	t, HDAE5000_RcmStream_Read_Done
-HDAE5000_RcmStream_Read_Skip2:
-	ldw	(HDAE5000_RAM_RcmStreamResult:24), 65535
-	ldw	(HDAE5000_RAM_RcmStreamState:24), 0
-HDAE5000_RcmStream_Read_Done:
-	ld xhl, (xsp + 0x0c)
-	pop xiz
-	lda	xsp, (xsp+12)
-	ret
+HDAE5000_RcmStream_Read:	.include "includes/generated/cc900/HDAE5000_RcmStream_Read.s"	; C: cc900/hdae5000_store_ui.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_RcmStream_Read_Skip, HDAE5000_RcmStream_Read + 105
+	.set	HDAE5000_RcmStream_Read_Skip2, HDAE5000_RcmStream_Read + 189
+	.set	HDAE5000_RcmStream_Read_Done, HDAE5000_RcmStream_Read + 203
 
-HDAE5000_RcmStream_Write:
-	; Write callback handed to the main CPU by HDAE5000_SaveSong_Rcm (workspace
-	; 0x0E88 table +0xB4, after HDAE5000_HD_WriteOpen on the RCM slot): XWA =
-	; data, XBC = byte count, through HDAE5000_HD_WriteStream; marks the RCM
-	; part byte (+32) of song (0x238F1E, 0x238F20); state 0x238F1C -> 2,
-	; result -> 0x238F22.  Returns XHL = XBC.
-	dec	6, xsp
-	push xiz
-	ld (xsp + 0x06), xbc
-	ld	bc, (HDAE5000_RAM_RcmStreamState:24)
-	cp	bc, 2:i3
-	jr	z, HDAE5000_RcmStream_Write_Skip2
-	cp	bc, 0:i3
-	jrl	nz, HDAE5000_RcmStream_Write_Skip4
-	ld xbc, (xsp + 0x06)
-	calr	HDAE5000_HD_WriteStream
-	cp	hl, 0xffff
-	jr	z, HDAE5000_RcmStream_Write_Skip
-	ldw (xsp + 0x04), 0
-	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24)
-	add	xwa, xhl
-	ld	(xwa), 0x01
-	ldw	(HDAE5000_RAM_RcmStreamState:24), 2
-	jr	t, HDAE5000_RcmStream_Write_Join
-HDAE5000_RcmStream_Write_Skip:
-	ldw (xsp + 0x04), 65535
-HDAE5000_RcmStream_Write_Join:
-	ld	wa, (xsp+4)
-	ld	(HDAE5000_RAM_RcmStreamResult), wa
-	jr	t, HDAE5000_RcmStream_Write_Done
-HDAE5000_RcmStream_Write_Skip2:
-	ld xbc, (xsp + 0x06)
-	calr	HDAE5000_HD_WriteStream
-	cp	hl, 0xffff
-	jr	z, HDAE5000_RcmStream_Write_Skip3
-	ldw (xsp + 0x04), 0
-	ld	wa, (HDAE5000_RAM_RcmStreamSong:24)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (HDAE5000_RAM_RcmStreamDir:24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+32:24)
-	add	xwa, xhl
-	ld	(xwa), 0x01
-	ldw	(HDAE5000_RAM_RcmStreamState:24), 2
-	jr	t, HDAE5000_RcmStream_Write_Join2
-HDAE5000_RcmStream_Write_Skip3:
-	ldw (xsp + 0x04), 65535
-HDAE5000_RcmStream_Write_Join2:
-	ld	wa, (xsp+4)
-	ld	(HDAE5000_RAM_RcmStreamResult), wa
-	jr	t, HDAE5000_RcmStream_Write_Done
-HDAE5000_RcmStream_Write_Skip4:
-	ldw	(HDAE5000_RAM_RcmStreamResult:24), 65535
-	ldw	(HDAE5000_RAM_RcmStreamState:24), 0
-HDAE5000_RcmStream_Write_Done:
-	ld xhl, (xsp + 0x06)
-	pop xiz
-	inc	6, xsp
-	ret
+HDAE5000_RcmStream_Write:	.include "includes/generated/cc900/HDAE5000_RcmStream_Write.s"	; C: cc900/hdae5000_store_ui.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_RcmStream_Write_Skip, HDAE5000_RcmStream_Write + 98
+	.set	HDAE5000_RcmStream_Write_Join, HDAE5000_RcmStream_Write + 103
+	.set	HDAE5000_RcmStream_Write_Skip2, HDAE5000_RcmStream_Write + 113
+	.set	HDAE5000_RcmStream_Write_Skip3, HDAE5000_RcmStream_Write + 191
+	.set	HDAE5000_RcmStream_Write_Join2, HDAE5000_RcmStream_Write + 196
+	.set	HDAE5000_RcmStream_Write_Skip4, HDAE5000_RcmStream_Write + 206
+	.set	HDAE5000_RcmStream_Write_Done, HDAE5000_RcmStream_Write + 220
 
 HDAE5000_RcmStream_LastResult:	.include "includes/generated/cc900/HDAE5000_RcmStream_LastResult.s"	; C: cc900/hdae5000_ui_display.c
 
@@ -10272,38 +9484,7 @@ HDAE5000_HD_WriteOpen:	.include "includes/generated/cc900/HDAE5000_HD_WriteOpen.
 ; HDAE5000_HD_AppendFile otherwise; state -> 0.
 ; Out: clobbers XWA, XBC, XDE, XHL.
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_WriteClose:
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	cp xwa, (HDAE5000_RAM_HdStreamFill:24)
-	jr z, .Lds29e_clear
-	cp (HDAE5000_RAM_HdStreamState:24), 0x01
-	jr nz, .Lds29e_restore
-	; State 1: the buffer is the whole file -> HD_WriteFile
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld xhl, xwa
-	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld xwa, (HDAE5000_RAM_HdStreamFill:24)
-	sub xwa, xbc
-	ld xbc, xwa
-	ld xde, (HDAE5000_RAM_HdStreamSlot:24)
-	ld xwa, xhl
-	call HDAE5000_HD_WriteFile
-	ld (HDAE5000_RAM_HdStreamState:24), 0x02
-	jr t, .Lds29e_clear
-.Lds29e_restore:
-	; State 2: earlier chunks written -> HD_AppendFile
-	lda xwa, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld xhl, xwa
-	lda xbc, (HDAE5000_RAM_HdStreamBuffer:24)
-	ld xwa, (HDAE5000_RAM_HdStreamFill:24)
-	sub xwa, xbc
-	ld xbc, xwa
-	ld xde, (HDAE5000_RAM_HdStreamSlot:24)
-	ld xwa, xhl
-	call HDAE5000_HD_AppendFile
-.Lds29e_clear:
-	ld (HDAE5000_RAM_HdStreamState:24), 0x00
-	ret
+HDAE5000_HD_WriteClose:	.include "includes/generated/cc900/HDAE5000_HD_WriteClose.s"	; C: cc900/hdae5000_small2_ui_display.c
 
 ; ---------------------------------------------------------------------------
 ; Buffered write ("WriteFileHD", PC-link service 23): copy the source into

@@ -513,3 +513,4 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56c2491dd150c7817f8a84715aaa667857864a17956dbcea9d9	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Set	148	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56c2491dd150c7817f8a84715aaa667857864a17956dbcea9d9	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_SongRecord	139	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_sepout.c	f35ab83338a3e8d96cc7bfece07226898e34855e757c99a26ca42531af6cf9a2	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_SeparateOutput_Apply	279	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fd_file_select.c	c5158f93b266522d6f69ba7adca9b26f32e8ce029de3a9bfa747a7fe7f55d2ae	Xr	2026-11-17-18-hd-r46-staged	HDAE5000_FDFileSelectProc	2384	MATCH

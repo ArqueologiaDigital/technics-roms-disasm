@@ -2143,20 +2143,7 @@ HDAE5000_Str_LBNS:
 ; HDAE5000_LBNPage1SwCatch_OnClear of the case for value 0+i; 13 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNPage1SwCatch_CaseTable:
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit0Or1 - HDAE5000_LBNPage1SwCatch_OnClear	; 0
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit2Or3 - HDAE5000_LBNPage1SwCatch_OnClear	; 1
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit4Or5 - HDAE5000_LBNPage1SwCatch_OnClear	; 2
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit6Or7 - HDAE5000_LBNPage1SwCatch_OnClear	; 3
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit8Or9 - HDAE5000_LBNPage1SwCatch_OnClear	; 4
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 5
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 6
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 7
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 8 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 9 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 10 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 11 (default)
-	.short	HDAE5000_LBNPage1SwCatch_OnClear - HDAE5000_LBNPage1SwCatch_OnClear	; 12
+HDAE5000_LBNPage1SwCatch_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNPage1SwCatch_CaseTable.s"	; C: cc900/hdae5000_lbn_page.c (cc900-data)
 HDAE5000_Str_LBN:
 	; read by LBNLoadSwCatch at 0x286D7A (lda operand)
 	.asciz "LBN!"

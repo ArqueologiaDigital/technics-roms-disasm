@@ -803,34 +803,9 @@ HDAE5000_UiState_Reset_Join:
 	ld	wa, 1:i3
 	jp HDAE5000_Set_Menu_Visibility
 
-HDAE5000_AcWindowPage1Proc:
-	; registered as "AcWindowPage1Proc" in HDAE5000_ClassProc_Table
-	dec 8, xsp
-	push xiz
-	ld (xsp + 0x04), xde
-	ld (xsp + 0x08), xbc
-	ld	xiz, xwa
-	ld xwa, (xsp + 0x08)
-	cp	xwa, EVT_SHOW
-	jr	nz, HDAE5000_AcWindowPage1Proc_Join
-	ld	xwa, xiz
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_SET_PAGE
-	ld	xde, 1:i3
-	call	(xhl)
-HDAE5000_AcWindowPage1Proc_Join:
-	ld	xwa, xiz
-	ld xbc, (xsp + 0x08)
-	ld xde, (xsp + 0x04)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-	pop xiz
-	inc 8, xsp
-	ret
+HDAE5000_AcWindowPage1Proc:	.include "includes/generated/cc900/HDAE5000_AcWindowPage1Proc.s"	; C: cc900/hdae5000_small2_hd-ae5000_v1_15i.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_AcWindowPage1Proc_Join, HDAE5000_AcWindowPage1Proc + 48
 
 HDAE5000_TtlScreenRProc:	.include "includes/generated/cc900/HDAE5000_TtlScreenRProc.s"	; C: cc900/hdae5000_ttl_r1.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -3937,45 +3912,7 @@ HDAE5000_FdList_Clear:
 ; In:  XWA = file name
 ; Out: HL = n - 1, or 0xFFFF.  IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_FdName_SongNumber:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld iz, 1:i3
-	cp iz, 0x0014
-	jr gt, .Lptb_not_found
-.Lptb_loop:
-	pushw iz
-	pushw	HDAE5000_Fmt_2_2d@hi16
-	pushw	HDAE5000_Fmt_2_2d@lo16		; low half of HDAE5000_Fmt_2_2d
-	lda xwa, (xsp + 8)
-	push xwa
-	call HDAE5000_SPrintf
-	lda xwa, (xsp + 0x0c)
-	push xwa
-	call HDAE5000_StrLen
-	pushw hl
-	ld xwa, (xsp + 0x16)
-	push xwa
-	lda xwa, (xsp + 0x16)
-	push xwa
-	call HDAE5000_StrNCmp
-	add xsp, 0x00000018
-	cp hl, 0:i3
-	jr nz, .Lptb_found
-	ld hl, iz
-	dec 1, hl
-	jr t, .Lptb_done
-.Lptb_found:
-	inc 1, iz
-	cp iz, 0x0014
-	jr le, .Lptb_loop
-.Lptb_not_found:
-	ldw hl, 0xFFFF
-.Lptb_done:
-	popw iz
-	inc 8, xsp
-	ret
+HDAE5000_FdName_SongNumber:	.include "includes/generated/cc900/HDAE5000_FdName_SongNumber.s"	; C: cc900/hdae5000_small2_hd-ae5000_v1_15i.c
 
 ; --- HD Drive Setup and Configuration ---
 
