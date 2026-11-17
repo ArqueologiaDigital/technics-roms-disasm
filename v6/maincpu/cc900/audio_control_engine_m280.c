@@ -69,3 +69,30 @@ void ExtData_ToggleReverbIllusionOnOff(void)
 	ExtData_ToggleTlvBits(192);
 	SwbtWr_FlushAndAppendParams();
 }
+
+extern void SeqTimer_UpdateTempoReg(void);
+extern unsigned char __near PANEL_STYLE[];
+extern unsigned char __near MIDI_MSG_DATA1;
+extern unsigned char __near MIDI_MSG_DATA2;
+extern unsigned char __near MIDI_MSG_DATA3;
+extern unsigned char __near EXTDATA_VALUE;
+extern unsigned char __near EXTDATA_MASK;
+extern void ExtData_SetTempoIfChanged(void);
+
+void ExtData_SetTempoIfChanged(void)
+{
+	unsigned char *s;
+
+	s = PANEL_STYLE;
+	if (s[8] == EXTDATA_VALUE && s[9] == EXTDATA_MASK) return;
+	s[8] = EXTDATA_VALUE;
+	s[9] = EXTDATA_MASK;
+	MIDI_MSG_DATA2 = s[8];
+	MIDI_MSG_DATA3 = 255;
+	SwbtWr_FlushAndAppendParams();
+	MIDI_MSG_DATA1 = 9;
+	MIDI_MSG_DATA2 = s[9];
+	MIDI_MSG_DATA3 = 1;
+	SwbtWr_FlushAndAppendParams();
+	SeqTimer_UpdateTempoReg();
+}

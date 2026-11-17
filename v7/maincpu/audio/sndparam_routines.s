@@ -476,46 +476,12 @@ SndParam_ReadRegWord:	.include "includes/generated/cc900/SndParam_ReadRegWord.s"
 	.set	SndParam_ReadRegWord_Part, SndParam_ReadRegWord + 23
 	.set	SndParam_ReadRegWord_Part_2, SndParam_ReadRegWord + 30
 	.set	SndParam_ReadRegScanLoop, SndParam_ReadRegWord + 55
-SndParam_ReadRegBitfield:
-	ld	l, 0x0:opc
-	ld	c, (xwa + 4)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (SndParam_BlockRamPtrs:24)
-	ld	xix, (xde+bc)
-	or	xix, xix
-	jr	z, SndParam_BitfieldReturn
-	ld	c, (xwa + 5)
-	extz	bc
-	ld	de, bc
-	inc	1, de
-	bit	2, (xix+de)
-	jr	nz, SndParam_BitfieldPendingWrite
-	ld	l, (xix+bc)
-	ld	c, (xwa + 6)
-	ld	b, c
-	ld	e, (xwa + 10)
-	xor	l, e
-	and	l, b
-	ld	e, (xwa + 9)
-	ld	a, e
-	and	a, 0xf
-	jr	z, SndParam_BitfieldZeroCheck
-	srla	l
-SndParam_BitfieldZeroCheck:
-	jr	z, SndParam_BitfieldReturn
-	ld	a, e
-	and	a, 0xf
-	jr	z, SndParam_BitfieldNoShift
-	srla	c
-SndParam_BitfieldNoShift:
-	xor	l, c
-	jr	SndParam_BitfieldReturn
-SndParam_BitfieldPendingWrite:
-	ld	l, 0x3:opc
-SndParam_BitfieldReturn:
-	extz	hl
-	ret
+SndParam_ReadRegBitfield:	.include "includes/generated/cc900/SndParam_ReadRegBitfield.s"	; C: cc900/sndparam_routines_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_BitfieldZeroCheck, SndParam_ReadRegBitfield + 69
+	.set	SndParam_BitfieldNoShift, SndParam_ReadRegBitfield + 80
+	.set	SndParam_BitfieldPendingWrite, SndParam_ReadRegBitfield + 84
+	.set	SndParam_BitfieldReturn, SndParam_ReadRegBitfield + 86
 SndParam_ReadRegAddress:
 	ldw	hl, 0xffff
 	ld	a, (xwa + 4)

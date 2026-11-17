@@ -5024,31 +5024,10 @@ ExtData_ToneParam_AltBody_Join4:
 ;   (SeqTimer_UpdateTempoReg); XIZ preserved. Basis: callers + body -- ExtData_ToneParam_AltBody_OnTempo (offset 8 of
 ;   record 0x48, header: 'stores a changed tempo into 0xFC62/0xFC63, posts it and calls SeqTimer_UpdateTempoReg') is
 ;   only this call.
-ExtData_SetTempoIfChanged:
-	push	xiz
-	lda	xiz, (PANEL_STYLE:16)
-	lda	xbc, (xiz+8)
-	lda	xhl, (xiz+9)
-	ld	e, (EXTDATA_VALUE:16)
-	cp	(xbc), e
-	jr	nz, ExtData_SetTempoIfChanged_Skip
-	ld	a, (xhl)
-	cp	a, (EXTDATA_MASK:16)
-	jr	z, ExtData_SetTempoIfChanged_Epilogue
-ExtData_SetTempoIfChanged_Skip:
-	ld	(xbc), e
-	ld	(xhl), (EXTDATA_MASK)
-	ld	(MIDI_MSG_DATA2), (xbc)
-	ld	(MIDI_MSG_DATA3:16), 255
-	calr	SwbtWr_FlushAndAppendParams
-	ld	(MIDI_MSG_DATA1:16), 9
-	ld	(MIDI_MSG_DATA2), (xiz+9)
-	ld	(MIDI_MSG_DATA3:16), 1
-	calr	SwbtWr_FlushAndAppendParams
-	call	SeqTimer_UpdateTempoReg
-ExtData_SetTempoIfChanged_Epilogue:
-	pop	xiz
-	ret
+ExtData_SetTempoIfChanged:	.include "includes/generated/cc900/ExtData_SetTempoIfChanged.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtData_SetTempoIfChanged_Skip, ExtData_SetTempoIfChanged + 27
+	.set	ExtData_SetTempoIfChanged_Epilogue, ExtData_SetTempoIfChanged + 67
 ExtData_ToneParam_MultiChannel:
 	calr	SndParam_WriteLookupAndStore
 	ld	a, (EXTDATA_TLV_OFFSET:16)

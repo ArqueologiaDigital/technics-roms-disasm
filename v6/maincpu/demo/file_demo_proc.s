@@ -847,30 +847,7 @@ Demo_SelectEntry_LoadPattern:
 	ld	(DEMO_ACTIVE_ENTRY:16), (xbc+wa)
 	ret
 
-Demo_SelectEntry_DrawSecondary:
-	bit 3, (DEMO_CONTROL_FLAGS:16)
-
-	ret z
-
-; cpdi8 (0x8d38), 228 (v7 patched)
-	cp	(ACTIVE_TITLE:16), 228
-
-	ret z
-
-	ld a, (DEMO_CURRENT_SONG:16)
-
-	extz wa
-
-	add wa, wa
-
-; lda_24 xbc, (DemoSong_TitleCol) (v7 patched)
-	lda	xbc, (DemoSong_TitleCol:24)
-
-	ld	a, (xbc+wa)
-
-	call	UI_ChangeTitleByIndex
-
-	ret
+Demo_SelectEntry_DrawSecondary:	.include "includes/generated/cc900/Demo_SelectEntry_DrawSecondary.s"	; C: cc900/file_demo_proc_m266.c
 
 
 

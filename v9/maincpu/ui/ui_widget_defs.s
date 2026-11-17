@@ -1438,36 +1438,7 @@ LswEditCheck_Return:
 	pop xiz
 	ret
 
-MainLswPut:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), bc
-	ld (xsp + 8), xwa
-	pushw 0xc
-	call Malloc
-	inc 2, xsp
-	ld xiz, xhl
-	ld xwa, (xsp + 8)
-	ld (xiz), xwa
-	ld wa, (xsp + 6)
-	ld (xiz + 4), wa
-	ld wa, (xsp + 4)
-	ld (xiz + 6), wa
-	ld xwa, 0:i3
-	ld (xiz + 8), xwa
-	ld xwa, NAKA_MAINFUNC_MainPmanControl
-	ld xbc, EVT_LSW_PUT
-	ld xde, xiz
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, xiz
-	call MainFuncCall
-	ld hl, 0:i3
-	pop xiz
-	inc 8, xsp
-	ret
+MainLswPut:	.include "includes/generated/cc900/MainLswPut.s"	; C: cc900/ui_widget_defs_m271_b.c
 
 MainLswPartPut:
 	dec 8, xsp
@@ -1506,36 +1477,7 @@ MainLswPartPut:
 	inc 8, xsp
 	retd 0x2
 
-MainLswAdd:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), bc
-	ld (xsp + 8), xwa
-	pushw 0xc
-	call Malloc
-	inc 2, xsp
-	ld xiz, xhl
-	ld xwa, (xsp + 8)
-	ld (xiz), xwa
-	ld wa, (xsp + 6)
-	ld (xiz + 4), wa
-	ld wa, (xsp + 4)
-	ld (xiz + 6), wa
-	ld xwa, 0:i3
-	ld (xiz + 8), xwa
-	ld xwa, NAKA_MAINFUNC_MainPmanControl
-	ld xbc, EVT_LSW_ADD
-	ld xde, xiz
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, xiz
-	call MainFuncCall
-	ld hl, 0:i3
-	pop xiz
-	inc 8, xsp
-	ret
+MainLswAdd:	.include "includes/generated/cc900/MainLswAdd.s"	; C: cc900/ui_widget_defs_m271_b.c
 
 MainLswPartAdd:
 	dec 8, xsp
@@ -1975,55 +1917,9 @@ ResetLswFilter_Epilogue:
 	pop xiz
 	ret
 
-MainRamPut:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	pushw 0x16
-	call Malloc
-	inc 2, xsp
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	ld xiy, xiz
-	ld xix, xwa
-	ldw bc, 0xb
-	ldirw
-	ld xwa, NAKA_MAINFUNC_MainRamControl
-	ld xbc, EVT_RAM_PUT
-	ld xde, (xsp + 4)
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, (xsp + 4)
-	call MainFuncCall
-	pop xiz
-	inc 4, xsp
-	ret
+MainRamPut:	.include "includes/generated/cc900/MainRamPut.s"	; C: cc900/ui_widget_defs_m271_b.c
 
-MainRamAdd:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	pushw 0x16
-	call Malloc
-	inc 2, xsp
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	ld xiy, xiz
-	ld xix, xwa
-	ldw bc, 0xb
-	ldirw
-	ld xwa, NAKA_MAINFUNC_MainRamControl
-	ld xbc, EVT_RAM_ADD
-	ld xde, (xsp + 4)
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, (xsp + 4)
-	call MainFuncCall
-	pop xiz
-	inc 4, xsp
-	ret
+MainRamAdd:	.include "includes/generated/cc900/MainRamAdd.s"	; C: cc900/ui_widget_defs_m271_b.c
 
 MainRamGet:	.include "includes/generated/cc900/MainRamGet.s"	; C: cc900/ui_widget_defs_m271.c
 
@@ -2256,58 +2152,9 @@ BitEditCheck_Return:
 	pop xiz
 	ret
 
-MainBitPut:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	pushw 0xe
-	call Malloc
-	ld (xsp + 6), xhl
-	pushw 0xe
-	push xiz
-	ld xwa, (xsp + 12)
-	push xwa
-	call Mem_Copy
-	lda xsp, (xsp + 12)
-	ld xwa, NAKA_MAINFUNC_MainBitControl
-	ld xbc, EVT_BIT_PUT
-	ld xde, (xsp + 4)
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, (xsp + 4)
-	call MainFuncCall
-	pop xiz
-	inc 4, xsp
-	ret
+MainBitPut:	.include "includes/generated/cc900/MainBitPut.s"	; C: cc900/ui_widget_defs_m271_b.c
 
-MainBitGet:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld (xsp + 8), xwa
-	pushw 0xe
-	call Malloc
-	inc 2, xsp
-	ld xiz, xhl
-	ld xwa, (xsp + 8)
-	ld (xiz), xwa
-	ld xwa, (xsp + 4)
-	ld (xiz + 4), xwa
-	ldw (xiz + 8), 0x0
-	ld xwa, 0:i3
-	ld (xiz + 10), xwa
-	ld xwa, NAKA_MAINFUNC_MainBitControl
-	ld xbc, EVT_BIT_GET
-	ld xde, xiz
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, xiz
-	call MainFuncCall
-	pop xiz
-	inc 8, xsp
-	ret
+MainBitGet:	.include "includes/generated/cc900/MainBitGet.s"	; C: cc900/ui_widget_defs_m271_b.c
 
 PsMenuBoxProc:
 	lda xsp, (xsp-276)
@@ -3040,124 +2887,18 @@ VwMenuBox_Return:
 	lda xsp, (xsp+298)
 	ret
 
-PsEditSwBoxProc:
-	lda xsp, (xsp - 20)
-	push xiz
-	ld (xsp + 20), xde
-	ld xiz, xwa
-	cp xbc, EVT_SET_VISIBLE
-	jrl z, PsEditSwBox_Repaint
-	cp xbc, EVT_CHECK_EDIT_SW
-	jr z, PsEditSwBox_HitTest
-	cp xbc, EVT_PARA_DRAW
-	jr z, PsEditSwBox_Confirm
-	cp xbc, EVT_DRAW
-	jr z, PsEditSwBox_Paint
-	cp xbc, EVT_GET_STRING
-	jr z, PsEditSwBox_GetText
-	ld xwa, xiz
-	ld xde, (xsp + 20)
-	calr VwBoxProc
-	jrl PsEditSwBox_Return
-
-PsEditSwBox_GetText:
-	ld xwa, (xsp + 20)
-	ld (xwa), 0x0
-	jrl PsEditSwBox_ReturnZero
-
-PsEditSwBox_Paint:
-	ld xwa, xiz
-	ld xde, (xsp + 20)
-	calr VwBoxProc
-	ld xwa, xiz
-	call GetViewInstance
-	ld xiz, xhl
-	lda xbc, (xsp + 16)
-	ld wa, (xiz + 36)
-	calr GetEditSwPoint
-	cpw (xsp + 18), 0xef
-	jrl z, PsEditSwBox_ReturnZero
-	ld wa, (xiz + 36)
-	calr DrawEditSw
-	jrl PsEditSwBox_ReturnZero
-
-PsEditSwBox_Confirm:
-	ld xwa, (xsp + 20)
-	ld c, a
-	extz bc
-	ld xwa, xiz
-	calr ButtonState_PaintProc
-	jrl PsEditSwBox_ReturnZero
-
-PsEditSwBox_HitTest:
-	ld xwa, xiz
-	call GetViewInstance
-	ld (xsp + 4), xhl
-	ld xwa, xiz
-	call GetVisible
-	cp hl, 0:i3
-	jrl z, PsEditSwBox_ReturnZero
-	ld xwa, 0x2600024
-	ld xbc, EVT_MAKE_EDIT_SW_ID
-	ld xde, (xsp + 20)
-	call SendEvent
-	ld xwa, (xsp + 4)
-	ld wa, (xwa + 36)
-	extz xwa
-	cp xwa, xhl
-	jr nz, PsEditSwBox_ReturnZero
-	ld xhl, 1:i3
-	jr PsEditSwBox_Return
-
-PsEditSwBox_Repaint:
-	ld xwa, xiz
-	ld xde, (xsp + 20)
-	calr VwBoxProc
-	ld xwa, xiz
-	call GetVisible
-	cp hl, 0:i3
-	jr z, PsEditSwBox_Repaint_UpdateBounds
-	ld xwa, xiz
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	call SendEvent
-	jr PsEditSwBox_ReturnZero
-
-PsEditSwBox_Repaint_UpdateBounds:
-	ld xwa, xiz
-	call GetViewInstance
-	ld (xsp + 4), xhl
-	lda xbc, (xsp + 8)
-	ld xwa, xiz
-	call GetBox
-	lda xbc, (xsp + 16)
-	ld xwa, (xsp + 4)
-	ld wa, (xwa + 36)
-	calr GetEditSwPoint
-	lda xwa, (xsp + 16)
-	cpw (xwa + 2), 0xef
-	jr z, PsEditSwBox_Repaint_Render
-	lda xbc, (xsp + 8)
-	cpw (xwa), 0x13f
-	jr z, PsEditSwBox_Repaint_ClampRight
-	ldw (xbc), 0x0
-	jr PsEditSwBox_Repaint_Render
-
-PsEditSwBox_Repaint_ClampRight:
-	ldw (xbc + 4), 0x13f
-
-PsEditSwBox_Repaint_Render:
-	lda xwa, (xsp + 8)
-	ldw bc, 0xf5
-	call DrawBox
-
-PsEditSwBox_ReturnZero:
-	ld xhl, 0:i3
-
-PsEditSwBox_Return:
-	pop xiz
-	lda xsp, (xsp + 20)
-	ret
+PsEditSwBoxProc:	.include "includes/generated/cc900/PsEditSwBoxProc.s"	; C: cc900/ui_widget_defs_m271_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PsEditSwBox_GetText, PsEditSwBoxProc + 61
+	.set	PsEditSwBox_Paint, PsEditSwBoxProc + 70
+	.set	PsEditSwBox_Confirm, PsEditSwBoxProc + 112
+	.set	PsEditSwBox_HitTest, PsEditSwBoxProc + 127
+	.set	PsEditSwBox_Repaint, PsEditSwBoxProc + 180
+	.set	PsEditSwBox_Repaint_UpdateBounds, PsEditSwBoxProc + 213
+	.set	PsEditSwBox_Repaint_ClampRight, PsEditSwBoxProc + 268
+	.set	PsEditSwBox_Repaint_Render, PsEditSwBoxProc + 273
+	.set	PsEditSwBox_ReturnZero, PsEditSwBoxProc + 283
+	.set	PsEditSwBox_Return, PsEditSwBoxProc + 285
 
 ; -----------------------------------------------------------------------------
 ; PsEditSwBox_CalcEdgeSwitchRect -- code (was named PsEditSwBox_InlineData)
@@ -18504,105 +18245,19 @@ UpdateScreen_CheckDirty:
 	ld	(DRAW_ENABLED:24), wa
 	ret
 
-Gfx_BlitDirtyRegions:
-	dec 8, xsp
-	pushw iz
-	cpw (0x03ef92:24), 0
-	jrl z, SetChangeRect_Prologue
-	cpw (DISPLAY_UPDATE_FLAG:24), 0
-	jrl z, SetChangeRect_Prologue
-	cpw (PALETTE_UPDATE_FLAG:24), 0
-	jr z, Gfx_BlitDirty_ScanMatch
-	ld wa, (PALETTE_INDEX_CACHED:24)
-	cp wa, 4:i3
-	jr nz, Gfx_BlitDirty_Prologue
-	cpw (PALETTE_INDEX_PREVIOUS:24), 4
-	jr z, Display_CheckScreenDimensions
-	cp wa, 4:i3
-	jr nz, Display_CheckScreenDimensions
-
-Gfx_BlitDirty_Prologue:
-	calr LcdOn_Return
-	lda xwa, (xsp + 6)
-	ld (xsp + 2), xwa
-	ld iz, 0:i3
-
-Gfx_BlitDirty_ScanLoop:
-	ld wa, iz
-	call Table_LookupDword
-	ld (xsp + 6), xhl
-	ldto_berp A, 0xf8
-	extz wa
-	ld xbc, (xsp + 2)
-	call VGA_WritePaletteEntry
-	inc 1, iz
-	cp iz, 0x100
-	jr c, Gfx_BlitDirty_ScanLoop
-	jr Display_CheckScreenDimensions
-
-Gfx_BlitDirty_ScanMatch:
-	cpw (0x030462:24), 0
-	jr z, Display_CheckScreenDimensions
-	lda xwa, (xsp + 6)
-	ld (xsp + 2), xwa
-	ldw iz, 0xe0
-
-Gfx_BlitDirty_ScanDone:
-	ld wa, iz
-	call Table_LookupDword
-	ld (xsp + 6), xhl
-	ldto_berp A, 0xf8
-	extz wa
-	ld xbc, (xsp + 2)
-	call VGA_WritePaletteEntry
-	inc 1, iz
-	cp iz, 0xf0
-	jr c, Gfx_BlitDirty_ScanDone
-
-Display_CheckScreenDimensions:
-	lda xwa, (DIRTY_BBOX:24)
-	ld bc, (xwa + 6)
-	sub bc, (xwa + 2)
-	cp bc, 0xef
-	jr nz, Display_CheckDim_Prologue
-	ld bc, (xwa + 4)
-	sub bc, (xwa)
-	cp bc, 0x13f
-	jr nz, Display_CheckDim_Prologue
-	call AllBOut
-	jr Display_CheckDim_CheckWidth
-
-Display_CheckDim_Prologue:
-	call DisplayBuffer_Process
-
-Display_CheckDim_CheckWidth:
-	cpw (PALETTE_UPDATE_FLAG:24), 0
-	jr z, Display_CheckDim_CheckHeight
-	calr InitGraphics_SetupVRAM_Loop
-	ld wa, (PALETTE_INDEX_CACHED:24)
-	ld (PALETTE_INDEX_PREVIOUS:24), wa
-	ldw (PALETTE_UPDATE_FLAG:24), 0x0000
-	jr Display_CheckDim_Done
-
-Display_CheckDim_CheckHeight:
-	cpw (0x030462:24), 0
-	jr z, Display_CheckDim_Return
-
-Display_CheckDim_Done:
-	ldw (0x030462:24), 0x0000
-
-Display_CheckDim_Return:
-	ldw (DISPLAY_UPDATE_FLAG:24), 0x0000
-	lda xwa, (DIRTY_BBOX:24)
-	ldw (xwa + 2), 0xf0
-	ldw (xwa), 0x140
-	ldw (xwa + 4), 0xffff
-	ldw (xwa + 6), 0xffff
-
-SetChangeRect_Prologue:
-	popw iz
-	inc 8, xsp
-	ret
+Gfx_BlitDirtyRegions:	.include "includes/generated/cc900/Gfx_BlitDirtyRegions.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Gfx_BlitDirty_Prologue, Gfx_BlitDirtyRegions + 54
+	.set	Gfx_BlitDirty_ScanLoop, Gfx_BlitDirtyRegions + 65
+	.set	Gfx_BlitDirty_ScanMatch, Gfx_BlitDirtyRegions + 96
+	.set	Gfx_BlitDirty_ScanDone, Gfx_BlitDirtyRegions + 114
+	.set	Display_CheckScreenDimensions, Gfx_BlitDirtyRegions + 143
+	.set	Display_CheckDim_Prologue, Gfx_BlitDirtyRegions + 177
+	.set	Display_CheckDim_CheckWidth, Gfx_BlitDirtyRegions + 181
+	.set	Display_CheckDim_CheckHeight, Gfx_BlitDirtyRegions + 212
+	.set	Display_CheckDim_Done, Gfx_BlitDirtyRegions + 221
+	.set	Display_CheckDim_Return, Gfx_BlitDirtyRegions + 228
+	.set	SetChangeRect_Prologue, Gfx_BlitDirtyRegions + 259
 SetNeedUpdate:
 	ret
 

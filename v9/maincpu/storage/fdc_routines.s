@@ -1066,221 +1066,35 @@ FDC_SubmitReadDataCmd:
 ;   5. Error handling: sets error flag (35588=255) on failure
 ; Tail calls format-specific routines and status verification.
 ; Uses (R+d16) addressing for all FDC state variable access. 672 bytes.
-FDC_CMD_EXEC:
-	pushw	iz
-	calr	FDC_DETECT_CHECK
-	cp	hl, 0:i3
-	jr	z, FDC_CMD_EXEC_Skip
-	ld	(FDC_RETRY_COUNT:16), 1
-	jrl	FDC_CE_DISPATCH
-FDC_CMD_EXEC_Skip:
-	calr	FDC_DRIVE_DETECT
-	cp	hl, 0:i3
-	jr	nz, FDC_CMD_EXEC_Skip2
-	ld	(FDC_RETRY_COUNT:16), 8
-	jrl	FDC_CE_DISPATCH
-FDC_CMD_EXEC_Skip2:
-	ld	(FDC_RETRY_COUNT:16), 1
-	jrl	FDC_CE_DISPATCH
-FDC_CMD_EXEC_Loop:
-	ld	(FDC_ERROR_CODE:16), 0
-	calr	FDC_CmdSeek
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CMD_EXEC_Skip3
-	ld	a, (FDC_ERROR_CODE:16)
-	ldfr_berp a, 248
-	exts	iz
-	calr	FDC_CONFIG_VERIFY
-	ldto_berp	a, 248
-	stb_d8	(FDC_ERROR_CODE), a
-	jrl	FDC_CE_EXIT
-FDC_CMD_EXEC_Skip3:
-	ldw_d16	wa, (FDC_REQ_SECTOR)
-	cp	wa, (FDC_SECTOR_LIMIT:16)
-	jr	ule, FDC_CMD_EXEC_Skip4
-	ldw	(FDC_REQ_SECTOR:16), 1
-FDC_CMD_EXEC_Skip4:
-	ldmm16	0x8b10, FDC_REQ_SECTOR
-	ldw	(FDC_SECTOR_COUNT:16), 0
-	cp	(FDC_DRIVE_MODE:16), 2
-	jr	nz, FDC_CMD_EXEC_Skip5
-	ldw	(FDC_SECTOR_SIZE:16), 1024
-	jr	FDC_CMD_EXEC_Join
-FDC_CMD_EXEC_Skip5:
-	ldw	(FDC_SECTOR_SIZE:16), 512
-FDC_CMD_EXEC_Join:
-	ldmm16	0x8b12, FDC_REQ_COUNT
-	ld	iz, 1:i3
-FDC_CMD_EXEC_Join2:
-	ld	wa, (FDC_SECTOR_SIZE:16)
-	add	(FDC_SECTOR_COUNT:16), wa
-	lda	xwa, (FDC_REQ_COUNT:16)
-	decm	1, (xwa)
-	ld	wa, (xwa)
-	cp	wa, 0:i3
-	jr	z, FDC_CMD_EXEC_Skip6
-	lda	xwa, (FDC_REQ_SECTOR:16)
-	incw	1, (xwa)
-	ld	wa, (xwa)
-	cp	wa, (FDC_SECTOR_LIMIT:16)
-	jr	ugt, FDC_CMD_EXEC_Skip6
-	inc	1, iz
-	jr	FDC_CMD_EXEC_Join2
-FDC_CMD_EXEC_Skip6:
-	ld	(FDC_REQ_COUNT:16), iz
-	ldmm16	FDC_REQ_SECTOR, 0x8b10
-	calr	FDC_SubmitReadDataCmd
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CMD_EXEC_Skip8
-	cp	(FDC_ERROR_CODE:16), 9
-	jr	nz, FDC_CMD_EXEC_Skip7
-	calr	FDC_INIT
-	jrl	FDC_CE_EXIT
-FDC_CMD_EXEC_Skip7:
-	calr	FDC_DRIVE_DETECT
-	cp	hl, 0xffff
-	jr	z, FDC_CMD_EXEC_Join3
-	calr	FDC_CONFIG_VERIFY
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-	calr	FDC_CmdSeek
-FDC_CMD_EXEC_Join3:
-	ldmm16	FDC_REQ_COUNT, 0x8b12
-	dec	1, (FDC_RETRY_COUNT:16)
-	ldb_d8	a, (FDC_RETRY_COUNT)
-	cp	a, 0:i3
-	jr	nz, FDC_CE_DISPATCH
-	ld	(FDC_ERROR_CODE:16), 16
-	jr	FDC_CE_EXIT
-FDC_CMD_EXEC_Skip8:
-	ld	wa, (0x8b12:16)
-	sub	wa, iz
-	ld	(FDC_REQ_COUNT:16), wa
-	cpw	(FDC_REQ_COUNT:16), 0
-	jr	z, FDC_CE_DISPATCH
-	lda	xbc, (FDC_REQ_BUFFER:16)
-	ld	wa, (FDC_SECTOR_COUNT:16)
-	extz	xwa
-	add	xwa, (xbc)
-	ld	(xbc), xwa
-	ldw	(FDC_REQ_SECTOR:16), 1
-	ld	(FDC_PARAM_R:16), 1
-	ld	a, (FDC_HEAD:16)
-	xor	a, 1
-	ld	(FDC_HEAD:16), a
-	ld	(FDC_PARAM_H:16), a
-	cp	(FDC_PARAM_H:16), 0
-	jr	nz, FDC_CE_DISPATCH
-	lda	xwa, (FDC_PARAM_C:16)
-	incm8	1, (xwa)
-	ld	a, (xwa)
-	ld	(FDC_TARGET_TRACK:16), a
-FDC_CE_DISPATCH:
-	cpw	(FDC_REQ_COUNT:16), 0
-	jrl	nz, FDC_CMD_EXEC_Loop
-FDC_CE_EXIT:
-	popw	iz
-	ret
-FDC_SECTOR_XFER:
-	pushw	iz
-	ld	(FDC_RETRY_COUNT:16), 8
-	jrl	FDC_SECTOR_XFER_Join5
-FDC_SECTOR_XFER_Loop2:
-	ld	(FDC_ERROR_CODE:16), 0
-	calr	FDC_CmdSeek
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_SECTOR_XFER_Skip9
-	ld	a, (FDC_ERROR_CODE:16)
-	ldfr_berp a, 248
-	exts	iz
-	calr	FDC_CONFIG_VERIFY
-	ldto_berp	a, 248
-	stb_d8	(FDC_ERROR_CODE), a
-	jrl	FDC_SECTOR_XFER_Epilogue2
-FDC_SECTOR_XFER_Skip9:
-	ldw_d16	wa, (FDC_REQ_SECTOR)
-	cp	wa, (FDC_SECTOR_LIMIT:16)
-	jr	ule, FDC_SECTOR_XFER_Skip10
-	ldw	(FDC_REQ_SECTOR:16), 1
-FDC_SECTOR_XFER_Skip10:
-	ldmm16	0x8b10, FDC_REQ_SECTOR
-	ldw	(FDC_SECTOR_COUNT:16), 0
-	cp	(FDC_DRIVE_MODE:16), 2
-	jr	nz, FDC_SECTOR_XFER_Skip11
-	ldw	(FDC_SECTOR_SIZE:16), 1024
-	jr	FDC_SECTOR_XFER_Join3
-FDC_SECTOR_XFER_Skip11:
-	ldw	(FDC_SECTOR_SIZE:16), 512
-FDC_SECTOR_XFER_Join3:
-	ldmm16	0x8b12, FDC_REQ_COUNT
-	ld	iz, 1:i3
-FDC_SECTOR_XFER_Join4:
-	ld	wa, (FDC_SECTOR_SIZE:16)
-	add	(FDC_SECTOR_COUNT:16), wa
-	lda	xwa, (FDC_REQ_COUNT:16)
-	decm	1, (xwa)
-	ld	wa, (xwa)
-	cp	wa, 0:i3
-	jr	z, FDC_SECTOR_XFER_Skip12
-	lda	xwa, (FDC_REQ_SECTOR:16)
-	incw	1, (xwa)
-	ld	wa, (xwa)
-	cp	wa, (FDC_SECTOR_LIMIT:16)
-	jr	ugt, FDC_SECTOR_XFER_Skip12
-	inc	1, iz
-	jr	FDC_SECTOR_XFER_Join4
-FDC_SECTOR_XFER_Skip12:
-	ld	(FDC_REQ_COUNT:16), iz
-	ldmm16	FDC_REQ_SECTOR, 0x8b10
-	calr	FDC_SubmitWriteDataCmd
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_SECTOR_XFER_Skip14
-	cp	(FDC_ERROR_CODE:16), 9
-	jr	nz, FDC_SECTOR_XFER_Skip13
-	calr	FDC_INIT
-	calr	FDC_CONFIG_VERIFY
-	jrl	FDC_SECTOR_XFER_Epilogue2
-FDC_SECTOR_XFER_Skip13:
-	cp	(FDC_ERROR_CODE:16), 47
-	jr	z, FDC_SECTOR_XFER_Epilogue2
-	calr	FDC_CONFIG_VERIFY
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-	calr	FDC_CmdSeek
-	ldmm16	FDC_REQ_COUNT, 0x8b12
-	dec	1, (FDC_RETRY_COUNT:16)
-	ldb_d8	a, (FDC_RETRY_COUNT)
-	cp	a, 0:i3
-	jr	nz, FDC_SECTOR_XFER_Join5
-	ld	(FDC_ERROR_CODE:16), 32
-	jr	FDC_SECTOR_XFER_Epilogue2
-FDC_SECTOR_XFER_Skip14:
-	ld	wa, (0x8b12:16)
-	sub	wa, iz
-	ld	(FDC_REQ_COUNT:16), wa
-	cpw	(FDC_REQ_COUNT:16), 0
-	jr	z, FDC_SECTOR_XFER_Join5
-	lda	xbc, (FDC_REQ_BUFFER:16)
-	ld	wa, (FDC_SECTOR_COUNT:16)
-	extz	xwa
-	add	xwa, (xbc)
-	ld	(xbc), xwa
-	ldw	(FDC_REQ_SECTOR:16), 1
-	ld	(FDC_PARAM_R:16), 1
-	ld	a, (FDC_HEAD:16)
-	xor	a, 1
-	ld	(FDC_HEAD:16), a
-	ld	(FDC_PARAM_H:16), a
-	cp	(FDC_PARAM_H:16), 0
-	jr	nz, FDC_SECTOR_XFER_Join5
-	lda	xwa, (FDC_PARAM_C:16)
-	incm8	1, (xwa)
-	ld	a, (xwa)
-	ld	(FDC_TARGET_TRACK:16), a
-FDC_SECTOR_XFER_Join5:
-	cpw	(FDC_REQ_COUNT:16), 0
-	jrl	nz, FDC_SECTOR_XFER_Loop2
-FDC_SECTOR_XFER_Epilogue2:
-	popw	iz
-	ret
+FDC_CMD_EXEC:	.include "includes/generated/cc900/FDC_CMD_EXEC.s"	; C: cc900/fdc_routines_m270_xr_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CMD_EXEC_Skip, FDC_CMD_EXEC + 16
+	.set	FDC_CMD_EXEC_Skip2, FDC_CMD_EXEC + 31
+	.set	FDC_CMD_EXEC_Loop, FDC_CMD_EXEC + 39
+	.set	FDC_CMD_EXEC_Skip3, FDC_CMD_EXEC + 76
+	.set	FDC_CMD_EXEC_Skip4, FDC_CMD_EXEC + 92
+	.set	FDC_CMD_EXEC_Skip5, FDC_CMD_EXEC + 119
+	.set	FDC_CMD_EXEC_Join, FDC_CMD_EXEC + 125
+	.set	FDC_CMD_EXEC_Join2, FDC_CMD_EXEC + 133
+	.set	FDC_CMD_EXEC_Skip6, FDC_CMD_EXEC + 171
+	.set	FDC_CMD_EXEC_Skip7, FDC_CMD_EXEC + 204
+	.set	FDC_CMD_EXEC_Join3, FDC_CMD_EXEC + 224
+	.set	FDC_CMD_EXEC_Skip8, FDC_CMD_EXEC + 249
+	.set	FDC_CE_DISPATCH, FDC_CMD_EXEC + 326
+	.set	FDC_CE_EXIT, FDC_CMD_EXEC + 335
+FDC_SECTOR_XFER:	.include "includes/generated/cc900/FDC_SECTOR_XFER.s"	; C: cc900/fdc_routines_m270_xr_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_SECTOR_XFER_Loop2, FDC_SECTOR_XFER + 9
+	.set	FDC_SECTOR_XFER_Skip9, FDC_SECTOR_XFER + 46
+	.set	FDC_SECTOR_XFER_Skip10, FDC_SECTOR_XFER + 62
+	.set	FDC_SECTOR_XFER_Skip11, FDC_SECTOR_XFER + 89
+	.set	FDC_SECTOR_XFER_Join3, FDC_SECTOR_XFER + 95
+	.set	FDC_SECTOR_XFER_Join4, FDC_SECTOR_XFER + 103
+	.set	FDC_SECTOR_XFER_Skip12, FDC_SECTOR_XFER + 141
+	.set	FDC_SECTOR_XFER_Skip13, FDC_SECTOR_XFER + 177
+	.set	FDC_SECTOR_XFER_Skip14, FDC_SECTOR_XFER + 220
+	.set	FDC_SECTOR_XFER_Join5, FDC_SECTOR_XFER + 297
+	.set	FDC_SECTOR_XFER_Epilogue2, FDC_SECTOR_XFER + 306
 ; FDC_SubmitWriteDataCmd: Issues MT|MF WRITE DATA (0xC5): stores the opcode in 0x8A28, arms DMA channel 3 for
 ;   memory->I/O (FDC_Setup_DMA_Mode), clears the result buffer, sends the command with FDC_CMD_SEND and, if no error,
 ;   waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_SECTOR_XFER (write sectors, FDC command 4)
@@ -1304,81 +1118,15 @@ FDC_SubmitWriteDataCmd:
 ;   35372: side number, 35369: drive number
 ; Then enters sector counting/validation loop.
 ; Uses (R+d16) addressing for all state variables. 184 bytes.
-FDC_MODE_CONFIG:
-	calr	FDC_PRE_OP_CHECK
-	cp	(FDC_ERROR_CODE:16), 0
-	jrl	nz, FDC_MC_EXIT
-	calr	FDC_CmdSenseDriveStatus
-	cp	(FDC_ERROR_CODE:16), 0
-	jrl	nz, FDC_MC_EXIT
-	calr	FDC_CmdRecalibrate
-	cp	(FDC_ERROR_CODE:16), 0
-	jrl	nz, FDC_MC_EXIT
-	ld	a, (FDC_DRIVE_MODE:16)
-	cp	a, 2:i3
-	jr	z, FDC_MODE_CONFIG_Skip3
-	cp	a, 3:i3
-	jr	z, FDC_MODE_CONFIG_Skip2
-	cp	a, 5:i3
-	jr	z, FDC_MODE_CONFIG_Skip
-	cp	a, 4:i3
-	jr	z, FDC_MODE_CONFIG_Skip
-	cp	a, 0:i3
-	jr	nz, FDC_MODE_CONFIG_Join
-FDC_MODE_CONFIG_Skip:
-	ld	(FDC_PARAM_N:16), 2
-	ld	(FDC_FORMAT_GPL:16), 80
-	jr	FDC_MODE_CONFIG_Join
-FDC_MODE_CONFIG_Skip2:
-	ld	(FDC_PARAM_N:16), 2
-	ld	(FDC_FORMAT_GPL:16), 108
-	jr	FDC_MODE_CONFIG_Join
-FDC_MODE_CONFIG_Skip3:
-	ld	(FDC_PARAM_N:16), 3
-	ld	(FDC_FORMAT_GPL:16), 116
-FDC_MODE_CONFIG_Join:
-	ld	(FDC_TARGET_TRACK:16), 0
-	ld	(FDC_PARAM_C:16), 0
-	ld	(FDC_FORMAT_FILL:16), 229
-	ld	(FDC_PARAM_H:16), 0
-	ld	(FDC_HEAD:16), 0
-	jr	FDC_MODE_CONFIG_Join2
-FDC_MODE_CONFIG_Loop:
-	ldmm8	0x8a12, FDC_TARGET_TRACK
-	calr	FDC_FormatOneTrack
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_MC_EXIT
-	ld	a, (FDC_HEAD:16)
-	xor	a, 1
-	ld	(FDC_HEAD:16), a
-	ld	(FDC_PARAM_H:16), a
-	cp	(FDC_PARAM_H:16), 0
-	jr	nz, FDC_MODE_CONFIG_Join2
-	lda	xwa, (FDC_PARAM_C:16)
-	incm8	1, (xwa)
-	ld	a, (xwa)
-	ld	(FDC_TARGET_TRACK:16), a
-	ld	(0x8a12:16), a
-FDC_MODE_CONFIG_Join2:
-	ld	a, (FDC_TARGET_TRACK:16)
-	extz	wa
-	cp wa, (35592:16)
-	jr	ule, FDC_MODE_CONFIG_Loop
-; --- FDC_MC_EXIT: FORMAT command execution and sector fill ---
-; Calls cleanup, sets up FORMAT command (command byte 0x4d).
-; Loads format buffer address from 35440, stores to DMA source (35404).
-; Main loop fills format buffer with [track, head, sector, size] tuples:
-;   For each sector: load index, compute buffer[index] address,
-;   store track/head/sector/size bytes, increment byte count (35356).
-; Handles odd sector counts separately.
-; Tail: DMA transfer initiation and multi-sector retry logic.
-; Uses (R+d16) addressing for buffer and state access. 536 bytes.
-FDC_MC_EXIT:
-	cp	(FDC_ERROR_CODE:16), 0
-	call	nz, (FDC_CONFIG_VERIFY:24)
-	calr	FDC_CmdRecalibrate
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-	ret
+FDC_MODE_CONFIG:	.include "includes/generated/cc900/FDC_MODE_CONFIG.s"	; C: cc900/fdc_routines_m270_xr_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_MODE_CONFIG_Skip, FDC_MODE_CONFIG + 57
+	.set	FDC_MODE_CONFIG_Skip2, FDC_MODE_CONFIG + 69
+	.set	FDC_MODE_CONFIG_Skip3, FDC_MODE_CONFIG + 81
+	.set	FDC_MODE_CONFIG_Join, FDC_MODE_CONFIG + 91
+	.set	FDC_MODE_CONFIG_Loop, FDC_MODE_CONFIG + 118
+	.set	FDC_MODE_CONFIG_Join2, FDC_MODE_CONFIG + 172
+	.set	FDC_MC_EXIT, FDC_MODE_CONFIG + 184
 ; FDC_FormatOneTrack: Formats one side of the current track: seeks (FDC_CmdSeek; on an error leaves through
 ;   FDC_CONFIG_VERIFY), builds the C/H/R/N ID-field list in the buffer at (FDC_FORMAT_IDS) (FDC_MC_EXIT_Code_Helper2), sets
 ;   command 0x4D (MF FORMAT TRACK) in 0x8A28, points the DMA address 0x8A4C at the list and runs the transfer and

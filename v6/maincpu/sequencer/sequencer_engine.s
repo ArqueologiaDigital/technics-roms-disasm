@@ -25559,105 +25559,19 @@ FileIO_Read16Return:
 	popw iz
 	ret
 
-SeqLoad_ReadPartDataBlock:
-	lda	xsp, (xsp-10)
-	push	xiz
-	ld	(xsp+12), a
-	ld	a, (xsp+12)
-	extz	wa
-	add	wa, wa
-	lda	xde, (0x29b2:16)
-	cpw	(xde+wa), 0x0000
-	jr	nz, SeqLoad_ReadPartDataBlock_Skip2
-	ld	xhl, 0:i3
-	jrl	FileIO_SeekAndRead16BitValue_Epilogue
-SeqLoad_ReadPartDataBlock_Skip2:
-	ld	xwa, 2048
-	ld	(xsp+4), xwa
-	ldw (xsp+10), 0
-	ldw (xsp+8), 0
-	ld	c, (xsp+12)
-	extz	bc
-	cp	bc, 0:i3
-	jr	ule, SeqLoad_ReadPartDataBlock_Skip3
-SeqLoad_ReadPartDataBlock_Loop:
-	ld	wa, (xsp+8)
-	add	wa, wa
-	extz	xwa
-	add	xwa, xde
-	ld	hl, (xwa)
-	extz	xhl
-	sll	xhl, 8
-	add	(xsp+4), xhl
-	ld	wa, (xwa)
-	add	(xsp+10), wa
-	incw	1, (xsp+8)
-	cp	(xsp+8), bc
-	jr	c, SeqLoad_ReadPartDataBlock_Loop
-SeqLoad_ReadPartDataBlock_Skip3:
-	ld	xwa, 1:i3
-	add	(xsp+4), xwa
-	ldw	(xsp+8), 1
-	jr	SeqLoad_ReadPartDataBlock_Join
-SeqLoad_ReadPartDataBlock_Loop2:
-	ld	xwa, (xsp+4)
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip4
-	ldw	wa, 200
-	jr	SeqLoad_ReadPartDataBlock_Join2
-SeqLoad_ReadPartDataBlock_Skip4:
-	ld	xwa, (xsp+4)
-	inc	2, xwa
-	ld	bc, (xsp+10)
-	add	bc, (xsp+8)
-	inc	1, bc
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip5
-	ldw	wa, 201
-	jr	SeqLoad_ReadPartDataBlock_Join2
-SeqLoad_ReadPartDataBlock_Skip5:
-	ld	xwa, 256
-	add	(xsp+4), xwa
-	incw	1, (xsp+8)
-SeqLoad_ReadPartDataBlock_Join:
-	ld	l, (xsp+12)
-	extz	hl
-	add	hl, hl
-	lda	xde, (0x29b2:16)
-	ld	bc, (xsp+10)
-	add	bc, (xsp+8)
-	dec	1, bc
-	ld	wa, (xsp+8)
-	cp	wa, (xde+hl)
-	jr	c, SeqLoad_ReadPartDataBlock_Loop2
-	ld	xwa, (xsp+4)
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip6
-	ldw	wa, 202
-	jr	SeqLoad_ReadPartDataBlock_Join2
-SeqLoad_ReadPartDataBlock_Skip6:
-	ld	xwa, (xsp+4)
-	inc	2, xwa
-	ldw	bc, 0xffff
-	calr	FileIO_SeekAndRead16BitValue
-	ld	xiz, xhl
-	or	xiz, xiz
-	jr	z, SeqLoad_ReadPartDataBlock_Skip
-	ldw	wa, 203
-SeqLoad_ReadPartDataBlock_Join2:
-	call	SeqData_SetErrorCode
-SeqLoad_ReadPartDataBlock_Skip:
-	ld	xhl, xiz
-FileIO_SeekAndRead16BitValue_Epilogue:
-	pop	xiz
-	lda	xsp, (xsp+10)
-	ret
+SeqLoad_ReadPartDataBlock:	.include "includes/generated/cc900/SeqLoad_ReadPartDataBlock.s"	; C: cc900/sequencer_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqLoad_ReadPartDataBlock_Skip2, SeqLoad_ReadPartDataBlock + 32
+	.set	SeqLoad_ReadPartDataBlock_Loop, SeqLoad_ReadPartDataBlock + 59
+	.set	SeqLoad_ReadPartDataBlock_Skip3, SeqLoad_ReadPartDataBlock + 91
+	.set	SeqLoad_ReadPartDataBlock_Loop2, SeqLoad_ReadPartDataBlock + 103
+	.set	SeqLoad_ReadPartDataBlock_Skip4, SeqLoad_ReadPartDataBlock + 120
+	.set	SeqLoad_ReadPartDataBlock_Skip5, SeqLoad_ReadPartDataBlock + 147
+	.set	SeqLoad_ReadPartDataBlock_Join, SeqLoad_ReadPartDataBlock + 158
+	.set	SeqLoad_ReadPartDataBlock_Skip6, SeqLoad_ReadPartDataBlock + 204
+	.set	SeqLoad_ReadPartDataBlock_Join2, SeqLoad_ReadPartDataBlock + 224
+	.set	SeqLoad_ReadPartDataBlock_Skip, SeqLoad_ReadPartDataBlock + 228
+	.set	FileIO_SeekAndRead16BitValue_Epilogue, SeqLoad_ReadPartDataBlock + 230
 
 SeqLoad_CheckAutoAccompFlag:
 	ld wa, 0:i3
