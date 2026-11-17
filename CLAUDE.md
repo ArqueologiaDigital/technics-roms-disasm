@@ -215,18 +215,21 @@ Symbol reference files in `symbols/` provide address-to-name mappings for extern
 | `symbols/maincpu_v7_symbols_reference.txt`      | Main CPU v7                                       | 54,102  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v6_symbols_reference.txt`      | Main CPU v6                                       | 54,195  | 0xE00000 - 0xFFFFE8                                        |
 | `symbols/maincpu_v5_symbols_reference.txt`      | Main CPU v5                                       | 54,171  | 0xE00000 - 0xFFFFE8                                        |
-| `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,070   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
-| `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,069   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
-| `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,069   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_symbols_reference.txt`          | Sub CPU payload v1.42                             | 5,072   | 0x000400 - 0x0451CC (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_v141_symbols_reference.txt`     | Sub CPU payload v1.41                             | 5,071   | 0x000400 - 0x0451B4 (past the image: DRAM `.equ` symbols)  |
+| `symbols/subcpu_v140_symbols_reference.txt`     | Sub CPU payload v1.40                             | 5,071   | 0x000400 - 0x045180 (past the image: DRAM `.equ` symbols)  |
 | `symbols/subcpu_boot_symbols_reference.txt`     | Sub CPU boot                                      | 200     | 0xFF8000 - 0x1000000 (last row is the linker `end` marker) |
 | `symbols/table_data_symbols_reference.txt`      | Table data                                        | 4,762   | 0x800000 - 0x9FFEF0                                        |
-| `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,197   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
-| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 7,099   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
-| `symbols/hdae5000_v1_15i_symbols_reference.txt` | HDAE5000 expansion v1.15i                         | 6,709   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_symbols_reference.txt`        | HDAE5000 expansion                                | 7,200   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v2_01i_symbols_reference.txt` | HDAE5000 expansion v2.01i                         | 7,101   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
+| `symbols/hdae5000_v1_15i_symbols_reference.txt` | HDAE5000 expansion v1.15i                         | 6,703   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 | `symbols/hdae5000_v1_10i_symbols_reference.txt` | HDAE5000 expansion v1.10i                         | 6,690   | 0x280000 - 0x300000 (last row is the linker `end` marker)  |
 
 The two HD-AE5000 v1 rows were added 2026-10-30 (lane open/hdae-v1), from
-`l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.  The seven main-CPU rows were re-counted
+`l2_symbol_reference.py --regen --only hdae5000_v1_15i,hdae5000_v1_10i`.  The three sub-CPU payload rows and the
+four HD-AE5000 rows were re-counted 2026-11-17 (end of the cc900 C lanes: functions built from C, case tables as
+V4.23 data, `Int_ClampSignedToRange_B`), by counting the non-`#` rows of each file after `make gate` passed (its
+`--check` keeps the files equal to the build).  The seven main-CPU rows were re-counted
 2026-11-06 (lane open10/kernel4, the main CPU's kernel joined to `wsa1/kernel/kernel.s`), from
 `l2_symbol_reference.py --regen --only maincpu,maincpu_v10,maincpu_v9,maincpu_v8,maincpu_v7,maincpu_v6,maincpu_v5`,
 and again 2026-11-16 by the same command (cc900 phase 6: functions built from C keep their inner labels as `.set`
