@@ -1,0 +1,25 @@
+tree	function	bytes	matches	best_diff
+wsa1/prom_a	BitMask_PopCountByte	23	-	+0 ws_a_1@v110/Xr
+wsa1/prom_a	LCD_SetPanelDarkFlag	10	-	+0 ws_a_1@v423/none
+wsa1/prom_a	MIDI_Fg_StashFirstData	10	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Part0SecondRecord_StoreBytes	49	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Rec2330_CopyData	44	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Rec2330_CopyData25	47	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Var27DF_Get	8	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Var27DF_Set	6	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Var27F9_GetW	8	-	+0 ws_a_1@v423/none
+wsa1/prom_a	Var280C_SetW	6	-	+0 ws_a_1@v423/none
+wsa1/prom_b	CreatorSelect_ButtonCodeToBit	23	-	+0 ws_b_1@v423/none
+wsa1/prom_b	DspEffect_RepairS8	75	-	+0 ws_b_1@v423/none
+wsa1/prom_b	DspEffect_RepairU8	75	-	+0 ws_b_1@v423/none
+wsa1/prom_b	Pack3x7BitFields_Bytes6To8	48	-	+0 ws_b_1@v423/none
+wsa1/prom_b	Pack3x7BitFields_Bytes9To11	48	-	+0 ws_b_1@v423/none
+wsa1/prom_b	Queue2C00_Append4	53	-	+0 ws_b_1@v423/none
+wsa1/prom_c	Dev10C_SetChanReg_0100_0140_b	49	-	+0 ws_c_1@v423/none
+wsa1/prom_c	GlobalScale_StoreMode	6	-	+0 ws_c_1@v423/none
+wsa1/prom_c	MidiIn_StoreRingBacklog	9	-	+0 ws_c_1@v423/none
+wsa1/prom_c	MidiNote_StoreStatusBit3	9	-	+0 ws_c_1@v423/none
+wsa1/prom_c	PartRec_Word0004_ClearStagedSetBit2	39	-	+0 ws_c_1@v423/none
+wsa1/prom_c	Queue_FreeSlots	7	-	+0 ws_c_1@v423/none
+wsa1/prom_c	Rec0E3E_GroupOfIndex	27	-	+0 ws_c_1@v423/none
+wsa1/prom_c	Rec0E3E_IndexWithinGroup	44	-	+0 ws_c_1@v423/none
