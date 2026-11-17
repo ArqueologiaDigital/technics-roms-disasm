@@ -13,11 +13,11 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 385346       | 382242            | 5.075 %       | 368226           | 17120           |
-| reference model               | 32049        | 29137             | 0.387 %       | 14657            | 17392           |
+| Toshiba V4.23                 | 411329       | 408219            | 5.420 %       | 394209           | 17120           |
+| reference model               | 32100        | 29188             | 0.388 %       | 14708            | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
-All 20 images: 20643840 bytes, 7532032 of them census CODE.  Every version of an image counts on its own.
+All 20 images: 20643840 bytes, 7532026 of them census CODE.  Every version of an image counts on its own.
 
 ## Per image
 
@@ -35,22 +35,22 @@ All 20 images: 20643840 bytes, 7532032 of them census CODE.  Every version of an
 | v6         | 2097152 | 992951 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v5         | 2097152 | 991867 | firmware C | 523   | 29218 / 29204      | 2138 / 2138        | 0 / 0             | 0.216 %         | 0                     |
 | v5         | 2097152 | 991867 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v142       | 196608  | 128881 | firmware C | 403   | 30236 / 30210      | 466 / 466          | 0 / 0             | 0.362 %         | 0                     |
-| v142       | 196608  | 128881 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v141       | 196608  | 128858 | firmware C | 403   | 30236 / 30210      | 466 / 466          | 0 / 0             | 0.362 %         | 0                     |
-| v141       | 196608  | 128858 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v140       | 196608  | 128806 | firmware C | 403   | 30236 / 30210      | 466 / 466          | 0 / 0             | 0.362 %         | 0                     |
-| v140       | 196608  | 128806 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
+| v142       | 196608  | 128879 | firmware C | 447   | 37208 / 37180      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v142       | 196608  | 128879 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
+| v141       | 196608  | 128856 | firmware C | 447   | 37208 / 37180      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v141       | 196608  | 128856 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
+| v140       | 196608  | 128804 | firmware C | 447   | 37208 / 37180      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v140       | 196608  | 128804 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | subboot    | 131072  | 3604   | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | tabledata  | 2097152 | 19426  | library C  | 2     | 89 / 89            | 89 / 89            | 0 / 0             | 0.458 %         | 0                     |
 | customdata | 1048576 | 0      | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | -               | 0                     |
-| hdae5000   | 524288  | 112320 | firmware C | 172   | 39114 / 39110      | 147 / 147          | 0 / 0             | 0.131 %         | 0                     |
+| hdae5000   | 524288  | 112320 | firmware C | 186   | 43689 / 43685      | 147 / 147          | 0 / 0             | 0.131 %         | 0                     |
 | hdae5000   | 524288  | 112320 | library C  | 20    | 1156 / 900         | 1392 / 1136        | 0 / 0             | 1.011 %         | 0                     |
-| hdae_v201  | 524288  | 110472 | firmware C | 97    | 15141 / 15137      | 147 / 147          | 0 / 0             | 0.133 %         | 0                     |
+| hdae_v201  | 524288  | 110472 | firmware C | 101   | 15575 / 15571      | 147 / 147          | 0 / 0             | 0.133 %         | 0                     |
 | hdae_v201  | 524288  | 110472 | library C  | 20    | 1156 / 900         | 1392 / 1136        | 0 / 0             | 1.028 %         | 0                     |
-| hdae_v115  | 524288  | 95880  | firmware C | 67    | 8922 / 8918        | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
+| hdae_v115  | 524288  | 95880  | firmware C | 68    | 8951 / 8947        | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
 | hdae_v115  | 524288  | 95880  | library C  | 18    | 1061 / 805         | 1297 / 1041        | 0 / 0             | 1.086 %         | 0                     |
-| hdae_v110  | 524288  | 95630  | firmware C | 65    | 8453 / 8451        | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
+| hdae_v110  | 524288  | 95630  | firmware C | 66    | 8482 / 8480        | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
 | hdae_v110  | 524288  | 95630  | library C  | 18    | 1061 / 805         | 1297 / 1041        | 0 / 0             | 1.089 %         | 0                     |
 | prom_a     | 524288  | 325759 | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | prom_b     | 524288  | 206615 | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
@@ -3570,6 +3570,7 @@ found yet.
 | v142      | DSP2_SPI_ClockPulseHigh                            | v142/subcpu/cc900/audio_process_dsp_and_effects_inlinejr.c   | -Xr         | 186   | yes   | differs | MATCH                  | cache 4678aaf77ac8 |
 | v142      | DSP_WaitForDelay                                   | v142/subcpu/cc900/audio_process_dsp_and_effects_kernel.c     | -Xr         | 34    | yes   | differs | MATCH                  | cache a93999688532 |
 | v142      | DSP_WakeAudioTask                                  | v142/subcpu/cc900/audio_process_dsp_and_effects_kernel.c     | -Xr         | 6     | yes   | differs | MATCH                  | cache a93999688532 |
+| v142      | EFF_VolumeUpdate_WithDebug                         | v142/subcpu/cc900/audio_process_dsp_and_effects_n_17a.c      | -Xr         | 247   | yes   | differs | MATCH                  | cache cfbc444adb43 |
 | v142      | Audio_CmdHandler_20_3F                             | v142/subcpu/cc900/audio_system_init.c                        | -Xr         | 3     | yes   | MATCH   | MATCH                  | cache 124b7987778d |
 | v142      | Audio_CmdHandler_40_5F                             | v142/subcpu/cc900/audio_system_init.c                        | -Xr         | 22    | yes   | differs | MATCH                  | cache 124b7987778d |
 | v142      | Audio_InitRingBuffers                              | v142/subcpu/cc900/audio_system_init.c                        | -Xr         | 12    | yes   | MATCH   | MATCH                  | cache 124b7987778d |
@@ -3643,6 +3644,12 @@ found yet.
 | v142      | DSP_State_DmaLoadPresets                           | v142/subcpu/cc900/dsp_control_routines_kernel.c              | -Xr         | 32    | yes   | differs | MATCH                  | cache 8cfb116742a4 |
 | v142      | DSP_WriteLUTParamSet                               | v142/subcpu/cc900/dsp_control_routines_l_16a.c               | -Xr         | 331   | yes   | differs | MATCH                  | cache e08fdd10163c |
 | v142      | DSP_ParamInterp_Div0xC6                            | v142/subcpu/cc900/dsp_control_routines_l_16b.c               | -Xr         | 114   | yes   | differs | MATCH                  | cache e0b1fa057ea9 |
+| v142      | DSP_AlgoDescriptor_Emit                            | v142/subcpu/cc900/dsp_control_routines_n_17a.c               | -Xr         | 396   | yes   | differs | MATCH                  | cache 29da242247ce |
+| v142      | DSP_OscAlgoSelect                                  | v142/subcpu/cc900/dsp_control_routines_n_17a.c               | -Xr         | 337   | yes   | differs | MATCH                  | cache 29da242247ce |
+| v142      | DSP_ParamInterp_Div0xB4                            | v142/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 70    | yes   | differs | MATCH                  | cache c71d15fbfbaa |
+| v142      | DSP_PerParameterTranslator                         | v142/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 0     | yes   | differs | differs                | cache c71d15fbfbaa |
+| v142      | DSP_WriteOscParam                                  | v142/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 205   | yes   | differs | MATCH                  | cache c71d15fbfbaa |
+| v142      | DSP_WriteOscParam_Offset                           | v142/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 191   | yes   | differs | MATCH                  | cache c71d15fbfbaa |
 | v142      | AlgoType_AB_Checker                                | v142/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 63    | yes   | differs | MATCH                  | cache 782b56bd9890 |
 | v142      | DSP_ParamWrite_BlockCopy                           | v142/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 21    | yes   | differs | MATCH                  | cache 782b56bd9890 |
 | v142      | DSP_ReadVoiceParam11                               | v142/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 16    | yes   | differs | MATCH                  | cache 782b56bd9890 |
@@ -3678,6 +3685,14 @@ found yet.
 | v142      | DSP_SetCoeff_CopyDirect2                           | v142/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 69    | yes   | differs | MATCH                  | cache a21964315e76 |
 | v142      | DSP_System_Init                                    | v142/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 149   | yes   | differs | MATCH                  | cache a21964315e76 |
 | v142      | WaveSel_StageA1_FromToneSlot                       | v142/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 52    | yes   | differs | MATCH                  | cache a21964315e76 |
+| v142      | Algo67_LUTOffset_Check                             | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 147   | yes   | differs | MATCH                  | cache 1fc8d9206492 |
+| v142      | Algo_SubTable_Bit15Dispatch                        | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 0     | yes   | differs | differs                | cache 1fc8d9206492 |
+| v142      | Algo_SubTable_DispatchA                            | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 96    | yes   | differs | MATCH                  | cache 1fc8d9206492 |
+| v142      | Algo_SubTable_DispatchC                            | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 0     | yes   | differs | differs                | cache 1fc8d9206492 |
+| v142      | VoiceNoteParam_UpdateLoop                          | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 386   | yes   | differs | MATCH                  | cache 1fc8d9206492 |
+| v142      | WaveSel_StageA1_FromPatchBlock                     | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 134   | yes   | differs | MATCH                  | cache 1fc8d9206492 |
+| v142      | WaveSel_StageA2_FromToneRec                        | v142/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 124   | yes   | differs | MATCH                  | cache 1fc8d9206492 |
+| v142      | Voice_Part_ResetSlotRouting                        | v142/subcpu/cc900/dsp_voice_params_r_17b.c                   | -Xr         | 259   | yes   | differs | MATCH                  | cache e11930cd80c4 |
 | v142      | Audio_CmdHandler_00_1F                             | v142/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 52    | yes   | differs | MATCH                  | cache acc0820ffab8 |
 | v142      | DSP_GetEffectRouting                               | v142/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 40    | yes   | MATCH   | MATCH                  | cache acc0820ffab8 |
 | v142      | DSP_ResetAlgoDefaults                              | v142/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 43    | yes   | differs | MATCH                  | cache acc0820ffab8 |
@@ -3691,6 +3706,7 @@ found yet.
 | v142      | RingBuf_Write4K                                    | v142/subcpu/cc900/ringbuf_and_midi_dispatch_d_7a.c           | -Xr         | 24    | yes   | differs | MATCH                  | cache 8bf87e4d24f4 |
 | v142      | MIDI_Dispatch                                      | v142/subcpu/cc900/ringbuf_and_midi_dispatch_d_8a.c           | -Xr         | 595   | yes   | differs | MATCH                  | cache 5e9a4b0dca7d |
 | v142      | ToneGen_SetupPercussionVoice                       | v142/subcpu/cc900/ringbuf_and_midi_dispatch_d_9a.c           | -Xr         | 115   | yes   | differs | MATCH                  | cache 7195304fa776 |
+| v142      | ToneGen_SetupPolyVoice                             | v142/subcpu/cc900/ringbuf_and_midi_dispatch_n_17a.c          | -Xr         | 169   | yes   | differs | MATCH                  | cache 10804e53e0b3 |
 | v142      | Serial1_DataTransmit_Loop                          | v142/subcpu/cc900/subcpu_data_tables_o3xr_e_8a.c             | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache 8d92ffa39694 |
 | v142      | RingBuf_Reset_1K                                   | v142/subcpu/cc900/task_scheduler_kernel.c                    | -Xr         | 26    | yes   | differs | MATCH                  | cache df00e195d642 |
 | v142      | RingBuf_Reset_256                                  | v142/subcpu/cc900/task_scheduler_kernel.c                    | -Xr         | 26    | yes   | differs | MATCH                  | cache df00e195d642 |
@@ -3731,6 +3747,11 @@ found yet.
 | v142      | Voice_Init_Type2                                   | v142/subcpu/cc900/voice_ctrlchange_callnames.c               | -Xr         | 117   | yes   | differs | MATCH                  | cache 0c233098a60b |
 | v142      | Voice_Release_Type4                                | v142/subcpu/cc900/voice_ctrlchange_callnames2.c              | -Xr         | 177   | yes   | differs | MATCH                  | cache c90a1394b0c1 |
 | v142      | Voice_PortamentoTarget_ComputePitch                | v142/subcpu/cc900/voice_ctrlchange_m_16a.c                   | -Xr         | 115   | yes   | differs | MATCH (name cut to 31) | cache 8f8be8bc07ad |
+| v142      | Voice_PitchBend                                    | v142/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 130   | yes   | differs | MATCH                  | cache 9353e34ce79b |
+| v142      | Voice_PortamentoTarget_SetSlot                     | v142/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 41    | yes   | differs | MATCH                  | cache 9353e34ce79b |
+| v142      | Voice_Selector_ComputeMixWeights                   | v142/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 190   | yes   | differs | MATCH (name cut to 31) | cache 9353e34ce79b |
+| v142      | Voice_Slot_ComputePitch                            | v142/subcpu/cc900/voice_ctrlchange_p_17b.c                   | -Xr         | 179   | yes   | differs | MATCH                  | cache 01af8b83b6d6 |
+| v142      | Voice_PortamentoTargets_SetAll                     | v142/subcpu/cc900/voice_ctrlchange_p_17c.c                   | -Xr         | 175   | yes   | differs | MATCH                  | cache 0a32956d3805 |
 | v142      | Audio_Clamp_To_Range                               | v142/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 17    | yes   | MATCH   | MATCH                  | cache 3c8bcf390de9 |
 | v142      | Pitch_Bend_Ramp_Tick                               | v142/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 231   | yes   | differs | MATCH                  | cache 3c8bcf390de9 |
 | v142      | ScaleTune_Get_Global_Mode                          | v142/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache 3c8bcf390de9 |
@@ -3795,6 +3816,19 @@ found yet.
 | v142      | ScaleTune_Set_User_Offset                          | v142/subcpu/cc900/voice_envelopes_and_channels_h_14c.c       | -Xr         | 20    | yes   | differs | MATCH                  | cache a408ea9bab4f |
 | v142      | ToneGen_WriteVoice_Direct                          | v142/subcpu/cc900/voice_envelopes_and_channels_inlinejr.c    | -Xr         | 27    | yes   | differs | MATCH                  | cache 79b47d565efc |
 | v142      | Voice_InitVoiceState                               | v142/subcpu/cc900/voice_envelopes_and_channels_m_16b.c       | -Xr         | 192   | yes   | differs | MATCH                  | cache 2abe53b3e9af |
+| v142      | AudioChannel_Handler_Cmd01                         | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 77    | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | AudioChannel_Handler_Cmd02                         | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 124   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | AudioChannel_Handler_Cmd03                         | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 62    | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Int_ClampSignedToRange_B                           | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 17    | yes   | MATCH   | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_AllVoices_UpdateVelocity                     | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 245   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_ApplyPortamento2                             | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 84    | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_Calc_LevelPair_EGC                           | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 306   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_Step_DelayTimers                             | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 104   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_WriteChPanShift                              | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 280   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_WriteChPanShift2                             | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 280   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | Voice_WriteChPitchWithVib                          | v142/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 145   | yes   | differs | MATCH                  | cache 6d806fd35129 |
+| v142      | AudioMod_Apply_BusRouting                          | v142/subcpu/cc900/voice_envelopes_and_channels_q_17b.c       | -Xr         | 234   | yes   | differs | MATCH                  | cache c4bbbc2bec45 |
+| v142      | Voice_ToneTableRamp_Up                             | v142/subcpu/cc900/voice_envelopes_and_channels_q_17c.c       | -Xr         | 165   | yes   | differs | MATCH                  | cache 6a9be0384e3a |
 | v142      | BlockCopy_Words_BC_to_HL                           | v142/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 21    | yes   | differs | MATCH                  | cache 8f573e08ba90 |
 | v142      | DSP_EffectStateQuery                               | v142/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 32    | yes   | differs | MATCH                  | cache 8f573e08ba90 |
 | v142      | ToneGen_Mute_Reg05C0                               | v142/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 29    | yes   | differs | MATCH                  | cache 8f573e08ba90 |
@@ -3816,6 +3850,11 @@ found yet.
 | v142      | DSP_Config_Init                                    | v142/subcpu/cc900/voice_noteon_and_tonegen_j_15b.c           | -Xr         | 270   | yes   | differs | MATCH                  | cache 3c6c96c9347d |
 | v142      | Audio_Cmd_ToneEdit_Dispatch                        | v142/subcpu/cc900/voice_noteon_and_tonegen_k_16a.c           | -Xr         | 0     | yes   | differs | differs                | cache 7a0ea1538334 |
 | v142      | CustomTone_CopyToneRecord                          | v142/subcpu/cc900/voice_noteon_and_tonegen_m_16a.c           | -Xr         | 69    | yes   | differs | MATCH                  | cache d43bf2ce757d |
+| v142      | DSP_SlotParam_Read_To_Cache                        | v142/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 105   | yes   | differs | MATCH                  | cache fc7079f86a61 |
+| v142      | DSP_SlotParam_Write_From_Cache                     | v142/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 332   | yes   | differs | MATCH                  | cache fc7079f86a61 |
+| v142      | DSP_SlotParam_Write_From_Cache_B                   | v142/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 341   | yes   | differs | MATCH (name cut to 31) | cache fc7079f86a61 |
+| v142      | CustomTone_CopySubUnitRecord                       | v142/subcpu/cc900/voice_noteon_and_tonegen_r_17c.c           | -Xr         | 89    | yes   | differs | MATCH                  | cache 0778ebf087e8 |
+| v142      | VoiceSubSlot_Init                                  | v142/subcpu/cc900/voice_noteon_and_tonegen_r_17c.c           | -Xr         | 61    | yes   | differs | MATCH                  | cache 0778ebf087e8 |
 | v142      | CheckStatusBits_40                                 | v142/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache 6e1ab275eb11 |
 | v142      | CheckStatusBits_80                                 | v142/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache 6e1ab275eb11 |
 | v142      | Voice_Part_Mode_Is_C0                              | v142/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache 6e1ab275eb11 |
@@ -3907,6 +3946,11 @@ found yet.
 | v142      | TVF_Emit_Registers                                 | v142/subcpu/cc900/voice_params_and_tvf_k_16a.c               | -Xr         | 0     | yes   | differs | differs                | cache 3a0e7145183e |
 | v142      | TVF_Emit_Registers_Type2                           | v142/subcpu/cc900/voice_params_and_tvf_k_16a.c               | -Xr         | 0     | yes   | differs | differs                | cache 3a0e7145183e |
 | v142      | Voice_Build_OutputLevel                            | v142/subcpu/cc900/voice_params_and_tvf_m_16a.c               | -Xr         | 97    | yes   | differs | MATCH                  | cache ffcf5d855d11 |
+| v142      | EGEnv_Compute_A                                    | v142/subcpu/cc900/voice_params_and_tvf_n_17a.c               | -Xr         | 144   | yes   | differs | MATCH                  | cache 775b5ae349a8 |
+| v142      | OutputBuf_Flush_B                                  | v142/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 97    | yes   | differs | MATCH                  | cache 24c0e84e9dd8 |
+| v142      | TVF_Build_Dispatch                                 | v142/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 0     | yes   | differs | differs                | cache 24c0e84e9dd8 |
+| v142      | TVF_Emit_Offset_Reg100                             | v142/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 102   | yes   | differs | MATCH                  | cache 24c0e84e9dd8 |
+| v142      | Voice_AdvanceSlotIterator                          | v142/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 102   | yes   | differs | MATCH                  | cache 24c0e84e9dd8 |
 | v142      | EnvDepth_Cap                                       | v142/subcpu/cc900/voice_params_and_tvf_runtime.c             | -Xr         | 51    | yes   | differs | MATCH                  | cache ce51e74d133a |
 | v142      | Voice_Vol_ScaleVelocityWord                        | v142/subcpu/cc900/voice_params_and_tvf_runtime.c             | -Xr         | 36    | yes   | differs | MATCH                  | cache ce51e74d133a |
 | v141      | DSP_AlgoChange_CheckAndFlag                        | v141/subcpu/cc900/audio_process_dsp_and_effects.c            | -Xr         | 37    | yes   | differs | MATCH                  | cache bcd007408e96 |
@@ -3973,6 +4017,7 @@ found yet.
 | v141      | DSP2_SPI_ClockPulseHigh                            | v141/subcpu/cc900/audio_process_dsp_and_effects_inlinejr.c   | -Xr         | 186   | yes   | differs | MATCH                  | cache 2d87514f1895 |
 | v141      | DSP_WaitForDelay                                   | v141/subcpu/cc900/audio_process_dsp_and_effects_kernel.c     | -Xr         | 34    | yes   | differs | MATCH                  | cache bfe796082f4c |
 | v141      | DSP_WakeAudioTask                                  | v141/subcpu/cc900/audio_process_dsp_and_effects_kernel.c     | -Xr         | 6     | yes   | differs | MATCH                  | cache bfe796082f4c |
+| v141      | EFF_VolumeUpdate_WithDebug                         | v141/subcpu/cc900/audio_process_dsp_and_effects_n_17a.c      | -Xr         | 247   | yes   | differs | MATCH                  | cache cfbc444adb43 |
 | v141      | Audio_CmdHandler_20_3F                             | v141/subcpu/cc900/audio_system_init.c                        | -Xr         | 3     | yes   | MATCH   | MATCH                  | cache 124b7987778d |
 | v141      | Audio_CmdHandler_40_5F                             | v141/subcpu/cc900/audio_system_init.c                        | -Xr         | 22    | yes   | differs | MATCH                  | cache 124b7987778d |
 | v141      | Audio_InitRingBuffers                              | v141/subcpu/cc900/audio_system_init.c                        | -Xr         | 12    | yes   | MATCH   | MATCH                  | cache 124b7987778d |
@@ -4046,6 +4091,12 @@ found yet.
 | v141      | DSP_State_DmaLoadPresets                           | v141/subcpu/cc900/dsp_control_routines_kernel.c              | -Xr         | 32    | yes   | differs | MATCH                  | cache 72dad1b73fd9 |
 | v141      | DSP_WriteLUTParamSet                               | v141/subcpu/cc900/dsp_control_routines_l_16a.c               | -Xr         | 331   | yes   | differs | MATCH                  | cache e08fdd10163c |
 | v141      | DSP_ParamInterp_Div0xC6                            | v141/subcpu/cc900/dsp_control_routines_l_16b.c               | -Xr         | 114   | yes   | differs | MATCH                  | cache e0b1fa057ea9 |
+| v141      | DSP_AlgoDescriptor_Emit                            | v141/subcpu/cc900/dsp_control_routines_n_17a.c               | -Xr         | 396   | yes   | differs | MATCH                  | cache 29da242247ce |
+| v141      | DSP_OscAlgoSelect                                  | v141/subcpu/cc900/dsp_control_routines_n_17a.c               | -Xr         | 337   | yes   | differs | MATCH                  | cache 29da242247ce |
+| v141      | DSP_ParamInterp_Div0xB4                            | v141/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 70    | yes   | differs | MATCH                  | cache c71d15fbfbaa |
+| v141      | DSP_PerParameterTranslator                         | v141/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 0     | yes   | differs | differs                | cache c71d15fbfbaa |
+| v141      | DSP_WriteOscParam                                  | v141/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 205   | yes   | differs | MATCH                  | cache c71d15fbfbaa |
+| v141      | DSP_WriteOscParam_Offset                           | v141/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 191   | yes   | differs | MATCH                  | cache c71d15fbfbaa |
 | v141      | AlgoType_AB_Checker                                | v141/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 63    | yes   | differs | MATCH                  | cache be031120c641 |
 | v141      | DSP_ParamWrite_BlockCopy                           | v141/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 21    | yes   | differs | MATCH                  | cache be031120c641 |
 | v141      | DSP_ReadVoiceParam11                               | v141/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 16    | yes   | differs | MATCH                  | cache be031120c641 |
@@ -4081,6 +4132,14 @@ found yet.
 | v141      | DSP_SetCoeff_CopyDirect2                           | v141/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 69    | yes   | differs | MATCH                  | cache 4fa513795cdb |
 | v141      | DSP_System_Init                                    | v141/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 149   | yes   | differs | MATCH                  | cache 4fa513795cdb |
 | v141      | WaveSel_StageA1_FromToneSlot                       | v141/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 52    | yes   | differs | MATCH                  | cache 4fa513795cdb |
+| v141      | Algo67_LUTOffset_Check                             | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 147   | yes   | differs | MATCH                  | cache 3c5999ce56be |
+| v141      | Algo_SubTable_Bit15Dispatch                        | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 0     | yes   | differs | differs                | cache 3c5999ce56be |
+| v141      | Algo_SubTable_DispatchA                            | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 96    | yes   | differs | MATCH                  | cache 3c5999ce56be |
+| v141      | Algo_SubTable_DispatchC                            | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 0     | yes   | differs | differs                | cache 3c5999ce56be |
+| v141      | VoiceNoteParam_UpdateLoop                          | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 386   | yes   | differs | MATCH                  | cache 3c5999ce56be |
+| v141      | WaveSel_StageA1_FromPatchBlock                     | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 134   | yes   | differs | MATCH                  | cache 3c5999ce56be |
+| v141      | WaveSel_StageA2_FromToneRec                        | v141/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 124   | yes   | differs | MATCH                  | cache 3c5999ce56be |
+| v141      | Voice_Part_ResetSlotRouting                        | v141/subcpu/cc900/dsp_voice_params_r_17b.c                   | -Xr         | 259   | yes   | differs | MATCH                  | cache 31312183b417 |
 | v141      | Audio_CmdHandler_00_1F                             | v141/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 52    | yes   | differs | MATCH                  | cache c21614165a58 |
 | v141      | DSP_GetEffectRouting                               | v141/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 40    | yes   | MATCH   | MATCH                  | cache c21614165a58 |
 | v141      | DSP_ResetAlgoDefaults                              | v141/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 43    | yes   | differs | MATCH                  | cache c21614165a58 |
@@ -4094,6 +4153,7 @@ found yet.
 | v141      | RingBuf_Write4K                                    | v141/subcpu/cc900/ringbuf_and_midi_dispatch_d_7a.c           | -Xr         | 24    | yes   | differs | MATCH                  | cache 8bf87e4d24f4 |
 | v141      | MIDI_Dispatch                                      | v141/subcpu/cc900/ringbuf_and_midi_dispatch_d_8a.c           | -Xr         | 595   | yes   | differs | MATCH                  | cache 5e9a4b0dca7d |
 | v141      | ToneGen_SetupPercussionVoice                       | v141/subcpu/cc900/ringbuf_and_midi_dispatch_d_9a.c           | -Xr         | 115   | yes   | differs | MATCH                  | cache 7195304fa776 |
+| v141      | ToneGen_SetupPolyVoice                             | v141/subcpu/cc900/ringbuf_and_midi_dispatch_n_17a.c          | -Xr         | 169   | yes   | differs | MATCH                  | cache 10804e53e0b3 |
 | v141      | Serial1_DataTransmit_Loop                          | v141/subcpu/cc900/subcpu_data_tables_o3xr_e_8a.c             | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache 8d92ffa39694 |
 | v141      | RingBuf_Reset_1K                                   | v141/subcpu/cc900/task_scheduler_kernel.c                    | -Xr         | 26    | yes   | differs | MATCH                  | cache df00e195d642 |
 | v141      | RingBuf_Reset_256                                  | v141/subcpu/cc900/task_scheduler_kernel.c                    | -Xr         | 26    | yes   | differs | MATCH                  | cache df00e195d642 |
@@ -4134,6 +4194,11 @@ found yet.
 | v141      | Voice_Init_Type2                                   | v141/subcpu/cc900/voice_ctrlchange_callnames.c               | -Xr         | 117   | yes   | differs | MATCH                  | cache 15a9fbb23e18 |
 | v141      | Voice_Release_Type4                                | v141/subcpu/cc900/voice_ctrlchange_callnames2.c              | -Xr         | 177   | yes   | differs | MATCH                  | cache 2e38193ad067 |
 | v141      | Voice_PortamentoTarget_ComputePitch                | v141/subcpu/cc900/voice_ctrlchange_m_16a.c                   | -Xr         | 115   | yes   | differs | MATCH (name cut to 31) | cache e45fe4fcf363 |
+| v141      | Voice_PitchBend                                    | v141/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 130   | yes   | differs | MATCH                  | cache 194f36cef861 |
+| v141      | Voice_PortamentoTarget_SetSlot                     | v141/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 41    | yes   | differs | MATCH                  | cache 194f36cef861 |
+| v141      | Voice_Selector_ComputeMixWeights                   | v141/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 190   | yes   | differs | MATCH (name cut to 31) | cache 194f36cef861 |
+| v141      | Voice_Slot_ComputePitch                            | v141/subcpu/cc900/voice_ctrlchange_p_17b.c                   | -Xr         | 179   | yes   | differs | MATCH                  | cache 334a105b2bbb |
+| v141      | Voice_PortamentoTargets_SetAll                     | v141/subcpu/cc900/voice_ctrlchange_p_17c.c                   | -Xr         | 175   | yes   | differs | MATCH                  | cache a774e03611d0 |
 | v141      | Audio_Clamp_To_Range                               | v141/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 17    | yes   | MATCH   | MATCH                  | cache a33fe685f51c |
 | v141      | Pitch_Bend_Ramp_Tick                               | v141/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 231   | yes   | differs | MATCH                  | cache a33fe685f51c |
 | v141      | ScaleTune_Get_Global_Mode                          | v141/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache a33fe685f51c |
@@ -4198,6 +4263,19 @@ found yet.
 | v141      | ScaleTune_Set_User_Offset                          | v141/subcpu/cc900/voice_envelopes_and_channels_h_14c.c       | -Xr         | 20    | yes   | differs | MATCH                  | cache 9178cf1eaf18 |
 | v141      | ToneGen_WriteVoice_Direct                          | v141/subcpu/cc900/voice_envelopes_and_channels_inlinejr.c    | -Xr         | 27    | yes   | differs | MATCH                  | cache 77103d85fef5 |
 | v141      | Voice_InitVoiceState                               | v141/subcpu/cc900/voice_envelopes_and_channels_m_16b.c       | -Xr         | 192   | yes   | differs | MATCH                  | cache 400efb481d68 |
+| v141      | AudioChannel_Handler_Cmd01                         | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 77    | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | AudioChannel_Handler_Cmd02                         | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 124   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | AudioChannel_Handler_Cmd03                         | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 62    | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Int_ClampSignedToRange_B                           | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 17    | yes   | MATCH   | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_AllVoices_UpdateVelocity                     | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 245   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_ApplyPortamento2                             | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 84    | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_Calc_LevelPair_EGC                           | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 306   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_Step_DelayTimers                             | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 104   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_WriteChPanShift                              | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 280   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_WriteChPanShift2                             | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 280   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | Voice_WriteChPitchWithVib                          | v141/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 145   | yes   | differs | MATCH                  | cache 7581ea078fd9 |
+| v141      | AudioMod_Apply_BusRouting                          | v141/subcpu/cc900/voice_envelopes_and_channels_q_17b.c       | -Xr         | 234   | yes   | differs | MATCH                  | cache 95bcd79c4653 |
+| v141      | Voice_ToneTableRamp_Up                             | v141/subcpu/cc900/voice_envelopes_and_channels_q_17c.c       | -Xr         | 165   | yes   | differs | MATCH                  | cache 6a9be0384e3a |
 | v141      | BlockCopy_Words_BC_to_HL                           | v141/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 21    | yes   | differs | MATCH                  | cache bfc7f3c0f569 |
 | v141      | DSP_EffectStateQuery                               | v141/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 32    | yes   | differs | MATCH                  | cache bfc7f3c0f569 |
 | v141      | ToneGen_Mute_Reg05C0                               | v141/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 29    | yes   | differs | MATCH                  | cache bfc7f3c0f569 |
@@ -4219,6 +4297,11 @@ found yet.
 | v141      | DSP_Config_Init                                    | v141/subcpu/cc900/voice_noteon_and_tonegen_j_15b.c           | -Xr         | 270   | yes   | differs | MATCH                  | cache 3c6c96c9347d |
 | v141      | Audio_Cmd_ToneEdit_Dispatch                        | v141/subcpu/cc900/voice_noteon_and_tonegen_k_16a.c           | -Xr         | 0     | yes   | differs | differs                | cache cb987baa4c18 |
 | v141      | CustomTone_CopyToneRecord                          | v141/subcpu/cc900/voice_noteon_and_tonegen_m_16a.c           | -Xr         | 69    | yes   | differs | MATCH                  | cache 05cb3cc72766 |
+| v141      | DSP_SlotParam_Read_To_Cache                        | v141/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 105   | yes   | differs | MATCH                  | cache e9dffd862ab1 |
+| v141      | DSP_SlotParam_Write_From_Cache                     | v141/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 332   | yes   | differs | MATCH                  | cache e9dffd862ab1 |
+| v141      | DSP_SlotParam_Write_From_Cache_B                   | v141/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 341   | yes   | differs | MATCH (name cut to 31) | cache e9dffd862ab1 |
+| v141      | CustomTone_CopySubUnitRecord                       | v141/subcpu/cc900/voice_noteon_and_tonegen_r_17c.c           | -Xr         | 89    | yes   | differs | MATCH                  | cache 2d55bae1b85e |
+| v141      | VoiceSubSlot_Init                                  | v141/subcpu/cc900/voice_noteon_and_tonegen_r_17c.c           | -Xr         | 61    | yes   | differs | MATCH                  | cache 2d55bae1b85e |
 | v141      | CheckStatusBits_40                                 | v141/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache cf0faf21723d |
 | v141      | CheckStatusBits_80                                 | v141/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache cf0faf21723d |
 | v141      | Voice_Part_Mode_Is_C0                              | v141/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache cf0faf21723d |
@@ -4310,6 +4393,11 @@ found yet.
 | v141      | TVF_Emit_Registers                                 | v141/subcpu/cc900/voice_params_and_tvf_k_16a.c               | -Xr         | 0     | yes   | differs | differs                | cache 1a08a1f1fd7a |
 | v141      | TVF_Emit_Registers_Type2                           | v141/subcpu/cc900/voice_params_and_tvf_k_16a.c               | -Xr         | 0     | yes   | differs | differs                | cache 1a08a1f1fd7a |
 | v141      | Voice_Build_OutputLevel                            | v141/subcpu/cc900/voice_params_and_tvf_m_16a.c               | -Xr         | 97    | yes   | differs | MATCH                  | cache 7706e8f542d6 |
+| v141      | EGEnv_Compute_A                                    | v141/subcpu/cc900/voice_params_and_tvf_n_17a.c               | -Xr         | 144   | yes   | differs | MATCH                  | cache b58098fa5bf2 |
+| v141      | OutputBuf_Flush_B                                  | v141/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 97    | yes   | differs | MATCH                  | cache c27f7de632ee |
+| v141      | TVF_Build_Dispatch                                 | v141/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 0     | yes   | differs | differs                | cache c27f7de632ee |
+| v141      | TVF_Emit_Offset_Reg100                             | v141/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 102   | yes   | differs | MATCH                  | cache c27f7de632ee |
+| v141      | Voice_AdvanceSlotIterator                          | v141/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 102   | yes   | differs | MATCH                  | cache c27f7de632ee |
 | v141      | EnvDepth_Cap                                       | v141/subcpu/cc900/voice_params_and_tvf_runtime.c             | -Xr         | 51    | yes   | differs | MATCH                  | cache e3d3f47a9dc3 |
 | v141      | Voice_Vol_ScaleVelocityWord                        | v141/subcpu/cc900/voice_params_and_tvf_runtime.c             | -Xr         | 36    | yes   | differs | MATCH                  | cache e3d3f47a9dc3 |
 | v140      | DSP_AlgoChange_CheckAndFlag                        | v140/subcpu/cc900/audio_process_dsp_and_effects.c            | -Xr         | 37    | yes   | differs | MATCH                  | cache 789c36845af4 |
@@ -4376,6 +4464,7 @@ found yet.
 | v140      | DSP2_SPI_ClockPulseHigh                            | v140/subcpu/cc900/audio_process_dsp_and_effects_inlinejr.c   | -Xr         | 186   | yes   | differs | MATCH                  | cache 969249670451 |
 | v140      | DSP_WaitForDelay                                   | v140/subcpu/cc900/audio_process_dsp_and_effects_kernel.c     | -Xr         | 34    | yes   | differs | MATCH                  | cache 4ecc3496704d |
 | v140      | DSP_WakeAudioTask                                  | v140/subcpu/cc900/audio_process_dsp_and_effects_kernel.c     | -Xr         | 6     | yes   | differs | MATCH                  | cache 4ecc3496704d |
+| v140      | EFF_VolumeUpdate_WithDebug                         | v140/subcpu/cc900/audio_process_dsp_and_effects_n_17a.c      | -Xr         | 247   | yes   | differs | MATCH                  | cache cfbc444adb43 |
 | v140      | Audio_CmdHandler_20_3F                             | v140/subcpu/cc900/audio_system_init.c                        | -Xr         | 3     | yes   | MATCH   | MATCH                  | cache 124b7987778d |
 | v140      | Audio_CmdHandler_40_5F                             | v140/subcpu/cc900/audio_system_init.c                        | -Xr         | 22    | yes   | differs | MATCH                  | cache 124b7987778d |
 | v140      | Audio_InitRingBuffers                              | v140/subcpu/cc900/audio_system_init.c                        | -Xr         | 12    | yes   | MATCH   | MATCH                  | cache 124b7987778d |
@@ -4449,6 +4538,12 @@ found yet.
 | v140      | DSP_State_DmaLoadPresets                           | v140/subcpu/cc900/dsp_control_routines_kernel.c              | -Xr         | 32    | yes   | differs | MATCH                  | cache 90c93a30a12d |
 | v140      | DSP_WriteLUTParamSet                               | v140/subcpu/cc900/dsp_control_routines_l_16a.c               | -Xr         | 331   | yes   | differs | MATCH                  | cache e08fdd10163c |
 | v140      | DSP_ParamInterp_Div0xC6                            | v140/subcpu/cc900/dsp_control_routines_l_16b.c               | -Xr         | 114   | yes   | differs | MATCH                  | cache e0b1fa057ea9 |
+| v140      | DSP_AlgoDescriptor_Emit                            | v140/subcpu/cc900/dsp_control_routines_n_17a.c               | -Xr         | 396   | yes   | differs | MATCH                  | cache 29da242247ce |
+| v140      | DSP_OscAlgoSelect                                  | v140/subcpu/cc900/dsp_control_routines_n_17a.c               | -Xr         | 337   | yes   | differs | MATCH                  | cache 29da242247ce |
+| v140      | DSP_ParamInterp_Div0xB4                            | v140/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 70    | yes   | differs | MATCH                  | cache c71d15fbfbaa |
+| v140      | DSP_PerParameterTranslator                         | v140/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 0     | yes   | differs | differs                | cache c71d15fbfbaa |
+| v140      | DSP_WriteOscParam                                  | v140/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 205   | yes   | differs | MATCH                  | cache c71d15fbfbaa |
+| v140      | DSP_WriteOscParam_Offset                           | v140/subcpu/cc900/dsp_control_routines_s_17a.c               | -Xr         | 191   | yes   | differs | MATCH                  | cache c71d15fbfbaa |
 | v140      | AlgoType_AB_Checker                                | v140/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 63    | yes   | differs | MATCH                  | cache c92773ac7f80 |
 | v140      | DSP_ParamWrite_BlockCopy                           | v140/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 21    | yes   | differs | MATCH                  | cache c92773ac7f80 |
 | v140      | DSP_ReadVoiceParam11                               | v140/subcpu/cc900/dsp_voice_params.c                         | -Xr         | 16    | yes   | differs | MATCH                  | cache c92773ac7f80 |
@@ -4484,6 +4579,14 @@ found yet.
 | v140      | DSP_SetCoeff_CopyDirect2                           | v140/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 69    | yes   | differs | MATCH                  | cache 2efa559ca2d6 |
 | v140      | DSP_System_Init                                    | v140/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 149   | yes   | differs | MATCH                  | cache 2efa559ca2d6 |
 | v140      | WaveSel_StageA1_FromToneSlot                       | v140/subcpu/cc900/dsp_voice_params_d_9a.c                    | -Xr         | 52    | yes   | differs | MATCH                  | cache 2efa559ca2d6 |
+| v140      | Algo67_LUTOffset_Check                             | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 147   | yes   | differs | MATCH                  | cache d449eb5f49dd |
+| v140      | Algo_SubTable_Bit15Dispatch                        | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 0     | yes   | differs | differs                | cache d449eb5f49dd |
+| v140      | Algo_SubTable_DispatchA                            | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 96    | yes   | differs | MATCH                  | cache d449eb5f49dd |
+| v140      | Algo_SubTable_DispatchC                            | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 0     | yes   | differs | differs                | cache d449eb5f49dd |
+| v140      | VoiceNoteParam_UpdateLoop                          | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 386   | yes   | differs | MATCH                  | cache d449eb5f49dd |
+| v140      | WaveSel_StageA1_FromPatchBlock                     | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 134   | yes   | differs | MATCH                  | cache d449eb5f49dd |
+| v140      | WaveSel_StageA2_FromToneRec                        | v140/subcpu/cc900/dsp_voice_params_r_17a.c                   | -Xr         | 124   | yes   | differs | MATCH                  | cache d449eb5f49dd |
+| v140      | Voice_Part_ResetSlotRouting                        | v140/subcpu/cc900/dsp_voice_params_r_17b.c                   | -Xr         | 259   | yes   | differs | MATCH                  | cache 1ae51a2ee6ca |
 | v140      | Audio_CmdHandler_00_1F                             | v140/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 52    | yes   | differs | MATCH                  | cache 91632ec6b849 |
 | v140      | DSP_GetEffectRouting                               | v140/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 40    | yes   | MATCH   | MATCH                  | cache 91632ec6b849 |
 | v140      | DSP_ResetAlgoDefaults                              | v140/subcpu/cc900/ringbuf_and_midi_dispatch.c                | -Xr         | 43    | yes   | differs | MATCH                  | cache 91632ec6b849 |
@@ -4497,6 +4600,7 @@ found yet.
 | v140      | RingBuf_Write4K                                    | v140/subcpu/cc900/ringbuf_and_midi_dispatch_d_7a.c           | -Xr         | 24    | yes   | differs | MATCH                  | cache 8bf87e4d24f4 |
 | v140      | MIDI_Dispatch                                      | v140/subcpu/cc900/ringbuf_and_midi_dispatch_d_8a.c           | -Xr         | 595   | yes   | differs | MATCH                  | cache 5e9a4b0dca7d |
 | v140      | ToneGen_SetupPercussionVoice                       | v140/subcpu/cc900/ringbuf_and_midi_dispatch_d_9a.c           | -Xr         | 115   | yes   | differs | MATCH                  | cache 7195304fa776 |
+| v140      | ToneGen_SetupPolyVoice                             | v140/subcpu/cc900/ringbuf_and_midi_dispatch_n_17a.c          | -Xr         | 169   | yes   | differs | MATCH                  | cache 10804e53e0b3 |
 | v140      | Serial1_DataTransmit_Loop                          | v140/subcpu/cc900/subcpu_data_tables_o3xr_e_8a.c             | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache 8d92ffa39694 |
 | v140      | RingBuf_Reset_1K                                   | v140/subcpu/cc900/task_scheduler_kernel.c                    | -Xr         | 26    | yes   | differs | MATCH                  | cache df00e195d642 |
 | v140      | RingBuf_Reset_256                                  | v140/subcpu/cc900/task_scheduler_kernel.c                    | -Xr         | 26    | yes   | differs | MATCH                  | cache df00e195d642 |
@@ -4537,6 +4641,11 @@ found yet.
 | v140      | Voice_Init_Type2                                   | v140/subcpu/cc900/voice_ctrlchange_callnames.c               | -Xr         | 117   | yes   | differs | MATCH                  | cache 087bc1bf4448 |
 | v140      | Voice_Release_Type4                                | v140/subcpu/cc900/voice_ctrlchange_callnames2.c              | -Xr         | 177   | yes   | differs | MATCH                  | cache f19adc6bb911 |
 | v140      | Voice_PortamentoTarget_ComputePitch                | v140/subcpu/cc900/voice_ctrlchange_m_16a.c                   | -Xr         | 115   | yes   | differs | MATCH (name cut to 31) | cache 761087bf1261 |
+| v140      | Voice_PitchBend                                    | v140/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 130   | yes   | differs | MATCH                  | cache b78e2d2adef6 |
+| v140      | Voice_PortamentoTarget_SetSlot                     | v140/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 41    | yes   | differs | MATCH                  | cache b78e2d2adef6 |
+| v140      | Voice_Selector_ComputeMixWeights                   | v140/subcpu/cc900/voice_ctrlchange_p_17a.c                   | -Xr         | 190   | yes   | differs | MATCH (name cut to 31) | cache b78e2d2adef6 |
+| v140      | Voice_Slot_ComputePitch                            | v140/subcpu/cc900/voice_ctrlchange_p_17b.c                   | -Xr         | 179   | yes   | differs | MATCH                  | cache 9668bf963c85 |
+| v140      | Voice_PortamentoTargets_SetAll                     | v140/subcpu/cc900/voice_ctrlchange_p_17c.c                   | -Xr         | 175   | yes   | differs | MATCH                  | cache a876a9071c4f |
 | v140      | Audio_Clamp_To_Range                               | v140/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 17    | yes   | MATCH   | MATCH                  | cache ada2b09d42a8 |
 | v140      | Pitch_Bend_Ramp_Tick                               | v140/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 231   | yes   | differs | MATCH                  | cache ada2b09d42a8 |
 | v140      | ScaleTune_Get_Global_Mode                          | v140/subcpu/cc900/voice_envelopes_and_channels.c             | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache ada2b09d42a8 |
@@ -4601,6 +4710,19 @@ found yet.
 | v140      | ScaleTune_Set_User_Offset                          | v140/subcpu/cc900/voice_envelopes_and_channels_h_14c.c       | -Xr         | 20    | yes   | differs | MATCH                  | cache 79036f6a2422 |
 | v140      | ToneGen_WriteVoice_Direct                          | v140/subcpu/cc900/voice_envelopes_and_channels_inlinejr.c    | -Xr         | 27    | yes   | differs | MATCH                  | cache 410b5f2cadab |
 | v140      | Voice_InitVoiceState                               | v140/subcpu/cc900/voice_envelopes_and_channels_m_16b.c       | -Xr         | 192   | yes   | differs | MATCH                  | cache cfcb1f5708bc |
+| v140      | AudioChannel_Handler_Cmd01                         | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 77    | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | AudioChannel_Handler_Cmd02                         | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 124   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | AudioChannel_Handler_Cmd03                         | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 62    | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Int_ClampSignedToRange_B                           | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 17    | yes   | MATCH   | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_AllVoices_UpdateVelocity                     | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 245   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_ApplyPortamento2                             | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 84    | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_Calc_LevelPair_EGC                           | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 306   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_Step_DelayTimers                             | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 104   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_WriteChPanShift                              | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 280   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_WriteChPanShift2                             | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 280   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | Voice_WriteChPitchWithVib                          | v140/subcpu/cc900/voice_envelopes_and_channels_q_17a.c       | -Xr         | 145   | yes   | differs | MATCH                  | cache a753fb0aa3d5 |
+| v140      | AudioMod_Apply_BusRouting                          | v140/subcpu/cc900/voice_envelopes_and_channels_q_17b.c       | -Xr         | 234   | yes   | differs | MATCH                  | cache 5659a86ed6ee |
+| v140      | Voice_ToneTableRamp_Up                             | v140/subcpu/cc900/voice_envelopes_and_channels_q_17c.c       | -Xr         | 165   | yes   | differs | MATCH                  | cache 6a9be0384e3a |
 | v140      | BlockCopy_Words_BC_to_HL                           | v140/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 21    | yes   | differs | MATCH                  | cache c4db03d1404f |
 | v140      | DSP_EffectStateQuery                               | v140/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 32    | yes   | differs | MATCH                  | cache c4db03d1404f |
 | v140      | ToneGen_Mute_Reg05C0                               | v140/subcpu/cc900/voice_noteon_and_tonegen.c                 | -Xr         | 29    | yes   | differs | MATCH                  | cache c4db03d1404f |
@@ -4622,6 +4744,11 @@ found yet.
 | v140      | DSP_Config_Init                                    | v140/subcpu/cc900/voice_noteon_and_tonegen_j_15b.c           | -Xr         | 270   | yes   | differs | MATCH                  | cache 3c6c96c9347d |
 | v140      | Audio_Cmd_ToneEdit_Dispatch                        | v140/subcpu/cc900/voice_noteon_and_tonegen_k_16a.c           | -Xr         | 0     | yes   | differs | differs                | cache 6f2df29e9ff2 |
 | v140      | CustomTone_CopyToneRecord                          | v140/subcpu/cc900/voice_noteon_and_tonegen_m_16a.c           | -Xr         | 69    | yes   | differs | MATCH                  | cache e143a27b2dcc |
+| v140      | DSP_SlotParam_Read_To_Cache                        | v140/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 105   | yes   | differs | MATCH                  | cache 053b2c775c3d |
+| v140      | DSP_SlotParam_Write_From_Cache                     | v140/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 332   | yes   | differs | MATCH                  | cache 053b2c775c3d |
+| v140      | DSP_SlotParam_Write_From_Cache_B                   | v140/subcpu/cc900/voice_noteon_and_tonegen_r_17a.c           | -Xr         | 341   | yes   | differs | MATCH (name cut to 31) | cache 053b2c775c3d |
+| v140      | CustomTone_CopySubUnitRecord                       | v140/subcpu/cc900/voice_noteon_and_tonegen_r_17c.c           | -Xr         | 89    | yes   | differs | MATCH                  | cache 7977b1d6c754 |
+| v140      | VoiceSubSlot_Init                                  | v140/subcpu/cc900/voice_noteon_and_tonegen_r_17c.c           | -Xr         | 61    | yes   | differs | MATCH                  | cache 7977b1d6c754 |
 | v140      | CheckStatusBits_40                                 | v140/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache 05a15ea3d4e0 |
 | v140      | CheckStatusBits_80                                 | v140/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache 05a15ea3d4e0 |
 | v140      | Voice_Part_Mode_Is_C0                              | v140/subcpu/cc900/voice_noteon_and_tonegen_runtime.c         | -Xr         | 32    | yes   | differs | MATCH                  | cache 05a15ea3d4e0 |
@@ -4713,6 +4840,11 @@ found yet.
 | v140      | TVF_Emit_Registers                                 | v140/subcpu/cc900/voice_params_and_tvf_k_16a.c               | -Xr         | 0     | yes   | differs | differs                | cache f7ce9f6c9982 |
 | v140      | TVF_Emit_Registers_Type2                           | v140/subcpu/cc900/voice_params_and_tvf_k_16a.c               | -Xr         | 0     | yes   | differs | differs                | cache f7ce9f6c9982 |
 | v140      | Voice_Build_OutputLevel                            | v140/subcpu/cc900/voice_params_and_tvf_m_16a.c               | -Xr         | 97    | yes   | differs | MATCH                  | cache 0887a3d91ab9 |
+| v140      | EGEnv_Compute_A                                    | v140/subcpu/cc900/voice_params_and_tvf_n_17a.c               | -Xr         | 144   | yes   | differs | MATCH                  | cache e0f40b14a0d4 |
+| v140      | OutputBuf_Flush_B                                  | v140/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 97    | yes   | differs | MATCH                  | cache d4aa721b1a99 |
+| v140      | TVF_Build_Dispatch                                 | v140/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 0     | yes   | differs | differs                | cache d4aa721b1a99 |
+| v140      | TVF_Emit_Offset_Reg100                             | v140/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 102   | yes   | differs | MATCH                  | cache d4aa721b1a99 |
+| v140      | Voice_AdvanceSlotIterator                          | v140/subcpu/cc900/voice_params_and_tvf_p_17a.c               | -Xr         | 102   | yes   | differs | MATCH                  | cache d4aa721b1a99 |
 | v140      | EnvDepth_Cap                                       | v140/subcpu/cc900/voice_params_and_tvf_runtime.c             | -Xr         | 51    | yes   | differs | MATCH                  | cache 88116dbfcd96 |
 | v140      | Voice_Vol_ScaleVelocityWord                        | v140/subcpu/cc900/voice_params_and_tvf_runtime.c             | -Xr         | 36    | yes   | differs | MATCH                  | cache 88116dbfcd96 |
 | hdae5000  | HDAE5000_Boot_Init                                 | hdae5000/cc900/hdae5000_boot.c                               | -Xr         | 236   | yes   | differs | MATCH                  | cache 10c78c1ee99d |
@@ -4729,12 +4861,17 @@ found yet.
 | hdae5000  | HDAE5000_FileLoadSwCatch                           | hdae5000/cc900/hdae5000_drv_screens4_hd_driver.c             | -Xr         | 133   | yes   | differs | MATCH                  | cache 6b9e75ad7211 |
 | hdae5000  | HDAE5000_HDDTitleSwCatch                           | hdae5000/cc900/hdae5000_drv_screens4_hd_driver.c             | -Xr         | 110   | yes   | differs | MATCH                  | cache 6b9e75ad7211 |
 | hdae5000  | HDAE5000_ErrMsgTimerCatchLBN                       | hdae5000/cc900/hdae5000_drv_screens4_ui_display.c            | -Xr         | 152   | yes   | differs | MATCH                  | cache 4a44398e062f |
+| hdae5000  | HDAE5000_Lbn_TypeDigit                             | hdae5000/cc900/hdae5000_drv_screens5.c                       | -Xr         | 646   | yes   | differs | MATCH                  | cache 63f9bdc48f71 |
+| hdae5000  | HDAE5000_AttenHDFormatSwCatch                      | hdae5000/cc900/hdae5000_drv_screens6.c                       | -Xr         | 0     | yes   | differs | differs                | cache cc92621b0faa |
+| hdae5000  | HDAE5000_HDAETitleFunc                             | hdae5000/cc900/hdae5000_drv_screens6.c                       | -Xr         | 0     | yes   | differs | differs                | cache cc92621b0faa |
 | hdae5000  | HDAE5000_FdList_Clear                              | hdae5000/cc900/hdae5000_fd_stream_hd-ae5000_v2_06i.c         | -Xr         | 270   | yes   | differs | MATCH                  | cache ad7c2e3446c5 |
 | hdae5000  | HDAE5000_HD_WriteStream                            | hdae5000/cc900/hdae5000_fd_stream_ui_display.c               | -Xr         | 275   | yes   | differs | MATCH                  | cache 4f0869c0f7b3 |
 | hdae5000  | HDAE5000_FdLyricList_Scan                          | hdae5000/cc900/hdae5000_fdlyric.c                            | -Xr         | 556   | yes   | differs | MATCH                  | cache aefdc4cbc2b1 |
 | hdae5000  | HDAE5000_FdLyricList_AddTlx                        | hdae5000/cc900/hdae5000_fdlyric_addtlx.c                     | -Xr         | 352   | yes   | differs | MATCH                  | cache a103dd1aedff |
 | hdae5000  | HDAE5000_FdSong_CheckFiles                         | hdae5000/cc900/hdae5000_fdsong_check.c                       | -Xr         | 1273  | yes   | differs | MATCH                  | cache 1706739b42ff |
 | hdae5000  | HDAE5000_CheckFileSignature                        | hdae5000/cc900/hdae5000_fdsong_sig.c                         | -Xr         | 75    | yes   | differs | MATCH                  | cache d857a2e81ec6 |
+| hdae5000  | HDAE5000_CopyToHd_Execute                          | hdae5000/cc900/hdae5000_fls_refresh.c                        | -Xr         | 1257  | yes   | differs | MATCH                  | cache eddfbf8af2a2 |
+| hdae5000  | HDAE5000_FlsScreen_Refresh                         | hdae5000/cc900/hdae5000_fls_refresh.c                        | -Xr         | 982   | yes   | differs | MATCH                  | cache eddfbf8af2a2 |
 | hdae5000  | HDAE5000_FlsItem_IsSet                             | hdae5000/cc900/hdae5000_flsitem.c                            | -Xr         | 66    | yes   | differs | MATCH                  | cache 7b00d46bbceb |
 | hdae5000  | HDAE5000_FlsItem_Remove                            | hdae5000/cc900/hdae5000_flsitem_remove.c                     | -Xr         | 389   | yes   | differs | MATCH                  | cache f05b49024a1d |
 | hdae5000  | HDAE5000_FlsItem_SetAutoLoad                       | hdae5000/cc900/hdae5000_flsitem_set.c                        | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
@@ -4756,7 +4893,9 @@ found yet.
 | hdae5000  | HDAE5000_FlsFileLoadSwCatch                        | hdae5000/cc900/hdae5000_fs_screens3.c                        | -Xr         | 206   | yes   | differs | MATCH                  | cache 25868a360bf0 |
 | hdae5000  | HDAE5000_HardTestPage                              | hdae5000/cc900/hdae5000_hardtest.c                           | -Xr         | 903   | yes   | differs | MATCH                  | cache ebec51ac25f5 |
 | hdae5000  | HDAE5000_PPI_Init                                  | hdae5000/cc900/hdae5000_hardtest.c                           | -Xr         | 13    | yes   | MATCH   | MATCH                  | cache ebec51ac25f5 |
+| hdae5000  | HDAE5000_HardTest_HddIdRead                        | hdae5000/cc900/hdae5000_hardtest_id.c                        | -Xr         | 192   | yes   | differs | MATCH                  | cache 3ba9d5039c36 |
 | hdae5000  | HDAE5000_HardTest_PortTest                         | hdae5000/cc900/hdae5000_hardtest_port.c                      | -Xr         | 71    | yes   | differs | MATCH                  | cache df48b9c0d79b |
+| hdae5000  | HDAE5000_HardTest_Print                            | hdae5000/cc900/hdae5000_hardtest_print.c                     | -Xr         | 29    | yes   | differs | MATCH                  | cache 4866f5983959 |
 | hdae5000  | HDAE5000_TypeSel_BuildMask                         | hdae5000/cc900/hdae5000_hd_driver.c                          | -Xr         | 95    | yes   | differs | MATCH                  | cache 169b3607f060 |
 | hdae5000  | HDAE5000_DirName_SetAndStore                       | hdae5000/cc900/hdae5000_hd_tables.c                          | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae5000  | HDAE5000_FlsName_SetAndStore                       | hdae5000/cc900/hdae5000_hd_tables.c                          | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
@@ -4764,6 +4903,7 @@ found yet.
 | hdae5000  | HDAE5000_SongName_SetAndStore                      | hdae5000/cc900/hdae5000_hd_tables.c                          | -Xr         | 74    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae5000  | HDAE5000_Lbn_ShowEntry                             | hdae5000/cc900/hdae5000_lbn_show.c                           | -Xr         | 0     | yes   | differs | differs                | cache 47f571fd53d4 |
 | hdae5000  | HDAE5000_LoadSongWithUi                            | hdae5000/cc900/hdae5000_load_ui.c                            | -Xr         | 441   | yes   | differs | MATCH                  | cache b047cb939f16 |
+| hdae5000  | HDAE5000_LoadSong_Tlx                              | hdae5000/cc900/hdae5000_loadsong_tlx.c                       | -Xr         | 259   | yes   | differs | MATCH                  | cache 35f82dbd61c5 |
 | hdae5000  | HDAE5000_Lyrics_CheckFile                          | hdae5000/cc900/hdae5000_lyrics.c                             | -Xr         | 35    | yes   | differs | MATCH                  | cache a3faf885ac8a |
 | hdae5000  | HDAE5000_Lyrics_CheckHeaderChunk                   | hdae5000/cc900/hdae5000_lyrics.c                             | -Xr         | 113   | yes   | differs | MATCH                  | cache a3faf885ac8a |
 | hdae5000  | HDAE5000_Lyrics_CheckTrackChunk                    | hdae5000/cc900/hdae5000_lyrics.c                             | -Xr         | 59    | yes   | differs | MATCH                  | cache a3faf885ac8a |
@@ -4807,6 +4947,9 @@ found yet.
 | hdae5000  | HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd          | hdae5000/cc900/hdae5000_pport_services3.c                    | -Xr         | 51    | yes   | differs | MATCH                  | cache b0dfd20bcd2c |
 | hdae5000  | HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace  | hdae5000/cc900/hdae5000_pport_services3.c                    | -Xr         | 53    | yes   | differs | MATCH                  | cache b0dfd20bcd2c |
 | hdae5000  | HDAE5000_PPORT_Svc27_DeleteSongParts               | hdae5000/cc900/hdae5000_pport_services3.c                    | -Xr         | 18    | yes   | differs | MATCH                  | cache b0dfd20bcd2c |
+| hdae5000  | HDAE5000_PPORT_Svc01_GetInfoBlockPointer           | hdae5000/cc900/hdae5000_pport_svc2.c                         | -Xr         | 56    | yes   | differs | MATCH                  | cache 1ede93219ece |
+| hdae5000  | HDAE5000_PPORT_Svc21_WriteOpenHD                   | hdae5000/cc900/hdae5000_pport_svc2.c                         | -Xr         | 295   | yes   | differs | MATCH                  | cache 1ede93219ece |
+| hdae5000  | HDAE5000_PPORT_Svc24_ReadOpenHD                    | hdae5000/cc900/hdae5000_pport_svc2.c                         | -Xr         | 145   | yes   | differs | MATCH                  | cache 1ede93219ece |
 | hdae5000  | HDAE5000_DirName_Address                           | hdae5000/cc900/hdae5000_record_addr.c                        | -Xr         | 13    | yes   | differs | MATCH                  | cache 689e1948a1d5 |
 | hdae5000  | HDAE5000_FlsRecord_Address                         | hdae5000/cc900/hdae5000_record_addr.c                        | -Xr         | 26    | yes   | differs | MATCH                  | cache 689e1948a1d5 |
 | hdae5000  | HDAE5000_SongRecord_Address                        | hdae5000/cc900/hdae5000_record_addr.c                        | -Xr         | 56    | yes   | differs | MATCH                  | cache 689e1948a1d5 |
@@ -4854,6 +4997,7 @@ found yet.
 | hdae5000  | HDAE5000_LoadSong                                  | hdae5000/cc900/hdae5000_song_module2.c                       | -Xr         | 362   | yes   | differs | MATCH                  | cache dd84335d64ca |
 | hdae5000  | HDAE5000_SaveSong                                  | hdae5000/cc900/hdae5000_song_module2.c                       | -Xr         | 764   | yes   | differs | MATCH                  | cache dd84335d64ca |
 | hdae5000  | HDAE5000_SaveSong_Rcm                              | hdae5000/cc900/hdae5000_song_module2.c                       | -Xr         | 134   | yes   | differs | MATCH                  | cache dd84335d64ca |
+| hdae5000  | HDAE5000_SongScreen_Refresh                        | hdae5000/cc900/hdae5000_song_refresh.c                       | -Xr         | 568   | yes   | differs | MATCH                  | cache 83aa45c7e456 |
 | hdae5000  | HDAE5000_HdTitleEventCatch                         | hdae5000/cc900/hdae5000_title_info.c                         | -Xr         | 128   | yes   | differs | MATCH                  | cache 036042b52a7b |
 | hdae5000  | HDAE5000_TitleInfo_Build                           | hdae5000/cc900/hdae5000_title_info.c                         | -Xr         | 421   | yes   | differs | MATCH                  | cache 036042b52a7b |
 | hdae5000  | HDAE5000_Alloc_Memory_1                            | hdae5000/cc900/hdae5000_ttl_r1.c                             | -Xr         | 45    | yes   | differs | MATCH                  | cache 834d0dfcd364 |
@@ -4886,6 +5030,8 @@ found yet.
 | hdae5000  | HDAE5000_Smf_SwapBytes32                           | hdae5000/cc900/hdae5000_ui_display.c                         | -Xr         | 59    | yes   | differs | MATCH                  | cache c3d23f5ae51b |
 | hdae5000  | HDAE5000_UiObj_SetCaption                          | hdae5000/cc900/hdae5000_ui_display.c                         | -Xr         | 25    | yes   | differs | MATCH                  | cache c3d23f5ae51b |
 | hdae5000  | HDAE5000_YieldUntilSem1Zero                        | hdae5000/cc900/hdae5000_ui_display.c                         | -Xr         | 45    | yes   | differs | MATCH                  | cache c3d23f5ae51b |
+| hdae5000  | HDAE5000_VarInt_Decode                             | hdae5000/cc900/hdae5000_varint.c                             | -Xr         | 64    | yes   | differs | MATCH                  | cache 7a953dd76791 |
+| hdae5000  | HDAE5000_VarInt_Encode                             | hdae5000/cc900/hdae5000_varint.c                             | -Xr         | 82    | yes   | differs | MATCH                  | cache 7a953dd76791 |
 | hdae5000  | HDAE5000_VGA_Port_Write                            | hdae5000/cc900/hdae5000_vga_port.c                           | -Xr         | 37    | yes   | differs | MATCH                  | cache 8b9f0d2d43d8 |
 | hdae_v201 | HDAE5000_Boot_Init                                 | hdae5000_v2_01i/cc900/hdae5000_boot.c                        | -Xr         | 236   | yes   | differs | MATCH                  | cache 10c78c1ee99d |
 | hdae_v201 | HDAE5000_Frame_Handler                             | hdae5000_v2_01i/cc900/hdae5000_boot.c                        | -Xr         | 291   | yes   | differs | MATCH                  | cache 10c78c1ee99d |
@@ -4900,11 +5046,13 @@ found yet.
 | hdae_v201 | HDAE5000_FlsFileLoadSwCatch                        | hdae5000_v2_01i/cc900/hdae5000_fs_screens3.c                 | -Xr         | 206   | yes   | differs | MATCH                  | cache c9f44959f39a |
 | hdae_v201 | HDAE5000_PPI_Init                                  | hdae5000_v2_01i/cc900/hdae5000_hardtest.c                    | -Xr         | 13    | yes   | MATCH   | MATCH                  | cache bcc6b06f0864 |
 | hdae_v201 | HDAE5000_HardTest_PortTest                         | hdae5000_v2_01i/cc900/hdae5000_hardtest_port.c               | -Xr         | 71    | yes   | differs | MATCH                  | cache 4583326cd7bf |
+| hdae_v201 | HDAE5000_HardTest_Print                            | hdae5000_v2_01i/cc900/hdae5000_hardtest_print.c              | -Xr         | 29    | yes   | differs | MATCH                  | cache e7ead2b4cece |
 | hdae_v201 | HDAE5000_TypeSel_BuildMask                         | hdae5000_v2_01i/cc900/hdae5000_hd_driver.c                   | -Xr         | 95    | yes   | differs | MATCH                  | cache 169b3607f060 |
 | hdae_v201 | HDAE5000_DirName_SetAndStore                       | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                   | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v201 | HDAE5000_FlsName_SetAndStore                       | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                   | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v201 | HDAE5000_HD_StoreTables                            | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                   | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v201 | HDAE5000_SongName_SetAndStore                      | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                   | -Xr         | 74    | yes   | differs | MATCH                  | cache 641c0f568cce |
+| hdae_v201 | HDAE5000_LoadSong_Tlx                              | hdae5000_v2_01i/cc900/hdae5000_loadsong_tlx.c                | -Xr         | 259   | yes   | differs | MATCH                  | cache 35f82dbd61c5 |
 | hdae_v201 | HDAE5000_Lyrics_CheckFile                          | hdae5000_v2_01i/cc900/hdae5000_lyrics.c                      | -Xr         | 35    | yes   | differs | MATCH                  | cache 709a5c0a877f |
 | hdae_v201 | HDAE5000_Lyrics_CheckHeaderChunk                   | hdae5000_v2_01i/cc900/hdae5000_lyrics.c                      | -Xr         | 113   | yes   | differs | MATCH                  | cache 709a5c0a877f |
 | hdae_v201 | HDAE5000_Lyrics_CheckTrackChunk                    | hdae5000_v2_01i/cc900/hdae5000_lyrics.c                      | -Xr         | 59    | yes   | differs | MATCH                  | cache 709a5c0a877f |
@@ -4983,6 +5131,8 @@ found yet.
 | hdae_v201 | HDAE5000_Smf_SwapBytes32                           | hdae5000_v2_01i/cc900/hdae5000_ui_display.c                  | -Xr         | 59    | yes   | differs | MATCH                  | cache 18658233cab4 |
 | hdae_v201 | HDAE5000_UiObj_SetCaption                          | hdae5000_v2_01i/cc900/hdae5000_ui_display.c                  | -Xr         | 25    | yes   | differs | MATCH                  | cache 18658233cab4 |
 | hdae_v201 | HDAE5000_YieldUntilSem1Zero                        | hdae5000_v2_01i/cc900/hdae5000_ui_display.c                  | -Xr         | 45    | yes   | differs | MATCH                  | cache 18658233cab4 |
+| hdae_v201 | HDAE5000_VarInt_Decode                             | hdae5000_v2_01i/cc900/hdae5000_varint.c                      | -Xr         | 64    | yes   | differs | MATCH                  | cache 7a953dd76791 |
+| hdae_v201 | HDAE5000_VarInt_Encode                             | hdae5000_v2_01i/cc900/hdae5000_varint.c                      | -Xr         | 82    | yes   | differs | MATCH                  | cache 7a953dd76791 |
 | hdae_v201 | HDAE5000_VGA_Port_Write                            | hdae5000_v2_01i/cc900/hdae5000_vga_port.c                    | -Xr         | 37    | yes   | differs | MATCH                  | cache 8b9f0d2d43d8 |
 | hdae_v115 | HDAE5000_Boot_Init                                 | hdae5000_v1_15i/cc900/hdae5000_boot.c                        | -Xr         | 236   | yes   | differs | MATCH                  | cache f6f602c0d012 |
 | hdae_v115 | HDAE5000_Get_Init_Flag                             | hdae5000_v1_15i/cc900/hdae5000_boot.c                        | -Xr         | 6     | yes   | MATCH   | MATCH                  | cache f6f602c0d012 |
@@ -4995,6 +5145,7 @@ found yet.
 | hdae_v115 | HDAE5000_FlsFileLoadSwCatch                        | hdae5000_v1_15i/cc900/hdae5000_fs_screens3.c                 | -Xr         | 206   | yes   | differs | MATCH                  | cache c9f44959f39a |
 | hdae_v115 | HDAE5000_PPI_Init                                  | hdae5000_v1_15i/cc900/hdae5000_hardtest.c                    | -Xr         | 13    | yes   | MATCH   | MATCH                  | cache 18ce32ad9833 |
 | hdae_v115 | HDAE5000_HardTest_PortTest                         | hdae5000_v1_15i/cc900/hdae5000_hardtest_port.c               | -Xr         | 71    | yes   | differs | MATCH                  | cache e0fdd7378a56 |
+| hdae_v115 | HDAE5000_HardTest_Print                            | hdae5000_v1_15i/cc900/hdae5000_hardtest_print.c              | -Xr         | 29    | yes   | differs | MATCH                  | cache 62eb53a51e3d |
 | hdae_v115 | HDAE5000_DirName_SetAndStore                       | hdae5000_v1_15i/cc900/hdae5000_hd_tables.c                   | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v115 | HDAE5000_FlsName_SetAndStore                       | hdae5000_v1_15i/cc900/hdae5000_hd_tables.c                   | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v115 | HDAE5000_HD_StoreTables                            | hdae5000_v1_15i/cc900/hdae5000_hd_tables.c                   | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
@@ -5062,6 +5213,7 @@ found yet.
 | hdae_v110 | HDAE5000_FlsFileLoadSwCatch                        | hdae5000_v1_10i/cc900/hdae5000_fs_screens3.c                 | -Xr         | 206   | yes   | differs | MATCH                  | cache c9f44959f39a |
 | hdae_v110 | HDAE5000_PPI_Init                                  | hdae5000_v1_10i/cc900/hdae5000_hardtest.c                    | -Xr         | 13    | yes   | MATCH   | MATCH                  | cache 6d77e4a308ed |
 | hdae_v110 | HDAE5000_HardTest_PortTest                         | hdae5000_v1_10i/cc900/hdae5000_hardtest_port.c               | -Xr         | 71    | yes   | differs | MATCH                  | cache 71bbbe4fa226 |
+| hdae_v110 | HDAE5000_HardTest_Print                            | hdae5000_v1_10i/cc900/hdae5000_hardtest_print.c              | -Xr         | 29    | yes   | differs | MATCH                  | cache a0df2b26747c |
 | hdae_v110 | HDAE5000_DirName_SetAndStore                       | hdae5000_v1_10i/cc900/hdae5000_hd_tables.c                   | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v110 | HDAE5000_FlsName_SetAndStore                       | hdae5000_v1_10i/cc900/hdae5000_hd_tables.c                   | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v110 | HDAE5000_HD_StoreTables                            | hdae5000_v1_10i/cc900/hdae5000_hd_tables.c                   | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
