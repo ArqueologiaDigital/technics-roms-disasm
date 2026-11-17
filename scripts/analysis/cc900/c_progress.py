@@ -13,8 +13,10 @@ usage: python3 scripts/analysis/cc900/c_progress.py record RUN [--branch BRANCH]
 It appends one row to results/c_progress.tsv (beside this script, in results/):
     time       when the row was recorded (local time, ISO 8601)
     run        RUN
-    built_fn   firmware C functions built into the images that V4.23 reproduces, over all six main-CPU images
-               (results/c_build_coverage.md, rows "firmware C", V4.23 MATCH; v8 counts on its own, with v9's C)
+    built_fn   firmware C functions built into the images that V4.23 reproduces, over every image of
+               results/c_build_coverage.md's per-function table (built = yes, V4.23 MATCH): the six main-CPU images
+               (v8 counts on its own, with v9's C), the three sub-CPU payloads and the four HD-AE5000 images.  Its
+               bytes equal the page's "Toshiba V4.23 ... firmware C bytes" total.
     built_b    their bytes
     staged_fn  functions in BRANCH's notes/cc900-phase6-2026-11-16/staged_v423.tsv whose latest check is MATCH and
                which are not built yet, counted per image the same way (v9's staged C counts for v8 too); also
@@ -52,7 +54,10 @@ def built():
     for line in open(COVERAGE, encoding="utf-8"):
         f = [c.strip() for c in line.strip().strip("|").split("|")]
         # the per-function table: image | function | C file | options | bytes | built | model | V4.23 | V4.23 run
-        if len(f) == 9 and re.fullmatch(r"v\d+", f[0]) and f[5] == "yes" and f[7].startswith("MATCH"):
+        # every image of the page: v10 .. v5, the sub-CPU's v142 .. v140, and the HD-AE5000's hdae5000 / hdae_v201 /
+        # hdae_v115 / hdae_v110.  Until 2026-11-16 night only `v<digits>` names were read, so the four HD-AE5000
+        # images (18,797 B then) were in the page's V4.23 total (225,766 B) and missing from built_b (206,969 B)
+        if len(f) == 9 and re.fullmatch(r"v\d+|hdae\w*", f[0]) and f[5] == "yes" and f[7].startswith("MATCH"):
             out[(f[0], f[1])] = int(f[4])
     return out
 

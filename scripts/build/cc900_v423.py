@@ -294,6 +294,33 @@ def cached_wine_failure(cache, key):
     return wine_fault(logs) and not re.search(r"-Error-", logs)
 
 
+# The listings store shared by every worktree (CC900_V423_SHARED; empty = none).  An entry's name is its key: the
+# hash of the C text, its file name, flags and headers, the compiler tree and job.sh (key_of), so the same key is
+# the same compile wherever it ran.  A lane compiles its C in its own worktree; when the lane is merged, main's
+# `make` used to send the same files to the VM again (212 files, 285 s, on 2026-11-16).  fill() now takes a missing
+# entry from here when its status is OK, and puts the entries it compiled here.  Only whole OK entries are copied,
+# into a temporary name that is renamed into place; nothing here is ever removed or overwritten.  It is scratch
+# (Toshiba output: never committed), and losing it only costs VM time.
+SHARED = os.environ.get("CC900_V423_SHARED", os.path.expanduser("~/compartilhado/tmp/cc900-v423-shared"))
+
+
+def copy_entry(src, dst):
+    """copy the cache entry SRC (a directory with status OK) to DST when DST does not exist; True when DST is now a
+    whole OK entry that this call put there"""
+    if not SHARED or os.path.exists(dst):
+        return False
+    try:
+        if open(os.path.join(src, "status")).read().strip() != "OK":
+            return False
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
+        tmp = "%s.%d.tmp" % (dst, os.getpid())
+        shutil.copytree(src, tmp)
+        os.rename(tmp, dst)
+        return True
+    except OSError:
+        return False
+
+
 def fill(cache, oracle, files):
     cache, oracle = os.path.abspath(cache), os.path.abspath(oracle)
     check_cache_root(cache)
@@ -316,6 +343,11 @@ def fill(cache, oracle, files):
         if not os.path.exists(os.path.join(cache, k, "status")) or cached_wine_failure(cache, k):
             misses[k] = f
             missing.add(f)
+    fetched = 0
+    for k in [k for k in misses if k in keys.values()]:    # another worktree compiled this very text already
+        if copy_entry(os.path.join(SHARED, k), os.path.join(cache, k)):
+            missing.discard(misses.pop(k))
+            fetched += 1
     compiled = len(set(misses.values()))
     if misses:
         problems = vm_problems(oracle)
@@ -342,9 +374,12 @@ def fill(cache, oracle, files):
     if failed:
         sys.exit("cc900 V4.23 does not compile:\n%s" % "".join(
             "    %s (logs: %s)\n" % (os.path.relpath(f, REPO), " ".join(logs)) for f, logs in failed))
+    for k in sorted(set(keys.values())):                   # every entry of this build the store lacks (what this
+        copy_entry(os.path.join(cache, k), os.path.join(SHARED, k))   # fill compiled, and older ones the first time)
     index(cache, files)
-    print("cc900 V4.23: %d firmware C file(s), %d compiled now, the rest cached in %s"
-          % (len(files), compiled, os.path.relpath(cache, REPO)))
+    print("cc900 V4.23: %d firmware C file(s), %d compiled now%s, the rest cached in %s"
+          % (len(files), compiled, ", %d taken from %s" % (fetched, SHARED) if fetched else "",
+             os.path.relpath(cache, REPO)))
 
 
 def index(cache, files):
