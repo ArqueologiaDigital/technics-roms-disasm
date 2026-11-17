@@ -910,3 +910,23 @@ analysis now reads the generated body in place (f1884d220), and `menu_map_diff.p
 re-credited / hidden / DROPPED / added; exit 1 on a drop) must show 0 dropped against the previous map before a
 promotion is committed.  Against the map before phase 6's first promotion (4d6c02d82~1) the fixed map keeps all 330
 references.
+
+## Scripts added in the last rounds (2026-11-17), one line each
+
+Run from the repository root with `python3 -B notes/cc900-phase6-2026-11-16/<script>`; each docstring says more.
+
+| script                   | question it answers                                                                    | command                                             |
+|--------------------------|----------------------------------------------------------------------------------------|-----------------------------------------------------|
+| `phase6_counts.py`       | how many functions are built from C, staged, probed and matched (the handoff's counts) | `phase6_counts.py`                                  |
+| `list_promoted.py`       | which tracked staged files are fully promoted (the explicit `git rm` list)             | `list_promoted.py`                                  |
+| `check_obsolete.py`      | is every function of a staging file restage calls obsolete defined elsewhere           | `check_obsolete.py FILE.c ...`                      |
+| `new_pool.py`            | which v10 routines nobody has C or a probe for (fresh disjoint helper pools)           | `new_pool.py OUT_PREFIX C D --min 60 --max 800 ...` |
+| `drop_link_routines.py`  | which routines use link / unlk frames (never V4.23 output); drop them from pools       | `drop_link_routines.py POOLFILE ...`                |
+| `menu_map_diff.py`       | did a regenerated menu map lose a code reference                                        | `menu_map_diff.py OLD.md NEW.md`                    |
+| `first_moved.py`         | which label moved first in a rebuilt object (a grown splice)                           | `first_moved.py SYMBOLS NM_OUTPUT [BASE]`           |
+| `org_window.py`          | which files lie between a failing `.org` and the previous one                           | `org_window.py TREE_DIR TOP.s FILE.s:LINE`          |
+| `relaxed_jr.py`          | which generated functions hold a jr that llvm-mc relaxes to jrl                        | `relaxed_jr.py OBJ NM_OUTPUT GENERATED_DIR`         |
+| `edge_jr.py`             | which generated jr sit within 8 bytes of the d8 limits                                 | `edge_jr.py OBJ NM_OUTPUT GENERATED_DIR [LO HI]`    |
+| `repair_module_lines.py` | give back module names an append dropped                                               | `repair_module_lines.py [--dry-run]`                |
+
+The final state, open functions, idioms, blockers and next steps are in `HANDOFF-2026-11-17.md`.

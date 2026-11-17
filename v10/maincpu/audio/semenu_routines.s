@@ -1603,76 +1603,13 @@ SeMenu_SelectPartIfEnabled:	.include "includes/generated/cc900/SeMenu_SelectPart
 ;   the kind's current number - 1) -> on + bit 4 -> off, then redraws and stores it; WA = 0 amp, 1 pitch, 2 filter.
 ;   Basis: callers + body -- only SeAmpLfo1/SePitLfo1/SeFilLfo1 OnSideRow2..5 call it, with WA = page kind and C =
 ;   row's part.
-SeMenu_CyclePartLfoState:
-	lda	xsp, (xsp-14)
-	ld	(xsp+10), c
-	ld	(xsp+12), a
-	ld	a, (xsp+10)
-	extz	wa
-	calr	SeMenu_IsPartEnabled
-	cp	hl, 0:i3
-	jrl	z, SeMenu_CyclePartLfoState_Epilogue4
-	ld	a, (xsp+10)
-	inc	4, a
-	ld	(xsp), a
-	extz	wa
-	lda	xbc, (xsp+6)
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp+6)
-	ld	a, (xbc)
-	bit	5, a
-	jr	nz, SeMenu_CyclePartLfoState_Skip23
-	set	5, a
-	ld	(xbc), a
-	ld	a, (xsp+12)
-	extz	wa
-	lda	xbc, (xsp+4)
-	calr	SeLfo_GetSelectedLfo
-	lda	xde, (xsp+6)
-	ld	c, (xde)
-	and	c, 63
-	ld	(xde), c
-	ld	a, (xsp+4)
-	dec	1, a
-	sll	a, 6
-	or	c, a
-	ld	(xde), c
-	jr	SeMenu_CyclePartLfoState_Join6
-SeMenu_CyclePartLfoState_Skip23:
-	bit	4, a
-	jr	z, SeMenu_CyclePartLfoState_Skip24
-	and	a, 15
-	jr	SeMenu_CyclePartLfoState_Join5
-SeMenu_CyclePartLfoState_Skip24:
-	set	4, a
-SeMenu_CyclePartLfoState_Join5:
-	ld	(xbc), a
-SeMenu_CyclePartLfoState_Join6:
-	ld	a, (xsp+12)
-	extz	wa
-	lda	xbc, (xsp+2)
-	calr	SeMenu_GetLfoPartSwitchParamId
-	ld	a, (xsp+10)
-	extz	wa
-	ld	c, (xsp+2)
-	extz	bc
-	lda	xde, (xsp+6)
-	pushw	240
-	calr	SeMenu_RegisterElement_Extended
-	ld	a, (xsp)
-	extz	wa
-	ld	c, (xsp+6)
-	extz	bc
-	calr	SeMenu_StorePartParam
-	ld	a, (xsp)
-	extz	wa
-	pushw	wa
-	pushw	42
-	call	SeTitle_DrawField
-	inc	4, xsp
-SeMenu_CyclePartLfoState_Epilogue4:
-	lda	xsp, (xsp+14)
-	ret
+SeMenu_CyclePartLfoState:	.include "includes/generated/cc900/SeMenu_CyclePartLfoState.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_CyclePartLfoState_Skip23, SeMenu_CyclePartLfoState + 87
+	.set	SeMenu_CyclePartLfoState_Skip24, SeMenu_CyclePartLfoState + 97
+	.set	SeMenu_CyclePartLfoState_Join5, SeMenu_CyclePartLfoState + 100
+	.set	SeMenu_CyclePartLfoState_Join6, SeMenu_CyclePartLfoState + 102
+	.set	SeMenu_CyclePartLfoState_Epilogue4, SeMenu_CyclePartLfoState + 158
 ; SeCtr2_StepPartField: For part A (1..4) of the AFTER TOUCH controller page (SeCtr2): steps the part's 2-bit field
 ;   (bits 2A-2..2A-1) of page param 12 -- C = 0: 0 -> 1 -> 3 (stays at 3); C != 0: 3 -> 1 -> 0 (stays at 0) -- then
 ;   redraws the column (SeMenu_RegisterElement_Extended), stores param 12 and posts it (SeTitle_DrawField 59).
