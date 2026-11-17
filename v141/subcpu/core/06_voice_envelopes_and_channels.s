@@ -1830,7 +1830,8 @@ Voice_ComputePitch_WriteDone:
 	inc 8, xsp
 	ret
 
-; Despite the name, these 17 bytes are EXECUTABLE CODE, not data.
+; Int_ClampSignedToRange_B(WA = value, BC = high, DE = low) -> HL.  (Named Voice_ComputePitch_InlineData
+; until 2026-11-16: these 17 bytes are code, and Toshiba V4.23 reproduces them from C.)
 ; "clamp WA into [DE..BC], return in HL" -- the same operation as
 ; Int_ClampSignedToRange at 0x022B19, with the low bound tested first (that routine tests
 ; the high bound first). Nothing in the image references it; it is dead code left between
@@ -1838,7 +1839,7 @@ Voice_ComputePitch_WriteDone:
 ; Converted from `.byte` to real mnemonics 2026-09-01 (lane SUB): `jr ge, 4` / `jr 6` /
 ; `jr le, 2` take the raw 8-bit displacement field, verified byte-identical via a llvm-mc
 ; round trip (assemble -> objcopy -> compare against the original 17 bytes).
-Voice_ComputePitch_InlineData:
+Int_ClampSignedToRange_B:
 	cp	wa, de
 	jr	ge, Voice_ComputePitch_Skip
 	ld	wa, de

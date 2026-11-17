@@ -52,7 +52,7 @@ void AudioChannel_Handler_Cmd03(unsigned char part, unsigned char val, unsigned 
 void Voice_AllVoices_UpdateVelocity(unsigned char v);
 int Voice_ApplyPortamento2(unsigned char *v);
 void Voice_Calc_LevelPair_EGC(unsigned char *v);
-int Voice_ComputePitch_InlineData(int a, int hi, int lo);
+int Int_ClampSignedToRange_B(int a, int hi, int lo);
 void Voice_Step_DelayTimers(unsigned char *p);
 void Voice_WriteChPanShift(unsigned char *v, unsigned char flag);
 void Voice_WriteChPanShift2(unsigned char *v, unsigned char flag);
@@ -175,7 +175,7 @@ void Voice_Calc_LevelPair_EGC(unsigned char *v)
     ram_451b6 = t;
 }
 
-int Voice_ComputePitch_InlineData(int a, int hi, int lo)
+int Int_ClampSignedToRange_B(int a, int hi, int lo)
 {
     if (a < lo) a = lo;
     else if (a > hi) a = hi;
