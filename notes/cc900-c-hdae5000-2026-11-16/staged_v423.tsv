@@ -430,10 +430,6 @@ hdae5000	hdae5000/cc900-staged/hdae5000_loadsong2.c	425f7fe7c4c554a5b74bb12faf64
 hdae5000	hdae5000/cc900-staged/hdae5000_lyrics2.c	26cc78e3102981b6c683dbf79f28272e2dddb64ba88bdce9d24c10976360c005	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_Lyrics_FillLines	579	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_lyrics2.c	26cc78e3102981b6c683dbf79f28272e2dddb64ba88bdce9d24c10976360c005	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_Lyrics_ParseEvent	656	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_pport_svc13.c	6913bc72e3712413509765b2b4d9c0c36d4395d0d711709a44764ee5e1595454	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_PPORT_Svc13_SendInfosAboutSong	782	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7ac469bb090146e6489cb31b1d1026b3ab65d5345cd6086a4bc5c48386b447f4	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_SeparateBassPartCheck	169	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7ac469bb090146e6489cb31b1d1026b3ab65d5345cd6086a4bc5c48386b447f4	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_SeparateDrumPartCheck	169	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7ac469bb090146e6489cb31b1d1026b3ab65d5345cd6086a4bc5c48386b447f4	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_SeparateOutputModeCheck	165	MATCH
-hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7ac469bb090146e6489cb31b1d1026b3ab65d5345cd6086a4bc5c48386b447f4	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_SeparateOutput_Apply	0	cannot resolve 'no address for .SepOut_SendPartMsg'
 hdae5000	hdae5000/cc900-staged/hdae5000_setup_copy.c	2c449d078bb78697d8c8b83fcca1e253b1a0240e7e57363dd01b5fb740dcbc92	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_CopyToHDScreen	264	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_setup_copy.c	2c449d078bb78697d8c8b83fcca1e253b1a0240e7e57363dd01b5fb740dcbc92	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_SetupP2SwCatch	220	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_small2.c	583aeaa53d5f9f662b2b8beedf2da892ff76ae399e45fc69c6d1ee9bff539af9	Xr	2026-11-17-11-hd-r40-staged	HDAE5000_AcWindowPage1Proc	77	MATCH
@@ -494,3 +490,13 @@ hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_small2.c	50c5e07b92aea66b6
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_small2.c	50c5e07b92aea66b68651febb8d773069cd6b64d48bccd29093b16abaa10a713	Xr	2026-11-17-13-hd-r42-ports	HDAE5000_NameHistory_Push	61	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_store_ui.c	363dc1bfedfe9c080ec5170c292a0b71e0e0b0af40c1d7449b23e37e7c01faab	Xr	2026-11-17-13-hd-r42-ports	HDAE5000_RcmStream_Read	211	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_store_ui.c	363dc1bfedfe9c080ec5170c292a0b71e0e0b0af40c1d7449b23e37e7c01faab	Xr	2026-11-17-13-hd-r42-ports	HDAE5000_RcmStream_Write	227	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fdlist_scan.c	dc76ec8759e53fb7e0a937f8ca56a51bbe0de6841d384ddbd608afe21aa810b3	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_FdList_Scan	640	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem2.c	65f43c243dc69129a009e40776ec28f2d743997b0fabc82b773125108081ced2	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_FlsItem_Get	191	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem2.c	65f43c243dc69129a009e40776ec28f2d743997b0fabc82b773125108081ced2	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_FlsItem_Set	148	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem2.c	65f43c243dc69129a009e40776ec28f2d743997b0fabc82b773125108081ced2	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_FlsItem_SongRecord	139	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_page.c	0a00b7dbec55a3574c527ad907011411f1e11bf2827cbf842df9ffe4c589372f	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_LBNPage1SwCatch	379	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_page.c	0a00b7dbec55a3574c527ad907011411f1e11bf2827cbf842df9ffe4c589372f	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_Lbn_StepDigit	330	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateBassPartCheck	169	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateDrumPartCheck	169	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateOutputModeCheck	165	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateOutput_Apply	279	MATCH
