@@ -3216,246 +3216,30 @@ EnvTranspose_Epilogue:
 ; enable.  The XHL load of Part_PatchRecord_Ptr at 0x033007..0x033014 is dead.
 ; Callers: TVF_Refresh_Sounding_Voices (6 sites), VoiceAlloc_Apply_Algo_Group0
 ; (6 sites), Voice_Part_ResetSlotRouting (2), VoiceSlot_FullInit/AltInit (2).
-AlgoFlag_Write:
-	pushw iz
-	ld l, e
-	extz hl
-	ld ix, hl
-	sla ix, 2
-	ld l, c
-	extz hl
-	sla hl, 4
-	ld iy, hl
-	add iy, ix
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xix, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xix
-	lda	xix, (xhl+iy)
-	lda xix, (xix + 39)
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_PatchRecord_Ptr:24)
-	ld	xhl, (xiy+hl)
-	andmi8 (xix), 0xFC
-	cp (xix + 3), 0x0
-	jr z, AlgoFlag_Write_OuterStart
-	ld l, (xix + 1)
-	and l, 0x55
-	jr z, AlgoFlag_Write_OuterStart
-	setm 1, (xix)
-	jrl AlgoFlag_Write_Epilogue
-
-; Initialise the p = 0..3 partial scan counter (W).
-AlgoFlag_Write_OuterStart:
-	ld w, 0x0:opc
-	cp w, 4:i3
-	jrl nc, AlgoFlag_Write_Epilogue
-
-; Group selector C == 0: b = Part_Slot_Sub_Base[part][p] -> [+0x06].
-AlgoFlag_Write_InnerLoop:
-	ld l, c
-	cp l, 2:i3
-	jr z, AlgoFlag_Write_InnerNext
-	cp l, 1:i3
-	jr z, AlgoFlag_Write_InnerMatch
-	cp l, 0:i3
-	jr nz, AlgoFlag_Write_OuterMatch
-	ld l, w
-	extz hl
-	muls hl, 0x25
-	ld iz, hl
-	add iz, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xiy
-	ld	xhl, (xhl+iz)
-	ld b, (xhl + 6)
-	jr AlgoFlag_Write_OuterMatch
-
-; C == 1: b = block[+0x26].
-AlgoFlag_Write_InnerMatch:
-	ld l, w
-	extz hl
-	muls hl, 0x25
-	ld iz, hl
-	add iz, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xiy
-	ld	xhl, (xhl+iz)
-	ld b, (xhl + 38)
-	jr AlgoFlag_Write_OuterMatch
-
-; C == 2: b = block[+0x38].
-AlgoFlag_Write_InnerNext:
-	ld l, w
-	extz hl
-	muls hl, 0x25
-	ld iz, hl
-	add iz, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xiy
-	ld	xhl, (xhl+iz)
-	ld b, (xhl + 56)
-
-; b bit 5 set and (b >> 6) == E -> set bit 0 of the target byte.
-AlgoFlag_Write_OuterMatch:
-	bit 5, b
-	jr z, AlgoFlag_Write_OuterNext
-	ld l, b
-	and l, 0xC0
-	srl l, 6
-	cp l, e
-	jr nz, AlgoFlag_Write_OuterNext
-	setm 0, (xix)
-
-; p++ and loop while p < 4.
-AlgoFlag_Write_OuterNext:
-	inc 1, w
-	cp w, 4:i3
-	jrl c, AlgoFlag_Write_InnerLoop
-
-; Shared exit.
-AlgoFlag_Write_Epilogue:
-	popw iz
-	ret
+AlgoFlag_Write:	.include "includes/generated/cc900/AlgoFlag_Write.s"	; C: cc900/dsp_voice_params_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AlgoFlag_Write_OuterStart, AlgoFlag_Write + 86
+	.set	AlgoFlag_Write_InnerLoop, AlgoFlag_Write + 93
+	.set	AlgoFlag_Write_InnerMatch, AlgoFlag_Write + 148
+	.set	AlgoFlag_Write_InnerNext, AlgoFlag_Write + 189
+	.set	AlgoFlag_Write_OuterMatch, AlgoFlag_Write + 228
+	.set	AlgoFlag_Write_OuterNext, AlgoFlag_Write + 247
+	.set	AlgoFlag_Write_Epilogue, AlgoFlag_Write + 254
 
 ; Byte-for-byte twin of 0x032FD5 operating on bits 2 and 3 of the same target
 ; byte: the mask is 0xF3 instead of 0xFC, the "already forced" probe reads
 ; (target+2) instead of (target+3), and the bits set are 3 (forced) and 2
 ; (matched) instead of 1 and 0.  Same entry contract, same callers (a different
 ; set of 16 call sites), same dead XHL load at 0x033107..0x033114.
-AlgoFlag_Write_Bit3:
-	pushw iz
-	ld l, e
-	extz hl
-	ld ix, hl
-	sla ix, 2
-	ld l, c
-	extz hl
-	sla hl, 4
-	ld iy, hl
-	add iy, ix
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xix, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xix
-	lda	xix, (xhl+iy)
-	lda xix, (xix + 39)
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_PatchRecord_Ptr:24)
-	ld	xhl, (xiy+hl)
-	andmi8 (xix), 0xF3
-	cp (xix + 2), 0x0
-	jr z, AlgoFlag_Write_Bit3_OuterStart
-	ld l, (xix + 1)
-	and l, 0x55
-	jr z, AlgoFlag_Write_Bit3_OuterStart
-	setm 3, (xix)
-	jrl AlgoFlag_Write_Bit3_Epilogue
-
-; Initialise the p = 0..3 partial scan counter (W).
-AlgoFlag_Write_Bit3_OuterStart:
-	ld w, 0x0:opc
-	cp w, 4:i3
-	jrl nc, AlgoFlag_Write_Bit3_Epilogue
-
-; Group selector C == 0: b = block[+0x06].
-AlgoFlag_Write_Bit3_InnerLoop:
-	ld l, c
-	cp l, 2:i3
-	jr z, AlgoFlag_Write_Bit3_InnerNext
-	cp l, 1:i3
-	jr z, AlgoFlag_Write_Bit3_InnerMatch
-	cp l, 0:i3
-	jr nz, AlgoFlag_Write_Bit3_OuterMatch
-	ld l, w
-	extz hl
-	muls hl, 0x25
-	ld iz, hl
-	add iz, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xiy
-	ld	xhl, (xhl+iz)
-	ld b, (xhl + 6)
-	jr AlgoFlag_Write_Bit3_OuterMatch
-
-; C == 1: b = block[+0x26].
-AlgoFlag_Write_Bit3_InnerMatch:
-	ld l, w
-	extz hl
-	muls hl, 0x25
-	ld iz, hl
-	add iz, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xiy
-	ld	xhl, (xhl+iz)
-	ld b, (xhl + 38)
-	jr AlgoFlag_Write_Bit3_OuterMatch
-
-; C == 2: b = block[+0x38].
-AlgoFlag_Write_Bit3_InnerNext:
-	ld l, w
-	extz hl
-	muls hl, 0x25
-	ld iz, hl
-	add iz, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xiy, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xiy
-	ld	xhl, (xhl+iz)
-	ld b, (xhl + 56)
-
-; b bit 5 set and (b >> 6) == E -> set bit 2 of the target byte.
-AlgoFlag_Write_Bit3_OuterMatch:
-	bit 5, b
-	jr z, AlgoFlag_Write_Bit3_OuterNext
-	ld l, b
-	and l, 0xC0
-	srl l, 6
-	cp l, e
-	jr nz, AlgoFlag_Write_Bit3_OuterNext
-	setm 2, (xix)
-
-; p++ and loop while p < 4.
-AlgoFlag_Write_Bit3_OuterNext:
-	inc 1, w
-	cp w, 4:i3
-	jrl c, AlgoFlag_Write_Bit3_InnerLoop
-
-; Shared exit; last instruction of region 10.
-AlgoFlag_Write_Bit3_Epilogue:
-	popw iz
-	ret
+AlgoFlag_Write_Bit3:	.include "includes/generated/cc900/AlgoFlag_Write_Bit3.s"	; C: cc900/dsp_voice_params_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AlgoFlag_Write_Bit3_OuterStart, AlgoFlag_Write_Bit3 + 86
+	.set	AlgoFlag_Write_Bit3_InnerLoop, AlgoFlag_Write_Bit3 + 93
+	.set	AlgoFlag_Write_Bit3_InnerMatch, AlgoFlag_Write_Bit3 + 148
+	.set	AlgoFlag_Write_Bit3_InnerNext, AlgoFlag_Write_Bit3 + 189
+	.set	AlgoFlag_Write_Bit3_OuterMatch, AlgoFlag_Write_Bit3 + 228
+	.set	AlgoFlag_Write_Bit3_OuterNext, AlgoFlag_Write_Bit3 + 247
+	.set	AlgoFlag_Write_Bit3_Epilogue, AlgoFlag_Write_Bit3 + 254
 
 ; Writes ONE 16-bit routing word into an output-slot record.
 ; Inputs: XWA = base address of the output-slot record (part+0x6E+0x25*slot),
@@ -4411,141 +4195,20 @@ AlgoType_AB_Checker:	.include "includes/generated/cc900/AlgoType_AB_Checker.s"	;
 ;   type 7: same but the sub-index comes from the algorithm-descriptor byte at
 ;           0x011E1C + 0x27*type, and no OR is applied.
 ; Called from both recompute paths of AlgoType_StateWrite.
-DSP_ChanFreq_WritePacket1:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	ld l, c
-	cp c, 7:i3
-	jr z, DSP_ChanFreq_WritePacket1_Algo7
-	cp c, 6:i3
-	jrl nz, DSP_ChanFreq_WritePacket1_Zero
-	ld c, l
-	extz bc
-	muls bc, 0x6
-	lda xde, (DSP_AlgoChannel_SelectorByte4:24)
-	ld	w, (xde+bc)
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 94)
-	extz bc
-	ld hl, bc
-	add hl, hl
-	ld c, w
-	extz bc
-	muls bc, 0x66
-	lda xde, (DSP_ChanFreq_Packet1_Curve:24)
-	exts xbc
-	add xbc, xde
-	ld	hl, (xbc+hl)
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 96)
-	extz bc
-	add bc, bc
-	lda xde, (EGEnv_ModeBits_Table:24)
-	or	hl, (xde+bc)
-	jr DSP_ChanFreq_WritePacket1_Epilogue
-
-; The algorithm-type-7 variant described above.
-DSP_ChanFreq_WritePacket1_Algo7:
-	ld c, l
-	extz bc
-	muls bc, 0x6
-	lda xde, (DSP_AlgoChannel_SelectorByte4:24)
-	ld	w, (xde+bc)
-	ld c, l
-	extz bc
-	muls bc, 0x27
-	lda xde, (DSP_AlgoDescriptor_SelIdx:24)
-	ld	c, (xde+bc)
-	extz bc
-	ld hl, bc
-	add hl, hl
-	ld c, w
-	extz bc
-	muls bc, 0x66
-	lda xde, (DSP_ChanFreq_Packet1_Curve:24)
-	exts xbc
-	add xbc, xde
-	ld	hl, (xbc+hl)
-	jr DSP_ChanFreq_WritePacket1_Epilogue
-
-; All other algorithm types: HL = 0.
-DSP_ChanFreq_WritePacket1_Zero:
-	ld hl, 0:i3
-
-; Store to part+0x5F and return.
-DSP_ChanFreq_WritePacket1_Epilogue:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2551:24)
-	ld	(xbc+wa), hl
-	ret
+DSP_ChanFreq_WritePacket1:	.include "includes/generated/cc900/DSP_ChanFreq_WritePacket1.s"	; C: cc900/dsp_voice_params_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ChanFreq_WritePacket1_Algo7, DSP_ChanFreq_WritePacket1 + 139
+	.set	DSP_ChanFreq_WritePacket1_Zero, DSP_ChanFreq_WritePacket1 + 205
+	.set	DSP_ChanFreq_WritePacket1_Epilogue, DSP_ChanFreq_WritePacket1 + 207
 
 ; Input A = part index.  Stores a 16-bit word at part+0x61 (0x0413C9).
 ; Types 6 and 7 share one path here: selector = byte at 0x010FD3 + 6*type, word =
 ; table[0x011016 + 0x66*selector + 2*descriptor[0x5F]].  All other types store 0.
-DSP_ChanFreq_WritePacket2:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	ld e, c
-	cp c, 7:i3
-	jr z, DSP_ChanFreq_WritePacket2_PathA
-	cp c, 6:i3
-	jr nz, DSP_ChanFreq_WritePacket2_PathB
-
-; The type-6/7 lookup path.
-DSP_ChanFreq_WritePacket2_PathA:
-	ld c, e
-	extz bc
-	muls bc, 0x6
-	lda xde, (DSP_AlgoChannel_SelectorByte5:24)
-	ld	w, (xde+bc)
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 95)
-	extz bc
-	ld hl, bc
-	add hl, hl
-	ld c, w
-	extz bc
-	muls bc, 0x66
-	lda xde, (DSP_ChanFreq_CurvePool:24)
-	exts xbc
-	add xbc, xde
-	ld	hl, (xbc+hl)
-	jr DSP_ChanFreq_WritePacket2_Epilogue
-
-; All other algorithm types: HL = 0.
-DSP_ChanFreq_WritePacket2_PathB:
-	ld hl, 0:i3
-
-; Store to part+0x61 and return.
-DSP_ChanFreq_WritePacket2_Epilogue:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2553:24)
-	ld	(xbc+wa), hl
-	ret
+DSP_ChanFreq_WritePacket2:	.include "includes/generated/cc900/DSP_ChanFreq_WritePacket2.s"	; C: cc900/dsp_voice_params_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ChanFreq_WritePacket2_PathA, DSP_ChanFreq_WritePacket2 + 34
+	.set	DSP_ChanFreq_WritePacket2_PathB, DSP_ChanFreq_WritePacket2 + 103
+	.set	DSP_ChanFreq_WritePacket2_Epilogue, DSP_ChanFreq_WritePacket2 + 105
 
 ; Input A = part index.  Returns L.
 ; Returns 0xFF unless part+0x0A bit 15 is set AND the algorithm type is exactly 9; in that case
@@ -4563,64 +4226,12 @@ Voice_SecondaryParam_Fetch:	.include "includes/generated/cc900/Voice_SecondaryPa
 ; for every other type it returns descriptor[0x64].
 ; Caller: Voice_ActiveFlag_CheckAndLoad (0x0344E4), which ADDS the result to its own accumulator
 ; -- i.e. this is an additive offset applied to a per-part DSP parameter.
-Voice_SecondaryParam_Fetch2:
-	ld l, 0x0:opc
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xde+bc)
-	extz xbc
-	bit 15, bc
-	ret z
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	ld l, c
-	cp c, 0xB
-	jr z, Voice_SecondaryParam_AlgoAB
-	cp c, 0xA
-	jr nz, Voice_SecondaryParam_Path3
-
-; The type-0x0A/0x0B branch: tests bit 7 of 0x011E23 + 0x27*type.
-Voice_SecondaryParam_AlgoAB:
-	ld c, l
-	extz bc
-	muls bc, 0x27
-	lda xde, (DSP_AlgoDescriptor_FlagsAB:24)
-	bit	7, (xde+bc)
-	jr z, Voice_SecondaryParam_Path2
-	ld a, l
-	extz wa
-	muls wa, 0x27
-	lda xbc, (DSP_AlgoDescriptor_ValueAB:24)
-	ld	l, (xbc+wa)
-	jr Voice_SecondaryParam_Path4
-
-; Bit 7 clear: L = descriptor[0x64].
-Voice_SecondaryParam_Path2:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 100)
-	jr Voice_SecondaryParam_Path4
-
-; All other algorithm types: L = descriptor[0x64].
-Voice_SecondaryParam_Path3:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 100)
-
-; Shared `ret`.
-Voice_SecondaryParam_Path4:
-	ret
+Voice_SecondaryParam_Fetch2:	.include "includes/generated/cc900/Voice_SecondaryParam_Fetch2.s"	; C: cc900/dsp_voice_params_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SecondaryParam_AlgoAB, Voice_SecondaryParam_Fetch2 + 63
+	.set	Voice_SecondaryParam_Path2, Voice_SecondaryParam_Fetch2 + 103
+	.set	Voice_SecondaryParam_Path3, Voice_SecondaryParam_Fetch2 + 124
+	.set	Voice_SecondaryParam_Path4, Voice_SecondaryParam_Fetch2 + 143
 
 ; NOT an epilogue -- this is a separate one-line accessor with its own entry point.
 ; Input A = part index; returns L = descriptor[0x65] when part+0x0A bit 15 is set, else 0.
@@ -4805,82 +4416,12 @@ Algo_SubTable_DispatchA:	.include "includes/generated/cc900/Algo_SubTable_Dispat
 ; 2*descriptor[0x5F] (type 8), or leave the sub-record byte untouched (types 6/7).
 ; All arms require C == 1; for any other sub-slot the sub-record byte is returned as-is.
 ; Caller: VoiceNoteParam_LoopBody (0x034387); result lands in output-slot byte +0x21.
-Algo_SubTable_DispatchB:
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld e, (xde + 93)
-	and e, 0xF
-	ld w, e
-	ld e, c
-	extz de
-	muls de, 0x5
-	ld ix, de
-	add ix, 0x13
-	ld e, w
-	extz de
-	muls de, 0x27
-	lda xhl, (DSP_AlgoDescriptor_Records:24)
-	exts xde
-	add xde, xhl
-	lda	xde, (xde+ix)
-	ld l, (xde + 2)
-	ld e, w
-	extz de
-	cp de, 0:i3
-	ret mi
-	cp de, 0x8
-	ret gt
-	add de, de
-	lda xix, (Algo_SubTable_DispatchB_CaseOffsets:24)
-	ld	de, (xix+de)
-	lda xix, (Algo_SubTable_JumpTable1:24)
-	jp	t, (xix+de)
-
-; NOT DATA -- the arm block of DispatchB's computed jump; +0x00 serves algorithm types 0..3.
-Algo_SubTable_JumpTable1:
-	; Converted from a 135-byte `.byte` run, round-trip exact: these exact
-	; mnemonics re-assemble to the original bytes. Entered by the computed
-	; jump above; every interior arm label below falls on an instruction
-	; boundary of this decode, which is what makes the linear framing right.
-	cp	c, 1:i3
-	ret	nz
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+96)
-	ld	l, a
-	add	l, a
-	jr	Algo_SubTable_DispatchB_Return
-; DispatchB arm for algorithm types 4 and 5: L = 2 * descriptor[0x62].
-Algo_SubTable_DispatchB_Arm_Type45:
-	cp	c, 1:i3
-	ret	nz
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+98)
-	ld	l, a
-	add	l, a
-	jr	Algo_SubTable_DispatchB_Return
-; DispatchB arm for algorithm type 8: L = 2 * descriptor[0x5F].
-Algo_SubTable_DispatchB_Arm_Type8:
-	cp	c, 1:i3
-	ret	nz
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+95)
-	ld	l, a
-	add	l, a
-; Shared `ret` of DispatchB; also the no-op arm for algorithm types 6 and 7.
-Algo_SubTable_DispatchB_Return:
-	ret
+Algo_SubTable_DispatchB:	.include "includes/generated/cc900/Algo_SubTable_DispatchB.s"	; C: cc900/dsp_voice_params_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Algo_SubTable_JumpTable1, Algo_SubTable_DispatchB + 101
+	.set	Algo_SubTable_DispatchB_Arm_Type45, Algo_SubTable_DispatchB + 130
+	.set	Algo_SubTable_DispatchB_Arm_Type8, Algo_SubTable_DispatchB + 159
+	.set	Algo_SubTable_DispatchB_Return, Algo_SubTable_DispatchB + 186
 ; A small leaf helper with no symbol of its own -- it sits between the DispatchB arm block and
 ; Algo_SubTable_DispatchC and is reached only by `calr 0x034122` from two arms of
 ; Algo_SubTable_JumpTable2 (0x0341E1 and 0x0341F2).

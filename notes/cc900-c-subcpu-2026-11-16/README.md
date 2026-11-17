@@ -157,6 +157,25 @@ Algo_SubTable_Bit15Dispatch_CaseOffsets, Algo_SubTable_DispatchC_CaseOffsets, TV
 renamed Int_ClampSignedToRange_B (`scripts/renaming/rename_subcpu_clamp_b.sed`): 17 bytes of code, now built
 from C too.
 
+**Sixth promotion: round 18's 30 (run 2026-11-17-7, verified per tree in run 2026-11-17-9).**  12 files, 30
+bodies and six more offset tables (DSP_BytecodeInterpreter_CaseOffsets, Algo_SubTable_DispatchB_CaseOffsets,
+DSP_EFFPARAM_APPLY_JUMPTABLE, VOICE_DSPOUT_A_JUMPTABLE, VOICE_DSPOUT_B_JUMPTABLE,
+VOICE_DSPOUT_SECOND_A_JUMPTABLE).  **477 functions per tree** built from C, DSP_BytecodeInterpreter_Init
+(1,933 B) among them; `make -j2 gate` PASS.
+
+### Floating point at -Xr (runs 2026-11-17-7 and 2026-11-17-9)
+
+- A register-convention function may not return float or double: V4.23 says `THC1-Error-373: Illegal function
+  return type`, for prototypes too (sub_fp_18a/b/c.c were refused whole).  A `__cdecl` function may
+  (sub_fp_19c.c), and the math library is declared `double __cdecl pow(double, double);` and so on.
+- The ROM's callers show the same split: arithmetic and conversions pass ADDRESSES (XWA destination, XBC / XDE
+  operands; nothing returns in a register), the math library takes its doubles on the stack with a pushed result
+  pointer and the caller pops 20 bytes.  So the firmware's FP functions are plain C with float / double locals.
+- Library names V4.23 calls (`fp_names.py` on sub_fp_19a/b.asm): `._fadd_f ._fsub_f ._fmul_f ._fdiv_f ._fneg_f
+  ._fcmp_f ._fcmp_zf`, the same with `_d`, conversions `._fld_XY` (df, fd, lf, ulf, ld, fl, ful, dl, dul), and
+  `_pow _sin _cos _tan _fabs`.  Their pairing with the tree's FP_* labels is NOT confirmed yet: each pair goes
+  into `scripts/build/cc900_runtime_names.tsv` when a function that uses it matches.
+
 | script            | question it answers                                                                      | command                                                                                          |
 |-------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | `hold_back.py`    | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...`               |

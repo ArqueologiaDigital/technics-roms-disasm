@@ -2660,170 +2660,17 @@ DSP_State_ApplyAll:	.include "includes/generated/cc900/DSP_State_ApplyAll.s"	; C
 ; and a batch of dirty bits is forced: (0x4930 + n*2) = 1, the coefficient flag indexed by
 ; slot +0x1E doubled, and the words at 0x495A / 0x495C / 0x4960 (+ n*0x32 + 0x10) = 1, plus
 ; 0x4958 + n*0x32 + 0x10 = 1 unless slot +0x30 equals 0x63. Otherwise (0x4930 + n*2) = 0.
-EFF_SlotActive_UpdateFlags:
-	ld de, 0:i3
-	cpw (DSP_AlgoChangedFlag:16), 1
-	jr nz, EFF_SlotActive_SlotActive
-	ld hl, 0:i3
-	cp hl, 5:i3
-	ret nc
-
-; The "mark all five live" loop taken when (0x493E) == 1.
-EFF_SlotActive_CheckSlot:
-	ld wa, hl
-	add wa, wa
-	lda xbc, (EFF_SlotActiveFlags:16)
-	extz xwa
-	add xwa, xbc
-	ldw (xwa), 0x1
-	inc 1, hl
-	cp hl, 5:i3
-	jr c, EFF_SlotActive_CheckSlot
-	ret
-
-; Per-slot loop set-up (n = 0..4).
-EFF_SlotActive_SlotActive:
-	ld hl, 0:i3
-	cp hl, 5:i3
-	ret nc
-
-; Per-slot loop body: reads the algorithm number and tests it against 0x33/0x34/0x45/0x46.
-EFF_SlotActive_SlotInactive:
-	ld bc, hl
-	extz xbc
-	ld xix, xbc
-	sll xix, 3
-	sub xix, xbc
-	sll xix, 3
-	inc 8, xix
-	add xix, xwa
-	ld bc, (xix)
-	cp bc, 0x33
-	jr z, EFF_SlotActive_VoiceCheck
-	cp bc, 0x34
-	jr z, EFF_SlotActive_VoiceCheck
-	cp bc, 0x45
-	jr z, EFF_SlotActive_VoiceCheck
-	cp bc, 0x46
-	jr nz, EFF_SlotActive_VoiceInactive
-
-; One of those four algorithms: DE = 1.
-EFF_SlotActive_VoiceCheck:
-	ld de, 1:i3
-
-; The three-way "does this slot need a rewrite" test.
-EFF_SlotActive_VoiceInactive:
-	ld bc, hl
-	mul bc, 0x32
-	lda xix, (18752:16)
-	extz xbc
-	add xbc, xix
-	cpw (xbc), 0x1
-	jr z, EFF_SlotActive_LoopNext
-	cpw (xwa), 0x1
-	jr nz, EFF_SlotActive_AlgoCheck
-	ld bc, hl
-	mul bc, 0x32
-	add bc, 0x10
-	lda xix, (18784:16)
-	extz xbc
-	add xbc, xix
-	cpw (xbc), 0x1
-	jr z, EFF_SlotActive_LoopNext
-
-; Summary-word test combined with the DE flag.
-EFF_SlotActive_AlgoCheck:
-	ld bc, hl
-	mul bc, 0x32
-	add bc, 0x10
-	lda xix, (18784:16)
-	extz xbc
-	add xbc, xix
-	cpw (xbc), 0x1
-	jrl nz, EFF_SlotActive_InnerLoopNext
-	cp de, 1:i3
-	jrl nz, EFF_SlotActive_InnerLoopNext
-
-; The "slot is live" body that forces the batch of dirty flags. Not a loop tail.
-EFF_SlotActive_LoopNext:
-	ld bc, hl
-	add bc, bc
-	lda xix, (EFF_SlotActiveFlags:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x1
-	ld bc, hl
-	extz xbc
-	ld xix, xbc
-	sll xix, 3
-	sub xix, xbc
-	sll xix, 3
-	inc 8, xix
-	add xix, xwa
-	ld ix, (xix + 38)
-	sll ix, 1
-	ld bc, hl
-	mul bc, 0x32
-	add bc, ix
-	lda xix, (18756:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x1
-	ld bc, hl
-	mul bc, 0x32
-	add bc, 0x10
-	lda xix, (18778:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x1
-	ld bc, hl
-	mul bc, 0x32
-	add bc, 0x10
-	lda xix, (18780:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x1
-	ld bc, hl
-	mul bc, 0x32
-	add bc, 0x10
-	lda xix, (18784:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x1
-	ld bc, hl
-	extz xbc
-	ld xix, xbc
-	sll xix, 3
-	sub xix, xbc
-	sll xix, 3
-	inc 8, xix
-	add xix, xwa
-	cpw (xix + 48), 0x63
-	jr z, EFF_SlotActive_Epilogue
-	ld bc, hl
-	mul bc, 0x32
-	add bc, 0x10
-	lda xix, (18776:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x1
-	jr EFF_SlotActive_Epilogue
-
-; The "slot is not live" body: (0x4930 + n*2) = 0.
-EFF_SlotActive_InnerLoopNext:
-	ld bc, hl
-	add bc, bc
-	lda xix, (EFF_SlotActiveFlags:16)
-	extz xbc
-	add xbc, xix
-	ldw (xbc), 0x0
-
-; ++n while n < 5, then ret. This is the actual loop tail.
-EFF_SlotActive_Epilogue:
-	inc 1, hl
-	cp hl, 5:i3
-	jrl c, EFF_SlotActive_SlotInactive
-	ret
+EFF_SlotActive_UpdateFlags:	.include "includes/generated/cc900/EFF_SlotActive_UpdateFlags.s"	; C: cc900/audio_process_dsp_and_effects_t_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_SlotActive_CheckSlot, EFF_SlotActive_UpdateFlags + 16
+	.set	EFF_SlotActive_SlotActive, EFF_SlotActive_UpdateFlags + 39
+	.set	EFF_SlotActive_SlotInactive, EFF_SlotActive_UpdateFlags + 45
+	.set	EFF_SlotActive_VoiceCheck, EFF_SlotActive_UpdateFlags + 89
+	.set	EFF_SlotActive_VoiceInactive, EFF_SlotActive_UpdateFlags + 91
+	.set	EFF_SlotActive_AlgoCheck, EFF_SlotActive_UpdateFlags + 141
+	.set	EFF_SlotActive_LoopNext, EFF_SlotActive_UpdateFlags + 171
+	.set	EFF_SlotActive_InnerLoopNext, EFF_SlotActive_UpdateFlags + 346
+	.set	EFF_SlotActive_Epilogue, EFF_SlotActive_UpdateFlags + 362
 
 ; ALREADY NAMED -- doc header only. No parameters.
 ; If (0x493E) == 1: (0x493A) = 1 and then (0x493A + i*2) = 0 for i = 1 only, i.e. the pair
@@ -3904,115 +3751,17 @@ EFF_LinkLoop:	.include "includes/generated/cc900/EFF_LinkLoop.s"	; C: cc900/audi
 ;    EFF_Disconnect(slot, block[+0x06]). Each matching slot folds its own settle time from
 ;    0x01ED72 into a second maximum, and pass 2 ends with another DSP_ScheduleDelay.
 ; So an unlink costs up to two scheduled delays, 20 ms plus up to 46 ms.
-EFF_SecondaryLinkPath:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-	ld iz, 0:i3
-	ldiw_erp 0xFA, 4
-	cp_erpw 0xFA, 0xFF, 0xFF
-	jr le, EFF_SecLinkPath_Pass1Epilogue
-
-; Pass 1 body: link-dirty test plus the +0x36 == 0 test, then max-reduce 0x14.
-EFF_SecLinkPath_Pass1Body:
-	ldto_werp WA, 0xFA
-	mul wa, 0x32
-	add wa, 0x10
-	lda xbc, (18782:16)
-	extz xwa
-	add xwa, xbc
-	cpw (xwa), 0x1
-	jr nz, EFF_SecLinkPath_Pass1Next
-	ldto_werp WA, 0xFA
-	muls wa, 0x38
-	ld bc, wa
-	inc 8, bc
-	ld xwa, (xsp + 4)
-	lda	xwa, (xwa+bc)
-	cpw (xwa + 54), 0x0
-	jr nz, EFF_SecLinkPath_Pass1Next
-	ld wa, iz
-	ldw bc, 0x14
-	calr Unsigned_Max_Select
-	ld iz, hl
-
-; Pass 1 descending step (decrements the QIZ slot counter).
-EFF_SecLinkPath_Pass1Next:
-	dec1w_erp 0xFA
-	cp_erpw 0xFA, 0xFF, 0xFF
-	jr gt, EFF_SecLinkPath_Pass1Body
-
-; If pass 1 matched anything, DSP_ScheduleDelay(20 ms) before pass 2 runs.
-EFF_SecLinkPath_Pass1Epilogue:
-	cp iz, 0:i3
-	jr z, EFF_SecLinkPath_Pass2Start
-	ld wa, iz
-	call DSP_ScheduleDelay
-
-; Reset the accumulator and the QIZ slot counter for pass 2.
-EFF_SecLinkPath_Pass2Start:
-	ld iz, 0:i3
-	ldiw_erp 0xFA, 4
-	cp_erpw 0xFA, 0xFF, 0xFF
-	jr le, EFF_SecLinkPath_Pass2Epilogue
-
-; Pass 2 body: same predicate; slots 3 and 2 skip the EFF_Disconnect call.
-EFF_SecLinkPath_Pass2Body:
-	ldto_werp WA, 0xFA
-	mul wa, 0x32
-	add wa, 0x10
-	lda xbc, (18782:16)
-	extz xwa
-	add xwa, xbc
-	cpw (xwa), 0x1
-	jr nz, EFF_SecLinkPath_Pass2Next
-	ldto_werp WA, 0xFA
-	muls wa, 0x38
-	ld bc, wa
-	inc 8, bc
-	ld xwa, (xsp + 4)
-	lda	xwa, (xwa+bc)
-	cpw (xwa + 54), 0x0
-	jr nz, EFF_SecLinkPath_Pass2Next
-	cpiw_erp 0xFA, 3
-	jr z, EFF_SecLinkPath_Pass2MaxVol
-	cpi3_erpw 2, 0xFA
-	jr z, EFF_SecLinkPath_Pass2MaxVol
-	ldto_werp WA, 0xFA
-	ld xbc, (xsp + 4)
-	ld bc, (xbc + 6)
-	call EFF_Disconnect
-
-; Fold this slot's settle time byte (0x01ED72 + slot) into the pass-2 maximum. The build's
-; name is a little off -- this is a settle-time reduction, not a volume one.
-EFF_SecLinkPath_Pass2MaxVol:
-	ld de, iz
-	lda xwa, (EFF_SlotSettleTime_Table:24)
-	ld	a, (xwa+qiz)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Unsigned_Max_Select
-	ld iz, hl
-
-; Pass 2 descending step.
-EFF_SecLinkPath_Pass2Next:
-	dec1w_erp 0xFA
-	cp_erpw 0xFA, 0xFF, 0xFF
-	jr gt, EFF_SecLinkPath_Pass2Body
-
-; If pass 2 matched anything, DSP_ScheduleDelay(max).
-EFF_SecLinkPath_Pass2Epilogue:
-	cp iz, 0:i3
-	jr z, EFF_SecLinkPath_Epilogue
-	ld wa, iz
-	call DSP_ScheduleDelay
-
-; Restore XIZ, drop the frame, return.
-EFF_SecLinkPath_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+EFF_SecondaryLinkPath:	.include "includes/generated/cc900/EFF_SecondaryLinkPath.s"	; C: cc900/audio_process_dsp_and_effects_t_18b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_SecLinkPath_Pass1Body, EFF_SecondaryLinkPath + 18
+	.set	EFF_SecLinkPath_Pass1Next, EFF_SecondaryLinkPath + 79
+	.set	EFF_SecLinkPath_Pass1Epilogue, EFF_SecondaryLinkPath + 89
+	.set	EFF_SecLinkPath_Pass2Start, EFF_SecondaryLinkPath + 99
+	.set	EFF_SecLinkPath_Pass2Body, EFF_SecondaryLinkPath + 111
+	.set	EFF_SecLinkPath_Pass2MaxVol, EFF_SecondaryLinkPath + 185
+	.set	EFF_SecLinkPath_Pass2Next, EFF_SecondaryLinkPath + 208
+	.set	EFF_SecLinkPath_Pass2Epilogue, EFF_SecondaryLinkPath + 218
+	.set	EFF_SecLinkPath_Epilogue, EFF_SecondaryLinkPath + 228
 
 ; Already correctly named in both sources; documented here only.
 ; Entry: XWA = config block. Slots 0..4 ascending. For each slot, look up its volume
@@ -4024,132 +3773,12 @@ EFF_SecLinkPath_Epilogue:
 ;     flooring at 0. This is the only place in the region that MUTATES the config block.
 ;   - Then call EFF_VolumeUpdate_WithDebug(slot, effectnumber, v, block).
 ; The mutation matters for emulation: the block the caller handed in is not read-only.
-EFF_VolumeLoop:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ld iz, 0:i3
-	cp iz, 5:i3
-	jrl nc, EFF_VolumeLoop_Epilogue
-
-; Slot body: the record[+0x26] lookup, the dirty test, and the effect-0x3F fork.
-EFF_VolumeLoop_TestVolumeDirty:
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld bc, (xbc + 38)
-	sll bc, 1
-	ld wa, iz
-	mul wa, 0x32
-	add wa, bc
-	lda xbc, (18756:16)
-	extz xwa
-	add xwa, xbc
-	cpw (xwa), 0x1
-	jrl nz, EFF_VolumeLoop_Next
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld de, (xbc + 38)
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	cpw (xbc), 0x3F
-	jrl nz, EFF_VolumeLoop_ApplyDelta
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	ld xix, xbc
-	add xix, (xsp + 2)
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	lda xhl, (EFF_VolumeReduction_Steps:24)
-	ld wa, (xbc + 6)
-	ld	a, (xhl+wa)
-	extz wa
-	ld hl, (xix + 4)
-	sub hl, wa
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld (xbc + 4), hl
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	cpw (xbc + 4), 0x0
-	jr ge, EFF_VolumeLoop_ApplyDelta
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ldw (xbc + 4), 0x0
-
-; Join point: push the block pointer and call EFF_VolumeUpdate_WithDebug.
-EFF_VolumeLoop_ApplyDelta:
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	sll xbc, 3
-	inc 8, xbc
-	add xbc, (xsp + 2)
-	ld xwa, (xsp + 2)
-	push xwa
-	ld wa, iz
-	ld bc, (xbc)
-	call EFF_VolumeUpdate_WithDebug
-
-; Ascending slot step, repeat while slot < 5.
-EFF_VolumeLoop_Next:
-	inc 1, iz
-	cp iz, 5:i3
-	jrl c, EFF_VolumeLoop_TestVolumeDirty
-
-; Restore IZ, drop the frame, return.
-EFF_VolumeLoop_Epilogue:
-	popw iz
-	inc 4, xsp
-	ret
+EFF_VolumeLoop:	.include "includes/generated/cc900/EFF_VolumeLoop.s"	; C: cc900/audio_process_dsp_and_effects_t_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EFF_VolumeLoop_TestVolumeDirty, EFF_VolumeLoop + 13
+	.set	EFF_VolumeLoop_ApplyDelta, EFF_VolumeLoop + 241
+	.set	EFF_VolumeLoop_Next, EFF_VolumeLoop + 272
+	.set	EFF_VolumeLoop_Epilogue, EFF_VolumeLoop + 279
 
 ; Already correctly named in both sources; documented here only.
 ; Entry: XWA = config block. Slots 4 down to 0, SKIPPING slots 3 and 2, calls

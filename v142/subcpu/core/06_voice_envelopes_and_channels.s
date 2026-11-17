@@ -1246,81 +1246,13 @@ Voice_Calc_LevelPair_Mono_WriteCh2:
 ; Pure computation; no hardware, no memory written.
 ; Sole caller: Voice_ComputePitch_ApplyLFO, which ADDS the result into the pitch
 ; accumulator -- so despite the "Pan" in the name this is a pitch-domain correction.
-Voice_InterpolatePanCurve:
-	ld hl, (xwa + 8)
-	and hl, 0x7F00
-	sra hl, 8
-	ld a, (xbc + 30)
-	extz wa
-	cp hl, wa
-	jr ge, Voice_InterpolatePanCurve_HighCheck
-	ld a, (xbc + 31)
-	extz wa
-	cp hl, wa
-	jr ge, Voice_InterpolatePanCurve_LowRange
-	ldw hl, 0xFE00
-	jr Voice_InterpolatePanCurve_Done
-
-; Velocity between +31 and +30: ramp -64 -> 0 as velocity rises.
-Voice_InterpolatePanCurve_LowRange:
-	ld a, (xbc + 31)
-	ld e, a
-	extz de
-	ld a, (xbc + 30)
-	extz wa
-	ld ix, wa
-	sub ix, de
-	ld a, (xbc + 30)
-	extz wa
-	sub wa, hl
-	muls wa, 0xFFC0
-	ld hl, wa
-	exts xwa
-	divs xwa, ix
-	ld hl, wa
-	jr Voice_InterpolatePanCurve_Done
-
-; Velocity at or above +30: test it against the upper plateau edge +32.
-Voice_InterpolatePanCurve_HighCheck:
-	ld a, (xbc + 32)
-	extz wa
-	cp hl, wa
-	jr le, Voice_InterpolatePanCurve_Zero
-	ld a, (xbc + 33)
-	extz wa
-	cp hl, wa
-	jr le, Voice_InterpolatePanCurve_HighRange
-	ldw hl, 0xFE00
-	jr Voice_InterpolatePanCurve_Done
-
-; Velocity between +32 and +33: ramp 0 -> -64 as velocity rises.
-Voice_InterpolatePanCurve_HighRange:
-	ld a, (xbc + 32)
-	ld e, a
-	extz de
-	ld a, (xbc + 33)
-	extz wa
-	ld ix, wa
-	sub ix, de
-	ld a, (xbc + 32)
-	extz wa
-	ld bc, hl
-	sub bc, wa
-	ld wa, bc
-	muls wa, 0xFFC0
-	ld hl, wa
-	exts xwa
-	divs xwa, ix
-	ld hl, wa
-	jr Voice_InterpolatePanCurve_Done
-
-; Inside the plateau: return 0 (no correction).
-Voice_InterpolatePanCurve_Zero:
-	ld hl, 0:i3
-
-; Common return.
-Voice_InterpolatePanCurve_Done:
-	ret
+Voice_InterpolatePanCurve:	.include "includes/generated/cc900/Voice_InterpolatePanCurve.s"	; C: cc900/voice_envelopes_and_channels_v_18b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_InterpolatePanCurve_LowRange, Voice_InterpolatePanCurve + 33
+	.set	Voice_InterpolatePanCurve_HighCheck, Voice_InterpolatePanCurve + 70
+	.set	Voice_InterpolatePanCurve_HighRange, Voice_InterpolatePanCurve + 93
+	.set	Voice_InterpolatePanCurve_Zero, Voice_InterpolatePanCurve + 134
+	.set	Voice_InterpolatePanCurve_Done, Voice_InterpolatePanCurve + 136
 
 ; Voice_InterpolateNoteCurve(XWA = voice-slot record, XBC = paramA record) -> HL.
 ; Byte-for-byte the same shaper as Voice_InterpolatePanCurve, but keyed on the MIDI note
@@ -1429,181 +1361,16 @@ Voice_InterpolateNoteCurve_Done:
 ; tonerec[0x011E] is added on top.
 ; Touches no hardware; the result reaches the TG later via Voice_ApplyPortamento ->
 ; Voice_Build_OutputLevel.
-Voice_ComputePitch:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 6)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	bit 7, bc
-	jr z, Voice_ComputePitch_CheckSysExTune
-	ld xwa, (xsp + 6)
-	ormi16 (xwa + 1), 0x800
-
-; Mask the note to 7 bits; select the alternate table if 0x041343 bit 0 is set or
-; paramA+25 == 0xE0.
-Voice_ComputePitch_CheckSysExTune:
-	and bc, 0x7F
-	ld wa, (Voice_GlobalFlags:24)
-	bit 0, wa
-	jr nz, Voice_ComputePitch_SysExTable
-	ld xwa, (xsp + 2)
-	cp (xwa + 25), 0xE0
-	jr nz, Voice_ComputePitch_CheckAltTune
-
-; Alternate mapping: IZ = table_0x011C96[note] - 0x0C.
-Voice_ComputePitch_SysExTable:
-	ld wa, bc
-	extz xwa
-	ld xbc, Voice_AltNoteMap_Curve
-	add xbc, xwa
-	ld a, (xbc)
-	extz wa
-	ld iz, wa
-	sub iz, 0xC
-	jrl Voice_ComputePitch_ApplyLFO
-
-; Second entry point to the alternate mapping, gated on 0x041343 bit 1.
-Voice_ComputePitch_CheckAltTune:
-	ld wa, (Voice_GlobalFlags:24)
-	bit 1, wa
-	jr z, Voice_ComputePitch_NormalTune
-	ld wa, bc
-	extz xwa
-	ld xbc, Voice_AltNoteMap_Curve
-	add xbc, xwa
-	ld a, (xbc)
-	extz wa
-	ld iz, wa
-	sub iz, 0xC
-	jr Voice_ComputePitch_ApplyLFO
-
-; Normal mapping, negative-detune arm: negate paramA+24 before the multiply.
-Voice_ComputePitch_NormalTune:
-	ld xwa, (xsp + 2)
-	cp (xwa + 24), 0x0
-	jr ge, Voice_ComputePitch_PortaPositive
-	ld wa, bc
-	extz xwa
-	ld xbc, Voice_DepthMirror_Table
-	add xbc, xwa
-	ld a, (xbc)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 25)
-	ld e, a
-	extz de
-	ld wa, bc
-	ld bc, de
-	calr Voice_Colour_LookupIndex
-	sub hl, 0xD0
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 24)
-	exts wa
-	cpl wa
-	ld bc, wa
-	inc 1, bc
-	ld wa, hl
-	muls xwa, bc
-	ld hl, wa
-	jr Voice_ComputePitch_PortaScale
-
-; Normal mapping, non-negative-detune arm.
-Voice_ComputePitch_PortaPositive:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 25)
-	ld e, a
-	extz de
-	ld wa, bc
-	ld bc, de
-	calr Voice_Colour_LookupIndex
-	sub hl, 0xD0
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 24)
-	ld c, a
-	exts bc
-	ld wa, hl
-	muls xwa, bc
-	ld hl, wa
-
-; Common scaling of the detuned value: >>5 (arithmetic) then bias +0xD8.
-Voice_ComputePitch_PortaScale:
-	sra hl, 5
-	ld iz, hl
-	add iz, 0xD8
-
-; Accumulates every additive pitch term (LFO scaler, 0x011A4F fine tune, controller
-; byte, global 0x045314, +0x2940, velocity and key crossfades, optional tonerec[0x011E]).
-Voice_ComputePitch_ApplyLFO:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 26)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 27)
-	ld e, a
-	extz de
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 28)
-	extz wa
-	pushw wa
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 29)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 10)
-	ld wa, (xwa + 8)
-	calr Voice_Colour_ClampUpper
-	add iz, hl
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 43)
-	and wa, 0x7F
-	extz xwa
-	ld xbc, Voice_FineTune_Curve
-	add xbc, xwa
-	ld a, (xbc)
-	exts wa
-	add iz, wa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 15)
-	ld a, (xwa + 3)
-	exts wa
-	add iz, wa
-	ld xwa, (ToneDB_RootPtr:24)
-	add	iz, (xwa+224)
-	add iz, (10560:16)
-	ld xwa, (xsp + 6)
-	ld xbc, (xsp + 2)
-	calr Voice_InterpolatePanCurve
-	add iz, hl
-	ld xwa, (xsp + 6)
-	ld xbc, (xsp + 2)
-	calr Voice_InterpolateNoteCurve
-	add iz, hl
-	ld xwa, (xsp + 2)
-	bitm 7, (xwa)
-	jr z, Voice_ComputePitch_WriteDone
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld	a, (xwa+286)
-	extz wa
-	add iz, wa
-
-; Store the accumulator to slot+13 and clear the portamento offset slot+51.
-Voice_ComputePitch_WriteDone:
-	ld xwa, (xsp + 6)
-	ld (xwa + 13), iz
-	ld xwa, (xsp + 6)
-	ldw (xwa + 51), 0x0
-	popw iz
-	inc 8, xsp
-	ret
+Voice_ComputePitch:	.include "includes/generated/cc900/Voice_ComputePitch.s"	; C: cc900/voice_envelopes_and_channels_v_18c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ComputePitch_CheckSysExTune, Voice_ComputePitch + 38
+	.set	Voice_ComputePitch_SysExTable, Voice_ComputePitch + 61
+	.set	Voice_ComputePitch_CheckAltTune, Voice_ComputePitch + 85
+	.set	Voice_ComputePitch_NormalTune, Voice_ComputePitch + 118
+	.set	Voice_ComputePitch_PortaPositive, Voice_ComputePitch + 187
+	.set	Voice_ComputePitch_PortaScale, Voice_ComputePitch + 224
+	.set	Voice_ComputePitch_ApplyLFO, Voice_ComputePitch + 233
+	.set	Voice_ComputePitch_WriteDone, Voice_ComputePitch + 378
 
 ; Int_ClampSignedToRange_B(WA = value, BC = high, DE = low) -> HL.  (Named Voice_ComputePitch_InlineData
 ; until 2026-11-16: these 17 bytes are code, and Toshiba V4.23 reproduces them from C.)
@@ -2400,99 +2167,12 @@ Voice_TickNoteDecay_Done:
 ; 0xFFFF; the loop runs while (entry & 0xFF) < 0x80, so at most 27 entries.
 ; Callers: Voice_ToneTableRamp_Up_Increment, Voice_ToneTableRamp_Down_Decrement,
 ; Voice_ToneTableApply_Pitch_Loop, Voice_ToneTableApply_Filter_Loop.
-Voice_LoadPitchTable_Ch:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), c
-	ld (xsp + 8), a
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 1:i3
-	call DSP_AlgoType_Dispatch2
-	extz xhl
-	ld a, (xsp + 6)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xhl
-	call Math_Multiply32
-	srl xhl, 8
-	cp xhl, 0x2C
-	jr nc, Voice_LoadPitchTable_Ch_NoClamp
-	ldw (Payload_Bss_Start+0x6392:24), 0x002c
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x254f:24)
-	ldw	(xbc+wa), 0x002c
-	jr Voice_LoadPitchTable_Ch_ScanLoop
-
-; Scaled value already >= 0x2C: store it unclamped.
-Voice_LoadPitchTable_Ch_NoClamp:
-	ld wa, hl
-	ld (Payload_Bss_Start+0x6392:24), wa
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x254f:24)
-	ld	(xbc+wa), hl
-
-; Second parameter (Dispatch1 * table_0x010DCE[C]) and the output-list build.
-Voice_LoadPitchTable_Ch_ScanLoop:
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 1:i3
-	call DSP_AlgoType_Dispatch1
-	extz xhl
-	ld a, (xsp + 6)
-	extz wa
-	lda xbc, (Voice_PitchDepth_Scale:24)
-	ld	a, (xbc+wa)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xhl
-	call Math_Multiply32
-	srl xhl, 8
-	ld wa, hl
-	ld (Payload_Bss_Start+0x6396:24), wa
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x254d:24)
-	ld	(xbc+wa), hl
-	ld a, (xsp + 8)
-	extz wa
-	ldw bc, 0xD
-	ld de, 0:i3
-	call Voice_BuildOutputList
-	ld (xsp + 2), xhl
-	ld iz, 0:i3
-	jr Voice_LoadPitchTable_Ch_LoopCheck
-
-; Per-voice broadcast via ToneGen_WriteExtParams_56.
-Voice_LoadPitchTable_Ch_LoopBody:
-	ld wa, iz
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp + 2)
-	ld wa, (xwa)
-	ld w, 0x0:opc
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteExtParams_56
-	inc 1, iz
-
-; Continue while the list entry's low byte is < 0x80.
-Voice_LoadPitchTable_Ch_LoopCheck:
-	ld wa, iz
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp + 2)
-	ld wa, (xwa)
-	and wa, 0xFF
-	cp wa, 0x80
-	jr c, Voice_LoadPitchTable_Ch_LoopBody
-	popw iz
-	inc 8, xsp
-	ret
+Voice_LoadPitchTable_Ch:	.include "includes/generated/cc900/Voice_LoadPitchTable_Ch.s"	; C: cc900/voice_envelopes_and_channels_v_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_LoadPitchTable_Ch_NoClamp, Voice_LoadPitchTable_Ch + 76
+	.set	Voice_LoadPitchTable_Ch_ScanLoop, Voice_LoadPitchTable_Ch + 102
+	.set	Voice_LoadPitchTable_Ch_LoopBody, Voice_LoadPitchTable_Ch + 190
+	.set	Voice_LoadPitchTable_Ch_LoopCheck, Voice_LoadPitchTable_Ch + 214
 
 ; Voice_LoadPitchTable_All(A = part index). The ramp-position-independent form of
 ; Voice_LoadPitchTable_Ch: stores the raw DSP_AlgoType_Dispatch2/Dispatch1 results to
@@ -2510,99 +2190,12 @@ Voice_LoadPitchTable_All:	.include "includes/generated/cc900/Voice_LoadPitchTabl
 ; DSP_AlgoType_Dispatch1(part, 0) scaled by table_0x010ECE[C] into 0x04520E and
 ; 0x0413BF + part*0x11F; broadcast with Voice_BuildOutputList(part, 0x0C, 0) and
 ; ToneGen_WriteExtParams_56b.
-Voice_LoadFilterTable_Ch:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), c
-	ld (xsp + 8), a
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 0:i3
-	call DSP_AlgoType_Dispatch2
-	extz xhl
-	ld a, (xsp + 6)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xhl
-	call Math_Multiply32
-	srl xhl, 8
-	cp xhl, 0x1C
-	jr nc, Voice_LoadFilterTable_Ch_NoClamp
-	ldw (Payload_Bss_Start+0x6394:24), 0x001c
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x254b:24)
-	ldw	(xbc+wa), 0x001c
-	jr Voice_LoadFilterTable_Ch_ScanFilter
-
-; Scaled value already >= 0x1C: store unclamped.
-Voice_LoadFilterTable_Ch_NoClamp:
-	ld wa, hl
-	ld (Payload_Bss_Start+0x6394:24), wa
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x254b:24)
-	ld	(xbc+wa), hl
-
-; Second filter parameter and the output-list build.
-Voice_LoadFilterTable_Ch_ScanFilter:
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 0:i3
-	call DSP_AlgoType_Dispatch1
-	extz xhl
-	ld a, (xsp + 6)
-	extz wa
-	lda xbc, (Voice_FilterDepth_Scale:24)
-	ld	a, (xbc+wa)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xhl
-	call Math_Multiply32
-	srl xhl, 8
-	ld wa, hl
-	ld (Payload_Bss_Start+0x6398:24), wa
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2549:24)
-	ld	(xbc+wa), hl
-	ld a, (xsp + 8)
-	extz wa
-	ldw bc, 0xC
-	ld de, 0:i3
-	call Voice_BuildOutputList
-	ld (xsp + 2), xhl
-	ld iz, 0:i3
-	jr Voice_LoadFilterTable_Ch_LoopCheck
-
-; Per-voice broadcast via ToneGen_WriteExtParams_56b.
-Voice_LoadFilterTable_Ch_LoopBody:
-	ld wa, iz
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp + 2)
-	ld wa, (xwa)
-	ld w, 0x0:opc
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteExtParams_56b
-	inc 1, iz
-
-; Continue while the list entry's low byte is < 0x80.
-Voice_LoadFilterTable_Ch_LoopCheck:
-	ld wa, iz
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp + 2)
-	ld wa, (xwa)
-	and wa, 0xFF
-	cp wa, 0x80
-	jr c, Voice_LoadFilterTable_Ch_LoopBody
-	popw iz
-	inc 8, xsp
-	ret
+Voice_LoadFilterTable_Ch:	.include "includes/generated/cc900/Voice_LoadFilterTable_Ch.s"	; C: cc900/voice_envelopes_and_channels_v_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_LoadFilterTable_Ch_NoClamp, Voice_LoadFilterTable_Ch + 76
+	.set	Voice_LoadFilterTable_Ch_ScanFilter, Voice_LoadFilterTable_Ch + 102
+	.set	Voice_LoadFilterTable_Ch_LoopBody, Voice_LoadFilterTable_Ch + 190
+	.set	Voice_LoadFilterTable_Ch_LoopCheck, Voice_LoadFilterTable_Ch + 214
 
 ; Voice_LoadFilterTable_All(A = part index). Unscaled counterpart of
 ; Voice_LoadFilterTable_Ch; writes 0x04520A / 0x04520E and broadcasts with
@@ -2617,75 +2210,12 @@ Voice_LoadFilterTable_All:	.include "includes/generated/cc900/Voice_LoadFilterTa
 ; 0x1C, stores to 0x045206 and to 0x0413C9 + part*0x11F, then broadcasts with
 ; Voice_BuildOutputList(part, 0x10, 0) and ToneGen_WriteExtParams_15_Alt.
 ; Note its list terminator differs: the loop runs while (entry & 0xFF) < 0x40, not 0x80.
-Voice_LoadToneTable_Ch:
-	lda xsp, (xsp - 10)
-	ld (xsp + 6), c
-	ld (xsp + 8), a
-	ld a, (xsp + 8)
-	extz wa
-	call DSP_ChanFreq_WritePacket2
-	extz xhl
-	ld a, (xsp + 6)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xhl
-	call Math_Multiply32
-	srl xhl, 8
-	cp xhl, 0x1C
-	jr nc, Voice_LoadToneTable_Ch_NoClamp
-	ldw (Payload_Bss_Start+0x6390:24), 0x001c
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2553:24)
-	ldw	(xbc+wa), 0x001c
-	jr Voice_LoadToneTable_Ch_ScanLoop
-
-; Scaled value already >= 0x1C: store unclamped.
-Voice_LoadToneTable_Ch_NoClamp:
-	ld wa, hl
-	ld (Payload_Bss_Start+0x6390:24), wa
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2553:24)
-	ld	(xbc+wa), hl
-
-; Build the output list for mask 0x10.
-Voice_LoadToneTable_Ch_ScanLoop:
-	ld a, (xsp + 8)
-	extz wa
-	ldw bc, 0x10
-	ld de, 0:i3
-	call Voice_BuildOutputList
-	ld (xsp), xhl
-	ldw (xsp + 4), 0x0
-	jr Voice_LoadToneTable_Ch_LoopCheck
-
-; Per-voice broadcast via ToneGen_WriteExtParams_15_Alt.
-Voice_LoadToneTable_Ch_LoopBody:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	ld w, 0x0:opc
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteExtParams_15_Alt
-	incw 1, (xsp + 4)
-
-; Continue while the list entry's low byte is < 0x40.
-Voice_LoadToneTable_Ch_LoopCheck:
-	ld wa, (xsp + 4)
-	extz xwa
-	add xwa, xwa
-	add xwa, (xsp)
-	ld wa, (xwa)
-	and wa, 0xFF
-	cp wa, 0x40
-	jr c, Voice_LoadToneTable_Ch_LoopBody
-	lda xsp, (xsp + 10)
-	ret
+Voice_LoadToneTable_Ch:	.include "includes/generated/cc900/Voice_LoadToneTable_Ch.s"	; C: cc900/voice_envelopes_and_channels_v_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_LoadToneTable_Ch_NoClamp, Voice_LoadToneTable_Ch + 74
+	.set	Voice_LoadToneTable_Ch_ScanLoop, Voice_LoadToneTable_Ch + 100
+	.set	Voice_LoadToneTable_Ch_LoopBody, Voice_LoadToneTable_Ch + 123
+	.set	Voice_LoadToneTable_Ch_LoopCheck, Voice_LoadToneTable_Ch + 148
 
 ; Voice_LoadToneTable_All(A = part index). Unscaled counterpart of
 ; Voice_LoadToneTable_Ch. Sole caller: Voice_ToneTableRamp_Up_CheckFilter.

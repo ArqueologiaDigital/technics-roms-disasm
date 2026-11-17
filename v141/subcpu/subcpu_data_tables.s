@@ -896,57 +896,21 @@ AUDIO_CMD_TONEEDIT_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_TONEE
 
 ; --- 0x00F99B-0x00F9B2  DSP_EFFPARAM_APPLY_JUMPTABLE -- 12 u16 jump offsets, base 0x02F2D9
 ; Computed jump in DSP_EffParam_Apply_By_AlgoType (algorithm type 0..11): `jp T, 0x02F2D9 + table[index*2]`.
-DSP_EFFPARAM_APPLY_JUMPTABLE:
-	.short DSP_EffParam_Apply_T0 - DSP_EffParam_Apply_T0	; index 0
-	.short DSP_EffParam_Apply_T1 - DSP_EffParam_Apply_T0	; index 1
-	.short DSP_EffParam_Apply_T2 - DSP_EffParam_Apply_T0	; index 2
-	.short DSP_EffParam_Apply_T3 - DSP_EffParam_Apply_T0	; index 3
-	.short DSP_EffParam_Apply_T4 - DSP_EffParam_Apply_T0	; index 4
-	.short DSP_EffParam_Apply_T5 - DSP_EffParam_Apply_T0	; index 5
-	.short DSP_EffParam_Apply_T6 - DSP_EffParam_Apply_T0	; index 6
-	.short DSP_EffParam_Apply_T7 - DSP_EffParam_Apply_T0	; index 7
-	.short DSP_EffParam_Apply_T8 - DSP_EffParam_Apply_T0	; index 8
-	.short DSP_EffParam_Apply_T9 - DSP_EffParam_Apply_T0	; index 9
-	.short DSP_EffParam_Apply_TA - DSP_EffParam_Apply_T0	; index 10
-	.short DSP_EffParam_Apply_TB - DSP_EffParam_Apply_T0	; index 11
+DSP_EFFPARAM_APPLY_JUMPTABLE:	.include "includes/generated/cc900/DSP_EFFPARAM_APPLY_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c (cc900-data)
 
 ; --- 0x00F9B3-0x00F9C2  VOICE_DSPOUT_A_JUMPTABLE -- 8 u16 jump offsets, base 0x02F36E
 ; Computed jump in Voice_DSPOut_Apply_A ((patch+0x5D) & 0x0F, types 0..7): `jp T, 0x02F36E + table[index*2]`.
 ; Byte-identical to VOICE_DSPOUT_B_JUMPTABLE below (twin dispatchers, different
 ; arm bases).
-VOICE_DSPOUT_A_JUMPTABLE:
-	.short Voice_DSPOut_A_Type0To3 - Voice_DSPOut_A_Type0To3	; index 0
-	.short Voice_DSPOut_A_Type0To3 - Voice_DSPOut_A_Type0To3	; index 1
-	.short Voice_DSPOut_A_Type0To3 - Voice_DSPOut_A_Type0To3	; index 2
-	.short Voice_DSPOut_A_Type0To3 - Voice_DSPOut_A_Type0To3	; index 3
-	.short Voice_DSPOut_A_Type4To5 - Voice_DSPOut_A_Type0To3	; index 4
-	.short Voice_DSPOut_A_Type4To5 - Voice_DSPOut_A_Type0To3	; index 5
-	.short Voice_DSPOut_A_Type6 - Voice_DSPOut_A_Type0To3	; index 6
-	.short Voice_DSPOut_A_Type7 - Voice_DSPOut_A_Type0To3	; index 7
+VOICE_DSPOUT_A_JUMPTABLE:	.include "includes/generated/cc900/VOICE_DSPOUT_A_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c (cc900-data)
 
 ; --- 0x00F9C3-0x00F9D2  VOICE_DSPOUT_B_JUMPTABLE -- 8 u16 jump offsets, base 0x02F3FA
 ; Computed jump in Voice_DSPOut_Apply_B (types 0..7): `jp T, 0x02F3FA + table[index*2]`.
-VOICE_DSPOUT_B_JUMPTABLE:
-	.short Voice_DSPOut_B_Type0To3 - Voice_DSPOut_B_Type0To3	; index 0
-	.short Voice_DSPOut_B_Type0To3 - Voice_DSPOut_B_Type0To3	; index 1
-	.short Voice_DSPOut_B_Type0To3 - Voice_DSPOut_B_Type0To3	; index 2
-	.short Voice_DSPOut_B_Type0To3 - Voice_DSPOut_B_Type0To3	; index 3
-	.short Voice_DSPOut_B_Type4To5 - Voice_DSPOut_B_Type0To3	; index 4
-	.short Voice_DSPOut_B_Type4To5 - Voice_DSPOut_B_Type0To3	; index 5
-	.short Voice_DSPOut_B_Type6 - Voice_DSPOut_B_Type0To3	; index 6
-	.short Voice_DSPOut_B_Type7 - Voice_DSPOut_B_Type0To3	; index 7
+VOICE_DSPOUT_B_JUMPTABLE:	.include "includes/generated/cc900/VOICE_DSPOUT_B_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c (cc900-data)
 
 ; --- 0x00F9D3-0x00F9E2  VOICE_DSPOUT_SECOND_A_JUMPTABLE -- 8 u16 jump offsets, base 0x02F48C
 ; Computed jump in Voice_DSPOut_Second_A (algorithm types 4..0x0B mapped to index 0..7): `jp T, 0x02F48C + table[index*2]`.
-VOICE_DSPOUT_SECOND_A_JUMPTABLE:
-	.short Voice_DSPOut_Second_A_Slot1 - Voice_DSPOut_Second_A_Slot1	; index 0
-	.short Voice_DSPOut_Second_A_Slot1 - Voice_DSPOut_Second_A_Slot1	; index 1
-	.short Voice_DSPOut_Second_A_Simple - Voice_DSPOut_Second_A_Slot1	; index 2
-	.short Voice_DSPOut_Second_A_Gated - Voice_DSPOut_Second_A_Slot1	; index 3
-	.short Voice_DSPOut_Second_A_None - Voice_DSPOut_Second_A_Slot1	; index 4
-	.short Voice_DSPOut_Second_A_None - Voice_DSPOut_Second_A_Slot1	; index 5
-	.short Voice_DSPOut_Second_A_Slot0 - Voice_DSPOut_Second_A_Slot1	; index 6
-	.short Voice_DSPOut_Second_A_Slot0 - Voice_DSPOut_Second_A_Slot1	; index 7
+VOICE_DSPOUT_SECOND_A_JUMPTABLE:	.include "includes/generated/cc900/VOICE_DSPOUT_SECOND_A_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c (cc900-data)
 
 ; --- 0x00F9E3-0x00FA37  AUDIO_CMD_EFFPARAM_CASEMAP -- 85 bytes, opcode -> case
 ; Audio_Cmd_EffParam_TableJump maps opcode-0x11 (0..84) through this byte table
@@ -1195,16 +1159,7 @@ DSP_AlgoType_Dispatch3_CaseOffsets:
 
 ; --- 0x00FBAE-0x00FBBF  Algo_SubTable_DispatchB_CaseOffsets -- 9 u16 jump offsets, base 0x0340CC
 ; Computed jump in Algo_SubTable_DispatchB (algorithm type 0..8): `jp T, 0x0340CC + table[index*2]`.
-Algo_SubTable_DispatchB_CaseOffsets:
-	.short Algo_SubTable_JumpTable1 - Algo_SubTable_JumpTable1	; index 0
-	.short Algo_SubTable_JumpTable1 - Algo_SubTable_JumpTable1	; index 1
-	.short Algo_SubTable_JumpTable1 - Algo_SubTable_JumpTable1	; index 2
-	.short Algo_SubTable_JumpTable1 - Algo_SubTable_JumpTable1	; index 3
-	.short Algo_SubTable_DispatchB_Arm_Type45 - Algo_SubTable_JumpTable1	; index 4
-	.short Algo_SubTable_DispatchB_Arm_Type45 - Algo_SubTable_JumpTable1	; index 5
-	.short Algo_SubTable_DispatchB_Return - Algo_SubTable_JumpTable1	; index 6
-	.short Algo_SubTable_DispatchB_Return - Algo_SubTable_JumpTable1	; index 7
-	.short Algo_SubTable_DispatchB_Arm_Type8 - Algo_SubTable_JumpTable1	; index 8
+Algo_SubTable_DispatchB_CaseOffsets:	.include "includes/generated/cc900/Algo_SubTable_DispatchB_CaseOffsets.s"	; C: cc900/dsp_voice_params_w_18a.c (cc900-data)
 
 ; --- 0x00FBC0-0x00FBD1  Algo_SubTable_DispatchC_CaseOffsets -- 9 u16 jump offsets, base 0x0341BE
 ; Computed jump in Algo_SubTable_DispatchC (algorithm type 0..8): `jp T, 0x0341BE + table[index*2]`.
@@ -4764,13 +4719,7 @@ EFF_ParamMeta_ByteTableB:
 ;   nibble (0..5) of a DSP bytecode instruction: the computed `jp` at the tail of DSP_BytecodeInterpreter_Loop. Basis:
 ;   reader + table. (Old name quoted in dsp/analysis/*.md, dsp/instruction-set.md and
 ;   notes/sound/dsp_protocol_cross_product.py: dated notes keep it with '(now ...)'.)
-DSP_BytecodeInterpreter_CaseOffsets:
-	.short DSP_Bytecode_Op00_Groups5_ParamMix - DSP_Bytecode_Op00_Groups5_ParamMix	; index 0
-	.short DSP_Bytecode_Op01_Groups5_Addr12 - DSP_Bytecode_Op00_Groups5_ParamMix	; index 1
-	.short DSP_Bytecode_Op02_Groups3_Raw - DSP_Bytecode_Op00_Groups5_ParamMix	; index 2
-	.short DSP_Bytecode_Op03_Addr16_RawTail - DSP_Bytecode_Op00_Groups5_ParamMix	; index 3
-	.short DSP_Bytecode_Op04_CommandOnly - DSP_Bytecode_Op00_Groups5_ParamMix	; index 4
-	.short DSP_Bytecode_Op05_Groups5_Masked - DSP_Bytecode_Op00_Groups5_ParamMix	; index 5
+DSP_BytecodeInterpreter_CaseOffsets:	.include "includes/generated/cc900/DSP_BytecodeInterpreter_CaseOffsets.s"	; C: cc900/dsp_control_routines_x_18a.c (cc900-data)
 
 ; --- 0x014745-0x014776  DSP_Translator_CaseOffsets -- 25 x u16 jump offsets, base 0x03CB8E
 ; The DSP bytecode interpreter's SECONDARY dispatch, for opcodes 0x61..0x79: `sub wa,0x61 /
