@@ -500,3 +500,16 @@ hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4
 hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateDrumPartCheck	169	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateOutputModeCheck	165	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_sepout.c	7f191dc7bda455a4469c80d0b9080b4a8c28012dae71ada8786ae6785bd55b13	Xr	2026-11-17-14-hd-r43-staged	HDAE5000_SeparateOutput_Apply	279	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_flsitem2.c	0a5e29fd27e5140188fa1f82641bf3af6f4fa3793421f2a5cae4d891c50c34a2	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Get	191	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_flsitem2.c	0a5e29fd27e5140188fa1f82641bf3af6f4fa3793421f2a5cae4d891c50c34a2	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Set	148	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_flsitem2.c	0a5e29fd27e5140188fa1f82641bf3af6f4fa3793421f2a5cae4d891c50c34a2	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_SongRecord	139	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_lbn_page.c	347404a64275e1a367e80d6a15a539a063e056bf59f6195a2fccf1e390de11f8	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_LBNPage1SwCatch	379	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_sepout.c	08ebd8695769a32b22e6a2d218dd1146a3670f01d7cfdd43ffae37bbc00f497c	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_SeparateOutput_Apply	279	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_flsitem2.c	88bc5294174d8ffc065708a5dbdd4872cb810b0b9959e9a80e55cb34d302dd1c	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Get	191	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_flsitem2.c	88bc5294174d8ffc065708a5dbdd4872cb810b0b9959e9a80e55cb34d302dd1c	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Set	148	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_flsitem2.c	88bc5294174d8ffc065708a5dbdd4872cb810b0b9959e9a80e55cb34d302dd1c	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_SongRecord	139	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_sepout.c	9f6e3885faa2b9d5b313ce8644dd2ad43e435a733fda1f94f0be4b135091ebd5	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_SeparateOutput_Apply	279	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56c2491dd150c7817f8a84715aaa667857864a17956dbcea9d9	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Get	191	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56c2491dd150c7817f8a84715aaa667857864a17956dbcea9d9	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_Set	148	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem2.c	7acef2dd73a6f56c2491dd150c7817f8a84715aaa667857864a17956dbcea9d9	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_FlsItem_SongRecord	139	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_sepout.c	f35ab83338a3e8d96cc7bfece07226898e34855e757c99a26ca42531af6cf9a2	Xr	2026-11-17-17-hd-r45-ports	HDAE5000_SeparateOutput_Apply	279	MATCH
