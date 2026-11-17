@@ -1,6 +1,6 @@
-/* The hard-disk test page's line printer.
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r27_a4.c.
+/* Functions of hd-ae5000_v2_06i.s.  (hdae5000_hardtest_print.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_hardtest_print.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_HardTest_Print HDAE5000_HardTest_PortTest HDAE5000_HardTest_HddIdRead
    cc900-module: HDAE5000_PPI_Init HDAE5000_PPI_LoopbackByte

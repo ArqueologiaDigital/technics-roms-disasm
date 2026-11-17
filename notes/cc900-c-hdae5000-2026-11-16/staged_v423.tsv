@@ -416,3 +416,9 @@ hdae5000	hdae5000/cc900-staged/hdae5000_pport_svc2.c	7d8cc0aa7c6c133818148c444da
 hdae5000	hdae5000/cc900-staged/hdae5000_song_refresh.c	65c1ec0f5f7d2b4436a17aa5e7f39de9fa2e8f744c3a58c2fd110bb6c194bb93	Xr	2026-11-17-4-hd-r37-staged	HDAE5000_SongScreen_Refresh	568	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_varint.c	01d8e760854fe1b257bd3935ee01077d38d396647a0f85ef41724dd40d64848b	Xr	2026-11-17-4-hd-r37-staged	HDAE5000_VarInt_Decode	64	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_varint.c	01d8e760854fe1b257bd3935ee01077d38d396647a0f85ef41724dd40d64848b	Xr	2026-11-17-4-hd-r37-staged	HDAE5000_VarInt_Encode	82	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_hardtest_print.c	43eea7da43f446dae7fe56cc55ae40fa505bfdd0909ad7e0011850a54a4c1287	Xr	2026-11-17-5-hd-r38-ports	HDAE5000_HardTest_Print	29	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_loadsong_tlx.c	594972a84db83a74531bce971050e9cbe156d8f78568e05ef482268da41eba7b	Xr	2026-11-17-5-hd-r38-ports	HDAE5000_LoadSong_Tlx	259	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_varint.c	9b099b08d929133648b8fae95404ed00d7b6d7a21f60cdc5e5618f5ef98808ac	Xr	2026-11-17-5-hd-r38-ports	HDAE5000_VarInt_Decode	64	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_varint.c	9b099b08d929133648b8fae95404ed00d7b6d7a21f60cdc5e5618f5ef98808ac	Xr	2026-11-17-5-hd-r38-ports	HDAE5000_VarInt_Encode	82	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_hardtest_print.c	1052b86f610ab8a5ac6c51339a81c9bbb77bae048356e0a04db692978a67791e	Xr	2026-11-17-5-hd-r38-ports	HDAE5000_HardTest_Print	29	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_hardtest_print.c	ada779dad898793e49e85ff12fce8a7fb3fc936858b8d3d2acdfe86e75b18eee	Xr	2026-11-17-5-hd-r38-ports	HDAE5000_HardTest_Print	29	MATCH

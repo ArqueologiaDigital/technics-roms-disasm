@@ -1,6 +1,6 @@
-/* Loading a song's TLX part.
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r36_fix2s.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_loadsong_tlx.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_loadsong_tlx.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: LdTlx_u=HDAE5000_LoadSong_Tlx
    cc900-module: HDAE5000_Song_IsUsed HDAE5000_Song_CheckFreeSpace HDAE5000_Song_PartMask

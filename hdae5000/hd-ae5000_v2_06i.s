@@ -2200,14 +2200,7 @@ HDAE5000_HDTitleMenuProc_OnParaDraw:
 ; Out: whatever RootFn_SendEvent returns.
 ; RAM: HDAE5000_RAM_MainWorkspacePtr
 ; ---------------------------------------------------------------------------
-HDAE5000_HardTest_Print:
-	ld xde, xwa					; e8 8a
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); e2 a2 a1 23 20 — load context base
-	ld xwa, (xwa + WS_RootFnTable)             ; e3 e1 0a 0e 20 — xwa = (xwa+0x0e0a) vtable ptr
-	ld_sril xhl, (xwa + RootFn_SendEvent)             ; e3 e1 00 01 23 — xhl = (xwa+0x0100) callback
-	ld xwa, 0xffffffff				; 40 ff ff ff ff
-	ld xbc, EVT_MEMO_DRAW				; 41 25 00 c0 01
-	jp (xhl)					; b3 d8
+HDAE5000_HardTest_Print:	.include "includes/generated/cc900/HDAE5000_HardTest_Print.s"	; C: cc900/hdae5000_hardtest_print.c
 	; Entry point 2: main event handler dispatcher
 HDAE5000_HardTestPage:	.include "includes/generated/cc900/HDAE5000_HardTestPage.s"	; C: cc900/hdae5000_hardtest.c
 

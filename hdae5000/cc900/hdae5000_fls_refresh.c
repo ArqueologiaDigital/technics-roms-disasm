@@ -1,6 +1,6 @@
-/* The file-list screen's refresh and the copy-to-HD worker.
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r36_fix2.c.
+/* Functions of hdae5000_filesystem.s.  (hdae5000_fls_refresh.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_fls_refresh.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FlsScr_c=HDAE5000_FlsScreen_Refresh
    cc900-module: HDAE5000_PartList_Build HDAE5000_NameHistory_Recall HDAE5000_FlsName_StoreWithUi
