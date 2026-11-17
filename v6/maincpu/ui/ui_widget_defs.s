@@ -2140,35 +2140,7 @@ MainRamAdd:
 
 
 
-MainRamGet:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), bc
-	ld	(xsp+6), xwa
-	pushw	22
-	call	Malloc
-	inc	2, xsp
-	ld	xiz, xhl
-	ld	xwa, (xsp+6)
-	ld	(xiz), xwa
-	ld	wa, (xsp+4)
-	ld	(xiz+4), wa
-	ld	xwa, 0:i3
-	ld	(xiz+6), xwa
-	ld	(xiz+10), xwa
-	ld	(xiz+14), xwa
-	ld	(xiz+18), xwa
-	ld	xwa, NAKA_MAINFUNC_MainRamControl
-	ld	xbc, EVT_RAM_GET
-	ld	xde, xiz
-	call	MainFuncCall
-	ld	xwa, NAKA_MAINFUNC_MainAutoFree
-	ld	xbc, EVT_AUTO_FREE
-	ld	xde, xiz
-	call	MainFuncCall
-	pop	xiz
-	inc	6, xsp
-	ret
+MainRamGet:	.include "includes/generated/cc900/MainRamGet.s"	; C: cc900/ui_widget_defs_m271.c
 AcBitEditBoxProc:
 	lda xsp, (xsp - 26)
 	push xiz
@@ -17299,173 +17271,16 @@ IDCursorAdvance_Check:
 InitializeEventQueue:
 	ret
 
-DispatchEvent:	; SysData_FA9585
-	lda xsp, (xsp - 12)
-	lda xwa, (xsp + 8)
-	lda xbc, (xsp + 4)
-	lda xde, (xsp)
-	calr GetEvent
-	cp hl, 0:i3
-	jrl z, EventHandler_DispatchLoop
+DispatchEvent:	.include "includes/generated/cc900/DispatchEvent.s"	; C: cc900/ui_widget_defs_m273_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EventHandler_ObjectDispatch, DispatchEvent + 19
+	.set	EventHandler_ContinueProc, DispatchEvent + 199
+	.set	EventHandler_DispatchLoop, DispatchEvent + 215
 
-; EventHandler dual-phase dispatch
-EventHandler_ObjectDispatch:
-	ld xwa, (xsp + 8)
-	cp xwa, 0xffffffff
-	jrl z, EventHandler_ContinueProc
-	ld xwa, (xsp + 8)
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027ed6:24)
-	add xwa, xbc
-	ld xhl, (xwa)
-	or xhl, xhl
-	jrl z, EventHandler_ContinueProc
-	ld xwa, (xsp + 8)
-	ld (FOCUS_OBJECT:24), xwa
-	ld (ROOT_OBJECT:24), xwa
-	ld xwa, (xsp + 4)
-	ld (FOCUS_EVENT:24), xwa
-	ld (ROOT_EVENT:24), xwa
-	ld xwa, (xsp)
-	ld (FOCUS_PARAM:24), xwa
-	ld (ROOT_PARAM:24), xwa
-	ld xwa, (xsp + 8)
-	ld xix, xhl
-	ld xbc, EVT_GET_CLASS_SP
-	ld xde, 0:i3
-	call (xix)
-	ld (0x02bc14:24), xhl
-	ld xwa, xhl
-	srl xwa, 16
-	and xwa, 0xfff
-	ldiw_erp 0xee, 0
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xde, (xwa)
-	extz xhl
-	ld xbc, xhl
-	add xbc, xbc
-	add xbc, xhl
-	sll xbc, 3
-	add xbc, xde
-	ld xhl, (xbc)
-	ld xwa, (xsp + 8)
-	ld xbc, (xsp + 4)
-	ld xde, (xsp)
-	call (xhl)
-	cpw	(0x03ef4a:24), 0
-	jr z, EventHandler_ContinueProc
-	ld wa, 3:i3
-	call Kernel_YieldRotate
-
-EventHandler_ContinueProc:
-	lda xwa, (xsp + 8)
-	lda xbc, (xsp + 4)
-	lda xde, (xsp)
-	calr GetEvent
-	cp hl, 0:i3
-	jrl nz, EventHandler_ObjectDispatch
-
-EventHandler_DispatchLoop:
-	lda xsp, (xsp + 12)
-	ret
-
-SendEvent:
-	lda xsp, (xsp - 24)
-	push xiz
-	ld (xsp + 20), xde
-	ld (xsp + 24), xbc
-	ld xiz, xwa
-	cp xiz, 0xffffffff
-	jr nz, EventRoute_ObjectDispatch
-	calr GetCurrentTarget
-	ld xiz, xhl
-
-; EventRoute dual dispatch with context setup
-EventRoute_ObjectDispatch:
-	ld xwa, xiz
-	srl xwa, 16
-	and xwa, 0xfff
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027ed6:24)
-	add xwa, xbc
-	ld xhl, (xwa)
-	ld xwa, (FOCUS_OBJECT:24)
-	ld (xsp + 12), xwa
-	ld xwa, (FOCUS_EVENT:24)
-	ld (xsp + 16), xwa
-	ld xwa, (FOCUS_PARAM:24)
-	ld (xsp + 8), xwa
-	ld (FOCUS_OBJECT:24), xiz
-	ld xwa, (xsp + 24)
-	ld (FOCUS_EVENT:24), xwa
-	ld xwa, (xsp + 20)
-	ld (FOCUS_PARAM:24), xwa
-	ld xwa, (0x02bc14:24)
-	ld (xsp + 4), xwa
-	ld xix, xhl
-	ld xwa, xiz
-	ld xbc, EVT_GET_CLASS_SP
-	ld xde, 0:i3
-	call (xix)
-	ld (0x02bc14:24), xhl
-	ld xwa, xhl
-	srl xwa, 16
-	and xwa, 0xfff
-	ldiw_erp 0xee, 0
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xde, (xwa)
-	extz xhl
-	ld xbc, xhl
-	add xbc, xbc
-	add xbc, xhl
-	sll xbc, 3
-	add xbc, xde
-	ld xhl, (xbc)
-	ld xwa, xiz
-	ld xbc, (xsp + 24)
-	ld xde, (xsp + 20)
-	call (xhl)
-	ld xiz, xhl
-	ld xwa, (xsp + 4)
-	ld (0x02bc14:24), xwa
-	ld xwa, (xsp + 12)
-	ld (FOCUS_OBJECT:24), xwa
-	ld xwa, (xsp + 16)
-	ld (FOCUS_EVENT:24), xwa
-	ld xwa, (xsp + 8)
-	ld (FOCUS_PARAM:24), xwa
-	cpw	(0x03ef4a:24), 0
-	jr z, EventRoute_DispatchJump
-	ld wa, 3:i3
-	call Kernel_YieldRotate
-
-EventRoute_DispatchJump:
-	ld xhl, xiz
-	pop xiz
-	lda xsp, (xsp + 24)
-	ret
+SendEvent:	.include "includes/generated/cc900/SendEvent.s"	; C: cc900/ui_widget_defs_m273_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EventRoute_ObjectDispatch, SendEvent + 25
+	.set	EventRoute_DispatchJump, SendEvent + 235
 PostEvent:	.include "includes/generated/cc900/PostEvent.s"	; C: cc900/ui_widget_defs_m273.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	EventRoute_CheckOwner, PostEvent + 45
@@ -17753,53 +17568,11 @@ GetCurrentTarget:	.include "includes/generated/cc900/GetCurrentTarget.s"	; C: cc
 
 SetCurrentTarget:	.include "includes/generated/cc900/SetCurrentTarget.s"	; C: cc900/ui_widget_defs.c
 
-MainDispatchEvent:
-	lda xsp, (xsp - 12)
-	lda xwa, (xsp + 8)
-	lda xbc, (xsp + 4)
-	lda xde, (xsp)
-	calr MainGetEvent
-	cp hl, 0:i3
-	jr z, MainSendEvent_Dispatch
-
-; MainSendEvent object dispatch
-MainSendEvent_VirtualDispatch:
-	ld xwa, (xsp + 8)
-	cp xwa, 0xffffffff
-	jr z, MainSendEvent_Return
-	ld xwa, (xsp + 8)
-	srl xwa, 16
-	and xwa, 0xfff
-	ld xde, (xsp + 8)
-	ldiw_erp 0xea, 0
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ld xwa, (xsp + 8)
-	ld xbc, (xsp + 4)
-	ld xde, (xsp)
-	call (xhl)
-
-MainSendEvent_Return:
-	lda xwa, (xsp + 8)
-	lda xbc, (xsp + 4)
-	lda xde, (xsp)
-	calr MainGetEvent
-	cp hl, 0:i3
-	jr nz, MainSendEvent_VirtualDispatch
-
-MainSendEvent_Dispatch:
-	lda xsp, (xsp + 12)
-	ret
+MainDispatchEvent:	.include "includes/generated/cc900/MainDispatchEvent.s"	; C: cc900/ui_widget_defs_m273_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MainSendEvent_VirtualDispatch, MainDispatchEvent + 18
+	.set	MainSendEvent_Return, MainDispatchEvent + 86
+	.set	MainSendEvent_Dispatch, MainDispatchEvent + 101
 
 MainSendEvent:
 	dec 8, xsp

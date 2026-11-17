@@ -52,8 +52,9 @@ def main():
             if n in alias:                               # a short C name (`cc900-name:`) of a callee or object
                 n = alias[n]
             r = super().resolve(n, depth)
-            if r[0] is None and len(n) == 31:
-                full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == n]
+            b = n.lstrip('_.')                           # the listing's `.Name` / `_Name` spelling of a cut name
+            if r[0] is None and len(b) == 31:
+                full = [k for k in list(self.values) + list(self.labels) if len(k) > 31 and k[:31] == b]
                 if len(set(full)) == 1:
                     return super().resolve(full[0], depth)
             return r

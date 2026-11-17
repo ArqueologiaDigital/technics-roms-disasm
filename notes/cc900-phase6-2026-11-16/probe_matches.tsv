@@ -575,3 +575,40 @@ SndParamBank_WriteFlashDefaults	201	2026-11-16-118-p6-r23	p6_G_9a@O3XSXr p6_G_9a
 SndParam_BinarySearch	54	2026-11-16-118-p6-r23	p6_F_10m283a@O3XSXr p6_F_10m283a@O3Xr
 SndParam_ResetDefaultTable	23	2026-11-16-118-p6-r23	p6_F_10m283a@Xr p6_F_10m283b@Xr
 SubView	50	2026-11-16-118-p6-r23	p6_A_18m272b@O3XSXr p6_A_18m272b@O3Xr
+AudioInit_ConfigurePanning	233	2026-11-16-123-p6-r25	p6_D_17m295@Xr
+AudioInit_DrumRoutingCheck	580	2026-11-16-123-p6-r25	p6_D_17m295@Xr p6_D_17m295b@Xr
+BmDrEdit_AdjustScrollToView	85	2026-11-16-123-p6-r25	p6_D_17m232@Xr
+BmDrEdit_InsertMultiSongSteps	96	2026-11-16-123-p6-r25	p6_D_17m232@O3Xr p6_D_17m232b@O3Xr
+BmDrEdit_PrepareSecondaryNoteDisplay	204	2026-11-16-123-p6-r25	p6_D_17m232@O3XSXr p6_D_17m232@O3Xr
+DispatchEvent	219	2026-11-16-123-p6-r25	p6_A_19m273a@O3Xr
+ExtDev_SndParam_Block48_Var02	44	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block48_Var04	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block48_Var04_B	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block48_Var40	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block48_Var80	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block70_Var04	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block98_Var40	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block98_Var40_B	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_Block98_Var80	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_BlockA9_Var02	45	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+ExtDev_SndParam_ConfigAndWrite	77	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr p6_D_17m277b@O3XSXr p6_D_17m277b@O3Xr
+ExtDev_SndParam_DispatchComplex	106	2026-11-16-123-p6-r25	p6_D_17m277@O3Xr p6_D_17m277b@O3Xr
+ExtDev_SndParam_Write48_Block	57	2026-11-16-123-p6-r25	p6_D_17m277@O3Xr
+ExtDev_SndParam_Write98_Block	61	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+FDC_MC_EXIT_Code_Helper2	403	2026-11-16-123-p6-r25	p6_C_18m270b@Xr
+Fat_TransferSectorsDirect	396	2026-11-16-123-p6-r25	p6_E_10m238@Xr p6_E_10m238b@Xr
+IvExitProc	83	2026-11-16-123-p6-r25	p6_H_12m271a@O3XSXr p6_H_12m271a@O3Xr p6_H_12m271b@O3XSXr p6_H_12m271b@O3Xr p6_H_12m271c@O3XSXr p6_H_12m271c@O3Xr
+MainDispatchEvent	105	2026-11-16-123-p6-r25	p6_A_19m273a@O3Xr
+MainRamGet	81	2026-11-16-123-p6-r25	p6_H_12m271a@O3XSXr p6_H_12m271a@O3Xr p6_H_12m271b@O3XSXr p6_H_12m271b@O3Xr p6_H_12m271c@O3XSXr p6_H_12m271c@O3Xr
+NakaData_WidgetInit1	37	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+PanelAction_PedalFn_Code40	124	2026-11-16-123-p6-r25	p6_D_17m277@O3XSXr p6_D_17m277@O3Xr
+SeGfx_StaticOp03_Bitmap	73	2026-11-16-123-p6-r25	p6_C_18m273c@O3XSXr p6_C_18m273c@O3Xr
+SeWrtSnd_SetupNamingPage	99	2026-11-16-123-p6-r25	p6_H_12m132a@O3XSXr p6_H_12m132a@O3Xr p6_H_12m132b@O3XSXr p6_H_12m132b@O3Xr
+SeWrtSnd_SetupNamingPage_Join6	89	2026-11-16-123-p6-r25	p6_H_12m132a@O3XSXr p6_H_12m132a@O3Xr p6_H_12m132b@O3XSXr p6_H_12m132b@O3Xr
+SeWrtSnd_SetupNamingPage_Join7	102	2026-11-16-123-p6-r25	p6_H_12m132a@O3XSXr p6_H_12m132a@O3Xr p6_H_12m132b@O3XSXr p6_H_12m132b@O3Xr
+SendEvent	242	2026-11-16-123-p6-r25	p6_A_19m273a@O3XSXr p6_A_19m273a@O3Xr
+SeqAccomp_SendStopNotify	30	2026-11-16-123-p6-r25	p6_B_17a@O3XSXr p6_B_17a@O3Xr p6_B_17b@O3XSXr p6_B_17b@O3Xr p6_B_17b@Xr
+SeqPlay_CheckDrumPartAndClearCounters	61	2026-11-16-123-p6-r25	p6_B_17c@O3XSXr p6_B_17c@O3Xr
+SeqStep_EventAdvance	173	2026-11-16-123-p6-r25	p6_C_18m236a@O3XSXr p6_C_18m236a@O3Xr
+SeqStep_FileSeekCleanup	265	2026-11-16-123-p6-r25	p6_E_10m237@Xr
+SndParam_ReadRegWord	69	2026-11-16-123-p6-r25	p6_F_11m283a@Xr p6_F_11m283b@Xr

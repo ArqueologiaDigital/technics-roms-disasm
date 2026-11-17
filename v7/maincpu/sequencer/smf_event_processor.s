@@ -3739,115 +3739,14 @@ SeqStep_FileSeekError:
 	ld xwa, 0:i3
 	ret
 
-SeqStep_FileSeekCleanup:
-	dec 6, xsp
-	push xiz
-	pushw SeqStep_FileSeekCleanup_Str_r@hi16
-	pushw SeqStep_FileSeekCleanup_Str_r@lo16
-	ld xwa, (xsp + 18)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	or xwa, xwa
-	jr nz, SeqStep_FileTellReturn
-	cpw (FILE_ERROR:24), 13
-	jr nz, SeqStep_FileTellSetup
-	ldw (FILE_ERROR:24), 0x0000
-	pushw SeqStep_FileSeekCleanup_Str_d@hi16
-	pushw SeqStep_FileSeekCleanup_Str_d@lo16
-	ld xwa, (xsp + 18)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	or xwa, xwa
-	jr nz, SeqStep_FileTellReturn
-	cpw (FILE_ERROR:24), 13
-	jr nz, SeqStep_FileTellReturn
-	ldw hl, 0xffff
-	jrl SeqStep_FileTellExit
-
-SeqStep_FileTellSetup:
-	ldw hl, 0xffff
-	jrl SeqStep_FileTellExit
-
-SeqStep_FileTellReturn:
-	pushw SeqStep_FileTellReturn_Str_r@hi16
-	pushw SeqStep_FileTellReturn_Str_r@lo16
-	ld xwa, (xsp + 22)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld xiz, xhl
-	or xiz, xiz
-	jr z, SeqStep_FileTellProcess
-	ld xwa, (xsp + 4)
-	push xwa
-	call FileClose
-	push xiz
-	call FileClose
-	inc 8, xsp
-	ldw (FILE_ERROR:24), 0x0015
-	ldw hl, 0xffff
-	jr SeqStep_FileTellExit
-
-SeqStep_FileTellProcess:
-	ldw (FILE_ERROR:24), 0x0000
-	pushw SeqStep_FileTellProcess_Str_a@hi16
-	pushw SeqStep_FileTellProcess_Str_a@lo16
-	ld xwa, (xsp + 22)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld xiz, xhl
-	or xiz, xiz
-	jr nz, SeqStep_FileTellDone
-	ld xwa, (xsp + 4)
-	push xwa
-	call FileClose
-	inc 4, xsp
-	ldw hl, 0xffff
-	jr SeqStep_FileTellExit
-
-SeqStep_FileTellDone:
-	ld xbc, (xiz + 18)
-	ld xwa, (xsp + 4)
-	cp xbc, (xwa + 18)
-	jr z, SeqStep_FileTellComplete
-	ld xwa, (xsp + 4)
-	push xwa
-	call FileClose
-	push xiz
-	call FileClose
-	ld xwa, (xsp + 26)
-	push xwa
-	calr FileOpenDefault
-	lda xsp, (xsp + 12)
-	ldw (FILE_ERROR:24), 0x001a
-	ldw hl, 0xffff
-	jr SeqStep_FileTellExit
-
-SeqStep_FileTellComplete:
-	push xiz
-	ld xwa, (xsp + 8)
-	push xwa
-	calr SeqStep_FileSeekError
-	ld (xsp + 16), hl
-	ld xwa, (xsp + 12)
-	push xwa
-	call FileClose
-	push xiz
-	call FileClose
-	lda xsp, (xsp + 16)
-	ld hl, (xsp + 8)
-
-SeqStep_FileTellExit:
-	pop xiz
-	inc 6, xsp
-	ret
+SeqStep_FileSeekCleanup:	.include "includes/generated/cc900/SeqStep_FileSeekCleanup.s"	; C: cc900/smf_event_processor_m237_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileTellSetup, SeqStep_FileSeekCleanup + 86
+	.set	SeqStep_FileTellReturn, SeqStep_FileSeekCleanup + 92
+	.set	SeqStep_FileTellProcess, SeqStep_FileSeekCleanup + 141
+	.set	SeqStep_FileTellDone, SeqStep_FileSeekCleanup + 185
+	.set	SeqStep_FileTellComplete, SeqStep_FileSeekCleanup + 231
+	.set	SeqStep_FileTellExit, SeqStep_FileSeekCleanup + 261
 
 SeqStep_FileTellFinal:
 	lda	xsp, (xsp-36)

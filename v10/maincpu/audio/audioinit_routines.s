@@ -422,215 +422,29 @@ AudioInit_VoiceParamDone:
 	inc 6, xsp
 	ret
 
-AudioInit_DrumRoutingCheck:
-	ld de, 0:i3
-	bit 2, (AUDIO_STATE:16)
-	jr nz, AudioInit_ProcessVoiceAssign
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x6
-	jr z, AudioInit_CheckOutputFlags
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	bit 0, wa
-	jr nz, AudioInit_CheckOutputFlags
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	and wa, 0x3
-	jr nz, AudioInit_ProcessVoiceAssign
-
-AudioInit_CheckOutputFlags:
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x60
-	jrl nz, AudioInit_NoRoutingActive
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	and wa, 0x3
-	jrl z, AudioInit_NoRoutingActive
-
-AudioInit_ProcessVoiceAssign:
-	cp (AUDIO_STATE+1:16), 255
-	jr nz, AudioInit_CheckStoredVoice
-	set 3, de
-	ldmm8 0xc5c8, 0xc5a2
-	jr AudioInit_UpdateVoiceBank0
-
-AudioInit_CheckStoredVoice:
-	cp (0xc5c8:16), 255
-	jr z, AudioInit_ClearStoredVoice
-	set 3, de
-
-AudioInit_ClearStoredVoice:
-	ld (0xc5c8:16), 255
-
-AudioInit_UpdateVoiceBank0:
-	ld a, (AUDIO_STATE+197:16)
-	srl a, 1
-	cp a, (0xc5a2:16)
-	jr z, AudioInit_UpdateVoiceBank1
-	set 7, (AUDIO_STATE+196:16)
-	ld a, (0xc5a2:16)
-	res 7, a
-	sla a, 1
-	and (AUDIO_STATE+197:16), 1
-	or (AUDIO_STATE+197:16), a
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_UpdateVoiceBank1:
-	ld a, (AUDIO_STATE+201:16)
-	srl a, 1
-	cp a, (0xc5a2:16)
-	jr z, AudioInit_UpdateVoiceBank2
-	set 7, (AUDIO_STATE+200:16)
-	ld a, (0xc5a2:16)
-	res 7, a
-	sla a, 1
-	and (AUDIO_STATE+201:16), 1
-	or (AUDIO_STATE+201:16), a
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_UpdateVoiceBank2:
-	ld a, (0xc5a2:16)
-	dec 1, a
-	ld c, (AUDIO_STATE+204:16)
-	res 7, c
-	cp c, a
-	jr z, AudioInit_CheckStereoRouting
-	set 7, (AUDIO_STATE+204:16)
-	ld a, (0xc5a2:16)
-	dec 1, a
-	res 7, a
-	and (AUDIO_STATE+204:16), 128
-	or (AUDIO_STATE+204:16), a
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_CheckStereoRouting:
-	bit 3, (AUDIO_STATE:16)
-	jr z, AudioInit_ClearStereoRouting
-	ld a, (0xc5a2:16)
-	dec 1, a
-	ld c, (AUDIO_STATE+208:16)
-	res 7, c
-	cp c, a
-	jr z, AudioInit_VoiceStereoCheck
-	set 7, (AUDIO_STATE+208:16)
-	ld a, (0xc5a2:16)
-	dec 1, a
-	res 7, a
-	and (AUDIO_STATE+208:16), 128
-	or (AUDIO_STATE+208:16), a
-	orw (AUDIO_VOICE_CHANGES:16), 512
-	jr AudioInit_VoiceStereoCheck
-
-AudioInit_ClearStereoRouting:
-	ld a, (AUDIO_STATE+208:16)
-	res 7, a
-	cp a, 0:i3
-	jr z, AudioInit_VoiceStereoCheck
-	set 7, (AUDIO_STATE+208:16)
-	and (AUDIO_STATE+208:16), 128
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_VoiceStereoCheck:
-	ld a, (AUDIO_STATE+213:16)
-	srl a, 1
-	cp a, (0xc5a2:16)
-	jrl z, AudioInit_UpdateIndicators
-	set 7, (AUDIO_STATE+212:16)
-	ld a, (0xc5a2:16)
-	res 7, a
-	sla a, 1
-	and (AUDIO_STATE+213:16), 1
-	or (AUDIO_STATE+213:16), a
-	orw (AUDIO_VOICE_CHANGES:16), 512
-	jrl AudioInit_UpdateIndicators
-
-AudioInit_NoRoutingActive:
-	cp (0xc5c8:16), 255
-	jr z, AudioInit_ClearAllVoiceBanks
-	set 3, de
-
-AudioInit_ClearAllVoiceBanks:
-	ld (0xc5c8:16), 255
-	ld a, (AUDIO_STATE+197:16)
-	res 0, a
-	cp a, 0:i3
-	jr z, AudioInit_ClearBank1Routing
-	set 7, (AUDIO_STATE+196:16)
-	and (AUDIO_STATE+197:16), 1
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_ClearBank1Routing:
-	ld a, (AUDIO_STATE+201:16)
-	res 0, a
-	cp a, 0:i3
-	jr z, AudioInit_ClearBank2Routing
-	set 7, (AUDIO_STATE+200:16)
-	and (AUDIO_STATE+201:16), 1
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_ClearBank2Routing:
-	ld a, (AUDIO_STATE+204:16)
-	res 7, a
-	cp a, 0:i3
-	jr z, AudioInit_CheckBit2Routing
-	set 7, (AUDIO_STATE+204:16)
-	and (AUDIO_STATE+204:16), 128
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_CheckBit2Routing:
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	bit 2, wa
-	jr z, AudioInit_ClearBank3Routing
-	ld a, (AUDIO_STATE+208:16)
-	res 7, a
-	cp a, 0x7f
-	jr z, AudioInit_UpdateIndicators
-	set 7, (AUDIO_STATE+208:16)
-	or (AUDIO_STATE+208:16), 127
-	orw (AUDIO_VOICE_CHANGES:16), 512
-	jr AudioInit_UpdateIndicators
-
-AudioInit_ClearBank3Routing:
-	ld a, (AUDIO_STATE+208:16)
-	res 7, a
-	cp a, 0:i3
-	jr z, AudioInit_UpdateIndicators
-	set 7, (AUDIO_STATE+208:16)
-	and (AUDIO_STATE+208:16), 128
-	orw (AUDIO_VOICE_CHANGES:16), 512
-
-AudioInit_UpdateIndicators:
-	bit 3, de
-	ret z
-	ldw wa, 0x45
-	call CtrlPanel_SetIndicatorBit
-	cp (0xc5c8:16), 255
-	jr z, AudioInit_ClearDrumModeAlt
-	ld a, (PANEL_PLAY_SETTINGS:16)
-	and a, 0x3
-	jr z, AudioInit_ClearDrumMode
-	ld a, (0xc5a2:16)
-	cp a, 0x43
-	jr z, AudioInit_SetDrumMode4
-	cp a, 0x3c
-	jr z, AudioInit_SetDrumMode2
-	cp a, 0x37
-	ret nz
-	ld (0x8f58:16), 1
-	ret
-
-AudioInit_SetDrumMode2:
-	ld (0x8f58:16), 2
-	ret
-
-AudioInit_SetDrumMode4:
-	ld (0x8f58:16), 4
-	ret
-
-AudioInit_ClearDrumMode:
-	and (0x8f58:16), 248
-	ret
-
-AudioInit_ClearDrumModeAlt:
-	and (0x8f58:16), 248
-	ret
+AudioInit_DrumRoutingCheck:	.include "includes/generated/cc900/AudioInit_DrumRoutingCheck.s"	; C: cc900/audioinit_routines_m295_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_CheckOutputFlags, AudioInit_DrumRoutingCheck + 37
+	.set	AudioInit_ProcessVoiceAssign, AudioInit_DrumRoutingCheck + 59
+	.set	AudioInit_CheckStoredVoice, AudioInit_DrumRoutingCheck + 77
+	.set	AudioInit_ClearStoredVoice, AudioInit_DrumRoutingCheck + 87
+	.set	AudioInit_UpdateVoiceBank0, AudioInit_DrumRoutingCheck + 92
+	.set	AudioInit_UpdateVoiceBank1, AudioInit_DrumRoutingCheck + 134
+	.set	AudioInit_UpdateVoiceBank2, AudioInit_DrumRoutingCheck + 176
+	.set	AudioInit_CheckStereoRouting, AudioInit_DrumRoutingCheck + 221
+	.set	AudioInit_ClearStereoRouting, AudioInit_DrumRoutingCheck + 274
+	.set	AudioInit_VoiceStereoCheck, AudioInit_DrumRoutingCheck + 300
+	.set	AudioInit_NoRoutingActive, AudioInit_DrumRoutingCheck + 346
+	.set	AudioInit_ClearAllVoiceBanks, AudioInit_DrumRoutingCheck + 356
+	.set	AudioInit_ClearBank1Routing, AudioInit_DrumRoutingCheck + 387
+	.set	AudioInit_ClearBank2Routing, AudioInit_DrumRoutingCheck + 413
+	.set	AudioInit_CheckBit2Routing, AudioInit_DrumRoutingCheck + 439
+	.set	AudioInit_ClearBank3Routing, AudioInit_DrumRoutingCheck + 477
+	.set	AudioInit_UpdateIndicators, AudioInit_DrumRoutingCheck + 503
+	.set	AudioInit_SetDrumMode2, AudioInit_DrumRoutingCheck + 556
+	.set	AudioInit_SetDrumMode4, AudioInit_DrumRoutingCheck + 562
+	.set	AudioInit_ClearDrumMode, AudioInit_DrumRoutingCheck + 568
+	.set	AudioInit_ClearDrumModeAlt, AudioInit_DrumRoutingCheck + 574
 
 AudioInit_ClearPartFlags_ByMode:	.include "includes/generated/cc900/AudioInit_ClearPartFlags_ByMode.s"	; C: cc900/audioinit_routines_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -1382,114 +1196,27 @@ AudioInit_Routing_Done:
 	orw (AUDIO_STATE_CHANGES:16), 260
 	ret
 
-AudioInit_ConfigurePanning:
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	and wa, 0x400
-	cp wa, 0x400
-	ret nz
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	bit 2, wa
-	ret nz
-	cp (AUDIO_STATE+1:16), 255
-	jr nz, AudioInit_Pan_CheckMode0
-	bit 0, (AUDIO_STATE:16)
-	jr nz, AudioInit_Pan_SetStereoLeft
-
-AudioInit_Pan_CheckMode0:
-	cp (AUDIO_STATE+1:16), 0
-	jr nz, AudioInit_Pan_CheckMode1
-
-AudioInit_Pan_SetStereoLeft:
-	ld (AUDIO_STATE+182:16), 0
-	jr AudioInit_Pan_CheckReverbChannel
-
-AudioInit_Pan_CheckMode1:
-	cp (AUDIO_STATE+1:16), 255
-	jr nz, AudioInit_Pan_CheckMode1b
-	bit 1, (AUDIO_STATE:16)
-	jr nz, AudioInit_Pan_SetStereoRight
-
-AudioInit_Pan_CheckMode1b:
-	cp (AUDIO_STATE+1:16), 1
-	jr nz, AudioInit_Pan_CheckTypeED
-
-AudioInit_Pan_SetStereoRight:
-	ld (AUDIO_STATE+182:16), 1
-	jr AudioInit_Pan_CheckReverbChannel
-
-AudioInit_Pan_CheckTypeED:
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x60
-	jr z, AudioInit_Pan_DefaultCenter
-	ld a, (PANEL_CONDUCTOR:16)
-	and a, 0x3
-	cp a, 2:i3
-	jr nz, AudioInit_Pan_TypeED_Left
-	ld (AUDIO_STATE+182:16), 1
-	jr AudioInit_Pan_CheckReverbChannel
-
-AudioInit_Pan_TypeED_Left:
-	ld (AUDIO_STATE+182:16), 0
-	jr AudioInit_Pan_CheckReverbChannel
-
-AudioInit_Pan_DefaultCenter:
-	ld (AUDIO_STATE+182:16), 255
-
-AudioInit_Pan_CheckReverbChannel:
-	cp (0xe9c0:16), 14
-	jr ule, AudioInit_Pan_Reverb_CopyFromMain
-	cp (AUDIO_STATE+1:16), 255
-	jr nz, AudioInit_Pan_Reverb_CheckMode0
-	bit 0, (AUDIO_STATE:16)
-	jr nz, AudioInit_Pan_Reverb_Left
-
-AudioInit_Pan_Reverb_CheckMode0:
-	cp (AUDIO_STATE+1:16), 0
-	jr nz, AudioInit_Pan_Reverb_CheckMode1
-
-AudioInit_Pan_Reverb_Left:
-	ld (AUDIO_STATE+190:16), 0
-	jr AudioInit_Pan_Done
-
-AudioInit_Pan_Reverb_CheckMode1:
-	cp (AUDIO_STATE+1:16), 255
-	jr nz, AudioInit_Pan_Reverb_CheckMode1b
-	bit 1, (AUDIO_STATE:16)
-	jr nz, AudioInit_Pan_Reverb_Right
-
-AudioInit_Pan_Reverb_CheckMode1b:
-	cp (AUDIO_STATE+1:16), 1
-	jr nz, AudioInit_Pan_Reverb_CheckTypeED
-
-AudioInit_Pan_Reverb_Right:
-	ld (AUDIO_STATE+190:16), 1
-	jr AudioInit_Pan_Done
-
-AudioInit_Pan_Reverb_CheckTypeED:
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x60
-	jr z, AudioInit_Pan_Reverb_Center
-	ld a, (PANEL_CONDUCTOR:16)
-	and a, 0x3
-	cp a, 2:i3
-	jr nz, AudioInit_Pan_Reverb_TypeED_Left
-	ld (AUDIO_STATE+190:16), 1
-	jr AudioInit_Pan_Done
-
-AudioInit_Pan_Reverb_TypeED_Left:
-	ld (AUDIO_STATE+190:16), 0
-	jr AudioInit_Pan_Done
-
-AudioInit_Pan_Reverb_Center:
-	ld (AUDIO_STATE+190:16), 255
-	jr AudioInit_Pan_Done
-
-AudioInit_Pan_Reverb_CopyFromMain:
-	ldmm8 AUDIO_STATE+190, 0xe9c0
-
-AudioInit_Pan_Done:
-	orw (AUDIO_STATE_CHANGES:16), 256
-	ret
+AudioInit_ConfigurePanning:	.include "includes/generated/cc900/AudioInit_ConfigurePanning.s"	; C: cc900/audioinit_routines_m295_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_Pan_CheckMode0, AudioInit_ConfigurePanning + 36
+	.set	AudioInit_Pan_SetStereoLeft, AudioInit_ConfigurePanning + 43
+	.set	AudioInit_Pan_CheckMode1, AudioInit_ConfigurePanning + 50
+	.set	AudioInit_Pan_CheckMode1b, AudioInit_ConfigurePanning + 63
+	.set	AudioInit_Pan_SetStereoRight, AudioInit_ConfigurePanning + 70
+	.set	AudioInit_Pan_CheckTypeED, AudioInit_ConfigurePanning + 77
+	.set	AudioInit_Pan_TypeED_Left, AudioInit_ConfigurePanning + 105
+	.set	AudioInit_Pan_DefaultCenter, AudioInit_ConfigurePanning + 112
+	.set	AudioInit_Pan_CheckReverbChannel, AudioInit_ConfigurePanning + 117
+	.set	AudioInit_Pan_Reverb_CheckMode0, AudioInit_ConfigurePanning + 137
+	.set	AudioInit_Pan_Reverb_Left, AudioInit_ConfigurePanning + 144
+	.set	AudioInit_Pan_Reverb_CheckMode1, AudioInit_ConfigurePanning + 151
+	.set	AudioInit_Pan_Reverb_CheckMode1b, AudioInit_ConfigurePanning + 164
+	.set	AudioInit_Pan_Reverb_Right, AudioInit_ConfigurePanning + 171
+	.set	AudioInit_Pan_Reverb_CheckTypeED, AudioInit_ConfigurePanning + 178
+	.set	AudioInit_Pan_Reverb_TypeED_Left, AudioInit_ConfigurePanning + 206
+	.set	AudioInit_Pan_Reverb_Center, AudioInit_ConfigurePanning + 213
+	.set	AudioInit_Pan_Reverb_CopyFromMain, AudioInit_ConfigurePanning + 220
+	.set	AudioInit_Pan_Done, AudioInit_ConfigurePanning + 226
 
 AudioInit_CheckStereoMode:
 	ld wa, (AUDIO_CONFIG_FLAGS:16)

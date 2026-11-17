@@ -194,3 +194,14 @@ void SeqScan_UpdateBestPositionB(void)
   ram_2592 = ram_2587;
   ram_28a6 &= ~0x01;
 }
+
+/* cc900-module: FileIO_SeekAndRead16BitValue NotePool_InsertEntry SeqAcc_InitPlayback_FreshStart SeqPlay_CheckDrumPartAndClearCounters SeqPlay_ProcessChannelsAndDrum SeqPlay_ReactivatePartsAndResume SeqPlay_RestartWithVoiceConfig */
+extern unsigned char __near ACTIVE_TITLE;
+extern unsigned long __near SEQ_SCREEN_OBJECT;
+extern void SeqAccomp_SendStopNotify(void);
+
+void SeqAccomp_SendStopNotify(void)
+{
+  if (ACTIVE_TITLE == 0x85 || ACTIVE_TITLE == 0x87)
+    ApDeliveryEvent(SEQ_SCREEN_OBJECT, 0x1c0000fL, 2L);
+}

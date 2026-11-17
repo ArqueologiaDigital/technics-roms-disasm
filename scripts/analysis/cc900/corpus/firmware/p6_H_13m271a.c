@@ -1,0 +1,178 @@
+/* lane_p6 helper H, round 13, module 271 (ui/ui_widget_defs.s), form a: PsToggleBoxProc from round 12 (run 123: the
+   member-address arguments fixed the argument order and kept SET_VISIBLE's pointer in the frame; the breaks fixed the
+   hit test but moved the shared `return 0` block up into the DRAW case).  Now: every case returns as in round 11
+   (V4.23 then places the shared `return 0` after SET_VISIBLE's DrawBox, as the ROM does); the hit test is one
+   `if (a && b) return 1;` (two branches to the shared zero return, no set-on-condition); SET_VISIBLE is an if / else
+   with one `return 0` after it, so that the REPAINT SendEvent jumps to the join and is not merged with the DRAW /
+   SET_PARAM SendEvent (the ROM merges only those two, into SET_PARAM's). */
+/* cc900-module: ButtonState_PaintProc DrawEditSw GetBoxCenter GetEditSwPoint VwBoxProc */
+
+struct pt { int x, y; };
+struct rect { int x1, y1, x2, y2; };
+struct tginst {
+    unsigned char pad[14];
+    struct rect r;
+    long font;
+    char *on;
+    char *off;
+    int *value;
+    unsigned int swid;
+};
+#define EVT_DRAW            0x1c0000dL
+#define EVT_PARA_DRAW       0x1c0000fL
+#define EVT_REPAINT         0x1c0000cL
+#define EVT_CHECK_EDIT_SW   0x1e00053L
+#define EVT_TOGGLE_PARAM    0x1e0006cL
+#define EVT_SET_PARAM       0x1e0003bL
+#define EVT_GET_PARAM       0x1e0006bL
+#define EVT_SET_VISIBLE     0x1e0009cL
+#define EVT_MAKE_EDIT_SW_ID 0x1e00029L
+
+extern long ViewableProc(long, long, long);
+extern void *GetViewInstance(long);
+extern long SendEvent(long, long, long);
+extern int GetVisible(long);
+extern void GetBox(long, struct rect *);
+extern void GetClientBox(long, struct rect *);
+extern void GetBoxCenter(struct rect *, struct pt *);
+extern void GetEditSwPoint(unsigned int, struct pt *);
+extern void DrawEditSw(unsigned int);
+extern void DrawBox(struct rect *, int);
+extern void DrawDesignBox(struct rect *, int, int);
+extern void DrawStringCentered(struct rect *, struct pt *, char *, long, int, int);
+
+long PsToggleBoxProc(long obj, long evt, long p)
+{
+    struct tginst *h;
+    struct tginst *t;
+    struct pt c;
+    struct pt pt;
+    struct rect box;
+
+    switch (evt) {
+    case EVT_DRAW:
+        ViewableProc(obj, evt, p);
+        h = GetViewInstance(obj);
+        GetEditSwPoint(h->swid, (struct pt *)&pt.x);
+        if (pt.y != 0xef)
+            DrawEditSw(h->swid);
+        SendEvent(obj, EVT_PARA_DRAW, *h->value);
+        return 0;
+    case EVT_PARA_DRAW:
+        ViewableProc(obj, evt, p);
+        t = GetViewInstance(obj);
+        if (*t->value != p)
+            *t->value = (int)p;
+        GetClientBox(obj, &box);
+        GetBoxCenter(&box, &c);
+        if (*t->value != 0) {
+            if (t->swid <= 7)
+                DrawDesignBox(&t->r, 0xca, 10);
+            else
+                DrawDesignBox(&t->r, 0xc3, 10);
+            DrawStringCentered((struct rect *)&box.x1, (struct pt *)&c.x, t->on, t->font, 0xff, 0xf7);
+        } else {
+            if (t->swid <= 7)
+                DrawDesignBox(&t->r, 0xc9, 7);
+            else
+                DrawDesignBox(&t->r, 0xc1, 7);
+            DrawStringCentered((struct rect *)&box.x1, (struct pt *)&c.x, t->off, t->font, 0, 0xf7);
+        }
+        return 0;
+    case EVT_CHECK_EDIT_SW:
+        t = GetViewInstance(obj);
+        if (GetVisible(obj) != 0 && t->swid == SendEvent(0x2600024L, EVT_MAKE_EDIT_SW_ID, p))
+            return 1;
+        return 0;
+    case EVT_TOGGLE_PARAM:
+        t = GetViewInstance(obj);
+        if (*t->value != 0)
+            SendEvent(obj, EVT_PARA_DRAW, 0);
+        else
+            SendEvent(obj, EVT_PARA_DRAW, 1);
+        return *t->value;
+    case EVT_SET_PARAM:
+        if ((int)p != *((struct tginst *)GetViewInstance(obj))->value)
+            SendEvent(obj, EVT_PARA_DRAW, p);
+        return 0;
+    case EVT_GET_PARAM:
+        return *((struct tginst *)GetViewInstance(obj))->value;
+    case EVT_SET_VISIBLE:
+        ViewableProc(obj, evt, p);
+        if (GetVisible(obj) != 0)
+            SendEvent(obj, EVT_REPAINT, 0);
+        else {
+            t = GetViewInstance(obj);
+            GetBox(obj, (struct rect *)&box.x1);
+            GetEditSwPoint(t->swid, (struct pt *)&c.x);
+            if (c.y != 0xef) {
+                if (c.x != 0x13f)
+                    box.x1 = 0;
+                else
+                    box.x2 = 0x13f;
+            }
+            DrawBox(&box, 0xf5);
+        }
+        return 0;
+    default:
+        return ViewableProc(obj, evt, p);
+    }
+}
+
+/* PsEditSwBoxProc (new): PsToggleBoxProc's sibling for a box bound to a panel edit switch (instance +36).  The ROM's
+   compare chain falls into the default body, so `default` is the first case; the object stays in XIZ (the DRAW
+   case's instance pointer reuses it).  Frame: the instance pointer +4 (plain), then the address-taken structs in
+   reverse declaration order: box +8, point +16.  ButtonState_PaintProc gets the state byte widened to int (the ROM's
+   ld c,a / extz bc).  SET_VISIBLE as an if / else, as PsToggleBoxProc above. */
+struct esinst { unsigned char pad[36]; unsigned int swid; };
+#define EVT_GET_STRING      0x1e0003aL
+extern long VwBoxProc(long, long, long);
+extern void ButtonState_PaintProc(long, int);
+
+long PsEditSwBoxProc(long obj, long evt, long p)
+{
+    struct esinst *t;
+    struct pt pt;
+    struct rect box;
+    struct esinst *h;
+
+    switch (evt) {
+    default:
+        return VwBoxProc(obj, evt, p);
+    case EVT_GET_STRING:
+        *(char *)p = 0;
+        return 0;
+    case EVT_DRAW:
+        VwBoxProc(obj, evt, p);
+        h = GetViewInstance(obj);
+        GetEditSwPoint(h->swid, (struct pt *)&pt.x);
+        if (pt.y != 0xef)
+            DrawEditSw(h->swid);
+        return 0;
+    case EVT_PARA_DRAW:
+        ButtonState_PaintProc(obj, (unsigned char)p);
+        return 0;
+    case EVT_CHECK_EDIT_SW:
+        t = GetViewInstance(obj);
+        if (GetVisible(obj) != 0 && t->swid == SendEvent(0x2600024L, EVT_MAKE_EDIT_SW_ID, p))
+            return 1;
+        return 0;
+    case EVT_SET_VISIBLE:
+        VwBoxProc(obj, evt, p);
+        if (GetVisible(obj) != 0)
+            SendEvent(obj, EVT_REPAINT, 0);
+        else {
+            t = GetViewInstance(obj);
+            GetBox(obj, (struct rect *)&box.x1);
+            GetEditSwPoint(t->swid, (struct pt *)&pt.x);
+            if (pt.y != 0xef) {
+                if (pt.x != 0x13f)
+                    box.x1 = 0;
+                else
+                    box.x2 = 0x13f;
+            }
+            DrawBox(&box, 0xf5);
+        }
+        return 0;
+    }
+}

@@ -945,33 +945,9 @@ SndParam_CompareNotFound:
 	ldw hl, 0xffff
 	ret
 
-SndParam_ReadRegWord:
-	ldw hl, 0xffff
-	ld c, (xwa + 4)
-	extz bc
-	sla bc, 2
-	lda xde, (SndParam_BlockRamPtrs:24)
-	ld	xde, (xde+bc)
-	or xde, xde
-	ret z
-	ld c, (xwa + 5)
-	extz bc
-	add bc, bc
-	ld	de, (xde+bc)
-	ld a, (xwa + 11)
-	sla a, 2
-	lda xbc, (SndParam_WordValueListPtrs:24)
-	ld	xwa, (xbc+a)
-	ld hl, 0:i3
-
-SndParam_ReadRegScanLoop:
-	cp DE, (xwa+)
-	ret z
-	inc 1, hl
-	cp hl, 5:i3
-	jr le, SndParam_ReadRegScanLoop
-	ld hl, 0:i3
-	ret
+SndParam_ReadRegWord:	.include "includes/generated/cc900/SndParam_ReadRegWord.s"	; C: cc900/sndparam_routines_m283_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_ReadRegScanLoop, SndParam_ReadRegWord + 55
 
 SndParam_ReadRegBitfield:
 	ld l, 0x0:opc
