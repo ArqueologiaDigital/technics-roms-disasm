@@ -1025,176 +1025,28 @@ AudioInit_VoiceRoutingTable_Loop:
 	jr	c, AudioInit_VoiceRoutingTable_Loop
 	ret
 
-AudioInit_ConfigureVoiceRouting:
-	andw (AUDIO_CONFIG_FLAGS:16), 0xfeff
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	and wa, 0x3
-	jrl z, AudioInit_Routing_NoActiveVoices
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	and wa, 0xa0
-	cp wa, 0xa0
-	jrl nz, AudioInit_Routing_NoGroupAB
-	res 2, (AUDIO_STATE:16)
-	orw (AUDIO_STATE_CHANGES:16), 1
-	ld (AUDIO_STATE+188:16), 2
-	ld (AUDIO_STATE+189:16), 22
-	ld (AUDIO_STATE+6:16), 255
-	ld (AUDIO_STATE+26:16), 255
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	bit 9, wa
-	jr z, AudioInit_Routing_CheckSplitMode
-	ld a, (PANEL_STYLE+5:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_SetOverrideFlag
-	ld a, (PANEL_STYLE+6:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_SetOverrideFlag
-	bit 5, (PANEL_PART_LEFT+13:16)
-	jrl nz, AudioInit_Routing_SkipToEnd
-	ld (AUDIO_STATE+6:16), 2
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_SetOverrideFlag:
-	orw (AUDIO_CONFIG_FLAGS:16), 256
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_CheckSplitMode:
-	bit 1, (PANEL_STYLE+5:16)
-	jr z, AudioInit_Routing_NoSplit
-	ld a, (PANEL_STYLE+5:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_SplitOverride
-	ld a, (PANEL_STYLE+6:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_SplitOverride
-	bit 5, (PANEL_PART_LEFT+13:16)
-	jr nz, AudioInit_Routing_SplitCheckAux
-	ld (AUDIO_STATE+6:16), 2
-
-AudioInit_Routing_SplitCheckAux:
-	bit 5, (PANEL_PART_BASS+13:16)
-	jrl nz, AudioInit_Routing_SkipToEnd
-	ld (AUDIO_STATE+26:16), 22
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_SplitOverride:
-	orw (AUDIO_CONFIG_FLAGS:16), 256
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_NoSplit:
-	ld a, (PANEL_STYLE+5:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_CheckTypeEDFlags
-	ld a, (PANEL_STYLE+6:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_CheckTypeEDFlags
-	bit 5, (PANEL_PART_LEFT+13:16)
-	jr nz, AudioInit_Routing_NoSplitCheckAux
-	ld (AUDIO_STATE+6:16), 2
-
-AudioInit_Routing_NoSplitCheckAux:
-	bit 5, (PANEL_PART_BASS+13:16)
-	jrl nz, AudioInit_Routing_Done
-	ld (AUDIO_STATE+26:16), 22
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_CheckTypeEDFlags:
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x60
-	jr nz, AudioInit_Routing_TypeED_Override
-	bit 5, (PANEL_PART_LEFT+13:16)
-	jr nz, AudioInit_Routing_TypeED_CheckAux
-	ld (AUDIO_STATE+6:16), 2
-
-AudioInit_Routing_TypeED_CheckAux:
-	bit 5, (PANEL_PART_BASS+13:16)
-	jrl nz, AudioInit_Routing_Done
-	ld (AUDIO_STATE+26:16), 22
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_TypeED_Override:
-	orw (AUDIO_CONFIG_FLAGS:16), 256
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_NoGroupAB:
-	bit 5, (PANEL_PART_LEFT+13:16)
-	jr nz, AudioInit_Routing_SimpleAssign
-	ld (AUDIO_STATE+6:16), 2
-
-AudioInit_Routing_SimpleAssign:
-	ld (AUDIO_STATE+188:16), 21
-	ld (AUDIO_STATE+189:16), 22
-	ld (AUDIO_STATE+25:16), 255
-	ld (AUDIO_STATE+26:16), 255
-	cp (3431:16), 4
-	jr z, AudioInit_Routing_AllDisabled
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x22
-	cp wa, 0x20
-	jr nz, AudioInit_Routing_CheckMixMode
-
-AudioInit_Routing_AllDisabled:
-	ld (AUDIO_STATE+188:16), 255
-	ld (AUDIO_STATE+189:16), 255
-	jrl AudioInit_Routing_Done
-
-AudioInit_Routing_CheckMixMode:
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	bit 9, wa
-	jrl nz, AudioInit_Routing_Done
-	bit 1, (PANEL_STYLE+5:16)
-	jr nz, AudioInit_Routing_Done
-	ld a, (PANEL_STYLE+5:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_MixFCBits
-	ld a, (PANEL_STYLE+6:16)
-	and a, 0xfc
-	jr nz, AudioInit_Routing_MixFCBits
-	bit 5, (PANEL_PART_CHRD+13:16)
-	jr nz, AudioInit_Routing_MixCheckAux
-	ld (AUDIO_STATE+25:16), 21
-
-AudioInit_Routing_MixCheckAux:
-	bit 5, (PANEL_PART_BASS+13:16)
-	jr nz, AudioInit_Routing_Done
-	ld (AUDIO_STATE+26:16), 22
-	jr AudioInit_Routing_Done
-
-AudioInit_Routing_MixFCBits:
-	ld wa, (AUDIO_SEQ_TRACK_FLAGS:16)
-	and wa, 0x60
-	jr nz, AudioInit_Routing_Done
-	bit 5, (PANEL_PART_CHRD+13:16)
-	jr nz, AudioInit_Routing_MixFCCheckAux
-	ld (AUDIO_STATE+25:16), 21
-
-AudioInit_Routing_MixFCCheckAux:
-	bit 5, (PANEL_PART_BASS+13:16)
-	jr nz, AudioInit_Routing_Done
-	ld (AUDIO_STATE+26:16), 22
-
-AudioInit_Routing_SkipToEnd:
-	jr AudioInit_Routing_Done
-
-AudioInit_Routing_NoActiveVoices:
-	ld wa, (AUDIO_CONFIG_FLAGS:16)
-	bit 2, wa
-	jr z, AudioInit_Routing_FullDisable
-	ld (AUDIO_STATE+188:16), 21
-	ld (AUDIO_STATE+189:16), 22
-	ld (AUDIO_STATE+25:16), 255
-	ld (AUDIO_STATE+26:16), 255
-	jr AudioInit_Routing_Done
-
-AudioInit_Routing_FullDisable:
-	ld (AUDIO_STATE+188:16), 255
-	ld (AUDIO_STATE+189:16), 255
-	ld (AUDIO_STATE+25:16), 255
-	ld (AUDIO_STATE+26:16), 255
-
-AudioInit_Routing_Done:
-	orw (AUDIO_STATE_CHANGES:16), 260
-	ret
+AudioInit_ConfigureVoiceRouting:	.include "includes/generated/cc900/AudioInit_ConfigureVoiceRouting.s"	; C: cc900/audioinit_routines_m295_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_Routing_SetOverrideFlag, AudioInit_ConfigureVoiceRouting + 104
+	.set	AudioInit_Routing_CheckSplitMode, AudioInit_ConfigureVoiceRouting + 113
+	.set	AudioInit_Routing_SplitCheckAux, AudioInit_ConfigureVoiceRouting + 148
+	.set	AudioInit_Routing_SplitOverride, AudioInit_ConfigureVoiceRouting + 163
+	.set	AudioInit_Routing_NoSplit, AudioInit_ConfigureVoiceRouting + 172
+	.set	AudioInit_Routing_NoSplitCheckAux, AudioInit_ConfigureVoiceRouting + 201
+	.set	AudioInit_Routing_CheckTypeEDFlags, AudioInit_ConfigureVoiceRouting + 216
+	.set	AudioInit_Routing_TypeED_CheckAux, AudioInit_ConfigureVoiceRouting + 237
+	.set	AudioInit_Routing_TypeED_Override, AudioInit_ConfigureVoiceRouting + 252
+	.set	AudioInit_Routing_NoGroupAB, AudioInit_ConfigureVoiceRouting + 261
+	.set	AudioInit_Routing_SimpleAssign, AudioInit_ConfigureVoiceRouting + 272
+	.set	AudioInit_Routing_AllDisabled, AudioInit_ConfigureVoiceRouting + 313
+	.set	AudioInit_Routing_CheckMixMode, AudioInit_ConfigureVoiceRouting + 326
+	.set	AudioInit_Routing_MixCheckAux, AudioInit_ConfigureVoiceRouting + 371
+	.set	AudioInit_Routing_MixFCBits, AudioInit_ConfigureVoiceRouting + 384
+	.set	AudioInit_Routing_MixFCCheckAux, AudioInit_ConfigureVoiceRouting + 405
+	.set	AudioInit_Routing_SkipToEnd, AudioInit_ConfigureVoiceRouting + 416
+	.set	AudioInit_Routing_NoActiveVoices, AudioInit_ConfigureVoiceRouting + 418
+	.set	AudioInit_Routing_FullDisable, AudioInit_ConfigureVoiceRouting + 449
+	.set	AudioInit_Routing_Done, AudioInit_ConfigureVoiceRouting + 469
 
 AudioInit_ConfigurePanning:	.include "includes/generated/cc900/AudioInit_ConfigurePanning.s"	; C: cc900/audioinit_routines_m295_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets

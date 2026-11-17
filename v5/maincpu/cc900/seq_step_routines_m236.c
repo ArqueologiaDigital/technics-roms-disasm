@@ -177,3 +177,65 @@ restore:
         if (d & 0x80) c = 0;
     }
 }
+
+extern unsigned int __near SEQOP_PRIMARY_OFFSET;
+extern unsigned int __near SEQOP_PRIMARY_BLOCK;
+extern unsigned int __near SEQOP_SECONDARY_OFFSET;
+extern unsigned int __near SEQOP_SECONDARY_BLOCK;
+extern void SeqPart_WriteByte_Primary(int);
+extern void PartCtrl_NavigateBackward(void);
+extern void PartCtrl_AdvanceToNextEntry(void);
+extern void PartCtrl_NavigateBackwardAlt(void);
+extern void SeqStep_DeleteShiftEvents(void);
+
+void SeqStep_DeleteShiftEvents(void)
+{
+    unsigned char buf[8];
+    unsigned int i, j;
+    unsigned char r;
+    SEQOP_SECONDARY_BLOCK = ram_2630;
+    SEQOP_SECONDARY_OFFSET = ram_262e;
+    i = 0;
+    buf[i++] = SeqPart_ReadByte_Secondary();
+    PartCtrl_AdvanceReadPos();
+    if (SEQ_ERROR_CODE == 0) goto collect;
+    return;
+    for (;;) {
+        PartCtrl_AdvanceReadPos();
+        if (SEQ_ERROR_CODE != 0) return;
+collect:
+        r = SeqPart_ReadByte_Secondary();
+        buf[i++] = r;
+        if (r & 0x80) break;
+    }
+    i--;
+    PartCtrl_NavigateBackward();
+    SEQOP_PRIMARY_BLOCK = SEQOP_SECONDARY_BLOCK;
+    SEQOP_PRIMARY_OFFSET = SEQOP_SECONDARY_OFFSET;
+    SEQOP_SECONDARY_BLOCK = ram_2630;
+    SEQOP_SECONDARY_OFFSET = ram_262e;
+    PartCtrl_NavigateBackward();
+    for (;;) {
+        r = SeqPart_ReadByte_Secondary();
+        if (SEQOP_SECONDARY_BLOCK == ram_262c && SEQOP_SECONDARY_OFFSET == ram_262a) {
+            SeqPart_WriteByte_Primary((unsigned int)r);
+            SEQOP_PRIMARY_BLOCK = ram_262c;
+            SEQOP_PRIMARY_OFFSET = ram_262a;
+            j = 0;
+            if (j >= i) return;
+write:
+            SeqPart_WriteByte_Primary(buf[j]);
+            PartCtrl_AdvanceToNextEntry();
+            if (SEQ_ERROR_CODE == 0) goto next;
+            return;
+        }
+        SeqPart_WriteByte_Primary((int)r);
+        PartCtrl_NavigateBackward();
+        if (SEQ_ERROR_CODE != 0) return;
+        PartCtrl_NavigateBackwardAlt();
+        if (SEQ_ERROR_CODE != 0) return;
+    }
+next:
+    j++;
+    if (j < i) goto write;
+}

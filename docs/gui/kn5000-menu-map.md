@@ -30,7 +30,7 @@ or posting `EVT_CHANGE_TITLE` itself.
 | `MD_SEQ`         | SEQUENCER MENU     | `TITLE_SQMENU`    | SEQUENCER MENU       | -                                                                                          |
 | `MD_SEQ_EREC`    | SEQUENCER EASY REC | `TITLE_SQEASYREC` | EASY RECORD          | -                                                                                          |
 | `MD_SEQ_PLAY`    | -                  | `TITLE_SQPLAY`    | SEQUENCER PLAY       | `FmmFileNameFunc`, `FmmSmfFileNameFunc`, `SeqPlay_ProcessVoiceAndNotes` +1                 |
-| `MD_SEQ_REAL`    | -                  | `TITLE_SQREALREC` | REALTIME RECORD      | `MainExe_SequencerStop`                                                                    |
+| `MD_SEQ_REAL`    | -                  | `TITLE_SQREALREC` | REALTIME RECORD      | -                                                                                          |
 | `MD_SEQ_EDIT`    | -                  | `TITLE_SQEMENU`   | EDIT                 | -                                                                                          |
 | `MD_SEQ_STEP`    | -                  | `TITLE_SQTRSEL`   | STEP RECORD          | -                                                                                          |
 | `MD_CMP`         | COMPOSER MENU      | `TITLE_CMMENU`    | COMPOSER MENU        | -                                                                                          |

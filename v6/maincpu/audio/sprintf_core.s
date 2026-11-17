@@ -1485,18 +1485,10 @@ Sprintf_FFixed_Return:
 	popw	iz
 	inc	4, xsp
 	ret
-Sprintf_FFixed_DataTable:
-	ld	xwa, (xsp+4)
-Sprintf_FFixed_DataTable_Loop:
-	cp	(xwa), 0
-	jr	nz, Sprintf_FormatFFixed_Skip
-	ld	hl, 1:i3
-	ret
-Sprintf_FormatFFixed_Skip:
-	cp	(xwa+), 48
-	jr	z, Sprintf_FFixed_DataTable_Loop
-	ld	hl, 0:i3
-	ret
+Sprintf_FFixed_DataTable:	.include "includes/generated/cc900/Sprintf_FFixed_DataTable.s"	; C: cc900/sprintf_core_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_FFixed_DataTable_Loop, Sprintf_FFixed_DataTable + 3
+	.set	Sprintf_FormatFFixed_Skip, Sprintf_FFixed_DataTable + 11
 Sprintf_FormatEScientific:
 	dec	2, xsp
 	push	xiz

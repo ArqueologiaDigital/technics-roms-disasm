@@ -5386,111 +5386,14 @@ ToneParam_ExtendedOpsBlock_Epilogue2:
 	popw	iz
 	ret
 
-DualVoice_LoadAndScan:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld xiz, xde
-	ld (xsp + 12), c
-	ld (xsp + 14), a
-	ld (xsp + 4), 0x0
-	ld (xsp + 10), 0x0
-	calr Flash_InitExtMemAddrs
-	ld (RHYTHM_PATTERN_BUF_PTR:16), xiz
-	cp (xsp + 14), 0xa
-	jrl nc, DualVoice_LoadDoneRetVal
-	ld a, (xsp + 14)
-	extz wa
-	calr DualVoice_ScanAllColumns
-	ld a, (xsp + 12)
-	extz wa
-	calr DualVoice_ScanAllColumnsAlt
-	ld a, (xsp + 12)
-	extz wa
-	calr NoteEvent_Store
-	ld (xsp + 6), l
-	ld a, (xsp + 6)
-	extz wa
-	calr NoteEventBuffer_CopyToSlot
-	call AccPatch_CountSlotsAlt
-	ld a, (xsp + 12)
-	extz wa
-	lda xbc, (MSP_Default_GroupIndexPad:24)
-	ld	a, (xbc+wa)
-	ld (xsp + 8), a
-	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
-	ld (STYLE_SRC_IMAGE_PTR:16), xwa
-	ldib_erp 0xfb, 0
-
-DualVoice_AccPatchLoop:
-	ld c, (xsp + 8)
-	extz bc
-	ldto_berp A, 0xfb
-	extz wa
-	muls wa, 0x3
-	ld de, wa
-	add de, bc
-	lda xwa, (MSP_Default_ChannelMap:24)
-	ld	(STYLE_COPY_SRC_SECTION:16), (xwa+de)
-	call AccPatch_InitFromSlotIndex
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x0a
-	jr c, DualVoice_AccPatchLoop
-	ld xwa, (RHYTHM_PATTERN_BUF_PTR:16)
-	ld (STYLE_SRC_IMAGE_PTR:16), xwa
-	ld xwa, (STYLE_WORK_IMAGE_PTR:16)
-	ld (STYLE_DST_IMAGE_PTR:16), xwa
-	res 0, (0x35b0:16)
-	ldib_erp 0xfb, 0
-
-DualVoice_ParamCompareLoop:
-	ld e, (xsp + 14)
-	extz de
-	ldto_berp A, 0xfb
-	extz wa
-	muls wa, 0x3
-	ld bc, wa
-	add wa, de
-	lda xde, (MSP_Default_ChannelMap:24)
-	ld	(STYLE_COPY_SRC_SECTION:16), (xde+wa)
-	ld a, (xsp + 8)
-	extz wa
-	add bc, wa
-	ld	(STYLE_COPY_DST_SECTION:16), (xde+bc)
-	call DualVoice_ParamLoadDone
-	ld a, (0x35b0:16)
-	extz wa
-	bit 0, wa
-	jr z, DualVoice_LoopCheckNext
-	ld (xsp + 10), 0x1
-
-DualVoice_SetLoadFlag:
-	ld (xsp + 4), 0x1
-
-DualVoice_LoadDoneRetVal:
-	ld l, (xsp + 4)
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
-
-DualVoice_LoopCheckNext:
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x0a
-	jr c, DualVoice_ParamCompareLoop
-	cp (xsp + 10), 0x0
-	jr nz, DualVoice_SetLoadFlag
-	calr Flash_StoreBaseAndInitAccPatch
-	ld a, (xsp + 6)
-	extz wa
-	calr NoteEventBuffer_Store
-	lda xwa, (1850:16)
-	cpw (xwa), 0xffff
-	jr nz, DualVoice_WriteBackSlots
-	cpw (xwa + 2), 0xffff
-	jr z, DualVoice_LoadDoneRetVal
-
-DualVoice_WriteBackSlots:
-	calr Flash_WriteBackSlotTable
-	jr DualVoice_LoadDoneRetVal
+DualVoice_LoadAndScan:	.include "includes/generated/cc900/DualVoice_LoadAndScan.s"	; C: cc900/flash_floppy_handlers_m159.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DualVoice_AccPatchLoop, DualVoice_LoadAndScan + 102
+	.set	DualVoice_ParamCompareLoop, DualVoice_LoadAndScan + 168
+	.set	DualVoice_SetLoadFlag, DualVoice_LoadAndScan + 231
+	.set	DualVoice_LoadDoneRetVal, DualVoice_LoadAndScan + 235
+	.set	DualVoice_LoopCheckNext, DualVoice_LoadAndScan + 243
+	.set	DualVoice_WriteBackSlots, DualVoice_LoadAndScan + 286
 ; FileIO_LoadMspAltFormat: Loads an .MSP file whose header fails the native signature check: between msp_ld_mae and
 ;   msp_ld_ato reads it into 0x1E8800..0x1EC400, then FileHdr_ValidateSignature converts 'G',0,'K' / 'LKE' / 'MKB'
 ;   files to the native layout (moves +0x100.. up 512 bytes, zero-fills the gap, writes the native header); HL = read

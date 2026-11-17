@@ -1183,56 +1183,9 @@ BmDrEdit_SetupCoordinates:
 	add (xbc), wa
 	ret
 
-BmDrEdit_SetupAndWalkToNote:
-	dec 4, xsp
-	pushw_erp 0xfa
-	res	0, (0x2943:16)
-	lda xwa, (xsp + 4)
-	lda xbc, (xsp + 2)
-	calr BmDrEdit_SetupCoordinates
-	ld wa, (xsp + 2)
-	sub (xsp + 4), wa
-	ld wa, (xsp + 4)
-	cp	wa, (0x2780:16)
-	jr nz, BmDrEdit_SetupAndWalkDone
-	call SeqData_ReadNextByte
-	and l, 0xf0
-	cp l, 0x90
-	jr nz, BmDrEdit_SetupAndWalkDone
-	calr BmDrEdit_CompareVelocity
-	cp l, 0:i3
-	jr nz, BmDrEdit_SetupAndWalkDone
-	set	0, (0x2943:16)
-	call SeqData_AdvancePosition
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld	(0x276c:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ld	(0x276e:16), l
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	ldfr_berp L, 0xfb
-	call SeqData_AdvancePosition
-	call SeqData_ReadNextByte
-	res 7, l
-	res_erpb 0xfb, 0x07
-	extz hl
-	ld bc, hl
-	mul bc, 0x60
-	ld hl, bc
-	ldto_berp A, 0xfb
-	extz wa
-	add hl, wa
-	ld	(0x2772:16), hl
-	calr BmDrEdit_ClearAndScanToEnd
-	ldmm8	0x2946, 0x276c
-	calr BmDrEdit_AdjustScrollToView
-
-BmDrEdit_SetupAndWalkDone:
-	popw_erp 0xfa
-	inc 4, xsp
-	ret
+BmDrEdit_SetupAndWalkToNote:	.include "includes/generated/cc900/BmDrEdit_SetupAndWalkToNote.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_SetupAndWalkDone, BmDrEdit_SetupAndWalkToNote + 143
 
 BmDrEdit_SaveAndFindNote:
 	calr BmDrEdit_SaveEditState
