@@ -2500,57 +2500,7 @@ WaveSel_StageA1_Return:
 	inc 2, xsp
 	retd 0x4
 
-WaveSel_StageA1_FromPatchBlock:
-	ld e, c
-	extz de
-	muls de, 0x25
-	ld ix, de
-	add ix, 0x6E
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_Record_Base:24)
-	exts xde
-	add xde, xhl
-	ld	xde, (xde+ix)
-	ld e, (xde + 2)
-	ld l, e
-	extz hl
-	ld e, c
-	extz de
-	muls de, 0x25
-	ld iy, de
-	add iy, 0x6E
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xix, (Part_Record_Base:24)
-	exts xde
-	add xde, xix
-	ld	xde, (xde+iy)
-	ld e, (xde + 3)
-	extz de
-	ldfr_berp C, 0xF4
-	extz iy
-	ldfr_berp L, 0xF0
-	extz ix
-	ld c, e
-	ld l, c
-	extz hl
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Payload_Bss_Start+0x250b:24)
-	ld	c, (xde+bc)
-	extz bc
-	pushw bc
-	extz wa
-	pushw wa
-	ld wa, iy
-	ld bc, ix
-	ld de, hl
-	calr WaveSel_StageA1_FindVelSplit
-	ret
+WaveSel_StageA1_FromPatchBlock:	.include "includes/generated/cc900/WaveSel_StageA1_FromPatchBlock.s"	; C: cc900/dsp_voice_params_r_17a.c
 
 WaveSel_StageA1_FromToneSlot:	.include "includes/generated/cc900/WaveSel_StageA1_FromToneSlot.s"	; C: cc900/dsp_voice_params_d_9a.c
 
@@ -2723,52 +2673,7 @@ WaveSel_StageA2_IndexLookup:
 	popw iz
 	ret
 
-WaveSel_StageA2_FromToneRec:
-	ld l, c
-	extz hl
-	muls hl, 0x25
-	ld iy, hl
-	add iy, 0x6E
-	ld l, a
-	extz hl
-	muls hl, 0x11F
-	lda xix, (Part_Record_Base:24)
-	exts xhl
-	add xhl, xix
-	lda	xix, (xhl+iy)
-	ld l, e
-	extz hl
-	add hl, hl
-	ld iy, hl
-	inc 3, iy
-	ld xhl, (xix + 4)
-	ld	l, (xhl+iy)
-	extz hl
-	extz bc
-	muls bc, 0x25
-	ld ix, bc
-	add ix, 0x6E
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xbc, (xwa+ix)
-	ld a, e
-	extz wa
-	add wa, wa
-	ld de, wa
-	inc 3, de
-	ld xwa, (xbc + 4)
-	lda	xwa, (xwa+de)
-	ld a, (xwa + 1)
-	extz wa
-	ld e, l
-	extz de
-	ld c, a
-	extz bc
-	ld wa, de
-	jrl WaveSel_StageA2_FindSetDesc
+WaveSel_StageA2_FromToneRec:	.include "includes/generated/cc900/WaveSel_StageA2_FromToneRec.s"	; C: cc900/dsp_voice_params_r_17a.c
 
 WaveSel_StageA2_FromVelZone:	.include "includes/generated/cc900/WaveSel_StageA2_FromVelZone.s"	; C: cc900/dsp_voice_params_d_10a.c
 
@@ -4881,109 +4786,18 @@ DSP_AlgoType_D3_Return:
 ; Gate: bit 5 of the sub-record byte at 0x011E16 + 0x27*type + 0x13 + 5*channel.  Then
 ; descriptor[0x5D] bit 6 selects between "always 0x4000" and "0xC000 / 0x4000 on sub-record
 ; bit 1".
-Algo67_LUTOffset_Check:
-	ld hl, 0:i3
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xix+de)
-	ld e, (xde + 93)
-	and e, 0xF
-	ld b, e
-	cp e, 7:i3
-	jr z, Algo67_LUTOffset_Read
-	cp e, 6:i3
-	ret nz
-
-; The type-6/7 body described above.
-Algo67_LUTOffset_Read:
-	ld e, c
-	extz de
-	muls de, 0x5
-	ld iy, de
-	add iy, 0x13
-	ld e, b
-	extz de
-	muls de, 0x27
-	lda xix, (DSP_AlgoDescriptor_Records:24)
-	exts xde
-	add xde, xix
-	bit	5, (xde+iy)
-	ret z
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xde+wa)
-	bitm 6, (xwa + 93)
-	jr z, Algo_SubTable_Flag8000
-	ld a, c
-	extz wa
-	muls wa, 0x5
-	ld de, wa
-	add de, 0x13
-	ld a, b
-	extz wa
-	muls wa, 0x27
-	lda xbc, (DSP_AlgoDescriptor_Records:24)
-	exts xwa
-	add xwa, xbc
-	bit	1, (xwa+de)
-	jr z, Algo67_LUTOffset_Flag4000
-	ldw hl, 0xC000
-	jr Algo_SubTable_FlagC000
-
-; sub-record bit 1 clear: HL = 0x4000.
-Algo67_LUTOffset_Flag4000:
-	ldw hl, 0x4000
-	jr Algo_SubTable_FlagC000
-
-; descriptor[0x5D] bit 6 clear: HL = 0x4000.  (The name says 0x8000; the code loads 0x4000 --
-; see [UNCERTAIN].)
-Algo_SubTable_Flag8000:
-	ldw hl, 0x4000
-
-; Shared `ret` of Algo67_LUTOffset_Check.
-Algo_SubTable_FlagC000:
-	ret
+Algo67_LUTOffset_Check:	.include "includes/generated/cc900/Algo67_LUTOffset_Check.s"	; C: cc900/dsp_voice_params_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Algo67_LUTOffset_Read, Algo67_LUTOffset_Check + 36
+	.set	Algo67_LUTOffset_Flag4000, Algo67_LUTOffset_Check + 138
+	.set	Algo_SubTable_Flag8000, Algo67_LUTOffset_Check + 143
+	.set	Algo_SubTable_FlagC000, Algo67_LUTOffset_Check + 146
 
 ; Input A = part index, C = sub-slot (0..3).  Returns L = the FIRST parameter byte of the
 ; algorithm sub-record: 0x011E16 + 0x27*type + 0x13 + 5*C + 0x01.
 ; Special case: for algorithm type 8 with C == 1 it returns descriptor[0x60] instead.
 ; Caller: VoiceNoteParam_LoopBody (0x03434B); the result lands in output-slot byte +0x20.
-Algo_SubTable_DispatchA:
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld e, (xde + 93)
-	and e, 0xF
-	ld w, e
-	ld e, c
-	extz de
-	muls de, 0x5
-	ld ix, de
-	add ix, 0x13
-	ld e, w
-	extz de
-	muls de, 0x27
-	lda xhl, (DSP_AlgoDescriptor_Records:24)
-	exts xde
-	add xde, xhl
-	lda	xde, (xde+ix)
-	ld l, (xde + 1)
-	ld e, w
-	cp e, 0x8
-	ret nz
-	cp c, 1:i3
-	ret nz
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld l, (xwa + 96)
-	ret
+Algo_SubTable_DispatchA:	.include "includes/generated/cc900/Algo_SubTable_DispatchA.s"	; C: cc900/dsp_voice_params_r_17a.c
 
 ; Same shape as DispatchA but reads sub-record byte +0x02, then post-processes it through a
 ; computed jump `jp T, 0x0340CC + Algo_SubTable_DispatchB_CaseOffsets[type]` (table 0x00FBAE, 9 entries).
@@ -5090,91 +4904,13 @@ Algo_SubTable_PanTrim_From_PartFlags:	.include "includes/generated/cc900/Algo_Su
 ;   types 6/8  : if C == 1 the base is replaced by descriptor[0x61] - 0x64
 ;   type 7     : no adjustment
 ; Caller: VoiceNoteParam_LoopBody (0x0343C3); result lands in output-slot byte +0x22.
-Algo_SubTable_DispatchC:
-	pushw_erp 0xFA
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld e, (xde + 93)
-	and e, 0xF
-	ld w, e
-	ld e, c
-	extz de
-	muls de, 0x5
-	ld ix, de
-	add ix, 0x13
-	ld e, w
-	extz de
-	muls de, 0x27
-	lda xhl, (DSP_AlgoDescriptor_Records:24)
-	exts xde
-	add xde, xhl
-	lda	xde, (xde+ix)
-	ld e, (xde + 3)
-	ldfr_berp E, 0xFB
-	ld e, w
-	extz de
-	cp de, 0:i3
-	jr mi, Algo_SubTable_Epilogue
-	cp de, 0x8
-	jr gt, Algo_SubTable_Epilogue
-	add de, de
-	lda xix, (Algo_SubTable_DispatchC_CaseOffsets:24)
-	ld	de, (xix+de)
-	lda xix, (Algo_SubTable_JumpTable2:24)
-	jp	t, (xix+de)
-
-; NOT DATA -- DispatchC's arm block; +0x00 serves algorithm types 0..3.
-Algo_SubTable_JumpTable2:
-	; Converted from a 89-byte `.byte` run, round-trip exact: these exact
-	; mnemonics re-assemble to the original bytes. Entered by the computed
-	; jump above; every interior arm label below falls on an instruction
-	; boundary of this decode, which is what makes the linear framing right.
-	cp	c, 1:i3
-	jr	nz, Algo_SubTable_DispatchC_Arm03_AddTrim
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld	e, (xde+98)
-	sub	e, 100
-	ldfr_berp	e, 251
-; Tail of the types-0..3 arm: adds Algo_SubTable_PanTrim_From_PartFlags to the accumulator.
-Algo_SubTable_DispatchC_Arm03_AddTrim:
-	extz	wa
-	extz	bc
-	calr	Algo_SubTable_PanTrim_From_PartFlags
-	ldto_berp	a, 251
-	add	a, l
-	ldfr_berp	a, 251
-	jr	Algo_SubTable_Epilogue
-; DispatchC arm for algorithm types 4 and 5: the value is the pan trim alone.
-Algo_SubTable_DispatchC_Arm_Type45:
-	extz	wa
-	extz	bc
-	calr	Algo_SubTable_PanTrim_From_PartFlags
-	ldfr_berp	l, 251
-	jr	Algo_SubTable_Epilogue
-; DispatchC arm for algorithm types 6 and 8: C == 1 -> descriptor[0x61] - 0x64.
-Algo_SubTable_DispatchC_Arm_Type68:
-	cp	c, 1:i3
-	jr	nz, Algo_SubTable_Epilogue
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+97)
-	sub	a, 100
-	ldfr_berp	a, 251
-
-; L = accumulator, pop QIZ, ret.  Also the no-op arm for algorithm type 7.
-Algo_SubTable_Epilogue:
-	ldto_berp L, 0xFB
-	popw_erp 0xFA
-	ret
+Algo_SubTable_DispatchC:	.include "includes/generated/cc900/Algo_SubTable_DispatchC.s"	; C: cc900/dsp_voice_params_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Algo_SubTable_JumpTable2, Algo_SubTable_DispatchC + 107
+	.set	Algo_SubTable_DispatchC_Arm03_AddTrim, Algo_SubTable_DispatchC + 138
+	.set	Algo_SubTable_DispatchC_Arm_Type45, Algo_SubTable_DispatchC + 155
+	.set	Algo_SubTable_DispatchC_Arm_Type68, Algo_SubTable_DispatchC + 167
+	.set	Algo_SubTable_Epilogue, Algo_SubTable_DispatchC + 196
 
 ; Input A = part index, C = sub-slot.  Returns L = 0 immediately unless part+0x0A bit 15 is set.
 ; Otherwise: base = sub-record byte +0x04, then a computed jump
@@ -5182,246 +4918,25 @@ Algo_SubTable_Epilogue:
 ; byte from the 0x0114DE lookup table indexed by descriptor[0x61] (types 0..3),
 ; descriptor[0x63] (types 4/5) or descriptor[0x5E] (type 8); types 6 and 7 return the base.
 ; Every replacement arm requires C == 1.
-Algo_SubTable_Bit15Dispatch:
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Payload_Bss_Start+0x24fc:24)
-	ld	de, (xhl+de)
-	extz xde
-	bit 15, de
-	jrl z, Algo_SubTable_ZeroReturn
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld e, (xde + 93)
-	and e, 0xF
-	ld w, e
-	ld e, c
-	extz de
-	muls de, 0x5
-	ld ix, de
-	add ix, 0x13
-	ld e, w
-	extz de
-	muls de, 0x27
-	lda xhl, (DSP_AlgoDescriptor_Records:24)
-	exts xde
-	add xde, xhl
-	lda	xde, (xde+ix)
-	ld l, (xde + 4)
-	ld e, w
-	extz de
-	cp de, 0:i3
-	ret mi
-	cp de, 0x8
-	ret gt
-	add de, de
-	lda xix, (Algo_SubTable_Bit15Dispatch_CaseOffsets:24)
-	ld	de, (xix+de)
-	lda xix, (Algo_SubTable_JumpTable3:24)
-	jp	t, (xix+de)
-
-; NOT DATA -- the arm block; +0x00 serves algorithm types 0..3 (descriptor[0x61] -> 0x0114DE).
-Algo_SubTable_JumpTable3:
-	; Converted from a 111-byte `.byte` run, round-trip exact: these exact
-	; mnemonics re-assemble to the original bytes. Entered by the computed
-	; jump above; every interior arm label below falls on an instruction
-	; boundary of this decode, which is what makes the linear framing right.
-	cp	c, 1:i3
-	ret	nz
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+97)
-	extz	wa
-	lda	xbc, (DSP_ChanFreq_IndexMap:24)
-	ld	l, (xbc+wa)
-	jr	Algo_SubTable_Bit15Dispatch_Return
-; Bit15Dispatch arm for algorithm types 4 and 5: 0x0114DE[descriptor[0x63]].
-Algo_SubTable_Bit15_Arm_Type45:
-	cp	c, 1:i3
-	ret	nz
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+99)
-	extz	wa
-	lda	xbc, (DSP_ChanFreq_IndexMap:24)
-	ld	l, (xbc+wa)
-	jr	Algo_SubTable_Bit15Dispatch_Return
-; Bit15Dispatch arm for algorithm type 8: 0x0114DE[descriptor[0x5E]].
-Algo_SubTable_Bit15_Arm_Type8:
-	cp	c, 1:i3
-	ret	nz
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+94)
-	extz	wa
-	lda	xbc, (DSP_ChanFreq_IndexMap:24)
-	ld	l, (xbc+wa)
-	jr	Algo_SubTable_Bit15Dispatch_Return
-
-; part+0x0A bit 15 clear: L = 0, then the shared `ret` at 0x03430E (also the no-op arm for
-; algorithm types 6 and 7).
-Algo_SubTable_ZeroReturn:
-	ld l, 0x0:opc
-Algo_SubTable_Bit15Dispatch_Return:
-	ret
+Algo_SubTable_Bit15Dispatch:	.include "includes/generated/cc900/Algo_SubTable_Bit15Dispatch.s"	; C: cc900/dsp_voice_params_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Algo_SubTable_JumpTable3, Algo_SubTable_Bit15Dispatch + 127
+	.set	Algo_SubTable_Bit15_Arm_Type45, Algo_SubTable_Bit15Dispatch + 164
+	.set	Algo_SubTable_Bit15_Arm_Type8, Algo_SubTable_Bit15Dispatch + 201
+	.set	Algo_SubTable_ZeroReturn, Algo_SubTable_Bit15Dispatch + 238
+	.set	Algo_SubTable_Bit15Dispatch_Return, Algo_SubTable_Bit15Dispatch + 240
 
 ; Input A = part index.  Recomputes output-slot bytes +0x20, +0x21 and +0x22 for all four
 ; output slots of the part by calling Algo_SubTable_DispatchA / DispatchB / DispatchC once each
 ; per slot (12 calls).  If part+0x0A bit 15 is clear it instead ZEROES all twelve bytes.
 ; Callers: VoiceSlot_FullInit_Epilogue (0x034961) and VoiceSlot_AltInit_Epilogue (0x034A41),
 ; i.e. it is always the last step of a part re-init.
-VoiceNoteParam_UpdateLoop:
-	dec 2, xsp
-	pushw_erp 0xFA
-	ld (xsp + 2), a
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	ld	wa, (xbc+wa)
-	extz xwa
-	bit 15, wa
-	jrl z, VoiceNoteParam_FallbackPath
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jrl nc, VoiceNoteParam_Epilogue
-
-; Per-slot body: three dispatch calls, three stores to slot+0x20/+0x21/+0x22.
-VoiceNoteParam_LoopBody:
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Algo_SubTable_DispatchA
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 32), l
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Algo_SubTable_DispatchB
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 33), l
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Algo_SubTable_DispatchC
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 34), l
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jrl c, VoiceNoteParam_LoopBody
-	jrl VoiceNoteParam_Epilogue
-
-; part+0x0A bit 15 clear: enter the zero-fill loop.
-VoiceNoteParam_FallbackPath:
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jrl nc, VoiceNoteParam_Epilogue
-
-; Zero-fill loop body: slot+0x20 = slot+0x21 = slot+0x22 = 0.
-VoiceNoteParam_LoopNext:
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 32), 0x0
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 33), 0x0
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 34), 0x0
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jrl c, VoiceNoteParam_LoopNext
-
-; pop QIZ / inc 2,XSP / ret.
-VoiceNoteParam_Epilogue:
-	popw_erp 0xFA
-	inc 2, xsp
-	ret
+VoiceNoteParam_UpdateLoop:	.include "includes/generated/cc900/VoiceNoteParam_UpdateLoop.s"	; C: cc900/dsp_voice_params_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceNoteParam_LoopBody, VoiceNoteParam_UpdateLoop + 44
+	.set	VoiceNoteParam_FallbackPath, VoiceNoteParam_UpdateLoop + 236
+	.set	VoiceNoteParam_LoopNext, VoiceNoteParam_UpdateLoop + 245
+	.set	VoiceNoteParam_Epilogue, VoiceNoteParam_UpdateLoop + 380
 
 ; Input A = part index.  Writes one byte to part+0x67 (0x0413CF).
 ; The value is built as: if part+0x00 bit 0 is set AND the global at 0x0451A4 equals this part
@@ -5450,113 +4965,16 @@ Voice_ActiveFlag_CheckAndLoad:	.include "includes/generated/cc900/Voice_ActiveFl
 ; from the boot ROM; I could not resolve which.  Confidence is therefore medium on the ROLE,
 ; high on the BEHAVIOUR.
 ; ★ Renamed 2026-09-25 from Voice_ProgChange_TableData: header: masks the four output slots' flag bytes, AlgoFlag writes, EFF_RoutingInit x4.
-Voice_Part_ResetSlotRouting:
-	dec	2, xsp
-	pushw	iz
-	ld	(xsp+2), a
-	cp	(Payload_Bss_Start+0x6331:24), 0xf5	; cp (0x0451a7),0xf5
-	jr	z, Voice_Part_ResetSlotRouting_Skip2
-	ld	iz, 0:i3
-	cp	iz, 4:i3
-	jr	nc, Voice_Part_ResetSlotRouting_Skip
-Voice_Part_ResetSlotRouting_Loop:
-	ld	wa, iz
-	extz	xwa
-	ld	xbc, 37
-	call	Math_Multiply32
-	add	xhl, 110
-	ld	a, (xsp+2)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xbc
-	add	xwa, xhl
-	ld	xwa, (xwa)
-	and8_imm_rid8	xwa, 0x06, 0x07	; and (XWA+0x06),0x07
-	ld	wa, iz
-	extz	xwa
-	ld	xbc, 37
-	call	Math_Multiply32
-	add	xhl, 110
-	ld	a, (xsp+2)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xbc
-	add	xwa, xhl
-	ld	xwa, (xwa)
-	set	5, (xwa+6)	; set 5,(XWA+0x06)
-	inc	1, iz
-	cp	iz, 4:i3
-	jr	c, Voice_Part_ResetSlotRouting_Loop
-Voice_Part_ResetSlotRouting_Skip:
-	ld	a, (xsp+2)
-	extz	wa
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	calr	AlgoFlag_Write_Bit3
-	ld	a, (xsp+2)
-	extz	wa
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	calr	AlgoFlag_Write
-	jr	Voice_Part_ResetSlotRouting_Join
-Voice_Part_ResetSlotRouting_Skip2:
-	ld	iz, 0:i3
-	cp	iz, 4:i3
-	jr	nc, Voice_Part_ResetSlotRouting_Skip3
-Voice_Part_ResetSlotRouting_Loop2:
-	ld	wa, iz
-	extz	xwa
-	ld	xbc, 37
-	call	Math_Multiply32
-	add	xhl, 110
-	ld	a, (xsp+2)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xbc
-	add	xwa, xhl
-	ld	xwa, (xwa)
-	and8_imm_rid8	xwa, 0x06, 0x07	; and (XWA+0x06),0x07
-	inc	1, iz
-	cp	iz, 4:i3
-	jr	c, Voice_Part_ResetSlotRouting_Loop2
-Voice_Part_ResetSlotRouting_Skip3:
-	ld	a, (xsp+2)
-	extz	wa
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	calr	AlgoFlag_Write_Bit3
-	ld	a, (xsp+2)
-	extz	wa
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	calr	AlgoFlag_Write
-Voice_Part_ResetSlotRouting_Join:
-	ld	iz, 0:i3
-	cp	iz, 4:i3
-	jr	nc, Voice_Part_ResetSlotRouting_Epilogue
-Voice_Part_ResetSlotRouting_Loop3:
-	ld	a, (xsp+2)
-	ld	e, a
-	extz	de
-	ld_erpb_rr	a, 0xf8	; ld A,IZL
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	calr	EFF_RoutingInit
-	inc	1, iz
-	cp	iz, 4:i3
-	jr	c, Voice_Part_ResetSlotRouting_Loop3
-Voice_Part_ResetSlotRouting_Epilogue:
-	popw	iz
-	inc	2, xsp
-	ret
+Voice_Part_ResetSlotRouting:	.include "includes/generated/cc900/Voice_Part_ResetSlotRouting.s"	; C: cc900/dsp_voice_params_r_17b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Part_ResetSlotRouting_Loop, Voice_Part_ResetSlotRouting + 20
+	.set	Voice_Part_ResetSlotRouting_Skip, Voice_Part_ResetSlotRouting + 115
+	.set	Voice_Part_ResetSlotRouting_Skip2, Voice_Part_ResetSlotRouting + 141
+	.set	Voice_Part_ResetSlotRouting_Loop2, Voice_Part_ResetSlotRouting + 147
+	.set	Voice_Part_ResetSlotRouting_Skip3, Voice_Part_ResetSlotRouting + 198
+	.set	Voice_Part_ResetSlotRouting_Join, Voice_Part_ResetSlotRouting + 222
+	.set	Voice_Part_ResetSlotRouting_Loop3, Voice_Part_ResetSlotRouting + 228
+	.set	Voice_Part_ResetSlotRouting_Epilogue, Voice_Part_ResetSlotRouting + 255
 
 ; Input A = part index.  Writes part+0x68 (0x0413D0).
 ; If part+0x00 bit 0 is set AND 0x0451A4 == this part, the value is (0x0451A7) << 1;

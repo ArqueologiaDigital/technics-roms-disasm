@@ -845,65 +845,9 @@ DSP_GetEffectRouting:	.include "includes/generated/cc900/DSP_GetEffectRouting.s"
 ;      ToneGen_WriteSingleReg(WA = voice, XBC = word at 0x3B1C).
 ; Hardware: indirectly the tone generator at 0x100000/0x100002 through the two writers.
 ; Reached only through the 6-entry dispatch table at ROM 0x012159 (see [DATA]).
-ToneGen_SetupPolyVoice:
-	dec 4, xsp
-	ld (xsp), e
-	ld e, c
-	ld (xsp + 2), a
-	ld xiy, ToneGen_Voice_Param_Template
-	ld xix, 0x3B1C
-	ldw bc, 0x22
-	ldirw
-	ld a, e
-	extz wa
-	lda xbc, (Audio_DSP_StateTable_Packed:24)
-	ld	a, (xbc+wa)
-	add a, (xsp)
-	ld (xsp), a
-	resm 7, (xsp)
-	ld a, (xsp)
-	extz wa
-	sll wa, 8
-	set 7, wa
-	ld (15146:16), wa
-	ld a, e
-	extz wa
-	lda xbc, (ToneGen_VoiceType_Default_Level:24)
-	cp	(xbc+wa), 0x00
-	jr z, ToneGen_SetupPolyVoice_Path
-	ld a, e
-	extz wa
-	lda xbc, (ToneGen_VoiceType_Default_Level:24)
-	ld	a, (xbc+wa)
-	ld (xsp + 8), a
-
-; Join point after the optional velocity override; steps 4-6 above.
-ToneGen_SetupPolyVoice_Path:
-	ld a, (xsp + 8)
-	extz wa
-	calr DSP_VelocityToVolume
-	or (15136:16), hl
-	calr DSP_GetEffectRouting
-	or (15138:16), hl
-	ld a, (xsp)
-	extz wa
-	div a, 0xC
-	ld a, w
-	extz wa
-	add wa, wa
-	lda xbc, (ToneGen_Semitone_Pitch_Table:24)
-	ld	wa, (xbc+wa)
-	ld (15134:16), wa
-	ld a, (xsp + 2)
-	extz wa
-	lda xbc, (15132:16)
-	call ToneGen_WriteVoiceParams
-	ld a, (xsp + 2)
-	extz wa
-	ld bc, (15132:16)
-	call ToneGen_WriteSingleReg
-	inc 4, xsp
-	retd 0x2
+ToneGen_SetupPolyVoice:	.include "includes/generated/cc900/ToneGen_SetupPolyVoice.s"	; C: cc900/ringbuf_and_midi_dispatch_n_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_SetupPolyVoice_Path, ToneGen_SetupPolyVoice + 92
 
 ; The percussion variant, dispatch-table entry 1. Entry A = tone-generator voice, E = note,
 ; one pushed word (`retd 0x2`). Same template refill into 0x3B1C. Differences from the
