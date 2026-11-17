@@ -1435,18 +1435,8 @@ HDAE5000_Str_Blank14:	; 0x2E271E
 	; read by PC_DATA_LINK_PAGE at 0x284F0A (lda operand)
 	.asciz "              "
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_SeparateOutput_MsgTemplateA:	; 0x2E272E
-	; read by SeparateOutput_SendPartMsg at 0x284F50 (ld # operand)
-	.byte 0xb0
-	.zero 1
-	.byte 0x9b
-	.zero 1
-HDAE5000_SeparateOutput_MsgTemplateB:	; 0x2E2732
-	; read by SeparateOutput_SendPartMsg at 0x284F5C (ld # operand)
-	.byte 0xb0
-	.zero 1
-	.byte 0x9d
-	.zero 1
+HDAE5000_SeparateOutput_MsgTemplateA:	.include "includes/generated/cc900/HDAE5000_SeparateOutput_MsgTemplateA.s"	; C: cc900/hdae5000_sepout_msg.c (cc900-data)
+HDAE5000_SeparateOutput_MsgTemplateB:	.include "includes/generated/cc900/HDAE5000_SeparateOutput_MsgTemplateB.s"	; C: cc900/hdae5000_sepout_msg.c (cc900-data)
 HDAE5000_TextPtrs_OFF_DRUMSLR_BASSDRUMSMIX_BASSDRUMSMONO:	; 0x2E2736, 4 x .long -> string
 	; read by SeparateOutputModeCheck at 0x28512B (ld # operand); 4 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_OFF_3

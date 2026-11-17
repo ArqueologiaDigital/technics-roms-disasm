@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: the functions of hdae5000/cc900-staged/hdae5000_sepout_msg.c that V4.23 reproduces unchanged in HD-AE5000 v1.10i (port_staged.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_sepout_msg.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_sepout_msg.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_sepout_msg.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: SepOut_SendPartMsg=HDAE5000_SeparateOutput_SendPartMsg
    cc900-module: HDAE5000_SeparateOutput_SendPartMsg HDAE5000_SeparateOutput_Apply

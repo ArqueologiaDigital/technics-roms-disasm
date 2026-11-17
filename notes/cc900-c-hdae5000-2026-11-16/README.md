@@ -18,6 +18,31 @@ listing is compared with the ROM, and the C that matches is staged in `hdae5000/
 | `gen_ws_header.py`  | the main CPU's workspace function tables as C structs (`hdae5000/cc900-staged/hdae_ws.h`)         | `python3 -B notes/cc900-c-hdae5000-2026-11-16/gen_ws_header.py > hdae5000/cc900-staged/hdae_ws.h`                                          |
 | `gen_ids_header.py` | event codes and UI object ids as `#define`s (`hdae5000/cc900-staged/hdae_ids.h`)                  | `python3 -B notes/cc900-c-hdae5000-2026-11-16/gen_ids_header.py rebuilt_ROMs/hd-ae5000_v2_06i.llvm.elf > hdae5000/cc900-staged/hdae_ids.h` |
 
+The pipeline scripts after a V4.23 run (all run from the repository root; `$TMPDIR` must be set):
+
+- **`stage_from_probe.py`**: copies the matching functions of a probe into a staged C file, keeping only their
+  `cc900-name` / `cc900-module` / `cc900-data` lines.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/stage_from_probe.py PROBE.c OUT.c "WHAT" FUNC...`
+- **`port_staged.py`**: which staged v2.06i functions does the same C reproduce in the three older images?  It stages
+  them per tree.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/port_staged.py RUN_DIR`
+- **`promote_hd.py`**: moves matching staged C into `<tree>/cc900/` and splices the hand source.  It holds back what
+  the splice refuses.  With `--keep-uncached`, a file the V4.23 cache lacks stays in place: build the tree, then
+  rerun.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/promote_hd.py [--dry-run] [--keep-uncached] [--hold L,..] [TREE..]`
+- **`staged_done.py`**: how many functions (and data objects) each tree builds from C, and which staged files are
+  fully promoted.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/staged_done.py`
+- **`remaining.py`**: which v2.06i functions are still without matching C, largest first.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/remaining.py [--untried] [--min-bytes N] [--all]`
+- **`menu_map_diff.py`**: did a regenerated menu map drop any code reference?  It must print `DROPPED 0`.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/menu_map_diff.py OLD.md NEW.md`
+- **`probe_runs.py`**: which probe files no oracle run compiled.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/probe_runs.py`
+- **`selectlist/`**: SelectListProc's instruction-level comparison and probe generator; see `selectlist/README.md`.
+
+Where the work stopped and how to resume it: `HANDOFF-2026-11-17.md`.
+
 `survey.md` / `survey.tsv` are `survey.py --md survey.md --tsv survey.tsv` as of the commit that wrote them.
 
 ## The survey (v2.06i)
@@ -40,19 +65,20 @@ or that it falls into, are its inner blocks.  Its kind:
 choice also tells which functions shared a source file.  C-calr functions wait for lane_vmb's `cc900-module:`
 marking; the C? ones can be checked now.
 
-## Status (staged_v423.tsv after run `2026-11-16-124-hd-r34-staged`; build after the merge of main 9735ab893)
+## Status at the wind-down (staged_v423.tsv after run `2026-11-17-22-hd-r49-ports`)
 
-| tree              | V4.23 MATCH (ledger rows) | bytes  | built from C (`<tree>/cc900/`, `make gate` passes) |
-|-------------------|---------------------------|--------|----------------------------------------------------|
-| `hdae5000`        | 176                       | 47,416 | 176                                                |
-| `hdae5000_v2_01i` | 97                        | 15,141 | 97                                                 |
-| `hdae5000_v1_15i` | 67                        | 8,922  | 67                                                 |
-| `hdae5000_v1_10i` | 65                        | 8,453  | 65                                                 |
-| total             | 405                       | 79,932 | 405                                                |
+| tree              | V4.23 MATCH (ledger rows) | bytes   | built from C (`<tree>/cc900/`, `make gate` passes) | data objects built from C |
+|-------------------|---------------------------|---------|----------------------------------------------------|---------------------------|
+| `hdae5000`        | 227                       | 63,568  | 227                                                | 15                        |
+| `hdae5000_v2_01i` | 123                       | 19,492  | 123                                                | 3                         |
+| `hdae5000_v1_15i` | 87                        | 12,202  | 87                                                 | 2                         |
+| `hdae5000_v1_10i` | 85                        | 11,733  | 85                                                 | 2                         |
+| total             | 522                       | 106,995 | 522                                                | 22                        |
 
-The MATCH column is `awk -F'\t' '$8=="MATCH"'` over `staged_v423.tsv`, per tree; the built column is what
-`staged_done.py` prints.  Every matched function is built from C; nothing is staged.  Six v2.06i functions bring
-their own data with them (`cc900-data:`): five case tables and one float constant.
+The MATCH column is `awk -F'\t' '$8=="MATCH"'` over `staged_v423.tsv`, per tree; the built columns are what
+`staged_done.py` prints.  Every matched function is built from C; nothing is staged.  The data objects are case
+tables, message templates and one float constant that functions carry with them (`cc900-data:`).  Open in v2.06i:
+60 functions, 4,294 B (`remaining.py`).  Where the work stopped and how to resume it: `HANDOFF-2026-11-17.md`.
 
 **Correction (2026-11-17).**  Until then `staged_done.py` counted every `.include` of generated C, data objects
 included, as a function.  The figures quoted for 33dd5d82f ("175 in hdae5000, 404 in all") were 172 functions plus

@@ -2516,67 +2516,7 @@ HDAE5000_PC_DATA_LINK_PAGE:
 ; not established here.  Only caller: HDAE5000_SeparateOutput_Apply.
 ; In:  A = part - 1, L = selector, E = mode
 ; ---------------------------------------------------------------------------
-HDAE5000_SeparateOutput_SendPartMsg:
-	dec 8, xsp			; allocate 8 bytes on stack
-	ld l, c				; save C in L
-	ld xiy, HDAE5000_SeparateOutput_MsgTemplateA		; source template address (first block)
-	lda xix, (xsp + 4)		; XIX = destination: stack+4
-	ldiw				; copy word (XIY→XIX, both advance)
-	ldiw				; copy second word
-	ld xiy, HDAE5000_SeparateOutput_MsgTemplateB		; source template address (second block)
-	ld xix, xsp			; XIX = destination: stack base
-	ldiw				; copy word
-	ldiw				; copy second word
-	; --- Parameter validation ---
-	cp a, 0x10			; A must be < 16
-	jr nc, .Lwr_exit		; if A >= 16, bail out
-	cp l, 1:i3			; L must be <= 1
-	jr ugt, .Lwr_exit		; if L > 1, bail out
-	cp e, 2:i3			; E must be <= 2
-	jr ugt, .Lwr_exit		; if E > 2, bail out
-	; --- Fill parameter blocks ---
-	ld (xsp + 5), a			; store register index at offset 5
-	ld (xsp + 1), a			; store register index at offset 1
-	cp l, 0:i3			; check bank
-	jr nz, .Lwr_bank1
-	ld (xsp + 7), 0x01		; bank 0: store 0x01 at offset 7
-	jr t, .Lwr_mode
-.Lwr_bank1:
-	ld (xsp + 7), 0x20		; bank 1: store 0x20 at offset 7
-.Lwr_mode:
-	cp e, 0:i3			; check mode
-	jr nz, .Lwr_mode1
-	ld (xsp + 3), 0x00		; mode 0: store 0x00 at offset 3
-	jr t, .Lwr_call
-.Lwr_mode1:
-	cp e, 1:i3			; mode 1?
-	jr nz, .Lwr_mode2
-	ld (xsp + 3), 0x01		; mode 1: store 0x01 at offset 3
-	jr t, .Lwr_call
-.Lwr_mode2:
-	ld (xsp + 3), 0x02		; mode 2: store 0x02 at offset 3
-.Lwr_call:
-	; --- First workspace call (stack+4 block) ---
-	lda xwa, (xsp + 4)		; XWA = pointer to first param block
-	ld xde, xwa			; XDE = param block ptr
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld xhl, (xwa + HamaFn_sendCOMM)
-	ld wa, 0:i3			; WA = 0
-	ld bc, 4:i3			; BC = 4 (param count)
-	call (xhl)			; call handler
-	; --- Second workspace call (stack base block) ---
-	lda xwa, (xsp)			; XWA = pointer to second param block
-	ld xde, xwa			; XDE = param block ptr
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_HamaFnTable)
-	ld xhl, (xwa + HamaFn_sendCOMM)
-	ld wa, 0:i3			; WA = 0
-	ld bc, 4:i3			; BC = 4
-	call (xhl)			; call handler
-.Lwr_exit:
-	inc 8, xsp			; deallocate 8 bytes
-	ret
+HDAE5000_SeparateOutput_SendPartMsg:	.include "includes/generated/cc900/HDAE5000_SeparateOutput_SendPartMsg.s"	; C: cc900/hdae5000_sepout_msg.c
 
 ; ---------------------------------------------------------------------------
 ; Apply the SEPARATE OUTPUT setting: HDAE5000_RAM_SeparateOutputMode ("OFF",

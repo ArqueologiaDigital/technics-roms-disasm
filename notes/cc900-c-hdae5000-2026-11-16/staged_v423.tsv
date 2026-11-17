@@ -517,3 +517,9 @@ hdae5000	hdae5000/cc900-staged/hdae5000_fd_file_select.c	c5158f93b266522d6f69ba7
 hdae5000	hdae5000/cc900-staged/hdae5000_loadsong_sqt.c	e503cccbcca99836bb580de7a2801ca1fdc4a4a2a3bb2009346126e596c2f201	Xr	2026-11-17-21-hd-r48-staged	HDAE5000_LoadSong_Sqt	390	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_lyrics_play.c	b20a6dcf539813a1420b4fe8960837ccec7d2339486af29633a005df41c44de7	Xr	2026-11-17-21-hd-r48-staged	HDAE5000_Lyrics_PlayToPosition	938	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_sepout_msg.c	e1f849c17c120d8aac818716f69411a842ceb7bf1894a520ce007953020631f3	Xr	2026-11-17-21-hd-r48-staged	HDAE5000_SeparateOutput_SendPartMsg	138	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_loadsong_sqt.c	dd7ef62e657aef9ce5c78f76321a50b23783284770d485164de01f67d5d20574	Xr	2026-11-17-22-hd-r49-ports	HDAE5000_LoadSong_Sqt	390	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_sepout_msg.c	1b9d0031b9cb8141157e869b0f1c0973dd030ced62e02bfd93a559fc848340bd	Xr	2026-11-17-22-hd-r49-ports	HDAE5000_SeparateOutput_SendPartMsg	138	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_loadsong_sqt.c	f4d57ac460f7b8de85574cd5bc75c2f8f40b8f16473b98a62bc7362943ccafeb	Xr	2026-11-17-22-hd-r49-ports	HDAE5000_LoadSong_Sqt	390	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_sepout_msg.c	d74ec7655207fc927c245bb9494a3ed304df0bb753949e40889cb5b522730b57	Xr	2026-11-17-22-hd-r49-ports	HDAE5000_SeparateOutput_SendPartMsg	138	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_loadsong_sqt.c	6ecfc3f0075de5556f517c054e5610804ee992d76d5294b80e014d41ae580b9e	Xr	2026-11-17-22-hd-r49-ports	HDAE5000_LoadSong_Sqt	390	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_sepout_msg.c	6a044e1051d833c27af4680e3e4df362c0794426920570285f1e93e57fd5ead8	Xr	2026-11-17-22-hd-r49-ports	HDAE5000_SeparateOutput_SendPartMsg	138	MATCH
