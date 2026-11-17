@@ -3,6 +3,7 @@
    (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r39_m4a.c.
    cc900-options: -Xr
    cc900-name: SepOutModeCheck=HDAE5000_SeparateOutputModeCheck
+   cc900-name: SepOut_SendPartMsg=HDAE5000_SeparateOutput_SendPartMsg
    cc900-module: HDAE5000_SeparateOutput_SendPartMsg HDAE5000_SeparateOutput_Apply
    cc900-data: HDAE5000_SeparateOutputModeCheck 1 = HDAE5000_SeparateOutputModeCheck_CaseTable
    cc900-data: HDAE5000_SeparateDrumPartCheck 1 = HDAE5000_SeparateDrumPartCheck_CaseTable
