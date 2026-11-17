@@ -1330,72 +1330,16 @@ PanelAction_DispatchPedalFunction:
 ;   SndParam_LookupViaEncode(tag, 0x601) is 1, posts the panel event {tag, 4, 8 if the pedal event's bytes +2 and
 ;   +3 share a bit else 0, 8}.  [INFERENCE] 0x40 is MIDI CC64, so this is probably the sustain function.  Basis:
 ;   table + body.
-PanelAction_PedalFn_Code40:
-	dec	4, xsp
-	push	xiz
-	ld	xiz, xwa
-	cp	(CURRENT_MODE:16), 17
-	jr	z, FileIO_BytecodeData_Code_Epilogue33
-	bit	3, (0x34cd:16)
-	jr	nz, FileIO_BytecodeData_Code_Epilogue33
-	set	1, (0x90f9:16)
-	ld	a, (xiz+3)
-	and	a, (xiz+2)
-	ld	(xsp+4), 0
-	cp	a, 0:i3
-	jr	z, FileIO_BytecodeData_Code_Skip66
-	ld	(xsp+4), 8
-FileIO_BytecodeData_Code_Skip66:
-	ldw	(xsp+6), 0
-FileIO_BytecodeData_Code_Loop2:
-	lda	xbc, (37115:16)
-	ld	wa, (xsp+6)
-	extz	xwa
-	add	xwa, xbc
-	ld	a, (xwa)
-	cp	a, 255
-	jr	z, FileIO_BytecodeData_Code_Epilogue33
-	extz	wa
-	ldw	bc, 1537
-	call	SndParam_LookupViaEncode
-	cp	hl, 1:i3
-	jr	nz, FileIO_BytecodeData_Code_Skip67
-	lda	xwa, (37115:16)
-	ld	bc, (xsp+6)
-	extz	xbc
-	add	xbc, xwa
-	ld	a, (xbc)
-	ld	(xiz), a
-	ld	(xiz+1), 4
-	ld	a, (xsp+4)
-	ld	(xiz+2), a
-	ld	(xiz+3), 8
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-FileIO_BytecodeData_Code_Skip67:
-	incw	1, (xsp+6)
-	cpw	(xsp+6), 16
-	jr	c, FileIO_BytecodeData_Code_Loop2
-FileIO_BytecodeData_Code_Epilogue33:
-	pop	xiz
-	inc	4, xsp
-	ret
-NakaData_WidgetInit1:
-	set	1, (0x90f9:16)
-	ld	(xwa), 72
-	ld	(xwa+1), 5
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip68
-	ld	(xde), 1
-	jr	FileIO_BytecodeData_Code_Join16
-FileIO_BytecodeData_Code_Skip68:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join16:
-	ld	(xhl), 1
-	jrl	PanelEvent_Post
+PanelAction_PedalFn_Code40:	.include "includes/generated/cc900/PanelAction_PedalFn_Code40.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip66, PanelAction_PedalFn_Code40 + 40
+	.set	FileIO_BytecodeData_Code_Loop2, PanelAction_PedalFn_Code40 + 45
+	.set	FileIO_BytecodeData_Code_Skip67, PanelAction_PedalFn_Code40 + 110
+	.set	FileIO_BytecodeData_Code_Epilogue33, PanelAction_PedalFn_Code40 + 120
+NakaData_WidgetInit1:	.include "includes/generated/cc900/NakaData_WidgetInit1.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip68, NakaData_WidgetInit1 + 28
+	.set	FileIO_BytecodeData_Code_Join16, NakaData_WidgetInit1 + 31
 FileIO_BytecodeData_Code_Loop3:
 	push	xiz
 	ld	xiz, xwa
@@ -1488,198 +1432,48 @@ FileIO_BytecodeData_Code_Join19:
 FileIO_BytecodeData_Code_Epilogue35:
 	pop	xiz
 	ret
-ExtDev_SndParam_Block48_Var40:
-	set	1, (0x90f9:16)
-	ld	(xwa), 72
-	ld	(xwa+1), 5
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip75
-	ld	(xde), 64
-	jr	FileIO_BytecodeData_Code_Join20
-FileIO_BytecodeData_Code_Skip75:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join20:
-	ld	(xhl), 64
-	jrl	PanelEvent_Post
-ExtDev_SndParam_Block48_Var80:
-	set	1, (0x90f9:16)
-	ld	(xwa), 72
-	ld	(xwa+1), 5
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip76
-	ld	(xde), 128
-	jr	FileIO_BytecodeData_Code_Join21
-FileIO_BytecodeData_Code_Skip76:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join21:
-	ld	(xhl), 128
-	jrl	PanelEvent_Post
-ExtDev_SndParam_Block48_Var04:
-	set	1, (0x90f9:16)
-	ld	(xwa), 72
-	ld	(xwa+1), 5
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip77
-	ld	(xde), 4
-	jr	FileIO_BytecodeData_Code_Join22
-FileIO_BytecodeData_Code_Skip77:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join22:
-	ld	(xhl), 4
-	jrl	PanelEvent_Post
-ExtDev_SndParam_Block48_Var04_B:
-	set	1, (0x90f9:16)
-	ld	(xwa), 72
-	ld	(xwa+1), 6
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip78
-	ld	(xde), 4
-	jr	ExtDev_SndParam_Block48_Var04_B_Join
-FileIO_BytecodeData_Code_Skip78:
-	ld	(xde), 0
-ExtDev_SndParam_Block48_Var04_B_Join:
-	ld	(xhl), 4
-	jrl	PanelEvent_Post
-ExtDev_SndParam_Write98_Block:
-	push	xiz
-	ld	xiz, xwa
-	ld	a, (PART_SELECT:16)
-	extz	wa
-	ldw	bc, 1539
-	call	SndParam_LookupViaEncode
-	cp	hl, 1:i3
-	jr	nz, NakaData_WidgetInit1_Code_Epilogue
-	set	1, (0x90f9:16)
-	ld	(xiz), 152
-	ld	(xiz+1), 2
-	lda	xbc, (xiz+2)
-	lda	xde, (xiz+3)
-	ld	a, (xde)
-	and	a, (xbc)
-	jr	z, NakaData_WidgetInit1_Code_Skip
-	ld	(xbc), 128
-	jr	NakaData_WidgetInit1_Code_Join2
-NakaData_WidgetInit1_Code_Skip:
-	ld	(xbc), 0
-NakaData_WidgetInit1_Code_Join2:
-	ld	(xde), 128
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-NakaData_WidgetInit1_Code_Epilogue:
-	pop	xiz
-	ret
-ExtDev_SndParam_Block98_Var40:
-	set	1, (0x90f9:16)
-	ld	(xwa), 152
-	ld	(xwa+1), 2
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, ExtDev_SndParam_Block98_Var40_Skip2
-	ld	(xde), 64
-	jr	ExtDev_SndParam_Block98_Var40_Join3
-ExtDev_SndParam_Block98_Var40_Skip2:
-	ld	(xde), 0
-ExtDev_SndParam_Block98_Var40_Join3:
-	ld	(xhl), 64
-	jrl	PanelEvent_Post
-ExtDev_SndParam_BlockA9_Var02:
-	cp	(CURRENT_TITLE:16), 135
-	ret	nz
-	set	1, (0x90f9:16)
-	ld	(xwa), 0xa9
-	ld	(xwa+1), 10
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, ExtDev_SndParam_BlockA9_Var02_Skip3
-	ld	(xde), 2
-	jr	ExtDev_SndParam_BlockA9_Var02_Join4
-ExtDev_SndParam_BlockA9_Var02_Skip3:
-	ld	(xde), 0
-ExtDev_SndParam_BlockA9_Var02_Join4:
-	ld	(xhl), 2
-	calr	PanelEvent_Post
-	ret
-ExtDev_SndParam_Block98_Var80:
-	set	1, (0x90f9:16)
-	ld	(xwa), 152
-	ld	(xwa+1), 11
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip79
-	ld	(xde), 128
-	jr	FileIO_BytecodeData_Code_Join23
-FileIO_BytecodeData_Code_Skip79:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join23:
-	ld	(xhl), 128
-	jrl	PanelEvent_Post
-ExtDev_SndParam_Block98_Var40_B:
-	set	1, (0x90f9:16)
-	ld	(xwa), 152
-	ld	(xwa+1), 11
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, ExtDev_SndParam_Block98_Var40_B_Skip4
-	ld	(xde), 64
-	jr	ExtDev_SndParam_Block98_Var40_B_Join5
-ExtDev_SndParam_Block98_Var40_B_Skip4:
-	ld	(xde), 0
-ExtDev_SndParam_Block98_Var40_B_Join5:
-	ld	(xhl), 64
-	jrl	PanelEvent_Post
-ExtDev_SndParam_ConfigAndWrite:
-	push	xiz
-	ld	xiz, xwa
-	ld	a, (xiz+3)
-	and	a, (xiz+2)
-	jr	z, NakaData_WidgetInit1_Code_Epilogue5
-	set	1, (0x90f9:16)
-	ld	(xiz), (PART_SELECT)
-	ld	(xiz+1), 5
-	ld	a, (PART_SELECT:16)
-	extz	wa
-	ldw	bc, 93
-	call	SndParam_LookupViaEncode
-	lda	xbc, (xiz+2)
-	cp	hl, 0:i3
-	jr	nz, ExtDev_SndParam_ConfigAndWrite_Skip5
-	ld	a, (PART_SELECT:16)
-	extz	wa
-	lda	xde, (0x918d:16)
-	extz	xwa
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xbc), a
-	jr	FileIO_BytecodeData_Code_Join24
-ExtDev_SndParam_ConfigAndWrite_Skip5:
-	ld	(xbc), 0
-FileIO_BytecodeData_Code_Join24:
-	ld	(xiz+3), 127
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-NakaData_WidgetInit1_Code_Epilogue5:
-	pop	xiz
-	ret
+ExtDev_SndParam_Block48_Var40:	.include "includes/generated/cc900/ExtDev_SndParam_Block48_Var40.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip75, ExtDev_SndParam_Block48_Var40 + 28
+	.set	FileIO_BytecodeData_Code_Join20, ExtDev_SndParam_Block48_Var40 + 31
+ExtDev_SndParam_Block48_Var80:	.include "includes/generated/cc900/ExtDev_SndParam_Block48_Var80.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip76, ExtDev_SndParam_Block48_Var80 + 28
+	.set	FileIO_BytecodeData_Code_Join21, ExtDev_SndParam_Block48_Var80 + 31
+ExtDev_SndParam_Block48_Var04:	.include "includes/generated/cc900/ExtDev_SndParam_Block48_Var04.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip77, ExtDev_SndParam_Block48_Var04 + 28
+	.set	FileIO_BytecodeData_Code_Join22, ExtDev_SndParam_Block48_Var04 + 31
+ExtDev_SndParam_Block48_Var04_B:	.include "includes/generated/cc900/ExtDev_SndParam_Block48_Var04_B.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip78, ExtDev_SndParam_Block48_Var04_B + 28
+	.set	ExtDev_SndParam_Block48_Var04_B_Join, ExtDev_SndParam_Block48_Var04_B + 31
+ExtDev_SndParam_Write98_Block:	.include "includes/generated/cc900/ExtDev_SndParam_Write98_Block.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NakaData_WidgetInit1_Code_Skip, ExtDev_SndParam_Write98_Block + 48
+	.set	NakaData_WidgetInit1_Code_Join2, ExtDev_SndParam_Write98_Block + 51
+	.set	NakaData_WidgetInit1_Code_Epilogue, ExtDev_SndParam_Write98_Block + 59
+ExtDev_SndParam_Block98_Var40:	.include "includes/generated/cc900/ExtDev_SndParam_Block98_Var40.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtDev_SndParam_Block98_Var40_Skip2, ExtDev_SndParam_Block98_Var40 + 28
+	.set	ExtDev_SndParam_Block98_Var40_Join3, ExtDev_SndParam_Block98_Var40 + 31
+ExtDev_SndParam_BlockA9_Var02:	.include "includes/generated/cc900/ExtDev_SndParam_BlockA9_Var02.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtDev_SndParam_BlockA9_Var02_Skip3, ExtDev_SndParam_BlockA9_Var02 + 35
+	.set	ExtDev_SndParam_BlockA9_Var02_Join4, ExtDev_SndParam_BlockA9_Var02 + 38
+ExtDev_SndParam_Block98_Var80:	.include "includes/generated/cc900/ExtDev_SndParam_Block98_Var80.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip79, ExtDev_SndParam_Block98_Var80 + 28
+	.set	FileIO_BytecodeData_Code_Join23, ExtDev_SndParam_Block98_Var80 + 31
+ExtDev_SndParam_Block98_Var40_B:	.include "includes/generated/cc900/ExtDev_SndParam_Block98_Var40_B.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtDev_SndParam_Block98_Var40_B_Skip4, ExtDev_SndParam_Block98_Var40_B + 28
+	.set	ExtDev_SndParam_Block98_Var40_B_Join5, ExtDev_SndParam_Block98_Var40_B + 31
+ExtDev_SndParam_ConfigAndWrite:	.include "includes/generated/cc900/ExtDev_SndParam_ConfigAndWrite.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtDev_SndParam_ConfigAndWrite_Skip5, ExtDev_SndParam_ConfigAndWrite + 63
+	.set	FileIO_BytecodeData_Code_Join24, ExtDev_SndParam_ConfigAndWrite + 66
+	.set	NakaData_WidgetInit1_Code_Epilogue5, ExtDev_SndParam_ConfigAndWrite + 75
 ExtDev_SndParam_Block14_Dual:
 	lda	xhl, (xwa+2)
 	lda	xix, (xwa+3)
@@ -1694,66 +1488,19 @@ ExtDev_SndParam_Block14_Dual:
 	ld	(xix), 64
 	calr	PanelEvent_Post
 	ret
-ExtDev_SndParam_Write48_Block:
-	push	xiz
-	ld	xiz, xwa
-	ld	xwa, 192
-	call	SndParam_LookupReadOnly
-	cp	hl, 0:i3
-	jr	nz, NakaData_WidgetInit1_Code_Epilogue2
-	set	1, (0x90f9:16)
-	ld	(xiz), 72
-	ld	(xiz+1), 4
-	lda	xbc, (xiz+2)
-	lda	xde, (xiz+3)
-	ld	a, (xde)
-	and	a, (xbc)
-	jr	z, NakaData_WidgetInit1_Code_Skip2
-	ld	(xbc), 64
-	jr	NakaData_WidgetInit1_Code_Join3
-NakaData_WidgetInit1_Code_Skip2:
-	ld	(xbc), 0
-NakaData_WidgetInit1_Code_Join3:
-	ld	(xde), 64
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-NakaData_WidgetInit1_Code_Epilogue2:
-	pop	xiz
-	ret
-ExtDev_SndParam_Block48_Var02:
-	cp	(CURRENT_MODE:16), 16
-	ret	z
-	set	1, (0x90f9:16)
-	ld	(xwa), 72
-	ld	(xwa+1), 5
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip80
-	ld	(xde), 2
-	jr	FileIO_BytecodeData_Code_Join25
-FileIO_BytecodeData_Code_Skip80:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join25:
-	ld	(xhl), 2
-	jrl	PanelEvent_Post
-ExtDev_SndParam_Block70_Var04:
-	set	1, (0x90f9:16)
-	ld	(xwa), 112
-	ld	(xwa+1), 0
-	lda	xde, (xwa+2)
-	lda	xhl, (xwa+3)
-	ld	c, (xhl)
-	and	c, (xde)
-	jr	z, FileIO_BytecodeData_Code_Skip81
-	ld	(xde), 4
-	jr	FileIO_BytecodeData_Code_Join26
-FileIO_BytecodeData_Code_Skip81:
-	ld	(xde), 0
-FileIO_BytecodeData_Code_Join26:
-	ld	(xhl), 4
-	jrl	PanelEvent_Post
+ExtDev_SndParam_Write48_Block:	.include "includes/generated/cc900/ExtDev_SndParam_Write48_Block.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NakaData_WidgetInit1_Code_Skip2, ExtDev_SndParam_Write48_Block + 44
+	.set	NakaData_WidgetInit1_Code_Join3, ExtDev_SndParam_Write48_Block + 47
+	.set	NakaData_WidgetInit1_Code_Epilogue2, ExtDev_SndParam_Write48_Block + 55
+ExtDev_SndParam_Block48_Var02:	.include "includes/generated/cc900/ExtDev_SndParam_Block48_Var02.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip80, ExtDev_SndParam_Block48_Var02 + 35
+	.set	FileIO_BytecodeData_Code_Join25, ExtDev_SndParam_Block48_Var02 + 38
+ExtDev_SndParam_Block70_Var04:	.include "includes/generated/cc900/ExtDev_SndParam_Block70_Var04.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip81, ExtDev_SndParam_Block70_Var04 + 28
+	.set	FileIO_BytecodeData_Code_Join26, ExtDev_SndParam_Block70_Var04 + 31
 ExtDev_SndParam_DispatchAndWriteA8:
 	push	xiz
 	ld	xiz, xwa
@@ -1845,50 +1592,11 @@ ExtDev_SndParam_MultiReg_Iterate:
 	or	d, l
 	ld	(xix), d
 	jrl	FileIO_BytecodeData_Code_Join18
-ExtDev_SndParam_DispatchComplex:
-	dec	2, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	xiz, xwa
-	ld	a, (CURRENT_MODE:16)
-	cp	a, 16
-	jr	z, FileIO_BytecodeData_Code_Skip84
-	cp	a, 15
-	jr	z, FileIO_BytecodeData_Code_Skip84
-	cp	a, 14
-	jr	z, FileIO_BytecodeData_Code_Skip84
-	cp	a, 17
-	jr	z, FileIO_BytecodeData_Code_Skip84
-	cp	a, 3:i3
-	jr	z, FileIO_BytecodeData_Code_Skip84
-	cp	a, 19
-	jr	nz, ExtDev_SndParam_DispatchComplex_Skip9
-FileIO_BytecodeData_Code_Skip84:
-	jr	ExtDev_SndParam_DispatchComplex_Epilogue5
-ExtDev_SndParam_DispatchComplex_Skip9:
-	ld	xwa, 192
-	call	SndParam_LookupReadOnly
-	cp	hl, 1:i3
-	jr	z, ExtDev_SndParam_DispatchComplex_Epilogue5
-	ld	a, (xiz+3)
-	and	a, (xiz+2)
-	jr	z, ExtDev_SndParam_DispatchComplex_Epilogue5
-	set	1, (0x90f9:16)
-	ld	(xiz), 152
-	ld	(xiz+1), 1
-	call	BitMapOut_PrepareRender_CheckBit1
-	sll	l, 3
-	ld	w, (xsp+4)
-	sub	w, 191
-	add	w, l
-	ld	(xiz+2), w
-	ld	(xiz+3), 127
-	ld	xwa, xiz
-	calr	PanelEvent_Post
-ExtDev_SndParam_DispatchComplex_Epilogue5:
-	pop	xiz
-	inc	2, xsp
-	ret
+ExtDev_SndParam_DispatchComplex:	.include "includes/generated/cc900/ExtDev_SndParam_DispatchComplex.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_BytecodeData_Code_Skip84, ExtDev_SndParam_DispatchComplex + 41
+	.set	ExtDev_SndParam_DispatchComplex_Skip9, ExtDev_SndParam_DispatchComplex + 43
+	.set	ExtDev_SndParam_DispatchComplex_Epilogue5, ExtDev_SndParam_DispatchComplex + 102
 ; every button but the LCD ones and HELP, in MD_HELP (PanelButton_HelpModeActionLists)
 PanelButton_HelpMode:
 	push	xiz

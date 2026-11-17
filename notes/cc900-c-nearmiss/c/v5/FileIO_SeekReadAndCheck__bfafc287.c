@@ -1,0 +1,11 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of v5/sequencer_engine_m235.c (2026-11-16-68-p6-r12)
+   sha256 bfafc2875fa1d1fd79576b9677c9d023a72104b07c71ec3b3f8fc124f5de14a1 (tar-sha256); compiled at -O3 -Xr
+   cc900-options: -O3 -Xr */
+extern int FileIO_SeekAndReadBlock(unsigned long, unsigned int);
+extern int FileIO_ReadByte_BufferHit(unsigned int);
+long FileIO_SeekReadAndCheck(unsigned long a, unsigned char c)
+{
+  long r = FileIO_SeekAndReadBlock(a, 0);
+  if (r == 0) r = FileIO_ReadByte_BufferHit(c);
+  return r;
+}

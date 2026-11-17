@@ -1,0 +1,27 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of firmware/p6_C_8b.c (2026-11-16-53-p6-r11)
+   sha256 2e653ef8b65fbca41cde47c6cf85f0d99977fce6cf00e855ff8dcb59f7554120 (tar-sha256); compiled at -O3 -Xr */
+extern void MidiTG_WriteRegByDescriptor(unsigned char *);
+void TGReg_WriteCC0_AltMask(void)
+{
+    unsigned char d[4];
+    for (d[0] = 0; d[0] <= 15; d[0]++) {
+        d[1] = 0;
+        d[2] = 0;
+        d[3] = 0xff;
+        MidiTG_WriteRegByDescriptor(d);
+        d[1] = 1;
+        d[2] = 0;
+        d[3] = 0x7f;
+        MidiTG_WriteRegByDescriptor(d);
+    }
+    d[0] = 15;
+    d[1] = 0;
+    d[2] = 0xf0;
+    d[3] = 0xff;
+    MidiTG_WriteRegByDescriptor(d);
+    d[0] = 15;
+    d[1] = 1;
+    d[2] = 0x0;
+    d[3] = 0x7f;
+    MidiTG_WriteRegByDescriptor(d);
+}

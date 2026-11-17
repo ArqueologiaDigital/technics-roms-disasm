@@ -1,0 +1,61 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of firmware/p6_F_8m266b.c (2026-11-16-100-p6-r19)
+   sha256 9342ae2fc7efd6d76769d1c26a9d30e125f138385340313d752053fd20da9bdf (tar-sha256); compiled at -O3 -Xr */
+extern int GetCurrentFileIndex(void);
+extern void *GetFileEntryPtr(int);
+extern void FileIO_FormatFileIndex(char *, int, void *);
+extern unsigned char FileIO_CheckRecordValid(char);
+extern unsigned char FileIO_CheckRecordByFile(int, char);
+extern long UpdateFileEntry(int, char);
+extern long FileIO_GetDiskFreeSpace(void);
+extern void FileIO_ReadHeader(char *, char *, char);
+extern int FileIO_OpenDefault(char *);
+extern int FileIO_CompareFiles(char *, char *);
+extern unsigned char FileIO_TypeProbeOrder[];
+int WriteFileWithVerify(int idx)
+{
+    char name1[10];
+    char name2[10];
+    char hdr1[14];
+    char hdr2[14];
+    int cur;
+    int r;
+    long total;
+    int i;
+    void *e;
+    void *e2;
+    register unsigned char t;
+
+    r = 0;
+    cur = GetCurrentFileIndex();
+    if (cur < 0) return -104;
+    total = 0;
+    for (i = 0; i < 10; i++) {
+        if (FileIO_CheckRecordValid(FileIO_TypeProbeOrder[i]) != 0) {
+            t = FileIO_TypeProbeOrder[i];
+            total += UpdateFileEntry(cur, t);
+        }
+    }
+    if (FileIO_GetDiskFreeSpace() < total) return -101;
+    e2 = GetFileEntryPtr(idx);
+    FileIO_FormatFileIndex(name1, (unsigned char)idx, e2);
+    for (i = 0; i < 10; i++) {
+        if (FileIO_CheckRecordByFile(idx, FileIO_TypeProbeOrder[i]) != 0) {
+            t = FileIO_TypeProbeOrder[i];
+            FileIO_ReadHeader(hdr1, name1, t);
+            r = FileIO_OpenDefault(hdr1);
+            if (r < 0) return r;
+        }
+    }
+    e = GetFileEntryPtr(cur);
+    FileIO_FormatFileIndex(name1, (unsigned char)cur, e);
+    FileIO_FormatFileIndex(name2, (unsigned char)idx, e);
+    for (i = 0; i < 10; i++) {
+        if (FileIO_CheckRecordValid(FileIO_TypeProbeOrder[i]) != 0) {
+            FileIO_ReadHeader(hdr1, name1, FileIO_TypeProbeOrder[i]);
+            FileIO_ReadHeader(hdr2, name2, FileIO_TypeProbeOrder[i]);
+            r = FileIO_CompareFiles(hdr2, hdr1);
+            if (r < 0) break;
+        }
+    }
+    return r;
+}

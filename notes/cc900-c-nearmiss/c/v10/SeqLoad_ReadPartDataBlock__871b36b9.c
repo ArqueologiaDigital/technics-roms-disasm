@@ -1,0 +1,36 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of firmware/p6_B_15m235.c (2026-11-16-107-p6-r21)
+   sha256 871b36b9c01c41f4d4a0e348474bb4783a9e1e53114cef4abb8e5409034d3f19 (tar-sha256); compiled at -O3 -Xr */
+extern long FileIO_SeekAndRead16BitValue(unsigned long, unsigned int);
+extern void SeqData_SetErrorCode(unsigned char);
+extern unsigned int __near ram_29ce[];
+long SeqLoad_ReadPartDataBlock(unsigned char a)
+{
+  unsigned int sum, i;
+  unsigned long pos;
+  unsigned int *t;
+  unsigned int k, b;
+  long r;
+  k = a * 2;
+  t = ram_29ce;
+  if (*(unsigned int *)((unsigned char *)t + k) == 0) return 0;
+  pos = 0x800;
+  sum = 0;
+  for (i = 0; i < a; i++) {
+    pos += (unsigned long)t[i] << 8;
+    sum += t[i];
+  }
+  pos += 1;
+  i = 1;
+  goto test;
+loop:
+  if ((r = FileIO_SeekAndRead16BitValue(pos, b)) != 0) { SeqData_SetErrorCode(200); return r; }
+  if ((r = FileIO_SeekAndRead16BitValue(pos + 2, sum + i + 1)) != 0) { SeqData_SetErrorCode(201); return r; }
+  pos += 256;
+  i++;
+test:
+  b = sum + i - 1;
+  if (i < ram_29ce[a]) goto loop;
+  if ((r = FileIO_SeekAndRead16BitValue(pos, b)) != 0) { SeqData_SetErrorCode(202); return r; }
+  if ((r = FileIO_SeekAndRead16BitValue(pos + 2, 0xffff)) != 0) { SeqData_SetErrorCode(203); return r; }
+  return r;
+}

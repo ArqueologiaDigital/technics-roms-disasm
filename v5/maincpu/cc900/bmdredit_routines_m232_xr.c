@@ -28,3 +28,39 @@ void BmDrEdit_SaveSequencerState(void)
 	SeqVoice_FindSingleActive();
 	ram_1d54 = PART_SELECT;
 }
+
+/* cc900-module: BmDrEdit_CheckAndSelectChannel BmDrEdit_InsertStepEntry BmDrEdit_ProcessVoiceSection BmDrEdit_RestoreEditState BmDrEdit_SaveEditState BmDrEdit_SetupScrollRegion EditChannel_LoadVoiceParams */
+extern void NoteEditSy_UpdateChordDisplay(void);
+extern void BmDrEdit_SetupScrollRegion(unsigned char *, unsigned char *);
+extern unsigned char __near ram_2946;
+extern unsigned char __near ram_27b0;
+extern unsigned char __near NOTEEDIT_BASE_KEY;
+extern void BmDrEdit_AdjustScrollToView(void);
+
+void BmDrEdit_AdjustScrollToView(void)
+{
+	unsigned char lo, hi;
+	unsigned char c, k;
+
+	if (ram_2728 & 1) return;
+	ram_27b0 = NOTEEDIT_BASE_KEY;
+	for (;;) {
+		BmDrEdit_SetupScrollRegion(&lo, &hi);
+		c = ram_2946;
+		k = NOTEEDIT_BASE_KEY;
+		if (c < lo) {
+			c = k;
+			if (k == 0) return;
+			c--;
+			NOTEEDIT_BASE_KEY = c;
+		} else if (c > hi) {
+			c = k;
+			if (k >= 9) return;
+			c++;
+			NOTEEDIT_BASE_KEY = c;
+		} else
+			break;
+	}
+	if (ram_27b0 == NOTEEDIT_BASE_KEY) return;
+	NoteEditSy_UpdateChordDisplay();
+}
