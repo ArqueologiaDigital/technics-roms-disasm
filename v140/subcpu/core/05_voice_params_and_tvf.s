@@ -1051,54 +1051,11 @@ Voice_Build_SoundingVoiceList_Done:
 	popw	iz
 	ret
 
-Voice_AdvanceSlotIterator:
-	dec 2, xsp
-	push xiz
-	ld c, 0x30:opc
-	mul bc, a
-	ld iz, bc
-	ld (xsp + 4), iz
-	addiw_da (xsp + 4), 0x30
-	cp iz, (xsp + 4)
-	jr nc, Voice_AdvanceSlotIterator_Return
-
-Voice_AdvanceSlotIterator_Loop:
-	ld wa, iz
-	mul wa, 0x5
-	lda xbc, (8490:16)
-	extz xwa
-	add xwa, xbc
-	cp (xwa), 0x40
-	jr ule, Voice_AdvanceSlotIterator_Next
-	ld wa, iz
-	mul wa, 0x5
-	lda xbc, (8488:16)
-	extz xwa
-	add xwa, xbc
-	cp (xwa), 0x1A
-	jr z, Voice_AdvanceSlotIterator_Next
-	ldto_berp A, 0xF8
-	extz wa
-	ldfr_werp WA, 0xFA
-	ldto_berp A, 0xF8
-	extz wa
-	calr Quad_Decode_A_To_L
-	ld c, l
-	extz bc
-	ldto_werp WA, 0xFA
-	ld de, bc
-	ldw bc, 0x1A
-	calr VoiceSlot_UpdateNoteSource
-
-Voice_AdvanceSlotIterator_Next:
-	inc 1, iz
-	cp iz, (xsp + 4)
-	jr c, Voice_AdvanceSlotIterator_Loop
-
-Voice_AdvanceSlotIterator_Return:
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_AdvanceSlotIterator:	.include "includes/generated/cc900/Voice_AdvanceSlotIterator.s"	; C: cc900/voice_params_and_tvf_p_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_AdvanceSlotIterator_Loop, Voice_AdvanceSlotIterator + 22
+	.set	Voice_AdvanceSlotIterator_Next, Voice_AdvanceSlotIterator + 91
+	.set	Voice_AdvanceSlotIterator_Return, Voice_AdvanceSlotIterator + 98
 
 DList_Unlink_SelfLink:	.include "includes/generated/cc900/DList_Unlink_SelfLink.s"	; C: cc900/voice_params_and_tvf.c
 
@@ -1986,59 +1943,12 @@ OutputBuf_Flush_A:	.include "includes/generated/cc900/OutputBuf_Flush_A.s"	; C: 
 ; to put the voice into release, then appends (node+0x24) and unlinks the node from the
 ; 0x10/0x14 chain, resuming from the saved successor.
 ; This is the note-off enumerator; OutputBuf_Flush_A is the query-only one.
-OutputBuf_Flush_B:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 8), xwa
-	or xbc, xbc
-	jr z, OutputBuf_Flush_B_Done
-	ld xiz, xbc
-
-; Chain walk with the same match rule as OutputBuf_Flush_A_Loop.
-OutputBuf_Flush_B_Loop:
-	cp (xsp + 16), 0x0
-	jr nz, OutputBuf_Flush_B_Emit
-	cp (xiz + 35), e
-	jr nz, OutputBuf_Flush_B_Next
-
-; Release the matched node, append its voice index, unlink it and continue from (node+0x10).
-OutputBuf_Flush_B_Emit:
-	ld xwa, xiz
-	ld xbc, (xiz + 24)
-	ld de, 1:i3
-	calr Voice_List_MoveToPartList
-	ld xwa, xiz
-	calr Voice_Reprioritise
-	ld xwa, (xsp + 8)
-	ld xbc, (xwa)
-	ld a, (xiz + 36)
-	ld (xbc), a
-	ld xwa, (xsp + 8)
-	ld xbc, 1:i3
-	add (xwa), xbc
-	cp xiz, (xiz + 16)
-	jr z, OutputBuf_Flush_B_Done
-	ld xwa, (xiz + 16)
-	ld (xsp + 4), xwa
-	ld xwa, xiz
-	calr DList_Unlink_SelfLink_Offsets16
-	ld xiz, (xsp + 4)
-	jr OutputBuf_Flush_B_Emit
-
-; Follow (node+0x08); stop when the walk wraps to the head.
-OutputBuf_Flush_B_Next:
-	ld xiz, (xiz + 8)
-	cp xiz, xbc
-	jr nz, OutputBuf_Flush_B_Loop
-
-; Write the 0xFF terminator at the cursor and return (retd 2).
-OutputBuf_Flush_B_Done:
-	ld xwa, (xsp + 8)
-	ld xwa, (xwa)
-	ld (xwa), 0xFF
-	pop xiz
-	inc 8, xsp
-	retd 0x2
+OutputBuf_Flush_B:	.include "includes/generated/cc900/OutputBuf_Flush_B.s"	; C: cc900/voice_params_and_tvf_p_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	OutputBuf_Flush_B_Loop, OutputBuf_Flush_B + 12
+	.set	OutputBuf_Flush_B_Emit, OutputBuf_Flush_B + 23
+	.set	OutputBuf_Flush_B_Next, OutputBuf_Flush_B + 76
+	.set	OutputBuf_Flush_B_Done, OutputBuf_Flush_B + 83
 
 ; ROUTE A NOTE-OFF / VOICE-QUERY PACKET AND RETURN THE AFFECTED VOICE LIST.
 ; In: XWA = packet:  +0x00 flag byte (bit7, bit6 select which chains to visit)
@@ -2740,66 +2650,10 @@ EnvDepth_Cap:	.include "includes/generated/cc900/EnvDepth_Cap.s"	; C: cc900/voic
 ;   finally (rec+0x00) & 3 indexes the u16 table at 0x011511 and those bits are OR'ed
 ;   in, producing the 16-bit word the TG expects. Out: XHL.
 ; Callers 0x0293B9, 0x02F5F0.
-EGEnv_Compute_A:
-	dec 4, xsp
-	push xiz
-	extz wa
-	muls wa, 0x1B
-	lda xbc, (Payload_Bss_Start+0x53d8:24)
-	exts xwa
-	add xwa, xbc
-	ld (xsp + 4), xwa
-	ld a, (xwa + 1)
-	extz wa
-	add wa, wa
-	lda xbc, (EGEnv_BaseCurve_A:24)
-	ld	wa, (xbc+wa)
-	ld iz, wa
-	extz xiz
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 2)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xiz
-	call Math_Multiply32
-	ld xiz, xhl
-	ld xwa, (xsp + 4)
-	cp (xwa + 5), 0x0
-	jr z, EGEnv_Compute_A_Normalise
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 6)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 5)
-	ld e, a
-	extz de
-	ld xwa, xiz
-	calr EnvDepth_Cap
-	sub xiz, xhl
-
-; >> 7 and clamp the accumulator to 0x1FFF.
-EGEnv_Compute_A_Normalise:
-	srl xiz, 7
-	cp xiz, 0x1FFF
-	jr ule, EGEnv_Compute_A_FormatBits
-	ld xiz, 0x1FFF
-
-; OR in the 2-bit mode field fetched from the 0x011511 table.
-EGEnv_Compute_A_FormatBits:
-	ld xwa, (xsp + 4)
-	ld a, (xwa)
-	and a, 0x3
-	extz wa
-	add wa, wa
-	lda xbc, (EGEnv_ModeBits_Table:24)
-	ld	wa, (xbc+wa)
-	ld bc, iz
-	ld hl, bc
-	or hl, wa
-	pop xiz
-	inc 4, xsp
-	ret
+EGEnv_Compute_A:	.include "includes/generated/cc900/EGEnv_Compute_A.s"	; C: cc900/voice_params_and_tvf_n_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EGEnv_Compute_A_Normalise, EGEnv_Compute_A + 96
+	.set	EGEnv_Compute_A_FormatBits, EGEnv_Compute_A + 112
 
 ; SIMPLE ENVELOPE VALUE: (rec+0x03) indexes the u16 table at 0x010964, the value is
 ; multiplied by (rec+0x04), >> 7 and clamped to 0x3FFF. No depth cap, no mode bits.
@@ -4854,40 +4708,14 @@ Voice_PitchPack_Mode5_Dual:	.include "includes/generated/cc900/Voice_PitchPack_M
 	.set	Voice_PitchPack_Mode5_ApplyDetune, Voice_PitchPack_Mode5_Dual + 44
 	.set	Voice_PitchPack_Mode5_Finalize, Voice_PitchPack_Mode5_Dual + 90
 
-TVF_Build_Dispatch:
-	ld xbc, (xwa + 23)
-	ld c, (xbc + 54)
-	and c, 0x7
-	extz bc
-	cp bc, 0:i3
-	jr mi, TVF_Build_Dispatch_Table
-	cp bc, 5:i3
-	jr gt, TVF_Build_Dispatch_Table
-	add bc, bc
-	lda xix, (TVF_Build_CaseOffsets:24)
-	ld	bc, (xix+bc)
-	lda xix, (TVF_Build_Dispatch_Table:24)
-	jp	t, (xix+bc)
-
-; Six-entry computed-goto landing pad for TVF_Build_Dispatch. Entry 0 falls through
-; to TVF_Set_Bypass (0x022DA1, which sets voice+66=0x017F, voice+68=0x7F7F);
-; entries 1..5 reach the mode bodies at 0x023D01, 0x023DB5, 0x023EC2, 0x023FBD, 0x02403D.
-; Offsets come from the word table at 0x00F6A7.
-TVF_Build_Dispatch_Table:
-	jrl TVF_Set_Bypass
-TVF_Build_Dispatch_Mode1_SingleCutoff:
-	jrl TVF_Build_Full
-TVF_Build_Dispatch_Mode2_SingleCutoffBit7:
-	jrl Voice_PitchPack_Mode2
-; TVF_Build_Dispatch_Mode3_SharedCutoff: With bit 9 of (voice+0x23)->[2] set, Voice_PitchPack_Mode3 packs like mode 1
-;   instead (cutoff in the +0x100 word only).
-TVF_Build_Dispatch_Mode3_SharedCutoff:
-	jrl Voice_PitchPack_Mode3
-TVF_Build_Dispatch_Mode4_SharedCutoffBit7:
-	jrl Voice_PitchPack_Mode4_Single
-TVF_Build_Dispatch_Mode5_DualCutoff:
-	calr Voice_PitchPack_Mode5_Dual
-	ret
+TVF_Build_Dispatch:	.include "includes/generated/cc900/TVF_Build_Dispatch.s"	; C: cc900/voice_params_and_tvf_p_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TVF_Build_Dispatch_Table, TVF_Build_Dispatch + 41
+	.set	TVF_Build_Dispatch_Mode1_SingleCutoff, TVF_Build_Dispatch + 44
+	.set	TVF_Build_Dispatch_Mode2_SingleCutoffBit7, TVF_Build_Dispatch + 47
+	.set	TVF_Build_Dispatch_Mode3_SharedCutoff, TVF_Build_Dispatch + 50
+	.set	TVF_Build_Dispatch_Mode4_SharedCutoffBit7, TVF_Build_Dispatch + 53
+	.set	TVF_Build_Dispatch_Mode5_DualCutoff, TVF_Build_Dispatch + 56
 
 TVF_Build_Short:	.include "includes/generated/cc900/TVF_Build_Short.s"	; C: cc900/voice_params_and_tvf_a_ia06.c
 
@@ -4924,57 +4752,12 @@ TVF_BuildEmit_Short_Dispatch:	.include "includes/generated/cc900/TVF_BuildEmit_S
 	.set	TVF_BuildEmit_Short_Mode5_DualCutoff, TVF_BuildEmit_Short_Dispatch + 95
 	.set	TVF_BuildEmit_Short_Dispatch_Return, TVF_BuildEmit_Short_Dispatch + 100
 
-TVF_Emit_Offset_Reg100:
-	push xiz
-	ld xiz, xwa
-	ld xwa, (xiz + 39)
-	ld wa, (xwa + 24)
-	bit 6, wa
-	jr z, Voice_Pan_Write_AsIs
-	ld xwa, (xiz + 39)
-	ld wa, (xwa + 24)
-	bit 7, wa
-	jr z, TVF_Emit_Offset_Reg100_Positive
-	ld xwa, (xiz + 35)
-	ld a, (xwa + 31)
-	exts wa
-	ld bc, (xiz + 66)
-	and bc, 0x7F
-	sub bc, wa
-	ld wa, bc
-	jr TVF_Emit_Offset_Reg100_Clamp
-
-; Additive arm (bit 7 of ((voice+39)+0x18) clear): field = (voice+66 & 0x7F) + s8(patch+0x1F).
-TVF_Emit_Offset_Reg100_Positive:
-	ld xwa, (xiz + 35)
-	ld a, (xwa + 31)
-	exts wa
-	ld bc, (xiz + 66)
-	and bc, 0x7F
-	add bc, wa
-	ld wa, bc
-
-; TVF_Clamp_Cutoff the 7-bit field to 0..120, merge under mask 0xFF80 back into voice+66 and
-; store to 0x0451D4 (TG reg 0x100).
-TVF_Emit_Offset_Reg100_Clamp:
-	calr TVF_Clamp_Cutoff
-	ld wa, (xiz + 66)
-	and wa, 0xFF80
-	or wa, hl
-	ld (Payload_Bss_Start+0x635e:24), wa
-	jr Voice_Pan_WriteSecondary
-
-; Offset disabled (bit 6 of ((voice+39)+0x18) clear): copy voice+66 to 0x0451D4 unchanged.
-Voice_Pan_Write_AsIs:
-	ld wa, (xiz + 66)
-	ld (Payload_Bss_Start+0x635e:24), wa
-
-; Common tail: copy voice+68 to 0x0451D6 (TG reg 0x140) unchanged, pop XIZ, ret.
-Voice_Pan_WriteSecondary:
-	ld wa, (xiz + 68)
-	ld (Payload_Bss_Start+0x6360:24), wa
-	pop xiz
-	ret
+TVF_Emit_Offset_Reg100:	.include "includes/generated/cc900/TVF_Emit_Offset_Reg100.s"	; C: cc900/voice_params_and_tvf_p_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TVF_Emit_Offset_Reg100_Positive, TVF_Emit_Offset_Reg100 + 46
+	.set	TVF_Emit_Offset_Reg100_Clamp, TVF_Emit_Offset_Reg100 + 65
+	.set	Voice_Pan_Write_AsIs, TVF_Emit_Offset_Reg100 + 84
+	.set	Voice_Pan_WriteSecondary, TVF_Emit_Offset_Reg100 + 92
 
 TVF_Emit_Offset_Both:
 	push xiz

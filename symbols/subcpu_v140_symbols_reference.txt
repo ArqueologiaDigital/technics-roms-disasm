@@ -1890,7 +1890,7 @@ Voice_ComputePitch_PortaPositive 0002643A
 Voice_ComputePitch_PortaScale 0002645F
 Voice_ComputePitch_ApplyLFO 00026468
 Voice_ComputePitch_WriteDone 000264F9
-Voice_ComputePitch_InlineData 0002650B
+Int_ClampSignedToRange_B 0002650B
 Voice_ComputePitch_Skip 00026513
 Voice_ComputePitch_Join 00026519
 Voice_ComputePitch_Mono 0002651C

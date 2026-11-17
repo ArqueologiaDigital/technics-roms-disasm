@@ -42,7 +42,8 @@ assign={'core/05_voice_params_and_tvf.s':'A','core/07_voice_ctrlchange.s':'A','c
 for r in rows:
     if r[4]=='subcpu_fp_math.s': continue   # Toshiba's double library: library C, not ours
     if (not REMAINING and r[6] not in (('rel',) if REL else ('leaf','abs'))) or r[5]=='hand' or r[1]=='None' or r[14]!='0' or r[3] in done: continue
-    b=body(r)
+    try: b=body(r)
+    except StopIteration: continue   # a label the splice turned into `.set INNER, NAME + n` (inside a built function)
     tg=[m.group(1) for l in b for m in [re.match(r'\s+call\s+(\w+)',l)] if m]
     rt=sorted(set(t for t in tg if re.match(r'(FP_|Math_|Int_)',t)))
     cr=sorted(set(m.group(1) for l in b for m in [re.match(r'\s+calr\s+(\w+)',l)] if m))

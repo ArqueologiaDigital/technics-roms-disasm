@@ -405,127 +405,14 @@ Voice_Calc_LevelPair_PatchAtk_ClampDepth:
 ; 0x0451E6 (TG reg 0x840) and 0x0451E8 (TG reg 0x880).
 ; If the "channel" flag in the frame is set, the right word gets bit 15 forced instead of
 ; the cached high byte.
-Voice_WriteChPanShift:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 4), c
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 39)
-	ld wa, (xwa + 24)
-	bit 8, wa
-	jrl z, Voice_WriteChPanShift_Passthrough
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	and wa, 0xFF
-	jrl z, Voice_WriteChPanShift_Passthrough
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 39)
-	ld wa, (xwa + 24)
-	bit 9, wa
-	jr z, Voice_WriteChPanShift_AddShift
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	and wa, 0x7F
-	ld (xsp + 2), wa
-	sub (xsp + 2), bc
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	and wa, 0x7F
-	ld iz, wa
-	sub iz, bc
-	jr Voice_WriteChPanShift_ClampAndWrite
-
-; Adds the signed shift byte to both 7-bit channel fields.
-Voice_WriteChPanShift_AddShift:
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	and wa, 0x7F
-	ld (xsp + 2), wa
-	add (xsp + 2), bc
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	and wa, 0x7F
-	ld iz, wa
-	add iz, bc
-
-; Clamps both fields via Int_ClampSignedToRange and branches on the channel flag.
-Voice_WriteChPanShift_ClampAndWrite:
-	ld wa, (xsp + 2)
-	ldw bc, 0x7F
-	ld de, 4:i3
-	calr Int_ClampSignedToRange
-	ld (xsp + 2), hl
-	ld wa, iz
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	cp (xsp + 4), 0x0
-	jr z, Voice_WriteChPanShift_NoChanFlag
-	ld wa, iz
-	set 15, wa
-	ld (Payload_Bss_Start+0x6372:24), wa
-	jr Voice_WriteChPanShift_WriteL
-
-; Channel flag clear: merge the right field under the cached voice+64 high byte before
-; storing to 0x0451E8.
-Voice_WriteChPanShift_NoChanFlag:
-	ld wa, iz
-	ld w, 0x0:opc
-	ld bc, wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	ld a, 0x0:opc
-	or wa, bc
-	ld (Payload_Bss_Start+0x6372:24), wa
-
-; Merge and store the left field to 0x0451E6 (TG reg 0x840).
-Voice_WriteChPanShift_WriteL:
-	ld wa, (xsp + 2)
-	ld w, 0x0:opc
-	ld bc, wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	ld a, 0x0:opc
-	or wa, bc
-	ld (Payload_Bss_Start+0x6370:24), wa
-	jr Voice_WriteChPanShift_Done
-
-; No-shift path: copy the cached voice+62 / voice+64 words verbatim to 0x0451E6 / 0x0451E8.
-Voice_WriteChPanShift_Passthrough:
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	ld (Payload_Bss_Start+0x6370:24), wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	ld (Payload_Bss_Start+0x6372:24), wa
-
-; popw IZ, inc 8 xsp, ret.
-Voice_WriteChPanShift_Done:
-	popw iz
-	inc 8, xsp
-	ret
+Voice_WriteChPanShift:	.include "includes/generated/cc900/Voice_WriteChPanShift.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_WriteChPanShift_AddShift, Voice_WriteChPanShift + 109
+	.set	Voice_WriteChPanShift_ClampAndWrite, Voice_WriteChPanShift + 165
+	.set	Voice_WriteChPanShift_NoChanFlag, Voice_WriteChPanShift + 209
+	.set	Voice_WriteChPanShift_WriteL, Voice_WriteChPanShift + 230
+	.set	Voice_WriteChPanShift_Passthrough, Voice_WriteChPanShift + 254
+	.set	Voice_WriteChPanShift_Done, Voice_WriteChPanShift + 276
 
 Voice_Calc_LevelPair_FixedAtk:
 	lda xsp, (xsp - 12)
@@ -657,126 +544,14 @@ Voice_Calc_LevelPair_FixedAtk_Done:
 ; Second, instruction-identical copy of Voice_WriteChPanShift (0x02591D). Same inputs, same
 ; outputs (0x0451E6 / 0x0451E8 = TG regs 0x840 / 0x880); it exists so the "full" level path
 ; can call it with a `calr` in range.
-Voice_WriteChPanShift2:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 4), c
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 39)
-	ld wa, (xwa + 24)
-	bit 8, wa
-	jrl z, Voice_WriteChPanShift2_Passthrough
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	and wa, 0xFF
-	jrl z, Voice_WriteChPanShift2_Passthrough
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 39)
-	ld wa, (xwa + 24)
-	bit 9, wa
-	jr z, Voice_WriteChPanShift2_AddShift
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	and wa, 0x7F
-	ld (xsp + 2), wa
-	sub (xsp + 2), bc
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	and wa, 0x7F
-	ld iz, wa
-	sub iz, bc
-	jr Voice_WriteChPanShift2_ClampAndWrite
-
-; As 0x02598A.
-Voice_WriteChPanShift2_AddShift:
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	and wa, 0x7F
-	ld (xsp + 2), wa
-	add (xsp + 2), bc
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 32)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	and wa, 0x7F
-	ld iz, wa
-	add iz, bc
-
-; As 0x0259C2.
-Voice_WriteChPanShift2_ClampAndWrite:
-	ld wa, (xsp + 2)
-	ldw bc, 0x7F
-	ld de, 4:i3
-	calr Int_ClampSignedToRange
-	ld (xsp + 2), hl
-	ld wa, iz
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	cp (xsp + 4), 0x0
-	jr z, Voice_WriteChPanShift2_NoChanFlag
-	ld wa, iz
-	set 15, wa
-	ld (Payload_Bss_Start+0x6372:24), wa
-	jr Voice_WriteChPanShift2_WriteL
-
-; As 0x0259EE.
-Voice_WriteChPanShift2_NoChanFlag:
-	ld wa, iz
-	ld w, 0x0:opc
-	ld bc, wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	ld a, 0x0:opc
-	or wa, bc
-	ld (Payload_Bss_Start+0x6372:24), wa
-
-; As 0x025A03.
-Voice_WriteChPanShift2_WriteL:
-	ld wa, (xsp + 2)
-	ld w, 0x0:opc
-	ld bc, wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	ld a, 0x0:opc
-	or wa, bc
-	ld (Payload_Bss_Start+0x6370:24), wa
-	jr Voice_WriteChPanShift2_Done
-
-; As 0x025A1B.
-Voice_WriteChPanShift2_Passthrough:
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 62)
-	ld (Payload_Bss_Start+0x6370:24), wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 64)
-	ld (Payload_Bss_Start+0x6372:24), wa
-
-; As 0x025A31.
-Voice_WriteChPanShift2_Done:
-	popw iz
-	inc 8, xsp
-	ret
+Voice_WriteChPanShift2:	.include "includes/generated/cc900/Voice_WriteChPanShift2.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_WriteChPanShift2_AddShift, Voice_WriteChPanShift2 + 109
+	.set	Voice_WriteChPanShift2_ClampAndWrite, Voice_WriteChPanShift2 + 165
+	.set	Voice_WriteChPanShift2_NoChanFlag, Voice_WriteChPanShift2 + 209
+	.set	Voice_WriteChPanShift2_WriteL, Voice_WriteChPanShift2 + 230
+	.set	Voice_WriteChPanShift2_Passthrough, Voice_WriteChPanShift2 + 254
+	.set	Voice_WriteChPanShift2_Done, Voice_WriteChPanShift2 + 276
 
 ; Full level-pair recomputation for one voice; the body runs past the end of this region
 ; (to ~0x025F7E). In: XWA = per-voice record. Same shape as Voice_Calc_LevelPair_PatchAtk
@@ -1830,7 +1605,8 @@ Voice_ComputePitch_WriteDone:
 	inc 8, xsp
 	ret
 
-; Despite the name, these 17 bytes are EXECUTABLE CODE, not data.
+; Int_ClampSignedToRange_B(WA = value, BC = high, DE = low) -> HL.  (Named Voice_ComputePitch_InlineData
+; until 2026-11-16: these 17 bytes are code, and Toshiba V4.23 reproduces them from C.)
 ; "clamp WA into [DE..BC], return in HL" -- the same operation as
 ; Int_ClampSignedToRange at 0x022B19, with the low bound tested first (that routine tests
 ; the high bound first). Nothing in the image references it; it is dead code left between
@@ -1838,18 +1614,10 @@ Voice_ComputePitch_WriteDone:
 ; Converted from `.byte` to real mnemonics 2026-09-01 (lane SUB): `jr ge, 4` / `jr 6` /
 ; `jr le, 2` take the raw 8-bit displacement field, verified byte-identical via a llvm-mc
 ; round trip (assemble -> objcopy -> compare against the original 17 bytes).
-Voice_ComputePitch_InlineData:
-	cp	wa, de
-	jr	ge, Voice_ComputePitch_Skip
-	ld	wa, de
-	jr	Voice_ComputePitch_Join
-Voice_ComputePitch_Skip:
-	cp	wa, bc
-	jr	le, Voice_ComputePitch_Join
-	ld	wa, bc
-Voice_ComputePitch_Join:
-	ld	hl, wa
-	ret
+Int_ClampSignedToRange_B:	.include "includes/generated/cc900/Int_ClampSignedToRange_B.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ComputePitch_Skip, Int_ClampSignedToRange_B + 8
+	.set	Voice_ComputePitch_Join, Int_ClampSignedToRange_B + 14
 
 ; Voice_ComputePitch_Mono(XWA = voice-slot record). The cut-down pitch computation used
 ; by the mono/legato voice types; callers are Voice_Init_Type1 and Voice_Init_Type2.
@@ -1892,48 +1660,12 @@ Voice_ApplyPortamento:	.include "includes/generated/cc900/Voice_ApplyPortamento.
 ; exactly 0xFE00, in which case the raw 0xFE00 is added (a sentinel, the same -512 value
 ; the crossfade shapers use). Tail-jumps to Voice_Build_OutputLevel.
 ; Callers: Voice_Init_Type1, Voice_Init_Type2, Voice_AllVoices_WriteAmplitude_BranchB.
-Voice_ApplyPortamento2:
-	ld xbc, (xwa + 23)
-	ld de, (xwa + 13)
-	cp (xbc + 5), 0x0
-	jr z, Voice_ApplyPortamento2_NoChanDetune
-	ld c, (xbc + 5)
-	extz bc
-	sub bc, 0x64
-	add de, bc
-	jr Voice_ApplyPortamento2_ApplyDetune
-
-; paramA+5 == 0: apply the fixed -0x200 bias.
-Voice_ApplyPortamento2_NoChanDetune:
-	sub de, 0x200
-
-; Key-shift arm gated on 0x041343 bit 1; computes the tonerec[+12] vibrato term.
-Voice_ApplyPortamento2_ApplyDetune:
-	ld bc, (Voice_GlobalFlags:24)
-	bit 1, bc
-	jr z, Voice_ApplyPortamento2_Done
-	ld xbc, (xwa + 35)
-	sub de, (xbc + 16)
-	ld xbc, (xwa + 35)
-	sub de, (xbc + 12)
-	ldw hl, 0xFE00
-	ld xbc, (xwa + 35)
-	ld bc, (xbc + 12)
-	cp bc, 0xFE00
-	jr z, Voice_ApplyPortamento2_AddVibrato
-	ld xbc, (xwa + 35)
-	ld bc, (xbc + 12)
-	sra bc, 2
-	ld hl, bc
-
-; Add the vibrato term (either tonerec[+12]>>2 or the 0xFE00 sentinel).
-Voice_ApplyPortamento2_AddVibrato:
-	add de, hl
-
-; Move to BC and tail-jump to Voice_Build_OutputLevel.
-Voice_ApplyPortamento2_Done:
-	ld bc, de
-	jrl Voice_Build_OutputLevel
+Voice_ApplyPortamento2:	.include "includes/generated/cc900/Voice_ApplyPortamento2.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ApplyPortamento2_NoChanDetune, Voice_ApplyPortamento2 + 25
+	.set	Voice_ApplyPortamento2_ApplyDetune, Voice_ApplyPortamento2 + 29
+	.set	Voice_ApplyPortamento2_AddVibrato, Voice_ApplyPortamento2 + 77
+	.set	Voice_ApplyPortamento2_Done, Voice_ApplyPortamento2 + 79
 
 ; Voice_WriteChPitchWithVib(WA = part index, BC = MIDI channel). Broadcasts one part's
 ; note-level register pair to every voice slot currently owned by that channel.
@@ -1947,64 +1679,11 @@ Voice_ApplyPortamento2_Done:
 ; NUL-list of matching slot indices at (XHL+5) and, for each slot whose channel byte
 ; (record 0x0430AD + slot*0x47, offset +14) matches, calls ToneGen_WriteLevelPair to
 ; push shadow offsets +44/+46 into TG banks 0x800/0x840 through 0x100000/0x100002.
-Voice_WriteChPitchWithVib:
-	dec 2, xsp
-	push xiz
-	extz bc
-	muls bc, 0x47
-	lda xde, (Payload_Bss_Start+0x4237:24)
-	ld	xbc, (xde+bc)
-	bitm 3, (xbc)
-	jr z, Voice_WriteChPitchWithVib_Done
-	ld c, (xbc + 14)
-	ld (xsp + 4), c
-	extz bc
-	lda xde, (Voice_VibratoDepth_Table:24)
-	ld	c, (xde+bc)
-	extz bc
-	sll bc, 8
-	set 7, bc
-	ld (Payload_Bss_Start+0x6382:24), bc
-	ld c, (xsp + 4)
-	extz bc
-	lda xde, (Voice_VibratoDepth_Table:24)
-	ld	c, (xde+bc)
-	extz bc
-	sll bc, 8
-	ld (Payload_Bss_Start+0x6384:24), bc
-	extz wa
-	call Voice_Query_PartVoices
-	lda xwa, (xhl + 5)
-	ld xiz, xwa
-	cp (xiz), 0x40
-	jr nc, Voice_WriteChPitchWithVib_Done
-
-; Per-slot body: match the slot's channel byte, then push the two TG registers.
-Voice_WriteChPitchWithVib_Loop:
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4237:24)
-	ld	xbc, (xbc+wa)
-	ld a, (xsp + 4)
-	cp a, (xbc + 14)
-	jr nz, Voice_WriteChPitchWithVib_NextSlot
-	ld a, (xiz)
-	extz wa
-	lda xbc, (ToneGen_StagingBlock:24)
-	call ToneGen_WriteLevelPair
-
-; Advance the slot-list cursor; the list terminates on the first index >= 0x40.
-Voice_WriteChPitchWithVib_NextSlot:
-	inc 1, xiz
-	cp (xiz), 0x40
-	jr c, Voice_WriteChPitchWithVib_Loop
-
-; Restore IZ and return.
-Voice_WriteChPitchWithVib_Done:
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_WriteChPitchWithVib:	.include "includes/generated/cc900/Voice_WriteChPitchWithVib.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_WriteChPitchWithVib_Loop, Voice_WriteChPitchWithVib + 95
+	.set	Voice_WriteChPitchWithVib_NextSlot, Voice_WriteChPitchWithVib + 134
+	.set	Voice_WriteChPitchWithVib_Done, Voice_WriteChPitchWithVib + 141
 
 Voice_Calc_LevelPair_EGA:	.include "includes/generated/cc900/Voice_Calc_LevelPair_EGA.s"	; C: cc900/voice_envelopes_and_channels_b_10a.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -2041,139 +1720,12 @@ Voice_Calc_LevelPair_EGB:	.include "includes/generated/cc900/Voice_Calc_LevelPai
 	.set	Voice_Calc_LevelPair_EGB_PositiveDetune, Voice_Calc_LevelPair_EGB + 275
 	.set	Voice_Calc_LevelPair_EGB_WriteResult, Voice_Calc_LevelPair_EGB + 286
 
-Voice_Calc_LevelPair_EGC:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld a, (xwa + 69)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	ld iz, wa
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld wa, (xwa + 10)
-	bit 0, wa
-	jr z, Voice_Calc_LevelPair_EGC_ApplyLFO
-	ld xwa, (xsp + 6)
-	ld xwa, (xwa + 35)
-	ld a, (xwa + 24)
-	extz wa
-	lda xbc, (Voice_EnvLevel_IndexMap:24)
-	ld	a, (xbc+wa)
-	extz wa
-	lda xbc, (Voice_EnvelopeLevel_Curve:24)
-	ld	a, (xbc+wa)
-	extz wa
-	cp wa, iz
-	jr gt, Voice_Calc_LevelPair_EGC_ApplyLFO
-	ld iz, wa
-
-; Body of Voice_Calc_LevelPair_EGC (entry 0x026AAA, already named). Identical in
-; shape to Volume2 but reading paramA+69/+73/+76/+71/+70/+61 instead of
-; +15/+19/+22/+17/+16/+7, and staging to 0x045200/0x045202 (shadow +52/+54, TG banks
-; 0x9C0 and 0xA00).
-Voice_Calc_LevelPair_EGC_ApplyLFO:
-	ld xwa, (xsp + 2)
-	cp (xwa + 76), 0x0
-	jr z, Voice_Calc_LevelPair_EGC_NoLFO
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 73)
-	ld c, a
-	extz bc
-	pushw 0x7F
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 76)
-	exts wa
-	pushw wa
-	ld xwa, (xsp + 10)
-	ld wa, (xwa + 8)
-	ld de, 0:i3
-	calr Pan_ScaleWithVelocity
-	add iz, hl
-	ld xwa, (xsp + 2)
-	cp (xwa + 71), 0x0
-	jr z, Voice_Calc_LevelPair_EGC_NoKeyTrack
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 71)
-	ld e, a
-	exts de
-	ld xwa, (xsp + 6)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	ld wa, de
-	ld de, 4:i3
-	calr PitchBend_Scale
-	add iz, hl
-	ld wa, iz
-	ldw bc, 0xFF
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	jr Voice_Calc_LevelPair_EGC_WriteDSP
-
-; paramA+71 == 0: skip key tracking, clamp 0..0xFF.
-Voice_Calc_LevelPair_EGC_NoKeyTrack:
-	ld wa, iz
-	ldw bc, 0xFF
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	jr Voice_Calc_LevelPair_EGC_WriteDSP
-
-; paramA+76 == 0: key tracking only.
-Voice_Calc_LevelPair_EGC_NoLFO:
-	ld xwa, (xsp + 2)
-	cp (xwa + 71), 0x0
-	jr z, Voice_Calc_LevelPair_EGC_WriteDSP
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 71)
-	ld e, a
-	exts de
-	ld xwa, (xsp + 6)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	ld wa, de
-	ld de, 4:i3
-	calr PitchBend_Scale
-	add iz, hl
-	ld wa, iz
-	ldw bc, 0xFF
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-
-; Sums paramA+61 and paramA+70, clamps to -0x32..+0x32, scales via
-; Detune_ScaleSymmetric, and stages (level<<8)|detune to 0x045200 and 0x045202.
-Voice_Calc_LevelPair_EGC_WriteDSP:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 61)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 70)
-	exts wa
-	add wa, bc
-	ldw bc, 0x32
-	ldw de, 0xFFCE
-	calr Int_ClampSignedToRange
-	ld wa, hl
-	calr Detune_ScaleSymmetric
-	ld h, 0x0:opc
-	ld wa, iz
-	sla wa, 8
-	or wa, hl
-	ld (Payload_Bss_Start+0x638a:24), wa
-	ld (Payload_Bss_Start+0x638c:24), wa
-	popw iz
-	inc 8, xsp
-	ret
+Voice_Calc_LevelPair_EGC:	.include "includes/generated/cc900/Voice_Calc_LevelPair_EGC.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Calc_LevelPair_EGC_ApplyLFO, Voice_Calc_LevelPair_EGC + 89
+	.set	Voice_Calc_LevelPair_EGC_NoKeyTrack, Voice_Calc_LevelPair_EGC + 185
+	.set	Voice_Calc_LevelPair_EGC_NoLFO, Voice_Calc_LevelPair_EGC + 199
+	.set	Voice_Calc_LevelPair_EGC_WriteDSP, Voice_Calc_LevelPair_EGC + 249
 
 Voice_Calc_LevelPair_Silence:	.include "includes/generated/cc900/Voice_Calc_LevelPair_Silence.s"	; C: cc900/voice_envelopes_and_channels_b.c
 
@@ -2402,83 +1954,10 @@ Voice_UpdateAllLFO_Done:
 	pop xiz
 	ret
 
-Voice_Step_DelayTimers:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 2)
-	ld iz, (xwa + 47)
-	ld wa, iz
-	extz xwa
-	bit 15, wa
-	jr z, Voice_Step_DelayTimers_LowSlot
-	sub iz, 0x100
-	ld wa, iz
-	and wa, 0x7F00
-	jr nz, Voice_Step_DelayTimers_LowSlot
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	extz wa
-	ld xbc, (xsp + 2)
-	ld bc, (xbc + 45)
-	call ToneGen_WriteSingleReg
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	extz wa
-	call Voice_Clear_HoldBit
-	res 15, iz
-
-; ---------------------------------------------------------------------------
-; Voice_Step_DelayTimers (0x026E5B) -- ticks TWO independent deferred-action
-; timers packed into the single word at (record + 0x2F), once per call.
-;
-;   bit 15      = high slot ARMED      bits 8..14 = high slot countdown
-;   bit  7      = low  slot ARMED      bits 0..6  = low  slot countdown
-;
-; Each armed slot is decremented; when its counter reaches zero the slot fires
-; and DISARMS ITSELF (res 0x0F,IZ / and IZ,0x007F), then the packed word is
-; written back.
-;
-;   high slot expiry -> ToneGen_WriteSingleReg (param from record+0x2D)
-;                    -> Voice_Clear_HoldBit
-;   low  slot expiry -> Voice_Reload_Levels
-;
-; NAMING (2026-08-06): previously Voice_Step_AmpDelay, and a later pass argued
-; for Voice_Step_ReleaseDelay. BOTH described only one slot -- "release" the
-; high one, "amp" the low one -- which is why the two readings disagreed. The
-; routine is a generic two-slot delay timer, so it is named for the mechanism.
-; Sibling: Voice_Step_ExprRamp (0x026EC3).
-; ---------------------------------------------------------------------------
-; Body of Voice_Step_DelayTimers (entry 0x026E5B, already named -- left alone). That routine
-; drives the packed 16-bit countdown word at slot+47, which holds TWO independent timers:
-;   high byte, bit 15 = "note-off armed": each tick subtracts 0x100; when the high 7 bits
-;     reach zero it writes slot+45 to the voice's TG register through
-;     ToneGen_WriteSingleReg, calls Voice_Clear_HoldBit, and clears bit 15;
-;   low byte, bit 7 = "release armed": handled at THIS label. Decrement by 1; when the
-;     low 7 bits reach zero, call Voice_Reload_Levels for the slot and clear bit 7.
-; ★ These two paths are the ONLY way a slot goes back to the free pool during steady-
-; state playback (the other being the portamento terminal state), so any stall upstream
-; of Voice_Step_DelayTimers stops voice reclamation outright.
-Voice_Step_DelayTimers_LowSlot:
-	bit 7, iz
-	jr z, Voice_Step_DelayTimers_Store
-	dec 1, iz
-	ld wa, iz
-	and wa, 0x7F
-	jr nz, Voice_Step_DelayTimers_Store
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	extz wa
-	call Voice_Reload_Levels
-	and iz, 0x7F
-
-; Write the updated countdown word back to slot+47 and return.
-Voice_Step_DelayTimers_Store:
-	ld xwa, (xsp + 2)
-	ld (xwa + 47), iz
-	popw iz
-	inc 4, xsp
-	ret
+Voice_Step_DelayTimers:	.include "includes/generated/cc900/Voice_Step_DelayTimers.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Step_DelayTimers_LowSlot, Voice_Step_DelayTimers + 64
+	.set	Voice_Step_DelayTimers_Store, Voice_Step_DelayTimers + 94
 
 Voice_Step_ExprRamp:
 	dec 6, xsp
@@ -3226,80 +2705,12 @@ Voice_LoadToneTable_All:	.include "includes/generated/cc900/Voice_LoadToneTable_
 ; table_0x010D64[+100]. The filter half behaves the same way against 0x96 / 6, calling
 ; Voice_LoadFilterTable_All + Voice_LoadToneTable_All, or _Ch with table_0x010DB4[+101/6].
 ; Sole caller: Audio_Tick_ServiceVoices_B_LFOLoopBody.
-Voice_ToneTableRamp_Up:
-	dec 4, xsp
-	push xiz
-	ld xiz, xbc
-	ld (xsp + 6), a
-	cp (xiz + 100), 0x4F
-	jr c, Voice_ToneTableRamp_Up_Increment
-	setm 3, (xiz + 99)
-	ld a, (xsp + 6)
-	extz wa
-	calr Voice_LoadPitchTable_All
-	jr Voice_ToneTableRamp_Up_CheckFilter
-
-; Pitch ramp not yet at 0x4F: ++position, clear flag bit 3, push the new value.
-Voice_ToneTableRamp_Up_Increment:
-	incm8 1, (xiz + 100)
-	resm 3, (xiz + 99)
-	ld a, (xiz + 100)
-	ld (xsp + 4), a
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (Voice_ToneRampPitch_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadPitchTable_Ch
-
-; Filter ramp: at 0x96 -> Voice_LoadFilterTable_All + Voice_LoadToneTable_All.
-Voice_ToneTableRamp_Up_CheckFilter:
-	cp (xiz + 101), 0x96
-	jr c, Voice_ToneTableRamp_Up_FilterIncrement
-	ld a, (xsp + 6)
-	extz wa
-	calr Voice_LoadFilterTable_All
-	ld a, (xsp + 6)
-	extz wa
-	calr Voice_LoadToneTable_All
-	jr Voice_ToneTableRamp_Up_Done
-
-; ++filter position, clear flag bit 3, push table_0x010DB4[pos/6] to both the filter and
-; tone parameter sets.
-Voice_ToneTableRamp_Up_FilterIncrement:
-	incm8 1, (xiz + 101)
-	resm 3, (xiz + 99)
-	ld a, (xiz + 101)
-	extz wa
-	div a, 0x6
-	ld (xsp + 4), a
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadFilterTable_Ch
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadToneTable_Ch
-
-; Restore and return.
-Voice_ToneTableRamp_Up_Done:
-	pop xiz
-	inc 4, xsp
-	ret
+Voice_ToneTableRamp_Up:	.include "includes/generated/cc900/Voice_ToneTableRamp_Up.s"	; C: cc900/voice_envelopes_and_channels_q_17c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ToneTableRamp_Up_Increment, Voice_ToneTableRamp_Up + 27
+	.set	Voice_ToneTableRamp_Up_CheckFilter, Voice_ToneTableRamp_Up + 66
+	.set	Voice_ToneTableRamp_Up_FilterIncrement, Voice_ToneTableRamp_Up + 90
+	.set	Voice_ToneTableRamp_Up_Done, Voice_ToneTableRamp_Up + 161
 
 ; Voice_ToneTableRamp_Down(A = part index, XBC = part record). The mirror of
 ; Voice_ToneTableRamp_Up: when +100 is already 0 it sets flag bit 4 and skips to the
@@ -4358,95 +3769,13 @@ ToneGen_WriteVoice_Reg15_Or_Reg16_Epilogue:
 ; field +0x18) using OR / AND-with-complement.  Returns with `retd 2`.
 ; This is the routine that turns a "send this modulation to buses X" request into the
 ; per-slot enable bitmap.
-AudioMod_Apply_BusRouting:
-	pushw	iz
-	ld	ix, (xsp+6)
-	ld	w, 0:opc
-	cp	w, 4:i3
-	jrl	nc, AudioMod_Apply_BusRouting_Epilogue
-AudioMod_Apply_BusRouting_Loop:
-	ld	l, w
-	extz	hl
-	lda	xiy, (AudioMod_BusRouting_EnableBits:24)
-	ld	l, (xiy+hl)
-	and	l, c
-	jrl	z, AudioMod_Apply_BusRouting_Skip2
-	ld	l, w
-	extz	hl
-	lda	xiy, (AudioMod_BusRouting_OrIXBits:24)
-	ld	l, (xiy+hl)
-	and	l, c
-	jr	z, AudioMod_Apply_BusRouting_Skip
-	ld	l, w
-	extz	hl
-	muls	hl, 37
-	ld	iz, hl
-	add	iz, 110
-	ld	l, a
-	extz	hl
-	muls	hl, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xhl
-	add	xhl, xiy
-	lda	xhl, (xhl+iz)	; lda XHL,XHL+IZ
-	ld	iy, de
-	or	iy, ix
-	or	(xhl+24), iy
-	jrl	AudioMod_Apply_BusRouting_Join
-AudioMod_Apply_BusRouting_Skip:
-	ld	l, w
-	extz	hl
-	muls	hl, 37
-	ld	iz, hl
-	add	iz, 110
-	ld	l, a
-	extz	hl
-	muls	hl, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xhl
-	add	xhl, xiy
-	lda	xiy, (xhl+iz)	; lda XIY,XHL+IZ
-	ld	hl, ix
-	cpl	hl
-	and	(xiy+24), hl
-	ld	l, w
-	extz	hl
-	muls	hl, 37
-	ld	iz, hl
-	add	iz, 110
-	ld	l, a
-	extz	hl
-	muls	hl, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xhl
-	add	xhl, xiy
-	lda	xhl, (xhl+iz)	; lda XHL,XHL+IZ
-	or	(xhl+24), de
-	jr	AudioMod_Apply_BusRouting_Join
-AudioMod_Apply_BusRouting_Skip2:
-	ld	l, w
-	extz	hl
-	muls	hl, 37
-	ld	iz, hl
-	add	iz, 110
-	ld	l, a
-	extz	hl
-	muls	hl, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xhl
-	add	xhl, xiy
-	lda	xiy, (xhl+iz)	; lda XIY,XHL+IZ
-	ld	hl, de
-	or	hl, ix
-	cpl	hl
-	and	(xiy+24), hl
-AudioMod_Apply_BusRouting_Join:
-	inc	1, w
-	cp	w, 4:i3
-	jrl	c, AudioMod_Apply_BusRouting_Loop
-AudioMod_Apply_BusRouting_Epilogue:
-	popw	iz
-	retd	2
+AudioMod_Apply_BusRouting:	.include "includes/generated/cc900/AudioMod_Apply_BusRouting.s"	; C: cc900/voice_envelopes_and_channels_q_17b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioMod_Apply_BusRouting_Loop, AudioMod_Apply_BusRouting + 11
+	.set	AudioMod_Apply_BusRouting_Skip, AudioMod_Apply_BusRouting + 94
+	.set	AudioMod_Apply_BusRouting_Skip2, AudioMod_Apply_BusRouting + 178
+	.set	AudioMod_Apply_BusRouting_Join, AudioMod_Apply_BusRouting + 223
+	.set	AudioMod_Apply_BusRouting_Epilogue, AudioMod_Apply_BusRouting + 230
 ; A = part index, BC = controller value, XDE = 3-byte modulation-routing descriptor.
 ; Descriptor layout, proven by every user in this block:
 ;     +0 : (unused here)
@@ -5113,110 +4442,15 @@ ScaleTune_Get_User_Offset:	.include "includes/generated/cc900/ScaleTune_Get_User
 ; and then unconditionally calls ToneGen_ReadPitch_AndScale (0x02E18D) per voice.
 ; ★ That last call is a tone-generator READ inside a doubly-nested loop -- relevant to the
 ; sine-mode bug, see findings.
-Voice_AllVoices_UpdateVelocity:
-	dec 2, xsp
-	push xiz
-	and a, 0xF
-	ld (Payload_Bss_Start+0x24d6:24), a
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x1A
-	jrl nc, Voice_AllVoices_UpdateVelocity_Exit
-
-; loop head of Voice_AllVoices_UpdateVelocity.
-Voice_AllVoices_UpdateVelocity_LoopStart:
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x24fc:24)
-	ld	wa, (xbc+wa)
-	bit 1, wa
-	jrl z, Voice_AllVoices_UpdateVelocity_InnerStep
-	ld a, (xsp + 4)
-	extz wa
-	call Voice_Query_PartVoices
-	lda xwa, (xhl + 5)
-	ld xiz, xwa
-	cp (xiz), 0x40
-	jrl nc, Voice_AllVoices_UpdateVelocity_InnerStep
-
-; inner loop body of Voice_AllVoices_UpdateVelocity.
-Voice_AllVoices_UpdateVelocity_InnerLoop:
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x421c:24)
-	ld	a, (xbc+wa)
-	ld (xsp + 4), a
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, Voice_AllVoices_UpdateVelocity_TypeB
-	cp a, 0xC0
-	jr z, Voice_AllVoices_UpdateVelocity_TypeA
-	cp a, 0x40
-	jr z, Voice_AllVoices_UpdateVelocity_TypeA
-	cp a, 0:i3
-	jr nz, Voice_AllVoices_UpdateVelocity_NextOuter
-
-; TypeA case of Voice_AllVoices_UpdateVelocity.
-Voice_AllVoices_UpdateVelocity_TypeA:
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	exts xwa
-	add xwa, xbc
-	call Level_Build_Reg0C0
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	exts xwa
-	add xwa, xbc
-	call Voice_Build_GateCommand
-	jr Voice_AllVoices_UpdateVelocity_NextOuter
-
-; TypeB case of Voice_AllVoices_UpdateVelocity.
-Voice_AllVoices_UpdateVelocity_TypeB:
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	exts xwa
-	add xwa, xbc
-	call Voice_ComputePitchBend2
-	ld a, (xiz)
-	extz wa
-	muls wa, 0x47
-	lda xbc, (Payload_Bss_Start+0x4218:24)
-	exts xwa
-	add xwa, xbc
-	call Voice_Build_GateCommand_NoPartial
-
-; Calls ToneGen_ReadPitch_AndScale then advances the inner cursor.
-Voice_AllVoices_UpdateVelocity_NextOuter:
-	ld a, (xiz)
-	extz wa
-	call ToneGen_ReadPitch_AndScale
-	inc 1, xiz
-	cp (xiz), 0x40
-	jrl c, Voice_AllVoices_UpdateVelocity_InnerLoop
-
-; inner loop step of Voice_AllVoices_UpdateVelocity.
-Voice_AllVoices_UpdateVelocity_InnerStep:
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x1A
-	jrl c, Voice_AllVoices_UpdateVelocity_LoopStart
-
-; common exit of Voice_AllVoices_UpdateVelocity.
-Voice_AllVoices_UpdateVelocity_Exit:
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_AllVoices_UpdateVelocity:	.include "includes/generated/cc900/Voice_AllVoices_UpdateVelocity.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_AllVoices_UpdateVelocity_LoopStart, Voice_AllVoices_UpdateVelocity + 22
+	.set	Voice_AllVoices_UpdateVelocity_InnerLoop, Voice_AllVoices_UpdateVelocity + 67
+	.set	Voice_AllVoices_UpdateVelocity_TypeA, Voice_AllVoices_UpdateVelocity + 129
+	.set	Voice_AllVoices_UpdateVelocity_TypeB, Voice_AllVoices_UpdateVelocity + 173
+	.set	Voice_AllVoices_UpdateVelocity_NextOuter, Voice_AllVoices_UpdateVelocity + 215
+	.set	Voice_AllVoices_UpdateVelocity_InnerStep, Voice_AllVoices_UpdateVelocity + 231
+	.set	Voice_AllVoices_UpdateVelocity_Exit, Voice_AllVoices_UpdateVelocity + 241
 
 ; A == 0 SETS bit 9 (0x0200) of the global flag word 0x041343; any other value clears it.
 ; The inverted sense makes the "MonoMode" reading doubtful -- see [UNCERTAIN].
@@ -5372,124 +4606,18 @@ AudioChannel_AllVoices_Update_Variant3_Epilogue:
 ; Handler for audio-channel command 1.  Reached by `jrl` from dispatch stub 0 (0x029E5B).
 ; Entry WA = value, BC = value2, XDE = the 3-byte routing descriptor.  Calls
 ; AudioMod_Apply_BusRouting / AudioMod_Apply_Porta_Curve in the 0x0280FE block.
-AudioChannel_Handler_Cmd01:
-	dec	2, xsp
-	push	xiz
-	ld	xiz, xde
-	ld	(xsp+4), a
-	ld	wa, bc
-	extz	xwa
-	bit	15, wa
-	jr	z, AudioChannel_Handler_Cmd01_Skip
-	res	15, bc
-	jr	AudioChannel_Handler_Cmd01_Join
-AudioChannel_Handler_Cmd01_Skip:
-	sll	bc, 7
-AudioChannel_Handler_Cmd01_Join:
-	ld	a, (xsp+4)
-	extz	wa
-	ld	xde, xiz
-	calr	AudioMod_Apply_Porta_Curve
-	ld	a, (xsp+4)
-	ld	e, a
-	extz	de
-	ld	a, (xiz)
-	ld	c, a
-	extz	bc
-	pushw	32
-	ld	wa, de
-	ldw	de, 16
-	calr	AudioMod_Apply_BusRouting
-	ld	a, (xsp+4)
-	extz	wa
-	call	Voice_Query_PartVoices
-	ld	xwa, xhl
-	calr	Pitch_Refresh_Sounding_Voices
-	pop	xiz
-	inc	2, xsp
-	ret
+AudioChannel_Handler_Cmd01:	.include "includes/generated/cc900/AudioChannel_Handler_Cmd01.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioChannel_Handler_Cmd01_Skip, AudioChannel_Handler_Cmd01 + 22
+	.set	AudioChannel_Handler_Cmd01_Join, AudioChannel_Handler_Cmd01 + 25
 ; Handler for audio-channel command 3.  Reached by `jrl` from dispatch stub 2 (0x029E65).
-AudioChannel_Handler_Cmd03:
-	dec	2, xsp
-	push	xiz
-	ld	xiz, xde
-	ld	(xsp+4), a
-	ld	a, (xsp+4)
-	extz	wa
-	extz	bc
-	ld	xde, xiz
-	calr	AudioMod_Scale_To_Part_1F
-	ld	a, (xsp+4)
-	ld	e, a
-	extz	de
-	ld	a, (xiz)
-	ld	c, a
-	extz	bc
-	pushw	128
-	ld	wa, de
-	ldw	de, 64
-	calr	AudioMod_Apply_BusRouting
-	ld	a, (xsp+4)
-	extz	wa
-	call	Voice_Query_PartVoices
-	ld	xwa, xhl
-	calr	TVF_Refresh_Sounding_Voices
-	pop	xiz
-	inc	2, xsp
-	ret
+AudioChannel_Handler_Cmd03:	.include "includes/generated/cc900/AudioChannel_Handler_Cmd03.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
 ; Handler for audio-channel command 2.  Reached by `jrl` from dispatch stub 1 (0x029E60).
 ; Note the table order is 1, 2, 3 but the code order is CMD01, CMD03, CMD02.
-AudioChannel_Handler_Cmd02:
-	dec	6, xsp
-	push	xiz
-	ld	xiz, xde
-	ld	(xsp+8), a
-	ld	a, (xsp+8)
-	extz	wa
-	extz	bc
-	ld	xde, xiz
-	calr	AudioMod_Scale_To_LevelPairShift
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	a, (xiz)
-	ld	c, a
-	extz	bc
-	pushw	512
-	ld	wa, de
-	ldw	de, 256
-	calr	AudioMod_Apply_BusRouting
-	ld	a, (xsp+8)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+16)
-	and	a, 192
-	cp	a, 192
-	jr	z, AudioChannel_Handler_Cmd02_Join
-	cp	a, 64
-	jr	z, AudioChannel_Handler_Cmd02_Join
-	cp	a, 128
-	jr	z, AudioChannel_Handler_Cmd02_Skip
-	cp	a, 0:i3
-	jr	nz, AudioChannel_Handler_Cmd02_Join
-	ld	a, (xsp+8)
-	extz	wa
-	call	Voice_Query_PartVoices_Mask7F
-	ld	(xsp+4), xhl
-	jr	AudioChannel_Handler_Cmd02_Join
-AudioChannel_Handler_Cmd02_Skip:
-	ld	a, (xsp+8)
-	extz	wa
-	call	Voice_Query_PartVoices
-	ld	(xsp+4), xhl
-AudioChannel_Handler_Cmd02_Join:
-	ld	xwa, (xsp+4)
-	calr	AudioChannel_AllVoices_Update_PanShift
-	pop	xiz
-	inc	6, xsp
-	ret
+AudioChannel_Handler_Cmd02:	.include "includes/generated/cc900/AudioChannel_Handler_Cmd02.s"	; C: cc900/voice_envelopes_and_channels_q_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioChannel_Handler_Cmd02_Skip, AudioChannel_Handler_Cmd02 + 102
+	.set	AudioChannel_Handler_Cmd02_Join, AudioChannel_Handler_Cmd02 + 114
 ; Shared body for audio-channel commands 4..7.  The four dispatch stubs at 0x029E6A,
 ; 0x029E75, 0x029E80 and 0x029E8B differ only in the sub-index 0..3 they `push` before the
 ; `calr`, so the pushed word is the handler's bus/slot selector.

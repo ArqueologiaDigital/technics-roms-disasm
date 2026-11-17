@@ -618,13 +618,7 @@ Pitch_OctaveShift_CaseOffsets:	.include "includes/generated/cc900/Pitch_OctaveSh
 ; --- 0x00F6A7-0x00F6B2  6 x u16 case offsets from TVF_Build_Dispatch_Table (0x02412B).
 ; Read by TVF_Build_Dispatch (0x024102): index = (tonerec+54) & 7, range-checked 0..5
 ; (6 entries), doubled, then the same ldw_sri / jp t, (xrr+rr) computed goto.
-TVF_Build_CaseOffsets:
-	.short TVF_Build_Dispatch_Table - TVF_Build_Dispatch_Table					; (tonerec+54)&7 = 0
-	.short TVF_Build_Dispatch_Mode1_SingleCutoff - TVF_Build_Dispatch_Table					; (tonerec+54)&7 = 1
-	.short TVF_Build_Dispatch_Mode2_SingleCutoffBit7 - TVF_Build_Dispatch_Table					; (tonerec+54)&7 = 2
-	.short TVF_Build_Dispatch_Mode3_SharedCutoff - TVF_Build_Dispatch_Table					; (tonerec+54)&7 = 3
-	.short TVF_Build_Dispatch_Mode4_SharedCutoffBit7 - TVF_Build_Dispatch_Table					; (tonerec+54)&7 = 4
-	.short TVF_Build_Dispatch_Mode5_DualCutoff - TVF_Build_Dispatch_Table					; (tonerec+54)&7 = 5
+TVF_Build_CaseOffsets:	.include "includes/generated/cc900/TVF_Build_CaseOffsets.s"	; C: cc900/voice_params_and_tvf_p_17a.c (cc900-data)
 ; --- 0x00F6B3-0x00F6BE  6 x u16 case offsets from TVF_BuildEmit_Short_Dispatch_Table (0x02432C).
 ; Read by TVF_BuildEmit_Short_Dispatch (0x024300): index = (tonerec+0x0F) & 7,
 ; range-checked 0..5 (6 entries), doubled, ldw_sri / jp t, (xrr+rr).
@@ -1214,29 +1208,11 @@ Algo_SubTable_DispatchB_CaseOffsets:
 
 ; --- 0x00FBC0-0x00FBD1  Algo_SubTable_DispatchC_CaseOffsets -- 9 u16 jump offsets, base 0x0341BE
 ; Computed jump in Algo_SubTable_DispatchC (algorithm type 0..8): `jp T, 0x0341BE + table[index*2]`.
-Algo_SubTable_DispatchC_CaseOffsets:
-	.short Algo_SubTable_JumpTable2 - Algo_SubTable_JumpTable2	; index 0
-	.short Algo_SubTable_JumpTable2 - Algo_SubTable_JumpTable2	; index 1
-	.short Algo_SubTable_JumpTable2 - Algo_SubTable_JumpTable2	; index 2
-	.short Algo_SubTable_JumpTable2 - Algo_SubTable_JumpTable2	; index 3
-	.short Algo_SubTable_DispatchC_Arm_Type45 - Algo_SubTable_JumpTable2	; index 4
-	.short Algo_SubTable_DispatchC_Arm_Type45 - Algo_SubTable_JumpTable2	; index 5
-	.short Algo_SubTable_DispatchC_Arm_Type68 - Algo_SubTable_JumpTable2	; index 6
-	.short Algo_SubTable_Epilogue - Algo_SubTable_JumpTable2	; index 7
-	.short Algo_SubTable_DispatchC_Arm_Type68 - Algo_SubTable_JumpTable2	; index 8
+Algo_SubTable_DispatchC_CaseOffsets:	.include "includes/generated/cc900/Algo_SubTable_DispatchC_CaseOffsets.s"	; C: cc900/dsp_voice_params_r_17a.c (cc900-data)
 
 ; --- 0x00FBD2-0x00FBE3  Algo_SubTable_Bit15Dispatch_CaseOffsets -- 9 u16 jump offsets, base 0x03429D
 ; Computed jump in Algo_SubTable_Bit15Dispatch (algorithm type 0..8): `jp T, 0x03429D + table[index*2]`.
-Algo_SubTable_Bit15Dispatch_CaseOffsets:
-	.short Algo_SubTable_JumpTable3 - Algo_SubTable_JumpTable3	; index 0
-	.short Algo_SubTable_JumpTable3 - Algo_SubTable_JumpTable3	; index 1
-	.short Algo_SubTable_JumpTable3 - Algo_SubTable_JumpTable3	; index 2
-	.short Algo_SubTable_JumpTable3 - Algo_SubTable_JumpTable3	; index 3
-	.short Algo_SubTable_Bit15_Arm_Type45 - Algo_SubTable_JumpTable3	; index 4
-	.short Algo_SubTable_Bit15_Arm_Type45 - Algo_SubTable_JumpTable3	; index 5
-	.short Algo_SubTable_Bit15Dispatch_Return - Algo_SubTable_JumpTable3	; index 6
-	.short Algo_SubTable_Bit15Dispatch_Return - Algo_SubTable_JumpTable3	; index 7
-	.short Algo_SubTable_Bit15_Arm_Type8 - Algo_SubTable_JumpTable3	; index 8
+Algo_SubTable_Bit15Dispatch_CaseOffsets:	.include "includes/generated/cc900/Algo_SubTable_Bit15Dispatch_CaseOffsets.s"	; C: cc900/dsp_voice_params_r_17a.c (cc900-data)
 
 ; --- 0x00FBE4-0x00FCE3  Voice_Reg080_NoteField_Table -- 128 u16 words
 ; RENAMED 2026-08-21 (was Voice_PanPosition_Table). It has nothing to do with pan: pan is
@@ -4817,32 +4793,7 @@ DSP_BytecodeInterpreter_CaseOffsets:
 ;   parameter-translator opcodes 0x61..0x79: the computed `jp` in DSP_Translator_ReadOpcode (0x21 / 0x24 / 0x40 are
 ;   tested before it). Basis: reader + table. (Old name quoted in technics-docs/dsp-bytecode-interpreter.md,
 ;   dsp/analysis/*.md and the dsp/tools/host_side.py comment: update or annotate there.)
-DSP_Translator_CaseOffsets:
-	.short DSP_Op_0x61_LinearEval - DSP_Op_0x61_LinearEval	; index 0
-	.short DSP_Op_0x62_ParamFetchSingle - DSP_Op_0x61_LinearEval	; index 1
-	.short DSP_Op_0x63_ParamFetchAlgoType - DSP_Op_0x61_LinearEval	; index 2
-	.short DSP_Op_0x64_PitchParamScale - DSP_Op_0x61_LinearEval	; index 3
-	.short DSP_Op_0x65_VolumeParamScale - DSP_Op_0x61_LinearEval	; index 4
-	.short DSP_Op_0x66_Interp2Point - DSP_Op_0x61_LinearEval	; index 5
-	.short DSP_Op_0x67_InterpFPScale - DSP_Op_0x61_LinearEval	; index 6
-	.short DSP_Op_0x68_InterpDiv0xB4 - DSP_Op_0x61_LinearEval	; index 7
-	.short DSP_Op_0x69_VolumeCurve - DSP_Op_0x61_LinearEval	; index 8
-	.short DSP_Op_0x6A_FreqCurve - DSP_Op_0x61_LinearEval	; index 9
-	.short DSP_Op_0x6B_FreqInterp2Point - DSP_Op_0x61_LinearEval	; index 10
-	.short DSP_Op_0x6C_Interp3Point - DSP_Op_0x61_LinearEval	; index 11
-	.short DSP_Op_0x6D_ReverbCurve - DSP_Op_0x61_LinearEval	; index 12
-	.short DSP_Op_0x6E_InterpFPComplex - DSP_Op_0x61_LinearEval	; index 13
-	.short DSP_Op_0x6F_PanCurve - DSP_Op_0x61_LinearEval	; index 14
-	.short DSP_Op_0x70_BiquadCoeff - DSP_Op_0x61_LinearEval	; index 15
-	.short DSP_Op_0x71_DetuneCurve - DSP_Op_0x61_LinearEval	; index 16
-	.short DSP_Op_0x72_BiquadWarp - DSP_Op_0x61_LinearEval	; index 17
-	.short DSP_Op_0x73_InterpDiv0xC6 - DSP_Op_0x61_LinearEval	; index 18
-	.short DSP_Op_0x74_LUTParamSet - DSP_Op_0x61_LinearEval	; index 19
-	.short DSP_Op_0x75_ParamEQCurve - DSP_Op_0x61_LinearEval	; index 20
-	.short DSP_Op_0x76_SOSCoeff - DSP_Op_0x61_LinearEval	; index 21
-	.short DSP_Op_0x77_Interp2PointB - DSP_Op_0x61_LinearEval	; index 22
-	.short DSP_Op_0x78_VolScaleB - DSP_Op_0x61_LinearEval	; index 23
-	.short DSP_Op_0x79_AlgoParamDecode - DSP_Op_0x61_LinearEval	; index 24
+DSP_Translator_CaseOffsets:	.include "includes/generated/cc900/DSP_Translator_CaseOffsets.s"	; C: cc900/dsp_control_routines_s_17a.c (cc900-data)
 
 ; NOTE: this address ALREADY carries the ELF name ToneGen_WorkArea -- no rename proposed, this
 ; entry documents it. It is DSP program+parameter data, not a tone-generator work area.

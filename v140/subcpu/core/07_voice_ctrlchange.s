@@ -428,58 +428,10 @@ Voice_ChanPressure_Exit:
 ; tail-jumps to AudioChannel_Dispatch with XDE = patch+0x14 (classes 0x40/0xC0/0x00) or
 ; patch+0x12 (class 0x80).  The forced bit 15 is what marks the value as pitch-bend for the
 ; downstream handlers.
-Voice_PitchBend:
-	cp (xwa + 1), 0x1A
-	ret nc
-	ld e, (xwa + 1)
-	ld c, (xwa + 3)
-	extz bc
-	sll bc, 7
-	ld a, (xwa + 2)
-	extz wa
-	extz xwa
-	set 15, wa
-	or bc, wa
-	ld a, e
-	extz wa
-	muls wa, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xhl+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, Voice_PitchBend_BranchB
-	cp a, 0x40
-	jr z, Voice_PitchBend_BranchA
-	cp a, 0xC0
-	jr z, Voice_PitchBend_BranchA
-	cp a, 0:i3
-	ret nz
-
-; BranchA of Voice_PitchBend.
-Voice_PitchBend_BranchA:
-	ld l, e
-	extz hl
-	ld a, e
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xde+wa)
-	lda xde, (xwa + 20)
-	ld wa, hl
-	jrl AudioChannel_Dispatch
-
-; BranchB of Voice_PitchBend.
-Voice_PitchBend_BranchB:
-	ld a, e
-	extz wa
-	muls wa, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xhl, (xhl+wa)
-	ld a, e
-	extz wa
-	lda xde, (xhl + 18)
-	jrl AudioChannel_Dispatch
+Voice_PitchBend:	.include "includes/generated/cc900/Voice_PitchBend.s"	; C: cc900/voice_ctrlchange_p_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_PitchBend_BranchA, Voice_PitchBend + 72
+	.set	Voice_PitchBend_BranchB, Voice_PitchBend + 102
 
 ; Calls Voice_NoteState_Clear for parts 0..0x19, then walks the voice list from
 ; Voice_Query_AllChannels and issues per-voice tone-generator writes with the standard strobe.
@@ -945,92 +897,15 @@ Voice_ResetAllControllers_ChanModeExit:
 ; to 12 bits and stores the word at part_base + 0x102 + i*2.
 ; So the portamento target for each slot is a 12-bit pitch value copied out of the slot's
 ; tone record.  Pure memory; no hardware.
-Voice_PortamentoTargets_SetAll:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ldiw_erp 0xFA, 0
-	cpiw_erp 0xFA, 4
-	jrl nc, Voice_PortamentoTargets_SetAll_Exit
-
-; loop body of Voice_PortamentoTargets_SetAll.
-Voice_PortamentoTargets_SetAll_LoopBody:
-	ldto_werp WA, 0xFA
-	extz xwa
-	ld xbc, 0x25
-	call Math_Multiply32
-	add xhl, 0x6E
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	add xwa, xhl
-	ld xwa, (xwa)
-	ld a, (xwa + 2)
-	ldfr_berp A, 0xF8
-	extz iz
-	ldto_werp WA, 0xFA
-	extz xwa
-	ld xbc, 0x25
-	call Math_Multiply32
-	add xhl, 0x6E
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	add xwa, xhl
-	ld xwa, (xwa)
-	ld a, (xwa + 3)
-	extz wa
-	sll wa, 8
-	or iz, wa
-	ldto_werp WA, 0xFA
-	extz xwa
-	add xwa, xwa
-	ld xde, xwa
-	add xde, 0x102
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	ld xbc, xwa
-	add xbc, xde
-	ld wa, iz
-	and wa, 0xFFF
-	ld (xbc), wa
-	inc1w_erp 0xFA
-	cpiw_erp 0xFA, 4
-	jrl c, Voice_PortamentoTargets_SetAll_LoopBody
-
-; common exit of Voice_PortamentoTargets_SetAll.
-Voice_PortamentoTargets_SetAll_Exit:
-	pop xiz
-	inc 2, xsp
-	ret
+Voice_PortamentoTargets_SetAll:	.include "includes/generated/cc900/Voice_PortamentoTargets_SetAll.s"	; C: cc900/voice_ctrlchange_p_17c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_PortamentoTargets_SetAll_LoopBody, Voice_PortamentoTargets_SetAll + 15
+	.set	Voice_PortamentoTargets_SetAll_Exit, Voice_PortamentoTargets_SetAll + 171
 
 ; A = part, C = slot 0..3.  Stores A into slot+0x00 of part_base + 0x6E + slot*0x25 and
 ; installs the constant long pointer 0x00F8B0 at slot+0x04.  0x00F8B0 is therefore the
 ; default (ROM) tone record used when no patch record has been bound to the slot.
-Voice_PortamentoTarget_SetSlot:
-	extz bc
-	muls bc, 0x25
-	ld de, bc
-	add de, 0x6E
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xbc, (xwa+de)
-	lda xwa, (Voice_DefaultToneRecord:24)
-	ld (xbc + 4), xwa
-	ret
+Voice_PortamentoTarget_SetSlot:	.include "includes/generated/cc900/Voice_PortamentoTarget_SetSlot.s"	; C: cc900/voice_ctrlchange_p_17a.c
 
 ; A = part, C = slot.  Reads (slotrecord+3) & 0x30 >> 4 as a 2-bit selector, fetches a
 ; 32-bit base from [0x045314]+0x70 and a 16-bit multiplier from [0x045314]+0xEC, computes
@@ -1121,66 +996,7 @@ Voice_Selector_FindBestSlot:	.include "includes/generated/cc900/Voice_Selector_F
 ;     time is likewise unproven.
 ; Touches no hardware. Only caller: Voice_InitFromSlot (0x02ADC1), i.e. it runs whenever an
 ; articulation parameter changes, never per note.
-Voice_Selector_ComputeMixWeights:
-	dec 8, xsp
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x25f4:24)
-	lda	xhl, (xbc+wa)
-	lda xwa, (xsp + 4)
-	ld xbc, xwa
-	lda xwa, (xsp + 2)
-	ld xde, xwa
-	lda xwa, (xsp)
-	push xwa
-	ld xwa, xhl
-	calr Voice_Selector_FindBestSlot
-	ld a, (xsp + 6)
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x2600:24)
-	ld a, (xsp + 4)
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_Part_Trim_Table_A:24)
-	ld	wa, (xbc+wa)
-	ld	(xhl+de), wa
-	ld a, (xsp + 6)
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Payload_Bss_Start+0x2604:24)
-	ld a, (xsp + 2)
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_Part_Trim_Table_B:24)
-	ld	wa, (xbc+wa)
-	ld	(xhl+de), wa
-	ld a, (xsp + 4)
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_Part_Trim_Base:24)
-	ld	de, (xbc+wa)
-	ld a, (xsp + 2)
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_Part_Trim_Addend_1:24)
-	add	de, (xbc+wa)
-	ld a, (xsp)
-	extz wa
-	add wa, wa
-	lda xbc, (Voice_Part_Trim_Addend_2:24)
-	add	de, (xbc+wa)
-	ld a, (xsp + 6)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2602:24)
-	ld	(xbc+wa), de
-	inc 8, xsp
-	ret
+Voice_Selector_ComputeMixWeights:	.include "includes/generated/cc900/Voice_Selector_ComputeMixWeights.s"	; C: cc900/voice_ctrlchange_p_17a.c
 
 ; "An articulation parameter of this part changed" -- recompute everything derived from it.
 ; IN : A = part index. Calls Voice_UpdateFlagsFromSlot (0x02AB83), which sets/clears bits
@@ -1582,72 +1398,7 @@ WaveSel_AddRandomEntryOffset:
 ; slot+0x06 is exactly the word that Voice_Slot_CalcAmpNibble and
 ; Voice_Slot_FindOctaveOffset later read back as the sounding key.
 ; Only caller: Voice_Allocate_1of4 (0x02C5A0). Touches no hardware.
-Voice_Slot_ComputePitch:
-	lda xsp, (xsp - 12)
-	pushw iz
-	ld (xsp + 10), xwa
-	ld xwa, (xsp + 10)
-	ld xbc, (xwa + 35)
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 31)
-	ld (xsp + 6), xwa
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 5)
-	res 7, a
-	ldfr_berp A, 0xF8
-	extz iz
-	sla iz, 8
-	add iz, 0x80
-	add	iz, (xbc+274)
-	add iz, (Payload_Bss_Start+0x24d3:24)
-	ld a, (xbc + 22)
-	exts wa
-	sla wa, 8
-	add iz, wa
-	ld a, (xbc + 109)
-	exts wa
-	sla wa, 8
-	add iz, wa
-	ld wa, iz
-	call Pitch_Saturate_15bit
-	ld xwa, (xsp + 10)
-	ld (xwa + 8), hl
-	ld xwa, (xsp + 6)
-	ld a, (xwa + 11)
-	extz wa
-	sla wa, 8
-	add wa, 0x80
-	sub iz, wa
-	ld xwa, (xsp + 6)
-	ld wa, (xwa + 12)
-	add iz, wa
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 3)
-	exts wa
-	sla wa, 8
-	add iz, wa
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 4)
-	exts wa
-	add iz, wa
-	ld xwa, (xsp + 6)
-	ld a, (xwa + 9)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 6)
-	ld a, (xwa + 10)
-	ld e, a
-	extz de
-	ld wa, iz
-	call Pitch_Fold_Octaves_Into_Range
-	ld xwa, (xsp + 10)
-	ld (xwa + 6), hl
-	popw iz
-	lda xsp, (xsp + 12)
-	ret
+Voice_Slot_ComputePitch:	.include "includes/generated/cc900/Voice_Slot_ComputePitch.s"	; C: cc900/voice_ctrlchange_p_17b.c
 
 ; Signed three-way clamp. IN: WA = value, DE = lower bound, BC = upper bound.
 ; OUT: HL = min(max(WA, DE), BC). Callers: Voice_Build_Partial_Descriptor_BranchB/BranchC and

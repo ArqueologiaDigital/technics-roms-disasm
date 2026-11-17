@@ -2377,30 +2377,7 @@ CustomTone_CopyToneRecord:	.include "includes/generated/cc900/CustomTone_CopyTon
 ; A = part index, C = sub-slot (0..3). Calls WaveSel_StageA1_FromPatchBlock (0x0325FC) to obtain XHL = the
 ; source record, then copies (0x045314)[0xEA] bytes into 0x044FCE + 0x1AA + slot*0x0B.
 ; Named VoiceSubSlot_Init in the LLVM build.
-VoiceSubSlot_Init:
-	dec 2, xsp
-	ld (xsp), c
-	ld e, a
-	extz de
-	ld a, (xsp)
-	ld c, a
-	extz bc
-	ld wa, de
-	call WaveSel_StageA1_FromPatchBlock
-	ld a, (xsp)
-	extz wa
-	muls wa, 0xB
-	add wa, 0x1AA
-	lda xbc, (Payload_Bss_Start+0x6158:24)
-	exts xwa
-	add xwa, xbc
-	ld xbc, xwa
-	ld xde, (ToneDB_RootPtr:24)
-	ld xwa, xhl
-	ld	de, (xde+234)
-	calr BlockCopy_Words_BC_to_HL
-	inc 2, xsp
-	ret
+VoiceSubSlot_Init:	.include "includes/generated/cc900/VoiceSubSlot_Init.s"	; C: cc900/voice_noteon_and_tonegen_r_17c.c
 
 ; ** MISIDENTIFIED AS DATA (LLVM: VoiceSubSlot_Init_AltData .byte); it is code. ** Called from
 ; 0x02EA60 and 0x02EB53. A = sub-unit index, BC/DE = selectors, (XSP+6) = custom-tone slot;
@@ -2408,39 +2385,7 @@ VoiceSubSlot_Init:
 ; copies (0x045314)[0xF0] bytes into
 ; (0x04531C) + slot*0x50 + unit*0x0B + 0x4AE1.
 ; ★ Renamed 2026-09-25 from VoiceSubSlot_Init_AltData: header: copies a sub-unit record (0xF0 bytes) into a custom-tone slot's sub-unit.
-CustomTone_CopySubUnitRecord:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	ld	l, a
-	extz	hl
-	extz	bc
-	extz	de
-	ld	a, (xsp+6)
-	extz	wa
-	pushw	wa
-	pushw	255
-	ld	wa, hl
-	call	WaveSel_StageA1_FindVelSplit
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 11
-	ld	bc, wa
-	ld	a, (xsp+6)
-	extz	wa
-	muls	wa, 80
-	ld	de, wa
-	add	de, bc
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xwa, (xwa+de)	; lda XWA,XWA+DE
-	lda	xwa, (xwa+19169)
-	ld	xbc, xwa
-	ld	xde, (ToneDB_RootPtr:24)
-	ld	xwa, xhl
-	ld	de, (xde+240)
-	calr	BlockCopy_Words_BC_to_HL
-	inc	2, xsp
-	retd	2
+CustomTone_CopySubUnitRecord:	.include "includes/generated/cc900/CustomTone_CopySubUnitRecord.s"	; C: cc900/voice_noteon_and_tonegen_r_17c.c
 
 ; A = part index. The full "prepare this part's tone for the TG" pass, and the only writer of
 ; several staging fields. Steps:
@@ -4561,210 +4506,25 @@ Audio_Cmd_EffParam_Return:
 ; descriptor+0x4D..+0x50.  Otherwise it re-maps them according to the pair
 ; (cache[0], descriptor shape), which is what the branch tree below does.
 ; Called from Audio_Cmd_DSPUnit_Param opcode 0x36 (0x030167), gated on (rec+5) == 7.
-DSP_SlotParam_Write_From_Cache:
-	ld	e, c
-	extz	de
-	muls	de, 37
-	ld	hl, de
-	add	hl, 110
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xde
-	ld	xde, (xwa+hl)
-	ld	a, c
-	extz	wa
-	muls	wa, 5
-	add	wa, 480
-	lda	xbc, (Payload_Bss_Start+0x6158:24)
-	lda	xbc, (xbc+wa)
-	ld	a, (xde+54)
-	and	a, 7
-	cp	a, (xbc)
-	jr	nz, DSP_SlotParam_Write_Remap
-	ld	hl, 0:i3
-	cp	hl, 4:i3
-	ret	nc
-; Shapes agree: copy cache[1..4] to descriptor+0x4D..+0x50 in a 4-iteration loop.
-DSP_SlotParam_Write_Match_Loop:
-	ld	wa, hl
-	extz	xwa
-	add	xwa, 77
-	ld	xix, xwa
-	add	xix, xde
-	ld	wa, hl
-	extz	xwa
-	inc	1, xwa
-	add	xwa, xbc
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, hl
-	cp	hl, 4:i3
-	jr	c, DSP_SlotParam_Write_Match_Loop
-	ret
-; Shapes differ: switch on cache[0] (1/3 -> 0x02FE05, 2/4 -> 0x02FE4B, 5 -> 0x02FE91,
-; anything else -> return).
-DSP_SlotParam_Write_Remap:
-	ld	a, (xbc)
-	cp	a, 5:i3
-	jrl	z, DSP_SlotParam_Write_Shape5
-	cp	a, 4:i3
-	jr	z, DSP_SlotParam_Write_Shape2Or4
-	cp	a, 2:i3
-	jr	z, DSP_SlotParam_Write_Shape2Or4
-	cp	a, 3:i3
-	jr	z, DSP_SlotParam_Write_Shape1Or3
-	cp	a, 1:i3
-	ret	nz
-; cache[0] in {1,3}: if the descriptor's shape is 5, write the fixed pattern
-; {0x00, 0x01, cache[1], cache[2]}; otherwise fall back to the plain 4-byte copy.
-DSP_SlotParam_Write_Shape1Or3:
-	ld	a, (xde+54)
-	and	a, 7
-	cp	a, 5:i3
-	jr	nz, DSP_SlotParam_Write_Shape1Or3_Plain
-	ld	(xde+77), 0
-	ld	(xde+78), 1
-	ld	a, (xbc+1)
-	ld	(xde+79), a
-	ld	a, (xbc+2)
-	ld	(xde+80), a
-	ret
-; Plain 4-byte copy fallback for the {1,3} branch.
-DSP_SlotParam_Write_Shape1Or3_Plain:
-	ld	hl, 0:i3
-	cp	hl, 4:i3
-	ret	nc
-; Loop body of that fallback.
-DSP_SlotParam_Write_Shape1Or3_Loop:
-	ld	wa, hl
-	extz	xwa
-	add	xwa, 77
-	ld	xix, xwa
-	add	xix, xde
-	ld	wa, hl
-	extz	xwa
-	inc	1, xwa
-	add	xwa, xbc
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, hl
-	cp	hl, 4:i3
-	jr	c, DSP_SlotParam_Write_Shape1Or3_Loop
-	ret
-; cache[0] in {2,4}: if the descriptor's shape is 5, write {cache[1], cache[2], 0x7F, 0x01};
-; otherwise plain copy.
-DSP_SlotParam_Write_Shape2Or4:
-	ld	a, (xde+54)
-	and	a, 7
-	cp	a, 5:i3
-	jr	nz, DSP_SlotParam_Write_Shape2Or4_Plain
-	ld	a, (xbc+1)
-	ld	(xde+77), a
-	ld	a, (xbc+2)
-	ld	(xde+78), a
-	ld	(xde+79), 127
-	ld	(xde+80), 1
-	ret
-; Plain 4-byte copy fallback for the {2,4} branch.
-DSP_SlotParam_Write_Shape2Or4_Plain:
-	ld	hl, 0:i3
-	cp	hl, 4:i3
-	ret	nc
-; Loop body of that fallback.
-DSP_SlotParam_Write_Shape2Or4_Loop:
-	ld	wa, hl
-	extz	xwa
-	add	xwa, 77
-	ld	xix, xwa
-	add	xix, xde
-	ld	wa, hl
-	extz	xwa
-	inc	1, xwa
-	add	xwa, xbc
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, hl
-	cp	hl, 4:i3
-	jr	c, DSP_SlotParam_Write_Shape2Or4_Loop
-	ret
-; cache[0] == 5: descriptor shape 1 or 3 -> write {cache[3], cache[4], 0x40, 0x87};
-; shape 2 or 4 -> write {cache[1], cache[2], 0x40, 0x07}; other shapes -> return.
-DSP_SlotParam_Write_Shape5:
-	ld	a, (xde+54)
-	and	a, 7
-	cp	a, 4:i3
-	jr	z, DSP_SlotParam_Write_Shape5_To24
-	cp	a, 2:i3
-	jr	z, DSP_SlotParam_Write_Shape5_To24
-	cp	a, 3:i3
-	jr	z, DSP_SlotParam_Write_Shape5_To13
-	cp	a, 1:i3
-	ret	nz
-; Shape-5 source, shape-1/3 destination.
-DSP_SlotParam_Write_Shape5_To13:
-	ld	a, (xbc+3)
-	ld	(xde+77), a
-	ld	a, (xbc+4)
-	ld	(xde+78), a
-	ld	(xde+79), 64
-	ld	(xde+80), 135
-	ret
-; Shape-5 source, shape-2/4 destination.
-DSP_SlotParam_Write_Shape5_To24:
-	ld	a, (xbc+1)
-	ld	(xde+77), a
-	ld	a, (xbc+2)
-	ld	(xde+78), a
-	ld	(xde+79), 64
-	ld	(xde+80), 7
-	ret
+DSP_SlotParam_Write_From_Cache:	.include "includes/generated/cc900/DSP_SlotParam_Write_From_Cache.s"	; C: cc900/voice_noteon_and_tonegen_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_Match_Loop, DSP_SlotParam_Write_From_Cache + 72
+	.set	DSP_SlotParam_Write_Remap, DSP_SlotParam_Write_From_Cache + 105
+	.set	DSP_SlotParam_Write_Shape1Or3, DSP_SlotParam_Write_From_Cache + 128
+	.set	DSP_SlotParam_Write_Shape1Or3_Plain, DSP_SlotParam_Write_From_Cache + 159
+	.set	DSP_SlotParam_Write_Shape1Or3_Loop, DSP_SlotParam_Write_From_Cache + 165
+	.set	DSP_SlotParam_Write_Shape2Or4, DSP_SlotParam_Write_From_Cache + 198
+	.set	DSP_SlotParam_Write_Shape2Or4_Plain, DSP_SlotParam_Write_From_Cache + 229
+	.set	DSP_SlotParam_Write_Shape2Or4_Loop, DSP_SlotParam_Write_From_Cache + 235
+	.set	DSP_SlotParam_Write_Shape5, DSP_SlotParam_Write_From_Cache + 268
+	.set	DSP_SlotParam_Write_Shape5_To13, DSP_SlotParam_Write_From_Cache + 290
+	.set	DSP_SlotParam_Write_Shape5_To24, DSP_SlotParam_Write_From_Cache + 311
 ; Inverse of DSP_SlotParam_Write_From_Cache.  Same addressing; returns immediately unless
 ; (descriptor+0x36 & 7) equals cache[0], then copies descriptor+0x4D..+0x50 into cache[1..4].
 ; Called from Audio_Cmd_DSPUnit_Param opcodes 0x4D..0x50 (0x0301DC).
-DSP_SlotParam_Read_To_Cache:
-	ld	e, c
-	extz	de
-	muls	de, 37
-	ld	hl, de
-	add	hl, 110
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xde
-	ld	xde, (xwa+hl)
-	ld	a, c
-	extz	wa
-	muls	wa, 5
-	add	wa, 480
-	lda	xbc, (Payload_Bss_Start+0x6158:24)
-	lda	xhl, (xbc+wa)
-	ld	a, (xde+54)
-	and	a, 7
-	cp	a, (xhl)
-	ret	nz
-	ld	bc, 0:i3
-	cp	bc, 4:i3
-	ret	nc
-; 4-iteration copy loop.
-DSP_SlotParam_Read_Loop:
-	ld	wa, bc
-	extz	xwa
-	inc	1, xwa
-	ld	xix, xwa
-	add	xix, xhl
-	ld	wa, bc
-	extz	xwa
-	add	xwa, 77
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, bc
-	cp	bc, 4:i3
-	jr	c, DSP_SlotParam_Read_Loop
-	ret
+DSP_SlotParam_Read_To_Cache:	.include "includes/generated/cc900/DSP_SlotParam_Read_To_Cache.s"	; C: cc900/voice_noteon_and_tonegen_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Read_Loop, DSP_SlotParam_Read_To_Cache + 72
 ; Third command dispatcher, one instance per DSP unit.  Input C = unit 0..3,
 ; XWA = command record.  The opcode is taken from (rec+2) with bit 7 forced low; the value
 ; (rec+4) is stored into the parameter shadow at
@@ -5142,163 +4902,19 @@ Audio_Cmd_PatchByte_Write_And_Echo:
 ; Shape byte is at record+0x0F and the four data bytes at record+0x11..+0x14.  The remap
 ; tree is byte-for-byte the same decision structure as the 0x02FD85 version.
 ; Called twice from Audio_Cmd_ToneEdit_Write_And_Reply (0x0304E2, 0x0304EF) with index 0/1.
-DSP_SlotParam_Write_From_Cache_B:
-	ld	c, a
-	extz	bc
-	muls	bc, 21
-	ld	de, bc
-	ld	xbc, (Payload_Bss_Start+0x64a6:24)
-	ld	c, (xbc+29351)
-	extz	bc
-	muls	bc, 80
-	ld	hl, bc
-	add	hl, de
-	ld	xbc, (Payload_Bss_Start+0x64a6:24)
-	lda	xbc, (xbc+hl)
-	lda	xbc, (xbc+19127)
-	extz	wa
-	muls	wa, 5
-	add	wa, 500
-	lda	xde, (Payload_Bss_Start+0x6158:24)
-	lda	xde, (xde+wa)
-	ld	a, (xbc+15)
-	and	a, 7
-	cp	a, (xde)
-	jr	nz, DSP_SlotParam_Write_B_Remap
-	ld	hl, 0:i3
-	cp	hl, 4:i3
-	ret	nc
-; Shapes agree: copy cache[1..4] into record+0x11..+0x14.
-DSP_SlotParam_Write_B_Match_Loop:
-	ld	wa, hl
-	extz	xwa
-	add	xwa, 17
-	ld	xix, xwa
-	add	xix, xbc
-	ld	wa, hl
-	extz	xwa
-	inc	1, xwa
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, hl
-	cp	hl, 4:i3
-	jr	c, DSP_SlotParam_Write_B_Match_Loop
-	ret
-; Shapes differ: switch on cache[0] exactly as at 0x02FDEE.
-DSP_SlotParam_Write_B_Remap:
-	ld	a, (xde)
-	cp	a, 5:i3
-	jrl	z, DSP_SlotParam_Write_B_Shape5
-	cp	a, 4:i3
-	jr	z, DSP_SlotParam_Write_B_Shape2Or4
-	cp	a, 2:i3
-	jr	z, DSP_SlotParam_Write_B_Shape2Or4
-	cp	a, 3:i3
-	jr	z, DSP_SlotParam_Write_B_Shape1Or3
-	cp	a, 1:i3
-	ret	nz
-; cache[0] in {1,3}: record shape 5 -> {0x00, 0x01, cache[1], cache[2]}, else plain copy.
-DSP_SlotParam_Write_B_Shape1Or3:
-	ld	a, (xbc+15)
-	and	a, 7
-	cp	a, 5:i3
-	jr	nz, DSP_SlotParam_Write_B_Shape1Or3_Plain
-	ld	(xbc+17), 0
-	ld	(xbc+18), 1
-	ld	a, (xde+1)
-	ld	(xbc+19), a
-	ld	a, (xde+2)
-	ld	(xbc+20), a
-	ret
-; Plain copy fallback.
-DSP_SlotParam_Write_B_Shape1Or3_Plain:
-	ld	hl, 0:i3
-	cp	hl, 4:i3
-	ret	nc
-; Loop body of that fallback.
-DSP_SlotParam_Write_B_Shape1Or3_Loop:
-	ld	wa, hl
-	extz	xwa
-	add	xwa, 17
-	ld	xix, xwa
-	add	xix, xbc
-	ld	wa, hl
-	extz	xwa
-	inc	1, xwa
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, hl
-	cp	hl, 4:i3
-	jr	c, DSP_SlotParam_Write_B_Shape1Or3_Loop
-	ret
-; cache[0] in {2,4}: record shape 5 -> {cache[1], cache[2], 0x7F, 0x01}, else plain copy.
-DSP_SlotParam_Write_B_Shape2Or4:
-	ld	a, (xbc+15)
-	and	a, 7
-	cp	a, 5:i3
-	jr	nz, DSP_SlotParam_Write_B_Shape2Or4_Plain
-	ld	a, (xde+1)
-	ld	(xbc+17), a
-	ld	a, (xde+2)
-	ld	(xbc+18), a
-	ld	(xbc+19), 127
-	ld	(xbc+20), 1
-	ret
-; Plain copy fallback.
-DSP_SlotParam_Write_B_Shape2Or4_Plain:
-	ld	hl, 0:i3
-	cp	hl, 4:i3
-	ret	nc
-; Loop body of that fallback.
-DSP_SlotParam_Write_B_Shape2Or4_Loop:
-	ld	wa, hl
-	extz	xwa
-	add	xwa, 17
-	ld	xix, xwa
-	add	xix, xbc
-	ld	wa, hl
-	extz	xwa
-	inc	1, xwa
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, hl
-	cp	hl, 4:i3
-	jr	c, DSP_SlotParam_Write_B_Shape2Or4_Loop
-	ret
-; cache[0] == 5: shape 1/3 -> {cache[3], cache[4], 0x40, 0x87}; shape 2/4 ->
-; {cache[1], cache[2], 0x40, 0x07}.
-DSP_SlotParam_Write_B_Shape5:
-	ld	a, (xbc+15)
-	and	a, 7
-	cp	a, 4:i3
-	jr	z, DSP_SlotParam_Write_B_Shape5_To24
-	cp	a, 2:i3
-	jr	z, DSP_SlotParam_Write_B_Shape5_To24
-	cp	a, 3:i3
-	jr	z, DSP_SlotParam_Write_B_Shape5_To13
-	cp	a, 1:i3
-	ret	nz
-; Shape-5 source, shape-1/3 destination.
-DSP_SlotParam_Write_B_Shape5_To13:
-	ld	a, (xde+3)
-	ld	(xbc+17), a
-	ld	a, (xde+4)
-	ld	(xbc+18), a
-	ld	(xbc+19), 64
-	ld	(xbc+20), 135
-	ret
-; Shape-5 source, shape-2/4 destination.
-DSP_SlotParam_Write_B_Shape5_To24:
-	ld	a, (xde+1)
-	ld	(xbc+17), a
-	ld	a, (xde+2)
-	ld	(xbc+18), a
-	ld	(xbc+19), 64
-	ld	(xbc+20), 7
-	ret
+DSP_SlotParam_Write_From_Cache_B:	.include "includes/generated/cc900/DSP_SlotParam_Write_From_Cache_B.s"	; C: cc900/voice_noteon_and_tonegen_r_17a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Write_B_Match_Loop, DSP_SlotParam_Write_From_Cache_B + 81
+	.set	DSP_SlotParam_Write_B_Remap, DSP_SlotParam_Write_From_Cache_B + 114
+	.set	DSP_SlotParam_Write_B_Shape1Or3, DSP_SlotParam_Write_From_Cache_B + 137
+	.set	DSP_SlotParam_Write_B_Shape1Or3_Plain, DSP_SlotParam_Write_From_Cache_B + 168
+	.set	DSP_SlotParam_Write_B_Shape1Or3_Loop, DSP_SlotParam_Write_From_Cache_B + 174
+	.set	DSP_SlotParam_Write_B_Shape2Or4, DSP_SlotParam_Write_From_Cache_B + 207
+	.set	DSP_SlotParam_Write_B_Shape2Or4_Plain, DSP_SlotParam_Write_From_Cache_B + 238
+	.set	DSP_SlotParam_Write_B_Shape2Or4_Loop, DSP_SlotParam_Write_From_Cache_B + 244
+	.set	DSP_SlotParam_Write_B_Shape5, DSP_SlotParam_Write_From_Cache_B + 277
+	.set	DSP_SlotParam_Write_B_Shape5_To13, DSP_SlotParam_Write_From_Cache_B + 299
+	.set	DSP_SlotParam_Write_B_Shape5_To24, DSP_SlotParam_Write_From_Cache_B + 320
 ; Inverse of DSP_SlotParam_Write_From_Cache_B; input C = record index.  Returns unless
 ; (record+0x0F & 7) == cache[0], then copies record+0x11..+0x14 into cache[1..4].
 ; Called twice from 0x0304FB and 0x030505.

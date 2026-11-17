@@ -150,6 +150,13 @@ four files into `cc900/`, built the v142 payload so the V4.23 cache held them, a
 `v142/subcpu/subcpu_data_tables.s`, now `.include`s of generated data at their labels) checked against the built
 image.  **403 functions per tree** built from C; `cc900-staged/` is empty; `make -j2 gate` PASS.
 
+**Fifth promotion: round 17's 44 (run 2026-11-16-126, verified per tree in run 127).**  The same script, all 16
+files through the `--v423` splice: 44 bodies and four more offset tables (DSP_Translator_CaseOffsets,
+Algo_SubTable_Bit15Dispatch_CaseOffsets, Algo_SubTable_DispatchC_CaseOffsets, TVF_Build_CaseOffsets).
+**447 functions per tree** built from C; `make -j2 gate` PASS.  Before it, Voice_ComputePitch_InlineData was
+renamed Int_ClampSignedToRange_B (`scripts/renaming/rename_subcpu_clamp_b.sed`): 17 bytes of code, now built
+from C too.
+
 | script            | question it answers                                                                      | command                                                                                          |
 |-------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | `hold_back.py`    | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...`               |
