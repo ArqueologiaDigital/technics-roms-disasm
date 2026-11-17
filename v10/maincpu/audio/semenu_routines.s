@@ -1122,53 +1122,14 @@ SeMenu_PartMask_Data:
 ;   0x65E), then sends the new mask (as edit element 17, or display object 13 when the object entry is non-zero); A
 ;   outside 1..4 does nothing. Basis: callers + body -- SeMenuTitleFunc_DispatchSwitch and SeTonTon1_OnColumn1 test
 ;   SeMenu_IsPartEnabled and call it with C = 0 to turn an enabled part off or C = 1 to turn a disabled one on.
-SeMenu_SetPartEnabled:
-	dec	8, xsp
-	ld	(xsp+4), c
-	ld	(xsp+6), a
-	cp	(xsp+6), 1
-	jr	c, SeMenu_SetPartEnabled_Skip
-	cp	(xsp+6), 4
-	jr	ule, SeMenu_SetPartEnabled_Skip2
-SeMenu_SetPartEnabled_Skip:
-	jr	SeMenu_PartMask_Data_Code_Epilogue
-SeMenu_SetPartEnabled_Skip2:
-	lda	xwa, (xsp)
-	calr	SeMenu_LoadObjEntries
-	ld	a, (xsp+6)
-	add	a, (xsp+6)
-	dec	2, a
-	ld	c, a
-	extz	bc
-	ld	wa, 1:i3
-	calr	SeMenu_BitShiftMask
-	cp	(xsp+4), 0
-	jr	nz, SeMenu_PartMask_Data_Code_Skip
-	ld	a, l
-	cpl	a
-	and	(SEMENU_PART_MASK:16), a
-	jr	SeMenu_SetPartEnabled_Join
-SeMenu_PartMask_Data_Code_Skip:
-	or	(SEMENU_PART_MASK:16), l
-SeMenu_SetPartEnabled_Join:
-	ld	(xsp+2), (SEMENU_PART_MASK)
-	extz	hl
-	lda	xde, (xsp+2)
-	cp	(xsp), 0
-	jr	nz, SeMenu_PartMask_Data_Code_Skip2
-	pushw	hl
-	ld	wa, 0:i3
-	ldw	bc, 17
-	calr	SeMenu_RegisterElement_Extended
-	jr	SeMenu_PartMask_Data_Code_Epilogue
-SeMenu_PartMask_Data_Code_Skip2:
-	pushw	hl
-	ld	wa, 0:i3
-	ldw	bc, 13
-	calr	SeMenu_SetupDisplayObject_Alt1
-SeMenu_PartMask_Data_Code_Epilogue:
-	inc	8, xsp
-	ret
+SeMenu_SetPartEnabled:	.include "includes/generated/cc900/SeMenu_SetPartEnabled.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetPartEnabled_Skip, SeMenu_SetPartEnabled + 20
+	.set	SeMenu_SetPartEnabled_Skip2, SeMenu_SetPartEnabled + 22
+	.set	SeMenu_PartMask_Data_Code_Skip, SeMenu_SetPartEnabled + 60
+	.set	SeMenu_SetPartEnabled_Join, SeMenu_SetPartEnabled + 64
+	.set	SeMenu_PartMask_Data_Code_Skip2, SeMenu_SetPartEnabled + 90
+	.set	SeMenu_PartMask_Data_Code_Epilogue, SeMenu_SetPartEnabled + 99
 
 ; Returns HL = 1 when sound-editor part A (1..4) is enabled in the mask byte at 0x65e (bit
 ; 2*(A-1)), else 0; parts outside 1..4 return 0.
@@ -1441,23 +1402,10 @@ SeMenu_StepParamFieldSigned_Join4:
 ; SeMenu_ToggleSolo: Toggles the sound-editor SOLO flag (RAM 0x65C), re-sends the per-part level (code 0x17, only the
 ;   edited part non-zero while SOLO is on) and redraws the SOLO button. Basis: callers + body -- every page's
 ;   OnSideRow1 handler calls it on press (A != 0).
-SeMenu_ToggleSolo:
-	dec	2, xsp
-	lda	xwa, (xsp)
-	calr	SeMenu_SetupMenuDisplay_Finalize
-	cp	(xsp), 0
-	jr	z, SeMenu_ToggleSolo_Skip7
-	ld	wa, 0:i3
-	jr	SeMenu_ToggleSolo_Join5
-SeMenu_ToggleSolo_Skip7:
-	ld	wa, 1:i3
-SeMenu_ToggleSolo_Join5:
-	calr	SeMenu_SetupMenuDisplay_Section3_End
-	ld	wa, 1:i3
-	calr	SeMenu_SetupMenuDisplay
-	call	SeMenu_DrawSoloButton
-	inc	2, xsp
-	ret
+SeMenu_ToggleSolo:	.include "includes/generated/cc900/SeMenu_ToggleSolo.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_ToggleSolo_Skip7, SeMenu_ToggleSolo + 16
+	.set	SeMenu_ToggleSolo_Join5, SeMenu_ToggleSolo + 18
 ; SeMenu_SetFilterType: Sets the filter type: sends the low-3-bit field (code 54, mask 7) of A for the selected part
 ;   to the tone generator and keeps A in RAM 0x68C; returns HL = 0. Basis: callers + body -- each
 ;   SeFil<type>1_OnSideRow4 passes edit byte 0 with its own type number in bits 0-2.
@@ -3611,22 +3559,7 @@ SeMenu_ApplyPartEdit_AltStore_Join22:
 ;   12 through 0, 1, 3 (up for a first-bank switch, down otherwise) via SeCtr2_StepPartField, then posts dial
 ;   events with SeMenu_BindDialToColumn(A+4). Basis: callers + body -- only SeCtr2_OnColumn5..8 call it, passing
 ;   part 1..4 in WA and the bank byte in C.
-SeCtr2_OnPartColumn:
-	dec	2, xsp
-	ld	(xsp), a
-	res	7, c
-	cp	c, 0:i3
-	scc8	nz, c
-	ld	a, (xsp)
-	extz	wa
-	extz	bc
-	calr	SeCtr2_StepPartField
-	ld	a, (xsp)
-	inc	4, a
-	extz	wa
-	calr	SeMenu_BindDialToColumn
-	inc	2, xsp
-	ret
+SeCtr2_OnPartColumn:	.include "includes/generated/cc900/SeCtr2_OnPartColumn.s"	; C: cc900/semenu_routines_m129.c
 ; SeMenu_DrawAmpEnvGraph: Clears the box (51,59)-(256,144) and draws the amplitude-envelope graph from the current
 ;   part's params 0..6 (each clamped to 0..100) as connected line segments. Basis: callers + body -- called only by
 ;   SeAmpEnv1 column handlers after each edit and by the page refresh after its popup 45.

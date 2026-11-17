@@ -24,7 +24,7 @@ Add every new one here, in the commit that finds it.
 | 8  | -O: op= on a 1-bit bit-field at bit 15 flips bit 7 of the unit's low byte                     | -O3 -XS, -O3 -XS -Xr | 2026-11-16, probe bitf.c               | refuses the shape          |
 | 9  | an unsigned char plus a constant computed at the byte, wrapping at 256                        | all four             | 2026-11-16, training pool rstmt11.c    | computes correct C         |
 | 10 | -O3 -XS -Xr: an argument register overwritten before it is read (a shift count)               | -O3 -XS -Xr          | 2026-11-16, training pool rstmt10.c    | refuses or computes C      |
-| 11 | the code generator crashes on a loop bound of a constant pointer plus an offset               | all four             | 2026-11-16, phase 6 (p6_m4)            | the model compiles it      |
+| 11 | the code generator crashes on a constant pointer plus an offset (loop bound; struct copies)   | all four             | 2026-11-16, phase 6 (p6_m4, p6_B_16)   | the model compiles it      |
 
 ## 1. A char product widened to long keeps only its low byte
 
@@ -186,6 +186,14 @@ Add every new one here, in the commit that finds it.
   compiles (sc_a, sc_c, va_a), so the firmware's own source must have been written that other way.
 - **Evidence:** oracle runs 2026-11-16-12-p6-m4 (the crash, whole file) and 2026-11-16-14-p6-m4-split (one function per
   file).  Found by lane_p6.
+- **A second trigger (2026-11-16, run 2026-11-16-118-p6-r23):** helper B's round 16 (corpus/firmware/p6_B_16a.c,
+  `_16b.c`, `_16c.c`) indexes tables written as constant struct pointers, `#define CUR_23E0 ((struct cur *)0x23e0)`
+  with `struct cur { unsigned int blk, off; }`, and copies whole elements (`c = CUR_23E0[k]; CUR_23E0[19] = c;`).
+  All three files, at all three option sets compiled (-O3 -Xr, -Xr, -O3 -XS -Xr), stop with a page fault reading
+  host address 0x23e4, the constant + 4, the same symptom as above; asm900 then rejects the truncated output
+  ("Illegal source file format").  Which statement triggers it is not narrowed yet; the struct copies through the
+  constant pointer are the likeliest.  So the firmware's tables were not written as indexed constant struct pointers
+  in that form either.
 - **Model:** compiles it (no crash to imitate).
 
 ## 12. The pseudo-registers `__XIZ` and `__IZ` crash the compiler next to a pointer kept in memory

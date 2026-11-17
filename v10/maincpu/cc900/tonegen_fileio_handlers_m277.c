@@ -91,3 +91,22 @@ void PanelTlv_WritePanelMemoryHeaders(void)
     for (i = 0, p = ram_1ed400; i < 80; i++, p += 960)
         PanelTlv_WriteBlock0Headers(p);
 }
+
+/* cc900-module: SndParamBank_WriteFlashDefaults */
+extern void SndParamBank_WriteFlashDefaults(void);
+extern unsigned char SndParamBank_DefaultHeader[];
+extern void SndParamBank_CheckFlash(void);
+
+void SndParamBank_CheckFlash(void)
+{
+	unsigned char *s, *d;
+	unsigned int i;
+
+	s = SndParamBank_DefaultHeader;
+	d = (unsigned char *)0x3d3000L;
+	for (i = 0; i < 3; i++)
+		if (*d++ != *s++) {
+			SndParamBank_WriteFlashDefaults();
+			return;
+		}
+}

@@ -3637,16 +3637,7 @@ MidiChOut_ClearLowNibble:
 MidiChannel_CleanupRet:
 	pop	xiz
 	ret
-MidiChOut_DetectChanges:
-	bit	2, (ACC_TRANSPORT_STATE:16)
-	ret	nz
-	ld	a, (PLAY_TRANSPORT_STATE:16)
-	xor	a, (0x33df:16)
-	bit	2, a
-	ret	z
-	orw	(LED_REQUEST_2:16), 4
-	ldmm8	0x33df, PLAY_TRANSPORT_STATE
-	ret
+MidiChOut_DetectChanges:	.include "includes/generated/cc900/MidiChOut_DetectChanges.s"	; C: cc900/audio_control_engine_m278.c
 MidiChannel_ScanPending:
 	push	xiz
 	lda	xiz, (CPANEL_LED_IMAGE:16)
@@ -5367,10 +5358,7 @@ ExtData_Voice_CheckMode:
 	ret	nz
 	calr	ExtData_ToggleReverbIllusionOnOff
 	ret
-ExtData_ToggleReverbIllusionOnOff:
-	ldw	wa, 192
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_ToggleReverbIllusionOnOff:	.include "includes/generated/cc900/ExtData_ToggleReverbIllusionOnOff.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_Voice_RetEntry:
 	ret
 ExtData_Voice_MixedHandler:
