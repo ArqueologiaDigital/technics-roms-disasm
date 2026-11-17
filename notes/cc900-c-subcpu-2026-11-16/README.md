@@ -144,6 +144,12 @@ payloads byte-identical, `make -j2 gate` PASS.  Held back in `cc900-staged/` (4 
 TVF_BuildEmit_Short_Dispatch, Pitch_Get_Patch_Octave_Shift), until the build splices their generated table at the
 tree's label (lane_vmb's fix: the table began with V4.23's own `align 2`).
 
+**Fourth promotion: the six switches (main's table fix, 508e4b243).**  `promote_v423_run.sh LIST WORK` moved their
+four files into `cc900/`, built the v142 payload so the V4.23 cache held them, and spliced with
+`cc900_splice.py ... --v423 build/cc900-v423 --work WORK`: each body and its offset table (six tables in
+`v142/subcpu/subcpu_data_tables.s`, now `.include`s of generated data at their labels) checked against the built
+image.  **403 functions per tree** built from C; `cc900-staged/` is empty; `make -j2 gate` PASS.
+
 | script            | question it answers                                                                      | command                                                                                          |
 |-------------------|------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | `hold_back.py`    | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/` | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...`               |
