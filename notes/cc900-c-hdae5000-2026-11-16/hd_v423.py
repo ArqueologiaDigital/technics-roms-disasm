@@ -253,6 +253,7 @@ def data_places(srcs, func, lines, ref):
 
 SDATA_RE = re.compile(r'untranslated: (\w+)\t(\w+),S\d+\s*$')
 SDATA_MARK = 0x5a5a5a00
+SDATA_MARK24 = 0x5a5b00
 LOCAL_ABS_RE = re.compile(r'^(\tlda \w+, )\(([A-Za-z_.]\w*):24\)$')
 CALL_RE = re.compile(r'^\s*call\s+(0x[0-9a-fA-F]+)\s*$')
 
@@ -374,7 +375,10 @@ def check(a):
                     m = SDATA_RE.search(l)
                     if m:                            # an operand naming the compiler's own data (S50000: a switch
                         marks.append(len(marks))     # table, S1: an initialiser); masked, reported `sdata:<n>`
-                        body[i] = '\t%s %s, 0x%x' % (m.group(1), m.group(2).lower(), SDATA_MARK + len(marks) - 1)
+                        if m.group(1) == 'lda':
+                            body[i] = '\tlda %s, (0x%x:24)' % (m.group(2).lower(), SDATA_MARK24 + len(marks) - 1)
+                        else:
+                            body[i] = '\t%s %s, 0x%x' % (m.group(1), m.group(2).lower(), SDATA_MARK + len(marks) - 1)
                 if any('untranslated' in l for l in body):
                     res[key][(stem_k, label)] = (0, 'to_llvm cannot translate a line')
                     continue
@@ -383,7 +387,12 @@ def check(a):
                     mine, relaxed = assemble_fn(full, body, rom, at, '--calr' in a)
                 except Exception as e:
                     if os.environ.get('HD_V423_DEBUG'):     # say why (stderr), for the function being worked on
-                        sys.stderr.write('HD_V423_DEBUG %s: %s\n' % (full, str(e)[-600:]))
+                        sys.stderr.write('HD_V423_DEBUG %s: %s\n' % (full, str(e)[-300:]))
+                        el = mc_errors('\t.text\n%s:\n%s\n' % (full, '\n'.join(body))).split('\n')
+                        for i, l in enumerate(el):      # llvm-mc's own errors on the unrelaxed body, with their line
+                            if 'error:' in l:
+                                sys.stderr.write('HD_V423_DEBUG   %s | %s\n' % (l[-160:], el[i + 1].strip()[:80]
+                                                                                 if i + 1 < len(el) else ''))
                     res[key][(stem_k, label)] = (0, 'llvm-mc refused the translation')
                     continue
                 r = rom[at:at + len(mine)]
@@ -394,6 +403,10 @@ def check(a):
                         j = mine.find(mk)
                         if j >= 0 and len(r) >= j + 4:
                             mine[j:j + 4] = r[j:j + 4]
+                        mk = (SDATA_MARK24 + k).to_bytes(3, 'little')      # an `lda xR,(S:24)` operand
+                        j = mine.find(mk)
+                        if j >= 0 and len(r) >= j + 3:
+                            mine[j:j + 3] = r[j:j + 3]
                     mine = bytes(mine)
                 if mine == r and marks:
                     res[key][(stem_k, label)] = (len(mine), 'MATCH sdata:%d' % len(marks) +

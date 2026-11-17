@@ -5467,50 +5467,7 @@ HDAE5000_PPORT_Svc30_WakeUpMainTask:		; 0x28F357
 	; Input: XWA = value to encode, XBC = output buffer pointer
 	; Output: XHL = number of bytes written (1-5)
 	; ============================================================
-HDAE5000_VarInt_Encode:		; 0x28F36B
-	dec 6, xsp			; allocate 6-byte temp buffer
-	ld xix, xwa			; XIX = value to encode
-	ld hl, 0:i3			; HL = byte count
-
-	; --- Phase 1: Extract 7-bit chunks LSB-first into temp buffer ---
-.Lve_extract:
-	lda xde, (xsp + 0x00)		; XDE = temp buffer base on stack
-	ld xwa, xix
-	and xwa, 0x0000007f		; extract low 7 bits of remaining value
-	ld	(xde+hl), a	; temp[HL] = A (store 7-bit chunk)
-	srl xix, 7			; shift remaining value right by 7
-	inc 1, hl			; HL = chunk count
-	or xix, xix			; any bits left?
-	jr nz, .Lve_extract		; loop until value fully consumed
-
-	; --- Phase 2: Reverse chunks into output, set continuation bits ---
-	; temp[] has chunks in LSB-first order; output needs MSB-first
-	ld ix, 1:i3			; IX = reverse index (skip first temp byte)
-	cp ix, hl			; only one chunk? skip to last
-	jr ge, .Lve_copy_last
-
-.Lve_set_msb:
-	ld wa, hl
-	sub wa, ix			; WA = count - reverse_index
-	ld de, wa
-	dec 1, de			; DE = output position
-	lda xwa, (xsp + 0x00)
-	ld	a, (xwa+ix)	; A = temp[IX] — load chunk (MSB-first order)
-	set 7, a			; set continuation bit (more bytes follow)
-	ld	(xbc+de), a	; output[DE] = A — store to caller's buffer
-	inc 1, ix
-	cp ix, hl
-	jr lt, .Lve_set_msb
-
-	; --- Phase 3: Copy final byte WITHOUT continuation bit ---
-.Lve_copy_last:
-	ld de, hl
-	dec 1, de			; DE = last output position
-	ld8_src_rid8 xsp, 0x00, a		; A = temp[0] — LSB chunk (becomes last output byte)
-	ld	(xbc+de), a	; output[DE] = A (bit 7 clear = final byte)
-	exts xhl			; sign-extend HL to XHL (byte count)
-	inc 6, xsp			; free temp buffer
-	ret
+HDAE5000_VarInt_Encode:	.include "includes/generated/cc900/HDAE5000_VarInt_Encode.s"	; C: cc900/hdae5000_varint.c
 
 	; ============================================================
 	; Variable-length integer decoder (MIDI-style VarInt)
@@ -5520,45 +5477,7 @@ HDAE5000_VarInt_Encode:		; 0x28F36B
 	; Output: XHL = decoded value, or 0xFFFFFFFF on error
 	; Side effect: stores bytes consumed to (XBC)
 	; ============================================================
-HDAE5000_VarInt_Decode:		; 0x28F3BD
-	ld xde, xwa			; XDE = data pointer
-	ld ix, 0:i3			; IX = byte index
-	ld xhl, 0:i3			; XHL = accumulator
-
-	ld a, (xde)			; A = first byte (for length check)
-	ldfr_berp a, 0xf4		; IYL = A (save first byte)
-
-.Lvd_loop:
-	ld	a, (xde+ix)	; A = data[IX] — load current byte
-	res 7, a			; strip continuation bit → 7-bit payload
-	ld w, 0:opc			; W = 0
-	extz xwa			; XWA = payload (zero-extended to 32-bit)
-	add xhl, xwa			; accumulate: XHL += payload
-
-	bit	7, (xde+ix)	; test continuation bit of data[IX]
-	jr nz, .Lvd_continue
-	; Continuation=0 → this was the last byte, decoding complete
-	ldto_berp a, 0xf0		; A = IXL (byte index)
-	inc 1, a			; A = bytes consumed
-	ld (xbc), a			; store byte count to caller's pointer
-	ret
-
-.Lvd_continue:
-	; Continuation=1 → more bytes follow
-	inc 1, ix			; advance to next byte
-	sll xhl, 7			; make room for next 7-bit chunk
-	cp ix, 4:i3
-	jr le, .Lvd_length_check
-	cpib_erp 0xf4, 7		; if first byte > 7 and >4 bytes: invalid
-	jr ugt, .Lvd_error
-
-.Lvd_length_check:
-	cp ix, 5:i3			; max 5 bytes (35 bits for 32-bit values)
-	jr le, .Lvd_loop
-
-.Lvd_error:
-	ld xhl, 0xffffffff		; return -1 (invalid VarInt encoding)
-	ret
+HDAE5000_VarInt_Decode:	.include "includes/generated/cc900/HDAE5000_VarInt_Decode.s"	; C: cc900/hdae5000_varint.c
 
 ; ---------------------------------------------------------------------------
 ; Reverse the four bytes of XWA (a big-endian SMF long -> native), unrolled.
@@ -6979,90 +6898,9 @@ HDAE5000_LoadSong_Md:	.include "includes/generated/cc900/HDAE5000_LoadSong_Md.s"
 ; Out: HL = 0 when the song has no TLX part, else HD_ReadFile's result.
 ;      IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_LoadSong_Tlx:
-	lda	xsp, (xsp-24)
-	pushw iz
-	ld (xsp + 0x16), bc
-	ld (xsp + 0x18), wa
-	ld	iz, 0:i3
-	ld	wa, (xsp+22)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld (xsp + 0x0a), xhl
-	ld	wa, (xsp+24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, (xsp+10)
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
-	add	xwa, xhl
-	ld xwa, (xwa)
-	cp	xwa, 0xffffffff
-	jrl	z, HDAE5000_LoadSong_Tlx_Done
-	call HDAE5000_Lyrics_ClearBuffer
-	lda	xwa, (xsp+14)
-	ld	xbc, xwa
-	ldw	wa, 0x000a
-	calr	HDAE5000_TlxPart_Describe
-	lda	xwa, (xsp+14)
-	ld (xsp + 0x06), xwa
-	ld	wa, (xsp+22)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld (xsp + 0x0a), xhl
-	ld	wa, (xsp+24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, (xsp+10)
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
-	add	xwa, xhl
-	ld	xbc, xwa
-	ld xwa, (xsp + 0x06)
-	ld xwa, (xwa)
-	ld	xde, xbc
-	ld	xbc, 0x00000016
-	call HDAE5000_HD_ReadFile
-	ld	iz, hl
-	cp	iz, 0xffff
-	jr	z, HDAE5000_LoadSong_Tlx_Done
-	lda	xwa, (xsp+14)
-	ld	xbc, xwa
-	ldw	wa, 0x000a
-	calr	HDAE5000_TlxPart_Describe
-	lda	xwa, (xsp+14)
-	ld (xsp + 0x02), xwa
-	lda	xwa, (xsp+18)
-	ld (xsp + 0x06), xwa
-	ld	wa, (xsp+22)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld (xsp + 0x0a), xhl
-	ld	wa, (xsp+24)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, (xsp+10)
-	lda xwa, (HDAE5000_RAM_SongRecords-0x780+68:24)
-	add	xwa, xhl
-	ld	xde, xwa
-	ld xwa, (xsp + 0x02)
-	ld xwa, (xwa)
-	ld xbc, (xsp + 0x06)
-	ld xbc, (xbc)
-	call HDAE5000_HD_ReadFile
-	ld	iz, hl
-HDAE5000_LoadSong_Tlx_Done:
-	ld	hl, iz
-	popw iz
-	lda	xsp, (xsp+24)
-	ret
+HDAE5000_LoadSong_Tlx:	.include "includes/generated/cc900/HDAE5000_LoadSong_Tlx.s"	; C: cc900/hdae5000_loadsong_tlx.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_LoadSong_Tlx_Done, HDAE5000_LoadSong_Tlx + 252
 
 ; ---------------------------------------------------------------------------
 ; Save a song.  Mask 0 returns HL = 0 at once; not enough free clusters
@@ -8016,25 +7854,7 @@ HDAE5000_DebugTrace:	.include "includes/generated/cc900/HDAE5000_DebugTrace.s"	;
 ; banner, like every SvcNN name): the address of the info block the PC reads.
 ; Out: XHL = HDAE5000_RAM_PportInfoBlock
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_Svc01_GetInfoBlockPointer:
-	lda	xsp, (xsp-32)
-	lda xwa, (HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_GetInfoBlockPointer:24)
-	calr	HDAE5000_DebugTrace
-	lda xwa, (HDAE5000_RAM_PportInfoBlock:24)
-	push xwa
-	pushw HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_ppib_adr_Fmtx@hi16
-	pushw HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_ppib_adr_Fmtx@lo16
-	lda	xwa, (xsp+8)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	lda	xwa, (xsp)
-	calr	HDAE5000_DebugTrace
-	lda xwa, (HDAE5000_PPORT_Svc01_GetInfoBlockPointer_Str_Blank1:24)
-	calr	HDAE5000_DebugTrace
-	lda xhl, (HDAE5000_RAM_PportInfoBlock:24)
-	lda	xsp, (xsp+32)
-	ret
+HDAE5000_PPORT_Svc01_GetInfoBlockPointer:	.include "includes/generated/cc900/HDAE5000_PPORT_Svc01_GetInfoBlockPointer.s"	; C: cc900/hdae5000_pport_svc2.c
 
 ; ---------------------------------------------------------------------------
 ; PC-link service 2, "TurnHdMotorOff": HDAE5000_ATA_Standby_Status.
@@ -8454,103 +8274,12 @@ HDAE5000_PPORT_Svc20_PreWholeSongInMemory:	.include "includes/generated/cc900/HD
 ; In:  WA = directory, BC = song
 ; Out: HL = 0 when a write was opened, else 1.  XIZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_Svc21_WriteOpenHD:
-	lda	xsp, (xsp-28)
-	push xiz
-	ld (xsp + 0x1c), bc
-	ld (xsp + 0x1e), wa
-	ldw (xsp + 0x04), 1
-	lda xwa, (HDAE5000_PPORT_Svc21_WriteOpenHD_Str_WriteOpenHD:24)
-	calr	HDAE5000_DebugTrace
-	ld	wa, (HDAE5000_RAM_PportInfoBlock:24)
-	ld	(xsp+6), 0x00
-	cp	(xsp+6), 0x09
-	jrl	nc, HDAE5000_PPORT_Svc21_WriteOpenHD_Done
-HDAE5000_PPORT_Svc21_WriteOpenHD_Loop:
-	bit	0x00, wa
-	jrl	z, HDAE5000_PPORT_Svc21_WriteOpenHD_Next
-	ld	wa, (xsp+28)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (xsp+30)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	ld	xbc, HDAE5000_RAM_DirNames
-	add	xbc, xhl
-	ld	a, (xsp+6)
-	extz wa
-	sla	wa, 0x02
-	add	wa, 0x0024
-	exts xwa
-	add	xwa, xbc
-	call HDAE5000_HD_WriteOpen
-	cp	hl, 0xffff
-	jr	z, HDAE5000_PPORT_Svc21_WriteOpenHD_Join
-	pushw 0x001a
-	lda xwa, (HDAE5000_RAM_PportInfoBlock+2:24)
-	push xwa
-	ld	wa, (xsp+34)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (xsp+36)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	ld	xwa, HDAE5000_RAM_DirNames
-	add	xwa, xhl
-	push xwa
-	call HDAE5000_StrNCpy
-	lda	xsp, (xsp+10)
-	ld	wa, (xsp+28)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld	xiz, xhl
-	ld	wa, (xsp+30)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, xiz
-	ld	xbc, HDAE5000_RAM_DirNames
-	add	xbc, xhl
-	ld	a, (xsp+6)
-	extz wa
-	add	wa, 0x001a
-	ld	(xbc+wa), 0x01
-	ldw (xsp + 0x04), 0
-HDAE5000_PPORT_Svc21_WriteOpenHD_Join:
-	ld	a, (xsp+6)
-	extz wa
-	pushw wa
-	pushw HDAE5000_PPORT_Svc21_WriteOpenHD_Str_SUFFIX_Fmtd@hi16
-	pushw HDAE5000_PPORT_Svc21_WriteOpenHD_Str_SUFFIX_Fmtd@lo16
-	lda	xwa, (xsp+14)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+10)
-	lda	xwa, (xsp+8)
-	calr	HDAE5000_DebugTrace
-	jr	t, HDAE5000_PPORT_Svc21_WriteOpenHD_Done
-HDAE5000_PPORT_Svc21_WriteOpenHD_Next:
-	srl	wa, 0x01
-	incm8	1, (xsp+6)
-	cp	(xsp+6), 0x09
-	jrl	c, HDAE5000_PPORT_Svc21_WriteOpenHD_Loop
-HDAE5000_PPORT_Svc21_WriteOpenHD_Done:
-	ld	hl, (xsp+4)
-	pop xiz
-	lda	xsp, (xsp+28)
-	ret
+HDAE5000_PPORT_Svc21_WriteOpenHD:	.include "includes/generated/cc900/HDAE5000_PPORT_Svc21_WriteOpenHD.s"	; C: cc900/hdae5000_pport_svc2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_PPORT_Svc21_WriteOpenHD_Loop, HDAE5000_PPORT_Svc21_WriteOpenHD + 39
+	.set	HDAE5000_PPORT_Svc21_WriteOpenHD_Join, HDAE5000_PPORT_Svc21_WriteOpenHD + 243
+	.set	HDAE5000_PPORT_Svc21_WriteOpenHD_Next, HDAE5000_PPORT_Svc21_WriteOpenHD + 274
+	.set	HDAE5000_PPORT_Svc21_WriteOpenHD_Done, HDAE5000_PPORT_Svc21_WriteOpenHD + 287
 
 ; ---------------------------------------------------------------------------
 ; PC-link service 22, "WriteCloseHD": HDAE5000_HD_WriteClose, then the tables
@@ -8577,54 +8306,11 @@ HDAE5000_PPORT_Svc23_WriteFileHD:	.include "includes/generated/cc900/HDAE5000_PP
 ; In:  WA = directory, BC = song
 ; Out: HL = 0 when a part was found, else 1.  QIZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_Svc24_ReadOpenHD:
-	dec 8, xsp
-	push	qiz
-	ld (xsp + 0x06), bc
-	ld (xsp + 0x08), wa
-	ldw (xsp + 0x04), 1
-	lda xwa, (HDAE5000_PPORT_Svc24_ReadOpenHD_Str_ReadOpenHD:24)
-	calr	HDAE5000_DebugTrace
-	ld	wa, (HDAE5000_RAM_PportInfoBlock:24)
-	ldib_erp 0xfb, 0		; ld QIZH,0
-	cp_erpb 0xfb, 0x09		; cp QIZH,0x09
-	jr	nc, HDAE5000_PPORT_Svc24_ReadOpenHD_Done
-HDAE5000_PPORT_Svc24_ReadOpenHD_Loop:
-	bit	0x00, wa
-	jr	z, HDAE5000_PPORT_Svc24_ReadOpenHD_Next
-	ld	wa, (xsp+6)
-	extz xwa
-	ld	xbc, 0x0000004c
-	call HDAE5000_Multiply
-	ld (xsp + 0x02), xhl
-	ld	wa, (xsp+8)
-	extz xwa
-	ld	xbc, 0x000004c0
-	call HDAE5000_Multiply
-	add	xhl, 0x00000780
-	add	xhl, (xsp+2)
-	ld	xbc, HDAE5000_RAM_DirNames
-	add	xbc, xhl
-	ldto_berp a, 0xfb		; ld A,QIZH
-	extz wa
-	sla	wa, 0x02
-	add	wa, 0x0024
-	exts xwa
-	add	xwa, xbc
-	ld	(HDAE5000_RAM_PportInfoBlock+206), xwa
-	ld	(HDAE5000_RAM_PportReadState:24), 1
-	ldw (xsp + 0x04), 0
-	jr	t, HDAE5000_PPORT_Svc24_ReadOpenHD_Done
-HDAE5000_PPORT_Svc24_ReadOpenHD_Next:
-	srl	wa, 0x01
-	incb_erp 0xfb, 1		; inc 1,QIZH
-	cp_erpb 0xfb, 0x09		; cp QIZH,0x09
-	jr	c, HDAE5000_PPORT_Svc24_ReadOpenHD_Loop
-HDAE5000_PPORT_Svc24_ReadOpenHD_Done:
-	ld	hl, (xsp+4)
-	pop	qiz
-	inc 8, xsp
-	ret
+HDAE5000_PPORT_Svc24_ReadOpenHD:	.include "includes/generated/cc900/HDAE5000_PPORT_Svc24_ReadOpenHD.s"	; C: cc900/hdae5000_pport_svc2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_PPORT_Svc24_ReadOpenHD_Loop, HDAE5000_PPORT_Svc24_ReadOpenHD + 38
+	.set	HDAE5000_PPORT_Svc24_ReadOpenHD_Next, HDAE5000_PPORT_Svc24_ReadOpenHD + 124
+	.set	HDAE5000_PPORT_Svc24_ReadOpenHD_Done, HDAE5000_PPORT_Svc24_ReadOpenHD + 136
 
 ; ---------------------------------------------------------------------------
 ; PC-link service 25, "ReadFileHD": with HDAE5000_RAM_PportReadState 1,

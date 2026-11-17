@@ -121,3 +121,19 @@ More idioms found since (runs 66-93):
   (for a char parameter the caller loads as a word, try `int` and a cast inside).
 - notes/cc900-c-hdae5000-2026-11-16/hdae5000 staged C (hdae5000/cc900-staged/*.c) and built C
   (hdae5000/cc900/*.c) are good examples of matched C for this ROM.
+
+Idioms found in run 2026-11-17-3-hd-r36 (the matching C is in hdae5000/cc900-staged/ or hdae5000/cc900/):
+- CONSTANT TIMES LOOP REGISTER (`ld wa,30; muls xwa,iz`, the row address of a list): write the constant as a
+  comma expression, `(0, 30) * i + &text[2]` (SongScreen_Refresh) or `&rows[(k = 37, k * i) + 2]` with a local k
+  (FlsScreen_Refresh).  Literals, enum, #define, a plain local and `(k = 37) * i` do not give it.
+- A RESULT LOCAL kept in IZ only (16-bit push, the 32-bit products on the stack): declare it `unsigned int ret = 0;`
+  AFTER the structure locals and test it against 0xffff (LoadSong_Tlx).  `int ret` makes V4.23 use the whole XIZ.
+- REGISTER CHOICE between loop locals follows declaration order: CopyToHd_Execute wanted `j, mask, i` (i in IZ,
+  j / mask in QIZ).  Try the orders.
+- A struct member indexed by a loop variable where the ROM adds the member offset in 32 bits and loads the object
+  address as an immediate: declare the object as a flat `extern unsigned char ram_xxxx[];` and index it with
+  `[(unsigned long)i + OFFSET]` (CopyToHd_Execute).
+- `value % 128` and `value /= 128` on a LOCAL COPY of an unsigned long parameter give the 32-bit mask with 0x7f and
+  the shift on a second register (VarInt_Encode); an `unsigned long` accumulator gives the logical shift (Decode).
+- A structure address passed where the ROM takes it into XWA first: cast it, `(void *)&info`; a record laid out
+  without a pad member (`part[10]`) where an offset is 2 short (PPORT Svc21 / Svc24).
