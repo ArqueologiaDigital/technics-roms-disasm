@@ -34,27 +34,16 @@
   245   89 Voice_NoteOn_Rhythm                          core/07_voice_ctrlchange.s                 rel  erp  1 nop   0 runtime -  calr Voice_Allocate_1of4
   234   90 Voice_PortaLevel_Compute                     core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr Detune_ScaleSymmetric Detune_ScaleUnsigned Int_ClampSignedToRange PitchBend_Scale
   205   76 Voice_ScanSlots_ReassignSources              core/05_voice_params_and_tvf.s             rel  erp 10 nop   0 runtime -  calr Quad_Decode_A_To_L VoiceSlot_UpdateNoteSource VoiceState_SwapSlot_DE_BC
-  190   59 Voice_Selector_ComputeMixWeights             core/07_voice_ctrlchange.s                 rel  erp  0 nop   0 runtime -  calr Voice_Selector_FindBestSlot
   185   81 VoiceState_SwapSlot_DE_BC                    core/05_voice_params_and_tvf.s             leaf erp  0 nop   0 runtime -  calr 
-  179   65 Voice_Slot_ComputePitch                      core/07_voice_ctrlchange.s                 abs  erp  1 nop   0 runtime -  calr 
   175   67 WaveSel_StageB_Build_Reg040                  core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr WaveSel_Emit_ZoneRecord_S10 WaveSel_Emit_ZoneRecord_S12 WaveSel_Emit_ZoneRecord_S13 WaveSel_Emit_ZoneRecord_S15 WaveSel_Emit_ZoneRecord_S4 WaveSel_Emit_ZoneRecord_S6 WaveSel_KeyTable_Lookup
-  175   61 Voice_PortamentoTargets_SetAll               core/07_voice_ctrlchange.s                 abs  erp  8 nop   0 runtime Math_Multiply32  calr 
   169   71 TVF_Lookup_Depth_Amount                      core/05_voice_params_and_tvf.s             leaf erp  2 nop   0 runtime -  calr 
   147   57 TVF_Calc_Cutoff                              core/05_voice_params_and_tvf.s             rel  erp  1 nop   0 runtime -  calr TVF_Clamp_Cutoff
-  144   53 EGEnv_Compute_A                              core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime Math_Multiply32  calr EnvDepth_Cap
   144   53 EGEnv_Compute_B                              core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime Math_Multiply32  calr EnvDepth_Cap
   132   44 Voice_CtrlChange                             core/07_voice_ctrlchange.s                 abs  erp  0 nop   0 runtime -  calr 
-  130   45 Voice_PitchBend                              core/07_voice_ctrlchange.s                 abs  erp  0 nop   0 runtime -  calr 
   120   43 TVF_Emit_Offset_Both                         core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr TVF_Clamp_Cutoff
   115   44 Voice_AllVoices_PortamentoReset              core/07_voice_ctrlchange.s                 abs  erp  5 nop   8 runtime -  calr 
-  102   41 Voice_AdvanceSlotIterator                    core/05_voice_params_and_tvf.s             rel  erp  4 nop   0 runtime -  calr Quad_Decode_A_To_L VoiceSlot_UpdateNoteSource
-  102   37 TVF_Emit_Offset_Reg100                       core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr TVF_Clamp_Cutoff
-   97   40 OutputBuf_Flush_B                            core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr DList_Unlink_SelfLink_Offsets16 Voice_List_MoveToPartList Voice_Reprioritise
    82   32 Voice_Retire_ToFreePool                      core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr DList_Unlink_SelfLink_Offsets16 Voice_List_MoveToPartList Voice_List_MoveToPool
    77   25 Voice_SystemMsg                              core/07_voice_ctrlchange.s                 abs  erp  0 nop   0 runtime -  calr 
    76   28 Voice_Clear_HoldBit                          core/05_voice_params_and_tvf.s             abs  erp  0 nop   0 runtime -  calr 
    66   27 ToneGen_SilenceChannel                       core/07_voice_ctrlchange.s                 leaf erp  0 nop   8 runtime -  calr 
    62   24 PitchBend_Scale                              core/05_voice_params_and_tvf.s             leaf erp  1 nop   0 runtime -  calr 
-   41   13 TVF_Build_Dispatch                           core/05_voice_params_and_tvf.s             abs  erp  0 nop   0 runtime -  calr 
-   41   13 Voice_PortamentoTarget_SetSlot               core/07_voice_ctrlchange.s                 leaf erp  0 nop   0 runtime -  calr 
-   19    7 TVF_Build_Dispatch_Table                     core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr Voice_PitchPack_Mode5_Dual
