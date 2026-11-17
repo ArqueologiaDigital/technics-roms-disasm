@@ -37,13 +37,8 @@
   185   81 VoiceState_SwapSlot_DE_BC                    core/05_voice_params_and_tvf.s             leaf erp  0 nop   0 runtime -  calr 
   175   67 WaveSel_StageB_Build_Reg040                  core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr WaveSel_Emit_ZoneRecord_S10 WaveSel_Emit_ZoneRecord_S12 WaveSel_Emit_ZoneRecord_S13 WaveSel_Emit_ZoneRecord_S15 WaveSel_Emit_ZoneRecord_S4 WaveSel_Emit_ZoneRecord_S6 WaveSel_KeyTable_Lookup
   169   71 TVF_Lookup_Depth_Amount                      core/05_voice_params_and_tvf.s             leaf erp  2 nop   0 runtime -  calr 
-  147   57 TVF_Calc_Cutoff                              core/05_voice_params_and_tvf.s             rel  erp  1 nop   0 runtime -  calr TVF_Clamp_Cutoff
-  144   53 EGEnv_Compute_B                              core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime Math_Multiply32  calr EnvDepth_Cap
   132   44 Voice_CtrlChange                             core/07_voice_ctrlchange.s                 abs  erp  0 nop   0 runtime -  calr 
   120   43 TVF_Emit_Offset_Both                         core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr TVF_Clamp_Cutoff
   115   44 Voice_AllVoices_PortamentoReset              core/07_voice_ctrlchange.s                 abs  erp  5 nop   8 runtime -  calr 
-   82   32 Voice_Retire_ToFreePool                      core/05_voice_params_and_tvf.s             rel  erp  0 nop   0 runtime -  calr DList_Unlink_SelfLink_Offsets16 Voice_List_MoveToPartList Voice_List_MoveToPool
    77   25 Voice_SystemMsg                              core/07_voice_ctrlchange.s                 abs  erp  0 nop   0 runtime -  calr 
    76   28 Voice_Clear_HoldBit                          core/05_voice_params_and_tvf.s             abs  erp  0 nop   0 runtime -  calr 
-   66   27 ToneGen_SilenceChannel                       core/07_voice_ctrlchange.s                 leaf erp  0 nop   8 runtime -  calr 
-   62   24 PitchBend_Scale                              core/05_voice_params_and_tvf.s             leaf erp  1 nop   0 runtime -  calr 

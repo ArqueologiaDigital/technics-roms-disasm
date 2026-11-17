@@ -44,6 +44,10 @@ for r in rows:
     if (not REMAINING and r[6] not in (('rel',) if REL else ('leaf','abs'))) or r[5]=='hand' or r[1]=='None' or r[14]!='0' or r[3] in done: continue
     try: b=body(r)
     except StopIteration: continue   # a label the splice turned into `.set INNER, NAME + n` (inside a built function)
+    # `link xiz,-N` / `unlk xiz` frames: another compiler's convention (the SX-WSA1R's; arguments at (xiz+8)),
+    # which V4.23 never emits: not candidates (coordinator / WSA1R lane, 2026-11-17).  Listed on stderr.
+    if any(re.match(r'\s+(link|unlk)\b',l) for l in b):
+        sys.stderr.write('link/unlk frame, not a V4.23 candidate: %s (%s B, %s)\n'%(r[3],r[1],r[4])); continue
     tg=[m.group(1) for l in b for m in [re.match(r'\s+call\s+(\w+)',l)] if m]
     rt=sorted(set(t for t in tg if re.match(r'(FP_|Math_|Int_)',t)))
     cr=sorted(set(m.group(1) for l in b for m in [re.match(r'\s+calr\s+(\w+)',l)] if m))

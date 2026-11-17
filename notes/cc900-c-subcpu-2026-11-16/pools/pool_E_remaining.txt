@@ -9,16 +9,12 @@
   321  109 DSP_SOS_LUT_Fetch                            core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_Raw4Copy,FP_ScalarToDP,FP_dadd,FP_dmul,FP_dtof  calr 
   305   98 DSP_ParamInterp_FPComplex                    core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime FP_SP_CallWithBuf8,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
   297   94 DSP_ReverbCurve_FP                           core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CallWithBuf8,FP_ddiv,FP_dmul,FP_dsub,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
-  255  113 RingBuf_Init_256                             core/03_task_scheduler_kernel.s            rel  erp  0 nop   0 runtime -  calr FIFO_Engine512_Get FIFO_Engine512_Put
   250   87 DSP_MixerCoeff_Compute                       core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CallWithBuf8,FP_ftoi,Math_Multiply32  calr 
-  213   83 DSP_BytecodeInterpreter_Init                 core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime -  calr 
-  174   77 RingBuf_Init_1K                              core/03_task_scheduler_kernel.s            rel  erp  0 nop   0 runtime -  calr FIFO_Engine256_Get FIFO_Engine256_Put
   165   56 DSP_AlgoParam_Decode                         core/14_dsp_control_routines.s             abs  erp  1 nop   0 runtime FP_DP_DecodeToInt,FP_SP_CallWithBuf8,FP_dmul,FP_ftod  calr 
   116   41 DSP_ParamInterp_3Point_WithOffset            core/14_dsp_control_routines.s             abs  erp  2 nop   0 runtime Math_Multiply32  calr 
   110   40 MemClear_DRAM_And_ExtRAM                     core/02_audio_system_init.s                abs  erp  4 nop   0 runtime -  calr 
    90   37 Keybed_Read_Event                            core/14_dsp_control_routines.s             rel  erp  0 nop   2 runtime -  calr Keybed_Decode_Event
    87   34 FP_cos                                       core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_DP_Raw8Copy,FP_SinCos_Kernel,FP_dadd,FP_fabs  calr 
-   73   31 DSP_Init_Channels                            core/02_audio_system_init.s                rel  erp  0 nop   0 runtime -  calr DSP_Write_Channel
    73   32 DSP_Write_Channel                            core/02_audio_system_init.s                rel  erp  0 nop   0 runtime -  calr DSP_WriteChannelRegs_Inner
    69   26 InterCPU_DMA_Send                            core/04_intercpu_link.s                    rel  erp  1 nop   0 runtime -  calr InterCPU_DMA_SendDataPacket
    48   19 FP_ddiv                                      core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_DP_Decode,FP_DP_DivCore,FP_DP_Encode  calr 
