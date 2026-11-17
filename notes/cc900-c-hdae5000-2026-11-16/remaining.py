@@ -32,6 +32,10 @@ def main():
         t = open(p, encoding='latin-1').read()
         tried |= set(re.findall(r'\b(HDAE5000_\w+)\s*\(', t))
         tried |= {lab for _, lab in re.findall(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', t)}
+    # a label the splice kept as `.set NAME, Function + N` is inside a function now built from C, not a function
+    for p in glob.glob(os.path.join(HERE, '..', '..', 'hdae5000', '*.s')):
+        t = open(p, 'rb').read().decode('latin-1')
+        done |= set(re.findall(r'^\s*\.set\s+(HDAE5000_\w+),\s*HDAE5000_\w+ \+ \d+', t, re.M))
     rows = []
     for l in open(os.path.join(HERE, 'survey.tsv')).read().split('\n')[1:]:
         f = l.split('\t')
