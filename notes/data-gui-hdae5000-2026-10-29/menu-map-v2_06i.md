@@ -369,7 +369,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `LBN_P1_PsMenuBox` PsMenuBox: switch Right5
   - `LBN_P1_PsMenuBox_CLEAR` Label: "CLEAR"
-- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit_SongUnits`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry`
+- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_AcIndexEditSw` AcIndexEditSw: switch Right1
   - `LBN_P1_AcIndexEditSw_LOAD` Label: "LOAD"
 - `LBN_P1_80` EditSw: "~80"; switch Right2
@@ -827,7 +827,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - EXIT -> `TITLE_PS`
 - source: `hdae5000/hdae5000_ui_tree.s` line 999
 
-- `HD_MENU_BMP` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon` -- code: `HDAE5000_HDTitleMenuProc_OnParaDraw`
+- `HD_MENU_BMP` VwUserBitmap: func `NAKA_APFUNC_BitmapHdd_icon` -- code: `HDAE5000_HDTitleMenuProc`
 
 ## IV_HDDMENU
 

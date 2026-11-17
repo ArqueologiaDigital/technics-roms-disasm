@@ -1415,18 +1415,8 @@ HDAE5000_Str_Blank14:
 	; read by PC_DATA_LINK_PAGE at 0x284F0A (lda operand)
 	.asciz "              "
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_SeparateOutput_MsgTemplateA:
-	; read by SeparateOutput_SendPartMsg at 0x284F50 (ld # operand)
-	.byte 0xb0
-	.zero 1
-	.byte 0x9b
-	.zero 1
-HDAE5000_SeparateOutput_MsgTemplateB:
-	; read by SeparateOutput_SendPartMsg at 0x284F5C (ld # operand)
-	.byte 0xb0
-	.zero 1
-	.byte 0x9d
-	.zero 1
+HDAE5000_SeparateOutput_MsgTemplateA:	.include "includes/generated/cc900/HDAE5000_SeparateOutput_MsgTemplateA.s"	; C: cc900/hdae5000_sepout_msg.c (cc900-data)
+HDAE5000_SeparateOutput_MsgTemplateB:	.include "includes/generated/cc900/HDAE5000_SeparateOutput_MsgTemplateB.s"	; C: cc900/hdae5000_sepout_msg.c (cc900-data)
 HDAE5000_TextPtrs_OFF_DRUMSLR_BASSDRUMSMIX_BASSDRUMSMONO:	; 4 x .long -> string
 	; read by SeparateOutputModeCheck at 0x28512B (ld # operand); 4 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_OFF_3
@@ -2143,20 +2133,7 @@ HDAE5000_Str_LBNS:
 ; HDAE5000_LBNPage1SwCatch_OnClear of the case for value 0+i; 13 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNPage1SwCatch_CaseTable:
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit0Or1 - HDAE5000_LBNPage1SwCatch_OnClear	; 0
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit2Or3 - HDAE5000_LBNPage1SwCatch_OnClear	; 1
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit4Or5 - HDAE5000_LBNPage1SwCatch_OnClear	; 2
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit6Or7 - HDAE5000_LBNPage1SwCatch_OnClear	; 3
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit8Or9 - HDAE5000_LBNPage1SwCatch_OnClear	; 4
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 5
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 6
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 7
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 8 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 9 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 10 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 11 (default)
-	.short	HDAE5000_LBNPage1SwCatch_OnClear - HDAE5000_LBNPage1SwCatch_OnClear	; 12
+HDAE5000_LBNPage1SwCatch_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNPage1SwCatch_CaseTable.s"	; C: cc900/hdae5000_lbn_page.c (cc900-data)
 HDAE5000_Str_LBN:
 	; read by LBNLoadSwCatch at 0x286D7A (lda operand)
 	.asciz "LBN!"

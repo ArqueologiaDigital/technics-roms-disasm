@@ -4429,32 +4429,7 @@ HDAE5000_DelOptSwEventCatch:
 	ret
 
 ; --- Display, Menu, and Utility Routines ---
-HDAE5000_DelOpt_InitFromSong:	; (1612 bytes)
-	; Part 1: Table lookup + data copy utility (68 bytes)
-	; (= init the delete options 0x22ABE6 (HDAE5000_TypeSel_Init with template
-	; 0x2E1E08) to "DEL" (2) for the parts song 0x23A092/0x23A094 holds.)
-	ld wa, (HDAE5000_RAM_CurDir:24); WA = cylinder
-	ld bc, (HDAE5000_RAM_CurSong:24); BC = head
-	call HDAE5000_Song_PartMask
-	ld wa, hl
-	cp wa, 0xffff
-	jr z, .LDUO__not_found
-	; Found — copy data
-	lda xwa, (HDAE5000_RAM_DeleteOptions:24)
-	pushw 0x0002
-	ld bc, hl
-	lda xde, (HDAE5000_DelOpt_TemplateBlank:24)
-	calr HDAE5000_TypeSel_Init
-	jr t, .LDUO__done_p1
-.LDUO__not_found:
-	lda xwa, (HDAE5000_RAM_DeleteOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_DelOpt_TemplateBlank:24)
-	ld bc, 0:i3
-	calr HDAE5000_TypeSel_Init
-.LDUO__done_p1:
-	ldw (HDAE5000_RAM_DeleteOptions:24), 0x0000
-	ret
+HDAE5000_DelOpt_InitFromSong:	.include "includes/generated/cc900/HDAE5000_DelOpt_InitFromSong.s"	; C: cc900/hdae5000_small2_filesystem.c
 	;
 	; Part 2: Handler A (0x28A617) — event handler with stack frame
 HDAE5000_DelOptNameCheck:
