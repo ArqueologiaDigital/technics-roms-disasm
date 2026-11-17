@@ -6481,9 +6481,7 @@ HDAE5000_Alloc_Memory__type_A3:
 ; ---------------------------------------------------------------------------
 ; L = HDAE5000_RAM_HdPresent, HDAE5000_Check_HD_Present's result at boot.
 ; ---------------------------------------------------------------------------
-HDAE5000_Get_Init_Flag:
-	ld l, (HDAE5000_RAM_HdPresent:24)
-	ret
+HDAE5000_Get_Init_Flag:	.include "includes/generated/cc900/HDAE5000_Get_Init_Flag.s"	; C: cc900/hdae5000_boot.c
 
 ; ============================================================================
 ; BOOT INITIALIZATION ROUTINE (0x28F576 - 0x28F661)

@@ -1436,64 +1436,7 @@ HDAE5000_TypeSel_BuildMask:	.include "includes/generated/cc900/HDAE5000_TypeSel_
 	; Input: XWA = context pointer (saved as XIZ), XBC = command ID
 	; Returns XHL = result
 
-HDAE5000_SaveOptNameCheck:
-	; registered as "SaveOptNameCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld xiz, xwa			; save context
-	ld xwa, xbc			; command → XWA
-	cp xwa, EVT_RAM_DATA_REQ		; special command?
-	jr z, .Lhbi_special
-	sub xwa, EVT_GET_LARGE_STEP		; normalize to index 0-9
-	cp xwa, 0x00000000
-	jr lt, .Lhbi_default
-	cp xwa, 0x00000009
-	jr gt, .Lhbi_default
-	add xwa, xwa			; index * 2 (table has 16-bit entries)
-	add xwa, HDAE5000_SaveOptNameCheck_CaseTable		; jump table base
-	ld wa, (xwa + 0)		; load offset from table
-	lda xix, (.Lhbi_case0:24); base of case handlers (0x2853D6)
-	jp	t, (xix+wa)
-.Lhbi_case0:
-	; Case 0: PPI block copy from device
-	pushw 0x0023
-	pushw 0xA04E
-	pushw HDAE5000_Fmt_s_SaveOptNameCheck@hi16
-	pushw HDAE5000_Fmt_s_SaveOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_SaveOptNameCheck
-	ld xwa, (xde + 18)
-	push xwa
-	call HDAE5000_SPrintf
-	lda xsp, (xsp + 12)		; pop args
-	ld xhl, xiz			; return context ptr
-	jr t, .Lhbi_exit
-.Lhbi_case1:
-	ld xhl, 1:i3
-	jr t, .Lhbi_exit
-.Lhbi_case2:
-	ld xhl, 1:i3
-	jr t, .Lhbi_exit
-.Lhbi_case3:
-	ld xhl, 0:i3
-	jr t, .Lhbi_exit
-.Lhbi_case4:
-	ld xhl, 0:i3
-	jr t, .Lhbi_exit
-.Lhbi_case5:
-	lda xhl, (HDAE5000_RAM_SaveOptions+11:24)
-	jr t, .Lhbi_exit
-.Lhbi_case6:
-	ld xhl, 1:i3
-	jr t, .Lhbi_exit
-.Lhbi_special:
-	; Command 0x01E00082: init buffer then return 0
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr HDAE5000_TypeSel_BuildMask
-	ld xhl, 0:i3
-	jr t, .Lhbi_exit
-.Lhbi_default:
-	ld xhl, 0:i3
-.Lhbi_exit:
-	pop xiz
-	ret
+HDAE5000_SaveOptNameCheck:	.include "includes/generated/cc900/HDAE5000_SaveOptNameCheck.s"	; C: cc900/hdae5000_saveopt_name.c
 
 ; --- HD Configuration Manager and CHS Geometry ---
 HDAE5000_TypeSel_ShowSaveFlags:	; 0x28541C (3728 bytes)

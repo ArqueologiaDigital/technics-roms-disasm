@@ -1116,16 +1116,7 @@ HDAE5000_Str_Blank1:	; 0x2E21C4
 ; HDAE5000_AcHddNamingWindowProc_OnPositionLeft of the case for value 1+i; 9 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_AcHddNamingWindowProc_CaseTable:
-	.short	HDAE5000_AcHddNamingWindowProc_OnPositionLeft - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 1
-	.short	HDAE5000_AcHddNamingWindowProc_OnPositionRight - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 2
-	.short	HDAE5000_AcHddNamingWindowProc_OnPrevCharacter - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 3
-	.short	HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 4
-	.short	HDAE5000_AcHddNamingWindowProc_OnNextCharacter - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 5
-	.short	HDAE5000_AcHddNamingWindowProc_OnInsert - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 6
-	.short	HDAE5000_AcHddNamingWindowProc_OnDelete - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 7
-	.short	HDAE5000_AcHddNamingWindowProc_OnCenterName - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 8
-	.short	HDAE5000_AcHddNamingWindowProc_OnClear - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 9
+HDAE5000_AcHddNamingWindowProc_CaseTable:	.include "includes/generated/cc900/HDAE5000_AcHddNamingWindowProc_CaseTable.s"	; C: cc900/hdae5000_naming_window.c (cc900-data)
 HDAE5000_Str_Name:	; 0x2E21D8
 	; read by IvHddNamingProc at 0x2826DD (lda operand)
 	.asciz "Name"
@@ -1750,17 +1741,7 @@ HDAE5000_Fmt_s_SaveOptNameCheck:	; 0x2E293A
 ; .Lhbi_case0 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SaveOptNameCheck_CaseTable:
-	.short	.Lhbi_case1 - .Lhbi_case0	; 0x01E0003E
-	.short	.Lhbi_case2 - .Lhbi_case0	; 0x01E0003F
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00040 (default)
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00041 (default)
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00042 (default)
-	.short	.Lhbi_case3 - .Lhbi_case0	; 0x01E00043
-	.short	.Lhbi_case4 - .Lhbi_case0	; 0x01E00044
-	.short	.Lhbi_case5 - .Lhbi_case0	; 0x01E00045
-	.short	.Lhbi_case6 - .Lhbi_case0	; 0x01E00046
-	.short	.Lhbi_case0 - .Lhbi_case0	; 0x01E00047
+HDAE5000_SaveOptNameCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SaveOptNameCheck_CaseTable.s"	; C: cc900/hdae5000_saveopt_name.c (cc900-data)
 HDAE5000_Str_SVOP:	; 0x2E2952
 	; read by SaveOptSwEventCatch at 0x28560E (lda operand)
 	.asciz "SVOP"
@@ -2316,14 +2297,7 @@ HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2:	; 0x2E2D3E
 ; HDAE5000_Lbn_ShowEntry_NoDigitTyped of the case for value 0+i; 7 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_Lbn_ShowEntry_CaseTable:
-	.short	HDAE5000_Lbn_ShowEntry_NoDigitTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 0
-	.short	HDAE5000_Lbn_ShowEntry_DirHundredsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 1
-	.short	HDAE5000_Lbn_ShowEntry_DirTensTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 2
-	.short	HDAE5000_Lbn_ShowEntry_DirUnitsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 3
-	.short	HDAE5000_Lbn_ShowEntry_SongTensTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 4
-	.short	HDAE5000_Lbn_ShowEntry_SongUnitsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 5
-	.short	HDAE5000_Lbn_ShowEntry_Reset - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 6
+HDAE5000_Lbn_ShowEntry_CaseTable:	.include "includes/generated/cc900/HDAE5000_Lbn_ShowEntry_CaseTable.s"	; C: cc900/hdae5000_lbn_show.c (cc900-data)
 HDAE5000_Str_Blank26:	; 0x2E2D54
 	; read by FileLBNNameCheck at 0x2875C4 (pushed operand)
 	.asciz "                          "
