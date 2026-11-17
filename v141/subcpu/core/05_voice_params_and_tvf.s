@@ -1083,43 +1083,10 @@ DList_Unlink_SelfLink_Offsets16:	.include "includes/generated/cc900/DList_Unlink
 
 DList_Relink_Adjacent_Offsets16:	.include "includes/generated/cc900/DList_Relink_Adjacent_Offsets16.s"	; C: cc900/voice_params_and_tvf.c
 
-Voice_Retire_ToFreePool:
-	push xiz
-	ld xiz, xwa
-	bitm 0, (xiz + 34)
-	jr nz, Voice_Retire_ToFreePool_Return
-	ld xwa, (xiz + 29)
-	cp (xwa + 1), 0x0
-	jr z, Voice_Retire_ToFreePool_InsertLists
-	ld xwa, (xiz + 29)
-	decm8 1, (xwa + 1)
-
-Voice_Retire_ToFreePool_InsertLists:
-	lda xwa, (4907:16)
-	ld xbc, xwa
-	ld xwa, xiz
-	ld de, 6:i3
-	calr Voice_List_MoveToPool
-	lda xwa, (5249:16)
-	ld xbc, xwa
-	ld xwa, xiz
-	ld de, 1:i3
-	calr Voice_List_MoveToPartList
-	ld xwa, xiz
-	calr DList_Unlink_SelfLink_Offsets16
-	ld (xiz + 34), 0x1
-	ld (xiz + 37), 0x0
-	ld xwa, (xiz + 29)
-	ld xbc, xwa
-	ld a, (xwa + 1)
-	cp a, (xbc)
-	jr nc, Voice_Retire_ToFreePool_Return
-	ld xwa, (xiz + 29)
-	incm8 1, (xwa + 1)
-
-Voice_Retire_ToFreePool_Return:
-	pop xiz
-	ret
+Voice_Retire_ToFreePool:	.include "includes/generated/cc900/Voice_Retire_ToFreePool.s"	; C: cc900/voice_params_and_tvf_u_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Retire_ToFreePool_InsertLists, Voice_Retire_ToFreePool + 23
+	.set	Voice_Retire_ToFreePool_Return, Voice_Retire_ToFreePool + 80
 
 Voice_Demote_Decayed:	.include "includes/generated/cc900/Voice_Demote_Decayed.s"	; C: cc900/voice_params_and_tvf_a_7c.c
 
@@ -2368,34 +2335,9 @@ Int_ClampSignedToRange:	.include "includes/generated/cc900/Int_ClampSignedToRang
 ; before being negated; the coefficient itself comes from the ROM byte table at
 ; 0x00FF64 indexed by C. Out: XHL = (coeff * |depth|) >> (E & 0x0F).
 ; Called from Voice_Level_Triplet_ModByEnv (0x023B3D).
-PitchBend_Scale:
-	res 7, c
-	cp a, 0:i3
-	jr ge, PitchBend_Scale_Multiply
-	extz bc
-	lda xhl, (Voice_DepthMirror_Table:24)
-	ld	c, (xhl+bc)
-	extz bc
-	cpl a
-	inc 1, a
-
-; Signed multiply of the coefficient by the depth, then the optional right shift.
-PitchBend_Scale_Multiply:
-	ldfr_berp A, 0xF0
-	exts ix
-	ld a, c
-	extz wa
-	lda xbc, (PitchBend_ScaleCoeff_Table:24)
-	ld	l, (xbc+wa)
-	exts hl
-	ld wa, hl
-	muls	xwa, ix
-	ld hl, wa
-	ld a, e
-	and a, 0xF
-	ret z
-	sraa hl
-	ret
+PitchBend_Scale:	.include "includes/generated/cc900/PitchBend_Scale.s"	; C: cc900/voice_params_and_tvf_u_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PitchBend_Scale_Multiply, PitchBend_Scale + 25
 
 ; SYMMETRIC DETUNE CURVE LOOKUP.
 ; In: WA = signed amount. |WA| is clamped to 0x32 (50) and used to index the byte table
@@ -2442,76 +2384,12 @@ TVF_Clamp_Cutoff:	.include "includes/generated/cc900/TVF_Clamp_Cutoff.s"	; C: cc
 ; Called from all five filter builders at 0x023D42, 0x023E04, 0x023E76, 0x023F11,
 ; 0x023F80, 0x024002.
 ; See [UNCERTAIN]: this is a TVF (filter) computation, not portamento.
-TVF_Calc_Cutoff:
-	ld hl, de
-	ld xix, (xwa + 23)
-	cp hl, 0:i3
-	jr z, TVF_Calc_Cutoff_DepthScale
-	ld e, (xix + 54)
-	and e, 0xE0
-	srl e, 5
-	extz de
-	ld iy, de
-	sla iy, 7
-	ld e, (xwa + 12)
-	extz de
-	and de, 0x7F
-	extz xde
-	lda	xde, (xde+iy)
-	ld xiy, TVF_KeyFollow_Curves
-	add xiy, xde
-	ld e, (xiy)
-	ldfr_berp E, 0xF4
-	exts iy
-	ld de, hl
-	muls	xde, iy
-	ld hl, de
-	sra hl, 5
-	add bc, hl
-
-; Level-scaling stage: clamp (XWA+0x08) hi-byte between (patch+0x3A) and (patch+0x3B).
-TVF_Calc_Cutoff_DepthScale:
-	cp (xsp + 4), 0x0
-	jr z, TVF_Calc_Cutoff_AddBaseline
-	ld de, (xwa + 8)
-	and de, 0x7F00
-	srl de, 8
-	ld a, (xix + 59)
-	extz wa
-	cp de, wa
-	jr ule, TVF_Calc_Cutoff_ClampHi
-	ld a, (xix + 59)
-	ld e, a
-	extz de
-	jr TVF_Calc_Cutoff_Multiply
-
-; Lower clamp arm against (patch+0x3A).
-TVF_Calc_Cutoff_ClampHi:
-	ld a, (xix + 58)
-	extz wa
-	cp de, wa
-	jr nc, TVF_Calc_Cutoff_Multiply
-	ld a, (xix + 58)
-	ld e, a
-	extz de
-
-; Subtract the (patch+0x39) reference, multiply by the stacked depth, >> 5.
-TVF_Calc_Cutoff_Multiply:
-	ld a, (xix + 57)
-	extz wa
-	sub de, wa
-	ld a, (xsp + 4)
-	exts wa
-	muls	xwa, de
-	sra wa, 5
-	add bc, wa
-
-; Add the +0x18 bias and clamp to 0..0x78.
-TVF_Calc_Cutoff_AddBaseline:
-	add bc, 0x18
-	ld wa, bc
-	calr TVF_Clamp_Cutoff
-	retd 0x2
+TVF_Calc_Cutoff:	.include "includes/generated/cc900/TVF_Calc_Cutoff.s"	; C: cc900/voice_params_and_tvf_u_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TVF_Calc_Cutoff_DepthScale, TVF_Calc_Cutoff + 66
+	.set	TVF_Calc_Cutoff_ClampHi, TVF_Calc_Cutoff + 100
+	.set	TVF_Calc_Cutoff_Multiply, TVF_Calc_Cutoff + 116
+	.set	TVF_Calc_Cutoff_AddBaseline, TVF_Calc_Cutoff + 135
 
 ; SECOND CUTOFF CONTRIBUTION VARIANT - same shape as TVF_Calc_Cutoff but the
 ; key-follow depth comes from (patch+0x10) and the curve selector from (patch+0x0F),
@@ -2671,66 +2549,10 @@ EGEnv_Compute_A_Simple_Dup:	.include "includes/generated/cc900/EGEnv_Compute_A_S
 ; Envelope value B: identical structure to EGEnv_Compute_A but the record base is
 ; 0x044257 (= 0x04424E + 9, the second 9-byte sub-record) and the base-value table is
 ; 0x010B64 instead of 0x010A64. Callers 0x0297CD, 0x02F6F6.
-EGEnv_Compute_B:
-	dec 4, xsp
-	push xiz
-	extz wa
-	muls wa, 0x1B
-	lda xbc, (Payload_Bss_Start+0x53e1:24)
-	exts xwa
-	add xwa, xbc
-	ld (xsp + 4), xwa
-	ld a, (xwa + 1)
-	extz wa
-	add wa, wa
-	lda xbc, (EGEnv_BaseCurve_B:24)
-	ld	wa, (xbc+wa)
-	ld iz, wa
-	extz xiz
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 2)
-	ld xbc, 0:i3
-	ld c, a
-	ld xwa, xiz
-	call Math_Multiply32
-	ld xiz, xhl
-	ld xwa, (xsp + 4)
-	cp (xwa + 5), 0x0
-	jr z, EGEnv_Compute_B_Normalise
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 6)
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 5)
-	ld e, a
-	extz de
-	ld xwa, xiz
-	calr EnvDepth_Cap
-	sub xiz, xhl
-
-; >> 7 and clamp the accumulator to 0x1FFF.
-EGEnv_Compute_B_Normalise:
-	srl xiz, 7
-	cp xiz, 0x1FFF
-	jr ule, EGEnv_Compute_B_FormatBits
-	ld xiz, 0x1FFF
-
-; OR in the 2-bit mode field fetched from the 0x011511 table.
-EGEnv_Compute_B_FormatBits:
-	ld xwa, (xsp + 4)
-	ld a, (xwa)
-	and a, 0x3
-	extz wa
-	add wa, wa
-	lda xbc, (EGEnv_ModeBits_Table:24)
-	ld	wa, (xbc+wa)
-	ld bc, iz
-	ld hl, bc
-	or hl, wa
-	pop xiz
-	inc 4, xsp
-	ret
+EGEnv_Compute_B:	.include "includes/generated/cc900/EGEnv_Compute_B.s"	; C: cc900/voice_params_and_tvf_t_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EGEnv_Compute_B_Normalise, EGEnv_Compute_B + 96
+	.set	EGEnv_Compute_B_FormatBits, EGEnv_Compute_B + 112
 
 ; Simple envelope value for sub-record B: base 0x044257, table 0x010964, clamp 0x3FFF.
 ; Callers 0x0299DF, 0x02F704.

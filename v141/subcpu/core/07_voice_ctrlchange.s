@@ -1421,40 +1421,10 @@ Voice_Pitch_ClampRange:	.include "includes/generated/cc900/Voice_Pitch_ClampRang
 ; Only caller: Voice_Manager_PollBank_SlotLoop (0x022C58 region), which XORs the freshly read
 ; active-voice bitmap from 0x100000 against its previous copy and calls this for every slot
 ; whose bit just went 1 -> 0.
-ToneGen_SilenceChannel:
-	dec 2, xsp
-	ld (xsp), a
-	res	7, (P6:8)
-	ld a, (xsp)
-	add a, 0xC0
-	extz wa
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x0000
-	jr ToneGen_SilenceChannel_NopCont1
-
-; Landing pad of the `jr T` bus-settling delay after the first data write (3 nops).
-ToneGen_SilenceChannel_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld a, (xsp)
-	extz wa
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x7e00
-	jr ToneGen_SilenceChannel_NopCont2
-
-; Landing pad of the `jr T` bus-settling delay after the 0x7E00 free write (3 nops).
-ToneGen_SilenceChannel_NopCont2:
-	nop
-	nop
-	nop
-	inc 2, xsp
-	ret
+ToneGen_SilenceChannel:	.include "includes/generated/cc900/ToneGen_SilenceChannel.s"	; C: cc900/voice_ctrlchange_u_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_SilenceChannel_NopCont1, ToneGen_SilenceChannel + 32
+	.set	ToneGen_SilenceChannel_NopCont2, ToneGen_SilenceChannel + 60
 
 ; NAME LEFT AS-IS (the reference file's existing non-LABEL_ name). The LLVM build calls this
 ; address Voice_Build_Register_Set. Documentation only; nothing is renamed.

@@ -136,6 +136,17 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
     alias, cnames = {'C9H_mulls': 'Math_Multiply32', 'C9H_mullu': 'Math_Multiply32',
                      'C9H_divls': 'Long_SignedDiv', 'C9H_remls': 'Long_SignedRem',
                      'C9H_remlu': 'Int_UnsignedRemainder'}, {}
+    # CANDIDATE floating-point pairs (round 19): V4.23's names (sub_fp_19a/b.asm) by meaning, not yet confirmed by a
+    # match; a match confirms a pair, and only confirmed pairs go into scripts/build/cc900_runtime_names.tsv.
+    for v, t in (('_fadd_f', 'FP_fadd'), ('_fsub_f', 'FP_fsub'), ('_fmul_f', 'FP_fmul'), ('_fdiv_f', 'FP_fdiv'),
+                 ('_fcmp_f', 'FP_fcmp'), ('_fadd_d', 'FP_dadd'), ('_fsub_d', 'FP_dsub'), ('_fmul_d', 'FP_dmul'),
+                 ('_fdiv_d', 'FP_ddiv'), ('_fcmp_d', 'FP_dcmp'), ('_fld_df', 'FP_ftod'), ('_fld_fd', 'FP_dtof'),
+                 ('_fld_lf', 'FP_ftoi'), ('_pow', 'FP_pow'), ('_sin', 'FP_sin'), ('_cos', 'FP_cos'),
+                 ('_tan', 'FP_tan'), ('_fabs', 'FP_fabs'), ('_exp', 'FP_exp'), ('_log', 'FP_log'),
+                 ('_frexp', 'FP_frexp'), ('_ldexp', 'FP_ldexp'), ('_modf', 'FP_modf')):
+        if os.environ.get('SUB_V423_NO_FP') is None:
+            for k in (v, '.' + v, v.lstrip('_')):
+                alias.setdefault(k, t)
     for c in list(cfiles) + glob.glob(os.path.join(REPO, tree, 'cc900', '*.c')):
         lm = fw.label_map(c)
         alias.update(lm)

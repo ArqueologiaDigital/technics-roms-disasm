@@ -14,74 +14,46 @@
   396  135 DSP_AlgoType_Dispatch1_Arms                  core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   395  131 Audio_Cmd_EffParam_Grp0                      core/08_voice_noteon_and_tonegen.s         abs  erp 14 nop   0 runtime -  calr 
   387  127 WaveSel_Cache_VelSplitPtr                    core/10_dsp_voice_params.s                 rel  erp  0 nop   0 runtime -  calr WaveSel_StageA1_FromPatchBlock
-  386  129 VoiceNoteParam_UpdateLoop                    core/10_dsp_voice_params.s                 rel  erp 19 nop   0 runtime -  calr Algo_SubTable_DispatchA Algo_SubTable_DispatchB Algo_SubTable_DispatchC
   369  121 WaveSel_StageA1_FindVelSplit                 core/10_dsp_voice_params.s                 rel  erp  3 nop   0 runtime Math_Multiply32  calr WaveSel_StageA1_SelectTables
   366  127 DSP_AlgoType_Dispatch2_Arms                  core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   344  134 DSP_SetCoeff_RouteComplex                    core/10_dsp_voice_params.s                 leaf erp  2 nop   0 runtime -  calr 
-  341  133 DSP_SlotParam_Write_From_Cache_B             core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   0 runtime -  calr 
   339  105 Voice_Part_SetStateAndReinit                 core/08_voice_noteon_and_tonegen.s         abs  erp  1 nop   0 runtime -  calr 
-  332  132 DSP_SlotParam_Write_From_Cache               core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   0 runtime -  calr 
   304  103 DSP_AlgoType_D3_Arm_Types0to5_7              core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   291  110 DSP_SetCoeff_RouteWithCallback               core/10_dsp_voice_params.s                 abs  erp  3 nop   0 runtime -  calr 
   277   99 DSP_SetVoiceCoefficients                     core/10_dsp_voice_params.s                 abs  erp  1 nop   0 runtime -  calr 
   263   98 RoutingFlag_Encode                           core/10_dsp_voice_params.s                 leaf erp  2 nop   0 runtime -  calr 
   262   98 VoiceAlloc_Apply_Algo_Group0                 core/08_voice_noteon_and_tonegen.s         abs  erp  9 nop   0 runtime -  calr 
   261   99 VoiceAlloc_Apply_Algo_Group1                 core/08_voice_noteon_and_tonegen.s         abs  erp  9 nop   0 runtime -  calr 
-  259   98 Voice_Part_ResetSlotRouting                  core/10_dsp_voice_params.s                 rel  erp  1 nop   0 runtime Math_Multiply32  calr AlgoFlag_Write AlgoFlag_Write_Bit3 EFF_RoutingInit
-  256   95 AlgoFlag_Write                               core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
-  256   95 AlgoFlag_Write_Bit3                          core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   254   78 ToneDB_Find_PatchRecord                      core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime Math_Multiply32  calr 
   252   98 ToneGen_WriteExtParams_15_Banked             core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  24 runtime -  calr 
   251   97 VoiceAlloc_Apply_Algo_Group2                 core/08_voice_noteon_and_tonegen.s         abs  erp  9 nop   0 runtime -  calr 
   242   78 DSP_VoiceParamReadWrite                      core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime Math_Multiply32  calr 
   227   78 Audio_Cmd_ToneEdit_Field_Write_And_Reply     core/08_voice_noteon_and_tonegen.s         abs  erp  3 nop   0 runtime -  calr 
-  224   71 DSP_ChanFreq_WritePacket1                    core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   216   85 ToneGen_WriteLevelBurst                      core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  24 runtime -  calr 
   216   70 ToneDB_Resolve_NamedToneRecord               core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime Math_Multiply32  calr 
   194   81 ToneGen_WriteLevelPair                       core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  20 runtime -  calr 
   191   63 Audio_Cmd_DSPUnit_Param                      core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-  186   66 VoiceParam_SubSlot_Apply_Catalog64           core/08_voice_noteon_and_tonegen.s         abs  erp  5 nop   0 runtime -  calr 
   186   68 VoiceParam_Action_ToneEdit                   core/10_dsp_voice_params.s                 rel  erp  0 nop   0 runtime -  calr Audio_Cmd_DSPGlobal_Param_Store Audio_Cmd_DSPUnit_Param Audio_Cmd_EffectParam_Dispatch Audio_Cmd_PatchByte_Write_And_Echo Audio_Cmd_ToneEdit_Dispatch Audio_Cmd_ToneEdit_Field_Write_And_Reply Audio_Cmd_ToneEdit_Write_And_Reply VoiceAlloc_CheckAndInit
   184   72 ToneGen_WriteExtParams_TypeDispatch          core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  16 runtime -  calr 
   176   70 ToneGen_WriteVoiceParams_Ext                 core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  20 runtime -  calr 
   166   49 WaveSel_StageA1_SelectTables                 core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   156   58 DSP_WriteVoiceParam                          core/10_dsp_voice_params.s                 rel  erp  0 nop   0 runtime Math_Multiply32  calr DSP_ParamWrite_BlockCopy
   155   60 DSP_VoiceParam_Dispatch                      core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
-  150   54 VoiceParam_CustomTone_Select                 core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime Math_Multiply32  calr 
-  147   51 Algo67_LUTOffset_Check                       core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   144   53 VoiceBuf_TypeSelector_MatchEpilogue          core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
-  144   45 Voice_SecondaryParam_Fetch2                  core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
   142   45 Audio_Cmd_ToneEdit_Write_And_Reply           core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
   136   55 ToneGen_WriteVoiceParams_Ext2                core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  16 runtime -  calr 
   134   52 ToneGen_ReadPitch_AndScale                   core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   8 runtime Math_Multiply32  calr 
-  134   45 VoiceStruct_BulkInit                         core/08_voice_noteon_and_tonegen.s         rel  erp  8 nop   0 runtime -  calr BlockCopy_Words_BC_to_HL
-  134   50 WaveSel_StageA1_FromPatchBlock               core/10_dsp_voice_params.s                 rel  erp  2 nop   0 runtime -  calr WaveSel_StageA1_FindVelSplit
   128   51 ToneGen_WriteExtParams_56                    core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  12 runtime -  calr 
   128   51 ToneGen_WriteExtParams_56b                   core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  12 runtime -  calr 
   128   51 ToneGen_WriteExtParams_15                    core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  12 runtime -  calr 
   128   48 VoiceParam_Set_Tone_Option_CutoffOffset      core/08_voice_noteon_and_tonegen.s         rel  erp  0 nop   0 runtime -  calr VoiceAlloc_Apply_Algo_Group0
   127   46 Audio_Cmd_ToneEdit_Reply_Case_Pan            core/08_voice_noteon_and_tonegen.s         rel  erp  0 nop   0 runtime -  calr DSP_SlotParam_Read_To_Cache_B DSP_SlotParam_Write_From_Cache_B
-  127   40 Algo_SubTable_Bit15Dispatch                  core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
-  124   45 WaveSel_StageA2_FromToneRec                  core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
   123   49 ToneGen_Write_ExtParam_05C0_Strobe           core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop  12 runtime -  calr 
-  122   40 DSP_ChanFreq_WritePacket2                    core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
-  116   41 DSP_SlotParam_Read_To_Cache_B                core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   0 runtime -  calr 
-  114   35 Algo_SubTable_JumpTable3                     core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
-  107   34 Algo_SubTable_DispatchC                      core/10_dsp_voice_params.s                 abs  erp  2 nop   0 runtime -  calr 
-  105   39 DSP_SlotParam_Read_To_Cache                  core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   0 runtime -  calr 
-  101   32 Algo_SubTable_DispatchB                      core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
-   96   32 Algo_SubTable_DispatchA                      core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
-   96   34 Algo_SubTable_JumpTable2                     core/10_dsp_voice_params.s                 rel  erp  7 nop   0 runtime -  calr Algo_SubTable_PanTrim_From_PartFlags
    94   38 ToneGen_WriteExtParams_56_Alt                core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   8 runtime -  calr 
    94   38 ToneGen_WriteExtParams_15_Alt                core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   8 runtime -  calr 
    91   31 ToneDB_Find_ToneRecord_CoeffPath             core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
-   89   32 CustomTone_CopySubUnitRecord                 core/08_voice_noteon_and_tonegen.s         rel  erp  0 nop   0 runtime -  calr BlockCopy_Words_BC_to_HL
-   89   37 DSP_EffParam_Apply_T0                        core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-   88   34 Voice_DSPOut_B_Type0To3                      core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-   86   30 Algo_SubTable_JumpTable1                     core/10_dsp_voice_params.s                 leaf erp  0 nop   0 runtime -  calr 
    80   33 ToneGen_WriteEnvSegments                     core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   8 runtime -  calr 
    80   33 ToneGen_WriteSegRegs_SameLevel               core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   8 runtime -  calr 
-   80   31 Voice_DSPOut_A_Type0To3                      core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
    71   31 ToneGen_WriteVoicePitch                      core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   8 runtime -  calr 
    71   29 ToneGen_WriteExtParam_TypeDispatch_Single    core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   8 runtime -  calr 
    66   20 DSP_AlgoType_Dispatch3                       core/10_dsp_voice_params.s                 abs  erp  2 nop   0 runtime -  calr 
@@ -90,15 +62,8 @@
    64   19 DSP_AlgoType_Dispatch1                       core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
    64   19 DSP_AlgoType_Dispatch2                       core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
    63   19 Audio_Cmd_EffectParam_Dispatch               core/08_voice_noteon_and_tonegen.s         abs  erp  1 nop   0 runtime -  calr 
-   61   23 VoiceSubSlot_Init                            core/08_voice_noteon_and_tonegen.s         rel  erp  0 nop   0 runtime -  calr BlockCopy_Words_BC_to_HL
    60   20 InterCPU_SendEditBufferToMain                core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-   60   19 Voice_DSPOut_Apply_A                         core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-   60   19 Voice_DSPOut_Apply_B                         core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-   60   21 Audio_Cmd_DSPGlobal_Param_Store              core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   0 runtime -  calr 
-   58   17 DSP_EffParam_Apply_By_AlgoType               core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
-   58   18 Voice_DSPOut_Second_A                        core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
    58   18 DSP_SetCoeff_MasterConfig                    core/10_dsp_voice_params.s                 abs  erp  0 nop   0 runtime -  calr 
-   54   19 Voice_DSPOut_Second_A_Slot1                  core/08_voice_noteon_and_tonegen.s         abs  erp  0 nop   0 runtime -  calr 
    34   15 ToneGen_WriteExtParam_600                    core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   4 runtime -  calr 
    34   15 ToneGen_WriteReg0640                         core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   4 runtime -  calr 
    34   15 ToneGen_WriteExtParam_1C0_Single             core/08_voice_noteon_and_tonegen.s         leaf erp  0 nop   4 runtime -  calr 

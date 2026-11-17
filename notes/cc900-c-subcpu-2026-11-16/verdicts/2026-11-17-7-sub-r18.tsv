@@ -1,0 +1,77 @@
+function	bytes	matches	best_diff
+AlgoFlag_Write	256	sub_W_18a@Xr sub_W_18c@Xr	
+AlgoFlag_Write_Bit3	256	sub_W_18a@Xr sub_W_18c@Xr	
+Algo_SubTable_DispatchB	187	sub_W_18a@Xr sub_W_18b@Xr	
+AudioChannel_AllVoices_Update_Variant3	115	-	+20 sub_V_18c@Xr
+AudioChannel_Handler_Cmd04_07	513	-	+19 sub_V_18c@Xr
+AudioChannel_Handler_Cmd08_0B	516	-	+19 sub_V_18c@Xr
+AudioChannel_Handler_Cmd0C_0F	518	-	+19 sub_V_18c@Xr
+AudioChannel_Handler_Cmd10_13	526	-	+19 sub_V_18c@Xr
+AudioChannel_Handler_Cmd14_17	529	-	+19 sub_V_18c@Xr
+AudioChannel_Handler_Cmd18_1B	531	-	+19 sub_V_18c@Xr
+AudioMod_Apply_Slot_Field29	288	-	+1 sub_V_18c@Xr
+AudioMod_Apply_Slot_Field2A	288	-	+1 sub_V_18c@Xr
+AudioMod_Scale_To_LevelPairShift	74	-	+4 sub_V_18c@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_V_18c@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_V_18c@Xr
+AudioMod_Scale_To_Part_1F	77	-	+4 sub_V_18c@Xr
+Audio_Cmd_DSPGlobal_Param_Store	60	sub_W_18a@Xr sub_W_18c@Xr	
+Audio_Cmd_PatchByte_Write_And_Echo	65	-	+18 sub_W_18c@Xr
+DSP1_ResolveStreamPtr	33	-	+14 sub_T_18c@Xr
+DSP_BytecodeInterpreter_Init	1933	sub_X_18a@Xr sub_X_18b@Xr	
+DSP_ChanFreq_WritePacket1	224	sub_W_18a@Xr	
+DSP_ChanFreq_WritePacket2	122	sub_W_18a@Xr sub_W_18c@Xr	
+DSP_EFFParam_DiffAllAndFlag	641	-	+6 sub_T_18c@Xr
+DSP_EffParam_Apply_By_AlgoType	147	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+DSP_FlushAllSlots	183	-	+30 sub_T_18c@Xr
+DSP_InitChannelSlot	240	-	+6 sub_T_18c@Xr
+DSP_ParamInterp_3Point_WithOffset	118	-	+104 sub_X_18b@Xr
+DSP_RingBuf_Read	43	-	+6 sub_T_18c@Xr
+DSP_SlotParam_Read_To_Cache_B	116	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+DSP_VoiceCoeffRoute2	430	sub_T_18c@Xr	
+DSP_WriteAlgoBuffer	250	-	+74 sub_T_18a@Xr
+DSP_WriteVoiceParam	168	-	+43 sub_W_18b@Xr
+Debug_Print_Word	32	-	+16 sub_T_18c@Xr
+EFF_DspChannel_InitFlags	1848	-	+51 sub_T_18c@Xr
+EFF_ParamIterator_Process	320	-	+104 sub_T_18c@Xr
+EFF_SecondaryLinkPath	232	sub_T_18b@Xr	
+EFF_SlotActive_UpdateFlags	370	sub_T_18a@Xr sub_T_18b@Xr	
+EFF_VolumeLoop	283	sub_T_18a@Xr sub_T_18b@Xr	
+EGEnv_Compute_B	144	sub_T_18a@Xr sub_T_18b@Xr	
+InterCPU_DMA_Send	0	-	llvm-mc cannot assemble the translation
+InterCPU_SendEditBufferToMain	58	-	+0 sub_W_18c@Xr
+Keybed_Read_Event	88	-	+16 sub_X_18c@Xr
+PitchBend_Scale	62	sub_U_18a@Xr sub_U_18b@Xr sub_U_18c@Xr	
+RingBuf_ReadByte	43	-	+6 sub_T_18c@Xr
+TVF_Calc_Cutoff	147	sub_U_18a@Xr sub_U_18c@Xr	
+TVF_Emit_Offset_Both	120	-	+71 sub_U_18c@Xr
+TVF_Lookup_Depth_Amount	168	-	+5 sub_U_18c@Xr
+ToneDB_Find_PatchRecord	246	-	+21 sub_W_18c@Xr
+ToneDB_Find_ToneRecord_CoeffPath	89	-	+30 sub_W_18c@Xr
+ToneDB_Resolve_NamedToneRecord	216	-	+40 sub_W_18b@Xr
+ToneGen_SilenceChannel	66	sub_U_18a@Xr sub_U_18b@Xr sub_U_18c@Xr	
+VoiceParam_CustomTone_Select	150	sub_W_18a@Xr sub_W_18b@Xr	
+VoiceParam_Set_Tone_Option	193	-	+12 sub_T_18c@Xr
+VoiceParam_SubSlot_Apply_Catalog64	186	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+VoiceState_SwapSlot_DE_BC	173	-	+4 sub_U_18b@Xr
+VoiceState_SwapSlot_HL_IY	261	-	+4 sub_U_18b@Xr
+VoiceStruct_BulkInit	134	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+Voice_Calc_LevelPair_FixedAtk	340	-	+225 sub_V_18b@Xr
+Voice_Clear_HoldBit	77	-	+52 sub_U_18c@Xr
+Voice_ComputePitch	396	sub_V_18c@Xr	
+Voice_DSPOut_Apply_A	140	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+Voice_DSPOut_Apply_B	148	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+Voice_DSPOut_Second_A	112	sub_W_18a@Xr sub_W_18b@Xr sub_W_18c@Xr	
+Voice_Freq_WriteLeft	284	-	+133 sub_U_18a@Xr
+Voice_InterpolateNoteCurve	138	-	+3 sub_V_18b@Xr
+Voice_InterpolatePanCurve	137	sub_V_18b@Xr	
+Voice_LoadFilterTable_Ch	239	sub_V_18a@Xr sub_V_18c@Xr	
+Voice_LoadPitchTable_Ch	239	sub_V_18a@Xr sub_V_18c@Xr	
+Voice_LoadToneTable_Ch	173	sub_V_18a@Xr sub_V_18c@Xr	
+Voice_PortaLevel_Compute	236	-	+1 sub_U_18c@Xr
+Voice_Retire_ToFreePool	82	sub_U_18a@Xr sub_U_18b@Xr sub_U_18c@Xr	
+Voice_ScanSlots_ReassignSources	205	-	+51 sub_U_18c@Xr
+Voice_SecondaryParam_Fetch2	144	sub_W_18a@Xr sub_W_18b@Xr	
+Voice_Slot_CalcArticParams	325	-	+80 sub_U_18c@Xr
+WaveSel_StageA1_SelectTables	174	-	+152 sub_W_18b@Xr
+WaveSel_StageB_Build_Reg040	183	-	+40 sub_U_18c@Xr

@@ -2314,56 +2314,10 @@ BlockCopy_Words_BC_to_HL:	.include "includes/generated/cc900/BlockCopy_Words_BC_
 ;   0x66 bytes from the pointer at part+0x06        -> 0x044FCE + 0x0000
 ;   for i = 0..3: 0x51 bytes from the pointer at part + 0x6E + i*0x25 -> 0x044FCE + 0x66 + i*0x51
 ; That fixes the staging layout used everywhere else in the region.
-VoiceStruct_BulkInit:
-	dec 2, xsp
-	pushw_erp 0xFA
-	ld (xsp + 2), a
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xbc+wa)
-	lda xwa, (Payload_Bss_Start+0x6158:24)
-	ld xbc, xwa
-	ld xwa, xde
-	ldw de, 0x66
-	calr BlockCopy_Words_BC_to_HL
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jr nc, VoiceStruct_BulkInit_Return
-
-VoiceStruct_BulkInit_SubSlotLoop:
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	ld	xde, (xwa+de)
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x51
-	add wa, 0x66
-	lda xbc, (Payload_Bss_Start+0x6158:24)
-	exts xwa
-	add xwa, xbc
-	ld xbc, xwa
-	ld xwa, xde
-	ldw de, 0x51
-	calr BlockCopy_Words_BC_to_HL
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jr c, VoiceStruct_BulkInit_SubSlotLoop
-
-VoiceStruct_BulkInit_Return:
-	popw_erp 0xFA
-	inc 2, xsp
-	ret
+VoiceStruct_BulkInit:	.include "includes/generated/cc900/VoiceStruct_BulkInit.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceStruct_BulkInit_SubSlotLoop, VoiceStruct_BulkInit + 50
+	.set	VoiceStruct_BulkInit_Return, VoiceStruct_BulkInit + 128
 
 ; ** MISIDENTIFIED AS DATA in the reference file / emitted with decimal literals in the LLVM
 ; source under the name VoiceStruct_BulkInit_AltData; it is ordinary code. ** Called from
@@ -2707,73 +2661,7 @@ VoiceParam_SubSlot_Apply_Catalog50:	.include "includes/generated/cc900/VoicePara
 ; A = part, BC = catalogue index. Writes catalogue entry +0x0E into (sub-slot record +0x04)
 ; indexed by 3 + 2*k, and entry +0x0F into the following byte, then tail-jumps into
 ; WaveSel_Cache_SetDescPtr (0x0328E2).
-VoiceParam_SubSlot_Apply_Catalog64:
-	ld	xhl, (ToneDB_RootPtr:24)
-	ld	xhl, (xhl+100)
-	ld	xix, (ToneDB_RelBase:24)
-	add	xix, xhl
-	ldfr_berp	e, 226
-	and_erpb	226, 15
-	and	e, 240
-	srl	e, 4
-	ld	w, e
-	ldto_berp	e, 226
-	extz	de
-	muls	de, 37
-	ld	iy, de
-	add	iy, 110
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xhl, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xhl
-	lda	xhl, (xde+iy)
-	ld	e, w
-	extz	de
-	add	de, de
-	ld	iy, de
-	inc	3, iy
-	ld	xhl, (xhl+4)
-	ld	de, bc
-	extz	xde
-	sll	xde, 4
-	add	xde, xix
-	ld	e, (xde+14)
-	ld	(xhl+iy), e
-	ldto_berp	e, 226
-	extz	de
-	muls	de, 37
-	ld	iy, de
-	add	iy, 110
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xhl, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xhl
-	lda	xhl, (xde+iy)
-	ld	e, w
-	extz	de
-	add	de, de
-	ld	iy, de
-	inc	3, iy
-	ld	xde, (xhl+4)
-	lda	xde, (xde+iy)
-	extz	xbc
-	sll	xbc, 4
-	add	xbc, xix
-	ld	c, (xbc+15)
-	ld	(xde+1), c
-	ld	l, a
-	extz	hl
-	ldto_berp	a, 226
-	ld	c, a
-	extz	bc
-	ld	e, w
-	extz	de
-	ld	wa, hl
-	jp	WaveSel_Cache_SetDescPtr
+VoiceParam_SubSlot_Apply_Catalog64:	.include "includes/generated/cc900/VoiceParam_SubSlot_Apply_Catalog64.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
 ; ** Same blob; unnamed in both sources. ** Called from 0x02EF20.
 ; E = new value, (XSP+2) = part index, C = tone-option index (0..6). Stores E into the staging
 ; tone-option array at 0x044FCE + 0x1D8 + C, then dispatches through the 7-entry, 2-byte
@@ -2878,65 +2766,12 @@ VoiceParam_Set_Tone_Option_Epilogue:
 ; selected custom tone" global that the next three routines all read back. Then for k = 0..1 it
 ; copies from (0x04531C) + slot*0x50 + k*0x15 + 0x4AB7 into 0x044FCE + 0x1F4 + k*5:
 ;   dest[0] = src[0x0F] & 7 ; dest[1..4] = src[0x11..0x14].
-VoiceParam_CustomTone_Select:
-	dec	2, xsp
-	push xiz
-	ld	(xsp+4), a
-	ld	xbc, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xsp+4)
-	ld	(xbc+29351), a
-	ld	qiz, 0
-	cp	qiz, 2
-	jr	nc, VoiceParam_CustomTone_Select_Epilogue
-VoiceParam_CustomTone_Select_Loop:
-	ld	a, (xsp+4)
-	extz	wa
-	muls	wa, 80
-	ld	iz, wa
-	ld	wa, qiz
-	extz	xwa
-	ld	xbc, 21
-	call	Math_Multiply32
-	lda	xhl, (xhl+iz)
-	add	xhl, (Payload_Bss_Start+0x64a6:24)
-	lda	xhl, (xhl+19127)
-	ld	wa, qiz
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	add	xbc, 500
-	lda	xde, (Payload_Bss_Start+0x6158:24)
-	add	xde, xbc
-	ld	a, (xhl+15)
-	and	a, 7
-	ld	(xde), a
-	ld	bc, 0:i3
-	cp	bc, 4:i3
-	jr	nc, VoiceParam_CustomTone_Select_Skip
-VoiceParam_CustomTone_Select_Loop2:
-	ld	wa, bc
-	extz	xwa
-	inc	1, xwa
-	ld	xix, xwa
-	add	xix, xde
-	ld	wa, bc
-	extz	xwa
-	add	xwa, 17
-	add	xwa, xhl
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, bc
-	cp	bc, 4:i3
-	jr	c, VoiceParam_CustomTone_Select_Loop2
-VoiceParam_CustomTone_Select_Skip:
-	inc	1, qiz
-	cp	qiz, 2
-	jr	c, VoiceParam_CustomTone_Select_Loop
-VoiceParam_CustomTone_Select_Epilogue:
-	pop xiz
-	inc	2, xsp
-	ret
+VoiceParam_CustomTone_Select:	.include "includes/generated/cc900/VoiceParam_CustomTone_Select.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceParam_CustomTone_Select_Loop, VoiceParam_CustomTone_Select + 27
+	.set	VoiceParam_CustomTone_Select_Loop2, VoiceParam_CustomTone_Select + 106
+	.set	VoiceParam_CustomTone_Select_Skip, VoiceParam_CustomTone_Select + 138
+	.set	VoiceParam_CustomTone_Select_Epilogue, VoiceParam_CustomTone_Select + 146
 ; ** Same blob; unnamed in both sources. ** Called from 0x02EF96. WA = wave-catalogue index;
 ; the custom-tone slot comes from the (0x04531C)+0x72A7 latch, not from an argument.
 ; Catalogue = (0x045310) + (0x045314)[0x80], 0x10-byte entries. Calls
@@ -3302,273 +3137,51 @@ DSP_EffParam_Copy_V7_CopyRemaining:
 ;   type 0->V0/0  1->V0/1  2->V0/2  3->V0/3  4->V1/4  5->V1/5  6->V2/6  7->V3/7
 ;   type 8->V4/8  9->V5/9  A->V6/0x0A  B->V7/0x0B
 ; Called from 0x02FC2D (opcode 0x5D with rec+5 == 0x0F).
-DSP_EffParam_Apply_By_AlgoType:
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld	c, (xbc+93)
-	and	c, 15
-	extz	bc
-	cp	bc, 0:i3
-	ret	mi
-	cp	bc, 11
-	ret	gt
-	add	bc, bc
-	lda	xix, (DSP_EFFPARAM_APPLY_JUMPTABLE:24)
-	ld	bc, (xix+bc)
-	lda	xix, (DSP_EffParam_Apply_T0:24)
-	jp	t, (xix+bc)
-; Algorithm type 0: DSP_EffParam_Copy_V0 with descriptor 0.
-DSP_EffParam_Apply_T0:
-	extz	wa
-	ld	bc, 0:i3
-	jrl	t, DSP_EffParam_Copy_V0
-; Algorithm type 1: DSP_EffParam_Copy_V0 with descriptor 1.
-DSP_EffParam_Apply_T1:
-	extz	wa
-	ld	bc, 1:i3
-	jrl	t, DSP_EffParam_Copy_V0
-; Algorithm type 2: DSP_EffParam_Copy_V0 with descriptor 2.
-DSP_EffParam_Apply_T2:
-	extz	wa
-	ld	bc, 2:i3
-	jrl	t, DSP_EffParam_Copy_V0
-; Algorithm type 3: DSP_EffParam_Copy_V0 with descriptor 3.
-DSP_EffParam_Apply_T3:
-	extz	wa
-	ld	bc, 3:i3
-	jrl	t, DSP_EffParam_Copy_V0
-; Algorithm type 4: DSP_EffParam_Copy_V1 with descriptor 4.
-DSP_EffParam_Apply_T4:
-	extz	wa
-	ld	bc, 4:i3
-	jrl	t, DSP_EffParam_Copy_V1
-; Algorithm type 5: DSP_EffParam_Copy_V1 with descriptor 5.
-DSP_EffParam_Apply_T5:
-	extz	wa
-	ld	bc, 5:i3
-	jrl	t, DSP_EffParam_Copy_V1
-; Algorithm type 6: DSP_EffParam_Copy_V2 with descriptor 6.
-DSP_EffParam_Apply_T6:
-	extz	wa
-	ld	bc, 6:i3
-	jrl	t, DSP_EffParam_Copy_V2
-; Algorithm type 7: DSP_EffParam_Copy_V3 with descriptor 7.
-DSP_EffParam_Apply_T7:
-	extz	wa
-	ld	bc, 7:i3
-	jrl	t, DSP_EffParam_Copy_V3
-; Algorithm type 8: DSP_EffParam_Copy_V4 with descriptor 8.
-DSP_EffParam_Apply_T8:
-	extz	wa
-	ldw	bc, 8
-	jrl	t, DSP_EffParam_Copy_V4
-; Algorithm type 9: DSP_EffParam_Copy_V5 with descriptor 9.
-DSP_EffParam_Apply_T9:
-	extz	wa
-	ldw	bc, 9
-	jrl	t, DSP_EffParam_Copy_V5
-; Algorithm type 0x0A: DSP_EffParam_Copy_V6 with descriptor 0x0A.
-DSP_EffParam_Apply_TA:
-	extz	wa
-	ldw	bc, 10
-	jrl	t, DSP_EffParam_Copy_V6
-; Algorithm type 0x0B: DSP_EffParam_Copy_V7 with descriptor 0x0B.
-DSP_EffParam_Apply_TB:
-	extz	wa
-	ldw	bc, 11
-	jrl	t, DSP_EffParam_Copy_V7
-	ret
+DSP_EffParam_Apply_By_AlgoType:	.include "includes/generated/cc900/DSP_EffParam_Apply_By_AlgoType.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_EffParam_Apply_T0, DSP_EffParam_Apply_By_AlgoType + 58
+	.set	DSP_EffParam_Apply_T1, DSP_EffParam_Apply_By_AlgoType + 65
+	.set	DSP_EffParam_Apply_T2, DSP_EffParam_Apply_By_AlgoType + 72
+	.set	DSP_EffParam_Apply_T3, DSP_EffParam_Apply_By_AlgoType + 79
+	.set	DSP_EffParam_Apply_T4, DSP_EffParam_Apply_By_AlgoType + 86
+	.set	DSP_EffParam_Apply_T5, DSP_EffParam_Apply_By_AlgoType + 93
+	.set	DSP_EffParam_Apply_T6, DSP_EffParam_Apply_By_AlgoType + 100
+	.set	DSP_EffParam_Apply_T7, DSP_EffParam_Apply_By_AlgoType + 107
+	.set	DSP_EffParam_Apply_T8, DSP_EffParam_Apply_By_AlgoType + 114
+	.set	DSP_EffParam_Apply_T9, DSP_EffParam_Apply_By_AlgoType + 122
+	.set	DSP_EffParam_Apply_TA, DSP_EffParam_Apply_By_AlgoType + 130
+	.set	DSP_EffParam_Apply_TB, DSP_EffParam_Apply_By_AlgoType + 138
 ; Input A = part.  Re-runs the part's DSP output routing after a parameter change.
 ; Reads the algorithm type; types outside 0..7 do nothing.  Dispatches through
 ; VOICE_DSPOUT_A_JUMPTABLE (0x00F9B3, base 0x02F36E) onto Voice_DSP_OutputConfig (0x027CE4)
 ; and Voice_DSP_SimpleCopy (0x027EBE).  Called from 0x02FC6A and 0x02FCE2.
-Voice_DSPOut_Apply_A:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+93)
-	and	a, 15
-	extz	wa
-	cp	wa, 0:i3
-	jr	mi, Voice_DSPOut_A_Return
-	cp	wa, 7:i3
-	jr	gt, Voice_DSPOut_A_Return
-	add	wa, wa
-	lda	xix, (VOICE_DSPOUT_A_JUMPTABLE:24)
-	ld	wa, (xix+wa)
-	lda	xix, (Voice_DSPOut_A_Type0To3:24)
-	jp	t, (xix+wa)
-; Algorithm types 0..3: Voice_DSP_OutputConfig(part, 0) then (part, 1).
-Voice_DSPOut_A_Type0To3:
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 0:i3
-	call	Voice_DSP_OutputConfig
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 1:i3
-	call	Voice_DSP_OutputConfig
-	jr	t, Voice_DSPOut_A_Return
-; Algorithm types 4..5: Voice_DSP_OutputConfig(part, 0) only.
-Voice_DSPOut_A_Type4To5:
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 0:i3
-	call	Voice_DSP_OutputConfig
-	jr	t, Voice_DSPOut_A_Return
-; Algorithm type 6: Voice_DSP_SimpleCopy(part).
-Voice_DSPOut_A_Type6:
-	ld	a, (xsp)
-	extz	wa
-	call	Voice_DSP_SimpleCopy
-	jr	t, Voice_DSPOut_A_Return
-; Algorithm type 7: only if PART+0x0A bit 14 is set, Voice_DSP_OutputConfig(part, 0).
-Voice_DSPOut_A_Type7:
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x24fc:24)
-	ld	wa, (xbc+wa)
-	bit	14, wa
-	jr	z, Voice_DSPOut_A_Return
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 0:i3
-	call	Voice_DSP_OutputConfig
-; Pop the one-word frame and return.
-Voice_DSPOut_A_Return:
-	inc	2, xsp
-	ret
+Voice_DSPOut_Apply_A:	.include "includes/generated/cc900/Voice_DSPOut_Apply_A.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSPOut_A_Type0To3, Voice_DSPOut_Apply_A + 60
+	.set	Voice_DSPOut_A_Type4To5, Voice_DSPOut_Apply_A + 82
+	.set	Voice_DSPOut_A_Type6, Voice_DSPOut_Apply_A + 94
+	.set	Voice_DSPOut_A_Type7, Voice_DSPOut_Apply_A + 104
+	.set	Voice_DSPOut_A_Return, Voice_DSPOut_Apply_A + 137
 ; Twin of Voice_DSPOut_Apply_A driving the second output bank: Voice_DSP_OutputConfig2
 ; (0x027DD1) and Voice_DSP_SimpleCopy2 (0x027F19), table VOICE_DSPOUT_B_JUMPTABLE
 ; (0x00F9C3, base 0x02F3FA).  Called from 0x02FC75 and 0x02FCF0.
-Voice_DSPOut_Apply_B:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+93)
-	and	a, 15
-	extz	wa
-	cp	wa, 0:i3
-	jr	mi, Voice_DSPOut_B_Return
-	cp	wa, 7:i3
-	jr	gt, Voice_DSPOut_B_Return
-	add	wa, wa
-; CORRECTED FRAMING: the next 5+5 bytes were `.byte 0xf2 / xor c,(xiz+13312) / reti /
-; .byte 0xf0,0xe0,0x20`, a misreading of `lda xix,(table:24)` + `ld wa,(xix+wa)` (unidasm
-; frames them so; they are the same two instructions as in Voice_DSPOut_Apply_A).
-	lda	xix, (VOICE_DSPOUT_B_JUMPTABLE:24)
-	ld	wa, (xix+wa)
-	lda	xix, (Voice_DSPOut_B_Type0To3:24)
-	jp	t, (xix+wa)
-; Algorithm types 0..3: Voice_DSP_OutputConfig2(part, 0) then (part, 1).
-Voice_DSPOut_B_Type0To3:
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 0:i3
-	call	Voice_DSP_OutputConfig2
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 1:i3
-	call	Voice_DSP_OutputConfig2
-	jr	t, Voice_DSPOut_B_Return
-; Algorithm types 4..5: Voice_DSP_OutputConfig2(part, 0) only.
-Voice_DSPOut_B_Type4To5:
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 0:i3
-	call	Voice_DSP_OutputConfig2
-	jr	t, Voice_DSPOut_B_Return
-; Algorithm type 6: Voice_DSP_SimpleCopy2(part).
-Voice_DSPOut_B_Type6:
-	ld	a, (xsp)
-	extz	wa
-	call	Voice_DSP_SimpleCopy2
-	jr	t, Voice_DSPOut_B_Return
-; Algorithm type 7: only if PART+0x0A bit 14 is set, Voice_DSP_OutputConfig2(part, 0)
-; followed by Voice_DSP_SimpleCopy2(part).
-Voice_DSPOut_B_Type7:
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x24fc:24)
-	ld	wa, (xbc+wa)
-	bit	14, wa
-	jr	z, Voice_DSPOut_B_Return
-	ld	a, (xsp)
-	extz	wa
-	ld	bc, 0:i3
-	call	Voice_DSP_OutputConfig2
-	ld	a, (xsp)
-	extz	wa
-	call	Voice_DSP_SimpleCopy2
-; Pop the one-word frame and return.
-Voice_DSPOut_B_Return:
-	inc	2, xsp
-	ret
+Voice_DSPOut_Apply_B:	.include "includes/generated/cc900/Voice_DSPOut_Apply_B.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSPOut_B_Type0To3, Voice_DSPOut_Apply_B + 60
+	.set	Voice_DSPOut_B_Type4To5, Voice_DSPOut_Apply_B + 82
+	.set	Voice_DSPOut_B_Type6, Voice_DSPOut_Apply_B + 94
+	.set	Voice_DSPOut_B_Type7, Voice_DSPOut_Apply_B + 104
+	.set	Voice_DSPOut_B_Return, Voice_DSPOut_Apply_B + 145
 ; Input A = part.  Applies the SECOND output slot only, and only for algorithm types 4..0x0B
 ; ((patch+0x5D & 0x0F) - 4 must be in 0..7).  Table VOICE_DSPOUT_SECOND_A_JUMPTABLE
 ; (0x00F9D3, base 0x02F48C).  Called from 0x02FC80 and 0x02FD09.
-Voice_DSPOut_Second_A:
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xde+bc)
-	ld	c, (xbc+93)
-	and	c, 15
-	extz	bc
-	dec	4, bc
-	cp	bc, 0:i3
-	ret	lt
-	cp	bc, 7:i3
-	ret	gt
-	add	bc, bc
-; CORRECTED FRAMING, as in Voice_DSPOut_Apply_B: `lda xix,(table:24)` + `ld bc,(xix+bc)`.
-	lda	xix, (VOICE_DSPOUT_SECOND_A_JUMPTABLE:24)
-	ld	bc, (xix+bc)
-	lda	xix, (Voice_DSPOut_Second_A_Slot1:24)
-	jp	t, (xix+bc)
-; Types 4..5: tail-jump Voice_DSP_OutputConfig(part, 1).
-Voice_DSPOut_Second_A_Slot1:
-	extz	wa
-	ld	bc, 1:i3
-	jp	Voice_DSP_OutputConfig
-; Type 6: tail-jump Voice_DSP_SimpleCopy(part).
-Voice_DSPOut_Second_A_Simple:
-	extz	wa
-	jp	Voice_DSP_SimpleCopy
-; Type 7: return unless PART+0x0A bit 14 is set, then Voice_DSP_OutputConfig(part, 1).
-Voice_DSPOut_Second_A_Gated:
-	ld	c, a
-	extz	bc
-	muls	bc, 287
-	lda	xde, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xde+bc)
-	bit	14, bc
-	ret	z
-	extz	wa
-	ld	bc, 1:i3
-	jp	Voice_DSP_OutputConfig
-; Types 0x0A..0x0B: tail-jump Voice_DSP_OutputConfig(part, 0).
-Voice_DSPOut_Second_A_Slot0:
-	extz	wa
-	ld	bc, 0:i3
-	jp	Voice_DSP_OutputConfig
-; Types 8..9: bare return.
-Voice_DSPOut_Second_A_None:
-	ret
+Voice_DSPOut_Second_A:	.include "includes/generated/cc900/Voice_DSPOut_Second_A.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_DSPOut_Second_A_Slot1, Voice_DSPOut_Second_A + 58
+	.set	Voice_DSPOut_Second_A_Simple, Voice_DSPOut_Second_A + 66
+	.set	Voice_DSPOut_Second_A_Gated, Voice_DSPOut_Second_A + 72
+	.set	Voice_DSPOut_Second_A_Slot0, Voice_DSPOut_Second_A + 103
+	.set	Voice_DSPOut_Second_A_None, Voice_DSPOut_Second_A + 111
 ; Second-bank twin of Voice_DSPOut_Second_A, written as an if-chain instead of a table:
 ; algorithm types 4 and 5 -> Voice_DSP_OutputConfig2(part, 1); type 7 -> the same but only
 ; when PART+0x0A bit 14 is set; every other type returns.  Called from 0x02FC8B, 0x02FD22.
@@ -4847,28 +4460,7 @@ Audio_Cmd_DSPUnit_Return:
 ; UserTone_VelSplit_Base + 0x1AA + (opcode >> 6)*0x0B + (opcode & 0x3F).  The trailing
 ; `cp A,0x0A / ret UGT` before the final `ret` computes a flag nothing consumes.
 ; Caller: 0x031B1B.
-Audio_Cmd_DSPGlobal_Param_Store:
-	ld	c, (xwa+2)
-	and	c, 192
-	srl	c, 6
-	extz	bc
-	muls	bc, 11
-	add	bc, 426
-	lda	xde, (Payload_Bss_Start+0x6158:24)
-	exts	xbc
-	add	xbc, xde
-	ld	xde, xbc
-	ld	c, (xwa+2)
-	and	c, 63
-	extz	bc
-	lda	xde, (xde+bc)
-	ld	c, (xwa+4)
-	ld	(xde), c
-	ld	a, (xwa+2)
-	res	7, a
-	cp	a, 10
-	ret	ugt
-	ret
+Audio_Cmd_DSPGlobal_Param_Store:	.include "includes/generated/cc900/Audio_Cmd_DSPGlobal_Param_Store.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
 ; Input XWA = command record.  Writes (rec+4) into the part's patch record at byte offset
 ; (rec+2), then tail-jumps to InterCPU_E1_DMA_Transfer with
 ; src = &patch[opcode], dst = 0x001E0000 + 0x4980 + opcode, len = 1.
@@ -4918,50 +4510,9 @@ DSP_SlotParam_Write_From_Cache_B:	.include "includes/generated/cc900/DSP_SlotPar
 ; Inverse of DSP_SlotParam_Write_From_Cache_B; input C = record index.  Returns unless
 ; (record+0x0F & 7) == cache[0], then copies record+0x11..+0x14 into cache[1..4].
 ; Called twice from 0x0304FB and 0x030505.
-DSP_SlotParam_Read_To_Cache_B:
-	ld	a, c
-	extz	wa
-	muls	wa, 21
-	ld	de, wa
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	extz	wa
-	muls	wa, 80
-	ld	hl, wa
-	add	hl, de
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xde, (xwa+hl)
-	lda	xde, (xde+19127)
-	ld	a, c
-	extz	wa
-	muls	wa, 5
-	add	wa, 500
-	lda	xbc, (Payload_Bss_Start+0x6158:24)
-	lda	xhl, (xbc+wa)
-	ld	a, (xde+15)
-	and	a, 7
-	cp	a, (xhl)
-	ret	nz
-	ld	bc, 0:i3
-	cp	bc, 4:i3
-	ret	nc
-; 4-iteration copy loop.
-DSP_SlotParam_Read_B_Loop:
-	ld	wa, bc
-	extz	xwa
-	inc	1, xwa
-	ld	xix, xwa
-	add	xix, xhl
-	ld	wa, bc
-	extz	xwa
-	add	xwa, 17
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xix), a
-	inc	1, bc
-	cp	bc, 4:i3
-	jr	c, DSP_SlotParam_Read_B_Loop
-	ret
+DSP_SlotParam_Read_To_Cache_B:	.include "includes/generated/cc900/DSP_SlotParam_Read_To_Cache_B.s"	; C: cc900/voice_noteon_and_tonegen_w_18a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SlotParam_Read_B_Loop, DSP_SlotParam_Read_To_Cache_B + 83
 ; Fourth command dispatcher, and the one that ALWAYS answers the main CPU.
 ; Input XWA = command record (kept in XIZ).  Obtains the part's working buffer via
 ; ToneDB_Find_SubToneRecord (0x032AE0) called with WA = patch pointer, BC = the edit
