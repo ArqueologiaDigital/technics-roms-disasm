@@ -649,3 +649,7 @@ PanelEvent_Post	49	2026-11-17-2-p6-r29	p6_D_20m277@O3Xr
 SeqPlay_AllocBuffersAndInit	174	2026-11-17-2-p6-r29	p6_B_19a@O3XSXr p6_B_19a@O3Xr p6_B_19a@Xr p6_B_19b@O3XSXr p6_B_19b@O3Xr
 SeqStep_DeleteShiftEvents	242	2026-11-17-2-p6-r29	p6_C_20m236a@O3XSXr p6_C_20m236a@O3Xr
 SubCPU_Send_Payload	259	2026-11-17-2-p6-r29	p6_C_20a@O3Xr p6_C_20b@O3Xr p6_C_20b@Xr
+FileIO_DetectFileTypeAndPost	93	2026-11-17-16-p6-r31	p6_D_21m269@O3XSXr p6_D_21m269@O3Xr
+FileIO_DiskEventDispatch	106	2026-11-17-16-p6-r31	p6_D_21m269@O3XSXr p6_D_21m269@O3Xr
+RegisterObjectTable	31	2026-11-17-16-p6-r31	p6_H_15m272a@O3XSXr p6_H_15m272a@O3Xr p6_H_15m272a@Xr
+SeMenu_CyclePartLfoState	162	2026-11-17-16-p6-r31	p6_A_22m129a@O3Xr p6_A_22m129b@O3Xr p6_A_22m129c@O3Xr
