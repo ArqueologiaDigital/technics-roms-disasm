@@ -3,7 +3,6 @@
    (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r39_m4a.c.
    cc900-options: -Xr
    cc900-name: SepOutModeCheck=HDAE5000_SeparateOutputModeCheck
-   cc900-name: SepOut_SendPartMsg=HDAE5000_SeparateOutput_SendPartMsg
    cc900-module: HDAE5000_SeparateOutput_SendPartMsg HDAE5000_SeparateOutput_Apply
    cc900-data: HDAE5000_SeparateOutputModeCheck 1 = HDAE5000_SeparateOutputModeCheck_CaseTable
    cc900-data: HDAE5000_SeparateDrumPartCheck 1 = HDAE5000_SeparateDrumPartCheck_CaseTable
@@ -35,11 +34,11 @@ void HDAE5000_SeparateOutput_Apply(void)
 {
     CALLV(HAMA->SetSepaOutMode)(HDAE5000_RAM_SeparateOutputMode);
     if (HDAE5000_RAM_SeparateDrumPartSent != 0) {
-        SepOut_SendPartMsg(HDAE5000_RAM_SeparateDrumPartSent - 1, 0, 0);
+        HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateDrumPartSent - 1, 0, 0);
         HDAE5000_RAM_SeparateDrumPartSent = 0;
     }
     if (HDAE5000_RAM_SeparateBassPartSent != 0) {
-        SepOut_SendPartMsg(HDAE5000_RAM_SeparateBassPartSent - 1, 0, 0);
+        HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateBassPartSent - 1, 0, 0);
         HDAE5000_RAM_SeparateBassPartSent = 0;
     }
     switch (HDAE5000_RAM_SeparateOutputMode) {
@@ -47,27 +46,27 @@ void HDAE5000_SeparateOutput_Apply(void)
         break;
     case 1:
         if (HDAE5000_RAM_SeparateDrumPart != 0) {
-            SepOut_SendPartMsg(HDAE5000_RAM_SeparateDrumPart - 1, 1, 0);
+            HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateDrumPart - 1, 1, 0);
             HDAE5000_RAM_SeparateDrumPartSent = HDAE5000_RAM_SeparateDrumPart;
         }
         break;
     case 2:
         if (HDAE5000_RAM_SeparateDrumPart != 0) {
-            SepOut_SendPartMsg(HDAE5000_RAM_SeparateDrumPart - 1, 1, 0);
+            HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateDrumPart - 1, 1, 0);
             HDAE5000_RAM_SeparateDrumPartSent = HDAE5000_RAM_SeparateDrumPart;
         }
         if (HDAE5000_RAM_SeparateBassPart != 0) {
-            SepOut_SendPartMsg(HDAE5000_RAM_SeparateBassPart - 1, 1, 0);
+            HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateBassPart - 1, 1, 0);
             HDAE5000_RAM_SeparateBassPartSent = HDAE5000_RAM_SeparateBassPart;
         }
         break;
     case 3:
         if (HDAE5000_RAM_SeparateDrumPart != 0) {
-            SepOut_SendPartMsg(HDAE5000_RAM_SeparateDrumPart - 1, 1, 2);
+            HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateDrumPart - 1, 1, 2);
             HDAE5000_RAM_SeparateDrumPartSent = HDAE5000_RAM_SeparateDrumPart;
         }
         if (HDAE5000_RAM_SeparateBassPart != 0) {
-            SepOut_SendPartMsg(HDAE5000_RAM_SeparateBassPart - 1, 1, 1);
+            HDAE5000_SeparateOutput_SendPartMsg(HDAE5000_RAM_SeparateBassPart - 1, 1, 1);
             HDAE5000_RAM_SeparateBassPartSent = HDAE5000_RAM_SeparateBassPart;
         }
         break;
