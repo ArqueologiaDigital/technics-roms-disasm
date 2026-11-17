@@ -40,19 +40,23 @@ or that it falls into, are its inner blocks.  Its kind:
 choice also tells which functions shared a source file.  C-calr functions wait for lane_vmb's `cc900-module:`
 marking; the C? ones can be checked now.
 
-## Status (staged_v423.tsv after run `2026-11-16-124-hd-r34-staged`; build at 33dd5d82f)
+## Status (staged_v423.tsv after run `2026-11-16-124-hd-r34-staged`; build after the merge of main 9735ab893)
 
 | tree              | V4.23 MATCH (ledger rows) | bytes  | built from C (`<tree>/cc900/`, `make gate` passes) |
 |-------------------|---------------------------|--------|----------------------------------------------------|
-| `hdae5000`        | 176                       | 47,416 | 175                                                |
+| `hdae5000`        | 176                       | 47,416 | 176                                                |
 | `hdae5000_v2_01i` | 97                        | 15,141 | 97                                                 |
 | `hdae5000_v1_15i` | 67                        | 8,922  | 67                                                 |
 | `hdae5000_v1_10i` | 65                        | 8,453  | 65                                                 |
-| total             | 405                       | 79,932 | 404                                                |
+| total             | 405                       | 79,932 | 405                                                |
 
 The MATCH column is `awk -F'\t' '$8=="MATCH"'` over `staged_v423.tsv`, per tree; the built column is what
-`staged_done.py` prints.  Four matched v2.06i functions are still staged (HardTest_HddIdRead, Lbn_TypeDigit,
-AttenHDFormatSwCatch, HDAETitleFunc), waiting for the splice fixes of main 4506e8731.
+`staged_done.py` prints.  Every matched function is built from C; nothing is staged.  Six v2.06i functions bring
+their own data with them (`cc900-data:`): five case tables and one float constant.
+
+**Correction (2026-11-17).**  Until then `staged_done.py` counted every `.include` of generated C, data objects
+included, as a function.  The figures quoted for 33dd5d82f ("175 in hdae5000, 404 in all") were 172 functions plus
+3 case tables, 401 functions in all; the "167 / 393" before it had no data objects and stands.
 
 ### Not compiled by us: the disk driver and the library (2026-11-17)
 

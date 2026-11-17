@@ -23,16 +23,19 @@ NAME_RE = re.compile(r'cc900-name:\s*(\w+)\s*=\s*(\w+)')
 
 def main():
     for tree in TREES:
-        built = set()
+        built, data = set(), set()
         for f in sorted(os.listdir(os.path.join(REPO, tree))):
             if f.endswith('.s'):
                 for l in open(os.path.join(REPO, tree, f), 'rb'):
                     m = INC.match(l)
                     if m:
                         built.add(m.group(1).decode())
-        print('%s: %d functions built from C' % (tree, len(built)))
+                        if b'(cc900-data' in l:     # the splice's comment on a function's own data (a case table)
+                            data.add(m.group(1).decode())
+        print('%s: %d functions built from C%s' % (tree, len(built - data),
+                                                   ', and %d of their data objects' % len(data) if data else ''))
         sdir = os.path.join(REPO, tree, 'cc900-staged')
-        for f in sorted(os.listdir(sdir)):
+        for f in sorted(os.listdir(sdir)) if os.path.isdir(sdir) else []:      # no staged file left: no directory
             if not f.endswith('.c'):
                 continue
             text = open(os.path.join(sdir, f), encoding='latin-1').read()

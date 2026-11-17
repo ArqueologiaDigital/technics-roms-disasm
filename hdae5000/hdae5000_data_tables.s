@@ -1177,10 +1177,7 @@ HDAE5000_Str_HDDNG:	; 0x2E2298
 	; read by HardTest_HddIdRead at 0x282D22 (lda operand)
 	.asciz "=======> HDD NG!"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Float_100_HddIdRead:	; 0x2E22AA
-	; read by HardTest_HddIdRead at 0x282CD9 (lda operand)
-	; IEEE single 100.0 (0x42C80000): the divisor HDAE5000_HardTest_HddIdRead passes to HDAE5000_FloatDiv to turn the free space (units of 10,000 bytes) into MB for "Fre Capa: %3.1f [MB]"
-	.long 0x42c80000		; 100.0f
+HDAE5000_Float_100_HddIdRead:	.include "includes/generated/cc900/HDAE5000_Float_100_HddIdRead.s"	; C: cc900/hdae5000_hardtest_id.c (cc900-data)
 HDAE5000_Fmt_2_2d:	; 0x2E22AE
 	; read by FdName_SongNumber at 0x282E4E (pushed operand)
 	.asciz "%2.2d"
@@ -1243,15 +1240,7 @@ HDAE5000_HDAETitleFunc_ObjIds:	; 0x2E2388
 ; .Lri_jt_base of the case for value 2+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_HDAETitleFunc_CaseTable:
-	.short	.Lri_jt_base - .Lri_jt_base	; 2
-	.short	.Lri_done - .Lri_jt_base	; 3 (default)
-	.short	.Lri_done - .Lri_jt_base	; 4 (default)
-	.short	.Lri_done - .Lri_jt_base	; 5 (default)
-	.short	.Lri_case6 - .Lri_jt_base	; 6
-	.short	.Lri_done - .Lri_jt_base	; 7 (default)
-	.short	.Lri_case8 - .Lri_jt_base	; 8
-	.short	.Lri_case9 - .Lri_jt_base	; 9
+HDAE5000_HDAETitleFunc_CaseTable:	.include "includes/generated/cc900/HDAE5000_HDAETitleFunc_CaseTable.s"	; C: cc900/hdae5000_drv_screens6.c (cc900-data)
 HDAE5000_Str_Chr2020203A2020:	; 0x2E23BC
 	; read by DirList_BuildPage at 0x283732 (lda operand)
 	.asciz "   :                \t"
@@ -2221,15 +2210,7 @@ HDAE5000_Str_FMT:	; 0x2E2CDC
 ; HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1 of the case for value 0+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_AttenHDFormatSwCatch_CaseTable:
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 0
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit2Or3 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 1
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit4Or5 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 2
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit6Or7 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 3
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit8Or9 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 4
-	.short	.LCHSC__post_switch - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 5 (default)
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCancel - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 6
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCancel - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 7
+HDAE5000_AttenHDFormatSwCatch_CaseTable:	.include "includes/generated/cc900/HDAE5000_AttenHDFormatSwCatch_CaseTable.s"	; C: cc900/hdae5000_drv_screens6.c (cc900-data)
 ;
 ; HDAE5000_Lbn_StepDigit_CaseTable (0x2E2CF2, 6 x u16): the switch of HDAE5000_Lbn_StepDigit
 ; (dispatch at 0x286A49, hdae5000_hd_driver.s:5493: bound `cp xwa,5`, `add xwa,xwa`, `ld wa,(<table>+2i)`,

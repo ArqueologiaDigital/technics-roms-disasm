@@ -14,7 +14,7 @@ The splice (scripts/tools/cc900_splice.py) takes one C file per HAND SOURCE (its
 A function is promoted only when its row in staged_v423.tsv is MATCH for that tree.  The staged files are left in
 place; remove them (git rm, explicit paths) after `make gate` passes.
 
-    python3 -B notes/cc900-c-hdae5000-2026-11-16/promote_hd.py [--dry-run] [--hold LABEL[,LABEL...]] [TREE ...]
+    python3 -B notes/cc900-c-hdae5000-2026-11-16/promote_hd.py [--dry-run] [--keep-uncached] [--hold LABEL[,LABEL...]] [TREE ...]
         --hold: labels not to promote (e.g. a function the build cannot yet compile)
         TREE: hdae5000, hdae5000_v2_01i, hdae5000_v1_15i, hdae5000_v1_10i (default: all four)
 Prints what it promoted and what it held back.  Run from the repository root.
@@ -131,6 +131,7 @@ def main():
                 stem = f[:-2] if len(groups) == 1 else '%s_%s' % (f[:-2], hand[:-2].replace('hdae5000_', ''))
                 out = os.path.join(cdir, stem + '.c')
                 rel = os.path.relpath(out, os.path.join(REPO, tree))
+                uncached = False
                 while keep:
                     write(tree, staged, out, hand, keep)
                     r = splice(tree, os.path.relpath(out, REPO), True)
@@ -138,6 +139,10 @@ def main():
                         break
                     msg = (r.stderr or r.stdout).strip().split('\n')[-1]
                     bad = [n for n in keep if label.get(n, n) in msg or n in msg]
+                    if not bad and 'no V4.23 listing' in msg and '--keep-uncached' in a and not dry:
+                        # leave the C file in cc900/ so that the next `make` compiles it into the cache; then rerun
+                        print('UNCACHED %s: %s kept; build the tree (make fills build/cc900-v423), then rerun' % (tree, rel))
+                        uncached = True
                     if not bad:
                         held += [(tree, label.get(n, n), 'splice: ' + msg[:160]) for n in keep]
                         keep = set()
@@ -146,7 +151,9 @@ def main():
                         held.append((tree, label.get(n, n), 'splice: ' + msg[:160]))
                         keep.discard(n)
                 if not keep:
-                    if os.path.exists(out):
+                    if uncached:
+                        written.add(os.path.basename(out))
+                    elif os.path.exists(out):
                         remove_generated(out, cdir)
                     continue
                 if not dry:

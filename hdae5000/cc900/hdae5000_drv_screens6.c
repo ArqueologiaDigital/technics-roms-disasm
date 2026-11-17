@@ -1,6 +1,6 @@
-/* Lbn_TypeDigit (hdae5000_hd_driver.s): helper h_r27b's C that matches (module-local calls in cc900-module).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r27_b_drv.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_drv_screens6.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_drv_screens6.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_FdList_Clear HDAE5000_FdName_SongNumber HDAE5000_ShowErrorMessageTitle
    cc900-module: HDAE5000_SongScreen_Refresh HDAE5000_FlsScreen_Refresh HDAE5000_DirList_BuildPage
@@ -9,6 +9,8 @@
    cc900-module: HDAE5000_DirName_StoreWithUi HDAE5000_TypeSel_Init HDAE5000_TypeSel_ShowSaveFlags
    cc900-module: HDAE5000_SaveSongWithUi HDAE5000_LoadSongWithUi HDAE5000_HardTest_HddIdRead
    cc900-module: HDAE5000_HardTest_Print HDAE5000_FormatDialog_CodeDigit HDAE5000_UiObj_SetCaption
+   cc900-data: HDAE5000_HDAETitleFunc 1 = HDAE5000_HDAETitleFunc_CaseTable
+   cc900-data: HDAE5000_AttenHDFormatSwCatch 1 = HDAE5000_AttenHDFormatSwCatch_CaseTable
 */
 #include "hdae_ws.h"
 #include "hdae_ids.h"
@@ -163,6 +165,64 @@ struct FindBlk { char head[6]; char name[260]; };
      with an unsigned long index.  (Form b: the same through pointer arithmetic, *(member + index).) */
 
 /* r23: not checked in run 95 (Browser_State unresolvable); now ram_23a09a, and the inner switch unsigned */
+long HDAE5000_HDAETitleFunc(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ACTIVATE_STATE:
+        switch ((unsigned long)arg) {     /* r23: the ROM's bound checks are unsigned (`dec 2; cp 0; jrl c`) */
+        case 2:
+            HDAE5000_RAM_TitleInfoText[150] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_HARD_DISK_OPT, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_TitleInfoText));
+            HDAE5000_SongScreen_Refresh(0, 0);
+            HDAE5000_RAM_FlsListText[1920] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_FLS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_FlsListText));
+            HDAE5000_FlsScreen_Refresh(0, 2);
+            HDAE5000_RAM_DirListText[504] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_DIR, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_DirListText));
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            HDAE5000_FlsList_BuildPage();
+            HDAE5000_Lbn_ShowEntry(0, 0, 6, 0);
+            HDAE5000_MemCopy(HDAE5000_RAM_PcLinkStatusText, HDAE5000_Str_STATUS, 0x21);
+            CALLV(ROOT->ApPostEvent)(OBJ_PP_STATUS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_PcLinkStatusText));
+            ram_23a09a = OBJ_HDDMENU;
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1)
+                ram_23a09a = OBJ_FLS_FILE_LOAD;
+            break;
+        case 9:
+            switch (HDAE5000_RAM_QuickLoadMode) {
+            case 1:
+                ram_23a09a = OBJ_SELECT_FILE;
+                break;
+            case 2:
+                ram_23a09a = OBJ_LOAD_BY_NUM;
+                break;
+            case 3:
+                ram_23a09a = OBJ_FLS_FILE_LOAD;
+                break;
+            }
+            break;
+        case 8:
+            CALLV(ROOT->ApPostEvent)(ram_23a09a, EVT_SHOW, 0L);
+            CALLV(ROOT->ApPostEvent)(-1L, EVT_INDEXSW_DOWN, 0L);
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1) {
+                HDAE5000_RAM_FlsSeqStopPending = 0;
+                CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD, EVT_HDAE_SEQ_STOP, 0L);
+            }
+            break;
+        case 6:
+            ram_23a09a = HDAE5000_HDAETitleFunc_ObjIds[HDAE5000_Get_Init_Flag()];
+        /* r27: the ROM dispatches through a jump table over 2..9 whose entries for 3, 4, 5 and 7 are the
+           switch's end; V4.23 wrote a compare chain for the four cases alone.  The four empty labels make the
+           case set dense; placed last, with case 6 falling into them, they add no code. */
+        case 3:
+        case 4:
+        case 5:
+        case 7:
+            ;
+        }
+    }
+    return 0;
+}
 
 /* page: which of the three object sets (ObjIds tables); skip != 0: only the part list.  The ROM takes the two
    parameters as bytes (A, C) and keeps them in stack slots (`ld (xsp+24),c; ld (xsp+26),a`): r23 declares them
@@ -188,6 +248,106 @@ struct FindBlk { char head[6]; char name[260]; };
      ternary as a byte select (`ld c,1; ..; bit 7,wa; jr z; ld c,0; ld a,c; exts wa`).  Written as if / else into a
      local that dies at the call (form b keeps the ternary with the register arg);
    - the timers' stacked arguments reversed (V4.23 pushes left to right). */
+long HDAE5000_AttenHDFormatSwCatch(long obj, long ev, register long arg)
+{
+    int res;
+    int d;
+
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_FMT);
+        return 0;
+    case EVT_SW_IN:
+        res = 0;
+        switch (CALLR(unsigned long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 0:
+            if (arg & 0x80)
+                d = 0;
+            else
+                d = 1;
+            res = HDAE5000_FormatDialog_CodeDigit(d);
+            break;
+        case 1:
+            if (arg & 0x80)
+                d = 2;
+            else
+                d = 3;
+            res = HDAE5000_FormatDialog_CodeDigit(d);
+            break;
+        case 2:
+            if (arg & 0x80)
+                d = 4;
+            else
+                d = 5;
+            res = HDAE5000_FormatDialog_CodeDigit(d);
+            break;
+        case 3:
+            if (arg & 0x80)
+                d = 6;
+            else
+                d = 7;
+            res = HDAE5000_FormatDialog_CodeDigit(d);
+            break;
+        case 4:
+            if (arg & 0x80)
+                d = 8;
+            else
+                d = 9;
+            res = HDAE5000_FormatDialog_CodeDigit(d);
+            break;
+        case 6:
+        case 7:
+            HDAE5000_MemFill(ram_22ad9c, 0, 10);
+            CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
+        }
+        switch (res) {
+        case 1:
+            CALLV(ROOT->SendEvent)(OBJ_AGAIN_HD_FORMAT, EVT_SHOW, 3L);
+            CALLV(ROOT->KillApTimer)(0x14dL, OBJ_AGAIN_HD_FORMAT_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_ATTEN_HD_FORMAT);
+            CALLV(ROOT->SetApTimer)(0x14dL, OBJ_AGAIN_HD_FORMAT_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_ATTEN_HD_FORMAT);
+            break;
+        case 2:
+            CALLV(ROOT->SendEvent)(OBJ_WAIT_HD_FORMAT, EVT_SHOW, 0L);
+            HDAE5000_YieldUntilSem1Zero();
+            if (HDAE5000_HD_FormatDrive(1) == 0) {
+                CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
+                HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+                HDAE5000_SongScreen_Refresh(0, 0);
+                HDAE5000_FlsList_BuildPage();
+                HDAE5000_FlsScreen_Refresh(0, 2);
+            } else {
+                CALLV(ROOT->PostEvent)(OBJ_ERR_HD_FORMAT, EVT_SHOW, 3L);
+                CALLV(ROOT->KillApTimer)(0x14dL, OBJ_ERR_HD_FORMAT_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_ATTEN_HD_FORMAT);
+                CALLV(ROOT->SetApTimer)(0x14dL, OBJ_ERR_HD_FORMAT_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_ATTEN_HD_FORMAT);
+            }
+            break;
+        case 3:
+            HDAE5000_RAM_QuickLoadMode = 1;
+            HDAE5000_RAM_LoadByNumberMode = 1;
+            HDAE5000_RAM_JumpAfterLoad = 1;
+            CALLV(ROOT->SendEvent)(OBJ_WAIT_TR0_RECOVER, EVT_SHOW, 0L);
+            HDAE5000_YieldUntilSem1Zero();
+            if (HDAE5000_HD_StoreSettings(0) != -1) {
+                CALLV(ROOT->PostEvent)(OBJ_SETUPS_TOOLS, EVT_SHOW, 0L);
+            } else {
+                CALLV(ROOT->PostEvent)(OBJ_ERR_SAVE, EVT_SHOW, 3L);
+                HDAE5000_UiObj_SetCaption(OBJ_ERR_SAVE_EXIT, OBJ_ATTEN_HD_FORMAT);
+                CALLV(ROOT->KillApTimer)(0x14dL, OBJ_ERR_SAVE_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_ATTEN_HD_FORMAT);
+                CALLV(ROOT->SetApTimer)(0x14dL, OBJ_ERR_SAVE_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_ATTEN_HD_FORMAT);
+            }
+            break;
+        }
+        return 0;
+    case EVT_HDAE_TIMER_BACK:
+        CALLV(ROOT->PostEvent)(OBJ_ATTEN_HD_FORMAT, EVT_SHOW, 0L);
+        return 0;
+    }
+}
 
 /* r23: run 95's only departure in form a was LoadSongWithUi's stacked arguments (the ROM pushes 1, then the obj) */
 
@@ -197,64 +357,3 @@ struct FindBlk { char head[6]; char name[260]; };
    for PartList_Build's push (`ld wa,iz; push wa`), the order of an int converted to the unsigned mask parameter
    (r20's unsigned m was loaded late and pushed as `push iz`); LoadSongWithUi / SetApTimer stacked arguments
    reversed. */
-void HDAE5000_Lbn_TypeDigit(long obj, unsigned int digit)
-{
-    int m;      /* r27: r declared LAST (allocated first): run 109 gave r IZ and m QIZ, the ROM has r QIZ, m IZ */
-    int r;
-
-    r = 0;
-    switch (HDAE5000_RAM_LbnDigitPos) {
-    case 0:
-        HDAE5000_RAM_LbnDir = digit * 100;
-        HDAE5000_RAM_LbnSong = 0;
-        HDAE5000_RAM_LbnDigitPos = 1;
-        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
-        break;
-    case 1:
-        HDAE5000_RAM_LbnDir += digit * 10;
-        HDAE5000_RAM_LbnDigitPos = 2;
-        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
-        break;
-    case 2:
-        HDAE5000_RAM_LbnDir += digit;
-        HDAE5000_RAM_LbnDigitPos = 3;
-        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
-        break;
-    case 3:
-        HDAE5000_RAM_LbnSong = digit * 10;
-        HDAE5000_RAM_LbnDigitPos = 4;
-        r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
-        break;
-    case 4:
-        HDAE5000_RAM_LbnSong += digit;
-        HDAE5000_RAM_LbnDigitPos = 5;
-        if ((r = HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1))
-                == 0) {
-            HDAE5000_RAM_CurDir = HDAE5000_RAM_LbnDir - 1;
-            HDAE5000_RAM_CurSong = HDAE5000_RAM_LbnSong - 1;
-            if ((m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong)) != 0xffff) {
-                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateBlank, 2);
-                HDAE5000_PartList_Build(OBJ_LBN_OPTION, HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, m);
-            } else {
-                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0, HDAE5000_TypeSel_TemplateBlank, 2);
-                HDAE5000_PartList_Build(OBJ_LBN_OPTION, 0xffff, 0xffff, 0xffff);
-            }
-            if (HDAE5000_RAM_LoadByNumberMode == 2) {
-                HDAE5000_LoadSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
-                                        1, OBJ_LOAD_BY_NUM);
-                HDAE5000_Lbn_ShowEntry(0, 0, 6, 1);
-                if (HDAE5000_RAM_LyricJump == 2 && (HDAE5000_RAM_SaveOptions.mask & 0x100) == 0x100)
-                    CALLV(ROOT->ApPostEvent)(OBJ_Tech_lyrics, EVT_SHOW, 0L);
-            }
-        }
-    }
-    switch (r) {
-    case -1:
-        CALLV(ROOT->PostEvent)(OBJ_DIR_OUT_RANGE, EVT_SHOW, 5L);
-        CALLV(ROOT->SetApTimer)(0x21L, OBJ_DIR_OUT_RANGE_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_LOAD_BY_NUM);
-        break;
-    case -2:
-        CALLV(ROOT->PostEvent)(OBJ_FILE_OUT_RANGE, EVT_SHOW, 5L);
-        CALLV(ROOT->SetApTimer)(0x21L, OBJ_FILE_OUT_RANGE_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_LOAD_BY_NUM);
-    }
-}
