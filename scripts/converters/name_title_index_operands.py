@@ -92,7 +92,28 @@ def title_indices(tree):
     return out
 
 
+CC900_INCLUDE = re.compile(r'^\s*\.include\s+"(includes/generated/cc900/[^"]+\.s)"')
+
+
 class File:
+    def _expanded(self):
+        """(line index, text) of the file, with a function compiled from firmware C read in place: a hand source
+        holds `Label:\t.include "includes/generated/cc900/Label.s"` where the hand code was (cc900 phase 6), and
+        the title / mode operands are in that generated body.  Its lines carry index None: they are not this
+        file's lines, so main() never rewrites them (lane_p6, 2026-11-17: the menu map lost
+        MainExe_SequencerStop's MD_SEQ_REAL when the function became C)."""
+        root = self.path.split(os.sep + 'maincpu' + os.sep)[0] + os.sep + 'maincpu'
+        for i, ln in enumerate(self.lines):
+            m = LABEL.match(ln)
+            rest = ln[m.end():] if m else ln
+            inc = CC900_INCLUDE.match(rest)
+            if not inc or not os.path.exists(os.path.join(root, inc.group(1))):
+                yield i, ln
+                continue
+            yield i, ln[:m.end()] if m else ''
+            for x in read(os.path.join(root, inc.group(1))).split('\n'):
+                yield None, x
+
     def __init__(self, path):
         self.path = path
         self.lines = read(path).split('\n')
@@ -100,7 +121,7 @@ class File:
         self.label_at = {}      # label -> instruction position
         self.labels_of = collections.defaultdict(list)
         pending = []
-        for i, ln in enumerate(self.lines):
+        for i, ln in self._expanded():
             m = LABEL.match(ln)
             rest = ln
             if m:
@@ -350,6 +371,9 @@ def main():
             x = int(v.split(':')[0], 0)
             name = tt.get(x)
             i = f.ins[p][0]
+            if i is None:                        # inside a compiled function's generated body: not rewritable
+                st['in compiled C'] += 1
+                continue
             if not name:
                 unnamed[(x, os.path.relpath(f.path, ROOT), i + 1)] += 1
                 continue
@@ -373,7 +397,7 @@ def main():
         for s in sites:
             if s['unknown'] or not s['defs']:
                 print('  unresolved: %s:%d %s -> %s (%s)' % (os.path.relpath(s['file'].path, ROOT),
-                                                         s['file'].ins[s['pos']][0] + 1, s['routine'],
+                                                         (s['file'].ins[s['pos']][0] or -1) + 1, s['routine'],
                                                          s['target'], s['reg']))
 
 
