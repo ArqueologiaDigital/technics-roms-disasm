@@ -2,16 +2,16 @@
 
 QUESTION ANSWERED: for every function of our firmware C that Toshiba cc900 V4.23 compiled in the oracle runs below, how close does V4.23's code (translated by `model/to_llvm.py`, assembled by llvm-mc) come to the ROM, and which kinds of difference keep it from matching?  `index.tsv` has one row per attempt (run, option set, C file, function); the tables below take each function's best attempt.  No Toshiba text is in this directory: names, counts, offsets, class names and paths only.  The listings stay in the private repository `~/compartilhado/cc900-oracle` (`listing` column, relative to it).
 
-Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@5b2943bc2) --model-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@5b2943bc2)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
+Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@117dd396c) --model-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@117dd396c)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
 
 ## Totals
 
 | what                     | MATCH | NEAR | DIFF  | errors |
 |--------------------------|-------|------|-------|--------|
-| attempts (index rows)    | 21019 | 8535 | 11507 | 2010   |
-| functions (best attempt) | 4240  | 455  | 210   | 387    |
+| attempts (index rows)    | 21251 | 8823 | 11727 | 1270   |
+| functions (best attempt) | 4268  | 529  | 214   | 281    |
 
-Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, ERR-translate 268 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation; ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
+Errors: ERR-asm 116, ERR-data 155, ERR-dup 242, ERR-name 446, ERR-resolve 245, ERR-translate 66 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation; ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
 
 ## By class (each non-matching function's best attempt)
 
@@ -19,23 +19,23 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 
 | class        | functions | sole | sole ROM B | diff B | examples                                                                                                                                                                                        |
 |--------------|-----------|------|------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| call-form    | 274       | 230  | 28322      | 2651   | hdae5000 HDAE5000_FdSong_CheckFiles (1273 B, 97.9%), v142 Audio_Cmd_ToneEdit_Dispatch (656 B, 97.3%), v140 MIDI_Dispatch (595 B, 80.5%), v141 MIDI_Dispatch (595 B, 80.5%)                      |
-| register     | 296       | 27   | 6507       | 6928   | hdae5000 HDAE5000_SelectListProc (2641 B, 97.9%), v10 PsToggleBoxProc (600 B, 99.5%), v10 AcRamBoxProc (489 B, 98.0%), v10 Fat_MapFilePosToSector (451 B, 99.6%)                                |
-| other        | 290       | 26   | 1500       | 6472   | v10 ApPostEvent (175 B, 97.7%), v10 MainPostEvent (169 B, 97.6%), v142 TVF_Lookup_Depth_Amount (169 B, 88.2%), v10 SingleLoadDstMemFunc (81 B, 87.7%)                                           |
-| order        | 145       | 7    | 781        | 2559   | v10 ReadDualFileEx (417 B, 95.7%), v10 ExtDev_SndParam_DispatchAndWriteA8 (89 B, 96.6%), v10 ExtDev_SndParam_DispatchAndWriteA8_Alt (89 B, 96.6%), v10 SeqData_ReadParamBlock (78 B, 97.4%)     |
+| call-form    | 324       | 268  | 34767      | 3396   | hdae5000 HDAE5000_FdSong_CheckFiles (1273 B, 97.9%), v142 Audio_Cmd_ToneEdit_Dispatch (656 B, 97.3%), v140 MIDI_Dispatch (595 B, 80.5%), v141 MIDI_Dispatch (595 B, 80.5%)                      |
+| register     | 321       | 28   | 6541       | 7415   | hdae5000 HDAE5000_SelectListProc (2641 B, 97.9%), v10 PsToggleBoxProc (600 B, 99.5%), v10 AcRamBoxProc (489 B, 98.0%), v10 Fat_MapFilePosToSector (451 B, 99.6%)                                |
+| other        | 312       | 26   | 1500       | 6618   | v10 ApPostEvent (175 B, 97.7%), v10 MainPostEvent (169 B, 97.6%), v142 TVF_Lookup_Depth_Amount (169 B, 88.2%), v10 SingleLoadDstMemFunc (81 B, 87.7%)                                           |
+| order        | 148       | 7    | 781        | 2427   | v10 ReadDualFileEx (417 B, 95.7%), v10 ExtDev_SndParam_DispatchAndWriteA8 (89 B, 96.6%), v10 ExtDev_SndParam_DispatchAndWriteA8_Alt (89 B, 96.6%), v10 SeqData_ReadParamBlock (78 B, 97.4%)     |
+| length-only  | 42        | 12   | 580        | 2727   | v140 ToneGen_SetupPolyVoice (68 B, 100.0%), v141 ToneGen_SetupPolyVoice (68 B, 100.0%), v142 ToneGen_SetupPolyVoice (68 B, 100.0%), v142 Voice_ToneTableApply_Pitch (56 B, 100.0%)              |
 | return-form  | 50        | 16   | 530        | 181    | v10 AccPitch_CheckTransposeFlags (59 B, 89.8%), v10 AccSection_SwitchNowUnlessDeferred (55 B, 92.7%), v10 TimeSig_DisplayStrings_Code_Helper4 (50 B, 84.0%), v10 AccNote_FlushAll (45 B, 95.6%) |
 | size         | 33        | 4    | 462        | 135    | v142 Voice_Slot_CalcArticParams (320 B, 98.8%), v10 FileIO_CheckRecordByFile (54 B, 96.3%), v10 FileIO_FormatName_Return (44 B, 95.5%), v10 FileIO_WriteRecordName_Done (44 B, 95.5%)           |
-| length-only  | 30        | 6    | 306        | 1690   | v140 ToneGen_SetupPolyVoice (68 B, 100.0%), v141 ToneGen_SetupPolyVoice (68 B, 100.0%), v140 VoiceSlot_UpdateNoteSource (52 B, 100.0%), v141 VoiceSlot_UpdateNoteSource (52 B, 100.0%)          |
 | bit-form     | 23        | 3    | 144        | 147    | v10 AccentVoice_DetectAndMarkChange (86 B, 94.2%), v10 PerfMode_ParamHandler_7_Helper (29 B, 82.8%), v10 PerfMode_ParamHandler_7_Helper2 (29 B, 82.8%)                                          |
-| address-form | 25        | 2    | 64         | 197    | v10 TrAsGrid_StepListValue (44 B, 88.6%), v10 VoiceAlloc_InitBitMap (20 B, 80.0%)                                                                                                               |
+| address-form | 27        | 2    | 64         | 242    | v10 TrAsGrid_StepListValue (44 B, 88.6%), v10 VoiceAlloc_InitBitMap (20 B, 80.0%)                                                                                                               |
 | arith-type   | 8         | 1    | 63         | 76     | v10 SeqBuffer_RemoveLastEntry (63 B, 87.3%)                                                                                                                                                     |
 | width        | 11        | 3    | 58         | 106    | v10 BmDrEdit_DecrementDelayA (21 B, 61.9%), v10 BmDrEdit_DecrementDelayB (21 B, 61.9%), v10 SeqStatus_SetOrClearBit (16 B, 75.0%)                                                               |
-| extend       | 108       | 1    | 46         | 504    | v10 FileIO_SeekAndRead16BitValue (46 B, 91.3%)                                                                                                                                                  |
+| extend       | 116       | 1    | 46         | 542    | v10 FileIO_SeekAndRead16BitValue (46 B, 91.3%)                                                                                                                                                  |
 | encoding     | 1         | 1    | 21         | 7      | v10 Demo_SelectEntry_LoadPattern (21 B, 66.7%)                                                                                                                                                  |
-| operand      | 56        | 1    | 14         | 684    | v142 RING_BUFFER_HAS_OVERRUN (14 B, 57.1%)                                                                                                                                                      |
-| loop-shape   | 85        | 0    | 0          | 535    | v10 DrawMonoBitmap_Impl (766 B, 18.5%), v10 ProcessEventDispatch_Prologue (702 B, 83.9%), v142 AudioChannel_Handler_Cmd18_1B (532 B, 96.4%), v142 AudioChannel_Handler_Cmd14_17 (530 B, 97.5%)  |
-| swap         | 33        | 0    | 0          | 88     | v10 SeqStep_FileSectorPopReturn (474 B, 59.3%), v10 SeqPlay_CheckStartConditions (331 B, 86.7%), v142 EFF_ParamIterator_Process (314 B, 91.1%), v142 Voice_Freq_WriteLeft (284 B, 90.1%)        |
-| idiom        | 4         | 0    | 0          | 26     | v10 AccStyle_ResetAllVoiceState (151 B, 90.1%), v10 DrumParam_BuildActiveMask (93 B, 29.0%), v10 AccBuf_ResetByteData (91 B, 1.1%), v10 Interrupt_ClearRegsAndInit (27 B, 74.1%)                |
+| operand      | 66        | 1    | 14         | 736    | v142 RING_BUFFER_HAS_OVERRUN (14 B, 57.1%)                                                                                                                                                      |
+| loop-shape   | 85        | 0    | 0          | 472    | v10 DrawMonoBitmap_Impl (766 B, 18.5%), v10 ProcessEventDispatch_Prologue (702 B, 83.9%), v142 AudioChannel_Handler_Cmd18_1B (532 B, 96.4%), v142 AudioChannel_Handler_Cmd14_17 (530 B, 97.5%)  |
+| swap         | 34        | 0    | 0          | 90     | v10 SeqStep_FileSectorPopReturn (474 B, 59.3%), v10 SeqPlay_CheckStartConditions (331 B, 86.7%), v142 EFF_ParamIterator_Process (314 B, 91.1%), v142 Voice_Freq_WriteLeft (284 B, 87.3%)        |
+| idiom        | 5         | 0    | 0          | 32     | v10 Test_PROGRAM_and_TABLE_DATA_ROMs (267 B, 54.3%), v10 AccStyle_ResetAllVoiceState (151 B, 90.1%), v10 DrumParam_BuildActiveMask (93 B, 29.0%), v10 AccBuf_ResetByteData (91 B, 1.1%)         |
 | staging      | 1         | 0    | 0          | 7      | v10 AccVoice_WriteEmptyPattern (37 B, 35.1%)                                                                                                                                                    |
 | bool-form    | 0         | 0    | 0          | 0      |                                                                                                                                                                                                 |
 
@@ -67,36 +67,36 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 
 | classes                                                | functions | ROM B |
 |--------------------------------------------------------|-----------|-------|
-| call-form                                              | 230       | 28322 |
-| register,other                                         | 35        | 3251  |
-| register                                               | 27        | 6507  |
+| call-form                                              | 268       | 34767 |
+| register,other                                         | 44        | 3957  |
+| register                                               | 28        | 6541  |
 | other                                                  | 26        | 1500  |
 | register,extend,order,other                            | 17        | 2634  |
 | return-form                                            | 16        | 530   |
 | register,order,other                                   | 15        | 2127  |
-| call-form,other                                        | 14        | 1102  |
-| register,swap                                          | 12        | 928   |
-| register,order,loop-shape,other                        | 11        | 2915  |
+| call-form,other                                        | 15        | 1204  |
+| call-form,length-only                                  | 15        | 1517  |
+| length-only                                            | 12        | 580   |
+| register,swap                                          | 11        | 644   |
 | register,extend,other                                  | 11        | 835   |
+| register,order,loop-shape,other                        | 10        | 2864  |
+| register,operand,other                                 | 10        | 2776  |
 | register,loop-shape,other                              | 9         | 1041  |
-| call-form,length-only                                  | 9         | 969   |
 | register,order                                         | 8         | 990   |
+| register,extend                                        | 8         | 837   |
 | register,operand,order,other                           | 7         | 2317  |
-| register,extend                                        | 7         | 596   |
 | order                                                  | 7         | 781   |
-| length-only                                            | 6         | 306   |
-| order,other                                            | 5         | 650   |
+| order,other                                            | 6         | 687   |
 | register,extend,address-form,other                     | 4         | 441   |
 | register,return-form,other                             | 4         | 132   |
 | loop-shape,other                                       | 4         | 391   |
 | register,operand,return-form,bit-form,other            | 4         | 144   |
 | register,extend,swap                                   | 4         | 406   |
 | size                                                   | 4         | 462   |
-| register,operand,extend,order,loop-shape,other         | 4         | 919   |
 | call-form,register,extend,loop-shape,return-form,other | 4         | 732   |
-| operand,length-only                                    | 3         | 614   |
 | register,return-form,bit-form,other                    | 3         | 230   |
 | register,operand,order,loop-shape,other                | 3         | 810   |
+| bit-form,other                                         | 3         | 147   |
 
 ## Near misses (best attempt, NEAR)
 
@@ -107,8 +107,6 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | hdae5000 | HDAE5000_FlsItem_Insert                 | 384   | 392    | 94.8    | 7          | register                                                        | 2026-11-17-3-hd-r36 Xr              | c/hdae5000/HDAE5000_FlsItem_Insert__01ab3119.c            |
 | hdae5000 | HDAE5000_FormatDialog_CodeDigit         | 136   | 135    | 89.7    | 25         | register,extend,address-form,other                              | 2026-11-17-10-hd-r39 Xr             | c/hdae5000/HDAE5000_FormatDialog_CodeDigit__75dce666.c    |
 | hdae5000 | HDAE5000_Lyrics_CheckFile               | 35    | 36     | 91.4    | 0          | call-form                                                       | 2026-11-16-78-hd-r15-ports Xr       |                                                           |
-| hdae5000 | HDAE5000_Lyrics_FindEvent               | 280   | 285    | 92.9    | 18         | operand,length-only                                             | 2026-11-16-78-hd-r15-ports Xr       | c/hdae5000/HDAE5000_Lyrics_FindEvent__d145a411.c          |
-| hdae5000 | HDAE5000_Lyrics_ReadSongInfo            | 564   | 568    | 97.9    | 10         | call-form                                                       | 2026-11-16-76-hd-r14-staged Xr      | c/hdae5000/HDAE5000_Lyrics_ReadSongInfo__6e52297d.c       |
 | hdae5000 | HDAE5000_SelectListProc                 | 2641  | 2623   | 97.9    | 23         | register                                                        | 2026-11-17-20-hd-r47 Xr             | c/hdae5000/HDAE5000_SelectListProc__221f9f1b.c            |
 | v10      | AcRamBoxProc                            | 489   | 489    | 98.0    | 239        | register                                                        | 2026-11-17-2-p6-r29 O3XSXr          | c/v10/AcRamBoxProc__d55652c4.c                            |
 | v10      | AccChannel_CheckActivitySetDirty        | 38    | 38     | 89.5    | 23         | return-form                                                     | 2026-11-16-37-p6-r5 O3Xr            | c/v10/AccChannel_CheckActivitySetDirty__3186bc0b.c        |
@@ -166,16 +164,19 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v10      | ExtDev_SndParam_DispatchAndWriteA8      | 89    | 89     | 96.6    | 63         | order                                                           | 2026-11-16-128-p6-r27 O3Xr          | c/v10/ExtDev_SndParam_DispatchAndWriteA8__358fe255.c      |
 | v10      | ExtDev_SndParam_DispatchAndWriteA8_Alt  | 89    | 89     | 96.6    | 63         | order                                                           | 2026-11-16-128-p6-r27 O3Xr          | c/v10/ExtDev_SndParam_DispatchAndWriteA8_Alt__358fe255.c  |
 | v10      | FDC_HardwareSetup                       | 49    | 52     | 81.6    | 0          | other                                                           | 2026-11-16-40-p6-r8 Xr              | c/v10/FDC_HardwareSetup__a315e99d.c                       |
-| v10      | FDC_SendAuxCmd                          | 24    | 26     | 75.0    | 4          | call-form                                                       | 2026-11-16-111-p6-r22-staged O3Xr   | c/v10/FDC_SendAuxCmd__8e6aea90.c                          |
 | v10      | FDC_SendParams_ReadWrite                | 92    | 99     | 85.9    | 68         | extend,return-form,other                                        | 2026-11-16-87-p6-r15 O3XSXr         | c/v10/FDC_SendParams_ReadWrite__f32a8d95.c                |
+| v10      | FDC_WaitReady                           | 70    | 64     | 91.4    | 16         | register,extend,loop-shape                                      | 2026-11-16-87-p6-r15 Xr             |                                                           |
 | v10      | FDLoadSaveTest                          | 448   | 449    | 82.6    | 11         | register,loop-shape,other                                       | 2026-11-16-92-p6-r18 Xr             | c/v10/FDLoadSaveTest__c7a8b3d1.c                          |
 | v10      | FDemoText_ByteData_LayoutB              | 247   | 255    | 85.0    | 12         | register,extend,address-form,other                              | 2026-11-16-128-p6-r27 O3Xr          | c/v10/FDemoText_ByteData_LayoutB__08f7d695.c              |
 | v10      | FDemoText_RenderTextLine                | 438   | 439    | 99.3    | 407        | call-form                                                       | 2026-11-17-6-p6-r30-staged O3Xr     | c/v10/FDemoText_RenderTextLine__df20e3f7.c                |
 | v10      | FDemoText_ScanMIDIChannels              | 346   | 346    | 91.9    | 117        | register,order,other                                            | 2026-11-16-100-p6-r19 O3Xr          | c/v10/FDemoText_ScanMIDIChannels__6635aad8.c              |
+| v10      | FDemo_DisplayResourceData               | 293   | 291    | 90.4    | 17         | register,order,loop-shape                                       | 2026-11-16-107-p6-r21 O3Xr          |                                                           |
 | v10      | Fat_CreateDirEntry                      | 592   | 595    | 97.1    | 32         | call-form,register,other                                        | 2026-11-17-16-p6-r31 Xr             | c/v10/Fat_CreateDirEntry__c99676e1.c                      |
 | v10      | Fat_MapFilePosToSector                  | 451   | 452    | 99.6    | 82         | register                                                        | 2026-11-16-123-p6-r25 Xr            | c/v10/Fat_MapFilePosToSector__60cec29b.c                  |
+| v10      | Fat_ReadEntry                           | 264   | 273    | 70.5    | 5          | register,operand,extend,order,swap,other                        | 2026-11-16-100-p6-r19 Xr            |                                                           |
 | v10      | FileIO_BytecodeData_Code_Join18         | 106   | 106    | 92.5    | 81         | register                                                        | 2026-11-16-128-p6-r27 O3Xr          | c/v10/FileIO_BytecodeData_Code_Join18__40add7c1.c         |
 | v10      | FileIO_BytecodeData_Code_Loop3          | 107   | 107    | 92.5    | 81         | register                                                        | 2026-11-16-128-p6-r27 O3Xr          | c/v10/FileIO_BytecodeData_Code_Loop3__40add7c1.c          |
+| v10      | FileIO_CheckFileExists                  | 37    | 37     | 83.8    | 19         | order,other                                                     | 2026-11-16-40-p6-r8 O3XSXr          |                                                           |
 | v10      | FileIO_CheckRecordByFile                | 54    | 54     | 96.3    | 51         | size                                                            | 2026-11-16-39-p6-r7 O3XSXr          | c/v10/FileIO_CheckRecordByFile__3463f1aa.c                |
 | v10      | FileIO_CheckRecordValid                 | 55    | 53     | 74.5    | 36         | register,size                                                   | 2026-11-16-39-p6-r7 O3XSXr          | c/v10/FileIO_CheckRecordValid__cd9f1347.c                 |
 | v10      | FileIO_FormatName_Copy                  | 24    | 22     | 75.0    | 15         | other                                                           | 2026-11-16-33-p6-r2 O3XSXr          | c/v10/FileIO_FormatName_Copy__d0971740.c                  |
@@ -184,6 +185,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v10      | FileIO_LoadRcmToFlash                   | 330   | 328    | 95.8    | 30         | call-form,order,other                                           | 2026-11-17-16-p6-r31 O3Xr           | c/v10/FileIO_LoadRcmToFlash__3baabd13.c                   |
 | v10      | FileIO_ParseDirectoryEntry              | 238   | 252    | 76.1    | 1          | register,operand,extend,order,address-form,other                | 2026-11-17-16-p6-r31 O3XSXr         | c/v10/FileIO_ParseDirectoryEntry__a2a95e7c.c              |
 | v10      | FileIO_ReadAndValidateHeader            | 105   | 105    | 88.6    | 58         | register,loop-shape,other                                       | 2026-11-16-53-p6-r11 O3XSXr         | c/v10/FileIO_ReadAndValidateHeader__059fc1db.c            |
+| v10      | FileIO_SaveAllRegions                   | 344   | 373    | 73.5    | 23         | register,extend,order,address-form,other                        | 2026-11-16-72-p6-r13 O3XSXr         |                                                           |
 | v10      | FileIO_SearchFile                       | 30    | 26     | 73.3    | 0          | register,other                                                  | 2026-11-16-39-p6-r7 O3XSXr          | c/v10/FileIO_SearchFile__3463f1aa.c                       |
 | v10      | FileIO_Search_SkipEntry                 | 43    | 43     | 72.1    | 28         | register,loop-shape,other                                       | 2026-11-16-37-p6-r5 O3Xr            | c/v10/FileIO_Search_SkipEntry__412474a4.c                 |
 | v10      | FileIO_SeekAndRead16BitValue            | 46    | 42     | 91.3    | 14         | extend                                                          | 2026-11-16-100-p6-r19 O3XSXr        | c/v10/FileIO_SeekAndRead16BitValue__3e7e5ada.c            |
@@ -258,6 +260,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v10      | SeqScan_StoreResultB                    | 42    | 43     | 83.3    | 34         | register,extend,other                                           | 2026-11-16-128-p6-r27 O3XSXr        | c/v10/SeqScan_StoreResultB__6d81222a.c                    |
 | v10      | SeqStatus_SetOrClearBit                 | 16    | 17     | 75.0    | 0          | width                                                           | 2026-11-16-32-p6-m18-olevels O1XSXr | c/v10/SeqStatus_SetOrClearBit__19abfb5e.c                 |
 | v10      | SeqStep_CopyPartData                    | 69    | 67     | 73.9    | 6          | register,order,size,other                                       | 2026-11-16-45-p6-r9 O3Xr            | c/v10/SeqStep_CopyPartData__0a24d3ab.c                    |
+| v10      | SeqStep_FileCloseExit                   | 177   | 181    | 70.6    | 40         | extend,address-form,other                                       | 2026-11-16-87-p6-r15 Xr             |                                                           |
 | v10      | SeqStep_FileSectorRead                  | 32    | 34     | 93.8    | 10         | register                                                        | 2026-11-16-40-p6-r8 Xr              | c/v10/SeqStep_FileSectorRead__3f969905.c                  |
 | v10      | Seq_CheckSongEnd                        | 18    | 20     | 88.9    | 10         | other                                                           | 2026-11-16-39-p6-r7 Xr              | c/v10/Seq_CheckSongEnd__cd9f1347.c                        |
 | v10      | SingleLoadDstBankFunc                   | 57    | 59     | 77.2    | 15         | register,order                                                  | 2026-11-16-45-p6-r9 Xr              | c/v10/SingleLoadDstBankFunc__0a24d3ab.c                   |
@@ -307,6 +310,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v140     | DSP_AlgorithmChange                     | 158   | 159    | 98.1    | 49         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | DSP_ApplyConfig                         | 91    | 92     | 96.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | DSP_Cmd_LoadEffectPreset                | 163   | 168    | 90.8    | 31         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v140     | DSP_Config_Init                         | 270   | 276    | 93.3    | 8          | call-form                                                       | 2026-11-16-112-sub-r16 Xr           |                                                           |
 | v140     | DSP_Deselect_Chip                       | 28    | 29     | 89.3    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | DSP_DispatchCommand                     | 33    | 35     | 81.8    | 8          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | DSP_DispatchData                        | 33    | 35     | 81.8    | 8          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -345,6 +349,9 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v140     | ToneGen_SetupPolyVoice                  | 68    | 171    | 100.0   | 97         | length-only                                                     | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v140     | VoiceAlloc_CheckAndInit                 | 180   | 181    | 98.3    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | VoiceAlloc_WithRoutingFlag              | 29    | 30     | 89.7    | 6          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v140     | VoiceNoteParam_UpdateLoop               | 386   | 389    | 97.7    | 33         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v140     | VoiceParam_SubSlot_Apply_Catalog50      | 204   | 205    | 98.5    | 152        | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
+| v140     | VoiceSlot_AltInit                       | 226   | 238    | 84.1    | 15         | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
 | v140     | VoiceSlot_ClearAll                      | 250   | 251    | 98.8    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | VoiceSlot_NoteOff                       | 48    | 51     | 81.2    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | VoiceSlot_UpdateNoteSource              | 52    | 172    | 100.0   | 113        | length-only                                                     | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -373,6 +380,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v140     | Voice_PitchPack_RouteE                  | 95    | 97     | 93.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | Voice_Pitch_CopyBase                    | 64    | 65     | 95.3    | 56         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v140     | Voice_Portamento_OnHandler              | 166   | 167    | 98.2    | 36         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v140     | Voice_Reprioritise                      | 42    | 46     | 88.1    | 9          | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
 | v140     | Voice_Retire_ToFreePool                 | 82    | 85     | 89.0    | 7          | call-form                                                       | 2026-11-17-9-sub-staged6 Xr         |                                                           |
 | v140     | Voice_Selector_ComputeMixWeights        | 148   | 191    | 98.0    | 39         | call-form,length-only                                           | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v140     | Voice_Selector_FindBestSlot             | 175   | 178    | 94.9    | 19         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -393,6 +401,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v141     | DSP_AlgorithmChange                     | 158   | 159    | 98.1    | 49         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | DSP_ApplyConfig                         | 91    | 92     | 96.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | DSP_Cmd_LoadEffectPreset                | 163   | 168    | 90.8    | 31         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v141     | DSP_Config_Init                         | 270   | 276    | 93.3    | 8          | call-form                                                       | 2026-11-16-112-sub-r16 Xr           |                                                           |
 | v141     | DSP_Deselect_Chip                       | 28    | 29     | 89.3    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | DSP_DispatchCommand                     | 33    | 35     | 81.8    | 8          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | DSP_DispatchData                        | 33    | 35     | 81.8    | 8          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -431,6 +440,9 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v141     | ToneGen_SetupPolyVoice                  | 68    | 171    | 100.0   | 97         | length-only                                                     | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v141     | VoiceAlloc_CheckAndInit                 | 180   | 181    | 98.3    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | VoiceAlloc_WithRoutingFlag              | 29    | 30     | 89.7    | 6          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v141     | VoiceNoteParam_UpdateLoop               | 386   | 389    | 97.7    | 33         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v141     | VoiceParam_SubSlot_Apply_Catalog50      | 204   | 205    | 98.5    | 152        | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
+| v141     | VoiceSlot_AltInit                       | 226   | 238    | 84.1    | 15         | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
 | v141     | VoiceSlot_ClearAll                      | 250   | 251    | 98.8    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | VoiceSlot_NoteOff                       | 48    | 51     | 81.2    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | VoiceSlot_UpdateNoteSource              | 52    | 172    | 100.0   | 113        | length-only                                                     | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -459,6 +471,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v141     | Voice_PitchPack_RouteE                  | 95    | 97     | 93.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | Voice_Pitch_CopyBase                    | 64    | 65     | 95.3    | 56         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | Voice_Portamento_OnHandler              | 166   | 167    | 98.2    | 36         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v141     | Voice_Reprioritise                      | 42    | 46     | 88.1    | 9          | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
 | v141     | Voice_Retire_ToFreePool                 | 82    | 85     | 89.0    | 7          | call-form                                                       | 2026-11-17-9-sub-staged6 Xr         |                                                           |
 | v141     | Voice_Selector_ComputeMixWeights        | 148   | 191    | 98.0    | 39         | call-form,length-only                                           | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v141     | Voice_Selector_FindBestSlot             | 175   | 178    | 94.9    | 19         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -471,7 +484,9 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v141     | WaveSel_StageA1_FromPatchBlock          | 134   | 135    | 97.8    | 130        | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v141     | WaveSel_StageA1_FromToneSlot            | 52    | 53     | 94.2    | 46         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v141     | WaveSel_StageA2_FromToneRec             | 124   | 125    | 97.6    | 121        | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
-| v142     | Algo_SubTable_DispatchC                 | 203   | 205    | 97.0    | 78         | call-form                                                       | 2026-11-16-126-sub-r17 Xr           | c/v142/Algo_SubTable_DispatchC__6c9da23b.c                |
+| v142     | Algo_SubTable_Bit15Dispatch             | 241   | 241    | 97.1    | 74         | register,extend                                                 | 2026-11-16-97-sub-r12 Xr            | c/v142/Algo_SubTable_Bit15Dispatch__2af5e402.c            |
+| v142     | Algo_SubTable_DispatchC                 | 203   | 205    | 93.6    | 51         | call-form,register,extend                                       | 2026-11-16-97-sub-r12 Xr            | c/v142/Algo_SubTable_DispatchC__2af5e402.c                |
+| v142     | AudioChannel_AllVoices_Update_PanShift  | 137   | 139    | 95.6    | 19         | call-form                                                       | 2026-11-16-79-sub-r7 Xr             |                                                           |
 | v142     | AudioChannel_AllVoices_Update_Variant3  | 118   | 115    | 94.9    | 16         | loop-shape,other                                                | 2026-11-17-7-sub-r18 Xr             | c/v142/AudioChannel_AllVoices_Update_Variant3__9eef23d0.c |
 | v142     | AudioChannel_Handler_Cmd02              | 124   | 126    | 95.2    | 17         | call-form                                                       | 2026-11-16-126-sub-r17 Xr           | c/v142/AudioChannel_Handler_Cmd02__ac0e9204.c             |
 | v142     | AudioChannel_Handler_Cmd04_07           | 514   | 513    | 97.5    | 19         | register,order,loop-shape,other                                 | 2026-11-17-7-sub-r18 Xr             | c/v142/AudioChannel_Handler_Cmd04_07__9eef23d0.c          |
@@ -482,11 +497,13 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v142     | AudioChannel_Handler_Cmd18_1B           | 532   | 533    | 96.4    | 19         | call-form,register,order,loop-shape,other                       | 2026-11-17-7-sub-r18 Xr             | c/v142/AudioChannel_Handler_Cmd18_1B__9eef23d0.c          |
 | v142     | Audio_Cmd_PatchByte_Write_And_Echo      | 64    | 63     | 73.4    | 19         | register,extend,order,swap,other                                | 2026-11-16-62-sub-r4 Xr             | c/v142/Audio_Cmd_PatchByte_Write_And_Echo__b0df8e0b.c     |
 | v142     | Audio_Cmd_ToneEdit_Dispatch             | 656   | 662    | 97.3    | 11         | call-form                                                       | 2026-11-16-112-sub-r16 Xr           | c/v142/Audio_Cmd_ToneEdit_Dispatch__0dd0b6ee.c            |
+| v142     | CustomTone_CopySubUnitRecord            | 89    | 90     | 96.6    | 81         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v142     | DSP_AlgoSelect                          | 138   | 140    | 95.7    | 18         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_AlgoType_Dispatch1                  | 460   | 448    | 86.3    | 33         | register,extend,order,other                                     | 2026-11-16-99-sub-r13-idioms Xr     | c/v142/DSP_AlgoType_Dispatch1__07af9208.c                 |
 | v142     | DSP_AlgoType_Dispatch2                  | 430   | 410    | 85.3    | 33         | register,extend,order                                           | 2026-11-16-99-sub-r13-idioms Xr     | c/v142/DSP_AlgoType_Dispatch2__07af9208.c                 |
 | v142     | DSP_AlgorithmChange                     | 158   | 159    | 98.1    | 49         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_ApplyConfig                         | 91    | 92     | 96.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | DSP_Config_Init                         | 270   | 276    | 93.3    | 8          | call-form                                                       | 2026-11-16-112-sub-r16 Xr           |                                                           |
 | v142     | DSP_Deselect_Chip                       | 28    | 29     | 89.3    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_DispatchCommand                     | 33    | 35     | 81.8    | 8          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_DispatchData                        | 33    | 35     | 81.8    | 8          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -495,6 +512,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v142     | DSP_InitChannelSlot                     | 243   | 230    | 83.5    | 6          | register,operand,order,other                                    | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_InitChannelSlot__a10fe588.c                    |
 | v142     | DSP_ParamInterp_3Point_WithOffset       | 51    | 116    | 100.0   | 104        | length-only                                                     | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_ParamInterp_3Point_WithOffset__2f4dfc1d.c      |
 | v142     | DSP_ParameterWriteEngine                | 200   | 198    | 97.5    | 13         | register,other                                                  | 2026-11-16-79-sub-r7 Xr             | c/v142/DSP_ParameterWriteEngine__55b39cc0.c               |
+| v142     | DSP_PerParameterTranslator              | 1113  | 1144   | 93.4    | 104        | register,operand,extend,order,other                             | 2026-11-16-97-sub-r12 Xr            | c/v142/DSP_PerParameterTranslator__ef09c91d.c             |
 | v142     | DSP_Reset                               | 118   | 120    | 94.9    | 92         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_RingBuf_Read                        | 41    | 43     | 90.2    | 6          | register                                                        | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_RingBuf_Read__aa008c6d.c                       |
 | v142     | DSP_RingBuf_Skip                        | 28    | 30     | 78.6    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
@@ -503,47 +521,103 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | v142     | DSP_WriteAlgoBuffer                     | 245   | 245    | 88.6    | 74         | register,operand,extend,order,arith-type,other                  | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_WriteAlgoBuffer__a10fe588.c                    |
 | v142     | DSP_WriteFreqParam                      | 205   | 206    | 98.5    | 187        | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_WriteFreqParam_AlgoType             | 205   | 206    | 98.5    | 187        | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | DSP_WriteOscParam                       | 205   | 206    | 98.5    | 187        | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v142     | DSP_WriteParamCmd30                     | 51    | 52     | 94.1    | 44         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | DSP_WriteVoiceParam                     | 156   | 152    | 88.5    | 43         | register,extend,other                                           | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_WriteVoiceParam__2b9b067a.c                    |
 | v142     | Debug_Print_Word                        | 29    | 25     | 86.2    | 14         | other                                                           | 2026-11-16-47-sub-r2 O3Xr           | c/v142/Debug_Print_Word__a5f7743e.c                       |
+| v142     | EFF_Change_Handler                      | 192   | 193    | 98.4    | 185        | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | EFF_DspChannel_InitFlags                | 1844  | 1840   | 97.9    | 51         | register,operand,other                                          | 2026-11-17-7-sub-r18 Xr             | c/v142/EFF_DspChannel_InitFlags__a10fe588.c               |
 | v142     | EFF_HeaderChangeDataLoop                | 127   | 129    | 95.3    | 16         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | EFF_ParamIterator_Process               | 314   | 314    | 91.1    | 104        | register,order,loop-shape,swap                                  | 2026-11-17-7-sub-r18 Xr             | c/v142/EFF_ParamIterator_Process__43ba5118.c              |
 | v142     | EFF_VolumeChange_Check                  | 28    | 29     | 89.3    | 24         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
-| v142     | InterCPU_DMA_Send                       | 69    | 67     | 92.8    | 22         | extend,order                                                    | 2026-11-16-126-sub-r17 Xr           | c/v142/InterCPU_DMA_Send__36b65b7f.c                      |
+| v142     | EGEnv_Compute_A                         | 144   | 145    | 97.9    | 68         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | InterCPU_DMA_Send                       | 69    | 69     | 84.1    | 16         | call-form,extend,order                                          | 2026-11-16-126-sub-r17 Xr           | c/v142/InterCPU_DMA_Send__36b65b7f.c                      |
 | v142     | Keybed_Read_Event                       | 90    | 88     | 73.3    | 16         | register,order,other                                            | 2026-11-17-7-sub-r18 Xr             | c/v142/Keybed_Read_Event__2f4dfc1d.c                      |
+| v142     | MIDI_Dispatch                           | 595   | 634    | 80.5    | 13         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | OutputBuf_Flush_B                       | 97    | 100    | 90.7    | 9          | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v142     | RingBuf_ReadByte                        | 41    | 43     | 90.2    | 6          | register                                                        | 2026-11-17-7-sub-r18 Xr             | c/v142/RingBuf_ReadByte__aa008c6d.c                       |
 | v142     | RingBuf_ReadByte_MidiRing               | 6     | 8      | 66.7    | 4          | call-form                                                       | 2026-11-16-73-sub-r6 Xr             |                                                           |
 | v142     | RingBuf_SkipToEnd                       | 28    | 30     | 78.6    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
-| v142     | Serial1_DataTransmit_Loop               | 69    | 71     | 91.3    | 9          | call-form                                                       | 2026-11-16-86-sub-r9 O1Xr           | c/v142/Serial1_DataTransmit_Loop__2bd0e9d4.c              |
-| v142     | TVF_Emit_Offset_Both                    | 120   | 122    | 88.3    | 13         | register,swap                                                   | 2026-11-16-126-sub-r17 Xr           | c/v142/TVF_Emit_Offset_Both__bd67878a.c                   |
+| v142     | Serial1_DataTransmit_Loop               | 69    | 71     | 91.3    | 9          | call-form                                                       | 2026-11-16-86-sub-r9 O1Xr           | c/v142/Serial1_DataTransmit_Loop__1da6a169.c              |
+| v142     | TVF_Build_Dispatch                      | 44    | 62     | 100.0   | 59         | length-only                                                     | 2026-11-16-97-sub-r12 Xr            | c/v142/TVF_Build_Dispatch__632f36eb.c                     |
+| v142     | TVF_Emit_Offset_Both                    | 120   | 120    | 86.7    | 71         | register,swap                                                   | 2026-11-17-7-sub-r18 Xr             | c/v142/TVF_Emit_Offset_Both__28995d12.c                   |
+| v142     | TVF_Emit_Offset_Reg100                  | 102   | 103    | 95.1    | 13         | call-form,other                                                 | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v142     | TVF_Lookup_Depth_Amount                 | 169   | 177    | 88.2    | 13         | other                                                           | 2026-11-16-58-sub-r3 Xr             | c/v142/TVF_Lookup_Depth_Amount__117dcfe4.c                |
 | v142     | TVF_Refresh_Sounding_Voices             | 115   | 117    | 94.8    | 19         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | ToneDB_Find_PatchRecord                 | 254   | 246    | 85.8    | 21         | register,order,size,other                                       | 2026-11-17-7-sub-r18 Xr             | c/v142/ToneDB_Find_PatchRecord__2b9b067a.c                |
+| v142     | ToneDB_Find_SubToneRecord               | 62    | 63     | 95.2    | 58         | call-form                                                       | 2026-11-16-90-sub-r10 Xr            |                                                           |
 | v142     | ToneDB_Find_ToneRecord_CoeffPath        | 91    | 87     | 76.9    | 0          | register,order,size,other                                       | 2026-11-17-7-sub-r18 Xr             | c/v142/ToneDB_Find_ToneRecord_CoeffPath__2b9b067a.c       |
 | v142     | ToneDB_Resolve_NamedToneRecord          | 216   | 216    | 84.7    | 40         | register,other                                                  | 2026-11-17-7-sub-r18 Xr             | c/v142/ToneDB_Resolve_NamedToneRecord__2b9b067a.c         |
-| v142     | ToneGen_WriteVoice_Long                 | 34    | 28     | 73.5    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             | c/v142/ToneGen_WriteVoice_Long__37c0af01.c                |
-| v142     | ToneGen_WriteVoice_Reg11                | 34    | 28     | 73.5    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             | c/v142/ToneGen_WriteVoice_Reg11__37c0af01.c               |
+| v142     | ToneGen_Process_Notes                   | 167   | 169    | 95.8    | 6          | operand,length-only                                             | 2026-11-16-106-sub-r15 Xr           |                                                           |
+| v142     | ToneGen_SelfTest_ProbeVoice0            | 215   | 215    | 94.0    | 60         | call-form,register                                              | 2026-11-16-90-sub-r10 Xr            |                                                           |
+| v142     | ToneGen_SetupPolyVoice                  | 68    | 171    | 100.0   | 97         | length-only                                                     | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | ToneGen_WriteExtParam_600               | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-79-sub-r7 Xr             |                                                           |
+| v142     | ToneGen_WriteReg0640                    | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoicePitch                 | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-79-sub-r7 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_EnvLevel             | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Long                 | 34    | 36     | 91.2    | 19         | register                                                        | 2026-11-16-62-sub-r4 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Reg07                | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Reg11                | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Reg13                | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Reg15                | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Reg16                | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Reg18                | 34    | 30     | 79.4    | 0          | register,other                                                  | 2026-11-16-58-sub-r3 Xr             |                                                           |
+| v142     | ToneGen_WriteVoice_Short                | 37    | 33     | 81.1    | 0          | register,other                                                  | 2026-11-16-79-sub-r7 Xr             |                                                           |
 | v142     | VoiceAlloc_CheckAndInit                 | 180   | 181    | 98.3    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | VoiceAlloc_WithRoutingFlag              | 29    | 30     | 89.7    | 6          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | VoiceNoteParam_UpdateLoop               | 386   | 389    | 97.7    | 33         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | VoiceParam_CustomTone_Apply_Catalog8C   | 188   | 189    | 98.4    | 133        | call-form                                                       | 2026-11-16-90-sub-r10 Xr            |                                                           |
+| v142     | VoiceParam_FullSetup                    | 408   | 400    | 82.6    | 11         | call-form,register,operand,extend,order,loop-shape,other        | 2026-11-16-82-sub-r8 Xr             |                                                           |
 | v142     | VoiceParam_Set_Tone_Option              | 193   | 193    | 97.9    | 12         | register,order                                                  | 2026-11-16-112-sub-r16 Xr           | c/v142/VoiceParam_Set_Tone_Option__0dd0b6ee.c             |
+| v142     | VoiceParam_SubSlot_Apply_Catalog50      | 204   | 205    | 98.5    | 152        | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
+| v142     | VoiceSlot_AltInit                       | 226   | 238    | 84.1    | 15         | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
 | v142     | VoiceSlot_ClearAll                      | 250   | 251    | 98.8    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | VoiceSlot_FullInit                      | 216   | 229    | 81.9    | 13         | call-form                                                       | 2026-11-16-90-sub-r10 Xr            |                                                           |
+| v142     | VoiceSlot_NoteOff                       | 48    | 51     | 81.2    | 5          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | VoiceSlot_UpdateNoteSource              | 52    | 172    | 100.0   | 113        | length-only                                                     | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | VoiceState_SwapSlot_DE_BC               | 185   | 173    | 70.8    | 6          | register,order                                                  | 2026-11-16-65-sub-r5 Xr             | c/v142/VoiceState_SwapSlot_DE_BC__3bd51c75.c              |
+| v142     | VoiceSubSlot_Init                       | 61    | 62     | 95.1    | 55         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v142     | Voice_ActiveFlag_CheckAndLoad           | 114   | 115    | 97.4    | 77         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_AdvanceSlotIterator               | 102   | 104    | 94.1    | 21         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | Voice_AllVoices_PortamentoReset         | 115   | 118    | 84.3    | 0          | register,other                                                  | 2026-11-16-62-sub-r4 Xr             |                                                           |
 | v142     | Voice_AllVoices_WriteAmplitude          | 103   | 104    | 97.1    | 19         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_Artic_SetWord0Word2_Nibble2       | 78    | 80     | 92.3    | 65         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_Artic_SetWord1Nibble2_And_Word3   | 72    | 74     | 91.7    | 59         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_Artic_SetWord2Word1_Nibble0       | 74    | 76     | 91.9    | 61         | call-form                                                       | 2026-11-16-82-sub-r8 Xr             |                                                           |
+| v142     | Voice_Artic_SetWord2Word1_Nibble1       | 74    | 76     | 91.9    | 61         | call-form                                                       | 2026-11-16-82-sub-r8 Xr             |                                                           |
+| v142     | Voice_Calc_LevelPair_EGB                | 309   | 310    | 98.7    | 254        | register,other                                                  | 2026-11-16-94-sub-r11 Xr            | c/v142/Voice_Calc_LevelPair_EGB__417738f3.c               |
 | v142     | Voice_Calc_LevelPair_FixedAtk           | 314   | 318    | 96.8    | 225        | register,other                                                  | 2026-11-17-7-sub-r18 Xr             | c/v142/Voice_Calc_LevelPair_FixedAtk__e23f8bbd.c          |
 | v142     | Voice_Clear_HoldBit                     | 15    | 77     | 100.0   | 52         | length-only                                                     | 2026-11-17-7-sub-r18 Xr             | c/v142/Voice_Clear_HoldBit__28995d12.c                    |
-| v142     | Voice_Freq_WriteLeft                    | 284   | 284    | 90.1    | 143        | register,swap                                                   | 2026-11-16-126-sub-r17 Xr           | c/v142/Voice_Freq_WriteLeft__4236702b.c                   |
+| v142     | Voice_ComputePitch_Mono                 | 260   | 262    | 98.5    | 35         | register,other                                                  | 2026-11-16-94-sub-r11 Xr            | c/v142/Voice_ComputePitch_Mono__417738f3.c                |
+| v142     | Voice_Demote_Decayed                    | 30    | 31     | 90.0    | 26         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_Freq_WriteLeft                    | 284   | 287    | 87.3    | 26         | call-form,register,swap                                         | 2026-11-16-126-sub-r17 Xr           | c/v142/Voice_Freq_WriteLeft__4236702b.c                   |
+| v142     | Voice_InitFromSlot                      | 32    | 99     | 81.2    | 8          | call-form,length-only                                           | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | Voice_InterpolateNoteCurve              | 138   | 138    | 97.1    | 3          | register,order,size                                             | 2026-11-17-7-sub-r18 Xr             | c/v142/Voice_InterpolateNoteCurve__e23f8bbd.c             |
+| v142     | Voice_List_MoveToPartList               | 27    | 171    | 100.0   | 100        | length-only                                                     | 2026-11-16-82-sub-r8 Xr             |                                                           |
+| v142     | Voice_List_MoveToPool                   | 27    | 169    | 100.0   | 98         | length-only                                                     | 2026-11-16-82-sub-r8 Xr             |                                                           |
 | v142     | Voice_NoteOn                            | 118   | 123    | 87.3    | 10         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
-| v142     | Voice_PortaLevel_Compute                | 234   | 240    | 93.2    | 16         | register,operand,extend,other                                   | 2026-11-16-126-sub-r17 Xr           | c/v142/Voice_PortaLevel_Compute__4236702b.c               |
+| v142     | Voice_Part_ResetSlotRouting             | 259   | 265    | 93.4    | 12         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | Voice_PitchBend                         | 130   | 132    | 95.4    | 57         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | Voice_PitchPack_RouteD                  | 81    | 82     | 96.3    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_PitchPack_RouteE                  | 95    | 97     | 93.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_Pitch_CopyBase                    | 64    | 65     | 95.3    | 56         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_Pitch_WriteOutputReg_Secondary    | 55    | 56     | 94.5    | 46         | call-form                                                       | 2026-11-16-82-sub-r8 Xr             |                                                           |
+| v142     | Voice_PortaLevel_Compute                | 234   | 249    | 81.6    | 16         | call-form,register,operand,extend,other                         | 2026-11-16-126-sub-r17 Xr           | c/v142/Voice_PortaLevel_Compute__4236702b.c               |
 | v142     | Voice_Portamento_OnHandler              | 166   | 167    | 98.2    | 36         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_ProgChange                        | 257   | 262    | 94.2    | 16         | call-form                                                       | 2026-11-16-90-sub-r10 Xr            |                                                           |
+| v142     | Voice_Reprioritise                      | 42    | 46     | 88.1    | 9          | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                           |
 | v142     | Voice_ScanSlots_ReassignSources         | 205   | 203    | 97.6    | 33         | register                                                        | 2026-11-17-7-sub-r18 Xr             | c/v142/Voice_ScanSlots_ReassignSources__9db4bd63.c        |
+| v142     | Voice_Selector_ComputeMixWeights        | 148   | 191    | 98.0    | 39         | call-form,length-only                                           | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | Voice_Selector_FindBestSlot             | 175   | 178    | 94.9    | 19         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | Voice_SetArticWord0_LowByte             | 54    | 56     | 88.9    | 41         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
 | v142     | Voice_Slot_CalcArticParams              | 320   | 319    | 98.8    | 80         | size                                                            | 2026-11-17-7-sub-r18 Xr             | c/v142/Voice_Slot_CalcArticParams__28995d12.c             |
+| v142     | Voice_ToneTableApply_Pitch              | 56    | 203    | 100.0   | 91         | length-only                                                     | 2026-11-16-73-sub-r6 Xr             |                                                           |
 | v142     | WaveSel_Cache_SetDescPtr                | 86    | 87     | 96.5    | 32         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                           |
+| v142     | WaveSel_StageA1_FromPatchBlock          | 134   | 135    | 97.8    | 130        | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
 | v142     | WaveSel_StageA1_SelectTables            | 166   | 168    | 95.2    | 152        | register                                                        | 2026-11-17-7-sub-r18 Xr             | c/v142/WaveSel_StageA1_SelectTables__2b9b067a.c           |
+| v142     | WaveSel_StageA2_FromToneRec             | 124   | 125    | 97.6    | 121        | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                           |
+| v142     | WaveSel_StageA2_FromVelZone             | 45    | 46     | 93.3    | 42         | call-form                                                       | 2026-11-16-90-sub-r10 Xr            |                                                           |
 | v142     | WaveSel_StageB_Build_Reg040             | 175   | 171    | 91.4    | 40         | register                                                        | 2026-11-17-7-sub-r18 Xr             | c/v142/WaveSel_StageB_Build_Reg040__28995d12.c            |
-| v142     | WaveSel_StageB_Build_Reg040_Footage     | 233   | 230    | 91.4    | 73         | register,other                                                  | 2026-11-16-62-sub-r4 Xr             | c/v142/WaveSel_StageB_Build_Reg040_Footage__8761cd5b.c    |
 | v5       | BmDrEdit_CalcBeatMeasure                | 183   | 103    | 54.1    | 99         | call-form,register,extend,loop-shape,return-form,other          | 2026-11-16-92-p6-r18 O3XSXr         | c/v5/BmDrEdit_CalcBeatMeasure__76688110.c                 |
 | v5       | FDemoText_RenderTextLine                | 438   | 439    | 99.3    | 407        | call-form                                                       | 2026-11-17-6-p6-r30-staged O3Xr     | c/v5/FDemoText_RenderTextLine__df20e3f7.c                 |
 | v5       | SeMenu_ToggleSolo                       | 33    | 34     | 84.8    | 18         | call-form,other                                                 | 2026-11-16-122-p6-r24-staged O3Xr   | c/v5/SeMenu_ToggleSolo__74abb106.c                        |
@@ -598,7 +672,7 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | 2026-11-16-42-p6-calrel       | 018a6a2bbeb61d74  | name+funcs       | 19       | 0     |
 | 2026-11-16-43-sub-r1          | ac2cd07f1d6f78b3  | name+funcs       | 162      | 71    |
 | 2026-11-16-44-hd-r1           | f5a238c10cea09a0  | tar-sha256       | 129      | 27    |
-| 2026-11-16-45-p6-r9           | 73d32a543fbe010d  | tar-sha256       | 1084     | 553   |
+| 2026-11-16-45-p6-r9           | 73d32a543fbe010d  | tar-sha256       | 1084     | 555   |
 | 2026-11-16-46-hd-r2           | d9a5880cf08d6aaa  | tar-sha256       | 41       | 1     |
 | 2026-11-16-47-sub-r2          | 2b67f9348acfee94  | name+funcs, none | 1465     | 528   |
 | 2026-11-16-48-hd-r2b          | 1c9bba6fee280257  | tar-sha256       | 59       | 12    |
@@ -609,54 +683,54 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | 2026-11-16-53-p6-r11          | 62247366982b5271  | tar-sha256       | 474      | 139   |
 | 2026-11-16-54-hd-r5           | c4efc3f5b8839c5a  | tar-sha256       | 25       | 10    |
 | 2026-11-16-55-p6-r10          | 8d52fbb4078eb44b  | tar-sha256       | 1386     | 933   |
-| 2026-11-16-56-hd-r6           | 14f19a28ec0f519c  | tar-sha256       | 80       | 42    |
+| 2026-11-16-56-hd-r6           | 14f19a28ec0f519c  | tar-sha256       | 80       | 43    |
 | 2026-11-16-57-hd-r7           | b0d1cc100cc8c7fe  | tar-sha256       | 88       | 33    |
-| 2026-11-16-58-sub-r3          | 3d90e110fbbb3fcf  | name+funcs, none | 760      | 534   |
+| 2026-11-16-58-sub-r3          | 3d90e110fbbb3fcf  | name+funcs, none | 760      | 543   |
 | 2026-11-16-59-hd-r8           | 50be0d04a84d2e29  | tar-sha256       | 69       | 49    |
 | 2026-11-16-60-hd-r9a          | 3b4e9edb7a9ad792  | tar-sha256       | 95       | 91    |
 | 2026-11-16-61-p6-calrel-far2  | def17f1db2a769ae  | name+funcs       | 18       | 0     |
-| 2026-11-16-62-sub-r4          | 4cf0b5d9d980b930  | name+funcs, none | 899      | 687   |
+| 2026-11-16-62-sub-r4          | 4cf0b5d9d980b930  | name+funcs, none | 899      | 691   |
 | 2026-11-16-63-hd-r9s-staged   | 59e51cbceca26d75  | tar-sha256       | 139      | 139   |
 | 2026-11-16-64-hd-r9b          | df8ff2156107f5bd  | tar-sha256       | 17       | 4     |
-| 2026-11-16-65-sub-r5          | c203eda20ce0f346  | name+funcs, none | 858      | 681   |
-| 2026-11-16-66-hd-r10          | ee2202009524aff7  | tar-sha256       | 78       | 43    |
+| 2026-11-16-65-sub-r5          | c203eda20ce0f346  | name+funcs, none | 858      | 693   |
+| 2026-11-16-66-hd-r10          | ee2202009524aff7  | tar-sha256       | 78       | 44    |
 | 2026-11-16-67-hd-r11-staged   | cd59fdd106651963  | tar-sha256       | 61       | 61    |
-| 2026-11-16-68-p6-r12          | 428ce64226c542d2  | tar-sha256       | 1706     | 1238  |
+| 2026-11-16-68-p6-r12          | 428ce64226c542d2  | tar-sha256       | 1706     | 1239  |
 | 2026-11-16-69-hd-r12-ports    | 196c389bc4b2d55b  | tar-sha256       | 110      | 110   |
 | 2026-11-16-70-hd-r13v         | 9b74d4b4667b7ca8  | tar-sha256       | 10       | 0     |
 | 2026-11-16-71-hd-r13a         | 64ed2ccab48d1490  | tar-sha256       | 5        | 1     |
-| 2026-11-16-72-p6-r13          | 07624d29aa1c91fe  | tar-sha256       | 453      | 120   |
-| 2026-11-16-73-sub-r6          | a0c5e9e9cbc72aea  | name+funcs, none | 909      | 764   |
+| 2026-11-16-72-p6-r13          | 07624d29aa1c91fe  | tar-sha256       | 453      | 152   |
+| 2026-11-16-73-sub-r6          | a0c5e9e9cbc72aea  | name+funcs, none | 909      | 779   |
 | 2026-11-16-74-hd-r13          | 1900cec3954fb74c  | tar-sha256       | 37       | 23    |
-| 2026-11-16-75-hd-r13b         | 5a7faff1ea64bffc  | tar-sha256       | 88       | 31    |
+| 2026-11-16-75-hd-r13b         | 5a7faff1ea64bffc  | tar-sha256       | 88       | 39    |
 | 2026-11-16-76-hd-r14-staged   | 2bd370122387adc7  | tar-sha256       | 80       | 74    |
 | 2026-11-16-77-hd-r14b-songmod | 61edcc2d81e2defb  | tar-sha256       | 6        | 6     |
 | 2026-11-16-78-hd-r15-ports    | aae2f7f47266b3d2  | tar-sha256       | 141      | 139   |
-| 2026-11-16-79-sub-r7          | 782919101cdeeeac  | name+funcs       | 199      | 22    |
-| 2026-11-16-80-sub-staged2     | 281a7cb649012d3e  | name+funcs, none | 243      | 84    |
+| 2026-11-16-79-sub-r7          | 782919101cdeeeac  | name+funcs       | 199      | 13    |
+| 2026-11-16-80-sub-staged2     | 281a7cb649012d3e  | name+funcs, none | 243      | 99    |
 | 2026-11-16-81-p6-r14          | ef2be26a14b26142  | tar-sha256       | 309      | 206   |
-| 2026-11-16-82-sub-r8          | fe933c1549e67bc3  | name+funcs       | 203      | 45    |
+| 2026-11-16-82-sub-r8          | fe933c1549e67bc3  | name+funcs       | 203      | 11    |
 | 2026-11-16-83-hd-r16          | c31e34d091777075  | tar-sha256       | 44       | 20    |
 | 2026-11-16-84-hd-r17-staged   | 2a6932cb91b4a585  | tar-sha256       | 7        | 7     |
 | 2026-11-16-85-hd-r18-ports    | 74929b5b5e65f0b9  | tar-sha256       | 10       | 10    |
-| 2026-11-16-86-sub-r9          | e17a232665857a74  | name+funcs       | 752      | 29    |
-| 2026-11-16-87-p6-r15          | f63625e03cc501b5  | tar-sha256       | 813      | 332   |
-| 2026-11-16-88-p6-r16          | faa240c37421f268  | tar-sha256       | 219      | 43    |
-| 2026-11-16-89-sub-staged3     | c1e89bee0fd6696a  | name+funcs, none | 348      | 129   |
-| 2026-11-16-90-sub-r10         | 09321db0cbe8718c  | name+funcs, none | 196      | 24    |
+| 2026-11-16-86-sub-r9          | e17a232665857a74  | name+funcs       | 752      | 22    |
+| 2026-11-16-87-p6-r15          | f63625e03cc501b5  | tar-sha256       | 813      | 352   |
+| 2026-11-16-88-p6-r16          | faa240c37421f268  | tar-sha256       | 219      | 47    |
+| 2026-11-16-89-sub-staged3     | c1e89bee0fd6696a  | name+funcs, none | 348      | 150   |
+| 2026-11-16-90-sub-r10         | 09321db0cbe8718c  | name+funcs, none | 196      | 13    |
 | 2026-11-16-91-p6-r17          | ca2969cd1c6f44c3  | tar-sha256       | 747      | 495   |
-| 2026-11-16-92-p6-r18          | 632fbea5c3a865ff  | tar-sha256       | 1405     | 772   |
+| 2026-11-16-92-p6-r18          | 632fbea5c3a865ff  | tar-sha256       | 1405     | 826   |
 | 2026-11-16-93-hd-r19-svc      | be30d4bba3226902  | tar-sha256       | 2        | 2     |
-| 2026-11-16-94-sub-r11         | fd8fa129f6ce45ed  | name+funcs       | 60       | 7     |
+| 2026-11-16-94-sub-r11         | fd8fa129f6ce45ed  | name+funcs       | 60       | 4     |
 | 2026-11-16-95-hd-r20          | ba6cf2c219d9cb59  | tar-sha256       | 49       | 9     |
 | 2026-11-16-96-hd-r21-staged   | dd384d0b005d4755  | tar-sha256       | 9        | 9     |
-| 2026-11-16-97-sub-r12         | 14076f5f883be217  | name+funcs       | 56       | 12    |
+| 2026-11-16-97-sub-r12         | 14076f5f883be217  | name+funcs       | 56       | 8     |
 | 2026-11-16-98-hd-r22          | 41fae69fd96decb5  | tar-sha256       | 26       | 10    |
 | 2026-11-16-99-sub-r13-idioms  | f60b89a8590276e3  | name+funcs, none | 399      | 10    |
-| 2026-11-16-100-p6-r19         | be130d1b9e48b2d1  | tar-sha256       | 654      | 162   |
-| 2026-11-16-101-sub-r14        | 5af67f7d5608cfe6  | name+funcs, none | 135      | 25    |
-| 2026-11-16-102-hd-r23a        | b00eddddcbe46333  | tar-sha256       | 67       | 40    |
-| 2026-11-16-103-p6-r20-staged  | 52cf574e5f55c80b  | tar-sha256       | 600      | 417   |
+| 2026-11-16-100-p6-r19         | be130d1b9e48b2d1  | tar-sha256       | 654      | 166   |
+| 2026-11-16-101-sub-r14        | 5af67f7d5608cfe6  | name+funcs, none | 135      | 30    |
+| 2026-11-16-102-hd-r23a        | b00eddddcbe46333  | tar-sha256       | 67       | 52    |
+| 2026-11-16-103-p6-r20-staged  | 52cf574e5f55c80b  | tar-sha256       | 600      | 449   |
 | 2026-11-16-104-hd-r24-staged  | 11f5d72c355c37ba  | tar-sha256       | 22       | 21    |
 | 2026-11-16-105-hd-r23b        | e4e43617f3db2e8d  | tar-sha256       | 57       | 33    |
 | 2026-11-16-106-sub-r15        | 1fafa306c6132a6b  | name+funcs, none | 59       | 15    |
@@ -664,22 +738,22 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | 2026-11-16-108-hd-r25-staged  | 44f72a908cfe6f1c  | tar-sha256       | 6        | 6     |
 | 2026-11-16-109-hd-r23c        | 440357f93c922ee4  | tar-sha256       | 33       | 21    |
 | 2026-11-16-110-hd-r26-staged  | e80ed13bc8b20fbe  | tar-sha256       | 9        | 9     |
-| 2026-11-16-111-p6-r22-staged  | 33fafd321995c4ef  | tar-sha256       | 806      | 536   |
-| 2026-11-16-112-sub-r16        | 37fa09c75d9ace52  | name+funcs, none | 70       | 26    |
-| 2026-11-16-113-hd-r27a        | 634478f05fb16448  | tar-sha256       | 24       | 16    |
+| 2026-11-16-111-p6-r22-staged  | 33fafd321995c4ef  | tar-sha256       | 806      | 568   |
+| 2026-11-16-112-sub-r16        | 37fa09c75d9ace52  | name+funcs, none | 70       | 24    |
+| 2026-11-16-113-hd-r27a        | 634478f05fb16448  | tar-sha256       | 24       | 17    |
 | 2026-11-16-114-sub-staged4    | ce48dc6eaf46b0cc  | none             | 39       | 12    |
 | 2026-11-16-115-hd-r28-staged  | ebf3297a77a64647  | tar-sha256       | 15       | 15    |
-| 2026-11-16-116-hd-r27c        | 5b0d16773e6b847a  | tar-sha256       | 78       | 61    |
+| 2026-11-16-116-hd-r27c        | 5b0d16773e6b847a  | tar-sha256       | 78       | 62    |
 | 2026-11-16-117-hd-r29-staged  | 66002a530f0ded0c  | tar-sha256       | 18       | 18    |
-| 2026-11-16-118-p6-r23         | 9629eb1a441fad9e  | tar-sha256       | 723      | 77    |
-| 2026-11-16-119-hd-r30         | 84db687e80a014a8  | tar-sha256       | 163      | 108   |
-| 2026-11-16-120-hd-r31-staged  | 1bf04e7f4d836389  | tar-sha256       | 12       | 5     |
-| 2026-11-16-121-hd-r32-staged  | 6e5363295f2fde51  | tar-sha256       | 16       | 8     |
-| 2026-11-16-122-p6-r24-staged  | e93250558126d820  | tar-sha256       | 280      | 163   |
+| 2026-11-16-118-p6-r23         | 9629eb1a441fad9e  | tar-sha256       | 723      | 85    |
+| 2026-11-16-119-hd-r30         | 84db687e80a014a8  | tar-sha256       | 163      | 120   |
+| 2026-11-16-120-hd-r31-staged  | 1bf04e7f4d836389  | tar-sha256       | 12       | 11    |
+| 2026-11-16-121-hd-r32-staged  | 6e5363295f2fde51  | tar-sha256       | 16       | 15    |
+| 2026-11-16-122-p6-r24-staged  | e93250558126d820  | tar-sha256       | 280      | 172   |
 | 2026-11-16-123-p6-r25         | 74ebf6fd4585abf4  | tar-sha256       | 621      | 86    |
-| 2026-11-16-124-hd-r34-staged  | 1211eb6dbfd01ccc  | tar-sha256       | 6        | 3     |
+| 2026-11-16-124-hd-r34-staged  | 1211eb6dbfd01ccc  | tar-sha256       | 6        | 6     |
 | 2026-11-16-125-p6-r26-staged  | 73ee26bdf6114fd4  | tar-sha256       | 330      | 162   |
-| 2026-11-16-126-sub-r17        | 2569b2a32a2beb2b  | name+funcs       | 304      | 83    |
+| 2026-11-16-126-sub-r17        | 2569b2a32a2beb2b  | name+funcs       | 304      | 54    |
 | 2026-11-16-127-sub-staged5    | e58ea64dd9cfcd14  | none             | 132      | 48    |
 | 2026-11-16-128-p6-r27         | 016281fd288ddc95  | tar-sha256       | 519      | 89    |
 | 2026-11-17-1-p6-r28-staged    | 393616853a8b753e  | tar-sha256       | 182      | 103   |
@@ -703,3 +777,9 @@ Errors: ERR-asm 521, ERR-data 110, ERR-dup 236, ERR-name 440, ERR-resolve 435, E
 | 2026-11-17-20-hd-r47          | 7848bceb7701db2b  | tar-sha256       | 25       | 2     |
 | 2026-11-17-21-hd-r48-staged   | 3bc816730b8fbdc3  | tar-sha256       | 3        | 3     |
 | 2026-11-17-22-hd-r49-ports    | c49608ff65de9f8d  | tar-sha256       | 6        | 6     |
+
+## Listings the tool could not read
+
+- runs/2026-11-16-109-hd-r23c/out/v423/Xr/hd/hd_r23_drv.asm: SystemExit: /home/fsanches/compartilhado/tmp/cc900-tab/lane_nmx/tmpis075m6r/c.c:18: a cc900-name: marker wraps: its `C=LABEL` is not whole on this line.  Each marker is read from its own line only: repeat the keyword on every line (`cc900-name: ...`)
+- runs/2026-11-16-119-hd-r30/out/v423/Xr/hd/hd_r27_b_drv.asm: SystemExit: /home/fsanches/compartilhado/tmp/cc900-tab/lane_nmx/tmpm7ti5xzq/c.c:34: a cc900-name: marker wraps: its `C=LABEL` is not whole on this line.  Each marker is read from its own line only: repeat the keyword on every line (`cc900-name: ...`)
+- runs/2026-11-16-119-hd-r30/out/v423/Xr/hd/hd_r27_b_drvb.asm: SystemExit: /home/fsanches/compartilhado/tmp/cc900-tab/lane_nmx/tmp0igok1i4/c.c:30: a cc900-name: marker wraps: its `C=LABEL` is not whole on this line.  Each marker is read from its own line only: repeat the keyword on every line (`cc900-name: ...`)
