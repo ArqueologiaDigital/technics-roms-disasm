@@ -143,7 +143,13 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
                  ('_fdiv_d', 'FP_ddiv'), ('_fcmp_d', 'FP_dcmp'), ('_fld_df', 'FP_ftod'), ('_fld_fd', 'FP_dtof'),
                  ('_fld_lf', 'FP_ftoi'), ('_pow', 'FP_pow'), ('_sin', 'FP_sin'), ('_cos', 'FP_cos'),
                  ('_tan', 'FP_tan'), ('_fabs', 'FP_fabs'), ('_exp', 'FP_exp'), ('_log', 'FP_log'),
-                 ('_frexp', 'FP_frexp'), ('_ldexp', 'FP_ldexp'), ('_modf', 'FP_modf')):
+                 ('_frexp', 'FP_frexp'), ('_ldexp', 'FP_ldexp'), ('_modf', 'FP_modf'),
+                 # helper AC's candidates from the routines' bodies (subcpu_fp_math.s headers), round 20
+                 ('_fld_fl', 'FP_SP_CallWithBuf8'), ('_fld_ful', 'FP_SP_CallWithBuf8b'),
+                 ('_fld_dl', 'FP_ScalarToDP'), ('_fld_dul', 'FP_DP_CallWithBuf12'), ('_fld_ld', 'FP_DP_DecodeToInt'),
+                 ('_fneg_f', 'FP_SP_CopyOrNegate4'), ('_fneg_d', 'FP_DP_CopyOrNegate8'),
+                 ('_fcmp_zf', 'FP_SP_CmpZero32'), ('_fcmp_zd', 'FP_DP_CmpZero64'),
+                 ('_fld_ff', 'FP_SP_Raw4Copy'), ('_fld_dd', 'FP_DP_Raw8Copy')):
         if os.environ.get('SUB_V423_NO_FP') is None:
             for k in (v, '.' + v, v.lstrip('_')):
                 alias.setdefault(k, t)
