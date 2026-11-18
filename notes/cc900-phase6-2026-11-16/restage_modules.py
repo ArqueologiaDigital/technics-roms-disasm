@@ -52,6 +52,8 @@ def main():
                 if k == 'name':
                     for m in re.finditer(r'cc900-name:\s*(\w+)\s*=', d):
                         names[m.group(1)] = d
+                    for m in re.finditer(r'cc900-data:\s*(\w+)\s+\d', d):    # a function's switch-table place
+                        names[m.group(1)] = d                                 # (stage_probe.names_fn)
             # a callee the probe DEFINES (a module neighbour that did not match) still needs a prototype in the
             # staging file, or V4.23 assumes `int f()` (run 87: GetViewInstance's struct pointer, `->box` refused)
             protos = []
@@ -94,7 +96,7 @@ def main():
                 continue
             seen.add(label)
             key = (base, flags, mod.get(label, 0))
-            nm = [c for c in names if re.search(r'cc900-name:\s*%s\s*=' % re.escape(cn), c)]
+            nm = [c for c in names if sp.names_fn(c, cn) or sp.names_fn(c, label)]
             pr = probe_for(label, d)
             if pr is None:
                 missing.append(cn); ds, pnames = own, {}

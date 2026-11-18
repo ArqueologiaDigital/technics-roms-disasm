@@ -102,6 +102,25 @@ Q_WORD = {'QWA': 0xe2, 'QBC': 0xe6, 'QDE': 0xea, 'QHL': 0xee, 'QIX': 0xf2, 'QIY'
 ERP_IMM_OP = {'add': 'add_erpb', 'sub': 'sub_erpb', 'and': 'and_erpb', 'or': 'or_erpb', 'xor': 'xor_erpb'}
 ERP_BIT_OP = {'bit': 'bit_erpb', 'set': 'set_erpb', 'res': 'res_erpb', 'sll': 'sll_erpb', 'srl': 'srl_erpb'}
 
+QIDX_ALU = {'add': 0x38, 'adc': 0x39, 'sub': 0x3a, 'sbc': 0x3b, 'and': 0x3c, 'xor': 0x3d, 'or': 0x3e, 'cp': 0x3f}
+QIDX_PSEUDO = {(False, 'ld'): 'stib_ind', (False, 'cp'): 'cpib_sri', (False, 'sub'): 'sub_srib_im',
+               (False, 'and'): 'and_srib_im', (False, 'or'): 'or_srib_im',
+               (True, 'ld'): 'stiw_ind', (True, 'cp'): 'cpiw_sri', (True, 'and'): 'and_sriw_im', (True, 'or'): 'or_sriw_im'}
+
+def qidx_imm(base, word, xb, qw, n):
+    """`OP (Xrr+Qrr),#` (a byte or word in memory indexed by an upper word, ld / cp / the ALU ops with an immediate):
+    llvm-mc has no operand syntax for the (Xrr+Qrr) mode, so the instruction is its raw-byte pseudo where the backend
+    has one, else its bytes.  Encoding (TLCS900InstrInfo.td, "(base+idx16) on every ... memory operation"): source
+    prefix c3 (byte) / d3 (word), 07, base, index, then 0x38 add .. 0x3f cp and the immediate; ld is the destination
+    prefix f3, 07, base, index, 0x00 (byte) / 0x02 (word) and the immediate.  lane_p6: Sprintf_FormatGGeneral's
+    `orb (XDE+QIZ),0x30` = c3 07 e8 fa 3e 30."""
+    imm = [n & 0xff, (n >> 8) & 0xff] if word else [n & 0xff]
+    p = QIDX_PSEUDO.get((word, base))
+    if p:
+        return '\t%s 0x07, 0x%x, 0x%x, %s' % (p, xb, qw, ', '.join('0x%x' % b for b in imm))
+    b = [0xd3 if word else 0xc3, 0x07, xb, qw, QIDX_ALU[base]] + imm
+    return '\t.byte %s\t; %s%s (x+q), 0x%x' % (', '.join('0x%02x' % x for x in b), base, 'w' if word else '', n)
+
 def erp_byte(op, raw):
     """an instruction on a byte register llvm-mc names only by its extended code (IXL .. QIZH, QA .. QH) -> its ERP
     form, or an `untranslated` line: never the generic path, where llvm-mc would read `qa` as a symbol"""
@@ -223,11 +242,12 @@ def translate_line(t, syms, locals_):
     # 16-bit-index mode, the base's code, the index's code): sprintf_core.s, Sprintf_FormatEScientific (lane_p6)
     qi = [QIDX.match(a) for a in raw]
     if any(qi):
-        if op in ('inc', 'dec', 'incb', 'decb') and len(raw) == 2 and qi[1] and NUM.match(raw[0]):
-            return '\t%s_srib %d, 0x07, 0x%x, 0x%x' % (op[:3], num(raw[0]), XBASE[qi[1].group(1)], Q_WORD[qi[1].group(2)])
-        if op in ('cp', 'cpb', 'ld', 'ldb') and len(raw) == 2 and qi[0] and NUM.match(raw[1]):
-            return '\t%s 0x07, 0x%x, 0x%x, 0x%x' % ('cpib_sri' if op.startswith('cp') else 'stib_ind',
-                                                     XBASE[qi[0].group(1)], Q_WORD[qi[0].group(2)], num(raw[1]) & 0xff)
+        if op in ('inc', 'dec', 'incb', 'decb', 'incw', 'decw') and len(raw) == 2 and qi[1] and NUM.match(raw[0]):
+            return '\t%s_sri%s %d, 0x07, 0x%x, 0x%x' % (op[:3], 'w' if op.endswith('w') else 'b', num(raw[0]),
+                                                       XBASE[qi[1].group(1)], Q_WORD[qi[1].group(2)])
+        m = re.match(r'^(ld|cp|add|adc|sub|sbc|and|xor|or)([bw]?)$', op)
+        if m and len(raw) == 2 and qi[0] and NUM.match(raw[1]):
+            return qidx_imm(m.group(1), m.group(2) == 'w', XBASE[qi[0].group(1)], Q_WORD[qi[0].group(2)], num(raw[1]))
     if any(a in ERP_BYTE for a in raw): return erp_byte(op, raw)     # IXL .. QIZH, QA .. QH: before any other rule
     if op == 'ret': return '\tret' if not raw else '\tret %s' % CC[raw[0]]
     if op == 'retd': return '\tretd %d' % num(raw[0])

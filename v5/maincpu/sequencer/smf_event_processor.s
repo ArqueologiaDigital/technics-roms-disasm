@@ -5209,243 +5209,29 @@ Fat_LookupPath_Epilogue4:
 ;   6), packs it into the sector (SeqStep_FileSectorReturn) and marks the sector dirty. Basis: callers + body -- the
 ;   open slot SeqByteBlock_ChannelContainer calls it only when Fat_LookupPath returned 5 (not found) and handle +3 bit
 ;   7 is set.
-Fat_CreateDirEntry:
-	lda	xsp, (xsp-30)
-	push	xiz
-	ld	xiz, (xsp+38)
-	ld	xwa, (xiz+18)
-	ld	xwa, (xwa+26)
-	ld	(xsp+6), xwa
-	lda	xwa, (xsp+42)
-	push	xwa
-	lda	xwa, (xsp+26)
-	push	xwa
-	calr	FatPath_Next83Component
-	inc	8, xsp
-	cp	hl, 0:i3
-	jrl	nz, Fat_CreateDirEntry_Skip5
-	lda	xwa, (xiz+26)
-	ld	(xsp+14), xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, (xsp+14)
-	ld	xwa, (xwa+28)
-	ld	(xbc), xwa
-	ld	xwa, (xsp+6)
-	ld	wa, (xwa+44)
-	ld	(xsp+4), wa
-	cpw	(xsp+4), 0
-	jrl	lt, Fat_CreateDirEntry_Skip4
-Fat_CreateDirEntry_Loop:
-	pushw	24
-	ld	xwa, 0:i3
-	push	xwa
-	ld	xwa, (xsp+20)
-	ld	xwa, (xwa)
-	push	xwa
-	push	xiz
-	calr	SeqStep_FileIoCheck
-	lda	xsp, (xsp+14)
-	ld	(xsp+18), xhl
-	ld	xwa, (xsp+18)
-	or	xwa, xwa
-	jr	nz, Fat_CreateDirEntry_Skip
-	ld	hl, (xiz+6)
-	jrl	Fat_CreateDirEntry_Epilogue5
-Fat_CreateDirEntry_Skip:
-	ld	xwa, (xsp+18)
-	cpw	(xwa+20), 0
-	jr	z, Fat_CreateDirEntry_Skip2
-	ld	xwa, (xsp+18)
-	ld	hl, (xwa+20)
-	jrl	Fat_CreateDirEntry_Epilogue5
-Fat_CreateDirEntry_Skip2:
-	ld	xwa, (xsp+18)
-	lda	xwa, (xwa+26)
-	ld	(xsp+10), xwa
-	ld	hl, 0:i3
-	jr	Fat_CreateDirEntry_Join
-Fat_CreateDirEntry_Loop18:
-	ld	xwa, (xsp+10)
-	cp	(xwa), 229
-	jr	z, Fat_CreateDirEntry_Skip3
-	ld	xwa, (xsp+10)
-	cp	(xwa), 0
-	jr	nz, Fat_CreateDirEntry_Skip49
-Fat_CreateDirEntry_Skip3:
-	ld	(xiz+51), l
-Fat_CreateDirEntry_Loop2:
-	ldw	(xiz+42), 0
-	ldw	(xiz+46), 0
-	ld	(xiz+50), 0
-	pushw	11
-	lda	xwa, (xsp+24)
-	push	xwa
-	lda	xwa, (xiz+52)
-	push	xwa
-	call	Mem_Copy
-	ld	(xiz+64), 0
-	ldw	(xiz+69), 0
-	ld	xwa, 0:i3
-	ld	(xiz+71), xwa
-	ld	xwa, 0:i3
-	ld	(xiz+34), xwa
-	lda	xwa, (xiz+65)
-	push	xwa
-	ld	xwa, (xiz+10)
-	ld	xwa, (xwa+24)
-	call	(xwa)
-	ld	xwa, (xsp+24)
-	push	xwa
-	lda	xwa, (xiz+52)
-	push	xwa
-	calr	SeqStep_FileSectorReturn
-	ld	xwa, (xsp+40)
-	setm	1, (xwa+22)
-	ld	xwa, (xsp+40)
-	andmi8	(xwa+22), 231
-	ld	xwa, (xsp+40)
-	push	xwa
-	calr	SeqStep_FileBufferSetup
-	lda	xsp, (xsp+26)
-	jrl	Fat_CreateDirEntry_Epilogue5
-Fat_CreateDirEntry_Skip49:
-	inc	1, hl
-	ld	xwa, 32
-	add	(xsp+10), xwa
-Fat_CreateDirEntry_Join:
-	ldw	wa, 16
-	cpw	(xsp+4), 16
-	jr	gt, Fat_CreateDirEntry_Skip50
-	ld	wa, (xsp+4)
-Fat_CreateDirEntry_Skip50:
-	cp	hl, wa
-	jrl	lt, Fat_CreateDirEntry_Loop18
-	ld	xwa, (xsp+18)
-	andmi8	(xwa+22), 231
-	submi16	(xsp+4), 16
-	ld	xwa, (xsp+14)
-	ld	xbc, 1:i3
-	add	(xwa), xbc
-	cpw	(xsp+4), 0
-	jrl	ge, Fat_CreateDirEntry_Loop
-Fat_CreateDirEntry_Skip4:
-	ldw	hl, 16
-	jrl	Fat_CreateDirEntry_Epilogue5
-Fat_CreateDirEntry_Skip5:
-	ld	wa, (xiz+69)
-	ld	(xiz+48), wa
-	lda	xwa, (xsp+42)
-	push	xwa
-	lda	xwa, (xsp+26)
-	push	xwa
-	calr	FatPath_Next83Component
-	inc	8, xsp
-	cp	hl, 0:i3
-	jrl	z, Fat_CreateDirEntry_Join13
-Fat_CreateDirEntry_Loop20:
-	lda	xwa, (xsp+42)
-	push	xwa
-	lda	xwa, (xsp+26)
-	push	xwa
-	calr	FatPath_Next83Component
-	inc	8, xsp
-	cp	hl, 0:i3
-	jr	nz, Fat_CreateDirEntry_Loop20
-	jrl	Fat_CreateDirEntry_Join13
-Fat_CreateDirEntry_Loop21:
-	ld	xwa, (xsp+6)
-	lda	xbc, (xwa+32)
-	ld	wa, (xiz+42)
-	dec	2, wa
-	extz	xwa
-	ld	xbc, (xbc)
-	call	Math_Multiply32
-	ld	xwa, (xsp+6)
-	ld	xwa, (xwa+20)
-	add	xwa, xhl
-	ld	(xiz+26), xwa
-	ldw	(xsp+4), 0
-	jr	Fat_CreateDirEntry_Join2
-Fat_CreateDirEntry_Loop22:
-	pushw	24
-	ld	xwa, 0:i3
-	push	xwa
-	ld	xwa, (xiz+26)
-	push	xwa
-	push	xiz
-	calr	SeqStep_FileIoCheck
-	lda	xsp, (xsp+14)
-	ld	(xsp+18), xhl
-	ld	xwa, (xsp+18)
-	or	xwa, xwa
-	jr	nz, Fat_CreateDirEntry_Skip6
-	ld	hl, (xiz+6)
-	jrl	Fat_CreateDirEntry_Epilogue5
-Fat_CreateDirEntry_Skip6:
-	ld	xwa, (xsp+18)
-	cpw	(xwa+20), 0
-	jr	z, Fat_CreateDirEntry_Skip7
-	ld	xwa, (xsp+18)
-	ld	hl, (xwa+20)
-	jrl	Fat_CreateDirEntry_Epilogue5
-Fat_CreateDirEntry_Skip7:
-	ld	xwa, (xsp+18)
-	lda	xwa, (xwa+26)
-	ld	(xsp+10), xwa
-	ld	(xiz+51), 0
-	cp	(xiz+51), 16
-	jr	nc, Fat_CreateDirEntry_Skip8
-Fat_CreateDirEntry_Loop3:
-	ld	xwa, (xsp+10)
-	cp	(xwa), 229
-	jrl	z, Fat_CreateDirEntry_Loop2
-	ld	xwa, (xsp+10)
-	cp	(xwa), 0
-	jrl	z, Fat_CreateDirEntry_Loop2
-	incm8	1, (xiz+51)
-	ld	xwa, 32
-	add	(xsp+10), xwa
-	cp	(xiz+51), 16
-	jr	c, Fat_CreateDirEntry_Loop3
-Fat_CreateDirEntry_Skip8:
-	ld	xwa, (xsp+18)
-	andmi8	(xwa+22), 231
-	ld	xwa, 1:i3
-	add	(xiz+26), xwa
-	incm	1, (xsp+4)
-Fat_CreateDirEntry_Join2:
-	ld	xwa, (xsp+6)
-	ld	xwa, (xwa+32)
-	cp	(xsp+4), wa
-	jrl	lt, Fat_CreateDirEntry_Loop22
-	ld	wa, (xiz+42)
-	ld	(xsp+20), wa
-	pushm	(xiz+42)
-	push	xiz
-	calr	Fat_ReadEntry
-	inc	6, xsp
-	ld	(xiz+42), hl
-Fat_CreateDirEntry_Join13:
-	ld	xwa, (xsp+6)
-	ld	wa, (xwa+36)
-	dec	8, wa
-	cp	(xiz+42), wa
-	jrl	ule, Fat_CreateDirEntry_Loop21
-	ld	(xiz+51), 0
-	ld	wa, (xsp+20)
-	ld	(xiz+42), wa
-	pushw	1
-	pushw	1
-	push	xiz
-	calr	Fat_AllocateClusters
-	inc	8, xsp
-	ld	wa, hl
-	cp	wa, 0:i3
-	jrl	z, Fat_CreateDirEntry_Loop21
-Fat_CreateDirEntry_Epilogue5:
-	pop	xiz
-	lda	xsp, (xsp+30)
-	ret
+Fat_CreateDirEntry:	.include "includes/generated/cc900/Fat_CreateDirEntry.s"	; C: cc900/smf_event_processor_m238_xr_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Fat_CreateDirEntry_Loop, Fat_CreateDirEntry + 68
+	.set	Fat_CreateDirEntry_Skip, Fat_CreateDirEntry + 103
+	.set	Fat_CreateDirEntry_Skip2, Fat_CreateDirEntry + 122
+	.set	Fat_CreateDirEntry_Loop18, Fat_CreateDirEntry + 135
+	.set	Fat_CreateDirEntry_Skip3, Fat_CreateDirEntry + 151
+	.set	Fat_CreateDirEntry_Loop2, Fat_CreateDirEntry + 154
+	.set	Fat_CreateDirEntry_Skip49, Fat_CreateDirEntry + 251
+	.set	Fat_CreateDirEntry_Join, Fat_CreateDirEntry + 261
+	.set	Fat_CreateDirEntry_Skip50, Fat_CreateDirEntry + 274
+	.set	Fat_CreateDirEntry_Skip4, Fat_CreateDirEntry + 306
+	.set	Fat_CreateDirEntry_Skip5, Fat_CreateDirEntry + 312
+	.set	Fat_CreateDirEntry_Loop20, Fat_CreateDirEntry + 336
+	.set	Fat_CreateDirEntry_Loop21, Fat_CreateDirEntry + 356
+	.set	Fat_CreateDirEntry_Loop22, Fat_CreateDirEntry + 393
+	.set	Fat_CreateDirEntry_Skip6, Fat_CreateDirEntry + 426
+	.set	Fat_CreateDirEntry_Skip7, Fat_CreateDirEntry + 445
+	.set	Fat_CreateDirEntry_Loop3, Fat_CreateDirEntry + 464
+	.set	Fat_CreateDirEntry_Skip8, Fat_CreateDirEntry + 499
+	.set	Fat_CreateDirEntry_Join2, Fat_CreateDirEntry + 514
+	.set	Fat_CreateDirEntry_Join13, Fat_CreateDirEntry + 544
+	.set	Fat_CreateDirEntry_Epilogue5, Fat_CreateDirEntry + 587
 ; Fat_WriteDirEntry: Writes an open file's directory entry back: lets the device stamp the time word +65 (block op 6;
 ;   drive A's FDC_ReturnZeroLong stores 0), fetches the directory sector (+26) through the sector cache
 ;   (SeqStep_FileIoCheck flags 0x1A, which include the dirty bit 1) and packs the in-memory entry at +52 (name,

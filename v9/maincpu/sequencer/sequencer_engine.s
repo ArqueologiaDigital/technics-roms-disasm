@@ -12106,56 +12106,12 @@ PartCtrl_ConfigureAndReturn:
 	inc 2, xsp
 	ret
 
-Part_ValidateVoiceAndSetupSeq:
-	dec 2, xsp
-	ld (xsp), a
-	ld a, (xsp)
-	extz wa
-	calr Part_ValidateVoiceChannel
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_DecisionReturn
-	ld c, (xsp)
-	dec 1, c
-	extz bc
-	lda xwa, (SEQ_SONG_RECORD+152:16)
-	ld de, bc
-	extz xde
-	add xde, xwa
-	ld e, (xde)
-	extz de
-	cp de, 5:i3
-	jr c, Part_ValidateSetup_ErrorEnd
-	cp de, 0xff
-	jr ugt, Part_ValidateSetup_ErrorEnd
-	add bc, bc
-	lda xwa, (SEQ_SONG_RECORD+120:16)
-	extz xbc
-	add xbc, xwa
-	ld wa, (xbc)
-	cp wa, 0x4d8
-	jr ule, Part_ValidateSetup_StorePos
-	ld (SEQ_ERROR_CODE:16), 10
-	jr SeqPart_DecisionReturn
-
-Part_ValidateSetup_StorePos:
-	ld (SEQ_DATA_BLOCK:16), wa
-	ld (SEQ_DATA_OFFSET:16), de
-	calr SeqData_ReadNextByte
-	cp l, 0x82
-	jr z, Part_ValidateSetup_CheckBarMark
-	cp l, 0x84
-	jr z, Part_ValidateSetup_CheckBarMark
-
-Part_ValidateSetup_ErrorEnd:
-	ld (SEQ_ERROR_CODE:16), 11
-	jr SeqPart_DecisionReturn
-
-Part_ValidateSetup_CheckBarMark:
-	ld (SEQ_ERROR_CODE:16), 0
-
-SeqPart_DecisionReturn:
-	inc 2, xsp
-	ret
+Part_ValidateVoiceAndSetupSeq:	.include "includes/generated/cc900/Part_ValidateVoiceAndSetupSeq.s"	; C: cc900/sequencer_engine_m234_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Part_ValidateSetup_StorePos, Part_ValidateVoiceAndSetupSeq + 73
+	.set	Part_ValidateSetup_ErrorEnd, Part_ValidateVoiceAndSetupSeq + 94
+	.set	Part_ValidateSetup_CheckBarMark, Part_ValidateVoiceAndSetupSeq + 101
+	.set	SeqPart_DecisionReturn, Part_ValidateVoiceAndSetupSeq + 106
 
 SeqTrack_LookupChannelData:
 	ld	a, (SEQ_TRACK:16)
@@ -15930,21 +15886,7 @@ MIDI_GetEventSize:	.include "includes/generated/cc900/MIDI_GetEventSize.s"	; C: 
 	.set	MIDI_Status_3, MIDI_GetEventSize + 66
 	.set	SeqPlay_ResetState, MIDI_GetEventSize + 70
 
-SeqPos_AdvanceWithWrap:
-	ld c, a
-	extz bc
-	ld wa, (SEQ_DATA_OFFSET:16)
-	add wa, bc
-	ld (SEQ_DATA_OFFSET:16), wa
-	cp wa, 0xff
-	ret ule
-	sub wa, 0x100
-	inc 5, wa
-	ld (SEQ_DATA_OFFSET:16), wa
-	ld wa, (SEQ_DATA_BLOCK:16)
-	calr PartCtrl_ReadWord
-	ld (SEQ_DATA_BLOCK:16), hl
-	ret
+SeqPos_AdvanceWithWrap:	.include "includes/generated/cc900/SeqPos_AdvanceWithWrap.s"	; C: cc900/sequencer_engine_m234_d.c
 
 SeqPlay_StopReturn:
 	dec	4, xsp
@@ -16646,16 +16588,7 @@ PartCtrlRd_Return:
 	pop xiz
 	ret
 
-Rhythm_ComputeNoteAllocation:
-	dec 4, xsp
-	ldw (xsp + 2), 0x0
-	ld (xsp), 0x0
-	lda xbc, (xsp + 2)
-	lda xde, (xsp)
-	calr Rhythm_DispatchNoteAlloc
-	ld hl, (xsp + 2)
-	inc 4, xsp
-	ret
+Rhythm_ComputeNoteAllocation:	.include "includes/generated/cc900/Rhythm_ComputeNoteAllocation.s"	; C: cc900/sequencer_engine_m234_d.c
 
 Rhythm_NoteAllocBlock:
 	dec	8, xsp

@@ -7124,112 +7124,16 @@ FDC_ReadSectors_Done:
 	inc 6, xsp
 	ret
 
-Detect_Disk_Type:
-	dec	2, xsp
-	push	xiz
-	ld	(xsp+4), 255
-	pushw	512
-	call	Malloc
-	inc	2, xsp
-	ld	xiz, xhl
-	ld	xwa, 33
-	ld	bc, 1:i3
-	ld	xde, xiz
-	calr	FDC_ReadSectors
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_PROGRAM_1@hi16
-	pushw	FILETYPE_SIG_PROGRAM_1@lo16	; "Technics KN5000 Program  DATA FILE 1/2"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckProgram2of2
-	ld	(xsp+4), 1
-	jrl	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckProgram2of2:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_PROGRAM_2@hi16
-	pushw	FILETYPE_SIG_PROGRAM_2@lo16	; "Technics KN5000 Program  DATA FILE 2/2"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckTable1of2
-	ld	(xsp+4), 2
-	jrl	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckTable1of2:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_TABLE_1@hi16
-	pushw	FILETYPE_SIG_TABLE_1@lo16	; "Technics KN5000 Table    DATA FILE 1/2"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckTable2of2
-	ld	(xsp+4), 3
-	jrl	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckTable2of2:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_TABLE_2@hi16
-	pushw	FILETYPE_SIG_TABLE_2@lo16	; "Technics KN5000 Table    DATA FILE 2/2"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckCmpCustom
-	ld	(xsp+4), 4
-	jr	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckCmpCustom:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_CMPCUSTOM@hi16
-	pushw	FILETYPE_SIG_CMPCUSTOM@lo16	; "Technics KN5000 CMPCUSTOMDATA FILE"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckHDAEPRG
-	ld	(xsp+4), 5
-	jr	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckHDAEPRG:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_HDAE_PRG@hi16
-	pushw	FILETYPE_SIG_HDAE_PRG@lo16	; "Technics KN5000 HD-AEPRG DATA FILE"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckProgramPCK
-	ld	(xsp+4), 6
-	jr	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckProgramPCK:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_PROGRAM_PCK@hi16
-	pushw	FILETYPE_SIG_PROGRAM_PCK@lo16	; "Technics KN5000 Program  DATA FILE PCK"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_CheckTablePCK
-	ld	(xsp+4), 7
-	jr	DetectDisk_FreeBufAndReturn
-DetectDisk_CheckTablePCK:
-	pushw	38	; string length
-	pushw	FILETYPE_SIG_TABLE_PCK@hi16
-	pushw	FILETYPE_SIG_TABLE_PCK@lo16	; "Technics KN5000 Table    DATA FILE PCK"
-	push	xiz
-	call	String_Compare
-	add	xsp, 10
-	cp	hl, 0:i3
-	jr	nz, DetectDisk_FreeBufAndReturn
-	ld	(xsp+4), 8
-DetectDisk_FreeBufAndReturn:
-	push	xiz
-	call	Free
-	inc	4, xsp
-	ld	l, (xsp+4)
-	pop	xiz
-	inc	2, xsp
-	ret
+Detect_Disk_Type:	.include "includes/generated/cc900/Detect_Disk_Type.s"	; C: cc900/system_handlers_m5.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DetectDisk_CheckProgram2of2, Detect_Disk_Type + 61
+	.set	DetectDisk_CheckTable1of2, Detect_Disk_Type + 92
+	.set	DetectDisk_CheckTable2of2, Detect_Disk_Type + 123
+	.set	DetectDisk_CheckCmpCustom, Detect_Disk_Type + 153
+	.set	DetectDisk_CheckHDAEPRG, Detect_Disk_Type + 183
+	.set	DetectDisk_CheckProgramPCK, Detect_Disk_Type + 213
+	.set	DetectDisk_CheckTablePCK, Detect_Disk_Type + 243
+	.set	DetectDisk_FreeBufAndReturn, Detect_Disk_Type + 271
 FDC_WriteSectors:
 	lda xsp, (xsp - 16)
 	push xiz

@@ -27,6 +27,21 @@ import check_bytes                                           # noqa: E402
 import cc900_firmware_c as fw                                # noqa: E402
 
 
+def place_locals(body, fa):
+    """The function is assembled on its own, at offset 0 of .text, so an ABSOLUTE operand naming one of its own labels
+    (a switch's base, `lda xix, (L50002:24)`: the jump table holds offsets from that code label) would come out as
+    the label's offset in the object, not its ROM address.  Write each such operand as the label's distance from the
+    function's start plus the function's ROM address FA; llvm-mc folds the difference.  Branches (`jr L`) are
+    relative and stay as they are.  lane_p6, 2026-11-18: ParaLoadOpt_AudioFlagCheck / _B differed only there (+157 /
+    +168, the operand of `lda xix,<switch base>`)."""
+    import re
+    local = {m.group(1) for m in (re.match(r'^([.\w]+):', l) for l in body) if m}
+    if not local:
+        return body
+    pat = re.compile(r'\((%s):24\)' % '|'.join(re.escape(x) for x in sorted(local, key=len, reverse=True)))
+    return [pat.sub(lambda m: '(%s - .Lcc900_fn0 + 0x%x:24)' % (m.group(1), fa), l) for l in body]
+
+
 def opt(a, n, d):
     return a[a.index(n) + 1] if n in a else d
 
@@ -105,6 +120,7 @@ def main():
         # (relative to an assembler-local label: an expression on the global symbol stays a relocation for a
         # conditional jr / jrl, which then comes out as an unresolved jrl -- helper G, run 87)
         sets = ''.join('\t.set __cc900_at_%x, .Lcc900_fn0 + %d\n' % (t, t - fa) for t in targets)
+        body = place_locals(body, fa)
         try:
             mine = check_bytes.assemble('\t.text\n\t.globl %s\n%s:\n.Lcc900_fn0:\n%s\n%s' % (full, full, '\n'.join(body), sets))[full]
         except Exception:                                 # e.g. a register to_llvm spells as llvm-mc does not

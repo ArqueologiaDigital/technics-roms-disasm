@@ -2097,110 +2097,17 @@ LoadRegion4_Return:
 	ret
 
 
-FileIO_ParseDirectoryEntry:
-	lda xsp, (xsp - 16)
-	push xiz
-	ldiw_erp 0xfa, 0
-	call GetCurrentFileIndex
-	ld iz, hl
-	cp iz, 0:i3
-	jr ge, ParseDir_ValidIndex
-	ldw hl, 0xff98
-	jrl ParseDir_Return
-
-ParseDir_ValidIndex:
-	ld wa, iz
-	call GetFileEntryPtr
-	ld (xsp + 4), xhl
-	ldto_berp C, 0xf8
-	extz bc
-	lda xwa, (xsp + 10)
-	ld xde, (xsp + 4)
-	call FileIO_FormatFileIndex
-	ldw (xsp + 8), 0x0
-	ld iz, 0:i3
-
-; File demo record callback dispatch
-FileDemo_RecordCallback:
-	ld wa, iz
-	muls wa, 0x6
-	lda xbc, (FileIO_RegionLoaders:24)
-	ld	a, (xbc+wa)
-	call FileIO_WriteRecordName_Done
-	cp l, 0:i3
-	jr z, FileIO_RecordLoop_Continue
-	ld wa, iz
-	muls wa, 0x6
-	lda xbc, (FileIO_RegionLoaders:24)
-	ld	a, (xbc+wa)
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, FileIO_RecordLoop_Continue
-	lda xwa, (xsp + 10)
-	ld bc, iz
-	muls bc, 0x6
-	lda xde, (FileIO_TypeLoaderColumn:24)
-	exts xbc
-	add xbc, xde
-	ld xix, (xbc)
-	call (xix)
-	cp hl, 0:i3
-	jr ge, ParseDir_IncrementCount
-	cpiw_erp 0xfa, 0
-	jr lt, FileIO_RecordLoop_Continue
-	ldfr_werp HL, 0xfa
-	jr FileIO_RecordLoop_Continue
-
-ParseDir_IncrementCount:
-	incw 1, (xsp + 8)
-
-FileIO_RecordLoop_Continue:
-	inc 1, iz
-	cp iz, 0x8
-	jr lt, FileDemo_RecordCallback
-	ld wa, 2:i3
-	call FileIO_WriteRecordName_Done
-	cp l, 0:i3
-	jr z, FileIO_FinalizeRecordLookup
-	ldw wa, 0x8
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, FileIO_FinalizeRecordLookup
-	ldw wa, 0x9
-	call FileIO_CheckRecordValid
-	cp l, 0:i3
-	jr z, FileIO_FinalizeRecordLookup
-	lda xwa, (xsp + 10)
-	calr FileIO_LoadSongRegion8
-	cp hl, 0:i3
-	jr ge, ParseDir_SongIncrCount
-	cpiw_erp 0xfa, 0
-	jr lt, FileIO_FinalizeRecordLookup
-	ldfr_werp HL, 0xfa
-	jr FileIO_FinalizeRecordLookup
-
-ParseDir_SongIncrCount:
-	incw 1, (xsp + 8)
-
-FileIO_FinalizeRecordLookup:
-	cpw (xsp + 8), 0x0
-	jr le, ParseDir_NoRecords
-	ld xwa, (xsp + 4)
-	call FileIO_GetRecordByType_Lookup
-	jr ParseDir_GetResult
-
-ParseDir_NoRecords:
-	cpiw_erp 0xfa, 0
-	jr lt, ParseDir_GetResult
-	ldi_erpw 0xfa, 0x98, 0xff
-
-ParseDir_GetResult:
-	ldto_werp HL, 0xfa
-
-ParseDir_Return:
-	pop xiz
-	lda xsp, (xsp + 16)
-	ret
+FileIO_ParseDirectoryEntry:	.include "includes/generated/cc900/FileIO_ParseDirectoryEntry.s"	; C: cc900/file_demo_proc_m266.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ParseDir_ValidIndex, FileIO_ParseDirectoryEntry + 23
+	.set	FileDemo_RecordCallback, FileIO_ParseDirectoryEntry + 54
+	.set	ParseDir_IncrementCount, FileIO_ParseDirectoryEntry + 138
+	.set	FileIO_RecordLoop_Continue, FileIO_ParseDirectoryEntry + 141
+	.set	ParseDir_SongIncrCount, FileIO_ParseDirectoryEntry + 201
+	.set	FileIO_FinalizeRecordLookup, FileIO_ParseDirectoryEntry + 204
+	.set	ParseDir_NoRecords, FileIO_ParseDirectoryEntry + 220
+	.set	ParseDir_GetResult, FileIO_ParseDirectoryEntry + 230
+	.set	ParseDir_Return, FileIO_ParseDirectoryEntry + 233
 
 ; =============================================================================
 ; Display region save/restore functions (F87AF6-F87EAC)
@@ -7911,51 +7818,15 @@ FileIO_DetectFileTypeAndPost:	.include "includes/generated/cc900/FileIO_DetectFi
 	.set	DetectType_IsNone, FileIO_DetectFileTypeAndPost + 70
 	.set	UI_PostEventCommon, FileIO_DetectFileTypeAndPost + 73
 	.set	DetectType_IsCardReset, FileIO_DetectFileTypeAndPost + 77
-FileIO_GetDiskCapacity:
-	dec 2,XSP
-	ld (XSP),A
-	cpw (DISK_MEDIA_TYPE:16), 0x0000
-	jr ge, DiskCap_CheckMediaType
-	call GetDiskSizeInfo
-	extz HL
-	ld (DISK_MEDIA_TYPE:16), hl
-DiskCap_CheckMediaType:
-	ld	wa, (DISK_MEDIA_TYPE:16)
-	cp	wa, 3:i3
-	jr	z, DiskCap_TypeIsFloppyOrHD
-	cp	wa, 2:i3
-	jr	z, DiskCap_TypeIsFloppyOrHD
-	cp	wa, 1:i3
-	jr	z, DiskCap_TypeIsCardReset
-	cp	wa, 0:i3
-	jr	z, DiskCap_TypeIsNone
-	cp	wa, 5:i3
-	jr	nz, DiskCap_Return
-	ld	(GLOBAL_ERROR_CODE:16), 0
-	ldw	wa, TT_MESAGE
-	jr	DiskCap_SendSoundCmd
-DiskCap_TypeIsNone:
-	ldw wa, TT_DKUTFRMT
-	jr DiskCap_PostModeEvent
-
-DiskCap_TypeIsCardReset:
-	calr	ResetProgressIndication
-	ld	(GLOBAL_ERROR_CODE:16), 2
-	ldw	wa, TT_MESAGE
-DiskCap_SendSoundCmd:
-	call UI_InterruptTitleByIndex
-	jr DiskCap_Return
-
-DiskCap_TypeIsFloppyOrHD:
-	ld a, (xsp)
-	extz wa
-
-DiskCap_PostModeEvent:
-	call UI_ChangeTitleByIndex
-
-DiskCap_Return:
-	inc 2, xsp
-	ret
+FileIO_GetDiskCapacity:	.include "includes/generated/cc900/FileIO_GetDiskCapacity.s"	; C: cc900/file_demo_proc_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DiskCap_CheckMediaType, FileIO_GetDiskCapacity + 22
+	.set	DiskCap_TypeIsNone, FileIO_GetDiskCapacity + 56
+	.set	DiskCap_TypeIsCardReset, FileIO_GetDiskCapacity + 61
+	.set	DiskCap_SendSoundCmd, FileIO_GetDiskCapacity + 72
+	.set	DiskCap_TypeIsFloppyOrHD, FileIO_GetDiskCapacity + 78
+	.set	DiskCap_PostModeEvent, FileIO_GetDiskCapacity + 82
+	.set	DiskCap_Return, FileIO_GetDiskCapacity + 86
 
 FileIO_ValidateSignedValue:
 	cp wa, 0:i3

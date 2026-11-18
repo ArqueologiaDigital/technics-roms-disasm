@@ -663,24 +663,7 @@ SndParam_SyncDisplayBitmap:
 	ormi8 (xwa), 0x7f
 	ret
 
-SoundParam_NotifyMultipleChanges:
-	ld c, (0x8e6c:16)
-	extz bc
-	ld xwa, 0:i3
-	ld de, 0:i3
-	call SoundParam_NotifyChange
-	ld c, (0x8e6e:16)
-	extz bc
-	ld xwa, 0x102
-	ld de, 0:i3
-	call SoundParam_NotifyChange
-	ld c, (0x8e70:16)
-	extz bc
-	ld xwa, 0x103
-	ld de, 0:i3
-	call SoundParam_NotifyChange
-	call BitMapOut_DetectChanges
-	jr ToneGen_DiffScanAndUpdate
+SoundParam_NotifyMultipleChanges:	.include "includes/generated/cc900/SoundParam_NotifyMultipleChanges.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 
 ToneGen_DiffScanAndUpdate:
 	lda xsp, (xsp - 14)

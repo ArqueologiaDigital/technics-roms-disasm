@@ -208,72 +208,13 @@ RenderSmfFilename:	.include "includes/generated/cc900/RenderSmfFilename.s"	; C: 
 	.set	RenderSmf_PadCheck, RenderSmfFilename + 51
 	.set	RenderSmf_PadLoop, RenderSmfFilename + 57
 
-SaveFileNameSmfFunc:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xde
-	lda xwa, (0x8850:16)
-	cp xbc, EVT_SET_STRING
-	jr z, SaveFN_HandleApply
-	cp xbc, EVT_GET_STRING
-	jr z, SaveFN_HandleTextChange
-	cp xbc, EVT_PAINT
-	jr z, SaveFN_HandleActivate
-	cp xbc, EVT_PS_FILE_NAME_BOX_ID
-	jrl nz, SaveFN_Return
-	ld xwa, (xsp + 4)
-	ld (0x808c:16), xwa
-	jrl SaveFN_Return
-
-SaveFN_HandleActivate:
-	ld (xwa), 0x0
-	lda xiz, (xwa + 1)
-	call FileIO_GetRecordPtrAlt
-	ld xbc, xhl
-	ld xwa, xiz
-	call FileIO_CopyString
-	lda xwa, (0x8851:16)
-	call FileIO_GetRecordType_Extended
-	ld xwa, (0x808c:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0x8850
-	jr SaveFN_SendEvent
-
-SaveFN_HandleTextChange:
-	ld xiz, xwa
-	call FileIO_GetRecordPtrAlt
-	ld xbc, xhl
-	ld xwa, xiz
-	call FileIO_CopyString
-	ld xwa, 0x8850
-	ldw bc, 0x8
-	calr RenderSmfFilename
-	ld xwa, (xsp + 4)
-	ld xbc, EVT_SET_STRING
-	ld xde, 0x8850
-
-SaveFN_SendEvent:
-	call ApPostEvent
-	jr SaveFN_Return
-
-SaveFN_HandleApply:
-	ld xbc, (xsp + 4)
-	ldw de, 0x8
-	call FileIO_CopyString_WriteNull
-	ld xwa, 0x8850
-	ldw bc, 0x8
-	calr RenderSmfFilename
-	ld xwa, 0x8850
-	ld xbc, SaveFN_HandleApply_Str_MID
-	call FileIO_BuildFilePath
-	ld xwa, 0x8850
-	call FileIO_WriteRecordName
-
-SaveFN_Return:
-	ld xhl, 0:i3
-	pop xiz
-	inc 4, xsp
-	ret
+SaveFileNameSmfFunc:	.include "includes/generated/cc900/SaveFileNameSmfFunc.s"	; C: cc900/smf_operations_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SaveFN_HandleActivate, SaveFileNameSmfFunc + 53
+	.set	SaveFN_HandleTextChange, SaveFileNameSmfFunc + 95
+	.set	SaveFN_SendEvent, SaveFileNameSmfFunc + 133
+	.set	SaveFN_HandleApply, SaveFileNameSmfFunc + 139
+	.set	SaveFN_Return, SaveFileNameSmfFunc + 183
 
 SmfSeqToSongNumFunc:
 	push xiz

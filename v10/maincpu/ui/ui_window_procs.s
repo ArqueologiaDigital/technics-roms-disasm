@@ -2062,181 +2062,19 @@ AcLswBoxProc:	.include "includes/generated/cc900/AcLswBoxProc.s"	; C: cc900/ui_w
 	.set	AcLswBox_DefaultHandler, AcLswBoxProc + 481
 	.set	AcLswBox_Epilogue, AcLswBoxProc + 490
 
-AcRamBoxProc:
-	lda xsp, (xsp - 34)
-	push xiz
-	ld (xsp + 30), xde
-	ld (xsp + 34), xwa
-	cp xbc, EVT_INDEXSW_DOWN
-	jrl z, AcRamBox_HandlePageDown
-	cp xbc, EVT_INDEXSW_DOWN_AIC
-	jrl z, AcRamBoxProc_OnIndexswDownAic
-	cp xbc, EVT_INDEXSW_UP
-	jrl z, AcRamBoxProc_OnIndexswUp
-	cp xbc, EVT_INDEXSW_UP_AIC
-	jrl z, AcRamBox_HandleScrollUp
-	cp xbc, EVT_RAM_DATA
-	jrl z, AcRamBox_HandleWriteBack
-	cp xbc, EVT_REFRESH_PARA_DRAW
-	jr z, AcRamBox_HandleDataRefresh
-	cp xbc, EVT_REPAINT
-	jr z, AcRamBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_PAINT
-	jr z, AcRamBoxProc_OnPaintOrRepaint
-	cp xbc, EVT_GET_STRING
-	jrl nz, AcRamBox_DefaultHandler
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_RAM_ADDRESS
-	ld xde, 0:i3
-	call ApFuncCall
-	lda xde, (xsp + 8)
-	ld (xde), xhl
-	ld xwa, (xiz + 40)
-	ld xwa, (xwa)
-	ld (xde + 14), xwa
-	ld xwa, (xsp + 30)
-	ld (xde + 18), xwa
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_RAM_STRING
-	call ApFuncCall
-	jrl AcRamBox_EventReturn
-
-AcRamBoxProc_OnPaintOrRepaint:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-
-AcRamBox_HandleDataRefresh:
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_RAM_ADDRESS
-	ld xde, 0:i3
-	call ApFuncCall
-	ld (xsp + 4), xhl
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_RAM_SIZE
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xwa, (xsp + 4)
-	ld bc, hl
-	calr MainRamGet
-	jrl AcRamBox_EventReturn
-
-AcRamBox_HandleWriteBack:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xiz, xhl
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_GET_RAM_ADDRESS
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xix, (xsp + 30)
-	ld xwa, (xix)
-	cp xwa, xhl
-	jrl nz, AcRamBox_EventReturn
-	lda xde, (xiz + 40)
-	ld xbc, (xde)
-	ld xwa, (xix + 14)
-	ld (xbc), xwa
-	ld xwa, (xde)
-	ld xde, (xwa)
-	ld xwa, (xiz + 36)
-	ld xbc, EVT_RAM_DATA_REQ
-	call ApFuncCall
-	ld xwa, (xsp + 34)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0:i3
-	jrl AcRamBox_SendUIEvent_Common
-
-AcRamBox_HandleScrollUp:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_LARGE_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xde, xhl
-	ld xwa, (xsp + 34)
-	ld xbc, EVT_CALC_PARAM
-	jrl AcRamBox_SendUIEvent_Common
-
-AcRamBoxProc_OnIndexswUp:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_SMALL_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xde, xhl
-	ld xwa, (xsp + 34)
-	ld xbc, EVT_CALC_PARAM
-	jr AcRamBox_SendUIEvent_Common
-
-AcRamBoxProc_OnIndexswDownAic:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_LARGE_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	cpl hl
-	cplw_erp 0xee
-	inc 1, xhl
-	ld xwa, (xsp + 34)
-	ld xbc, EVT_CALC_PARAM
-	ld xde, xhl
-	jr AcRamBox_SendUIEvent_Common
-
-AcRamBox_HandlePageDown:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-	ld xwa, (xsp + 34)
-	call GetViewInstance
-	ld xwa, (xhl + 36)
-	ld xbc, EVT_GET_SMALL_STEP
-	ld xde, 0:i3
-	call ApFuncCall
-	cpl hl
-	cplw_erp 0xee
-	inc 1, xhl
-	ld xwa, (xsp + 34)
-	ld xbc, EVT_CALC_PARAM
-	ld xde, xhl
-
-AcRamBox_SendUIEvent_Common:
-	call SendEvent
-
-AcRamBox_EventReturn:
-	ld xhl, 0:i3
-	jr AcRamBox_Epilogue
-
-AcRamBox_DefaultHandler:
-	ld xwa, (xsp + 34)
-	ld xde, (xsp + 30)
-	calr PsParaBoxProc
-
-AcRamBox_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 34)
-	ret
+AcRamBoxProc:	.include "includes/generated/cc900/AcRamBoxProc.s"	; C: cc900/ui_window_procs_m0_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AcRamBoxProc_OnPaintOrRepaint, AcRamBoxProc + 145
+	.set	AcRamBox_HandleDataRefresh, AcRamBoxProc + 154
+	.set	AcRamBox_HandleWriteBack, AcRamBoxProc + 205
+	.set	AcRamBox_HandleScrollUp, AcRamBoxProc + 286
+	.set	AcRamBoxProc_OnIndexswUp, AcRamBoxProc + 329
+	.set	AcRamBoxProc_OnIndexswDownAic, AcRamBoxProc + 371
+	.set	AcRamBox_HandlePageDown, AcRamBoxProc + 420
+	.set	AcRamBox_SendUIEvent_Common, AcRamBoxProc + 467
+	.set	AcRamBox_EventReturn, AcRamBoxProc + 471
+	.set	AcRamBox_DefaultHandler, AcRamBoxProc + 475
+	.set	AcRamBox_Epilogue, AcRamBoxProc + 484
 
 AcTempoBoxProc:	.include "includes/generated/cc900/AcTempoBoxProc.s"	; C: cc900/ui_window_procs_m0_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets

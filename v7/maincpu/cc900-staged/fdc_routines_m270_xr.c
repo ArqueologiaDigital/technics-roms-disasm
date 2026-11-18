@@ -6,75 +6,140 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
-/* cc900-module: FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_ValidateOpcode FDC_WaitReady */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FDC_CMD_DISPATCH_SUB FDC_CMD_ENABLE FDC_CMD_SEND FDC_ClearStatus_InitTimer FDC_CmdRecalibrate FDC_DRIVE_DETECT FDC_DRIVE_STATUS FDC_Exception_Status_Decoder FDC_ReadDataRegister FDC_Read_Status FDC_RecordDensityCode FDC_Send_Command FDC_Wait_Ready_Timeout FDC_WriteDataRegister SOME_DELAY */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+extern unsigned char __near FDC_CURRENT_CYLINDER;
+extern unsigned char __near FDC_INIT_FLAG;
 extern unsigned char __near FDC_ERROR_CODE;
-extern volatile unsigned char __near FDC_CMD_OPCODE;
-extern unsigned char __near FDC_HEAD;
-extern unsigned char __near FDC_DRIVE;
-extern void FDC_WaitReady(void);
-extern unsigned char FDC_ValidateOpcode(void);
-extern void FDC_SendAuxCmd(int);
-extern void FDC_SendAuxCmdReadResult(int);
-extern void FDC_SendCommandByte(int);
-extern void FDC_SendParameterByte(int);
-extern void FDC_SendParams_Specify(void);
-extern void FDC_SendParams_Format(void);
-extern void FDC_SendParam_SeekTrack(void);
-extern void FDC_SendParams_ReadWrite(void);
-extern void FDC_CMD_SEND(unsigned char c);
+extern unsigned char __near FDC_RESULT[];
+extern unsigned char __near FDC_DRIVE_MODE;
+extern unsigned int __near ram_8986;
+extern unsigned char __near ram_89d2;
+extern void FDC_ClearStatus_InitTimer(void);
+extern int FDC_DRIVE_DETECT(void);
+extern int FDC_DRIVE_STATUS(void);
+extern void FDC_Send_Command(int);
+extern void SOME_DELAY(int);
+extern int FDC_CMD_DISPATCH_SUB(void);
+extern unsigned char FDC_Read_Status(void);
+extern void FDC_WriteDataRegister(int);
+extern void FDC_Wait_Ready_Timeout(void);
+extern unsigned char FDC_ReadDataRegister(void);
+extern unsigned char FDC_Exception_Status_Decoder(void);
+extern void FDC_CMD_SEND(int);
+extern void FDC_RecordDensityCode(int);
+extern void FDC_CMD_ENABLE(void);
+extern void FDC_CmdRecalibrate(void);
+extern void FDC_CONFIG_VERIFY(void);
 
-void FDC_CMD_SEND(unsigned char c)
+/* cc900-data: FDC_CONFIG_VERIFY 1 = FDC_WaitReady_CaseTable */
+void FDC_CONFIG_VERIFY(void)
 {
-    unsigned char hi, lo, t;
-    FDC_WaitReady();
-    if (FDC_ERROR_CODE != 0) return;
-    FDC_CMD_OPCODE = c;
-    if (FDC_ValidateOpcode() != 0) return;
-    switch (c) {
-    case 71:
-    case 53:
-    case 54:
-        FDC_SendAuxCmd(c);
+    unsigned char *p;
+    unsigned char s;
+    unsigned char d;
+
+    FDC_ClearStatus_InitTimer();
+    if (FDC_DRIVE_DETECT() != -1 && FDC_DRIVE_STATUS() != -1)
+        FDC_CURRENT_CYLINDER = 255;
+    if (FDC_INIT_FLAG == 255)
         return;
-    case 52:
-    case 51:
-        FDC_SendAuxCmdReadResult(c);
+    FDC_INIT_FLAG = 255;
+    FDC_Send_Command(54);
+    SOME_DELAY(2);
+    if (FDC_DRIVE_DETECT() != -1 && FDC_DRIVE_STATUS() != -1) {
+        FDC_ClearStatus_InitTimer();
+        FDC_CMD_DISPATCH_SUB();
+        if (FDC_ERROR_CODE != 0) {
+            FDC_INIT_FLAG = 0;
+            return;
+        }
+        do {
+            do
+                ;
+            while (!(FDC_Read_Status() & 0x80));
+            if (!(FDC_Read_Status() & 0x40)) {
+                s = 0;
+                while (s != 0x80)
+                    s = FDC_Read_Status() & 0xf0;
+                FDC_WriteDataRegister(8);
+            }
+            p = FDC_RESULT;
+            p++;
+            do {
+                FDC_Wait_Ready_Timeout();
+                *p++ = FDC_ReadDataRegister();
+                do
+                    ;
+                while (!(FDC_Read_Status() & 0x80));
+            } while (FDC_Read_Status() & 0x40);
+            FDC_Exception_Status_Decoder();
+        } while (FDC_RESULT[1] != 0x80);
+    }
+    FDC_CMD_SEND(3);
+    if (FDC_ERROR_CODE != 0) {
+        FDC_INIT_FLAG = 0;
         return;
+    }
+    FDC_CMD_SEND(79);
+    if (FDC_ERROR_CODE != 0) {
+        FDC_INIT_FLAG = 0;
+        return;
+    }
+    switch (ram_89d2 & 15) {
+    case 0:
+        FDC_DRIVE_MODE = 0;
+        ram_8986 = 0;
+        d = 0;
+        FDC_RecordDensityCode(2);
+        break;
+    case 1:
+        FDC_DRIVE_MODE = 0;
+        ram_8986 = 0;
+        d = 192;
+        FDC_RecordDensityCode(2);
+        break;
+    case 2:
+        FDC_DRIVE_MODE = 2;
+        ram_8986 = 0;
+        d = 64;
+        FDC_RecordDensityCode(0);
+        break;
+    case 3:
+        FDC_DRIVE_MODE = 3;
+        ram_8986 = 0;
+        d = 64;
+        FDC_RecordDensityCode(0);
+        break;
+    case 4:
+        FDC_DRIVE_MODE = 4;
+        ram_8986 = 0;
+        d = 0;
+        FDC_RecordDensityCode(2);
+        break;
+    case 5:
+        FDC_DRIVE_MODE = 5;
+        ram_8986 = 0;
+        d = 0;
+        FDC_RecordDensityCode(2);
+        break;
     default:
+        FDC_DRIVE_MODE = 0;
+        ram_8986 = 0;
+        d = 0;
+        FDC_RecordDensityCode(2);
         break;
     }
-    if ((unsigned char)(c & 0xef) == 79) {
-        FDC_SendAuxCmdReadResult(c);
+    FDC_CMD_SEND(d | 11);
+    if (FDC_ERROR_CODE != 0) {
+        FDC_INIT_FLAG = 0;
         return;
     }
-    if ((c & 15) == 14 || (c & 15) == 11) {
-        FDC_SendAuxCmdReadResult(c);
+    FDC_CMD_ENABLE();
+    if (FDC_ERROR_CODE != 0) {
+        FDC_INIT_FLAG = 0;
         return;
     }
-    FDC_SendCommandByte(c);
-    if (FDC_ERROR_CODE != 0) return;
-    if (c == 8) return;
-    if (c == 3) {
-        FDC_SendParams_Specify();
-        return;
-    }
-    hi = (FDC_HEAD & 1) << 2;
-    lo = FDC_DRIVE & 3;
-    t = hi | lo;
-    FDC_SendParameterByte(hi | 1);
-    switch (c) {
-    case 74:
-    case 4:
-    case 7:
-        return;
-    case 77:
-        FDC_SendParams_Format();
-        return;
-    case 15:
-        FDC_SendParam_SeekTrack();
-        return;
-    default:
-        FDC_SendParams_ReadWrite();
-    }
+    FDC_CmdRecalibrate();
+    FDC_INIT_FLAG = 0;
 }

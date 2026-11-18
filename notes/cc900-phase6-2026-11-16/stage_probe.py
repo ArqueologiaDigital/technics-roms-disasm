@@ -33,8 +33,8 @@ def items(text):
         if text.startswith('/*', i):
             j = text.index('*/', i) + 2
             c = text[i:j]
-            if 'cc900-name:' in c and depth == 0:
-                out.append(('name', c))
+            if ('cc900-name:' in c or 'cc900-data:' in c) and depth == 0:
+                out.append(('name', c))     # a function's `cc900-data:` place goes with it as a cc900-name does
             i = j
             continue
         if text[i] == '#' and not buf.strip() and depth == 0:   # a preprocessor line (#define): its own item
@@ -64,6 +64,14 @@ def items(text):
             buf = ''
         i += 1
     return out
+
+
+def names_fn(c, f):
+    """does the 'name' item c (a cc900-name or cc900-data comment) belong to function f?  2026-11-18: staging
+    dropped `cc900-data:` comments, so run p6-r34-staged could not translate the switch tables of the ParaLoadOpt
+    pair, DisplayMode_DispatchEvents and FDemoText_ByteData_VoiceProbeC."""
+    return bool(re.search(r'cc900-name:\s*%s\s*=' % re.escape(f), c) or
+                re.search(r'cc900-data:\s*%s\s+\d' % re.escape(f), c))
 
 
 def idents(s):
@@ -133,7 +141,7 @@ def main():
             if d not in picked and defines(d) & need:
                 picked.append(d); need |= idents(d); changed = True
     picked = [d for d in decls if d in picked]                     # keep the probe's order
-    nm = [c for c in names if any(re.search(r'cc900-name:\s*%s\s*=' % re.escape(f), c) for f in funcs)]
+    nm = [c for c in names if any(names_fn(c, f) for f in funcs)]
     # A name the staging file already declares differently (another probe's type for it) would make V4.23 refuse
     # the whole file (THC1-Error-262): such functions go to a sibling file, <name>_b.c, _c.c, ... instead.
     base = staged[:-2]
