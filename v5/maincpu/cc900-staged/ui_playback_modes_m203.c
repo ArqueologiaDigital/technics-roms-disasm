@@ -22,36 +22,8 @@ extern void CDlikeSwTtl_DocNavDispatch(int n);
 extern unsigned char __near CURRENT_TITLE;
 extern long ApPostEvent(long, long, long);
 
-void CDlikeSwTtl_DocNavDispatch(int n)
-{
-    if (SeqState_GetFlags() & 2) {
-        Song_AbortPlayback();
-        NavigateDocList(n);
-        ram_21086 = 0;
-        DisplayMode_RefreshState();
-        DisplayMode_DispatchEvents();
-        NameGetFuncCall(-1L, EVT_GET_DOC_FILE_NO, 0);
-        NameGetFuncCall(-1L, EVT_GET_DOC_SONG_NAME, 0);
-        CDlikeSwTtl_ShowDocTitle();
-    } else if (SeqState_GetFlags() & 1) {
-        Song_AbortPlayback();
-        NavigateDocList(n);
-        ram_21086 = 0;
-        DisplayMode_RefreshState();
-        DisplayMode_DispatchEvents();
-        NameGetFuncCall(-1L, EVT_GET_DOC_FILE_NO, 0);
-        NameGetFuncCall(-1L, EVT_GET_DOC_SONG_NAME, 0);
-        CDlikeSwTtl_ShowDocTitle();
-    } else {
-        NavigateDocList(n);
-        ram_21086 = 0;
-        DisplayMode_RefreshState();
-        DisplayMode_DispatchEvents();
-        NameGetFuncCall(-1L, EVT_GET_DOC_FILE_NO, 0);
-        NameGetFuncCall(-1L, EVT_GET_DOC_SONG_NAME, 0);
-    }
-}
-
+/* CDlikeSwTtl_DocNavDispatch is not here: in v5 V4.23 differs at +41 (run 2026-11-18-12-p6-r35); built in the
+   other four trees. */
 /* cc900-data: DisplayMode_DispatchEvents 1 = DisplayMode_DispatchEvents_CaseTable */
 void DisplayMode_DispatchEvents(void)
 {
