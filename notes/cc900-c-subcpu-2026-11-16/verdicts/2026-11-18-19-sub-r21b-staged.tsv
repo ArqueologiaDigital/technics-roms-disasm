@@ -1,0 +1,14 @@
+function	bytes	matches	best_diff
+CheckStatusBits_Zero	31	sub_AI_21a@Xr sub_AI_21b@Xr sub_AI_21c@Xr	
+DSP_SetCoeff_RouteComplex	338	-	+21 sub_AI_21c@Xr
+DSP_SetCoeff_RouteWithCallback	287	-	+1 sub_AI_21c@Xr
+DSP_SetVoiceCoefficients	293	-	+1 sub_AI_21c@Xr
+DSP_VoiceParamReadWrite	195	-	+45 sub_AI_21c@Xr
+DSP_VoiceParam_Dispatch	155	-	+86 sub_AI_21c@Xr
+EFF_RoutingInit	390	-	+18 sub_AI_21c@Xr
+Partial_Build_Present_Word	550	sub_AI_21a@Xr sub_AI_21b@Xr sub_AI_21c@Xr	
+RoutingFlag_Encode	263	sub_AI_21a@Xr sub_AI_21b@Xr sub_AI_21c@Xr	
+VoiceAlloc_Apply_Algo_Group0	262	sub_AI_21a@Xr sub_AI_21b@Xr sub_AI_21c@Xr	
+VoiceAlloc_Apply_Algo_Group1	261	sub_AI_21a@Xr sub_AI_21b@Xr sub_AI_21c@Xr	
+VoiceAlloc_Apply_Algo_Group2	0	-	cannot resolve 'no address for .ToneGen_WriteExtParams_15_Banke'
+VoiceBuf_TypeSelector_MatchEpilogue	144	sub_AI_21c@Xr	
