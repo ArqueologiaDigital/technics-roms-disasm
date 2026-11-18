@@ -601,3 +601,12 @@ hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_deltlx_editcheck.c	5cf7f3f
 hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_name_checks.c	1bda67beee3bf91737bd9e150e666c09160b92b928cb1ab8316dcbb6577bb6f7	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_DelOptNameCheck	134	MATCH
 hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_name_checks.c	1bda67beee3bf91737bd9e150e666c09160b92b928cb1ab8316dcbb6577bb6f7	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_FileLBNNameCheck	162	MATCH
 hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_name_checks.c	1bda67beee3bf91737bd9e150e666c09160b92b928cb1ab8316dcbb6577bb6f7	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_FileOptNameCheck	134	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_file_load_screen.c	a643f797009bdd54e29080fed0006146871f4384e25d2bfe77c3250b4fa34ecf	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_FILE_LOAD_Screen	479	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNCmpBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNLswBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNMdBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNMspBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNPmtBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNRcmBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNSqtBitCheck	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNTlxBitCheck_Unregistered	266	MATCH
