@@ -100,144 +100,18 @@ HDAE5000_SongScreen_Refresh:	.include "includes/generated/cc900/HDAE5000_SongScr
 	.set	HDAE5000_SongScreen_Refresh_Skip, HDAE5000_SongScreen_Refresh + 533
 	.set	HDAE5000_SongScreen_Refresh_Epilogue, HDAE5000_SongScreen_Refresh + 563
 
-HDAE5000_FILE_LOAD_Screen:
-	; registered as "FILE_LOAD_Screen" in HDAE5000_ScreenProc_Table
-	push xiz
-	ld	xiz, xde
-	ld	xwa, xbc
-	cp	xwa, EVT_SW_IN
-	jrl	z, HDAE5000_FILE_LOAD_Screen_Default
-	cp	xwa, EVT_SHOW
-	jr	z, HDAE5000_FILE_LOAD_Screen_Ev01C00001
-	sub	xwa, EVT_HDAE_OVER_FLOW
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_FILE_LOAD_Screen_Default
-	cp	xwa, 0x0000000d
-	jrl	gt, HDAE5000_FILE_LOAD_Screen_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_FILE_LOAD_Screen_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_FILE_LOAD_Screen_Ev01C00001:24)
-	jp	t, (xix+wa)
-HDAE5000_FILE_LOAD_Screen_Ev01C00001:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HD_FILE_LIST
-	ld	xbc, EVT_HDAE_CHANGE_SEL_NUM
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0008:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
-	ldw	bc, 0x003f
-	calr	HDAE5000_TypeSel_Init
-	ld	(HDAE5000_RAM_CurSong), iz
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_SongRecord_Address
-	ld	xde, xhl
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApFuncCall)
-	ld	xwa, NAKA_APFUNC_HDDNamingCheck
-	ld	xbc, EVT_SET_STRING
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HDD_FILE_NAMING
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA000D:
-	ld	(HDAE5000_RAM_CurSong), iz
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	ld	de, 0:i3
-	calr	HDAE5000_DelOpt_InitFromSong
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_FILE_DEL_SCREEN
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA000C:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_ATTEN_DEL_DIR
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0001:
-	cpw	(HDAE5000_RAM_CurDir:24), 0
-	jrl	z, HDAE5000_FILE_LOAD_Screen_Default
-	decw	1, (HDAE5000_RAM_CurDir:24)
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_SongScreen_Refresh
-	ld	xwa, xiz
-	add	xwa, 0x00000010
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HD_FILE_LIST
-	ld	xbc, EVT_HDAE_SET_SEL_NUM
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0000:
-	cpw	(HDAE5000_RAM_CurDir:24), 119
-	jr	nc, HDAE5000_FILE_LOAD_Screen_Default
-	incw	1, (HDAE5000_RAM_CurDir:24)
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_SongScreen_Refresh
-	ld	xwa, xiz
-	sub	xwa, 0x00000010
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HD_FILE_LIST
-	ld	xbc, EVT_HDAE_SET_SEL_NUM
-	call	(xhl)
-	jr	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0002:
-	ld	(HDAE5000_RAM_CurSong), iz
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_Song_PartMask
-	ld	wa, hl
-	cp	wa, 0xffff
-	jr	z, HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	ld	bc, hl
-	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
-	calr	HDAE5000_TypeSel_Init
-	jr	t, HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join
-HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
-	ld	bc, 0:i3
-	calr	HDAE5000_TypeSel_Init
-HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join:
-	ld	wa, 0:i3
-	ld	bc, 1:i3
-	calr	HDAE5000_SongScreen_Refresh
-HDAE5000_FILE_LOAD_Screen_Default:
-	ld	xhl, 0:i3
-	pop xiz
-	ret
+HDAE5000_FILE_LOAD_Screen:	.include "includes/generated/cc900/HDAE5000_FILE_LOAD_Screen.s"	; C: cc900/hdae5000_file_load_screen.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01C00001, HDAE5000_FILE_LOAD_Screen + 66
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0008, HDAE5000_FILE_LOAD_Screen + 98
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA000D, HDAE5000_FILE_LOAD_Screen + 197
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA000C, HDAE5000_FILE_LOAD_Screen + 249
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0001, HDAE5000_FILE_LOAD_Screen + 281
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0000, HDAE5000_FILE_LOAD_Screen + 343
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0002, HDAE5000_FILE_LOAD_Screen + 403
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip, HDAE5000_FILE_LOAD_Screen + 450
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join, HDAE5000_FILE_LOAD_Screen + 468
+	.set	HDAE5000_FILE_LOAD_Screen_Default, HDAE5000_FILE_LOAD_Screen + 475
 
 HDAE5000_AttenDelDirSwCatch:	.include "includes/generated/cc900/HDAE5000_AttenDelDirSwCatch.s"	; C: cc900/hdae5000_drv_screens.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -439,113 +313,7 @@ HDAE5000_TypeSel_BuildMask:	.include "includes/generated/cc900/HDAE5000_TypeSel_
 HDAE5000_SaveOptNameCheck:	.include "includes/generated/cc900/HDAE5000_SaveOptNameCheck.s"	; C: cc900/hdae5000_saveopt_name.c
 
 ; --- HD Configuration Manager and CHS Geometry ---
-HDAE5000_TypeSel_ShowSaveFlags:	; 0x28541C (3728 bytes)
-	; Show the nine save-option flags (0x22AA4E..56) as "---"/"NO "/"YES"
-	; (pointer table 0x2E2922) in the objects "RAM_EDIT_LSW".."RAM_EDIT_TLX"
-	; (0x7F0196.., names from HDAE5000_UiObjectName_PtrTable), event
-	; 0x01C0000F.  (Was HD_Config_Manager.)
-; LHCM: 0x28541C (3728 bytes)
-	; ^ conversion-region size (local-label prefix .LHCM_), not a routine size.
-
-	ld	a, (HDAE5000_RAM_SaveOptions+2:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_LSW
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+3:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_PMT
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+4:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_SQT
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+5:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_CMP
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+6:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_TM
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+7:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_MSP
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+8:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_RCM
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+9:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_MD
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	a, (HDAE5000_RAM_SaveOptions+10:24)
-	extz wa
-	sla	wa, 0x02
-	lda xbc, (HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:24)
-	ld	xde, (xbc+wa)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_RAM_EDIT_TLX
-	ld	xbc, EVT_PARA_DRAW
-	jp	(xhl)
+HDAE5000_TypeSel_ShowSaveFlags:	.include "includes/generated/cc900/HDAE5000_TypeSel_ShowSaveFlags.s"	; C: cc900/hdae5000_showflags_drv.c
 
 HDAE5000_SaveOptSwEventCatch:	.include "includes/generated/cc900/HDAE5000_SaveOptSwEventCatch.s"	; C: cc900/hdae5000_drv_screens3.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -563,867 +331,179 @@ HDAE5000_SaveOptSwEventCatch:	.include "includes/generated/cc900/HDAE5000_SaveOp
 	.set	HDAE5000_SaveOptSwEventCatch_Done, HDAE5000_SaveOptSwEventCatch + 437
 	.set	HDAE5000_SaveOptSwEventCatch_Epilogue, HDAE5000_SaveOptSwEventCatch + 439
 
-HDAE5000_FileOptNameCheck:
-	; registered as "FileOptNameCheck" in HDAE5000_ObjHandler_Table
-	dec	4, xsp
-	push xiz
-	ld (xsp + 0x04), xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_FileOptNameCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_FileOptNameCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_FileOptNameCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_FileOptNameCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_FileOptNameCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_FileOptNameCheck_Ev01E00047:
-	ld	xiz, xde
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_SongRecord_Address
-	push xhl
-	pushw HDAE5000_Fmt_s_FileOptNameCheck@hi16
-	pushw HDAE5000_Fmt_s_FileOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_FileOptNameCheck
-	ld xwa, (xiz + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld xhl, (xsp + 0x04)
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00043:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+11:24)
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_FileOptNameCheck_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+HDAE5000_FileOptNameCheck:	.include "includes/generated/cc900/HDAE5000_FileOptNameCheck.s"	; C: cc900/hdae5000_name_checks_hd_driver.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FileOptNameCheck_Ev01E00047, HDAE5000_FileOptNameCheck + 58
+	.set	HDAE5000_FileOptNameCheck_Ev01E0003E, HDAE5000_FileOptNameCheck + 97
+	.set	HDAE5000_FileOptNameCheck_Ev01E0003F, HDAE5000_FileOptNameCheck + 101
+	.set	HDAE5000_FileOptNameCheck_Ev01E00043, HDAE5000_FileOptNameCheck + 105
+	.set	HDAE5000_FileOptNameCheck_Ev01E00044, HDAE5000_FileOptNameCheck + 109
+	.set	HDAE5000_FileOptNameCheck_Ev01E00045, HDAE5000_FileOptNameCheck + 113
+	.set	HDAE5000_FileOptNameCheck_Ev01E00046, HDAE5000_FileOptNameCheck + 120
+	.set	HDAE5000_FileOptNameCheck_OnRamDataReq, HDAE5000_FileOptNameCheck + 124
+	.set	HDAE5000_FileOptNameCheck_Default, HDAE5000_FileOptNameCheck + 128
+	.set	HDAE5000_FileOptNameCheck_Epilogue, HDAE5000_FileOptNameCheck + 130
 
-HDAE5000_SfxLswBitCheck:
-	; registered as "SfxLswBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxLswBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxLswBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxLswBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxLswBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxLswBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxLswBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxLswBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxLswBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxLswBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+2:24), 0
-	jr	nz, HDAE5000_SfxLswBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxLswBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+2:24), 0
-	jr	nz, HDAE5000_SfxLswBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxLswBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+2:24)
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxLswBitCheck_Epilogue
-HDAE5000_SfxLswBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxLswBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxLswBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxLswBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00047, HDAE5000_SfxLswBitCheck + 58
+	.set	HDAE5000_SfxLswBitCheck_Ev01E0003E, HDAE5000_SfxLswBitCheck + 95
+	.set	HDAE5000_SfxLswBitCheck_Ev01E0003F, HDAE5000_SfxLswBitCheck + 99
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00043, HDAE5000_SfxLswBitCheck + 103
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00043_Join, HDAE5000_SfxLswBitCheck + 115
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00044, HDAE5000_SfxLswBitCheck + 117
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00044_Join, HDAE5000_SfxLswBitCheck + 129
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00045, HDAE5000_SfxLswBitCheck + 131
+	.set	HDAE5000_SfxLswBitCheck_Ev01E00046, HDAE5000_SfxLswBitCheck + 138
+	.set	HDAE5000_SfxLswBitCheck_OnRamDataReq, HDAE5000_SfxLswBitCheck + 142
+	.set	HDAE5000_SfxLswBitCheck_Default, HDAE5000_SfxLswBitCheck + 178
+	.set	HDAE5000_SfxLswBitCheck_Epilogue, HDAE5000_SfxLswBitCheck + 180
 
-HDAE5000_SfxPmtBitCheck:
-	; registered as "SfxPmtBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxPmtBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxPmtBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxPmtBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxPmtBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxPmtBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxPmtBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxPmtBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxPmtBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxPmtBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+3:24), 0
-	jr	nz, HDAE5000_SfxPmtBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxPmtBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+3:24), 0
-	jr	nz, HDAE5000_SfxPmtBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxPmtBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+3:24)
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxPmtBitCheck_Epilogue
-HDAE5000_SfxPmtBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxPmtBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxPmtBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxPmtBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00047, HDAE5000_SfxPmtBitCheck + 58
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E0003E, HDAE5000_SfxPmtBitCheck + 95
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E0003F, HDAE5000_SfxPmtBitCheck + 99
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00043, HDAE5000_SfxPmtBitCheck + 103
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00043_Join, HDAE5000_SfxPmtBitCheck + 115
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00044, HDAE5000_SfxPmtBitCheck + 117
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00044_Join, HDAE5000_SfxPmtBitCheck + 129
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00045, HDAE5000_SfxPmtBitCheck + 131
+	.set	HDAE5000_SfxPmtBitCheck_Ev01E00046, HDAE5000_SfxPmtBitCheck + 138
+	.set	HDAE5000_SfxPmtBitCheck_OnRamDataReq, HDAE5000_SfxPmtBitCheck + 142
+	.set	HDAE5000_SfxPmtBitCheck_Default, HDAE5000_SfxPmtBitCheck + 178
+	.set	HDAE5000_SfxPmtBitCheck_Epilogue, HDAE5000_SfxPmtBitCheck + 180
 
-HDAE5000_SfxSqtBitCheck:
-	; registered as "SfxSqtBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxSqtBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxSqtBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxSqtBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxSqtBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxSqtBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxSqtBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxSqtBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxSqtBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxSqtBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+4:24), 0
-	jr	nz, HDAE5000_SfxSqtBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxSqtBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+4:24), 0
-	jr	nz, HDAE5000_SfxSqtBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxSqtBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+4:24)
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxSqtBitCheck_Epilogue
-HDAE5000_SfxSqtBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxSqtBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxSqtBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxSqtBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00047, HDAE5000_SfxSqtBitCheck + 58
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E0003E, HDAE5000_SfxSqtBitCheck + 95
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E0003F, HDAE5000_SfxSqtBitCheck + 99
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00043, HDAE5000_SfxSqtBitCheck + 103
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00043_Join, HDAE5000_SfxSqtBitCheck + 115
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00044, HDAE5000_SfxSqtBitCheck + 117
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00044_Join, HDAE5000_SfxSqtBitCheck + 129
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00045, HDAE5000_SfxSqtBitCheck + 131
+	.set	HDAE5000_SfxSqtBitCheck_Ev01E00046, HDAE5000_SfxSqtBitCheck + 138
+	.set	HDAE5000_SfxSqtBitCheck_OnRamDataReq, HDAE5000_SfxSqtBitCheck + 142
+	.set	HDAE5000_SfxSqtBitCheck_Default, HDAE5000_SfxSqtBitCheck + 178
+	.set	HDAE5000_SfxSqtBitCheck_Epilogue, HDAE5000_SfxSqtBitCheck + 180
 
-HDAE5000_SfxCmpBitCheck:
-	; registered as "SfxCmpBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxCmpBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxCmpBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxCmpBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxCmpBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxCmpBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxCmpBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxCmpBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxCmpBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxCmpBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+5:24), 0
-	jr	nz, HDAE5000_SfxCmpBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxCmpBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+5:24), 0
-	jr	nz, HDAE5000_SfxCmpBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxCmpBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+5:24)
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxCmpBitCheck_Epilogue
-HDAE5000_SfxCmpBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxCmpBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxCmpBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxCmpBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00047, HDAE5000_SfxCmpBitCheck + 58
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E0003E, HDAE5000_SfxCmpBitCheck + 95
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E0003F, HDAE5000_SfxCmpBitCheck + 99
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00043, HDAE5000_SfxCmpBitCheck + 103
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00043_Join, HDAE5000_SfxCmpBitCheck + 115
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00044, HDAE5000_SfxCmpBitCheck + 117
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00044_Join, HDAE5000_SfxCmpBitCheck + 129
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00045, HDAE5000_SfxCmpBitCheck + 131
+	.set	HDAE5000_SfxCmpBitCheck_Ev01E00046, HDAE5000_SfxCmpBitCheck + 138
+	.set	HDAE5000_SfxCmpBitCheck_OnRamDataReq, HDAE5000_SfxCmpBitCheck + 142
+	.set	HDAE5000_SfxCmpBitCheck_Default, HDAE5000_SfxCmpBitCheck + 178
+	.set	HDAE5000_SfxCmpBitCheck_Epilogue, HDAE5000_SfxCmpBitCheck + 180
 
-HDAE5000_SfxTmBitCheck:
-	; registered as "SfxTmBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxTmBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxTmBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxTmBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxTmBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxTmBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxTmBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxTmBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxTmBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxTmBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+6:24), 0
-	jr	nz, HDAE5000_SfxTmBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxTmBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+6:24), 0
-	jr	nz, HDAE5000_SfxTmBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxTmBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+6:24)
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxTmBitCheck_Epilogue
-HDAE5000_SfxTmBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxTmBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxTmBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxTmBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00047, HDAE5000_SfxTmBitCheck + 58
+	.set	HDAE5000_SfxTmBitCheck_Ev01E0003E, HDAE5000_SfxTmBitCheck + 95
+	.set	HDAE5000_SfxTmBitCheck_Ev01E0003F, HDAE5000_SfxTmBitCheck + 99
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00043, HDAE5000_SfxTmBitCheck + 103
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00043_Join, HDAE5000_SfxTmBitCheck + 115
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00044, HDAE5000_SfxTmBitCheck + 117
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00044_Join, HDAE5000_SfxTmBitCheck + 129
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00045, HDAE5000_SfxTmBitCheck + 131
+	.set	HDAE5000_SfxTmBitCheck_Ev01E00046, HDAE5000_SfxTmBitCheck + 138
+	.set	HDAE5000_SfxTmBitCheck_OnRamDataReq, HDAE5000_SfxTmBitCheck + 142
+	.set	HDAE5000_SfxTmBitCheck_Default, HDAE5000_SfxTmBitCheck + 178
+	.set	HDAE5000_SfxTmBitCheck_Epilogue, HDAE5000_SfxTmBitCheck + 180
 
-HDAE5000_SfxMspBitCheck:
-	; registered as "SfxMspBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxMspBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxMspBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxMspBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxMspBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxMspBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxMspBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxMspBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxMspBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxMspBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+7:24), 0
-	jr	nz, HDAE5000_SfxMspBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxMspBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+7:24), 0
-	jr	nz, HDAE5000_SfxMspBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxMspBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+7:24)
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxMspBitCheck_Epilogue
-HDAE5000_SfxMspBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxMspBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxMspBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxMspBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00047, HDAE5000_SfxMspBitCheck + 58
+	.set	HDAE5000_SfxMspBitCheck_Ev01E0003E, HDAE5000_SfxMspBitCheck + 95
+	.set	HDAE5000_SfxMspBitCheck_Ev01E0003F, HDAE5000_SfxMspBitCheck + 99
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00043, HDAE5000_SfxMspBitCheck + 103
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00043_Join, HDAE5000_SfxMspBitCheck + 115
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00044, HDAE5000_SfxMspBitCheck + 117
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00044_Join, HDAE5000_SfxMspBitCheck + 129
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00045, HDAE5000_SfxMspBitCheck + 131
+	.set	HDAE5000_SfxMspBitCheck_Ev01E00046, HDAE5000_SfxMspBitCheck + 138
+	.set	HDAE5000_SfxMspBitCheck_OnRamDataReq, HDAE5000_SfxMspBitCheck + 142
+	.set	HDAE5000_SfxMspBitCheck_Default, HDAE5000_SfxMspBitCheck + 178
+	.set	HDAE5000_SfxMspBitCheck_Epilogue, HDAE5000_SfxMspBitCheck + 180
 
-HDAE5000_SfxRcmBitCheck:
-	; registered as "SfxRcmBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxRcmBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxRcmBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxRcmBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxRcmBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxRcmBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxRcmBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxRcmBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxRcmBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxRcmBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+8:24), 0
-	jr	nz, HDAE5000_SfxRcmBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxRcmBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+8:24), 0
-	jr	nz, HDAE5000_SfxRcmBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxRcmBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+8:24)
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxRcmBitCheck_Epilogue
-HDAE5000_SfxRcmBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxRcmBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxRcmBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxRcmBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00047, HDAE5000_SfxRcmBitCheck + 58
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E0003E, HDAE5000_SfxRcmBitCheck + 95
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E0003F, HDAE5000_SfxRcmBitCheck + 99
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00043, HDAE5000_SfxRcmBitCheck + 103
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00043_Join, HDAE5000_SfxRcmBitCheck + 115
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00044, HDAE5000_SfxRcmBitCheck + 117
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00044_Join, HDAE5000_SfxRcmBitCheck + 129
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00045, HDAE5000_SfxRcmBitCheck + 131
+	.set	HDAE5000_SfxRcmBitCheck_Ev01E00046, HDAE5000_SfxRcmBitCheck + 138
+	.set	HDAE5000_SfxRcmBitCheck_OnRamDataReq, HDAE5000_SfxRcmBitCheck + 142
+	.set	HDAE5000_SfxRcmBitCheck_Default, HDAE5000_SfxRcmBitCheck + 178
+	.set	HDAE5000_SfxRcmBitCheck_Epilogue, HDAE5000_SfxRcmBitCheck + 180
 
-HDAE5000_SfxMdBitCheck:
-	; registered as "SfxMdBitCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxMdBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxMdBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxMdBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxMdBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxMdBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxMdBitCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxMdBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxMdBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxMdBitCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+9:24), 0
-	jr	nz, HDAE5000_SfxMdBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxMdBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	cp	(HDAE5000_RAM_SaveOptions+9:24), 0
-	jr	nz, HDAE5000_SfxMdBitCheck_Ev01E00044_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxMdBitCheck_Ev01E00044_Join:
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+9:24)
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxMdBitCheck_Epilogue
-HDAE5000_SfxMdBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxMdBitCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SfxMdBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxMdBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00047, HDAE5000_SfxMdBitCheck + 58
+	.set	HDAE5000_SfxMdBitCheck_Ev01E0003E, HDAE5000_SfxMdBitCheck + 95
+	.set	HDAE5000_SfxMdBitCheck_Ev01E0003F, HDAE5000_SfxMdBitCheck + 99
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00043, HDAE5000_SfxMdBitCheck + 103
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00043_Join, HDAE5000_SfxMdBitCheck + 115
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00044, HDAE5000_SfxMdBitCheck + 117
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00044_Join, HDAE5000_SfxMdBitCheck + 129
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00045, HDAE5000_SfxMdBitCheck + 131
+	.set	HDAE5000_SfxMdBitCheck_Ev01E00046, HDAE5000_SfxMdBitCheck + 138
+	.set	HDAE5000_SfxMdBitCheck_OnRamDataReq, HDAE5000_SfxMdBitCheck + 142
+	.set	HDAE5000_SfxMdBitCheck_Default, HDAE5000_SfxMdBitCheck + 178
+	.set	HDAE5000_SfxMdBitCheck_Epilogue, HDAE5000_SfxMdBitCheck + 180
 
-HDAE5000_SfxTlxBitCheck:
-	; registered as "SfxTlxBitCheck" in HDAE5000_ObjHandler_Table
-	dec	4, xsp
-	push xiz
-	ld (xsp + 0x04), xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_SfxTlxBitCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_SfxTlxBitCheck_Default
-	cp	xwa, 0x00000009
-	jrl	gt, HDAE5000_SfxTlxBitCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_SfxTlxBitCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_SfxTlxBitCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_SfxTlxBitCheck_Ev01E00047:
-	ld	xiz, xde
-	ld xwa, (xiz + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_Chr2D2D2D_NO_YES
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_SfxTlxBitCheck@hi16
-	pushw HDAE5000_Fmt_s_SfxTlxBitCheck@lo16		; low half of HDAE5000_Fmt_s_SfxTlxBitCheck
-	ld xwa, (xiz + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld xwa, (xiz + 0x0e)
-	ld	(0x23a0a6), xwa
-	ld xhl, (xsp + 0x04)
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	cp	(HDAE5000_RAM_SaveOptions+10:24), 0
-	jr	nz, HDAE5000_SfxTlxBitCheck_Ev01E00043_Join
-	ld	xhl, 0:i3
-HDAE5000_SfxTlxBitCheck_Ev01E00043_Join:
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Ev01E00044:
-	ld	xwa, (0x23a0a6)
-	cp	xwa, 0x00000001
-	jr	nz, HDAE5000_SfxTlxBitCheck_Ev01E00044_Skip
-	ld	xwa, 2:i3
-	ld	(0x23a0a6), xwa
-	ld	xhl, 2:i3
-	jr	t, HDAE5000_SfxTlxBitCheck_Ev01E00044_Join
-HDAE5000_SfxTlxBitCheck_Ev01E00044_Skip:
-	ld	xwa, 1:i3
-	ld	(0x23a0a6), xwa
-	ld	xhl, 1:i3
-HDAE5000_SfxTlxBitCheck_Ev01E00044_Join:
-	cp	(HDAE5000_RAM_SaveOptions+10:24), 0
-	jr	nz, HDAE5000_SfxTlxBitCheck_Ev01E00044_Join2
-	ld	xhl, 0:i3
-HDAE5000_SfxTlxBitCheck_Ev01E00044_Join2:
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+10:24)
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_OnRamDataReq:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_TypeSel_BuildMask
-	ld	bc, (HDAE5000_RAM_CurDir:24)
-	ld	de, (HDAE5000_RAM_CurSong:24)
-	ld	wa, (HDAE5000_RAM_SaveOptions:24)
-	pushw wa
-	ld	xwa, HDAE5000_OBJ_HD_FILE_OPTION
-	calr	HDAE5000_PartList_Build
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_SfxTlxBitCheck_Epilogue
-HDAE5000_SfxTlxBitCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_SfxTlxBitCheck_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+HDAE5000_SfxTlxBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxTlxBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00047, HDAE5000_SfxTlxBitCheck + 61
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E0003E, HDAE5000_SfxTlxBitCheck + 109
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E0003F, HDAE5000_SfxTlxBitCheck + 113
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00043, HDAE5000_SfxTlxBitCheck + 117
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00043_Join, HDAE5000_SfxTlxBitCheck + 129
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00044, HDAE5000_SfxTlxBitCheck + 131
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00044_Skip, HDAE5000_SfxTlxBitCheck + 155
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00044_Join, HDAE5000_SfxTlxBitCheck + 164
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00044_Join2, HDAE5000_SfxTlxBitCheck + 174
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00045, HDAE5000_SfxTlxBitCheck + 176
+	.set	HDAE5000_SfxTlxBitCheck_Ev01E00046, HDAE5000_SfxTlxBitCheck + 183
+	.set	HDAE5000_SfxTlxBitCheck_OnRamDataReq, HDAE5000_SfxTlxBitCheck + 187
+	.set	HDAE5000_SfxTlxBitCheck_Default, HDAE5000_SfxTlxBitCheck + 223
+	.set	HDAE5000_SfxTlxBitCheck_Epilogue, HDAE5000_SfxTlxBitCheck + 225
 
-HDAE5000_WriteProtectEditCheck:
-	; registered as "WriteProtectEditCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_WriteProtectEditCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_WriteProtectEditCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_WriteProtectEditCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_WriteProtectEditCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_WriteProtectEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_WriteProtectEditCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_OFF_ON
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_WriteProtectEditCheck@hi16
-	pushw HDAE5000_Fmt_s_WriteProtectEditCheck@lo16		; low half of HDAE5000_Fmt_s_WriteProtectEditCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_Ev01E00043:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_WriteProtect:24)
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_OnRamDataReq:
-	ld	a, (HDAE5000_RAM_WriteProtect:24)
-	extz wa
-	calr	HDAE5000_Set_Menu_Visibility
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_WriteProtectEditCheck_Epilogue
-HDAE5000_WriteProtectEditCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_WriteProtectEditCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_WriteProtectEditCheck:	.include "includes/generated/cc900/HDAE5000_WriteProtectEditCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_WriteProtectEditCheck_Ev01E00047, HDAE5000_WriteProtectEditCheck + 55
+	.set	HDAE5000_WriteProtectEditCheck_Ev01E0003E, HDAE5000_WriteProtectEditCheck + 92
+	.set	HDAE5000_WriteProtectEditCheck_Ev01E00043, HDAE5000_WriteProtectEditCheck + 96
+	.set	HDAE5000_WriteProtectEditCheck_Ev01E00044, HDAE5000_WriteProtectEditCheck + 100
+	.set	HDAE5000_WriteProtectEditCheck_Ev01E00045, HDAE5000_WriteProtectEditCheck + 104
+	.set	HDAE5000_WriteProtectEditCheck_Ev01E00046, HDAE5000_WriteProtectEditCheck + 111
+	.set	HDAE5000_WriteProtectEditCheck_OnRamDataReq, HDAE5000_WriteProtectEditCheck + 115
+	.set	HDAE5000_WriteProtectEditCheck_Default, HDAE5000_WriteProtectEditCheck + 129
+	.set	HDAE5000_WriteProtectEditCheck_Epilogue, HDAE5000_WriteProtectEditCheck + 131
 
-HDAE5000_LyricJumpEditCheck:
-	; registered as "LyricJumpEditCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_LyricJumpEditCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_LyricJumpEditCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_LyricJumpEditCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_LyricJumpEditCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_LyricJumpEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_LyricJumpEditCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	push xwa
-	pushw HDAE5000_Fmt_1d@hi16
-	pushw HDAE5000_Fmt_1d@lo16		; low half of HDAE5000_Fmt_1d
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_LyricJump:24)
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_LyricJumpEditCheck_Epilogue
-HDAE5000_LyricJumpEditCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_LyricJumpEditCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_LyricJumpEditCheck:	.include "includes/generated/cc900/HDAE5000_LyricJumpEditCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_LyricJumpEditCheck_Ev01E00047, HDAE5000_LyricJumpEditCheck + 55
+	.set	HDAE5000_LyricJumpEditCheck_Ev01E0003E, HDAE5000_LyricJumpEditCheck + 80
+	.set	HDAE5000_LyricJumpEditCheck_Ev01E00043, HDAE5000_LyricJumpEditCheck + 84
+	.set	HDAE5000_LyricJumpEditCheck_Ev01E00044, HDAE5000_LyricJumpEditCheck + 88
+	.set	HDAE5000_LyricJumpEditCheck_Ev01E00045, HDAE5000_LyricJumpEditCheck + 92
+	.set	HDAE5000_LyricJumpEditCheck_Ev01E00046, HDAE5000_LyricJumpEditCheck + 99
+	.set	HDAE5000_LyricJumpEditCheck_OnRamDataReq, HDAE5000_LyricJumpEditCheck + 103
+	.set	HDAE5000_LyricJumpEditCheck_Default, HDAE5000_LyricJumpEditCheck + 107
+	.set	HDAE5000_LyricJumpEditCheck_Epilogue, HDAE5000_LyricJumpEditCheck + 109
 
 ; ---------------------------------------------------------------------------
 ; A second, UNREGISTERED edit-check procedure of the LYRIC JUMP setting: no
@@ -1472,335 +552,79 @@ HDAE5000_LyricJumpEditCheck_Default_Epilogue:
 	pop xiz
 	ret
 
-HDAE5000_LyricForeColorCheck:
-	; registered as "LyricForeColorCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_LyricForeColorCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_LyricForeColorCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_LyricForeColorCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_LyricForeColorCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_LyricForeColorCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_LyricForeColorCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_RED_to_YELLOW
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_LyricForeColorCheck@hi16
-	pushw HDAE5000_Fmt_s_LyricForeColorCheck@lo16		; low half of HDAE5000_Fmt_s_LyricForeColorCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Ev01E00043:
-	ld	xhl, 4:i3
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_LyricForeColor:24)
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_LyricForeColorCheck_Epilogue
-HDAE5000_LyricForeColorCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_LyricForeColorCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_LyricForeColorCheck:	.include "includes/generated/cc900/HDAE5000_LyricForeColorCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_LyricForeColorCheck_Ev01E00047, HDAE5000_LyricForeColorCheck + 55
+	.set	HDAE5000_LyricForeColorCheck_Ev01E0003E, HDAE5000_LyricForeColorCheck + 92
+	.set	HDAE5000_LyricForeColorCheck_Ev01E0003F, HDAE5000_LyricForeColorCheck + 96
+	.set	HDAE5000_LyricForeColorCheck_Ev01E00043, HDAE5000_LyricForeColorCheck + 100
+	.set	HDAE5000_LyricForeColorCheck_Ev01E00044, HDAE5000_LyricForeColorCheck + 104
+	.set	HDAE5000_LyricForeColorCheck_Ev01E00045, HDAE5000_LyricForeColorCheck + 108
+	.set	HDAE5000_LyricForeColorCheck_Ev01E00046, HDAE5000_LyricForeColorCheck + 115
+	.set	HDAE5000_LyricForeColorCheck_OnRamDataReq, HDAE5000_LyricForeColorCheck + 119
+	.set	HDAE5000_LyricForeColorCheck_Default, HDAE5000_LyricForeColorCheck + 123
+	.set	HDAE5000_LyricForeColorCheck_Epilogue, HDAE5000_LyricForeColorCheck + 125
 
-HDAE5000_LyricBackColorCheck:
-	; registered as "LyricBackColorCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_LyricBackColorCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_LyricBackColorCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_LyricBackColorCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_LyricBackColorCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_LyricBackColorCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_LyricBackColorCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_RED_to_YELLOW_2
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_LyricBackColorCheck@hi16
-	pushw HDAE5000_Fmt_s_LyricBackColorCheck@lo16		; low half of HDAE5000_Fmt_s_LyricBackColorCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Ev01E00043:
-	ld	xhl, 4:i3
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_LyricBackColor:24)
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_LyricBackColorCheck_Epilogue
-HDAE5000_LyricBackColorCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_LyricBackColorCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_LyricBackColorCheck:	.include "includes/generated/cc900/HDAE5000_LyricBackColorCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_LyricBackColorCheck_Ev01E00047, HDAE5000_LyricBackColorCheck + 55
+	.set	HDAE5000_LyricBackColorCheck_Ev01E0003E, HDAE5000_LyricBackColorCheck + 92
+	.set	HDAE5000_LyricBackColorCheck_Ev01E0003F, HDAE5000_LyricBackColorCheck + 96
+	.set	HDAE5000_LyricBackColorCheck_Ev01E00043, HDAE5000_LyricBackColorCheck + 100
+	.set	HDAE5000_LyricBackColorCheck_Ev01E00044, HDAE5000_LyricBackColorCheck + 104
+	.set	HDAE5000_LyricBackColorCheck_Ev01E00045, HDAE5000_LyricBackColorCheck + 108
+	.set	HDAE5000_LyricBackColorCheck_Ev01E00046, HDAE5000_LyricBackColorCheck + 115
+	.set	HDAE5000_LyricBackColorCheck_OnRamDataReq, HDAE5000_LyricBackColorCheck + 119
+	.set	HDAE5000_LyricBackColorCheck_Default, HDAE5000_LyricBackColorCheck + 123
+	.set	HDAE5000_LyricBackColorCheck_Epilogue, HDAE5000_LyricBackColorCheck + 125
 
-HDAE5000_WriteConfirmEditCheck:
-	; registered as "WriteConfirmEditCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_WriteConfirmEditCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_WriteConfirmEditCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_WriteConfirmEditCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_WriteConfirmEditCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_WriteConfirmEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_WriteConfirmEditCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	sll	xwa, 0x02
-	ld	xbc, HDAE5000_TextPtrs_OFF_ON
-	add	xbc, xwa
-	ld xwa, (xbc)
-	push xwa
-	pushw HDAE5000_Fmt_s_WriteConfirmEditCheck@hi16
-	pushw HDAE5000_Fmt_s_WriteConfirmEditCheck@lo16		; low half of HDAE5000_Fmt_s_WriteConfirmEditCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_Ev01E00043:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_WriteConfirm:24)
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_WriteConfirmEditCheck_Epilogue
-HDAE5000_WriteConfirmEditCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_WriteConfirmEditCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_WriteConfirmEditCheck:	.include "includes/generated/cc900/HDAE5000_WriteConfirmEditCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_WriteConfirmEditCheck_Ev01E00047, HDAE5000_WriteConfirmEditCheck + 55
+	.set	HDAE5000_WriteConfirmEditCheck_Ev01E0003E, HDAE5000_WriteConfirmEditCheck + 92
+	.set	HDAE5000_WriteConfirmEditCheck_Ev01E00043, HDAE5000_WriteConfirmEditCheck + 96
+	.set	HDAE5000_WriteConfirmEditCheck_Ev01E00044, HDAE5000_WriteConfirmEditCheck + 100
+	.set	HDAE5000_WriteConfirmEditCheck_Ev01E00045, HDAE5000_WriteConfirmEditCheck + 104
+	.set	HDAE5000_WriteConfirmEditCheck_Ev01E00046, HDAE5000_WriteConfirmEditCheck + 111
+	.set	HDAE5000_WriteConfirmEditCheck_OnRamDataReq, HDAE5000_WriteConfirmEditCheck + 115
+	.set	HDAE5000_WriteConfirmEditCheck_Default, HDAE5000_WriteConfirmEditCheck + 119
+	.set	HDAE5000_WriteConfirmEditCheck_Epilogue, HDAE5000_WriteConfirmEditCheck + 121
 
-HDAE5000_QuickLoadModeEditCheck:
-	; registered as "QuickLoadModeEditCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_QuickLoadModeEditCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_QuickLoadModeEditCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_QuickLoadModeEditCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_QuickLoadModeEditCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_QuickLoadModeEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_QuickLoadModeEditCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	push xwa
-	pushw HDAE5000_Fmt_1d_QuickLoadModeEditCheck@hi16
-	pushw HDAE5000_Fmt_1d_QuickLoadModeEditCheck@lo16		; low half of HDAE5000_Fmt_1d_QuickLoadModeEditCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_Ev01E00043:
-	ld	xhl, 3:i3
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_QuickLoadMode:24)
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_QuickLoadModeEditCheck_Epilogue
-HDAE5000_QuickLoadModeEditCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_QuickLoadModeEditCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_QuickLoadModeEditCheck:	.include "includes/generated/cc900/HDAE5000_QuickLoadModeEditCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_QuickLoadModeEditCheck_Ev01E00047, HDAE5000_QuickLoadModeEditCheck + 55
+	.set	HDAE5000_QuickLoadModeEditCheck_Ev01E0003E, HDAE5000_QuickLoadModeEditCheck + 80
+	.set	HDAE5000_QuickLoadModeEditCheck_Ev01E00043, HDAE5000_QuickLoadModeEditCheck + 84
+	.set	HDAE5000_QuickLoadModeEditCheck_Ev01E00044, HDAE5000_QuickLoadModeEditCheck + 88
+	.set	HDAE5000_QuickLoadModeEditCheck_Ev01E00045, HDAE5000_QuickLoadModeEditCheck + 92
+	.set	HDAE5000_QuickLoadModeEditCheck_Ev01E00046, HDAE5000_QuickLoadModeEditCheck + 99
+	.set	HDAE5000_QuickLoadModeEditCheck_OnRamDataReq, HDAE5000_QuickLoadModeEditCheck + 103
+	.set	HDAE5000_QuickLoadModeEditCheck_Default, HDAE5000_QuickLoadModeEditCheck + 107
+	.set	HDAE5000_QuickLoadModeEditCheck_Epilogue, HDAE5000_QuickLoadModeEditCheck + 109
 
-HDAE5000_LoadByNumberModeEditCheck:
-	; registered as "LoadByNumberModeEditCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_LoadByNumberModeEditCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_LoadByNumberModeEditCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_LoadByNumberModeEditCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_LoadByNumberModeEditCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_LoadByNumberModeEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_LoadByNumberModeEditCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	push xwa
-	pushw HDAE5000_Fmt_1d_LoadByNumberModeEditCheck@hi16
-	pushw HDAE5000_Fmt_1d_LoadByNumberModeEditCheck@lo16		; low half of HDAE5000_Fmt_1d_LoadByNumberModeEditCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_LoadByNumberMode:24)
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_LoadByNumberModeEditCheck_Epilogue
-HDAE5000_LoadByNumberModeEditCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_LoadByNumberModeEditCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_LoadByNumberModeEditCheck:	.include "includes/generated/cc900/HDAE5000_LoadByNumberModeEditCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_LoadByNumberModeEditCheck_Ev01E00047, HDAE5000_LoadByNumberModeEditCheck + 55
+	.set	HDAE5000_LoadByNumberModeEditCheck_Ev01E0003E, HDAE5000_LoadByNumberModeEditCheck + 80
+	.set	HDAE5000_LoadByNumberModeEditCheck_Ev01E00043, HDAE5000_LoadByNumberModeEditCheck + 84
+	.set	HDAE5000_LoadByNumberModeEditCheck_Ev01E00044, HDAE5000_LoadByNumberModeEditCheck + 88
+	.set	HDAE5000_LoadByNumberModeEditCheck_Ev01E00045, HDAE5000_LoadByNumberModeEditCheck + 92
+	.set	HDAE5000_LoadByNumberModeEditCheck_Ev01E00046, HDAE5000_LoadByNumberModeEditCheck + 99
+	.set	HDAE5000_LoadByNumberModeEditCheck_OnRamDataReq, HDAE5000_LoadByNumberModeEditCheck + 103
+	.set	HDAE5000_LoadByNumberModeEditCheck_Default, HDAE5000_LoadByNumberModeEditCheck + 107
+	.set	HDAE5000_LoadByNumberModeEditCheck_Epilogue, HDAE5000_LoadByNumberModeEditCheck + 109
 
-HDAE5000_JumpAfterLoadModeEditCheck:
-	; registered as "JumpAfterLoadModeEditCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_JumpAfterLoadModeEditCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_JumpAfterLoadModeEditCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_JumpAfterLoadModeEditCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_JumpAfterLoadModeEditCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047:
-	ld xwa, (xde + 0x0e)
-	push xwa
-	pushw HDAE5000_Fmt_1d_JumpAfterLoadModeEditCheck@hi16
-	pushw HDAE5000_Fmt_1d_JumpAfterLoadModeEditCheck@lo16		; low half of HDAE5000_Fmt_1d_JumpAfterLoadModeEditCheck
-	ld xwa, (xde + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld	xhl, xiz
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00043:
-	ld	xhl, 2:i3
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00044:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_JumpAfterLoad:24)
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_JumpAfterLoadModeEditCheck_Epilogue
-HDAE5000_JumpAfterLoadModeEditCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_JumpAfterLoadModeEditCheck_Epilogue:
-	pop xiz
-	ret
+HDAE5000_JumpAfterLoadModeEditCheck:	.include "includes/generated/cc900/HDAE5000_JumpAfterLoadModeEditCheck.s"	; C: cc900/hdae5000_edit_checks.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00047, HDAE5000_JumpAfterLoadModeEditCheck + 55
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E0003E, HDAE5000_JumpAfterLoadModeEditCheck + 80
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00043, HDAE5000_JumpAfterLoadModeEditCheck + 84
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00044, HDAE5000_JumpAfterLoadModeEditCheck + 88
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00045, HDAE5000_JumpAfterLoadModeEditCheck + 92
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Ev01E00046, HDAE5000_JumpAfterLoadModeEditCheck + 99
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_OnRamDataReq, HDAE5000_JumpAfterLoadModeEditCheck + 103
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Default, HDAE5000_JumpAfterLoadModeEditCheck + 107
+	.set	HDAE5000_JumpAfterLoadModeEditCheck_Epilogue, HDAE5000_JumpAfterLoadModeEditCheck + 109
 
 
 ; ---------------------------------------------------------------------------

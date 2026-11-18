@@ -1,14 +1,12 @@
-/* the numeric edit checks of hdae5000_hd_driver.s (write protect, lyric jump / colours, write confirm, load modes)
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r50_chk_edit.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_edit_checks.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_edit_checks.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: LoadByNumEditCheck=HDAE5000_LoadByNumberModeEditCheck
    cc900-name: JumpAfterLoadEditCheck=HDAE5000_JumpAfterLoadModeEditCheck
    cc900-module: HDAE5000_Set_Menu_Visibility
    cc900-data: HDAE5000_WriteProtectEditCheck 1 = HDAE5000_WriteProtectEditCheck_CaseTable
    cc900-data: HDAE5000_LyricJumpEditCheck 1 = HDAE5000_LyricJumpEditCheck_CaseTable
-   cc900-data: HDAE5000_LyricForeColorCheck 1 = HDAE5000_LyricForeColorCheck_CaseTable
-   cc900-data: HDAE5000_LyricBackColorCheck 1 = HDAE5000_LyricBackColorCheck_CaseTable
    cc900-data: HDAE5000_WriteConfirmEditCheck 1 = HDAE5000_WriteConfirmEditCheck_CaseTable
    cc900-data: HDAE5000_QuickLoadModeEditCheck 1 = HDAE5000_QuickLoadModeEditCheck_CaseTable
    cc900-data: HDAE5000_LoadByNumberModeEditCheck 1 = HDAE5000_LoadByNumberModeEditCheck_CaseTable
@@ -87,56 +85,6 @@ long HDAE5000_LyricJumpEditCheck(long obj, long ev, struct ParaBlk *arg)
         return 1;
     case EVT_GET_RAM_ADDRESS:
         return (long)&HDAE5000_RAM_LyricJump;
-    case EVT_GET_RAM_SIZE:
-        return 1;
-    case EVT_RAM_DATA_REQ:
-        return 0;
-    default:
-        return 0;
-    }
-}
-
-long HDAE5000_LyricForeColorCheck(long obj, long ev, struct ParaBlk *arg)
-{
-    switch (ev) {
-    case EVT_GET_RAM_STRING:
-        HDAE5000_SPrintf(arg->str, HDAE5000_Fmt_s_LyricForeColorCheck, HDAE5000_TextPtrs_RED_to_YELLOW[arg->value]);
-        return obj;
-    case EVT_GET_LARGE_STEP:
-        return 1;
-    case EVT_GET_SMALL_STEP:
-        return 1;
-    case EVT_GET_MAX:
-        return 4;
-    case EVT_GET_MIN:
-        return 0;
-    case EVT_GET_RAM_ADDRESS:
-        return (long)&HDAE5000_RAM_LyricForeColor;
-    case EVT_GET_RAM_SIZE:
-        return 1;
-    case EVT_RAM_DATA_REQ:
-        return 0;
-    default:
-        return 0;
-    }
-}
-
-long HDAE5000_LyricBackColorCheck(long obj, long ev, struct ParaBlk *arg)
-{
-    switch (ev) {
-    case EVT_GET_RAM_STRING:
-        HDAE5000_SPrintf(arg->str, HDAE5000_Fmt_s_LyricBackColorCheck, ram_2e2ad0[arg->value]);
-        return obj;
-    case EVT_GET_LARGE_STEP:
-        return 1;
-    case EVT_GET_SMALL_STEP:
-        return 1;
-    case EVT_GET_MAX:
-        return 4;
-    case EVT_GET_MIN:
-        return 0;
-    case EVT_GET_RAM_ADDRESS:
-        return (long)&HDAE5000_RAM_LyricBackColor;
     case EVT_GET_RAM_SIZE:
         return 1;
     case EVT_RAM_DATA_REQ:

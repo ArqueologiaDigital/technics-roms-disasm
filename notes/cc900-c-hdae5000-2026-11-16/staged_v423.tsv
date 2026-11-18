@@ -623,3 +623,4 @@ hdae5000	hdae5000/cc900-staged/hdae5000_small_procs.c	134d55f103d577fc828ffcaa0b
 hdae5000	hdae5000/cc900-staged/hdae5000_small_procs.c	134d55f103d577fc828ffcaa0b0de8d431e4b2c3e910f4b4d917155e034a169a	Xr	2026-11-18-24-hd-r56	HDAE5000_LanguageTextReturn	17	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_uistate.c	bc90a3278a064b7b3f1615929012130e620ce4986e9bc534abf4cbed23579ad9	Xr	2026-11-18-24-hd-r56	HDAE5000_TypeSel_Init	92	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_uistate.c	bc90a3278a064b7b3f1615929012130e620ce4986e9bc534abf4cbed23579ad9	Xr	2026-11-18-24-hd-r56	HDAE5000_UiState_Reset	122	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyricbox.c	22ddde9f971aace5d84e182c1398bb88bbeb30f98e8d3c409f3792aadfa7faad	Xr	2026-11-18-25-hd-r57	HDAE5000_LyricBoxProc	2301	MATCH

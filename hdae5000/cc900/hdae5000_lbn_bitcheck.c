@@ -1,6 +1,6 @@
-/* the load-by-number part-flag checks of hdae5000_filesystem.s (LBN*BitCheck)
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r54_lbn.c.
+/* Functions of hdae5000_filesystem.s.  (hdae5000_lbn_bitcheck.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_lbn_bitcheck.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
 */
 /* lane_hd round 52, helper h_chk: second try at the nine LBN*BitCheck procedures (hd_r50_chk_lbn.c, run

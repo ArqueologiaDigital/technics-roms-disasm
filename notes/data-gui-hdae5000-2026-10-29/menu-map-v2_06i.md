@@ -231,7 +231,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - class `TtlScreenR`, caption "EDIT FILE NAME", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_HDDEXT`; icon idICON_i171 (page with arrows out and in)
 - opened by: `SAVE_OPT_SCREEN_Exit_HDD_FILE_NAMING.screen`
-- named in code by: `HDAE5000_FILE_LOAD_Screen_Ev01EA0008`, `HDAE5000_WrConfirmEventCatch`
+- named in code by: `HDAE5000_FILE_LOAD_Screen`, `HDAE5000_WrConfirmEventCatch`
 - source: `hdae5000/hdae5000_ui_tree.s` line 286
 
 - `HDD_FILE_NAMING_IvMainEditSw` IvMainEditSw: func `NAKA_MAINFUNC_FILE_Naming_Screen`
@@ -511,8 +511,8 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `HD_FILE_LOAD_SW_SAVE` AcIndexEditSw (RAM record): switch Right5 -- code: `HDAE5000_Set_Menu_Visibility`
   - `HD_FILE_LOAD_SW_SAVE_SAVE` Label: "SAVE"
-- `HD_FILE_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_SfxLswBitCheck_OnRamDataReq`, `HDAE5000_SfxPmtBitCheck_OnRamDataReq`, `HDAE5000_SfxSqtBitCheck_OnRamDataReq`, `HDAE5000_SfxCmpBitCheck_OnRamDataReq`, `HDAE5000_SfxTmBitCheck_OnRamDataReq`, `HDAE5000_SfxMspBitCheck_OnRamDataReq`, `HDAE5000_SfxRcmBitCheck_OnRamDataReq`, `HDAE5000_SfxMdBitCheck_OnRamDataReq`, `HDAE5000_SfxTlxBitCheck_OnRamDataReq`, `HDAE5000_LBNLswBitCheck_OnRamDataReq`, `HDAE5000_LBNLswBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNPmtBitCheck_OnRamDataReq`, `HDAE5000_LBNPmtBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNSqtBitCheck_OnRamDataReq`, `HDAE5000_LBNSqtBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNCmpBitCheck_OnRamDataReq`, `HDAE5000_LBNCmpBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNTmBitCheck_OnRamDataReq`, `HDAE5000_LBNTmBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNMspBitCheck_OnRamDataReq`, `HDAE5000_LBNMspBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNRcmBitCheck_OnRamDataReq`, `HDAE5000_LBNRcmBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNMdBitCheck_OnRamDataReq`, `HDAE5000_LBNMdBitCheck_Ev01E00046_Skip`, `HDAE5000_LBNTlxBitCheck_Unregistered_OnRamDataReq`, `HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00046_Skip`
-- `HD_FILE_LIST` SelectList: main_func `NAKA_MAINFUNC_FILE_LOAD_Screen` -- code: `HDAE5000_FILE_LOAD_Screen_Ev01C00001`, `HDAE5000_FILE_LOAD_Screen_Ev01EA0001`, `HDAE5000_FILE_LOAD_Screen_Ev01EA0000`
+- `HD_FILE_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_SfxLswBitCheck`, `HDAE5000_SfxPmtBitCheck`, `HDAE5000_SfxSqtBitCheck`, `HDAE5000_SfxCmpBitCheck`, `HDAE5000_SfxTmBitCheck`, `HDAE5000_SfxMspBitCheck`, `HDAE5000_SfxRcmBitCheck`, `HDAE5000_SfxMdBitCheck`, `HDAE5000_SfxTlxBitCheck`, `HDAE5000_LBNLswBitCheck`, `HDAE5000_LBNPmtBitCheck`, `HDAE5000_LBNSqtBitCheck`, `HDAE5000_LBNCmpBitCheck`, `HDAE5000_LBNTmBitCheck`, `HDAE5000_LBNMspBitCheck`, `HDAE5000_LBNRcmBitCheck`, `HDAE5000_LBNMdBitCheck`, `HDAE5000_LBNTlxBitCheck_Unregistered`
+- `HD_FILE_LIST` SelectList: main_func `NAKA_MAINFUNC_FILE_LOAD_Screen` -- code: `HDAE5000_FILE_LOAD_Screen`
 - `FILE_LOAD_DIRBOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction`
 - `HD_FILE_LOAD_P1_AcIndexEditSw` AcIndexEditSw: switch Bottom2
 - `HD_FILE_LOAD_P1_AcIndexWideES` AcIndexWideES: switch Bottom3; switch Bottom5
@@ -776,7 +776,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `TtlScreenR2`, caption "HD FILE DELETE", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_i171 (page with arrows out and in)
-- named in code by: `HDAE5000_FILE_LOAD_Screen_Ev01EA000D`, `HDAE5000_AttenDelFileSwCatch`
+- named in code by: `HDAE5000_FILE_LOAD_Screen`, `HDAE5000_AttenDelFileSwCatch`
 - source: `hdae5000/hdae5000_ui_tree.s` line 945
 
 - `FILE_DEL_SCREEN_Exit_SELECT_FILE` IvExitScreen: opens [SELECT_FILE](#select_file)
@@ -840,7 +840,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `TtlScreenR2`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_None
-- named in code by: `HDAE5000_FILE_LOAD_Screen_Ev01EA000C`
+- named in code by: `HDAE5000_FILE_LOAD_Screen`
 - source: `hdae5000/hdae5000_ui_tree.s` line 1014
 
 - `ATTEN_DEL_DIR_YES` VwWideESBox: switch Bottom1; switch Bottom2
