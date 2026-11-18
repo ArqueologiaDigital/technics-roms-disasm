@@ -7,6 +7,9 @@ no MATCH row for the hdae5000 tree, with size, kind and hand source, and whether
 (probes/*.c defines the label or maps a C name to it).
 
     python3 -B notes/cc900-c-hdae5000-2026-11-16/remaining.py [--kinds C?,C-calr] [--min-bytes N] [--untried]
+    python3 -B notes/cc900-c-hdae5000-2026-11-16/remaining.py --kinds C?,C-calr,other,tail,hand? --group
+        (the open survey rows folded into their procedures: a switch's arms are rows of their own in the survey,
+        and the default kinds miss every procedure whose head row is `other`, `tail` or `hand?`; 2026-11-18)
 Run from the repository root.
 """
 import glob, os, re, sys
@@ -53,6 +56,8 @@ def main():
             if '--untried' in a and name in tried:
                 continue
             rows.append((size, name, kind, f[0], 'tried' if name in tried else ''))
+    if '--group' in a:
+        return grouped(rows)
     rows.sort(reverse=True)
     for size, name, kind, src, t in rows:
         print('%6d  %-6s  %-44s  %-24s  %s' % (size, kind, name, src, t))
@@ -60,6 +65,33 @@ def main():
     if skipped[0]:
         print('left out: %d survey rows from 0x%06x up (hand-assembly disk driver and C library), %d B of these kinds;'
               ' --all lists them' % (skipped[0], NOT_C_FROM, skipped[1]))
+
+
+def grouped(rows):
+    """--group: fold the survey's pieces into their procedure.  The survey makes a function of every label that a
+    table reaches, so a switch's arms (`Proc_Ev01CA0003`, `Proc_Msg001`, `Proc_Default`) are rows of their own; a
+    row whose name is an earlier row's name plus `_...` (the nearest such row before it, by address, in the same
+    file) is counted in that row's procedure.  Prints one line per procedure: open bytes, pieces, kinds."""
+    addr = {}
+    for l in open(os.path.join(HERE, 'survey.tsv')).read().split('\n')[1:]:
+        f = l.split('\t')
+        if len(f) >= 16 and f[2] != '-':
+            addr[f[1]] = (f[0], int(f[2], 16))
+    order = sorted(rows, key=lambda r: addr.get(r[1], ('', 0)))
+    heads, out = [], {}
+    for size, name, kind, src, t in order:
+        head = next((h for h in reversed(heads) if name.startswith(h + '_') and addr.get(h, ('',))[0] == src), None)
+        if head is None:
+            heads.append(name)
+            head = name
+        g = out.setdefault(head, [0, 0, set(), src, ''])
+        g[0] += size
+        g[1] += 1
+        g[2].add(kind)
+        g[4] = g[4] or t
+    for head, (size, n, kinds, src, t) in sorted(out.items(), key=lambda x: -x[1][0]):
+        print('%6d  %3d  %-14s  %-44s  %-24s  %s' % (size, n, ','.join(sorted(kinds)), head, src, t))
+    print('%d procedures (%d survey rows), %d B' % (len(out), len(rows), sum(r[0] for r in rows)))
 
 
 if __name__ == '__main__':
