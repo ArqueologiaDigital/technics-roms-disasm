@@ -154,6 +154,7 @@ v140	v140/subcpu/cc900-staged/dsp_control_routines_f_ra11.c	d27390a9188bd91007ff
 v140	v140/subcpu/cc900-staged/dsp_control_routines_fp_20d.c	247c685a1fc3bc65240e6302c6f0083a0246e5a1cd225b803e484d410970c946	Xr	2026-11-18-8-sub-r20b-staged	DSP_ParamInterp_FPComplex	305	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_fp_20i.c	829d7938bcd8877ad8b866d1ee389dde66faa6bae2901953022a2eb1e15be389	Xr	2026-11-18-8-sub-r20b-staged	DSP_ReverbCurve_FP	297	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_fp_20i.c	829d7938bcd8877ad8b866d1ee389dde66faa6bae2901953022a2eb1e15be389	Xr	2026-11-18-8-sub-r20b-staged	DSP_VolumeCurve_FP	329	MATCH
+v140	v140/subcpu/cc900-staged/dsp_control_routines_fp_21a.c	3e55e1d5d478bae0ee63221e7186dab18110cd15da176e232959340cdb99ded5	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoParam_Decode	165	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_h_14a.c	32d73b693f755f2b72fd35e6f803a96ddeb7808335faa45521c109328ae62c79	Xr	2026-11-16-106-sub-r15	DSP_TableWalk_SearchWithState	72	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_j_14b.c	826efb4b4de283117acdf9ae4ec8c0a3f27f114088c6b9837cf3e3734019bd62	Xr	2026-11-16-106-sub-r15	ToneGen_Process_Notes	167	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_kernel.c	23145e756c0de683db7a529db83e2d1050735ba9ae2c4d016c9513bfef7cf49a	Xr	2026-11-16-89-sub-staged3	DSP_Bytecode_NotifyStateChange	6	MATCH
@@ -186,6 +187,9 @@ v140	v140/subcpu/cc900-staged/dsp_voice_params.c	39753968d7a617d55a9c2d0d70bb5e0
 v140	v140/subcpu/cc900-staged/dsp_voice_params.c	39753968d7a617d55a9c2d0d70bb5e01e93fcc1c6f14b845e1bba35331add5d0	Xr	2026-11-16-73-sub-r6	Voice_ActiveFlag_Set	58	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params.c	39753968d7a617d55a9c2d0d70bb5e01e93fcc1c6f14b845e1bba35331add5d0	Xr	2026-11-16-73-sub-r6	Voice_NoteState_Clear	217	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params.c	39753968d7a617d55a9c2d0d70bb5e01e93fcc1c6f14b845e1bba35331add5d0	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Epilogue	47	MATCH
+v140	v140/subcpu/cc900-staged/dsp_voice_params_af_20a.c	e968a44e272b27f2402c5a7ae31bd6da43a60831a40a77e1a83f3fbde75e8bbd	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch3	370	MATCH
+v140	v140/subcpu/cc900-staged/dsp_voice_params_af_20b.c	9da57e32329b86917fa651919f9655c0b61d4e29548057bf9a35fcd377c8087d	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch1	460	MATCH
+v140	v140/subcpu/cc900-staged/dsp_voice_params_af_20b.c	9da57e32329b86917fa651919f9655c0b61d4e29548057bf9a35fcd377c8087d	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch2	430	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_b.c	a9219c543af05274b1397e8dfa3abbe8001e864eaf08c0ff73286c4aed14ca9b	Xr	2026-11-16-73-sub-r6	Algo_SubTable_PanTrim_From_PartFlags	49	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_b.c	a9219c543af05274b1397e8dfa3abbe8001e864eaf08c0ff73286c4aed14ca9b	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Fetch	94	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_c_6a.c	7a2cddee05c37498aefc828f66a7a1bad7d9326c4c4fbdd05000e529911d574f	Xr	2026-11-16-89-sub-staged3	ToneDB_Find_ToneRecord	19	MATCH
@@ -267,6 +271,8 @@ v140	v140/subcpu/cc900-staged/voice_ctrlchange_a_8a.c	72d14b37a24d6945a204172bcc
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_a_8a.c	72d14b37a24d6945a204172bcc99f69c7546ed100a3556c85d5cd6381d402048	Xr	2026-11-16-89-sub-staged3	Voice_SetArticWord0_LowByte	54	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_a_8a_qizinc.c	1fa3ff8b6d76aeb9524d4964be4acc191556b1f71faeefb3deaa7eadd9805760	Xr	2026-11-16-101-sub-r14	Voice_AllVoices_PortamentoUpdate	33	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_a_9b.c	7cc27a809a1d865847f24c599b2ef923fdfee2240cb4830ac8bbc88604606475	Xr	2026-11-16-89-sub-staged3	Voice_Selector_FindBestSlot	175	MATCH
+v140	v140/subcpu/cc900-staged/voice_ctrlchange_af_20a.c	f17539157ea8e7e24498af5ee6fbcc0e679d4b5dec43faa03c2403a9574567d9	Xr	2026-11-18-9-sub-r20c-staged	Voice_CtrlChange	616	MATCH
+v140	v140/subcpu/cc900-staged/voice_ctrlchange_af_20a.c	f17539157ea8e7e24498af5ee6fbcc0e679d4b5dec43faa03c2403a9574567d9	Xr	2026-11-18-9-sub-r20c-staged	Voice_SystemMsg	324	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_b.c	0613b5efd53038dd62bc09b3daec89cc628f25e0760e50903e3780acf939cd27	Xr	2026-11-16-73-sub-r6	Voice_KeyIndex_Pack3Nibbles	39	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_callnames.c	c9378ca3d90d58580cc58d3fefe0ad14d65b8eae2d07a71087545c445a030d96	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type1	132	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_callnames.c	c9378ca3d90d58580cc58d3fefe0ad14d65b8eae2d07a71087545c445a030d96	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type2	117	MATCH
@@ -665,6 +671,7 @@ v141	v141/subcpu/cc900-staged/dsp_control_routines_f_ra11.c	d27390a9188bd91007ff
 v141	v141/subcpu/cc900-staged/dsp_control_routines_fp_20d.c	247c685a1fc3bc65240e6302c6f0083a0246e5a1cd225b803e484d410970c946	Xr	2026-11-18-8-sub-r20b-staged	DSP_ParamInterp_FPComplex	305	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_fp_20i.c	829d7938bcd8877ad8b866d1ee389dde66faa6bae2901953022a2eb1e15be389	Xr	2026-11-18-8-sub-r20b-staged	DSP_ReverbCurve_FP	297	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_fp_20i.c	829d7938bcd8877ad8b866d1ee389dde66faa6bae2901953022a2eb1e15be389	Xr	2026-11-18-8-sub-r20b-staged	DSP_VolumeCurve_FP	329	MATCH
+v141	v141/subcpu/cc900-staged/dsp_control_routines_fp_21a.c	3e55e1d5d478bae0ee63221e7186dab18110cd15da176e232959340cdb99ded5	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoParam_Decode	165	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_h_14a.c	32d73b693f755f2b72fd35e6f803a96ddeb7808335faa45521c109328ae62c79	Xr	2026-11-16-106-sub-r15	DSP_TableWalk_SearchWithState	72	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_j_14b.c	826efb4b4de283117acdf9ae4ec8c0a3f27f114088c6b9837cf3e3734019bd62	Xr	2026-11-16-106-sub-r15	ToneGen_Process_Notes	167	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_kernel.c	3eebb1fc42e9d7f1b861c6c4b058027d1683db3c6d7e3e872999a7e99a251527	Xr	2026-11-16-89-sub-staged3	DSP_Bytecode_NotifyStateChange	6	MATCH
@@ -697,6 +704,9 @@ v141	v141/subcpu/cc900-staged/dsp_voice_params.c	59fa2ae62b4ed304418f13f96c7a1cf
 v141	v141/subcpu/cc900-staged/dsp_voice_params.c	59fa2ae62b4ed304418f13f96c7a1cf3377c127b06aa5ae0f827cc44c43f205c	Xr	2026-11-16-73-sub-r6	Voice_ActiveFlag_Set	58	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params.c	59fa2ae62b4ed304418f13f96c7a1cf3377c127b06aa5ae0f827cc44c43f205c	Xr	2026-11-16-73-sub-r6	Voice_NoteState_Clear	217	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params.c	59fa2ae62b4ed304418f13f96c7a1cf3377c127b06aa5ae0f827cc44c43f205c	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Epilogue	47	MATCH
+v141	v141/subcpu/cc900-staged/dsp_voice_params_af_20a.c	d261ae0ac5f7cce4aa2b469493597eca345f3335d6f2f5c808499830efdaa556	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch3	370	MATCH
+v141	v141/subcpu/cc900-staged/dsp_voice_params_af_20b.c	e2513d0803bb709db84937ef9adbc5ddca2196981b3303ff3ccda7dd678667b3	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch1	460	MATCH
+v141	v141/subcpu/cc900-staged/dsp_voice_params_af_20b.c	e2513d0803bb709db84937ef9adbc5ddca2196981b3303ff3ccda7dd678667b3	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch2	430	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_b.c	19f3f6f104870d92b9c26e7083d28cf91c525bffc2fcc5a6695e4f98b8809381	Xr	2026-11-16-73-sub-r6	Algo_SubTable_PanTrim_From_PartFlags	49	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_b.c	19f3f6f104870d92b9c26e7083d28cf91c525bffc2fcc5a6695e4f98b8809381	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Fetch	94	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_c_6a.c	9bd39c88495d3a860554c36e5fc09f8f327e66f955a5a6f6c6fd769882dd89cd	Xr	2026-11-16-89-sub-staged3	ToneDB_Find_ToneRecord	19	MATCH
@@ -778,6 +788,8 @@ v141	v141/subcpu/cc900-staged/voice_ctrlchange_a_8a.c	ad3f928159ef48840f4a4e79f1
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_a_8a.c	ad3f928159ef48840f4a4e79f147ad94f44af1b0d30083f8bb990e7323cc3d1e	Xr	2026-11-16-89-sub-staged3	Voice_SetArticWord0_LowByte	54	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_a_8a_qizinc.c	f2821647f0f03df078eb5c26cef82e081659ad02b0e862e615de7aef4efa47d7	Xr	2026-11-16-101-sub-r14	Voice_AllVoices_PortamentoUpdate	33	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_a_9b.c	7cc27a809a1d865847f24c599b2ef923fdfee2240cb4830ac8bbc88604606475	Xr	2026-11-16-89-sub-staged3	Voice_Selector_FindBestSlot	175	MATCH
+v141	v141/subcpu/cc900-staged/voice_ctrlchange_af_20a.c	f17539157ea8e7e24498af5ee6fbcc0e679d4b5dec43faa03c2403a9574567d9	Xr	2026-11-18-9-sub-r20c-staged	Voice_CtrlChange	616	MATCH
+v141	v141/subcpu/cc900-staged/voice_ctrlchange_af_20a.c	f17539157ea8e7e24498af5ee6fbcc0e679d4b5dec43faa03c2403a9574567d9	Xr	2026-11-18-9-sub-r20c-staged	Voice_SystemMsg	324	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_b.c	0613b5efd53038dd62bc09b3daec89cc628f25e0760e50903e3780acf939cd27	Xr	2026-11-16-73-sub-r6	Voice_KeyIndex_Pack3Nibbles	39	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_callnames.c	841351ae21803aab81af85e8928198973138a2fcbd2bb729add677cf8a3f4eb2	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type1	132	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_callnames.c	841351ae21803aab81af85e8928198973138a2fcbd2bb729add677cf8a3f4eb2	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type2	117	MATCH
@@ -1176,6 +1188,7 @@ v142	v142/subcpu/cc900-staged/dsp_control_routines_f_ra11.c	d27390a9188bd91007ff
 v142	v142/subcpu/cc900-staged/dsp_control_routines_fp_20d.c	247c685a1fc3bc65240e6302c6f0083a0246e5a1cd225b803e484d410970c946	Xr	2026-11-18-8-sub-r20b-staged	DSP_ParamInterp_FPComplex	305	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_fp_20i.c	829d7938bcd8877ad8b866d1ee389dde66faa6bae2901953022a2eb1e15be389	Xr	2026-11-18-8-sub-r20b-staged	DSP_ReverbCurve_FP	297	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_fp_20i.c	829d7938bcd8877ad8b866d1ee389dde66faa6bae2901953022a2eb1e15be389	Xr	2026-11-18-8-sub-r20b-staged	DSP_VolumeCurve_FP	329	MATCH
+v142	v142/subcpu/cc900-staged/dsp_control_routines_fp_21a.c	3e55e1d5d478bae0ee63221e7186dab18110cd15da176e232959340cdb99ded5	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoParam_Decode	165	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_h_14a.c	32d73b693f755f2b72fd35e6f803a96ddeb7808335faa45521c109328ae62c79	Xr	2026-11-16-106-sub-r15	DSP_TableWalk_SearchWithState	72	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_j_14b.c	826efb4b4de283117acdf9ae4ec8c0a3f27f114088c6b9837cf3e3734019bd62	Xr	2026-11-16-106-sub-r15	ToneGen_Process_Notes	167	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_kernel.c	b93f6a5abd483612c91c834d22cc1e7250c57130435f1ec5955c67217baf4379	Xr	2026-11-16-89-sub-staged3	DSP_Bytecode_NotifyStateChange	6	MATCH
@@ -1208,6 +1221,9 @@ v142	v142/subcpu/cc900-staged/dsp_voice_params.c	b2dad0bfb20f5d89b875ca12f1ea008
 v142	v142/subcpu/cc900-staged/dsp_voice_params.c	b2dad0bfb20f5d89b875ca12f1ea0085feb8285d6622fc74469b6417efc66d8f	Xr	2026-11-16-73-sub-r6	Voice_ActiveFlag_Set	58	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params.c	b2dad0bfb20f5d89b875ca12f1ea0085feb8285d6622fc74469b6417efc66d8f	Xr	2026-11-16-73-sub-r6	Voice_NoteState_Clear	217	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params.c	b2dad0bfb20f5d89b875ca12f1ea0085feb8285d6622fc74469b6417efc66d8f	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Epilogue	47	MATCH
+v142	v142/subcpu/cc900-staged/dsp_voice_params_af_20a.c	ed99d6f607719e42b0e4e2fac23fa1ee078b66fe8a2f0c246e49c84446b25a84	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch3	370	MATCH
+v142	v142/subcpu/cc900-staged/dsp_voice_params_af_20b.c	b11a004f7253881059529bb08152f74017754479c1050ad7a7b11575a9b73d29	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch1	460	MATCH
+v142	v142/subcpu/cc900-staged/dsp_voice_params_af_20b.c	b11a004f7253881059529bb08152f74017754479c1050ad7a7b11575a9b73d29	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch2	430	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_b.c	07b857383ddc77dea4fc928c38a21730e86f6772c8d17897eed5f5f8457b9e5d	Xr	2026-11-16-73-sub-r6	Algo_SubTable_PanTrim_From_PartFlags	49	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_b.c	07b857383ddc77dea4fc928c38a21730e86f6772c8d17897eed5f5f8457b9e5d	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Fetch	94	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_c_6a.c	4d1fa12e5595afa223c3475efe427b76240685bd8d514b5feeb34d96c9b788dd	Xr	2026-11-16-89-sub-staged3	ToneDB_Find_ToneRecord	19	MATCH
@@ -1289,6 +1305,8 @@ v142	v142/subcpu/cc900-staged/voice_ctrlchange_a_8a.c	a23d281b4204f374b2f984ed6c
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_a_8a.c	a23d281b4204f374b2f984ed6cc85f473f72ac59057a96b02dd59786b2911bca	Xr	2026-11-16-89-sub-staged3	Voice_SetArticWord0_LowByte	54	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_a_8a_qizinc.c	3416404391b2696f7222d12bed14bb43533fe2c20c7c0f36465b3284f4e0a129	Xr	2026-11-16-101-sub-r14	Voice_AllVoices_PortamentoUpdate	33	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_a_9b.c	7cc27a809a1d865847f24c599b2ef923fdfee2240cb4830ac8bbc88604606475	Xr	2026-11-16-89-sub-staged3	Voice_Selector_FindBestSlot	175	MATCH
+v142	v142/subcpu/cc900-staged/voice_ctrlchange_af_20a.c	f17539157ea8e7e24498af5ee6fbcc0e679d4b5dec43faa03c2403a9574567d9	Xr	2026-11-18-9-sub-r20c-staged	Voice_CtrlChange	616	MATCH
+v142	v142/subcpu/cc900-staged/voice_ctrlchange_af_20a.c	f17539157ea8e7e24498af5ee6fbcc0e679d4b5dec43faa03c2403a9574567d9	Xr	2026-11-18-9-sub-r20c-staged	Voice_SystemMsg	324	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_callnames.c	ea53322c9470441dfe6873ee3ba16bc614ac9b0d1a74cd38dbbd3a5fa7dea8c9	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type1	132	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_callnames.c	ea53322c9470441dfe6873ee3ba16bc614ac9b0d1a74cd38dbbd3a5fa7dea8c9	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type2	117	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_callnames2.c	931dfbeb5796071ce4e985e55f4b520e88d62d31359aa1a8af9753718372dcab	Xr	2026-11-16-89-sub-staged3	Voice_Release_Type4	177	MATCH
