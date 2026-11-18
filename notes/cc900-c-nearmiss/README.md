@@ -2,16 +2,16 @@
 
 QUESTION ANSWERED: for every function of our firmware C that Toshiba cc900 V4.23 compiled in the oracle runs below, how close does V4.23's code (translated by `model/to_llvm.py`, assembled by llvm-mc) come to the ROM, and which kinds of difference keep it from matching?  `index.tsv` has one row per attempt (run, option set, C file, function); the tables below take each function's best attempt.  No Toshiba text is in this directory: names, counts, offsets, class names and paths only.  The listings stay in the private repository `~/compartilhado/cc900-oracle` (`listing` column, relative to it).
 
-Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@28fd6b8d7) --model-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@28fd6b8d7)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
+Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@c31cb512c) --model-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@c31cb512c)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
 
 ## Totals
 
 | what                     | MATCH | NEAR  | DIFF  | errors |
 |--------------------------|-------|-------|-------|--------|
-| attempts (index rows)    | 22693 | 10251 | 12530 | 1008   |
-| functions (best attempt) | 4773  | 687   | 242   | 237    |
+| attempts (index rows)    | 22824 | 10300 | 12562 | 1020   |
+| functions (best attempt) | 4806  | 687   | 242   | 237    |
 
-Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 296, ERR-translate 69 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
+Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 69 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
 
 ## By class (each non-matching function's best attempt)
 
@@ -968,3 +968,4 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 296, ERR-translate 
 | 2026-11-18-31-hd-r58-staged   | fa501c66fe8d948f  | tar-sha256       | 1        | 1     |
 | 2026-11-18-32-sub-r21g-staged | 8375b08b67158c7a  | tar-sha256       | 40       | 39    |
 | 2026-11-18-33-p6-r37          | 0a40e1a6b8392467  | tar-sha256       | 420      | 144   |
+| 2026-11-18-34-p6-r38-staged   | fc744ed2ac5b46eb  | tar-sha256       | 224      | 131   |
