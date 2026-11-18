@@ -37,6 +37,9 @@ The pipeline scripts after a V4.23 run (all run from the repository root; `$TMPD
   `python3 -B notes/cc900-c-hdae5000-2026-11-16/remaining.py [--untried] [--min-bytes N] [--all]`
   With `--kinds C?,C-calr,other,tail,hand? --group`: the open survey rows folded into their procedures (a switch's
   arms are rows of their own in the survey); this is the count to quote since 2026-11-18.
+- **`coverage_hd_rows.py [TREE_KEY]`**: does `scripts/analysis/cc900/c_build_coverage.py` credit every function
+  the tree builds from C?  (one tree, no census; prints the ones it does not credit)
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/coverage_hd_rows.py hdae5000` (or hdae_v201 / hdae_v115 / hdae_v110)
 - **`selectlist/cmp.py SHOW OUTDIR TAG [LABEL [SIZE]]`**: where does V4.23's code for one C form (an
   `hd_v423.py --show` dump) differ from the ROM, instruction by instruction, for any v2.06i function.
 - **`menu_map_diff.py`**: did a regenerated menu map drop any code reference?  It must print `DROPPED 0`.
