@@ -755,25 +755,11 @@ HDAE5000_Alloc_Memory_3:	.include "includes/generated/cc900/HDAE5000_Alloc_Memor
 ; The label is the firmware's own name.  HDAE5000_ObjHandler_Table entry 39
 ; (ROM 0x2F94B2 + 0x9C) holds 0x280395, and the parallel HDAE5000_ObjName_Table
 ; entry (ROM 0x2F95CA + 0x9C) points at 0x29BD0A = "BitmapHdd_icon".
-HDAE5000_BitmapHdd_icon:
-	; Resource descriptor for HDAE5000_Bitmap_HddIcon.  Allocates nothing.
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_BitmapHdd_icon__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_BitmapHdd_icon__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_BitmapHdd_icon__type_A1
-	ld xhl, 0:i3
-	ret
-HDAE5000_BitmapHdd_icon__type_A1:
-	lda xhl, (HDAE5000_Bitmap_HddIcon:24); HDAE5000_Bitmap_HddIcon data, NOT a palette
-	ret
-HDAE5000_BitmapHdd_icon__type_A2:
-	ld xhl, 0x1B	; 27 (icon width)
-	ret
-HDAE5000_BitmapHdd_icon__type_A3:
-	ld xhl, 0x1B	; 27 (icon height)
-	ret
+HDAE5000_BitmapHdd_icon:	.include "includes/generated/cc900/HDAE5000_BitmapHdd_icon.s"	; C: cc900/hdae5000_small_procs_hd-ae5000_v2_01i.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_BitmapHdd_icon__type_A1, HDAE5000_BitmapHdd_icon + 27
+	.set	HDAE5000_BitmapHdd_icon__type_A2, HDAE5000_BitmapHdd_icon + 33
+	.set	HDAE5000_BitmapHdd_icon__type_A3, HDAE5000_BitmapHdd_icon + 39
 
 ; ============================================================================
 ; CODE SECTION 1: Setup, HD interface, filesystem, and UI routines
@@ -796,49 +782,10 @@ HDAE5000_BitmapHdd_icon__type_A3:
 ;   0x28B3EA-0x28F542  UI handler, file ops, path/string utilities (16,857 bytes)
 ; ============================================================================
 
-HDAE5000_UiState_Reset:
-	; Reset the browser selection (0x23A08E, 0x23A092 directory, 0x23A094
-	; song = 0), the load-by-number block 0x22AA58 (template 0x2E1CA2), and
-	; the save-option record 0x22AA4C (template 0x2E1C96, mask 0x1FF, then
-	; "YES" for the parts the selected song holds -- HDAE5000_TypeSel_Init);
-	; ends in HDAE5000_Set_Menu_Visibility(1).  Caller: HDAE5000_Boot_Init.
-	; (Was Register_Frame, "(9266 bytes)".)
-; LRF: 0x2803C2 (9266 bytes)
-	; ^ conversion-region size (local-label prefix .LRF_), not a routine size.
-
-	ldw	(HDAE5000_RAM_DirPageBase:24), 0
-	ldw	(HDAE5000_RAM_CurDir:24), 0
-	ldw	(HDAE5000_RAM_CurSong:24), 0
-	ld	xiy, HDAE5000_Lbn_BlockTemplate
-	ld	xix, 0x0022aa58
-	ld	bc, 5:i3
-	ldirw
-	ld	xiy, HDAE5000_TypeSel_TemplateBlank
-	ld	xix, HDAE5000_RAM_SaveOptions
-	ld	bc, 6:i3
-	ldirw
-	ldw	(HDAE5000_RAM_SaveOptions:24), 511
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_Song_PartMask
-	ld	wa, hl
-	cp	wa, 0xffff
-	jr	z, HDAE5000_UiState_Reset_Skip
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	ld	bc, hl
-	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
-	calr	HDAE5000_TypeSel_Init
-	jr	t, HDAE5000_UiState_Reset_Join
-HDAE5000_UiState_Reset_Skip:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
-	ld	bc, 0:i3
-	calr	HDAE5000_TypeSel_Init
-HDAE5000_UiState_Reset_Join:
-	ld	wa, 1:i3
-	jp HDAE5000_Set_Menu_Visibility
+HDAE5000_UiState_Reset:	.include "includes/generated/cc900/HDAE5000_UiState_Reset.s"	; C: cc900/hdae5000_uistate_hd-ae5000_v2_01i.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_UiState_Reset_Skip, HDAE5000_UiState_Reset + 98
+	.set	HDAE5000_UiState_Reset_Join, HDAE5000_UiState_Reset + 116
 
 HDAE5000_AcWindowPage1Proc:	.include "includes/generated/cc900/HDAE5000_AcWindowPage1Proc.s"	; C: cc900/hdae5000_small2_hd-ae5000_v2_01i.c
 ; the hand assembly's labels inside the compiled body, by their offsets

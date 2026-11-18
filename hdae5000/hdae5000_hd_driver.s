@@ -251,52 +251,7 @@ HDAE5000_SeparateBassPartCheck:	.include "includes/generated/cc900/HDAE5000_Sepa
 ;      (low byte of the stacked word; retd pops it)
 ; Out: clobbers XIX, XIY, HL, E.
 ; ---------------------------------------------------------------------------
-HDAE5000_TypeSel_Init:
-	ld xix, xde			; save source
-	ld hl, bc			; HL = flags
-	ld e, (xsp + 4)			; E = flag byte from stack
-	ld xiy, xix			; XIY = source
-	ld xix, xwa			; XIX = dest (for ldirw)
-	ld bc, 6:i3			; count = 6 words (12 bytes)
-	ldirw				; 95 11: copy 6 words from (XIY+) to (XIX+)
-	ld (xwa), hl			; store flags at dest[0..1]
-	bit 0, hl			; bit 0 set?
-	jr z, .LHD_Data_Copy__bit1
-	ld (xwa + 2), e			; dest[2] = flag value
-.LHD_Data_Copy__bit1:
-	bit 1, hl
-	jr z, .LHD_Data_Copy__bit2
-	ld (xwa + 3), e
-.LHD_Data_Copy__bit2:
-	bit 2, hl
-	jr z, .LHD_Data_Copy__bit3
-	ld (xwa + 4), e
-.LHD_Data_Copy__bit3:
-	bit 3, hl
-	jr z, .LHD_Data_Copy__bit4
-	ld (xwa + 5), e
-.LHD_Data_Copy__bit4:
-	bit 4, hl
-	jr z, .LHD_Data_Copy__bit5
-	ld (xwa + 6), e
-.LHD_Data_Copy__bit5:
-	bit 5, hl
-	jr z, .LHD_Data_Copy__bit6
-	ld (xwa + 7), e
-.LHD_Data_Copy__bit6:
-	bit 6, hl
-	jr z, .LHD_Data_Copy__bit7
-	ld (xwa + 8), e
-.LHD_Data_Copy__bit7:
-	bit 7, hl
-	jr z, .LHD_Data_Copy__bit8
-	ld (xwa + 9), e
-.LHD_Data_Copy__bit8:
-	bit 8, hl
-	jr z, .LHD_Data_Copy__done
-	ld (xwa + 10), e
-.LHD_Data_Copy__done:
-	retd 0x0002
+HDAE5000_TypeSel_Init:	.include "includes/generated/cc900/HDAE5000_TypeSel_Init.s"	; C: cc900/hdae5000_uistate_hd_driver.c
 
 ; ---------------------------------------------------------------------------
 ; Recompute the mask word of a part-selection record (see

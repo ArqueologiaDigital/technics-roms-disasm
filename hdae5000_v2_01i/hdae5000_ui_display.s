@@ -29,25 +29,7 @@ HDAE5000_RequestTitle16:	.include "includes/generated/cc900/HDAE5000_RequestTitl
 ; HDAE5000_FdList_Scan, code 2 when the floppy is not ready.
 ; In:  WA = error code
 ; ---------------------------------------------------------------------------
-HDAE5000_ShowErrorMessageTitle:
-	extz wa
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_HamaFnTable)
-	ld xhl, (xbc + HamaFn_SetGlobalError)             ; ld XHL, (XBC + 0x012C) — shutdown handler
-	call (xhl)		; HamaFn_SetGlobalError(WA)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_DeleteEvent)
-	ld xwa, 0xFFFFFFFF
-	ld xbc, EVT_INTERRUPT_TITLE		; event 0x01C00016
-	call (xhl)		; RootFn_DeleteEvent
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_ApPostEvent)
-	ld xwa, 0xFFFFFFFF
-	ld xbc, EVT_INTERRUPT_TITLE
-	ld xde, TITLE_MESAGE		; title 0xEE (TT_MESAGE)
-	jp (xhl)		; tail-call RootFn_ApPostEvent
+HDAE5000_ShowErrorMessageTitle:	.include "includes/generated/cc900/HDAE5000_ShowErrorMessageTitle.s"	; C: cc900/hdae5000_show_error_title.c
 
 ; ---------------------------------------------------------------------------
 ; Rename a directory with its screen messages: shows HD_PLEASE on the asking
@@ -626,33 +608,7 @@ HDAE5000_NameHistory_Push:	.include "includes/generated/cc900/HDAE5000_NameHisto
 ; In:  XWA = history (see HDAE5000_NameHistory_Push)
 ; Out: XHL = the name, or 0 when the history is empty.
 ; ---------------------------------------------------------------------------
-HDAE5000_NameHistory_Recall:
-	cp (xwa), 0x00		; empty history?
-	jr z, .LNameHistory_Recall__empty
-	ld c, (xwa + 1)		; recall index
-	extz bc				; zero-extend to 16-bit
-	muls bc, 0x001B		; 27 bytes per name
-	inc 4, bc		; past the 4-byte header
-	lda	xhl, (xwa+bc)		; XHL = &name[recall index]
-	cp (xwa + 1), 0x00		; check if index is non-zero
-	jr nz, .LNameHistory_Recall__dec
-	ld c, (xwa)			; get count
-	cp c, 5:i3			; count == 5?
-	jr nz, .LNameHistory_Recall__dec_count
-	ld (xwa + 1), 0x04		; wrap: index = 4 (max-1)
-	jr t, .LNameHistory_Recall__ret
-.LNameHistory_Recall__dec_count:
-	ld c, (xwa)			; get count
-	dec 1, c			; count - 1
-	ld (xwa + 1), c			; index = count - 1
-	jr t, .LNameHistory_Recall__ret
-.LNameHistory_Recall__dec:
-	decm8 1, (xwa + 1)		; index--
-	jr t, .LNameHistory_Recall__ret
-.LNameHistory_Recall__empty:
-	ld xhl, 0:i3			; return NULL
-.LNameHistory_Recall__ret:
-	ret
+HDAE5000_NameHistory_Recall:	.include "includes/generated/cc900/HDAE5000_NameHistory_Recall.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; L = the byte at RAM HDAE5000_RAM_FlsAutoLoadPending (its role is not established).
@@ -669,25 +625,10 @@ HDAE5000_Fls_SetSeqStopPending:	.include "includes/generated/cc900/HDAE5000_Fls_
 ; 0x22AA9C whose status byte is 1.
 ; Out: HL = the count.
 ; ---------------------------------------------------------------------------
-HDAE5000_Count_Active_Files:
-	ld hl, 0:i3		; HL = count = 0
-	ld de, 0:i3		; DE = index = 0
-	cp de, 0x0014		; check if index >= 20
-	ret nc			; return if index >= 20 (unsigned)
-HDAE5000_Count_Active_Files__loop:
-	ld wa, de		; WA = current index
-	extz xwa		; zero-extend to 32 bits
-	add xwa, 0x00000114	; add entry size offset
-	ld xbc, HDAE5000_RAM_FdList	; table base address
-	add xbc, xwa		; XBC = &table[index]
-	cp (xbc), 0x01	; compare status byte with 1
-	jr nz, HDAE5000_Count_Active_Files__skip
-	inc 1, hl		; count++
-HDAE5000_Count_Active_Files__skip:
-	inc 1, de		; index++
-	cp de, 0x0014		; check if index < 20
-	jr c, HDAE5000_Count_Active_Files__loop
-	ret
+HDAE5000_Count_Active_Files:	.include "includes/generated/cc900/HDAE5000_Count_Active_Files.s"	; C: cc900/hdae5000_fls_small.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Count_Active_Files__loop, HDAE5000_Count_Active_Files + 10
+	.set	HDAE5000_Count_Active_Files__skip, HDAE5000_Count_Active_Files + 34
 
 ; --- UI Handler, File Operations, Path/String Utilities ---
 HDAE5000_UiObj_SetCaption:	.include "includes/generated/cc900/HDAE5000_UiObj_SetCaption.s"	; C: cc900/hdae5000_ui_display.c
@@ -706,28 +647,11 @@ HDAE5000_ErrMsgTimerCatchLBN:	.include "includes/generated/cc900/HDAE5000_ErrMsg
 	.set	HDAE5000_ErrMsgTimerCatchLBN_OnHdaeTimerBack, HDAE5000_ErrMsgTimerCatchLBN + 110
 	.set	HDAE5000_ErrMsgTimerCatchLBN_Epilogue, HDAE5000_ErrMsgTimerCatchLBN + 150
 
-HDAE5000_BitmapButt01:
-	; registered as "BitmapButt01" in HDAE5000_ObjHandler_Table
-	cp	xbc, EVT_GET_BITMAP_HEIGHT
-	jr	z, HDAE5000_BitmapButt01_OnGetBitmapHeight
-	cp	xbc, EVT_GET_BITMAP_WIDTH
-	jr	z, HDAE5000_BitmapButt01_OnGetBitmapWidth
-	cp	xbc, EVT_GET_BITMAP_DATA
-	jr	z, HDAE5000_BitmapButt01_OnGetBitmapData
-	ld	xhl, 0:i3
-	ret
-
-HDAE5000_BitmapButt01_OnGetBitmapData:
-	lda xhl, (HDAE5000_Bitmap_Button01:24)
-	ret
-
-HDAE5000_BitmapButt01_OnGetBitmapWidth:
-	ld	xhl, 0x0000002a
-	ret
-
-HDAE5000_BitmapButt01_OnGetBitmapHeight:
-	ld	xhl, 0x0000000f
-	ret
+HDAE5000_BitmapButt01:	.include "includes/generated/cc900/HDAE5000_BitmapButt01.s"	; C: cc900/hdae5000_small_procs_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_BitmapButt01_OnGetBitmapData, HDAE5000_BitmapButt01 + 27
+	.set	HDAE5000_BitmapButt01_OnGetBitmapWidth, HDAE5000_BitmapButt01 + 33
+	.set	HDAE5000_BitmapButt01_OnGetBitmapHeight, HDAE5000_BitmapButt01 + 39
 
 HDAE5000_AcLanguageText1Proc:
 	; registered as "AcLanguageText1Proc" in HDAE5000_ClassProc_Table
@@ -6206,14 +6130,7 @@ HDAE5000_FdLyricList_AddTlx:
 	; [INFERENCE] they read as file stems: ".TTX", ".MID" and "XLT." sit a
 	; few bytes earlier.  Nothing here concerns directories: the old name
 	; Dir_Event_Check was a misnomer.
-HDAE5000_LanguageTextReturn:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, .Ldec_no
-	lda xhl, (HDAE5000_TextPtrs_LANENG001_to_LANENG006:24)
-	ret
-.Ldec_no:
-	ld xhl, 0:i3
-	ret
+HDAE5000_LanguageTextReturn:	.include "includes/generated/cc900/HDAE5000_LanguageTextReturn.s"	; C: cc900/hdae5000_small_procs_ui_display.c
 
 	; ============================================================
 	; Format + ROM region setup helper
@@ -6323,24 +6240,11 @@ HDAE5000_Smf_CheckHeader:	.include "includes/generated/cc900/HDAE5000_Smf_CheckH
 ; Out: XHL = HDAE5000_Bitmap_BootSplash, 0x140 (320) or 0xF0 (240); 0 for any
 ;      other event.
 ; ---------------------------------------------------------------------------
-HDAE5000_Alloc_Memory:
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_Alloc_Memory__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_Alloc_Memory__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_Alloc_Memory__type_A1
-	ld xhl, 0:i3
-	ret
-HDAE5000_Alloc_Memory__type_A1:
-	lda xhl, (HDAE5000_Bitmap_BootSplash:24)
-	ret
-HDAE5000_Alloc_Memory__type_A2:
-	ld xhl, 0x140
-	ret
-HDAE5000_Alloc_Memory__type_A3:
-	ld xhl, 0xF0
-	ret
+HDAE5000_Alloc_Memory:	.include "includes/generated/cc900/HDAE5000_Alloc_Memory.s"	; C: cc900/hdae5000_small_procs_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Alloc_Memory__type_A1, HDAE5000_Alloc_Memory + 27
+	.set	HDAE5000_Alloc_Memory__type_A2, HDAE5000_Alloc_Memory + 33
+	.set	HDAE5000_Alloc_Memory__type_A3, HDAE5000_Alloc_Memory + 39
 
 ; ---------------------------------------------------------------------------
 ; L = HDAE5000_RAM_HdPresent, HDAE5000_Check_HD_Present's result at boot.
@@ -6542,28 +6446,10 @@ HDAE5000_Palette_Setup:	.include "includes/generated/cc900/HDAE5000_Palette_Setu
 ; down to 0 (HDAE5000_Palette_Setup).
 ; In:  XWA = the table.  IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_Load_Palette:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ldw iz, 0xFF
-	cp iz, 0:i3
-	jr lt, HDAE5000_Load_Palette__done
-HDAE5000_Load_Palette__loop:
-	ldto_berp E, 0xF8
-	ld wa, iz
-	exts xwa
-	sll xwa, 2
-	ld xbc, xwa
-	add xbc, (xsp + 2)
-	ld a, e
-	calr HDAE5000_Palette_Setup
-	sub iz, 0x1
-	jr ge, HDAE5000_Load_Palette__loop
-HDAE5000_Load_Palette__done:
-	popw iz
-	inc 4, xsp
-	ret
+HDAE5000_Load_Palette:	.include "includes/generated/cc900/HDAE5000_Load_Palette.s"	; C: cc900/hdae5000_load_palette.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Load_Palette__loop, HDAE5000_Load_Palette + 13
+	.set	HDAE5000_Load_Palette__done, HDAE5000_Load_Palette + 39
 
 ; ---------------------------------------------------------------------------
 ; Empty: a lone `ret`, called at the end of HDAE5000_Boot_Init.
@@ -6928,44 +6814,14 @@ HDAE5000_FlsItem_Set:	.include "includes/generated/cc900/HDAE5000_FlsItem_Set.s"
 ; In:  WA = FLS, BC = item, E = directory
 ; Out: HL = 0
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetDir:
-	extz xbc
-	extz xwa
-	ld	xhl, xwa
-	sll	xhl, 0x03
-	add	xhl, xwa
-	sll	xhl, 0x04
-	add	xhl, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
-	ld	xbc, xwa
-	add	xbc, xhl
-	ld	a, e
-	inc	1, a
-	ld	(xbc), a
-	ld	hl, 0:i3
-	ret
+HDAE5000_FlsItem_SetDir:	.include "includes/generated/cc900/HDAE5000_FlsItem_SetDir.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; Item BC of FLS record WA: its song byte (+48) = E + 1.
 ; In:  WA = FLS, BC = item, E = song
 ; Out: HL = 0
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetSong:
-	extz xbc
-	extz xwa
-	ld	xhl, xwa
-	sll	xhl, 0x03
-	add	xhl, xwa
-	sll	xhl, 0x04
-	add	xhl, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
-	ld	xbc, xwa
-	add	xbc, xhl
-	ld	a, e
-	inc	1, a
-	ld	(xbc), a
-	ld	hl, 0:i3
-	ret
+HDAE5000_FlsItem_SetSong:	.include "includes/generated/cc900/HDAE5000_FlsItem_SetSong.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; Item BC of FLS record WA, when set: its AS (AUTO START) option byte at +80 =
@@ -9287,17 +9143,7 @@ HDAE5000_RcmStream_Write:	.include "includes/generated/cc900/HDAE5000_RcmStream_
 
 HDAE5000_RcmStream_LastResult:	.include "includes/generated/cc900/HDAE5000_RcmStream_LastResult.s"	; C: cc900/hdae5000_ui_display.c
 
-HDAE5000_RcmStream_FreeSpace:
-	; XHL = the free-space field of HDAE5000_HD_GetDiskUsage (units of
-	; 10,000 bytes) shifted left by 10; handed to the main CPU by
-	; HDAE5000_SaveSong_Rcm.
-	lda	xsp, (xsp-16)
-	lda	xwa, (xsp)
-	call HDAE5000_HD_GetDiskUsage
-	ld xhl, (xsp + 0x0c)
-	sll	xhl, 0x0a
-	lda	xsp, (xsp+16)
-	ret
+HDAE5000_RcmStream_FreeSpace:	.include "includes/generated/cc900/HDAE5000_RcmStream_FreeSpace.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; Describe one in-RAM filesystem table for the PC link: {long address; word

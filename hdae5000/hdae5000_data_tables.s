@@ -3465,15 +3465,7 @@ HDAE5000_Fmt_03i_i:	; 0x2E5BB6
 ; HDAE5000_LyricBoxProc_OnReset of the case for value 0+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LyricBoxProc_CaseTable2:
-	.short	HDAE5000_LyricBoxProc_OnReset - HDAE5000_LyricBoxProc_OnReset	; 0
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 1 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 2 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 3 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 4 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 5 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 6 (default)
-	.short	HDAE5000_LyricBoxProc_OnLoad - HDAE5000_LyricBoxProc_OnReset	; 7
+HDAE5000_LyricBoxProc_CaseTable2:	.include "includes/generated/cc900/HDAE5000_LyricBoxProc_CaseTable2.s"	; C: cc900/hdae5000_lyricbox.c (cc900-data)
 ;
 ; HDAE5000_LyricBoxProc_CaseTable1 (0x2E5BD2, 7 x u16): the switch of HDAE5000_LyricBoxProc
 ; (dispatch at 0x28CD6A, hdae5000_ui_display.s:3194: `sub xwa,0x01ca0003`, bound `cp xwa,6`, `add xwa,xwa`, `ld wa,(<table>+2i)`,
@@ -3481,14 +3473,7 @@ HDAE5000_LyricBoxProc_CaseTable2:
 ; HDAE5000_LyricBoxProc_Ev01C0000D of the case for event 0x01CA0003+i; 7 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LyricBoxProc_CaseTable1:
-	.short	HDAE5000_LyricBoxProc_Ev01CA0003 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0003
-	.short	HDAE5000_LyricBoxProc_Ev01CA0004 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0004
-	.short	HDAE5000_LyricBoxProc_Ev01CA0005 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0005
-	.short	HDAE5000_LyricBoxProc_Default1 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0006 (default)
-	.short	HDAE5000_LyricBoxProc_Ev01CA0007 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0007
-	.short	HDAE5000_LyricBoxProc_Ev01CA0008 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0008
-	.short	HDAE5000_LyricBoxProc_Ev01CA0009 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0009
+HDAE5000_LyricBoxProc_CaseTable1:	.include "includes/generated/cc900/HDAE5000_LyricBoxProc_CaseTable1.s"	; C: cc900/hdae5000_lyricbox.c (cc900-data)
 HDAE5000_Str_Rb:	; 0x2E5BE0
 	; read by Display_Error at 0x28D67B (lda operand)
 	.asciz "rb"

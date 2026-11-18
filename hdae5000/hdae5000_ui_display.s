@@ -29,25 +29,7 @@ HDAE5000_RequestTitle16:	.include "includes/generated/cc900/HDAE5000_RequestTitl
 ; HDAE5000_FdList_Scan, code 2 when the floppy is not ready.
 ; In:  WA = error code
 ; ---------------------------------------------------------------------------
-HDAE5000_ShowErrorMessageTitle:
-	extz wa
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_HamaFnTable)
-	ld xhl, (xbc + HamaFn_SetGlobalError)             ; ld XHL, (XBC + 0x012C) — shutdown handler
-	call (xhl)		; HamaFn_SetGlobalError(WA)
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_DeleteEvent)
-	ld xwa, 0xFFFFFFFF
-	ld xbc, EVT_INTERRUPT_TITLE		; event 0x01C00016
-	call (xhl)		; RootFn_DeleteEvent
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_ApPostEvent)
-	ld xwa, 0xFFFFFFFF
-	ld xbc, EVT_INTERRUPT_TITLE
-	ld xde, TITLE_MESAGE		; title 0xEE (TT_MESAGE)
-	jp (xhl)		; tail-call RootFn_ApPostEvent
+HDAE5000_ShowErrorMessageTitle:	.include "includes/generated/cc900/HDAE5000_ShowErrorMessageTitle.s"	; C: cc900/hdae5000_show_error_title.c
 
 ; ---------------------------------------------------------------------------
 ; Rename a directory with its screen messages: shows HD_PLEASE on the asking
@@ -141,33 +123,7 @@ HDAE5000_NameHistory_Push:	.include "includes/generated/cc900/HDAE5000_NameHisto
 ; In:  XWA = history (see HDAE5000_NameHistory_Push)
 ; Out: XHL = the name, or 0 when the history is empty.
 ; ---------------------------------------------------------------------------
-HDAE5000_NameHistory_Recall:
-	cp (xwa), 0x00		; empty history?
-	jr z, .LNameHistory_Recall__empty
-	ld c, (xwa + 1)		; recall index
-	extz bc				; zero-extend to 16-bit
-	muls bc, 0x001B		; 27 bytes per name
-	inc 4, bc		; past the 4-byte header
-	lda	xhl, (xwa+bc)		; XHL = &name[recall index]
-	cp (xwa + 1), 0x00		; check if index is non-zero
-	jr nz, .LNameHistory_Recall__dec
-	ld c, (xwa)			; get count
-	cp c, 5:i3			; count == 5?
-	jr nz, .LNameHistory_Recall__dec_count
-	ld (xwa + 1), 0x04		; wrap: index = 4 (max-1)
-	jr t, .LNameHistory_Recall__ret
-.LNameHistory_Recall__dec_count:
-	ld c, (xwa)			; get count
-	dec 1, c			; count - 1
-	ld (xwa + 1), c			; index = count - 1
-	jr t, .LNameHistory_Recall__ret
-.LNameHistory_Recall__dec:
-	decm8 1, (xwa + 1)		; index--
-	jr t, .LNameHistory_Recall__ret
-.LNameHistory_Recall__empty:
-	ld xhl, 0:i3			; return NULL
-.LNameHistory_Recall__ret:
-	ret
+HDAE5000_NameHistory_Recall:	.include "includes/generated/cc900/HDAE5000_NameHistory_Recall.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; L = the byte at RAM HDAE5000_RAM_FlsAutoLoadPending (its role is not established).
@@ -184,25 +140,10 @@ HDAE5000_Fls_SetSeqStopPending:	.include "includes/generated/cc900/HDAE5000_Fls_
 ; 0x22AA9C whose status byte is 1.
 ; Out: HL = the count.
 ; ---------------------------------------------------------------------------
-HDAE5000_Count_Active_Files:
-	ld hl, 0:i3		; HL = count = 0
-	ld de, 0:i3		; DE = index = 0
-	cp de, 0x0014		; check if index >= 20
-	ret nc			; return if index >= 20 (unsigned)
-HDAE5000_Count_Active_Files__loop:
-	ld wa, de		; WA = current index
-	extz xwa		; zero-extend to 32 bits
-	add xwa, 0x00000114	; add entry size offset
-	ld xbc, HDAE5000_RAM_FdList	; table base address
-	add xbc, xwa		; XBC = &table[index]
-	cp (xbc), 0x01	; compare status byte with 1
-	jr nz, HDAE5000_Count_Active_Files__skip
-	inc 1, hl		; count++
-HDAE5000_Count_Active_Files__skip:
-	inc 1, de		; index++
-	cp de, 0x0014		; check if index < 20
-	jr c, HDAE5000_Count_Active_Files__loop
-	ret
+HDAE5000_Count_Active_Files:	.include "includes/generated/cc900/HDAE5000_Count_Active_Files.s"	; C: cc900/hdae5000_fls_small.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Count_Active_Files__loop, HDAE5000_Count_Active_Files + 10
+	.set	HDAE5000_Count_Active_Files__skip, HDAE5000_Count_Active_Files + 34
 
 ; --- UI Handler, File Operations, Path/String Utilities ---
 HDAE5000_UiObj_SetCaption:	.include "includes/generated/cc900/HDAE5000_UiObj_SetCaption.s"	; C: cc900/hdae5000_ui_display.c
@@ -221,28 +162,11 @@ HDAE5000_ErrMsgTimerCatchLBN:	.include "includes/generated/cc900/HDAE5000_ErrMsg
 	.set	HDAE5000_ErrMsgTimerCatchLBN_OnHdaeTimerBack, HDAE5000_ErrMsgTimerCatchLBN + 110
 	.set	HDAE5000_ErrMsgTimerCatchLBN_Epilogue, HDAE5000_ErrMsgTimerCatchLBN + 150
 
-HDAE5000_BitmapButt01:
-	; registered as "BitmapButt01" in HDAE5000_ObjHandler_Table
-	cp	xbc, EVT_GET_BITMAP_HEIGHT
-	jr	z, HDAE5000_BitmapButt01_OnGetBitmapHeight
-	cp	xbc, EVT_GET_BITMAP_WIDTH
-	jr	z, HDAE5000_BitmapButt01_OnGetBitmapWidth
-	cp	xbc, EVT_GET_BITMAP_DATA
-	jr	z, HDAE5000_BitmapButt01_OnGetBitmapData
-	ld	xhl, 0:i3
-	ret
-
-HDAE5000_BitmapButt01_OnGetBitmapData:
-	lda xhl, (HDAE5000_Bitmap_Button01:24)
-	ret
-
-HDAE5000_BitmapButt01_OnGetBitmapWidth:
-	ld	xhl, 0x0000002a
-	ret
-
-HDAE5000_BitmapButt01_OnGetBitmapHeight:
-	ld	xhl, 0x0000000f
-	ret
+HDAE5000_BitmapButt01:	.include "includes/generated/cc900/HDAE5000_BitmapButt01.s"	; C: cc900/hdae5000_small_procs_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_BitmapButt01_OnGetBitmapData, HDAE5000_BitmapButt01 + 27
+	.set	HDAE5000_BitmapButt01_OnGetBitmapWidth, HDAE5000_BitmapButt01 + 33
+	.set	HDAE5000_BitmapButt01_OnGetBitmapHeight, HDAE5000_BitmapButt01 + 39
 
 HDAE5000_AcLanguageText1Proc:	.include "includes/generated/cc900/HDAE5000_AcLanguageText1Proc.s"	; C: cc900/hdae5000_aclanguage.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -490,679 +414,44 @@ HDAE5000_AcLanguageText1Proc:	.include "includes/generated/cc900/HDAE5000_AcLang
 	.set	HDAE5000_AcLanguageText1Proc_Join6, HDAE5000_AcLanguageText1Proc + 6025
 	.set	HDAE5000_AcLanguageText1Proc_Epilogue, HDAE5000_AcLanguageText1Proc + 6061
 
-HDAE5000_LyricBoxProc:
-	; registered as "LyricBoxProc" in HDAE5000_ClassProc_Table
-	lda	xsp, (xsp-16)
-	pushw iz
-	ld (xsp + 0x06), xde
-	ld (xsp + 0x0a), xbc
-	ld (xsp + 0x0e), xwa
-	ld xwa, (xsp + 0x0a)
-	cp	xwa, EVT_SW_IN
-	jrl	z, HDAE5000_LyricBoxProc_OnSwIn
-	cp	xwa, EVT_HIDE
-	jrl	z, HDAE5000_LyricBoxProc_OnHide
-	cp	xwa, EVT_SHOW
-	jrl	z, HDAE5000_LyricBoxProc_OnShow
-	cp	xwa, EVT_PAINT
-	jr	z, HDAE5000_LyricBoxProc_OnPaint
-	cp	xwa, EVT_DRAW
-	jr	z, HDAE5000_LyricBoxProc_Ev01C0000D
-	sub	xwa, EVT_HDAE_INIT_LYRIC_PARAM
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_LyricBoxProc_Default1
-	cp	xwa, 0x00000006
-	jrl	gt, HDAE5000_LyricBoxProc_Default1
-	add	xwa, xwa
-	add	xwa, HDAE5000_LyricBoxProc_CaseTable1
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_LyricBoxProc_Ev01C0000D:24)
-	jp	t, (xix+wa)
-HDAE5000_LyricBoxProc_Ev01C0000D:
-	ld xwa, (xsp + 0x0e)
-	ld xbc, (xsp + 0x0a)
-	ld xde, (xsp + 0x06)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_LYRIC_ALL_DRAW
-	ld	xde, 0:i3
-	call	(xhl)
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_OnPaint:
-	ld xwa, (xsp + 0x0e)
-	ld xbc, (xsp + 0x0a)
-	ld xde, (xsp + 0x06)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_INIT_LYRIC_PARAM
-	ld	xde, 0:i3
-	call	(xhl)
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_INIT_LYRICS
-	ld	xde, 0:i3
-	call	(xhl)
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_LYRIC_ALL_DRAW
-	ld	xde, 1:i3
-	call	(xhl)
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Ev01CA0003:
-	cp	(HDAE5000_RAM_LyricLines_Init+240:24), 0
-	jrl	nz, HDAE5000_LyricBoxProc_Ev01CA0003_Join3
-	ld	(HDAE5000_RAM_LyricLines_Init+240:24), 1
-	lda xwa, (0x22a08c:24)
-	ld	xbc, xwa
-	ld xwa, (xsp + 0x0e)
-	ld	xde, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xde, (xde + WS_RootFnTable)
-	ld	xhl, (xde + RootFn_GetClientBox)
-	call	(xhl)
-	incw	2, (0x22A08C:24)
-	incw	4, (0x22A08E:24)
-	decw	1, (0x22A090:24)
-	decw	2, (0x22A092:24)
-	ld	wa, (0x22A08C:24)
-	inc	2, wa
-	ld	(0x22a094), wa
-	ld	wa, (0x22A08E:24)
-	dec	2, wa
-	ld	(0x22a096), wa
-	ld	wa, (0x22A090:24)
-	dec	2, wa
-	ld	(0x22a098), wa
-	ld	wa, (0x22A096:24)
-	add	wa, 0x000d
-	ld	(0x22a09a), wa
-	ld	wa, (0x22A08C:24)
-	inc	6, wa
-	ld	(0x22a09c), wa
-	ld	wa, (0x22A08E:24)
-	inc	2, wa
-	ld	(0x22a09e), wa
-	lda xwa, (0x22a0a0:24)
-	ld	xbc, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_GetClientBox)
-	ld	xwa, HDAE5000_OBJ_MeasureinLyric
-	call	(xhl)
-	ld	wa, (0x22A0A0:24)
-	add	wa, 0x0014
-	ld	(0x22a0a8), wa
-	ld	wa, (0x22A0A2:24)
-	inc	5, wa
-	ld	(0x22a0aa), wa
-	lda xwa, (0x22a0ac:24)
-	ld	xbc, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_GetClientBox)
-	ld	xwa, HDAE5000_OBJ_TimeSigInLyric
-	call	(xhl)
-	ld	wa, (0x22A0AC:24)
-	add	wa, 0x0014
-	ld	(0x22a0b4), wa
-	ld	wa, (0x22A0AE:24)
-	inc	5, wa
-	ld	(0x22a0b6), wa
-	ldw	(0x2307B8:24), 0
-	ld	hl, 0:i3
-	cp	hl, 0x0027
-	jr	ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join
-HDAE5000_LyricBoxProc_Ev01CA0003_Loop:
-	ld	wa, hl
-	sla	wa, 0x02
-	ld	bc, wa
-	inc	4, bc
-	ld	wa, (0x22A08C:24)
-	add	wa, 0x009c
-	ld	de, wa
-	sub	de, bc
-	ld	wa, hl
-	add	wa, wa
-	lda xbc, (0x2307ba:24)
-	ld	(xbc+wa), de
-	inc	1, hl
-	cp	hl, 0x0027
-	jr	lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop
-HDAE5000_LyricBoxProc_Ev01CA0003_Join:
-	ld	hl, 0:i3
-	cp	hl, 0x0027
-	jr	ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join2
-HDAE5000_LyricBoxProc_Ev01CA0003_Loop2:
-	ld	wa, hl
-	add	wa, wa
-	lda xbc, (0x23080e:24)
-	ld	de, hl
-	sla	de, 0x03
-	ld	(xbc+wa), de
-	inc	1, hl
-	cp	hl, 0x0027
-	jr	lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop2
-HDAE5000_LyricBoxProc_Ev01CA0003_Join2:
-	ld	hl, 0:i3
-	cp	hl, 6:i3
-	jr	ge, HDAE5000_LyricBoxProc_Ev01CA0003_Join3
-HDAE5000_LyricBoxProc_Ev01CA0003_Loop3:
-	ld	wa, hl
-	muls	wa, 0x0012
-	add	wa, (0x22A08E:24)
-	add	a, 0x0f
-	ld	c, a
-	lda xwa, (0x230808:24)
-	ld	(xwa+hl), c
-	inc	1, hl
-	cp	hl, 6:i3
-	jr	lt, HDAE5000_LyricBoxProc_Ev01CA0003_Loop3
-HDAE5000_LyricBoxProc_Ev01CA0003_Join3:
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Ev01CA0007:
-	ld xwa, (xsp + 0x06)
-	cp	xwa, 0x00000001
-	jr	z, HDAE5000_LyricBoxProc_Ev01CA0007_Skip2
-	or xwa, xwa
-	jr	z, HDAE5000_LyricBoxProc_Ev01CA0007_Skip
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Ev01CA0007_Skip:
-	cpw	(0x2307B2:24), 0
-	jr	z, HDAE5000_LyricBoxProc_Ev01CA0007_Join
-	ldw	(0x2307B2:24), 0
-	ldw	(0x2307B4:24), 1
-	calr	HDAE5000_Lyrics_ResetState
-	ld	xwa, 0:i3
-	calr	HDAE5000_Lyrics_ReadSongInfo
-	ldw	(0x22A0B8:24), 0
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_Lyrics_FillLines
-	ld	(0x230870), hl
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_DRAW
-	ld	xde, 0:i3
-	call	(xhl)
-	ldw	(0x2307B4:24), 0
-HDAE5000_LyricBoxProc_Ev01CA0007_Join:
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Ev01CA0007_Skip2:
-	calr	HDAE5000_Lyrics_ResetState
-	ld	xwa, 0:i3
-	calr	HDAE5000_Lyrics_ReadSongInfo
-	ldw	(0x22A0B8:24), 0
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_PAINT
-	ld	xde, 0:i3
-	call	(xhl)
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Ev01CA0008:
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld	xix, (xbc + RootFn_GetViewInstance)
-	call	(xix)
-	ld	(0x22a088), xhl
-	ld	iz, 0:i3
-	cp	iz, 6:i3
-	jrl	nc, HDAE5000_LyricBoxProc_Ev01CA0008_Join
-HDAE5000_LyricBoxProc_Ev01CA0008_Loop:
-	ld	wa, iz
-	extz xwa
-	ld	xbc, xwa
-	sll	xbc, 0x02
-	add	xbc, xwa
-	sll	xbc, 0x03
-	ld	xwa, HDAE5000_RAM_LyricLines
-	add	xwa, xbc
-	push xwa
-	call HDAE5000_StrLen
-	inc 4, xsp
-	ld	wa, iz
-	extz xwa
-	add	xwa, 0x00000010
-	ld	xbc, 0x002304d8
-	add	xbc, xwa
-	ld_dst8_ri xbc, l		; ld (XBC),L
-	ld	wa, (0x230806:24)
-	ld (xsp + 0x02), wa
-	ld	wa, iz
-	extz xwa
-	ld	xbc, 0x00230808
-	add	xbc, xwa
-	ld	a, (xbc)
-	extz wa
-	ld (xsp + 0x04), wa
-	lda xhl, (0x22a08c:24)
-	lda	xbc, (xsp+2)
-	lda xwa, (HDAE5000_Str_Blank40:24)
-	ld	xde, xwa
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x20)
-	push xwa
-	ld	a, (0x230880:24)
-	extz wa
-	pushw wa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	ld	wa, iz
-	extz xwa
-	add	xwa, 0x00000010
-	ld	xbc, 0x002304d8
-	add	xbc, xwa
-	ld	a, (xbc)
-	extz wa
-	add	wa, wa
-	lda xbc, (0x2307b8:24)
-	ld	wa, (xbc+wa)
-	ld (xsp + 0x02), wa
-	ld	a, (0x2304EE:24)
-	extz wa
-	cp	wa, iz
-	jr	ule, HDAE5000_LyricBoxProc_Ev01CA0008_Skip
-	lda xhl, (0x22a08c:24)
-	lda	xbc, (xsp+2)
-	ld	wa, iz
-	extz xwa
-	ld	xix, xwa
-	sll	xix, 0x02
-	add	xix, xwa
-	sll	xix, 0x03
-	ld	xde, HDAE5000_RAM_LyricLines
-	add	xde, xix
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x20)
-	push xwa
-	ld	a, (0x23087E:24)
-	extz wa
-	pushw wa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	jr	t, HDAE5000_LyricBoxProc_Ev01CA0008_Next
-HDAE5000_LyricBoxProc_Ev01CA0008_Skip:
-	lda xhl, (0x22a08c:24)
-	lda	xbc, (xsp+2)
-	ld	wa, iz
-	extz xwa
-	ld	xix, xwa
-	sll	xix, 0x02
-	add	xix, xwa
-	sll	xix, 0x03
-	ld	xde, HDAE5000_RAM_LyricLines
-	add	xde, xix
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x20)
-	push xwa
-	ld	a, (0x230880:24)
-	extz wa
-	pushw wa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-HDAE5000_LyricBoxProc_Ev01CA0008_Next:
-	inc	1, iz
-	cp	iz, 6:i3
-	jrl	c, HDAE5000_LyricBoxProc_Ev01CA0008_Loop
-HDAE5000_LyricBoxProc_Ev01CA0008_Join:
-	lda xwa, (0x22a094:24)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_DrawFrame)
-	ldw	bc, 0x00f9
-	call	(xhl)
-	lda xhl, (0x22a08c:24)
-	lda xbc, (0x22a09c:24)
-	lda xde, (0x2306b6:24)
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x28)
-	push xwa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+44)
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	ld xwa, (xsp + 0x06)
-	cp	xwa, 0x00000001
-	jrl	nz, HDAE5000_LyricBoxProc_Ev01CA0008_Join2
-	lda xwa, (0x230736:24)
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xhl, (xwa + RootFn_SendEvent)
-	ld	xwa, HDAE5000_OBJ_Conductor
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	lda xwa, (0x230768:24)
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xhl, (xwa + RootFn_SendEvent)
-	ld	xwa, HDAE5000_OBJ_SongTitle
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_DRAW_SYLLABLE
-	ld	xde, 4:i3
-	call	(xhl)
-	lda xwa, (HDAE5000_Str_Reset:24)
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xhl, (xwa + RootFn_SendEvent)
-	ld	xwa, HDAE5000_OBJ_bottom01
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	lda xwa, (HDAE5000_Str_Load:24)
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xhl, (xwa + RootFn_SendEvent)
-	ld	xwa, HDAE5000_OBJ_bottom08
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-HDAE5000_LyricBoxProc_Ev01CA0008_Join2:
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Ev01CA0009:
-	ld xwa, (xsp + 0x06)
-	cp	xwa, 0x00000004
-	jrl	z, HDAE5000_LyricBoxProc_Skip4
-	cp	xwa, 0x00000003
-	jrl	z, HDAE5000_LyricBoxProc_Skip3
-	cp	xwa, 0x00000002
-	jrl	z, HDAE5000_LyricBoxProc_Skip2
-	cp	xwa, 0x00000001
-	jr	z, HDAE5000_LyricBoxProc_Skip
-	or xwa, xwa
-	jr	nz, HDAE5000_LyricBoxProc_Default1
-	lda xhl, (0x22a08c:24)
-	lda xbc, (0x23087a:24)
-	lda xwa, (0x23051e:24)
-	ld	xde, xwa
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x20)
-	push xwa
-	ld	a, (0x23087E:24)
-	extz wa
-	pushw wa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-HDAE5000_LyricBoxProc_Default1:
-	ld xwa, (xsp + 0x0e)
-	ld xbc, (xsp + 0x0a)
-	ld xde, (xsp + 0x06)
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-	jrl	t, HDAE5000_LyricBoxProc_Epilogue
-HDAE5000_LyricBoxProc_Skip:
-	lda xhl, (0x22a08c:24)
-	lda xbc, (0x23087a:24)
-	lda xwa, (0x23051e:24)
-	ld	xde, xwa
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x20)
-	push xwa
-	ld	a, (0x230880:24)
-	extz wa
-	pushw wa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	jr	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_Skip2:
-	lda xhl, (0x22a08c:24)
-	lda xbc, (0x22a09c:24)
-	lda xde, (0x2306b6:24)
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x28)
-	push xwa
-	ld	xwa, (0x22a088)
-	pushm	(xwa+44)
-	ld	xwa, (0x22a088)
-	pushm	(xwa+22)
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_Skip3:
-	lda xwa, (0x22a0a0:24)
-	ld	xhl, xwa
-	lda xwa, (0x22a0a8:24)
-	ld	xbc, xwa
-	lda xwa, (0x23079a:24)
-	ld	xde, xwa
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x28)
-	push xwa
-	pushw 0x00ff
-	pushw 0x0008
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_Skip4:
-	lda xwa, (0x22a0ac:24)
-	ld	xhl, xwa
-	lda xwa, (0x22a0b4:24)
-	ld	xbc, xwa
-	lda xwa, (0x230790:24)
-	ld	xde, xwa
-	ld	xwa, (0x22a088)
-	ld xwa, (xwa + 0x28)
-	push xwa
-	pushw 0x00ff
-	pushw 0x0008
-	ld	xwa, xhl
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_DrawString)
-	call	(xhl)
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_Ev01CA0004:
-	cpw	(0x2307B4:24), 0
-	jrl	nz, HDAE5000_LyricBoxProc_Default1
-	ld xwa, (xsp + 0x06)
-	ld	bc, 1:i3
-	calr	HDAE5000_Lyrics_PlayToPosition
-	ld	wa, (0x230874:24)
-	cp	wa, (0x2307B0:24)
-	jr	c, HDAE5000_LyricBoxProc_Ev01CA0004_Join
-	ld	wa, (0x2307AE:24)
-	ld	(0x2307b0), wa
-	incw	1, (0x230872:24)
-	ldw	(0x230874:24), 0
-	ld	xwa, (HDAE5000_RAM_LyricBoxObj)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_BEAT_MESSAGE
-	ld	xde, 0:i3
-	call	(xhl)
-HDAE5000_LyricBoxProc_Ev01CA0004_Join:
-	incw	1, (0x230874:24)
-	ld	xwa, 1:i3
-	add	(0x230876:24), xwa
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_Ev01CA0005:
-	incw	1, (0x2307AC:24)
-	ld	a, (0x2307A6:24)
-	extz wa
-	cp	(0x2307AC:24), wa
-	jr	ule, HDAE5000_LyricBoxProc_Ev01CA0005_Join
-	ld	a, (0x2307A4:24)
-	ld	(0x2307A6:24), a
-	incw	1, (0x2307AA:24)
-	ldw	(0x2307AC:24), 1
-HDAE5000_LyricBoxProc_Ev01CA0005_Join:
-	ld	wa, (0x2307AC:24)
-	pushw wa
-	ld	wa, (0x2307AA:24)
-	pushw wa
-	pushw HDAE5000_Fmt_03i_i@hi16
-	pushw HDAE5000_Fmt_03i_i@lo16		; low half of HDAE5000_Fmt_03i_i
-	lda xwa, (0x23079a:24)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_DRAW_SYLLABLE
-	ld	xde, 3:i3
-	call	(xhl)
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_OnShow:
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld	xix, (xbc + RootFn_GetViewInstance)
-	call	(xix)
-	ld	(0x22a088), xhl
-	ld xwa, (xhl + 0x1c)
-	ldw	(xwa), 0x0001
-	ld xwa, (xsp + 0x0e)
-	ld	(HDAE5000_RAM_LyricBoxObj), xwa
-	ldw	(0x2307B2:24), 1
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_OnHide:
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld	xix, (xbc + RootFn_GetViewInstance)
-	call	(xix)
-	ld	(0x22a088), xhl
-	ld xwa, (xhl + 0x1c)
-	ldw	(xwa), 0x0000
-	ld	xwa, 0xffffffff
-	ld	(HDAE5000_RAM_LyricBoxObj), xwa
-	jrl	t, HDAE5000_LyricBoxProc_Default1
-HDAE5000_LyricBoxProc_OnSwIn:
-	ld xde, (xsp + 0x06)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xix, (xwa + RootFn_SendEvent)
-	ld	xwa, 0x02600024
-	ld	xbc, EVT_MAKE_EDIT_SW_ID
-	call	(xix)
-	ld	xwa, xhl
-	cp	xwa, 0x00000007
-	jrl	ugt, HDAE5000_LyricBoxProc_Default2
-	add	xwa, xwa
-	add	xwa, HDAE5000_LyricBoxProc_CaseTable2
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_LyricBoxProc_OnReset:24)
-	jp	t, (xix+wa)
-; HDAE5000_LyricBoxProc_OnReset: EVT_SW_IN on the lyric box, edit switch 0 = the bottom01 button captioned "Reset":
-;   re-init the lyrics (EVT_HDAE_INIT_LYRICS 1, HDAE5000_Lyrics_FillLines(0,0)) and redraw. Also the base of
-;   HDAE5000_LyricBoxProc_CaseTable2. Basis: switch on EVT_MAKE_EDIT_SW_ID + the caption drawn on bottom01.
-HDAE5000_LyricBoxProc_OnReset:
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_HDAE_INIT_LYRICS
-	ld	xde, 1:i3
-	call	(xhl)
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_Lyrics_FillLines
-	ld	(0x230870), hl
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_DRAW
-	ld	xde, 0:i3
-	call	(xhl)
-	jr	t, HDAE5000_LyricBoxProc_Default2
-; HDAE5000_LyricBoxProc_OnLoad: EVT_SW_IN on the lyric box, edit switch 7 = the bottom08 button captioned "Load":
-;   clear the lyric buffer and post EVT_SHOW to the LoadLyricFD screen. Basis: case 7 of
-;   HDAE5000_LyricBoxProc_CaseTable2 + the caption drawn on bottom08.
-HDAE5000_LyricBoxProc_OnLoad:
-	ld xwa, (xsp + 0x0e)
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld	xix, (xbc + RootFn_GetViewInstance)
-	call	(xix)
-	ld	(0x22a088), xhl
-	calr	HDAE5000_Lyrics_ClearBuffer
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_LoadLyricFD
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-HDAE5000_LyricBoxProc_Default2:
-	ld	xhl, 0:i3
-HDAE5000_LyricBoxProc_Epilogue:
-	popw iz
-	lda	xsp, (xsp+16)
-	ret
+HDAE5000_LyricBoxProc:	.include "includes/generated/cc900/HDAE5000_LyricBoxProc.s"	; C: cc900/hdae5000_lyricbox.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_LyricBoxProc_Ev01C0000D, HDAE5000_LyricBoxProc + 103
+	.set	HDAE5000_LyricBoxProc_OnPaint, HDAE5000_LyricBoxProc + 161
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003, HDAE5000_LyricBoxProc + 273
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003_Loop, HDAE5000_LyricBoxProc + 534
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003_Join, HDAE5000_LyricBoxProc + 578
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003_Loop2, HDAE5000_LyricBoxProc + 586
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003_Join2, HDAE5000_LyricBoxProc + 613
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003_Loop3, HDAE5000_LyricBoxProc + 619
+	.set	HDAE5000_LyricBoxProc_Ev01CA0003_Join3, HDAE5000_LyricBoxProc + 651
+	.set	HDAE5000_LyricBoxProc_Ev01CA0007, HDAE5000_LyricBoxProc + 656
+	.set	HDAE5000_LyricBoxProc_Ev01CA0007_Skip, HDAE5000_LyricBoxProc + 676
+	.set	HDAE5000_LyricBoxProc_Ev01CA0007_Join, HDAE5000_LyricBoxProc + 760
+	.set	HDAE5000_LyricBoxProc_Ev01CA0007_Skip2, HDAE5000_LyricBoxProc + 765
+	.set	HDAE5000_LyricBoxProc_Ev01CA0008, HDAE5000_LyricBoxProc + 812
+	.set	HDAE5000_LyricBoxProc_Ev01CA0008_Loop, HDAE5000_LyricBoxProc + 844
+	.set	HDAE5000_LyricBoxProc_Ev01CA0008_Skip, HDAE5000_LyricBoxProc + 1098
+	.set	HDAE5000_LyricBoxProc_Ev01CA0008_Next, HDAE5000_LyricBoxProc + 1171
+	.set	HDAE5000_LyricBoxProc_Ev01CA0008_Join, HDAE5000_LyricBoxProc + 1178
+	.set	HDAE5000_LyricBoxProc_Ev01CA0008_Join2, HDAE5000_LyricBoxProc + 1437
+	.set	HDAE5000_LyricBoxProc_Ev01CA0009, HDAE5000_LyricBoxProc + 1442
+	.set	HDAE5000_LyricBoxProc_Default1, HDAE5000_LyricBoxProc + 1545
+	.set	HDAE5000_LyricBoxProc_Skip, HDAE5000_LyricBoxProc + 1574
+	.set	HDAE5000_LyricBoxProc_Skip2, HDAE5000_LyricBoxProc + 1637
+	.set	HDAE5000_LyricBoxProc_Skip3, HDAE5000_LyricBoxProc + 1699
+	.set	HDAE5000_LyricBoxProc_Skip4, HDAE5000_LyricBoxProc + 1757
+	.set	HDAE5000_LyricBoxProc_Ev01CA0004, HDAE5000_LyricBoxProc + 1815
+	.set	HDAE5000_LyricBoxProc_Ev01CA0004_Join, HDAE5000_LyricBoxProc + 1896
+	.set	HDAE5000_LyricBoxProc_Ev01CA0005, HDAE5000_LyricBoxProc + 1911
+	.set	HDAE5000_LyricBoxProc_Ev01CA0005_Join, HDAE5000_LyricBoxProc + 1952
+	.set	HDAE5000_LyricBoxProc_OnShow, HDAE5000_LyricBoxProc + 2013
+	.set	HDAE5000_LyricBoxProc_OnHide, HDAE5000_LyricBoxProc + 2063
+	.set	HDAE5000_LyricBoxProc_OnSwIn, HDAE5000_LyricBoxProc + 2108
+	.set	HDAE5000_LyricBoxProc_OnReset, HDAE5000_LyricBoxProc + 2169
+	.set	HDAE5000_LyricBoxProc_OnLoad, HDAE5000_LyricBoxProc + 2237
+	.set	HDAE5000_LyricBoxProc_Default2, HDAE5000_LyricBoxProc + 2294
+	.set	HDAE5000_LyricBoxProc_Epilogue, HDAE5000_LyricBoxProc + 2296
 
 
 ; ---------------------------------------------------------------------------
@@ -1449,14 +738,7 @@ HDAE5000_FdLyricList_AddTlx:	.include "includes/generated/cc900/HDAE5000_FdLyric
 	; [INFERENCE] they read as file stems: ".TTX", ".MID" and "XLT." sit a
 	; few bytes earlier.  Nothing here concerns directories: the old name
 	; Dir_Event_Check was a misnomer.
-HDAE5000_LanguageTextReturn:	; 0x28F2F7
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, .Ldec_no
-	lda xhl, (HDAE5000_TextPtrs_LANENG001_to_LANENG006:24)
-	ret
-.Ldec_no:
-	ld xhl, 0:i3
-	ret
+HDAE5000_LanguageTextReturn:	.include "includes/generated/cc900/HDAE5000_LanguageTextReturn.s"	; C: cc900/hdae5000_small_procs_ui_display.c
 
 	; ============================================================
 	; Format + ROM region setup helper
@@ -1566,24 +848,11 @@ HDAE5000_Smf_CheckHeader:	.include "includes/generated/cc900/HDAE5000_Smf_CheckH
 ; Out: XHL = HDAE5000_Bitmap_BootSplash, 0x140 (320) or 0xF0 (240); 0 for any
 ;      other event.
 ; ---------------------------------------------------------------------------
-HDAE5000_Alloc_Memory:
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_Alloc_Memory__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_Alloc_Memory__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_Alloc_Memory__type_A1
-	ld xhl, 0:i3
-	ret
-HDAE5000_Alloc_Memory__type_A1:
-	lda xhl, (HDAE5000_Bitmap_BootSplash:24)
-	ret
-HDAE5000_Alloc_Memory__type_A2:
-	ld xhl, 0x140
-	ret
-HDAE5000_Alloc_Memory__type_A3:
-	ld xhl, 0xF0
-	ret
+HDAE5000_Alloc_Memory:	.include "includes/generated/cc900/HDAE5000_Alloc_Memory.s"	; C: cc900/hdae5000_small_procs_ui_display.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Alloc_Memory__type_A1, HDAE5000_Alloc_Memory + 27
+	.set	HDAE5000_Alloc_Memory__type_A2, HDAE5000_Alloc_Memory + 33
+	.set	HDAE5000_Alloc_Memory__type_A3, HDAE5000_Alloc_Memory + 39
 
 ; ---------------------------------------------------------------------------
 ; L = HDAE5000_RAM_HdPresent, HDAE5000_Check_HD_Present's result at boot.
@@ -1784,28 +1053,10 @@ HDAE5000_Palette_Setup:	.include "includes/generated/cc900/HDAE5000_Palette_Setu
 ; down to 0 (HDAE5000_Palette_Setup).
 ; In:  XWA = the table.  IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_Load_Palette:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ldw iz, 0xFF
-	cp iz, 0:i3
-	jr lt, HDAE5000_Load_Palette__done
-HDAE5000_Load_Palette__loop:
-	ldto_berp E, 0xF8
-	ld wa, iz
-	exts xwa
-	sll xwa, 2
-	ld xbc, xwa
-	add xbc, (xsp + 2)
-	ld a, e
-	calr HDAE5000_Palette_Setup
-	sub iz, 0x1
-	jr ge, HDAE5000_Load_Palette__loop
-HDAE5000_Load_Palette__done:
-	popw iz
-	inc 4, xsp
-	ret
+HDAE5000_Load_Palette:	.include "includes/generated/cc900/HDAE5000_Load_Palette.s"	; C: cc900/hdae5000_load_palette.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Load_Palette__loop, HDAE5000_Load_Palette + 13
+	.set	HDAE5000_Load_Palette__done, HDAE5000_Load_Palette + 39
 
 ; ---------------------------------------------------------------------------
 ; Empty: a lone `ret`, called at the end of HDAE5000_Boot_Init.
@@ -2122,44 +1373,14 @@ HDAE5000_FlsItem_Set:	.include "includes/generated/cc900/HDAE5000_FlsItem_Set.s"
 ; In:  WA = FLS, BC = item, E = directory
 ; Out: HL = 0
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetDir:
-	extz xbc
-	extz xwa
-	ld	xhl, xwa
-	sll	xhl, 0x03
-	add	xhl, xwa
-	sll	xhl, 0x04
-	add	xhl, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+16:24)
-	ld	xbc, xwa
-	add	xbc, xhl
-	ld	a, e
-	inc	1, a
-	ld	(xbc), a
-	ld	hl, 0:i3
-	ret
+HDAE5000_FlsItem_SetDir:	.include "includes/generated/cc900/HDAE5000_FlsItem_SetDir.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; Item BC of FLS record WA: its song byte (+48) = E + 1.
 ; In:  WA = FLS, BC = item, E = song
 ; Out: HL = 0
 ; ---------------------------------------------------------------------------
-HDAE5000_FlsItem_SetSong:
-	extz xbc
-	extz xwa
-	ld	xhl, xwa
-	sll	xhl, 0x03
-	add	xhl, xwa
-	sll	xhl, 0x04
-	add	xhl, xbc
-	lda xwa, (HDAE5000_RAM_FlsRecords+48:24)
-	ld	xbc, xwa
-	add	xbc, xhl
-	ld	a, e
-	inc	1, a
-	ld	(xbc), a
-	ld	hl, 0:i3
-	ret
+HDAE5000_FlsItem_SetSong:	.include "includes/generated/cc900/HDAE5000_FlsItem_SetSong.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; Item BC of FLS record WA, when set: its AS (AUTO START) option byte at +80 =
@@ -2851,17 +2072,7 @@ HDAE5000_RcmStream_Write:	.include "includes/generated/cc900/HDAE5000_RcmStream_
 
 HDAE5000_RcmStream_LastResult:	.include "includes/generated/cc900/HDAE5000_RcmStream_LastResult.s"	; C: cc900/hdae5000_ui_display.c
 
-HDAE5000_RcmStream_FreeSpace:
-	; XHL = the free-space field of HDAE5000_HD_GetDiskUsage (units of
-	; 10,000 bytes) shifted left by 10; handed to the main CPU by
-	; HDAE5000_SaveSong_Rcm.
-	lda	xsp, (xsp-16)
-	lda	xwa, (xsp)
-	call HDAE5000_HD_GetDiskUsage
-	ld xhl, (xsp + 0x0c)
-	sll	xhl, 0x0a
-	lda	xsp, (xsp+16)
-	ret
+HDAE5000_RcmStream_FreeSpace:	.include "includes/generated/cc900/HDAE5000_RcmStream_FreeSpace.s"	; C: cc900/hdae5000_fls_small.c
 
 ; ---------------------------------------------------------------------------
 ; Describe one in-RAM filesystem table for the PC link: {long address; word
