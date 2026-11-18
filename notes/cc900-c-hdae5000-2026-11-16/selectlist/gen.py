@@ -61,6 +61,38 @@ FORMS50 = [
     dict(R50_BASE, NAME="SelList_n", REGS=R50_REGS + ["long u;"],
          GET="u = (long)(v = GETVIEW(obj));", GETI="v = GETVIEW(obj);", U="(unsigned char *)u"),
 ]
+# Round 52, from the read-out of run 2026-11-18-4-hd-r50: only a register local u keeps the call's result in XHL
+# (so that the function pointer goes to XIX, as the ROM); without u (m) the pointer is called through XHL and v is
+# reloaded from the stack; `u = v = ..` (h, i, j) the same as m.  k (the label's spelling with f's order) differs
+# only in item 4.  So u stays, in XHL, and its USE must copy it to XWA: an integer address, u + 54 computed on a long
+# (the integer-address idiom of DeleteSongPart_Sqt), instead of the pointer cast that folds into (xhl+54).
+FORMS52 = [
+    dict(R50_BASE, NAME="SelList_p", REGS=R50_REGS + ["long u;"],
+         GET="u = GETVIEWL(obj);\n        v = (unsigned char *)u;", U="u"),
+    dict(R50_BASE, NAME="SelList_q", REGS=R50_REGS + ["unsigned long u;"],
+         GET="u = CALLR(unsigned long, ROOT->GetViewInstance)(obj);\n        v = (unsigned char *)u;", U="u"),
+    dict(R50_BASE, NAME="SelList_r", REGS=R50_REGS + ["long u;"],
+         GET="v = (unsigned char *)(u = GETVIEWL(obj));", U="u"),
+    dict(R50_BASE, NAME="SelList_s", REGS=R50_REGS + ["long u;"],
+         GET="u = GETVIEWL(obj);\n        v = (unsigned char *)u;", U="(long)u"),
+]
+HEAD52 = """/* hd_r52_sl.c (lane_hd round 52): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), four forms written by
+   selectlist/gen.py --round 52.  It calls nothing relatively.
+   cc900-options: -Xr
+%s
+   Read-out of run 2026-11-18-4-hd-r50 (hd_r50_sl.c): only a register local u keeps the call's result in XHL, so
+   that the function pointer is loaded into XIX as in the ROM (forms k and the label's); without one (m), or with
+   `u = v = ..` / `v = ..; u = v;` (h, i, j), the pointer goes through XHL and v is reloaded from the stack.  Form k
+   (f's order, the label's spelling) differs from the ROM only in item 4: at the nine first uses the ROM copies u
+   to XWA and reads (xwa+N), V4.23 reads (xhl+N) straight.  These forms use u as an INTEGER at those nine places,
+   V_xxx(u) = *(T *)(u + N) on a long (the integer-address idiom), instead of the cast (unsigned char *)u:
+     SelList_p  long u;  u = GETVIEWL(obj); v = (unsigned char *)u;  first use V_xxx(u)
+     SelList_q  unsigned long u (the call's result as unsigned long)
+     SelList_r  v = (unsigned char *)(u = GETVIEWL(obj));
+     SelList_s  first use V_xxx((long)u)
+   The INDEXSW case keeps k's spelling there.
+*/
+"""
 HEAD50 = """/* hd_r50_sl.c (lane_hd round 50): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), six forms written by
    selectlist/gen.py --round 50.  It calls nothing relatively.
    cc900-options: -Xr
@@ -88,10 +120,11 @@ def main():
     head = open(os.path.join(HERE, "head.txt")).read()
     tpl = open(os.path.join(HERE, "body.tpl")).read()
     forms = FORMS
-    if "--round" in sys.argv and sys.argv[sys.argv.index("--round") + 1] == "50":
-        forms = FORMS50
+    rnd = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else None
+    if rnd in ("50", "52"):
+        forms, hd = {"50": (FORMS50, HEAD50), "52": (FORMS52, HEAD52)}[rnd]
         names = "\n".join("   cc900-name: %s=HDAE5000_SelectListProc" % f["NAME"] for f in forms)
-        head = HEAD50 % names + head.split("*/\n", 1)[1]
+        head = hd % names + head.split("*/\n", 1)[1]
     parts = [head]
     for f in forms:
         f = dict(f)
