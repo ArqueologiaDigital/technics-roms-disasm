@@ -1162,10 +1162,15 @@ def link_at_addresses(bodies, ref, values, d):
 
 
 def run_job(job):
+    # SystemExit too: the build's checks outside finish() (check_markers via label_map / module_names, c_functions)
+    # stop with sys.exit.  SystemExit is no Exception, so it used to end a pool worker: multiprocessing.Pool replaces
+    # a worker that exits but loses its task, and imap_unordered then waited for that result for ever (the hung
+    # --jobs 2 recheck of 2026-11-17: two C files with a wrapped `cc900-name:` marker, two dead workers).  With
+    # --jobs 1 the same exit stopped the whole run.
     try:
         return job, analyse_listing(job), None
-    except Exception as e:                       # one bad listing must not stop the index
-        return job, [], '%s: %s' % (type(e).__name__, e)
+    except (Exception, SystemExit) as e:         # one bad listing must not stop the index
+        return job, [], '%s: %s' % (type(e).__name__, str(e).replace('\n', ' ')[:300])
 
 
 # ---------------------------------------------------------------------------------------------- C extraction
@@ -1378,10 +1383,13 @@ def build_jobs(runs, oracle, src_root):
 def execute(jobs, n):
     rows, errs = [], []
     if n > 1:
+        # concurrent.futures, not multiprocessing.Pool: a worker that dies (killed, out of memory) makes the map
+        # raise BrokenProcessPool, where Pool silently replaced the worker, lost its task and waited for ever.  Fork,
+        # so the workers inherit setup_imports() and Ctx.src_root; the parent has no thread yet when they start.
         import multiprocessing as mp
-        with mp.Pool(n) as pool:
-            res = pool.imap_unordered(run_job, jobs, chunksize=4)
-            res = list(res)
+        from concurrent.futures import ProcessPoolExecutor
+        with ProcessPoolExecutor(n, mp_context=mp.get_context('fork')) as pool:
+            res = list(pool.map(run_job, jobs, chunksize=4))
     else:
         res = [run_job(j) for j in jobs]
     for job, rs, err in res:
@@ -1673,6 +1681,8 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
         if (n['status'], str(n.get('eq_pct', ''))) != (r['status'], r['eq_pct']) or n.get('classes', '') != r['classes']:
             changed.append((r, n))
     print('re-checked %d attempts (%d listings) with %s' % (len(sel), len(jobs), root_label(model_root)))
+    for e in errs:
+        print('not read (rows kept as they were): %s' % e)
     if '--verbose' in a:
         for r, n in changed:
             print('%-8s %-40s %-9s %5s%% %-28s -> %-9s %5s%% %s' % (
@@ -1699,24 +1709,47 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
 
 
 def lane_staged():
-    """{(tree key, label): worktree} of the functions the lanes' worktrees already build from C (<tree>/cc900/ and
-    cc900-staged/), by their C definitions and cc900-name maps"""
-    listing, to_llvm, fw = mods()
+    """{(tree key, label): where} of the functions that have C somewhere other than the src-root's <tree>/cc900/:
+    the src-root's own <tree>/cc900-staged/ (`src-root:staged`), the lanes' worktrees (<tree>/cc900/ and cc900-staged/,
+    committed or not; the worktree's directory name), and the committed trees of the local branches main has not
+    merged (`branch:<name>`).  By their C definitions and cc900-name maps; several places are joined with `+`."""
     out = {}
+
+    def add(key, b, where):
+        lm = label_map_text(b)
+        for n in c_defs_text(b):
+            ws = out.setdefault((key, lm.get(n, n)), [])
+            if where not in ws:
+                ws.append(where)
+
+    src = os.path.realpath(Ctx.src_root)
+    for key, (tdir, _r, _s, _b) in TREES.items():
+        for c in glob.glob(os.path.join(src, tdir, 'cc900-staged', '*.c')):
+            add(key, open(c, 'rb').read(), 'src-root:staged')
     for wt in sorted(glob.glob(os.path.join(LANE_WORKTREES, '*', ''))):
+        if os.path.realpath(wt) == src:          # the src-root itself: its cc900/ is what write_ready leaves out
+            continue
         for key, (tdir, _r, _s, _b) in TREES.items():
             for c in glob.glob(os.path.join(wt, tdir, 'cc900', '*.c')) + glob.glob(os.path.join(wt, tdir, 'cc900-staged', '*.c')):
-                b = open(c, 'rb').read()
-                lm = label_map_text(b)
-                for n in c_defs_text(b):
-                    out.setdefault((key, lm.get(n, n)), os.path.basename(os.path.dirname(wt)))
-    return out
+                add(key, open(c, 'rb').read(), os.path.basename(os.path.dirname(wt)))
+    git = ['git', '-C', MAIN_REPO]
+    refs = subprocess.run(git + ['for-each-ref', '--no-merged=main', '--format=%(refname:short)', 'refs/heads'],
+                          capture_output=True, text=True).stdout.split()
+    for ref in refs:
+        for key, (tdir, _r, _s, _b) in TREES.items():
+            files = subprocess.run(git + ['ls-tree', '-r', '--name-only', ref, '--', tdir + '/cc900', tdir + '/cc900-staged'],
+                                   capture_output=True, text=True).stdout.split()
+            for p in files:
+                if p.endswith('.c'):
+                    add(key, subprocess.run(git + ['show', '%s:%s' % (ref, p)], capture_output=True).stdout, 'branch:' + ref)
+    return {k: '+'.join(v) for k, v in out.items()}
 
 
 def write_ready(out, rows, runs):
     """OUT/ready.tsv: every (tree, function) that MATCHes in the index and is not built from C in the src-root's tree,
     per lane, with its newest matching attempt, a C copy (written when missing) and that function's cc900-module
-    line (derive_module); `in_lane_worktree` names a lane worktree whose tree already has it"""
+    line (derive_module).  `c_elsewhere` says where else C for it exists (lane_staged: the src-root's cc900-staged/,
+    a lane worktree, a local branch main has not merged), `none` when nowhere: the C copy here is then the only one."""
     best = {}
     for r in rows:
         if r['status'] != 'MATCH':
@@ -1751,14 +1784,14 @@ def write_ready(out, rows, runs):
             m = derive_module(tree, os.path.join(out, r['c_copy']), only=fn)
             mod = ' '.join(m) if m else ''
         lines.append([LANES.get(tree, '?'), tree, fn, r['gen_size'], r['flags'], r['run'], r['opt'], r['c_copy'], mod,
-                      lanes.get((tree, fn), '')])
+                      lanes.get((tree, fn), 'none')])
     with open(os.path.join(out, 'ready.tsv'), 'w') as f:
-        f.write('lane\ttree\tfunction\tbytes\tflags\trun\topt\tc_copy\tcc900_module\tin_lane_worktree\n')
+        f.write('lane\ttree\tfunction\tbytes\tflags\trun\topt\tc_copy\tcc900_module\tc_elsewhere\n')
         for l in lines:
             f.write('\t'.join(str(x) for x in l) + '\n')
     per = {}
     for l in lines:
-        k = (l[0], 'new' if not l[9] else 'in a worktree')
+        k = (l[0], 'C nowhere else' if l[9] == 'none' else 'C elsewhere')
         per.setdefault(k, [0, 0]); per[k][0] += 1; per[k][1] += int(l[3] or 0)
     print('ready.tsv: %d functions already built from C in the tree left out; %s' % (
         staged, ', '.join('%s %s %d functions %d B' % (k[0], k[1], v[0], v[1]) for k, v in sorted(per.items()))))
