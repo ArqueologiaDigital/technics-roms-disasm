@@ -694,28 +694,7 @@ Voice_MakePartHandle:	.include "includes/generated/cc900/Voice_MakePartHandle.s"
 ; E = the caller's argument at (XSP+8). Returns with 'retd 2', i.e. it pops one word of
 ; caller-pushed argument. No caller found by branch-target scan (candidate for a call
 ; through one of the dispatch tables).
-Voice_Part_Assign:
-	dec	4, xsp
-	ld	(xsp), c
-	ld	(xsp+2), a
-	ld	a, (xsp)
-	extz	wa
-	ld	c, e
-	extz	bc
-	calr	Voice_MakePartHandle
-	ld	a, (xsp+2)
-	ld	l, a
-	extz	hl
-	ld	a, (xsp)
-	ld	c, a
-	extz	bc
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	calr	ExtVoice_Alloc_StreamSlot
-	inc	4, xsp
-	retd	2
+Voice_Part_Assign:	.include "includes/generated/cc900/Voice_Part_Assign.s"	; C: cc900/voice_params_and_tvf_ah_21a.c
 ; Builds a 0xFFFF-terminated word list at 0x00286B describing the up-to-four sounding
 ; sub-slots of one tone entry.
 ; Inputs: A = tone/part row index, C = a group id, E = a group mask (the routine keeps
@@ -4731,176 +4710,16 @@ Voice_Level_ClearAllOutputRegs:	.include "includes/generated/cc900/Voice_Level_C
 ; slotrec+1, +3 and +7.
 ; The direct/bypass path is chosen when the group index == 2, or the operator index == 0,
 ; or the byte at 0x0451A7 == 0xF5 (a global "raw parameters" mode flag).
-Voice_OpSlot_WriteParams:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 12), xbc
-	ld l, (xsp + 22)
-	ld c, e
-	extz bc
-	ld ix, bc
-	sla ix, 2
-	ld c, l
-	extz bc
-	sla bc, 4
-	ld iy, bc
-	add iy, ix
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	lda	xbc, (xbc+iy)
-	ld (xsp + 4), xbc
-	ld xbc, 0x2B
-	add (xsp + 4), xbc
-	ld c, l
-	extz bc
-	muls bc, 0x9
-	ld iy, bc
-	ld c, (xsp + 20)
-	extz bc
-	muls bc, 0x1B
-	lda xix, (Payload_Bss_Start+0x53d8:24)
-	exts xbc
-	add xbc, xix
-	lda	xiz, (xbc+iy)
-	ld c, e
-	extz bc
-	ld ix, bc
-	sla ix, 2
-	ld c, l
-	extz bc
-	sla bc, 4
-	ld iy, bc
-	add iy, ix
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+iy)
-	ld (xsp + 8), xwa
-	ld xwa, 0x27
-	add (xsp + 8), xwa
-	cp l, 2:i3
-	jr z, Voice_OpSlot_WriteParams_Direct
-	cp e, 0:i3
-	jr nz, Voice_OpSlot_WriteParams_Direct
-	cp (Payload_Bss_Start+0x6331:24), 0xf5
-	jr z, Voice_OpSlot_WriteParams_Direct
-	ld xwa, (xsp + 12)
-	ld a, (xwa + 104)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa)
-	extz wa
-	add wa, bc
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr ClampS16_WA_Short
-	ld (xiz + 1), l
-	ld xwa, (xsp + 12)
-	ld a, (xwa + 105)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 1)
-	extz wa
-	add wa, bc
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr ClampS16_WA_Short
-	ld (xiz + 3), l
-	ld xwa, (xsp + 12)
-	ld a, (xwa + 106)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 3)
-	and a, 0x3F
-	extz wa
-	add wa, bc
-	ldw bc, 0x1E
-	ld de, 0:i3
-	calr ClampS16_WA_Short
-	ld (xiz + 7), l
-	jr Voice_OpSlot_ApplySustainPedal
-
-; Bypass path: copy the three parameter bytes into slotrec+1/+3/+7 with no patch offset
-; and no clamping.
-Voice_OpSlot_WriteParams_Direct:
-	ld xwa, (xsp + 4)
-	ld a, (xwa)
-	ld (xiz + 1), a
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 1)
-	ld (xiz + 3), a
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 3)
-	and a, 0x3F
-	ld (xiz + 7), a
-
-; If the sustain bit is set in the per-voice flag word, forces the release segment of this
-; slot record to the sustain-pedal value instead of the patch value.
-Voice_OpSlot_ApplySustainPedal:
-	ld xwa, (xsp + 8)
-	bitm 1, (xwa)
-	jr z, Voice_OpSlot_SustainRelease_Set
-	ld xwa, (xsp + 8)
-	ld a, (xwa + 3)
-	ld (xiz + 2), a
-	ld (xiz + 7), 0x0
-	jr Voice_OpSlot_ApplySostenuto
-
-; Two-instruction store of the sustain-pedal release value.
-Voice_OpSlot_SustainRelease_Set:
-	ld (xiz + 2), 0x80
-
-; Same test/override for the sostenuto pedal.
-Voice_OpSlot_ApplySostenuto:
-	ld xwa, (xsp + 8)
-	bitm 3, (xwa)
-	jr z, Voice_OpSlot_SostenutoRelease_Set
-	ld xwa, (xsp + 8)
-	ld a, (xwa + 2)
-	ld (xiz + 4), a
-	ld (xiz + 7), 0x0
-	jr Voice_OpSlot_CopyWaveformBits
-
-; Two-instruction store of the sostenuto release value.
-Voice_OpSlot_SostenutoRelease_Set:
-	ld (xiz + 4), 0x80
-
-; Copies the waveform-select bits from the patch record into the slot record.
-Voice_OpSlot_CopyWaveformBits:
-	ld xwa, (xsp + 4)
-	bitm 7, (xwa + 2)
-	jr z, Voice_OpSlot_ClearWaveformBit5
-	setm 5, (xiz)
-	jr Voice_OpSlot_PackEnvelopeBits
-
-; Single `res 5` on the waveform byte.
-Voice_OpSlot_ClearWaveformBit5:
-	resm 5, (xiz)
-
-; Final packing of the envelope-shape bit-field into the slot record; restores XIZ and returns.
-Voice_OpSlot_PackEnvelopeBits:
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 3)
-	and a, 0xC0
-	extz wa
-	srl wa, 6
-	andmi8 (xiz), 0xFC
-	or (xiz), a
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 2)
-	res 7, a
-	ld (xiz + 5), a
-	pop xiz
-	lda xsp, (xsp + 12)
-	retd 0x4
+Voice_OpSlot_WriteParams:	.include "includes/generated/cc900/Voice_OpSlot_WriteParams.s"	; C: cc900/voice_params_and_tvf_ah_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_OpSlot_WriteParams_Direct, Voice_OpSlot_WriteParams + 261
+	.set	Voice_OpSlot_ApplySustainPedal, Voice_OpSlot_WriteParams + 290
+	.set	Voice_OpSlot_SustainRelease_Set, Voice_OpSlot_WriteParams + 312
+	.set	Voice_OpSlot_ApplySostenuto, Voice_OpSlot_WriteParams + 316
+	.set	Voice_OpSlot_SostenutoRelease_Set, Voice_OpSlot_WriteParams + 338
+	.set	Voice_OpSlot_CopyWaveformBits, Voice_OpSlot_WriteParams + 342
+	.set	Voice_OpSlot_ClearWaveformBit5, Voice_OpSlot_WriteParams + 354
+	.set	Voice_OpSlot_PackEnvelopeBits, Voice_OpSlot_WriteParams + 356
 
 ExtVoice_Build_SlotRegisters:
 	lda xsp, (xsp - 22)

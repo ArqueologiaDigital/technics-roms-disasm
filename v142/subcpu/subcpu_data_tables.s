@@ -646,17 +646,7 @@ AudioMod_BusRouting_OrIXBits:
 ; Read by AudioMod_Apply_Porta_Curve (0x0284AC): index = A - 0x10, range-checked 0..9
 ; (10 entries), doubled, ldw_sri / jp t, (xrr+rr).  Only A = 0x14 (entry 4) reaches
 ; AudioMod_Apply_Porta_Curve_Skip; the other nine take the shared base body.
-AudioMod_PortaCurve_CaseOffsets:
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x10
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x11
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x12
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x13
-	.short AudioMod_Apply_Porta_Curve_Skip - AudioMod_Porta_Curve_JumpBase				; A = 0x14
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x15
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x16
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x17
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x18
-	.short AudioMod_Porta_Curve_JumpBase - AudioMod_Porta_Curve_JumpBase				; A = 0x19
+AudioMod_PortaCurve_CaseOffsets:	.include "includes/generated/cc900/AudioMod_PortaCurve_CaseOffsets.s"	; C: cc900/voice_envelopes_and_channels_ag_21c.c (cc900-data)
 ; --- 0x00F6F3-0x00F702  8 x u16, rhythm-mode word stored at 0x041360
 ; Read by Voice_SetRhythmMode (0x028B9C): index = bits 7..4 of the packed SysEx byte A
 ; (`and c,0xF0 / srl c,4 / add bc,bc / lda xde,(table:24) / ld r, (xrr+rr)`), result -> 0x041360.

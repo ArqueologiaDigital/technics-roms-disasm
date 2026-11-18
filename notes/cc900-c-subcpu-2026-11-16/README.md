@@ -182,6 +182,14 @@ DSP_SetCoeff_MasterConfig (706 B, with DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE).  17
 (staged_v423.tsv's MATCH rows of runs -19 / -21 / -22 / -23); **512 functions per tree** built from C
 (`c_duplicates.py`).
 
+**Ninth promotion: run 2026-11-18-29-sub-r21f's 13 (verified per tree in run 2026-11-18-32-sub-r21g-staged).**  6 files:
+Voice_Calc_LevelPair_Full / _PatchAtk, Voice_UpdateAllLFO, Audio_Tick_ServiceVoices_B, AudioMod_Apply_Porta_Curve (a
+switch, with AudioMod_PortaCurve_CaseOffsets), VoiceModWheel_DataTable_02A061 (helper AG); Voice_Allocate_Type2,
+Voice_NoteOn_Type3, Voice_OpSlot_WriteParams, Voice_Part_Assign (helper AH); DSP_SetCoeff_RouteComplex,
+DSP_VoiceParamReadWrite, VoiceAlloc_Apply_Algo_Group2 (helper AI).  13 functions, 4,841 B per tree; **525 functions per
+tree** built from C (`c_duplicates.py`); `make -j2 gate` PASS.  The work was wound down after it (owner, 2026-11-18):
+HANDOFF-2026-11-18.md.
+
 Round 21's lessons (helper-briefs/ROUND21.md has round 20's):
 - A first `case` whose body only leaves the switch loses its compare; Variant3 needed a `case 4:` before
   `case 0x20: case 8: break;` to keep the 0x20 test (helper AD).
@@ -248,6 +256,7 @@ What the spellings taught (every call address matched from the first run; only f
 | `syntax_check.sh`     | gcc C89 pre-check of probe files before a VM run                                                                                                                                                                                                      | `bash notes/cc900-c-subcpu-2026-11-16/syntax_check.sh FILE.c ...`                                |
 | `ready_check.py`      | which lane_sub rows of the near-miss index's ready.tsv are really new (built, staged, or NEW)                                                                                                                                                         | `python3 -B notes/cc900-c-subcpu-2026-11-16/ready_check.py [--new]`                              |
 | `never_tried.py`      | which pool candidates no probe has compiled yet, largest first, with totals per pool                                                                                                                                                                  | `python3 -B notes/cc900-c-subcpu-2026-11-16/never_tried.py`                                      |
+| `crash_check.py`      | which C files of an oracle run made V4.23 crash (page fault in the log, truncated listing)                                                                                                                                                            | `python3 -B notes/cc900-c-subcpu-2026-11-16/crash_check.py RUN_DIR ['sub_*']`                    |
 | `helper-generators/`  | the helpers' generators of their probe forms, and their diff tools `idiff.py` / `ctx.py` (instruction-level diff of a listing function against the ROM); `fpconst.py` prints every FP constant of the payload with an exact C literal (`fpconst.txt`) | read each file's head; run from the repository root                                              |
 
 ## Where the helpers stopped (round 11, 2026-11-16)

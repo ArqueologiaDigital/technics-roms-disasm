@@ -13,105 +13,14 @@
 ; the part's four operator slots (DSP_VoiceParam_MultiSlot) and only reports a value when
 ; all four agree.  Called from 0x03193B and from eight consecutive sites in
 ; AUDIO_PROCESS_DSP (0x035C10..0x035C9C), i.e. it is the main query primitive.
-DSP_VoiceParamReadWrite:
-	lda xsp, (xsp - 14)
-	push xiz
-	ld (xsp + 10), xde
-	ld (xsp + 14), bc
-	ld (xsp + 16), wa
-	ldw (xsp + 8), 0x0
-	ld wa, (xsp + 16)
-	extz xwa
-	ld xbc, 0x11F
-	call Math_Multiply32
-	ld xwa, Part_Record_Base
-	add xwa, xhl
-	ld wa, (xwa)
-	bit 0, wa
-	jr z, DSP_VoiceParam_MultiSlot
-	ld wa, (xsp + 14)
-	extz xwa
-	add xwa, 0x1D8
-	ld xbc, Payload_Bss_Start+0x6158
-	add xbc, xwa
-	ld xwa, (xsp + 10)
-	ld c, (xbc)
-	ld (xwa), c
-	jrl DSP_VoiceParamReadWrite_Return
-
-; Part not allocated: zero the match counter at (XSP+0x08) and walk the four slots.
-DSP_VoiceParam_MultiSlot:
-	ldw (xsp + 6), 0x0
-	cpw (xsp + 6), 0x4
-	jr nc, DSP_VoiceParam_MultiSlot_CheckResult
-
-; Per slot: skip the slot if (slotptr+0x06) & 0xC0 is non-zero or bit 5 of (slotptr+0x06) is
-; set; otherwise increment the match counter.
-DSP_VoiceParam_MultiSlot_LoopBody:
-	ld wa, (xsp + 6)
-	extz xwa
-	ld xbc, 0x25
-	call Math_Multiply32
-	ld xiz, xhl
-	add xiz, 0x6E
-	ld wa, (xsp + 16)
-	extz xwa
-	ld xbc, 0x11F
-	call Math_Multiply32
-	ld xwa, Part_Record_Base
-	add xwa, xhl
-	add xwa, xiz
-	ld xwa, (xwa)
-	ld a, (xwa + 6)
-	and a, 0xC0
-	jr nz, DSP_VoiceParam_MultiSlot_LoopNext
-	ld wa, (xsp + 6)
-	extz xwa
-	ld xbc, 0x25
-	call Math_Multiply32
-	ld xiz, xhl
-	add xiz, 0x6E
-	ld wa, (xsp + 16)
-	extz xwa
-	ld xbc, 0x11F
-	call Math_Multiply32
-	ld xwa, Part_Record_Base
-	add xwa, xhl
-	add xwa, xiz
-	ld xwa, (xwa)
-	bitm 5, (xwa + 6)
-	jr nz, DSP_VoiceParam_MultiSlot_LoopNext
-	incw 1, (xsp + 8)
-
-; Advance the slot counter and loop while < 4.
-DSP_VoiceParam_MultiSlot_LoopNext:
-	incw 1, (xsp + 6)
-	cpw (xsp + 6), 0x4
-	jr c, DSP_VoiceParam_MultiSlot_LoopBody
-
-; Result = 0 unless all four slots matched, in which case the answer comes from
-; DSP_VOICEPARAM_DEFAULT_TABLE (0x00F95D) indexed by the parameter index.
-DSP_VoiceParam_MultiSlot_CheckResult:
-	ld xde, (xsp + 10)
-	ld a, 0x0:opc
-	cpw (xsp + 8), 0x4
-	jr nz, DSP_VoiceParam_MultiSlot_StoreResult
-	ld wa, (xsp + 14)
-	extz xwa
-	ld xbc, DSP_VOICEPARAM_DEFAULT_TABLE
-	add xbc, xwa
-	ld a, (xbc)
-
-; Store the byte into the caller's buffer.
-DSP_VoiceParam_MultiSlot_StoreResult:
-	ld (xde), a
-
-; HL = (XSP+0x04), unwind and return.
-DSP_VoiceParamReadWrite_Return:
-	ld hl, (xsp + 4)
-	pop xiz
-	lda xsp, (xsp + 14)
-	ret
+DSP_VoiceParamReadWrite:	.include "includes/generated/cc900/DSP_VoiceParamReadWrite.s"	; C: cc900/dsp_voice_params_ai_22a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_VoiceParam_MultiSlot, DSP_VoiceParamReadWrite + 74
+	.set	DSP_VoiceParam_MultiSlot_LoopBody, DSP_VoiceParamReadWrite + 86
+	.set	DSP_VoiceParam_MultiSlot_LoopNext, DSP_VoiceParamReadWrite + 196
+	.set	DSP_VoiceParam_MultiSlot_CheckResult, DSP_VoiceParamReadWrite + 206
+	.set	DSP_VoiceParam_MultiSlot_StoreResult, DSP_VoiceParamReadWrite + 232
+	.set	DSP_VoiceParamReadWrite_Return, DSP_VoiceParamReadWrite + 234
 
 ; Input XDE = one-byte result buffer.  Calls ToneDB_Find_ToneRecord (0x03206F) and returns
 ; byte +0x5D of that buffer -- the algorithm-type byte this whole region dispatches on.
@@ -385,145 +294,12 @@ DSP_SetCoeff_CopyDirect:	.include "includes/generated/cc900/DSP_SetCoeff_CopyDir
 ;       Three extra bytes follow: table[16*row + 0x0D], then row's low and high
 ;       halves (row & 0xFF, row >> 8).  Hence 16 payload bytes.
 ; Reached only from ToneDB_Query_Dispatch case 16 (0x0319B2).
-DSP_SetCoeff_RouteComplex:
-	dec	4, xsp
-	push xiz
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_PatchRecord_Ptr:24)
-	ld	xhl, (xde+wa)
-	ld	a, c
-	extz	wa
-	add	wa, wa
-	add	wa, 39
-	ld	a, (xhl+wa)
-	ld	e, a
-	extz	de
-	and	de, 127
-	ld	a, c
-	extz	wa
-	add	wa, wa
-	add	wa, 39
-	exts	xwa
-	add	xwa, xhl
-	ld	a, (xwa+1)
-	ldfr_berp	a, 244
-	extz	iy
-	and	iy, 31
-	ld	a, c
-	extz	wa
-	add	wa, wa
-	add	wa, 39
-	exts	xwa
-	add	xwa, xhl
-	ld	a, (xwa+1)
-	ldfr_berp	a, 240
-	extz	ix
-	and	ix, 32
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xhl, (xwa+124)
-	ld	wa, iy
-	sll	wa, 7
-	add	wa, de
-	add	wa, wa
-	extz	xwa
-	add	xwa, xhl
-	add	xwa, (ToneDB_RelBase:24)
-	ld	xwa, (xwa)
-	ld	de, wa
-	ld	xwa, (ToneDB_RootPtr:24)
-	ld	xhl, (xwa+128)
-	ld	xwa, (ToneDB_RelBase:24)
-	add	xwa, xhl
-	ld	(xsp+4), xwa
-	ldw	hl, 13
-	ld	wa, ix
-	cp	wa, 32
-	jr	z, DSP_SetCoeff_RouteComplex_Skip
-	cp	wa, 0:i3
-	jr	nz, DSP_SetCoeff_RouteComplex_Join
-	ld	ix, 0:i3
-	cp	ix, hl
-	jr	nc, DSP_SetCoeff_RouteComplex_Join
-DSP_SetCoeff_RouteComplex_Loop:
-	ld	bc, ix
-	extz	xbc
-	ld	wa, de
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, xbc
-	ld	xbc, xwa
-	add	xbc, (xsp+4)
-	ld	wa, ix
-	inc	6, wa
-	extz	xwa
-	ld	xiy, Payload_Bss_Start+0x639a
-	add	xiy, xwa
-	ld	a, (xbc)
-	ld	(xiy), a
-	inc	1, ix
-	cp	ix, hl
-	jr	c, DSP_SetCoeff_RouteComplex_Loop
-	jr	t, DSP_SetCoeff_RouteComplex_Join
-DSP_SetCoeff_RouteComplex_Skip:
-	ld	ix, 0:i3
-	cp	ix, hl
-	jr	nc, DSP_SetCoeff_RouteComplex_Join
-DSP_SetCoeff_RouteComplex_Loop2:
-	ld	a, c
-	extz	wa
-	muls	wa, 80
-	ld	iy, wa
-	add	iy, 19111
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	lda	xiz, (xwa+iy)
-	ld	wa, ix
-	inc	6, wa
-	extz	xwa
-	ld	xiy, Payload_Bss_Start+0x639a
-	add	xiy, xwa
-	ld	wa, ix
-	extz	xwa
-	add	xwa, xiz
-	ld	a, (xwa)
-	ld	(xiy), a
-	inc	1, ix
-	cp	ix, hl
-	jr	c, DSP_SetCoeff_RouteComplex_Loop2
-DSP_SetCoeff_RouteComplex_Join:
-	ld	wa, hl
-	inc	6, wa
-	extz	xwa
-	ld	xbc, Payload_Bss_Start+0x639a
-	add	xbc, xwa
-	ld	wa, de
-	extz	xwa
-	sll	xwa, 4
-	add	xwa, (xsp+4)
-	ld	a, (xwa+13)
-	ld	(xbc), a
-	inc	1, hl
-	ld	wa, hl
-	inc	6, wa
-	extz	xwa
-	ld	xbc, Payload_Bss_Start+0x639a
-	add	xbc, xwa
-	ld	wa, de
-	ld	w, 0:opc
-	ld	(xbc), a
-	inc	1, hl
-	ld	wa, hl
-	inc	6, wa
-	extz	xwa
-	ld	xbc, Payload_Bss_Start+0x639a
-	add	xbc, xwa
-	ld	wa, de
-	srl	wa, 8
-	ld	(xbc), a
-	inc	1, hl
-	pop xiz
-	inc	4, xsp
-	ret
+DSP_SetCoeff_RouteComplex:	.include "includes/generated/cc900/DSP_SetCoeff_RouteComplex.s"	; C: cc900/dsp_voice_params_ai_22a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SetCoeff_RouteComplex_Loop, DSP_SetCoeff_RouteComplex + 165
+	.set	DSP_SetCoeff_RouteComplex_Skip, DSP_SetCoeff_RouteComplex + 208
+	.set	DSP_SetCoeff_RouteComplex_Loop2, DSP_SetCoeff_RouteComplex + 214
+	.set	DSP_SetCoeff_RouteComplex_Join, DSP_SetCoeff_RouteComplex + 267
 ; ----------------------------------------------------------------------------
 ; DSP_SetCoeff_CopyDirect2 - Copy coefficients directly (variant 2)
 ; Notes: Same pattern as DSP_SetCoeff_CopyDirect with different offsets
