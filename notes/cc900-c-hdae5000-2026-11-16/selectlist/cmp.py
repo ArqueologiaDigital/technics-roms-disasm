@@ -6,6 +6,7 @@ branch distances and jr/jrl, call/calr lengths?  Both sides go through MAME's un
 Usage: cmp.py SHOWFILE OUTDIR TAG   (writes OUTDIR/gen_TAG.bin, prints a unified diff ROM -> generated)
        cmp.py SHOWFILE OUTDIR TAG LABEL   (any other v2.06i function: address from the symbols reference, size
                                            from survey.tsv)
+       cmp.py SHOWFILE OUTDIR TAG LABEL SIZE   (SIZE bytes from LABEL: a procedure the survey split into pieces)
 """
 import difflib
 import re
@@ -53,8 +54,11 @@ def label_range(label):
 
 def main():
     show, outdir, tag = sys.argv[1:4]
-    if len(sys.argv) > 4:          # another function than SelectListProc: cmp.py SHOW OUTDIR TAG LABEL
+    if len(sys.argv) > 4:          # another function than SelectListProc: cmp.py SHOW OUTDIR TAG LABEL [SIZE]
         label_range(sys.argv[4])
+    if len(sys.argv) > 5:          # a procedure the survey split into pieces: its whole size
+        global SIZE
+        SIZE = int(sys.argv[5], 0)
     data = bytearray()
     for line in open(show, encoding="latin-1"):
         if line.startswith("=="):
