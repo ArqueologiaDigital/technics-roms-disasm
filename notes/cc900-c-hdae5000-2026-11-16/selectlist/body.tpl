@@ -174,7 +174,7 @@ long @NAME@(long obj, long ev, long arg)
         CALLV(ROOT->InheritedProc)(obj, ev, arg);
         d = 0;
         idx = CALLR(long, ROOT->SendEvent)(obj, EVT_GET_INDEX, 0L);
-        @GET@
+        @GETI@
         if (arg == idx) {
             switch (ev) {
             case EVT_INDEXSW_UP_AIC:
