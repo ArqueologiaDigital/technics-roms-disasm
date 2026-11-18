@@ -1,0 +1,52 @@
+function	bytes	matches	best_diff
+AudioChannel_AllVoices_Update_Variant3	118	sub_AD_21a@Xr sub_AD_21b@Xr sub_AD_21c@Xr	
+AudioMod_Apply_Porta_Curve	179	-	+28 sub_AG_20c@Xr
+AudioMod_Apply_Slot_Field29	279	-	+13 sub_AD_21c@Xr
+AudioMod_Apply_Slot_Field2A	279	-	+13 sub_AD_21c@Xr
+AudioMod_Scale_To_LevelPairShift	74	-	+4 sub_AD_21c@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_AD_21c@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_AD_21c@Xr
+AudioMod_Scale_To_Part_1F	77	-	+4 sub_AD_21c@Xr
+Audio_Tick_ServiceVoices_B	512	-	+18 sub_AG_20c@Xr
+DSP_DetuneCurve_SignedFP	495	-	+12 sub_fp_21i@Xr
+DSP_SOS_LUT_Fetch	302	-	+1 sub_fp_21f@Xr
+DSP_SetCoeff_RouteComplex	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_4136e'
+DSP_SetCoeff_RouteWithCallback	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_4136e'
+DSP_SetVoiceCoefficients	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41381'
+DSP_VoiceParamReadWrite	195	-	+45 sub_AI_20c@Xr
+DSP_VoiceParam_Dispatch	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_45314'
+EFF_RoutingInit	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41368'
+NoteOn_RoutePacket	382	-	+1 sub_AH_20c@Xr
+Partial_Build_Present_Word	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_4136a'
+RoutingFlag_Encode	0	-	cannot resolve 'no declared width (small / medium / large) for _SlotEnableMaskA'
+VoiceAlloc_Apply_Algo_Group0	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41368'
+VoiceAlloc_Apply_Algo_Group1	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41368'
+VoiceAlloc_Apply_Algo_Group2	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41368'
+VoiceBuf_TypeSelector_MatchEpilogue	0	-	cannot resolve 'no declared width (small / medium / large) for _ram_41382'
+VoiceModWheel_DataTable_02A061	134	-	+49 sub_AG_20c@Xr
+VoiceState_FullReset	357	-	+9 sub_AH_20c@Xr
+Voice_Allocate_1of4	392	sub_AH_20a@Xr	
+Voice_Allocate_Type2	405	-	+22 sub_AH_20c@Xr
+Voice_Allocate_Typed	417	sub_AH_20a@Xr sub_AH_20b@Xr	
+Voice_BuildOutputList	186	-	+66 sub_AH_20a@Xr
+Voice_Build_PartSlot_List	185	-	+48 sub_AH_20b@Xr
+Voice_Build_SoundingVoiceList	167	-	+0 sub_AH_20c@Xr
+Voice_Calc_LevelPair_FixedAtk	318	-	+225 sub_AG_20c@Xr
+Voice_Calc_LevelPair_Full	756	-	+55 sub_AG_20c@Xr
+Voice_Calc_LevelPair_Mono	762	-	+63 sub_AG_20c@Xr
+Voice_Calc_LevelPair_PatchAtk	740	-	+65 sub_AG_20c@Xr
+Voice_Env_ApplyVelocity_Type0	396	sub_AH_20a@Xr sub_AH_20b@Xr sub_AH_20c@Xr	
+Voice_MakePartHandle	48	sub_AH_20a@Xr sub_AH_20b@Xr sub_AH_20c@Xr	
+Voice_Manager_PollBank	258	-	+33 sub_AH_20c@Xr
+Voice_ModWheel_Apply	238	sub_AG_20a@Xr sub_AG_20c@Xr	
+Voice_NoteOn_Rhythm	245	-	+30 sub_AH_20c@Xr
+Voice_NoteOn_Type1	271	-	+70 sub_AH_20c@Xr
+Voice_NoteOn_Type2	417	-	+134 sub_AH_20c@Xr
+Voice_NoteOn_Type3	402	-	+27 sub_AH_20c@Xr
+Voice_OpSlot_WriteParams	392	-	+151 sub_AH_20c@Xr
+Voice_Part_Assign	49	-	+15 sub_AH_20c@Xr
+Voice_Step_ExprRamp	770	-	+15 sub_AG_20b@Xr
+Voice_TickNoteDecay	118	-	+23 sub_AG_20c@Xr
+Voice_ToneTableApply_Filter	191	sub_AG_20a@Xr	
+Voice_ToneTableApply_Pitch	188	sub_AG_20a@Xr	
+Voice_UpdateAllLFO	409	-	+8 sub_AG_20c@Xr

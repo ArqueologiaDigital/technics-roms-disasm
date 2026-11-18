@@ -1,0 +1,33 @@
+function	bytes	matches	best_diff
+AudioChannel_AllVoices_Update_Variant3	112	-	+20 sub_AD_20c@Xr
+AudioChannel_Handler_Cmd04_07	514	sub_AD_20a@Xr sub_AD_20b@Xr sub_AD_20c@Xr	
+AudioChannel_Handler_Cmd08_0B	517	sub_AD_20a@Xr sub_AD_20b@Xr sub_AD_20c@Xr	
+AudioChannel_Handler_Cmd0C_0F	519	sub_AD_20a@Xr sub_AD_20b@Xr sub_AD_20c@Xr	
+AudioChannel_Handler_Cmd10_13	527	sub_AD_20a@Xr sub_AD_20b@Xr sub_AD_20c@Xr	
+AudioChannel_Handler_Cmd14_17	530	sub_AD_20a@Xr sub_AD_20b@Xr sub_AD_20c@Xr	
+AudioChannel_Handler_Cmd18_1B	532	sub_AD_20a@Xr sub_AD_20b@Xr sub_AD_20c@Xr	
+AudioMod_Apply_Slot_Field29	279	-	+13 sub_AD_20c@Xr
+AudioMod_Apply_Slot_Field2A	279	-	+13 sub_AD_20c@Xr
+AudioMod_Scale_To_LevelPairShift	74	-	+4 sub_AD_20c@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_AD_20c@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_AD_20c@Xr
+AudioMod_Scale_To_Part_1F	77	-	+4 sub_AD_20c@Xr
+DSP1_ResolveStreamPtr	33	-	+14 sub_AE_20c@Xr
+DSP_AlgoParam_Decode	168	-	+15 sub_fp_20i@Xr
+DSP_EFFParam_DiffAllAndFlag	641	-	+6 sub_AE_20c@Xr
+DSP_MixerCoeff_Compute	250	-	+1 sub_fp_20i@Xr
+DSP_ParamInterp_3Point_WithOffset	116	-	+93 sub_AE_20c@Xr
+DSP_ReverbCurve_FP	297	sub_fp_20i@Xr	
+DSP_RingBuf_Read	43	-	+18 sub_AE_20c@Xr
+DSP_VolumeCurve_FP	329	sub_fp_20i@Xr	
+Debug_Print_Word	31	-	+18 sub_AE_20c@Xr
+Keybed_Read_Event	88	-	+16 sub_AE_20b@Xr
+RingBuf_ReadByte	43	-	+18 sub_AE_20c@Xr
+TVF_Lookup_Depth_Amount	168	-	+5 sub_AE_20c@Xr
+VoiceParam_Set_Tone_Option	195	-	+21 sub_AE_20b@Xr
+VoiceState_SwapSlot_DE_BC	171	-	+1 sub_AE_20c@Xr
+VoiceState_SwapSlot_HL_IY	257	-	+0 sub_AE_20c@Xr
+Voice_InterpolateNoteCurve	138	sub_AD_20b@Xr	
+Voice_PortaLevel_Compute	234	sub_AE_20a@Xr sub_AE_20b@Xr	
+Voice_ScanSlots_ReassignSources	205	sub_AE_20a@Xr sub_AE_20b@Xr sub_AE_20c@Xr	
+WaveSel_StageB_Build_Reg040	171	-	+40 sub_AE_20c@Xr

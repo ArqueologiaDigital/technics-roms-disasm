@@ -10,8 +10,6 @@
   243   89 DSP_InitChannelSlot                          core/11_ringbuf_and_midi_dispatch.s        abs  erp  0 nop   0 runtime -  calr 
   207   66 DSP_VoiceState_Dispatch                      core/11_ringbuf_and_midi_dispatch.s        abs  erp 16 nop   0 runtime -  calr 
   185   64 DSP_FlushAllSlots                            core/11_ringbuf_and_midi_dispatch.s        rel  erp  0 nop   0 runtime -  calr DSP_InitChannelSlot
-   47   19 RingBuf_ReadByte                             core/11_ringbuf_and_midi_dispatch.s        leaf erp  0 nop   0 runtime -  calr 
-   47   19 DSP_RingBuf_Read                             core/12_dsp2_init.s                        leaf erp  0 nop   0 runtime -  calr 
    33   13 DSP_WriteCount_Compute                       core/11_ringbuf_and_midi_dispatch.s        leaf erp  0 nop   0 runtime -  calr 
    33   13 DSP1_ResolveStreamPtr                        core/11_ringbuf_and_midi_dispatch.s        leaf erp  0 nop   0 runtime -  calr 
    29   13 Debug_Print_Word                             core/13_audio_process_dsp_and_effects.s    abs  erp  1 nop   0 runtime -  calr 

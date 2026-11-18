@@ -65,7 +65,8 @@ def encodings(text):
     return out
 
 
-DATA_UNIT = {b".byte": 1, b".short": 2, b".hword": 2, b".word": 2, b".2byte": 2, b".long": 4, b".int": 4, b".4byte": 4}
+DATA_UNIT = {b".byte": 1, b".short": 2, b".hword": 2, b".word": 2, b".2byte": 2, b".long": 4, b".int": 4, b".4byte": 4,
+             b".float": 4, b".single": 4, b".double": 8}  # the sub-CPU's FP constants (lane_sub, 2026-11-18)
 
 
 def data_size(c):
@@ -449,9 +450,13 @@ def main():
         inc = b'.include "includes/generated/cc900/' + n + b'.s"'
         if inc in lines[i]:
             continue
-        if lines[i].split(b";")[0].strip() != n + b":":
-            sys.exit("%s:%d: %s's label line holds more than the label" % (asm, i + 1, name))
         j, total = i, 0
+        rest = lines[i].split(b";")[0].strip()[len(n) + 1:].strip()
+        if rest:                                         # `Label:\t.double 2.0` (the sub-CPU's FP constants): the
+            k = data_size(rest) if rest.startswith(b".") else None   # label line's own directive is the first
+            if k is None:                                             # data line
+                sys.exit("%s:%d: %s's label line holds more than the label" % (asm, i + 1, name))
+            total = k
         while total < size:
             j += 1
             if j >= len(lines):

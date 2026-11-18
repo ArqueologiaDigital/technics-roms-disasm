@@ -163,6 +163,44 @@ DSP_EFFPARAM_APPLY_JUMPTABLE, VOICE_DSPOUT_A_JUMPTABLE, VOICE_DSPOUT_B_JUMPTABLE
 VOICE_DSPOUT_SECOND_A_JUMPTABLE).  **477 functions per tree** built from C, DSP_BytecodeInterpreter_Init
 (1,933 B) among them; `make -j2 gate` PASS.
 
+**Seventh promotion: round 20's 18 (2026-11-18; runs 2026-11-18-3, -6 and -8 matched them, -8 and -9 verified them
+per tree).**  9 files through `promote_v423_run.sh`: the six AudioChannel_Handler_Cmd*, Voice_InterpolateNoteCurve,
+Voice_PortaLevel_Compute, Voice_ScanSlots_ReassignSources, the switches Voice_CtrlChange, Voice_SystemMsg and
+DSP_AlgoType_Dispatch1/2/3 with their case tables, and the first floating-point functions, DSP_ParamInterp_FPComplex,
+DSP_VolumeCurve_FP, DSP_ReverbCurve_FP and DSP_AlgoParam_Decode with their constants.  18 functions, 7,012 B per tree
+(staged_v423.tsv's rows of runs -8 / -9); **495 functions per tree** built from C (`c_duplicates.py`).  The ready
+list of the near-miss index offered nothing new (`ready_check.py`: all 137 lane_sub rows were already built).
+`scripts/tools/cc900_splice.py` learned that a cc900-data object may start on its label's own line (`Label:\t.double
+2.0`, how the FP constants are written) and that .float / .double are data.  `make -j2 gate` PASS.
+
+**Eighth promotion: round 21's 17 (2026-11-18; matched in runs 2026-11-18-18, -19, -21 and -22, verified per tree in
+-19, -21, -22 and -23).**  10 files: AudioChannel_AllVoices_Update_Variant3, Voice_ModWheel_Apply,
+Voice_ToneTableApply_Filter / _Pitch, Voice_Allocate_1of4 / _Typed, Voice_Env_ApplyVelocity_Type0,
+Voice_MakePartHandle, Partial_Build_Present_Word, RoutingFlag_Encode, VoiceAlloc_Apply_Algo_Group0 / 1,
+VoiceBuf_TypeSelector_MatchEpilogue, CheckStatusBits_Zero, DSP_RingBuf_Read, RingBuf_ReadByte and the switch
+DSP_SetCoeff_MasterConfig (706 B, with DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE).  17 functions, 4,287 B per tree
+(staged_v423.tsv's MATCH rows of runs -19 / -21 / -22 / -23); **512 functions per tree** built from C
+(`c_duplicates.py`).
+
+**Ninth promotion: run 2026-11-18-29-sub-r21f's 13 (verified per tree in run 2026-11-18-32-sub-r21g-staged).**  6 files:
+Voice_Calc_LevelPair_Full / _PatchAtk, Voice_UpdateAllLFO, Audio_Tick_ServiceVoices_B, AudioMod_Apply_Porta_Curve (a
+switch, with AudioMod_PortaCurve_CaseOffsets), VoiceModWheel_DataTable_02A061 (helper AG); Voice_Allocate_Type2,
+Voice_NoteOn_Type3, Voice_OpSlot_WriteParams, Voice_Part_Assign (helper AH); DSP_SetCoeff_RouteComplex,
+DSP_VoiceParamReadWrite, VoiceAlloc_Apply_Algo_Group2 (helper AI).  13 functions, 4,841 B per tree; **525 functions per
+tree** built from C (`c_duplicates.py`); `make -j2 gate` PASS.  The work was wound down after it (owner, 2026-11-18):
+HANDOFF-2026-11-18.md.
+
+Round 21's lessons (helper-briefs/ROUND21.md has round 20's):
+- A first `case` whose body only leaves the switch loses its compare; Variant3 needed a `case 4:` before
+  `case 0x20: case 8: break;` to keep the 0x20 test (helper AD).
+- A file that names `__IZ` next to a pointer kept in memory crashes V4.23 (bug candidate 12) and loses every
+  function in it: run 2026-11-18-18 lost helper AI's three files whole; without ToneGen_ReadPitch_AndScale they
+  compiled (sub_AI_21*.c).  Keep `__IZ` probes in files of their own.
+- An argument that the ROM builds in XWA and copies to its register (`lda xwa,...; ld xbc,xwa`) is an address
+  expression such as `&ram_45216[0]`, not the bare array (DSP_SetCoeff_MasterConfig, helper AF).
+- A byte assigned to an int register variable through an int temporary gives the ROM's `extz wa; ld r,wa`; char
+  sums need `(int)` operands or V4.23 adds in 8 bits (helpers AG, AI).
+
 ### Floating point at -Xr (runs 2026-11-17-7 and 2026-11-17-9)
 
 - A register-convention function may not return float or double: V4.23 says `THC1-Error-373: Illegal function
@@ -175,6 +213,27 @@ VOICE_DSPOUT_SECOND_A_JUMPTABLE).  **477 functions per tree** built from C, DSP_
   ._fcmp_f ._fcmp_zf`, the same with `_d`, conversions `._fld_XY` (df, fd, lf, ulf, ld, fl, ful, dl, dul), and
   `_pow _sin _cos _tan _fabs`.  Their pairing with the tree's FP_* labels is NOT confirmed yet: each pair goes
   into `scripts/build/cc900_runtime_names.tsv` when a function that uses it matches.
+
+### Floating point matched (round 20, 2026-11-18; runs 2026-11-18-2, -3 and -6)
+
+DSP_ParamInterp_FPComplex (305 B, sub_fp_20d), DSP_VolumeCurve_FP (329 B) and DSP_ReverbCurve_FP (297 B,
+sub_fp_20i) are the payload's first floating-point functions V4.23 reproduces.  They confirm twelve library names,
+now rows of `scripts/build/cc900_runtime_names.tsv` (`*/subcpu`): `._fld_fl` FP_SP_CallWithBuf8, `._fld_lf`
+FP_ftoi, `._fld_df` FP_ftod, `._fld_fd` FP_dtof, `._fadd_f` / `._fsub_f` / `._fmul_f` / `._fdiv_f` FP_fadd /
+FP_fsub / FP_fmul / FP_fdiv, `._fmul_d` / `._fdiv_d` / `._fsub_d` FP_dmul / FP_ddiv / FP_dsub, `_pow` FP_pow.  The
+other candidates stay in `sub_v423.py` only (helper AC's, from the routines' bodies); `._fld_ulf` has none.
+
+What the spellings taught (every call address matched from the first run; only frames and folds differed):
+- **Frame rule at -Xr.**  Locals whose address is taken (every float / double / long the library reads or writes
+  by address) take slots top-down in declaration order, the first declared at the highest offset, just below the
+  spilled parameters; compiler temporaries go below them; a register candidate spilled across calls gets the
+  lowest slot.  So the ROM's offsets give the declaration order.
+- **Constant folding.**  V4.23 folds `(float)x * 30.0F * 44100.0F` into one multiply by 1323000 (a cast int, a
+  comma or a float cast around the first product do not stop it); a unary plus does: `+((float)x * 30.0F) *
+  44100.0F` keeps the ROM's two multiplies.
+- **Temporary order.**  In `y = 1.0 - pow(...)` V4.23 took the difference's temporary before the call's result
+  slot; `y = (float)(1.0 - pow(...))` gives the ROM's order.
+- Each floating constant is its own object, one `cc900-data:` line each, in the order the source uses them.
 
 | script                | question it answers                                                                                                                                                                                                                                   | command                                                                                          |
 |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
@@ -195,6 +254,9 @@ VOICE_DSPOUT_SECOND_A_JUMPTABLE).  **477 functions per tree** built from C, DSP_
 | `fp_names.py`         | which library routines V4.23 calls in each function of a listing (names only)                                                                                                                                                                         | `python3 -B notes/cc900-c-subcpu-2026-11-16/fp_names.py LISTING.asm ...`                         |
 | `open_list.py`        | which attempted functions still do not match, with each one's best attempt (HANDOFF's count)                                                                                                                                                          | `python3 -B notes/cc900-c-subcpu-2026-11-16/open_list.py`                                        |
 | `syntax_check.sh`     | gcc C89 pre-check of probe files before a VM run                                                                                                                                                                                                      | `bash notes/cc900-c-subcpu-2026-11-16/syntax_check.sh FILE.c ...`                                |
+| `ready_check.py`      | which lane_sub rows of the near-miss index's ready.tsv are really new (built, staged, or NEW)                                                                                                                                                         | `python3 -B notes/cc900-c-subcpu-2026-11-16/ready_check.py [--new]`                              |
+| `never_tried.py`      | which pool candidates no probe has compiled yet, largest first, with totals per pool                                                                                                                                                                  | `python3 -B notes/cc900-c-subcpu-2026-11-16/never_tried.py`                                      |
+| `crash_check.py`      | which C files of an oracle run made V4.23 crash (page fault in the log, truncated listing)                                                                                                                                                            | `python3 -B notes/cc900-c-subcpu-2026-11-16/crash_check.py RUN_DIR ['sub_*']`                    |
 | `helper-generators/`  | the helpers' generators of their probe forms, and their diff tools `idiff.py` / `ctx.py` (instruction-level diff of a listing function against the ROM); `fpconst.py` prints every FP constant of the payload with an exact C literal (`fpconst.txt`) | read each file's head; run from the repository root                                              |
 
 ## Where the helpers stopped (round 11, 2026-11-16)

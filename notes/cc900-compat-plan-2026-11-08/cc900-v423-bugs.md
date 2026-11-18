@@ -208,4 +208,17 @@ Add every new one here, in the commit that finds it.
   parameter taken (sub_C_7d).  The same spellings without `__IZ` compile (sub_C_7g, sub_C_7h), and so does a
   `register` pointer local (sub_B_7f, sub_C_7f).  Whether the compiler or its use of Wine is at fault is open.
 - **Evidence:** oracle runs 2026-11-16-62-sub-r4, 2026-11-16-65-sub-r5 and 2026-11-16-79-sub-r7.  Found by lane_sub.
+- **Again, 2026-11-18 (run 2026-11-18-18-sub-r21a):** helper AI's sub_AI_20a/b/c.c were lost whole.  V4.23's log
+  shows a page fault (read access to 0x630 this time, not 0) and the listing is truncated.  Each file's
+  ToneGen_ReadPitch_AndScale names `__IZ`, keeps a pointer local `q` set to a constant address, and multiplies
+  `__IZ` by a long, so a runtime call happens while `__IZ` is live.  The same files without that one function
+  (sub_AI_21a/b/c.c, run 2026-11-18-19-sub-r21b-staged) compiled, and six of their functions match the ROM.
+  Reproducer: `corpus/firmware/sub_bug12_r1.c` is that function alone; `_r2` replaces `__IZ` with a `register`
+  local (the control), `_r3` uses an int multiply (no runtime call), and `_r4` drops `q`.  Run
+  2026-11-18-32-sub-r21g-staged (`notes/cc900-c-subcpu-2026-11-16/crash_check.py RUN 'sub_bug12*'`): r1, r3 and r4
+  CRASH, r2 compiles.  So neither the long multiply nor the pointer local is needed: `__IZ` in this function alone
+  crashes V4.23, though ToneGen_WriteVoice_Direct, also `__IZ` around inline `nop` / `jr $+2`, compiles and
+  matches.  What separates the two is still open (next probes: drop the inline-asm lines, then the `& 0x7fff`
+  read through the computed address).
+- **Workaround:** keep each `__IZ` probe in a file of its own, so a crash loses nothing else.
 - **Model:** not applicable (paused); the C lanes use `__IZ` instead.

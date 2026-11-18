@@ -281,93 +281,13 @@ VoiceSlot_UpdateNoteSource:	.include "includes/generated/cc900/VoiceSlot_UpdateN
 	.set	VoiceSlot_UpdateNoteSource_UseDE_WA, VoiceSlot_UpdateNoteSource + 131
 	.set	VoiceSlot_UpdateNoteSource_Return, VoiceSlot_UpdateNoteSource + 154
 
-Voice_ScanSlots_ReassignSources:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 8), a
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0xC
-	lda xbc, (9446:16)
-	exts xwa
-	add xwa, xbc
-	ld (xsp + 4), xwa
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jrl nc, Voice_ScanSlots_Return
-
-Voice_ScanSlots_LoopBody:
-	ldto_berp A, 0xFB
-	extz wa
-	ld bc, wa
-	inc 8, bc
-	ld xwa, (xsp + 4)
-	ld	l, (xwa+bc)
-	ld a, l
-	cp a, 0xC0
-	jrl nc, Voice_ScanSlots_LoopNext
-	ld a, l
-	extz wa
-	muls wa, 0x5
-	lda xbc, (8486:16)
-	lda	xde, (xbc+wa)
-	ld a, (xde + 4)
-	cp a, (xsp + 8)
-	jr nz, Voice_ScanSlots_MarkSlotInactive
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 4)
-	ld	a, (xwa+bc)
-	cp a, (xsp + 8)
-	jr z, Voice_ScanSlots_PromoteSource
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 4)
-	ld	a, (xwa+bc)
-	ld (xde + 4), a
-	jr Voice_ScanSlots_MarkSlotInactive
-
-Voice_ScanSlots_PromoteSource:
-	ld (xde + 4), 0xFF
-	ldfr_berp L, 0xF8
-	extz iz
-	ld a, l
-	extz wa
-	calr Quad_Decode_A_To_L
-	ld c, l
-	extz bc
-	ld wa, iz
-	ld de, bc
-	ldw bc, 0x1A
-	calr VoiceSlot_UpdateNoteSource
-
-Voice_ScanSlots_MarkSlotInactive:
-	ld a, (xsp + 8)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	calr VoiceState_SwapSlot_DE_BC
-	ldto_berp A, 0xFB
-	extz wa
-	ld bc, wa
-	inc 8, bc
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), 0xff
-
-Voice_ScanSlots_LoopNext:
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jrl c, Voice_ScanSlots_LoopBody
-
-Voice_ScanSlots_Return:
-	pop xiz
-	inc 6, xsp
-	ret
+Voice_ScanSlots_ReassignSources:	.include "includes/generated/cc900/Voice_ScanSlots_ReassignSources.s"	; C: cc900/voice_params_and_tvf_ae_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ScanSlots_LoopBody, Voice_ScanSlots_ReassignSources + 35
+	.set	Voice_ScanSlots_PromoteSource, Voice_ScanSlots_ReassignSources + 125
+	.set	Voice_ScanSlots_MarkSlotInactive, Voice_ScanSlots_ReassignSources + 155
+	.set	Voice_ScanSlots_LoopNext, Voice_ScanSlots_ReassignSources + 192
+	.set	Voice_ScanSlots_Return, Voice_ScanSlots_ReassignSources + 201
 
 VoiceState_FullReset:
 	push xiz
@@ -764,57 +684,17 @@ ExtVoice_Alloc_StreamSlot_Return:
 ; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its
 ; own bytes, the few llvm-mc cannot spell stay .byte with unidasm's reading as a comment).
 ; Renamed from VoiceState_OpaqueData1.
-Voice_MakePartHandle:
-	dec	2, xsp
-	ld	(xsp), c
-	andmi8	(xsp), 63
-	cp	a, 64
-	jr	c, Voice_MakePartHandle_NoRefresh
-	ld	a, (xsp)
-	extz	wa
-	sll	wa, 8
-	ld	hl, wa
-	or	hl, 255
-	jr	Voice_MakePartHandle_Epilogue
-Voice_MakePartHandle_NoRefresh:
-	extz	wa
-	calr	Voice_ScanSlots_ReassignSources
-	ld	a, (xsp)
-	extz	wa
-	sll	wa, 8
-	ld	hl, wa
-	or	hl, 255
-Voice_MakePartHandle_Epilogue:
-	inc	2, xsp
-	ret
+Voice_MakePartHandle:	.include "includes/generated/cc900/Voice_MakePartHandle.s"	; C: cc900/voice_params_and_tvf_ah_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_MakePartHandle_NoRefresh, Voice_MakePartHandle + 27
+	.set	Voice_MakePartHandle_Epilogue, Voice_MakePartHandle + 45
 ; Stack-argument front end that turns a (part, selector, key) triple into an assigned voice
 ; slot: saves C and A in a local frame, calls VOICE_PART_HANDLE_MAKE (0x02197C) with
 ; C = E, then calls ExtVoice_Alloc_StreamSlot (0x02177E) with WA = the saved A, C = the saved C and
 ; E = the caller's argument at (XSP+8). Returns with 'retd 2', i.e. it pops one word of
 ; caller-pushed argument. No caller found by branch-target scan (candidate for a call
 ; through one of the dispatch tables).
-Voice_Part_Assign:
-	dec	4, xsp
-	ld	(xsp), c
-	ld	(xsp+2), a
-	ld	a, (xsp)
-	extz	wa
-	ld	c, e
-	extz	bc
-	calr	Voice_MakePartHandle
-	ld	a, (xsp+2)
-	ld	l, a
-	extz	hl
-	ld	a, (xsp)
-	ld	c, a
-	extz	bc
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	calr	ExtVoice_Alloc_StreamSlot
-	inc	4, xsp
-	retd	2
+Voice_Part_Assign:	.include "includes/generated/cc900/Voice_Part_Assign.s"	; C: cc900/voice_params_and_tvf_ah_21a.c
 ; Builds a 0xFFFF-terminated word list at 0x00286B describing the up-to-four sounding
 ; sub-slots of one tone entry.
 ; Inputs: A = tone/part row index, C = a group id, E = a group mask (the routine keeps
@@ -3146,214 +3026,29 @@ Voice_Env_UpdateVelocityCounters:	.include "includes/generated/cc900/Voice_Env_U
 ; 0x04137F + part*0x011F. If the resulting predicate L is non-zero,
 ; Instrument_LookupProgram_HiNibble installs the program byte.
 ; Callers 0x02C72B, 0x02C82F, 0x02C933, 0x02CA9C.
-Voice_Env_ApplyVelocity_Type0:
-	dec 2, xsp
-	ld (xsp), a
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x255f:24)
-	ld	(xde+wa), 0x00
-	ld a, (xsp)
-	cp a, 2:i3
-	jrl z, Voice_Env_ApplyVelocity_Type2
-	cp a, 1:i3
-	jr z, Voice_Env_VelocityDispatch_c1
-	cp a, 0:i3
-	jrl nz, Voice_Env_ApplyVelocity_Return
-
-; Sub-case selector for the type-0/1 variant.
-Voice_Env_VelocityDispatch_c1:
-	cp c, 3:i3
-	jr z, Voice_Env_VelocityDispatch_c3
-	cp c, 2:i3
-	jr z, Voice_Env_VelocityDispatch_c2
-	cp c, 1:i3
-	jr z, Voice_Env_VelocityDispatch_c1_Bit1
-	cp c, 0:i3
-	jrl nz, Voice_Env_VelocityDispatch_ClearFlag
-	bit 3, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_VelocityDispatch_c0_NoBit3
-	ld l, 0x0:opc
-	jrl Voice_Env_VelocityDispatch_Gate
-
-; Case 0, config bit3 clear: predicate = bit0 of the 0x04134B config byte.
-Voice_Env_VelocityDispatch_c0_NoBit3:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Bit0_L
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 1: test bit3 of the 0x04134B config byte.
-Voice_Env_VelocityDispatch_c1_Bit1:
-	bit 3, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_VelocityDispatch_c1_NoBit3
-	ld l, 0x0:opc
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 1, bit3 clear: predicate = BitTest_Mode2_L of the config byte.
-Voice_Env_VelocityDispatch_c1_NoBit3:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Mode2_L
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 2: test bit3 of the per-part byte at 0x04137F + part*0x011F.
-Voice_Env_VelocityDispatch_c2:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	3, (xbc+wa)
-	jr z, Voice_Env_VelocityDispatch_c2_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 2, bit3 clear: predicate = bit0 of that per-part byte.
-Voice_Env_VelocityDispatch_c2_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Bit0_L_v2
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 3: test bit3 of the per-part byte.
-Voice_Env_VelocityDispatch_c3:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	3, (xbc+wa)
-	jr z, Voice_Env_VelocityDispatch_c3_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 3, bit3 clear: predicate = BitTest_Mode2_L of that per-part byte.
-Voice_Env_VelocityDispatch_c3_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Mode2_L_v2
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Unknown sub-case: predicate = 0.
-Voice_Env_VelocityDispatch_ClearFlag:
-	ld l, 0x0:opc
-
-; Gate: if the predicate is non-zero install the program byte via Instrument_LookupProgram_HiNibble (high nibble variant).
-Voice_Env_VelocityDispatch_Gate:
-	cp l, 0:i3
-	jrl z, Voice_Env_ApplyVelocity_Return
-	ld a, (xsp)
-	extz wa
-	calr Instrument_LookupProgram_HiNibble
-	jrl Voice_Env_ApplyVelocity_Return
-
-; VELOCITY-SWITCH DISPATCHER, TYPE 2. Identical structure to the type-0/1 dispatcher
-; but every flag test uses bit4 instead of bit3, and the gate calls
-; Instrument_LookupProgram_LoNibble (low nibble of the patch byte +0x2A).
-; Entered only by the A == 2 branch of Voice_Env_ApplyVelocity_Type0.
-Voice_Env_ApplyVelocity_Type2:
-	cp c, 3:i3
-	jr z, Voice_Env_Type2_c3
-	cp c, 2:i3
-	jr z, Voice_Env_Type2_c2
-	cp c, 1:i3
-	jr z, Voice_Env_Type2_c1
-	cp c, 0:i3
-	jrl nz, Voice_Env_Type2_ClearFlag
-	bit 4, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_Type2_c0_NoBit4
-	ld l, 0x0:opc
-	jrl Voice_Env_Type2_Gate
-
-; Case 0, bit4 clear: predicate = bit0 of the 0x04134B config byte.
-Voice_Env_Type2_c0_NoBit4:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Bit0_L
-	jr Voice_Env_Type2_Gate
-
-; Case 1: test bit4 of the 0x04134B config byte.
-Voice_Env_Type2_c1:
-	bit 4, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_Type2_c1_NoBit4
-	ld l, 0x0:opc
-	jr Voice_Env_Type2_Gate
-
-; Case 1, bit4 clear: predicate = BitTest_Mode2_L of the config byte.
-Voice_Env_Type2_c1_NoBit4:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Mode2_L
-	jr Voice_Env_Type2_Gate
-
-; Case 2: test bit4 of the per-part byte at 0x04137F + part*0x011F.
-Voice_Env_Type2_c2:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	4, (xbc+wa)
-	jr z, Voice_Env_Type2_c2_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_Type2_Gate
-
-; Case 2, bit4 clear: predicate = bit0 of that per-part byte.
-Voice_Env_Type2_c2_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Bit0_L_v2
-	jr Voice_Env_Type2_Gate
-
-; Case 3: test bit4 of the per-part byte.
-Voice_Env_Type2_c3:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	4, (xbc+wa)
-	jr z, Voice_Env_Type2_c3_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_Type2_Gate
-
-; Case 3, bit4 clear: predicate = BitTest_Mode2_L_v2 of that per-part byte.
-Voice_Env_Type2_c3_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Mode2_L_v2
-	jr Voice_Env_Type2_Gate
-
-; Unknown sub-case: predicate = 0.
-Voice_Env_Type2_ClearFlag:
-	ld l, 0x0:opc
-
-; Gate: install the program byte via Instrument_LookupProgram_LoNibble.
-Voice_Env_Type2_Gate:
-	cp l, 0:i3
-	jr z, Voice_Env_ApplyVelocity_Return
-	ld a, (xsp)
-	extz wa
-	calr Instrument_LookupProgram_LoNibble
-
-; Shared return for both dispatchers.
-Voice_Env_ApplyVelocity_Return:
-	inc 2, xsp
-	ret
+Voice_Env_ApplyVelocity_Type0:	.include "includes/generated/cc900/Voice_Env_ApplyVelocity_Type0.s"	; C: cc900/voice_params_and_tvf_ah_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Env_VelocityDispatch_c1, Voice_Env_ApplyVelocity_Type0 + 39
+	.set	Voice_Env_VelocityDispatch_c0_NoBit3, Voice_Env_ApplyVelocity_Type0 + 68
+	.set	Voice_Env_VelocityDispatch_c1_Bit1, Voice_Env_ApplyVelocity_Type0 + 80
+	.set	Voice_Env_VelocityDispatch_c1_NoBit3, Voice_Env_ApplyVelocity_Type0 + 91
+	.set	Voice_Env_VelocityDispatch_c2, Voice_Env_ApplyVelocity_Type0 + 103
+	.set	Voice_Env_VelocityDispatch_c2_Trigger, Voice_Env_ApplyVelocity_Type0 + 127
+	.set	Voice_Env_VelocityDispatch_c3, Voice_Env_ApplyVelocity_Type0 + 152
+	.set	Voice_Env_VelocityDispatch_c3_Trigger, Voice_Env_ApplyVelocity_Type0 + 176
+	.set	Voice_Env_VelocityDispatch_ClearFlag, Voice_Env_ApplyVelocity_Type0 + 201
+	.set	Voice_Env_VelocityDispatch_Gate, Voice_Env_ApplyVelocity_Type0 + 203
+	.set	Voice_Env_ApplyVelocity_Type2, Voice_Env_ApplyVelocity_Type0 + 218
+	.set	Voice_Env_Type2_c0_NoBit4, Voice_Env_ApplyVelocity_Type0 + 247
+	.set	Voice_Env_Type2_c1, Voice_Env_ApplyVelocity_Type0 + 259
+	.set	Voice_Env_Type2_c1_NoBit4, Voice_Env_ApplyVelocity_Type0 + 270
+	.set	Voice_Env_Type2_c2, Voice_Env_ApplyVelocity_Type0 + 282
+	.set	Voice_Env_Type2_c2_Trigger, Voice_Env_ApplyVelocity_Type0 + 306
+	.set	Voice_Env_Type2_c3, Voice_Env_ApplyVelocity_Type0 + 331
+	.set	Voice_Env_Type2_c3_Trigger, Voice_Env_ApplyVelocity_Type0 + 355
+	.set	Voice_Env_Type2_ClearFlag, Voice_Env_ApplyVelocity_Type0 + 380
+	.set	Voice_Env_Type2_Gate, Voice_Env_ApplyVelocity_Type0 + 382
+	.set	Voice_Env_ApplyVelocity_Return, Voice_Env_ApplyVelocity_Type0 + 393
 
 ; COMPUTE THE PITCH OF ONE VOICE (the main pitch accumulator).
 ; In: XWA = voice work record. Locals: (XSP+0x08) = record, (XSP+0x02) = (record+0x1F)
@@ -4974,104 +4669,10 @@ Voice_StereoLevel_PackCh23:
 ; both bytes are negated before scaling (Detune_ScaleUnsigned for +7, Detune_ScaleSymmetric
 ; for +8), so the routine has a mirrored positive arm at 0x024911. The scaled values are
 ; then combined with tonerec+18 and the note number (voice+12) in the tail.
-Voice_PortaLevel_Compute:
-	lda xsp, (xsp - 12)
-	pushw iz
-	ld (xsp + 10), xwa
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	cp (xwa + 7), 0x0
-	jr ge, Voice_PortaLevel_Compute_Positive
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 7)
-	exts wa
-	cpl wa
-	inc 1, wa
-	calr Detune_ScaleUnsigned
-	ld (xsp + 8), hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 8)
-	exts wa
-	cpl wa
-	inc 1, wa
-	calr Detune_ScaleSymmetric
-	ld (xsp + 6), hl
-	jr Voice_PortaLevel_ScaleAndPack
-
-; Positive/zero arm: scale tonerec+7 and tonerec+8 directly, no negation.
-Voice_PortaLevel_Compute_Positive:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 7)
-	exts wa
-	calr Detune_ScaleUnsigned
-	ld (xsp + 8), hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 8)
-	exts wa
-	calr Detune_ScaleSymmetric
-	ld (xsp + 6), hl
-
-; Shared tail: scales by tonerec+18 against the note number, packs and stores the two words
-; to 0x0451E2 (TG reg 0x500) and 0x0451EA (TG reg 0x8C0).
-Voice_PortaLevel_ScaleAndPack:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 18)
-	ld e, a
-	exts de
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	ld wa, de
-	ld de, 6:i3
-	calr PitchBend_Scale
-	add (xsp + 8), hl
-	ld wa, (xsp + 8)
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld (xsp + 8), hl
-	ldw iz, 0x7F
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 72)
-	ld e, a
-	exts de
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	ld wa, de
-	ld de, 6:i3
-	calr PitchBend_Scale
-	add iz, hl
-	ld wa, iz
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	ld wa, iz
-	ld bc, wa
-	ld b, 0x0:opc
-	ld wa, (xsp + 8)
-	sll wa, 8
-	or wa, bc
-	ld (Payload_Bss_Start+0x636c:24), wa
-	ld xwa, (xsp + 2)
-	ld c, (xwa + 61)
-	ld xwa, (xsp + 2)
-	add c, (xwa + 62)
-	ld a, c
-	exts wa
-	calr Detune_ScaleSymmetric
-	ld h, 0x0:opc
-	ld wa, (xsp + 6)
-	sll wa, 8
-	or wa, hl
-	ld (Payload_Bss_Start+0x6374:24), wa
-	popw iz
-	lda xsp, (xsp + 12)
-	ret
+Voice_PortaLevel_Compute:	.include "includes/generated/cc900/Voice_PortaLevel_Compute.s"	; C: cc900/voice_params_and_tvf_ae_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_PortaLevel_Compute_Positive, Voice_PortaLevel_Compute + 60
+	.set	Voice_PortaLevel_ScaleAndPack, Voice_PortaLevel_Compute + 88
 
 ; Zeroes the whole level half of the staging block: 0x0451EA, 0x0451E2, 0x0451EC,
 ; 0x0451EE, 0x0451F0, 0x0451F2, 0x0451F4, 0x0451F6, 0x0451DC, 0x0451DE (TG regs 0x8C0,
@@ -5109,176 +4710,16 @@ Voice_Level_ClearAllOutputRegs:	.include "includes/generated/cc900/Voice_Level_C
 ; slotrec+1, +3 and +7.
 ; The direct/bypass path is chosen when the group index == 2, or the operator index == 0,
 ; or the byte at 0x0451A7 == 0xF5 (a global "raw parameters" mode flag).
-Voice_OpSlot_WriteParams:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 12), xbc
-	ld l, (xsp + 22)
-	ld c, e
-	extz bc
-	ld ix, bc
-	sla ix, 2
-	ld c, l
-	extz bc
-	sla bc, 4
-	ld iy, bc
-	add iy, ix
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	lda	xbc, (xbc+iy)
-	ld (xsp + 4), xbc
-	ld xbc, 0x2B
-	add (xsp + 4), xbc
-	ld c, l
-	extz bc
-	muls bc, 0x9
-	ld iy, bc
-	ld c, (xsp + 20)
-	extz bc
-	muls bc, 0x1B
-	lda xix, (Payload_Bss_Start+0x53d8:24)
-	exts xbc
-	add xbc, xix
-	lda	xiz, (xbc+iy)
-	ld c, e
-	extz bc
-	ld ix, bc
-	sla ix, 2
-	ld c, l
-	extz bc
-	sla bc, 4
-	ld iy, bc
-	add iy, ix
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+iy)
-	ld (xsp + 8), xwa
-	ld xwa, 0x27
-	add (xsp + 8), xwa
-	cp l, 2:i3
-	jr z, Voice_OpSlot_WriteParams_Direct
-	cp e, 0:i3
-	jr nz, Voice_OpSlot_WriteParams_Direct
-	cp (Payload_Bss_Start+0x6331:24), 0xf5
-	jr z, Voice_OpSlot_WriteParams_Direct
-	ld xwa, (xsp + 12)
-	ld a, (xwa + 104)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa)
-	extz wa
-	add wa, bc
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr ClampS16_WA_Short
-	ld (xiz + 1), l
-	ld xwa, (xsp + 12)
-	ld a, (xwa + 105)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 1)
-	extz wa
-	add wa, bc
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr ClampS16_WA_Short
-	ld (xiz + 3), l
-	ld xwa, (xsp + 12)
-	ld a, (xwa + 106)
-	ld c, a
-	exts bc
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 3)
-	and a, 0x3F
-	extz wa
-	add wa, bc
-	ldw bc, 0x1E
-	ld de, 0:i3
-	calr ClampS16_WA_Short
-	ld (xiz + 7), l
-	jr Voice_OpSlot_ApplySustainPedal
-
-; Bypass path: copy the three parameter bytes into slotrec+1/+3/+7 with no patch offset
-; and no clamping.
-Voice_OpSlot_WriteParams_Direct:
-	ld xwa, (xsp + 4)
-	ld a, (xwa)
-	ld (xiz + 1), a
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 1)
-	ld (xiz + 3), a
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 3)
-	and a, 0x3F
-	ld (xiz + 7), a
-
-; If the sustain bit is set in the per-voice flag word, forces the release segment of this
-; slot record to the sustain-pedal value instead of the patch value.
-Voice_OpSlot_ApplySustainPedal:
-	ld xwa, (xsp + 8)
-	bitm 1, (xwa)
-	jr z, Voice_OpSlot_SustainRelease_Set
-	ld xwa, (xsp + 8)
-	ld a, (xwa + 3)
-	ld (xiz + 2), a
-	ld (xiz + 7), 0x0
-	jr Voice_OpSlot_ApplySostenuto
-
-; Two-instruction store of the sustain-pedal release value.
-Voice_OpSlot_SustainRelease_Set:
-	ld (xiz + 2), 0x80
-
-; Same test/override for the sostenuto pedal.
-Voice_OpSlot_ApplySostenuto:
-	ld xwa, (xsp + 8)
-	bitm 3, (xwa)
-	jr z, Voice_OpSlot_SostenutoRelease_Set
-	ld xwa, (xsp + 8)
-	ld a, (xwa + 2)
-	ld (xiz + 4), a
-	ld (xiz + 7), 0x0
-	jr Voice_OpSlot_CopyWaveformBits
-
-; Two-instruction store of the sostenuto release value.
-Voice_OpSlot_SostenutoRelease_Set:
-	ld (xiz + 4), 0x80
-
-; Copies the waveform-select bits from the patch record into the slot record.
-Voice_OpSlot_CopyWaveformBits:
-	ld xwa, (xsp + 4)
-	bitm 7, (xwa + 2)
-	jr z, Voice_OpSlot_ClearWaveformBit5
-	setm 5, (xiz)
-	jr Voice_OpSlot_PackEnvelopeBits
-
-; Single `res 5` on the waveform byte.
-Voice_OpSlot_ClearWaveformBit5:
-	resm 5, (xiz)
-
-; Final packing of the envelope-shape bit-field into the slot record; restores XIZ and returns.
-Voice_OpSlot_PackEnvelopeBits:
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 3)
-	and a, 0xC0
-	extz wa
-	srl wa, 6
-	andmi8 (xiz), 0xFC
-	or (xiz), a
-	ld xwa, (xsp + 4)
-	ld a, (xwa + 2)
-	res 7, a
-	ld (xiz + 5), a
-	pop xiz
-	lda xsp, (xsp + 12)
-	retd 0x4
+Voice_OpSlot_WriteParams:	.include "includes/generated/cc900/Voice_OpSlot_WriteParams.s"	; C: cc900/voice_params_and_tvf_ah_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_OpSlot_WriteParams_Direct, Voice_OpSlot_WriteParams + 261
+	.set	Voice_OpSlot_ApplySustainPedal, Voice_OpSlot_WriteParams + 290
+	.set	Voice_OpSlot_SustainRelease_Set, Voice_OpSlot_WriteParams + 312
+	.set	Voice_OpSlot_ApplySostenuto, Voice_OpSlot_WriteParams + 316
+	.set	Voice_OpSlot_SostenutoRelease_Set, Voice_OpSlot_WriteParams + 338
+	.set	Voice_OpSlot_CopyWaveformBits, Voice_OpSlot_WriteParams + 342
+	.set	Voice_OpSlot_ClearWaveformBit5, Voice_OpSlot_WriteParams + 354
+	.set	Voice_OpSlot_PackEnvelopeBits, Voice_OpSlot_WriteParams + 356
 
 ExtVoice_Build_SlotRegisters:
 	lda xsp, (xsp - 22)

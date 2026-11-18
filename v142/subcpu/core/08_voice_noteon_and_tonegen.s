@@ -2274,18 +2274,7 @@ ToneGen_ReadPitch_Return:
 ; WA = part index. Computes 0x04136E + part*0x11F via Math_Multiply32(0x11F), dereferences the
 ; long stored there (the tone-header pointer), reads header byte +0x10, masks 0xC0 and returns
 ; HL = 1 when the part mode is 0x00, else 0 (scc Z,HL). Unreferenced in v142.
-CheckStatusBits_Zero:
-	extz	xwa
-	ld	xbc, 0x11f
-	call	Math_Multiply32
-	lda	xwa, (Part_PatchRecord_Ptr:24)
-	add	xwa, xhl
-	ld	xwa, (xwa)
-	ld	a, (xwa+16)
-	and	a, 0xc0
-	cp	a, 0:i3
-	scc16	z, hl
-	ret
+CheckStatusBits_Zero:	.include "includes/generated/cc900/CheckStatusBits_Zero.s"	; C: cc900/voice_noteon_and_tonegen_ai_21a.c
 
 ; Identical predicate for part mode 0x40. Called from 0x0317F2 and 0x035BC8 -- the only member
 ; of this family of four with live callers.
@@ -3212,115 +3201,12 @@ VoiceAlloc_WithRoutingFlag:	.include "includes/generated/cc900/VoiceAlloc_WithRo
 ; Callers verified by disassembly: 0x02E8C4 and 0x02E8D9 (both with BC = 0), and the four
 ; opcode-group cases at 0x02FB65, 0x02FB75, 0x02FB85, 0x02FB95 (slots 0..3).
 ; ★ Renamed 2026-09-25 from VoiceAlloc_WithRoutingFlag_ExtData: header: ALGORITHM GROUP 0 APPLY; siblings are VoiceAlloc_Apply_Algo_Group1/2.
-VoiceAlloc_Apply_Algo_Group0:
-	lda	xsp, (xsp-10)
-	push xiz
-	ld	(xsp+10), c
-	ld	(xsp+12), a
-	ld	a, (xsp+12)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+10)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, bc
-	ld	bc, 0:i3
-	call	AlgoFlag_Write
-	ld	a, (xsp+12)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+10)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, bc
-	ld	bc, 0:i3
-	call	AlgoFlag_Write_Bit3
-	ldib_erp	251, 0
-	cpib_erp	251, 4
-	jr	nc, VoiceAlloc_Apply_Grp0_BuildList
-; Body of the four-iteration EFF_RoutingInit loop, counter in QIZH.
-VoiceAlloc_Apply_Grp0_RoutingLoop:
-	ld	a, (xsp+12)
-	ld	e, a
-	extz	de
-	ldto_berp	a, 251
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	EFF_RoutingInit
-	incb_erp	251, 1
-	cpib_erp	251, 4
-	jr	c, VoiceAlloc_Apply_Grp0_RoutingLoop
-; Routing done: call Voice_BuildOutputList and stash the list pointer at (XSP+0x04),
-; cursor at (XSP+0x08).
-VoiceAlloc_Apply_Grp0_BuildList:
-	ld	a, (xsp+12)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+10)
-	extz	wa
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp+4), xhl
-	ldw	(xsp+8), 0
-	jr	t, VoiceAlloc_Apply_Grp0_VoiceLoop_Test
-; Per-voice body: fetch list[cursor] into IZ, write the op-slot parameters, compute both
-; envelopes and push the result to the tone generator.
-VoiceAlloc_Apply_Grp0_VoiceLoop:
-	ld	wa, (xsp+8)
-	extz	xwa
-	add	xwa, xwa
-	add	xwa, (xsp+4)
-	ld	iz, (xwa)
-	ldib_erp	249, 0
-	ld	a, (xsp+12)
-	ld	l, a
-	extz	hl
-	ld	a, (xsp+12)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	lda	xbc, (xbc+wa)
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	pushw 0
-	ldto_berp	a, 248
-	extz	wa
-	pushw wa
-	ld	wa, hl
-	call	Voice_OpSlot_WriteParams
-	ldto_berp	a, 248
-	extz	wa
-	call	EGEnv_Compute_A
-	ld	(Payload_Bss_Start+0x6396:24), hl
-	ldto_berp	a, 248
-	extz	wa
-	call	EGEnv_Compute_A_Simple
-	ld	(Payload_Bss_Start+0x6392:24), hl
-	ld	wa, iz
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParams_56
-	incw	1, (xsp+8)
-; Loop condition: re-read list[cursor] and continue while (word & 0xFF) < 0x80.
-VoiceAlloc_Apply_Grp0_VoiceLoop_Test:
-	ld	wa, (xsp+8)
-	extz	xwa
-	add	xwa, xwa
-	add	xwa, (xsp+4)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 128
-	jr	c, VoiceAlloc_Apply_Grp0_VoiceLoop
-	pop xiz
-	lda	xsp, (xsp+10)
-	ret
+VoiceAlloc_Apply_Algo_Group0:	.include "includes/generated/cc900/VoiceAlloc_Apply_Algo_Group0.s"	; C: cc900/voice_noteon_and_tonegen_ai_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_Apply_Grp0_RoutingLoop, VoiceAlloc_Apply_Algo_Group0 + 66
+	.set	VoiceAlloc_Apply_Grp0_BuildList, VoiceAlloc_Apply_Algo_Group0 + 96
+	.set	VoiceAlloc_Apply_Grp0_VoiceLoop, VoiceAlloc_Apply_Algo_Group0 + 130
+	.set	VoiceAlloc_Apply_Grp0_VoiceLoop_Test, VoiceAlloc_Apply_Algo_Group0 + 235
 ; ALGORITHM GROUP 1 APPLY.  Same five steps as 0x02F52A with group = 1 throughout:
 ; AlgoFlag_Write(...,BC=1), AlgoFlag_Write_Bit3(...,BC=1), EFF_RoutingInit(...,DE=1),
 ; Voice_BuildOutputList with the slot number OR 4 (`set 2,WA`), Voice_OpSlot_WriteParams
@@ -3328,224 +3214,22 @@ VoiceAlloc_Apply_Grp0_VoiceLoop_Test:
 ; -> 0x045206, ToneGen_WriteExtParams_15 (0x02DC50).
 ; ★ Its voice-list loop terminates on (word & 0xFF) >= 0x40, not >= 0x80 like the other two.
 ; Callers: opcodes 0x2F..0x32 (0x02FBA5..0x02FBD5).
-VoiceAlloc_Apply_Algo_Group1:
-	dec	8, xsp
-	push xiz
-	ld	(xsp+8), c
-	ld	(xsp+10), a
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+8)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, bc
-	ld	bc, 1:i3
-	call	AlgoFlag_Write
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+8)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, bc
-	ld	bc, 1:i3
-	call	AlgoFlag_Write_Bit3
-	ldib_erp	251, 0
-	cpib_erp	251, 4
-	jr	nc, VoiceAlloc_Apply_Grp1_BuildList
-; Four-iteration EFF_RoutingInit loop with DE = 1.
-VoiceAlloc_Apply_Grp1_RoutingLoop:
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ldto_berp	a, 251
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 1:i3
-	call	EFF_RoutingInit
-	incb_erp	251, 1
-	cpib_erp	251, 4
-	jr	c, VoiceAlloc_Apply_Grp1_RoutingLoop
-; Voice_BuildOutputList with selector = slot | 4.
-VoiceAlloc_Apply_Grp1_BuildList:
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+8)
-	extz	wa
-	set	2, wa
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp+4), xhl
-	ld	qiz, 0
-	jr	t, VoiceAlloc_Apply_Grp1_VoiceLoop_Test
-; Per-voice body for group 1.
-VoiceAlloc_Apply_Grp1_VoiceLoop:
-	ld	wa, qiz
-	extz	xwa
-	add	xwa, xwa
-	add	xwa, (xsp+4)
-	ld	iz, (xwa)
-	ldib_erp	249, 0
-	ld	a, (xsp+10)
-	ld	l, a
-	extz	hl
-	ld	a, (xsp+10)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	lda	xbc, (xbc+wa)
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	pushw 1
-	ldto_berp	a, 248
-	extz	wa
-	pushw wa
-	ld	wa, hl
-	call	Voice_OpSlot_WriteParams
-	ldto_berp	a, 248
-	extz	wa
-	call	EGEnv_Compute_B
-	ld	(Payload_Bss_Start+0x638e:24), hl
-	ldto_berp	a, 248
-	extz	wa
-	call	EGEnv_Compute_B_Simple
-	ld	(Payload_Bss_Start+0x6390:24), hl
-	ld	wa, iz
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParams_15
-	inc	1, qiz
-; Loop condition: continue while (list word & 0xFF) < 0x40.
-VoiceAlloc_Apply_Grp1_VoiceLoop_Test:
-	ld	wa, qiz
-	extz	xwa
-	add	xwa, xwa
-	add	xwa, (xsp+4)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 64
-	jr	c, VoiceAlloc_Apply_Grp1_VoiceLoop
-	pop xiz
-	inc	8, xsp
-	ret
+VoiceAlloc_Apply_Algo_Group1:	.include "includes/generated/cc900/VoiceAlloc_Apply_Algo_Group1.s"	; C: cc900/voice_noteon_and_tonegen_ai_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_Apply_Grp1_RoutingLoop, VoiceAlloc_Apply_Algo_Group1 + 65
+	.set	VoiceAlloc_Apply_Grp1_BuildList, VoiceAlloc_Apply_Algo_Group1 + 95
+	.set	VoiceAlloc_Apply_Grp1_VoiceLoop, VoiceAlloc_Apply_Algo_Group1 + 130
+	.set	VoiceAlloc_Apply_Grp1_VoiceLoop_Test, VoiceAlloc_Apply_Algo_Group1 + 235
 ; ALGORITHM GROUP 2 APPLY.  Group = 2 throughout; Voice_BuildOutputList selector = slot | 8
 ; (`set 3,WA`); per voice it calls Voice_OpSlot_WriteParams(group 2), Voice_Freq_WriteLeft
 ; (0x023043), Voice_Freq_WriteRight (0x02315F) and ToneGen_WriteExtParams_15_Banked (0x02DD6D).
 ; Loop terminator (word & 0xFF) >= 0x80.  Callers: opcodes 0x33..0x36 (0x02FBE5..0x02FC15).
-VoiceAlloc_Apply_Algo_Group2:
-	dec	8, xsp
-	push xiz
-	ld	(xsp+8), c
-	ld	(xsp+10), a
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+8)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, bc
-	ld	bc, 2:i3
-	call	AlgoFlag_Write
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+8)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, bc
-	ld	bc, 2:i3
-	call	AlgoFlag_Write_Bit3
-	ldib_erp	251, 0
-	cpib_erp	251, 4
-	jr	nc, VoiceAlloc_Apply_Grp2_BuildList
-; Four-iteration EFF_RoutingInit loop with DE = 2.
-VoiceAlloc_Apply_Grp2_RoutingLoop:
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ldto_berp	a, 251
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 2:i3
-	call	EFF_RoutingInit
-	incb_erp	251, 1
-	cpib_erp	251, 4
-	jr	c, VoiceAlloc_Apply_Grp2_RoutingLoop
-; Voice_BuildOutputList with selector = slot | 8.
-VoiceAlloc_Apply_Grp2_BuildList:
-	ld	a, (xsp+10)
-	ld	e, a
-	extz	de
-	ld	a, (xsp+8)
-	extz	wa
-	set	3, wa
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	ld	de, 0:i3
-	call	Voice_BuildOutputList
-	ld	(xsp+4), xhl
-	ld	qiz, 0
-	jr	t, VoiceAlloc_Apply_Grp2_VoiceLoop_Test
-; Per-voice body for group 2 (frequency writes rather than envelope writes).
-VoiceAlloc_Apply_Grp2_VoiceLoop:
-	ld	wa, qiz
-	extz	xwa
-	add	xwa, xwa
-	add	xwa, (xsp+4)
-	ld	iz, (xwa)
-	ldib_erp	249, 0
-	ld	a, (xsp+10)
-	ld	l, a
-	extz	hl
-	ld	a, (xsp+10)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	lda	xbc, (xbc+wa)
-	ld	a, (xsp+8)
-	ld	e, a
-	extz	de
-	pushw 2
-	ldto_berp	a, 248
-	extz	wa
-	pushw wa
-	ld	wa, hl
-	call	Voice_OpSlot_WriteParams
-	ldto_berp	a, 248
-	extz	wa
-	call	Voice_Freq_WriteLeft
-	ldto_berp	a, 248
-	extz	wa
-	call	Voice_Freq_WriteRight
-	ld	wa, iz
-	lda	xbc, (ToneGen_StagingBlock:24)
-	call	ToneGen_WriteExtParams_15_Banked
-	inc	1, qiz
-; Loop condition: continue while (list word & 0xFF) < 0x80.
-VoiceAlloc_Apply_Grp2_VoiceLoop_Test:
-	ld	wa, qiz
-	extz	xwa
-	add	xwa, xwa
-	add	xwa, (xsp+4)
-	ld	wa, (xwa)
-	and	wa, 255
-	cp	wa, 128
-	jr	c, VoiceAlloc_Apply_Grp2_VoiceLoop
-	pop xiz
-	inc	8, xsp
-	ret
+VoiceAlloc_Apply_Algo_Group2:	.include "includes/generated/cc900/VoiceAlloc_Apply_Algo_Group2.s"	; C: cc900/voice_noteon_and_tonegen_ai_22a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceAlloc_Apply_Grp2_RoutingLoop, VoiceAlloc_Apply_Algo_Group2 + 65
+	.set	VoiceAlloc_Apply_Grp2_BuildList, VoiceAlloc_Apply_Algo_Group2 + 95
+	.set	VoiceAlloc_Apply_Grp2_VoiceLoop, VoiceAlloc_Apply_Algo_Group2 + 130
+	.set	VoiceAlloc_Apply_Grp2_VoiceLoop_Test, VoiceAlloc_Apply_Algo_Group2 + 225
 ; Second command dispatcher.  Entry XWA = command record; part goes to QIZH.
 ; Stage 1 accepts opcodes 0x15..0x27 through AUDIO_CMD_EFFECTPARAM_JUMPTABLE (0x00FA76,
 ; base 0x02F86F); only every third opcode has a handler, and each handler forwards to

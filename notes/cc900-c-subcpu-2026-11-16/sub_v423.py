@@ -23,7 +23,7 @@ the function's own label.  The comparison is scripts/analysis/cc900/asm_vs_rom.p
 
 No Toshiba text is printed or written: names, sizes and verdicts only.  Run from the repository root.
 """
-import glob, hashlib, os, re, shutil, subprocess, sys
+import glob, hashlib, os, re, shutil, struct, subprocess, sys
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 CC = os.path.join(REPO, 'scripts', 'analysis', 'cc900')
@@ -44,6 +44,7 @@ OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
 LEDGER = os.path.join(REPO, 'notes', 'cc900-c-subcpu-2026-11-16', 'staged_v423.tsv')
 ORACLE = os.path.expanduser('~/compartilhado/cc900-oracle')
 FUNC_RE = re.compile(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
+FIMS_RE = re.compile(r'\bfims\(([-+]?[0-9.]+(?:[eE][-+]?\d+)?)\)')
 
 
 def rom_offset(addr):
@@ -143,7 +144,13 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
                  ('_fdiv_d', 'FP_ddiv'), ('_fcmp_d', 'FP_dcmp'), ('_fld_df', 'FP_ftod'), ('_fld_fd', 'FP_dtof'),
                  ('_fld_lf', 'FP_ftoi'), ('_pow', 'FP_pow'), ('_sin', 'FP_sin'), ('_cos', 'FP_cos'),
                  ('_tan', 'FP_tan'), ('_fabs', 'FP_fabs'), ('_exp', 'FP_exp'), ('_log', 'FP_log'),
-                 ('_frexp', 'FP_frexp'), ('_ldexp', 'FP_ldexp'), ('_modf', 'FP_modf')):
+                 ('_frexp', 'FP_frexp'), ('_ldexp', 'FP_ldexp'), ('_modf', 'FP_modf'),
+                 # helper AC's candidates from the routines' bodies (subcpu_fp_math.s headers), round 20
+                 ('_fld_fl', 'FP_SP_CallWithBuf8'), ('_fld_ful', 'FP_SP_CallWithBuf8b'),
+                 ('_fld_dl', 'FP_ScalarToDP'), ('_fld_dul', 'FP_DP_CallWithBuf12'), ('_fld_ld', 'FP_DP_DecodeToInt'),
+                 ('_fneg_f', 'FP_SP_CopyOrNegate4'), ('_fneg_d', 'FP_DP_CopyOrNegate8'),
+                 ('_fcmp_zf', 'FP_SP_CmpZero32'), ('_fcmp_zd', 'FP_DP_CmpZero64'),
+                 ('_fld_ff', 'FP_SP_Raw4Copy'), ('_fld_dd', 'FP_DP_Raw8Copy')):
         if os.environ.get('SUB_V423_NO_FP') is None:
             for k in (v, '.' + v, v.lstrip('_')):
                 alias.setdefault(k, t)
@@ -190,6 +197,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         # f_const data (a switch's jump table ...): the C file's `cc900-data: FUNCTION N = LABEL` places the N-th
         # object at the tree's LABEL, as the build does; the code is checked with that address (the table's own bytes
         # are checked by make gate, as in c_build_coverage.translate)
+        # asm900's `fims(3.0)` (a float constant as a 32-bit immediate, `ld xwa,0x40400000` in the ROM): to_llvm does
+        # not know it yet (a translator gap reported to lane_vmb, 2026-11-18); the checker writes the IEEE bits itself
+        lines = [FIMS_RE.sub(lambda m: '0x%08x' % struct.unpack('<I', struct.pack('<f', float(m.group(1))))[0], l)
+                 for l in lines]
         consts, _ = to_llvm.split_consts(lines)
         pl = places.get(bare, places.get(full, {}))
         to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and pl[k] in ref}
