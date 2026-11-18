@@ -23,7 +23,7 @@ the function's own label.  The comparison is scripts/analysis/cc900/asm_vs_rom.p
 
 No Toshiba text is printed or written: names, sizes and verdicts only.  Run from the repository root.
 """
-import glob, hashlib, os, re, shutil, subprocess, sys
+import glob, hashlib, os, re, shutil, struct, subprocess, sys
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 CC = os.path.join(REPO, 'scripts', 'analysis', 'cc900')
@@ -44,6 +44,7 @@ OPT_RE = re.compile(rb'cc900-options:([^*\n]*)')
 LEDGER = os.path.join(REPO, 'notes', 'cc900-c-subcpu-2026-11-16', 'staged_v423.tsv')
 ORACLE = os.path.expanduser('~/compartilhado/cc900-oracle')
 FUNC_RE = re.compile(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
+FIMS_RE = re.compile(r'\bfims\(([-+]?[0-9.]+(?:[eE][-+]?\d+)?)\)')
 
 
 def rom_offset(addr):
@@ -196,6 +197,10 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         # f_const data (a switch's jump table ...): the C file's `cc900-data: FUNCTION N = LABEL` places the N-th
         # object at the tree's LABEL, as the build does; the code is checked with that address (the table's own bytes
         # are checked by make gate, as in c_build_coverage.translate)
+        # asm900's `fims(3.0)` (a float constant as a 32-bit immediate, `ld xwa,0x40400000` in the ROM): to_llvm does
+        # not know it yet (a translator gap reported to lane_vmb, 2026-11-18); the checker writes the IEEE bits itself
+        lines = [FIMS_RE.sub(lambda m: '0x%08x' % struct.unpack('<I', struct.pack('<f', float(m.group(1))))[0], l)
+                 for l in lines]
         consts, _ = to_llvm.split_consts(lines)
         pl = places.get(bare, places.get(full, {}))
         to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and pl[k] in ref}

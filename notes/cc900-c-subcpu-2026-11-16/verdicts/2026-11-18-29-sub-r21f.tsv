@@ -1,0 +1,36 @@
+function	bytes	matches	best_diff
+AudioMod_Apply_Porta_Curve	179	sub_AG_21c@Xr sub_AG_22c@Xr	
+Audio_Cmd_ToneEdit_Field_Write_And_Reply	228	-	+20 sub_AI_22c@Xr
+Audio_Tick_ServiceVoices_B	506	sub_AG_21a@Xr sub_AG_22a@Xr	
+DSP_BiquadWarp_FP	620	-	+18 sub_AJ_21b@Xr
+DSP_FilterLUT_Fetch	745	-	+1 sub_AJ_21c@Xr
+DSP_MixerCoeff_Compute	250	-	+1 sub_AJ_21c@Xr
+DSP_ParamEQ_Curve_FP	1160	-	+32 sub_AJ_21c@Xr
+DSP_SetCoeff_RouteComplex	344	sub_AI_22a@Xr sub_AI_22b@Xr sub_AI_22c@Xr	
+DSP_SetCoeff_RouteWithCallback	305	-	+2 sub_AI_22c@Xr
+DSP_SetVoiceCoefficients	279	-	+119 sub_AI_22c@Xr
+DSP_VoiceParamReadWrite	242	sub_AI_22a@Xr sub_AI_22c@Xr	
+DSP_VoiceParam_Dispatch	151	-	+14 sub_AI_22c@Xr
+EFF_RoutingInit	414	-	+86 sub_AI_22c@Xr
+NoteOn_RoutePacket	403	-	+12 sub_AH_21c@Xr
+VoiceAlloc_Apply_Algo_Group2	251	sub_AI_22a@Xr sub_AI_22b@Xr sub_AI_22c@Xr	
+VoiceModWheel_DataTable_02A061	136	sub_AG_21a@Xr sub_AG_21b@Xr sub_AG_21c@Xr sub_AG_22a@Xr sub_AG_22c@Xr	
+VoiceState_FullReset	366	-	+9 sub_AH_21c@Xr
+Voice_Allocate_Type2	405	sub_AH_21a@Xr sub_AH_21c@Xr	
+Voice_BuildOutputList	177	-	+66 sub_AH_21c@Xr
+Voice_Build_PartSlot_List	176	-	+48 sub_AH_21c@Xr
+Voice_Build_SoundingVoiceList	178	-	+0 sub_AH_21b@Xr
+Voice_Calc_LevelPair_FixedAtk	318	-	+225 sub_AG_22c@Xr
+Voice_Calc_LevelPair_Full	760	sub_AG_21a@Xr sub_AG_21b@Xr sub_AG_22a@Xr	
+Voice_Calc_LevelPair_Mono	771	-	+65 sub_AG_22c@Xr
+Voice_Calc_LevelPair_PatchAtk	743	sub_AG_21a@Xr sub_AG_21b@Xr sub_AG_22a@Xr	
+Voice_Manager_PollBank	255	-	+33 sub_AH_21c@Xr
+Voice_NoteOn_Rhythm	243	-	+161 sub_AH_21c@Xr
+Voice_NoteOn_Type1	266	-	+146 sub_AH_21c@Xr
+Voice_NoteOn_Type2	409	-	+289 sub_AH_21c@Xr
+Voice_NoteOn_Type3	404	sub_AH_21a@Xr sub_AH_21b@Xr sub_AH_21c@Xr	
+Voice_OpSlot_WriteParams	394	sub_AH_21a@Xr sub_AH_21c@Xr	
+Voice_Part_Assign	48	sub_AH_21a@Xr sub_AH_21b@Xr sub_AH_21c@Xr	
+Voice_Step_ExprRamp	766	-	+20 sub_AG_21a@Xr
+Voice_TickNoteDecay	111	-	+13 sub_AG_22c@Xr
+Voice_UpdateAllLFO	429	sub_AG_21a@Xr sub_AG_21b@Xr sub_AG_21c@Xr sub_AG_22a@Xr sub_AG_22c@Xr	
