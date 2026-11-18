@@ -191,6 +191,7 @@ v140	v140/subcpu/cc900-staged/dsp_voice_params.c	39753968d7a617d55a9c2d0d70bb5e0
 v140	v140/subcpu/cc900-staged/dsp_voice_params_af_20a.c	e968a44e272b27f2402c5a7ae31bd6da43a60831a40a77e1a83f3fbde75e8bbd	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch3	370	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_af_20b.c	9da57e32329b86917fa651919f9655c0b61d4e29548057bf9a35fcd377c8087d	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch1	460	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_af_20b.c	9da57e32329b86917fa651919f9655c0b61d4e29548057bf9a35fcd377c8087d	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch2	430	MATCH
+v140	v140/subcpu/cc900-staged/dsp_voice_params_af_21a.c	19a9356d9243885a7288d44ba00351f52975a786536b44b7dc12a152bb92b0f7	Xr	2026-11-18-23-sub-r21e-staged	DSP_SetCoeff_MasterConfig	706	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	d68d789e222c7a4099fe82ccae37476ff3deaf711abe498a3f40ecc63889a54d	Xr	2026-11-18-21-sub-r21c-staged	Partial_Build_Present_Word	550	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	d68d789e222c7a4099fe82ccae37476ff3deaf711abe498a3f40ecc63889a54d	Xr	2026-11-18-21-sub-r21c-staged	RoutingFlag_Encode	263	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_21c.c	3f85d248b41a955ae75775ba0084608d95e75998810b264eb99ab490b0f18e2d	Xr	2026-11-18-21-sub-r21c-staged	VoiceBuf_TypeSelector_MatchEpilogue	144	MATCH
@@ -724,6 +725,7 @@ v141	v141/subcpu/cc900-staged/dsp_voice_params.c	59fa2ae62b4ed304418f13f96c7a1cf
 v141	v141/subcpu/cc900-staged/dsp_voice_params_af_20a.c	d261ae0ac5f7cce4aa2b469493597eca345f3335d6f2f5c808499830efdaa556	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch3	370	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_af_20b.c	e2513d0803bb709db84937ef9adbc5ddca2196981b3303ff3ccda7dd678667b3	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch1	460	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_af_20b.c	e2513d0803bb709db84937ef9adbc5ddca2196981b3303ff3ccda7dd678667b3	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch2	430	MATCH
+v141	v141/subcpu/cc900-staged/dsp_voice_params_af_21a.c	be42ea3c9d88aa2f42c8346693349be201ca4e14b0542ab0be7eb659ac18872a	Xr	2026-11-18-23-sub-r21e-staged	DSP_SetCoeff_MasterConfig	706	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	eef901762ac2aa7fd14d6bfe327b3f2db23fd0d8aa054337e34b36061071915d	Xr	2026-11-18-21-sub-r21c-staged	Partial_Build_Present_Word	550	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	eef901762ac2aa7fd14d6bfe327b3f2db23fd0d8aa054337e34b36061071915d	Xr	2026-11-18-21-sub-r21c-staged	RoutingFlag_Encode	263	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_21c.c	fb80715a9d256d63b56ee5de677ab66aac2b56b4487124ab6ef4d593ca96a3e2	Xr	2026-11-18-21-sub-r21c-staged	VoiceBuf_TypeSelector_MatchEpilogue	144	MATCH
@@ -1257,6 +1259,7 @@ v142	v142/subcpu/cc900-staged/dsp_voice_params.c	b2dad0bfb20f5d89b875ca12f1ea008
 v142	v142/subcpu/cc900-staged/dsp_voice_params_af_20a.c	ed99d6f607719e42b0e4e2fac23fa1ee078b66fe8a2f0c246e49c84446b25a84	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch3	370	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_af_20b.c	b11a004f7253881059529bb08152f74017754479c1050ad7a7b11575a9b73d29	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch1	460	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_af_20b.c	b11a004f7253881059529bb08152f74017754479c1050ad7a7b11575a9b73d29	Xr	2026-11-18-9-sub-r20c-staged	DSP_AlgoType_Dispatch2	430	MATCH
+v142	v142/subcpu/cc900-staged/dsp_voice_params_af_21a.c	0191e5c9c25f754ec8bfe53314aff8140be72290bf906a6c8fb3c96838d300d3	Xr	2026-11-18-23-sub-r21e-staged	DSP_SetCoeff_MasterConfig	706	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	b001dbb4de4506e7a85e41d2f2bc68d43f2af2b6a120f969e8630ff3d7d904e9	Xr	2026-11-18-21-sub-r21c-staged	Partial_Build_Present_Word	550	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	b001dbb4de4506e7a85e41d2f2bc68d43f2af2b6a120f969e8630ff3d7d904e9	Xr	2026-11-18-21-sub-r21c-staged	RoutingFlag_Encode	263	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_21c.c	b26dc6f954754ab99fef2a7065faf3f933e594d9e2a6f465f7596bff69bfa66f	Xr	2026-11-18-21-sub-r21c-staged	VoiceBuf_TypeSelector_MatchEpilogue	144	MATCH
