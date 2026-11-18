@@ -727,3 +727,12 @@ SingleLoadSrc_ComposerDrawBankName	119	2026-11-18-28-p6-r36	p6_J_2m269a@O3Xr
 SmfSeqToSongNumFunc	87	2026-11-18-28-p6-r36	p6_J_3m269a@O3Xr
 SndParam_ApplyMaskClamp	157	2026-11-18-28-p6-r36	p6_J_3a@O3Xr
 TrimAndFormatFilename	119	2026-11-18-28-p6-r36	p6_K_3m268b@O3Xr
+ConvertStrings	109	2026-11-18-33-p6-r37	p6_J_4m274a@O3XSXr p6_J_4m274a@O3Xr p6_J_4m274a@Xr
+DSPCfg_DecodeParamIdRange	167	2026-11-18-33-p6-r37	p6_J_5m293a@O3Xr
+DSPCfg_ResolveParamToSlot	316	2026-11-18-33-p6-r37	p6_J_5m293a@O3XSXr p6_J_5m293a@O3Xr
+MovePixels_Impl	190	2026-11-18-33-p6-r37	p6_J_5m273a@O3XSXr p6_J_5m273a@O3Xr p6_J_5m273b@O3XSXr p6_J_5m273b@O3Xr
+ParseSMFTrackName	185	2026-11-18-33-p6-r37	p6_I_4m268a@O3Xr
+PsMixer_DrawFrameBoxWithDividers	138	2026-11-18-33-p6-r37	p6_K_5m264a@O3XSXr p6_K_5m264a@O3Xr p6_K_5m264b@O3XSXr p6_K_5m264b@O3Xr
+SeMenu_SetupSoundBankPair	175	2026-11-18-33-p6-r37	p6_I_4m129a@O3XSXr p6_I_4m129a@O3Xr p6_I_4m129a@Xr p6_I_4m129b@O3XSXr p6_I_4m129b@O3Xr p6_I_4m129b@Xr
+SingleLoadSrc_PanelMemDrawMemoryName	72	2026-11-18-33-p6-r37	p6_J_4m269a@O3XSXr p6_J_4m269a@O3Xr
+SmfMed_FormatSlotList	207	2026-11-18-33-p6-r37	p6_I_4m269a@O3Xr p6_I_4m269b@O3Xr

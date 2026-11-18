@@ -8,17 +8,36 @@
 */
 /* cc900-module: SingleLoad_GetComposerBankName TrimAndPadSmfFilename */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+#define EVT_PARA_DRAW      0x1c0000fL
 extern void FileIO_CopyString(char *, char *);
-extern void FileIO_BuildFilePath(char *, char *);
 extern void TrimAndPadSmfFilename(unsigned char *, unsigned int);
 extern long ApPostEvent(long, long, long);
 extern char __near SINGLE_LOAD_SRC_ROWS[];
+extern unsigned char __near SINGLE_LOAD_ALL;
+extern unsigned char __near SLOAD_SRC_PMEM_POS;
+extern char *SingleLoadSrc_ReadPmtMemoryName(unsigned int);
+extern void SLSrc_PMemDrawMemName(long obj, unsigned char n);
+extern void FileIO_BuildFilePath(char *, char *);
 extern unsigned char __near SINGLE_LOAD_AREA;
 extern unsigned char __near SLOAD_SRC_CMP_POS;
 extern char *StorageArea_UnitNames[], *SingleLoad_BankCaptionByMode[];
 extern char SlSrcEntry_Str_Colon_2[], SlSrcEntry_Str_Colon_3[], SlSrcEntry_Str_ALL[];
 extern void SingleLoad_GetComposerBankName(char *, unsigned int, unsigned int);
 extern void SLSrc_ComposerDrawBankName(long obj, unsigned char n);
+
+/* cc900-name: SLSrc_PMemDrawMemName=SingleLoadSrc_PanelMemDrawMemoryName */
+void SLSrc_PMemDrawMemName(long obj, unsigned char n)
+{
+	char *p;
+
+	if (SINGLE_LOAD_ALL != 0)
+		return;
+	p = SINGLE_LOAD_SRC_ROWS;
+	p[63] = 3;
+	FileIO_CopyString(p + 64, SingleLoadSrc_ReadPmtMemoryName(SLOAD_SRC_PMEM_POS));
+	TrimAndPadSmfFilename((unsigned char *)SINGLE_LOAD_SRC_ROWS + 64, 16);
+	ApPostEvent(obj, EVT_PARA_DRAW, (long)(SINGLE_LOAD_SRC_ROWS + 63));
+}
 
 /* cc900-name: SLSrc_ComposerDrawBankName=SingleLoadSrc_ComposerDrawBankName */
 /* cc900-name: SlSrcEntry_Str_Colon_2=SLSrcBankList_FuncBody_Entry_Str_Colon_2 */
