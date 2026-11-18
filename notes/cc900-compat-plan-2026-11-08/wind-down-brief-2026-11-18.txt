@@ -1,0 +1,14 @@
+WIND-DOWN (the owner, 2026-11-18): finish the round that is in flight, post it, save everything useful, then stop. No new rounds.
+
+1. Finish what is in flight, nothing more:
+   - Probe files that are ALREADY WRITTEN go through their one VM run (if not yet run, run them now, one job).
+   - Matches from that run get their staged check run, promotion and `make -j2 gate`, as usual.
+   - Helpers already running finish the file they are on and stop; spawn no new helper, start no new round of helpers, write no new probes.
+   - Do NOT start a next round (no r+1 probes, no new candidates).
+2. Save everything useful, all committed on your branch (Opus 5.5 trailer, message from a file, the usual LLVM line):
+   - every probe / C file written, run or not (unrun ones listed as such);
+   - every script that produced a number or a verdict, in your notes directory, with a README line (question answered, exact command);
+   - update your handoff: write `HANDOFF-2026-11-18.md` in your notes directory (final state with built / staged / open counts from your committed scripts, the open functions with their best attempt and what was learned, idioms found, blockers, exact next steps to resume). It may point to HANDOFF-2026-11-17.md for what did not change. No Toshiba listing text in it.
+   - harvest your scratch scripts: `cd ~/compartilhado/research-scratch && ./harvest.sh --dry-run`, then `./harvest.sh`; do NOT commit there (the coordinator does).
+3. Leave the worktree clean (`git status` empty: committed or git-ignored). Delete nothing beyond your usual rules; tell me what scratch can go.
+4. End your turn with the final report: the final gated head, the VM run names to commit, and "done". Then stop.
