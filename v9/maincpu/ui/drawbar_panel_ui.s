@@ -12909,57 +12909,9 @@ Util_StoreGridArrayBase:
 ; -----------------------------------------------------------------------------
 ; AudioCtrl_DataBlock: previous name of this label, kept only because it is still referenced by shared/positional_labels.s (owned by another lane)
 AudioCtrl_DataBlock:
-PsMixer_DrawFrameBoxWithDividers:
-	lda	xsp, (xsp-22)
-	push	xiz
-	ld	(xsp+24), bc
-	ld	xiz, xwa
-	lda	xbc, (xsp+6)
-	lda	xde, (xsp+4)
-	ldw	wa, 52
-	call	GetFrameSPSize
-	ld	xiy, xiz
-	lda	xix, (xsp+16)
-	ld	bc, 4:i3
-	ldirw
-	lda	xwa, (xsp+16)
-	ld	bc, (xsp+4)
-	dec	2, bc
-	add	(xwa+2), bc
-	ldw	bc, 193
-	ld	de, (xsp+24)
-	call	DrawDesignBox
-	lda	xde, (xsp+12)
-	ldw (xde), 45
-	lda	xbc, (xsp+16)
-	ld	wa, (xbc+2)
-	inc	2, wa
-	ld	(xde+2), wa
-	lda	xde, (xsp+8)
-	ldw (xde), 45
-	ld	wa, (xbc+6)
-	dec	2, wa
-	ld	(xde+2), wa
-	ld	iz, 0:i3
-PsMixer_DrawFrameBoxWithDividers_Loop:
-	lda	xwa, (xsp+12)
-	lda	xbc, (xsp+8)
-	ldw	de, 248
-	call	DrawLine
-	lda	xwa, (xsp+12)
-	incw	1, (xwa)
-	lda	xbc, (xsp+8)
-	incw	1, (xbc)
-	ldw	de, 255
-	call	DrawLine
-	addw	(xsp+12), 0x25
-	addw	(xsp+8), 0x25
-	inc	1, iz
-	cp	iz, 7:i3
-	jr	lt, PsMixer_DrawFrameBoxWithDividers_Loop
-	pop	xiz
-	lda	xsp, (xsp+22)
-	ret
+PsMixer_DrawFrameBoxWithDividers:	.include "includes/generated/cc900/PsMixer_DrawFrameBoxWithDividers.s"	; C: cc900/drawbar_panel_ui_m264.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PsMixer_DrawFrameBoxWithDividers_Loop, PsMixer_DrawFrameBoxWithDividers + 87
 PsMixer_DrawFrameBox:
 	lda	xsp, (xsp-14)
 	push	xiz

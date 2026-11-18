@@ -15,3 +15,144 @@ int IsPointOnScreen(struct point *p)
         return 0;
     return 1;
 }
+
+/* cc900-module: ClipBlit_Replace_Impl ColorBlit2_Impl ColorBlit_Impl DrawBitmapFast_Impl DrawBitmapSP2_Impl DrawBitmapSPFast_Impl DrawBitmapSP_Impl DrawBox_Impl DrawDesignBox_Impl DrawDottedLineWithMode_Impl DrawFrameSP_Impl DrawFrame_Impl DrawFunc_Return DrawIcons_Impl DrawLineWithMode_Impl DrawLine_Impl DrawQueue_Alloc DrawRing_Post DrawString DrawString_Impl Gfx_BlitDirtyRegions IS_XSP_INSIDE_4K_REGION_AT_1C032 MovePixels_Impl */
+struct pt { int x, y; };
+extern int IsXspInDrawStack(void);
+extern unsigned char *DrawQueue_Alloc(unsigned int n);
+extern void *DrawRing_Post(void *cmd);
+extern void ClipBlit_Replace_Impl(struct pt *, int);
+extern void ClipBlit_Replace_ParamBlock(unsigned char *q);
+extern void ClipBlit_Replace(struct pt *p, int n);
+struct rect { int x0, y0, x1, y1; };
+extern int DRAW_ENABLED;
+extern unsigned char COLORBLIT_MODE;
+extern unsigned char COLORBLIT_MODE_ACTIVE;
+extern void ColorBlit2_Impl(struct rect *, int);
+extern void ColorBlit2_CallbackBlock(unsigned char *q);
+extern void ColorBlit2(struct rect *r, int n);
+extern void DrawDesignBox_Impl(struct rect *, int, int);
+extern void DrawDesignBox_QueueCallback(unsigned char *q);
+extern void DrawDesignBox(struct rect *r, int a, int b);
+extern void DrawDottedLineWithMode_Impl(struct pt *, struct pt *, int);
+extern void DrawDottedLineMode_ParamBlock(unsigned char *q);
+extern void DrawDottedLineWithMode(struct pt *a, struct pt *b, int m);
+extern int IsDrawTask(void);
+struct cbcmd { void (*fn)(struct cbcmd *); struct rect r; int c; unsigned char mode; };
+extern void ColorBlit_Impl(struct rect *, int);
+extern void ColorBlit_CallbackBlock(struct cbcmd *);
+extern void ColorBlit(struct rect *r, int c);
+extern void ColorBlit_CallbackBlock(struct cbcmd *q);
+struct lmcmd { void (*fn)(struct lmcmd *); struct pt a; struct pt b; int c; unsigned char mode; };
+extern void DrawLineWithMode_Impl(struct pt *, struct pt *, int);
+extern void DrawLineWithMode_ParamBlock(struct lmcmd *);
+extern void DrawLineWithMode(struct pt *a, struct pt *b, int c);
+extern void DrawLineWithMode_ParamBlock(struct lmcmd *q);
+
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void ClipBlit_Replace(struct pt *p, int n)
+{
+	unsigned char *q;
+
+	if (IsXspInDrawStack() != 0)
+		ClipBlit_Replace_Impl(p, n);
+	else {
+		q = DrawQueue_Alloc(10);
+		*(void **)q = (void *)ClipBlit_Replace_ParamBlock;
+		*(struct pt *)(q + 4) = *p;
+		*(int *)(q + 8) = n;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void ColorBlit2(struct rect *r, int n)
+{
+	unsigned char *q;
+
+	if (IsXspInDrawStack() != 0) {
+		COLORBLIT_MODE_ACTIVE = COLORBLIT_MODE;
+		if (DRAW_ENABLED != 0)
+			ColorBlit2_Impl(r, n);
+	} else {
+		q = DrawQueue_Alloc(16);
+		*(void **)q = (void *)ColorBlit2_CallbackBlock;
+		*(struct rect *)(q + 4) = *r;
+		*(int *)(q + 12) = n;
+		q[14] = COLORBLIT_MODE;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void DrawDesignBox(struct rect *r, int a, int b)
+{
+	unsigned char *q;
+
+	if (IsXspInDrawStack() != 0) {
+		if (DRAW_ENABLED != 0)
+			DrawDesignBox_Impl(r, a, b);
+	} else {
+		q = DrawQueue_Alloc(16);
+		*(void **)q = (void *)DrawDesignBox_QueueCallback;
+		*(struct rect *)(q + 4) = *r;
+		*(int *)(q + 12) = a;
+		*(int *)(q + 14) = b;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+/* cc900-name: DrawDottedLineMode_ParamBlock=DrawDottedLineWithMode_ParamBlock */
+void DrawDottedLineWithMode(struct pt *a, struct pt *b, int m)
+{
+	unsigned char *q;
+
+	if (IsXspInDrawStack() != 0) {
+		COLORBLIT_MODE_ACTIVE = COLORBLIT_MODE;
+		if (DRAW_ENABLED != 0)
+			DrawDottedLineWithMode_Impl(a, b, m);
+	} else {
+		q = DrawQueue_Alloc(16);
+		*(void **)q = (void *)DrawDottedLineMode_ParamBlock;
+		*(struct pt *)(q + 4) = *a;
+		*(struct pt *)(q + 8) = *b;
+		*(int *)(q + 12) = m;
+		q[14] = COLORBLIT_MODE;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsDrawTask=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void ColorBlit(struct rect *r, int c)
+{
+	struct cbcmd *q;
+
+	if (IsDrawTask() != 0) {
+		COLORBLIT_MODE_ACTIVE = COLORBLIT_MODE;
+		if (DRAW_ENABLED != 0)
+			ColorBlit_Impl(r, c);
+	} else {
+		q = (struct cbcmd *)DrawQueue_Alloc(sizeof(struct cbcmd));
+		q->fn = ColorBlit_CallbackBlock;
+		q->r = *r;
+		q->c = c;
+		q->mode = COLORBLIT_MODE;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsDrawTask=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void DrawLineWithMode(struct pt *a, struct pt *b, int c)
+{
+	struct lmcmd *q;
+
+	if (IsDrawTask() != 0) {
+		COLORBLIT_MODE_ACTIVE = COLORBLIT_MODE;
+		if (DRAW_ENABLED != 0)
+			DrawLineWithMode_Impl(a, b, c);
+	} else {
+		q = (struct lmcmd *)DrawQueue_Alloc(sizeof(struct lmcmd));
+		q->fn = DrawLineWithMode_ParamBlock;
+		q->a = *a;
+		q->b = *b;
+		q->c = c;
+		q->mode = COLORBLIT_MODE;
+		DrawRing_Post(q);
+	}
+}

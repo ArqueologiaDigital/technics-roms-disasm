@@ -56,3 +56,36 @@ unsigned long SubView(unsigned long id)
     }
     return 0xffffffffUL;
 }
+
+/* cc900-module: ClipBlit_Replace_Impl ColorBlit2_Impl DrawBitmapSPFast_Impl DrawDesignBox_Impl DrawDottedLineWithMode_Impl DrawFrame_Impl DrawIcons_Impl DrawQueue_Alloc DrawRing_Post Gfx_BlitDirtyRegions IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+#define NAKA_MAINFUNC_MainAutoFree 0x1400003L
+#define NAKA_MAINFUNC_MainPmanControl 0x1400002L
+#define EVT_AUTO_FREE 0x1e00023L
+#define EVT_LSW_PART_GET 0x1e0005cL
+struct lswreq { long id; int a; int b; long z; };
+extern void *__cdecl Malloc(unsigned int);
+extern void FuncCall(long fn, long evt, void *par);
+extern int MainLswPartGet(unsigned int part, unsigned int idx);
+extern int DRAW_ENABLED;
+extern int ram_30450;
+extern void Gfx_BlitDirtyRegions(void);
+extern void UpdateScreen_CheckDirty(void *q);
+
+int MainLswPartGet(unsigned int part, unsigned int idx)
+{
+    struct lswreq *p;
+    p = (struct lswreq *)Malloc(sizeof(struct lswreq));
+    p->id = ((unsigned long)part << 16) + idx;
+    p->a = 0;
+    p->b = 0;
+    p->z = 0;
+    FuncCall(NAKA_MAINFUNC_MainPmanControl, EVT_LSW_PART_GET, p);
+    FuncCall(NAKA_MAINFUNC_MainAutoFree, EVT_AUTO_FREE, p);
+    return 0;
+}
+void UpdateScreen_CheckDirty(void *q)
+{
+	Gfx_BlitDirtyRegions();
+	if (ram_30450 == 0)
+		DRAW_ENABLED = ram_30450;
+}

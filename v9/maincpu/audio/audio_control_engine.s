@@ -7319,74 +7319,10 @@ EQPreset_SendLoop:
 ; Reads 48 bytes (24 reverb + 24 EQ) from ROM table at 0xedb3b8.
 ; Sends reverb with cmd 0x63, EQ (at offset +24) with cmd 0x64.
 ; Args: wa = preset index (0-8)
-CombinedPreset_Load:
-	dec 4, xsp
-	pushw iz
-	extz wa
-	sla wa, 2
-	lda xbc, (CombinedPreset_Table:24)
-	ld	xwa, (xbc+wa)
-	ld (xsp + 2), xwa
-	pushw 0x18
-	ld xwa, (xsp + 4)
-	push xwa
-	pushw 0x0
-	pushw 0xfc8e
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	ld iz, 0:i3
-
-CombinedPreset_SendReverbLoop:
-	ldto_berp C, 0xf8
-	extz bc
-	lda xwa, (PANEL_DIGITAL_REVERB:16)
-	ld de, iz
-	extz xde
-	add xde, xwa
-	ld e, (xde)
-	extz de
-	pushw 0xff
-	ldw wa, 0x63
-	call AssswbWr
-	inc 1, iz
-	cp iz, 0x18
-	jr c, CombinedPreset_SendReverbLoop
-	pushw 0x18
-	ld xwa, (xsp + 4)
-	lda xwa, (xwa + 24)
-	push xwa
-	pushw 0x0
-	pushw 0xfca8
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	ld iz, 0:i3
-
-CombinedPreset_SendEQLoop:
-	ldto_berp C, 0xf8
-	extz bc
-	lda xwa, (PANEL_EQUALIZER:16)
-	ld de, iz
-	extz xde
-	add xde, xwa
-	ld e, (xde)
-	extz de
-	pushw 0xff
-	ldw wa, 0x64
-	call AssswbWr
-	inc 1, iz
-	cp iz, 0x18
-	jr c, CombinedPreset_SendEQLoop
-	ld xwa, 0x4002
-	ldw bc, 0x7f
-	ld de, 1:i3
-	call SoundParam_NotifyChange
-	ld xwa, 0x4006
-	ld bc, 1:i3
-	ld de, 1:i3
-	call SoundParam_NotifyChange
-	popw iz
-	inc 4, xsp
-	ret
+CombinedPreset_Load:	.include "includes/generated/cc900/CombinedPreset_Load.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CombinedPreset_SendReverbLoop, CombinedPreset_Load + 43
+	.set	CombinedPreset_SendEQLoop, CombinedPreset_Load + 105
 
 MIDI_MapCCToIndex:
 	cp	a, 102

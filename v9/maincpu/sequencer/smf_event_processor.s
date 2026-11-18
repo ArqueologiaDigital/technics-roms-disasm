@@ -3978,47 +3978,7 @@ SeqStep_FileSectorDone:	.include "includes/generated/cc900/SeqStep_FileSectorDon
 	ld	(xde), a
 	ret
 
-SeqStep_FileSectorComplete:
-	dec 4, xsp
-	push xiz
-	ld xiz, (xsp + 16)
-	lda xwa, (xiz + 22)
-	ld (xsp + 4), xwa
-	pushw 0xb
-	ld xwa, xiz
-	push xwa
-	ld xwa, (xsp + 18)
-	push xwa
-	call Mem_Copy
-	ld xwa, (xsp + 22)
-	ld (xwa + 11), 0x0
-	ld xwa, (xsp + 22)
-	ld c, (xiz + 11)
-	ld (xwa + 12), c
-	lda xwa, (xsp + 14)
-	push xwa
-	calr SeqStep_FileSectorRead
-	ld xwa, (xsp + 26)
-	ld (xwa + 13), hl
-	lda xwa, (xsp + 18)
-	push xwa
-	calr SeqStep_FileSectorRead
-	ld xwa, (xsp + 30)
-	ld (xwa + 15), hl
-	lda xwa, (xsp + 22)
-	push xwa
-	calr SeqStep_FileSectorRead
-	ld xwa, (xsp + 34)
-	ld (xwa + 17), hl
-	lda xwa, (xsp + 26)
-	push xwa
-	calr SeqStep_FileSectorProcess
-	lda xsp, (xsp + 26)
-	ld xwa, (xsp + 12)
-	ld (xwa + 19), xhl
-	pop xiz
-	inc 4, xsp
-	ret
+SeqStep_FileSectorComplete:	.include "includes/generated/cc900/SeqStep_FileSectorComplete.s"	; C: cc900/smf_event_processor_m238_xr.c
 
 SeqStep_FileSectorReturn:	.include "includes/generated/cc900/SeqStep_FileSectorReturn.s"	; C: cc900/smf_event_processor_m238_xr.c
 
@@ -7161,21 +7121,7 @@ SeqChan_ByteBlockC_Skip3:
 SeqChan_ByteBlockC_Epilogue:
 	pop	xiz
 	ret
-SeqChan_ByteBlockD:
-	ld	xwa, (xsp+16)
-	push	xwa
-	pushm	(xsp+18)
-	pushm	(xsp+18)
-	pushm	(xsp+16)
-	pushm	(xsp+20)
-	ld	xwa, (xsp+16)
-	ld	a, (xwa+4)
-	extz	wa
-	pushw	wa
-	pushw	4
-	calr	SeqStep_ParseVariableHeader
-	lda	xsp, (xsp+16)
-	ret
+SeqChan_ByteBlockD:	.include "includes/generated/cc900/SeqChan_ByteBlockD.s"	; C: cc900/smf_event_processor_m239_xr.c
 ; Fat_HandleDiskIoError: After a floppy sector transfer, handles its error word (*arg1): 0 -> HL = 0. Otherwise counts
 ;   the attempt (word 0x2271E) and maps the FDC code: 0x2F write-protect -> 31 (HL = 0 at once), 0x30/0x31 -> 32,
 ;   0x33/0x35 -> 33, 6 (disk changed) -> 6, other -> 36; re-mounts the volume (Fat_MountVolume) and

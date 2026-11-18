@@ -8450,47 +8450,10 @@ Part_CheckAndSetModifiedFlags:	.include "includes/generated/cc900/Part_CheckAndS
 	.set	PartModFlags_CheckField4, Part_CheckAndSetModifiedFlags + 17
 	.set	PartModFlags_CheckField5, Part_CheckAndSetModifiedFlags + 34
 
-SeqBuf_WriteMidiEvent:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), c
-	ld xiz, xwa
-	ld a, (xiz)
-	and a, 0xf0
-	cp a, 0x90
-	jr nz, SeqBufMidi_HandleNonNoteOn
-	cp	(7552:16), 0
-	call nz, (SeqBuf_FlushAndReinit_VoiceCCEvents:24)
-	call SeqBuf_GetWritePos
-	cp hl, 0xf
-	call lt, (SeqBuf_FlushAndReinit_NoteEvents:24)
-	push xiz
-	ld a, (xsp + 8)
-	extz wa
-	pushw wa
-	call SeqBuf_WriteBytes
-	inc 6, xsp
-	ld	(7550:16), 1
-	jr SeqBufMidi_Return
-
-SeqBufMidi_HandleNonNoteOn:
-	cp	(7550:16), 0
-	call nz, (SeqBuf_FlushAndReinit_NoteEvents:24)
-	call SeqBuf_GetWritePos
-	cp hl, 0xf
-	call lt, (SeqBuf_FlushAndReinit_VoiceCCEvents:24)
-	push xiz
-	ld a, (xsp + 8)
-	extz wa
-	pushw wa
-	call SeqBuf_WriteBytes
-	inc 6, xsp
-	ld	(7552:16), 1
-
-SeqBufMidi_Return:
-	pop xiz
-	inc 2, xsp
-	ret
+SeqBuf_WriteMidiEvent:	.include "includes/generated/cc900/SeqBuf_WriteMidiEvent.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqBufMidi_HandleNonNoteOn, SeqBuf_WriteMidiEvent + 61
+	.set	SeqBufMidi_Return, SeqBuf_WriteMidiEvent + 102
 
 SeqBuf_WriteMidiEventDirect:
 	dec 2, xsp
@@ -27672,46 +27635,10 @@ SeqPart_WaitRightLoop:
 	jr z, SeqPart_WaitRightLoop
 	ret
 
-SeqPart_DualSwap:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld xiz, xbc
-	cp a, 0x82
-	jr nz, SeqPart_DualSwapFinish
-	extz wa
-	call SeqPart_WriteByte_Primary
-	ld	(0x27b8:16), 255
-	ld	a, (9834:16)
-	extz wa
-	ld	(0x2861:16), wa
-	ld	wa, (SEQOP_PRIMARY_OFFSET:16)
-	ld c, a
-	extz bc
-	ld	wa, (SEQOP_PRIMARY_BLOCK:16)
-	call Part_WriteWordAndByte
-	jr SeqPart_DualSwapReturn
-
-SeqPart_DualSwapFinish:
-	ldw wa, 0x81
-	call SeqPart_WriteByte_Primary
-	call PartCtrl_AdvanceToNextEntry
-	ld	xwa, 0x27ba
-	ld	xbc, 0x27bc
-	call PartCtrl_ReadWordWithBoundsCheck
-	calr SeqPart_CompareLeft
-	ld (xiz), l
-	ld	xwa, 0x27be
-	ld	xbc, 0x27c0
-	call PartCtrl_ReadWordWithBoundsCheck
-	calr SeqPart_CompareRight
-	ld xwa, (xsp + 4)
-	ld (xwa), l
-
-SeqPart_DualSwapReturn:
-	pop xiz
-	inc 4, xsp
-	ret
+SeqPart_DualSwap:	.include "includes/generated/cc900/SeqPart_DualSwap.s"	; C: cc900/sequencer_engine_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_DualSwapFinish, SeqPart_DualSwap + 52
+	.set	SeqPart_DualSwapReturn, SeqPart_DualSwap + 104
 
 SeqPart_ValidateRight:
 	ld l, a

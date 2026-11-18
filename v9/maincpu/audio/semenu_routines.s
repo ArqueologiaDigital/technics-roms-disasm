@@ -5563,86 +5563,13 @@ SeMenu_LoadEditParam:
 	ldmi16 (xwa), 0x6b9
 	ret
 
-SeMenu_SetupSoundBankPair:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 10), xbc
-	ld xiz, xwa
-	lda xwa, (xsp + 6)
-	calr SeMenu_LoadSoundBankCfg
-	cp (xsp + 6), 0x0
-	jr nz, SeMenu_SetupSoundBankPair_NonZero
-	ld (xiz), 0x24
-	ld xwa, (xsp + 10)
-	ld (xwa), 0x24
-	ld a, (xiz)
-	extz wa
-	calr SeMenu_SetFilterParam1
-	ld xwa, (xsp + 10)
-	ld a, (xwa)
-	extz wa
-	calr SeMenu_SetFilterCoeff
-	ld wa, 1:i3
-	calr SeMenu_SetSoundBank
-	jr SeMenu_SetupSoundBankPair_End
-
-SeMenu_SetupSoundBankPair_NonZero:
-	lda xwa, (xsp + 4)
-	calr SeMenu_LoadFilterParam2
-	cp (xsp + 4), 0x1
-	jr nz, SeMenu_SetupSoundBankPair_Direct
-	lda xwa, (xsp + 8)
-	calr SeMenu_LoadMasterPtr
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 0:i3
-	ld de, 0:i3
-	call SndParam_UpdateChannelTuning
-	ld (xiz), l
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 0:i3
-	ld de, 1:i3
-	call SndParam_UpdateChannelTuning
-	ld xwa, (xsp + 10)
-	ld (xwa), l
-	cp (xiz), 0xff
-	jr nz, SeMenu_SetupSoundBankPair_CheckValid
-	ld a, (xsp + 8)
-	extz wa
-	ld bc, 1:i3
-	ld de, 1:i3
-	call SndParam_UpdateChannelTuning
-	ld (xiz), l
-	ld xwa, (xsp + 10)
-	ld (xwa), l
-
-SeMenu_SetupSoundBankPair_CheckValid:
-	cp (xiz), 0xff
-	jr z, SeMenu_SetupSoundBankPair_Invalid
-	ld a, (xiz)
-	extz wa
-	calr SeMenu_SetFilterParam1
-	ld xwa, (xsp + 10)
-	ld a, (xwa)
-	extz wa
-	calr SeMenu_SetFilterCoeff
-
-SeMenu_SetupSoundBankPair_Invalid:
-	ld wa, 0:i3
-	calr SeMenu_SetFilterMode
-	jr SeMenu_SetupSoundBankPair_End
-
-SeMenu_SetupSoundBankPair_Direct:
-	ld xwa, xiz
-	calr SeMenu_LoadFilterType
-	ld xwa, (xsp + 10)
-	calr SeMenu_LoadEditParam
-
-SeMenu_SetupSoundBankPair_End:
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+SeMenu_SetupSoundBankPair:	.include "includes/generated/cc900/SeMenu_SetupSoundBankPair.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetupSoundBankPair_NonZero, SeMenu_SetupSoundBankPair + 54
+	.set	SeMenu_SetupSoundBankPair_CheckValid, SeMenu_SetupSoundBankPair + 130
+	.set	SeMenu_SetupSoundBankPair_Invalid, SeMenu_SetupSoundBankPair + 152
+	.set	SeMenu_SetupSoundBankPair_Direct, SeMenu_SetupSoundBankPair + 159
+	.set	SeMenu_SetupSoundBankPair_End, SeMenu_SetupSoundBankPair + 170
 
 SeMenu_ComputeParamTableAddr:
 	dec 1, a

@@ -1824,92 +1824,13 @@ NavPd_Exit:
 	popw iz
 	ret
 
-SmfMed_FormatSlotList:
-	dec 6, xsp
-	push xiz
-	ld iz, bc
-	ld (xsp + 6), xwa
-	ld xwa, 0:i3
-	ld xbc, EVT_GET_SELECTED_FILE_NUMBER
-	ld xde, 0:i3
-	calr FmmSmfFileNameFunc
-	ldfr_werp HL, 0xfa
-	ldto_werp WA, 0xfa
-	extz xwa
-	div wa, 0xa
-	ldfr_werp WA, 0xfa
-	mul wa, 0xa
-	ldfr_werp WA, 0xfa
-	ldw (xsp + 4), 0xa
-	ldto_werp WA, 0xfa
-	add wa, 0xa
-	cp wa, iz
-	jr c, SmfFmt_CalcVisible
-	ld (xsp + 4), iz
-	ldto_werp WA, 0xfa
-	sub (xsp + 4), wa
-
-SmfFmt_CalcVisible:
-	ld iz, 0:i3
-	cpw (xsp + 4), 0x0
-	jr ule, SmfFmt_FillEmpty
-
-SmfFmt_FormatLoop:
-	ld wa, iz
-	sll wa, 3
-	lda xbc, (0x83e0:16)
-	extz xwa
-	add xwa, xbc
-	ldto_werp BC, 0xfa
-	add bc, iz
-	lda xde, (0x88a0:16)
-	extz xbc
-	add xbc, xde
-	ld c, (xbc)
-	extz bc
-	ld de, iz
-	calr FormatMedleyNumber
-	ld de, iz
-	sll de, 3
-	lda xwa, (0x83e0:16)
-	extz xde
-	add xde, xwa
-	ld xwa, (xsp + 6)
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-	inc 1, iz
-	cp iz, (xsp + 4)
-	jr c, SmfFmt_FormatLoop
-
-SmfFmt_FillEmpty:
-	cp iz, 0xa
-	jr nc, SmfFmt_Exit
-
-SmfFmt_EmptyLoop:
-	ld wa, iz
-	sll wa, 3
-	lda xbc, (0x83e0:16)
-	extz xwa
-	add xwa, xbc
-	ldw bc, 0xff
-	ld de, iz
-	calr FormatMedleyNumber
-	ld de, iz
-	sll de, 3
-	lda xwa, (0x83e0:16)
-	extz xde
-	add xde, xwa
-	ld xwa, (xsp + 6)
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-	inc 1, iz
-	cp iz, 0xa
-	jr c, SmfFmt_EmptyLoop
-
-SmfFmt_Exit:
-	pop xiz
-	inc 6, xsp
-	ret
+SmfMed_FormatSlotList:	.include "includes/generated/cc900/SmfMed_FormatSlotList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SmfFmt_CalcVisible, SmfMed_FormatSlotList + 67
+	.set	SmfFmt_FormatLoop, SmfMed_FormatSlotList + 76
+	.set	SmfFmt_FillEmpty, SmfMed_FormatSlotList + 143
+	.set	SmfFmt_EmptyLoop, SmfMed_FormatSlotList + 149
+	.set	SmfFmt_Exit, SmfMed_FormatSlotList + 203
 
 FmmSmfMedleyFunc:
 	dec 4, xsp

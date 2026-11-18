@@ -216,38 +216,10 @@ SaveFileNameSmfFunc:	.include "includes/generated/cc900/SaveFileNameSmfFunc.s"	;
 	.set	SaveFN_HandleApply, SaveFileNameSmfFunc + 139
 	.set	SaveFN_Return, SaveFileNameSmfFunc + 183
 
-SmfSeqToSongNumFunc:
-	push xiz
-	cp xbc, EVT_PAINT
-	jr z, SeqToSong_BuildEntry
-	cp xbc, EVT_PS_FILE_NAME_BOX_ID
-	jr nz, SeqToSong_Return
-	ld (0x8090:16), xde
-	jr SeqToSong_Return
-
-SeqToSong_BuildEntry:
-	lda xwa, (0x8094:16)
-	ld (xwa+), 0x00
-	ld xbc, SeqToSong_BuildEntry_Str_TO_SONG
-	call FileIO_CopyString
-	lda xiz, (0x8095:16)
-	ld a, (0x8948:16)
-	inc 1, a
-	extz wa
-	ld bc, 2:i3
-	calr NumToAscii_FormatNumber
-	ld xbc, xhl
-	ld xwa, xiz
-	call FileIO_BuildFilePath
-	ld xwa, (0x8090:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0x8094
-	call ApPostEvent
-
-SeqToSong_Return:
-	ld xhl, 0:i3
-	pop xiz
-	ret
+SmfSeqToSongNumFunc:	.include "includes/generated/cc900/SmfSeqToSongNumFunc.s"	; C: cc900/smf_operations_m269_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqToSong_BuildEntry, SmfSeqToSongNumFunc + 23
+	.set	SeqToSong_Return, SmfSeqToSongNumFunc + 83
 
 SmfSeqFromSongNumFunc:
 	push xiz

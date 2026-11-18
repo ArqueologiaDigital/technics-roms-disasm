@@ -928,5 +928,13 @@ Run from the repository root with `python3 -B notes/cc900-phase6-2026-11-16/<scr
 | `relaxed_jr.py`          | which generated functions hold a jr that llvm-mc relaxes to jrl                        | `relaxed_jr.py OBJ NM_OUTPUT GENERATED_DIR`         |
 | `edge_jr.py`             | which generated jr sit within 8 bytes of the d8 limits                                 | `edge_jr.py OBJ NM_OUTPUT GENERATED_DIR [LO HI]`    |
 | `repair_module_lines.py` | give back module names an append dropped                                               | `repair_module_lines.py [--dry-run]`                |
+| `ready_check.py`         | which near-miss ready.tsv rows are really not built yet (built / staged / NEW)         | `ready_check.py [--lane LANE] [--new]`              |
+| `promoted_bytes.py`      | how many functions / bytes a promotion built, per tree, from staged_v423.tsv           | `promoted_bytes.py RUN [RUN ...]`                   |
+| `fix_c_comment.py`       | point each function's `; C: cc900/<file>` label comment at the file that defines it    | `fix_c_comment.py TREE/maincpu/cc900/F.c ...`       |
+
+2026-11-18: `port_staged.py --keep-unproven` keeps a function whose bytes differ outside the C's address fields (a
+relative call to a moved callee, an own switch base) for V4.23's per-tree check to decide; the staging scripts now
+carry `cc900-data:` comments with their functions (`stage_probe.names_fn`).  The 2026-11-18 rounds are in
+`HANDOFF-2026-11-18.md`.
 
 The final state, open functions, idioms, blockers and next steps are in `HANDOFF-2026-11-17.md`.

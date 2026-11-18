@@ -112,6 +112,10 @@ def main():
                     if k in ('decl', 'pp'):
                         for n in sp.defines(d):
                             prev[n] = d
+                    elif k == 'fn':                       # a function the built file DEFINES: a staged prototype of
+                        prev[sp.fn_name(d)] = '<definition>'   # it is another declaration (2026-11-18: an `extern int
+                        # DSPCfg_GetSlotCount(int)` appended after its `unsigned int ...(unsigned int)` definition,
+                        # THC1-Error-262), and the staged C was checked against its own prototype: a sibling file
                 if any(n in prev and prev[n] != d for k, d in sp.items(text) if k in ('decl', 'pp') for n in sp.defines(d)):
                     for c in 'bcdefgh':
                         alt = dst[:-2] + '_' + c + '.c'

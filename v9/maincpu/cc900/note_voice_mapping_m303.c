@@ -22,3 +22,48 @@ void SndParam_ApplyVoiceValue(unsigned char *r)
     r[4] = 0x78;
   }
 }
+
+extern int SndParam_LookupReadOnly(long);
+extern void SndParam_ApplyMaskClamp(unsigned char *p, unsigned char *q);
+
+void SndParam_ApplyMaskClamp(unsigned char *p, unsigned char *q)
+{
+	unsigned char c;
+
+	if (SndParam_LookupReadOnly(0xc0) == 1)
+		return;
+	if (*q == 0x78)
+		return;
+	if (*p <= 0x7f) {
+		*q &= 7;
+		return;
+	}
+	if (*q == 7) {
+		*p &= 0x7f;
+		c = 0x70;
+	} else if (*p <= 0xef) {
+		if (*q == 0) {
+			*p &= 0x7f;
+			c = 0x10;
+		} else if (*q == 5) {
+			*p &= 0x7f;
+			c = 0x15;
+		} else
+			goto def;
+	} else if (*q <= 1) {
+		*p &= 0x0f;
+		*q = (*q & 1) | 0x40;
+		return;
+	} else if (*q == 6) {
+		*p = 0;
+		c = 0x50;
+	} else if (*q == 5) {
+		*p &= 3;
+		c = 0x55;
+	} else {
+def:
+		*p = 0;
+		c = 0;
+	}
+	*q = c;
+}

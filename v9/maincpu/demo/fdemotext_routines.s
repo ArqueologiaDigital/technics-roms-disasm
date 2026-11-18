@@ -2185,42 +2185,10 @@ FDemoText_ScaleUpCoords:
 	ld (xbc + 2), wa
 	ret
 
-FDemoText_CalcTextExtent:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	lda xbc, (xsp + 8)
-	ld xwa, xiz
-	calr FDemoText_ScaleDownCoords
-	lda xwa, (xsp + 8)
-	lda xbc, (xsp + 4)
-	calr FDemoText_ScaleUpCoords
-	lda xwa, (xsp + 8)
-	ld ix, (xwa)
-	inc 1, ix
-	ld hl, (xsp + 4)
-	inc 8, hl
-	sub hl, (xiz)
-	cp ix, 0x28
-	jr ge, FDemoText_CalcExtent_Done
-	ld wa, (xwa + 2)
-	muls wa, 0x28
-	lda xde, (0x0251da:24)
-
-FDemoText_CalcExtent_ScanLoop:
-	ld bc, wa
-	add bc, ix
-	cp	(xde+bc), 0x54
-	jr nz, FDemoText_CalcExtent_Done
-	inc 8, hl
-	inc 1, ix
-	cp ix, 0x28
-	jr lt, FDemoText_CalcExtent_ScanLoop
-
-FDemoText_CalcExtent_Done:
-	pop xiz
-	inc 8, xsp
-	ret
+FDemoText_CalcTextExtent:	.include "includes/generated/cc900/FDemoText_CalcTextExtent.s"	; C: cc900/fdemotext_routines_m265_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_CalcExtent_ScanLoop, FDemoText_CalcTextExtent + 54
+	.set	FDemoText_CalcExtent_Done, FDemoText_CalcTextExtent + 76
 
 FDemoText_UpdateCursorPosition:
 	dec 4, xsp

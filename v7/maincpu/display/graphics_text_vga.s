@@ -1633,68 +1633,15 @@ GetCenteredDelta_Return:
 ;   XWA = pointer to source string (null-terminated)
 ;   XBC = pointer to output buffer
 ; =============================================================================
-ConvertStrings:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-
-ConvertStrings_MainLoop:
-	cp (xiz), 0x7e		; Check for escape prefix
-	jr nz, ConvertStrings_CheckNull
-	inc 1, xiz
-	cp (xiz), 0x0
-	jr z, ConvertStrings_NullTerminate
-	ld a, (xiz)
-	extz wa
-	calr HexCharToNibble
-	sll l, 4
-	ld xwa, (xsp + 4)
-	ld (xwa), l
-	inc 1, xiz
-	cp (xiz), 0x0
-	jr z, ConvertStrings_NullTerminate
-	ld a, (xiz)
-	extz wa
-	calr HexCharToNibble
-	ld xwa, (xsp + 4)
-	add (xwa), l
-	jr ConvertStrings_AdvancePointer
-
-ConvertStrings_NullTerminate:
-	ld xwa, (xsp + 4)
-	ld (xwa), 0x0
-	jr ConvertStrings_PopAndReturn
-
-ConvertStrings_CheckNull:
-	cp (xiz), 0x0
-	jr nz, ConvertStrings_CheckPrintable
-	ld xwa, (xsp + 4)
-	ld c, (xiz)
-	ld (xwa), c
-
-ConvertStrings_PopAndReturn:
-	pop xiz
-	inc 4, xsp
-	ret
-
-ConvertStrings_CheckPrintable:
-	cp (xiz), 0x20
-	jr nc, ConvertStrings_CopyChar
-	ld xwa, (xsp + 4)
-	ld (xwa), 0x20
-	jr ConvertStrings_AdvancePointer
-
-ConvertStrings_CopyChar:
-	ld xwa, (xsp + 4)
-	ld c, (xiz)
-	ld (xwa), c
-
-ConvertStrings_AdvancePointer:
-	inc 1, xiz
-	ld xwa, 1:i3
-	add (xsp + 4), xwa
-	jr ConvertStrings_MainLoop
+ConvertStrings:	.include "includes/generated/cc900/ConvertStrings.s"	; C: cc900/graphics_text_vga_m274.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ConvertStrings_MainLoop, ConvertStrings + 8
+	.set	ConvertStrings_NullTerminate, ConvertStrings + 56
+	.set	ConvertStrings_CheckNull, ConvertStrings + 64
+	.set	ConvertStrings_PopAndReturn, ConvertStrings + 76
+	.set	ConvertStrings_CheckPrintable, ConvertStrings + 80
+	.set	ConvertStrings_CopyChar, ConvertStrings + 93
+	.set	ConvertStrings_AdvancePointer, ConvertStrings + 100
 
 ConvertStringsEx:
 	ld xde, xwa

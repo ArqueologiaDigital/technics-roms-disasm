@@ -84,3 +84,38 @@ int WordwrapStrings(char *s, long font, int width)
 	Free(buf);
 	return best;
 }
+
+/* cc900-module: HexCharToNibble */
+extern unsigned char HexCharToNibble(int c);
+extern void ConvertStrings(unsigned char *src, unsigned char *dst);
+
+void ConvertStrings(unsigned char *src, unsigned char *dst)
+{
+	for (;;) {
+		if (*src == '~') {
+			src++;
+			if (*src == 0)
+				goto term;
+			*dst = HexCharToNibble(*src) << 4;
+			src++;
+			if (*src == 0)
+				goto term;
+			*dst += HexCharToNibble(*src);
+			goto next;
+term:
+			*dst = 0;
+			return;
+		}
+		if (*src == 0) {
+			*dst = *src;
+			return;
+		}
+		if (*src < 0x20)
+			*dst = ' ';
+		else
+			*dst = *src;
+next:
+		src++;
+		dst += 1;
+	}
+}

@@ -29,46 +29,10 @@ DrawLine_Epilogue:
 ;
 ; Calls SetChangeRect on completion to mark the drawn region as dirty.
 ; =============================================================================
-DrawLine:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawLine_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawLine_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 6)
-	ld de, (xsp + 4)
-	calr DrawLine_Impl
-	jr DrawLine_Return
-
-DrawLine_DeferredPath:
-	ldw wa, 0xe
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawLine_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 6)
-	ld xiy, xbc
-	lda xix, (xwa + 8)
-	ldiw
-	ldiw
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	calr DrawRing_Post
-
-DrawLine_Return:
-	pop xiz
-	inc 6, xsp
-	ret
+DrawLine:	.include "includes/generated/cc900/DrawLine.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawLine_DeferredPath, DrawLine + 40
+	.set	DrawLine_Return, DrawLine + 85
 
 ; Executor of a queued DrawLine: DrawLine_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -76,15 +40,7 @@ DrawLine_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawLine makes before drawing directly) and otherwise calls DrawLine_Impl.
 ; (Formerly DrawLine_ParamBlock, held as `.byte`.)
-DrawLine_QueuedExec:
-	lda xhl, (xwa + 4)
-	lda xbc, (xwa + 8)
-	ld de, (xwa + 12)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xhl
-	calr DrawLine_Impl
-	ret
+DrawLine_QueuedExec:	.include "includes/generated/cc900/DrawLine_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
 DrawLine_Impl:
 	lda xsp, (xsp - 66)
@@ -1010,39 +966,10 @@ DrawLineEx_Return:
 ;   Rectangle filled in OFFSCREEN_BUFFER_1 (0x43c00)
 ;   SetChangeRect called with filled region
 ; =============================================================================
-DrawBox:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBox_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBox_Return
-	ld xwa, xiz
-	ld bc, (xsp + 4)
-	calr DrawBox_Impl
-	jr DrawBox_Return
-
-DrawBox_DeferredPath:
-	ldw wa, 0xe
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBox_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ld bc, 4:i3
-	ldirw
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	calr DrawRing_Post
-
-DrawBox_Return:
-	pop xiz
-	inc 2, xsp
-	ret
+DrawBox:	.include "includes/generated/cc900/DrawBox.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBox_DeferredPath, DrawBox + 34
+	.set	DrawBox_Return, DrawBox + 67
 
 ; Executor of a queued DrawBox: DrawBox_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -1050,14 +977,7 @@ DrawBox_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawBox makes before drawing directly) and otherwise calls DrawBox_Impl.
 ; (Formerly DrawBox_ParamBlock, held as `.byte`.)
-DrawBox_QueuedExec:
-	lda xde, (xwa + 4)
-	ld bc, (xwa + 12)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr DrawBox_Impl
-	ret
+DrawBox_QueuedExec:	.include "includes/generated/cc900/DrawBox_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
 DrawBox_Impl:
 	lda xsp, (xsp - 16)
@@ -1188,39 +1108,10 @@ DrawBox_Impl_Return:
 ;   XWA = pointer to bounding box: {x_min, y_min, x_max, y_max} (4 words)
 ;   BC  = border color (low byte)
 ; =============================================================================
-DrawFrame:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawFrame_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawFrame_Return
-	ld xwa, xiz
-	ld bc, (xsp + 4)
-	calr DrawFrame_Impl
-	jr DrawFrame_Return
-
-DrawFrame_DeferredPath:
-	ldw wa, 0xe
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawFrame_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ld bc, 4:i3
-	ldirw
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	calr DrawRing_Post
-
-DrawFrame_Return:
-	pop xiz
-	inc 2, xsp
-	ret
+DrawFrame:	.include "includes/generated/cc900/DrawFrame.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawFrame_DeferredPath, DrawFrame + 34
+	.set	DrawFrame_Return, DrawFrame + 67
 
 ; Executor of a queued DrawFrame: DrawFrame_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -1228,14 +1119,7 @@ DrawFrame_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawFrame makes before drawing directly) and otherwise calls DrawFrame_Impl.
 ; (Formerly DrawFrame_ParamBlock, held as `.byte`.)
-DrawFrame_QueuedExec:
-	lda xde, (xwa + 4)
-	ld bc, (xwa + 12)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr DrawFrame_Impl
-	ret
+DrawFrame_QueuedExec:	.include "includes/generated/cc900/DrawFrame_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
 DrawFrame_Impl:
 	lda xsp, (xsp - 44)
@@ -1947,42 +1831,10 @@ DrawFrameEx_Return:
 ; Copies pixel-by-pixel with nested row/column loops.
 ; Calls SetChangeRect on completion.
 ; =============================================================================
-MovePixels:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, MovePixels_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, MovePixels_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr MovePixels_Impl
-	jr MovePixels_Return
-
-MovePixels_DeferredPath:
-	ldw wa, 0x10
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (MovePixels_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ld bc, 4:i3
-	ldirw
-	ld xbc, (xsp + 4)
-	ld xiy, xbc
-	lda xix, (xwa + 12)
-	ldiw
-	ldiw
-	calr DrawRing_Post
-
-MovePixels_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+MovePixels:	.include "includes/generated/cc900/MovePixels.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MovePixels_DeferredPath, MovePixels + 34
+	.set	MovePixels_Return, MovePixels + 73
 
 ; Executor of a queued MovePixels: MovePixels_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -1990,100 +1842,15 @@ MovePixels_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; MovePixels makes before drawing directly) and otherwise calls MovePixels_Impl.
 ; (Formerly MovePixels_ParamBlock, held as `.byte`.)
-MovePixels_QueuedExec:
-	lda xde, (xwa + 4)
-	lda xbc, (xwa + 12)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr MovePixels_Impl
-	ret
+MovePixels_QueuedExec:	.include "includes/generated/cc900/MovePixels_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
-MovePixels_Impl:
-	lda xsp, (xsp - 22)
-	push xiz
-	ld (xsp + 22), xbc
-	ld bc, (xwa + 4)
-	ld (xsp + 4), bc
-	ld bc, (xwa)
-	sub (xsp + 4), bc
-	jrl lt, MovePixels_Impl_Return
-	lda xbc, (xwa + 2)
-	ld (xsp + 10), xbc
-	ld bc, (xwa + 6)
-	ld (xsp + 6), bc
-	ld xbc, (xsp + 10)
-	ld bc, (xbc)
-	sub (xsp + 6), bc
-	jrl lt, MovePixels_Impl_Return
-	ldw (xsp + 8), 0x0
-	cpw (xsp + 6), 0x0
-	jr lt, MovePixels_Impl_SetChangeRect
-
-MovePixels_Impl_RowLoop:
-	ld hl, 0:i3
-	cpw (xsp + 4), 0x0
-	jr lt, MovePixels_Impl_RowAdvance
-
-MovePixels_Impl_ColLoop:
-	lda xix, (xsp + 18)
-	ld bc, (xwa)
-	add bc, hl
-	ld (xix), bc
-	lda xde, (xix + 2)
-	ld xbc, (xsp + 10)
-	ld bc, (xbc)
-	add bc, (xsp + 8)
-	ld (xde), bc
-	lda xiy, (xsp + 14)
-	ld xbc, (xsp + 22)
-	ld bc, (xbc)
-	add bc, hl
-	ld (xiy), bc
-	ld xbc, (xsp + 22)
-	ld bc, (xbc + 2)
-	add bc, (xsp + 8)
-	ld (xiy + 2), bc
-	exts xbc
-	ld xiz, xbc
-	sll xiz, 2
-	add xiz, xbc
-	sll xiz, 6
-	ld bc, (xiy)
-	exts xbc
-	add xbc, xiz
-	lda xiy, (OFFSCREEN_BUFFER_1:24)
-	ld xiz, xiy
-	add xiz, xbc
-	ld bc, (xde)
-	exts xbc
-	ld xde, xbc
-	sll xde, 2
-	add xde, xbc
-	sll xde, 6
-	ld bc, (xix)
-	exts xbc
-	add xbc, xde
-	add xiy, xbc
-	ld c, (xiy)
-	ld (xiz), c
-	inc 1, hl
-	cp hl, (xsp + 4)
-	jr le, MovePixels_Impl_ColLoop
-
-MovePixels_Impl_RowAdvance:
-	incw 1, (xsp + 8)
-	ld bc, (xsp + 8)
-	cp bc, (xsp + 6)
-	jr le, MovePixels_Impl_RowLoop
-
-MovePixels_Impl_SetChangeRect:
-	calr SetChangeRect
-
-MovePixels_Impl_Return:
-	pop xiz
-	lda xsp, (xsp + 22)
-	ret
+MovePixels_Impl:	.include "includes/generated/cc900/MovePixels_Impl.s"	; C: cc900/drawing_primitives_m273_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MovePixels_Impl_RowLoop, MovePixels_Impl + 56
+	.set	MovePixels_Impl_ColLoop, MovePixels_Impl + 65
+	.set	MovePixels_Impl_RowAdvance, MovePixels_Impl + 171
+	.set	MovePixels_Impl_SetChangeRect, MovePixels_Impl + 182
+	.set	MovePixels_Impl_Return, MovePixels_Impl + 185
 
 ; =============================================================================
 ; DrawWall - Fill entire screen / draw wallpaper
@@ -2422,39 +2189,10 @@ DrawBitmap_Impl_Return:
 ;   XWA = pointer to position: word[0]=x, word[2]=y
 ;   XBC = bitmap index (table at 0x913000, 8 bytes per entry)
 ; =============================================================================
-DrawBitmapFast:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBitmapFast_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBitmapFast_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr DrawBitmapFast_Impl
-	jr DrawBitmapFast_Return
-
-DrawBitmapFast_DeferredPath:
-	ldw wa, 0xc
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBitmapFast_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 4)
-	ld (xwa + 8), xbc
-	calr DrawRing_Post
-
-DrawBitmapFast_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+DrawBitmapFast:	.include "includes/generated/cc900/DrawBitmapFast.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBitmapFast_DeferredPath, DrawBitmapFast + 34
+	.set	DrawBitmapFast_Return, DrawBitmapFast + 67
 
 ; Executor of a queued DrawBitmapFast: DrawBitmapFast_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -2462,14 +2200,7 @@ DrawBitmapFast_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawBitmapFast makes before drawing directly) and otherwise calls DrawBitmapFast_Impl.
 ; (Formerly DrawBitmapFast_ParamBlock, held as `.byte`.)
-DrawBitmapFast_QueuedExec:
-	lda xde, (xwa + 4)
-	ld xbc, (xwa + 8)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr DrawBitmapFast_Impl
-	ret
+DrawBitmapFast_QueuedExec:	.include "includes/generated/cc900/DrawBitmapFast_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
 DrawBitmapFast_Impl:
 	lda xsp, (xsp - 24)
@@ -2571,39 +2302,10 @@ DrawBitmapFast_Impl_Return:
 ;
 ; Returns immediately if icon index is 0 (no icon).
 ; =============================================================================
-DrawIcons:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawIcons_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawIcons_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr DrawIcons_Impl
-	jr DrawIcons_Return
-
-DrawIcons_DeferredPath:
-	ldw wa, 0xc
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawIcons_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 4)
-	ld (xwa + 8), xbc
-	calr DrawRing_Post
-
-DrawIcons_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+DrawIcons:	.include "includes/generated/cc900/DrawIcons.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawIcons_DeferredPath, DrawIcons + 34
+	.set	DrawIcons_Return, DrawIcons + 67
 
 ; Executor of a queued DrawIcons: DrawIcons_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -2611,14 +2313,7 @@ DrawIcons_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawIcons makes before drawing directly) and otherwise calls DrawIcons_Impl.
 ; (Formerly DrawIcons_ParamBlock, held as `.byte`.)
-DrawIcons_QueuedExec:
-	lda xde, (xwa + 4)
-	ld xbc, (xwa + 8)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr DrawIcons_Impl
-	ret
+DrawIcons_QueuedExec:	.include "includes/generated/cc900/DrawIcons_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
 DrawIcons_Impl:
 	lda xsp, (xsp - 36)
@@ -2716,43 +2411,10 @@ DrawIcons_Impl_Return:
 	lda xsp, (xsp + 36)
 	ret
 
-DrawFrameSP:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawFrameSP_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawFrameSP_Return
-	ld xwa, xiz
-	ld bc, (xsp + 6)
-	ld de, (xsp + 4)
-	calr DrawFrameSP_Impl
-	jr DrawFrameSP_Return
-
-DrawFrameSP_DeferredPath:
-	ldw wa, 0xc
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawFrameSP_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld bc, (xsp + 6)
-	ld (xwa + 8), bc
-	ld bc, (xsp + 4)
-	ld (xwa + 10), bc
-	calr DrawRing_Post
-
-DrawFrameSP_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+DrawFrameSP:	.include "includes/generated/cc900/DrawFrameSP.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawFrameSP_DeferredPath, DrawFrameSP + 40
+	.set	DrawFrameSP_Return, DrawFrameSP + 79
 
 ; Executor of a queued DrawFrameSP: DrawFrameSP_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -2760,15 +2422,7 @@ DrawFrameSP_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawFrameSP makes before drawing directly) and otherwise calls DrawFrameSP_Impl.
 ; (Formerly DrawFrameSP_ParamBlock, held as `.byte`.)
-DrawFrameSP_QueuedExec:
-	lda xhl, (xwa + 4)
-	ld bc, (xwa + 8)
-	ld de, (xwa + 10)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xhl
-	calr DrawFrameSP_Impl
-	ret
+DrawFrameSP_QueuedExec:	.include "includes/generated/cc900/DrawFrameSP_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
 DrawFrameSP_Impl:
 	lda xsp, (xsp - 34)
@@ -2899,58 +2553,11 @@ DrawFrameSP_Impl_Return:
 ;   XBC = bitmap index
 ;   Stack: additional rendering parameters
 ; =============================================================================
-DrawBitmapSP:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBitmapSP_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBitmapSP_Return
-	pushm (xsp + 14)
-	ld xwa, xiz
-	ld xbc, (xsp + 8)
-	ld de, (xsp + 6)
-	calr DrawBitmapSP_Impl
-	jr DrawBitmapSP_Return
-
-DrawBitmapSP_DeferredPath:
-	ldw wa, 0x10
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBitmapSP_DeferredPath_Code:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 6)
-	ld (xwa + 8), xbc
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	ld bc, (xsp + 14)
-	ld (xwa + 14), bc
-	calr DrawRing_Post
-
-DrawBitmapSP_Return:
-	pop xiz
-	inc 6, xsp
-	retd 0x2
-DrawBitmapSP_DeferredPath_Code:
-	lda xbc, (xwa + 4)
-	ld xhl, (xwa + 8)
-	ld de, (xwa + 12)
-	ld wa, (xwa + 14)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	pushw wa
-	ld xwa, xbc
-	ld xbc, xhl
-	calr DrawBitmapSP_Impl
-	ret
+DrawBitmapSP:	.include "includes/generated/cc900/DrawBitmapSP.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBitmapSP_DeferredPath, DrawBitmapSP + 43
+	.set	DrawBitmapSP_Return, DrawBitmapSP + 88
+DrawBitmapSP_DeferredPath_Code:	.include "includes/generated/cc900/DrawBitmapSP_DeferredPath_Code.s"	; C: cc900/drawing_primitives_m0.c
 
 DrawBitmapSP_Impl:
 	lda xsp, (xsp - 26)
@@ -3122,58 +2729,11 @@ DrawBitmapSP_Impl_Return:
 	lda xsp, (xsp + 26)
 	retd 0x2
 
-DrawBitmapSPFast:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBitmapSPFast_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBitmapSPFast_Return
-	pushm (xsp + 14)
-	ld xwa, xiz
-	ld xbc, (xsp + 8)
-	ld de, (xsp + 6)
-	calr DrawBitmapSPFast_Impl
-	jr DrawBitmapSPFast_Return
-
-DrawBitmapSPFast_DeferredPath:
-	ldw wa, 0x10
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBitmapSPFast_DeferredPath_Code:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 6)
-	ld (xwa + 8), xbc
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	ld bc, (xsp + 14)
-	ld (xwa + 14), bc
-	calr DrawRing_Post
-
-DrawBitmapSPFast_Return:
-	pop xiz
-	inc 6, xsp
-	retd 0x2
-DrawBitmapSPFast_DeferredPath_Code:
-	lda xbc, (xwa + 4)
-	ld xhl, (xwa + 8)
-	ld de, (xwa + 12)
-	ld wa, (xwa + 14)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	pushw wa
-	ld xwa, xbc
-	ld xbc, xhl
-	calr DrawBitmapSPFast_Impl
-	ret
+DrawBitmapSPFast:	.include "includes/generated/cc900/DrawBitmapSPFast.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBitmapSPFast_DeferredPath, DrawBitmapSPFast + 43
+	.set	DrawBitmapSPFast_Return, DrawBitmapSPFast + 88
+DrawBitmapSPFast_DeferredPath_Code:	.include "includes/generated/cc900/DrawBitmapSPFast_DeferredPath_Code.s"	; C: cc900/drawing_primitives_m0.c
 
 DrawBitmapSPFast_Impl:
 	lda xsp, (xsp - 22)
@@ -3250,67 +2810,11 @@ DrawBitmapSPFast_Impl_Return:
 	lda xsp, (xsp + 22)
 	retd 0x2
 
-DrawBitmapSP2:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBitmapSP2_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBitmapSP2_Return
-	pushm (xsp + 18)
-	pushm (xsp + 18)
-	pushm (xsp + 18)
-	ld xwa, xiz
-	ld xbc, (xsp + 12)
-	ld de, (xsp + 10)
-	calr DrawBitmapSP2_Impl
-	jr DrawBitmapSP2_Return
-
-DrawBitmapSP2_DeferredPath:
-	ldw wa, 0x14
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBitmapSP2_DeferredPath_Code:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 6)
-	ld (xwa + 8), xbc
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	ld bc, (xsp + 18)
-	ld (xwa + 14), bc
-	ld bc, (xsp + 16)
-	ld (xwa + 16), bc
-	ld bc, (xsp + 14)
-	ld (xwa + 18), bc
-	calr DrawRing_Post
-
-DrawBitmapSP2_Return:
-	pop xiz
-	inc 6, xsp
-	retd 0x6
-DrawBitmapSP2_DeferredPath_Code:
-	lda xhl, (xwa + 4)
-	ld xbc, (xwa + 8)
-	ld de, (xwa + 12)
-	ld iy, (xwa + 14)
-	ld ix, (xwa + 16)
-	ld wa, (xwa + 18)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	pushw iy
-	pushw ix
-	pushw wa
-	ld xwa, xhl
-	calr DrawBitmapSP2_Impl
-	ret
+DrawBitmapSP2:	.include "includes/generated/cc900/DrawBitmapSP2.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBitmapSP2_DeferredPath, DrawBitmapSP2 + 49
+	.set	DrawBitmapSP2_Return, DrawBitmapSP2 + 106
+DrawBitmapSP2_DeferredPath_Code:	.include "includes/generated/cc900/DrawBitmapSP2_DeferredPath_Code.s"	; C: cc900/drawing_primitives_m0.c
 
 DrawBitmapSP2_Impl:
 	lda xsp, (xsp - 22)
@@ -3860,92 +3364,13 @@ DrawBitmapFile_Impl_Return:
 ;   Text rendered to OFFSCREEN_BUFFER_1 (0x43c00)
 ;   SetChangeRect called with text bounding box
 ; =============================================================================
-DrawString:
-	lda xsp, (xsp - 16)
-	push xiz
-	ld (xsp + 8), xde
-	ld (xsp + 12), xbc
-	ld (xsp + 16), xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawString_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawString_Return
-	ld xwa, (xsp + 28)
-	push xwa
-	pushm (xsp + 30)
-	pushm (xsp + 30)
-	ld xde, (xiz + 16)
-	ld xwa, (xsp + 24)
-	ld xbc, (xsp + 20)
-	calr DrawString_Impl
-	jr DrawString_Return
-
-DrawString_DeferredPath:
-	ld xwa, (xsp + 8)
-	push xwa
-	call Strlen
-	inc 4, xsp
-	inc 1, hl
-	ld wa, hl
-	calr DrawQueue_Alloc
-	ld (xsp + 4), xhl
-	ldw wa, 0x1c
-	calr DrawQueue_Alloc
-	ld xiz, xhl
-	lda xwa, (DrawString_DeferredPath_Code:24)
-	ld (xhl), xwa
-	ld xwa, (xsp + 16)
-	ld xiy, xwa
-	lda xix, (xhl + 4)
-	ld bc, 4:i3
-	ldirw
-	ld xwa, (xsp + 12)
-	ld xiy, xwa
-	lda xix, (xhl + 12)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 4)
-	ld (xhl + 16), xbc
-	ld xwa, (xsp + 8)
-	push xwa
-	push xbc
-	call Strcpy
-	inc 8, xsp
-	ld xwa, (xsp + 28)
-	ld (xiz + 20), xwa
-	ld wa, (xsp + 26)
-	ld (xiz + 24), wa
-	ld wa, (xsp + 24)
-	ld (xiz + 26), wa
-	ld xwa, xiz
-	calr DrawRing_Post
-
-DrawString_Return:
-	pop xiz
-	lda xsp, (xsp + 16)
-	retd 0x8
-DrawString_DeferredPath_Code:
-	push xiz
-	ld xiz, xwa
-	lda xwa, (xiz + 4)
-	lda xbc, (xiz + 12)
-	ld xix, (xiz + 20)
-	ld hl, (xiz + 24)
-	ld de, (xiz + 26)
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawString_DeferredDispatch
-	push xix
-	pushw hl
-	pushw de
-	ld xde, (xiz + 16)
-	calr DrawString_Impl
-
-DrawString_DeferredDispatch:
-	ld xwa, (xiz + 16)
-	calr DrawFunc_Return
-	pop xiz
-	ret
+DrawString:	.include "includes/generated/cc900/DrawString.s"	; C: cc900/drawing_primitives_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawString_DeferredPath, DrawString + 53
+	.set	DrawString_Return, DrawString + 152
+DrawString_DeferredPath_Code:	.include "includes/generated/cc900/DrawString_DeferredPath_Code.s"	; C: cc900/drawing_primitives_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawString_DeferredDispatch, DrawString_DeferredPath_Code + 36
 
 DrawString_Impl:
 	lda xsp, (xsp-316)
@@ -4355,45 +3780,7 @@ DrawStringCentered:
 ;
 ; Positions text at x = rect.left + 4, vertically centered within the rect.
 ; =============================================================================
-DrawStringLeftJustify:
-	lda xsp, (xsp - 14)
-	push xiz
-	ld (xsp + 10), xde
-	ld xiz, xbc
-	ld (xsp + 14), xwa
-	ld xwa, (xsp + 26)
-	call GetCharHeight
-	ld (xsp + 4), hl
-	ld xwa, (xsp + 26)
-	call GetCharDescent
-	ld xiy, xiz
-	lda xix, (xsp + 6)
-	ldiw
-	ldiw
-	lda xbc, (xsp + 6)
-	ld xwa, (xsp + 14)
-	ld wa, (xwa)
-	inc 4, wa
-	ld (xbc), wa
-	ld wa, (xsp + 4)
-	sub wa, hl
-	exts xwa
-	divs wa, 0x2
-	sub (xbc + 2), wa
-	ld xwa, (xsp + 26)
-	call GetCenteredDelta
-	lda xbc, (xsp + 6)
-	add (xbc + 2), hl
-	ld xwa, (xsp + 26)
-	push xwa
-	pushm (xsp + 28)
-	pushm (xsp + 28)
-	ld xwa, (xsp + 22)
-	ld xde, (xsp + 18)
-	calr DrawString
-	pop xiz
-	lda xsp, (xsp + 14)
-	retd 0x8
+DrawStringLeftJustify:	.include "includes/generated/cc900/DrawStringLeftJustify.s"	; C: cc900/drawing_primitives_m273_b.c
 
 ; =============================================================================
 ; DrawStringRightJustify - Draw text right-aligned, vertically centered

@@ -37,3 +37,30 @@ unsigned int PartCtrl_ReadWord(unsigned int n)
 {
   return *(unsigned int *)((unsigned long)ram_b0000 + (((unsigned long)(n - 1) << 8) + 3));
 }
+
+extern unsigned char __near ram_1d7e;
+extern unsigned char __near ram_1d80;
+extern int SeqBuf_GetWritePos(void);
+extern void SeqBuf_FlushAndReinit_NoteEvents(void);
+extern void SeqBuf_FlushAndReinit_VoiceCCEvents(void);
+extern void __cdecl SeqBuf_WriteBytes(unsigned int n, unsigned char *p);
+extern void SeqBuf_WriteMidiEvent(unsigned char *ev, unsigned char n);
+
+void SeqBuf_WriteMidiEvent(unsigned char *ev, unsigned char n)
+{
+	if ((*ev & 0xf0) == 0x90) {
+		if (ram_1d80 != 0)
+			SeqBuf_FlushAndReinit_VoiceCCEvents();
+		if (SeqBuf_GetWritePos() < 15)
+			SeqBuf_FlushAndReinit_NoteEvents();
+		SeqBuf_WriteBytes(n, ev);
+		ram_1d7e = 1;
+	} else {
+		if (ram_1d7e != 0)
+			SeqBuf_FlushAndReinit_NoteEvents();
+		if (SeqBuf_GetWritePos() < 15)
+			SeqBuf_FlushAndReinit_VoiceCCEvents();
+		SeqBuf_WriteBytes(n, ev);
+		ram_1d80 = 1;
+	}
+}

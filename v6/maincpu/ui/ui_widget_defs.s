@@ -1525,123 +1525,11 @@ MainLswPartAdd:
 	popw	iz
 	inc	8, xsp
 	retd	2
-MainLswGet:
-	dec 4, xsp
-
-	push xiz
-
-	ld (xsp + 4), xwa
-
-	pushw 0xc
-
-	call	Malloc
-
-	inc 2, xsp
-
-	ld xiz, xhl
-
-	ld xwa, (xsp + 4)
-
-	ld (xiz), xwa
-
-	ldw (xiz + 4), 0x0
-
-	ldw (xiz + 6), 0x0
-
-	ld xwa, 0:i3
-
-	ld (xiz + 8), xwa
-
-	ld xwa, NAKA_MAINFUNC_MainPmanControl
-
-	ld xbc, EVT_LSW_GET
-
-	ld xde, xiz
-
-	call	FuncCall
-
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-
-	ld xbc, EVT_AUTO_FREE
-
-	ld xde, xiz
-
-	call	FuncCall
-
-	ld hl, 0:i3
-
-	pop xiz
-
-	inc 4, xsp
-
-	ret
+MainLswGet:	.include "includes/generated/cc900/MainLswGet.s"	; C: cc900/ui_widget_defs_m271_c.c
 
 
 
-MainLswPartGet:
-	dec 6, xsp
-
-	pushw iz
-
-	ld (xsp + 6), bc
-
-	ld iz, wa
-
-	pushw 0xc
-
-	call	Malloc
-
-	inc 2, xsp
-
-	ld (xsp + 2), xhl
-
-	ld bc, (xsp + 6)
-
-	extz xbc
-
-	ld de, iz
-
-	extz xde
-
-	sll xde, 16
-
-	add xde, xbc
-
-	ld xwa, (xsp + 2)
-
-	ld (xwa), xde
-
-	ldw (xwa + 4), 0x0
-
-	ldw (xwa + 6), 0x0
-
-	ld xbc, 0:i3
-
-	ld (xwa + 8), xbc
-
-	ld xwa, NAKA_MAINFUNC_MainPmanControl
-
-	ld xbc, EVT_LSW_PART_GET
-
-	ld xde, (xsp + 2)
-
-	call	FuncCall
-
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-
-	ld xbc, EVT_AUTO_FREE
-
-	ld xde, (xsp + 2)
-
-	call	FuncCall
-
-	ld hl, 0:i3
-
-	popw iz
-
-	inc 6, xsp
-
-	ret
+MainLswPartGet:	.include "includes/generated/cc900/MainLswPartGet.s"	; C: cc900/ui_widget_defs_m0.c
 
 
 
@@ -18331,33 +18219,11 @@ LcdOff_Return:	.include "includes/generated/cc900/LcdOff_Return.s"	; C: cc900/ui
 ; only for rows within the dirty bounding box. Processes rows in two passes
 ; (even lines first, then remaining) for potential interlace support.
 ; =============================================================================
-UpdateScreen:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, UpdateScreen_Prologue
-	calr Gfx_BlitDirtyRegions
-	ld wa, (0x030450:24)
-	cp wa, 0:i3
-	ret nz
-	ld (DRAW_ENABLED:24), wa
-	ret
+UpdateScreen:	.include "includes/generated/cc900/UpdateScreen.s"	; C: cc900/ui_widget_defs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UpdateScreen_Prologue, UpdateScreen + 25
 
-UpdateScreen_Prologue:
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (UpdateScreen_CheckDirty:24)
-	ld (xwa), xbc
-	calr DrawRing_Post
-	ret
-
-UpdateScreen_CheckDirty:
-	calr	Gfx_BlitDirtyRegions
-	ld	wa, (197712:24)
-	cp	wa, 0:i3
-	ret	nz
-	ld	(DRAW_ENABLED:24), wa
-	ret
+UpdateScreen_CheckDirty:	.include "includes/generated/cc900/UpdateScreen_CheckDirty.s"	; C: cc900/ui_widget_defs_m0.c
 
 Gfx_BlitDirtyRegions:	.include "includes/generated/cc900/Gfx_BlitDirtyRegions.s"	; C: cc900/ui_widget_defs_m273.c
 ; the hand assembly's labels inside the compiled body, by their offsets

@@ -22126,80 +22126,17 @@ CharMap_ActivePreamb_Prologue2:
 	calr	CharMap_ActivePreamb_Prologue
 	inc	2, xsp
 	ret
-SndParam_ApplyMaskClamp:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp + 4), xbc
-	ld	xiz, xwa
-	ld	xwa, 0xc0
-	call	SndParam_LookupReadOnly
-	cp	hl, 1:i3
-	jrl	z, SndParam_PopIzSkip4Ret
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x78
-	jr	z, SndParam_PopIzSkip4Ret
-	cp	(xiz), 0x7f
-	jr	ugt, ApplyMaskClamp_LoadParam
-	ld	xwa, (xsp + 4)
-	andmi8	(xwa), 0x7
-	jr	SndParam_PopIzSkip4Ret
-ApplyMaskClamp_LoadParam:
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x7
-	jr	nz, ApplyMaskClamp_Compare
-	resm	7, (xiz)
-	ld	c, 0x70:opc
-	jr	SndParam_StoreResult_Return
-ApplyMaskClamp_Compare:
-	cp	(xiz), 0xef
-	jr	ugt, ApplyMaskClamp_LoadParam3
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x0
-	jr	nz, ApplyMaskClamp_LoadParam2
-	resm	7, (xiz)
-	ld	c, 0x10:opc
-	jr	SndParam_StoreResult_Return
-ApplyMaskClamp_LoadParam2:
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x5
-	jr	nz, ApplyMaskClamp_LoadReg
-	resm	7, (xiz)
-	ld	c, 0x15:opc
-	jr	SndParam_StoreResult_Return
-ApplyMaskClamp_LoadParam3:
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x1
-	jr	ugt, ApplyMaskClamp_LoadParam4
-	andmi8	(xiz), 0xf
-	ld	c, (xwa)
-	and	c, 0x1
-	set	6, c
-	ld	(xwa), c
-	jr	SndParam_PopIzSkip4Ret
-ApplyMaskClamp_LoadParam4:
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x6
-	jr	nz, ApplyMaskClamp_LoadParam5
-	ld	(xiz), 0x0
-	ld	c, 0x50:opc
-	jr	SndParam_StoreResult_Return
-ApplyMaskClamp_LoadParam5:
-	ld	xwa, (xsp + 4)
-	cp	(xwa), 0x5
-	jr	nz, ApplyMaskClamp_LoadReg
-	andmi8	(xiz), 0x3
-	ld	c, 0x55:opc
-	jr	SndParam_StoreResult_Return
-ApplyMaskClamp_LoadReg:
-	ld	(xiz), 0x0
-	ld	c, 0x0:opc
-SndParam_StoreResult_Return:
-	ld	xwa, (xsp + 4)
-	ld	(xwa), c
-SndParam_PopIzSkip4Ret:
-	pop	xiz
-	inc	4, xsp
-	ret
+SndParam_ApplyMaskClamp:	.include "includes/generated/cc900/SndParam_ApplyMaskClamp.s"	; C: cc900/note_voice_mapping_m303.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ApplyMaskClamp_LoadParam, SndParam_ApplyMaskClamp + 43
+	.set	ApplyMaskClamp_Compare, SndParam_ApplyMaskClamp + 57
+	.set	ApplyMaskClamp_LoadParam2, SndParam_ApplyMaskClamp + 76
+	.set	ApplyMaskClamp_LoadParam3, SndParam_ApplyMaskClamp + 90
+	.set	ApplyMaskClamp_LoadParam4, SndParam_ApplyMaskClamp + 113
+	.set	ApplyMaskClamp_LoadParam5, SndParam_ApplyMaskClamp + 128
+	.set	ApplyMaskClamp_LoadReg, SndParam_ApplyMaskClamp + 143
+	.set	SndParam_StoreResult_Return, SndParam_ApplyMaskClamp + 148
+	.set	SndParam_PopIzSkip4Ret, SndParam_ApplyMaskClamp + 153
 SndParam_StoreDRAMInit:
 	lda	xsp, (xsp-304)
 	pushw	iz
@@ -26435,81 +26372,15 @@ Strcat_CheckZero2:
 	jr	nz, Strcat_Block
 	ld	(xde), 0x0
 	ret
-Itoa_Safe:
-	lda	xsp, (xsp - 18)
-	push	xiz
-	ld	xhl, (xsp + 28)
-	ld	ix, 0:i3
-	ld	bc, (xsp + 32)
-	cp	bc, 2:i3
-	jr	lt, Itoa_Safe_LoadReg
-	cp	bc, 0x24
-	jr	le, Itoa
-Itoa_Safe_LoadReg:
-	ld	(xhl), 0x0
-	jr	NumFormat_DivideAndC_Epilogue
-; ============================================================================
-; Itoa - Convert integer to ASCII string (C runtime)
-; ============================================================================
-; Input:  (xsp+26) = workspace register set selector
-;         BC = numeric base (e.g., 10 for decimal)
-;         XIZ+4 = output buffer pointer
-; Output: Null-terminated string written to buffer
-; Converts an integer to its string representation in the given base.
-; Handles negative numbers when base is 10 (prepends '-'). Digits above
-; 9 use lowercase letters (a-f). Uses repeated division algorithm.
-; ============================================================================
-Itoa:
-	ld	wa, (xsp + 26)
-	ldfr_werp	WA, 0xe6
-	lda	xiz, (xsp + 4)
-	ld	(xiz + 17), 0x0
-	lda	xiy, (xiz + 16)
-	cp	bc, 0xa
-	jr	nz, NumFormat_DivideAndConvert
-	ldto_werp	WA, 0xe6
-	cp	wa, 0:i3
-	jr	ge, NumFormat_DivideAndConvert
-	ld	ix, 1:i3
-	ldto_werp	WA, 0xe6
-	neg	wa
-	ldfr_werp	WA, 0xe6
-NumFormat_DivideAndConvert:
-	ld	de, bc
-	ldto_werp	WA, 0xe6
-	extz	xwa
-	div	xwa, de
-	ldto_werp	WA, 0xe2
-	add	a, 0x30
-	ld	(xiy), a
-	cp	(xiy), 0x39
-	jr	le, NumFormat_DivideAndConvert_Join
-	addmi8	(xiy), 0x27
-NumFormat_DivideAndConvert_Join:
-	ldto_werp	WA, 0xe6
-	extz	xwa
-	div	xwa, de
-	ldfr_werp	WA, 0xe6
-	cpiw_erp	0xe6, 0
-	jr	z, NumFormat_DivideAndC_Compare
-	dec	1, xiy
-	jr	NumFormat_DivideAndConvert
-NumFormat_DivideAndC_Compare:
-	cp	ix, 0:i3
-	jr	z, NumFormat_DivideAndC_LoadAddr
-	ld	(-xiy), 0x2d
-NumFormat_DivideAndC_LoadAddr:
-	lda	xwa, (xiz + 18)
-	sub	xwa, xiy
-	pushw	wa
-	push	xiy
-	push	xhl
-	call	Mem_Copy
-	lda	xsp, (xsp + 10)
-NumFormat_DivideAndC_Epilogue:
-	pop	xiz
-	lda	xsp, (xsp + 18)
-	ret
+Itoa_Safe:	.include "includes/generated/cc900/Itoa_Safe.s"	; C: cc900/note_voice_mapping_m308.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Itoa_Safe_LoadReg, Itoa_Safe + 22
+	.set	Itoa, Itoa_Safe + 27
+	.set	NumFormat_DivideAndConvert, Itoa_Safe + 66
+	.set	NumFormat_DivideAndConvert_Join, Itoa_Safe + 91
+	.set	NumFormat_DivideAndC_Compare, Itoa_Safe + 110
+	.set	NumFormat_DivideAndC_LoadAddr, Itoa_Safe + 118
+	.set	NumFormat_DivideAndC_Epilogue, Itoa_Safe + 133
 ; Strchr: C strchr(s, c): returns in XHL the first byte of string (xsp+4) equal to (xsp+8), or 0 at the terminating
 ;   NUL. Basis: callers + body.
 Strchr:
