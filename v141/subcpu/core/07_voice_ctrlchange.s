@@ -23,299 +23,29 @@
 ; Decoded targets: 0x78->0x02A3EB, 0x79->0x02A3F6, 0x7B->0x02A402, 0x80->0x02A41D,
 ; 0x81->0x02A433, 0x82->0x02A457; 0x7A, 0x7C, 0x7D, 0x7E and 0x7F all land on
 ; Voice_CC_Exit, i.e. Local Control and the Omni/Mono/Poly mode messages are ignored.
-Voice_CtrlChange:
-	push xiz
-	ld xiz, xwa
-	cp (xiz + 1), 0x1A
-	jrl nc, Voice_CC_Exit
-	ld a, (xiz + 2)
-	cp a, 0x9D
-	jrl z, Voice_CC_TgPanMode
-	cp a, 0x9C
-	jrl z, Voice_CC_KeyScaling
-	cp a, 0x9B
-	jrl z, Voice_CC_GateRoutingMode
-	cp a, 0x97
-	jrl z, Voice_CC_SustainLength
-	cp a, 0x95
-	jrl z, Voice_CC_GlidePedal
-	cp a, 0x91
-	jrl z, Voice_CC_VelSwitchConfig
-	cp a, 0x5E
-	jrl z, Voice_CC_Portamento
-	cp a, 0x5D
-	jrl z, Voice_CC_DspEffectSend
-	cp a, 0x5B
-	jrl z, Voice_CC_ReverbSend
-	cp a, 0x40
-	jrl z, Voice_CC_Sustain
-	cp a, 0xB
-	jrl z, Voice_CC_Expression
-	cp a, 0xA
-	jr z, Voice_CC_Pan
-	cp a, 7:i3
-	jr z, Voice_CC_Volume
-	cp a, 1:i3
-	jr z, Voice_CC_ModWheel
-	extz wa
-	sub wa, 0x78
-	cp wa, 0:i3
-	jrl lt, Voice_CC_Exit
-	cp wa, 0xA
-	jrl gt, Voice_CC_Exit
-	add wa, wa
-	lda xix, (Voice_CC_Mode_CaseOffsets:24)
-	ld	wa, (xix+wa)
-	lda xix, (Voice_CC_ModWheel:24)
-	jp	t, (xix+wa)
-
-; CC 1.  WA = part, BC = value -> Voice_ModWheel_Apply.
-Voice_CC_ModWheel:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_ModWheel_Apply
-	jrl Voice_CC_Exit
-
-; CC 7.  Voice_CC_SetVolume, then Voice_Query_PartVoices (0x02CD36) and
-; Voice_AllVoices_WriteAmplitude -- so the new level reaches TG register 2 immediately.
-Voice_CC_Volume:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetVolume
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_Query_PartVoices
-	ld xwa, xhl
-	calr Voice_AllVoices_WriteAmplitude
-	jrl Voice_CC_Exit
-
-; CC 10.  Voice_CC_SetPan, then EnvTranspose_UpdateLoop (0x032E1E) to push it to hardware.
-Voice_CC_Pan:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetPan
-	ld a, (xiz + 1)
-	extz wa
-	call EnvTranspose_UpdateLoop
-	jrl Voice_CC_Exit
-
-; CC 11.  Voice_CC_SetExpression, then Voice_Query_PartVoices + Voice_AllVoices_WriteAmplitude.
-Voice_CC_Expression:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetExpression
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_Query_PartVoices
-	ld xwa, xhl
-	calr Voice_AllVoices_WriteAmplitude
-	jrl Voice_CC_Exit
-
-; CC 64.  Voice_CC_SetSustain, then Voice_AllocateForSustain (0x02CCF5) and the sustain
-; retrigger scan -- this is the path that re-articulates held notes when the pedal moves.
-Voice_CC_Sustain:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetSustain
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_AllocateForSustain
-	ld xwa, xhl
-	ld bc, 0:i3
-	calr Voice_AllNotes_SustainRetrigger
-	jrl Voice_CC_Exit
-
-; CC 0x5B: the part's REVERB send (main-CPU Lsw 0x05B) -> Voice_CC_SetReverbSend.
-Voice_CC_ReverbSend:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetReverbSend
-	jrl Voice_CC_Exit
-
-; CC 0x5D: the part's DSP EFFECT send (main-CPU Lsw 0x05D) -> Voice_CC_SetDspEffectSend.
-Voice_CC_DspEffectSend:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetDspEffectSend
-	jrl Voice_CC_Exit
-
-; CC 0x5E.  Voice_Portamento_OnHandler + Voice_PortamentoSlots_WriteHW.
-Voice_CC_Portamento:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_Portamento_OnHandler
-	jrl Voice_CC_Exit
-Voice_CC_Num120:
-	ld a, (xiz + 1)
-	extz wa
-	calr Voice_PortamentoSlots_WriteHW
-	jrl Voice_CC_Exit
-Voice_CC_Num121:
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_NoteState_Clear
-	jrl Voice_CC_Exit
-Voice_CC_Num123:
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_SetLFO_ActiveFlag
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_AllocateForRelease
-	ld xwa, xhl
-	call Voice_ParamInit
-	jrl Voice_CC_Exit
-Voice_CC_BendRange:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetBendRange
-	jrl Voice_CC_Exit
-Voice_CC_Tuning:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetTuning
-	ld a, (xiz + 1)
-	extz wa
-	call Voice_Query_PartVoices
-	ld xwa, xhl
-	calr Pitch_Refresh_Sounding_Voices
-	jrl Voice_CC_Exit
-Voice_CC_KeyShift:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetKeyShift
-	jr Voice_CC_Exit
-
-; CC 0x91 (proprietary): the part's velocity-switch configuration -> Voice_CC_SetVelSwitchConfig.
-Voice_CC_VelSwitchConfig:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetVelSwitchConfig
-	jr Voice_CC_Exit
-
-; CC 0x95: the part's GLIDE PEDAL switch (main-CPU Lsw 0x603, sent as 0 / 0x7F) -> Voice_CC_SetGlidePedal.
-Voice_CC_GlidePedal:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetGlidePedal
-	jr Voice_CC_Exit
-
-; CC 0x97: the part's SUSTAIN LENGTH (main-CPU Lsw 0x600, 0..7) -> Voice_CC_SetSustainLength.
-Voice_CC_SustainLength:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetSustainLength
-	jr Voice_CC_Exit
-
-; CC 0x9B (proprietary): the part's gate-word routing override -> Voice_CC_SetGateRoutingMode.
-Voice_CC_GateRoutingMode:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetGateRoutingMode
-	jr Voice_CC_Exit
-
-; CC 0x9C: the part's KEY SCALING switch (main-CPU Lsw 0x602, sent as 0 / 0x7F) -> Voice_CC_SetKeyScaling.
-Voice_CC_KeyScaling:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetKeyScaling
-	jr Voice_CC_Exit
-
-; CC 0x9D (proprietary): the part's TG register 0x180 (pan) override -> Voice_CC_SetTgPanMode.
-Voice_CC_TgPanMode:
-	ld a, (xiz + 1)
-	ld e, a
-	extz de
-	ld a, (xiz + 3)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr Voice_CC_SetTgPanMode
-
-; Common exit: pop XIZ, ret.  Also the landing pad for the five ignored channel-mode CCs.
-Voice_CC_Exit:
-	pop xiz
-	ret
+Voice_CtrlChange:	.include "includes/generated/cc900/Voice_CtrlChange.s"	; C: cc900/voice_ctrlchange_af_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_CC_ModWheel, Voice_CtrlChange + 132
+	.set	Voice_CC_Volume, Voice_CtrlChange + 154
+	.set	Voice_CC_Pan, Voice_CtrlChange + 190
+	.set	Voice_CC_Expression, Voice_CtrlChange + 221
+	.set	Voice_CC_Sustain, Voice_CtrlChange + 257
+	.set	Voice_CC_ReverbSend, Voice_CtrlChange + 295
+	.set	Voice_CC_DspEffectSend, Voice_CtrlChange + 317
+	.set	Voice_CC_Portamento, Voice_CtrlChange + 339
+	.set	Voice_CC_Num120, Voice_CtrlChange + 361
+	.set	Voice_CC_Num121, Voice_CtrlChange + 372
+	.set	Voice_CC_Num123, Voice_CtrlChange + 384
+	.set	Voice_CC_BendRange, Voice_CtrlChange + 411
+	.set	Voice_CC_Tuning, Voice_CtrlChange + 433
+	.set	Voice_CC_KeyShift, Voice_CtrlChange + 469
+	.set	Voice_CC_VelSwitchConfig, Voice_CtrlChange + 490
+	.set	Voice_CC_GlidePedal, Voice_CtrlChange + 511
+	.set	Voice_CC_SustainLength, Voice_CtrlChange + 532
+	.set	Voice_CC_GateRoutingMode, Voice_CtrlChange + 553
+	.set	Voice_CC_KeyScaling, Voice_CtrlChange + 574
+	.set	Voice_CC_TgPanMode, Voice_CtrlChange + 595
+	.set	Voice_CC_Exit, Voice_CtrlChange + 614
 
 ; MIDI 0xD0 channel pressure.  XWA -> message (+1 part, +2 = 0, +3 value; MIDI_SendChannelPressure on the main CPU).  Rejects part >= 0x1A,
 ; follows the patch pointer at part+0x06 and switches on (patch+0x10) & 0xC0 exactly as
@@ -537,207 +267,36 @@ Voice_AllVoices_PortamentoUpdate:	.include "includes/generated/cc900/Voice_AllVo
 ; after a further -0x1B, if 8 <= index <= 0x16 (sub-commands 0xA3..0xB1).  Everything else
 ; returns.  The accepted index is doubled, used to read a word from the table at 0x00F74F
 ; and added to the stub-table base 0x02A7FC.
-Voice_SystemMsg:
-	ld c, (xwa + 2)
-	cp c, 0x99
-	jrl z, Voice_SystemMsg_DispatchEntry2
-	cp c, 0x92
-	jrl z, Voice_SystemMsg_DispatchEntry1
-	cp c, 0x91
-	jr z, Voice_SystemMsg_DispatchEntry0
-	cp c, 0x9
-	jr z, Voice_SystemMsg_DispatchTable
-	extz bc
-	sub bc, 0x80
-	cp bc, 0:i3
-	ret lt
-	cp bc, 7:i3
-	jr le, Voice_SystemMsg_DispatchJump
-	sub bc, 0x1B
-	cp bc, 0x8
-	ret lt
-	cp bc, 0x16
-	ret gt
-
-; The computed jump itself: BC*2 -> word at 0x00F74F -> jp (0x02A7FC + offset).
-Voice_SystemMsg_DispatchJump:
-	add bc, bc
-	lda xix, (Voice_SystemMsg_CaseOffsets:24)
-	ld	bc, (xix+bc)
-	lda xix, (Voice_SystemMsg_DispatchTable:24)
-	jp	t, (xix+bc)
-
-; --- 0x02A7FC-0x02A837  Voice_SystemMsg_DispatchTable
-; Stubs of the form `ld A,(XWA+3) [; extz WA] ; jrl <handler>` -- 8 bytes with the extz,
-; 6 without.  Resolved by adding the word at 0x00F74F + index*2 to this base:
-;   (reached directly when sub-command == 0x09, NOT via the table) 0x02A7FC ->
-;                                             Voice_SetPolyphonyMode
-;   index 0 (sub-cmd 0x80) offset 0x0008 -> 0x02A804 VoiceCC_Stub_Ret1
-;   index 1 (0x81)         offset 0x0010 -> 0x02A80C VoiceCC_Stub_Ret2
-;   index 2 (0x82)         offset 0x0018 -> 0x02A814 Voice_SetMasterTuneAndApply
-;   index 3 (0x83)         offset 0x001E -> 0x02A81A Voice_SetPitchBendRange
-;   index 4 (0x84)         offset 0x00F6 -> 0x02A8F2 a bare `ret` (sub-command ignored)
-;   index 5 (0x85)         offset 0x0024 -> 0x02A820 Voice_SetKeyShiftEnable
-;   index 6 (0x86)         offset 0x002C -> 0x02A828 ScaleTune_Set_Global_Mode
-;   index 7 (0x87)         offset 0x0034 -> 0x02A830 Voice_SetRhythmMode
-; Indices 8..0x16 (sub-commands 0xA3..0xB1) resolve past 0x02A838 into the three named
-; DispatchEntry stubs and the code that follows them; index > 0x16 is rejected by the caller.
-; (Measured from the table, Voice_SystemMsg_CaseOffsets: none of 8..0x16 lands ON a
-; DispatchEntry stub -- index 8 is the instruction right after DispatchEntry2's `jrl`, and
-; 9..0x16 the stubs after that, labelled Voice_SystemMsg_SubA3 .. _SubB1.)
-Voice_SystemMsg_DispatchTable:
-	ld a, (xwa + 3)
-	extz wa
-	jrl Voice_SetPolyphonyMode
-; Voice_SystemMsg_CallStubRet1: Case for system sub-command 0x80 of Voice_SystemMsg: passes message byte 3 in A/WA to
-;   a bare-`ret` stub (also called with 0x7F by Voice_ResetAllControllers): sub-command 0x80 has no effect in v1.42.
-;   Basis: table + body.
-Voice_SystemMsg_CallStubRet1:
-	ld a, (xwa + 3)
-	extz wa
-	jrl VoiceCC_Stub_Ret1
-; Voice_SystemMsg_CallStubRet2: Case for system sub-command 0x81 of Voice_SystemMsg: passes message byte 3 in A/WA to
-;   the second bare-`ret` stub: sub-command 0x81 has no effect in v1.42. Basis: table + body.
-Voice_SystemMsg_CallStubRet2:
-	ld a, (xwa + 3)
-	extz wa
-	jrl VoiceCC_Stub_Ret2
-; Voice_SystemMsg_SetMasterTune: Case for system sub-command 0x82 of Voice_SystemMsg: passes message byte 3 in A/WA to
-;   the master-tune setter (word (A - 0x40) * 2 at 0x041347) that then refreshes the sounding voices' pitch. Basis:
-;   table + body.
-Voice_SystemMsg_SetMasterTune:
-	ld a, (xwa + 3)
-	jrl Voice_SetMasterTuneAndApply
-; Voice_SystemMsg_SetPitchBendRange: Case for system sub-command 0x83 of Voice_SystemMsg: passes message byte 3 in
-;   A/WA to Voice_SetPitchBendRange ((s8)A << 8 at 0x041349). Basis: table + body.
-Voice_SystemMsg_SetPitchBendRange:
-	ld a, (xwa + 3)
-	jrl Voice_SetPitchBendRange
-; Voice_SystemMsg_SetKeyShiftEnable: Case for system sub-command 0x85 of Voice_SystemMsg: passes message byte 3 in
-;   A/WA to Voice_SetKeyShiftEnable. Basis: table + body.
-Voice_SystemMsg_SetKeyShiftEnable:
-	ld a, (xwa + 3)
-	extz wa
-	jrl Voice_SetKeyShiftEnable
-; Voice_SystemMsg_SetScaleTuneMode: Case for system sub-command 0x86 of Voice_SystemMsg: passes message byte 3 in A/WA
-;   to ScaleTune_Set_Global_Mode (A -> byte 0x04134D). Basis: table + body.
-Voice_SystemMsg_SetScaleTuneMode:
-	ld a, (xwa + 3)
-	extz wa
-	jrl ScaleTune_Set_Global_Mode
-; Voice_SystemMsg_SetRhythmMode: Case for system sub-command 0x87 of Voice_SystemMsg: passes message byte 3 in A/WA to
-;   Voice_SetRhythmMode (packed rhythm-mode byte -> 0x04135E block). Basis: table + body.
-Voice_SystemMsg_SetRhythmMode:
-	ld a, (xwa + 3)
-	extz wa
-	jrl Voice_SetRhythmMode
-
-; Sub-command 0x91 -> Voice_SetVelSwitchConfig.
-Voice_SystemMsg_DispatchEntry0:
-	ld a, (xwa + 3)
-	extz wa
-	jrl Voice_SetVelSwitchConfig
-
-; Sub-command 0x92 -> Voice_AllVoices_PortamentoUpdate (no argument).
-Voice_SystemMsg_DispatchEntry1:
-	jrl Voice_AllVoices_PortamentoUpdate
-
-; Sub-command 0x99 -> Voice_SetCCMaxFlag(A = message byte 3), and nothing else: the `jrl`
-; is unconditional.  The stubs after it are cases 0xA3..0xB1 of Voice_SystemMsg_CaseOffsets
-; (Voice_SystemMsg_SubA3 .. _SubB1), and 0x84 lands on the bare `ret` at the end.
-; ★ CORRECTED 2026-09-25: this said "Sub-command 0x99 -> a small group ending in
-; ScaleTune_Set_User_Offset with WA = 0x0B, Voice_AllVoices_UpdateVelocity and
-; ScaleTune_Set_Global_Enabled" -- those are the separately-dispatched stubs that follow.
-Voice_SystemMsg_DispatchEntry2:
-	ld a, (xwa + 3)
-	extz wa
-	jrl Voice_SetCCMaxFlag
-Voice_SystemMsg_SubA3:
-	jrl Voice_AllVoices_PortamentoReset
-Voice_SystemMsg_SubA4:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 0:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubA5:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 1:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubA6:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 2:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubA7:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 3:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubA8:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 4:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubA9:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 5:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubAA:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 6:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubAB:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ld wa, 7:i3
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubAC:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ldw wa, 0x8
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubAD:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ldw wa, 0x9
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubAE:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ldw wa, 0xA
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubAF:
-	ld a, (xwa + 3)
-	extz wa
-	ld bc, wa
-	ldw wa, 0xB
-	jrl ScaleTune_Set_User_Offset
-Voice_SystemMsg_SubB0:
-	ld a, (xwa + 3)
-	extz wa
-	jrl Voice_AllVoices_UpdateVelocity
-Voice_SystemMsg_SubB1:
-	ld a, (xwa + 3)
-	extz wa
-	jrl ScaleTune_Set_Global_Enabled
-; Voice_SystemMsg_Ignore: Case for system sub-command 0x84 of Voice_SystemMsg: a bare `ret`, so 0x84 is accepted by
-;   the range check and ignored. Basis: table + body.
-Voice_SystemMsg_Ignore:
-	ret
+Voice_SystemMsg:	.include "includes/generated/cc900/Voice_SystemMsg.s"	; C: cc900/voice_ctrlchange_af_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SystemMsg_DispatchJump, Voice_SystemMsg + 55
+	.set	Voice_SystemMsg_DispatchTable, Voice_SystemMsg + 77
+	.set	Voice_SystemMsg_CallStubRet1, Voice_SystemMsg + 85
+	.set	Voice_SystemMsg_CallStubRet2, Voice_SystemMsg + 93
+	.set	Voice_SystemMsg_SetMasterTune, Voice_SystemMsg + 101
+	.set	Voice_SystemMsg_SetPitchBendRange, Voice_SystemMsg + 107
+	.set	Voice_SystemMsg_SetKeyShiftEnable, Voice_SystemMsg + 113
+	.set	Voice_SystemMsg_SetScaleTuneMode, Voice_SystemMsg + 121
+	.set	Voice_SystemMsg_SetRhythmMode, Voice_SystemMsg + 129
+	.set	Voice_SystemMsg_DispatchEntry0, Voice_SystemMsg + 137
+	.set	Voice_SystemMsg_DispatchEntry1, Voice_SystemMsg + 145
+	.set	Voice_SystemMsg_DispatchEntry2, Voice_SystemMsg + 148
+	.set	Voice_SystemMsg_SubA3, Voice_SystemMsg + 156
+	.set	Voice_SystemMsg_SubA4, Voice_SystemMsg + 159
+	.set	Voice_SystemMsg_SubA5, Voice_SystemMsg + 171
+	.set	Voice_SystemMsg_SubA6, Voice_SystemMsg + 183
+	.set	Voice_SystemMsg_SubA7, Voice_SystemMsg + 195
+	.set	Voice_SystemMsg_SubA8, Voice_SystemMsg + 207
+	.set	Voice_SystemMsg_SubA9, Voice_SystemMsg + 219
+	.set	Voice_SystemMsg_SubAA, Voice_SystemMsg + 231
+	.set	Voice_SystemMsg_SubAB, Voice_SystemMsg + 243
+	.set	Voice_SystemMsg_SubAC, Voice_SystemMsg + 255
+	.set	Voice_SystemMsg_SubAD, Voice_SystemMsg + 268
+	.set	Voice_SystemMsg_SubAE, Voice_SystemMsg + 281
+	.set	Voice_SystemMsg_SubAF, Voice_SystemMsg + 294
+	.set	Voice_SystemMsg_SubB0, Voice_SystemMsg + 307
+	.set	Voice_SystemMsg_SubB1, Voice_SystemMsg + 315
+	.set	Voice_SystemMsg_Ignore, Voice_SystemMsg + 323
 
 ; Full audio-side reset.  Reached by `jp` from the audio init sequence (right after
 ; DSP_Config_Init, DSP_Reset, Voice_Reset_Engine(0), DSP_ResetWriteBufferPtr,

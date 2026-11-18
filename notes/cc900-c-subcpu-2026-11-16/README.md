@@ -163,6 +163,16 @@ DSP_EFFPARAM_APPLY_JUMPTABLE, VOICE_DSPOUT_A_JUMPTABLE, VOICE_DSPOUT_B_JUMPTABLE
 VOICE_DSPOUT_SECOND_A_JUMPTABLE).  **477 functions per tree** built from C, DSP_BytecodeInterpreter_Init
 (1,933 B) among them; `make -j2 gate` PASS.
 
+**Seventh promotion: round 20's 18 (2026-11-18; runs 2026-11-18-3, -6 and -8 matched them, -8 and -9 verified them
+per tree).**  9 files through `promote_v423_run.sh`: the six AudioChannel_Handler_Cmd*, Voice_InterpolateNoteCurve,
+Voice_PortaLevel_Compute, Voice_ScanSlots_ReassignSources, the switches Voice_CtrlChange, Voice_SystemMsg and
+DSP_AlgoType_Dispatch1/2/3 with their case tables, and the first floating-point functions, DSP_ParamInterp_FPComplex,
+DSP_VolumeCurve_FP, DSP_ReverbCurve_FP and DSP_AlgoParam_Decode with their constants.  18 functions, 7,012 B per tree
+(staged_v423.tsv's rows of runs -8 / -9); **495 functions per tree** built from C (`c_duplicates.py`).  The ready
+list of the near-miss index offered nothing new (`ready_check.py`: all 137 lane_sub rows were already built).
+`scripts/tools/cc900_splice.py` learned that a cc900-data object may start on its label's own line (`Label:\t.double
+2.0`, how the FP constants are written) and that .float / .double are data.  `make -j2 gate` PASS.
+
 ### Floating point at -Xr (runs 2026-11-17-7 and 2026-11-17-9)
 
 - A register-convention function may not return float or double: V4.23 says `THC1-Error-373: Illegal function
@@ -216,6 +226,8 @@ What the spellings taught (every call address matched from the first run; only f
 | `fp_names.py`         | which library routines V4.23 calls in each function of a listing (names only)                                                                                                                                                                         | `python3 -B notes/cc900-c-subcpu-2026-11-16/fp_names.py LISTING.asm ...`                         |
 | `open_list.py`        | which attempted functions still do not match, with each one's best attempt (HANDOFF's count)                                                                                                                                                          | `python3 -B notes/cc900-c-subcpu-2026-11-16/open_list.py`                                        |
 | `syntax_check.sh`     | gcc C89 pre-check of probe files before a VM run                                                                                                                                                                                                      | `bash notes/cc900-c-subcpu-2026-11-16/syntax_check.sh FILE.c ...`                                |
+| `ready_check.py`      | which lane_sub rows of the near-miss index's ready.tsv are really new (built, staged, or NEW)                                                                                                                                                         | `python3 -B notes/cc900-c-subcpu-2026-11-16/ready_check.py [--new]`                              |
+| `never_tried.py`      | which pool candidates no probe has compiled yet, largest first, with totals per pool                                                                                                                                                                  | `python3 -B notes/cc900-c-subcpu-2026-11-16/never_tried.py`                                      |
 | `helper-generators/`  | the helpers' generators of their probe forms, and their diff tools `idiff.py` / `ctx.py` (instruction-level diff of a listing function against the ROM); `fpconst.py` prints every FP constant of the payload with an exact C literal (`fpconst.txt`) | read each file's head; run from the repository root                                              |
 
 ## Where the helpers stopped (round 11, 2026-11-16)

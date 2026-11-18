@@ -21,7 +21,8 @@ def main():
         lo = int(a[a.index('--min') + 1])
     if '--max' in a:
         hi = int(a[a.index('--max') + 1])
-    tried = set(I.best_attempts(I.matched()))
+    done = I.matched()                                        # staged or built (a MATCH in staged_v423.tsv)
+    tried = set(I.best_attempts(done)) | set(done)
     rows, tot = [], {}
     for p in sorted(glob.glob(os.path.join(HERE, 'pools', 'pool_*_remaining.txt'))):
         tag = os.path.basename(p).split('_')[1]

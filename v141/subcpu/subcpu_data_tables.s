@@ -681,47 +681,13 @@ AudioChannel_CaseOffsets:	.include "includes/generated/cc900/AudioChannel_CaseOf
 ; Sound Off / Reset All Controllers / All Notes Off; 128..130 are not MIDI controller
 ; numbers, so they arrive from inside the firmware.  Each target's body is its callee
 ; list, written next to its entry.)
-Voice_CC_Mode_CaseOffsets:
-	.short Voice_CC_Num120 - Voice_CC_ModWheel							; CC 120 -> Voice_PortamentoSlots_WriteHW(part)
-	.short Voice_CC_Num121 - Voice_CC_ModWheel							; CC 121 -> Voice_NoteState_Clear(part)
-	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 122 -> Voice_CC_Exit (ignored)
-	.short Voice_CC_Num123 - Voice_CC_ModWheel							; CC 123 -> Voice_SetLFO_ActiveFlag, Voice_AllocateForRelease, Voice_ParamInit
-	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 124 -> Voice_CC_Exit (ignored)
-	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 125 -> Voice_CC_Exit (ignored)
-	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 126 -> Voice_CC_Exit (ignored)
-	.short Voice_CC_Exit - Voice_CC_ModWheel							; CC 127 -> Voice_CC_Exit (ignored)
-	.short Voice_CC_BendRange - Voice_CC_ModWheel							; CC 128 -> Voice_CC_SetBendRange(part, value)
-	.short Voice_CC_Tuning - Voice_CC_ModWheel							; CC 129 -> Voice_CC_SetTuning, then Pitch_Refresh_Sounding_Voices
-	.short Voice_CC_KeyShift - Voice_CC_ModWheel							; CC 130 -> Voice_CC_SetKeyShift(part, value)
+Voice_CC_Mode_CaseOffsets:	.include "includes/generated/cc900/Voice_CC_Mode_CaseOffsets.s"	; C: cc900/voice_ctrlchange_af_20a.c (cc900-data)
 ; --- 0x00F74F-0x00F77C  23 x u16 case offsets from Voice_SystemMsg_DispatchTable (0x02A7FC).
 ; Read by Voice_SystemMsg (0x02A7AF, the jump at Voice_SystemMsg_DispatchJump):
 ; sub-command C - 0x80 in 0..7 is used directly; otherwise C - 0x80 - 0x1B must be
 ; 8..0x16, so entries 8..22 serve sub-commands 0xA3..0xB1 (23 entries in all).
 ; Doubled, ldw_sri / jp t, (xrr+rr).  Sub-command 0x84 lands on a bare `ret`.
-Voice_SystemMsg_CaseOffsets:
-	.short Voice_SystemMsg_CallStubRet1 - Voice_SystemMsg_DispatchTable					; sub-command 0x80
-	.short Voice_SystemMsg_CallStubRet2 - Voice_SystemMsg_DispatchTable					; sub-command 0x81
-	.short Voice_SystemMsg_SetMasterTune - Voice_SystemMsg_DispatchTable					; sub-command 0x82
-	.short Voice_SystemMsg_SetPitchBendRange - Voice_SystemMsg_DispatchTable					; sub-command 0x83
-	.short Voice_SystemMsg_Ignore - Voice_SystemMsg_DispatchTable					; sub-command 0x84
-	.short Voice_SystemMsg_SetKeyShiftEnable - Voice_SystemMsg_DispatchTable					; sub-command 0x85
-	.short Voice_SystemMsg_SetScaleTuneMode - Voice_SystemMsg_DispatchTable					; sub-command 0x86
-	.short Voice_SystemMsg_SetRhythmMode - Voice_SystemMsg_DispatchTable					; sub-command 0x87
-	.short Voice_SystemMsg_SubA3 - Voice_SystemMsg_DispatchTable					; sub-command 0xA3
-	.short Voice_SystemMsg_SubA4 - Voice_SystemMsg_DispatchTable					; sub-command 0xA4
-	.short Voice_SystemMsg_SubA5 - Voice_SystemMsg_DispatchTable					; sub-command 0xA5
-	.short Voice_SystemMsg_SubA6 - Voice_SystemMsg_DispatchTable					; sub-command 0xA6
-	.short Voice_SystemMsg_SubA7 - Voice_SystemMsg_DispatchTable					; sub-command 0xA7
-	.short Voice_SystemMsg_SubA8 - Voice_SystemMsg_DispatchTable					; sub-command 0xA8
-	.short Voice_SystemMsg_SubA9 - Voice_SystemMsg_DispatchTable					; sub-command 0xA9
-	.short Voice_SystemMsg_SubAA - Voice_SystemMsg_DispatchTable					; sub-command 0xAA
-	.short Voice_SystemMsg_SubAB - Voice_SystemMsg_DispatchTable					; sub-command 0xAB
-	.short Voice_SystemMsg_SubAC - Voice_SystemMsg_DispatchTable					; sub-command 0xAC
-	.short Voice_SystemMsg_SubAD - Voice_SystemMsg_DispatchTable					; sub-command 0xAD
-	.short Voice_SystemMsg_SubAE - Voice_SystemMsg_DispatchTable					; sub-command 0xAE
-	.short Voice_SystemMsg_SubAF - Voice_SystemMsg_DispatchTable					; sub-command 0xAF
-	.short Voice_SystemMsg_SubB0 - Voice_SystemMsg_DispatchTable					; sub-command 0xB0
-	.short Voice_SystemMsg_SubB1 - Voice_SystemMsg_DispatchTable					; sub-command 0xB1
+Voice_SystemMsg_CaseOffsets:	.include "includes/generated/cc900/Voice_SystemMsg_CaseOffsets.s"	; C: cc900/voice_ctrlchange_af_20a.c (cc900-data)
 ; --- 0x00F77D-0x00F785  3 records x 3 bytes: scratch-array slot of each 4-bit field
 ; Read by Voice_Selector_Unpack3Groups (0x02ABEE): for group E = 0..2 it reads bytes
 ; [table + 3E + 0], [+1], [+2] (three `lda (table+k:24)` bases, index E*3 via `muls 3`) and
@@ -1111,51 +1077,15 @@ SlotEnableMaskB:
 
 ; --- 0x00FB66-0x00FB7D  DSP_AlgoType_Dispatch1_CaseOffsets -- 12 u16 jump offsets, base 0x033812
 ; Computed jump in DSP_AlgoType_Dispatch1 (algorithm type 0..0x0B): `jp T, 0x033812 + table[index*2]`.
-DSP_AlgoType_Dispatch1_CaseOffsets:
-	.short DSP_AlgoType_Dispatch1_Arms - DSP_AlgoType_Dispatch1_Arms	; index 0
-	.short DSP_AlgoType_Dispatch1_Arms - DSP_AlgoType_Dispatch1_Arms	; index 1
-	.short DSP_AlgoType_Dispatch1_Arms - DSP_AlgoType_Dispatch1_Arms	; index 2
-	.short DSP_AlgoType_Dispatch1_Arms - DSP_AlgoType_Dispatch1_Arms	; index 3
-	.short DSP_AlgoType_D1_Arm_Type457 - DSP_AlgoType_Dispatch1_Arms	; index 4
-	.short DSP_AlgoType_D1_Arm_Type457 - DSP_AlgoType_Dispatch1_Arms	; index 5
-	.short DSP_AlgoType_Dispatch1_Store - DSP_AlgoType_Dispatch1_Arms	; index 6
-	.short DSP_AlgoType_D1_Arm_Type457 - DSP_AlgoType_Dispatch1_Arms	; index 7
-	.short DSP_AlgoType_Dispatch1_Store - DSP_AlgoType_Dispatch1_Arms	; index 8
-	.short DSP_AlgoType_Dispatch1_Store - DSP_AlgoType_Dispatch1_Arms	; index 9
-	.short DSP_AlgoType_D1_Arm_TypeAB - DSP_AlgoType_Dispatch1_Arms	; index 10
-	.short DSP_AlgoType_D1_Arm_TypeAB - DSP_AlgoType_Dispatch1_Arms	; index 11
+DSP_AlgoType_Dispatch1_CaseOffsets:	.include "includes/generated/cc900/DSP_AlgoType_Dispatch1_CaseOffsets.s"	; C: cc900/dsp_voice_params_af_20b.c (cc900-data)
 
 ; --- 0x00FB7E-0x00FB95  DSP_AlgoType_Dispatch2_CaseOffsets -- 12 u16 jump offsets, base 0x0339DE
 ; Computed jump in DSP_AlgoType_Dispatch2 (algorithm type 0..0x0B): `jp T, 0x0339DE + table[index*2]`.
-DSP_AlgoType_Dispatch2_CaseOffsets:
-	.short DSP_AlgoType_Dispatch2_Arms - DSP_AlgoType_Dispatch2_Arms	; index 0
-	.short DSP_AlgoType_Dispatch2_Arms - DSP_AlgoType_Dispatch2_Arms	; index 1
-	.short DSP_AlgoType_Dispatch2_Arms - DSP_AlgoType_Dispatch2_Arms	; index 2
-	.short DSP_AlgoType_Dispatch2_Arms - DSP_AlgoType_Dispatch2_Arms	; index 3
-	.short DSP_AlgoType_D2_Arm_Type457 - DSP_AlgoType_Dispatch2_Arms	; index 4
-	.short DSP_AlgoType_D2_Arm_Type457 - DSP_AlgoType_Dispatch2_Arms	; index 5
-	.short DSP_AlgoType_Dispatch2_Store - DSP_AlgoType_Dispatch2_Arms	; index 6
-	.short DSP_AlgoType_D2_Arm_Type457 - DSP_AlgoType_Dispatch2_Arms	; index 7
-	.short DSP_AlgoType_Dispatch2_Store - DSP_AlgoType_Dispatch2_Arms	; index 8
-	.short DSP_AlgoType_Dispatch2_Store - DSP_AlgoType_Dispatch2_Arms	; index 9
-	.short DSP_AlgoType_D2_Arm_TypeAB - DSP_AlgoType_Dispatch2_Arms	; index 10
-	.short DSP_AlgoType_D2_Arm_TypeAB - DSP_AlgoType_Dispatch2_Arms	; index 11
+DSP_AlgoType_Dispatch2_CaseOffsets:	.include "includes/generated/cc900/DSP_AlgoType_Dispatch2_CaseOffsets.s"	; C: cc900/dsp_voice_params_af_20b.c (cc900-data)
 
 ; --- 0x00FB96-0x00FBAD  DSP_AlgoType_Dispatch3_CaseOffsets -- 12 u16 jump offsets, base 0x033E44
 ; Computed jump in DSP_AlgoType_Dispatch3 (algorithm type 0..0x0B; types 6, 8, 9 land on the bare ret): `jp T, 0x033E44 + table[index*2]`.
-DSP_AlgoType_Dispatch3_CaseOffsets:
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 0
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 1
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 2
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 3
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 4
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 5
-	.short DSP_AlgoType_D3_Return - DSP_AlgoType_D3_Arm_Types0to5_7	; index 6
-	.short DSP_AlgoType_D3_Arm_Types0to5_7 - DSP_AlgoType_D3_Arm_Types0to5_7	; index 7
-	.short DSP_AlgoType_D3_Return - DSP_AlgoType_D3_Arm_Types0to5_7	; index 8
-	.short DSP_AlgoType_D3_Return - DSP_AlgoType_D3_Arm_Types0to5_7	; index 9
-	.short DSP_AlgoType_D3_Arm_TypeAB - DSP_AlgoType_D3_Arm_Types0to5_7	; index 10
-	.short DSP_AlgoType_D3_Arm_TypeAB - DSP_AlgoType_D3_Arm_Types0to5_7	; index 11
+DSP_AlgoType_Dispatch3_CaseOffsets:	.include "includes/generated/cc900/DSP_AlgoType_Dispatch3_CaseOffsets.s"	; C: cc900/dsp_voice_params_af_20a.c (cc900-data)
 
 ; --- 0x00FBAE-0x00FBBF  Algo_SubTable_DispatchB_CaseOffsets -- 9 u16 jump offsets, base 0x0340CC
 ; Computed jump in Algo_SubTable_DispatchB (algorithm type 0..8): `jp T, 0x0340CC + table[index*2]`.
@@ -2948,10 +2878,8 @@ DSP_CoeffCurve_Op62:
 ;   negated first); its twin FP_Const_0p552_Add is read only by DSP_AlgoParam_Decode_Type1 and would follow as
 ;   FPConst_DSP_AlgoParam_Decode_Type1_0p552. Basis: reader + bytes, named by the pool's FPConst_<reader>_<value>
 ;   convention -- what 0.552 means is not established.
-FPConst_DSP_AlgoParam_Decode_0p552:
-	.double 0.552
-FP_Const_0p552_Add:
-	.double 0.552
+FPConst_DSP_AlgoParam_Decode_0p552:	.include "includes/generated/cc900/FPConst_DSP_AlgoParam_Decode_0p552.s"	; C: cc900/dsp_control_routines_fp_21a.c (cc900-data)
+FP_Const_0p552_Add:	.include "includes/generated/cc900/FP_Const_0p552_Add.s"	; C: cc900/dsp_control_routines_fp_21a.c (cc900-data)
 
 ; --- 0x012cd3-0x0131ce  floating-point constant pool of the DSP coefficient routines:
 ; 127 x f32 and 98 x f64, one constant per lda_24 site (lda_24 takes only numeric
@@ -2966,56 +2894,56 @@ FP_Const_0p552_Add:
 ; label DSP_FP_ConstPool is gone: an address carries one name, and the first constant has
 ; its own.  Measured by that script: 127 x f32 + 96 x f64 = 1,276 bytes tile
 ; 0x012CD3-0x0131CE exactly, read by 223 sites, one per constant (so "98 x f64" above is 2 high).
-FPConst_DSP_VolumeCurve_FP_30:	.float 3e+01	; f32 3e+01, read by DSP_VolumeCurve_FP (operand at 0x039311)
+FPConst_DSP_VolumeCurve_FP_30:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_30.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
 ; FPConst_DSP_VolumeCurve_FP_SampleRate: f32 44100.0, the DSP sample rate (44.1 kHz): the x <= 75 arm of
 ;   DSP_VolumeCurve_FP builds 44100*(30x + 75) and returns 2^23 * 2^(1800 / (75 - 44100*(30x + 75))) = 2^23 * 2^(-24 /
 ;   (44100*T - 1)), T = 1 + 0.4x, a per-sample factor that falls by 2^-24 over 44100*T samples. Basis: reader + bytes;
 ;   the x > 75 arm has the same form with T = 1.25x - 61.5, and 44100 is the hard-coded rate of the sibling decoders.
-FPConst_DSP_VolumeCurve_FP_SampleRate:	.float 4.41e+04	; f32 4.41e+04, read by DSP_VolumeCurve_FP (operand at 0x039320)
-FPConst_DSP_VolumeCurve_FP_3307500:	.float 3.3075e+06	; f32 3.3075e+06, read by DSP_VolumeCurve_FP (operand at 0x03932F)
-FPConst_DSP_VolumeCurve_FP_75:	.float 75	; f32 75, read by DSP_VolumeCurve_FP (operand at 0x03933B)
-FPConst_DSP_VolumeCurve_FP_1800:	.float 1.8e+03	; f32 1.8e+03, read by DSP_VolumeCurve_FP (operand at 0x03934A)
-FPConst_DSP_VolumeCurve_FP_2:	.double 2.0	; f64 2.0, read by DSP_VolumeCurve_FP (operand at 0x03936D)
-FPConst_DSP_VolumeCurve_FP_HighRange_30:	.float 3e+01	; f32 3e+01, read by DSP_VolumeCurve_FP_HighRange (operand at 0x03939E)
+FPConst_DSP_VolumeCurve_FP_SampleRate:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_SampleRate.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_3307500:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_3307500.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_75:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_75.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_1800:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_1800.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_2:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_2.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_HighRange_30:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_HighRange_30.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
 ; FPConst_DSP_VolumeCurve_FP_HighRange_SampleRate: f32 44100.0, the DSP sample rate (44.1 kHz), in the x > 75 arm of
 ;   DSP_VolumeCurve_FP: 2^23 * 2^(576 / (24 - 44100*(30x - 1476))) = 2^23 * 2^(-24 / (44100*T - 1)), T = 1.25x - 61.5
 ;   -- the same form as the x <= 75 arm. Basis: reader + bytes + the twin arm.
-FPConst_DSP_VolumeCurve_FP_HighRange_SampleRate:	.float 4.41e+04	; f32 4.41e+04, read by DSP_VolumeCurve_FP_HighRange (operand at 0x0393AD)
-FPConst_DSP_VolumeCurve_FP_HighRange_65091600:	.float 6.50916e+07	; f32 6.50916e+07, read by DSP_VolumeCurve_FP_HighRange (operand at 0x0393BC)
-FPConst_DSP_VolumeCurve_FP_HighRange_24:	.float 24	; f32 24, read by DSP_VolumeCurve_FP_HighRange (operand at 0x0393C8)
-FPConst_DSP_VolumeCurve_FP_HighRange_576:	.float 576	; f32 576, read by DSP_VolumeCurve_FP_HighRange (operand at 0x0393D7)
-FPConst_DSP_VolumeCurve_FP_HighRange_2:	.double 2.0	; f64 2.0, read by DSP_VolumeCurve_FP_HighRange (operand at 0x0393FA)
+FPConst_DSP_VolumeCurve_FP_HighRange_SampleRate:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_HighRange_SampleRate.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_HighRange_65091600:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_HighRange_65091600.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_HighRange_24:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_HighRange_24.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_HighRange_576:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_HighRange_576.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_VolumeCurve_FP_HighRange_2:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_HighRange_2.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
 ; FPConst_DSP_VolumeCurve_FP_Finalize_Q23One: f32 8388608.0 = 2^23, 1.0 in Q23: DSP_VolumeCurve_FP_Finalize multiplies
 ;   the float result by it and truncates with FP_ftoi, so the opcode-0x69 value leaves as a Q23 fixed-point word for
 ;   DSP_WriteOscParam. Basis: reader + bytes.
-FPConst_DSP_VolumeCurve_FP_Finalize_Q23One:	.float 8388608	; 2^23; f32 8388608, read by DSP_VolumeCurve_FP_Finalize (operand at 0x03941E)
-FPConst_DSP_ReverbCurve_FP_1:	.float 1	; f32 1, read by DSP_ReverbCurve_FP (operand at 0x0395B7)
-FPConst_DSP_ReverbCurve_FP_441:	.double 441.0	; f64 441.0, read by DSP_ReverbCurve_FP (operand at 0x0395D0)
-FPConst_DSP_ReverbCurve_FP_10:	.double 10.0	; f64 10.0, read by DSP_ReverbCurve_FP (operand at 0x0395DC)
-FPConst_DSP_ReverbCurve_FP_0p4270422:	.double 0.4270422	; f64 0.4270422, read by DSP_ReverbCurve_FP (operand at 0x0395F5)
-FPConst_DSP_ReverbCurve_FP_1_2:	.double 1.0	; f64 1.0, read by DSP_ReverbCurve_FP (operand at 0x03960C)
+FPConst_DSP_VolumeCurve_FP_Finalize_Q23One:	.include "includes/generated/cc900/FPConst_DSP_VolumeCurve_FP_Finalize_Q23One.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_1:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_1.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_441:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_441.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_10:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_10.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_0p4270422:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_0p4270422.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_1_2:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_1_2.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
 ; FPConst_DSP_ReverbCurve_FP_HighRange_SampleRate: f32 44100.0, the DSP sample rate (44.1 kHz): the x > 89 arm of
 ;   DSP_ReverbCurve_FP returns 1 - 0.4270422^(1/N) with N = (44100x - 89*44100)/10 = (x - 89) x 100 ms of samples,
 ;   continuing the x <= 89 arm's N = 441*(x + 1)/10 = (x + 1) ms (44.1 samples per ms). Basis: reader + bytes + the
 ;   low-range twin.
-FPConst_DSP_ReverbCurve_FP_HighRange_SampleRate:	.float 4.41e+04	; f32 4.41e+04, read by DSP_ReverbCurve_FP_HighRange (operand at 0x039634)
-FPConst_DSP_ReverbCurve_FP_HighRange_3924900:	.float 3.9249e+06	; f32 3.9249e+06, read by DSP_ReverbCurve_FP_HighRange (operand at 0x039643)
-FPConst_DSP_ReverbCurve_FP_HighRange_10:	.float 1e+01	; f32 1e+01, read by DSP_ReverbCurve_FP_HighRange (operand at 0x03964F)
-FPConst_DSP_ReverbCurve_FP_HighRange_0p4270422:	.double 0.4270422	; f64 0.4270422, read by DSP_ReverbCurve_FP_HighRange (operand at 0x039672)
-FPConst_DSP_ReverbCurve_FP_HighRange_1:	.double 1.0	; f64 1.0, read by DSP_ReverbCurve_FP_HighRange (operand at 0x039689)
+FPConst_DSP_ReverbCurve_FP_HighRange_SampleRate:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_HighRange_SampleRate.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_HighRange_3924900:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_HighRange_3924900.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_HighRange_10:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_HighRange_10.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_HighRange_0p4270422:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_HighRange_0p4270422.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ReverbCurve_FP_HighRange_1:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_HighRange_1.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
 ; FPConst_DSP_ReverbCurve_FP_Finalize_Q23One: f32 2^23 = 1.0 in Q23: DSP_ReverbCurve_FP_Finalize multiplies by it and
 ;   FP_ftoi's the product to get the Q23 DSP word. Basis: reader -- every use is fmul then ftoi.
-FPConst_DSP_ReverbCurve_FP_Finalize_Q23One:	.float 8388608	; 2^23; f32 8388608, read by DSP_ReverbCurve_FP_Finalize (operand at 0x0396A5)
-FPConst_DSP_ParamInterp_FPComplex_32768:	.float 32768	; f32 32768, read by DSP_ParamInterp_FPComplex (operand at 0x0396EB)
-FPConst_DSP_ParamInterp_FPComplex_65536:	.float 65536	; f32 65536, read by DSP_ParamInterp_FPComplex (operand at 0x0396FA)
-FPConst_DSP_ParamInterp_FPComplex_99:	.float 99	; f32 99, read by DSP_ParamInterp_FPComplex (operand at 0x039752)
-FPConst_DSP_ParamInterp_FPComplex_44100:	.float 4.41e+04	; f32 4.41e+04, read by DSP_ParamInterp_FPComplex (operand at 0x03976E)
-FPConst_DSP_ParamInterp_FPComplex_99_2:	.float 99	; f32 99, read by DSP_ParamInterp_FPComplex (operand at 0x03977A)
-FPConst_DSP_ParamInterp_FPComplex_2376:	.float 2376	; f32 2376, read by DSP_ParamInterp_FPComplex (operand at 0x039789)
-FPConst_DSP_ParamInterp_FPComplex_2:	.double 2.0	; f64 2.0, read by DSP_ParamInterp_FPComplex (operand at 0x0397AC)
+FPConst_DSP_ReverbCurve_FP_Finalize_Q23One:	.include "includes/generated/cc900/FPConst_DSP_ReverbCurve_FP_Finalize_Q23One.s"	; C: cc900/dsp_control_routines_fp_20i.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_32768:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_32768.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_65536:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_65536.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_99:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_99.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_44100:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_44100.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_99_2:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_99_2.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_2376:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_2376.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
+FPConst_DSP_ParamInterp_FPComplex_2:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_2.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
 ; FPConst_DSP_ParamInterp_FPComplex_Q23One: f32 2^23 = 1.0 in Q23: DSP_ParamInterp_FPComplex multiplies by it and
 ;   FP_ftoi's the product to get the Q23 DSP word. Basis: reader -- every use is fmul then ftoi.
-FPConst_DSP_ParamInterp_FPComplex_Q23One:	.float 8388608	; 2^23; f32 8388608, read by DSP_ParamInterp_FPComplex (operand at 0x0397D5)
+FPConst_DSP_ParamInterp_FPComplex_Q23One:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_Q23One.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
 FPConst_DSP_DetuneCurve_Range1_Compute_2:	.float 2	; f32 2, read by DSP_DetuneCurve_Range1_Compute (operand at 0x039917)
 FPConst_DSP_DetuneCurve_Range2_Compute_20:	.float 2e+01	; f32 2e+01, read by DSP_DetuneCurve_Range2_Compute (operand at 0x039969)
 FPConst_DSP_DetuneCurve_Range2_Compute_180:	.float 1.8e+02	; f32 1.8e+02, read by DSP_DetuneCurve_Range2_Compute (operand at 0x039978)

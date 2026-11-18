@@ -281,93 +281,13 @@ VoiceSlot_UpdateNoteSource:	.include "includes/generated/cc900/VoiceSlot_UpdateN
 	.set	VoiceSlot_UpdateNoteSource_UseDE_WA, VoiceSlot_UpdateNoteSource + 131
 	.set	VoiceSlot_UpdateNoteSource_Return, VoiceSlot_UpdateNoteSource + 154
 
-Voice_ScanSlots_ReassignSources:
-	dec 6, xsp
-	push xiz
-	ld (xsp + 8), a
-	ld a, (xsp + 8)
-	extz wa
-	muls wa, 0xC
-	lda xbc, (9446:16)
-	exts xwa
-	add xwa, xbc
-	ld (xsp + 4), xwa
-	ldib_erp 0xFB, 0
-	cpib_erp 0xFB, 4
-	jrl nc, Voice_ScanSlots_Return
-
-Voice_ScanSlots_LoopBody:
-	ldto_berp A, 0xFB
-	extz wa
-	ld bc, wa
-	inc 8, bc
-	ld xwa, (xsp + 4)
-	ld	l, (xwa+bc)
-	ld a, l
-	cp a, 0xC0
-	jrl nc, Voice_ScanSlots_LoopNext
-	ld a, l
-	extz wa
-	muls wa, 0x5
-	lda xbc, (8486:16)
-	lda	xde, (xbc+wa)
-	ld a, (xde + 4)
-	cp a, (xsp + 8)
-	jr nz, Voice_ScanSlots_MarkSlotInactive
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 4)
-	ld	a, (xwa+bc)
-	cp a, (xsp + 8)
-	jr z, Voice_ScanSlots_PromoteSource
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld xwa, (xsp + 4)
-	ld	a, (xwa+bc)
-	ld (xde + 4), a
-	jr Voice_ScanSlots_MarkSlotInactive
-
-Voice_ScanSlots_PromoteSource:
-	ld (xde + 4), 0xFF
-	ldfr_berp L, 0xF8
-	extz iz
-	ld a, l
-	extz wa
-	calr Quad_Decode_A_To_L
-	ld c, l
-	extz bc
-	ld wa, iz
-	ld de, bc
-	ldw bc, 0x1A
-	calr VoiceSlot_UpdateNoteSource
-
-Voice_ScanSlots_MarkSlotInactive:
-	ld a, (xsp + 8)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	ld c, a
-	extz bc
-	ld wa, de
-	calr VoiceState_SwapSlot_DE_BC
-	ldto_berp A, 0xFB
-	extz wa
-	ld bc, wa
-	inc 8, bc
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), 0xff
-
-Voice_ScanSlots_LoopNext:
-	inc1b_erp 0xFB
-	cpib_erp 0xFB, 4
-	jrl c, Voice_ScanSlots_LoopBody
-
-Voice_ScanSlots_Return:
-	pop xiz
-	inc 6, xsp
-	ret
+Voice_ScanSlots_ReassignSources:	.include "includes/generated/cc900/Voice_ScanSlots_ReassignSources.s"	; C: cc900/voice_params_and_tvf_ae_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ScanSlots_LoopBody, Voice_ScanSlots_ReassignSources + 35
+	.set	Voice_ScanSlots_PromoteSource, Voice_ScanSlots_ReassignSources + 125
+	.set	Voice_ScanSlots_MarkSlotInactive, Voice_ScanSlots_ReassignSources + 155
+	.set	Voice_ScanSlots_LoopNext, Voice_ScanSlots_ReassignSources + 192
+	.set	Voice_ScanSlots_Return, Voice_ScanSlots_ReassignSources + 201
 
 VoiceState_FullReset:
 	push xiz
@@ -4974,104 +4894,10 @@ Voice_StereoLevel_PackCh23:
 ; both bytes are negated before scaling (Detune_ScaleUnsigned for +7, Detune_ScaleSymmetric
 ; for +8), so the routine has a mirrored positive arm at 0x024911. The scaled values are
 ; then combined with tonerec+18 and the note number (voice+12) in the tail.
-Voice_PortaLevel_Compute:
-	lda xsp, (xsp - 12)
-	pushw iz
-	ld (xsp + 10), xwa
-	ld xwa, (xsp + 10)
-	ld xwa, (xwa + 23)
-	ld (xsp + 2), xwa
-	cp (xwa + 7), 0x0
-	jr ge, Voice_PortaLevel_Compute_Positive
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 7)
-	exts wa
-	cpl wa
-	inc 1, wa
-	calr Detune_ScaleUnsigned
-	ld (xsp + 8), hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 8)
-	exts wa
-	cpl wa
-	inc 1, wa
-	calr Detune_ScaleSymmetric
-	ld (xsp + 6), hl
-	jr Voice_PortaLevel_ScaleAndPack
-
-; Positive/zero arm: scale tonerec+7 and tonerec+8 directly, no negation.
-Voice_PortaLevel_Compute_Positive:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 7)
-	exts wa
-	calr Detune_ScaleUnsigned
-	ld (xsp + 8), hl
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 8)
-	exts wa
-	calr Detune_ScaleSymmetric
-	ld (xsp + 6), hl
-
-; Shared tail: scales by tonerec+18 against the note number, packs and stores the two words
-; to 0x0451E2 (TG reg 0x500) and 0x0451EA (TG reg 0x8C0).
-Voice_PortaLevel_ScaleAndPack:
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 18)
-	ld e, a
-	exts de
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	ld wa, de
-	ld de, 6:i3
-	calr PitchBend_Scale
-	add (xsp + 8), hl
-	ld wa, (xsp + 8)
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld (xsp + 8), hl
-	ldw iz, 0x7F
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 72)
-	ld e, a
-	exts de
-	ld xwa, (xsp + 10)
-	ld a, (xwa + 12)
-	ld c, a
-	extz bc
-	ld wa, de
-	ld de, 6:i3
-	calr PitchBend_Scale
-	add iz, hl
-	ld wa, iz
-	ldw bc, 0x7F
-	ld de, 0:i3
-	calr Int_ClampSignedToRange
-	ld iz, hl
-	ld wa, iz
-	ld bc, wa
-	ld b, 0x0:opc
-	ld wa, (xsp + 8)
-	sll wa, 8
-	or wa, bc
-	ld (Payload_Bss_Start+0x636c:24), wa
-	ld xwa, (xsp + 2)
-	ld c, (xwa + 61)
-	ld xwa, (xsp + 2)
-	add c, (xwa + 62)
-	ld a, c
-	exts wa
-	calr Detune_ScaleSymmetric
-	ld h, 0x0:opc
-	ld wa, (xsp + 6)
-	sll wa, 8
-	or wa, hl
-	ld (Payload_Bss_Start+0x6374:24), wa
-	popw iz
-	lda xsp, (xsp + 12)
-	ret
+Voice_PortaLevel_Compute:	.include "includes/generated/cc900/Voice_PortaLevel_Compute.s"	; C: cc900/voice_params_and_tvf_ae_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_PortaLevel_Compute_Positive, Voice_PortaLevel_Compute + 60
+	.set	Voice_PortaLevel_ScaleAndPack, Voice_PortaLevel_Compute + 88
 
 ; Zeroes the whole level half of the staging block: 0x0451EA, 0x0451E2, 0x0451EC,
 ; 0x0451EE, 0x0451F0, 0x0451F2, 0x0451F4, 0x0451F6, 0x0451DC, 0x0451DE (TG regs 0x8C0,
