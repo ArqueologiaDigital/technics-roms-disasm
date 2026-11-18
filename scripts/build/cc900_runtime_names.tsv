@@ -6,6 +6,8 @@
 # entry) and LDIVL.ASM, whose entries sit in the ROM in the library's order: remls, divls (SDivMod), remlu, divlu at
 # Math_RemainderSigned32, Math_DivideSigned32, Math_RemainderU32, Math_DivideU32 (0xff0c0a, 0c0e, 0c12, 0c18 in v10).
 # Sub-CPU: lane_sub, each confirmed by matches (Long_SignedDiv / Long_SignedRem: its renames, branch cc900/c-subcpu-hdae).
+# Sub-CPU floating point (2026-11-18): the nine ._f* / _pow rows, confirmed by DSP_ParamInterp_FPComplex, which V4.23
+# reproduces (run 2026-11-18-3-sub-r20-fp2, notes/cc900-c-subcpu-2026-11-16/verdicts/).
 # HD-AE5000 (all four trees): lane_hd.
 tree	name	label
 */maincpu	C9H_mullu	Math_Multiply32
@@ -19,6 +21,15 @@ tree	name	label
 */subcpu	C9H_divls	Long_SignedDiv
 */subcpu	C9H_remls	Long_SignedRem
 */subcpu	C9H_remlu	Int_UnsignedRemainder
+*/subcpu	._fld_fl	FP_SP_CallWithBuf8
+*/subcpu	._fld_lf	FP_ftoi
+*/subcpu	._fld_df	FP_ftod
+*/subcpu	._fld_fd	FP_dtof
+*/subcpu	._fadd_f	FP_fadd
+*/subcpu	._fsub_f	FP_fsub
+*/subcpu	._fmul_f	FP_fmul
+*/subcpu	._fdiv_f	FP_fdiv
+*/subcpu	_pow	FP_pow
 hdae5000*	C9H_mullu	HDAE5000_Multiply
 hdae5000*	C9H_divlu	HDAE5000_UDivMod32
 hdae5000*	._fdiv_f	HDAE5000_FloatDiv
