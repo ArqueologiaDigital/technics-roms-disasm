@@ -18,7 +18,8 @@ usage (from the repository root or anywhere):
   python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all] [--update] [--verbose]
           [--status STATUS[,STATUS]] [--no-derive-module] [same options]
       no VM: re-translate the listings of the indexed near misses (--all: every attempt but MATCH, ERR-name and
-      ERR-dup; --class: only those with that class) with the CURRENT translator and compare again.  The C is the
+      ERR-dup; --status: the attempts of those statuses, any of them; --class: only those with that class) with the
+      CURRENT translator and compare again.  The C is the
       run's corpus file when it still has the index's sha256, else the near-miss copies.  Each C's `cc900-module:`
       line is derived from the built image by module_calls.py's rule (derive_module).  Writes OUT/ready.tsv: per
       lane, the functions that now MATCH with their C copy (written if missing) and module line.  --update rewrites
@@ -48,6 +49,12 @@ reproduces the hash: provenance `tar-sha256` (exact; the C's own SHA-256 is then
 source is looked up by name (scratch copies, the lanes' corpus directories and their git history) and accepted when
 it defines exactly the listing's functions, the copy nearest in time to the run winning: provenance `name+funcs`
 (likely, not proven).  `none` when nothing fits.
+
+NAMES.  A listing name the C's own `cc900-name:` lines and the tree do not resolve (the C was not found, or the copy
+found lacks the line) is looked up in the `cc900-name:` lines and long names of the C the src-root's trees build
+(main_c_maps; only names that map one way there).  This cannot make a false MATCH: the bytes are still compared
+with the ROM.  Several C functions mapped to one label (variants in one probe file) are each linked and compared on
+their own; the index's `listing_name` tells them apart.
 
 ROM SIZE.  The ROM's function is disassembled (llvm-objdump) from its address and followed through its branches;
 its size is the end of the furthest instruction reached (a tail jump out of it, a return or an indirect jump ends a
@@ -154,7 +161,10 @@ CLASS_NEEDS = {
 }
 
 INDEX_COLS = ('tree', 'function', 'status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct', 'first_diff',
-              'class_bytes', 'run', 'opt', 'flags', 'source', 'c_sha256', 'c_provenance', 'c_copy', 'listing', 'why')
+              'class_bytes', 'run', 'opt', 'flags', 'source', 'c_sha256', 'c_provenance', 'c_copy', 'listing',
+              'listing_name', 'why')
+# listing_name: the function's name in the listing, without V4.23's `_` / `.` (several C functions, variants, may
+# map to one label; empty in rows indexed before 2026-11-18, which kept only the first variant: ERR-dup)
 
 
 # --------------------------------------------------------------------------------------------- tool chain imports
@@ -1019,6 +1029,58 @@ def module_line(job, cpath):
     return fw.module_names(cpath)
 
 
+MAIN_MAPS = []
+
+
+def main_c_maps():
+    """({short C name: label}, {31-character cut: long name}) from the `cc900-name:` lines and the long names of
+    every C file the src-root's trees build (<tree>/cc900/*.c, cc900-staged/*.c), each kept only where it is
+    unambiguous across them.  The fallback for an attempt whose own C is missing, or is a version without the line
+    (provenance none / name+funcs): the lanes give a label one short name and reuse it from file to file, so the
+    name the listing calls is most likely the one main's C maps.  Likely, not proven: such a row's C copy may still
+    lack the line, and the build (which reads only the file's own lines) would then refuse it."""
+    if not MAIN_MAPS:
+        listing, to_llvm, fw = mods()
+        smap, scut = {}, {}
+        for tdir, _r, _s, _b in TREES.values():
+            for c in glob.glob(os.path.join(Ctx.src_root, tdir, 'cc900', '*.c')) + \
+                    glob.glob(os.path.join(Ctx.src_root, tdir, 'cc900-staged', '*.c')):
+                b = open(c, 'rb').read()
+                for k, v in label_map_text(b).items():
+                    smap.setdefault(k, set()).add(v)
+                src = re.sub(r'/\*.*?\*/', ' ', b.decode('latin-1'), flags=re.S)
+                for n in set(re.findall(r'\b[A-Za-z_]\w{%d,}' % C_NAME_LIMIT, src)):
+                    scut.setdefault(n[:C_NAME_LIMIT], set()).add(n)
+        MAIN_MAPS.append({k: next(iter(v)) for k, v in smap.items() if len(v) == 1})
+        MAIN_MAPS.append({k: next(iter(v)) for k, v in scut.items() if len(v) == 1})
+    return MAIN_MAPS[0], MAIN_MAPS[1]
+
+
+def main_fallback_names(fw):
+    """fw.Names that, when V4.23's name resolves to nothing (or to an ambiguous 31-character cut), tries main's C
+    files' map for it (main_c_maps)"""
+    class MainFallbackNames(fw.Names):
+        def resolve(self, n, depth=0):
+            try:
+                a = super().resolve(n, depth)
+            except KeyError:
+                a = None
+                if depth:
+                    raise
+            if (a is None or a[0] is None) and depth == 0:
+                mmap, mcut = main_c_maps()
+                bare = n.lstrip('_.')
+                for alt in (mmap.get(bare), mcut.get(bare) if len(bare) == C_NAME_LIMIT else None):
+                    if alt and alt != bare:
+                        b = super().resolve(alt, 1)
+                        if b[0] is not None:
+                            return b
+            if a is None:                        # the ambiguous cut, unresolved: the resolver's own error
+                return super().resolve(n, depth)
+            return a
+    return MainFallbackNames
+
+
 def analyse_listing_build(job, t):
     """the build's own chain (src-root's scripts/build/cc900_firmware_c.py): names spelled as the tree spells them,
     runtime names, cc900-module call relaxation, the out-of-reach fallback, f_const placement; each function then
@@ -1032,7 +1094,7 @@ def analyse_listing_build(job, t):
     funcs = fw.listing_functions(text)
     ctext = job.get('ctext') or b''
     ref = t['ref']
-    rows, bodies = [], {}
+    rows, bodies, extra = [], {}, []
     with scratch_dir() as d:
         cpath = os.path.join(d, 'c.c')
         open(cpath, 'wb').write(ctext)
@@ -1043,7 +1105,7 @@ def analyse_listing_build(job, t):
         fw.RUNTIME.clear(); fw.RUNTIME.update(fw.runtime_names(tdir))
         fw.DATA_OUT.clear()
         values, tlabels = TREE_LABELS[tdir]
-        names = fw.Names(values, tlabels, cut=True)
+        names = main_fallback_names(fw)(values, tlabels, cut=True)
         names.addrs = fw.ADDRS                   # the symbols reference, the resolver's last resort
         names.cmap = labels                      # cc900-name: for every reference, callees too
         if hasattr(fw, 'ROM_LABEL'):
@@ -1053,6 +1115,7 @@ def analyse_listing_build(job, t):
         widths.update({uncut[k]: v for k, v in list(widths.items()) if k in uncut})
         to_llvm.WIDTHS = widths
         to_llvm.MODULE = module_line(job, cpath)
+        mmap, mcut = main_c_maps()
         for name, lines in funcs.items():
             bare = name.lstrip('_.')
             c = bare if bare in cdefs else uncut.get(bare, bare)
@@ -1060,10 +1123,10 @@ def analyse_listing_build(job, t):
             full = next((x for x in cand if x and x in ref), None)
             if full is None and len(t['short'].get(bare, [])) == 1:
                 full = t['short'][bare][0]
+            if full is None:                     # the C's own map is missing (C not found): main's C files' maps
+                full = next((x for x in (mmap.get(bare), mcut.get(bare)) if x and x in ref), None)
             row = dict(function=full or bare, listing_name=bare, status='ERR-other')
             rows.append(row)
-            if full in bodies:
-                row['status'] = 'ERR-dup'; continue
             if full is None:
                 row['status'] = 'ERR-name'; continue
             try:
@@ -1072,16 +1135,56 @@ def analyse_listing_build(job, t):
                 msg = str(e)
                 row['status'] = 'ERR-translate' if 'cannot translate' in msg else \
                     'ERR-data' if 'cc900-data' in msg else 'ERR-resolve'
-                row['why'] = msg.split(': ', 2)[-1][:100].replace('\t', ' ').replace('\n', ' ')
+                row['why'] = untranslated_shapes(msg) if 'cannot translate' in msg else \
+                    msg.split(': ', 2)[-1][:100].replace('\t', ' ').replace('\n', ' ')
                 continue
-            bodies[full] = (row, body)
-        ok = {}
+            if full in bodies:                   # a variant for a label already taken (two C functions, one
+                extra.append((full, row, body))  # cc900-name label): linked and compared on its own below
+            else:
+                bodies[full] = (row, body)
+        vals = {k: v for k, v in values.items() if v is not None}
+        ok, why = {}, {}
         if bodies:
-            ok = link_at_addresses(bodies, ref, {k: v for k, v in values.items() if v is not None}, d)
+            ok = link_at_addresses(bodies, ref, vals, d, why)
+        alone = []
+        for full, row, body in extra:
+            w = {}
+            alone.append((row, link_at_addresses({full: (row, body)}, ref, vals, d, w), w))
     for full, (row, b) in bodies.items():
         if full not in ok:
             row['status'] = 'ERR-asm'
+            row['why'] = why.get(full, '')
+    for row, ok1, w in alone:
+        if row['function'] not in ok1:
+            row['status'] = 'ERR-asm'
+            row['why'] = w.get(row['function'], '')
+        else:
+            compare_rows(job, t, ok1, {row['function']: row}, [])
     return compare_rows(job, t, ok, {f: b[0] for f, b in bodies.items()}, rows)
+
+
+def untranslated_shapes(msg):
+    """the build's `to_llvm cannot translate` stop -> its reason and each refused line's SHAPE only: the mnemonic
+    and register names kept, any other name written `sym`, any number `N` (`cp A,QE`, `ld XIX,sym + N`).  The
+    refused lines are V4.23's listing lines, which never enter this repository."""
+    head = 'to_llvm cannot translate' + (' data' if 'the data of' in msg else '')
+    by = {}
+    for m in re.finditer(r'untranslated(?: \(([^)]*)\))?:?[ \t]*([^\n;]*)', msg):
+        toks = m.group(2).split(None, 1)
+        ops = toks[1] if len(toks) > 1 else ''
+        ops = re.sub(r'(?<![\w.])-?(0x[0-9a-fA-F]+|\d+)(?!\w)', '#', ops)
+        ops = re.sub(r'[_.]?[A-Za-z_]\w*', lambda t: t.group(0) if to_llvm_reg(t.group(0)) else 'sym', ops).replace('#', 'N')
+        s = ' '.join(x for x in (toks[0] if toks else '', ops.strip()) if x)
+        shapes = by.setdefault(m.group(1) or '', [])
+        if s not in shapes:
+            shapes.append(s)
+    return (head + ': ' + '; '.join((r + ': ' if r else '') + ', '.join(s) for r, s in by.items()))[:100]
+
+
+def to_llvm_reg(n):
+    """a register name of the listing (A, QE, XIX, QIZH, ...) or a condition code: kept in a shape"""
+    return bool(re.fullmatch(r'(Q?[WABCDEHL]|Q?(WA|BC|DE|HL|IX|IY|IZ|SP)|X(WA|BC|DE|HL|IX|IY|IZ|SP)|Q?I[XYZ][LH]|'
+                             r'eq|ne|lt|le|gt|ge|ult|uge|ugt|ule|z|nz|c|nc|t|f|m|p|ov|nov)', n))
 
 
 SYM_TOKEN = re.compile(r'(?<![\w.])([A-Za-z_][A-Za-z0-9_]*)(?![\w])')
@@ -1090,11 +1193,28 @@ SYM_TOKEN = re.compile(r'(?<![\w.])([A-Za-z_][A-Za-z0-9_]*)(?![\w])')
 BRANCH_MN = re.compile(r'^\t(jr|jrl|calr|call|jp|djnz\w*)\s+(?:\w+\s*,\s*)?([A-Za-z_]\w*)\s*$')
 
 
-def link_at_addresses(bodies, ref, values, d):
+def tool_error(err, src_lines):
+    """a short reason from llvm-mc's / ld.lld's stderr: each distinct error message once, with the mnemonic of the
+    line llvm-mc refused (the message only, never the line: it is a translation of V4.23's listing)"""
+    out = []
+    for m in re.finditer(r'^(?:[^\n:]*\.s:(\d+):\d+: )?(?:ld\.lld: )?error: ([^\n]*)', err, re.M):
+        msg = m.group(2).strip()
+        if m.group(1) and 0 < int(m.group(1)) <= len(src_lines):
+            mn = src_lines[int(m.group(1)) - 1].split()
+            msg += ' (%s)' % mn[0] if mn else ''
+        msg = re.sub(r'\s+', ' ', msg)
+        if msg not in out:
+            out.append(msg)
+    return ('; '.join(out) or 'no error text')[:100]
+
+
+def link_at_addresses(bodies, ref, values, d, why=None):
     """{label: (row, llvm-mc lines)} -> {label: (bytes, instructions)}.  As in the tree, the functions and the
     labels they branch to sit in ONE section at their ROM offsets (`.org`), so llvm-mc measures and widens the
     jr / calr itself; the section is linked (ld.lld) at its ROM address; other names are `.set` to the tree's
-    values.  A function that does not assemble or link with the others is tried alone, else left out."""
+    values.  A function that does not assemble or link with the others is tried alone, else left out; why
+    ({label: reason}) gets tool_error()'s reason for each function left out."""
+    fail = {}
 
     def build(items, stem):
         used, targets = set(), set()
@@ -1127,6 +1247,7 @@ def link_at_addresses(bodies, ref, values, d):
         if o is None:
             if os.environ.get('NEARMISS_DEBUG'):
                 sys.stderr.write(err[:2000])
+            fail['why'] = 'llvm-mc: ' + tool_error(err, '\n'.join(src).split('\n'))
             return None
         ld = os.path.join(d, stem + '.ld'); elf = os.path.join(d, stem + '.elf')
         open(ld, 'w').write('SECTIONS { .text.nm 0x%x : { *(.text.nm) } }\n' % lo)
@@ -1134,6 +1255,7 @@ def link_at_addresses(bodies, ref, values, d):
         if r.returncode:
             if os.environ.get('NEARMISS_DEBUG'):
                 sys.stderr.write(r.stderr[:2000])
+            fail['why'] = 'ld.lld: ' + tool_error(r.stderr, [])
             return None
         nm = llvm('llvm-nm', '--defined-only', elf).stdout
         sym = {p[2]: int(p[0], 16) for p in (l.split() for l in nm.splitlines()) if len(p) == 3}
@@ -1155,9 +1277,12 @@ def link_at_addresses(bodies, ref, values, d):
     if res is None:
         res = {}
         for it in items:
+            fail.clear()
             r = build([it], 'one')
             if r:
                 res.update(r)
+            elif why is not None:
+                why[it[0]] = fail.get('why', 'no output')
     return res
 
 
@@ -1496,7 +1621,9 @@ def write_readme(out, rows, prov, pct, src_root, model_root, errs):
         L.append('Errors: ' + ', '.join('%s %d' % (k, sum(1 for r in rows if r['status'] == k)) for k in errk) +
                  ' attempts (ERR-name: the listing\'s function is not a label of the tree; ERR-resolve: a name '
                  'without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc '
-                 'refuses the translation; ERR-data: an f_const object (switch table, FP constant) without a '
+                 'refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for '
+                 'a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and '
+                 'compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a '
                  '`cc900-data:` line; the `why` column has the reason).\n')
     L.append('## By class (each non-matching function\'s best attempt)\n')
     L.append('`sole`: functions whose only class it is, so fixing the class alone would make them MATCH; `sole ROM B`: '
@@ -1656,8 +1783,9 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
     else:
         sel = [r for r in old if r['status'] == 'NEAR']
     sel = [r for r in sel if cls is None or cls in r['classes'].split(',')]
-    if '--status' in a:                   # only rows of these statuses (comma-separated, e.g. ERR-resolve)
-        sel = [r for r in sel if r['status'] in opt(a, '--status', '').split(',')]
+    if '--status' in a:                   # only rows of these statuses (comma-separated, e.g. ERR-resolve; any status)
+        sel = [r for r in old if r['status'] in opt(a, '--status', '').split(',')
+               and (cls is None or cls in r['classes'].split(','))]
     by = {}
     for r in sel:
         by.setdefault(r['listing'], []).append(r)
@@ -1667,13 +1795,13 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
         jobs.append(dict(asm=os.path.join(ORACLE, lst), tree=rs[0]['tree'], ctext=ctext, c_how=how, listing=lst,
                          derive_module='--no-derive-module' not in a))
     res, errs = execute(jobs, jobs_n)
-    new = {(r['listing'], r['function']): r for r in res}
     for r in res:
         if r['status'] == 'DIFF' and near(r, pct):
             r['status'] = 'NEAR'
+    pair = pair_rows(old, res)
     ready, changed = [], []
     for r in sel:
-        n = new.get((r['listing'], r['function']))
+        n = pair.get(id(r))
         if n is None:
             continue
         if n['status'] == 'MATCH':
@@ -1696,16 +1824,46 @@ def recheck(a, out, pct, jobs_n, src_root, model_root):
     if ready:
         print('now MATCH: %s' % ' '.join(sorted({'%s:%s' % (r['tree'], r['function']) for r, n in ready})))
     if '--update' in a:
-        for r in old:
-            n = new.get((r['listing'], r['function']))
+        # only the selected rows: the other functions of a re-read listing were translated from whatever C
+        # source_c() found for the selected ones (the near-miss copies of those rows only, when the corpus is
+        # gone), so their new results are not comparable with their indexed ones (the 2026-11-18 recheck,
+        # d84256090, overwrote them and turned 99 MATCH rows into NEAR this way)
+        for r in sel:
+            n = pair.get(id(r))
             if n is not None:
-                for k in ('status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct', 'first_diff', 'class_bytes',
-                          'why'):
+                for k in ('function', 'listing_name', 'status', 'classes', 'rom_size', 'gen_size', 'eq_bytes', 'eq_pct',
+                          'first_diff', 'class_bytes', 'why'):
                     r[k] = n.get(k, '')
+                finalise([r], pct)
         write_index(out, old)
         write_readme(out, old, runs, pct, src_root, model_root, errs)
         write_ready(out, old, runs)
     return 0
+
+
+def pair_rows(old, res):
+    """{id(old row): its re-checked row}.  By the listing's function name (listing_name; an ERR-name row's function
+    is that name) when the old row has one, else by order: the n-th old row of a (listing, function) is the n-th
+    re-checked one (the index keeps a listing's rows in listing order, and rows indexed before listing_name existed
+    kept the first variant of a label first, the others as ERR-dup)."""
+    by_name, by_fn = {}, {}
+    for n in res:
+        by_name[(n['listing'], n.get('listing_name', ''))] = n
+        by_fn.setdefault((n['listing'], n['function']), []).append(n)
+    out, seen = {}, {}
+    for r in old:
+        k = (r['listing'], r['function'])
+        i = seen.get(k, 0)
+        seen[k] = i + 1
+        ln = r.get('listing_name') or (r['function'] if r['status'] == 'ERR-name' else '')
+        if ln:
+            n = by_name.get((r['listing'], ln))
+        else:
+            lst = by_fn.get(k, [])
+            n = lst[i] if i < len(lst) else None
+        if n is not None:
+            out[id(r)] = n
+    return out
 
 
 def lane_staged():
