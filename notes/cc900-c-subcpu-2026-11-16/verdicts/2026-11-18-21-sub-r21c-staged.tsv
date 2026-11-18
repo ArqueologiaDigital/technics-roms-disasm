@@ -1,0 +1,13 @@
+function	bytes	matches	best_diff
+DSP1_ResolveStreamPtr	35	-	+14 sub_AE_21c@Xr
+DSP_EFFParam_DiffAllAndFlag	641	-	+6 sub_AE_21c@Xr
+DSP_ParamInterp_3Point_WithOffset	120	-	+102 sub_AE_21b@Xr
+DSP_RingBuf_Read	41	sub_AE_21a@Xr sub_AE_21c@Xr	
+Debug_Print_Word	33	-	+18 sub_AE_21c@Xr
+Keybed_Read_Event	88	-	+16 sub_AE_21c@Xr
+RingBuf_ReadByte	41	sub_AE_21a@Xr sub_AE_21c@Xr	
+TVF_Lookup_Depth_Amount	168	-	+5 sub_AE_21c@Xr
+VoiceParam_Set_Tone_Option	193	-	+13 sub_AE_21c@Xr
+VoiceState_SwapSlot_DE_BC	157	-	+1 sub_AE_21c@Xr
+VoiceState_SwapSlot_HL_IY	246	-	+0 sub_AE_21c@Xr
+WaveSel_StageB_Build_Reg040	171	-	+40 sub_AE_21c@Xr
