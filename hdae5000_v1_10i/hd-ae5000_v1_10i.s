@@ -718,25 +718,11 @@ HDAE5000_Alloc_Memory_2:	.include "includes/generated/cc900/HDAE5000_Alloc_Memor
 ; The label is the firmware's own name.  HDAE5000_ObjHandler_Table entry 39
 ; (ROM 0x2F94B2 + 0x9C) holds 0x280395, and the parallel HDAE5000_ObjName_Table
 ; entry (ROM 0x2F95CA + 0x9C) points at 0x29BD0A = "BitmapHdd_icon".
-HDAE5000_BitmapHdd_icon:
-	; Resource descriptor for HDAE5000_Bitmap_HddIcon.  Allocates nothing.
-	cp xbc, EVT_GET_BITMAP_HEIGHT
-	jr z, HDAE5000_BitmapHdd_icon__type_A3
-	cp xbc, EVT_GET_BITMAP_WIDTH
-	jr z, HDAE5000_BitmapHdd_icon__type_A2
-	cp xbc, EVT_GET_BITMAP_DATA
-	jr z, HDAE5000_BitmapHdd_icon__type_A1
-	ld xhl, 0:i3
-	ret
-HDAE5000_BitmapHdd_icon__type_A1:
-	lda xhl, (HDAE5000_Bitmap_HddIcon:24); HDAE5000_Bitmap_HddIcon data, NOT a palette
-	ret
-HDAE5000_BitmapHdd_icon__type_A2:
-	ld xhl, 0x1B	; 27 (icon width)
-	ret
-HDAE5000_BitmapHdd_icon__type_A3:
-	ld xhl, 0x1B	; 27 (icon height)
-	ret
+HDAE5000_BitmapHdd_icon:	.include "includes/generated/cc900/HDAE5000_BitmapHdd_icon.s"	; C: cc900/hdae5000_small_procs_hd-ae5000_v1_10i.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_BitmapHdd_icon__type_A1, HDAE5000_BitmapHdd_icon + 27
+	.set	HDAE5000_BitmapHdd_icon__type_A2, HDAE5000_BitmapHdd_icon + 33
+	.set	HDAE5000_BitmapHdd_icon__type_A3, HDAE5000_BitmapHdd_icon + 39
 
 ; ============================================================================
 ; CODE SECTION 1: Setup, HD interface, filesystem, and UI routines

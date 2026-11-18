@@ -4,6 +4,9 @@
 Question it answers: where does V4.23's code for a C form differ from HDAE5000_SelectListProc in the ROM, ignoring
 branch distances and jr/jrl, call/calr lengths?  Both sides go through MAME's unidasm so the text is comparable.
 Usage: cmp.py SHOWFILE OUTDIR TAG   (writes OUTDIR/gen_TAG.bin, prints a unified diff ROM -> generated)
+       cmp.py SHOWFILE OUTDIR TAG LABEL   (any other v2.06i function: address from the symbols reference, size
+                                           from survey.tsv)
+       cmp.py SHOWFILE OUTDIR TAG LABEL SIZE   (SIZE bytes from LABEL: a procedure the survey split into pieces)
 """
 import difflib
 import re
@@ -36,8 +39,26 @@ def dis(path, skip, count):
     return res
 
 
+def label_range(label):
+    """(ROM offset, size) of a v2.06i function: its address from the symbols reference, its size from survey.tsv"""
+    global OFS, SIZE
+    for l in open("symbols/hdae5000_symbols_reference.txt"):
+        c = l.split()
+        if len(c) == 2 and c[0] == label:
+            OFS = int(c[1], 16) - 0x280000
+    for l in open("notes/cc900-c-hdae5000-2026-11-16/survey.tsv"):
+        c = l.split("\t")
+        if len(c) > 3 and c[1] == label:
+            SIZE = int(c[3])
+
+
 def main():
     show, outdir, tag = sys.argv[1:4]
+    if len(sys.argv) > 4:          # another function than SelectListProc: cmp.py SHOW OUTDIR TAG LABEL [SIZE]
+        label_range(sys.argv[4])
+    if len(sys.argv) > 5:          # a procedure the survey split into pieces: its whole size
+        global SIZE
+        SIZE = int(sys.argv[5], 0)
     data = bytearray()
     for line in open(show, encoding="latin-1"):
         if line.startswith("=="):

@@ -105,7 +105,8 @@ def main():
         sdir = os.path.join(REPO, tree, 'cc900-staged')
         cdir = os.path.join(REPO, tree, 'cc900')
         os.makedirs(cdir, exist_ok=True)
-        for f in sorted(os.listdir(sdir)):
+        # a tree whose staged files are all promoted (and git rm'd) has no cc900-staged directory left
+        for f in sorted(os.listdir(sdir)) if os.path.isdir(sdir) else []:
             if not f.endswith('.c'):
                 continue
             staged = os.path.join(sdir, f)

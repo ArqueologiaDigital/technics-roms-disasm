@@ -11,6 +11,9 @@ still without matching C.  These files decided two things that lane_hd reported:
 - **`gen.py`**: writes `probes/hd_r46_n2.c`, the label's form and four variants that differ only in the two
   unsettled items.
   `python3 -B notes/cc900-c-hdae5000-2026-11-16/selectlist/gen.py notes/cc900-c-hdae5000-2026-11-16/probes/hd_r46_n2.c`
+  `gen.py --round 50|52|55|57 OUT` writes round 50's, 52's, 55's or 57's probe (`probes/hd_r5N_sl.c`, 2026-11-18;
+  each round's header says what the run before it showed).  `cmp.py ... TAG LABEL [SIZE]` compares any other
+  v2.06i function (SIZE: a procedure the survey split into pieces).
 - **`head.txt`**, **`body.tpl`**: `gen.py`'s inputs.  `head.txt` holds the probe's header comment (the read-out
   table) and declarations; `body.tpl` holds the function body, with `@NAME@`-style slots for what the forms change.
 

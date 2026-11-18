@@ -267,24 +267,29 @@ def listing_functions(path):
     return fs
 
 
-def translate(listing_funcs, names, widths=None, module=None, places=None, ref=None):
+def translate(listing_funcs, names, widths=None, module=None, places=None, ref=None, labels=None, cdefs=None):
     """{name: listing lines} -> {bare name: llvm-mc lines}, every name written as its address (fn_diff.py's way),
     as cc900_firmware_c.compile_c does for the model's listing.  widths: each symbol's operand width as the listing
     declares it (cc900_firmware_c.listing_widths); a function that reaches a symbol without one is None.  places:
     the C file's `cc900-data:` map (cc900_firmware_c.data_map): a reference to f_const data becomes its tree address
-    (the data itself is not part of the function's bytes); one without a place makes the function None"""
+    (the data itself is not part of the function's bytes); one without a place makes the function None.  The map is
+    keyed by TREE label, as the build reads it (cc900_firmware_c.finish): labels (`cc900-name: C=LABEL`) and cdefs
+    (the C's definitions, to undo V4.23's 31-character cut) turn the listing's name into that label first; without
+    them a function under a short C name lost its places (HDAE5000_SeparateOutputModeCheck, 2026-11-18)"""
     import to_llvm
     import cc900_firmware_c as fw
     to_llvm.SPELL = None
     to_llvm.WIDTHS = widths
     to_llvm.MODULE = module    # the build's: the cc900-module: names
     funcs = {}
+    uncut = {n[:fw.C_NAME_LIMIT]: n for n in (cdefs or ())}
     for name, lines in listing_funcs.items():
         if not lines or not lines[0].endswith(':') or lines[0][:-1] != name:
             continue
         bare = name.lstrip('_.')
+        c = bare if bare in (cdefs or ()) else uncut.get(bare, bare)
         consts, _ = to_llvm.split_consts(lines)
-        pl = (places or {}).get(bare, {})
+        pl = (places or {}).get((labels or {}).get(c, c), {})
         to_llvm.DATA = {c: '0x%x' % ref[pl[k]] for k, c in enumerate(consts, 1) if k in pl and ref and pl[k] in ref}
         to_llvm.DATA_REQUIRED = True
         try:
@@ -305,6 +310,41 @@ def translate(listing_funcs, names, widths=None, module=None, places=None, ref=N
             continue
         funcs[bare] = to_llvm.relax('\n'.join(text), fw.assembler_errors).split('\n')
     return funcs
+
+
+def assemble_at(text, at):
+    """check_bytes.assemble, but LINKED with .text at address `at` (ld.lld -Ttext): an absolute reference to one of
+    the function's own labels -- a compiled switch's jump base, `lda xix,(.L..:24)` -- gets its real address.
+    check_bytes.assemble reads the unlinked object, where such an operand is still 0, so every function with a
+    switch compared unequal and was credited 0 B (HDAE5000_DelCmpEditCheck and 51 more of hdae5000, 2026-11-18)."""
+    import tempfile
+    import check_bytes
+    bindir = check_bytes.LLVM_BIN
+    # the linker rounds the section start up to its alignment (4): link at the aligned address below `at` and pad
+    # (`.org` offsets moved up by the pad, or `.space` before the code), then take offsets from a marker at the start
+    pad = at % 4
+    at -= pad
+    if pad and '\t.org ' in text:
+        text = re.sub(r'\t\.org 0x([0-9a-f]+)', lambda m: '\t.org 0x%x' % (int(m.group(1), 16) + pad), text)
+    elif pad:
+        text = text.replace('\t.text\n', '\t.text\n\t.space %d\n' % pad, 1)
+    text = text.replace('\t.text\n', '\t.text\n\t.globl __cc900_begin\n__cc900_begin:\n', 1)
+    with tempfile.TemporaryDirectory() as d:
+        s, o, e, b = (os.path.join(d, x) for x in ('f.s', 'f.o', 'f.elf', 'f.bin'))
+        open(s, 'w').write(text)
+        subprocess.run([os.path.join(bindir, 'llvm-mc'), '-triple=tlcs900', '-filetype=obj', s, '-o', o], check=True,
+                       capture_output=True)
+        subprocess.run([os.path.join(bindir, 'ld.lld'), '-e', '0', '-Ttext=0x%x' % at, o, '-o', e], check=True,
+                       capture_output=True)
+        subprocess.run([os.path.join(bindir, 'llvm-objcopy'), '-O', 'binary', '-j', '.text', e, b], check=True)
+        nm = subprocess.run([os.path.join(bindir, 'llvm-nm'), '--defined-only', e], check=True, capture_output=True,
+                            text=True).stdout
+        code = open(b, 'rb').read() if os.path.exists(b) else b''
+    syms = {p[2]: int(p[0], 16) for p in (l.split() for l in nm.splitlines()) if len(p) == 3 and p[1] == 'T'}
+    start = syms.pop('__cc900_begin')
+    syms = {n: a - start for n, a in syms.items()}
+    order = sorted(syms, key=syms.get)
+    return {n: code[syms[n]:syms[order[i + 1]] if i + 1 < len(order) else len(code)] for i, n in enumerate(order)}
 
 
 def compare(fn, lines, rom, ref, base=0xe00000, to_off=None):
@@ -328,12 +368,23 @@ def compare(fn, lines, rom, ref, base=0xe00000, to_off=None):
         body = '\n'.join('\t.org 0x%x\n%s' % (a - org, txt) for a, txt in items)
         src = '\t.text\n%s\n' % body
     else:
+        org = ref[fn]
         src = '\t.text\n\t.globl %s\n%s:\n%s\n' % (fn, fn, body)
     try:
         mine = check_bytes.assemble(src)[fn]
     except subprocess.CalledProcessError:
         return 0, 'does not assemble'
     at = to_off(ref[fn]) if to_off else ref[fn] - base
+    if mine != rom[at:at + len(mine)] and '.Lcc900_' in body:
+        # an absolute reference to the function's own label (a switch's jump base) is 0 in the unlinked object:
+        # compare the same text linked at its address as well (assemble_at's docstring).  The unlinked check stays
+        # first: it is what every earlier results file used, and the linked one is only a second chance.
+        try:
+            linked = assemble_at(src, org)[fn]
+        except subprocess.CalledProcessError:
+            linked = None
+        if linked is not None and linked == rom[at:at + len(linked)]:
+            mine = linked
     return len(mine), mine == rom[at:at + len(mine)]
 
 
@@ -408,7 +459,8 @@ def firmware(key, tree, rom_path, sym_path):
             except SystemExit as ex:                      # the C's qualifiers disagree with the listing
                 sys.stderr.write('%s: %s\n' % (rel(path), str(ex)[:200]))
                 widths = {}
-            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path), fw.data_map(path), ref)
+            v423 = translate(listing_functions(lp), names, widths, fw.module_names(path), fw.data_map(path), ref,
+                             lm_, set(fw.c_functions(path)))
             v423 = {lm_.get(k, k): v for k, v in v423.items()}   # (BitMapOut_PrepRender_CheckBit1)
         fnames = set(funcs) | {lm_.get(c, c) for c in fw.c_functions(path)}
         for fn in sorted(fnames):
