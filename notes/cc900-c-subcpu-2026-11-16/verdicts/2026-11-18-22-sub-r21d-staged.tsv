@@ -1,0 +1,3 @@
+function	bytes	matches	best_diff
+DSP_SetCoeff_MasterConfig	706	sub_AF_21a@Xr sub_AF_21c@Xr	
+DSP_SetCoeff_RouteWithCallback	298	-	+18 sub_AF_21e@Xr

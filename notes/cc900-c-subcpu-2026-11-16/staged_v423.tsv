@@ -84,6 +84,7 @@ v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004
 v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP_Pack3x7bitFields	45	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Extract_14Bit_PayloadSize	26	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Extract_14Bit_VoiceParam	26	MATCH
+v140	v140/subcpu/cc900-staged/dsp2_init_ae_21a.c	cf557ed788075e35354dc8d1f3c83536c120cc016d4947d311464857e4167f1d	Xr	2026-11-18-22-sub-r21d-staged	DSP_RingBuf_Read	41	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init_d_6a.c	cdb10807501f6817d64f2c98bb935a496e3cc6503bc32da547164129254af4a1	Xr	2026-11-16-89-sub-staged3	DSP_Cmd_DequeueHeader	68	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init_d_6a.c	cdb10807501f6817d64f2c98bb935a496e3cc6503bc32da547164129254af4a1	Xr	2026-11-16-89-sub-staged3	DSP_RingBuf_Skip	28	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init_d_7a.c	a4b6a6bdfc3a6e8fe289b0a3a20930865ea49a01b04d5197f12ef31f37aeb145	Xr	2026-11-16-89-sub-staged3	DSP_RingBuf_Write2K	24	MATCH
@@ -227,6 +228,7 @@ v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	6ba94abfd97ce49ac361f3
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	6ba94abfd97ce49ac361f3c8995f33b82bb5462e2e1bf314f3d34436c52670eb	Xr	2026-11-16-73-sub-r6	DSP_Stub_RetB	1	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	6ba94abfd97ce49ac361f3c8995f33b82bb5462e2e1bf314f3d34436c52670eb	Xr	2026-11-16-73-sub-r6	DSP_Stub_RetC	1	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	6ba94abfd97ce49ac361f3c8995f33b82bb5462e2e1bf314f3d34436c52670eb	Xr	2026-11-16-73-sub-r6	DSP_VelocityToVolume	14	MATCH
+v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_ae_21a.c	31c64b8f5c56601bf829488bda6f4b3662dfc63a648e9a5f796c8948e1f181c5	Xr	2026-11-18-22-sub-r21d-staged	RingBuf_ReadByte	41	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_b.c	7728d2be8b090096e0a1edb0f004fb0cab27abc46e456b4055b96221e1cce704	Xr	2026-11-16-73-sub-r6	RingBuf_ReadByte_MidiRing	8	DIFF at +4
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	0d425c63ff6aa4a7562d6f79cadd26132aee2074900b8e28a778376b9105d921	Xr	2026-11-16-89-sub-staged3	DSP_FlushAllSlots_ForPart	47	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	0d425c63ff6aa4a7562d6f79cadd26132aee2074900b8e28a778376b9105d921	Xr	2026-11-16-89-sub-staged3	RingBuf_SkipToEnd	28	MATCH
@@ -615,6 +617,7 @@ v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004
 v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP_Pack3x7bitFields	45	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Extract_14Bit_PayloadSize	26	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Extract_14Bit_VoiceParam	26	MATCH
+v141	v141/subcpu/cc900-staged/dsp2_init_ae_21a.c	cf557ed788075e35354dc8d1f3c83536c120cc016d4947d311464857e4167f1d	Xr	2026-11-18-22-sub-r21d-staged	DSP_RingBuf_Read	41	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init_d_6a.c	cdb10807501f6817d64f2c98bb935a496e3cc6503bc32da547164129254af4a1	Xr	2026-11-16-89-sub-staged3	DSP_Cmd_DequeueHeader	68	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init_d_6a.c	cdb10807501f6817d64f2c98bb935a496e3cc6503bc32da547164129254af4a1	Xr	2026-11-16-89-sub-staged3	DSP_RingBuf_Skip	28	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init_d_7a.c	a4b6a6bdfc3a6e8fe289b0a3a20930865ea49a01b04d5197f12ef31f37aeb145	Xr	2026-11-16-89-sub-staged3	DSP_RingBuf_Write2K	24	MATCH
@@ -758,6 +761,7 @@ v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	524ceb53c0d61128476982
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	524ceb53c0d61128476982b37bd5b509c1636c8fae4a628a88270040a0d12a64	Xr	2026-11-16-73-sub-r6	DSP_Stub_RetB	1	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	524ceb53c0d61128476982b37bd5b509c1636c8fae4a628a88270040a0d12a64	Xr	2026-11-16-73-sub-r6	DSP_Stub_RetC	1	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	524ceb53c0d61128476982b37bd5b509c1636c8fae4a628a88270040a0d12a64	Xr	2026-11-16-73-sub-r6	DSP_VelocityToVolume	14	MATCH
+v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_ae_21a.c	31c64b8f5c56601bf829488bda6f4b3662dfc63a648e9a5f796c8948e1f181c5	Xr	2026-11-18-22-sub-r21d-staged	RingBuf_ReadByte	41	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_b.c	7728d2be8b090096e0a1edb0f004fb0cab27abc46e456b4055b96221e1cce704	Xr	2026-11-16-73-sub-r6	RingBuf_ReadByte_MidiRing	8	DIFF at +4
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	d3eb7ccc4c61327da736c53850a72692adc7c1b5e6f778a11b80f6f3eb681f13	Xr	2026-11-16-89-sub-staged3	DSP_FlushAllSlots_ForPart	47	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	d3eb7ccc4c61327da736c53850a72692adc7c1b5e6f778a11b80f6f3eb681f13	Xr	2026-11-16-89-sub-staged3	RingBuf_SkipToEnd	28	MATCH
@@ -1146,6 +1150,7 @@ v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004
 v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP_Pack3x7bitFields	45	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Extract_14Bit_PayloadSize	26	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Extract_14Bit_VoiceParam	26	MATCH
+v142	v142/subcpu/cc900-staged/dsp2_init_ae_21a.c	cf557ed788075e35354dc8d1f3c83536c120cc016d4947d311464857e4167f1d	Xr	2026-11-18-22-sub-r21d-staged	DSP_RingBuf_Read	41	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init_d_6a.c	cdb10807501f6817d64f2c98bb935a496e3cc6503bc32da547164129254af4a1	Xr	2026-11-16-89-sub-staged3	DSP_Cmd_DequeueHeader	68	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init_d_6a.c	cdb10807501f6817d64f2c98bb935a496e3cc6503bc32da547164129254af4a1	Xr	2026-11-16-89-sub-staged3	DSP_RingBuf_Skip	28	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init_d_7a.c	a4b6a6bdfc3a6e8fe289b0a3a20930865ea49a01b04d5197f12ef31f37aeb145	Xr	2026-11-16-89-sub-staged3	DSP_RingBuf_Write2K	24	MATCH
@@ -1289,6 +1294,7 @@ v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	da0606358e2973a208ea22
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	da0606358e2973a208ea221f397b0a06817a349db7ba93f30cfea000af49e1f7	Xr	2026-11-16-73-sub-r6	DSP_Stub_RetB	1	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	da0606358e2973a208ea221f397b0a06817a349db7ba93f30cfea000af49e1f7	Xr	2026-11-16-73-sub-r6	DSP_Stub_RetC	1	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch.c	da0606358e2973a208ea221f397b0a06817a349db7ba93f30cfea000af49e1f7	Xr	2026-11-16-73-sub-r6	DSP_VelocityToVolume	14	MATCH
+v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_ae_21a.c	31c64b8f5c56601bf829488bda6f4b3662dfc63a648e9a5f796c8948e1f181c5	Xr	2026-11-18-22-sub-r21d-staged	RingBuf_ReadByte	41	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_b.c	7728d2be8b090096e0a1edb0f004fb0cab27abc46e456b4055b96221e1cce704	Xr	2026-11-16-73-sub-r6	RingBuf_ReadByte_MidiRing	8	DIFF at +4
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	27931c962f8f17d13328976bf9e424b2d99a472ede051d0ffdb0cae52f838c98	Xr	2026-11-16-89-sub-staged3	DSP_FlushAllSlots_ForPart	47	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_6a.c	27931c962f8f17d13328976bf9e424b2d99a472ede051d0ffdb0cae52f838c98	Xr	2026-11-16-89-sub-staged3	RingBuf_SkipToEnd	28	MATCH
