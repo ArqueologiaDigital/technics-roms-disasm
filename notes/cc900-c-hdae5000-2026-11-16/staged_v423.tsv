@@ -610,3 +610,16 @@ hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822f
 hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNRcmBitCheck	266	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNSqtBitCheck	266	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_lbn_bitcheck.c	a2a35eede405c4ea76979822fa8a6ea160ffd0503e32cd3d9691cb9a0b9160f3	Xr	2026-11-18-17-hd-r54-staged	HDAE5000_LBNTlxBitCheck_Unregistered	266	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fls_small.c	ea5d107ddee09701b6e5e3e38d36b0d06affd65361bb779d01d5c7e0e6325dfc	Xr	2026-11-18-24-hd-r56	HDAE5000_Count_Active_Files	43	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fls_small.c	ea5d107ddee09701b6e5e3e38d36b0d06affd65361bb779d01d5c7e0e6325dfc	Xr	2026-11-18-24-hd-r56	HDAE5000_FlsItem_SetDir	34	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fls_small.c	ea5d107ddee09701b6e5e3e38d36b0d06affd65361bb779d01d5c7e0e6325dfc	Xr	2026-11-18-24-hd-r56	HDAE5000_FlsItem_SetSong	34	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fls_small.c	ea5d107ddee09701b6e5e3e38d36b0d06affd65361bb779d01d5c7e0e6325dfc	Xr	2026-11-18-24-hd-r56	HDAE5000_NameHistory_Recall	56	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_fls_small.c	ea5d107ddee09701b6e5e3e38d36b0d06affd65361bb779d01d5c7e0e6325dfc	Xr	2026-11-18-24-hd-r56	HDAE5000_RcmStream_FreeSpace	19	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_load_palette.c	7119dab21b4da463928a1c23ce0ed12658e445bad5935e50a4c0931a914a3b22	Xr	2026-11-18-24-hd-r56	HDAE5000_Load_Palette	43	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_show_error_title.c	39ee25480c4180abbb537b4be583ac643dc370ffa6de52a501d4262edafcc4b9	Xr	2026-11-18-24-hd-r56	HDAE5000_ShowErrorMessageTitle	78	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_small_procs.c	134d55f103d577fc828ffcaa0b0de8d431e4b2c3e910f4b4d917155e034a169a	Xr	2026-11-18-24-hd-r56	HDAE5000_Alloc_Memory	45	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_small_procs.c	134d55f103d577fc828ffcaa0b0de8d431e4b2c3e910f4b4d917155e034a169a	Xr	2026-11-18-24-hd-r56	HDAE5000_BitmapButt01	45	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_small_procs.c	134d55f103d577fc828ffcaa0b0de8d431e4b2c3e910f4b4d917155e034a169a	Xr	2026-11-18-24-hd-r56	HDAE5000_BitmapHdd_icon	45	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_small_procs.c	134d55f103d577fc828ffcaa0b0de8d431e4b2c3e910f4b4d917155e034a169a	Xr	2026-11-18-24-hd-r56	HDAE5000_LanguageTextReturn	17	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_uistate.c	bc90a3278a064b7b3f1615929012130e620ce4986e9bc534abf4cbed23579ad9	Xr	2026-11-18-24-hd-r56	HDAE5000_TypeSel_Init	92	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_uistate.c	bc90a3278a064b7b3f1615929012130e620ce4986e9bc534abf4cbed23579ad9	Xr	2026-11-18-24-hd-r56	HDAE5000_UiState_Reset	122	MATCH

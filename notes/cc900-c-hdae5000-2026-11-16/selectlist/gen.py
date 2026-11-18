@@ -119,6 +119,32 @@ HEAD55 = """/* hd_r55_sl.c (lane_hd round 55): HDAE5000_SelectListProc (hd-ae500
      SelList_w  v = (unsigned char *)(u = GETVIEWL(obj));
 */
 """
+# Round 57, from run 2026-11-18-20-hd-r55: t, v and w give everything but one instruction at the nine places: v is
+# reloaded from the stack (`ld xwa,(xsp+4)`) where the ROM copies the register (`ld xwa,xhl`).  So the store of v is
+# made the first use's operand, an assignment expression whose value V4.23 takes again from the right-hand register.
+K_GET = "u = GETVIEWL(obj);\n        v = (unsigned char *)u;"
+FORMS57 = [
+    dict(R50_BASE, NAME="SelList_x", REGS=R50_REGS + ["long u;"], GET="u = GETVIEWL(obj);", GETI=K_GET,
+         U="(v = (unsigned char *)u)"),
+    dict(R50_BASE, NAME="SelList_y", REGS=R50_REGS + ["unsigned char *u;"], GET="u = GETVIEW(obj);",
+         GETI="u = GETVIEW(obj);\n        v = u;", U="(v = u)"),
+    dict(R50_BASE, NAME="SelList_z", REGS=R50_REGS + ["unsigned char *u;"], GET="u = GETVIEW(obj);",
+         GETI="u = GETVIEW(obj);\n        v = u;", U="(unsigned char *)(v = u)"),
+]
+HEAD57 = """/* hd_r57_sl.c (lane_hd round 57): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), three forms written by
+   selectlist/gen.py --round 57.  It calls nothing relatively.
+   cc900-options: -Xr
+%s
+   Run 2026-11-18-20-hd-r55 (hd_r55_sl.c): forms t, v and w are the ROM's code but for one instruction at each of
+   the nine first uses: v is reloaded from the stack, `ld xwa,(xsp+4)`, where the ROM copies the register that
+   was just stored, `ld xwa,xhl`.  So the store to v becomes the operand of the first use, an assignment
+   expression, whose value V4.23 takes again from the right-hand register (Lyrics_FindEvent's `pos += (n = ..)`):
+     SelList_x  long u; u = GETVIEWL(obj);  first use V_xxx((v = (unsigned char *)u))
+     SelList_y  unsigned char *u; u = GETVIEW(obj);  first use V_xxx((v = u))
+     SelList_z  as y, the operand cast: V_xxx((unsigned char *)(v = u))
+   The INDEXSW case (no first use) keeps `v = ..` as a statement.
+*/
+"""
 HEAD50 = """/* hd_r50_sl.c (lane_hd round 50): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), six forms written by
    selectlist/gen.py --round 50.  It calls nothing relatively.
    cc900-options: -Xr
@@ -147,8 +173,9 @@ def main():
     tpl = open(os.path.join(HERE, "body.tpl")).read()
     forms = FORMS
     rnd = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else None
-    if rnd in ("50", "52", "55"):
-        forms, hd = {"50": (FORMS50, HEAD50), "52": (FORMS52, HEAD52), "55": (FORMS55, HEAD55)}[rnd]
+    if rnd in ("50", "52", "55", "57"):
+        forms, hd = {"50": (FORMS50, HEAD50), "52": (FORMS52, HEAD52), "55": (FORMS55, HEAD55),
+                     "57": (FORMS57, HEAD57)}[rnd]
         names = "\n".join("   cc900-name: %s=HDAE5000_SelectListProc" % f["NAME"] for f in forms)
         head = hd % names + head.split("*/\n", 1)[1]
     parts = [head]
