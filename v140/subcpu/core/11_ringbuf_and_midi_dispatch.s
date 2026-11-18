@@ -17,30 +17,10 @@
 ; HL, not equality, so any value >= 0x8000 reads as "empty".
 ; Side effects: increments the read index (masked to 0x0FFF, so a 4096-byte payload) and
 ; decrements the count.  32 call sites, all in MIDI_Dispatch and RingBuf_SkipToEnd.
-RingBuf_ReadByte:
-	cpw (xwa + 4), 0x0
-	jr z, RingBuf_ReadByte_Empty
-	lda xbc, (xwa + 2)
-	ld de, (xbc)
-	incw 1, (xbc)
-	and de, 0xFFF
-	ld bc, de
-	extz xbc
-	inc 6, xbc
-	add xbc, xwa
-	ld c, (xbc)
-	extz bc
-	ld hl, bc
-	decm 1, (xwa + 4)
-	jr RingBuf_ReadByte_Return
-
-; Count == 0: HL = 0xFFFF.
-RingBuf_ReadByte_Empty:
-	ldw hl, 0xFFFF
-
-; Shared `ret`.
-RingBuf_ReadByte_Return:
-	ret
+RingBuf_ReadByte:	.include "includes/generated/cc900/RingBuf_ReadByte.s"	; C: cc900/ringbuf_and_midi_dispatch_ae_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RingBuf_ReadByte_Empty, RingBuf_ReadByte + 37
+	.set	RingBuf_ReadByte_Return, RingBuf_ReadByte + 40
 
 ; A two-instruction convenience wrapper: `lda XWA,0x2B0D` then fall into RINGBUF_READBYTE,
 ; i.e. "read one byte from THE MIDI ring".  It has no caller in the authoritative source.

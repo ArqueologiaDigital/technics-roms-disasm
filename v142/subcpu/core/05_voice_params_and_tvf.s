@@ -684,29 +684,10 @@ ExtVoice_Alloc_StreamSlot_Return:
 ; llvm-mc and unidasm agree on every instruction boundary; each instruction re-assembles to its
 ; own bytes, the few llvm-mc cannot spell stay .byte with unidasm's reading as a comment).
 ; Renamed from VoiceState_OpaqueData1.
-Voice_MakePartHandle:
-	dec	2, xsp
-	ld	(xsp), c
-	andmi8	(xsp), 63
-	cp	a, 64
-	jr	c, Voice_MakePartHandle_NoRefresh
-	ld	a, (xsp)
-	extz	wa
-	sll	wa, 8
-	ld	hl, wa
-	or	hl, 255
-	jr	Voice_MakePartHandle_Epilogue
-Voice_MakePartHandle_NoRefresh:
-	extz	wa
-	calr	Voice_ScanSlots_ReassignSources
-	ld	a, (xsp)
-	extz	wa
-	sll	wa, 8
-	ld	hl, wa
-	or	hl, 255
-Voice_MakePartHandle_Epilogue:
-	inc	2, xsp
-	ret
+Voice_MakePartHandle:	.include "includes/generated/cc900/Voice_MakePartHandle.s"	; C: cc900/voice_params_and_tvf_ah_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_MakePartHandle_NoRefresh, Voice_MakePartHandle + 27
+	.set	Voice_MakePartHandle_Epilogue, Voice_MakePartHandle + 45
 ; Stack-argument front end that turns a (part, selector, key) triple into an assigned voice
 ; slot: saves C and A in a local frame, calls VOICE_PART_HANDLE_MAKE (0x02197C) with
 ; C = E, then calls ExtVoice_Alloc_StreamSlot (0x02177E) with WA = the saved A, C = the saved C and
@@ -3066,214 +3047,29 @@ Voice_Env_UpdateVelocityCounters:	.include "includes/generated/cc900/Voice_Env_U
 ; 0x04137F + part*0x011F. If the resulting predicate L is non-zero,
 ; Instrument_LookupProgram_HiNibble installs the program byte.
 ; Callers 0x02C72B, 0x02C82F, 0x02C933, 0x02CA9C.
-Voice_Env_ApplyVelocity_Type0:
-	dec 2, xsp
-	ld (xsp), a
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xde, (Payload_Bss_Start+0x255f:24)
-	ld	(xde+wa), 0x00
-	ld a, (xsp)
-	cp a, 2:i3
-	jrl z, Voice_Env_ApplyVelocity_Type2
-	cp a, 1:i3
-	jr z, Voice_Env_VelocityDispatch_c1
-	cp a, 0:i3
-	jrl nz, Voice_Env_ApplyVelocity_Return
-
-; Sub-case selector for the type-0/1 variant.
-Voice_Env_VelocityDispatch_c1:
-	cp c, 3:i3
-	jr z, Voice_Env_VelocityDispatch_c3
-	cp c, 2:i3
-	jr z, Voice_Env_VelocityDispatch_c2
-	cp c, 1:i3
-	jr z, Voice_Env_VelocityDispatch_c1_Bit1
-	cp c, 0:i3
-	jrl nz, Voice_Env_VelocityDispatch_ClearFlag
-	bit 3, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_VelocityDispatch_c0_NoBit3
-	ld l, 0x0:opc
-	jrl Voice_Env_VelocityDispatch_Gate
-
-; Case 0, config bit3 clear: predicate = bit0 of the 0x04134B config byte.
-Voice_Env_VelocityDispatch_c0_NoBit3:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Bit0_L
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 1: test bit3 of the 0x04134B config byte.
-Voice_Env_VelocityDispatch_c1_Bit1:
-	bit 3, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_VelocityDispatch_c1_NoBit3
-	ld l, 0x0:opc
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 1, bit3 clear: predicate = BitTest_Mode2_L of the config byte.
-Voice_Env_VelocityDispatch_c1_NoBit3:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Mode2_L
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 2: test bit3 of the per-part byte at 0x04137F + part*0x011F.
-Voice_Env_VelocityDispatch_c2:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	3, (xbc+wa)
-	jr z, Voice_Env_VelocityDispatch_c2_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 2, bit3 clear: predicate = bit0 of that per-part byte.
-Voice_Env_VelocityDispatch_c2_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Bit0_L_v2
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 3: test bit3 of the per-part byte.
-Voice_Env_VelocityDispatch_c3:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	3, (xbc+wa)
-	jr z, Voice_Env_VelocityDispatch_c3_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Case 3, bit3 clear: predicate = BitTest_Mode2_L of that per-part byte.
-Voice_Env_VelocityDispatch_c3_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Mode2_L_v2
-	jr Voice_Env_VelocityDispatch_Gate
-
-; Unknown sub-case: predicate = 0.
-Voice_Env_VelocityDispatch_ClearFlag:
-	ld l, 0x0:opc
-
-; Gate: if the predicate is non-zero install the program byte via Instrument_LookupProgram_HiNibble (high nibble variant).
-Voice_Env_VelocityDispatch_Gate:
-	cp l, 0:i3
-	jrl z, Voice_Env_ApplyVelocity_Return
-	ld a, (xsp)
-	extz wa
-	calr Instrument_LookupProgram_HiNibble
-	jrl Voice_Env_ApplyVelocity_Return
-
-; VELOCITY-SWITCH DISPATCHER, TYPE 2. Identical structure to the type-0/1 dispatcher
-; but every flag test uses bit4 instead of bit3, and the gate calls
-; Instrument_LookupProgram_LoNibble (low nibble of the patch byte +0x2A).
-; Entered only by the A == 2 branch of Voice_Env_ApplyVelocity_Type0.
-Voice_Env_ApplyVelocity_Type2:
-	cp c, 3:i3
-	jr z, Voice_Env_Type2_c3
-	cp c, 2:i3
-	jr z, Voice_Env_Type2_c2
-	cp c, 1:i3
-	jr z, Voice_Env_Type2_c1
-	cp c, 0:i3
-	jrl nz, Voice_Env_Type2_ClearFlag
-	bit 4, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_Type2_c0_NoBit4
-	ld l, 0x0:opc
-	jrl Voice_Env_Type2_Gate
-
-; Case 0, bit4 clear: predicate = bit0 of the 0x04134B config byte.
-Voice_Env_Type2_c0_NoBit4:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Bit0_L
-	jr Voice_Env_Type2_Gate
-
-; Case 1: test bit4 of the 0x04134B config byte.
-Voice_Env_Type2_c1:
-	bit 4, (Payload_Bss_Start+0x24d5:24)
-	jr z, Voice_Env_Type2_c1_NoBit4
-	ld l, 0x0:opc
-	jr Voice_Env_Type2_Gate
-
-; Case 1, bit4 clear: predicate = BitTest_Mode2_L of the config byte.
-Voice_Env_Type2_c1_NoBit4:
-	ld a, (Payload_Bss_Start+0x24d5:24)
-	extz wa
-	calr BitTest_Mode2_L
-	jr Voice_Env_Type2_Gate
-
-; Case 2: test bit4 of the per-part byte at 0x04137F + part*0x011F.
-Voice_Env_Type2_c2:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	4, (xbc+wa)
-	jr z, Voice_Env_Type2_c2_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_Type2_Gate
-
-; Case 2, bit4 clear: predicate = bit0 of that per-part byte.
-Voice_Env_Type2_c2_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Bit0_L_v2
-	jr Voice_Env_Type2_Gate
-
-; Case 3: test bit4 of the per-part byte.
-Voice_Env_Type2_c3:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	bit	4, (xbc+wa)
-	jr z, Voice_Env_Type2_c3_Trigger
-	ld l, 0x0:opc
-	jr Voice_Env_Type2_Gate
-
-; Case 3, bit4 clear: predicate = BitTest_Mode2_L_v2 of that per-part byte.
-Voice_Env_Type2_c3_Trigger:
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x2509:24)
-	ld	a, (xbc+wa)
-	extz wa
-	calr BitTest_Mode2_L_v2
-	jr Voice_Env_Type2_Gate
-
-; Unknown sub-case: predicate = 0.
-Voice_Env_Type2_ClearFlag:
-	ld l, 0x0:opc
-
-; Gate: install the program byte via Instrument_LookupProgram_LoNibble.
-Voice_Env_Type2_Gate:
-	cp l, 0:i3
-	jr z, Voice_Env_ApplyVelocity_Return
-	ld a, (xsp)
-	extz wa
-	calr Instrument_LookupProgram_LoNibble
-
-; Shared return for both dispatchers.
-Voice_Env_ApplyVelocity_Return:
-	inc 2, xsp
-	ret
+Voice_Env_ApplyVelocity_Type0:	.include "includes/generated/cc900/Voice_Env_ApplyVelocity_Type0.s"	; C: cc900/voice_params_and_tvf_ah_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Env_VelocityDispatch_c1, Voice_Env_ApplyVelocity_Type0 + 39
+	.set	Voice_Env_VelocityDispatch_c0_NoBit3, Voice_Env_ApplyVelocity_Type0 + 68
+	.set	Voice_Env_VelocityDispatch_c1_Bit1, Voice_Env_ApplyVelocity_Type0 + 80
+	.set	Voice_Env_VelocityDispatch_c1_NoBit3, Voice_Env_ApplyVelocity_Type0 + 91
+	.set	Voice_Env_VelocityDispatch_c2, Voice_Env_ApplyVelocity_Type0 + 103
+	.set	Voice_Env_VelocityDispatch_c2_Trigger, Voice_Env_ApplyVelocity_Type0 + 127
+	.set	Voice_Env_VelocityDispatch_c3, Voice_Env_ApplyVelocity_Type0 + 152
+	.set	Voice_Env_VelocityDispatch_c3_Trigger, Voice_Env_ApplyVelocity_Type0 + 176
+	.set	Voice_Env_VelocityDispatch_ClearFlag, Voice_Env_ApplyVelocity_Type0 + 201
+	.set	Voice_Env_VelocityDispatch_Gate, Voice_Env_ApplyVelocity_Type0 + 203
+	.set	Voice_Env_ApplyVelocity_Type2, Voice_Env_ApplyVelocity_Type0 + 218
+	.set	Voice_Env_Type2_c0_NoBit4, Voice_Env_ApplyVelocity_Type0 + 247
+	.set	Voice_Env_Type2_c1, Voice_Env_ApplyVelocity_Type0 + 259
+	.set	Voice_Env_Type2_c1_NoBit4, Voice_Env_ApplyVelocity_Type0 + 270
+	.set	Voice_Env_Type2_c2, Voice_Env_ApplyVelocity_Type0 + 282
+	.set	Voice_Env_Type2_c2_Trigger, Voice_Env_ApplyVelocity_Type0 + 306
+	.set	Voice_Env_Type2_c3, Voice_Env_ApplyVelocity_Type0 + 331
+	.set	Voice_Env_Type2_c3_Trigger, Voice_Env_ApplyVelocity_Type0 + 355
+	.set	Voice_Env_Type2_ClearFlag, Voice_Env_ApplyVelocity_Type0 + 380
+	.set	Voice_Env_Type2_Gate, Voice_Env_ApplyVelocity_Type0 + 382
+	.set	Voice_Env_ApplyVelocity_Return, Voice_Env_ApplyVelocity_Type0 + 393
 
 ; COMPUTE THE PITCH OF ONE VOICE (the main pitch accumulator).
 ; In: XWA = voice work record. Locals: (XSP+0x08) = record, (XSP+0x02) = (record+0x1F)

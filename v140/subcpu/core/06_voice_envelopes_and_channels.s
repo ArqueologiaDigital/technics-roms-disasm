@@ -2197,79 +2197,10 @@ Voice_ToneTableRamp_Down:	.include "includes/generated/cc900/Voice_ToneTableRamp
 ; three parameter sets with Voice_LoadPitchTable_Ch, Voice_LoadFilterTable_Ch and
 ; Voice_LoadToneTable_Ch.
 ; Sole caller: Audio_Tick_ServiceVoices_B_LFO_RampDown.
-Voice_ToneTableApply_Pitch:
-	dec 6, xsp
-	pushw_erp 0xFA
-	ld (xsp + 2), xbc
-	ld (xsp + 6), a
-	ld xwa, (xsp + 2)
-	andmi8 (xwa + 99), 0xE7
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 100)
-	extz wa
-	lda xbc, (Voice_ToneRampPitch_Curve:24)
-	ld	l, (xbc+wa)
-	ldi_erpb 0xFB, 0x19
-	jr Voice_ToneTableApply_Pitch_Loop
-
-; Search step: decrement the candidate index.
-Voice_ToneTableApply_Pitch_Decrement:
-	dec1b_erp 0xFB
-
-; Search test: continue while L < table_0x010DB4[index]. The loop has no explicit lower
-; bound; it is bounded only by table_0x010DB4[0] == 0x00, which no unsigned L can be
-; below, so index 0 always terminates it.
-Voice_ToneTableApply_Pitch_Loop:
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	cp	l, (xbc+wa)
-	jr c, Voice_ToneTableApply_Pitch_Decrement
-	ld xwa, (xsp + 2)
-	ldto_berp C, 0xFB
-	ld (xwa + 100), c
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ld a, l
-	extz wa
-	lda xbc, (Voice_ToneRampPitch_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadPitchTable_Ch
-	ld xwa, (xsp + 2)
-	ld l, (xwa + 101)
-	ld a, l
-	extz wa
-	div a, 0x6
-	ld l, a
-	ldfr_berp L, 0xFB
-	ld a, l
-	mul a, 0x5
-	ld l, a
-	ld xwa, (xsp + 2)
-	ld (xwa + 101), l
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadFilterTable_Ch
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadToneTable_Ch
-	popw_erp 0xFA
-	inc 6, xsp
-	ret
+Voice_ToneTableApply_Pitch:	.include "includes/generated/cc900/Voice_ToneTableApply_Pitch.s"	; C: cc900/voice_envelopes_and_channels_ag_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ToneTableApply_Pitch_Decrement, Voice_ToneTableApply_Pitch + 42
+	.set	Voice_ToneTableApply_Pitch_Loop, Voice_ToneTableApply_Pitch + 45
 
 ; Voice_ToneTableApply_Filter(A = part index, XBC = part record). The mirror of
 ; Voice_ToneTableApply_Pitch: reads E = table_0x010DB4[+100 >> 1] and searches UPWARD
@@ -2277,80 +2208,10 @@ Voice_ToneTableApply_Pitch_Loop:
 ; +100; +101 is rescaled from the /5 domain into the /6 domain (index * 6). Then pushes
 ; all three parameter sets with the three _Ch broadcasters.
 ; Sole caller: Audio_Tick_ServiceVoices_B_LFO_ApplyFilter.
-Voice_ToneTableApply_Filter:
-	dec 6, xsp
-	pushw_erp 0xFA
-	ld (xsp + 2), xbc
-	ld (xsp + 6), a
-	ld xwa, (xsp + 2)
-	andmi8 (xwa + 99), 0xE7
-	ld xwa, (xsp + 2)
-	ld a, (xwa + 100)
-	srl a, 1
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	e, (xbc+wa)
-	ldib_erp 0xFB, 0
-	jr Voice_ToneTableApply_Filter_Loop
-
-; Search step: increment the candidate index.
-Voice_ToneTableApply_Filter_Increment:
-	inc1b_erp 0xFB
-
-; Search test: continue while E > table_0x010D64[index] (unsigned). The loop has no
-; explicit upper bound; it is bounded only by the fact that table_0x010D64 reaches 0xFF
-; at index 78 of its 80 entries.
-Voice_ToneTableApply_Filter_Loop:
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampPitch_Curve:24)
-	cp	e, (xbc+wa)
-	jr ugt, Voice_ToneTableApply_Filter_Increment
-	ld xwa, (xsp + 2)
-	ldto_berp C, 0xFB
-	ld (xwa + 100), c
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadPitchTable_Ch
-	ld xwa, (xsp + 2)
-	ld e, (xwa + 101)
-	ld a, e
-	extz wa
-	div a, 0x5
-	ld e, a
-	ldfr_berp E, 0xFB
-	ld a, e
-	mul a, 0x6
-	ld e, a
-	ld xwa, (xsp + 2)
-	ld (xwa + 101), e
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadFilterTable_Ch
-	ld a, (xsp + 6)
-	ld e, a
-	extz de
-	ldto_berp A, 0xFB
-	extz wa
-	lda xbc, (Voice_ToneRampFilter_Curve:24)
-	ld	c, (xbc+wa)
-	ld wa, de
-	calr Voice_LoadToneTable_Ch
-	popw_erp 0xFA
-	inc 6, xsp
-	ret
+Voice_ToneTableApply_Filter:	.include "includes/generated/cc900/Voice_ToneTableApply_Filter.s"	; C: cc900/voice_envelopes_and_channels_ag_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ToneTableApply_Filter_Increment, Voice_ToneTableApply_Filter + 44
+	.set	Voice_ToneTableApply_Filter_Loop, Voice_ToneTableApply_Filter + 47
 
 Audio_Tick_ServiceVoices_A:	.include "includes/generated/cc900/Audio_Tick_ServiceVoices_A.s"	; C: cc900/voice_envelopes_and_channels_b_11a.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -4016,54 +3877,12 @@ AudioChannel_AllVoices_Update_PanShift:	.include "includes/generated/cc900/Audio
 ; reached by an absolute `call` (from 0x0304C1).  Uses `lda XIZ,XWA+BC` to form the voice
 ; pointer rather than the store-to-XIZ idiom of its siblings, and branches on the same
 ; (voice+0x01)&0x3C classes in a different order (0x10 first).
-AudioChannel_AllVoices_Update_Variant3:
-	dec	8, xsp
-	push	xiz
-	lda	xbc, (Payload_Bss_Start+0x4218:24)
-	ld	(xsp+4), xbc
-	inc	5, xwa
-	ld	(xsp+8), xwa
-	cp8_imm_ri	xwa, 0x40	; cp (XWA),0x40
-	jr	nc, AudioChannel_AllVoices_Update_Variant3_Epilogue
-AudioChannel_AllVoices_Update_Variant3_Loop:
-	ld	xwa, (xsp+8)
-	ld	a, (xwa)
-	extz	wa
-	muls	wa, 71
-	ld	bc, wa
-	ld	xwa, (xsp+4)
-	lda	xiz, (xwa+bc)	; lda XIZ,XWA+BC
-	ld	wa, (xiz+1)
-	and	wa, 60
-	cp	wa, 16
-	jr	z, AudioChannel_AllVoices_Update_Variant3_Skip
-	cp	wa, 8
-	jr	z, AudioChannel_AllVoices_Update_Variant3_Join
-	cp	wa, 32
-	jr	z, AudioChannel_AllVoices_Update_Variant3_Join
-	jr	AudioChannel_AllVoices_Update_Variant3_Join
-AudioChannel_AllVoices_Update_Variant3_Skip:
-	ld	xwa, (xiz+19)
-	ld	xwa, xiz
-	call	Voice_Calc_LevelPair_FixedAtk
-	ld	xwa, xiz
-	ld	bc, 0:i3
-	call	Voice_WriteChPanShift2
-	ld	xwa, (xsp+8)
-	ld	a, (xwa)
-	extz	wa
-	lda	xbc, (ToneGen_StagingBlock:24)
-	calr	ToneGen_WriteVoice_Reg21_Reg22
-AudioChannel_AllVoices_Update_Variant3_Join:
-	ld	xwa, 1:i3
-	add	(xsp+8), xwa
-	ld	xwa, (xsp+8)
-	cp8_imm_ri	xwa, 0x40	; cp (XWA),0x40
-	jr	c, AudioChannel_AllVoices_Update_Variant3_Loop
-AudioChannel_AllVoices_Update_Variant3_Epilogue:
-	pop	xiz
-	inc	8, xsp
-	ret
+AudioChannel_AllVoices_Update_Variant3:	.include "includes/generated/cc900/AudioChannel_AllVoices_Update_Variant3.s"	; C: cc900/voice_envelopes_and_channels_ad_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioChannel_AllVoices_Update_Variant3_Loop, AudioChannel_AllVoices_Update_Variant3 + 21
+	.set	AudioChannel_AllVoices_Update_Variant3_Skip, AudioChannel_AllVoices_Update_Variant3 + 69
+	.set	AudioChannel_AllVoices_Update_Variant3_Join, AudioChannel_AllVoices_Update_Variant3 + 101
+	.set	AudioChannel_AllVoices_Update_Variant3_Epilogue, AudioChannel_AllVoices_Update_Variant3 + 114
 ; Handler for audio-channel command 1.  Reached by `jrl` from dispatch stub 0 (0x029E5B).
 ; Entry WA = value, BC = value2, XDE = the 3-byte routing descriptor.  Calls
 ; AudioMod_Apply_BusRouting / AudioMod_Apply_Porta_Curve in the 0x0280FE block.
@@ -4213,103 +4032,13 @@ AudioChannel_Dispatch:	.include "includes/generated/cc900/AudioChannel_Dispatch.
 ;   0x00              -> return
 ; Each iteration calls AudioChannel_Dispatch with XDE pointing at the 3-byte descriptor.
 ; So a patch declares, per modulation source, up to two destination commands with depths.
-Voice_ModWheel_Apply:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 10), c
-	ld (xsp + 12), a
-	ld a, (xsp + 12)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, Voice_ModWheel_Apply_StereoLoopA
-	cp a, 0x40
-	jr z, Voice_ModWheel_Apply_StereoPath
-	cp a, 0xC0
-	jr z, Voice_ModWheel_Apply_StereoPath
-	cp a, 0:i3
-	jrl nz, Voice_ModWheel_Apply_Exit
-
-; StereoPath of Voice_ModWheel_Apply.
-Voice_ModWheel_Apply_StereoPath:
-	ldw (xsp + 8), 0x0
-	cpw (xsp + 8), 0x2
-	jrl nc, Voice_ModWheel_Apply_Exit
-
-; PolyPath of Voice_ModWheel_Apply.
-Voice_ModWheel_Apply_PolyPath:
-	ld a, (xsp + 12)
-	ldfr_berp A, 0xF4
-	extz iy
-	ld a, (xsp + 10)
-	ldfr_berp A, 0xF0
-	extz ix
-	ld a, (xsp + 12)
-	extz wa
-	muls wa, 0x11F
-	ld de, wa
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld wa, (xsp + 8)
-	extz xwa
-	ld xbc, xwa
-	add xbc, xbc
-	add xbc, xwa
-	add xbc, 0x17
-	ld xiz, xbc
-	add	xiz, (xhl+de)
-	ld wa, iy
-	ld bc, ix
-	ld xde, xiz
-	calr AudioChannel_Dispatch
-	incw 1, (xsp + 8)
-	cpw (xsp + 8), 0x2
-	jr c, Voice_ModWheel_Apply_PolyPath
-	jr Voice_ModWheel_Apply_Exit
-
-; StereoLoopA of Voice_ModWheel_Apply.
-Voice_ModWheel_Apply_StereoLoopA:
-	ld a, (xsp + 12)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld (xsp + 4), xwa
-	ldw (xsp + 8), 0x0
-	cpw (xsp + 8), 0x2
-	jr nc, Voice_ModWheel_Apply_Exit
-
-; StereoLoopB of Voice_ModWheel_Apply.
-Voice_ModWheel_Apply_StereoLoopB:
-	ld a, (xsp + 12)
-	ldfr_berp A, 0xF0
-	extz ix
-	ld a, (xsp + 10)
-	ld l, a
-	extz hl
-	ld wa, (xsp + 8)
-	extz xwa
-	ld xbc, xwa
-	add xbc, xbc
-	add xbc, xwa
-	add xbc, 0x15
-	ld xde, xbc
-	add xde, (xsp + 4)
-	ld wa, ix
-	ld bc, hl
-	calr AudioChannel_Dispatch
-	incw 1, (xsp + 8)
-	cpw (xsp + 8), 0x2
-	jr c, Voice_ModWheel_Apply_StereoLoopB
-
-; common exit of Voice_ModWheel_Apply.
-Voice_ModWheel_Apply_Exit:
-	pop xiz
-	lda xsp, (xsp + 10)
-	ret
+Voice_ModWheel_Apply:	.include "includes/generated/cc900/Voice_ModWheel_Apply.s"	; C: cc900/voice_envelopes_and_channels_ag_20a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_ModWheel_Apply_StereoPath, Voice_ModWheel_Apply + 55
+	.set	Voice_ModWheel_Apply_PolyPath, Voice_ModWheel_Apply + 68
+	.set	Voice_ModWheel_Apply_StereoLoopA, Voice_ModWheel_Apply + 145
+	.set	Voice_ModWheel_Apply_StereoLoopB, Voice_ModWheel_Apply + 179
+	.set	Voice_ModWheel_Apply_Exit, Voice_ModWheel_Apply + 233
 
 ; --- 0x02A061-0x02A0E8  VoiceModWheel_DataTable_02A061 -- was MISLABELLED, now fully code
 ; All 136 bytes are TLCS-900H instructions (round-trip verified byte-identical to

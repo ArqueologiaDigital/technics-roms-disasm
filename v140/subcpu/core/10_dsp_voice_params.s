@@ -894,297 +894,30 @@ DSP_SetCoeff_WriteParams:	.include "includes/generated/cc900/DSP_SetCoeff_WriteP
 ; Cases 18 and 19 first fetch ToneDB_RamBankA[+0x72A7] and pass it as the
 ; "current part" argument.  Sole caller: 0x031B5D (query family case 0).
 ; The LLVM source calls this DSP_SetCoeff_MasterConfig.
-DSP_SetCoeff_MasterConfig:
-	dec	6, xsp
-	pushw iz
-	ld	(xsp+4), xwa
-	ldw	(xsp+2), 0
-	ld	iz, 0:i3
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+2)
-	res	7, a
-	extz	wa
-	cp	wa, 0:i3
-	jrl	mi, DSP_SetCoeff_MasterConfig_Epilogue
-	cp	wa, 23
-	jrl	gt, DSP_SetCoeff_MasterConfig_Epilogue
-	add	wa, wa
-	lda	xix, (DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE:24)
-	ld	wa, (xix+wa)
-	lda	xix, (DSP_SetCoeff_MasterConfig_CaseBase:24)
-	jp	t, (xix+wa)
-DSP_SetCoeff_MasterConfig_CaseBase:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	e, a
-	extz	de
-	lda	xwa, (Payload_Bss_Start+0x63a0:24)
-	ld	xbc, xwa
-	ld	wa, de
-	calr	DSP_EffectStateQuery
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_AlgoSelect:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	calr	CheckStatusBits_40
-	cp	l, 0:i3
-	jr	z, DSP_SetCoeff_MasterConfig_Skip
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	call	Voice_Slot_CalcArticParams
-DSP_SetCoeff_MasterConfig_Skip:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	l, a
-	extz	hl
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	lda	xwa, (Payload_Bss_Start+0x63a0:24)
-	ld	xde, xwa
-	ld	wa, hl
-	calr	DSP_AlgoSelect
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_ToneNameAndMode:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	l, a
-	extz	hl
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	lda	xwa, (Payload_Bss_Start+0x63a0:24)
-	ld	xde, xwa
-	ld	wa, hl
-	calr	DSP_MixSendConfig
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SourceNameA_BySelector:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	e, a
-	extz	de
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	DSP_RouteCoeffs_TypeA
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SourceNameB_BySelector:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	e, a
-	extz	de
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	DSP_RouteCoeffs_TypeB
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SourceNameA_ByRow:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	sll	wa, 8
-	or	wa, bc
-	calr	DSP_CopyCoeffs_TypeA
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SourceNameB_ByRow:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	sll	wa, 8
-	or	wa, bc
-	calr	DSP_CopyCoeffs_TypeB
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SlotSourceNameA:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	e, a
-	extz	de
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	DSP_VoiceCoeffRoute
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SlotPairSourceNameB:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	e, a
-	extz	de
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	DSP_VoiceCoeffRoute2
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_CatalogueFooter:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	extz	wa
-	calr	DSP_AlgoCoeffLookup
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_ToneOptions:
-	ldw	iz, 8
-	cp	(xsp+2), iz
-	jrl	nc, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_Loop:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	ld	wa, (xsp+2)
-	inc	6, wa
-	extz	xwa
-	ld	xde, Payload_Bss_Start+0x639a
-	add	xde, xwa
-	ld	wa, bc
-	ld	bc, (xsp+2)
-	calr	DSP_VoiceParamReadWrite
-	incw	1, (xsp+2)
-	cp	(xsp+2), iz
-	jr	c, DSP_SetCoeff_MasterConfig_Loop
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_AlgorithmType:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	l, a
-	extz	hl
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	lda	xwa, (Payload_Bss_Start+0x63a0:24)
-	ld	xde, xwa
-	ld	wa, hl
-	calr	DSP_ReadVoiceParam5D
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_DrumSourceName_BySelector:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	l, a
-	extz	hl
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	c, a
-	extz	bc
-	lda	xwa, (Payload_Bss_Start+0x63a0:24)
-	ld	xde, xwa
-	ld	wa, hl
-	calr	DSP_VoiceParam_Dispatch
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_DrumSourceName_ByRow:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	sll	wa, 8
-	or	wa, bc
-	calr	DSP_SetCoeff_CopyDirect
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_KitNoteSourceName:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	e, a
-	extz	de
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	DSP_SetCoeff_RouteComplex
-	ld	iz, hl
-	jrl	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_PercSourceName_ByRow:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	c, a
-	extz	bc
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	sll	wa, 8
-	or	wa, bc
-	calr	DSP_SetCoeff_CopyDirect2
-	ld	iz, hl
-	jr	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SubToneLayerSourceName:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	l, a
-	extz	hl
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	ld	c, a
-	extz	bc
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	calr	DSP_SetCoeff_RouteWithCallback
-	ld	iz, hl
-	jr	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_SubToneLayerPairSourceName:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	ld	l, a
-	extz	hl
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	ld	c, a
-	extz	bc
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+3)
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	calr	DSP_SetCoeff_FullPipeline
-	ld	iz, hl
-	jr	t, DSP_SetCoeff_MasterConfig_Epilogue
-DSP_SetCoeff_MasterConfig_PartModeBytes:
-	ld	xwa, (xsp+4)
-	ld	a, (xwa+1)
-	extz	wa
-	calr	DSP_SetCoeff_WriteParams
-	ld	iz, hl
-DSP_SetCoeff_MasterConfig_Epilogue:
-	ld	hl, iz
-	popw iz
-	inc	6, xsp
-	ret
+DSP_SetCoeff_MasterConfig:	.include "includes/generated/cc900/DSP_SetCoeff_MasterConfig.s"	; C: cc900/dsp_voice_params_af_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_SetCoeff_MasterConfig_CaseBase, DSP_SetCoeff_MasterConfig + 58
+	.set	DSP_SetCoeff_MasterConfig_AlgoSelect, DSP_SetCoeff_MasterConfig + 85
+	.set	DSP_SetCoeff_MasterConfig_Skip, DSP_SetCoeff_MasterConfig + 112
+	.set	DSP_SetCoeff_MasterConfig_ToneNameAndMode, DSP_SetCoeff_MasterConfig + 149
+	.set	DSP_SetCoeff_MasterConfig_SourceNameA_BySelector, DSP_SetCoeff_MasterConfig + 186
+	.set	DSP_SetCoeff_MasterConfig_SourceNameB_BySelector, DSP_SetCoeff_MasterConfig + 216
+	.set	DSP_SetCoeff_MasterConfig_SourceNameA_ByRow, DSP_SetCoeff_MasterConfig + 246
+	.set	DSP_SetCoeff_MasterConfig_SourceNameB_ByRow, DSP_SetCoeff_MasterConfig + 277
+	.set	DSP_SetCoeff_MasterConfig_SlotSourceNameA, DSP_SetCoeff_MasterConfig + 308
+	.set	DSP_SetCoeff_MasterConfig_SlotPairSourceNameB, DSP_SetCoeff_MasterConfig + 338
+	.set	DSP_SetCoeff_MasterConfig_CatalogueFooter, DSP_SetCoeff_MasterConfig + 368
+	.set	DSP_SetCoeff_MasterConfig_ToneOptions, DSP_SetCoeff_MasterConfig + 384
+	.set	DSP_SetCoeff_MasterConfig_Loop, DSP_SetCoeff_MasterConfig + 393
+	.set	DSP_SetCoeff_MasterConfig_AlgorithmType, DSP_SetCoeff_MasterConfig + 436
+	.set	DSP_SetCoeff_MasterConfig_DrumSourceName_BySelector, DSP_SetCoeff_MasterConfig + 473
+	.set	DSP_SetCoeff_MasterConfig_DrumSourceName_ByRow, DSP_SetCoeff_MasterConfig + 510
+	.set	DSP_SetCoeff_MasterConfig_KitNoteSourceName, DSP_SetCoeff_MasterConfig + 541
+	.set	DSP_SetCoeff_MasterConfig_PercSourceName_ByRow, DSP_SetCoeff_MasterConfig + 571
+	.set	DSP_SetCoeff_MasterConfig_SubToneLayerSourceName, DSP_SetCoeff_MasterConfig + 601
+	.set	DSP_SetCoeff_MasterConfig_SubToneLayerPairSourceName, DSP_SetCoeff_MasterConfig + 644
+	.set	DSP_SetCoeff_MasterConfig_PartModeBytes, DSP_SetCoeff_MasterConfig + 687
+	.set	DSP_SetCoeff_MasterConfig_Epilogue, DSP_SetCoeff_MasterConfig + 700
 
 ; Unbounded byte block copy used by the whole query family.
 ; Entry: XBC = source, XDE = destination, WA = byte count (0..0xFFFF).
@@ -1920,79 +1653,14 @@ ToneDB_Find_ToneRecord:	.include "includes/generated/cc900/ToneDB_Find_ToneRecor
 ;       1..p.  Callers pass the result straight into the 0x51-byte partial
 ;       block address patchrec + 0x66 + 0x51*L.
 ; Callers: 0x032253 and 0x032345 (both inside VoiceParam_Update).
-VoiceBuf_TypeSelector_MatchEpilogue:
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Payload_Bss_Start+0x250c:24)
-	cp	(xhl+de), 0x10
-	jr c, VoiceChanScan_LoopBody
-	cp c, 0:i3
-	jr nz, VoiceChanScan_ReturnPUnchanged
-
-; Test mask[p] against tonerec+0x11; jump to the absent path if clear.
-VoiceChanScan_LoopBody:
-	ld e, c
-	extz de
-	ld ix, de
-	add ix, ix
-	lda xiy, (VoiceChanScan_SlotEnableMask:24)
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld e, (xde + 17)
-	extz de
-	and	de, (xiy+ix)
-	jr z, VoiceChanScan_Epilogue
-	ld w, 0x0:opc
-	ld b, 0x1:opc
-	ld e, c
-	inc 1, e
-	cp b, e
-	jr nc, VoiceChanScan_LoopNext
-
-; Count loop body: B = 1..p, W += 1 for each present partial.
-VoiceChanScan_MatchFound:
-	ld e, b
-	extz de
-	ld ix, de
-	add ix, ix
-	lda xiy, (VoiceChanScan_SlotEnableMask:24)
-	ld e, a
-	extz de
-	muls de, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xde, (xhl+de)
-	ld e, (xde + 17)
-	extz de
-	and	de, (xiy+ix)
-	jr z, VoiceChanScan_NoMatch
-	inc 1, w
-
-; Count loop increment and termination test.
-VoiceChanScan_NoMatch:
-	inc 1, b
-	ld e, c
-	inc 1, e
-	cp b, e
-	jr c, VoiceChanScan_MatchFound
-
-; C = W (the accumulated rank).
-VoiceChanScan_LoopNext:
-	ld c, w
-	jr VoiceChanScan_ReturnPUnchanged
-
-; C = 0xFF -- partial not present in this tone record.
-VoiceChanScan_Epilogue:
-	ld c, 0xFF:opc
-
-; L = C; ret.
-; ★ Renamed 2026-09-25 from VoiceChanScan_Data: the `L = C; ret` arm: partial index p returned unpacked (RAM tones / kits).
-VoiceChanScan_ReturnPUnchanged:
-	ld l, c
-	ret
+VoiceBuf_TypeSelector_MatchEpilogue:	.include "includes/generated/cc900/VoiceBuf_TypeSelector_MatchEpilogue.s"	; C: cc900/dsp_voice_params_ai_21c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceChanScan_LoopBody, VoiceBuf_TypeSelector_MatchEpilogue + 25
+	.set	VoiceChanScan_MatchFound, VoiceBuf_TypeSelector_MatchEpilogue + 80
+	.set	VoiceChanScan_NoMatch, VoiceBuf_TypeSelector_MatchEpilogue + 125
+	.set	VoiceChanScan_LoopNext, VoiceBuf_TypeSelector_MatchEpilogue + 135
+	.set	VoiceChanScan_Epilogue, VoiceBuf_TypeSelector_MatchEpilogue + 139
+	.set	VoiceChanScan_ReturnPUnchanged, VoiceBuf_TypeSelector_MatchEpilogue + 141
 
 ; (Re)bind a part's cached tone-record pointer and its four partial-block
 ; pointers.  This is the routine that makes a part playable: every downstream
@@ -2772,218 +2440,22 @@ ToneDB_Resolve_NamedToneRecord_Return:
 
 ToneDB_Find_SubToneRecord:	.include "includes/generated/cc900/ToneDB_Find_SubToneRecord.s"	; C: cc900/dsp_voice_params_d_10a.c
 
-Partial_Build_Present_Word:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xde, (Part_PresentWord:24)
-	ld	bc, (xde+bc)
-	extz xbc
-	and xbc, 0xFFFF3FF0
-	ld de, bc
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xhl, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xhl+bc)
-	ld l, (xbc + 18)
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	bitm 0, (xbc + 17)
-	jr z, Partial_Try_Unison_Slot0
-	set 0, de
-	jr VoiceFlags_Bit0Set
-
-Partial_Try_Unison_Slot0:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xix+bc)
-	extz xbc
-	bit 15, bc
-	jr z, VoiceFlags_Bit0Set
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	bitm 2, (xbc + 17)
-	jr z, VoiceFlags_Bit0Set
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	cp c, 0x8
-	jr ugt, VoiceFlags_Bit0Set
-	cp c, 0:i3
-	jr c, VoiceFlags_Bit0Set
-	or de, 0x4001
-
-; (tonerec[+0x12] & 0x03) == 1 -> Part_Slot_Flags[0] (0x0413EE) |= 0x8000.
-VoiceFlags_Bit0Set:
-	ld c, l
-	and c, 0x3
-	cp c, 1:i3
-	jr nz, VoiceFlags_Bit1Check
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x2578:24)
-	orw	(xix+bc), 0x8000
-	jr VoiceFlags_Bit1Set
-
-; Otherwise Part_Slot_Flags[0] &= 0x7FFF.
-VoiceFlags_Bit1Check:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x2578:24)
-	andw	(xix+bc), 0x7fff
-
-; tonerec[+0x11] bit 2 -> set bit 1 of the present word.
-VoiceFlags_Bit1Set:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	bitm 2, (xbc + 17)
-	jr z, Partial_Try_Unison_Slot1
-	set 1, de
-	jr VoiceFlags_Bit2Set
-
-Partial_Try_Unison_Slot1:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x24fc:24)
-	ld	bc, (xix+bc)
-	extz xbc
-	bit 15, bc
-	jr z, VoiceFlags_Bit2Set
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	bitm 0, (xbc + 17)
-	jr z, VoiceFlags_Bit2Set
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	ld c, (xbc + 93)
-	and c, 0xF
-	cp c, 0x8
-	jr ugt, VoiceFlags_Bit2Set
-	cp c, 0:i3
-	jr c, VoiceFlags_Bit2Set
-	or de, 0x8002
-
-; (tonerec[+0x12] & 0x0C) == 4 -> Part_Slot_Flags[1] (0x041413) |= 0x8000.
-VoiceFlags_Bit2Set:
-	ld c, l
-	and c, 0xC
-	cp c, 4:i3
-	jr nz, VoiceFlags_Bit3Check
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x259d:24)
-	orw	(xix+bc), 0x8000
-	jr VoiceFlags_Bit3Set
-
-; Otherwise Part_Slot_Flags[1] &= 0x7FFF.
-VoiceFlags_Bit3Check:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x259d:24)
-	andw	(xix+bc), 0x7fff
-
-; tonerec[+0x11] bit 4 -> set bit 2 of the present word.
-VoiceFlags_Bit3Set:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	bitm 4, (xbc + 17)
-	jr z, VoiceFlags_Bit4Check
-	set 2, de
-
-; (tonerec[+0x12] & 0x30) == 0x10 -> Part_Slot_Flags[2] (0x041438) |= 0x8000.
-VoiceFlags_Bit4Check:
-	ld c, l
-	and c, 0x30
-	cp c, 0x10
-	jr nz, VoiceFlags_Bit4Set
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x25c2:24)
-	orw	(xix+bc), 0x8000
-	jr VoiceFlags_Bit5Check
-
-; Otherwise Part_Slot_Flags[2] &= 0x7FFF.
-VoiceFlags_Bit4Set:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Payload_Bss_Start+0x25c2:24)
-	andw	(xix+bc), 0x7fff
-
-; tonerec[+0x11] bit 6 -> set bit 3 of the present word.
-VoiceFlags_Bit5Check:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xix, (Part_PatchRecord_Ptr:24)
-	ld	xbc, (xix+bc)
-	bitm 6, (xbc + 17)
-	jr z, VoiceFlags_Bit5Set
-	set 3, de
-
-; (tonerec[+0x12] & 0xC0) == 0x40 -> Part_Slot_Flags[3] (0x04145D) |= 0x8000.
-VoiceFlags_Bit5Set:
-	ld c, l
-	and c, 0xC0
-	cp c, 0x40
-	jr nz, VoiceFlags_Bit6Check
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xhl, (Payload_Bss_Start+0x25e7:24)
-	orw	(xhl+bc), 0x8000
-	jr VoiceFlags_Bit6Set
-
-; Otherwise Part_Slot_Flags[3] &= 0x7FFF.
-VoiceFlags_Bit6Check:
-	ld c, a
-	extz bc
-	muls bc, 0x11F
-	lda xhl, (Payload_Bss_Start+0x25e7:24)
-	andw	(xhl+bc), 0x7fff
-
-; Write the assembled word back to Part_PresentWord (0x04136A+part*0x11F).
-; Bits 0..3 = "partial p present"; bit 14 = partial 0 is unison-substituted by
-; partial 1; bit 15 = partial 1 is unison-substituted by partial 0.  The
-; substitution is only taken when Part_Flags0A bit 15 is set, the OTHER
-; partial is present, and (tonerec[+0x5D] & 0x0F) is in 0..8.
-VoiceFlags_Bit6Set:
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	ld	(xbc+wa), de
-	ret
+Partial_Build_Present_Word:	.include "includes/generated/cc900/Partial_Build_Present_Word.s"	; C: cc900/dsp_voice_params_ai_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Partial_Try_Unison_Slot0, Partial_Build_Present_Word + 77
+	.set	VoiceFlags_Bit0Set, Partial_Build_Present_Word + 162
+	.set	VoiceFlags_Bit1Check, Partial_Build_Present_Word + 193
+	.set	VoiceFlags_Bit1Set, Partial_Build_Present_Word + 213
+	.set	Partial_Try_Unison_Slot1, Partial_Build_Present_Word + 241
+	.set	VoiceFlags_Bit2Set, Partial_Build_Present_Word + 326
+	.set	VoiceFlags_Bit3Check, Partial_Build_Present_Word + 357
+	.set	VoiceFlags_Bit3Set, Partial_Build_Present_Word + 377
+	.set	VoiceFlags_Bit4Check, Partial_Build_Present_Word + 403
+	.set	VoiceFlags_Bit4Set, Partial_Build_Present_Word + 435
+	.set	VoiceFlags_Bit5Check, Partial_Build_Present_Word + 455
+	.set	VoiceFlags_Bit5Set, Partial_Build_Present_Word + 481
+	.set	VoiceFlags_Bit6Check, Partial_Build_Present_Word + 513
+	.set	VoiceFlags_Bit6Set, Partial_Build_Present_Word + 533
 
 ; Clamp a signed 16-bit value to 0..0x7F.
 ; Entry: WA = value.  Exit: HL = clamped value.
@@ -3256,123 +2728,14 @@ AlgoFlag_Write_Bit3:	.include "includes/generated/cc900/AlgoFlag_Write_Bit3.s"	;
 ; So the enable byte carries TWO bits per slot: bit(2s) = routed at all, bit(2s+1) = which of
 ; the two level/pan encodings to stamp into the word.
 ; Caller: EFF_RoutingInit only (0x033463).  Callee-cleans 4 bytes of arguments (retd 0x0004).
-RoutingFlag_Encode:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-	ld a, (xsp + 12)
-	ld l, (xsp + 14)
-	ldfr_berp E, 0xF0
-	extz ix
-	ld iy, ix
-	add iy, iy
-	lda xiz, (SlotEnableMaskA:24)
-	ld w, (xbc + 1)
-	ldfr_berp W, 0xF0
-	extz ix
-	and	ix, (xiz+iy)
-	jrl z, RoutingFlag_Epilogue
-	extz de
-	add de, de
-	lda xix, (SlotEnableMaskB:24)
-	ld c, (xbc + 1)
-	extz bc
-	and	bc, (xix+de)
-	jr z, RoutingFlag_Chan2
-	ld c, l
-	cp c, 2:i3
-	jr z, RoutingFlag_Chan1
-	cp c, 1:i3
-	jr z, RoutingFlag_Chan0
-	cp c, 0:i3
-	jrl nz, RoutingFlag_Epilogue
-	ld c, l
-	extz bc
-	add bc, bc
-	add bc, 0x1A
-	extz wa
-	ld de, wa
-	or de, 0xC0
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), de
-	jrl RoutingFlag_Epilogue
-
-; MaskB set, L==1: writes payload | 0xC000.
-RoutingFlag_Chan0:
-	ld c, l
-	extz bc
-	add bc, bc
-	add bc, 0x1A
-	extz wa
-	ld de, wa
-	or de, 0xC000
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), de
-	jr RoutingFlag_Epilogue
-
-; MaskB set, L==2: writes payload | 0x3300.
-RoutingFlag_Chan1:
-	ld c, l
-	extz bc
-	add bc, bc
-	add bc, 0x1A
-	extz wa
-	ld de, wa
-	or de, 0x3300
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), de
-	jr RoutingFlag_Epilogue
-
-; MaskB clear: re-tests L and takes the second constant set; L==0 writes payload with bit 6 set.
-RoutingFlag_Chan2:
-	ld c, l
-	cp c, 2:i3
-	jr z, RoutingFlag_Chan1B
-	cp c, 1:i3
-	jr z, RoutingFlag_Chan0B
-	cp c, 0:i3
-	jr nz, RoutingFlag_Epilogue
-	ld c, l
-	extz bc
-	add bc, bc
-	add bc, 0x1A
-	extz wa
-	ld de, wa
-	set 6, de
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), de
-	jr RoutingFlag_Epilogue
-
-; MaskB clear, L==1: writes payload with bit 14 set (0x4000).
-RoutingFlag_Chan0B:
-	ld c, l
-	extz bc
-	add bc, bc
-	add bc, 0x1A
-	extz wa
-	ld de, wa
-	set 14, de
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), de
-	jr RoutingFlag_Epilogue
-
-; MaskB clear, L==2: writes payload | 0x1100.
-RoutingFlag_Chan1B:
-	ld c, l
-	extz bc
-	add bc, bc
-	add bc, 0x1A
-	extz wa
-	ld de, wa
-	or de, 0x1100
-	ld xwa, (xsp + 4)
-	ld	(xwa+bc), de
-
-; Common exit; also the "nothing to route" early-out.  pop XIZ / inc 4,XSP / retd 4.
-RoutingFlag_Epilogue:
-	pop xiz
-	inc 4, xsp
-	retd 0x4
+RoutingFlag_Encode:	.include "includes/generated/cc900/RoutingFlag_Encode.s"	; C: cc900/dsp_voice_params_ai_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RoutingFlag_Chan0, RoutingFlag_Encode + 107
+	.set	RoutingFlag_Chan1, RoutingFlag_Encode + 135
+	.set	RoutingFlag_Chan2, RoutingFlag_Encode + 163
+	.set	RoutingFlag_Chan0B, RoutingFlag_Encode + 204
+	.set	RoutingFlag_Chan1B, RoutingFlag_Encode + 231
+	.set	RoutingFlag_Epilogue, RoutingFlag_Encode + 257
 
 ; Routing-word writer #0 of three near-identical siblings (see also 0x033327 and 0x033372).
 ; Inputs: XWA = output-slot record base, BC = the payload index, E = the expected 2-bit

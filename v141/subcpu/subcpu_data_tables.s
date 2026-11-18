@@ -999,31 +999,7 @@ AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE:
 ; --- 0x00FAEE-0x00FB1D  DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE -- 24 u16 jump offsets, base 0x0317CF
 ; Computed jump in DSP_SetCoeff_MasterConfig (selector 0..23): `jp T, 0x0317CF + table[index*2]`.
 ; Offset 0x0282 (entries 2, 3, 20, 21, 22) is the shared "no-op/return" arm.
-DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE:
-	.short DSP_SetCoeff_MasterConfig_CaseBase - DSP_SetCoeff_MasterConfig_CaseBase	; index 0
-	.short DSP_SetCoeff_MasterConfig_AlgoSelect - DSP_SetCoeff_MasterConfig_CaseBase	; index 1
-	.short DSP_SetCoeff_MasterConfig_Epilogue - DSP_SetCoeff_MasterConfig_CaseBase	; index 2
-	.short DSP_SetCoeff_MasterConfig_Epilogue - DSP_SetCoeff_MasterConfig_CaseBase	; index 3
-	.short DSP_SetCoeff_MasterConfig_ToneNameAndMode - DSP_SetCoeff_MasterConfig_CaseBase	; index 4
-	.short DSP_SetCoeff_MasterConfig_SourceNameA_BySelector - DSP_SetCoeff_MasterConfig_CaseBase	; index 5
-	.short DSP_SetCoeff_MasterConfig_SourceNameB_BySelector - DSP_SetCoeff_MasterConfig_CaseBase	; index 6
-	.short DSP_SetCoeff_MasterConfig_SourceNameA_ByRow - DSP_SetCoeff_MasterConfig_CaseBase	; index 7
-	.short DSP_SetCoeff_MasterConfig_SourceNameB_ByRow - DSP_SetCoeff_MasterConfig_CaseBase	; index 8
-	.short DSP_SetCoeff_MasterConfig_SlotSourceNameA - DSP_SetCoeff_MasterConfig_CaseBase	; index 9
-	.short DSP_SetCoeff_MasterConfig_SlotPairSourceNameB - DSP_SetCoeff_MasterConfig_CaseBase	; index 10
-	.short DSP_SetCoeff_MasterConfig_CatalogueFooter - DSP_SetCoeff_MasterConfig_CaseBase	; index 11
-	.short DSP_SetCoeff_MasterConfig_ToneOptions - DSP_SetCoeff_MasterConfig_CaseBase	; index 12
-	.short DSP_SetCoeff_MasterConfig_AlgorithmType - DSP_SetCoeff_MasterConfig_CaseBase	; index 13
-	.short DSP_SetCoeff_MasterConfig_DrumSourceName_BySelector - DSP_SetCoeff_MasterConfig_CaseBase	; index 14
-	.short DSP_SetCoeff_MasterConfig_DrumSourceName_ByRow - DSP_SetCoeff_MasterConfig_CaseBase	; index 15
-	.short DSP_SetCoeff_MasterConfig_KitNoteSourceName - DSP_SetCoeff_MasterConfig_CaseBase	; index 16
-	.short DSP_SetCoeff_MasterConfig_PercSourceName_ByRow - DSP_SetCoeff_MasterConfig_CaseBase	; index 17
-	.short DSP_SetCoeff_MasterConfig_SubToneLayerSourceName - DSP_SetCoeff_MasterConfig_CaseBase	; index 18
-	.short DSP_SetCoeff_MasterConfig_SubToneLayerPairSourceName - DSP_SetCoeff_MasterConfig_CaseBase	; index 19
-	.short DSP_SetCoeff_MasterConfig_Epilogue - DSP_SetCoeff_MasterConfig_CaseBase	; index 20
-	.short DSP_SetCoeff_MasterConfig_Epilogue - DSP_SetCoeff_MasterConfig_CaseBase	; index 21
-	.short DSP_SetCoeff_MasterConfig_Epilogue - DSP_SetCoeff_MasterConfig_CaseBase	; index 22
-	.short DSP_SetCoeff_MasterConfig_PartModeBytes - DSP_SetCoeff_MasterConfig_CaseBase	; index 23
+DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE:	.include "includes/generated/cc900/DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE.s"	; C: cc900/dsp_voice_params_af_21a.c (cc900-data)
 
 ; --- 0x00FB1E-0x00FB2D  VOICEPARAM_FINALIZE_QUERY_JUMPTABLE -- 8 u16 jump offsets, base 0x031B5B
 ; Computed jump in VoiceParamFinalize_SecondaryDispatch (status bit 3 CLEAR -> "queries"): `jp T, 0x031B5B + table[index*2]`.

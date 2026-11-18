@@ -173,6 +173,26 @@ list of the near-miss index offered nothing new (`ready_check.py`: all 137 lane_
 `scripts/tools/cc900_splice.py` learned that a cc900-data object may start on its label's own line (`Label:\t.double
 2.0`, how the FP constants are written) and that .float / .double are data.  `make -j2 gate` PASS.
 
+**Eighth promotion: round 21's 17 (2026-11-18; matched in runs 2026-11-18-18, -19, -21 and -22, verified per tree in
+-19, -21, -22 and -23).**  10 files: AudioChannel_AllVoices_Update_Variant3, Voice_ModWheel_Apply,
+Voice_ToneTableApply_Filter / _Pitch, Voice_Allocate_1of4 / _Typed, Voice_Env_ApplyVelocity_Type0,
+Voice_MakePartHandle, Partial_Build_Present_Word, RoutingFlag_Encode, VoiceAlloc_Apply_Algo_Group0 / 1,
+VoiceBuf_TypeSelector_MatchEpilogue, CheckStatusBits_Zero, DSP_RingBuf_Read, RingBuf_ReadByte and the switch
+DSP_SetCoeff_MasterConfig (706 B, with DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE).  17 functions, 4,287 B per tree
+(staged_v423.tsv's MATCH rows of runs -19 / -21 / -22 / -23); **512 functions per tree** built from C
+(`c_duplicates.py`).
+
+Round 21's lessons (helper-briefs/ROUND21.md has round 20's):
+- A first `case` whose body only leaves the switch loses its compare; Variant3 needed a `case 4:` before
+  `case 0x20: case 8: break;` to keep the 0x20 test (helper AD).
+- A file that names `__IZ` next to a pointer kept in memory crashes V4.23 (bug candidate 12) and loses every
+  function in it: run 2026-11-18-18 lost helper AI's three files whole; without ToneGen_ReadPitch_AndScale they
+  compiled (sub_AI_21*.c).  Keep `__IZ` probes in files of their own.
+- An argument that the ROM builds in XWA and copies to its register (`lda xwa,...; ld xbc,xwa`) is an address
+  expression such as `&ram_45216[0]`, not the bare array (DSP_SetCoeff_MasterConfig, helper AF).
+- A byte assigned to an int register variable through an int temporary gives the ROM's `extz wa; ld r,wa`; char
+  sums need `(int)` operands or V4.23 adds in 8 bits (helpers AG, AI).
+
 ### Floating point at -Xr (runs 2026-11-17-7 and 2026-11-17-9)
 
 - A register-convention function may not return float or double: V4.23 says `THC1-Error-373: Illegal function

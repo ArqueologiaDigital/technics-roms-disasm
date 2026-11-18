@@ -36,30 +36,10 @@ DSP2_InitTask_NullStub:	.include "includes/generated/cc900/DSP2_InitTask_NullStu
 ; 0xFFFF when the ring is empty -- callers test with a SIGNED compare (`cps hl,0` / `jr lt`),
 ; so 0xFFFF is "empty" and any real byte is >= 0. Advances (XWA+2) and decrements (XWA+4);
 ; index masked with 0x7FF; data area starts at XWA+6.
-DSP_RingBuf_Read:
-	cpw (xwa + 4), 0x0
-	jr z, DSP_RingBuf_Read_Empty
-	lda xbc, (xwa + 2)
-	ld de, (xbc)
-	incw 1, (xbc)
-	and de, 0x7FF
-	ld bc, de
-	extz xbc
-	inc 6, xbc
-	add xbc, xwa
-	ld c, (xbc)
-	extz bc
-	ld hl, bc
-	decm 1, (xwa + 4)
-	jr DSP_RingBuf_Read_Return
-
-; HL = 0xFFFF.
-DSP_RingBuf_Read_Empty:
-	ldw hl, 0xFFFF
-
-; ret.
-DSP_RingBuf_Read_Return:
-	ret
+DSP_RingBuf_Read:	.include "includes/generated/cc900/DSP_RingBuf_Read.s"	; C: cc900/dsp2_init_ae_21a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_RingBuf_Read_Empty, DSP_RingBuf_Read + 37
+	.set	DSP_RingBuf_Read_Return, DSP_RingBuf_Read + 40
 
 ; --- 0x035859-0x03585E  DSP_RingBuf3B60_Read -- six bytes f1 60 3b 30 68 d1
 ; Also not a table. `f1 60 3b 30` is `lda XWA,0x3B60` and `68 xx` is a `jr` -- this is the
