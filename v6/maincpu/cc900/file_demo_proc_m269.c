@@ -73,3 +73,28 @@ void FileIO_DiskEventDispatch(unsigned char a, unsigned char c)
 		break;
 	}
 }
+
+extern void FileIO_GetDiskCapacity(unsigned char a);
+
+void FileIO_GetDiskCapacity(unsigned char a)
+{
+	if (DISK_MEDIA_TYPE < 0) DISK_MEDIA_TYPE = GetDiskSizeInfo();
+	switch (DISK_MEDIA_TYPE) {
+	case 5:
+		GLOBAL_ERROR_CODE = 0;
+		UI_InterruptTitleByIndex(TT_MESAGE);
+		break;
+	case 0:
+		UI_ChangeTitleByIndex(TT_DKUTFRMT);
+		break;
+	case 1:
+		ResetProgressIndication();
+		GLOBAL_ERROR_CODE = 2;
+		UI_InterruptTitleByIndex(TT_MESAGE);
+		break;
+	case 2:
+	case 3:
+		UI_ChangeTitleByIndex(a);
+		break;
+	}
+}

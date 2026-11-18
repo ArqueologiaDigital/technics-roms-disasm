@@ -53,63 +53,14 @@ FDemoText_ByteData_VoiceProbeA_Skip2:
 	ld	a, (xbc+wa)
 	or (149490:24), a
 	ret
-FDemoText_ByteData_VoiceProbeB:
-	cp	(SWBTWR_PAYLOAD_1:16), 1
-	ret	nz
-	ld	a, (SWBTWR_PAYLOAD_3:16)
-	res	7, a
-	cp	a, 0:i3
-	ret	z
-	set	6, (0x247ee:24)
-	ret
-FDemoText_ByteData_VoiceProbeC:
-	ld	e, (SWBTWR_EVENT_TYPE:16)
-	sub	e, 68
-	ld	a, (SWBTWR_PAYLOAD_1:16)
-	extz	wa
-	dec	1, wa
-	cp	wa, 0:i3
-	ret	lt
-	cp	wa, 6:i3
-	ret	gt
-	add	wa, wa
-	lda	xix, (FDemoText_ByteData_VoiceProbeC_CaseTable:24)
-	ld	wa, (xix+wa)
-	lda	xix, (FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:24)
-	jp	t, (xix+wa)
-; FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll: Cases 1 and 2 of FDemoText_ByteData_VoiceProbeC (SWBTWR
-;   codes 0x44-0x46, changed payload byte +1/+2): sets bit 6 of RAM 0x247EC, which makes
-;   FDemoText_ProcessOutputChannels request a partial resend of every active part. Also the switch's offset base.
-;   Basis: callers + body.
-FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll:
-	set	6, (0x247ec:24)
-	ret
-; FDemoText_ByteData_VoiceProbeC_FootagesChanged: Payload +3..+6 (drawbar footages): sets the part's full-send bit in
-;   0x247EC.
-FDemoText_ByteData_VoiceProbeC_FootagesChanged:	; cases 3, 4, 5, 6
-	ld	xwa, FDemoText_FullSendBitByPart
-	jr	FDemoText_ByteData_VoiceProbeC_Join
-; FDemoText_ByteData_VoiceProbeC_Footage1OrSwitchesChanged: Payload +7: the 1' drawbar nibble sets the part's full-
-;   send bit, switch bits 0x10/0x20 its partial-resend bit (0x247EC).
-FDemoText_ByteData_VoiceProbeC_Footage1OrSwitchesChanged:
-	ld	a, (SWBTWR_PAYLOAD_3:16)
-	and	a, 15
-	jr	z, FDemoText_ByteData_VoiceProbeC_Skip
-	ld	a, e
-	extz	wa
-	lda	xbc, (FDemoText_FullSendBitByPart:24)
-	ld	a, (xbc+wa)
-	or (149484:24), a
-FDemoText_ByteData_VoiceProbeC_Skip:
-	ld a, (SWBTWR_PAYLOAD_3:16)
-	and a, 48
-	ret z
-	ld	xwa, FDemoText_PartialResendBit
-FDemoText_ByteData_VoiceProbeC_Join:
-	extz	de
-	ld	a, (xwa+de)
-	or (149484:24), a
-	ret
+FDemoText_ByteData_VoiceProbeB:	.include "includes/generated/cc900/FDemoText_ByteData_VoiceProbeB.s"	; C: cc900/fdemotext_routines_m0_xr.c
+FDemoText_ByteData_VoiceProbeC:	.include "includes/generated/cc900/FDemoText_ByteData_VoiceProbeC.s"	; C: cc900/fdemotext_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_ByteData_VoiceProbeC_RequestPartialResendAll, FDemoText_ByteData_VoiceProbeC + 45
+	.set	FDemoText_ByteData_VoiceProbeC_FootagesChanged, FDemoText_ByteData_VoiceProbeC + 51
+	.set	FDemoText_ByteData_VoiceProbeC_Footage1OrSwitchesChanged, FDemoText_ByteData_VoiceProbeC + 58
+	.set	FDemoText_ByteData_VoiceProbeC_Skip, FDemoText_ByteData_VoiceProbeC + 86
+	.set	FDemoText_ByteData_VoiceProbeC_Join, FDemoText_ByteData_VoiceProbeC + 100
 
 FDemoText_ProcessVoiceFlags:
 	pushw_erp 0xfa

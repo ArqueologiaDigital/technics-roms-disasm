@@ -1707,81 +1707,16 @@ DkMdlyPly_Finalize:
 	inc 2, xsp
 	ret
 
-DisplayMode_DispatchEvents:
-	ld a, (CURRENT_TITLE:16)
-	extz WA
-	sub WA,0x006f
-	cp wa, 0:i3
-	ret LT
-	cp wa, 6:i3
-	ret gt
-	add wa, wa
-	lda xix, (DisplayMode_DispatchEvents_CaseTable:24)
-	ld	wa, (xix+wa)
-	lda xix, (DisplayMode_BatchEventSend:24)
-	jp	t, (xix+wa)
-; --- DisplayMode_BatchEventSend: Dispatch events for display mode transitions ---
-; Multiple entry points, each dispatching 2-3 events for a specific mode.
-; Pattern per entry: XWA=event_id, XBC=0x1e0043b (target), XDE=0 (param),
-;   then call EventDispatch (0xfac14b) or jump to common tail.
-; Event IDs encode mode/sub-function: 0x6f000a, 0x70000x, 0x73000c, etc.
-DisplayMode_BatchEventSend:
-	ld	xwa, 0x6f000a
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	jrl	DisplayMode_DispatchEvents_Join
-DisplayMode_DispatchEvents_OnTitleDpmdlysmf:
-	ld	xwa, 0x73000c
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	jrl	DisplayMode_DispatchEvents_Join
-DisplayMode_DispatchEvents_OnTitleDpdoc:
-	ld	xwa, 0x700007
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	xwa, 0x700008
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	xwa, 0x700009
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	jr	DisplayMode_DispatchEvents_Join
-DisplayMode_DispatchEvents_OnTitleDpmdlydoc:
-	ld	xwa, 0x74000a
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	xwa, 0x74000b
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	xwa, 0x74000c
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	jr	DisplayMode_DispatchEvents_Join
-DisplayMode_DispatchEvents_OnTitleDppd:
-	ld	xwa, 0x710007
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	xwa, 0x710008
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	jr	DisplayMode_DispatchEvents_Join
-DisplayMode_DispatchEvents_OnTitleDpmdlypd:
-	ld	xwa, 0x750009
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	xwa, 0x75000a
-	ld	xbc, EVT_SET_PARAM
-	ld	xde, 0:i3
-DisplayMode_DispatchEvents_Join:
-	call	ApPostEvent
-DisplayMode_DispatchEvents_OnTitleDpsmflyr:
-	ret
+DisplayMode_DispatchEvents:	.include "includes/generated/cc900/DisplayMode_DispatchEvents.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DisplayMode_BatchEventSend, DisplayMode_DispatchEvents + 40
+	.set	DisplayMode_DispatchEvents_OnTitleDpmdlysmf, DisplayMode_DispatchEvents + 55
+	.set	DisplayMode_DispatchEvents_OnTitleDpdoc, DisplayMode_DispatchEvents + 70
+	.set	DisplayMode_DispatchEvents_OnTitleDpmdlydoc, DisplayMode_DispatchEvents + 116
+	.set	DisplayMode_DispatchEvents_OnTitleDppd, DisplayMode_DispatchEvents + 162
+	.set	DisplayMode_DispatchEvents_OnTitleDpmdlypd, DisplayMode_DispatchEvents + 192
+	.set	DisplayMode_DispatchEvents_Join, DisplayMode_DispatchEvents + 220
+	.set	DisplayMode_DispatchEvents_OnTitleDpsmflyr, DisplayMode_DispatchEvents + 224
 
 DisplayMode_RefreshState:
 	ld	wa, (135302:24)
@@ -2740,66 +2675,12 @@ CDlikeSwTtl_SongNavReturn:
 	popw iz
 	ret
 
-CDlikeSwTtl_DocNavDispatch:
-	pushw	iz
-	ld	iz, wa
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	z, CDlikeSwTtl_DocNavBit0
-	call	Song_AbortPlayback
-	ld	wa, iz
-	call	NavigateDocList
-	ldw	(135302:24), 0
-	calr	DisplayMode_RefreshState
-	calr	DisplayMode_DispatchEvents
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_DOC_FILE_NO
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_DOC_SONG_NAME
-	ld	xde, 0:i3
-	jr	CDlikeSwTtl_DocNavFinishNames
-CDlikeSwTtl_DocNavBit0:
-	call	SeqState_GetFlags
-	bit	0, hl
-	jr	z, CDlikeSwTtl_DocNavNoRedraw
-	call	Song_AbortPlayback
-	ld	wa, iz
-	call	NavigateDocList
-	ldw	(135302:24), 0
-	calr	DisplayMode_RefreshState
-	calr	DisplayMode_DispatchEvents
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_DOC_FILE_NO
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_DOC_SONG_NAME
-	ld	xde, 0:i3
-CDlikeSwTtl_DocNavFinishNames:
-	calr NameGetFuncCall
-	calr CDlikeSwTtl_ShowDocTitle
-	jr CDlikeSwTtl_DocNavReturn
-
-CDlikeSwTtl_DocNavNoRedraw:
-	ld wa, iz
-	call NavigateDocList
-	ldw (0x021086:24), 0x0000
-	calr DisplayMode_RefreshState
-	calr DisplayMode_DispatchEvents
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_DOC_FILE_NO
-	ld xde, 0:i3
-	calr NameGetFuncCall
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_DOC_SONG_NAME
-	ld xde, 0:i3
-	calr NameGetFuncCall
-
-CDlikeSwTtl_DocNavReturn:
-	popw iz
-	ret
+CDlikeSwTtl_DocNavDispatch:	.include "includes/generated/cc900/CDlikeSwTtl_DocNavDispatch.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_DocNavBit0, CDlikeSwTtl_DocNavDispatch + 64
+	.set	CDlikeSwTtl_DocNavFinishNames, CDlikeSwTtl_DocNavDispatch + 123
+	.set	CDlikeSwTtl_DocNavNoRedraw, CDlikeSwTtl_DocNavDispatch + 131
+	.set	CDlikeSwTtl_DocNavReturn, CDlikeSwTtl_DocNavDispatch + 180
 
 CDlikeSwTtl_PdNavDispatch:
 	pushw	iz
