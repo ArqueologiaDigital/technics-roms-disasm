@@ -7089,26 +7089,7 @@ CheckMediaWritable_Ok:
 	ld hl, 0:i3
 	ret
 
-FileIO_OpenWithBuiltPath:
-	lda xsp, (xsp-144)
-	push xiz
-	ld	(xsp+144), xbc
-	ld xiz, xwa
-	lda xwa, (xsp + 4)
-	ld xbc, 0x272d2
-	calr FileIO_CopyString
-	lda xwa, (xsp + 4)
-	ld xbc, 0x272f2
-	calr FileIO_BuildFilePath
-	lda xwa, (xsp + 4)
-	ld xbc, xiz
-	calr FileIO_BuildFilePath
-	lda xwa, (xsp + 4)
-	ld	xbc, (xsp+144)
-	call FileIO_OpenWithMode
-	pop xiz
-	lda xsp, (xsp+144:16)
-	ret
+FileIO_OpenWithBuiltPath:	.include "includes/generated/cc900/FileIO_OpenWithBuiltPath.s"	; C: cc900/file_demo_proc_m268.c
 
 FileIO_BuildFileIndex:
 	dec 4, xsp
@@ -7310,51 +7291,12 @@ FindFirst_Return:
 	lda xsp, (xsp+276)
 	ret
 
-FileIO_FindNextMatch:
-	lda xsp, (xsp-270)
-	push xiz
-	ld	(xsp+270), xbc
-	ld xiz, xwa
-	ld xwa, (0x027416:24)
-	lda xbc, (xsp + 4)
-	call _findnext
-	cp hl, 0:i3
-	jr z, FindNext_CopyName
-	ld (xiz), 0x0
-	ld XWA, (xsp + 0x010e)
-	ld xbc, 0:i3
-	ld (xwa), xbc
-	ld xwa, (0x027416:24)
-	call _findclose
-	ld xwa, 0xffffffff
-	ld (0x027416:24), xwa
-	ldw hl, 0xffff
-	jr FindNext_Return
-
-FindNext_CopyName:
-	lda xbc, (xsp + 10)
-	ld xwa, xiz
-	calr FileIO_CopyString
-	lda xbc, (xsp + 4)
-	bitm 4, (xbc)
-	jr z, FindNext_StoreFileSize
-	ld XWA, (xsp + 0x010e)
-	ld xbc, 0xffffffff
-	ld (xwa), xbc
-	jr FindNext_Ok
-
-FindNext_StoreFileSize:
-	ld XWA, (xsp + 0x010e)
-	ld xbc, (xbc + 2)
-	ld (xwa), xbc
-
-FindNext_Ok:
-	ld hl, 0:i3
-
-FindNext_Return:
-	pop xiz
-	lda xsp, (xsp+270)
-	ret
+FileIO_FindNextMatch:	.include "includes/generated/cc900/FileIO_FindNextMatch.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FindNext_CopyName, FileIO_FindNextMatch + 65
+	.set	FindNext_StoreFileSize, FileIO_FindNextMatch + 94
+	.set	FindNext_Ok, FileIO_FindNextMatch + 104
+	.set	FindNext_Return, FileIO_FindNextMatch + 106
 
 FileIO_SearchStringMatch:
 	dec 4, xsp

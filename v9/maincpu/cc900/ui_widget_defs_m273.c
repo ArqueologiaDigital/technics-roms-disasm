@@ -228,3 +228,27 @@ void Gfx_BlitDirtyRegions(void)
         DIRTY_BBOX.y1 = -1;
     }
 }
+
+/* cc900-module: ClipBlit_Replace_Impl ColorBlit2_Impl DrawBitmapSPFast_Impl DrawDesignBox_Impl DrawDottedLineWithMode_Impl DrawFrame_Impl DrawIcons_Impl DrawQueue_Alloc DrawRing_Post Gfx_BlitDirtyRegions IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+extern int IsXspInDrawStack(void);
+extern void *DrawRing_Post(void *cmd);
+extern int DRAW_ENABLED;
+extern int ram_30450;
+extern void UpdateScreen_CheckDirty(void *q);
+extern void UpdateScreen(void);
+
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void UpdateScreen(void)
+{
+	void **q;
+
+	if (IsXspInDrawStack() != 0) {
+		Gfx_BlitDirtyRegions();
+		if (ram_30450 == 0)
+			DRAW_ENABLED = ram_30450;
+	} else {
+		q = (void **)DrawQueue_Alloc(4);
+		*q = (void *)UpdateScreen_CheckDirty;
+		DrawRing_Post(q);
+	}
+}

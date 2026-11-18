@@ -43,3 +43,42 @@ unsigned char GetDiskSizeInfo(void)
     if (FileIO_DiskInfoInit_MediaType == ram_25db6) ram_25db6 = GetMediaType();
     return ram_25db6;
 }
+
+/* cc900-module: FileIO_BuildFileIndex FileIO_BuildFilePath FileIO_CopyString FileIO_FindPathSeparator */
+extern void FileIO_CopyString(char *, char *);
+extern void FileIO_BuildFilePath(char *, char *);
+extern int FileIO_OpenWithMode(char *, char *);
+extern int FileIO_OpenWithBuiltPath(char *name, char *mode);
+struct ffblk { unsigned char attr; char pad; long size; char name[260]; };
+extern int _findnext(long, struct ffblk *);
+extern int _findclose(long);
+extern long ram_27416;
+extern int FileIO_FindNextMatch(char *name, long *size);
+
+int FileIO_OpenWithBuiltPath(char *name, char *mode)
+{
+	char path[140];
+
+	FileIO_CopyString(path, (char *)0x272d2);
+	FileIO_BuildFilePath(path, (char *)0x272f2);
+	FileIO_BuildFilePath(path, name);
+	return FileIO_OpenWithMode(path, mode);
+}
+int FileIO_FindNextMatch(char *name, long *size)
+{
+	struct ffblk fb;
+
+	if (_findnext(ram_27416, &fb) != 0) {
+		*name = 0;
+		*size = 0;
+		_findclose(ram_27416);
+		ram_27416 = -1;
+		return -1;
+	}
+	FileIO_CopyString(name, fb.name);
+	if (fb.attr & 0x10)
+		*size = -1;
+	else
+		*size = fb.size;
+	return 0;
+}

@@ -6,43 +6,41 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: FileIO_BuildFileIndex FileIO_BuildFilePath FileIO_CopyString FileIO_FindPathSeparator */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FileIO_BuildFileIndex FileIO_CopyString FileIO_FindPathSeparator */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern void FileIO_CopyString(char *, char *);
-extern void FileIO_BuildFilePath(char *, char *);
-extern int FileIO_OpenWithMode(char *, char *);
-extern int FileIO_OpenWithBuiltPath(char *name, char *mode);
-struct ffblk { unsigned char attr; char pad; long size; char name[260]; };
-extern int _findnext(long, struct ffblk *);
-extern int _findclose(long);
-extern long ram_27416;
-extern int FileIO_FindNextMatch(char *name, long *size);
+extern int TrimAndFormatFilename(int len, unsigned char *s, unsigned char sep);
 
-int FileIO_OpenWithBuiltPath(char *name, char *mode)
+int TrimAndFormatFilename(int len, unsigned char *s, unsigned char sep)
 {
-	char path[140];
+	unsigned char buf[128];
+	int i;
+	unsigned char *p;
+	unsigned char c;
+	unsigned char *q;
 
-	FileIO_CopyString(path, (char *)0x272d2);
-	FileIO_BuildFilePath(path, (char *)0x272f2);
-	FileIO_BuildFilePath(path, name);
-	return FileIO_OpenWithMode(path, mode);
-}
-
-int FileIO_FindNextMatch(char *name, long *size)
-{
-	struct ffblk fb;
-
-	if (_findnext(ram_27416, &fb) != 0) {
-		*name = 0;
-		*size = 0;
-		_findclose(ram_27416);
-		ram_27416 = -1;
-		return -1;
+	s[len] = 0;
+	for (i = 0; i < len; i++) {
+		p = &s[i];
+		c = *p;
+		if (c < 0x20)
+			*p = ' ';
+		else if (c == sep) {
+			*p = 0;
+			break;
+		}
 	}
-	FileIO_CopyString(name, fb.name);
-	if (fb.attr & 0x10)
-		*size = -1;
-	else
-		*size = fb.size;
+	while (--i >= 0) {
+		q = &s[i];
+		if (*q != ' ')
+			break;
+		*q = 0;
+	}
+	if (*s == ' ') {
+		FileIO_CopyString((char *)buf, (char *)s);
+		for (i = 0; buf[i] == ' '; i++)
+			;
+		FileIO_CopyString((char *)s, (char *)&buf[i]);
+	}
 	return 0;
 }

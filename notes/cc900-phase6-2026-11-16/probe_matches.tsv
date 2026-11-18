@@ -713,3 +713,17 @@ MovePixels	77	2026-11-18-12-p6-r35	p6_K_1m273a@O3XSXr p6_K_1m273a@O3Xr
 MovePixels_QueuedExec	21	2026-11-18-12-p6-r35	p6_K_1m273a@O3XSXr p6_K_1m273a@O3Xr p6_K_1m273a@Xr
 UpdateScreen	43	2026-11-18-12-p6-r35	p6_J_1m273b@O3XSXr p6_J_1m273b@O3Xr
 UpdateScreen_CheckDirty	18	2026-11-18-12-p6-r35	p6_J_1m273b@O3XSXr p6_J_1m273b@O3Xr
+DSPCfg_FindSlot63	69	2026-11-18-28-p6-r36	p6_I_3m293a@O3XSXr p6_I_3m293a@O3Xr
+DrawText_PopAndReturn_Code	54	2026-11-18-28-p6-r36	p6_I_2m273a@O3XSXr p6_I_2m273a@O3Xr
+FDemoText_CalcTextExtent	80	2026-11-18-28-p6-r36	p6_K_2m265a@O3XSXr p6_K_2m265a@O3Xr
+FDemo_LinkedListSearch	60	2026-11-18-28-p6-r36	p6_K_2m265a@O3Xr
+FileIO_OpenWithMode	129	2026-11-18-28-p6-r36	p6_K_3m267a@O3XSXr p6_K_3m267a@O3Xr p6_K_3m267a@Xr
+Itoa_Safe	138	2026-11-18-28-p6-r36	p6_I_2m308b@O3XSXr p6_I_2m308b@O3Xr
+SeqBuf_WriteMidiEvent	106	2026-11-18-28-p6-r36	p6_J_2m234a@O3XSXr p6_J_2m234a@O3Xr p6_J_2m234a@Xr
+SeqChan_ByteBlockD	35	2026-11-18-28-p6-r36	p6_K_2m239a@O3XSXr p6_K_2m239a@O3Xr p6_K_2m239a@Xr
+SeqPart_DualSwap	108	2026-11-18-28-p6-r36	p6_J_2m236a@O3XSXr p6_J_2m236a@O3Xr
+SeqStep_FileSectorComplete	101	2026-11-18-28-p6-r36	p6_K_2m238a@Xr
+SingleLoadSrc_ComposerDrawBankName	119	2026-11-18-28-p6-r36	p6_J_2m269a@O3Xr
+SmfSeqToSongNumFunc	87	2026-11-18-28-p6-r36	p6_J_3m269a@O3Xr
+SndParam_ApplyMaskClamp	157	2026-11-18-28-p6-r36	p6_J_3a@O3Xr
+TrimAndFormatFilename	119	2026-11-18-28-p6-r36	p6_K_3m268b@O3Xr

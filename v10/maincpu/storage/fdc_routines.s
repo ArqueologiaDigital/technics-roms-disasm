@@ -120,170 +120,29 @@ FDC_WaitParamByteReady_Epilogue2:
 ; Sends floppy-controller command 0x36 (FDC_Send_Command), waits SOME_DELAY 2 and marks the head
 ; position unknown (0x8b04 = 0xff).
 FDC_INIT:	.include "includes/generated/cc900/FDC_INIT.s"	; C: cc900/fdc_routines_m270.c
-FDC_CONFIG_VERIFY:
-	push	xiz
-	calr	FDC_ClearStatus_InitTimer
-	calr	FDC_DRIVE_DETECT
-	cp	hl, 0xffff
-	jr	z, FDC_CONFIG_VERIFY_Skip
-	calr	FDC_DRIVE_STATUS
-	cp	hl, 0xffff
-	jr	z, FDC_CONFIG_VERIFY_Skip
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-FDC_CONFIG_VERIFY_Skip:
-	cp	(FDC_INIT_FLAG:16), 255
-	jrl	z, FDC_WaitReady_Epilogue3
-	ld	(FDC_INIT_FLAG:16), 255
-	ldw	wa, 54
-	calr	FDC_Send_Command
-	ld	wa, 2:i3
-	calr	SOME_DELAY
-	calr	FDC_DRIVE_DETECT
-	cp	hl, 0xffff
-	jr	z, FDC_CONFIG_VERIFY_Skip2
-	calr	FDC_DRIVE_STATUS
-	cp	hl, 0xffff
-	jr	z, FDC_CONFIG_VERIFY_Skip2
-	calr	FDC_ClearStatus_InitTimer
-	calr	FDC_CMD_DISPATCH_SUB
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CONFIG_VERIFY_Loop3
-	ld	(FDC_INIT_FLAG:16), 0
-	jrl	FDC_WaitReady_Epilogue3
-FDC_CONFIG_VERIFY_Loop3:
-	calr	FDC_Read_Status
-	bit	7, l
-	jr	z, FDC_CONFIG_VERIFY_Loop3
-	calr	FDC_Read_Status
-	bit	6, l
-	jr	nz, FDC_CONFIG_VERIFY_Skip8
-	ld	l, 0:opc
-	cp	l, 128
-	jr	z, FDC_CONFIG_VERIFY_Skip7
-FDC_CONFIG_VERIFY_Loop4:
-	calr	FDC_Read_Status
-	and	l, 240
-	cp	l, 128
-	jr	nz, FDC_CONFIG_VERIFY_Loop4
-FDC_CONFIG_VERIFY_Skip7:
-	ldw	wa, 8
-	calr	FDC_WriteDataRegister
-FDC_CONFIG_VERIFY_Skip8:
-	lda	xiz, (FDC_RESULT:16)
-	inc	1, xiz
-FDC_CONFIG_VERIFY_Loop5:
-	calr	FDC_Wait_Ready_Timeout
-	calr	FDC_ReadDataRegister
-	ld (xiz+), l
-FDC_CONFIG_VERIFY_Loop6:
-	calr FDC_Read_Status
-	bit 7, l
-	jr z, FDC_CONFIG_VERIFY_Loop6
-	calr	FDC_Read_Status
-	bit	6, l
-	jr	nz, FDC_CONFIG_VERIFY_Loop5
-	calr	FDC_Exception_Status_Decoder
-	cp	(FDC_RESULT+1:16), 128
-	jr	nz, FDC_CONFIG_VERIFY_Loop3
-FDC_CONFIG_VERIFY_Skip2:
-	ld	wa, 3:i3
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CONFIG_VERIFY_Skip9
-	ld	(FDC_INIT_FLAG:16), 0
-	jrl	FDC_WaitReady_Epilogue3
-FDC_CONFIG_VERIFY_Skip9:
-	ldw	wa, 79
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CONFIG_VERIFY_Skip10
-	ld	(FDC_INIT_FLAG:16), 0
-	jrl	FDC_WaitReady_Epilogue3
-FDC_CONFIG_VERIFY_Skip10:
-	ld	a, (0x8a6e:16)
-	and	a, 15
-	extz	wa
-	cp	wa, 0:i3
-	jrl	mi, FDC_WaitReady_Skip11
-	cp	wa, 5:i3
-	jrl	gt, FDC_WaitReady_Skip11
-	add	wa, wa
-	lda	xix, (FDC_WaitReady_CaseTable:24)
-	ld	wa, (xix+wa)
-	lda xix, (FDC_CONFIG_VERIFY_On720KMedia:24)
-	jp	t, (xix+wa)
-; FDC_CONFIG_VERIFY_On720KMedia: Media-type 0 case of FDC_CONFIG_VERIFY's switch on the low nibble of 0x8A6E: stores
-;   drive mode 0 in 0x8A6C, rate/mode bits 0 and FDC_RecordDensityCode(2) -- the 9 x 512 B, 80-track 720 KB (2DD)
-;   setting; codes 4 and 5 and the default run the same body with their own code. Basis: callers + body.
-FDC_CONFIG_VERIFY_On720KMedia:
-	ld (FDC_DRIVE_MODE:16), 0
-	ldw	(0x8a22:16), 0
-	ldib_erp 251, 0
-	ld wa, 2:i3
-	calr	FDC_RecordDensityCode
-	jr	FDC_WaitReady_Join
-FDC_CONFIG_VERIFY_Case1:
-	ld	(FDC_DRIVE_MODE:16), 0
-	ldw	(0x8a22:16), 0
-	ldi_erpb 251, 192
-	ld	wa, 2:i3
-	calr	FDC_RecordDensityCode
-	jr	FDC_WaitReady_Join
-FDC_CONFIG_VERIFY_On1024ByteSectorMedia:
-	ld	(FDC_DRIVE_MODE:16), 2
-	ldw	(0x8a22:16), 0
-	ldi_erpb 251, 64
-	ld wa, 0:i3
-	calr FDC_RecordDensityCode
-	jr	FDC_WaitReady_Join
-FDC_CONFIG_VERIFY_On1440KMedia:
-	ld	(FDC_DRIVE_MODE:16), 3
-	ldw	(0x8a22:16), 0
-	ldi_erpb 251, 64
-	ld wa, 0:i3
-	calr FDC_RecordDensityCode
-	jr	FDC_WaitReady_Join
-FDC_CONFIG_VERIFY_Case4:
-	ld	(FDC_DRIVE_MODE:16), 4
-	ldw	(0x8a22:16), 0
-	ldib_erp 251, 0
-	ld wa, 2:i3
-	calr	FDC_RecordDensityCode
-	jr	FDC_WaitReady_Join
-FDC_CONFIG_VERIFY_Case5:
-	ld	(FDC_DRIVE_MODE:16), 5
-	ldw	(0x8a22:16), 0
-	ldib_erp 251, 0
-	ld wa, 2:i3
-	calr	FDC_RecordDensityCode
-	jr	FDC_WaitReady_Join
-FDC_WaitReady_Skip11:
-	ld	(FDC_DRIVE_MODE:16), 0
-	ldw	(0x8a22:16), 0
-	ldib_erp 251, 0
-	ld wa, 2:i3
-	calr	FDC_RecordDensityCode
-FDC_WaitReady_Join:
-	ldto_berp a, 251
-	or a, 11
-	extz wa
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_WaitReady_Skip12
-	ld	(FDC_INIT_FLAG:16), 0
-	jr	FDC_WaitReady_Epilogue3
-FDC_WaitReady_Skip12:
-	calr	FDC_CMD_ENABLE
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_WaitReady_Skip13
-	ld	(FDC_INIT_FLAG:16), 0
-	jr	FDC_WaitReady_Epilogue3
-FDC_WaitReady_Skip13:
-	calr	FDC_CmdRecalibrate
-	ld	(FDC_INIT_FLAG:16), 0
-FDC_WaitReady_Epilogue3:
-	pop	xiz
-	ret
+FDC_CONFIG_VERIFY:	.include "includes/generated/cc900/FDC_CONFIG_VERIFY.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CONFIG_VERIFY_Skip, FDC_CONFIG_VERIFY + 27
+	.set	FDC_CONFIG_VERIFY_Loop3, FDC_CONFIG_VERIFY + 90
+	.set	FDC_CONFIG_VERIFY_Loop4, FDC_CONFIG_VERIFY + 113
+	.set	FDC_CONFIG_VERIFY_Skip7, FDC_CONFIG_VERIFY + 124
+	.set	FDC_CONFIG_VERIFY_Skip8, FDC_CONFIG_VERIFY + 130
+	.set	FDC_CONFIG_VERIFY_Loop5, FDC_CONFIG_VERIFY + 136
+	.set	FDC_CONFIG_VERIFY_Loop6, FDC_CONFIG_VERIFY + 145
+	.set	FDC_CONFIG_VERIFY_Skip2, FDC_CONFIG_VERIFY + 171
+	.set	FDC_CONFIG_VERIFY_Skip9, FDC_CONFIG_VERIFY + 191
+	.set	FDC_CONFIG_VERIFY_Skip10, FDC_CONFIG_VERIFY + 212
+	.set	FDC_CONFIG_VERIFY_On720KMedia, FDC_CONFIG_VERIFY + 253
+	.set	FDC_CONFIG_VERIFY_Case1, FDC_CONFIG_VERIFY + 274
+	.set	FDC_CONFIG_VERIFY_On1024ByteSectorMedia, FDC_CONFIG_VERIFY + 296
+	.set	FDC_CONFIG_VERIFY_On1440KMedia, FDC_CONFIG_VERIFY + 318
+	.set	FDC_CONFIG_VERIFY_Case4, FDC_CONFIG_VERIFY + 340
+	.set	FDC_CONFIG_VERIFY_Case5, FDC_CONFIG_VERIFY + 361
+	.set	FDC_WaitReady_Skip11, FDC_CONFIG_VERIFY + 382
+	.set	FDC_WaitReady_Join, FDC_CONFIG_VERIFY + 401
+	.set	FDC_WaitReady_Skip12, FDC_CONFIG_VERIFY + 426
+	.set	FDC_WaitReady_Skip13, FDC_CONFIG_VERIFY + 443
+	.set	FDC_WaitReady_Epilogue3, FDC_CONFIG_VERIFY + 451
 FDC_CMD_DISPATCH_SUB:
 	ldw	wa, 54
 	calr	FDC_Send_Command

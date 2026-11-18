@@ -3325,53 +3325,12 @@ DrawDottedLine_Impl_Epilogue2:
 ;   while the word at 0x3044e is non-zero; from any other task it queues a 16-byte command
 ;   {DrawDesignBox_QueueCallback, rectangle, BC, DE} for the draw task (DrawQueue_Alloc,
 ;   DrawRing_Post).
-DrawDesignBox:	; SysData_FAD559
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), de
-	ld (xsp + 6), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawDesignBox_QueuedPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawDesignBox_DirectEpilogue
-	ld xwa, xiz
-	ld bc, (xsp + 6)
-	ld de, (xsp + 4)
-	calr DrawDesignBox_Impl
-	jr DrawDesignBox_DirectEpilogue
+DrawDesignBox:	.include "includes/generated/cc900/DrawDesignBox.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawDesignBox_QueuedPath, DrawDesignBox + 40
+	.set	DrawDesignBox_DirectEpilogue, DrawDesignBox + 79
 
-DrawDesignBox_QueuedPath:
-	ldw wa, 0x10
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawDesignBox_QueueCallback:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ld bc, 4:i3
-	ldirw
-	ld bc, (xsp + 6)
-	ld (xwa + 12), bc
-	ld bc, (xsp + 4)
-	ld (xwa + 14), bc
-	calr DrawRing_Post
-
-DrawDesignBox_DirectEpilogue:
-	pop xiz
-	inc 4, xsp
-	ret
-
-DrawDesignBox_QueueCallback:
-	lda	xhl, (xwa+4)
-	ld	bc, (xwa+12)
-	ld	de, (xwa+14)
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	xwa, xhl
-	calr	DrawDesignBox_Impl
-	ret
+DrawDesignBox_QueueCallback:	.include "includes/generated/cc900/DrawDesignBox_QueueCallback.s"	; C: cc900/ui_window_procs_m0_xr.c
 
 DrawDesignBox_Impl:
 	lda xsp, (xsp - 74)
@@ -6425,42 +6384,11 @@ PaletteBankRotate_NextCol:
 	pop xiz
 	ret
 
-ClipBlit_Replace:
-	; --- VRAM display rendering function pair 1: wrapper (FAF3E0-FAF41D) ---
-	dec	2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, ClipBlit_Replace_Deferred
-	ld xwa, xiz
-	ld bc, (xsp + 4)
-	calr ClipBlit_Replace_Impl
-	jr t, ClipBlit_Replace_Return
-ClipBlit_Replace_Deferred:
-	ldw wa, 0x000a
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda	xbc, (ClipBlit_Replace_ParamBlock:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld bc, (xsp + 4)
-	ld (xwa + 8), bc
-	calr DrawRing_Post
-ClipBlit_Replace_Return:
-	pop xiz
-	inc	2, xsp
-	ret
-ClipBlit_Replace_ParamBlock:
-	; --- Callback stub (FAF41E-FAF427) ---
-	lda xde, (xwa + 4)
-	ld bc, (xwa + 8)
-	ld xwa, xde
-	jr t, ClipBlit_Replace_Impl
+ClipBlit_Replace:	.include "includes/generated/cc900/ClipBlit_Replace.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ClipBlit_Replace_Deferred, ClipBlit_Replace + 25
+	.set	ClipBlit_Replace_Return, ClipBlit_Replace + 58
+ClipBlit_Replace_ParamBlock:	.include "includes/generated/cc900/ClipBlit_Replace_ParamBlock.s"	; C: cc900/ui_window_procs_m0_xr.c
 ClipBlit_Replace_Impl:
 	; --- Main rendering routine 1 (FAF428-FAF541) ---
 	lda	xsp, (xsp-28)
@@ -6701,55 +6629,12 @@ ClipBlit_Direct_ScanlineCond:
 	ret
 
 
-ColorBlit:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, ColorBlit_Deferred
-	ld a, (COLORBLIT_MODE:24)
-	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (DRAW_ENABLED:24), 0
-	jr z, ColorBlit_Return
-	ld xwa, xiz
-	ld bc, (xsp + 4)
-	calr ColorBlit_Impl
-	jr ColorBlit_Return
+ColorBlit:	.include "includes/generated/cc900/ColorBlit.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ColorBlit_Deferred, ColorBlit + 44
+	.set	ColorBlit_Return, ColorBlit + 85
 
-ColorBlit_Deferred:
-	ldw wa, 0x10
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (ColorBlit_CallbackBlock:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ld bc, 4:i3
-	ldirw
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	ld c, (COLORBLIT_MODE:24)
-	ld (xwa + 14), c
-	calr DrawRing_Post
-
-ColorBlit_Return:
-	pop xiz
-	inc 2, xsp
-	ret
-
-ColorBlit_CallbackBlock:
-	ld	xbc, xwa
-	lda	xwa, (xbc+4)
-	ld	de, (xbc+12)
-	ld	c, (xbc+14)
-	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	bc, de
-	calr	ColorBlit_Impl
-	ret
+ColorBlit_CallbackBlock:	.include "includes/generated/cc900/ColorBlit_CallbackBlock.s"	; C: cc900/ui_window_procs_m0_d.c
 
 ColorBlit_Impl:
 	dec 8, xsp
@@ -6997,55 +6882,12 @@ ColorBlit_PopReturn:
 	inc 8, xsp
 	ret
 
-ColorBlit2:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), bc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, ColorBlit2_Deferred
-	ld a, (COLORBLIT_MODE:24)
-	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (DRAW_ENABLED:24), 0
-	jr z, ColorBlit2_Return
-	ld xwa, xiz
-	ld bc, (xsp + 4)
-	calr ColorBlit2_Impl
-	jr ColorBlit2_Return
+ColorBlit2:	.include "includes/generated/cc900/ColorBlit2.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ColorBlit2_Deferred, ColorBlit2 + 44
+	.set	ColorBlit2_Return, ColorBlit2 + 85
 
-ColorBlit2_Deferred:
-	ldw wa, 0x10
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (ColorBlit2_CallbackBlock:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ld bc, 4:i3
-	ldirw
-	ld bc, (xsp + 4)
-	ld (xwa + 12), bc
-	ld c, (COLORBLIT_MODE:24)
-	ld (xwa + 14), c
-	calr DrawRing_Post
-
-ColorBlit2_Return:
-	pop xiz
-	inc 2, xsp
-	ret
-
-ColorBlit2_CallbackBlock:
-	ld	xbc, xwa
-	lda	xwa, (xbc+4)
-	ld	de, (xbc+12)
-	ld	c, (xbc+14)
-	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	bc, de
-	calr	ColorBlit2_Impl
-	ret
+ColorBlit2_CallbackBlock:	.include "includes/generated/cc900/ColorBlit2_CallbackBlock.s"	; C: cc900/ui_window_procs_m0_d.c
 
 ColorBlit2_Impl:
 	dec 8, xsp
@@ -7768,60 +7610,11 @@ DrawMonoBitmap_Impl_Done:
 ; DrawLineWithMode_Impl).
 ; =============================================================================
 ; DrawLineWithMode: previous name of this label, kept only because it is still referenced by display/graphics_text_vga.s (owned by another lane)
-DrawLineWithMode:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), de
-	ld	(xsp+6), xbc
-	ld	xiz, xwa
-	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp	hl, 0:i3
-	jr	z, DrawLineWithMode_DeferredPath
-	ld	a, (COLORBLIT_MODE:24)
-	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(DRAW_ENABLED:24), 0
-	jr	z, DrawLineWithMode_Return
-	ld	xwa, xiz
-	ld	xbc, (xsp+6)
-	ld	de, (xsp+4)
-	calr	DrawLineWithMode_Impl
-	jr	DrawLineWithMode_Return
-DrawLineWithMode_DeferredPath:
-	ldw	wa, 16
-	calr	DrawQueue_Alloc
-	ld	xwa, xhl
-	lda	xbc, (DrawLineWithMode_ParamBlock:24)
-	ld	(xwa), xbc
-	ld	xiy, xiz
-	lda	xix, (xwa+4)
-	ldiw
-	ldiw
-	ld	xbc, (xsp+6)
-	ld	xiy, xbc
-	lda	xix, (xwa+8)
-	ldiw
-	ldiw
-	ld	bc, (xsp+4)
-	ld	(xwa+12), bc
-	ld	c, (COLORBLIT_MODE:24)
-	ld	(xwa+14), c
-	calr	DrawRing_Post
-DrawLineWithMode_Return:
-	pop	xiz
-	inc	6, xsp
-	ret
-DrawLineWithMode_ParamBlock:
-	ld	xbc, xwa
-	lda	xwa, (xbc+4)
-	lda	xhl, (xbc+8)
-	ld	de, (xbc+12)
-	ld	c, (xbc+14)
-	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	xbc, xhl
-	calr	DrawLineWithMode_Impl
-	ret
+DrawLineWithMode:	.include "includes/generated/cc900/DrawLineWithMode.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawLineWithMode_DeferredPath, DrawLineWithMode + 50
+	.set	DrawLineWithMode_Return, DrawLineWithMode + 103
+DrawLineWithMode_ParamBlock:	.include "includes/generated/cc900/DrawLineWithMode_ParamBlock.s"	; C: cc900/ui_window_procs_m0_d.c
 ; DrawLineWithMode_Impl: previous name of this label, kept only because it is still referenced by kn5000_v10_program.s (owned by another lane)
 DrawLineWithMode_Impl:
 	lda	xsp, (xsp-72)
@@ -8609,60 +8402,11 @@ DrawLineWithMode_Impl_Epilogue:
 ; display/graphics_text_vga.s (as DrawDottedLineWithMode).
 ; =============================================================================
 ; DrawDottedLineWithMode: previous name of this label, kept only because it is still referenced by display/graphics_text_vga.s (owned by another lane)
-DrawDottedLineWithMode:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), de
-	ld	(xsp+6), xbc
-	ld	xiz, xwa
-	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp	hl, 0:i3
-	jr	z, DrawDottedLineWithMode_DeferredPath
-	ld	a, (COLORBLIT_MODE:24)
-	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(DRAW_ENABLED:24), 0
-	jr	z, DrawDottedLineWithMode_Return
-	ld	xwa, xiz
-	ld	xbc, (xsp+6)
-	ld	de, (xsp+4)
-	calr	DrawDottedLineWithMode_Impl
-	jr	DrawDottedLineWithMode_Return
-DrawDottedLineWithMode_DeferredPath:
-	ldw	wa, 16
-	calr	DrawQueue_Alloc
-	ld	xwa, xhl
-	lda	xbc, (DrawDottedLineWithMode_ParamBlock:24)
-	ld	(xwa), xbc
-	ld	xiy, xiz
-	lda	xix, (xwa+4)
-	ldiw
-	ldiw
-	ld	xbc, (xsp+6)
-	ld	xiy, xbc
-	lda	xix, (xwa+8)
-	ldiw
-	ldiw
-	ld	bc, (xsp+4)
-	ld	(xwa+12), bc
-	ld	c, (COLORBLIT_MODE:24)
-	ld	(xwa+14), c
-	calr	DrawRing_Post
-DrawDottedLineWithMode_Return:
-	pop	xiz
-	inc	6, xsp
-	ret
-DrawDottedLineWithMode_ParamBlock:
-	ld	xbc, xwa
-	lda	xwa, (xbc+4)
-	lda	xhl, (xbc+8)
-	ld	de, (xbc+12)
-	ld	c, (xbc+14)
-	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	xbc, xhl
-	calr	DrawDottedLineWithMode_Impl
-	ret
+DrawDottedLineWithMode:	.include "includes/generated/cc900/DrawDottedLineWithMode.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawDottedLineWithMode_DeferredPath, DrawDottedLineWithMode + 50
+	.set	DrawDottedLineWithMode_Return, DrawDottedLineWithMode + 103
+DrawDottedLineWithMode_ParamBlock:	.include "includes/generated/cc900/DrawDottedLineWithMode_ParamBlock.s"	; C: cc900/ui_window_procs_m0_d.c
 DrawDottedLineWithMode_Impl:
 	lda	xsp, (xsp-56)
 	push	xiz
