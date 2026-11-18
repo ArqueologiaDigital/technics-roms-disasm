@@ -176,6 +176,27 @@ VOICE_DSPOUT_SECOND_A_JUMPTABLE).  **477 functions per tree** built from C, DSP_
   `_pow _sin _cos _tan _fabs`.  Their pairing with the tree's FP_* labels is NOT confirmed yet: each pair goes
   into `scripts/build/cc900_runtime_names.tsv` when a function that uses it matches.
 
+### Floating point matched (round 20, 2026-11-18; runs 2026-11-18-2, -3 and -6)
+
+DSP_ParamInterp_FPComplex (305 B, sub_fp_20d), DSP_VolumeCurve_FP (329 B) and DSP_ReverbCurve_FP (297 B,
+sub_fp_20i) are the payload's first floating-point functions V4.23 reproduces.  They confirm twelve library names,
+now rows of `scripts/build/cc900_runtime_names.tsv` (`*/subcpu`): `._fld_fl` FP_SP_CallWithBuf8, `._fld_lf`
+FP_ftoi, `._fld_df` FP_ftod, `._fld_fd` FP_dtof, `._fadd_f` / `._fsub_f` / `._fmul_f` / `._fdiv_f` FP_fadd /
+FP_fsub / FP_fmul / FP_fdiv, `._fmul_d` / `._fdiv_d` / `._fsub_d` FP_dmul / FP_ddiv / FP_dsub, `_pow` FP_pow.  The
+other candidates stay in `sub_v423.py` only (helper AC's, from the routines' bodies); `._fld_ulf` has none.
+
+What the spellings taught (every call address matched from the first run; only frames and folds differed):
+- **Frame rule at -Xr.**  Locals whose address is taken (every float / double / long the library reads or writes
+  by address) take slots top-down in declaration order, the first declared at the highest offset, just below the
+  spilled parameters; compiler temporaries go below them; a register candidate spilled across calls gets the
+  lowest slot.  So the ROM's offsets give the declaration order.
+- **Constant folding.**  V4.23 folds `(float)x * 30.0F * 44100.0F` into one multiply by 1323000 (a cast int, a
+  comma or a float cast around the first product do not stop it); a unary plus does: `+((float)x * 30.0F) *
+  44100.0F` keeps the ROM's two multiplies.
+- **Temporary order.**  In `y = 1.0 - pow(...)` V4.23 took the difference's temporary before the call's result
+  slot; `y = (float)(1.0 - pow(...))` gives the ROM's order.
+- Each floating constant is its own object, one `cc900-data:` line each, in the order the source uses them.
+
 | script                | question it answers                                                                                                                                                                                                                                   | command                                                                                          |
 |-----------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
 | `hold_back.py`        | moves verified functions the build cannot build yet out of `cc900/` into `cc900-staged/`                                                                                                                                                              | `python3 -B notes/cc900-c-subcpu-2026-11-16/hold_back.py FILE.c TAG "WHY" FUNC...`               |

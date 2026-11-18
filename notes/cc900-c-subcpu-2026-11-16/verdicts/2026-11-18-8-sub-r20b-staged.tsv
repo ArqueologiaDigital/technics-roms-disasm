@@ -1,0 +1,9 @@
+function	bytes	matches	best_diff
+DSP_AlgoParam_Decode	165	sub_fp_21a@Xr sub_fp_21c@Xr	
+DSP_AlgoType_Dispatch1	460	sub_AF_20b@Xr	
+DSP_AlgoType_Dispatch2	430	sub_AF_20b@Xr	
+DSP_AlgoType_Dispatch3	370	sub_AF_20a@Xr sub_AF_20b@Xr sub_AF_20c@Xr	
+DSP_SOS_LUT_Fetch	287	-	+3 sub_fp_21c@Xr
+DSP_SetCoeff_MasterConfig	729	-	+27 sub_AF_20c@Xr
+Voice_CtrlChange	616	sub_AF_20a@Xr sub_AF_20b@Xr sub_AF_20c@Xr	
+Voice_SystemMsg	324	sub_AF_20a@Xr sub_AF_20b@Xr sub_AF_20c@Xr	
