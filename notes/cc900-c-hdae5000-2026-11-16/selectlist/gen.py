@@ -93,6 +93,32 @@ HEAD52 = """/* hd_r52_sl.c (lane_hd round 52): HDAE5000_SelectListProc (hd-ae500
    The INDEXSW case keeps k's spelling there.
 */
 """
+# Round 55, from run 2026-11-18-13-hd-r52: u as an integer address (p, r) adds in XHL (`add xhl,N; ld xwa,(xhl)`);
+# q and s are k again.  The ROM's `ld xwa,xhl` reads like the reload of v from the register that still holds it
+# (it was just stored from XHL), which V4.23 did not do in m (no u: the function pointer was called through XHL).
+# So: u present (the pointer in XIX), and the first use through v.
+FORMS55 = [
+    dict(R50_BASE, NAME="SelList_t", REGS=R50_REGS + ["long u;"],
+         GET="u = GETVIEWL(obj);\n        v = (unsigned char *)u;", U="v"),
+    dict(R50_BASE, NAME="SelList_v", REGS=R50_REGS + ["unsigned char *u;"],
+         GET="u = GETVIEW(obj);\n        v = u;", U="v"),
+    dict(R50_BASE, NAME="SelList_w", REGS=R50_REGS + ["long u;"],
+         GET="v = (unsigned char *)(u = GETVIEWL(obj));", U="v"),
+]
+HEAD55 = """/* hd_r55_sl.c (lane_hd round 55): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), three forms written by
+   selectlist/gen.py --round 55.  It calls nothing relatively.
+   cc900-options: -Xr
+%s
+   Run 2026-11-18-13-hd-r52 (hd_r52_sl.c): u used as an integer address (p, r) is added to in place
+   (`add xhl,N; ld xwa,(xhl)`); q and s gave k's code again ((xhl+N) straight).  The ROM's `ld (xsp+4),xhl;
+   ld xwa,xhl; ld xwa,(xwa+N)` reads like v reloaded from the register that still holds it.  Run hd-r50's m (no u)
+   reloaded v from the stack instead, but there the function pointer had been called through XHL.  These keep a
+   register local u (the pointer then in XIX) and make the first use through v:
+     SelList_t  long u; u = GETVIEWL(obj); v = (unsigned char *)u;  first use V_xxx(v)
+     SelList_v  unsigned char *u; u = GETVIEW(obj); v = u;
+     SelList_w  v = (unsigned char *)(u = GETVIEWL(obj));
+*/
+"""
 HEAD50 = """/* hd_r50_sl.c (lane_hd round 50): HDAE5000_SelectListProc (hd-ae5000_v2_06i.s, 2641 B), six forms written by
    selectlist/gen.py --round 50.  It calls nothing relatively.
    cc900-options: -Xr
@@ -121,8 +147,8 @@ def main():
     tpl = open(os.path.join(HERE, "body.tpl")).read()
     forms = FORMS
     rnd = sys.argv[sys.argv.index("--round") + 1] if "--round" in sys.argv else None
-    if rnd in ("50", "52"):
-        forms, hd = {"50": (FORMS50, HEAD50), "52": (FORMS52, HEAD52)}[rnd]
+    if rnd in ("50", "52", "55"):
+        forms, hd = {"50": (FORMS50, HEAD50), "52": (FORMS52, HEAD52), "55": (FORMS55, HEAD55)}[rnd]
         names = "\n".join("   cc900-name: %s=HDAE5000_SelectListProc" % f["NAME"] for f in forms)
         head = hd % names + head.split("*/\n", 1)[1]
     parts = [head]
