@@ -23,6 +23,7 @@ extern unsigned char __near ram_bc54;
 extern unsigned char __near ram_bc4c;
 extern void ParaLoadOpt_AudioFlagCheck_B(unsigned char a, unsigned char c, unsigned char e);
 
+/* cc900-data: ParaLoadOpt_AudioFlagCheck 1 = ParaLoadOpt_AudioFlagCheck_CaseTable */
 void ParaLoadOpt_AudioFlagCheck(unsigned char a, unsigned char c, unsigned char e)
 {
     if (ram_bc76 & 1) {
@@ -92,6 +93,7 @@ void ParaLoadOpt_AudioFlagCheck(unsigned char a, unsigned char c, unsigned char 
     }
 }
 
+/* cc900-data: ParaLoadOpt_AudioFlagCheck_B 1 = ParaLoadOpt_AudioFlagCheck_B_CaseTable */
 void ParaLoadOpt_AudioFlagCheck_B(unsigned char a, unsigned char c, unsigned char e)
 {
     if (ram_bc76 & 2) {

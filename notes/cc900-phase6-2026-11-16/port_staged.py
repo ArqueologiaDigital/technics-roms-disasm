@@ -110,7 +110,7 @@ def main():
                 for kind, item in sp.items(text):
                     if kind == 'fn' and sp.fn_name(item) == cn:
                         out = out.replace(item + '\n', '')
-                    if kind == 'name' and re.search(r'cc900-name:\s*%s\s*=' % re.escape(cn), item):
+                    if kind == 'name' and sp.names_fn(item, cn):
                         out = out.replace(item + '\n', '')
             # declarations that only dropped functions used go too (their ram_<hex> names would collide with remapped
             # ones): keep a declaration when a kept function, or a kept declaration, uses a name it introduces

@@ -52,6 +52,7 @@ void CDlikeSwTtl_DocNavDispatch(int n)
     }
 }
 
+/* cc900-data: DisplayMode_DispatchEvents 1 = DisplayMode_DispatchEvents_CaseTable */
 void DisplayMode_DispatchEvents(void)
 {
     switch (CURRENT_TITLE) {

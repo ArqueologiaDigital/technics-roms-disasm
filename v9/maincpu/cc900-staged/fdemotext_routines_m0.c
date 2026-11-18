@@ -16,6 +16,7 @@ extern unsigned char FDemoText_FullSendBitByPart[];
 extern unsigned char FDemoText_PartialResendBit[];
 extern void FDemoText_ByteData_VoiceProbeC(void);
 
+/* cc900-data: FDemoText_ByteData_VoiceProbeC 1 = FDemoText_ByteData_VoiceProbeC_CaseTable */
 void FDemoText_ByteData_VoiceProbeC(void)
 {
     unsigned char e;
