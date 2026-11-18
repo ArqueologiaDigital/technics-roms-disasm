@@ -930,6 +930,7 @@ Run from the repository root with `python3 -B notes/cc900-phase6-2026-11-16/<scr
 | `repair_module_lines.py` | give back module names an append dropped                                               | `repair_module_lines.py [--dry-run]`                |
 | `ready_check.py`         | which near-miss ready.tsv rows are really not built yet (built / staged / NEW)         | `ready_check.py [--lane LANE] [--new]`              |
 | `promoted_bytes.py`      | how many functions / bytes a promotion built, per tree, from staged_v423.tsv           | `promoted_bytes.py RUN [RUN ...]`                   |
+| `fix_c_comment.py`       | point each function's `; C: cc900/<file>` label comment at the file that defines it    | `fix_c_comment.py TREE/maincpu/cc900/F.c ...`       |
 
 2026-11-18: `port_staged.py --keep-unproven` keeps a function whose bytes differ outside the C's address fields (a
 relative call to a moved callee, an own switch base) for V4.23's per-tree check to decide; the staging scripts now

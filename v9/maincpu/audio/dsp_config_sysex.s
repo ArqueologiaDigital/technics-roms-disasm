@@ -2854,41 +2854,11 @@ DSPCfg_GetSlotCount:	.include "includes/generated/cc900/DSPCfg_GetSlotCount.s"	;
 
 DSPCfg_Data_002:	.include "includes/generated/cc900/DSPCfg_Data_002.s"	; C: cc900/dsp_config_sysex_m0.c
 
-DSPCfg_FindSlot63:
-	dec 2, xsp
-	push xiz
-	ld iz, wa
-	ldw (xsp + 4), 0xffff
-	ld wa, iz
-	calr DSPCfg_GetSlotCount
-	ldfr_werp HL, 0xfa
-	ld wa, iz
-	exts xwa
-	sll xwa, 2
-	ld xbc, DspFxRecListPtrTable
-	add xbc, xwa
-	ld xwa, (xbc)
-	ld iz, 0:i3
-	cpiw_erp 0xfa, 0
-	jr le, DSPCfg_FindSlot63_Return
-
-DSPCfg_FindSlot63_Loop:
-	cp (xwa + 2), 0x63
-	jr nz, DSPCfg_FindSlot63_Next
-	ld (xsp + 4), iz
-
-DSPCfg_FindSlot63_Next:
-	calr DSPCfg_PackAddress
-	ld xwa, xhl
-	inc 1, iz
-	cpw_erp IZ, 0xfa
-	jr lt, DSPCfg_FindSlot63_Loop
-
-DSPCfg_FindSlot63_Return:
-	ld hl, (xsp + 4)
-	pop xiz
-	inc 2, xsp
-	ret
+DSPCfg_FindSlot63:	.include "includes/generated/cc900/DSPCfg_FindSlot63.s"	; C: cc900/dsp_config_sysex_m293_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_FindSlot63_Loop, DSPCfg_FindSlot63 + 41
+	.set	DSPCfg_FindSlot63_Next, DSPCfg_FindSlot63 + 50
+	.set	DSPCfg_FindSlot63_Return, DSPCfg_FindSlot63 + 62
 
 DSPCfg_Data_003:
 	dec	8, xsp
@@ -2927,195 +2897,25 @@ DSPCfg_FindSlot63_Skip:
 DSPCfg_FindSlot63_Return2:
 	ret
 
-DSPCfg_DecodeParamIdRange:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 6), xde
-	ld (xsp + 10), xbc
-	ld xiz, xwa
-	ldw (xsp + 4), 0x0
-	ld xwa, (xsp + 22)
-	calr DSPCfg_GetParamCount
-	ld xwa, xiz
-	cp xiz, 0x4947
-	jr ugt, DSPCfg_DecodeParamIdRange_Invalid
-	cp xiz, 0x4940
-	jr nc, DSPCfg_DecodeParamIdRange_4940
-	cp xiz, 0x4927
-	jr ugt, DSPCfg_DecodeParamIdRange_Invalid
-	cp xiz, 0x4910
-	jr nc, DSPCfg_DecodeParamIdRange_4910
-	sub xwa, 0x4900
-	cp xwa, 0x0
-	jr c, DSPCfg_DecodeParamIdRange_Invalid
-	cp xwa, 0x7
-	jr ugt, DSPCfg_DecodeParamIdRange_Invalid
-	add xwa, DspParamId4900_ByteMap
-	ld c, (xwa)
-	exts bc
-	ld xwa, (xsp + 6)
-	ld (xwa), bc
-	jr DSPCfg_DecodeParamIdRange_Return
+DSPCfg_DecodeParamIdRange:	.include "includes/generated/cc900/DSPCfg_DecodeParamIdRange.s"	; C: cc900/dsp_config_sysex_m293_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_DecodeParamIdRange_4910, DSPCfg_DecodeParamIdRange + 96
+	.set	DSPCfg_DecodeParamIdRange_4940, DSPCfg_DecodeParamIdRange + 110
+	.set	DSPCfg_DecodeParamIdRange_CalcOffset, DSPCfg_DecodeParamIdRange + 122
+	.set	DSPCfg_DecodeParamIdRange_Invalid, DSPCfg_DecodeParamIdRange + 133
+	.set	DSPCfg_DecodeParamIdRange_Return, DSPCfg_DecodeParamIdRange + 152
 
-DSPCfg_DecodeParamIdRange_4910:
-	ld xwa, (xsp + 6)
-	ldw (xwa), 0x1
-	ld xwa, 0x4910
-	jr DSPCfg_DecodeParamIdRange_CalcOffset
-
-DSPCfg_DecodeParamIdRange_4940:
-	ld xwa, (xsp + 6)
-	ldw (xwa), 0x4
-	ld xwa, 0x4940
-
-DSPCfg_DecodeParamIdRange_CalcOffset:
-	ld xbc, xiz
-	sub xbc, xwa
-	ld xwa, (xsp + 10)
-	ld (xwa), bc
-	jr DSPCfg_DecodeParamIdRange_Return
-
-DSPCfg_DecodeParamIdRange_Invalid:
-	ld xwa, (xsp + 6)
-	ldw (xwa), 0xffff
-	ld xwa, (xsp + 10)
-	ldw (xwa), 0xffff
-	ldw (xsp + 4), 0xffff
-
-DSPCfg_DecodeParamIdRange_Return:
-	ld xwa, (xsp + 18)
-	ld (xwa), hl
-	ld hl, (xsp + 4)
-	pop xiz
-	lda xsp, (xsp + 10)
-	retd 0x8
-
-DSPCfg_ResolveParamToSlot:
-	lda xsp, (xsp - 14)
-	push xiz
-	ld (xsp + 10), xde
-	ld (xsp + 14), xbc
-	ld xiz, xwa
-	cp xiz, 0x4f00
-	jr ugt, DSPCfg_ResolveParamToSlot_OutOfRange
-	cp xiz, 0x4900
-	jr nc, DSPCfg_ResolveParamToSlot_Range49
-
-DSPCfg_ResolveParamToSlot_OutOfRange:
-	ldw hl, 0xffff
-	jrl DSPCfg_ResolveParamToSlot_StoreResult
-
-DSPCfg_ResolveParamToSlot_Range49:
-	cp xiz, 0x4a00
-	jr nc, DSPCfg_ResolveParamToSlot_Range4A
-	ldw (xsp + 8), 0x0
-	ld wa, 0:i3
-	calr DSPCfg_LookupMidiMap
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	push xwa
-	ld xwa, (xsp + 26)
-	push xwa
-	ld xwa, xiz
-	ld xbc, (xsp + 38)
-	ld xde, (xsp + 34)
-	jrl DSPCfg_ResolveParamToSlot_CallDecode
-
-DSPCfg_ResolveParamToSlot_Range4A:
-	cp xiz, 0x4b00
-	jr nc, DSPCfg_ResolveParamToSlot_Range4B
-	ldw (xsp + 8), 0x1
-	ld wa, 1:i3
-	calr DSPCfg_LookupMidiMap
-	ld (xsp + 4), xhl
-	ld xwa, xiz
-	sub xwa, 0x200
-	ld xbc, (xsp + 4)
-	push xbc
-	ld xbc, (xsp + 26)
-	push xbc
-	ld xbc, (xsp + 38)
-	ld xde, (xsp + 34)
-	jrl DSPCfg_ResolveParamToSlot_CallDecode
-
-DSPCfg_ResolveParamToSlot_Range4B:
-	cp xiz, 0x4c00
-	jr nc, DSPCfg_ResolveParamToSlot_Range4C
-	ldw (xsp + 8), 0x1
-	ld wa, 1:i3
-	calr DSPCfg_LookupMidiMap
-	ld (xsp + 4), xhl
-	ld xwa, xiz
-	sub xwa, 0x200
-	ld xbc, (xsp + 4)
-	push xbc
-	ld xbc, (xsp + 26)
-	push xbc
-	ld xbc, (xsp + 38)
-	ld xde, (xsp + 34)
-	jr DSPCfg_ResolveParamToSlot_CallDecode
-
-DSPCfg_ResolveParamToSlot_Range4C:
-	cp xiz, 0x4d00
-	jr nc, DSPCfg_ResolveParamToSlot_Range4D
-	ldw (xsp + 8), 0x4
-	ld wa, 4:i3
-	calr DSPCfg_LookupMidiMap
-	ld (xsp + 4), xhl
-	ld xwa, xiz
-	sub xwa, 0x300
-	ld xbc, (xsp + 4)
-	push xbc
-	ld xbc, (xsp + 26)
-	push xbc
-	ld xbc, (xsp + 38)
-	ld xde, (xsp + 34)
-	jr DSPCfg_ResolveParamToSlot_CallDecode
-
-DSPCfg_ResolveParamToSlot_Range4D:
-	cp xiz, 0x4e00
-	jr nc, DSPCfg_ResolveParamToSlot_Range4E
-	ldw (xsp + 8), 0x2
-	ld wa, 2:i3
-	calr DSPCfg_LookupMidiMap
-	ld (xsp + 4), xhl
-	ld xwa, xiz
-	sub xwa, 0x400
-	ld xbc, (xsp + 4)
-	push xbc
-	ld xbc, (xsp + 26)
-	push xbc
-	ld xbc, (xsp + 38)
-	ld xde, (xsp + 34)
-	jr DSPCfg_ResolveParamToSlot_CallDecode
-
-DSPCfg_ResolveParamToSlot_Range4E:
-	ldw (xsp + 8), 0x3
-	ld wa, 3:i3
-	calr DSPCfg_LookupMidiMap
-	ld (xsp + 4), xhl
-	ld xwa, xiz
-	sub xwa, 0x500
-	ld xbc, (xsp + 4)
-	push xbc
-	ld xbc, (xsp + 26)
-	push xbc
-	ld xbc, (xsp + 38)
-	ld xde, (xsp + 34)
-
-DSPCfg_ResolveParamToSlot_CallDecode:
-	calr DSPCfg_DecodeParamIdRange
-
-DSPCfg_ResolveParamToSlot_StoreResult:
-	ld xwa, (xsp + 14)
-	ld xbc, (xsp + 4)
-	ld (xwa), xbc
-	ld xwa, (xsp + 10)
-	ld bc, (xsp + 8)
-	ld (xwa), bc
-	pop xiz
-	lda xsp, (xsp + 14)
-	retd 0xc
+DSPCfg_ResolveParamToSlot:	.include "includes/generated/cc900/DSPCfg_ResolveParamToSlot.s"	; C: cc900/dsp_config_sysex_m293_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_ResolveParamToSlot_OutOfRange, DSPCfg_ResolveParamToSlot + 28
+	.set	DSPCfg_ResolveParamToSlot_Range49, DSPCfg_ResolveParamToSlot + 34
+	.set	DSPCfg_ResolveParamToSlot_Range4A, DSPCfg_ResolveParamToSlot + 74
+	.set	DSPCfg_ResolveParamToSlot_Range4B, DSPCfg_ResolveParamToSlot + 120
+	.set	DSPCfg_ResolveParamToSlot_Range4C, DSPCfg_ResolveParamToSlot + 165
+	.set	DSPCfg_ResolveParamToSlot_Range4D, DSPCfg_ResolveParamToSlot + 210
+	.set	DSPCfg_ResolveParamToSlot_Range4E, DSPCfg_ResolveParamToSlot + 255
+	.set	DSPCfg_ResolveParamToSlot_CallDecode, DSPCfg_ResolveParamToSlot + 290
+	.set	DSPCfg_ResolveParamToSlot_StoreResult, DSPCfg_ResolveParamToSlot + 293
 
 DSPCfg_ResolveAndExtract:
 	lda xsp, (xsp - 12)

@@ -245,32 +245,9 @@ SingleLoadSrc_PanelMemDrawMemoryNumber:	.include "includes/generated/cc900/Singl
 ;   16 bytes at 178 + index * entry size, the size being the file's word at offset 13), pads it and posts
 ;   EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_PanelMemListProc calls it on EVT_PAINT and on parameter 40
 ;   when a memory change is pending (0x81CE).
-SingleLoadSrc_PanelMemDrawMemoryName:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp+4), xwa
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	nz, SingleLoadSrc_PanelMemDrawMemoryName_Epilogue
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld	(xwa+63), 3
-	lda	xiz, (xwa+64)
-	ld	a, (SLOAD_SRC_PMEM_POS:16)
-	extz	wa
-	call	SingleLoadSrc_ReadPmtMemoryName
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+64:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+63:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-SingleLoadSrc_PanelMemDrawMemoryName_Epilogue:
-	pop	xiz
-	inc	4, xsp
-	ret
+SingleLoadSrc_PanelMemDrawMemoryName:	.include "includes/generated/cc900/SingleLoadSrc_PanelMemDrawMemoryName.s"	; C: cc900/single_load_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadSrc_PanelMemDrawMemoryName_Epilogue, SingleLoadSrc_PanelMemDrawMemoryName + 68
 ; SingleLoadSrc_PanelMemListProc: Single-load source list for area 0 PANEL MEMORY: EVT_PAINT draws the bank/name rows
 ;   (SLSrcBankList_FuncBody, _Helper2, _Helper, _Helper3); event parameter 5 pages by SingleLoadSrc_PanelMemBankSize
 ;   (8) up to 80 (RAM 0x89FC), parameter 6 steps by 1, 40 redraws the pending rows; entry [0] of
@@ -541,44 +518,7 @@ SingleLoadSrc_SequencerListProc_Skip11:
 ;   / C (SingleLoad_GetComposerBankName -> SingleLoad_MemoryBankNames: MEMORY-A/B/C; C = SLSrcComposer_RowsPerColumn, 10), and
 ;   posts both with EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
 ;   after a +-10 move (parameter 5), the moves that change the bank.
-SingleLoadSrc_ComposerDrawBankName:
-	dec	2, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	xiz, xwa
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld (xwa+), 0
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (SingleLoad_BankCaptionByMode:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_Colon_2
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+21:16)
-	ld	c, (SLOAD_SRC_CMP_POS:16)
-	extz	bc
-	div	bc, (xsp+0x4)
-	extz	bc
-	ld	de, 1:i3
-	calr	SingleLoad_GetComposerBankName
-	ld	xwa, xiz
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0x894e
-	call	ApPostEvent
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+21:16)
-	ld	xwa, xiz
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	pop	xiz
-	inc	2, xsp
-	ret
+SingleLoadSrc_ComposerDrawBankName:	.include "includes/generated/cc900/SingleLoadSrc_ComposerDrawBankName.s"	; C: cc900/single_load_m269.c
 ; SingleLoadSrc_ComposerDrawPatternSlot: COMPOSER source list, rows 2-3 for the slot: writes cell 2 (0x8978) as
 ;   StorageArea_UnitNames[mode] ('PATTERN') + ': ' + PtrTbl_VariationNames[(SLOAD_SRC_CMP_POS) mod C] (VARI 1-4; omitted in ALL
 ;   mode 0x89FA) and posts it; then cell 3 (0x898D) is 'ALL' in ALL mode, or for slots 4-9 the fixed section name

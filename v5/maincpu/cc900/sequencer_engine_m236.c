@@ -198,3 +198,30 @@ void SeqPart_UndoAllocOnError(void)
     SeqPart_InitClear();
   }
 }
+
+/* cc900-module: SeqPart_CompareLeft SeqPart_CompareRight */
+extern unsigned char __near ram_27b8;
+extern unsigned int __near ram_2861;
+extern void SeqPart_WriteByte_Primary(int);
+extern void Part_WriteWordAndByte(unsigned int, unsigned int);
+extern void PartCtrl_AdvanceToNextEntry(void);
+extern unsigned char SeqPart_CompareLeft(void);
+extern unsigned char SeqPart_CompareRight(void);
+extern void SeqPart_DualSwap(unsigned char a, unsigned char *l, unsigned char *r);
+
+void SeqPart_DualSwap(unsigned char a, unsigned char *l, unsigned char *r)
+{
+	if (a == 0x82) {
+		SeqPart_WriteByte_Primary(a);
+		ram_27b8 = 0xff;
+		ram_2861 = ram_266a;
+		Part_WriteWordAndByte(SEQOP_PRIMARY_BLOCK, (unsigned char)SEQOP_PRIMARY_OFFSET);
+	} else {
+		SeqPart_WriteByte_Primary(0x81);
+		PartCtrl_AdvanceToNextEntry();
+		PartCtrl_ReadWordWithBoundsCheck(&ram_27ba, &ram_27bc);
+		*l = SeqPart_CompareLeft();
+		PartCtrl_ReadWordWithBoundsCheck(&ram_27be, &ram_27c0);
+		*r = SeqPart_CompareRight();
+	}
+}

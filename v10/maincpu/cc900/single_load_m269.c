@@ -64,3 +64,43 @@ void SLDstBankList_FuncBody(long obj, unsigned char n)
 	ApPostEvent(obj, 0x1c0000fL, 0x89a2L);
 	ApPostEvent(obj, 0x1c0000fL, (long)(SINGLE_LOAD_DST_ROWS + 21));
 }
+
+/* cc900-module: SingleLoad_GetComposerBankName */
+#define EVT_PARA_DRAW      0x1c0000fL
+extern char *SingleLoadSrc_ReadPmtMemoryName(unsigned int);
+extern void SLSrc_PMemDrawMemName(long obj, unsigned char n);
+extern unsigned char __near SLOAD_SRC_CMP_POS;
+extern char SlSrcEntry_Str_Colon_2[], SlSrcEntry_Str_Colon_3[], SlSrcEntry_Str_ALL[];
+extern void SingleLoad_GetComposerBankName(char *, unsigned int, unsigned int);
+extern void SLSrc_ComposerDrawBankName(long obj, unsigned char n);
+
+/* cc900-name: SLSrc_PMemDrawMemName=SingleLoadSrc_PanelMemDrawMemoryName */
+void SLSrc_PMemDrawMemName(long obj, unsigned char n)
+{
+	char *p;
+
+	if (SINGLE_LOAD_ALL != 0)
+		return;
+	p = SINGLE_LOAD_SRC_ROWS;
+	p[63] = 3;
+	FileIO_CopyString(p + 64, SingleLoadSrc_ReadPmtMemoryName(SLOAD_SRC_PMEM_POS));
+	TrimAndPadSmfFilename((unsigned char *)SINGLE_LOAD_SRC_ROWS + 64, 16);
+	ApPostEvent(obj, EVT_PARA_DRAW, (long)(SINGLE_LOAD_SRC_ROWS + 63));
+}
+/* cc900-name: SLSrc_ComposerDrawBankName=SingleLoadSrc_ComposerDrawBankName */
+/* cc900-name: SlSrcEntry_Str_Colon_2=SLSrcBankList_FuncBody_Entry_Str_Colon_2 */
+/* cc900-name: SlSrcEntry_Str_Colon_3=SLSrcBankList_FuncBody_Entry_Str_Colon_3 */
+/* cc900-name: SlSrcEntry_Str_ALL=SLSrcBankList_FuncBody_Entry_Str_ALL */
+void SLSrc_ComposerDrawBankName(long obj, unsigned char n)
+{
+	char *p;
+
+	p = SINGLE_LOAD_SRC_ROWS;
+	*p = 0;
+	FileIO_CopyString(p + 1, SingleLoad_BankCaptionByMode[SINGLE_LOAD_AREA] + 1);
+	FileIO_BuildFilePath(SINGLE_LOAD_SRC_ROWS + 1, SlSrcEntry_Str_Colon_2);
+	TrimAndPadSmfFilename((unsigned char *)SINGLE_LOAD_SRC_ROWS + 1, 16);
+	SingleLoad_GetComposerBankName(SINGLE_LOAD_SRC_ROWS + 21, SLOAD_SRC_CMP_POS / n, 1);
+	ApPostEvent(obj, 0x1c0000fL, 0x894eL);
+	ApPostEvent(obj, 0x1c0000fL, (long)(SINGLE_LOAD_SRC_ROWS + 21));
+}

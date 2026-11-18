@@ -38,3 +38,32 @@ void SubCPU_Send_Payload(void)
     for (a = 0; a < 0x100000L; a++)
         ;
 }
+
+/* cc900-module: DrawBox DrawFunc_Return DrawQueue_Alloc DrawRing_Post DrawString IS_XSP_INSIDE_4K_REGION_AT_1C032 TextRender_BeginDraw */
+struct pt { int x, y; };
+struct rect { int x0, y0, x1, y1; };
+struct dq { void *fn; struct rect r; struct pt p; char *s; long font; int a; int b; unsigned char mode; };
+extern unsigned char COLORBLIT_MODE_ACTIVE;
+extern int DRAW_ENABLED;
+extern void DrawFunc_Return(void *p);
+extern void TextRender_BeginDraw(struct rect *, struct pt *, char *, long, int, int);
+extern void DrawText_PopAndReturn_Code(struct dq *q);
+
+void DrawText_PopAndReturn_Code(struct dq *q)
+{
+    struct rect *r;
+    struct pt *p;
+    long font;
+    int a;
+    int b;
+
+    r = &q->r;
+    p = &q->p;
+    font = q->font;
+    a = q->a;
+    b = q->b;
+    COLORBLIT_MODE_ACTIVE = q->mode;
+    if (DRAW_ENABLED != 0)
+        TextRender_BeginDraw(r, p, q->s, font, a, b);
+    DrawFunc_Return(q->s);
+}

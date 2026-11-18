@@ -2709,30 +2709,9 @@ DrawText_PopAndReturn:
 	pop xiz
 	lda xsp, (xsp + 16)
 	retd 0x8
-DrawText_PopAndReturn_Code:
-	push xiz
-	ld xiz, xwa
-	lda xhl, (xiz + 4)
-	lda xbc, (xiz + 12)
-	ld xiy, (xiz + 20)
-	ld ix, (xiz + 24)
-	ld de, (xiz + 26)
-	ld a, (xiz + 28)
-	ld (COLORBLIT_MODE_ACTIVE:24), a
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawText_DeferredFreeAndReturn
-	push xiy
-	pushw ix
-	pushw de
-	ld xde, (xiz + 16)
-	ld xwa, xhl
-	calr TextRender_BeginDraw
-
-DrawText_DeferredFreeAndReturn:
-	ld xwa, (xiz + 16)
-	calr DrawFunc_Return
-	pop xiz
-	ret
+DrawText_PopAndReturn_Code:	.include "includes/generated/cc900/DrawText_PopAndReturn_Code.s"	; C: cc900/kn5000_v10_program_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawText_DeferredFreeAndReturn, DrawText_PopAndReturn_Code + 46
 
 TextRender_BeginDraw:
 	lda xsp, (xsp-314)

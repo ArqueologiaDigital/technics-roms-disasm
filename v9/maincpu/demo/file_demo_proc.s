@@ -361,42 +361,12 @@ FDemo_LoadRegsAndPostEvent:
 	jp ApPostEvent
 
 
-FDemo_LinkedListSearch:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-	ld xiz, (0x880008:24)
-	ld xwa, (xiz + 16)
-	or xwa, xwa
-	jr z, FDemo_LinkedListSearchFound
-
-FDemo_LinkedListSearchLoop:
-	push xiz
-	ld xwa, (xsp + 8)
-	push xwa
-	call Strcmp
-	inc 8, xsp
-	cp hl, 0:i3
-	jr z, FDemo_LinkedListSearchFound
-	lda xiz, (xiz + 24)
-	ld xwa, (xiz + 16)
-	or xwa, xwa
-	jr nz, FDemo_LinkedListSearchLoop
-
-FDemo_LinkedListSearchFound:
-	ld xwa, (xiz + 16)
-	or xwa, xwa
-	jr z, FDemo_LinkedListSearchRetNull
-	ld xhl, xiz
-	jr FDemo_LinkedListSearchExit
-
-FDemo_LinkedListSearchRetNull:
-	ld xhl, 0:i3
-
-FDemo_LinkedListSearchExit:
-	pop xiz
-	inc 4, xsp
-	ret
+FDemo_LinkedListSearch:	.include "includes/generated/cc900/FDemo_LinkedListSearch.s"	; C: cc900/file_demo_proc_m265.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemo_LinkedListSearchLoop, FDemo_LinkedListSearch + 18
+	.set	FDemo_LinkedListSearchFound, FDemo_LinkedListSearch + 43
+	.set	FDemo_LinkedListSearchRetNull, FDemo_LinkedListSearch + 54
+	.set	FDemo_LinkedListSearchExit, FDemo_LinkedListSearch + 56
 
 ; --- LinkedList_SearchInsert: Search and insert into a 24-byte-node list ---
 ; Two routines sharing this label block:
@@ -3829,59 +3799,13 @@ LoadFromSecondaryPage:	.include "includes/generated/cc900/LoadFromSecondaryPage.
 
 FileIO_ReturnError:	.include "includes/generated/cc900/FileIO_ReturnError.s"	; C: cc900/file_demo_proc.c
 
-FileIO_OpenWithMode:
-	lda xsp, (xsp - 128)
-	push xiz
-	ld xiz, xbc
-	ld xde, xwa
-	ld xiy, FileIO_OpenWithMode_PathInit
-	lda xix, (xsp + 4)
-	ldw bc, 0x40
-	ldirw
-	lda xwa, (xsp + 4)
-	ld xbc, xde
-	call FileIO_BuildFilePath
-	push xiz
-	lda xwa, (xsp + 8)
-	push xwa
-	call FileOpen
-	inc 8, xsp
-	ld (0x7f44:16), xhl
-	or xhl, xhl
-	jr nz, FileIO_OpenMode_Success
-	cp (xiz), 0x72
-	jr nz, FileIO_OpenMode_CheckWrite
-	ldw (0x7f48:16), 0xfffe
-	ldw hl, 0xfffe
-	jr FileIO_OpenMode_Return
-
-FileIO_OpenMode_CheckWrite:
-	cp (xiz), 0x77
-	jr nz, FileIO_OpenMode_UnknownMode
-	cpw (FILE_ERROR:24), 31
-	jr nz, FileIO_OpenMode_WriteMaxFiles
-	ldw (0x7f48:16), 0xfff5
-	ldw hl, 0xfff5
-	jr FileIO_OpenMode_Return
-
-FileIO_OpenMode_WriteMaxFiles:
-	ldw (0x7f48:16), 0xfffd
-	ldw hl, 0xfffd
-	jr FileIO_OpenMode_Return
-
-FileIO_OpenMode_UnknownMode:
-	ldw (0x7f48:16), 0xffff
-	ldw hl, 0xffff
-	jr FileIO_OpenMode_Return
-
-FileIO_OpenMode_Success:
-	ldw (0x7f48:16), 0
-	ld hl, (0x7f48:16)
-
-FileIO_OpenMode_Return:
-	pop xiz
-	lda xsp, (xsp+128:16)
-	ret
+FileIO_OpenWithMode:	.include "includes/generated/cc900/FileIO_OpenWithMode.s"	; C: cc900/file_demo_proc_m267_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_OpenMode_CheckWrite, FileIO_OpenWithMode + 65
+	.set	FileIO_OpenMode_WriteMaxFiles, FileIO_OpenWithMode + 90
+	.set	FileIO_OpenMode_UnknownMode, FileIO_OpenWithMode + 101
+	.set	FileIO_OpenMode_Success, FileIO_OpenWithMode + 112
+	.set	FileIO_OpenMode_Return, FileIO_OpenWithMode + 122
 
 FileIO_CloseHandle:
 	ld xwa, (0x7f44:16)
@@ -5680,105 +5604,23 @@ ReadField_Return:
 	inc 8, xsp
 	ret
 
-ParseSMFTrackName:
-	push xiz
-	ld iz, 0:i3
-	ld (0x025b90:24), 0x00
-	ldiw_erp 0xfa, 0
-	calr ReadVariableLengthInt
-	cp hl, 0:i3
-	jrl nz, ParseSMF_ReturnNamePtr
-
-ParseSMF_ReadEvent:
-	call FileIO_ReadByte
-	cp hl, 0xff
-	jr nz, ParseSMF_CheckSysex
-	call FileIO_ReadByte
-	ldfr_werp HL, 0xfa
-	calr ReadVariableLengthInt
-	ld iz, hl
-	cpiw_erp 0xfa, 3
-	jr nz, ParseSMF_ResetRunning
-	ld wa, iz
-	ld xbc, 0x25b90
-	calr ReadFieldToBuffer
-	ld iz, 0:i3
-	jr ParseSMF_ResetRunning
-
-ParseSMF_CheckSysex:
-	cp hl, 0xf0
-	jr z, ParseSMF_SysexReadLen
-	cp hl, 0xf7
-	jr nz, ParseSMF_CheckMIDI
-
-ParseSMF_SysexReadLen:
-	calr ReadVariableLengthInt
-	ld iz, hl
-
-ParseSMF_ResetRunning:
-	ldiw_erp 0xfa, 0
-
-ParseSMF_SkipDataBytes:
-	cp iz, 0:i3
-	jr le, ParseSMF_CheckEOF
-
-ParseSMF_SkipLoop:
-	ld wa, iz
-	exts xwa
-	ld bc, 1:i3
-	call FileIO_SeekAndReadBlock
-
-ParseSMF_CheckEOF:
-	call FileIO_ReturnError
-	cp hl, 0:i3
-	jr ge, ParseSMF_ReadDeltaAndLoop
-	ld xhl, 0:i3
-	jr ParseSMF_Return
-
-ParseSMF_CheckMIDI:
-	cp hl, 0xc0
-	jr lt, ParseSMF_Check3ByteMsg
-	cp hl, 0xdf
-	jr gt, ParseSMF_Check3ByteMsg
-	ld iz, 2:i3
-	jr ParseSMF_SetRunningStatus
-
-ParseSMF_Check3ByteMsg:
-	cp hl, 0x80
-	jr lt, ParseSMF_CheckDataByte
-	cp hl, 0xef
-	jr gt, ParseSMF_CheckDataByte
-	ld iz, 3:i3
-
-ParseSMF_SetRunningStatus:
-	ldfr_werp HL, 0xfa
-	jr ParseSMF_SkipDataBytes
-
-ParseSMF_CheckDataByte:
-	cp hl, 0x7f
-	jr gt, ParseSMF_SkipDataBytes
-	cp_erpw 0xfa, 0xc0, 0x00
-	jr lt, ParseSMF_RunningStatus3Byte
-	cp_erpw 0xfa, 0xdf, 0x00
-	jr gt, ParseSMF_RunningStatus3Byte
-	ld iz, 1:i3
-	jr ParseSMF_SkipLoop
-
-ParseSMF_RunningStatus3Byte:
-	ld iz, 2:i3
-	jr ParseSMF_SkipLoop
-
-ParseSMF_ReadDeltaAndLoop:
-	calr ReadVariableLengthInt
-	cp hl, 0:i3
-	jrl z, ParseSMF_ReadEvent
-
-ParseSMF_ReturnNamePtr:
-	lda xhl, (0x025b90:24)
-
-ParseSMF_Return:
-	pop xiz
-	ret
+ParseSMFTrackName:	.include "includes/generated/cc900/ParseSMFTrackName.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ParseSMF_ReadEvent, ParseSMFTrackName + 20
+	.set	ParseSMF_CheckSysex, ParseSMFTrackName + 61
+	.set	ParseSMF_SysexReadLen, ParseSMFTrackName + 73
+	.set	ParseSMF_ResetRunning, ParseSMFTrackName + 78
+	.set	ParseSMF_SkipDataBytes, ParseSMFTrackName + 81
+	.set	ParseSMF_SkipLoop, ParseSMFTrackName + 85
+	.set	ParseSMF_CheckEOF, ParseSMFTrackName + 95
+	.set	ParseSMF_CheckMIDI, ParseSMFTrackName + 107
+	.set	ParseSMF_Check3ByteMsg, ParseSMFTrackName + 123
+	.set	ParseSMF_SetRunningStatus, ParseSMFTrackName + 137
+	.set	ParseSMF_CheckDataByte, ParseSMFTrackName + 142
+	.set	ParseSMF_RunningStatus3Byte, ParseSMFTrackName + 166
+	.set	ParseSMF_ReadDeltaAndLoop, ParseSMFTrackName + 170
+	.set	ParseSMF_ReturnNamePtr, ParseSMFTrackName + 178
+	.set	ParseSMF_Return, ParseSMFTrackName + 183
 
 ProcessFileRecord:
 	dec 8, xsp
@@ -6609,70 +6451,17 @@ BuildRecordsAlt_StoreCount:
 	ld (FILE_LIST_LAST:24), wa
 	ret
 
-TrimAndFormatFilename:
-	lda xsp, (xsp - 128)
-	push xiz
-	ld xiz, xbc
-	ld	(xiz+wa), 0x00
-	ld ix, 0:i3
-	cp wa, 0:i3
-	jr le, TrimFormat_TrimTrailing
-
-TrimFormat_ScanLoop:
-	lda	xhl, (xiz+ix)
-	ld c, (xhl)
-	cp c, 0x20
-	jr nc, TrimFormat_CheckSeparator
-	ld (xhl), 0x20
-
-TrimFormat_ScanNext:
-	inc 1, ix
-	cp ix, wa
-	jr lt, TrimFormat_ScanLoop
-
-TrimFormat_TrimTrailing:
-	sub ix, 0x1
-	jr lt, TrimFormat_CheckLeading
-
-TrimFormat_TrimLoop:
-	lda	xwa, (xiz+ix)
-	cp (xwa), 0x20
-	jr nz, TrimFormat_CheckLeading
-	ld (xwa), 0x0
-	sub ix, 0x1
-	jr ge, TrimFormat_TrimLoop
-
-TrimFormat_CheckLeading:
-	cp (xiz), 0x20
-	jr nz, TrimFormat_Done
-	lda xwa, (xsp + 4)
-	ld xbc, xiz
-	calr FileIO_CopyString
-	ld ix, 0:i3
-	lda xwa, (xsp + 4)
-	jr TrimFormat_SkipLoop
-
-TrimFormat_CheckSeparator:
-	cp c, e
-	jr nz, TrimFormat_ScanNext
-	ld (xhl), 0x0
-	jr TrimFormat_TrimTrailing
-
-TrimFormat_SkipSpaces:
-	inc 1, ix
-
-TrimFormat_SkipLoop:
-	lda	xbc, (xwa+ix)
-	cp (xbc), 0x20
-	jr z, TrimFormat_SkipSpaces
-	ld xwa, xiz
-	calr FileIO_CopyString
-
-TrimFormat_Done:
-	ld hl, 0:i3
-	pop xiz
-	lda xsp, (xsp+128:16)
-	ret
+TrimAndFormatFilename:	.include "includes/generated/cc900/TrimAndFormatFilename.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TrimFormat_ScanLoop, TrimAndFormatFilename + 18
+	.set	TrimFormat_ScanNext, TrimAndFormatFilename + 33
+	.set	TrimFormat_TrimTrailing, TrimAndFormatFilename + 39
+	.set	TrimFormat_TrimLoop, TrimAndFormatFilename + 45
+	.set	TrimFormat_CheckLeading, TrimAndFormatFilename + 64
+	.set	TrimFormat_CheckSeparator, TrimAndFormatFilename + 84
+	.set	TrimFormat_SkipSpaces, TrimAndFormatFilename + 93
+	.set	TrimFormat_SkipLoop, TrimAndFormatFilename + 95
+	.set	TrimFormat_Done, TrimAndFormatFilename + 110
 
 DetectFileType:
 	ld l, (0x025db6:24)

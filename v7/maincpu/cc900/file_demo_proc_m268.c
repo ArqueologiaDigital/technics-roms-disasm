@@ -82,3 +82,86 @@ int FileIO_FindNextMatch(char *name, long *size)
 		*size = fb.size;
 	return 0;
 }
+
+/* cc900-module: ReadFieldToBuffer ReadVariableLengthInt */
+extern char ram_25b90[];
+extern void ReadFieldToBuffer(int len, char *buf);
+extern void FileIO_SeekAndReadBlock(long, int);
+extern int FileIO_ReturnError(void);
+extern char *ParseSMFTrackName(void);
+extern int TrimAndFormatFilename(int len, unsigned char *s, unsigned char sep);
+
+char *ParseSMFTrackName(void)
+{
+    int len;
+    int status;
+    int c;
+
+    len = 0;
+    ram_25b90[0] = 0;
+    status = 0;
+    while (ReadVariableLengthInt() == 0) {
+        c = FileIO_ReadByte();
+        if (c == 0xff) {
+            status = FileIO_ReadByte();
+            len = ReadVariableLengthInt();
+            if (status == 3) {
+                ReadFieldToBuffer(len, ram_25b90);
+                len = 0;
+            }
+            status = 0;
+        } else if (c == 0xf0 || c == 0xf7) {
+            len = ReadVariableLengthInt();
+            status = 0;
+        } else if (c >= 0xc0 && c <= 0xdf) {
+            len = 2;
+            status = c;
+        } else if (c >= 0x80 && c <= 0xef) {
+            len = 3;
+            status = c;
+        } else if (c <= 0x7f) {
+            if (status >= 0xc0 && status <= 0xdf)
+                len = 1;
+            else
+                len = 2;
+        }
+        if (len > 0)
+            FileIO_SeekAndReadBlock(len, 1);
+        if (FileIO_ReturnError() < 0)
+            return 0;
+    }
+    return ram_25b90;
+}
+int TrimAndFormatFilename(int len, unsigned char *s, unsigned char sep)
+{
+	unsigned char buf[128];
+	int i;
+	unsigned char *p;
+	unsigned char c;
+	unsigned char *q;
+
+	s[len] = 0;
+	for (i = 0; i < len; i++) {
+		p = &s[i];
+		c = *p;
+		if (c < 0x20)
+			*p = ' ';
+		else if (c == sep) {
+			*p = 0;
+			break;
+		}
+	}
+	while (--i >= 0) {
+		q = &s[i];
+		if (*q != ' ')
+			break;
+		*q = 0;
+	}
+	if (*s == ' ') {
+		FileIO_CopyString((char *)buf, (char *)s);
+		for (i = 0; buf[i] == ' '; i++)
+			;
+		FileIO_CopyString((char *)s, (char *)&buf[i]);
+	}
+	return 0;
+}

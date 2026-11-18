@@ -1881,91 +1881,13 @@ MovePixels:	.include "includes/generated/cc900/MovePixels.s"	; C: cc900/drawing_
 ; (Formerly MovePixels_ParamBlock, held as `.byte`.)
 MovePixels_QueuedExec:	.include "includes/generated/cc900/MovePixels_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr.c
 
-MovePixels_Impl:
-	lda xsp, (xsp - 22)
-	push xiz
-	ld (xsp + 22), xbc
-	ld bc, (xwa + 4)
-	ld (xsp + 4), bc
-	ld bc, (xwa)
-	sub (xsp + 4), bc
-	jrl lt, MovePixels_Impl_Return
-	lda xbc, (xwa + 2)
-	ld (xsp + 10), xbc
-	ld bc, (xwa + 6)
-	ld (xsp + 6), bc
-	ld xbc, (xsp + 10)
-	ld bc, (xbc)
-	sub (xsp + 6), bc
-	jrl lt, MovePixels_Impl_Return
-	ldw (xsp + 8), 0x0
-	cpw (xsp + 6), 0x0
-	jr lt, MovePixels_Impl_SetChangeRect
-
-MovePixels_Impl_RowLoop:
-	ld hl, 0:i3
-	cpw (xsp + 4), 0x0
-	jr lt, MovePixels_Impl_RowAdvance
-
-MovePixels_Impl_ColLoop:
-	lda xix, (xsp + 18)
-	ld bc, (xwa)
-	add bc, hl
-	ld (xix), bc
-	lda xde, (xix + 2)
-	ld xbc, (xsp + 10)
-	ld bc, (xbc)
-	add bc, (xsp + 8)
-	ld (xde), bc
-	lda xiy, (xsp + 14)
-	ld xbc, (xsp + 22)
-	ld bc, (xbc)
-	add bc, hl
-	ld (xiy), bc
-	ld xbc, (xsp + 22)
-	ld bc, (xbc + 2)
-	add bc, (xsp + 8)
-	ld (xiy + 2), bc
-	exts xbc
-	ld xiz, xbc
-	sll xiz, 2
-	add xiz, xbc
-	sll xiz, 6
-	ld bc, (xiy)
-	exts xbc
-	add xbc, xiz
-	lda xiy, (OFFSCREEN_BUFFER_1:24)
-	ld xiz, xiy
-	add xiz, xbc
-	ld bc, (xde)
-	exts xbc
-	ld xde, xbc
-	sll xde, 2
-	add xde, xbc
-	sll xde, 6
-	ld bc, (xix)
-	exts xbc
-	add xbc, xde
-	add xiy, xbc
-	ld c, (xiy)
-	ld (xiz), c
-	inc 1, hl
-	cp hl, (xsp + 4)
-	jr le, MovePixels_Impl_ColLoop
-
-MovePixels_Impl_RowAdvance:
-	incw 1, (xsp + 8)
-	ld bc, (xsp + 8)
-	cp bc, (xsp + 6)
-	jr le, MovePixels_Impl_RowLoop
-
-MovePixels_Impl_SetChangeRect:
-	calr SetChangeRect
-
-MovePixels_Impl_Return:
-	pop xiz
-	lda xsp, (xsp + 22)
-	ret
+MovePixels_Impl:	.include "includes/generated/cc900/MovePixels_Impl.s"	; C: cc900/drawing_primitives_m273_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MovePixels_Impl_RowLoop, MovePixels_Impl + 56
+	.set	MovePixels_Impl_ColLoop, MovePixels_Impl + 65
+	.set	MovePixels_Impl_RowAdvance, MovePixels_Impl + 171
+	.set	MovePixels_Impl_SetChangeRect, MovePixels_Impl + 182
+	.set	MovePixels_Impl_Return, MovePixels_Impl + 185
 
 ; =============================================================================
 ; DrawWall - Fill entire screen / draw wallpaper

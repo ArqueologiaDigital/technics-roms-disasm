@@ -86,3 +86,21 @@ unsigned long __cdecl SeqStep_FileSectorProcess(unsigned char **pp)
 	v += (unsigned long)*(*pp)++ << 24;
 	return v;
 }
+
+/* cc900-module: Fat_MapFilePosToSector SeqStep_FileBufferSetup SeqStep_FileIoCheck SeqStep_FileSectorProcess SeqStep_FileSectorRead SeqStep_FileSectorReturn */
+extern unsigned int __cdecl SeqStep_FileSectorRead(unsigned char **pp);
+extern void __cdecl SeqStep_FileSectorComplete(unsigned char *e, unsigned char *raw);
+
+void __cdecl SeqStep_FileSectorComplete(unsigned char *e, unsigned char *raw)
+{
+	unsigned char *p;
+
+	p = raw + 22;
+	Mem_Copy(e, raw, 11);
+	e[11] = 0;
+	e[12] = raw[11];
+	*(unsigned int *)(e + 13) = SeqStep_FileSectorRead(&p);
+	*(unsigned int *)(e + 15) = SeqStep_FileSectorRead(&p);
+	*(unsigned int *)(e + 17) = SeqStep_FileSectorRead(&p);
+	*(unsigned long *)(e + 19) = SeqStep_FileSectorProcess(&p);
+}
