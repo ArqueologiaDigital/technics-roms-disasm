@@ -597,3 +597,7 @@ hdae5000	hdae5000/cc900-staged/hdae5000_sfx_bitcheck.c	fad5b4fe8798125b0c747e21f
 hdae5000	hdae5000/cc900-staged/hdae5000_showflags_drv.c	efec9b93193ad93fa7741e4cc62748bf4f04100e4cec98b1760545f043920152	Xr	2026-11-18-14-hd-r52-staged	HDAE5000_TypeSel_ShowSaveFlags	423	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_showflags_fs.c	9b1b99046d8c4343faec31c3a9879c8ad6002d25c8c0928cdc472829414c1f70	Xr	2026-11-18-14-hd-r52-staged	HDAE5000_DelOpt_ShowFlags	423	MATCH
 hdae5000	hdae5000/cc900-staged/hdae5000_showflags_fs.c	9b1b99046d8c4343faec31c3a9879c8ad6002d25c8c0928cdc472829414c1f70	Xr	2026-11-18-14-hd-r52-staged	HDAE5000_FdList_Redisplay	284	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_deltlx_editcheck.c	5cf7f3f03917b41398379dffa967efa0674729c3410413e010d98d2176f179c8	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_DelTlxEditCheck	170	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_name_checks.c	1bda67beee3bf91737bd9e150e666c09160b92b928cb1ab8316dcbb6577bb6f7	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_DelOptNameCheck	134	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_name_checks.c	1bda67beee3bf91737bd9e150e666c09160b92b928cb1ab8316dcbb6577bb6f7	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_FileLBNNameCheck	162	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_name_checks.c	1bda67beee3bf91737bd9e150e666c09160b92b928cb1ab8316dcbb6577bb6f7	Xr	2026-11-18-15-hd-r52-ports	HDAE5000_FileOptNameCheck	134	MATCH
