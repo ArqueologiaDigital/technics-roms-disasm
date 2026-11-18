@@ -41,8 +41,15 @@ def value(names, n):
         return None
 
 
+KEEP_UNPROVEN = False
+
+
 def main():
+    global KEEP_UNPROVEN
     a = sys.argv[1:]
+    if '--keep-unproven' in a:        # keep a function whose bytes differ outside the C's address fields: a relative
+        a.remove('--keep-unproven')   # call / jump to a callee that moved, or a switch base in the function itself,
+        KEEP_UNPROVEN = True          # which the byte compare cannot tell from other code; staged_v423.py decides
     sizes = {}
     for l in open(a[0]):
         c = l.rstrip('\n').split('\t')
@@ -58,7 +65,7 @@ def main():
                 continue
             text = open(os.path.join(sdir, fn), encoding='latin-1').read()
             lm = fw.label_map(os.path.join(sdir, fn))
-            amap, drop = {}, []
+            amap, drop, unproven = {}, [], []
             for kind, item in sp.items(text):
                 if kind != 'fn':
                     continue
@@ -86,7 +93,9 @@ def main():
                                 covered |= set(range(i, i + w))
                 bad = [i for i in range(n) if b10[i] != bt[i] and i not in covered]
                 amb = [k for k, s in local.items() if len(s) > 1]
-                if bad or amb:
+                if bad and not amb and KEEP_UNPROVEN:
+                    unproven.append('%s (+%d)' % (cn, bad[0]))   # kept: V4.23's per-tree check decides
+                elif bad or amb:
                     drop.append((cn, 'bytes differ at +%d' % bad[0] if bad else 'ambiguous %s' % amb[0])); continue
                 for k, s in local.items():
                     nv = s.pop()
@@ -127,7 +136,9 @@ def main():
             out = re.sub(r'\bram_[0-9a-f]+\b|\b0x[0-9a-fA-F]{3,6}\b', sub, out)
             dst = os.path.join(REPO, t, 'maincpu', 'cc900-staged', fn)
             if not any(k == 'fn' for k, _ in sp.items(out)):
-                print('%s %-30s no function left: not written%s' % (t, fn, ' (an older copy exists: remove it)' if os.path.exists(dst) else ''))
+                print('%s %-30s no function left: not written%s; dropped %s' % (
+                    t, fn, ' (an older copy exists: remove it)' if os.path.exists(dst) else '',
+                    ', '.join('%s (%s)' % d for d in drop)))
                 continue
             # the tree may hold these functions in another hand source (v7's SysEx_ClampVoiceIndex*_49 are in
             # midi/midipkt_routines.s, v10's in audio/dsp_config_sysex.s): name that file in the header
@@ -145,8 +156,9 @@ def main():
             os.makedirs(os.path.dirname(dst), exist_ok=True)
             open(dst, 'w', encoding='latin-1').write(out)
             moved = ', '.join('%s->%x' % (k, v) for k, v in sorted(amap.items()) if int(k[4:] if k.startswith('ram_') else k, 16) != v)
-            print('%s %-30s dropped %s%s' % (t, fn, ', '.join('%s (%s)' % d for d in drop) or '-',
-                                              ' | moved: ' + moved if moved else ''))
+            print('%s %-30s dropped %s%s%s' % (t, fn, ', '.join('%s (%s)' % d for d in drop) or '-',
+                                                ' | moved: ' + moved if moved else '',
+                                                ' | unproven: ' + ', '.join(unproven) if unproven else ''))
 
 
 if __name__ == '__main__':

@@ -653,3 +653,20 @@ FileIO_DetectFileTypeAndPost	93	2026-11-17-16-p6-r31	p6_D_21m269@O3XSXr p6_D_21m
 FileIO_DiskEventDispatch	106	2026-11-17-16-p6-r31	p6_D_21m269@O3XSXr p6_D_21m269@O3Xr
 RegisterObjectTable	31	2026-11-17-16-p6-r31	p6_H_15m272a@O3XSXr p6_H_15m272a@O3Xr p6_H_15m272a@Xr
 SeMenu_CyclePartLfoState	162	2026-11-17-16-p6-r31	p6_A_22m129a@O3Xr p6_A_22m129b@O3Xr p6_A_22m129c@O3Xr
+AcRamBoxProc	489	2026-11-18-1-p6-r33	p6_G_14m271a@O3XSXr p6_G_14m271a@O3Xr p6_G_14m271b@O3XSXr p6_G_14m271b@O3Xr
+CDlikeSwTtl_DocNavDispatch	182	2026-11-18-1-p6-r33	p6_A_23m203a@O3XSXr p6_A_23m203a@O3Xr p6_A_23m203b@O3XSXr p6_A_23m203b@O3Xr
+Detect_Disk_Type	285	2026-11-18-1-p6-r33	p6_G_14m5a@O3Xr
+DisplayMode_DispatchEvents	225	2026-11-18-1-p6-r33	p6_C_23m203a@O3XSXr p6_C_23m203a@O3Xr
+FDemoText_ByteData_VoiceProbeB	24	2026-11-18-1-p6-r33	p6_C_23m265a@O3XSXr p6_C_23m265a@O3Xr p6_C_23m265a@Xr p6_C_23m265b@O3XSXr p6_C_23m265b@O3Xr p6_C_23m265b@Xr
+FDemoText_ByteData_VoiceProbeC	113	2026-11-18-1-p6-r33	p6_C_23m265b@O3XSXr p6_C_23m265b@O3Xr
+Fat_CreateDirEntry	592	2026-11-18-1-p6-r33	p6_E_14m238@Xr p6_E_14m238b@Xr
+FileIO_GetDiskCapacity	89	2026-11-18-1-p6-r33	p6_D_22m269@O3XSXr p6_D_22m269@O3Xr
+FileIO_LoadRcmToFlash	330	2026-11-18-1-p6-r33	p6_G_14m159a@O3Xr p6_G_14m159b@O3Xr
+FileIO_ParseDirectoryEntry	238	2026-11-18-1-p6-r33	p6_F_15m266a@O3XSXr p6_F_15m266a@O3Xr
+Part_ValidateVoiceAndSetupSeq	109	2026-11-18-1-p6-r33	p6_B_21a@O3XSXr p6_B_21a@O3Xr
+Rhythm_ComputeNoteAllocation	24	2026-11-18-1-p6-r33	p6_B_21b@O3XSXr p6_B_21b@O3Xr p6_B_21b@Xr
+SaveFileNameSmfFunc	189	2026-11-18-1-p6-r33	p6_A_23m269a@O3Xr
+SeqPos_AdvanceWithWrap	42	2026-11-18-1-p6-r33	p6_B_21b@O3XSXr p6_B_21b@O3Xr p6_B_21b@Xr
+SoundParam_NotifyMultipleChanges	54	2026-11-18-1-p6-r33	p6_G_14m277a@O3Xr
+ParaLoadOpt_AudioFlagCheck	419	2026-11-17-2-p6-r29	p6_C_21m264a@O3Xr p6_C_21m264b@O3XSXr p6_C_21m264b@O3Xr
+ParaLoadOpt_AudioFlagCheck_B	430	2026-11-17-2-p6-r29	p6_C_21m264a@O3Xr p6_C_21m264b@O3XSXr p6_C_21m264b@O3Xr
