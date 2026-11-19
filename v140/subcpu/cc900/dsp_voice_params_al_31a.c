@@ -1,0 +1,76 @@
+/* Functions of core/10_dsp_voice_params.s.
+   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
+   the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
+   as a number or as Payload_Bss_Start+offset.
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -Xr
+*/
+
+extern unsigned char ram_4131e[];
+extern unsigned char ram_41322[];
+extern unsigned char ram_41326[];
+extern unsigned char ram_4137f[];
+extern unsigned char ram_41380[];
+extern unsigned char ram_41381[];
+extern int DSP_AlgoType_Dispatch1(int, int);
+extern int DSP_AlgoType_Dispatch2(int, int);
+extern int DSP_ChanFreq_WritePacket1(int);
+extern int DSP_ChanFreq_WritePacket2(int);
+void AlgoType_StateWrite(unsigned char part, unsigned char c);
+
+/* cc900-module: DSP_AlgoType_Dispatch1 DSP_AlgoType_Dispatch2 DSP_ChanFreq_WritePacket1 DSP_ChanFreq_WritePacket2 */
+void AlgoType_StateWrite(unsigned char part, unsigned char c)
+{
+    unsigned char t;
+    t = (*(unsigned char **)(ram_41322 + (part) * 0x11f))[93] & 0xf;
+    if (t == 7) {
+        (*(unsigned int *)&(ram_41326)[(part) * 0x11f]) |= 0x8000;
+        if (c == 0) {
+            if ((*(unsigned int *)&(ram_41326)[(part) * 0x11f]) & 0x4000) {
+                ram_4137f[part * 0x11f] = 0x0f;
+                ram_41380[part * 0x11f] = 0x4f;
+                ram_41381[part * 0x11f] = 0x96;
+            } else {
+                ram_4137f[part * 0x11f] = 1;
+                ram_41380[part * 0x11f] = 1;
+                ram_41381[part * 0x11f] = 1;
+            }
+            DSP_AlgoType_Dispatch1(part, 0);
+            DSP_AlgoType_Dispatch2(part, 0);
+            DSP_AlgoType_Dispatch1(part, 1);
+            DSP_AlgoType_Dispatch2(part, 1);
+            DSP_ChanFreq_WritePacket1(part);
+            DSP_ChanFreq_WritePacket2(part);
+        } else {
+            if ((*(unsigned int *)&(ram_41326)[(part) * 0x11f]) & 0x4000) {
+                ram_4137f[part * 0x11f] &= 0x05;
+                ram_4137f[part * 0x11f] |= 0x02;
+            } else {
+                ram_4137f[part * 0x11f] &= 0x05;
+            }
+        }
+        (*(unsigned int *)&(ram_4131e)[(part) * 0x11f]) &= 0xfdff;
+    } else {
+        if ((*(unsigned int *)&(ram_41326)[(part) * 0x11f]) & 0x4000) {
+            (*(unsigned int *)&(ram_41326)[(part) * 0x11f]) |= 0x8000;
+            DSP_AlgoType_Dispatch1(part, 0);
+            DSP_AlgoType_Dispatch2(part, 0);
+            DSP_AlgoType_Dispatch1(part, 1);
+            DSP_AlgoType_Dispatch2(part, 1);
+            DSP_ChanFreq_WritePacket1(part);
+            DSP_ChanFreq_WritePacket2(part);
+            if (t == 0x0a)
+                (*(unsigned int *)&(ram_4131e)[(part) * 0x11f]) |= 0x0200;
+            else
+                (*(unsigned int *)&(ram_4131e)[(part) * 0x11f]) &= 0xfdff;
+        } else {
+            (*(unsigned int *)&(ram_41326)[(part) * 0x11f]) &= 0x7fff;
+            (*(unsigned int *)&(ram_4131e)[(part) * 0x11f]) &= 0xfdff;
+        }
+        ram_4137f[part * 0x11f] = 0;
+        ram_41380[part * 0x11f] = 0;
+        ram_41381[part * 0x11f] = 0;
+    }
+}

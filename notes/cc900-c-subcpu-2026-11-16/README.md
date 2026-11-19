@@ -226,6 +226,17 @@ tree in run 2026-11-19-47-sub-r30s-staged).**  dsp_voice_params_al_30a.c (helper
 first and the row offset added in place, `e` a plain char read as `(unsigned char)e`): 384 B per tree; **579
 functions per tree** built from C (`c_duplicates.py`).
 
+**Seventeenth promotion: AlgoType_StateWrite (2026-11-19; matched in run 2026-11-19-50-sub-r31a on its first attempt,
+verified per tree in run 2026-11-19-51-sub-r31s-staged).**  dsp_voice_params_al_31a.c (helper AL): 635 B per tree;
+**580 functions per tree** built from C (`c_duplicates.py`).
+
+**Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
+V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
+on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding
+(`cpb_erp A, 0xFA` = c7 fa f1 in Voice_Poly_NoteOn): 7 of 7.  Voice_Build_SoundingVoiceList's listing (sub_AM_23a,
+run 2026-11-19-11) now translates (DIFF at +0: register choice).  `bad_lines.py` no longer crashes on to_llvm's
+"untranslated (a byte register ...)" lines (helper AP's fix).
+
 **Held back: Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c.c).**  It matches v142 and v141 (run -31) but not
 v140 (DIFF at +24): in v1.40 the function is 1,491 bytes, because DSP_Cmd2B_SetParam is 82 bytes longer and the
 reply / write paths differ (scripts/generators/create_v140_subcpu_source.py's edits 2-4).  v140's source is v141's
