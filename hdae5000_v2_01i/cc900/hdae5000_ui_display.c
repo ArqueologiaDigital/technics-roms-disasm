@@ -101,6 +101,24 @@ void HDAE5000_YieldUntilSem1Zero(void)
         CALLV(HAMA->rot_rdq_X)(3);
 }
 
+void HDAE5000_Set_Menu_Visibility(unsigned char hide)
+{
+    int v;
+    if (hide == 0)
+        v = 1;
+    else
+        v = 0;
+    CALLV(ROOT->SetVisible)(OBJ_SELECT_DIR_SW_EDIT, v);
+    CALLV(ROOT->SetVisible)(OBJ_HD_FILE_LOAD_SW_SAVE, v);
+    CALLV(ROOT->SetVisible)(OBJ_HD_FILE_LOAD_SW_DEL, v);
+    CALLV(ROOT->SetVisible)(OBJ_FLS_SELECT_SW_EDIT, v);
+    CALLV(ROOT->SetVisible)(OBJ_FLS_FILE_LOAD_SW_EDIT, v);
+    CALLV(ROOT->SetVisible)(OBJ_HD_FILE_LOAD_SW_DELFILE, v);
+    CALLV(ROOT->SetVisible)(OBJ_CP_FD_HDSWTO, v);
+    CALLV(ROOT->SetVisible)(OBJ_CP_FD_HDSWSEL, v);
+    CALLV(ROOT->SetVisible)(OBJ_SW_HD_FORMAT, v);
+}
+
 /* Song-record fields: part byte k at +26+k, first-cluster slot k at +36+4k; k = 0 LSW, 1 PMT, 2 SQT, 3 CMP,
    4 TM, 5 MSP, 6 RCM, 7 MD, 8 TLX.  The address is written as an integer, (unsigned long)&sym[field] + offset:
    that is what gives the ROM's lda xR,(sym+field) after the offset (run 2026-11-16-52-hd-r4v). */

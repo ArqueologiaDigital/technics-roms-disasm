@@ -2,6 +2,11 @@
    Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_pport_services3.c (checked in
    notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
+   cc900-name: PP_Svc04=HDAE5000_PPORT_Svc04_SendInfosAboutDirBlock
+   cc900-name: PP_Svc05=HDAE5000_PPORT_Svc05_SendInfosAboutFileSystemBlock
+   cc900-name: PP_Svc06=HDAE5000_PPORT_Svc06_SendInfosAboutFlsBlock
+   cc900-name: PP_Svc14=HDAE5000_PPORT_Svc14_LoadSongFromHdToMemory
+   cc900-name: PP_Svc15=HDAE5000_PPORT_Svc15_SaveSongInMemoryToHd
    cc900-name: PP_Svc27=HDAE5000_PPORT_Svc27_DeleteSongParts
    cc900-module: HDAE5000_DebugTrace
 */
@@ -28,72 +33,72 @@ extern unsigned char ram_23a04c;                  /* HDAE5000_RAM_FileFormat_Ver
 #define SREC(d, s) ((struct SongRec *)(HDAE5000_RAM_DirNames + SONG_OFS(d, s)))
 
 /* trace banners and blank lines (HDAE5000_PPORT_SvcNN_*_Str_<name>), passed in XWA: lda */
-extern char ram_2f8f5e[], ram_2f8f8c[];                                   /* Svc01 GetInfoBlockPointer, Blank1 */
-extern char ram_2f8f8e[], ram_2f8fa8[];                                   /* Svc02 */
-extern char ram_2f8faa[], ram_2f900a[];                                   /* Svc03 */
-extern char ram_2f900c[], ram_2f9058[];                                   /* Svc04 */
-extern char ram_2f905a[], ram_2f90ac[];                                   /* Svc05 */
-extern char ram_2f90ae[], ram_2f9108[];                                   /* Svc06 */
-extern char ram_2f910a[], ram_2f9128[];                                   /* Svc07 */
-extern char ram_2f912a[], ram_2f9148[];                                   /* Svc08 */
-extern char ram_2f914a[], ram_2f9168[];                                   /* Svc09 */
-extern char ram_2f916a[], ram_2f9186[];                                   /* Svc10 */
-extern char ram_2f9188[], ram_2f91ac[];                                   /* Svc11 */
-extern char ram_2f91ae[], ram_2f91ca[];                                   /* Svc12 */
-extern char ram_2f91cc[], ram_2f9206[];                                   /* Svc13 */
-extern char ram_2f9208[], ram_2f922a[];                                   /* Svc14 */
-extern char ram_2f922c[], ram_2f924c[];                                   /* Svc15 */
-extern char ram_2f924e[], ram_2f926e[];                                   /* Svc16 */
-extern char ram_2f9270[], ram_2f9284[];                                   /* Svc17 */
-extern char ram_2f9286[], ram_2f92be[];                                   /* Svc19 */
-extern char ram_2f92c0[], ram_2f92e0[];                                   /* Svc20 */
-extern char ram_2f92e2[];                                                 /* Svc21 */
-extern char ram_2f9306[];                                                 /* Svc22 */
-extern char ram_2f931e[];                                                 /* Svc23 */
-extern char ram_2f9336[];                                                 /* Svc24 */
-extern char ram_2f934c[];                                                 /* Svc25 */
+extern char ram_2e08d2[], ram_2e0900[];                                   /* Svc01 GetInfoBlockPointer, Blank1 */
+extern char ram_2e0902[], ram_2e091c[];                                   /* Svc02 */
+extern char ram_2e091e[], ram_2e097e[];                                   /* Svc03 */
+extern char ram_2e0980[], ram_2e09cc[];                                   /* Svc04 */
+extern char ram_2e09ce[], ram_2e0a20[];                                   /* Svc05 */
+extern char ram_2e0a22[], ram_2e0a7c[];                                   /* Svc06 */
+extern char ram_2e0a7e[], ram_2e0a9c[];                                   /* Svc07 */
+extern char ram_2e0a9e[], ram_2e0abc[];                                   /* Svc08 */
+extern char ram_2e0abe[], ram_2e0adc[];                                   /* Svc09 */
+extern char ram_2e0ade[], ram_2e0afa[];                                   /* Svc10 */
+extern char ram_2e0afc[], ram_2e0b20[];                                   /* Svc11 */
+extern char ram_2e0b22[], ram_2e0b3e[];                                   /* Svc12 */
+extern char ram_2e0b40[], ram_2e0b7a[];                                   /* Svc13 */
+extern char ram_2e0b7c[], ram_2e0b9e[];                                   /* Svc14 */
+extern char ram_2e0ba0[], ram_2e0bc0[];                                   /* Svc15 */
+extern char ram_2e0bc2[], ram_2e0be2[];                                   /* Svc16 */
+extern char ram_2e0be4[], ram_2e0bf8[];                                   /* Svc17 */
+extern char ram_2e0bfa[], ram_2e0c32[];                                   /* Svc19 */
+extern char ram_2e0c34[], ram_2e0c54[];                                   /* Svc20 */
+extern char ram_2e0c56[];                                                 /* Svc21 */
+extern char ram_2e0c7a[];                                                 /* Svc22 */
+extern char ram_2e0c92[];                                                 /* Svc23 */
+extern char ram_2e0caa[];                                                 /* Svc24 */
+extern char ram_2e0cc0[];                                                 /* Svc25 */
 
 /* format strings, stacked SPrintf arguments: pushw hi16 / pushw lo16 */
-extern char ram_2f8f7c[];
-#define F_ppib_adr ram_2f8f7c
-extern char ram_2f8fc6[];
-#define F_hddname ram_2f8fc6
-extern char ram_2f8fd2[];
-#define F_hddtrck ram_2f8fd2
-extern char ram_2f8fe0[];
-#define F_hddhead ram_2f8fe0
-extern char ram_2f8fee[];
-#define F_hddsctr ram_2f8fee
-extern char ram_2f8ffc[];
-#define F_hddscby ram_2f8ffc
-extern char ram_2f902e[];
-#define F_FGB_ptr ram_2f902e
-extern char ram_2f903c[];
-#define F_FGB_wid ram_2f903c
-extern char ram_2f904a[];
-#define F_FGB_num ram_2f904a
-extern char ram_2f9082[];
-#define F_FEB_ptr ram_2f9082
-extern char ram_2f9090[];
-#define F_FEB_wid ram_2f9090
-extern char ram_2f909e[];
-#define F_FEB_num ram_2f909e
-extern char ram_2f90d0[];
-#define F_FLS_ptr ram_2f90d0
-extern char ram_2f90de[];
-#define F_FLS_wid ram_2f90de
-extern char ram_2f90ec[];
-#define F_FLS_num ram_2f90ec
-extern char ram_2f90fa[];
-#define F_FLS_ent ram_2f90fa
-extern char ram_2f91ea[];
-#define F_dirname ram_2f91ea
-extern char ram_2f91f8[];
-#define F_sngname ram_2f91f8
-extern char ram_2f92ae[];
-#define F_work_adr ram_2f92ae
-extern char ram_2f92fa[];
-#define F_SUFFIX ram_2f92fa
+extern char ram_2e08f0[];
+#define F_ppib_adr ram_2e08f0
+extern char ram_2e093a[];
+#define F_hddname ram_2e093a
+extern char ram_2e0946[];
+#define F_hddtrck ram_2e0946
+extern char ram_2e0954[];
+#define F_hddhead ram_2e0954
+extern char ram_2e0962[];
+#define F_hddsctr ram_2e0962
+extern char ram_2e0970[];
+#define F_hddscby ram_2e0970
+extern char ram_2e09a2[];
+#define F_FGB_ptr ram_2e09a2
+extern char ram_2e09b0[];
+#define F_FGB_wid ram_2e09b0
+extern char ram_2e09be[];
+#define F_FGB_num ram_2e09be
+extern char ram_2e09f6[];
+#define F_FEB_ptr ram_2e09f6
+extern char ram_2e0a04[];
+#define F_FEB_wid ram_2e0a04
+extern char ram_2e0a12[];
+#define F_FEB_num ram_2e0a12
+extern char ram_2e0a44[];
+#define F_FLS_ptr ram_2e0a44
+extern char ram_2e0a52[];
+#define F_FLS_wid ram_2e0a52
+extern char ram_2e0a60[];
+#define F_FLS_num ram_2e0a60
+extern char ram_2e0a6e[];
+#define F_FLS_ent ram_2e0a6e
+extern char ram_2e0b5e[];
+#define F_dirname ram_2e0b5e
+extern char ram_2e0b6c[];
+#define F_sngname ram_2e0b6c
+extern char ram_2e0c22[];
+#define F_work_adr ram_2e0c22
+extern char ram_2e0c6e[];
+#define F_SUFFIX ram_2e0c6e
 
 extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
 extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
@@ -116,6 +121,90 @@ extern int HDAE5000_HD_WriteClose(void);
 extern int HDAE5000_HD_WriteStream(void *src, unsigned long n);
 extern int HDAE5000_HD_ReadFile(void *dst, unsigned long n, unsigned long *slot);
 extern int HDAE5000_HD_ReadFileNext(void *dst, unsigned long n, unsigned long *slot);
+
+void PP_Svc04(void)
+{
+    struct HdBlockInfo bi;
+    char buf[64];
+
+    HDAE5000_HD_GetBlockInfo(0, (void *)&bi);
+    PP_L(44) = (unsigned long)bi.base;
+    PP_W(48) = bi.size;
+    PP_W(50) = bi.count;
+    HDAE5000_DebugTrace(ram_2e0980);
+    HDAE5000_SPrintf(buf, F_FGB_ptr, PP_L(44));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FGB_wid, PP_W(48));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FGB_num, PP_W(50));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_DebugTrace(ram_2e09cc);
+}
+
+void PP_Svc05(void)
+{
+    struct HdBlockInfo bi;
+    char buf[64];
+
+    HDAE5000_HD_GetBlockInfo(1, (void *)&bi);
+    PP_L(52) = (unsigned long)bi.base;
+    PP_W(56) = bi.size;
+    PP_W(58) = bi.count;
+    HDAE5000_DebugTrace(ram_2e09ce);
+    HDAE5000_SPrintf(buf, F_FEB_ptr, PP_L(52));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FEB_wid, PP_W(56));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FEB_num, PP_W(58));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_DebugTrace(ram_2e0a20);
+}
+
+void PP_Svc06(void)
+{
+    struct HdBlockInfo bi;
+    char buf[64];
+
+    HDAE5000_HD_GetBlockInfo(2, (void *)&bi);
+    PP_L(60) = (unsigned long)bi.base;
+    PP_W(64) = bi.size;
+    PP_W(66) = bi.count;
+    PP_W(68) = bi.extra;
+    HDAE5000_DebugTrace(ram_2e0a22);
+    HDAE5000_SPrintf(buf, F_FLS_ptr, PP_L(60));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FLS_wid, PP_W(64));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FLS_num, PP_W(66));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_SPrintf(buf, F_FLS_ent, PP_W(68));
+    HDAE5000_DebugTrace(buf);
+    HDAE5000_DebugTrace(ram_2e0a7c);
+}
+
+int PP_Svc14(unsigned int dir, unsigned int song)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_LoadSong(dir, song, PP_W(0), 0, 1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0b7c);
+    HDAE5000_DebugTrace(ram_2e0b9e);
+    return ret;
+}
+
+int PP_Svc15(unsigned int dir, unsigned int song)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_SaveSong(dir, song, (char *)(PPIB + 2), PP_W(0), 0, 1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0ba0);
+    HDAE5000_DebugTrace(ram_2e0bc0);
+    return ret;
+}
 
 int PP_Svc27(unsigned int dir, unsigned int song)
 {

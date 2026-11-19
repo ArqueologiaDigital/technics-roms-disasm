@@ -58,6 +58,73 @@ extern char HDAE5000_Str_HDDNG[];
 
 /* the hardware-test page: switches 9 (PPORT), 10 (HDD), 11 (FD) run a test and, while RUN/STOP is on, chain the
    next one through a timer; 12 toggles RUN/STOP */
+long HDAE5000_HardTestPage(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_Test);
+        return 0;
+    case EVT_SW_IN:
+        switch (arg) {
+        case 9:
+            CALLV(ROOT->SendEvent)(OBJ_PPORT_SW, EVT_PARA_DRAW, 1L);
+            CALLV(ROOT->UpdateScreen)();
+            HDAE5000_YieldUntilSem1Zero();
+            HDAE5000_HardTest_Print(HDAE5000_Str_PPORTTEST);
+            HDAE5000_HardTest_PortTest();
+            CALLV(ROOT->SendEvent)(OBJ_PPORT_SW, EVT_PARA_DRAW, 0L);
+            if (CALLR(long, ROOT->SendEvent)(OBJ_RUN_STOP, EVT_GET_PARAM, 0L) == 1)
+                CALLV(ROOT->SetApTimer)(0x29L, obj, -1L, EVT_SW_IN, 10L);
+            break;
+        case 10:
+            CALLV(ROOT->SendEvent)(OBJ_HDD_SW, EVT_PARA_DRAW, 1L);
+            CALLV(ROOT->UpdateScreen)();
+            HDAE5000_YieldUntilSem1Zero();
+            HDAE5000_HardTest_Print(HDAE5000_Str_HDDIDREAD);
+            HDAE5000_HardTest_HddIdRead();
+            CALLV(ROOT->SendEvent)(OBJ_HDD_SW, EVT_PARA_DRAW, 0L);
+            if (CALLR(long, ROOT->SendEvent)(OBJ_RUN_STOP, EVT_GET_PARAM, 0L) == 1)
+                CALLV(ROOT->SetApTimer)(0x29L, obj, -1L, EVT_SW_IN, 11L);
+            break;
+        case 11:
+            CALLV(ROOT->SendEvent)(OBJ_FD_SW, EVT_PARA_DRAW, 1L);
+            CALLV(ROOT->UpdateScreen)();
+            HDAE5000_YieldUntilSem1Zero();
+            HDAE5000_HardTest_Print(HDAE5000_Str_FDTEST);
+            switch (CALLR(unsigned char, HAMA->GetMediaType)()) {
+            case 2:
+            case 3:
+                if (CALLR(int, HAMA->FDLoadSaveTest)() == 0)
+                    HDAE5000_HardTest_Print(HDAE5000_Str_OK);
+                else
+                    HDAE5000_HardTest_Print(HDAE5000_Str_ERROR);
+                break;
+            default:
+                HDAE5000_HardTest_Print(HDAE5000_Str_ERROR_HardTestPage);
+                break;
+            }
+            CALLV(ROOT->SendEvent)(OBJ_FD_SW, EVT_PARA_DRAW, 0L);
+            if (CALLR(long, ROOT->SendEvent)(OBJ_RUN_STOP, EVT_GET_PARAM, 0L) == 1)
+                CALLV(ROOT->SetApTimer)(0x29L, obj, -1L, EVT_SW_IN, 9L);
+            break;
+        case 12:
+            if (CALLR(long, ROOT->SendEvent)(OBJ_RUN_STOP, EVT_GET_PARAM, 0L) == 1) {
+                CALLV(ROOT->SendEvent)(OBJ_RUN_STOP, EVT_SET_PARAM, 0L);
+                HDAE5000_HardTest_Print(HDAE5000_Str_STOPTESTLOOP);
+            } else {
+                CALLV(ROOT->SendEvent)(OBJ_RUN_STOP, EVT_SET_PARAM, 1L);
+                HDAE5000_HardTest_Print(HDAE5000_Str_STARTTESTLOOP);
+                CALLV(ROOT->PostEvent)(-1L, EVT_SW_IN, 9L);
+            }
+            break;
+        }
+        break;
+    }
+    return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+}
 
 /* 8255 control word 0x90 (mode 0, port A input), then 0xff to port A */
 void HDAE5000_PPI_Init(void)
