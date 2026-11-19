@@ -225,3 +225,28 @@ void SeqPart_DualSwap(unsigned char a, unsigned char *l, unsigned char *r)
 		*r = SeqPart_CompareRight();
 	}
 }
+
+/* cc900-module: SeqPart_EventLoop */
+extern unsigned char __near ram_ce5;
+extern void SeqPart_EventLoop(unsigned int);
+extern void SeqPart_SetupWithDispatch(void);
+
+void SeqPart_SetupWithDispatch(void)
+{
+	SEQ_ERROR_CODE = 0;
+	ram_285d &= ~0x01;
+	ram_285d &= ~0x02;
+	SeqVoice_SetDefaultParams();
+	if (ram_ce5 > 15) {
+		SeqVoice_InitReturnZero();
+		return;
+	}
+	if (SEQ_TRACK_ASSIGN[(unsigned char)(SEQ_TRACK - 1)] == 12)
+		ram_285d |= 0x01;
+	if (SEQ_TRACK_ASSIGN[(unsigned char)(SEQ_OP_DEST_TRACK - 1)] == 12)
+		ram_285d |= 0x02;
+	SeqPart_EventLoop((unsigned char)(ram_ce5 + 1));
+	SeqVoice_InitReturnZero();
+	ram_285d &= ~0x01;
+	ram_285d &= ~0x02;
+}

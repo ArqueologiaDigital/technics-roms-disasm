@@ -1960,40 +1960,11 @@ BmDrEdit_CalcTickPosition:
 	ld (0x279a:16), bc
 	ret
 
-BmDrEdit_ReloadChannelAndDisplay:
-	calr BmDrEdit_SelectChannelAndLoadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_ReloadChannel_LoadAndSkip
-	calr BmDrEdit_SeekToPartVoice
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, BmDrEdit_ReloadChannel_RefreshDisplay
-	calr BmDrEdit_SelectChannelAndLoadPos
-
-BmDrEdit_ReloadChannel_LoadAndSkip:
-	calr BmDrEdit_LoadAlternateState
-	calr BmDrEdit_SkipToEventByCount
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_LoadAndDisplayNotes
-	calr BmDrEdit_SeekToPartVoice
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_LoadAndDisplayNotes
-
-BmDrEdit_ReloadChannel_RefreshDisplay:
-	jrl BmDrEdit_RefreshDisplayState
-
-BmDrEdit_LoadAndDisplayNotes:
-	calr BmDrEdit_LoadAlternateState
-	calr BmDrEdit_ScanChannelEvents
-	calr BmDrEdit_SyncSeekCheck
-	calr BmDrEdit_SetupAndWalkToNote
-	calr NoteEditSy_SendCompoundWidgetUpdate
-	calr NoteEdit_UpdateScrollAndDisplay
-	call NoteEditSy_SendWidgetCmd0
-	calr NoteEdit_SendScrollCmds
-	bit 0, (0x295f:16)
-	ret z
-	calr BmDrEdit_SendMetronomeNoteOn
-	ret
+BmDrEdit_ReloadChannelAndDisplay:	.include "includes/generated/cc900/BmDrEdit_ReloadChannelAndDisplay.s"	; C: cc900/bmdredit_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ReloadChannel_LoadAndSkip, BmDrEdit_ReloadChannelAndDisplay + 23
+	.set	BmDrEdit_ReloadChannel_RefreshDisplay, BmDrEdit_ReloadChannelAndDisplay + 46
+	.set	BmDrEdit_LoadAndDisplayNotes, BmDrEdit_ReloadChannelAndDisplay + 49
 
 BmDrEdit_NavigateAndLoadPosition:
 	calr BmDrEdit_CalcTickPosition

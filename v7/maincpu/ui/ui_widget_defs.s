@@ -17723,39 +17723,10 @@ ResetApTimer_Epilogue:
 	lda xsp, (xsp + 16)
 	retd 0x8
 
-ResetApTimer:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), xbc
-	ld (xsp + 12), xwa
-	ld xwa, (xsp + 24)
-	push xwa
-	ld xiz, (xsp + 24)
-	push xiz
-	ld xwa, (xsp + 20)
-	ld xbc, (xsp + 16)
-	ld xde, (xsp + 12)
-	calr KillApTimer
-	cp hl, 0:i3
-	jr z, KillApTimer_ReturnZero
-	ld xwa, (xsp + 24)
-	push xwa
-	push xiz
-	ld xwa, (xsp + 20)
-	ld xbc, (xsp + 16)
-	ld xde, (xsp + 12)
-	calr SetApTimer
-	ld hl, 1:i3
-	jr KillApTimer_Return
-
-KillApTimer_ReturnZero:
-	ld hl, 0:i3
-
-KillApTimer_Return:
-	pop xiz
-	lda xsp, (xsp + 12)
-	retd 0x8
+ResetApTimer:	.include "includes/generated/cc900/ResetApTimer.s"	; C: cc900/ui_widget_defs_m273_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	KillApTimer_ReturnZero, ResetApTimer + 58
+	.set	KillApTimer_Return, ResetApTimer + 60
 
 KillApTimer:	.include "includes/generated/cc900/KillApTimer.s"	; C: cc900/ui_widget_defs_m273.c
 ; the hand assembly's labels inside the compiled body, by their offsets

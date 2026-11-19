@@ -466,30 +466,11 @@ SeqPlay_DecPunchOutMeasure_Join2:
 ;   playback start words 0x2668 / 0x26EC = punch-in - count-in and tail-jumps to SeqAcc_SetupRepeatCount; with bit 0
 ;   of SEQ_METRO_FLAGS set and punch-in <= 2 it does nothing. Basis: callers + body -- SeqAccomp_ParamDelivery_IncPInPOutPCntIn
 ;   calls it for parameter 10 ("P count-in 0xF23F").
-SeqPlay_IncPunchCountIn:
-	bit	0, (SEQ_METRO_FLAGS:16)
-	jr	z, SeqPlay_IncPunchCountIn_Skip3
-	cpw	(SEQ_PUNCH_IN_MEASURE:16), 2
-	ret	ule
-SeqPlay_IncPunchCountIn_Skip3:
-	ld	wa, (SEQ_COUNT_IN:16)
-	cp	wa, 997
-	jr	c, SeqPlay_IncPunchCountIn_Skip8
-	ldw	(SEQ_COUNT_IN:16), 997
-	jr	SeqPlay_IncPunchCountIn_Join3
-SeqPlay_IncPunchCountIn_Skip8:
-	inc	1, wa
-	ld	(SEQ_COUNT_IN:16), wa
-SeqPlay_IncPunchCountIn_Join3:
-	ld	wa, (SEQ_PUNCH_IN_MEASURE:16)
-	dec	1, wa
-	ld	(0x28c3:16), wa
-	calr	SeqAcc_UpdateEndPosition
-	ld	wa, (SEQ_PUNCH_IN_MEASURE:16)
-	sub wa, (SEQ_COUNT_IN:16)
-	ld	(SEQ_START_MEASURE:16), wa
-	ld	(9964:16), wa
-	jrl	SeqAcc_SetupRepeatCount
+SeqPlay_IncPunchCountIn:	.include "includes/generated/cc900/SeqPlay_IncPunchCountIn.s"	; C: cc900/sequencer_engine_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_IncPunchCountIn_Skip3, SeqPlay_IncPunchCountIn + 14
+	.set	SeqPlay_IncPunchCountIn_Skip8, SeqPlay_IncPunchCountIn + 32
+	.set	SeqPlay_IncPunchCountIn_Join3, SeqPlay_IncPunchCountIn + 38
 ; SeqPlay_DecPunchCountIn: Parameter 10 down on the sequencer play screen: decrements the punch count-in 0xF23F, not
 ;   below 0, then clamps it to punch-in - 1 (SeqAcc_UpdateEndPosition), sets the start words 0x2668 / 0x26EC = punch-
 ;   in - count-in and tail-jumps to SeqAcc_SetupRepeatCount; with bit 0 of SEQ_METRO_FLAGS set and punch-in <= 2 it does
@@ -27908,46 +27889,10 @@ SeqPart_CompareLongReturn:
 	inc 6, xsp
 	ret
 
-SeqPart_SetupWithDispatch:
-	ld (SEQ_ERROR_CODE:16), 0
-	ld a, (0x2879:16)
-	res 0, a
-	res 1, a
-	ld (0x2879:16), a
-	call SeqVoice_SetDefaultParams
-	cp (3301:16), 15
-	jp ugt, (SeqVoice_InitReturnZero:24)
-	ld a, (SEQ_TRACK:16)
-	dec 1, a
-	extz wa
-	lda xbc, (SEQ_TRACK_ASSIGN:16)
-	extz xwa
-	add xwa, xbc
-	cp (xwa), 0xc
-	jr nz, SeqPart_DispatchReturn
-	set 0, (0x2879:16)
-
-SeqPart_DispatchReturn:
-	ld a, (SEQ_OP_DEST_TRACK:16)
-	dec 1, a
-	extz wa
-	extz xwa
-	add xwa, xbc
-	cp (xwa), 0xc
-	jr nz, SeqPart_DispatchCheckEvent
-	set 1, (0x2879:16)
-
-SeqPart_DispatchCheckEvent:
-	ld a, (3301:16)
-	inc 1, a
-	extz wa
-	calr SeqPart_EventLoop
-	call SeqVoice_InitReturnZero
-	ld a, (0x2879:16)
-	res 0, a
-	res 1, a
-	ld (0x2879:16), a
-	ret
+SeqPart_SetupWithDispatch:	.include "includes/generated/cc900/SeqPart_SetupWithDispatch.s"	; C: cc900/sequencer_engine_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_DispatchReturn, SeqPart_SetupWithDispatch + 58
+	.set	SeqPart_DispatchCheckEvent, SeqPart_SetupWithDispatch + 79
 
 SeqPart_EventLoop:
 	res 2, (SEQ_EDIT_FLAGS:16)

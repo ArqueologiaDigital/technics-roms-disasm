@@ -904,35 +904,10 @@ EffectMode_CopyPresetBits:
 	ld (xbc), a
 
 	ret
-EffectMode_ReinitSoundOutput:
-	ld	xwa, 770
-	call	SndParam_LookupReadOnly
-	ld	(36020:16), l
-	ld	xwa, 770
-	ld	bc, 1:i3
-	ld	de, 0:i3
-	call	SoundParam_NotifyChange
-	ldw	wa, 128
-	ld	xbc, 246468
-	call	BitMapOut_CopyVoicePreset9
-	ldw	wa, 128
-	call	PanelMemory_Recall
-	calr	EffectMode_DisplayPresetName
-	res	4, (0x8cb6:16)
-	cp	(36020:16), 1
-	jr	z, EffectMode_ReinitSound_NotifyBank1
-	ld	xwa, 770
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	jr	EffectMode_ReinitSound_CallNotify
-EffectMode_ReinitSound_NotifyBank1:
-	ld xwa, 0x302
-	ld bc, 1:i3
-	ld de, 0:i3
-
-EffectMode_ReinitSound_CallNotify:
-	call	SoundParam_NotifyChange
-	jp	SwbtWr_ReinitOutputBank
+EffectMode_ReinitSoundOutput:	.include "includes/generated/cc900/EffectMode_ReinitSoundOutput.s"	; C: cc900/ui_mode_handlers_m275_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_ReinitSound_NotifyBank1, EffectMode_ReinitSoundOutput + 70
+	.set	EffectMode_ReinitSound_CallNotify, EffectMode_ReinitSoundOutput + 79
 EffectMode_ReinitWithFlag:
 	set 5, (0x8cb6:16)
 	calr EffectMode_CheckModeAndReinit
@@ -1443,56 +1418,11 @@ CustomRomTest_Done:
 	inc 6, xsp
 	ret
 
-Test_LCD_Controller_IC206:
-	dec 2, xsp
-	ld (xsp), a
-
-	; equivalent to "_VGA_WRITE 3c3h, 0" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	ld bc, 0:i3
-	call _Write_VGA_Register
-
-	; equivalent to "_VGA_READ 3c3h" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	call _Read_VGA_Register
-
-	cp l, 0:i3
-	jr z, LcdTest_WriteOneVerify
-	set	2, (xsp)
-
-LcdTest_WriteOneVerify:
-	; equivalent to "_VGA_WRITE 3c3h, 1" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	ld bc, 1:i3
-	call _Write_VGA_Register
-
-	; equivalent to "_VGA_READ 3c3h" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	call _Read_VGA_Register
-
-	cp l, 1:i3
-	jr z, LcdTest_WriteZeroVerify
-	set	2, (xsp)
-
-LcdTest_WriteZeroVerify:
-	; equivalent to "_VGA_WRITE 3c3h, 0" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	ld bc, 0:i3
-	call _Write_VGA_Register
-
-	; equivalent to "_VGA_READ 3c3h" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	call _Read_VGA_Register
-
-	cp l, 0:i3
-	jr z, LcdTest_Done
-	set	2, (xsp)
-
-LcdTest_Done:
-	ld l, (xsp)
-	extz hl
-	inc 2, xsp
-	ret
+Test_LCD_Controller_IC206:	.include "includes/generated/cc900/Test_LCD_Controller_IC206.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LcdTest_WriteOneVerify, Test_LCD_Controller_IC206 + 26
+	.set	LcdTest_WriteZeroVerify, Test_LCD_Controller_IC206 + 48
+	.set	LcdTest_Done, Test_LCD_Controller_IC206 + 70
 
 Test_Video_RAM_IC207:
 	dec 2, xsp

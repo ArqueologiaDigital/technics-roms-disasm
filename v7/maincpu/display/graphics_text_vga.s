@@ -663,30 +663,7 @@ SeGfx_StaticOp23_DesignBox:
 	popw	iz
 	lda	xsp, (xsp+12)
 	ret
-SeGfx_StaticOp05_FillBoxMode1:
-	dec	8, xsp
-	push	qiz
-	lda	xbc, (xsp+2)
-	ld	de, (xwa+2)
-	ld	(xbc), de
-	ld	de, (xwa+4)
-	ld	(xbc+2), de
-	ld	de, (xwa+6)
-	ld	(xbc+4), de
-	ld	wa, (xwa+8)
-	ld	(xbc+6), wa
-	ld	a, (COLORBLIT_MODE:24)
-	ldfr_berp	a, 251
-	ld	(COLORBLIT_MODE:24), 1
-	ld	de, (GFX_FG_COLOR:24)
-	ld	xwa, xbc
-	ld	bc, de
-	calr	ColorBlit
-	ldto_berp	a, 251
-	ld	(COLORBLIT_MODE:24), a
-	pop	qiz
-	inc	8, xsp
-	ret
+SeGfx_StaticOp05_FillBoxMode1:	.include "includes/generated/cc900/SeGfx_StaticOp05_FillBoxMode1.s"	; C: cc900/graphics_text_vga_m273_d.c
 
 ColorBlit_ComputeRectAndBlit:	.include "includes/generated/cc900/ColorBlit_ComputeRectAndBlit.s"	; C: cc900/graphics_text_vga_m273_c.c
 

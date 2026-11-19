@@ -26875,32 +26875,10 @@ SoundRam_ConvertUserKit_CopyId:
 PreTmLoad:
 	ret
 
-PostTmLoad:
-	cp wa, 0:i3
-	jr lt, PostTmLoad_Send
-	ldw wa, 0xff
-	ldw bc, 0xff
-	calr SoundRam_ConvertSounds
-	ldw wa, 0xff
-	ldw bc, 0xff
-	calr SoundRam_ConvertUserKit
-	calr SoundRam_WriteIdAndChecksum
-	ld xwa, 0x1e0000
-	ldw bc, 0x72aa
-	ld xde, 0x7800
-	call InterCPU_E1_Bulk_Transfer
-	ldw wa, 0xff
-	ldw bc, 0xff
-	call SubCPU_SendSoundMemUpdated
-	jr PostTmLoad_Block
-
-PostTmLoad_Send:
-	ldw wa, 0xff
-	ldw bc, 0xff
-	call COMM_BuildAndSendPacket
-
-PostTmLoad_Block:
-	jp FDemoText_RefreshFullDisplay
+PostTmLoad:	.include "includes/generated/cc900/PostTmLoad.s"	; C: cc900/note_voice_mapping_m306.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PostTmLoad_Send, PostTmLoad + 54
+	.set	PostTmLoad_Block, PostTmLoad + 64
 
 PreTmSave:
 	ret

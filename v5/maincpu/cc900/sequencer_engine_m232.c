@@ -73,3 +73,23 @@ void SeqAcc_StartPlaybackFromPosition(void)
 	SeqPlay_InitStartState();
 	SeqBuf_Init();
 }
+
+/* cc900-module: BmDrEdit_CheckAndAdvancePage BmDrEdit_LoadAlternateState BmDrEdit_RefreshDisplayState BmDrEdit_ScanChannelEvents BmDrEdit_SeekToPartVoice BmDrEdit_SelectChannelAndLoadPos BmDrEdit_SendMetronomeNoteOn BmDrEdit_SetupAndWalkToNote BmDrEdit_SkipToEventByCount BmDrEdit_SyncSeekCheck NoteEditSy_SendCompoundWidgetUpdate NoteEdit_SendScrollCmds NoteEdit_UpdateScrollAndDisplay */
+extern void SeqPlay_IncPunchCountIn(void);
+
+void SeqPlay_IncPunchCountIn(void)
+{
+	unsigned int c;
+
+	if ((SEQ_METRO_FLAGS & 0x01) && SEQ_PUNCH_IN_MEASURE <= 2)
+		return;
+	c = SEQ_COUNT_IN;
+	if (c >= 997)
+		SEQ_COUNT_IN = 997;
+	else
+		SEQ_COUNT_IN = c + 1;
+	ram_28a7 = SEQ_PUNCH_IN_MEASURE - 1;
+	SeqAcc_UpdateEndPosition();
+	ram_26d2 = SEQ_START_MEASURE = SEQ_PUNCH_IN_MEASURE - SEQ_COUNT_IN;
+	SeqAcc_SetupRepeatCount();
+}

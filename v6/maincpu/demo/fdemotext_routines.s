@@ -257,8 +257,7 @@ FDemoText_ActivateVoiceAlt:
 	inc 2, xsp
 	ret
 
-FDemoText_DeactivateVoice_RetOnly:
-	ret
+FDemoText_DeactivateVoice_RetOnly:	.include "includes/generated/cc900/FDemoText_DeactivateVoice_RetOnly.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
 FDemoText_UpdateVoiceDisplay:
 	dec	2, xsp

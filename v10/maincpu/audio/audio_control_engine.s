@@ -4791,12 +4791,7 @@ ExtData_ToneParam_CheckMode_Join:
 ;   callers + body -- ExtData_ToneParam_CheckMode is entry 0x43 of SoundProgram_DispatchTable and calls it when the
 ;   event offset (EXTDATA_TLV_OFFSET) is 1; record 0x43 is identified in docs/kn-disk-file-formats.md:534 as the microphone record
 ;   (on/off, a 0..127 level, a second on/off; 'microphone' is that page's inference).
-ExtData_Tag43_SetByte1Fields:
-	ldw	wa, 128
-	calr	ExtData_SetTlvField
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_Tag43_SetByte1Fields:	.include "includes/generated/cc900/ExtData_Tag43_SetByte1Fields.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_ToneParam_AltDispatch:
 	calr	SndParam_WriteLookupAndStore
 	ld	a, (EXTDATA_TLV_OFFSET:16)
@@ -4848,12 +4843,7 @@ ExtData_ToneParam_AltDispatch_Join3:
 ;   then posts the change with SwbtWr_FlushAndAppendParams. Basis: callers + body -- its only caller is case 7 of
 ;   ExtData_ToneParam_AltDispatch, ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches, whose header names these two
 ;   fields; same shape as ExtData_Tag43_SetByte1Fields.
-ExtData_Drawbar_SetByte7Fields:
-	ldw	wa, 15
-	calr	ExtData_SetTlvField
-	ldw	wa, 48
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_Drawbar_SetByte7Fields:	.include "includes/generated/cc900/ExtData_Drawbar_SetByte7Fields.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_ToneParam_AltEntry:
 	ret
 ExtData_ToneParam_AltBody:

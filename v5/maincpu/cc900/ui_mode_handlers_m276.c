@@ -50,3 +50,23 @@ void FDC_CommandAndPostEvent(void)
 	else
 		ApPostEvent(-1, EVT_PAGE_CHANGE, 1);
 }
+
+extern void VgaWriteReg(int reg, int val);
+extern unsigned char VgaReadReg(int reg);
+extern int Test_LCD_Controller_IC206(unsigned char st);
+
+/* cc900-name: VgaWriteReg=_Write_VGA_Register */
+/* cc900-name: VgaReadReg=_Read_VGA_Register */
+int Test_LCD_Controller_IC206(unsigned char st)
+{
+	VgaWriteReg(0x3c3, 0);
+	if (VgaReadReg(0x3c3) != 0)
+		st |= 4;
+	VgaWriteReg(0x3c3, 1);
+	if (VgaReadReg(0x3c3) != 1)
+		st |= 4;
+	VgaWriteReg(0x3c3, 0);
+	if (VgaReadReg(0x3c3) != 0)
+		st |= 4;
+	return st;
+}

@@ -42,3 +42,10 @@ char *FdtDisplayRefresh(unsigned long id)
 		Strcpy(ram_247f6, s);
 	return ram_247f6;
 }
+
+/* cc900-module: FDemoText_LookupTableEntry FDemoText_NotifyUIChange */
+extern void FDemoText_DeactivateVoice_RetOnly(void);
+
+void FDemoText_DeactivateVoice_RetOnly(void)
+{
+}

@@ -48,3 +48,56 @@ void SeFilLpq1_OnColumn4_Join26(unsigned char a)
 	} else
 		SeMenu_ToggleSolo();
 }
+
+#define TT_SEAMPAMP2 0x2c
+extern unsigned char SeMenu_SelectPartIfEnabled(int p);
+extern void SeAmpAmp2_OnSideRow5(unsigned char a);
+#define TT_SEMENU    0x20
+extern void SeMenu_SetupMenuDisplay(int mode);
+extern void SeAmpAmp2_OnSwitch15(unsigned char a);
+#define TT_SEAMPAMP1 0x2b
+extern void SeAmpAmp2_OnSwitch25(unsigned char a);
+extern void SeAmpEnv1_OnSideRow1(unsigned char a);
+#define TT_SEFILLPQ1 0x30
+extern void SeFilLpq1_OnColumn4_Join27(unsigned char a);
+#define TT_SEAMPENV1 0x2d
+extern void SeAmpAmp2_OnSideRow1(unsigned char a);
+
+void SeAmpAmp2_OnSideRow5(unsigned char a)
+{
+	if (a != 0) {
+		if (SeMenu_SelectPartIfEnabled(4) != 0)
+			SeMenu_SendEvent(TT_SEAMPAMP2, 1);
+	}
+}
+void SeAmpAmp2_OnSwitch15(unsigned char a)
+{
+	if (a == 0) {
+		SeMenu_SetupMenuDisplay(0);
+		SeMenu_SendEvent(TT_SEMENU, 0);
+	}
+}
+void SeAmpAmp2_OnSwitch25(unsigned char a)
+{
+	if (a != 0)
+		SeMenu_SendEvent(TT_SEAMPAMP1, 0);
+}
+void SeAmpEnv1_OnSideRow1(unsigned char a)
+{
+	if (a != 0)
+		SeMenu_ToggleSolo();
+}
+void SeFilLpq1_OnColumn4_Join27(unsigned char a)
+{
+	if (a != 0) {
+		if (SeMenu_SelectPartIfEnabled(1) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+void SeAmpAmp2_OnSideRow1(unsigned char a)
+{
+	if (a != 0)
+		SeMenu_ToggleSolo();
+	else
+		SeMenu_SendEvent(TT_SEAMPENV1, 0);
+}
