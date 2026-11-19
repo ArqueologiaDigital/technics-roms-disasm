@@ -61,7 +61,9 @@ IMAGES = {'v2.06i': ('hdae5000', 'original_ROMs/hd-ae5000_v2_06i.ic4', 'symbols/
                      'symbols/hdae5000_v1_10i_symbols_reference.txt')}
 BASE = 0x280000
 NAME_RE = re.compile(r'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
-DEF_RE = re.compile(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
+# a definition: new style `T f(args) {`, or old style `T f(a, b) T1 a; T2 b; {` (2026-11-19: the parameter
+# declarations between the list and the brace were not recognised, so an old-style function's name was not mapped)
+DEF_RE = re.compile(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)(?:[^;{}()]*;)*\s*\{', re.M)  # each repeat ends at its own ';'
 
 
 def opt(a, n, d=None):
