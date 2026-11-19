@@ -1,0 +1,112 @@
+function	bytes	matches	best_diff
+Algo_SubTable_DispatchA	93	-	+35 sub_lane_23w4b@Xr
+AudioMod_Apply_BusRouting	292	-	+0 sub_lane_23w3b@Xr
+AudioMod_Scale_To_LevelPairShift	79	-	+5 sub_lane_23w3b@Xr
+AudioMod_Scale_To_Part_1B	73	-	+4 sub_lane_23w3b@Xr
+AudioMod_Scale_To_Part_1C	73	-	+4 sub_lane_23w3b@Xr
+AudioMod_Scale_To_Part_1F	82	-	+5 sub_lane_23w3b@Xr
+Audio_Cmd_DSPGlobal_Param_Store	55	-	+15 sub_lane_23w4b@Xr
+Audio_Cmd_PatchByte_Write_And_Echo	65	-	+18 sub_lane_23w4b@Xr
+DSP_ChanFreq_WritePacket2	116	-	+25 sub_lane_23w4b@Xr
+DSP_CopyCoeffs_TypeA	67	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+DSP_CopyCoeffs_TypeB	67	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+DSP_MixSendConfig	30	-	+7 sub_lane_23w3b@Xr
+DSP_RouteCoeffs_TypeA	163	-	+112 sub_lane_23w3b@Xr
+DSP_RouteCoeffs_TypeB	163	-	+112 sub_lane_23w3b@Xr
+DSP_SetCoeff_CopyDirect	72	-	+6 sub_lane_23w4b@Xr
+DSP_SetCoeff_CopyDirect2	72	-	+6 sub_lane_23w4b@Xr
+DSP_SlotParam_Read_To_Cache	101	-	+42 sub_lane_23w4b@Xr
+DSP_SlotParam_Write_Slot0	75	sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+DSP_SlotParam_Write_Slot1	75	sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+DSP_SlotParam_Write_Slot2	75	sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+DSP_SlotParam_Write_Slot3	75	-	+50 sub_lane_23w4b@Xr
+DSP_SlotParam_Write_Slot4	75	-	+50 sub_lane_23w4b@Xr
+DSP_VoiceCoeffRoute	423	-	+0 sub_lane_23w3b@Xr
+EGEnv_Compute_A_Simple	63	-	+17 sub_lane_23w5b@Xr
+EGEnv_Compute_A_Simple_Dup	63	-	+17 sub_lane_23w5b@Xr
+EGEnv_Compute_B_Simple	63	-	+11 sub_lane_23w5b@Xr
+EnvDepth_Cap	51	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+InterCPU_SendEditBufferToMain	58	-	+5 sub_lane_23w4b@Xr
+Level_Build_Reg0C0	155	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Pan_ScaleWithVelocity	58	-	+37 sub_lane_23w5b@Xr
+Partial_GetBaseKey	198	sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+PitchBend_Scale	57	-	+0 sub_lane_23w5b@Xr
+Pitch_Bend_Ramp_Tick	243	-	+9 sub_lane_23w3b@Xr
+SlotRouting_Chan1	75	-	+30 sub_lane_23w4b@Xr
+SlotRouting_Chan3	76	-	+30 sub_lane_23w4b@Xr
+SlotRouting_WriteSingle	74	-	+7 sub_lane_23w4b@Xr
+TVF_Calc_Cutoff_NoKeyFollow	76	-	+2 sub_lane_23w5b@Xr
+TVF_Lookup_Depth_Amount	168	-	+5 sub_lane_23w5b@Xr
+ToneGen_Mute_Reg05C0	29	sub_lane_23w2a@Xr sub_lane_23w2b@Xr sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+ToneGen_SilenceChannel	66	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+ToneGen_WriteEnvSegments	80	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteExprReg	31	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteExtParam_1C0_Single	34	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteExtParam_540_Mute	29	sub_lane_23w2a@Xr sub_lane_23w2b@Xr sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+ToneGen_WriteExtParam_600	34	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteExtParam_600_Mute	29	sub_lane_23w2a@Xr sub_lane_23w2b@Xr sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+ToneGen_WriteExtParam_Mute_TypeDispatch	64	sub_lane_23w2a@Xr sub_lane_23w2b@Xr sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+ToneGen_WriteExtParam_TypeDispatch_Single	71	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteExtParams_15_Alt	94	-	+3 sub_lane_23w7b@Xr
+ToneGen_WriteExtParams_56	128	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteExtParams_56_Alt	94	sub_lane_23w2a@Xr sub_lane_23w2b@Xr sub_lane_23w6a@Xr sub_lane_23w6b@Xr	
+ToneGen_WriteNote2ch	80	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteReg0080_StrobeClear	37	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteReg0640	34	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteSegRegs_SameLevel	80	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteSingleReg	27	sub_lane_23w2a@Xr sub_lane_23w2b@Xr sub_lane_23w4a@Xr sub_lane_23w4b@Xr	
+ToneGen_WriteVoicePitch	34	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+ToneGen_WriteVoice_6Words	216	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Direct	27	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_EnvLevel	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Long	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg07	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg07_Or_Reg18	71	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg11	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg13	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg15	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg15_Or_Reg16	71	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg16	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg18	34	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Reg21_Reg22	80	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_Short	37	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_WriteVoice_TvfPair	80	sub_lane_23w1a@Xr sub_lane_23w1b@Xr	
+ToneGen_Write_ExtParam_05C0_Strobe	94	sub_lane_23w2a@Xr sub_lane_23w2b@Xr	
+VoiceCC_DataTable_0280FE	0	-	not in the symbols reference
+VoiceState_SwapSlot_DE_BC	173	-	+6 sub_lane_23w5b@Xr
+Voice_AdvanceLFOPhase	92	-	+52 sub_lane_23w3b@Xr
+Voice_AllVoices_PortamentoReset	115	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_AllVoices_UpdateVelocity	248	-	+20 sub_lane_23w3b@Xr
+Voice_Artic_SetDepthPair_A	59	-	+42 sub_lane_23w5b@Xr
+Voice_Artic_SetDepthPair_B	58	-	+42 sub_lane_23w5b@Xr
+Voice_CC_SetExpression	140	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_CC_SetKeyShift	22	-	+1 sub_lane_23w3b@Xr
+Voice_CC_SetTuning	27	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_CC_SetVolume	140	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_Clamp_Byte_Unsigned	12	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_Colour_ClampUpper	58	-	+37 sub_lane_23w5b@Xr
+Voice_ComputePitchBend2	145	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_DSP_OutputConfig	237	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_DSP_OutputConfig2	237	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_DSP_SimpleCopy	91	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_DSP_SimpleCopy2	91	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_Freq_ComputeLeft_Raw	50	-	+11 sub_lane_23w5b@Xr
+Voice_Freq_ComputeRight_Raw	101	-	+17 sub_lane_23w5b@Xr
+Voice_Freq_WriteRight	122	-	+20 sub_lane_23w5b@Xr
+Voice_Init_Type1	132	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_Init_Type2	117	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_InterpolateNoteCurve	136	-	+2 sub_lane_23w3b@Xr
+Voice_InterpolatePanCurve	137	-	+18 sub_lane_23w3b@Xr
+Voice_LoadToneTable_All	91	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+Voice_NoteState_Clear	217	-	+134 sub_lane_23w4b@Xr
+Voice_PortamentoTarget_SetSlot	41	-	+0 sub_lane_23w5b@Xr
+Voice_PortamentoTargets_SetAll	177	-	+1 sub_lane_23w5b@Xr
+Voice_Release_Type4	177	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_Reload_Levels	219	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_Slot_CalcAmpNibble	142	-	+11 sub_lane_23w5b@Xr
+Voice_Slot_FindOctaveOffset	228	-	+11 sub_lane_23w5b@Xr
+Voice_UpdateFlagsFromSlot	109	-	+13 sub_lane_23w5b@Xr
+Voice_Vol_ScaleVelocityWord	36	sub_lane_23w5a@Xr sub_lane_23w5b@Xr	
+Voice_WriteChPitchWithVib	148	-	+22 sub_lane_23w3b@Xr
+Voice_WriteVolume_OrPan	60	sub_lane_23w3a@Xr sub_lane_23w3b@Xr	
+WaveSel_StageB_Build_Reg040_Footage	230	-	+73 sub_lane_23w5b@Xr
