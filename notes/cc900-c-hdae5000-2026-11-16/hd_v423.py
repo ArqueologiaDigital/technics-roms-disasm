@@ -9,7 +9,9 @@ bytes are compared with the image at the function's label.
 
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --corpus DIR OPTIONS FILE.c [FILE.c ...]
         copies the C files into DIR/hd/ with their #include "..." headers inlined (expand()), writes DIR/sources.txt and DIR/options.txt (OPTIONS: comma-separated labels
-        of LABELS below, e.g. O3Xr,Xr) and prints the oracle command (run it under the VM lock)
+        of LABELS below, e.g. O3Xr,Xr) and prints the oracle command (run it under the VM lock).  With --tree TREE
+        (an older tree, 2026-11-19) the headers come from TREE/cc900/ first and the files go to corpus directory
+        TREE (check them with --dir TREE --image IMG); a --tree call adds to the DIR's existing sources.txt
     python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --check RUN_DIR [--image v2.06i] [--tsv OUT] [--only GLOB]
                                                                           [--calr] [--record] [--csrc STEM=PATH]
         one row per function: bytes and, per C file and option set, MATCH or the first differing offset.  --calr:
@@ -59,7 +61,9 @@ IMAGES = {'v2.06i': ('hdae5000', 'original_ROMs/hd-ae5000_v2_06i.ic4', 'symbols/
                      'symbols/hdae5000_v1_10i_symbols_reference.txt')}
 BASE = 0x280000
 NAME_RE = re.compile(r'cc900-name:\s*([A-Za-z_]\w*)\s*=\s*([A-Za-z_]\w*)')
-DEF_RE = re.compile(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)\s*\{', re.M)
+# a definition: new style `T f(args) {`, or old style `T f(a, b) T1 a; T2 b; {` (2026-11-19: the parameter
+# declarations between the list and the brace were not recognised, so an old-style function's name was not mapped)
+DEF_RE = re.compile(r'^[\w\s\*]+?\b(\w+)\s*\([^;{)]*\)(?:[^;{}()]*;)*\s*\{', re.M)  # each repeat ends at its own ';'
 
 
 def opt(a, n, d=None):
@@ -67,6 +71,13 @@ def opt(a, n, d=None):
 
 
 def corpus(a):
+    tree = None
+    if '--tree' in a:                    # probes written for an older tree: its cc900/ headers, corpus directory TREE
+        i = a.index('--tree')
+        tree = a[i + 1]
+        a = a[:i] + a[i + 2:]
+        if not os.path.isdir(os.path.join(REPO, tree, 'cc900')):
+            sys.exit('--tree %s: no %s/cc900/' % (tree, tree))
     d = os.path.abspath(a[0])
     labels = a[1].split(',')
     os.makedirs(os.path.join(d, 'hd'), exist_ok=True)
@@ -75,11 +86,15 @@ def corpus(a):
         if f.endswith('.c'):
             # a ported tree's staged copy goes to a directory named after its tree (same base names as v2.06i's)
             parts = os.path.abspath(f).split(os.sep)
-            sub = parts[-3] if parts[-2] == 'cc900-staged' and parts[-3] != 'hdae5000' else 'hd'
+            sub = parts[-3] if parts[-2] == 'cc900-staged' and parts[-3] != 'hdae5000' else (tree or 'hd')
             os.makedirs(os.path.join(d, sub), exist_ok=True)
-            open(os.path.join(d, sub, os.path.basename(f)), 'w', encoding='latin-1').write(expand(f))
+            first = [os.path.join(REPO, tree, 'cc900')] if tree else []
+            open(os.path.join(d, sub, os.path.basename(f)), 'w', encoding='latin-1').write(expand(f, first))
             names.append(sub + '/' + os.path.basename(f))
-    open(os.path.join(d, 'sources.txt'), 'w').write('\n'.join(names) + '\n')
+    src = os.path.join(d, 'sources.txt')
+    if tree and os.path.exists(src):     # --tree adds to a corpus another call began (one run, several trees)
+        names = [l for l in open(src).read().split('\n') if l and l not in names] + names
+    open(src, 'w').write('\n'.join(names) + '\n')
     open(os.path.join(d, 'options.txt'), 'w').write(''.join('%s|%s\n' % (l, LABELS[l]) for l in labels))
     print('flock /home/fsanches/compartilhado/cc900-oracle/vm/.runlock bash scripts/analysis/cc900/oracle/run_oracle.sh '
           'RUN_NAME %s %s/sources.txt %s/options.txt v423' % (d, d, d))
@@ -90,14 +105,14 @@ HEADER_DIRS = [os.path.join(os.path.dirname(os.path.abspath(__file__)), 'probes'
                os.path.join(REPO, 'hdae5000', 'cc900-staged')]
 
 
-def expand(path):
+def expand(path, first=()):
     """FILE.c with each #include "x.h" replaced by the header's text: V4.23 in the oracle VM did not open a header
     beside the C (run 2026-11-16-46-hd-r2: THC1-Error-310 although job.sh passes -I with the source directory).
     Of a header of #defines only (hdae_ids.h) only the macros the file uses are kept."""
     text = open(path, encoding='latin-1').read()
 
     def one(m):
-        h = next((os.path.join(x, m.group(1)) for x in [os.path.dirname(os.path.abspath(path))] + HEADER_DIRS
+        h = next((os.path.join(x, m.group(1)) for x in list(first) + [os.path.dirname(os.path.abspath(path))] + HEADER_DIRS
                   if os.path.exists(os.path.join(x, m.group(1)))), None)
         if h is None:
             sys.exit('%s: #include "%s" not found' % (path, m.group(1)))
