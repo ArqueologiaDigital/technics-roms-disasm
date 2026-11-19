@@ -972,299 +972,36 @@ Voice_Demote_Decayed:	.include "includes/generated/cc900/Voice_Demote_Decayed.s"
 
 Voice_Reprioritise:	.include "includes/generated/cc900/Voice_Reprioritise.s"	; C: cc900/voice_params_and_tvf_a_7b_modjump.c
 
-Voice_Reset_Engine:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 6), a
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x4
-	jr nc, Voice_Reset_Engine_PhaseA
-
-Voice_Reset_Engine_FindStart:
-	ld a, (xsp + 4)
-	extz wa
-	add wa, wa
-	lda xbc, (10542:16)
-	cpw	(xbc+wa), 0x0000
-	jr nz, Voice_Reset_Engine_PhaseA
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x4
-	jr c, Voice_Reset_Engine_FindStart
-
-Voice_Reset_Engine_PhaseA:
-	cp (xsp + 4), 0x4
-	jr nc, Voice_Reset_Engine_PhaseB
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x40
-	jr nc, Voice_Reset_Engine_PhaseB
-
-Voice_Reset_Engine_PhaseA_VoiceLoop:
-	res	7, (P6:8)
-	ld a, (xsp + 4)
-	extz wa
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xa200
-	jr Voice_Reset_Engine_PhaseA_Nop
-
-Voice_Reset_Engine_PhaseA_Nop:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld a, (xsp + 4)
-	extz wa
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xa280
-	jr Voice_Reset_Engine_PhaseA_Nop2
-
-Voice_Reset_Engine_PhaseA_Nop2:
-	nop
-	nop
-	nop
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x40
-	jr c, Voice_Reset_Engine_PhaseA_VoiceLoop
-
-Voice_Reset_Engine_PhaseB:
-	cp (xsp + 4), 0x4
-	jr nc, Voice_Reset_Engine_PhaseC
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x40
-	jr nc, Voice_Reset_Engine_PhaseC
-
-Voice_Reset_Engine_PhaseB_VoiceLoop:
-	res	7, (P6:8)
-	ld a, (xsp + 4)
-	add a, 0xC0
-	extz wa
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x0000
-	jr Voice_Reset_Engine_PhaseB_Nop
-
-Voice_Reset_Engine_PhaseB_Nop:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld a, (xsp + 4)
-	extz wa
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0x7e00
-	jr Voice_Reset_Engine_PhaseB_Nop2
-
-Voice_Reset_Engine_PhaseB_Nop2:
-	nop
-	nop
-	nop
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x40
-	jr c, Voice_Reset_Engine_PhaseB_VoiceLoop
-
-Voice_Reset_Engine_PhaseC:
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x12
-	jrl nc, ChanStruct_Init_Loop
-
-CmdTable_InitEntry_Loop:
-	cp (xsp + 6), 0x0
-	jr nz, CmdTable_InitEntry_AltPtr
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x1E
-	ld de, wa
-	lda xhl, (4397:16)
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (Voice_Pool_Quota_ModeA:24)
-	ld	a, (xbc+wa)
-	ld	(xhl+de), a
-	jr CmdTable_InitEntry_ZeroFields
-
-CmdTable_InitEntry_AltPtr:
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x1E
-	ld de, wa
-	lda xhl, (4397:16)
-	ld a, (xsp + 4)
-	extz wa
-	lda xbc, (Voice_Pool_Quota_ModeB:24)
-	ld	a, (xbc+wa)
-	ld	(xhl+de), a
-
-CmdTable_InitEntry_ZeroFields:
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x1E
-	lda xbc, (4398:16)
-	ld	(xbc+wa), 0x00
-	ld e, 0x0:opc
-	cp e, 7:i3
-	jr nc, CmdTable_InitEntry_Next
-
-CmdTable_InitEntry_ZeroLoop:
-	ld a, e
-	extz wa
-	sla wa, 2
-	ld hl, wa
-	inc 2, hl
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x1E
-	lda xbc, (4397:16)
-	lda	xbc, (xbc+wa)
-	ld xwa, 0:i3
-	ld	(xbc+hl), xwa
-	inc 1, e
-	cp e, 7:i3
-	jr c, CmdTable_InitEntry_ZeroLoop
-
-CmdTable_InitEntry_Next:
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x12
-	jrl c, CmdTable_InitEntry_Loop
-
-ChanStruct_Init_Loop:
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x1B
-	jrl nc, VoiceNode_Init_Loop
-
-ChanStruct_Init_BindPartPool:
-	cp (xsp + 6), 0x0
-	jr nz, ChanStruct_Init_Entry_AltPtr
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0xC
-	ld de, wa
-	lda xhl, (4937:16)
-	ld a, (xsp + 4)
-	extz wa
-	sla wa, 2
-	lda xbc, (Voice_Part_PoolPtr_ModeA:24)
-	ld	xwa, (xbc+wa)
-	ld	(xhl+de), xwa
-	jr ChanStruct_Init_ZeroSub
-
-ChanStruct_Init_Entry_AltPtr:
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0xC
-	ld de, wa
-	lda xhl, (4937:16)
-	ld a, (xsp + 4)
-	extz wa
-	sla wa, 2
-	lda xbc, (Voice_Part_PoolPtr_ModeB:24)
-	ld	xwa, (xbc+wa)
-	ld	(xhl+de), xwa
-
-ChanStruct_Init_ZeroSub:
-	ld e, 0x0:opc
-	cp e, 2:i3
-	jr nc, ChanStruct_Init_Next
-
-ChanStruct_Init_ZeroLoop:
-	ld a, e
-	extz wa
-	sla wa, 2
-	ld hl, wa
-	inc 4, hl
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0xC
-	lda xbc, (4937:16)
-	lda	xbc, (xbc+wa)
-	ld xwa, 0:i3
-	ld	(xbc+hl), xwa
-	inc 1, e
-	cp e, 2:i3
-	jr c, ChanStruct_Init_ZeroLoop
-
-ChanStruct_Init_Next:
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x1B
-	jrl c, ChanStruct_Init_BindPartPool
-
-VoiceNode_Init_Loop:
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x40
-	jr nc, Voice_Retire_ToFreePool_All
-
-VoiceNode_Init_NodeLoop:
-	ld a, (xsp + 4)
-	extz wa
-	muls wa, 0x27
-	lda xbc, (5261:16)
-	lda	xiz, (xbc+wa)
-	ld a, (xsp + 4)
-	ld (xiz + 36), a
-	ld (xiz), xiz
-	ld (xiz + 4), xiz
-	ld (xiz + 8), xiz
-	ld (xiz + 12), xiz
-	ld (xiz + 16), xiz
-	ld (xiz + 20), xiz
-	ld (xiz + 34), 0x0
-	lda xwa, (4937:16)
-	ld (xiz + 24), xwa
-	ld (xiz + 28), 0x1
-	lda xwa, (4397:16)
-	ld (xiz + 29), xwa
-	ld (xiz + 33), 0x6
-	ld (xiz + 37), 0x0
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x40
-	jr c, VoiceNode_Init_NodeLoop
-
-Voice_Retire_ToFreePool_All:
-	lda xiz, (5261:16)
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x40
-	jr nc, AudioState_Init_ClearWords_Loop
-
-Voice_Retire_ToFreePool_All_Loop:
-	ld xwa, xiz
-	calr Voice_Retire_ToFreePool
-	lda xiz, (xiz + 39)
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x40
-	jr c, Voice_Retire_ToFreePool_All_Loop
-
-AudioState_Init_ClearWords_Loop:
-	ld (xsp + 4), 0x0
-	cp (xsp + 4), 0x4
-	jr nc, AudioState_Init_Return
-
-AudioState_Init_ClearVoiceBitmaps:
-	ld a, (xsp + 4)
-	extz wa
-	add wa, wa
-	lda xbc, (10542:16)
-	ldw	(xbc+wa), 0x0000
-	ld a, (xsp + 4)
-	extz wa
-	add wa, wa
-	lda xbc, (10550:16)
-	ldw	(xbc+wa), 0x0000
-	incm8 1, (xsp + 4)
-	cp (xsp + 4), 0x4
-	jr c, AudioState_Init_ClearVoiceBitmaps
-
-AudioState_Init_Return:
-	calr VoiceState_FullReset
-	pop xiz
-	inc 4, xsp
-	ret
+Voice_Reset_Engine:	.include "includes/generated/cc900/Voice_Reset_Engine.s"	; C: cc900/voice_params_and_tvf_ap_35a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Reset_Engine_FindStart, Voice_Reset_Engine + 16
+	.set	Voice_Reset_Engine_PhaseA, Voice_Reset_Engine + 45
+	.set	Voice_Reset_Engine_PhaseA_VoiceLoop, Voice_Reset_Engine + 61
+	.set	Voice_Reset_Engine_PhaseA_Nop, Voice_Reset_Engine + 91
+	.set	Voice_Reset_Engine_PhaseA_Nop2, Voice_Reset_Engine + 124
+	.set	Voice_Reset_Engine_PhaseB, Voice_Reset_Engine + 136
+	.set	Voice_Reset_Engine_PhaseB_VoiceLoop, Voice_Reset_Engine + 152
+	.set	Voice_Reset_Engine_PhaseB_Nop, Voice_Reset_Engine + 181
+	.set	Voice_Reset_Engine_PhaseB_Nop2, Voice_Reset_Engine + 210
+	.set	Voice_Reset_Engine_PhaseC, Voice_Reset_Engine + 222
+	.set	CmdTable_InitEntry_Loop, Voice_Reset_Engine + 233
+	.set	CmdTable_InitEntry_AltPtr, Voice_Reset_Engine + 276
+	.set	CmdTable_InitEntry_ZeroFields, Voice_Reset_Engine + 311
+	.set	CmdTable_InitEntry_ZeroLoop, Voice_Reset_Engine + 336
+	.set	CmdTable_InitEntry_Next, Voice_Reset_Engine + 378
+	.set	ChanStruct_Init_Loop, Voice_Reset_Engine + 388
+	.set	ChanStruct_Init_BindPartPool, Voice_Reset_Engine + 399
+	.set	ChanStruct_Init_Entry_AltPtr, Voice_Reset_Engine + 445
+	.set	ChanStruct_Init_ZeroSub, Voice_Reset_Engine + 483
+	.set	ChanStruct_Init_ZeroLoop, Voice_Reset_Engine + 489
+	.set	ChanStruct_Init_Next, Voice_Reset_Engine + 531
+	.set	VoiceNode_Init_Loop, Voice_Reset_Engine + 541
+	.set	VoiceNode_Init_NodeLoop, Voice_Reset_Engine + 551
+	.set	Voice_Retire_ToFreePool_All, Voice_Reset_Engine + 631
+	.set	Voice_Retire_ToFreePool_All_Loop, Voice_Reset_Engine + 645
+	.set	AudioState_Init_ClearWords_Loop, Voice_Reset_Engine + 662
+	.set	AudioState_Init_ClearVoiceBitmaps, Voice_Reset_Engine + 672
+	.set	AudioState_Init_Return, Voice_Reset_Engine + 717
 
 ; PER-TICK TONE-GENERATOR VOICE POLL. Services ONE bank of 16 hardware voices per
 ; call and is the ONLY place in the firmware where a voice is handed back to the

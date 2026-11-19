@@ -516,158 +516,19 @@ DSP_WriteAlgoBuffer_Return:
 ; Re-staging one stream = DSP1_ResolveStreamPtr(index) then a 0xD5-word copy to
 ; (0x04531C) + 0x10 + 0x01D6*index.
 ; All paths converge on DSP_WriteCount_Compute + the checksum store + the DMA push.
-DSP_Reinit_VoiceSlots:
-	dec 4, xsp
-	push xiz
-	cp a, 0x40
-	jrl nc, DSP_Reinit_VoiceSlots_Loop2A
-	cp c, 0xFF
-	jr z, DSP_Reinit_VoiceSlots_Loop1
-	extz bc
-	extz wa
-	mul wa, 0x14
-	ldfr_werp WA, 0xFA
-	add wa, bc
-	ldfr_werp WA, 0xFA
-	calr DSP1_ResolveStreamPtr
-	ld (xsp + 4), xhl
-	ldto_werp WA, 0xFA
-	extz xwa
-	ld xbc, 0x1D6
-	call Math_Multiply32
-	add xhl, 0x10
-	add xhl, (Payload_Bss_Start+0x64a6:24)
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	ld xix, xhl
-	ldw bc, 0xD5
-	ldirw
-	jr DSP_Reinit_VoiceSlots_Loop2
-
-; C == 0xFF: set up the 0x14-stream range for part A.
-DSP_Reinit_VoiceSlots_Loop1:
-	ldfr_berp A, 0xF8
-	extz iz
-	ld wa, iz
-	mul wa, 0x14
-	ld iz, wa
-	ldfr_werp IZ, 0xFA
-	ld bc, iz
-	add bc, 0x14
-	ldto_werp WA, 0xFA
-	cp wa, bc
-	jr nc, DSP_Reinit_VoiceSlots_Loop2
-
-; Body: resolve one stream and copy 0xD5 words into its slot.
-DSP_Reinit_VoiceSlots_Loop1Next:
-	ldto_werp WA, 0xFA
-	calr DSP1_ResolveStreamPtr
-	ld (xsp + 4), xhl
-	ldto_werp WA, 0xFA
-	extz xwa
-	ld xbc, 0x1D6
-	call Math_Multiply32
-	add xhl, 0x10
-	add xhl, (Payload_Bss_Start+0x64a6:24)
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	ld xix, xhl
-	ldw bc, 0xD5
-	ldirw
-	inc1w_erp 0xFA
-	ld bc, iz
-	add bc, 0x14
-	ldto_werp WA, 0xFA
-	cp wa, bc
-	jr c, DSP_Reinit_VoiceSlots_Loop1Next
-
-; Checksum + store, then jump to the DMA flush.
-DSP_Reinit_VoiceSlots_Loop2:
-	calr DSP_WriteCount_Compute
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	(xwa+29352), hl
-	jrl DSP_Reinit_VoiceSlots_DMAFlush
-
-; A >= 0x40 entry: distinguishes the A == 0xFF full rebuild from the channel-slot paths.
-DSP_Reinit_VoiceSlots_Loop2A:
-	cp a, 0xFF
-	jr z, DSP_Reinit_VoiceSlots_Loop3A
-	cp c, 0xFF
-	jr z, DSP_Reinit_VoiceSlots_Loop2B
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	lda xwa, (xwa+18816)
-	extz bc
-	calr DSP_InitChannelSlot
-	jr DSP_Reinit_VoiceSlots_Loop3
-
-; C == 0xFF: head of the 128-channel DSP_InitChannelSlot loop.
-DSP_Reinit_VoiceSlots_Loop2B:
-	ldfr_werp IZ, 0xFA
-	cp_erpw 0xFA, 0x80, 0x00
-	jr nc, DSP_Reinit_VoiceSlots_Loop3
-
-; Body of the 128-channel loop.
-DSP_Reinit_VoiceSlots_Loop2Next:
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	lda xwa, (xwa+18816)
-	ldto_werp BC, 0xFA
-	calr DSP_InitChannelSlot
-	inc1w_erp 0xFA
-	cp_erpw 0xFA, 0x80, 0x00
-	jr c, DSP_Reinit_VoiceSlots_Loop2Next
-
-; Checksum + store for the channel-slot paths.
-DSP_Reinit_VoiceSlots_Loop3:
-	calr DSP_WriteCount_Compute
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	(xwa+29352), hl
-	jr DSP_Reinit_VoiceSlots_DMAFlush
-
-; A == 0xFF full rebuild: DSP_ResetAlgoDefaults then the 0x28-stream re-stage loop.
-DSP_Reinit_VoiceSlots_Loop3A:
-	calr DSP_ResetAlgoDefaults
-	ld iz, 0:i3
-	cp iz, 0x28
-	jr nc, DSP_Reinit_VoiceSlots_OuterNext
-
-; Body of the 0x28-stream re-stage loop.
-DSP_Reinit_VoiceSlots_Loop3Next:
-	ld wa, iz
-	calr DSP1_ResolveStreamPtr
-	ld (xsp + 4), xhl
-	ld wa, iz
-	extz xwa
-	ld xbc, 0x1D6
-	call Math_Multiply32
-	add xhl, 0x10
-	add xhl, (Payload_Bss_Start+0x64a6:24)
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	ld xix, xhl
-	ldw bc, 0xD5
-	ldirw
-	inc 1, iz
-	cp iz, 0x28
-	jr c, DSP_Reinit_VoiceSlots_Loop3Next
-
-; Full-rebuild tail: DSP_FlushAllSlots(0, 0x40), then checksum + store.
-DSP_Reinit_VoiceSlots_OuterNext:
-	ld wa, 0:i3
-	ldw bc, 0x40
-	calr DSP_FlushAllSlots
-	calr DSP_WriteCount_Compute
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	(xwa+29352), hl
-
-; ★ The common exit: InterCPU_E1_DMA_Transfer(0x007800, 0x72AA, 0x001E0000).
-DSP_Reinit_VoiceSlots_DMAFlush:
-	lda xwa, (0x007800:24)
-	ldw bc, 0x72AA
-	ld xde, 0x1E0000
-	call InterCPU_E1_DMA_Transfer
-	pop xiz
-	inc 4, xsp
-	ret
+DSP_Reinit_VoiceSlots:	.include "includes/generated/cc900/DSP_Reinit_VoiceSlots.s"	; C: cc900/ringbuf_and_midi_dispatch_ap_34a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_Reinit_VoiceSlots_Loop1, DSP_Reinit_VoiceSlots + 75
+	.set	DSP_Reinit_VoiceSlots_Loop1Next, DSP_Reinit_VoiceSlots + 104
+	.set	DSP_Reinit_VoiceSlots_Loop2, DSP_Reinit_VoiceSlots + 166
+	.set	DSP_Reinit_VoiceSlots_Loop2A, DSP_Reinit_VoiceSlots + 182
+	.set	DSP_Reinit_VoiceSlots_Loop2B, DSP_Reinit_VoiceSlots + 209
+	.set	DSP_Reinit_VoiceSlots_Loop2Next, DSP_Reinit_VoiceSlots + 219
+	.set	DSP_Reinit_VoiceSlots_Loop3, DSP_Reinit_VoiceSlots + 245
+	.set	DSP_Reinit_VoiceSlots_Loop3A, DSP_Reinit_VoiceSlots + 260
+	.set	DSP_Reinit_VoiceSlots_Loop3Next, DSP_Reinit_VoiceSlots + 271
+	.set	DSP_Reinit_VoiceSlots_OuterNext, DSP_Reinit_VoiceSlots + 323
+	.set	DSP_Reinit_VoiceSlots_DMAFlush, DSP_Reinit_VoiceSlots + 344
 
 ; Scans all 26 parts and acts on the program byte at part+0x1A (0x041382).
 ; Only the head of the scan is inside this region: it compares part+0x1A against 0x10 and 0x50
