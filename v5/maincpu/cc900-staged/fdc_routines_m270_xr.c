@@ -6,140 +6,22 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
-/* cc900-module: FDC_CMD_DISPATCH_SUB FDC_CMD_ENABLE FDC_CMD_SEND FDC_ClearStatus_InitTimer FDC_CmdRecalibrate FDC_DRIVE_DETECT FDC_DRIVE_STATUS FDC_Exception_Status_Decoder FDC_ReadDataRegister FDC_Read_Status FDC_RecordDensityCode FDC_Send_Command FDC_Wait_Ready_Timeout FDC_WriteDataRegister SOME_DELAY */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: FDC_ReadDataRegister FDC_Read_Status FDC_ResultPhase_Read FDC_SendAuxCmd FDC_SendAuxCmdReadResult FDC_SendCommandByte FDC_SendParam_SeekTrack FDC_SendParameterByte FDC_SendParams_Format FDC_SendParams_ReadWrite FDC_SendParams_Specify FDC_Send_Command FDC_Set_Status FDC_ValidateOpcode FDC_WaitParamByteReady FDC_WaitReady FDC_Wait_Ready_Timeout FDC_WriteAuxCmdByte FDC_WriteDataRegister */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-extern unsigned char __near FDC_CURRENT_CYLINDER;
-extern unsigned char __near FDC_INIT_FLAG;
-extern unsigned char __near FDC_ERROR_CODE;
-extern unsigned char __near FDC_RESULT[];
-extern unsigned char __near FDC_DRIVE_MODE;
-extern unsigned int __near ram_896a;
-extern unsigned char __near ram_89b6;
-extern void FDC_ClearStatus_InitTimer(void);
-extern int FDC_DRIVE_DETECT(void);
-extern int FDC_DRIVE_STATUS(void);
-extern void FDC_Send_Command(int);
-extern void SOME_DELAY(int);
-extern int FDC_CMD_DISPATCH_SUB(void);
-extern unsigned char FDC_Read_Status(void);
-extern void FDC_WriteDataRegister(int);
-extern void FDC_Wait_Ready_Timeout(void);
-extern unsigned char FDC_ReadDataRegister(void);
-extern unsigned char FDC_Exception_Status_Decoder(void);
-extern void FDC_CMD_SEND(int);
-extern void FDC_RecordDensityCode(int);
-extern void FDC_CMD_ENABLE(void);
-extern void FDC_CmdRecalibrate(void);
-extern void FDC_CONFIG_VERIFY(void);
+extern unsigned int __near SYSTEM_TIMESTAMP;
+extern void FDC_Set_Status(int);
+unsigned char FDC_Read_Status();
+extern unsigned char FDC_Read_Status();
+extern void FDC_WaitParamByteReady();
 
-/* cc900-data: FDC_CONFIG_VERIFY 1 = FDC_WaitReady_CaseTable */
-void FDC_CONFIG_VERIFY(void)
+void FDC_WaitParamByteReady()
 {
-    unsigned char *p;
-    unsigned char s;
-    unsigned char d;
-
-    FDC_ClearStatus_InitTimer();
-    if (FDC_DRIVE_DETECT() != -1 && FDC_DRIVE_STATUS() != -1)
-        FDC_CURRENT_CYLINDER = 255;
-    if (FDC_INIT_FLAG == 255)
-        return;
-    FDC_INIT_FLAG = 255;
-    FDC_Send_Command(54);
-    SOME_DELAY(2);
-    if (FDC_DRIVE_DETECT() != -1 && FDC_DRIVE_STATUS() != -1) {
-        FDC_ClearStatus_InitTimer();
-        FDC_CMD_DISPATCH_SUB();
-        if (FDC_ERROR_CODE != 0) {
-            FDC_INIT_FLAG = 0;
-            return;
-        }
-        do {
-            do
-                ;
-            while (!(FDC_Read_Status() & 0x80));
-            if (!(FDC_Read_Status() & 0x40)) {
-                s = 0;
-                while (s != 0x80)
-                    s = FDC_Read_Status() & 0xf0;
-                FDC_WriteDataRegister(8);
-            }
-            p = FDC_RESULT;
-            p++;
-            do {
-                FDC_Wait_Ready_Timeout();
-                *p++ = FDC_ReadDataRegister();
-                do
-                    ;
-                while (!(FDC_Read_Status() & 0x80));
-            } while (FDC_Read_Status() & 0x40);
-            FDC_Exception_Status_Decoder();
-        } while (FDC_RESULT[1] != 0x80);
-    }
-    FDC_CMD_SEND(3);
-    if (FDC_ERROR_CODE != 0) {
-        FDC_INIT_FLAG = 0;
-        return;
-    }
-    FDC_CMD_SEND(79);
-    if (FDC_ERROR_CODE != 0) {
-        FDC_INIT_FLAG = 0;
-        return;
-    }
-    switch (ram_89b6 & 15) {
-    case 0:
-        FDC_DRIVE_MODE = 0;
-        ram_896a = 0;
-        d = 0;
-        FDC_RecordDensityCode(2);
-        break;
-    case 1:
-        FDC_DRIVE_MODE = 0;
-        ram_896a = 0;
-        d = 192;
-        FDC_RecordDensityCode(2);
-        break;
-    case 2:
-        FDC_DRIVE_MODE = 2;
-        ram_896a = 0;
-        d = 64;
-        FDC_RecordDensityCode(0);
-        break;
-    case 3:
-        FDC_DRIVE_MODE = 3;
-        ram_896a = 0;
-        d = 64;
-        FDC_RecordDensityCode(0);
-        break;
-    case 4:
-        FDC_DRIVE_MODE = 4;
-        ram_896a = 0;
-        d = 0;
-        FDC_RecordDensityCode(2);
-        break;
-    case 5:
-        FDC_DRIVE_MODE = 5;
-        ram_896a = 0;
-        d = 0;
-        FDC_RecordDensityCode(2);
-        break;
-    default:
-        FDC_DRIVE_MODE = 0;
-        ram_896a = 0;
-        d = 0;
-        FDC_RecordDensityCode(2);
-        break;
-    }
-    FDC_CMD_SEND(d | 11);
-    if (FDC_ERROR_CODE != 0) {
-        FDC_INIT_FLAG = 0;
-        return;
-    }
-    FDC_CMD_ENABLE();
-    if (FDC_ERROR_CODE != 0) {
-        FDC_INIT_FLAG = 0;
-        return;
-    }
-    FDC_CmdRecalibrate();
-    FDC_INIT_FLAG = 0;
+    unsigned int t, s;
+    t = SYSTEM_TIMESTAMP;
+    s = 128;
+    if (s == 128) do {
+        if ((FDC_Read_Status() & 0x90) == 0x90) s = 0;
+        if (SYSTEM_TIMESTAMP - t > 500) s = 0xffff;
+    } while (s == 128);
+    if (s != 0) FDC_Set_Status(1);
 }

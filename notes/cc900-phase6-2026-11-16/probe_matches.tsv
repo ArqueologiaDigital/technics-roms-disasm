@@ -752,3 +752,92 @@ SLSrcBankList_FuncBody	116	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr
 SingleLoadDst_DrawComposerBankRows	119	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr
 SingleLoadSrc_DrawSoundMemBankRows	126	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr p6_M_1m269b@O3Xr
 SmfSeqFromSongNumFunc	87	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr
+CstmCpTtl_ResolvePendingCopy	55	2026-11-19-15-p6-r42	p6_M_2m159a@O3XSXr p6_M_2m159a@O3Xr
+DrawBitmapFile	71	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr
+DrawBitmapFile_QueuedExec	21	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr p6_L_1m273a@Xr
+DrawDesignBox_ByteData	89	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr
+DrawDesignBox_ByteData_Code	24	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr p6_L_1m273a@Xr
+DrawFunc_Return	1	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr p6_L_1m273a@Xr
+DrawMonoBitmap	101	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr
+DrawMonoBitmap_ParamBlock	34	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr
+DrawWall	114	2026-11-19-15-p6-r42	p6_L_1m273a@O3Xr
+DrawWall_Deferred_Code	2	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr p6_L_1m273a@Xr
+DrawWall_DoCopy	85	2026-11-19-15-p6-r42	p6_L_1m273a@O3Xr p6_L_1m273b@O3Xr
+ExtData_StepTlvField	109	2026-11-19-15-p6-r42	p6_N_1m280a@O3XSXr p6_N_1m280a@O3Xr
+FDemoText_ByteData_ProbeHelper	44	2026-11-19-15-p6-r42	p6_M_2m265a@O3XSXr p6_M_2m265a@O3Xr
+FDemoText_ProbeVoiceType	44	2026-11-19-15-p6-r42	p6_M_2m265a@O3XSXr p6_M_2m265a@O3Xr
+FatPath_Next83Component	183	2026-11-19-15-p6-r42	p6_L_1m238a@Xr
+FileIO_SearchStringMatch	72	2026-11-19-15-p6-r42	p6_L_1m268a@O3XSXr p6_L_1m268a@O3Xr
+GraphicsRender_RetStub	1	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr p6_L_1m273a@Xr
+GraphicsRender_ShortByteBlock	5	2026-11-19-15-p6-r42	p6_L_1m273a@O3XSXr p6_L_1m273a@O3Xr p6_L_1m273a@Xr
+InitializeGraphics	111	2026-11-19-15-p6-r42	p6_N_1m273a@O3XSXr p6_N_1m273a@O3Xr
+PaletteBankRotate	24	2026-11-19-15-p6-r42	p6_N_1m273a@O3XSXr p6_N_1m273a@O3Xr p6_N_1m273b@O3XSXr p6_N_1m273b@O3Xr
+PaletteBankRotate_Code	2	2026-11-19-15-p6-r42	p6_N_1m273a@O3XSXr p6_N_1m273a@O3Xr p6_N_1m273a@Xr p6_N_1m273b@O3XSXr p6_N_1m273b@O3Xr p6_N_1m273b@Xr
+SeMenu_HandleMenuChange	125	2026-11-19-15-p6-r42	p6_L_1m129a@O3XSXr p6_L_1m129a@O3Xr p6_L_1m129a@Xr
+SeqBuf_WriteMidiEventDirect	102	2026-11-19-15-p6-r42	p6_N_1m234a@O3XSXr p6_N_1m234a@O3Xr p6_N_1m234a@Xr p6_N_1m234b@O3XSXr p6_N_1m234b@O3Xr p6_N_1m234b@Xr
+SeqVoice_CountEventsInBar	138	2026-11-19-15-p6-r42	p6_M_2m234a@O3Xr
+SingleLoadDst_DrawSongRows	151	2026-11-19-15-p6-r42	p6_M_2m269a@O3XSXr p6_M_2m269a@O3Xr
+SndParam_ApplyAndFetch	63	2026-11-19-15-p6-r42	p6_N_1m280b@O3XSXr p6_N_1m280b@O3Xr
+SndParam_ApplyFromPointer	66	2026-11-19-15-p6-r42	p6_N_1m280a@O3XSXr p6_N_1m280a@O3Xr p6_N_1m280b@O3XSXr p6_N_1m280b@O3Xr
+SndParam_FetchOscTableEntry	30	2026-11-19-15-p6-r42	p6_L_1m303a@O3Xr p6_L_1m303a@Xr
+BmDrEdit_ScanAfterModify	93	2026-11-19-19-p6-r43	p6_N_2m232a@O3XSXr p6_N_2m232a@O3Xr p6_N_2m232a@Xr
+CalcTotalWidth	137	2026-11-19-19-p6-r43	p6_P_5m274e@O3XSXr p6_P_5m274e@O3Xr
+ColorBlit_ComputeRectAndBlit	70	2026-11-19-19-p6-r43	p6_M_3m273a@O3XSXr p6_M_3m273a@O3Xr
+EffectMode_MidiParseLoop	36	2026-11-19-19-p6-r43	p6_L_2m276a@O3Xr p6_L_2m276a@Xr
+FDemoText_ByteData_DisplayRefresh	114	2026-11-19-19-p6-r43	p6_L_2m265a@Xr
+MainTitle_InitGraphicsAndEvents	87	2026-11-19-19-p6-r43	p6_L_2m270a@O3XSXr p6_L_2m270a@O3Xr p6_L_2m270a@Xr
+MidiChan_ClearAllStates	79	2026-11-19-19-p6-r43	p6_L_2m285a@O3XSXr p6_L_2m285a@O3Xr p6_L_2m285a@Xr
+MidiChan_InitAllBufferPtrs	99	2026-11-19-19-p6-r43	p6_L_2m288a@O3XSXr p6_L_2m288a@O3Xr
+MidiPkt_EnqueueControl_3354	138	2026-11-19-19-p6-r43	p6_M_3m289a@O3XSXr p6_M_3m289a@O3Xr
+ReadFieldToBuffer	178	2026-11-19-19-p6-r43	p6_P_5m268d@O3Xr
+SeqData_DispatchLoop_Done	133	2026-11-19-19-p6-r43	p6_N_2m289a@O3XSXr p6_N_2m289a@O3Xr
+UpdSeSel_ProcessStep	185	2026-11-19-19-p6-r43	p6_L_2m131a@O3Xr
+VoiceParam_CompareAndUpdate	87	2026-11-19-19-p6-r43	p6_L_2m280a@O3XSXr p6_L_2m280a@O3Xr
+ExtData_SetTlvField	79	2026-11-19-21-p6-r44	p6_M_4m280a@O3XSXr p6_M_4m280a@O3Xr
+DSPCfg_RecordFieldToParamId	204	2026-11-19-22-p6-r45	p6_N_3m293b@O3Xr
+FDC_ExecuteSectorCommand	78	2026-11-19-22-p6-r45	p6_L_3m241a@Xr p6_L_3m241b@Xr
+GraphicsRender_ProcessEntries	98	2026-11-19-22-p6-r45	p6_L_3m273a@O3Xr
+GraphicsRender_Start	88	2026-11-19-22-p6-r45	p6_L_3m273a@O3Xr
+ListDir2_Entry	90	2026-11-19-22-p6-r45	p6_L_3m159a@O3Xr
+MidiPkt_DispatchSpecialType	107	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4D6A	52	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4D82	52	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4D8E	52	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4D9A	52	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4DA6	52	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4DAE	122	2026-11-19-22-p6-r45	p6_N_3m289a@O3Xr
+MidiPkt_DispatchViaTable_4DCE	53	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_EnqueueControl_335C	134	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+MidiPkt_EnqueueControl_3364	143	2026-11-19-22-p6-r45	p6_N_3m289a@O3XSXr p6_N_3m289a@O3Xr
+PaletteBankRotate_Impl	128	2026-11-19-22-p6-r45	p6_N_3m273a@O3XSXr p6_N_3m273a@O3Xr
+Part_DetectSingleVoiceType	106	2026-11-19-22-p6-r45	p6_N_3m234a@O3XSXr p6_N_3m234a@O3Xr
+PsMixer_CalcRowBandRect	107	2026-11-19-22-p6-r45	p6_L_3m264a@O3XSXr p6_L_3m264a@O3Xr
+SeqVoice_ActivateWithBarSync	89	2026-11-19-22-p6-r45	p6_N_3m234a@O3XSXr p6_N_3m234a@O3Xr
+Display_UpdateDirtyRegions	67	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+FileIO_ReadHeaderAtF	37	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+Flash_BurnWithProgress	67	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+HDAE5000_ProgramCustomDataFlash	82	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+HDAE5000_ProgramTableDataFlash	82	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@Xr
+InitializeOperationState	64	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+Scoop_Dispatch_CallFAB273	38	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@Xr
+Scoop_Dispatch_Nop	1	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+SearchAndOpen	81	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr
+Seq_InitStub_Nop1	1	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+Seq_InitStub_Nop2	1	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+Seq_InitStub_Nop3	1	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+SubCPU_Payload_Verify	78	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr p6_C_6a@Xr
+TGReg_WriteCC12_Assign	37	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr
+TGReg_WriteCC3_Expression	38	2026-11-16-45-p6-r9 (lane_p6 re-check 2026-11-19)	p6_C_6a@O3Xr
+FDC_ReadDataRegister	6	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_Read_Status	6	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendAuxCmd	24	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendAuxCmdReadResult	34	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendCommandByte	17	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendParam_SeekTrack	9	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendParameterByte	17	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_SendParams_Format	39	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_Send_Command	6	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_ValidateOpcode	79	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@Xr
+FDC_WaitParamByteReady	67	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@Xr
+FDC_WriteAuxCmdByte	17	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+FDC_WriteDataRegister	6	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
