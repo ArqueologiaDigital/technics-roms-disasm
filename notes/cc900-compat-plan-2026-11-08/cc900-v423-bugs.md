@@ -221,4 +221,8 @@ Add every new one here, in the commit that finds it.
   matches.  What separates the two is still open (next probes: drop the inline-asm lines, then the `& 0x7fff`
   read through the computed address).
 - **Workaround:** keep each `__IZ` probe in a file of its own, so a crash loses nothing else.
+- **Not needed for the writers (2026-11-19):** the firmware's inline assembly is the lower-case `__asm("...")`, which
+  V4.23 treats as clobbering the scratch registers; values live across it then go to XIZ / IZ by themselves, and 27
+  tone-generator writers match with plain C (notes/cc900-c-subcpu-2026-11-16/README.md, round 23).  The crash itself
+  is still open.
 - **Model:** not applicable (paused); the C lanes use `__IZ` instead.

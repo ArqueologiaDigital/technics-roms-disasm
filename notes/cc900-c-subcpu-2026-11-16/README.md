@@ -190,6 +190,30 @@ DSP_VoiceParamReadWrite, VoiceAlloc_Apply_Algo_Group2 (helper AI).  13 functions
 tree** built from C (`c_duplicates.py`); `make -j2 gate` PASS.  The work was wound down after it (owner, 2026-11-18):
 HANDOFF-2026-11-18.md.
 
+**Tenth promotion: round 23's 32 (2026-11-19; matched in runs 2026-11-19-5, -10 and -11, verified per tree in run
+2026-11-19-12-sub-r23s-staged).**  7 files through `promote_v423_run.sh`: 27 tone-generator writers (ToneGen_WriteVoice_*,
+ToneGen_WriteExtParam*, ToneGen_WriteNote2ch, ToneGen_WriteEnvSegments, ...) and Voice_AllVoices_PortamentoReset, all
+open at +0 since round 3; DSP_VoiceState_Dispatch; AudioMod_Apply_Slot_Field29 / _2A and NoteOn_RoutePacket (helper AM);
+Voice_Part_SetStateAndReinit (helper AL).  32 functions, 3,253 B per tree (staged_v423.tsv's MATCH rows of run -12);
+**557 functions per tree** built from C (`c_duplicates.py`).
+
+### The firmware's inline assembly is `__asm` (round 23, runs 2026-11-19-7, -8 and -10)
+
+V4.23 knows two spellings of inline assembly and treats them differently.  With `__ASM("...")` it assumes the block
+touches no register, so a value live across it stays in the scratch register it arrived in (the writers' record pointer
+in XBC).  With the lower-case `__asm("...")` it assumes the block clobbers the scratch registers, and such a value goes
+to the callee-saved XIZ family (XIZ, IZ, QIZH, QIZL, IZH), pushed and popped, which is what the ROM does.
+ToneGen_WriteVoice_Reg07 matched with plain C and `__asm` (sub_lane_23p2.c), and `gen_lane_23w.py` respelled the earlier
+writer probes: 27 open functions matched at once.  So the record pointer never needed `__XIZ` / `__IZ` (bug candidate 12
+is no longer in the way of these functions).  `#pragma asm` is unknown to V4.23 (THC1-Warning-618, sub_lane_23p1.c).
+Functions built earlier with `__ASM` still match: their inline blocks have nothing live across them.
+
+Other round-23 verdicts: memcpy(d, s, 11) is a library call in V4.23, not an inline copy, and `#pragma pack(1)` is
+ignored silently, so the odd-size record copies (11, 71, 295 bytes) stay blocked (sub_lane_23a/b.c);
+DSP_MixerCoeff_Compute keeps its +1 (a 16-byte frame where the ROM has 20) in ten more spellings (`gen_lane_23m.py`).
+Helper AM found that `open_list.py` still lists DSP_WriteParameter and WaveSel_StageA2_FromVelZone, which are built
+(dsp_control_routines_e_10a.c, dsp_voice_params_d_10a.c): their MATCH rows predate the ledger.
+
 Round 21's lessons (helper-briefs/ROUND21.md has round 20's):
 - A first `case` whose body only leaves the switch loses its compare; Variant3 needed a `case 4:` before
   `case 0x20: case 8: break;` to keep the 0x20 test (helper AD).

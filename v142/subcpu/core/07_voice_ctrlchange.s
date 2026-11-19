@@ -166,69 +166,14 @@ Voice_PitchBend:	.include "includes/generated/cc900/Voice_PitchBend.s"	; C: cc90
 ; Calls Voice_NoteState_Clear for parts 0..0x19, then walks the voice list from
 ; Voice_Query_AllChannels and issues per-voice tone-generator writes with the standard strobe.
 ; Called from Voice_ResetAllControllers.
-Voice_AllVoices_PortamentoReset:
-	push xiz
-	ldib_erp 0xFB, 0
-	cp_erpb 0xFB, 0x1A
-	jr nc, Voice_AllVoices_PortamentoReset_NopCont1
-
-; loop body of Voice_AllVoices_PortamentoReset.
-Voice_AllVoices_PortamentoReset_LoopBody:
-	ldto_berp A, 0xFB
-	extz wa
-	call Voice_NoteState_Clear
-	inc1b_erp 0xFB
-	cp_erpb 0xFB, 0x1A
-	jr c, Voice_AllVoices_PortamentoReset_LoopBody
-
-; NopCont1: settling gap plus the next address/data pair of Voice_AllVoices_PortamentoReset.
-Voice_AllVoices_PortamentoReset_NopCont1:
-	call Voice_Query_AllChannels
-	lda xwa, (xhl + 5)
-	ld xiz, xwa
-	cp (xiz), 0x40
-	jr nc, Voice_AllVoices_PortamentoReset_Exit
-
-; NopCont2: settling gap plus the next address/data pair of Voice_AllVoices_PortamentoReset.
-Voice_AllVoices_PortamentoReset_NopCont2:
-	res	7, (P6:8)
-	ld a, (xiz)
-	extz wa
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xa200
-	jr Voice_AllVoices_PortamentoReset_NopCont3
-
-; NopCont3: settling gap plus the next address/data pair of Voice_AllVoices_PortamentoReset.
-Voice_AllVoices_PortamentoReset_NopCont3:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld a, (xiz)
-	extz wa
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xa280
-	jr Voice_AllVoices_PortamentoReset_LoopStep
-
-; loop step of Voice_AllVoices_PortamentoReset.
-Voice_AllVoices_PortamentoReset_LoopStep:
-	nop
-	nop
-	nop
-	inc 1, xiz
-	cp (xiz), 0x40
-	jr c, Voice_AllVoices_PortamentoReset_NopCont2
-
-; common exit of Voice_AllVoices_PortamentoReset.
-Voice_AllVoices_PortamentoReset_Exit:
-	pop xiz
-	ret
+Voice_AllVoices_PortamentoReset:	.include "includes/generated/cc900/Voice_AllVoices_PortamentoReset.s"	; C: cc900/voice_ctrlchange_lane_23w5a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_AllVoices_PortamentoReset_LoopBody, Voice_AllVoices_PortamentoReset + 10
+	.set	Voice_AllVoices_PortamentoReset_NopCont1, Voice_AllVoices_PortamentoReset + 28
+	.set	Voice_AllVoices_PortamentoReset_NopCont2, Voice_AllVoices_PortamentoReset + 42
+	.set	Voice_AllVoices_PortamentoReset_NopCont3, Voice_AllVoices_PortamentoReset + 71
+	.set	Voice_AllVoices_PortamentoReset_LoopStep, Voice_AllVoices_PortamentoReset + 103
+	.set	Voice_AllVoices_PortamentoReset_Exit, Voice_AllVoices_PortamentoReset + 113
 
 ; A = value.  Stores the global pitch-bend range and then drives
 ; Voice_PerVoice_PortamentoPitchUpdate so sounding notes pick it up.  Reached from SysEx
