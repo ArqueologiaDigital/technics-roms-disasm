@@ -45,3 +45,29 @@ void MIDI_SendPitchBend(unsigned char ch, unsigned int v)
   MIDI_SendCmdPacket(b);
   MIDI_PostSendStub();
 }
+
+/* cc900-module: SndParam_ApplySystemParam SndPart_SetParam */
+extern int SndParam_ResolveWidget(unsigned char *ev, void *key, void *val);
+extern int SndParam_KeyToLswPartNumber(void *key, void *part, void *sub);
+extern void SndPart_SetParam(int, int, int);
+extern void SndParam_ApplySystemParam(long key, int val);
+extern void SndParam_ApplyEventField(unsigned char *ev, unsigned char c);
+
+void SndParam_ApplyEventField(unsigned char *ev, unsigned char c)
+{
+	unsigned char save;
+	long key;
+	int val;
+	int part;
+	int sub;
+
+	save = ev[3];
+	ev[3] = c;
+	if (SndParam_ResolveWidget(ev, (void *)&key, (void *)&val) != -1) {
+		if (SndParam_KeyToLswPartNumber((void *)&key, (void *)&part, (void *)&sub) != -1)
+			SndPart_SetParam(part, sub, val);
+		else
+			SndParam_ApplySystemParam(key, val);
+	}
+	ev[3] = save;
+}

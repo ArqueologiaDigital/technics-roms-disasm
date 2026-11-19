@@ -121,3 +121,34 @@ done:
     Flash_WriteBackSlotTable();
     goto done;
 }
+
+/* cc900-module: Flash_InitBytecodeBlock_Helper8 Flash_InitBytecodeBlock_Helper9 */
+extern void Flash_InitBytecodeBlock_Helper8(unsigned int, unsigned int, unsigned int);
+extern void Flash_InitBytecodeBlock_Helper9(unsigned int, unsigned int, unsigned int);
+extern unsigned char __near ram_c68;
+extern unsigned char __near ram_c6a;
+extern unsigned char __near ram_c6c;
+extern unsigned char CstmCpTtl_ResolvePendingCopy(unsigned char mode);
+
+unsigned char CstmCpTtl_ResolvePendingCopy(unsigned char mode)
+{
+	unsigned char a;
+	unsigned char b;
+	unsigned char c;
+
+	Flash_InitExtMemAddrs();
+	a = ram_c68;
+	b = ram_c6a;
+	c = ram_c6c;
+	switch (mode) {
+	case 0:
+		if (a < 10)
+			Flash_InitBytecodeBlock_Helper8(a, b, c);
+		else
+			Flash_InitBytecodeBlock_Helper9(a, b, c);
+		break;
+	case 2:
+		break;
+	}
+	return 0;
+}

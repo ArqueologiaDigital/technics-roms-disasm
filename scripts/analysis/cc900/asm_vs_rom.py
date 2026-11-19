@@ -66,8 +66,12 @@ def main():
 
     class CutNames(fw.Names):                            # a name cc900 cut to 31 characters resolves to the one tree
         def resolve(self, n, depth=0):                   # name (value or label) it is the prefix of
+            if n not in alias and n.lstrip('_.') in alias:   # the listing's `.Short` of a `cc900-name:` short name
+                n = n.lstrip('_.')
             if n in alias:                               # a short C name (`cc900-name:`) of a callee or object
                 n = alias[n]
+                if n[:1] in '._' and n in self.labels:   # an alias naming the tree's `_Label` itself, not Label
+                    return self.labels[n], n             # (Write_VGA_Register vs _Write_VGA_Register, 2026-11-19)
             r = super().resolve(n, depth)
             b = n.lstrip('_.')                           # the listing's `.Name` / `_Name` spelling of a cut name
             if r[0] is None and len(b) == 31:

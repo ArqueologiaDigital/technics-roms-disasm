@@ -231,47 +231,12 @@ FDTest_Return:
 ; Args: (xsp+4) = path string pointer
 ; Returns: hl = 0 on success, 0xffff on open failure
 ; Stack frame: 266 bytes (local buffer at xsp+10 used as formatted string)
-FDListDirectory:
-	lda xsp, (xsp - 266)
-	push xiz
-	ld wa, 0:i3
-	lda xwa, (FDListDirectory_Str_Star_Dot_Star:24)
-	lda xbc, (xsp + 4)
-	call _findfirst
-	ld xiz, xhl
-	ld xwa, xiz
-	cp xwa, 0xffffffff
-	jr nz, FDListDir_LogEntry
-	ldw hl, 0xffff
-	jr FDListDir_Return
-
-FDListDir_LogEntry:
-	lda xwa, (xsp + 10)
-	calr FDTest_PrintDiag
-	ld xwa, xiz
-	lda xbc, (xsp + 4)
-	call _findnext
-	cp hl, 0xffff
-	jr z, FDListDir_CloseDir
-
-FDListDir_NextEntry:
-	lda xwa, (xsp + 10)
-	calr FDTest_PrintDiag
-	ld xwa, xiz
-	lda xbc, (xsp + 4)
-	call _findnext
-	cp hl, 0xffff
-	jr nz, FDListDir_NextEntry
-
-FDListDir_CloseDir:
-	ld xwa, xiz
-	call _findclose
-	ld hl, 0:i3
-
-FDListDir_Return:
-	pop xiz
-	lda xsp, (xsp + 266)
-	ret
+FDListDirectory:	.include "includes/generated/cc900/FDListDirectory.s"	; C: cc900/fd_test_code_m159_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDListDir_LogEntry, FDListDirectory + 37
+	.set	FDListDir_NextEntry, FDListDirectory + 58
+	.set	FDListDir_CloseDir, FDListDirectory + 79
+	.set	FDListDir_Return, FDListDirectory + 87
 
 ; FDTestDialogEventHandler (FDTestDialogProc)
 ; Event handler for the FD SAVE/LOAD TEST dialog.

@@ -9259,36 +9259,7 @@ SndTable_CalcSectorPosition:
 
 ; Builds a floppy command block (type 3, sector position from SndTable_CalcSectorPosition and
 ; the three word arguments, count 1, buffer XBC) and runs it with FDC_CommandEntry.
-FDC_ExecuteSectorCommand:
-	lda xsp, (xsp - 22)
-	push xiz
-	ld xiz, xbc
-	lda xbc, (xsp + 24)
-	ld xhl, xbc
-	lda xbc, (xsp + 22)
-	ld xde, xbc
-	lda xbc, (xsp + 20)
-	push xbc
-	ld xbc, xhl
-	calr SndTable_CalcSectorPosition
-	ldw (xsp + 4), 0x3
-	ldw (xsp + 6), 0x0
-	ld wa, (xsp + 22)
-	ld (xsp + 8), wa
-	ld wa, (xsp + 20)
-	ld (xsp + 10), wa
-	ld wa, (xsp + 24)
-	ld (xsp + 12), wa
-	ldw (xsp + 14), 0x1
-	ld xwa, xiz
-	ld (xsp + 16), xwa
-	lda xwa, (xsp + 4)
-	push xwa
-	call FDC_CommandEntry
-	inc 4, xsp
-	pop xiz
-	lda xsp, (xsp + 22)
-	ret
+FDC_ExecuteSectorCommand:	.include "includes/generated/cc900/FDC_ExecuteSectorCommand.s"	; C: cc900/smf_event_processor_m241_xr.c
 
 FDC_SectorCmd_ByteBlock:
 	push	xiz

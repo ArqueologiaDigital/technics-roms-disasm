@@ -284,7 +284,10 @@ class Names(dict):
         if m:
             return int(m.group(1), 16), None
         if n in self.cmap and self.cmap[n] != n and depth < 4:
-            return self.resolve(self.cmap[n], depth + 1)
+            t = self.cmap[n]
+            if t[:1] in "._" and t in self.labels:   # `cc900-name: X=_Label` names the tree's `_Label` itself: resolve
+                return self.labels[t], t              # it before resolve() strips the `_` (Write_VGA_Register is another
+            return self.resolve(t, depth + 1)         # label than _Write_VGA_Register; lane_p6 helper L, 2026-11-19)
         if self.values.get(n) is not None:
             return self.values[n], n
         if n in self.values:

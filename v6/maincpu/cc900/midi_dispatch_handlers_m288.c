@@ -100,3 +100,43 @@ void TGReg_WriteCC9_Variation(void)
     d[3] = 0x7f;
     for (d[0] = 0; d[0] <= 15; d[0]++) MidiTG_WriteRegByDescriptor(d);
 }
+
+/* cc900-module: ArpQueue_InitBuffer */
+struct mq { unsigned int count; unsigned char *rd; unsigned char *p6; unsigned char *wr; unsigned char buf[2]; };
+struct tmpl16 { unsigned int w[8]; };
+typedef struct mq *mqp;
+typedef struct tmpl16 *tqp;
+extern struct mq __near ram_b734;
+extern struct mq __near ram_b84c;
+extern struct mq __near ram_b964;
+extern struct mq __near ram_ba7c;
+extern struct tmpl16 __near ram_bbac;
+extern struct tmpl16 __near ram_bbbc;
+extern struct tmpl16 __near ram_bbcc;
+extern struct tmpl16 __near ram_bbdc;
+extern mqp __near MIDISEQ_ACTIVE_BLOCK_PTR;
+extern tqp __near MIDISEQ_ACTIVE_BUF_PTR;
+extern mqp __near MIDISEQ_SPARE_BLOCK_PTR;
+extern tqp __near MIDISEQ_SPARE_BUF_PTR;
+extern mqp __near ram_bb9c;
+extern tqp __near ram_bbf4;
+extern mqp __near ram_bba0;
+extern tqp __near ram_bbf8;
+extern void ArpQueue_InitBuffer(struct mq *q, struct tmpl16 *t);
+extern void MidiChan_InitAllBufferPtrs(void);
+
+void MidiChan_InitAllBufferPtrs(void)
+{
+	MIDISEQ_ACTIVE_BLOCK_PTR = &ram_b734;
+	MIDISEQ_ACTIVE_BUF_PTR = &ram_bbac;
+	MIDISEQ_SPARE_BLOCK_PTR = &ram_b84c;
+	MIDISEQ_SPARE_BUF_PTR = &ram_bbbc;
+	ram_bb9c = &ram_b964;
+	ram_bbf4 = &ram_bbcc;
+	ram_bba0 = &ram_ba7c;
+	ram_bbf8 = &ram_bbdc;
+	ArpQueue_InitBuffer(MIDISEQ_ACTIVE_BLOCK_PTR, MIDISEQ_ACTIVE_BUF_PTR);
+	ArpQueue_InitBuffer(MIDISEQ_SPARE_BLOCK_PTR, MIDISEQ_SPARE_BUF_PTR);
+	ArpQueue_InitBuffer(ram_bb9c, ram_bbf4);
+	ArpQueue_InitBuffer(ram_bba0, ram_bbf8);
+}

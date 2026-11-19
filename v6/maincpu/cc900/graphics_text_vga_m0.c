@@ -128,3 +128,12 @@ void SeGfx_StaticOp12_DottedLine(struct dsrc *s)
     b.y = s->a8;
     DrawDottedLineWithMode(&a, &b, GFX_FG_COLOR);
 }
+
+/* cc900-module: DrawBitmapFile_Impl DrawDottedLine_Impl DrawMonoBitmap_Impl DrawQueue_Alloc DrawRing_Post DrawWall_DoCopy GraphicsRender_ProcessEntries GraphicsRender_RetStub IS_XSP_INSIDE_4K_REGION_AT_1C032 SetChangeRect */
+extern void GraphicsRender_ProcessEntries(unsigned char *p, unsigned char *end);
+extern void GraphicsRender_ShortByteBlock(unsigned char *p);
+
+void GraphicsRender_ShortByteBlock(unsigned char *p)
+{
+	GraphicsRender_ProcessEntries(p, p + 1);
+}

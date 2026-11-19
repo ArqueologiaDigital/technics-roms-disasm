@@ -1,0 +1,5044 @@
+{
+ "date": "2026-11-19",
+ "head": "f22ced4f",
+ "dirty": true,
+ "images": {
+  "v10": {
+   "model": "kn5000",
+   "files": 142,
+   "lines": 480281,
+   "untracked": [],
+   "headers": {
+    "routines": 7939,
+    "with_header": 3012,
+    "no_header": 4927,
+    "inline_only": 12,
+    "call_targets": 4604,
+    "call_no_header": 2164,
+    "blocks_jump": 7899,
+    "blocks_case": 1261,
+    "blocks_declared": 3080,
+    "by_reason": {
+     "call": 4604,
+     "address": 2185,
+     "xfile_jump": 120,
+     "unreferenced": 1030,
+     "banner": 0
+    },
+    "pct": 37.94
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 14801,
+    "imm_in_image": 0,
+    "branch_numeric": 4,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 55,
+     "lines": 57,
+     "bytes": 159
+    },
+    "after_terminator": {
+     "runs": 93,
+     "lines": 386,
+     "bytes": 3047
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      474
+     ],
+     [
+      "v10/maincpu/display/scoop_display.s",
+      360
+     ],
+     [
+      "v10/maincpu/sequencer/sequencer_engine.s",
+      340
+     ],
+     [
+      "v10/maincpu/audio/note_voice_mapping.s",
+      280
+     ],
+     [
+      "v10/maincpu/audio/audio_control_engine.s",
+      274
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v10/maincpu/sequencer/sequencer_engine.s",
+      258
+     ],
+     [
+      "v10/maincpu/display/scoop_display.s",
+      239
+     ],
+     [
+      "v10/maincpu/audio/note_voice_mapping.s",
+      195
+     ],
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      146
+     ],
+     [
+      "v10/maincpu/midi/midi_dispatch_handlers.s",
+      123
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      3248
+     ],
+     [
+      "v10/maincpu/sequencer/sequencer_engine.s",
+      1989
+     ],
+     [
+      "v10/maincpu/display/scoop_display.s",
+      1203
+     ],
+     [
+      "v10/maincpu/audio/audio_control_engine.s",
+      614
+     ],
+     [
+      "v10/maincpu/audio/note_voice_mapping.s",
+      568
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      2
+     ],
+     [
+      "v10/maincpu/ui/ui_playback_modes.s",
+      1
+     ],
+     [
+      "v10/maincpu/sequencer/sequencer_engine.s",
+      1
+     ]
+    ],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v10/maincpu/audio/audio_control_engine.s",
+      10
+     ],
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      8
+     ],
+     [
+      "v10/maincpu/audio/note_voice_mapping.s",
+      8
+     ],
+     [
+      "v10/maincpu/midi/midi_dispatch_handlers.s",
+      6
+     ],
+     [
+      "v10/maincpu/boot/system_handlers.s",
+      4
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v10/maincpu/audio/audio_control_engine.s",
+      29
+     ],
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      28
+     ],
+     [
+      "v10/maincpu/boot/system_handlers.s",
+      16
+     ],
+     [
+      "v10/maincpu/audio/semenu_routines.s",
+      15
+     ],
+     [
+      "v10/maincpu/sequencer/seq_event_playback.s",
+      14
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      42
+     ],
+     [
+      "v10/maincpu/display/scoop_display.s",
+      19
+     ],
+     [
+      "v10/maincpu/midi/midi_dispatch_handlers.s",
+      6
+     ],
+     [
+      "v10/maincpu/ui/setwall_routines.s",
+      5
+     ],
+     [
+      "v10/maincpu/sequencer/smf_tonegen_core.s",
+      4
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v10/maincpu/sequencer/accompaniment_engine.s",
+      1346
+     ],
+     [
+      "v10/maincpu/display/scoop_display.s",
+      759
+     ],
+     [
+      "v10/maincpu/sequencer/rhythm_routines.s",
+      345
+     ],
+     [
+      "v10/maincpu/sequencer/smf_config_routines.s",
+      150
+     ],
+     [
+      "v10/maincpu/ui/setwall_routines.s",
+      131
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v9": {
+   "model": "kn5000",
+   "files": 142,
+   "lines": 477023,
+   "untracked": [],
+   "headers": {
+    "routines": 7938,
+    "with_header": 1451,
+    "no_header": 6487,
+    "inline_only": 12,
+    "call_targets": 4605,
+    "call_no_header": 3719,
+    "blocks_jump": 7899,
+    "blocks_case": 1261,
+    "blocks_declared": 3086,
+    "by_reason": {
+     "call": 4605,
+     "address": 2184,
+     "xfile_jump": 120,
+     "unreferenced": 1029,
+     "banner": 0
+    },
+    "pct": 18.28
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 14800,
+    "imm_in_image": 0,
+    "branch_numeric": 4,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 58,
+     "lines": 60,
+     "bytes": 164
+    },
+    "after_terminator": {
+     "runs": 95,
+     "lines": 391,
+     "bytes": 3091
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      1176
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      475
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      395
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      306
+     ],
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      300
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      848
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      392
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      274
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      221
+     ],
+     [
+      "v9/maincpu/boot/system_handlers.s",
+      140
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      3248
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      1989
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      1203
+     ],
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      613
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      568
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      2
+     ],
+     [
+      "v9/maincpu/ui/ui_playback_modes.s",
+      1
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      1
+     ]
+    ],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      11
+     ],
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      10
+     ],
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      8
+     ],
+     [
+      "v9/maincpu/midi/midi_dispatch_handlers.s",
+      6
+     ],
+     [
+      "v9/maincpu/boot/system_handlers.s",
+      4
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      29
+     ],
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      28
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      18
+     ],
+     [
+      "v9/maincpu/boot/system_handlers.s",
+      16
+     ],
+     [
+      "v9/maincpu/audio/semenu_routines.s",
+      15
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      42
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      19
+     ],
+     [
+      "v9/maincpu/midi/midi_dispatch_handlers.s",
+      6
+     ],
+     [
+      "v9/maincpu/ui/setwall_routines.s",
+      5
+     ],
+     [
+      "v9/maincpu/sequencer/smf_tonegen_core.s",
+      4
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      1346
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      759
+     ],
+     [
+      "v9/maincpu/sequencer/rhythm_routines.s",
+      345
+     ],
+     [
+      "v9/maincpu/sequencer/smf_config_routines.s",
+      150
+     ],
+     [
+      "v9/maincpu/ui/setwall_routines.s",
+      131
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v8": {
+   "model": "kn5000",
+   "files": 142,
+   "lines": 477023,
+   "untracked": [],
+   "headers": {
+    "routines": 7938,
+    "with_header": 1451,
+    "no_header": 6487,
+    "inline_only": 12,
+    "call_targets": 4605,
+    "call_no_header": 3719,
+    "blocks_jump": 7899,
+    "blocks_case": 1261,
+    "blocks_declared": 3086,
+    "by_reason": {
+     "call": 4605,
+     "address": 2184,
+     "xfile_jump": 120,
+     "unreferenced": 1029,
+     "banner": 0
+    },
+    "pct": 18.28
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 14800,
+    "imm_in_image": 0,
+    "branch_numeric": 4,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 58,
+     "lines": 60,
+     "bytes": 164
+    },
+    "after_terminator": {
+     "runs": 95,
+     "lines": 391,
+     "bytes": 3091
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      1176
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      475
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      395
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      306
+     ],
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      300
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      848
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      392
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      274
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      221
+     ],
+     [
+      "v9/maincpu/boot/system_handlers.s",
+      140
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      3248
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      1989
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      1203
+     ],
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      613
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      568
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      2
+     ],
+     [
+      "v9/maincpu/ui/ui_playback_modes.s",
+      1
+     ],
+     [
+      "v9/maincpu/sequencer/sequencer_engine.s",
+      1
+     ]
+    ],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      11
+     ],
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      10
+     ],
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      8
+     ],
+     [
+      "v9/maincpu/midi/midi_dispatch_handlers.s",
+      6
+     ],
+     [
+      "v9/maincpu/boot/system_handlers.s",
+      4
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v9/maincpu/audio/audio_control_engine.s",
+      29
+     ],
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      28
+     ],
+     [
+      "v9/maincpu/audio/note_voice_mapping.s",
+      18
+     ],
+     [
+      "v9/maincpu/boot/system_handlers.s",
+      16
+     ],
+     [
+      "v9/maincpu/audio/semenu_routines.s",
+      15
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      42
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      19
+     ],
+     [
+      "v9/maincpu/midi/midi_dispatch_handlers.s",
+      6
+     ],
+     [
+      "v9/maincpu/ui/setwall_routines.s",
+      5
+     ],
+     [
+      "v9/maincpu/sequencer/smf_tonegen_core.s",
+      4
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v9/maincpu/sequencer/accompaniment_engine.s",
+      1346
+     ],
+     [
+      "v9/maincpu/display/scoop_display.s",
+      759
+     ],
+     [
+      "v9/maincpu/sequencer/rhythm_routines.s",
+      345
+     ],
+     [
+      "v9/maincpu/sequencer/smf_config_routines.s",
+      150
+     ],
+     [
+      "v9/maincpu/ui/setwall_routines.s",
+      131
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v7": {
+   "model": "kn5000",
+   "files": 142,
+   "lines": 476453,
+   "untracked": [],
+   "headers": {
+    "routines": 8182,
+    "with_header": 1303,
+    "no_header": 6879,
+    "inline_only": 6,
+    "call_targets": 4669,
+    "call_no_header": 3894,
+    "blocks_jump": 7999,
+    "blocks_case": 1266,
+    "blocks_declared": 3117,
+    "by_reason": {
+     "call": 4669,
+     "address": 2179,
+     "xfile_jump": 125,
+     "unreferenced": 1209,
+     "banner": 0
+    },
+    "pct": 15.93
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 14916,
+    "imm_in_image": 0,
+    "branch_numeric": 7,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 492,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 72,
+     "lines": 186,
+     "bytes": 1027
+    },
+    "after_terminator": {
+     "runs": 97,
+     "lines": 572,
+     "bytes": 4341
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      1330
+     ],
+     [
+      "v7/maincpu/sequencer/sequencer_engine.s",
+      478
+     ],
+     [
+      "v7/maincpu/display/scoop_display.s",
+      431
+     ],
+     [
+      "v7/maincpu/audio/note_voice_mapping.s",
+      313
+     ],
+     [
+      "v7/maincpu/audio/audio_control_engine.s",
+      308
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      882
+     ],
+     [
+      "v7/maincpu/sequencer/sequencer_engine.s",
+      395
+     ],
+     [
+      "v7/maincpu/display/scoop_display.s",
+      308
+     ],
+     [
+      "v7/maincpu/audio/note_voice_mapping.s",
+      229
+     ],
+     [
+      "v7/maincpu/midi/midi_dispatch_handlers.s",
+      149
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      3231
+     ],
+     [
+      "v7/maincpu/sequencer/sequencer_engine.s",
+      2031
+     ],
+     [
+      "v7/maincpu/display/scoop_display.s",
+      1203
+     ],
+     [
+      "v7/maincpu/audio/audio_control_engine.s",
+      617
+     ],
+     [
+      "v7/maincpu/audio/note_voice_mapping.s",
+      584
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      4
+     ],
+     [
+      "v7/maincpu/sequencer/sequencer_engine.s",
+      3
+     ]
+    ],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      194
+     ],
+     [
+      "v7/maincpu/display/scoop_display.s",
+      46
+     ],
+     [
+      "v7/maincpu/display/scoop_editor_data.s",
+      35
+     ],
+     [
+      "v7/maincpu/storage/flash_floppy_handlers.s",
+      29
+     ],
+     [
+      "v7/maincpu/sequencer/seq_audio_mode.s",
+      29
+     ]
+    ],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v7/maincpu/sequencer/sequencer_engine.s",
+      11
+     ],
+     [
+      "v7/maincpu/storage/flash_floppy_handlers.s",
+      8
+     ],
+     [
+      "v7/maincpu/audio/audio_control_engine.s",
+      7
+     ],
+     [
+      "v7/maincpu/midi/midi_dispatch_handlers.s",
+      7
+     ],
+     [
+      "v7/maincpu/audio/sound_editor_ui.s",
+      6
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      809
+     ],
+     [
+      "v7/maincpu/storage/flash_floppy_handlers.s",
+      56
+     ],
+     [
+      "v7/maincpu/sequencer/sequencer_engine.s",
+      22
+     ],
+     [
+      "v7/maincpu/audio/audio_control_engine.s",
+      20
+     ],
+     [
+      "v7/maincpu/boot/system_handlers.s",
+      16
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      44
+     ],
+     [
+      "v7/maincpu/display/scoop_display.s",
+      21
+     ],
+     [
+      "v7/maincpu/sequencer/smf_tonegen_core.s",
+      4
+     ],
+     [
+      "v7/maincpu/sequencer/rhythm_routines.s",
+      4
+     ],
+     [
+      "v7/maincpu/midi/midi_dispatch_handlers.s",
+      4
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v7/maincpu/sequencer/accompaniment_engine.s",
+      2314
+     ],
+     [
+      "v7/maincpu/display/scoop_display.s",
+      1152
+     ],
+     [
+      "v7/maincpu/sequencer/rhythm_routines.s",
+      345
+     ],
+     [
+      "v7/maincpu/sequencer/smf_config_routines.s",
+      150
+     ],
+     [
+      "v7/maincpu/sequencer/smf_tonegen_core.s",
+      83
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v6": {
+   "model": "kn5000",
+   "files": 140,
+   "lines": 475900,
+   "untracked": [],
+   "headers": {
+    "routines": 8215,
+    "with_header": 1092,
+    "no_header": 7123,
+    "inline_only": 6,
+    "call_targets": 4695,
+    "call_no_header": 4102,
+    "blocks_jump": 8095,
+    "blocks_case": 1269,
+    "blocks_declared": 3166,
+    "by_reason": {
+     "call": 4695,
+     "address": 2219,
+     "xfile_jump": 125,
+     "unreferenced": 1176,
+     "banner": 0
+    },
+    "pct": 13.29
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 16093,
+    "imm_in_image": 0,
+    "branch_numeric": 10,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 619,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 172,
+     "lines": 299,
+     "bytes": 1428
+    },
+    "after_terminator": {
+     "runs": 115,
+     "lines": 630,
+     "bytes": 4810
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      1392
+     ],
+     [
+      "v6/maincpu/sequencer/sequencer_engine.s",
+      483
+     ],
+     [
+      "v6/maincpu/display/scoop_display.s",
+      478
+     ],
+     [
+      "v6/maincpu/midi/midi_dispatch_handlers.s",
+      333
+     ],
+     [
+      "v6/maincpu/audio/audio_control_engine.s",
+      327
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      937
+     ],
+     [
+      "v6/maincpu/sequencer/sequencer_engine.s",
+      397
+     ],
+     [
+      "v6/maincpu/display/scoop_display.s",
+      354
+     ],
+     [
+      "v6/maincpu/audio/note_voice_mapping.s",
+      231
+     ],
+     [
+      "v6/maincpu/midi/midi_dispatch_handlers.s",
+      175
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      3814
+     ],
+     [
+      "v6/maincpu/sequencer/sequencer_engine.s",
+      2044
+     ],
+     [
+      "v6/maincpu/display/scoop_display.s",
+      1232
+     ],
+     [
+      "v6/maincpu/audio/audio_control_engine.s",
+      638
+     ],
+     [
+      "v6/maincpu/audio/note_voice_mapping.s",
+      594
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      6
+     ],
+     [
+      "v6/maincpu/sequencer/sequencer_engine.s",
+      4
+     ]
+    ],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      196
+     ],
+     [
+      "v6/maincpu/audio/sound_editor_ui.s",
+      90
+     ],
+     [
+      "v6/maincpu/display/scoop_display.s",
+      71
+     ],
+     [
+      "v6/maincpu/display/scoop_editor_data.s",
+      37
+     ],
+     [
+      "v6/maincpu/audio/semenu_routines.s",
+      34
+     ]
+    ],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v6/maincpu/audio/sound_editor_ui.s",
+      52
+     ],
+     [
+      "v6/maincpu/audio/semenu_routines.s",
+      21
+     ],
+     [
+      "v6/maincpu/storage/flash_floppy_handlers.s",
+      12
+     ],
+     [
+      "v6/maincpu/sequencer/sequencer_engine.s",
+      12
+     ],
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      11
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      886
+     ],
+     [
+      "v6/maincpu/audio/sound_editor_ui.s",
+      175
+     ],
+     [
+      "v6/maincpu/storage/flash_floppy_handlers.s",
+      76
+     ],
+     [
+      "v6/maincpu/audio/semenu_routines.s",
+      54
+     ],
+     [
+      "v6/maincpu/audio/audio_control_engine.s",
+      32
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      48
+     ],
+     [
+      "v6/maincpu/display/scoop_display.s",
+      21
+     ],
+     [
+      "v6/maincpu/audio/sound_editor_ui.s",
+      11
+     ],
+     [
+      "v6/maincpu/sequencer/smf_tonegen_core.s",
+      4
+     ],
+     [
+      "v6/maincpu/sequencer/rhythm_routines.s",
+      4
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v6/maincpu/sequencer/accompaniment_engine.s",
+      2606
+     ],
+     [
+      "v6/maincpu/display/scoop_display.s",
+      1152
+     ],
+     [
+      "v6/maincpu/sequencer/rhythm_routines.s",
+      345
+     ],
+     [
+      "v6/maincpu/sequencer/smf_config_routines.s",
+      150
+     ],
+     [
+      "v6/maincpu/audio/sound_editor_ui.s",
+      117
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v5": {
+   "model": "kn5000",
+   "files": 140,
+   "lines": 475993,
+   "untracked": [],
+   "headers": {
+    "routines": 8211,
+    "with_header": 1091,
+    "no_header": 7120,
+    "inline_only": 6,
+    "call_targets": 4696,
+    "call_no_header": 4104,
+    "blocks_jump": 8087,
+    "blocks_case": 1268,
+    "blocks_declared": 3164,
+    "by_reason": {
+     "call": 4696,
+     "address": 2219,
+     "xfile_jump": 125,
+     "unreferenced": 1171,
+     "banner": 0
+    },
+    "pct": 13.29
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 16088,
+    "imm_in_image": 0,
+    "branch_numeric": 10,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 617,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 172,
+     "lines": 299,
+     "bytes": 1428
+    },
+    "after_terminator": {
+     "runs": 115,
+     "lines": 630,
+     "bytes": 4810
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      1392
+     ],
+     [
+      "v5/maincpu/sequencer/sequencer_engine.s",
+      481
+     ],
+     [
+      "v5/maincpu/display/scoop_display.s",
+      478
+     ],
+     [
+      "v5/maincpu/midi/midi_dispatch_handlers.s",
+      333
+     ],
+     [
+      "v5/maincpu/audio/audio_control_engine.s",
+      327
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      937
+     ],
+     [
+      "v5/maincpu/sequencer/sequencer_engine.s",
+      395
+     ],
+     [
+      "v5/maincpu/display/scoop_display.s",
+      354
+     ],
+     [
+      "v5/maincpu/audio/note_voice_mapping.s",
+      231
+     ],
+     [
+      "v5/maincpu/midi/midi_dispatch_handlers.s",
+      175
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      3814
+     ],
+     [
+      "v5/maincpu/sequencer/sequencer_engine.s",
+      2037
+     ],
+     [
+      "v5/maincpu/display/scoop_display.s",
+      1232
+     ],
+     [
+      "v5/maincpu/audio/audio_control_engine.s",
+      638
+     ],
+     [
+      "v5/maincpu/audio/note_voice_mapping.s",
+      594
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      6
+     ],
+     [
+      "v5/maincpu/sequencer/sequencer_engine.s",
+      4
+     ]
+    ],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      196
+     ],
+     [
+      "v5/maincpu/audio/sound_editor_ui.s",
+      90
+     ],
+     [
+      "v5/maincpu/display/scoop_display.s",
+      71
+     ],
+     [
+      "v5/maincpu/display/scoop_editor_data.s",
+      37
+     ],
+     [
+      "v5/maincpu/audio/semenu_routines.s",
+      34
+     ]
+    ],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v5/maincpu/audio/sound_editor_ui.s",
+      52
+     ],
+     [
+      "v5/maincpu/audio/semenu_routines.s",
+      21
+     ],
+     [
+      "v5/maincpu/storage/flash_floppy_handlers.s",
+      12
+     ],
+     [
+      "v5/maincpu/sequencer/sequencer_engine.s",
+      12
+     ],
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      11
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      886
+     ],
+     [
+      "v5/maincpu/audio/sound_editor_ui.s",
+      175
+     ],
+     [
+      "v5/maincpu/storage/flash_floppy_handlers.s",
+      76
+     ],
+     [
+      "v5/maincpu/audio/semenu_routines.s",
+      54
+     ],
+     [
+      "v5/maincpu/audio/audio_control_engine.s",
+      32
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      48
+     ],
+     [
+      "v5/maincpu/display/scoop_display.s",
+      21
+     ],
+     [
+      "v5/maincpu/audio/sound_editor_ui.s",
+      11
+     ],
+     [
+      "v5/maincpu/sequencer/smf_tonegen_core.s",
+      4
+     ],
+     [
+      "v5/maincpu/sequencer/rhythm_routines.s",
+      4
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v5/maincpu/sequencer/accompaniment_engine.s",
+      2606
+     ],
+     [
+      "v5/maincpu/display/scoop_display.s",
+      1152
+     ],
+     [
+      "v5/maincpu/sequencer/rhythm_routines.s",
+      345
+     ],
+     [
+      "v5/maincpu/sequencer/smf_config_routines.s",
+      150
+     ],
+     [
+      "v5/maincpu/audio/sound_editor_ui.s",
+      117
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v142": {
+   "model": "kn5000",
+   "files": 21,
+   "lines": 53806,
+   "untracked": [],
+   "headers": {
+    "routines": 426,
+    "with_header": 351,
+    "no_header": 75,
+    "inline_only": 4,
+    "call_targets": 151,
+    "call_no_header": 11,
+    "blocks_jump": 538,
+    "blocks_case": 91,
+    "blocks_declared": 286,
+    "by_reason": {
+     "call": 151,
+     "address": 22,
+     "xfile_jump": 13,
+     "unreferenced": 240,
+     "banner": 0
+    },
+    "pct": 82.39
+   },
+   "numeric": {
+    "mem_abs_in_image": 298,
+    "mem_abs_other": 50,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 12,
+     "lines": 12,
+     "bytes": 46
+    },
+    "after_terminator": {
+     "runs": 24,
+     "lines": 27,
+     "bytes": 42
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v142/subcpu/subcpu_vectors.s",
+      43
+     ],
+     [
+      "v142/subcpu/core/05_voice_params_and_tvf.s",
+      8
+     ],
+     [
+      "v142/subcpu/core/02_audio_system_init.s",
+      7
+     ],
+     [
+      "v142/subcpu/core/10_dsp_voice_params.s",
+      6
+     ],
+     [
+      "v142/subcpu/subcpu_data_tables.s",
+      4
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v142/subcpu/subcpu_data_tables.s",
+      3
+     ],
+     [
+      "v142/subcpu/core/10_dsp_voice_params.s",
+      3
+     ],
+     [
+      "v142/subcpu/core/03_task_scheduler_kernel.s",
+      2
+     ],
+     [
+      "v142/subcpu/core/05_voice_params_and_tvf.s",
+      2
+     ],
+     [
+      "v142/subcpu/core/02_audio_system_init.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "v142/subcpu/core/13_audio_process_dsp_and_effects.s",
+      140
+     ],
+     [
+      "v142/subcpu/core/05_voice_params_and_tvf.s",
+      86
+     ],
+     [
+      "v142/subcpu/core/04_intercpu_link.s",
+      18
+     ],
+     [
+      "v142/subcpu/core/11_ringbuf_and_midi_dispatch.s",
+      13
+     ],
+     [
+      "v142/subcpu/core/02_audio_system_init.s",
+      11
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "v142/subcpu/core/01_reset_and_main_loop.s",
+      32
+     ],
+     [
+      "v142/subcpu/core/04_intercpu_link.s",
+      14
+     ],
+     [
+      "v142/subcpu/core/14_dsp_control_routines.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v142/subcpu/core/03_task_scheduler_kernel.s",
+      10
+     ],
+     [
+      "v142/subcpu/core/04_intercpu_link.s",
+      2
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v142/subcpu/core/03_task_scheduler_kernel.s",
+      40
+     ],
+     [
+      "v142/subcpu/core/04_intercpu_link.s",
+      6
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v142/subcpu/subcpu_fp_math.s",
+      22
+     ],
+     [
+      "v142/subcpu/core/14_dsp_control_routines.s",
+      2
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v142/subcpu/subcpu_fp_math.s",
+      40
+     ],
+     [
+      "v142/subcpu/core/14_dsp_control_routines.s",
+      2
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v141": {
+   "model": "kn5000",
+   "files": 21,
+   "lines": 53809,
+   "untracked": [],
+   "headers": {
+    "routines": 426,
+    "with_header": 351,
+    "no_header": 75,
+    "inline_only": 4,
+    "call_targets": 151,
+    "call_no_header": 11,
+    "blocks_jump": 538,
+    "blocks_case": 91,
+    "blocks_declared": 286,
+    "by_reason": {
+     "call": 151,
+     "address": 22,
+     "xfile_jump": 13,
+     "unreferenced": 240,
+     "banner": 0
+    },
+    "pct": 82.39
+   },
+   "numeric": {
+    "mem_abs_in_image": 298,
+    "mem_abs_other": 50,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 12,
+     "lines": 12,
+     "bytes": 46
+    },
+    "after_terminator": {
+     "runs": 23,
+     "lines": 26,
+     "bytes": 41
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v141/subcpu/subcpu_vectors.s",
+      43
+     ],
+     [
+      "v141/subcpu/core/05_voice_params_and_tvf.s",
+      8
+     ],
+     [
+      "v141/subcpu/core/02_audio_system_init.s",
+      7
+     ],
+     [
+      "v141/subcpu/core/10_dsp_voice_params.s",
+      6
+     ],
+     [
+      "v141/subcpu/subcpu_data_tables.s",
+      4
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v141/subcpu/subcpu_data_tables.s",
+      3
+     ],
+     [
+      "v141/subcpu/core/10_dsp_voice_params.s",
+      3
+     ],
+     [
+      "v141/subcpu/core/03_task_scheduler_kernel.s",
+      2
+     ],
+     [
+      "v141/subcpu/core/05_voice_params_and_tvf.s",
+      2
+     ],
+     [
+      "v141/subcpu/core/02_audio_system_init.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "v141/subcpu/core/13_audio_process_dsp_and_effects.s",
+      140
+     ],
+     [
+      "v141/subcpu/core/05_voice_params_and_tvf.s",
+      86
+     ],
+     [
+      "v141/subcpu/core/04_intercpu_link.s",
+      18
+     ],
+     [
+      "v141/subcpu/core/11_ringbuf_and_midi_dispatch.s",
+      13
+     ],
+     [
+      "v141/subcpu/core/02_audio_system_init.s",
+      11
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "v141/subcpu/core/01_reset_and_main_loop.s",
+      32
+     ],
+     [
+      "v141/subcpu/core/04_intercpu_link.s",
+      14
+     ],
+     [
+      "v141/subcpu/core/14_dsp_control_routines.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v141/subcpu/core/03_task_scheduler_kernel.s",
+      10
+     ],
+     [
+      "v141/subcpu/core/04_intercpu_link.s",
+      2
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v141/subcpu/core/03_task_scheduler_kernel.s",
+      40
+     ],
+     [
+      "v141/subcpu/core/04_intercpu_link.s",
+      6
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v141/subcpu/subcpu_fp_math.s",
+      22
+     ],
+     [
+      "v141/subcpu/core/14_dsp_control_routines.s",
+      1
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v141/subcpu/subcpu_fp_math.s",
+      40
+     ],
+     [
+      "v141/subcpu/core/14_dsp_control_routines.s",
+      1
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "v140": {
+   "model": "kn5000",
+   "files": 21,
+   "lines": 53797,
+   "untracked": [],
+   "headers": {
+    "routines": 426,
+    "with_header": 351,
+    "no_header": 75,
+    "inline_only": 4,
+    "call_targets": 151,
+    "call_no_header": 11,
+    "blocks_jump": 538,
+    "blocks_case": 91,
+    "blocks_declared": 286,
+    "by_reason": {
+     "call": 151,
+     "address": 22,
+     "xfile_jump": 13,
+     "unreferenced": 240,
+     "banner": 0
+    },
+    "pct": 82.39
+   },
+   "numeric": {
+    "mem_abs_in_image": 300,
+    "mem_abs_other": 50,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 12,
+     "lines": 12,
+     "bytes": 46
+    },
+    "after_terminator": {
+     "runs": 23,
+     "lines": 26,
+     "bytes": 41
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "v140/subcpu/subcpu_vectors.s",
+      43
+     ],
+     [
+      "v140/subcpu/core/05_voice_params_and_tvf.s",
+      8
+     ],
+     [
+      "v140/subcpu/core/02_audio_system_init.s",
+      7
+     ],
+     [
+      "v140/subcpu/core/10_dsp_voice_params.s",
+      6
+     ],
+     [
+      "v140/subcpu/subcpu_data_tables.s",
+      4
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "v140/subcpu/subcpu_data_tables.s",
+      3
+     ],
+     [
+      "v140/subcpu/core/10_dsp_voice_params.s",
+      3
+     ],
+     [
+      "v140/subcpu/core/03_task_scheduler_kernel.s",
+      2
+     ],
+     [
+      "v140/subcpu/core/05_voice_params_and_tvf.s",
+      2
+     ],
+     [
+      "v140/subcpu/core/02_audio_system_init.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "v140/subcpu/core/13_audio_process_dsp_and_effects.s",
+      142
+     ],
+     [
+      "v140/subcpu/core/05_voice_params_and_tvf.s",
+      86
+     ],
+     [
+      "v140/subcpu/core/04_intercpu_link.s",
+      18
+     ],
+     [
+      "v140/subcpu/core/11_ringbuf_and_midi_dispatch.s",
+      13
+     ],
+     [
+      "v140/subcpu/core/02_audio_system_init.s",
+      11
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "v140/subcpu/core/01_reset_and_main_loop.s",
+      32
+     ],
+     [
+      "v140/subcpu/core/04_intercpu_link.s",
+      14
+     ],
+     [
+      "v140/subcpu/core/14_dsp_control_routines.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "v140/subcpu/core/03_task_scheduler_kernel.s",
+      10
+     ],
+     [
+      "v140/subcpu/core/04_intercpu_link.s",
+      2
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "v140/subcpu/core/03_task_scheduler_kernel.s",
+      40
+     ],
+     [
+      "v140/subcpu/core/04_intercpu_link.s",
+      6
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "v140/subcpu/subcpu_fp_math.s",
+      22
+     ],
+     [
+      "v140/subcpu/core/14_dsp_control_routines.s",
+      1
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "v140/subcpu/subcpu_fp_math.s",
+      40
+     ],
+     [
+      "v140/subcpu/core/14_dsp_control_routines.s",
+      1
+     ]
+    ],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "subboot": {
+   "model": "kn5000",
+   "files": 1,
+   "lines": 3121,
+   "untracked": [],
+   "headers": {
+    "routines": 42,
+    "with_header": 17,
+    "no_header": 25,
+    "inline_only": 0,
+    "call_targets": 20,
+    "call_no_header": 14,
+    "blocks_jump": 8,
+    "blocks_case": 0,
+    "blocks_declared": 58,
+    "by_reason": {
+     "call": 20,
+     "address": 9,
+     "xfile_jump": 0,
+     "unreferenced": 13,
+     "banner": 0
+    },
+    "pct": 40.48
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 186,
+    "imm_in_image": 1,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "subcpu/boot/kn5000_subcpu_boot.s",
+      25
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "subcpu/boot/kn5000_subcpu_boot.s",
+      14
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "subcpu/boot/kn5000_subcpu_boot.s",
+      186
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "subcpu/boot/kn5000_subcpu_boot.s",
+      1
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "tabledata": {
+   "model": "kn5000",
+   "files": 26,
+   "lines": 94953,
+   "untracked": [],
+   "headers": {
+    "routines": 236,
+    "with_header": 211,
+    "no_header": 25,
+    "inline_only": 1,
+    "call_targets": 150,
+    "call_no_header": 15,
+    "blocks_jump": 59,
+    "blocks_case": 18,
+    "blocks_declared": 192,
+    "by_reason": {
+     "call": 150,
+     "address": 30,
+     "xfile_jump": 2,
+     "unreferenced": 54,
+     "banner": 0
+    },
+    "pct": 89.41
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 900,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 92
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "table_data/kn5000_table_data.s",
+      10
+     ],
+     [
+      "table_data/boot_cpserial.s",
+      7
+     ],
+     [
+      "table_data/boot_cpserial_states.s",
+      5
+     ],
+     [
+      "table_data/boot_cpserial_isr.s",
+      2
+     ],
+     [
+      "table_data/boot_clib.s",
+      1
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "table_data/boot_cpserial.s",
+      6
+     ],
+     [
+      "table_data/kn5000_table_data.s",
+      5
+     ],
+     [
+      "table_data/boot_cpserial_states.s",
+      4
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "table_data/boot_fdc_driver.s",
+      406
+     ],
+     [
+      "table_data/kn5000_table_data.s",
+      152
+     ],
+     [
+      "table_data/boot_cpserial_states.s",
+      134
+     ],
+     [
+      "table_data/boot_cpserial.s",
+      99
+     ],
+     [
+      "table_data/boot_disk_probe.s",
+      46
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [
+     [
+      "table_data/kn5000_table_data.s",
+      86
+     ],
+     [
+      "table_data/boot_cpserial.s",
+      3
+     ],
+     [
+      "table_data/shared/boot_call_init_handlers.s",
+      1
+     ],
+     [
+      "table_data/boot_fdc_driver.s",
+      1
+     ],
+     [
+      "table_data/boot_clib.s",
+      1
+     ]
+    ],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "customdata": {
+   "model": "kn5000",
+   "files": 1,
+   "lines": 292,
+   "untracked": [],
+   "headers": {
+    "routines": 0,
+    "with_header": 0,
+    "no_header": 0,
+    "inline_only": 0,
+    "call_targets": 0,
+    "call_no_header": 0,
+    "blocks_jump": 0,
+    "blocks_case": 0,
+    "blocks_declared": 0,
+    "by_reason": {
+     "call": 0,
+     "address": 0,
+     "xfile_jump": 0,
+     "unreferenced": 0,
+     "banner": 0
+    },
+    "pct": null
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 0,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "hdae5000": {
+   "model": "kn5000",
+   "files": 11,
+   "lines": 28793,
+   "untracked": [],
+   "headers": {
+    "routines": 262,
+    "with_header": 170,
+    "no_header": 92,
+    "inline_only": 51,
+    "call_targets": 127,
+    "call_no_header": 0,
+    "blocks_jump": 114,
+    "blocks_case": 6,
+    "blocks_declared": 297,
+    "by_reason": {
+     "call": 127,
+     "address": 62,
+     "xfile_jump": 0,
+     "unreferenced": 73,
+     "banner": 0
+    },
+    "pct": 64.89
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 173,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "hdae5000/hdae5000_ui_display.s",
+      89
+     ],
+     [
+      "hdae5000/hd-ae5000_v2_06i.s",
+      2
+     ],
+     [
+      "hdae5000/hdae5000_hd_driver.s",
+      1
+     ]
+    ],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "hdae5000/hdae5000_ui_display.s",
+      164
+     ],
+     [
+      "hdae5000/hdae5000_hd_driver.s",
+      5
+     ],
+     [
+      "hdae5000/hdae5000_utilities.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "hdae_v201": {
+   "model": "kn5000",
+   "files": 11,
+   "lines": 46916,
+   "untracked": [],
+   "headers": {
+    "routines": 424,
+    "with_header": 271,
+    "no_header": 153,
+    "inline_only": 16,
+    "call_targets": 213,
+    "call_no_header": 0,
+    "blocks_jump": 319,
+    "blocks_case": 236,
+    "blocks_declared": 530,
+    "by_reason": {
+     "call": 213,
+     "address": 152,
+     "xfile_jump": 0,
+     "unreferenced": 59,
+     "banner": 0
+    },
+    "pct": 63.92
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 641,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 1
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "hdae5000_v2_01i/hdae5000_ui_display.s",
+      94
+     ],
+     [
+      "hdae5000_v2_01i/hdae5000_hd_driver.s",
+      28
+     ],
+     [
+      "hdae5000_v2_01i/hdae5000_filesystem.s",
+      26
+     ],
+     [
+      "hdae5000_v2_01i/hd-ae5000_v2_01i.s",
+      5
+     ]
+    ],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "hdae5000_v2_01i/hdae5000_ui_display.s",
+      540
+     ],
+     [
+      "hdae5000_v2_01i/hd-ae5000_v2_01i.s",
+      45
+     ],
+     [
+      "hdae5000_v2_01i/hdae5000_hd_driver.s",
+      30
+     ],
+     [
+      "hdae5000_v2_01i/hdae5000_filesystem.s",
+      22
+     ],
+     [
+      "hdae5000_v2_01i/hdae5000_utilities.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [
+     [
+      "hdae5000_v2_01i/hdae5000_ui_display.s",
+      1
+     ]
+    ],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "hdae_v115": {
+   "model": "kn5000",
+   "files": 11,
+   "lines": 43808,
+   "untracked": [],
+   "headers": {
+    "routines": 416,
+    "with_header": 273,
+    "no_header": 143,
+    "inline_only": 15,
+    "call_targets": 218,
+    "call_no_header": 0,
+    "blocks_jump": 273,
+    "blocks_case": 237,
+    "blocks_declared": 537,
+    "by_reason": {
+     "call": 218,
+     "address": 147,
+     "xfile_jump": 2,
+     "unreferenced": 49,
+     "banner": 0
+    },
+    "pct": 65.62
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 277,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "hdae5000_v1_15i/hdae5000_ui_display.s",
+      84
+     ],
+     [
+      "hdae5000_v1_15i/hdae5000_hd_driver.s",
+      28
+     ],
+     [
+      "hdae5000_v1_15i/hdae5000_filesystem.s",
+      26
+     ],
+     [
+      "hdae5000_v1_15i/hd-ae5000_v1_15i.s",
+      5
+     ]
+    ],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "hdae5000_v1_15i/hdae5000_ui_display.s",
+      152
+     ],
+     [
+      "hdae5000_v1_15i/hd-ae5000_v1_15i.s",
+      55
+     ],
+     [
+      "hdae5000_v1_15i/hdae5000_hd_driver.s",
+      40
+     ],
+     [
+      "hdae5000_v1_15i/hdae5000_filesystem.s",
+      26
+     ],
+     [
+      "hdae5000_v1_15i/hdae5000_utilities.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "hdae_v110": {
+   "model": "kn5000",
+   "files": 11,
+   "lines": 43866,
+   "untracked": [],
+   "headers": {
+    "routines": 418,
+    "with_header": 275,
+    "no_header": 143,
+    "inline_only": 15,
+    "call_targets": 220,
+    "call_no_header": 0,
+    "blocks_jump": 272,
+    "blocks_case": 236,
+    "blocks_declared": 538,
+    "by_reason": {
+     "call": 220,
+     "address": 147,
+     "xfile_jump": 2,
+     "unreferenced": 49,
+     "banner": 0
+    },
+    "pct": 65.79
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 277,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "hdae5000_v1_10i/hdae5000_ui_display.s",
+      84
+     ],
+     [
+      "hdae5000_v1_10i/hdae5000_hd_driver.s",
+      28
+     ],
+     [
+      "hdae5000_v1_10i/hdae5000_filesystem.s",
+      26
+     ],
+     [
+      "hdae5000_v1_10i/hd-ae5000_v1_10i.s",
+      5
+     ]
+    ],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "hdae5000_v1_10i/hdae5000_ui_display.s",
+      152
+     ],
+     [
+      "hdae5000_v1_10i/hd-ae5000_v1_10i.s",
+      55
+     ],
+     [
+      "hdae5000_v1_10i/hdae5000_hd_driver.s",
+      40
+     ],
+     [
+      "hdae5000_v1_10i/hdae5000_filesystem.s",
+      26
+     ],
+     [
+      "hdae5000_v1_10i/hdae5000_utilities.s",
+      4
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "prom_a": {
+   "model": "wsa1",
+   "files": 48,
+   "lines": 203261,
+   "untracked": [],
+   "headers": {
+    "routines": 5447,
+    "with_header": 4076,
+    "no_header": 1371,
+    "inline_only": 152,
+    "call_targets": 2258,
+    "call_no_header": 322,
+    "blocks_jump": 3404,
+    "blocks_case": 0,
+    "blocks_declared": 698,
+    "by_reason": {
+     "call": 2258,
+     "address": 1891,
+     "xfile_jump": 0,
+     "unreferenced": 1298,
+     "banner": 0
+    },
+    "pct": 74.83
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 5749,
+    "imm_in_image": 0,
+    "branch_numeric": 8,
+    "branch_label_offset": 29
+   },
+   "addr_locals": {
+    "dotL": 9759,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 20
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 74,
+     "lines": 81,
+     "bytes": 226
+    },
+    "after_terminator": {
+     "runs": 63,
+     "lines": 421,
+     "bytes": 4382
+    }
+   },
+   "placeholders": {
+    "total": 134,
+    "by_prefix": {
+     "sub_": 134
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s",
+      252
+     ],
+     [
+      "wsa1/prom_a/modules/f84000_f855ff_ring_buffers.s",
+      155
+     ],
+     [
+      "wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s",
+      127
+     ],
+     [
+      "wsa1/prom_a/modules/f9c000_fa53ff_system_menu_screens.s",
+      92
+     ],
+     [
+      "wsa1/prom_a/modules/fbb800_fbffff_part_params_and_combi_edit.s",
+      89
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      57
+     ],
+     [
+      "wsa1/prom_a/modules/fa6000_fa9fff_midi_in_out.s",
+      50
+     ],
+     [
+      "wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s",
+      30
+     ],
+     [
+      "wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s",
+      24
+     ],
+     [
+      "wsa1/prom_a/modules/fbb800_fbffff_part_params_and_combi_edit.s",
+      20
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      797
+     ],
+     [
+      "wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s",
+      758
+     ],
+     [
+      "wsa1/prom_a/modules/faa000_fad7ff_param_message_module.s",
+      552
+     ],
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      464
+     ],
+     [
+      "wsa1/prom_a/modules/f9c000_fa53ff_system_menu_screens.s",
+      402
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      4
+     ],
+     [
+      "wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s",
+      2
+     ],
+     [
+      "wsa1/prom_a/modules/f8a000_f8bbff_panel_wire_to_group.s",
+      1
+     ],
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      1
+     ]
+    ],
+    "numeric.branch_label_offset": [
+     [
+      "wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s",
+      14
+     ],
+     [
+      "wsa1/prom_a/modules/faa000_fad7ff_param_message_module.s",
+      9
+     ],
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      6
+     ]
+    ],
+    "addr_locals.dotL": [
+     [
+      "wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s",
+      1742
+     ],
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      989
+     ],
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      874
+     ],
+     [
+      "wsa1/prom_a/modules/f9c000_fa53ff_system_menu_screens.s",
+      781
+     ],
+     [
+      "wsa1/prom_a/modules/fbb800_fbffff_part_params_and_combi_edit.s",
+      546
+     ]
+    ],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      10
+     ],
+     [
+      "wsa1/prom_a/modules/f94c00_f993ff_debug_monitor_and_param_scripts.s",
+      3
+     ],
+     [
+      "wsa1/prom_a/modules/f99800_f9bfff_midi_settings_screens.s",
+      3
+     ],
+     [
+      "wsa1/prom_a/modules/f8a000_f8bbff_panel_wire_to_group.s",
+      1
+     ],
+     [
+      "wsa1/prom_a/modules/f9c000_fa53ff_system_menu_screens.s",
+      1
+     ]
+    ],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      14
+     ],
+     [
+      "wsa1/prom_a/modules/f94c00_f993ff_debug_monitor_and_param_scripts.s",
+      13
+     ],
+     [
+      "wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s",
+      10
+     ],
+     [
+      "wsa1/prom_a/modules/f80000_f81fff_sequencer_job_button_tables.s",
+      6
+     ],
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      5
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      47
+     ],
+     [
+      "wsa1/prom_a/modules/f94c00_f993ff_debug_monitor_and_param_scripts.s",
+      28
+     ],
+     [
+      "wsa1/prom_a/modules/f80000_f81fff_sequencer_job_button_tables.s",
+      23
+     ],
+     [
+      "wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s",
+      22
+     ],
+     [
+      "wsa1/prom_a/modules/fc0000_fc3fff_msg0716_module.s",
+      18
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "wsa1/prom_a/modules/f8c000_f8d9ff_panel_leds.s",
+      12
+     ],
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      12
+     ],
+     [
+      "wsa1/prom_a/modules/f8a000_f8bbff_panel_wire_to_group.s",
+      10
+     ],
+     [
+      "wsa1/prom_a/modules/fe8000_ff37ff_edit_screens.s",
+      7
+     ],
+     [
+      "wsa1/prom_a/modules/fc0000_fc3fff_msg0716_module.s",
+      6
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "wsa1/prom_a/modules/fb2000_fb8fff_sysex_module.s",
+      2566
+     ],
+     [
+      "wsa1/prom_a/modules/fc0000_fc3fff_msg0716_module.s",
+      367
+     ],
+     [
+      "wsa1/prom_a/modules/f8a000_f8bbff_panel_wire_to_group.s",
+      357
+     ],
+     [
+      "wsa1/prom_a/modules/f8c000_f8d9ff_panel_leds.s",
+      225
+     ],
+     [
+      "wsa1/prom_a/modules/fb9000_fbabff_smf_playback.s",
+      205
+     ]
+    ],
+    "placeholders.total": [
+     [
+      "wsa1/prom_a/modules/fcf000_fdffff_tone_edit_module.s",
+      30
+     ],
+     [
+      "wsa1/prom_a/modules/fe0000_fe77ff_disk_and_floppy.s",
+      16
+     ],
+     [
+      "wsa1/prom_a/modules/f8e800_f94bff_lcd_swi7_and_combination_screens.s",
+      14
+     ],
+     [
+      "wsa1/kernel/kernel.s",
+      11
+     ],
+     [
+      "wsa1/prom_a/modules/fa6000_fa9fff_midi_in_out.s",
+      11
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "prom_b": {
+   "model": "wsa1",
+   "files": 49,
+   "lines": 180809,
+   "untracked": [],
+   "headers": {
+    "routines": 4688,
+    "with_header": 3396,
+    "no_header": 1292,
+    "inline_only": 1159,
+    "call_targets": 1773,
+    "call_no_header": 220,
+    "blocks_jump": 89,
+    "blocks_case": 0,
+    "blocks_declared": 2926,
+    "by_reason": {
+     "call": 1773,
+     "address": 652,
+     "xfile_jump": 552,
+     "unreferenced": 1711,
+     "banner": 0
+    },
+    "pct": 72.44
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 8278,
+    "imm_in_image": 0,
+    "branch_numeric": 73,
+    "branch_label_offset": 24
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 2
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 66,
+     "lines": 66,
+     "bytes": 217
+    },
+    "after_terminator": {
+     "runs": 76,
+     "lines": 190,
+     "bytes": 2204
+    }
+   },
+   "placeholders": {
+    "total": 724,
+    "by_prefix": {
+     "sub_": 271,
+     "T_": 453
+    }
+   },
+   "insn_macros": 9,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "wsa1/prom_b/modules/f40000_f44017_routine_directory.s",
+      1147
+     ],
+     [
+      "wsa1/prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s",
+      26
+     ],
+     [
+      "wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s",
+      24
+     ],
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      22
+     ],
+     [
+      "wsa1/prom_b/modules/f62c00_f64fff_block_store.s",
+      18
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "wsa1/prom_b/modules/f40000_f44017_routine_directory.s",
+      172
+     ],
+     [
+      "wsa1/prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s",
+      13
+     ],
+     [
+      "wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s",
+      11
+     ],
+     [
+      "wsa1/prom_b/modules/f62c00_f64fff_block_store.s",
+      9
+     ],
+     [
+      "wsa1/prom_b/modules/f7d000_f7ffff_panel_screen_methods.s",
+      8
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      1545
+     ],
+     [
+      "wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s",
+      1204
+     ],
+     [
+      "wsa1/prom_b/modules/f67400_f6efff_step_record.s",
+      929
+     ],
+     [
+      "wsa1/prom_b/modules/f7aa00_f7cfff_song_store_commands.s",
+      790
+     ],
+     [
+      "wsa1/prom_b/modules/f44018_f477ff_sequencer_core.s",
+      640
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [
+     [
+      "wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s",
+      48
+     ],
+     [
+      "wsa1/prom_b/modules/f58000_f5b7ff_disk_display_lists_and_sc1_link.s",
+      20
+     ],
+     [
+      "wsa1/prom_b/modules/f40000_f44017_routine_directory.s",
+      5
+     ]
+    ],
+    "numeric.branch_label_offset": [
+     [
+      "wsa1/prom_b/modules/f40000_f44017_routine_directory.s",
+      11
+     ],
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      11
+     ],
+     [
+      "wsa1/prom_b/modules/f09800_f0c7ff_sound_edit_screens.s",
+      1
+     ],
+     [
+      "wsa1/prom_b/modules/f7d000_f7ffff_panel_screen_methods.s",
+      1
+     ]
+    ],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [
+     [
+      "wsa1/prom_b/modules/f0e800_f1b3ff_blink_and_dsp_effect_editor.s",
+      2
+     ]
+    ],
+    "byte_runs.after_fallthrough.runs": [
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      32
+     ],
+     [
+      "wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s",
+      9
+     ],
+     [
+      "wsa1/prom_b/modules/f36800_f387ff_sysex_param_ranges.s",
+      6
+     ],
+     [
+      "wsa1/prom_b/modules/f2d800_f327ff_messages_and_display_list_interpreter.s",
+      4
+     ],
+     [
+      "wsa1/prom_b/modules/f62c00_f64fff_block_store.s",
+      4
+     ]
+    ],
+    "byte_runs.after_fallthrough.bytes": [
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      105
+     ],
+     [
+      "wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s",
+      35
+     ],
+     [
+      "wsa1/prom_b/modules/f36800_f387ff_sysex_param_ranges.s",
+      16
+     ],
+     [
+      "wsa1/prom_b/modules/f47800_f48bff_bstore_cursor_and_seq_cycle.s",
+      15
+     ],
+     [
+      "wsa1/prom_b/modules/f62c00_f64fff_block_store.s",
+      13
+     ]
+    ],
+    "byte_runs.after_terminator.runs": [
+     [
+      "wsa1/prom_b/modules/f67400_f6efff_step_record.s",
+      35
+     ],
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      19
+     ],
+     [
+      "wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s",
+      6
+     ],
+     [
+      "wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s",
+      3
+     ],
+     [
+      "wsa1/prom_b/modules/f62c00_f64fff_block_store.s",
+      3
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "wsa1/prom_b/modules/f67400_f6efff_step_record.s",
+      651
+     ],
+     [
+      "wsa1/prom_b/modules/f6f000_f7a3ff_smf_file_io_and_old_copy.s",
+      531
+     ],
+     [
+      "wsa1/prom_b/modules/f09800_f0c7ff_sound_edit_screens.s",
+      379
+     ],
+     [
+      "wsa1/prom_b/modules/f65c00_f673ff_track_assign_and_medley_screens.s",
+      192
+     ],
+     [
+      "wsa1/prom_b/modules/f62c00_f64fff_block_store.s",
+      152
+     ]
+    ],
+    "placeholders.total": [
+     [
+      "wsa1/prom_b/modules/f40000_f44017_routine_directory.s",
+      453
+     ],
+     [
+      "wsa1/prom_b/modules/f67400_f6efff_step_record.s",
+      104
+     ],
+     [
+      "wsa1/prom_b/modules/f47800_f48bff_bstore_cursor_and_seq_cycle.s",
+      27
+     ],
+     [
+      "wsa1/prom_b/modules/f44018_f477ff_sequencer_core.s",
+      23
+     ],
+     [
+      "wsa1/prom_b/modules/f00000_f067ff_old_copies_and_display_lists.s",
+      22
+     ]
+    ],
+    "insn_macros": [
+     [
+      "wsa1/prom_b/modules/f5b800_f62bff_song_edit_jobs_and_tone_edit_draws.s",
+      5
+     ],
+     [
+      "wsa1/prom_b/modules/f67400_f6efff_step_record.s",
+      4
+     ]
+    ]
+   }
+  },
+  "prom_c": {
+   "model": "wsa1",
+   "files": 33,
+   "lines": 142284,
+   "untracked": [],
+   "headers": {
+    "routines": 858,
+    "with_header": 845,
+    "no_header": 13,
+    "inline_only": 13,
+    "call_targets": 757,
+    "call_no_header": 0,
+    "blocks_jump": 3,
+    "blocks_case": 0,
+    "blocks_declared": 2827,
+    "by_reason": {
+     "call": 757,
+     "address": 20,
+     "xfile_jump": 6,
+     "unreferenced": 75,
+     "banner": 0
+    },
+    "pct": 98.48
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 2134,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 6
+   },
+   "addr_locals": {
+    "dotL": 7,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 4712
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 1,
+     "lines": 1,
+     "bytes": 1
+    }
+   },
+   "placeholders": {
+    "total": 178,
+    "by_prefix": {
+     "sub_": 178
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "wsa1/kernel/kernel.s",
+      13
+     ]
+    ],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "wsa1/prom_c/p7/p7_module.s",
+      523
+     ],
+     [
+      "wsa1/prom_c/field_accessors.s",
+      518
+     ],
+     [
+      "wsa1/prom_c/tone_db/tone_db_module.s",
+      333
+     ],
+     [
+      "wsa1/prom_c/voice/note_engine.s",
+      169
+     ],
+     [
+      "wsa1/prom_c/voice/voice_parameters.s",
+      144
+     ]
+    ],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [
+     [
+      "wsa1/prom_c/boot/reset_and_vectors.s",
+      6
+     ]
+    ],
+    "addr_locals.dotL": [
+     [
+      "wsa1/kernel/kernel.s",
+      7
+     ]
+    ],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [
+     [
+      "wsa1/prom_c/tone_db/tone_db_module.s",
+      1381
+     ],
+     [
+      "wsa1/prom_c/p7/p7_module.s",
+      667
+     ],
+     [
+      "wsa1/prom_c/field_accessors.s",
+      561
+     ],
+     [
+      "wsa1/prom_c/voice/note_engine.s",
+      492
+     ],
+     [
+      "wsa1/prom_c/voice/voice_parameters.s",
+      395
+     ]
+    ],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [
+     [
+      "wsa1/prom_c/boot/boot_and_main.s",
+      1
+     ]
+    ],
+    "byte_runs.after_terminator.bytes": [
+     [
+      "wsa1/prom_c/boot/boot_and_main.s",
+      1
+     ]
+    ],
+    "placeholders.total": [
+     [
+      "wsa1/prom_c/tone_db/tone_db_module.s",
+      47
+     ],
+     [
+      "wsa1/prom_c/field_accessors.s",
+      30
+     ],
+     [
+      "wsa1/prom_c/p7/p7_module.s",
+      26
+     ],
+     [
+      "wsa1/prom_c/midi/midi_controllers.s",
+      22
+     ],
+     [
+      "wsa1/prom_c/wsa1_prom_c.s",
+      20
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "prom_d": {
+   "model": "wsa1",
+   "files": 4,
+   "lines": 62663,
+   "untracked": [],
+   "headers": {
+    "routines": 0,
+    "with_header": 0,
+    "no_header": 0,
+    "inline_only": 0,
+    "call_targets": 0,
+    "call_no_header": 0,
+    "blocks_jump": 0,
+    "blocks_case": 0,
+    "blocks_declared": 0,
+    "by_reason": {
+     "call": 0,
+     "address": 0,
+     "xfile_jump": 0,
+     "unreferenced": 0,
+     "banner": 0
+    },
+    "pct": null
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 0,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "program": {
+   "model": "kn7000",
+   "files": 40,
+   "lines": 1062942,
+   "untracked": [],
+   "headers": {
+    "routines": 21154,
+    "with_header": 1026,
+    "no_header": 20128,
+    "inline_only": 0,
+    "call_targets": 7596,
+    "call_no_header": 7434,
+    "blocks_jump": 35661,
+    "blocks_case": 2,
+    "blocks_declared": 1,
+    "by_reason": {
+     "call": 7596,
+     "address": 7414,
+     "xfile_jump": 2,
+     "unreferenced": 6142,
+     "banner": 0
+    },
+    "pct": 4.85
+   },
+   "numeric": {
+    "mem_abs_in_image": 1,
+    "mem_abs_other": 19617,
+    "imm_in_image": 1,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 61472,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 3970,
+    "by_prefix": {
+     "func_": 3970
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn7000/src/program/region1_02.s",
+      2274
+     ],
+     [
+      "kn7000/src/program/region1_03.s",
+      1821
+     ],
+     [
+      "kn7000/src/program/region1_01.s",
+      1712
+     ],
+     [
+      "kn7000/src/program/region1_0B.s",
+      1623
+     ],
+     [
+      "kn7000/src/program/region1_09.s",
+      1609
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn7000/src/program/region1_02.s",
+      1182
+     ],
+     [
+      "kn7000/src/program/region1_03.s",
+      818
+     ],
+     [
+      "kn7000/src/program/library_00.s",
+      736
+     ],
+     [
+      "kn7000/src/program/region1_01.s",
+      732
+     ],
+     [
+      "kn7000/src/program/region1_0B.s",
+      637
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "kn7000/src/program/region1_06.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "kn7000/src/program/region1_09.s",
+      2517
+     ],
+     [
+      "kn7000/src/program/region1_02.s",
+      2267
+     ],
+     [
+      "kn7000/src/program/region1_03.s",
+      2169
+     ],
+     [
+      "kn7000/src/program/region1_0A.s",
+      1848
+     ],
+     [
+      "kn7000/src/program/region1_05.s",
+      1706
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn7000/src/program/region1_00.s",
+      1
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn7000/src/program/region1_05.s",
+      6695
+     ],
+     [
+      "kn7000/src/program/region1_09.s",
+      4826
+     ],
+     [
+      "kn7000/src/program/region1_0B.s",
+      4757
+     ],
+     [
+      "kn7000/src/program/region1_08.s",
+      4699
+     ],
+     [
+      "kn7000/src/program/region1_00.s",
+      4470
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn7000/src/program/region1_02.s",
+      656
+     ],
+     [
+      "kn7000/src/program/library_00.s",
+      427
+     ],
+     [
+      "kn7000/src/program/region1_03.s",
+      405
+     ],
+     [
+      "kn7000/src/program/region1_0B.s",
+      342
+     ],
+     [
+      "kn7000/src/program/region1_05.s",
+      329
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "table": {
+   "model": "kn7000",
+   "files": 176,
+   "lines": 457732,
+   "untracked": [],
+   "headers": {
+    "routines": 0,
+    "with_header": 0,
+    "no_header": 0,
+    "inline_only": 0,
+    "call_targets": 0,
+    "call_no_header": 0,
+    "blocks_jump": 0,
+    "blocks_case": 0,
+    "blocks_declared": 0,
+    "by_reason": {
+     "call": 0,
+     "address": 0,
+     "xfile_jump": 0,
+     "unreferenced": 0,
+     "banner": 0
+    },
+    "pct": null
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 0,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 0,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 0,
+    "by_prefix": {}
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [],
+    "headers.call_no_header": [],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [],
+    "insn_macros": []
+   }
+  },
+  "cnv": {
+   "model": "kn7000",
+   "files": 7,
+   "lines": 173406,
+   "untracked": [],
+   "headers": {
+    "routines": 951,
+    "with_header": 295,
+    "no_header": 656,
+    "inline_only": 0,
+    "call_targets": 754,
+    "call_no_header": 512,
+    "blocks_jump": 15182,
+    "blocks_case": 0,
+    "blocks_declared": 0,
+    "by_reason": {
+     "call": 754,
+     "address": 7,
+     "xfile_jump": 0,
+     "unreferenced": 190,
+     "banner": 0
+    },
+    "pct": 31.02
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 0,
+    "imm_in_image": 0,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 18922,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 606,
+    "by_prefix": {
+     "func_": 606
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn7000/src/cnv/gem_wx2.s",
+      105
+     ],
+     [
+      "kn7000/src/cnv/korg.s",
+      100
+     ],
+     [
+      "kn7000/src/cnv/gem_ws2.s",
+      96
+     ],
+     [
+      "kn7000/src/cnv/solton.s",
+      93
+     ],
+     [
+      "kn7000/src/cnv/roland.s",
+      88
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn7000/src/cnv/gem_wx2.s",
+      87
+     ],
+     [
+      "kn7000/src/cnv/korg.s",
+      82
+     ],
+     [
+      "kn7000/src/cnv/gem_ws2.s",
+      80
+     ],
+     [
+      "kn7000/src/cnv/solton.s",
+      77
+     ],
+     [
+      "kn7000/src/cnv/roland.s",
+      70
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [],
+    "numeric.imm_in_image": [],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn7000/src/cnv/korg.s",
+      3275
+     ],
+     [
+      "kn7000/src/cnv/gem_wx2.s",
+      3231
+     ],
+     [
+      "kn7000/src/cnv/gem_ws2.s",
+      2749
+     ],
+     [
+      "kn7000/src/cnv/solton.s",
+      2727
+     ],
+     [
+      "kn7000/src/cnv/roland.s",
+      2434
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn7000/src/cnv/gem_wx2.s",
+      99
+     ],
+     [
+      "kn7000/src/cnv/korg.s",
+      94
+     ],
+     [
+      "kn7000/src/cnv/gem_ws2.s",
+      90
+     ],
+     [
+      "kn7000/src/cnv/solton.s",
+      87
+     ],
+     [
+      "kn7000/src/cnv/roland.s",
+      82
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "program942": {
+   "model": "kn7000",
+   "files": 40,
+   "lines": 1064619,
+   "untracked": [],
+   "headers": {
+    "routines": 21221,
+    "with_header": 1039,
+    "no_header": 20182,
+    "inline_only": 0,
+    "call_targets": 7604,
+    "call_no_header": 7442,
+    "blocks_jump": 35681,
+    "blocks_case": 2,
+    "blocks_declared": 1,
+    "by_reason": {
+     "call": 7604,
+     "address": 7584,
+     "xfile_jump": 2,
+     "unreferenced": 6031,
+     "banner": 0
+    },
+    "pct": 4.9
+   },
+   "numeric": {
+    "mem_abs_in_image": 1,
+    "mem_abs_other": 19635,
+    "imm_in_image": 1,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 61511,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 3970,
+    "by_prefix": {
+     "func_": 3970
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn7000/src/sp7001/program/region1_02.s",
+      2274
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_03.s",
+      1821
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_01.s",
+      1708
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_0B.s",
+      1623
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_09.s",
+      1609
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn7000/src/sp7001/program/region1_02.s",
+      1182
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_03.s",
+      818
+     ],
+     [
+      "kn7000/src/sp7001/program/library_00.s",
+      736
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_01.s",
+      729
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_0B.s",
+      637
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "kn7000/src/sp7001/program/region1_06.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "kn7000/src/sp7001/program/region1_09.s",
+      2517
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_02.s",
+      2267
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_03.s",
+      2169
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_0A.s",
+      1848
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_05.s",
+      1706
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn7000/src/sp7001/program/region1_00.s",
+      1
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn7000/src/sp7001/program/region1_05.s",
+      6695
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_09.s",
+      4826
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_0B.s",
+      4757
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_08.s",
+      4699
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_00.s",
+      4470
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn7000/src/sp7001/program/region1_02.s",
+      656
+     ],
+     [
+      "kn7000/src/sp7001/program/library_00.s",
+      427
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_03.s",
+      405
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_0B.s",
+      342
+     ],
+     [
+      "kn7000/src/sp7001/program/region1_05.s",
+      329
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "program935": {
+   "model": "kn7000",
+   "files": 40,
+   "lines": 1062500,
+   "untracked": [],
+   "headers": {
+    "routines": 21156,
+    "with_header": 1026,
+    "no_header": 20130,
+    "inline_only": 0,
+    "call_targets": 7596,
+    "call_no_header": 7434,
+    "blocks_jump": 35661,
+    "blocks_case": 2,
+    "blocks_declared": 1,
+    "by_reason": {
+     "call": 7596,
+     "address": 7416,
+     "xfile_jump": 2,
+     "unreferenced": 6142,
+     "banner": 0
+    },
+    "pct": 4.85
+   },
+   "numeric": {
+    "mem_abs_in_image": 1,
+    "mem_abs_other": 19616,
+    "imm_in_image": 1,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 61474,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 3967,
+    "by_prefix": {
+     "func_": 3967
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn7000/src/b935/program/region1_02.s",
+      2272
+     ],
+     [
+      "kn7000/src/b935/program/region1_03.s",
+      1822
+     ],
+     [
+      "kn7000/src/b935/program/region1_01.s",
+      1714
+     ],
+     [
+      "kn7000/src/b935/program/region1_0B.s",
+      1623
+     ],
+     [
+      "kn7000/src/b935/program/region1_09.s",
+      1611
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn7000/src/b935/program/region1_02.s",
+      1181
+     ],
+     [
+      "kn7000/src/b935/program/region1_03.s",
+      818
+     ],
+     [
+      "kn7000/src/b935/program/library_00.s",
+      736
+     ],
+     [
+      "kn7000/src/b935/program/region1_01.s",
+      733
+     ],
+     [
+      "kn7000/src/b935/program/region1_0B.s",
+      637
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "kn7000/src/b935/program/region1_06.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "kn7000/src/b935/program/region1_09.s",
+      2517
+     ],
+     [
+      "kn7000/src/b935/program/region1_02.s",
+      2267
+     ],
+     [
+      "kn7000/src/b935/program/region1_03.s",
+      2169
+     ],
+     [
+      "kn7000/src/b935/program/region1_0A.s",
+      1848
+     ],
+     [
+      "kn7000/src/b935/program/region1_05.s",
+      1706
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn7000/src/b935/program/region1_00.s",
+      1
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn7000/src/b935/program/region1_05.s",
+      6695
+     ],
+     [
+      "kn7000/src/b935/program/region1_09.s",
+      4828
+     ],
+     [
+      "kn7000/src/b935/program/region1_0B.s",
+      4757
+     ],
+     [
+      "kn7000/src/b935/program/region1_08.s",
+      4682
+     ],
+     [
+      "kn7000/src/b935/program/region1_00.s",
+      4470
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn7000/src/b935/program/region1_02.s",
+      656
+     ],
+     [
+      "kn7000/src/b935/program/library_00.s",
+      427
+     ],
+     [
+      "kn7000/src/b935/program/region1_03.s",
+      405
+     ],
+     [
+      "kn7000/src/b935/program/region1_0B.s",
+      342
+     ],
+     [
+      "kn7000/src/b935/program/region1_05.s",
+      329
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "program893": {
+   "model": "kn7000",
+   "files": 39,
+   "lines": 1060042,
+   "untracked": [],
+   "headers": {
+    "routines": 21123,
+    "with_header": 1025,
+    "no_header": 20098,
+    "inline_only": 0,
+    "call_targets": 7588,
+    "call_no_header": 7426,
+    "blocks_jump": 35581,
+    "blocks_case": 2,
+    "blocks_declared": 1,
+    "by_reason": {
+     "call": 7588,
+     "address": 7397,
+     "xfile_jump": 2,
+     "unreferenced": 6136,
+     "banner": 0
+    },
+    "pct": 4.85
+   },
+   "numeric": {
+    "mem_abs_in_image": 1,
+    "mem_abs_other": 19577,
+    "imm_in_image": 1,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 61333,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 3968,
+    "by_prefix": {
+     "func_": 3968
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn7000/src/b893/program/region1_02.s",
+      2273
+     ],
+     [
+      "kn7000/src/b893/program/region1_03.s",
+      1807
+     ],
+     [
+      "kn7000/src/b893/program/region1_01.s",
+      1714
+     ],
+     [
+      "kn7000/src/b893/program/region1_0B.s",
+      1657
+     ],
+     [
+      "kn7000/src/b893/program/region1_09.s",
+      1624
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn7000/src/b893/program/region1_02.s",
+      1182
+     ],
+     [
+      "kn7000/src/b893/program/region1_03.s",
+      818
+     ],
+     [
+      "kn7000/src/b893/program/library_00.s",
+      735
+     ],
+     [
+      "kn7000/src/b893/program/region1_01.s",
+      733
+     ],
+     [
+      "kn7000/src/b893/program/region1_0B.s",
+      654
+     ]
+    ],
+    "numeric.mem_abs_in_image": [
+     [
+      "kn7000/src/b893/program/region1_06.s",
+      1
+     ]
+    ],
+    "numeric.mem_abs_other": [
+     [
+      "kn7000/src/b893/program/region1_09.s",
+      2487
+     ],
+     [
+      "kn7000/src/b893/program/region1_02.s",
+      2267
+     ],
+     [
+      "kn7000/src/b893/program/region1_03.s",
+      2169
+     ],
+     [
+      "kn7000/src/b893/program/region1_0A.s",
+      1867
+     ],
+     [
+      "kn7000/src/b893/program/region1_05.s",
+      1702
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn7000/src/b893/program/region1_00.s",
+      1
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn7000/src/b893/program/region1_05.s",
+      6673
+     ],
+     [
+      "kn7000/src/b893/program/region1_09.s",
+      4848
+     ],
+     [
+      "kn7000/src/b893/program/region1_0B.s",
+      4764
+     ],
+     [
+      "kn7000/src/b893/program/region1_08.s",
+      4666
+     ],
+     [
+      "kn7000/src/b893/program/region1_00.s",
+      4470
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn7000/src/b893/program/region1_02.s",
+      656
+     ],
+     [
+      "kn7000/src/b893/program/library_00.s",
+      427
+     ],
+     [
+      "kn7000/src/b893/program/region1_03.s",
+      405
+     ],
+     [
+      "kn7000/src/b893/program/region1_0B.s",
+      355
+     ],
+     [
+      "kn7000/src/b893/program/region1_05.s",
+      328
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "kn2400": {
+   "model": "mn10300-siblings",
+   "files": 23,
+   "lines": 1125684,
+   "untracked": [],
+   "headers": {
+    "routines": 21270,
+    "with_header": 7,
+    "no_header": 21263,
+    "inline_only": 0,
+    "call_targets": 7431,
+    "call_no_header": 7424,
+    "blocks_jump": 34917,
+    "blocks_case": 2,
+    "blocks_declared": 11,
+    "by_reason": {
+     "call": 7431,
+     "address": 7914,
+     "xfile_jump": 0,
+     "unreferenced": 5925,
+     "banner": 0
+    },
+    "pct": 0.03
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 14934,
+    "imm_in_image": 442,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 4992,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 5060,
+    "by_prefix": {
+     "func_": 5060
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn2400/src/program.s",
+      21263
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn2400/src/program.s",
+      7424
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "kn2400/src/program.s",
+      14934
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn2400/src/program.s",
+      442
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn2400/src/program.s",
+      4992
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn2400/src/program.s",
+      5060
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "kn6000": {
+   "model": "mn10300-siblings",
+   "files": 25,
+   "lines": 1026924,
+   "untracked": [],
+   "headers": {
+    "routines": 19045,
+    "with_header": 2,
+    "no_header": 19043,
+    "inline_only": 0,
+    "call_targets": 6300,
+    "call_no_header": 6298,
+    "blocks_jump": 26803,
+    "blocks_case": 2,
+    "blocks_declared": 11,
+    "by_reason": {
+     "call": 6300,
+     "address": 7752,
+     "xfile_jump": 0,
+     "unreferenced": 4993,
+     "banner": 0
+    },
+    "pct": 0.01
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 13716,
+    "imm_in_image": 499,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 5096,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 4577,
+    "by_prefix": {
+     "func_": 4577
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn6000/src/program.s",
+      19043
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn6000/src/program.s",
+      6298
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "kn6000/src/program.s",
+      13716
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn6000/src/program.s",
+      499
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn6000/src/program.s",
+      5096
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn6000/src/program.s",
+      4577
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "kn6500": {
+   "model": "mn10300-siblings",
+   "files": 22,
+   "lines": 1003948,
+   "untracked": [],
+   "headers": {
+    "routines": 19116,
+    "with_header": 2,
+    "no_header": 19114,
+    "inline_only": 0,
+    "call_targets": 6321,
+    "call_no_header": 6319,
+    "blocks_jump": 26830,
+    "blocks_case": 2,
+    "blocks_declared": 11,
+    "by_reason": {
+     "call": 6321,
+     "address": 7787,
+     "xfile_jump": 0,
+     "unreferenced": 5008,
+     "banner": 0
+    },
+    "pct": 0.01
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 13739,
+    "imm_in_image": 451,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 5113,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 4599,
+    "by_prefix": {
+     "func_": 4599
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "kn6500/src/program.s",
+      19114
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "kn6500/src/program.s",
+      6319
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "kn6500/src/program.s",
+      13739
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "kn6500/src/program.s",
+      451
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "kn6500/src/program.s",
+      5113
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "kn6500/src/program.s",
+      4599
+     ]
+    ],
+    "insn_macros": []
+   }
+  },
+  "hdsx3": {
+   "model": "mn10300-siblings",
+   "files": 17,
+   "lines": 134340,
+   "untracked": [],
+   "headers": {
+    "routines": 1018,
+    "with_header": 0,
+    "no_header": 1018,
+    "inline_only": 0,
+    "call_targets": 454,
+    "call_no_header": 454,
+    "blocks_jump": 7454,
+    "blocks_case": 0,
+    "blocks_declared": 0,
+    "by_reason": {
+     "call": 454,
+     "address": 149,
+     "xfile_jump": 0,
+     "unreferenced": 415,
+     "banner": 0
+    },
+    "pct": 0.0
+   },
+   "numeric": {
+    "mem_abs_in_image": 0,
+    "mem_abs_other": 3537,
+    "imm_in_image": 1,
+    "branch_numeric": 0,
+    "branch_label_offset": 0
+   },
+   "addr_locals": {
+    "dotL": 0,
+    "dotLc": 0,
+    "loc": 24,
+    "parent_hex": 0
+   },
+   "byte_runs": {
+    "after_fallthrough": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    },
+    "after_terminator": {
+     "runs": 0,
+     "lines": 0,
+     "bytes": 0
+    }
+   },
+   "placeholders": {
+    "total": 455,
+    "by_prefix": {
+     "func_": 455
+    }
+   },
+   "insn_macros": 0,
+   "top_files": {
+    "headers.no_header": [
+     [
+      "hdsx3/src/program.s",
+      1018
+     ]
+    ],
+    "headers.call_no_header": [
+     [
+      "hdsx3/src/program.s",
+      454
+     ]
+    ],
+    "numeric.mem_abs_in_image": [],
+    "numeric.mem_abs_other": [
+     [
+      "hdsx3/src/program.s",
+      3537
+     ]
+    ],
+    "numeric.imm_in_image": [
+     [
+      "hdsx3/src/program.s",
+      1
+     ]
+    ],
+    "numeric.branch_numeric": [],
+    "numeric.branch_label_offset": [],
+    "addr_locals.dotL": [],
+    "addr_locals.dotLc": [],
+    "addr_locals.loc": [
+     [
+      "hdsx3/src/program.s",
+      24
+     ]
+    ],
+    "addr_locals.parent_hex": [],
+    "byte_runs.after_fallthrough.runs": [],
+    "byte_runs.after_fallthrough.bytes": [],
+    "byte_runs.after_terminator.runs": [],
+    "byte_runs.after_terminator.bytes": [],
+    "placeholders.total": [
+     [
+      "hdsx3/src/program.s",
+      455
+     ]
+    ],
+    "insn_macros": []
+   }
+  }
+ }
+}

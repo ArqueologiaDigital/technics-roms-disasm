@@ -893,45 +893,13 @@ SingleLoadSrc_ComposerListProc_Join9:
 ;   repaints SingleLoadSrcFunc (EVT_PAINT); retd 4. Basis: callers + body -- SingleLoadSrc_SoundMemListProc
 ;   (parameters 5/6) and SingleLoadDst_SoundMemListProc (parameters 7/8) call it after every move with XDE = 0x8964,
 ;   pushed 0x896C and XWA = the parameter.
-SingleLoad_SyncSoundMemCursorGroup:
-	ld	xix, (xsp+4)
-	ld	l, c
-	add	l, c
-	cp	(xde), l
-	jr	nc, SingleLoad_SyncSoundMemCursorGroup_Skip21
-	cp	(xix), l
-	jr	c, SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip21:
-	cp	(xde), l
-	jr	c, SingleLoad_SyncSoundMemCursorGroup_Skip22
-	cp	(xix), l
-	jr	nc, SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip22:
-	cp	xwa, 8
-	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip24
-	cp	xwa, 7
-	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip24
-	cp	xwa, 6
-	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip23
-	cp	xwa, 5
-	jr	nz, SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip23:
-	ld	a, (xde)
-	ld	(xix), a
-	ld	xwa, 0:i3
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0:i3
-	calr	SingleLoadDstFunc
-	jr	SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip24:
-	ld	a, (xix)
-	ld	(xde), a
-	ld	xwa, 0:i3
-	ld	xbc, EVT_PAINT
-	ld	xde, 0:i3
-	calr	SingleLoadSrcFunc
-SingleLoad_SyncSoundMemCursorGroup_Return:
-	retd	0x0004
+SingleLoad_SyncSoundMemCursorGroup:	.include "includes/generated/cc900/SingleLoad_SyncSoundMemCursorGroup.s"	; C: cc900/single_load_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip21, SingleLoad_SyncSoundMemCursorGroup + 15
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip22, SingleLoad_SyncSoundMemCursorGroup + 23
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip23, SingleLoad_SyncSoundMemCursorGroup + 55
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip24, SingleLoad_SyncSoundMemCursorGroup + 73
+	.set	SingleLoad_SyncSoundMemCursorGroup_Return, SingleLoad_SyncSoundMemCursorGroup + 89
 SLSrcBankList_FuncBody_Helper15:
 	dec	6, xsp
 	ld	(xsp), c

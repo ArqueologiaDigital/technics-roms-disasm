@@ -61,3 +61,42 @@ void InitChannelState_Che_InitVal(unsigned char *r)
     }
   }
 }
+
+struct ct2 { unsigned char next; unsigned char pad; };
+struct ct8 { unsigned char id; unsigned char x1; unsigned char v0; unsigned char x3, x4; unsigned char v1, v2;
+             unsigned char x7; };
+extern unsigned char CharMap_ValueData_A[];
+extern unsigned char __near ram_cca6;
+extern unsigned char __near ram_cca8;
+extern struct ct2 __near ram_e768[128];
+extern struct ct8 __near ram_c5ce[128];
+extern unsigned char SndParam_UpdateChannelTuning(unsigned char m, unsigned char c, unsigned char e);
+
+unsigned char SndParam_UpdateChannelTuning(unsigned char m, unsigned char c, unsigned char e)
+{
+	unsigned char r;
+
+	if (m != 0xff) {
+		ram_cca8 = CharMap_ValueData_A[m];
+		ram_cca6 = ram_e768[ram_cca8].next;
+	}
+	if (ram_cca6 != ram_cca8 && ram_c5ce[ram_cca6].id == c) {
+		switch (e) {
+		case 0:
+			r = ram_c5ce[ram_cca6].v0;
+			break;
+		case 1:
+			r = ram_c5ce[ram_cca6].v1;
+			break;
+		case 2:
+			r = ram_c5ce[ram_cca6].v2;
+			break;
+		default:
+			r = 0xff;
+			break;
+		}
+		ram_cca6 = ram_e768[ram_cca6].next;
+	} else
+		r = 0xff;
+	return r;
+}

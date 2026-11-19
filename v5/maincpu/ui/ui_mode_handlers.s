@@ -904,35 +904,10 @@ EffectMode_CopyPresetBits:
 	ld (xbc), a
 
 	ret
-EffectMode_ReinitSoundOutput:
-	ld	xwa, 770
-	call	SndParam_LookupReadOnly
-	ld	(35992:16), l
-	ld	xwa, 770
-	ld	bc, 1:i3
-	ld	de, 0:i3
-	call	SoundParam_NotifyChange
-	ldw	wa, 128
-	ld	xbc, 246468
-	call	BitMapOut_CopyVoicePreset9
-	ldw	wa, 128
-	call	PanelMemory_Recall
-	calr	EffectMode_DisplayPresetName
-	res	4, (0x8c9a:16)
-	cp	(35992:16), 1
-	jr	z, EffectMode_ReinitSound_NotifyBank1
-	ld	xwa, 770
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	jr	EffectMode_ReinitSound_CallNotify
-EffectMode_ReinitSound_NotifyBank1:
-	ld xwa, 0x302
-	ld bc, 1:i3
-	ld de, 0:i3
-
-EffectMode_ReinitSound_CallNotify:
-	call	SoundParam_NotifyChange
-	jp	SwbtWr_ReinitOutputBank
+EffectMode_ReinitSoundOutput:	.include "includes/generated/cc900/EffectMode_ReinitSoundOutput.s"	; C: cc900/ui_mode_handlers_m275_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_ReinitSound_NotifyBank1, EffectMode_ReinitSoundOutput + 70
+	.set	EffectMode_ReinitSound_CallNotify, EffectMode_ReinitSoundOutput + 79
 EffectMode_ReinitWithFlag:
 	set	5, (0x8c9a:16)
 	calr EffectMode_CheckModeAndReinit
@@ -1436,56 +1411,11 @@ CustomRomTest_Done:
 	inc 6, xsp
 	ret
 
-Test_LCD_Controller_IC206:
-	dec 2, xsp
-	ld (xsp), a
-
-	; equivalent to "_VGA_WRITE 3c3h, 0" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	ld bc, 0:i3
-	call _Write_VGA_Register
-
-	; equivalent to "_VGA_READ 3c3h" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	call _Read_VGA_Register
-
-	cp l, 0:i3
-	jr z, LcdTest_WriteOneVerify
-	set	2, (xsp)
-
-LcdTest_WriteOneVerify:
-	; equivalent to "_VGA_WRITE 3c3h, 1" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	ld bc, 1:i3
-	call _Write_VGA_Register
-
-	; equivalent to "_VGA_READ 3c3h" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	call _Read_VGA_Register
-
-	cp l, 1:i3
-	jr z, LcdTest_WriteZeroVerify
-	set	2, (xsp)
-
-LcdTest_WriteZeroVerify:
-	; equivalent to "_VGA_WRITE 3c3h, 0" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	ld bc, 0:i3
-	call _Write_VGA_Register
-
-	; equivalent to "_VGA_READ 3c3h" but with CALL instead of CALR
-	ldw wa, 0x3c3
-	call _Read_VGA_Register
-
-	cp l, 0:i3
-	jr z, LcdTest_Done
-	set	2, (xsp)
-
-LcdTest_Done:
-	ld l, (xsp)
-	extz hl
-	inc 2, xsp
-	ret
+Test_LCD_Controller_IC206:	.include "includes/generated/cc900/Test_LCD_Controller_IC206.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LcdTest_WriteOneVerify, Test_LCD_Controller_IC206 + 26
+	.set	LcdTest_WriteZeroVerify, Test_LCD_Controller_IC206 + 48
+	.set	LcdTest_Done, Test_LCD_Controller_IC206 + 70
 
 Test_Video_RAM_IC207:
 	dec 2, xsp
@@ -2042,48 +1972,16 @@ LED_SetAll_BlankLoop:
 	ret
 
 
-FDC_CommandAndPostEvent:
-	lda xsp, (xsp - 0x10)
-	lda XWA, (XSP)
-	ldw (XWA), 0x0003
-	push XWA
-	call FDC_CommandEntry
-	inc 4,XSP
-	ld a, (FDC_ERROR_CODE:16)
-	cp A,0xfc
-	jr nz, FDC_PostEvent_Error
-	ld XWA,0xffffffff
-	ld XBC,EVT_PAGE_CHANGE
-	ld xde, 2:i3
-	jr t, FDC_PostEvent_Send
-FDC_PostEvent_Error:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_PAGE_CHANGE
-	ld	xde, 1:i3
-FDC_PostEvent_Send:
-	call ApPostEvent
-	lda	xsp, (xsp+16)
-	ret
+FDC_CommandAndPostEvent:	.include "includes/generated/cc900/FDC_CommandAndPostEvent.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_PostEvent_Error, FDC_CommandAndPostEvent + 39
+	.set	FDC_PostEvent_Send, FDC_CommandAndPostEvent + 51
 
 
-EffectMode_MidiParseLoop:
-	push	xiz
-	lda	xiz, (36012:16)
-	ld	xwa, xiz
-	call	PanelInput_ReadRxRecord
-	cp	hl, 65535
-	jr	z, EffectMode_MidiParse_Done
-EffectMode_MidiParse_Continue:
-	ld xwa, xiz
-	calr EffectMode_MidiSetLEDs
-	ld xwa, xiz
-	call PanelInput_ReadRxRecord
-	cp hl, 0xffff
-	jr nz, EffectMode_MidiParse_Continue
-
-EffectMode_MidiParse_Done:
-	pop xiz
-	ret
+EffectMode_MidiParseLoop:	.include "includes/generated/cc900/EffectMode_MidiParseLoop.s"	; C: cc900/ui_mode_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_MidiParse_Continue, EffectMode_MidiParseLoop + 17
+	.set	EffectMode_MidiParse_Done, EffectMode_MidiParseLoop + 34
 
 EffectMode_MidiSetLEDs:
 	push xiz
