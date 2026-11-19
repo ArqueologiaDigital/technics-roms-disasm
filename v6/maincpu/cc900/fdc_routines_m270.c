@@ -56,3 +56,30 @@ unsigned char FDC_Read_Status()
 {
     return *(unsigned char *)0x110008;
 }
+
+/* cc900-module: FDC_CMD_SEND FDC_CmdSeek FDC_POST_OP FDC_TIMING_DELAY */
+extern unsigned char __near FDC_TARGET_TRACK;
+extern unsigned char __near FDC_ERROR_CODE;
+extern void FDC_CmdSeek(void);
+extern void FDC_TIMING_DELAY(void);
+extern void FDC_CMD_SEND(int);
+extern void FDC_POST_OP(void);
+extern void FDC_CmdRecalibrate(void);
+
+void FDC_CmdRecalibrate(void)
+{
+	unsigned char t;
+
+	t = FDC_TARGET_TRACK;
+	FDC_TARGET_TRACK = 5;
+	FDC_CURRENT_CYLINDER = 255;
+	FDC_CmdSeek();
+	FDC_CURRENT_CYLINDER = 0;
+	FDC_TIMING_DELAY();
+	FDC_CMD_SEND(7);
+	FDC_POST_OP();
+	if (FDC_ERROR_CODE != 0)
+		FDC_CURRENT_CYLINDER = 255;
+	FDC_TARGET_TRACK = t;
+	SOME_DELAY(16);
+}

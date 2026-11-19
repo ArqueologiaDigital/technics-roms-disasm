@@ -1498,42 +1498,7 @@ MainLswPartPut:
 ;   Out: HL = 0.  Same shape as MainLswPut.
 MainLswAdd:	.include "includes/generated/cc900/MainLswAdd.s"	; C: cc900/ui_widget_defs_m271_b.c
 
-MainLswPartAdd:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 6), de
-	ld (xsp + 8), bc
-	ld iz, wa
-	pushw 0xc
-	call Malloc
-	inc 2, xsp
-	ld (xsp + 2), xhl
-	ld bc, (xsp + 8)
-	extz xbc
-	ld de, iz
-	extz xde
-	sll xde, 16
-	add xde, xbc
-	ld xwa, (xsp + 2)
-	ld (xwa), xde
-	ld bc, (xsp + 6)
-	ld (xwa + 4), bc
-	ld bc, (xsp + 14)
-	ld (xwa + 6), bc
-	ld xbc, 0:i3
-	ld (xwa + 8), xbc
-	ld xwa, NAKA_MAINFUNC_MainPmanControl
-	ld xbc, EVT_LSW_PART_ADD
-	ld xde, (xsp + 2)
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, (xsp + 2)
-	call MainFuncCall
-	ld hl, 0:i3
-	popw iz
-	inc 8, xsp
-	retd 0x2
+MainLswPartAdd:	.include "includes/generated/cc900/MainLswPartAdd.s"	; C: cc900/ui_widget_defs_m271_d.c
 
 ; Requests an LSW_GET from the panel-memory manager.
 ;   In:  XWA = the request's first field.  Builds a 12-byte block {XWA, 0, 0, 0} (Malloc) and
@@ -17890,39 +17855,10 @@ ResetApTimer_Epilogue:
 ; Restarts an application timer: cancels the one that matches XBC, XDE and the two stack words
 ; (KillApTimer) and, when there was one, arms it again with delay XWA (SetApTimer).
 ;   Out: HL = 1 when the timer existed, else 0.
-ResetApTimer:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), xbc
-	ld (xsp + 12), xwa
-	ld xwa, (xsp + 24)
-	push xwa
-	ld xiz, (xsp + 24)
-	push xiz
-	ld xwa, (xsp + 20)
-	ld xbc, (xsp + 16)
-	ld xde, (xsp + 12)
-	calr KillApTimer
-	cp hl, 0:i3
-	jr z, KillApTimer_ReturnZero
-	ld xwa, (xsp + 24)
-	push xwa
-	push xiz
-	ld xwa, (xsp + 20)
-	ld xbc, (xsp + 16)
-	ld xde, (xsp + 12)
-	calr SetApTimer
-	ld hl, 1:i3
-	jr KillApTimer_Return
-
-KillApTimer_ReturnZero:
-	ld hl, 0:i3
-
-KillApTimer_Return:
-	pop xiz
-	lda xsp, (xsp + 12)
-	retd 0x8
+ResetApTimer:	.include "includes/generated/cc900/ResetApTimer.s"	; C: cc900/ui_widget_defs_m273_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	KillApTimer_ReturnZero, ResetApTimer + 58
+	.set	KillApTimer_Return, ResetApTimer + 60
 
 ; Cancels an application timer armed with SetApTimer.
 ;   In:  XBC = object, XDE = the word stored at +12, stack +4 / +8 = the two stack arguments it
@@ -18102,8 +18038,7 @@ DrawQueue_Alloc:	.include "includes/generated/cc900/DrawQueue_Alloc.s"	; C: cc90
 	.set	DrawFunc_Prologue, DrawQueue_Alloc + 52
 	.set	DrawFunc_CallHandler, DrawQueue_Alloc + 61
 
-DrawFunc_Return:
-	ret
+DrawFunc_Return:	.include "includes/generated/cc900/DrawFunc_Return.s"	; C: cc900/ui_widget_defs_m273_xr.c
 
 DrawFunc:
 	push xiz
@@ -18227,43 +18162,7 @@ IS_XSP_INSIDE_4K_REGION_AT_1C032:
 IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop:
 	ret
 
-InitializeGraphics:
-	dec 8, xsp
-	push xiz
-	calr InitDrawTask
-	ld wa, 5:i3
-	call Kernel_StartTask
-	ldw (0x03ef92:24), 0x0001
-	call InitPaletteRGB
-	ld wa, 0:i3
-	calr ChangeWall
-	ld wa, 2:i3
-	calr ChangePalette
-	ld wa, 0:i3
-	calr ChangeWallPalette
-	lda xwa, (OFFSCREEN_BUFFER_1:24)
-	ld xiz, xwa
-	pushw 0x9600
-	pushw 0x0
-	push xwa
-	call Memset
-	add xiz, 0x9600
-	pushw 0x9600
-	pushw 0x0
-	push xiz
-	call Memset
-	lda xsp, (xsp + 16)
-	lda xwa, (xsp + 4)
-	ldw (xwa + 2), 0x0
-	ldw (xwa), 0x0
-	ldw (xwa + 4), 0x13f
-	ldw (xwa + 6), 0xef
-	calr SetChangeRect
-	calr UpdateScreen
-	calr LcdOn
-	pop xiz
-	inc 8, xsp
-	ret
+InitializeGraphics:	.include "includes/generated/cc900/InitializeGraphics.s"	; C: cc900/ui_widget_defs_m273_c.c
 
 ; LcdOn - Enable LCD display output (sets flag at 0x030464)
 LcdOn:

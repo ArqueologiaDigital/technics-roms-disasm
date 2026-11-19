@@ -57,3 +57,18 @@ void EffectMode_HandleTimerEvents(void)
         break;
     }
 }
+
+/* cc900-module: EffectMode_MidiSetLEDs */
+extern unsigned char __near ram_8cd0[];
+extern int PanelInput_ReadRxRecord(unsigned char *rec);
+extern void EffectMode_MidiSetLEDs(unsigned char *rec);
+extern void EffectMode_MidiParseLoop(void);
+
+void EffectMode_MidiParseLoop(void)
+{
+	unsigned char *p;
+
+	p = ram_8cd0;
+	while (PanelInput_ReadRxRecord(p) != -1)
+		EffectMode_MidiSetLEDs(p);
+}

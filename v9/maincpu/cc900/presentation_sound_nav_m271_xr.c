@@ -15,3 +15,31 @@ long GetDialFocus(void)
 	if (DIAL_ENABLE == 0) return -1;
 	return DIAL_FOCUS;
 }
+
+/* cc900-module: DrawTitleBar ScreenProc */
+extern void ChangeWallPalette(int n);
+extern void SetWallColor(int c);
+
+void SetWallColor(int c)
+{
+	int n;
+
+	switch (c) {
+	default:
+		n = 0;
+		break;
+	case 0xf8:
+		n = 2;
+		break;
+	case 2:
+		n = 4;
+		break;
+	case 0xf9:
+		n = 6;
+		break;
+	case 1:
+		n = 8;
+		break;
+	}
+	ChangeWallPalette(n);
+}

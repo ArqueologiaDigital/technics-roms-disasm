@@ -262,53 +262,12 @@ FDemoText_ActivateVoiceAlt:
 	inc 2, xsp
 	ret
 
-FDemoText_DeactivateVoice_RetOnly:
-	ret
+FDemoText_DeactivateVoice_RetOnly:	.include "includes/generated/cc900/FDemoText_DeactivateVoice_RetOnly.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
-FDemoText_UpdateVoiceDisplay:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	calr FDemoText_LookupTableEntry
-	ld xiz, xhl
-	inc 5, xiz
-	cp (xiz), 0x0
-	jr z, FDemoText_UpdateVoiceDisplay_CheckSend
-	ld (xiz), 0x0
-	ld a, (xsp + 4)
-	extz wa
-	pushw 0x7f
-	ld bc, 5:i3
-	ld de, 0:i3
-	call AddswbWr
-	lda xwa, (xiz + 2)
-	cp (xwa), 0x0
-	jr nz, FDemoText_UpdateVoiceDisplay_CheckSend
-	ld (xwa), 0x5a
-	ld a, (xsp + 4)
-	extz wa
-	pushw 0x7f
-	ld bc, 7:i3
-	ldw de, 0x5a
-	call AddswbWr
-
-FDemoText_UpdateVoiceDisplay_CheckSend:
-	ld a, (0x0247ee:24)
-	and a, 0x38
-	jr nz, FDemoText_UpdateVoiceDisplay_Done
-	ld c, (PANEL_DRAWBAR_RIGHT1:16)
-	cp (PANEL_DSP_EFFECT:16), c
-	jr z, FDemoText_UpdateVoiceDisplay_Done
-	extz bc
-	ldw wa, 0x61
-	calr FDemoText_NotifyUIChange
-
-FDemoText_UpdateVoiceDisplay_Done:
-	pop xiz
-	inc 2, xsp
-	ret
+FDemoText_UpdateVoiceDisplay:	.include "includes/generated/cc900/FDemoText_UpdateVoiceDisplay.s"	; C: cc900/fdemotext_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_UpdateVoiceDisplay_CheckSend, FDemoText_UpdateVoiceDisplay + 70
+	.set	FDemoText_UpdateVoiceDisplay_Done, FDemoText_UpdateVoiceDisplay + 98
 
 FDemoText_SyncVoicePreset:
 	dec 6, xsp
@@ -424,85 +383,11 @@ FDemoText_ParseControlMessage:	.include "includes/generated/cc900/FDemoText_Pars
 
 FDemoText_SendResetMessage:	.include "includes/generated/cc900/FDemoText_SendResetMessage.s"	; C: cc900/fdemotext_routines_m265.c
 
-FDemoText_SendVoiceParams:
-	lda xsp, (xsp - 12)
-	pushw_erp 0xfa
-	ld (xsp + 12), a
-	ld a, (xsp + 12)
-	extz wa
-	calr FDemoText_ProbeVoiceType
-	cp l, 0xc
-	jrl nz, FDemoText_SendVoiceParams_Return
-	lda xde, (xsp + 6)
-	ld (xde), 0xb0
-	ld a, (xsp + 12)
-	ld (xde + 1), a
-	ld (xde + 2), 0x78
-	ld (xde + 3), 0x0
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	lda xbc, (xsp + 6)
-	ld (xbc), 0x88
-	ld a, (xsp + 12)
-	ld (xbc + 1), a
-	ld (xbc + 3), 0x0
-	ld (xbc + 5), 0x0
-	ldw wa, 0x44
-	calr FDemoText_LookupTableEntry
-	ld (xsp + 2), xhl
-	ld xwa, 1:i3
-	add (xsp + 2), xwa
-	ldi_erpb 0xfb, 0x0b
-
-FDemoText_SendParams_NoteLoop:
-	lda xde, (xsp + 6)
-	ldto_berp A, 0xfb
-	ld (xde + 2), a
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	ld (xde + 4), a
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	ld xwa, 1:i3
-	add (xsp + 2), xwa
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x0c
-	jr ule, FDemoText_SendParams_NoteLoop
-	ld a, (xsp + 12)
-	add a, 0x44
-	extz wa
-	calr FDemoText_LookupTableEntry
-	ld (xsp + 2), xhl
-	ld xwa, 3:i3
-	add (xsp + 2), xwa
-	ldib_erp 0xfb, 4
-
-FDemoText_SendParams_LevelLoop:
-	lda xde, (xsp + 6)
-	ldto_berp A, 0xfb
-	ld (xde + 2), a
-	ld xwa, (xsp + 2)
-	ld a, (xwa)
-	ld (xde + 4), a
-	ld wa, 0:i3
-	ld bc, 6:i3
-	call sendCOMM
-	ld xwa, 1:i3
-	add (xsp + 2), xwa
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x08
-	jr ule, FDemoText_SendParams_LevelLoop
-	ld c, (xsp + 12)
-	extz bc
-	ldw wa, 0xff
-	call VoiceEvent_FlushAndReturn
-
-FDemoText_SendVoiceParams_Return:
-	popw_erp 0xfa
-	lda xsp, (xsp + 12)
-	ret
+FDemoText_SendVoiceParams:	.include "includes/generated/cc900/FDemoText_SendVoiceParams.s"	; C: cc900/fdemotext_routines_m265_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_SendParams_NoteLoop, FDemoText_SendVoiceParams + 89
+	.set	FDemoText_SendParams_LevelLoop, FDemoText_SendVoiceParams + 150
+	.set	FDemoText_SendVoiceParams_Return, FDemoText_SendVoiceParams + 201
 
 FDemoText_SendExtVoiceParams:	.include "includes/generated/cc900/FDemoText_SendExtVoiceParams.s"	; C: cc900/fdemotext_routines_m265.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -607,43 +492,9 @@ FDemoText_SendExtAlt_NoteLoop:
 ; Returns in L the type byte that SndParam_FetchOscTableEntry produces for demo voice A: an 8-byte
 ; local record with +2 = A and +3/+4 = the two bytes of A's entry in the table at (PART_RECORD_PTRS)
 ; (FDemoText_LookupTableEntry); the result is the record's byte 0.
-FDemoText_ProbeVoiceType:
-	dec 8, xsp
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	calr FDemoText_LookupTableEntry
-	lda xbc, (xsp)
-	ld A, (xhl+)
-	ld (xbc + 3), a
-	ld a, (xhl)
-	ld (xbc + 4), a
-	ld a, (xsp + 6)
-	ld (xbc + 2), a
-	ld xwa, xbc
-	call SndParam_FetchOscTableEntry
-	ld l, (xsp + 0:8)
-	inc 8, xsp
-	ret
+FDemoText_ProbeVoiceType:	.include "includes/generated/cc900/FDemoText_ProbeVoiceType.s"	; C: cc900/fdemotext_routines_m265.c
 
-FDemoText_ByteData_ProbeHelper:
-	dec	8, xsp
-	ld	(xsp+6), a
-	ld	a, (xsp+6)
-	extz	wa
-	calr	FDemoText_LookupTableEntry
-	lda	xbc, (xsp)
-	ld	a, (xhl+)
-	ld	(xbc+0x3), a
-	ld	a, (xhl)
-	ld	(xbc+0x4), a
-	ld	a, (xsp+0x6)
-	ld	(xbc+0x2), a
-	ld	xwa, xbc
-	call	SndParam_FetchOscTableEntry
-	ld	l, (xsp+1)
-	inc	8, xsp
-	ret
+FDemoText_ByteData_ProbeHelper:	.include "includes/generated/cc900/FDemoText_ByteData_ProbeHelper.s"	; C: cc900/fdemotext_routines_m0.c
 
 FDemoText_CheckVoiceState:
 	dec 2, xsp
@@ -948,50 +799,12 @@ FDemoText_RefreshFullDisplay:
 	pop xde
 	ret
 
-FDemoText_ByteData_DisplayRefresh:
-	push	xiz
-	ld	xiz, xwa
-	cp	xiz, 0xffffffff
-	jr	nz, FDemoText_ByteData_DisplayRefresh_Skip
-	lda	xhl, (FDemoText_ByteData_DisplayRefresh_Str_NONE:24)
-	jr	FDemoText_ByteData_DisplayRefresh_Epilogue
-FDemoText_ByteData_DisplayRefresh_Skip:
-	ld	xwa, xiz
-	ld	xbc, EVT_GET_NAME
-	ld	xde, 0:i3
-	call	SendEvent
-	cp	(xhl), 0
-	jr	nz, FDemoText_ByteData_DisplayRefresh_Skip2
-	ld	xwa, xiz
-	srl	xwa, 16
-	and	xwa, 4095
-	extz	xwa
-	add	xwa, TITLE_PS
-	ld	xbc, EVT_GET_NAME
-	ld	xde, 0:i3
-	call	SendEvent
-	ld	xwa, xiz
-	ld	qwa, 0
-	pushw	wa
-	push	xhl
-	pushw	FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd@hi16
-	pushw	FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd@lo16
-	pushw	2
-	pushw	0x47f6
-	call	Sprintf_Locked
-	lda	xsp, (xsp+14)
-	jr	FDemoText_ByteData_DisplayRefresh_Join
-FDemoText_ByteData_DisplayRefresh_Skip2:
-	push	xhl
-	pushw	2
-	pushw	0x47f6
-	call	Strcpy
-	inc	8, xsp
-FDemoText_ByteData_DisplayRefresh_Join:
-	lda	xhl, (0x0247f6:24)
-FDemoText_ByteData_DisplayRefresh_Epilogue:
-	pop	xiz
-	ret
+FDemoText_ByteData_DisplayRefresh:	.include "includes/generated/cc900/FDemoText_ByteData_DisplayRefresh.s"	; C: cc900/fdemotext_routines_m265_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_ByteData_DisplayRefresh_Skip, FDemoText_ByteData_DisplayRefresh + 18
+	.set	FDemoText_ByteData_DisplayRefresh_Skip2, FDemoText_ByteData_DisplayRefresh + 94
+	.set	FDemoText_ByteData_DisplayRefresh_Join, FDemoText_ByteData_DisplayRefresh + 107
+	.set	FDemoText_ByteData_DisplayRefresh_Epilogue, FDemoText_ByteData_DisplayRefresh + 112
 ; FDemoText_GetInstanceID: Finds the view object whose name equals the string XWA: walks classes 255..0 and their
 ;   instances (CountObject, CheckViewObject), compares each object's name (FDemoText_ByteData_DisplayRefresh) and
 ;   returns its id class<<16 | instance in XHL; if none matches it posts "Error! (GetInstanceID)" to the debug memo
@@ -2431,36 +2244,7 @@ Seq_CopyResourcePtrs:	.include "includes/generated/cc900/Seq_CopyResourcePtrs.s"
 	.set	Seq_UseFallbackAddr, Seq_CopyResourcePtrs + 67
 	.set	Seq_StoreResultAddr, Seq_CopyResourcePtrs + 77
 
-Seq_InitializeAndStart:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-	ldw (PRESENTATION_LOADED:24), 0x0001
-	ld wa, 0:i3
-	calr Seq_InitVoiceStructures
-	ld xwa, (xsp + 4)
-	push xwa
-	call Strlen
-	inc 1, hl
-	pushw hl
-	call Malloc
-	ld xiz, xhl
-	ld xwa, (xsp + 10)
-	push xwa
-	push xiz
-	call Strcpy
-	lda xsp, (xsp + 14)
-	ld xwa, NAKA_MAINFUNC_MainPreControl
-	ld xbc, EVT_READ_PRESENTATION_REQ
-	ld xde, xiz
-	call MainFuncCall
-	ld xwa, NAKA_MAINFUNC_MainAutoFree
-	ld xbc, EVT_AUTO_FREE
-	ld xde, xiz
-	call MainFuncCall
-	pop xiz
-	inc 4, xsp
-	ret
+Seq_InitializeAndStart:	.include "includes/generated/cc900/Seq_InitializeAndStart.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
 ; =============================================================================
 ; Display resource loader functions (F86360-F86470)

@@ -1898,104 +1898,16 @@ MovePixels_Impl:	.include "includes/generated/cc900/MovePixels_Impl.s"	; C: cc90
 ;
 ; This is used for drawing full-screen backgrounds (wallpaper/splash).
 ; =============================================================================
-DrawWall:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawWall_DirectPath
-	ldw (0x030450:24), 0x0001
-	ldw (DRAW_ENABLED:24), 0x0001
-	jr DrawWall_DoCopy
+DrawWall:	.include "includes/generated/cc900/DrawWall.s"	; C: cc900/drawing_primitives_m273_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawWall_DirectPath, DrawWall + 23
+	.set	DrawWall_WaitVblankBefore, DrawWall + 39
+	.set	DrawWall_SetCopyFlag, DrawWall + 60
+	.set	DrawWall_WaitVblankAfter, DrawWall + 76
+	.set	DrawWall_Deferred, DrawWall + 97
+DrawWall_Deferred_Code:	.include "includes/generated/cc900/DrawWall_Deferred_Code.s"	; C: cc900/drawing_primitives_m0_xr_b.c
 
-DrawWall_DirectPath:
-	ldw (0x030450:24), 0x0000
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawWall_SetCopyFlag
-
-DrawWall_WaitVblankBefore:
-	ld wa, 1:i3
-	call Kernel_SemaSignal
-	ld wa, 3:i3
-	call Kernel_YieldRotate
-	cpw (DRAW_ENABLED:24), 0
-	jr nz, DrawWall_WaitVblankBefore
-
-DrawWall_SetCopyFlag:
-	ldw (0x030450:24), 0x0001
-	cpw (DRAW_ENABLED:24), 0
-	jr nz, DrawWall_Deferred
-
-DrawWall_WaitVblankAfter:
-	ld wa, 1:i3
-	call Kernel_SemaSignal
-	ld wa, 3:i3
-	call Kernel_YieldRotate
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawWall_WaitVblankAfter
-
-DrawWall_Deferred:
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawWall_Deferred_Code:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
-DrawWall_Deferred_Code:
-	jr DrawWall_DoCopy
-
-DrawWall_DoCopy:
-	lda xsp, (xsp - 12)
-
-	push xiz
-
-	ld xiz, (WALLPAPER_BITMAP:24)
-
-	lda xwa, (OFFSCREEN_BUFFER_1:24)
-
-	ld (xsp + 4), xwa
-
-	pushw 0x9600
-
-	push xiz
-
-	push xwa
-
-	call	Mem_Copy
-
-	ld xwa, 0x9600
-
-	add (xsp + 14), xwa
-
-	add xiz, 0x9600
-
-	pushw 0x9600
-
-	push xiz
-
-	ld xwa, (xsp + 20)
-
-	push xwa
-
-	call	Mem_Copy
-
-	lda xsp, (xsp + 20)
-
-	lda xwa, (xsp + 8)
-
-	ldw (xwa + 2), 0x0
-
-	ldw (xwa), 0x0
-
-	ldw (xwa + 4), 0x13f
-
-	ldw (xwa + 6), 0xef
-
-	calr	SetChangeRect
-
-	pop xiz
-
-	lda xsp, (xsp + 12)
-
-	ret
+DrawWall_DoCopy:	.include "includes/generated/cc900/DrawWall_DoCopy.s"	; C: cc900/drawing_primitives_m0.c
 
 
 
@@ -2978,39 +2890,10 @@ DrawBitmapSP2_Impl_Return:
 	lda xsp, (xsp + 22)
 	retd 0x6
 
-DrawBitmapFile:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBitmapFile_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBitmapFile_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr DrawBitmapFile_Impl
-	jr DrawBitmapFile_Return
-
-DrawBitmapFile_DeferredPath:
-	ldw wa, 0xc
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBitmapFile_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 4)
-	ld (xwa + 8), xbc
-	calr DrawRing_Post
-
-DrawBitmapFile_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+DrawBitmapFile:	.include "includes/generated/cc900/DrawBitmapFile.s"	; C: cc900/drawing_primitives_m273_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBitmapFile_DeferredPath, DrawBitmapFile + 34
+	.set	DrawBitmapFile_Return, DrawBitmapFile + 67
 
 ; Executor of a queued DrawBitmapFile: DrawBitmapFile_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -3018,14 +2901,7 @@ DrawBitmapFile_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawBitmapFile makes before drawing directly) and otherwise calls DrawBitmapFile_Impl.
 ; (Formerly DrawBitmapFile_ParamBlock, held as `.byte`.)
-DrawBitmapFile_QueuedExec:
-	lda xde, (xwa + 4)
-	ld xbc, (xwa + 8)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr DrawBitmapFile_Impl
-	ret
+DrawBitmapFile_QueuedExec:	.include "includes/generated/cc900/DrawBitmapFile_QueuedExec.s"	; C: cc900/drawing_primitives_m0_xr_b.c
 
 DrawBitmapFile_Impl:
 	lda xsp, (xsp - 0x0438)

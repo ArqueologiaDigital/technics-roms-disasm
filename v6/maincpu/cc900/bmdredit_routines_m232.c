@@ -488,3 +488,17 @@ void BmDrEdit_SetupAndWalkToNote(void)
 	ram_2946 = ram_276c;
 	BmDrEdit_AdjustScrollToView();
 }
+
+/* cc900-module: BmDrEdit_CheckAndAdvancePage */
+extern void BmDrEdit_CheckAndAdvancePage(void);
+extern void BmDrEdit_CalcTickPosition(void);
+
+void BmDrEdit_CalcTickPosition(void)
+{
+	unsigned int t;
+
+	BmDrEdit_CheckAndAdvancePage();
+	t = ram_2768 * 0x60;
+	t += ram_276a;
+	ram_2780 = t;
+}

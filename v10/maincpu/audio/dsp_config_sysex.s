@@ -3790,91 +3790,19 @@ DSPCfg_FindParamAtRecordOffset_Skip3:
 ;   DspFxRecListPtrTable list. HL = 0, or 0xFFFF for a bad code / no parameter there; retd 4. Basis: callers + body --
 ;   EffEdit_DSPConfigBlock (in the SwbtWr lists of codes 0x61, 0x63-0x66) passes the event and then treats id base+0
 ;   as an effect-type change (EVT_RET_EFF_FIX) and base+0x10+n as parameter n (EVT_RET_EFF_PARA).
-DSPCfg_RecordFieldToParamId:
-	lda	xsp, (xsp-0xa)
-	push	xiz
-	ld	(xsp+0xa), e
-	ld	(xsp+0xc), c
-	ldw	(xsp+0x4), 0
-	extz	wa
-	sub	wa, 97
-	cp	wa, 0:i3
-	jr	lt, DSPCfg_Data_ParamDispatch_Skip6
-	cp	wa, 5:i3
-	jr	gt, DSPCfg_Data_ParamDispatch_Skip6
-	add	wa, wa
-	lda	xix, (DspCfg_OpLetter_JumpOffsets:24)
-	ld	wa, (xix+wa)
-	lda	xix, (DSPCfg_RecordFieldToParamId_DspEffectRecord:24)
-	jp	t, (xix+wa)
-; DSPCfg_RecordFieldToParamId_DspEffectRecord: Tag 0x61 (also the switch base): id base 0x4900 in DSP slot 0, the DSP
-;   EFFECT slot. Basis: switch value (tag - 0x61) + body.
-DSPCfg_RecordFieldToParamId_DspEffectRecord:
-	ld	xiz, 0x4900
-	ld	wa, 0:i3
-	jr	DSPCfg_Data_ParamDispatch_Join3
-; DSPCfg_RecordFieldToParamId_Tag62ReverbSlot: Tag 0x62: id base 0x4A00 in DSP slot 1 (the DIGITAL REVERB slot); 0x62
-;   has no panel record of its own.
-DSPCfg_RecordFieldToParamId_Tag62ReverbSlot:
-	ld	xiz, 0x4a00
-	jr	DSPCfg_Data_ParamDispatch_Join2
-DSPCfg_RecordFieldToParamId_DigitalReverbRecord:
-	ld	xiz, 0x4b00
-DSPCfg_Data_ParamDispatch_Join2:
-	ld	wa, 1:i3
-	jr	DSPCfg_Data_ParamDispatch_Join3
-DSPCfg_RecordFieldToParamId_EqualizerRecord:
-	ld	xiz, 0x4c00
-	ld	wa, 4:i3
-	jr	DSPCfg_Data_ParamDispatch_Join3
-DSPCfg_RecordFieldToParamId_AcousticIllusionRecord:
-	ld	xiz, 0x4d00
-	ld	wa, 2:i3
-	jr	DSPCfg_Data_ParamDispatch_Join3
-DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord:
-	ld	xiz, 0x4e00
-	ld	wa, 3:i3
-	jr	DSPCfg_Data_ParamDispatch_Join3
-DSPCfg_Data_ParamDispatch_Skip6:
-	ldw	(xsp+0x4), 0xffff
-DSPCfg_Data_ParamDispatch_Join3:
-	cp	(xsp+12), 1
-	jr	c, DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Join4
-	cp	(xsp+12), 17
-	jr	nc, DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Join4
-	calr	DSPCfg_LookupMidiMap
-	ld	(xsp+6), xhl
-	ld	xwa, (xsp+6)
-	calr	DSPCfg_GetParamCount
-	extz	xhl
-	sll	xhl, 2
-	ld	xbc, DspFxRecListPtrTable
-	add	xbc, xhl
-	ld	xbc, (xbc)
-	ld	xwa, 1:i3
-	add	(xsp+6), xwa
-	ld	e, (xsp+12)
-	dec	1, e
-	extz	de
-	lda	xwa, (xsp+10)
-	push	xwa
-	ld	xwa, (xsp+10)
-	calr	DSPCfg_FindParamAtRecordOffset
-	cp	hl, 0xffff
-	jr	nz, DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Skip7
-	ldw	(xsp+4), 65535
-	jr	DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Join4
-DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Skip7:
-	add	hl, 16
-	exts	xhl
-	add	xiz, xhl
-DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Join4:
-	ld	xwa, (xsp+18)
-	ld	(xwa), xiz
-	ld	hl, (xsp+4)
-	pop	xiz
-	lda	xsp, (xsp+10)
-	retd	4
+DSPCfg_RecordFieldToParamId:	.include "includes/generated/cc900/DSPCfg_RecordFieldToParamId.s"	; C: cc900/dsp_config_sysex_m293.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_RecordFieldToParamId_DspEffectRecord, DSPCfg_RecordFieldToParamId + 51
+	.set	DSPCfg_RecordFieldToParamId_Tag62ReverbSlot, DSPCfg_RecordFieldToParamId + 60
+	.set	DSPCfg_RecordFieldToParamId_DigitalReverbRecord, DSPCfg_RecordFieldToParamId + 67
+	.set	DSPCfg_Data_ParamDispatch_Join2, DSPCfg_RecordFieldToParamId + 72
+	.set	DSPCfg_RecordFieldToParamId_EqualizerRecord, DSPCfg_RecordFieldToParamId + 76
+	.set	DSPCfg_RecordFieldToParamId_AcousticIllusionRecord, DSPCfg_RecordFieldToParamId + 85
+	.set	DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord, DSPCfg_RecordFieldToParamId + 94
+	.set	DSPCfg_Data_ParamDispatch_Skip6, DSPCfg_RecordFieldToParamId + 103
+	.set	DSPCfg_Data_ParamDispatch_Join3, DSPCfg_RecordFieldToParamId + 108
+	.set	DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Skip7, DSPCfg_RecordFieldToParamId + 181
+	.set	DSPCfg_RecordFieldToParamId_Slot3RoomKaraokeRecord_Join4, DSPCfg_RecordFieldToParamId + 189
 
 DSPCfg_CheckParamTableEntry:	.include "includes/generated/cc900/DSPCfg_CheckParamTableEntry.s"	; C: cc900/dsp_config_sysex_m293_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets

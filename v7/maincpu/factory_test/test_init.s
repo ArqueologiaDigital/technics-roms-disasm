@@ -394,41 +394,12 @@ TitleFunc_Return:
 ; Args: (xsp+4) = directory path string pointer
 ; Returns: hl = 0 on success, 0xffff on open failure
 ; Stack frame: 266 bytes
-ListDir2_Entry:
-	lda xsp, (xsp - 266)
-	push xiz
-	lda xwa, (ListDir2_Entry_Str_A_HAMA_LSW:24)
-	lda xbc, (xsp + 4)
-	call _findfirst
-	ld xiz, xhl
-	cp xiz, 0xffffffff
-	jr nz, ListDir2_LogEntry
-	ldw hl, 0xffff
-	jr ListDir2_Return
-ListDir2_LogEntry:
-	lda xwa, (xsp + 10)
-	calr FDTest_PrintDiag
-	ld xbc, (xsp + 4)
-	ld xwa, xiz
-	call _findnext
-	cp hl, 0xffff
-	jr z, ListDir2_CloseDir
-ListDir2_NextEntry:
-	lda xwa, (xsp + 10)
-	calr FDTest_PrintDiag
-	ld xbc, (xsp + 4)
-	ld xwa, xiz
-	call _findnext
-	cp hl, 0xffff
-	jr nz, ListDir2_NextEntry
-ListDir2_CloseDir:
-	ld xwa, xiz
-	call _findclose
-	ld hl, 0:i3
-ListDir2_Return:
-	pop xiz
-	lda xsp, (xsp + 266)
-	ret
+ListDir2_Entry:	.include "includes/generated/cc900/ListDir2_Entry.s"	; C: cc900/test_init_m159.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ListDir2_LogEntry, ListDir2_Entry + 33
+	.set	ListDir2_NextEntry, ListDir2_Entry + 54
+	.set	ListDir2_CloseDir, ListDir2_Entry + 75
+	.set	ListDir2_Return, ListDir2_Entry + 83
 
 ; RunTestAndUpdateCounters -- Checks FD status (0xf525ec), runs FDLoadSaveTest
 ; if status is 2 or 3, increments TOTAL/OK/NG counters at 0x03dcfe-0x03dd02,

@@ -120,3 +120,71 @@ void CombinedPreset_Load(unsigned char n)
     SoundParam_NotifyChange(0x4002L, 0x7f, 1);
     SoundParam_NotifyChange(0x4006L, 1, 1);
 }
+
+extern void SndParam_ApplyProgramChange(unsigned char *);
+extern void Rhythm_LookupTempoVelocity_Wrap(void);
+extern void SndParam_ApplyAndFetch(void);
+extern void VoiceParam_CompareAndUpdate(unsigned char m);
+extern void ExtData_SetTlvField(unsigned char m);
+
+void SndParam_ApplyAndFetch(void)
+{
+	unsigned char b[6];
+	unsigned char *s;
+	unsigned char *d;
+	unsigned char c;
+
+	d = b;
+	s = ram_902a;
+	d[0] = s[0];
+	d[1] = s[1];
+	d[2] = c = s[2];
+	if (c <= 0x1f) {
+		SndParam_ApplyProgramChange(d);
+		s = ram_902e;
+		d = b;
+		s[0] = d[3];
+		s[1] = d[4];
+	} else if (c == 0x48)
+		Rhythm_LookupTempoVelocity_Wrap();
+}
+void VoiceParam_CompareAndUpdate(unsigned char m)
+{
+	unsigned char *p;
+	unsigned char v;
+
+	if ((EXTDATA_MASK & m) == 0)
+		return;
+	if ((EXTDATA_VALUE & m) == 0)
+		return;
+	p = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+	if (p == (unsigned char *)-1L)
+		return;
+	p += EXTDATA_TLV_OFFSET;
+	v = (~m & *p) | EXTDATA_VALUE;
+	if (v == EXTDATA_NEW_VALUE)
+		return;
+	*p = v;
+	EXTDATA_NEW_VALUE = v;
+	MIDI_MSG_DATA2 = v;
+	MIDI_MSG_DATA3 |= m;
+}
+void ExtData_SetTlvField(unsigned char m)
+{
+	unsigned char *p;
+	unsigned char v;
+
+	if ((EXTDATA_MASK & m) == 0)
+		return;
+	p = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+	if (p == (unsigned char *)-1L)
+		return;
+	p += EXTDATA_TLV_OFFSET;
+	v = (*p & ~m) | EXTDATA_VALUE;
+	if (v == EXTDATA_NEW_VALUE)
+		return;
+	*p = v;
+	EXTDATA_NEW_VALUE = v;
+	MIDI_MSG_DATA2 = v;
+	MIDI_MSG_DATA3 |= m;
+}

@@ -12999,47 +12999,7 @@ PsMixer_DrawCaptionFrame_Join:
 ;   The row's edit switch is 136 + BC mod 5 (GetEditSwPoint); the band spans x = 8..311 and
 ;   y = switch y - 9 .. switch y + 31, both minus BC mod 5 and plus the word at +4 of the row's
 ;   12-byte record (array based at the u32 at 0x3ea30).
-PsMixer_CalcRowBandRect:
-	dec	8, xsp
-	push	xiz
-	ld	xiz, xwa
-	ld	wa, bc
-	exts	xwa
-	divs	wa, 5
-	ld	wa, qwa
-	ld	(xsp+6), wa
-	ld	wa, bc
-	exts	xwa
-	ld	xbc, xwa
-	add	xbc, xbc
-	add	xbc, xwa
-	sll	xbc, 2
-	add	xbc, (0x3ea30:24)
-	ld	wa, (xbc+4)
-	ld	(xsp+4), wa
-	ldw	wa, 136
-	add	wa, (xsp+6)
-	lda	xbc, (xsp+8)
-	call	GetEditSwPoint
-	lda	xde, (xiz+2)
-	lda	xbc, (xsp+10)
-	ld	wa, (xbc)
-	sub	wa, 9
-	sub	wa, (xsp+6)
-	ld	(xde), wa
-	ldw	(xiz), 8
-	ldw	(xiz+4), 311
-	lda	xhl, (xiz+6)
-	ld	wa, (xbc)
-	add	wa, 31
-	sub	wa, (xsp+6)
-	ld	(xhl), wa
-	ld	wa, (xsp+4)
-	add	(xde), wa
-	add	(xhl), wa
-	pop	xiz
-	inc	8, xsp
-	ret
+PsMixer_CalcRowBandRect:	.include "includes/generated/cc900/PsMixer_CalcRowBandRect.s"	; C: cc900/drawbar_panel_ui_m264.c
 PsMixer_CalcSwitchPointInFrame:
 	lda	xsp, (xsp-22)
 	push	xiz

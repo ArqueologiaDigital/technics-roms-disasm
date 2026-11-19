@@ -142,8 +142,9 @@ def erp_byte(op, raw):
         # c7 <bank> <op base + r>, llvm-mc's cpb_erp / addb_erp / ... r, bank (the ROM's Voice_Poly_NoteOn:
         # cpb_erp A, 0xFA = c7 fa f1, cp A,QIZL).  No xorb_erp exists, so xor stays untranslated.
         return '\t%sb_erp %s, 0x%x' % (b, raw[0].lower(), ERP_BYTE[raw[1]])
-    if op in ('inc', 'dec') and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE and 1 <= num(raw[0]) <= 8:
-        return '\t%sb_erp 0x%x, %d' % (op, ERP_BYTE[raw[1]], num(raw[0]))   # inc 0x1,QIZH = c7 fb 61 (lane_sub)
+    if op in ('inc', 'dec') and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE and 0 <= num(raw[0]) <= 8:
+        return '\t%sb_erp 0x%x, %d' % (op, ERP_BYTE[raw[1]], num(raw[0]) or 8)   # inc 0x1,QIZH = c7 fb 61 (lane_sub);
+        #                                                                   a count field of 0 means 8 (2026-11-19)
     if op in ERP_BIT_OP and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE:
         return '\t%s 0x%x, %d' % (ERP_BIT_OP[op], ERP_BYTE[raw[1]], num(raw[0]))
     return '\t; untranslated (a byte register llvm-mc cannot name): ' + op + ' ' + ','.join(raw)
@@ -353,7 +354,7 @@ def translate_line(t, syms, locals_):
     args = [operand(a, syms, locals_) for a in raw]
     if any(a is None for a in args): return '\t; untranslated: ' + t.strip()
     if base in ('inc', 'dec') and len(args) == 2:
-        return '\t%s%s %d, %s' % (base, 'w' if sz == 'w' else '', num(args[0]), args[1])
+        return '\t%s%s %d, %s' % (base, 'w' if sz == 'w' else '', num(args[0]) or 8, args[1])  # count field 0 = 8
     if base == 'ld' and len(args) == 2 and raw[0] in R8 and NUM.match(raw[1]):
         return '\tld %s, 0x%x:opc' % (args[0], num(raw[1]) & 0xff)            # String_Compare: ld l, 0x0:opc
     if base in ('ld', 'cp') and len(args) == 2 and REGS.match(raw[0]) and re.match(r'^(0x[0-7]|[0-7])$', raw[1]) \

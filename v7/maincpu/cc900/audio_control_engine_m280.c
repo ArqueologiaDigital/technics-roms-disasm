@@ -142,3 +142,20 @@ void CombinedPreset_Load(unsigned char n)
     SoundParam_NotifyChange(0x4002L, 0x7f, 1);
     SoundParam_NotifyChange(0x4006L, 1, 1);
 }
+
+/* cc900-module: ExtData_Tag43_SetByte1Fields */
+extern void ExtData_Drawbar_SetByte7Fields(void);
+extern void ExtData_Tag43_SetByte1Fields(void);
+
+void ExtData_Drawbar_SetByte7Fields(void)
+{
+	ExtData_SetTlvField(15);
+	ExtData_ToggleTlvBits(48);
+	SwbtWr_FlushAndAppendParams();
+}
+void ExtData_Tag43_SetByte1Fields(void)
+{
+	ExtData_SetTlvField(128);
+	ExtData_SetTlvField(127);
+	SwbtWr_FlushAndAppendParams();
+}
