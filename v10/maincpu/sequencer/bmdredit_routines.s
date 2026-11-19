@@ -2095,15 +2095,7 @@ BmDrEdit_SeekVoice_DecrementLoop:
 
 ; Advances the page if needed (BmDrEdit_CheckAndAdvancePage) and sets the cursor tick 0x279a =
 ; (0x2782) * 96 + (0x2784).
-BmDrEdit_CalcTickPosition:
-	calr BmDrEdit_CheckAndAdvancePage
-	ld bc, (0x2782:16)
-	mul bc, 0x60
-	ld a, (0x2784:16)
-	extz wa
-	add bc, wa
-	ld (0x279a:16), bc
-	ret
+BmDrEdit_CalcTickPosition:	.include "includes/generated/cc900/BmDrEdit_CalcTickPosition.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_ReloadChannelAndDisplay:	.include "includes/generated/cc900/BmDrEdit_ReloadChannelAndDisplay.s"	; C: cc900/bmdredit_routines_m0.c
 ; the hand assembly's labels inside the compiled body, by their offsets

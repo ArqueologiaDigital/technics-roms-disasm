@@ -57,3 +57,31 @@ unsigned char FDemoText_ByteData_ProbeHelper(unsigned char v)
 	SndParam_FetchOscTableEntry(p);
 	return rec[1];
 }
+
+/* cc900-module: FDemoText_NotifyUIChange FDemoText_ProbeVoiceType FDemoText_ReadTaggedBlock */
+extern void AddswbWr(int, int, int, int);
+extern unsigned char ram_247ee;
+extern unsigned char __near PANEL_DSP_EFFECT[];
+extern unsigned char __near PANEL_DRAWBAR_RIGHT1[];
+extern void FDemoText_NotifyUIChange(int a, unsigned char v);
+extern void FDemoText_UpdateVoiceDisplay(unsigned char ch);
+
+void FDemoText_UpdateVoiceDisplay(unsigned char ch)
+{
+	unsigned char *e;
+	unsigned char *f;
+
+	e = FDemoText_LookupTableEntry(ch);
+	e += 5;
+	if (*e != 0) {
+		*e = 0;
+		AddswbWr(ch, 5, 0, 0x7f);
+		f = e + 2;
+		if (*f == 0) {
+			*f = 0x5a;
+			AddswbWr(ch, 7, 0x5a, 0x7f);
+		}
+	}
+	if ((ram_247ee & 0x38) == 0 && PANEL_DRAWBAR_RIGHT1[0] != PANEL_DSP_EFFECT[0])
+		FDemoText_NotifyUIChange(0x61, PANEL_DRAWBAR_RIGHT1[0]);
+}

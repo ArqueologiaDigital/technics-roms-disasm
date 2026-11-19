@@ -49,3 +49,29 @@ extern void FDemoText_DeactivateVoice_RetOnly(void);
 void FDemoText_DeactivateVoice_RetOnly(void)
 {
 }
+
+/* cc900-module: Seq_InitVoiceStructures */
+extern int PRESENTATION_LOADED;
+extern void Seq_InitVoiceStructures(int);
+extern int __cdecl Strlen(char *);
+extern void *__cdecl Malloc(unsigned int);
+extern long MainFuncCall(long, long, long);
+extern void Seq_InitializeAndStart(char *name);
+
+void Seq_InitializeAndStart(char *name)
+{
+	char *s;
+	long f;
+	long e;
+
+	PRESENTATION_LOADED = 1;
+	Seq_InitVoiceStructures(0);
+	s = Malloc(Strlen(name) + 1);
+	Strcpy(s, name);
+	f = 0x1410000L;
+	e = 0x1e10003L;
+	MainFuncCall(f, e, (long)s);
+	f = 0x1400003L;
+	e = 0x1e00023L;
+	MainFuncCall(f, e, (long)s);
+}

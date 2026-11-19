@@ -23917,28 +23917,11 @@ ApplyProgramChangeAs_RestoreReg2:
 	inc 8, xsp
 	ret
 
-ApplyProgramChangeAs_DoLookupRe:
-	ld xwa, 0xc0
-	call SndParam_LookupReadOnly
-	cp hl, 1:i3
-	jr nz, ApplyProgramChangeAs_LoadDRAM
-	call GetCurrentPartSelect
-	cp l, 0xf
-	jr z, ApplyProgramChangeAs_SetByte
-	ld l, 0x80:opc
-	jr ApplyProgramChangeAs_Return
-
-ApplyProgramChangeAs_SetByte:
-	ld l, 0x89:opc
-	jr ApplyProgramChangeAs_Return
-
-ApplyProgramChangeAs_LoadDRAM:
-	ld xwa, (SOUND_TABLE_BASE:16)
-	ld xwa, (xwa + 4)
-	ld l, a
-
-ApplyProgramChangeAs_Return:
-	ret
+ApplyProgramChangeAs_DoLookupRe:	.include "includes/generated/cc900/ApplyProgramChangeAs_DoLookupRe.s"	; C: cc900/note_voice_mapping_m303.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ApplyProgramChangeAs_SetByte, ApplyProgramChangeAs_DoLookupRe + 26
+	.set	ApplyProgramChangeAs_LoadDRAM, ApplyProgramChangeAs_DoLookupRe + 30
+	.set	ApplyProgramChangeAs_Return, ApplyProgramChangeAs_DoLookupRe + 39
 
 ApplyProgramChangeAs_LoadDRAM2:
 	ld xhl, (SOUND_TABLE_BASE:16)
@@ -24034,24 +24017,10 @@ FetchOscTableEntry_LoadReg2:
 	ld xbc, 0x24
 	jr FetchOscTableEntry_Prologue
 
-SndParam_ApplyProgramChange:
-	push xiz
-	ld xiz, xwa
-	ld xwa, 0xc0
-	call SndParam_LookupReadOnly
-	cp hl, 1:i3
-	jr nz, ApplyProgramChange_LoadIter
-	ld xwa, xiz
-	calr FetchOscTableEntry_LoadReg2
-	jr ApplyProgramChange_Epilogue
-
-ApplyProgramChange_LoadIter:
-	ld xwa, xiz
-	calr FetchOscTableEntry_LoadReg
-
-ApplyProgramChange_Epilogue:
-	pop xiz
-	ret
+SndParam_ApplyProgramChange:	.include "includes/generated/cc900/SndParam_ApplyProgramChange.s"	; C: cc900/note_voice_mapping_m303.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ApplyProgramChange_LoadIter, SndParam_ApplyProgramChange + 23
+	.set	ApplyProgramChange_Epilogue, SndParam_ApplyProgramChange + 28
 
 ApplyProgramChange_LoadDRAM:
 	ld xhl, (SOUND_TABLE_BASE:16)

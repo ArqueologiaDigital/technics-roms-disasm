@@ -1538,68 +1538,14 @@ LoadRegion1_Return:
 	lda xsp, (xsp + 14)
 	ret
 
-FileIO_LoadRegion7_Flash:
-	; --- Display region 7: flash/file buffer 0x3d3000, 0x0400 bytes ---
-	lda xsp, (xsp - 14)
-	push xiz				; save XIZ (4 bytes)
-	ld xbc, xwa
-	lda xwa, (xsp + 4)			; stack offset differs (XIZ=4 vs IZ=2)
-	ld	de, 7:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 4)
-	ld xbc, FileIO_LoadRegion7_Flash_Str_rb			; resource ID for region 7
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion7_OpenSuccess
-	call FileIO_ReturnError
-	jr LoadRegion7_Return
-LoadRegion7_OpenSuccess:
-	ld	wa, 7:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion7_ModeError
-	call PreMidiLoad
-	pushw 0x0400				; buffer size
-	call Malloc				; allocate buffer (Malloc)
-	inc 2, xsp				; clean stack
-	ld xiz, xhl				; XIZ = buffer ptr
-	or xiz, xiz				; check null
-	jr z, LoadRegion7_AllocFailed			; alloc failed
-	pushw 0x0000				; fill value
-	pushw 0x0400				; fill size
-	push xiz				; buffer ptr
-	call Memset				; memset
-	inc	8, xsp
-	ld xwa, xiz				; base address
-	ld xbc, 0x00000400			; size
-	call FileIO_ReadBlock
-	ld xwa, 0x003d3000			; flash/file area base
-	push xwa
-	ld	wa, 1:i3
-	ld xbc, xiz				; buffer ptr
-	ldw de, 0x0400				; size
-	call FlashWrite				; flash read/copy
-	push xiz
-	call Free				; Free buffer
-	inc 4, xsp				; clean stack
-	call FileIO_ReturnError
-	ld iz, hl
-	jr LoadRegion7_PostMidi
-LoadRegion7_AllocFailed:
-	ldw iz, 0xff38				; alloc failure error code
-LoadRegion7_PostMidi:
-	ld wa, iz
-	call PostMidiLoad
-	jr LoadRegion7_Finalize
-LoadRegion7_ModeError:
-	ldw iz, 0xff9a				; mode unavailable error
-LoadRegion7_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion7_Return:
-	pop xiz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_LoadRegion7_Flash:	.include "includes/generated/cc900/FileIO_LoadRegion7_Flash.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion7_OpenSuccess, FileIO_LoadRegion7_Flash + 37
+	.set	LoadRegion7_AllocFailed, FileIO_LoadRegion7_Flash + 121
+	.set	LoadRegion7_PostMidi, FileIO_LoadRegion7_Flash + 124
+	.set	LoadRegion7_ModeError, FileIO_LoadRegion7_Flash + 132
+	.set	LoadRegion7_Finalize, FileIO_LoadRegion7_Flash + 135
+	.set	LoadRegion7_Return, FileIO_LoadRegion7_Flash + 141
 
 FileIO_LoadRegion2_ExtMem:
 	; --- Display region 2: external memory 0x0ab000-0x0fd800 ---
@@ -1895,38 +1841,12 @@ LoadRegion5_Return:
 	lda xsp, (xsp + 14)
 	ret
 
-FileIO_LoadRegion6_Simple:
-	; --- Display region 6: simple init ---
-	lda xsp, (xsp - 14)
-	pushw iz
-	ld xbc, xwa
-	lda xwa, (xsp + 2)
-	ld	de, 6:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 2)
-	ld xbc, FileIO_LoadRegion6_Simple_Str_rb			; resource ID for region 6
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion6_OpenSuccess
-	call FileIO_ReturnError
-	jr LoadRegion6_Return
-LoadRegion6_OpenSuccess:
-	ld	wa, 6:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion6_ModeError
-	call FileIO_LoadRcmToFlash
-	ld iz, hl
-	jr LoadRegion6_Finalize
-LoadRegion6_ModeError:
-	ldw iz, 0xff9a				; mode unavailable
-LoadRegion6_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion6_Return:
-	popw iz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_LoadRegion6_Simple:	.include "includes/generated/cc900/FileIO_LoadRegion6_Simple.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion6_OpenSuccess, FileIO_LoadRegion6_Simple + 37
+	.set	LoadRegion6_ModeError, FileIO_LoadRegion6_Simple + 54
+	.set	LoadRegion6_Finalize, FileIO_LoadRegion6_Simple + 57
+	.set	LoadRegion6_Return, FileIO_LoadRegion6_Simple + 63
 
 FileIO_LoadRegion4_VRAM:
 	; --- Display region 4: VRAM 0x1e0000-0x1e7800 (with iteration loop) ---

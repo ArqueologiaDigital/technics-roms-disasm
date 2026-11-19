@@ -1950,15 +1950,7 @@ BmDrEdit_SeekVoice_DecrementLoop:
 	jr nz, BmDrEdit_SeekVoice_InsertLoop
 	ret
 
-BmDrEdit_CalcTickPosition:
-	calr BmDrEdit_CheckAndAdvancePage
-	ld	bc, (0x2768:16)
-	mul bc, 0x60
-	ld	a, (0x276a:16)
-	extz wa
-	add bc, wa
-	ld	(0x2780:16), bc
-	ret
+BmDrEdit_CalcTickPosition:	.include "includes/generated/cc900/BmDrEdit_CalcTickPosition.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_ReloadChannelAndDisplay:	.include "includes/generated/cc900/BmDrEdit_ReloadChannelAndDisplay.s"	; C: cc900/bmdredit_routines_m0.c
 ; the hand assembly's labels inside the compiled body, by their offsets
