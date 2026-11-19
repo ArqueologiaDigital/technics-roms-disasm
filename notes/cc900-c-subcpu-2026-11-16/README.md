@@ -236,6 +236,11 @@ verified per tree in run 2026-11-19-51-sub-r31s-staged).**  dsp_voice_params_al_
 ram_4531c` with `ram_4531c` an `unsigned long`) and voice_ctrlchange_al_34a.c (helper AL: the rebased key through a
 byte local before the Voice_Allocate_Typed call): 1,154 B per tree; **582 functions per tree** built from C.
 
+**Nineteenth promotion: Voice_Reset_Engine (2026-11-19; matched in run 2026-11-19-65-sub-r35a, verified per tree in
+run 2026-11-19-69-sub-r36q).**  voice_params_and_tvf_ap_35a.c (helper AP: the command / channel records' long fields
+through a struct cast on the record's byte address, which gives the ROM's `lda xbc,(xbc+wa)`): 724 B per tree; **583
+functions per tree** built from C.
+
 **Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
 V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
 on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding
