@@ -882,3 +882,29 @@ SndParam_RelocateAndApply	109	2026-11-19-37-p6-r47	p6_L_5m285b@O3XSXr p6_L_5m285
 SongPlayer_ResetState	67	2026-11-19-37-p6-r47	p6_N_5m302a@Xr
 TtlScreenProc	94	2026-11-19-37-p6-r47	p6_L_5m271a@O3XSXr p6_L_5m271a@O3Xr
 Test_LCD_Controller_IC206	77	2026-11-19-29-p6-r46 (resolver fix re-check)	p6_L_4m276a@O3XSXr p6_L_4m276a@O3Xr p6_L_4m276a@Xr
+SeAmpAmp2_OnColumn3	115	2026-11-19-43-p6-r48	p6_M_7m128c@O3XSXr p6_M_7m128c@O3Xr
+SeAmpAmp2_OnSideRow1	16	2026-11-19-43-p6-r48	p6_M_7m128c@O3XSXr p6_M_7m128c@O3Xr p6_M_7m128c@Xr
+SeAmpAmp2_OnSideRow5	24	2026-11-19-43-p6-r48	p6_M_7m128b@O3XSXr p6_M_7m128b@O3Xr p6_M_7m128b@Xr
+SeAmpAmp2_OnSwitch15	20	2026-11-19-43-p6-r48	p6_M_7m128b@O3XSXr p6_M_7m128b@O3Xr p6_M_7m128b@Xr
+SeAmpAmp2_OnSwitch25	14	2026-11-19-43-p6-r48	p6_M_7m128b@O3XSXr p6_M_7m128b@O3Xr p6_M_7m128b@Xr
+SeAmpEnv1_OnColumn7	99	2026-11-19-43-p6-r48	p6_M_7m128a@O3XSXr p6_M_7m128a@O3Xr
+SeAmpEnv1_OnColumn8	112	2026-11-19-43-p6-r48	p6_M_7m128a@O3XSXr p6_M_7m128a@O3Xr
+SeAmpEnv1_OnSideRow1	9	2026-11-19-43-p6-r48	p6_M_7m128b@O3XSXr p6_M_7m128b@O3Xr p6_M_7m128b@Xr
+SeFilLpq1_OnColumn4_Join27	24	2026-11-19-43-p6-r48	p6_M_7m128b@O3XSXr p6_M_7m128b@O3Xr p6_M_7m128b@Xr
+BmDrEdit_ReloadChannelAndDisplay	84	2026-11-19-49-p6-r49	p6_N_6m232a@O3XSXr p6_N_6m232a@O3Xr p6_N_6m232a@Xr
+ExtData_Drawbar_SetByte7Fields	15	2026-11-19-49-p6-r49	p6_N_6m280a@O3XSXr p6_N_6m280a@O3Xr p6_N_6m280a@Xr
+ExtData_Tag43_SetByte1Fields	15	2026-11-19-49-p6-r49	p6_N_6m280a@O3XSXr p6_N_6m280a@O3Xr p6_N_6m280a@Xr
+FDemoText_DeactivateVoice_RetOnly	1	2026-11-19-49-p6-r49	p6_L_6m265c@O3XSXr p6_L_6m265c@O3Xr p6_L_6m265c@Xr
+PostTmLoad	68	2026-11-19-49-p6-r49	p6_N_6m306a@O3Xr p6_N_6m306a@Xr
+ResetApTimer	67	2026-11-19-49-p6-r49	p6_N_6m273a@O3XSXr p6_N_6m273a@O3Xr
+SeAmpAmp1_OnColumn5	114	2026-11-19-49-p6-r49	p6_M_8m128a@O3XSXr p6_M_8m128a@O3Xr
+SeAmpAmp1_OnSideRow1	16	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr p6_M_8m128e@Xr
+SeAmpAmp1_OnSideRow2	16	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr p6_M_8m128e@Xr
+SeAmpAmp1_OnSideRow3	47	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr p6_M_8m128e@Xr
+SeAmpAmp1_OnSideRow4	36	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr p6_M_8m128e@Xr
+SeAmpAmp1_OnSideRow5	36	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr p6_M_8m128e@Xr
+SeAmpAmp1_OnSwitch15	47	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr
+SeAmpAmp1_OnSwitch25	34	2026-11-19-49-p6-r49	p6_M_8m128e@O3XSXr p6_M_8m128e@O3Xr p6_M_8m128e@Xr
+SeGfx_StaticOp05_FillBoxMode1	71	2026-11-19-49-p6-r49	p6_L_6m273a@O3XSXr p6_L_6m273a@O3Xr
+SeqPart_SetupWithDispatch	109	2026-11-19-49-p6-r49	p6_N_6m236a@O3Xr
+SeqPlay_IncPunchCountIn	70	2026-11-19-49-p6-r49	p6_N_6m232a@O3XSXr p6_N_6m232a@O3Xr p6_N_6m232a@Xr p6_N_6m232b@O3XSXr p6_N_6m232b@O3Xr p6_N_6m232b@Xr

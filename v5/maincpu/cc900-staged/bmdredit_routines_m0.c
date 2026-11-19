@@ -1,0 +1,57 @@
+/* Functions of sequencer/bmdredit_routines.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+   Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -O3 -Xr
+*/
+/* cc900-module: BmDrEdit_CheckAndAdvancePage BmDrEdit_LoadAlternateState BmDrEdit_RefreshDisplayState BmDrEdit_ScanChannelEvents BmDrEdit_SeekToPartVoice BmDrEdit_SelectChannelAndLoadPos BmDrEdit_SendMetronomeNoteOn BmDrEdit_SetupAndWalkToNote BmDrEdit_SkipToEventByCount BmDrEdit_SyncSeekCheck NoteEditSy_SendCompoundWidgetUpdate NoteEdit_SendScrollCmds NoteEdit_UpdateScrollAndDisplay SeqAcc_SetupRepeatCount SeqAcc_UpdateEndPosition */   /* scripts/analysis/cc900/module_calls.py v10 */
+
+extern unsigned char __near SEQ_ERROR_CODE;
+extern unsigned char __near ram_2943;
+extern void BmDrEdit_SelectChannelAndLoadPos(void);
+extern void BmDrEdit_SeekToPartVoice(void);
+extern void BmDrEdit_LoadAlternateState(void);
+extern void BmDrEdit_SkipToEventByCount(void);
+extern void BmDrEdit_RefreshDisplayState(void);
+extern void BmDrEdit_ScanChannelEvents(void);
+extern void BmDrEdit_SyncSeekCheck(void);
+extern void BmDrEdit_SetupAndWalkToNote(void);
+extern void NoteEditSy_SendCompoundWidgetUpdate(void);
+extern void NoteEdit_UpdateScrollAndDisplay(void);
+extern void NoteEditSy_SendWidgetCmd0(void);
+extern void NoteEdit_SendScrollCmds(void);
+extern void BmDrEdit_SendMetronomeNoteOn(void);
+extern void BmDrEdit_ReloadChannelAndDisplay(void);
+
+void BmDrEdit_ReloadChannelAndDisplay(void)
+{
+	BmDrEdit_SelectChannelAndLoadPos();
+	if (SEQ_ERROR_CODE != 0) {
+		BmDrEdit_SeekToPartVoice();
+		if (SEQ_ERROR_CODE != 0)
+			goto refresh;
+		BmDrEdit_SelectChannelAndLoadPos();
+	}
+	BmDrEdit_LoadAlternateState();
+	BmDrEdit_SkipToEventByCount();
+	if (SEQ_ERROR_CODE != 0) {
+		BmDrEdit_SeekToPartVoice();
+		if (SEQ_ERROR_CODE != 0) {
+refresh:
+			BmDrEdit_RefreshDisplayState();
+			return;
+		}
+	}
+	BmDrEdit_LoadAlternateState();
+	BmDrEdit_ScanChannelEvents();
+	BmDrEdit_SyncSeekCheck();
+	BmDrEdit_SetupAndWalkToNote();
+	NoteEditSy_SendCompoundWidgetUpdate();
+	NoteEdit_UpdateScrollAndDisplay();
+	NoteEditSy_SendWidgetCmd0();
+	NoteEdit_SendScrollCmds();
+	if (ram_2943 & 0x01)
+		BmDrEdit_SendMetronomeNoteOn();
+}
