@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: per-tree C written from the tree's hand source, MATCH in run 2026-11-19-77-hd-r81-v1lang (hd_r81b_drv_screens__utilpage_v1.c).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r81b_drv_screens__utilpage_v1.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_drv_screens__utilpage_v1_r81.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_drv_screens__utilpage_v1_r81.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: UtilPage_a=HDAE5000_HDD_UTIL_PAGE
    cc900-module: HDAE5000_FdList_Clear HDAE5000_FdName_SongNumber HDAE5000_ShowErrorMessageTitle
@@ -34,9 +34,9 @@ extern char HDAE5000_Str_FORMATERROR[], HDAE5000_Str_ERRORNO[];
 extern char HDAE5000_Str_LSWFileInfo[], HDAE5000_Str_SDAFileInfo[], HDAE5000_Str_PMTFileInfo[];
 extern char HDAE5000_Str_SQFFileInfo[];
 extern char HDAE5000_Str_Adr[], HDAE5000_Str_Size[], HDAE5000_Str_Adr_HDD_UTIL_PAGE[];
-extern char ram_2cac14[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2 / _3 names' prefix) */
-extern char ram_2cac36[], ram_2cac3e[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
-extern char ram_2cac60[], ram_2cac68[];   /* _3 */
+extern char ram_2cad64[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2 / _3 names' prefix) */
+extern char ram_2cad86[], ram_2cad8e[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
+extern char ram_2cadb0[], ram_2cadb8[];   /* _3 */
 
 long UtilPage_a(long obj, long ev, long arg)
 {
@@ -92,7 +92,7 @@ long UtilPage_a(long obj, long ev, long arg)
             HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
             HDAE5000_HardTest_Print(line);
             HDAE5000_MemFill(line, 0, 64);
-            HDAE5000_StrCpy(line, ram_2cac14);
+            HDAE5000_StrCpy(line, ram_2cad64);
             HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
             HDAE5000_HardTest_Print(line);
 
@@ -101,11 +101,11 @@ long UtilPage_a(long obj, long ev, long arg)
             HDAE5000_StrCpy(line, HDAE5000_Str_PMTFileInfo);
             HDAE5000_HardTest_Print(line);
             HDAE5000_MemFill(line, 0, 64);
-            HDAE5000_StrCpy(line, ram_2cac36);
+            HDAE5000_StrCpy(line, ram_2cad86);
             HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
             HDAE5000_HardTest_Print(line);
             HDAE5000_MemFill(line, 0, 64);
-            HDAE5000_StrCpy(line, ram_2cac3e);
+            HDAE5000_StrCpy(line, ram_2cad8e);
             HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
             HDAE5000_HardTest_Print(line);
 
@@ -114,11 +114,11 @@ long UtilPage_a(long obj, long ev, long arg)
             HDAE5000_StrCpy(line, HDAE5000_Str_SQFFileInfo);
             HDAE5000_HardTest_Print(line);
             HDAE5000_MemFill(line, 0, 64);
-            HDAE5000_StrCpy(line, ram_2cac60);
+            HDAE5000_StrCpy(line, ram_2cadb0);
             HDAE5000_StrCat(line, HDAE5000_LToA(info.addr, num, 10));
             HDAE5000_HardTest_Print(line);
             HDAE5000_MemFill(line, 0, 64);
-            HDAE5000_StrCpy(line, ram_2cac68);
+            HDAE5000_StrCpy(line, ram_2cadb8);
             HDAE5000_StrCat(line, HDAE5000_LToA(info.size, num, 10));
             HDAE5000_HardTest_Print(line);
         }

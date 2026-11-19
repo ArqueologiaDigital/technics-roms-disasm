@@ -1,6 +1,6 @@
-/* hdae5000_v1_15i: per-tree C written from the tree's hand source, MATCH in run 2026-11-19-77-hd-r81-v1lang (hd_r81a_setup_ui_display__version_v1.c).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r81a_setup_ui_display__version_v1.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_setup_ui_display__version_v1_r81.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_setup_ui_display__version_v1_r81.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_SetupPage_BuildDriveInfo HDAE5000_CopyVersionString
 */

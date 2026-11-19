@@ -1,6 +1,6 @@
-/* hdae5000_v1_15i: per-tree C written from the tree's hand source, MATCH in run 2026-11-19-79-hd-r82-v1notlx (hd_r82a_drv_screens4_hd_driver__fileload.c).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r82a_drv_screens4_hd_driver__fileload.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_drv_screens4_hd_driver__fileload_r82.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_drv_screens4_hd_driver__fileload_r82.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_FdList_Scan HDAE5000_Lbn_ShowEntry HDAE5000_TypeSel_BuildMask
    cc900-module: HDAE5000_LoadSongWithUi HDAE5000_TypeSel_Init HDAE5000_PartList_Build

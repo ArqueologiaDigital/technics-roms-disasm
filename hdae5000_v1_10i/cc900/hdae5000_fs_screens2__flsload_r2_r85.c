@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: per-tree C written from the tree's hand source, MATCH in run 2026-11-19-82-hd-r85-v1fix2 (hd_r85b_fs_screens2__flsload_r2.c).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r85b_fs_screens2__flsload_r2.c.
+/* Functions of hdae5000_filesystem.s.  (hdae5000_fs_screens2__flsload_r2_r85.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_fs_screens2__flsload_r2_r85.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FlsLoad_c=HDAE5000_FlsLoadScreen
    cc900-module: HDAE5000_PartList_Build HDAE5000_NameHistory_Recall HDAE5000_FlsName_StoreWithUi

@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: per-tree C written from the tree's hand source, MATCH in run 2026-11-19-79-hd-r82-v1notlx (hd_r82b_song_module2__savercm_v110.c).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r82b_song_module2__savercm_v110.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_song_module2__savercm_v110_r82.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_song_module2__savercm_v110_r82.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: SaveRcm_a=HDAE5000_SaveSong_Rcm
    cc900-module: HDAE5000_Song_IsUsed HDAE5000_Song_CheckFreeSpace HDAE5000_Song_PartMask
