@@ -1607,17 +1607,7 @@ HDAE5000_Fmt_s_SaveOptNameCheck:
 ; .Lhbi_case0 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SaveOptNameCheck_CaseTable:
-	.short	.Lhbi_case1 - .Lhbi_case0	; 0x01E0003E
-	.short	.Lhbi_case2 - .Lhbi_case0	; 0x01E0003F
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00040 (default)
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00041 (default)
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00042 (default)
-	.short	.Lhbi_case3 - .Lhbi_case0	; 0x01E00043
-	.short	.Lhbi_case4 - .Lhbi_case0	; 0x01E00044
-	.short	.Lhbi_case5 - .Lhbi_case0	; 0x01E00045
-	.short	.Lhbi_case6 - .Lhbi_case0	; 0x01E00046
-	.short	.Lhbi_case0 - .Lhbi_case0	; 0x01E00047
+HDAE5000_SaveOptNameCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SaveOptNameCheck_CaseTable.s"	; C: cc900/hdae5000_saveopt_name__saveopt_r71.c (cc900-data)
 HDAE5000_Str_SVOP:
 	; read by SaveOptSwEventCatch at 0x28560E (lda operand)
 	.asciz "SVOP"
@@ -1633,17 +1623,7 @@ HDAE5000_Fmt_s_FileOptNameCheck:
 ; HDAE5000_FileOptNameCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_FileOptNameCheck_CaseTable:
-	.short	HDAE5000_FileOptNameCheck_Ev01E0003E - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_FileOptNameCheck_Ev01E0003F - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_FileOptNameCheck_Default - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_FileOptNameCheck_Default - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_FileOptNameCheck_Default - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_FileOptNameCheck_Ev01E00043 - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_FileOptNameCheck_Ev01E00044 - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_FileOptNameCheck_Ev01E00045 - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_FileOptNameCheck_Ev01E00046 - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_FileOptNameCheck_Ev01E00047 - HDAE5000_FileOptNameCheck_Ev01E00047	; 0x01E00047
+HDAE5000_FileOptNameCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_FileOptNameCheck_CaseTable.s"	; C: cc900/hdae5000_name_checks_hd_driver__fileopt_r71.c (cc900-data)
 HDAE5000_Fmt_s_SfxLswBitCheck:
 	; read by SfxLswBitCheck at 0x28584F (pushed operand)
 	.asciz "%s"
@@ -1898,17 +1878,7 @@ HDAE5000_Fmt_s_FileLBNNameCheck:
 ; HDAE5000_FileLBNNameCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_FileLBNNameCheck_CaseTable:
-	.short	HDAE5000_FileLBNNameCheck_Ev01E0003E - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_FileLBNNameCheck_Ev01E0003F - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_FileLBNNameCheck_Default - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_FileLBNNameCheck_Default - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_FileLBNNameCheck_Default - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_FileLBNNameCheck_Ev01E00043 - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_FileLBNNameCheck_Ev01E00044 - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_FileLBNNameCheck_Ev01E00045 - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_FileLBNNameCheck_Ev01E00046 - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_FileLBNNameCheck_Ev01E00047 - HDAE5000_FileLBNNameCheck_Ev01E00047	; 0x01E00047
+HDAE5000_FileLBNNameCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_FileLBNNameCheck_CaseTable.s"	; C: cc900/hdae5000_name_checks_filesystem__lbn_del_r71.c (cc900-data)
 HDAE5000_Fmt_s_LBNLswBitCheck:
 	; read by LBNLswBitCheck at 0x287651 (pushed operand)
 	.asciz "%s"
@@ -2128,17 +2098,7 @@ HDAE5000_Fmt_s_DelOptNameCheck:
 ; HDAE5000_DelOptNameCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_DelOptNameCheck_CaseTable:
-	.short	HDAE5000_DelOptNameCheck_Ev01E0003E - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_DelOptNameCheck_Ev01E0003F - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E0003F
-	.short	.LDUO__hA_default - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	.LDUO__hA_default - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	.LDUO__hA_default - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_DelOptNameCheck_Ev01E00043 - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_DelOptNameCheck_Ev01E00044 - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_DelOptNameCheck_Ev01E00045 - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_DelOptNameCheck_Ev01E00046 - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_DelOptNameCheck_Ev01E00047 - HDAE5000_DelOptNameCheck_Ev01E00047	; 0x01E00047
+HDAE5000_DelOptNameCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_DelOptNameCheck_CaseTable.s"	; C: cc900/hdae5000_name_checks_filesystem__lbn_del_r71.c (cc900-data)
 HDAE5000_Fmt_s_DelLswEditCheck:
 	; read by DelLswEditCheck at 0x28A6E7 (pushed operand)
 	.asciz "%s"

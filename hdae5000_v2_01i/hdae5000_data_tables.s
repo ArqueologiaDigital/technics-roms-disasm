@@ -3294,84 +3294,7 @@ HDAE5000_LangMsg_NoMessage:
 ; out of range, share the _NoMessage case.  v2.01i has no messages 65-67
 ; (v2.06i's table has 80 entries: 1-67 and 200-212).
 ;
-HDAE5000_LangText_CaseTable:
-	.short	HDAE5000_AcLanguageText1Proc_Msg001 - HDAE5000_AcLanguageText1Proc_Msg001	; message 1
-	.short	HDAE5000_AcLanguageText1Proc_Msg002 - HDAE5000_AcLanguageText1Proc_Msg001	; message 2
-	.short	HDAE5000_AcLanguageText1Proc_Msg003 - HDAE5000_AcLanguageText1Proc_Msg001	; message 3
-	.short	HDAE5000_AcLanguageText1Proc_Msg004 - HDAE5000_AcLanguageText1Proc_Msg001	; message 4
-	.short	HDAE5000_AcLanguageText1Proc_Msg005 - HDAE5000_AcLanguageText1Proc_Msg001	; message 5
-	.short	HDAE5000_AcLanguageText1Proc_Msg006 - HDAE5000_AcLanguageText1Proc_Msg001	; message 6
-	.short	HDAE5000_AcLanguageText1Proc_Msg007 - HDAE5000_AcLanguageText1Proc_Msg001	; message 7
-	.short	HDAE5000_AcLanguageText1Proc_Msg008 - HDAE5000_AcLanguageText1Proc_Msg001	; message 8
-	.short	HDAE5000_AcLanguageText1Proc_Msg009 - HDAE5000_AcLanguageText1Proc_Msg001	; message 9
-	.short	HDAE5000_AcLanguageText1Proc_Msg010 - HDAE5000_AcLanguageText1Proc_Msg001	; message 10
-	.short	HDAE5000_AcLanguageText1Proc_Msg011 - HDAE5000_AcLanguageText1Proc_Msg001	; message 11
-	.short	HDAE5000_AcLanguageText1Proc_Msg012 - HDAE5000_AcLanguageText1Proc_Msg001	; message 12
-	.short	HDAE5000_AcLanguageText1Proc_Msg013 - HDAE5000_AcLanguageText1Proc_Msg001	; message 13
-	.short	HDAE5000_AcLanguageText1Proc_Msg014 - HDAE5000_AcLanguageText1Proc_Msg001	; message 14
-	.short	HDAE5000_AcLanguageText1Proc_Msg015 - HDAE5000_AcLanguageText1Proc_Msg001	; message 15
-	.short	HDAE5000_AcLanguageText1Proc_Msg016 - HDAE5000_AcLanguageText1Proc_Msg001	; message 16
-	.short	HDAE5000_AcLanguageText1Proc_Msg017 - HDAE5000_AcLanguageText1Proc_Msg001	; message 17
-	.short	HDAE5000_AcLanguageText1Proc_Msg018 - HDAE5000_AcLanguageText1Proc_Msg001	; message 18
-	.short	HDAE5000_AcLanguageText1Proc_Msg019 - HDAE5000_AcLanguageText1Proc_Msg001	; message 19
-	.short	HDAE5000_AcLanguageText1Proc_Msg020 - HDAE5000_AcLanguageText1Proc_Msg001	; message 20
-	.short	HDAE5000_AcLanguageText1Proc_Msg021 - HDAE5000_AcLanguageText1Proc_Msg001	; message 21
-	.short	HDAE5000_AcLanguageText1Proc_Msg022 - HDAE5000_AcLanguageText1Proc_Msg001	; message 22
-	.short	HDAE5000_AcLanguageText1Proc_Msg023 - HDAE5000_AcLanguageText1Proc_Msg001	; message 23
-	.short	HDAE5000_AcLanguageText1Proc_Msg024 - HDAE5000_AcLanguageText1Proc_Msg001	; message 24
-	.short	HDAE5000_AcLanguageText1Proc_Msg025 - HDAE5000_AcLanguageText1Proc_Msg001	; message 25
-	.short	HDAE5000_AcLanguageText1Proc_Msg026 - HDAE5000_AcLanguageText1Proc_Msg001	; message 26
-	.short	HDAE5000_AcLanguageText1Proc_Msg027 - HDAE5000_AcLanguageText1Proc_Msg001	; message 27
-	.short	HDAE5000_AcLanguageText1Proc_Msg028 - HDAE5000_AcLanguageText1Proc_Msg001	; message 28
-	.short	HDAE5000_AcLanguageText1Proc_Msg029 - HDAE5000_AcLanguageText1Proc_Msg001	; message 29
-	.short	HDAE5000_AcLanguageText1Proc_Msg030 - HDAE5000_AcLanguageText1Proc_Msg001	; message 30
-	.short	HDAE5000_AcLanguageText1Proc_Msg031 - HDAE5000_AcLanguageText1Proc_Msg001	; message 31
-	.short	HDAE5000_AcLanguageText1Proc_Msg032 - HDAE5000_AcLanguageText1Proc_Msg001	; message 32
-	.short	HDAE5000_AcLanguageText1Proc_Msg033 - HDAE5000_AcLanguageText1Proc_Msg001	; message 33
-	.short	HDAE5000_AcLanguageText1Proc_Msg034 - HDAE5000_AcLanguageText1Proc_Msg001	; message 34
-	.short	HDAE5000_AcLanguageText1Proc_Msg035 - HDAE5000_AcLanguageText1Proc_Msg001	; message 35
-	.short	HDAE5000_AcLanguageText1Proc_Msg036 - HDAE5000_AcLanguageText1Proc_Msg001	; message 36
-	.short	HDAE5000_AcLanguageText1Proc_Msg037 - HDAE5000_AcLanguageText1Proc_Msg001	; message 37
-	.short	HDAE5000_AcLanguageText1Proc_Msg038 - HDAE5000_AcLanguageText1Proc_Msg001	; message 38
-	.short	HDAE5000_AcLanguageText1Proc_Msg039 - HDAE5000_AcLanguageText1Proc_Msg001	; message 39
-	.short	HDAE5000_AcLanguageText1Proc_Msg040 - HDAE5000_AcLanguageText1Proc_Msg001	; message 40
-	.short	HDAE5000_AcLanguageText1Proc_Msg041 - HDAE5000_AcLanguageText1Proc_Msg001	; message 41
-	.short	HDAE5000_AcLanguageText1Proc_Msg042 - HDAE5000_AcLanguageText1Proc_Msg001	; message 42
-	.short	HDAE5000_AcLanguageText1Proc_Msg043 - HDAE5000_AcLanguageText1Proc_Msg001	; message 43
-	.short	HDAE5000_AcLanguageText1Proc_Msg044 - HDAE5000_AcLanguageText1Proc_Msg001	; message 44
-	.short	HDAE5000_AcLanguageText1Proc_Msg045 - HDAE5000_AcLanguageText1Proc_Msg001	; message 45
-	.short	HDAE5000_AcLanguageText1Proc_Msg046 - HDAE5000_AcLanguageText1Proc_Msg001	; message 46
-	.short	HDAE5000_AcLanguageText1Proc_Msg047 - HDAE5000_AcLanguageText1Proc_Msg001	; message 47
-	.short	HDAE5000_AcLanguageText1Proc_Msg048 - HDAE5000_AcLanguageText1Proc_Msg001	; message 48
-	.short	HDAE5000_AcLanguageText1Proc_Msg049 - HDAE5000_AcLanguageText1Proc_Msg001	; message 49
-	.short	HDAE5000_AcLanguageText1Proc_Msg050 - HDAE5000_AcLanguageText1Proc_Msg001	; message 50
-	.short	HDAE5000_AcLanguageText1Proc_Msg051 - HDAE5000_AcLanguageText1Proc_Msg001	; message 51
-	.short	HDAE5000_AcLanguageText1Proc_Msg052 - HDAE5000_AcLanguageText1Proc_Msg001	; message 52
-	.short	HDAE5000_AcLanguageText1Proc_Msg053 - HDAE5000_AcLanguageText1Proc_Msg001	; message 53
-	.short	HDAE5000_AcLanguageText1Proc_Msg054 - HDAE5000_AcLanguageText1Proc_Msg001	; message 54
-	.short	HDAE5000_AcLanguageText1Proc_Msg055 - HDAE5000_AcLanguageText1Proc_Msg001	; message 55
-	.short	HDAE5000_AcLanguageText1Proc_Msg056 - HDAE5000_AcLanguageText1Proc_Msg001	; message 56
-	.short	HDAE5000_AcLanguageText1Proc_Msg057 - HDAE5000_AcLanguageText1Proc_Msg001	; message 57
-	.short	HDAE5000_AcLanguageText1Proc_Msg058 - HDAE5000_AcLanguageText1Proc_Msg001	; message 58
-	.short	HDAE5000_AcLanguageText1Proc_Msg059 - HDAE5000_AcLanguageText1Proc_Msg001	; message 59
-	.short	HDAE5000_AcLanguageText1Proc_Msg060 - HDAE5000_AcLanguageText1Proc_Msg001	; message 60
-	.short	HDAE5000_AcLanguageText1Proc_Msg061 - HDAE5000_AcLanguageText1Proc_Msg001	; message 61
-	.short	HDAE5000_AcLanguageText1Proc_Msg062 - HDAE5000_AcLanguageText1Proc_Msg001	; message 62
-	.short	HDAE5000_AcLanguageText1Proc_NoMessage - HDAE5000_AcLanguageText1Proc_Msg001	; message 63
-	.short	HDAE5000_AcLanguageText1Proc_Msg064 - HDAE5000_AcLanguageText1Proc_Msg001	; message 64
-	.short	HDAE5000_AcLanguageText1Proc_Msg200 - HDAE5000_AcLanguageText1Proc_Msg001	; message 200
-	.short	HDAE5000_AcLanguageText1Proc_Msg201 - HDAE5000_AcLanguageText1Proc_Msg001	; message 201
-	.short	HDAE5000_AcLanguageText1Proc_Msg202 - HDAE5000_AcLanguageText1Proc_Msg001	; message 202
-	.short	HDAE5000_AcLanguageText1Proc_Msg203 - HDAE5000_AcLanguageText1Proc_Msg001	; message 203
-	.short	HDAE5000_AcLanguageText1Proc_NoMessage - HDAE5000_AcLanguageText1Proc_Msg001	; message 204
-	.short	HDAE5000_AcLanguageText1Proc_NoMessage - HDAE5000_AcLanguageText1Proc_Msg001	; message 205
-	.short	HDAE5000_AcLanguageText1Proc_Msg206 - HDAE5000_AcLanguageText1Proc_Msg001	; message 206
-	.short	HDAE5000_AcLanguageText1Proc_Msg207 - HDAE5000_AcLanguageText1Proc_Msg001	; message 207
-	.short	HDAE5000_AcLanguageText1Proc_Msg208 - HDAE5000_AcLanguageText1Proc_Msg001	; message 208
-	.short	HDAE5000_AcLanguageText1Proc_Msg209 - HDAE5000_AcLanguageText1Proc_Msg001	; message 209
-	.short	HDAE5000_AcLanguageText1Proc_Msg210 - HDAE5000_AcLanguageText1Proc_Msg001	; message 210
-	.short	HDAE5000_AcLanguageText1Proc_Msg211 - HDAE5000_AcLanguageText1Proc_Msg001	; message 211
-	.short	HDAE5000_AcLanguageText1Proc_Msg212 - HDAE5000_AcLanguageText1Proc_Msg001	; message 212
+HDAE5000_LangText_CaseTable:	.include "includes/generated/cc900/HDAE5000_LangText_CaseTable.s"	; C: cc900/hdae5000_aclanguage__text1_r74.c (cc900-data)
 
 ; ============================================================================
 ; LYRICS MODULE .RODATA, 0x2E5B80-0x2E5DCD: the read-only data of the code
@@ -3404,15 +3327,7 @@ HDAE5000_Fmt_03i_i:
 ; HDAE5000_LyricBoxProc_OnReset of the case for value 0+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LyricBoxProc_CaseTable2:
-	.short	HDAE5000_LyricBoxProc_OnReset - HDAE5000_LyricBoxProc_OnReset	; 0
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 1 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 2 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 3 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 4 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 5 (default)
-	.short	HDAE5000_LyricBoxProc_Default2 - HDAE5000_LyricBoxProc_OnReset	; 6 (default)
-	.short	HDAE5000_LyricBoxProc_OnLoad - HDAE5000_LyricBoxProc_OnReset	; 7
+HDAE5000_LyricBoxProc_CaseTable2:	.include "includes/generated/cc900/HDAE5000_LyricBoxProc_CaseTable2.s"	; C: cc900/hdae5000_lyricbox__lyricbox_r2_r78.c (cc900-data)
 ;
 ; HDAE5000_LyricBoxProc_CaseTable1 (0x2E5BD2, 7 x u16): the switch of HDAE5000_LyricBoxProc
 ; (dispatch at 0x28CD6A, hdae5000_ui_display.s:3194: `sub xwa,0x01ca0003`, bound `cp xwa,6`, `add xwa,xwa`, `ld wa,(<table>+2i)`,
@@ -3420,14 +3335,7 @@ HDAE5000_LyricBoxProc_CaseTable2:
 ; HDAE5000_LyricBoxProc_Ev01C0000D of the case for event 0x01CA0003+i; 7 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LyricBoxProc_CaseTable1:
-	.short	HDAE5000_LyricBoxProc_Ev01CA0003 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0003
-	.short	HDAE5000_LyricBoxProc_Ev01CA0004 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0004
-	.short	HDAE5000_LyricBoxProc_Ev01CA0005 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0005
-	.short	HDAE5000_LyricBoxProc_Default1 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0006 (default)
-	.short	HDAE5000_LyricBoxProc_Ev01CA0007 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0007
-	.short	HDAE5000_LyricBoxProc_Ev01CA0008 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0008
-	.short	HDAE5000_LyricBoxProc_Ev01CA0009 - HDAE5000_LyricBoxProc_Ev01C0000D	; 0x01CA0009
+HDAE5000_LyricBoxProc_CaseTable1:	.include "includes/generated/cc900/HDAE5000_LyricBoxProc_CaseTable1.s"	; C: cc900/hdae5000_lyricbox__lyricbox_r2_r78.c (cc900-data)
 HDAE5000_Str_Rb:
 	; read by Display_Error at 0x28D67B (lda operand)
 	.asciz "rb"
@@ -3514,23 +3422,7 @@ HDAE5000_Str_Rb_FDFileSelectProc:
 ; differs in two keys: 1 / 0x81 have their own case (.Lsc_07_btn_k1, where
 ; v2.06i returns 0) and 7 / 0x87 return 0 (where v2.06i takes the enter case).
 ;
-HDAE5000_FDFileSelectProc_KeyCaseTable:
-	.short	.Lsc_ret0 - .Lsc_07_btn_k1	; key code 0x00
-	.short	.Lsc_07_btn_k1 - .Lsc_07_btn_k1	; key code 0x01
-	.short	.Lsc_07_btn_down - .Lsc_07_btn_k1	; key code 0x02
-	.short	.Lsc_07_btn_down - .Lsc_07_btn_k1	; key code 0x03
-	.short	.Lsc_07_btn_down - .Lsc_07_btn_k1	; key code 0x04
-	.short	.Lsc_07_btn_down - .Lsc_07_btn_k1	; key code 0x05
-	.short	.Lsc_07_btn_enter - .Lsc_07_btn_k1	; key code 0x06
-	.short	.Lsc_ret0 - .Lsc_07_btn_k1	; key code 0x07
-	.short	.Lsc_ret0 - .Lsc_07_btn_k1	; key code 0x80
-	.short	.Lsc_07_btn_k1 - .Lsc_07_btn_k1	; key code 0x81
-	.short	.Lsc_07_btn_up - .Lsc_07_btn_k1	; key code 0x82
-	.short	.Lsc_07_btn_up - .Lsc_07_btn_k1	; key code 0x83
-	.short	.Lsc_07_btn_up - .Lsc_07_btn_k1	; key code 0x84
-	.short	.Lsc_07_btn_up - .Lsc_07_btn_k1	; key code 0x85
-	.short	.Lsc_07_btn_enter - .Lsc_07_btn_k1	; key code 0x86
-	.short	.Lsc_ret0 - .Lsc_07_btn_k1	; key code 0x87
+HDAE5000_FDFileSelectProc_KeyCaseTable:	.include "includes/generated/cc900/HDAE5000_FDFileSelectProc_KeyCaseTable.s"	; C: cc900/hdae5000_fd_file_select__fdsel_r74.c (cc900-data)
 HDAE5000_Str_Chr202D3E:
 	; read by FdLyricList_Scan at 0x28EFF1 (pushed operand)
 	.asciz " ->"

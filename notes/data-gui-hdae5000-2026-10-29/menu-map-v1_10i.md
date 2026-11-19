@@ -136,7 +136,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - class `TtlScreenR2`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_HDDEXT`; icon idICON_None
 - opened by: `SELECT_DIR2_Go_SELECT_FILE.screen`, `SELECT_DIR2_Go_SELECT_FILE_2.screen`, `FD_FILE_SELECT_Go_SELECT_FILE.screen`, `FD_FILE_SELECT_Go_SELECT_FILE_2.screen`, `HDD_FILE_NAMING_Exit_SELECT_FILE.screen`, `FILE_DEL_SCREEN_Exit_SELECT_FILE.screen`
-- named in code by: `HDAE5000_HDAETitleFunc`, `HDAE5000_SEL_DIR_Screen`, `HDAE5000_AttenDelDirSwCatch`, `HDAE5000_AttenDelFileSwCatch`, `HDAE5000_FileLoadSwCatch_Join`, `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch_Skip`, `HDAE5000_WrConfirmEventCatch`
+- named in code by: `HDAE5000_HDAETitleFunc`, `HDAE5000_SEL_DIR_Screen`, `HDAE5000_AttenDelDirSwCatch`, `HDAE5000_AttenDelFileSwCatch`, `HDAE5000_FileLoadSwCatch_Join`, `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch`, `HDAE5000_WrConfirmEventCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 177
 
 - `SELECT_FILE_Exit_SELECT_DIR` IvExitScreen: opens [SELECT_DIR](#select_dir)
@@ -736,7 +736,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 ## HddNamingWindow
 
 - class `AcHddNamingWindow`, x 44, y 108, 232 x 88
-- named in code by: `HDAE5000_IvHddNamingProc`, `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch_OnSwIn`, `HDAE5000_WrConfirmEventCatch`
+- named in code by: `HDAE5000_IvHddNamingProc`, `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch`, `HDAE5000_WrConfirmEventCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 897
 
 - `HddNamingWindow_AcIndexEditSw` AcIndexEditSw: switch Left2
@@ -974,7 +974,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `TtlScreenR`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_None
-- named in code by: `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch_OnSwIn`
+- named in code by: `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1190
 
 - `ATTEN_OVER_FILE_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_WrConfirmEventCatch`

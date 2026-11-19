@@ -23,76 +23,20 @@ HDAE5000_Lbn_ShowEntry:	.include "includes/generated/cc900/HDAE5000_Lbn_ShowEntr
 	.set	HDAE5000_Lbn_ShowEntry_Reset_Skip, HDAE5000_Lbn_ShowEntry + 881
 	.set	HDAE5000_Lbn_ShowEntry_Reset_Done, HDAE5000_Lbn_ShowEntry + 1145
 
-HDAE5000_FileLBNNameCheck:
-	; registered as "FileLBNNameCheck" in HDAE5000_ObjHandler_Table
-	dec	4, xsp
-	push xiz
-	ld (xsp + 0x04), xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jrl	z, HDAE5000_FileLBNNameCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_FileLBNNameCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_FileLBNNameCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_FileLBNNameCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_FileLBNNameCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_FileLBNNameCheck_Ev01E00047:
-	ld	xiz, xde
-	cpw	(HDAE5000_RAM_LbnDigitPos:24), 5
-	jr	nz, HDAE5000_FileLBNNameCheck_Ev01E00047_Skip
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_SongRecord_Address
-	push xhl
-	pushw	HDAE5000_Fmt_s_FileLBNNameCheck@hi16
-	pushw	HDAE5000_Fmt_s_FileLBNNameCheck@lo16		; low half of HDAE5000_Fmt_s_FileLBNNameCheck
-	ld xwa, (xiz + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	jr	t, HDAE5000_FileLBNNameCheck_Ev01E00047_Join
-HDAE5000_FileLBNNameCheck_Ev01E00047_Skip:
-	pushw	HDAE5000_Str_Blank26@hi16
-	pushw	HDAE5000_Str_Blank26@lo16		; low half of HDAE5000_Str_Blank26
-	ld xwa, (xiz + 0x12)
-	push xwa
-	call HDAE5000_StrCpy
-	inc 8, xsp
-HDAE5000_FileLBNNameCheck_Ev01E00047_Join:
-	ld xhl, (xsp + 0x04)
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Ev01E00043:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+10:24)
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileLBNNameCheck_Epilogue
-HDAE5000_FileLBNNameCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_FileLBNNameCheck_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+HDAE5000_FileLBNNameCheck:	.include "includes/generated/cc900/HDAE5000_FileLBNNameCheck.s"	; C: cc900/hdae5000_name_checks_filesystem__lbn_del_r71.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00047, HDAE5000_FileLBNNameCheck + 59
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00047_Skip, HDAE5000_FileLBNNameCheck + 104
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00047_Join, HDAE5000_FileLBNNameCheck + 120
+	.set	HDAE5000_FileLBNNameCheck_Ev01E0003E, HDAE5000_FileLBNNameCheck + 125
+	.set	HDAE5000_FileLBNNameCheck_Ev01E0003F, HDAE5000_FileLBNNameCheck + 129
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00043, HDAE5000_FileLBNNameCheck + 133
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00044, HDAE5000_FileLBNNameCheck + 137
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00045, HDAE5000_FileLBNNameCheck + 141
+	.set	HDAE5000_FileLBNNameCheck_Ev01E00046, HDAE5000_FileLBNNameCheck + 148
+	.set	HDAE5000_FileLBNNameCheck_OnRamDataReq, HDAE5000_FileLBNNameCheck + 152
+	.set	HDAE5000_FileLBNNameCheck_Default, HDAE5000_FileLBNNameCheck + 156
+	.set	HDAE5000_FileLBNNameCheck_Epilogue, HDAE5000_FileLBNNameCheck + 158
 
 HDAE5000_LBNLswBitCheck:	.include "includes/generated/cc900/HDAE5000_LBNLswBitCheck.s"	; C: cc900/hdae5000_lbn_bitcheck.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -1339,72 +1283,15 @@ HDAE5000_DelOptSwEventCatch:	.include "includes/generated/cc900/HDAE5000_DelOptS
 HDAE5000_DelOpt_InitFromSong:	.include "includes/generated/cc900/HDAE5000_DelOpt_InitFromSong.s"	; C: cc900/hdae5000_small2_filesystem.c
 	;
 	; Part 2: Handler A (0x28A617) — event handler with stack frame
-HDAE5000_DelOptNameCheck:
-	; registered as "DelOptNameCheck" in HDAE5000_ObjHandler_Table
-	dec 4, xsp			; alloc 16 bytes
-	push xiz
-	ld (xsp + 0x04), xwa
-	ld xwa, xbc
-	cp xwa, EVT_RAM_DATA_REQ
-	jr z, .LDUO__hA_ev82
-	sub xwa, EVT_GET_LARGE_STEP		; normalize event code
-	cp xwa, 0x00000000
-	jr lt, .LDUO__hA_default
-	cp xwa, 0x00000009
-	jr gt, .LDUO__hA_default
-	add xwa, xwa
-	add xwa, HDAE5000_DelOptNameCheck_CaseTable		; jump table
-	ld wa, (xwa)
-	lda xix, (HDAE5000_DelOptNameCheck_Ev01E00047:24); dispatch base
-	jp	t, (xix+wa)
-	; Case 0: full lookup
-HDAE5000_DelOptNameCheck_Ev01E00047:
-	ld xiz, xde
-	ld wa, (HDAE5000_RAM_CurDir:24)
-	ld bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_SongRecord_Address
-	push xhl
-	pushw	HDAE5000_Fmt_s_DelOptNameCheck@hi16
-	pushw	HDAE5000_Fmt_s_DelOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_DelOptNameCheck
-	ld xwa, (xiz + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda xsp, (xsp + 0x0c)
-	ld xhl, (xsp + 0x04)
-	jr t, .LDUO__hA_exit
-	; Case 1
-HDAE5000_DelOptNameCheck_Ev01E0003E:
-	ld xhl, 1:i3
-	jr t, .LDUO__hA_exit
-	; Case 2
-HDAE5000_DelOptNameCheck_Ev01E0003F:
-	ld xhl, 1:i3
-	jr t, .LDUO__hA_exit
-	; Case 3
-HDAE5000_DelOptNameCheck_Ev01E00043:
-	ld xhl, 0:i3
-	jr t, .LDUO__hA_exit
-	; Case 4
-HDAE5000_DelOptNameCheck_Ev01E00044:
-	ld xhl, 0:i3
-	jr t, .LDUO__hA_exit
-	; Case 5
-HDAE5000_DelOptNameCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+10:24)
-	jr t, .LDUO__hA_exit
-	; Case 6
-HDAE5000_DelOptNameCheck_Ev01E00046:
-	ld xhl, 1:i3
-	jr t, .LDUO__hA_exit
-.LDUO__hA_ev82:
-	ld xhl, 0:i3
-	jr t, .LDUO__hA_exit
-.LDUO__hA_default:
-	ld xhl, 0:i3
-.LDUO__hA_exit:
-	pop xiz
-	inc 4, xsp
-	ret
+HDAE5000_DelOptNameCheck:	.include "includes/generated/cc900/HDAE5000_DelOptNameCheck.s"	; C: cc900/hdae5000_name_checks_filesystem__lbn_del_r71.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_DelOptNameCheck_Ev01E00047, HDAE5000_DelOptNameCheck + 58
+	.set	HDAE5000_DelOptNameCheck_Ev01E0003E, HDAE5000_DelOptNameCheck + 97
+	.set	HDAE5000_DelOptNameCheck_Ev01E0003F, HDAE5000_DelOptNameCheck + 101
+	.set	HDAE5000_DelOptNameCheck_Ev01E00043, HDAE5000_DelOptNameCheck + 105
+	.set	HDAE5000_DelOptNameCheck_Ev01E00044, HDAE5000_DelOptNameCheck + 109
+	.set	HDAE5000_DelOptNameCheck_Ev01E00045, HDAE5000_DelOptNameCheck + 113
+	.set	HDAE5000_DelOptNameCheck_Ev01E00046, HDAE5000_DelOptNameCheck + 120
 	;
 	; Part 3: Handler B (0x28A69D) — digit callback for slot 0 (0x22ABE8)
 HDAE5000_DelLswEditCheck:	.include "includes/generated/cc900/HDAE5000_DelLswEditCheck.s"	; C: cc900/hdae5000_del_editcheck.c

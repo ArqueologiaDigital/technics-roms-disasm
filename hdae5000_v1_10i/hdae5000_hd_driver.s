@@ -80,162 +80,7 @@ HDAE5000_SEL_DIR_Screen:	.include "includes/generated/cc900/HDAE5000_SEL_DIR_Scr
 ;      (xsp+4) = part mask word (bit k = part k present); retd pops it
 ; RAM: HDAE5000_RAM_PartListText, HDAE5000_RAM_MainWorkspacePtr
 ; ---------------------------------------------------------------------------
-HDAE5000_PartList_Build:
-	dec 4, xsp			; allocate 4 bytes
-	pushw iz                                ; push iz (compact 1-byte form)
-	ld (xsp + 0x02), xwa		; save the list object
-	ld iz, (xsp + 0x0a)		; IZ = part mask
-
-	; --- no directory or no song (0xFFFF): blank list ---
-	cp bc, 0xffff
-	jr z, .Lhsk_bc_invalid
-	cp de, 0xffff
-	jr nz, .Lhsk_check_bits
-
-.Lhsk_bc_invalid:
-	pushw 0x0071
-	lda xwa, (HDAE5000_PartNames_BlankText:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-	jrl	t, .Lhsk_epilogue_vtable
-
-.Lhsk_check_bits:
-	pushw 0x0071
-	lda xwa, (HDAE5000_PartNames_Text:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-	cp iz, 0xffff
-	jrl	z, .Lhsk_iz_invalid
-
-	; --- Bit 0 ---
-	bit 0, iz
-	jr nz, .Lhsk_bit1
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_bit1:
-	bit 1, iz
-	jr nz, .Lhsk_bit2
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+14:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_bit2:
-	bit 2, iz
-	jr nz, .Lhsk_bit3
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+28:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_bit3:
-	bit 3, iz
-	jr nz, .Lhsk_bit4
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+42:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_bit4:
-	bit 4, iz
-	jr nz, .Lhsk_bit5
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+56:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_bit5:
-	bit 5, iz
-	jr nz, .Lhsk_bit6
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+70:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_bit6:
-	bit 6, iz
-	jr nz, .Lhsk_bit7
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+84:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-.Lhsk_bit7:
-
-	bit 7, iz
-	jr nz, .Lhsk_epilogue_vtable
-	pushw 0x000e
-	lda xwa, (HDAE5000_PartName_Blank:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText+98:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-	jr t, .Lhsk_epilogue_vtable
-
-.Lhsk_iz_invalid:
-	pushw 0x0071
-	lda xwa, (HDAE5000_PartNames_BlankText:24)
-	push xwa
-	lda xwa, (HDAE5000_RAM_PartListText:24)
-	push xwa
-	call HDAE5000_MemCopy
-	lda xsp, (xsp + 0x0a)
-
-.Lhsk_epilogue_vtable:
-	; point the list object at the text, then have it redraw
-	lda xwa, (HDAE5000_RAM_PartListText:24)
-	ld xbc, xwa
-	ld xwa, (xsp + 0x02)		; restore context ptr
-	ld xde, xbc
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_RootFnTable)             ; XBC = (XBC + 0x0e0a)
-	ld xhl, (xbc + RootFn_ApPostEvent)             ; XHL = (XBC + 0x0124)
-	ld xbc, EVT_HDAE_SET_STR_ADR
-	call (xhl)
-
-	ld xwa, (xsp + 0x02)		; restore context ptr
-	ld xbc, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xbc, (xbc + WS_RootFnTable)             ; XBC = (XBC + 0x0e0a)
-	ld xhl, (xbc + RootFn_ApPostEvent)             ; XHL = (XBC + 0x0124)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0xffffffff
-	call (xhl)
-
-	; --- Epilogue ---
-	popw iz                                 ; pop iz (compact 1-byte form)
-	inc 4, xsp
-	retd 0x0002
+HDAE5000_PartList_Build:	.include "includes/generated/cc900/HDAE5000_PartList_Build.s"	; C: cc900/hdae5000_partlist__build_r72.c
 
 ; ---------------------------------------------------------------------------
 ; Refresh the song-selection screen: title "DIRECTORY NN:<name>"
@@ -924,48 +769,7 @@ HDAE5000_SeparateBassPartCheck:	.include "includes/generated/cc900/HDAE5000_Sepa
 ;      (low byte of the stacked word; retd pops it)
 ; Out: clobbers XIX, XIY, HL, E.
 ; ---------------------------------------------------------------------------
-HDAE5000_TypeSel_Init:
-	ld xix, xde			; save source
-	ld hl, bc			; HL = flags
-	ld e, (xsp + 4)			; E = flag byte from stack
-	ld xiy, xix			; XIY = source
-	ld xix, xwa			; XIX = dest (for ldirw)
-	ld bc, 6:i3			; count = 6 words (12 bytes)
-	ldirw				; 95 11: copy 6 words from (XIY+) to (XIX+)
-	ld (xwa), hl			; store flags at dest[0..1]
-	bit 0, hl			; bit 0 set?
-	jr z, .LHD_Data_Copy__bit1
-	ld (xwa + 2), e			; dest[2] = flag value
-.LHD_Data_Copy__bit1:
-	bit 1, hl
-	jr z, .LHD_Data_Copy__bit2
-	ld (xwa + 3), e
-.LHD_Data_Copy__bit2:
-	bit 2, hl
-	jr z, .LHD_Data_Copy__bit3
-	ld (xwa + 4), e
-.LHD_Data_Copy__bit3:
-	bit 3, hl
-	jr z, .LHD_Data_Copy__bit4
-	ld (xwa + 5), e
-.LHD_Data_Copy__bit4:
-	bit 4, hl
-	jr z, .LHD_Data_Copy__bit5
-	ld (xwa + 6), e
-.LHD_Data_Copy__bit5:
-	bit 5, hl
-	jr z, .LHD_Data_Copy__bit6
-	ld (xwa + 7), e
-.LHD_Data_Copy__bit6:
-	bit 6, hl
-	jr z, .LHD_Data_Copy__bit7
-	ld (xwa + 8), e
-.LHD_Data_Copy__bit7:
-	bit 7, hl
-	jr z, .LHD_Data_Copy__done
-	ld (xwa + 9), e
-.LHD_Data_Copy__done:
-	retd 0x0002
+HDAE5000_TypeSel_Init:	.include "includes/generated/cc900/HDAE5000_TypeSel_Init.s"	; C: cc900/hdae5000_uistate_hd_driver__typesel_init_r72.c
 
 ; ---------------------------------------------------------------------------
 ; Recompute the mask word of a part-selection record (see
@@ -974,102 +778,12 @@ HDAE5000_TypeSel_Init:
 ; In:  XWA = record (HDAE5000_RAM_SaveOptions or _DeleteOptions)
 ; Out: (XWA+0) = mask.  No register changes.
 ; ---------------------------------------------------------------------------
-HDAE5000_TypeSel_BuildMask:
-	ldw (xwa + 0), 0x0000		; clear output flags
-	cp (xwa + 2), 0x02
-	jr nz, .Lhbi_skip0
-	ldw (xwa + 0), 0x0001		; set bit 0
-.Lhbi_skip0:
-	cp (xwa + 3), 0x02
-	jr nz, .Lhbi_skip1
-	ormi16 (xwa + 0), 0x0002	; set bit 1
-.Lhbi_skip1:
-	cp (xwa + 4), 0x02
-	jr nz, .Lhbi_skip2
-	ormi16 (xwa + 0), 0x0004	; set bit 2
-.Lhbi_skip2:
-	cp (xwa + 5), 0x02
-	jr nz, .Lhbi_skip3
-	ormi16 (xwa + 0), 0x0008	; set bit 3
-.Lhbi_skip3:
-	cp (xwa + 6), 0x02
-	jr nz, .Lhbi_skip4
-	ormi16 (xwa + 0), 0x0010	; set bit 4
-.Lhbi_skip4:
-	cp (xwa + 7), 0x02
-	jr nz, .Lhbi_skip5
-	ormi16 (xwa + 0), 0x0020	; set bit 5
-.Lhbi_skip5:
-	cp (xwa + 8), 0x02
-	jr nz, .Lhbi_skip6
-	ormi16 (xwa + 0), 0x0040	; set bit 6
-.Lhbi_skip6:
-	cp (xwa + 9), 0x02
-	ret nz
-	ormi16 (xwa + 0), 0x0080	; set bit 8
-	ret
+HDAE5000_TypeSel_BuildMask:	.include "includes/generated/cc900/HDAE5000_TypeSel_BuildMask.s"	; C: cc900/hdae5000_hd_driver__typesel_buildmask_r72.c
 	; Sub-routine 2: Command dispatcher with computed jump table
 	; Input: XWA = context pointer (saved as XIZ), XBC = command ID
 	; Returns XHL = result
 
-HDAE5000_SaveOptNameCheck:
-	; registered as "SaveOptNameCheck" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld xiz, xwa			; save context
-	ld xwa, xbc			; command → XWA
-	cp xwa, EVT_RAM_DATA_REQ		; special command?
-	jr z, .Lhbi_special
-	sub xwa, EVT_GET_LARGE_STEP		; normalize to index 0-9
-	cp xwa, 0x00000000
-	jr lt, .Lhbi_default
-	cp xwa, 0x00000009
-	jr gt, .Lhbi_default
-	add xwa, xwa			; index * 2 (table has 16-bit entries)
-	add xwa, HDAE5000_SaveOptNameCheck_CaseTable		; jump table base
-	ld wa, (xwa + 0)		; load offset from table
-	lda xix, (.Lhbi_case0:24); base of case handlers (0x284E54)
-	jp	t, (xix+wa)
-.Lhbi_case0:
-	; Case 0: PPI block copy from device
-	pushw 0x0023
-	pushw 0xd286
-	pushw	HDAE5000_Fmt_s_SaveOptNameCheck@hi16
-	pushw	HDAE5000_Fmt_s_SaveOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_SaveOptNameCheck
-	ld xwa, (xde + 18)
-	push xwa
-	call HDAE5000_SPrintf
-	lda xsp, (xsp + 12)		; pop args
-	ld xhl, xiz			; return context ptr
-	jr t, .Lhbi_exit
-.Lhbi_case1:
-	ld xhl, 1:i3
-	jr t, .Lhbi_exit
-.Lhbi_case2:
-	ld xhl, 1:i3
-	jr t, .Lhbi_exit
-.Lhbi_case3:
-	ld xhl, 0:i3
-	jr t, .Lhbi_exit
-.Lhbi_case4:
-	ld xhl, 0:i3
-	jr t, .Lhbi_exit
-.Lhbi_case5:
-	lda xhl, (HDAE5000_RAM_SaveOptions+10:24)
-	jr t, .Lhbi_exit
-.Lhbi_case6:
-	ld xhl, 1:i3
-	jr t, .Lhbi_exit
-.Lhbi_special:
-	; Command 0x01E00082: init buffer then return 0
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	calr HDAE5000_TypeSel_BuildMask
-	ld xhl, 0:i3
-	jr t, .Lhbi_exit
-.Lhbi_default:
-	ld xhl, 0:i3
-.Lhbi_exit:
-	pop xiz
-	ret
+HDAE5000_SaveOptNameCheck:	.include "includes/generated/cc900/HDAE5000_SaveOptNameCheck.s"	; C: cc900/hdae5000_saveopt_name__saveopt_r71.c
 
 ; --- HD Configuration Manager and CHS Geometry ---
 HDAE5000_TypeSel_ShowSaveFlags:	; (3728 bytes)
@@ -1169,184 +883,31 @@ HDAE5000_TypeSel_ShowSaveFlags:	; (3728 bytes)
 	ld	xbc, EVT_PARA_DRAW
 	jp	(xhl)
 
-HDAE5000_SaveOptSwEventCatch:
-	; registered as "SaveOptSwEventCatch" in HDAE5000_ObjHandler_Table
-	push xiz
-	ld	xiz, xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_SW_IN
-	jr	z, HDAE5000_SaveOptSwEventCatch_OnSwIn
-	cp	xwa, EVT_DRAW
-	jr	z, HDAE5000_SaveOptSwEventCatch_OnDraw
-	cp	xwa, EVT_ARE_YOU_CLASS_PROC
-	jr	z, HDAE5000_SaveOptSwEventCatch_OnAreYouClassProc
-	ld	xwa, xiz
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xix, (xhl + RootFn_InheritedProc)
-	call	(xix)
-	jrl	t, HDAE5000_SaveOptSwEventCatch_Epilogue
-HDAE5000_SaveOptSwEventCatch_OnAreYouClassProc:
-	ld	xhl, 1:i3
-	jrl	t, HDAE5000_SaveOptSwEventCatch_Epilogue
-HDAE5000_SaveOptSwEventCatch_OnDraw:
-	ld	xwa, xiz
-	ld	xhl, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xhl, (xhl + WS_RootFnTable)
-	ld_sril	xhl, (xhl + RootFn_InheritedProc)
-	call	(xhl)
-	lda xwa, (HDAE5000_Str_SVOP:24)
-	ld	xbc, xwa
-	ld	xwa, xiz
-	ld	xde, xbc
-	ld	xbc, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xbc, (xbc + WS_RootFnTable)
-	ld_sril	xhl, (xbc + RootFn_SendEvent)
-	ld	xbc, EVT_PARA_DRAW
-	call	(xhl)
-	ld	xhl, 0:i3
-	jrl	t, HDAE5000_SaveOptSwEventCatch_Epilogue
-HDAE5000_SaveOptSwEventCatch_OnSwIn:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xix, (xwa + RootFn_SendEvent)
-	ld	xwa, 0x02600024
-	ld	xbc, EVT_MAKE_EDIT_SW_ID
-	call	(xix)
-	cp	xhl, 0x0000000b
-	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip4
-	cp	xhl, 0x0000000a
-	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip3
-	cp	xhl, 0x00000009
-	jrl	z, HDAE5000_SaveOptSwEventCatch_Skip2
-	cp	xhl, 0x00000008
-	jrl	nz, HDAE5000_SaveOptSwEventCatch_Done
-	lda	xwa, (0x23d286:24)
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xhl, (xwa + RootFn_SendEvent)
-	ld	xwa, HDAE5000_OBJ_HddNamingWindow
-	ld	xbc, EVT_GET_STRING
-	call	(xhl)
-	cp	(HDAE5000_RAM_WriteConfirm:24), 1
-	jr	nz, HDAE5000_SaveOptSwEventCatch_Skip
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_Song_IsUsed
-	cp	hl, 0xffff
-	jr	z, HDAE5000_SaveOptSwEventCatch_Skip
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_PostEvent)
-	ld	xwa, HDAE5000_OBJ_ATTEN_OVER_FILE
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jr	t, HDAE5000_SaveOptSwEventCatch_Join
-HDAE5000_SaveOptSwEventCatch_Skip:
-	pushw 0x0023
-	pushw 0xd286
-	pushw 0x0001
-	ld	xwa, HDAE5000_OBJ_SELECT_FILE
-	push xwa
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	ld	de, (HDAE5000_RAM_SaveOptions:24)
-	calr	HDAE5000_SaveSongWithUi
-HDAE5000_SaveOptSwEventCatch_Join:
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_SongScreen_Refresh
-	jr	t, HDAE5000_SaveOptSwEventCatch_Done
-HDAE5000_SaveOptSwEventCatch_Skip2:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
-	ldw	bc, 0x003f
-	calr	HDAE5000_TypeSel_Init
-	calr	HDAE5000_TypeSel_ShowSaveFlags
-	jr	t, HDAE5000_SaveOptSwEventCatch_Done
-HDAE5000_SaveOptSwEventCatch_Skip3:
-	lda	xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw	0x2
-	lda	xde, (HDAE5000_TypeSel_TemplateAllNo:24)
-	ldw	bc, 0x00ff
-	calr	HDAE5000_TypeSel_Init
-	calr	HDAE5000_TypeSel_ShowSaveFlags
-	jr	t, HDAE5000_SaveOptSwEventCatch_Done
-HDAE5000_SaveOptSwEventCatch_Skip4:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
-	ld	bc, 0:i3
-	calr	HDAE5000_TypeSel_Init
-	calr	HDAE5000_TypeSel_ShowSaveFlags
-HDAE5000_SaveOptSwEventCatch_Done:
-	ld	xhl, 0:i3
-HDAE5000_SaveOptSwEventCatch_Epilogue:
-	pop xiz
-	ret
+HDAE5000_SaveOptSwEventCatch:	.include "includes/generated/cc900/HDAE5000_SaveOptSwEventCatch.s"	; C: cc900/hdae5000_drv_screens3__saveoptsw_r71.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_SaveOptSwEventCatch_OnAreYouClassProc, HDAE5000_SaveOptSwEventCatch + 51
+	.set	HDAE5000_SaveOptSwEventCatch_OnDraw, HDAE5000_SaveOptSwEventCatch + 56
+	.set	HDAE5000_SaveOptSwEventCatch_OnSwIn, HDAE5000_SaveOptSwEventCatch + 113
+	.set	HDAE5000_SaveOptSwEventCatch_Skip, HDAE5000_SaveOptSwEventCatch + 269
+	.set	HDAE5000_SaveOptSwEventCatch_Join, HDAE5000_SaveOptSwEventCatch + 302
+	.set	HDAE5000_SaveOptSwEventCatch_Skip2, HDAE5000_SaveOptSwEventCatch + 311
+	.set	HDAE5000_SaveOptSwEventCatch_Skip3, HDAE5000_SaveOptSwEventCatch + 335
+	.set	HDAE5000_SaveOptSwEventCatch_Skip4, HDAE5000_SaveOptSwEventCatch + 359
+	.set	HDAE5000_SaveOptSwEventCatch_Done, HDAE5000_SaveOptSwEventCatch + 380
+	.set	HDAE5000_SaveOptSwEventCatch_Epilogue, HDAE5000_SaveOptSwEventCatch + 382
 
-HDAE5000_FileOptNameCheck:
-	; registered as "FileOptNameCheck" in HDAE5000_ObjHandler_Table
-	dec	4, xsp
-	push xiz
-	ld (xsp + 0x04), xwa
-	ld	xwa, xbc
-	cp	xwa, EVT_RAM_DATA_REQ
-	jr	z, HDAE5000_FileOptNameCheck_OnRamDataReq
-	sub	xwa, EVT_GET_LARGE_STEP
-	cp	xwa, 0x00000000
-	jr	lt, HDAE5000_FileOptNameCheck_Default
-	cp	xwa, 0x00000009
-	jr	gt, HDAE5000_FileOptNameCheck_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_FileOptNameCheck_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_FileOptNameCheck_Ev01E00047:24)
-	jp	t, (xix+wa)
-HDAE5000_FileOptNameCheck_Ev01E00047:
-	ld	xiz, xde
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_SongRecord_Address
-	push xhl
-	pushw	HDAE5000_Fmt_s_FileOptNameCheck@hi16
-	pushw	HDAE5000_Fmt_s_FileOptNameCheck@lo16		; low half of HDAE5000_Fmt_s_FileOptNameCheck
-	ld xwa, (xiz + 0x12)
-	push xwa
-	call HDAE5000_SPrintf
-	lda	xsp, (xsp+12)
-	ld xhl, (xsp + 0x04)
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E0003E:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E0003F:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00043:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00044:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00045:
-	lda xhl, (HDAE5000_RAM_SaveOptions+10:24)
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Ev01E00046:
-	ld	xhl, 1:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_OnRamDataReq:
-	ld	xhl, 0:i3
-	jr	t, HDAE5000_FileOptNameCheck_Epilogue
-HDAE5000_FileOptNameCheck_Default:
-	ld	xhl, 0:i3
-HDAE5000_FileOptNameCheck_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+HDAE5000_FileOptNameCheck:	.include "includes/generated/cc900/HDAE5000_FileOptNameCheck.s"	; C: cc900/hdae5000_name_checks_hd_driver__fileopt_r71.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FileOptNameCheck_Ev01E00047, HDAE5000_FileOptNameCheck + 58
+	.set	HDAE5000_FileOptNameCheck_Ev01E0003E, HDAE5000_FileOptNameCheck + 97
+	.set	HDAE5000_FileOptNameCheck_Ev01E0003F, HDAE5000_FileOptNameCheck + 101
+	.set	HDAE5000_FileOptNameCheck_Ev01E00043, HDAE5000_FileOptNameCheck + 105
+	.set	HDAE5000_FileOptNameCheck_Ev01E00044, HDAE5000_FileOptNameCheck + 109
+	.set	HDAE5000_FileOptNameCheck_Ev01E00045, HDAE5000_FileOptNameCheck + 113
+	.set	HDAE5000_FileOptNameCheck_Ev01E00046, HDAE5000_FileOptNameCheck + 120
+	.set	HDAE5000_FileOptNameCheck_OnRamDataReq, HDAE5000_FileOptNameCheck + 124
+	.set	HDAE5000_FileOptNameCheck_Default, HDAE5000_FileOptNameCheck + 128
+	.set	HDAE5000_FileOptNameCheck_Epilogue, HDAE5000_FileOptNameCheck + 130
 
 HDAE5000_SfxLswBitCheck:	.include "includes/generated/cc900/HDAE5000_SfxLswBitCheck.s"	; C: cc900/hdae5000_sfx_bitcheck.c
 ; the hand assembly's labels inside the compiled body, by their offsets
