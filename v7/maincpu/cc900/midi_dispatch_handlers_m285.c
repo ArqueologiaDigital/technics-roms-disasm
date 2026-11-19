@@ -929,3 +929,54 @@ void SndParam_RelocateAndApply(long base, unsigned char k)
 			*p = b->base[i].b;
 		}
 }
+
+/* cc900-module: MidiPkt_GetUsedSize_AccompBlocks MidiPkt_GetUsedSize_SeqEvents MidiPkt_GetUsedSize_StyleImage */
+struct xfer { unsigned char *start; unsigned char *end; long size; };
+extern unsigned char ram_b0000[];
+extern long MidiPkt_GetUsedSize_SeqEvents(void);
+extern void MidiPkt_SetXferBlock_SeqEvents(struct xfer *x);
+extern unsigned char ram_1e8800;
+extern long MidiPkt_GetUsedSize_AccompBlocks(void);
+extern void MidiPkt_SetXferTotal_AccompBlk(struct xfer *x);
+extern unsigned char RHYTHM_PATTERN_BUF_A[];
+extern long MidiPkt_GetUsedSize_StyleImage(void);
+extern void MidiPkt_SetXferTotal_StyleImg(struct xfer *x);
+
+void MidiPkt_SetXferBlock_SeqEvents(struct xfer *x)
+{
+	long n;
+
+	x->end = (x->start = ram_b0000) + 0x4d800;
+	x->size = 0x4d800;
+	if (ram_bc7c & 0x40) {
+		n = MidiPkt_GetUsedSize_SeqEvents();
+		x->end = (unsigned char *)((long)x->start + n);
+		x->size = n;
+	}
+}
+/* cc900-name: MidiPkt_SetXferTotal_AccompBlk=MidiPkt_SetXferTotal_AccompBlocks */
+void MidiPkt_SetXferTotal_AccompBlk(struct xfer *x)
+{
+	long n;
+
+	x->end = (x->start = &ram_1e8800) + 0x3c00;
+	x->size = 0x3c00;
+	if (ram_bc7c & 0x40) {
+		n = MidiPkt_GetUsedSize_AccompBlocks();
+		x->end = (unsigned char *)((long)x->start + n);
+		x->size = n;
+	}
+}
+/* cc900-name: MidiPkt_SetXferTotal_StyleImg=MidiPkt_SetXferTotal_StyleImage */
+void MidiPkt_SetXferTotal_StyleImg(struct xfer *x)
+{
+	long n;
+
+	x->end = (x->start = RHYTHM_PATTERN_BUF_A) + 0x16800;
+	x->size = 0x16800;
+	if (ram_bc7c & 0x40) {
+		n = MidiPkt_GetUsedSize_StyleImage();
+		x->end = (unsigned char *)((long)x->start + n);
+		x->size = n;
+	}
+}

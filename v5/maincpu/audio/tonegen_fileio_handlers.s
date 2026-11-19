@@ -1131,31 +1131,10 @@ Encoder_AlignByte:
 	ret
 ; Dispatch every queued panel change (PanelButton_FetchChange, then PanelButton_DispatchChange), end the
 ; event queue at (0xC039) with 0xFF, clear the change queue, then VoiceEntry_FindMasterVolume.
-PanelButton_ProcessChanges:
-	ld	(0x8dcc:16), 0
-	ld	(0x8dce:16), 0
-	jr	PanelButton_ProcessChanges_Loop
-PanelButton_ProcessChanges_Next:
-	calr	PanelButton_FetchChange
-	calr	PanelButton_DispatchChange
-PanelButton_ProcessChanges_Loop:
-	call	PanelInput_ChangeQueue
-	ld	a, (0x8dcc:16)
-	extz	wa
-	muls	wa, 0x3
-	ld	a, (xhl+wa)
-	ld	(0x8dd0:16), a
-	cp	a, 0xff
-	jr	nz, PanelButton_ProcessChanges_Next
-	ld	a, (0x8dce:16)
-	extz	wa
-	sll	wa, 2
-	lda	xbc, (PANEL_EVENT_QUEUE:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	(xwa), 0xff
-	call	PanelInput_ClearChangeQueue
-	jrl	VoiceEntry_FindMasterVolume
+PanelButton_ProcessChanges:	.include "includes/generated/cc900/PanelButton_ProcessChanges.s"	; C: cc900/tonegen_fileio_handlers_m277.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelButton_ProcessChanges_Next, PanelButton_ProcessChanges + 12
+	.set	PanelButton_ProcessChanges_Loop, PanelButton_ProcessChanges + 18
 PanelButton_FetchChange:
 	call	PanelInput_ChangeQueue
 	ld	a, (0x8dcc:16)

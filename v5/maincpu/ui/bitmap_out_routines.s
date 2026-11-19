@@ -3429,36 +3429,10 @@ BitMapOut_ByteData_DisplayUpdate_Skip:
 BitMapOut_ByteData_DisplayUpdate_Epilogue:
 	pop	xiz
 	ret
-BitMapOut_UpdateDisplayWidget:
-	push xiz
-	ld xiz, xbc
-	cp a, 0:i3
-	jr nz, BitMapOut_UpdateWidget_CheckType
-	pushw 0x10
-	pushw BitMapOut_UpdateDisplayWidget_Str_Non_Panel_Memory@hi16
-	pushw BitMapOut_UpdateDisplayWidget_Str_Non_Panel_Memory@lo16
-	jr BitMapOut_UpdateWidget_TypeA
-
-BitMapOut_UpdateWidget_CheckType:
-	dec 1, a
-	extz wa
-	sla wa, 2
-	lda xbc, (PanelMemory_SlotAddresses:24)
-	ld	xbc, (xbc+wa)
-	pushw 0x10
-	lda xwa, (PANEL_STYLIST_NAME:16)
-	sub xwa, 0xf980
-	sub xwa, 0x20
-	add xwa, xbc
-	push xwa
-
-BitMapOut_UpdateWidget_TypeA:
-	push	xiz
-	call	Mem_Copy
-	lda	xsp, (xsp+10)
-	ld	(xiz+16), 0
-	pop	xiz
-	ret
+BitMapOut_UpdateDisplayWidget:	.include "includes/generated/cc900/BitMapOut_UpdateDisplayWidget.s"	; C: cc900/bitmap_out_routines_m274.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitMapOut_UpdateWidget_CheckType, BitMapOut_UpdateDisplayWidget + 18
+	.set	BitMapOut_UpdateWidget_TypeA, BitMapOut_UpdateDisplayWidget + 57
 BitMapOut_UpdateWidget_TypeB:
 	cp a, 0:i3
 	ret Z

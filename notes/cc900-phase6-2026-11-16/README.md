@@ -938,3 +938,8 @@ carry `cc900-data:` comments with their functions (`stage_probe.names_fn`).  The
 `HANDOFF-2026-11-18.md`.
 
 The final state, open functions, idioms, blockers and next steps are in `HANDOFF-2026-11-17.md`.
+
+2026-11-19: `vdiff.py` answers "where does V4.23's code for one probe function first differ from the ROM, and what is
+there?" (from `scripts/analysis/cc900`: `python3 -B ../../../notes/cc900-phase6-2026-11-16/vdiff.py LISTING.asm FUNC
+--cfile corpus/firmware/P.c --ctx 12`; it prints translated listing instructions, which never go into the repository).
+The 2026-11-19 rounds, promotions and the wind-down state are in `HANDOFF-2026-11-19.md`.

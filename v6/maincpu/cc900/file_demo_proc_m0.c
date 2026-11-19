@@ -125,3 +125,166 @@ int FileIO_LoadRegion7_Flash(char *src)
 	FileIO_CloseHandle();
 	return r;
 }
+
+extern int FileIO_ReadHeaderAt4(void);
+extern void SeqLoadPre(void);
+extern void SeqLoadPost(int);
+extern void SeqLoad_JumpInitFromPreset(void);
+extern void SeqLoad_PostAltEntry(int);
+extern void VoiceSynth_CmdCase0(char *);
+extern char FileIO_LoadRegion2_ExtMem_Str_rb[];
+extern unsigned char SEQ_SONG_SLOTS[];
+extern unsigned char ram_b0000[];
+extern unsigned char ram_fd800[];
+extern int FileIO_LoadRegion2_ExtMem(char *src);
+extern void cmp_ld_mae(void);
+extern void cmp_ld_ato(int);
+extern int ToneParam_ExtendedOpsBlock(void);
+extern char FileIO_LoadRegion3_ExtMem_Str_rb[];
+extern unsigned char RHYTHM_PATTERN_BUF_A[];
+extern int FileIO_LoadRegion3_ExtMem(char *src);
+extern int FileIO_ReadByte(void);
+extern void FileIO_SeekRead_ExtReturn(void);
+extern void PreTmLoad(void);
+extern void PostTmLoad(int);
+extern int PostTmSave_ByteBlock(unsigned char *);
+extern void PostTmSave_Success(int);
+extern char FileIO_LoadRegion4_VRAM_Str_rb[];
+extern unsigned char ram_1e0000[];
+extern unsigned char ram_1e7800[];
+extern int FileIO_LoadRegion4_VRAM(char *src);
+extern void msp_ld_mae(void);
+extern void msp_ld_ato(int);
+extern int FileIO_LoadMspAltFormat(void);
+extern char FileIO_LoadRegion5_VRAM_Str_rb[];
+extern unsigned char ram_1e8800[];
+extern unsigned char ram_1ec400[];
+extern int FileIO_LoadRegion5_VRAM(char *src);
+extern int FileIO_OpenDefault(char *);
+extern long FileIO_GetDiskFreeSpace(void);
+extern void FileIO_WriteByte_Impl(void *, long);
+extern void PreMidiSave(void);
+extern void PostMidiSave(int);
+extern char Resource_Region7_Start[];
+extern int FileIO_SaveRegion7_Flash(char *src);
+
+int FileIO_LoadRegion2_ExtMem(char *src)
+{
+	char hd[14];
+	int r;
+
+	FileIO_ReadHeader(hd, src, 2);
+	if (FileIO_OpenWithMode(hd, FileIO_LoadRegion2_ExtMem_Str_rb) < 0)
+		return FileIO_ReturnError();
+	if (FileIO_CheckRegionSignature(2) != 0) {
+		if (FileIO_ReadHeaderAt4() != 0) {
+			SeqLoadPre();
+			FileIO_ReadBlock(SEQ_SONG_SLOTS, 0x5000);
+			FileIO_ReadBlock(ram_b0000, (long)ram_fd800 - (long)ram_b0000);
+			r = FileIO_ReturnError();
+			SeqLoadPost(r);
+		} else {
+			SeqLoad_JumpInitFromPreset();
+			FileIO_ReadBlock(SEQ_SONG_SLOTS, 0x800);
+			FileIO_ReadBlock(ram_b0000, (long)ram_fd800 - (long)ram_b0000);
+			r = FileIO_ReturnError();
+			SeqLoad_PostAltEntry(r);
+		}
+	} else
+		r = -102;
+	FileIO_CloseHandle();
+	if (r >= 0)
+		VoiceSynth_CmdCase0(src);
+	return r;
+}
+int FileIO_LoadRegion3_ExtMem(char *src)
+{
+	char hd[14];
+	int r;
+
+	FileIO_ReadHeader(hd, src, 3);
+	if (FileIO_OpenWithMode(hd, FileIO_LoadRegion3_ExtMem_Str_rb) < 0)
+		return FileIO_ReturnError();
+	if (FileIO_CheckRegionSignature(3) != 0) {
+		cmp_ld_mae();
+		FileIO_ReadBlock(RHYTHM_PATTERN_BUF_A, (long)SEQ_SONG_SLOTS - (long)RHYTHM_PATTERN_BUF_A);
+		r = FileIO_ReturnError();
+		cmp_ld_ato(r);
+	} else
+		r = ToneParam_ExtendedOpsBlock();
+	FileIO_CloseHandle();
+	return r;
+}
+int FileIO_LoadRegion4_VRAM(char *src)
+{
+	char hd[14];
+	unsigned char b[16];
+	int r;
+	int i;
+	int c;
+
+	FileIO_ReadHeader(hd, src, 4);
+	if (FileIO_OpenWithMode(hd, FileIO_LoadRegion4_VRAM_Str_rb) < 0)
+		return FileIO_ReturnError();
+	if (FileIO_CheckRegionSignature(4) != 0) {
+		PreTmLoad();
+		FileIO_ReadBlock(ram_1e0000, (long)ram_1e7800 - (long)ram_1e0000);
+		r = FileIO_ReturnError();
+		PostTmLoad(r);
+	} else {
+		for (i = 0; i < 16; i++) {
+			if ((c = FileIO_ReadByte()) < 0)
+				break;
+			b[i] = c;
+		}
+		r = FileIO_ReturnError();
+		if (r >= 0) {
+			r = PostTmSave_ByteBlock(b);
+			if (r >= 0) {
+				FileIO_SeekRead_ExtReturn();
+				FileIO_ReadBlock(ram_1e0000, (long)ram_1e7800 - (long)ram_1e0000);
+				r = FileIO_ReturnError();
+			}
+		}
+		PostTmSave_Success(r);
+	}
+	FileIO_CloseHandle();
+	return r;
+}
+int FileIO_LoadRegion5_VRAM(char *src)
+{
+	char hd[14];
+	int r;
+
+	FileIO_ReadHeader(hd, src, 5);
+	if (FileIO_OpenWithMode(hd, FileIO_LoadRegion5_VRAM_Str_rb) < 0)
+		return FileIO_ReturnError();
+	if (FileIO_CheckRegionSignature(5) != 0) {
+		msp_ld_mae();
+		FileIO_ReadBlock(ram_1e8800, (long)ram_1ec400 - (long)ram_1e8800);
+		r = FileIO_ReturnError();
+		msp_ld_ato(r);
+	} else
+		r = FileIO_LoadMspAltFormat();
+	FileIO_CloseHandle();
+	return r;
+}
+int FileIO_SaveRegion7_Flash(char *src)
+{
+	char hd[14];
+	int r;
+
+	if (FileIO_GetDiskFreeSpace() < 0x400)
+		return -101;
+	FileIO_ReadHeader(hd, src, 7);
+	if (FileIO_OpenWithMode(hd, Resource_Region7_Start) < 0)
+		return FileIO_ReturnError();
+	PreMidiSave();
+	FileIO_WriteByte_Impl((void *)0x3d3000L, 0x400);
+	r = FileIO_ReturnError();
+	PostMidiSave(r);
+	FileIO_CloseHandle();
+	if (r < 0)
+		FileIO_OpenDefault(hd);
+	return r;
+}

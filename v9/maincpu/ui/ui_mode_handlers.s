@@ -961,39 +961,7 @@ SndOutput_ReinitByMode_NotifyParam:	.include "includes/generated/cc900/SndOutput
 	.set	SndOutput_ReinitByMode_CheckBit3, SndOutput_ReinitByMode_NotifyParam + 35
 
 
-MainCPU_self_test_routines:
-	set	1, (0x30:8)
-	bit	0, (0x30:8)
-	ret nz
-	ld wa, 0:i3
-	calr Test_DRAM_IC10_and_IC9
-	extz hl
-	ld wa, hl
-	calr Test_SRAM_IC21
-	extz hl
-	ld wa, hl
-	calr Report_test_result_by_blinking_LED
-	calr A_Short_Pause
-	ld wa, 0:i3
-	calr Test_PROGRAM_and_TABLE_DATA_ROMs
-	extz hl
-	ld wa, hl
-	calr Report_test_result_by_blinking_LED
-	ld wa, 0:i3
-	calr Test_Rhythm_data_ROM_IC14
-	extz hl
-	ld wa, hl
-	calr Test_Custom_data_ROM_IC19
-	extz hl
-	ld wa, hl
-	calr Test_LCD_Controller_IC206
-	extz hl
-	ld wa, hl
-	calr Test_Video_RAM_IC207
-	extz hl
-	ld wa, hl
-	calr Report_test_result_by_blinking_LED
-	ret
+MainCPU_self_test_routines:	.include "includes/generated/cc900/MainCPU_self_test_routines.s"	; C: cc900/ui_mode_handlers_m276_b.c
 
 
 Report_test_result_by_blinking_LED:
