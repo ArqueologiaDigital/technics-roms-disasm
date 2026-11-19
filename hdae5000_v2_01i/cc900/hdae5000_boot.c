@@ -86,9 +86,10 @@ void HDAE5000_Frame_Handler(void)
                     HDAE5000_Fls_SetSeqStopPending(1);
                     HDAE5000_RequestTitle15(0x7f);
                 } else {
-                    CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD_SW_EDIT, EVT_SHOW, 0L);
-                    CALLV(ROOT->DeleteEvent)(OBJ_FLS_FILE_LOAD_SW_EDIT, EVT_HDAE_SEQ_STOP);
-                    CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD_SW_EDIT, EVT_HDAE_SEQ_STOP, 0L);
+                    /* v2.01i's object 0x7f013e (v2.06i's OBJ_FLS_FILE_LOAD_SW_EDIT) */
+                    CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD_AcIndexEditSw, EVT_SHOW, 0L);
+                    CALLV(ROOT->DeleteEvent)(OBJ_FLS_FILE_LOAD_AcIndexEditSw, EVT_HDAE_SEQ_STOP);
+                    CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD_AcIndexEditSw, EVT_HDAE_SEQ_STOP, 0L);
                 }
             }
         }

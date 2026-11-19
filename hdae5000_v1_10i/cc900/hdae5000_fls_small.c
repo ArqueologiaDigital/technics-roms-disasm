@@ -14,7 +14,7 @@ struct DiskUsage { unsigned long drive; unsigned long system; unsigned long data
 extern void HDAE5000_HD_GetDiskUsage(struct DiskUsage *u);
 
 extern unsigned char HDAE5000_RAM_FlsRecords[];
-extern unsigned char ram_22aa9c[];      /* HDAE5000_RAM_FdList as a flat array: sel[20] at 0x114 */
+extern unsigned char ram_22aa54[];      /* HDAE5000_RAM_FdList as a flat array: sel[20] at 0x114 */
 
 #define FLSB(o, f, i) (*(unsigned char *)((unsigned long)&HDAE5000_RAM_FlsRecords[o] + ((unsigned long)(f) * 144 + (i))))
 
@@ -41,6 +41,17 @@ char *NameHistRecall_b(struct NameHist *h)
 }
 
 /* how many of the 20 floppy entries are selected (byte 1) */
+unsigned int HDAE5000_Count_Active_Files(void)
+{
+    unsigned int n;
+    unsigned int i;
+
+    n = 0;
+    for (i = 0; i < 20; i++)
+        if (ram_22aa54[(unsigned long)i + 0x114] == 1)
+            n++;
+    return n;
+}
 
 int HDAE5000_FlsItem_SetDir(unsigned int fls, unsigned int item, unsigned int dir)
 {

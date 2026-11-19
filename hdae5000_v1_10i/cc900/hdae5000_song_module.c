@@ -91,23 +91,23 @@ extern unsigned long HDAE5000_RAM_LyricFileLength;
 
 /* the "rb" fopen modes, HDAE5000_CopyFdSongToHd_Str_rb and HDAE5000_CopyFdSongToHd_<Part>_Str_rb */
 extern char HDAE5000_CopyFdSongToHd_Str_rb[];
-extern char ram_2f8f0e[], ram_2f8f18[], ram_2f8f22[], ram_2f8f2c[], ram_2f8f34[];
-extern char ram_2f8f3e[], ram_2f8f48[], ram_2f8f50[], ram_2f8f5a[];
+extern char ram_2e088c[], ram_2e0896[], ram_2e08a0[], ram_2e08aa[], ram_2e08b2[];
+extern char ram_2e08bc[], ram_2e08c6[], ram_2e08ce[], ram_2e08d8[];
 /* the extensions, pushed as pushw hi16 / lo16 (an extern array; a numeric constant gives ld xwa,imm / push xwa):
    HDAE5000_CopyFdSongToHd_Str_TTX (0x2f8efe), HDAE5000_CopyFdSongToHd_<Part>_Str_<PART>, under ram_<hex> names
    because the part labels share their first 31 characters with _Str_rb */
-extern char ram_2f8efe[], ram_2f8f08[], ram_2f8f12[], ram_2f8f1c[], ram_2f8f26[];
-extern char ram_2f8f30[], ram_2f8f38[], ram_2f8f42[], ram_2f8f4c[], ram_2f8f54[];
-#define STR_TTX ram_2f8efe
-#define STR_LSW ram_2f8f08
-#define STR_PMT ram_2f8f12
-#define STR_SQT ram_2f8f1c
-#define STR_CMP ram_2f8f26
-#define STR_TM  ram_2f8f30
-#define STR_MSP ram_2f8f38
-#define STR_RCM ram_2f8f42
-#define STR_MD  ram_2f8f4c
-#define STR_TLX ram_2f8f54
+extern char ram_2e0890[], ram_2e0886[], ram_2e0890[], ram_2e089a[], ram_2e08a4[];
+extern char ram_2e08ae[], ram_2e08b6[], ram_2e08c0[], ram_2e08ca[], ram_2e08d2[];
+#define STR_TTX ram_2e0890
+#define STR_LSW ram_2e0886
+#define STR_PMT ram_2e0890
+#define STR_SQT ram_2e089a
+#define STR_CMP ram_2e08a4
+#define STR_TM  ram_2e08ae
+#define STR_MSP ram_2e08b6
+#define STR_RCM ram_2e08c0
+#define STR_MD  ram_2e08ca
+#define STR_TLX ram_2e08d2
 
 #define TLX_TRLEN (*(unsigned long *)&HDAE5000_RAM_LyricBuffer[18])
 
@@ -216,6 +216,32 @@ int HDAE5000_CopyFdSongToHd_Md(unsigned int dir, unsigned int song, char *fdname
 int HDAE5000_CopyFdSongToHd_Tlx(unsigned int dir, unsigned int song, char *fdname);
 
 /* XDE = the floppy song's 8-character file name; stacked words (retd 6), lowest first: keep, sleep, mask (xsp+64) */
+
+int HDAE5000_CopyFdSongToHd_Lsw(unsigned int dir, unsigned int song, char *fdname)
+{
+    int ret = 0;
+    struct ResInfo info0;
+    struct ResInfo info1;
+    char fname[14];
+    unsigned long size;
+
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_LSW);
+    CALLV(HAMA->GetResouceInfo)(0, (char *)&info0);
+    CALLV(HAMA->GetResouceInfo)(1, (char *)&info1);
+    size = HDAE5000_RoundUpToSector(info0.size + info1.size);
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2e088c) >= 0) {
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, size);
+        HDAE5000_RAM_HdStreamBuffer[info0.size + info1.size]= 0;
+        HDAE5000_RAM_HdStreamBuffer[info0.size + info1.size + 1]= 0x10;
+        HDAE5000_RAM_HdStreamBuffer[info0.size + info1.size + 2]= 0;
+        ret = HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, size, &SLOT(0, dir, song));
+        HAS(0, dir, song) = 1;
+        CALLV(HAMA->fclose_ext)();
+    } else
+        ret = -1;
+    return ret;
+}
 
 /* PMT: the first write's result is kept (ret); the 0x8000-byte reads that follow are appended */
 

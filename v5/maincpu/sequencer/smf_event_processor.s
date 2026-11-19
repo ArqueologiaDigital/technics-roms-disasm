@@ -8793,69 +8793,14 @@ PathInfo_RetVal:
 	lda xsp, (xsp + 18)
 	ret
 
-FileIO_ParsePathComponents:
-	lda xsp, (xsp - 18)
-	push xiz
-	ld xiz, xbc
-	ld (xsp + 18), xwa
-	ld de, 0:i3
-	ld xwa, (xsp + 18)
-	ld (xwa), 0x0
-	ld xhl, (xiz)
-	jr FileIO_ParseLoop_Test
-
-FileIO_ParseLoop_CheckChar:
-	ld	xwa, (xiz)
-	cp	(xwa), 92
-	jr	nz, FileIO_ParseLoop_CopyChar
-	lda	xwa, (xsp+4)
-	ld	(xwa+de), 0x00
-	ld	xwa, (xsp+18)
-	cp	(xwa), 0
-	jr	z, FileIO_ParseLoop_AppendSlash
-	pushw	FileIO_ParseLoop_CheckChar_Str_Backslash@hi16
-	pushw	FileIO_ParseLoop_CheckChar_Str_Backslash@lo16
-	ld	xwa, (xsp+22)
-	push	xwa
-	call	Strcat
-	inc	8, xsp
-FileIO_ParseLoop_AppendSlash:
-	lda	xwa, (xsp+4)
-	push	xwa
-	ld	xwa, (xsp+22)
-	push	xwa
-	call	Strcat
-	inc	8, xsp
-	ld	de, 0:i3
-	ld	xwa, (xiz)
-	inc	1, xwa
-	ld	xhl, xwa
-FileIO_ParseLoop_Advance:
-	ld xwa, 1:i3
-	add (xiz), xwa
-
-FileIO_ParseLoop_Test:
-	ld xwa, (xiz)
-	cp (xwa), 0x0
-	jr nz, FileIO_ParseLoop_CheckChar
-	ld (xiz), xhl
-	ld hl, 0:i3
-	jr FileIO_ParsePath_Return
-
-FileIO_ParseLoop_CopyChar:
-	lda xbc, (xsp + 4)
-	ld xwa, (xiz)
-	ld a, (xwa)
-	ld	(xbc+de), a
-	inc 1, de
-	cp de, 0xc
-	jr le, FileIO_ParseLoop_Advance
-	ldw hl, 0xffff
-
-FileIO_ParsePath_Return:
-	pop xiz
-	lda xsp, (xsp + 18)
-	ret
+FileIO_ParsePathComponents:	.include "includes/generated/cc900/FileIO_ParsePathComponents.s"	; C: cc900/smf_event_processor_m240_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_ParseLoop_CheckChar, FileIO_ParsePathComponents + 21
+	.set	FileIO_ParseLoop_AppendSlash, FileIO_ParsePathComponents + 61
+	.set	FileIO_ParseLoop_Advance, FileIO_ParsePathComponents + 83
+	.set	FileIO_ParseLoop_Test, FileIO_ParsePathComponents + 87
+	.set	FileIO_ParseLoop_CopyChar, FileIO_ParsePathComponents + 100
+	.set	FileIO_ParsePath_Return, FileIO_ParsePathComponents + 123
 
 _findfirst:
 	lda xsp, (xsp - 20)

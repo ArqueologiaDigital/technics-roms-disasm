@@ -1,5 +1,5 @@
-/* Functions of hd-ae5000_v1_10i.s.  (hdae5000_small2.c)
-   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_small2.c (checked in
+/* Functions of hd-ae5000_v1_10i.s.  (hdae5000_small2_hd-ae5000_v1_10i.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_small2_hd-ae5000_v1_10i.c (checked in
    notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_TypeSel_Init HDAE5000_FlsRecord_Address HDAE5000_NameHistory_AfterPushNop
@@ -60,6 +60,17 @@ long HDAE5000_AcWindowPage1Proc(long obj, long ev, long arg)
 }
 
 /* ---- 0x2827a8 ---- */
+long HDAE5000_HDTitleMenuProc(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_PARA_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(OBJ_HD_MENU_BMP, EVT_DRAW, 0L);
+        return 0;
+    }
+}
 
 /* ---- 0x282e3c ---- */
 int HDAE5000_FdName_SongNumber(char *name)

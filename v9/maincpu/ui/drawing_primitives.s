@@ -1953,39 +1953,10 @@ DrawWall_DoCopy:
 ; Returns immediately if bitmap index is 0xffffffff (no bitmap).
 ; Clips against screen bottom edge (y >= 240 -> skip row).
 ; =============================================================================
-DrawBitmap:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, DrawBitmap_DeferredPath
-	cpw (DRAW_ENABLED:24), 0
-	jr z, DrawBitmap_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr DrawBitmap_Impl
-	jr DrawBitmap_Return
-
-DrawBitmap_DeferredPath:
-	ldw wa, 0xc
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (DrawBitmap_QueuedExec:24)
-	ld (xwa), xbc
-	ld xiy, xiz
-	lda xix, (xwa + 4)
-	ldiw
-	ldiw
-	ld xbc, (xsp + 4)
-	ld (xwa + 8), xbc
-	calr DrawRing_Post
-
-DrawBitmap_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+DrawBitmap:	.include "includes/generated/cc900/DrawBitmap.s"	; C: cc900/drawing_primitives_m273_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawBitmap_DeferredPath, DrawBitmap + 34
+	.set	DrawBitmap_Return, DrawBitmap + 67
 
 ; Executor of a queued DrawBitmap: DrawBitmap_DeferredPath stores this address at +0 of a
 ; DrawQueue_Alloc entry and the call's parameters at +4.., and DrawTask_FuncDispatch
@@ -1993,14 +1964,7 @@ DrawBitmap_Return:
 ; parameters from (xwa + 4..), returns when the word at RAM 0x3044E is 0 (the test
 ; DrawBitmap makes before drawing directly) and otherwise calls DrawBitmap_Impl.
 ; (Formerly DrawBitmap_ParamBlock, held as `.byte`.)
-DrawBitmap_QueuedExec:
-	lda xde, (xwa + 4)
-	ld xbc, (xwa + 8)
-	cpw (DRAW_ENABLED:24), 0
-	ret z
-	ld xwa, xde
-	calr DrawBitmap_Impl
-	ret
+DrawBitmap_QueuedExec:	.include "includes/generated/cc900/DrawBitmap_QueuedExec.s"	; C: cc900/drawing_primitives_m0.c
 
 DrawBitmap_Impl:
 	lda xsp, (xsp - 26)
@@ -3728,52 +3692,7 @@ DrawString_Impl_Return:
 ;   XDE = pointer to null-terminated string
 ;   Stack: font_id (word), foreground_color (word), background_color (word)
 ; =============================================================================
-DrawStringCentered:
-	lda xsp, (xsp-270)
-	pushw iz
-	ld	(xsp+264), xbc
-	ld	(xsp+268), xwa
-	lda xbc, (xsp + 4)
-	ld xwa, xde
-	call ConvertStrings
-	lda xwa, (xsp + 4)
-	ld XBC, (xsp + 0x0118)
-	call CalcTotalWidth
-	ld iz, hl
-	ld XWA, (xsp + 0x0118)
-	call GetCharHeight
-	ld (xsp + 2), hl
-	ld XWA, (xsp + 0x0118)
-	call GetCharDescent
-	ld XWA, (xsp + 0x0108)
-	ld xiy, xwa
-	lda xix, (xsp+260)
-	ldiw
-	ldiw
-	lda xbc, (xsp+260)
-	ld wa, iz
-	exts xwa
-	divs wa, 0x2
-	sub (xbc), wa
-	ld wa, (xsp + 2)
-	sub wa, hl
-	exts xwa
-	divs wa, 0x2
-	sub (xbc + 2), wa
-	ld XWA, (xsp + 0x0118)
-	call GetCenteredDelta
-	lda xbc, (xsp+260)
-	add (xbc + 2), hl
-	lda xde, (xsp + 4)
-	ld XWA, (xsp + 0x0118)
-	push xwa
-	pushw	(xsp+282)
-	pushw	(xsp+282)
-	ld XWA, (xsp + 0x0114)
-	calr DrawString
-	popw iz
-	lda xsp, (xsp+270)
-	retd 0x8
+DrawStringCentered:	.include "includes/generated/cc900/DrawStringCentered.s"	; C: cc900/drawing_primitives_m273_d.c
 
 ; =============================================================================
 ; DrawStringLeftJustify - Draw text left-aligned, vertically centered
@@ -3787,53 +3706,7 @@ DrawStringLeftJustify:	.include "includes/generated/cc900/DrawStringLeftJustify.
 ;
 ; Positions text at x = rect.right - 4 - text_width, vertically centered.
 ; =============================================================================
-DrawStringRightJustify:
-	lda xsp, (xsp-272)
-	push xiz
-	ld	(xsp+268), xbc
-	ld	(xsp+272), xwa
-	lda xbc, (xsp + 8)
-	ld xwa, xde
-	call ConvertStrings
-	lda xwa, (xsp + 8)
-	ld XIZ, (xsp + 0x011c)
-	ld xbc, xiz
-	call CalcTotalWidth
-	ld (xsp + 4), hl
-	ld xwa, xiz
-	call GetCharHeight
-	ld (xsp + 6), hl
-	ld xwa, xiz
-	call GetCharDescent
-	ld XWA, (xsp + 0x010c)
-	ld xiy, xwa
-	lda xix, (xsp+264)
-	ldiw
-	ldiw
-	lda xbc, (xsp+264)
-	ld XWA, (xsp + 0x0110)
-	ld wa, (xwa + 4)
-	dec 4, wa
-	sub wa, (xsp + 4)
-	ld (xbc), wa
-	ld wa, (xsp + 6)
-	sub wa, hl
-	exts xwa
-	divs wa, 0x2
-	sub (xbc + 2), wa
-	ld xwa, xiz
-	call GetCenteredDelta
-	lda xbc, (xsp+264)
-	add (xbc + 2), hl
-	lda xde, (xsp + 8)
-	push xiz
-	pushw	(xsp+286)
-	pushw	(xsp+286)
-	ld XWA, (xsp + 0x0118)
-	calr DrawString
-	pop xiz
-	lda xsp, (xsp+272)
-	retd 0x8
+DrawStringRightJustify:	.include "includes/generated/cc900/DrawStringRightJustify.s"	; C: cc900/drawing_primitives_m273_d.c
 
 ; =============================================================================
 ; DrawStringAlignment - Draw text with specified alignment mode
@@ -3896,164 +3769,17 @@ DrawStringAlignment_Return:
 ;   XDE = pointer to null-terminated string
 ;   Stack: alignment (byte), font_id, foreground, background
 ; =============================================================================
-DrawStringReverse:
-	lda xsp, (xsp - 24)
-	push xiz
-	ld (xsp + 20), xde
-	ld (xsp + 24), xwa
-	ld xiy, xbc
-	lda xix, (xsp + 8)
-	ldiw
-	ldiw
-	ld xwa, (xsp + 20)
-	ld xbc, (xsp + 40)
-	call CalcTotalWidth
-	ld (xsp + 4), hl
-	ld xwa, (xsp + 40)
-	call GetCharHeight
-	ld (xsp + 6), hl
-	ld xwa, (xsp + 40)
-	call GetCharDescent
-	ld iz, hl
-	ld xwa, (xsp + 40)
-	call GetCenteredDelta
-	lda xde, (xsp + 8)
-	lda xbc, (xde + 2)
-	ld wa, (xsp + 6)
-	sub wa, iz
-	ld ix, wa
-	exts xix
-	divs ix, 0x2
-	ld wa, (xbc)
-	sub wa, ix
-	ld (xbc), wa
-	add wa, hl
-	ld (xbc), wa
-	ld a, (xsp + 34)
-	cp a, 2:i3
-	jr z, DrawStringReverse_AlignRight
-	cp a, 1:i3
-	jr z, DrawStringReverse_AlignLeft
-	cp a, 0:i3
-	jr nz, DrawStringReverse_ComputeTextBox
-	ld wa, (xsp + 4)
-	exts xwa
-	divs wa, 0x2
-	sub (xde), wa
-	jr DrawStringReverse_ComputeTextBox
-
-DrawStringReverse_AlignLeft:
-	ld xwa, (xsp + 24)
-	ld wa, (xwa)
-	inc 4, wa
-	ld (xde), wa
-	jr DrawStringReverse_ComputeTextBox
-
-DrawStringReverse_AlignRight:
-	ld xwa, (xsp + 24)
-	ld wa, (xwa + 4)
-	dec 4, wa
-	sub wa, (xsp + 4)
-	ld (xde), wa
-
-DrawStringReverse_ComputeTextBox:
-	ld ix, hl
-	add ix, ix
-	ld wa, (xbc)
-	dec 2, wa
-	ld iy, wa
-	sub iy, ix
-	lda xwa, (xsp + 12)
-	lda xix, (xwa + 2)
-	ld (xix), iy
-	ld iy, (xde)
-	dec 3, iy
-	ld (xwa), iy
-	lda xiy, (xwa + 4)
-	ld de, (xde)
-	add de, (xsp + 4)
-	inc 3, de
-	ld (xiy), de
-	lda xiz, (xwa + 6)
-	ld bc, (xbc)
-	add bc, (xsp + 6)
-	add bc, hl
-	ld (xiz), bc
-	ld xbc, (xsp + 24)
-	ld bc, (xbc + 2)
-	cp (xix), bc
-	jr ge, DrawStringReverse_ClampLeft
-	ld (xix), bc
-
-DrawStringReverse_ClampLeft:
-	ld de, (xwa)
-	ld xbc, (xsp + 24)
-	cp de, (xbc)
-	jr ge, DrawStringReverse_ClampLeftX
-	ld bc, (xbc)
-	ld (xwa), bc
-
-DrawStringReverse_ClampLeftX:
-	ld xbc, (xsp + 24)
-	ld bc, (xbc + 4)
-	cp (xiy), bc
-	jr le, DrawStringReverse_ClampRight
-	ld (xiy), bc
-
-DrawStringReverse_ClampRight:
-	ld xbc, (xsp + 24)
-	ld bc, (xbc + 6)
-	cp (xiz), bc
-	jr le, DrawStringReverse_ClampBottom
-	ld (xiz), bc
-
-DrawStringReverse_ClampBottom:
-	ld bc, (xix)
-	cp bc, (xiz)
-	jr gt, DrawStringReverse_Return
-	ld bc, (xwa)
-	cp bc, (xiy)
-	jr gt, DrawStringReverse_Return
-	ld iz, (xsp + 36)
-	cpw (xsp + 32), 0x0
-	jr z, DrawStringReverse_DrawNoHighlight
-	ld bc, (xsp + 38)
-	calr DrawBox
-	lda xwa, (xsp + 12)
-	lda xbc, (xsp + 8)
-	cp iz, 0xf5
-	jr nz, DrawStringReverse_DrawNonPattern
-	ld xde, (xsp + 40)
-	push xde
-	pushw 0x0
-	pushw 0xf7
-	ld xde, (xsp + 28)
-	jr DrawStringReverse_CallDrawString
-
-DrawStringReverse_DrawNonPattern:
-	ld xde, (xsp + 40)
-	push xde
-	pushw iz
-	pushw 0xf7
-	ld xde, (xsp + 28)
-	jr DrawStringReverse_CallDrawString
-
-DrawStringReverse_DrawNoHighlight:
-	ld bc, iz
-	calr DrawBox
-	lda xwa, (xsp + 12)
-	lda xbc, (xsp + 8)
-	ld xde, (xsp + 40)
-	push xde
-	pushm (xsp + 42)
-	pushw 0xf7
-	ld xde, (xsp + 28)
-
-DrawStringReverse_CallDrawString:
-	calr DrawString
-
-DrawStringReverse_Return:
-	pop xiz
-	lda xsp, (xsp + 24)
-	retd 0xc
+DrawStringReverse:	.include "includes/generated/cc900/DrawStringReverse.s"	; C: cc900/drawing_primitives_m273_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawStringReverse_AlignLeft, DrawStringReverse + 115
+	.set	DrawStringReverse_AlignRight, DrawStringReverse + 126
+	.set	DrawStringReverse_ComputeTextBox, DrawStringReverse + 139
+	.set	DrawStringReverse_ClampLeft, DrawStringReverse + 201
+	.set	DrawStringReverse_ClampLeftX, DrawStringReverse + 214
+	.set	DrawStringReverse_ClampRight, DrawStringReverse + 226
+	.set	DrawStringReverse_ClampBottom, DrawStringReverse + 238
+	.set	DrawStringReverse_DrawNonPattern, DrawStringReverse + 293
+	.set	DrawStringReverse_DrawNoHighlight, DrawStringReverse + 306
+	.set	DrawStringReverse_CallDrawString, DrawStringReverse + 330
+	.set	DrawStringReverse_Return, DrawStringReverse + 333
 

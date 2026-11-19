@@ -91,23 +91,23 @@ extern unsigned long HDAE5000_RAM_LyricFileLength;
 
 /* the "rb" fopen modes, HDAE5000_CopyFdSongToHd_Str_rb and HDAE5000_CopyFdSongToHd_<Part>_Str_rb */
 extern char HDAE5000_CopyFdSongToHd_Str_rb[];
-extern char ram_2f8f0e[], ram_2f8f18[], ram_2f8f22[], ram_2f8f2c[], ram_2f8f34[];
-extern char ram_2f8f3e[], ram_2f8f48[], ram_2f8f50[], ram_2f8f5a[];
+extern char ram_2f83fa[], ram_2f8404[], ram_2f840e[], ram_2f8418[], ram_2f8420[];
+extern char ram_2f842a[], ram_2f8434[], ram_2f843c[], ram_2f8446[];
 /* the extensions, pushed as pushw hi16 / lo16 (an extern array; a numeric constant gives ld xwa,imm / push xwa):
    HDAE5000_CopyFdSongToHd_Str_TTX (0x2f8efe), HDAE5000_CopyFdSongToHd_<Part>_Str_<PART>, under ram_<hex> names
    because the part labels share their first 31 characters with _Str_rb */
-extern char ram_2f8efe[], ram_2f8f08[], ram_2f8f12[], ram_2f8f1c[], ram_2f8f26[];
-extern char ram_2f8f30[], ram_2f8f38[], ram_2f8f42[], ram_2f8f4c[], ram_2f8f54[];
-#define STR_TTX ram_2f8efe
-#define STR_LSW ram_2f8f08
-#define STR_PMT ram_2f8f12
-#define STR_SQT ram_2f8f1c
-#define STR_CMP ram_2f8f26
-#define STR_TM  ram_2f8f30
-#define STR_MSP ram_2f8f38
-#define STR_RCM ram_2f8f42
-#define STR_MD  ram_2f8f4c
-#define STR_TLX ram_2f8f54
+extern char ram_2f83f4[], ram_2f83f4[], ram_2f83fe[], ram_2f8408[], ram_2f8412[];
+extern char ram_2f841c[], ram_2f8424[], ram_2f842e[], ram_2f8438[], ram_2f8440[];
+#define STR_TTX ram_2f83f4
+#define STR_LSW ram_2f83f4
+#define STR_PMT ram_2f83fe
+#define STR_SQT ram_2f8408
+#define STR_CMP ram_2f8412
+#define STR_TM  ram_2f841c
+#define STR_MSP ram_2f8424
+#define STR_RCM ram_2f842e
+#define STR_MD  ram_2f8438
+#define STR_TLX ram_2f8440
 
 #define TLX_TRLEN (*(unsigned long *)&HDAE5000_RAM_LyricBuffer[18])
 
@@ -255,11 +255,203 @@ int HDAE5000_CopyFdSongToHd_Tlx(unsigned int dir, unsigned int song, char *fdnam
 
 /* XDE = the floppy song's 8-character file name; stacked words (retd 6), lowest first: keep, sleep, mask (xsp+64) */
 
+int HDAE5000_CopyFdSongToHd_Lsw(unsigned int dir, unsigned int song, char *fdname)
+{
+    int ret = 0;
+    struct ResInfo info0;
+    struct ResInfo info1;
+    char fname[14];
+    unsigned long size;
+
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_LSW);
+    CALLV(HAMA->GetResouceInfo)(0, (char *)&info0);
+    CALLV(HAMA->GetResouceInfo)(1, (char *)&info1);
+    size = HDAE5000_RoundUpToSector(info0.size + info1.size);
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f83fa) >= 0) {
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, size);
+        HDAE5000_RAM_HdStreamBuffer[info0.size + info1.size]= 0;
+        HDAE5000_RAM_HdStreamBuffer[info0.size + info1.size + 1]= 0x10;
+        HDAE5000_RAM_HdStreamBuffer[info0.size + info1.size + 2]= 0;
+        ret = HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, size, &SLOT(0, dir, song));
+        HAS(0, dir, song) = 1;
+        CALLV(HAMA->fclose_ext)();
+    } else
+        ret = -1;
+    return ret;
+}
+
 /* PMT: the first write's result is kept (ret); the 0x8000-byte reads that follow are appended */
+int HDAE5000_CopyFdSongToHd_Pmt(unsigned int dir, unsigned int song, char *fdname)
+{
+    int ret = 0;
+    char fname[14];
+    long n;
+
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_PMT);
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f8404) < 0)
+        return -1;
+    n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+    if ((ret = HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, HDAE5000_RoundUpToSector(n),
+                                     &SLOT(1, dir, song))) == -1)
+        return -1;
+    while (n == 0x8000L) {
+        n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+        if (n > 0) {
+            if ((ret = HDAE5000_HD_AppendFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                              HDAE5000_RoundUpToSector(n), &SLOT(1, dir, song))) == -1)
+                break;
+        }
+    }
+    HAS(1, dir, song) = 1;
+    CALLV(HAMA->fclose_ext)();
+    return ret;
+}
 
 /* SQT, CMP, RCM: as PMT, but the first write's result is only tested */
 
+int HDAE5000_CopyFdSongToHd_Sqt(unsigned int dir, unsigned int song, char *fdname) { 
+    int ret = 0;
+    long n;
+    char fname[14];
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_SQT);
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f840e) < 0)
+        return -1;
+    n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+    if (HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, HDAE5000_RoundUpToSector(n),
+                              &SLOT(2, dir, song)) == -1)
+        return -1;
+    while (n == 0x8000L) {
+        n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+        if (n > 0) {
+            if ((ret = HDAE5000_HD_AppendFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                              HDAE5000_RoundUpToSector(n), &SLOT(2, dir, song))) == -1)
+                break;
+        }
+    }
+    HAS(2, dir, song) = 1;
+    CALLV(HAMA->fclose_ext)();
+    return ret;
+ }
+int HDAE5000_CopyFdSongToHd_Cmp(unsigned int dir, unsigned int song, char *fdname) { 
+    int ret = 0;
+    long n;
+    char fname[14];
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_CMP);
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f8418) < 0)
+        return -1;
+    n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+    if (HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, HDAE5000_RoundUpToSector(n),
+                              &SLOT(3, dir, song)) == -1)
+        return -1;
+    while (n == 0x8000L) {
+        n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+        if (n > 0) {
+            if ((ret = HDAE5000_HD_AppendFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                              HDAE5000_RoundUpToSector(n), &SLOT(3, dir, song))) == -1)
+                break;
+        }
+    }
+    HAS(3, dir, song) = 1;
+    CALLV(HAMA->fclose_ext)();
+    return ret;
+ }
+
 /* TM, MSP, MD: one read of the resource's size (TM's fixed at 0x72aa) */
+
+int HDAE5000_CopyFdSongToHd_Tm(unsigned int dir, unsigned int song, char *fdname)
+{
+    
+    int ret = 0;
+    struct ResInfo info;
+    char fname[14];
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_TM);
+    CALLV(HAMA->GetResouceInfo)(6, (char *)&info);
+    info.size = 0x72aaL;
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f8420) >= 0) {
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, info.size);
+        ret = HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                    HDAE5000_RoundUpToSector(info.size), &SLOT(4, dir, song));
+        HAS(4, dir, song) = 1;
+        CALLV(HAMA->fclose_ext)();
+    } else
+        ret = -1;
+    return ret;
+
+}
+
+int HDAE5000_CopyFdSongToHd_Msp(unsigned int dir, unsigned int song, char *fdname)
+{
+    
+    int ret = 0;
+    struct ResInfo info;
+    char fname[14];
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_MSP);
+    CALLV(HAMA->GetResouceInfo)(7, (char *)&info);
+    ;
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f842a) >= 0) {
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, info.size);
+        ret = HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                    HDAE5000_RoundUpToSector(info.size), &SLOT(5, dir, song));
+        HAS(5, dir, song) = 1;
+        CALLV(HAMA->fclose_ext)();
+    } else
+        ret = -1;
+    return ret;
+
+}
+
+int HDAE5000_CopyFdSongToHd_Rcm(unsigned int dir, unsigned int song, char *fdname) { 
+    int ret = 0;
+    long n;
+    char fname[14];
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_RCM);
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f8434) < 0)
+        return -1;
+    n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+    if (HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer, HDAE5000_RoundUpToSector(n),
+                              &SLOT(6, dir, song)) == -1)
+        return -1;
+    while (n == 0x8000L) {
+        n = CALLR(long, HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, 0x8000L);
+        if (n > 0) {
+            if ((ret = HDAE5000_HD_AppendFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                              HDAE5000_RoundUpToSector(n), &SLOT(6, dir, song))) == -1)
+                break;
+        }
+    }
+    HAS(6, dir, song) = 1;
+    CALLV(HAMA->fclose_ext)();
+    return ret;
+ }
+
+int HDAE5000_CopyFdSongToHd_Md(unsigned int dir, unsigned int song, char *fdname)
+{
+    
+    int ret = 0;
+    struct ResInfo info;
+    char fname[14];
+    HDAE5000_MemCopy(fname, fdname, 8);
+    HDAE5000_StrCpy(fname + 8, STR_MD);
+    CALLV(HAMA->GetResouceInfo)(9, (char *)&info);
+    ;
+    if (CALLR(int, HAMA->fopen_ext)(fname, ram_2f843c) >= 0) {
+        CALLV(HAMA->fread_ext)(HDAE5000_RAM_HdStreamBuffer, info.size);
+        ret = HDAE5000_HD_WriteFile((unsigned long)HDAE5000_RAM_HdStreamBuffer,
+                                    HDAE5000_RoundUpToSector(info.size), &SLOT(7, dir, song));
+        HAS(7, dir, song) = 1;
+        CALLV(HAMA->fclose_ext)();
+    } else
+        ret = -1;
+    return ret;
+
+}
 
 /* TLX: the 22-byte TLhd header first (after clearing the buffer), then the TLtr chunk behind it */
 

@@ -4,6 +4,7 @@
    cc900-options: -Xr
    cc900-module: HDAE5000_Lbn_ShowEntry HDAE5000_TypeSel_Init HDAE5000_PartList_Build
    cc900-module: HDAE5000_Lbn_StepDigit HDAE5000_Lbn_TypeDigit
+   cc900-data: HDAE5000_Lbn_StepDigit 1 = HDAE5000_Lbn_StepDigit_CaseTable
    cc900-data: HDAE5000_LBNPage1SwCatch 1 = HDAE5000_LBNPage1SwCatch_CaseTable
 */
 #include "hdae_ws.h"
@@ -40,6 +41,65 @@ extern unsigned char HDAE5000_TypeSel_TemplateBlank[];
 /* ---- HDAE5000_Lbn_StepDigit ------------------------------------------------------------------------------ */
 
 /* a local copy of dir */
+void HDAE5000_Lbn_StepDigit(int dir, int song, int pos, int step)
+{
+    int m;
+    int d;
+
+    d = dir;
+    switch (HDAE5000_RAM_LbnDigitPos) {
+    case 0:
+        return;
+    case 1:
+        d += step * 100;
+        if (d >= 100)
+            d = 100;
+        else if (d <= 0)
+            d = 0;
+        break;
+    case 2:
+        d += step * 10;
+        if (d >= 120)
+            d = 120;
+        else if (d <= 1)
+            d = 0;
+        break;
+    case 3:
+        d += step;
+        if (d > 120)
+            d = 120;
+        else if (d <= 0)
+            d = 1;
+        break;
+    case 4:
+        song += step * 10;
+        if (song >= 10)
+            song = 10;
+        else if (song <= 0)
+            song = 0;
+        break;
+    case 5:
+        song += step;
+        if (song > 16)
+            song = 16;
+        else if (song <= 0)
+            song = 1;
+    }
+    HDAE5000_RAM_LbnDir = d;
+    HDAE5000_RAM_LbnSong = song;
+    if (HDAE5000_RAM_LbnDigitPos == 5) {
+        HDAE5000_RAM_CurDir = HDAE5000_RAM_LbnDir - 1;
+        HDAE5000_RAM_CurSong = HDAE5000_RAM_LbnSong - 1;
+        if ((m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong)) != 0xffff) {
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateBlank, 2);
+            HDAE5000_PartList_Build(OBJ_LBN_OPTION, HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, m);
+        } else {
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0, HDAE5000_TypeSel_TemplateBlank, 2);
+            HDAE5000_PartList_Build(OBJ_LBN_OPTION, -1, -1, 0xffff);
+        }
+    }
+    HDAE5000_Lbn_ShowEntry(HDAE5000_RAM_LbnDir, HDAE5000_RAM_LbnSong, HDAE5000_RAM_LbnDigitPos, 1);
+}
 
 /* the copy as an initialiser */
 
