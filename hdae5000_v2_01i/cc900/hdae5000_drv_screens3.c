@@ -69,7 +69,7 @@ extern unsigned char HDAE5000_Get_Init_Flag(void);
 /* ---- RAM ---- */
 struct FdList { char label[14]; char rows[242]; char line1[20]; char line2[20]; };
 extern struct FdList HDAE5000_RAM_FdList;
-extern long ram_23a09a;                          /* HDAE5000_RAM_Browser_State + 12: the screen to show next */
+extern long ram_23a022;                          /* HDAE5000_RAM_Browser_State + 12: the screen to show next */
 extern struct TypeSel HDAE5000_RAM_SaveOptions;
 extern struct TypeSel HDAE5000_RAM_DeleteOptions;
 extern unsigned int HDAE5000_RAM_CurDir;
@@ -92,7 +92,7 @@ extern char HDAE5000_RAM_PcLinkStatusText[];
 extern char HDAE5000_RAM_SongScreenTitle[];
 extern char HDAE5000_RAM_SongListText[];
 extern char HDAE5000_RAM_NameEditBuffer[];       /* 0x23a06e */
-extern char ram_23a04e[];                        /* HDAE5000_RAM_Name_ColumnRuler (a .set, not resolvable) */
+extern char ram_239fd6[];                        /* HDAE5000_RAM_Name_ColumnRuler (a .set, not resolvable) */
 extern unsigned char HDAE5000_RAM_DirNameHistory[];
 extern unsigned char ram_22ac7e[];               /* the song-name history (NameHistory_Recall layout) */
 extern unsigned char ram_22ad9c[];               /* format-code dialog: count, pad, HDAE5000_RAM_FormatCodeDigits */
@@ -101,7 +101,7 @@ extern unsigned char ram_22ad9c[];               /* format-code dialog: count, p
 extern char HDAE5000_Str_STATUS[];
 extern char HDAE5000_Str_AllFilesPattern[];
 extern char HDAE5000_Str_DIRECTORY[];
-extern char ram_2e2512[];   /* HDAE5000_Str_Chr3A_SongScreen_Refresh (pushed as a constant: the listing's 31-char
+extern char ram_2e1d20[];   /* HDAE5000_Str_Chr3A_SongScreen_Refresh (pushed as a constant: the listing's 31-char
                                name is not translated) */
 extern char HDAE5000_Str_Blank0Tab[];
 extern char HDAE5000_Str_Chr3A2020202020[];
@@ -111,13 +111,13 @@ extern char HDAE5000_Str_UTIL[];
 extern char HDAE5000_Str_SVOP[];
 extern char HDAE5000_Str_FMT[];
 extern char HDAE5000_Str_LBN[];
-extern char ram_2e250c[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh, "%2.2d" */
-extern char ram_2e2534[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh_2 */
+extern char ram_2e1d1a[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh, "%2.2d" */
+extern char ram_2e1d42[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh_2 */
 /* unsigned long: the ROM evaluates ObjIds[page] before the other arguments (`ld xde,(xbc+wa)` ahead of the text
    address; before PartList_Build's stack push), the order of a converted argument; passed as (long) / to long obj */
-extern unsigned long ram_2e24e8[];   /* HDAE5000_SongScreen_Refresh_ObjIds */
-extern unsigned long ram_2e24f0[];   /* HDAE5000_SongScreen_Refresh_ObjIds_2 */
-extern unsigned long ram_2e24f8[];   /* HDAE5000_SongScreen_Refresh_ObjIds_3 */
+extern unsigned long ram_2e1cf6[];   /* HDAE5000_SongScreen_Refresh_ObjIds */
+extern unsigned long ram_2e1cfe[];   /* HDAE5000_SongScreen_Refresh_ObjIds_2 */
+extern unsigned long ram_2e1d06[];   /* HDAE5000_SongScreen_Refresh_ObjIds_3 */
 extern long HDAE5000_HDAETitleFunc_ObjIds[];
 extern unsigned char HDAE5000_TypeSel_TemplateBlank[];
 extern unsigned char HDAE5000_TypeSel_TemplateAllNo[];
@@ -126,15 +126,15 @@ extern char HDAE5000_Str_SQFFileInfo[], HDAE5000_Str_SEQFileInfo[], HDAE5000_Str
 extern char HDAE5000_Str_TMFileInfo[], HDAE5000_Str_MSPFileInfo[], HDAE5000_Str_RCMFileInfo[];
 extern char HDAE5000_Str_MDFileInfo[];
 extern char HDAE5000_Str_Adr[], HDAE5000_Str_Size[], HDAE5000_Str_Adr_HDD_UTIL_PAGE[];
-extern char ram_2e25b4[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2.._9 names' prefix) */
-extern char ram_2e25d6[], ram_2e25de[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
-extern char ram_2e2600[], ram_2e2608[];   /* _3 */
-extern char ram_2e262a[], ram_2e2632[];   /* _4 */
-extern char ram_2e2654[], ram_2e265c[];   /* _5 */
-extern char ram_2e267c[], ram_2e2684[];   /* _6 */
-extern char ram_2e26a6[], ram_2e26ae[];   /* _7 */
-extern char ram_2e26d0[], ram_2e26d8[];   /* _8 */
-extern char ram_2e26f8[], ram_2e2700[];   /* _9 */
+extern char ram_2e1e16[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2.._9 names' prefix) */
+extern char ram_2e1e38[], ram_2e1e40[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
+extern char ram_2e1e62[], ram_2e1e6a[];   /* _3 */
+extern char ram_2e1e8c[], ram_2e1e94[];   /* _4 */
+extern char ram_2e1eb6[], ram_2e1ebe[];   /* _5 */
+extern char ram_2e1ede[], ram_2e1ee6[];   /* _6 */
+extern char ram_2e1f08[], ram_2e1f10[];   /* _7 */
+extern char ram_2e1f32[], ram_2e1f3a[];   /* _8 */
+extern char ram_2e1f5a[], ram_2e1f62[];   /* _9 */
 
 /* an array read as an lvalue member at offset 0: `lda xwa,(sym); ld xde,xwa` (hd_r9_b2.c, TitleInfo_Build) */
 struct Wrap { char c[2]; };
@@ -162,7 +162,7 @@ struct FindBlk { char head[6]; char name[260]; };
      V4.23 gave `extz xwa; add wa,0x114; lda xbc,(FdList); cp (xbc+wa),1` for an unsigned int index.  Written
      with an unsigned long index.  (Form b: the same through pointer arithmetic, *(member + index).) */
 
-/* r23: not checked in run 95 (Browser_State unresolvable); now ram_23a09a, and the inner switch unsigned */
+/* r23: not checked in run 95 (Browser_State unresolvable); now ram_23a022, and the inner switch unsigned */
 
 long HDAE5000_SEL_DIR_Screen(long obj, long ev, long arg)
 {
@@ -228,7 +228,7 @@ long HDAE5000_SEL_DIR_Screen(long obj, long ev, long arg)
    unsigned char (r20's drvb form, whose prologue matched), defined as SongScrRefresh_c (cc900-name).
    r23 also: ObjIds unsigned long (see the declaration); the row address with the product on the left (the ROM loads
    the base after the product and extends the product last); the song record a local assigned before the MemCopy
-   (the ROM calls SongRecord_Address before pushing the count and pushes XHL); the ":" string as ram_2e2512.
+   (the ROM calls SongRecord_Address before pushing the count and pushes XHL); the ":" string as ram_2e1d20.
    Open: `ld wa,30; muls xwa,iz` (V4.23 writes `ld wa,iz; muls wa,30`). */
 
 /* r23: run 95's only departure was DeleteSongParts' two stacked flags (the ROM pushes 1, then 0) */
@@ -265,9 +265,104 @@ long HDAE5000_AttenDelFileSwCatch(long obj, long ev, long arg)
 
 /* r23: not checked in run 95 (Name_ColumnRuler unresolvable).  Read against the ROM: p assigned in its condition,
    SaveSongWithUi's stacked arguments in the ROM's push order (name, 1, obj) */
+long HDAE5000_HDDNamingCheck(long obj, long ev, long arg)
+{
+    char *p;
+    unsigned int m;
+
+    switch (ev) {
+    case EVT_GET_STRING:
+        HDAE5000_StrNCpy((char *)arg, ram_239fd6, 26);
+        return obj;
+    case EVT_SET_STRING:
+        HDAE5000_StrNCpy(ram_239fd6, (char *)arg, 26);
+        return obj;
+    case EVT_GET_NAMING_MODE:
+        return 0;
+    case EVT_GET_STRING_LENGTH:
+        return 26;
+    case EVT_SW_IN:
+        switch (arg) {
+        case 0x8a:
+            if ((p = HDAE5000_NameHistory_Recall(ram_22ac7e)) != 0) {     /* r23: the ROM tests a copy */
+                HDAE5000_MemCopy(ram_239fd6, p, HDAE5000_StrLen(p));
+                CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_SET_STRING, WRAP(ram_239fd6));
+            }
+            break;
+        case 0x0a:
+            if ((m = HDAE5000_Song_PartMask(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong)) == 0xffff)
+                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x3f, HDAE5000_TypeSel_TemplateAllNo, 2);
+            else
+                HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateAllNo, 2);
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(ram_239fd6));
+            CALLV(ROOT->PostEvent)(OBJ_SAVE_OPT_SCREEN, EVT_SHOW, 0L);
+            break;
+        case 0x0b:
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(ram_239fd6));
+            if (HDAE5000_RAM_WriteConfirm == 1 && HDAE5000_Song_IsUsed(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong) != -1)
+                CALLV(ROOT->PostEvent)(OBJ_ATTEN_OVER_FILE, EVT_SHOW, 0L);
+            else
+                HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                        ram_239fd6, 1, OBJ_SELECT_FILE);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            break;
+        }
+        break;
+    }
+    return 0;
+}
 
 /* r23: not checked in run 95 (Name_ColumnRuler unresolvable); read against the ROM, only SaveSongWithUi's
    stacked arguments change */
+long HDAE5000_SaveOptSwEventCatch(long obj, long ev, long arg)
+{
+    unsigned int m;
+
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_SVOP);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 8:
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(ram_239fd6));
+            if (HDAE5000_RAM_WriteConfirm == 1 && HDAE5000_Song_IsUsed(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong) != -1)
+                CALLV(ROOT->PostEvent)(OBJ_ATTEN_OVER_FILE, EVT_SHOW, 0L);
+            else
+                HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                        ram_239fd6, 1, OBJ_SELECT_FILE);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            break;
+        case 9:
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x3f, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        case 0x0a:
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0x1ff, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        case 0x0b:
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, 0, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        case 0x8b:
+            m = HDAE5000_RAM_SaveOptions.mask;
+            if ((m & 0x100) == 0x100)
+                m -= 0x100;
+            else
+                m += 0x100;
+            HDAE5000_TypeSel_Init(&HDAE5000_RAM_SaveOptions, m, HDAE5000_TypeSel_TemplateAllNo, 2);
+            HDAE5000_TypeSel_ShowSaveFlags();
+            break;
+        }
+        return 0;
+    }
+}
 
 /* r23 (run 95 departed at +1):
    - the ROM keeps arg in XIZ and res in a stack word (`dec 6,xsp; push xiz; ld xiz,xde`, `ldw (xsp+4),0`); V4.23 gave

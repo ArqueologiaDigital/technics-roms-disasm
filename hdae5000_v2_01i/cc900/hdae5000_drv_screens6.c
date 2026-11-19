@@ -9,6 +9,7 @@
    cc900-module: HDAE5000_DirName_StoreWithUi HDAE5000_TypeSel_Init HDAE5000_TypeSel_ShowSaveFlags
    cc900-module: HDAE5000_SaveSongWithUi HDAE5000_LoadSongWithUi HDAE5000_HardTest_HddIdRead
    cc900-module: HDAE5000_HardTest_Print HDAE5000_FormatDialog_CodeDigit HDAE5000_UiObj_SetCaption
+   cc900-data: HDAE5000_HDAETitleFunc 1 = HDAE5000_HDAETitleFunc_CaseTable
    cc900-data: HDAE5000_AttenHDFormatSwCatch 1 = HDAE5000_AttenHDFormatSwCatch_CaseTable
 */
 #include "hdae_ws.h"
@@ -70,7 +71,7 @@ extern unsigned char HDAE5000_Get_Init_Flag(void);
 /* ---- RAM ---- */
 struct FdList { char label[14]; char rows[242]; char line1[20]; char line2[20]; };
 extern struct FdList HDAE5000_RAM_FdList;
-extern long ram_23a09a;                          /* HDAE5000_RAM_Browser_State + 12: the screen to show next */
+extern long ram_23a022;                          /* HDAE5000_RAM_Browser_State + 12: the screen to show next */
 extern struct TypeSel HDAE5000_RAM_SaveOptions;
 extern struct TypeSel HDAE5000_RAM_DeleteOptions;
 extern unsigned int HDAE5000_RAM_CurDir;
@@ -93,7 +94,7 @@ extern char HDAE5000_RAM_PcLinkStatusText[];
 extern char HDAE5000_RAM_SongScreenTitle[];
 extern char HDAE5000_RAM_SongListText[];
 extern char HDAE5000_RAM_NameEditBuffer[];       /* 0x23a06e */
-extern char ram_23a04e[];                        /* HDAE5000_RAM_Name_ColumnRuler (a .set, not resolvable) */
+extern char ram_239fd6[];                        /* HDAE5000_RAM_Name_ColumnRuler (a .set, not resolvable) */
 extern unsigned char HDAE5000_RAM_DirNameHistory[];
 extern unsigned char ram_22ac7e[];               /* the song-name history (NameHistory_Recall layout) */
 extern unsigned char ram_22ad9c[];               /* format-code dialog: count, pad, HDAE5000_RAM_FormatCodeDigits */
@@ -102,7 +103,7 @@ extern unsigned char ram_22ad9c[];               /* format-code dialog: count, p
 extern char HDAE5000_Str_STATUS[];
 extern char HDAE5000_Str_AllFilesPattern[];
 extern char HDAE5000_Str_DIRECTORY[];
-extern char ram_2e2512[];   /* HDAE5000_Str_Chr3A_SongScreen_Refresh (pushed as a constant: the listing's 31-char
+extern char ram_2e1d20[];   /* HDAE5000_Str_Chr3A_SongScreen_Refresh (pushed as a constant: the listing's 31-char
                                name is not translated) */
 extern char HDAE5000_Str_Blank0Tab[];
 extern char HDAE5000_Str_Chr3A2020202020[];
@@ -112,13 +113,13 @@ extern char HDAE5000_Str_UTIL[];
 extern char HDAE5000_Str_SVOP[];
 extern char HDAE5000_Str_FMT[];
 extern char HDAE5000_Str_LBN[];
-extern char ram_2e250c[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh, "%2.2d" */
-extern char ram_2e2534[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh_2 */
+extern char ram_2e1d1a[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh, "%2.2d" */
+extern char ram_2e1d42[];   /* HDAE5000_Fmt_2_2d_SongScreen_Refresh_2 */
 /* unsigned long: the ROM evaluates ObjIds[page] before the other arguments (`ld xde,(xbc+wa)` ahead of the text
    address; before PartList_Build's stack push), the order of a converted argument; passed as (long) / to long obj */
-extern unsigned long ram_2e24e8[];   /* HDAE5000_SongScreen_Refresh_ObjIds */
-extern unsigned long ram_2e24f0[];   /* HDAE5000_SongScreen_Refresh_ObjIds_2 */
-extern unsigned long ram_2e24f8[];   /* HDAE5000_SongScreen_Refresh_ObjIds_3 */
+extern unsigned long ram_2e1cf6[];   /* HDAE5000_SongScreen_Refresh_ObjIds */
+extern unsigned long ram_2e1cfe[];   /* HDAE5000_SongScreen_Refresh_ObjIds_2 */
+extern unsigned long ram_2e1d06[];   /* HDAE5000_SongScreen_Refresh_ObjIds_3 */
 extern long HDAE5000_HDAETitleFunc_ObjIds[];
 extern unsigned char HDAE5000_TypeSel_TemplateBlank[];
 extern unsigned char HDAE5000_TypeSel_TemplateAllNo[];
@@ -127,15 +128,15 @@ extern char HDAE5000_Str_SQFFileInfo[], HDAE5000_Str_SEQFileInfo[], HDAE5000_Str
 extern char HDAE5000_Str_TMFileInfo[], HDAE5000_Str_MSPFileInfo[], HDAE5000_Str_RCMFileInfo[];
 extern char HDAE5000_Str_MDFileInfo[];
 extern char HDAE5000_Str_Adr[], HDAE5000_Str_Size[], HDAE5000_Str_Adr_HDD_UTIL_PAGE[];
-extern char ram_2e25b4[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2.._9 names' prefix) */
-extern char ram_2e25d6[], ram_2e25de[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
-extern char ram_2e2600[], ram_2e2608[];   /* _3 */
-extern char ram_2e262a[], ram_2e2632[];   /* _4 */
-extern char ram_2e2654[], ram_2e265c[];   /* _5 */
-extern char ram_2e267c[], ram_2e2684[];   /* _6 */
-extern char ram_2e26a6[], ram_2e26ae[];   /* _7 */
-extern char ram_2e26d0[], ram_2e26d8[];   /* _8 */
-extern char ram_2e26f8[], ram_2e2700[];   /* _9 */
+extern char ram_2e1e16[];   /* HDAE5000_Str_Size_HDD_UTIL_PAGE (its 31 characters are the _2.._9 names' prefix) */
+extern char ram_2e1e38[], ram_2e1e40[];   /* HDAE5000_Str_Adr_HDD_UTIL_PAGE_2, HDAE5000_Str_Size_HDD_UTIL_PAGE_2 */
+extern char ram_2e1e62[], ram_2e1e6a[];   /* _3 */
+extern char ram_2e1e8c[], ram_2e1e94[];   /* _4 */
+extern char ram_2e1eb6[], ram_2e1ebe[];   /* _5 */
+extern char ram_2e1ede[], ram_2e1ee6[];   /* _6 */
+extern char ram_2e1f08[], ram_2e1f10[];   /* _7 */
+extern char ram_2e1f32[], ram_2e1f3a[];   /* _8 */
+extern char ram_2e1f5a[], ram_2e1f62[];   /* _9 */
 
 /* an array read as an lvalue member at offset 0: `lda xwa,(sym); ld xde,xwa` (hd_r9_b2.c, TitleInfo_Build) */
 struct Wrap { char c[2]; };
@@ -163,14 +164,72 @@ struct FindBlk { char head[6]; char name[260]; };
      V4.23 gave `extz xwa; add wa,0x114; lda xbc,(FdList); cp (xbc+wa),1` for an unsigned int index.  Written
      with an unsigned long index.  (Form b: the same through pointer arithmetic, *(member + index).) */
 
-/* r23: not checked in run 95 (Browser_State unresolvable); now ram_23a09a, and the inner switch unsigned */
+/* r23: not checked in run 95 (Browser_State unresolvable); now ram_23a022, and the inner switch unsigned */
+long HDAE5000_HDAETitleFunc(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ACTIVATE_STATE:
+        switch ((unsigned long)arg) {     /* r23: the ROM's bound checks are unsigned (`dec 2; cp 0; jrl c`) */
+        case 2:
+            HDAE5000_RAM_TitleInfoText[150] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_HARD_DISK_OPT, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_TitleInfoText));
+            HDAE5000_SongScreen_Refresh(0, 0);
+            HDAE5000_RAM_FlsListText[1920] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_FLS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_FlsListText));
+            HDAE5000_FlsScreen_Refresh(0, 2);
+            HDAE5000_RAM_DirListText[504] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_DIR, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_DirListText));
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            HDAE5000_FlsList_BuildPage();
+            HDAE5000_Lbn_ShowEntry(0, 0, 6, 0);
+            HDAE5000_MemCopy(HDAE5000_RAM_PcLinkStatusText, HDAE5000_Str_STATUS, 0x21);
+            CALLV(ROOT->ApPostEvent)(OBJ_PP_STATUS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_PcLinkStatusText));
+            ram_23a022 = OBJ_HDDMENU;
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1)
+                ram_23a022 = OBJ_FLS_FILE_LOAD;
+            break;
+        case 9:
+            switch (HDAE5000_RAM_QuickLoadMode) {
+            case 1:
+                ram_23a022 = OBJ_SELECT_FILE;
+                break;
+            case 2:
+                ram_23a022 = OBJ_LOAD_BY_NUM;
+                break;
+            case 3:
+                ram_23a022 = OBJ_FLS_FILE_LOAD;
+                break;
+            }
+            break;
+        case 8:
+            CALLV(ROOT->ApPostEvent)(ram_23a022, EVT_SHOW, 0L);
+            CALLV(ROOT->ApPostEvent)(-1L, EVT_INDEXSW_DOWN, 0L);
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1) {
+                HDAE5000_RAM_FlsSeqStopPending = 0;
+                CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD, EVT_HDAE_SEQ_STOP, 0L);
+            }
+            break;
+        case 6:
+            ram_23a022 = HDAE5000_HDAETitleFunc_ObjIds[HDAE5000_Get_Init_Flag()];
+        /* r27: the ROM dispatches through a jump table over 2..9 whose entries for 3, 4, 5 and 7 are the
+           switch's end; V4.23 wrote a compare chain for the four cases alone.  The four empty labels make the
+           case set dense; placed last, with case 6 falling into them, they add no code. */
+        case 3:
+        case 4:
+        case 5:
+        case 7:
+            ;
+        }
+    }
+    return 0;
+}
 
 /* page: which of the three object sets (ObjIds tables); skip != 0: only the part list.  The ROM takes the two
    parameters as bytes (A, C) and keeps them in stack slots (`ld (xsp+24),c; ld (xsp+26),a`): r23 declares them
    unsigned char (r20's drvb form, whose prologue matched), defined as SongScrRefresh_c (cc900-name).
    r23 also: ObjIds unsigned long (see the declaration); the row address with the product on the left (the ROM loads
    the base after the product and extends the product last); the song record a local assigned before the MemCopy
-   (the ROM calls SongRecord_Address before pushing the count and pushes XHL); the ":" string as ram_2e2512.
+   (the ROM calls SongRecord_Address before pushing the count and pushes XHL); the ":" string as ram_2e1d20.
    Open: `ld wa,30; muls xwa,iz` (V4.23 writes `ld wa,iz; muls wa,30`). */
 
 /* r23: run 95's only departure was DeleteSongParts' two stacked flags (the ROM pushes 1, then 0) */

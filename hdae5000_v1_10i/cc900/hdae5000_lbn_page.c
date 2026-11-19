@@ -5,6 +5,7 @@
    cc900-module: HDAE5000_Lbn_ShowEntry HDAE5000_TypeSel_Init HDAE5000_PartList_Build
    cc900-module: HDAE5000_Lbn_StepDigit HDAE5000_Lbn_TypeDigit
    cc900-data: HDAE5000_Lbn_StepDigit 1 = HDAE5000_Lbn_StepDigit_CaseTable
+   cc900-data: HDAE5000_LBNPage1SwCatch 1 = HDAE5000_LBNPage1SwCatch_CaseTable
 */
 #include "hdae_ws.h"
 #include "hdae_ids.h"
@@ -29,9 +30,9 @@ extern unsigned int HDAE5000_RAM_LbnDigitPos;
 extern unsigned int HDAE5000_RAM_LbnDir;
 extern unsigned int HDAE5000_RAM_LbnSong;
 /* the same three cells as int: HDAE5000_RAM_LbnDigitPos, _LbnDir, _LbnSong */
-extern int ram_22aa5c;
-extern int ram_22aa5e;
-extern int ram_22aa60;
+extern int ram_22aa14;
+extern int ram_22aa16;
+extern int ram_22aa18;
 
 /* ---- ROM ---- */
 extern char HDAE5000_Str_LBNS[];
@@ -109,6 +110,65 @@ void HDAE5000_Lbn_StepDigit(int dir, int song, int pos, int step)
 /* ---- HDAE5000_LBNPage1SwCatch ---------------------------------------------------------------------------- */
 
 /* int cells; unsigned s by if / else */
+long HDAE5000_LBNPage1SwCatch(long obj, long ev, long arg)
+{
+    unsigned int s;
+
+    switch (ev) {
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_LBNS);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(unsigned long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 12:
+            HDAE5000_Lbn_ShowEntry(0, 0, 6, 1);
+            break;
+        case 5:
+        case 6:
+        case 7:
+            if ((arg & 0x80) == 0)
+                s = 1;
+            else
+                s = 0xffff;
+            HDAE5000_Lbn_StepDigit(ram_22aa16, ram_22aa18, ram_22aa14, s);
+            break;
+        case 0:
+            if (arg & 0x80)
+                HDAE5000_Lbn_TypeDigit(obj, 0);
+            else
+                HDAE5000_Lbn_TypeDigit(obj, 1);
+            break;
+        case 1:
+            if (arg & 0x80)
+                HDAE5000_Lbn_TypeDigit(obj, 2);
+            else
+                HDAE5000_Lbn_TypeDigit(obj, 3);
+            break;
+        case 2:
+            if (arg & 0x80)
+                HDAE5000_Lbn_TypeDigit(obj, 4);
+            else
+                HDAE5000_Lbn_TypeDigit(obj, 5);
+            break;
+        case 3:
+            if (arg & 0x80)
+                HDAE5000_Lbn_TypeDigit(obj, 6);
+            else
+                HDAE5000_Lbn_TypeDigit(obj, 7);
+            break;
+        case 4:
+            if (arg & 0x80)
+                HDAE5000_Lbn_TypeDigit(obj, 8);
+            else
+                HDAE5000_Lbn_TypeDigit(obj, 9);
+        }
+        break;
+    }
+    return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+}
 
 /* int cells; int s by if / else */
 

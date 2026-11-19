@@ -2,6 +2,15 @@
    Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_pport_services.c (checked in
    notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
+   cc900-name: PP_Svc02=HDAE5000_PPORT_Svc02_TurnHdMotorOff
+   cc900-name: PP_Svc07=HDAE5000_PPORT_Svc07_ReadDirBlockFromHd
+   cc900-name: PP_Svc08=HDAE5000_PPORT_Svc08_ReadFileBlockFromHd
+   cc900-name: PP_Svc09=HDAE5000_PPORT_Svc09_ReadFlsBlockFromHd
+   cc900-name: PP_Svc10=HDAE5000_PPORT_Svc10_WriteDirBlockToHd
+   cc900-name: PP_Svc11=HDAE5000_PPORT_Svc11_WriteFileSystemBlockToHd
+   cc900-name: PP_Svc12=HDAE5000_PPORT_Svc12_WriteFlsBlockToHd
+   cc900-name: PP_Svc22=HDAE5000_PPORT_Svc22_WriteCloseHD
+   cc900-name: PP_Svc23=HDAE5000_PPORT_Svc23_WriteFileHD
    cc900-module: HDAE5000_DebugTrace
 */
 #include "hdae_ws.h"
@@ -27,30 +36,30 @@ extern unsigned char ram_23a04c;                  /* HDAE5000_RAM_FileFormat_Ver
 #define SREC(d, s) ((struct SongRec *)(HDAE5000_RAM_DirNames + SONG_OFS(d, s)))
 
 /* trace banners and blank lines (HDAE5000_PPORT_SvcNN_*_Str_<name>), passed in XWA: lda */
-extern char ram_2f8f5e[], ram_2f8f8c[];                                   /* Svc01 GetInfoBlockPointer, Blank1 */
-extern char ram_2f8f8e[], ram_2f8fa8[];                                   /* Svc02 */
-extern char ram_2f8faa[], ram_2f900a[];                                   /* Svc03 */
-extern char ram_2f900c[], ram_2f9058[];                                   /* Svc04 */
-extern char ram_2f905a[], ram_2f90ac[];                                   /* Svc05 */
-extern char ram_2f90ae[], ram_2f9108[];                                   /* Svc06 */
-extern char ram_2f910a[], ram_2f9128[];                                   /* Svc07 */
-extern char ram_2f912a[], ram_2f9148[];                                   /* Svc08 */
-extern char ram_2f914a[], ram_2f9168[];                                   /* Svc09 */
-extern char ram_2f916a[], ram_2f9186[];                                   /* Svc10 */
-extern char ram_2f9188[], ram_2f91ac[];                                   /* Svc11 */
-extern char ram_2f91ae[], ram_2f91ca[];                                   /* Svc12 */
-extern char ram_2f91cc[], ram_2f9206[];                                   /* Svc13 */
-extern char ram_2f9208[], ram_2f922a[];                                   /* Svc14 */
-extern char ram_2f922c[], ram_2f924c[];                                   /* Svc15 */
-extern char ram_2f924e[], ram_2f926e[];                                   /* Svc16 */
-extern char ram_2f9270[], ram_2f9284[];                                   /* Svc17 */
-extern char ram_2f9286[], ram_2f92be[];                                   /* Svc19 */
-extern char ram_2f92c0[], ram_2f92e0[];                                   /* Svc20 */
-extern char ram_2f92e2[];                                                 /* Svc21 */
-extern char ram_2f9306[];                                                 /* Svc22 */
-extern char ram_2f931e[];                                                 /* Svc23 */
-extern char ram_2f9336[];                                                 /* Svc24 */
-extern char ram_2f934c[];                                                 /* Svc25 */
+extern char ram_2e08d2[], ram_2e0900[];                                   /* Svc01 GetInfoBlockPointer, Blank1 */
+extern char ram_2e0902[], ram_2e091c[];                                   /* Svc02 */
+extern char ram_2e091e[], ram_2e097e[];                                   /* Svc03 */
+extern char ram_2e0980[], ram_2e09cc[];                                   /* Svc04 */
+extern char ram_2e09ce[], ram_2e0a20[];                                   /* Svc05 */
+extern char ram_2e0a22[], ram_2e0a7c[];                                   /* Svc06 */
+extern char ram_2e0a7e[], ram_2e0a9c[];                                   /* Svc07 */
+extern char ram_2e0a9e[], ram_2e0abc[];                                   /* Svc08 */
+extern char ram_2e0abe[], ram_2e0adc[];                                   /* Svc09 */
+extern char ram_2e0ade[], ram_2e0afa[];                                   /* Svc10 */
+extern char ram_2e0afc[], ram_2e0b20[];                                   /* Svc11 */
+extern char ram_2e0b22[], ram_2e0b3e[];                                   /* Svc12 */
+extern char ram_2e0b40[], ram_2e0b7a[];                                   /* Svc13 */
+extern char ram_2e0b7c[], ram_2e0b9e[];                                   /* Svc14 */
+extern char ram_2e0ba0[], ram_2e0bc0[];                                   /* Svc15 */
+extern char ram_2e0bc2[], ram_2e0be2[];                                   /* Svc16 */
+extern char ram_2e0be4[], ram_2e0bf8[];                                   /* Svc17 */
+extern char ram_2e0bfa[], ram_2e0c32[];                                   /* Svc19 */
+extern char ram_2e0c34[], ram_2e0c54[];                                   /* Svc20 */
+extern char ram_2e0c56[];                                                 /* Svc21 */
+extern char ram_2e0c7a[];                                                 /* Svc22 */
+extern char ram_2e0c92[];                                                 /* Svc23 */
+extern char ram_2e0caa[];                                                 /* Svc24 */
+extern char ram_2e0cc0[];                                                 /* Svc25 */
 
 /* format strings, stacked SPrintf arguments: pushw hi16 / pushw lo16 */
 #define F_ppib_adr  ((char *)0x2f8f7cL)
@@ -98,4 +107,122 @@ extern int HDAE5000_HD_ReadFileNext(void *dst, unsigned long n, unsigned long *s
 
 void HDAE5000_DebugTrace(char *s)
 {
+}
+
+int PP_Svc02(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_ATA_Standby_Status() == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0902);
+    HDAE5000_DebugTrace(ram_2e091c);
+    return ret;
+}
+
+int PP_Svc07(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_LoadTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0a7e);
+    HDAE5000_DebugTrace(ram_2e0a9c);
+    return ret;
+}
+
+int PP_Svc08(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_LoadTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0a9e);
+    HDAE5000_DebugTrace(ram_2e0abc);
+    return ret;
+}
+
+int PP_Svc09(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_LoadTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0abe);
+    HDAE5000_DebugTrace(ram_2e0adc);
+    return ret;
+}
+
+int PP_Svc10(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_StoreTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0ade);
+    HDAE5000_DebugTrace(ram_2e0afa);
+    return ret;
+}
+
+int PP_Svc11(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_StoreTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0afc);
+    HDAE5000_DebugTrace(ram_2e0b20);
+    return ret;
+}
+
+int PP_Svc12(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_StoreTables(1) == -1)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0b22);
+    HDAE5000_DebugTrace(ram_2e0b3e);
+    return ret;
+}
+
+int HDAE5000_PPORT_Svc17_FormatHd(void)
+{
+    int ret;
+
+    ret = 0;
+    if (HDAE5000_HD_FormatDrive(0) != 0)
+        ret = 1;
+    HDAE5000_DebugTrace(ram_2e0be4);
+    HDAE5000_DebugTrace(ram_2e0bf8);
+    return ret;
+}
+
+int PP_Svc22(void)
+{
+    int ret;
+
+    ret = 1;
+    if (HDAE5000_HD_WriteClose() != -1 && HDAE5000_HD_StoreTables(1) != -1)
+        ret = 0;
+    HDAE5000_DebugTrace(ram_2e0c7a);
+    return ret;
+}
+
+int PP_Svc23(void *src, unsigned long n)
+{
+    int ret;
+
+    ret = 1;
+    if (HDAE5000_HD_WriteStream(src, n) != -1)
+        ret = 0;
+    HDAE5000_DebugTrace(ram_2e0c92);
+    return ret;
 }

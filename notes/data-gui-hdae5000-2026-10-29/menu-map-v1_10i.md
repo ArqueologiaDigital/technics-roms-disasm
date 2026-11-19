@@ -123,7 +123,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - class `TtlScreenR`, caption " SETUP & TOOLS ", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_HDDEXT`; icon idICON_i6 (stack of blank white pages)
 - opened by: `HDDMENU_SETUP_TOOLS.screen`, `HD_UTIL_Exit_SETUPS_TOOLS.screen`, `SETUP_HDINFO_Exit_SETUPS_TOOLS.screen`, `ABOUT_HELP_Exit_SETUPS_TOOLS.screen`
-- named in code by: `HDAE5000_PC_DATA_LINK_PAGE`, `HDAE5000_SetupP2SwCatch`, `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- named in code by: `HDAE5000_PC_DATA_LINK_PAGE`, `HDAE5000_SetupP2SwCatch`, `HDAE5000_AttenHDFormatSwCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 159
 
 - `SETUPS_TOOLS_Exit_HDDMENU` IvExitScreen: opens [HDDMENU](#hddmenu)
@@ -159,7 +159,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `SELECT_DIR_AcIndexWideES` AcIndexWideES: switch Bottom3; switch Bottom5
 - `SELECT_DIR_IvMainEditSw` IvMainEditSw: func `NAKA_MAINFUNC_SEL_DIR_Screen`
-- `SEL_DIR` SelectList: main_func `NAKA_MAINFUNC_SEL_DIR_Screen` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_SEL_DIR_Screen`, `HDAE5000_AttenDelDirSwCatch`, `HDAE5000_AttenDelFileSwCatch`, `HDAE5000_HDD_DIRNAMECheck`, `HDAE5000_AttenHDFormatSwCatch_OnCancel`, `HDAE5000_CP_FD_DIRNAMECheck`
+- `SEL_DIR` SelectList: main_func `NAKA_MAINFUNC_SEL_DIR_Screen` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_SEL_DIR_Screen`, `HDAE5000_AttenDelDirSwCatch`, `HDAE5000_AttenDelFileSwCatch`, `HDAE5000_HDD_DIRNAMECheck`, `HDAE5000_AttenHDFormatSwCatch`, `HDAE5000_CP_FD_DIRNAMECheck`
 - `SELECT_DIR_97_120` VwEditSwBox: "97-120"; switch Bottom8
 - `SELECT_DIR_01_24` VwEditSwBox: "01-24"; switch Bottom1
 - `SELECT_DIR_25_48` VwEditSwBox: "25-48"; switch Bottom8
@@ -908,7 +908,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - class `TtlScreenR2`, caption "   HD FORMAT", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_None
 - opened by: `ERR_HD_FORMAT_Exit_ATTEN_HD_FORMAT.screen`, `AGAIN_HD_FORMAT_Exit_ATTEN_HD_FORMAT.screen`
-- named in code by: `HDAE5000_SetupP2SwCatch`, `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- named in code by: `HDAE5000_SetupP2SwCatch`, `HDAE5000_AttenHDFormatSwCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1111
 
 - `ATTEN_HD_FORMAT_HD_FORMAT_will_erase_all` TextBox
@@ -923,7 +923,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 ## WAIT_HD_FORMAT
 
 - class `Window`, x 26, y 30, 268 x 184
-- named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- named in code by: `HDAE5000_AttenHDFormatSwCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1129
 
 - `WAIT_HD_FORMAT_The_hard_disk_will_now_b` AcLanguageText1: text "The hard disk will now be formatted. This procedure can take about 2-3 minutes."
@@ -1142,7 +1142,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 ## WAIT_TR0_RECOVER
 
 - class `Window`, x 26, y 30, 268 x 60
-- named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- named in code by: `HDAE5000_AttenHDFormatSwCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1389
 
 - `WAIT_TR0_RECOVER_Track_O_will_be_recovere` AcLanguageText1: text "Track O will be recovered:"
@@ -1152,11 +1152,11 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `IvScreenR2`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`
-- named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`, `HDAE5000_FlsEditScreen`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
+- named in code by: `HDAE5000_AttenHDFormatSwCatch`, `HDAE5000_FlsEditScreen`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1401
 
-- `ERR_SAVE_EXIT` IvExitScreen (RAM record) -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`, `HDAE5000_FlsEditScreen`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
-- `ERR_SAVE_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`, `HDAE5000_FlsEditScreen`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
+- `ERR_SAVE_EXIT` IvExitScreen (RAM record) -- code: `HDAE5000_AttenHDFormatSwCatch`, `HDAE5000_FlsEditScreen`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
+- `ERR_SAVE_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch`, `HDAE5000_FlsEditScreen`, `HDAE5000_CopyToHd_Execute`, `HDAE5000_DirName_StoreWithUi`, `HDAE5000_FlsName_StoreWithUi`, `HDAE5000_SaveSongWithUi`
 - `ERR_SAVE_Please_make_a_safety_bac` TextBox
   - `ERR_SAVE_Please_make_a_safety_bac_Text` AcLanguageText1: text "Please make a safety backup of your data and call your service center."
 - `ERR_SAVE_ATTENTION` AcLanguageText1: text "!ATTENTION!"
@@ -1253,11 +1253,11 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `IvScreenR2`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`
-- named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- named in code by: `HDAE5000_AttenHDFormatSwCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1521
 
 - `ERR_HD_FORMAT_Exit_ATTEN_HD_FORMAT` IvExitScreen: opens [ATTEN_HD_FORMAT](#atten_hd_format)
-- `ERR_HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- `ERR_HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch`
 - `ERR_HD_FORMAT_The_automatic_HD_format_` TextBox
   - `ERR_HD_FORMAT_The_automatic_HD_format__Text` AcLanguageText1: text "The automatic HD format was not successful!"
   - `ERR_HD_FORMAT_The_automatic_HD_format__FORMAT_ERROR` AcLanguageText1: text "!FORMAT ERROR!"
@@ -1267,11 +1267,11 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `IvScreenR2`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`
-- named in code by: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- named in code by: `HDAE5000_AttenHDFormatSwCatch`
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 1537
 
 - `AGAIN_HD_FORMAT_Exit_ATTEN_HD_FORMAT` IvExitScreen: opens [ATTEN_HD_FORMAT](#atten_hd_format)
-- `AGAIN_HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch_OnCancel`
+- `AGAIN_HD_FORMAT_CATCH` IvCatchEvent: func `NAKA_APFUNC_ErrMsgTimerCatch` -- code: `HDAE5000_AttenHDFormatSwCatch`
 - `AGAIN_HD_FORMAT_Input_error` TextBox
   - `AGAIN_HD_FORMAT_Input_error_Text` AcLanguageText1: text "Input error!"
   - `AGAIN_HD_FORMAT_Input_error_The_key_code_input_was_w` AcLanguageText1: text "The key code input was wrong!"

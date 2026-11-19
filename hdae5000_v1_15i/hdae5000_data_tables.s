@@ -1391,17 +1391,7 @@ HDAE5000_Fmt_s_SeparateOutputModeCheck:
 ; .LHD_SC__h1_case9 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SeparateOutputModeCheck_CaseTable:
-	.short	.LHD_SC__h1_case0 - .LHD_SC__h1_case9	; 0x01E0003E
-	.short	.LHD_SC__h1_case1 - .LHD_SC__h1_case9	; 0x01E0003F
-	.short	.LHD_SC__h1_default - .LHD_SC__h1_case9	; 0x01E00040 (default)
-	.short	.LHD_SC__h1_default - .LHD_SC__h1_case9	; 0x01E00041 (default)
-	.short	.LHD_SC__h1_default - .LHD_SC__h1_case9	; 0x01E00042 (default)
-	.short	.LHD_SC__h1_case5 - .LHD_SC__h1_case9	; 0x01E00043
-	.short	.LHD_SC__h1_case6 - .LHD_SC__h1_case9	; 0x01E00044
-	.short	.LHD_SC__h1_case7 - .LHD_SC__h1_case9	; 0x01E00045
-	.short	.LHD_SC__h1_case8 - .LHD_SC__h1_case9	; 0x01E00046
-	.short	.LHD_SC__h1_case9 - .LHD_SC__h1_case9	; 0x01E00047
+HDAE5000_SeparateOutputModeCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SeparateOutputModeCheck_CaseTable.s"	; C: cc900/hdae5000_sepout.c (cc900-data)
 HDAE5000_TextPtrs_NONE_to_16:	; 17 x .long -> string
 	; read by SeparateDrumPartCheck at 0x2851D1 (ld # operand); 17 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_NONE
@@ -1500,17 +1490,7 @@ HDAE5000_Fmt_s_SeparateDrumPartCheck:
 ; .LHD_SC__h2_case9 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SeparateDrumPartCheck_CaseTable:
-	.short	.LHD_SC__h2_case0 - .LHD_SC__h2_case9	; 0x01E0003E
-	.short	.LHD_SC__h2_case1 - .LHD_SC__h2_case9	; 0x01E0003F
-	.short	.LHD_SC__h2_default - .LHD_SC__h2_case9	; 0x01E00040 (default)
-	.short	.LHD_SC__h2_default - .LHD_SC__h2_case9	; 0x01E00041 (default)
-	.short	.LHD_SC__h2_default - .LHD_SC__h2_case9	; 0x01E00042 (default)
-	.short	.LHD_SC__h2_case5 - .LHD_SC__h2_case9	; 0x01E00043
-	.short	.LHD_SC__h2_case6 - .LHD_SC__h2_case9	; 0x01E00044
-	.short	.LHD_SC__h2_case7 - .LHD_SC__h2_case9	; 0x01E00045
-	.short	.LHD_SC__h2_case8 - .LHD_SC__h2_case9	; 0x01E00046
-	.short	.LHD_SC__h2_case9 - .LHD_SC__h2_case9	; 0x01E00047
+HDAE5000_SeparateDrumPartCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SeparateDrumPartCheck_CaseTable.s"	; C: cc900/hdae5000_sepout.c (cc900-data)
 HDAE5000_TextPtrs_NONE_to_16_2:	; 17 x .long -> string
 	; read by SeparateBassPartCheck at 0x28527A (ld # operand); 17 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_NONE_2
@@ -1609,17 +1589,7 @@ HDAE5000_Fmt_s_SeparateBassPartCheck:
 ; .LHD_SC__h3_case9 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SeparateBassPartCheck_CaseTable:
-	.short	.LHD_SC__h3_case0 - .LHD_SC__h3_case9	; 0x01E0003E
-	.short	.LHD_SC__h3_case1 - .LHD_SC__h3_case9	; 0x01E0003F
-	.short	.LHD_SC__h3_default - .LHD_SC__h3_case9	; 0x01E00040 (default)
-	.short	.LHD_SC__h3_default - .LHD_SC__h3_case9	; 0x01E00041 (default)
-	.short	.LHD_SC__h3_default - .LHD_SC__h3_case9	; 0x01E00042 (default)
-	.short	.LHD_SC__h3_case5 - .LHD_SC__h3_case9	; 0x01E00043
-	.short	.LHD_SC__h3_case6 - .LHD_SC__h3_case9	; 0x01E00044
-	.short	.LHD_SC__h3_case7 - .LHD_SC__h3_case9	; 0x01E00045
-	.short	.LHD_SC__h3_case8 - .LHD_SC__h3_case9	; 0x01E00046
-	.short	.LHD_SC__h3_case9 - .LHD_SC__h3_case9	; 0x01E00047
+HDAE5000_SeparateBassPartCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SeparateBassPartCheck_CaseTable.s"	; C: cc900/hdae5000_sepout.c (cc900-data)
 HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:	; 3 x .long -> string
 	; read by LBNCmpBitCheck, LBNLswBitCheck, LBNMdBitCheck, LBNMspBitCheck, LBNPmtBitCheck, LBNRcmBitCheck, LBNSqtBitCheck, LBNTlxBitCheck_Unregistered, LBNTmBitCheck, SfxCmpBitCheck, SfxLswBitCheck, SfxMdBitCheck, SfxMspBitCheck, SfxPmtBitCheck, SfxRcmBitCheck, SfxSqtBitCheck, SfxTlxBitCheck, SfxTmBitCheck, TypeSel_ShowSaveFlags at 0x285426 (ld #, ld (mem), lda operand); 3 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_Chr2D2D2D_2
@@ -1871,15 +1841,7 @@ HDAE5000_Str_FMT:
 ; HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1 of the case for value 0+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_AttenHDFormatSwCatch_CaseTable:
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 0
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit2Or3 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 1
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit4Or5 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 2
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit6Or7 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 3
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit8Or9 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 4
-	.short	.LCHSC__post_switch - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 5 (default)
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCancel - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 6
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCancel - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 7
+HDAE5000_AttenHDFormatSwCatch_CaseTable:	.include "includes/generated/cc900/HDAE5000_AttenHDFormatSwCatch_CaseTable.s"	; C: cc900/hdae5000_drv_screens6.c (cc900-data)
 ;
 ; HDAE5000_Lbn_StepDigit_CaseTable (0x2E2CF2, 6 x u16): the switch of HDAE5000_Lbn_StepDigit
 ; (dispatch at 0x286A49, hdae5000_hd_driver.s:5493: bound `cp xwa,5`, `add xwa,xwa`, `ld wa,(<table>+2i)`,
@@ -1899,20 +1861,7 @@ HDAE5000_Str_LBNS:
 ; HDAE5000_LBNPage1SwCatch_OnClear of the case for value 0+i; 13 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNPage1SwCatch_CaseTable:
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit0Or1 - HDAE5000_LBNPage1SwCatch_OnClear	; 0
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit2Or3 - HDAE5000_LBNPage1SwCatch_OnClear	; 1
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit4Or5 - HDAE5000_LBNPage1SwCatch_OnClear	; 2
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit6Or7 - HDAE5000_LBNPage1SwCatch_OnClear	; 3
-	.short	HDAE5000_LBNPage1SwCatch_OnDigit8Or9 - HDAE5000_LBNPage1SwCatch_OnClear	; 4
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 5
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 6
-	.short	HDAE5000_LBNPage1SwCatch_OnStepDigit - HDAE5000_LBNPage1SwCatch_OnClear	; 7
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 8 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 9 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 10 (default)
-	.short	.LHD_SR__a_exit - HDAE5000_LBNPage1SwCatch_OnClear	; 11 (default)
-	.short	HDAE5000_LBNPage1SwCatch_OnClear - HDAE5000_LBNPage1SwCatch_OnClear	; 12
+HDAE5000_LBNPage1SwCatch_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNPage1SwCatch_CaseTable.s"	; C: cc900/hdae5000_lbn_page.c (cc900-data)
 HDAE5000_Str_LBN:
 	; read by LBNLoadSwCatch at 0x286D7A (lda operand)
 	.asciz "LBN!"
