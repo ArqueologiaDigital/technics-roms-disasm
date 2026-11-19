@@ -1,0 +1,9 @@
+function	bytes	matches	best_diff
+Audio_Cmd_DSPUnit_Param	679	-	+9 sub_AL_27c@Xr
+Audio_Cmd_EffectParam_Dispatch	1365	-	+361 sub_AL_27c@Xr
+Audio_Cmd_ToneEdit_Write_And_Reply	270	-	+224 sub_AL_27c@Xr
+Voice2_UpdatePitch	469	-	+210 sub_AP_27c@Xr
+Voice_Calc_LevelPair_EGA	226	-	+63 sub_AP_27c@Xr
+Voice_Calc_LevelPair_FixedAtk	316	-	+225 sub_AP_27b@Xr
+Voice_Calc_LevelPair_Mono	771	-	+65 sub_AP_27c@Xr
+WaveSel_Cache_VelSplitPtr	154	sub_AL_27a@Xr sub_AL_27b@Xr sub_AL_27c@Xr	
