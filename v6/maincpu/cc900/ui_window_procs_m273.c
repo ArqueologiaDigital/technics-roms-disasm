@@ -156,3 +156,22 @@ void DrawLineWithMode(struct pt *a, struct pt *b, int c)
 		DrawRing_Post(q);
 	}
 }
+
+/* cc900-module: ChangePalette ChangeWall ChangeWallPalette InitDrawTask LcdOn PaletteBankRotate_Impl SetChangeRect UpdateScreen */
+extern void PaletteBankRotate_Impl(void);
+extern void PaletteBankRotate_Code(unsigned char *q);
+extern void PaletteBankRotate(void);
+
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void PaletteBankRotate(void)
+{
+	unsigned char *q;
+
+	if (IsXspInDrawStack() != 0) {
+		PaletteBankRotate_Impl();
+	} else {
+		q = DrawQueue_Alloc(4);
+		*(void **)q = (void *)PaletteBankRotate_Code;
+		DrawRing_Post(q);
+	}
+}

@@ -4791,12 +4791,7 @@ ExtData_ToneParam_CheckMode_Join:
 ;   callers + body -- ExtData_ToneParam_CheckMode is entry 0x43 of SoundProgram_DispatchTable and calls it when the
 ;   event offset (EXTDATA_TLV_OFFSET) is 1; record 0x43 is identified in docs/kn-disk-file-formats.md:534 as the microphone record
 ;   (on/off, a 0..127 level, a second on/off; 'microphone' is that page's inference).
-ExtData_Tag43_SetByte1Fields:
-	ldw	wa, 128
-	calr	ExtData_SetTlvField
-	ldw	wa, 127
-	calr	ExtData_SetTlvField
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_Tag43_SetByte1Fields:	.include "includes/generated/cc900/ExtData_Tag43_SetByte1Fields.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_ToneParam_AltDispatch:
 	calr	SndParam_WriteLookupAndStore
 	ld	a, (EXTDATA_TLV_OFFSET:16)
@@ -4848,12 +4843,7 @@ ExtData_ToneParam_AltDispatch_Join3:
 ;   then posts the change with SwbtWr_FlushAndAppendParams. Basis: callers + body -- its only caller is case 7 of
 ;   ExtData_ToneParam_AltDispatch, ExtData_ToneParam_AltDispatch_Drawbar1FootAndSwitches, whose header names these two
 ;   fields; same shape as ExtData_Tag43_SetByte1Fields.
-ExtData_Drawbar_SetByte7Fields:
-	ldw	wa, 15
-	calr	ExtData_SetTlvField
-	ldw	wa, 48
-	calr	ExtData_ToggleTlvBits
-	jrl	SwbtWr_FlushAndAppendParams
+ExtData_Drawbar_SetByte7Fields:	.include "includes/generated/cc900/ExtData_Drawbar_SetByte7Fields.s"	; C: cc900/audio_control_engine_m280.c
 ExtData_ToneParam_AltEntry:
 	ret
 ExtData_ToneParam_AltBody:
@@ -6380,74 +6370,15 @@ Voice_Update_Return:
 	inc 2, xsp
 	ret
 
-VoiceParam_CompareAndUpdate:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (EXTDATA_MASK:16)
-	and	a, (xsp)
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (EXTDATA_VALUE:16)
-	and	a, (xsp)
-	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC972C-0xFC9746 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+17
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 4294967295
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	lda	xhl, (xhl+wa)
-	ld	a, (xsp)
-	cpl	a
-	and	a, (xhl)
-	or	a, (EXTDATA_VALUE:16)
-	ld	c, a
-	ld	a, (EXTDATA_NEW_VALUE:16)
-	cp	c, a
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	(xhl), c
-	ld	(EXTDATA_NEW_VALUE:16), c
-	ld	(MIDI_MSG_DATA2:16), c
-	ld	a, (xsp)
-	or	(MIDI_MSG_DATA3:16), a
-VoiceParam_CompareAndUpdate_Epilogue:
-	inc	2, xsp
-	ret
+VoiceParam_CompareAndUpdate:	.include "includes/generated/cc900/VoiceParam_CompareAndUpdate.s"	; C: cc900/audio_control_engine_m280_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceParam_CompareAndUpdate_Epilogue, VoiceParam_CompareAndUpdate + 84
 ; ExtData_SetTlvField: If mask A is enabled in (EXTDATA_MASK), replaces the field A of the panel TLV byte (tag
 ;   MIDI_MSG_STATUS, offset (EXTDATA_TLV_OFFSET)) with (EXTDATA_VALUE); if the byte changed, stores it in (EXTDATA_NEW_VALUE) and MIDI_MSG_DATA2 and
 ;   ORs A into MIDI_MSG_DATA3. Basis: callers + body -- ExtData_* handlers call it per field mask and then flush.
-ExtData_SetTlvField:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (EXTDATA_MASK:16)
-	and	a, (xsp)
-	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC977B-0xFC9795 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+96
-	jr	z, ExtData_SetTlvField_Epilogue
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 4294967295
-	jr	z, ExtData_SetTlvField_Epilogue
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	lda	xhl, (xhl+wa)
-	ld	a, (xsp)
-	cpl	a
-	and	a, (xhl)
-	or	a, (EXTDATA_VALUE:16)
-	ld	c, a
-	ld	a, (EXTDATA_NEW_VALUE:16)
-	cp	c, a
-	jr	z, ExtData_SetTlvField_Epilogue
-	ld	(xhl), c
-	ld	(EXTDATA_NEW_VALUE:16), c
-	ld	(MIDI_MSG_DATA2:16), c
-	ld	a, (xsp)
-	or	(MIDI_MSG_DATA3:16), a
-ExtData_SetTlvField_Epilogue:
-	inc	2, xsp
-	ret
+ExtData_SetTlvField:	.include "includes/generated/cc900/ExtData_SetTlvField.s"	; C: cc900/audio_control_engine_m280_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtData_SetTlvField_Epilogue, ExtData_SetTlvField + 76
 	dec	2, xsp
 	ld	(xsp), a
 	ld	a, (EXTDATA_MASK:16)
@@ -6524,50 +6455,11 @@ SwbtWr_WriteParamBlock_Epilogue2:
 ;   (EXTDATA_TLV_OFFSET)); a sum >= the limit (0x9154) becomes the fallback (0x9155). Gated by A in (EXTDATA_MASK) and (EXTDATA_VALUE); if the
 ;   byte changed it goes to (EXTDATA_NEW_VALUE) and MIDI_MSG_DATA2 and C is ORed into MIDI_MSG_DATA3. Basis: callers + body --
 ;   the ExtData_* handlers load step/limit/fallback, call it, then flush.
-ExtData_StepTlvField:
-	dec	2, xsp
-	ld	(xsp), c
-	ld	c, (EXTDATA_MASK:16)
-	and	c, a
-	jr	z, ExtData_StepTlvField_Epilogue3
-	ld	c, (EXTDATA_VALUE:16)
-	and	c, a
-	jr	z, ExtData_StepTlvField_Epilogue3
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 0xffffffff
-	jr	z, ExtData_StepTlvField_Epilogue3
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	lda	xhl, (xhl+wa)
-	ld e, (xhl)
-	and	e, (xsp)
-	ld	c, (0x9153:16)
-	ld	a, e
-	add	a, c
-	cp	a, (37204:16)
-	jr	nc, ExtData_StepTlvField_Skip3
-	add	e, c
-	jr	ExtData_StepTlvField_Join
-ExtData_StepTlvField_Skip3:
-	ld	e, (0x9155:16)
-ExtData_StepTlvField_Join:
-	ld	a, (xsp)
-	cpl	a
-	and	a, (xhl)
-	or	e, a
-	ld	a, (EXTDATA_NEW_VALUE:16)
-	cp	e, a
-	jr	z, ExtData_StepTlvField_Epilogue3
-	ld	(xhl), e
-	ld	(EXTDATA_NEW_VALUE:16), e
-	ld	(MIDI_MSG_DATA2:16), e
-	ld	a, (xsp)
-	or	(MIDI_MSG_DATA3:16), a
-ExtData_StepTlvField_Epilogue3:
-	inc	2, xsp
-	ret
+ExtData_StepTlvField:	.include "includes/generated/cc900/ExtData_StepTlvField.s"	; C: cc900/audio_control_engine_m280_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtData_StepTlvField_Skip3, ExtData_StepTlvField + 70
+	.set	ExtData_StepTlvField_Join, ExtData_StepTlvField + 74
+	.set	ExtData_StepTlvField_Epilogue3, ExtData_StepTlvField + 106
 ; ExtData_ForceSetTlvField: If mask A is enabled in (EXTDATA_MASK), sets field A of the panel TLV byte (tag MIDI_MSG_STATUS,
 ;   offset (EXTDATA_TLV_OFFSET)) to (EXTDATA_VALUE) & A and, unlike ExtData_SetTlvField, always records it -- byte to (EXTDATA_NEW_VALUE) and
 ;   MIDI_MSG_DATA2, A ORed into MIDI_MSG_DATA3 -- even when the byte did not change. Basis: callers + body --
@@ -6745,64 +6637,15 @@ MidiCC_ClearReceivedBankSelects_Loop2:
 	jr	c, MidiCC_ClearReceivedBankSelects_Loop2
 	ret
 
-SndParam_ApplyAndFetch:
-	dec 6, xsp
-	lda xwa, (xsp)
-	lda xde, (0x90ea:16)
-	ld c, (xde)
-	ld (xwa), c
-	ld c, (xde + 1)
-	ld (xwa + 1), c
-	ld c, (xde + 2)
-	ld (xwa + 2), c
-	cp c, 0x1f
-	jr ugt, SndParam_CheckRhythm
-	call SndParam_ApplyProgramChange
-	lda xde, (0x90ee:16)
-	lda xbc, (xsp)
-	ld a, (xbc + 3)
-	ld (xde), a
-	ld a, (xbc + 4)
-	ld (xde + 1), a
-	jr SndParam_ApplyDone
+SndParam_ApplyAndFetch:	.include "includes/generated/cc900/SndParam_ApplyAndFetch.s"	; C: cc900/audio_control_engine_m280_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_CheckRhythm, SndParam_ApplyAndFetch + 52
+	.set	SndParam_ApplyDone, SndParam_ApplyAndFetch + 60
 
-SndParam_CheckRhythm:
-	cp c, 0x48
-	call z, (Rhythm_LookupTempoVelocity_Wrap:24)
-
-SndParam_ApplyDone:
-	inc 6, xsp
-	ret
-
-SndParam_ApplyFromPointer:
-	push	xiz
-	ld	xiz, xwa
-	lda	xde, (xiz+2)
-	ld	a, (xde)
-	cp	a, 31
-	jr	ugt, SndParam_ApplyFromPointer_Skip
-	ld	xwa, xiz
-	call	SndParam_ApplyProgramChange
-	jr	SndParam_ApplyFromPointer_Epilogue
-SndParam_ApplyFromPointer_Skip:
-	cp	a, 72
-	jr	nz, SndParam_ApplyFromPointer_Epilogue
-	lda	xbc, (0x90ea:16)
-	ld	a, (xiz)
-	ld	(xbc), a
-	ld	a, (xiz+1)
-	ld	(xbc+1), a
-	ld	a, (xde)
-	ld	(xbc+2), a
-	call	Rhythm_LookupTempoVelocity_Wrap
-	lda	xbc, (0x90ee:16)
-	ld	a, (xbc)
-	ld	(xiz+3), a
-	ld	a, (xbc+1)
-	ld	(xiz+4), a
-SndParam_ApplyFromPointer_Epilogue:
-	pop xiz
-	ret
+SndParam_ApplyFromPointer:	.include "includes/generated/cc900/SndParam_ApplyFromPointer.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_ApplyFromPointer_Skip, SndParam_ApplyFromPointer + 21
+	.set	SndParam_ApplyFromPointer_Epilogue, SndParam_ApplyFromPointer + 64
 
 SndParam_FetchAndStore:
 	dec 6, xsp

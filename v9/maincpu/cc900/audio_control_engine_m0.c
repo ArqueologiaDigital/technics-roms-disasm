@@ -285,3 +285,29 @@ void PanelAction_PedalFn_Code40(unsigned char *e)
 		}
 	} while (++i < 16);
 }
+
+/* cc900-module: PanelTlv_PayloadOfTag */
+extern unsigned char __near ram_90ea[];
+extern unsigned char __near ram_90ee[];
+extern void SndParam_ApplyProgramChange(unsigned char *);
+extern void Rhythm_LookupTempoVelocity_Wrap(void);
+extern void SndParam_ApplyFromPointer(unsigned char *r);
+
+void SndParam_ApplyFromPointer(unsigned char *r)
+{
+	unsigned char *t = r + 2;
+	unsigned char *b;
+
+	if (*t <= 0x1f)
+		SndParam_ApplyProgramChange(r);
+	else if (*t == 0x48) {
+		b = ram_90ea;
+		b[0] = r[0];
+		b[1] = r[1];
+		b[2] = *t;
+		Rhythm_LookupTempoVelocity_Wrap();
+		b = ram_90ee;
+		r[3] = b[0];
+		r[4] = b[1];
+	}
+}

@@ -3196,54 +3196,11 @@ ClampColorToRange:
 	ret gt
 	ret
 
-DrawDesignBox_ByteData:
-	; framing ported from v10's source for the same label (same span length, statement for statement); 297 of 302 slots byte-identical
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), de
-	ld	(xsp+6), xbc
-	ld	xiz, xwa
-	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp	hl, 0:i3
-	jr	z, ClampColorToRange_Skip
-	cpw	(DRAW_ENABLED:24), 0
-	jr	z, ClampColorToRange_Epilogue
-	ld	xwa, xiz
-	ld	xbc, (xsp+6)
-	ld	de, (xsp+4)
-	calr	DrawDottedLine_Impl
-	jr	ClampColorToRange_Epilogue
-ClampColorToRange_Skip:
-	ldw	wa, 14
-	calr	DrawQueue_Alloc
-	ld	xwa, xhl
-	lda	xbc, (DrawDesignBox_ByteData_Code:24)
-	ld	(xwa), xbc
-	ld	xiy, xiz
-	lda	xix, (xwa+4)
-	ldiw
-	ldiw
-	ld	xbc, (xsp+6)
-	ld	xiy, xbc
-	lda	xix, (xwa+8)
-	ldiw
-	ldiw
-	ld	bc, (xsp+4)
-	ld	(xwa+12), bc
-	calr	DrawRing_Post
-ClampColorToRange_Epilogue:
-	pop	xiz
-	inc	6, xsp
-	ret
-DrawDesignBox_ByteData_Code:
-	lda	xhl, (xwa+4)
-	lda	xbc, (xwa+8)
-	ld	de, (xwa+12)
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	xwa, xhl
-	calr	DrawDottedLine_Impl
-	ret
+DrawDesignBox_ByteData:	.include "includes/generated/cc900/DrawDesignBox_ByteData.s"	; C: cc900/ui_window_procs_m0_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ClampColorToRange_Skip, DrawDesignBox_ByteData + 40
+	.set	ClampColorToRange_Epilogue, DrawDesignBox_ByteData + 85
+DrawDesignBox_ByteData_Code:	.include "includes/generated/cc900/DrawDesignBox_ByteData_Code.s"	; C: cc900/ui_window_procs_m0_xr.c
 ; DrawDottedLine_Impl: Draw-task body of a plain dotted line: from point (XWA) to point (XBC) (each {x, y} words) in
 ;   colour DE, writing straight into OFFSCREEN_BUFFER_1 (320-byte rows) with a 2-on / 3-off pattern (counter 0,1 draw;
 ;   2,3 skip; 4 resets), horizontal, vertical and fixed-point sloped cases; ends with SetChangeRect. No draw-mode
@@ -6533,73 +6490,15 @@ UIRender_RetStub2:
 ;
 ; Screen iteration: outer loop DE=0..0xEF (rows), inner loop HL=0..0x13F (cols)
 ; =============================================================================
-PaletteBankRotate:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, PaletteBankRotate_Impl
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (PaletteBankRotate_Code:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
-PaletteBankRotate_Code:
-	jr PaletteBankRotate_Impl
+PaletteBankRotate:	.include "includes/generated/cc900/PaletteBankRotate.s"	; C: cc900/ui_window_procs_m273.c
+PaletteBankRotate_Code:	.include "includes/generated/cc900/PaletteBankRotate_Code.s"	; C: cc900/ui_window_procs_m0_xr.c
 
-PaletteBankRotate_Impl:
-	push	xiz
-	lda	xwa, (OFFSCREEN_BUFFER_1:24)
-	ld	xiz, xwa
-	pushw	38400
-	push	xwa
-	ld	xwa, OFFSCREEN_BUFFER_2
-	push	xwa
-	call	Mem_Copy
-	add	xiz, 38400
-	pushw	38400
-	push	xiz
-	ld	xwa, OFFSCREEN_BUFFER_3
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp+20)
-	lda	xwa, (OFFSCREEN_BUFFER_1:24)
-	ld	xbc, xwa
-	ld	de, 0:i3
-PaletteBankRotate_RowLoop:
-	ld hl, 0:i3
-
-PaletteBankRotate_ColLoop:
-	cp (xbc), 0xe0
-	jr c, PaletteBankRotate_LowBank
-	submi8 (xbc), 0x90
-	jr PaletteBankRotate_NextCol
-
-PaletteBankRotate_LowBank:
-	addmi8 (xbc), 0x10
-
-PaletteBankRotate_NextCol:
-	inc	1, xbc
-	inc	1, hl
-	cp	hl, 320
-	jr	lt, PaletteBankRotate_ColLoop
-	inc	1, de
-	cp	de, 240
-	jr	lt, PaletteBankRotate_RowLoop
-	ld	xiz, xwa
-	pushw	38400
-	push	xwa
-	ld	xwa, 432128
-	push	xwa
-	call	Mem_Copy
-	add	xiz, 38400
-	pushw	38400
-	push	xiz
-	ld	xwa, 470528
-	push	xwa
-	call	Mem_Copy
-	lda	xsp, (xsp+20)
-	pop	xiz
-	ret
+PaletteBankRotate_Impl:	.include "includes/generated/cc900/PaletteBankRotate_Impl.s"	; C: cc900/ui_window_procs_m0_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PaletteBankRotate_RowLoop, PaletteBankRotate_Impl + 54
+	.set	PaletteBankRotate_ColLoop, PaletteBankRotate_Impl + 56
+	.set	PaletteBankRotate_LowBank, PaletteBankRotate_Impl + 66
+	.set	PaletteBankRotate_NextCol, PaletteBankRotate_Impl + 69
 ClipBlit_Replace:	.include "includes/generated/cc900/ClipBlit_Replace.s"	; C: cc900/ui_window_procs_m273.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	ClipBlit_Replace_Deferred, ClipBlit_Replace + 25
@@ -7418,57 +7317,11 @@ ColorBlit2_PopReturn:
 ; =============================================================================
 ; ColorBlit2_LargeCodeBlock: previous name of this label, kept only because it is still referenced by display/graphics_text_vga.s and shared/positional_labels.s (owned by another lane)
 ColorBlit2_LargeCodeBlock:
-DrawMonoBitmap:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), de
-	ld	(xsp+6), xbc
-	ld	xiz, xwa
-	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp	hl, 0:i3
-	jr	z, DrawMonoBitmap_DeferredPath
-	ld	a, (COLORBLIT_MODE:24)
-	ld	(COLORBLIT_MODE_ACTIVE:24), a
-	cpw	(DRAW_ENABLED:24), 0
-	jr	z, DrawMonoBitmap_Return
-	ld	xwa, xiz
-	ld	xbc, (xsp+6)
-	ld	de, (xsp+4)
-	calr	DrawMonoBitmap_Impl
-	jr	DrawMonoBitmap_Return
-DrawMonoBitmap_DeferredPath:
-	ldw	wa, 20
-	calr	DrawQueue_Alloc
-	ld	xwa, xhl
-	lda	xbc, (DrawMonoBitmap_ParamBlock:24)
-	ld	(xwa), xbc
-	ld	xiy, xiz
-	lda	xix, (xwa+4)
-	ld	bc, 4:i3
-	ldirw
-	ld	xbc, (xsp+6)
-	ld	(xwa+12), xbc
-	ld	bc, (xsp+4)
-	ld	(xwa+16), bc
-	ld	c, (COLORBLIT_MODE:24)
-	ld	(xwa+18), c
-	calr	DrawRing_Post
-DrawMonoBitmap_Return:
-	pop	xiz
-	inc	6, xsp
-	ret
-DrawMonoBitmap_ParamBlock:
-	ld	xbc, xwa
-	lda	xwa, (xbc+4)
-	ld	xhl, (xbc+12)
-	ld	de, (xbc+16)
-	ld	c, (xbc+18)
-	ld	(COLORBLIT_MODE_ACTIVE:24), c
-	cpw	(DRAW_ENABLED:24), 0
-	ret	z
-	ld	xbc, xhl
-	calr	DrawMonoBitmap_Impl
-	ret
+DrawMonoBitmap:	.include "includes/generated/cc900/DrawMonoBitmap.s"	; C: cc900/ui_window_procs_m0_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawMonoBitmap_DeferredPath, DrawMonoBitmap + 50
+	.set	DrawMonoBitmap_Return, DrawMonoBitmap + 97
+DrawMonoBitmap_ParamBlock:	.include "includes/generated/cc900/DrawMonoBitmap_ParamBlock.s"	; C: cc900/ui_window_procs_m0_d.c
 DrawMonoBitmap_Impl:
 	lda	xsp, (xsp-30)
 	pushw	iz

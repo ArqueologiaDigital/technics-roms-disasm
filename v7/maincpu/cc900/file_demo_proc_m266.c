@@ -108,3 +108,24 @@ int FileIO_ParseDirectoryEntry(void)
     else if (r >= 0) r = -104;
     return r;
 }
+
+struct ffblk { unsigned char b[266]; };
+extern int GetFirstPageBase(void);
+extern char *GetRecordPtrForFile(int);
+extern long _findfirst(char *, struct ffblk *);
+extern void _findclose(long);
+extern int FileIO_CopyAndOpen(char *, char *);
+extern int SearchAndOpen(char *name);
+
+int SearchAndOpen(char *name)
+{
+    struct ffblk f;
+    int pg;
+    long h;
+    pg = GetFirstPageBase();
+    if (pg < 0) return -104;
+    h = _findfirst(name, &f);
+    if (h < 0) return FileIO_CopyAndOpen(GetRecordPtrForFile(pg), name);
+    _findclose(h);
+    return -10;
+}

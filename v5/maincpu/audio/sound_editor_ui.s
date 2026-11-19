@@ -41,93 +41,18 @@ UpdSeSel_SkipMenuSetup:
 	inc 2, xsp
 	ret
 
-UpdSeSel_ProcessStep:
-	lda xsp, (xsp - 20)
-	lda xwa, (xsp + 16)
-	call SeMenu_ReadObjData
-	cp (xsp + 16), 0x0
-	jr nz, UpdSeSel_Step1_CheckEnabled
-	ld wa, 1:i3
-	call SeMenu_SetDisplayState
-	pushw 0x20
-	ld wa, 0:i3
-	ldw bc, 0x10
-	ld de, 1:i3
-	call SeMenu_RegisterElement_Type1
-	ld wa, 1:i3
-	call SeMenu_SetCurrentStep
-	jrl UpdSeSel_ProcessStep_End
-
-UpdSeSel_Step1_CheckEnabled:
-	cp (xsp + 16), 0x1
-	jr nz, UpdSeSel_UpdateEntries
-	ldw wa, 0x81
-	call SeMenu_CheckObjEnabled
-	cp hl, 0:i3
-	jr nz, UpdSeSel_Step1_Disable
-	ldw wa, 0x10
-	call SeMenu_CheckObjValid
-	cp hl, 0:i3
-	jr z, UpdSeSel_Step1_FillTable
-
-UpdSeSel_Step1_Disable:
-	ldw wa, 0x10
-	call SeMenu_SetCurrentStep
-	ld wa, 0:i3
-	jr UpdSeSel_Step1_SetDisplayState
-
-UpdSeSel_Step1_FillTable:
-	lda xwa, (xsp)
-	call SeMenu_FillEntryTable
-	lda xbc, (xsp)
-	ld a, (xbc)
-	and a, 0xc0
-	ld (xbc), a
-	cp a, 0x80
-	jr nz, UpdSeSel_Step1_Flag40
-	ld wa, 1:i3
-	call SeMenu_SetMode
-	ld wa, 2:i3
-	jr UpdSeSel_Step1_SetStep
-
-UpdSeSel_Step1_Flag40:
-	cp a, 0x40
-	jr nz, UpdSeSel_Step1_DefaultMode
-	ld wa, 2:i3
-	call SeMenu_SetMode
-	ldw wa, TT_DRAWBAR
-	ld bc, 0:i3
-	call SeMenu_SendEvent
-	ld wa, 0:i3
-	call SeMenu_SetCurrentStep
-	ld wa, 0:i3
-
-UpdSeSel_Step1_SetDisplayState:
-	call SeMenu_SetDisplayState
-	jr UpdSeSel_ProcessStep_End
-
-UpdSeSel_Step1_DefaultMode:
-	ld wa, 0:i3
-	call SeMenu_SetMode
-	ld wa, 2:i3
-
-UpdSeSel_Step1_SetStep:
-	call SeMenu_SetCurrentStep
-
-UpdSeSel_UpdateEntries:
-	lda xwa, (xsp + 18)
-	call SeMenu_LoadObjEntries
-	cp (xsp + 18), 0x1
-	jr nz, UpdSeSel_UpdateEntries_CallSimple
-	calr UpdSeSel_DetailedUpdate
-	jr UpdSeSel_ProcessStep_End
-
-UpdSeSel_UpdateEntries_CallSimple:
-	calr UpdSeSel_SimpleUpdate
-
-UpdSeSel_ProcessStep_End:
-	lda xsp, (xsp + 20)
-	ret
+UpdSeSel_ProcessStep:	.include "includes/generated/cc900/UpdSeSel_ProcessStep.s"	; C: cc900/sound_editor_ui_m131.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UpdSeSel_Step1_CheckEnabled, UpdSeSel_ProcessStep + 45
+	.set	UpdSeSel_Step1_Disable, UpdSeSel_ProcessStep + 73
+	.set	UpdSeSel_Step1_FillTable, UpdSeSel_ProcessStep + 84
+	.set	UpdSeSel_Step1_Flag40, UpdSeSel_ProcessStep + 114
+	.set	UpdSeSel_Step1_SetDisplayState, UpdSeSel_ProcessStep + 142
+	.set	UpdSeSel_Step1_DefaultMode, UpdSeSel_ProcessStep + 148
+	.set	UpdSeSel_Step1_SetStep, UpdSeSel_ProcessStep + 156
+	.set	UpdSeSel_UpdateEntries, UpdSeSel_ProcessStep + 160
+	.set	UpdSeSel_UpdateEntries_CallSimple, UpdSeSel_ProcessStep + 178
+	.set	UpdSeSel_ProcessStep_End, UpdSeSel_ProcessStep + 181
 
 UpdSeSel_SimpleUpdate:
 	lda xsp, (xsp - 42)

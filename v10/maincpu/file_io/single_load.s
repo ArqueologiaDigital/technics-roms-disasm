@@ -717,45 +717,13 @@ SingleLoadSrc_ComposerListProc_Join9:
 ;   repaints SingleLoadSrcFunc (EVT_PAINT); retd 4. Basis: callers + body -- SingleLoadSrc_SoundMemListProc
 ;   (parameters 5/6) and SingleLoadDst_SoundMemListProc (parameters 7/8) call it after every move with XDE = 0x8A00,
 ;   pushed 0x8A08 and XWA = the parameter.
-SingleLoad_SyncSoundMemCursorGroup:
-	ld	xix, (xsp+4)
-	ld	l, c
-	add	l, c
-	cp	(xde), l
-	jr	nc, SingleLoad_SyncSoundMemCursorGroup_Skip21
-	cp	(xix), l
-	jr	c, SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip21:
-	cp	(xde), l
-	jr	c, SingleLoad_SyncSoundMemCursorGroup_Skip22
-	cp	(xix), l
-	jr	nc, SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip22:
-	cp	xwa, 8
-	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip24
-	cp	xwa, 7
-	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip24
-	cp	xwa, 6
-	jr	z, SingleLoad_SyncSoundMemCursorGroup_Skip23
-	cp	xwa, 5
-	jr	nz, SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip23:
-	ld	a, (xde)
-	ld	(xix), a
-	ld	xwa, 0:i3
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0:i3
-	calr	SingleLoadDstFunc
-	jr	SingleLoad_SyncSoundMemCursorGroup_Return
-SingleLoad_SyncSoundMemCursorGroup_Skip24:
-	ld	a, (xix)
-	ld	(xde), a
-	ld	xwa, 0:i3
-	ld	xbc, EVT_PAINT
-	ld	xde, 0:i3
-	calr	SingleLoadSrcFunc
-SingleLoad_SyncSoundMemCursorGroup_Return:
-	retd	4
+SingleLoad_SyncSoundMemCursorGroup:	.include "includes/generated/cc900/SingleLoad_SyncSoundMemCursorGroup.s"	; C: cc900/single_load_m269_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip21, SingleLoad_SyncSoundMemCursorGroup + 15
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip22, SingleLoad_SyncSoundMemCursorGroup + 23
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip23, SingleLoad_SyncSoundMemCursorGroup + 55
+	.set	SingleLoad_SyncSoundMemCursorGroup_Skip24, SingleLoad_SyncSoundMemCursorGroup + 73
+	.set	SingleLoad_SyncSoundMemCursorGroup_Return, SingleLoad_SyncSoundMemCursorGroup + 89
 ; SingleLoadSrc_DrawSoundMemBankRows: Draws rows 0-1 of the single-load SOUND MEMORY source list (21-byte cells at RAM
 ;   0x894E / 0x8963): row 0 = the mode's bank caption ("BANK") + ": "; row 1, only while the position 0x8A00 is one of
 ;   the 2 x C sounds, = the bank name SingleLoad_GetSoundMemBankName(pos / C) ("MEMORY A" / "MEMORY B"); C = entries per bank (20);
@@ -772,32 +740,9 @@ SingleLoadSrc_DrawSoundMemBankRows:	.include "includes/generated/cc900/SingleLoa
 ;   calls it on EVT_PAINT and on parameter 40 (pending row-1 redraw, flag 0x81DE); 0x4980 = 16 + 40 x 470 follows the
 ;   40 sound records, the sound-RAM copy of the same name is SingleLoad_GetUserKitName's 0x1E4980, and bank 2 of
 ;   SingleLoad_SoundMemBankNames is "USER KIT".
-SingleLoadSrc_DrawUserKitName:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp+4), xwa
-	ld	a, c
-	add	a, c
-	cp	(SLOAD_SRC_SOUND_POS:16), a
-	jr	c, SingleLoadSrc_DrawUserKitName_Epilogue2
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld	(xwa+21), 1
-	lda	xiz, (xwa+22)
-	call	SingleLoadSrc_ReadTmUserKitName
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+22:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+21:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-SingleLoadSrc_DrawUserKitName_Epilogue2:
-	pop	xiz
-	inc	4, xsp
-	ret
+SingleLoadSrc_DrawUserKitName:	.include "includes/generated/cc900/SingleLoadSrc_DrawUserKitName.s"	; C: cc900/single_load_m269_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadSrc_DrawUserKitName_Epilogue2, SingleLoadSrc_DrawUserKitName + 65
 ; SingleLoadSrc_DrawSoundMemItemNumber: Fills row 2 of the SOUND MEMORY source list (RAM 0x8978) with
 ;   StorageArea_UnitNames[mode] ("MEMORY") + ": " and, unless the ALL flag 0x89FA is set, the 1-based item number --
 ;   (0x8A00 - 2C) + 1 for a USER KIT entry, (0x8A00 mod C) + 1 for a sound; with 0x89FA set it also writes "ALL" into
@@ -1653,55 +1598,7 @@ SingleLoadDst_PanelMemListProc_Epilogue:
 ;   (BuildSlotLabel(song, cell 2, no number): 16 bytes at SEQ_SONG_SLOTS + 0x800 x song + 0x100); posts EVT_PARA_DRAW
 ;   for both. Basis: callers + body -- SingleLoadDst_SequencerListProc calls it after blanking rows 0/3 on EVT_PAINT
 ;   and after stepping 0x8A04 with parameter 8; its header calls these rows "'SONG: n' + slot label".
-SingleLoadDst_DrawSongRows:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp+4), xwa
-	lda	xwa, (SINGLE_LOAD_DST_ROWS:16)
-	ld	(xwa+21), 1
-	lda	xwa, (xwa+22)
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (StorageArea_UnitNames:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+22:16)
-	ld	xbc, SLDstMemLabel_ColonSep
-	call	FileIO_BuildFilePath
-	lda	xiz, (SINGLE_LOAD_DST_ROWS+22:16)
-	ld	a, (SLOAD_DST_SONG:16)
-	inc	1, a
-	extz	wa
-	ld	bc, 0:i3
-	calr	NumToAscii_FormatNumber
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+22:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xiz, (SINGLE_LOAD_DST_ROWS+42:16)
-	ld	a, (SLOAD_DST_SONG:16)
-	extz	wa
-	ld	bc, 2:i3
-	ld	de, 0:i3
-	calr	BuildSlotLabel
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_CopyString
-	lda	xde, (SINGLE_LOAD_DST_ROWS+21:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	lda	xde, (SINGLE_LOAD_DST_ROWS+42:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	pop	xiz
-	inc	4, xsp
-	ret
+SingleLoadDst_DrawSongRows:	.include "includes/generated/cc900/SingleLoadDst_DrawSongRows.s"	; C: cc900/single_load_m269_c.c
 ; SingleLoadDst_SequencerListProc: Single-load destination list for area 1 SEQUENCER: EVT_PAINT blanks rows 0/3 and
 ;   draws 'SONG: n' + slot label (SingleLoadDst_DrawSongRows, BuildSlotLabel); parameter 8 steps the song number
 ;   RAM 0x8A04 up to SingleLoadDst_SequencerSongCount; parameter 10 returns SingleLoad_LoadSong(song); entry

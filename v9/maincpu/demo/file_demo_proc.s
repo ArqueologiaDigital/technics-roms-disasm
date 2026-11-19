@@ -445,16 +445,9 @@ FDemo_RegisterLoadedFile_Epilogue2:
 	inc	4, xsp
 	ret
 
-FDemo_LinkedListLookupField:
-	calr FDemo_LinkedListSearch
-	or xhl, xhl
-	jr z, FDemo_LinkedListLookupNull
-	ld xhl, (xhl + 16)
-	ret
-
-FDemo_LinkedListLookupNull:
-	ld xhl, 0:i3
-	ret
+FDemo_LinkedListLookupField:	.include "includes/generated/cc900/FDemo_LinkedListLookupField.s"	; C: cc900/file_demo_proc_m265_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemo_LinkedListLookupNull, FDemo_LinkedListLookupField + 11
 
 FDemo_FileOpenAndProcess:
 	; --- Stack-frame function: alloc, multi-call dispatch (114 bytes) ---
@@ -506,36 +499,7 @@ FDemo_FileOpen_Exit:
 	ret
 
 
-DemoMode_Main_Operation:
-	res 0, (SEQ_CYCLE_FLAGS:16)
-	call Voice_InitializeAll
-	lda xbc, (PANEL_RECORDS:16)
-	lda xwa, (0xffbe:16)
-	sub xwa, xbc
-	inc 2, xwa
-	pushw wa
-	push xbc
-	pushw 0x3
-	pushw 0xcf04
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	call Fade_Cancel
-	calr Voice_LoadVoiceTable
-	set 4, (PANEL_MIDI:16)
-	res 2, (PANEL_MIDI:16)
-	res 2, (PANEL_MIDI+2:16)
-	calr Demo_PreSetup
-	res 0, (1115:16)
-	call AccompSeq_StopSequence
-	calr Voice_CopyPreset
-	call MIDI_BroadcastPitchReset
-	calr Demo_ReleaseGlidePedal
-	call Audio_CheckSubsystemReady
-	set 6, (0xb7e2:16)
-	res 3, (DEMO_CONTROL_FLAGS:16)
-	call SeqInit_PostEventSequence
-	call SeqInit_FinalEvent
-	jp Seq_StartMainControl
+DemoMode_Main_Operation:	.include "includes/generated/cc900/DemoMode_Main_Operation.s"	; C: cc900/file_demo_proc_m266_c.c
 
 FDemo_IndicatorSetup:
 	ldw wa, 0x22
@@ -575,35 +539,10 @@ FDemo_PostBannerCheck:
 	res 6, (0xb7e2:16)
 	ret
 
-Demo_SelectionEntryHandler:
-	calr Demo_PreSetup
-	ld (0x2966:16), 0
-	ld (DEMO_DEBOUNCE:16), 0
-	ld (DEMO_TIMER_COUNTDOWN:16), 0
-	calr Audio_WaitForReady
-	call SeqStep_PlaybackStateMachine
-	res 3, (DEMO_CONTROL_FLAGS:16)
-	call SeqInit_PostEventSequence
-	call TempoRingBuf_Init
-	call SeqBuf_Init
-	ldw wa, 0x22
-	call CtrlPanel_SetIndicatorLED
-	jrl Banner_Loop_Check
-SwbtB3_CodeA9_Listener0:
-	cp (SWBTWR_PAYLOAD_1:16), 32
-	ret nz
-	ld a, (SWBTWR_PAYLOAD_3:16)
-	and a, 0x13
-	ret z
-	ld a, (SWBTWR_PAYLOAD_2:16)
-	and a, 0x13
-	jr z, Demo_SelectEntry_NoNewButton
-	ld (DEMO_DEBOUNCE:16), 16
-	ret
-
-Demo_SelectEntry_NoNewButton:
-	ld (DEMO_DEBOUNCE:16), 0
-	ret
+Demo_SelectionEntryHandler:	.include "includes/generated/cc900/Demo_SelectionEntryHandler.s"	; C: cc900/file_demo_proc_m266_c.c
+SwbtB3_CodeA9_Listener0:	.include "includes/generated/cc900/SwbtB3_CodeA9_Listener0.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_SelectEntry_NoNewButton, SwbtB3_CodeA9_Listener0 + 31
 
 Demo_SelectEntry_PreSaveCheck:
 	cp (CURRENT_MODE:16), 19
@@ -722,30 +661,9 @@ Demo_SelectEntry_StartAutoPlay:
 	call Seq_DispatchEventType6
 	ret
 
-Demo_SelectEntry_TimerTick:
-	calr Demo_SelectEntry_CheckCPanel
-	cpw (0x25b84:24), 0
-	call nz, (Banner_Loop_Check:24)
-	ld a, (DEMO_TIMER_COUNTDOWN:16)
-	cp a, 0:i3
-	ret z
-	dec 1, a
-	ld (DEMO_TIMER_COUNTDOWN:16), a
-	cp a, 0xa
-	jr nz, Demo_SelectEntry_CheckCountdown
-	ld a, (DEMO_ACTIVE_ENTRY:16)
-	extz wa
-	calr Demo_ParseSlideHeader
-	jrl Demo_SelectEntry_PlaySong
-
-Demo_SelectEntry_CheckCountdown:
-	ld a, (DEMO_TIMER_COUNTDOWN:16)
-	cp a, 3:i3
-	jrl z, Demo_SelectEntry_StartPlayback
-	cp a, 1:i3
-	ret nz
-	ld (0x2966:16), 133
-	ret
+Demo_SelectEntry_TimerTick:	.include "includes/generated/cc900/Demo_SelectEntry_TimerTick.s"	; C: cc900/file_demo_proc_m266_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_SelectEntry_CheckCountdown, Demo_SelectEntry_TimerTick + 46
 
 Demo_SelectEntry_CheckCPanel:
 	cp (CURRENT_MODE:16), 19
@@ -1620,68 +1538,14 @@ LoadRegion1_Return:
 	lda xsp, (xsp + 14)
 	ret
 
-FileIO_LoadRegion7_Flash:
-	; --- Display region 7: flash/file buffer 0x3d3000, 0x0400 bytes ---
-	lda xsp, (xsp - 14)
-	push xiz				; save XIZ (4 bytes)
-	ld xbc, xwa
-	lda xwa, (xsp + 4)			; stack offset differs (XIZ=4 vs IZ=2)
-	ld	de, 7:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 4)
-	ld xbc, FileIO_LoadRegion7_Flash_Str_rb			; resource ID for region 7
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion7_OpenSuccess
-	call FileIO_ReturnError
-	jr LoadRegion7_Return
-LoadRegion7_OpenSuccess:
-	ld	wa, 7:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion7_ModeError
-	call PreMidiLoad
-	pushw 0x0400				; buffer size
-	call Malloc				; allocate buffer (Malloc)
-	inc 2, xsp				; clean stack
-	ld xiz, xhl				; XIZ = buffer ptr
-	or xiz, xiz				; check null
-	jr z, LoadRegion7_AllocFailed			; alloc failed
-	pushw 0x0000				; fill value
-	pushw 0x0400				; fill size
-	push xiz				; buffer ptr
-	call Memset				; memset
-	inc	8, xsp
-	ld xwa, xiz				; base address
-	ld xbc, 0x00000400			; size
-	call FileIO_ReadBlock
-	ld xwa, 0x003d3000			; flash/file area base
-	push xwa
-	ld	wa, 1:i3
-	ld xbc, xiz				; buffer ptr
-	ldw de, 0x0400				; size
-	call FlashWrite				; flash read/copy
-	push xiz
-	call Free				; Free buffer
-	inc 4, xsp				; clean stack
-	call FileIO_ReturnError
-	ld iz, hl
-	jr LoadRegion7_PostMidi
-LoadRegion7_AllocFailed:
-	ldw iz, 0xff38				; alloc failure error code
-LoadRegion7_PostMidi:
-	ld wa, iz
-	call PostMidiLoad
-	jr LoadRegion7_Finalize
-LoadRegion7_ModeError:
-	ldw iz, 0xff9a				; mode unavailable error
-LoadRegion7_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion7_Return:
-	pop xiz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_LoadRegion7_Flash:	.include "includes/generated/cc900/FileIO_LoadRegion7_Flash.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion7_OpenSuccess, FileIO_LoadRegion7_Flash + 37
+	.set	LoadRegion7_AllocFailed, FileIO_LoadRegion7_Flash + 121
+	.set	LoadRegion7_PostMidi, FileIO_LoadRegion7_Flash + 124
+	.set	LoadRegion7_ModeError, FileIO_LoadRegion7_Flash + 132
+	.set	LoadRegion7_Finalize, FileIO_LoadRegion7_Flash + 135
+	.set	LoadRegion7_Return, FileIO_LoadRegion7_Flash + 141
 
 FileIO_LoadRegion2_ExtMem:
 	; --- Display region 2: external memory 0x0ab000-0x0fd800 ---
@@ -1977,38 +1841,12 @@ LoadRegion5_Return:
 	lda xsp, (xsp + 14)
 	ret
 
-FileIO_LoadRegion6_Simple:
-	; --- Display region 6: simple init ---
-	lda xsp, (xsp - 14)
-	pushw iz
-	ld xbc, xwa
-	lda xwa, (xsp + 2)
-	ld	de, 6:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 2)
-	ld xbc, FileIO_LoadRegion6_Simple_Str_rb			; resource ID for region 6
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion6_OpenSuccess
-	call FileIO_ReturnError
-	jr LoadRegion6_Return
-LoadRegion6_OpenSuccess:
-	ld	wa, 6:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion6_ModeError
-	call FileIO_LoadRcmToFlash
-	ld iz, hl
-	jr LoadRegion6_Finalize
-LoadRegion6_ModeError:
-	ldw iz, 0xff9a				; mode unavailable
-LoadRegion6_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion6_Return:
-	popw iz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_LoadRegion6_Simple:	.include "includes/generated/cc900/FileIO_LoadRegion6_Simple.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion6_OpenSuccess, FileIO_LoadRegion6_Simple + 37
+	.set	LoadRegion6_ModeError, FileIO_LoadRegion6_Simple + 54
+	.set	LoadRegion6_Finalize, FileIO_LoadRegion6_Simple + 57
+	.set	LoadRegion6_Return, FileIO_LoadRegion6_Simple + 63
 
 FileIO_LoadRegion4_VRAM:
 	; --- Display region 4: VRAM 0x1e0000-0x1e7800 (with iteration loop) ---
@@ -3757,39 +3595,11 @@ GetFirstRecord_GotPage:
 	ld xwa, xhl
 	jp FileIO_OpenDefault
 
-SearchAndOpen:
-	lda xsp, (xsp-270)
-	pushw iz
-	ld	(xsp+268), xwa
-	call GetFirstPageBase
-	ld iz, hl
-	cp iz, 0:i3
-	jr ge, SearchOpen_DoSearch
-	ldw hl, 0xff98
-	jr SearchOpen_Return
-
-SearchOpen_DoSearch:
-	lda xbc, (xsp + 2)
-	ld XWA, (xsp + 0x010c)
-	call _findfirst
-	ld xwa, xhl
-	cp xwa, 0x0
-	jr ge, SearchOpen_AlreadyExists
-	ld wa, iz
-	call GetRecordPtrForFile
-	ld xwa, xhl
-	ld XBC, (xsp + 0x010c)
-	call FileIO_CopyAndOpen
-	jr SearchOpen_Return
-
-SearchOpen_AlreadyExists:
-	call _findclose
-	ldw hl, 0xfff6
-
-SearchOpen_Return:
-	popw iz
-	lda xsp, (xsp+270)
-	ret
+SearchAndOpen:	.include "includes/generated/cc900/SearchAndOpen.s"	; C: cc900/file_demo_proc_m266.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SearchOpen_DoSearch, SearchAndOpen + 26
+	.set	SearchOpen_AlreadyExists, SearchAndOpen + 67
+	.set	SearchOpen_Return, SearchAndOpen + 74
 
 LoadFromSecondaryPage:	.include "includes/generated/cc900/LoadFromSecondaryPage.s"	; C: cc900/file_demo_proc_m266_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -5395,42 +5205,12 @@ BuildSecondPage_Return:
 	lda xsp, (xsp+274)
 	ret
 
-NavigateToFileIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr ValidateFileRange
-	cp hl, 0xffff
-	jr nz, NavToFileIdx_InSecondPage
-	ld hl, (0x0271ea:24)
-	jr NavToFileIdx_Return
-
-NavToFileIdx_InSecondPage:
-	cp hl, 1:i3
-	jr nz, NavToFileIdx_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0x3c
-	mul wa, 0x3c
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x3b
-	ld wa, (0x0271ec:24)
-	cp bc, wa
-	jr ge, NavToFileIdx_ClampEnd
-	ld wa, bc
-
-NavToFileIdx_ClampEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr BuildSecondPageRecords
-
-NavToFileIdx_StoreIndex:
-	ld hl, iz
-	ld (0x0271ea:24), hl
-
-NavToFileIdx_Return:
-	popw iz
-	ret
+NavigateToFileIndex:	.include "includes/generated/cc900/NavigateToFileIndex.s"	; C: cc900/file_demo_proc_m268_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NavToFileIdx_InSecondPage, NavigateToFileIndex + 21
+	.set	NavToFileIdx_ClampEnd, NavigateToFileIndex + 59
+	.set	NavToFileIdx_StoreIndex, NavigateToFileIndex + 67
+	.set	NavToFileIdx_Return, NavigateToFileIndex + 74
 
 GetRecordPtrForFile:
 	pushw iz
@@ -5518,91 +5298,20 @@ ReadVariableLengthInt:	.include "includes/generated/cc900/ReadVariableLengthInt.
 	.set	ReadVarLen_Negative, ReadVariableLengthInt + 35
 	.set	ReadVarLen_Return, ReadVariableLengthInt + 54
 
-ReadFieldToBuffer:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 4), xbc
-	ld (xsp + 8), wa
-	ld xwa, (xsp + 4)
-	cp (xwa), 0x0
-	jrl nz, ReadField_Return
-	ld iz, 0:i3
-	cpw (xsp + 8), 0x40
-	jr gt, ReadField_LongInit
-	cpw (xsp + 8), 0x0
-	jr le, ReadField_Terminate
-
-ReadField_ShortLoop:
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr ge, ReadField_StoreByte
-	ld hl, 0:i3
-
-ReadField_StoreByte:
-	ld xwa, (xsp + 4)
-	ld	(xwa+iz), l
-	decm 1, (xsp + 8)
-	inc 1, iz
-	cpw (xsp + 8), 0x0
-	jr gt, ReadField_ShortLoop
-	jr ReadField_Terminate
-
-ReadField_LongInit:
-	ldw (xsp + 2), 0x1
-
-ReadField_LongLoop:
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr lt, ReadField_DiscardExtra
-	ld c, l
-	ld xwa, (xsp + 4)
-	lda	xwa, (xwa+iz)
-	cpw (xsp + 2), 0x0
-	jr z, ReadField_Long_CheckSpace
-	cp hl, 0x20
-	jr z, ReadField_Long_StoreIfNotLeading
-	ldw (xsp + 2), 0x0
-
-ReadField_Long_CheckSpace:
-	ld (xwa), c
-
-ReadField_Long_StoreIfNotLeading:
-	decm 1, (xsp + 8)
-	inc 1, iz
-	cp iz, 0x40
-	jr lt, ReadField_LongLoop
-
-ReadField_DiscardExtra:
-	cpw (xsp + 8), 0x0
-	jr le, ReadField_Terminate
-
-ReadField_DiscardLoop:
-	call FileIO_ReadByte
-	decm 1, (xsp + 8)
-	cpw (xsp + 8), 0x0
-	jr gt, ReadField_DiscardLoop
-
-ReadField_Terminate:
-	ld xwa, (xsp + 4)
-	ld	(xwa+iz), 0x00
-	jr ReadField_TrimLoop
-
-ReadField_TrimSpace:
-	ld (xwa), 0x0
-
-ReadField_TrimLoop:
-	dec 1, iz
-	ld xwa, (xsp + 4)
-	lda	xwa, (xwa+iz)
-	cp (xwa), 0x20
-	jr nz, ReadField_Return
-	cp iz, 0:i3
-	jr gt, ReadField_TrimSpace
-
-ReadField_Return:
-	popw iz
-	inc 8, xsp
-	ret
+ReadFieldToBuffer:	.include "includes/generated/cc900/ReadFieldToBuffer.s"	; C: cc900/file_demo_proc_m268_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadField_ShortLoop, ReadFieldToBuffer + 34
+	.set	ReadField_StoreByte, ReadFieldToBuffer + 44
+	.set	ReadField_LongInit, ReadFieldToBuffer + 66
+	.set	ReadField_LongLoop, ReadFieldToBuffer + 71
+	.set	ReadField_Long_CheckSpace, ReadFieldToBuffer + 107
+	.set	ReadField_Long_StoreIfNotLeading, ReadFieldToBuffer + 109
+	.set	ReadField_DiscardExtra, ReadFieldToBuffer + 120
+	.set	ReadField_DiscardLoop, ReadFieldToBuffer + 127
+	.set	ReadField_Terminate, ReadFieldToBuffer + 141
+	.set	ReadField_TrimSpace, ReadFieldToBuffer + 152
+	.set	ReadField_TrimLoop, ReadFieldToBuffer + 155
+	.set	ReadField_Return, ReadFieldToBuffer + 174
 
 ParseSMFTrackName:	.include "includes/generated/cc900/ParseSMFTrackName.s"	; C: cc900/file_demo_proc_m268.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -7175,39 +6884,11 @@ FileIO_FindNextMatch:	.include "includes/generated/cc900/FileIO_FindNextMatch.s"
 	.set	FindNext_Ok, FileIO_FindNextMatch + 104
 	.set	FindNext_Return, FileIO_FindNextMatch + 106
 
-FileIO_SearchStringMatch:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ldw hl, 0xffff
-	ld xwa, (0x027416:24)
-	cp xwa, 0x0
-	jr ge, SearchMatch_HasHandle
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	jr SearchMatch_FirstSearch
-
-SearchMatch_HasHandle:
-	ld a, (0x027414:24)
-	cp a, (0x27412:24)
-	jr ge, SearchMatch_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr FileIO_FindNextMatch
-	cp hl, 0:i3
-	jr ge, SearchMatch_Return
-	inc 1, (0x27414:24)
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-
-SearchMatch_FirstSearch:
-	calr FileIO_FindFirstMatch
-
-SearchMatch_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+FileIO_SearchStringMatch:	.include "includes/generated/cc900/FileIO_SearchStringMatch.s"	; C: cc900/file_demo_proc_m268_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SearchMatch_HasHandle, FileIO_SearchStringMatch + 31
+	.set	SearchMatch_FirstSearch, FileIO_SearchStringMatch + 65
+	.set	SearchMatch_Return, FileIO_SearchStringMatch + 68
 
 FileIO_ExtractBasename:
 	lda xhl, (0x025cec:24)
@@ -7383,42 +7064,12 @@ ScanDir_Return:
 	lda xsp, (xsp+274)
 	ret
 
-FileIO_SelectWallpaperByIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr FileIO_ValidateModeAndRange
-	cp hl, 0xffff
-	jr nz, SelectWP_CheckPageBound
-	ld hl, (0x0272c8:24)
-	jr SelectWP_Return
-
-SelectWP_CheckPageBound:
-	cp hl, 1:i3
-	jr nz, SelectWP_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0xa
-	mul wa, 0xa
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x9
-	ld wa, (0x0272ca:24)
-	cp bc, wa
-	jr ge, SelectWP_ClampEnd
-	ld wa, bc
-
-SelectWP_ClampEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr FileIO_ScanDirEntries
-
-SelectWP_StoreIndex:
-	ld hl, iz
-	ld (0x0272c8:24), hl
-
-SelectWP_Return:
-	popw iz
-	ret
+FileIO_SelectWallpaperByIndex:	.include "includes/generated/cc900/FileIO_SelectWallpaperByIndex.s"	; C: cc900/file_demo_proc_m268_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SelectWP_CheckPageBound, FileIO_SelectWallpaperByIndex + 21
+	.set	SelectWP_ClampEnd, FileIO_SelectWallpaperByIndex + 59
+	.set	SelectWP_StoreIndex, FileIO_SelectWallpaperByIndex + 67
+	.set	SelectWP_Return, FileIO_SelectWallpaperByIndex + 74
 
 FileIO_GetWallpaperEntry:
 	pushw iz

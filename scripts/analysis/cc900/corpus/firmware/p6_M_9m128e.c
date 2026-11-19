@@ -1,0 +1,115 @@
+/* Phase 6, lane_p6 helper M, round 9, module 128 (display/scoop_editor_data.s), form e: the LPF+Q / HPF+Q pages'
+   side rows and switches (siblings of the matched AMP1 / AMP ENV ones).  Side row 4 sets the filter type in part
+   parameter 0 (low 3 bits: 2 = LPF+Q, 3 = HPF+Q; the ROM ands / ors the frame byte in memory) and reopens the page,
+   or selects part 3; Join30 selects part 4.  Frames: obj +0, [the parameter byte +2,] the switch above. */
+/* (no module-local callee: scripts/analysis/cc900/module_calls.py v10) */
+
+#define TT_SEMENU    0x20
+#define TT_SEFILLPQ1 0x30
+#define TT_SEFILFIL2 0x36
+#define TT_SECOPY    0x3d
+
+extern void SeMenu_LoadObjEntries(unsigned char *);
+extern void SeMenu_LoadPartParam(int, unsigned char *);
+extern void SeMenu_SetFilterType(int);
+extern void SeMenu_SendEvent(int title, int refresh);
+extern void SeMenu_SetupMenuDisplay(int mode);
+extern unsigned char SeMenu_SelectPartIfEnabled(int p);
+extern void SeFilLpq1_OnSideRow4(unsigned char a);
+extern void SeFilLpq1_OnSideRow4_Join30(unsigned char a);
+extern void SeFilLpq1_OnSwitch25(unsigned char a);
+extern void SeFilLpq1_OnSwitch15(unsigned char a);
+extern void SeFilHpq1_OnSideRow4(unsigned char a);
+extern void SeFilHpq1_OnSwitch25(unsigned char a);
+extern void SeFilHpq1_OnSwitch15(unsigned char a);
+
+void SeFilLpq1_OnSideRow4(unsigned char a)
+{
+	unsigned char v;
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		SeMenu_LoadPartParam(0, &v);
+		v &= 0xf8;
+		v |= 0x02;
+		SeMenu_SetFilterType(v);
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	} else {
+		if (obj != 1 && SeMenu_SelectPartIfEnabled(3) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilLpq1_OnSideRow4_Join30(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a != 0 && obj != 1 && SeMenu_SelectPartIfEnabled(4) != 0)
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+}
+
+void SeFilLpq1_OnSwitch25(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (obj != 1 && a == 0)
+		SeMenu_SendEvent(TT_SEFILFIL2, 0);
+}
+
+void SeFilLpq1_OnSwitch15(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_SetupMenuDisplay(0);
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEMENU, 0);
+		else
+			SeMenu_SendEvent(TT_SECOPY, 0);
+	}
+}
+
+void SeFilHpq1_OnSideRow4(unsigned char a)
+{
+	unsigned char v;
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		SeMenu_LoadPartParam(0, &v);
+		v &= 0xf8;
+		v |= 0x03;
+		SeMenu_SetFilterType(v);
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	} else {
+		if (obj == 0 && SeMenu_SelectPartIfEnabled(3) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilHpq1_OnSwitch25(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0 && obj == 0)
+		SeMenu_SendEvent(TT_SEFILFIL2, 0);
+}
+
+void SeFilHpq1_OnSwitch15(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_SetupMenuDisplay(0);
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEMENU, 0);
+		else
+			SeMenu_SendEvent(TT_SECOPY, 0);
+	}
+}

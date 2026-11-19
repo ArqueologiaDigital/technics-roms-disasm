@@ -108,50 +108,12 @@ MidiPkt_DispatchViaTable_4DAE_Done:
 	pop xiz
 	inc 8, xsp
 	ret
-MidiPkt_DispatchSpecialType:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld a, (xiz + 1)
-	cp a, 0x11
-	jr	nz, MidiPkt_DispatchSpecialType_Type10
-	ld	xwa, SysEx_GmSystemOn
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld	xwa, (0xbbc0:16)
-	jr	MidiPkt_DispatchSpecialType_SendAndUpdate
-MidiPkt_DispatchSpecialType_Type10:
-	cp a, 0x10
-	jr	nz, MidiPkt_DispatchSpecialType_Default
-	ld	xwa, SysEx_GmSystemOff
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld	xwa, (0xbbc0:16)
-MidiPkt_DispatchSpecialType_SendAndUpdate:
-	call	SeqOut_FlushTimedBuffer
-	call	ArpQueue_SwapBuffers
-	jr	MidiPkt_DispatchSpecialType_Return
-MidiPkt_DispatchSpecialType_Default:
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList6
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-MidiPkt_DispatchSpecialType_Return:
-	pop xiz
-	inc 8, xsp
-	ret
+MidiPkt_DispatchSpecialType:	.include "includes/generated/cc900/MidiPkt_DispatchSpecialType.s"	; C: cc900/midipkt_routines_m289_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_DispatchSpecialType_Type10, MidiPkt_DispatchSpecialType + 30
+	.set	MidiPkt_DispatchSpecialType_SendAndUpdate, MidiPkt_DispatchSpecialType + 50
+	.set	MidiPkt_DispatchSpecialType_Default, MidiPkt_DispatchSpecialType + 60
+	.set	MidiPkt_DispatchSpecialType_Return, MidiPkt_DispatchSpecialType + 103
 MidiPkt_MatchParamInTable:
 	ld xde, xbc
 	lda	xix, (MidiCtl_NullRecord:24)
@@ -168,59 +130,10 @@ MidiPkt_MatchParamInTable_Loop:
 	ret
 MidiPkt_EnqueueControlNop:
 	ret
-MidiPkt_EnqueueControl_3354:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	ld	xiy, MidiPkt_MsgTemplate_334C
-	lda xix, (xsp + 4)
-	ldi85
-	ldiw
-	ld xwa, (xiz + 4)
-	calr	MidiPkt_CheckGateCondition
-	cp hl, 0xffff
-	jr	z, MidiPkt_EnqueueControl_3354_Return
-	lda	xbc, (MidiCtl_NullRecord:24)
-	ld xwa, (xiz + 4)
-	cp xbc, xwa
-	jr	z, MidiPkt_EnqueueControl_3354_Return
-	ld xbc, (xiz)
-	ld a, (xwa + 8)
-	and a, (xbc + 3)
-	jr	z, MidiPkt_EnqueueControl_3354_Return
-	ld	xwa, SysEx_Msg_35DC
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld xwa, (xiz + 4)
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld xbc, (xiz)
-	ld xde, (xiz + 4)
-	ld a, (xde + 8)
-	and a, (xbc + 2)
-	ld c, a
-	ld a, (xde + 11)
-	and a, 0xf
-	jr	z, MidiPkt_EnqueueControl_3354_ShiftBits
-	srla c
-MidiPkt_EnqueueControl_3354_ShiftBits:
-	lda xwa, (xsp + 4)
-	ld (xwa), c
-	and c, 0xf
-	ld (xwa + 1), c
-	ld c, (xwa)
-	srl c, 4
-	ld (xwa), c
-	ld bc, 3:i3
-	call	ArpQueue_Enqueue
-	call	ArpQueue_ComputeAndEnqueue
-	ld	xwa, (0xbbc0:16)
-	call	SeqOut_FlushTimedBuffer
-	call	ArpQueue_SwapBuffers
-MidiPkt_EnqueueControl_3354_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+MidiPkt_EnqueueControl_3354:	.include "includes/generated/cc900/MidiPkt_EnqueueControl_3354.s"	; C: cc900/midipkt_routines_m289.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_EnqueueControl_3354_ShiftBits, MidiPkt_EnqueueControl_3354 + 94
+	.set	MidiPkt_EnqueueControl_3354_Return, MidiPkt_EnqueueControl_3354 + 134
 ; MidiPkt_SendCtlWordValueSysEx: 16-bit variant of MidiPkt_SendCtlValueSysEx: given XWA -> {packet, record}, returns
 ;   on MidiPkt_CheckGateCondition = 0xFFFF, on MidiCtl_NullRecord or when the packet's mask word (+4) is 0; else
 ;   queues SysEx_Msg_35DC (F0 50 2C 01 28 12) and the record's first 6 bytes, then the low byte of (value word +2 &
@@ -280,57 +193,10 @@ MidiPkt_SendCtlWordValueSysEx_Epilogue:
 	pop	xiz
 	inc	4, xsp
 	ret
-MidiPkt_EnqueueControl_335C:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	ld	xiy, MidiPkt_MsgTemplate_3354
-	lda xix, (xsp + 4)
-	ldi85
-	ldiw
-	ld xwa, (xiz + 4)
-	calr	MidiPkt_CheckGateCondition
-	cp hl, 0xffff
-	jr	z, MidiPkt_EnqueueControl_335C_Return
-	lda	xbc, (MidiCtl_NullRecord:24)
-	ld xwa, (xiz + 4)
-	cp xbc, xwa
-	jr	z, MidiPkt_EnqueueControl_335C_Return
-	ld xbc, (xiz)
-	ld a, (xwa + 8)
-	and a, (xbc + 3)
-	jr	z, MidiPkt_EnqueueControl_335C_Return
-	ld	xwa, SysEx_Msg_35DC
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld xwa, (xiz + 4)
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	lda xwa, (xsp + 4)
-	ld (xwa), 0x0
-	ld xde, (xiz)
-	ld xbc, (xiz + 4)
-	ld c, (xbc + 8)
-	and c, (xde + 2)
-	jr	z, MidiPkt_EnqueueControl_335C_ZeroData
-	ld (xwa), 0x7f
-MidiPkt_EnqueueControl_335C_ZeroData:
-	ld c, (xwa)
-	and c, 0xf
-	ld (xwa + 1), c
-	ld c, (xwa)
-	srl c, 4
-	ld (xwa), c
-	ld bc, 3:i3
-	call	ArpQueue_Enqueue
-	call	ArpQueue_ComputeAndEnqueue
-	ld	xwa, (0xbbc0:16)
-	call	SeqOut_FlushTimedBuffer
-	call	ArpQueue_SwapBuffers
-MidiPkt_EnqueueControl_335C_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+MidiPkt_EnqueueControl_335C:	.include "includes/generated/cc900/MidiPkt_EnqueueControl_335C.s"	; C: cc900/midipkt_routines_m289_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_EnqueueControl_335C_ZeroData, MidiPkt_EnqueueControl_335C + 93
+	.set	MidiPkt_EnqueueControl_335C_Return, MidiPkt_EnqueueControl_335C + 130
 MidiPkt_EnqueueControl_3358:
 	dec 6, xsp
 	push xiz
@@ -473,62 +339,11 @@ MidiPkt_EnqueueControl_335E_Return:
 	pop xiz
 	lda xsp, (xsp + 14)
 	ret
-MidiPkt_EnqueueControl_3364:
-	dec 4, xsp
-	push xiz
-	ld xiz, xwa
-	ld	xiy, MidiPkt_MsgTemplate_3364
-	lda xix, (xsp + 4)
-	ldi85
-	ldiw
-	ld xwa, (xiz + 4)
-	calr	MidiPkt_CheckGateCondition
-	cp hl, 0xffff
-	jr	z, MidiPkt_EnqueueControl_3364_Return
-	ld xbc, (xiz)
-	ld xwa, (xiz + 4)
-	ld a, (xwa + 8)
-	and a, (xbc + 3)
-	jr	z, MidiPkt_EnqueueControl_3364_Return
-	ld	xwa, SysEx_Msg_35DC
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld xwa, (xiz + 4)
-	ld bc, 6:i3
-	call	ArpQueue_Enqueue
-	ld xbc, (xiz)
-	ld xde, (xiz + 4)
-	ld a, (xde + 8)
-	and a, (xbc + 2)
-	cp a, 1:i3
-	jr	nz, MidiPkt_EnqueueControl_3364_FormatData
-	ld c, (PANEL_STYLE+7:16)
-	and c, 0x30
-	ld a, (xde + 11)
-	and a, 0xf
-	jr	z, MidiPkt_EnqueueControl_3364_NoShift
-	srla c
-MidiPkt_EnqueueControl_3364_NoShift:
-	inc 1, c
-	ld (xsp + 4), c
-MidiPkt_EnqueueControl_3364_FormatData:
-	lda xwa, (xsp + 4)
-	ld c, (xwa)
-	and c, 0xf
-	ld (xwa + 1), c
-	ld c, (xwa)
-	srl c, 4
-	ld (xwa), c
-	ld bc, 3:i3
-	call	ArpQueue_Enqueue
-	call	ArpQueue_ComputeAndEnqueue
-	ld	xwa, (0xbbc0:16)
-	call	SeqOut_FlushTimedBuffer
-	call	ArpQueue_SwapBuffers
-MidiPkt_EnqueueControl_3364_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+MidiPkt_EnqueueControl_3364:	.include "includes/generated/cc900/MidiPkt_EnqueueControl_3364.s"	; C: cc900/midipkt_routines_m289_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_EnqueueControl_3364_NoShift, MidiPkt_EnqueueControl_3364 + 94
+	.set	MidiPkt_EnqueueControl_3364_FormatData, MidiPkt_EnqueueControl_3364 + 99
+	.set	MidiPkt_EnqueueControl_3364_Return, MidiPkt_EnqueueControl_3364 + 139
 MidiPkt_EnqueueControl_3368:
 	dec 4, xsp
 	push xiz
@@ -671,29 +486,7 @@ MidiPkt_CheckGateCondition:	.include "includes/generated/cc900/MidiPkt_CheckGate
 	.set	MidiPkt_CheckGateCondition_Second, MidiPkt_CheckGateCondition + 35
 	.set	MidiPkt_CheckGateCondition_Blocked, MidiPkt_CheckGateCondition + 70
 	.set	MidiPkt_CheckGateCondition_Pass, MidiPkt_CheckGateCondition + 74
-MidiPkt_DispatchViaTable_4DCE:
-	dec 8, xsp
-	push xiz
-	ld xiz, (xsp + 16)
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList7
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
+MidiPkt_DispatchViaTable_4DCE:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4DCE.s"	; C: cc900/midipkt_routines_m289_b.c
 MidiPkt_DispatchData_Chan4:
 	ld	(0xbc60:16), 4
 	jr	MidiPkt_DispatchData_Chan6_Join2

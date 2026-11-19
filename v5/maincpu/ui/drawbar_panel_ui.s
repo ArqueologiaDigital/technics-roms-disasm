@@ -13263,59 +13263,7 @@ PsMixer_DrawCaptionFrame_Join:
 	pop	xiz
 	lda	xsp, (xsp+22)
 	ret
-PsMixer_CalcRowBandRect:
-	dec	8, xsp
-	push	xiz
-	ld	xiz, xwa
-	ld	wa, bc
-	exts	xwa
-	divs	wa, 5
-	ld	wa, qwa
-	ld	(xsp+6), wa
-	ld	wa, bc
-	exts	xwa
-	ld	xbc, xwa
-	add	xbc, xbc
-	add	xbc, xwa
-	sll	xbc, 2
-	add	xbc, (256556:24)
-	ld	wa, (xbc+4)
-	ld	(xsp+4), wa
-	ldw	wa, 136
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	add	wa, (xsp+6)
-	lda	xbc, (xsp+8)
-	call	GetEditSwPoint
-	lda	xde, (xiz+2)
-	lda	xbc, (xsp+10)
-	ld	wa, (xbc)
-	sub	wa, 9
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	sub	wa, (xsp+6)
-	ld	(xde), wa
-	ldw	(xiz), 8	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	ldw	(xiz+4), 311
-	lda	xhl, (xiz+6)
-	ld	wa, (xbc)
-	add	wa, 31
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	; v10 does not spell this byte either
-	sub	wa, (xsp+6)
-	ld	(xhl), wa
-	ld	wa, (xsp+4)
-	add	(xde), wa
-	add	(xhl), wa
-	pop	xiz
-	inc	8, xsp
-	ret
+PsMixer_CalcRowBandRect:	.include "includes/generated/cc900/PsMixer_CalcRowBandRect.s"	; C: cc900/drawbar_panel_ui_m264.c
 PsMixer_CalcSwitchPointInFrame:
 	lda	xsp, (xsp-22)
 	push	xiz

@@ -40,3 +40,19 @@ void MidiSeq_SyncToneStates_Upper(void)
         ram_bc56 = ram_bc54;
     }
 }
+
+extern unsigned char __near ram_bc5c;
+extern void ParaLoadOpt_AudioFlagCheck(unsigned char a, unsigned char c, unsigned char e);
+extern void ParaLoadOpt_AudioFlagCheck_B(unsigned char a, unsigned char c, unsigned char e);
+extern void MidiSeq_ApplyPendingParams(void);
+
+void MidiSeq_ApplyPendingParams(void)
+{
+	if (!(ram_bc5c & 0x40))
+		return;
+	if (ram_bc58 & 0x40)
+		ParaLoadOpt_AudioFlagCheck(ram_bc40 & 0x7f, ram_bc44 & 0x7f, ram_bc48 & 0x7f);
+	else
+		ParaLoadOpt_AudioFlagCheck_B(ram_bc4c & 0x7f, ram_bc50 & 0x7f, ram_bc54 & 0x7f);
+	ram_bc5c &= ~0x40;
+}

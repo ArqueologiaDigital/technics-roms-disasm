@@ -1950,50 +1950,13 @@ BmDrEdit_SeekVoice_DecrementLoop:
 	jr nz, BmDrEdit_SeekVoice_InsertLoop
 	ret
 
-BmDrEdit_CalcTickPosition:
-	calr BmDrEdit_CheckAndAdvancePage
-	ld bc, (0x2782:16)
-	mul bc, 0x60
-	ld a, (0x2784:16)
-	extz wa
-	add bc, wa
-	ld (0x279a:16), bc
-	ret
+BmDrEdit_CalcTickPosition:	.include "includes/generated/cc900/BmDrEdit_CalcTickPosition.s"	; C: cc900/bmdredit_routines_m232.c
 
-BmDrEdit_ReloadChannelAndDisplay:
-	calr BmDrEdit_SelectChannelAndLoadPos
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_ReloadChannel_LoadAndSkip
-	calr BmDrEdit_SeekToPartVoice
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, BmDrEdit_ReloadChannel_RefreshDisplay
-	calr BmDrEdit_SelectChannelAndLoadPos
-
-BmDrEdit_ReloadChannel_LoadAndSkip:
-	calr BmDrEdit_LoadAlternateState
-	calr BmDrEdit_SkipToEventByCount
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_LoadAndDisplayNotes
-	calr BmDrEdit_SeekToPartVoice
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_LoadAndDisplayNotes
-
-BmDrEdit_ReloadChannel_RefreshDisplay:
-	jrl BmDrEdit_RefreshDisplayState
-
-BmDrEdit_LoadAndDisplayNotes:
-	calr BmDrEdit_LoadAlternateState
-	calr BmDrEdit_ScanChannelEvents
-	calr BmDrEdit_SyncSeekCheck
-	calr BmDrEdit_SetupAndWalkToNote
-	calr NoteEditSy_SendCompoundWidgetUpdate
-	calr NoteEdit_UpdateScrollAndDisplay
-	call NoteEditSy_SendWidgetCmd0
-	calr NoteEdit_SendScrollCmds
-	bit 0, (0x295f:16)
-	ret z
-	calr BmDrEdit_SendMetronomeNoteOn
-	ret
+BmDrEdit_ReloadChannelAndDisplay:	.include "includes/generated/cc900/BmDrEdit_ReloadChannelAndDisplay.s"	; C: cc900/bmdredit_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ReloadChannel_LoadAndSkip, BmDrEdit_ReloadChannelAndDisplay + 23
+	.set	BmDrEdit_ReloadChannel_RefreshDisplay, BmDrEdit_ReloadChannelAndDisplay + 46
+	.set	BmDrEdit_LoadAndDisplayNotes, BmDrEdit_ReloadChannelAndDisplay + 49
 
 BmDrEdit_NavigateAndLoadPosition:
 	calr BmDrEdit_CalcTickPosition
@@ -2393,50 +2356,13 @@ BmDrEdit_InsertSeq_PopIzRet:
 	pop xiz
 	ret
 
-BmDrEdit_ScanAfterModify:
-	dec 4, xsp
-	res 3, (0x295f:16)
-	cpw (0x279c:16), 0
-	jr nz, BmDrEdit_ScanAfterModify_LoadAndWalk
-	call SeqData_ReadNextByte
-	cp l, 0x81
-	jr z, BmDrEdit_SetFlagReturn
-	and l, 0xf0
-	cp l, 0x90
-	jr z, BmDrEdit_ScanAfterModify_CheckVelocity
-	calr BmDrEdit_WalkAndScanAfterEdit
-	jr BmDrEdit_ScanAfterModify_Return
-
-BmDrEdit_ScanAfterModify_CheckVelocity:
-	calr BmDrEdit_CompareVelocity
-	cp l, 0:i3
-	jr nz, BmDrEdit_SetFlagReturn
-	cp (0x2760:16), 0
-	jr nz, BmDrEdit_SetFlagReturn
-
-BmDrEdit_ScanAfterModify_LoadAndWalk:
-	calr BmDrEdit_LoadAlternateState
-	calr BmDrEdit_CheckNoteAtPosition
-
-BmDrEdit_ScanAfterModify_WalkLoop:
-	calr BmDrEdit_SaveEditState
-	calr BmDrEdit_WalkTrackForward
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr BmDrEdit_SetupCoordinates
-	ld wa, (xsp + 2)
-	sub wa, (xsp)
-	cp wa, (0x279c:16)
-	jr c, BmDrEdit_ScanAfterModify_WalkLoop
-	calr BmDrEdit_RestoreEditState
-	jr BmDrEdit_ScanAfterModify_Return
-
-BmDrEdit_SetFlagReturn:
-	set 3, (0x295f:16)
-
-BmDrEdit_ScanAfterModify_Return:
-	inc 4, xsp
-	ret
+BmDrEdit_ScanAfterModify:	.include "includes/generated/cc900/BmDrEdit_ScanAfterModify.s"	; C: cc900/bmdredit_routines_m232_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ScanAfterModify_CheckVelocity, BmDrEdit_ScanAfterModify + 36
+	.set	BmDrEdit_ScanAfterModify_LoadAndWalk, BmDrEdit_ScanAfterModify + 50
+	.set	BmDrEdit_ScanAfterModify_WalkLoop, BmDrEdit_ScanAfterModify + 56
+	.set	BmDrEdit_SetFlagReturn, BmDrEdit_ScanAfterModify + 86
+	.set	BmDrEdit_ScanAfterModify_Return, BmDrEdit_ScanAfterModify + 90
 
 BmDrEdit_AlignGridBackward:
 	ld wa, (0x279a:16)

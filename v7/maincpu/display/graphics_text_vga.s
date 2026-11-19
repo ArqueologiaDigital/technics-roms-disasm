@@ -238,12 +238,9 @@ Display_DeferOrUpdateScreen_Direct:
 Display_DeferOrUpdateScreen_Direct_0xF:
 	ret
 
-GraphicsRender_RetStub:
-	ret
+GraphicsRender_RetStub:	.include "includes/generated/cc900/GraphicsRender_RetStub.s"	; C: cc900/graphics_text_vga_m273_c.c
 
-GraphicsRender_ShortByteBlock:
-	lda	xbc, (xwa+1)
-	jr	GraphicsRender_ProcessEntries
+GraphicsRender_ShortByteBlock:	.include "includes/generated/cc900/GraphicsRender_ShortByteBlock.s"	; C: cc900/graphics_text_vga_m0.c
 ; GraphicsRender_StartSingleRecord: Renders the one bound ScreenData record at XWA: sets the end pointer XBC = XWA + 1
 ;   and enters GraphicsRender_Start, whose loop stops after that record. Basis: callers + body --
 ;   SeGfx_DrawBoundRecord (the single-record wrapper; XIY = record) is its only caller, and SeGfx_DrawBoundList calls
@@ -253,91 +250,17 @@ GraphicsRender_StartSingleRecord:
 	lda	xbc, (xwa+1)
 	jr	t, GraphicsRender_Start
 
-GraphicsRender_ProcessEntries:
-	lda xsp, (xsp-150)
-	push xiz
-	ld	(xsp+150), xbc
-	ld xiz, xwa
-	ld xiy, GraphicsRender_ProcessEntries_PtrTable
-	lda xix, (xsp + 6)
-	ldw bc, 0x48
-	ldirw
-	cp	(xsp+150), xiz
-	jr ule, GraphicsRender_ProcessEntries_Done
+GraphicsRender_ProcessEntries:	.include "includes/generated/cc900/GraphicsRender_ProcessEntries.s"	; C: cc900/graphics_text_vga_m273_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GraphicsRender_ProcessEntry_Loop, GraphicsRender_ProcessEntries + 33
+	.set	VoiceMidi_EventHandler, GraphicsRender_ProcessEntries + 53
+	.set	GraphicsRender_ProcessEntries_Done, GraphicsRender_ProcessEntries + 91
 
-GraphicsRender_ProcessEntry_Loop:
-	ld c, (xiz)
-	ld a, (xiz + 1)
-	ld (xsp + 4), a
-	cp c, 0x23
-	jr ule, VoiceMidi_EventHandler
-	ld xwa, xiz
-	calr GraphicsRender_RetStub
-	jr GraphicsRender_ProcessEntries_Done
-
-; Voice MIDI event handler dispatch
-VoiceMidi_EventHandler:
-	ld a, c
-	extz wa
-	sla wa, 2
-	lda xbc, (xsp + 6)
-	lda	xbc, (xbc+wa)
-	ld xwa, xiz
-	ld xhl, (xbc)
-	call (xhl)
-	ld a, (xsp + 4)
-	extz wa
-	lda	xiz, (xiz+wa)
-	cp	(xsp+150), xiz
-	jr ugt, GraphicsRender_ProcessEntry_Loop
-
-GraphicsRender_ProcessEntries_Done:
-	pop xiz
-	lda xsp, (xsp+150:16)
-	ret
-
-GraphicsRender_Start:
-	lda xsp, (xsp - 54)
-	push xiz
-	ld (xsp + 54), xbc
-	ld xiz, xwa
-	ld xiy, GraphicsRender_Start_PtrTable
-	lda xix, (xsp + 6)
-	ldw bc, 0x18
-	ldirw
-	cp (xsp + 54), xiz
-	jr ule, GraphicsRender_Start_Done
-
-GraphicsRender_Start_EntryLoop:
-	ld c, (xiz)
-	ld a, (xiz + 1)
-	ld (xsp + 4), a
-	cp c, 0xb
-	jr ule, VoiceMidi_AltEventHandler
-	ld xwa, xiz
-	calr GraphicsRender_RetStub
-	jr GraphicsRender_Start_Done
-
-; Voice MIDI alt event handler dispatch
-VoiceMidi_AltEventHandler:
-	ld a, c
-	extz wa
-	sla wa, 2
-	lda xbc, (xsp + 6)
-	lda	xbc, (xbc+wa)
-	ld xwa, xiz
-	ld xhl, (xbc)
-	call (xhl)
-	ld a, (xsp + 4)
-	extz wa
-	lda	xiz, (xiz+wa)
-	cp (xsp + 54), xiz
-	jr ugt, GraphicsRender_Start_EntryLoop
-
-GraphicsRender_Start_Done:
-	pop xiz
-	lda xsp, (xsp + 54)
-	ret
+GraphicsRender_Start:	.include "includes/generated/cc900/GraphicsRender_Start.s"	; C: cc900/graphics_text_vga_m273_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GraphicsRender_Start_EntryLoop, GraphicsRender_Start + 27
+	.set	VoiceMidi_AltEventHandler, GraphicsRender_Start + 47
+	.set	GraphicsRender_Start_Done, GraphicsRender_Start + 83
 
 SeGfx_StaticOp06_CellTextFont0:
 	lda xsp, (xsp-274)
@@ -740,59 +663,9 @@ SeGfx_StaticOp23_DesignBox:
 	popw	iz
 	lda	xsp, (xsp+12)
 	ret
-SeGfx_StaticOp05_FillBoxMode1:
-	dec	8, xsp
-	push	qiz
-	lda	xbc, (xsp+2)
-	ld	de, (xwa+2)
-	ld	(xbc), de
-	ld	de, (xwa+4)
-	ld	(xbc+2), de
-	ld	de, (xwa+6)
-	ld	(xbc+4), de
-	ld	wa, (xwa+8)
-	ld	(xbc+6), wa
-	ld	a, (COLORBLIT_MODE:24)
-	ldfr_berp	a, 251
-	ld	(COLORBLIT_MODE:24), 1
-	ld	de, (GFX_FG_COLOR:24)
-	ld	xwa, xbc
-	ld	bc, de
-	calr	ColorBlit
-	ldto_berp	a, 251
-	ld	(COLORBLIT_MODE:24), a
-	pop	qiz
-	inc	8, xsp
-	ret
+SeGfx_StaticOp05_FillBoxMode1:	.include "includes/generated/cc900/SeGfx_StaticOp05_FillBoxMode1.s"	; C: cc900/graphics_text_vga_m273_d.c
 
-ColorBlit_ComputeRectAndBlit:
-	dec 8, xsp
-	ld xbc, xwa
-	lda xwa, (xsp)
-	lda xhl, (xwa + 2)
-	lda xix, (xbc + 2)
-	ld de, (xix)
-	extz xde
-	div de, 0x28
-	ld (xhl), de
-	ld de, (xix)
-	extz xde
-	div de, 0x28
-	ldto_werp DE, 0xea
-	sll de, 3
-	ld (xwa), de
-	ld de, (xhl)
-	add de, (xbc + 6)
-	ld (xwa + 6), de
-	ld bc, (xbc + 4)
-	sll bc, 3
-	ld de, (xwa)
-	add de, bc
-	ld (xwa + 4), de
-	ld bc, (GFX_BG_COLOR:24)
-	calr ColorBlit2
-	inc 8, xsp
-	ret
+ColorBlit_ComputeRectAndBlit:	.include "includes/generated/cc900/ColorBlit_ComputeRectAndBlit.s"	; C: cc900/graphics_text_vga_m273_c.c
 
 ColorBlit_ByteData:	.include "includes/generated/cc900/ColorBlit_ByteData.s"	; C: cc900/graphics_text_vga_m273_b.c
 
@@ -1668,67 +1541,11 @@ ConvertStringsEx_Advance:
 ; Output:
 ;   HL = total width in pixels
 ; =============================================================================
-CalcTotalWidth:
-	lda xsp, (xsp - 0x0c)
-	push XIZ
-	ld (XSP+0x0c),XBC
-	ld XIZ,XWA
-	push XIZ
-	call Strlen
-	inc 1,HL
-	pushw hl
-	call Malloc
-	inc 6,XSP
-	ld (XSP+0x08),XHL
-	ld XWA,(XSP+0x08)
-	ld (XSP+0x04),XWA
-	ld XWA,XIZ
-	ld XBC,(XSP+0x08)
-	calr ConvertStrings
-	ld XIZ,(XSP+0x0c)
-	sll XIZ, 0x04
-	add XIZ,0x00945c00
-	ld XWA,(XSP+0x08)
-	push XWA
-	call Strlen
-	inc 4,XSP
-	ld XBC,(XIZ+0x0c)
-	or XBC,XBC
-	jr nz, CalcTotalWidth_KerningLoop_Init
-	muls	xhl, (xiz)
-	ld	iz, hl
-	jr	CalcTotalWidth_FreeAndReturn
-CalcTotalWidth_KerningLoop_Init:
-	ld iz, 0:i3
-	ld xix, xbc
-	ld de, 0:i3
-	cp hl, 0:i3
-	jr le, CalcTotalWidth_FreeAndReturn
-
-CalcTotalWidth_KerningLoop:
-	ld xwa, (xsp + 4)
-	ld	a, (xwa+de)
-	sub a, 0x20
-	extz wa
-	sla wa, 2
-	lda	xix, (xix+wa)
-	ld a, (xix)
-	extz wa
-	add iz, wa
-	ld xix, xbc
-	inc 1, de
-	cp de, hl
-	jr lt, CalcTotalWidth_KerningLoop
-
-CalcTotalWidth_FreeAndReturn:
-	ld	xwa, (xsp+8)
-	push	xwa
-	call	Free
-	inc	4, xsp
-	ld	hl, iz
-	pop	xiz
-	lda	xsp, (xsp+12)
-	ret
+CalcTotalWidth:	.include "includes/generated/cc900/CalcTotalWidth.s"	; C: cc900/graphics_text_vga_m274_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CalcTotalWidth_KerningLoop_Init, CalcTotalWidth + 75
+	.set	CalcTotalWidth_KerningLoop, CalcTotalWidth + 85
+	.set	CalcTotalWidth_FreeAndReturn, CalcTotalWidth + 120
 WordwrapStrings:	.include "includes/generated/cc900/WordwrapStrings.s"	; C: cc900/graphics_text_vga_m274.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	Wordwrap_ScanWordStart, WordwrapStrings + 54

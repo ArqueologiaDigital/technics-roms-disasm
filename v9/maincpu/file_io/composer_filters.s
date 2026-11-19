@@ -512,41 +512,11 @@ LoadFilter_Return:
 	inc 6, xsp
 	ret
 
-RenderSaveFilterDisplay:
-	dec 6, xsp
-	ld (xsp), c
-	ld (xsp + 2), xwa
-	ld xwa, (xsp + 2)
-	ld c, (xsp)
-	ld (xwa+), c
-	ld (xsp + 2), xwa
-	ld a, c
-	extz wa
-	call FileIO_FormatName_Return
-	cp l, 0:i3
-	jr z, RenderSaveFilter_Unavail
-	cp (xsp), 0x1
-	jr nz, RenderSaveFilter_Available
-	call FileIO_GetRecordAttr_Check
-	cp l, 0:i3
-	jr z, RenderSaveFilter_Available
-	ld xwa, (xsp + 2)
-	ld xbc, RenderSaveFilterDisplay_Str_N1BANK
-	jr RenderSaveFilter_CopyAndReturn
-
-RenderSaveFilter_Available:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderSaveFilter_Available_Str_YES
-	jr RenderSaveFilter_CopyAndReturn
-
-RenderSaveFilter_Unavail:
-	ld xwa, (xsp + 2)
-	ld xbc, RenderSaveFilter_Unavail_Str_NO
-
-RenderSaveFilter_CopyAndReturn:
-	call FileIO_CopyString
-	inc 6, xsp
-	ret
+RenderSaveFilterDisplay:	.include "includes/generated/cc900/RenderSaveFilterDisplay.s"	; C: cc900/composer_filters_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	RenderSaveFilter_Available, RenderSaveFilterDisplay + 53
+	.set	RenderSaveFilter_Unavail, RenderSaveFilterDisplay + 63
+	.set	RenderSaveFilter_CopyAndReturn, RenderSaveFilterDisplay + 71
 
 FmmSaveFilterFunc:
 	dec 6, xsp

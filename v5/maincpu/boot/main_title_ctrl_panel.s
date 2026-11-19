@@ -14,28 +14,7 @@ CheckTitleFunc:
 	ld xhl, 0:i3
 	ret
 
-MainTitle_InitGraphicsAndEvents:
-	call InitializeGraphics
-	call InitializeEventQueue
-	call InitializeTimer
-	call InitializeObjectTable
-	call LcdOn
-	ld xwa, TITLE_PS
-	ld xbc, EVT_SET_NOT_DRAW_FLAG
-	ld xde, 1:i3
-	call PostEvent
-	ld xwa, 0:i3
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	call PostEvent
-	ld xwa, 0xffffffff
-	ld xbc, EVT_CHANGE_MODE
-	ld xde, NAKA_MODE_MD_NORMAL
-	call PostEvent
-	ld xwa, 0xffffffff
-	ld xbc, EVT_INTERRUPT_TITLE
-	ld xde, TITLE_WELCOM
-	jp PostEvent
+MainTitle_InitGraphicsAndEvents:	.include "includes/generated/cc900/MainTitle_InitGraphicsAndEvents.s"	; C: cc900/main_title_ctrl_panel_m270_xr.c
 
 MainTitle_SetBootFlag:
 	ld	(GLOBAL_ERROR_CODE:16), 35

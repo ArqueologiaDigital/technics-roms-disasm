@@ -51,3 +51,24 @@ void DrawDesignBox_QueueCallback(struct cmd_r_ii *q)
 	if (DRAW_ENABLED != 0)
 		DrawDesignBox_Impl(r, a, b);
 }
+
+/* cc900-module: ChangePalette ChangeWall ChangeWallPalette DrawBitmapFile_Impl DrawDottedLine_Impl DrawMonoBitmap_Impl DrawWall_DoCopy GraphicsRender_ProcessEntries GraphicsRender_RetStub InitDrawTask LcdOn PaletteBankRotate_Impl SetChangeRect UpdateScreen */
+struct ddcmd { void (*fn)(struct ddcmd *); struct pt a; struct pt b; int c; };
+extern void DrawDottedLine_Impl(struct pt *, struct pt *, int);
+extern void DrawDesignBox_ByteData_Code(struct ddcmd *q);
+extern void PaletteBankRotate_Impl(void);
+extern void PaletteBankRotate_Code(unsigned char *q);
+
+void DrawDesignBox_ByteData_Code(struct ddcmd *q)
+{
+	struct pt *a = &q->a;
+	struct pt *b = &q->b;
+	int c = q->c;
+
+	if (DRAW_ENABLED != 0)
+		DrawDottedLine_Impl(a, b, c);
+}
+void PaletteBankRotate_Code(unsigned char *q)
+{
+	PaletteBankRotate_Impl();
+}

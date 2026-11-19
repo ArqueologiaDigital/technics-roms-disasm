@@ -88,35 +88,13 @@ FDC_WaitReady_Epilogue:
 ;   records status 1 (FDC_Set_Status). Basis: callers + body + twin -- FDC_SendParameterByte calls it before writing
 ;   each parameter byte to the data register; the bootloader twin is FDC_WaitComplete (table_data, header 'Wait for
 ;   the FDC parameter phase'), called by the bootloader's FDC_SendParameterByte.
-FDC_WaitParamByteReady:
-	push	xiz
-	ld	iz, (SYSTEM_TIMESTAMP:16)
-	ldw qiz, 128
-	cpw	qiz, 128
-	jr	nz, FDC_WaitParamByteReady_Skip6
-FDC_WaitParamByteReady_Loop2:
-	calr	FDC_Read_Status
-	and	l, 144
-	cp	l, 144
-	jr	nz, FDC_WaitParamByteReady_Skip4
-	ld qiz, 0
-FDC_WaitParamByteReady_Skip4:
-	ld	wa, (SYSTEM_TIMESTAMP:16)
-	sub	wa, iz
-	cp	wa, 500
-	jr	ule, FDC_WaitParamByteReady_Skip5
-	ldw qiz, 65535
-FDC_WaitParamByteReady_Skip5:
-	cpw	qiz, 128
-	jr	z, FDC_WaitParamByteReady_Loop2
-FDC_WaitParamByteReady_Skip6:
-	cp qiz, 0
-	jr z, FDC_WaitParamByteReady_Epilogue2
-	ld	wa, 1:i3
-	calr	FDC_Set_Status
-FDC_WaitParamByteReady_Epilogue2:
-	pop	xiz
-	ret
+FDC_WaitParamByteReady:	.include "includes/generated/cc900/FDC_WaitParamByteReady.s"	; C: cc900/fdc_routines_m270_xr_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_WaitParamByteReady_Loop2, FDC_WaitParamByteReady + 17
+	.set	FDC_WaitParamByteReady_Skip4, FDC_WaitParamByteReady + 31
+	.set	FDC_WaitParamByteReady_Skip5, FDC_WaitParamByteReady + 48
+	.set	FDC_WaitParamByteReady_Skip6, FDC_WaitParamByteReady + 55
+	.set	FDC_WaitParamByteReady_Epilogue2, FDC_WaitParamByteReady + 65
 ; Sends floppy-controller command 0x36 (FDC_Send_Command), waits SOME_DELAY 2 and marks the head
 ; position unknown (0x8b04 = 0xff).
 FDC_INIT:	.include "includes/generated/cc900/FDC_INIT.s"	; C: cc900/fdc_routines_m270.c
@@ -888,28 +866,9 @@ FDC_InitSequence_Full:
 ; [INFERENCE] The neighbouring .set aliases FDC_TIMING_DELAY (0xf975dc) and
 ; FDC_POST_OP (0xf975e2) look like the same class of misnomer; they were
 ; not re-checked in this pass.
-FDC_CmdRecalibrate:
-	push	qiz
-	ld	a, (FDC_TARGET_TRACK:16)
-	ldfr_berp a, 251
-	ld	(FDC_TARGET_TRACK:16), 5
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-	calr	FDC_CmdSeek
-	ld	(FDC_CURRENT_CYLINDER:16), 0
-	calr	FDC_TIMING_DELAY
-	ld	wa, 7:i3
-	calr	FDC_CMD_SEND
-	calr	FDC_POST_OP
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CmdRecalibrate_Skip
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-FDC_CmdRecalibrate_Skip:
-	ldto_berp a, 251
-	ld	(FDC_TARGET_TRACK:16), a
-	ldw	wa, 16
-	calr	SOME_DELAY
-	pop qiz
-	ret
+FDC_CmdRecalibrate:	.include "includes/generated/cc900/FDC_CmdRecalibrate.s"	; C: cc900/fdc_routines_m270.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CmdRecalibrate_Skip, FDC_CmdRecalibrate + 51
 ; Seeks the floppy head to FDC_TARGET_TRACK unless the current-track byte 0x8b04 already holds
 ; it: records the target in 0x8b04, waits (SOME_DELAY 2, FDC_TIMING_DELAY), sends SEEK (0x0f,
 ; FDC_CMD_SEND) and waits for the result (FDC_POST_OP).  On an error 0x8b04 becomes 0xff
