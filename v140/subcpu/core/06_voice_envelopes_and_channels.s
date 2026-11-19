@@ -1528,50 +1528,16 @@ Voice_DSP_SimpleCopy2:	.include "includes/generated/cc900/Voice_DSP_SimpleCopy2.
 ; Caller: Pitch_Refresh_Sounding_Voices/Pitch_Refresh_Sounding_Voices (0x028D4C) and the sustain
 ; retrigger scan.  These four writers were prefixed DSP_WriteVoiceParam_*, which was wrong:
 ; they drive the TONE GENERATOR at 0x100000/0x100002, never IC311 at 0x130000.
-ToneGen_WriteVoice_Long:
-	push xiz
-	ld xiz, xbc
-	res	7, (P6:8)
-	add wa, 0x400
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 14)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteVoice_Long_NopGap
-
-; The mandatory 3-nop settling gap after the data write, entered by a `jr` to the next
-; instruction.  Present after every single TG write in this region -- it is timing, not filler.
-ToneGen_WriteVoice_Long_NopGap:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteVoice_Long:	.include "includes/generated/cc900/ToneGen_WriteVoice_Long.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Long_NopGap, ToneGen_WriteVoice_Long + 29
 
 ; latch = voice + 0x0080 (register 0x02 = AMPLITUDE / level), data = word at XBC+0x04 with
 ; bit 15 forcibly cleared.  Called from Voice_AllVoices_WriteAmplitude, i.e. this is the
 ; register that CC 7 (volume) and CC 11 (expression) ultimately reach.
-ToneGen_WriteVoice_Short:
-	push xiz
-	ld xiz, xbc
-	res	7, (P6:8)
-	add wa, 0x80
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 4)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteVoice_Short_NopGap
-
-; NopGap of ToneGen_WriteVoice_Short.
-ToneGen_WriteVoice_Short_NopGap:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteVoice_Short:	.include "includes/generated/cc900/ToneGen_WriteVoice_Short.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Short_NopGap, ToneGen_WriteVoice_Short + 32
 
 ; latch = WA + 0x0000, data = the 16-bit value already in IZ.  The only writer in the region
 ; that sends a caller-supplied word rather than a staged one.
@@ -1596,156 +1562,22 @@ ToneGen_WriteVoice_Direct:	.include "includes/generated/cc900/ToneGen_WriteVoice
 ;   0x0800 (reg 0x20) <- +0x2C   0x0900 (reg 0x24) <- +0x30   0x09C0 (reg 0x27) <- +0x34
 ; i.e. three (even,odd) register pairs, matching the three Voice_Calc_LevelPair_EGA/2/3
 ; calls that precede it in Voice_AllNotes_SustainRetrigger_BranchC.
-ToneGen_WriteVoice_6Words:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 46)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteVoice_6Words_Word2
-
-; Word2 of ToneGen_WriteVoice_6Words.
-ToneGen_WriteVoice_6Words_Word2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x940
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 50)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote6ch_NopCont1
-
-; NopCont1: settling gap plus the next address/data pair of ToneGen_WriteNote6ch.
-ToneGen_WriteNote6ch_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0xA00
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 54)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote6ch_NopCont2
-
-; NopCont2: settling gap plus the next address/data pair of ToneGen_WriteNote6ch.
-ToneGen_WriteNote6ch_NopCont2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 44)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote6ch_NopCont3
-
-; NopCont3: settling gap plus the next address/data pair of ToneGen_WriteNote6ch.
-ToneGen_WriteNote6ch_NopCont3:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x900
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 48)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote6ch_NopCont4
-
-; NopCont4: settling gap plus the next address/data pair of ToneGen_WriteNote6ch.
-ToneGen_WriteNote6ch_NopCont4:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x9C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 52)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote6ch_NopCont5
-
-; The five continuation points of the six-word burst; each is the settling gap plus the next
-; address/data pair.  Note the existing names call this "6ch" while the code is 6 REGISTERS
-; of ONE voice -- see [UNCERTAIN].
-ToneGen_WriteNote6ch_NopCont5:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteVoice_6Words:	.include "includes/generated/cc900/ToneGen_WriteVoice_6Words.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_6Words_Word2, ToneGen_WriteVoice_6Words + 39
+	.set	ToneGen_WriteNote6ch_NopCont1, ToneGen_WriteVoice_6Words + 73
+	.set	ToneGen_WriteNote6ch_NopCont2, ToneGen_WriteVoice_6Words + 107
+	.set	ToneGen_WriteNote6ch_NopCont3, ToneGen_WriteVoice_6Words + 141
+	.set	ToneGen_WriteNote6ch_NopCont4, ToneGen_WriteVoice_6Words + 175
+	.set	ToneGen_WriteNote6ch_NopCont5, ToneGen_WriteVoice_6Words + 209
 
 ; Two-register variant: latch 0x0840 (reg 0x21) <- XBC+0x2E, latch 0x0800 (reg 0x20) <- +0x2C.
 ; Same entry convention as ToneGen_WriteVoice_6Words.  Used where only the first volume/EG
 ; pair needs refreshing (Voice_AllNotes_SustainRetrigger branches E and F).
-ToneGen_WriteNote2ch:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 46)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote2ch_NopCont1
-
-; NopCont1: settling gap plus the next address/data pair of ToneGen_WriteNote2ch.
-ToneGen_WriteNote2ch_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 44)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteNote2ch_NopCont2
-
-; NopCont2: settling gap plus the next address/data pair of ToneGen_WriteNote2ch.
-ToneGen_WriteNote2ch_NopCont2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteNote2ch:	.include "includes/generated/cc900/ToneGen_WriteNote2ch.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteNote2ch_NopCont1, ToneGen_WriteNote2ch + 39
+	.set	ToneGen_WriteNote2ch_NopCont2, ToneGen_WriteNote2ch + 73
 
 ; --- 0x0280FE-0x028838  ToneGen_WriteVoice_Reg21 -- was MISLABELLED, now fully code
 ; All 1851 bytes are TLCS-900H instructions, byte-for-byte (round-trip verified against
@@ -1783,284 +1615,66 @@ ToneGen_WriteVoice_Reg21_Next:
 ;   after TVF_Emit_Registers / TVF_Emit_Registers_Type2 put the clamped cutoff word and the second filter
 ;   word at staging +8 / +10; 0x100 / 0x140 is the filter pair (tone-generator.md).  Was
 ;   ToneGen_WriteVoice_Pan_Pair: those registers are not the pan.
-ToneGen_WriteVoice_TvfPair:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp+2), xbc
-	ld	iz, wa
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 256
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+8)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_TvfPair_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_TvfPair_Next:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 320
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+10)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_TvfPair_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_TvfPair_Next2:
-	nop
-	nop
-	nop
-	popw	iz
-	inc	4, xsp
-	ret
+ToneGen_WriteVoice_TvfPair:	.include "includes/generated/cc900/ToneGen_WriteVoice_TvfPair.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_TvfPair_Next, ToneGen_WriteVoice_TvfPair + 39
+	.set	ToneGen_WriteVoice_TvfPair_Next2, ToneGen_WriteVoice_TvfPair + 73
 ; WA = voice, XBC = source record.  Writes register 0x21 (voice+0x0840) from XBC+0x1A and
 ; register 0x22 (voice+0x0880) from XBC+0x1C.  Called after Voice_WriteChPanShift (0x02591D)
 ; and Voice_WriteChPanShift2 (0x025B6F), so the pair is the pan-shift/detune result, but the
 ; exact meaning of registers 0x21/0x22 is not proven here.
-ToneGen_WriteVoice_Reg21_Reg22:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp+2), xbc
-	ld	iz, wa
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 2112
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+26)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg21_Reg22_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg21_Reg22_Next:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 2176
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+28)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg21_Reg22_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg21_Reg22_Next2:
-	nop
-	nop
-	nop
-	popw	iz
-	inc	4, xsp
-	ret
+ToneGen_WriteVoice_Reg21_Reg22:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg21_Reg22.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg21_Reg22_Next, ToneGen_WriteVoice_Reg21_Reg22 + 39
+	.set	ToneGen_WriteVoice_Reg21_Reg22_Next2, ToneGen_WriteVoice_Reg21_Reg22 + 73
 ; WA = voice, XBC = source record.  Writes register 0x06 (latch = voice + 0x0180) from
 ; XBC+0x0C.  Register 6 is the per-voice ENVELOPE LEVEL -- the MAME memory map already
 ; documents latch 0x0180+ch as the envelope-level read-back address, and this is the write
 ; side of the same register.
-ToneGen_WriteVoice_EnvLevel:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 384
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+12)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_EnvLevel_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_EnvLevel_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_EnvLevel:	.include "includes/generated/cc900/ToneGen_WriteVoice_EnvLevel.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_EnvLevel_Next, ToneGen_WriteVoice_EnvLevel + 29
 ; Writes register 0x11 (latch voice+0x0440) from XBC+0x10.
-ToneGen_WriteVoice_Reg11:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1088
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+16)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg11_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg11_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg11:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg11.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg11_Next, ToneGen_WriteVoice_Reg11 + 29
 ; Writes register 0x13 (latch voice+0x04C0) from XBC+0x14.
-ToneGen_WriteVoice_Reg13:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1216
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+20)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg13_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg13_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg13:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg13.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg13_Next, ToneGen_WriteVoice_Reg13 + 29
 ; Writes register 0x18 (latch voice+0x0600) from XBC+0x40.
-ToneGen_WriteVoice_Reg18:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1536
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+64)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg18_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg18_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg18:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg18.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg18_Next, ToneGen_WriteVoice_Reg18 + 29
 ; Writes register 0x16 (latch voice+0x0580) from XBC+0x3C.
-ToneGen_WriteVoice_Reg16:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1408
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+60)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg16_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg16_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg16:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg16.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg16_Next, ToneGen_WriteVoice_Reg16 + 29
 ; Writes register 0x07 (latch voice+0x01C0) from XBC+0x38.
-ToneGen_WriteVoice_Reg07:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 448
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+56)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg07_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg07_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg07:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg07.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg07_Next, ToneGen_WriteVoice_Reg07 + 29
 ; Writes register 0x15 (latch voice+0x0540) from XBC+0x3A.
-ToneGen_WriteVoice_Reg15:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1344
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+58)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg15_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg15_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg15:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg15.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg15_Next, ToneGen_WriteVoice_Reg15 + 29
 ; Range-split writer.  If WA < 0x40 it writes register 0x07 from XBC+0x38 (the normal 64
 ; voices); otherwise it writes register 0x18 from XBC+0x42.  Proof that the tone generator
 ; has addressable slots beyond voice 0x3F for some register groups, and that the software
 ; deliberately re-targets them.
-ToneGen_WriteVoice_Reg07_Or_Reg18:
-	push	xiz
-	ld	xiz, xbc
-	cp	wa, 64
-	jr	nc, ToneGen_WriteVoice_Reg07_Or_Reg18_Skip
-	res	7, (P6:8)
-	add	wa, 448
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+56)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg07_Or_Reg18_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg07_Or_Reg18_Next:
-	nop
-	nop
-	nop
-	jr	ToneGen_WriteVoice_Reg07_Or_Reg18_Epilogue
-ToneGen_WriteVoice_Reg07_Or_Reg18_Skip:
-	res	7, (P6:8)
-	add	wa, 1536
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+66)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg07_Or_Reg18_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg07_Or_Reg18_Next2:
-	nop
-	nop
-	nop
-ToneGen_WriteVoice_Reg07_Or_Reg18_Epilogue:
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg07_Or_Reg18:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg07_Or_Reg18.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg07_Or_Reg18_Next, ToneGen_WriteVoice_Reg07_Or_Reg18 + 35
+	.set	ToneGen_WriteVoice_Reg07_Or_Reg18_Skip, ToneGen_WriteVoice_Reg07_Or_Reg18 + 40
+	.set	ToneGen_WriteVoice_Reg07_Or_Reg18_Next2, ToneGen_WriteVoice_Reg07_Or_Reg18 + 66
+	.set	ToneGen_WriteVoice_Reg07_Or_Reg18_Epilogue, ToneGen_WriteVoice_Reg07_Or_Reg18 + 69
 ; Same shape: WA < 0x40 -> register 0x15 from XBC+0x3A, else register 0x16 from XBC+0x3E.
-ToneGen_WriteVoice_Reg15_Or_Reg16:
-	push	xiz
-	ld	xiz, xbc
-	cp	wa, 64
-	jr	nc, ToneGen_WriteVoice_Reg15_Or_Reg16_Skip
-	res	7, (P6:8)
-	add	wa, 1344
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+58)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg15_Or_Reg16_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg15_Or_Reg16_Next:
-	nop
-	nop
-	nop
-	jr	ToneGen_WriteVoice_Reg15_Or_Reg16_Epilogue
-ToneGen_WriteVoice_Reg15_Or_Reg16_Skip:
-	res	7, (P6:8)
-	add	wa, 1408
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+62)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteVoice_Reg15_Or_Reg16_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteVoice_Reg15_Or_Reg16_Next2:
-	nop
-	nop
-	nop
-ToneGen_WriteVoice_Reg15_Or_Reg16_Epilogue:
-	pop	xiz
-	ret
+ToneGen_WriteVoice_Reg15_Or_Reg16:	.include "includes/generated/cc900/ToneGen_WriteVoice_Reg15_Or_Reg16.s"	; C: cc900/voice_envelopes_and_channels_lane_23w1a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoice_Reg15_Or_Reg16_Next, ToneGen_WriteVoice_Reg15_Or_Reg16 + 35
+	.set	ToneGen_WriteVoice_Reg15_Or_Reg16_Skip, ToneGen_WriteVoice_Reg15_Or_Reg16 + 40
+	.set	ToneGen_WriteVoice_Reg15_Or_Reg16_Next2, ToneGen_WriteVoice_Reg15_Or_Reg16 + 66
+	.set	ToneGen_WriteVoice_Reg15_Or_Reg16_Epilogue, ToneGen_WriteVoice_Reg15_Or_Reg16 + 69
 ; A = part index, C = a bus mask, XDE and XIX = bit patterns to set/clear, one word on the
 ; stack.  For each of the 4 output buses w = 0..3 it reads two 4-byte mask tables at
 ; 0x00F6D7 and 0x00F6DB, tests bit (1<<w) of C against each, and then sets or clears bits in
@@ -2242,245 +1856,23 @@ AudioMod_Scale_To_Part_20_Join:
 ; Slot address = 0x041368 + part*0x11F + 0x6E + (L<<4) + (W<<2).  Returns with `retd 4`.
 ; The routine body runs to the `retd 4` at 0x02870C; it has two interior entry points,
 ; 0x02860D and 0x0286D9, each taken by exactly one external caller.
-AudioMod_Apply_Slot_Field2A:
-	pushw	iz
-	ld	xix, xde
-	ld	l, (xsp+6)
-	ld	w, (xsp+8)
-	bit	7, (xix+1)	; bit 7,(XIX+0x01)
-	jr	z, AudioMod_Apply_Slot_Field2A_Join
-	cp	c, 64
-	jr	ule, AudioMod_Apply_Slot_Field2A_Skip
-	sub	c, 64
-	ld	e, c
-	add	c, e
-	jr	AudioMod_Apply_Slot_Field2A_Join
-AudioMod_Apply_Slot_Field2A_Skip:
-	ld	c, 0:opc
-AudioMod_Apply_Slot_Field2A_Join:
-	cp	c, 0:i3
-	jr	z, AudioMod_Apply_Slot_Field2A_Skip2
-	ld	e, w
-	extz	de
-	ld	iy, de
-	sla	iy, 2
-	ld	e, l
-	extz	de
-	sla	de, 4
-	ld	iz, de
-	add	iz, iy
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xiy
-	lda	xde, (xde+iz)	; lda XDE,XDE+IZ
-	ld	e, (xde+40)
-	and	e, 85
-	ld	h, e
-	ld	e, (xix)
-	and	e, 85
-	ld	b, e
-	ld	e, h
-	or	e, b
-	ld	h, e
-	ld	e, (xix)
-	and	e, 170
-	ld	b, e
-	ld	e, w
-	extz	de
-	ld	iy, de
-	sla	iy, 2
-	ld	e, l
-	extz	de
-	sla	de, 4
-	ld	iz, de
-	add	iz, iy
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xiy
-	lda	xiy, (xde+iz)	; lda XIY,XDE+IZ
-	ld	e, h
-	or	e, b
-	ld	(xiy+40), e
-	jr	AudioMod_Apply_Slot_Field2A_Join2
-AudioMod_Apply_Slot_Field2A_Skip2:
-	ld	e, w
-	extz	de
-	ld	iy, de
-	sla	iy, 2
-	ld	e, l
-	extz	de
-	sla	de, 4
-	ld	iz, de
-	add	iz, iy
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xiy
-	lda	xde, (xde+iz)	; lda XDE,XDE+IZ
-	ld	(xde+40), 0
-AudioMod_Apply_Slot_Field2A_Join2:
-	ldfr_berp	c, 0xf4	; ld IYL,C
-	extz	iy
-	ld	e, (xix+2)
-	ldfr_berp	e, 0xf0	; ld IXL,E
-	extz	ix
-	ld	de, iy
-	mul	xde, ix
-	ld	iy, de
-	srl	iy, 6
-	jr	nz, AudioMod_Apply_Slot_Field2A_Skip3
-	cp	c, 0:i3
-	jr	z, AudioMod_Apply_Slot_Field2A_Skip3
-	ld	iy, 1:i3
-AudioMod_Apply_Slot_Field2A_Skip3:
-	ld	c, w
-	extz	bc
-	ld	de, bc
-	sla	de, 2
-	ld	c, l
-	extz	bc
-	sla	bc, 4
-	ld	hl, bc
-	add	hl, de
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xbc
-	lda	xbc, (xwa+hl)	; lda XBC,XWA+HL
-	ld_erpb_rr	a, 0xf4	; ld A,IYL
-	ld	(xbc+42), a
-	popw	iz
-	retd	4
+AudioMod_Apply_Slot_Field2A:	.include "includes/generated/cc900/AudioMod_Apply_Slot_Field2A.s"	; C: cc900/voice_envelopes_and_channels_am_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioMod_Apply_Slot_Field2A_Skip, AudioMod_Apply_Slot_Field2A + 28
+	.set	AudioMod_Apply_Slot_Field2A_Join, AudioMod_Apply_Slot_Field2A + 30
+	.set	AudioMod_Apply_Slot_Field2A_Skip2, AudioMod_Apply_Slot_Field2A + 155
+	.set	AudioMod_Apply_Slot_Field2A_Join2, AudioMod_Apply_Slot_Field2A + 201
+	.set	AudioMod_Apply_Slot_Field2A_Skip3, AudioMod_Apply_Slot_Field2A + 231
 ; Byte-for-byte the same algorithm as AudioMod_Apply_Slot_Field2A except that the result is
 ; stored at slot+0x29 instead of slot+0x2A.  Also returns with `retd 4` (at 0x028825).
 ; Six callers, all of them dispatch handlers inside the 0x028F75 block.
-AudioMod_Apply_Slot_Field29:
-	pushw	iz
-	ld	xix, xde
-	ld	l, (xsp+6)
-	ld	w, (xsp+8)
-	bit	7, (xix+1)	; bit 7,(XIX+0x01)
-	jr	z, AudioMod_Apply_Slot_Field29_Join
-	cp	c, 64
-	jr	ule, AudioMod_Apply_Slot_Field29_Skip
-	sub	c, 64
-	ld	e, c
-	add	c, e
-	jr	AudioMod_Apply_Slot_Field29_Join
-AudioMod_Apply_Slot_Field29_Skip:
-	ld	c, 0:opc
-AudioMod_Apply_Slot_Field29_Join:
-	cp	c, 0:i3
-	jr	z, AudioMod_Apply_Slot_Field29_Skip2
-	ld	e, w
-	extz	de
-	ld	iy, de
-	sla	iy, 2
-	ld	e, l
-	extz	de
-	sla	de, 4
-	ld	iz, de
-	add	iz, iy
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xiy
-	lda	xde, (xde+iz)	; lda XDE,XDE+IZ
-	ld	e, (xde+40)
-	and	e, 85
-	ld	h, e
-	ld	e, (xix)
-	and	e, 85
-	ld	b, e
-	ld	e, h
-	or	e, b
-	ld	h, e
-	ld	e, (xix)
-	and	e, 170
-	ld	b, e
-	ld	e, w
-	extz	de
-	ld	iy, de
-	sla	iy, 2
-	ld	e, l
-	extz	de
-	sla	de, 4
-	ld	iz, de
-	add	iz, iy
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xiy
-	lda	xiy, (xde+iz)	; lda XIY,XDE+IZ
-	ld	e, h
-	or	e, b
-	ld	(xiy+40), e
-	jr	AudioMod_Apply_Slot_Field29_Join2
-AudioMod_Apply_Slot_Field29_Skip2:
-	ld	e, w
-	extz	de
-	ld	iy, de
-	sla	iy, 2
-	ld	e, l
-	extz	de
-	sla	de, 4
-	ld	iz, de
-	add	iz, iy
-	ld	e, a
-	extz	de
-	muls	de, 287
-	lda	xiy, (Part_Record_Base:24)
-	exts	xde
-	add	xde, xiy
-	lda	xde, (xde+iz)	; lda XDE,XDE+IZ
-	ld	(xde+40), 0
-AudioMod_Apply_Slot_Field29_Join2:
-	ldfr_berp	c, 0xf4	; ld IYL,C
-	extz	iy
-	ld	e, (xix+2)
-	ldfr_berp	e, 0xf0	; ld IXL,E
-	extz	ix
-	ld	de, iy
-	mul	xde, ix
-	ld	iy, de
-	srl	iy, 6
-	jr	nz, AudioMod_Apply_Slot_Field29_Skip3
-	cp	c, 0:i3
-	jr	z, AudioMod_Apply_Slot_Field29_Skip3
-	ld	iy, 1:i3
-AudioMod_Apply_Slot_Field29_Skip3:
-	ld	c, w
-	extz	bc
-	ld	de, bc
-	sla	de, 2
-	ld	c, l
-	extz	bc
-	sla	bc, 4
-	ld	hl, bc
-	add	hl, de
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	exts	xwa
-	add	xwa, xbc
-	lda	xbc, (xwa+hl)	; lda XBC,XWA+HL
-	ld_erpb_rr	a, 0xf4	; ld A,IYL
-	ld	(xbc+41), a
-	popw	iz
-	retd	4
+AudioMod_Apply_Slot_Field29:	.include "includes/generated/cc900/AudioMod_Apply_Slot_Field29.s"	; C: cc900/voice_envelopes_and_channels_am_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioMod_Apply_Slot_Field29_Skip, AudioMod_Apply_Slot_Field29 + 28
+	.set	AudioMod_Apply_Slot_Field29_Join, AudioMod_Apply_Slot_Field29 + 30
+	.set	AudioMod_Apply_Slot_Field29_Skip2, AudioMod_Apply_Slot_Field29 + 155
+	.set	AudioMod_Apply_Slot_Field29_Join2, AudioMod_Apply_Slot_Field29 + 201
+	.set	AudioMod_Apply_Slot_Field29_Skip3, AudioMod_Apply_Slot_Field29 + 231
 ; Eleven bytes, no prologue.  HL = min(max(WA, DE), BC), i.e. clamp WA to the inclusive
 ; range [DE, BC] using signed comparisons.  Tail utility of the 0x0280FE block.
 Audio_Clamp_To_Range:	.include "includes/generated/cc900/Audio_Clamp_To_Range.s"	; C: cc900/voice_envelopes_and_channels.c

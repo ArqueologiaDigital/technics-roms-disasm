@@ -1872,101 +1872,19 @@ TextBox_Epilogue:
 ;   ViewableProc and then draws the box (DrawDesignBox with BC = border, DE = colour);
 ;   EVT_DRAW_SELECTED draws the selection frame around the client box (GetClientBox).  Other
 ;   events go to ViewableProc.
-VwBoxProc:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld (xsp + 12), xde
-	ld xiz, xwa
-	cp xbc, EVT_GET_BOX_COLOR
-	jrl z, VwBox_HandleGetColor
-	cp xbc, EVT_GET_BOX_BORDER
-	jrl z, VwBox_OnGetBoxBorder
-	cp xbc, EVT_CHECK_INDEX
-	jr z, VwBox_OnCheckIndex
-	cp xbc, EVT_GET_INDEX
-	jr z, VwBox_OnGetIndex
-	cp xbc, EVT_DRAW_SELECTED
-	jr z, VwBox_OnDrawSelected
-	cp xbc, EVT_DRAW
-	jrl nz, VwBox_DefaultHandler
-	ld xwa, xiz
-	ld xde, (xsp + 12)
-	call ViewableProc
-	ld xwa, xiz
-	call GetViewInstance
-	lda xwa, (xhl + 14)
-	ld bc, (xhl + 24)
-	ld de, (xhl + 22)
-	call DrawDesignBox
-	jr VwBox_DrawReturnZero
-
-VwBox_OnDrawSelected:
-	lda xbc, (xsp + 4)
-	ld xwa, xiz
-	calr GetClientBox
-	ld xwa, xiz
-	call GetViewInstance
-	ld xbc, (xsp + 12)
-	lda xwa, (xsp + 4)
-	cp bc, 0:i3
-	jr z, VwBox_UseFocusColor
-	pushw 0xf2
-	ld bc, 1:i3
-	ld de, 2:i3
-	jr VwBox_CallDrawDesignFrame
-
-VwBox_UseFocusColor:
-	pushw	(xhl+22)
-	ld bc, 1:i3
-	ld de, 2:i3
-
-VwBox_CallDrawDesignFrame:
-	calr DrawDesignFrame
-
-VwBox_DrawReturnZero:
-	ld xhl, 0:i3
-	jr ViewableProc_Return
-
-VwBox_OnGetIndex:
-	ld xwa, xiz
-	ld xiz, 0x1a
-	jr VwBox_GetFieldAtOffset
-
-VwBox_OnCheckIndex:
-	ld xwa, xiz
-	call GetViewInstance
-	ld wa, (xhl + 26)
-	exts xwa
-	cp xwa, (xsp + 12)
-	scc16 z, hl
-	extz xhl
-	jr ViewableProc_Return
-
-VwBox_OnGetBoxBorder:
-	ld xwa, xiz
-	ld xiz, 0x18
-	jr VwBox_GetFieldAtOffset
-
-VwBox_HandleGetColor:
-	ld xwa, xiz
-	ld xiz, 0x16
-
-VwBox_GetFieldAtOffset:
-	call GetViewInstance
-	add xhl, xiz
-	ld hl, (xhl)
-	exts xhl
-	jr ViewableProc_Return
-
-VwBox_DefaultHandler:
-	ld xwa, xiz
-	ld xde, (xsp + 12)
-	call ViewableProc
-
-ViewableProc_Return:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+VwBoxProc:	.include "includes/generated/cc900/VwBoxProc.s"	; C: cc900/ui_window_procs_m271_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VwBox_OnDrawSelected, VwBoxProc + 90
+	.set	VwBox_UseFocusColor, VwBoxProc + 123
+	.set	VwBox_CallDrawDesignFrame, VwBoxProc + 130
+	.set	VwBox_DrawReturnZero, VwBoxProc + 133
+	.set	VwBox_OnGetIndex, VwBoxProc + 137
+	.set	VwBox_OnCheckIndex, VwBoxProc + 146
+	.set	VwBox_OnGetBoxBorder, VwBoxProc + 166
+	.set	VwBox_HandleGetColor, VwBoxProc + 175
+	.set	VwBox_GetFieldAtOffset, VwBoxProc + 182
+	.set	VwBox_DefaultHandler, VwBoxProc + 194
+	.set	ViewableProc_Return, VwBoxProc + 203
 
 ; Proc of the PsParaBox class: a VwBox that shows a text string.
 ;   EVT_GET_STRING returns an empty string in the parameter's buffer.  EVT_PARA_DRAW draws the

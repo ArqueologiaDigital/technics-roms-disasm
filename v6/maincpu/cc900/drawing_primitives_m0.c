@@ -81,3 +81,17 @@ void DrawBmpSPFast_DeferredCode(struct cmd_pt_lii *q)
 	if (DRAW_ENABLED != 0)
 		DrawBitmapSPFast_Impl(p, b, c, d);
 }
+
+/* cc900-module: ColorBlit2 DrawBitmap_Impl */
+struct bmcmd { void (*fn)(struct bmcmd *); struct pt p; unsigned char *bmp; };
+extern void DrawBitmap_Impl(struct pt *, unsigned char *);
+extern void DrawBitmap_QueuedExec(struct bmcmd *q);
+
+void DrawBitmap_QueuedExec(struct bmcmd *q)
+{
+	struct pt *p = &q->p;
+	unsigned char *bmp = q->bmp;
+
+	if (DRAW_ENABLED != 0)
+		DrawBitmap_Impl(p, bmp);
+}

@@ -1,0 +1,7 @@
+function	bytes	matches	best_diff
+Audio_Process_DSP	1413	-	+1 sub_lane_23nc@Xr
+DSP_VoiceCoeffRoute	365	-	+239 sub_AP_23b@Xr
+Voice2_UpdatePitch	452	-	+1 sub_AP_23c@Xr
+Voice_Freq_WriteLeft	284	-	+133 sub_AP_23c@Xr
+Voice_Pitch_Compute	631	-	+31 sub_AP_23c@Xr
+Voice_StereoLevel_Compute	624	-	+21 sub_AP_23b@Xr

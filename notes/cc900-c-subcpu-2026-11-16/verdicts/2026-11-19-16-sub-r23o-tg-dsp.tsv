@@ -1,0 +1,22 @@
+function	bytes	matches	best_diff
+Audio_Process_DSP	0	-	cannot resolve 'no address for .Voice_AllVoices_PortamentoUpdat'
+ToneGen_ReadPitch_AndScale	101	-	+45 sub_AO_23c@Xr
+ToneGen_WriteExtParams_15	128	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteExtParams_15_Alt	94	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteExtParams_15_Banked	252	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteExtParams_56b	128	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteExtParams_TypeDispatch	184	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteGlobalConfig	375	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteLevelBurst	216	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteLevelPair	80	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteReg0440_0480	80	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteReg0840_Shadow2E	34	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_WriteVoiceParams	792	-	+424 sub_AO_23b@Xr
+ToneGen_WriteVoiceParams_Ext	178	-	+48 sub_AO_23c@Xr
+ToneGen_WriteVoiceParams_Ext2	138	-	+45 sub_AO_23c@Xr
+ToneGen_WriteVoice_TvfRegs_Dup	80	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_Write_Reg0180	34	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_Write_Reg0440	34	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_Write_Reg0480	34	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+ToneGen_Write_Reg04C0	34	sub_AO_23a@Xr sub_AO_23b@Xr sub_AO_23c@Xr	
+Voice_Poly_NoteOn	335	-	+10 sub_AO_23c@Xr

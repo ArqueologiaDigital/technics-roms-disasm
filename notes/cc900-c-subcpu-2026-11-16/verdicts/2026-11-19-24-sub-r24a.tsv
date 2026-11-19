@@ -1,0 +1,12 @@
+function	bytes	matches	best_diff
+Audio_Cmd_DSPUnit_Param	658	-	+9 sub_AL_24c@Xr
+Audio_Cmd_EffectParam_Dispatch	1364	-	+361 sub_AL_24c@Xr
+Audio_Cmd_ToneEdit_Write_And_Reply	272	-	+224 sub_AL_24b@Xr
+Audio_Process_DSP	1402	-	+11 sub_AN_24c@Xr
+DSP_VoiceCoeffRoute	365	sub_AP_24a@Xr sub_AP_24c@Xr	
+EnvTranspose_UpdateLoop	441	-	+62 sub_AL_24b@Xr
+Voice2_UpdatePitch	464	-	+50 sub_AP_24a@Xr
+Voice_Freq_WriteLeft	284	-	+47 sub_AP_24c@Xr
+Voice_Pitch_Compute	643	-	+121 sub_AP_24c@Xr
+Voice_StereoLevel_Compute	625	sub_AP_24b@Xr sub_AP_24c@Xr	
+WaveSel_Cache_VelSplitPtr	156	-	+30 sub_AL_24c@Xr

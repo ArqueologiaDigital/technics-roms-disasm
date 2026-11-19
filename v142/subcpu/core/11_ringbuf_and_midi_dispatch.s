@@ -675,98 +675,14 @@ DSP_Reinit_VoiceSlots_DMAFlush:
 ; matches, otherwise to the loop-increment at 0x035551.  3 call sites outside the region.
 ; The 0x10 / 0x50 constants are program-byte class markers, matching the two "voice active"
 ; encodings used by Voice_ProgChange.
-DSP_VoiceState_Dispatch:
-	pushw_erp 0xFA
-	ldib_erp 0xFB, 0
-	cp_erpb 0xFB, 0x1A
-	jrl nc, DSP_VoiceState_Dispatch_Epilogue
-
-; Per-part test of part+0x1A against 0x10 then 0x50.  The rest of the routine (the
-; DSP_VoiceState_Dispatch_ActiveVoice body at 0x0354CA and the loop tail at 0x035551) lies
-; beyond 0x0354C9 and belongs to the next region.
-DSP_VoiceState_Dispatch_Scan:
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	cp	(xbc+wa), 0x10
-	jr z, DSP_VoiceState_Dispatch_ActiveVoice
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	cp	(xbc+wa), 0x50
-	jrl nz, DSP_VoiceState_Dispatch_LoopNext
-
-; Body of DSP_VoiceState_Dispatch, whose entry (0x035497) is just below this region. For MIDI
-; part `n` (0..0x19, stride 0x11F from the 0x041368 part table) whose byte at +0x1A is 0x10 or
-; 0x50, calls WaveSel_Rebuild_PartCaches(WA=n, BC=part[+0x19], DE=part[+0x1A]), then switches on
-; bits 7:6 of tonerec[+0x10] (tonerec = the long at part+0x06): 0x80 or 0 -> next part,
-; 0x40 -> SubPathB, 0xC0 -> SubPathA.
-DSP_VoiceState_Dispatch_ActiveVoice:
-	ldto_berp A, 0xFB
-	ld l, a
-	extz hl
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250b:24)
-	ld	a, (xbc+wa)
-	ldfr_berp A, 0xF0
-	extz ix
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	ld	a, (xbc+wa)
-	ld e, a
-	extz de
-	ld wa, hl
-	ld bc, ix
-	call WaveSel_Rebuild_PartCaches
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, DSP_VoiceState_Dispatch_LoopNext
-	cp a, 0x40
-	jr z, DSP_VoiceState_Dispatch_SubPathB
-	cp a, 0xC0
-	jr z, DSP_VoiceState_Dispatch_SubPathA
-	cp a, 0:i3
-	jr nz, DSP_VoiceState_Dispatch_LoopNext
-
-; tonerec type 0xC0: call VoiceSlot_FullInit(WA = part index), then continue the scan.
-DSP_VoiceState_Dispatch_SubPathA:
-	ldto_berp A, 0xFB
-	extz wa
-	call VoiceSlot_FullInit
-	jr DSP_VoiceState_Dispatch_LoopNext
-
-; tonerec type 0x40: Voice_PortamentoTargets_SetAll(part) then VoiceSlot_AltInit(part).
-DSP_VoiceState_Dispatch_SubPathB:
-	ldto_berp A, 0xFB
-	extz wa
-	call Voice_PortamentoTargets_SetAll
-	ldto_berp A, 0xFB
-	extz wa
-	call VoiceSlot_AltInit
-
-; ++part; loop back to the scan while part < 0x1A.
-DSP_VoiceState_Dispatch_LoopNext:
-	inc1b_erp 0xFB
-	cp_erpb 0xFB, 0x1A
-	jrl c, DSP_VoiceState_Dispatch_Scan
-
-; pop frame, ret. Callers: DSP_Cmd2B_AlgoSelect's neighbourhood (0x026279), CmdHandler2C
-; sub-commands 4 and 6 (0x035EF0, 0x035F0B).
-DSP_VoiceState_Dispatch_Epilogue:
-	popw_erp 0xFA
-	ret
+DSP_VoiceState_Dispatch:	.include "includes/generated/cc900/DSP_VoiceState_Dispatch.s"	; C: cc900/ringbuf_and_midi_dispatch_lane_23c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_VoiceState_Dispatch_Scan, DSP_VoiceState_Dispatch + 13
+	.set	DSP_VoiceState_Dispatch_ActiveVoice, DSP_VoiceState_Dispatch + 58
+	.set	DSP_VoiceState_Dispatch_SubPathA, DSP_VoiceState_Dispatch + 164
+	.set	DSP_VoiceState_Dispatch_SubPathB, DSP_VoiceState_Dispatch + 175
+	.set	DSP_VoiceState_Dispatch_LoopNext, DSP_VoiceState_Dispatch + 193
+	.set	DSP_VoiceState_Dispatch_Epilogue, DSP_VoiceState_Dispatch + 203
 
 ; Resets the two DSP working-buffer write pointers to 0x007800:
 ;   (0x045320) = 0x00007800 ; (0x04531C) = 0x00007800

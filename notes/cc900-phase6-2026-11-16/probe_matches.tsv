@@ -736,3 +736,19 @@ PsMixer_DrawFrameBoxWithDividers	138	2026-11-18-33-p6-r37	p6_K_5m264a@O3XSXr p6_
 SeMenu_SetupSoundBankPair	175	2026-11-18-33-p6-r37	p6_I_4m129a@O3XSXr p6_I_4m129a@O3Xr p6_I_4m129a@Xr p6_I_4m129b@O3XSXr p6_I_4m129b@O3Xr p6_I_4m129b@Xr
 SingleLoadSrc_PanelMemDrawMemoryName	72	2026-11-18-33-p6-r37	p6_J_4m269a@O3XSXr p6_J_4m269a@O3Xr
 SmfMed_FormatSlotList	207	2026-11-18-33-p6-r37	p6_I_4m269a@O3Xr p6_I_4m269b@O3Xr
+DrawStringCentered	158	2026-11-19-6-p6-r39	p6_P_3m273b@O3XSXr p6_P_3m273b@O3Xr
+DrawStringRightJustify	152	2026-11-19-6-p6-r39	p6_P_3m273b@O3XSXr p6_P_3m273b@O3Xr
+VwBoxProc	208	2026-11-19-6-p6-r39	p6_P_3m271a@O3Xr
+DrawStringReverse	340	2026-11-19-9-p6-r40	p6_P_4m273c@O3Xr p6_P_4m273d@O3Xr
+FileIO_ParsePathComponents	128	2026-11-19-9-p6-r40	p6_P_3m240a@Xr
+SingleLoadSrc_ComposerDrawBankName	119	2026-11-19-9-p6-r40	p6_P_3m269a@O3Xr
+SingleLoadSrc_ComposerDrawPatternSlot	215	2026-11-19-9-p6-r40	p6_P_3m269a@O3XSXr p6_P_3m269a@O3Xr
+ColorBlit_ByteData	42	2026-11-19-13-p6-r41	p6_M_1m273a@O3XSXr p6_M_1m273a@O3Xr
+DSPCfg_ReadMultiField	119	2026-11-19-13-p6-r41	p6_P_4m293a@O3XSXr p6_P_4m293a@O3Xr
+DSPCfg_WriteMultiField	142	2026-11-19-13-p6-r41	p6_P_4m293a@O3XSXr p6_P_4m293a@O3Xr
+DrawBitmap	71	2026-11-19-13-p6-r41	p6_M_1m273a@O3XSXr p6_M_1m273a@O3Xr
+DrawBitmap_QueuedExec	21	2026-11-19-13-p6-r41	p6_M_1m273a@O3XSXr p6_M_1m273a@O3Xr p6_M_1m273a@Xr
+SLSrcBankList_FuncBody	116	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr
+SingleLoadDst_DrawComposerBankRows	119	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr
+SingleLoadSrc_DrawSoundMemBankRows	126	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr p6_M_1m269b@O3Xr
+SmfSeqFromSongNumFunc	87	2026-11-19-13-p6-r41	p6_M_1m269a@O3Xr
