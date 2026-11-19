@@ -1969,111 +1969,18 @@ DSPCfg_ReadField_Type76_Width16:
 	and	wa, 0x3f
 	ld	hl, wa
 	jrl	DSPCfg_ReadField_SetWidth1
-DSPCfg_WriteMultiField:
-	lda	xsp, (xsp - 14)
-	push	xiz
-	ld	(xsp + 12), de
-	ld	xiz, xbc
-	ld	(xsp + 14), xwa
-	ldw	(xsp + 10), 0x0
-	ldw	(xsp + 8), 0x0
-	ldw	(xsp + 4), 0x0
-	cpw	(xsp + 12), 0x0
-	jr	ule, DSPCfg_WriteMultiField_Final
-DSPCfg_WriteMultiField_Loop:
-	ld	wa, (xsp + 10)
-	add	(xsp + 8), wa
-	lda	xde, (xsp + 10)
-	lda	xwa, (xsp + 8)
-	push	xwa
-	ld	xwa, (xsp + 18)
-	ld	xbc, xiz
-	calr	DSPCfg_ReadField
-	ld	bc, 0:i3
-	cpw	(xsp + 10), 0x0
-	jr	ule, DSPCfg_WriteMultiField_AdvanceAddr
-DSPCfg_WriteMultiField_AccumXWA:
-	ld	xwa, 1:i3
-	add	(xsp + 14), xwa
-	inc	1, bc
-	cp	bc, (xsp + 10)
-	jr	c, DSPCfg_WriteMultiField_AccumXWA
-DSPCfg_WriteMultiField_AdvanceAddr:
-	ld	xwa, xiz
-	calr	DSPCfg_PackAddress
-	ld	xiz, xhl
-	incw	1, (xsp + 4)
-	ld	wa, (xsp + 4)
-	cp	wa, (xsp + 12)
-	jr	c, DSPCfg_WriteMultiField_Loop
-DSPCfg_WriteMultiField_Final:
-	ld	wa, (xsp + 10)
-	add	(xsp + 8), wa
-	lda	xwa, (xsp + 8)
-	push	xwa
-	lda	xwa, (xsp + 10)
-	push	xwa
-	ld	xwa, (xsp + 22)
-	ld	xbc, xiz
-	ld	de, (xsp + 38)
-	calr	DSPCfg_WriteParam
-	ld	xbc, (xsp + 26)
-	ld	wa, (xsp + 8)
-	ld	(xbc), a
-	ld	xbc, (xsp + 22)
-	ld	a, (xsp + 6)
-	ld	(xbc), a
-	pop	xiz
-	lda	xsp, (xsp + 14)
-	retd	0xa
-DSPCfg_ReadMultiField:
-	lda	xsp, (xsp - 12)
-	push	xiz
-	ld	(xsp + 10), de
-	ld	(xsp + 12), xbc
-	ld	xiz, xwa
-	ldw	(xsp + 8), 0x0
-	ldw	(xsp + 6), 0x0
-	ldw	(xsp + 4), 0x0
-	cpw	(xsp + 10), 0x0
-	jr	ule, DSPCfg_ReadMultiField_Final
-DSPCfg_ReadMultiField_Loop:
-	ld	wa, (xsp + 8)
-	add	(xsp + 6), wa
-	lda	xde, (xsp + 8)
-	lda	xwa, (xsp + 6)
-	push	xwa
-	ld	xwa, xiz
-	ld	xbc, (xsp + 16)
-	calr	DSPCfg_ReadField
-	ld	wa, 0:i3
-	cpw	(xsp + 8), 0x0
-	jr	ule, DSPCfg_ReadMultiField_PackAndNext
-DSPCfg_ReadMultiField_AdvancePtr:
-	inc	1, xiz
-	inc	1, wa
-	cp	wa, (xsp + 8)
-	jr	c, DSPCfg_ReadMultiField_AdvancePtr
-DSPCfg_ReadMultiField_PackAndNext:
-	ld	xwa, (xsp + 12)
-	calr	DSPCfg_PackAddress
-	ld	(xsp + 12), xhl
-	incw	1, (xsp + 4)
-	ld	wa, (xsp + 4)
-	cp	wa, (xsp + 10)
-	jr	c, DSPCfg_ReadMultiField_Loop
-DSPCfg_ReadMultiField_Final:
-	ld	wa, (xsp + 8)
-	add	(xsp + 6), wa
-	lda	xde, (xsp + 8)
-	lda	xwa, (xsp + 6)
-	push	xwa
-	ld	xwa, xiz
-	ld	xbc, (xsp + 16)
-	calr	DSPCfg_ReadField
-	pop	xiz
-	lda	xsp, (xsp + 12)
-	ret
+DSPCfg_WriteMultiField:	.include "includes/generated/cc900/DSPCfg_WriteMultiField.s"	; C: cc900/dsp_config_sysex_m293.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_WriteMultiField_Loop, DSPCfg_WriteMultiField + 34
+	.set	DSPCfg_WriteMultiField_AccumXWA, DSPCfg_WriteMultiField + 64
+	.set	DSPCfg_WriteMultiField_AdvanceAddr, DSPCfg_WriteMultiField + 76
+	.set	DSPCfg_WriteMultiField_Final, DSPCfg_WriteMultiField + 94
+DSPCfg_ReadMultiField:	.include "includes/generated/cc900/DSPCfg_ReadMultiField.s"	; C: cc900/dsp_config_sysex_m293.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSPCfg_ReadMultiField_Loop, DSPCfg_ReadMultiField + 34
+	.set	DSPCfg_ReadMultiField_AdvancePtr, DSPCfg_ReadMultiField + 64
+	.set	DSPCfg_ReadMultiField_PackAndNext, DSPCfg_ReadMultiField + 73
+	.set	DSPCfg_ReadMultiField_Final, DSPCfg_ReadMultiField + 93
 DSPCfg_GetParamCount:
 	ld	l, (xwa)
 	extz	hl

@@ -162,44 +162,7 @@ SLSrcMem_Return:
 	ld xhl, 0:i3
 	ret
 
-SLSrcBankList_FuncBody:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	(xsp+6), xwa
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld (xwa+), 0
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (SingleLoad_BankCaptionByMode:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ld	xbc, SLSrcBankList_FuncBody_Str_Colon
-	call	FileIO_BuildFilePath
-	lda	xiz, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ld	a, (SLOAD_SRC_PMEM_POS:16)
-	extz	wa
-	div	wa, (xsp+0x4)
-	inc	1, a
-	extz	wa
-	ld	bc, 0:i3
-	calr	NumToAscii_FormatNumber
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0x894e
-	call	ApPostEvent
-	pop	xiz
-	inc	6, xsp
-	ret
+SLSrcBankList_FuncBody:	.include "includes/generated/cc900/SLSrcBankList_FuncBody.s"	; C: cc900/single_load_m269_b.c
 ; SingleLoadSrc_PanelMemDrawBankName: PANEL MEMORY source list, row 1: writes cell 1 of the list buffer (0x8963) with
 ;   the name of bank (SLOAD_SRC_PMEM_POS) / C (C = SingleLoadSrc_PanelMemBankSize, 8) read from the selected .PMT file
 ;   (SingleLoadSrc_ReadPmtBankName: 16 bytes at file offset 16 + 16 * bank), pads it to 16 and posts EVT_PARA_DRAW
@@ -525,77 +488,12 @@ SingleLoadSrc_ComposerDrawBankName:	.include "includes/generated/cc900/SingleLoa
 ;   (SingleLoad_GetComposerSectionName -> SingleLoad_StyleSectionNames: INTRO 1 .. ENDING 2); slots 0-3 leave cell 3 to
 ;   SingleLoadSrc_ComposerDrawPatternName. Basis: callers + body -- SingleLoadSrc_ComposerListProc calls it on EVT_PAINT and
 ;   after every cursor move (parameters 5 and 6).
-SingleLoadSrc_ComposerDrawPatternSlot:
-	dec	8, xsp
-	push	xiz
-	ld	(xsp+6), c
-	ld	(xsp+8), xwa
-	ld	a, (SLOAD_SRC_CMP_POS:16)
-	extz	wa
-	div	wa, (xsp+0x6)
-	ld	a, w
-	extz	wa
-	ld	(xsp+4), wa
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld	(xwa+42), 2
-	lda	xwa, (xwa+43)
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (StorageArea_UnitNames:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+43:16)
-	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_Colon_3
-	call	FileIO_BuildFilePath
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	nz, SingleLoadSrc_ComposerDrawPatternSlot_Skip
-	lda	xiz, (SINGLE_LOAD_SRC_ROWS+43:16)
-	ld	wa, (xsp+4)
-	calr	SingleLoad_GetVariationName
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-SingleLoadSrc_ComposerDrawPatternSlot_Skip:
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+43:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+42:16)
-	ld	xwa, (xsp+8)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	lda	xbc, (SINGLE_LOAD_SRC_ROWS:16)
-	lda	xwa, (xbc+63)
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	z, SingleLoadSrc_ComposerDrawPatternSlot_Skip2
-	ld	(xwa), 3
-	lda	xwa, (xbc+64)
-	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_ALL
-	call	FileIO_CopyString
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+63:16)
-	ld	xwa, (xsp+8)
-	ld	xbc, EVT_PARA_DRAW
-	jr	SingleLoadSrc_ComposerDrawPatternSlot_Join
-SingleLoadSrc_ComposerDrawPatternSlot_Skip2:
-	cpw	(xsp+0x4), 4
-	jr	c, SingleLoadSrc_ComposerDrawPatternSlot_Epilogue
-	ld	c, (SLOAD_SRC_CMP_POS:16)
-	extz	bc
-	div	bc, (xsp+0x6)
-	extz	bc
-	pushw	3
-	ld	de, (xsp+6)
-	calr	SingleLoad_GetComposerSectionName
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+63:16)
-	ld	xwa, (xsp+8)
-	ld	xbc, EVT_PARA_DRAW
-SingleLoadSrc_ComposerDrawPatternSlot_Join:
-	call	ApPostEvent
-SingleLoadSrc_ComposerDrawPatternSlot_Epilogue:
-	pop	xiz
-	inc	8, xsp
-	ret
+SingleLoadSrc_ComposerDrawPatternSlot:	.include "includes/generated/cc900/SingleLoadSrc_ComposerDrawPatternSlot.s"	; C: cc900/single_load_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadSrc_ComposerDrawPatternSlot_Skip, SingleLoadSrc_ComposerDrawPatternSlot + 99
+	.set	SingleLoadSrc_ComposerDrawPatternSlot_Skip2, SingleLoadSrc_ComposerDrawPatternSlot + 168
+	.set	SingleLoadSrc_ComposerDrawPatternSlot_Join, SingleLoadSrc_ComposerDrawPatternSlot + 207
+	.set	SingleLoadSrc_ComposerDrawPatternSlot_Epilogue, SingleLoadSrc_ComposerDrawPatternSlot + 211
 ; SingleLoadSrc_ComposerDrawPatternName: COMPOSER source list, row 3 for user patterns: unless ALL mode (SINGLE_LOAD_ALL) or
 ;   slot (SLOAD_SRC_CMP_POS) mod C >= 4, writes cell 3 (0x898D) with the 13-character name of pattern (bank, slot) read from the
 ;   selected .CMP file (SingleLoadSrc_ReadCmpPatternName: offset 160 + 96 * (4 * bank + slot), the layout of RAM
@@ -864,47 +762,9 @@ SingleLoad_SyncSoundMemCursorGroup_Return:
 ;   posts EVT_PARA_DRAW. Basis: callers + body -- SingleLoadSrc_SoundMemListProc calls it first on EVT_PAINT and on
 ;   bank paging (parameter 5) with C = SingleLoadSrc_SoundMemPageSize; for the USER KIT positions row 1 comes from
 ;   SingleLoadSrc_DrawUserKitName.
-SingleLoadSrc_DrawSoundMemBankRows:
-	dec	6, xsp
-	ld	(xsp), c
-	ld	(xsp+2), xwa
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld (xwa+), 0
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (SingleLoad_BankCaptionByMode:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ld	xbc, SLSrcBankList_FuncBody_Entry_Str_Colon_4
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+1:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	ld	xwa, (xsp+2)
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0x894e
-	call	ApPostEvent
-	ld	a, (xsp)
-	add	a, (xsp)
-	ld	c, (SLOAD_SRC_SOUND_POS:16)
-	cp	c, a
-	jr	nc, SingleLoadSrc_DrawSoundMemBankRows_Epilogue
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+21:16)
-	extz	bc
-	div	bc, (xsp)
-	extz	bc
-	ld	de, 1:i3
-	calr	SingleLoad_GetSoundMemBankName
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+21:16)
-	ld	xwa, (xsp+2)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-SingleLoadSrc_DrawSoundMemBankRows_Epilogue:
-	inc	6, xsp
-	ret
+SingleLoadSrc_DrawSoundMemBankRows:	.include "includes/generated/cc900/SingleLoadSrc_DrawSoundMemBankRows.s"	; C: cc900/single_load_m269_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadSrc_DrawSoundMemBankRows_Epilogue, SingleLoadSrc_DrawSoundMemBankRows + 123
 ; SingleLoadSrc_DrawUserKitName: For a USER KIT position of the SOUND MEMORY source list (0x8A00 >= 2 x C, past the 40
 ;   sounds) fills row 1 (cell 1, RAM 0x8963) with the kit name read from the selected sound-memory file
 ;   (SingleLoadSrc_ReadTmUserKitName: 16 bytes at file offset 0x4980), pads it and posts EVT_PARA_DRAW; sound
@@ -1940,44 +1800,7 @@ SingleLoadDst_SequencerListProc_Epilogue2:
 ;   SingleLoadDst_ComposerListProc calls it on EVT_PAINT and on bank paging (parameter 7) with C =
 ;   SingleLoadDst_ComposerBankSize (10 per bank, 30 in all); SingleLoad_MemoryBankNames, the table SingleLoad_GetComposerBankName
 ;   reads, already documents this caller.
-SingleLoadDst_DrawComposerBankRows:
-	dec	2, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	xiz, xwa
-	lda	xwa, (SINGLE_LOAD_DST_ROWS:16)
-	ld (xwa+), 0
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (SingleLoad_BankCaptionByMode:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+1:16)
-	ld	xbc, SLDstBankList_FuncBody_Str_Colon_5
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+1:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+21:16)
-	ld	c, (SLOAD_DST_CMP_POS:16)
-	extz	bc
-	div	bc, (xsp+0x4)
-	extz	bc
-	ld	de, 1:i3
-	calr	SingleLoad_GetComposerBankName
-	ld	xwa, xiz
-	ld	xbc, EVT_PARA_DRAW
-	ld	xde, 0x89a2
-	call	ApPostEvent
-	lda	xde, (SINGLE_LOAD_DST_ROWS+21:16)
-	ld	xwa, xiz
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	pop	xiz
-	inc	2, xsp
-	ret
+SingleLoadDst_DrawComposerBankRows:	.include "includes/generated/cc900/SingleLoadDst_DrawComposerBankRows.s"	; C: cc900/single_load_m269_b.c
 ; SingleLoadDst_DrawComposerItemRows: Fills rows 2-3 of the COMPOSER destination list: row 2 (RAM 0x89CC) =
 ;   StorageArea_UnitNames[mode] ("PATTERN") + ": " + PtrTbl_VariationNames[0x8A06 mod C] ("VARI 1"-"VARI 4", empty for
 ;   sections 4-9), row 3 (RAM 0x89E1) = the section's name (SingleLoad_GetComposerSectionName(bank, section, 3): the RAM record at
