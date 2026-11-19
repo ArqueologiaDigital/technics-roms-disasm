@@ -1226,3 +1226,30 @@ SysEx_SendPanelMemoryData	12	2026-11-19-83-p6-r56	p6_N_11m286a@O3Xr p6_N_11m286a
 SysEx_SendSequencerData	12	2026-11-19-83-p6-r56	p6_N_11m286a@O3Xr p6_N_11m286a@Xr
 SysEx_SendSoundMemoryData	12	2026-11-19-83-p6-r56	p6_N_11m286a@O3Xr p6_N_11m286a@Xr
 SysEx_SendStyleImageData	12	2026-11-19-83-p6-r56	p6_N_11m286a@O3Xr p6_N_11m286a@Xr
+MidiPkt_ArpChordHandler	76	2026-11-19-92-p6-r57	p6_N_12m287a@O3XSXr p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_ArpExtHandler_A	52	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_ArpExtHandler_G	44	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_HandleCmdCode01	73	2026-11-19-92-p6-r57	p6_N_12m287a@Xr
+MidiPkt_XferAnswerMsg21	24	2026-11-19-92-p6-r57	p6_N_12m287a@O3XSXr p6_N_12m287a@O3Xr
+MidiPkt_XferOnAccompBlocksBlock2	40	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_XferOnAccompBlocksStart	52	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_XferOnPanelMemBlock	39	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_XferOnSoundRamDataBlock	39	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_XferOnSoundRamStart	48	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_XferOnStyleImageBlock2	40	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiPkt_XferOnStyleImageStart	52	2026-11-19-92-p6-r57	p6_N_12m287a@O3Xr p6_N_12m287a@Xr
+MidiTable_DispatchHelper	58	2026-11-19-92-p6-r57	p6_N_12m287a@O3XSXr p6_N_12m287a@O3Xr
+MidiTable_FlushArpNotes	56	2026-11-19-92-p6-r57	p6_N_12m287a@O3XSXr p6_N_12m287a@O3Xr
+SePitPit1_OnColumn2	108	2026-11-19-92-p6-r57	p6_M_14m129a@O3XSXr p6_M_14m129a@O3Xr
+SePitPit1_OnColumn3	108	2026-11-19-92-p6-r57	p6_M_14m129a@O3XSXr p6_M_14m129a@O3Xr
+SePitPit1_OnColumn4	102	2026-11-19-92-p6-r57	p6_M_14m129a@O3XSXr p6_M_14m129a@O3Xr
+SeTonHyb1_OnColumn2	133	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr
+SeTonHyb1_OnColumn3	118	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr
+SeWrtSnd_OnColumn1	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnColumn2	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnColumn3	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnColumn4	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnColumn5	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnColumn6	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnColumn8	3	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
+SeWrtSnd_OnSideRow2	7	2026-11-19-92-p6-r57	p6_M_14m152a@O3XSXr p6_M_14m152a@O3Xr p6_M_14m152a@Xr
