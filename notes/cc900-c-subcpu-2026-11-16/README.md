@@ -197,6 +197,13 @@ open at +0 since round 3; DSP_VoiceState_Dispatch; AudioMod_Apply_Slot_Field29 /
 Voice_Part_SetStateAndReinit (helper AL).  32 functions, 3,253 B per tree (staged_v423.tsv's MATCH rows of run -12);
 **557 functions per tree** built from C (`c_duplicates.py`).
 
+**Eleventh promotion: helper AO's 15 writers (2026-11-19; matched in run 2026-11-19-16-sub-r23o-tg-dsp, verified per
+tree in run 2026-11-19-20-sub-r23t-staged).**  voice_noteon_and_tonegen_ao_23a.c: ToneGen_WriteExtParams_15 / _15_Alt /
+_15_Banked / _56b / _TypeDispatch, ToneGen_WriteGlobalConfig, ToneGen_WriteLevelBurst, ToneGen_WriteLevelPair,
+ToneGen_WriteReg0440_0480, ToneGen_WriteReg0840_Shadow2E, ToneGen_WriteVoice_TvfRegs_Dup and ToneGen_Write_Reg0180 /
+0440 / 0480 / 04C0, all written with `__asm`.  15 functions, 1,787 B per tree; **572 functions per tree** built from C
+(`c_duplicates.py`).
+
 ### The firmware's inline assembly is `__asm` (round 23, runs 2026-11-19-7, -8 and -10)
 
 V4.23 knows two spellings of inline assembly and treats them differently.  With `__ASM("...")` it assumes the block
