@@ -198,6 +198,7 @@ v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	d68d789e222c7a4099fe82cc
 v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_21c.c	3f85d248b41a955ae75775ba0084608d95e75998810b264eb99ab490b0f18e2d	Xr	2026-11-18-21-sub-r21c-staged	VoiceBuf_TypeSelector_MatchEpilogue	144	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_22a.c	60f85914f1fed144b9fba7f85b0afb9e425a3d04cea8f6f4cf651bee755922de	Xr	2026-11-18-32-sub-r21g-staged	DSP_SetCoeff_RouteComplex	344	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_ai_22a.c	60f85914f1fed144b9fba7f85b0afb9e425a3d04cea8f6f4cf651bee755922de	Xr	2026-11-18-32-sub-r21g-staged	DSP_VoiceParamReadWrite	242	MATCH
+v140	v140/subcpu/cc900-staged/dsp_voice_params_al_25a.c	22dd36535c3234abdd81c0077b15e6ead8151beb3ce1ac79a8632f3901b64791	Xr	2026-11-19-28-sub-r25s-staged	EnvTranspose_UpdateLoop	439	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_b.c	a9219c543af05274b1397e8dfa3abbe8001e864eaf08c0ff73286c4aed14ca9b	Xr	2026-11-16-73-sub-r6	Algo_SubTable_PanTrim_From_PartFlags	49	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_b.c	a9219c543af05274b1397e8dfa3abbe8001e864eaf08c0ff73286c4aed14ca9b	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Fetch	94	MATCH
 v140	v140/subcpu/cc900-staged/dsp_voice_params_c_6a.c	7a2cddee05c37498aefc828f66a7a1bad7d9326c4c4fbdd05000e529911d574f	Xr	2026-11-16-89-sub-staged3	ToneDB_Find_ToneRecord	19	MATCH
@@ -794,6 +795,7 @@ v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	eef901762ac2aa7fd14d6bfe
 v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_21c.c	fb80715a9d256d63b56ee5de677ab66aac2b56b4487124ab6ef4d593ca96a3e2	Xr	2026-11-18-21-sub-r21c-staged	VoiceBuf_TypeSelector_MatchEpilogue	144	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_22a.c	55496073d78ab37af244a6452c3457aa1623dd98d93a2fdc3faae092efc0c86f	Xr	2026-11-18-32-sub-r21g-staged	DSP_SetCoeff_RouteComplex	344	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_ai_22a.c	55496073d78ab37af244a6452c3457aa1623dd98d93a2fdc3faae092efc0c86f	Xr	2026-11-18-32-sub-r21g-staged	DSP_VoiceParamReadWrite	242	MATCH
+v141	v141/subcpu/cc900-staged/dsp_voice_params_al_25a.c	373ab936b8799bb2c8ae334863ed6de165379138a8aa765e193d73515b7503a0	Xr	2026-11-19-28-sub-r25s-staged	EnvTranspose_UpdateLoop	439	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_b.c	19f3f6f104870d92b9c26e7083d28cf91c525bffc2fcc5a6695e4f98b8809381	Xr	2026-11-16-73-sub-r6	Algo_SubTable_PanTrim_From_PartFlags	49	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_b.c	19f3f6f104870d92b9c26e7083d28cf91c525bffc2fcc5a6695e4f98b8809381	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Fetch	94	MATCH
 v141	v141/subcpu/cc900-staged/dsp_voice_params_c_6a.c	9bd39c88495d3a860554c36e5fc09f8f327e66f955a5a6f6c6fd769882dd89cd	Xr	2026-11-16-89-sub-staged3	ToneDB_Find_ToneRecord	19	MATCH
@@ -1390,6 +1392,7 @@ v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_21a.c	b001dbb4de4506e7a85e41d2
 v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_21c.c	b26dc6f954754ab99fef2a7065faf3f933e594d9e2a6f465f7596bff69bfa66f	Xr	2026-11-18-21-sub-r21c-staged	VoiceBuf_TypeSelector_MatchEpilogue	144	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_22a.c	b54d6a0ad609d3d1db832de095dd1e663019c7025aaea2349ba161515c0f3718	Xr	2026-11-18-32-sub-r21g-staged	DSP_SetCoeff_RouteComplex	344	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_ai_22a.c	b54d6a0ad609d3d1db832de095dd1e663019c7025aaea2349ba161515c0f3718	Xr	2026-11-18-32-sub-r21g-staged	DSP_VoiceParamReadWrite	242	MATCH
+v142	v142/subcpu/cc900-staged/dsp_voice_params_al_25a.c	cd134881594fc18eedc3b459d30b1444512a28a75f872c4be1a7af63b935fb72	Xr	2026-11-19-28-sub-r25s-staged	EnvTranspose_UpdateLoop	439	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_b.c	07b857383ddc77dea4fc928c38a21730e86f6772c8d17897eed5f5f8457b9e5d	Xr	2026-11-16-73-sub-r6	Algo_SubTable_PanTrim_From_PartFlags	49	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_b.c	07b857383ddc77dea4fc928c38a21730e86f6772c8d17897eed5f5f8457b9e5d	Xr	2026-11-16-73-sub-r6	Voice_SecondaryParam_Fetch	94	MATCH
 v142	v142/subcpu/cc900-staged/dsp_voice_params_c_6a.c	4d1fa12e5595afa223c3475efe427b76240685bd8d514b5feeb34d96c9b788dd	Xr	2026-11-16-89-sub-staged3	ToneDB_Find_ToneRecord	19	MATCH
