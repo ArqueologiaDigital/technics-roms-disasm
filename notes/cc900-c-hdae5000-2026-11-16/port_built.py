@@ -131,6 +131,7 @@ def main():
 
 
 RAM_RE = re.compile(r'\bram_([0-9a-fA-F]{6})\b')
+APFUNC_RE = re.compile(r'^#define (APFUNC_\w+) (0x[0-9a-fA-F]+)L', re.M)
 NM = os.path.expanduser('~/compartilhado/llvm-project/build/bin/llvm-nm')
 
 
@@ -171,7 +172,17 @@ def remap_text(text, old_names, old_addrs, new_names, log):
         b = cand.pop()
         log.append((a, b, how))
         return 'ram_%06x' % b
-    return RAM_RE.sub(one, text)
+
+    def apfunc(m):
+        """a C file's own `#define APFUNC_<X> 0x...L`: the tree's NAKA_APFUNC_<X> (each version numbers its
+        application functions, hdae5000_ui_tree.s; 2026-11-19)"""
+        b = new_names.get('NAKA_' + m.group(1))
+        if b is None:
+            log.append((int(m.group(2), 16), None, 'apfunc-unmapped'))
+            return m.group(0)
+        log.append((int(m.group(2), 16), b, 'apfunc'))
+        return '#define %s 0x%08xL' % (m.group(1), b)
+    return APFUNC_RE.sub(apfunc, RAM_RE.sub(one, text))
 
 
 def remapped_dir(tree):
