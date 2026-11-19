@@ -1948,69 +1948,10 @@ WaveSel_StageA1_FromPatchBlock:	.include "includes/generated/cc900/WaveSel_Stage
 
 WaveSel_StageA1_FromToneSlot:	.include "includes/generated/cc900/WaveSel_StageA1_FromToneSlot.s"	; C: cc900/dsp_voice_params_d_9a.c
 
-WaveSel_Cache_VelSplitPtr:
-	dec 4, xsp
-	ld (xsp), c
-	ld (xsp + 2), a
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	ld	wa, (xbc+wa)
-	bit 0, wa
-	jr z, WaveSel_Cache_VelSplitPtr_Path0
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	exts xde
-	add xde, xwa
-	ld a, (xsp)
-	extz wa
-	muls wa, 0xB
-	add wa, 0x1AA
-	lda xbc, (Payload_Bss_Start+0x6158:24)
-	exts xwa
-	add xwa, xbc
-	ld (xde + 4), xwa
-	jr WaveSel_Cache_VelSplitPtr_Path1
-
-; Part flags bit 0 clear: the VSEL pointer comes from
-; WaveSel_StageA1_FromPatchBlock 0x0325FC instead of the fixed RAM formula.
-WaveSel_Cache_VelSplitPtr_Path0:
-	ld a, (xsp + 2)
-	ld e, a
-	extz de
-	ld a, (xsp)
-	ld c, a
-	extz bc
-	ld wa, de
-	calr WaveSel_StageA1_FromPatchBlock
-	ld a, (xsp)
-	extz wa
-	muls wa, 0x25
-	ld de, wa
-	add de, 0x6E
-	ld a, (xsp + 2)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_Record_Base:24)
-	exts xwa
-	add xwa, xbc
-	lda	xwa, (xwa+de)
-	ld (xwa + 4), xhl
-
-; Frame teardown.
-WaveSel_Cache_VelSplitPtr_Path1:
-	inc 4, xsp
-	ret
+WaveSel_Cache_VelSplitPtr:	.include "includes/generated/cc900/WaveSel_Cache_VelSplitPtr.s"	; C: cc900/dsp_voice_params_al_27a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	WaveSel_Cache_VelSplitPtr_Path0, WaveSel_Cache_VelSplitPtr + 93
+	.set	WaveSel_Cache_VelSplitPtr_Path1, WaveSel_Cache_VelSplitPtr + 151
 
 WaveSel_StageA2_FindSetDesc:
 	pushw iz

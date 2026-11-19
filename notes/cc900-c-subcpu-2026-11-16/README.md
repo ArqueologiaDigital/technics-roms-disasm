@@ -217,6 +217,10 @@ key stores value first); **575 functions per tree** built from C (`c_duplicates.
 2026-11-19-30-sub-r26a, verified per tree in run 2026-11-19-31-sub-r26s-staged).**  voice_params_and_tvf_ap_26a.c
 (helper AP): 929 B per tree; **577 functions per tree** built from C (`c_duplicates.py`).
 
+**Fifteenth promotion: WaveSel_Cache_VelSplitPtr (2026-11-19; matched in run 2026-11-19-35-sub-r27a, verified per
+tree in run 2026-11-19-38-sub-r27s-staged).**  dsp_voice_params_al_27a.c (helper AL: path 1's +4 as a member of a
+struct cast, idiom (z)): 154 B per tree; **578 functions per tree** built from C (`c_duplicates.py`).
+
 **Held back: Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c.c).**  It matches v142 and v141 (run -31) but not
 v140 (DIFF at +24): in v1.40 the function is 1,491 bytes, because DSP_Cmd2B_SetParam is 82 bytes longer and the
 reply / write paths differ (scripts/generators/create_v140_subcpu_source.py's edits 2-4).  v140's source is v141's
