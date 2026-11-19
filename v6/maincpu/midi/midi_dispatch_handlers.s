@@ -8059,25 +8059,9 @@ MidiPkt_SetXferBlock_PanelMemories:	.include "includes/generated/cc900/MidiPkt_S
 MidiPkt_SetXferTotal_SoundRam:	.include "includes/generated/cc900/MidiPkt_SetXferTotal_SoundRam.s"	; C: cc900/midi_dispatch_handlers.c
 MidiPkt_SetXferBlock_SoundRamId:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SoundRamId.s"	; C: cc900/midi_dispatch_handlers.c
 MidiPkt_SetXferBlock_SoundRamData:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SoundRamData.s"	; C: cc900/midi_dispatch_handlers.c
-MidiPkt_SetXferTotal_StyleImage:
-	push	xiz
-	ld	xiz, xwa
-	lda	xwa, (RHYTHM_PATTERN_BUF_A:24)
-	ld	(xiz), xwa
-	add	xwa, 0x16800
-	ld	(xiz+4), xwa
-	ld	xwa, 0x16800
-	ld	(xiz+8), xwa
-	bit	6, (0xbc58:16)
-	jr	z, MidiPkt_SetXferTotal_StyleImage_Epilogue2
-	calr	MidiPkt_GetUsedSize_StyleImage
-	ld	xwa, (xiz)
-	add	xwa, xhl
-	ld	(xiz+4), xwa
-	ld	(xiz+8), xhl
-MidiPkt_SetXferTotal_StyleImage_Epilogue2:
-	pop	xiz
-	ret
+MidiPkt_SetXferTotal_StyleImage:	.include "includes/generated/cc900/MidiPkt_SetXferTotal_StyleImage.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetXferTotal_StyleImage_Epilogue2, MidiPkt_SetXferTotal_StyleImage + 46
 MidiPkt_SetXferBlock_StyleImageHeader:
 	lda	xde, (RHYTHM_PATTERN_BUF_A:24)
 	ld	(xwa), xde
@@ -8160,47 +8144,15 @@ MidiPkt_SetXferBlock_CurrentSong:	.include "includes/generated/cc900/MidiPkt_Set
 ;   (0xAB000), end 0xB0000, length 0x5000}, block 2 of the sequencer transfer. Basis: callers + body --
 ;   MidiPkt_ArpExtHandler_L (command 19, state 12) points the block descriptor 0xBC50 with it and continues step 12.
 MidiPkt_SetXferBlock_SongSlots:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SongSlots.s"	; C: cc900/midi_dispatch_handlers.c
-MidiPkt_SetXferBlock_SeqEvents:
-	push	xiz
-	ld	xiz, xwa
-	lda	xwa, (0xb0000:24)
-	ld	(xiz), xwa
-	add	xwa, 0x4d800
-	ld	(xiz+4), xwa
-	ld	xwa, 0x4d800
-	ld	(xiz+8), xwa
-	bit	6, (0xbc58:16)
-	jr	z, MidiPkt_SetXferBlock_SeqEvents_Epilogue5
-	calr	MidiPkt_GetUsedSize_SeqEvents
-	ld	xwa, (xiz)
-	add	xwa, xhl
-	ld	(xiz+4), xwa
-	ld	(xiz+8), xhl
-MidiPkt_SetXferBlock_SeqEvents_Epilogue5:
-	pop	xiz
+MidiPkt_SetXferBlock_SeqEvents:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SeqEvents.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetXferBlock_SeqEvents_Epilogue5, MidiPkt_SetXferBlock_SeqEvents + 46
 	ret
 	ret
 	ret
-	ret
-MidiPkt_SetXferTotal_AccompBlocks:
-	push	xiz
-	ld	xiz, xwa
-	lda	xwa, (0x1e8800:24)
-	ld	(xiz), xwa
-	lda	xwa, (xwa+15360)
-	ld	(xiz+4), xwa
-	ld	xwa, 0x3c00
-	ld	(xiz+8), xwa
-	bit	6, (0xbc58:16)
-	jr	z, MidiPkt_SetXferTotal_AccompBlocks_Epilogue6
-	calr	MidiPkt_GetUsedSize_AccompBlocks
-	ld	xwa, (xiz)
-	add	xwa, xhl
-	ld	(xiz+4), xwa
-	ld	(xiz+8), xhl
-MidiPkt_SetXferTotal_AccompBlocks_Epilogue6:
-	pop	xiz
-	ret
+MidiPkt_SetXferTotal_AccompBlocks:	.include "includes/generated/cc900/MidiPkt_SetXferTotal_AccompBlocks.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetXferTotal_AccompBlocks_Epilogue6, MidiPkt_SetXferTotal_AccompBlocks + 45
 MidiPkt_SetXferBlock_AccompAreaHeader:
 	lda	xde, (0x1e8800:24)
 	ld	(xwa), xde
@@ -9004,16 +8956,7 @@ MidiPkt_ArpConfigChain_Data_Helper10:
 	call	ArpQueue_Pack21BitValue
 	call	ArpQueue_ProcessAndSort_Data
 	ret
-MidiPkt_ArpConfigChain_Data_Join:
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	ret	z
-	calr	MidiPkt_ArpConfigChain_Data_Helper11
-	calr	MidiPkt_ArpConfigChain_Data_Helper12
-	calr	MidiPkt_ArpConfigChain_Data_Helper13
-	calr	MidiPkt_SendGroupEnd
-	ret
+MidiPkt_ArpConfigChain_Data_Join:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Join.s"	; C: cc900/midi_dispatch_handlers_m0.c
 MidiPkt_ArpConfigChain_Data_Helper11:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld	bc, 4:i3

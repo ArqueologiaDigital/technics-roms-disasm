@@ -93,3 +93,39 @@ void SeFilLpq1_OnColumn4_Join28(unsigned char a)
 			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
 	}
 }
+
+#define TT_SEFILENV1 0x37
+extern void SeFilEnv1_OnSideRow2(unsigned char a);
+extern void SeFilEnv1_OnSideRow3(unsigned char a);
+#define TT_SEFILENV2 0x38
+extern void SeFilEnv2_OnSideRow2(unsigned char a);
+extern void SeFilEnv2_OnSideRow3(unsigned char a);
+
+void SeFilEnv1_OnSideRow2(unsigned char a)
+{
+	if (a == 0)
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	else if (SeMenu_SelectPartIfEnabled(1) != 0)
+		SeMenu_SendEvent(TT_SEFILENV1, 1);
+}
+void SeFilEnv1_OnSideRow3(unsigned char a)
+{
+	if (a == 0)
+		SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	else if (SeMenu_SelectPartIfEnabled(2) != 0)
+		SeMenu_SendEvent(TT_SEFILENV1, 1);
+}
+void SeFilEnv2_OnSideRow2(unsigned char a)
+{
+	if (a == 0)
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	else if (SeMenu_SelectPartIfEnabled(1) != 0)
+		SeMenu_SendEvent(TT_SEFILENV2, 1);
+}
+void SeFilEnv2_OnSideRow3(unsigned char a)
+{
+	if (a == 0)
+		SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	else if (SeMenu_SelectPartIfEnabled(2) != 0)
+		SeMenu_SendEvent(TT_SEFILENV2, 1);
+}

@@ -1544,73 +1544,14 @@ FileIO_LoadRegion7_Flash:	.include "includes/generated/cc900/FileIO_LoadRegion7_
 	.set	LoadRegion7_Finalize, FileIO_LoadRegion7_Flash + 135
 	.set	LoadRegion7_Return, FileIO_LoadRegion7_Flash + 141
 
-FileIO_LoadRegion2_ExtMem:
-	; --- Display region 2: external memory 0x0ab000-0x0fd800 ---
-	lda xsp, (xsp - 18)
-	pushw iz
-	ld (xsp + 16), xwa			; save caller arg
-	lda xwa, (xsp + 2)
-	ld xbc, (xsp + 16)
-	ld	de, 2:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 2)
-	ld xbc, FileIO_LoadRegion2_ExtMem_Str_rb			; resource ID for region 2
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion2_OpenSuccess
-	call FileIO_ReturnError
-	jrl LoadRegion2_Return
-LoadRegion2_OpenSuccess:
-	ld	wa, 2:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion2_ModeError
-	calr FileIO_ReadHeaderAt4			; check extended mode (region 2)
-	cp hl, 0:i3
-	jr z, LoadRegion2_AltSeqInit
-	call SeqLoadPre				; primary ext memory init
-	ld xwa, SEQ_SONG_SLOTS			; ext memory base
-	ld xbc, 0x00005000			; size = 0x5000
-	call FileIO_ReadBlock
-	lda xwa, (0x0b0000:24); ext memory region 2
-	ld xde, xwa
-	lda xbc, (0x0fd800:24); end address
-	sub xbc, xde				; size = 0x0fd800 - 0x0b0000
-	call FileIO_ReadBlock
-	call FileIO_ReturnError
-	ld iz, hl
-	ld wa, iz
-	call SeqLoadPost				; post-setup
-	jr LoadRegion2_Finalize
-LoadRegion2_AltSeqInit:
-	call SeqLoad_JumpInitFromPreset				; alternate ext memory init
-	ld xwa, SEQ_SONG_SLOTS
-	ld xbc, 0x00000800			; smaller size
-	call FileIO_ReadBlock
-	lda xwa, (0x0b0000:24)
-	ld xde, xwa
-	lda xbc, (0x0fd800:24)
-	sub xbc, xde
-	call FileIO_ReadBlock
-	call FileIO_ReturnError
-	ld iz, hl
-	ld wa, iz
-	call SeqLoad_PostAltEntry				; post-setup (alt)
-	jr LoadRegion2_Finalize
-LoadRegion2_ModeError:
-	ldw iz, 0xff9a				; mode unavailable error
-LoadRegion2_Finalize:
-	call FileIO_CloseHandle
-	cp iz, 0:i3				; check result
-	jr lt, LoadRegion2_SkipVoiceCmd			; error, skip
-	ld xwa, (xsp + 16)			; restore caller arg
-	call VoiceSynth_CmdCase0				; additional processing
-LoadRegion2_SkipVoiceCmd:
-	ld hl, iz
-LoadRegion2_Return:
-	popw iz
-	lda xsp, (xsp + 18)
-	ret
+FileIO_LoadRegion2_ExtMem:	.include "includes/generated/cc900/FileIO_LoadRegion2_ExtMem.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion2_OpenSuccess, FileIO_LoadRegion2_ExtMem + 42
+	.set	LoadRegion2_AltSeqInit, FileIO_LoadRegion2_ExtMem + 108
+	.set	LoadRegion2_ModeError, FileIO_LoadRegion2_ExtMem + 158
+	.set	LoadRegion2_Finalize, FileIO_LoadRegion2_ExtMem + 161
+	.set	LoadRegion2_SkipVoiceCmd, FileIO_LoadRegion2_ExtMem + 176
+	.set	LoadRegion2_Return, FileIO_LoadRegion2_ExtMem + 178
 
 
 ; === v7-specific block: FileIO_LoadSongRegion8 (372 bytes) ===
@@ -1744,89 +1685,19 @@ LoadSong8_Return:
 ; Four more display region init/validate/configure functions following the
 ; same pattern as F8744F-F876CA.
 ; =============================================================================
-FileIO_LoadRegion3_ExtMem:
-	; --- Display region 3: ext memory 0x094800-0x0ab000 ---
-	lda xsp, (xsp - 14)
-	pushw iz
-	ld xbc, xwa
-	lda xwa, (xsp + 2)
-	ld	de, 3:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 2)
-	ld xbc, FileIO_LoadRegion3_ExtMem_Str_rb			; resource ID for region 3
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion3_OpenSuccess
-	call FileIO_ReturnError
-	jr LoadRegion3_Return
-LoadRegion3_OpenSuccess:
-	ld	wa, 3:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion3_AltPath
-	call cmp_ld_mae
-	lda xwa, (RHYTHM_PATTERN_BUF_A:24)
-	ld xde, xwa
-	lda xbc, (SEQ_SONG_SLOTS:24)
-	sub xbc, xde
-	call FileIO_ReadBlock
-	call FileIO_ReturnError
-	ld iz, hl
-	ld wa, iz
-	call cmp_ld_ato
-	jr LoadRegion3_Finalize
-LoadRegion3_AltPath:
-	call ToneParam_ExtendedOpsBlock				; alternate path
-	ld iz, hl
-LoadRegion3_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion3_Return:
-	popw iz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_LoadRegion3_ExtMem:	.include "includes/generated/cc900/FileIO_LoadRegion3_ExtMem.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion3_OpenSuccess, FileIO_LoadRegion3_ExtMem + 37
+	.set	LoadRegion3_AltPath, FileIO_LoadRegion3_ExtMem + 82
+	.set	LoadRegion3_Finalize, FileIO_LoadRegion3_ExtMem + 88
+	.set	LoadRegion3_Return, FileIO_LoadRegion3_ExtMem + 94
 
-FileIO_LoadRegion5_VRAM:
-	; --- Display region 5: VRAM 0x1e8800-0x1ec400 ---
-	lda xsp, (xsp - 14)
-	pushw iz
-	ld xbc, xwa
-	lda xwa, (xsp + 2)
-	ld	de, 5:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 2)
-	ld xbc, FileIO_LoadRegion5_VRAM_Str_rb			; resource ID for region 5
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion5_OpenSuccess
-	call FileIO_ReturnError
-	jr LoadRegion5_Return
-LoadRegion5_OpenSuccess:
-	ld	wa, 5:i3
-	calr FileIO_CheckRegionSignature
-	cp hl, 0:i3
-	jr z, LoadRegion5_AltPath
-	call msp_ld_mae
-	lda xwa, (0x1e8800:24)
-	ld xde, xwa
-	lda xbc, (0x1ec400:24)
-	sub xbc, xde
-	call FileIO_ReadBlock
-	call FileIO_ReturnError
-	ld iz, hl
-	ld wa, iz
-	call msp_ld_ato
-	jr LoadRegion5_Finalize
-LoadRegion5_AltPath:
-	call FileIO_LoadMspAltFormat				; alternate path
-	ld iz, hl
-LoadRegion5_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion5_Return:
-	popw iz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_LoadRegion5_VRAM:	.include "includes/generated/cc900/FileIO_LoadRegion5_VRAM.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion5_OpenSuccess, FileIO_LoadRegion5_VRAM + 37
+	.set	LoadRegion5_AltPath, FileIO_LoadRegion5_VRAM + 82
+	.set	LoadRegion5_Finalize, FileIO_LoadRegion5_VRAM + 88
+	.set	LoadRegion5_Return, FileIO_LoadRegion5_VRAM + 94
 
 FileIO_LoadRegion6_Simple:	.include "includes/generated/cc900/FileIO_LoadRegion6_Simple.s"	; C: cc900/file_demo_proc_m0.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -1835,76 +1706,15 @@ FileIO_LoadRegion6_Simple:	.include "includes/generated/cc900/FileIO_LoadRegion6
 	.set	LoadRegion6_Finalize, FileIO_LoadRegion6_Simple + 57
 	.set	LoadRegion6_Return, FileIO_LoadRegion6_Simple + 63
 
-FileIO_LoadRegion4_VRAM:
-	; --- Display region 4: VRAM 0x1e0000-0x1e7800 (with iteration loop) ---
-	lda xsp, (xsp - 30)
-	pushw iz
-	ld xbc, xwa
-	lda xwa, (xsp + 18)
-	ld	de, 4:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 18)
-	ld xbc, FileIO_LoadRegion4_VRAM_Str_rb			; resource ID for region 4
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, LoadRegion4_OpenSuccess
-	call FileIO_ReturnError
-	jrl LoadRegion4_Return
-LoadRegion4_OpenSuccess:
-	ld	wa, 4:i3
-	calr	FileIO_CheckRegionSignature
-	cp	hl, 0:i3
-	jr	z, LoadRegion4_AltIterLoop
-	call	PreTmLoad
-	lda	xwa, (1966080:24)
-	ld	xde, xwa
-	lda	xbc, (1996800:24)
-	sub	xbc, xde
-	call	FileIO_ReadBlock
-	call	FileIO_ReturnError
-	ld	iz, hl
-	ld	wa, iz
-	call	PostTmLoad
-	jr	LoadRegion4_Finalize
-LoadRegion4_AltIterLoop:
-	ld	iz, 0:i3
-LoadRegion4_ReadByteLoop:
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr lt, LoadRegion4_ReadDone
-	lda xwa, (xsp + 2)
-	ld	(xwa+iz), l
-	inc 1, iz
-	cp iz, 0x0010				; loop 16 times
-	jr lt, LoadRegion4_ReadByteLoop
-LoadRegion4_ReadDone:
-	call	FileIO_ReturnError
-	ld	iz, hl
-	cp	iz, 0:i3
-	jr	lt, LoadRegion4_PostSave
-	lda	xwa, (xsp+2)
-	call	PostTmSave_ByteBlock
-	ld	iz, hl
-	cp	iz, 0:i3
-	jr	lt, LoadRegion4_PostSave
-	call	FileIO_SeekRead_ExtReturn
-	lda	xwa, (1966080:24)
-	ld	xde, xwa
-	lda	xbc, (1996800:24)
-	sub	xbc, xde
-	call	FileIO_ReadBlock
-	call	FileIO_ReturnError
-	ld	iz, hl
-LoadRegion4_PostSave:
-	ld	wa, iz
-	call	PostTmSave_Success
-LoadRegion4_Finalize:
-	call FileIO_CloseHandle
-	ld hl, iz
-LoadRegion4_Return:
-	popw iz
-	lda xsp, (xsp + 30)
-	ret
+FileIO_LoadRegion4_VRAM:	.include "includes/generated/cc900/FileIO_LoadRegion4_VRAM.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	LoadRegion4_OpenSuccess, FileIO_LoadRegion4_VRAM + 38
+	.set	LoadRegion4_AltIterLoop, FileIO_LoadRegion4_VRAM + 83
+	.set	LoadRegion4_ReadByteLoop, FileIO_LoadRegion4_VRAM + 85
+	.set	LoadRegion4_ReadDone, FileIO_LoadRegion4_VRAM + 109
+	.set	LoadRegion4_PostSave, FileIO_LoadRegion4_VRAM + 160
+	.set	LoadRegion4_Finalize, FileIO_LoadRegion4_VRAM + 166
+	.set	LoadRegion4_Return, FileIO_LoadRegion4_VRAM + 172
 
 
 FileIO_ParseDirectoryEntry:	.include "includes/generated/cc900/FileIO_ParseDirectoryEntry.s"	; C: cc900/file_demo_proc_m266.c
@@ -2056,48 +1866,12 @@ SaveRegion1_Return:
 	lda xsp, (xsp + 18)
 	ret
 
-FileIO_SaveRegion7_Flash:
-	; --- Save region 7: flash 3D3000, fixed 0x400 bytes ---
-	lda xsp, (xsp - 14)
-	push xiz
-	ld xiz, xwa				; XIZ = arg
-	call FileIO_GetDiskFreeSpace
-	cp xhl, 0x00000400			; need 1024 bytes
-	jr ge, SaveRegion7_SpaceOk
-	ldw hl, 0xff9b
-	jr SaveRegion7_Return
-SaveRegion7_SpaceOk:
-	lda xwa, (xsp + 4)
-	ld xbc, xiz
-	ld	de, 7:i3
-	call FileIO_ReadHeader
-	lda xwa, (xsp + 4)
-	ld xbc, Resource_Region7_Start			; resource ID region 7
-	call FileIO_OpenWithMode
-	cp hl, 0:i3
-	jr ge, SaveRegion7_OpenSuccess
-	call FileIO_ReturnError
-	jr SaveRegion7_Return
-SaveRegion7_OpenSuccess:
-	call	PreMidiSave				; pre-save hook
-	ld	xwa, 4009984			; flash address
-	ld	xbc, 1024			; 1024 bytes
-	call	FileIO_WriteByte_Impl
-	call	FileIO_ReturnError
-	ld	iz, hl
-	ld	wa, iz
-	call	PostMidiSave				; post-save hook
-	call	FileIO_CloseHandle
-	cp	iz, 0:i3
-	jr	ge, SaveRegion7_Done
-	lda	xwa, (xsp+4)
-	call	FileIO_OpenDefault
-SaveRegion7_Done:
-	ld hl, iz
-SaveRegion7_Return:
-	pop xiz
-	lda xsp, (xsp + 14)
-	ret
+FileIO_SaveRegion7_Flash:	.include "includes/generated/cc900/FileIO_SaveRegion7_Flash.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SaveRegion7_SpaceOk, FileIO_SaveRegion7_Flash + 23
+	.set	SaveRegion7_OpenSuccess, FileIO_SaveRegion7_Flash + 56
+	.set	SaveRegion7_Done, FileIO_SaveRegion7_Flash + 101
+	.set	SaveRegion7_Return, FileIO_SaveRegion7_Flash + 103
 
 FileIO_SaveRegion2_ExtMem:
 	; --- Save region 2: ext mem 0AB000 + computed size ---
