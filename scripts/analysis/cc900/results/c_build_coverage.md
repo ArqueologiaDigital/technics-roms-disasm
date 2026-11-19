@@ -13,28 +13,28 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 638821       | 635067            | 8.432 %       | 621701           | 17120           |
+| Toshiba V4.23                 | 649096       | 645246            | 8.567 %       | 631976           | 17120           |
 | reference model               | 33060        | 30148             | 0.400 %       | 15668            | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
-All 20 images: 20643840 bytes, 7531422 of them census CODE.  Every version of an image counts on its own.
+All 20 images: 20643840 bytes, 7531326 of them census CODE.  Every version of an image counts on its own.
 
 ## Per image
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996611 | firmware C | 736   | 54939 / 54821      | 2318 / 2318        | 0 / 0             | 0.233 %         | 0                     |
-| v10        | 2097152 | 996611 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996296 | firmware C | 735   | 54543 / 54425      | 2318 / 2318        | 0 / 0             | 0.233 %         | 0                     |
-| v9         | 2097152 | 996296 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996296 | firmware C | 735   | 54543 / 54425      | 2318 / 2318        | 0 / 0             | 0.233 %         | 0                     |
-| v8         | 2097152 | 996296 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993862 | firmware C | 678   | 47782 / 47664      | 2335 / 2335        | 0 / 0             | 0.235 %         | 0                     |
-| v7         | 2097152 | 993862 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992851 | firmware C | 638   | 42669 / 42555      | 2298 / 2298        | 0 / 0             | 0.231 %         | 0                     |
-| v6         | 2097152 | 992851 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991767 | firmware C | 635   | 42394 / 42280      | 2298 / 2298        | 0 / 0             | 0.232 %         | 0                     |
-| v5         | 2097152 | 991767 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
+| v10        | 2097152 | 996595 | firmware C | 751   | 56983 / 56849      | 2318 / 2318        | 0 / 0             | 0.233 %         | 0                     |
+| v10        | 2097152 | 996595 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v9         | 2097152 | 996280 | firmware C | 750   | 56587 / 56453      | 2318 / 2318        | 0 / 0             | 0.233 %         | 0                     |
+| v9         | 2097152 | 996280 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v8         | 2097152 | 996280 | firmware C | 750   | 56587 / 56453      | 2318 / 2318        | 0 / 0             | 0.233 %         | 0                     |
+| v8         | 2097152 | 996280 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v7         | 2097152 | 993846 | firmware C | 688   | 49163 / 49029      | 2335 / 2335        | 0 / 0             | 0.235 %         | 0                     |
+| v7         | 2097152 | 993846 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
+| v6         | 2097152 | 992835 | firmware C | 648   | 44050 / 43920      | 2298 / 2298        | 0 / 0             | 0.231 %         | 0                     |
+| v6         | 2097152 | 992835 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
+| v5         | 2097152 | 991751 | firmware C | 645   | 43775 / 43645      | 2298 / 2298        | 0 / 0             | 0.232 %         | 0                     |
+| v5         | 2097152 | 991751 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128879 | firmware C | 525   | 63983 / 63955      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v142       | 196608  | 128879 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | v141       | 196608  | 128856 | firmware C | 525   | 63983 / 63955      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
@@ -189,10 +189,11 @@ found yet.
 | v10       | CPanel_CheckSpecialCombos                          | v10/maincpu/cc900/cpanel_routines_xr.c                        | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 140fee75f6bc |
 | v10       | PsMixer_DrawFrameBoxWithDividers                   | v10/maincpu/cc900/drawbar_panel_ui_m264.c                     | -O3 -Xr     | 138   | yes   | differs | MATCH (name cut to 31) | cache 3f6467f9e604 |
 | v10       | SdpartLookupPartId                                 | v10/maincpu/cc900/drawbar_panel_ui_m264_xr.c                  | -Xr         | 32    | yes   | differs | MATCH                  | cache 6fb68028b2cb |
-| v10       | DrawBitmapSP2_DeferredPath_Code                    | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v10       | DrawBitmapSPFast_DeferredPath_Code                 | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v10       | DrawBitmapSP_DeferredPath_Code                     | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v10       | DrawString_DeferredPath_Code                       | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 64e925e2df2a |
+| v10       | DrawBitmapSP2_DeferredPath_Code                    | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v10       | DrawBitmapSPFast_DeferredPath_Code                 | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v10       | DrawBitmapSP_DeferredPath_Code                     | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v10       | DrawBitmap_QueuedExec                              | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v10       | DrawString_DeferredPath_Code                       | v10/maincpu/cc900/drawing_primitives_m0.c                     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 145485822f2f |
 | v10       | DrawBitmapFast_QueuedExec                          | v10/maincpu/cc900/drawing_primitives_m0_xr.c                  | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v10       | DrawBox_QueuedExec                                 | v10/maincpu/cc900/drawing_primitives_m0_xr.c                  | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v10       | DrawFrameSP_QueuedExec                             | v10/maincpu/cc900/drawing_primitives_m0_xr.c                  | -Xr         | 24    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
@@ -212,14 +213,20 @@ found yet.
 | v10       | DrawString                                         | v10/maincpu/cc900/drawing_primitives_m273.c                   | -O3 -Xr     | 159   | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v10       | MovePixels                                         | v10/maincpu/cc900/drawing_primitives_m273.c                   | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v10       | DrawStringLeftJustify                              | v10/maincpu/cc900/drawing_primitives_m273_b.c                 | -O3 -Xr     | 103   | yes   | differs | MATCH                  | cache cdc1c975ccd2 |
+| v10       | DrawStringReverse                                  | v10/maincpu/cc900/drawing_primitives_m273_b_b.c               | -O3 -Xr     | 340   | yes   | differs | MATCH                  | cache 29734222445b |
 | v10       | MovePixels_Impl                                    | v10/maincpu/cc900/drawing_primitives_m273_c.c                 | -O3 -Xr     | 190   | yes   | differs | MATCH                  | cache 9b5f2b6cf0f6 |
+| v10       | DrawBitmap                                         | v10/maincpu/cc900/drawing_primitives_m273_d.c                 | -O3 -Xr     | 71    | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v10       | DrawStringCentered                                 | v10/maincpu/cc900/drawing_primitives_m273_d.c                 | -O3 -Xr     | 158   | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v10       | DrawStringRightJustify                             | v10/maincpu/cc900/drawing_primitives_m273_d.c                 | -O3 -Xr     | 152   | yes   | differs | MATCH                  | cache b79bcd1c568e |
 | v10       | GET_COMPUTER_INTERFACE_SELECTION                   | v10/maincpu/cc900/dsp_config_sysex.c                          | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache f660ff6b74a9 |
 | v10       | DSPCfg_Data_002                                    | v10/maincpu/cc900/dsp_config_sysex_m0.c                       | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 3fe5a794ecee |
 | v10       | SysEx_ValidateRolandHeader                         | v10/maincpu/cc900/dsp_config_sysex_m290.c                     | -O3 -Xr     | 137   | yes   | differs | MATCH                  | cache e972d749e2e7 |
 | v10       | SysEx_ClampVoiceIndex128_49                        | v10/maincpu/cc900/dsp_config_sysex_m290_xs.c                  | -O3 -XS -Xr | 20    | yes   | differs | MATCH                  | cache 9ef2f5de426e |
 | v10       | SysEx_ClampVoiceIndex8_49                          | v10/maincpu/cc900/dsp_config_sysex_m290_xs.c                  | -O3 -XS -Xr | 20    | yes   | differs | MATCH                  | cache 9ef2f5de426e |
-| v10       | DSPCfg_GetSlotCount                                | v10/maincpu/cc900/dsp_config_sysex_m293.c                     | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 61ec5942ff52 |
-| v10       | Fade_Cancel                                        | v10/maincpu/cc900/dsp_config_sysex_m293.c                     | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache 61ec5942ff52 |
+| v10       | DSPCfg_GetSlotCount                                | v10/maincpu/cc900/dsp_config_sysex_m293.c                     | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache b5b3c45e4c9f |
+| v10       | DSPCfg_ReadMultiField                              | v10/maincpu/cc900/dsp_config_sysex_m293.c                     | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
+| v10       | DSPCfg_WriteMultiField                             | v10/maincpu/cc900/dsp_config_sysex_m293.c                     | -O3 -Xr     | 142   | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
+| v10       | Fade_Cancel                                        | v10/maincpu/cc900/dsp_config_sysex_m293.c                     | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
 | v10       | DSPCfg_DecodeParamIdRange                          | v10/maincpu/cc900/dsp_config_sysex_m293_b.c                   | -O3 -Xr     | 167   | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v10       | DSPCfg_FindSlot63                                  | v10/maincpu/cc900/dsp_config_sysex_m293_b.c                   | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v10       | DSPCfg_ResolveParamToSlot                          | v10/maincpu/cc900/dsp_config_sysex_m293_b.c                   | -O3 -Xr     | 316   | yes   | differs | MATCH                  | cache f943b13a39b7 |
@@ -355,6 +362,7 @@ found yet.
 | v10       | SeGfx_StaticOp03_Bitmap                            | v10/maincpu/cc900/graphics_text_vga_m273.c                    | -O3 -Xr     | 73    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v10       | SeGfx_StaticOp09_Box                               | v10/maincpu/cc900/graphics_text_vga_m273.c                    | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v10       | SeGfx_StaticOp15_DottedLine                        | v10/maincpu/cc900/graphics_text_vga_m273.c                    | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
+| v10       | ColorBlit_ByteData                                 | v10/maincpu/cc900/graphics_text_vga_m273_b.c                  | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 9034b3928746 |
 | v10       | ConvertStrings                                     | v10/maincpu/cc900/graphics_text_vga_m274.c                    | -O3 -Xr     | 109   | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v10       | GetFrameSPSize                                     | v10/maincpu/cc900/graphics_text_vga_m274.c                    | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v10       | HexCharToNibble                                    | v10/maincpu/cc900/graphics_text_vga_m274.c                    | -O3 -Xr     | 51    | yes   | differs | MATCH                  | cache 37a495c31809 |
@@ -608,10 +616,14 @@ found yet.
 | v10       | SeqPart_SetupLeftPos                               | v10/maincpu/cc900/sequencer_engine_m236.c                     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
 | v10       | SeqPart_SetupRightPos                              | v10/maincpu/cc900/sequencer_engine_m236.c                     | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
 | v10       | SeqPart_UndoAllocOnError                           | v10/maincpu/cc900/sequencer_engine_m236.c                     | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
-| v10       | SLDstBankList_FuncBody                             | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 162   | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v10       | SingleLoadSrc_ComposerDrawBankName                 | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v10       | SingleLoadSrc_PanelMemDrawMemoryName               | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v10       | SingleLoadSrc_PanelMemDrawMemoryNumber             | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 170   | yes   | differs | MATCH (name cut to 31) | cache 8a801469cf96 |
+| v10       | SLDstBankList_FuncBody                             | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 162   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v10       | SingleLoadSrc_ComposerDrawBankName                 | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v10       | SingleLoadSrc_ComposerDrawPatternSlot              | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 215   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v10       | SingleLoadSrc_PanelMemDrawMemoryName               | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v10       | SingleLoadSrc_PanelMemDrawMemoryNumber             | v10/maincpu/cc900/single_load_m269.c                          | -O3 -Xr     | 170   | yes   | differs | MATCH (name cut to 31) | cache 3de2e53be4bd |
+| v10       | SLSrcBankList_FuncBody                             | v10/maincpu/cc900/single_load_m269_b.c                        | -O3 -Xr     | 116   | yes   | differs | MATCH                  | cache 759025d7857c |
+| v10       | SingleLoadDst_DrawComposerBankRows                 | v10/maincpu/cc900/single_load_m269_b.c                        | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 759025d7857c |
+| v10       | SingleLoadSrc_DrawSoundMemBankRows                 | v10/maincpu/cc900/single_load_m269_b.c                        | -O3 -Xr     | 126   | yes   | differs | MATCH                  | cache 759025d7857c |
 | v10       | SeqStep_ByteBlockF245                              | v10/maincpu/cc900/smf_event_processor_m0_xr.c                 | -Xr         | 138   | yes   | differs | MATCH                  | cache ea26c44d814d |
 | v10       | SeqStep_FileSectorDone                             | v10/maincpu/cc900/smf_event_processor_m0_xr.c                 | -Xr         | 34    | yes   | differs | MATCH                  | cache ea26c44d814d |
 | v10       | SeqStep_FileCloseInner                             | v10/maincpu/cc900/smf_event_processor_m236_xr.c               | -Xr         | 186   | yes   | differs | MATCH                  | cache fc64321e3f3b |
@@ -626,12 +638,14 @@ found yet.
 | v10       | Fat_TransferSectorsDirect                          | v10/maincpu/cc900/smf_event_processor_m238_xr_c.c             | -Xr         | 396   | yes   | differs | MATCH                  | cache 8c2341491bfd |
 | v10       | Fat_CreateDirEntry                                 | v10/maincpu/cc900/smf_event_processor_m238_xr_d.c             | -Xr         | 592   | yes   | differs | MATCH                  | cache f7bae20187fd |
 | v10       | SeqChan_ByteBlockD                                 | v10/maincpu/cc900/smf_event_processor_m239_xr.c               | -Xr         | 35    | yes   | MATCH   | MATCH                  | cache acbd7d9f6962 |
-| v10       | FileIO_MatchWildcard                               | v10/maincpu/cc900/smf_event_processor_m240_xr.c               | -Xr         | 221   | yes   | differs | MATCH                  | cache 3f631201d705 |
-| v10       | FindFirst_SndTable                                 | v10/maincpu/cc900/smf_event_processor_m240_xr.c               | -Xr         | 54    | yes   | differs | MATCH                  | cache 3f631201d705 |
+| v10       | FileIO_MatchWildcard                               | v10/maincpu/cc900/smf_event_processor_m240_xr.c               | -Xr         | 221   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v10       | FileIO_ParsePathComponents                         | v10/maincpu/cc900/smf_event_processor_m240_xr.c               | -Xr         | 128   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v10       | FindFirst_SndTable                                 | v10/maincpu/cc900/smf_event_processor_m240_xr.c               | -Xr         | 54    | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
 | v10       | RenderSmfFilename                                  | v10/maincpu/cc900/smf_operations.c                            | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache d18776f5c48f |
 | v10       | TrimAndPadSmfFilename                              | v10/maincpu/cc900/smf_operations.c                            | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache d18776f5c48f |
 | v10       | SaveFileNameSmfFunc                                | v10/maincpu/cc900/smf_operations_m269.c                       | -O3 -Xr     | 189   | yes   | differs | MATCH                  | cache 1ec81e41e12a |
 | v10       | SmfSeqToSongNumFunc                                | v10/maincpu/cc900/smf_operations_m269_b.c                     | -O3 -Xr     | 87    | yes   | differs | MATCH                  | cache 10cfd4526a88 |
+| v10       | SmfSeqFromSongNumFunc                              | v10/maincpu/cc900/smf_operations_m269_c.c                     | -O3 -Xr     | 87    | yes   | differs | MATCH                  | cache e4445ca6452b |
 | v10       | SndParam_ClearHashTable                            | v10/maincpu/cc900/sndparam_routines.c                         | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 909a1218ca48 |
 | v10       | SndParam_EncodeAddress                             | v10/maincpu/cc900/sndparam_routines.c                         | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache 909a1218ca48 |
 | v10       | SndParam_BinarySearch                              | v10/maincpu/cc900/sndparam_routines_m0.c                      | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache b99a78b260d6 |
@@ -791,6 +805,7 @@ found yet.
 | v10       | UserBitmapCheck                                    | v10/maincpu/cc900/ui_window_procs_m0_xr.c                     | -Xr         | 39    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v10       | DrawEditSw                                         | v10/maincpu/cc900/ui_window_procs_m271.c                      | -O3 -Xr     | 223   | yes   | differs | MATCH                  | cache 332c30417d06 |
 | v10       | LabelProc                                          | v10/maincpu/cc900/ui_window_procs_m271.c                      | -O3 -Xr     | 90    | yes   | differs | MATCH                  | cache 332c30417d06 |
+| v10       | VwBoxProc                                          | v10/maincpu/cc900/ui_window_procs_m271_b.c                    | -O3 -Xr     | 208   | yes   | differs | MATCH                  | cache 855aeec7750b |
 | v10       | ClipBlit_Replace                                   | v10/maincpu/cc900/ui_window_procs_m273.c                      | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v10       | ColorBlit                                          | v10/maincpu/cc900/ui_window_procs_m273.c                      | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v10       | ColorBlit2                                         | v10/maincpu/cc900/ui_window_procs_m273.c                      | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
@@ -925,10 +940,11 @@ found yet.
 | v9        | CPanel_CheckSpecialCombos                          | v9/maincpu/cc900/cpanel_routines_xr.c                         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 140fee75f6bc |
 | v9        | PsMixer_DrawFrameBoxWithDividers                   | v9/maincpu/cc900/drawbar_panel_ui_m264.c                      | -O3 -Xr     | 138   | yes   | differs | MATCH (name cut to 31) | cache 3f6467f9e604 |
 | v9        | SdpartLookupPartId                                 | v9/maincpu/cc900/drawbar_panel_ui_m264_xr.c                   | -Xr         | 32    | yes   | differs | MATCH                  | cache 6fb68028b2cb |
-| v9        | DrawBitmapSP2_DeferredPath_Code                    | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v9        | DrawBitmapSPFast_DeferredPath_Code                 | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v9        | DrawBitmapSP_DeferredPath_Code                     | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v9        | DrawString_DeferredPath_Code                       | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 64e925e2df2a |
+| v9        | DrawBitmapSP2_DeferredPath_Code                    | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v9        | DrawBitmapSPFast_DeferredPath_Code                 | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v9        | DrawBitmapSP_DeferredPath_Code                     | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v9        | DrawBitmap_QueuedExec                              | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v9        | DrawString_DeferredPath_Code                       | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 145485822f2f |
 | v9        | DrawBitmapFast_QueuedExec                          | v9/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v9        | DrawBox_QueuedExec                                 | v9/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v9        | DrawFrameSP_QueuedExec                             | v9/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 24    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
@@ -948,14 +964,20 @@ found yet.
 | v9        | DrawString                                         | v9/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 159   | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v9        | MovePixels                                         | v9/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v9        | DrawStringLeftJustify                              | v9/maincpu/cc900/drawing_primitives_m273_b.c                  | -O3 -Xr     | 103   | yes   | differs | MATCH                  | cache cdc1c975ccd2 |
+| v9        | DrawStringReverse                                  | v9/maincpu/cc900/drawing_primitives_m273_b_b.c                | -O3 -Xr     | 340   | yes   | differs | MATCH                  | cache 29734222445b |
 | v9        | MovePixels_Impl                                    | v9/maincpu/cc900/drawing_primitives_m273_c.c                  | -O3 -Xr     | 190   | yes   | differs | MATCH                  | cache 9b5f2b6cf0f6 |
+| v9        | DrawBitmap                                         | v9/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 71    | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v9        | DrawStringCentered                                 | v9/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 158   | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v9        | DrawStringRightJustify                             | v9/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 152   | yes   | differs | MATCH                  | cache b79bcd1c568e |
 | v9        | GET_COMPUTER_INTERFACE_SELECTION                   | v9/maincpu/cc900/dsp_config_sysex.c                           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache f660ff6b74a9 |
 | v9        | DSPCfg_Data_002                                    | v9/maincpu/cc900/dsp_config_sysex_m0.c                        | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 3fe5a794ecee |
 | v9        | SysEx_ValidateRolandHeader                         | v9/maincpu/cc900/dsp_config_sysex_m290.c                      | -O3 -Xr     | 137   | yes   | differs | MATCH                  | cache e972d749e2e7 |
 | v9        | SysEx_ClampVoiceIndex128_49                        | v9/maincpu/cc900/dsp_config_sysex_m290_xs.c                   | -O3 -XS -Xr | 20    | yes   | differs | MATCH                  | cache 9ef2f5de426e |
 | v9        | SysEx_ClampVoiceIndex8_49                          | v9/maincpu/cc900/dsp_config_sysex_m290_xs.c                   | -O3 -XS -Xr | 20    | yes   | differs | MATCH                  | cache 9ef2f5de426e |
-| v9        | DSPCfg_GetSlotCount                                | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 61ec5942ff52 |
-| v9        | Fade_Cancel                                        | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache 61ec5942ff52 |
+| v9        | DSPCfg_GetSlotCount                                | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache b5b3c45e4c9f |
+| v9        | DSPCfg_ReadMultiField                              | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
+| v9        | DSPCfg_WriteMultiField                             | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 142   | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
+| v9        | Fade_Cancel                                        | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
 | v9        | DSPCfg_DecodeParamIdRange                          | v9/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 167   | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v9        | DSPCfg_FindSlot63                                  | v9/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v9        | DSPCfg_ResolveParamToSlot                          | v9/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 316   | yes   | differs | MATCH                  | cache f943b13a39b7 |
@@ -1091,6 +1113,7 @@ found yet.
 | v9        | SeGfx_StaticOp03_Bitmap                            | v9/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 73    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v9        | SeGfx_StaticOp09_Box                               | v9/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v9        | SeGfx_StaticOp15_DottedLine                        | v9/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
+| v9        | ColorBlit_ByteData                                 | v9/maincpu/cc900/graphics_text_vga_m273_b.c                   | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 9034b3928746 |
 | v9        | ConvertStrings                                     | v9/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 109   | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v9        | GetFrameSPSize                                     | v9/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v9        | HexCharToNibble                                    | v9/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 51    | yes   | differs | MATCH                  | cache 37a495c31809 |
@@ -1344,10 +1367,14 @@ found yet.
 | v9        | SeqPart_SetupLeftPos                               | v9/maincpu/cc900/sequencer_engine_m236.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
 | v9        | SeqPart_SetupRightPos                              | v9/maincpu/cc900/sequencer_engine_m236.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
 | v9        | SeqPart_UndoAllocOnError                           | v9/maincpu/cc900/sequencer_engine_m236.c                      | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
-| v9        | SLDstBankList_FuncBody                             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 162   | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v9        | SingleLoadSrc_ComposerDrawBankName                 | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v9        | SingleLoadSrc_PanelMemDrawMemoryName               | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v9        | SingleLoadSrc_PanelMemDrawMemoryNumber             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 170   | yes   | differs | MATCH (name cut to 31) | cache 8a801469cf96 |
+| v9        | SLDstBankList_FuncBody                             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 162   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v9        | SingleLoadSrc_ComposerDrawBankName                 | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v9        | SingleLoadSrc_ComposerDrawPatternSlot              | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 215   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v9        | SingleLoadSrc_PanelMemDrawMemoryName               | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v9        | SingleLoadSrc_PanelMemDrawMemoryNumber             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 170   | yes   | differs | MATCH (name cut to 31) | cache 3de2e53be4bd |
+| v9        | SLSrcBankList_FuncBody                             | v9/maincpu/cc900/single_load_m269_b.c                         | -O3 -Xr     | 116   | yes   | differs | MATCH                  | cache 759025d7857c |
+| v9        | SingleLoadDst_DrawComposerBankRows                 | v9/maincpu/cc900/single_load_m269_b.c                         | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 759025d7857c |
+| v9        | SingleLoadSrc_DrawSoundMemBankRows                 | v9/maincpu/cc900/single_load_m269_b.c                         | -O3 -Xr     | 126   | yes   | differs | MATCH                  | cache 759025d7857c |
 | v9        | SeqStep_ByteBlockF245                              | v9/maincpu/cc900/smf_event_processor_m0_xr.c                  | -Xr         | 138   | yes   | differs | MATCH                  | cache ea26c44d814d |
 | v9        | SeqStep_FileSectorDone                             | v9/maincpu/cc900/smf_event_processor_m0_xr.c                  | -Xr         | 34    | yes   | differs | MATCH                  | cache ea26c44d814d |
 | v9        | SeqStep_FileCloseInner                             | v9/maincpu/cc900/smf_event_processor_m236_xr.c                | -Xr         | 186   | yes   | differs | MATCH                  | cache fc64321e3f3b |
@@ -1361,12 +1388,14 @@ found yet.
 | v9        | SeqStep_FileIoCheck                                | v9/maincpu/cc900/smf_event_processor_m238_xr_b_b.c            | -Xr         | 573   | yes   | differs | MATCH                  | cache 10ff3fd95bb8 |
 | v9        | Fat_CreateDirEntry                                 | v9/maincpu/cc900/smf_event_processor_m238_xr_c.c              | -Xr         | 592   | yes   | differs | MATCH                  | cache c32a2f648340 |
 | v9        | SeqChan_ByteBlockD                                 | v9/maincpu/cc900/smf_event_processor_m239_xr.c                | -Xr         | 35    | yes   | MATCH   | MATCH                  | cache acbd7d9f6962 |
-| v9        | FileIO_MatchWildcard                               | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 3f631201d705 |
-| v9        | FindFirst_SndTable                                 | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 3f631201d705 |
+| v9        | FileIO_MatchWildcard                               | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v9        | FileIO_ParsePathComponents                         | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 128   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v9        | FindFirst_SndTable                                 | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
 | v9        | RenderSmfFilename                                  | v9/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache d18776f5c48f |
 | v9        | TrimAndPadSmfFilename                              | v9/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache d18776f5c48f |
 | v9        | SaveFileNameSmfFunc                                | v9/maincpu/cc900/smf_operations_m269.c                        | -O3 -Xr     | 189   | yes   | differs | MATCH                  | cache 1ec81e41e12a |
 | v9        | SmfSeqToSongNumFunc                                | v9/maincpu/cc900/smf_operations_m269_b.c                      | -O3 -Xr     | 87    | yes   | differs | MATCH                  | cache 10cfd4526a88 |
+| v9        | SmfSeqFromSongNumFunc                              | v9/maincpu/cc900/smf_operations_m269_c.c                      | -O3 -Xr     | 87    | yes   | differs | MATCH                  | cache e4445ca6452b |
 | v9        | SndParam_ClearHashTable                            | v9/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 909a1218ca48 |
 | v9        | SndParam_EncodeAddress                             | v9/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache 909a1218ca48 |
 | v9        | SndParam_BinarySearch                              | v9/maincpu/cc900/sndparam_routines_m0.c                       | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache b99a78b260d6 |
@@ -1526,6 +1555,7 @@ found yet.
 | v9        | UserBitmapCheck                                    | v9/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 39    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v9        | DrawEditSw                                         | v9/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 223   | yes   | differs | MATCH                  | cache 332c30417d06 |
 | v9        | LabelProc                                          | v9/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 90    | yes   | differs | MATCH                  | cache 332c30417d06 |
+| v9        | VwBoxProc                                          | v9/maincpu/cc900/ui_window_procs_m271_b.c                     | -O3 -Xr     | 208   | yes   | differs | MATCH                  | cache 855aeec7750b |
 | v9        | ClipBlit_Replace                                   | v9/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v9        | ColorBlit                                          | v9/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v9        | ColorBlit2                                         | v9/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
@@ -1660,10 +1690,11 @@ found yet.
 | v8        | CPanel_CheckSpecialCombos                          | v9/maincpu/cc900/cpanel_routines_xr.c                         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 140fee75f6bc |
 | v8        | PsMixer_DrawFrameBoxWithDividers                   | v9/maincpu/cc900/drawbar_panel_ui_m264.c                      | -O3 -Xr     | 138   | yes   | differs | MATCH (name cut to 31) | cache 3f6467f9e604 |
 | v8        | SdpartLookupPartId                                 | v9/maincpu/cc900/drawbar_panel_ui_m264_xr.c                   | -Xr         | 32    | yes   | differs | MATCH                  | cache 6fb68028b2cb |
-| v8        | DrawBitmapSP2_DeferredPath_Code                    | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v8        | DrawBitmapSPFast_DeferredPath_Code                 | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v8        | DrawBitmapSP_DeferredPath_Code                     | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v8        | DrawString_DeferredPath_Code                       | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 64e925e2df2a |
+| v8        | DrawBitmapSP2_DeferredPath_Code                    | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v8        | DrawBitmapSPFast_DeferredPath_Code                 | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v8        | DrawBitmapSP_DeferredPath_Code                     | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v8        | DrawBitmap_QueuedExec                              | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v8        | DrawString_DeferredPath_Code                       | v9/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 145485822f2f |
 | v8        | DrawBitmapFast_QueuedExec                          | v9/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v8        | DrawBox_QueuedExec                                 | v9/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v8        | DrawFrameSP_QueuedExec                             | v9/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 24    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
@@ -1683,14 +1714,20 @@ found yet.
 | v8        | DrawString                                         | v9/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 159   | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v8        | MovePixels                                         | v9/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v8        | DrawStringLeftJustify                              | v9/maincpu/cc900/drawing_primitives_m273_b.c                  | -O3 -Xr     | 103   | yes   | differs | MATCH                  | cache cdc1c975ccd2 |
+| v8        | DrawStringReverse                                  | v9/maincpu/cc900/drawing_primitives_m273_b_b.c                | -O3 -Xr     | 340   | yes   | differs | MATCH                  | cache 29734222445b |
 | v8        | MovePixels_Impl                                    | v9/maincpu/cc900/drawing_primitives_m273_c.c                  | -O3 -Xr     | 190   | yes   | differs | MATCH                  | cache 9b5f2b6cf0f6 |
+| v8        | DrawBitmap                                         | v9/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 71    | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v8        | DrawStringCentered                                 | v9/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 158   | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v8        | DrawStringRightJustify                             | v9/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 152   | yes   | differs | MATCH                  | cache b79bcd1c568e |
 | v8        | GET_COMPUTER_INTERFACE_SELECTION                   | v9/maincpu/cc900/dsp_config_sysex.c                           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache f660ff6b74a9 |
 | v8        | DSPCfg_Data_002                                    | v9/maincpu/cc900/dsp_config_sysex_m0.c                        | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 3fe5a794ecee |
 | v8        | SysEx_ValidateRolandHeader                         | v9/maincpu/cc900/dsp_config_sysex_m290.c                      | -O3 -Xr     | 137   | yes   | differs | MATCH                  | cache e972d749e2e7 |
 | v8        | SysEx_ClampVoiceIndex128_49                        | v9/maincpu/cc900/dsp_config_sysex_m290_xs.c                   | -O3 -XS -Xr | 20    | yes   | differs | MATCH                  | cache 9ef2f5de426e |
 | v8        | SysEx_ClampVoiceIndex8_49                          | v9/maincpu/cc900/dsp_config_sysex_m290_xs.c                   | -O3 -XS -Xr | 20    | yes   | differs | MATCH                  | cache 9ef2f5de426e |
-| v8        | DSPCfg_GetSlotCount                                | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 61ec5942ff52 |
-| v8        | Fade_Cancel                                        | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache 61ec5942ff52 |
+| v8        | DSPCfg_GetSlotCount                                | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache b5b3c45e4c9f |
+| v8        | DSPCfg_ReadMultiField                              | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
+| v8        | DSPCfg_WriteMultiField                             | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 142   | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
+| v8        | Fade_Cancel                                        | v9/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache b5b3c45e4c9f |
 | v8        | DSPCfg_DecodeParamIdRange                          | v9/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 167   | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v8        | DSPCfg_FindSlot63                                  | v9/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v8        | DSPCfg_ResolveParamToSlot                          | v9/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 316   | yes   | differs | MATCH                  | cache f943b13a39b7 |
@@ -1826,6 +1863,7 @@ found yet.
 | v8        | SeGfx_StaticOp03_Bitmap                            | v9/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 73    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v8        | SeGfx_StaticOp09_Box                               | v9/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v8        | SeGfx_StaticOp15_DottedLine                        | v9/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
+| v8        | ColorBlit_ByteData                                 | v9/maincpu/cc900/graphics_text_vga_m273_b.c                   | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 9034b3928746 |
 | v8        | ConvertStrings                                     | v9/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 109   | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v8        | GetFrameSPSize                                     | v9/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v8        | HexCharToNibble                                    | v9/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 51    | yes   | differs | MATCH                  | cache 37a495c31809 |
@@ -2079,10 +2117,14 @@ found yet.
 | v8        | SeqPart_SetupLeftPos                               | v9/maincpu/cc900/sequencer_engine_m236.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
 | v8        | SeqPart_SetupRightPos                              | v9/maincpu/cc900/sequencer_engine_m236.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
 | v8        | SeqPart_UndoAllocOnError                           | v9/maincpu/cc900/sequencer_engine_m236.c                      | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 35956bc9dea8 |
-| v8        | SLDstBankList_FuncBody                             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 162   | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v8        | SingleLoadSrc_ComposerDrawBankName                 | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v8        | SingleLoadSrc_PanelMemDrawMemoryName               | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 8a801469cf96 |
-| v8        | SingleLoadSrc_PanelMemDrawMemoryNumber             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 170   | yes   | differs | MATCH (name cut to 31) | cache 8a801469cf96 |
+| v8        | SLDstBankList_FuncBody                             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 162   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v8        | SingleLoadSrc_ComposerDrawBankName                 | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v8        | SingleLoadSrc_ComposerDrawPatternSlot              | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 215   | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v8        | SingleLoadSrc_PanelMemDrawMemoryName               | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache 3de2e53be4bd |
+| v8        | SingleLoadSrc_PanelMemDrawMemoryNumber             | v9/maincpu/cc900/single_load_m269.c                           | -O3 -Xr     | 170   | yes   | differs | MATCH (name cut to 31) | cache 3de2e53be4bd |
+| v8        | SLSrcBankList_FuncBody                             | v9/maincpu/cc900/single_load_m269_b.c                         | -O3 -Xr     | 116   | yes   | differs | MATCH                  | cache 759025d7857c |
+| v8        | SingleLoadDst_DrawComposerBankRows                 | v9/maincpu/cc900/single_load_m269_b.c                         | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache 759025d7857c |
+| v8        | SingleLoadSrc_DrawSoundMemBankRows                 | v9/maincpu/cc900/single_load_m269_b.c                         | -O3 -Xr     | 126   | yes   | differs | MATCH                  | cache 759025d7857c |
 | v8        | SeqStep_ByteBlockF245                              | v9/maincpu/cc900/smf_event_processor_m0_xr.c                  | -Xr         | 138   | yes   | differs | MATCH                  | cache ea26c44d814d |
 | v8        | SeqStep_FileSectorDone                             | v9/maincpu/cc900/smf_event_processor_m0_xr.c                  | -Xr         | 34    | yes   | differs | MATCH                  | cache ea26c44d814d |
 | v8        | SeqStep_FileCloseInner                             | v9/maincpu/cc900/smf_event_processor_m236_xr.c                | -Xr         | 186   | yes   | differs | MATCH                  | cache fc64321e3f3b |
@@ -2096,12 +2138,14 @@ found yet.
 | v8        | SeqStep_FileIoCheck                                | v9/maincpu/cc900/smf_event_processor_m238_xr_b_b.c            | -Xr         | 573   | yes   | differs | MATCH                  | cache 10ff3fd95bb8 |
 | v8        | Fat_CreateDirEntry                                 | v9/maincpu/cc900/smf_event_processor_m238_xr_c.c              | -Xr         | 592   | yes   | differs | MATCH                  | cache c32a2f648340 |
 | v8        | SeqChan_ByteBlockD                                 | v9/maincpu/cc900/smf_event_processor_m239_xr.c                | -Xr         | 35    | yes   | MATCH   | MATCH                  | cache acbd7d9f6962 |
-| v8        | FileIO_MatchWildcard                               | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 3f631201d705 |
-| v8        | FindFirst_SndTable                                 | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 3f631201d705 |
+| v8        | FileIO_MatchWildcard                               | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v8        | FileIO_ParsePathComponents                         | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 128   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v8        | FindFirst_SndTable                                 | v9/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
 | v8        | RenderSmfFilename                                  | v9/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache d18776f5c48f |
 | v8        | TrimAndPadSmfFilename                              | v9/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache d18776f5c48f |
 | v8        | SaveFileNameSmfFunc                                | v9/maincpu/cc900/smf_operations_m269.c                        | -O3 -Xr     | 189   | yes   | differs | MATCH                  | cache 1ec81e41e12a |
 | v8        | SmfSeqToSongNumFunc                                | v9/maincpu/cc900/smf_operations_m269_b.c                      | -O3 -Xr     | 87    | yes   | differs | MATCH                  | cache 10cfd4526a88 |
+| v8        | SmfSeqFromSongNumFunc                              | v9/maincpu/cc900/smf_operations_m269_c.c                      | -O3 -Xr     | 87    | yes   | differs | MATCH                  | cache e4445ca6452b |
 | v8        | SndParam_ClearHashTable                            | v9/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 909a1218ca48 |
 | v8        | SndParam_EncodeAddress                             | v9/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 39    | yes   | differs | MATCH                  | cache 909a1218ca48 |
 | v8        | SndParam_BinarySearch                              | v9/maincpu/cc900/sndparam_routines_m0.c                       | -O3 -Xr     | 54    | yes   | differs | MATCH                  | cache b99a78b260d6 |
@@ -2261,6 +2305,7 @@ found yet.
 | v8        | UserBitmapCheck                                    | v9/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 39    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v8        | DrawEditSw                                         | v9/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 223   | yes   | differs | MATCH                  | cache 332c30417d06 |
 | v8        | LabelProc                                          | v9/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 90    | yes   | differs | MATCH                  | cache 332c30417d06 |
+| v8        | VwBoxProc                                          | v9/maincpu/cc900/ui_window_procs_m271_b.c                     | -O3 -Xr     | 208   | yes   | differs | MATCH                  | cache 855aeec7750b |
 | v8        | ClipBlit_Replace                                   | v9/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v8        | ColorBlit                                          | v9/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v8        | ColorBlit2                                         | v9/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
@@ -2371,10 +2416,11 @@ found yet.
 | v7        | CPanel_CheckSpecialCombos                          | v7/maincpu/cc900/cpanel_routines_xr.c                         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 8e13c424557e |
 | v7        | PsMixer_DrawFrameBoxWithDividers                   | v7/maincpu/cc900/drawbar_panel_ui_m264.c                      | -O3 -Xr     | 138   | yes   | differs | MATCH (name cut to 31) | cache 3f6467f9e604 |
 | v7        | SdpartLookupPartId                                 | v7/maincpu/cc900/drawbar_panel_ui_m264_xr.c                   | -Xr         | 32    | yes   | differs | MATCH                  | cache 6fb68028b2cb |
-| v7        | DrawBitmapSP2_DeferredPath_Code                    | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v7        | DrawBitmapSPFast_DeferredPath_Code                 | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v7        | DrawBitmapSP_DeferredPath_Code                     | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v7        | DrawString_DeferredPath_Code                       | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 64e925e2df2a |
+| v7        | DrawBitmapSP2_DeferredPath_Code                    | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v7        | DrawBitmapSPFast_DeferredPath_Code                 | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v7        | DrawBitmapSP_DeferredPath_Code                     | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v7        | DrawBitmap_QueuedExec                              | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v7        | DrawString_DeferredPath_Code                       | v7/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 145485822f2f |
 | v7        | DrawBitmapFast_QueuedExec                          | v7/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v7        | DrawBox_QueuedExec                                 | v7/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v7        | DrawFrameSP_QueuedExec                             | v7/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 24    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
@@ -2394,12 +2440,18 @@ found yet.
 | v7        | DrawString                                         | v7/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 159   | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v7        | MovePixels                                         | v7/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v7        | DrawStringLeftJustify                              | v7/maincpu/cc900/drawing_primitives_m273_b.c                  | -O3 -Xr     | 103   | yes   | differs | MATCH                  | cache cdc1c975ccd2 |
+| v7        | DrawStringReverse                                  | v7/maincpu/cc900/drawing_primitives_m273_b_b.c                | -O3 -Xr     | 340   | yes   | differs | MATCH                  | cache 29734222445b |
 | v7        | MovePixels_Impl                                    | v7/maincpu/cc900/drawing_primitives_m273_c.c                  | -O3 -Xr     | 190   | yes   | differs | MATCH                  | cache 9b5f2b6cf0f6 |
+| v7        | DrawBitmap                                         | v7/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 71    | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v7        | DrawStringCentered                                 | v7/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 158   | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v7        | DrawStringRightJustify                             | v7/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 152   | yes   | differs | MATCH                  | cache b79bcd1c568e |
 | v7        | GET_COMPUTER_INTERFACE_SELECTION                   | v7/maincpu/cc900/dsp_config_sysex.c                           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache f660ff6b74a9 |
 | v7        | DSPCfg_Data_002                                    | v7/maincpu/cc900/dsp_config_sysex_m0.c                        | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 3fe5a794ecee |
 | v7        | SysEx_ValidateRolandHeader                         | v7/maincpu/cc900/dsp_config_sysex_m290.c                      | -O3 -Xr     | 137   | yes   | differs | MATCH                  | cache edaf446f231f |
-| v7        | DSPCfg_GetSlotCount                                | v7/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 037e9b5955b4 |
-| v7        | Fade_Cancel                                        | v7/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache 037e9b5955b4 |
+| v7        | DSPCfg_GetSlotCount                                | v7/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache c76ff93d14c2 |
+| v7        | DSPCfg_ReadMultiField                              | v7/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache c76ff93d14c2 |
+| v7        | DSPCfg_WriteMultiField                             | v7/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 142   | yes   | differs | MATCH                  | cache c76ff93d14c2 |
+| v7        | Fade_Cancel                                        | v7/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache c76ff93d14c2 |
 | v7        | DSPCfg_DecodeParamIdRange                          | v7/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 167   | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v7        | DSPCfg_FindSlot63                                  | v7/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v7        | DSPCfg_ResolveParamToSlot                          | v7/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 316   | yes   | differs | MATCH                  | cache f943b13a39b7 |
@@ -2526,6 +2578,7 @@ found yet.
 | v7        | SeGfx_StaticOp03_Bitmap                            | v7/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 73    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v7        | SeGfx_StaticOp09_Box                               | v7/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v7        | SeGfx_StaticOp15_DottedLine                        | v7/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
+| v7        | ColorBlit_ByteData                                 | v7/maincpu/cc900/graphics_text_vga_m273_b.c                   | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 9034b3928746 |
 | v7        | ConvertStrings                                     | v7/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 109   | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v7        | GetFrameSPSize                                     | v7/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v7        | HexCharToNibble                                    | v7/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 51    | yes   | differs | MATCH                  | cache 37a495c31809 |
@@ -2776,8 +2829,9 @@ found yet.
 | v7        | SeqStep_FileIoCheck                                | v7/maincpu/cc900/smf_event_processor_m238_xr_b_b.c            | -Xr         | 573   | yes   | differs | MATCH                  | cache 10ff3fd95bb8 |
 | v7        | Fat_CreateDirEntry                                 | v7/maincpu/cc900/smf_event_processor_m238_xr_c.c              | -Xr         | 592   | yes   | differs | MATCH                  | cache c32a2f648340 |
 | v7        | SeqChan_ByteBlockD                                 | v7/maincpu/cc900/smf_event_processor_m239_xr.c                | -Xr         | 35    | yes   | MATCH   | MATCH                  | cache acbd7d9f6962 |
-| v7        | FileIO_MatchWildcard                               | v7/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 3f631201d705 |
-| v7        | FindFirst_SndTable                                 | v7/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 3f631201d705 |
+| v7        | FileIO_MatchWildcard                               | v7/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v7        | FileIO_ParsePathComponents                         | v7/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 128   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v7        | FindFirst_SndTable                                 | v7/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
 | v7        | RenderSmfFilename                                  | v7/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache d18776f5c48f |
 | v7        | TrimAndPadSmfFilename                              | v7/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache d18776f5c48f |
 | v7        | SndParam_ClearHashTable                            | v7/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache ef16d062ac8f |
@@ -2939,6 +2993,7 @@ found yet.
 | v7        | UserBitmapCheck                                    | v7/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 39    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v7        | DrawEditSw                                         | v7/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 223   | yes   | differs | MATCH                  | cache 332c30417d06 |
 | v7        | LabelProc                                          | v7/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 90    | yes   | differs | MATCH                  | cache 332c30417d06 |
+| v7        | VwBoxProc                                          | v7/maincpu/cc900/ui_window_procs_m271_b.c                     | -O3 -Xr     | 208   | yes   | differs | MATCH                  | cache 855aeec7750b |
 | v7        | ClipBlit_Replace                                   | v7/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v7        | ColorBlit                                          | v7/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v7        | ColorBlit2                                         | v7/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
@@ -3035,10 +3090,11 @@ found yet.
 | v6        | CPanel_CheckSpecialCombos                          | v6/maincpu/cc900/cpanel_routines_xr.c                         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 79cec96c63cf |
 | v6        | PsMixer_DrawFrameBoxWithDividers                   | v6/maincpu/cc900/drawbar_panel_ui_m264.c                      | -O3 -Xr     | 138   | yes   | differs | MATCH (name cut to 31) | cache 3f6467f9e604 |
 | v6        | SdpartLookupPartId                                 | v6/maincpu/cc900/drawbar_panel_ui_m264_xr.c                   | -Xr         | 32    | yes   | differs | MATCH                  | cache 6fb68028b2cb |
-| v6        | DrawBitmapSP2_DeferredPath_Code                    | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v6        | DrawBitmapSPFast_DeferredPath_Code                 | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v6        | DrawBitmapSP_DeferredPath_Code                     | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v6        | DrawString_DeferredPath_Code                       | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 64e925e2df2a |
+| v6        | DrawBitmapSP2_DeferredPath_Code                    | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v6        | DrawBitmapSPFast_DeferredPath_Code                 | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v6        | DrawBitmapSP_DeferredPath_Code                     | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v6        | DrawBitmap_QueuedExec                              | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v6        | DrawString_DeferredPath_Code                       | v6/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 145485822f2f |
 | v6        | DrawBitmapFast_QueuedExec                          | v6/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v6        | DrawBox_QueuedExec                                 | v6/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v6        | DrawFrameSP_QueuedExec                             | v6/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 24    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
@@ -3058,12 +3114,18 @@ found yet.
 | v6        | DrawString                                         | v6/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 159   | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v6        | MovePixels                                         | v6/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v6        | DrawStringLeftJustify                              | v6/maincpu/cc900/drawing_primitives_m273_b.c                  | -O3 -Xr     | 103   | yes   | differs | MATCH                  | cache cdc1c975ccd2 |
+| v6        | DrawStringReverse                                  | v6/maincpu/cc900/drawing_primitives_m273_b_b.c                | -O3 -Xr     | 340   | yes   | differs | MATCH                  | cache 29734222445b |
 | v6        | MovePixels_Impl                                    | v6/maincpu/cc900/drawing_primitives_m273_c.c                  | -O3 -Xr     | 190   | yes   | differs | MATCH                  | cache 9b5f2b6cf0f6 |
+| v6        | DrawBitmap                                         | v6/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 71    | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v6        | DrawStringCentered                                 | v6/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 158   | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v6        | DrawStringRightJustify                             | v6/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 152   | yes   | differs | MATCH                  | cache b79bcd1c568e |
 | v6        | GET_COMPUTER_INTERFACE_SELECTION                   | v6/maincpu/cc900/dsp_config_sysex.c                           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache f660ff6b74a9 |
 | v6        | DSPCfg_Data_002                                    | v6/maincpu/cc900/dsp_config_sysex_m0.c                        | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 3fe5a794ecee |
 | v6        | SysEx_ValidateRolandHeader                         | v6/maincpu/cc900/dsp_config_sysex_m290.c                      | -O3 -Xr     | 137   | yes   | differs | MATCH                  | cache edaf446f231f |
-| v6        | DSPCfg_GetSlotCount                                | v6/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 950b617aa59b |
-| v6        | Fade_Cancel                                        | v6/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache 950b617aa59b |
+| v6        | DSPCfg_GetSlotCount                                | v6/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache bb728fa380e8 |
+| v6        | DSPCfg_ReadMultiField                              | v6/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache bb728fa380e8 |
+| v6        | DSPCfg_WriteMultiField                             | v6/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 142   | yes   | differs | MATCH                  | cache bb728fa380e8 |
+| v6        | Fade_Cancel                                        | v6/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache bb728fa380e8 |
 | v6        | DSPCfg_DecodeParamIdRange                          | v6/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 167   | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v6        | DSPCfg_FindSlot63                                  | v6/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v6        | DSPCfg_ResolveParamToSlot                          | v6/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 316   | yes   | differs | MATCH                  | cache f943b13a39b7 |
@@ -3183,6 +3245,7 @@ found yet.
 | v6        | SeGfx_StaticOp03_Bitmap                            | v6/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 73    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v6        | SeGfx_StaticOp09_Box                               | v6/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v6        | SeGfx_StaticOp15_DottedLine                        | v6/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
+| v6        | ColorBlit_ByteData                                 | v6/maincpu/cc900/graphics_text_vga_m273_b.c                   | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 9034b3928746 |
 | v6        | ConvertStrings                                     | v6/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 109   | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v6        | GetFrameSPSize                                     | v6/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v6        | HexCharToNibble                                    | v6/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 51    | yes   | differs | MATCH                  | cache 37a495c31809 |
@@ -3423,8 +3486,9 @@ found yet.
 | v6        | SeqStep_FileIoCheck                                | v6/maincpu/cc900/smf_event_processor_m238_xr_b_b.c            | -Xr         | 573   | yes   | differs | MATCH                  | cache 10ff3fd95bb8 |
 | v6        | Fat_CreateDirEntry                                 | v6/maincpu/cc900/smf_event_processor_m238_xr_c.c              | -Xr         | 592   | yes   | differs | MATCH                  | cache c32a2f648340 |
 | v6        | SeqChan_ByteBlockD                                 | v6/maincpu/cc900/smf_event_processor_m239_xr.c                | -Xr         | 35    | yes   | MATCH   | MATCH                  | cache acbd7d9f6962 |
-| v6        | FileIO_MatchWildcard                               | v6/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 3f631201d705 |
-| v6        | FindFirst_SndTable                                 | v6/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 3f631201d705 |
+| v6        | FileIO_MatchWildcard                               | v6/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v6        | FileIO_ParsePathComponents                         | v6/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 128   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v6        | FindFirst_SndTable                                 | v6/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
 | v6        | RenderSmfFilename                                  | v6/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache d18776f5c48f |
 | v6        | TrimAndPadSmfFilename                              | v6/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache d18776f5c48f |
 | v6        | SndParam_ClearHashTable                            | v6/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 43293526f0a5 |
@@ -3577,6 +3641,7 @@ found yet.
 | v6        | DrawDesignBox_QueueCallback                        | v6/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 24    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v6        | UserBitmapCheck                                    | v6/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 39    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v6        | LabelProc                                          | v6/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 90    | yes   | differs | MATCH                  | cache d0b030819a4f |
+| v6        | VwBoxProc                                          | v6/maincpu/cc900/ui_window_procs_m271_b.c                     | -O3 -Xr     | 208   | yes   | differs | MATCH                  | cache 855aeec7750b |
 | v6        | ClipBlit_Replace                                   | v6/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v6        | ColorBlit                                          | v6/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v6        | ColorBlit2                                         | v6/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
@@ -3672,10 +3737,11 @@ found yet.
 | v5        | CPanel_CheckSpecialCombos                          | v5/maincpu/cc900/cpanel_routines_xr.c                         | -Xr         | 47    | yes   | MATCH   | MATCH                  | cache 79cec96c63cf |
 | v5        | PsMixer_DrawFrameBoxWithDividers                   | v5/maincpu/cc900/drawbar_panel_ui_m264.c                      | -O3 -Xr     | 138   | yes   | differs | MATCH (name cut to 31) | cache 3f6467f9e604 |
 | v5        | SdpartLookupPartId                                 | v5/maincpu/cc900/drawbar_panel_ui_m264_xr.c                   | -Xr         | 32    | yes   | differs | MATCH                  | cache 6fb68028b2cb |
-| v5        | DrawBitmapSP2_DeferredPath_Code                    | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v5        | DrawBitmapSPFast_DeferredPath_Code                 | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v5        | DrawBitmapSP_DeferredPath_Code                     | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 64e925e2df2a |
-| v5        | DrawString_DeferredPath_Code                       | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 64e925e2df2a |
+| v5        | DrawBitmapSP2_DeferredPath_Code                    | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 36    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v5        | DrawBitmapSPFast_DeferredPath_Code                 | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v5        | DrawBitmapSP_DeferredPath_Code                     | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 30    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v5        | DrawBitmap_QueuedExec                              | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 21    | yes   | differs | MATCH                  | cache 145485822f2f |
+| v5        | DrawString_DeferredPath_Code                       | v5/maincpu/cc900/drawing_primitives_m0.c                      | -O3 -Xr     | 44    | yes   | differs | MATCH                  | cache 145485822f2f |
 | v5        | DrawBitmapFast_QueuedExec                          | v5/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v5        | DrawBox_QueuedExec                                 | v5/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 21    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
 | v5        | DrawFrameSP_QueuedExec                             | v5/maincpu/cc900/drawing_primitives_m0_xr.c                   | -Xr         | 24    | yes   | differs | MATCH                  | cache 8e138ead6a97 |
@@ -3695,12 +3761,18 @@ found yet.
 | v5        | DrawString                                         | v5/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 159   | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v5        | MovePixels                                         | v5/maincpu/cc900/drawing_primitives_m273.c                    | -O3 -Xr     | 77    | yes   | differs | MATCH                  | cache a350e5a0715e |
 | v5        | DrawStringLeftJustify                              | v5/maincpu/cc900/drawing_primitives_m273_b.c                  | -O3 -Xr     | 103   | yes   | differs | MATCH                  | cache cdc1c975ccd2 |
+| v5        | DrawStringReverse                                  | v5/maincpu/cc900/drawing_primitives_m273_b_b.c                | -O3 -Xr     | 340   | yes   | differs | MATCH                  | cache 29734222445b |
 | v5        | MovePixels_Impl                                    | v5/maincpu/cc900/drawing_primitives_m273_c.c                  | -O3 -Xr     | 190   | yes   | differs | MATCH                  | cache 9b5f2b6cf0f6 |
+| v5        | DrawBitmap                                         | v5/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 71    | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v5        | DrawStringCentered                                 | v5/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 158   | yes   | differs | MATCH                  | cache b79bcd1c568e |
+| v5        | DrawStringRightJustify                             | v5/maincpu/cc900/drawing_primitives_m273_d.c                  | -O3 -Xr     | 152   | yes   | differs | MATCH                  | cache b79bcd1c568e |
 | v5        | GET_COMPUTER_INTERFACE_SELECTION                   | v5/maincpu/cc900/dsp_config_sysex.c                           | -O3 -Xr     | 5     | yes   | MATCH   | MATCH (name cut to 31) | cache f660ff6b74a9 |
 | v5        | DSPCfg_Data_002                                    | v5/maincpu/cc900/dsp_config_sysex_m0.c                        | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 3fe5a794ecee |
 | v5        | SysEx_ValidateRolandHeader                         | v5/maincpu/cc900/dsp_config_sysex_m290.c                      | -O3 -Xr     | 137   | yes   | differs | MATCH                  | cache edaf446f231f |
-| v5        | DSPCfg_GetSlotCount                                | v5/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache 950b617aa59b |
-| v5        | Fade_Cancel                                        | v5/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache 950b617aa59b |
+| v5        | DSPCfg_GetSlotCount                                | v5/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 14    | yes   | MATCH   | MATCH                  | cache bb728fa380e8 |
+| v5        | DSPCfg_ReadMultiField                              | v5/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 119   | yes   | differs | MATCH                  | cache bb728fa380e8 |
+| v5        | DSPCfg_WriteMultiField                             | v5/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 142   | yes   | differs | MATCH                  | cache bb728fa380e8 |
+| v5        | Fade_Cancel                                        | v5/maincpu/cc900/dsp_config_sysex_m293.c                      | -O3 -Xr     | 55    | yes   | differs | MATCH                  | cache bb728fa380e8 |
 | v5        | DSPCfg_DecodeParamIdRange                          | v5/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 167   | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v5        | DSPCfg_FindSlot63                                  | v5/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 69    | yes   | differs | MATCH                  | cache f943b13a39b7 |
 | v5        | DSPCfg_ResolveParamToSlot                          | v5/maincpu/cc900/dsp_config_sysex_m293_b.c                    | -O3 -Xr     | 316   | yes   | differs | MATCH                  | cache f943b13a39b7 |
@@ -3820,6 +3892,7 @@ found yet.
 | v5        | SeGfx_StaticOp03_Bitmap                            | v5/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 73    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v5        | SeGfx_StaticOp09_Box                               | v5/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
 | v5        | SeGfx_StaticOp15_DottedLine                        | v5/maincpu/cc900/graphics_text_vga_m273.c                     | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 7145990f6192 |
+| v5        | ColorBlit_ByteData                                 | v5/maincpu/cc900/graphics_text_vga_m273_b.c                   | -O3 -Xr     | 42    | yes   | differs | MATCH                  | cache 9034b3928746 |
 | v5        | ConvertStrings                                     | v5/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 109   | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v5        | GetFrameSPSize                                     | v5/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 23    | yes   | differs | MATCH                  | cache 37a495c31809 |
 | v5        | HexCharToNibble                                    | v5/maincpu/cc900/graphics_text_vga_m274.c                     | -O3 -Xr     | 51    | yes   | differs | MATCH                  | cache 37a495c31809 |
@@ -4059,8 +4132,9 @@ found yet.
 | v5        | SeqStep_FileIoCheck                                | v5/maincpu/cc900/smf_event_processor_m238_xr_b_b.c            | -Xr         | 573   | yes   | differs | MATCH                  | cache 10ff3fd95bb8 |
 | v5        | Fat_CreateDirEntry                                 | v5/maincpu/cc900/smf_event_processor_m238_xr_c.c              | -Xr         | 592   | yes   | differs | MATCH                  | cache c32a2f648340 |
 | v5        | SeqChan_ByteBlockD                                 | v5/maincpu/cc900/smf_event_processor_m239_xr.c                | -Xr         | 35    | yes   | MATCH   | MATCH                  | cache acbd7d9f6962 |
-| v5        | FileIO_MatchWildcard                               | v5/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 3f631201d705 |
-| v5        | FindFirst_SndTable                                 | v5/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 3f631201d705 |
+| v5        | FileIO_MatchWildcard                               | v5/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 221   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v5        | FileIO_ParsePathComponents                         | v5/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 128   | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
+| v5        | FindFirst_SndTable                                 | v5/maincpu/cc900/smf_event_processor_m240_xr.c                | -Xr         | 54    | yes   | differs | MATCH                  | cache 5ba28a94f5ae |
 | v5        | RenderSmfFilename                                  | v5/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache d18776f5c48f |
 | v5        | TrimAndPadSmfFilename                              | v5/maincpu/cc900/smf_operations.c                             | -O3 -Xr     | 60    | yes   | MATCH   | MATCH                  | cache d18776f5c48f |
 | v5        | SndParam_ClearHashTable                            | v5/maincpu/cc900/sndparam_routines.c                          | -O3 -Xr     | 48    | yes   | differs | MATCH                  | cache 43293526f0a5 |
@@ -4212,6 +4286,7 @@ found yet.
 | v5        | DrawDesignBox_QueueCallback                        | v5/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 24    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v5        | UserBitmapCheck                                    | v5/maincpu/cc900/ui_window_procs_m0_xr.c                      | -Xr         | 39    | yes   | differs | MATCH                  | cache 8395d6398f83 |
 | v5        | LabelProc                                          | v5/maincpu/cc900/ui_window_procs_m271.c                       | -O3 -Xr     | 90    | yes   | differs | MATCH                  | cache d0b030819a4f |
+| v5        | VwBoxProc                                          | v5/maincpu/cc900/ui_window_procs_m271_b.c                     | -O3 -Xr     | 208   | yes   | differs | MATCH                  | cache 855aeec7750b |
 | v5        | ClipBlit_Replace                                   | v5/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 62    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v5        | ColorBlit                                          | v5/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
 | v5        | ColorBlit2                                         | v5/maincpu/cc900/ui_window_procs_m273.c                       | -O3 -Xr     | 89    | yes   | differs | MATCH                  | cache f09a8545ff95 |
