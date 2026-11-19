@@ -855,3 +855,29 @@ SeqAcc_StartPlaybackFromPosition	87	2026-11-19-29-p6-r46	p6_N_4m232a@O3XSXr p6_N
 SndParam_ApplyEventField	98	2026-11-19-29-p6-r46	p6_M_5m301a@Xr
 SndParam_UpdateChannelTuning	166	2026-11-19-29-p6-r46	p6_N_4m298a@Xr
 SwbtB3_CodeA9_Listener0	37	2026-11-19-29-p6-r46	p6_N_4m266a@O3XSXr p6_N_4m266a@O3Xr p6_N_4m266a@Xr
+DemoMode_Main_Operation	99	2026-11-19-37-p6-r47	p6_N_5m266a@O3XSXr p6_N_5m266a@O3Xr p6_N_5m266b@O3XSXr p6_N_5m266b@O3Xr
+Demo_SelectEntry_TimerTick	65	2026-11-19-37-p6-r47	p6_L_5m266a@O3Xr
+FDC_CmdRecalibrate	68	2026-11-19-37-p6-r47	p6_L_5m270a@O3XSXr p6_L_5m270a@O3Xr p6_L_5m270a@Xr
+FileIO_SelectWallpaperByIndex	76	2026-11-19-37-p6-r47	p6_L_5m268b@Xr
+MidiSeq_ApplyPendingParams	81	2026-11-19-37-p6-r47	p6_N_5m286a@O3XSXr p6_N_5m286a@O3Xr
+NavigateToFileIndex	76	2026-11-19-37-p6-r47	p6_L_5m268b@Xr
+Part_ClearAndStealSingleVoice	75	2026-11-19-37-p6-r47	p6_N_5m234a@O3XSXr p6_N_5m234a@O3Xr
+SeFilLpq1_OnColumn2	18	2026-11-19-37-p6-r47	p6_M_6m128d@O3XSXr p6_M_6m128d@O3Xr p6_M_6m128d@Xr
+SeFilLpq1_OnColumn3	9	2026-11-19-37-p6-r47	p6_M_6m128d@O3XSXr p6_M_6m128d@O3Xr p6_M_6m128d@Xr
+SeFilLpq1_OnColumn3_Join21	135	2026-11-19-37-p6-r47	p6_M_6m128c@O3XSXr p6_M_6m128c@O3Xr
+SeFilLpq1_OnColumn4	9	2026-11-19-37-p6-r47	p6_M_6m128d@O3XSXr p6_M_6m128d@O3Xr p6_M_6m128d@Xr
+SeFilLpq1_OnColumn4_Join22	135	2026-11-19-37-p6-r47	p6_M_6m128c@O3XSXr p6_M_6m128c@O3Xr
+SeFilLpq1_OnColumn4_Join24	129	2026-11-19-37-p6-r47	p6_M_6m128e@O3XSXr p6_M_6m128e@O3Xr
+SeFilLpq1_OnColumn4_Join25	130	2026-11-19-37-p6-r47	p6_M_6m128e@O3XSXr p6_M_6m128e@O3Xr
+SeFilLpq1_OnColumn4_Join26	40	2026-11-19-37-p6-r47	p6_M_6m128e@O3XSXr p6_M_6m128e@O3Xr p6_M_6m128e@Xr
+SeFilLpq1_OnColumn4_Join28	51	2026-11-19-37-p6-r47	p6_M_6m128e@O3XSXr p6_M_6m128e@O3Xr
+SeMenu_EditFilterCutoff	135	2026-11-19-37-p6-r47	p6_M_6m128a@O3XSXr p6_M_6m128a@O3Xr
+SeMenu_EditFilterResonance	135	2026-11-19-37-p6-r47	p6_M_6m128a@O3XSXr p6_M_6m128a@O3Xr p6_M_6m128b@O3XSXr p6_M_6m128b@O3Xr
+SeqBuf_WriteNoteOffEntry	83	2026-11-19-37-p6-r47	p6_N_5m234a@O3XSXr p6_N_5m234a@O3Xr
+SeqPlay_CheckDrumAndStart	97	2026-11-19-37-p6-r47	p6_N_5m233a@O3XSXr p6_N_5m233a@O3Xr
+SeqPlay_UpdateStartFromPunchInDown	90	2026-11-19-37-p6-r47	p6_N_5m232a@O3XSXr p6_N_5m232a@O3Xr
+Seq_ValidatePartAndTempo	71	2026-11-19-37-p6-r47	p6_N_5m234a@O3XSXr p6_N_5m234a@O3Xr
+SetWallColor	43	2026-11-19-37-p6-r47	p6_L_5m271a@O3XSXr p6_L_5m271a@O3Xr p6_L_5m271a@Xr
+SndParam_RelocateAndApply	109	2026-11-19-37-p6-r47	p6_L_5m285b@O3XSXr p6_L_5m285b@O3Xr
+SongPlayer_ResetState	67	2026-11-19-37-p6-r47	p6_N_5m302a@Xr
+TtlScreenProc	94	2026-11-19-37-p6-r47	p6_L_5m271a@O3XSXr p6_L_5m271a@O3Xr
