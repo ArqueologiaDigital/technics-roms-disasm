@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: the functions of hdae5000/cc900/hdae5000_lbn_show.c that V4.23 reproduces in HD-AE5000 v1.10i with the tree's own object ids and ram_ addresses (port_built.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_lbn_show.c.
+/* Functions of hdae5000_filesystem.s.  (hdae5000_lbn_show.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_lbn_show.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-module: HDAE5000_PartList_Build HDAE5000_NameHistory_Recall HDAE5000_FlsName_StoreWithUi
    cc900-module: HDAE5000_DirName_StoreWithUi HDAE5000_FlsList_BuildPage HDAE5000_DirList_BuildPage
@@ -117,22 +117,22 @@ extern char HDAE5000_Str_Blank16Tab[];
 extern char HDAE5000_Str_Blank3Tab_Lbn_ShowEntry[];
 extern char HDAE5000_Str_Blank26Tab[];
 extern char HDAE5000_Fmt_1_1d[];
-extern char ram_2cb1b6[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry */
+extern char ram_2cb306[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry */
 extern char HDAE5000_Fmt_3_3d_Lbn_ShowEntry[];
 extern char HDAE5000_Fmt_1_1d_Lbn_ShowEntry[];
-extern char ram_2cb1ca[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2 */
+extern char ram_2cb31a[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2 */
 /* unsigned long: the ROM evaluates ObjIds[variant] first among the arguments (a converted argument's order) */
-extern unsigned long ram_2cb2f0[], ram_2cb2f8[], ram_2cb300[], ram_2cb308[], ram_2cb310[], ram_2cb318[];
+extern unsigned long ram_2cb440[], ram_2cb448[], ram_2cb450[], ram_2cb458[], ram_2cb460[], ram_2cb468[];
                                                         /* HDAE5000_FlsScreen_Refresh_ObjIds .. _ObjIds_6 */
 extern char HDAE5000_Str_FLSNAME[];
-extern char ram_2cb32a[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
-extern char ram_2cb330[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
-extern char ram_2cb332[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
+extern char ram_2cb47a[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
+extern char ram_2cb480[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
+extern char ram_2cb482[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
 extern char HDAE5000_Str_Chr3A2020202020_FlsScreen_Refresh[];
-extern char ram_2cb358[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
+extern char ram_2cb4a8[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
 extern char HDAE5000_Fmt_LOC_3_3d_2_2d[];
 extern char HDAE5000_Str_LOC00000[];
-extern char ram_2cb398[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
+extern char ram_2cb4e8[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
 extern char HDAE5000_Str_LSW[], HDAE5000_Str_PMT[], HDAE5000_Str_SQT[], HDAE5000_Str_CMP[], HDAE5000_Str_TM[],
     HDAE5000_Str_MSP[], HDAE5000_Str_RCM[], HDAE5000_Str_MD[], HDAE5000_Str_TLX[];
 
@@ -155,7 +155,7 @@ int HDAE5000_Lbn_ShowEntry(unsigned int dir, unsigned int song, unsigned int pos
         HDAE5000_MemCopy(HDAE5000_RAM_LbnEntryText, s, HDAE5000_StrLen(s));
         break;
     case 2:
-        HDAE5000_SPrintf(s, ram_2cb1b6, dir / 10);
+        HDAE5000_SPrintf(s, ram_2cb306, dir / 10);
         HDAE5000_MemCopy(HDAE5000_RAM_LbnEntryText, s, HDAE5000_StrLen(s));
         break;
     case 3:
@@ -171,7 +171,7 @@ int HDAE5000_Lbn_ShowEntry(unsigned int dir, unsigned int song, unsigned int pos
         HDAE5000_MemCopy(ram_22aa32, s, HDAE5000_StrLen(s));
         break;
     case 5:
-        HDAE5000_SPrintf(s, ram_2cb1ca, song);
+        HDAE5000_SPrintf(s, ram_2cb31a, song);
         HDAE5000_MemCopy(ram_22aa32, s, HDAE5000_StrLen(s));
         if (dir != 0 && dir <= 120) {
             if (song != 0 && song <= 16)

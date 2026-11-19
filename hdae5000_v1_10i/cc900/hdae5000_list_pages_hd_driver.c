@@ -1,6 +1,6 @@
-/* hdae5000_v1_15i: the functions of hdae5000/cc900/hdae5000_list_pages_hd_driver.c that V4.23 reproduces in HD-AE5000 v1.15i with the tree's own object ids and ram_ addresses (port_built.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_list_pages_hd_driver.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_list_pages_hd_driver.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_list_pages_hd_driver.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
 */
 #include "hdae_ws.h"
@@ -24,8 +24,8 @@ extern int HDAE5000_RAM_DirPageBase;
 extern unsigned int HDAE5000_RAM_FlsPageBase;
 extern char HDAE5000_Str_Chr2020203A2020[];
 extern char HDAE5000_Fmt_3_3d[];
-extern char ram_2cb424[];   /* HDAE5000_Str_Chr2020203A2020_FlsList_BuildPage */
-extern char ram_2cb43a[];   /* HDAE5000_Fmt_3_3d_FlsList_BuildPage, "%3.3d" */
+extern char ram_2cb2d4[];   /* HDAE5000_Str_Chr2020203A2020_FlsList_BuildPage */
+extern char ram_2cb2ea[];   /* HDAE5000_Fmt_3_3d_FlsList_BuildPage, "%3.3d" */
 
 void HDAE5000_DirList_BuildPage(long obj)
 {

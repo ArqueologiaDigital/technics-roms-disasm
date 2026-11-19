@@ -281,7 +281,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - source: `hdae5000_v1_10i/hdae5000_ui_tree.s` line 340
 
 - `PC_DATA_LINK_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_PC_DATA_LINK_PAGE`
-- `PP_STATUS` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_PPORT_Svc26_ShowStatus_Join`, `HDAE5000_PcLink_ShowStatus`
+- `PP_STATUS` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_PPORT_Svc26_ShowStatus`, `HDAE5000_PcLink_ShowStatus`
 - `PC_DATA_LINK_AcIndexWideES` AcIndexWideES: switch Bottom7; switch Bottom8
   - `PC_DATA_LINK_AcIndexWideES_CANCEL` Label: "CANCEL"
 - `PC_DATA_LINK_AcIndexWideES_2` AcIndexWideES: switch Bottom1; switch Bottom2
@@ -361,7 +361,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `LBN_P1_PsMenuBox` PsMenuBox: switch Right5
   - `LBN_P1_PsMenuBox_CLEAR` Label: "CLEAR"
-- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry_Reset`
+- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_AcIndexEditSw` AcIndexEditSw: switch Right1
   - `LBN_P1_AcIndexEditSw_LOAD` Label: "LOAD"
 - `LBN_P1_80` EditSw: "~80"; switch Right2
@@ -377,10 +377,10 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - `LBN_P1_7` StringBox: "7"
 - `LBN_P1_8` StringBox: "8"
 - `LBN_P1_9` StringBox: "9"
-- `LBN_DIRNO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_DIRNAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_FILENO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
+- `LBN_DIRNO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_DIRNAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_FILENO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_LBNPage1SwCatch`
 - `LBN_P1_AcIndexWideES` AcIndexWideES: switch Bottom6; switch Bottom8
 - `LBN_P1_Press_3_digits_for_direc` AcLanguageText1: text "Press 3 digits for directory and 2 digits for the file."

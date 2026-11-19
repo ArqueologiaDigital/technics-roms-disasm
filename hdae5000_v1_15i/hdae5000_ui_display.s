@@ -6767,14 +6767,7 @@ HDAE5000_PPORT_Svc17_FormatHd:	.include "includes/generated/cc900/HDAE5000_PPORT
 ; the mode request the main CPU's own boot makes (HDAE5000_RequestMode does
 ; the same after cancelling a queued one).
 ; ---------------------------------------------------------------------------
-HDAE5000_PPORT_Svc18_RequestNormalMode:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, 0xffffffff
-	ld	xbc, EVT_CHANGE_MODE
-	ld	xde, NAKA_MODE_MD_NORMAL
-	jp	(xhl)
+HDAE5000_PPORT_Svc18_RequestNormalMode:	.include "includes/generated/cc900/HDAE5000_PPORT_Svc18_RequestNormalMode.s"	; C: cc900/hdae5000_pport_svc18.c
 
 ; ---------------------------------------------------------------------------
 ; PC-link service 19, "SendPointerToFreeBufferSpace": the address of

@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: the functions of hdae5000/cc900/hdae5000_song_refresh.c that V4.23 reproduces in HD-AE5000 v1.10i with the tree's own object ids and ram_ addresses (port_built.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_song_refresh.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_song_refresh.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_song_refresh.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: SongScr_q=HDAE5000_SongScreen_Refresh
    cc900-module: HDAE5000_FdList_Clear HDAE5000_FdName_SongNumber HDAE5000_ShowErrorMessageTitle

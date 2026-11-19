@@ -9,6 +9,7 @@
    cc900-module: HDAE5000_DirName_StoreWithUi HDAE5000_TypeSel_Init HDAE5000_TypeSel_ShowSaveFlags
    cc900-module: HDAE5000_SaveSongWithUi HDAE5000_LoadSongWithUi HDAE5000_HardTest_HddIdRead
    cc900-module: HDAE5000_HardTest_Print HDAE5000_FormatDialog_CodeDigit HDAE5000_UiObj_SetCaption
+   cc900-data: HDAE5000_HDAETitleFunc 1 = HDAE5000_HDAETitleFunc_CaseTable
    cc900-data: HDAE5000_AttenHDFormatSwCatch 1 = HDAE5000_AttenHDFormatSwCatch_CaseTable
 */
 #include "hdae_ws.h"
@@ -164,6 +165,64 @@ struct FindBlk { char head[6]; char name[260]; };
      with an unsigned long index.  (Form b: the same through pointer arithmetic, *(member + index).) */
 
 /* r23: not checked in run 95 (Browser_State unresolvable); now ram_23d2d2, and the inner switch unsigned */
+long HDAE5000_HDAETitleFunc(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ACTIVATE_STATE:
+        switch ((unsigned long)arg) {     /* r23: the ROM's bound checks are unsigned (`dec 2; cp 0; jrl c`) */
+        case 2:
+            HDAE5000_RAM_TitleInfoText[150] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_HARD_DISK_OPT, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_TitleInfoText));
+            HDAE5000_SongScreen_Refresh(0, 0);
+            HDAE5000_RAM_FlsListText[1920] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_FLS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_FlsListText));
+            HDAE5000_FlsScreen_Refresh(0, 2);
+            HDAE5000_RAM_DirListText[504] = 0;
+            CALLV(ROOT->ApPostEvent)(OBJ_SEL_DIR, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_DirListText));
+            HDAE5000_DirList_BuildPage(OBJ_SEL_DIR);
+            HDAE5000_FlsList_BuildPage();
+            HDAE5000_Lbn_ShowEntry(0, 0, 6, 0);
+            HDAE5000_MemCopy(HDAE5000_RAM_PcLinkStatusText, HDAE5000_Str_STATUS, 0x21);
+            CALLV(ROOT->ApPostEvent)(OBJ_PP_STATUS, EVT_HDAE_SET_STR_ADR, WRAP(HDAE5000_RAM_PcLinkStatusText));
+            ram_23d2d2 = OBJ_HDDMENU;
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1)
+                ram_23d2d2 = OBJ_FLS_FILE_LOAD;
+            break;
+        case 9:
+            switch (HDAE5000_RAM_QuickLoadMode) {
+            case 1:
+                ram_23d2d2 = OBJ_SELECT_FILE;
+                break;
+            case 2:
+                ram_23d2d2 = OBJ_LOAD_BY_NUM;
+                break;
+            case 3:
+                ram_23d2d2 = OBJ_FLS_FILE_LOAD;
+                break;
+            }
+            break;
+        case 8:
+            CALLV(ROOT->ApPostEvent)(ram_23d2d2, EVT_SHOW, 0L);
+            CALLV(ROOT->ApPostEvent)(-1L, EVT_INDEXSW_DOWN, 0L);
+            if (HDAE5000_RAM_FlsAutoLoadPending == 1 && HDAE5000_RAM_FlsSeqStopPending == 1) {
+                HDAE5000_RAM_FlsSeqStopPending = 0;
+                CALLV(ROOT->ApPostEvent)(OBJ_FLS_FILE_LOAD, EVT_HDAE_SEQ_STOP, 0L);
+            }
+            break;
+        case 6:
+            ram_23d2d2 = HDAE5000_HDAETitleFunc_ObjIds[HDAE5000_Get_Init_Flag()];
+        /* r27: the ROM dispatches through a jump table over 2..9 whose entries for 3, 4, 5 and 7 are the
+           switch's end; V4.23 wrote a compare chain for the four cases alone.  The four empty labels make the
+           case set dense; placed last, with case 6 falling into them, they add no code. */
+        case 3:
+        case 4:
+        case 5:
+        case 7:
+            ;
+        }
+    }
+    return 0;
+}
 
 /* page: which of the three object sets (ObjIds tables); skip != 0: only the part list.  The ROM takes the two
    parameters as bytes (A, C) and keeps them in stack slots (`ld (xsp+24),c; ld (xsp+26),a`): r23 declares them
