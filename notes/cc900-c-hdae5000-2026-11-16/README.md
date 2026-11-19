@@ -32,6 +32,10 @@ The pipeline scripts after a V4.23 run (all run from the repository root; `$TMPD
   writes the corpus layout for the run; `RUN [--remap]` stages what matches per tree.
   `python3 -B notes/cc900-c-hdae5000-2026-11-16/port_built.py --layout OUT --remap`, then
   `hd_v423.py --corpus DIR Xr OUT/*/cc900-staged/*.c`, the run, and `port_built.py RUN --remap`
+- **`learn_remap.py`** (2026-11-19): which v2.06i RAM / string addresses sit elsewhere in an older image, read from
+  near-miss read-outs (`selectlist/cmp.py --image IMG`: lines equal but for one address)?  Writes
+  `learned_remap.tsv`, which `port_built.py --layout OUT --remap --extra learned_remap.tsv` applies to the cells no
+  label moves.  `python3 -B notes/cc900-c-hdae5000-2026-11-16/learn_remap.py OUT.tsv TREE CMP_FILE...`
 - **`promote_hd.py`**: moves matching staged C into `<tree>/cc900/` and splices the hand source.  It holds back what
   the splice refuses.  With `--keep-uncached`, a file the V4.23 cache lacks stays in place: build the tree, then
   rerun.
