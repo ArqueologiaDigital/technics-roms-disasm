@@ -6,31 +6,323 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: SeFilL241_OnColumn6_Join33 SeFilL241_OnColumn6_Join34 SeFilL241_OnColumn6_Join35 SeFilL241_OnSideRow4_Join11 SeFilLpq1_OnColumn3_Join21 SeFilLpq1_OnColumn4_Join22 SeMenu_EditFilterCutoff SeMenu_EditFilterResonance */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-#define TT_SEAMPAMP1 0x2b
-#define TT_SEAMPENV1 0x2d
+#define TT_SEFILLPQ1 0x30
+#define TT_SEFILLFO1 0x39
+extern void SeMenu_LoadObjEntries(unsigned char *);
 extern void SeMenu_SendEvent(int title, int refresh);
 extern unsigned char SeMenu_SelectPartIfEnabled(int p);
+extern void SeFilL241_OnColumn6_Join35(unsigned char a);
+extern void SeMenu_LoadPartParam(int, unsigned char *);
+extern void SeMenu_SetFilterType(int);
+extern void SeFilL241_OnSideRow4(unsigned char a);
+#define TT_SEMENU    0x20
+#define TT_SECOPY    0x3d
+extern void SeMenu_SetupMenuDisplay(int mode);
+extern void SeFilL241_OnSwitch15(unsigned char a);
+extern void SeFilH241_OnSideRow4(unsigned char a);
+extern void SeFilH241_OnSwitch15(unsigned char a);
+struct seprm { unsigned char hdr[16]; unsigned char rec[8][21]; };
+extern void SeMenu_ValidatePartNumber(unsigned char *part);
+extern void SeMenu_SwitchToValueStep(int, unsigned char *);
+extern unsigned char SeMenu_StepParamFieldAndSend(int, int, int, int, unsigned char *);
+extern void SeMenu_BindDialToColumn(int col);
+extern void SeMenu_DrawBandPassCurve(void);
+extern void SeFilBpf1_OnColumn2(unsigned char a);
+extern void SeFilBpf1_OnColumn4(unsigned char a);
+extern void SeFilBpf1_OnColumn5(unsigned char a);
+extern void SeFilBpf1_OnSideRow3(unsigned char a);
+extern void SeFilBpf1_OnSideRow4(unsigned char a);
+extern void SeFilBpf1_OnSwitch15(unsigned char a);
+extern void SeFilBcf1_OnSideRow3(unsigned char a);
+extern void SeFilBcf1_OnSideRow4(unsigned char a);
+extern void SeFilBcf1_OnSwitch15(unsigned char a);
+extern void SeMenu_StorePartParam(int, int);
+#define TT_SEFILFIL2 0x36
+extern void SeFilFil2_OnSideRow3(unsigned char a);
+#define TT_SEAMPAMP1 0x2b
+#define TT_SEAMPENV1 0x2d
 extern void SeAmpEnv1_OnSideRow2(unsigned char a);
 #define TT_SEAMPLFO1 0x2f
-extern void SeMenu_LoadObjEntries(unsigned char *);
 extern void SeAmpEnv1_OnSideRow3(unsigned char a);
-extern void SeMenu_LoadPartParam(int, unsigned char *);
-extern void SeMenu_StorePartParam(int, int);
 extern void __cdecl SeTitle_DrawField(int, int);
 extern void SeMenu_DrawAmpEnvGraph(void);
 extern void SeMenu_SetupDisplayObject_Alt1(int, int, unsigned char *, unsigned int);
 extern void SeAmpEnv1_OnSideRow5(unsigned char a);
-#define TT_SEMENU    0x20
-#define TT_SECOPY    0x3d
-extern void SeMenu_SetupMenuDisplay(int mode);
 extern void SeAmpEnv1_OnSwitch15(unsigned char a);
-#define TT_SEFILLPQ1 0x30
-extern void SeMenu_SetFilterType(int);
 extern void SeFilHpq1_OnSideRow4(unsigned char a);
 extern void SeFilHpq1_OnSwitch15(unsigned char a);
 extern void SeFilLpq1_OnSideRow4(unsigned char a);
 extern void SeFilLpq1_OnSwitch15(unsigned char a);
+
+void SeFilL241_OnColumn6_Join35(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	} else {
+		if (SeMenu_SelectPartIfEnabled(2) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilL241_OnSideRow4(unsigned char a)
+{
+	unsigned char v;
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		SeMenu_LoadPartParam(0, &v);
+		v &= 0xf8;
+		v |= 0x04;
+		SeMenu_SetFilterType(v);
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	} else {
+		if (obj != 1 && SeMenu_SelectPartIfEnabled(3) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilL241_OnSwitch15(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_SetupMenuDisplay(0);
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEMENU, 0);
+		else
+			SeMenu_SendEvent(TT_SECOPY, 0);
+	}
+}
+
+void SeFilH241_OnSideRow4(unsigned char a)
+{
+	unsigned char v;
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		SeMenu_LoadPartParam(0, &v);
+		v &= 0xf8;
+		v |= 0x05;
+		SeMenu_SetFilterType(v);
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	} else {
+		if (obj != 1 && SeMenu_SelectPartIfEnabled(3) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilH241_OnSwitch15(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_SetupMenuDisplay(0);
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEMENU, 0);
+		else
+			SeMenu_SendEvent(TT_SECOPY, 0);
+	}
+}
+
+void SeFilBpf1_OnColumn2(unsigned char a)
+{
+	unsigned char part;
+	unsigned char t;
+	unsigned char obj;
+	unsigned char buf[12];
+	unsigned char *p;
+	unsigned char v;
+	unsigned char *r;
+
+	SeMenu_ValidatePartNumber(&part);
+	SeMenu_LoadObjEntries(&obj);
+	SeMenu_LoadPartParam(4, &t);
+	SeMenu_LoadPartParam(2, buf);
+	p = buf;
+	p[6] = 255;
+	p[7] = 0;
+	p[8] = t - 1;
+	p[9] = 0;
+	SeMenu_SwitchToValueStep(a, p + 10);
+	if (obj == 0)
+		v = 77;
+	else {
+		r = ((struct seprm *)0)->rec[(unsigned char)(part - 1)];
+		v = (unsigned char)(unsigned long)(r + 17);
+		part = 0;
+	}
+	SeMenu_StepParamFieldAndSend(52, 2, part, v, buf);
+	SeMenu_DrawBandPassCurve();
+	SeMenu_BindDialToColumn(2);
+}
+
+void SeFilBpf1_OnColumn4(unsigned char a)
+{
+	unsigned char part;
+	unsigned char t;
+	unsigned char obj;
+	unsigned char buf[12];
+	unsigned char *p;
+	unsigned char *r;
+
+	SeMenu_ValidatePartNumber(&part);
+	SeMenu_LoadObjEntries(&obj);
+	SeMenu_LoadPartParam(2, &t);
+	SeMenu_LoadPartParam(4, buf);
+	p = buf;
+	p[6] = 255;
+	p[7] = 0;
+	p[8] = 127;
+	p[9] = t + 1;
+	SeMenu_SwitchToValueStep(a, p + 10);
+	p = buf;
+	if (obj == 0)
+		SeMenu_StepParamFieldAndSend(52, 4, part, 79, p);
+	else {
+		r = ((struct seprm *)0)->rec[(unsigned char)(part - 1)];
+		SeMenu_StepParamFieldAndSend(52, 4, 0, (unsigned char)(unsigned long)(r + 19), p);
+	}
+	SeMenu_DrawBandPassCurve();
+	SeMenu_BindDialToColumn(4);
+}
+
+void SeFilBpf1_OnColumn5(unsigned char a)
+{
+	unsigned char part;
+	unsigned char obj;
+	unsigned char buf[12];
+	unsigned char *p;
+	unsigned char *r;
+
+	SeMenu_ValidatePartNumber(&part);
+	SeMenu_LoadObjEntries(&obj);
+	SeMenu_LoadPartParam(5, buf);
+	p = buf;
+	p[6] = 15;
+	p[7] = 0;
+	p[8] = 5;
+	p[9] = 0;
+	SeMenu_SwitchToValueStep(a, p + 10);
+	p = buf;
+	if (obj == 0)
+		SeMenu_StepParamFieldAndSend(52, 5, part, 80, p);
+	else {
+		r = ((struct seprm *)0)->rec[(unsigned char)(part - 1)];
+		SeMenu_StepParamFieldAndSend(52, 5, 0, (unsigned char)(unsigned long)(r + 20), p);
+	}
+	SeMenu_DrawBandPassCurve();
+	SeMenu_BindDialToColumn(5);
+}
+
+void SeFilBpf1_OnSideRow3(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	} else {
+		if (SeMenu_SelectPartIfEnabled(2) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilBpf1_OnSideRow4(unsigned char a)
+{
+	unsigned char v;
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		SeMenu_LoadPartParam(0, &v);
+		v &= 0xf8;
+		SeMenu_SetFilterType(v);
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	} else {
+		if (obj != 1 && SeMenu_SelectPartIfEnabled(3) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilBpf1_OnSwitch15(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_SetupMenuDisplay(0);
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEMENU, 0);
+		else
+			SeMenu_SendEvent(TT_SECOPY, 0);
+	}
+}
+
+void SeFilBcf1_OnSideRow3(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	} else {
+		if (SeMenu_SelectPartIfEnabled(2) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilBcf1_OnSideRow4(unsigned char a)
+{
+	unsigned char v;
+	unsigned char obj;
+
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		SeMenu_LoadPartParam(0, &v);
+		v &= 0xf8;
+		v |= 0x01;
+		SeMenu_SetFilterType(v);
+		SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	} else {
+		if (obj != 1 && SeMenu_SelectPartIfEnabled(3) != 0)
+			SeMenu_SendEvent(TT_SEFILLPQ1, 0);
+	}
+}
+
+void SeFilBcf1_OnSwitch15(unsigned char a)
+{
+	unsigned char obj;
+
+	SeMenu_SetupMenuDisplay(0);
+	SeMenu_LoadObjEntries(&obj);
+	if (a == 0) {
+		if (obj == 0)
+			SeMenu_SendEvent(TT_SEMENU, 0);
+		else
+			SeMenu_SendEvent(TT_SECOPY, 0);
+	}
+}
+
+
+void SeFilFil2_OnSideRow3(unsigned char a)
+{
+	if (a == 0)
+		SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	else if (SeMenu_SelectPartIfEnabled(2) != 0)
+		SeMenu_SendEvent(TT_SEFILFIL2, 1);
+}
 
 void SeAmpEnv1_OnSideRow2(unsigned char a)
 {

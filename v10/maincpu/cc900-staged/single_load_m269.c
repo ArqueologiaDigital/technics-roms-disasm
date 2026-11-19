@@ -6,9 +6,13 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: TrimAndPadSmfFilename */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: SingleLoadDstFunc SingleLoadSrcFunc TrimAndPadSmfFilename */   /* scripts/analysis/cc900/module_calls.py v10 */
 
+#define EVT_PAINT     0x1c0000bL
 #define EVT_PARA_DRAW 0x1c0000fL
+extern long SingleLoadSrcFunc(long, long, long);
+extern long SingleLoadDstFunc(long, long, long);
+extern void SingleLoad_SyncSoundMemCursorGroup(long kind, unsigned char n, unsigned char *a, unsigned char *b);
 extern char __near SINGLE_LOAD_SRC_ROWS[];
 extern unsigned char __near SLOAD_SRC_SOUND_POS;
 extern char *SingleLoadSrc_ReadTmUserKitName(void);
@@ -16,6 +20,29 @@ extern void FileIO_CopyString(char *, char *);
 extern void TrimAndPadSmfFilename(unsigned char *, unsigned int);
 extern long ApPostEvent(long, long, long);
 extern void SingleLoadSrc_DrawUserKitName(long obj, unsigned char n);
+
+void SingleLoad_SyncSoundMemCursorGroup(long kind, unsigned char n, unsigned char *a, unsigned char *b)
+{
+	unsigned char l;
+
+	l = n + n;
+	if (*a < l && *b < l)
+		return;
+	if (*a >= l && *b >= l)
+		return;
+	switch (kind) {
+	case 5:
+	case 6:
+		*b = *a;
+		SingleLoadDstFunc(0, EVT_PARA_DRAW, 0);
+		break;
+	case 7:
+	case 8:
+		*a = *b;
+		SingleLoadSrcFunc(0, EVT_PAINT, 0);
+		break;
+	}
+}
 
 void SingleLoadSrc_DrawUserKitName(long obj, unsigned char n)
 {
