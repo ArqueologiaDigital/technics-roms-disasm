@@ -6340,41 +6340,13 @@ SePitPit1_OnSwitch15:
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
-SePitEnv1_OnColumn1:
-	extz	wa
-	ldw	bc, 9
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join8
-SePitEnv1_OnColumn2:
-	extz	wa
-	ldw	bc, 10
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join9
-SePitEnv1_OnColumn3:
-	extz	wa
-	ldw	bc, 8
-	ldw	de, 11
-	jp	SeMenu_ApplyPartEdit_AltStore_Join10
-SePitEnv1_OnColumn4:
-	extz	wa
-	ldw	bc, 12
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join11
-SePitEnv1_OnColumn5:
-	extz	wa
-	ldw	bc, 16
-	ldw	de, 13
-	jp	SeMenu_ApplyPartEdit_AltStore_Join12
-SePitEnv1_OnColumn6:
-	extz	wa
-	ldw	bc, 14
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join13
-SePitEnv1_OnColumn7:
-	extz	wa
-	ld	bc, 7:i3
-	ldw	de, 15
-	jp	SeMenu_ApplyPartEdit_AltStore_Join14
+SePitEnv1_OnColumn1:	.include "includes/generated/cc900/SePitEnv1_OnColumn1.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv1_OnColumn2:	.include "includes/generated/cc900/SePitEnv1_OnColumn2.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv1_OnColumn3:	.include "includes/generated/cc900/SePitEnv1_OnColumn3.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv1_OnColumn4:	.include "includes/generated/cc900/SePitEnv1_OnColumn4.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv1_OnColumn5:	.include "includes/generated/cc900/SePitEnv1_OnColumn5.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv1_OnColumn6:	.include "includes/generated/cc900/SePitEnv1_OnColumn6.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv1_OnColumn7:	.include "includes/generated/cc900/SePitEnv1_OnColumn7.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv1_OnSideRow1:
 	cp	a, 0:i3
 	ret	z
@@ -6412,34 +6384,12 @@ SePitEnv1_OnSideRow3_Skip6:
 SePitEnv1_OnSideRow3_Join5:
 	call	SeMenu_SendEvent
 	ret
-SePitEnv1_OnSideRow4:
-	cp	a, 0:i3
-	jr	nz, SePitEnv1_OnSideRow4_Skip7
-	ld	wa, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join7
-SePitEnv1_OnSideRow4_Skip7:
-	ld	wa, 3:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SePitEnv1_OnSideRow5:
-	cp	a, 0:i3
-	jr	nz, SePitEnv1_OnSideRow5_Skip8
-	ld	wa, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join7
-SePitEnv1_OnSideRow5_Skip8:
-	ld	wa, 4:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
+SePitEnv1_OnSideRow4:	.include "includes/generated/cc900/SePitEnv1_OnSideRow4.s"	; C: cc900/semenu_routines_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitEnv1_OnSideRow4_Skip7, SePitEnv1_OnSideRow4 + 10
+SePitEnv1_OnSideRow5:	.include "includes/generated/cc900/SePitEnv1_OnSideRow5.s"	; C: cc900/semenu_routines_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitEnv1_OnSideRow5_Skip8, SePitEnv1_OnSideRow5 + 10
 SePitEnv1_OnSwitch25:
 	cp	a, 0:i3
 	ret	nz
@@ -6456,30 +6406,15 @@ SePitEnv1_OnSwitch15:
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
-SePitEnv2_OnColumn2:
-	extz	wa
-	ldw	bc, 20
-	jp	SeMenu_ApplyPartEdit_AltStore_Join15
-SePitEnv2_OnColumn3:
-	extz	wa
-	ldw	bc, 21
-	jp	SeMenu_ApplyPartEdit_AltStore_Join16
-SePitEnv2_OnColumn4:
-	extz	wa
-	ldw	bc, 22
-	jp	SeMenu_ApplyPartEdit_AltStore_Join17
+SePitEnv2_OnColumn2:	.include "includes/generated/cc900/SePitEnv2_OnColumn2.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv2_OnColumn3:	.include "includes/generated/cc900/SePitEnv2_OnColumn3.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv2_OnColumn4:	.include "includes/generated/cc900/SePitEnv2_OnColumn4.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv2_OnColumn5:
 	extz	wa
 	ldw	bc, 19
 	jp	SeMenu_ApplyPartEdit_AltStore_Join18
-SePitEnv2_OnColumn7:
-	extz	wa
-	ldw	bc, 17
-	jp	SeMenu_ApplyPartEdit_AltStore_Join19
-SePitEnv2_OnColumn8:
-	extz	wa
-	ldw	bc, 18
-	jp	SeMenu_ApplyPartEdit_AltStore_Join20
+SePitEnv2_OnColumn7:	.include "includes/generated/cc900/SePitEnv2_OnColumn7.s"	; C: cc900/semenu_routines_m0_b.c
+SePitEnv2_OnColumn8:	.include "includes/generated/cc900/SePitEnv2_OnColumn8.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv2_OnSideRow1:
 	cp	a, 0:i3
 	ret	z
@@ -6559,30 +6494,12 @@ SePitLfo1_OnColumn2:
 	extz	wa
 	ld	bc, 1:i3
 	jp	SeLfo1_StepSelectorAndReload
-SePitLfo1_OnColumn3:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join
-SePitLfo1_OnColumn4:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join2
-SePitLfo1_OnColumn5:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join3
-SePitLfo1_OnColumn6:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join4
-SePitLfo1_OnColumn7:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join5
-SePitLfo1_OnColumn8:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join6
+SePitLfo1_OnColumn3:	.include "includes/generated/cc900/SePitLfo1_OnColumn3.s"	; C: cc900/semenu_routines_m0_b.c
+SePitLfo1_OnColumn4:	.include "includes/generated/cc900/SePitLfo1_OnColumn4.s"	; C: cc900/semenu_routines_m0_b.c
+SePitLfo1_OnColumn5:	.include "includes/generated/cc900/SePitLfo1_OnColumn5.s"	; C: cc900/semenu_routines_m0_b.c
+SePitLfo1_OnColumn6:	.include "includes/generated/cc900/SePitLfo1_OnColumn6.s"	; C: cc900/semenu_routines_m0_b.c
+SePitLfo1_OnColumn7:	.include "includes/generated/cc900/SePitLfo1_OnColumn7.s"	; C: cc900/semenu_routines_m0_b.c
+SePitLfo1_OnColumn8:	.include "includes/generated/cc900/SePitLfo1_OnColumn8.s"	; C: cc900/semenu_routines_m0_b.c
 SePitLfo1_OnSideRow1:
 	cp	a, 0:i3
 	jp	nz, (SeMenu_ToggleSolo:24)

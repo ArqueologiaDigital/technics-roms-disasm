@@ -3,7 +3,6 @@
  1170  365 DSP_ParamEQ_Curve_FP                         core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_DP_CopyOrNegate8,FP_SP_CallWithBuf8,FP_dadd,FP_dcmp,FP_ddiv,FP_dmul,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
   787  262 DSP_FilterLUT_Fetch                          core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_Raw4Copy,FP_ScalarToDP,FP_dadd,FP_dmul,FP_dtof  calr 
   617  203 DSP_BiquadWarp_FP                            core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CopyOrNegate4,FP_ScalarToDP,FP_dmul,FP_dtof,FP_fadd,FP_fdiv,FP_fmul,FP_fsub,FP_ftoi,FP_pow  calr 
-  495  160 DSP_DetuneCurve_SignedFP                     core/14_dsp_control_routines.s             abs  erp  7 nop   0 runtime FP_SP_CallWithBuf8,FP_SP_CopyOrNegate4,FP_ddiv,FP_dsub,FP_dtof,FP_fdiv,FP_fmul,FP_fsub,FP_ftod,FP_ftoi,FP_pow  calr 
   321  109 DSP_SOS_LUT_Fetch                            core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_Raw4Copy,FP_ScalarToDP,FP_dadd,FP_dmul,FP_dtof  calr 
   250   87 DSP_MixerCoeff_Compute                       core/14_dsp_control_routines.s             abs  erp  0 nop   0 runtime FP_SP_CallWithBuf8,FP_ftoi,Math_Multiply32  calr 
   116   41 DSP_ParamInterp_3Point_WithOffset            core/14_dsp_control_routines.s             abs  erp  2 nop   0 runtime Math_Multiply32  calr 

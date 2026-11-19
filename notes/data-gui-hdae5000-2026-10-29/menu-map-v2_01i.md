@@ -1347,29 +1347,29 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `Tech_lyrics_Exit_HDDMENU` IvExitScreen: opens [HDDMENU](#hddmenu)
 - `Tech_lyrics_TextBox` TextBox
-  - `SongTitle` PsParaBox -- code: `HDAE5000_LyricBoxProc_Ev01CA0008_Join`
+  - `SongTitle` PsParaBox -- code: `HDAE5000_LyricBoxProc`
 - `Tech_lyrics_TextBox_2` TextBox
-  - `Conductor` PsParaBox -- code: `HDAE5000_LyricBoxProc_Ev01CA0008_Join`
-- `bottom01` PsParaBox -- code: `HDAE5000_LyricBoxProc_Ev01CA0008_Join`
+  - `Conductor` PsParaBox -- code: `HDAE5000_LyricBoxProc`
+- `bottom01` PsParaBox -- code: `HDAE5000_LyricBoxProc`
 - `bottom02` PsParaBox
 - `bottom03` PsParaBox
 - `bottom04` PsParaBox
 - `bottom05` PsParaBox
 - `bottom06` PsParaBox
 - `bottom07` PsParaBox
-- `bottom08` PsParaBox -- code: `HDAE5000_LyricBoxProc_Ev01CA0008_Join`
+- `bottom08` PsParaBox -- code: `HDAE5000_LyricBoxProc`
 - `Tech_lyrics_TextBox_3` TextBox
   - `ChordinLyric` PsParaBox (RAM record)
   - `TempoinLyric` PsParaBox (RAM record)
-  - `MeasureinLyric` PsParaBox (RAM record) -- code: `HDAE5000_LyricBoxProc_Ev01CA0003`
-  - `TimeSigInLyric` PsParaBox (RAM record) -- code: `HDAE5000_LyricBoxProc_Ev01CA0003`
+  - `MeasureinLyric` PsParaBox (RAM record) -- code: `HDAE5000_LyricBoxProc`
+  - `TimeSigInLyric` PsParaBox (RAM record) -- code: `HDAE5000_LyricBoxProc`
 - `Tech_lyrics_LyricBox` LyricBox
 
 ## LoadLyricFD
 
 - class `TtlScreenR3`, caption "Load Lyric From FD", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_i37 (document page with a music note)
-- named in code by: `HDAE5000_LyricBoxProc_OnLoad`
+- named in code by: `HDAE5000_LyricBoxProc`
 - source: `hdae5000_v2_01i/hdae5000_ui_tree.s` line 1648
 
 - `LoadLyricFD_Exit_Tech_lyrics` IvExitScreen: opens [Tech_lyrics](#tech_lyrics)

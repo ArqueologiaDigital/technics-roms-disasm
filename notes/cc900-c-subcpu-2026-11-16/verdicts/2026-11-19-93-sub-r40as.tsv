@@ -1,0 +1,3 @@
+function	bytes	matches	best_diff
+ExtVoice_Build_SlotRegisters	894	-	+754 sub_AS_40a@Xr
+Voice_SubVoice_ComputeAndTrigger	744	sub_AS_40a@Xr sub_AS_40b@Xr	

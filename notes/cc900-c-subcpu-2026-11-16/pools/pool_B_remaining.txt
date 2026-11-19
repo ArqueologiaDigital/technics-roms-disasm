@@ -1,24 +1,6 @@
   772  282 Voice_Calc_LevelPair_Mono                    core/06_voice_envelopes_and_channels.s     rel  erp 10 nop   0 runtime -  calr Int_ClampSignedToRange Pan_ScaleWithVelocity PitchBend_Scale
   761  266 Voice_Step_ExprRamp                          core/06_voice_envelopes_and_channels.s     rel  erp  0 nop  32 runtime -  calr Voice_ApplyPortamento
-  365  135 DSP_VoiceCoeffRoute                          core/09_dsp_algo_select.s                  leaf erp  2 nop   0 runtime -  calr 
   314  111 Voice_Calc_LevelPair_FixedAtk                core/06_voice_envelopes_and_channels.s     rel  erp  0 nop   0 runtime -  calr Int_ClampSignedToRange PitchBend_Scale
-  298  121 AudioMod_Apply_Slot_Field29                  core/06_voice_envelopes_and_channels.s     leaf erp  3 nop   0 runtime -  calr 
-  281  112 AudioMod_Apply_Slot_Field2A                  core/06_voice_envelopes_and_channels.s     leaf erp  3 nop   0 runtime -  calr 
-  216   85 ToneGen_WriteVoice_6Words                    core/06_voice_envelopes_and_channels.s     leaf erp  0 nop  24 runtime -  calr 
   117   35 Voice_TickNoteDecay                          core/06_voice_envelopes_and_channels.s     rel  erp  6 nop   0 runtime -  calr Voice_InitVoiceState
-  114   48 ToneGen_WriteNote2ch                         core/06_voice_envelopes_and_channels.s     leaf erp  0 nop  12 runtime -  calr 
-   80   33 ToneGen_WriteVoice_TvfPair                   core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   8 runtime -  calr 
-   80   33 ToneGen_WriteVoice_Reg21_Reg22               core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   8 runtime -  calr 
    77   31 AudioMod_Scale_To_Part_1F                    core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   0 runtime -  calr 
    74   30 AudioMod_Scale_To_LevelPairShift             core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   0 runtime -  calr 
-   71   29 ToneGen_WriteVoice_Reg07_Or_Reg18            core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   8 runtime -  calr 
-   71   29 ToneGen_WriteVoice_Reg15_Or_Reg16            core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   8 runtime -  calr 
-   37   16 ToneGen_WriteVoice_Short                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Long                      core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_EnvLevel                  core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Reg11                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Reg13                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Reg18                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Reg16                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Reg07                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 
-   34   15 ToneGen_WriteVoice_Reg15                     core/06_voice_envelopes_and_channels.s     leaf erp  0 nop   4 runtime -  calr 

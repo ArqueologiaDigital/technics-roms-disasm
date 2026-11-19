@@ -1152,80 +1152,21 @@ SeAmpEnv2_OnSwitch15:
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
-SeAmpLfo1_OnColumn2:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeLfo1_StepSelectorAndReload
-SeAmpLfo1_OnColumn3:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join
-SeAmpLfo1_OnColumn4:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join2
-SeAmpLfo1_OnColumn5:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join3
-SeAmpLfo1_OnColumn6:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join4
-SeAmpLfo1_OnColumn7:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join5
-SeAmpLfo1_OnColumn8:
-	extz	wa
-	ld	bc, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join6
-SeAmpLfo1_OnSideRow1:
-	cp	a, 0:i3
-	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, TT_SEAMPENV1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SeAmpLfo1_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SeAmpLfo1_OnSideRow2_Skip26
-	ldw	wa, TT_SEAMPAMP1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SeAmpLfo1_OnSideRow2_Skip26:
-	ld	wa, 0:i3
-	ld	bc, 1:i3
-	jp	SeMenu_CyclePartLfoState
-SeAmpLfo1_OnSideRow3:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 0:i3
-	ld	bc, 2:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SeAmpLfo1_OnSideRow4:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 0:i3
-	ld	bc, 3:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SeAmpLfo1_OnSideRow5:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 0:i3
-	ld	bc, 4:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SeAmpLfo1_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
+SeAmpLfo1_OnColumn2:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn2.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnColumn3:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnColumn4:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnColumn5:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnColumn6:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn6.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnColumn7:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn7.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnColumn8:	.include "includes/generated/cc900/SeAmpLfo1_OnColumn8.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnSideRow1:	.include "includes/generated/cc900/SeAmpLfo1_OnSideRow1.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnSideRow2:	.include "includes/generated/cc900/SeAmpLfo1_OnSideRow2.s"	; C: cc900/scoop_editor_data_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpLfo1_OnSideRow2_Skip26, SeAmpLfo1_OnSideRow2 + 13
+SeAmpLfo1_OnSideRow3:	.include "includes/generated/cc900/SeAmpLfo1_OnSideRow3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnSideRow4:	.include "includes/generated/cc900/SeAmpLfo1_OnSideRow4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnSideRow5:	.include "includes/generated/cc900/SeAmpLfo1_OnSideRow5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeAmpLfo1_OnSwitch15:	.include "includes/generated/cc900/SeAmpLfo1_OnSwitch15.s"	; C: cc900/scoop_editor_data_m0_xr.c
 SeFilLpq1TitleFunc_DispatchSwitch:
 	dec	4, xsp
 	lda	xde, (xsp+2)
@@ -1838,298 +1779,67 @@ SeFilFil2_OnSideRow4:	.include "includes/generated/cc900/SeFilFil2_OnSideRow4.s"
 SeFilFil2_OnSideRow5:	.include "includes/generated/cc900/SeFilFil2_OnSideRow5.s"	; C: cc900/scoop_editor_data_m0_xr_b.c
 SeFilFil2_OnSwitch25:	.include "includes/generated/cc900/SeFilFil2_OnSwitch25.s"	; C: cc900/scoop_editor_data_m0_xr_b.c
 SeFilFil2_OnSwitch15:	.include "includes/generated/cc900/SeFilFil2_OnSwitch15.s"	; C: cc900/scoop_editor_data_m0_xr_b.c
-SeFilEnv1_OnColumn1:
-	extz	wa
-	ldw	bc, 63
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join8
-SeFilEnv1_OnColumn2:
-	extz	wa
-	ldw	bc, 64
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join9
-SeFilEnv1_OnColumn3:
-	extz	wa
-	ldw	bc, 62
-	ldw	de, 65
-	jp	SeMenu_ApplyPartEdit_AltStore_Join10
-SeFilEnv1_OnColumn4:
-	extz	wa
-	ldw	bc, 66
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join11
-SeFilEnv1_OnColumn5:
-	extz	wa
-	ldw	bc, 70
-	ldw	de, 67
-	jp	SeMenu_ApplyPartEdit_AltStore_Join12
-SeFilEnv1_OnColumn6:
-	extz	wa
-	ldw	bc, 68
-	ld	de, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join13
-SeFilEnv1_OnColumn7:
-	extz	wa
-	ldw	bc, 61
-	ldw	de, 69
-	jp	SeMenu_ApplyPartEdit_AltStore_Join14
-SeFilEnv1_OnSideRow1:
-	cp	a, 0:i3
-	ret	z
-	call	SeMenu_ToggleSolo
-	ret
-SeFilEnv1_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SeFilEnv1_OnSideRow2_Skip46
-	ldw	wa, TT_SEFILLPQ1
-	ld	bc, 0:i3
-	jr	SeFilEnv1_OnSideRow2_Join44
-SeFilEnv1_OnSideRow2_Skip46:
-	ld	wa, 1:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 1:i3
-SeFilEnv1_OnSideRow2_Join44:
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv1_OnSideRow3:
-	cp	a, 0:i3
-	jr	nz, SeFilEnv1_OnSideRow3_Skip47
-	ldw	wa, TT_SEFILLFO1
-	ld	bc, 0:i3
-	jr	SeFilEnv1_OnSideRow3_Join45
-SeFilEnv1_OnSideRow3_Skip47:
-	ld	wa, 2:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 1:i3
-SeFilEnv1_OnSideRow3_Join45:
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv1_OnSideRow4:
-	cp	a, 0:i3
-	jr	nz, SeFilEnv1_OnSideRow4_Skip48
-	ld	wa, 0:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join7
-SeFilEnv1_OnSideRow4_Skip48:
-	ld	wa, 3:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv1_OnSideRow5:
-	cp	a, 0:i3
-	jr	nz, SeFilEnv1_OnSideRow5_Skip49
-	ld	wa, 1:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join7
-SeFilEnv1_OnSideRow5_Skip49:
-	ld	wa, 4:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv1_OnSwitch25:
-	cp	a, 0:i3
-	ret	nz
-	ldw	wa, TT_SEFILENV2
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv1_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv2_OnColumn2:
-	extz	wa
-	ldw	bc, 74
-	jp	SeMenu_ApplyPartEdit_AltStore_Join15
-SeFilEnv2_OnColumn3:
-	extz	wa
-	ldw	bc, 75
-	jp	SeMenu_ApplyPartEdit_AltStore_Join16
-SeFilEnv2_OnColumn4:
-	extz	wa
-	ldw	bc, 76
-	jp	SeMenu_ApplyPartEdit_AltStore_Join17
-SeFilEnv2_OnColumn5:
-	extz	wa
-	ldw	bc, 73
-	jp	SeMenu_ApplyPartEdit_AltStore_Join18
-SeFilEnv2_OnColumn7:
-	extz	wa
-	ldw	bc, 71
-	jp	SeMenu_ApplyPartEdit_AltStore_Join19
-SeFilEnv2_OnColumn8:
-	extz	wa
-	ldw	bc, 72
-	jp	SeMenu_ApplyPartEdit_AltStore_Join20
-SeFilEnv2_OnSideRow1:
-	cp	a, 0:i3
-	ret	z
-	call	SeMenu_ToggleSolo
-	ret
-SeFilEnv2_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SeFilEnv2_OnSideRow2_Skip50
-	ldw	wa, TT_SEFILLPQ1
-	ld	bc, 0:i3
-	jr	SeFilEnv2_OnSideRow2_Join46
-SeFilEnv2_OnSideRow2_Skip50:
-	ld	wa, 1:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV2
-	ld	bc, 1:i3
-SeFilEnv2_OnSideRow2_Join46:
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv2_OnSideRow3:
-	cp	a, 0:i3
-	jr	nz, SeFilEnv2_OnSideRow3_Skip51
-	ldw	wa, TT_SEFILLFO1
-	ld	bc, 0:i3
-	jr	SeFilEnv2_OnSideRow3_Join47
-SeFilEnv2_OnSideRow3_Skip51:
-	ld	wa, 2:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV2
-	ld	bc, 1:i3
-SeFilEnv2_OnSideRow3_Join47:
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv2_OnSideRow4:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 3:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV2
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv2_OnSideRow5:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 4:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV2
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv2_OnSwitch25:
-	cp	a, 0:i3
-	ret	z
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilEnv2_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SeFilLfo1_OnColumn2:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeLfo1_StepSelectorAndReload
-SeFilLfo1_OnColumn3:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join
-SeFilLfo1_OnColumn4:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join2
-SeFilLfo1_OnColumn5:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join3
-SeFilLfo1_OnColumn6:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join4
-SeFilLfo1_OnColumn7:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join5
-SeFilLfo1_OnColumn8:
-	extz	wa
-	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_AltStore_Join6
-SeFilLfo1_OnSideRow1:
-	cp	a, 0:i3
-	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SeFilLfo1_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SeFilLfo1_OnSideRow2_Skip52
-	ldw	wa, TT_SEFILLPQ1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SeFilLfo1_OnSideRow2_Skip52:
-	ld	wa, 2:i3
-	ld	bc, 1:i3
-	jp	SeMenu_CyclePartLfoState
-SeFilLfo1_OnSideRow3:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 2:i3
-	ld	bc, 2:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SeFilLfo1_OnSideRow4:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 2:i3
-	ld	bc, 3:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SeFilLfo1_OnSideRow5:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 2:i3
-	ld	bc, 4:i3
-	call	SeMenu_CyclePartLfoState
-	ret
+SeFilEnv1_OnColumn1:	.include "includes/generated/cc900/SeFilEnv1_OnColumn1.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnColumn2:	.include "includes/generated/cc900/SeFilEnv1_OnColumn2.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnColumn3:	.include "includes/generated/cc900/SeFilEnv1_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnColumn4:	.include "includes/generated/cc900/SeFilEnv1_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnColumn5:	.include "includes/generated/cc900/SeFilEnv1_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnColumn6:	.include "includes/generated/cc900/SeFilEnv1_OnColumn6.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnColumn7:	.include "includes/generated/cc900/SeFilEnv1_OnColumn7.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnSideRow1:	.include "includes/generated/cc900/SeFilEnv1_OnSideRow1.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnSideRow2:	.include "includes/generated/cc900/SeFilEnv1_OnSideRow2.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilEnv1_OnSideRow2_Skip46, SeFilEnv1_OnSideRow2 + 11
+	.set	SeFilEnv1_OnSideRow2_Join44, SeFilEnv1_OnSideRow2 + 26
+SeFilEnv1_OnSideRow3:	.include "includes/generated/cc900/SeFilEnv1_OnSideRow3.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilEnv1_OnSideRow3_Skip47, SeFilEnv1_OnSideRow3 + 11
+	.set	SeFilEnv1_OnSideRow3_Join45, SeFilEnv1_OnSideRow3 + 26
+SeFilEnv1_OnSideRow4:	.include "includes/generated/cc900/SeFilEnv1_OnSideRow4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilEnv1_OnSideRow4_Skip48, SeFilEnv1_OnSideRow4 + 10
+SeFilEnv1_OnSideRow5:	.include "includes/generated/cc900/SeFilEnv1_OnSideRow5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilEnv1_OnSideRow5_Skip49, SeFilEnv1_OnSideRow5 + 10
+SeFilEnv1_OnSwitch25:	.include "includes/generated/cc900/SeFilEnv1_OnSwitch25.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv1_OnSwitch15:	.include "includes/generated/cc900/SeFilEnv1_OnSwitch15.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnColumn2:	.include "includes/generated/cc900/SeFilEnv2_OnColumn2.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnColumn3:	.include "includes/generated/cc900/SeFilEnv2_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnColumn4:	.include "includes/generated/cc900/SeFilEnv2_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnColumn5:	.include "includes/generated/cc900/SeFilEnv2_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnColumn7:	.include "includes/generated/cc900/SeFilEnv2_OnColumn7.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnColumn8:	.include "includes/generated/cc900/SeFilEnv2_OnColumn8.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnSideRow1:	.include "includes/generated/cc900/SeFilEnv2_OnSideRow1.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnSideRow2:	.include "includes/generated/cc900/SeFilEnv2_OnSideRow2.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilEnv2_OnSideRow2_Skip50, SeFilEnv2_OnSideRow2 + 11
+	.set	SeFilEnv2_OnSideRow2_Join46, SeFilEnv2_OnSideRow2 + 26
+SeFilEnv2_OnSideRow3:	.include "includes/generated/cc900/SeFilEnv2_OnSideRow3.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilEnv2_OnSideRow3_Skip51, SeFilEnv2_OnSideRow3 + 11
+	.set	SeFilEnv2_OnSideRow3_Join47, SeFilEnv2_OnSideRow3 + 26
+SeFilEnv2_OnSideRow4:	.include "includes/generated/cc900/SeFilEnv2_OnSideRow4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnSideRow5:	.include "includes/generated/cc900/SeFilEnv2_OnSideRow5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnSwitch25:	.include "includes/generated/cc900/SeFilEnv2_OnSwitch25.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilEnv2_OnSwitch15:	.include "includes/generated/cc900/SeFilEnv2_OnSwitch15.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn2:	.include "includes/generated/cc900/SeFilLfo1_OnColumn2.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn3:	.include "includes/generated/cc900/SeFilLfo1_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn4:	.include "includes/generated/cc900/SeFilLfo1_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn5:	.include "includes/generated/cc900/SeFilLfo1_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn6:	.include "includes/generated/cc900/SeFilLfo1_OnColumn6.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn7:	.include "includes/generated/cc900/SeFilLfo1_OnColumn7.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnColumn8:	.include "includes/generated/cc900/SeFilLfo1_OnColumn8.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnSideRow1:	.include "includes/generated/cc900/SeFilLfo1_OnSideRow1.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnSideRow2:	.include "includes/generated/cc900/SeFilLfo1_OnSideRow2.s"	; C: cc900/scoop_editor_data_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLfo1_OnSideRow2_Skip52, SeFilLfo1_OnSideRow2 + 13
+SeFilLfo1_OnSideRow3:	.include "includes/generated/cc900/SeFilLfo1_OnSideRow3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnSideRow4:	.include "includes/generated/cc900/SeFilLfo1_OnSideRow4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLfo1_OnSideRow5:	.include "includes/generated/cc900/SeFilLfo1_OnSideRow5.s"	; C: cc900/scoop_editor_data_m0_xr.c
 ; SeFilLfo1_OnSwitch15: LFO 1 (filter) page, switch 15 (SeFilLfo1TitleFunc_SwitchHandlers[15]): when A == 0,
 ;   SeMenu_SetupMenuDisplay(0) then SeMenu_SendEvent(WA = 32, C = 0), a mode change to screen 32; same body as
 ;   SeFilEnv1_OnSwitch15 / SeFilEnv2_OnSwitch15 / SeFilFil2_OnSwitch15
-SeFilLfo1_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
+SeFilLfo1_OnSwitch15:	.include "includes/generated/cc900/SeFilLfo1_OnSwitch15.s"	; C: cc900/scoop_editor_data_m0_xr.c
 
 
 ; --- Sound Editor ---

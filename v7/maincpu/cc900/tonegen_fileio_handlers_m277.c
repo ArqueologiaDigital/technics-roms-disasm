@@ -128,3 +128,29 @@ void SoundParam_NotifyMultipleChanges(void)
 	BitMapOut_DetectChanges();
 	ToneGen_DiffScanAndUpdate();
 }
+
+/* cc900-module: PanelButton_DispatchChange PanelButton_FetchChange PanelInput_QueueChange VoiceEntry_FindMasterVolume */
+struct pevt { unsigned char code, a, b, c; };
+extern unsigned char __near ram_8df0;
+extern unsigned char __near ram_8df2;
+extern unsigned char __near ram_8df4;
+extern struct pevt __near PANEL_EVENT_QUEUE[];
+extern unsigned char *PanelInput_ChangeQueue(void);
+extern void PanelButton_FetchChange(void);
+extern void PanelButton_DispatchChange(void);
+extern void PanelInput_ClearChangeQueue(void);
+extern void VoiceEntry_FindMasterVolume(void);
+extern void PanelButton_ProcessChanges(void);
+
+void PanelButton_ProcessChanges(void)
+{
+	ram_8df0 = 0;
+	ram_8df2 = 0;
+	while ((ram_8df4 = PanelInput_ChangeQueue()[(int)ram_8df0 * 3]) != 0xff) {
+		PanelButton_FetchChange();
+		PanelButton_DispatchChange();
+	}
+	PANEL_EVENT_QUEUE[ram_8df2].code = 0xff;
+	PanelInput_ClearChangeQueue();
+	VoiceEntry_FindMasterVolume();
+}

@@ -536,225 +536,27 @@ DSP_PanCurve_PiecewiseLin:	.include "includes/generated/cc900/DSP_PanCurve_Piece
 ; FP_ddiv(0x012DA7, 2400.0), FP_dtof, FP_fmul(0x012DAF) and
 ; FP_ftoi.  The 2400 is cents-per-octave x 2, and the 2.0 base again points at a
 ; pow(2, cents/2400) pitch-ratio computation.  Frame 0x48 bytes.
-DSP_DetuneCurve_SignedFP:
-	lda xsp, (xsp - 72)
-	push xiz
-	ld xiz, xbc
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_NegateInput
-	ld xwa, xiz
-	jr DSP_DetuneCurve_CheckMagnitude
-
-; x < 0: XWA = -IZ, to get the magnitude for the range test.
-DSP_DetuneCurve_NegateInput:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-
-; Join point with |x| in XWA; first range test, |x| <= 10.
-DSP_DetuneCurve_CheckMagnitude:
-	cp xwa, 0xA
-	jr gt, DSP_DetuneCurve_CheckRange2
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_Range1_NegArm
-	ld (xsp + 60), xiz
-	jr DSP_DetuneCurve_Range1_Compute
-
-; Range 1, negative input: store the magnitude at (XSP+0x3C).
-DSP_DetuneCurve_Range1_NegArm:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-	ld (xsp + 60), xwa
-
-; Range 1 body: int->float, + the constant at 0x012D77.
-DSP_DetuneCurve_Range1_Compute:
-	lda xbc, (xsp + 60)
-	lda xwa, (xsp + 36)
-	call FP_SP_CallWithBuf8
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range1_Compute_2:24)
-	lda xwa, (xsp + 68)
-	call FP_fmul
-	jrl DSP_DetuneCurve_ApplySign
-
-; Recompute |x| for the second range test.
-DSP_DetuneCurve_CheckRange2:
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_Range2_NegArm
-	ld xwa, xiz
-	jr DSP_DetuneCurve_CheckRange2Limit
-
-; Negate to get the magnitude before the |x| <= 19 test.
-DSP_DetuneCurve_Range2_NegArm:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-
-; The |x| <= 19 (0x13) comparison itself.
-DSP_DetuneCurve_CheckRange2Limit:
-	cp xwa, 0x13
-	jr gt, DSP_DetuneCurve_CheckRange3
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_Range2_NegStore
-	ld (xsp + 56), xiz
-	jr DSP_DetuneCurve_Range2_Compute
-
-; Range 2, negative input: store the magnitude at (XSP+0x38).
-DSP_DetuneCurve_Range2_NegStore:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-	ld (xsp + 56), xwa
-
-; Range 2 body: + 0x012D7B (20), - 0x012D7F (180).
-DSP_DetuneCurve_Range2_Compute:
-	lda xbc, (xsp + 56)
-	lda xwa, (xsp + 36)
-	call FP_SP_CallWithBuf8
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range2_Compute_20:24)
-	lda xwa, (xsp + 36)
-	call FP_fmul
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range2_Compute_180:24)
-	lda xwa, (xsp + 68)
-	call FP_fsub
-	jrl DSP_DetuneCurve_ApplySign
-
-; Recompute |x| for the third range test.
-DSP_DetuneCurve_CheckRange3:
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_Range3_NegArm
-	ld xwa, xiz
-	jr DSP_DetuneCurve_CheckRange3Limit
-
-; Negate to get the magnitude before the |x| <= 31 test.
-DSP_DetuneCurve_Range3_NegArm:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-
-; The |x| <= 31 (0x1F) comparison itself.
-DSP_DetuneCurve_CheckRange3Limit:
-	cp xwa, 0x1F
-	jr gt, DSP_DetuneCurve_Range4_CheckSign
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_Range3_NegStore
-	ld (xsp + 52), xiz
-	jr DSP_DetuneCurve_Range3_Compute
-
-; Range 3, negative input: store the magnitude at (XSP+0x34).
-DSP_DetuneCurve_Range3_NegStore:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-	ld (xsp + 52), xwa
-
-; Range 3 body: + 0x012D83 (100), - 0x012D87 (1700).
-DSP_DetuneCurve_Range3_Compute:
-	lda xbc, (xsp + 52)
-	lda xwa, (xsp + 36)
-	call FP_SP_CallWithBuf8
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range3_Compute_100:24)
-	lda xwa, (xsp + 36)
-	call FP_fmul
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range3_Compute_1700:24)
-	lda xwa, (xsp + 68)
-	call FP_fsub
-	jr DSP_DetuneCurve_ApplySign
-
-; Fall-through range (|x| > 31): sign test only.
-DSP_DetuneCurve_Range4_CheckSign:
-	cp xiz, 0x0
-	jr lt, DSP_DetuneCurve_Range4_NegStore
-	ld (xsp + 48), xiz
-	jr DSP_DetuneCurve_Range4_Compute
-
-; Range 4, negative input: store the magnitude at (XSP+0x30).
-DSP_DetuneCurve_Range4_NegStore:
-	ld xwa, xiz
-	cpl wa
-	cplw_erp 0xE2
-	inc 1, xwa
-	ld (xsp + 48), xwa
-
-; Range 4 body: + 0x012D8B (200), - 0x012D8F (4800).
-DSP_DetuneCurve_Range4_Compute:
-	lda xbc, (xsp + 48)
-	lda xwa, (xsp + 36)
-	call FP_SP_CallWithBuf8
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range4_Compute_200:24)
-	lda xwa, (xsp + 36)
-	call FP_fmul
-	lda xbc, (xsp + 36)
-	lda xde, (FPConst_DSP_DetuneCurve_Range4_Compute_4800:24)
-	lda xwa, (xsp + 68)
-	call FP_fsub
-
-; If the ORIGINAL input was negative, negate the accumulated float via FP_SP_CopyOrNegate4.
-DSP_DetuneCurve_ApplySign:
-	cp xiz, 0x0
-	jr ge, DSP_DetuneCurve_Finalize
-	lda xbc, (xsp + 68)
-	lda xwa, (xsp + 68)
-	call FP_SP_CopyOrNegate4
-
-; Shared tail described in the routine header; note the 2400.0 (cents per octave x 2) at
-; 0x012DA7 and the 2.0 base at 0x012D97.
-DSP_DetuneCurve_Finalize:
-	lda xbc, (xsp + 68)
-	lda xde, (FPConst_DSP_DetuneCurve_Finalize_2400:24)
-	lda xwa, (xsp + 36)
-	call FP_fdiv
-	lda xbc, (xsp + 36)
-	lda xwa, (xsp + 28)
-	call FP_ftod
-	lda xiy, (xsp + 28)
-	ld xix, (xiy + 4)
-	push xix
-	ld xix, (xiy)
-	push xix
-	lda xiy, (FPConst_DSP_DetuneCurve_Finalize_2:24)
-	ld xix, (xiy + 4)
-	push xix
-	ld xix, (xiy)
-	push xix
-	lda xwa, (xsp + 56)
-	push xwa
-	call FP_pow
-	lda xsp, (xsp + 20)
-	lda xbc, (FPConst_DSP_DetuneCurve_Finalize_1:24)
-	lda xde, (xsp + 40)
-	lda xwa, (xsp + 28)
-	call FP_dsub
-	lda xbc, (xsp + 28)
-	lda xde, (FPConst_DSP_DetuneCurve_Finalize_2400_2:24)
-	lda xwa, (xsp + 28)
-	call FP_ddiv
-	lda xbc, (xsp + 28)
-	lda xwa, (xsp + 72)
-	call FP_dtof
-	lda xbc, (xsp + 72)
-	lda xde, (FPConst_DSP_DetuneCurve_Finalize_Q23One:24)
-	lda xwa, (xsp + 36)
-	call FP_fmul
-	lda xbc, (xsp + 36)
-	lda xwa, (xsp + 64)
-	call FP_ftoi
-	ld xhl, (xsp + 64)
-	pop xiz
-	lda xsp, (xsp + 72)
-	ret
+DSP_DetuneCurve_SignedFP:	.include "includes/generated/cc900/DSP_DetuneCurve_SignedFP.s"	; C: cc900/dsp_control_routines_ar_41a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_DetuneCurve_NegateInput, DSP_DetuneCurve_SignedFP + 18
+	.set	DSP_DetuneCurve_CheckMagnitude, DSP_DetuneCurve_SignedFP + 27
+	.set	DSP_DetuneCurve_Range1_NegArm, DSP_DetuneCurve_SignedFP + 48
+	.set	DSP_DetuneCurve_Range1_Compute, DSP_DetuneCurve_SignedFP + 60
+	.set	DSP_DetuneCurve_CheckRange2, DSP_DetuneCurve_SignedFP + 88
+	.set	DSP_DetuneCurve_Range2_NegArm, DSP_DetuneCurve_SignedFP + 100
+	.set	DSP_DetuneCurve_CheckRange2Limit, DSP_DetuneCurve_SignedFP + 109
+	.set	DSP_DetuneCurve_Range2_NegStore, DSP_DetuneCurve_SignedFP + 130
+	.set	DSP_DetuneCurve_Range2_Compute, DSP_DetuneCurve_SignedFP + 142
+	.set	DSP_DetuneCurve_CheckRange3, DSP_DetuneCurve_SignedFP + 185
+	.set	DSP_DetuneCurve_Range3_NegArm, DSP_DetuneCurve_SignedFP + 197
+	.set	DSP_DetuneCurve_CheckRange3Limit, DSP_DetuneCurve_SignedFP + 206
+	.set	DSP_DetuneCurve_Range3_NegStore, DSP_DetuneCurve_SignedFP + 227
+	.set	DSP_DetuneCurve_Range3_Compute, DSP_DetuneCurve_SignedFP + 239
+	.set	DSP_DetuneCurve_Range4_CheckSign, DSP_DetuneCurve_SignedFP + 281
+	.set	DSP_DetuneCurve_Range4_NegStore, DSP_DetuneCurve_SignedFP + 294
+	.set	DSP_DetuneCurve_Range4_Compute, DSP_DetuneCurve_SignedFP + 306
+	.set	DSP_DetuneCurve_ApplySign, DSP_DetuneCurve_SignedFP + 346
+	.set	DSP_DetuneCurve_Finalize, DSP_DetuneCurve_SignedFP + 364
 
 ; Decoder for opcode 0x72 (arm 0x03CDD6).  Unlike every other routine in the region this one
 ; EMITS TO THE DSP ITSELF instead of returning a value for the interpreter to send.

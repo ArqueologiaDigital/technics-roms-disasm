@@ -17718,52 +17718,16 @@ DemoMenu_BuildItemWorkspace_Post:
 	ret
 
 ; DemoMenu workspace return
-DemoMenu_WorkspaceReturn:
-	cp wa, 0x8
-	jr ugt, DemoMenu_DescriptorFunc
-	extz xwa
-	add xwa, xwa
-	ld xbc, 0x247ce
-	add xbc, xwa
-	ld hl, (xbc)
-	ret
-
-; DemoMenu descriptor function
-DemoMenu_DescriptorFunc:
-	sub wa, 0x9
-	cp wa, 0:i3
-	jr c, DemoMenu_DescriptorReturn
-	cp wa, 5:i3
-	jr ugt, DemoMenu_DescriptorReturn
-	add wa, wa
-	lda xix, (DemoMenu_DescriptorFunc_CaseTable:24)
-	ld	wa, (xix+wa)
-	lda xix, (DemoDesc_DispatchTable:24)
-	jp	t, (xix+wa)
-
-DemoDesc_DispatchTable:
-	ld	hl, (0x247e0:24)
-	ret
-DemoMenu_DescriptorFunc_Case10:
-	ld	hl, (0x247e2:24)
-	ret
-DemoMenu_DescriptorFunc_Case11:
-	ld	hl, (0x247e4:24)
-	ret
-DemoMenu_DescriptorFunc_Case12:
-	ld	hl, (0x247e6:24)
-	ret
-DemoMenu_DescriptorFunc_Case13:
-	ld	hl, (0x247e8:24)
-	ret
-DemoMenu_DescriptorFunc_Case14:
-	ld	hl, (0x247ea:24)
-	ret
-
-; DemoMenu descriptor return
-DemoMenu_DescriptorReturn:
-	ld hl, 0:i3
-	ret
+DemoMenu_WorkspaceReturn:	.include "includes/generated/cc900/DemoMenu_WorkspaceReturn.s"	; C: cc900/drawbar_panel_ui_m264_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DemoMenu_DescriptorFunc, DemoMenu_WorkspaceReturn + 20
+	.set	DemoDesc_DispatchTable, DemoMenu_WorkspaceReturn + 54
+	.set	DemoMenu_DescriptorFunc_Case10, DemoMenu_WorkspaceReturn + 60
+	.set	DemoMenu_DescriptorFunc_Case11, DemoMenu_WorkspaceReturn + 66
+	.set	DemoMenu_DescriptorFunc_Case12, DemoMenu_WorkspaceReturn + 72
+	.set	DemoMenu_DescriptorFunc_Case13, DemoMenu_WorkspaceReturn + 78
+	.set	DemoMenu_DescriptorFunc_Case14, DemoMenu_WorkspaceReturn + 84
+	.set	DemoMenu_DescriptorReturn, DemoMenu_WorkspaceReturn + 90
 
 DemoDesc_BuildCompactParams:
 	ld bc, (0x0247e6:24)

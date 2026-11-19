@@ -8890,25 +8890,9 @@ MidiPkt_SetXferBlock_SoundRamData:	.include "includes/generated/cc900/MidiPkt_Se
 ;   (MidiPkt_GetUsedSize_StyleImage). Basis: callers + body -- MidiPkt_XferOnStyleImageStart points the receive total
 ;   0xBCDC with it, SysEx_SendStyleImageData (code 1) the send-side total 0xBCBC; MidiPkt_GetUsedSize_StyleImage's
 ;   header already names it as the style-image total.
-MidiPkt_SetXferTotal_StyleImage:
-	push	xiz
-	ld	xiz, xwa
-	lda	xwa, (RHYTHM_PATTERN_BUF_A:24)
-	ld	(xiz), xwa
-	add	xwa, 0x16800
-	ld	(xiz+4), xwa
-	ld	xwa, 0x16800
-	ld	(xiz+8), xwa
-	bit	6, (0xbd18:16)
-	jr	z, MidiPkt_SetXferTotal_StyleImage_Epilogue2
-	calr	MidiPkt_GetUsedSize_StyleImage
-	ld	xwa, (xiz)
-	add	xwa, xhl
-	ld	(xiz+4), xwa
-	ld	(xiz+8), xhl
-MidiPkt_SetXferTotal_StyleImage_Epilogue2:
-	pop	xiz
-	ret
+MidiPkt_SetXferTotal_StyleImage:	.include "includes/generated/cc900/MidiPkt_SetXferTotal_StyleImage.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetXferTotal_StyleImage_Epilogue2, MidiPkt_SetXferTotal_StyleImage + 46
 ; MidiPkt_SetXferBlock_StyleImageHeader: Fills the transfer descriptor at XWA for block 1 of the style-image transfer:
 ;   {start RHYTHM_PATTERN_BUF_A (0x94800), end 0x94860, length 0x60}, the image's 0x60-byte header
 ;   (AccDemo_LoadRhythm's part of Demo_StyleRhythmData; +46 holds the used size / 16). Basis: callers + body --
@@ -9016,25 +9000,9 @@ MidiPkt_SetXferBlock_SongSlots:	.include "includes/generated/cc900/MidiPkt_SetXf
 ;   (MidiPkt_GetUsedSize_SeqEvents). Basis: callers + body -- MidiPkt_XferOnSeqEventBlock (message 20, state 13)
 ;   points the block descriptor 0xBCEC with it, and the send side (MidiPkt_ArpConfigChain_Data_Helper13) 0xBCCC;
 ;   MidiPkt_GetUsedSize_SeqEvents' header names it as the event-memory block.
-MidiPkt_SetXferBlock_SeqEvents:
-	push	xiz
-	ld	xiz, xwa
-	lda	xwa, (0xb0000:24)
-	ld	(xiz), xwa
-	add	xwa, 0x4d800
-	ld	(xiz+4), xwa
-	ld	xwa, 0x4d800
-	ld	(xiz+8), xwa
-	bit	6, (0xbd18:16)
-	jr	z, MidiPkt_SetXferBlock_SeqEvents_Epilogue5
-	calr	MidiPkt_GetUsedSize_SeqEvents
-	ld	xwa, (xiz)
-	add	xwa, xhl
-	ld	(xiz+4), xwa
-	ld	(xiz+8), xhl
-MidiPkt_SetXferBlock_SeqEvents_Epilogue5:
-	pop	xiz
-	ret
+MidiPkt_SetXferBlock_SeqEvents:	.include "includes/generated/cc900/MidiPkt_SetXferBlock_SeqEvents.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetXferBlock_SeqEvents_Epilogue5, MidiPkt_SetXferBlock_SeqEvents + 46
 	ret
 	ret
 	ret
@@ -9044,25 +9012,9 @@ MidiPkt_SetXferBlock_SeqEvents_Epilogue5:
 ;   MidiPkt_XferOnAccompBlocksStart (message 23, state 0) points the receive total 0xBCDC with it,
 ;   SysEx_SendMspUserData the send-side total 0xBCBC; MidiPkt_GetUsedSize_AccompBlocks' header already names it as the
 ;   area total.
-MidiPkt_SetXferTotal_AccompBlocks:
-	push	xiz
-	ld	xiz, xwa
-	lda	xwa, (0x1e8800:24)
-	ld	(xiz), xwa
-	lda	xwa, (xwa+15360)
-	ld	(xiz+4), xwa
-	ld	xwa, 0x3c00
-	ld	(xiz+8), xwa
-	bit	6, (0xbd18:16)
-	jr	z, MidiPkt_SetXferTotal_AccompBlocks_Epilogue6
-	calr	MidiPkt_GetUsedSize_AccompBlocks
-	ld	xwa, (xiz)
-	add	xwa, xhl
-	ld	(xiz+4), xwa
-	ld	(xiz+8), xhl
-MidiPkt_SetXferTotal_AccompBlocks_Epilogue6:
-	pop	xiz
-	ret
+MidiPkt_SetXferTotal_AccompBlocks:	.include "includes/generated/cc900/MidiPkt_SetXferTotal_AccompBlocks.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetXferTotal_AccompBlocks_Epilogue6, MidiPkt_SetXferTotal_AccompBlocks + 45
 ; MidiPkt_SetXferBlock_AccompAreaHeader: Fills the transfer descriptor at XWA for block 1 of the accompaniment-block-
 ;   area transfer: {start 0x1E8800, end 0x1E8820, length 0x20}, the area header that Voice_InitBankTables fills from
 ;   Voice_BankHeaderDefaults. Basis: callers + body -- MidiPkt_XferOnAccompBlocksStart points the block descriptor
@@ -9596,55 +9548,26 @@ MidiSeq_CheckSyncDirty:	.include "includes/generated/cc900/MidiSeq_CheckSyncDirt
 ;   transfer status (field 4) to GLOBAL_ERROR_CODE (0 -> 0x23, else MidiRx_PartLookup_ByteMap[status]) and opens the
 ;   TT_MESAGE box (title 0xEE); status 34 shows nothing. Basis: callers + body -- ArpChord_FinalizePass (receive) and
 ;   SysEx_SendDispatch / SysEx_InitiateSend_Join (send) call it last.
-MidiPkt_XferShowResult:
-	ld	wa, 0:i3
-	call	ParaLoadOpt_PostDualEvent
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 34
-	jr	z, MidiPkt_XferShowResult_Skip
-	cp	l, 0:i3
-	jr	nz, MidiPkt_XferShowResult_Skip2
-	calr	MidiPkt_XferShowCompleted
-	jr	MidiPkt_XferShowResult_Join
-MidiPkt_XferShowResult_Skip:
-	calr	MidiPkt_XferShowNothing
-	jr	MidiPkt_XferShowResult_Join
-MidiPkt_XferShowResult_Skip2:
-	calr	MidiPkt_XferShowErrorMessage
-MidiPkt_XferShowResult_Join:
-	bit	1, (0xbd18:16)
-	ret	z
-	call	SeqStep_PlaybackNop
-	ret
+MidiPkt_XferShowResult:	.include "includes/generated/cc900/MidiPkt_XferShowResult.s"	; C: cc900/midi_dispatch_handlers_m286.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferShowResult_Skip, MidiPkt_XferShowResult + 30
+	.set	MidiPkt_XferShowResult_Skip2, MidiPkt_XferShowResult + 35
+	.set	MidiPkt_XferShowResult_Join, MidiPkt_XferShowResult + 38
 ; MidiPkt_XferShowCompleted: End of a successful MIDI bulk transfer (status 0): sets GLOBAL_ERROR_CODE 35 and opens
 ;   the TT_MESAGE box (UI_InterruptTitleByIndex 0xEE), whose catalog entry 0x23 reads 'COMPLETED!'. Basis: callers + body
 ;   -- MidiPkt_XferShowResult calls it when the transfer status (field 4) is 0; the other statuses go to
 ;   MidiPkt_XferShowErrorMessage (error message) or, for 34, MidiPkt_XferShowNothing (nothing).
-MidiPkt_XferShowCompleted:
-	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, TT_MESAGE
-	jp	UI_InterruptTitleByIndex
+MidiPkt_XferShowCompleted:	.include "includes/generated/cc900/MidiPkt_XferShowCompleted.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_XferShowNothing: Empty routine (`ret`): the transfer-status 34 arm of MidiPkt_XferShowResult, which shows no
 ;   message box. Basis: callers + body -- MidiPkt_XferShowResult calls it when field 4 of the active MIDI message is
 ;   34 (its header: 'status 34 shows nothing'); the name says literally what it does, as SysEx_SendNothing does for
 ;   send code 5.
-MidiPkt_XferShowNothing:
-	ret
+MidiPkt_XferShowNothing:	.include "includes/generated/cc900/MidiPkt_XferShowNothing.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_XferShowErrorMessage: End of a failed MIDI bulk transfer: maps the transfer status (field 4 of the active
 ;   MIDI message) to a message through MidiRx_PartLookup_ByteMap (0x20 SysEx transmission error, 0x21 reception error,
 ;   0x22 ID mismatch, 0x0F memory full) into GLOBAL_ERROR_CODE and opens the TT_MESAGE box (UI_InterruptTitleByIndex
 ;   0xEE). Basis: callers + body -- MidiPkt_XferShowResult calls it for every status other than 0 and 34.
-MidiPkt_XferShowErrorMessage:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	extz	hl
-	lda	xbc, (MidiRx_PartLookup_ByteMap:24)
-	ld	(GLOBAL_ERROR_CODE), (xbc+hl)
-	ldw	wa, TT_MESAGE
-	jp	UI_InterruptTitleByIndex
+MidiPkt_XferShowErrorMessage:	.include "includes/generated/cc900/MidiPkt_XferShowErrorMessage.s"	; C: cc900/midi_dispatch_handlers_m286.c
 
 MidiSeq_ApplyPendingParams:	.include "includes/generated/cc900/MidiSeq_ApplyPendingParams.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -9666,64 +9589,42 @@ MidiTable_PreDispatchNullRet:
 ;   7E F7), then clears bit 3. Basis: callers + body -- SysEx_InitiateSend jumps through SysExSend_SwitchOffsets;
 ;   entry 0 is SysEx_SendDispatch, which calls this, while cases 1-6 (SysEx_SendStyleImageData..6) each send one
 ;   group with that group's own total; MainExcSend maps menu index 0 to code 0.
-SysEx_SendAllData:
-	set	3, (0xbd18:16)
-	ld	xwa, 0xbcbc
-	call	MidiPkt_SetXferTotal_All
-	calr	MidiPkt_ArpConfigChain_Data
-	res	3, (0xbd18:16)
-	ret
+SysEx_SendAllData:	.include "includes/generated/cc900/SysEx_SendAllData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_SendStyleImageData: Code-1 (STYLE IMAGE) sender of SysEx_InitiateSend: points the send-side total 0xBCBC at
 ;   the style image (MidiPkt_SetXferTotal_StyleImage) and tail-jumps into the style-image group of
 ;   MidiPkt_ArpConfigChain_Data (MidiPkt_SendGroup_StyleImage: header, tables and pattern pool blocks, then the
 ;   group end). Basis: callers + body -- only SysEx_InitiateSend_SendStyleImage (entry 1 of SysExSend_SwitchOffsets)
 ;   calls it; same shape as SysEx_SendSequencerData / SysEx_SendSoundMemoryData.
-SysEx_SendStyleImageData:
-	ld	xwa, 0xbcbc
-	call	MidiPkt_SetXferTotal_StyleImage
-	jrl	MidiPkt_SendGroup_StyleImage
+SysEx_SendStyleImageData:	.include "includes/generated/cc900/SysEx_SendStyleImageData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_SendSequencerData: Code-2 (SEQUENCER) sender of SysEx_InitiateSend: points the send-side total descriptor
 ;   0xBCBC at the whole sequencer transfer (MidiPkt_SetXferTotal_SeqData) and tail-jumps into the sequencer group of
 ;   MidiPkt_ArpConfigChain_Data (MidiPkt_ArpConfigChain_Data_Join: current song, song slots, event memory, then F0 50
 ;   27 7E F7). Basis: callers + body -- only SysEx_InitiateSend_SendSequencer (entry 2 of SysExSend_SwitchOffsets)
 ;   calls it, then rejoins SysEx_InitiateSend_Join; same shape as case 0's SysEx_SendAllData.
-SysEx_SendSequencerData:
-	ld	xwa, 0xbcbc
-	call	MidiPkt_SetXferTotal_SeqData
-	jrl	MidiPkt_ArpConfigChain_Data_Join
+SysEx_SendSequencerData:	.include "includes/generated/cc900/SysEx_SendSequencerData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_SendSoundMemoryData: Code-3 (SOUND MEMORY) sender of SysEx_InitiateSend: points 0xBCBC at the 0x72AA-byte
 ;   sound RAM area from 0x1E0000 (MidiPkt_SetXferTotal_SoundRam) and tail-jumps into the sound-RAM group of
 ;   MidiPkt_ArpConfigChain_Data (MidiPkt_SendGroup_SoundRam: the 16-byte 'KN5000 SOUND RAM' id at 0x1E0000,
 ;   the data from 0x1E0010, then the group end). Basis: callers + body -- only SysEx_InitiateSend_SendSoundMemory
 ;   (switch entry 3) calls it; MidiSysEx_FinishSoundRamXfer describes the same two blocks on the receive side.
-SysEx_SendSoundMemoryData:
-	ld	xwa, 0xbcbc
-	call	MidiPkt_SetXferTotal_SoundRam
-	jrl	MidiPkt_SendGroup_SoundRam
+SysEx_SendSoundMemoryData:	.include "includes/generated/cc900/SysEx_SendSoundMemoryData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_SendPanelMemoryData: Code-4 (PANEL MEMORY) sender of SysEx_InitiateSend: points 0xBCBC at the whole panel
 ;   transfer (MidiPkt_SetXferTotal_Panel: live panel 0xF980-0xFFBF plus the 80 panel memories at 0x1ED350) and tail-
 ;   jumps into the panel group of MidiPkt_ArpConfigChain_Data (MidiPkt_SendGroup_Panel: those two blocks,
 ;   then the group end). Basis: callers + body -- only SysEx_InitiateSend_SendPanelMemory (switch entry 4) calls it;
 ;   MidiPkt_SetXferTotal_Panel's header already names this use.
-SysEx_SendPanelMemoryData:
-	ld	xwa, 0xbcbc
-	call	MidiPkt_SetXferTotal_Panel
-	jrl	MidiPkt_SendGroup_Panel
+SysEx_SendPanelMemoryData:	.include "includes/generated/cc900/SysEx_SendPanelMemoryData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_SendNothing: Code-5 sender of SysEx_InitiateSend: a bare `ret`, so code 5 queues no data group and only the
 ;   closing SysEx_FinishBulkSend runs. Basis: callers + body -- only SysEx_InitiateSend_SendNoData (switch entry 5)
 ;   calls it; that case's header notes that no EXCLUSIVE list row maps to code 5. The name says literally what the
 ;   routine does.
-SysEx_SendNothing:
-	ret
+SysEx_SendNothing:	.include "includes/generated/cc900/SysEx_SendNothing.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_SendMspUserData: Code-6 (MSP user) sender of SysEx_InitiateSend: points 0xBCBC at the accompaniment block area
 ;   from 0x1E8800 (MidiPkt_SetXferTotal_AccompBlocks: 0x3C00 bytes, or the used size from MidiPkt_GetUsedSize_AccompBlocks
 ;   with bit 6 of 0xBD18 set) and tail-jumps into that group of MidiPkt_ArpConfigChain_Data
 ;   (MidiPkt_SendGroup_AccompBlocks: blocks 0x1E8800, 0x1E8820 and the 0x1E8B00 block pool, then the group end).
 ;   Basis: callers + body -- only SysEx_InitiateSend_SendMspUser (switch entry 6) calls it.
-SysEx_SendMspUserData:
-	ld	xwa, 0xbcbc
-	call	MidiPkt_SetXferTotal_AccompBlocks
-	jrl	MidiPkt_SendGroup_AccompBlocks
+SysEx_SendMspUserData:	.include "includes/generated/cc900/SysEx_SendMspUserData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 
 MidiPkt_ArpMultiPass:
 	pushw_erp 0xfa
@@ -9791,21 +9692,13 @@ MidiPkt_ArpPopReturn:
 	popw_erp 0xfa
 	ret
 
-MidiPkt_ArpConfigChain_Data:
-	calr	MidiPkt_SendGroup_Panel
-	calr	MidiPkt_SendGroup_SoundRam
-	calr	MidiPkt_SendGroup_AccompBlocks
-	calr	MidiPkt_SendGroup_StyleImage
-	jrl	MidiPkt_ArpConfigChain_Data_Join
+MidiPkt_ArpConfigChain_Data:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendGroup_Panel: Sends the panel group of a MIDI bulk dump: block 1 = the live panel
 ;   (MidiPkt_SendBlock_LivePanel: descriptor 0xBCCC from MidiPkt_SetXferBlock_LivePanel), block 2 = the 80
 ;   panel memories (MidiPkt_SendBlock_PanelMemories: MidiPkt_SetXferBlock_PanelMemories), then the group end F0 50 27 7E
 ;   F7 (MidiPkt_SendGroupEnd). Basis: callers + body -- SysEx_SendPanelMemoryData (code 4) tail-jumps
 ;   here and MidiPkt_ArpConfigChain_Data (code 0, ALL) calls it first; both headers call it the panel group.
-MidiPkt_SendGroup_Panel:
-	calr	MidiPkt_SendBlock_LivePanel
-	calr	MidiPkt_SendBlock_PanelMemories
-	jrl	MidiPkt_SendGroupEnd
+MidiPkt_SendGroup_Panel:	.include "includes/generated/cc900/MidiPkt_SendGroup_Panel.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_LivePanel: Sends block 1 of the panel group of a MIDI bulk dump: when the transfer status (field 4
 ;   of the active MIDI buffer) is 0, writes step 1 into field 3 of the outgoing packet record (0xBCB4), points the
 ;   send descriptor 0xBCCC at the live panel (0xF980-0xFFC0) (MidiPkt_SetXferBlock_LivePanel), queues the block-start
@@ -9813,23 +9706,7 @@ MidiPkt_SendGroup_Panel:
 ;   nibble packets until the block length is used up). Basis: callers + body -- MidiPkt_SendGroup_Panel calls it as
 ;   block 1 and its header names that block; the receive side takes the same message as the panel-group start (command
 ;   11, state 0, MidiPkt_ArpExtHandler_A).
-MidiPkt_SendBlock_LivePanel:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ld	de, 1:i3
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_LivePanel
-	ld	xwa, SysEx_TechMsg_35E2
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_LivePanel:	.include "includes/generated/cc900/MidiPkt_SendBlock_LivePanel.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_PanelMemories: Sends block 2 of the panel group of a MIDI bulk dump: when the transfer status
 ;   (field 4 of the active MIDI buffer) is 0, writes step 2 into field 3 of the outgoing packet record (0xBCB4),
 ;   points the send descriptor 0xBCCC at the 80 panel memories (0x1ED350) (MidiPkt_SetXferBlock_PanelMemories), queues
@@ -9837,37 +9714,13 @@ MidiPkt_SendBlock_LivePanel:
 ;   (ArpQueue_ProcessAndSort_Data: nibble packets until the block length is used up). Basis: callers + body --
 ;   MidiPkt_SendGroup_Panel calls it as block 2 and its header names that block; the receive side takes the same
 ;   message as message id 12 (MidiPkt_XferOnPanelMemBlock).
-MidiPkt_SendBlock_PanelMemories:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ld	de, 2:i3
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_PanelMemories
-	ld	xwa, SysEx_TechMsg_35EE
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_PanelMemories:	.include "includes/generated/cc900/MidiPkt_SendBlock_PanelMemories.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendGroup_SoundRam: Sends the sound-RAM group of a MIDI bulk dump unless AccWrap_ReturnZero(1) returns
 ;   0xFFFF (it always returns 0): block 1 = the 16-byte id at 0x1E0000 (MidiPkt_SendBlock_SoundRamId), block 2
 ;   = the data from 0x1E0010 (_Helper6), then the group end (_Helper18). Basis: callers + body --
 ;   SysEx_SendSoundMemoryData (code 3) tail-jumps here and MidiPkt_ArpConfigChain_Data (ALL) calls it second;
 ;   SysEx_SendSoundMemoryData's header names these two blocks.
-MidiPkt_SendGroup_SoundRam:
-	ld	wa, 1:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	ret	z
-	calr	MidiPkt_SendBlock_SoundRamId
-	calr	MidiPkt_SendBlock_SoundRamData
-	calr	MidiPkt_SendGroupEnd
-	ret
+MidiPkt_SendGroup_SoundRam:	.include "includes/generated/cc900/MidiPkt_SendGroup_SoundRam.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_SoundRamId: Sends block 1 of the sound-RAM group of a MIDI bulk dump: when the transfer status
 ;   (field 4 of the active MIDI buffer) is 0, writes step 4 into field 3 of the outgoing packet record (0xBCB4),
 ;   points the send descriptor 0xBCCC at the 16-byte id at 0x1E0000 (MidiPkt_SetXferBlock_SoundRamId), queues the
@@ -9875,23 +9728,7 @@ MidiPkt_SendGroup_SoundRam:
 ;   (ArpQueue_ProcessAndSort_Data: nibble packets until the block length is used up). Basis: callers + body --
 ;   MidiPkt_SendGroup_SoundRam calls it as block 1 and its header names that block; the receive side takes the same
 ;   message as message id 13 (MidiPkt_XferOnSoundRamStart).
-MidiPkt_SendBlock_SoundRamId:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ld	de, 4:i3
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_SoundRamId
-	ld	xwa, SysEx_TechMsg_35FA
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_SoundRamId:	.include "includes/generated/cc900/MidiPkt_SendBlock_SoundRamId.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_SoundRamData: Sends block 2 of the sound-RAM group of a MIDI bulk dump: when the transfer status
 ;   (field 4 of the active MIDI buffer) is 0, writes step 5 into field 3 of the outgoing packet record (0xBCB4),
 ;   points the send descriptor 0xBCCC at the data from 0x1E0010 (MidiPkt_SetXferBlock_SoundRamData), queues the block-
@@ -9899,23 +9736,7 @@ MidiPkt_SendBlock_SoundRamId:
 ;   (ArpQueue_ProcessAndSort_Data: nibble packets until the block length is used up). Basis: callers + body --
 ;   MidiPkt_SendGroup_SoundRam calls it as block 2 and its header names that block; the receive side takes the same
 ;   message as message id 14 (MidiPkt_XferOnSoundRamDataBlock).
-MidiPkt_SendBlock_SoundRamData:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ld	de, 5:i3
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_SoundRamData
-	ld	xwa, SysEx_TechMsg_3606
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_SoundRamData:	.include "includes/generated/cc900/MidiPkt_SendBlock_SoundRamData.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendGroup_StyleImage: Sends the style-image group of a MIDI bulk dump unless AccWrap_ReturnZero(3) returns
 ;   0xFFFF: block 1 = the image header (MidiPkt_ArpConfigChain_Data_Helper8, descriptor MidiPkt_ArpPopReturn_Helper5),
 ;   block 2 = its tables (_Helper9, MidiPkt_ArpPopReturn_Helper6), block 3 = the pattern pool (_Helper10,
@@ -9923,130 +9744,14 @@ MidiPkt_SendBlock_SoundRamData:
 ;   MidiPkt_ArpConfigChain_Data (send code 0, ALL) calls it fourth, and the code-1 (STYLE IMAGE) sender
 ;   SysEx_ResetAndReturn_Helper tail-jumps here after pointing the send total at the style image; the style-image
 ;   sibling of the groups batch h2 names MidiPkt_SendGroup_Panel / _SoundRam / _AccompBlocks.
-MidiPkt_SendGroup_StyleImage:
-	ld	wa, 3:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	ret	z
-	calr	MidiPkt_ArpConfigChain_Data_Helper8
-	calr	MidiPkt_ArpConfigChain_Data_Helper9
-	calr	MidiPkt_ArpConfigChain_Data_Helper10
-	calr	MidiPkt_SendGroupEnd
-	ret
-MidiPkt_ArpConfigChain_Data_Helper8:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ld	de, 7:i3
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_StyleImageHeader
-	ld	xwa, SysEx_TechMsg_3612
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
-MidiPkt_ArpConfigChain_Data_Helper9:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 8
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_StyleImageTables
-	ld	xwa, SysEx_TechMsg_361E
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
-MidiPkt_ArpConfigChain_Data_Helper10:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 9
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_StyleImagePool
-	ld	xwa, SysEx_TechMsg_362A
-	ldw	bc, 9
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_Pack21BitValue
-	call	ArpQueue_ProcessAndSort_Data
-	ret
-MidiPkt_ArpConfigChain_Data_Join:
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	ret	z
-	calr	MidiPkt_ArpConfigChain_Data_Helper11
-	calr	MidiPkt_ArpConfigChain_Data_Helper12
-	calr	MidiPkt_ArpConfigChain_Data_Helper13
-	calr	MidiPkt_SendGroupEnd
-	ret
-MidiPkt_ArpConfigChain_Data_Helper11:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 11
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_CurrentSong
-	ld	xwa, SysEx_TechMsg_3634
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
-MidiPkt_ArpConfigChain_Data_Helper12:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 12
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_SongSlots
-	ld	xwa, SysEx_TechMsg_3640
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
-MidiPkt_ArpConfigChain_Data_Helper13:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 13
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_SeqEvents
-	ld	xwa, SysEx_TechMsg_364C
-	ldw	bc, 9
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_Pack21BitValue
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendGroup_StyleImage:	.include "includes/generated/cc900/MidiPkt_SendGroup_StyleImage.s"	; C: cc900/midi_dispatch_handlers_m286.c
+MidiPkt_ArpConfigChain_Data_Helper8:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Helper8.s"	; C: cc900/midi_dispatch_handlers_m286.c
+MidiPkt_ArpConfigChain_Data_Helper9:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Helper9.s"	; C: cc900/midi_dispatch_handlers_m286.c
+MidiPkt_ArpConfigChain_Data_Helper10:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Helper10.s"	; C: cc900/midi_dispatch_handlers_m286.c
+MidiPkt_ArpConfigChain_Data_Join:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Join.s"	; C: cc900/midi_dispatch_handlers_m0.c
+MidiPkt_ArpConfigChain_Data_Helper11:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Helper11.s"	; C: cc900/midi_dispatch_handlers_m286_b.c
+MidiPkt_ArpConfigChain_Data_Helper12:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Helper12.s"	; C: cc900/midi_dispatch_handlers_m286_b.c
+MidiPkt_ArpConfigChain_Data_Helper13:	.include "includes/generated/cc900/MidiPkt_ArpConfigChain_Data_Helper13.s"	; C: cc900/midi_dispatch_handlers_m286_b.c
 	ret
 	ret
 	ret
@@ -10055,11 +9760,7 @@ MidiPkt_ArpConfigChain_Data_Helper13:
 ;   block pool (_Helper17: MidiPkt_SetXferBlock_AccompBlockPool), then the group end (_Helper18). Basis: callers +
 ;   body -- SysEx_SendMspUserData (code 6) tail-jumps here and MidiPkt_ArpConfigChain_Data (ALL) calls it third;
 ;   SysEx_SendMspUserData's header lists these three blocks.
-MidiPkt_SendGroup_AccompBlocks:
-	calr	MidiPkt_SendBlock_AccompAreaHeader
-	calr	MidiPkt_SendBlock_AccompBankTables
-	calr	MidiPkt_SendBlock_AccompBlockPool
-	jrl	MidiPkt_SendGroupEnd
+MidiPkt_SendGroup_AccompBlocks:	.include "includes/generated/cc900/MidiPkt_SendGroup_AccompBlocks.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_AccompAreaHeader: Sends block 1 of the accompaniment-block-area group of a MIDI bulk dump: when
 ;   the transfer status (field 4 of the active MIDI buffer) is 0, writes step 18 into field 3 of the outgoing packet
 ;   record (0xBCB4), points the send descriptor 0xBCCC at the area header 0x1E8800-0x1E8820
@@ -10067,23 +9768,7 @@ MidiPkt_SendGroup_AccompBlocks:
 ;   12 bytes) and sends the data (ArpQueue_ProcessAndSort_Data: nibble packets until the block length is used up).
 ;   Basis: callers + body -- MidiPkt_SendGroup_AccompBlocks calls it as block 1 and its header names that block; the
 ;   receive side takes the same message as message id 23 (MidiPkt_XferOnAccompBlocksStart).
-MidiPkt_SendBlock_AccompAreaHeader:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 18
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_AccompAreaHeader
-	ld	xwa, SysEx_TechMsg_3656
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_AccompAreaHeader:	.include "includes/generated/cc900/MidiPkt_SendBlock_AccompAreaHeader.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_AccompBankTables: Sends block 2 of the accompaniment-block-area group of a MIDI bulk dump: when
 ;   the transfer status (field 4 of the active MIDI buffer) is 0, writes step 19 into field 3 of the outgoing packet
 ;   record (0xBCB4), points the send descriptor 0xBCCC at the slot table and bank-name headers 0x1E8820-0x1E8B00
@@ -10091,23 +9776,7 @@ MidiPkt_SendBlock_AccompAreaHeader:
 ;   12 bytes) and sends the data (ArpQueue_ProcessAndSort_Data: nibble packets until the block length is used up).
 ;   Basis: callers + body -- MidiPkt_SendGroup_AccompBlocks calls it as block 2 and its header names that block; the
 ;   receive side takes the same message as message id 24 (MidiPkt_XferOnAccompBlocksBlock2).
-MidiPkt_SendBlock_AccompBankTables:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 19
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_AccompBankTables
-	ld	xwa, SysEx_TechMsg_3662
-	ldw	bc, 12
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_AccompBankTables:	.include "includes/generated/cc900/MidiPkt_SendBlock_AccompBankTables.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendBlock_AccompBlockPool: Sends block 3 of the accompaniment-block-area group of a MIDI bulk dump: when the
 ;   transfer status (field 4 of the active MIDI buffer) is 0, writes step 20 into field 3 of the outgoing packet
 ;   record (0xBCB4), points the send descriptor 0xBCCC at the block pool from 0x1E8B00
@@ -10116,24 +9785,7 @@ MidiPkt_SendBlock_AccompBankTables:
 ;   (ArpQueue_ProcessAndSort_Data: nibble packets until the block length is used up). Basis: callers + body --
 ;   MidiPkt_SendGroup_AccompBlocks calls it as block 3 and its header names that block; the receive side takes the
 ;   same message as command 25, state 20 (MidiPkt_ArpExtHandler_J), which takes the length from the message.
-MidiPkt_SendBlock_AccompBlockPool:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	ld	bc, 3:i3
-	ldw	de, 20
-	call	MIDI_ReadChannelParam
-	ld	xwa, 0xbccc
-	call	MidiPkt_SetXferBlock_AccompBlockPool
-	ld	xwa, SysEx_TechMsg_366E
-	ldw	bc, 9
-	call	SeqBuf_FlushNoteOffs
-	call	ArpQueue_Pack21BitValue
-	call	ArpQueue_ProcessAndSort_Data
-	ret
+MidiPkt_SendBlock_AccompBlockPool:	.include "includes/generated/cc900/MidiPkt_SendBlock_AccompBlockPool.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; MidiPkt_SendGroupEnd: Closes one group of a MIDI bulk dump: when the transfer status (field 4 of the active MIDI
 ;   buffer) is 0, advances the step in field 3 of the outgoing packet record (0xBCB4) by one, queues the group end F0
 ;   50 27 7E F7 (SysEx_Msg_35A0, 5 bytes) and runs MidiStream_PrevBankCheck. Basis: callers + body -- all five group
@@ -10142,54 +9794,17 @@ MidiPkt_SendBlock_AccompBlockPool:
 ;   call it) and their headers call it the group end; the receive side takes F0 50 27 7E as message 3
 ;   (MidiPkt_XferOnGroupEnd), whose group-complete states 3/6/10/14/21 are one past each group's last block step (2,
 ;   5, 9, 13, 20).
-MidiPkt_SendGroupEnd:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (0xbcb4:16)
-	incm8	1, (xwa+3)
-	ld	xwa, SysEx_Msg_35A0
-	ld	bc, 5:i3
-	call	SeqBuf_FlushNoteOffs
-	call	MidiStream_PrevBankCheck
-	ret
+MidiPkt_SendGroupEnd:	.include "includes/generated/cc900/MidiPkt_SendGroupEnd.s"	; C: cc900/midi_dispatch_handlers_m286.c
 ; SysEx_FinishBulkSend: Last step of every SysEx_InitiateSend case: when the transfer status (field 4 of the active
 ;   MIDI buffer) is 0 it queues F0 50 28 7E F7 and runs MidiStream_PrevBankCheck (the post-send handshake / pause);
 ;   when the status is 24 it queues F0 50 29 7E F7. Basis: callers + body -- SysEx_SendDispatch falls into it after
 ;   case 0 and cases 1-6 jump back to SysEx_InitiateSend_Join, which calls it; each group already ends with F0 50 27
 ;   7E F7 (MidiPkt_SendGroupEnd), and every group sender skips when that status is non-zero. What
 ;   0x28/0x29 mean to the receiver is not established.
-SysEx_FinishBulkSend:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr	nz, SysEx_FinishBulkSend_Skip
-	ld	xwa, SysEx_Msg_35A6
-	ld	bc, 5:i3
-	call	SeqBuf_FlushNoteOffs
-	call	MidiStream_PrevBankCheck
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 24
-	ret	nz
-	ld	xwa, SysEx_Msg_35AC
-	ld	bc, 5:i3
-	jr	SysEx_FinishBulkSend_Join2
-SysEx_FinishBulkSend_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 24
-	ret	nz
-	ld	xwa, SysEx_Msg_35AC
-	ld	bc, 5:i3
-SysEx_FinishBulkSend_Join2:
-	call	SeqBuf_FlushNoteOffs
-	ret
+SysEx_FinishBulkSend:	.include "includes/generated/cc900/SysEx_FinishBulkSend.s"	; C: cc900/midi_dispatch_handlers_m287.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysEx_FinishBulkSend_Skip, SysEx_FinishBulkSend + 53
+	.set	SysEx_FinishBulkSend_Join2, SysEx_FinishBulkSend + 75
 MidiPkt_ArpChordHandler:
 	; --- Main: guard check, loop with bit 4 flag, multiple calls (76 bytes) ---
 	cp	(CURRENT_TITLE:16), 87
