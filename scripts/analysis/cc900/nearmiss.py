@@ -119,6 +119,14 @@ TREES = {   # key: (tree, ROM, symbols reference, load address of the ROM's firs
     'v141': ('v141/subcpu', 'original_ROMs/kn5000_subprogram_v141.rom', 'symbols/subcpu_v141_symbols_reference.txt', 0xef00),
     'v140': ('v140/subcpu', 'original_ROMs/kn5000_subprogram_v140.rom', 'symbols/subcpu_v140_symbols_reference.txt', 0xef00),
     'hdae5000': ('hdae5000', 'original_ROMs/hd-ae5000_v2_06i.ic4', 'symbols/hdae5000_symbols_reference.txt', 0x280000),
+    # the older HD-AE5000 trees (ported C, sources `hdae5000_v.../*.c`); before 2026-11-19 these were indexed as
+    # 'hdae5000' and compared with the v2.06i image.  Their ROMs are git-ignored: rom_path() reads MAIN_REPO's copies.
+    'hdae5000_v2_01i': ('hdae5000_v2_01i', 'original_ROMs/hd-ae5000_v2_01i.ic4',
+                        'symbols/hdae5000_v2_01i_symbols_reference.txt', 0x280000),
+    'hdae5000_v1_15i': ('hdae5000_v1_15i', 'original_ROMs/hd-ae5000_v1_15i.ic4',
+                        'symbols/hdae5000_v1_15i_symbols_reference.txt', 0x280000),
+    'hdae5000_v1_10i': ('hdae5000_v1_10i', 'original_ROMs/hd-ae5000_v1_10i.ic4',
+                        'symbols/hdae5000_v1_10i_symbols_reference.txt', 0x280000),
 }
 
 CLASSES = ('call-form', 'width', 'register', 'operand', 'extend', 'order', 'loop-shape', 'swap', 'address-form',
@@ -280,7 +288,10 @@ def c_defs_text(text):
     src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
     src = re.sub(r'//[^\n]*', '', src)
     kw = {'if', 'while', 'for', 'switch', 'return', 'sizeof', 'do', 'else'}
-    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{', src, re.M) if n not in kw]
+    # K&R definitions (parameters declared between `)` and `{`, lane_hd's lyrics) as the build's c_functions reads
+    # them; before 2026-11-19 they were missed, so main's K&R functions were listed in ready.tsv as not built
+    return [n for n in re.findall(r'^(?![ \t#])[\w \t*]*?\b([A-Za-z_]\w*)\s*\([^;{}]*\)(?:[^;{}()#=]*;)*\s*\{',
+                                  src, re.M) if n not in kw]
 
 
 def file_candidates(basename):
@@ -950,7 +961,9 @@ TREE_LABELS = {}
 
 ELF_OF = {'v10': 'kn5000_v10_program', 'v9': 'kn5000_v9_program', 'v7': 'kn5000_v7_program',
           'v6': 'kn5000_v6_program', 'v5': 'kn5000_v5_program', 'v142': 'kn5000_subprogram_v142',
-          'v141': 'kn5000_subprogram_v141', 'v140': 'kn5000_subprogram_v140', 'hdae5000': 'hd-ae5000_v2_06i'}
+          'v141': 'kn5000_subprogram_v141', 'v140': 'kn5000_subprogram_v140', 'hdae5000': 'hd-ae5000_v2_06i',
+          'hdae5000_v2_01i': 'hd-ae5000_v2_01i', 'hdae5000_v1_15i': 'hd-ae5000_v1_15i',
+          'hdae5000_v1_10i': 'hd-ae5000_v1_10i'}
 MODIMG = {}
 
 
@@ -1754,7 +1767,8 @@ def main():
 
 
 LANES = {'v10': 'lane_p6', 'v9': 'lane_p6', 'v7': 'lane_p6', 'v6': 'lane_p6', 'v5': 'lane_p6',
-         'v142': 'lane_sub', 'v141': 'lane_sub', 'v140': 'lane_sub', 'hdae5000': 'lane_hd'}
+         'v142': 'lane_sub', 'v141': 'lane_sub', 'v140': 'lane_sub', 'hdae5000': 'lane_hd',
+         'hdae5000_v2_01i': 'lane_hd', 'hdae5000_v1_15i': 'lane_hd', 'hdae5000_v1_10i': 'lane_hd'}
 
 
 def source_c(out, rows, runs):

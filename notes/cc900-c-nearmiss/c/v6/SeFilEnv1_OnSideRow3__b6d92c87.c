@@ -1,0 +1,14 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of v6/scoop_editor_data_m0.c (2026-11-19-92-p6-r57)
+   sha256 b6d92c8728587c36d7344955e1856c519b3f49fdf7b5bc91b25862fbbea16a72 (tar-sha256); compiled at -Xr
+   cc900-options: -O3 -Xr */
+#define TT_SEFILENV1 0x37
+extern void SeMenu_SendEvent(int title, int refresh);
+extern unsigned char SeMenu_SelectPartIfEnabled(int p);
+#define TT_SEFILLFO1 0x39
+void SeFilEnv1_OnSideRow3(unsigned char a)
+{
+	if (a == 0)
+		SeMenu_SendEvent(TT_SEFILLFO1, 0);
+	else if (SeMenu_SelectPartIfEnabled(2) != 0)
+		SeMenu_SendEvent(TT_SEFILENV1, 1);
+}

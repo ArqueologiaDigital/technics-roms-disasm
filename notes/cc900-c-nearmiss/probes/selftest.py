@@ -4,7 +4,8 @@ listing: made-up inputs only.  Exit 1 on a failure.
   - pair_rows: old rows without listing_name (a first variant, two ERR-dup variants, an ERR-name row) pair with the
     re-checked rows by order and by name;
   - untranslated_shapes: a `cannot translate` stop keeps only the mnemonic, register names, `sym` and `N`;
-  - tool_error: llvm-mc's errors become their messages plus the refused line's mnemonic only.
+  - tool_error: llvm-mc's errors become their messages plus the refused line's mnemonic only;
+  - c_defs_text (2026-11-19): a K&R definition is a definition; a prototype or a call is not.
 
 usage: python3 -B notes/cc900-c-nearmiss/probes/selftest.py"""
 import os
@@ -54,6 +55,11 @@ def main():
                             '-o', os.devnull], capture_output=True, text=True)
     check('tool_error', nearmiss.tool_error(r.stderr, src.split('\n')),
           "unrecognized instruction mnemonic (ldxx); expected ')' after a register-indexed operand (ld)")
+
+    # 2026-11-19: K&R definitions count as definitions (as the build's c_functions), prototypes and calls do not
+    ctext = (b'long KR_Def(type, at)\nunsigned char type;\nlong at;\n{\n    return Proto(at);\n}\n'
+             b'long Proto(long);\nint Ansi_Def(int a)\n{\n    if (a) { return 1; }\n    return 0;\n}\n')
+    check('c_defs_text K&R', nearmiss.c_defs_text(ctext), ['KR_Def', 'Ansi_Def'])
     return 1 if FAIL else 0
 
 
