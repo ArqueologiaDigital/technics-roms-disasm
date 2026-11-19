@@ -230,6 +230,12 @@ functions per tree** built from C (`c_duplicates.py`).
 verified per tree in run 2026-11-19-51-sub-r31s-staged).**  dsp_voice_params_al_31a.c (helper AL): 635 B per tree;
 **580 functions per tree** built from C (`c_duplicates.py`).
 
+**Eighteenth promotion: DSP_Reinit_VoiceSlots and Voice_Build_Partial_Descriptor (2026-11-19; matched in run
+2026-11-19-57-sub-r34a, verified per tree in run 2026-11-19-58-sub-r34s-staged).**  ringbuf_and_midi_dispatch_ap_34a.c
+(helper AP: the index `(unsigned int)a * 0x14 + c` in 16 bits, the destination `+((unsigned long)x * 0x1d6 + 0x10) +
+ram_4531c` with `ram_4531c` an `unsigned long`) and voice_ctrlchange_al_34a.c (helper AL: the rebased key through a
+byte local before the Voice_Allocate_Typed call): 1,154 B per tree; **582 functions per tree** built from C.
+
 **Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
 V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
 on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding
