@@ -1,0 +1,9 @@
+function	bytes	matches	best_diff
+DSP1_ResolveStreamPtr	35	-	+16 sub_AR_41a@Xr
+DSP_BiquadWarp_FP	620	-	+18 sub_AR_41c@Xr
+DSP_DetuneCurve_SignedFP	495	sub_AR_41a@Xr sub_AR_41b@Xr sub_AR_41c@Xr	
+DSP_EFFParam_DiffAllAndFlag	643	sub_AR_41c@Xr	
+DSP_ParamEQ_Curve_FP	1170	-	+94 sub_AR_41c@Xr
+TVF_Lookup_Depth_Amount	168	-	+5 sub_AR_41c@Xr
+ToneDB_Find_PatchRecord	243	-	+21 sub_AR_41c@Xr
+Voice_TickNoteDecay	111	-	+13 sub_AR_41c@Xr
