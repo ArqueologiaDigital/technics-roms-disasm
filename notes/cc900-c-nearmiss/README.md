@@ -2,42 +2,42 @@
 
 QUESTION ANSWERED: for every function of our firmware C that Toshiba cc900 V4.23 compiled in the oracle runs below, how close does V4.23's code (translated by `model/to_llvm.py`, assembled by llvm-mc) come to the ROM, and which kinds of difference keep it from matching?  `index.tsv` has one row per attempt (run, option set, C file, function); the tables below take each function's best attempt.  No Toshiba text is in this directory: names, counts, offsets, class names and paths only.  The listings stay in the private repository `~/compartilhado/cc900-oracle` (`listing` column, relative to it).
 
-Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nmx (cc900/nearmiss@0ad46ea50) --model-root ~/compartilhado/disasm-lanes/nmx (cc900/nearmiss@0ad46ea50)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
+Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nmx (cc900/nearmiss@a89c2cda5) --model-root ~/compartilhado/disasm-lanes/nmx (cc900/nearmiss@a89c2cda5)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
 
 ## Totals
 
 | what                     | MATCH | NEAR  | DIFF  | errors |
 |--------------------------|-------|-------|-------|--------|
-| attempts (index rows)    | 24099 | 10928 | 12840 | 1000   |
-| functions (best attempt) | 4977  | 729   | 243   | 236    |
+| attempts (index rows)    | 24253 | 11194 | 12957 | 1012   |
+| functions (best attempt) | 5030  | 740   | 249   | 245    |
 
-Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 72 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
+Errors: ERR-asm 113, ERR-data 157, ERR-name 392, ERR-resolve 275, ERR-translate 75 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
 
 ## By class (each non-matching function's best attempt)
 
 `sole`: functions whose only class it is, so fixing the class alone would make them MATCH; `sole ROM B`: their ROM bytes (what a fix recovers outright).  `diff B`: bytes this class covers in all functions.  Examples: the largest sole-class functions, else the largest.
 
-| class        | functions | sole | sole ROM B | diff B | examples                                                                                                                                                                                            |
-|--------------|-----------|------|------------|--------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| call-form    | 438       | 376  | 46780      | 3714   | hdae5000 HDAE5000_FdSong_CheckFiles (1273 B, 97.9%), v142 Audio_Cmd_ToneEdit_Dispatch (656 B, 97.3%), v140 MIDI_Dispatch (595 B, 80.5%), v141 MIDI_Dispatch (595 B, 80.5%)                          |
-| register     | 388       | 33   | 7867       | 9128   | hdae5000 HDAE5000_SelectListProc (2641 B, 99.3%), v10 PsToggleBoxProc (600 B, 99.5%), hdae5000 HDAE5000_DbMemoClProc (487 B, 99.2%), v10 Fat_MapFilePosToSector (451 B, 99.6%)                      |
-| other        | 399       | 42   | 3283       | 8314   | v142 Voice_ChanPressure (252 B, 100.0%), v10 SeqEvt_SelectNearestTiming (215 B, 99.1%), v10 ApPostEvent (175 B, 97.7%), v10 MainPostEvent (169 B, 97.6%)                                            |
-| operand      | 115       | 14   | 1439       | 1488   | v5 SaveFileNameSmfFunc (189 B, 84.1%), v6 SaveFileNameSmfFunc (189 B, 84.1%), v7 SaveFileNameSmfFunc (189 B, 84.1%), v5 CDlikeSwTtl_DocNavDispatch (182 B, 83.5%)                                   |
-| order        | 203       | 8    | 875        | 3425   | v10 ReadDualFileEx (417 B, 95.7%), v142 ToneGen_WriteExtParams_15_Alt (94 B, 96.8%), v10 ExtDev_SndParam_DispatchAndWriteA8 (89 B, 96.6%), v10 ExtDev_SndParam_DispatchAndWriteA8_Alt (89 B, 96.6%) |
-| length-only  | 48        | 13   | 695        | 4139   | v142 Voice_NoteOn_Rhythm (155 B, 100.0%), v142 EFF_RoutingInit (73 B, 100.0%), v140 ToneGen_SetupPolyVoice (68 B, 100.0%), v141 ToneGen_SetupPolyVoice (68 B, 100.0%)                               |
-| return-form  | 53        | 16   | 530        | 185    | v10 AccPitch_CheckTransposeFlags (59 B, 89.8%), v10 AccSection_SwitchNowUnlessDeferred (55 B, 92.7%), v10 TimeSig_DisplayStrings_Code_Helper4 (50 B, 84.0%), v10 AccNote_FlushAll (45 B, 95.6%)     |
-| size         | 41        | 4    | 462        | 170    | v142 Voice_Slot_CalcArticParams (320 B, 98.8%), v10 FileIO_CheckRecordByFile (54 B, 96.3%), v10 FileIO_FormatName_Return (44 B, 95.5%), v10 FileIO_WriteRecordName_Done (44 B, 95.5%)               |
-| address-form | 37        | 3    | 154        | 310    | v10 ListDir2_Entry (90 B, 94.4%), v10 TrAsGrid_StepListValue (44 B, 88.6%), v10 VoiceAlloc_InitBitMap (20 B, 80.0%)                                                                                 |
-| bit-form     | 25        | 3    | 144        | 155    | v10 AccentVoice_DetectAndMarkChange (86 B, 94.2%), v10 PerfMode_ParamHandler_7_Helper (29 B, 82.8%), v10 PerfMode_ParamHandler_7_Helper2 (29 B, 82.8%)                                              |
-| arith-type   | 13        | 1    | 63         | 118    | v10 SeqBuffer_RemoveLastEntry (63 B, 87.3%)                                                                                                                                                         |
-| width        | 11        | 3    | 58         | 106    | v10 BmDrEdit_DecrementDelayA (21 B, 61.9%), v10 BmDrEdit_DecrementDelayB (21 B, 61.9%), v10 SeqStatus_SetOrClearBit (16 B, 75.0%)                                                                   |
-| extend       | 153       | 1    | 46         | 700    | v10 FileIO_SeekAndRead16BitValue (46 B, 91.3%)                                                                                                                                                      |
-| encoding     | 1         | 1    | 21         | 7      | v10 Demo_SelectEntry_LoadPattern (21 B, 66.7%)                                                                                                                                                      |
-| loop-shape   | 115       | 0    | 0          | 647    | v10 DrawMonoBitmap_Impl (766 B, 18.5%), v10 ProcessEventDispatch_Prologue (702 B, 83.9%), v142 Audio_Cmd_DSPUnit_Param (681 B, 82.5%), v142 Voice_Allocate_Nodes (583 B, 74.3%)                     |
-| swap         | 46        | 0    | 0          | 129    | v10 SeqStep_FileSectorPopReturn (474 B, 59.3%), v142 DSP_VoiceCoeffRoute (365 B, 37.5%), v10 SeqPlay_CheckStartConditions (331 B, 86.7%), v142 EFF_ParamIterator_Process (314 B, 91.1%)             |
-| idiom        | 5         | 0    | 0          | 32     | v10 Test_PROGRAM_and_TABLE_DATA_ROMs (267 B, 54.3%), v10 AccStyle_ResetAllVoiceState (151 B, 90.1%), v10 DrumParam_BuildActiveMask (93 B, 29.0%), v10 AccBuf_ResetByteData (91 B, 1.1%)             |
-| staging      | 1         | 0    | 0          | 7      | v10 AccVoice_WriteEmptyPattern (37 B, 35.1%)                                                                                                                                                        |
-| bool-form    | 0         | 0    | 0          | 0      |                                                                                                                                                                                                     |
+| class        | functions | sole | sole ROM B | diff B | examples                                                                                                                                                                                        |
+|--------------|-----------|------|------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| call-form    | 440       | 376  | 46780      | 3731   | hdae5000 HDAE5000_FdSong_CheckFiles (1273 B, 97.9%), v142 Audio_Cmd_ToneEdit_Dispatch (656 B, 97.3%), v140 MIDI_Dispatch (595 B, 80.5%), v141 MIDI_Dispatch (595 B, 80.5%)                      |
+| register     | 403       | 40   | 9922       | 9357   | hdae5000 HDAE5000_SelectListProc (2641 B, 99.3%), v142 ToneGen_WriteVoiceParams (794 B, 99.1%), v142 Voice_StereoLevel_Compute (625 B, 98.7%), v10 PsToggleBoxProc (600 B, 99.5%)               |
+| other        | 409       | 42   | 3283       | 8416   | v142 Voice_ChanPressure (252 B, 100.0%), v10 SeqEvt_SelectNearestTiming (215 B, 99.1%), v10 ApPostEvent (175 B, 97.7%), v10 MainPostEvent (169 B, 97.6%)                                        |
+| operand      | 120       | 15   | 1516       | 1636   | v5 SaveFileNameSmfFunc (189 B, 84.1%), v6 SaveFileNameSmfFunc (189 B, 84.1%), v7 SaveFileNameSmfFunc (189 B, 84.1%), v5 CDlikeSwTtl_DocNavDispatch (182 B, 83.5%)                               |
+| order        | 209       | 7    | 781        | 3480   | v10 ReadDualFileEx (417 B, 95.7%), v10 ExtDev_SndParam_DispatchAndWriteA8 (89 B, 96.6%), v10 ExtDev_SndParam_DispatchAndWriteA8_Alt (89 B, 96.6%), v10 SeqData_ReadParamBlock (78 B, 97.4%)     |
+| length-only  | 50        | 13   | 695        | 4150   | v142 Voice_NoteOn_Rhythm (155 B, 100.0%), v142 EFF_RoutingInit (73 B, 100.0%), v140 ToneGen_SetupPolyVoice (68 B, 100.0%), v141 ToneGen_SetupPolyVoice (68 B, 100.0%)                           |
+| return-form  | 54        | 16   | 530        | 187    | v10 AccPitch_CheckTransposeFlags (59 B, 89.8%), v10 AccSection_SwitchNowUnlessDeferred (55 B, 92.7%), v10 TimeSig_DisplayStrings_Code_Helper4 (50 B, 84.0%), v10 AccNote_FlushAll (45 B, 95.6%) |
+| size         | 43        | 4    | 462        | 179    | v142 Voice_Slot_CalcArticParams (320 B, 98.8%), v10 FileIO_CheckRecordByFile (54 B, 96.3%), v10 FileIO_FormatName_Return (44 B, 95.5%), v10 FileIO_WriteRecordName_Done (44 B, 95.5%)           |
+| extend       | 161       | 2    | 165        | 714    | v10 SeMenu_StepParamFieldAndSend (119 B, 100.0%), v10 FileIO_SeekAndRead16BitValue (46 B, 91.3%)                                                                                                |
+| address-form | 37        | 3    | 154        | 305    | v10 ListDir2_Entry (90 B, 94.4%), v10 TrAsGrid_StepListValue (44 B, 88.6%), v10 VoiceAlloc_InitBitMap (20 B, 80.0%)                                                                             |
+| loop-shape   | 116       | 1    | 145        | 669    | v10 BmDrEdit_WalkAndScanAfterEdit (145 B, 97.2%)                                                                                                                                                |
+| bit-form     | 25        | 3    | 144        | 155    | v10 AccentVoice_DetectAndMarkChange (86 B, 94.2%), v10 PerfMode_ParamHandler_7_Helper (29 B, 82.8%), v10 PerfMode_ParamHandler_7_Helper2 (29 B, 82.8%)                                          |
+| arith-type   | 12        | 1    | 63         | 114    | v10 SeqBuffer_RemoveLastEntry (63 B, 87.3%)                                                                                                                                                     |
+| width        | 11        | 3    | 58         | 106    | v10 BmDrEdit_DecrementDelayA (21 B, 61.9%), v10 BmDrEdit_DecrementDelayB (21 B, 61.9%), v10 SeqStatus_SetOrClearBit (16 B, 75.0%)                                                               |
+| encoding     | 1         | 1    | 21         | 7      | v10 Demo_SelectEntry_LoadPattern (21 B, 66.7%)                                                                                                                                                  |
+| swap         | 42        | 0    | 0          | 113    | v10 SeqStep_FileSectorPopReturn (474 B, 59.3%), v10 SeqPlay_CheckStartConditions (331 B, 86.7%), v142 EFF_ParamIterator_Process (314 B, 91.1%), v142 Voice_Freq_WriteLeft (284 B, 90.1%)        |
+| idiom        | 5         | 0    | 0          | 32     | v10 Test_PROGRAM_and_TABLE_DATA_ROMs (267 B, 54.3%), v10 AccStyle_ResetAllVoiceState (151 B, 90.1%), v10 DrumParam_BuildActiveMask (93 B, 29.0%), v10 AccBuf_ResetByteData (91 B, 1.1%)         |
+| staging      | 2         | 0    | 0          | 12     | v10 SeMenu_RegisterElement_Extended (95 B, 74.7%), v10 AccVoice_WriteEmptyPattern (37 B, 35.1%)                                                                                                 |
+| bool-form    | 0         | 0    | 0          | 0      |                                                                                                                                                                                                 |
 
 ## What each class needs
 
@@ -68,30 +68,30 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | classes                                             | functions | ROM B |
 |-----------------------------------------------------|-----------|-------|
 | call-form                                           | 376       | 46780 |
+| register,other                                      | 43        | 4770  |
 | other                                               | 42        | 3283  |
-| register,other                                      | 42        | 4449  |
-| register                                            | 33        | 7867  |
-| register,extend,order,other                         | 27        | 4102  |
+| register                                            | 40        | 9922  |
+| register,extend,order,other                         | 26        | 3982  |
 | register,order,other                                | 19        | 2804  |
 | call-form,other                                     | 19        | 1487  |
 | return-form                                         | 16        | 530   |
-| register,order                                      | 14        | 2101  |
-| register,extend,other                               | 14        | 1504  |
-| operand                                             | 14        | 1439  |
+| register,extend,other                               | 16        | 1691  |
+| operand                                             | 15        | 1516  |
+| register,order                                      | 13        | 1970  |
+| register,swap                                       | 13        | 1031  |
 | length-only                                         | 13        | 695   |
 | call-form,length-only                               | 13        | 1337  |
-| register,swap                                       | 12        | 928   |
-| register,order,loop-shape,other                     | 10        | 1367  |
+| register,order,loop-shape,other                     | 11        | 1531  |
 | register,loop-shape,other                           | 10        | 1236  |
 | register,operand,order,other                        | 9         | 1569  |
-| operand,other                                       | 8         | 2018  |
 | register,extend                                     | 8         | 690   |
-| order                                               | 8         | 875   |
-| order,other                                         | 7         | 606   |
-| register,operand,extend,order,loop-shape,other      | 7         | 1554  |
+| order,other                                         | 8         | 729   |
+| register,operand,extend,order,loop-shape,other      | 8         | 1700  |
+| operand,other                                       | 7         | 1880  |
+| order                                               | 7         | 781   |
 | register,operand,extend,order,other                 | 6         | 2860  |
 | register,operand,extend,order,loop-shape,swap,other | 5         | 795   |
-| register,loop-shape,swap                            | 5         | 358   |
+| register,extend,order,loop-shape,other              | 5         | 633   |
 | call-form,length-only,other                         | 4         | 489   |
 | register,operand,order,loop-shape,other             | 4         | 919   |
 | register,return-form,other                          | 4         | 132   |
@@ -134,10 +134,10 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | BmDrEdit_CalcSongPosition                    | 82    | 82     | 73.2    | 3          | register,extend,swap                                            | 2026-11-16-87-p6-r15 O3XSXr         | c/v10/BmDrEdit_CalcSongPosition__2098e074.c                     |
 | v10      | BmDrEdit_CheckSlotsAvailable                 | 35    | 33     | 88.6    | 0          | extend,order                                                    | 2026-11-16-32-p6-m18-olevels O1XSXr | c/v10/BmDrEdit_CheckSlotsAvailable__dfb6a132.c                  |
 | v10      | BmDrEdit_ScanBackwardInit                    | 307   | 300    | 87.3    | 78         | register,other                                                  | 2026-11-17-2-p6-r29 O3Xr            | c/v10/BmDrEdit_ScanBackwardInit__a7836de9.c                     |
+| v10      | BmDrEdit_WalkAndScanAfterEdit                | 145   | 145    | 97.2    | 101        | loop-shape                                                      | 2026-11-19-19-p6-r43 O3Xr           | c/v10/BmDrEdit_WalkAndScanAfterEdit__880d7e33.c                 |
 | v10      | BoxProc                                      | 92    | 101    | 73.9    | 0          | register,order,other                                            | 2026-11-16-45-p6-r9 O3Xr            | c/v10/BoxProc__0a24d3ab.c                                       |
 | v10      | BuildPageRecords                             | 199   | 213    | 76.9    | 10         | register,operand,extend,order,loop-shape,swap,other             | 2026-11-18-33-p6-r37 O3Xr           | c/v10/BuildPageRecords__3d000a22.c                              |
 | v10      | BuildSlotLabel                               | 120   | 121    | 77.5    | 3          | register,extend,order,other                                     | 2026-11-19-15-p6-r42 Xr             | c/v10/BuildSlotLabel__610f9391.c                                |
-| v10      | CalcTotalWidth                               | 137   | 137    | 85.4    | 64         | register                                                        | 2026-11-19-9-p6-r40 O3XSXr          | c/v10/CalcTotalWidth__23b8683e.c                                |
 | v10      | CaptureLcd                                   | 475   | 471    | 73.7    | 176        | register,size,other                                             | 2026-11-16-107-p6-r21 O3Xr          | c/v10/CaptureLcd__55d3f22f.c                                    |
 | v10      | CheckFileSystemStatus                        | 33    | 35     | 69.7    | 22         | register                                                        | 2026-11-16-37-p6-r5 O3Xr            | c/v10/CheckFileSystemStatus__412474a4.c                         |
 | v10      | ClipBlit_Direct_Impl                         | 234   | 225    | 89.3    | 120        | register,extend,other                                           | 2026-11-18-12-p6-r35 O3Xr           | c/v10/ClipBlit_Direct_Impl__7f8e81c7.c                          |
@@ -149,7 +149,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | CmpSingleLoadSrcFunc                         | 490   | 477    | 71.6    | 3          | register,order,other                                            | 2026-11-18-1-p6-r33 O3XSXr          | c/v10/CmpSingleLoadSrcFunc__94d7dff5.c                          |
 | v10      | ColorBlit                                    | 89    | 90     | 96.6    | 8          | call-form                                                       | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/ColorBlit__aef12111.c                                     |
 | v10      | ColorBlit2                                   | 89    | 90     | 96.6    | 8          | call-form                                                       | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/ColorBlit2__aef12111.c                                    |
-| v10      | ColorBlit_ComputeRectAndBlit                 | 70    | 70     | 92.9    | 38         | register                                                        | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/ColorBlit_ComputeRectAndBlit__f40c01f9.c                  |
+| v10      | ColorBlit_Variant_ByteData                   | 107   | 108    | 73.8    | 11         | register,extend,other                                           | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/ColorBlit_Variant_ByteData__4eb09df1.c                    |
 | v10      | CtrlPanel_GetSelectionState                  | 30    | 35     | 76.7    | 14         | register,other                                                  | 2026-11-16-35-p6-r3 O3Xr            | c/v10/CtrlPanel_GetSelectionState__b13624c6.c                   |
 | v10      | DELAY_6_TICKS                                | 21    | 19     | 42.9    | 11         | register,loop-shape                                             | 2026-11-16-40-p6-r8 O3XSXr          | c/v10/DELAY_6_TICKS__a315e99d.c                                 |
 | v10      | DSPCfg_ApplyParamStruct                      | 431   | 431    | 73.5    | 152        | register,operand,order,size,other                               | 2026-11-16-100-p6-r19 O3Xr          | c/v10/DSPCfg_ApplyParamStruct__5f9005b0.c                       |
@@ -190,11 +190,11 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | DrawRect_Impl                                | 243   | 239    | 86.8    | 18         | register,order,other                                            | 2026-11-16-87-p6-r15 O3XSXr         | c/v10/DrawRect_Impl__22f6f472.c                                 |
 | v10      | DrawString                                   | 159   | 160    | 98.1    | 13         | call-form                                                       | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/DrawString__3cd8a79d.c                                    |
 | v10      | EffectMode_RestoreSwbWr_NormalMode           | 60    | 62     | 93.3    | 17         | register,extend                                                 | 2026-11-16-55-p6-r10 Xr             | c/v10/EffectMode_RestoreSwbWr_NormalMode__ece06184.c            |
-| v10      | ExtData_SetTlvField                          | 79    | 79     | 92.4    | 4          | register                                                        | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/ExtData_SetTlvField__b102f42f.c                           |
 | v10      | ExtData_Voice_MixedHandler                   | 110   | 106    | 90.9    | 8          | order,return-form                                               | 2026-11-16-128-p6-r27 O3XSXr        | c/v10/ExtData_Voice_MixedHandler__1ca5a990.c                    |
 | v10      | ExtDev_SndParam_Block14_Dual                 | 36    | 36     | 91.7    | 1          | order                                                           | 2026-11-16-128-p6-r27 O3XSXr        | c/v10/ExtDev_SndParam_Block14_Dual__358fe255.c                  |
 | v10      | ExtDev_SndParam_DispatchAndWriteA8           | 89    | 89     | 96.6    | 63         | order                                                           | 2026-11-16-128-p6-r27 O3Xr          | c/v10/ExtDev_SndParam_DispatchAndWriteA8__358fe255.c            |
 | v10      | ExtDev_SndParam_DispatchAndWriteA8_Alt       | 89    | 89     | 96.6    | 63         | order                                                           | 2026-11-16-128-p6-r27 O3Xr          | c/v10/ExtDev_SndParam_DispatchAndWriteA8_Alt__358fe255.c        |
+| v10      | FDC_CommandAndPostEvent                      | 59    | 57     | 88.1    | 19         | register,other                                                  | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/FDC_CommandAndPostEvent__fca43bd8.c                       |
 | v10      | FDC_ExecuteSectorCommand                     | 78    | 70     | 78.2    | 7          | register,operand,order,other                                    | 2026-11-19-15-p6-r42 Xr             | c/v10/FDC_ExecuteSectorCommand__7e4397b4.c                      |
 | v10      | FDC_HardwareSetup                            | 49    | 52     | 81.6    | 0          | other                                                           | 2026-11-16-40-p6-r8 Xr              | c/v10/FDC_HardwareSetup__a315e99d.c                             |
 | v10      | FDC_SendAuxCmd                               | 24    | 26     | 75.0    | 4          | call-form                                                       | 2026-11-16-111-p6-r22-staged O3Xr   | c/v10/FDC_SendAuxCmd__8e6aea90.c                                |
@@ -206,7 +206,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | FDemoText_LookupTableEntry                   | 16    | 15     | 62.5    | 9          | extend,other                                                    | 2026-11-18-12-p6-r35 O3XSXr         | c/v10/FDemoText_LookupTableEntry__34bb79d4.c                    |
 | v10      | FDemoText_RenderTextLine                     | 438   | 439    | 99.3    | 407        | call-form                                                       | 2026-11-17-6-p6-r30-staged O3Xr     | c/v10/FDemoText_RenderTextLine__df20e3f7.c                      |
 | v10      | FDemoText_ScanMIDIChannels                   | 346   | 346    | 91.9    | 117        | register,order,other                                            | 2026-11-16-100-p6-r19 O3Xr          | c/v10/FDemoText_ScanMIDIChannels__6635aad8.c                    |
-| v10      | FDemoText_UpdateCursorPosition               | 194   | 192    | 73.2    | 87         | register,order,loop-shape,other                                 | 2026-11-19-9-p6-r40 O3Xr            | c/v10/FDemoText_UpdateCursorPosition__6e792c3d.c                |
+| v10      | FDemoText_UpdateCursorPosition               | 194   | 192    | 73.2    | 87         | register,order,loop-shape,other                                 | 2026-11-19-19-p6-r43 O3Xr           | c/v10/FDemoText_UpdateCursorPosition__e2f22101.c                |
 | v10      | FDemo_DisplayResourceData                    | 293   | 291    | 90.4    | 17         | register,order,loop-shape                                       | 2026-11-16-107-p6-r21 O3Xr          |                                                                 |
 | v10      | FDemo_RegisterLoadedFile                     | 61    | 61     | 85.2    | 20         | order,other                                                     | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/FDemo_RegisterLoadedFile__876f0f9b.c                      |
 | v10      | Fat_GetSectorAtFilePos                       | 76    | 74     | 94.7    | 29         | register                                                        | 2026-11-18-28-p6-r36 Xr             | c/v10/Fat_GetSectorAtFilePos__f24805d5.c                        |
@@ -214,7 +214,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | Fat_MapFilePosToSector                       | 451   | 452    | 99.6    | 82         | register                                                        | 2026-11-16-123-p6-r25 Xr            | c/v10/Fat_MapFilePosToSector__60cec29b.c                        |
 | v10      | Fat_ReadEntry                                | 264   | 273    | 70.5    | 5          | register,operand,extend,order,swap,other                        | 2026-11-16-100-p6-r19 Xr            |                                                                 |
 | v10      | Fat_WriteDirEntry                            | 95    | 95     | 85.3    | 7          | operand,other                                                   | 2026-11-18-28-p6-r36 Xr             | c/v10/Fat_WriteDirEntry__f24805d5.c                             |
-| v10      | FileIO_BuildFileIndex                        | 157   | 157    | 85.4    | 52         | register,order                                                  | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/FileIO_BuildFileIndex__d1d81b32.c                         |
+| v10      | FileIO_BuildFileIndex                        | 157   | 157    | 89.2    | 64         | register                                                        | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/FileIO_BuildFileIndex__1bc8735a.c                         |
 | v10      | FileIO_BytecodeData_Code_Join18              | 106   | 106    | 92.5    | 81         | register                                                        | 2026-11-16-128-p6-r27 O3Xr          | c/v10/FileIO_BytecodeData_Code_Join18__40add7c1.c               |
 | v10      | FileIO_BytecodeData_Code_Loop3               | 107   | 107    | 92.5    | 81         | register                                                        | 2026-11-16-128-p6-r27 O3Xr          | c/v10/FileIO_BytecodeData_Code_Loop3__40add7c1.c                |
 | v10      | FileIO_CheckFileExists                       | 37    | 37     | 83.8    | 19         | order,other                                                     | 2026-11-16-40-p6-r8 O3XSXr          |                                                                 |
@@ -227,12 +227,14 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | FileIO_InitRecordTable                       | 126   | 138    | 75.4    | 21         | register,operand,loop-shape                                     | 2026-11-16-32-p6-m18-olevels O1XSXr | c/v10/FileIO_InitRecordTable__3c701cc2.c                        |
 | v10      | FileIO_ReadAndValidateHeader                 | 105   | 105    | 88.6    | 58         | register,loop-shape,other                                       | 2026-11-16-53-p6-r11 O3XSXr         | c/v10/FileIO_ReadAndValidateHeader__059fc1db.c                  |
 | v10      | FileIO_ReadBlock                             | 180   | 183    | 80.6    | 24         | register,order,other                                            | 2026-11-18-28-p6-r36 O3Xr           | c/v10/FileIO_ReadBlock__1efaad1a.c                              |
+| v10      | FileIO_ReadVariableLengthData                | 135   | 133    | 97.0    | 33         | register                                                        | 2026-11-19-19-p6-r43 Xr             | c/v10/FileIO_ReadVariableLengthData__5fe673f3.c                 |
 | v10      | FileIO_SaveAllRegions                        | 344   | 373    | 73.5    | 23         | register,extend,order,address-form,other                        | 2026-11-16-72-p6-r13 O3XSXr         |                                                                 |
 | v10      | FileIO_ScanDirEntries                        | 198   | 212    | 76.8    | 10         | register,operand,extend,order,loop-shape,swap,other             | 2026-11-18-33-p6-r37 O3Xr           | c/v10/FileIO_ScanDirEntries__3d000a22.c                         |
 | v10      | FileIO_SearchFile                            | 30    | 26     | 73.3    | 0          | register,other                                                  | 2026-11-16-39-p6-r7 O3XSXr          | c/v10/FileIO_SearchFile__3463f1aa.c                             |
 | v10      | FileIO_Search_SkipEntry                      | 43    | 43     | 72.1    | 28         | register,loop-shape,other                                       | 2026-11-16-37-p6-r5 O3Xr            | c/v10/FileIO_Search_SkipEntry__412474a4.c                       |
 | v10      | FileIO_SeekAndRead16BitValue                 | 46    | 42     | 91.3    | 14         | extend                                                          | 2026-11-16-100-p6-r19 O3XSXr        | c/v10/FileIO_SeekAndRead16BitValue__3e7e5ada.c                  |
 | v10      | FileIO_WriteRecordName_Done                  | 44    | 44     | 95.5    | 41         | size                                                            | 2026-11-16-39-p6-r7 O3XSXr          | c/v10/FileIO_WriteRecordName_Done__3463f1aa.c                   |
+| v10      | FirmwareUpdate_SaveDiskType                  | 94    | 94     | 92.6    | 4          | loop-shape,address-form                                         | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/FirmwareUpdate_SaveDiskType__593b3537.c                   |
 | v10      | Flash_GetSlotAddressAndSize                  | 197   | 202    | 84.8    | 23         | register,operand,other                                          | 2026-11-18-12-p6-r35 O3Xr           | c/v10/Flash_GetSlotAddressAndSize__acf7ea99.c                   |
 | v10      | Flash_InitBytecodeBlock                      | 703   | 701    | 96.7    | 33         | call-form,register,extend                                       | 2026-11-18-1-p6-r33 O3XSXr          | c/v10/Flash_InitBytecodeBlock__9a69b846.c                       |
 | v10      | FmmDocFileNameFunc                           | 509   | 508    | 95.5    | 13         | call-form,register,order,size,other                             | 2026-11-17-16-p6-r31 O3Xr           | c/v10/FmmDocFileNameFunc__bd734b39.c                            |
@@ -254,7 +256,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | Malloc                                       | 181   | 181    | 93.4    | 16         | register,other                                                  | 2026-11-18-28-p6-r36 Xr             | c/v10/Malloc__3b0896e0.c                                        |
 | v10      | MemConfig_Handler_5_Helper11                 | 25    | 24     | 80.0    | 20         | return-form                                                     | 2026-11-16-40-p6-r8 O3XSXr          | c/v10/MemConfig_Handler_5_Helper11__f87946ba.c                  |
 | v10      | MidiChan_DequeueVoiceEntry                   | 20    | 22     | 90.0    | 0          | order,other                                                     | 2026-11-16-32-p6-m18-olevels O1Xr   | c/v10/MidiChan_DequeueVoiceEntry__7d16c83e.c                    |
-| v10      | MidiEvent_ParseNoteSequence                  | 185   | 186    | 81.6    | 31         | register,loop-shape,size,other                                  | 2026-11-18-33-p6-r37 Xr             | c/v10/MidiEvent_ParseNoteSequence__9faccfc6.c                   |
+| v10      | MidiEvent_ParseNoteSequence                  | 185   | 188    | 85.4    | 31         | register,size,other                                             | 2026-11-19-19-p6-r43 Xr             | c/v10/MidiEvent_ParseNoteSequence__498da92d.c                   |
 | v10      | MidiPkt_DispatchSpecialType                  | 107   | 107    | 97.2    | 83         | operand                                                         | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_DispatchSpecialType__5c33f24e.c                   |
 | v10      | MidiPkt_DispatchViaTable_4D6A                | 52    | 52     | 94.2    | 28         | operand                                                         | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_DispatchViaTable_4D6A__5c33f24e.c                 |
 | v10      | MidiPkt_DispatchViaTable_4D82                | 52    | 52     | 94.2    | 28         | operand                                                         | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_DispatchViaTable_4D82__5c33f24e.c                 |
@@ -263,7 +265,6 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | MidiPkt_DispatchViaTable_4DA6                | 52    | 52     | 94.2    | 28         | operand                                                         | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_DispatchViaTable_4DA6__5c33f24e.c                 |
 | v10      | MidiPkt_DispatchViaTable_4DAE                | 122   | 122    | 92.6    | 28         | operand                                                         | 2026-11-19-15-p6-r42 O3Xr           | c/v10/MidiPkt_DispatchViaTable_4DAE__5c33f24e.c                 |
 | v10      | MidiPkt_DispatchViaTable_4DCE                | 53    | 53     | 94.3    | 29         | operand                                                         | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_DispatchViaTable_4DCE__5c33f24e.c                 |
-| v10      | MidiPkt_EnqueueControl_3354                  | 138   | 141    | 93.5    | 28         | operand,other                                                   | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/MidiPkt_EnqueueControl_3354__488c9989.c                   |
 | v10      | MidiPkt_EnqueueControl_335C                  | 134   | 134    | 95.5    | 44         | operand                                                         | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_EnqueueControl_335C__5c33f24e.c                   |
 | v10      | MidiPkt_EnqueueControl_3364                  | 143   | 146    | 93.7    | 28         | operand,other                                                   | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_EnqueueControl_3364__5c33f24e.c                   |
 | v10      | MidiPkt_EnqueueControl_3368                  | 183   | 192    | 90.7    | 28         | operand,other                                                   | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/MidiPkt_EnqueueControl_3368__5c33f24e.c                   |
@@ -271,7 +272,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | MidiPkt_SetXferBlock_StyleImageHeader        | 23    | 25     | 78.3    | 4          | register                                                        | 2026-11-16-37-p6-r5 Xr              | c/v10/MidiPkt_SetXferBlock_StyleImageHeader__412474a4.c         |
 | v10      | MidiPkt_SetXferBlock_StyleImageTables        | 23    | 25     | 78.3    | 4          | register                                                        | 2026-11-16-37-p6-r5 Xr              | c/v10/MidiPkt_SetXferBlock_StyleImageTables__412474a4.c         |
 | v10      | MidiPkt_SetXferTotal_All                     | 98    | 94     | 77.6    | 30         | register,operand,other                                          | 2026-11-19-15-p6-r42 O3Xr           | c/v10/MidiPkt_SetXferTotal_All__5b96d416.c                      |
-| v10      | MidiSysEx_BuildAndSend                       | 151   | 160    | 78.1    | 35         | register,bit-form,other                                         | 2026-11-19-13-p6-r41 Xr             | c/v10/MidiSysEx_BuildAndSend__9fa5434a.c                        |
+| v10      | MidiSysEx_BuildAndSend                       | 151   | 160    | 82.1    | 35         | register,bit-form,other                                         | 2026-11-19-19-p6-r43 Xr             | c/v10/MidiSysEx_BuildAndSend__3d8a97f7.c                        |
 | v10      | MovePixels                                   | 77    | 78     | 96.1    | 8          | call-form                                                       | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/MovePixels__3cd8a79d.c                                    |
 | v10      | NoteMap_FindLinkedSlotByKey                  | 88    | 88     | 89.8    | 61         | extend,loop-shape,other                                         | 2026-11-16-35-p6-r3 Xr              | c/v10/NoteMap_FindLinkedSlotByKey__c97b2399.c                   |
 | v10      | NoteMap_LookupAndAllocVoice                  | 225   | 222    | 88.0    | 15         | register,order,other                                            | 2026-11-16-53-p6-r11 Xr             | c/v10/NoteMap_LookupAndAllocVoice__7868c53b.c                   |
@@ -299,29 +300,32 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | PsRadioBoxProc                               | 988   | 987    | 94.2    | 33         | register,extend,order,other                                     | 2026-11-16-107-p6-r21 O3XSXr        | c/v10/PsRadioBoxProc__2fb16011.c                                |
 | v10      | PsToggleBoxProc                              | 600   | 602    | 99.5    | 17         | register                                                        | 2026-11-17-2-p6-r29 O3XSXr          | c/v10/PsToggleBoxProc__c4a775d0.c                               |
 | v10      | ReadDualFileEx                               | 417   | 417    | 95.7    | 103        | order                                                           | 2026-11-16-72-p6-r13 O3XSXr         | c/v10/ReadDualFileEx__00a3050e.c                                |
-| v10      | ReadFieldToBuffer                            | 178   | 171    | 77.0    | 16         | order,loop-shape,other                                          | 2026-11-18-33-p6-r37 O3XSXr         | c/v10/ReadFieldToBuffer__85d0da1d.c                             |
 | v10      | RhythmBuf_CheckEmpty                         | 18    | 20     | 88.9    | 10         | other                                                           | 2026-11-16-39-p6-r7 Xr              | c/v10/RhythmBuf_CheckEmpty__cd9f1347.c                          |
 | v10      | Rhythm_ComputeNoteAllocation_Helper          | 122   | 122    | 78.7    | 44         | register,order,loop-shape,length-only,other                     | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/Rhythm_ComputeNoteAllocation_Helper__3df6c91d.c           |
 | v10      | SC0Init_StandardBaudTable                    | 69    | 68     | 97.1    | 7          | other                                                           | 2026-11-16-45-p6-r9 O3Xr            | c/v10/SC0Init_StandardBaudTable__6921ff26.c                     |
 | v10      | Scoop_Dispatch_CallFAA98A                    | 47    | 41     | 83.0    | 29         | register                                                        | 2026-11-16-45-p6-r9 Xr              | c/v10/Scoop_Dispatch_CallFAA98A__d8c23d04.c                     |
 | v10      | SdpartScrollDelta                            | 50    | 47     | 90.0    | 9          | register,return-form,other                                      | 2026-11-16-40-p6-r8 O3XSXr          | c/v10/SdpartScrollDelta__a315e99d.c                             |
 | v10      | SeEasy_SendParamValue                        | 72    | 72     | 94.4    | 10         | register,swap                                                   | 2026-11-16-123-p6-r25 O3XSXr        | c/v10/SeEasy_SendParamValue__71454169.c                         |
-| v10      | SeMenu_ApplyFilter                           | 124   | 123    | 78.2    | 91         | register,extend,order,other                                     | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/SeMenu_ApplyFilter__7d076c3e.c                            |
+| v10      | SeMenu_ApplyFilter                           | 124   | 124    | 82.3    | 98         | register,order                                                  | 2026-11-19-21-p6-r44 O3XSXr         | c/v10/SeMenu_ApplyFilter__00ac53d7.c                            |
+| v10      | SeMenu_ApplySynthParam_Alt                   | 84    | 83     | 69.0    | 52         | register,extend,order,other                                     | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_ApplySynthParam_Alt__1e906412.c                    |
 | v10      | SeMenu_ClampAndScaleEnvLevel                 | 86    | 91     | 81.4    | 44         | register,extend,other                                           | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/SeMenu_ClampAndScaleEnvLevel__67c161e2.c                  |
-| v10      | SeMenu_ClearDisplayBuffer                    | 58    | 58     | 74.1    | 4          | register,loop-shape,swap                                        | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/SeMenu_ClearDisplayBuffer__2e7c283d.c                     |
+| v10      | SeMenu_ClearDisplayBuffer                    | 58    | 56     | 87.9    | 4          | register                                                        | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_ClearDisplayBuffer__c5ed0d0d.c                     |
 | v10      | SeMenu_ComputeParamTableAddr                 | 34    | 32     | 70.6    | 8          | register,extend,order                                           | 2026-11-16-40-p6-r8 O3XSXr          | c/v10/SeMenu_ComputeParamTableAddr__a315e99d.c                  |
-| v10      | SeMenu_InitDisplayField                      | 89    | 89     | 82.0    | 16         | register,loop-shape,swap                                        | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/SeMenu_InitDisplayField__1f9212f4.c                       |
-| v10      | SeMenu_InitDisplayField_Alt                  | 108   | 108    | 85.2    | 19         | register,loop-shape,swap                                        | 2026-11-19-13-p6-r41 O3Xr           | c/v10/SeMenu_InitDisplayField_Alt__1f9212f4.c                   |
-| v10      | SeMenu_InitTrackInfo                         | 90    | 96     | 92.2    | 39         | register,other                                                  | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/SeMenu_InitTrackInfo__2e7c283d.c                          |
+| v10      | SeMenu_InitDisplayField                      | 89    | 87     | 91.0    | 16         | register                                                        | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_InitDisplayField__c5ed0d0d.c                       |
+| v10      | SeMenu_InitDisplayField_Alt                  | 108   | 106    | 92.6    | 19         | register                                                        | 2026-11-19-19-p6-r43 O3Xr           | c/v10/SeMenu_InitDisplayField_Alt__c5ed0d0d.c                   |
+| v10      | SeMenu_InitTrackInfo                         | 90    | 96     | 92.2    | 39         | register,other                                                  | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_InitTrackInfo__93e6e3b7.c                          |
 | v10      | SeMenu_IsPartEnabled                         | 35    | 33     | 77.1    | 27         | register,other                                                  | 2026-11-16-100-p6-r19 O3XSXr        | c/v10/SeMenu_IsPartEnabled__701b5086.c                          |
+| v10      | SeMenu_RegisterElement_Extended              | 95    | 93     | 74.7    | 13         | register,order,loop-shape,staging,other                         | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_RegisterElement_Extended__32378dc9.c               |
 | v10      | SeMenu_RegisterParamDisplay                  | 59    | 59     | 93.2    | 7          | register,swap                                                   | 2026-11-16-123-p6-r25 O3XSXr        | c/v10/SeMenu_RegisterParamDisplay__9d395ce3.c                   |
 | v10      | SeMenu_RegisterValueDisplay                  | 68    | 68     | 94.1    | 10         | register,swap                                                   | 2026-11-16-123-p6-r25 O3XSXr        | c/v10/SeMenu_RegisterValueDisplay__71454169.c                   |
 | v10      | SeMenu_SetDisplayValue                       | 63    | 63     | 93.7    | 7          | register,swap                                                   | 2026-11-16-123-p6-r25 O3XSXr        | c/v10/SeMenu_SetDisplayValue__71454169.c                        |
 | v10      | SeMenu_SetFilterType                         | 79    | 82     | 96.2    | 39         | extend,other                                                    | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/SeMenu_SetFilterType__67c161e2.c                          |
 | v10      | SeMenu_SetupDisplayObject_Alt1               | 119   | 123    | 85.7    | 13         | register,order,loop-shape                                       | 2026-11-18-33-p6-r37 O3XSXr         | c/v10/SeMenu_SetupDisplayObject_Alt1__aee4a5a1.c                |
-| v10      | SeMenu_SetupDisplayObject_Alt2_Continue_0x21 | 63    | 63     | 76.2    | 7          | register,loop-shape,swap                                        | 2026-11-19-13-p6-r41 O3XSXr         | c/v10/SeMenu_SetupDisplayObject_Alt2_Continue_0x21__2e7c283d.c  |
+| v10      | SeMenu_SetupDisplayObject_Alt2_Continue_0x21 | 63    | 61     | 88.9    | 7          | register                                                        | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_SetupDisplayObject_Alt2_Continue_0x21__c5ed0d0d.c  |
 | v10      | SeMenu_StepParamField                        | 36    | 36     | 80.6    | 25         | order,other                                                     | 2026-11-16-100-p6-r19 O3XSXr        | c/v10/SeMenu_StepParamField__701b5086.c                         |
+| v10      | SeMenu_StepParamFieldAndSend                 | 119   | 121    | 100.0   | 29         | extend                                                          | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeMenu_StepParamFieldAndSend__553f435b.c                  |
 | v10      | SeMenu_ToggleSolo                            | 33    | 34     | 84.8    | 18         | call-form,other                                                 | 2026-11-16-122-p6-r24-staged O3Xr   | c/v10/SeMenu_ToggleSolo__74abb106.c                             |
+| v10      | SeWrtMem_SelectMemorySlotSound               | 123   | 117    | 87.0    | 72         | order,other                                                     | 2026-11-19-19-p6-r43 O3XSXr         | c/v10/SeWrtMem_SelectMemorySlotSound__32378dc9.c                |
 | v10      | SendPartDataBlock_InitVal                    | 41    | 42     | 73.2    | 5          | address-form,size,other                                         | 2026-11-16-38-p6-r6 O3XSXr          | c/v10/SendPartDataBlock_InitVal__fc0ec014.c                     |
 | v10      | SendPartDataBlock_InitVal2                   | 35    | 36     | 82.9    | 5          | size,other                                                      | 2026-11-16-38-p6-r6 O3XSXr          | c/v10/SendPartDataBlock_InitVal2__fc0ec014.c                    |
 | v10      | SendPartDataBlock_InitVal3                   | 35    | 36     | 82.9    | 5          | size,other                                                      | 2026-11-16-38-p6-r6 O3XSXr          | c/v10/SendPartDataBlock_InitVal3__fc0ec014.c                    |
@@ -341,7 +345,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | SeqLoad_CheckAutoAccompFlag                  | 51    | 49     | 84.3    | 44         | other                                                           | 2026-11-16-45-p6-r9 O3Xr            | c/v10/SeqLoad_CheckAutoAccompFlag__6f378217.c                   |
 | v10      | SeqNote_SetupVoice                           | 210   | 210    | 97.1    | 146        | order,other                                                     | 2026-11-17-16-p6-r31 O3XSXr         | c/v10/SeqNote_SetupVoice__7d3e44df.c                            |
 | v10      | SeqPart_ClearSingle                          | 85    | 83     | 91.8    | 56         | register,extend,order,other                                     | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/SeqPart_ClearSingle__d76db510.c                           |
-| v10      | SeqPart_ConsumeTicksFromBuffer               | 108   | 108    | 88.0    | 46         | register,order,other                                            | 2026-11-19-15-p6-r42 O3XSXr         | c/v10/SeqPart_ConsumeTicksFromBuffer__d70fa5a5.c                |
+| v10      | SeqPart_ConsumeTicksFromBuffer               | 108   | 108    | 88.0    | 46         | register,order,other                                            | 2026-11-19-21-p6-r44 O3XSXr         | c/v10/SeqPart_ConsumeTicksFromBuffer__2ced1b66.c                |
 | v10      | SeqPart_ReadNextEventByte                    | 212   | 215    | 84.4    | 57         | register,order,loop-shape,other                                 | 2026-11-16-87-p6-r15 O3XSXr         | c/v10/SeqPart_ReadNextEventByte__d8629b9e.c                     |
 | v10      | SeqPlay_CheckRepeatAndReactivate             | 82    | 84     | 93.9    | 45         | register,extend                                                 | 2026-11-17-2-p6-r29 Xr              | c/v10/SeqPlay_CheckRepeatAndReactivate__0e2c6631.c              |
 | v10      | SeqPlay_CheckStartConditions                 | 331   | 331    | 86.7    | 105        | register,swap,other                                             | 2026-11-16-87-p6-r15 Xr             | c/v10/SeqPlay_CheckStartConditions__61dc1f48.c                  |
@@ -378,7 +382,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | SingleLoad_LoadSoundMemBank                  | 259   | 259    | 94.2    | 37         | order,address-form                                              | 2026-11-16-88-p6-r16 Xr             | c/v10/SingleLoad_LoadSoundMemBank__2c43853f.c                   |
 | v10      | SingleLoad_LoadSoundMemEntry                 | 342   | 375    | 77.8    | 15         | register,operand,extend,order,address-form,other                | 2026-11-16-88-p6-r16 O3Xr           | c/v10/SingleLoad_LoadSoundMemEntry__2c43853f.c                  |
 | v10      | SndParam_AllocAndCopyPreset                  | 195   | 199    | 77.4    | 20         | register,loop-shape,other                                       | 2026-11-18-33-p6-r37 O3XSXr         | c/v10/SndParam_AllocAndCopyPreset__5e36118f.c                   |
-| v10      | SndParam_ApplyEventField                     | 98    | 86     | 75.5    | 15         | register,order                                                  | 2026-11-19-13-p6-r41 Xr             | c/v10/SndParam_ApplyEventField__65e029ee.c                      |
+| v10      | SndParam_ApplyEventField                     | 98    | 100    | 93.9    | 15         | register,operand,length-only                                    | 2026-11-19-19-p6-r43 Xr             | c/v10/SndParam_ApplyEventField__a87d66bc.c                      |
 | v10      | SndParam_CompactLookupStub                   | 17    | 13     | 47.1    | 11         | register,extend                                                 | 2026-11-16-32-p6-m18-olevels O1XSXr | c/v10/SndParam_CompactLookupStub__e95e51a6.c                    |
 | v10      | SndParam_GetBlockPointer                     | 58    | 59     | 84.5    | 4          | register,extend,order,other                                     | 2026-11-16-37-p6-r5 O3Xr            | c/v10/SndParam_GetBlockPointer__3f4da976.c                      |
 | v10      | SndParam_HeapAlloc                           | 35    | 36     | 82.9    | 26         | register,size,other                                             | 2026-11-18-28-p6-r36 O3XSXr         | c/v10/SndParam_HeapAlloc__a598c92e.c                            |
@@ -390,7 +394,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v10      | SoundParam_NotifyMultipleChanges             | 77    | 56     | 67.5    | 52         | call-form,other                                                 | 2026-11-18-12-p6-r35 O3Xr           | c/v10/SoundParam_NotifyMultipleChanges__e9af8039.c              |
 | v10      | SoundRam_IdentifyImage                       | 261   | 261    | 72.4    | 12         | register,extend                                                 | 2026-11-16-72-p6-r13 Xr             | c/v10/SoundRam_IdentifyImage__80a7567e.c                        |
 | v10      | SplitPointFunc                               | 373   | 374    | 93.8    | 31         | operand,extend,order,loop-shape,address-form,other              | 2026-11-16-72-p6-r13 O3Xr           |                                                                 |
-| v10      | Sprintf_FormatGGeneral                       | 53    | 757    | 100.0   | 106        | length-only                                                     | 2026-11-18-28-p6-r36 O3XSXr         |                                                                 |
+| v10      | Sprintf_FormatGGeneral                       | 53    | 757    | 100.0   | 104        | length-only                                                     | 2026-11-19-21-p6-r44 O3XSXr         | c/v10/Sprintf_FormatGGeneral__c12924d9.c                        |
 | v10      | StyleName_FindOverride_C2C5                  | 46    | 47     | 93.5    | 27         | other                                                           | 2026-11-16-37-p6-r5 O3Xr            | c/v10/StyleName_FindOverride_C2C5__87e701e2.c                   |
 | v10      | StyleName_FindOverride_Default               | 44    | 45     | 93.2    | 27         | other                                                           | 2026-11-16-37-p6-r5 O3Xr            | c/v10/StyleName_FindOverride_Default__87e701e2.c                |
 | v10      | SwbtWr_ReinitBothBanks                       | 27    | 27     | 92.6    | 5          | return-form                                                     | 2026-11-16-40-p6-r8 O3XSXr          | c/v10/SwbtWr_ReinitBothBanks__f87946ba.c                        |
@@ -638,6 +642,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v142     | Audio_Cmd_ToneEdit_Dispatch                  | 656   | 662    | 97.3    | 11         | call-form                                                       | 2026-11-16-112-sub-r16 Xr           | c/v142/Audio_Cmd_ToneEdit_Dispatch__0dd0b6ee.c                  |
 | v142     | Audio_Cmd_ToneEdit_Field_Write_And_Reply     | 227   | 228    | 88.1    | 20         | register,extend,order,other                                     | 2026-11-18-29-sub-r21f Xr           | c/v142/Audio_Cmd_ToneEdit_Field_Write_And_Reply__a7937865.c     |
 | v142     | Audio_Cmd_ToneEdit_Write_And_Reply           | 269   | 268    | 80.7    | 14         | register,operand,extend,order,other                             | 2026-11-19-11-sub-r23h-helpers Xr   | c/v142/Audio_Cmd_ToneEdit_Write_And_Reply__da82344f.c           |
+| v142     | Audio_Process_DSP                            | 1409  | 1412   | 93.1    | 1          | register,operand,extend,order,size,other                        | 2026-11-19-18-sub-r23r-apdsp Xr     | c/v142/Audio_Process_DSP__5a323e6f.c                            |
 | v142     | DSP_AlgoSelect                               | 138   | 140    | 95.7    | 18         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
 | v142     | DSP_AlgorithmChange                          | 158   | 159    | 98.1    | 49         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
 | v142     | DSP_ApplyConfig                              | 91    | 92     | 96.7    | 22         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
@@ -657,6 +662,7 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v142     | DSP_SetCoeff_RouteWithCallback               | 291   | 298    | 80.8    | 18         | register,extend,order,other                                     | 2026-11-18-22-sub-r21d-staged Xr    | c/v142/DSP_SetCoeff_RouteWithCallback__90f8c1e4.c               |
 | v142     | DSP_SetVoiceCoefficients                     | 277   | 279    | 97.1    | 119        | register                                                        | 2026-11-18-29-sub-r21f Xr           | c/v142/DSP_SetVoiceCoefficients__f1667cac.c                     |
 | v142     | DSP_State_Dispatcher                         | 194   | 204    | 82.5    | 9          | call-form,other                                                 | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
+| v142     | DSP_VoiceCoeffRoute                          | 365   | 365    | 98.1    | 239        | register,other                                                  | 2026-11-19-18-sub-r23r-apdsp Xr     | c/v142/DSP_VoiceCoeffRoute__1a3f0ea3.c                          |
 | v142     | DSP_VoiceParam_Dispatch                      | 155   | 155    | 92.9    | 86         | register,order                                                  | 2026-11-18-19-sub-r21b-staged Xr    | c/v142/DSP_VoiceParam_Dispatch__28de3138.c                      |
 | v142     | DSP_WriteAlgoBuffer                          | 245   | 245    | 88.6    | 74         | register,operand,extend,order,arith-type,other                  | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_WriteAlgoBuffer__a10fe588.c                          |
 | v142     | DSP_WriteFreqParam                           | 205   | 206    | 98.5    | 187        | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
@@ -682,8 +688,11 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v142     | ToneDB_Find_PatchRecord                      | 254   | 246    | 85.8    | 21         | register,order,size,other                                       | 2026-11-17-7-sub-r18 Xr             | c/v142/ToneDB_Find_PatchRecord__2b9b067a.c                      |
 | v142     | ToneDB_Find_ToneRecord_CoeffPath             | 91    | 87     | 76.9    | 0          | register,order,size,other                                       | 2026-11-17-7-sub-r18 Xr             | c/v142/ToneDB_Find_ToneRecord_CoeffPath__2b9b067a.c             |
 | v142     | ToneDB_Resolve_NamedToneRecord               | 216   | 216    | 84.7    | 40         | register,other                                                  | 2026-11-17-7-sub-r18 Xr             | c/v142/ToneDB_Resolve_NamedToneRecord__2b9b067a.c               |
+| v142     | ToneGen_ReadPitch_AndScale                   | 103   | 101    | 89.3    | 45         | register,swap                                                   | 2026-11-19-16-sub-r23o-tg-dsp Xr    | c/v142/ToneGen_ReadPitch_AndScale__8433e2c8.c                   |
 | v142     | ToneGen_SelfTest_ProbeVoice0                 | 215   | 215    | 94.0    | 60         | call-form,register                                              | 2026-11-16-90-sub-r10 Xr            |                                                                 |
-| v142     | ToneGen_WriteExtParams_15_Alt                | 94    | 94     | 96.8    | 3          | order                                                           | 2026-11-19-10-sub-r23w-asm Xr       | c/v142/ToneGen_WriteExtParams_15_Alt__f646f646.c                |
+| v142     | ToneGen_WriteVoiceParams                     | 794   | 792    | 99.1    | 424        | register                                                        | 2026-11-19-16-sub-r23o-tg-dsp Xr    | c/v142/ToneGen_WriteVoiceParams__9d77906e.c                     |
+| v142     | ToneGen_WriteVoiceParams_Ext                 | 176   | 172    | 92.0    | 48         | register                                                        | 2026-11-19-16-sub-r23o-tg-dsp Xr    | c/v142/ToneGen_WriteVoiceParams_Ext__9d77906e.c                 |
+| v142     | ToneGen_WriteVoiceParams_Ext2                | 136   | 132    | 89.7    | 45         | register                                                        | 2026-11-19-16-sub-r23o-tg-dsp Xr    | c/v142/ToneGen_WriteVoiceParams_Ext2__9d77906e.c                |
 | v142     | VoiceAlloc_CheckAndInit                      | 180   | 181    | 98.3    | 12         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
 | v142     | VoiceAlloc_WithRoutingFlag                   | 29    | 30     | 89.7    | 6          | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
 | v142     | VoiceNoteParam_UpdateLoop                    | 386   | 389    | 97.7    | 33         | call-form                                                       | 2026-11-16-127-sub-staged5 Xr       |                                                                 |
@@ -711,12 +720,14 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 | v142     | Voice_NoteOn_Rhythm                          | 155   | 243    | 100.0   | 161        | length-only                                                     | 2026-11-18-29-sub-r21f Xr           | c/v142/Voice_NoteOn_Rhythm__5304f6c5.c                          |
 | v142     | Voice_NoteOn_Type1                           | 268   | 266    | 96.3    | 146        | operand,other                                                   | 2026-11-18-29-sub-r21f Xr           | c/v142/Voice_NoteOn_Type1__5304f6c5.c                           |
 | v142     | Voice_NoteOn_Type2                           | 73    | 409    | 97.3    | 289        | operand,length-only                                             | 2026-11-18-29-sub-r21f Xr           | c/v142/Voice_NoteOn_Type2__5304f6c5.c                           |
+| v142     | Voice_Pitch_Compute                          | 645   | 631    | 86.8    | 31         | call-form,register,extend,order,other                           | 2026-11-19-18-sub-r23r-apdsp Xr     | c/v142/Voice_Pitch_Compute__6881d8b7.c                          |
 | v142     | Voice_Portamento_OnHandler                   | 166   | 167    | 98.2    | 36         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
 | v142     | Voice_Reprioritise                           | 42    | 46     | 88.1    | 9          | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                                 |
 | v142     | Voice_SetPitch                               | 266   | 262    | 97.4    | 44         | register,other                                                  | 2026-11-19-11-sub-r23h-helpers Xr   | c/v142/Voice_SetPitch__4a24922c.c                               |
 | v142     | Voice_SetPolyphonyMode                       | 69    | 70     | 95.7    | 47         | call-form                                                       | 2026-11-16-101-sub-r14 Xr           |                                                                 |
 | v142     | Voice_Slot_CalcArticParams                   | 320   | 319    | 98.8    | 80         | size                                                            | 2026-11-17-7-sub-r18 Xr             | c/v142/Voice_Slot_CalcArticParams__28995d12.c                   |
 | v142     | Voice_Step_ExprRamp                          | 761   | 763    | 98.7    | 20         | register,length-only,other                                      | 2026-11-18-29-sub-r21f Xr           | c/v142/Voice_Step_ExprRamp__3f2ddbfc.c                          |
+| v142     | Voice_StereoLevel_Compute                    | 625   | 621    | 98.7    | 21         | register                                                        | 2026-11-19-18-sub-r23r-apdsp Xr     | c/v142/Voice_StereoLevel_Compute__6881d8b7.c                    |
 | v142     | Voice_SystemMsg                              | 156   | 325    | 96.2    | 7          | call-form,length-only,other                                     | 2026-11-18-9-sub-r20c-staged Xr     | c/v142/Voice_SystemMsg__f1753915.c                              |
 | v142     | Voice_TickNoteDecay                          | 117   | 111    | 94.9    | 13         | other                                                           | 2026-11-18-29-sub-r21f Xr           | c/v142/Voice_TickNoteDecay__3f2ddbfc.c                          |
 | v142     | WaveSel_Cache_SetDescPtr                     | 86    | 87     | 96.5    | 32         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
@@ -836,193 +847,199 @@ Errors: ERR-asm 113, ERR-data 157, ERR-name 383, ERR-resolve 275, ERR-translate 
 
 `tar-sha256`: a scratch directory still holds exactly the corpus whose tar hash the run recorded; `name+funcs`: the C was found by name and defines exactly the listing's functions (likely, not proven).
 
-| run                            | corpus.tar sha256 | C provenance     | attempts | MATCH |
-|--------------------------------|-------------------|------------------|----------|-------|
-| 2026-11-16-5-p6-m2a            | 802e7b9dbea1611d  | name+funcs       | 60       | 0     |
-| 2026-11-16-8-p6-firmware       | fef728a695502f59  | tar-sha256       | 4        | 2     |
-| 2026-11-16-9-p6-m3             | ba2cd265d7678b7c  | name+funcs       | 28       | 0     |
-| 2026-11-16-10-p6-m3b           | 3f00baba21208e38  | name+funcs       | 20       | 0     |
-| 2026-11-16-11-p6-m3c           | 6cd9849c6b0a9d57  | name+funcs       | 8        | 0     |
-| 2026-11-16-12-p6-m4            | 99ed1a10e27fb817  | -                | 0        | 0     |
-| 2026-11-16-13-p6-firmware      | 3215ef71b07d20df  | tar-sha256       | 300      | 195   |
-| 2026-11-16-14-p6-m4-split      | d7525a31a2c5bd37  | name+funcs       | 32       | 0     |
-| 2026-11-16-18-p6-firmware      | 08f29329ac303832  | tar-sha256       | 556      | 180   |
-| 2026-11-16-20-p6-m8            | 0c3de4292e3c139a  | name+funcs       | 84       | 8     |
-| 2026-11-16-21-p6-firmware      | 7473ef5208fd79bb  | tar-sha256       | 432      | 211   |
-| 2026-11-16-22-p6-m9            | 0acebfbf99d1527d  | name+funcs       | 120      | 8     |
-| 2026-11-16-23-p6-m9c           | f511dce79750aaa3  | name+funcs       | 16       | 0     |
-| 2026-11-16-24-p6-m11           | e4c203010388935f  | name+funcs       | 52       | 4     |
-| 2026-11-16-25-p6-firmware      | 9069906dde02ddd0  | tar-sha256       | 40       | 20    |
-| 2026-11-16-26-p6-m13           | 2efb14fdbe6525a2  | name+funcs       | 28       | 0     |
-| 2026-11-16-27-p6-m14           | 56bf27f1fc09ceb6  | name+funcs       | 40       | 1     |
-| 2026-11-16-28-p6-m15           | 61fa9a229988b61f  | tar-sha256       | 90       | 35    |
-| 2026-11-16-29-p6-m16           | 22908f1b409dcfaa  | tar-sha256       | 34       | 0     |
-| 2026-11-16-30-p6-r1            | 73b5de237ad1d1e5  | tar-sha256       | 624      | 114   |
-| 2026-11-16-31-p6-r1b           | b2555f4891b6d21e  | tar-sha256       | 730      | 145   |
-| 2026-11-16-32-p6-m18-olevels   | 17540441e1d37721  | tar-sha256       | 2548     | 383   |
-| 2026-11-16-33-p6-r2            | 94f355624c532350  | tar-sha256       | 2556     | 1366  |
-| 2026-11-16-34-p6-firmware      | b8445fba94638bd5  | tar-sha256       | 612      | 607   |
-| 2026-11-16-35-p6-r3            | 567807220ceb8ef5  | tar-sha256       | 284      | 29    |
-| 2026-11-16-36-p6-staged-r4     | 4b5621d2eaed58fb  | tar-sha256       | 1422     | 1007  |
-| 2026-11-16-37-p6-r5            | 285e2c6f19bb2412  | tar-sha256       | 264      | 32    |
-| 2026-11-16-38-p6-r6            | cb8e785b1db05aee  | tar-sha256       | 1758     | 1181  |
-| 2026-11-16-39-p6-r7            | f02444459d22627d  | tar-sha256       | 1581     | 1029  |
-| 2026-11-16-40-p6-r8            | f30d93623455bcf4  | tar-sha256       | 2631     | 1592  |
-| 2026-11-16-41-p6-firmware      | b5a1913082b92938  | tar-sha256       | 50       | 50    |
-| 2026-11-16-42-p6-calrel        | 018a6a2bbeb61d74  | name+funcs       | 19       | 0     |
-| 2026-11-16-43-sub-r1           | ac2cd07f1d6f78b3  | name+funcs       | 162      | 71    |
-| 2026-11-16-44-hd-r1            | f5a238c10cea09a0  | tar-sha256       | 129      | 27    |
-| 2026-11-16-45-p6-r9            | 73d32a543fbe010d  | tar-sha256       | 1084     | 554   |
-| 2026-11-16-46-hd-r2            | d9a5880cf08d6aaa  | tar-sha256       | 41       | 1     |
-| 2026-11-16-47-sub-r2           | 2b67f9348acfee94  | name+funcs, none | 1465     | 528   |
-| 2026-11-16-48-hd-r2b           | 1c9bba6fee280257  | tar-sha256       | 59       | 12    |
-| 2026-11-16-49-hd-r3            | a75295b82753c210  | tar-sha256       | 54       | 21    |
-| 2026-11-16-50-hd-x1-compilers  | 057876ee96d02d99  | tar-sha256       | 18       | 0     |
-| 2026-11-16-51-sub-staged1      | 0451a754c5fc8353  | none             | 465      | 450   |
-| 2026-11-16-52-hd-r4v           | 06cc77b352968a92  | tar-sha256       | 8        | 2     |
-| 2026-11-16-53-p6-r11           | 62247366982b5271  | tar-sha256       | 474      | 139   |
-| 2026-11-16-54-hd-r5            | c4efc3f5b8839c5a  | tar-sha256       | 25       | 10    |
-| 2026-11-16-55-p6-r10           | 8d52fbb4078eb44b  | tar-sha256       | 1386     | 933   |
-| 2026-11-16-56-hd-r6            | 14f19a28ec0f519c  | tar-sha256       | 80       | 43    |
-| 2026-11-16-57-hd-r7            | b0d1cc100cc8c7fe  | tar-sha256       | 88       | 33    |
-| 2026-11-16-58-sub-r3           | 3d90e110fbbb3fcf  | name+funcs, none | 760      | 553   |
-| 2026-11-16-59-hd-r8            | 50be0d04a84d2e29  | tar-sha256       | 69       | 49    |
-| 2026-11-16-60-hd-r9a           | 3b4e9edb7a9ad792  | tar-sha256       | 95       | 91    |
-| 2026-11-16-61-p6-calrel-far2   | def17f1db2a769ae  | name+funcs       | 18       | 0     |
-| 2026-11-16-62-sub-r4           | 4cf0b5d9d980b930  | name+funcs, none | 899      | 713   |
-| 2026-11-16-63-hd-r9s-staged    | 59e51cbceca26d75  | tar-sha256       | 139      | 139   |
-| 2026-11-16-64-hd-r9b           | df8ff2156107f5bd  | tar-sha256       | 17       | 4     |
-| 2026-11-16-65-sub-r5           | c203eda20ce0f346  | name+funcs, none | 858      | 705   |
-| 2026-11-16-66-hd-r10           | ee2202009524aff7  | tar-sha256       | 78       | 43    |
-| 2026-11-16-67-hd-r11-staged    | cd59fdd106651963  | tar-sha256       | 61       | 61    |
-| 2026-11-16-68-p6-r12           | 428ce64226c542d2  | tar-sha256       | 1706     | 1241  |
-| 2026-11-16-69-hd-r12-ports     | 196c389bc4b2d55b  | tar-sha256       | 110      | 110   |
-| 2026-11-16-70-hd-r13v          | 9b74d4b4667b7ca8  | tar-sha256       | 10       | 2     |
-| 2026-11-16-71-hd-r13a          | 64ed2ccab48d1490  | tar-sha256       | 5        | 4     |
-| 2026-11-16-72-p6-r13           | 07624d29aa1c91fe  | tar-sha256       | 453      | 122   |
-| 2026-11-16-73-sub-r6           | a0c5e9e9cbc72aea  | name+funcs, none | 909      | 803   |
-| 2026-11-16-74-hd-r13           | 1900cec3954fb74c  | tar-sha256       | 37       | 23    |
-| 2026-11-16-75-hd-r13b          | 5a7faff1ea64bffc  | tar-sha256       | 88       | 35    |
-| 2026-11-16-76-hd-r14-staged    | 2bd370122387adc7  | tar-sha256       | 80       | 74    |
-| 2026-11-16-77-hd-r14b-songmod  | 61edcc2d81e2defb  | tar-sha256       | 6        | 6     |
-| 2026-11-16-78-hd-r15-ports     | aae2f7f47266b3d2  | tar-sha256       | 141      | 139   |
-| 2026-11-16-79-sub-r7           | 782919101cdeeeac  | name+funcs       | 199      | 23    |
-| 2026-11-16-80-sub-staged2      | 281a7cb649012d3e  | name+funcs, none | 243      | 117   |
-| 2026-11-16-81-p6-r14           | ef2be26a14b26142  | tar-sha256       | 309      | 206   |
-| 2026-11-16-82-sub-r8           | fe933c1549e67bc3  | name+funcs       | 203      | 47    |
-| 2026-11-16-83-hd-r16           | c31e34d091777075  | tar-sha256       | 44       | 24    |
-| 2026-11-16-84-hd-r17-staged    | 2a6932cb91b4a585  | tar-sha256       | 7        | 7     |
-| 2026-11-16-85-hd-r18-ports     | 74929b5b5e65f0b9  | tar-sha256       | 10       | 10    |
-| 2026-11-16-86-sub-r9           | e17a232665857a74  | name+funcs       | 752      | 32    |
-| 2026-11-16-87-p6-r15           | f63625e03cc501b5  | tar-sha256       | 813      | 337   |
-| 2026-11-16-88-p6-r16           | faa240c37421f268  | tar-sha256       | 219      | 47    |
-| 2026-11-16-89-sub-staged3      | c1e89bee0fd6696a  | name+funcs, none | 348      | 153   |
-| 2026-11-16-90-sub-r10          | 09321db0cbe8718c  | name+funcs, none | 196      | 24    |
-| 2026-11-16-91-p6-r17           | ca2969cd1c6f44c3  | tar-sha256       | 747      | 495   |
-| 2026-11-16-92-p6-r18           | 632fbea5c3a865ff  | tar-sha256       | 1405     | 826   |
-| 2026-11-16-93-hd-r19-svc       | be30d4bba3226902  | tar-sha256       | 2        | 2     |
-| 2026-11-16-94-sub-r11          | fd8fa129f6ce45ed  | name+funcs       | 60       | 7     |
-| 2026-11-16-95-hd-r20           | ba6cf2c219d9cb59  | tar-sha256       | 49       | 9     |
-| 2026-11-16-96-hd-r21-staged    | dd384d0b005d4755  | tar-sha256       | 9        | 9     |
-| 2026-11-16-97-sub-r12          | 14076f5f883be217  | name+funcs       | 56       | 12    |
-| 2026-11-16-98-hd-r22           | 41fae69fd96decb5  | tar-sha256       | 26       | 10    |
-| 2026-11-16-99-sub-r13-idioms   | f60b89a8590276e3  | name+funcs, none | 399      | 10    |
-| 2026-11-16-100-p6-r19          | be130d1b9e48b2d1  | tar-sha256       | 654      | 172   |
-| 2026-11-16-101-sub-r14         | 5af67f7d5608cfe6  | name+funcs, none | 135      | 34    |
-| 2026-11-16-102-hd-r23a         | b00eddddcbe46333  | tar-sha256       | 67       | 52    |
-| 2026-11-16-103-p6-r20-staged   | 52cf574e5f55c80b  | tar-sha256       | 600      | 449   |
-| 2026-11-16-104-hd-r24-staged   | 11f5d72c355c37ba  | tar-sha256       | 22       | 21    |
-| 2026-11-16-105-hd-r23b         | e4e43617f3db2e8d  | tar-sha256       | 57       | 33    |
-| 2026-11-16-106-sub-r15         | 1fafa306c6132a6b  | name+funcs, none | 59       | 15    |
-| 2026-11-16-107-p6-r21          | 2d9aad7382365664  | tar-sha256       | 318      | 29    |
-| 2026-11-16-108-hd-r25-staged   | 44f72a908cfe6f1c  | tar-sha256       | 6        | 6     |
-| 2026-11-16-109-hd-r23c         | 440357f93c922ee4  | tar-sha256       | 33       | 21    |
-| 2026-11-16-110-hd-r26-staged   | e80ed13bc8b20fbe  | tar-sha256       | 9        | 9     |
-| 2026-11-16-111-p6-r22-staged   | 33fafd321995c4ef  | tar-sha256       | 806      | 568   |
-| 2026-11-16-112-sub-r16         | 37fa09c75d9ace52  | name+funcs, none | 70       | 26    |
-| 2026-11-16-113-hd-r27a         | 634478f05fb16448  | tar-sha256       | 24       | 17    |
-| 2026-11-16-114-sub-staged4     | ce48dc6eaf46b0cc  | none             | 39       | 12    |
-| 2026-11-16-115-hd-r28-staged   | ebf3297a77a64647  | tar-sha256       | 15       | 15    |
-| 2026-11-16-116-hd-r27c         | 5b0d16773e6b847a  | tar-sha256       | 78       | 62    |
-| 2026-11-16-117-hd-r29-staged   | 66002a530f0ded0c  | tar-sha256       | 18       | 18    |
-| 2026-11-16-118-p6-r23          | 9629eb1a441fad9e  | tar-sha256       | 723      | 85    |
-| 2026-11-16-119-hd-r30          | 84db687e80a014a8  | tar-sha256       | 163      | 125   |
-| 2026-11-16-120-hd-r31-staged   | 1bf04e7f4d836389  | tar-sha256       | 12       | 11    |
-| 2026-11-16-121-hd-r32-staged   | 6e5363295f2fde51  | tar-sha256       | 16       | 15    |
-| 2026-11-16-122-p6-r24-staged   | e93250558126d820  | tar-sha256       | 280      | 172   |
-| 2026-11-16-123-p6-r25          | 74ebf6fd4585abf4  | tar-sha256       | 621      | 86    |
-| 2026-11-16-124-hd-r34-staged   | 1211eb6dbfd01ccc  | tar-sha256       | 6        | 6     |
-| 2026-11-16-125-p6-r26-staged   | 73ee26bdf6114fd4  | tar-sha256       | 330      | 162   |
-| 2026-11-16-126-sub-r17         | 2569b2a32a2beb2b  | name+funcs       | 304      | 85    |
-| 2026-11-16-127-sub-staged5     | e58ea64dd9cfcd14  | none             | 132      | 54    |
-| 2026-11-16-128-p6-r27          | 016281fd288ddc95  | tar-sha256       | 519      | 89    |
-| 2026-11-17-1-p6-r28-staged     | 393616853a8b753e  | tar-sha256       | 182      | 103   |
-| 2026-11-17-2-p6-r29            | 7d37e3dcea2161b9  | tar-sha256       | 339      | 62    |
-| 2026-11-17-3-hd-r36            | 606533b8b5cda465  | tar-sha256       | 46       | 16    |
-| 2026-11-17-4-hd-r37-staged     | 7b976f93e3e091f2  | tar-sha256       | 10       | 10    |
-| 2026-11-17-5-hd-r38-ports      | d8fec40e459678e1  | tar-sha256       | 6        | 6     |
-| 2026-11-17-6-p6-r30-staged     | d85bc8247e9bc605  | tar-sha256       | 246      | 162   |
-| 2026-11-17-7-sub-r18           | 0d231e8a762ade1c  | name+funcs       | 228      | 65    |
-| 2026-11-17-9-sub-staged6       | ed8dc70ddf4052eb  | none             | 142      | 54    |
-| 2026-11-17-10-hd-r39           | 224ecb3bbd6a4a7e  | tar-sha256       | 108      | 60    |
-| 2026-11-17-11-hd-r40-staged    | b497d7a7ac37a22b  | tar-sha256       | 31       | 30    |
-| 2026-11-17-12-hd-r41           | 4c0fe5904fe910ab  | tar-sha256       | 37       | 19    |
-| 2026-11-17-13-hd-r42-ports     | 8998775ac43d649d  | tar-sha256       | 41       | 41    |
-| 2026-11-17-14-hd-r43-staged    | c83788b312c2f990  | tar-sha256       | 10       | 10    |
-| 2026-11-17-15-hd-r44           | 08a495d22ae1dbc8  | tar-sha256       | 5        | 1     |
-| 2026-11-17-16-p6-r31           | 61ffbca18c405428  | tar-sha256       | 234      | 10    |
-| 2026-11-17-17-hd-r45-ports     | d8b7f6bd026dfc38  | tar-sha256       | 13       | 13    |
-| 2026-11-17-18-hd-r46-staged    | 5c8a770593f14065  | tar-sha256       | 1        | 1     |
-| 2026-11-17-19-p6-r32-staged    | ba0efb2ce8c7077a  | tar-sha256       | 46       | 25    |
-| 2026-11-17-20-hd-r47           | 7848bceb7701db2b  | tar-sha256       | 25       | 13    |
-| 2026-11-17-21-hd-r48-staged    | 3bc816730b8fbdc3  | tar-sha256       | 3        | 3     |
-| 2026-11-17-22-hd-r49-ports     | c49608ff65de9f8d  | tar-sha256       | 6        | 6     |
-| 2026-11-18-1-p6-r33            | a160e07be62fb024  | tar-sha256       | 237      | 36    |
-| 2026-11-18-2-sub-r20-fp        | dbc769160bb31aec  | tar-sha256       | 9        | 0     |
-| 2026-11-18-3-sub-r20-fp2       | 175ceab5c5ab35ec  | tar-sha256       | 15       | 3     |
-| 2026-11-18-4-hd-r50            | 656140c4fdc50571  | tar-sha256       | 16       | 0     |
-| 2026-11-18-5-p6-r34-staged     | a1b983c45bb453e4  | tar-sha256       | 176      | 71    |
-| 2026-11-18-6-sub-r20a          | 99b6e8db5e46696d  | tar-sha256       | 96       | 20    |
-| 2026-11-18-7-hd-r51            | 9b3ac5e9af92bdfb  | tar-sha256       | 48       | 16    |
-| 2026-11-18-8-sub-r20b-staged   | b8d076fbb296aa97  | tar-sha256       | 60       | 40    |
-| 2026-11-18-9-sub-r20c-staged   | 3a3ca042f2c346a5  | tar-sha256       | 18       | 15    |
-| 2026-11-18-10-hd-r51-staged    | 0e23f889b139e8fa  | tar-sha256       | 16       | 16    |
-| 2026-11-18-11-hd-r51-ports     | c2464f3326575dd2  | tar-sha256       | 40       | 40    |
-| 2026-11-18-12-p6-r35           | 771f3ea76c3de544  | tar-sha256       | 606      | 198   |
-| 2026-11-18-13-hd-r52           | 671f95c3024835a5  | tar-sha256       | 57       | 26    |
-| 2026-11-18-14-hd-r52-staged    | b004ee76625e4ed9  | tar-sha256       | 18       | 18    |
-| 2026-11-18-15-hd-r52-ports     | e39aa77cf55c2a9d  | tar-sha256       | 4        | 4     |
-| 2026-11-18-16-hd-r54           | 292709522848c0be  | tar-sha256       | 21       | 9     |
-| 2026-11-18-17-hd-r54-staged    | f453792bf2edf97d  | tar-sha256       | 9        | 9     |
-| 2026-11-18-18-sub-r21a         | 39f7b7ea2464a205  | tar-sha256       | 153      | 19    |
-| 2026-11-18-19-sub-r21b-staged  | 4d38906eed078f2e  | tar-sha256       | 63       | 40    |
-| 2026-11-18-20-hd-r55           | 164dfe25842dbf0a  | tar-sha256       | 36       | 18    |
-| 2026-11-18-21-sub-r21c-staged  | aa75690f069b9c16  | tar-sha256       | 54       | 22    |
-| 2026-11-18-22-sub-r21d-staged  | 104129b0c8564adf  | tar-sha256       | 11       | 8     |
-| 2026-11-18-23-sub-r21e-staged  | cd072468900e00a0  | tar-sha256       | 3        | 3     |
-| 2026-11-18-24-hd-r56           | 75993add7c849e3c  | tar-sha256       | 18       | 14    |
-| 2026-11-18-25-hd-r57           | 33f3043cafd8bcd9  | tar-sha256       | 13       | 1     |
-| 2026-11-18-26-hd-r56-ports     | 7f6f99925113eb85  | tar-sha256       | 31       | 31    |
-| 2026-11-18-27-hd-r58-opts      | 86b3942c746da5f7  | tar-sha256       | 12       | 0     |
-| 2026-11-18-28-p6-r36           | 28f42eed218dafc8  | tar-sha256       | 984      | 304   |
-| 2026-11-18-29-sub-r21f         | 7a767736cc2075bc  | tar-sha256       | 123      | 38    |
-| 2026-11-18-30-hd-r58           | e2e84f17677fbc4c  | tar-sha256       | 3        | 3     |
-| 2026-11-18-31-hd-r58-staged    | fa501c66fe8d948f  | tar-sha256       | 1        | 1     |
-| 2026-11-18-32-sub-r21g-staged  | 8375b08b67158c7a  | tar-sha256       | 40       | 39    |
-| 2026-11-18-33-p6-r37           | 0a40e1a6b8392467  | tar-sha256       | 420      | 144   |
-| 2026-11-18-34-p6-r38-staged    | fc744ed2ac5b46eb  | tar-sha256       | 224      | 131   |
-| 2026-11-19-1-sub-r23a-copy     | bdf37a6bf7c1d3bd  | name+funcs       | 3        | 0     |
-| 2026-11-19-2-hd-r59-portall    | 14e87d9ed237a79a  | tar-sha256       | 285      | 283   |
-| 2026-11-19-3-sub-r23m-frame    | b4d6f2a25ff65c29  | name+funcs       | 8        | 0     |
-| 2026-11-19-4-hd-r60-dbmemo     | c9677da596764fcf  | tar-sha256       | 3        | 0     |
-| 2026-11-19-5-sub-r23c-vstate   | 29784dac79a00474  | name+funcs       | 2        | 2     |
-| 2026-11-19-6-p6-r39            | 61a1cd22a04924a2  | tar-sha256       | 27       | 5     |
-| 2026-11-19-7-sub-r23p-pragma   | 3125957415826d95  | name+funcs       | 2        | 0     |
-| 2026-11-19-8-sub-r23q-asmkw    | b96e7812d62a61f9  | name+funcs       | 2        | 1     |
-| 2026-11-19-9-p6-r40            | 6e4dff396c32a2b4  | tar-sha256       | 30       | 4     |
-| 2026-11-19-10-sub-r23w-asm     | 00a73470f86587de  | name+funcs       | 242      | 130   |
-| 2026-11-19-11-sub-r23h-helpers | d93d95bde745908e  | name+funcs       | 60       | 10    |
-| 2026-11-19-12-sub-r23s-staged  | 22ee8c3281dc859d  | none             | 96       | 75    |
-| 2026-11-19-13-p6-r41           | 55138a20662d0849  | tar-sha256       | 96       | 14    |
-| 2026-11-19-14-hd-r61-ids-ports | b011da9d28aa58af  | tar-sha256       | 801      | 583   |
-| 2026-11-19-15-p6-r42           | 1320238ca32b47e1  | tar-sha256       | 504      | 149   |
+| run                               | corpus.tar sha256 | C provenance     | attempts | MATCH |
+|-----------------------------------|-------------------|------------------|----------|-------|
+| 2026-11-16-5-p6-m2a               | 802e7b9dbea1611d  | name+funcs       | 60       | 0     |
+| 2026-11-16-8-p6-firmware          | fef728a695502f59  | tar-sha256       | 4        | 2     |
+| 2026-11-16-9-p6-m3                | ba2cd265d7678b7c  | name+funcs       | 28       | 0     |
+| 2026-11-16-10-p6-m3b              | 3f00baba21208e38  | name+funcs       | 20       | 0     |
+| 2026-11-16-11-p6-m3c              | 6cd9849c6b0a9d57  | name+funcs       | 8        | 0     |
+| 2026-11-16-12-p6-m4               | 99ed1a10e27fb817  | -                | 0        | 0     |
+| 2026-11-16-13-p6-firmware         | 3215ef71b07d20df  | tar-sha256       | 300      | 195   |
+| 2026-11-16-14-p6-m4-split         | d7525a31a2c5bd37  | name+funcs       | 32       | 0     |
+| 2026-11-16-18-p6-firmware         | 08f29329ac303832  | tar-sha256       | 556      | 180   |
+| 2026-11-16-20-p6-m8               | 0c3de4292e3c139a  | name+funcs       | 84       | 8     |
+| 2026-11-16-21-p6-firmware         | 7473ef5208fd79bb  | tar-sha256       | 432      | 211   |
+| 2026-11-16-22-p6-m9               | 0acebfbf99d1527d  | name+funcs       | 120      | 8     |
+| 2026-11-16-23-p6-m9c              | f511dce79750aaa3  | name+funcs       | 16       | 0     |
+| 2026-11-16-24-p6-m11              | e4c203010388935f  | name+funcs       | 52       | 4     |
+| 2026-11-16-25-p6-firmware         | 9069906dde02ddd0  | tar-sha256       | 40       | 20    |
+| 2026-11-16-26-p6-m13              | 2efb14fdbe6525a2  | name+funcs       | 28       | 0     |
+| 2026-11-16-27-p6-m14              | 56bf27f1fc09ceb6  | name+funcs       | 40       | 1     |
+| 2026-11-16-28-p6-m15              | 61fa9a229988b61f  | tar-sha256       | 90       | 35    |
+| 2026-11-16-29-p6-m16              | 22908f1b409dcfaa  | tar-sha256       | 34       | 0     |
+| 2026-11-16-30-p6-r1               | 73b5de237ad1d1e5  | tar-sha256       | 624      | 114   |
+| 2026-11-16-31-p6-r1b              | b2555f4891b6d21e  | tar-sha256       | 730      | 145   |
+| 2026-11-16-32-p6-m18-olevels      | 17540441e1d37721  | tar-sha256       | 2548     | 383   |
+| 2026-11-16-33-p6-r2               | 94f355624c532350  | tar-sha256       | 2556     | 1366  |
+| 2026-11-16-34-p6-firmware         | b8445fba94638bd5  | tar-sha256       | 612      | 607   |
+| 2026-11-16-35-p6-r3               | 567807220ceb8ef5  | tar-sha256       | 284      | 29    |
+| 2026-11-16-36-p6-staged-r4        | 4b5621d2eaed58fb  | tar-sha256       | 1422     | 1007  |
+| 2026-11-16-37-p6-r5               | 285e2c6f19bb2412  | tar-sha256       | 264      | 32    |
+| 2026-11-16-38-p6-r6               | cb8e785b1db05aee  | tar-sha256       | 1758     | 1181  |
+| 2026-11-16-39-p6-r7               | f02444459d22627d  | tar-sha256       | 1581     | 1029  |
+| 2026-11-16-40-p6-r8               | f30d93623455bcf4  | tar-sha256       | 2631     | 1592  |
+| 2026-11-16-41-p6-firmware         | b5a1913082b92938  | tar-sha256       | 50       | 50    |
+| 2026-11-16-42-p6-calrel           | 018a6a2bbeb61d74  | name+funcs       | 19       | 0     |
+| 2026-11-16-43-sub-r1              | ac2cd07f1d6f78b3  | name+funcs       | 162      | 71    |
+| 2026-11-16-44-hd-r1               | f5a238c10cea09a0  | tar-sha256       | 129      | 27    |
+| 2026-11-16-45-p6-r9               | 73d32a543fbe010d  | tar-sha256       | 1084     | 554   |
+| 2026-11-16-46-hd-r2               | d9a5880cf08d6aaa  | tar-sha256       | 41       | 1     |
+| 2026-11-16-47-sub-r2              | 2b67f9348acfee94  | name+funcs, none | 1465     | 528   |
+| 2026-11-16-48-hd-r2b              | 1c9bba6fee280257  | tar-sha256       | 59       | 12    |
+| 2026-11-16-49-hd-r3               | a75295b82753c210  | tar-sha256       | 54       | 21    |
+| 2026-11-16-50-hd-x1-compilers     | 057876ee96d02d99  | tar-sha256       | 18       | 0     |
+| 2026-11-16-51-sub-staged1         | 0451a754c5fc8353  | none             | 465      | 450   |
+| 2026-11-16-52-hd-r4v              | 06cc77b352968a92  | tar-sha256       | 8        | 2     |
+| 2026-11-16-53-p6-r11              | 62247366982b5271  | tar-sha256       | 474      | 139   |
+| 2026-11-16-54-hd-r5               | c4efc3f5b8839c5a  | tar-sha256       | 25       | 10    |
+| 2026-11-16-55-p6-r10              | 8d52fbb4078eb44b  | tar-sha256       | 1386     | 933   |
+| 2026-11-16-56-hd-r6               | 14f19a28ec0f519c  | tar-sha256       | 80       | 43    |
+| 2026-11-16-57-hd-r7               | b0d1cc100cc8c7fe  | tar-sha256       | 88       | 33    |
+| 2026-11-16-58-sub-r3              | 3d90e110fbbb3fcf  | name+funcs, none | 760      | 553   |
+| 2026-11-16-59-hd-r8               | 50be0d04a84d2e29  | tar-sha256       | 69       | 49    |
+| 2026-11-16-60-hd-r9a              | 3b4e9edb7a9ad792  | tar-sha256       | 95       | 91    |
+| 2026-11-16-61-p6-calrel-far2      | def17f1db2a769ae  | name+funcs       | 18       | 0     |
+| 2026-11-16-62-sub-r4              | 4cf0b5d9d980b930  | name+funcs, none | 899      | 713   |
+| 2026-11-16-63-hd-r9s-staged       | 59e51cbceca26d75  | tar-sha256       | 139      | 139   |
+| 2026-11-16-64-hd-r9b              | df8ff2156107f5bd  | tar-sha256       | 17       | 4     |
+| 2026-11-16-65-sub-r5              | c203eda20ce0f346  | name+funcs, none | 858      | 705   |
+| 2026-11-16-66-hd-r10              | ee2202009524aff7  | tar-sha256       | 78       | 43    |
+| 2026-11-16-67-hd-r11-staged       | cd59fdd106651963  | tar-sha256       | 61       | 61    |
+| 2026-11-16-68-p6-r12              | 428ce64226c542d2  | tar-sha256       | 1706     | 1241  |
+| 2026-11-16-69-hd-r12-ports        | 196c389bc4b2d55b  | tar-sha256       | 110      | 110   |
+| 2026-11-16-70-hd-r13v             | 9b74d4b4667b7ca8  | tar-sha256       | 10       | 2     |
+| 2026-11-16-71-hd-r13a             | 64ed2ccab48d1490  | tar-sha256       | 5        | 4     |
+| 2026-11-16-72-p6-r13              | 07624d29aa1c91fe  | tar-sha256       | 453      | 122   |
+| 2026-11-16-73-sub-r6              | a0c5e9e9cbc72aea  | name+funcs, none | 909      | 803   |
+| 2026-11-16-74-hd-r13              | 1900cec3954fb74c  | tar-sha256       | 37       | 23    |
+| 2026-11-16-75-hd-r13b             | 5a7faff1ea64bffc  | tar-sha256       | 88       | 35    |
+| 2026-11-16-76-hd-r14-staged       | 2bd370122387adc7  | tar-sha256       | 80       | 74    |
+| 2026-11-16-77-hd-r14b-songmod     | 61edcc2d81e2defb  | tar-sha256       | 6        | 6     |
+| 2026-11-16-78-hd-r15-ports        | aae2f7f47266b3d2  | tar-sha256       | 141      | 139   |
+| 2026-11-16-79-sub-r7              | 782919101cdeeeac  | name+funcs       | 199      | 23    |
+| 2026-11-16-80-sub-staged2         | 281a7cb649012d3e  | name+funcs, none | 243      | 117   |
+| 2026-11-16-81-p6-r14              | ef2be26a14b26142  | tar-sha256       | 309      | 206   |
+| 2026-11-16-82-sub-r8              | fe933c1549e67bc3  | name+funcs       | 203      | 47    |
+| 2026-11-16-83-hd-r16              | c31e34d091777075  | tar-sha256       | 44       | 24    |
+| 2026-11-16-84-hd-r17-staged       | 2a6932cb91b4a585  | tar-sha256       | 7        | 7     |
+| 2026-11-16-85-hd-r18-ports        | 74929b5b5e65f0b9  | tar-sha256       | 10       | 10    |
+| 2026-11-16-86-sub-r9              | e17a232665857a74  | name+funcs       | 752      | 32    |
+| 2026-11-16-87-p6-r15              | f63625e03cc501b5  | tar-sha256       | 813      | 337   |
+| 2026-11-16-88-p6-r16              | faa240c37421f268  | tar-sha256       | 219      | 47    |
+| 2026-11-16-89-sub-staged3         | c1e89bee0fd6696a  | name+funcs, none | 348      | 153   |
+| 2026-11-16-90-sub-r10             | 09321db0cbe8718c  | name+funcs, none | 196      | 24    |
+| 2026-11-16-91-p6-r17              | ca2969cd1c6f44c3  | tar-sha256       | 747      | 495   |
+| 2026-11-16-92-p6-r18              | 632fbea5c3a865ff  | tar-sha256       | 1405     | 826   |
+| 2026-11-16-93-hd-r19-svc          | be30d4bba3226902  | tar-sha256       | 2        | 2     |
+| 2026-11-16-94-sub-r11             | fd8fa129f6ce45ed  | name+funcs       | 60       | 7     |
+| 2026-11-16-95-hd-r20              | ba6cf2c219d9cb59  | tar-sha256       | 49       | 9     |
+| 2026-11-16-96-hd-r21-staged       | dd384d0b005d4755  | tar-sha256       | 9        | 9     |
+| 2026-11-16-97-sub-r12             | 14076f5f883be217  | name+funcs       | 56       | 12    |
+| 2026-11-16-98-hd-r22              | 41fae69fd96decb5  | tar-sha256       | 26       | 10    |
+| 2026-11-16-99-sub-r13-idioms      | f60b89a8590276e3  | name+funcs, none | 399      | 10    |
+| 2026-11-16-100-p6-r19             | be130d1b9e48b2d1  | tar-sha256       | 654      | 172   |
+| 2026-11-16-101-sub-r14            | 5af67f7d5608cfe6  | name+funcs, none | 135      | 34    |
+| 2026-11-16-102-hd-r23a            | b00eddddcbe46333  | tar-sha256       | 67       | 52    |
+| 2026-11-16-103-p6-r20-staged      | 52cf574e5f55c80b  | tar-sha256       | 600      | 449   |
+| 2026-11-16-104-hd-r24-staged      | 11f5d72c355c37ba  | tar-sha256       | 22       | 21    |
+| 2026-11-16-105-hd-r23b            | e4e43617f3db2e8d  | tar-sha256       | 57       | 33    |
+| 2026-11-16-106-sub-r15            | 1fafa306c6132a6b  | name+funcs, none | 59       | 15    |
+| 2026-11-16-107-p6-r21             | 2d9aad7382365664  | tar-sha256       | 318      | 29    |
+| 2026-11-16-108-hd-r25-staged      | 44f72a908cfe6f1c  | tar-sha256       | 6        | 6     |
+| 2026-11-16-109-hd-r23c            | 440357f93c922ee4  | tar-sha256       | 33       | 21    |
+| 2026-11-16-110-hd-r26-staged      | e80ed13bc8b20fbe  | tar-sha256       | 9        | 9     |
+| 2026-11-16-111-p6-r22-staged      | 33fafd321995c4ef  | tar-sha256       | 806      | 568   |
+| 2026-11-16-112-sub-r16            | 37fa09c75d9ace52  | name+funcs, none | 70       | 26    |
+| 2026-11-16-113-hd-r27a            | 634478f05fb16448  | tar-sha256       | 24       | 17    |
+| 2026-11-16-114-sub-staged4        | ce48dc6eaf46b0cc  | none             | 39       | 12    |
+| 2026-11-16-115-hd-r28-staged      | ebf3297a77a64647  | tar-sha256       | 15       | 15    |
+| 2026-11-16-116-hd-r27c            | 5b0d16773e6b847a  | tar-sha256       | 78       | 62    |
+| 2026-11-16-117-hd-r29-staged      | 66002a530f0ded0c  | tar-sha256       | 18       | 18    |
+| 2026-11-16-118-p6-r23             | 9629eb1a441fad9e  | tar-sha256       | 723      | 85    |
+| 2026-11-16-119-hd-r30             | 84db687e80a014a8  | tar-sha256       | 163      | 125   |
+| 2026-11-16-120-hd-r31-staged      | 1bf04e7f4d836389  | tar-sha256       | 12       | 11    |
+| 2026-11-16-121-hd-r32-staged      | 6e5363295f2fde51  | tar-sha256       | 16       | 15    |
+| 2026-11-16-122-p6-r24-staged      | e93250558126d820  | tar-sha256       | 280      | 172   |
+| 2026-11-16-123-p6-r25             | 74ebf6fd4585abf4  | tar-sha256       | 621      | 86    |
+| 2026-11-16-124-hd-r34-staged      | 1211eb6dbfd01ccc  | tar-sha256       | 6        | 6     |
+| 2026-11-16-125-p6-r26-staged      | 73ee26bdf6114fd4  | tar-sha256       | 330      | 162   |
+| 2026-11-16-126-sub-r17            | 2569b2a32a2beb2b  | name+funcs       | 304      | 85    |
+| 2026-11-16-127-sub-staged5        | e58ea64dd9cfcd14  | none             | 132      | 54    |
+| 2026-11-16-128-p6-r27             | 016281fd288ddc95  | tar-sha256       | 519      | 89    |
+| 2026-11-17-1-p6-r28-staged        | 393616853a8b753e  | tar-sha256       | 182      | 103   |
+| 2026-11-17-2-p6-r29               | 7d37e3dcea2161b9  | tar-sha256       | 339      | 62    |
+| 2026-11-17-3-hd-r36               | 606533b8b5cda465  | tar-sha256       | 46       | 16    |
+| 2026-11-17-4-hd-r37-staged        | 7b976f93e3e091f2  | tar-sha256       | 10       | 10    |
+| 2026-11-17-5-hd-r38-ports         | d8fec40e459678e1  | tar-sha256       | 6        | 6     |
+| 2026-11-17-6-p6-r30-staged        | d85bc8247e9bc605  | tar-sha256       | 246      | 162   |
+| 2026-11-17-7-sub-r18              | 0d231e8a762ade1c  | name+funcs       | 228      | 65    |
+| 2026-11-17-9-sub-staged6          | ed8dc70ddf4052eb  | none             | 142      | 54    |
+| 2026-11-17-10-hd-r39              | 224ecb3bbd6a4a7e  | tar-sha256       | 108      | 60    |
+| 2026-11-17-11-hd-r40-staged       | b497d7a7ac37a22b  | tar-sha256       | 31       | 30    |
+| 2026-11-17-12-hd-r41              | 4c0fe5904fe910ab  | tar-sha256       | 37       | 19    |
+| 2026-11-17-13-hd-r42-ports        | 8998775ac43d649d  | tar-sha256       | 41       | 41    |
+| 2026-11-17-14-hd-r43-staged       | c83788b312c2f990  | tar-sha256       | 10       | 10    |
+| 2026-11-17-15-hd-r44              | 08a495d22ae1dbc8  | tar-sha256       | 5        | 1     |
+| 2026-11-17-16-p6-r31              | 61ffbca18c405428  | tar-sha256       | 234      | 10    |
+| 2026-11-17-17-hd-r45-ports        | d8b7f6bd026dfc38  | tar-sha256       | 13       | 13    |
+| 2026-11-17-18-hd-r46-staged       | 5c8a770593f14065  | tar-sha256       | 1        | 1     |
+| 2026-11-17-19-p6-r32-staged       | ba0efb2ce8c7077a  | tar-sha256       | 46       | 25    |
+| 2026-11-17-20-hd-r47              | 7848bceb7701db2b  | tar-sha256       | 25       | 13    |
+| 2026-11-17-21-hd-r48-staged       | 3bc816730b8fbdc3  | tar-sha256       | 3        | 3     |
+| 2026-11-17-22-hd-r49-ports        | c49608ff65de9f8d  | tar-sha256       | 6        | 6     |
+| 2026-11-18-1-p6-r33               | a160e07be62fb024  | tar-sha256       | 237      | 36    |
+| 2026-11-18-2-sub-r20-fp           | dbc769160bb31aec  | tar-sha256       | 9        | 0     |
+| 2026-11-18-3-sub-r20-fp2          | 175ceab5c5ab35ec  | tar-sha256       | 15       | 3     |
+| 2026-11-18-4-hd-r50               | 656140c4fdc50571  | tar-sha256       | 16       | 0     |
+| 2026-11-18-5-p6-r34-staged        | a1b983c45bb453e4  | tar-sha256       | 176      | 71    |
+| 2026-11-18-6-sub-r20a             | 99b6e8db5e46696d  | tar-sha256       | 96       | 20    |
+| 2026-11-18-7-hd-r51               | 9b3ac5e9af92bdfb  | tar-sha256       | 48       | 16    |
+| 2026-11-18-8-sub-r20b-staged      | b8d076fbb296aa97  | tar-sha256       | 60       | 40    |
+| 2026-11-18-9-sub-r20c-staged      | 3a3ca042f2c346a5  | tar-sha256       | 18       | 15    |
+| 2026-11-18-10-hd-r51-staged       | 0e23f889b139e8fa  | tar-sha256       | 16       | 16    |
+| 2026-11-18-11-hd-r51-ports        | c2464f3326575dd2  | tar-sha256       | 40       | 40    |
+| 2026-11-18-12-p6-r35              | 771f3ea76c3de544  | tar-sha256       | 606      | 198   |
+| 2026-11-18-13-hd-r52              | 671f95c3024835a5  | tar-sha256       | 57       | 26    |
+| 2026-11-18-14-hd-r52-staged       | b004ee76625e4ed9  | tar-sha256       | 18       | 18    |
+| 2026-11-18-15-hd-r52-ports        | e39aa77cf55c2a9d  | tar-sha256       | 4        | 4     |
+| 2026-11-18-16-hd-r54              | 292709522848c0be  | tar-sha256       | 21       | 9     |
+| 2026-11-18-17-hd-r54-staged       | f453792bf2edf97d  | tar-sha256       | 9        | 9     |
+| 2026-11-18-18-sub-r21a            | 39f7b7ea2464a205  | tar-sha256       | 153      | 19    |
+| 2026-11-18-19-sub-r21b-staged     | 4d38906eed078f2e  | tar-sha256       | 63       | 40    |
+| 2026-11-18-20-hd-r55              | 164dfe25842dbf0a  | tar-sha256       | 36       | 18    |
+| 2026-11-18-21-sub-r21c-staged     | aa75690f069b9c16  | tar-sha256       | 54       | 22    |
+| 2026-11-18-22-sub-r21d-staged     | 104129b0c8564adf  | tar-sha256       | 11       | 8     |
+| 2026-11-18-23-sub-r21e-staged     | cd072468900e00a0  | tar-sha256       | 3        | 3     |
+| 2026-11-18-24-hd-r56              | 75993add7c849e3c  | tar-sha256       | 18       | 14    |
+| 2026-11-18-25-hd-r57              | 33f3043cafd8bcd9  | tar-sha256       | 13       | 1     |
+| 2026-11-18-26-hd-r56-ports        | 7f6f99925113eb85  | tar-sha256       | 31       | 31    |
+| 2026-11-18-27-hd-r58-opts         | 86b3942c746da5f7  | tar-sha256       | 12       | 0     |
+| 2026-11-18-28-p6-r36              | 28f42eed218dafc8  | tar-sha256       | 984      | 304   |
+| 2026-11-18-29-sub-r21f            | 7a767736cc2075bc  | tar-sha256       | 123      | 38    |
+| 2026-11-18-30-hd-r58              | e2e84f17677fbc4c  | tar-sha256       | 3        | 3     |
+| 2026-11-18-31-hd-r58-staged       | fa501c66fe8d948f  | tar-sha256       | 1        | 1     |
+| 2026-11-18-32-sub-r21g-staged     | 8375b08b67158c7a  | tar-sha256       | 40       | 39    |
+| 2026-11-18-33-p6-r37              | 0a40e1a6b8392467  | tar-sha256       | 420      | 144   |
+| 2026-11-18-34-p6-r38-staged       | fc744ed2ac5b46eb  | tar-sha256       | 224      | 131   |
+| 2026-11-19-1-sub-r23a-copy        | bdf37a6bf7c1d3bd  | name+funcs       | 3        | 0     |
+| 2026-11-19-2-hd-r59-portall       | 14e87d9ed237a79a  | tar-sha256       | 285      | 283   |
+| 2026-11-19-3-sub-r23m-frame       | b4d6f2a25ff65c29  | name+funcs       | 8        | 0     |
+| 2026-11-19-4-hd-r60-dbmemo        | c9677da596764fcf  | tar-sha256       | 3        | 0     |
+| 2026-11-19-5-sub-r23c-vstate      | 29784dac79a00474  | name+funcs       | 2        | 2     |
+| 2026-11-19-6-p6-r39               | 61a1cd22a04924a2  | tar-sha256       | 27       | 5     |
+| 2026-11-19-7-sub-r23p-pragma      | 3125957415826d95  | name+funcs       | 2        | 0     |
+| 2026-11-19-8-sub-r23q-asmkw       | b96e7812d62a61f9  | name+funcs       | 2        | 1     |
+| 2026-11-19-9-p6-r40               | 6e4dff396c32a2b4  | tar-sha256       | 30       | 4     |
+| 2026-11-19-10-sub-r23w-asm        | 00a73470f86587de  | name+funcs       | 242      | 130   |
+| 2026-11-19-11-sub-r23h-helpers    | d93d95bde745908e  | name+funcs       | 60       | 10    |
+| 2026-11-19-12-sub-r23s-staged     | 22ee8c3281dc859d  | none             | 96       | 75    |
+| 2026-11-19-13-p6-r41              | 55138a20662d0849  | tar-sha256       | 96       | 14    |
+| 2026-11-19-14-hd-r61-ids-ports    | b011da9d28aa58af  | tar-sha256       | 801      | 583   |
+| 2026-11-19-15-p6-r42              | 1320238ca32b47e1  | tar-sha256       | 504      | 149   |
+| 2026-11-19-16-sub-r23o-tg-dsp     | 581161e97a88bf52  | name+funcs       | 63       | 45    |
+| 2026-11-19-17-hd-r62-ports-staged | 5c02954d801aa6e7  | tar-sha256       | 186      | 45    |
+| 2026-11-19-18-sub-r23r-apdsp      | b4c40d65f03fc87e  | name+funcs       | 18       | 0     |
+| 2026-11-19-19-p6-r43              | 48ccd7730f528a8a  | tar-sha256       | 198      | 26    |
+| 2026-11-19-20-sub-r23t-staged     | 048f25a92b9e9aef  | none             | 45       | 36    |
+| 2026-11-19-21-p6-r44              | e1fe4f87eaeae8df  | tar-sha256       | 39       | 2     |

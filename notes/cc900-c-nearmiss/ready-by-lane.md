@@ -7,15 +7,15 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | lane     | tree     | functions | bytes | C only in c/ | bytes (C only in c/) |
 |----------|----------|-----------|-------|--------------|----------------------|
 | lane_hd  | hdae5000 | 6         | 1079  | 6            | 1079                 |
-| lane_p6  | v10      | 41        | 3462  | 28           | 1704                 |
+| lane_p6  | v10      | 55        | 4977  | 42           | 3219                 |
 | lane_p6  | v5       | 12        | 1337  | 3            | 27                   |
 | lane_p6  | v6       | 12        | 1337  | 3            | 27                   |
 | lane_p6  | v7       | 11        | 1322  | 2            | 12                   |
 | lane_p6  | v9       | 15        | 1770  | 2            | 12                   |
-| lane_sub | v140     | 27        | 2502  | 2            | 30                   |
-| lane_sub | v141     | 27        | 2502  | 2            | 30                   |
-| lane_sub | v142     | 34        | 3283  | 2            | 30                   |
-| all      |          | 185       | 18594 | 50           | 2951                 |
+| lane_sub | v140     | 39        | 3773  | 2            | 30                   |
+| lane_sub | v141     | 39        | 3773  | 2            | 30                   |
+| lane_sub | v142     | 49        | 5070  | 2            | 30                   |
+| all      |          | 238       | 24438 | 64           | 4466                 |
 
 ## lane_hd
 
@@ -32,7 +32,10 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 
 | tree | function                           | bytes | run                          | opt    | c_copy                                               | c_elsewhere                          |
 |------|------------------------------------|-------|------------------------------|--------|------------------------------------------------------|--------------------------------------|
+| v10  | BmDrEdit_ScanAfterModify           | 93    | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/BmDrEdit_ScanAfterModify__880d7e33.c           | none                                 |
+| v10  | CalcTotalWidth                     | 137   | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/CalcTotalWidth__b90db27b.c                     | none                                 |
 | v10  | ColorBlit_ByteData                 | 42    | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/ColorBlit_ByteData__7f8dcb37.c                 | phase6+branch:phase6/first-functions |
+| v10  | ColorBlit_ComputeRectAndBlit       | 70    | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/ColorBlit_ComputeRectAndBlit__b8a85328.c       | none                                 |
 | v10  | CstmCpTtl_ResolvePendingCopy       | 55    | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/CstmCpTtl_ResolvePendingCopy__bf36fb23.c       | none                                 |
 | v10  | DSPCfg_ReadMultiField              | 119   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/DSPCfg_ReadMultiField__3ec56f3a.c              | phase6+branch:phase6/first-functions |
 | v10  | DSPCfg_WriteMultiField             | 142   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/DSPCfg_WriteMultiField__3ec56f3a.c             | phase6+branch:phase6/first-functions |
@@ -46,10 +49,13 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | v10  | DrawStringRightJustify             | 152   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/DrawStringRightJustify__ffc86504.c             | phase6+branch:phase6/first-functions |
 | v10  | DrawWall_Deferred_Code             | 2     | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/DrawWall_Deferred_Code__5328f0d2.c             | none                                 |
 | v10  | DrawWall_DoCopy                    | 85    | 2026-11-19-15-p6-r42         | O3Xr   | c/v10/DrawWall_DoCopy__5328f0d2.c                    | none                                 |
+| v10  | EffectMode_MidiParseLoop           | 36    | 2026-11-19-19-p6-r43         | O3Xr   | c/v10/EffectMode_MidiParseLoop__fca43bd8.c           | none                                 |
+| v10  | ExtData_SetTlvField                | 79    | 2026-11-19-21-p6-r44         | O3XSXr | c/v10/ExtData_SetTlvField__ccbd4c26.c                | none                                 |
 | v10  | ExtData_StepTlvField               | 109   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/ExtData_StepTlvField__635407ea.c               | none                                 |
 | v10  | FDC_Send_Command                   | 6     | 2026-11-16-111-p6-r22-staged | O3Xr   | c/v10/FDC_Send_Command__60e54bb5.c                   | none                                 |
 | v10  | FDC_WaitParamByteReady             | 67    | 2026-11-16-87-p6-r15         | Xr     | c/v10/FDC_WaitParamByteReady__f32a8d95.c             | none                                 |
 | v10  | FDC_WriteDataRegister              | 6     | 2026-11-16-111-p6-r22-staged | O3Xr   | c/v10/FDC_WriteDataRegister__8abe2f0e.c              | none                                 |
+| v10  | FDemoText_ByteData_DisplayRefresh  | 114   | 2026-11-19-19-p6-r43         | Xr     | c/v10/FDemoText_ByteData_DisplayRefresh__01d9eb89.c  | none                                 |
 | v10  | FDemoText_ByteData_ProbeHelper     | 44    | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/FDemoText_ByteData_ProbeHelper__cb333b4d.c     | none                                 |
 | v10  | FDemoText_ProbeVoiceType           | 44    | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/FDemoText_ProbeVoiceType__cb333b4d.c           | none                                 |
 | v10  | FatPath_Next83Component            | 183   | 2026-11-19-15-p6-r42         | Xr     | c/v10/FatPath_Next83Component__9f07ec82.c            | none                                 |
@@ -58,11 +64,17 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | v10  | GraphicsRender_RetStub             | 1     | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/GraphicsRender_RetStub__5328f0d2.c             | none                                 |
 | v10  | GraphicsRender_ShortByteBlock      | 5     | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/GraphicsRender_ShortByteBlock__5328f0d2.c      | none                                 |
 | v10  | InitializeGraphics                 | 111   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/InitializeGraphics__c1310a23.c                 | none                                 |
+| v10  | MainTitle_InitGraphicsAndEvents    | 87    | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/MainTitle_InitGraphicsAndEvents__d42649e4.c    | none                                 |
+| v10  | MidiChan_ClearAllStates            | 79    | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/MidiChan_ClearAllStates__fcca8469.c            | none                                 |
+| v10  | MidiChan_InitAllBufferPtrs         | 99    | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/MidiChan_InitAllBufferPtrs__b70b2fc2.c         | none                                 |
+| v10  | MidiPkt_EnqueueControl_3354        | 138   | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/MidiPkt_EnqueueControl_3354__cbbe75c3.c        | none                                 |
 | v10  | PaletteBankRotate_Code             | 2     | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/PaletteBankRotate_Code__c1310a23.c             | none                                 |
+| v10  | ReadFieldToBuffer                  | 178   | 2026-11-19-19-p6-r43         | O3Xr   | c/v10/ReadFieldToBuffer__1399038f.c                  | none                                 |
 | v10  | SLSrcBankList_FuncBody             | 116   | 2026-11-19-15-p6-r42         | O3Xr   | c/v10/SLSrcBankList_FuncBody__4c770ef9.c             | phase6+branch:phase6/first-functions |
 | v10  | SeMenu_HandleMenuChange            | 125   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/SeMenu_HandleMenuChange__67c161e2.c            | none                                 |
 | v10  | SearchAndOpen                      | 81    | 2026-11-16-45-p6-r9          | O3Xr   | c/v10/SearchAndOpen__0aba4f34.c                      | none                                 |
 | v10  | SeqBuf_WriteMidiEventDirect        | 102   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/SeqBuf_WriteMidiEventDirect__d7efe7ee.c        | none                                 |
+| v10  | SeqData_DispatchLoop_Done          | 133   | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/SeqData_DispatchLoop_Done__9cda9f4e.c          | none                                 |
 | v10  | SeqVoice_CountEventsInBar          | 138   | 2026-11-19-15-p6-r42         | O3Xr   | c/v10/SeqVoice_CountEventsInBar__d70fa5a5.c          | none                                 |
 | v10  | SingleLoadDst_DrawComposerBankRows | 119   | 2026-11-19-15-p6-r42         | O3Xr   | c/v10/SingleLoadDst_DrawComposerBankRows__4c770ef9.c | phase6+branch:phase6/first-functions |
 | v10  | SingleLoadDst_DrawSongRows         | 151   | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/SingleLoadDst_DrawSongRows__3f5c6d6b.c         | none                                 |
@@ -72,6 +84,8 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | v10  | SndParam_ApplyAndFetch             | 63    | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/SndParam_ApplyAndFetch__3e2c2f2c.c             | none                                 |
 | v10  | SndParam_ApplyFromPointer          | 66    | 2026-11-19-15-p6-r42         | O3XSXr | c/v10/SndParam_ApplyFromPointer__635407ea.c          | none                                 |
 | v10  | SndParam_FetchOscTableEntry        | 30    | 2026-11-19-15-p6-r42         | O3Xr   | c/v10/SndParam_FetchOscTableEntry__69cff926.c        | none                                 |
+| v10  | UpdSeSel_ProcessStep               | 185   | 2026-11-19-19-p6-r43         | O3Xr   | c/v10/UpdSeSel_ProcessStep__7ce43006.c               | none                                 |
+| v10  | VoiceParam_CompareAndUpdate        | 87    | 2026-11-19-19-p6-r43         | O3XSXr | c/v10/VoiceParam_CompareAndUpdate__a0751420.c        | none                                 |
 | v10  | VwBoxProc                          | 208   | 2026-11-19-15-p6-r42         | O3Xr   | c/v10/VwBoxProc__42e90b08.c                          | phase6+branch:phase6/first-functions |
 | v5   | ColorBlit_ByteData                 | 42    | 2026-11-19-15-p6-r42         | O3XSXr | c/v5/ColorBlit_ByteData__7f8dcb37.c                  | phase6+branch:phase6/first-functions |
 | v5   | DSPCfg_ReadMultiField              | 119   | 2026-11-19-15-p6-r42         | O3XSXr | c/v5/DSPCfg_ReadMultiField__3ec56f3a.c               | phase6+branch:phase6/first-functions |
@@ -128,16 +142,24 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 
 | tree | function                                  | bytes | run                            | opt | c_copy                                                       | c_elsewhere                     |
 |------|-------------------------------------------|-------|--------------------------------|-----|--------------------------------------------------------------|---------------------------------|
-| v140 | AudioMod_Apply_Slot_Field29               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
-| v140 | AudioMod_Apply_Slot_Field2A               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
+| v140 | AudioMod_Apply_Slot_Field29               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | AudioMod_Apply_Slot_Field2A               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | DSP_StateTable_Reset                      | 13    | 2026-11-16-51-sub-staged1      | Xr  | (none)                                                       | none                            |
 | v140 | DSP_VoiceState_Dispatch                   | 207   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteEnvSegments                  | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteExtParam_600                 | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteExtParams_15                 | 128   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteExtParams_15_Alt             | 94    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteExtParams_56                 | 128   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteExtParams_56_Alt             | 94    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteExtParams_56b                | 128   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteGlobalConfig                 | 375   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteLevelBurst                   | 216   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteLevelPair                    | 80    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteNote2ch                      | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteReg0440_0480                 | 80    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteReg0640                      | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_WriteReg0840_Shadow2E             | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteSegRegs_SameLevel            | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteVoicePitch                   | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteVoice_6Words                 | 216   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
@@ -152,19 +174,31 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | v140 | ToneGen_WriteVoice_Reg21_Reg22            | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteVoice_Short                  | 37    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | ToneGen_WriteVoice_TvfPair                | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_Write_Reg0180                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_Write_Reg0440                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_Write_Reg0480                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v140 | ToneGen_Write_Reg04C0                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | Voice_AllVoices_PortamentoReset           | 115   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v140 | Voice_ComputePitch_InlineData             | 17    | 2026-11-16-127-sub-staged5     | Xr  | (none)                                                       | none                            |
-| v140 | Voice_Part_SetStateAndReinit              | 339   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
-| v141 | AudioMod_Apply_Slot_Field29               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
-| v141 | AudioMod_Apply_Slot_Field2A               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
+| v140 | Voice_Part_SetStateAndReinit              | 339   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | AudioMod_Apply_Slot_Field29               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | AudioMod_Apply_Slot_Field2A               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | DSP_StateTable_Reset                      | 13    | 2026-11-16-51-sub-staged1      | Xr  | (none)                                                       | none                            |
 | v141 | DSP_VoiceState_Dispatch                   | 207   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteEnvSegments                  | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteExtParam_600                 | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteExtParams_15                 | 128   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteExtParams_15_Alt             | 94    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteExtParams_56                 | 128   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteExtParams_56_Alt             | 94    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteExtParams_56b                | 128   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteGlobalConfig                 | 375   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteLevelBurst                   | 216   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteLevelPair                    | 80    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteNote2ch                      | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteReg0440_0480                 | 80    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteReg0640                      | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_WriteReg0840_Shadow2E             | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteSegRegs_SameLevel            | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteVoicePitch                   | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteVoice_6Words                 | 216   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
@@ -179,23 +213,37 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | v141 | ToneGen_WriteVoice_Reg21_Reg22            | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteVoice_Short                  | 37    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | ToneGen_WriteVoice_TvfPair                | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_Write_Reg0180                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_Write_Reg0440                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_Write_Reg0480                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v141 | ToneGen_Write_Reg04C0                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | Voice_AllVoices_PortamentoReset           | 115   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v141 | Voice_ComputePitch_InlineData             | 17    | 2026-11-16-127-sub-staged5     | Xr  | (none)                                                       | none                            |
-| v141 | Voice_Part_SetStateAndReinit              | 339   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
-| v142 | AudioMod_Apply_Slot_Field29               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
-| v142 | AudioMod_Apply_Slot_Field2A               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
+| v141 | Voice_Part_SetStateAndReinit              | 339   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | AudioMod_Apply_Slot_Field29               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | AudioMod_Apply_Slot_Field2A               | 281   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | DSP_StateTable_Reset                      | 13    | 2026-11-16-51-sub-staged1      | Xr  | (none)                                                       | none                            |
 | v142 | DSP_VoiceState_Dispatch                   | 207   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
-| v142 | NoteOn_RoutePacket                        | 403   | 2026-11-19-11-sub-r23h-helpers | Xr  | c/v142/NoteOn_RoutePacket__5facc7d4.c                        | csub                            |
+| v142 | NoteOn_RoutePacket                        | 403   | 2026-11-19-11-sub-r23h-helpers | Xr  | c/v142/NoteOn_RoutePacket__5facc7d4.c                        | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteEnvSegments                  | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteExtParam_1C0_Single          | 34    | 2026-11-19-10-sub-r23w-asm     | Xr  | c/v142/ToneGen_WriteExtParam_1C0_Single__e04d516c.c          | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteExtParam_600                 | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteExtParam_TypeDispatch_Single | 71    | 2026-11-19-10-sub-r23w-asm     | Xr  | c/v142/ToneGen_WriteExtParam_TypeDispatch_Single__e04d516c.c | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteExtParams_15                 | 128   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteExtParams_15_Alt             | 94    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteExtParams_15_Banked          | 252   | 2026-11-19-16-sub-r23o-tg-dsp  | Xr  | c/v142/ToneGen_WriteExtParams_15_Banked__9d77906e.c          | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteExtParams_56                 | 128   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteExtParams_56_Alt             | 94    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteExtParams_56b                | 128   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteExtParams_TypeDispatch       | 184   | 2026-11-19-16-sub-r23o-tg-dsp  | Xr  | c/v142/ToneGen_WriteExtParams_TypeDispatch__9d77906e.c       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteGlobalConfig                 | 375   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteLevelBurst                   | 216   | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteLevelPair                    | 80    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteNote2ch                      | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteReg0080_StrobeClear          | 37    | 2026-11-19-10-sub-r23w-asm     | Xr  | c/v142/ToneGen_WriteReg0080_StrobeClear__e04d516c.c          | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteReg0440_0480                 | 80    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteReg0640                      | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteReg0840_Shadow2E             | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteSegRegs_SameLevel            | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteVoicePitch                   | 34    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteVoice_6Words                 | 216   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
@@ -212,7 +260,12 @@ Functions whose best V4.23 attempt MATCHes the ROM but that the src-root (main) 
 | v142 | ToneGen_WriteVoice_Reg21_Reg22            | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteVoice_Short                  | 37    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_WriteVoice_TvfPair                | 80    | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_WriteVoice_TvfRegs_Dup            | 80    | 2026-11-19-16-sub-r23o-tg-dsp  | Xr  | c/v142/ToneGen_WriteVoice_TvfRegs_Dup__9d77906e.c            | csub+branch:cc900/c-subcpu-hdae |
 | v142 | ToneGen_Write_ExtParam_05C0_Strobe        | 94    | 2026-11-19-10-sub-r23w-asm     | Xr  | c/v142/ToneGen_Write_ExtParam_05C0_Strobe__e04d516c.c        | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_Write_Reg0180                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_Write_Reg0440                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_Write_Reg0480                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
+| v142 | ToneGen_Write_Reg04C0                     | 34    | 2026-11-19-20-sub-r23t-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | Voice_AllVoices_PortamentoReset           | 115   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
 | v142 | Voice_ComputePitch_InlineData             | 17    | 2026-11-16-127-sub-staged5     | Xr  | (none)                                                       | none                            |
-| v142 | Voice_Part_SetStateAndReinit              | 339   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub                            |
+| v142 | Voice_Part_SetStateAndReinit              | 339   | 2026-11-19-12-sub-r23s-staged  | Xr  | (none)                                                       | csub+branch:cc900/c-subcpu-hdae |
