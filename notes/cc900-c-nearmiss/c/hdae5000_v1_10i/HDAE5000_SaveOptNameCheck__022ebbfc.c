@@ -1,0 +1,43 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of hdae5000_v1_10i/hdae5000_saveopt_name__saveopt_r71.c (2026-11-19-61-hd-r73-staged)
+   sha256 022ebbfcb57ea869ab1a241b72ebdfa2e223f50452186895dda60e7f5d763225 (tar-sha256); compiled at -Xr
+   cc900-options: -Xr */
+#define EVT_GET_LARGE_STEP 0x1e0003eL
+#define EVT_GET_SMALL_STEP 0x1e0003fL
+#define EVT_GET_MAX 0x1e00043L
+#define EVT_GET_MIN 0x1e00044L
+#define EVT_GET_RAM_ADDRESS 0x1e00045L
+#define EVT_GET_RAM_SIZE 0x1e00046L
+#define EVT_GET_RAM_STRING 0x1e00047L
+#define EVT_RAM_DATA_REQ 0x1e00082L
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
+struct TypeSel { unsigned int mask; unsigned char flag[10]; };
+struct ParaBlk { unsigned char pad[14]; long value; char *str; };
+extern void HDAE5000_TypeSel_BuildMask(struct TypeSel *rec);
+extern struct TypeSel HDAE5000_RAM_SaveOptions;
+extern char ram_23d286[];
+extern char HDAE5000_Fmt_s_SaveOptNameCheck[];
+long HDAE5000_SaveOptNameCheck(long obj, long ev, struct ParaBlk *arg)
+{
+    switch (ev) {
+    case EVT_GET_RAM_STRING:
+        HDAE5000_SPrintf(arg->str, HDAE5000_Fmt_s_SaveOptNameCheck, ram_23d286);
+        return obj;
+    case EVT_GET_LARGE_STEP:
+        return 1;
+    case EVT_GET_SMALL_STEP:
+        return 1;
+    case EVT_GET_MAX:
+        return 0;
+    case EVT_GET_MIN:
+        return 0;
+    case EVT_GET_RAM_ADDRESS:
+        return (long)&HDAE5000_RAM_SaveOptions.flag[8];
+    case EVT_GET_RAM_SIZE:
+        return 1;
+    case EVT_RAM_DATA_REQ:
+        HDAE5000_TypeSel_BuildMask(&HDAE5000_RAM_SaveOptions);
+        return 0;
+    default:
+        return 0;
+    }
+}

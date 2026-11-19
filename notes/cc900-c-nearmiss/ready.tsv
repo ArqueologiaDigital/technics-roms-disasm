@@ -1,239 +1,1162 @@
 lane	tree	function	bytes	flags	run	opt	c_copy	cc900_module	c_elsewhere
-lane_hd	hdae5000	HDAE5000_Lyrics_FindEvent	280	-Xr	2026-11-19-14-hd-r61-ids-ports	Xr	c/hdae5000/HDAE5000_Lyrics_FindEvent__acca9904.c	HDAE5000_Lyrics_ParseEvent	none
-lane_hd	hdae5000	HDAE5000_Lyrics_ReadSongInfo	564	-Xr	2026-11-19-14-hd-r61-ids-ports	Xr	c/hdae5000/HDAE5000_Lyrics_ReadSongInfo__acca9904.c	HDAE5000_Lyrics_FindEvent	none
-lane_hd	hdae5000	HDAE5000_Lyrics_ReadVarLen	87	-Xr	2026-11-19-14-hd-r61-ids-ports	Xr	c/hdae5000/HDAE5000_Lyrics_ReadVarLen__acca9904.c		none
-lane_hd	hdae5000	HDAE5000_PPORT_Svc18_RequestNormalMode	32	-Xr	2026-11-16-116-hd-r27c	Xr	c/hdae5000/HDAE5000_PPORT_Svc18_RequestNormalMode__6a393e21.c		none
-lane_hd	hdae5000	HDAE5000_Read_Table_Multi	64	-Xr	2026-11-19-14-hd-r61-ids-ports	Xr	c/hdae5000/HDAE5000_Read_Table_Multi__acca9904.c		none
-lane_hd	hdae5000	HDAE5000_Read_Table_Word	52	-Xr	2026-11-19-14-hd-r61-ids-ports	Xr	c/hdae5000/HDAE5000_Read_Table_Word__acca9904.c		none
-lane_p6	v10	BmDrEdit_ScanAfterModify	93	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/BmDrEdit_ScanAfterModify__880d7e33.c	BmDrEdit_CheckNoteAtPosition BmDrEdit_CompareVelocity BmDrEdit_LoadAlternateState BmDrEdit_RestoreEditState BmDrEdit_SaveEditState BmDrEdit_SetupCoordinates BmDrEdit_WalkAndScanAfterEdit BmDrEdit_WalkTrackForward	none
-lane_p6	v10	CalcTotalWidth	137	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/CalcTotalWidth__b90db27b.c	ConvertStrings	none
-lane_p6	v10	ColorBlit_ByteData	42	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/ColorBlit_ByteData__7f8dcb37.c	ColorBlit2	phase6+branch:phase6/first-functions
-lane_p6	v10	ColorBlit_ComputeRectAndBlit	70	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/ColorBlit_ComputeRectAndBlit__b8a85328.c	ColorBlit2	none
-lane_p6	v10	CstmCpTtl_ResolvePendingCopy	55	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/CstmCpTtl_ResolvePendingCopy__bf36fb23.c	Flash_InitBytecodeBlock_Helper8 Flash_InitBytecodeBlock_Helper9 Flash_InitExtMemAddrs	none
-lane_p6	v10	DSPCfg_ReadMultiField	119	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DSPCfg_ReadMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField	phase6+branch:phase6/first-functions
-lane_p6	v10	DSPCfg_WriteMultiField	142	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DSPCfg_WriteMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField DSPCfg_WriteParam	phase6+branch:phase6/first-functions
-lane_p6	v10	DrawBitmapFile_QueuedExec	21	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawBitmapFile_QueuedExec__5328f0d2.c	DrawBitmapFile_Impl	none
-lane_p6	v10	DrawBitmap_QueuedExec	21	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawBitmap_QueuedExec__6114a5be.c	DrawBitmap_Impl	phase6+branch:phase6/first-functions
-lane_p6	v10	DrawDesignBox_ByteData_Code	24	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawDesignBox_ByteData_Code__5328f0d2.c	DrawDottedLine_Impl	none
-lane_p6	v10	DrawFunc_Return	1	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawFunc_Return__5328f0d2.c		none
-lane_p6	v10	DrawMonoBitmap_ParamBlock	34	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawMonoBitmap_ParamBlock__5328f0d2.c	DrawMonoBitmap_Impl	none
-lane_p6	v10	DrawStringCentered	158	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawStringCentered__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v10	DrawStringReverse	340	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/DrawStringReverse__69aba2df.c	DrawBox DrawString	phase6+branch:phase6/first-functions
-lane_p6	v10	DrawStringRightJustify	152	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawStringRightJustify__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v10	DrawWall_Deferred_Code	2	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/DrawWall_Deferred_Code__5328f0d2.c	DrawWall_DoCopy	none
-lane_p6	v10	DrawWall_DoCopy	85	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/DrawWall_DoCopy__5328f0d2.c	SetChangeRect	none
-lane_p6	v10	EffectMode_MidiParseLoop	36	-O3 -Xr	2026-11-19-19-p6-r43	O3Xr	c/v10/EffectMode_MidiParseLoop__fca43bd8.c	EffectMode_MidiSetLEDs	none
-lane_p6	v10	ExtData_SetTlvField	79	-O3 -XS -Xr	2026-11-19-21-p6-r44	O3XSXr	c/v10/ExtData_SetTlvField__ccbd4c26.c	PanelTlv_PayloadOfTag	none
-lane_p6	v10	ExtData_StepTlvField	109	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/ExtData_StepTlvField__635407ea.c	PanelTlv_PayloadOfTag	none
-lane_p6	v10	FDC_Send_Command	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v10/FDC_Send_Command__60e54bb5.c		none
-lane_p6	v10	FDC_WaitParamByteReady	67	-Xr	2026-11-16-87-p6-r15	Xr	c/v10/FDC_WaitParamByteReady__f32a8d95.c	FDC_Read_Status FDC_Set_Status	none
-lane_p6	v10	FDC_WriteDataRegister	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v10/FDC_WriteDataRegister__8abe2f0e.c		none
-lane_p6	v10	FDemoText_ByteData_DisplayRefresh	114	-Xr	2026-11-19-19-p6-r43	Xr	c/v10/FDemoText_ByteData_DisplayRefresh__01d9eb89.c		none
-lane_p6	v10	FDemoText_ByteData_ProbeHelper	44	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/FDemoText_ByteData_ProbeHelper__cb333b4d.c	FDemoText_LookupTableEntry	none
-lane_p6	v10	FDemoText_ProbeVoiceType	44	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/FDemoText_ProbeVoiceType__cb333b4d.c	FDemoText_LookupTableEntry	none
-lane_p6	v10	FatPath_Next83Component	183	-Xr	2026-11-19-15-p6-r42	Xr	c/v10/FatPath_Next83Component__9f07ec82.c		none
-lane_p6	v10	FileIO_ParsePathComponents	128	-Xr	2026-11-19-15-p6-r42	Xr	c/v10/FileIO_ParsePathComponents__dfa36b77.c		phase6+branch:phase6/first-functions
-lane_p6	v10	FileIO_SearchStringMatch	72	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/FileIO_SearchStringMatch__53ef57a4.c	FileIO_FindFirstMatch FileIO_FindNextMatch	none
-lane_p6	v10	GraphicsRender_RetStub	1	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/GraphicsRender_RetStub__5328f0d2.c		none
-lane_p6	v10	GraphicsRender_ShortByteBlock	5	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/GraphicsRender_ShortByteBlock__5328f0d2.c	GraphicsRender_ProcessEntries	none
-lane_p6	v10	InitializeGraphics	111	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/InitializeGraphics__c1310a23.c	ChangePalette ChangeWall ChangeWallPalette InitDrawTask LcdOn SetChangeRect UpdateScreen	none
-lane_p6	v10	MainTitle_InitGraphicsAndEvents	87	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/MainTitle_InitGraphicsAndEvents__d42649e4.c		none
-lane_p6	v10	MidiChan_ClearAllStates	79	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/MidiChan_ClearAllStates__fcca8469.c	MidiChan_SetStateMode MidiChan_SetVoiceBaseState MidiSeq_ApplyPendingParams	none
-lane_p6	v10	MidiChan_InitAllBufferPtrs	99	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/MidiChan_InitAllBufferPtrs__b70b2fc2.c	ArpQueue_InitBuffer	none
-lane_p6	v10	MidiPkt_EnqueueControl_3354	138	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/MidiPkt_EnqueueControl_3354__cbbe75c3.c	MidiPkt_CheckGateCondition	none
-lane_p6	v10	PaletteBankRotate_Code	2	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/PaletteBankRotate_Code__c1310a23.c	PaletteBankRotate_Impl	none
-lane_p6	v10	ReadFieldToBuffer	178	-O3 -Xr	2026-11-19-19-p6-r43	O3Xr	c/v10/ReadFieldToBuffer__1399038f.c		none
-lane_p6	v10	SLSrcBankList_FuncBody	116	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/SLSrcBankList_FuncBody__4c770ef9.c	NumToAscii_FormatNumber TrimAndPadSmfFilename	phase6+branch:phase6/first-functions
-lane_p6	v10	SeMenu_HandleMenuChange	125	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/SeMenu_HandleMenuChange__67c161e2.c	SeMenu_AdvanceSubIndex SeMenu_ComputeParamTableAddr SeMenu_FillEntryTable SeMenu_ReadObjData SeMenu_ReadObjParam SeMenu_RegisterElement_Type2 SeMenu_ResetSubIndex SeMenu_SendEvent SeMenu_SetCurrentStep SeMenu_SetupDisplayObject	none
-lane_p6	v10	SearchAndOpen	81	-O3 -Xr	2026-11-16-45-p6-r9	O3Xr	c/v10/SearchAndOpen__0aba4f34.c		none
-lane_p6	v10	SeqBuf_WriteMidiEventDirect	102	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/SeqBuf_WriteMidiEventDirect__d7efe7ee.c	SeqBuf_FlushAndReinit_NoteEvents SeqBuf_FlushAndReinit_VoiceCCEvents	none
-lane_p6	v10	SeqData_DispatchLoop_Done	133	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/SeqData_DispatchLoop_Done__9cda9f4e.c		none
-lane_p6	v10	SeqVoice_CountEventsInBar	138	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/SeqVoice_CountEventsInBar__d70fa5a5.c	Part_ValidateVoiceChannel SeqData_AdvancePosition SeqData_ReadNextByte SeqTrack_ProcessControlBytes SeqVoice_SetDefaultParams SeqVoice_ValidateAndProcessState	none
-lane_p6	v10	SingleLoadDst_DrawComposerBankRows	119	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/SingleLoadDst_DrawComposerBankRows__4c770ef9.c	SingleLoad_GetComposerBankName TrimAndPadSmfFilename	phase6+branch:phase6/first-functions
-lane_p6	v10	SingleLoadDst_DrawSongRows	151	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/SingleLoadDst_DrawSongRows__3f5c6d6b.c	BuildSlotLabel NumToAscii_FormatNumber TrimAndPadSmfFilename	none
-lane_p6	v10	SingleLoadSrc_DrawSoundMemBankRows	126	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/SingleLoadSrc_DrawSoundMemBankRows__4c770ef9.c	SingleLoad_GetSoundMemBankName TrimAndPadSmfFilename	phase6+branch:phase6/first-functions
+lane_hd	hdae5000_v1_10i	HDAE5000_AcLanguageText1Proc	5703	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_AcLanguageText1Proc__1852f2cb.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd	669	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd__0e99c9aa.c	HDAE5000_CopyFdSongToHd_Cmp HDAE5000_CopyFdSongToHd_Lsw HDAE5000_CopyFdSongToHd_Md HDAE5000_CopyFdSongToHd_Msp HDAE5000_CopyFdSongToHd_Pmt HDAE5000_CopyFdSongToHd_Rcm HDAE5000_CopyFdSongToHd_Sqt HDAE5000_CopyFdSongToHd_Tm HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_DeleteSongParts HDAE5000_Song_CheckFreeSpace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Cmp	412	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Cmp__a33456d2.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Md	289	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Md__4df37b35.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Msp	279	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Msp__4df37b35.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Pmt	388	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Pmt__6fc0668b.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Rcm	412	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Rcm__a33456d2.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Sqt	412	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Sqt__a33456d2.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyFdSongToHd_Tm	287	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyFdSongToHd_Tm__4df37b35.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyToHd_Execute	1179	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyToHd_Execute__54f6ae71.c	HDAE5000_UiObj_SetCaption	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_CopyVersionString	43	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_CopyVersionString__b78b5765.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_DelOptNameCheck	134	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_DelOptNameCheck__ff85d132.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_DeleteDirectory	341	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_DeleteDirectory__0e99c9aa.c	HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_Fls_ForgetSong HDAE5000_Song_IsUsed	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_DeleteSongParts	335	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_DeleteSongParts__0e99c9aa.c	HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_Fls_ForgetSong HDAE5000_Song_IsUsed	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_FdSong_CheckFiles	1153	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_FdSong_CheckFiles__07e1be17.c	HDAE5000_CheckFileSignature	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_FileLBNNameCheck	162	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_FileLBNNameCheck__ff85d132.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_FileLoadSwCatch	81	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_FileLoadSwCatch__6bf2986c.c	HDAE5000_LoadSongWithUi	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_FileOptNameCheck	134	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_FileOptNameCheck__4386e132.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_FlsLoadScreen	919	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_FlsLoadScreen__9b9530e0.c	HDAE5000_FlsScreen_Refresh HDAE5000_LoadSongWithUi	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_HDD_UTIL_PAGE	1034	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_HDD_UTIL_PAGE__2d590163.c	HDAE5000_HardTest_HddIdRead HDAE5000_HardTest_Print	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_HD_WriteStream	214	-Xr	2026-11-19-70-hd-r78-v201b	Xr	c/hdae5000_v1_10i/HDAE5000_HD_WriteStream__2e724bc3.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_Handler_Registration	750	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_Handler_Registration__547199f3.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_HardTestPage	900	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_HardTestPage__10286878.c	HDAE5000_HardTest_HddIdRead HDAE5000_HardTest_PortTest HDAE5000_HardTest_Print HDAE5000_YieldUntilSem1Zero	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_LBNLoadSwCatch	302	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_LBNLoadSwCatch__08445f22.c	HDAE5000_Lbn_ShowEntry HDAE5000_LoadSongWithUi HDAE5000_TypeSel_Init	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_Lbn_TypeDigit	594	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_Lbn_TypeDigit__fbefb032.c	HDAE5000_Lbn_ShowEntry HDAE5000_LoadSongWithUi HDAE5000_PartList_Build HDAE5000_TypeSel_Init	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_LoadSong	336	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_LoadSong__0e99c9aa.c	HDAE5000_LoadSong_Cmp HDAE5000_LoadSong_Lsw HDAE5000_LoadSong_Md HDAE5000_LoadSong_Msp HDAE5000_LoadSong_Pmt HDAE5000_LoadSong_Rcm HDAE5000_LoadSong_Sqt HDAE5000_LoadSong_Tm	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_LoadSong_Pmt	212	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_LoadSong_Pmt__d8a04ead.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_PPORT_Svc03_SendInfosAboutHd	233	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_PPORT_Svc03_SendInfosAboutHd__b0221e7b.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace	53	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace__49a98bac.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_PPORT_Svc21_WriteOpenHD	295	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_PPORT_Svc21_WriteOpenHD__96b094cd.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_PPORT_Svc24_ReadOpenHD	145	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_PPORT_Svc24_ReadOpenHD__96b094cd.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_PPORT_Svc25_ReadFileHD	110	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_10i/HDAE5000_PPORT_Svc25_ReadFileHD__36dd9606.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_PartList_Build	385	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_PartList_Build__5c124934.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_SaveOptNameCheck	125	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_SaveOptNameCheck__022ebbfc.c	HDAE5000_TypeSel_BuildMask	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_SaveOptSwEventCatch	384	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_SaveOptSwEventCatch__1a7f2d3b.c	HDAE5000_SaveSongWithUi HDAE5000_SongScreen_Refresh HDAE5000_TypeSel_Init HDAE5000_TypeSel_ShowSaveFlags	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_SaveSong	708	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_SaveSong__0e99c9aa.c	HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_DeleteSongParts HDAE5000_SaveSong_Cmp HDAE5000_SaveSong_Lsw HDAE5000_SaveSong_Md HDAE5000_SaveSong_Msp HDAE5000_SaveSong_Pmt HDAE5000_SaveSong_Rcm HDAE5000_SaveSong_Sqt HDAE5000_SaveSong_Tm HDAE5000_Song_CheckFreeSpace	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_SaveSong_Rcm	140	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_10i/HDAE5000_SaveSong_Rcm__513cd2ea.c	HDAE5000_HD_WriteClose HDAE5000_HD_WriteOpen	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_Song_CheckFreeSpace	333	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_Song_CheckFreeSpace__4174ab18.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_Song_IsUsed	493	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_Song_IsUsed__4174ab18.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_Song_PartMask	508	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_Song_PartMask__23d4dbc7.c	HDAE5000_Song_IsUsed	chd
+lane_hd	hdae5000_v1_10i	HDAE5000_TypeSel_BuildMask	85	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_TypeSel_BuildMask__b2e5e3e9.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_TypeSel_Init	84	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_TypeSel_Init__1736950b.c		chd
+lane_hd	hdae5000_v1_10i	HDAE5000_UiState_Reset	122	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_10i/HDAE5000_UiState_Reset__44f575b0.c	HDAE5000_TypeSel_Init	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_AcLanguageText1Proc	5776	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_AcLanguageText1Proc__7eb75e49.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd	669	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd__2ca8f8e1.c	HDAE5000_CopyFdSongToHd_Cmp HDAE5000_CopyFdSongToHd_Lsw HDAE5000_CopyFdSongToHd_Md HDAE5000_CopyFdSongToHd_Msp HDAE5000_CopyFdSongToHd_Pmt HDAE5000_CopyFdSongToHd_Rcm HDAE5000_CopyFdSongToHd_Sqt HDAE5000_CopyFdSongToHd_Tm HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_DeleteSongParts HDAE5000_Song_CheckFreeSpace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Cmp	412	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Cmp__42ff1cbc.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Md	289	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Md__d2c6862a.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Msp	279	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Msp__d2c6862a.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Pmt	388	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Pmt__a3e3adfc.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Rcm	412	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Rcm__42ff1cbc.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Sqt	412	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Sqt__42ff1cbc.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyFdSongToHd_Tm	287	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyFdSongToHd_Tm__d2c6862a.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyToHd_Execute	1179	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyToHd_Execute__c7263674.c	HDAE5000_UiObj_SetCaption	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_CopyVersionString	43	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_CopyVersionString__0578739e.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_DelOptNameCheck	134	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_DelOptNameCheck__06470329.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_DeleteDirectory	341	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_DeleteDirectory__2ca8f8e1.c	HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_Fls_ForgetSong HDAE5000_Song_IsUsed	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_DeleteSongParts	335	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_DeleteSongParts__2ca8f8e1.c	HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_Fls_ForgetSong HDAE5000_Song_IsUsed	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_FdSong_CheckFiles	1153	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_FdSong_CheckFiles__05ee84fa.c	HDAE5000_CheckFileSignature	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_FileLBNNameCheck	162	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_FileLBNNameCheck__06470329.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_FileLoadSwCatch	81	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_FileLoadSwCatch__8b2b3f04.c	HDAE5000_LoadSongWithUi	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_FileOptNameCheck	134	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_FileOptNameCheck__ef0f9706.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_FlsLoadScreen	919	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_FlsLoadScreen__5504b5ea.c	HDAE5000_FlsScreen_Refresh HDAE5000_LoadSongWithUi	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_HDD_UTIL_PAGE	1034	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_HDD_UTIL_PAGE__db4b0c01.c	HDAE5000_HardTest_HddIdRead HDAE5000_HardTest_Print	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_HD_WriteStream	275	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_HD_WriteStream__2f1f61d8.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_Handler_Registration	750	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_Handler_Registration__f317c06c.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_HardTestPage	900	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_HardTestPage__3c263558.c	HDAE5000_HardTest_HddIdRead HDAE5000_HardTest_PortTest HDAE5000_HardTest_Print HDAE5000_YieldUntilSem1Zero	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_LBNLoadSwCatch	302	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_LBNLoadSwCatch__d3804eab.c	HDAE5000_Lbn_ShowEntry HDAE5000_LoadSongWithUi HDAE5000_TypeSel_Init	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_Lbn_TypeDigit	594	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_Lbn_TypeDigit__967eb8cb.c	HDAE5000_Lbn_ShowEntry HDAE5000_LoadSongWithUi HDAE5000_PartList_Build HDAE5000_TypeSel_Init	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_LoadSong	336	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_LoadSong__2ca8f8e1.c	HDAE5000_LoadSong_Cmp HDAE5000_LoadSong_Lsw HDAE5000_LoadSong_Md HDAE5000_LoadSong_Msp HDAE5000_LoadSong_Pmt HDAE5000_LoadSong_Rcm HDAE5000_LoadSong_Sqt HDAE5000_LoadSong_Tm	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_PPORT_Svc03_SendInfosAboutHd	233	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_PPORT_Svc03_SendInfosAboutHd__0fc662e3.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace	53	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_PPORT_Svc19_SendPointerToFreeBufferSpace__3ab429b2.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_PPORT_Svc21_WriteOpenHD	295	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_PPORT_Svc21_WriteOpenHD__c2f179ca.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_PPORT_Svc24_ReadOpenHD	145	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_PPORT_Svc24_ReadOpenHD__c2f179ca.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_PPORT_Svc25_ReadFileHD	110	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_PPORT_Svc25_ReadFileHD__970de252.c	HDAE5000_DebugTrace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_PartList_Build	385	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_PartList_Build__bfc56dcd.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_SaveOptNameCheck	125	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_SaveOptNameCheck__6ef85a96.c	HDAE5000_TypeSel_BuildMask	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_SaveOptSwEventCatch	384	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_SaveOptSwEventCatch__a11e1ebd.c	HDAE5000_SaveSongWithUi HDAE5000_SongScreen_Refresh HDAE5000_TypeSel_Init HDAE5000_TypeSel_ShowSaveFlags	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_SaveSong	708	-Xr	2026-11-19-85-hd-r86-staged	Xr	c/hdae5000_v1_15i/HDAE5000_SaveSong__2ca8f8e1.c	HDAE5000_DeleteSongPart_Cmp HDAE5000_DeleteSongPart_Lsw HDAE5000_DeleteSongPart_Md HDAE5000_DeleteSongPart_Msp HDAE5000_DeleteSongPart_Pmt HDAE5000_DeleteSongPart_Rcm HDAE5000_DeleteSongPart_Sqt HDAE5000_DeleteSongPart_Tm HDAE5000_DeleteSongParts HDAE5000_SaveSong_Cmp HDAE5000_SaveSong_Lsw HDAE5000_SaveSong_Md HDAE5000_SaveSong_Msp HDAE5000_SaveSong_Pmt HDAE5000_SaveSong_Rcm HDAE5000_SaveSong_Sqt HDAE5000_SaveSong_Tm HDAE5000_Song_CheckFreeSpace	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_Song_CheckFreeSpace	333	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_Song_CheckFreeSpace__381c66ee.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_Song_IsUsed	493	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_Song_IsUsed__381c66ee.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_Song_PartMask	508	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_Song_PartMask__c58144be.c	HDAE5000_Song_IsUsed	chd
+lane_hd	hdae5000_v1_15i	HDAE5000_TypeSel_BuildMask	85	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_TypeSel_BuildMask__47058081.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_TypeSel_Init	84	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_TypeSel_Init__30e8080f.c		chd
+lane_hd	hdae5000_v1_15i	HDAE5000_UiState_Reset	122	-Xr	2026-11-19-61-hd-r73-staged	Xr	c/hdae5000_v1_15i/HDAE5000_UiState_Reset__84d87f88.c	HDAE5000_TypeSel_Init	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_AcLanguageText1Proc	5849	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_AcLanguageText1Proc__b3acfe0f.c		chd
+lane_hd	hdae5000_v2_01i	HDAE5000_CopyFdSongToHd_Tlx	302	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_CopyFdSongToHd_Tlx__7d2864ae.c	HDAE5000_RoundUpToSector	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_CopyVersionString	43	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_CopyVersionString__95600202.c		chd
+lane_hd	hdae5000_v2_01i	HDAE5000_FDFileSelectProc	2461	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_FDFileSelectProc__376a2a49.c	HDAE5000_FdLyricList_Scan	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_HDD_UTIL_PAGE	1034	-Xr	2026-11-19-72-hd-r79-staged	Xr	c/hdae5000_v2_01i/HDAE5000_HDD_UTIL_PAGE__4910a55b.c	HDAE5000_HardTest_HddIdRead HDAE5000_HardTest_Print	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_Handler_Registration	750	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_Handler_Registration__94ad81a4.c		chd
+lane_hd	hdae5000_v2_01i	HDAE5000_LyricBoxProc	2325	-Xr	2026-11-19-72-hd-r79-staged	Xr	c/hdae5000_v2_01i/HDAE5000_LyricBoxProc__5a67b5a0.c	HDAE5000_Lyrics_ClearBuffer HDAE5000_Lyrics_FillLines HDAE5000_Lyrics_PlayToPosition HDAE5000_Lyrics_ReadSongInfo HDAE5000_Lyrics_ResetState	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_Lyrics_FillLines	579	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_Lyrics_FillLines__1d6f8400.c	HDAE5000_Lyrics_FindEvent	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_Lyrics_PlayToPosition	938	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_Lyrics_PlayToPosition__eeaa6b85.c	HDAE5000_Lyrics_FillLines HDAE5000_Lyrics_FindEvent	chd
+lane_hd	hdae5000_v2_01i	HDAE5000_Lyrics_ResetState	222	-Xr	2026-11-19-64-hd-r76-staged	Xr	c/hdae5000_v2_01i/HDAE5000_Lyrics_ResetState__6d7ae633.c	HDAE5000_SwapBytes16	chd
+lane_p6	v10	BitMapOut_UpdateDisplayWidget	71	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/BitMapOut_UpdateDisplayWidget__1f644b9a.c		phase6
+lane_p6	v10	DemoMenu_WorkspaceReturn	93	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/DemoMenu_WorkspaceReturn__3ccec0a8.c		phase6
+lane_p6	v10	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v10/FatPath_Next83Component__20a913e2.c		none
+lane_p6	v10	FileIO_LoadRegion2_ExtMem	183	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/FileIO_LoadRegion2_ExtMem__63610799.c	FileIO_CheckRegionSignature FileIO_ReadHeaderAt4	phase6
+lane_p6	v10	FileIO_LoadRegion3_ExtMem	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/FileIO_LoadRegion3_ExtMem__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v10	FileIO_LoadRegion4_VRAM	177	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/FileIO_LoadRegion4_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v10	FileIO_LoadRegion5_VRAM	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/FileIO_LoadRegion5_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v10	FileIO_SaveRegion7_Flash	108	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/FileIO_SaveRegion7_Flash__63610799.c		phase6
+lane_p6	v10	MidiPkt_ArpChordHandler	76	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_ArpChordHandler__d0dd4b54.c	MidiPkt_RecoverIfXferAborted MidiTable_DispatchHelper	none
+lane_p6	v10	MidiPkt_ArpConfigChain_Data_Helper10	57	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpConfigChain_Data_Helper10__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_ArpConfigChain_Data_Helper11	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpConfigChain_Data_Helper11__3ce3885f.c		phase6
+lane_p6	v10	MidiPkt_ArpConfigChain_Data_Helper12	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpConfigChain_Data_Helper12__3ce3885f.c		phase6
+lane_p6	v10	MidiPkt_ArpConfigChain_Data_Helper13	57	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpConfigChain_Data_Helper13__3ce3885f.c		phase6
+lane_p6	v10	MidiPkt_ArpConfigChain_Data_Helper8	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpConfigChain_Data_Helper8__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_ArpConfigChain_Data_Helper9	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpConfigChain_Data_Helper9__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_ArpExtHandler_A	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpExtHandler_A__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_ArpExtHandler_G	44	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_ArpExtHandler_G__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_HandleCmdCode01	73	-Xr	2026-11-19-92-p6-r57	Xr	c/v10/MidiPkt_HandleCmdCode01__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_SendBlock_AccompAreaHeader	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_AccompAreaHeader__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendBlock_AccompBankTables	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_AccompBankTables__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendBlock_AccompBlockPool	57	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_AccompBlockPool__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendBlock_LivePanel	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_LivePanel__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendBlock_PanelMemories	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_PanelMemories__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendBlock_SoundRamData	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_SoundRamData__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendBlock_SoundRamId	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SendBlock_SoundRamId__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_SendGroupEnd__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_SendGroup_SoundRam__1f9373e7.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	phase6
+lane_p6	v10	MidiPkt_SetXferBlock_SeqEvents	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_SetXferBlock_SeqEvents__1deba4cc.c	MidiPkt_GetUsedSize_SeqEvents	phase6
+lane_p6	v10	MidiPkt_SetXferTotal_AccompBlocks	47	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_SetXferTotal_AccompBlocks__1deba4cc.c	MidiPkt_GetUsedSize_AccompBlocks	phase6
+lane_p6	v10	MidiPkt_SetXferTotal_StyleImage	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_SetXferTotal_StyleImage__1deba4cc.c	MidiPkt_GetUsedSize_StyleImage	phase6
+lane_p6	v10	MidiPkt_XferAnswerMsg21	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_XferAnswerMsg21__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferOnAccompBlocksBlock2	40	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_XferOnAccompBlocksBlock2__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferOnAccompBlocksStart	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_XferOnAccompBlocksStart__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferOnPanelMemBlock	39	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_XferOnPanelMemBlock__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferOnSoundRamDataBlock	39	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_XferOnSoundRamDataBlock__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferOnSoundRamStart	48	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_XferOnSoundRamStart__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferOnStyleImageBlock2	40	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/MidiPkt_XferOnStyleImageBlock2__d0dd4b54.c		none
+lane_p6	v10	MidiPkt_XferShowCompleted	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_XferShowCompleted__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_XferShowErrorMessage	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_XferShowErrorMessage__1f9373e7.c		phase6
+lane_p6	v10	MidiPkt_XferShowNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiPkt_XferShowNothing__1f9373e7.c		phase6
+lane_p6	v10	MidiTable_DispatchHelper	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiTable_DispatchHelper__d0dd4b54.c	MidiTable_FlushArpNotes	none
+lane_p6	v10	MidiTable_FlushArpNotes	56	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/MidiTable_FlushArpNotes__d0dd4b54.c		none
+lane_p6	v10	PanelButton_ProcessChanges	73	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/PanelButton_ProcessChanges__ebba21b6.c	PanelButton_DispatchChange PanelButton_FetchChange VoiceEntry_FindMasterVolume	phase6
+lane_p6	v10	SeAmpLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v10	SeAmpLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeAmpLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v10	SeCtr2_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnColumn2__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnColumn4	6	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnColumn4__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnColumn5	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnColumn5__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnColumn6	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnColumn7	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnColumn8	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnSideRow2	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnSideRow3	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnSwitch15	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr2_OnSwitch25	34	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr2_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr3_OnColumn3	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr3_OnColumn3__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr3_OnColumn6	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr3_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr3_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr3_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeCtr3_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeCtr3_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v10	SeDigEff_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeDigEff_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeEasy_OnSideRow1	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeEasy_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeEasy_OnSideRow2	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeEasy_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeEasy_OnSideRow3	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeEasy_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeEasy_OnSideRow4	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeEasy_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v10	SeEasy_OnSideRow5	59	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeEasy_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeEasy_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeEasy_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn1__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn2__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn3__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn4__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn5__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn6__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnColumn7	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnColumn7__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v10	SeFilEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v10	SeFilEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv1_OnSwitch25__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnColumn2__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnColumn3__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnColumn4__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnColumn5__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnColumn7__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnColumn8__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSideRow1__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v10	SeFilEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v10	SeFilEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSideRow4__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSideRow5__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSwitch15__40a181e9.c		phase6
+lane_p6	v10	SeFilEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilEnv2_OnSwitch25__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v10	SeFilLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeFilLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join10	158	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join10__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join11	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join11__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join12	160	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join12__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join13	102	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join13__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join14	160	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join14__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join15	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join15__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join16	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join16__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join17	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join17__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join19	83	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join19__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join2	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join2__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join20	84	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join20__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join3	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join3__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join4	123	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join4__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join5	103	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join5__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join6	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join6__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join7	56	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join7__d21354b5.c	SeMenu_LoadPartParam SeMenu_StorePartParam	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join8__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SeMenu_ApplyPartEdit_AltStore_Join9	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeMenu_ApplyPartEdit_AltStore_Join9__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v10	SePitEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn1__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn2__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn3__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn4__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn5__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn6__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnColumn7	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnColumn7__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v10	SePitEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v10	SePitEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v10	SePitEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSideRow4__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSideRow5__96050769.c		phase6
+lane_p6	v10	SePitEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v10	SePitEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv1_OnSwitch25__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnColumn2__96050769.c		phase6
+lane_p6	v10	SePitEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnColumn3__96050769.c		phase6
+lane_p6	v10	SePitEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnColumn4__96050769.c		phase6
+lane_p6	v10	SePitEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnColumn5__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnColumn7__96050769.c		phase6
+lane_p6	v10	SePitEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnColumn8__96050769.c		phase6
+lane_p6	v10	SePitEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSideRow1__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSideRow2__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSideRow3__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSideRow4__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSideRow5__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSwitch15__d21354b5.c		phase6
+lane_p6	v10	SePitEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitEnv2_OnSwitch25__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn2__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn3__96050769.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn4__96050769.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn5__96050769.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn6__96050769.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn7__96050769.c		phase6
+lane_p6	v10	SePitLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnColumn8__96050769.c		phase6
+lane_p6	v10	SePitLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnSideRow4__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnSideRow5__d21354b5.c		phase6
+lane_p6	v10	SePitLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitLfo1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v10	SePitPit1_OnColumn2	108	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnColumn2__2bac7f73.c		none
+lane_p6	v10	SePitPit1_OnColumn3	108	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnColumn3__2bac7f73.c		none
+lane_p6	v10	SePitPit1_OnColumn4	102	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnColumn4__2bac7f73.c		none
+lane_p6	v10	SePitPit1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v10	SePitPit1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v10	SePitPit1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v10	SePitPit1_OnSideRow4	61	-O3 -XS -Xr	2026-11-19-76-p6-r55	O3XSXr	c/v10/SePitPit1_OnSideRow4__b6dcb239.c		phase6
+lane_p6	v10	SePitPit1_OnSideRow5	61	-O3 -XS -Xr	2026-11-19-76-p6-r55	O3XSXr	c/v10/SePitPit1_OnSideRow5__b6dcb239.c		phase6
+lane_p6	v10	SePitPit1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SePitPit1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v10	SeTonHyb1_OnColumn2	133	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnColumn2__22c7b9a4.c		none
+lane_p6	v10	SeTonHyb1_OnColumn3	118	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnColumn3__22c7b9a4.c		none
+lane_p6	v10	SeTonHyb1_OnColumn8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSideRow4	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSideRow5	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSwitch15	42	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeTonHyb1_OnSwitch25	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonHyb1_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan1_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan1_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan2_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan2_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan2_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan2_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeTonRan2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonRan2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnColumn1	88	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnColumn1__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnColumn2	116	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnColumn2__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnColumn3	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnColumn3__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnColumn6	128	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnColumn7	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnColumn8	111	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSwitch15	18	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon1_OnSwitch25	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon1_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnColumn4	101	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnColumn4__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnColumn7	74	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeTonTon2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeTonTon2_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v10	SeWrtMem_OnSideRow1	53	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtMem_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v10	SeWrtMem_OnSideRow5	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtMem_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v10	SeWrtMem_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtMem_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v10	SeWrtSnd_OnColumn1	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn1__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join6	none
+lane_p6	v10	SeWrtSnd_OnColumn2	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn2__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join7	none
+lane_p6	v10	SeWrtSnd_OnColumn3	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn3__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join8	none
+lane_p6	v10	SeWrtSnd_OnColumn4	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn4__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join	none
+lane_p6	v10	SeWrtSnd_OnColumn5	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn5__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join2	none
+lane_p6	v10	SeWrtSnd_OnColumn6	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn6__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join3	none
+lane_p6	v10	SeWrtSnd_OnColumn8	3	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnColumn8__22c7b9a4.c	SeWrtSnd_SetupNamingPage_Join5	none
+lane_p6	v10	SeWrtSnd_OnSideRow2	7	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SeWrtSnd_OnSideRow2__22c7b9a4.c	SeWrtSnd_ClearName_Join	none
 lane_p6	v10	SingleLoad_PrepareSongSlot	76	-O3 -XS -Xr	2026-11-16-100-p6-r19	O3XSXr	c/v10/SingleLoad_PrepareSongSlot__85fbeeab.c		none
-lane_p6	v10	SmfSeqFromSongNumFunc	87	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/SmfSeqFromSongNumFunc__cc1bcc46.c	NumToAscii_FormatNumber	phase6+branch:phase6/first-functions
-lane_p6	v10	SndParam_ApplyAndFetch	63	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/SndParam_ApplyAndFetch__3e2c2f2c.c		none
-lane_p6	v10	SndParam_ApplyFromPointer	66	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v10/SndParam_ApplyFromPointer__635407ea.c		none
-lane_p6	v10	SndParam_FetchOscTableEntry	30	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/SndParam_FetchOscTableEntry__69cff926.c	ApplyProgramChangeAs_LoadReg ApplyProgramChangeAs_LoadReg2	none
-lane_p6	v10	UpdSeSel_ProcessStep	185	-O3 -Xr	2026-11-19-19-p6-r43	O3Xr	c/v10/UpdSeSel_ProcessStep__7ce43006.c	UpdSeSel_DetailedUpdate UpdSeSel_SimpleUpdate	none
-lane_p6	v10	VoiceParam_CompareAndUpdate	87	-O3 -XS -Xr	2026-11-19-19-p6-r43	O3XSXr	c/v10/VoiceParam_CompareAndUpdate__a0751420.c	PanelTlv_PayloadOfTag	none
-lane_p6	v10	VwBoxProc	208	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v10/VwBoxProc__42e90b08.c	DrawDesignFrame GetClientBox	phase6+branch:phase6/first-functions
-lane_p6	v5	ColorBlit_ByteData	42	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v5/ColorBlit_ByteData__7f8dcb37.c	ColorBlit2	phase6+branch:phase6/first-functions
-lane_p6	v5	DSPCfg_ReadMultiField	119	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v5/DSPCfg_ReadMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField	phase6+branch:phase6/first-functions
-lane_p6	v5	DSPCfg_WriteMultiField	142	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v5/DSPCfg_WriteMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField DSPCfg_WriteParam	phase6+branch:phase6/first-functions
-lane_p6	v5	DrawBitmap_QueuedExec	21	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v5/DrawBitmap_QueuedExec__6114a5be.c	DrawBitmap_Impl	phase6+branch:phase6/first-functions
-lane_p6	v5	DrawStringCentered	158	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v5/DrawStringCentered__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v5	DrawStringReverse	340	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v5/DrawStringReverse__69aba2df.c	DrawBox DrawString	phase6+branch:phase6/first-functions
-lane_p6	v5	DrawStringRightJustify	152	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v5/DrawStringRightJustify__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
+lane_p6	v10	SysEx_FinishBulkSend	80	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SysEx_FinishBulkSend__944a55f3.c		phase6
+lane_p6	v10	SysEx_SendAllData	21	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/SysEx_SendAllData__1f9373e7.c	MidiPkt_ArpConfigChain_Data	phase6
+lane_p6	v10	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v10/SysEx_SendNothing__1f9373e7.c		phase6
+lane_p6	v10	SysEx_SendPanelMemoryData	12	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/SysEx_SendPanelMemoryData__1f9373e7.c	MidiPkt_SendGroup_Panel	phase6
+lane_p6	v10	SysEx_SendSoundMemoryData	12	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/SysEx_SendSoundMemoryData__1f9373e7.c	MidiPkt_SendGroup_SoundRam	phase6
+lane_p6	v10	SysEx_SendStyleImageData	12	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v10/SysEx_SendStyleImageData__1f9373e7.c	MidiPkt_SendGroup_StyleImage	phase6
+lane_p6	v5	BitMapOut_UpdateDisplayWidget	71	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/BitMapOut_UpdateDisplayWidget__1f644b9a.c		phase6
+lane_p6	v5	DemoMenu_WorkspaceReturn	93	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/DemoMenu_WorkspaceReturn__3ccec0a8.c		phase6
 lane_p6	v5	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	none
-lane_p6	v5	FDC_Send_Command	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v5/FDC_Send_Command__a24700cd.c		none
-lane_p6	v5	FDC_WriteDataRegister	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v5/FDC_WriteDataRegister__17f72c76.c		none
-lane_p6	v5	FileIO_ParsePathComponents	128	-Xr	2026-11-19-15-p6-r42	Xr	c/v5/FileIO_ParsePathComponents__dfa36b77.c		phase6+branch:phase6/first-functions
-lane_p6	v5	VwBoxProc	208	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v5/VwBoxProc__42e90b08.c	DrawDesignFrame GetClientBox	phase6+branch:phase6/first-functions
-lane_p6	v6	ColorBlit_ByteData	42	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v6/ColorBlit_ByteData__7f8dcb37.c	ColorBlit2	phase6+branch:phase6/first-functions
-lane_p6	v6	DSPCfg_ReadMultiField	119	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v6/DSPCfg_ReadMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField	phase6+branch:phase6/first-functions
-lane_p6	v6	DSPCfg_WriteMultiField	142	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v6/DSPCfg_WriteMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField DSPCfg_WriteParam	phase6+branch:phase6/first-functions
-lane_p6	v6	DrawBitmap_QueuedExec	21	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v6/DrawBitmap_QueuedExec__6114a5be.c	DrawBitmap_Impl	phase6+branch:phase6/first-functions
-lane_p6	v6	DrawStringCentered	158	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v6/DrawStringCentered__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v6	DrawStringReverse	340	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v6/DrawStringReverse__69aba2df.c	DrawBox DrawString	phase6+branch:phase6/first-functions
-lane_p6	v6	DrawStringRightJustify	152	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v6/DrawStringRightJustify__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
+lane_p6	v5	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v5/FatPath_Next83Component__568fd7b6.c		none
+lane_p6	v5	FileIO_LoadRegion2_ExtMem	183	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v5/FileIO_LoadRegion2_ExtMem__63610799.c	FileIO_CheckRegionSignature FileIO_ReadHeaderAt4	phase6
+lane_p6	v5	FileIO_LoadRegion3_ExtMem	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/FileIO_LoadRegion3_ExtMem__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v5	FileIO_LoadRegion4_VRAM	177	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/FileIO_LoadRegion4_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v5	FileIO_LoadRegion5_VRAM	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/FileIO_LoadRegion5_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v5	FileIO_SaveRegion7_Flash	108	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v5/FileIO_SaveRegion7_Flash__63610799.c		phase6
+lane_p6	v5	MidiPkt_DispatchViaTable_4D6A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v5/MidiPkt_DispatchViaTable_4D6A__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v5	MidiPkt_DispatchViaTable_4D82	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v5/MidiPkt_DispatchViaTable_4D82__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v5	MidiPkt_DispatchViaTable_4D8E	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v5/MidiPkt_DispatchViaTable_4D8E__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v5	MidiPkt_DispatchViaTable_4D9A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v5/MidiPkt_DispatchViaTable_4D9A__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v5	MidiPkt_DispatchViaTable_4DA6	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v5/MidiPkt_DispatchViaTable_4DA6__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v5	MidiPkt_DispatchViaTable_4DAE	122	-O3 -Xr	2026-11-19-43-p6-r48	O3Xr	c/v5/MidiPkt_DispatchViaTable_4DAE__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v5	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/MidiPkt_SendGroupEnd__f7eb6649.c		phase6
+lane_p6	v5	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/MidiPkt_SendGroup_SoundRam__f7eb6649.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	phase6
+lane_p6	v5	MidiPkt_SetXferBlock_SeqEvents	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/MidiPkt_SetXferBlock_SeqEvents__4a5ead4b.c	MidiPkt_GetUsedSize_SeqEvents	phase6
+lane_p6	v5	MidiPkt_SetXferTotal_AccompBlocks	47	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v5/MidiPkt_SetXferTotal_AccompBlocks__4a5ead4b.c	MidiPkt_GetUsedSize_AccompBlocks	phase6
+lane_p6	v5	MidiPkt_SetXferTotal_StyleImage	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/MidiPkt_SetXferTotal_StyleImage__4a5ead4b.c	MidiPkt_GetUsedSize_StyleImage	phase6
+lane_p6	v5	PanelButton_ProcessChanges	73	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/PanelButton_ProcessChanges__293e1025.c	PanelButton_DispatchChange PanelButton_FetchChange VoiceEntry_FindMasterVolume	phase6
+lane_p6	v5	SeAmpLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v5	SeAmpLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeAmpLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v5	SeCtr2_OnColumn4	6	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnColumn4__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnColumn5	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnColumn5__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnColumn6	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnColumn6__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnColumn7	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnColumn7__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnColumn8	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnColumn8__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnSideRow2	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnSideRow3	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnSwitch15	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeCtr2_OnSwitch25	34	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr2_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v5	SeCtr3_OnColumn3	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr3_OnColumn3__0b09cb18.c		phase6
+lane_p6	v5	SeCtr3_OnColumn6	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr3_OnColumn6__0b09cb18.c		phase6
+lane_p6	v5	SeCtr3_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr3_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeCtr3_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeCtr3_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v5	SeDigEff_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeDigEff_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeEasy_OnSideRow2	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeEasy_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeEasy_OnSideRow3	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeEasy_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeEasy_OnSideRow4	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeEasy_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v5	SeEasy_OnSideRow5	59	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeEasy_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeEasy_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeEasy_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn1__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn2__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn3__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn4__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn5__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn6__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnColumn7	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnColumn7__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v5	SeFilEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v5	SeFilEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv1_OnSwitch25__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnColumn2__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnColumn3__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnColumn4__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnColumn5__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnColumn7__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnColumn8__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSideRow1__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v5	SeFilEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v5	SeFilEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSideRow4__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSideRow5__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSwitch15__40a181e9.c		phase6
+lane_p6	v5	SeFilEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilEnv2_OnSwitch25__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v5	SeFilLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeFilLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join19	83	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join19__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join2	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join2__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join20	84	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join20__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join3	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join3__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join4	123	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join4__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join5	103	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join5__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join6	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join6__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v5	SeMenu_ApplyPartEdit_AltStore_Join7	56	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeMenu_ApplyPartEdit_AltStore_Join7__d21354b5.c	SeMenu_LoadPartParam SeMenu_StorePartParam	phase6
+lane_p6	v5	SePitEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn1__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn2__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn3__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn4__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn5__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn6__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnColumn7	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnColumn7__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v5	SePitEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v5	SePitEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v5	SePitEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSideRow4__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSideRow5__96050769.c		phase6
+lane_p6	v5	SePitEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v5	SePitEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv1_OnSwitch25__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnColumn2__96050769.c		phase6
+lane_p6	v5	SePitEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnColumn3__96050769.c		phase6
+lane_p6	v5	SePitEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnColumn4__96050769.c		phase6
+lane_p6	v5	SePitEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnColumn5__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnColumn7__96050769.c		phase6
+lane_p6	v5	SePitEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnColumn8__96050769.c		phase6
+lane_p6	v5	SePitEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSideRow1__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSideRow2__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSideRow3__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSideRow4__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSideRow5__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSwitch15__d21354b5.c		phase6
+lane_p6	v5	SePitEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitEnv2_OnSwitch25__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn2__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn3__96050769.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn4__96050769.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn5__96050769.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn6__96050769.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn7__96050769.c		phase6
+lane_p6	v5	SePitLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnColumn8__96050769.c		phase6
+lane_p6	v5	SePitLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnSideRow4__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnSideRow5__d21354b5.c		phase6
+lane_p6	v5	SePitLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitLfo1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v5	SePitPit1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitPit1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v5	SePitPit1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitPit1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v5	SePitPit1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitPit1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v5	SePitPit1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SePitPit1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v5	SeTonHyb1_OnColumn8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnColumn8__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSideRow4	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSideRow5	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSwitch15	42	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeTonHyb1_OnSwitch25	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonHyb1_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan1_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan1_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan1_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan1_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan1_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan1_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan1_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan1_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan2_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan2_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan2_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan2_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan2_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan2_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeTonRan2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonRan2_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnColumn1	88	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnColumn1__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnColumn6	128	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnColumn6__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnColumn7	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnColumn7__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnColumn8	111	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnColumn8__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSwitch15	18	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon1_OnSwitch25	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon1_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnColumn4	101	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnColumn4__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnColumn7	74	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnColumn7__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SeTonTon2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeTonTon2_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v5	SeWrtMem_OnSideRow5	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeWrtMem_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v5	SeWrtMem_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SeWrtMem_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v5	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v5/SysEx_SendNothing__f7eb6649.c		phase6
+lane_p6	v6	BitMapOut_UpdateDisplayWidget	71	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/BitMapOut_UpdateDisplayWidget__1f644b9a.c		phase6
+lane_p6	v6	DemoMenu_WorkspaceReturn	93	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/DemoMenu_WorkspaceReturn__3ccec0a8.c		phase6
 lane_p6	v6	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	none
-lane_p6	v6	FDC_Send_Command	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v6/FDC_Send_Command__a24700cd.c		none
-lane_p6	v6	FDC_WriteDataRegister	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v6/FDC_WriteDataRegister__17f72c76.c		none
-lane_p6	v6	FileIO_ParsePathComponents	128	-Xr	2026-11-19-15-p6-r42	Xr	c/v6/FileIO_ParsePathComponents__dfa36b77.c		phase6+branch:phase6/first-functions
-lane_p6	v6	VwBoxProc	208	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v6/VwBoxProc__42e90b08.c	DrawDesignFrame GetClientBox	phase6+branch:phase6/first-functions
-lane_p6	v7	ColorBlit_ByteData	42	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v7/ColorBlit_ByteData__7f8dcb37.c	ColorBlit2	phase6+branch:phase6/first-functions
-lane_p6	v7	DSPCfg_ReadMultiField	119	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v7/DSPCfg_ReadMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField	phase6+branch:phase6/first-functions
-lane_p6	v7	DSPCfg_WriteMultiField	142	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v7/DSPCfg_WriteMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField DSPCfg_WriteParam	phase6+branch:phase6/first-functions
-lane_p6	v7	DrawBitmap_QueuedExec	21	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v7/DrawBitmap_QueuedExec__6114a5be.c	DrawBitmap_Impl	phase6+branch:phase6/first-functions
-lane_p6	v7	DrawStringCentered	158	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v7/DrawStringCentered__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v7	DrawStringReverse	340	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v7/DrawStringReverse__69aba2df.c	DrawBox DrawString	phase6+branch:phase6/first-functions
-lane_p6	v7	DrawStringRightJustify	152	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v7/DrawStringRightJustify__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v7	FDC_Send_Command	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v7/FDC_Send_Command__a24700cd.c		none
-lane_p6	v7	FDC_WriteDataRegister	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v7/FDC_WriteDataRegister__8abe2f0e.c		none
-lane_p6	v7	FileIO_ParsePathComponents	128	-Xr	2026-11-19-15-p6-r42	Xr	c/v7/FileIO_ParsePathComponents__dfa36b77.c		phase6+branch:phase6/first-functions
-lane_p6	v7	VwBoxProc	208	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v7/VwBoxProc__42e90b08.c	DrawDesignFrame GetClientBox	phase6+branch:phase6/first-functions
-lane_p6	v9	ColorBlit_ByteData	42	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v9/ColorBlit_ByteData__7f8dcb37.c	ColorBlit2	phase6+branch:phase6/first-functions
-lane_p6	v9	DSPCfg_ReadMultiField	119	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v9/DSPCfg_ReadMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField	phase6+branch:phase6/first-functions
-lane_p6	v9	DSPCfg_WriteMultiField	142	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v9/DSPCfg_WriteMultiField__3ec56f3a.c	DSPCfg_PackAddress DSPCfg_ReadField DSPCfg_WriteParam	phase6+branch:phase6/first-functions
-lane_p6	v9	DrawBitmap_QueuedExec	21	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v9/DrawBitmap_QueuedExec__6114a5be.c	DrawBitmap_Impl	phase6+branch:phase6/first-functions
-lane_p6	v9	DrawStringCentered	158	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v9/DrawStringCentered__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v9	DrawStringReverse	340	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v9/DrawStringReverse__69aba2df.c	DrawBox DrawString	phase6+branch:phase6/first-functions
-lane_p6	v9	DrawStringRightJustify	152	-O3 -XS -Xr	2026-11-19-15-p6-r42	O3XSXr	c/v9/DrawStringRightJustify__ffc86504.c	DrawString	phase6+branch:phase6/first-functions
-lane_p6	v9	FDC_Send_Command	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v9/FDC_Send_Command__60e54bb5.c		none
-lane_p6	v9	FDC_WriteDataRegister	6	-O3 -Xr	2026-11-16-111-p6-r22-staged	O3Xr	c/v9/FDC_WriteDataRegister__8abe2f0e.c		none
-lane_p6	v9	FileIO_ParsePathComponents	128	-Xr	2026-11-19-15-p6-r42	Xr	c/v9/FileIO_ParsePathComponents__dfa36b77.c		phase6+branch:phase6/first-functions
-lane_p6	v9	SLSrcBankList_FuncBody	116	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v9/SLSrcBankList_FuncBody__4c770ef9.c	NumToAscii_FormatNumber TrimAndPadSmfFilename	phase6+branch:phase6/first-functions
-lane_p6	v9	SingleLoadDst_DrawComposerBankRows	119	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v9/SingleLoadDst_DrawComposerBankRows__4c770ef9.c	SingleLoad_GetComposerBankName TrimAndPadSmfFilename	phase6+branch:phase6/first-functions
-lane_p6	v9	SingleLoadSrc_DrawSoundMemBankRows	126	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v9/SingleLoadSrc_DrawSoundMemBankRows__4c770ef9.c	SingleLoad_GetSoundMemBankName TrimAndPadSmfFilename	phase6+branch:phase6/first-functions
-lane_p6	v9	SmfSeqFromSongNumFunc	87	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v9/SmfSeqFromSongNumFunc__cc1bcc46.c	NumToAscii_FormatNumber	phase6+branch:phase6/first-functions
-lane_p6	v9	VwBoxProc	208	-O3 -Xr	2026-11-19-15-p6-r42	O3Xr	c/v9/VwBoxProc__42e90b08.c	DrawDesignFrame GetClientBox	phase6+branch:phase6/first-functions
-lane_sub	v140	AudioMod_Apply_Slot_Field29	281	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	AudioMod_Apply_Slot_Field2A	281	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
+lane_p6	v6	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v6/FatPath_Next83Component__568fd7b6.c		none
+lane_p6	v6	FileIO_LoadRegion2_ExtMem	183	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v6/FileIO_LoadRegion2_ExtMem__63610799.c	FileIO_CheckRegionSignature FileIO_ReadHeaderAt4	phase6
+lane_p6	v6	FileIO_LoadRegion3_ExtMem	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/FileIO_LoadRegion3_ExtMem__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v6	FileIO_LoadRegion4_VRAM	177	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/FileIO_LoadRegion4_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v6	FileIO_LoadRegion5_VRAM	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/FileIO_LoadRegion5_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v6	FileIO_SaveRegion7_Flash	108	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v6/FileIO_SaveRegion7_Flash__63610799.c		phase6
+lane_p6	v6	MidiPkt_DispatchViaTable_4D6A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v6/MidiPkt_DispatchViaTable_4D6A__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v6	MidiPkt_DispatchViaTable_4D82	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v6/MidiPkt_DispatchViaTable_4D82__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v6	MidiPkt_DispatchViaTable_4D8E	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v6/MidiPkt_DispatchViaTable_4D8E__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v6	MidiPkt_DispatchViaTable_4D9A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v6/MidiPkt_DispatchViaTable_4D9A__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v6	MidiPkt_DispatchViaTable_4DA6	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v6/MidiPkt_DispatchViaTable_4DA6__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v6	MidiPkt_DispatchViaTable_4DAE	122	-O3 -Xr	2026-11-19-43-p6-r48	O3Xr	c/v6/MidiPkt_DispatchViaTable_4DAE__ad544ca9.c	MidiPkt_MatchParamInTable	none
+lane_p6	v6	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/MidiPkt_SendGroupEnd__f7eb6649.c		phase6
+lane_p6	v6	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/MidiPkt_SendGroup_SoundRam__f7eb6649.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	phase6
+lane_p6	v6	MidiPkt_SetXferBlock_SeqEvents	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/MidiPkt_SetXferBlock_SeqEvents__4a5ead4b.c	MidiPkt_GetUsedSize_SeqEvents	phase6
+lane_p6	v6	MidiPkt_SetXferTotal_AccompBlocks	47	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v6/MidiPkt_SetXferTotal_AccompBlocks__4a5ead4b.c	MidiPkt_GetUsedSize_AccompBlocks	phase6
+lane_p6	v6	MidiPkt_SetXferTotal_StyleImage	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/MidiPkt_SetXferTotal_StyleImage__4a5ead4b.c	MidiPkt_GetUsedSize_StyleImage	phase6
+lane_p6	v6	PanelButton_ProcessChanges	73	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/PanelButton_ProcessChanges__293e1025.c	PanelButton_DispatchChange PanelButton_FetchChange VoiceEntry_FindMasterVolume	phase6
+lane_p6	v6	SeAmpLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v6	SeAmpLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeAmpLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v6	SeCtr2_OnColumn4	6	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnColumn4__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnColumn5	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnColumn5__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnColumn6	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnColumn6__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnColumn7	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnColumn7__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnColumn8	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnColumn8__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnSideRow2	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnSideRow3	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnSwitch15	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeCtr2_OnSwitch25	34	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr2_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v6	SeCtr3_OnColumn3	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr3_OnColumn3__0b09cb18.c		phase6
+lane_p6	v6	SeCtr3_OnColumn6	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr3_OnColumn6__0b09cb18.c		phase6
+lane_p6	v6	SeCtr3_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr3_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeCtr3_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeCtr3_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v6	SeDigEff_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeDigEff_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeEasy_OnSideRow2	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeEasy_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeEasy_OnSideRow3	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeEasy_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeEasy_OnSideRow4	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeEasy_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v6	SeEasy_OnSideRow5	59	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeEasy_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeEasy_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeEasy_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn1__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn2__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn3__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn4__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn5__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn6__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnColumn7	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnColumn7__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v6	SeFilEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v6	SeFilEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv1_OnSwitch25__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnColumn2__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnColumn3__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnColumn4__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnColumn5__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnColumn7__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnColumn8__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSideRow1__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v6	SeFilEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v6	SeFilEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSideRow4__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSideRow5__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSwitch15__40a181e9.c		phase6
+lane_p6	v6	SeFilEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilEnv2_OnSwitch25__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v6	SeFilLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeFilLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join19	83	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join19__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join2	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join2__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join20	84	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join20__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join3	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join3__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join4	123	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join4__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join5	103	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join5__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join6	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join6__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v6	SeMenu_ApplyPartEdit_AltStore_Join7	56	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeMenu_ApplyPartEdit_AltStore_Join7__d21354b5.c	SeMenu_LoadPartParam SeMenu_StorePartParam	phase6
+lane_p6	v6	SePitEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn1__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn2__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn3__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn4__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn5__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn6__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnColumn7	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnColumn7__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v6	SePitEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v6	SePitEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v6	SePitEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSideRow4__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSideRow5__96050769.c		phase6
+lane_p6	v6	SePitEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v6	SePitEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv1_OnSwitch25__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnColumn2__96050769.c		phase6
+lane_p6	v6	SePitEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnColumn3__96050769.c		phase6
+lane_p6	v6	SePitEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnColumn4__96050769.c		phase6
+lane_p6	v6	SePitEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnColumn5__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnColumn7__96050769.c		phase6
+lane_p6	v6	SePitEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnColumn8__96050769.c		phase6
+lane_p6	v6	SePitEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSideRow1__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSideRow2__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSideRow3__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSideRow4__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSideRow5__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSwitch15__d21354b5.c		phase6
+lane_p6	v6	SePitEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitEnv2_OnSwitch25__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn2__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn3__96050769.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn4__96050769.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn5__96050769.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn6__96050769.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn7__96050769.c		phase6
+lane_p6	v6	SePitLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnColumn8__96050769.c		phase6
+lane_p6	v6	SePitLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnSideRow4__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnSideRow5__d21354b5.c		phase6
+lane_p6	v6	SePitLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitLfo1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v6	SePitPit1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitPit1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v6	SePitPit1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitPit1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v6	SePitPit1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitPit1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v6	SePitPit1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SePitPit1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v6	SeTonHyb1_OnColumn8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnColumn8__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSideRow4	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSideRow5	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSwitch15	42	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeTonHyb1_OnSwitch25	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonHyb1_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan1_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan1_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan1_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan1_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan1_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan1_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan1_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan1_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan2_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan2_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan2_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan2_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan2_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan2_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeTonRan2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonRan2_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnColumn1	88	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnColumn1__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnColumn6	128	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnColumn6__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnColumn7	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnColumn7__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnColumn8	111	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnColumn8__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSwitch15	18	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon1_OnSwitch25	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon1_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnColumn4	101	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnColumn4__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnColumn7	74	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnColumn7__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSideRow1__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSideRow2__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSideRow3__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSideRow4__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SeTonTon2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeTonTon2_OnSwitch25__0b09cb18.c		phase6
+lane_p6	v6	SeWrtMem_OnSideRow5	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeWrtMem_OnSideRow5__0b09cb18.c		phase6
+lane_p6	v6	SeWrtMem_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SeWrtMem_OnSwitch15__0b09cb18.c		phase6
+lane_p6	v6	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v6/SysEx_SendNothing__f7eb6649.c		phase6
+lane_p6	v7	BitMapOut_UpdateDisplayWidget	71	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/BitMapOut_UpdateDisplayWidget__1f644b9a.c		phase6
+lane_p6	v7	DemoMenu_WorkspaceReturn	93	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/DemoMenu_WorkspaceReturn__3ccec0a8.c		phase6
+lane_p6	v7	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v7/FatPath_Next83Component__568fd7b6.c		none
+lane_p6	v7	FileIO_LoadRegion2_ExtMem	183	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v7/FileIO_LoadRegion2_ExtMem__63610799.c	FileIO_CheckRegionSignature FileIO_ReadHeaderAt4	phase6
+lane_p6	v7	FileIO_LoadRegion3_ExtMem	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/FileIO_LoadRegion3_ExtMem__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v7	FileIO_LoadRegion4_VRAM	177	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/FileIO_LoadRegion4_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v7	FileIO_LoadRegion5_VRAM	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/FileIO_LoadRegion5_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v7	FileIO_SaveRegion7_Flash	108	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v7/FileIO_SaveRegion7_Flash__63610799.c		phase6
+lane_p6	v7	MidiPkt_DispatchViaTable_4D6A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v7/MidiPkt_DispatchViaTable_4D6A__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
+lane_p6	v7	MidiPkt_DispatchViaTable_4D82	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v7/MidiPkt_DispatchViaTable_4D82__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
+lane_p6	v7	MidiPkt_DispatchViaTable_4D8E	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v7/MidiPkt_DispatchViaTable_4D8E__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
+lane_p6	v7	MidiPkt_DispatchViaTable_4D9A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v7/MidiPkt_DispatchViaTable_4D9A__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
+lane_p6	v7	MidiPkt_DispatchViaTable_4DA6	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v7/MidiPkt_DispatchViaTable_4DA6__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
+lane_p6	v7	MidiPkt_DispatchViaTable_4DAE	122	-O3 -Xr	2026-11-19-43-p6-r48	O3Xr	c/v7/MidiPkt_DispatchViaTable_4DAE__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
+lane_p6	v7	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_SendGroupEnd__70946f37.c		phase6
+lane_p6	v7	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_SendGroup_SoundRam__70946f37.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	phase6
+lane_p6	v7	MidiPkt_SetXferBlock_SeqEvents	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_SetXferBlock_SeqEvents__64a5c2ea.c	MidiPkt_GetUsedSize_SeqEvents	phase6
+lane_p6	v7	MidiPkt_SetXferTotal_AccompBlocks	47	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v7/MidiPkt_SetXferTotal_AccompBlocks__64a5c2ea.c	MidiPkt_GetUsedSize_AccompBlocks	phase6
+lane_p6	v7	MidiPkt_SetXferTotal_StyleImage	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_SetXferTotal_StyleImage__64a5c2ea.c	MidiPkt_GetUsedSize_StyleImage	phase6
+lane_p6	v7	MidiPkt_XferShowCompleted	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_XferShowCompleted__70946f37.c		phase6
+lane_p6	v7	MidiPkt_XferShowErrorMessage	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_XferShowErrorMessage__70946f37.c		phase6
+lane_p6	v7	MidiPkt_XferShowNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/MidiPkt_XferShowNothing__70946f37.c		phase6
+lane_p6	v7	PanelButton_ProcessChanges	73	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/PanelButton_ProcessChanges__b6d9cb19.c	PanelButton_DispatchChange PanelButton_FetchChange VoiceEntry_FindMasterVolume	phase6
+lane_p6	v7	SeAmpLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v7	SeAmpLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeAmpLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v7	SeCtr2_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnColumn2__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnColumn4	6	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnColumn4__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnColumn5	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnColumn5__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnColumn6	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnColumn7	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnColumn8	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnSideRow2	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnSideRow3	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnSwitch15	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr2_OnSwitch25	34	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr2_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr3_OnColumn3	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr3_OnColumn3__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr3_OnColumn6	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr3_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr3_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr3_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeCtr3_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeCtr3_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v7	SeDigEff_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeDigEff_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeEasy_OnSideRow1	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeEasy_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeEasy_OnSideRow2	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeEasy_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeEasy_OnSideRow3	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeEasy_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeEasy_OnSideRow4	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeEasy_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v7	SeEasy_OnSideRow5	59	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeEasy_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeEasy_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeEasy_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn1__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn2__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn3__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn4__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn5__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn6__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnColumn7	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnColumn7__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v7	SeFilEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v7	SeFilEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv1_OnSwitch25__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnColumn2__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnColumn3__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnColumn4__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnColumn5__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnColumn7__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnColumn8__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSideRow1__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v7	SeFilEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v7	SeFilEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSideRow4__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSideRow5__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSwitch15__40a181e9.c		phase6
+lane_p6	v7	SeFilEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilEnv2_OnSwitch25__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v7	SeFilLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeFilLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join10	158	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join10__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join11	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join11__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join12	160	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join12__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join13	102	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join13__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join14	160	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join14__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join15	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join15__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join16	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join16__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join17	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join17__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join19	83	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join19__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join2	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join2__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join20	84	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join20__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join3	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join3__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join4	123	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join4__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join5	103	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join5__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join6	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join6__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join7	56	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join7__d21354b5.c	SeMenu_LoadPartParam SeMenu_StorePartParam	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join8__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SeMenu_ApplyPartEdit_AltStore_Join9	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeMenu_ApplyPartEdit_AltStore_Join9__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v7	SePitEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn1__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn2__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn3__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn4__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn5__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn6__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnColumn7	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnColumn7__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v7	SePitEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v7	SePitEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v7	SePitEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSideRow4__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSideRow5__96050769.c		phase6
+lane_p6	v7	SePitEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v7	SePitEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv1_OnSwitch25__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnColumn2__96050769.c		phase6
+lane_p6	v7	SePitEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnColumn3__96050769.c		phase6
+lane_p6	v7	SePitEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnColumn4__96050769.c		phase6
+lane_p6	v7	SePitEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnColumn5__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnColumn7__96050769.c		phase6
+lane_p6	v7	SePitEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnColumn8__96050769.c		phase6
+lane_p6	v7	SePitEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSideRow1__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSideRow2__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSideRow3__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSideRow4__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSideRow5__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSwitch15__d21354b5.c		phase6
+lane_p6	v7	SePitEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitEnv2_OnSwitch25__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn2__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn3__96050769.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn4__96050769.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn5__96050769.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn6__96050769.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn7__96050769.c		phase6
+lane_p6	v7	SePitLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnColumn8__96050769.c		phase6
+lane_p6	v7	SePitLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnSideRow4__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnSideRow5__d21354b5.c		phase6
+lane_p6	v7	SePitLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitLfo1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v7	SePitPit1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitPit1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v7	SePitPit1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitPit1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v7	SePitPit1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitPit1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v7	SePitPit1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SePitPit1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v7	SeTonHyb1_OnColumn8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSideRow4	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSideRow5	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSwitch15	42	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeTonHyb1_OnSwitch25	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonHyb1_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan1_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan1_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan2_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan2_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan2_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan2_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeTonRan2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonRan2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnColumn1	88	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnColumn1__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnColumn2	116	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnColumn2__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnColumn3	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnColumn3__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnColumn6	128	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnColumn7	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnColumn8	111	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSwitch15	18	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon1_OnSwitch25	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon1_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnColumn4	101	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnColumn4__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnColumn7	74	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SeTonTon2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeTonTon2_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v7	SeWrtMem_OnSideRow1	53	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeWrtMem_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v7	SeWrtMem_OnSideRow5	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeWrtMem_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v7	SeWrtMem_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SeWrtMem_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v7	SysEx_FinishBulkSend	80	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SysEx_FinishBulkSend__944a55f3.c		phase6
+lane_p6	v7	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v7/SysEx_SendNothing__70946f37.c		phase6
+lane_p6	v9	BitMapOut_UpdateDisplayWidget	71	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/BitMapOut_UpdateDisplayWidget__1f644b9a.c		phase6
+lane_p6	v9	DemoMenu_WorkspaceReturn	93	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/DemoMenu_WorkspaceReturn__3ccec0a8.c		phase6
+lane_p6	v9	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v9/FatPath_Next83Component__568fd7b6.c		none
+lane_p6	v9	FileIO_LoadRegion2_ExtMem	183	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/FileIO_LoadRegion2_ExtMem__63610799.c	FileIO_CheckRegionSignature FileIO_ReadHeaderAt4	phase6
+lane_p6	v9	FileIO_LoadRegion3_ExtMem	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/FileIO_LoadRegion3_ExtMem__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v9	FileIO_LoadRegion4_VRAM	177	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/FileIO_LoadRegion4_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v9	FileIO_LoadRegion5_VRAM	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/FileIO_LoadRegion5_VRAM__63610799.c	FileIO_CheckRegionSignature	phase6
+lane_p6	v9	FileIO_SaveRegion7_Flash	108	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/FileIO_SaveRegion7_Flash__63610799.c		phase6
+lane_p6	v9	MidiPkt_ArpConfigChain_Data_Helper10	57	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_ArpConfigChain_Data_Helper10__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_ArpConfigChain_Data_Helper11	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_ArpConfigChain_Data_Helper11__3ce3885f.c		phase6
+lane_p6	v9	MidiPkt_ArpConfigChain_Data_Helper12	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_ArpConfigChain_Data_Helper12__3ce3885f.c		phase6
+lane_p6	v9	MidiPkt_ArpConfigChain_Data_Helper13	57	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_ArpConfigChain_Data_Helper13__3ce3885f.c		phase6
+lane_p6	v9	MidiPkt_ArpConfigChain_Data_Helper8	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_ArpConfigChain_Data_Helper8__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_ArpConfigChain_Data_Helper9	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_ArpConfigChain_Data_Helper9__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_AccompAreaHeader	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_AccompAreaHeader__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_AccompBankTables	53	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_AccompBankTables__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_AccompBlockPool	57	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_AccompBlockPool__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_LivePanel	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_LivePanel__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_PanelMemories	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_PanelMemories__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_SoundRamData	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_SoundRamData__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendBlock_SoundRamId	52	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SendBlock_SoundRamId__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_SendGroupEnd__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_SendGroup_SoundRam__1f9373e7.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	phase6
+lane_p6	v9	MidiPkt_SetXferBlock_SeqEvents	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_SetXferBlock_SeqEvents__1deba4cc.c	MidiPkt_GetUsedSize_SeqEvents	phase6
+lane_p6	v9	MidiPkt_SetXferTotal_AccompBlocks	47	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/MidiPkt_SetXferTotal_AccompBlocks__1deba4cc.c	MidiPkt_GetUsedSize_AccompBlocks	phase6
+lane_p6	v9	MidiPkt_SetXferTotal_StyleImage	48	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_SetXferTotal_StyleImage__1deba4cc.c	MidiPkt_GetUsedSize_StyleImage	phase6
+lane_p6	v9	MidiPkt_XferShowCompleted	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_XferShowCompleted__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_XferShowErrorMessage	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_XferShowErrorMessage__1f9373e7.c		phase6
+lane_p6	v9	MidiPkt_XferShowNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/MidiPkt_XferShowNothing__1f9373e7.c		phase6
+lane_p6	v9	PanelButton_ProcessChanges	73	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/PanelButton_ProcessChanges__ebba21b6.c	PanelButton_DispatchChange PanelButton_FetchChange VoiceEntry_FindMasterVolume	phase6
+lane_p6	v9	SeAmpLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v9	SeAmpLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeAmpLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v9	SeCtr2_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnColumn2__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnColumn4	6	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnColumn4__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnColumn5	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnColumn5__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnColumn6	10	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnColumn7	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnColumn8	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnSideRow2	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnSideRow3	51	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnSwitch15	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr2_OnSwitch25	34	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr2_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr3_OnColumn3	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr3_OnColumn3__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr3_OnColumn6	72	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr3_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr3_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr3_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeCtr3_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeCtr3_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v9	SeDigEff_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeDigEff_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeEasy_OnSideRow1	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeEasy_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeEasy_OnSideRow2	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeEasy_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeEasy_OnSideRow3	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeEasy_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeEasy_OnSideRow4	58	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeEasy_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v9	SeEasy_OnSideRow5	59	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeEasy_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeEasy_OnSwitch15	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeEasy_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn1__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn2__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn3__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn4__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn5__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn6__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnColumn7	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnColumn7__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v9	SeFilEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v9	SeFilEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv1_OnSwitch25__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnColumn2__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnColumn3__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnColumn4__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnColumn5__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnColumn7__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnColumn8__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSideRow1__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSideRow2__b6d92c87.c		phase6
+lane_p6	v9	SeFilEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSideRow3__b6d92c87.c		phase6
+lane_p6	v9	SeFilEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSideRow4__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSideRow5__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSwitch15__40a181e9.c		phase6
+lane_p6	v9	SeFilEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilEnv2_OnSwitch25__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn2__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn3__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn4__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn5__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn6__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn7__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnColumn8__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnSideRow1__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnSideRow2__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnSideRow3__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnSideRow4__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnSideRow5__40a181e9.c		phase6
+lane_p6	v9	SeFilLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeFilLfo1_OnSwitch15__40a181e9.c		phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join10	158	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join10__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join11	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join11__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join12	160	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join12__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join13	102	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join13__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join14	160	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join14__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join15	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join15__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join16	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join16__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join17	144	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join17__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawKeyScaleGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StorePartParam SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join19	83	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join19__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join2	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join2__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join20	84	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join20__d21354b5.c	SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join3	125	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join3__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join4	123	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join4__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_StoreEffectParam SeMenu_SwitchToValueStep	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join5	103	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join5__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join6	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join6__d21354b5.c	SeLfo_GetEntryElement SeLfo_GetSelectedLfo SeMenu_BindDialToColumn SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join7	56	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join7__d21354b5.c	SeMenu_LoadPartParam SeMenu_StorePartParam	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join8__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SeMenu_ApplyPartEdit_AltStore_Join9	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeMenu_ApplyPartEdit_AltStore_Join9__d21354b5.c	SeMenu_BindDialToColumn SeMenu_DrawPitFilEnvGraph SeMenu_LoadPartParam SeMenu_StepParamFieldAndSend SeMenu_SwitchToValueStep SeMenu_ValidatePartNumber	phase6
+lane_p6	v9	SePitEnv1_OnColumn1	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn1__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnColumn2	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn2__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnColumn3	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn3__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnColumn4	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn4__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnColumn5	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn5__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnColumn6	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn6__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnColumn7	11	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnColumn7__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v9	SePitEnv1_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v9	SePitEnv1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v9	SePitEnv1_OnSideRow4	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSideRow4__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnSideRow5	30	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSideRow5__96050769.c		phase6
+lane_p6	v9	SePitEnv1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v9	SePitEnv1_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv1_OnSwitch25__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnColumn2	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnColumn2__96050769.c		phase6
+lane_p6	v9	SePitEnv2_OnColumn3	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnColumn3__96050769.c		phase6
+lane_p6	v9	SePitEnv2_OnColumn4	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnColumn4__96050769.c		phase6
+lane_p6	v9	SePitEnv2_OnColumn5	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnColumn5__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnColumn7	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnColumn7__96050769.c		phase6
+lane_p6	v9	SePitEnv2_OnColumn8	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnColumn8__96050769.c		phase6
+lane_p6	v9	SePitEnv2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSideRow1__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSideRow2__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSideRow3__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSideRow4__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSideRow5__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSwitch15__d21354b5.c		phase6
+lane_p6	v9	SePitEnv2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitEnv2_OnSwitch25__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn2	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn2__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn3	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn3__96050769.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn4	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn4__96050769.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn5	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn5__96050769.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn6	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn6__96050769.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn7	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn7__96050769.c		phase6
+lane_p6	v9	SePitLfo1_OnColumn8	8	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnColumn8__96050769.c		phase6
+lane_p6	v9	SePitLfo1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnSideRow2	21	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnSideRow3	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnSideRow4	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnSideRow4__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnSideRow5	13	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnSideRow5__d21354b5.c		phase6
+lane_p6	v9	SePitLfo1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitLfo1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v9	SePitPit1_OnSideRow1	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitPit1_OnSideRow1__d21354b5.c		phase6
+lane_p6	v9	SePitPit1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitPit1_OnSideRow2__d21354b5.c		phase6
+lane_p6	v9	SePitPit1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitPit1_OnSideRow3__d21354b5.c		phase6
+lane_p6	v9	SePitPit1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SePitPit1_OnSwitch15__d21354b5.c		phase6
+lane_p6	v9	SeTonHyb1_OnColumn8	100	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSideRow4	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSideRow5	44	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSwitch15	42	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeTonHyb1_OnSwitch25	41	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonHyb1_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan1_OnSideRow2	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan1_OnSideRow3	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan1_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan1_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan1_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan2_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan2_OnSideRow2	31	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan2_OnSideRow3	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan2_OnSideRow4	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan2_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan2_OnSideRow5	24	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan2_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeTonRan2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonRan2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnColumn1	88	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnColumn1__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnColumn2	116	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnColumn2__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnColumn3	99	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnColumn3__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnColumn6	128	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnColumn6__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnColumn7	104	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnColumn8	111	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnColumn8__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSwitch15	18	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon1_OnSwitch25	12	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon1_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnColumn4	101	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnColumn4__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnColumn7	74	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnColumn7__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSideRow1	9	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSideRow2	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSideRow2__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSideRow3	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSideRow3__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSideRow4	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSideRow4__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSideRow5	16	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SeTonTon2_OnSwitch25	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeTonTon2_OnSwitch25__c7d93f6a.c		phase6
+lane_p6	v9	SeWrtMem_OnSideRow1	53	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeWrtMem_OnSideRow1__c7d93f6a.c		phase6
+lane_p6	v9	SeWrtMem_OnSideRow5	14	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeWrtMem_OnSideRow5__c7d93f6a.c		phase6
+lane_p6	v9	SeWrtMem_OnSwitch15	20	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SeWrtMem_OnSwitch15__c7d93f6a.c		phase6
+lane_p6	v9	SysEx_FinishBulkSend	80	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SysEx_FinishBulkSend__944a55f3.c		phase6
+lane_p6	v9	SysEx_SendAllData	21	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/SysEx_SendAllData__1f9373e7.c	MidiPkt_ArpConfigChain_Data	phase6
+lane_p6	v9	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-19-92-p6-r57	O3XSXr	c/v9/SysEx_SendNothing__1f9373e7.c		phase6
+lane_p6	v9	SysEx_SendPanelMemoryData	12	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/SysEx_SendPanelMemoryData__1f9373e7.c	MidiPkt_SendGroup_Panel	phase6
+lane_p6	v9	SysEx_SendSoundMemoryData	12	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/SysEx_SendSoundMemoryData__1f9373e7.c	MidiPkt_SendGroup_SoundRam	phase6
+lane_p6	v9	SysEx_SendStyleImageData	12	-O3 -Xr	2026-11-19-92-p6-r57	O3Xr	c/v9/SysEx_SendStyleImageData__1f9373e7.c	MidiPkt_SendGroup_StyleImage	phase6
+lane_sub	v140	DSP_EFFParam_DiffAllAndFlag	643	-Xr	2026-11-19-96-sub-r42s-staged	Xr			csub
 lane_sub	v140	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v140	DSP_VoiceState_Dispatch	207	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteEnvSegments	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteExtParam_600	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteExtParams_15	128	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteExtParams_15_Alt	94	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteExtParams_56	128	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteExtParams_56_Alt	94	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteExtParams_56b	128	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteGlobalConfig	375	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteLevelBurst	216	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteLevelPair	80	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteNote2ch	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteReg0440_0480	80	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteReg0640	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteReg0840_Shadow2E	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteSegRegs_SameLevel	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoicePitch	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_6Words	216	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_EnvLevel	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Long	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg07	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg11	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg13	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg15	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg16	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg18	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Reg21_Reg22	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_Short	37	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_WriteVoice_TvfPair	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_Write_Reg0180	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_Write_Reg0440	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_Write_Reg0480	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	ToneGen_Write_Reg04C0	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v140	Voice_AllVoices_PortamentoReset	115	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
 lane_sub	v140	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
-lane_sub	v140	Voice_Part_SetStateAndReinit	339	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	AudioMod_Apply_Slot_Field29	281	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	AudioMod_Apply_Slot_Field2A	281	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
+lane_sub	v141	DSP_EFFParam_DiffAllAndFlag	643	-Xr	2026-11-19-96-sub-r42s-staged	Xr			csub
 lane_sub	v141	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v141	DSP_VoiceState_Dispatch	207	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteEnvSegments	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteExtParam_600	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteExtParams_15	128	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteExtParams_15_Alt	94	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteExtParams_56	128	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteExtParams_56_Alt	94	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteExtParams_56b	128	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteGlobalConfig	375	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteLevelBurst	216	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteLevelPair	80	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteNote2ch	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteReg0440_0480	80	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteReg0640	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteReg0840_Shadow2E	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteSegRegs_SameLevel	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoicePitch	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_6Words	216	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_EnvLevel	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Long	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg07	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg11	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg13	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg15	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg16	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg18	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Reg21_Reg22	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_Short	37	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_WriteVoice_TvfPair	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_Write_Reg0180	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_Write_Reg0440	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_Write_Reg0480	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	ToneGen_Write_Reg04C0	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v141	Voice_AllVoices_PortamentoReset	115	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
 lane_sub	v141	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
-lane_sub	v141	Voice_Part_SetStateAndReinit	339	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	AudioMod_Apply_Slot_Field29	281	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	AudioMod_Apply_Slot_Field2A	281	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
+lane_sub	v142	Audio_Process_DSP	1409	-Xr	2026-11-19-30-sub-r26a	Xr	c/v142/Audio_Process_DSP__ec185f49.c	DSP_Cmd_DequeueHeader DSP_Cmd_LoadEffectPreset DSP_RingBuf_Read DSP_RingBuf_ReadAndCompare DSP_RingBuf_Skip DSP_StoreBufferCount Extract_14Bit_PayloadSize Extract_14Bit_VoiceParam	src-root:staged+chd+csub+phase6
+lane_sub	v142	DSP_EFFParam_DiffAllAndFlag	643	-Xr	2026-11-19-96-sub-r42s-staged	Xr			csub
 lane_sub	v142	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v142	DSP_VoiceState_Dispatch	207	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	NoteOn_RoutePacket	403	-Xr	2026-11-19-11-sub-r23h-helpers	Xr	c/v142/NoteOn_RoutePacket__5facc7d4.c	OutputBuf_Flush_A OutputBuf_Flush_B	csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteEnvSegments	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParam_1C0_Single	34	-Xr	2026-11-19-10-sub-r23w-asm	Xr	c/v142/ToneGen_WriteExtParam_1C0_Single__e04d516c.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParam_600	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParam_TypeDispatch_Single	71	-Xr	2026-11-19-10-sub-r23w-asm	Xr	c/v142/ToneGen_WriteExtParam_TypeDispatch_Single__e04d516c.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_15	128	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_15_Alt	94	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_15_Banked	252	-Xr	2026-11-19-16-sub-r23o-tg-dsp	Xr	c/v142/ToneGen_WriteExtParams_15_Banked__9d77906e.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_56	128	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_56_Alt	94	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_56b	128	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteExtParams_TypeDispatch	184	-Xr	2026-11-19-16-sub-r23o-tg-dsp	Xr	c/v142/ToneGen_WriteExtParams_TypeDispatch__9d77906e.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteGlobalConfig	375	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteLevelBurst	216	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteLevelPair	80	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteNote2ch	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteReg0080_StrobeClear	37	-Xr	2026-11-19-10-sub-r23w-asm	Xr	c/v142/ToneGen_WriteReg0080_StrobeClear__e04d516c.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteReg0440_0480	80	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteReg0640	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteReg0840_Shadow2E	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteSegRegs_SameLevel	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoicePitch	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_6Words	216	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_EnvLevel	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Long	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg07	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg07_Or_Reg18	71	-Xr	2026-11-19-10-sub-r23w-asm	Xr	c/v142/ToneGen_WriteVoice_Reg07_Or_Reg18__b851bbaa.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg11	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg13	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg15	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg15_Or_Reg16	71	-Xr	2026-11-19-10-sub-r23w-asm	Xr	c/v142/ToneGen_WriteVoice_Reg15_Or_Reg16__b851bbaa.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg16	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg18	34	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Reg21_Reg22	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_Short	37	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_TvfPair	80	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_WriteVoice_TvfRegs_Dup	80	-Xr	2026-11-19-16-sub-r23o-tg-dsp	Xr	c/v142/ToneGen_WriteVoice_TvfRegs_Dup__9d77906e.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_Write_ExtParam_05C0_Strobe	94	-Xr	2026-11-19-10-sub-r23w-asm	Xr	c/v142/ToneGen_Write_ExtParam_05C0_Strobe__e04d516c.c		csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_Write_Reg0180	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_Write_Reg0440	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_Write_Reg0480	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	ToneGen_Write_Reg04C0	34	-Xr	2026-11-19-20-sub-r23t-staged	Xr			csub+branch:cc900/c-subcpu-hdae
-lane_sub	v142	Voice_AllVoices_PortamentoReset	115	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
+lane_sub	v142	TVF_Build_Full	180	-Xr	2026-11-19-84-sub-r39r	Xr	c/v142/TVF_Build_Full__2103e71b.c	TVF_Bias_Clamp_Amount TVF_Calc_Cutoff TVF_Lookup_Depth_Amount	csub
 lane_sub	v142	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
-lane_sub	v142	Voice_Part_SetStateAndReinit	339	-Xr	2026-11-19-12-sub-r23s-staged	Xr			csub+branch:cc900/c-subcpu-hdae
+lane_sub	v142	Voice_Level_ComputeTriplet	561	-Xr	2026-11-19-84-sub-r39r	Xr	c/v142/Voice_Level_ComputeTriplet__2103e71b.c	Detune_ScaleSymmetric Int_ClampSignedToRange Pan_ScaleWithVelocity PitchBend_Scale	csub
+lane_sub	v142	Voice_ParamFinalize	1016	-Xr	2026-11-19-94-sub-r42t	Xr	c/v142/Voice_ParamFinalize__71e466aa.c	Audio_Cmd_DSPGlobal_Param_Store Audio_Cmd_DSPUnit_Param Audio_Cmd_EffectParam_Dispatch Audio_Cmd_PatchByte_Write_And_Echo Audio_Cmd_ToneEdit_Dispatch Audio_Cmd_ToneEdit_Field_Write_And_Reply Audio_Cmd_ToneEdit_Write_And_Reply DSP_ParamWrite_BlockCopy DSP_SetCoeff_MasterConfig VoiceAlloc_CheckAndInit	csub
+lane_sub	v142	Voice_PitchPack_Mode2	269	-Xr	2026-11-19-84-sub-r39r	Xr	c/v142/Voice_PitchPack_Mode2__2103e71b.c	TVF_Bias_Clamp_Amount TVF_Calc_Cutoff TVF_Lookup_Depth_Amount	csub
+lane_sub	v142	Voice_PitchPack_Mode3	251	-Xr	2026-11-19-84-sub-r39r	Xr	c/v142/Voice_PitchPack_Mode3__2103e71b.c	TVF_Bias_Clamp_Amount TVF_Calc_Cutoff TVF_Lookup_Depth_Amount	csub
+lane_sub	v142	Voice_PitchPack_Mode4_Single	128	-Xr	2026-11-19-84-sub-r39r	Xr	c/v142/Voice_PitchPack_Mode4_Single__2103e71b.c	TVF_Calc_Cutoff	csub
+lane_sub	v142	Voice_SubVoice_ComputeAndTrigger	744	-Xr	2026-11-19-93-sub-r40as	Xr	c/v142/Voice_SubVoice_ComputeAndTrigger__cdab335d.c	EGEnv_Compute_B EGEnv_Compute_B_Simple NoteState_ClearRecord Voice_OpSlot_WriteParams	csub

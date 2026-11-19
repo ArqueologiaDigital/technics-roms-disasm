@@ -1,0 +1,6 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of v7/semenu_routines_m0_b.c (2026-11-19-92-p6-r57)
+   sha256 9605076959759449e3659261e016ce4d253b923ed70326daa861129eca483c46 (tar-sha256); compiled at -O3 -XS -Xr
+   cc900-options: -O3 -Xr
+   cc900-name: SeAPE_J19=SeMenu_ApplyPartEdit_AltStore_Join19 */
+extern void SeAPE_J19();
+void SePitEnv2_OnColumn7(unsigned char a) { SeAPE_J19(a, 17); }

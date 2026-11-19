@@ -64,7 +64,7 @@ def main():
     with open(dst, 'w') as f:
         f.write('\n'.join(out) + '\n')
     for t in tot:
-        print('%-9s %-9s %5d functions %7d B   C only in c/: %4d functions %6d B' % tuple(t))
+        print('%-9s %-15s %5d functions %7d B   C only in c/: %4d functions %6d B' % tuple(t))
 
 
 if __name__ == '__main__':
