@@ -11,8 +11,8 @@
 #include "hdae_ws.h"
 #include "hdae_ids.h"
 
-#define APFUNC_FlsNamingCheck 0x012a0017L       /* NAKA_APFUNC_FlsNamingCheck (hdae5000_ui_tree.s) */
-#define APFUNC_CP_FD_DIRNAMECheck 0x012a0019L   /* NAKA_APFUNC_CP_FD_DIRNAMECheck */
+#define APFUNC_FlsNamingCheck 0x012a0016L       /* NAKA_APFUNC_FlsNamingCheck (hdae5000_ui_tree.s) */
+#define APFUNC_CP_FD_DIRNAMECheck 0x012a0018L   /* NAKA_APFUNC_CP_FD_DIRNAMECheck */
 
 struct FlsItem { unsigned int dir; unsigned int song; unsigned char as; unsigned char al; };
 struct TypeSel { unsigned int mask; unsigned char flag[10]; };
@@ -93,9 +93,9 @@ extern unsigned int HDAE5000_RAM_LbnDir;
 extern unsigned int HDAE5000_RAM_LbnSong;
 extern unsigned int HDAE5000_RAM_LbnDigitPos;
 extern char HDAE5000_RAM_LbnEntryText[];
-extern char ram_22aa68[], ram_22aa7a[], ram_22aa80[];   /* LbnEntryText + 6 / + 0x18 / + 0x1e */
+extern char ram_22aa20[], ram_22aa32[], ram_22aa38[];   /* LbnEntryText + 6 / + 0x18 / + 0x1e */
 extern char HDAE5000_RAM_NameEditBuffer[];
-extern char ram_23a04e[];                               /* HDAE5000_RAM_Name_ColumnRuler */
+extern char ram_23d286[];                               /* HDAE5000_RAM_Name_ColumnRuler */
 extern unsigned char HDAE5000_RAM_FlsNameHistory[];
 extern unsigned char HDAE5000_RAM_DirNameHistory[];
 extern struct TypeSel HDAE5000_RAM_SaveOptions;
@@ -103,7 +103,7 @@ extern struct TypeSel HDAE5000_RAM_DeleteOptions;
 extern struct FdList HDAE5000_RAM_FdList;
 extern char ram_22a058[];                               /* the FLS screen's title text */
 extern char ram_22a078[];                               /* its LOC text */
-extern char ram_22b020[];                               /* its 16 item rows of 37 */
+extern char ram_22afd8[];                               /* its 16 item rows of 37 */
 
 /* ROM */
 extern unsigned char HDAE5000_TypeSel_TemplateBlank[];
@@ -116,22 +116,22 @@ extern char HDAE5000_Str_Blank16Tab[];
 extern char HDAE5000_Str_Blank3Tab_Lbn_ShowEntry[];
 extern char HDAE5000_Str_Blank26Tab[];
 extern char HDAE5000_Fmt_1_1d[];
-extern char ram_2e2d2a[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry */
+extern char ram_2cb1b6[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry */
 extern char HDAE5000_Fmt_3_3d_Lbn_ShowEntry[];
 extern char HDAE5000_Fmt_1_1d_Lbn_ShowEntry[];
-extern char ram_2e2d3e[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2 */
+extern char ram_2cb1ca[];                               /* HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2 */
 /* unsigned long: the ROM evaluates ObjIds[variant] first among the arguments (a converted argument's order) */
-extern unsigned long ram_2e2e7c[], ram_2e2e84[], ram_2e2e8c[], ram_2e2e94[], ram_2e2e9c[], ram_2e2ea4[];
+extern unsigned long ram_2cb2f0[], ram_2cb2f8[], ram_2cb300[], ram_2cb308[], ram_2cb310[], ram_2cb318[];
                                                         /* HDAE5000_FlsScreen_Refresh_ObjIds .. _ObjIds_6 */
 extern char HDAE5000_Str_FLSNAME[];
-extern char ram_2e2eb6[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
-extern char ram_2e2ebc[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
-extern char ram_2e2ebe[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
+extern char ram_2cb32a[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
+extern char ram_2cb330[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
+extern char ram_2cb332[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
 extern char HDAE5000_Str_Chr3A2020202020_FlsScreen_Refresh[];
-extern char ram_2e2ee4[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
+extern char ram_2cb358[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
 extern char HDAE5000_Fmt_LOC_3_3d_2_2d[];
 extern char HDAE5000_Str_LOC00000[];
-extern char ram_2e2f24[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
+extern char ram_2cb398[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
 extern char HDAE5000_Str_LSW[], HDAE5000_Str_PMT[], HDAE5000_Str_SQT[], HDAE5000_Str_CMP[], HDAE5000_Str_TM[],
     HDAE5000_Str_MSP[], HDAE5000_Str_RCM[], HDAE5000_Str_MD[], HDAE5000_Str_TLX[];
 
@@ -227,11 +227,108 @@ long HDAE5000_FlsDirSelScreen(long obj, long ev, long arg)
    - CopyFdSongToHd(dir, slot, num, mask, 0, 0) and the timers' stacked arguments in V4.23's left-to-right order. */
 
 /* the copy-to-HD screen's directory selection.  r23 (run 98: +204): (unsigned int)arg + DirPageBase; timers */
+long HDAE5000_CopyToHDDirSelScreen(long obj, long ev, long arg)
+{
+    unsigned int n;
+
+    switch (ev) {
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 0:
+            HDAE5000_RAM_DirPageBase = 0;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            break;
+        case 1:
+            HDAE5000_RAM_DirPageBase = 24;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            break;
+        case 5:
+            HDAE5000_RAM_DirPageBase = 48;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            break;
+        case 6:
+            HDAE5000_RAM_DirPageBase = 72;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            break;
+        case 7:
+            HDAE5000_RAM_DirPageBase = 96;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            break;
+        }
+        break;
+    case EVT_HDAE_SELECT_OK:
+        if (HDAE5000_Dir_IsBlankName(HDAE5000_RAM_CurDir = (unsigned int)arg + HDAE5000_RAM_DirPageBase) == 0xffff) {
+            CALLV(ROOT->ApPostEvent)(OBJ_ATTEN_CP_UNNAMED, EVT_SHOW, 0L);
+            CALLV(ROOT->KillApTimer)(0x14dL, OBJ_ATTEN_CP_UNNAMED_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_CP_FD_DIRSEL);
+            CALLV(ROOT->SetApTimer)(0x14dL, OBJ_ATTEN_CP_UNNAMED_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_CP_FD_DIRSEL);
+        } else {
+            n = HDAE5000_Count_Active_Files();
+            if (HDAE5000_Dir_CountEmptySongs(HDAE5000_RAM_CurDir) >= n) {
+                CALLV(ROOT->ApPostEvent)(OBJ_HD_PLEASE, EVT_SHOW, 5L);
+                if (HDAE5000_CopyToHd_Execute(HDAE5000_RAM_FdList.sel, 20, HDAE5000_RAM_CurDir) != 0xffff)
+                    CALLV(ROOT->ApPostEvent)(OBJ_CP_FD, EVT_SHOW, 0L);
+            } else {
+                CALLV(ROOT->ApPostEvent)(OBJ_ATTEN_FULL_DIR, EVT_SHOW, 0L);
+                CALLV(ROOT->KillApTimer)(0x14dL, OBJ_ATTEN_FULL_DIR_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_CP_FD_DIRSEL);
+                CALLV(ROOT->SetApTimer)(0x14dL, OBJ_ATTEN_FULL_DIR_CATCH, -1L, EVT_HDAE_TIMER_BACK, OBJ_CP_FD_DIRSEL);
+            }
+        }
+        break;
+    case EVT_HDAE_SELECT_SAVE:
+        CALLV(ROOT->ApFuncCall)(APFUNC_CP_FD_DIRNAMECheck, EVT_SET_STRING,
+                                HDAE5000_DirName_Address(HDAE5000_RAM_CurDir =
+                                                             (unsigned int)arg + HDAE5000_RAM_DirPageBase));
+        CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_DIR_NAMING, EVT_SHOW, 0L);
+        break;
+    case EVT_HDAE_UNDER_FLOW:
+        if (HDAE5000_RAM_DirPageBase >= 24) {
+            HDAE5000_RAM_DirPageBase -= 24;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_DIRBOX, EVT_HDAE_SET_SEL_NUM, arg + 24);
+        }
+        break;
+    case EVT_HDAE_OVER_FLOW:
+        if (HDAE5000_RAM_DirPageBase < 96) {
+            HDAE5000_RAM_DirPageBase += 24;
+            HDAE5000_DirList_BuildPage(OBJ_CP_FD_DIRBOX);
+            CALLV(ROOT->ApPostEvent)(OBJ_CP_FD_DIRBOX, EVT_HDAE_SET_SEL_NUM, arg - 24);
+        }
+        break;
+    }
+    return 0;
+}
 
 /* the copy-to-HD directory naming window's check procedure */
 
 /* the "write confirm" switch: keys 0 / 1 save the song under the typed name, 6 / 7 go back.
    r23 (run 98: +229): SaveSongWithUi's stacked arguments in the ROM's push order (name, 1, obj) */
+long HDAE5000_WrConfirmEventCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_Wrcn);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 0:
+        case 1:
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(ram_23d286));
+            CALLV(ROOT->SendEvent)(OBJ_HDD_FILE_NAMING, EVT_SHOW, 0L);
+            HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                    ram_23d286, 1, OBJ_SELECT_FILE);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            break;
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
+        }
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    }
+}
 
 /* the delete-option switches: 8 asks to delete, 10 / 11 reset the delete options from the song's parts.
    r23 (run 98: +214): TypeSel_Init(void *, .., unsigned char *, ..), as the drv module's matched calls */

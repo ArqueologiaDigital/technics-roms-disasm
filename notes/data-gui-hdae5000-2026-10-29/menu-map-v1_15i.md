@@ -51,7 +51,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 | [CP_FD_DIR_NAMING](#cp_fd_dir_naming)       | TtlScreenR        | "EDIT DIRECTORY NAME"  | 5        | 1         | hdae5000_ui_tree.s:823  |
 | [Root_AcNamingWindow](#root_acnamingwindow) | AcNamingWindow    | -                      | 0        | 0         | hdae5000_ui_tree.s:835  |
 | [SAVE_OPT_SCREEN](#save_opt_screen)         | TtlScreenR2       | "SAVE OPTION"          | 40       | 1         | hdae5000_ui_tree.s:841  |
-| [HddNamingWindow](#hddnamingwindow)         | AcHddNamingWindow | -                      | 19       | 5         | hdae5000_ui_tree.s:897  |
+| [HddNamingWindow](#hddnamingwindow)         | AcHddNamingWindow | -                      | 19       | 4         | hdae5000_ui_tree.s:897  |
 | [FILE_DEL_SCREEN](#file_del_screen)         | TtlScreenR2       | "HD FILE DELETE"       | 38       | 2         | hdae5000_ui_tree.s:938  |
 | [HDD_ICON_DISPLAY](#hdd_icon_display)       | Screen            | -                      | 1        | 0         | hdae5000_ui_tree.s:989  |
 | [IV_HDDMENU](#iv_hddmenu)                   | IvScreenR2        | -                      | 0        | 1         | hdae5000_ui_tree.s:998  |
@@ -136,7 +136,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - class `TtlScreenR2`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_HDDEXT`; icon idICON_None
 - opened by: `SELECT_DIR2_Go_SELECT_FILE.screen`, `SELECT_DIR2_Go_SELECT_FILE_2.screen`, `FD_FILE_SELECT_Go_SELECT_FILE.screen`, `FD_FILE_SELECT_Go_SELECT_FILE_2.screen`, `HDD_FILE_NAMING_Exit_SELECT_FILE.screen`, `FILE_DEL_SCREEN_Exit_SELECT_FILE.screen`
-- named in code by: `HDAE5000_HDAETitleFunc`, `HDAE5000_SEL_DIR_Screen`, `HDAE5000_AttenDelDirSwCatch`, `HDAE5000_AttenDelFileSwCatch`, `HDAE5000_FileLoadSwCatch_Join`, `HDAE5000_HDDNamingCheck_Join`, `HDAE5000_SaveOptSwEventCatch_Skip`, `HDAE5000_WrConfirmEventCatch`
+- named in code by: `HDAE5000_HDAETitleFunc`, `HDAE5000_SEL_DIR_Screen`, `HDAE5000_AttenDelDirSwCatch`, `HDAE5000_AttenDelFileSwCatch`, `HDAE5000_FileLoadSwCatch_Join`, `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch_Skip`, `HDAE5000_WrConfirmEventCatch`
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 177
 
 - `SELECT_FILE_Exit_SELECT_DIR` IvExitScreen: opens [SELECT_DIR](#select_dir)
@@ -281,7 +281,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 340
 
 - `PC_DATA_LINK_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_PC_DATA_LINK_PAGE`
-- `PP_STATUS` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_PPORT_Svc26_ShowStatus_Join`, `HDAE5000_PcLink_ShowStatus`
+- `PP_STATUS` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_PPORT_Svc26_ShowStatus`, `HDAE5000_PcLink_ShowStatus`
 - `PC_DATA_LINK_AcIndexWideES` AcIndexWideES: switch Bottom7; switch Bottom8
   - `PC_DATA_LINK_AcIndexWideES_CANCEL` Label: "CANCEL"
 - `PC_DATA_LINK_AcIndexWideES_2` AcIndexWideES: switch Bottom1; switch Bottom2
@@ -361,7 +361,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - `LBN_P1_PsMenuBox` PsMenuBox: switch Right5
   - `LBN_P1_PsMenuBox_CLEAR` Label: "CLEAR"
-- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry_Reset`
+- `LBN_OPTION` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_StepDigit`, `HDAE5000_Lbn_TypeDigit`, `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_AcIndexEditSw` AcIndexEditSw: switch Right1
   - `LBN_P1_AcIndexEditSw_LOAD` Label: "LOAD"
 - `LBN_P1_80` EditSw: "~80"; switch Right2
@@ -377,10 +377,10 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - `LBN_P1_7` StringBox: "7"
 - `LBN_P1_8` StringBox: "8"
 - `LBN_P1_9` StringBox: "9"
-- `LBN_DIRNO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_DIRNAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_FILENO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
-- `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry_Join`, `HDAE5000_Lbn_ShowEntry_Reset_Skip`
+- `LBN_DIRNO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_DIRNAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_FILENO_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
+- `LBN_FILENAME_BOX` SelectList: main_func `NAKA_MAINFUNC_DefMainFunction` -- code: `HDAE5000_Lbn_ShowEntry`
 - `LBN_P1_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_LBNPage1SwCatch`
 - `LBN_P1_AcIndexWideES` AcIndexWideES: switch Bottom6; switch Bottom8
 - `LBN_P1_Press_3_digits_for_direc` AcLanguageText1: text "Press 3 digits for directory and 2 digits for the file."
@@ -488,7 +488,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - `FLS_SEL` AcIndexEditSw: switch Right1
 - `FLS_SELECT_SW_EDIT` AcIndexEditSw (RAM record): switch Right5 -- code: `HDAE5000_Set_Menu_Visibility`
   - `FLS_SELECT_SW_EDIT_EDIT` Label: "EDIT"
-- `SEL_FLS` SelectList: main_func `NAKA_MAINFUNC_SelectFlsScreen` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_FlsList_BuildPage`, `HDAE5000_SelectFlsScreen_OnHdaeUnderFlow`, `HDAE5000_SelectFlsScreen_OnHdaeOverFlow`
+- `SEL_FLS` SelectList: main_func `NAKA_MAINFUNC_SelectFlsScreen` -- code: `HDAE5000_HDAETitleFunc`, `HDAE5000_FlsList_BuildPage`, `HDAE5000_SelectFlsScreen`
 - `FLS_SELECT_IvMainEditSw` IvMainEditSw: func `NAKA_MAINFUNC_SelectFlsScreen`
 - `FLS_SELECT_80` EditSw: "~80"; switch Right2
 - `FLS_SELECT_Line` Line
@@ -562,7 +562,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `TtlScreenR`, caption "EDIT FLS NAME", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_i173 (F.L.S. with a green arrow, 1~120)
-- named in code by: `HDAE5000_SelectFlsScreen_OnHdaeSelectSave`
+- named in code by: `HDAE5000_SelectFlsScreen`
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 688
 
 - `HDD_FLS_NAMING_IvNaming` IvNaming: func `NAKA_APFUNC_FlsNamingCheck`
@@ -576,7 +576,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 - class `TtlScreenR2`, caption "F.L.S. FILE LOAD", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_i173 (F.L.S. with a green arrow, 1~120)
 - opened by: `FLS_DIR_SEL_Exit_FLS_FILE_LOAD.screen`, `FLS_EDIT_Exit_FLS_FILE_LOAD.screen`
-- named in code by: `HDAE5000_HDAETitleFunc`, `HDAE5000_SelectFlsScreen_Skip`, `HDAE5000_FlsLoadScreen_Join3`, `HDAE5000_FlsLoadScreen_Join5`
+- named in code by: `HDAE5000_HDAETitleFunc`, `HDAE5000_SelectFlsScreen`, `HDAE5000_FlsLoadScreen_Join3`, `HDAE5000_FlsLoadScreen_Join5`
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 705
 
 - `FLS_FILE_LOAD_Exit_FLS_SELECT` IvExitScreen: opens [FLS_SELECT](#fls_select)
@@ -689,7 +689,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `TtlScreenR2`, caption "SAVE OPTION", x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_i171 (page with arrows out and in)
-- named in code by: `HDAE5000_HDDNamingCheck_Join`
+- named in code by: `HDAE5000_HDDNamingCheck`
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 841
 
 - `SAVE_OPT_SCREEN_Exit_HDD_FILE_NAMING` IvExitScreen: opens [HDD_FILE_NAMING](#hdd_file_naming)
@@ -736,7 +736,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 ## HddNamingWindow
 
 - class `AcHddNamingWindow`, x 44, y 108, 232 x 88
-- named in code by: `HDAE5000_IvHddNamingProc`, `HDAE5000_HDDNamingCheck_OnSwIn`, `HDAE5000_HDDNamingCheck_Join`, `HDAE5000_SaveOptSwEventCatch_OnSwIn`, `HDAE5000_WrConfirmEventCatch`
+- named in code by: `HDAE5000_IvHddNamingProc`, `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch_OnSwIn`, `HDAE5000_WrConfirmEventCatch`
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 897
 
 - `HddNamingWindow_AcIndexEditSw` AcIndexEditSw: switch Left2
@@ -974,7 +974,7 @@ beside it; `NAKA_APFUNC_LanguageTextReturn` names the language). `switch` is the
 
 - class `TtlScreenR`, x 0, y 0, 320 x 240
 - EXIT -> `TITLE_PS`; icon idICON_None
-- named in code by: `HDAE5000_HDDNamingCheck_Join`, `HDAE5000_SaveOptSwEventCatch_OnSwIn`
+- named in code by: `HDAE5000_HDDNamingCheck`, `HDAE5000_SaveOptSwEventCatch_OnSwIn`
 - source: `hdae5000_v1_15i/hdae5000_ui_tree.s` line 1190
 
 - `ATTEN_OVER_FILE_IvCatchEvent` IvCatchEvent: func `NAKA_APFUNC_WrConfirmEventCatch`
