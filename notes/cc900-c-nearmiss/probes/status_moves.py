@@ -4,6 +4,7 @@ notes/cc900-c-nearmiss/index.tsv, and how many of each move (MATCH -> NEAR, ERR-
 Rows are matched by (listing, function, occurrence number within the file), so the variants of one label line up.
 
 usage: python3 -B notes/cc900-c-nearmiss/probes/status_moves.py OLD_REV NEW_REV
+(either may instead be the path of an index.tsv on disk, e.g. the working tree's before it is committed)
 (2026-11-18: 117dd396c d84256090 showed the --update recheck rewriting rows it had not selected: MATCH -> NEAR 99.)"""
 import os
 import subprocess
@@ -14,8 +15,11 @@ REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), 
 
 
 def rows(rev):
-    t = subprocess.run(['git', '-C', REPO, 'show', '%s:notes/cc900-c-nearmiss/index.tsv' % rev],
-                       capture_output=True, text=True).stdout.splitlines()
+    if os.path.isfile(rev):                      # an index.tsv on disk (the working tree's, before committing it)
+        t = open(rev).read().splitlines()
+    else:
+        t = subprocess.run(['git', '-C', REPO, 'show', '%s:notes/cc900-c-nearmiss/index.tsv' % rev],
+                           capture_output=True, text=True).stdout.splitlines()
     cols = t[0].split('\t')
     seen = Counter()
     out = {}
