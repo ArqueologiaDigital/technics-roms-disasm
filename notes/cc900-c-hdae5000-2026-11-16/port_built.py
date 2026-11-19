@@ -22,7 +22,8 @@ the staged copy by hand before the staged run).
         tree's address of the label at that v2.06i address (labels and .equ values from the trees' ELFs), else of
         the nearest label below it plus the same distance; prints per tree how many cells each way found.
         --extra TSV (with --remap): learn_remap.py's table of addresses read from near misses, for the cells
-        neither label rule moves.
+        neither label rule moves (keyed by the v2.06i address), and to correct a nearest-label guess (keyed by
+        the guessed address the run wrote).
     python3 -B notes/cc900-c-hdae5000-2026-11-16/port_built.py RUN_DIR [--dry-run] [--remap]
         RUN_DIR: an oracle run that compiled hdae5000/cc900/*.c as <tree>/<stem>.c (corpus directory per tree) with
         each tree's own header (--layout); their text must not have changed since.  --remap: the run compiled the
@@ -177,6 +178,11 @@ def remap_text(text, old_names, old_addrs, new_names, log, extra=None):
                 log.append((a, None, 'unmapped'))
                 return m.group(0)
         b = cand.pop()
+        if how == 'label+' and extra and b in extra:
+            # the nearest-label guess put the cell at B, and a near miss of a run of this layout showed the ROM
+            # at extra[B] there (learn_remap.py keys such a pair by the address the run wrote)
+            log.append((a, extra[b], 'learned+'))
+            return 'ram_%06x' % extra[b]
         log.append((a, b, how))
         return 'ram_%06x' % b
 
