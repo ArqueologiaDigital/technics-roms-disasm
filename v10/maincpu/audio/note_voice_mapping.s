@@ -24147,24 +24147,10 @@ ApplyProgramChangeAs_LoadReg2:
 SndBuf_WriteParamEntries_Helper:
 	jr ApplyProgramChangeAs_LoadReg
 
-SndParam_FetchOscTableEntry:
-	push xiz
-	ld xiz, xwa
-	ld xwa, 0xc0
-	call SndParam_LookupReadOnly
-	cp hl, 1:i3
-	jr nz, FetchOscTableEntry_LoadIter
-	ld xwa, xiz
-	calr ApplyProgramChangeAs_LoadReg2
-	jr FetchOscTableEntry_Epilogue
-
-FetchOscTableEntry_LoadIter:
-	ld xwa, xiz
-	calr ApplyProgramChangeAs_LoadReg
-
-FetchOscTableEntry_Epilogue:
-	pop xiz
-	ret
+SndParam_FetchOscTableEntry:	.include "includes/generated/cc900/SndParam_FetchOscTableEntry.s"	; C: cc900/note_voice_mapping_m303.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FetchOscTableEntry_LoadIter, SndParam_FetchOscTableEntry + 23
+	.set	FetchOscTableEntry_Epilogue, SndParam_FetchOscTableEntry + 28
 
 FetchOscTableEntry_Prologue:
 	dec 4, xsp

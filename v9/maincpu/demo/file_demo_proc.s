@@ -3757,39 +3757,11 @@ GetFirstRecord_GotPage:
 	ld xwa, xhl
 	jp FileIO_OpenDefault
 
-SearchAndOpen:
-	lda xsp, (xsp-270)
-	pushw iz
-	ld	(xsp+268), xwa
-	call GetFirstPageBase
-	ld iz, hl
-	cp iz, 0:i3
-	jr ge, SearchOpen_DoSearch
-	ldw hl, 0xff98
-	jr SearchOpen_Return
-
-SearchOpen_DoSearch:
-	lda xbc, (xsp + 2)
-	ld XWA, (xsp + 0x010c)
-	call _findfirst
-	ld xwa, xhl
-	cp xwa, 0x0
-	jr ge, SearchOpen_AlreadyExists
-	ld wa, iz
-	call GetRecordPtrForFile
-	ld xwa, xhl
-	ld XBC, (xsp + 0x010c)
-	call FileIO_CopyAndOpen
-	jr SearchOpen_Return
-
-SearchOpen_AlreadyExists:
-	call _findclose
-	ldw hl, 0xfff6
-
-SearchOpen_Return:
-	popw iz
-	lda xsp, (xsp+270)
-	ret
+SearchAndOpen:	.include "includes/generated/cc900/SearchAndOpen.s"	; C: cc900/file_demo_proc_m266.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SearchOpen_DoSearch, SearchAndOpen + 26
+	.set	SearchOpen_AlreadyExists, SearchAndOpen + 67
+	.set	SearchOpen_Return, SearchAndOpen + 74
 
 LoadFromSecondaryPage:	.include "includes/generated/cc900/LoadFromSecondaryPage.s"	; C: cc900/file_demo_proc_m266_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -5518,91 +5490,20 @@ ReadVariableLengthInt:	.include "includes/generated/cc900/ReadVariableLengthInt.
 	.set	ReadVarLen_Negative, ReadVariableLengthInt + 35
 	.set	ReadVarLen_Return, ReadVariableLengthInt + 54
 
-ReadFieldToBuffer:
-	dec 8, xsp
-	pushw iz
-	ld (xsp + 4), xbc
-	ld (xsp + 8), wa
-	ld xwa, (xsp + 4)
-	cp (xwa), 0x0
-	jrl nz, ReadField_Return
-	ld iz, 0:i3
-	cpw (xsp + 8), 0x40
-	jr gt, ReadField_LongInit
-	cpw (xsp + 8), 0x0
-	jr le, ReadField_Terminate
-
-ReadField_ShortLoop:
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr ge, ReadField_StoreByte
-	ld hl, 0:i3
-
-ReadField_StoreByte:
-	ld xwa, (xsp + 4)
-	ld	(xwa+iz), l
-	decm 1, (xsp + 8)
-	inc 1, iz
-	cpw (xsp + 8), 0x0
-	jr gt, ReadField_ShortLoop
-	jr ReadField_Terminate
-
-ReadField_LongInit:
-	ldw (xsp + 2), 0x1
-
-ReadField_LongLoop:
-	call FileIO_ReadByte
-	cp hl, 0:i3
-	jr lt, ReadField_DiscardExtra
-	ld c, l
-	ld xwa, (xsp + 4)
-	lda	xwa, (xwa+iz)
-	cpw (xsp + 2), 0x0
-	jr z, ReadField_Long_CheckSpace
-	cp hl, 0x20
-	jr z, ReadField_Long_StoreIfNotLeading
-	ldw (xsp + 2), 0x0
-
-ReadField_Long_CheckSpace:
-	ld (xwa), c
-
-ReadField_Long_StoreIfNotLeading:
-	decm 1, (xsp + 8)
-	inc 1, iz
-	cp iz, 0x40
-	jr lt, ReadField_LongLoop
-
-ReadField_DiscardExtra:
-	cpw (xsp + 8), 0x0
-	jr le, ReadField_Terminate
-
-ReadField_DiscardLoop:
-	call FileIO_ReadByte
-	decm 1, (xsp + 8)
-	cpw (xsp + 8), 0x0
-	jr gt, ReadField_DiscardLoop
-
-ReadField_Terminate:
-	ld xwa, (xsp + 4)
-	ld	(xwa+iz), 0x00
-	jr ReadField_TrimLoop
-
-ReadField_TrimSpace:
-	ld (xwa), 0x0
-
-ReadField_TrimLoop:
-	dec 1, iz
-	ld xwa, (xsp + 4)
-	lda	xwa, (xwa+iz)
-	cp (xwa), 0x20
-	jr nz, ReadField_Return
-	cp iz, 0:i3
-	jr gt, ReadField_TrimSpace
-
-ReadField_Return:
-	popw iz
-	inc 8, xsp
-	ret
+ReadFieldToBuffer:	.include "includes/generated/cc900/ReadFieldToBuffer.s"	; C: cc900/file_demo_proc_m268_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadField_ShortLoop, ReadFieldToBuffer + 34
+	.set	ReadField_StoreByte, ReadFieldToBuffer + 44
+	.set	ReadField_LongInit, ReadFieldToBuffer + 66
+	.set	ReadField_LongLoop, ReadFieldToBuffer + 71
+	.set	ReadField_Long_CheckSpace, ReadFieldToBuffer + 107
+	.set	ReadField_Long_StoreIfNotLeading, ReadFieldToBuffer + 109
+	.set	ReadField_DiscardExtra, ReadFieldToBuffer + 120
+	.set	ReadField_DiscardLoop, ReadFieldToBuffer + 127
+	.set	ReadField_Terminate, ReadFieldToBuffer + 141
+	.set	ReadField_TrimSpace, ReadFieldToBuffer + 152
+	.set	ReadField_TrimLoop, ReadFieldToBuffer + 155
+	.set	ReadField_Return, ReadFieldToBuffer + 174
 
 ParseSMFTrackName:	.include "includes/generated/cc900/ParseSMFTrackName.s"	; C: cc900/file_demo_proc_m268.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -7175,39 +7076,11 @@ FileIO_FindNextMatch:	.include "includes/generated/cc900/FileIO_FindNextMatch.s"
 	.set	FindNext_Ok, FileIO_FindNextMatch + 104
 	.set	FindNext_Return, FileIO_FindNextMatch + 106
 
-FileIO_SearchStringMatch:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ldw hl, 0xffff
-	ld xwa, (0x027416:24)
-	cp xwa, 0x0
-	jr ge, SearchMatch_HasHandle
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	jr SearchMatch_FirstSearch
-
-SearchMatch_HasHandle:
-	ld a, (0x027414:24)
-	cp a, (0x27412:24)
-	jr ge, SearchMatch_Return
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-	calr FileIO_FindNextMatch
-	cp hl, 0:i3
-	jr ge, SearchMatch_Return
-	inc 1, (0x27414:24)
-	ld xwa, xiz
-	ld xbc, (xsp + 4)
-
-SearchMatch_FirstSearch:
-	calr FileIO_FindFirstMatch
-
-SearchMatch_Return:
-	pop xiz
-	inc 4, xsp
-	ret
+FileIO_SearchStringMatch:	.include "includes/generated/cc900/FileIO_SearchStringMatch.s"	; C: cc900/file_demo_proc_m268_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SearchMatch_HasHandle, FileIO_SearchStringMatch + 31
+	.set	SearchMatch_FirstSearch, FileIO_SearchStringMatch + 65
+	.set	SearchMatch_Return, FileIO_SearchStringMatch + 68
 
 FileIO_ExtractBasename:
 	lda xhl, (0x025cec:24)

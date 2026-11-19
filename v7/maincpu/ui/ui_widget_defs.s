@@ -17965,8 +17965,7 @@ DrawQueue_Alloc:	.include "includes/generated/cc900/DrawQueue_Alloc.s"	; C: cc90
 	.set	DrawFunc_Prologue, DrawQueue_Alloc + 52
 	.set	DrawFunc_CallHandler, DrawQueue_Alloc + 61
 
-DrawFunc_Return:
-	ret
+DrawFunc_Return:	.include "includes/generated/cc900/DrawFunc_Return.s"	; C: cc900/ui_widget_defs_m273_xr.c
 
 DrawFunc:
 	push xiz
@@ -18084,43 +18083,7 @@ IS_XSP_INSIDE_4K_REGION_AT_1C032:
 IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop:
 	ret
 
-InitializeGraphics:
-	dec 8,XSP
-	push XIZ
-	calr InitDrawTask
-	ld wa, 5:i3
-	call Kernel_StartTask
-	ldw (0x03ef92:24), 0x0001
-	call InitPaletteRGB
-	ld wa, 0:i3
-	calr ChangeWall
-	ld wa, 2:i3
-	calr ChangePalette
-	ld wa, 0:i3
-	calr ChangeWallPalette
-	lda xwa, (OFFSCREEN_BUFFER_1:24)
-	ld XIZ,XWA
-	pushw 0x9600
-	pushw 0x0000
-	push XWA
-	call Memset
-	add XIZ,0x00009600
-	pushw 0x9600
-	pushw 0x0000
-	push XIZ
-	call Memset
-	lda xsp, (xsp + 0x10)
-	lda xwa, (xsp + 0x04)
-	ldw (XWA+0x02), 0x0000
-	ldw (XWA), 0x0000
-	ldw (XWA+0x04), 0x013f
-	ldw (XWA+0x06), 0x00ef
-	calr SetChangeRect
-	calr UpdateScreen
-	calr LcdOn
-	pop XIZ
-	inc 8,XSP
-	ret
+InitializeGraphics:	.include "includes/generated/cc900/InitializeGraphics.s"	; C: cc900/ui_widget_defs_m273_c.c
 ; LcdOn - Enable LCD display output (sets flag at 0x030464)
 LcdOn:
 	calr IS_XSP_INSIDE_4K_REGION_AT_1C032

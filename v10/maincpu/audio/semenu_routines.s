@@ -5660,61 +5660,11 @@ SeMenu_ComputeParamTableAddr_Loop:
 	jr c, SeMenu_ComputeParamTableAddr_Loop
 	ret
 
-SeMenu_HandleMenuChange:
-	lda xsp, (xsp - 20)
-	lda xwa, (xsp + 18)
-	calr SeMenu_ReadObjData
-	cp (xsp + 18), 0x0
-	jr nz, SeMenu_HandleMenuChange_NonZero
-	calr SeMenu_ResetSubIndex
-	calr SeMenu_AdvanceSubIndex
-	lda xwa, (xsp)
-	calr SeMenu_ReadObjParam
-	lda xwa, (xsp)
-	calr SeMenu_SetupDisplayObject
-	pushw 0x10
-	ld wa, 0:i3
-	ld bc, 0:i3
-	ldw de, 0xa
-	calr SeMenu_RegisterElement_Type2
-	ld wa, 1:i3
-	calr SeMenu_SetCurrentStep
-	jr SeMenu_HandleMenuChange_End
-
-SeMenu_HandleMenuChange_NonZero:
-	lda xwa, (xsp)
-	calr SeMenu_ReadObjParam
-	lda xwa, (xsp + 2)
-	calr SeMenu_FillEntryTable
-	ld a, (xsp)
-	extz wa
-	lda xbc, (xsp + 2)
-	calr SeMenu_ComputeParamTableAddr
-	calr SeMenu_AdvanceSubIndex
-	cp l, 0x7f
-	jr ugt, SeMenu_HandleMenuChange_Overflow
-	lda xwa, (xsp)
-	calr SeMenu_ReadObjParam
-	lda xwa, (xsp)
-	calr SeMenu_SetupDisplayObject
-	pushw 0x10
-	ld wa, 0:i3
-	ld bc, 0:i3
-	ldw de, 0xa
-	calr SeMenu_RegisterElement_Type2
-	jr SeMenu_HandleMenuChange_End
-
-SeMenu_HandleMenuChange_Overflow:
-	ld wa, 0:i3
-	calr SeMenu_SetCurrentStep
-	calr SeMenu_ResetSubIndex
-	ldw wa, TT_SQDRMEDT
-	ld bc, 0:i3
-	calr SeMenu_SendEvent
-
-SeMenu_HandleMenuChange_End:
-	lda xsp, (xsp + 20)
-	ret
+SeMenu_HandleMenuChange:	.include "includes/generated/cc900/SeMenu_HandleMenuChange.s"	; C: cc900/semenu_routines_m129_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_HandleMenuChange_NonZero, SeMenu_HandleMenuChange + 51
+	.set	SeMenu_HandleMenuChange_Overflow, SeMenu_HandleMenuChange + 105
+	.set	SeMenu_HandleMenuChange_End, SeMenu_HandleMenuChange + 121
 
 SeMenu_HandleMenuChange_Data:
 	ld	(xwa), (0x6b7)

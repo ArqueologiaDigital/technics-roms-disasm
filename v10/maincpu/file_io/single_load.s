@@ -1653,55 +1653,7 @@ SingleLoadDst_PanelMemListProc_Epilogue:
 ;   (BuildSlotLabel(song, cell 2, no number): 16 bytes at SEQ_SONG_SLOTS + 0x800 x song + 0x100); posts EVT_PARA_DRAW
 ;   for both. Basis: callers + body -- SingleLoadDst_SequencerListProc calls it after blanking rows 0/3 on EVT_PAINT
 ;   and after stepping 0x8A04 with parameter 8; its header calls these rows "'SONG: n' + slot label".
-SingleLoadDst_DrawSongRows:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp+4), xwa
-	lda	xwa, (SINGLE_LOAD_DST_ROWS:16)
-	ld	(xwa+21), 1
-	lda	xwa, (xwa+22)
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (StorageArea_UnitNames:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+22:16)
-	ld	xbc, SLDstMemLabel_ColonSep
-	call	FileIO_BuildFilePath
-	lda	xiz, (SINGLE_LOAD_DST_ROWS+22:16)
-	ld	a, (SLOAD_DST_SONG:16)
-	inc	1, a
-	extz	wa
-	ld	bc, 0:i3
-	calr	NumToAscii_FormatNumber
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+22:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xiz, (SINGLE_LOAD_DST_ROWS+42:16)
-	ld	a, (SLOAD_DST_SONG:16)
-	extz	wa
-	ld	bc, 2:i3
-	ld	de, 0:i3
-	calr	BuildSlotLabel
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_CopyString
-	lda	xde, (SINGLE_LOAD_DST_ROWS+21:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	lda	xde, (SINGLE_LOAD_DST_ROWS+42:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	pop	xiz
-	inc	4, xsp
-	ret
+SingleLoadDst_DrawSongRows:	.include "includes/generated/cc900/SingleLoadDst_DrawSongRows.s"	; C: cc900/single_load_m269_c.c
 ; SingleLoadDst_SequencerListProc: Single-load destination list for area 1 SEQUENCER: EVT_PAINT blanks rows 0/3 and
 ;   draws 'SONG: n' + slot label (SingleLoadDst_DrawSongRows, BuildSlotLabel); parameter 8 steps the song number
 ;   RAM 0x8A04 up to SingleLoadDst_SequencerSongCount; parameter 10 returns SingleLoad_LoadSong(song); entry

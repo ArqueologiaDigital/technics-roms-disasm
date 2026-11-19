@@ -67,3 +67,16 @@ def:
 	}
 	*q = c;
 }
+
+/* cc900-module: ApplyProgramChangeAs_DoLookupRe ApplyProgramChangeAs_LoadReg ApplyProgramChangeAs_LoadReg2 */
+extern void ApplyProgramChangeAs_LoadReg(unsigned char *p);
+extern void ApplyProgramChangeAs_LoadReg2(unsigned char *p);
+extern void SndParam_FetchOscTableEntry(unsigned char *p);
+
+void SndParam_FetchOscTableEntry(unsigned char *p)
+{
+	if (SndParam_LookupReadOnly(192) == 1)
+		ApplyProgramChangeAs_LoadReg2(p);
+	else
+		ApplyProgramChangeAs_LoadReg(p);
+}

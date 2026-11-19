@@ -8593,47 +8593,10 @@ SeqBuf_WriteMidiEvent:	.include "includes/generated/cc900/SeqBuf_WriteMidiEvent.
 	.set	SeqBufMidi_HandleNonNoteOn, SeqBuf_WriteMidiEvent + 61
 	.set	SeqBufMidi_Return, SeqBuf_WriteMidiEvent + 102
 
-SeqBuf_WriteMidiEventDirect:
-	dec 2, xsp
-	push xiz
-	ld (xsp + 4), c
-	ld xiz, xwa
-	ld a, (xiz)
-	and a, 0xf0
-	cp a, 0x90
-	jr nz, SeqBufDirect_HandleNonNoteOn
-	cp (7558:16), 0
-	call nz, (SeqBuf_FlushAndReinit_VoiceCCEvents:24)
-	call SeqBuf_GetWritePos
-	cp hl, 0xf
-	call lt, (SeqBuf_FlushAndReinit_NoteEvents:24)
-	push xiz
-	ld a, (xsp + 8)
-	extz wa
-	pushw wa
-	call SeqBuf_WriteBytes
-	inc 6, xsp
-	calr SeqBuf_FlushAndReinit_NoteEvents
-	jr SeqBufDirect_Return
-
-SeqBufDirect_HandleNonNoteOn:
-	cp (7556:16), 0
-	call nz, (SeqBuf_FlushAndReinit_NoteEvents:24)
-	call SeqBuf_GetWritePos
-	cp hl, 0xf
-	call lt, (SeqBuf_FlushAndReinit_VoiceCCEvents:24)
-	push xiz
-	ld a, (xsp + 8)
-	extz wa
-	pushw wa
-	call SeqBuf_WriteBytes
-	inc 6, xsp
-	calr SeqBuf_FlushAndReinit_VoiceCCEvents
-
-SeqBufDirect_Return:
-	pop xiz
-	inc 2, xsp
-	ret
+SeqBuf_WriteMidiEventDirect:	.include "includes/generated/cc900/SeqBuf_WriteMidiEventDirect.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqBufDirect_HandleNonNoteOn, SeqBuf_WriteMidiEventDirect + 59
+	.set	SeqBufDirect_Return, SeqBuf_WriteMidiEventDirect + 98
 
 ; Sends the note events gathered in the sequencer buffer and starts a new batch: saves the
 ; write position, AccNoteOn_ChannelDispatch, SeqBuf_Init, and clears the pending flag 0x1d84.
@@ -9296,57 +9259,13 @@ SeqNoteOff_Return:
 	lda xsp, (xsp + 10)
 	ret
 
-Part_DetectSingleVoiceType:
-	res 0, (9954:16)
-	ld l, 0x0:opc
-	ld d, 0x1:opc
-
-PartDetect_PartScanLoop:
-	ld a, d
-	dec 1, a
-	ld bc, 1:i3
-	and a, 0xf
-	jr z, PartDetect_ShiftDone
-	slaa bc
-
-PartDetect_ShiftDone:
-	and bc, (SEQ_REC_TRACKS:16)
-	jr z, PartDetect_CheckCount
-	inc 1, l
-	ld e, d
-
-PartDetect_CheckCount:
-	cp l, 1:i3
-	jr ugt, PartDetect_SingleVoiceFound
-	inc 1, d
-	cp d, 0x10
-	jr ule, PartDetect_PartScanLoop
-
-PartDetect_SingleVoiceFound:
-	cp l, 1:i3
-	jp nz, (PartSelect_UpdateDisplayState:24)
-	extz de
-	ld wa, 0:i3
-	ld bc, de
-	calr Part_ReadVoiceByte
-	cp l, 0xf
-	ret z
-	cp l, 0x13
-	jr ule, PartDetect_LookupAndApply
-	ld l, 0x0:opc
-
-PartDetect_LookupAndApply:
-	extz hl
-	lda xbc, (PartDetect_LookupAndApply_Table:24)
-	ld	e, (xbc+hl)
-	set 0, (9954:16)
-	ld (PART_SELECT:16), e
-	extz de
-	pushw 0xff
-	ldw wa, 0x90
-	ldw bc, 0x10
-	call AddswbWr
-	ret
+Part_DetectSingleVoiceType:	.include "includes/generated/cc900/Part_DetectSingleVoiceType.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartDetect_PartScanLoop, Part_DetectSingleVoiceType + 8
+	.set	PartDetect_ShiftDone, Part_DetectSingleVoiceType + 21
+	.set	PartDetect_CheckCount, Part_DetectSingleVoiceType + 31
+	.set	PartDetect_SingleVoiceFound, Part_DetectSingleVoiceType + 42
+	.set	PartDetect_LookupAndApply, Part_DetectSingleVoiceType + 70
 
 Part_DeactivateVoiceChannel:
 	dec 2, xsp
@@ -13875,68 +13794,16 @@ SeqValidate_CombinedOK:
 	ld hl, 0:i3
 	ret
 
-SeqVoice_CountEventsInBar:
-	dec 8, xsp
-	ld (xsp + 6), a
-	calr SeqVoice_SetDefaultParams
-	ld (SEQ_ERROR_CODE:16), 0
-	ld (0x288d:16), 0
-	ld a, (xsp + 6)
-	extz wa
-	calr Part_ValidateVoiceChannel
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, SeqCount_ValidateChannel
-	ldw hl, 0xffff
-	jr SeqCount_ReturnResult
-
-SeqCount_ValidateChannel:
-	calr SeqVoice_ValidateAndProcessState
-	ldw (xsp + 2), 0x1
-	ldw (xsp + 4), 0x0
-	ldw (xsp), 0x0
-	cpw (3299:16), 0
-	jr z, SeqData_EOL_Cleanup
-
-SeqCount_EventLoop:
-	ld a, (0x288e:16)
-	extz wa
-	cp wa, (xsp)
-	jr nz, SeqCount_ReadNextEvent
-	incw 1, (xsp + 2)
-	calr SeqTrack_ProcessControlBytes
-	ldw (xsp), 0x0
-
-SeqCount_ReadNextEvent:
-	calr SeqData_ReadNextByte
-	cp l, 0x82
-	jr z, SeqCount_EndMarkerFound
-	cp l, 0x84
-	jr nz, SeqCount_CheckBarMarker
-
-SeqCount_EndMarkerFound:
-	ld (SEQ_ERROR_CODE:16), 8
-	jr SeqData_EOL_Cleanup
-
-SeqCount_CheckBarMarker:
-	cp l, 0x81
-	jr nz, SeqCount_AdvanceAndCheck
-	incw 1, (xsp)
-	incw 1, (xsp + 4)
-
-SeqCount_AdvanceAndCheck:
-	calr SeqData_AdvancePosition
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqData_EOL_Cleanup
-	ld wa, (xsp + 4)
-	cp wa, (3299:16)
-	jr nz, SeqCount_EventLoop
-
-SeqData_EOL_Cleanup:
-	ld hl, (xsp + 2)
-
-SeqCount_ReturnResult:
-	inc 8, xsp
-	ret
+SeqVoice_CountEventsInBar:	.include "includes/generated/cc900/SeqVoice_CountEventsInBar.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqCount_ValidateChannel, SeqVoice_CountEventsInBar + 38
+	.set	SeqCount_EventLoop, SeqVoice_CountEventsInBar + 63
+	.set	SeqCount_ReadNextEvent, SeqVoice_CountEventsInBar + 83
+	.set	SeqCount_EndMarkerFound, SeqVoice_CountEventsInBar + 96
+	.set	SeqCount_CheckBarMarker, SeqVoice_CountEventsInBar + 103
+	.set	SeqCount_AdvanceAndCheck, SeqVoice_CountEventsInBar + 113
+	.set	SeqData_EOL_Cleanup, SeqVoice_CountEventsInBar + 132
+	.set	SeqCount_ReturnResult, SeqVoice_CountEventsInBar + 135
 
 SeqPart_ComputePlaybackDelta:
 	push xiz
@@ -18242,48 +18109,14 @@ Chan_DeactivateAfterAccomp:
 ; or the saved measure 0x251c when bit 0 of 0x28b1 is set and the current start is later; the
 ; editor scroll is reset, bit 3 of 0x28a7 reflects a start other than 1, and the play-mode
 ; dispatcher runs.  Then the part's sub-block assignment is updated and its active bit set.
-SeqVoice_ActivateWithBarSync:
-	dec 2, xsp
-	ld (xsp), a
-	cpw (SEQ_TRACK_MASK:16), 0
-	jr nz, SeqActivate_AssignAndEnable
-	bit 0, (SEQ_CYCLE_FLAGS:16)
-	jr z, SeqActivate_SetBar1
-	ld wa, (9500:16)
-	cp (SEQ_START_MEASURE:16), wa
-	jr ugt, SeqActivate_SetBarFromSave
-
-SeqActivate_SetBar1:
-	ldw (SEQ_START_MEASURE:16), 1
-	jr SeqActivate_ResetMode
-
-SeqActivate_SetBarFromSave:
-	ld (SEQ_START_MEASURE:16), wa
-
-SeqActivate_ResetMode:
-	call NoteEditSy_SendModeScrollReset
-	cpw (SEQ_START_MEASURE:16), 1
-	jr nz, SeqActivate_SetBit3
-	res 3, (SEQ_RTMCFG:16)
-	jr SeqActivate_DispatchAccomp
-
-SeqActivate_SetBit3:
-	set 3, (SEQ_RTMCFG:16)
-
-SeqActivate_DispatchAccomp:
-	call AccWrap_PlayModeDispatch
-
-SeqActivate_AssignAndEnable:
-	ld a, (xsp)
-	extz wa
-	calr SeqVoice_UpdateSubBlockAssign
-	ld a, (xsp)
-	extz wa
-	ld bc, 1:i3
-	calr Chan_SetActiveBit
-	call Audio_CheckSubsystemReady
-	inc 2, xsp
-	ret
+SeqVoice_ActivateWithBarSync:	.include "includes/generated/cc900/SeqVoice_ActivateWithBarSync.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqActivate_SetBar1, SeqVoice_ActivateWithBarSync + 28
+	.set	SeqActivate_SetBarFromSave, SeqVoice_ActivateWithBarSync + 36
+	.set	SeqActivate_ResetMode, SeqVoice_ActivateWithBarSync + 40
+	.set	SeqActivate_SetBit3, SeqVoice_ActivateWithBarSync + 58
+	.set	SeqActivate_DispatchAccomp, SeqVoice_ActivateWithBarSync + 62
+	.set	SeqActivate_AssignAndEnable, SeqVoice_ActivateWithBarSync + 66
 
 ; Clears part A's bit in the active-part mask (Chan_SetActiveBit), runs Audio_CheckSubsystemReady
 ; and then Part_DeactivateVoiceChannel for the part.

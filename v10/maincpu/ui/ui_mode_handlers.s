@@ -1982,25 +1982,10 @@ FDC_PostEvent_Send:
 	ret
 
 
-EffectMode_MidiParseLoop:
-	push xiz
-	lda xiz, (0x8d6c:16)
-	ld xwa, xiz
-	call PanelInput_ReadRxRecord
-	cp hl, 0xffff
-	jr z, EffectMode_MidiParse_Done
-
-EffectMode_MidiParse_Continue:
-	ld xwa, xiz
-	calr EffectMode_MidiSetLEDs
-	ld xwa, xiz
-	call PanelInput_ReadRxRecord
-	cp hl, 0xffff
-	jr nz, EffectMode_MidiParse_Continue
-
-EffectMode_MidiParse_Done:
-	pop xiz
-	ret
+EffectMode_MidiParseLoop:	.include "includes/generated/cc900/EffectMode_MidiParseLoop.s"	; C: cc900/ui_mode_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_MidiParse_Continue, EffectMode_MidiParseLoop + 17
+	.set	EffectMode_MidiParse_Done, EffectMode_MidiParseLoop + 34
 
 EffectMode_MidiSetLEDs:
 	push xiz

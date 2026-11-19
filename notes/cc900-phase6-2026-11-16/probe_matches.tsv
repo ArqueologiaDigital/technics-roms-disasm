@@ -841,3 +841,17 @@ FDC_ValidateOpcode	79	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10
 FDC_WaitParamByteReady	67	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@Xr
 FDC_WriteAuxCmdByte	17	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
 FDC_WriteDataRegister	6	2026-11-16-87-p6-r15 (lane_p6 re-check 2026-11-19)	p6_C_10m270@O3XSXr p6_C_10m270@O3Xr p6_C_10m270@Xr
+Demo_SelectionEntryHandler	51	2026-11-19-29-p6-r46	p6_N_4m266a@O3XSXr p6_N_4m266a@O3Xr p6_N_4m266a@Xr
+EffectMode_ReinitSoundOutput	87	2026-11-19-29-p6-r46	p6_N_4m275a@O3Xr
+FDC_CommandAndPostEvent	59	2026-11-19-29-p6-r46	p6_L_4m276b@O3XSXr p6_L_4m276b@O3Xr
+FDemo_LinkedListLookupField	14	2026-11-19-29-p6-r46	p6_L_4m265a@O3XSXr p6_L_4m265a@O3Xr p6_L_4m265a@Xr
+FileIO_ReadVariableLengthData	135	2026-11-19-29-p6-r46	p6_N_4m302a@Xr
+FirmwareUpdate_SaveDiskType	94	2026-11-19-29-p6-r46	p6_L_4m5a@O3Xr p6_L_4m5b@O3Xr
+GetEditSwPoint	188	2026-11-19-29-p6-r46	p6_M_5m271a@O3XSXr p6_M_5m271a@O3Xr
+IvScreenProc	12	2026-11-19-29-p6-r46	p6_L_4m271a@O3XSXr p6_L_4m271a@O3Xr p6_L_4m271a@Xr
+MainLswPartAdd	101	2026-11-19-29-p6-r46	p6_L_4m271b@O3XSXr p6_L_4m271b@O3Xr
+SeMenu_StepParamFieldAndSend	119	2026-11-19-29-p6-r46	p6_N_4m129a@O3XSXr p6_N_4m129a@O3Xr
+SeqAcc_StartPlaybackFromPosition	87	2026-11-19-29-p6-r46	p6_N_4m232a@O3XSXr p6_N_4m232a@O3Xr
+SndParam_ApplyEventField	98	2026-11-19-29-p6-r46	p6_M_5m301a@Xr
+SndParam_UpdateChannelTuning	166	2026-11-19-29-p6-r46	p6_N_4m298a@Xr
+SwbtB3_CodeA9_Listener0	37	2026-11-19-29-p6-r46	p6_N_4m266a@O3XSXr p6_N_4m266a@O3Xr p6_N_4m266a@Xr

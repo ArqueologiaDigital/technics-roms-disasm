@@ -602,43 +602,9 @@ FDemoText_SendExtAlt_NoteLoop:
 	lda xsp, (xsp + 22)
 	ret
 
-FDemoText_ProbeVoiceType:
-	dec 8, xsp
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	calr FDemoText_LookupTableEntry
-	lda xbc, (xsp)
-	ld A, (xhl+)
-	ld (xbc + 3), a
-	ld a, (xhl)
-	ld (xbc + 4), a
-	ld a, (xsp + 6)
-	ld (xbc + 2), a
-	ld xwa, xbc
-	call SndParam_FetchOscTableEntry
-	ld l, (xsp + 0:8)
-	inc 8, xsp
-	ret
+FDemoText_ProbeVoiceType:	.include "includes/generated/cc900/FDemoText_ProbeVoiceType.s"	; C: cc900/fdemotext_routines_m265.c
 
-FDemoText_ByteData_ProbeHelper:
-	dec	8, xsp
-	ld	(xsp+6), a
-	ld	a, (xsp+6)
-	extz	wa
-	calr	FDemoText_LookupTableEntry
-	lda	xbc, (xsp)
-	ld	a, (xhl+)
-	ld	(xbc+0x3), a
-	ld	a, (xhl)
-	ld	(xbc+0x4), a
-	ld	a, (xsp+0x6)
-	ld	(xbc+0x2), a
-	ld	xwa, xbc
-	call	SndParam_FetchOscTableEntry
-	ld	l, (xsp+1)
-	inc	8, xsp
-	ret
+FDemoText_ByteData_ProbeHelper:	.include "includes/generated/cc900/FDemoText_ByteData_ProbeHelper.s"	; C: cc900/fdemotext_routines_m0.c
 
 FDemoText_CheckVoiceState:
 	dec 2, xsp
@@ -943,50 +909,12 @@ FDemoText_RefreshFullDisplay:
 	pop xde
 	ret
 
-FDemoText_ByteData_DisplayRefresh:
-	push	xiz
-	ld	xiz, xwa
-	cp	xiz, 0xffffffff
-	jr	nz, FDemoText_ByteData_DisplayRefresh_Skip
-	lda	xhl, (FDemoText_ByteData_DisplayRefresh_Str_NONE:24)
-	jr	FDemoText_ByteData_DisplayRefresh_Epilogue
-FDemoText_ByteData_DisplayRefresh_Skip:
-	ld	xwa, xiz
-	ld	xbc, EVT_GET_NAME
-	ld	xde, 0:i3
-	call	SendEvent
-	cp	(xhl), 0
-	jr	nz, FDemoText_ByteData_DisplayRefresh_Skip2
-	ld	xwa, xiz
-	srl	xwa, 16
-	and	xwa, 4095
-	extz	xwa
-	add	xwa, TITLE_PS
-	ld	xbc, EVT_GET_NAME
-	ld	xde, 0:i3
-	call	SendEvent
-	ld	xwa, xiz
-	ld	qwa, 0
-	pushw	wa
-	push	xhl
-	pushw	FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd@hi16
-	pushw	FDemoText_ByteData_DisplayRefresh_Str_Fmts_Fmtd@lo16
-	pushw	2
-	pushw	0x47f6
-	call	Sprintf_Locked
-	lda	xsp, (xsp+14)
-	jr	FDemoText_ByteData_DisplayRefresh_Join
-FDemoText_ByteData_DisplayRefresh_Skip2:
-	push	xhl
-	pushw	2
-	pushw	0x47f6
-	call	Strcpy
-	inc	8, xsp
-FDemoText_ByteData_DisplayRefresh_Join:
-	lda	xhl, (0x0247f6:24)
-FDemoText_ByteData_DisplayRefresh_Epilogue:
-	pop	xiz
-	ret
+FDemoText_ByteData_DisplayRefresh:	.include "includes/generated/cc900/FDemoText_ByteData_DisplayRefresh.s"	; C: cc900/fdemotext_routines_m265_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_ByteData_DisplayRefresh_Skip, FDemoText_ByteData_DisplayRefresh + 18
+	.set	FDemoText_ByteData_DisplayRefresh_Skip2, FDemoText_ByteData_DisplayRefresh + 94
+	.set	FDemoText_ByteData_DisplayRefresh_Join, FDemoText_ByteData_DisplayRefresh + 107
+	.set	FDemoText_ByteData_DisplayRefresh_Epilogue, FDemoText_ByteData_DisplayRefresh + 112
 ; FDemoText_GetInstanceID: Finds the view object whose name equals the string XWA: walks classes 255..0 and their
 ;   instances (CountObject, CheckViewObject), compares each object's name (FDemoText_ByteData_DisplayRefresh) and
 ;   returns its id class<<16 | instance in XHL; if none matches it posts "Error! (GetInstanceID)" to the debug memo

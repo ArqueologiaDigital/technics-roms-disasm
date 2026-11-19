@@ -6118,71 +6118,12 @@ ExtData_ToggleTlvBits:
 Voice_Update_Return:
 	inc	2, xsp
 	ret
-VoiceParam_CompareAndUpdate:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (EXTDATA_MASK:16)
-	and	a, (xsp)
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (EXTDATA_VALUE:16)
-	and	a, (xsp)
-	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC972C-0xFC9746 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+17
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 4294967295
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	lda	xhl, (xhl+wa)
-	ld	a, (xsp)
-	cpl	a
-	and	a, (xhl)
-	or	a, (EXTDATA_VALUE:16)
-	ld	c, a
-	ld	a, (EXTDATA_NEW_VALUE:16)
-	cp	c, a
-	jr	z, VoiceParam_CompareAndUpdate_Epilogue
-	ld	(xhl), c
-	ld	(EXTDATA_NEW_VALUE:16), c
-	ld	(MIDI_MSG_DATA2:16), c
-	ld	a, (xsp)
-	or	(MIDI_MSG_DATA3:16), a
-VoiceParam_CompareAndUpdate_Epilogue:
-	inc	2, xsp
-	ret
-ExtData_SetTlvField:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (EXTDATA_MASK:16)
-	and	a, (xsp)
-	; data-as-code (v10_data_as_code_census.py, STRICT rule): 0xFC977B-0xFC9795 (26 B), unreached CODE-territory, was disassembled as 9 plausible-but-dead instruction lines; per=67% dist=15 near VoiceParam_CompareAndUpdate+96
-	jr	z, ExtData_SetTlvField_Epilogue
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	cp	xhl, 4294967295
-	jr	z, ExtData_SetTlvField_Epilogue
-	ld	a, (EXTDATA_TLV_OFFSET:16)
-	extz	wa
-	lda	xhl, (xhl+wa)
-	ld	a, (xsp)
-	cpl	a
-	and	a, (xhl)
-	or	a, (EXTDATA_VALUE:16)
-	ld	c, a
-	ld	a, (EXTDATA_NEW_VALUE:16)
-	cp	c, a
-	jr	z, ExtData_SetTlvField_Epilogue
-	ld	(xhl), c
-	ld	(EXTDATA_NEW_VALUE:16), c
-	ld	(MIDI_MSG_DATA2:16), c
-	ld	a, (xsp)
-	or	(MIDI_MSG_DATA3:16), a
-ExtData_SetTlvField_Epilogue:
-	inc	2, xsp
-	ret
+VoiceParam_CompareAndUpdate:	.include "includes/generated/cc900/VoiceParam_CompareAndUpdate.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceParam_CompareAndUpdate_Epilogue, VoiceParam_CompareAndUpdate + 84
+ExtData_SetTlvField:	.include "includes/generated/cc900/ExtData_SetTlvField.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ExtData_SetTlvField_Epilogue, ExtData_SetTlvField + 76
 	dec	2, xsp
 	ld	(xsp), a
 	ld	a, (EXTDATA_MASK:16)
@@ -6457,61 +6398,14 @@ MidiCC_ClearReceivedBankSelects_Loop2:
 	cp	wa, 32
 	jr	c, MidiCC_ClearReceivedBankSelects_Loop2
 	ret
-SndParam_ApplyAndFetch:
-	dec	6, xsp
-	lda	xwa, (xsp)
-	lda	xde, (0x902a:16)
-	ld	c, (xde)
-	ld	(xwa), c
-	ld	c, (xde + 1)
-	ld	(xwa + 1), c
-	ld	c, (xde + 2)
-	ld	(xwa + 2), c
-	cp	c, 0x1f
-	jr	ugt, SndParam_CheckRhythm
-	call	SndParam_ApplyProgramChange
-	lda	xde, (0x902e:16)
-	lda	xbc, (xsp)
-	ld	a, (xbc + 3)
-	ld	(xde), a
-	ld	a, (xbc + 4)
-	ld	(xde + 1), a
-	jr	SndParam_ApplyDone
-SndParam_CheckRhythm:
-	cp	c, 0x48
-	call	z, (Rhythm_LookupTempoVelocity_Wrap:24)
-SndParam_ApplyDone:
-	inc	6, xsp
-	ret
-SndParam_ApplyFromPointer:
-	push	xiz
-	ld	xiz, xwa
-	lda	xde, (xiz+2)
-	ld	a, (xde)
-	cp	a, 31
-	jr	ugt, SndParam_ApplyAndFetch_Skip
-	ld	xwa, xiz
-	call	SndParam_ApplyProgramChange
-	jr	SndParam_ApplyAndFetch_Epilogue
-SndParam_ApplyAndFetch_Skip:
-	cp	a, 72
-	jr	nz, SndParam_ApplyAndFetch_Epilogue
-	lda	xbc, (0x902a:16)
-	ld	a, (xiz)
-	ld	(xbc), a
-	ld	a, (xiz+1)
-	ld	(xbc+1), a
-	ld	a, (xde)
-	ld	(xbc+2), a
-	call	Rhythm_LookupTempoVelocity_Wrap
-	lda	xbc, (0x902e:16)
-	ld	a, (xbc)
-	ld	(xiz+3), a
-	ld	a, (xbc+1)
-	ld	(xiz+4), a
-SndParam_ApplyAndFetch_Epilogue:
-	pop	xiz
-	ret
+SndParam_ApplyAndFetch:	.include "includes/generated/cc900/SndParam_ApplyAndFetch.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_CheckRhythm, SndParam_ApplyAndFetch + 52
+	.set	SndParam_ApplyDone, SndParam_ApplyAndFetch + 60
+SndParam_ApplyFromPointer:	.include "includes/generated/cc900/SndParam_ApplyFromPointer.s"	; C: cc900/audio_control_engine_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_ApplyAndFetch_Skip, SndParam_ApplyFromPointer + 21
+	.set	SndParam_ApplyAndFetch_Epilogue, SndParam_ApplyFromPointer + 64
 SndParam_FetchAndStore:
 	dec	6, xsp
 	lda	xwa, (xsp)

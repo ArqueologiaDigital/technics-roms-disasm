@@ -35,3 +35,10 @@ void *DrawRing_Post(void *cmd)
     } while (s == 0);
     return s;
 }
+
+/* cc900-module: DrawBitmapFile_Impl DrawDottedLine_Impl DrawMonoBitmap_Impl DrawQueue_Alloc DrawRing_Post DrawWall_DoCopy GraphicsRender_ProcessEntries GraphicsRender_RetStub IS_XSP_INSIDE_4K_REGION_AT_1C032 SetChangeRect */
+extern void DrawFunc_Return(void *p);
+
+void DrawFunc_Return(void *p)
+{
+}

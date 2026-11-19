@@ -95,3 +95,28 @@ void DrawBitmap_QueuedExec(struct bmcmd *q)
 	if (DRAW_ENABLED != 0)
 		DrawBitmap_Impl(p, bmp);
 }
+
+/* cc900-module: DrawBitmapFile_Impl DrawDottedLine_Impl DrawMonoBitmap_Impl DrawWall_DoCopy GraphicsRender_ProcessEntries GraphicsRender_RetStub SetChangeRect */
+extern unsigned char *WALLPAPER_BITMAP;
+extern unsigned char OFFSCREEN_BUFFER_1[];
+extern void *__cdecl Mem_Copy(void *, void *, unsigned int);
+extern void SetChangeRect(struct rect *r);
+extern void DrawWall_DoCopy(void);
+
+void DrawWall_DoCopy(void)
+{
+	struct rect r;
+	unsigned char *dst;
+	unsigned char *src;
+
+	src = WALLPAPER_BITMAP;
+	dst = OFFSCREEN_BUFFER_1;
+	Mem_Copy(dst, src, 0x9600);
+	dst += 0x9600;
+	src += 0x9600;
+	Mem_Copy(dst, src, 0x9600);
+	r.x0 = r.y0 = 0;
+	r.x1 = 319;
+	r.y1 = 239;
+	SetChangeRect(&r);
+}

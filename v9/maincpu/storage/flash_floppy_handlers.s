@@ -1584,31 +1584,10 @@ Flash_InitBytecodeBlock_Join2:
 ;   + body -- CstmCpTtl_RecMode2_OnWindowExecute calls it with WA = 0 ("carries out the pending copy"),
 ;   CstmCpTtl_RecMode2_OnCopyOrWindowAbort with WA = 2 while a window is open; both then hide the window and post
 ;   message 35.
-CstmCpTtl_ResolvePendingCopy:
-	dec	2, xsp
-	ld	(xsp), a
-	calr	Flash_InitExtMemAddrs
-	ld	l, (3176:16)
-	ld	c, (3178:16)
-	ld	e, (3180:16)
-	cp	(xsp), 2
-	jr	z, CstmCpTtl_ResolvePendingCopy_Join3
-	cp	(xsp), 0
-	jr	nz, CstmCpTtl_ResolvePendingCopy_Join3
-	ld	a, l
-	extz	wa
-	extz	bc
-	extz	de
-	cp	l, 10
-	jr	nc, CstmCpTtl_ResolvePendingCopy_Skip
-	calr	Flash_InitBytecodeBlock_Helper8
-	jr	CstmCpTtl_ResolvePendingCopy_Join3
-CstmCpTtl_ResolvePendingCopy_Skip:
-	calr	Flash_InitBytecodeBlock_Helper9
-CstmCpTtl_ResolvePendingCopy_Join3:
-	ld	l, 0:opc
-	inc	2, xsp
-	ret
+CstmCpTtl_ResolvePendingCopy:	.include "includes/generated/cc900/CstmCpTtl_ResolvePendingCopy.s"	; C: cc900/flash_floppy_handlers_m159.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CstmCpTtl_ResolvePendingCopy_Skip, CstmCpTtl_ResolvePendingCopy + 47
+	.set	CstmCpTtl_ResolvePendingCopy_Join3, CstmCpTtl_ResolvePendingCopy + 50
 	dec	2, xsp
 	ld	(xsp), a
 	calr	Flash_InitExtMemAddrs

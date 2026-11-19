@@ -2393,50 +2393,13 @@ BmDrEdit_InsertSeq_PopIzRet:
 	pop xiz
 	ret
 
-BmDrEdit_ScanAfterModify:
-	dec 4, xsp
-	res	3, (0x2943:16)
-	cpw	(0x2782:16), 0
-	jr nz, BmDrEdit_ScanAfterModify_LoadAndWalk
-	call SeqData_ReadNextByte
-	cp l, 0x81
-	jr z, BmDrEdit_SetFlagReturn
-	and l, 0xf0
-	cp l, 0x90
-	jr z, BmDrEdit_ScanAfterModify_CheckVelocity
-	calr BmDrEdit_WalkAndScanAfterEdit
-	jr BmDrEdit_ScanAfterModify_Return
-
-BmDrEdit_ScanAfterModify_CheckVelocity:
-	calr BmDrEdit_CompareVelocity
-	cp l, 0:i3
-	jr nz, BmDrEdit_SetFlagReturn
-	cp	(0x2746:16), 0
-	jr nz, BmDrEdit_SetFlagReturn
-
-BmDrEdit_ScanAfterModify_LoadAndWalk:
-	calr BmDrEdit_LoadAlternateState
-	calr BmDrEdit_CheckNoteAtPosition
-
-BmDrEdit_ScanAfterModify_WalkLoop:
-	calr BmDrEdit_SaveEditState
-	calr BmDrEdit_WalkTrackForward
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr BmDrEdit_SetupCoordinates
-	ld wa, (xsp + 2)
-	sub wa, (xsp)
-	cp	wa, (0x2782:16)
-	jr c, BmDrEdit_ScanAfterModify_WalkLoop
-	calr BmDrEdit_RestoreEditState
-	jr BmDrEdit_ScanAfterModify_Return
-
-BmDrEdit_SetFlagReturn:
-	set	3, (0x2943:16)
-
-BmDrEdit_ScanAfterModify_Return:
-	inc 4, xsp
-	ret
+BmDrEdit_ScanAfterModify:	.include "includes/generated/cc900/BmDrEdit_ScanAfterModify.s"	; C: cc900/bmdredit_routines_m232_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ScanAfterModify_CheckVelocity, BmDrEdit_ScanAfterModify + 36
+	.set	BmDrEdit_ScanAfterModify_LoadAndWalk, BmDrEdit_ScanAfterModify + 50
+	.set	BmDrEdit_ScanAfterModify_WalkLoop, BmDrEdit_ScanAfterModify + 56
+	.set	BmDrEdit_SetFlagReturn, BmDrEdit_ScanAfterModify + 86
+	.set	BmDrEdit_ScanAfterModify_Return, BmDrEdit_ScanAfterModify + 90
 
 BmDrEdit_AlignGridBackward:
 	ld	wa, (0x2780:16)

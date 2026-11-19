@@ -1,4 +1,8 @@
-/* Functions of midi/midipkt_routines.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+/* HELD BACK (lane_p6, 2026-11-19): V4.23 matches these in v7 (run 2026-11-19-29-p6-r46), but in v7
+   MidiPkt_DispatchViaTable_4D9A starts in midi_dispatch_handlers.s and ends in midipkt_routines.s (the file boundary
+   cuts an instruction: `.byte 0xb8` before the `.include`), so cc900_splice.py cannot cut its hand lines; promote
+   once the v7 file boundary moves.
+   Functions of midi/midipkt_routines.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
    (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
    Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
    __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;

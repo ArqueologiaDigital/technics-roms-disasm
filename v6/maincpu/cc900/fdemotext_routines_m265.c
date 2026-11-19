@@ -225,3 +225,21 @@ void FDemoText_RenderTextLine(char *s)
         FDemoText_RenderTextLine(end + 1);
     Free(buf);
 }
+
+extern void SndParam_FetchOscTableEntry(unsigned char *);
+extern unsigned char FDemoText_ProbeVoiceType(unsigned char v);
+
+unsigned char FDemoText_ProbeVoiceType(unsigned char v)
+{
+	unsigned char rec[6];
+	unsigned char *t;
+	unsigned char *p;
+
+	t = FDemoText_LookupTableEntry(v);
+	p = rec;
+	p[3] = *t++;
+	p[4] = *t;
+	p[2] = v;
+	SndParam_FetchOscTableEntry(p);
+	return rec[0];
+}

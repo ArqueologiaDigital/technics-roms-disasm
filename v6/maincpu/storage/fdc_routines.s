@@ -84,40 +84,13 @@ FDC_WaitReady_Epilogue:
 ;   records status 1 (FDC_Set_Status). Basis: callers + body + twin -- FDC_SendParameterByte calls it before writing
 ;   each parameter byte to the data register; the bootloader twin is FDC_WaitComplete (table_data, header 'Wait for
 ;   the FDC parameter phase'), called by the bootloader's FDC_SendParameterByte.
-FDC_WaitParamByteReady:
-	push XIZ
-	ld iz, (SYSTEM_TIMESTAMP:16)
-	ldw QIZ, 0x0080
-	cpw QIZ, 0x0080
-	jr nz, .Lc_f967a6
-.Lc_f96780:
-FDC_WaitParamByteReady_Loop2:
-	calr FDC_Read_Status
-	and L,0x90
-	cp L,0x90
-	jr nz, .Lc_f9678e
-	ld QIZ,0
-.Lc_f9678e:
-FDC_WaitParamByteReady_Skip4:
-	ld wa, (SYSTEM_TIMESTAMP:16)
-	sub WA,IZ
-	cp WA,0x01f4
-	jr ule, .Lc_f9679f
-	ldw QIZ, 0xffff
-.Lc_f9679f:
-FDC_WaitParamByteReady_Skip5:
-	cpw QIZ, 0x0080
-	jr z, .Lc_f96780
-.Lc_f967a6:
-FDC_WaitParamByteReady_Skip6:
-	cp QIZ,0
-	jr z, .Lc_f967b0
-	ld wa, 1:i3
-	calr FDC_Set_Status
-.Lc_f967b0:
-FDC_WaitParamByteReady_Epilogue2:
-	pop XIZ
-	ret
+FDC_WaitParamByteReady:	.include "includes/generated/cc900/FDC_WaitParamByteReady.s"	; C: cc900/fdc_routines_m270_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_WaitParamByteReady_Loop2, FDC_WaitParamByteReady + 17
+	.set	FDC_WaitParamByteReady_Skip4, FDC_WaitParamByteReady + 31
+	.set	FDC_WaitParamByteReady_Skip5, FDC_WaitParamByteReady + 48
+	.set	FDC_WaitParamByteReady_Skip6, FDC_WaitParamByteReady + 55
+	.set	FDC_WaitParamByteReady_Epilogue2, FDC_WaitParamByteReady + 65
 FDC_INIT:	.include "includes/generated/cc900/FDC_INIT.s"	; C: cc900/fdc_routines_m270.c
 FDC_CONFIG_VERIFY:
 	push	xiz

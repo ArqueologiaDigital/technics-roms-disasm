@@ -9517,24 +9517,7 @@ Param_SignExtendReturn_Helper3_Helper2:
 MidiTable_NullRet:
 	ret
 
-MidiChan_ClearAllStates:
-	ld (0xbd00:16), 0
-	ld (0xbd02:16), 0
-	ld (0xbd04:16), 0
-	ld (0xbd06:16), 0
-	ld (0xbd08:16), 0
-	ld (0xbd0a:16), 0
-	ld (0xbd0c:16), 0
-	ld (0xbd0e:16), 0
-	ld (0xbd10:16), 0
-	ld (0xbd12:16), 0
-	ld (0xbd14:16), 0
-	ld (0xbd16:16), 0
-	ld (0xbd36:16), 0
-	ld (0xbd38:16), 0
-	calr MidiChan_SetStateMode
-	calr MidiChan_SetVoiceBaseState
-	jrl MidiSeq_ApplyPendingParams
+MidiChan_ClearAllStates:	.include "includes/generated/cc900/MidiChan_ClearAllStates.s"	; C: cc900/midi_dispatch_handlers_m285_b.c
 
 MidiChan_SetStateMode:	.include "includes/generated/cc900/MidiChan_SetStateMode.s"	; C: cc900/midi_dispatch_handlers_m285.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -11327,33 +11310,7 @@ SeqBuf_Timing_Data:
 
 MidiChan_ClearStorageFields:	.include "includes/generated/cc900/MidiChan_ClearStorageFields.s"	; C: cc900/midi_dispatch_handlers.c
 
-MidiChan_InitAllBufferPtrs:
-	lda xwa, (0xb7f4:16)
-	ld (MIDISEQ_ACTIVE_BLOCK_PTR:16), xwa
-	lda xbc, (0xbc6c:16)
-	ld (MIDISEQ_ACTIVE_BUF_PTR:16), xbc
-	lda xde, (0xb90c:16)
-	ld (MIDISEQ_SPARE_BLOCK_PTR:16), xde
-	lda xde, (0xbc7c:16)
-	ld (MIDISEQ_SPARE_BUF_PTR:16), xde
-	lda xde, (0xba24:16)
-	ld (0xbc5c:16), xde
-	lda xde, (0xbc8c:16)
-	ld (0xbcb4:16), xde
-	lda xde, (0xbb3c:16)
-	ld (0xbc60:16), xde
-	lda xde, (0xbc9c:16)
-	ld (0xbcb8:16), xde
-	calr ArpQueue_InitBuffer
-	ld xwa, (MIDISEQ_SPARE_BLOCK_PTR:16)
-	ld xbc, (MIDISEQ_SPARE_BUF_PTR:16)
-	calr ArpQueue_InitBuffer
-	ld xwa, (0xbc5c:16)
-	ld xbc, (0xbcb4:16)
-	calr ArpQueue_InitBuffer
-	ld xwa, (0xbc60:16)
-	ld xbc, (0xbcb8:16)
-	jr ArpQueue_InitBuffer
+MidiChan_InitAllBufferPtrs:	.include "includes/generated/cc900/MidiChan_InitAllBufferPtrs.s"	; C: cc900/midi_dispatch_handlers_m288.c
 
 ArpQueue_InitBuffer:	.include "includes/generated/cc900/ArpQueue_InitBuffer.s"	; C: cc900/midi_dispatch_handlers.c
 
@@ -12340,55 +12297,11 @@ SeqData_DispatchLoop_Body:
 SeqData_DispatchLoop_Check:
 	jp	SoundMode_ResetAllParams
 
-SeqData_DispatchLoop_Done:
-	dec 4, xsp
-	ld xiy, SeqData_OutTemplate
-	ld xix, xsp
-	ldi85
-	ldiw
-	ld wa, 0:i3
-	call AccWrap_ReturnZero
-	cp hl, 0xffff
-	jr z, ArpQueue_Flush_Return
-	bit 0, (0xb7e7:16)
-	jr nz, ArpQueue_Flush_Return
-	cp (CURRENT_TITLE:16), 87
-	jr z, ArpQueue_Flush_Return
-	ld a, (PANEL_MIDI:16)
-	and a, 0x14
-	jr nz, ArpQueue_Flush_Return
-	ld xwa, SysEx_Msg_35CC
-	ld bc, 3:i3
-	call SeqBuf_FlushNoteOffs
-	ld wa, (0xbd3a:16)
-	cp wa, 0x28
-	jr nc, SeqData_FormatOutput
-	ldw (0xbd3a:16), 40
-	jr SeqData_FormatOutput_Loop
-
-SeqData_FormatOutput:
-	cp wa, 0x12c
-	jr ule, SeqData_FormatOutput_Loop
-	ldw (0xbd3a:16), 300
-
-SeqData_FormatOutput_Loop:
-	lda xwa, (xsp)
-	ld bc, (0xbd3a:16)
-	and c, 0xf
-	ld (xwa), c
-	ld bc, (0xbd3a:16)
-	srl bc, 4
-	and c, 0x1f
-	ld (xwa + 1), c
-	ld bc, 3:i3
-	call ArpQueue_Enqueue
-	ld xwa, (0xbc5c:16)
-	call SeqOut_FlushTimedBuffer
-	call ArpQueue_SwapBuffers
-
-ArpQueue_Flush_Return:
-	inc 4, xsp
-	ret
+SeqData_DispatchLoop_Done:	.include "includes/generated/cc900/SeqData_DispatchLoop_Done.s"	; C: cc900/midi_dispatch_handlers_m289.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqData_FormatOutput, SeqData_DispatchLoop_Done + 76
+	.set	SeqData_FormatOutput_Loop, SeqData_DispatchLoop_Done + 88
+	.set	ArpQueue_Flush_Return, SeqData_DispatchLoop_Done + 130
 
 SeqData_FormatOutput_Dispatch:
 	; --- Input validation and dispatch (106 bytes, 2 functions) ---
