@@ -881,3 +881,4 @@ SetWallColor	43	2026-11-19-37-p6-r47	p6_L_5m271a@O3XSXr p6_L_5m271a@O3Xr p6_L_5m
 SndParam_RelocateAndApply	109	2026-11-19-37-p6-r47	p6_L_5m285b@O3XSXr p6_L_5m285b@O3Xr
 SongPlayer_ResetState	67	2026-11-19-37-p6-r47	p6_N_5m302a@Xr
 TtlScreenProc	94	2026-11-19-37-p6-r47	p6_L_5m271a@O3XSXr p6_L_5m271a@O3Xr
+Test_LCD_Controller_IC206	77	2026-11-19-29-p6-r46 (resolver fix re-check)	p6_L_4m276a@O3XSXr p6_L_4m276a@O3Xr p6_L_4m276a@Xr
