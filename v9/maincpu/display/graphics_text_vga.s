@@ -794,23 +794,7 @@ ColorBlit_ComputeRectAndBlit:
 	inc 8, xsp
 	ret
 
-ColorBlit_ByteData:
-	dec	8, xsp
-	lda	xbc, (xsp)
-	ld	de, (xwa+2)
-	ld	(xbc), de
-	ld	de, (xwa+4)
-	ld	(xbc+2), de
-	ld	de, (xwa+6)
-	ld	(xbc+4), de
-	ld	wa, (xwa+8)
-	ld	(xbc+6), wa
-	ld	de, (GFX_BG_COLOR:24)
-	ld	xwa, xbc
-	ld	bc, de
-	calr	ColorBlit2
-	inc	8, xsp
-	ret
+ColorBlit_ByteData:	.include "includes/generated/cc900/ColorBlit_ByteData.s"	; C: cc900/graphics_text_vga_m273_b.c
 
 DrawText_ExtendedLayout:
 	lda xsp, (xsp-284)
