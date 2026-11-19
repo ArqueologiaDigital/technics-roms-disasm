@@ -241,6 +241,12 @@ run 2026-11-19-69-sub-r36q).**  voice_params_and_tvf_ap_35a.c (helper AP: the co
 through a struct cast on the record's byte address, which gives the ROM's `lda xbc,(xbc+wa)`): 724 B per tree; **583
 functions per tree** built from C.
 
+**Twentieth promotion: the Voice_Level_ComputeTriplet span, five functions (2026-11-19; matched in run
+2026-11-19-84-sub-r39r on their first attempt, verified per tree in run 2026-11-19-87-sub-r39s-staged).**
+voice_params_and_tvf_ar_39a.c (helper AR): Voice_Level_ComputeTriplet, TVF_Build_Full, Voice_PitchPack_Mode2 / _Mode3 /
+_Mode4_Single.  The pool's 1,389-byte "Voice_Level_ComputeTriplet" was five functions: TVF_Build_Dispatch calls four
+of its inner labels.  1,389 B per tree; **588 functions per tree** built from C.
+
 **Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
 V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
 on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding
