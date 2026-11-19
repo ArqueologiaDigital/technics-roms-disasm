@@ -18,10 +18,24 @@ NM = os.path.expanduser('~/compartilhado/llvm-project/build/bin/llvm-nm')
 EQU = re.compile(r'^\s*\.equ\s+((?:EVT|NAKA|TITLE)_\w+),\s*(0x[0-9a-fA-F]+|\d+)\b')
 
 
+def event_codes(elf):
+    """the event_codes.s the ELF's tree assembles: the tree's own shared/event_codes.s when it has one (v1.15i and
+    v1.10i number some HD-AE5000 messages differently, 2026-11-19), else hdae5000/shared/event_codes.s"""
+    # the trees' llvm-mc -I order (Makefile): v1.10i reads v1.15i's shared/ before hdae5000's
+    chain = {'v2_01i': ['hdae5000_v2_01i'], 'v1_15i': ['hdae5000_v1_15i'],
+             'v1_10i': ['hdae5000_v1_10i', 'hdae5000_v1_15i']}
+    m = re.match(r'hd-ae5000_(v\d+_\d+i)\.llvm\.elf$', os.path.basename(elf))
+    for tree in chain.get(m.group(1), []) if m else []:
+        own = os.path.join(REPO, tree, 'shared', 'event_codes.s')
+        if os.path.exists(own):
+            return own
+    return os.path.join(REPO, 'hdae5000', 'shared', 'event_codes.s')
+
+
 def main():
     print('/* HD-AE5000 UI object ids and event codes (gen_ids_header.py) */')
     seen = set()
-    for l in open(os.path.join(REPO, 'hdae5000', 'shared', 'event_codes.s'), encoding='latin-1'):
+    for l in open(event_codes(sys.argv[1]), encoding='latin-1'):
         m = EQU.match(l)
         if m and m.group(1) not in seen and len(m.group(1)) <= 31:
             seen.add(m.group(1))

@@ -1198,15 +1198,7 @@ HDAE5000_HDAETitleFunc_ObjIds:
 ; .Lri_jt_base of the case for value 2+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_HDAETitleFunc_CaseTable:
-	.short	.Lri_jt_base - .Lri_jt_base	; 2
-	.short	.Lri_done - .Lri_jt_base	; 3 (default)
-	.short	.Lri_done - .Lri_jt_base	; 4 (default)
-	.short	.Lri_done - .Lri_jt_base	; 5 (default)
-	.short	.Lri_case6 - .Lri_jt_base	; 6
-	.short	.Lri_done - .Lri_jt_base	; 7 (default)
-	.short	.Lri_case8 - .Lri_jt_base	; 8
-	.short	.Lri_case9 - .Lri_jt_base	; 9
+HDAE5000_HDAETitleFunc_CaseTable:	.include "includes/generated/cc900/HDAE5000_HDAETitleFunc_CaseTable.s"	; C: cc900/hdae5000_drv_screens6.c (cc900-data)
 HDAE5000_Str_Chr2020203A2020:
 	; read by DirList_BuildPage at 0x283732 (lda operand)
 	.asciz "   :                \t"
@@ -1890,14 +1882,7 @@ HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2:
 ; HDAE5000_Lbn_ShowEntry_NoDigitTyped of the case for value 0+i; 7 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_Lbn_ShowEntry_CaseTable:
-	.short	HDAE5000_Lbn_ShowEntry_NoDigitTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 0
-	.short	HDAE5000_Lbn_ShowEntry_DirHundredsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 1
-	.short	HDAE5000_Lbn_ShowEntry_DirTensTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 2
-	.short	HDAE5000_Lbn_ShowEntry_DirUnitsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 3
-	.short	HDAE5000_Lbn_ShowEntry_SongTensTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 4
-	.short	HDAE5000_Lbn_ShowEntry_SongUnitsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 5
-	.short	HDAE5000_Lbn_ShowEntry_Reset - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 6
+HDAE5000_Lbn_ShowEntry_CaseTable:	.include "includes/generated/cc900/HDAE5000_Lbn_ShowEntry_CaseTable.s"	; C: cc900/hdae5000_lbn_show.c (cc900-data)
 HDAE5000_Str_Blank26:
 	; read by FileLBNNameCheck at 0x2875C4 (pushed operand)
 	.asciz "                          "
