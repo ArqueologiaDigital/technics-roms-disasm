@@ -1,0 +1,4 @@
+function	bytes	matches	best_diff
+DSP_Reinit_VoiceSlots	356	-	+7 sub_AP_32c@Xr
+VoiceParam_Update	721	-	+83 sub_AL_32c@Xr
+Voice_Reset_Engine	725	-	+15 sub_AP_32c@Xr

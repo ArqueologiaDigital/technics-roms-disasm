@@ -1,0 +1,6 @@
+function	bytes	matches	best_diff
+DSP_SetCoeff_FullPipeline	382	-	+18 sub_AL_29c@Xr
+VoiceState_FullReset	366	-	+9 sub_AP_29c@Xr
+VoiceState_SwapSlot_DE_BC	173	-	+6 sub_AP_29c@Xr
+VoiceState_SwapSlot_HL_IY	261	-	+6 sub_AP_29c@Xr
+WaveSel_StageA1_FindVelSplit	356	-	+0 sub_AL_29c@Xr
