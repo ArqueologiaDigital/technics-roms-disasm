@@ -34,6 +34,7 @@ v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects.c	430fc493b680dbfc27
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects.c	430fc493b680dbfc2788d99596f26098bb9f5f00ce24d2f2100d4305f94a8f4c	Xr	2026-11-16-73-sub-r6	EFF_MuteLoop	120	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects.c	430fc493b680dbfc2788d99596f26098bb9f5f00ce24d2f2100d4305f94a8f4c	Xr	2026-11-16-73-sub-r6	Task3_EnterDspApplyLoop	4	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects.c	430fc493b680dbfc2788d99596f26098bb9f5f00ce24d2f2100d4305f94a8f4c	Xr	2026-11-16-73-sub-r6	Unsigned_Max_Select	9	MATCH
+v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-19-31-sub-r26s-staged	Audio_Process_DSP	1409	DIFF at +24
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	CalcSampleAddr	43	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_AntiReset_WithDebug	33	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_Mute_WithDebug	51	MATCH
@@ -579,6 +580,8 @@ v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	a37add49af078a28de97
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	a37add49af078a28de9716956c77c27c5f411d7825833dbcef37b3006c208cc3	Xr	2026-11-18-32-sub-r21g-staged	Voice_Part_Assign	48	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_am_23a.c	78627a5275b6fcb12f73a5af643c17783257585b7865cd4bd39bdc13f876c528	Xr	2026-11-19-12-sub-r23s-staged	NoteOn_RoutePacket	403	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ap_24b.c	3558cf8c0cba6135142124c2eb27c2d1f07dd5e135ba2ae530a7d7f0529a68f6	Xr	2026-11-19-25-sub-r24s-staged	Voice_StereoLevel_Compute	625	MATCH
+v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ap_26a.c	934302d23d5f82c239be09d2b32727b0579a4609be3d81efa654edbf5b46fe01	Xr	2026-11-19-31-sub-r26s-staged	Voice_Freq_WriteLeft	284	MATCH
+v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ap_26a.c	934302d23d5f82c239be09d2b32727b0579a4609be3d81efa654edbf5b46fe01	Xr	2026-11-19-31-sub-r26s-staged	Voice_Pitch_Compute	645	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_b.c	f23ea0b547874af6079560761c13e9031605c4b19fb6f741ee61746fb0b55c84	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple	65	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_b.c	f23ea0b547874af6079560761c13e9031605c4b19fb6f741ee61746fb0b55c84	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple_Dup	65	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_b_runtime.c	80782105b6903a780f29208dec22d99907e086f2b246c5ffb233862fee5f0581	Xr	2026-11-16-89-sub-staged3	EGEnv_Compute_A_Simple	65	MATCH
@@ -631,6 +634,7 @@ v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b90571
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b9057102e9b06688a364629ad37d22630ffd415a8d110dd17d6a	Xr	2026-11-16-73-sub-r6	EFF_MuteLoop	120	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b9057102e9b06688a364629ad37d22630ffd415a8d110dd17d6a	Xr	2026-11-16-73-sub-r6	Task3_EnterDspApplyLoop	4	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b9057102e9b06688a364629ad37d22630ffd415a8d110dd17d6a	Xr	2026-11-16-73-sub-r6	Unsigned_Max_Select	9	MATCH
+v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-19-31-sub-r26s-staged	Audio_Process_DSP	1409	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	CalcSampleAddr	43	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_AntiReset_WithDebug	33	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_Mute_WithDebug	51	MATCH
@@ -1176,6 +1180,8 @@ v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	3a0df380df456a482e00
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	3a0df380df456a482e00c3dd555aec5e877379c245f449a5bbcd77f1ad05b354	Xr	2026-11-18-32-sub-r21g-staged	Voice_Part_Assign	48	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_am_23a.c	78627a5275b6fcb12f73a5af643c17783257585b7865cd4bd39bdc13f876c528	Xr	2026-11-19-12-sub-r23s-staged	NoteOn_RoutePacket	403	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ap_24b.c	a6682bf89f892a878a85ad585be0ad790dd3d40a705715fc0d6bcf0ffa9a93b9	Xr	2026-11-19-25-sub-r24s-staged	Voice_StereoLevel_Compute	625	MATCH
+v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ap_26a.c	f49d9469af9cd7896a455a54768861c5627fbb32f66860d23e9ad72d40c9fd82	Xr	2026-11-19-31-sub-r26s-staged	Voice_Freq_WriteLeft	284	MATCH
+v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ap_26a.c	f49d9469af9cd7896a455a54768861c5627fbb32f66860d23e9ad72d40c9fd82	Xr	2026-11-19-31-sub-r26s-staged	Voice_Pitch_Compute	645	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_b.c	b4e64fa39e2988d6a507541ded90090516e08b6cdb2e60bee77d62f3e2f3aa06	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple	65	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_b.c	b4e64fa39e2988d6a507541ded90090516e08b6cdb2e60bee77d62f3e2f3aa06	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple_Dup	65	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_b_runtime.c	428a817bbc5d9685715684d5825a9eadb68c4e76e109de7847ad4b326725c063	Xr	2026-11-16-89-sub-staged3	EGEnv_Compute_A_Simple	65	MATCH
@@ -1228,6 +1234,7 @@ v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7493450e6c420bc251f838a3f67c8af90ef7f3147015607	Xr	2026-11-16-73-sub-r6	EFF_MuteLoop	120	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7493450e6c420bc251f838a3f67c8af90ef7f3147015607	Xr	2026-11-16-73-sub-r6	Task3_EnterDspApplyLoop	4	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7493450e6c420bc251f838a3f67c8af90ef7f3147015607	Xr	2026-11-16-73-sub-r6	Unsigned_Max_Select	9	MATCH
+v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-19-31-sub-r26s-staged	Audio_Process_DSP	1409	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	CalcSampleAddr	43	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_AntiReset_WithDebug	33	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_Mute_WithDebug	51	MATCH
@@ -1772,6 +1779,8 @@ v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	cbe5972e34a6e8dc3dd4
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	cbe5972e34a6e8dc3dd469d5058e8c0400ad9376363f0bfb1f6ae45270c58621	Xr	2026-11-18-32-sub-r21g-staged	Voice_Part_Assign	48	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_am_23a.c	78627a5275b6fcb12f73a5af643c17783257585b7865cd4bd39bdc13f876c528	Xr	2026-11-19-12-sub-r23s-staged	NoteOn_RoutePacket	403	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ap_24b.c	d737c76413c126f263d68ee97e1e847b5eae3f594ccedebf84e73a9b41046ff6	Xr	2026-11-19-25-sub-r24s-staged	Voice_StereoLevel_Compute	625	MATCH
+v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ap_26a.c	d11b953705d733eca37fd34a39248d2b5052b4db9a69b21cc50f19fed6fa718f	Xr	2026-11-19-31-sub-r26s-staged	Voice_Freq_WriteLeft	284	MATCH
+v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ap_26a.c	d11b953705d733eca37fd34a39248d2b5052b4db9a69b21cc50f19fed6fa718f	Xr	2026-11-19-31-sub-r26s-staged	Voice_Pitch_Compute	645	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_b.c	f098712c92cc26a539e16db4ca37b1549b707b35c9d434b0b1abb575910aa77c	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple	65	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_b.c	f098712c92cc26a539e16db4ca37b1549b707b35c9d434b0b1abb575910aa77c	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple_Dup	65	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_b_runtime.c	e33e40df5164498b0af61e3d0127701726543262fad890abb1b8b4d495821065	Xr	2026-11-16-89-sub-staged3	EGEnv_Compute_A_Simple	65	MATCH

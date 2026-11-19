@@ -213,6 +213,17 @@ built DSP_VoiceCoeffRoute2) and Voice_StereoLevel_Compute (625 B, its IZ int a p
 in run 2026-11-19-28-sub-r25s-staged).**  439 B per tree (helper AL, round 25: the frame order rec, t, keys and the
 key stores value first); **575 functions per tree** built from C (`c_duplicates.py`).
 
+**Fourteenth promotion: Voice_Freq_WriteLeft and Voice_Pitch_Compute (2026-11-19; matched in run
+2026-11-19-30-sub-r26a, verified per tree in run 2026-11-19-31-sub-r26s-staged).**  voice_params_and_tvf_ap_26a.c
+(helper AP): 929 B per tree; **577 functions per tree** built from C (`c_duplicates.py`).
+
+**Held back: Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c.c).**  It matches v142 and v141 (run -31) but not
+v140 (DIFF at +24): in v1.40 the function is 1,491 bytes, because DSP_Cmd2B_SetParam is 82 bytes longer and the
+reply / write paths differ (scripts/generators/create_v140_subcpu_source.py's edits 2-4).  v140's source is v141's
+text with those byte-string edits applied, so splicing the function into v142 / v141 would remove the text the edits
+rewrite.  It stays in `<tree>/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c` until v140 gets C of its
+own for that span (a v1.40 form of the 0x2B SetParam case) and its generator learns to keep it.
+
 ### The firmware's inline assembly is `__asm` (round 23, runs 2026-11-19-7, -8 and -10)
 
 V4.23 knows two spellings of inline assembly and treats them differently.  With `__ASM("...")` it assumes the block
