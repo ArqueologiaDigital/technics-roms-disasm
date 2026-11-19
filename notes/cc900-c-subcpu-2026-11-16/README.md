@@ -221,6 +221,11 @@ key stores value first); **575 functions per tree** built from C (`c_duplicates.
 tree in run 2026-11-19-38-sub-r27s-staged).**  dsp_voice_params_al_27a.c (helper AL: path 1's +4 as a member of a
 struct cast, idiom (z)): 154 B per tree; **578 functions per tree** built from C (`c_duplicates.py`).
 
+**Sixteenth promotion: DSP_SetCoeff_FullPipeline (2026-11-19; matched in run 2026-11-19-45-sub-r30a, verified per
+tree in run 2026-11-19-47-sub-r30s-staged).**  dsp_voice_params_al_30a.c (helper AL: ToneDB_Find_SubToneRecord called
+first and the row offset added in place, `e` a plain char read as `(unsigned char)e`): 384 B per tree; **579
+functions per tree** built from C (`c_duplicates.py`).
+
 **Held back: Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c.c).**  It matches v142 and v141 (run -31) but not
 v140 (DIFF at +24): in v1.40 the function is 1,491 bytes, because DSP_Cmd2B_SetParam is 82 bytes longer and the
 reply / write paths differ (scripts/generators/create_v140_subcpu_source.py's edits 2-4).  v140's source is v141's
