@@ -1,0 +1,120 @@
+#!/usr/bin/env python3
+"""Which v2.06i functions built from C (hdae5000/cc900/*.c) does V4.23 reproduce in the older HD-AE5000 images too,
+with each older tree's OWN object ids?  Stage them per tree.
+
+QUESTION ANSWERED (2026-11-19): until then the older trees' cc900/hdae_ids.h was a copy of v2.06i's, so every
+`OBJ_*` name in ported C carried a v2.06i object id; the older images number their UI objects differently (the
+ui tree differs), and port_staged.py could only port functions that name no object.  With each tree's header
+written by gen_ids_header.py from that tree's own ELF, run 2026-11-19-14-hd-r61-ids-ports compiled the v2.06i
+C once per older tree (the C files laid out as <tree>/cc900-staged/ with the tree's header beside them) and this
+checks that run, per older image, and writes <tree>/cc900-staged/<stem>.c with the functions of
+hdae5000/cc900/<stem>.c that MATCH there and are not built in the tree yet -- plus, when the tree already has a
+cc900/<stem>.c, every function that file builds, so that promote_hd.py (which rewrites cc900/<stem>.c from the
+staged file) keeps them.  A function built in the tree from a C file of another name is left out.  It also copies
+the tree's cc900/hdae_ids.h and hdae_ws.h into its cc900-staged/ (hd_v423.py --corpus reads the header beside the
+C first), and lists any built function of a same-named file that does not match in the run (it must be fixed in
+the staged copy by hand before the staged run).
+
+    python3 -B notes/cc900-c-hdae5000-2026-11-16/port_built.py RUN_DIR [--dry-run]
+        RUN_DIR: an oracle run that compiled hdae5000/cc900/*.c as <tree>/<stem>.c (corpus directory per tree) with
+        each tree's own header; their text must not have changed since.
+Run from the repository root with $TMPDIR set.  The staged files are then rechecked and recorded by a run of their
+own (hd_v423.py --check RUN --dir TREE --image IMG --record).
+"""
+import os, re, shutil, subprocess, sys
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+REPO = os.path.abspath(os.path.join(HERE, '..', '..'))
+sys.path.insert(0, HERE)
+import stage_from_probe as sp                                # noqa: E402
+
+PORTS = [('v2.01i', 'hdae5000_v2_01i'), ('v1.15i', 'hdae5000_v1_15i'), ('v1.10i', 'hdae5000_v1_10i')]
+INC = re.compile(rb'^([A-Za-z_]\w*):\s*\.include\s+"includes/generated/cc900/')
+NAME_RE = re.compile(r'cc900-name:\s*(\w+)\s*=\s*(\w+)')
+
+
+def built(tree):
+    """{label} of the functions TREE builds from C (its hand source's `.include` of generated cc900 bodies)"""
+    out = set()
+    for f in os.listdir(os.path.join(REPO, tree)):
+        if f.endswith('.s'):
+            for l in open(os.path.join(REPO, tree, f), 'rb'):
+                m = INC.match(l)
+                if m and b'(cc900-data' not in l:
+                    out.add(m.group(1).decode())
+    return out
+
+
+def labels_of(path):
+    """{C name: tree label} of the functions a C file defines"""
+    text = open(path, encoding='latin-1').read()
+    lab = dict(NAME_RE.findall(text))
+    return {n: lab.get(n, n) for k, n, _ in sp.split(text) if k == 'fn'}
+
+
+def matches(run, image, tree, stems):
+    """{(file stem, C name)} that MATCH exactly in IMAGE (calr matches are left out)"""
+    tsv = os.path.join(os.environ['TMPDIR'], 'port_built_%s.tsv' % image)
+    cmd = [sys.executable, '-B', os.path.join(HERE, 'hd_v423.py'), '--check', run, '--image', image, '--dir', tree,
+           '--tsv', tsv]
+    for s in stems:
+        cmd += ['--csrc', '%s=%s' % (s, os.path.join(REPO, 'hdae5000', 'cc900', s + '.c'))]
+    subprocess.run(cmd, cwd=REPO, capture_output=True, check=True)
+    ok = set()
+    for l in open(tsv).read().split('\n')[1:]:
+        f = l.split('\t')
+        if len(f) == 5 and f[4] == 'MATCH':
+            stem, _, cname = f[0].partition(':')
+            ok.add((stem, cname or f[2]))
+    os.remove(tsv)
+    return ok
+
+
+def main():
+    if len(sys.argv) < 2:
+        sys.exit(__doc__)
+    if not os.environ.get('TMPDIR'):             # house rule: scratch goes under $TMPDIR, never /tmp
+        sys.exit('port_built.py: TMPDIR is not set (scratch goes to $TMPDIR, never /tmp)')
+    run, dry = sys.argv[1], '--dry-run' in sys.argv
+    src_dir = os.path.join(REPO, 'hdae5000', 'cc900')
+    stems = sorted(f[:-2] for f in os.listdir(src_dir) if f.endswith('.c'))
+    for image, tree in PORTS:
+        ok = matches(run, image, tree, stems)
+        have = built(tree)
+        out_dir = os.path.join(REPO, tree, 'cc900-staged')
+        n_new = 0
+        for stem in stems:
+            fns = labels_of(os.path.join(src_dir, stem + '.c'))
+            # a file named after v2.06i's own hand source (hd-ae5000_v2_06i.s) is the older tree's file named
+            # after ITS hand source (hd-ae5000_v2_01i.s ...)
+            ostem = stem.replace('hd-ae5000_v2_06i', 'hd-ae5000_' + tree.split('_', 1)[1])
+            same = os.path.join(REPO, tree, 'cc900', ostem + '.c')
+            kept_old = set(labels_of(same).values()) if os.path.exists(same) else set()
+            keep, broken = set(), []
+            for cname, lab in fns.items():
+                if lab in kept_old:
+                    keep.add(cname)
+                    if (stem, cname) not in ok:
+                        broken.append(lab)
+                elif (stem, cname) in ok and lab not in have:
+                    keep.add(cname)
+            new = sorted(fns[c] for c in keep if fns[c] not in kept_old)
+            if not new:
+                continue
+            n_new += len(new)
+            print('%s %s.c: %d new %s%s' % (tree, ostem, len(new), ' '.join(new),
+                                           ('; BUILT, NOT MATCHING: ' + ' '.join(broken)) if broken else ''))
+            if dry:
+                continue
+            os.makedirs(out_dir, exist_ok=True)
+            for h in ('hdae_ids.h', 'hdae_ws.h'):
+                shutil.copyfile(os.path.join(REPO, tree, 'cc900', h), os.path.join(out_dir, h))
+            what = ('%s: the functions of hdae5000/cc900/%s.c that V4.23 reproduces in HD-AE5000 %s with the tree\'s '
+                    'own object ids (port_built.py).' % (tree, stem, image))
+            sys.argv = ['x', os.path.join(src_dir, stem + '.c'), os.path.join(out_dir, ostem + '.c'), what] + sorted(keep)
+            sp.main()
+        print('%s: %d new functions' % (tree, n_new))
+
+
+if __name__ == '__main__':
+    main()

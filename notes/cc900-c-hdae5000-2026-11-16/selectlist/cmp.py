@@ -7,6 +7,9 @@ Usage: cmp.py SHOWFILE OUTDIR TAG   (writes OUTDIR/gen_TAG.bin, prints a unified
        cmp.py SHOWFILE OUTDIR TAG LABEL   (any other v2.06i function: address from the symbols reference, size
                                            from survey.tsv)
        cmp.py SHOWFILE OUTDIR TAG LABEL SIZE   (SIZE bytes from LABEL: a procedure the survey split into pieces)
+       --image v2.01i|v1.15i|v1.10i (anywhere, 2026-11-19): compare with that older image instead, the label's
+       address from its tree's symbols reference (give SIZE: survey.tsv is v2.06i's); the SHOW dump must then be
+       `hd_v423.py --show ... --image` of the same image
 """
 import difflib
 import re
@@ -14,6 +17,8 @@ import subprocess
 import sys
 
 ROM = "original_ROMs/hd-ae5000_v2_06i.ic4"
+SYMS = "symbols/hdae5000_symbols_reference.txt"
+OLDER = {"v2.01i": "hdae5000_v2_01i", "v1.15i": "hdae5000_v1_15i", "v1.10i": "hdae5000_v1_10i"}
 UNIDASM = "../../tools/unidasm"
 OFS, SIZE = 0x7D9, 2641
 
@@ -42,7 +47,7 @@ def dis(path, skip, count):
 def label_range(label):
     """(ROM offset, size) of a v2.06i function: its address from the symbols reference, its size from survey.tsv"""
     global OFS, SIZE
-    for l in open("symbols/hdae5000_symbols_reference.txt"):
+    for l in open(SYMS):
         c = l.split()
         if len(c) == 2 and c[0] == label:
             OFS = int(c[1], 16) - 0x280000
@@ -53,6 +58,13 @@ def label_range(label):
 
 
 def main():
+    global ROM, SYMS
+    if "--image" in sys.argv:      # an older image: its reference copy and symbols
+        i = sys.argv.index("--image")
+        tree = OLDER[sys.argv[i + 1]]
+        ROM = "original_ROMs/hd-ae5000_%s.ic4" % tree.split("_", 1)[1]
+        SYMS = "symbols/%s_symbols_reference.txt" % tree
+        del sys.argv[i:i + 2]
     show, outdir, tag = sys.argv[1:4]
     if len(sys.argv) > 4:          # another function than SelectListProc: cmp.py SHOW OUTDIR TAG LABEL [SIZE]
         label_range(sys.argv[4])
