@@ -21,6 +21,8 @@ the staged copy by hand before the staged run).
         name (a RAM cell, or a string whose label is longer than cc900's 31 characters) is moved to the older
         tree's address of the label at that v2.06i address (labels and .equ values from the trees' ELFs), else of
         the nearest label below it plus the same distance; prints per tree how many cells each way found.
+        --extra TSV (with --remap): learn_remap.py's table of addresses read from near misses, for the cells
+        neither label rule moves.
     python3 -B notes/cc900-c-hdae5000-2026-11-16/port_built.py RUN_DIR [--dry-run] [--remap]
         RUN_DIR: an oracle run that compiled hdae5000/cc900/*.c as <tree>/<stem>.c (corpus directory per tree) with
         each tree's own header (--layout); their text must not have changed since.  --remap: the run compiled the
@@ -85,7 +87,7 @@ def main():
         sys.exit('port_built.py: TMPDIR is not set (scratch goes to $TMPDIR, never /tmp)')
     remap = '--remap' in sys.argv
     if sys.argv[1] == '--layout':
-        layout(sys.argv[2], remap)
+        layout(sys.argv[2], remap, sys.argv[sys.argv.index('--extra') + 1] if '--extra' in sys.argv else None)
         return
     run, dry = sys.argv[1], '--dry-run' in sys.argv
     src_dir = os.path.join(REPO, 'hdae5000', 'cc900')
@@ -149,7 +151,7 @@ def symbols(tree):
     return by_name, by_addr
 
 
-def remap_text(text, old_names, old_addrs, new_names, log):
+def remap_text(text, old_names, old_addrs, new_names, log, extra=None):
     """TEXT with each ram_<hex> of a v2.06i address moved to the older tree's: by a label at that address that the
     tree also defines (all such labels agreeing), else by the nearest label below it (within 256 bytes) plus the
     same distance.  A cell neither finds is left as it is; LOG collects (old, new, how)."""
@@ -167,6 +169,11 @@ def remap_text(text, old_names, old_addrs, new_names, log):
                 cand = {new_names[n] + a - below[i] for n in old_addrs[below[i]] if n in new_names}
                 i -= 1
             if len(cand) != 1:
+                # learn_remap.py's table, read from the near misses of a run of this remapped layout: only for a
+                # cell no label moves, which that run therefore spelled with its v2.06i address
+                if extra and a in extra:
+                    log.append((a, extra[a], 'learned'))
+                    return 'ram_%06x' % extra[a]
                 log.append((a, None, 'unmapped'))
                 return m.group(0)
         b = cand.pop()
@@ -189,7 +196,17 @@ def remapped_dir(tree):
     return os.path.join(os.environ['TMPDIR'], 'cc900-tab', 'lane_hd', 'port_built', tree)
 
 
-def layout(out, remap):
+def learned(path, tree):
+    """{v2.06i address: tree address} of learn_remap.py's table for TREE"""
+    out = {}
+    for l in open(path) if path else []:
+        f = l.rstrip('\n').split('\t')
+        if len(f) >= 3 and f[0] == tree:
+            out[int(f[1], 16)] = int(f[2], 16)
+    return out
+
+
+def layout(out, remap, extra_path=None):
     """OUT/<tree>/cc900-staged/<stem>.c for each older tree: hdae5000/cc900/*.c (ram_ addresses remapped with
     --remap) with the tree's own headers beside them, the layout an oracle corpus is made from
     (hd_v423.py --corpus DIR Xr OUT/*/cc900-staged/*.c); with --remap the same text goes to remapped_dir(tree),
@@ -198,7 +215,8 @@ def layout(out, remap):
     old_names, old_addrs = symbols('hdae5000')
     for image, tree in PORTS:
         new_names, _ = symbols(tree)
-        dirs = [os.path.join(out, tree, 'cc900-staged')] + ([remapped_dir(tree)] if remap else [])
+        extra = learned(extra_path, tree)
+        dirs =[os.path.join(out, tree, 'cc900-staged')] + ([remapped_dir(tree)] if remap else [])
         for d in dirs:
             os.makedirs(d, exist_ok=True)
             for h in ('hdae_ids.h', 'hdae_ws.h'):
@@ -208,7 +226,7 @@ def layout(out, remap):
             if f.endswith('.c'):
                 text = open(os.path.join(src_dir, f), encoding='latin-1').read()
                 if remap:
-                    text = remap_text(text, old_names, old_addrs, new_names, log)
+                    text = remap_text(text, old_names, old_addrs, new_names, log, extra)
                 for d in dirs:
                     open(os.path.join(d, f), 'w', encoding='latin-1').write(text)
         cells = {}
