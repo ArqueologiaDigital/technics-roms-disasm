@@ -93,6 +93,7 @@ v140	v140/subcpu/cc900-staged/dsp_algo_select.c	f46c3d994962f5247c7e5236ece5400b
 v140	v140/subcpu/cc900-staged/dsp_algo_select.c	f46c3d994962f5247c7e5236ece5400bcfd95bb52f0af28910263f2537aa1301	Xr	2026-11-16-73-sub-r6	DSP_CopyCoeffs_TypeB	67	MATCH
 v140	v140/subcpu/cc900-staged/dsp_algo_select.c	f46c3d994962f5247c7e5236ece5400bcfd95bb52f0af28910263f2537aa1301	Xr	2026-11-16-73-sub-r6	DSP_RouteCoeffs_TypeA	163	MATCH
 v140	v140/subcpu/cc900-staged/dsp_algo_select.c	f46c3d994962f5247c7e5236ece5400bcfd95bb52f0af28910263f2537aa1301	Xr	2026-11-16-73-sub-r6	DSP_RouteCoeffs_TypeB	163	MATCH
+v140	v140/subcpu/cc900-staged/dsp_algo_select_ap_24a.c	8f5fe9f487809d922aaa2aa6141b2065aa885b0d9ec05ebf9f526dacd0768ab6	Xr	2026-11-19-25-sub-r24s-staged	DSP_VoiceCoeffRoute	365	MATCH
 v140	v140/subcpu/cc900-staged/dsp_algo_select_b_7j.c	8a695d3e0aa42f3b0a7caf01b1e6dec82872b2d55d03b4a7ac3717136bbcbbb8	Xr	2026-11-16-89-sub-staged3	DSP_AlgoSelect	138	MATCH
 v140	v140/subcpu/cc900-staged/dsp_algo_select_l_16a.c	5bf8192290e6b47ef8701892a40f1cb595a9b95155d1a84ff32b91fe35a475dd	Xr	2026-11-16-114-sub-staged4	DSP_MixSendConfig	32	MATCH
 v140	v140/subcpu/cc900-staged/dsp_algo_select_t_18c.c	2d716a344d5e54fa1316c60b17cf9388fdc61c554ba346bfd4ca17e19a133f40	Xr	2026-11-17-9-sub-staged6	DSP_VoiceCoeffRoute2	430	MATCH
@@ -576,6 +577,7 @@ v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ah_20a.c	eb116882d5a5f867232e
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	a37add49af078a28de9716956c77c27c5f411d7825833dbcef37b3006c208cc3	Xr	2026-11-18-32-sub-r21g-staged	Voice_OpSlot_WriteParams	394	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	a37add49af078a28de9716956c77c27c5f411d7825833dbcef37b3006c208cc3	Xr	2026-11-18-32-sub-r21g-staged	Voice_Part_Assign	48	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_am_23a.c	78627a5275b6fcb12f73a5af643c17783257585b7865cd4bd39bdc13f876c528	Xr	2026-11-19-12-sub-r23s-staged	NoteOn_RoutePacket	403	MATCH
+v140	v140/subcpu/cc900-staged/voice_params_and_tvf_ap_24b.c	3558cf8c0cba6135142124c2eb27c2d1f07dd5e135ba2ae530a7d7f0529a68f6	Xr	2026-11-19-25-sub-r24s-staged	Voice_StereoLevel_Compute	625	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_b.c	f23ea0b547874af6079560761c13e9031605c4b19fb6f741ee61746fb0b55c84	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple	65	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_b.c	f23ea0b547874af6079560761c13e9031605c4b19fb6f741ee61746fb0b55c84	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple_Dup	65	MATCH
 v140	v140/subcpu/cc900-staged/voice_params_and_tvf_b_runtime.c	80782105b6903a780f29208dec22d99907e086f2b246c5ffb233862fee5f0581	Xr	2026-11-16-89-sub-staged3	EGEnv_Compute_A_Simple	65	MATCH
@@ -687,6 +689,7 @@ v141	v141/subcpu/cc900-staged/dsp_algo_select.c	8a976009fb7f8b0a39e6a34c0da224dd
 v141	v141/subcpu/cc900-staged/dsp_algo_select.c	8a976009fb7f8b0a39e6a34c0da224dd2845967ee6b11e3d8b7c6d1d84323d1f	Xr	2026-11-16-73-sub-r6	DSP_CopyCoeffs_TypeB	67	MATCH
 v141	v141/subcpu/cc900-staged/dsp_algo_select.c	8a976009fb7f8b0a39e6a34c0da224dd2845967ee6b11e3d8b7c6d1d84323d1f	Xr	2026-11-16-73-sub-r6	DSP_RouteCoeffs_TypeA	163	MATCH
 v141	v141/subcpu/cc900-staged/dsp_algo_select.c	8a976009fb7f8b0a39e6a34c0da224dd2845967ee6b11e3d8b7c6d1d84323d1f	Xr	2026-11-16-73-sub-r6	DSP_RouteCoeffs_TypeB	163	MATCH
+v141	v141/subcpu/cc900-staged/dsp_algo_select_ap_24a.c	891b6a1383a7618829fa631da4959dc51c5154b221504f130a69f374ba69a2cb	Xr	2026-11-19-25-sub-r24s-staged	DSP_VoiceCoeffRoute	365	MATCH
 v141	v141/subcpu/cc900-staged/dsp_algo_select_b_7j.c	e30051a37bdc70d30ec32b137058073834e9c6cc252f08c55241c3a5f72a39c0	Xr	2026-11-16-89-sub-staged3	DSP_AlgoSelect	138	MATCH
 v141	v141/subcpu/cc900-staged/dsp_algo_select_l_16a.c	5bf8192290e6b47ef8701892a40f1cb595a9b95155d1a84ff32b91fe35a475dd	Xr	2026-11-16-114-sub-staged4	DSP_MixSendConfig	32	MATCH
 v141	v141/subcpu/cc900-staged/dsp_algo_select_t_18c.c	91bdc5a252dbd47cba61ab17865d12083550d7af00b11869665e3d8e3c031042	Xr	2026-11-17-9-sub-staged6	DSP_VoiceCoeffRoute2	430	MATCH
@@ -1170,6 +1173,7 @@ v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ah_20a.c	6b3f8af2abcce04ac419
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	3a0df380df456a482e00c3dd555aec5e877379c245f449a5bbcd77f1ad05b354	Xr	2026-11-18-32-sub-r21g-staged	Voice_OpSlot_WriteParams	394	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	3a0df380df456a482e00c3dd555aec5e877379c245f449a5bbcd77f1ad05b354	Xr	2026-11-18-32-sub-r21g-staged	Voice_Part_Assign	48	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_am_23a.c	78627a5275b6fcb12f73a5af643c17783257585b7865cd4bd39bdc13f876c528	Xr	2026-11-19-12-sub-r23s-staged	NoteOn_RoutePacket	403	MATCH
+v141	v141/subcpu/cc900-staged/voice_params_and_tvf_ap_24b.c	a6682bf89f892a878a85ad585be0ad790dd3d40a705715fc0d6bcf0ffa9a93b9	Xr	2026-11-19-25-sub-r24s-staged	Voice_StereoLevel_Compute	625	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_b.c	b4e64fa39e2988d6a507541ded90090516e08b6cdb2e60bee77d62f3e2f3aa06	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple	65	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_b.c	b4e64fa39e2988d6a507541ded90090516e08b6cdb2e60bee77d62f3e2f3aa06	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple_Dup	65	MATCH
 v141	v141/subcpu/cc900-staged/voice_params_and_tvf_b_runtime.c	428a817bbc5d9685715684d5825a9eadb68c4e76e109de7847ad4b326725c063	Xr	2026-11-16-89-sub-staged3	EGEnv_Compute_A_Simple	65	MATCH
@@ -1281,6 +1285,7 @@ v142	v142/subcpu/cc900-staged/dsp_algo_select.c	dd56c7d61c5c37404ae2d127653e0a4f
 v142	v142/subcpu/cc900-staged/dsp_algo_select.c	dd56c7d61c5c37404ae2d127653e0a4fe5182b4dc59e9b8ef9d1adaad67a4f88	Xr	2026-11-16-73-sub-r6	DSP_CopyCoeffs_TypeB	67	MATCH
 v142	v142/subcpu/cc900-staged/dsp_algo_select.c	dd56c7d61c5c37404ae2d127653e0a4fe5182b4dc59e9b8ef9d1adaad67a4f88	Xr	2026-11-16-73-sub-r6	DSP_RouteCoeffs_TypeA	163	MATCH
 v142	v142/subcpu/cc900-staged/dsp_algo_select.c	dd56c7d61c5c37404ae2d127653e0a4fe5182b4dc59e9b8ef9d1adaad67a4f88	Xr	2026-11-16-73-sub-r6	DSP_RouteCoeffs_TypeB	163	MATCH
+v142	v142/subcpu/cc900-staged/dsp_algo_select_ap_24a.c	2dfa39ec887c4337543f8140f5967639a9f319781d24d8556e04a0b3a8c877a1	Xr	2026-11-19-25-sub-r24s-staged	DSP_VoiceCoeffRoute	365	MATCH
 v142	v142/subcpu/cc900-staged/dsp_algo_select_b_7j.c	37f4150a9883058d08e66597781e2ec1dc36a2d1bf1230a49a01a4594c301f16	Xr	2026-11-16-89-sub-staged3	DSP_AlgoSelect	138	MATCH
 v142	v142/subcpu/cc900-staged/dsp_algo_select_l_16a.c	5bf8192290e6b47ef8701892a40f1cb595a9b95155d1a84ff32b91fe35a475dd	Xr	2026-11-16-114-sub-staged4	DSP_MixSendConfig	32	MATCH
 v142	v142/subcpu/cc900-staged/dsp_algo_select_t_18c.c	e79359be20a34d68211f93af6decd7f94f5c145dbe9c54ed02dcab758b1eac99	Xr	2026-11-17-9-sub-staged6	DSP_VoiceCoeffRoute2	430	MATCH
@@ -1763,6 +1768,7 @@ v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ah_20a.c	1de880758c1f363e9cac
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	cbe5972e34a6e8dc3dd469d5058e8c0400ad9376363f0bfb1f6ae45270c58621	Xr	2026-11-18-32-sub-r21g-staged	Voice_OpSlot_WriteParams	394	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ah_21a.c	cbe5972e34a6e8dc3dd469d5058e8c0400ad9376363f0bfb1f6ae45270c58621	Xr	2026-11-18-32-sub-r21g-staged	Voice_Part_Assign	48	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_am_23a.c	78627a5275b6fcb12f73a5af643c17783257585b7865cd4bd39bdc13f876c528	Xr	2026-11-19-12-sub-r23s-staged	NoteOn_RoutePacket	403	MATCH
+v142	v142/subcpu/cc900-staged/voice_params_and_tvf_ap_24b.c	d737c76413c126f263d68ee97e1e847b5eae3f594ccedebf84e73a9b41046ff6	Xr	2026-11-19-25-sub-r24s-staged	Voice_StereoLevel_Compute	625	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_b.c	f098712c92cc26a539e16db4ca37b1549b707b35c9d434b0b1abb575910aa77c	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple	65	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_b.c	f098712c92cc26a539e16db4ca37b1549b707b35c9d434b0b1abb575910aa77c	Xr	2026-11-16-73-sub-r6	EGEnv_Compute_A_Simple_Dup	65	MATCH
 v142	v142/subcpu/cc900-staged/voice_params_and_tvf_b_runtime.c	e33e40df5164498b0af61e3d0127701726543262fad890abb1b8b4d495821065	Xr	2026-11-16-89-sub-staged3	EGEnv_Compute_A_Simple	65	MATCH

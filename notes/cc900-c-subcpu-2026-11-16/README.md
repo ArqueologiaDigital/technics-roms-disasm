@@ -204,6 +204,11 @@ ToneGen_WriteReg0440_0480, ToneGen_WriteReg0840_Shadow2E, ToneGen_WriteVoice_Tvf
 0440 / 0480 / 04C0, all written with `__asm`.  15 functions, 1,787 B per tree; **572 functions per tree** built from C
 (`c_duplicates.py`).
 
+**Twelfth promotion: round 24's 2 (2026-11-19; matched in run 2026-11-19-24-sub-r24a, verified per tree in run
+2026-11-19-25-sub-r24s-staged).**  DSP_VoiceCoeffRoute (365 B, open at +0 since round 3; helper AP rewrote it from the
+built DSP_VoiceCoeffRoute2) and Voice_StereoLevel_Compute (625 B, its IZ int a plain local, no `__IZ`).  2 functions,
+990 B per tree; **574 functions per tree** built from C (`c_duplicates.py`).
+
 ### The firmware's inline assembly is `__asm` (round 23, runs 2026-11-19-7, -8 and -10)
 
 V4.23 knows two spellings of inline assembly and treats them differently.  With `__ASM("...")` it assumes the block
