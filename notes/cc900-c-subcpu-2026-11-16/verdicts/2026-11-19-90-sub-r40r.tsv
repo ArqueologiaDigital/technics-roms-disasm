@@ -1,0 +1,8 @@
+function	bytes	matches	best_diff
+DSP1_ResolveStreamPtr	35	-	+14 sub_AR_40c@Xr
+DSP_EFFParam_DiffAllAndFlag	645	-	+6 sub_AR_40c@Xr
+Debug_Print_Word	31	-	+18 sub_AR_40c@Xr
+Keybed_Read_Event	84	-	+11 sub_AR_40c@Xr
+TVF_Lookup_Depth_Amount	168	-	+6 sub_AR_40c@Xr
+ToneDB_Find_PatchRecord	246	-	+21 sub_AR_40c@Xr
+Voice_TickNoteDecay	124	-	+13 sub_AR_40c@Xr
