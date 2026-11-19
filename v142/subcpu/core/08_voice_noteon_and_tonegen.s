@@ -50,24 +50,9 @@ Voice_SetPanning:	.include "includes/generated/cc900/Voice_SetPanning.s"	; C: cc
 ;
 ; Pan is a DIFFERENT register, +0x180, written from the staging word at 0x0451D8 with
 ; 0x0040 as centre.
-ToneGen_WriteVoicePitch:
-	push xiz
-	ld xiz, xbc
-	res	7, (P6:8)
-	add wa, 0x400
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 14)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteVoicePitch_NopCont
-
-ToneGen_WriteVoicePitch_NopCont:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteVoicePitch:	.include "includes/generated/cc900/ToneGen_WriteVoicePitch.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteVoicePitch_NopCont, ToneGen_WriteVoicePitch + 29
 
 ; ** MISIDENTIFIED AS DATA (LLVM emits it as ToneGen_PanTable_02D0DC .byte). ** It is a
 ; standard single-register writer: WA = TG channel, XBC = shadow block; writes
@@ -80,24 +65,9 @@ ToneGen_WriteVoicePitch_NopCont:
 ; `res 7,(0x18)` that opens the final write.)
 ; Unreferenced in v142 (no call and no pointer to it anywhere in the ROM).
 ; ★ Renamed 2026-09-25 from ToneGen_PanTable_02D0DC: header: writes TG 0x0080+ch from shadow+0x04 with bit15 (the load strobe) cleared.
-ToneGen_WriteReg0080_StrobeClear:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 128
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+4)
-	res	15, wa
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteReg0080_StrobeClear_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteReg0080_StrobeClear_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteReg0080_StrobeClear:	.include "includes/generated/cc900/ToneGen_WriteReg0080_StrobeClear.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteReg0080_StrobeClear_Next, ToneGen_WriteReg0080_StrobeClear + 32
 
 ; ---------------------------------------------------------------------------------------
 ; ToneGen_WriteVoiceParams (0x02D101-0x02D41A, 794 bytes) -- THE IC303 PARAMETER-LATCH BURST
@@ -685,166 +655,28 @@ ToneGen_WriteSingleReg:	.include "includes/generated/cc900/ToneGen_WriteSingleRe
 ;   0x0840 <- +0x2E, 0x0940 <- +0x32, 0x0A00 <- +0x36, 0x0800 <- +0x2C, 0x0900 <- +0x30,
 ;   0x09C0 <- +0x34.
 ; (The LLVM build calls this ToneGen_WriteLevelBurst, which does not match the register set.)
-ToneGen_WriteLevelBurst:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 46)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelBurst_NopCont1
-
-ToneGen_WriteLevelBurst_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x940
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 50)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelBurst_NopCont2
-
-ToneGen_WriteLevelBurst_NopCont2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0xA00
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 54)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelBurst_NopCont3
-
-ToneGen_WriteLevelBurst_NopCont3:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 44)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelBurst_NopCont4
-
-ToneGen_WriteLevelBurst_NopCont4:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x900
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 48)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelBurst_NopCont5
-
-ToneGen_WriteLevelBurst_NopCont5:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x9C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 52)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelBurst_NopCont6
-
-ToneGen_WriteLevelBurst_NopCont6:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteLevelBurst:	.include "includes/generated/cc900/ToneGen_WriteLevelBurst.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteLevelBurst_NopCont1, ToneGen_WriteLevelBurst + 39
+	.set	ToneGen_WriteLevelBurst_NopCont2, ToneGen_WriteLevelBurst + 73
+	.set	ToneGen_WriteLevelBurst_NopCont3, ToneGen_WriteLevelBurst + 107
+	.set	ToneGen_WriteLevelBurst_NopCont4, ToneGen_WriteLevelBurst + 141
+	.set	ToneGen_WriteLevelBurst_NopCont5, ToneGen_WriteLevelBurst + 175
+	.set	ToneGen_WriteLevelBurst_NopCont6, ToneGen_WriteLevelBurst + 209
 
 ; Existing curated name kept. Writes 0x0840+ch <- +0x2E and 0x0800+ch <- +0x2C. The two-register
 ; subset of ToneGen_WriteLevelBurst.
-ToneGen_WriteLevelPair:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 46)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelPair_NopCont1
-
-ToneGen_WriteLevelPair_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 44)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteLevelPair_NopCont2
-
-ToneGen_WriteLevelPair_NopCont2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteLevelPair:	.include "includes/generated/cc900/ToneGen_WriteLevelPair.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteLevelPair_NopCont1, ToneGen_WriteLevelPair + 39
+	.set	ToneGen_WriteLevelPair_NopCont2, ToneGen_WriteLevelPair + 73
 
 ; ** MISIDENTIFIED AS DATA (LLVM: ToneGen_NoteTable_02D55E .byte). ** Single-register writer:
 ; WA = channel, XBC = shadow; 0x0840 + ch <- shadow +0x2E. Unreferenced in v142.
 ; ★ Renamed 2026-09-25 from ToneGen_NoteTable_02D55E: header: single-register writer, TG 0x0840+ch <- shadow+0x2E.
-ToneGen_WriteReg0840_Shadow2E:
-	push xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 2112
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+46)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteReg0840_Shadow2E_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteReg0840_Shadow2E_Next:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteReg0840_Shadow2E:	.include "includes/generated/cc900/ToneGen_WriteReg0840_Shadow2E.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteReg0840_Shadow2E_Next, ToneGen_WriteReg0840_Shadow2E + 29
 ; ** Not present in either symbol source; it lives inside the same misidentified .byte blob. **
 ; WA = channel, XBC = shadow; writes 0x0100 + ch <- +0x08 and 0x0140 + ch <- +0x0A.
 ; Unreferenced in v142.
@@ -853,123 +685,23 @@ ToneGen_WriteReg0840_Shadow2E_Next:
 ;   twin's callers -- TVF_Refresh_Sounding_Voices (TVF_Refresh_Sounding_Voices) calls the twin right after
 ;   TVF_Emit_Registers / TVF_Emit_Registers_Type2 have put the clamped cutoff word and the second filter word into
 ;   0x0451D4 / 0x0451D6 = staging +0x08 / +0x0A.
-ToneGen_WriteVoice_TvfRegs_Dup:
-	dec	4, xsp
-	pushw iz
-	ld	(xsp+2), xbc
-	ld	iz, wa
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 256
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+8)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr ToneGen_Write_Regs0100_0140_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_Regs0100_0140_Next:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 320
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+10)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr ToneGen_Write_Regs0100_0140_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_Regs0100_0140_Next2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp	; was mis-framed as `.byte 0xef` + `jr ov, 0x0e`: the bytes are ef 64 0e
-	ret
+ToneGen_WriteVoice_TvfRegs_Dup:	.include "includes/generated/cc900/ToneGen_WriteVoice_TvfRegs_Dup.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Write_Regs0100_0140_Next, ToneGen_WriteVoice_TvfRegs_Dup + 39
+	.set	ToneGen_Write_Regs0100_0140_Next2, ToneGen_WriteVoice_TvfRegs_Dup + 73
 
 ; Existing curated name kept. Writes 0x0840+ch <- +0x1A and 0x0880+ch <- +0x1C.
-ToneGen_WriteEnvSegments:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 26)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteEnvSegments_NopCont1
-
-ToneGen_WriteEnvSegments_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x880
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 28)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteEnvSegments_NopCont2
-
-ToneGen_WriteEnvSegments_NopCont2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteEnvSegments:	.include "includes/generated/cc900/ToneGen_WriteEnvSegments.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteEnvSegments_NopCont1, ToneGen_WriteEnvSegments + 39
+	.set	ToneGen_WriteEnvSegments_NopCont2, ToneGen_WriteEnvSegments + 73
 
 ; Existing curated name kept, and it is accurate: 0x0840+ch and 0x0880+ch are BOTH written
 ; with the same shadow word +0x2E.
-ToneGen_WriteSegRegs_SameLevel:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 46)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteSegRegs_SameLevel_NopCont1
-
-ToneGen_WriteSegRegs_SameLevel_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x880
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 46)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteSegRegs_SameLevel_NopCont2
-
-ToneGen_WriteSegRegs_SameLevel_NopCont2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteSegRegs_SameLevel:	.include "includes/generated/cc900/ToneGen_WriteSegRegs_SameLevel.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteSegRegs_SameLevel_NopCont1, ToneGen_WriteSegRegs_SameLevel + 39
+	.set	ToneGen_WriteSegRegs_SameLevel_NopCont2, ToneGen_WriteSegRegs_SameLevel + 73
 
 ; Existing curated name kept. WA = channel, BC = value; writes 0x0180 + ch <- BC. Bank 0x0180
 ; is the same bank the hardware exposes for per-voice envelope-level READBACK (memory map:
@@ -1138,291 +870,49 @@ ToneGen_WriteVoiceParams_Ext2_NopCont4:
 ;   0x0C00<-+0x0C 0x0C01<-+0x0E 0x0C02<-+0x10 0x0C03<-+0x12 0x0C04<-+0x14 0x0C05<-+0x16
 ;   0x0E00<-+0x18
 ; Called once, from DSP_CONFIG_INIT, with the ROM block at 0x00F8BB.
-ToneGen_WriteGlobalConfig:
-	push xiz
-	ld xiz, xwa
-	ld wa, (Voice_GlobalFlags:24)
-	bit 3, wa
-	jr z, ToneGen_WriteGlobalConfig_BranchA
-	andmi16 (xiz), 0xFFF7
-	jr ToneGen_WriteGlobalConfig_BranchB
-
-ToneGen_WriteGlobalConfig_BranchA:
-	ormi16 (xiz), 0x8
-
-ToneGen_WriteGlobalConfig_BranchB:
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0200
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont01
-
-ToneGen_WriteGlobalConfig_NopCont01:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0201
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 2)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont02
-
-ToneGen_WriteGlobalConfig_NopCont02:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0202
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 4)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont03
-
-ToneGen_WriteGlobalConfig_NopCont03:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0203
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 6)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont04
-
-ToneGen_WriteGlobalConfig_NopCont04:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0204
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 8)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont05
-
-ToneGen_WriteGlobalConfig_NopCont05:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0205
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 10)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont06
-
-ToneGen_WriteGlobalConfig_NopCont06:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0c00
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 12)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont07
-
-ToneGen_WriteGlobalConfig_NopCont07:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0c01
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 14)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont08
-
-ToneGen_WriteGlobalConfig_NopCont08:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0c02
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 16)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont09
-
-ToneGen_WriteGlobalConfig_NopCont09:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0c03
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 18)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont10
-
-ToneGen_WriteGlobalConfig_NopCont10:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0c04
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 20)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont11
-
-ToneGen_WriteGlobalConfig_NopCont11:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0c05
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 22)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont12
-
-ToneGen_WriteGlobalConfig_NopCont12:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldw (ToneGen_RegAddrLatch:24), 0x0e00
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 24)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteGlobalConfig_NopCont13
-
-ToneGen_WriteGlobalConfig_NopCont13:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteGlobalConfig:	.include "includes/generated/cc900/ToneGen_WriteGlobalConfig.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteGlobalConfig_BranchA, ToneGen_WriteGlobalConfig + 19
+	.set	ToneGen_WriteGlobalConfig_BranchB, ToneGen_WriteGlobalConfig + 23
+	.set	ToneGen_WriteGlobalConfig_NopCont01, ToneGen_WriteGlobalConfig + 46
+	.set	ToneGen_WriteGlobalConfig_NopCont02, ToneGen_WriteGlobalConfig + 73
+	.set	ToneGen_WriteGlobalConfig_NopCont03, ToneGen_WriteGlobalConfig + 100
+	.set	ToneGen_WriteGlobalConfig_NopCont04, ToneGen_WriteGlobalConfig + 127
+	.set	ToneGen_WriteGlobalConfig_NopCont05, ToneGen_WriteGlobalConfig + 154
+	.set	ToneGen_WriteGlobalConfig_NopCont06, ToneGen_WriteGlobalConfig + 181
+	.set	ToneGen_WriteGlobalConfig_NopCont07, ToneGen_WriteGlobalConfig + 208
+	.set	ToneGen_WriteGlobalConfig_NopCont08, ToneGen_WriteGlobalConfig + 235
+	.set	ToneGen_WriteGlobalConfig_NopCont09, ToneGen_WriteGlobalConfig + 262
+	.set	ToneGen_WriteGlobalConfig_NopCont10, ToneGen_WriteGlobalConfig + 289
+	.set	ToneGen_WriteGlobalConfig_NopCont11, ToneGen_WriteGlobalConfig + 316
+	.set	ToneGen_WriteGlobalConfig_NopCont12, ToneGen_WriteGlobalConfig + 343
+	.set	ToneGen_WriteGlobalConfig_NopCont13, ToneGen_WriteGlobalConfig + 370
 
 ; ** MISIDENTIFIED AS DATA (LLVM: ToneGen_GlobalConfigTable_02D93E .byte). It is not a table;
 ; it is the first of five single/double register writers packed into that blob. **
 ; WA = channel, XBC = shadow; writes 0x0440+ch <- +0x10 and 0x0480+ch <- +0x12. Unreferenced.
 ; ★ Renamed 2026-09-25 from ToneGen_GlobalConfigTable_02D93E: header: writes TG 0x0440+ch <- +0x10 and 0x0480+ch <- +0x12.
-ToneGen_WriteReg0440_0480:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp+2), xbc
-	ld	iz, wa
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1088
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+16)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteReg0440_0480_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteReg0440_0480_Next:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1152
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+18)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteReg0440_0480_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteReg0440_0480_Next2:
-	nop
-	nop
-	nop
-	popw	iz
-	inc	4, xsp
-	ret
+ToneGen_WriteReg0440_0480:	.include "includes/generated/cc900/ToneGen_WriteReg0440_0480.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteReg0440_0480_Next, ToneGen_WriteReg0440_0480 + 39
+	.set	ToneGen_WriteReg0440_0480_Next2, ToneGen_WriteReg0440_0480 + 73
 ; Inside the same misidentified blob; no symbol in either source. WA = channel, XBC = shadow;
 ; writes 0x0180 + ch <- +0x0C. Unreferenced in v142.
-ToneGen_Write_Reg0180:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 384
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+12)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_Write_Reg0180_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_Reg0180_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_Write_Reg0180:	.include "includes/generated/cc900/ToneGen_Write_Reg0180.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Write_Reg0180_Next, ToneGen_Write_Reg0180 + 29
 ; Same blob. Writes 0x0440 + ch <- shadow +0x10. Unreferenced in v142.
-ToneGen_Write_Reg0440:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1088
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+16)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_Write_Reg0440_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_Reg0440_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_Write_Reg0440:	.include "includes/generated/cc900/ToneGen_Write_Reg0440.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Write_Reg0440_Next, ToneGen_Write_Reg0440 + 29
 ; Same blob. Writes 0x0480 + ch <- shadow +0x12. Unreferenced in v142.
-ToneGen_Write_Reg0480:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1152
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+18)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_Write_Reg0480_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_Reg0480_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_Write_Reg0480:	.include "includes/generated/cc900/ToneGen_Write_Reg0480.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Write_Reg0480_Next, ToneGen_Write_Reg0480 + 29
 ; Same blob. Writes 0x04C0 + ch <- shadow +0x14. Unreferenced in v142.
-ToneGen_Write_Reg04C0:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1216
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+20)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_Write_Reg04C0_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_Reg04C0_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_Write_Reg04C0:	.include "includes/generated/cc900/ToneGen_Write_Reg04C0.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Write_Reg04C0_Next, ToneGen_Write_Reg04C0 + 29
 
 ; Existing name kept. WA = channel, XBC = shadow. The "strobed pair" pattern used by every
 ; ExtParams routine:
@@ -1431,134 +921,25 @@ ToneGen_Write_Reg04C0_Next:
 ;   always:                         0x0580+ch <- +0x3C with bit15 CLEARED (strobe released)
 ; So bit15 of the 0x0540/0x0580/0x05C0 banks is a load/trigger bit that software raises and
 ; lowers around the companion register write.
-ToneGen_WriteExtParams_56:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 60)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_56_BranchSkip
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 60)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56_NopCont1
-
-ToneGen_WriteExtParams_56_NopCont1:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_56_BranchSkip:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x600
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 64)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56_NopCont2
-
-ToneGen_WriteExtParams_56_NopCont2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 60)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56_NopCont3
-
-ToneGen_WriteExtParams_56_NopCont3:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteExtParams_56:	.include "includes/generated/cc900/ToneGen_WriteExtParams_56.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_56_NopCont1, ToneGen_WriteExtParams_56 + 50
+	.set	ToneGen_WriteExtParams_56_BranchSkip, ToneGen_WriteExtParams_56 + 53
+	.set	ToneGen_WriteExtParams_56_NopCont2, ToneGen_WriteExtParams_56 + 84
+	.set	ToneGen_WriteExtParams_56_NopCont3, ToneGen_WriteExtParams_56 + 121
 
 ; WA = channel, XBC = shadow; writes 0x0600 + ch <- +0x40 only.
-ToneGen_WriteExtParam_600:
-	push xiz
-	ld xiz, xbc
-	res	7, (P6:8)
-	add wa, 0x600
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 64)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParam_600_NopCont
-
-ToneGen_WriteExtParam_600_NopCont:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteExtParam_600:	.include "includes/generated/cc900/ToneGen_WriteExtParam_600.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParam_600_NopCont, ToneGen_WriteExtParam_600 + 29
 
 ; ToneGen_WriteExtParams_56 without the 0x0600 write: raises then releases the bit15 strobe on
 ; 0x0580 + ch using shadow +0x3C.
-ToneGen_WriteExtParams_56_Alt:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 60)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_56_Alt_ClearPath
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 60)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56_Alt_NopCont1
-
-ToneGen_WriteExtParams_56_Alt_NopCont1:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_56_Alt_ClearPath:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 60)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56_Alt_NopCont2
-
-ToneGen_WriteExtParams_56_Alt_NopCont2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteExtParams_56_Alt:	.include "includes/generated/cc900/ToneGen_WriteExtParams_56_Alt.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_56_Alt_NopCont1, ToneGen_WriteExtParams_56_Alt + 50
+	.set	ToneGen_WriteExtParams_56_Alt_ClearPath, ToneGen_WriteExtParams_56_Alt + 53
+	.set	ToneGen_WriteExtParams_56_Alt_NopCont2, ToneGen_WriteExtParams_56_Alt + 87
 
 ; WA = channel. Writes the literal 0x8100 to 0x0580 + ch. 0x8100 is the constant this whole
 ; family uses to mean "release/mute this slot"; it also appears mid-burst in
@@ -1569,134 +950,29 @@ ToneGen_WriteExtParam_600_Mute:	.include "includes/generated/cc900/ToneGen_Write
 
 ; Existing name kept. Identical to ToneGen_WriteExtParams_56 but on the second bank pair:
 ; strobe on 0x05C0 + ch from shadow +0x3E, companion write 0x0640 + ch <- +0x42.
-ToneGen_WriteExtParams_56b:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 62)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_56b_ClearPath
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x5C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 62)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56b_NopCont1
-
-ToneGen_WriteExtParams_56b_NopCont1:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_56b_ClearPath:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x640
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 66)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56b_NopCont2
-
-ToneGen_WriteExtParams_56b_NopCont2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x5C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 62)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_56b_NopCont3
-
-ToneGen_WriteExtParams_56b_NopCont3:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteExtParams_56b:	.include "includes/generated/cc900/ToneGen_WriteExtParams_56b.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_56b_NopCont1, ToneGen_WriteExtParams_56b + 50
+	.set	ToneGen_WriteExtParams_56b_ClearPath, ToneGen_WriteExtParams_56b + 53
+	.set	ToneGen_WriteExtParams_56b_NopCont2, ToneGen_WriteExtParams_56b + 84
+	.set	ToneGen_WriteExtParams_56b_NopCont3, ToneGen_WriteExtParams_56b + 121
 
 ; ** MISIDENTIFIED AS DATA (LLVM: ToneGen_ExtParams56b_DataTable .byte) BUT IT IS LIVE: it is
 ; CALLed from 0x027D43 and that call is the only reference to it in the ROM. **
 ; WA = channel, XBC = shadow; writes 0x0640 + ch <- shadow +0x42.
 ; ★ Renamed 2026-09-25 from ToneGen_ExtParams56b_DataTable: header: writes TG 0x0640+ch <- shadow+0x42.
-ToneGen_WriteReg0640:
-	push	xiz
-	ld	xiz, xbc
-	res	7, (P6:8)
-	add	wa, 1600
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	wa, (xiz+66)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteReg0640_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteReg0640_Next:
-	nop
-	nop
-	nop
-	pop	xiz
-	ret
+ToneGen_WriteReg0640:	.include "includes/generated/cc900/ToneGen_WriteReg0640.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteReg0640_Next, ToneGen_WriteReg0640 + 29
 ; Second routine inside the 0x02DBB3 blob; no symbol in either source. Raises then releases the
 ; bit15 strobe on 0x05C0 + ch using shadow +0x3E (the 0x05C0 twin of 0x02DAB8). Readers below.
 ; Readers (claims_lint.py unread-claims, 2026-10-02): kn5000_subprogram_v142.s:17453 (source
 ;   reference)
-ToneGen_Write_ExtParam_05C0_Strobe:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp+2), xbc
-	ld	iz, wa
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+62)
-	bit	15, wa
-	jr	z, ToneGen_Write_ExtParam_05C0_Strobe_Skip
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1472
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+62)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_Write_ExtParam_05C0_Strobe_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_ExtParam_05C0_Strobe_Next:
-	nop
-	nop
-	nop
-ToneGen_Write_ExtParam_05C0_Strobe_Skip:
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1472
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+62)
-	res	15, wa
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_Write_ExtParam_05C0_Strobe_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_Write_ExtParam_05C0_Strobe_Next2:
-	nop
-	nop
-	nop
-	popw	iz
-	inc	4, xsp
-	ret
+ToneGen_Write_ExtParam_05C0_Strobe:	.include "includes/generated/cc900/ToneGen_Write_ExtParam_05C0_Strobe.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_Write_ExtParam_05C0_Strobe_Next, ToneGen_Write_ExtParam_05C0_Strobe + 50
+	.set	ToneGen_Write_ExtParam_05C0_Strobe_Skip, ToneGen_Write_ExtParam_05C0_Strobe + 53
+	.set	ToneGen_Write_ExtParam_05C0_Strobe_Next2, ToneGen_Write_ExtParam_05C0_Strobe + 87
 ; Third routine in the same blob. Writes 0x8100 to 0x05C0 + ch. Unreferenced in v142.
 ToneGen_Mute_Reg05C0:	.include "includes/generated/cc900/ToneGen_Mute_Reg05C0.s"	; C: cc900/voice_noteon_and_tonegen.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -1704,133 +980,24 @@ ToneGen_Mute_Reg05C0:	.include "includes/generated/cc900/ToneGen_Mute_Reg05C0.s"
 
 ; Existing name kept. Strobe on 0x0540 + ch from shadow +0x3A, companion write
 ; 0x01C0 + ch <- shadow +0x38.
-ToneGen_WriteExtParams_15:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_15_ClearPath
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_15_NopCont1
-
-ToneGen_WriteExtParams_15_NopCont1:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_15_ClearPath:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x1C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 56)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_15_NopCont2
-
-ToneGen_WriteExtParams_15_NopCont2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_15_NopCont3
-
-ToneGen_WriteExtParams_15_NopCont3:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteExtParams_15:	.include "includes/generated/cc900/ToneGen_WriteExtParams_15.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_15_NopCont1, ToneGen_WriteExtParams_15 + 50
+	.set	ToneGen_WriteExtParams_15_ClearPath, ToneGen_WriteExtParams_15 + 53
+	.set	ToneGen_WriteExtParams_15_NopCont2, ToneGen_WriteExtParams_15 + 84
+	.set	ToneGen_WriteExtParams_15_NopCont3, ToneGen_WriteExtParams_15 + 121
 
 ; WA = channel, XBC = shadow; writes 0x01C0 + ch <- +0x38 only.
-ToneGen_WriteExtParam_1C0_Single:
-	push xiz
-	ld xiz, xbc
-	res	7, (P6:8)
-	add wa, 0x1C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 56)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParam_1C0_Single_NopCont
-
-ToneGen_WriteExtParam_1C0_Single_NopCont:
-	nop
-	nop
-	nop
-	pop xiz
-	ret
+ToneGen_WriteExtParam_1C0_Single:	.include "includes/generated/cc900/ToneGen_WriteExtParam_1C0_Single.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParam_1C0_Single_NopCont, ToneGen_WriteExtParam_1C0_Single + 29
 
 ; Raises then releases the bit15 strobe on 0x0540 + ch from shadow +0x3A; no companion write.
-ToneGen_WriteExtParams_15_Alt:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_15_Alt_ClearPath
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_15_Alt_NopCont1
-
-ToneGen_WriteExtParams_15_Alt_NopCont1:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_15_Alt_ClearPath:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_15_Alt_NopCont2
-
-ToneGen_WriteExtParams_15_Alt_NopCont2:
-	nop
-	nop
-	nop
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteExtParams_15_Alt:	.include "includes/generated/cc900/ToneGen_WriteExtParams_15_Alt.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_15_Alt_NopCont1, ToneGen_WriteExtParams_15_Alt + 50
+	.set	ToneGen_WriteExtParams_15_Alt_ClearPath, ToneGen_WriteExtParams_15_Alt + 53
+	.set	ToneGen_WriteExtParams_15_Alt_NopCont2, ToneGen_WriteExtParams_15_Alt + 87
 
 ; Writes 0x8100 to 0x0540 + ch.
 ToneGen_WriteExtParam_540_Mute:	.include "includes/generated/cc900/ToneGen_WriteExtParam_540_Mute.s"	; C: cc900/voice_noteon_and_tonegen.c
@@ -1845,247 +1012,39 @@ ToneGen_WriteExtParam_540_Mute:	.include "includes/generated/cc900/ToneGen_Write
 ; This is the clearest statement in the firmware that the TG has TWO channel banks split at
 ; channel 0x40 and that the second bank uses a different register-base set.
 ; ★ Renamed 2026-09-25 from ToneGen_ExtParams15_DataTable: header: channel-banked version of ToneGen_WriteExtParams_15 (bank split at ch 0x40).
-ToneGen_WriteExtParams_15_Banked:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp+2), xbc
-	ld	iz, wa
-	cp	iz, 64
-	jr	nc, ToneGen_WriteExtParams_15_Banked_Skip2
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+58)
-	bit	15, wa
-	jr	z, ToneGen_WriteExtParams_15_Banked_Skip
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1344
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+58)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteExtParams_15_Banked_Next	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteExtParams_15_Banked_Next:
-	nop
-	nop
-	nop
-ToneGen_WriteExtParams_15_Banked_Skip:
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 448
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+56)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteExtParams_15_Banked_Next2	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteExtParams_15_Banked_Next2:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1344
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+58)
-	res	15, wa
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteExtParams_15_Banked_Next3	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteExtParams_15_Banked_Next3:
-	nop
-	nop
-	nop
-	jr	ToneGen_WriteExtParams_15_Banked_Epilogue
-ToneGen_WriteExtParams_15_Banked_Skip2:
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+62)
-	bit	15, wa
-	jr	z, ToneGen_WriteExtParams_15_Banked_Skip3
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1408
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+62)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteExtParams_15_Banked_Next4	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteExtParams_15_Banked_Next4:
-	nop
-	nop
-	nop
-ToneGen_WriteExtParams_15_Banked_Skip3:
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1536
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+66)
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteExtParams_15_Banked_Next5	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteExtParams_15_Banked_Next5:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ld	wa, iz
-	add	wa, 1408
-	ld	(ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld	xwa, (xsp+2)
-	ld	wa, (xwa+62)
-	res	15, wa
-	ld	(ToneGen_RegDataPort:24), wa
-	jr	ToneGen_WriteExtParams_15_Banked_Next6	; `jr` to the next instruction + three `nop`s: the settling gap after the register write
-ToneGen_WriteExtParams_15_Banked_Next6:
-	nop
-	nop
-	nop
-ToneGen_WriteExtParams_15_Banked_Epilogue:
-	popw	iz
-	inc	4, xsp
-	ret
+ToneGen_WriteExtParams_15_Banked:	.include "includes/generated/cc900/ToneGen_WriteExtParams_15_Banked.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_15_Banked_Next, ToneGen_WriteExtParams_15_Banked + 56
+	.set	ToneGen_WriteExtParams_15_Banked_Skip, ToneGen_WriteExtParams_15_Banked + 59
+	.set	ToneGen_WriteExtParams_15_Banked_Next2, ToneGen_WriteExtParams_15_Banked + 90
+	.set	ToneGen_WriteExtParams_15_Banked_Next3, ToneGen_WriteExtParams_15_Banked + 127
+	.set	ToneGen_WriteExtParams_15_Banked_Skip2, ToneGen_WriteExtParams_15_Banked + 132
+	.set	ToneGen_WriteExtParams_15_Banked_Next4, ToneGen_WriteExtParams_15_Banked + 174
+	.set	ToneGen_WriteExtParams_15_Banked_Skip3, ToneGen_WriteExtParams_15_Banked + 177
+	.set	ToneGen_WriteExtParams_15_Banked_Next5, ToneGen_WriteExtParams_15_Banked + 208
+	.set	ToneGen_WriteExtParams_15_Banked_Next6, ToneGen_WriteExtParams_15_Banked + 245
+	.set	ToneGen_WriteExtParams_15_Banked_Epilogue, ToneGen_WriteExtParams_15_Banked + 248
 
 ; WA = channel, XBC = shadow. ch < 0x40 -> 0x01C0+ch <- +0x38; ch >= 0x40 -> 0x0600+ch <- +0x42.
-ToneGen_WriteExtParam_TypeDispatch_Single:
-	push xiz
-	ld xiz, xbc
-	cp wa, 0x40
-	jr nc, ToneGen_WriteExtParam_TypeDispatch_Single_HiPath
-	res	7, (P6:8)
-	add wa, 0x1C0
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 56)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParam_TypeDispatch_Single_NopCont1
-
-ToneGen_WriteExtParam_TypeDispatch_Single_NopCont1:
-	nop
-	nop
-	nop
-	jr ToneGen_WriteExtParam_TypeDispatch_Single_Exit
-
-ToneGen_WriteExtParam_TypeDispatch_Single_HiPath:
-	res	7, (P6:8)
-	add wa, 0x600
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld wa, (xiz + 66)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParam_TypeDispatch_Single_NopCont2
-
-ToneGen_WriteExtParam_TypeDispatch_Single_NopCont2:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParam_TypeDispatch_Single_Exit:
-	pop xiz
-	ret
+ToneGen_WriteExtParam_TypeDispatch_Single:	.include "includes/generated/cc900/ToneGen_WriteExtParam_TypeDispatch_Single.s"	; C: cc900/voice_noteon_and_tonegen_lane_23w2a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParam_TypeDispatch_Single_NopCont1, ToneGen_WriteExtParam_TypeDispatch_Single + 35
+	.set	ToneGen_WriteExtParam_TypeDispatch_Single_HiPath, ToneGen_WriteExtParam_TypeDispatch_Single + 40
+	.set	ToneGen_WriteExtParam_TypeDispatch_Single_NopCont2, ToneGen_WriteExtParam_TypeDispatch_Single + 66
+	.set	ToneGen_WriteExtParam_TypeDispatch_Single_Exit, ToneGen_WriteExtParam_TypeDispatch_Single + 69
 
 ; WA = channel, XBC = shadow. Strobe-only banked writer: ch < 0x40 strobes 0x0540 from +0x3A,
 ; ch >= 0x40 strobes 0x0580 from +0x3E. No companion register write in either path.
-ToneGen_WriteExtParams_TypeDispatch:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xbc
-	ld iz, wa
-	cp iz, 0x40
-	jr nc, ToneGen_WriteExtParams_TypeDispatch_HiPath
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_TypeDispatch_LoClearPath
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_TypeDispatch_NopCont1
-
-ToneGen_WriteExtParams_TypeDispatch_NopCont1:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_TypeDispatch_LoClearPath:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x540
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 58)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_TypeDispatch_NopCont2
-
-ToneGen_WriteExtParams_TypeDispatch_NopCont2:
-	nop
-	nop
-	nop
-	jr ToneGen_WriteExtParams_TypeDispatch_Exit
-
-ToneGen_WriteExtParams_TypeDispatch_HiPath:
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 62)
-	bit 15, wa
-	jr z, ToneGen_WriteExtParams_TypeDispatch_HiClearPath
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 62)
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_TypeDispatch_NopCont3
-
-ToneGen_WriteExtParams_TypeDispatch_NopCont3:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_TypeDispatch_HiClearPath:
-	res	7, (P6:8)
-	ld wa, iz
-	add wa, 0x580
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ld xwa, (xsp + 2)
-	ld wa, (xwa + 62)
-	res 15, wa
-	ld (ToneGen_RegDataPort:24), wa
-	jr ToneGen_WriteExtParams_TypeDispatch_NopCont4
-
-ToneGen_WriteExtParams_TypeDispatch_NopCont4:
-	nop
-	nop
-	nop
-
-ToneGen_WriteExtParams_TypeDispatch_Exit:
-	popw iz
-	inc 4, xsp
-	ret
+ToneGen_WriteExtParams_TypeDispatch:	.include "includes/generated/cc900/ToneGen_WriteExtParams_TypeDispatch.s"	; C: cc900/voice_noteon_and_tonegen_ao_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ToneGen_WriteExtParams_TypeDispatch_NopCont1, ToneGen_WriteExtParams_TypeDispatch + 56
+	.set	ToneGen_WriteExtParams_TypeDispatch_LoClearPath, ToneGen_WriteExtParams_TypeDispatch + 59
+	.set	ToneGen_WriteExtParams_TypeDispatch_NopCont2, ToneGen_WriteExtParams_TypeDispatch + 93
+	.set	ToneGen_WriteExtParams_TypeDispatch_HiPath, ToneGen_WriteExtParams_TypeDispatch + 98
+	.set	ToneGen_WriteExtParams_TypeDispatch_NopCont3, ToneGen_WriteExtParams_TypeDispatch + 140
+	.set	ToneGen_WriteExtParams_TypeDispatch_HiClearPath, ToneGen_WriteExtParams_TypeDispatch + 143
+	.set	ToneGen_WriteExtParams_TypeDispatch_NopCont4, ToneGen_WriteExtParams_TypeDispatch + 177
+	.set	ToneGen_WriteExtParams_TypeDispatch_Exit, ToneGen_WriteExtParams_TypeDispatch + 180
 
 ; WA = channel. Writes 0x8100 to 0x0540 + ch (ch < 0x40) or to 0x0580 + ch (ch >= 0x40).
 ToneGen_WriteExtParam_Mute_TypeDispatch:	.include "includes/generated/cc900/ToneGen_WriteExtParam_Mute_TypeDispatch.s"	; C: cc900/voice_noteon_and_tonegen.c
@@ -2520,119 +1479,15 @@ VoiceParam_FullSetup_Return:
 ;   0x80 -> nothing;  0x40 -> VoiceSlot_AltInit (0x034968);  0x00 and 0xC0 ->
 ;   VoiceSlot_FullInit (0x034890).
 ; ★ Renamed 2026-09-25 from VoiceParam_FullSetup_ExtData: header: sets the part status bits from C, then re-initialises the part by its mode.
-Voice_Part_SetStateAndReinit:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xde, (Part_Record_Base:24)
-	ld	wa, (xde+wa)
-	and	wa, 3
-	jrl	z, Voice_Part_SetStateAndReinit_Epilogue
-	cp	c, 0:i3
-	jr	nz, Voice_Part_SetStateAndReinit_Skip
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	andw	(xbc+wa), 0xfffe	; (unidasm; no llvm-mc spelling)
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	or_rrw_im	xbc, wa, 2, 0
-	jr	Voice_Part_SetStateAndReinit_Join
-Voice_Part_SetStateAndReinit_Skip:
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	andw	(xbc+wa), 0xfffd	; (unidasm; no llvm-mc spelling)
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	or_rrw_im	xbc, wa, 1, 0
-Voice_Part_SetStateAndReinit_Join:
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_Record_Base:24)
-	or_rrw_im	xbc, wa, 4, 0
-	ld	a, (xsp)
-	extz	wa
-	call	Voice_NoteState_Clear
-	ld	a, (xsp)
-	extz	wa
-	call	Voice_SetLFO_ActiveFlag
-	ld	a, (xsp)
-	ld	l, a
-	extz	hl
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x250b:24)
-	ld	a, (xbc+wa)
-	ldfr_berp	a, 240
-	extz	ix
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x250c:24)
-	ld	a, (xbc+wa)
-	ld	e, a
-	extz	de
-	ld	wa, hl
-	ld	bc, ix
-	call	WaveSel_Rebuild_PartCaches
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	bitm	7, (xwa+93)
-	jr	z, Voice_Part_SetStateAndReinit_Skip2
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x24fc:24)
-	or_rrw_im	xbc, wa, 0, 64
-	jr	Voice_Part_SetStateAndReinit_Join2
-Voice_Part_SetStateAndReinit_Skip2:
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Payload_Bss_Start+0x24fc:24)
-	andw	(xbc+wa), 0xbfff	; (unidasm; no llvm-mc spelling)
-Voice_Part_SetStateAndReinit_Join2:
-	ld	a, (xsp)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld	a, (xwa+16)
-	and	a, 192
-	cp	a, 128
-	jr	z, Voice_Part_SetStateAndReinit_Epilogue
-	cp	a, 64
-	jr	z, Voice_Part_SetStateAndReinit_Skip4
-	cp	a, 192
-	jr	z, Voice_Part_SetStateAndReinit_Skip3
-	cp	a, 0:i3
-	jr	nz, Voice_Part_SetStateAndReinit_Epilogue
-Voice_Part_SetStateAndReinit_Skip3:
-	ld	a, (xsp)
-	extz	wa
-	call	VoiceSlot_FullInit
-	jr	t, Voice_Part_SetStateAndReinit_Epilogue
-Voice_Part_SetStateAndReinit_Skip4:
-	ld	a, (xsp)
-	extz	wa
-	call	VoiceSlot_AltInit
-Voice_Part_SetStateAndReinit_Epilogue:
-	inc	2, xsp
-	ret
+Voice_Part_SetStateAndReinit:	.include "includes/generated/cc900/Voice_Part_SetStateAndReinit.s"	; C: cc900/voice_noteon_and_tonegen_al_23a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_Part_SetStateAndReinit_Skip, Voice_Part_SetStateAndReinit + 75
+	.set	Voice_Part_SetStateAndReinit_Join, Voice_Part_SetStateAndReinit + 115
+	.set	Voice_Part_SetStateAndReinit_Skip2, Voice_Part_SetStateAndReinit + 255
+	.set	Voice_Part_SetStateAndReinit_Join2, Voice_Part_SetStateAndReinit + 275
+	.set	Voice_Part_SetStateAndReinit_Skip3, Voice_Part_SetStateAndReinit + 318
+	.set	Voice_Part_SetStateAndReinit_Skip4, Voice_Part_SetStateAndReinit + 328
+	.set	Voice_Part_SetStateAndReinit_Epilogue, Voice_Part_SetStateAndReinit + 336
 ; ** Inside the same misidentified blob; unnamed in both sources. ** Called from 0x02EE97.
 ; A = part index, E low nibble = sub-slot, BC = wave-catalogue index. The catalogue is
 ; (0x045310) + (0x045314)[0x50], entries are 0x10 bytes. Writes catalogue entry byte +0x0E into

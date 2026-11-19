@@ -26,6 +26,16 @@ The pipeline scripts after a V4.23 run (all run from the repository root; `$TMPD
 - **`port_staged.py`**: which staged v2.06i functions does the same C reproduce in the three older images?  It stages
   them per tree.
   `python3 -B notes/cc900-c-hdae5000-2026-11-16/port_staged.py RUN_DIR`
+- **`port_built.py`** (2026-11-19): which v2.06i functions BUILT from C (`hdae5000/cc900/*.c`) does V4.23 reproduce in
+  the older images, with each older tree's own object ids (`<tree>/cc900/hdae_ids.h`, `gen_ids_header.py` on that
+  tree's ELF) and, with `--remap`, its `ram_<hex>` cells moved to the tree's addresses?  `--layout OUT [--remap]`
+  writes the corpus layout for the run; `RUN [--remap]` stages what matches per tree.
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/port_built.py --layout OUT --remap`, then
+  `hd_v423.py --corpus DIR Xr OUT/*/cc900-staged/*.c`, the run, and `port_built.py RUN --remap`
+- **`learn_remap.py`** (2026-11-19): which v2.06i RAM / string addresses sit elsewhere in an older image, read from
+  near-miss read-outs (`selectlist/cmp.py --image IMG`: lines equal but for one address)?  Writes
+  `learned_remap.tsv`, which `port_built.py --layout OUT --remap --extra learned_remap.tsv` applies to the cells no
+  label moves.  `python3 -B notes/cc900-c-hdae5000-2026-11-16/learn_remap.py OUT.tsv TREE CMP_FILE...`
 - **`promote_hd.py`**: moves matching staged C into `<tree>/cc900/` and splices the hand source.  It holds back what
   the splice refuses.  With `--keep-uncached`, a file the V4.23 cache lacks stays in place: build the tree, then
   rerun.
@@ -48,7 +58,8 @@ The pipeline scripts after a V4.23 run (all run from the repository root; `$TMPD
   `python3 -B notes/cc900-c-hdae5000-2026-11-16/probe_runs.py`
 - **`selectlist/`**: SelectListProc's instruction-level comparison and probe generator; see `selectlist/README.md`.
 
-Where the work stopped and how to resume it: `HANDOFF-2026-11-18.md` (and `HANDOFF-2026-11-17.md` before it).
+Where the work stopped and how to resume it: `HANDOFF-2026-11-19.md` (then `HANDOFF-2026-11-18.md` and
+`HANDOFF-2026-11-17.md`).
 
 `survey.md` / `survey.tsv` are `survey.py --md survey.md --tsv survey.tsv` as of the commit that wrote them.
 
@@ -126,6 +137,13 @@ In the older images, the v2.06i C fails where it writes a v2.06i number: string 
 longer than 31 characters that share their first 31), the RAM cell `ram_23085e`, a UI object id
 (`Set_Menu_Visibility`).  `TypeSel_BuildMask` changed between v1.15i and v2.01i.  The lyrics functions do not exist
 before v2.01i.
+
+**Corrected 2026-11-19.**  Most of those numbers were not the C's: the older trees' `cc900/hdae_ids.h` was a copy of
+v2.06i's, so every `OBJ_*` name carried a v2.06i object id.  Each older tree's header is now generated from its own
+ELF (with the tree's own event codes for v1.x), and `port_built.py --remap` moves the `ram_<hex>` cells by label;
+with these (and the APFUNC ids and `learn_remap.py`'s table), the built v2.06i C ported to 117 / 87 / 87 more
+functions of v2.01i / v1.15i / v1.10i
+(`HANDOFF-2026-11-19.md`).
 
 ## Rounds
 

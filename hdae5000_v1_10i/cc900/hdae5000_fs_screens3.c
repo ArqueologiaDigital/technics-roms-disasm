@@ -53,8 +53,60 @@ long HDAE5000_FlsFileLoadSwCatch(long obj, long ev, long arg)
 }
 
 /* "delete the FLS item?" (the item is cleared): keys 0 / 1 do it, 6 / 7 go back */
+long HDAE5000_FlsDel1SwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_DEL1);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 0:
+        case 1:
+            HDAE5000_FlsItem_Clear(HDAE5000_RAM_CurFls, HDAE5000_RAM_CurFlsItem);
+            HDAE5000_FlsScreen_Refresh(1, 0);
+            CALLV(ROOT->PostEvent)(OBJ_FLS_EDIT, EVT_SHOW, 0L);
+            break;
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_FLS_EDIT, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
+}
 
 /* the same, the item removed from the list */
+long HDAE5000_FlsDel2SwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_DEL2);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 0:
+        case 1:
+            HDAE5000_FlsItem_Remove(HDAE5000_RAM_CurFls, HDAE5000_RAM_CurFlsItem);
+            HDAE5000_FlsScreen_Refresh(1, 0);
+            CALLV(ROOT->PostEvent)(OBJ_FLS_EDIT, EVT_SHOW, 0L);
+            break;
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_FLS_EDIT, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
+}
 
 /* the copy-to-HD screen (the floppy's song list): mark all present songs, go on to the directory selection,
    toggle one song's mark.  The ROM compares XBC in place and indexes FdList with 32-bit sums

@@ -1,0 +1,5 @@
+function	bytes	matches	best_diff
+AlgoType_StateWrite	635	sub_AL_31a@Xr sub_AL_31b@Xr sub_AL_31c@Xr	
+DSP_Reinit_VoiceSlots	367	-	+1 sub_AP_31c@Xr
+VoiceParam_Update	716	-	+31 sub_AL_31c@Xr
+Voice_Reset_Engine	736	-	+15 sub_AP_31c@Xr

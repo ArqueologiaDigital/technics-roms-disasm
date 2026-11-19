@@ -516,158 +516,19 @@ DSP_WriteAlgoBuffer_Return:
 ; Re-staging one stream = DSP1_ResolveStreamPtr(index) then a 0xD5-word copy to
 ; (0x04531C) + 0x10 + 0x01D6*index.
 ; All paths converge on DSP_WriteCount_Compute + the checksum store + the DMA push.
-DSP_Reinit_VoiceSlots:
-	dec 4, xsp
-	push xiz
-	cp a, 0x40
-	jrl nc, DSP_Reinit_VoiceSlots_Loop2A
-	cp c, 0xFF
-	jr z, DSP_Reinit_VoiceSlots_Loop1
-	extz bc
-	extz wa
-	mul wa, 0x14
-	ldfr_werp WA, 0xFA
-	add wa, bc
-	ldfr_werp WA, 0xFA
-	calr DSP1_ResolveStreamPtr
-	ld (xsp + 4), xhl
-	ldto_werp WA, 0xFA
-	extz xwa
-	ld xbc, 0x1D6
-	call Math_Multiply32
-	add xhl, 0x10
-	add xhl, (Payload_Bss_Start+0x64a6:24)
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	ld xix, xhl
-	ldw bc, 0xD5
-	ldirw
-	jr DSP_Reinit_VoiceSlots_Loop2
-
-; C == 0xFF: set up the 0x14-stream range for part A.
-DSP_Reinit_VoiceSlots_Loop1:
-	ldfr_berp A, 0xF8
-	extz iz
-	ld wa, iz
-	mul wa, 0x14
-	ld iz, wa
-	ldfr_werp IZ, 0xFA
-	ld bc, iz
-	add bc, 0x14
-	ldto_werp WA, 0xFA
-	cp wa, bc
-	jr nc, DSP_Reinit_VoiceSlots_Loop2
-
-; Body: resolve one stream and copy 0xD5 words into its slot.
-DSP_Reinit_VoiceSlots_Loop1Next:
-	ldto_werp WA, 0xFA
-	calr DSP1_ResolveStreamPtr
-	ld (xsp + 4), xhl
-	ldto_werp WA, 0xFA
-	extz xwa
-	ld xbc, 0x1D6
-	call Math_Multiply32
-	add xhl, 0x10
-	add xhl, (Payload_Bss_Start+0x64a6:24)
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	ld xix, xhl
-	ldw bc, 0xD5
-	ldirw
-	inc1w_erp 0xFA
-	ld bc, iz
-	add bc, 0x14
-	ldto_werp WA, 0xFA
-	cp wa, bc
-	jr c, DSP_Reinit_VoiceSlots_Loop1Next
-
-; Checksum + store, then jump to the DMA flush.
-DSP_Reinit_VoiceSlots_Loop2:
-	calr DSP_WriteCount_Compute
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	(xwa+29352), hl
-	jrl DSP_Reinit_VoiceSlots_DMAFlush
-
-; A >= 0x40 entry: distinguishes the A == 0xFF full rebuild from the channel-slot paths.
-DSP_Reinit_VoiceSlots_Loop2A:
-	cp a, 0xFF
-	jr z, DSP_Reinit_VoiceSlots_Loop3A
-	cp c, 0xFF
-	jr z, DSP_Reinit_VoiceSlots_Loop2B
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	lda xwa, (xwa+18816)
-	extz bc
-	calr DSP_InitChannelSlot
-	jr DSP_Reinit_VoiceSlots_Loop3
-
-; C == 0xFF: head of the 128-channel DSP_InitChannelSlot loop.
-DSP_Reinit_VoiceSlots_Loop2B:
-	ldfr_werp IZ, 0xFA
-	cp_erpw 0xFA, 0x80, 0x00
-	jr nc, DSP_Reinit_VoiceSlots_Loop3
-
-; Body of the 128-channel loop.
-DSP_Reinit_VoiceSlots_Loop2Next:
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	lda xwa, (xwa+18816)
-	ldto_werp BC, 0xFA
-	calr DSP_InitChannelSlot
-	inc1w_erp 0xFA
-	cp_erpw 0xFA, 0x80, 0x00
-	jr c, DSP_Reinit_VoiceSlots_Loop2Next
-
-; Checksum + store for the channel-slot paths.
-DSP_Reinit_VoiceSlots_Loop3:
-	calr DSP_WriteCount_Compute
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	(xwa+29352), hl
-	jr DSP_Reinit_VoiceSlots_DMAFlush
-
-; A == 0xFF full rebuild: DSP_ResetAlgoDefaults then the 0x28-stream re-stage loop.
-DSP_Reinit_VoiceSlots_Loop3A:
-	calr DSP_ResetAlgoDefaults
-	ld iz, 0:i3
-	cp iz, 0x28
-	jr nc, DSP_Reinit_VoiceSlots_OuterNext
-
-; Body of the 0x28-stream re-stage loop.
-DSP_Reinit_VoiceSlots_Loop3Next:
-	ld wa, iz
-	calr DSP1_ResolveStreamPtr
-	ld (xsp + 4), xhl
-	ld wa, iz
-	extz xwa
-	ld xbc, 0x1D6
-	call Math_Multiply32
-	add xhl, 0x10
-	add xhl, (Payload_Bss_Start+0x64a6:24)
-	ld xwa, (xsp + 4)
-	ld xiy, xwa
-	ld xix, xhl
-	ldw bc, 0xD5
-	ldirw
-	inc 1, iz
-	cp iz, 0x28
-	jr c, DSP_Reinit_VoiceSlots_Loop3Next
-
-; Full-rebuild tail: DSP_FlushAllSlots(0, 0x40), then checksum + store.
-DSP_Reinit_VoiceSlots_OuterNext:
-	ld wa, 0:i3
-	ldw bc, 0x40
-	calr DSP_FlushAllSlots
-	calr DSP_WriteCount_Compute
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	(xwa+29352), hl
-
-; ★ The common exit: InterCPU_E1_DMA_Transfer(0x007800, 0x72AA, 0x001E0000).
-DSP_Reinit_VoiceSlots_DMAFlush:
-	lda xwa, (0x007800:24)
-	ldw bc, 0x72AA
-	ld xde, 0x1E0000
-	call InterCPU_E1_DMA_Transfer
-	pop xiz
-	inc 4, xsp
-	ret
+DSP_Reinit_VoiceSlots:	.include "includes/generated/cc900/DSP_Reinit_VoiceSlots.s"	; C: cc900/ringbuf_and_midi_dispatch_ap_34a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_Reinit_VoiceSlots_Loop1, DSP_Reinit_VoiceSlots + 75
+	.set	DSP_Reinit_VoiceSlots_Loop1Next, DSP_Reinit_VoiceSlots + 104
+	.set	DSP_Reinit_VoiceSlots_Loop2, DSP_Reinit_VoiceSlots + 166
+	.set	DSP_Reinit_VoiceSlots_Loop2A, DSP_Reinit_VoiceSlots + 182
+	.set	DSP_Reinit_VoiceSlots_Loop2B, DSP_Reinit_VoiceSlots + 209
+	.set	DSP_Reinit_VoiceSlots_Loop2Next, DSP_Reinit_VoiceSlots + 219
+	.set	DSP_Reinit_VoiceSlots_Loop3, DSP_Reinit_VoiceSlots + 245
+	.set	DSP_Reinit_VoiceSlots_Loop3A, DSP_Reinit_VoiceSlots + 260
+	.set	DSP_Reinit_VoiceSlots_Loop3Next, DSP_Reinit_VoiceSlots + 271
+	.set	DSP_Reinit_VoiceSlots_OuterNext, DSP_Reinit_VoiceSlots + 323
+	.set	DSP_Reinit_VoiceSlots_DMAFlush, DSP_Reinit_VoiceSlots + 344
 
 ; Scans all 26 parts and acts on the program byte at part+0x1A (0x041382).
 ; Only the head of the scan is inside this region: it compares part+0x1A against 0x10 and 0x50
@@ -675,98 +536,14 @@ DSP_Reinit_VoiceSlots_DMAFlush:
 ; matches, otherwise to the loop-increment at 0x035551.  3 call sites outside the region.
 ; The 0x10 / 0x50 constants are program-byte class markers, matching the two "voice active"
 ; encodings used by Voice_ProgChange.
-DSP_VoiceState_Dispatch:
-	pushw_erp 0xFA
-	ldib_erp 0xFB, 0
-	cp_erpb 0xFB, 0x1A
-	jrl nc, DSP_VoiceState_Dispatch_Epilogue
-
-; Per-part test of part+0x1A against 0x10 then 0x50.  The rest of the routine (the
-; DSP_VoiceState_Dispatch_ActiveVoice body at 0x0354CA and the loop tail at 0x035551) lies
-; beyond 0x0354C9 and belongs to the next region.
-DSP_VoiceState_Dispatch_Scan:
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	cp	(xbc+wa), 0x10
-	jr z, DSP_VoiceState_Dispatch_ActiveVoice
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	cp	(xbc+wa), 0x50
-	jrl nz, DSP_VoiceState_Dispatch_LoopNext
-
-; Body of DSP_VoiceState_Dispatch, whose entry (0x035497) is just below this region. For MIDI
-; part `n` (0..0x19, stride 0x11F from the 0x041368 part table) whose byte at +0x1A is 0x10 or
-; 0x50, calls WaveSel_Rebuild_PartCaches(WA=n, BC=part[+0x19], DE=part[+0x1A]), then switches on
-; bits 7:6 of tonerec[+0x10] (tonerec = the long at part+0x06): 0x80 or 0 -> next part,
-; 0x40 -> SubPathB, 0xC0 -> SubPathA.
-DSP_VoiceState_Dispatch_ActiveVoice:
-	ldto_berp A, 0xFB
-	ld l, a
-	extz hl
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250b:24)
-	ld	a, (xbc+wa)
-	ldfr_berp A, 0xF0
-	extz ix
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Payload_Bss_Start+0x250c:24)
-	ld	a, (xbc+wa)
-	ld e, a
-	extz de
-	ld wa, hl
-	ld bc, ix
-	call WaveSel_Rebuild_PartCaches
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x80
-	jr z, DSP_VoiceState_Dispatch_LoopNext
-	cp a, 0x40
-	jr z, DSP_VoiceState_Dispatch_SubPathB
-	cp a, 0xC0
-	jr z, DSP_VoiceState_Dispatch_SubPathA
-	cp a, 0:i3
-	jr nz, DSP_VoiceState_Dispatch_LoopNext
-
-; tonerec type 0xC0: call VoiceSlot_FullInit(WA = part index), then continue the scan.
-DSP_VoiceState_Dispatch_SubPathA:
-	ldto_berp A, 0xFB
-	extz wa
-	call VoiceSlot_FullInit
-	jr DSP_VoiceState_Dispatch_LoopNext
-
-; tonerec type 0x40: Voice_PortamentoTargets_SetAll(part) then VoiceSlot_AltInit(part).
-DSP_VoiceState_Dispatch_SubPathB:
-	ldto_berp A, 0xFB
-	extz wa
-	call Voice_PortamentoTargets_SetAll
-	ldto_berp A, 0xFB
-	extz wa
-	call VoiceSlot_AltInit
-
-; ++part; loop back to the scan while part < 0x1A.
-DSP_VoiceState_Dispatch_LoopNext:
-	inc1b_erp 0xFB
-	cp_erpb 0xFB, 0x1A
-	jrl c, DSP_VoiceState_Dispatch_Scan
-
-; pop frame, ret. Callers: DSP_Cmd2B_AlgoSelect's neighbourhood (0x026279), CmdHandler2C
-; sub-commands 4 and 6 (0x035EF0, 0x035F0B).
-DSP_VoiceState_Dispatch_Epilogue:
-	popw_erp 0xFA
-	ret
+DSP_VoiceState_Dispatch:	.include "includes/generated/cc900/DSP_VoiceState_Dispatch.s"	; C: cc900/ringbuf_and_midi_dispatch_lane_23c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_VoiceState_Dispatch_Scan, DSP_VoiceState_Dispatch + 13
+	.set	DSP_VoiceState_Dispatch_ActiveVoice, DSP_VoiceState_Dispatch + 58
+	.set	DSP_VoiceState_Dispatch_SubPathA, DSP_VoiceState_Dispatch + 164
+	.set	DSP_VoiceState_Dispatch_SubPathB, DSP_VoiceState_Dispatch + 175
+	.set	DSP_VoiceState_Dispatch_LoopNext, DSP_VoiceState_Dispatch + 193
+	.set	DSP_VoiceState_Dispatch_Epilogue, DSP_VoiceState_Dispatch + 203
 
 ; Resets the two DSP working-buffer write pointers to 0x007800:
 ;   (0x045320) = 0x00007800 ; (0x04531C) = 0x00007800

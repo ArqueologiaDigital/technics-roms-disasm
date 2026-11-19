@@ -137,6 +137,11 @@ def erp_byte(op, raw):
         return '\t%s 0x%x, 0x%x' % (ERP_IMM_OP[b], ERP_BYTE[raw[0]], num(raw[1]) & 0xff)
     if b in ('cp', 'or') and len(raw) == 2 and raw[0] in ERP_BYTE and raw[1] in R8:
         return '\t%s_erpb_rr %s, 0x%x' % (b, raw[1].lower(), ERP_BYTE[raw[0]])
+    if b in ('cp', 'add', 'sub', 'and', 'or') and len(raw) == 2 and raw[0] in R8 and raw[1] in ERP_BYTE:
+        # the byte register as the SECOND operand, `OP r,QC` (V4.23: cp L,QC in Voice_Build_SoundingVoiceList):
+        # c7 <bank> <op base + r>, llvm-mc's cpb_erp / addb_erp / ... r, bank (the ROM's Voice_Poly_NoteOn:
+        # cpb_erp A, 0xFA = c7 fa f1, cp A,QIZL).  No xorb_erp exists, so xor stays untranslated.
+        return '\t%sb_erp %s, 0x%x' % (b, raw[0].lower(), ERP_BYTE[raw[1]])
     if op in ('inc', 'dec') and len(raw) == 2 and NUM.match(raw[0]) and raw[1] in ERP_BYTE and 0 <= num(raw[0]) <= 8:
         return '\t%sb_erp 0x%x, %d' % (op, ERP_BYTE[raw[1]], num(raw[0]) or 8)   # inc 0x1,QIZH = c7 fb 61 (lane_sub);
         #                                                                   a count field of 0 means 8 (2026-11-19)

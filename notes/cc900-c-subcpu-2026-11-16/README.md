@@ -190,6 +190,88 @@ DSP_VoiceParamReadWrite, VoiceAlloc_Apply_Algo_Group2 (helper AI).  13 functions
 tree** built from C (`c_duplicates.py`); `make -j2 gate` PASS.  The work was wound down after it (owner, 2026-11-18):
 HANDOFF-2026-11-18.md.
 
+**Tenth promotion: round 23's 32 (2026-11-19; matched in runs 2026-11-19-5, -10 and -11, verified per tree in run
+2026-11-19-12-sub-r23s-staged).**  7 files through `promote_v423_run.sh`: 27 tone-generator writers (ToneGen_WriteVoice_*,
+ToneGen_WriteExtParam*, ToneGen_WriteNote2ch, ToneGen_WriteEnvSegments, ...) and Voice_AllVoices_PortamentoReset, all
+open at +0 since round 3; DSP_VoiceState_Dispatch; AudioMod_Apply_Slot_Field29 / _2A and NoteOn_RoutePacket (helper AM);
+Voice_Part_SetStateAndReinit (helper AL).  32 functions, 3,253 B per tree (staged_v423.tsv's MATCH rows of run -12);
+**557 functions per tree** built from C (`c_duplicates.py`).
+
+**Eleventh promotion: helper AO's 15 writers (2026-11-19; matched in run 2026-11-19-16-sub-r23o-tg-dsp, verified per
+tree in run 2026-11-19-20-sub-r23t-staged).**  voice_noteon_and_tonegen_ao_23a.c: ToneGen_WriteExtParams_15 / _15_Alt /
+_15_Banked / _56b / _TypeDispatch, ToneGen_WriteGlobalConfig, ToneGen_WriteLevelBurst, ToneGen_WriteLevelPair,
+ToneGen_WriteReg0440_0480, ToneGen_WriteReg0840_Shadow2E, ToneGen_WriteVoice_TvfRegs_Dup and ToneGen_Write_Reg0180 /
+0440 / 0480 / 04C0, all written with `__asm`.  15 functions, 1,787 B per tree; **572 functions per tree** built from C
+(`c_duplicates.py`).
+
+**Twelfth promotion: round 24's 2 (2026-11-19; matched in run 2026-11-19-24-sub-r24a, verified per tree in run
+2026-11-19-25-sub-r24s-staged).**  DSP_VoiceCoeffRoute (365 B, open at +0 since round 3; helper AP rewrote it from the
+built DSP_VoiceCoeffRoute2) and Voice_StereoLevel_Compute (625 B, its IZ int a plain local, no `__IZ`).  2 functions,
+990 B per tree; **574 functions per tree** built from C (`c_duplicates.py`).
+
+**Thirteenth promotion: EnvTranspose_UpdateLoop (2026-11-19; matched in run 2026-11-19-27-sub-r25a, verified per tree
+in run 2026-11-19-28-sub-r25s-staged).**  439 B per tree (helper AL, round 25: the frame order rec, t, keys and the
+key stores value first); **575 functions per tree** built from C (`c_duplicates.py`).
+
+**Fourteenth promotion: Voice_Freq_WriteLeft and Voice_Pitch_Compute (2026-11-19; matched in run
+2026-11-19-30-sub-r26a, verified per tree in run 2026-11-19-31-sub-r26s-staged).**  voice_params_and_tvf_ap_26a.c
+(helper AP): 929 B per tree; **577 functions per tree** built from C (`c_duplicates.py`).
+
+**Fifteenth promotion: WaveSel_Cache_VelSplitPtr (2026-11-19; matched in run 2026-11-19-35-sub-r27a, verified per
+tree in run 2026-11-19-38-sub-r27s-staged).**  dsp_voice_params_al_27a.c (helper AL: path 1's +4 as a member of a
+struct cast, idiom (z)): 154 B per tree; **578 functions per tree** built from C (`c_duplicates.py`).
+
+**Sixteenth promotion: DSP_SetCoeff_FullPipeline (2026-11-19; matched in run 2026-11-19-45-sub-r30a, verified per
+tree in run 2026-11-19-47-sub-r30s-staged).**  dsp_voice_params_al_30a.c (helper AL: ToneDB_Find_SubToneRecord called
+first and the row offset added in place, `e` a plain char read as `(unsigned char)e`): 384 B per tree; **579
+functions per tree** built from C (`c_duplicates.py`).
+
+**Seventeenth promotion: AlgoType_StateWrite (2026-11-19; matched in run 2026-11-19-50-sub-r31a on its first attempt,
+verified per tree in run 2026-11-19-51-sub-r31s-staged).**  dsp_voice_params_al_31a.c (helper AL): 635 B per tree;
+**580 functions per tree** built from C (`c_duplicates.py`).
+
+**Eighteenth promotion: DSP_Reinit_VoiceSlots and Voice_Build_Partial_Descriptor (2026-11-19; matched in run
+2026-11-19-57-sub-r34a, verified per tree in run 2026-11-19-58-sub-r34s-staged).**  ringbuf_and_midi_dispatch_ap_34a.c
+(helper AP: the index `(unsigned int)a * 0x14 + c` in 16 bits, the destination `+((unsigned long)x * 0x1d6 + 0x10) +
+ram_4531c` with `ram_4531c` an `unsigned long`) and voice_ctrlchange_al_34a.c (helper AL: the rebased key through a
+byte local before the Voice_Allocate_Typed call): 1,154 B per tree; **582 functions per tree** built from C.
+
+**Nineteenth promotion: Voice_Reset_Engine (2026-11-19; matched in run 2026-11-19-65-sub-r35a, verified per tree in
+run 2026-11-19-69-sub-r36q).**  voice_params_and_tvf_ap_35a.c (helper AP: the command / channel records' long fields
+through a struct cast on the record's byte address, which gives the ROM's `lda xbc,(xbc+wa)`): 724 B per tree; **583
+functions per tree** built from C.
+
+**Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
+V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
+on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding
+(`cpb_erp A, 0xFA` = c7 fa f1 in Voice_Poly_NoteOn): 7 of 7.  Voice_Build_SoundingVoiceList's listing (sub_AM_23a,
+run 2026-11-19-11) now translates (DIFF at +0: register choice).  `bad_lines.py` no longer crashes on to_llvm's
+"untranslated (a byte register ...)" lines (helper AP's fix).
+
+**Held back: Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c.c).**  It matches v142 and v141 (run -31) but not
+v140 (DIFF at +24): in v1.40 the function is 1,491 bytes, because DSP_Cmd2B_SetParam is 82 bytes longer and the
+reply / write paths differ (scripts/generators/create_v140_subcpu_source.py's edits 2-4).  v140's source is v141's
+text with those byte-string edits applied, so splicing the function into v142 / v141 would remove the text the edits
+rewrite.  It stays in `<tree>/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c` until v140 gets C of its
+own for that span (a v1.40 form of the 0x2B SetParam case) and its generator learns to keep it.
+
+### The firmware's inline assembly is `__asm` (round 23, runs 2026-11-19-7, -8 and -10)
+
+V4.23 knows two spellings of inline assembly and treats them differently.  With `__ASM("...")` it assumes the block
+touches no register, so a value live across it stays in the scratch register it arrived in (the writers' record pointer
+in XBC).  With the lower-case `__asm("...")` it assumes the block clobbers the scratch registers, and such a value goes
+to the callee-saved XIZ family (XIZ, IZ, QIZH, QIZL, IZH), pushed and popped, which is what the ROM does.
+ToneGen_WriteVoice_Reg07 matched with plain C and `__asm` (sub_lane_23p2.c), and `gen_lane_23w.py` respelled the earlier
+writer probes: 27 open functions matched at once.  So the record pointer never needed `__XIZ` / `__IZ` (bug candidate 12
+is no longer in the way of these functions).  `#pragma asm` is unknown to V4.23 (THC1-Warning-618, sub_lane_23p1.c).
+Functions built earlier with `__ASM` still match: their inline blocks have nothing live across them.
+
+Other round-23 verdicts: memcpy(d, s, 11) is a library call in V4.23, not an inline copy, and `#pragma pack(1)` is
+ignored silently, so the odd-size record copies (11, 71, 295 bytes) stay blocked (sub_lane_23a/b.c);
+DSP_MixerCoeff_Compute keeps its +1 (a 16-byte frame where the ROM has 20) in ten more spellings (`gen_lane_23m.py`).
+Helper AM found that `open_list.py` still lists DSP_WriteParameter and WaveSel_StageA2_FromVelZone, which are built
+(dsp_control_routines_e_10a.c, dsp_voice_params_d_10a.c): their MATCH rows predate the ledger.
+
 Round 21's lessons (helper-briefs/ROUND21.md has round 20's):
 - A first `case` whose body only leaves the switch loses its compare; Variant3 needed a `case 4:` before
   `case 0x20: case 8: break;` to keep the 0x20 test (helper AD).

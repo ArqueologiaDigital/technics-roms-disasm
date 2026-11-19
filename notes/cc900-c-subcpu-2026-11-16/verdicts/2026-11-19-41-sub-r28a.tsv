@@ -1,0 +1,7 @@
+function	bytes	matches	best_diff
+DSP_SetCoeff_FullPipeline	382	-	+1 sub_AL_28c@Xr
+VoiceState_FullReset	366	-	+9 sub_AP_28c@Xr
+Voice_Calc_LevelPair_EGA	225	sub_AP_28a@Xr sub_AP_28b@Xr sub_AP_28c@Xr	
+Voice_Calc_LevelPair_FixedAtk	318	-	+225 sub_AP_28c@Xr
+Voice_Calc_LevelPair_Mono	776	-	+65 sub_AP_28c@Xr
+WaveSel_StageA1_FindVelSplit	355	-	+2 sub_AL_28c@Xr

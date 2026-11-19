@@ -41,7 +41,9 @@ def main():
             if l.endswith(':') or '.globl' in l:
                 continue
             if 'untranslated' in l:
-                print('untranslated:', shape(l.split('untranslated:')[1])); continue
+                # to_llvm writes `untranslated: ...` and `untranslated (a byte register llvm-mc cannot name): ...`;
+                # split on the word, not on `untranslated:` (helper AP, 2026-11-19: the second form crashed here)
+                print('untranslated:', shape(l.split('untranslated', 1)[1])); continue
             try:
                 check_bytes.assemble('\t.text\nX:\n%s\n' % l)
             except subprocess.CalledProcessError:

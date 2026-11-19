@@ -1116,16 +1116,7 @@ HDAE5000_Str_Blank1:
 ; HDAE5000_AcHddNamingWindowProc_OnPositionLeft of the case for value 1+i; 9 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_AcHddNamingWindowProc_CaseTable:
-	.short	HDAE5000_AcHddNamingWindowProc_OnPositionLeft - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 1
-	.short	HDAE5000_AcHddNamingWindowProc_OnPositionRight - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 2
-	.short	HDAE5000_AcHddNamingWindowProc_OnPrevCharacter - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 3
-	.short	HDAE5000_AcHddNamingWindowProc_OnCharacterRowUpDown - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 4
-	.short	HDAE5000_AcHddNamingWindowProc_OnNextCharacter - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 5
-	.short	HDAE5000_AcHddNamingWindowProc_OnInsert - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 6
-	.short	HDAE5000_AcHddNamingWindowProc_OnDelete - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 7
-	.short	HDAE5000_AcHddNamingWindowProc_OnCenterName - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 8
-	.short	HDAE5000_AcHddNamingWindowProc_OnClear - HDAE5000_AcHddNamingWindowProc_OnPositionLeft	; 9
+HDAE5000_AcHddNamingWindowProc_CaseTable:	.include "includes/generated/cc900/HDAE5000_AcHddNamingWindowProc_CaseTable.s"	; C: cc900/hdae5000_naming_window.c (cc900-data)
 HDAE5000_Str_Name:
 	; read by IvHddNamingProc at 0x2826DD (lda operand)
 	.asciz "Name"
@@ -1186,10 +1177,7 @@ HDAE5000_Str_HDDNG:
 	; read by HardTest_HddIdRead at 0x282D22 (lda operand)
 	.asciz "=======> HDD NG!"
 	.balign 2, 0x00                       ; word-align pad (proven: see convert_align_pads.py header)
-HDAE5000_Float_100_HddIdRead:
-	; read by HardTest_HddIdRead at 0x282CD9 (lda operand)
-	; IEEE single 100.0 (0x42C80000): the divisor HDAE5000_HardTest_HddIdRead passes to HDAE5000_FloatDiv to turn the free space (units of 10,000 bytes) into MB for "Fre Capa: %3.1f [MB]"
-	.long 0x42c80000		; 100.0f
+HDAE5000_Float_100_HddIdRead:	.include "includes/generated/cc900/HDAE5000_Float_100_HddIdRead.s"	; C: cc900/hdae5000_hardtest_id.c (cc900-data)
 HDAE5000_Fmt_2_2d:
 	; read by FdName_SongNumber at 0x282E4E (pushed operand)
 	.asciz "%2.2d"
@@ -1252,15 +1240,7 @@ HDAE5000_HDAETitleFunc_ObjIds:
 ; .Lri_jt_base of the case for value 2+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_HDAETitleFunc_CaseTable:
-	.short	.Lri_jt_base - .Lri_jt_base	; 2
-	.short	.Lri_done - .Lri_jt_base	; 3 (default)
-	.short	.Lri_done - .Lri_jt_base	; 4 (default)
-	.short	.Lri_done - .Lri_jt_base	; 5 (default)
-	.short	.Lri_case6 - .Lri_jt_base	; 6
-	.short	.Lri_done - .Lri_jt_base	; 7 (default)
-	.short	.Lri_case8 - .Lri_jt_base	; 8
-	.short	.Lri_case9 - .Lri_jt_base	; 9
+HDAE5000_HDAETitleFunc_CaseTable:	.include "includes/generated/cc900/HDAE5000_HDAETitleFunc_CaseTable.s"	; C: cc900/hdae5000_drv_screens6.c (cc900-data)
 HDAE5000_Str_Chr2020203A2020:
 	; read by DirList_BuildPage at 0x283732 (lda operand)
 	.asciz "   :                \t"
@@ -1318,21 +1298,7 @@ HDAE5000_Fmt_2_2d_SongScreen_Refresh_2:
 ; HDAE5000_FILE_LOAD_Screen_Ev01C00001 of the case for event 0x01EA0000+i; 14 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_FILE_LOAD_Screen_CaseTable:
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA0000 - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0000
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA0001 - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0001
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA0002 - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0002
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0003 (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0004 (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0005 (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0006 (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0007 (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA0008 - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0008
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA0009 (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000A (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Default - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000B (default)
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA000C - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000C
-	.short	HDAE5000_FILE_LOAD_Screen_Ev01EA000D - HDAE5000_FILE_LOAD_Screen_Ev01C00001	; 0x01EA000D
+HDAE5000_FILE_LOAD_Screen_CaseTable:	.include "includes/generated/cc900/HDAE5000_FILE_LOAD_Screen_CaseTable.s"	; C: cc900/hdae5000_file_load_screen.c (cc900-data)
 HDAE5000_Str_DELD:
 	; read by AttenDelDirSwCatch at 0x283FCA (lda operand)
 	.asciz "DELD"
@@ -1446,17 +1412,7 @@ HDAE5000_Fmt_s_SeparateOutputModeCheck:
 ; .LHD_SC__h1_case9 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SeparateOutputModeCheck_CaseTable:
-	.short	.LHD_SC__h1_case0 - .LHD_SC__h1_case9	; 0x01E0003E
-	.short	.LHD_SC__h1_case1 - .LHD_SC__h1_case9	; 0x01E0003F
-	.short	.LHD_SC__h1_default - .LHD_SC__h1_case9	; 0x01E00040 (default)
-	.short	.LHD_SC__h1_default - .LHD_SC__h1_case9	; 0x01E00041 (default)
-	.short	.LHD_SC__h1_default - .LHD_SC__h1_case9	; 0x01E00042 (default)
-	.short	.LHD_SC__h1_case5 - .LHD_SC__h1_case9	; 0x01E00043
-	.short	.LHD_SC__h1_case6 - .LHD_SC__h1_case9	; 0x01E00044
-	.short	.LHD_SC__h1_case7 - .LHD_SC__h1_case9	; 0x01E00045
-	.short	.LHD_SC__h1_case8 - .LHD_SC__h1_case9	; 0x01E00046
-	.short	.LHD_SC__h1_case9 - .LHD_SC__h1_case9	; 0x01E00047
+HDAE5000_SeparateOutputModeCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SeparateOutputModeCheck_CaseTable.s"	; C: cc900/hdae5000_sepout.c (cc900-data)
 HDAE5000_TextPtrs_NONE_to_16:	; 17 x .long -> string
 	; read by SeparateDrumPartCheck at 0x2851D1 (ld # operand); 17 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_NONE
@@ -1555,17 +1511,7 @@ HDAE5000_Fmt_s_SeparateDrumPartCheck:
 ; .LHD_SC__h2_case9 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SeparateDrumPartCheck_CaseTable:
-	.short	.LHD_SC__h2_case0 - .LHD_SC__h2_case9	; 0x01E0003E
-	.short	.LHD_SC__h2_case1 - .LHD_SC__h2_case9	; 0x01E0003F
-	.short	.LHD_SC__h2_default - .LHD_SC__h2_case9	; 0x01E00040 (default)
-	.short	.LHD_SC__h2_default - .LHD_SC__h2_case9	; 0x01E00041 (default)
-	.short	.LHD_SC__h2_default - .LHD_SC__h2_case9	; 0x01E00042 (default)
-	.short	.LHD_SC__h2_case5 - .LHD_SC__h2_case9	; 0x01E00043
-	.short	.LHD_SC__h2_case6 - .LHD_SC__h2_case9	; 0x01E00044
-	.short	.LHD_SC__h2_case7 - .LHD_SC__h2_case9	; 0x01E00045
-	.short	.LHD_SC__h2_case8 - .LHD_SC__h2_case9	; 0x01E00046
-	.short	.LHD_SC__h2_case9 - .LHD_SC__h2_case9	; 0x01E00047
+HDAE5000_SeparateDrumPartCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SeparateDrumPartCheck_CaseTable.s"	; C: cc900/hdae5000_sepout.c (cc900-data)
 HDAE5000_TextPtrs_NONE_to_16_2:	; 17 x .long -> string
 	; read by SeparateBassPartCheck at 0x28527A (ld # operand); 17 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_NONE_2
@@ -1664,17 +1610,7 @@ HDAE5000_Fmt_s_SeparateBassPartCheck:
 ; .LHD_SC__h3_case9 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SeparateBassPartCheck_CaseTable:
-	.short	.LHD_SC__h3_case0 - .LHD_SC__h3_case9	; 0x01E0003E
-	.short	.LHD_SC__h3_case1 - .LHD_SC__h3_case9	; 0x01E0003F
-	.short	.LHD_SC__h3_default - .LHD_SC__h3_case9	; 0x01E00040 (default)
-	.short	.LHD_SC__h3_default - .LHD_SC__h3_case9	; 0x01E00041 (default)
-	.short	.LHD_SC__h3_default - .LHD_SC__h3_case9	; 0x01E00042 (default)
-	.short	.LHD_SC__h3_case5 - .LHD_SC__h3_case9	; 0x01E00043
-	.short	.LHD_SC__h3_case6 - .LHD_SC__h3_case9	; 0x01E00044
-	.short	.LHD_SC__h3_case7 - .LHD_SC__h3_case9	; 0x01E00045
-	.short	.LHD_SC__h3_case8 - .LHD_SC__h3_case9	; 0x01E00046
-	.short	.LHD_SC__h3_case9 - .LHD_SC__h3_case9	; 0x01E00047
+HDAE5000_SeparateBassPartCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SeparateBassPartCheck_CaseTable.s"	; C: cc900/hdae5000_sepout.c (cc900-data)
 HDAE5000_TextPtrs_Chr2D2D2D_NO_YES:	; 3 x .long -> string
 	; read by LBNCmpBitCheck, LBNLswBitCheck, LBNMdBitCheck, LBNMspBitCheck, LBNPmtBitCheck, LBNRcmBitCheck, LBNSqtBitCheck, LBNTlxBitCheck_Unregistered, LBNTmBitCheck, SfxCmpBitCheck, SfxLswBitCheck, SfxMdBitCheck, SfxMspBitCheck, SfxPmtBitCheck, SfxRcmBitCheck, SfxSqtBitCheck, SfxTlxBitCheck, SfxTmBitCheck, TypeSel_ShowSaveFlags at 0x285426 (ld #, ld (mem), lda operand); 3 string pointers, 4 bytes each, entry i at +4*i
 	.long	HDAE5000_Str_Chr2D2D2D_2
@@ -1700,17 +1636,7 @@ HDAE5000_Fmt_s_SaveOptNameCheck:
 ; .Lhbi_case0 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SaveOptNameCheck_CaseTable:
-	.short	.Lhbi_case1 - .Lhbi_case0	; 0x01E0003E
-	.short	.Lhbi_case2 - .Lhbi_case0	; 0x01E0003F
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00040 (default)
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00041 (default)
-	.short	.Lhbi_default - .Lhbi_case0	; 0x01E00042 (default)
-	.short	.Lhbi_case3 - .Lhbi_case0	; 0x01E00043
-	.short	.Lhbi_case4 - .Lhbi_case0	; 0x01E00044
-	.short	.Lhbi_case5 - .Lhbi_case0	; 0x01E00045
-	.short	.Lhbi_case6 - .Lhbi_case0	; 0x01E00046
-	.short	.Lhbi_case0 - .Lhbi_case0	; 0x01E00047
+HDAE5000_SaveOptNameCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SaveOptNameCheck_CaseTable.s"	; C: cc900/hdae5000_saveopt_name.c (cc900-data)
 HDAE5000_Str_SVOP:
 	; read by SaveOptSwEventCatch at 0x28560E (lda operand)
 	.asciz "SVOP"
@@ -1738,17 +1664,7 @@ HDAE5000_Fmt_s_SfxLswBitCheck:
 ; HDAE5000_SfxLswBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxLswBitCheck_CaseTable:
-	.short	HDAE5000_SfxLswBitCheck_Ev01E0003E - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxLswBitCheck_Ev01E0003F - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxLswBitCheck_Default - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxLswBitCheck_Default - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxLswBitCheck_Default - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxLswBitCheck_Ev01E00043 - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxLswBitCheck_Ev01E00044 - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxLswBitCheck_Ev01E00045 - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxLswBitCheck_Ev01E00046 - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxLswBitCheck_Ev01E00047 - HDAE5000_SfxLswBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxLswBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxLswBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxPmtBitCheck:
 	; read by SfxPmtBitCheck at 0x285905 (pushed operand)
 	.asciz "%s"
@@ -1760,17 +1676,7 @@ HDAE5000_Fmt_s_SfxPmtBitCheck:
 ; HDAE5000_SfxPmtBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxPmtBitCheck_CaseTable:
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E0003E - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E0003F - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxPmtBitCheck_Default - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxPmtBitCheck_Default - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxPmtBitCheck_Default - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E00043 - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E00044 - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E00045 - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E00046 - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxPmtBitCheck_Ev01E00047 - HDAE5000_SfxPmtBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxPmtBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxPmtBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxSqtBitCheck:
 	; read by SfxSqtBitCheck at 0x2859BB (pushed operand)
 	.asciz "%s"
@@ -1782,17 +1688,7 @@ HDAE5000_Fmt_s_SfxSqtBitCheck:
 ; HDAE5000_SfxSqtBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxSqtBitCheck_CaseTable:
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E0003E - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E0003F - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxSqtBitCheck_Default - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxSqtBitCheck_Default - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxSqtBitCheck_Default - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E00043 - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E00044 - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E00045 - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E00046 - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxSqtBitCheck_Ev01E00047 - HDAE5000_SfxSqtBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxSqtBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxSqtBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxCmpBitCheck:
 	; read by SfxCmpBitCheck at 0x285A71 (pushed operand)
 	.asciz "%s"
@@ -1804,17 +1700,7 @@ HDAE5000_Fmt_s_SfxCmpBitCheck:
 ; HDAE5000_SfxCmpBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxCmpBitCheck_CaseTable:
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E0003E - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E0003F - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxCmpBitCheck_Default - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxCmpBitCheck_Default - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxCmpBitCheck_Default - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E00043 - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E00044 - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E00045 - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E00046 - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxCmpBitCheck_Ev01E00047 - HDAE5000_SfxCmpBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxCmpBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxCmpBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxTmBitCheck:
 	; read by SfxTmBitCheck at 0x285B27 (pushed operand)
 	.asciz "%s"
@@ -1826,17 +1712,7 @@ HDAE5000_Fmt_s_SfxTmBitCheck:
 ; HDAE5000_SfxTmBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxTmBitCheck_CaseTable:
-	.short	HDAE5000_SfxTmBitCheck_Ev01E0003E - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxTmBitCheck_Ev01E0003F - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxTmBitCheck_Default - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxTmBitCheck_Default - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxTmBitCheck_Default - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxTmBitCheck_Ev01E00043 - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxTmBitCheck_Ev01E00044 - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxTmBitCheck_Ev01E00045 - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxTmBitCheck_Ev01E00046 - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxTmBitCheck_Ev01E00047 - HDAE5000_SfxTmBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxTmBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxTmBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxMspBitCheck:
 	; read by SfxMspBitCheck at 0x285BDD (pushed operand)
 	.asciz "%s"
@@ -1848,17 +1724,7 @@ HDAE5000_Fmt_s_SfxMspBitCheck:
 ; HDAE5000_SfxMspBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxMspBitCheck_CaseTable:
-	.short	HDAE5000_SfxMspBitCheck_Ev01E0003E - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxMspBitCheck_Ev01E0003F - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxMspBitCheck_Default - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxMspBitCheck_Default - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxMspBitCheck_Default - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxMspBitCheck_Ev01E00043 - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxMspBitCheck_Ev01E00044 - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxMspBitCheck_Ev01E00045 - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxMspBitCheck_Ev01E00046 - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxMspBitCheck_Ev01E00047 - HDAE5000_SfxMspBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxMspBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxMspBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxRcmBitCheck:
 	; read by SfxRcmBitCheck at 0x285C93 (pushed operand)
 	.asciz "%s"
@@ -1870,17 +1736,7 @@ HDAE5000_Fmt_s_SfxRcmBitCheck:
 ; HDAE5000_SfxRcmBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxRcmBitCheck_CaseTable:
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E0003E - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E0003F - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxRcmBitCheck_Default - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxRcmBitCheck_Default - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxRcmBitCheck_Default - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E00043 - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E00044 - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E00045 - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E00046 - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxRcmBitCheck_Ev01E00047 - HDAE5000_SfxRcmBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxRcmBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxRcmBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxMdBitCheck:
 	; read by SfxMdBitCheck at 0x285D49 (pushed operand)
 	.asciz "%s"
@@ -1892,17 +1748,7 @@ HDAE5000_Fmt_s_SfxMdBitCheck:
 ; HDAE5000_SfxMdBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxMdBitCheck_CaseTable:
-	.short	HDAE5000_SfxMdBitCheck_Ev01E0003E - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxMdBitCheck_Ev01E0003F - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxMdBitCheck_Default - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxMdBitCheck_Default - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxMdBitCheck_Default - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxMdBitCheck_Ev01E00043 - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxMdBitCheck_Ev01E00044 - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxMdBitCheck_Ev01E00045 - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxMdBitCheck_Ev01E00046 - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxMdBitCheck_Ev01E00047 - HDAE5000_SfxMdBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxMdBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxMdBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_SfxTlxBitCheck:
 	; read by SfxTlxBitCheck at 0x285E04 (pushed operand)
 	.asciz "%s"
@@ -1914,17 +1760,7 @@ HDAE5000_Fmt_s_SfxTlxBitCheck:
 ; HDAE5000_SfxTlxBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_SfxTlxBitCheck_CaseTable:
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E0003E - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E0003F - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_SfxTlxBitCheck_Default - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_SfxTlxBitCheck_Default - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_SfxTlxBitCheck_Default - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E00043 - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E00044 - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E00045 - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E00046 - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_SfxTlxBitCheck_Ev01E00047 - HDAE5000_SfxTlxBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_SfxTlxBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_SfxTlxBitCheck_CaseTable.s"	; C: cc900/hdae5000_sfx_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_WriteProtectEditCheck:
 	; read by WriteProtectEditCheck at 0x285EE1 (pushed operand)
 	.asciz "%s"
@@ -2029,15 +1865,7 @@ HDAE5000_Str_FMT:
 ; HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1 of the case for value 0+i; 8 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_AttenHDFormatSwCatch_CaseTable:
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 0
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit2Or3 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 1
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit4Or5 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 2
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit6Or7 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 3
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCodeDigit8Or9 - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 4
-	.short	.LCHSC__post_switch - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 5 (default)
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCancel - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 6
-	.short	HDAE5000_AttenHDFormatSwCatch_OnCancel - HDAE5000_AttenHDFormatSwCatch_OnCodeDigit0Or1	; 7
+HDAE5000_AttenHDFormatSwCatch_CaseTable:	.include "includes/generated/cc900/HDAE5000_AttenHDFormatSwCatch_CaseTable.s"	; C: cc900/hdae5000_drv_screens6.c (cc900-data)
 ;
 ; HDAE5000_Lbn_StepDigit_CaseTable (0x2E2CF2, 6 x u16): the switch of HDAE5000_Lbn_StepDigit
 ; (dispatch at 0x286A49, hdae5000_hd_driver.s:5493: bound `cp xwa,5`, `add xwa,xwa`, `ld wa,(<table>+2i)`,
@@ -2045,13 +1873,7 @@ HDAE5000_AttenHDFormatSwCatch_CaseTable:
 ; HDAE5000_Lbn_StepDigit_NoDigitTyped of the case for value 0+i; 6 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_Lbn_StepDigit_CaseTable:
-	.short	HDAE5000_Lbn_StepDigit_NoDigitTyped - HDAE5000_Lbn_StepDigit_NoDigitTyped	; 0
-	.short	HDAE5000_Lbn_StepDigit_DirHundreds - HDAE5000_Lbn_StepDigit_NoDigitTyped	; 1
-	.short	HDAE5000_Lbn_StepDigit_DirTens - HDAE5000_Lbn_StepDigit_NoDigitTyped	; 2
-	.short	HDAE5000_Lbn_StepDigit_DirUnits - HDAE5000_Lbn_StepDigit_NoDigitTyped	; 3
-	.short	HDAE5000_Lbn_StepDigit_SongTens - HDAE5000_Lbn_StepDigit_NoDigitTyped	; 4
-	.short	HDAE5000_Lbn_StepDigit_SongUnits - HDAE5000_Lbn_StepDigit_NoDigitTyped	; 5
+HDAE5000_Lbn_StepDigit_CaseTable:	.include "includes/generated/cc900/HDAE5000_Lbn_StepDigit_CaseTable.s"	; C: cc900/hdae5000_lbn_page.c (cc900-data)
 HDAE5000_Str_LBNS:
 	; read by LBNPage1SwCatch at 0x286BB7 (lda operand)
 	.asciz "LBNS"
@@ -2092,14 +1914,7 @@ HDAE5000_Fmt_2_2d_Lbn_ShowEntry_2:
 ; HDAE5000_Lbn_ShowEntry_NoDigitTyped of the case for value 0+i; 7 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_Lbn_ShowEntry_CaseTable:
-	.short	HDAE5000_Lbn_ShowEntry_NoDigitTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 0
-	.short	HDAE5000_Lbn_ShowEntry_DirHundredsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 1
-	.short	HDAE5000_Lbn_ShowEntry_DirTensTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 2
-	.short	HDAE5000_Lbn_ShowEntry_DirUnitsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 3
-	.short	HDAE5000_Lbn_ShowEntry_SongTensTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 4
-	.short	HDAE5000_Lbn_ShowEntry_SongUnitsTyped - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 5
-	.short	HDAE5000_Lbn_ShowEntry_Reset - HDAE5000_Lbn_ShowEntry_NoDigitTyped	; 6
+HDAE5000_Lbn_ShowEntry_CaseTable:	.include "includes/generated/cc900/HDAE5000_Lbn_ShowEntry_CaseTable.s"	; C: cc900/hdae5000_lbn_show.c (cc900-data)
 HDAE5000_Str_Blank26:
 	; read by FileLBNNameCheck at 0x2875C4 (pushed operand)
 	.asciz "                          "
@@ -2127,17 +1942,7 @@ HDAE5000_Fmt_s_LBNLswBitCheck:
 ; HDAE5000_LBNLswBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNLswBitCheck_CaseTable:
-	.short	HDAE5000_LBNLswBitCheck_Ev01E0003E - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNLswBitCheck_Ev01E0003F - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNLswBitCheck_Default - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNLswBitCheck_Default - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNLswBitCheck_Default - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNLswBitCheck_Ev01E00043 - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNLswBitCheck_Ev01E00044 - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNLswBitCheck_Ev01E00045 - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNLswBitCheck_Ev01E00046 - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNLswBitCheck_Ev01E00047 - HDAE5000_LBNLswBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNLswBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNLswBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNPmtBitCheck:
 	; read by LBNPmtBitCheck at 0x28775B (pushed operand)
 	.asciz "%s"
@@ -2149,17 +1954,7 @@ HDAE5000_Fmt_s_LBNPmtBitCheck:
 ; HDAE5000_LBNPmtBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNPmtBitCheck_CaseTable:
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E0003E - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E0003F - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNPmtBitCheck_Default - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNPmtBitCheck_Default - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNPmtBitCheck_Default - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E00043 - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E00044 - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E00045 - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E00046 - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNPmtBitCheck_Ev01E00047 - HDAE5000_LBNPmtBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNPmtBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNPmtBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNSqtBitCheck:
 	; read by LBNSqtBitCheck at 0x287865 (pushed operand)
 	.asciz "%s"
@@ -2171,17 +1966,7 @@ HDAE5000_Fmt_s_LBNSqtBitCheck:
 ; HDAE5000_LBNSqtBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNSqtBitCheck_CaseTable:
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E0003E - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E0003F - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNSqtBitCheck_Default - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNSqtBitCheck_Default - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNSqtBitCheck_Default - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E00043 - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E00044 - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E00045 - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E00046 - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNSqtBitCheck_Ev01E00047 - HDAE5000_LBNSqtBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNSqtBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNSqtBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNCmpBitCheck:
 	; read by LBNCmpBitCheck at 0x28796F (pushed operand)
 	.asciz "%s"
@@ -2193,17 +1978,7 @@ HDAE5000_Fmt_s_LBNCmpBitCheck:
 ; HDAE5000_LBNCmpBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNCmpBitCheck_CaseTable:
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E0003E - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E0003F - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNCmpBitCheck_Default - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNCmpBitCheck_Default - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNCmpBitCheck_Default - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E00043 - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E00044 - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E00045 - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E00046 - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNCmpBitCheck_Ev01E00047 - HDAE5000_LBNCmpBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNCmpBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNCmpBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNTmBitCheck:
 	; read by LBNTmBitCheck at 0x287A79 (pushed operand)
 	.asciz "%s"
@@ -2215,17 +1990,7 @@ HDAE5000_Fmt_s_LBNTmBitCheck:
 ; HDAE5000_LBNTmBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNTmBitCheck_CaseTable:
-	.short	HDAE5000_LBNTmBitCheck_Ev01E0003E - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNTmBitCheck_Ev01E0003F - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNTmBitCheck_Default - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNTmBitCheck_Default - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNTmBitCheck_Default - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNTmBitCheck_Ev01E00043 - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNTmBitCheck_Ev01E00044 - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNTmBitCheck_Ev01E00045 - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNTmBitCheck_Ev01E00046 - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNTmBitCheck_Ev01E00047 - HDAE5000_LBNTmBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNTmBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNTmBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbntm_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNMspBitCheck:
 	; read by LBNMspBitCheck at 0x287B83 (pushed operand)
 	.asciz "%s"
@@ -2237,17 +2002,7 @@ HDAE5000_Fmt_s_LBNMspBitCheck:
 ; HDAE5000_LBNMspBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNMspBitCheck_CaseTable:
-	.short	HDAE5000_LBNMspBitCheck_Ev01E0003E - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNMspBitCheck_Ev01E0003F - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNMspBitCheck_Default - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNMspBitCheck_Default - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNMspBitCheck_Default - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNMspBitCheck_Ev01E00043 - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNMspBitCheck_Ev01E00044 - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNMspBitCheck_Ev01E00045 - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNMspBitCheck_Ev01E00046 - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNMspBitCheck_Ev01E00047 - HDAE5000_LBNMspBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNMspBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNMspBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNRcmBitCheck:
 	; read by LBNRcmBitCheck at 0x287C8D (pushed operand)
 	.asciz "%s"
@@ -2259,17 +2014,7 @@ HDAE5000_Fmt_s_LBNRcmBitCheck:
 ; HDAE5000_LBNRcmBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNRcmBitCheck_CaseTable:
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E0003E - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E0003F - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNRcmBitCheck_Default - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNRcmBitCheck_Default - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNRcmBitCheck_Default - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E00043 - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E00044 - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E00045 - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E00046 - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNRcmBitCheck_Ev01E00047 - HDAE5000_LBNRcmBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNRcmBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNRcmBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNMdBitCheck:
 	; read by LBNMdBitCheck at 0x287D97 (pushed operand)
 	.asciz "%s"
@@ -2281,17 +2026,7 @@ HDAE5000_Fmt_s_LBNMdBitCheck:
 ; HDAE5000_LBNMdBitCheck_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNMdBitCheck_CaseTable:
-	.short	HDAE5000_LBNMdBitCheck_Ev01E0003E - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNMdBitCheck_Ev01E0003F - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNMdBitCheck_Default - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNMdBitCheck_Default - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNMdBitCheck_Default - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNMdBitCheck_Ev01E00043 - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNMdBitCheck_Ev01E00044 - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNMdBitCheck_Ev01E00045 - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNMdBitCheck_Ev01E00046 - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNMdBitCheck_Ev01E00047 - HDAE5000_LBNMdBitCheck_Ev01E00047	; 0x01E00047
+HDAE5000_LBNMdBitCheck_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNMdBitCheck_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Fmt_s_LBNTlxBitCheck_Unregistered:
 	; read by LBNTlxBitCheck_Unregistered at 0x287EA1 (pushed operand)
 	.asciz "%s"
@@ -2303,17 +2038,7 @@ HDAE5000_Fmt_s_LBNTlxBitCheck_Unregistered:
 ; HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047 of the case for event 0x01E0003E+i; 10 entries, pinned by the bound
 ; compare.  Asserted and written by scripts/converters/hdae5000_switch_tables.py.
 ;
-HDAE5000_LBNTlxBitCheck_Unregistered_CaseTable:
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E0003E - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E0003E
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E0003F - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E0003F
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Default - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00040 (default)
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Default - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00041 (default)
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Default - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00042 (default)
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00043 - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00043
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00044 - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00044
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00045 - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00045
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00046 - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00046
-	.short	HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047 - HDAE5000_LBNTlxBitCheck_Unregistered_Ev01E00047	; 0x01E00047
+HDAE5000_LBNTlxBitCheck_Unregistered_CaseTable:	.include "includes/generated/cc900/HDAE5000_LBNTlxBitCheck_Unregistered_CaseTable.s"	; C: cc900/hdae5000_lbn_bitcheck.c (cc900-data)
 HDAE5000_Str_Chr2020203A2020_FlsList_BuildPage:
 	; read by FlsList_BuildPage at 0x287F77 (lda operand)
 	.asciz "   :                \t"

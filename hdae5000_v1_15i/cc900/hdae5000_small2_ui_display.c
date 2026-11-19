@@ -1,5 +1,5 @@
-/* Functions of hdae5000_ui_display.s.  (hdae5000_small2.c)
-   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_small2.c (checked in
+/* Functions of hdae5000_ui_display.s.  (hdae5000_small2_ui_display.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_small2_ui_display.c (checked in
    notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: NameHistPush_s=HDAE5000_NameHistory_Push
@@ -38,8 +38,8 @@ extern unsigned int HDAE5000_RAM_CurSong;
 extern struct TypeSel HDAE5000_RAM_DeleteOptions;
 extern unsigned char HDAE5000_DelOpt_TemplateBlank[];
 extern unsigned char HDAE5000_RAM_DirNames[];
-extern unsigned char ram_22ad9c[];                      /* [0] = digits typed; the digits from +2 */
-extern unsigned char HDAE5000_RAM_FormatCodeDigits[];   /* ram_22ad9c + 2 */
+extern unsigned char ram_22ad54[];                      /* [0] = digits typed; the digits from +2 */
+extern unsigned char HDAE5000_RAM_FormatCodeDigits[];   /* ram_22ad54 + 2 */
 extern unsigned char HDAE5000_RAM_HdStreamBuffer[];
 extern unsigned char *HDAE5000_RAM_HdStreamFill;
 extern long *HDAE5000_RAM_HdStreamSlot;
@@ -49,8 +49,8 @@ extern char HDAE5000_Fmt_2_2d[];
 extern char HDAE5000_Str_HdFormatCode[];
 extern char HDAE5000_Str_Track0RecoverCode[];
 extern char HDAE5000_Str_XAP[];
-extern char ram_2f8de0[];                               /* HDAE5000_Dir_IsBlankName_Str_Blank16 */
-extern char ram_2f8df2[];                               /* HDAE5000_Fls_IsBlankName_Str_Blank16 */
+extern char ram_2e0910[];                               /* HDAE5000_Dir_IsBlankName_Str_Blank16 */
+extern char ram_2e0922[];                               /* HDAE5000_Fls_IsBlankName_Str_Blank16 */
 
 /* ---- 0x28043c ---- */
 
@@ -95,8 +95,24 @@ int HDAE5000_HD_FormatDrive(int sleep)
 }
 
 /* ---- 0x28f9ad ---- */
+int HDAE5000_Dir_IsBlankName(unsigned int dir)
+{
+    int ret = 0;
+
+    if (HDAE5000_StrNCmp(&HDAE5000_RAM_DirNames[(unsigned long)dir * 16], ram_2e0910, HDAE5000_StrLen(ram_2e0910)) == 0)
+        ret = -1;
+    return ret;
+}
 
 /* ---- 0x28fae9 ---- */
+unsigned int HDAE5000_Fls_IsBlankName(unsigned int fls)
+{
+    unsigned int ret = 0;
+
+    if (HDAE5000_StrNCmp(HDAE5000_FlsRecord_Address(fls), ram_2e0922, HDAE5000_StrLen(ram_2e0922)) == 0)
+        ret = 0xffff;
+    return ret;
+}
 
 /* ---- 0x293e88 ---- */
 int HDAE5000_HD_LoadTables(int keep)

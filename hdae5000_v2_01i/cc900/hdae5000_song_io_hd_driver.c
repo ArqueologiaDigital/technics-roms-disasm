@@ -1,5 +1,5 @@
-/* Functions of hdae5000_hd_driver.s.  (hdae5000_song_io.c)
-   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_song_io.c (checked in
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_song_io_hd_driver.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_song_io_hd_driver.c (checked in
    notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
 */
@@ -50,6 +50,27 @@ long HDAE5000_AttenCpToHDSwCatch(long obj, long ev, long arg)
         case 6:
         case 7:
             CALLV(ROOT->PostEvent)(OBJ_HDDMENU, EVT_SHOW, 0L);
+        }
+        return 0;
+    }
+}
+
+long HDAE5000_AttenCpToMarkSwCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_Cphd_AttenCpToMarkSwCatch);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID)) {
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_CP_FD, EVT_SHOW, 0L);
         }
         return 0;
     }

@@ -29,7 +29,8 @@ bytes are compared with the image at the function's label.
         of the run (ide2003, v110; diagnostics only: a function is done only under V4.23).  --record appends the rows of the STAGED files
         (hdae5000/cc900-staged/*.c whose text the run compiled) to staged_v423.tsv beside this script (tree directory, C file,
         SHA-256 of its text, options, run, function, bytes, result), replacing that file's earlier rows.
-    python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --show RUN_DIR FUNC [--file STEM] [--label O3Xr]
+    python3 -B notes/cc900-c-hdae5000-2026-11-16/hd_v423.py --show RUN_DIR FUNC [--file STEM] [--label O3Xr] [--dir SUB]
+                                                                        [--image IMG]
         for working only (never paste its output into the repository: it is derived from Toshiba's listing): our
         llvm-mc spelling of V4.23's code for FUNC, each line with its bytes and the ROM's bytes at that offset
 
@@ -178,6 +179,8 @@ def show(a):
             stem = os.path.basename(asm)[:-4]
             if opt(a, '--file') not in (None, stem):
                 continue
+            if opt(a, '--dir') and os.path.basename(os.path.dirname(asm)) != opt(a, '--dir'):
+                continue                         # --dir SUB: only that corpus directory's listings, as --check
             text = open(asm, encoding='latin-1').read()
             to_llvm.SPELL = None
             to_llvm.WIDTHS = listing.attributes(text)

@@ -1,0 +1,21 @@
+function	bytes	matches	best_diff
+AudioMod_Apply_Slot_Field29	281	sub_AM_23a@Xr sub_AM_23b@Xr	
+AudioMod_Apply_Slot_Field2A	281	sub_AM_23a@Xr sub_AM_23b@Xr	
+AudioMod_Scale_To_LevelPairShift	74	-	+4 sub_AM_23c@Xr
+AudioMod_Scale_To_Part_1B	67	-	+4 sub_AM_23c@Xr
+AudioMod_Scale_To_Part_1C	67	-	+4 sub_AM_23c@Xr
+AudioMod_Scale_To_Part_1F	77	-	+4 sub_AM_23c@Xr
+Audio_Cmd_DSPUnit_Param	629	-	+9 sub_AL_23c@Xr
+Audio_Cmd_EffectParam_Dispatch	1350	-	+44 sub_AL_23b@Xr
+Audio_Cmd_ToneEdit_Write_And_Reply	271	-	+14 sub_AL_23c@Xr
+ExtVoice_Alloc_StreamSlot	509	-	+45 sub_AK_23c@Xr
+InterCPU_SendEditBufferToMain	58	-	+0 sub_AM_23c@Xr
+NoteOn_RoutePacket	403	sub_AM_23a@Xr sub_AM_23b@Xr sub_AM_23c@Xr	
+VoiceState_FullReset	385	-	+9 sub_AM_23b@Xr
+Voice_Allocate_Nodes	584	-	+41 sub_AK_23c@Xr
+Voice_Build_SoundingVoiceList	0	-	to_llvm cannot translate a line
+Voice_ChanPressure	255	-	+26 sub_AK_23b@Xr
+Voice_NoteOff	265	-	+44 sub_AK_23c@Xr
+Voice_Part_SetStateAndReinit	339	sub_AL_23a@Xr sub_AL_23b@Xr sub_AL_23c@Xr	
+Voice_SetPitch	262	-	+44 sub_AK_23c@Xr
+WaveSel_Cache_VelSplitPtr	157	-	+40 sub_AL_23b@Xr
