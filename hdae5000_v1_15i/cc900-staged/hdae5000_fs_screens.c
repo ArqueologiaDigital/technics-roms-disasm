@@ -95,7 +95,7 @@ extern unsigned int HDAE5000_RAM_LbnDigitPos;
 extern char HDAE5000_RAM_LbnEntryText[];
 extern char ram_22aa20[], ram_22aa32[], ram_22aa38[];   /* LbnEntryText + 6 / + 0x18 / + 0x1e */
 extern char HDAE5000_RAM_NameEditBuffer[];
-extern char ram_23a04e[];                               /* HDAE5000_RAM_Name_ColumnRuler */
+extern char ram_23d286[];                               /* HDAE5000_RAM_Name_ColumnRuler */
 extern unsigned char HDAE5000_RAM_FlsNameHistory[];
 extern unsigned char HDAE5000_RAM_DirNameHistory[];
 extern struct TypeSel HDAE5000_RAM_SaveOptions;
@@ -103,7 +103,7 @@ extern struct TypeSel HDAE5000_RAM_DeleteOptions;
 extern struct FdList HDAE5000_RAM_FdList;
 extern char ram_22a058[];                               /* the FLS screen's title text */
 extern char ram_22a078[];                               /* its LOC text */
-extern char ram_22b020[];                               /* its 16 item rows of 37 */
+extern char ram_22afd8[];                               /* its 16 item rows of 37 */
 
 /* ROM */
 extern unsigned char HDAE5000_TypeSel_TemplateBlank[];
@@ -302,6 +302,33 @@ long HDAE5000_CopyToHDDirSelScreen(long obj, long ev, long arg)
 
 /* the "write confirm" switch: keys 0 / 1 save the song under the typed name, 6 / 7 go back.
    r23 (run 98: +229): SaveSongWithUi's stacked arguments in the ROM's push order (name, 1, obj) */
+long HDAE5000_WrConfirmEventCatch(long obj, long ev, long arg)
+{
+    switch (ev) {
+    case EVT_ARE_YOU_CLASS_PROC:
+        return 1;
+    case EVT_DRAW:
+        CALLV(ROOT->InheritedProc)(obj, ev, arg);
+        CALLV(ROOT->SendEvent)(obj, EVT_PARA_DRAW, (long)HDAE5000_Str_Wrcn);
+        return 0;
+    case EVT_SW_IN:
+        switch (CALLR(long, ROOT->SendEvent)(0x02600024L, EVT_MAKE_EDIT_SW_ID, arg)) {
+        case 0:
+        case 1:
+            CALLV(ROOT->SendEvent)(OBJ_HddNamingWindow, EVT_GET_STRING, WRAP(ram_23d286));
+            CALLV(ROOT->SendEvent)(OBJ_HDD_FILE_NAMING, EVT_SHOW, 0L);
+            HDAE5000_SaveSongWithUi(HDAE5000_RAM_CurDir, HDAE5000_RAM_CurSong, HDAE5000_RAM_SaveOptions.mask,
+                                    ram_23d286, 1, OBJ_SELECT_FILE);
+            HDAE5000_SongScreen_Refresh(0, 0);
+            break;
+        case 6:
+        case 7:
+            CALLV(ROOT->PostEvent)(OBJ_SELECT_FILE, EVT_SHOW, 0L);
+        }
+    default:
+        return CALLR(long, ROOT->InheritedProc)(obj, ev, arg);
+    }
+}
 
 /* the delete-option switches: 8 asks to delete, 10 / 11 reset the delete options from the song's parts.
    r23 (run 98: +214): TypeSel_Init(void *, .., unsigned char *, ..), as the drv module's matched calls */

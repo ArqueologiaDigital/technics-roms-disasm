@@ -95,7 +95,7 @@ extern unsigned int HDAE5000_RAM_LbnDigitPos;
 extern char HDAE5000_RAM_LbnEntryText[];
 extern char ram_22aa20[], ram_22aa32[], ram_22aa38[];   /* LbnEntryText + 6 / + 0x18 / + 0x1e */
 extern char HDAE5000_RAM_NameEditBuffer[];
-extern char ram_23a04e[];                               /* HDAE5000_RAM_Name_ColumnRuler */
+extern char ram_23d286[];                               /* HDAE5000_RAM_Name_ColumnRuler */
 extern unsigned char HDAE5000_RAM_FlsNameHistory[];
 extern unsigned char HDAE5000_RAM_DirNameHistory[];
 extern struct TypeSel HDAE5000_RAM_SaveOptions;
@@ -103,7 +103,7 @@ extern struct TypeSel HDAE5000_RAM_DeleteOptions;
 extern struct FdList HDAE5000_RAM_FdList;
 extern char ram_22a058[];                               /* the FLS screen's title text */
 extern char ram_22a078[];                               /* its LOC text */
-extern char ram_22b020[];                               /* its 16 item rows of 37 */
+extern char ram_22afd8[];                               /* its 16 item rows of 37 */
 
 /* ROM */
 extern unsigned char HDAE5000_TypeSel_TemplateBlank[];

@@ -1,0 +1,156 @@
+/* hdae5000_v1_10i: the functions of hdae5000/cc900/hdae5000_fls_refresh.c that V4.23 reproduces in HD-AE5000 v1.10i with the tree's own object ids and ram_ addresses (port_built.py).
+   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_fls_refresh.c.
+   cc900-options: -Xr
+   cc900-name: FlsScr_c=HDAE5000_FlsScreen_Refresh
+   cc900-module: HDAE5000_PartList_Build HDAE5000_NameHistory_Recall HDAE5000_FlsName_StoreWithUi
+   cc900-module: HDAE5000_DirName_StoreWithUi HDAE5000_FlsList_BuildPage HDAE5000_DirList_BuildPage
+   cc900-module: HDAE5000_FlsScreen_Refresh HDAE5000_SongScreen_Refresh HDAE5000_YieldUntilSem1Zero
+   cc900-module: HDAE5000_LoadSongWithUi HDAE5000_SaveSongWithUi HDAE5000_UiObj_SetCaption HDAE5000_TypeSel_Init
+   cc900-module: HDAE5000_DelOpt_ShowFlags HDAE5000_Count_Active_Files HDAE5000_CopyToHd_Execute
+*/
+#include "hdae_ws.h"
+#include "hdae_ids.h"
+
+struct FlsItem { unsigned int dir; unsigned int song; unsigned char as; unsigned char al; };
+/* +0 title, +14 the 20 rows of 12 (and 2 bytes), +0x100 present flags, +0x114 selected flags */
+struct FdList { char label[14]; char rows[242]; unsigned char present[20]; unsigned char sel[20]; };
+struct FindData { char b[266]; };
+
+/* an array read as an lvalue member at offset 0 (`lda xwa,(sym); ld xde,xwa`) */
+struct Wrap { char c[2]; };
+#define WRAP(x) (((struct Wrap *)(x))->c)
+
+extern void *__cdecl HDAE5000_MemCopy(void *, const void *, unsigned int);
+extern void *__cdecl HDAE5000_MemFill(void *, int, unsigned int);
+extern int __cdecl HDAE5000_SPrintf(char *, char *, ...);
+extern unsigned int __cdecl HDAE5000_StrLen(const char *);
+extern char *__cdecl HDAE5000_StrCpy(char *, char *);
+extern char *__cdecl HDAE5000_StrCat(char *, char *);
+extern char *__cdecl HDAE5000_StrNCat(char *, const char *, unsigned int);
+extern char *__cdecl HDAE5000_StrNCpy(char *, const char *, unsigned int);
+
+/* other modules (call) */
+extern unsigned char *HDAE5000_FlsRecord_Address(unsigned int fls);
+extern unsigned int HDAE5000_FlsItem_Get(unsigned int fls, unsigned int item, void *out);
+extern unsigned char *HDAE5000_FlsItem_SongRecord(unsigned int fls, unsigned int item);
+extern unsigned int HDAE5000_Song_PartMask(unsigned int dir, unsigned int song);
+/* r36: `int song`, so that CopyToHd_Execute's unsigned j is a converted argument (the ROM loads BC before WA) */
+extern unsigned int HDAE5000_Song_IsUsed(unsigned int dir, int song);
+extern unsigned int HDAE5000_FdSong_CheckFiles(char *name, unsigned int mask);
+extern unsigned int HDAE5000_CopyFdSongToHd(unsigned int dir, unsigned int song, const char *name, unsigned int mask,
+                                            int a, int b);
+
+/* this module (calr, cc900-module) */
+/* r36: `int dir, int song` (the matched Lbn_TypeDigit's prototype): the unsigned members are loaded early */
+extern void HDAE5000_PartList_Build(long obj, int dir, int song, unsigned int mask);
+extern void HDAE5000_UiObj_SetCaption(long obj, long caption);
+
+/* RAM */
+extern unsigned int HDAE5000_RAM_CurFls;
+extern unsigned int HDAE5000_RAM_CurFlsItem;
+extern unsigned int HDAE5000_RAM_FlsItemPageBase;
+/* the floppy list (HDAE5000_RAM_FdList, 0x22aa9c) as a flat byte array */
+extern unsigned char ram_22aa54[];
+extern char ram_22a058[];                               /* the FLS screen's title text */
+extern char ram_22a078[];                               /* its LOC text */
+extern char ram_22afd8[];                               /* its 16 item rows of 37 */
+
+/* ROM */
+/* unsigned long: the ROM evaluates ObjIds[variant] first among the arguments (a converted argument's order) */
+extern unsigned long ram_2cb2f0[], ram_2cb2f8[], ram_2cb300[], ram_2cb308[], ram_2cb310[], ram_2cb318[];
+                                                        /* HDAE5000_FlsScreen_Refresh_ObjIds .. _ObjIds_6 */
+extern char HDAE5000_Str_FLSNAME[];
+extern char ram_2cb32a[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
+extern char ram_2cb330[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
+extern char ram_2cb332[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
+extern char HDAE5000_Str_Chr3A2020202020_FlsScreen_Refresh[];
+extern char ram_2cb358[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
+extern char HDAE5000_Fmt_LOC_3_3d_2_2d[];
+extern char HDAE5000_Str_LOC00000[];
+extern char ram_2cb398[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
+extern char HDAE5000_Str_LSW[], HDAE5000_Str_PMT[], HDAE5000_Str_SQT[], HDAE5000_Str_CMP[], HDAE5000_Str_TM[],
+    HDAE5000_Str_MSP[], HDAE5000_Str_RCM[], HDAE5000_Str_MD[], HDAE5000_Str_TLX[];
+
+/* the FLS screen: title "FLS NAME NN:<name>", the 16 items of the page, the selected item's LOC and part list;
+   variant picks the object ids (0 load screen, 1 edit screen); mode 0 or 2 redraws title and items, 2 skips the
+   two lines at the end.  The row length goes through a comma expression, `(k = 37, k * i)`: that makes V4.23 load
+   the constant into WA and multiply by the loop register, as the ROM does (run 2026-11-17-3-hd-r36). */
+void FlsScr_c(unsigned char variant, unsigned char mode)
+{
+    char s[22];
+    struct FlsItem item;
+    unsigned int i;
+    unsigned int r;
+    const void *rec;
+    unsigned int k;
+
+    if (mode == 0 || mode == 2) {
+        HDAE5000_MemFill(ram_22a058, 0, 0x20);
+        HDAE5000_StrCat(ram_22a058, HDAE5000_Str_FLSNAME);
+        HDAE5000_SPrintf(s, ram_2cb32a, HDAE5000_RAM_CurFls + 1);
+        HDAE5000_StrCat(ram_22a058, s);
+        HDAE5000_StrCat(ram_22a058, ram_2cb330);
+        HDAE5000_StrNCat(ram_22a058, (char *)HDAE5000_FlsRecord_Address(HDAE5000_RAM_CurFls), 16);
+        HDAE5000_StrCat(ram_22a058, ram_2cb332);
+        CALLV(ROOT->SendEvent)((long)ram_2cb2f0[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22a058));
+        CALLV(ROOT->SendEvent)((long)ram_2cb2f0[variant], EVT_PARA_DRAW, -1L);
+    }
+    if (mode == 0 || mode == 2) {
+        for (i = 0; i < 16; i++) {
+            HDAE5000_MemCopy(&ram_22afd8[(k = 37, k * i) + 2], HDAE5000_Str_Chr3A2020202020_FlsScreen_Refresh, 35);
+            HDAE5000_SPrintf(s, ram_2cb358, HDAE5000_RAM_FlsItemPageBase + i + 1);
+            HDAE5000_MemCopy(&ram_22afd8[(k = 37, k * i)], s, HDAE5000_StrLen(s));
+            rec = HDAE5000_FlsItem_SongRecord(HDAE5000_RAM_CurFls, HDAE5000_RAM_FlsItemPageBase + i);
+            HDAE5000_MemCopy(&ram_22afd8[(k = 37, k * i) + 3], rec, 26);
+            if (HDAE5000_FlsItem_Get(HDAE5000_RAM_CurFls, HDAE5000_RAM_FlsItemPageBase + i, &item) != 0xffff) {
+                if (item.as == 1)
+                    ram_22afd8[(k = 37, k * i) + 32] = '*';
+                if (item.al == 1)
+                    ram_22afd8[(k = 37, k * i) + 35] = '*';
+            }
+        }
+        CALLV(ROOT->SendEvent)((long)ram_2cb2f8[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22afd8));
+        CALLV(ROOT->SendEvent)((long)ram_2cb2f8[variant], EVT_PARA_DRAW, -1L);
+    }
+    HDAE5000_MemFill(ram_22a078, 0, 16);
+    if ((r = HDAE5000_FlsItem_Get(HDAE5000_RAM_CurFls, HDAE5000_RAM_CurFlsItem, &item)) != 0xffff)
+        HDAE5000_SPrintf(s, HDAE5000_Fmt_LOC_3_3d_2_2d, item.dir + 1, item.song + 1);
+    else
+        HDAE5000_SPrintf(s, HDAE5000_Str_LOC00000);
+    HDAE5000_MemCopy(ram_22a078, s, HDAE5000_StrLen(s));
+    CALLV(ROOT->SendEvent)((long)ram_2cb300[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22a078));
+    CALLV(ROOT->SendEvent)((long)ram_2cb300[variant], EVT_PARA_DRAW, -1L);
+    if (r != 0xffff) {
+        r = HDAE5000_Song_PartMask(item.dir, item.song);
+        HDAE5000_PartList_Build(ram_2cb308[variant], item.dir, item.song, r);
+    } else
+        HDAE5000_PartList_Build(ram_2cb308[variant], 0xffff, 0xffff, 0xffff);
+    if (mode != 2) {
+        CALLV(ROOT->SendEvent)((long)ram_2cb310[variant], EVT_DRAW, 0L);
+        CALLV(ROOT->SendEvent)((long)ram_2cb318[variant], EVT_DRAW, 0L);
+    }
+}
+
+/* form _l: the literal `37 * i` (no local: the frame and the IZ save match; the multiply is known to depart) */
+
+/* one part file of the floppy song: name + extension looked up, its mask bit set when it exists */
+#define PART(ext, setbit) \
+    HDAE5000_StrCpy(&name[8], ext); \
+    if ((h = CALLR(long, HAMA->findfirst)(name, (char *)&ff)) != -1L) { setbit; CALLV(HAMA->findclose)(h); }
+
+/* the flat-array spellings of the list's members: selected flag i, and the name inside row i */
+#define FD_SEL(i) ram_22aa54[(unsigned long)(i) + 0x114]
+#define FD_ROWNAME(i) ((char *)&ram_22aa54[(unsigned long)((i) * 12 + 3) + 14])
+
+/* copy the floppy songs selected in the copy screen's list into free songs of directory dir; sel (XWA) is not
+   read: the list is HDAE5000_RAM_FdList itself.  Main form: j, mask, i declared in that order. */
+
+/* form _o: j, i, mask declared in that order */
+
+/* form _b: i at the top; j and mask declared in the block that uses them; the list's members through a constant
+   struct pointer (0x22aa9c = HDAE5000_RAM_FdList) */
+#define FDL ((struct FdList *)0x22aa9cL)
+
+/* form _g: i, j, mask declared in that order; the slot search with if / goto, so that j is not the variable of a
+   loop nested in i's (in case V4.23 serves the innermost loop's variable first) */
