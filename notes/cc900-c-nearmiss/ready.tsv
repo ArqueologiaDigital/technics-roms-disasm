@@ -23,5 +23,5 @@ lane_sub	v140	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr
 lane_sub	v141	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
 lane_sub	v141	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
 lane_sub	v142	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v142	DSP_VoiceState_Dispatch	207	-Xr	2026-11-16-58-sub-r3	Xr	c/v142/DSP_VoiceState_Dispatch__612946d0.c		none
+lane_sub	v142	DSP_VoiceState_Dispatch	207	-Xr	2026-11-16-58-sub-r3	Xr	c/v142/DSP_VoiceState_Dispatch__612946d0.c		csub+branch:cc900/c-subcpu-hdae
 lane_sub	v142	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none

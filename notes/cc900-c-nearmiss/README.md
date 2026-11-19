@@ -2,16 +2,16 @@
 
 QUESTION ANSWERED: for every function of our firmware C that Toshiba cc900 V4.23 compiled in the oracle runs below, how close does V4.23's code (translated by `model/to_llvm.py`, assembled by llvm-mc) come to the ROM, and which kinds of difference keep it from matching?  `index.tsv` has one row per attempt (run, option set, C file, function); the tables below take each function's best attempt.  No Toshiba text is in this directory: names, counts, offsets, class names and paths only.  The listings stay in the private repository `~/compartilhado/cc900-oracle` (`listing` column, relative to it).
 
-Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@c31cb512c) --model-root ~/compartilhado/disasm-lanes/nearmiss (cc900/nearmiss@c31cb512c)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
+Regenerate: `python3 -B scripts/analysis/cc900/nearmiss.py --src-root SRC --model-root MODEL` (this index: `--src-root ~/compartilhado/disasm-lanes/nmx (cc900/nearmiss@b650a74fc) --model-root ~/compartilhado/disasm-lanes/nmx (cc900/nearmiss@b650a74fc)`, near threshold 70.0 %).  Re-check after a translator change, without the VM: `python3 -B scripts/analysis/cc900/nearmiss.py --recheck [--class CLASS] [--all]`.  The classes and the ROM-size rule are defined in the script's docstring.
 
 ## Totals
 
 | what                     | MATCH | NEAR  | DIFF  | errors |
 |--------------------------|-------|-------|-------|--------|
-| attempts (index rows)    | 22824 | 10300 | 12562 | 1020   |
-| functions (best attempt) | 4806  | 687   | 242   | 237    |
+| attempts (index rows)    | 22843 | 10336 | 12571 | 956    |
+| functions (best attempt) | 4818  | 688   | 242   | 224    |
 
-Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 69 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
+Errors: ERR-asm 113, ERR-data 156, ERR-name 363, ERR-resolve 255, ERR-translate 69 attempts (ERR-name: the listing's function is not a label of the tree; ERR-resolve: a name without a value or declared width; ERR-translate: a line to_llvm does not know; ERR-asm: llvm-mc refuses the translation or ld.lld cannot link it; ERR-dup: a second listing function (a C variant) for a tree label, not compared, in rows indexed before 2026-11-18 (since then each variant is linked and compared on its own; `listing_name` tells them apart); ERR-data: an f_const object (switch table, FP constant) without a `cc900-data:` line; the `why` column has the reason).
 
 ## By class (each non-matching function's best attempt)
 
@@ -20,11 +20,11 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | class        | functions | sole | sole ROM B | diff B | examples                                                                                                                                                                                        |
 |--------------|-----------|------|------------|--------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | call-form    | 425       | 365  | 45492      | 3618   | hdae5000 HDAE5000_FdSong_CheckFiles (1273 B, 97.9%), v142 Audio_Cmd_ToneEdit_Dispatch (656 B, 97.3%), v140 MIDI_Dispatch (595 B, 80.5%), v141 MIDI_Dispatch (595 B, 80.5%)                      |
-| register     | 377       | 35   | 8442       | 8989   | hdae5000 HDAE5000_SelectListProc (2641 B, 99.3%), v10 PsToggleBoxProc (600 B, 99.5%), hdae5000 HDAE5000_DbMemoClProc (487 B, 99.2%), v10 Fat_MapFilePosToSector (451 B, 99.6%)                  |
-| other        | 379       | 35   | 2422       | 7797   | v10 SeqEvt_SelectNearestTiming (215 B, 99.1%), v10 ApPostEvent (175 B, 97.7%), v10 MainPostEvent (169 B, 97.6%), v142 TVF_Lookup_Depth_Amount (169 B, 88.2%)                                    |
+| register     | 376       | 35   | 8442       | 8980   | hdae5000 HDAE5000_SelectListProc (2641 B, 99.3%), v10 PsToggleBoxProc (600 B, 99.5%), hdae5000 HDAE5000_DbMemoClProc (487 B, 99.2%), v10 Fat_MapFilePosToSector (451 B, 99.6%)                  |
+| other        | 378       | 35   | 2422       | 7792   | v10 SeqEvt_SelectNearestTiming (215 B, 99.1%), v10 ApPostEvent (175 B, 97.7%), v10 MainPostEvent (169 B, 97.6%), v142 TVF_Lookup_Depth_Amount (169 B, 88.2%)                                    |
+| operand      | 105       | 6    | 1013       | 1416   | v142 DSP_MixerCoeff_Compute (250 B, 84.4%), v5 SaveFileNameSmfFunc (189 B, 84.1%), v6 SaveFileNameSmfFunc (189 B, 84.1%), v7 SaveFileNameSmfFunc (189 B, 84.1%)                                 |
 | order        | 185       | 7    | 781        | 3252   | v10 ReadDualFileEx (417 B, 95.7%), v10 ExtDev_SndParam_DispatchAndWriteA8 (89 B, 96.6%), v10 ExtDev_SndParam_DispatchAndWriteA8_Alt (89 B, 96.6%), v10 SeqData_ReadParamBlock (78 B, 97.4%)     |
-| operand      | 104       | 5    | 763        | 1377   | v5 SaveFileNameSmfFunc (189 B, 84.1%), v6 SaveFileNameSmfFunc (189 B, 84.1%), v7 SaveFileNameSmfFunc (189 B, 84.1%), v5 CDlikeSwTtl_DocNavDispatch (182 B, 83.5%)                               |
-| length-only  | 46        | 12   | 642        | 3974   | v142 Voice_NoteOn_Rhythm (155 B, 100.0%), v142 EFF_RoutingInit (73 B, 100.0%), v140 ToneGen_SetupPolyVoice (68 B, 100.0%), v141 ToneGen_SetupPolyVoice (68 B, 100.0%)                           |
+| length-only  | 46        | 13   | 695        | 3979   | v142 Voice_NoteOn_Rhythm (155 B, 100.0%), v142 EFF_RoutingInit (73 B, 100.0%), v140 ToneGen_SetupPolyVoice (68 B, 100.0%), v141 ToneGen_SetupPolyVoice (68 B, 100.0%)                           |
 | return-form  | 53        | 16   | 530        | 185    | v10 AccPitch_CheckTransposeFlags (59 B, 89.8%), v10 AccSection_SwitchNowUnlessDeferred (55 B, 92.7%), v10 TimeSig_DisplayStrings_Code_Helper4 (50 B, 84.0%), v10 AccNote_FlushAll (45 B, 95.6%) |
 | size         | 39        | 4    | 462        | 160    | v142 Voice_Slot_CalcArticParams (320 B, 98.8%), v10 FileIO_CheckRecordByFile (54 B, 96.3%), v10 FileIO_FormatName_Return (44 B, 95.5%), v10 FileIO_WriteRecordName_Done (44 B, 95.5%)           |
 | extend       | 139       | 2    | 254        | 650    | v10 VwBoxProc (208 B, 99.0%), v10 FileIO_SeekAndRead16BitValue (46 B, 91.3%)                                                                                                                    |
@@ -76,10 +76,10 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | register,order,other                                | 18        | 2696  |
 | return-form                                         | 16        | 530   |
 | register,extend,other                               | 13        | 1418  |
+| length-only                                         | 13        | 695   |
 | call-form,length-only                               | 13        | 1337  |
 | register,order                                      | 12        | 1849  |
 | register,swap                                       | 12        | 928   |
-| length-only                                         | 12        | 642   |
 | register,operand,other                              | 11        | 2973  |
 | register,loop-shape,other                           | 10        | 1236  |
 | register,operand,order,other                        | 8         | 1491  |
@@ -88,9 +88,9 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | order                                               | 7         | 781   |
 | register,operand,extend,order,loop-shape,other      | 7         | 1554  |
 | order,other                                         | 6         | 517   |
+| operand                                             | 6         | 1013  |
 | register,operand,extend,order,loop-shape,swap,other | 5         | 795   |
 | operand,other                                       | 5         | 1554  |
-| operand                                             | 5         | 763   |
 | call-form,length-only,other                         | 4         | 489   |
 | operand,length-only                                 | 4         | 687   |
 | register,operand,order,loop-shape,other             | 4         | 1213  |
@@ -356,7 +356,7 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | v10      | SoundParam_NotifyMultipleChanges         | 77    | 56     | 67.5    | 52         | call-form,other                                                 | 2026-11-18-12-p6-r35 O3Xr           | c/v10/SoundParam_NotifyMultipleChanges__e9af8039.c              |
 | v10      | SoundRam_IdentifyImage                   | 261   | 261    | 72.4    | 12         | register,extend                                                 | 2026-11-16-72-p6-r13 Xr             | c/v10/SoundRam_IdentifyImage__80a7567e.c                        |
 | v10      | SplitPointFunc                           | 373   | 374    | 93.8    | 31         | operand,extend,order,loop-shape,address-form,other              | 2026-11-16-72-p6-r13 O3Xr           |                                                                 |
-| v10      | Sprintf_FormatGGeneral                   | 53    | 736    | 75.5    | 4          | register,length-only,other                                      | 2026-11-18-1-p6-r33 O3XSXr          | c/v10/Sprintf_FormatGGeneral__a6ba7aa0.c                        |
+| v10      | Sprintf_FormatGGeneral                   | 53    | 757    | 100.0   | 106        | length-only                                                     | 2026-11-18-28-p6-r36 O3XSXr         |                                                                 |
 | v10      | StyleName_FindOverride_C2C5              | 46    | 47     | 93.5    | 27         | other                                                           | 2026-11-16-37-p6-r5 O3Xr            | c/v10/StyleName_FindOverride_C2C5__87e701e2.c                   |
 | v10      | StyleName_FindOverride_Default           | 44    | 45     | 93.2    | 27         | other                                                           | 2026-11-16-37-p6-r5 O3Xr            | c/v10/StyleName_FindOverride_Default__87e701e2.c                |
 | v10      | SwbtWr_ReinitBothBanks                   | 27    | 27     | 92.6    | 5          | return-form                                                     | 2026-11-16-40-p6-r8 O3XSXr          | c/v10/SwbtWr_ReinitBothBanks__f87946ba.c                        |
@@ -612,6 +612,7 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | v142     | DSP_EFFParam_DiffAllAndFlag              | 643   | 641    | 99.1    | 6          | operand,other                                                   | 2026-11-18-21-sub-r21c-staged Xr    | c/v142/DSP_EFFParam_DiffAllAndFlag__84dd3ad8.c                  |
 | v142     | DSP_FlushAllSlots                        | 185   | 183    | 97.3    | 30         | operand,other                                                   | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_FlushAllSlots__43ba5118.c                            |
 | v142     | DSP_InitChannelSlot                      | 243   | 230    | 83.5    | 6          | register,operand,order,other                                    | 2026-11-17-7-sub-r18 Xr             | c/v142/DSP_InitChannelSlot__a10fe588.c                          |
+| v142     | DSP_MixerCoeff_Compute                   | 250   | 250    | 84.4    | 1          | operand                                                         | 2026-11-18-2-sub-r20-fp Xr          |                                                                 |
 | v142     | DSP_ParamInterp_3Point_WithOffset        | 51    | 116    | 100.0   | 93         | length-only                                                     | 2026-11-18-21-sub-r21c-staged Xr    | c/v142/DSP_ParamInterp_3Point_WithOffset__84dd3ad8.c            |
 | v142     | DSP_ParameterWriteEngine                 | 200   | 198    | 97.5    | 13         | register,other                                                  | 2026-11-16-79-sub-r7 Xr             | c/v142/DSP_ParameterWriteEngine__55b39cc0.c                     |
 | v142     | DSP_Reset                                | 118   | 120    | 94.9    | 92         | call-form                                                       | 2026-11-16-89-sub-staged3 Xr        |                                                                 |
@@ -937,13 +938,13 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | 2026-11-17-22-hd-r49-ports    | c49608ff65de9f8d  | tar-sha256       | 6        | 6     |
 | 2026-11-18-1-p6-r33           | a160e07be62fb024  | tar-sha256       | 237      | 36    |
 | 2026-11-18-2-sub-r20-fp       | dbc769160bb31aec  | tar-sha256       | 9        | 0     |
-| 2026-11-18-3-sub-r20-fp2      | 175ceab5c5ab35ec  | tar-sha256       | 15       | 0     |
+| 2026-11-18-3-sub-r20-fp2      | 175ceab5c5ab35ec  | tar-sha256       | 15       | 3     |
 | 2026-11-18-4-hd-r50           | 656140c4fdc50571  | tar-sha256       | 16       | 0     |
 | 2026-11-18-5-p6-r34-staged    | a1b983c45bb453e4  | tar-sha256       | 176      | 71    |
-| 2026-11-18-6-sub-r20a         | 99b6e8db5e46696d  | tar-sha256       | 96       | 18    |
+| 2026-11-18-6-sub-r20a         | 99b6e8db5e46696d  | tar-sha256       | 96       | 20    |
 | 2026-11-18-7-hd-r51           | 9b3ac5e9af92bdfb  | tar-sha256       | 48       | 16    |
-| 2026-11-18-8-sub-r20b-staged  | b8d076fbb296aa97  | tar-sha256       | 60       | 29    |
-| 2026-11-18-9-sub-r20c-staged  | 3a3ca042f2c346a5  | tar-sha256       | 18       | 12    |
+| 2026-11-18-8-sub-r20b-staged  | b8d076fbb296aa97  | tar-sha256       | 60       | 40    |
+| 2026-11-18-9-sub-r20c-staged  | 3a3ca042f2c346a5  | tar-sha256       | 18       | 15    |
 | 2026-11-18-10-hd-r51-staged   | 0e23f889b139e8fa  | tar-sha256       | 16       | 16    |
 | 2026-11-18-11-hd-r51-ports    | c2464f3326575dd2  | tar-sha256       | 40       | 40    |
 | 2026-11-18-12-p6-r35          | 771f3ea76c3de544  | tar-sha256       | 606      | 198   |
@@ -969,3 +970,9 @@ Errors: ERR-asm 124, ERR-data 156, ERR-name 363, ERR-resolve 308, ERR-translate 
 | 2026-11-18-32-sub-r21g-staged | 8375b08b67158c7a  | tar-sha256       | 40       | 39    |
 | 2026-11-18-33-p6-r37          | 0a40e1a6b8392467  | tar-sha256       | 420      | 144   |
 | 2026-11-18-34-p6-r38-staged   | fc744ed2ac5b46eb  | tar-sha256       | 224      | 131   |
+
+## Listings the tool could not read
+
+- runs/2026-11-16-109-hd-r23c/out/v423/Xr/hd/hd_r23_drv.asm: SystemExit: /home/fsanches/compartilhado/tmp/cc900-tab/lane_nmx/tmpc8xtdt_z/c.c:18: a cc900-name: marker wraps: its `C=LABEL` is not whole on this line.  Each marker is read from its own line only: repeat the keyword on every line (`cc900-name: ...`)
+- runs/2026-11-16-119-hd-r30/out/v423/Xr/hd/hd_r27_b_drv.asm: SystemExit: /home/fsanches/compartilhado/tmp/cc900-tab/lane_nmx/tmpgfyqy_tg/c.c:34: a cc900-name: marker wraps: its `C=LABEL` is not whole on this line.  Each marker is read from its own line only: repeat the keyword on every line (`cc900-name: ...`)
+- runs/2026-11-16-119-hd-r30/out/v423/Xr/hd/hd_r27_b_drvb.asm: SystemExit: /home/fsanches/compartilhado/tmp/cc900-tab/lane_nmx/tmpat6rit51/c.c:30: a cc900-name: marker wraps: its `C=LABEL` is not whole on this line.  Each marker is read from its own line only: repeat the keyword on every line (`cc900-name: ...`)
