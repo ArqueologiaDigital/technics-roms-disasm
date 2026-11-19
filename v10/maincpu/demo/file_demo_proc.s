@@ -445,16 +445,9 @@ FDemo_RegisterLoadedFile_Epilogue2:
 	inc	4, xsp
 	ret
 
-FDemo_LinkedListLookupField:
-	calr FDemo_LinkedListSearch
-	or xhl, xhl
-	jr z, FDemo_LinkedListLookupNull
-	ld xhl, (xhl + 16)
-	ret
-
-FDemo_LinkedListLookupNull:
-	ld xhl, 0:i3
-	ret
+FDemo_LinkedListLookupField:	.include "includes/generated/cc900/FDemo_LinkedListLookupField.s"	; C: cc900/file_demo_proc_m265_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemo_LinkedListLookupNull, FDemo_LinkedListLookupField + 11
 
 FDemo_FileOpenAndProcess:
 	; --- Stack-frame function: alloc, multi-call dispatch (114 bytes) ---
@@ -506,36 +499,7 @@ FDemo_FileOpen_Exit:
 	ret
 
 
-DemoMode_Main_Operation:
-	res 0, (SEQ_CYCLE_FLAGS:16)
-	call Voice_InitializeAll
-	lda xbc, (PANEL_RECORDS:16)
-	lda xwa, (0xffbe:16)
-	sub xwa, xbc
-	inc 2, xwa
-	pushw wa
-	push xbc
-	pushw 0x3
-	pushw 0xcf04
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	call Fade_Cancel
-	calr Voice_LoadVoiceTable
-	set 4, (PANEL_MIDI:16)
-	res 2, (PANEL_MIDI:16)
-	res 2, (PANEL_MIDI+2:16)
-	calr Demo_PreSetup
-	res 0, (1115:16)
-	call AccompSeq_StopSequence
-	calr Voice_CopyPreset
-	call MIDI_BroadcastPitchReset
-	calr Demo_ReleaseGlidePedal
-	call Audio_CheckSubsystemReady
-	set 6, (0xb7e2:16)
-	res 3, (DEMO_CONTROL_FLAGS:16)
-	call SeqInit_PostEventSequence
-	call SeqInit_FinalEvent
-	jp Seq_StartMainControl
+DemoMode_Main_Operation:	.include "includes/generated/cc900/DemoMode_Main_Operation.s"	; C: cc900/file_demo_proc_m266_c.c
 
 ; Calls CtrlPanel_IndicatorDispatch with WA = 0x22, BC = 0, DE = 0 and stores 4 at 0x8f4e.
 FDemo_IndicatorSetup:
@@ -576,35 +540,10 @@ FDemo_PostBannerCheck:
 	res 6, (0xb7e2:16)
 	ret
 
-Demo_SelectionEntryHandler:
-	calr Demo_PreSetup
-	ld (0x2966:16), 0
-	ld (DEMO_DEBOUNCE:16), 0
-	ld (DEMO_TIMER_COUNTDOWN:16), 0
-	calr Audio_WaitForReady
-	call SeqStep_PlaybackStateMachine
-	res 3, (DEMO_CONTROL_FLAGS:16)
-	call SeqInit_PostEventSequence
-	call TempoRingBuf_Init
-	call SeqBuf_Init
-	ldw wa, 0x22
-	call CtrlPanel_SetIndicatorLED
-	jrl Banner_Loop_Check
-SwbtB3_CodeA9_Listener0:
-	cp (SWBTWR_PAYLOAD_1:16), 32
-	ret nz
-	ld a, (SWBTWR_PAYLOAD_3:16)
-	and a, 0x13
-	ret z
-	ld a, (SWBTWR_PAYLOAD_2:16)
-	and a, 0x13
-	jr z, Demo_SelectEntry_NoNewButton
-	ld (DEMO_DEBOUNCE:16), 16
-	ret
-
-Demo_SelectEntry_NoNewButton:
-	ld (DEMO_DEBOUNCE:16), 0
-	ret
+Demo_SelectionEntryHandler:	.include "includes/generated/cc900/Demo_SelectionEntryHandler.s"	; C: cc900/file_demo_proc_m266_c.c
+SwbtB3_CodeA9_Listener0:	.include "includes/generated/cc900/SwbtB3_CodeA9_Listener0.s"	; C: cc900/file_demo_proc_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_SelectEntry_NoNewButton, SwbtB3_CodeA9_Listener0 + 31
 
 Demo_SelectEntry_PreSaveCheck:
 	cp (CURRENT_MODE:16), 19
@@ -723,30 +662,9 @@ Demo_SelectEntry_StartAutoPlay:
 	call Seq_DispatchEventType6
 	ret
 
-Demo_SelectEntry_TimerTick:
-	calr Demo_SelectEntry_CheckCPanel
-	cpw (0x25b84:24), 0
-	call nz, (Banner_Loop_Check:24)
-	ld a, (DEMO_TIMER_COUNTDOWN:16)
-	cp a, 0:i3
-	ret z
-	dec 1, a
-	ld (DEMO_TIMER_COUNTDOWN:16), a
-	cp a, 0xa
-	jr nz, Demo_SelectEntry_CheckCountdown
-	ld a, (DEMO_ACTIVE_ENTRY:16)
-	extz wa
-	calr Demo_ParseSlideHeader
-	jrl Demo_SelectEntry_PlaySong
-
-Demo_SelectEntry_CheckCountdown:
-	ld a, (DEMO_TIMER_COUNTDOWN:16)
-	cp a, 3:i3
-	jrl z, Demo_SelectEntry_StartPlayback
-	cp a, 1:i3
-	ret nz
-	ld (0x2966:16), 133
-	ret
+Demo_SelectEntry_TimerTick:	.include "includes/generated/cc900/Demo_SelectEntry_TimerTick.s"	; C: cc900/file_demo_proc_m266_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Demo_SelectEntry_CheckCountdown, Demo_SelectEntry_TimerTick + 46
 
 Demo_SelectEntry_CheckCPanel:
 	cp (CURRENT_MODE:16), 19
@@ -5483,42 +5401,12 @@ BuildSecondPage_Return:
 	lda xsp, (xsp+274)
 	ret
 
-NavigateToFileIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr ValidateFileRange
-	cp hl, 0xffff
-	jr nz, NavToFileIdx_InSecondPage
-	ld hl, (0x0271ea:24)
-	jr NavToFileIdx_Return
-
-NavToFileIdx_InSecondPage:
-	cp hl, 1:i3
-	jr nz, NavToFileIdx_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0x3c
-	mul wa, 0x3c
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x3b
-	ld wa, (0x0271ec:24)
-	cp bc, wa
-	jr ge, NavToFileIdx_ClampEnd
-	ld wa, bc
-
-NavToFileIdx_ClampEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr BuildSecondPageRecords
-
-NavToFileIdx_StoreIndex:
-	ld hl, iz
-	ld (0x0271ea:24), hl
-
-NavToFileIdx_Return:
-	popw iz
-	ret
+NavigateToFileIndex:	.include "includes/generated/cc900/NavigateToFileIndex.s"	; C: cc900/file_demo_proc_m268_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NavToFileIdx_InSecondPage, NavigateToFileIndex + 21
+	.set	NavToFileIdx_ClampEnd, NavigateToFileIndex + 59
+	.set	NavToFileIdx_StoreIndex, NavigateToFileIndex + 67
+	.set	NavToFileIdx_Return, NavigateToFileIndex + 74
 
 ; Returns in XHL the 82-byte record of file WA on the current page (0x25eb2 + 82 * (WA - first
 ; index word 0x271ee)), or FileIO_EmptyEntryName when ValidateFileRange rejects WA.
@@ -7383,42 +7271,12 @@ ScanDir_Return:
 	lda xsp, (xsp+274)
 	ret
 
-FileIO_SelectWallpaperByIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr FileIO_ValidateModeAndRange
-	cp hl, 0xffff
-	jr nz, SelectWP_CheckPageBound
-	ld hl, (0x0272c8:24)
-	jr SelectWP_Return
-
-SelectWP_CheckPageBound:
-	cp hl, 1:i3
-	jr nz, SelectWP_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0xa
-	mul wa, 0xa
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x9
-	ld wa, (0x0272ca:24)
-	cp bc, wa
-	jr ge, SelectWP_ClampEnd
-	ld wa, bc
-
-SelectWP_ClampEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr FileIO_ScanDirEntries
-
-SelectWP_StoreIndex:
-	ld hl, iz
-	ld (0x0272c8:24), hl
-
-SelectWP_Return:
-	popw iz
-	ret
+FileIO_SelectWallpaperByIndex:	.include "includes/generated/cc900/FileIO_SelectWallpaperByIndex.s"	; C: cc900/file_demo_proc_m268_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SelectWP_CheckPageBound, FileIO_SelectWallpaperByIndex + 21
+	.set	SelectWP_ClampEnd, FileIO_SelectWallpaperByIndex + 59
+	.set	SelectWP_StoreIndex, FileIO_SelectWallpaperByIndex + 67
+	.set	SelectWP_Return, FileIO_SelectWallpaperByIndex + 74
 
 FileIO_GetWallpaperEntry:
 	pushw iz

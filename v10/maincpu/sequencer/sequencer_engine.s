@@ -112,37 +112,10 @@ SeqAcc_HandlePlaybackTick_Data:
 	set	3, (SEQ_PLAY_FLAGS:16)
 	ret
 
-SeqAcc_StartPlaybackFromPosition:
-	call Accomp_UpdateModeFlag
-	ld bc, (SEQ_START_MEASURE:16)
-	ld (9964:16), bc
-	ld bc, (SEQ_START_MEASURE:16)
-	ld wa, bc
-	extz xwa
-	bit 15, wa
-	jr nz, SeqAcc_StartPlayback
-	ld wa, (SEQ_PUNCH_IN_MEASURE:16)
-	cp bc, wa
-	jr ule, SeqAcc_AdjustEndAndStart
-	sub wa, (SEQ_COUNT_IN:16)
-	ld (SEQ_START_MEASURE:16), wa
-	ld (9964:16), wa
-	jr SeqAcc_StartPlayback
-
-SeqAcc_AdjustEndAndStart:
-	dec 1, wa
-	ld (0x28c3:16), wa
-	calr SeqAcc_UpdateEndPosition
-	ld wa, (SEQ_PUNCH_IN_MEASURE:16)
-	sub wa, (SEQ_COUNT_IN:16)
-	ld (SEQ_START_MEASURE:16), wa
-	ld (9964:16), wa
-
-SeqAcc_StartPlayback:
-	set 0, (SEQ_SONG_RECORD+188:16)
-	calr SeqAcc_SetupRepeatCount
-	call SeqPlay_InitStartState
-	jp SeqBuf_Init
+SeqAcc_StartPlaybackFromPosition:	.include "includes/generated/cc900/SeqAcc_StartPlaybackFromPosition.s"	; C: cc900/sequencer_engine_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqAcc_AdjustEndAndStart, SeqAcc_StartPlaybackFromPosition + 47
+	.set	SeqAcc_StartPlayback, SeqAcc_StartPlaybackFromPosition + 72
 
 SeqAcc_StopPlayback:
 	cp (CURRENT_TITLE:16), 136
@@ -435,36 +408,11 @@ SeqPlay_UpdateStartFromPunchIn_Skip2:
 ;   it clamps the count-in to punch-in - 1 (0x28C3, SeqAcc_UpdateEndPosition) and sets start = punch-in - count-in.
 ;   Basis: callers + body -- SeqPlay_DecPunchInMeasure and SeqPlay_DecPunchOutMeasure call it after lowering 0xF238;
 ;   their headers already call it the step-down counterpart.
-SeqPlay_UpdateStartFromPunchInDown:
-	bit	0, (SEQ_METRO_FLAGS:16)
-	jr	z, SeqPlay_UpdateStartFromPunchInDown_Skip2
-	ldw_d16	wa, (SEQ_PUNCH_IN_MEASURE)
-	cp	wa, 1:i3
-	jr	nz, SeqPlay_UpdateStartFromPunchInDown_Skip
-	ldw	(SEQ_START_MEASURE:16), 0x8002
-	ldw	(9964:16), 0x8002
-	ldw	(SEQ_COUNT_IN:16), 2
-	ret
-SeqPlay_UpdateStartFromPunchInDown_Skip:
-	cp	wa, 2:i3
-	jr	nz, SeqPlay_DataBlock_BBE_Skip5
-	ldw	(SEQ_START_MEASURE:16), 2
-	ldw	(9964:16), 0x8002
-	ldw	(SEQ_COUNT_IN:16), 3
-	ret
-SeqPlay_DataBlock_BBE_Skip5:
-	cp	wa, 3:i3
-	ret	c
-SeqPlay_UpdateStartFromPunchInDown_Skip2:
-	ld	wa, (SEQ_PUNCH_IN_MEASURE:16)
-	dec	1, wa
-	ld	(0x28c3:16), wa
-	calr	SeqAcc_UpdateEndPosition
-	ld	wa, (SEQ_PUNCH_IN_MEASURE:16)
-	sub wa, (SEQ_COUNT_IN:16)
-	ld	(SEQ_START_MEASURE:16), wa
-	ld	(9964:16), wa
-	ret
+SeqPlay_UpdateStartFromPunchInDown:	.include "includes/generated/cc900/SeqPlay_UpdateStartFromPunchInDown.s"	; C: cc900/sequencer_engine_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_UpdateStartFromPunchInDown_Skip, SeqPlay_UpdateStartFromPunchInDown + 33
+	.set	SeqPlay_DataBlock_BBE_Skip5, SeqPlay_UpdateStartFromPunchInDown + 56
+	.set	SeqPlay_UpdateStartFromPunchInDown_Skip2, SeqPlay_UpdateStartFromPunchInDown + 60
 ; SeqPlay_IncPunchOutMeasure: Parameter 9 up on the sequencer play screen: increments the punch-out measure 0xF23A
 ;   (MT_GetPOutMeasString), capped at 999; if the punch-in measure 0xF238 is not below it, pulls punch-in to punch-out
 ;   - 1, recomputes the start (SeqPlay_UpdateStartFromPunchIn) and runs SeqAcc_SetupRepeatCount. Basis: callers + body
@@ -8396,46 +8344,12 @@ SeqActivate_PartLoopNext:
 	popw_erp 0xfa
 	ret
 
-SeqPlay_CheckDrumAndStart:
-	cp (7570:16), 1
-	jr nz, SeqPlayCheck_ReturnFFFF
-	cpw (SEQ_REC_TRACKS:16), 0
-	jr z, SeqPlayCheck_ReturnFFFF
-	ld a, (8986:16)
-	bit 2, (SEQ_TRANSPORT_STATE:16)
-	jr nz, SeqPlay_StartPlayback
-	dec 1, a
-	ld bc, 1:i3
-	and a, 0xf
-	jr z, SeqPlayCheck_DrumShiftDone
-	slaa bc
-
-SeqPlayCheck_DrumShiftDone:
-	and bc, (8982:16)
-	jr nz, SeqPlay_StartPlayback
-
-SeqPlayCheck_ReturnFFFF:
-	ldw hl, 0xffff
-	ret
-
-SeqPlay_StartPlayback:
-	call SeqBuffer_ClearAndInitIteration
-	bit 2, (SEQ_TRANSPORT_STATE:16)
-	jr nz, SeqPlayCheck_SetSecondChannel
-	calr SeqPlay_ScanAndStoreChannelPos
-	ld (7522:16), 0
-	calr SeqPlay_InitializePlayback
-
-SeqPlayCheck_SetSecondChannel:
-	ld (7522:16), 1
-	ld wa, (SEQ_BEAT_COUNT:16)
-	add wa, (7544:16)
-	ld (7524:16), wa
-	ld a, (SEQ_BEAT_TICK:16)
-	extz wa
-	ld (7526:16), wa
-	ld hl, 0:i3
-	ret
+SeqPlay_CheckDrumAndStart:	.include "includes/generated/cc900/SeqPlay_CheckDrumAndStart.s"	; C: cc900/sequencer_engine_m233.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlayCheck_DrumShiftDone, SeqPlay_CheckDrumAndStart + 36
+	.set	SeqPlayCheck_ReturnFFFF, SeqPlay_CheckDrumAndStart + 42
+	.set	SeqPlay_StartPlayback, SeqPlay_CheckDrumAndStart + 46
+	.set	SeqPlayCheck_SetSecondChannel, SeqPlay_CheckDrumAndStart + 67
 
 SeqPlay_ScanAndStoreChannelPos:
 	lda xsp, (xsp - 20)
@@ -9223,41 +9137,11 @@ SeqBuf_AllocNextSlotAdjusted:
 ; A = 0x32, all parts) with SeqBuf_WriteBytes, then flushes the note events
 ; (SeqBuf_FlushAndReinit_NoteEvents).  Pending voice/CC events are flushed first when
 ; 0x1d86 is non-zero; A = 0x32 also re-initialises the note pool.
-SeqBuf_WriteNoteOffEntry:
-	lda xsp, (xsp - 10)
-	ld (xsp + 8), a
-	cp (7558:16), 0
-	call nz, (SeqBuf_FlushAndReinit_VoiceCCEvents:24)
-	lda xde, (xsp)
-	ld (xde), 0x90
-	ld (xde + 1), 0x7f
-	ld (xde + 2), 0x0
-	ld (xde + 3), 0x0
-	lda xbc, (xde + 4)
-	cp (xsp + 8), 0x32
-	jr nz, SeqNoteOff_StoreChannelByte
-	ld (xbc), 0x7f
-	jr SeqNoteOff_WriteAndFlush
-
-SeqNoteOff_StoreChannelByte:
-	ld a, (xsp + 8)
-	dec 1, a
-	ld (xbc), a
-
-SeqNoteOff_WriteAndFlush:
-	push xde
-	pushw 0x5
-	call SeqBuf_WriteBytes
-	inc 6, xsp
-	calr SeqBuf_FlushAndReinit_NoteEvents
-	cp (xsp + 8), 0x32
-	jr nz, SeqNoteOff_Return
-	ldw wa, 0x32
-	calr SeqNotePool_Init
-
-SeqNoteOff_Return:
-	lda xsp, (xsp + 10)
-	ret
+SeqBuf_WriteNoteOffEntry:	.include "includes/generated/cc900/SeqBuf_WriteNoteOffEntry.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqNoteOff_StoreChannelByte, SeqBuf_WriteNoteOffEntry + 47
+	.set	SeqNoteOff_WriteAndFlush, SeqBuf_WriteNoteOffEntry + 54
+	.set	SeqNoteOff_Return, SeqBuf_WriteNoteOffEntry + 79
 
 Part_DetectSingleVoiceType:	.include "includes/generated/cc900/Part_DetectSingleVoiceType.s"	; C: cc900/sequencer_engine_m234.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -11288,38 +11172,7 @@ PartRelRange_OuterNext:
 	lda xsp, (xsp + 10)
 	ret
 
-Part_ClearAndStealSingleVoice:
-	dec 4, xsp
-	ld (xsp + 2), a
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	ld de, 0:i3
-	calr Part_SetClearVoiceBit7
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	calr Part_ReadVoiceWord
-	ld (xsp), hl
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	ldw de, 0xffff
-	calr Part_WriteVoiceWord
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	ldw de, 0xffff
-	calr Part_WriteWord_Indexed
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	ld de, 5:i3
-	calr Part_WriteByte_Indexed
-	ld wa, (xsp)
-	calr Part_StealAndReallocVoices
-	inc 4, xsp
-	ret
+Part_ClearAndStealSingleVoice:	.include "includes/generated/cc900/Part_ClearAndStealSingleVoice.s"	; C: cc900/sequencer_engine_m234.c
 
 SeqParams_InitDefaults:	.include "includes/generated/cc900/SeqParams_InitDefaults.s"	; C: cc900/sequencer_engine.c
 
@@ -11370,41 +11223,11 @@ Seq_ValidateAllParams_DataBlock_Skip3:
 	ld	hl, 0:i3
 	ret
 
-Seq_ValidatePartAndTempo:
-	ld a, (SEQ_TRACK:16)
-	cp a, 0x7f
-	jr z, SeqValPT_CheckTempoValues
-	extz wa
-	calr Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr nz, Seq_TempoValidationFailReturn
-	ld a, (SEQ_OP_DEST_TRACK:16)
-	extz wa
-	calr Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr nz, Seq_TempoValidationFailReturn
-
-SeqValPT_CheckTempoValues:
-	ld wa, (SEQ_OP_FROM:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr nz, Seq_TempoValidationFailReturn
-	ld wa, (SEQ_OP_MEASURES:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr nz, Seq_TempoValidationFailReturn
-	ld wa, (SEQ_OP_DEST_MEASURE:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr z, SeqValPT_ReturnOK
-
-Seq_TempoValidationFailReturn:
-	ldw hl, 0xffff
-	ret
-
-SeqValPT_ReturnOK:
-	ld hl, 0:i3
-	ret
+Seq_ValidatePartAndTempo:	.include "includes/generated/cc900/Seq_ValidatePartAndTempo.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValPT_CheckTempoValues, Seq_ValidatePartAndTempo + 31
+	.set	Seq_TempoValidationFailReturn, Seq_ValidatePartAndTempo + 64
+	.set	SeqValPT_ReturnOK, Seq_ValidatePartAndTempo + 68
 
 Seq_ValidatePartTempoAndKey:
 	ld a, (SEQ_TRACK:16)

@@ -743,122 +743,33 @@ Screen_Return:
 ;   Codes 0x88..0x8c are the left column (x = 0) and the GetEditSwPoint_CaseTable codes
 ;   0..12 include the right column (x = 0x13f); the rows are at y = 0x2b, 0x55, 0x7f, 0xa9,
 ;   0xd3.  Other codes go to EditSwParam_Default.
-GetEditSwPoint:
-	ld hl, wa
-	lda xde, (xbc + 2)
-	cp wa, 0x8c
-	jr z, EditSwParam_Mode4
-	cp wa, 0x8b
-	jr z, EditSwParam_Mode3
-	cp wa, 0x8a
-	jr z, EditSwParam_Mode2
-	cp wa, 0x89
-	jr z, EditSwParam_Mode1
-	cp wa, 0x88
-	jr z, EditSwParam_Mode0
-	cp hl, 0xc
-	jrl ugt, EditSwParam_Default
-	add hl, hl
-	lda xix, (GetEditSwPoint_CaseTable:24)
-	ld	hl, (xix+hl)
-	lda xix, (EditSwParam_Mode0:24)
-	jp	t, (xix+hl)
-
-; GetEditSwPoint handler: mode 0 (value=0x2b)
-EditSwParam_Mode0:
-	ld wa, 0:i3
-	jr EditSwParam_StoreMode0
-GetEditSwPoint_RightRow1:
-	ldw wa, 0x13f
-
-EditSwParam_StoreMode0:
-	ld (xbc), wa
-	ldw (xde), 0x2b
-	ret
-
-; GetEditSwPoint handler: mode 1 (value=0x55)
-EditSwParam_Mode1:
-	ld wa, 0:i3
-	jr EditSwParam_StoreMode1
-GetEditSwPoint_RightRow2:
-	ldw wa, 0x13f
-
-EditSwParam_StoreMode1:
-	ld (xbc), wa
-	ldw (xde), 0x55
-	ret
-
-; GetEditSwPoint handler: mode 2 (value=0x7f)
-EditSwParam_Mode2:
-	ld wa, 0:i3
-	jr EditSwParam_StoreMode2
-GetEditSwPoint_RightRow3:
-	ldw wa, 0x13f
-
-EditSwParam_StoreMode2:
-	ld (xbc), wa
-	ldw (xde), 0x7f
-	ret
-
-; GetEditSwPoint handler: mode 3 (value=0xa9)
-EditSwParam_Mode3:
-	ld wa, 0:i3
-	jr EditSwParam_Mode3_Store
-GetEditSwPoint_RightRow4:
-	ldw wa, 0x13f
-
-; GetEditSwPoint: store mode 3 result
-EditSwParam_Mode3_Store:
-	ld (xbc), wa
-	ldw (xde), 0xa9
-	ret
-
-; GetEditSwPoint handler: mode 4 (value=0xd3)
-EditSwParam_Mode4:
-	ld wa, 0:i3
-	jr EditSwParam_Mode4_Store
-GetEditSwPoint_RightRow5:
-	ldw wa, 0x13f
-
-; GetEditSwPoint: store mode 4 result
-EditSwParam_Mode4_Store:
-	ld (xbc), wa
-	ldw (xde), 0xd3
-	ret
-; GetEditSwPoint handler: tempo table lookup
-EditSwParam_TempoTable:
-	ldw	wa, 20
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column2:
-	ldw	wa, 60
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column3:
-	ldw	wa, 100
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column4:
-	ldw	wa, 140
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column5:
-	ldw	wa, 180
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column6:
-	ldw	wa, 220
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column7:
-	ldw	wa, 260
-	jr	GetEditSwPoint_Join
-GetEditSwPoint_Column8:
-	ldw	wa, 300
-GetEditSwPoint_Join:
-	ld	(xbc), wa
-	ldw	(xde), 239
-	ret
-
-; GetEditSwPoint handler: default (value=0xa0/0x78)
-EditSwParam_Default:
-	ldw (xbc), 0xa0
-	ldw (xde), 0x78
-	ret
+GetEditSwPoint:	.include "includes/generated/cc900/GetEditSwPoint.s"	; C: cc900/presentation_sound_nav_m271.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EditSwParam_Mode0, GetEditSwPoint + 64
+	.set	GetEditSwPoint_RightRow1, GetEditSwPoint + 68
+	.set	EditSwParam_StoreMode0, GetEditSwPoint + 71
+	.set	EditSwParam_Mode1, GetEditSwPoint + 78
+	.set	GetEditSwPoint_RightRow2, GetEditSwPoint + 82
+	.set	EditSwParam_StoreMode1, GetEditSwPoint + 85
+	.set	EditSwParam_Mode2, GetEditSwPoint + 92
+	.set	GetEditSwPoint_RightRow3, GetEditSwPoint + 96
+	.set	EditSwParam_StoreMode2, GetEditSwPoint + 99
+	.set	EditSwParam_Mode3, GetEditSwPoint + 106
+	.set	GetEditSwPoint_RightRow4, GetEditSwPoint + 110
+	.set	EditSwParam_Mode3_Store, GetEditSwPoint + 113
+	.set	EditSwParam_Mode4, GetEditSwPoint + 120
+	.set	GetEditSwPoint_RightRow5, GetEditSwPoint + 124
+	.set	EditSwParam_Mode4_Store, GetEditSwPoint + 127
+	.set	EditSwParam_TempoTable, GetEditSwPoint + 134
+	.set	GetEditSwPoint_Column2, GetEditSwPoint + 139
+	.set	GetEditSwPoint_Column3, GetEditSwPoint + 144
+	.set	GetEditSwPoint_Column4, GetEditSwPoint + 149
+	.set	GetEditSwPoint_Column5, GetEditSwPoint + 154
+	.set	GetEditSwPoint_Column6, GetEditSwPoint + 159
+	.set	GetEditSwPoint_Column7, GetEditSwPoint + 164
+	.set	GetEditSwPoint_Column8, GetEditSwPoint + 169
+	.set	GetEditSwPoint_Join, GetEditSwPoint + 172
+	.set	EditSwParam_Default, GetEditSwPoint + 179
 
 SetWallPaper:
 	cp wa, 0:i3
@@ -894,83 +805,20 @@ SetWallPaper_Skip:
 	ld	wa, 2:i3
 	jr	t, SetWallPaper_Join
 
-SetWallColor:
-	cp wa, 1:i3
-	jr z, SetWallColor_01
-	cp wa, 0xf9
-	jr z, SetWallColor_F9
-	cp wa, 2:i3
-	jr z, SetWallColor_02
-	cp wa, 0xf8
-	jr z, SetWallColor_F8
-	ld wa, 0:i3
-	jr UI_ChangeWallPalette_Jump
+SetWallColor:	.include "includes/generated/cc900/SetWallColor.s"	; C: cc900/presentation_sound_nav_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SetWallColor_F8, SetWallColor + 24
+	.set	SetWallColor_02, SetWallColor + 28
+	.set	SetWallColor_F9, SetWallColor + 32
+	.set	SetWallColor_01, SetWallColor + 36
+	.set	UI_ChangeWallPalette_Jump, SetWallColor + 39
 
-SetWallColor_F8:
-	ld wa, 2:i3
-	jr UI_ChangeWallPalette_Jump
+IvScreenProc:	.include "includes/generated/cc900/IvScreenProc.s"	; C: cc900/presentation_sound_nav_m0_xr.c
 
-SetWallColor_02:
-	ld wa, 4:i3
-	jr UI_ChangeWallPalette_Jump
-
-SetWallColor_F9:
-	ld wa, 6:i3
-	jr UI_ChangeWallPalette_Jump
-
-SetWallColor_01:
-	ldw wa, 0x8
-
-UI_ChangeWallPalette_Jump:
-	jp ChangeWallPalette
-
-IvScreenProc:
-	cp xbc, EVT_DRAW
-	jrl nz, ScreenProc
-	ld xhl, 0:i3
-	ret
-
-TtlScreenProc:
-	lda xsp, (xsp - 12)
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_DRAW
-	jr z, TtlScreen_PaintHandler
-	ld xwa, xiz
-	calr ScreenProc
-	jr TtlScreen_Return
-
-TtlScreen_PaintHandler:
-	ld xwa, xiz
-	calr ScreenProc
-	ld xwa, xiz
-	call GetViewInstance
-	ld (xsp + 4), xhl
-	ld xwa, (xsp + 4)
-	lda xiy, (xwa + 14)
-	lda xix, (xsp + 8)
-	ld bc, 4:i3
-	ldirw
-	ld xwa, xiz
-	ld xbc, EVT_SEARCH_CLASS
-	ld xde, NAKA_CLASS_PsPageBox
-	call SendEvent
-	or xhl, xhl
-	scc16 nz, de
-	lda xwa, (xsp + 8)
-	ld xhl, (xsp + 4)
-	ld xbc, (xhl + 34)
-	push xbc
-	pushw de
-	ld xbc, (xhl + 38)
-	ld de, 0:i3
-	calr DrawTitleBar
-	ld xhl, 0:i3
-
-TtlScreen_Return:
-	pop xiz
-	lda xsp, (xsp + 12)
-	ret
+TtlScreenProc:	.include "includes/generated/cc900/TtlScreenProc.s"	; C: cc900/presentation_sound_nav_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TtlScreen_PaintHandler, TtlScreenProc + 21
+	.set	TtlScreen_Return, TtlScreenProc + 89
 
 DrawTitleBar:
 	lda xsp, (xsp - 42)

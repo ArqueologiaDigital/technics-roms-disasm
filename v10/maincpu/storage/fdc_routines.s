@@ -866,28 +866,9 @@ FDC_InitSequence_Full:
 ; [INFERENCE] The neighbouring .set aliases FDC_TIMING_DELAY (0xf975dc) and
 ; FDC_POST_OP (0xf975e2) look like the same class of misnomer; they were
 ; not re-checked in this pass.
-FDC_CmdRecalibrate:
-	push	qiz
-	ld	a, (FDC_TARGET_TRACK:16)
-	ldfr_berp a, 251
-	ld	(FDC_TARGET_TRACK:16), 5
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-	calr	FDC_CmdSeek
-	ld	(FDC_CURRENT_CYLINDER:16), 0
-	calr	FDC_TIMING_DELAY
-	ld	wa, 7:i3
-	calr	FDC_CMD_SEND
-	calr	FDC_POST_OP
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CmdRecalibrate_Skip
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-FDC_CmdRecalibrate_Skip:
-	ldto_berp a, 251
-	ld	(FDC_TARGET_TRACK:16), a
-	ldw	wa, 16
-	calr	SOME_DELAY
-	pop qiz
-	ret
+FDC_CmdRecalibrate:	.include "includes/generated/cc900/FDC_CmdRecalibrate.s"	; C: cc900/fdc_routines_m270.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CmdRecalibrate_Skip, FDC_CmdRecalibrate + 51
 ; Seeks the floppy head to FDC_TARGET_TRACK unless the current-track byte 0x8b04 already holds
 ; it: records the target in 0x8b04, waits (SOME_DELAY 2, FDC_TIMING_DELAY), sends SEEK (0x0f,
 ; FDC_CMD_SEND) and waits for the result (FDC_POST_OP).  On an error 0x8b04 becomes 0xff

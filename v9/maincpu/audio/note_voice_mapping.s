@@ -10363,73 +10363,15 @@ SetTransposeAndAlloc_Deref:
 	jrl c, SetTransposeAndAlloc_LoadReg
 	ret
 
-SndParam_UpdateChannelTuning:
-	cp a, 0xff
-	jr z, UpdateChannelTuning_LoadDRAM
-	extz wa
-	lda xhl, (CharMap_ValueData_A:24)
-	ld	(0xcd44:16), (xhl+wa)
-	ld a, (0xcd44:16)
-	extz wa
-	add wa, wa
-	lda xhl, (0xe82e:16)
-	ld	(0xcd42:16), (xhl+wa)
-
-UpdateChannelTuning_LoadDRAM:
-	ld a, (0xcd42:16)
-	cp a, (0xcd44:16)
-	jr z, SelectTone_Continue_SetByteFF
-	ld a, (0xcd42:16)
-	extz wa
-	sla wa, 3
-	lda xhl, (0xc66a:16)
-	cp	(xhl+wa), c
-	jr nz, SelectTone_Continue_SetByteFF
-	cp e, 2:i3
-	jr z, UpdateChannelTuning_LoadDRAM3
-	cp e, 1:i3
-	jr z, UpdateChannelTuning_LoadDRAM2
-	cp e, 0:i3
-	jr nz, UpdateChannelTuning_SetByteFF
-	ld a, (0xcd42:16)
-	extz wa
-	sla wa, 3
-	lda xbc, (0xc66c:16)
-	ld	l, (xbc+wa)
-	jr Synth_SelectTone_Continue
-
-UpdateChannelTuning_LoadDRAM2:
-	ld a, (0xcd42:16)
-	extz wa
-	sla wa, 3
-	lda xbc, (0xc66f:16)
-	ld	l, (xbc+wa)
-	jr Synth_SelectTone_Continue
-
-UpdateChannelTuning_LoadDRAM3:
-	ld a, (0xcd42:16)
-	extz wa
-	sla wa, 3
-	lda xbc, (0xc670:16)
-	ld	l, (xbc+wa)
-	jr Synth_SelectTone_Continue
-
-UpdateChannelTuning_SetByteFF:
-	ld l, 0xff:opc
-
-Synth_SelectTone_Continue:
-	ld a, (0xcd42:16)
-	extz wa
-	add wa, wa
-	lda xbc, (0xe82e:16)
-	ld	(0xcd42:16), (xbc+wa)
-	jr SelectTone_Continue_Return
-
-SelectTone_Continue_SetByteFF:
-	ld l, 0xff:opc
-
-SelectTone_Continue_Return:
-	ret
+SndParam_UpdateChannelTuning:	.include "includes/generated/cc900/SndParam_UpdateChannelTuning.s"	; C: cc900/note_voice_mapping_m298_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UpdateChannelTuning_LoadDRAM, SndParam_UpdateChannelTuning + 38
+	.set	UpdateChannelTuning_LoadDRAM2, SndParam_UpdateChannelTuning + 100
+	.set	UpdateChannelTuning_LoadDRAM3, SndParam_UpdateChannelTuning + 120
+	.set	UpdateChannelTuning_SetByteFF, SndParam_UpdateChannelTuning + 140
+	.set	Synth_SelectTone_Continue, SndParam_UpdateChannelTuning + 142
+	.set	SelectTone_Continue_SetByteFF, SndParam_UpdateChannelTuning + 163
+	.set	SelectTone_Continue_Return, SndParam_UpdateChannelTuning + 165
 
 SelectTone_Continue_Prologue:	.include "includes/generated/cc900/SelectTone_Continue_Prologue.s"	; C: cc900/note_voice_mapping_m298_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -17854,46 +17796,10 @@ PanelTag43_ApplyFields_Epilogue:
 ;   SndParam_ResolveWidget looks it up; if SndParam_KeyToLswPartNumber decodes the result, SndPart_SetParam, else
 ;   SndParam_ApplySystemParam; byte 3 is restored. Basis: callers + body -- the UIState_ProcessKeyEvent cases copy the SwbtWr
 ;   event to the stack and call this once per masked field of byte 3.
-SndParam_ApplyEventField:
-	lda	xsp, (xsp-12)
-	push	xiz
-	ld	xiz, xwa
-	ld	a, (xiz+3)
-	ld	(xsp+4), a
-	ld	(xiz+3), c
-	lda	xwa, (xsp+12)
-	ld	xbc, xwa
-	lda	xwa, (xsp+10)
-	ld	xde, xwa
-	ld	xwa, xiz
-	call	SndParam_ResolveWidget
-	cp	hl, 0xffff
-	jr	z, SndParam_ApplyEventField_Join
-	lda	xwa, (xsp+12)
-	ld	xhl, xwa
-	lda	xwa, (xsp+8)
-	ld	xbc, xwa
-	lda	xwa, (xsp+6)
-	ld	xde, xwa
-	ld	xwa, xhl
-	call	SndParam_KeyToLswPartNumber
-	cp	hl, 0xffff
-	jr	z, SndParam_ApplyEventField_Skip
-	ld	wa, (xsp+8)
-	ld	bc, (xsp+6)
-	ld	de, (xsp+10)
-	calr	SndPart_SetParam
-	jr	SndParam_ApplyEventField_Join
-SndParam_ApplyEventField_Skip:
-	ld	xwa, (xsp+12)
-	ld	bc, (xsp+10)
-	calr	SndParam_ApplySystemParam
-SndParam_ApplyEventField_Join:
-	ld	a, (xsp+4)
-	ld	(xiz+3), a
-	pop	xiz
-	lda	xsp, (xsp+12)
-	ret
+SndParam_ApplyEventField:	.include "includes/generated/cc900/SndParam_ApplyEventField.s"	; C: cc900/note_voice_mapping_m301_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_ApplyEventField_Skip, SndParam_ApplyEventField + 78
+	.set	SndParam_ApplyEventField_Join, SndParam_ApplyEventField + 87
 
 ; ============================================================================
 ; SndPart_SetParam - Set a sound part parameter by code
@@ -19835,70 +19741,13 @@ ReadMultiByteRecord_Epilogue:
 	pop xiz
 	ret
 
-FileIO_ReadVariableLengthData:
-	lda xsp, (xsp - 12)
-	ld (xsp + 4), xbc
-	ld (xsp + 8), xwa
-	call TaskBuf_ReadNextByte
-	ld wa, hl
-	exts xwa
-	ld (xsp), xwa
-	cp xwa, 0x0
-	jr ge, ReadVariableLengthDa_LoadParam
-	ld xhl, 0xffffffff
-	jr ReadVariableLengthDa_Epilogue
-
-ReadVariableLengthDa_LoadParam:
-	ld xwa, (xsp + 8)
-	ld bc, (xwa)
-	incw 1, (xwa)
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	add xbc, (xsp + 4)
-	ld xwa, (xsp)
-	ld (xbc), a
-	ld xwa, (xsp)
-	bit 7, wa
-	jr z, ReadVariableLengthDa_LoadParam3
-	ld xwa, 0x7f
-	and (xsp), xwa
-
-ReadVariableLengthDa_DoReadNext:
-	call TaskBuf_ReadNextByte
-	ld wa, hl
-	cp wa, 0:i3
-	jr ge, ReadVariableLengthDa_LoadParam2
-	ld xhl, 0xffffffff
-	jr ReadVariableLengthDa_Epilogue
-
-ReadVariableLengthDa_LoadParam2:
-	ld xwa, (xsp + 8)
-	ld bc, (xwa)
-	incw 1, (xwa)
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	add xbc, (xsp + 4)
-	ld a, l
-	ld (xbc), a
-	ld wa, hl
-	and wa, 0x7f
-	ld bc, wa
-	exts xbc
-	ld xwa, (xsp)
-	sla xwa, 7
-	add xwa, xbc
-	ld (xsp), xwa
-	bit 7, hl
-	jr nz, ReadVariableLengthDa_DoReadNext
-
-ReadVariableLengthDa_LoadParam3:
-	ld xhl, (xsp)
-
-ReadVariableLengthDa_Epilogue:
-	lda xsp, (xsp + 12)
-	ret
+FileIO_ReadVariableLengthData:	.include "includes/generated/cc900/FileIO_ReadVariableLengthData.s"	; C: cc900/note_voice_mapping_m302_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadVariableLengthDa_LoadParam, FileIO_ReadVariableLengthData + 34
+	.set	ReadVariableLengthDa_DoReadNext, FileIO_ReadVariableLengthData + 68
+	.set	ReadVariableLengthDa_LoadParam2, FileIO_ReadVariableLengthData + 85
+	.set	ReadVariableLengthDa_LoadParam3, FileIO_ReadVariableLengthData + 129
+	.set	ReadVariableLengthDa_Epilogue, FileIO_ReadVariableLengthData + 131
 
 ReadVariableLengthDa_Prologue:
 	dec 6, xsp
@@ -23348,24 +23197,7 @@ SndParam_StoreAndReturn:
 ; SongPlayer_ResetState: Resets the song-file player: clears its state, mode, flags and counters in the block at
 ;   0xE9C4 (+0, +0x20, +0x21, +0x23, +0x27, +0x2B, +0x2D, +0x31, +0x239, +0x23D) and re-initialises the track slots
 ;   and the SysEx and MIDI ring buffers. Basis: callers + body.
-SongPlayer_ResetState:
-	ld (0xe9e4:16), 0
-	ld xwa, 0:i3
-	ld (0xe9e7:16), xwa
-	ld xwa, 0:i3
-	ld (0xe9f5:16), xwa
-	ldw (0xe9e5:16), 0
-	ld xwa, 0:i3
-	ld (0xe9eb:16), xwa
-	ldw (0xe9ef:16), 0
-	ldw (0xe9f1:16), 0
-	ld xwa, 0:i3
-	ld (0xebfd:16), xwa
-	ldw (0xec01:16), 0
-	ld (0xe9c4:16), 0
-	calr FileIO_InitTrackSlots
-	calr SysexRingBuf_Init
-	jrl MidiRingBuf_Init
+SongPlayer_ResetState:	.include "includes/generated/cc900/SongPlayer_ResetState.s"	; C: cc900/note_voice_mapping_m302_xr.c
 
 FileIO_InitTrackSlots:
 	ldw (0xd0a8:16), 0

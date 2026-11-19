@@ -1063,46 +1063,9 @@ FDC_InitSequence_Full:
 	calr	FDC_HardwareSetup
 	calr	FDC_INIT
 	jrl	FDC_CONFIG_VERIFY
-FDC_CmdRecalibrate:	; formerly FDC_SeekRecalibrate; recalibrate-to-track-0 twin of boot FDC_CmdRecalibrate
-; (was .incbin "includes/romslices/v7_transplant_FDC_CmdRecalibrate_head.bin")
-; [v10] --- FDC_CmdRecalibrate (formerly FDC_SeekRecalibrate): recalibrate to track 0 ---
-; [v10] Renamed to match its bootloader twin FDC_CmdRecalibrate (table_data/
-; [v10] boot_fdc_driver.s): saves the caller's target track (0x8a36) in QIZH, seeks
-; [v10] to track 5 first (head-load settling), then issues RECALIBRATE (0x07) and
-; [v10] waits for the result; on failure invalidates the track cache (0x8b04).
-; [v10] The raw block below also contains the SEEK command handler at 0xf97696,
-; [v10] reached through the .set alias FDC_CmdSeek (renamed from the misnomer
-; [v10] FDC_STATUS_HANDLER -- it reads and writes no status register).  Verified
-; [v10] instruction-for-instruction against its bootloader twin FDC_CmdSeek in
-; [v10] table_data/boot_fdc_driver.s: compare the target track (0x8a36) against
-; [v10] the track cache (0x8b04) and return if equal, delay (WA=2), clear the
-; [v10] result buffer, LD WA,0x000F (= FDC SEEK opcode 0x0F), issue the command,
-; [v10] wait for the result, set the track cache to 0xFF on error, then settle
-; [v10] (WA=0x10; the delay routine busy-waits WA/2 ticks).
-; [v10] [INFERENCE] The neighbouring .set aliases FDC_TIMING_DELAY (0xf975dc) and
-; [v10] FDC_POST_OP (0xf975e2) look like the same class of misnomer; they were
-; [v10] not re-checked in this pass.
-	push	qiz
-	ld	a, (FDC_TARGET_TRACK:16)
-	ldfr_berp	a, 251
-	ld	(FDC_TARGET_TRACK:16), 5
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-	calr	FDC_CmdSeek
-	ld	(FDC_CURRENT_CYLINDER:16), 0
-	calr	FDC_TIMING_DELAY
-	ld	wa, 7:i3
-	calr	FDC_CMD_SEND
-	calr	FDC_POST_OP
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_CmdRecalibrate_Skip
-	ld	(FDC_CURRENT_CYLINDER:16), 255
-FDC_CmdRecalibrate_Skip:
-	ldto_berp	a, 251
-	ld	(FDC_TARGET_TRACK:16), a
-	ldw	wa, 16
-	calr	SOME_DELAY
-	pop	qiz
-	ret
+FDC_CmdRecalibrate:	.include "includes/generated/cc900/FDC_CmdRecalibrate.s"	; C: cc900/fdc_routines_m270.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CmdRecalibrate_Skip, FDC_CmdRecalibrate + 51
 FDC_CmdSeek:	.include "includes/generated/cc900/FDC_CmdSeek.s"	; C: cc900/fdc_routines_m270_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	FDC_CmdSeek_Skip, FDC_CmdSeek + 45

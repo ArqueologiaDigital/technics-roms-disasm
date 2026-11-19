@@ -1536,61 +1536,12 @@ SeMenu_TransferPartValues_EndData_Epilogue:
 ;   shift, +8 max, +9 min, +10 step) with clamping; if it changed, sends it to the tone generator, stores it at edit-
 ;   buffer index C and redraws via screen code WA. L = 1 changed, 0 not. Basis: callers + body -- the SeXxx_OnColumnN
 ;   handlers build the record, call this, then test L.
-SeMenu_StepParamFieldAndSend:
-	dec	8, xsp
-	push	xiz
-	ld	(xsp+6), e
-	ld	(xsp+8), c
-	ld	(xsp+10), a
-	ld	xiz, (xsp+16)
-	ld	xwa, xiz
-	calr	SeMenu_StepParamField
-	extz	hl
-	cp	hl, 0:i3
-	jr	nz, SeMenu_StepParamFieldAndSend_Skip19
-	ld	l, 0:opc
-	jr	SeMenu_StepParamFieldAndSend_Epilogue2
-SeMenu_StepParamFieldAndSend_Skip19:
-	lda	xwa, (xsp+4)
-	calr	SeMenu_LoadObjEntries
-	ld	a, (xiz+6)
-	extz	wa
-	ld	c, (xiz+7)
-	extz	bc
-	calr	SeMenu_BitShiftMask
-	extz	hl
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+20)
-	extz	bc
-	lda	xde, (xiz+3)
-	cp	(xsp+4), 0
-	jr	nz, SeMenu_StepParamFieldAndSend_Skip20
-	pushw	hl
-	calr	SeMenu_RegisterElement_Extended
-	jr	SeMenu_StepParamFieldAndSend_Join4
-SeMenu_StepParamFieldAndSend_Skip20:
-	pushw	hl
-	calr	SeMenu_SetupDisplayObject_Alt1
-SeMenu_StepParamFieldAndSend_Join4:
-	ld	a, (xsp+8)
-	extz	wa
-	ld	c, (xiz+3)
-	extz	bc
-	calr	SeMenu_StorePartParam
-	ld	a, (xsp+8)
-	extz	wa
-	pushw	wa
-	ld	a, (xsp+12)
-	extz	wa
-	pushw	wa
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	l, 1:opc
-SeMenu_StepParamFieldAndSend_Epilogue2:
-	pop	xiz
-	inc	8, xsp
-	retd	6
+SeMenu_StepParamFieldAndSend:	.include "includes/generated/cc900/SeMenu_StepParamFieldAndSend.s"	; C: cc900/semenu_routines_m129_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_StepParamFieldAndSend_Skip19, SeMenu_StepParamFieldAndSend + 30
+	.set	SeMenu_StepParamFieldAndSend_Skip20, SeMenu_StepParamFieldAndSend + 76
+	.set	SeMenu_StepParamFieldAndSend_Join4, SeMenu_StepParamFieldAndSend + 80
+	.set	SeMenu_StepParamFieldAndSend_Epilogue2, SeMenu_StepParamFieldAndSend + 113
 ; SeMenu_SelectPartIfEnabled: Makes part A (1..4) the sound editor's current part (RAM 0x65D) when it is enabled and
 ;   not already current; L = 1 if it changed, else 0. Basis: callers + body -- every Se*_OnSideRow2..5 handler passes
 ;   its row's part (1..4) and sends the page's redraw event only when L = 1.

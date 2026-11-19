@@ -1973,233 +1973,30 @@ SeFilLpq1_OnColumn1:
 ;   A and applies it via SeMenu_StepParamFieldAndSend (popup id E), then posts the column's dial events
 ;   (SeMenu_BindDialToColumn(C)). Basis: callers + body -- filter-page column handlers (Lpq1/Hpq1 col 1,
 ;   L241/H241 col 3) call it, then redraw with SeMenu_DrawFilterGraph, which places the corner at x = 86 + param 2.
-SeMenu_EditFilterCutoff:
-	lda	xsp, (xsp-22)
-	ld	(xsp+16), e
-	ld	(xsp+18), c
-	ld	(xsp+20), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	lda	xwa, (xsp+12)
-	call	SeMenu_LoadObjEntries
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 127
-	ld	(xbc+9), 0
-	ld	a, (xsp+20)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	cp	(xsp+12), 0
-	jr	nz, SeMenu_EditFilterCutoff_Skip
-	ld	c, 77:opc
-	jr	SeMenu_EditFilterCutoff_Join
-SeMenu_EditFilterCutoff_Skip:
-	ld	a, (xsp+14)
-	dec	1, a
-	extz	wa
-	muls	wa, 21
-	extz	xwa
-	lda	xwa, (xwa+16)
-	lda	xwa, (xwa+17)
-	ld	c, a
-	ld	(xsp+14), 0
-SeMenu_EditFilterCutoff_Join:
-	ld	a, (xsp+16)
-	extz	wa
-	ld	e, (xsp+14)
-	extz	de
-	extz	bc
-	pushw	bc
-	lda	xbc, (xsp+2)
-	push	xbc
-	ld	bc, 2:i3
-	call	SeMenu_StepParamFieldAndSend
-	ld	a, (xsp+18)
-	extz	wa
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+22)
-	ret
-SeFilLpq1_OnColumn2:
-	extz	wa
-	ld	bc, 2:i3
-	ldw	de, 48
-	calr	SeMenu_EditFilterResonance
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	jp	SeMenu_DrawFilterGraph
+SeMenu_EditFilterCutoff:	.include "includes/generated/cc900/SeMenu_EditFilterCutoff.s"	; C: cc900/scoop_editor_data_m128.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_EditFilterCutoff_Skip, SeMenu_EditFilterCutoff + 74
+	.set	SeMenu_EditFilterCutoff_Join, SeMenu_EditFilterCutoff + 99
+SeFilLpq1_OnColumn2:	.include "includes/generated/cc900/SeFilLpq1_OnColumn2.s"	; C: cc900/scoop_editor_data_m0_xr.c
 ; SeMenu_EditFilterResonance: Steps the current part's filter resonance (part param 3, range 0..5) by the column
 ;   switch in A and applies it via SeMenu_StepParamFieldAndSend (popup id E), then posts the column's dial events
 ;   (SeMenu_BindDialToColumn(C)). Basis: callers + body -- filter-page column handlers (Lpq1/Hpq1 col 2,
 ;   L241/H241 col 4, Bpf1 col 3) call it, then redraw with SeMenu_DrawFilterGraph, which plots param 3 as the peak
 ;   height.
-SeMenu_EditFilterResonance:
-	lda	xsp, (xsp-22)
-	ld	(xsp+16), e
-	ld	(xsp+18), c
-	ld	(xsp+20), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	lda	xwa, (xsp+12)
-	call	SeMenu_LoadObjEntries
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 127
-	ld	(xbc+7), 0
-	ld	(xbc+8), 5
-	ld	(xbc+9), 0
-	ld	a, (xsp+20)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	cp	(xsp+12), 0
-	jr	nz, SeMenu_EditFilterResonance_Skip
-	ld	c, 78:opc
-	jr	SeMenu_EditFilterResonance_Join
-SeMenu_EditFilterResonance_Skip:
-	ld	a, (xsp+14)
-	dec	1, a
-	extz	wa
-	muls	wa, 21
-	extz	xwa
-	lda	xwa, (xwa+16)
-	lda	xwa, (xwa+18)
-	ld	c, a
-	ld	(xsp+14), 0
-SeMenu_EditFilterResonance_Join:
-	ld	a, (xsp+16)
-	extz	wa
-	ld	e, (xsp+14)
-	extz	de
-	extz	bc
-	pushw	bc
-	lda	xbc, (xsp+2)
-	push	xbc
-	ld	bc, 3:i3
-	call	SeMenu_StepParamFieldAndSend
-	ld	a, (xsp+18)
-	extz	wa
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+22)
-	ret
-SeFilLpq1_OnColumn3:
-	extz	wa
-	ld	bc, 3:i3
-	ldw	de, 48
-	jr	SeFilLpq1_OnColumn3_Join21
-SeFilLpq1_OnColumn3_Join21:
-	lda	xsp, (xsp-22)
-	ld	(xsp+16), e
-	ld	(xsp+18), c
-	ld	(xsp+20), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	lda	xwa, (xsp+12)
-	call	SeMenu_LoadObjEntries
-	lda	xbc, (xsp)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 63
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 0
-	ld	a, (xsp+20)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	cp	(xsp+12), 0
-	jr	nz, SeFilLpq1_OnColumn3_Skip2
-	ld	c, 55:opc
-	jr	SeFilLpq1_OnColumn3_Join2
-SeFilLpq1_OnColumn3_Skip2:
-	ld	a, (xsp+14)
-	dec	1, a
-	extz	wa
-	muls	wa, 21
-	extz	xwa
-	lda	xwa, (xwa+16)
-	lda	xwa, (xwa+16)
-	ld	c, a
-	ld	(xsp+14), 0
-SeFilLpq1_OnColumn3_Join2:
-	ld	a, (xsp+16)
-	extz	wa
-	ld	e, (xsp+14)
-	extz	de
-	extz	bc
-	pushw	bc
-	lda	xbc, (xsp+2)
-	push	xbc
-	ld	bc, 1:i3
-	call	SeMenu_StepParamFieldAndSend
-	ld	a, (xsp+18)
-	extz	wa
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+22)
-	ret
-SeFilLpq1_OnColumn4:
-	extz	wa
-	ld	bc, 4:i3
-	ldw	de, 48
-	jr	SeFilLpq1_OnColumn4_Join22
-SeFilLpq1_OnColumn4_Join22:
-	lda	xsp, (xsp-22)
-	ld	(xsp+16), e
-	ld	(xsp+18), c
-	ld	(xsp+20), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	lda	xwa, (xsp+12)
-	call	SeMenu_LoadObjEntries
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 7
-	ld	(xbc+7), 5
-	ld	(xbc+8), 6
-	ld	(xbc+9), 0
-	ld	a, (xsp+20)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	cp	(xsp+12), 0
-	jr	nz, SeFilLpq1_OnColumn4_Skip3
-	ld	c, 54:opc
-	jr	SeFilLpq1_OnColumn4_Join3
-SeFilLpq1_OnColumn4_Skip3:
-	ld	a, (xsp+14)
-	dec	1, a
-	extz	wa
-	muls	wa, 21
-	extz	xwa
-	lda	xwa, (xwa+16)
-	lda	xwa, (xwa+15)
-	ld	c, a
-	ld	(xsp+14), 0
-SeFilLpq1_OnColumn4_Join3:
-	ld	a, (xsp+16)
-	extz	wa
-	ld	e, (xsp+14)
-	extz	de
-	extz	bc
-	pushw	bc
-	lda	xbc, (xsp+2)
-	push	xbc
-	ld	bc, 0:i3
-	call	SeMenu_StepParamFieldAndSend
-	ld	a, (xsp+18)
-	extz	wa
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+22)
-	ret
+SeMenu_EditFilterResonance:	.include "includes/generated/cc900/SeMenu_EditFilterResonance.s"	; C: cc900/scoop_editor_data_m128.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_EditFilterResonance_Skip, SeMenu_EditFilterResonance + 74
+	.set	SeMenu_EditFilterResonance_Join, SeMenu_EditFilterResonance + 99
+SeFilLpq1_OnColumn3:	.include "includes/generated/cc900/SeFilLpq1_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLpq1_OnColumn3_Join21:	.include "includes/generated/cc900/SeFilLpq1_OnColumn3_Join21.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLpq1_OnColumn3_Skip2, SeFilLpq1_OnColumn3_Join21 + 74
+	.set	SeFilLpq1_OnColumn3_Join2, SeFilLpq1_OnColumn3_Join21 + 99
+SeFilLpq1_OnColumn4:	.include "includes/generated/cc900/SeFilLpq1_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_xr.c
+SeFilLpq1_OnColumn4_Join22:	.include "includes/generated/cc900/SeFilLpq1_OnColumn4_Join22.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLpq1_OnColumn4_Skip3, SeFilLpq1_OnColumn4_Join22 + 74
+	.set	SeFilLpq1_OnColumn4_Join3, SeFilLpq1_OnColumn4_Join22 + 99
 SeFilLpq1_OnColumn4_Join23:
 	lda	xsp, (xsp-18)
 	ld	(xsp+16), a
@@ -2253,120 +2050,18 @@ SeFilLpq1_OnColumn4_Join5:
 	call	SeMenu_BindDialToColumn
 	lda	xsp, (xsp+18)
 	ret
-SeFilLpq1_OnColumn4_Join24:
-	lda	xsp, (xsp-18)
-	ld	(xsp+16), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	lda	xwa, (xsp+12)
-	call	SeMenu_LoadObjEntries
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 127
-	ld	(xbc+7), 0
-	ld	(xbc+8), 127
-	ld	(xbc+9), 0
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	cp	(xsp+12), 0
-	jr	nz, SeFilLpq1_OnColumn4_Skip6
-	ld	a, 79:opc
-	jr	SeFilLpq1_OnColumn4_Join6
-SeFilLpq1_OnColumn4_Skip6:
-	ld	a, (xsp+14)
-	dec	1, a
-	extz	wa
-	muls	wa, 21
-	extz	xwa
-	lda	xwa, (xwa+16)
-	lda	xwa, (xwa+19)
-	ld	(xsp+14), 0
-SeFilLpq1_OnColumn4_Join6:
-	ld	e, (xsp+14)
-	extz	de
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 48
-	ld	bc, 4:i3
-	call	SeMenu_StepParamFieldAndSend
-	cp	l, 1:i3
-	call	z, (SeMenu_DrawFilterEqGraph:24)
-	ld	wa, 7:i3
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+18)
-	ret
-SeFilLpq1_OnColumn4_Join25:
-	lda	xsp, (xsp-18)
-	ld	(xsp+16), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	lda	xwa, (xsp+12)
-	call	SeMenu_LoadObjEntries
-	lda	xbc, (xsp)
-	ld	wa, 5:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 127
-	ld	(xbc+7), 0
-	ld	(xbc+8), 13
-	ld	(xbc+9), 0
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	cp	(xsp+12), 0
-	jr	nz, SeFilLpq1_OnColumn4_Skip7
-	ld	a, 80:opc
-	jr	SeFilLpq1_OnColumn4_Join7
-SeFilLpq1_OnColumn4_Skip7:
-	ld	a, (xsp+14)
-	dec	1, a
-	extz	wa
-	muls	wa, 21
-	extz	xwa
-	lda	xwa, (xwa+16)
-	lda	xwa, (xwa+20)
-	ld	(xsp+14), 0
-SeFilLpq1_OnColumn4_Join7:
-	ld	e, (xsp+14)
-	extz	de
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 48
-	ld	bc, 5:i3
-	call	SeMenu_StepParamFieldAndSend
-	cp	l, 1:i3
-	call	z, (SeMenu_DrawFilterEqGraph:24)
-	ldw	wa, 8
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+18)
-	ret
-SeFilLpq1_OnColumn4_Join26:
-	dec	4, xsp
-	ld	(xsp+2), a
-	lda	xwa, (xsp)
-	call	SeMenu_LoadObjEntries
-	cp	(xsp+2), 0
-	jr	nz, SeFilLpq1_OnColumn4_Skip27
-	cp	(xsp), 0
-	jr	nz, SeFilLpq1_OnColumn4_Epilogue20
-	ldw	wa, TT_SEFILENV1
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	jr	SeFilLpq1_OnColumn4_Epilogue20
-SeFilLpq1_OnColumn4_Skip27:
-	call	SeMenu_ToggleSolo
-SeFilLpq1_OnColumn4_Epilogue20:
-	inc	4, xsp
-	ret
+SeFilLpq1_OnColumn4_Join24:	.include "includes/generated/cc900/SeFilLpq1_OnColumn4_Join24.s"	; C: cc900/scoop_editor_data_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLpq1_OnColumn4_Skip6, SeFilLpq1_OnColumn4_Join24 + 68
+	.set	SeFilLpq1_OnColumn4_Join6, SeFilLpq1_OnColumn4_Join24 + 91
+SeFilLpq1_OnColumn4_Join25:	.include "includes/generated/cc900/SeFilLpq1_OnColumn4_Join25.s"	; C: cc900/scoop_editor_data_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLpq1_OnColumn4_Skip7, SeFilLpq1_OnColumn4_Join25 + 68
+	.set	SeFilLpq1_OnColumn4_Join7, SeFilLpq1_OnColumn4_Join25 + 91
+SeFilLpq1_OnColumn4_Join26:	.include "includes/generated/cc900/SeFilLpq1_OnColumn4_Join26.s"	; C: cc900/scoop_editor_data_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLpq1_OnColumn4_Skip27, SeFilLpq1_OnColumn4_Join26 + 33
+	.set	SeFilLpq1_OnColumn4_Epilogue20, SeFilLpq1_OnColumn4_Join26 + 37
 SeFilLpq1_OnColumn4_Join27:
 	cp	a, 0:i3
 	ret	z
@@ -2378,30 +2073,11 @@ SeFilLpq1_OnColumn4_Join27:
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
-SeFilLpq1_OnColumn4_Join28:
-	dec	4, xsp
-	ld	(xsp+2), a
-	lda	xwa, (xsp)
-	call	SeMenu_LoadObjEntries
-	cp	(xsp+2), 0
-	jr	nz, SeFilLpq1_OnColumn4_Skip28
-	cp	(xsp), 0
-	jr	nz, SeFilLpq1_OnColumn4_Epilogue21
-	ldw	wa, TT_SEFILLFO1
-	ld	bc, 0:i3
-	jr	SeFilLpq1_OnColumn4_Join29
-SeFilLpq1_OnColumn4_Skip28:
-	ld	wa, 2:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	jr	z, SeFilLpq1_OnColumn4_Epilogue21
-	ldw	wa, TT_SEFILLPQ1
-	ld	bc, 0:i3
-SeFilLpq1_OnColumn4_Join29:
-	call	SeMenu_SendEvent
-SeFilLpq1_OnColumn4_Epilogue21:
-	inc	4, xsp
-	ret
+SeFilLpq1_OnColumn4_Join28:	.include "includes/generated/cc900/SeFilLpq1_OnColumn4_Join28.s"	; C: cc900/scoop_editor_data_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilLpq1_OnColumn4_Skip28, SeFilLpq1_OnColumn4_Join28 + 29
+	.set	SeFilLpq1_OnColumn4_Join29, SeFilLpq1_OnColumn4_Join28 + 44
+	.set	SeFilLpq1_OnColumn4_Epilogue21, SeFilLpq1_OnColumn4_Join28 + 48
 SeFilLpq1_OnSideRow4:
 	dec	6, xsp
 	ld	(xsp+4), a

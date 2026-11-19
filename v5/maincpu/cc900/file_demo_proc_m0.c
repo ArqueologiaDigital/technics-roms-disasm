@@ -46,3 +46,22 @@ void FileIO_DetectFileTypeAndPost(void)
 		break;
 	}
 }
+
+/* cc900-module: Audio_WaitForReady Banner_Loop_Check Demo_PreSetup Demo_ReleaseGlidePedal Voice_CopyPreset Voice_LoadVoiceTable */
+extern unsigned char __near DEMO_DEBOUNCE;
+extern unsigned char __near SWBTWR_PAYLOAD_1;
+extern unsigned char __near SWBTWR_PAYLOAD_2;
+extern unsigned char __near SWBTWR_PAYLOAD_3;
+extern void SwbtB3_CodeA9_Listener0(void);
+
+void SwbtB3_CodeA9_Listener0(void)
+{
+	if (SWBTWR_PAYLOAD_1 != 32)
+		return;
+	if ((SWBTWR_PAYLOAD_3 & 0x13) == 0)
+		return;
+	if (SWBTWR_PAYLOAD_2 & 0x13)
+		DEMO_DEBOUNCE = 16;
+	else
+		DEMO_DEBOUNCE = 0;
+}

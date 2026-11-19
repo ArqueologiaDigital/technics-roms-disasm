@@ -73,3 +73,23 @@ void EffectMode_RunDiagSequence(void)
 	}
 	ram_8cdc = c - 1;
 }
+
+#define EVT_PAGE_CHANGE 0x1c0001eL
+struct fdccmd { int op; int f2; int b; int a; int c; int count; void *buf; };
+extern int __cdecl FDC_CommandEntry(struct fdccmd *cmd);
+extern unsigned char __near FDC_ERROR_CODE;
+extern void FDC_CommandAndPostEvent(void);
+
+void FDC_CommandAndPostEvent(void)
+{
+	struct fdccmd cmd;
+	unsigned char e;
+
+	cmd.op = 3;
+	FDC_CommandEntry(&cmd);
+	e = FDC_ERROR_CODE;
+	if (e == 0xfc)
+		ApPostEvent(-1, EVT_PAGE_CHANGE, 2);
+	else
+		ApPostEvent(-1, EVT_PAGE_CHANGE, 1);
+}

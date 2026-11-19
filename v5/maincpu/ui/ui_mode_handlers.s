@@ -904,35 +904,10 @@ EffectMode_CopyPresetBits:
 	ld (xbc), a
 
 	ret
-EffectMode_ReinitSoundOutput:
-	ld	xwa, 770
-	call	SndParam_LookupReadOnly
-	ld	(35992:16), l
-	ld	xwa, 770
-	ld	bc, 1:i3
-	ld	de, 0:i3
-	call	SoundParam_NotifyChange
-	ldw	wa, 128
-	ld	xbc, 246468
-	call	BitMapOut_CopyVoicePreset9
-	ldw	wa, 128
-	call	PanelMemory_Recall
-	calr	EffectMode_DisplayPresetName
-	res	4, (0x8c9a:16)
-	cp	(35992:16), 1
-	jr	z, EffectMode_ReinitSound_NotifyBank1
-	ld	xwa, 770
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	jr	EffectMode_ReinitSound_CallNotify
-EffectMode_ReinitSound_NotifyBank1:
-	ld xwa, 0x302
-	ld bc, 1:i3
-	ld de, 0:i3
-
-EffectMode_ReinitSound_CallNotify:
-	call	SoundParam_NotifyChange
-	jp	SwbtWr_ReinitOutputBank
+EffectMode_ReinitSoundOutput:	.include "includes/generated/cc900/EffectMode_ReinitSoundOutput.s"	; C: cc900/ui_mode_handlers_m275_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_ReinitSound_NotifyBank1, EffectMode_ReinitSoundOutput + 70
+	.set	EffectMode_ReinitSound_CallNotify, EffectMode_ReinitSoundOutput + 79
 EffectMode_ReinitWithFlag:
 	set	5, (0x8c9a:16)
 	calr EffectMode_CheckModeAndReinit
@@ -2042,28 +2017,10 @@ LED_SetAll_BlankLoop:
 	ret
 
 
-FDC_CommandAndPostEvent:
-	lda xsp, (xsp - 0x10)
-	lda XWA, (XSP)
-	ldw (XWA), 0x0003
-	push XWA
-	call FDC_CommandEntry
-	inc 4,XSP
-	ld a, (FDC_ERROR_CODE:16)
-	cp A,0xfc
-	jr nz, FDC_PostEvent_Error
-	ld XWA,0xffffffff
-	ld XBC,EVT_PAGE_CHANGE
-	ld xde, 2:i3
-	jr t, FDC_PostEvent_Send
-FDC_PostEvent_Error:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_PAGE_CHANGE
-	ld	xde, 1:i3
-FDC_PostEvent_Send:
-	call ApPostEvent
-	lda	xsp, (xsp+16)
-	ret
+FDC_CommandAndPostEvent:	.include "includes/generated/cc900/FDC_CommandAndPostEvent.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_PostEvent_Error, FDC_CommandAndPostEvent + 39
+	.set	FDC_PostEvent_Send, FDC_CommandAndPostEvent + 51
 
 
 EffectMode_MidiParseLoop:	.include "includes/generated/cc900/EffectMode_MidiParseLoop.s"	; C: cc900/ui_mode_handlers_m0.c

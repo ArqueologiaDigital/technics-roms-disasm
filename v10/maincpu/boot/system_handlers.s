@@ -6227,55 +6227,15 @@ SHOW_FD_TO_FLASH_MEMORY_MESSAGE:
 	call Draw_FlashMemUpdate_message_bitmap
 	ret
 
-FirmwareUpdate_SaveDiskType:
-	dec 2, xsp
-	ld (xsp), a
-
-SHOW_CHANGE_FLOPPY_2_OF_2_MESSAGE:
-	pushw 0x8
-	pushw 0x2
-	ld xwa, Bitmap_1bit_Change_FD_2_of_2	; "Change FD (2/2)"
-	ldw bc, 0x30
-	ldw de, 0xa0
-	call Draw_FlashMemUpdate_message_bitmap
-	call Check_for_Floppy_Disk_Change
-	cp l, 0:i3
-	jr z, FloppyChange_DiskRemoved
-
-FloppyChange_WaitDiskRemove_Loop:
-	call Check_for_Floppy_Disk_Change
-	cp l, 0:i3
-	jr nz, FloppyChange_WaitDiskRemove_Loop
-
-FloppyChange_DiskRemoved:
-	ld xwa, 0:i3
-
-FloppyChange_Debounce1_Loop:
-	inc 1, xwa
-	cp xwa, 0x40000
-	jr c, FloppyChange_Debounce1_Loop
-	call Check_for_Floppy_Disk_Change
-	cp l, 0:i3
-	jr nz, FloppyChange_DiskInserted
-
-FloppyChange_WaitDiskInsert_Loop:
-	call Check_for_Floppy_Disk_Change
-	cp l, 0:i3
-	jr z, FloppyChange_WaitDiskInsert_Loop
-
-FloppyChange_DiskInserted:
-	ld xwa, 0:i3
-
-FloppyChange_Debounce2_Loop:
-	inc 1, xwa
-	cp xwa, 0x200000
-	jr c, FloppyChange_Debounce2_Loop
-	calr Detect_Disk_Type
-	cp l, (xsp)
-	jr nz, SHOW_CHANGE_FLOPPY_2_OF_2_MESSAGE
-	calr SHOW_FD_TO_FLASH_MEMORY_MESSAGE
-	inc 2, xsp
-	ret
+FirmwareUpdate_SaveDiskType:	.include "includes/generated/cc900/FirmwareUpdate_SaveDiskType.s"	; C: cc900/system_handlers_m5_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SHOW_CHANGE_FLOPPY_2_OF_2_MESSAGE, FirmwareUpdate_SaveDiskType + 4
+	.set	FloppyChange_WaitDiskRemove_Loop, FirmwareUpdate_SaveDiskType + 33
+	.set	FloppyChange_DiskRemoved, FirmwareUpdate_SaveDiskType + 41
+	.set	FloppyChange_Debounce1_Loop, FirmwareUpdate_SaveDiskType + 43
+	.set	FloppyChange_WaitDiskInsert_Loop, FirmwareUpdate_SaveDiskType + 61
+	.set	FloppyChange_DiskInserted, FirmwareUpdate_SaveDiskType + 69
+	.set	FloppyChange_Debounce2_Loop, FirmwareUpdate_SaveDiskType + 71
 
 Flash_BurnWithProgress:	.include "includes/generated/cc900/Flash_BurnWithProgress.s"	; C: cc900/system_handlers_m5.c
 ; the hand assembly's labels inside the compiled body, by their offsets

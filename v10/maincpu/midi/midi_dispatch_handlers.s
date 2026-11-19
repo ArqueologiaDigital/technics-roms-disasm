@@ -6399,62 +6399,13 @@ SndParam_GetBlockPointer_Bank3:
 	ld xhl, 0x3d3210
 	ret
 
-SndParam_RelocateAndApply:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xwa
-	extz bc
-	ld wa, bc
-	calr SndParam_GetBlockPointer
-	or xhl, xhl
-	jr z, SndParam_RelocateApply_Epilog
-	lda xbc, (xhl+138:16)
-	ld xde, xbc
-	lda xiy, (xbc + 96)
-
-SndParam_RelocateApply_MaskLoop:
-	ld xiz, xde
-	ld xix, (xde)
-	or xix, xix
-	jr z, SndParam_RelocateApply_NextMask
-	sub xix, 0xf980
-	add xix, (xsp + 4)
-	ld a, (xiz + 4)
-	cpl a
-	and a, (xix)
-	ld w, a
-	ld a, (xiz + 5)
-	or a, w
-	ld (xix), a
-
-SndParam_RelocateApply_NextMask:
-	inc 6, xde
-	cp xde, xiy
-	jr c, SndParam_RelocateApply_MaskLoop
-
-SndParam_RelocateApply_BaseLoop:
-	ld xde, xhl
-	ld xix, (xhl)
-	or xix, xix
-	jr z, SndParam_RelocateApply_NextBase
-	sub xix, 0xf980
-	add xix, (xsp + 4)
-	ld a, (xix)
-	and a, 0xf8
-	or a, (xde + 4)
-	ld (xix+), a
-	ld a, (xde + 5)
-	ld (xix), a
-
-SndParam_RelocateApply_NextBase:
-	inc 6, xhl
-	cp xhl, xbc
-	jr c, SndParam_RelocateApply_BaseLoop
-
-SndParam_RelocateApply_Epilog:
-	pop xiz
-	inc 4, xsp
-	ret
+SndParam_RelocateAndApply:	.include "includes/generated/cc900/SndParam_RelocateAndApply.s"	; C: cc900/midi_dispatch_handlers_m285.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_RelocateApply_MaskLoop, SndParam_RelocateAndApply + 27
+	.set	SndParam_RelocateApply_NextMask, SndParam_RelocateAndApply + 60
+	.set	SndParam_RelocateApply_BaseLoop, SndParam_RelocateAndApply + 66
+	.set	SndParam_RelocateApply_NextBase, SndParam_RelocateAndApply + 99
+	.set	SndParam_RelocateApply_Epilog, SndParam_RelocateAndApply + 105
 
 SndParam_UpdateChannels:
 	dec 2, xsp
@@ -9730,38 +9681,10 @@ MidiPkt_XferShowErrorMessage:
 	ldw	wa, TT_MESAGE
 	jp	UI_InterruptTitleByIndex
 
-MidiSeq_ApplyPendingParams:
-	bit 6, (0xbd1c:16)
-	ret z
-	bit 6, (0xbd18:16)
-	jr z, MidiSeq_ApplyParams_Lower
-	ld a, (0xbd00:16)
-	res 7, a
-	extz wa
-	ld c, (0xbd04:16)
-	res 7, c
-	extz bc
-	ld e, (0xbd08:16)
-	res 7, e
-	extz de
-	call ParaLoadOpt_AudioFlagCheck
-	jr MidiSeq_ClearSyncFlag
-
-MidiSeq_ApplyParams_Lower:
-	ld a, (0xbd0c:16)
-	res 7, a
-	extz wa
-	ld c, (0xbd10:16)
-	res 7, c
-	extz bc
-	ld e, (0xbd14:16)
-	res 7, e
-	extz de
-	call ParaLoadOpt_AudioFlagCheck_B
-
-MidiSeq_ClearSyncFlag:
-	res 6, (0xbd1c:16)
-	ret
+MidiSeq_ApplyPendingParams:	.include "includes/generated/cc900/MidiSeq_ApplyPendingParams.s"	; C: cc900/midi_dispatch_handlers_m286.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiSeq_ApplyParams_Lower, MidiSeq_ApplyPendingParams + 45
+	.set	MidiSeq_ClearSyncFlag, MidiSeq_ApplyPendingParams + 76
 
 ; MidiTable_PreDispatchNullRet: Bare `ret` called before each received packet is dispatched; the two instructions
 ;   after it (`ldw wa, 238` / `jp UI_InterruptTitleByIndex`, a TT_MESAGE box) are unreachable. Basis: callers + body --
