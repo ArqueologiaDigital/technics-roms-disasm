@@ -993,27 +993,11 @@ DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE:	.include "includes/generated/cc900/DSP_SETC
 
 ; --- 0x00FB1E-0x00FB2D  VOICEPARAM_FINALIZE_QUERY_JUMPTABLE -- 8 u16 jump offsets, base 0x031B5B
 ; Computed jump in VoiceParamFinalize_SecondaryDispatch (status bit 3 CLEAR -> "queries"): `jp T, 0x031B5B + table[index*2]`.
-VOICEPARAM_FINALIZE_QUERY_JUMPTABLE:
-	.short VoiceParamFinalize_SecondaryBody - VoiceParamFinalize_SecondaryBody	; index 0
-	.short VoiceParam_Query_Case1_PatchRec - VoiceParamFinalize_SecondaryBody	; index 1
-	.short VoiceParam_Query_Case2_Partial01 - VoiceParamFinalize_SecondaryBody	; index 2
-	.short VoiceParam_Query_Case3_Partial23 - VoiceParamFinalize_SecondaryBody	; index 3
-	.short VoiceParam_Query_Case4_PartialAny - VoiceParamFinalize_SecondaryBody	; index 4
-	.short VoiceParam_Query_Case5_PatchRec2 - VoiceParamFinalize_SecondaryBody	; index 5
-	.short VoiceParam_Query_Case6_SubTone - VoiceParamFinalize_SecondaryBody	; index 6
-	.short VoiceParam_Query_Case7_PartialSlot - VoiceParamFinalize_SecondaryBody	; index 7
+VOICEPARAM_FINALIZE_QUERY_JUMPTABLE:	.include "includes/generated/cc900/VOICEPARAM_FINALIZE_QUERY_JUMPTABLE.s"	; C: cc900/dsp_voice_params_at_42c.c (cc900-data)
 
 ; --- 0x00FB2E-0x00FB3D  VOICEPARAM_FINALIZE_ACTION_JUMPTABLE -- 8 u16 jump offsets, base 0x031AA1
 ; Computed jump in Voice_ParamFinalize (status bit 3 SET -> "actions"): `jp T, 0x031AA1 + table[index*2]`.
-VOICEPARAM_FINALIZE_ACTION_JUMPTABLE:
-	.short VoiceParam_Action_ToneEdit - VoiceParam_Action_ToneEdit	; index 0
-	.short VoiceParam_Action_EffectParam - VoiceParam_Action_ToneEdit	; index 1
-	.short VoiceParam_Action_Partial0Or1Param - VoiceParam_Action_ToneEdit	; index 2
-	.short VoiceParam_Action_Partial2Or3Param - VoiceParam_Action_ToneEdit	; index 3
-	.short VoiceParam_Action_VelSplitParam - VoiceParam_Action_ToneEdit	; index 4
-	.short VoiceParam_Action_PatchByteEcho - VoiceParam_Action_ToneEdit	; index 5
-	.short VoiceParam_Action_SubToneByteReply - VoiceParam_Action_ToneEdit	; index 6
-	.short VoiceParam_Action_SubToneLayerByteReply - VoiceParam_Action_ToneEdit	; index 7
+VOICEPARAM_FINALIZE_ACTION_JUMPTABLE:	.include "includes/generated/cc900/VOICEPARAM_FINALIZE_ACTION_JUMPTABLE.s"	; C: cc900/dsp_voice_params_at_42c.c (cc900-data)
 
 ; --- 0x00FB3E-0x00FB4D  VoiceParamFinalize_HandlerParams -- 16 bytes, UNREFERENCED
 ; No direct code reference located. Sits between the two VoiceParamFinalize
@@ -2910,20 +2894,20 @@ FPConst_DSP_ParamInterp_FPComplex_2:	.include "includes/generated/cc900/FPConst_
 ; FPConst_DSP_ParamInterp_FPComplex_Q23One: f32 2^23 = 1.0 in Q23: DSP_ParamInterp_FPComplex multiplies by it and
 ;   FP_ftoi's the product to get the Q23 DSP word. Basis: reader -- every use is fmul then ftoi.
 FPConst_DSP_ParamInterp_FPComplex_Q23One:	.include "includes/generated/cc900/FPConst_DSP_ParamInterp_FPComplex_Q23One.s"	; C: cc900/dsp_control_routines_fp_20d.c (cc900-data)
-FPConst_DSP_DetuneCurve_Range1_Compute_2:	.float 2	; f32 2, read by DSP_DetuneCurve_Range1_Compute (operand at 0x039917)
-FPConst_DSP_DetuneCurve_Range2_Compute_20:	.float 2e+01	; f32 2e+01, read by DSP_DetuneCurve_Range2_Compute (operand at 0x039969)
-FPConst_DSP_DetuneCurve_Range2_Compute_180:	.float 1.8e+02	; f32 1.8e+02, read by DSP_DetuneCurve_Range2_Compute (operand at 0x039978)
-FPConst_DSP_DetuneCurve_Range3_Compute_100:	.float 1e+02	; f32 1e+02, read by DSP_DetuneCurve_Range3_Compute (operand at 0x0399CA)
-FPConst_DSP_DetuneCurve_Range3_Compute_1700:	.float 1.7e+03	; f32 1.7e+03, read by DSP_DetuneCurve_Range3_Compute (operand at 0x0399D9)
-FPConst_DSP_DetuneCurve_Range4_Compute_200:	.float 2e+02	; f32 2e+02, read by DSP_DetuneCurve_Range4_Compute (operand at 0x039A0D)
-FPConst_DSP_DetuneCurve_Range4_Compute_4800:	.float 4.8e+03	; f32 4.8e+03, read by DSP_DetuneCurve_Range4_Compute (operand at 0x039A1C)
-FPConst_DSP_DetuneCurve_Finalize_2400:	.float 2.4e+03	; f32 2.4e+03, read by DSP_DetuneCurve_Finalize (operand at 0x039A3D)
-FPConst_DSP_DetuneCurve_Finalize_2:	.double 2.0	; f64 2.0, read by DSP_DetuneCurve_Finalize (operand at 0x039A5D)
-FPConst_DSP_DetuneCurve_Finalize_1:	.double 1.0	; f64 1.0, read by DSP_DetuneCurve_Finalize (operand at 0x039A74)
-FPConst_DSP_DetuneCurve_Finalize_2400_2:	.double 2400.0	; f64 2400.0, read by DSP_DetuneCurve_Finalize (operand at 0x039A86)
+FPConst_DSP_DetuneCurve_Range1_Compute_2:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range1_Compute_2.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Range2_Compute_20:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range2_Compute_20.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Range2_Compute_180:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range2_Compute_180.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Range3_Compute_100:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range3_Compute_100.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Range3_Compute_1700:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range3_Compute_1700.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Range4_Compute_200:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range4_Compute_200.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Range4_Compute_4800:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Range4_Compute_4800.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Finalize_2400:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Finalize_2400.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Finalize_2:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Finalize_2.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Finalize_1:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Finalize_1.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
+FPConst_DSP_DetuneCurve_Finalize_2400_2:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Finalize_2400_2.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
 ; FPConst_DSP_DetuneCurve_Finalize_Q23One: f32 2^23 = 1.0 in Q23: DSP_DetuneCurve_Finalize multiplies by it and
 ;   FP_ftoi's the product to get the Q23 DSP word. Basis: reader -- every use is fmul then ftoi.
-FPConst_DSP_DetuneCurve_Finalize_Q23One:	.float 8388608	; 2^23; f32 8388608, read by DSP_DetuneCurve_Finalize (operand at 0x039A9F)
+FPConst_DSP_DetuneCurve_Finalize_Q23One:	.include "includes/generated/cc900/FPConst_DSP_DetuneCurve_Finalize_Q23One.s"	; C: cc900/dsp_control_routines_ar_41a.c (cc900-data)
 FPConst_DSP_BiquadWarp_ComputeCoeffs_Neg0p0697:	.double -0.0697	; f64 -0.0697, read by DSP_BiquadWarp_ComputeCoeffs (operand at 0x039B31)
 FPConst_DSP_BiquadWarp_ComputeCoeffs_10:	.double 10.0	; f64 10.0, read by DSP_BiquadWarp_ComputeCoeffs (operand at 0x039B47)
 FPConst_DSP_BiquadWarp_ComputeCoeffs_0p9999:	.double 0.9999	; f64 0.9999, read by DSP_BiquadWarp_ComputeCoeffs (operand at 0x039B61)

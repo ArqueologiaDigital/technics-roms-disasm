@@ -35,6 +35,7 @@ tree	name	label
 */subcpu	._fdiv_d	FP_ddiv
 */subcpu	._fsub_d	FP_dsub
 */subcpu	._fld_ld	FP_DP_DecodeToInt
+*/subcpu	._fneg_f	FP_SP_CopyOrNegate4
 hdae5000*	C9H_mullu	HDAE5000_Multiply
 hdae5000*	C9H_divlu	HDAE5000_UDivMod32
 hdae5000*	._fdiv_f	HDAE5000_FloatDiv
