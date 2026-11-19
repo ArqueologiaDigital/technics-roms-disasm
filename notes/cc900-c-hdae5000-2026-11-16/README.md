@@ -141,7 +141,8 @@ before v2.01i.
 **Corrected 2026-11-19.**  Most of those numbers were not the C's: the older trees' `cc900/hdae_ids.h` was a copy of
 v2.06i's, so every `OBJ_*` name carried a v2.06i object id.  Each older tree's header is now generated from its own
 ELF (with the tree's own event codes for v1.x), and `port_built.py --remap` moves the `ram_<hex>` cells by label;
-with these, the built v2.06i C ported to 115 / 81 / 81 more functions of v2.01i / v1.15i / v1.10i
+with these (and the APFUNC ids and `learn_remap.py`'s table), the built v2.06i C ported to 117 / 87 / 87 more
+functions of v2.01i / v1.15i / v1.10i
 (`HANDOFF-2026-11-19.md`).
 
 ## Rounds

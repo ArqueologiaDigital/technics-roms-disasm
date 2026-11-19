@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: the functions of hdae5000/cc900/hdae5000_fls_refresh.c that V4.23 reproduces in HD-AE5000 v1.10i with the tree's own object ids and ram_ addresses (port_built.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_fls_refresh.c.
+/* Functions of hdae5000_filesystem.s.  (hdae5000_fls_refresh.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_fls_refresh.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FlsScr_c=HDAE5000_FlsScreen_Refresh
    cc900-module: HDAE5000_PartList_Build HDAE5000_NameHistory_Recall HDAE5000_FlsName_StoreWithUi
@@ -58,17 +58,17 @@ extern char ram_22afd8[];                               /* its 16 item rows of 3
 
 /* ROM */
 /* unsigned long: the ROM evaluates ObjIds[variant] first among the arguments (a converted argument's order) */
-extern unsigned long ram_2cb2f0[], ram_2cb2f8[], ram_2cb300[], ram_2cb308[], ram_2cb310[], ram_2cb318[];
+extern unsigned long ram_2cb440[], ram_2cb448[], ram_2cb450[], ram_2cb458[], ram_2cb460[], ram_2cb468[];
                                                         /* HDAE5000_FlsScreen_Refresh_ObjIds .. _ObjIds_6 */
 extern char HDAE5000_Str_FLSNAME[];
-extern char ram_2cb32a[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
-extern char ram_2cb330[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
-extern char ram_2cb332[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
+extern char ram_2cb47a[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh */
+extern char ram_2cb480[];                               /* HDAE5000_Str_Chr3A_FlsScreen_Refresh */
+extern char ram_2cb482[];                               /* HDAE5000_Str_Blank0Tab_FlsScreen_Refresh */
 extern char HDAE5000_Str_Chr3A2020202020_FlsScreen_Refresh[];
-extern char ram_2cb358[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
+extern char ram_2cb4a8[];                               /* HDAE5000_Fmt_2_2d_FlsScreen_Refresh_2 */
 extern char HDAE5000_Fmt_LOC_3_3d_2_2d[];
 extern char HDAE5000_Str_LOC00000[];
-extern char ram_2cb398[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
+extern char ram_2cb4e8[];                               /* HDAE5000_Fmt_2_2d_CopyToHd_Execute */
 extern char HDAE5000_Str_LSW[], HDAE5000_Str_PMT[], HDAE5000_Str_SQT[], HDAE5000_Str_CMP[], HDAE5000_Str_TM[],
     HDAE5000_Str_MSP[], HDAE5000_Str_RCM[], HDAE5000_Str_MD[], HDAE5000_Str_TLX[];
 
@@ -88,18 +88,18 @@ void FlsScr_c(unsigned char variant, unsigned char mode)
     if (mode == 0 || mode == 2) {
         HDAE5000_MemFill(ram_22a058, 0, 0x20);
         HDAE5000_StrCat(ram_22a058, HDAE5000_Str_FLSNAME);
-        HDAE5000_SPrintf(s, ram_2cb32a, HDAE5000_RAM_CurFls + 1);
+        HDAE5000_SPrintf(s, ram_2cb47a, HDAE5000_RAM_CurFls + 1);
         HDAE5000_StrCat(ram_22a058, s);
-        HDAE5000_StrCat(ram_22a058, ram_2cb330);
+        HDAE5000_StrCat(ram_22a058, ram_2cb480);
         HDAE5000_StrNCat(ram_22a058, (char *)HDAE5000_FlsRecord_Address(HDAE5000_RAM_CurFls), 16);
-        HDAE5000_StrCat(ram_22a058, ram_2cb332);
-        CALLV(ROOT->SendEvent)((long)ram_2cb2f0[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22a058));
-        CALLV(ROOT->SendEvent)((long)ram_2cb2f0[variant], EVT_PARA_DRAW, -1L);
+        HDAE5000_StrCat(ram_22a058, ram_2cb482);
+        CALLV(ROOT->SendEvent)((long)ram_2cb440[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22a058));
+        CALLV(ROOT->SendEvent)((long)ram_2cb440[variant], EVT_PARA_DRAW, -1L);
     }
     if (mode == 0 || mode == 2) {
         for (i = 0; i < 16; i++) {
             HDAE5000_MemCopy(&ram_22afd8[(k = 37, k * i) + 2], HDAE5000_Str_Chr3A2020202020_FlsScreen_Refresh, 35);
-            HDAE5000_SPrintf(s, ram_2cb358, HDAE5000_RAM_FlsItemPageBase + i + 1);
+            HDAE5000_SPrintf(s, ram_2cb4a8, HDAE5000_RAM_FlsItemPageBase + i + 1);
             HDAE5000_MemCopy(&ram_22afd8[(k = 37, k * i)], s, HDAE5000_StrLen(s));
             rec = HDAE5000_FlsItem_SongRecord(HDAE5000_RAM_CurFls, HDAE5000_RAM_FlsItemPageBase + i);
             HDAE5000_MemCopy(&ram_22afd8[(k = 37, k * i) + 3], rec, 26);
@@ -110,8 +110,8 @@ void FlsScr_c(unsigned char variant, unsigned char mode)
                     ram_22afd8[(k = 37, k * i) + 35] = '*';
             }
         }
-        CALLV(ROOT->SendEvent)((long)ram_2cb2f8[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22afd8));
-        CALLV(ROOT->SendEvent)((long)ram_2cb2f8[variant], EVT_PARA_DRAW, -1L);
+        CALLV(ROOT->SendEvent)((long)ram_2cb448[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22afd8));
+        CALLV(ROOT->SendEvent)((long)ram_2cb448[variant], EVT_PARA_DRAW, -1L);
     }
     HDAE5000_MemFill(ram_22a078, 0, 16);
     if ((r = HDAE5000_FlsItem_Get(HDAE5000_RAM_CurFls, HDAE5000_RAM_CurFlsItem, &item)) != 0xffff)
@@ -119,16 +119,16 @@ void FlsScr_c(unsigned char variant, unsigned char mode)
     else
         HDAE5000_SPrintf(s, HDAE5000_Str_LOC00000);
     HDAE5000_MemCopy(ram_22a078, s, HDAE5000_StrLen(s));
-    CALLV(ROOT->SendEvent)((long)ram_2cb300[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22a078));
-    CALLV(ROOT->SendEvent)((long)ram_2cb300[variant], EVT_PARA_DRAW, -1L);
+    CALLV(ROOT->SendEvent)((long)ram_2cb450[variant], EVT_HDAE_SET_STR_ADR, WRAP(ram_22a078));
+    CALLV(ROOT->SendEvent)((long)ram_2cb450[variant], EVT_PARA_DRAW, -1L);
     if (r != 0xffff) {
         r = HDAE5000_Song_PartMask(item.dir, item.song);
-        HDAE5000_PartList_Build(ram_2cb308[variant], item.dir, item.song, r);
+        HDAE5000_PartList_Build(ram_2cb458[variant], item.dir, item.song, r);
     } else
-        HDAE5000_PartList_Build(ram_2cb308[variant], 0xffff, 0xffff, 0xffff);
+        HDAE5000_PartList_Build(ram_2cb458[variant], 0xffff, 0xffff, 0xffff);
     if (mode != 2) {
-        CALLV(ROOT->SendEvent)((long)ram_2cb310[variant], EVT_DRAW, 0L);
-        CALLV(ROOT->SendEvent)((long)ram_2cb318[variant], EVT_DRAW, 0L);
+        CALLV(ROOT->SendEvent)((long)ram_2cb460[variant], EVT_DRAW, 0L);
+        CALLV(ROOT->SendEvent)((long)ram_2cb468[variant], EVT_DRAW, 0L);
     }
 }
 

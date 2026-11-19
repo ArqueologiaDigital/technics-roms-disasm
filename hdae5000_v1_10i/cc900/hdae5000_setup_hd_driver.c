@@ -1,6 +1,6 @@
-/* hdae5000_v1_15i: the functions of hdae5000/cc900/hdae5000_setup_hd_driver.c that V4.23 reproduces in HD-AE5000 v1.15i with the tree's own object ids and ram_ addresses (port_built.py).
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hdae5000_setup_hd_driver.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_setup_hd_driver.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_setup_hd_driver.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: SetupPage_BuildDriveInfo=HDAE5000_SetupPage_BuildDriveInfo
    cc900-module: HDAE5000_SetupPage_BuildDriveInfo HDAE5000_CopyVersionString
@@ -33,12 +33,12 @@ extern unsigned char ram_22ad54[];   /* 10 bytes cleared by SetupP2SwCatch; HDAE
 /* the "%6.1f" formats and the version string as the tree's char arrays (pushw sym@hi16 / @lo16, see the header);
    the two longer labels share their first 31 characters, so they are spelled as ram_<hex> (the address) */
 extern char HDAE5000_Fmt_6_1f[];
-extern char ram_2cb2a0[];   /* HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo */
-extern char ram_2cb2a6[];   /* HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo_2 */
+extern char ram_2cb150[];   /* HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo */
+extern char ram_2cb156[];   /* HDAE5000_Fmt_6_1f_SetupPage_BuildDriveInfo_2 */
 extern char HDAE5000_Str_V206i[];   /* "V2.06i" */
 #define FMT_61F_A HDAE5000_Fmt_6_1f
-#define FMT_61F_B ram_2cb2a0
-#define FMT_61F_C ram_2cb2a6
+#define FMT_61F_B ram_2cb150
+#define FMT_61F_C ram_2cb156
 #define VERSION HDAE5000_Str_V206i
 /* an array read as an lvalue member at offset 0 (hd_r9_b2.c FdList_Clear: `lda xwa,(sym); ld xde,xwa`) */
 struct Wrap { char c[2]; };
