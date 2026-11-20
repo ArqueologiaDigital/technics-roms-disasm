@@ -99,71 +99,7 @@ HDAE5000_YieldUntilSem1Zero:	.include "includes/generated/cc900/HDAE5000_YieldUn
 ; more.
 ; In:  A = 0 to show.  IZ preserved.
 ; ---------------------------------------------------------------------------
-HDAE5000_Set_Menu_Visibility:
-	pushw iz
-	cp a, 0:i3
-	jr nz, .Lsmv_hide
-	ld iz, 1:i3
-	jr t, .Lsmv_start
-.Lsmv_hide:
-	ld iz, 0:i3
-.Lsmv_start:
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_SELECT_DIR_SW_EDIT
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_SAVE
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_DEL
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_FLS_SELECT_SW_EDIT
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_FLS_FILE_LOAD_SW_EDIT
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_HD_FILE_LOAD_SW_DELFILE
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, 0x007f00d0	; PORT: absent in v1.15i: CP_FD_HDSWTO
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, 0x007f00d2	; PORT: absent in v1.15i: CP_FD_HDSWSEL
-	call (xhl)
-	ld bc, iz
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld xwa, (xwa + WS_RootFnTable)
-	ld xhl, (xwa + RootFn_SetVisible)
-	ld xwa, HDAE5000_OBJ_SW_HD_FORMAT
-	call (xhl)
-	popw iz
-	ret
+HDAE5000_Set_Menu_Visibility:	.include "includes/generated/cc900/HDAE5000_Set_Menu_Visibility.s"	; C: cc900/hdae5000_ui_display__menuvis_v1_r87.c
 
 ; HDAE5000_NameHistory_AfterPushNop: Empty routine (a lone ret) that HDAE5000_NameHistory_Push calls last, with XWA =
 ;   the history it just updated; its only caller. Basis: the single calr in NameHistory_Push (ROM search finds no
@@ -627,80 +563,11 @@ HDAE5000_Boot_Init:	.include "includes/generated/cc900/HDAE5000_Boot_Init.s"	; C
 ;   0x28F90C  Display_Init - Display initialization
 ; ============================================================================
 
-HDAE5000_Frame_Handler:
-	; Frame handler main entry - called periodically from main loop
-	; (v1.x has no lyric box, so no song-position post: v2.x's part 1.)
-	; 2. (_Status) When bit 2 of the main CPU's sqsrtc byte falls to 0 and
-	;    HDAE5000_Fls_GetAutoLoadPending is 1: on the HD title (GetTitleNow ==
-	;    0x01A0007F) post the file-load events, else HDAE5000_RequestTitle15(0x7F).
-	;
-	inc	1, (HDAE5000_RAM_FrameCount:24)	; v1.x only: counts frames; read nowhere in this ROM
-HDAE5000_Frame_Handler_Status:
-	; Frame handler status check section
-	; Watches bit 2 of the main CPU's sqsrtc byte; acts when it falls to 0
-	;
-	ld xwa, (HDAE5000_RAM_SqSrtcPtr:24); &sqsrtc
-	ld a, (xwa)	; Read status byte
-	and a, 0x4	; Isolate bit 2
-	cp a, (HDAE5000_RAM_SqSrtcBit2Prev:24); Compare with previous state
-	jrl z, HDAE5000_Frame_Handler_Exit	; jrl Z, Frame_Handler_Exit  ; Skip if unchanged
-	;
-	; Status changed - update previous state
-	ld (HDAE5000_RAM_SqSrtcBit2Prev:24), a; Store new state
-	cp a, 0:i3	; Check if bit 2 now clear
-	jrl nz, HDAE5000_Frame_Handler_Exit	; jrl NZ, Frame_Handler_Exit  ; Skip if bit still set
-	;
-	; Bit 2 cleared - check if display init needed
-	call HDAE5000_Fls_GetAutoLoadPending	; Call status check routine
-	cp l, 1:i3	; Check return value
-	jr nz, HDAE5000_Frame_Handler_Exit	; Skip if not 1
-	;
-	; Initialize display - call workspace callback
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24); Main workspace pointer
-	ld XWA, (xwa + WS_RootFnTable)             ; Handler table A
-	ld XIX, (xwa + RootFn_GetTitleNow)             ; Get display callback
-	call (xix)	; Call if valid
-	cp xhl, TITLE_HDDEXT	; Check return value
-	jr z, HDAE5000_Frame_Handler_Status__init_display	; If match, do full init
-	;
-	; Partial update
-	ld wa, 1:i3
-	call HDAE5000_Fls_SetSeqStopPending	; Call update routine
-	ldw wa, 0x7f
-	call HDAE5000_RequestTitle15	; Call UI update
-	jr HDAE5000_Frame_Handler_Exit
-	;
-HDAE5000_Frame_Handler_Status__init_display:
-	; Full display initialization sequence
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld XWA, (xwa + WS_RootFnTable)
-	ld XHL, (xwa + RootFn_ApPostEvent)             ; Init callback 1
-	; [INFERENCE] a stale id: 0x7F013E is FLS_FILE_LOAD_SW_EDIT in v2.06i, but in v2.01i
-	; object 318 is unnamed and FLS_FILE_LOAD_SW_EDIT is 320 (HDAE5000_Set_Menu_Visibility
-	; uses that); this code kept the old number.
-	ld	xwa, 0x007f0132
-	ld xbc, EVT_SHOW	; Display initialization flags
-	ld xde, 0:i3
-	call (xhl)
-	;
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld XWA, (xwa + WS_RootFnTable)
-	ld XHL, (xwa + RootFn_DeleteEvent)             ; Init callback 2
-	ld	xwa, 0x007f0132
-	ld xbc, EVT_HDAE_SEQ_STOP
-	call (xhl)
-	;
-	ld xwa, (HDAE5000_RAM_MainWorkspacePtr:24)
-	ld XWA, (xwa + WS_RootFnTable)
-	ld XHL, (xwa + RootFn_ApPostEvent)             ; Init callback 3
-	ld	xwa, 0x007f0132
-	ld xbc, EVT_HDAE_SEQ_STOP
-	ld xde, 0:i3
-	call (xhl)
-
-HDAE5000_Frame_Handler_Exit:
-	; Exit frame handler by jumping to PPORT handler
-	jp HDAE5000_PPORT_ServicePending
+HDAE5000_Frame_Handler:	.include "includes/generated/cc900/HDAE5000_Frame_Handler.s"	; C: cc900/hdae5000_boot__framehandler_v110_r88.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_Frame_Handler_Status, HDAE5000_Frame_Handler + 5
+	.set	HDAE5000_Frame_Handler_Status__init_display, HDAE5000_Frame_Handler + 81
+	.set	HDAE5000_Frame_Handler_Exit, HDAE5000_Frame_Handler + 166
 
 ; ----------------------------------------------------------------------------
 ; Utility routines (0x28F785 - 0x2953E1)
