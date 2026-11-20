@@ -11,3 +11,9 @@ s/\bSeMenu_RefreshPartDisplay_Data_2\b/SeMenu_StepParamField/g
 s/\bSeMenu_CopyWriteUpdate_Helper15\b/SeMenu_CopyWriteUpdate_Step3_Helper14/g
 s/\bFDC_HardwareSetup_Helper3\b/FDC_SendAuxCmd/g
 s/\bFDC_HardwareSetup_Helper5\b/FDC_ValidateOpcode/g
+# located by port_staged.py from the call operands of staged functions whose other bytes match (2026-11-20);
+# the first 12 bytes at each label equal v7's except address operands
+s/\bMidiSeq_PartLookup_Data\b/MidiPkt_XferShowResult/g
+s/\bMidiSeq_PartConfigure_Data\b/MidiTable_PreDispatchNullRet/g
+s/\bSeMenu_CopyWriteUpdate_Helper11\b/SeMenu_GetEntryCount/g
+s/\bSeMenu_CopyWriteUpdate_Helper9\b/SeMenu_GetToneIndex/g
