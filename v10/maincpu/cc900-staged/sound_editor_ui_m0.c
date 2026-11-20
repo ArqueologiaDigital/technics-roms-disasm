@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: SeWrtSnd_ClearName_Join SeWrtSnd_SetupNamingPage_Join SeWrtSnd_SetupNamingPage_Join2 SeWrtSnd_SetupNamingPage_Join3 SeWrtSnd_SetupNamingPage_Join5 SeWrtSnd_SetupNamingPage_Join6 SeWrtSnd_SetupNamingPage_Join7 SeWrtSnd_SetupNamingPage_Join8 */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern void SeMenu_ValidatePartNumber(unsigned char *part);
 extern void SeMenu_LoadPartParam(int, unsigned char *);
@@ -15,27 +16,28 @@ extern void SeMenu_GetEntryCount(unsigned char *);
 extern void SeMenu_GetGroupFirstToneIndex(int, int, unsigned int *);
 extern void SeMenu_SendToneIndex(int, int, unsigned int);
 extern void SeMenu_InitDisplayField_Alt();
+extern void SeTonHyb1_OnColumn2(unsigned char a);
 extern void SeMenu_GetToneIndex(int, unsigned int *);
 extern void SeMenu_GetWordEntryCount(unsigned int *);
-extern void SeWrtSnd_SetupNamingPage_Join(void);
-extern void SeWrtSnd_SetupNamingPage_Join2(void);
-extern void SeWrtSnd_SetupNamingPage_Join3(void);
-extern void SeWrtSnd_SetupNamingPage_Join5(void);
-extern void SeWrtSnd_SetupNamingPage_Join6(void);
-extern void SeWrtSnd_SetupNamingPage_Join7(void);
-extern void SeWrtSnd_SetupNamingPage_Join8(void);
-extern void SeWrtSnd_ClearName_Join(void);
-extern void SeWrtSnd_OnColumn1(unsigned char a);
-extern void SeWrtSnd_OnColumn2(unsigned char a);
-extern void SeWrtSnd_OnColumn3(unsigned char a);
-extern void SeWrtSnd_OnColumn4(unsigned char a);
-extern void SeWrtSnd_OnColumn5(unsigned char a);
-extern void SeWrtSnd_OnColumn6(unsigned char a);
-extern void SeWrtSnd_OnColumn8(unsigned char a);
-extern void SeWrtSnd_OnSideRow2(unsigned char a);
-extern void SeTonHyb1_OnColumn2(unsigned char a);
 extern void SeTonHyb1_OnColumn3(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join6(void);
+extern void SeWrtSnd_OnColumn1(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join7(void);
+extern void SeWrtSnd_OnColumn2(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join8(void);
+extern void SeWrtSnd_OnColumn3(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join(void);
+extern void SeWrtSnd_OnColumn4(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join2(void);
+extern void SeWrtSnd_OnColumn5(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join3(void);
+extern void SeWrtSnd_OnColumn6(unsigned char a);
+extern void SeWrtSnd_SetupNamingPage_Join5(void);
+extern void SeWrtSnd_OnColumn8(unsigned char a);
+extern void SeWrtSnd_ClearName_Join(void);
+extern void SeWrtSnd_OnSideRow2(unsigned char a);
 
+/* cc900-name: SeM_CWU_S3H11=SeMenu_CopyWriteUpdate_Step3_Helper11 */
 void SeTonHyb1_OnColumn2(unsigned char a)
 {
 	unsigned char idx;

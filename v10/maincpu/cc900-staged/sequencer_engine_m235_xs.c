@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -XS -Xr
 */
+/* cc900-module: SeqModeTransit_DemoPath SeqModeTransit_UpdateParts SeqPart_InitClear SeqPart_UndoAllocOnError */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned int __near SEQ_TRACK_MASK;
 extern unsigned int SEQ_TRACK_MASK_COPY;
@@ -16,6 +17,7 @@ extern void SeqData_CopyBlockToBuffer(unsigned int);
 extern void VoicePreset_LoadAndInitPan(unsigned int);
 extern void SeqVoice_InitEntryForCurrentBank(void);
 extern void SeqStep_FindAndCompact(void);
+extern void SingleLoad_PrepareSongSlot(unsigned char a);
 
 void SingleLoad_PrepareSongSlot(unsigned char a)
 {

@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
+/* cc900-module: MidiPkt_RecoverIfXferAborted MidiTable_DispatchHelper MidiTable_FlushArpNotes SeqChan_StepCmd_Field1to2 SeqChan_StepCmd_Field2to3 SeqChan_StepCmd_Field4to5 SeqChan_StepCmd_Field5to6 SeqChan_StepCmd_Field8to9 SeqChan_StepCmd_Field9to10 SeqChan_XferStep_AccompBlock1 SeqChan_XferStep_AccompBlock2 SeqChan_XferStep_StyleImageBlock1 */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 struct mq;
 typedef struct mq *mqp;
@@ -16,6 +17,7 @@ extern unsigned char __near ram_bc68;
 extern unsigned char __near ram_bc69;
 extern unsigned char __near ram_bc6a;
 extern unsigned char SeqData_ReadFieldByIndex(mqp, unsigned int);
+extern void MidiPkt_HandleCmdCode01(void);
 
 void MidiPkt_HandleCmdCode01(void)
 {
