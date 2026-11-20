@@ -1154,7 +1154,7 @@ SeMenu_BitShiftMask_Loop:
 SeMenu_BitShiftMask_End:	.include "includes/generated/cc900/SeMenu_BitShiftMask_End.s"	; C: cc900/semenu_routines_m129.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeMenu_BitShiftMask_End_Loop3, SeMenu_BitShiftMask_End + 10
-SeMenu_RefreshPartDisplay_Data_2:
+SeMenu_StepParamField:
 	.byte 0x88, 0x06
 	push	xsp
 	nop
@@ -1423,7 +1423,7 @@ SeMenu_ApplyPartEdit_Helper2:
 	ld	(xwa+9), 0
 	ld	c, (xsp+20)
 	ld	(xwa+10), c
-	calr	SeMenu_RefreshPartDisplay_Data_2
+	calr	SeMenu_StepParamField
 	cp	l, 0:i3
 	jr	z, SeMenu_TransferPartValues_EndData_Epilogue
 	ld	a, (xsp+22)
@@ -1474,7 +1474,7 @@ SeMenu_StepParamFieldAndSend:
 	ld	(xsp+10), a
 	ld	xiz, (xsp+16)
 	ld	xwa, xiz
-	calr	SeMenu_RefreshPartDisplay_Data_2
+	calr	SeMenu_StepParamField
 	extz	hl
 	cp	hl, 0:i3
 	jr	nz, SeMenu_StepParamFieldAndSend_Skip19
@@ -2595,7 +2595,7 @@ SeMenu_ApplyPartEdit_AltStore_Join8:
 	ldw	wa, 55
 	ld	bc, 3:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 1:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue2:
@@ -2634,7 +2634,7 @@ SeMenu_ApplyPartEdit_AltStore_Join9:
 	ldw	wa, 55
 	ld	bc, 4:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 2:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue3:
@@ -2692,7 +2692,7 @@ SeLfo1_StepSelectorAndReload_Join2:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 3:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -2731,7 +2731,7 @@ SeMenu_ApplyPartEdit_AltStore_Join11:
 	ldw	wa, 55
 	ld	bc, 6:i3
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 4:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue4:
@@ -2789,7 +2789,7 @@ SeLfo1_StepSelectorAndReload_Join3:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 5:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -2828,7 +2828,7 @@ SeMenu_ApplyPartEdit_AltStore_Join13:
 	ldw	wa, 55
 	ldw	bc, 8
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 6:i3
 	calr	SeMenu_BindDialToColumn
 SeLfo1_StepSelectorAndReload_Epilogue5:
@@ -2886,7 +2886,7 @@ SeLfo1_StepSelectorAndReload_Join4:
 	push	xwa
 	ldw	wa, 55
 	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_ApplyPartEdit_Helper7
+	calr	SeMenu_DrawPitFilEnvGraph
 	ld	wa, 7:i3
 	calr	SeMenu_BindDialToColumn
 	pop qiz
@@ -2929,7 +2929,7 @@ SeMenu_ApplyPartEdit_AltStore_Join15:
 	calr	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	calr	SeMenu_LoadPartParam
@@ -2984,7 +2984,7 @@ SeMenu_ApplyPartEdit_AltStore_Join16:
 	calr	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	calr	SeMenu_LoadPartParam
@@ -3039,7 +3039,7 @@ SeMenu_ApplyPartEdit_AltStore_Join17:
 	calr	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	calr	SeMenu_LoadPartParam
@@ -3085,7 +3085,7 @@ SeMenu_ApplyPartEdit_AltStore_Join18:
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 1:i3
-	calr	SeMenu_ApplyPartEdit_Helper12
+	calr	SeMenu_DrawKeyScaleGraph
 SeLfo1_StepSelectorAndReload_Skip5:
 	ld	wa, 5:i3
 	calr	SeMenu_BindDialToColumn
@@ -3155,7 +3155,7 @@ SeMenu_ApplyPartEdit_AltStore_Join20:
 	calr	SeMenu_BindDialToColumn
 	lda	xsp, (xsp+18)
 	ret
-SeMenu_ApplyPartEdit_Join6:
+SeMenu_ApplyPartEdit_AltStore_Join21:
 	lda	xsp, (xsp-24)
 	.byte 0xd7, 0xfa, 0x04
 	ld	(xsp+22), c
@@ -3189,7 +3189,7 @@ SeMenu_ApplyPartEdit_Join7:
 	lda	xbc, (xbc+10)
 	calr	SeMenu_SwitchToValueStep
 	lda	xwa, (xsp+2)
-	calr	SeMenu_RefreshPartDisplay_Data_2
+	calr	SeMenu_StepParamField
 	cp	l, 0:i3
 	jr	z, SeMenu_ApplyPartEdit_Epilogue7
 	ldto_berp	a, 251
@@ -3619,7 +3619,7 @@ SeMenu_ApplyPartEdit_Skip28:
 	ld	hl, iz
 	popw	iz
 	retd	0x0002
-SeMenu_ApplyPartEdit_Helper7:
+SeMenu_DrawPitFilEnvGraph:
 	lda	xsp, (xsp-32)
 	push	xiz
 	pushw	144
@@ -4247,7 +4247,7 @@ SeMenu_ApplyPartEdit_Helper11:
 	extz HL
 	ld (XBC),HL
 	ret
-SeMenu_ApplyPartEdit_Helper12:
+SeMenu_DrawKeyScaleGraph:
 	lda	xsp, (xsp-28)
 	push	xiz
 	ld	(xsp+28), c
@@ -5076,7 +5076,7 @@ SeMenu_ApplyPartEdit_Join37:
 	lda	xde, (1698:16)
 	ld	(xde+wa), bc
 	ret
-SeMenu_CopyWriteUpdate_Helper9:
+SeMenu_GetToneIndex:
 	dec	1, a
 	extz	wa
 	add	wa, wa
@@ -5091,7 +5091,7 @@ SeMenu_CopyWriteUpdate_Helper10:
 	ret
 	ld	(1708:16), a
 	ret
-SeMenu_CopyWriteUpdate_Helper11:
+SeMenu_GetEntryCount:
 	ld	(xwa), (0x6ac)
 	ret
 SeMenu_ProcessEffect:
@@ -5507,7 +5507,7 @@ SeMenu_HandleMenuChange_Data:
 	push_a
 	popw	(xsp)
 	ret
-SeMenu_CopyWriteUpdate_Helper15:
+SeMenu_CopyWriteUpdate_Step3_Helper14:
 	ld	(1719:16), a
 	ret
 
@@ -6144,7 +6144,7 @@ SePitPit1_OnColumn6:
 	lda xbc, (xbc + 0x0a)
 	call SeMenu_SwitchToValueStep
 	lda xwa, (xsp + 0x02)
-	call SeMenu_RefreshPartDisplay_Data_2
+	call SeMenu_StepParamField
 	cp l, 1:i3
 	jr nz, .Lc_f09d35
 	ld A,(XSP+0x05)

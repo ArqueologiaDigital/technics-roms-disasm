@@ -705,7 +705,7 @@ FDC_SendCommandByte:	.include "includes/generated/cc900/FDC_SendCommandByte.s"	;
 ;   per byte; bootloader twin FDC_SendParameterByte.
 FDC_SendParameterByte:	.include "includes/generated/cc900/FDC_SendParameterByte.s"	; C: cc900/fdc_routines_m270_b.c
 FDC_WriteAuxCmdByte:	.include "includes/generated/cc900/FDC_WriteAuxCmdByte.s"	; C: cc900/fdc_routines_m270_c.c
-FDC_HardwareSetup_Helper3:
+FDC_SendAuxCmd:
 	dec	2, xsp
 	ld	(xsp), a
 	calr	FDC_ResultPhase_Read
@@ -802,7 +802,7 @@ FDC_CMD_SEND:
 	jrl	nz, FDC_HardwareSetup_Epilogue
 	ld	a, (xsp)
 	ld	(FDC_CMD_OPCODE:16), a
-	calr	FDC_HardwareSetup_Helper5
+	calr	FDC_ValidateOpcode
 	cp	l, 0:i3
 	jrl	nz, FDC_HardwareSetup_Epilogue
 	ld	a, (xsp)
@@ -819,7 +819,7 @@ FDC_CMD_SEND:
 FDC_CMD_SEND_Skip:
 	ld	a, (xsp)
 	extz	wa
-	calr	FDC_HardwareSetup_Helper3
+	calr	FDC_SendAuxCmd
 	jrl	FDC_HardwareSetup_Epilogue
 FDC_CMD_SEND_Skip2:
 	ld	a, (xsp)
@@ -899,7 +899,7 @@ FDC_HardwareSetup_Skip11:
 FDC_HardwareSetup_Epilogue:
 	inc	2, xsp
 	ret
-FDC_HardwareSetup_Helper5:
+FDC_ValidateOpcode:
 	ld	a, (FDC_CMD_OPCODE:16)
 	cp	a, 79
 	jr	z, FDC_HardwareSetup_Skip12

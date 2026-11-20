@@ -705,7 +705,7 @@ FDC_SendCommandByte:	.include "includes/generated/cc900/FDC_SendCommandByte.s"	;
 ;   per byte; bootloader twin FDC_SendParameterByte.
 FDC_SendParameterByte:	.include "includes/generated/cc900/FDC_SendParameterByte.s"	; C: cc900/fdc_routines_m270_b.c
 FDC_WriteAuxCmdByte:	.include "includes/generated/cc900/FDC_WriteAuxCmdByte.s"	; C: cc900/fdc_routines_m270_c.c
-FDC_HardwareSetup_Helper3:
+FDC_SendAuxCmd:
 	dec	2, xsp
 	ld	(xsp), a
 	calr	FDC_ResultPhase_Read
@@ -819,7 +819,7 @@ FDC_CMD_SEND:
 FDC_CMD_SEND_Skip:
 	ld	a, (xsp)
 	extz	wa
-	calr	FDC_HardwareSetup_Helper3
+	calr	FDC_SendAuxCmd
 	jrl	FDC_CMD_SEND_Epilogue
 FDC_CMD_SEND_Skip2:
 	ld	a, (xsp)

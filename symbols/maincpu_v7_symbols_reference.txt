@@ -41763,7 +41763,7 @@ FDC_ResultPhase_Read_Epilogue3 00F96DBF
 FDC_SendCommandByte 00F96DC3
 FDC_SendParameterByte 00F96DD4
 FDC_WriteAuxCmdByte 00F96DE5
-FDC_HardwareSetup_Helper3 00F96DF6
+FDC_SendAuxCmd 00F96DF6
 FDC_ResultPhase_Read_Epilogue 00F96E0B
 FDC_HardwareSetup_Helper4 00F96E0E
 FDC_ResultPhase_Read_Epilogue2 00F96E2D

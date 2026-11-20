@@ -361,7 +361,7 @@ SeAmpAmp2_OnColumn3:
 	call	SeMenu_StorePartParam
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpAmp2_OnColumn3_Skip6:
 	ld	wa, 3:i3
 	call	SeMenu_BindDialToColumn
@@ -401,7 +401,7 @@ SeAmpAmp2_OnColumn4:
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpAmp2_OnColumn4_Skip7:
 	ld	wa, 4:i3
 	call	SeMenu_BindDialToColumn
@@ -446,7 +446,7 @@ SeAmpAmp2_OnColumn5:
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpAmp2_OnColumn5_Skip8:
 	ld	wa, 5:i3
 	call	SeMenu_BindDialToColumn
@@ -485,7 +485,7 @@ SeAmpAmp2_OnColumn6:
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpAmp2_OnColumn6_Skip9:
 	ld	wa, 6:i3
 	call	SeMenu_BindDialToColumn
@@ -969,7 +969,7 @@ SeAmpEnv2_OnColumn1:
 	call	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	call	SeMenu_LoadPartParam
@@ -1021,7 +1021,7 @@ SeAmpEnv2_OnColumn2:
 	call	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	call	SeMenu_LoadPartParam
@@ -1073,7 +1073,7 @@ SeAmpEnv2_OnColumn3:
 	call	SeMenu_StorePartParam
 	ld	wa, 2:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 	lda	xbc, (xsp+12)
 	ldw	wa, 9
 	call	SeMenu_LoadPartParam
@@ -1125,7 +1125,7 @@ SeAmpEnv2_OnColumn4:
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpEnv2_OnColumn4_Skip21:
 	ld	wa, 4:i3
 	call	SeMenu_BindDialToColumn
@@ -1170,7 +1170,7 @@ SeAmpEnv2_OnColumn5:
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpEnv2_OnColumn5_Skip22:
 	ld	wa, 5:i3
 	call	SeMenu_BindDialToColumn
@@ -1209,7 +1209,7 @@ SeAmpEnv2_OnColumn6:
 	inc	4, xsp
 	ld	wa, 2:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeAmpEnv2_OnColumn6_Skip23:
 	ld	wa, 6:i3
 	call	SeMenu_BindDialToColumn
@@ -1877,7 +1877,7 @@ SeFilFil2_OnColumn3:
 	call	SeMenu_StorePartParam
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeFilFil2_OnColumn3_Skip41:
 	ld	wa, 3:i3
 	call	SeMenu_BindDialToColumn
@@ -1917,7 +1917,7 @@ SeFilFil2_OnColumn4:
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeFilFil2_OnColumn4_Skip42:
 	ld	wa, 4:i3
 	call	SeMenu_BindDialToColumn
@@ -1962,7 +1962,7 @@ SeFilFil2_OnColumn5:
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeFilFil2_OnColumn5_Skip43:
 	ld	wa, 5:i3
 	call	SeMenu_BindDialToColumn
@@ -2001,7 +2001,7 @@ SeFilFil2_OnColumn6:
 	inc	4, xsp
 	ld	wa, 0:i3
 	ld	bc, 0:i3
-	call	SeMenu_ApplyPartEdit_Helper12
+	call	SeMenu_DrawKeyScaleGraph
 SeFilFil2_OnColumn6_Skip44:
 	ld	wa, 6:i3
 	call	SeMenu_BindDialToColumn
