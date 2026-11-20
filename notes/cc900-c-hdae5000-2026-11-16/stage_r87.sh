@@ -21,8 +21,11 @@ for T in "$@"; do
             "$W" HDAE5000_FILE_LOAD_Screen
         python3 -B $S/stage_from_probe.py $P/hd_r87a_setup_copy_filesystem__copytohd_v1.c \
             $O/hdae5000_setup_copy_filesystem__copytohd_v1_r87.c "$W" HDAE5000_CopyToHDScreen
-        python3 -B $S/stage_from_probe.py $P/hd_r87a_boot__framehandler_v1.c $O/hdae5000_boot__framehandler_v1_r87.c \
-            "$W" FrameH_a
+        # v1.10i posts to another AUTO LOAD object: its Frame_Handler is round 88's (hd_r88_boot__framehandler_v110.c)
+        if [ "$T" = hdae5000_v1_15i ]; then
+            python3 -B $S/stage_from_probe.py $P/hd_r87a_boot__framehandler_v1.c \
+                $O/hdae5000_boot__framehandler_v1_r87.c "$W" FrameH_a
+        fi
         ;;
     hdae5000_v2_01i)
         W="$T: v2.01i per-tree C, round 87 (2026-11-20), run 2026-11-20-2-hd-r87b-v201lyr"
