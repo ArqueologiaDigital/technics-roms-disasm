@@ -649,7 +649,7 @@ v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b90571
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b9057102e9b06688a364629ad37d22630ffd415a8d110dd17d6a	Xr	2026-11-16-73-sub-r6	EFF_MuteLoop	120	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b9057102e9b06688a364629ad37d22630ffd415a8d110dd17d6a	Xr	2026-11-16-73-sub-r6	Task3_EnterDspApplyLoop	4	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects.c	dd47a226ed73b9057102e9b06688a364629ad37d22630ffd415a8d110dd17d6a	Xr	2026-11-16-73-sub-r6	Unsigned_Max_Select	9	MATCH
-v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-19-31-sub-r26s-staged	Audio_Process_DSP	1409	MATCH
+v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-20-5-2026-11-20-6-sub-r43a	Audio_Process_DSP	1409	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_ar_41c.c	4a6007cf0b244aab690597adfd0f84c1feaaa6f28aecb811d499ef88d77cf5eb	Xr	2026-11-19-96-sub-r42s-staged	DSP_EFFParam_DiffAllAndFlag	643	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	CalcSampleAddr	43	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_AntiReset_WithDebug	33	MATCH
@@ -1264,7 +1264,7 @@ v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7493450e6c420bc251f838a3f67c8af90ef7f3147015607	Xr	2026-11-16-73-sub-r6	EFF_MuteLoop	120	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7493450e6c420bc251f838a3f67c8af90ef7f3147015607	Xr	2026-11-16-73-sub-r6	Task3_EnterDspApplyLoop	4	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects.c	6fc46fed2c99451eb7493450e6c420bc251f838a3f67c8af90ef7f3147015607	Xr	2026-11-16-73-sub-r6	Unsigned_Max_Select	9	MATCH
-v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-19-31-sub-r26s-staged	Audio_Process_DSP	1409	MATCH
+v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c	262e23209dbc2ddbd71f69110b85fae3ff83502e84850c9bdf9a88ba7f869211	Xr	2026-11-20-5-2026-11-20-6-sub-r43a	Audio_Process_DSP	1409	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_ar_41c.c	4a6007cf0b244aab690597adfd0f84c1feaaa6f28aecb811d499ef88d77cf5eb	Xr	2026-11-19-96-sub-r42s-staged	DSP_EFFParam_DiffAllAndFlag	643	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	CalcSampleAddr	43	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_b.c	76a9da8bcbca588bcf2e4c4610f508ea44a591a2a214e81bf2770e8e03bd5312	Xr	2026-11-16-73-sub-r6	DSP_AntiReset_WithDebug	33	MATCH
