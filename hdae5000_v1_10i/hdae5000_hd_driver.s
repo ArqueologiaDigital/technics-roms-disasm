@@ -100,144 +100,18 @@ HDAE5000_SongScreen_Refresh:	.include "includes/generated/cc900/HDAE5000_SongScr
 	.set	HDAE5000_SongScreen_Refresh_Skip, HDAE5000_SongScreen_Refresh + 533
 	.set	HDAE5000_SongScreen_Refresh_Epilogue, HDAE5000_SongScreen_Refresh + 563
 
-HDAE5000_FILE_LOAD_Screen:
-	; registered as "FILE_LOAD_Screen" in HDAE5000_ScreenProc_Table
-	push xiz
-	ld	xiz, xde
-	ld	xwa, xbc
-	cp	xwa, EVT_SW_IN
-	jrl	z, HDAE5000_FILE_LOAD_Screen_Default
-	cp	xwa, EVT_SHOW
-	jr	z, HDAE5000_FILE_LOAD_Screen_Ev01C00001
-	sub	xwa, EVT_HDAE_OVER_FLOW
-	cp	xwa, 0x00000000
-	jrl	lt, HDAE5000_FILE_LOAD_Screen_Default
-	cp	xwa, 0x0000000c
-	jrl	gt, HDAE5000_FILE_LOAD_Screen_Default
-	add	xwa, xwa
-	add	xwa, HDAE5000_FILE_LOAD_Screen_CaseTable
-	ld	wa, (xwa)
-	lda xix, (HDAE5000_FILE_LOAD_Screen_Ev01C00001:24)
-	jp	t, (xix+wa)
-HDAE5000_FILE_LOAD_Screen_Ev01C00001:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HD_FILE_LIST
-	ld	xbc, EVT_HDAE_CHANGE_SEL_NUM
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0008:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateAllNo:24)
-	ldw	bc, 0x003f
-	calr	HDAE5000_TypeSel_Init
-	ld	(HDAE5000_RAM_CurSong), iz
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_SongRecord_Address
-	ld	xde, xhl
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApFuncCall)
-	ld	xwa, NAKA_APFUNC_HDDNamingCheck
-	ld	xbc, EVT_SET_STRING
-	call	(xhl)
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HDD_FILE_NAMING
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA000C:
-	ld	(HDAE5000_RAM_CurSong), iz
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	ld	de, 0:i3
-	calr	HDAE5000_DelOpt_InitFromSong
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_FILE_DEL_SCREEN
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA000B:
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_ATTEN_DEL_DIR
-	ld	xbc, EVT_SHOW
-	ld	xde, 0:i3
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0001:
-	cpw	(HDAE5000_RAM_CurDir:24), 0
-	jrl	z, HDAE5000_FILE_LOAD_Screen_Default
-	decw	1, (HDAE5000_RAM_CurDir:24)
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_SongScreen_Refresh
-	ld	xwa, xiz
-	add	xwa, 0x00000010
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HD_FILE_LIST
-	ld	xbc, EVT_HDAE_SET_SEL_NUM
-	call	(xhl)
-	jrl	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0000:
-	cpw	(HDAE5000_RAM_CurDir:24), 119
-	jr	nc, HDAE5000_FILE_LOAD_Screen_Default
-	incw	1, (HDAE5000_RAM_CurDir:24)
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	calr	HDAE5000_SongScreen_Refresh
-	ld	xwa, xiz
-	sub	xwa, 0x00000010
-	ld	xde, xwa
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld	xhl, (xwa + RootFn_ApPostEvent)
-	ld	xwa, HDAE5000_OBJ_HD_FILE_LIST
-	ld	xbc, EVT_HDAE_SET_SEL_NUM
-	call	(xhl)
-	jr	t, HDAE5000_FILE_LOAD_Screen_Default
-HDAE5000_FILE_LOAD_Screen_Ev01EA0002:
-	ld	(HDAE5000_RAM_CurSong), iz
-	ld	wa, (HDAE5000_RAM_CurDir:24)
-	ld	bc, (HDAE5000_RAM_CurSong:24)
-	call HDAE5000_Song_PartMask
-	ld	wa, hl
-	cp	wa, 0xffff
-	jr	z, HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	ld	bc, hl
-	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
-	calr	HDAE5000_TypeSel_Init
-	jr	t, HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join
-HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip:
-	lda xwa, (HDAE5000_RAM_SaveOptions:24)
-	pushw 0x0002
-	lda xde, (HDAE5000_TypeSel_TemplateBlank:24)
-	ld	bc, 0:i3
-	calr	HDAE5000_TypeSel_Init
-HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join:
-	ld	wa, 0:i3
-	ld	bc, 1:i3
-	calr	HDAE5000_SongScreen_Refresh
-HDAE5000_FILE_LOAD_Screen_Default:
-	ld	xhl, 0:i3
-	pop xiz
-	ret
+HDAE5000_FILE_LOAD_Screen:	.include "includes/generated/cc900/HDAE5000_FILE_LOAD_Screen.s"	; C: cc900/hdae5000_file_load_screen__v1_r87.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01C00001, HDAE5000_FILE_LOAD_Screen + 66
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0008, HDAE5000_FILE_LOAD_Screen + 98
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA000C, HDAE5000_FILE_LOAD_Screen + 197
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA000B, HDAE5000_FILE_LOAD_Screen + 249
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0001, HDAE5000_FILE_LOAD_Screen + 281
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0000, HDAE5000_FILE_LOAD_Screen + 343
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0002, HDAE5000_FILE_LOAD_Screen + 403
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Skip, HDAE5000_FILE_LOAD_Screen + 450
+	.set	HDAE5000_FILE_LOAD_Screen_Ev01EA0002_Join, HDAE5000_FILE_LOAD_Screen + 468
+	.set	HDAE5000_FILE_LOAD_Screen_Default, HDAE5000_FILE_LOAD_Screen + 475
 
 HDAE5000_AttenDelDirSwCatch:	.include "includes/generated/cc900/HDAE5000_AttenDelDirSwCatch.s"	; C: cc900/hdae5000_drv_screens.c
 ; the hand assembly's labels inside the compiled body, by their offsets
