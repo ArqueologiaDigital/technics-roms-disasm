@@ -601,64 +601,7 @@ HDAE5000_SetupP2SwCatch:	.include "includes/generated/cc900/HDAE5000_SetupP2SwCa
 ; gives 3, anything else 1 (HDAE5000_StrPrefixCmp).  What 2 and 3 unlock is
 ; decided by the caller, HDAE5000_AttenHDFormatSwCatch.
 ; ---------------------------------------------------------------------------
-HDAE5000_FormatDialog_CodeDigit:
-	dec 8, xsp			; alloc 4 bytes
-	pushw iz                                ; push iz (compact)
-	pushw 0x000a
-	lda xbc, (xsp + 0x04)
-	push xbc
-	pushw wa                                ; push wa (compact)
-	call HDAE5000_IToA
-	inc 8, xsp			; dealloc 4 bytes
-	ld a, (0x22ad9c:24); A = current count
-	extz wa
-	ld bc, wa
-	inc 2, bc			; BC = count + 2
-	lda xde, (0x22ad9c:24); XDE = buffer base
-	ld a, (xsp + 0x02)		; A = digit param
-	ld	(xde+bc), a
-	inc	1, (0x22AD9C:24)
-	cp (0x22ad9c:24), 0x06; count == 6?
-	jr nz, .LCHSC__not_full
-	; 6 digits entered — match against patterns
-	pushw HDAE5000_Str_HdFormatCode@hi16
-	pushw HDAE5000_Str_HdFormatCode@lo16		; low half of HDAE5000_Str_HdFormatCode
-	lda xwa, (HDAE5000_RAM_FormatCodeDigits:24)
-	push xwa
-	call HDAE5000_StrPrefixCmp			; string compare
-	inc 8, xsp
-	cp hl, 0:i3
-	jr nz, .LCHSC__try2
-	ld iz, 2:i3			; match pattern 1 → IZ=2
-	jr t, .LCHSC__clear
-.LCHSC__try2:
-	pushw HDAE5000_Str_Track0RecoverCode@hi16
-	pushw HDAE5000_Str_Track0RecoverCode@lo16		; low half of HDAE5000_Str_Track0RecoverCode
-	lda xwa, (HDAE5000_RAM_FormatCodeDigits:24)
-	push xwa
-	call HDAE5000_StrPrefixCmp			; string compare
-	inc 8, xsp
-	cp hl, 0:i3
-	jr nz, .LCHSC__no_match
-	ld iz, 3:i3			; match pattern 2 → IZ=3
-	jr t, .LCHSC__clear
-.LCHSC__no_match:
-	ld iz, 1:i3			; no match → IZ=1
-.LCHSC__clear:
-	pushw 0x000a
-	pushw 0x0000
-	lda xwa, (0x22ad9c:24)
-	push xwa
-	call HDAE5000_MemFill			; MemFill (clear buffer)
-	inc 8, xsp
-	jr t, .LCHSC__return
-.LCHSC__not_full:
-	ld iz, 0:i3			; not full → IZ=0
-.LCHSC__return:
-	ld hl, iz			; return value in HL
-	popw iz                                 ; pop iz (compact)
-	inc 8, xsp			; dealloc 4 bytes
-	ret
+HDAE5000_FormatDialog_CodeDigit:	.include "includes/generated/cc900/HDAE5000_FormatDialog_CodeDigit.s"	; C: cc900/hdae5000_codedigit_r90.c
 	;
 	; Part 2: Event handler (0x286666)
 HDAE5000_AttenHDFormatSwCatch:	.include "includes/generated/cc900/HDAE5000_AttenHDFormatSwCatch.s"	; C: cc900/hdae5000_drv_screens6.c
