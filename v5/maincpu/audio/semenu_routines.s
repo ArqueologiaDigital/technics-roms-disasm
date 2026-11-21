@@ -996,11 +996,7 @@ SeMenu_SetupMenuDisplay_Section3_Loop:
 	lda xsp, (xsp + 14)
 	ret
 
-SeMenu_SetupMenuDisplay_Section3_End:
-	cp	a, 0:i3
-	scc8	nz, a
-	ld	(1628:16), a
-	ret
+SeMenu_SetupMenuDisplay_Section3_End:	.include "includes/generated/cc900/SeMenu_SetupMenuDisplay_Section3_End.s"	; C: cc900/semenu_routines_m129_f.c
 
 SeMenu_SetupMenuDisplay_Finalize:
 	ldmi16 (xwa), 0x65c

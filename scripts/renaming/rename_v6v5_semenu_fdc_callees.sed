@@ -20,6 +20,8 @@ s/\bFDC_HardwareSetup_Helper6\b/FDC_SendParams_Specify/g
 # in v10, v7, v6 and v5: Specify + 0x36 = Format, Format + 0x27 = SeekTrack)
 s/\bFDC_HardwareSetup_Helper7\b/FDC_SendParams_Format/g
 s/\bFDC_HardwareSetup_Helper8\b/FDC_SendParam_SeekTrack/g
+# (2026-11-22: and SeekTrack + 9 = ReadWrite, the same in v10, v7, v6 and v5; FDC_CMD_SEND's last unlabelled callee)
+s/\bFDC_HardwareSetup_Helper9\b/FDC_SendParams_ReadWrite/g
 s/\bMidiSeq_PartLookup_Data\b/MidiPkt_XferShowResult/g
 s/\bMidiSeq_PartConfigure_Data\b/MidiTable_PreDispatchNullRet/g
 s/\bSeMenu_CopyWriteUpdate_Helper11\b/SeMenu_GetEntryCount/g

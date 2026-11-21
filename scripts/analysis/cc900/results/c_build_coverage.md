@@ -13,7 +13,7 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 1177556      | 1173436           | 15.581 %      | 1160436          | 17120           |
+| Toshiba V4.23                 | 1182485      | 1178365           | 15.647 %      | 1165365          | 17120           |
 | reference model               | 61114        | 58202             | 0.773 %       | 43722            | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
@@ -35,11 +35,11 @@ All 20 images: 20643840 bytes, 7531114 of them census CODE.  Every version of an
 | v6         | 2097152 | 992824 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v5         | 2097152 | 991742 | firmware C | 1363  | 84687 / 84519      | 6952 / 6952        | 0 / 0             | 0.701 %         | 0                     |
 | v5         | 2097152 | 991742 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v142       | 196608  | 128873 | firmware C | 597   | 83249 / 83215      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v142       | 196608  | 128873 | firmware C | 601   | 84892 / 84858      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v142       | 196608  | 128873 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v141       | 196608  | 128850 | firmware C | 597   | 83249 / 83215      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v141       | 196608  | 128850 | firmware C | 601   | 84892 / 84858      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v141       | 196608  | 128850 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v140       | 196608  | 128798 | firmware C | 596   | 81840 / 81806      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v140       | 196608  | 128798 | firmware C | 600   | 83483 / 83449      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v140       | 196608  | 128798 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | subboot    | 131072  | 3604   | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | tabledata  | 2097152 | 19426  | library C  | 2     | 89 / 89            | 89 / 89            | 0 / 0             | 0.458 %         | 0                     |
@@ -8977,6 +8977,8 @@ found yet.
 | v142      | DSP_WriteGlobalConfig                              | v142/subcpu/cc900/dsp_control_routines.c                                  | -Xr         | 15    | yes   | differs | MATCH                  | cache 6511a6764a2d |
 | v142      | DSP_WriteParamWord                                 | v142/subcpu/cc900/dsp_control_routines.c                                  | -Xr         | 52    | yes   | differs | MATCH                  | cache 6511a6764a2d |
 | v142      | DSP_DetuneCurve_SignedFP                           | v142/subcpu/cc900/dsp_control_routines_ar_41a.c                           | -Xr         | 495   | yes   | differs | MATCH                  | cache a3d0f86ef900 |
+| v142      | DSP_FilterLUT_Fetch                                | v142/subcpu/cc900/dsp_control_routines_au_45a.c                           | -Xr         | 787   | yes   | differs | MATCH                  | cache 189dcf9df4f9 |
+| v142      | DSP_SOS_LUT_Fetch                                  | v142/subcpu/cc900/dsp_control_routines_au_46a.c                           | -Xr         | 321   | yes   | differs | MATCH                  | cache 6232aa098f3a |
 | v142      | DSP_State_LoadAndApplyAll                          | v142/subcpu/cc900/dsp_control_routines_b.c                                | -Xr         | 49    | yes   | differs | MATCH                  | cache 30ebb4413ed5 |
 | v142      | DSP_State_ApplyBuf                                 | v142/subcpu/cc900/dsp_control_routines_b_kernel.c                         | -Xr         | 61    | yes   | differs | MATCH                  | cache a61aaeb7d16d |
 | v142      | DSP_FreqCurve_FP                                   | v142/subcpu/cc900/dsp_control_routines_c_runtime.c                        | -Xr         | 146   | yes   | differs | MATCH                  | cache f7758c4f5706 |
@@ -9140,6 +9142,8 @@ found yet.
 | v142      | Voice_Allocate_Type2                               | v142/subcpu/cc900/voice_ctrlchange_ah_21a.c                               | -Xr         | 405   | yes   | differs | MATCH                  | cache 4652b40ee5ff |
 | v142      | Voice_NoteOn_Type3                                 | v142/subcpu/cc900/voice_ctrlchange_ah_21a.c                               | -Xr         | 404   | yes   | differs | MATCH                  | cache 4652b40ee5ff |
 | v142      | Voice_Build_Partial_Descriptor                     | v142/subcpu/cc900/voice_ctrlchange_al_34a.c                               | -Xr         | 789   | yes   | differs | MATCH                  | cache ce30bbeb63ca |
+| v142      | Voice_NoteOff                                      | v142/subcpu/cc900/voice_ctrlchange_ax_44d.c                               | -Xr         | 269   | yes   | differs | MATCH                  | cache d37d982cc6b5 |
+| v142      | Voice_SetPitch                                     | v142/subcpu/cc900/voice_ctrlchange_ax_44d.c                               | -Xr         | 266   | yes   | differs | MATCH                  | cache d37d982cc6b5 |
 | v142      | Voice_Init_Type1                                   | v142/subcpu/cc900/voice_ctrlchange_callnames.c                            | -Xr         | 132   | yes   | differs | MATCH                  | cache 0c233098a60b |
 | v142      | Voice_Init_Type2                                   | v142/subcpu/cc900/voice_ctrlchange_callnames.c                            | -Xr         | 117   | yes   | differs | MATCH                  | cache 0c233098a60b |
 | v142      | Voice_Release_Type4                                | v142/subcpu/cc900/voice_ctrlchange_callnames2.c                           | -Xr         | 177   | yes   | differs | MATCH                  | cache c90a1394b0c1 |
@@ -9574,6 +9578,8 @@ found yet.
 | v141      | DSP_WriteGlobalConfig                              | v141/subcpu/cc900/dsp_control_routines.c                                  | -Xr         | 15    | yes   | differs | MATCH                  | cache 1d7fbfb1427c |
 | v141      | DSP_WriteParamWord                                 | v141/subcpu/cc900/dsp_control_routines.c                                  | -Xr         | 52    | yes   | differs | MATCH                  | cache 1d7fbfb1427c |
 | v141      | DSP_DetuneCurve_SignedFP                           | v141/subcpu/cc900/dsp_control_routines_ar_41a.c                           | -Xr         | 495   | yes   | differs | MATCH                  | cache a3d0f86ef900 |
+| v141      | DSP_FilterLUT_Fetch                                | v141/subcpu/cc900/dsp_control_routines_au_45a.c                           | -Xr         | 787   | yes   | differs | MATCH                  | cache 189dcf9df4f9 |
+| v141      | DSP_SOS_LUT_Fetch                                  | v141/subcpu/cc900/dsp_control_routines_au_46a.c                           | -Xr         | 321   | yes   | differs | MATCH                  | cache 6232aa098f3a |
 | v141      | DSP_State_LoadAndApplyAll                          | v141/subcpu/cc900/dsp_control_routines_b.c                                | -Xr         | 49    | yes   | differs | MATCH                  | cache 061e94962647 |
 | v141      | DSP_State_ApplyBuf                                 | v141/subcpu/cc900/dsp_control_routines_b_kernel.c                         | -Xr         | 61    | yes   | differs | MATCH                  | cache decc8630b632 |
 | v141      | DSP_FreqCurve_FP                                   | v141/subcpu/cc900/dsp_control_routines_c_runtime.c                        | -Xr         | 146   | yes   | differs | MATCH                  | cache f7758c4f5706 |
@@ -9737,6 +9743,8 @@ found yet.
 | v141      | Voice_Allocate_Type2                               | v141/subcpu/cc900/voice_ctrlchange_ah_21a.c                               | -Xr         | 405   | yes   | differs | MATCH                  | cache affbe5b4be1a |
 | v141      | Voice_NoteOn_Type3                                 | v141/subcpu/cc900/voice_ctrlchange_ah_21a.c                               | -Xr         | 404   | yes   | differs | MATCH                  | cache affbe5b4be1a |
 | v141      | Voice_Build_Partial_Descriptor                     | v141/subcpu/cc900/voice_ctrlchange_al_34a.c                               | -Xr         | 789   | yes   | differs | MATCH                  | cache d7410d8d6a4b |
+| v141      | Voice_NoteOff                                      | v141/subcpu/cc900/voice_ctrlchange_ax_44d.c                               | -Xr         | 269   | yes   | differs | MATCH                  | cache 4375cc111470 |
+| v141      | Voice_SetPitch                                     | v141/subcpu/cc900/voice_ctrlchange_ax_44d.c                               | -Xr         | 266   | yes   | differs | MATCH                  | cache 4375cc111470 |
 | v141      | Voice_Init_Type1                                   | v141/subcpu/cc900/voice_ctrlchange_callnames.c                            | -Xr         | 132   | yes   | differs | MATCH                  | cache 15a9fbb23e18 |
 | v141      | Voice_Init_Type2                                   | v141/subcpu/cc900/voice_ctrlchange_callnames.c                            | -Xr         | 117   | yes   | differs | MATCH                  | cache 15a9fbb23e18 |
 | v141      | Voice_Release_Type4                                | v141/subcpu/cc900/voice_ctrlchange_callnames2.c                           | -Xr         | 177   | yes   | differs | MATCH                  | cache 2e38193ad067 |
@@ -10170,6 +10178,8 @@ found yet.
 | v140      | DSP_WriteGlobalConfig                              | v140/subcpu/cc900/dsp_control_routines.c                                  | -Xr         | 15    | yes   | differs | MATCH                  | cache 3dce3b846238 |
 | v140      | DSP_WriteParamWord                                 | v140/subcpu/cc900/dsp_control_routines.c                                  | -Xr         | 52    | yes   | differs | MATCH                  | cache 3dce3b846238 |
 | v140      | DSP_DetuneCurve_SignedFP                           | v140/subcpu/cc900/dsp_control_routines_ar_41a.c                           | -Xr         | 495   | yes   | differs | MATCH                  | cache a3d0f86ef900 |
+| v140      | DSP_FilterLUT_Fetch                                | v140/subcpu/cc900/dsp_control_routines_au_45a.c                           | -Xr         | 787   | yes   | differs | MATCH                  | cache 189dcf9df4f9 |
+| v140      | DSP_SOS_LUT_Fetch                                  | v140/subcpu/cc900/dsp_control_routines_au_46a.c                           | -Xr         | 321   | yes   | differs | MATCH                  | cache 6232aa098f3a |
 | v140      | DSP_State_LoadAndApplyAll                          | v140/subcpu/cc900/dsp_control_routines_b.c                                | -Xr         | 49    | yes   | differs | MATCH                  | cache 12384a2ce84a |
 | v140      | DSP_State_ApplyBuf                                 | v140/subcpu/cc900/dsp_control_routines_b_kernel.c                         | -Xr         | 61    | yes   | differs | MATCH                  | cache 8e2262fac07a |
 | v140      | DSP_FreqCurve_FP                                   | v140/subcpu/cc900/dsp_control_routines_c_runtime.c                        | -Xr         | 146   | yes   | differs | MATCH                  | cache f7758c4f5706 |
@@ -10333,6 +10343,8 @@ found yet.
 | v140      | Voice_Allocate_Type2                               | v140/subcpu/cc900/voice_ctrlchange_ah_21a.c                               | -Xr         | 405   | yes   | differs | MATCH                  | cache 42e8bfa3e164 |
 | v140      | Voice_NoteOn_Type3                                 | v140/subcpu/cc900/voice_ctrlchange_ah_21a.c                               | -Xr         | 404   | yes   | differs | MATCH                  | cache 42e8bfa3e164 |
 | v140      | Voice_Build_Partial_Descriptor                     | v140/subcpu/cc900/voice_ctrlchange_al_34a.c                               | -Xr         | 789   | yes   | differs | MATCH                  | cache 16875a5703e5 |
+| v140      | Voice_NoteOff                                      | v140/subcpu/cc900/voice_ctrlchange_ax_44d.c                               | -Xr         | 269   | yes   | differs | MATCH                  | cache cacff8a563b3 |
+| v140      | Voice_SetPitch                                     | v140/subcpu/cc900/voice_ctrlchange_ax_44d.c                               | -Xr         | 266   | yes   | differs | MATCH                  | cache cacff8a563b3 |
 | v140      | Voice_Init_Type1                                   | v140/subcpu/cc900/voice_ctrlchange_callnames.c                            | -Xr         | 132   | yes   | differs | MATCH                  | cache 087bc1bf4448 |
 | v140      | Voice_Init_Type2                                   | v140/subcpu/cc900/voice_ctrlchange_callnames.c                            | -Xr         | 117   | yes   | differs | MATCH                  | cache 087bc1bf4448 |
 | v140      | Voice_Release_Type4                                | v140/subcpu/cc900/voice_ctrlchange_callnames2.c                           | -Xr         | 177   | yes   | differs | MATCH                  | cache f19adc6bb911 |

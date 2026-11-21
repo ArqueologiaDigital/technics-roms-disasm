@@ -2874,13 +2874,7 @@ UI_PostTimerResetEvent:	.include "includes/generated/cc900/UI_PostTimerResetEven
 
 SeqState_HasModeChanged:	.include "includes/generated/cc900/SeqState_HasModeChanged.s"	; C: cc900/ui_control_panel.c
 
-UI_PostDialEnable:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_VALEN_SET
-	jp ApPostEvent
+UI_PostDialEnable:	.include "includes/generated/cc900/UI_PostDialEnable.s"	; C: cc900/ui_control_panel_m270.c
 ; Two setters, `ld (RAM),a; ret`, for RAM 0x27494 and 0x27495.  Nothing
 ; calls or points at either: no 24- or 32-bit value in the ROM and no
 ; jr/jrl/calr displacement reaches 0xF99539 or 0xF9953F.  (Formerly UI_DialRangeData,
@@ -2892,23 +2886,11 @@ UI_StoreA_Ram27495:
 	ld (0x027495:24), a
 	ret
 
-UI_PostEvent_0x6E:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_AICEN_SET
-	jp ApPostEvent
+UI_PostEvent_0x6E:	.include "includes/generated/cc900/UI_PostEvent_0x6E.s"	; C: cc900/ui_control_panel_m270.c
 
 UI_PostDialRangeEvent:	.include "includes/generated/cc900/UI_PostDialRangeEvent.s"	; C: cc900/ui_control_panel_m270.c
 
-UI_PostDialValueEvent:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_EDIT_UP_SET
-	jp ApPostEvent
+UI_PostDialValueEvent:	.include "includes/generated/cc900/UI_PostDialValueEvent.s"	; C: cc900/ui_control_panel_m270.c
 
 BoxProc:
 	push xiz
