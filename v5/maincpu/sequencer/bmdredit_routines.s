@@ -1158,17 +1158,9 @@ BmDrEdit_FindNote_SkipNonNote:
 	call SeqData_SkipToNextEvent
 	jr BmDrEdit_FindNote_Loop
 
-BmDrEdit_ClearAllSlots:
-	lda	xbc, (0x272c:16)
-	ld xwa, xbc
-	lda xbc, (xbc + 24)
-
-BmDrEdit_ClearSlots_Loop:
-	ld (xwa), 0x0
-	inc 3, xwa
-	cp xwa, xbc
-	jr c, BmDrEdit_ClearSlots_Loop
-	ret
+BmDrEdit_ClearAllSlots:	.include "includes/generated/cc900/BmDrEdit_ClearAllSlots.s"	; C: cc900/bmdredit_routines_m232_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ClearSlots_Loop, BmDrEdit_ClearAllSlots + 9
 
 BmDrEdit_CheckAndSelectChannel:	.include "includes/generated/cc900/BmDrEdit_CheckAndSelectChannel.s"	; C: cc900/bmdredit_routines_m232_d.c
 
@@ -1219,17 +1211,9 @@ BmDrEdit_FindNote_Return:
 	popw iz
 	ret
 
-BmDrEdit_ClearAllSlotsAlt:
-	lda	xbc, (0x272d:16)
-	ld xwa, xbc
-	lda xbc, (xbc + 24)
-
-BmDrEdit_ClearSlotsAlt_Loop:
-	ld (xwa), 0x0
-	inc 3, xwa
-	cp xwa, xbc
-	jr c, BmDrEdit_ClearSlotsAlt_Loop
-	ret
+BmDrEdit_ClearAllSlotsAlt:	.include "includes/generated/cc900/BmDrEdit_ClearAllSlotsAlt.s"	; C: cc900/bmdredit_routines_m232_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ClearSlotsAlt_Loop, BmDrEdit_ClearAllSlotsAlt + 9
 
 BmDrEdit_CheckSlotsAvailable:
 	ld de, 0:i3

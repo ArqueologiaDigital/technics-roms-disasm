@@ -60,3 +60,23 @@ void UI_PostTimerResetEvent(void)
   ApPostEvent(-1L, EVT_PARA_DRAW, 0L);
   ApPostEvent(-1L, EVT_SELE_DRAW, 0L);
 }
+
+#define EVT_VALEN_SET 0x1e0006fL
+extern void UI_PostDialEnable(unsigned char a);
+#define EVT_EDIT_UP_SET 0x1e00071L
+extern void UI_PostDialValueEvent(unsigned char a);
+#define EVT_AICEN_SET 0x1e0006eL
+extern void UI_PostEvent_0x6E(unsigned char a);
+
+void UI_PostDialEnable(unsigned char a)
+{
+  ApPostEvent(-1L, EVT_VALEN_SET, a);
+}
+void UI_PostDialValueEvent(unsigned char a)
+{
+  ApPostEvent(-1L, EVT_EDIT_UP_SET, a);
+}
+void UI_PostEvent_0x6E(unsigned char a)
+{
+  ApPostEvent(-1L, EVT_AICEN_SET, a);
+}
