@@ -13,6 +13,9 @@ s/\bFDC_HardwareSetup_Helper3\b/FDC_SendAuxCmd/g
 s/\bFDC_HardwareSetup_Helper5\b/FDC_ValidateOpcode/g
 # located by port_staged.py from the call operands of staged functions whose other bytes match (2026-11-20);
 # the first 12 bytes at each label equal v7's except address operands
+s/\bFDC_HardwareSetup_Helper6\b/FDC_SendParams_Specify/g
+# (2026-11-21, FDC_CMD_SEND's last unlabelled callee in v6 / v5: find_counterparts.py, two runs of v10's bytes,
+# +12:16 and +39:9, agree on this start; v7 already has the name at the same place)
 s/\bMidiSeq_PartLookup_Data\b/MidiPkt_XferShowResult/g
 s/\bMidiSeq_PartConfigure_Data\b/MidiTable_PreDispatchNullRet/g
 s/\bSeMenu_CopyWriteUpdate_Helper11\b/SeMenu_GetEntryCount/g
