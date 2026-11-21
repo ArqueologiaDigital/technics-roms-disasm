@@ -223,9 +223,11 @@ FIMS_RE = re.compile(r'\bfims\(([-+]?[0-9.]+(?:[eE][-+]?\d+)?)\)')
 def fims(t):
     """asm900's `fims(3.0)`: a single-precision float constant used as a 32-bit immediate (V4.23 writes it for a float
     constant moved into a register, `ld XWA,fims(3.0)`; the ROM has `ld xwa,0x40400000`) -> its IEEE-754 bits in hex.
-    lane_sub's checker did this before the translator did (sub_v423.py, 2026-11-18); fims_check.py checks it."""
+    lane_sub's checker did this before the translator did (sub_v423.py, 2026-11-18); fims_check.py checks it.
+    Written without leading zeros, so that fims(0) is `0x0` and takes the short `ld xwa, 0:i3` as any other
+    `ld XWA,0x0` does (the ROM's DSP_BiquadCoeff_Compute zero tap, helper AU, 2026-11-21)."""
     import struct
-    return FIMS_RE.sub(lambda m: '0x%08x' % struct.unpack('<I', struct.pack('<f', float(m.group(1))))[0], t)
+    return FIMS_RE.sub(lambda m: '0x%x' % struct.unpack('<I', struct.pack('<f', float(m.group(1))))[0], t)
 
 
 def translate_line(t, syms, locals_):
