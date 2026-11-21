@@ -9169,29 +9169,11 @@ MidiTable_DispatchHelper:
 	call	MidiTable_DispatchHelper_Helper
 	ret
 	; --- Helper 2: conditional A-based 3-way pointer selection (56 bytes) ---
-MidiTable_FlushArpNotes:
-	bit	7, (0xbc58:16)
-	ret z
-	call	ArpQueue_SwapBuffers
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld a, (xwa+4)
-	cp	a, 0:i3
-	jr	nz, MidiTable_CheckSpecialSlot
-	ld xwa, SysEx_Msg_3594
-	ld	bc, 5:i3
-	jr	MidiTable_CallFlush
-MidiTable_CheckSpecialSlot:
-	cp a, 0x16
-	jr	nz, MidiTable_UseDefaultBuf
-	ld xwa, SysEx_Msg_35B2
-	ld	bc, 5:i3
-	jr	MidiTable_CallFlush
-MidiTable_UseDefaultBuf:
-	ld xwa, SysEx_Msg_359A
-	ld	bc, 5:i3
-MidiTable_CallFlush:
-	call	SeqBuf_FlushNoteOffs
-	ret
+MidiTable_FlushArpNotes:	.include "includes/generated/cc900/MidiTable_FlushArpNotes.s"	; C: cc900/midi_dispatch_handlers_m287.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiTable_CheckSpecialSlot, MidiTable_FlushArpNotes + 30
+	.set	MidiTable_UseDefaultBuf, MidiTable_FlushArpNotes + 44
+	.set	MidiTable_CallFlush, MidiTable_FlushArpNotes + 51
 MidiPkt_InitSingleField_Data:
 	cp	(0xbc60:16), 0
 	ret	nz
@@ -9201,29 +9183,9 @@ MidiPkt_InitSingleField_Data:
 	call	SeqBuf_FlushNoteOffs
 	ret
 	; --- Two-path: 3x field extraction or single store (73 bytes) ---
-MidiPkt_HandleCmdCode01:
-	cp	(0xbc60:16), 1
-	jr	nz, MidiPkt_SetSlot18
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 6:i3
-	call	SeqData_ReadFieldByIndex
-	ld	(0xbba8:16), l
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 7:i3
-	call	SeqData_ReadFieldByIndex
-	ld	(0xbba9:16), l
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw bc, 0x0008
-	call	SeqData_ReadFieldByIndex
-	ld	(0xbbaa:16), l
-	set	7, (0xbc58:16)
-	ld	(0xbc60:16), 2
-	ret
-MidiPkt_SetSlot18:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld (xwa+4), 0x18
-	res	4, (0xbc58:16)
-	ret
+MidiPkt_HandleCmdCode01:	.include "includes/generated/cc900/MidiPkt_HandleCmdCode01.s"	; C: cc900/midi_dispatch_handlers_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetSlot18, MidiPkt_HandleCmdCode01 + 60
 MidiPkt_ArpExtHandler_A:
 	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
 	ld	bc, 3:i3
@@ -12734,75 +12696,9 @@ MidiPkt_ProcessEventQueue_Done:
 	ret
 MidiPkt_Nop:
 	ret
-MidiPkt_DispatchViaTable_4D6A:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList0
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
-MidiPkt_DispatchViaTable_4D82:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList1
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
-MidiPkt_DispatchViaTable_4D8E:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList2
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
+MidiPkt_DispatchViaTable_4D6A:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4D6A.s"	; C: cc900/midi_dispatch_handlers_dvt.c
+MidiPkt_DispatchViaTable_4D82:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4D82.s"	; C: cc900/midi_dispatch_handlers_dvt.c
+MidiPkt_DispatchViaTable_4D8E:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4D8E.s"	; C: cc900/midi_dispatch_handlers_dvt.c
 MidiPkt_DispatchViaTable_4D9A:
 	dec 8, xsp
 	push xiz

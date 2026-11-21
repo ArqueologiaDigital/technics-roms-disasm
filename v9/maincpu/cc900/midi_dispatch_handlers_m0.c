@@ -28,3 +28,181 @@ void MidiPkt_ArpCfgChain_Join(void)
 		MidiPkt_SendGroupEnd();
 	}
 }
+
+/* cc900-module: MidiPkt_RecoverIfXferAborted MidiTable_DispatchHelper MidiTable_FlushArpNotes SeqChan_StepCmd_Field1to2 SeqChan_StepCmd_Field2to3 SeqChan_StepCmd_Field4to5 SeqChan_StepCmd_Field5to6 SeqChan_StepCmd_Field8to9 SeqChan_StepCmd_Field9to10 SeqChan_XferStep_AccompBlock1 SeqChan_XferStep_AccompBlock2 SeqChan_XferStep_StyleImageBlock1 */
+struct mq;
+typedef struct mq *mqp;
+extern mqp __near MIDISEQ_ACTIVE_BUF_PTR;
+extern unsigned char __near ram_bd18;
+extern unsigned char __near CURRENT_TITLE;
+extern unsigned char SeqData_ReadFieldByIndex(mqp, unsigned int);
+extern void MidiTable_DispatchHelper(void);
+extern void MidiChan_ClearAllStates(void);
+extern void SeqAlt_ProcessAndFinalize(void);
+extern void MidiPkt_RecoverIfXferAborted(void);
+extern void MidiPkt_XferShowResult(void);
+extern void MidiPkt_ArpChordHandler(void);
+struct xfer;
+extern mqp __near MIDISEQ_SPARE_BUF_PTR;
+extern void MIDI_ReadChannelParam(mqp, int, int);
+extern void MidiPkt_PreparePanelReceive(void);
+extern void MidiPkt_SetXferTotal_Panel(struct xfer *);
+extern void MidiPkt_SetXferBlock_LivePanel(struct xfer *);
+extern void SeqChan_StepCmd_Field1to2(void);
+extern void MidiPkt_ArpExtHandler_A(void);
+extern void MidiPkt_SetXferLengthFromMsg(void);
+extern void MidiPkt_SetXferBlk_StyleImgPool(struct xfer *);
+extern void SeqChan_StepCmd_Field9to10(void);
+extern void MidiPkt_ArpExtHandler_G(void);
+extern unsigned char __near ram_bd20;
+extern unsigned char SysEx_Msg_35C4[];
+extern void SeqBuf_FlushNoteOffs(unsigned char *, unsigned int);
+extern void MidiPkt_XferAnswerMsg21(void);
+extern void MidiPkt_SetXferBlk_AccompBank(struct xfer *);
+extern void SeqChan_XferStep_AccompBlock2(void);
+extern void MidiPkt_XferOnAccompBlocksBlk2(void);
+extern void MidiPkt_PrepAccompBlocksReceive(void);
+extern void MidiPkt_SetXferTotal_AccompBlk(struct xfer *);
+extern void MidiPkt_SetXferBlk_AccompArea(struct xfer *);
+extern void SeqChan_XferStep_AccompBlock1(void);
+extern void MidiPkt_XferOnAccompBlocksStart(void);
+extern void MidiPkt_SetXferBlk_PanelMem(struct xfer *);
+extern void SeqChan_StepCmd_Field2to3(void);
+extern void MidiPkt_XferOnPanelMemBlock(void);
+extern void MidiPkt_SetXferBlk_SoundRamData(struct xfer *);
+extern void SeqChan_StepCmd_Field5to6(void);
+extern void MidiPkt_XferOnSoundRamDataBlock(void);
+extern void MidiPkt_SetXferTotal_SoundRam(struct xfer *);
+extern void MidiPkt_SetXferBlock_SoundRamId(struct xfer *);
+extern void SeqChan_StepCmd_Field4to5(void);
+extern void MidiPkt_XferOnSoundRamStart(void);
+extern void MidiPkt_SetXferBlk_StyleImgTbl(struct xfer *);
+extern void SeqChan_StepCmd_Field8to9(void);
+extern void MidiPkt_XferOnStyleImageBlock2(void);
+extern void MidiPkt_PrepStyleImageReceive(void);
+extern void MidiPkt_SetXferTotal_StyleImage(struct xfer *);
+extern void MidiPkt_SetXferBlk_StyleImgHdr(struct xfer *);
+extern void SeqChan_XferStep_StyleImageBlk1(void);
+extern void MidiPkt_XferOnStyleImageStart(void);
+
+void MidiPkt_ArpChordHandler(void)
+{
+	if (CURRENT_TITLE == 87 && SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 0) >= 7) {
+		ram_bd18 |= 0x10;
+		MidiChan_ClearAllStates();
+		goto dispatch;
+		for (;;) {
+			if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 4) != 0) {
+				ram_bd18 &= ~0x10;
+				break;
+			}
+			SeqAlt_ProcessAndFinalize();
+dispatch:
+			MidiTable_DispatchHelper();
+			if (!(ram_bd18 & 0x10))
+				break;
+		}
+		MidiPkt_RecoverIfXferAborted();
+		MidiPkt_XferShowResult();
+	}
+	ram_bd18 &= ~0x10;
+}
+void MidiPkt_ArpExtHandler_A(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 0) {
+		MidiPkt_PreparePanelReceive();
+		MidiPkt_SetXferTotal_Panel((struct xfer *)0xbcdcL);
+		MidiPkt_SetXferBlock_LivePanel((struct xfer *)0xbcecL);
+		SeqChan_StepCmd_Field1to2();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 25);
+}
+/* cc900-name: MidiPkt_SetXferBlk_StyleImgPool=MidiPkt_SetXferBlock_StyleImagePool */
+void MidiPkt_ArpExtHandler_G(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 9) {
+		MidiPkt_SetXferBlk_StyleImgPool((struct xfer *)0xbcecL);
+		MidiPkt_SetXferLengthFromMsg();
+		SeqChan_StepCmd_Field9to10();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 27);
+}
+void MidiPkt_XferAnswerMsg21(void)
+{
+	if (ram_bd20 == 0) {
+		ram_bd20 = 1;
+		SeqBuf_FlushNoteOffs(SysEx_Msg_35C4, 7);
+	}
+}
+/* cc900-name: MidiPkt_XferOnAccompBlocksBlk2=MidiPkt_XferOnAccompBlocksBlock2 */
+/* cc900-name: MidiPkt_SetXferBlk_AccompBank=MidiPkt_SetXferBlock_AccompBankTables */
+void MidiPkt_XferOnAccompBlocksBlk2(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 19) {
+		MidiPkt_SetXferBlk_AccompBank((struct xfer *)0xbcecL);
+		SeqChan_XferStep_AccompBlock2();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 30);
+}
+/* cc900-name: MidiPkt_SetXferTotal_AccompBlk=MidiPkt_SetXferTotal_AccompBlocks */
+/* cc900-name: MidiPkt_SetXferBlk_AccompArea=MidiPkt_SetXferBlock_AccompAreaHeader */
+/* cc900-name: MidiPkt_PrepAccompBlocksReceive=MidiPkt_PrepareAccompBlocksReceive */
+void MidiPkt_XferOnAccompBlocksStart(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 0) {
+		MidiPkt_PrepAccompBlocksReceive();
+		MidiPkt_SetXferTotal_AccompBlk((struct xfer *)0xbcdcL);
+		MidiPkt_SetXferBlk_AccompArea((struct xfer *)0xbcecL);
+		SeqChan_XferStep_AccompBlock1();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 30);
+}
+/* cc900-name: MidiPkt_SetXferBlk_PanelMem=MidiPkt_SetXferBlock_PanelMemories */
+void MidiPkt_XferOnPanelMemBlock(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 2) {
+		MidiPkt_SetXferBlk_PanelMem((struct xfer *)0xbcecL);
+		SeqChan_StepCmd_Field2to3();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 25);
+}
+/* cc900-name: MidiPkt_SetXferBlk_SoundRamData=MidiPkt_SetXferBlock_SoundRamData */
+void MidiPkt_XferOnSoundRamDataBlock(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 5) {
+		MidiPkt_SetXferBlk_SoundRamData((struct xfer *)0xbcecL);
+		SeqChan_StepCmd_Field5to6();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 25);
+}
+void MidiPkt_XferOnSoundRamStart(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 0) {
+		MidiPkt_SetXferTotal_SoundRam((struct xfer *)0xbcdcL);
+		MidiPkt_SetXferBlock_SoundRamId((struct xfer *)0xbcecL);
+		SeqChan_StepCmd_Field4to5();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 26);
+}
+/* cc900-name: MidiPkt_SetXferBlk_StyleImgTbl=MidiPkt_SetXferBlock_StyleImageTables */
+void MidiPkt_XferOnStyleImageBlock2(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 8) {
+		MidiPkt_SetXferBlk_StyleImgTbl((struct xfer *)0xbcecL);
+		SeqChan_StepCmd_Field8to9();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 27);
+}
+/* cc900-name: MidiPkt_SetXferBlk_StyleImgHdr=MidiPkt_SetXferBlock_StyleImageHeader */
+/* cc900-name: MidiPkt_PrepStyleImageReceive=MidiPkt_PrepareStyleImageReceive */
+/* cc900-name: SeqChan_XferStep_StyleImageBlk1=SeqChan_XferStep_StyleImageBlock1 */
+void MidiPkt_XferOnStyleImageStart(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 0) {
+		MidiPkt_PrepStyleImageReceive();
+		MidiPkt_SetXferTotal_StyleImage((struct xfer *)0xbcdcL);
+		MidiPkt_SetXferBlk_StyleImgHdr((struct xfer *)0xbcecL);
+		SeqChan_XferStep_StyleImageBlk1();
+	} else
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 27);
+}

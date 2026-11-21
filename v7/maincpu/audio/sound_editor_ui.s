@@ -4301,104 +4301,16 @@ SeTonHyb1_OnColumn8:	.include "includes/generated/cc900/SeTonHyb1_OnColumn8.s"	;
 	.set	SeTonHyb1_OnColumn8_Skip61, SeTonHyb1_OnColumn8 + 44
 	.set	SeTonHyb1_OnColumn8_Join29, SeTonHyb1_OnColumn8 + 78
 	.set	SeTonHyb1_OnColumn8_Epilogue55, SeTonHyb1_OnColumn8 + 94
-SeTonHyb1_OnColumn2:
-	lda	xsp, (xsp-12)
-	ld	(xsp+10), a
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	ld	c, (xsp+2)
-	extz	bc
-	lda	xde, (xsp+8)
-	ld	wa, 1:i3
-	call	SeMenu_CopyWriteUpdate_Step3_Helper11
-	lda	xwa, (xsp+6)
-	call	SeMenu_GetEntryCount
-	ld	a, (xsp+10)
-	res	7, a
-	cp	a, 0:i3
-	jr	nz, SeTonHyb1_OnColumn2_Skip
-	ld	a, (xsp+6)
-	dec	1, a
-	cp	(xsp+8), a
-	jr	nc, SeMenu_CopyWriteUpdate_Epilogue22
-	incm8	1, (xsp+8)
-	jr	SeMenu_CopyWriteUpdate_Join11
-SeTonHyb1_OnColumn2_Skip:
-	cp	(xsp+8), 0
-	jr	z, SeMenu_CopyWriteUpdate_Epilogue22
-	decm8	1, (xsp+8)
-SeMenu_CopyWriteUpdate_Join11:
-	ld	c, (xsp+8)
-	extz	bc
-	lda	xde, (xsp)
-	ld	wa, 1:i3
-	call	SeMenu_GetGroupFirstToneIndex
-	ld	a, (xsp+4)
-	extz	wa
-	ld	c, (xsp+2)
-	extz	bc
-	ld	de, (xsp)
-	call	SeMenu_SendToneIndex
-	ld	a, (xsp+4)
-	extz	wa
-	ld	c, (xsp+2)
-	extz	bc
-	ldw	de, 16
-	call	SeMenu_InitDisplayField_Alt
-	ld	wa, 2:i3
-	call	SeMenu_BindDialToColumn
-SeMenu_CopyWriteUpdate_Epilogue22:
-	lda	xsp, (xsp+12)
-	ret
-SeTonHyb1_OnColumn3:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+4)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	lda	xwa, (xsp+6)
-	call	SeMenu_ValidatePartNumber
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_GetToneIndex
-	lda	xwa, (xsp)
-	call	SeMenu_GetWordEntryCount
-	ld	a, (xsp+8)
-	res	7, a
-	cp	a, 0:i3
-	jr	nz, SeTonHyb1_OnColumn3_Skip28
-	ld	wa, (xsp)
-	dec	1, wa
-	cp	(xsp+2), wa
-	jr	nc, SeTonHyb1_OnColumn3_Epilogue23
-	incw	1, (xsp+2)
-	jr	SeTonHyb1_OnColumn3_Join12
-SeTonHyb1_OnColumn3_Skip28:
-	cpw	(xsp+2), 0
-	jr	z, SeTonHyb1_OnColumn3_Epilogue23
-	decm	1, (xsp+2)
-SeTonHyb1_OnColumn3_Join12:
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+4)
-	extz	bc
-	ld	de, (xsp+2)
-	call	SeMenu_SendToneIndex
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+4)
-	extz	bc
-	ldw	de, 16
-	call	SeMenu_InitDisplayField_Alt
-	ld	wa, 3:i3
-	call	SeMenu_BindDialToColumn
-SeTonHyb1_OnColumn3_Epilogue23:
-	lda	xsp, (xsp+10)
-	ret
+SeTonHyb1_OnColumn2:	.include "includes/generated/cc900/SeTonHyb1_OnColumn2.s"	; C: cc900/sound_editor_ui_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonHyb1_OnColumn2_Skip, SeTonHyb1_OnColumn2 + 68
+	.set	SeMenu_CopyWriteUpdate_Join11, SeTonHyb1_OnColumn2 + 77
+	.set	SeMenu_CopyWriteUpdate_Epilogue22, SeTonHyb1_OnColumn2 + 129
+SeTonHyb1_OnColumn3:	.include "includes/generated/cc900/SeTonHyb1_OnColumn3.s"	; C: cc900/sound_editor_ui_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonHyb1_OnColumn3_Skip28, SeTonHyb1_OnColumn3 + 64
+	.set	SeTonHyb1_OnColumn3_Join12, SeTonHyb1_OnColumn3 + 74
+	.set	SeTonHyb1_OnColumn3_Epilogue23, SeTonHyb1_OnColumn3 + 114
 SeTonHyb1_OnColumn6:
 	lda	xsp, (xsp-22)
 	push	qiz
@@ -5689,18 +5601,12 @@ SeWrtMem_OnSideRow4_Epilogue4:
 	ret
 SeWrtMem_OnSideRow5:	.include "includes/generated/cc900/SeWrtMem_OnSideRow5.s"	; C: cc900/sound_editor_ui_m0.c
 SeWrtMem_OnSwitch15:	.include "includes/generated/cc900/SeWrtMem_OnSwitch15.s"	; C: cc900/sound_editor_ui_m0.c
-SeWrtSnd_OnColumn1:
-	jrl	SeWrtSnd_SetupNamingPage_Join6
-SeWrtSnd_OnColumn2:
-	jrl	SeWrtSnd_SetupNamingPage_Join7
-SeWrtSnd_OnColumn3:
-	jrl	SeWrtSnd_SetupNamingPage_Join8
-SeWrtSnd_OnColumn4:
-	jrl	SeWrtSnd_SetupNamingPage_Join
-SeWrtSnd_OnColumn5:
-	jrl	SeWrtSnd_SetupNamingPage_Join2
-SeWrtSnd_OnColumn6:
-	jrl	SeWrtSnd_SetupNamingPage_Join3
+SeWrtSnd_OnColumn1:	.include "includes/generated/cc900/SeWrtSnd_OnColumn1.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn2:	.include "includes/generated/cc900/SeWrtSnd_OnColumn2.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn3:	.include "includes/generated/cc900/SeWrtSnd_OnColumn3.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn4:	.include "includes/generated/cc900/SeWrtSnd_OnColumn4.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn5:	.include "includes/generated/cc900/SeWrtSnd_OnColumn5.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn6:	.include "includes/generated/cc900/SeWrtSnd_OnColumn6.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnColumn7:
 	ld	c, a
 	res	7, c
@@ -5710,8 +5616,7 @@ SeWrtSnd_OnColumn7:
 	ld	wa, 0:i3
 SeWrtSnd_OnColumn7_Skip81:
 	jrl	SeWrtSnd_SetupNamingPage_Join4
-SeWrtSnd_OnColumn8:
-	jrl	SeWrtSnd_SetupNamingPage_Join5
+SeWrtSnd_OnColumn8:	.include "includes/generated/cc900/SeWrtSnd_OnColumn8.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp
 	push	qiz
@@ -5753,10 +5658,7 @@ SeWrtSnd_OnSideRow1_Epilogue:
 	pop	qiz
 	inc	4, xsp
 	ret
-SeWrtSnd_OnSideRow2:
-	cp	a, 0:i3
-	ret	nz
-	jrl	SeWrtSnd_ClearName_Join
+SeWrtSnd_OnSideRow2:	.include "includes/generated/cc900/SeWrtSnd_OnSideRow2.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSwitch15:
 	lda	xsp, (xsp-20)
 	push	qiz

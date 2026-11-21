@@ -1,0 +1,41 @@
+/* Functions of ui/ui_control_panel.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
+   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+   Names are the tree's; ram_<hex> is a RAM cell the tree has not named yet.
+   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
+   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
+   qualifier to the first declarator only.
+   cc900-options: -O3 -Xr
+*/
+
+struct pt { int x, y; };
+extern void DrawLine(struct pt *, struct pt *, int);
+
+void DrawLineHelper(struct pt *a, struct pt *b, int c, int swap)
+{
+  struct pt p1;
+  struct pt p2;
+  if (swap != 0) {
+    p1.x = a->y;
+    p1.y = a->x;
+    p2.x = b->y;
+    p2.y = b->x;
+    DrawLine(&p1, &p2, c);
+  } else
+    DrawLine(a, b, c);
+}
+
+#define EVT_PARA_DRAW 0x1c0000fL
+#define EVT_SELE_DRAW 0x1c0000eL
+#define EVT_EDIT_DOWN_SET 0x1e00070L
+extern long ApPostEvent(long, long, long);
+
+void UI_PostDialRangeEvent(unsigned char a)
+{
+  ApPostEvent(-1L, EVT_EDIT_DOWN_SET, a);
+}
+
+void UI_PostTimerResetEvent(void)
+{
+  ApPostEvent(-1L, EVT_PARA_DRAW, 0L);
+  ApPostEvent(-1L, EVT_SELE_DRAW, 0L);
+}

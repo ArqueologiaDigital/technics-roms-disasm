@@ -9805,284 +9805,81 @@ SysEx_FinishBulkSend:	.include "includes/generated/cc900/SysEx_FinishBulkSend.s"
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SysEx_FinishBulkSend_Skip, SysEx_FinishBulkSend + 53
 	.set	SysEx_FinishBulkSend_Join2, SysEx_FinishBulkSend + 75
-MidiPkt_ArpChordHandler:
-	; --- Main: guard check, loop with bit 4 flag, multiple calls (76 bytes) ---
-	cp	(CURRENT_TITLE:16), 87
-	jr nz, ArpChord_ClearBitAndReturn
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 0:i3
-	call SeqData_ReadFieldByIndex
-	cp	l, 7:i3
-	jr c, ArpChord_ClearBitAndReturn
-	set	4, (0xbd18:16)
-	call MidiChan_ClearAllStates
-	jr t, ArpChord_DispatchAndLoop
-ArpChord_CheckPlaybackDone:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr z, ArpChord_ProcessAndDispatch
-	res	4, (0xbd18:16)
-	jr t, ArpChord_FinalizePass
-ArpChord_ProcessAndDispatch:
-	call SeqAlt_ProcessAndFinalize
-ArpChord_DispatchAndLoop:
-	calr MidiTable_DispatchHelper
-	bit	4, (0xbd18:16)
-	jr nz, ArpChord_CheckPlaybackDone
-ArpChord_FinalizePass:
-	calr	MidiPkt_RecoverIfXferAborted
-	call MidiPkt_XferShowResult
-ArpChord_ClearBitAndReturn:
-	res	4, (0xbd18:16)
-	ret
+MidiPkt_ArpChordHandler:	.include "includes/generated/cc900/MidiPkt_ArpChordHandler.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ArpChord_CheckPlaybackDone, MidiPkt_ArpChordHandler + 31
+	.set	ArpChord_ProcessAndDispatch, MidiPkt_ArpChordHandler + 51
+	.set	ArpChord_DispatchAndLoop, MidiPkt_ArpChordHandler + 55
+	.set	ArpChord_FinalizePass, MidiPkt_ArpChordHandler + 64
+	.set	ArpChord_ClearBitAndReturn, MidiPkt_ArpChordHandler + 71
 ; MIDI table dispatch helper
-MidiTable_DispatchHelper:
-	; --- Helper 1: table dispatch via (XBC+WA) with guard checks (58 bytes) ---
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret nz
-	call MidiTable_PreDispatchNullRet
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	cp (xwa), 0x27
-	ret nc
-	ld a, (xwa)
-	extz wa
-	sla	wa, 2
-	lda xbc, (SeqChan_CommandDispatch_Table:24)
-	ld	xhl, (xbc+wa)
-	call	(xhl)
-	calr MidiTable_FlushArpNotes
-	call MidiSeq_UpdateAllParams
-	call MidiTable_NullRet
-	ret
-MidiTable_FlushArpNotes:
-	; --- Helper 2: conditional A-based 3-way pointer selection (56 bytes) ---
-	bit	7, (0xbd18:16)
-	ret z
-	call ArpQueue_SwapBuffers
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld a, (xwa+4)
-	cp	a, 0:i3
-	jr nz, MidiTable_CheckSpecialSlot
-	ld xwa, SysEx_Msg_3594
-	ld	bc, 5:i3
-	jr t, MidiTable_CallFlush
-MidiTable_CheckSpecialSlot:
-	cp a, 0x16
-	jr nz, MidiTable_UseDefaultBuf
-	ld xwa, SysEx_Msg_35B2
-	ld	bc, 5:i3
-	jr t, MidiTable_CallFlush
-MidiTable_UseDefaultBuf:
-	ld xwa, SysEx_Msg_359A
-	ld	bc, 5:i3
-MidiTable_CallFlush:
-	call SeqBuf_FlushNoteOffs
-	ret
+MidiTable_DispatchHelper:	.include "includes/generated/cc900/MidiTable_DispatchHelper.s"	; C: cc900/midi_dispatch_handlers_m287.c
+MidiTable_FlushArpNotes:	.include "includes/generated/cc900/MidiTable_FlushArpNotes.s"	; C: cc900/midi_dispatch_handlers_m287.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiTable_CheckSpecialSlot, MidiTable_FlushArpNotes + 30
+	.set	MidiTable_UseDefaultBuf, MidiTable_FlushArpNotes + 44
+	.set	MidiTable_CallFlush, MidiTable_FlushArpNotes + 51
 
 
 ; MidiPkt_XferAnswerMsg21: Message id 7 (F0 50 21 01 28 12, the sender's opening message) of the MIDI bulk-transfer
 ;   receive: once per session (0xBD20 0 -> 1) answers with SysEx_Msg_35C4 = F0 50 22 01 28 12 F7. Basis: callers +
 ;   body.
-MidiPkt_XferAnswerMsg21:
-	cp	(0xbd20:16), 0
-	ret	nz
-	ld	(0xbd20:16), 1
-	ld	xwa, SysEx_Msg_35C4
-	ld	bc, 7:i3
-	call	SeqBuf_FlushNoteOffs
-	ret
-MidiPkt_HandleCmdCode01:
-	; --- Two-path: 3x field extraction or single store (73 bytes) ---
-	cp	(0xbd20:16), 1
-	jr nz, MidiPkt_SetSlot18
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 6:i3
-	call SeqData_ReadFieldByIndex
-	ld	(0xbc68:16), l
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 7:i3
-	call SeqData_ReadFieldByIndex
-	ld	(0xbc69:16), l
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw bc, 0x0008
-	call SeqData_ReadFieldByIndex
-	ld	(0xbc6a:16), l
-	set	7, (0xbd18:16)
-	ld	(0xbd20:16), 2
-	ret
-MidiPkt_SetSlot18:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld (xwa+4), 0x18
-	res	4, (0xbd18:16)
-	ret
+MidiPkt_XferAnswerMsg21:	.include "includes/generated/cc900/MidiPkt_XferAnswerMsg21.s"	; C: cc900/midi_dispatch_handlers_m0.c
+MidiPkt_HandleCmdCode01:	.include "includes/generated/cc900/MidiPkt_HandleCmdCode01.s"	; C: cc900/midi_dispatch_handlers_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetSlot18, MidiPkt_HandleCmdCode01 + 60
 
 
-MidiPkt_ArpExtHandler_A:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr	nz, MidiPkt_ArpExtHandler_A_Skip
-	call	MidiPkt_PreparePanelReceive
-	ld	xwa, 0xbcdc
-	call	MidiPkt_SetXferTotal_Panel
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_LivePanel
-	jrl	SeqChan_StepCmd_Field1to2
-MidiPkt_ArpExtHandler_A_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 25
-	jp	MIDI_ReadChannelParam
+MidiPkt_ArpExtHandler_A:	.include "includes/generated/cc900/MidiPkt_ArpExtHandler_A.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_ArpExtHandler_A_Skip, MidiPkt_ArpExtHandler_A + 39
 ; MidiPkt_XferOnPanelMemBlock: Message id 12 (F0 50 2D 01 28 12 24 00 00 04 59 30): block 2 of the panel group -- in
 ;   state 2 points 0xBCEC at the 80 panel memories (0x1ED350, 0x12CB0 bytes) and continues at
 ;   SeqChan_StepCmd_Field2to3; else error 25. field 3 of MIDISEQ_SPARE_BUF_PTR = the receive state; a block-start
 ;   command checks it, points the block descriptor 0xBCEC (and for a group start the total 0xBCDC) and jumps into that
 ;   block's step; a wrong state stores an error status in field 4. Basis: callers + body.
-MidiPkt_XferOnPanelMemBlock:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 2:i3
-	jr	nz, MidiPkt_XferOnPanelMemBlock_Skip
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_PanelMemories
-	jrl	SeqChan_StepCmd_Field2to3
-MidiPkt_XferOnPanelMemBlock_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 25
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnPanelMemBlock:	.include "includes/generated/cc900/MidiPkt_XferOnPanelMemBlock.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnPanelMemBlock_Skip, MidiPkt_XferOnPanelMemBlock + 26
 ; MidiPkt_XferOnSoundRamStart: Message id 13 (F0 50 2D 01 28 12 38 00 00 00 00 10): start of the sound-RAM group -- in
 ;   state 0 points the total 0xBCDC at 0x1E0000 (0x72AA bytes) and block 0xBCEC at its 16-byte id, then
 ;   SeqChan_StepCmd_Field4to5; else error 26. Basis: callers + body.
-MidiPkt_XferOnSoundRamStart:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr	nz, MidiPkt_XferOnSoundRamStart_Skip
-	ld	xwa, 0xbcdc
-	call	MidiPkt_SetXferTotal_SoundRam
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_SoundRamId
-	jrl	SeqChan_StepCmd_Field4to5
-MidiPkt_XferOnSoundRamStart_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 26
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnSoundRamStart:	.include "includes/generated/cc900/MidiPkt_XferOnSoundRamStart.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnSoundRamStart_Skip, MidiPkt_XferOnSoundRamStart + 35
 ; MidiPkt_XferOnSoundRamDataBlock: Message id 14 (F0 50 2D 01 28 12 38 00 10 00 5A 50): block 2 of the sound-RAM group
 ;   -- in state 5 points 0xBCEC at 0x1E0010 (0x729A bytes) and continues at SeqChan_StepCmd_Field5to6; else error 25.
 ;   Basis: callers + body.
-MidiPkt_XferOnSoundRamDataBlock:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 5:i3
-	jr	nz, MidiPkt_XferOnSoundRamDataBlock_Skip
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_SoundRamData
-	jrl	SeqChan_StepCmd_Field5to6
-MidiPkt_XferOnSoundRamDataBlock_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 25
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnSoundRamDataBlock:	.include "includes/generated/cc900/MidiPkt_XferOnSoundRamDataBlock.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnSoundRamDataBlock_Skip, MidiPkt_XferOnSoundRamDataBlock + 26
 ; MidiPkt_XferOnStyleImageStart: Message id 15 (F0 50 2D 01 28 12 50 00 00 00 00 60): start of the style-image group
 ;   -- in state 0 resets the demo/style state, points the total at RHYTHM_PATTERN_BUF_A (0x16800 or the used size) and
 ;   block 1 at RHYTHM_PATTERN_BUF_A..0x94860, then step 7; else error 27. Basis: callers + body.
-MidiPkt_XferOnStyleImageStart:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr	nz, MidiPkt_XferOnStyleImageStart_Skip
-	call	MidiPkt_PrepareStyleImageReceive
-	ld	xwa, 0xbcdc
-	call	MidiPkt_SetXferTotal_StyleImage
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_StyleImageHeader
-	jrl	SeqChan_XferStep_StyleImageBlock1
-MidiPkt_XferOnStyleImageStart_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 27
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnStyleImageStart:	.include "includes/generated/cc900/MidiPkt_XferOnStyleImageStart.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnStyleImageStart_Skip, MidiPkt_XferOnStyleImageStart + 39
 ; MidiPkt_XferOnStyleImageBlock2: Message id 16 (F0 50 2D 01 28 12 50 00 60 00 26 60): block 2 of the style-image
 ;   group -- in state 8 points 0xBCEC at 0x94860..0x95BC0 and continues at SeqChan_StepCmd_Field8to9; else error 27.
 ;   Basis: callers + body.
-MidiPkt_XferOnStyleImageBlock2:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 8
-	jr	nz, MidiPkt_XferOnStyleImageBlock2_Skip
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_StyleImageTables
-	jrl	SeqChan_StepCmd_Field8to9
-MidiPkt_XferOnStyleImageBlock2_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 27
-	jp	MIDI_ReadChannelParam
-MidiPkt_ArpExtHandler_G:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 9
-	jr	nz, MidiPkt_ArpExtHandler_G_Skip
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_StyleImagePool
-	call	MidiPkt_SetXferLengthFromMsg
-	jrl	SeqChan_StepCmd_Field9to10
-MidiPkt_ArpExtHandler_G_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 27
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnStyleImageBlock2:	.include "includes/generated/cc900/MidiPkt_XferOnStyleImageBlock2.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnStyleImageBlock2_Skip, MidiPkt_XferOnStyleImageBlock2 + 27
+MidiPkt_ArpExtHandler_G:	.include "includes/generated/cc900/MidiPkt_ArpExtHandler_G.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_ArpExtHandler_G_Skip, MidiPkt_ArpExtHandler_G + 31
 ; MidiPkt_XferOnAccompBlocksStart: Message id 23 (F0 50 2D 01 28 12 48 00 00 00 00 20): start of the accompaniment-
 ;   block-area group -- in state 0 points the total at 0x1E8800 (0x3C00 or the used size) and block 1 at
 ;   0x1E8800..0x1E8820, then step 18; else error 30. Basis: callers + body.
-MidiPkt_XferOnAccompBlocksStart:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr	nz, MidiPkt_XferOnAccompBlocksStart_Skip
-	call	MidiPkt_PrepareAccompBlocksReceive
-	ld	xwa, 0xbcdc
-	call	MidiPkt_SetXferTotal_AccompBlocks
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_AccompAreaHeader
-	jrl	SeqChan_XferStep_AccompBlock1
-MidiPkt_XferOnAccompBlocksStart_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 30
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnAccompBlocksStart:	.include "includes/generated/cc900/MidiPkt_XferOnAccompBlocksStart.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnAccompBlocksStart_Skip, MidiPkt_XferOnAccompBlocksStart + 39
 ; MidiPkt_XferOnAccompBlocksBlock2: Message id 24 (F0 50 2D 01 28 12 48 00 20 00 01 60): block 2 of the accompaniment-
 ;   block-area group -- in state 19 points 0xBCEC at 0x1E8820..0x1E8B00 and continues at step 19; else error 30.
 ;   Basis: callers + body.
-MidiPkt_XferOnAccompBlocksBlock2:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 19
-	jr	nz, MidiPkt_XferOnAccompBlocksBlock2_Skip
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_AccompBankTables
-	jrl	SeqChan_XferStep_AccompBlock2
-MidiPkt_XferOnAccompBlocksBlock2_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 30
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnAccompBlocksBlock2:	.include "includes/generated/cc900/MidiPkt_XferOnAccompBlocksBlock2.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnAccompBlocksBlock2_Skip, MidiPkt_XferOnAccompBlocksBlock2 + 27
 MidiPkt_ArpExtHandler_J:
 	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
 	ld	bc, 3:i3
