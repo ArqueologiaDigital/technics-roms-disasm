@@ -828,44 +828,11 @@ SingleLoadSrc_DrawSoundMemItemNumber_Epilogue:
 ;   + body -- SingleLoadSrc_SoundMemListProc calls it on EVT_PAINT and on parameter 40 (pending row-3 redraw, flag
 ;   0x81DC); SingleLoadSrc_DrawSoundMemItemNumber draws the matching number row, and the sound-RAM loader sizes the same
 ;   two record kinds (470 and 80 bytes).
-SingleLoadSrc_DrawSoundMemItemName:
-	dec	4, xsp
-	push	xiz
-	ld	(xsp+4), xwa
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	nz, SingleLoadSrc_DrawSoundMemItemName_Epilogue
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS:16)
-	ld	(xwa+63), 3
-	ld	e, c
-	add	e, c
-	lda	xiz, (xwa+64)
-	ld	a, (SLOAD_SRC_SOUND_POS:16)
-	cp	a, e
-	jr	c, SingleLoadSrc_DrawSoundMemItemName_Skip
-	sub	a, e
-	extz	wa
-	call	SingleLoadSrc_ReadTmUserKitEntryName
-	ld	xbc, xhl
-	ld	xwa, xiz
-	jr	SingleLoadSrc_DrawSoundMemItemName_Join11
-SingleLoadSrc_DrawSoundMemItemName_Skip:
-	extz	wa
-	call	SingleLoadSrc_ReadTmSoundName
-	ld	xbc, xhl
-	ld	xwa, xiz
-SingleLoadSrc_DrawSoundMemItemName_Join11:
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_SRC_ROWS+64:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xde, (SINGLE_LOAD_SRC_ROWS+63:16)
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-SingleLoadSrc_DrawSoundMemItemName_Epilogue:
-	pop	xiz
-	inc	4, xsp
-	ret
+SingleLoadSrc_DrawSoundMemItemName:	.include "includes/generated/cc900/SingleLoadSrc_DrawSoundMemItemName.s"	; C: cc900/single_load_m269_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadSrc_DrawSoundMemItemName_Skip, SingleLoadSrc_DrawSoundMemItemName + 50
+	.set	SingleLoadSrc_DrawSoundMemItemName_Join11, SingleLoadSrc_DrawSoundMemItemName + 60
+	.set	SingleLoadSrc_DrawSoundMemItemName_Epilogue, SingleLoadSrc_DrawSoundMemItemName + 90
 ; SingleLoadSrc_SoundMemListProc: Single-load source list for area 3 SOUND MEMORY: pages of
 ;   SingleLoadSrc_SoundMemPageSize (20) over RAM 0x8A00; EVT_PAINT draws via
 ;   SingleLoadSrc_DrawSoundMemBankRows/_Helper10/_Helper9/_Helper11; entry [3] of SingleLoadSrc_ListProcByMode and

@@ -1044,24 +1044,7 @@ SeEasy_DrawField_SetupPath_Records2:
 	.ascii	"+ 8"
 	.ascii	"+ 9"
 	.ascii	"+10"
-InitializeNaka:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Naka_ClassCount_16B, ToneGen_ParamTable_0x53D, 0x16b
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Naka_ResEventCount_1CB, ToneGen_ParamTable_0x557, 0x1cb
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Naka_ResMethodCount_1EB, ToneGen_ParamTable_0x55D, 0x1eb
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x12, Naka_ApFuncTable_12B, 0x12b
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x12, Naka_ApFuncNameTable_42B, 0x42b
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x0, ToneGen_ParamTable_0x563, 0x10b
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x0, ToneGen_ParamTable_0x567, 0x40b
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x0, Naka_MainFunctionTable_14B, 0x14b
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x0, Naka_MainFunctionTable_44B, 0x44b
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1de, NAKA_UIObjectTable, 0xfd
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1de, Naka_ResNameTable_3FD, 0x3fd
-
-	RegTitle 0xb, InitializeNaka_Str_TT_FDMSP, 0xfd, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_ftdemo01
-	lda xsp, (xsp + 14)
-	ret
+InitializeNaka:	.include "includes/generated/cc900/InitializeNaka.s"	; C: cc900/flash_floppy_handlers_m159.c
 
 NAKA_InitDataBlock:	.include "includes/generated/cc900/NAKA_InitDataBlock.s"	; C: cc900/flash_floppy_handlers_m0.c
 ; FtLangText01: Naka ApFunction 0x12B0000, named by entry 0 of the ApFunction name slot 0x42B: feature-demo caption
@@ -5421,111 +5404,7 @@ ToneData_AdvanceRegion:
 	jr c, ToneData_ScanRegionLoop
 	ret
 
-InitializeSuna:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Suna_ClassCount_164, Suna_ClassTable_164, 0x164
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Suna_ResEventCount_1C4, Suna_ResEventTable_1C4, 0x1c4
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Suna_ResMethodCount_1E4, NakaMethodTable_PtrsStart, 0x1e4
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x49, Composer_FunctionTable, 0x124
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x49, Composer_CallbackNameTable, 0x424
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x1, Suna_FunctionTable_104, 0x104
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x1, Suna_FunctionTable_404, 0x404
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x24, Suna_MainFunctionTable_144, 0x144
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x24, PtrTbl_FuncNameStrs, 0x444
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3, Suna_ViewableTable_010, 0x10
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x3, Naka_Accomp14_Screens, 0x310
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Suna_ViewableTable_011, 0x11
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Naka_StylCnvWait_Screens, 0x311
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Suna_ViewableTable_012, 0x12
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x7, Naka_StylCnvVer_Screens, 0x312
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Suna_ViewableTable_013, 0x13
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Suna_ResNameTable_313, 0x313
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Suna_ViewableTable_014, 0x14
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Suna_ResNameTable_314, 0x314
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Suna_ViewableTable_015, 0x15
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Naka_StylCnvTxt_Screens, 0x315
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Suna_ViewableTable_016, 0x16
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x7, Suna_ResNameTable_316, 0x316
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x12, Suna_ViewableTable_0B0, 0xb0
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x12, Suna_ResNameTable_3B0, 0x3b0
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Suna_ViewableTable_0B1, 0xb1
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Naka_CmpMenu_Screens, 0x3b1
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x16, Suna_ViewableTable_0B2, 0xb2
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x16, Suna_ResNameTable_3B2, 0x3b2
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x5, Suna_ViewableTable_0B3, 0xb3
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x5, Suna_ResNameTable_3B3, 0x3b3
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x12, Suna_ViewableTable_0B4, 0xb4
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x12, Naka_NamingMem_Screens, 0x3b4
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1f, Suna_ViewableTable_0B5, 0xb5
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1f, Naka_CmSetP1Grid_Screens, 0x3b5
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, Suna_ViewableTable_0B6, 0xb6
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1, Suna_ResNameTable_3B6, 0x3b6
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Suna_ViewableTable_0B7, 0xb7
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x6, Naka_CmpMem_Screens, 0x3b7
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x21, Suna_ViewableTable_0B8, 0xb8
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x21, PtrTbl_CmpNcpScreenStrs, 0x3b8
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x25, Naka_SeqToComposer_Screens, 0xb9
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x25, PtrTbl_S2cScreenStrs, 0x3b9
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xe, Naka_EasyComposer_Screens, 0xba
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xe, PtrTbl_EasyCompScreenStrs, 0x3ba
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Naka_EasyComposer2_Screens, 0xbb
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, PtrTbl_BendScreenStrs, 0x3bb
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xb, Naka_ModeSelect_Screens, 0xbd
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xb, Suna_ResNameTable_3BD, 0x3bd
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x21, Naka_ExpandMode_Screens, 0xbe
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x21, PtrTbl_CstmCpScreenStrs, 0x3be
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1b, Naka_Accomp7_Screens, 0xc8
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1b, PtrTbl_MspBkslScreenStrs, 0x3c8
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Suna_ViewableTable_C9, 0xc9
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Suna_ResNameTable_3C9, 0x3c9
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Naka_Accomp9_Screens, 0xca
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x6, PtrTbl_MspMenuScreenStrs, 0x3ca
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Naka_Accomp10_Screens, 0xcb
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Suna_ResNameTable_3CB, 0x3cb
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x9, Naka_Accomp11_Screens, 0xcc
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x9, PtrTbl_MspReGrpScreenStrs, 0x3cc
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Naka_Accomp12_Screens, 0xdc
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, PtrTbl_SndArgrScreenStrs, 0x3dc
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Naka_Accomp13_Screens, 0xed
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x6, PtrTbl_ApcSelScreenStrs, 0x3ed
-
-	RegMode 0x4, InitializeSuna_Str_MD_CMP, 0xe, NAKA_MAINFUNC_CmpModeFunc, TITLE_CMMENU
-	RegMode 0x4, InitializeSuna_Str_MD_MSP, 0xf, NAKA_APFUNC_DefaultFunction, TITLE_MSPMENU
-	RegMode 0x4, InitializeSuna_Str_MD_MSP_REC, 0x10, NAKA_APFUNC_DefaultFunction, TITLE_MSPREC
-	RegMode 0x4, InitializeSuna_Str_MD_SND_ARG, 0x11, NAKA_MAINFUNC_SndArgModeFunc, TITLE_SNDARG
-
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVWAIT, 0x10, NAKA_MAINFUNC_StylCnvWaitTtlFunc, 0x100000
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVMODL, 0x11, NAKA_MAINFUNC_StylCnvModlTtlFunc, 0x110000
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVCNVT, 0x12, NAKA_MAINFUNC_StylCnvCnvtTtlFunc, 0x120000
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVSTOR, 0x13, NAKA_MAINFUNC_StylCnvStorTtlFunc, 0x130000
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVTXT, 0x14, NAKA_MAINFUNC_StylCnvTxtTtlFunc, 0x140000
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVSEL, 0x15, NAKA_MAINFUNC_StylCnvSelTtlFunc, 0x150000
-	RegTitle 0x4, InitializeSuna_Str_TT_STYLCNVCONT, 0x16, NAKA_MAINFUNC_StylCnvContTtlFunc, 0x160000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMMENU, 0xb0, NAKA_MAINFUNC_CmpMenuTtlFunc, 0xb00000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMBKSL, 0xb1, NAKA_MAINFUNC_CmpBkslTtlFunc, 0xb10000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMBKSL_S, 0xb2, NAKA_MAINFUNC_CmpBksl_STtlFunc, 0xb20000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMNAME, 0xb3, NAKA_APFUNC_DefaultFunction, 0xb30000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMSET, 0xb4, NAKA_MAINFUNC_CmpSetTtlFunc, 0xb40000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMREAL, 0xb5, NAKA_MAINFUNC_CmpRealTtlFunc, 0xb50000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMSTEP, 0xb6, NAKA_MAINFUNC_CmpStepTitleFunc, 0xb60000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMBAL, 0xb7, NAKA_APFUNC_DefaultFunction, 0xb70000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMPNCP, 0xb8, NAKA_MAINFUNC_CmpNcpTtlFunc, 0xb80000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMSEQCP, 0xb9, NAKA_MAINFUNC_S2cTtlFunc, 0xb90000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMEASY, 0xba, NAKA_MAINFUNC_CmEsyTtlFunc, 0xba0000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMBEND, 0xbb, NAKA_APFUNC_DefaultFunction, 0xbb0000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMMODE, 0xbd, NAKA_APFUNC_DefaultFunction, 0xbd0000
-	RegTitle 0x4, InitializeSuna_Str_TT_CMCSTMCP, 0xbe, NAKA_MAINFUNC_CstmCpTtlFunc, 0xbe0000
-	RegTitle 0x4, InitializeSuna_Str_TT_MSPBKSL, 0xc8, NAKA_MAINFUNC_MspBkslTtlFunc, 0xc80000
-	RegTitle 0x4, InitializeSuna_Str_TT_MSPREC, 0xc9, NAKA_MAINFUNC_MspRecTtlFunc, 0xc90000
-	RegTitle 0x4, InitializeSuna_Str_TT_MSPMENU, 0xca, NAKA_MAINFUNC_MspMenuTtlFunc, 0xca0000
-	RegTitle 0x4, InitializeSuna_Str_TT_MSPNAME, 0xcb, NAKA_MAINFUNC_MspNameTtlFunc, 0xcb0000
-	RegTitle 0x4, InitializeSuna_Str_TT_MSPGROUP, 0xcc, NAKA_APFUNC_DefaultFunction, 0xcc0000
-	RegTitle 0x4, InitializeSuna_Str_TT_SNDARG, 0xdc, NAKA_MAINFUNC_SndArgTtlFunc, 0xdc0000
-	RegTitle 0x4, InitializeSuna_Str_TT_APCSEL, 0xed, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_ApcSelScreen
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeSuna:	.include "includes/generated/cc900/InitializeSuna.s"	; C: cc900/flash_floppy_handlers_m159.c
 
 CmpBndRngFunc:
 	push xiz

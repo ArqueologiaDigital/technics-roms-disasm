@@ -307,3 +307,10 @@ unsigned char SeqStep_WalkReadByte(void)
 {
   return PartCtrl_ReadByte(SQSTEP_SCAN_BLOCK, (unsigned char)SQSTEP_SCAN_OFFSET);
 }
+
+extern void (*SeqStep_TimerDispatchB_PtrTable[])(void);
+
+void SeqStep_TimerDispatchB(void)
+{
+  (*SeqStep_TimerDispatchB_PtrTable[ram_22f6])();
+}

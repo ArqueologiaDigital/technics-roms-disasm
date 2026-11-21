@@ -14727,15 +14727,7 @@ Part_ReadVoiceByte:	.include "includes/generated/cc900/Part_ReadVoiceByte.s"	; C
 ;   In:  A = song slot (0 = the record at 0xf180), C = entry (1-based).
 ;   Out: L = byte at slot + 0xd0 + 3*(C-1), masked with 0x80 (non-zero = flag set).
 ;   The word after that byte is read and written by Part_ReadVoiceWord / Part_WriteVoiceWord.
-Part_ReadVoiceBit7:
-	extz wa
-	mul c, 0x3
-	dec 3, c
-	add c, 0xd0
-	extz bc
-	calr Part_ReadByteDirect
-	and l, 0x80
-	ret
+Part_ReadVoiceBit7:	.include "includes/generated/cc900/Part_ReadVoiceBit7.s"	; C: cc900/sequencer_engine_m234_g.c
 
 ; Sets or clears the flag bit (bit 7) of one entry of a song slot's 3-byte voice table.
 ;   In:  A = song slot, C = entry (1-based), E = 0 to clear, non-zero to set.
@@ -14778,24 +14770,12 @@ PartVoiceBit_WriteBit7:
 ; Reads the word of one entry of a song slot's 3-byte voice table (slot + 0xd0).
 ;   In:  A = song slot (0 = the record at 0xf180), C = entry (1-based).
 ;   Out: HL = word at slot + 0xd1 + 3*(C-1); tail-jumps to Part_ReadWord.
-Part_ReadVoiceWord:
-	extz wa
-	mul c, 0x3
-	dec 3, c
-	add c, 0xd1
-	extz bc
-	jrl Part_ReadWord
+Part_ReadVoiceWord:	.include "includes/generated/cc900/Part_ReadVoiceWord.s"	; C: cc900/sequencer_engine_m234_g.c
 
 ; Writes the word of one entry of a song slot's 3-byte voice table (slot + 0xd0).
 ;   In:  A = song slot (0 = the record at 0xf180), C = entry (1-based), DE = value.
 ;   The word written is at slot + 0xd1 + 3*(C-1); tail-jumps to Part_WriteWord.
-Part_WriteVoiceWord:
-	extz wa
-	mul c, 0x3
-	dec 3, c
-	add c, 0xd1
-	extz bc
-	jrl Part_WriteWord
+Part_WriteVoiceWord:	.include "includes/generated/cc900/Part_WriteVoiceWord.s"	; C: cc900/sequencer_engine_m234_g.c
 
 Part_InitVoiceDefaults:	.include "includes/generated/cc900/Part_InitVoiceDefaults.s"	; C: cc900/sequencer_engine_m234_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets

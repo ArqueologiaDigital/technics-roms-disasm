@@ -37691,13 +37691,7 @@ msp_sv_mae:
 	ret
 
 ; Voice_RefreshBankData; out: XHL = the word at 0x1e881c * 16.
-MspSave_InitAndCalcSize:
-	call Voice_RefreshBankData
-	ld xhl, 0x1e881c
-	ld hl, (xhl)
-	extz xhl
-	sll xhl, 4
-	ret
+MspSave_InitAndCalcSize:	.include "includes/generated/cc900/MspSave_InitAndCalcSize.s"	; C: cc900/accompaniment_engine_m261_xr.c
 
 ; Music-style-player automatic save (HAMA function table): MspSaveAuto_Return (empty) with XIZ
 ; preserved.

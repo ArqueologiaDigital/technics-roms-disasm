@@ -2235,13 +2235,7 @@ SeqStep_TimerDispatchA:
 	ld	xhl, (xbc+wa)
 	jp (xhl)
 
-SeqStep_TimerDispatchB:
-	ld a, (8956:16)
-	extz wa
-	sla wa, 2
-	lda xbc, (SeqStep_TimerDispatchB_PtrTable:24)
-	ld	xhl, (xbc+wa)
-	jp (xhl)
+SeqStep_TimerDispatchB:	.include "includes/generated/cc900/SeqStep_TimerDispatchB.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_TimerDispatchC:	.include "includes/generated/cc900/SeqStep_TimerDispatchC.s"	; C: cc900/seq_step_routines_m236.c
 

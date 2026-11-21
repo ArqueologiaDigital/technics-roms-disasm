@@ -140,3 +140,26 @@ void MidiChan_InitAllBufferPtrs(void)
 	ArpQueue_InitBuffer(ram_bb9c, ram_bbf4);
 	ArpQueue_InitBuffer(ram_bba0, ram_bbf8);
 }
+
+extern unsigned char ram_340f9;
+extern unsigned char __near ram_b72c;
+extern void SndParam_ApplyAndSync(void);
+extern void SoundMode_SetChorusType(void);
+
+void SoundMode_SetChorusType(void)
+{
+  switch (ram_340f9) {
+  default:
+    return;
+  case 1:
+    ram_b72c = 91;
+    break;
+  case 2:
+    ram_b72c = 92;
+    break;
+  case 3:
+    ram_b72c = 93;
+    break;
+  }
+  SndParam_ApplyAndSync();
+}
