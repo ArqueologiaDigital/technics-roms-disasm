@@ -1,6 +1,6 @@
-/* hdae5000_v1_10i: FILE_Naming_Screen (hdae5000_hd_driver.s), v2.06i's C of round 95 (2026-11-21), the same hand text in this tree
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r95_jnext.c.
+/* Functions of hdae5000_hd_driver.s.  (hdae5000_jnext_r95.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_jnext_r95.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FNaming_f=HDAE5000_FILE_Naming_Screen
 */
