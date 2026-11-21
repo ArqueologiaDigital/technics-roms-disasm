@@ -26,28 +26,7 @@ extern void SeqChan_StepCmd_Field9to10(void);
 extern void MidiPkt_ArpExtHandler_G(void);
 
 
-void MidiPkt_ArpExtHandler_A(void)
-{
-	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 0) {
-		MidiPkt_PreparePanelReceive();
-		MidiPkt_SetXferTotal_Panel((struct xfer *)0xbcdcL);
-		MidiPkt_SetXferBlock_LivePanel((struct xfer *)0xbcecL);
-		SeqChan_StepCmd_Field1to2();
-	} else
-		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 25);
-}
-
 /* cc900-name: MidiPkt_SetXferBlk_StyleImgPool=MidiPkt_SetXferBlock_StyleImagePool */
-void MidiPkt_ArpExtHandler_G(void)
-{
-	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 9) {
-		MidiPkt_SetXferBlk_StyleImgPool((struct xfer *)0xbcecL);
-		MidiPkt_SetXferLengthFromMsg();
-		SeqChan_StepCmd_Field9to10();
-	} else
-		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 27);
-}
-
 
 /* cc900-name: MidiPkt_SetXferBlk_AccompBank=MidiPkt_SetXferBlock_AccompBankTables */
 

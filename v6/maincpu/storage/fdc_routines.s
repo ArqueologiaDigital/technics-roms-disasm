@@ -717,7 +717,7 @@ FDC_SendAuxCmd:
 FDC_ResultPhase_Read_Epilogue:
 	inc	2, xsp
 	ret
-FDC_HardwareSetup_Helper4:
+FDC_SendAuxCmdReadResult:
 	dec	2, xsp
 	ld	(xsp), a
 	calr	FDC_ResultPhase_Read
@@ -824,7 +824,7 @@ FDC_CMD_SEND_Skip:
 FDC_CMD_SEND_Skip2:
 	ld	a, (xsp)
 	extz	wa
-	calr	FDC_HardwareSetup_Helper4
+	calr	FDC_SendAuxCmdReadResult
 	jrl	FDC_HardwareSetup_Epilogue
 FDC_CMD_SEND_Skip3:
 	ld	a, (xsp)
@@ -833,7 +833,7 @@ FDC_CMD_SEND_Skip3:
 	jr	nz, FDC_CMD_SEND_Skip4
 	ld	a, (xsp)
 	extz	wa
-	calr	FDC_HardwareSetup_Helper4
+	calr	FDC_SendAuxCmdReadResult
 	jrl	FDC_HardwareSetup_Epilogue
 FDC_CMD_SEND_Skip4:
 	ld	a, (xsp)
@@ -847,7 +847,7 @@ FDC_CMD_SEND_Skip4:
 FDC_CMD_SEND_Skip5:
 	ld	a, (xsp)
 	extz	wa
-	calr	FDC_HardwareSetup_Helper4
+	calr	FDC_SendAuxCmdReadResult
 	jr	FDC_HardwareSetup_Epilogue
 FDC_HardwareSetup_Skip6:
 	ld	a, (xsp)

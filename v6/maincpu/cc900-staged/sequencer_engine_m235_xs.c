@@ -15,7 +15,8 @@ extern unsigned int __near ram_f1ce;
 extern void Audio_CheckSubsystemReady(void);
 extern void SeqData_CopyBlockToBuffer(unsigned int);
 extern void VoicePreset_LoadAndInitPan(unsigned int);
-extern void SeqVoice_InitEntryForCurrentBank(void);
+/* cc900-name: SeqVoice_InitEntryCurBank=SeqVoice_InitEntryForCurrentBank */
+extern void SeqVoice_InitEntryCurBank(void);
 extern void SeqStep_FindAndCompact(void);
 extern void SingleLoad_PrepareSongSlot(unsigned char a);
 
@@ -27,7 +28,7 @@ void SingleLoad_PrepareSongSlot(unsigned char a)
   SeqData_CopyBlockToBuffer(SEQ_CURRENT_SONG);
   VoicePreset_LoadAndInitPan(a);
   SEQ_CURRENT_SONG = a;
-  SeqVoice_InitEntryForCurrentBank();
+  SeqVoice_InitEntryCurBank();
   SeqData_CopyBlockToBuffer(SEQ_CURRENT_SONG);
   k = ram_f1ce;
   SeqStep_FindAndCompact();
