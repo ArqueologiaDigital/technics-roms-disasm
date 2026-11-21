@@ -3280,29 +3280,13 @@ BoxCheck_ReturnZero:
 	ld hl, 0:i3
 	ret
 
-BoxLeftCheck:
-	cp wa, 0x88
-	jr gt, BoxLeftCheck_ReturnZero
-	cp wa, 0x80
-	jr lt, BoxLeftCheck_ReturnZero
-	ld hl, 1:i3
-	ret
+BoxLeftCheck:	.include "includes/generated/cc900/BoxLeftCheck.s"	; C: cc900/ui_control_panel_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BoxLeftCheck_ReturnZero, BoxLeftCheck + 15
 
-BoxLeftCheck_ReturnZero:
-	ld hl, 0:i3
-	ret
-
-BoxRightCheck:
-	cp wa, 0xa8
-	jr gt, BoxRightCheck_ReturnZero
-	cp wa, 0xa0
-	jr lt, BoxRightCheck_ReturnZero
-	ld hl, 1:i3
-	ret
-
-BoxRightCheck_ReturnZero:
-	ld hl, 0:i3
-	ret
+BoxRightCheck:	.include "includes/generated/cc900/BoxRightCheck.s"	; C: cc900/ui_control_panel_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BoxRightCheck_ReturnZero, BoxRightCheck + 15
 
 ; =============================================================================
 ; GroupBoxProc (approx. 0xf998xx)

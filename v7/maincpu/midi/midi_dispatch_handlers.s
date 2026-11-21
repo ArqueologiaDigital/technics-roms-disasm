@@ -8340,12 +8340,7 @@ MidiPkt_PreparePanelReceive:
 MidiStream_Delay25Ticks:	.include "includes/generated/cc900/MidiStream_Delay25Ticks.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiChan_TimerDispatch_Data_Code_Loop, MidiStream_Delay25Ticks + 4
-Part_LookupByIndex:
-	ld	xbc, (PART_RECORD_PTRS:16)
-	extz wa
-	sla wa, 2
-	ld	xhl, (xbc+wa)
-	ret
+Part_LookupByIndex:	.include "includes/generated/cc900/Part_LookupByIndex.s"	; C: cc900/midi_dispatch_handlers_m285.c
 MIDI_PackNibbleParam:
 	lda xbc, (xwa + 6)
 	ld xwa, (xbc)

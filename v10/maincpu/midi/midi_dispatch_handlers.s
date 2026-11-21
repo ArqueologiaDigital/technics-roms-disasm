@@ -9222,12 +9222,7 @@ MidiStream_Delay25Ticks:	.include "includes/generated/cc900/MidiStream_Delay25Ti
 	.set	MidiChan_TimerDispatch_Data_Code_Loop, MidiStream_Delay25Ticks + 4
 
 ; Returns in XHL entry WA (zero-extended) of the pointer table the u32 at 0x90f2 points to.
-Part_LookupByIndex:
-	ld xbc, (PART_RECORD_PTRS:16)
-	extz wa
-	sla wa, 2
-	ld	xhl, (xbc+wa)
-	ret
+Part_LookupByIndex:	.include "includes/generated/cc900/Part_LookupByIndex.s"	; C: cc900/midi_dispatch_handlers_m285.c
 
 ; Reads two bytes through the read pointer at (XWA + 6), advancing it by 2, and returns
 ; L = (first << 4) | (second & 0x0f): a value sent as two nibbles.

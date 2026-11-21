@@ -6386,10 +6386,7 @@ AccTuning_Toggle_Return:
 	ret
 
 ; Copies the tuning state 0x3391 to 0x3392.
-AccTuning_SaveState:
-	ld a, (0x3391:16)
-	ld (0x3392:16), a
-	ret
+AccTuning_SaveState:	.include "includes/generated/cc900/AccTuning_SaveState.s"	; C: cc900/accompaniment_engine_m245.c
 
 ; Sets the style-tuning state: for style numbers below 0x80 whose entry at 0x1e7810 +
 ; (AccHelper_ComputeVoiceOffset result) has bit 7 of byte +1 set, bit 0 of 0x3391 is set and the

@@ -3259,14 +3259,9 @@ Kernel_KillTask:
 	popw	wa
 	ret
 
-TaskSched_DelayTicks:
-	srl wa, 1
-	add wa, (SYSTEM_TIMESTAMP:16)
-
-TaskSched_DelayTicks_SpinLoop:
-	cp wa, (SYSTEM_TIMESTAMP:16)
-	jr gt, TaskSched_DelayTicks_SpinLoop
-	ret
+TaskSched_DelayTicks:	.include "includes/generated/cc900/TaskSched_DelayTicks.s"	; C: cc900/system_handlers_m2.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TaskSched_DelayTicks_SpinLoop, TaskSched_DelayTicks + 7
 
 Timer3_Start:	.include "includes/generated/cc900/Timer3_Start.s"	; C: cc900/system_handlers_m0.c
 

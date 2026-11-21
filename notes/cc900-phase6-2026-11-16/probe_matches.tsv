@@ -1510,3 +1510,56 @@ SeqChan_XferStep_AccompBlock2	46	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_
 SeqChan_XferStep_CurrentSong	57	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
 SeqChan_XferStep_SongSlots	57	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
 SeqChan_XferStep_StyleImageBlock1	45	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+AccTuning_SaveState	9	2026-11-21-7-p6-r62	p6_U_21r1m243a@O3XSXr p6_U_21r1m243a@O3Xr p6_U_21r1m243a@Xr p6_U_21r1m243b@O3XSXr p6_U_21r1m243b@O3Xr p6_U_21r1m243b@Xr
+Accomp_UpdateModeFlag	45	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr p6_U_21r1m234b@O3XSXr p6_U_21r1m234b@O3Xr p6_U_21r1m234b@Xr
+BmDrEdit_DurationUp_Check	15	2026-11-21-7-p6-r62	p6_U_21r1m232a@O3XSXr p6_U_21r1m232a@O3Xr p6_U_21r1m232a@Xr
+BoxLeftCheck	18	2026-11-21-7-p6-r62	p6_U_21r1m270a@O3XSXr p6_U_21r1m270a@O3Xr p6_U_21r1m270a@Xr
+BoxRightCheck	18	2026-11-21-7-p6-r62	p6_U_21r1m271a@O3XSXr p6_U_21r1m271a@O3Xr p6_U_21r1m271a@Xr
+DSPCfg_LookupMidiMap	15	2026-11-21-7-p6-r62	p6_U_21r1m300a@O3XSXr p6_U_21r1m300a@O3Xr
+FDemo_LoadRegsAndPostEvent	19	2026-11-21-7-p6-r62	p6_U_21r1m265a@O3XSXr p6_U_21r1m265a@O3Xr p6_U_21r1m265a@Xr p6_U_21r1m265b@O3XSXr p6_U_21r1m265b@O3Xr
+FDemo_MultiGuardCheck	34	2026-11-21-7-p6-r62	p6_U_21r1m265a@O3XSXr p6_U_21r1m265a@O3Xr p6_U_21r1m265a@Xr p6_U_21r1m265b@O3XSXr p6_U_21r1m265b@O3Xr p6_U_21r1m265b@Xr
+FileIO_CheckMediaIsWritable	19	2026-11-21-7-p6-r62	p6_U_21r1m268a@O3XSXr p6_U_21r1m268a@O3Xr p6_U_21r1m268a@Xr
+InitializeEast	2516	2026-11-21-7-p6-r62	p6_V_21r1m264ea@O3Xr
+InitializeKSS	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeKubo	4520	2026-11-21-7-p6-r62	p6_V_21r1m232a@O3Xr
+InitializeMurai	1782	2026-11-21-7-p6-r62	p6_V_21r1m264a@O3Xr
+InitializeNaka	451	2026-11-21-7-p6-r62	p6_V_21r1m159a@O3Xr
+InitializeRoot	571	2026-11-21-7-p6-r62	p6_V_21r1m274a@O3Xr
+InitializeSeMenuDefaults	38	2026-11-21-7-p6-r62	p6_V_21r1m131a@O3XSXr p6_V_21r1m131a@O3Xr p6_V_21r1m131a@Xr
+InitializeSuna	3317	2026-11-21-7-p6-r62	p6_V_21r1m159a@O3Xr
+InitializeToshi	3381	2026-11-21-7-p6-r62	p6_V_21r1m276a@O3Xr
+InitializeUser12	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser13	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser14	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser15	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser16	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser17	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser18	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser19	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser20	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser21	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser22	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser23	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser24	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser25	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser26	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser27	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser28	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser29	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser30	1	2026-11-21-7-p6-r62	p6_V_21r1m276ka@O3XSXr p6_V_21r1m276ka@O3Xr p6_V_21r1m276ka@Xr
+InitializeUser31	1	2026-11-21-7-p6-r62	p6_V_21r1m277a@O3XSXr p6_V_21r1m277a@O3Xr p6_V_21r1m277a@Xr
+NoteEdit_UpdateScrollAndDisplay	16	2026-11-21-7-p6-r62	p6_U_21r1m232a@O3XSXr p6_U_21r1m232a@O3Xr p6_U_21r1m232a@Xr
+Part_LookupByIndex	15	2026-11-21-7-p6-r62	p6_U_21r1m285a@O3XSXr p6_U_21r1m285a@O3Xr p6_U_21r1m285a@Xr
+Part_ReadByte_Indexed	19	2026-11-21-7-p6-r62	p6_U_21r1m234b@O3XSXr p6_U_21r1m234b@O3Xr
+Part_WriteByte_Indexed	18	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr p6_U_21r1m234b@Xr
+Part_WriteWord_Indexed	22	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234b@O3XSXr p6_U_21r1m234b@O3Xr
+PostTmSave_ByteBlock	18	2026-11-21-7-p6-r62	p6_U_21r1m300a@O3XSXr p6_U_21r1m300a@O3Xr p6_U_21r1m300a@Xr
+SeqAcc_SetIndicator_PB	23	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr p6_U_21r1m234b@O3XSXr p6_U_21r1m234b@O3Xr p6_U_21r1m234b@Xr
+SeqData_CopyBlockToBuffer	27	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr
+SeqPlay_SaveStateAndCleanup	29	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr p6_U_21r1m234b@O3XSXr p6_U_21r1m234b@O3Xr p6_U_21r1m234b@Xr
+SeqScan_RefreshReadAndCompare	18	2026-11-21-7-p6-r62	p6_U_21r1m235a@O3XSXr p6_U_21r1m235a@O3Xr p6_U_21r1m235a@Xr
+SeqSearch_InitNotFound	19	2026-11-21-7-p6-r62	p6_U_21r1m235a@O3XSXr p6_U_21r1m235a@O3Xr p6_U_21r1m235a@Xr
+TaskSched_DelayTicks	14	2026-11-21-7-p6-r62	p6_U_21r1m2a@O3XSXr p6_U_21r1m2a@O3Xr
+UpdateSeMenuSelection	44	2026-11-21-7-p6-r62	p6_V_21r1m131a@O3XSXr p6_V_21r1m131a@O3Xr p6_V_21r1m131a@Xr
+VoiceAlloc_TestBitRead	12	2026-11-21-7-p6-r62	p6_U_21r1m235a@O3XSXr p6_U_21r1m235a@O3Xr p6_U_21r1m235a@Xr
+VoicePreset_LoadAndInitPan	30	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr

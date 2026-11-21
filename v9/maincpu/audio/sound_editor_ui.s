@@ -7,39 +7,11 @@
 ; for saving/loading sound patches.
 ; =============================================================================
 
-InitializeSeMenuDefaults:
-	ld wa, 0:i3
-	call SeMenu_SetSoundBank
-	ld wa, 0:i3
-	call SeMenu_SetPatchBank
-	call AccWrap_PlayModeDispatch
-	ld wa, 1:i3
-	call SeMenu_SetEditEnable
-	ld wa, 1:i3
-	call SeMenu_OrPartConfig
-	ld wa, 0:i3
-	call SeMenu_SetConfirmState
-	jp SeMenu_ClearDisplayBuffer
+InitializeSeMenuDefaults:	.include "includes/generated/cc900/InitializeSeMenuDefaults.s"	; C: cc900/sound_editor_ui_m0.c
 
-UpdateSeMenuSelection:
-	dec 2, xsp
-	ld wa, 0:i3
-	call SeMenu_SetSelectedRow
-	ld wa, 0:i3
-	call SeMenu_SetEditEnable
-	lda xwa, (xsp)
-	call SeMenu_LoadObjEntries
-	cp (xsp), 0x2
-	jr z, UpdSeSel_SkipMenuSetup
-	ld wa, 0:i3
-	call SeMenu_SetupMenuDisplay
-
-UpdSeSel_SkipMenuSetup:
-	ld wa, 0:i3
-	call SeMenu_SetConfirmState
-	call SeMenu_RefreshPartDisplay
-	inc 2, xsp
-	ret
+UpdateSeMenuSelection:	.include "includes/generated/cc900/UpdateSeMenuSelection.s"	; C: cc900/sound_editor_ui_m131_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UpdSeSel_SkipMenuSetup, UpdateSeMenuSelection + 31
 
 UpdSeSel_ProcessStep:	.include "includes/generated/cc900/UpdSeSel_ProcessStep.s"	; C: cc900/sound_editor_ui_m131.c
 ; the hand assembly's labels inside the compiled body, by their offsets

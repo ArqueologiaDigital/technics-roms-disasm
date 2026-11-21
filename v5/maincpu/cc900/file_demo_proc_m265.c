@@ -27,3 +27,16 @@ struct fent *FDemo_LinkedListSearch(char *name)
 		return e;
 	return 0;
 }
+
+extern unsigned char __near ACTIVE_TITLE;
+extern unsigned int __near SEQ_ACTIVE_PARTS;
+extern unsigned char __near DEMO_TIMER_COUNTDOWN;
+extern unsigned char __near DEMO_CONTROL_FLAGS;
+extern int FDemo_MultiGuardCheck(void);
+
+int FDemo_MultiGuardCheck(void)
+{
+  if (ACTIVE_TITLE == 228 && SEQ_ACTIVE_PARTS == 0 && DEMO_TIMER_COUNTDOWN == 0 && !(DEMO_CONTROL_FLAGS & 0x08))
+    return 1;
+  return 0;
+}

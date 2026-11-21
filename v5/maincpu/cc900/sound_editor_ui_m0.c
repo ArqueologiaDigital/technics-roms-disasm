@@ -68,3 +68,23 @@ void SeWrtSnd_OnColumn7(unsigned char a)
 		w = 0;
 	SeWrtSnd_SetupNamingPage_Join4(w);
 }
+
+extern void SeMenu_SetSoundBank(int);
+extern void SeMenu_SetPatchBank(int);
+extern void AccWrap_PlayModeDispatch(void);
+extern void SeMenu_SetEditEnable(int);
+extern void SeMenu_OrPartConfig(int);
+extern void SeMenu_SetConfirmState(int);
+extern void SeMenu_ClearDisplayBuffer(void);
+extern void InitializeSeMenuDefaults(void);
+
+void InitializeSeMenuDefaults(void)
+{
+	SeMenu_SetSoundBank(0);
+	SeMenu_SetPatchBank(0);
+	AccWrap_PlayModeDispatch();
+	SeMenu_SetEditEnable(1);
+	SeMenu_OrPartConfig(1);
+	SeMenu_SetConfirmState(0);
+	SeMenu_ClearDisplayBuffer();
+}

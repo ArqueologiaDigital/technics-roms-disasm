@@ -317,3 +317,42 @@ void SeqSave_WriteBlockToFile(unsigned char a)
 {
   FileIO_WriteByte_Impl((void *)(SEQ_SONG_SLOTS + ((unsigned long)a << 11)), 0x800L);
 }
+
+/* cc900-module: Portamento_ScanInitAndLoop SeqEvt_SelectNearestTiming SeqScan_CheckBarBitAndProcess SeqScan_ComparePosition14vs1052 SeqStep_PostEventAndUpdate SeqTick_InitAndScanParts */
+extern void PartCtrl_RefreshWordPeriodic(void);
+extern unsigned char SeqData_ReadNextByte(void);
+extern void SeqScan_ComparePosition14vs1052(void);
+extern void SeqScan_RefreshReadAndCompare(void);
+extern unsigned int __near ram_25a8;
+extern unsigned char __near ram_25aa;
+extern unsigned int __near ram_25be;
+extern unsigned int __near ram_25b4;
+extern void SeqEvt_SelectNearestTiming(void);
+extern void SeqSearch_InitNotFound(void);
+extern void SeqStep_PostEventAndUpdate(void);
+extern void SeqScan_CheckBarBitAndProcess(void);
+extern void Portamento_ScanInitAndLoop(void);
+extern void SeqTick_InitAndScanParts(void);
+extern void VoiceAlloc_TestBitRead(void);
+
+void SeqScan_RefreshReadAndCompare(void)
+{
+  PartCtrl_RefreshWordPeriodic();
+  ram_2587 = SeqData_ReadNextByte();
+  PartCtrl_RefreshWordPeriodic();
+  SeqScan_ComparePosition14vs1052();
+}
+void SeqSearch_InitNotFound(void)
+{
+  ram_25a8 = 0xffff;
+  ram_25aa = 255;
+  ram_25be = ram_25b4;
+  SeqEvt_SelectNearestTiming();
+}
+void VoiceAlloc_TestBitRead(void)
+{
+  SeqStep_PostEventAndUpdate();
+  SeqScan_CheckBarBitAndProcess();
+  Portamento_ScanInitAndLoop();
+  SeqTick_InitAndScanParts();
+}

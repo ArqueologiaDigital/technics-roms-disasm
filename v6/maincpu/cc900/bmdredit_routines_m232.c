@@ -502,3 +502,23 @@ void BmDrEdit_CalcTickPosition(void)
 	t += ram_276a;
 	ram_2780 = t;
 }
+
+/* cc900-module: BmDrEdit_IncrementDuration NoteEditSy_UpdateAllWidgets */
+extern unsigned char __near ram_2941;
+extern void BmDrEdit_IncrementDuration(void);
+extern void BmDrEdit_DurationUp_Check(void);
+extern void NoteEditSy_UpdateAllWidgets(void);
+extern void NoteEdit_UpdateScrollAndDisplay(void);
+
+void BmDrEdit_DurationUp_Check(void)
+{
+  if ((ram_2940 & 0x80) && ram_2941 != 3)
+    return;
+  BmDrEdit_IncrementDuration();
+}
+void NoteEdit_UpdateScrollAndDisplay(void)
+{
+  if (ram_2780 >= (unsigned int)(ram_275a * 0x60))
+    return;
+  NoteEditSy_UpdateAllWidgets();
+}

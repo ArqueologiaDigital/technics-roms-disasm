@@ -15,3 +15,15 @@ void Timer3_Stop(void)
 {
   T8RUN &= ~0x08;
 }
+
+extern volatile int __near SYSTEM_TIMESTAMP;
+extern void TaskSched_DelayTicks(unsigned int t);
+
+void TaskSched_DelayTicks(unsigned int t)
+{
+  t >>= 1;
+  t += SYSTEM_TIMESTAMP;
+  do
+    ;
+  while ((int)t > SYSTEM_TIMESTAMP);
+}
