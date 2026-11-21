@@ -1,0 +1,56 @@
+C LANES, RESUMED 2026-11-20 (owner's goal: "C for the ROMs built with V4.23").  Rules for every lane and every helper.
+
+GOAL.  Turn ROM functions into C that Toshiba cc900 V4.23 (in the VM) compiles to the ROM's exact bytes, and get it
+into main through your branch: staged, checked per tree, promoted, `make -j2 gate` PASS.  A function counts only when
+V4.23 reproduces its ROM bytes.  Do not work on the Python model of the compiler, model rules or probes for the model
+(paused by the owner).  Keep rounds running: never sit idle; when a VM run is in flight, write the next probes.
+
+SAFETY (STRICT, the owner rejects any operation that breaks these):
+- `rm` only as its own standalone Bash call, with ONE literal absolute path, after looking at the target.  Never rm,
+  rmdir, find -delete, rsync --delete, shutil.rmtree or os.remove inside a heredoc, `bash -c`, `python -c`, a loop, or
+  an `&&` / `;` chain.  In committed Python scripts: assert the path lies inside the expected root and is not the root.
+- NO heredocs at all; no inline scripts (`python -c`, `bash -c`, `python3 -`), not even no-op ones.  Write scripts to
+  files (scratch scripts in your scratch dir, verdict-producing ones in your notes directory) and run them.
+- Edits to files go through the Edit/Write tools, not `sed -i` (the committed renaming .sed scripts the handoffs name
+  are fine).
+- `git rm -- <explicit paths>` as its own command.  Never `git stash`, never `--amend`, never push, never rebase.
+- If a tool call is denied, do not route around it: stop that step and report it to the coordinator.
+- $TMPDIR is /home/fsanches/compartilhado/tmp; never /tmp.  Your scratch: ~/compartilhado/tmp/cc900-tab/<lane>/.
+- Use `command grep` for recursive searches (the grep wrapper skips files with high bytes).
+- WAIT LOOPS: never `until ! pgrep -f PATTERN`: pgrep -f matches the waiting shell's own command line, so the loop
+  never ends.  Run the job with run_in_background and wait for its notification, or wait on a marker line the job
+  writes to its log, or on `while kill -0 PID`.
+- DISK: the share had 19 GB free on 2026-11-20 before a cleanup.  Keep per-run corpora small; delete nothing outside
+  your own scratch; tell the coordinator if `df -h ~/compartilhado` drops under 15 GB.
+
+TOSHIBA MATERIAL (STRICT): Toshiba outputs (listings, objects, library source) stay in the private
+~/compartilhado/cc900-oracle (only the coordinator commits there) or in git-ignored build products.  Never copy
+listing lines into this repository, commit messages, notes or reports; never commit Toshiba library source.  Our own
+C, our own scripts and verdict counts are fine.
+
+VM: one VM job at a time per lane, through `bash scripts/analysis/cc900/oracle/run_oracle.sh NAME DIR DIR/sources.txt
+DIR/options.txt v423` (from the directory the handoff says), with VM_POOL_SLOTS=4 in the environment.  Name runs
+with your lane tag (p6-, sub-, hd-).  A gate's own V4.23 compile counts as your lane's VM job: do not start a probe
+run while your gate compiles.  Tell the coordinator each run name when it is filed; the coordinator commits it in the
+oracle repository.
+
+COMMITS on your own branch only, often.  Message written to a file with Write, then `git commit -F FILE`.  Every
+message ends with:
+    LLVM: tlcs900_backend@91a65b6ddfd1 (91a65b6ddfd114319f634b347c4c7030bd8ba420)
+
+    Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+    Claude-Session: https://claude.ai/code/session_01T9N6DLYfpgpFgpezBtUHer
+Quote counts only from committed scripts' output; commit the script that produced a number in the same commit.
+Markdown tables space-padded and aligned.  Menu maps: `menu_map_diff.py` must report 0 dropped.  Before asking the
+coordinator to merge: `make -j2 gate` PASS at that head, `git status` clean, and tell the coordinator the head.
+Merge main into your branch when the coordinator says main moved (`git merge main`, message from a file).  A
+promotion's `git rm` of the promoted staged files goes in the promotion commit itself.
+
+HELPERS: you may spawn helper subagents (model "opus") for independent function batches, at most 3 at once, each in
+its own scratch dir and never reading another lane's worktree.  Give every helper these rules verbatim (point it at
+this file).  Helpers write C and probe files and report; only the lane runs the VM, stages, promotes and commits.
+
+REPORT: when a promotion is gated (or you are blocked), end your turn with a report: gated head, functions / bytes
+gained per image, VM runs to commit in the oracle, what you start next.  The coordinator merges, commits the runs and
+continues you with a message.  Start the next round's probes BEFORE ending the turn when a VM run can be in flight
+meanwhile (a run in flight is fine; say so in the report).  Use the emoji markers ✅ ❌ ⚠️ ⏳.

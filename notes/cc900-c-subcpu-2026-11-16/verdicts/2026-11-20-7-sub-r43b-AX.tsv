@@ -1,0 +1,4 @@
+function	bytes	matches	best_diff
+Voice_Calc_LevelPair_FixedAtk	314	sub_AX_43b@Xr	
+Voice_Calc_LevelPair_Mono	771	-	+65 sub_AX_43c@Xr
+Voice_Step_ExprRamp	761	sub_AX_43a@Xr sub_AX_43b@Xr sub_AX_43c@Xr	

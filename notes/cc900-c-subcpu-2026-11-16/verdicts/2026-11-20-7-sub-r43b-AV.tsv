@@ -1,0 +1,3 @@
+function	bytes	matches	best_diff
+DSP_SOS_Coeff_Compute	2607	-	+2 sub_AV_43c@Xr
+DSP_SOS_LUT_Fetch	326	-	+3 sub_AV_43b@Xr

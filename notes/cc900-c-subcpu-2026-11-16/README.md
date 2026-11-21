@@ -255,6 +255,26 @@ DSP_DetuneCurve_SignedFP (helper AR, 495 B, `x >= 0 ? x : -x`; its 12 FP constan
 FP_SP_CopyOrNegate4, now a row of scripts/build/cc900_runtime_names.tsv); DSP_EFFParam_DiffAllAndFlag (helper AR,
 643 B, `(unsigned int)(int)(i * 56 + 8)`).  2,898 B per tree; **592 functions per tree** built from C.
 
+**Twenty-second promotion, round 43 (2026-11-21; matched in runs 2026-11-20-5-2026-11-20-6-sub-r43a and
+2026-11-20-7-sub-r43b, verified per tree in those runs and 2026-11-21-1-sub-r43c).**  Five functions:
+- Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c, held back since 2026-11-19), in v142 and v141 only.  v140 keeps
+  its hand assembly: `create_v140_subcpu_source.py` now puts the v1.41 hand text of a spliced function back before
+  its EDITS (UNSPLICE; `scripts/generators/v140_subcpu_hand/` holds that text for Audio_Process_DSP and its two case
+  tables, captured with `hand_span_capture.py`), and `port_staged.py`'s DROP leaves its C out of v140.
+- Audio_Cmd_DSPUnit_Param (681 B) and Audio_Cmd_EffectParam_Dispatch (1,365 B), helper AW: each a whole switch over
+  its case labels (span_refs.py: every inner label inner-only), with five case tables; the row store `p = row; p +=
+  idx; *p = v;` as the built Audio_Cmd_DSPGlobal_Param_Store.
+- Voice_Step_ExprRamp (761 B) and Voice_Calc_LevelPair_FixedAtk (314 B), helper AX: the lower-case `__asm` and a
+  signed int ramp value (the old `__IZ` was unsigned: unsigned compares); the then-branch word built in `r`.
+v142 / v141: 4,530 B, **597 functions** built from C; v140: 3,121 B, **596 functions** (`c_duplicates.py` counts
+597 labels).  The promotion's v140 step stops until the hand text is captured (the order: promote_v423_run.sh, then
+hand_span_capture.py on `git show HEAD:v141/...` and the regenerated v141 files, then the v140 generator).
+
+Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43c.py, forms a-i): `(int)i * 2 + 0x27` and
+`((struct pair *)&t[..])->hi` give sub-command 0x24's bytes (form b).  The write path stays: whichever variable holds
+the channel gets IZ while the field is a variable (forms a-f), and with the field nested the channel's `and` happens
+in WA before the move to QIZ (helper AN's 30c; forms g-i).
+
 **Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
 V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
 on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding
