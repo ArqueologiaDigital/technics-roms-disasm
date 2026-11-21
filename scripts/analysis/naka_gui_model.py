@@ -244,6 +244,35 @@ def equ_comments():
     return out
 
 
+def c_registrations(line):
+    """a hand-source line, or -- when it is an Initialize* label built from firmware C (`X: .include
+    "includes/generated/cc900/X.s" ... ; C: cc900/F.c`, cc900 phase 6) -- that function's RegisterTitle /
+    RegisterMode calls rewritten as the RegTitle / RegMode macro lines they replace.  The C's argument order
+    (id, func, view or home, b, name) is the macro's (b, name, id, func, view).  2026-11-22, lane_p6."""
+    mc = re.match(r'^(Initialize\w+):\s*\.include\s+"includes/generated/cc900/\1\.s".*;\s*C:\s*(cc900/\S+\.c)', line)
+    if not mc:
+        return [line]
+    src = read(os.path.join(ROOT, 'v10', 'maincpu', mc.group(2)))
+    alias = {a.group(1): a.group(2) for a in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', src)}
+    cname = next((k for k, v in alias.items() if v == mc.group(1)), mc.group(1))
+    for d in re.finditer(r'^#\s*define\s+(\w+)\s+(0x[0-9a-fA-F]+|\d+)[lLuU]*\s*$', src, re.M):
+        alias.setdefault(d.group(1), d.group(2))          # NMF_DpMdlySmfLyrTtlFunc 0x147000fL (InitializeYoko)
+    fm = re.search(r'^[\w\s\*]*\b%s\s*\([^)]*\)\s*\{' % re.escape(cname), src, re.M)
+    if not fm:
+        return [line]
+    depth, k = 0, fm.end() - 1
+    for k in range(fm.end() - 1, len(src)):
+        depth += {'{': 1, '}': -1}.get(src[k], 0)
+        if depth == 0:
+            break
+    out = []
+    for c in re.finditer(r'\bRegister(Title|Mode)\s*\(([^;]*)\)\s*;', src[fm.end():k]):
+        a = [alias.get(x.strip(), x.strip()) for x in c.group(2).split(',')]
+        if len(a) == 5:
+            out.append('\tReg%s %s, %s, %s, %s, %s' % (c.group(1), a[3], a[4], a[0], a[1], a[2]))
+    return out
+
+
 def registrations(m):
     """titles {id: dict(name, index, func, view, module)} and modes {id: dict(name, home)}
     from the RegTitle / RegMode calls of the v10 source, resolved through the Map m
@@ -251,7 +280,7 @@ def registrations(m):
     rx = re.compile(r'^\s*(RegTitle|RegTitleHama|RegMode)\s+([^;]*?)\s*(?:;\s*(.*))?$')
     titles, modes = {}, {}
     for p in sorted(glob.glob(os.path.join(ROOT, 'v10', 'maincpu', '**', '*.s'), recursive=True)):
-        for ln in read(p).split('\n'):
+        for ln in [x for l in read(p).split('\n') for x in c_registrations(l)]:
             mm = rx.match(ln)
             if not mm:
                 continue

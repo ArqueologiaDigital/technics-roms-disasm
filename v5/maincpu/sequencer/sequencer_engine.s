@@ -14402,15 +14402,7 @@ PartFind_VoiceSearchReturn:
 
 Part_ReadVoiceByte:	.include "includes/generated/cc900/Part_ReadVoiceByte.s"	; C: cc900/sequencer_engine_m234_e.c
 
-Part_ReadVoiceBit7:
-	extz wa
-	mul c, 0x3
-	dec 3, c
-	add c, 0xd0
-	extz bc
-	calr Part_ReadByteDirect
-	and l, 0x80
-	ret
+Part_ReadVoiceBit7:	.include "includes/generated/cc900/Part_ReadVoiceBit7.s"	; C: cc900/sequencer_engine_m234_g.c
 
 Part_SetClearVoiceBit7:
 	dec 6, xsp
@@ -14447,21 +14439,9 @@ PartVoiceBit_WriteBit7:
 	inc 6, xsp
 	ret
 
-Part_ReadVoiceWord:
-	extz wa
-	mul c, 0x3
-	dec 3, c
-	add c, 0xd1
-	extz bc
-	jrl Part_ReadWord
+Part_ReadVoiceWord:	.include "includes/generated/cc900/Part_ReadVoiceWord.s"	; C: cc900/sequencer_engine_m234_g.c
 
-Part_WriteVoiceWord:
-	extz wa
-	mul c, 0x3
-	dec 3, c
-	add c, 0xd1
-	extz bc
-	jrl Part_WriteWord
+Part_WriteVoiceWord:	.include "includes/generated/cc900/Part_WriteVoiceWord.s"	; C: cc900/sequencer_engine_m234_g.c
 
 Part_InitVoiceDefaults:
 	dec 2, xsp

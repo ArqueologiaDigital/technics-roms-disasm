@@ -94,28 +94,7 @@
 ;   "TT_EXTAPR" (0xe1fd22) - Extension APR test, widget table 0xfc
 ; Both titles use TestTitleFunc (0xf1e39a) as their lifecycle callback.
 ; Title handler (TestTitleFunc) pointer is stored at 0xe1fd2c in fd_test_data.s.
-InitializeHama:
-	lda xsp, (xsp - 14)
-
-	RegObjTableHama NAKA_CLASS_Class, ClassProc, HamaStr_HamaList + 0xa, Hama_ClassTable_169, 0x169
-	RegObjTableHama NAKA_CLASS_ResEvent, ResEventProc, HamaStr_EV_INDEX_PUTS + 0xe, Hama_ResEventTable_1C9, 0x1c9
-	RegObjTableHama NAKA_CLASS_ResMethod, ResMethodProc, HamaStr_MT_CONTINUE + 0xc, Hama_ResMethodTable_1E9, 0x1e9
-	RegObjTablHama NAKA_CLASS_ApFunction, ApFunctionProc, 0x2, Hama_ApFuncTable_129, 0x129
-	RegObjTablHama NAKA_CLASS_ApFunction, ApFunctionProc, 0x2, Hama_ApFuncTable_429, 0x429
-	RegObjTablHama NAKA_CLASS_Function, FunctionProc, 0x4b, Hama_FunctionTable_109, 0x109
-	RegObjTablHama NAKA_CLASS_Function, FunctionProc, 0x4b, Hama_ModeParam_Table, 0x409
-	RegObjTablHama NAKA_CLASS_MainFunction, MainFunctionProc, 0x1, FDTest_CfgName_FDDTest + 0x1e, 0x149
-	RegObjTablHama NAKA_CLASS_MainFunction, MainFunctionProc, 0x1, FDTest_CfgName_FDDTest + 0x26, 0x449
-	RegObjTablHama NAKA_CLASS_Viewable, ViewableProc, 0x0, String_CONSOLE + 0x8, 0x7f
-	RegObjTablHama NAKA_CLASS_ResName, ResNameProc, 0x0, FDTest_DataBlock_Table + 0x68, 0x37f
-	RegObjTablHama NAKA_CLASS_Viewable, ViewableProc, 0x1a, String_CONSOLE + 0xc, 0xfc
-	RegObjTablHama NAKA_CLASS_ResName, ResNameProc, 0x1a, FDTest_Config_Table, 0x3fc
-
-	RegTitleHama 0x9, FDTest_CfgName_FDDTest + 0xa, 0x7f, NAKA_MAINFUNC_TestTitleFunc, NAKA_VIEW_FDD_TEST
-	RegTitleHama 0x9, FDTest_CfgName_FDDTest + 0x14, 0xfc, NAKA_MAINFUNC_TestTitleFunc, NAKA_VIEW_FDD_TEST
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeHama:	.include "includes/generated/cc900/InitializeHama.s"	; C: cc900/test_init_m159_xr.c
 
 ; Prints a diagnostic line of the floppy test screens: a tail jump to Debug_PrintString.
 FDTest_PrintDiag:

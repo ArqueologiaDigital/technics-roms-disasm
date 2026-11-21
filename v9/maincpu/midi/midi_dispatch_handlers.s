@@ -10846,26 +10846,11 @@ SoundMode_SetReverbType:	.include "includes/generated/cc900/SoundMode_SetReverbT
 	.set	SoundMode_ReverbType3, SoundMode_SetReverbType + 38
 	.set	SoundParam_SyncAndReturn, SoundMode_SetReverbType + 43
 
-SoundMode_SetChorusType:
-	ld a, (0x0340f9:24)
-	cp a, 3:i3
-	jr z, SoundMode_ChorusType3
-	cp a, 2:i3
-	jr z, SoundMode_ChorusType2
-	cp a, 1:i3
-	ret nz
-	ld (0xb7ec:16), 91
-	jr SoundMode_ChorusSyncAndRet
-
-SoundMode_ChorusType2:
-	ld (0xb7ec:16), 92
-	jr SoundMode_ChorusSyncAndRet
-
-SoundMode_ChorusType3:
-	ld (0xb7ec:16), 93
-
-SoundMode_ChorusSyncAndRet:
-	jp SndParam_ApplyAndSync
+SoundMode_SetChorusType:	.include "includes/generated/cc900/SoundMode_SetChorusType.s"	; C: cc900/midi_dispatch_handlers_m288.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundMode_ChorusType2, SoundMode_SetChorusType + 24
+	.set	SoundMode_ChorusType3, SoundMode_SetChorusType + 31
+	.set	SoundMode_ChorusSyncAndRet, SoundMode_SetChorusType + 36
 
 VoiceData_ZeroFillAll:
 	lda xbc, (PanelVari_PartRecordPtrs:24)
