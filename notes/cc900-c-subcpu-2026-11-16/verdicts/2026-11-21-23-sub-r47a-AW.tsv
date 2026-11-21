@@ -1,0 +1,3 @@
+function	bytes	matches	best_diff
+Audio_Cmd_ToneEdit_Write_And_Reply	269	sub_AW_47a@Xr sub_AW_47b@Xr sub_AW_47c@Xr	
+VoiceParam_Set_Tone_Option	193	-	+12 sub_AW_47c@Xr
