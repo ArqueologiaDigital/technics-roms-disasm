@@ -222,7 +222,10 @@ class Map:
             if depth == 0:
                 break
         body = re.sub(r'/\*.*?\*/', ' ', src[m.end():k], flags=re.S)
-        val = lambda tok: self._val(alias.get(tok, tok))
+        def val(tok):                    # a tree name (cc900-name mapped), a number, or an unnamed RAM cell ram_<hex>
+            tok = re.sub(r'^&\s*', '', tok.strip())
+            r_ = re.match(r'^ram_([0-9a-f]+)$', tok)
+            return int(r_.group(1), 16) if r_ else self._val(alias.get(tok, tok))
         cur = {}
         for st in body.split(';'):
             st = st.strip()
@@ -230,7 +233,7 @@ class Map:
             if a:
                 cur[a.group(1)] = re.sub(r'\s+', ' ', a.group(2)).strip()
                 continue
-            c = re.match(r'^RegisterObjectTable\s*\(\s*([^,]+),\s*&\s*\w+\s*\)$', st)
+            c = re.match(r'^RegisterObjectTable\s*\(\s*([^,]+),\s*&?\s*\w+\s*\)$', st)    # &reg, or a pointer (Hama)
             if not c:
                 continue
             e = cur.get('cls', '')
