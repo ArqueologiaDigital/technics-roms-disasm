@@ -283,6 +283,13 @@ copy (`._fld_ff` = FP_SP_Raw4Copy, helper AV's finding) and its 16-bit index; ._
 ._fadd_d (FP_dadd) are now rows of `scripts/build/cc900_runtime_names.tsv`.  v142 / v141 **600 functions**, v140
 **599** built from C.
 
+**Twenty-fifth promotion (2026-11-21; matched in run 2026-11-21-15-sub-r46a, verified per tree in run
+2026-11-21-16-sub-r46s-staged).**  dsp_control_routines_au_46a.c (helper AU): DSP_SOS_LUT_Fetch (321 B) and its four
+FP constants, FilterLUT's idiom plus the type-2 index widened before the scale, `(int)(*p++ & 0x1f) * 4`.  v142 /
+v141 **601 functions**, v140 **600** built from C.  DSP_BiquadCoeff_Compute (+81) and DSP_SOS_Coeff_Compute (+87) are
+at the ROM's lengths with the ROM's instructions; only the frame slots of their pooled FP temporaries differ (no C
+spelling has moved them yet; a V4.23 probe of temporary placement is the next step).
+
 Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43d.py, forms a-l): `(int)i * 2 + 0x27` and
 `((struct pair *)&t[..])->hi` give sub-command 0x24's bytes (form b).  The write path stays: whichever variable holds
 the channel gets IZ while the field is a variable (forms a-f), and with the field nested the channel's `and` happens

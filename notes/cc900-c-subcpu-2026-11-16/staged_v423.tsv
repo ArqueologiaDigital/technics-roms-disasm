@@ -128,6 +128,7 @@ v140	v140/subcpu/cc900-staged/dsp_control_routines.c	8d8a441dc6dfa7fc7835a4ace81
 v140	v140/subcpu/cc900-staged/dsp_control_routines.c	8d8a441dc6dfa7fc7835a4ace810e856920a8a4a3dc311d892efa6fe0f88c734	Xr	2026-11-16-73-sub-r6	DSP_WriteParamWord	52	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_ar_41a.c	c2135b8516f2b6efd16e3421db03cc5576258956c565d619c1d3e2811c99e37b	Xr	2026-11-19-96-sub-r42s-staged	DSP_DetuneCurve_SignedFP	495	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_au_45a.c	2e774c3bd93b0a772787e09744f9830ad83afc5453e57f9bb4dc9fc5a2b6e8a7	Xr	2026-11-21-14-sub-r45s-staged	DSP_FilterLUT_Fetch	787	MATCH
+v140	v140/subcpu/cc900-staged/dsp_control_routines_au_46a.c	1f6611437f7c085237143e56019b43802f7d5728c7a216eb8d0cdd205d1561d6	Xr	2026-11-21-16-sub-r46s-staged	DSP_SOS_LUT_Fetch	321	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_b.c	f868c66a0ccc67ff94c348baadc403c823974877aebf391fae41b10ef08e9117	Xr	2026-11-16-73-sub-r6	DSP_State_ApplyBuf	61	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_b.c	f868c66a0ccc67ff94c348baadc403c823974877aebf391fae41b10ef08e9117	Xr	2026-11-16-73-sub-r6	DSP_State_LoadAndApplyAll	49	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_b_kernel.c	0fd35fed5c5fbf3d92fcb40ecceb61b41bb504efff448a60f39ef2728c5a33a9	Xr	2026-11-16-89-sub-staged3	DSP_State_ApplyBuf	61	MATCH
@@ -750,6 +751,7 @@ v141	v141/subcpu/cc900-staged/dsp_control_routines.c	5700bc35695c5f9690cfeb69de3
 v141	v141/subcpu/cc900-staged/dsp_control_routines.c	5700bc35695c5f9690cfeb69de3b7ec64c6e7b9d687ea83f7e71693c2bd40346	Xr	2026-11-16-73-sub-r6	DSP_WriteParamWord	52	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_ar_41a.c	c2135b8516f2b6efd16e3421db03cc5576258956c565d619c1d3e2811c99e37b	Xr	2026-11-19-96-sub-r42s-staged	DSP_DetuneCurve_SignedFP	495	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_au_45a.c	2e774c3bd93b0a772787e09744f9830ad83afc5453e57f9bb4dc9fc5a2b6e8a7	Xr	2026-11-21-14-sub-r45s-staged	DSP_FilterLUT_Fetch	787	MATCH
+v141	v141/subcpu/cc900-staged/dsp_control_routines_au_46a.c	1f6611437f7c085237143e56019b43802f7d5728c7a216eb8d0cdd205d1561d6	Xr	2026-11-21-16-sub-r46s-staged	DSP_SOS_LUT_Fetch	321	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_b.c	a848e61589bae25d4177c8b4cb82a943bec8e1161f06750bf6f29e963ffc271d	Xr	2026-11-16-73-sub-r6	DSP_State_ApplyBuf	61	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_b.c	a848e61589bae25d4177c8b4cb82a943bec8e1161f06750bf6f29e963ffc271d	Xr	2026-11-16-73-sub-r6	DSP_State_LoadAndApplyAll	49	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_b_kernel.c	1e5b98c2be3235e563cc376233db0dd9796c552934fd1dc7438df57158dda29a	Xr	2026-11-16-89-sub-staged3	DSP_State_ApplyBuf	61	MATCH
@@ -1372,6 +1374,7 @@ v142	v142/subcpu/cc900-staged/dsp_control_routines.c	a9edc3ea176097cbaaa363c06f3
 v142	v142/subcpu/cc900-staged/dsp_control_routines.c	a9edc3ea176097cbaaa363c06f3f7b870e32fd8150507ad3b569f755bccd6b66	Xr	2026-11-16-73-sub-r6	DSP_WriteParamWord	52	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_ar_41a.c	c2135b8516f2b6efd16e3421db03cc5576258956c565d619c1d3e2811c99e37b	Xr	2026-11-19-96-sub-r42s-staged	DSP_DetuneCurve_SignedFP	495	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_au_45a.c	2e774c3bd93b0a772787e09744f9830ad83afc5453e57f9bb4dc9fc5a2b6e8a7	Xr	2026-11-21-14-sub-r45s-staged	DSP_FilterLUT_Fetch	787	MATCH
+v142	v142/subcpu/cc900-staged/dsp_control_routines_au_46a.c	1f6611437f7c085237143e56019b43802f7d5728c7a216eb8d0cdd205d1561d6	Xr	2026-11-21-16-sub-r46s-staged	DSP_SOS_LUT_Fetch	321	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_b.c	b81fadf0397bfdaca2d2ca799da4b4819b3c0a8b971763a88cd60834a4fb31dc	Xr	2026-11-16-73-sub-r6	DSP_State_ApplyBuf	61	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_b.c	b81fadf0397bfdaca2d2ca799da4b4819b3c0a8b971763a88cd60834a4fb31dc	Xr	2026-11-16-73-sub-r6	DSP_State_LoadAndApplyAll	49	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_b_kernel.c	64414bc0f2b706d952a84d68eee56094511c7d4b18f2d70db38c83a1d4f54ca3	Xr	2026-11-16-89-sub-staged3	DSP_State_ApplyBuf	61	MATCH

@@ -1,0 +1,4 @@
+function	bytes	matches	best_diff
+DSP_BiquadCoeff_Compute	3026	-	+81 sub_AU_46c@Xr
+DSP_SOS_Coeff_Compute	2593	-	+87 sub_AU_46c@Xr
+DSP_SOS_LUT_Fetch	321	sub_AU_46a@Xr sub_AU_46c@Xr	
