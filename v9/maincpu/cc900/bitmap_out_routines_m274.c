@@ -27,3 +27,16 @@ void BitMapOut_UpdateDisplayWidget(unsigned char n, char *d)
 	}
 	d[16] = 0;
 }
+
+/* cc900-module: SetDialFocus */
+extern void PanelMem_InitFromFactory(unsigned int);
+extern void PanelTlv_ValidatePanelMemory(unsigned int);
+extern void PanelMemory_PostSlotLoad(unsigned char n, int r);
+
+void PanelMemory_PostSlotLoad(unsigned char n, int r)
+{
+  if (r < 0)
+    PanelMem_InitFromFactory(n);
+  else
+    PanelTlv_ValidatePanelMemory(n);
+}

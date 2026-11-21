@@ -7510,28 +7510,15 @@ FDC_ReturnAndPop:
 	ld	hl, 1:i3
 	ret
 
-FDC_StoreDiskType:
-	ld a, (xsp + 4)
-	ld (0x03e3e4:24), a
-	ldw (0x03e3e6:24), 0x0001
-	ld (0x03e3be:24), 0x00
-	ret
+FDC_StoreDiskType:	.include "includes/generated/cc900/FDC_StoreDiskType.s"	; C: cc900/smf_event_processor_m240_xr_b.c
 
-FDC_ClearDiskChangeStatus:
-	ldw	(0x3e3e6:24), 0
-	ld	a, (0x3e3e4:24)
-	ld	(0x3e3e2:24), a
-	ret
+FDC_ClearDiskChangeStatus:	.include "includes/generated/cc900/FDC_ClearDiskChangeStatus.s"	; C: cc900/smf_event_processor_m240_xr_b.c
 ; FDC_ReadDiskChangeStatus: Returns HL = the DiskChanged word of FDC_DiskTypeState (0x3E3E6): 1 after
 ;   FDC_StoreDiskType, 0 after FDC_ClearDiskChangeStatus. Basis: callers + body -- SeqChan_ByteBlockC calls it first
 ;   and, when non-zero, acknowledges with FDC_ClearDiskChangeStatus and returns 6 (disk changed).
-FDC_ReadDiskChangeStatus:
-	ld	hl, (0x3e3e6:24)
-	ret
+FDC_ReadDiskChangeStatus:	.include "includes/generated/cc900/FDC_ReadDiskChangeStatus.s"	; C: cc900/smf_event_processor_m240_xr_b.c
 
-FDC_ReadDiskType:
-	ld l, (0x03e3e4:24)
-	ret
+FDC_ReadDiskType:	.include "includes/generated/cc900/FDC_ReadDiskType.s"	; C: cc900/smf_event_processor_m240_xr_b.c
 
 format_FD:
 	extz wa
@@ -8915,15 +8902,9 @@ FindFirst_SndTable:	.include "includes/generated/cc900/FindFirst_SndTable.s"	; C
 	.set	FindFirst_SndTable_Fail, FindFirst_SndTable + 40
 	.set	FindFirst_SndTable_Return, FindFirst_SndTable + 50
 
-FileIO_ValidateHandle:
-	or xwa, xwa
-	jr nz, FileIO_ValidateHandle_Ok
-	ldw hl, 0xffff
-	ret
-
-FileIO_ValidateHandle_Ok:
-	ld hl, 0:i3
-	ret
+FileIO_ValidateHandle:	.include "includes/generated/cc900/FileIO_ValidateHandle.s"	; C: cc900/smf_event_processor_m240_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_ValidateHandle_Ok, FileIO_ValidateHandle + 8
 
 FileIO_ReadNextDirEntry:
 	dec 4, xsp

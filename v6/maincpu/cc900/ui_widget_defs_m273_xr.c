@@ -42,3 +42,13 @@ extern void DrawFunc_Return(void *p);
 void DrawFunc_Return(void *p)
 {
 }
+
+/* cc900-module: SetDialFocus */
+extern void VGA_ScreenUnblank(void);
+extern void InitGraphics_SetupVRAM_Loop(void);
+
+void InitGraphics_SetupVRAM_Loop(void)
+{
+  ram_30464 = 1;
+  VGA_ScreenUnblank();
+}

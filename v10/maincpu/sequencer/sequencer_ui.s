@@ -201,11 +201,7 @@ TrAsSureLang_ReturnZero:
 	ret
 
 ; Posts EVT_LYRICS_PLAY_REQUEST with 0x720006 and argument 0 (ApPostEvent).
-Audio_SendEventPostCmd:
-	ld xwa, 0x720006
-	ld xbc, EVT_LYRICS_PLAY_REQUEST
-	ld xde, 0:i3
-	jp ApPostEvent
+Audio_SendEventPostCmd:	.include "includes/generated/cc900/Audio_SendEventPostCmd.s"	; C: cc900/sequencer_ui_m232.c
 
 Audio_ExternalCallback:
 	ld xwa, 0x720006
@@ -2710,12 +2706,7 @@ TrAsGrid_Epilogue:
 	ret
 
 ; Out: HL = word A of TrAsGrid_LookupTable_Table.
-TrAsGrid_LookupTable:
-	extz wa
-	add wa, wa
-	lda xbc, (TrAsGrid_LookupTable_Table:24)
-	ld	hl, (xbc+wa)
-	ret
+TrAsGrid_LookupTable:	.include "includes/generated/cc900/TrAsGrid_LookupTable.s"	; C: cc900/sequencer_ui_m232.c
 
 ; TrAsGrid_StepListValue (formerly TrAsGrid_ByteData1: it is code) -- A :=
 ; position of value A in the 20-entry list TrAsGrid_ByteData1_Table; step

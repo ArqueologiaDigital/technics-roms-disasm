@@ -313,3 +313,11 @@ void SePitLfo1_OnSwitch15(unsigned char a)
 		SeMenu_SendEvent(TT_SEMENU, 0);
 	}
 }
+
+extern unsigned char __near ram_694;
+extern void SeMenu_ReadObjParam_Data(unsigned char a);
+
+void SeMenu_ReadObjParam_Data(unsigned char a)
+{
+  ram_694 = a;
+}

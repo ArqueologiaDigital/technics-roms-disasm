@@ -132,3 +132,13 @@ void FDC_SendParams_Specify(void)
     lo = FDC_SPECIFY_ND & 1;
     FDC_SendParameterByte(hi | lo);
 }
+
+/* cc900-module: ApTaskControl ClearAllSongSlots Composer_GetPassword FindFirstEmptySlot */
+extern unsigned char __tiny PD;
+extern unsigned char Check_for_Floppy_Disk_Change(void);
+
+unsigned char Check_for_Floppy_Disk_Change(void)
+{
+  if (PD & 0x40) return 0;
+  return 1;
+}

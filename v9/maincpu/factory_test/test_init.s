@@ -337,23 +337,11 @@ CreateRunFDOp_Return:
 
 ; FDTest_Format2ddAndLabel: Switch 4 of the FDD test title: format_FD(2) (a 2DD disk), then
 ;   FileIO_CheckPathAndVolumeLabel("TEST_HAMA"); HL = 0. Basis: callers + body.
-FDTest_Format2ddAndLabel:
-	ld wa, 2:i3
-	call format_FD
-	lda xwa, (FDTest_Format2ddAndLabel_Str_TEST_HAMA:24)
-	call FileIO_CheckPathAndVolumeLabel
-	ld hl, 0:i3
-	ret
+FDTest_Format2ddAndLabel:	.include "includes/generated/cc900/FDTest_Format2ddAndLabel.s"	; C: cc900/test_init_m159_xr_b.c
 
 ; FDTest_Format2hdAndLabel: Switch 5 of the FDD test title: format_FD(3) (a 2HD disk), then
 ;   FileIO_CheckPathAndVolumeLabel("TESTHAMA2HD"); HL = 0. Basis: callers + body.
-FDTest_Format2hdAndLabel:
-	ld wa, 3:i3
-	call format_FD
-	lda xwa, (FDTest_Format2hdAndLabel_Str_TESTHAMA2HD:24)
-	call FileIO_CheckPathAndVolumeLabel
-	ld hl, 0:i3
-	ret
+FDTest_Format2hdAndLabel:	.include "includes/generated/cc900/FDTest_Format2hdAndLabel.s"	; C: cc900/test_init_m159_xr.c
 
 ; SendEventWithParam -- Sends event 0x1c00025 with xwa as parameter via 0xfa9660
 ; Args: xwa = event parameter (moved to xde)

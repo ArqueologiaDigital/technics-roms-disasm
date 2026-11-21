@@ -116,10 +116,7 @@ SubCPU_Payload_GetErrorFlag:	.include "includes/generated/cc900/SubCPU_Payload_G
 
 SubCPU_PayloadErrorStore:	.include "includes/generated/cc900/SubCPU_PayloadErrorStore.s"	; C: cc900/system_handlers.c
 
-Sys_CheckPowerStableFlag:
-	cpw (0xffcc:24), 0x5a5a
-	scc16 z, hl
-	ret
+Sys_CheckPowerStableFlag:	.include "includes/generated/cc900/Sys_CheckPowerStableFlag.s"	; C: cc900/system_handlers_m0.c
 
 Vga_WritePortShortDelay:
 	ld de, 0:i3
@@ -244,17 +241,7 @@ Vga_BackupPlane3ToBuffer:
 	calr Vga_SelectWritePlane
 	jp Timer3_Start
 
-Vga_RestorePlane3FromBuffer:
-	call Timer3_Stop
-	ld wa, 3:i3
-	calr Vga_SelectWritePlane
-	ld xwa, 0x69800
-	ld xbc, 0x1a9800
-	ld xde, 0xb400
-	call Copy_DE_words_from_XBC_to_XWA
-	ld wa, 0:i3
-	calr Vga_SelectWritePlane
-	jp Timer3_Start
+Vga_RestorePlane3FromBuffer:	.include "includes/generated/cc900/Vga_RestorePlane3FromBuffer.s"	; C: cc900/system_handlers_m0.c
 
 ; Boot_InitWorkRAM -- Early-boot DRAM initialisation
 ;
@@ -3281,13 +3268,9 @@ TaskSched_DelayTicks_SpinLoop:
 	jr gt, TaskSched_DelayTicks_SpinLoop
 	ret
 
-Timer3_Start:
-	set	3, (T8RUN:8)
-	ret
+Timer3_Start:	.include "includes/generated/cc900/Timer3_Start.s"	; C: cc900/system_handlers_m0.c
 
-Timer3_Stop:
-	res	3, (T8RUN:8)
-	ret
+Timer3_Stop:	.include "includes/generated/cc900/Timer3_Stop.s"	; C: cc900/system_handlers_m2.c
 
 SeqBuf_BytecodeSnippet:
 	incw	1, (1475:16)
@@ -6231,15 +6214,9 @@ FlashOp_Epilogue10:
 	lda xsp, (xsp + 10)
 	ret
 
-Flash_CheckReady:
-	bit	5, (P7:8)
-	jr z, Flash_CheckReady_NotReady
-	ld hl, 0:i3
-	ret
-
-Flash_CheckReady_NotReady:
-	ldw hl, 0xffff
-	ret
+Flash_CheckReady:	.include "includes/generated/cc900/Flash_CheckReady.s"	; C: cc900/system_handlers_m3.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Flash_CheckReady_NotReady, Flash_CheckReady + 8
 
 Flash_WaitUntilReady:
 	extz wa
@@ -6270,24 +6247,11 @@ Flash_InitAllBanks:
 	ld (0x0205e2:24), hl
 	ret
 
-Flash_FillBuffer:
-	ld de, 0:i3
-	cp bc, 0:i3
-	ret ule
+Flash_FillBuffer:	.include "includes/generated/cc900/Flash_FillBuffer.s"	; C: cc900/system_handlers_m3.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Flash_FillBuffer_Loop, Flash_FillBuffer + 6
 
-Flash_FillBuffer_Loop:
-	ld (xwa+), DE
-	inc 1, de
-	cp de, bc
-	jr c, Flash_FillBuffer_Loop
-	ret
-
-Flash_CopyROMToBuffer:
-	ld xbc, xwa
-	and xbc, MASK_BITS16_23
-	ld xwa, 0x69800
-	ld xde, 0x8000
-	jp Copy_DE_words_from_XBC_to_XWA
+Flash_CopyROMToBuffer:	.include "includes/generated/cc900/Flash_CopyROMToBuffer.s"	; C: cc900/system_handlers_m3.c
 
 Flash_WriteBufferToChip:
 	lda xsp, (xsp - 10)

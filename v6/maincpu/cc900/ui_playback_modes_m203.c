@@ -82,3 +82,74 @@ void DisplayMode_DispatchEvents(void)
         break;
     }
 }
+
+/* cc900-module: CDlikeSwTtl_ShowPdTitle CDlikeSwTtl_ShowSongTitle SeqInit_LookupDispatchEntry SeqRecPlay_DisableBoth SeqRecPlay_EnablePlayOnly SeqRecPlay_EnableRecordOnly */
+extern unsigned char __near ram_1d46;
+extern void SeqRecPlay_EnablePlayOnly(void);
+extern void Acc_StartFillIn(void);
+extern void CDlikeSwTtl_DocConfirmStart(void);
+extern void CDlikeSwTtl_ShowPdTitle(void);
+extern void SeqRecPlay_DisableBoth(void);
+extern void CDlikeSwTtl_PdBitCheck(void);
+extern void CDlikeSwTtl_DocBitCheck(void);
+extern void CDlikeSwTtl_PdConfirmStart(void);
+extern void CDlikeSwTtl_ShowSongTitle(void);
+extern void CDlikeSwTtl_SongConfirmStart(void);
+
+void CDlikeSwTtl_DocConfirmStart(void)
+{
+  if (SeqState_GetFlags() & 2)
+    ram_1d46 = 3;
+  else if (SeqState_GetFlags() & 1)
+    ram_1d46 = 2;
+  else {
+    ram_1d46 = 1;
+    CDlikeSwTtl_ShowDocTitle();
+    SeqRecPlay_EnablePlayOnly();
+  }
+  Acc_StartFillIn();
+}
+void CDlikeSwTtl_PdBitCheck(void)
+{
+  if (!(SeqState_GetFlags() & 2) && !(SeqState_GetFlags() & 1))
+    CDlikeSwTtl_ShowPdTitle();
+  else {
+    SeqRecPlay_DisableBoth();
+    Song_AbortPlayback();
+  }
+}
+void CDlikeSwTtl_DocBitCheck(void)
+{
+  if (!(SeqState_GetFlags() & 2) && !(SeqState_GetFlags() & 1))
+    CDlikeSwTtl_ShowDocTitle();
+  else {
+    SeqRecPlay_DisableBoth();
+    Song_AbortPlayback();
+  }
+}
+void CDlikeSwTtl_PdConfirmStart(void)
+{
+  if (SeqState_GetFlags() & 2)
+    ram_1d46 = 3;
+  else if (SeqState_GetFlags() & 1)
+    ram_1d46 = 2;
+  else {
+    ram_1d46 = 1;
+    CDlikeSwTtl_ShowPdTitle();
+    SeqRecPlay_EnablePlayOnly();
+  }
+  Acc_StartFillIn();
+}
+void CDlikeSwTtl_SongConfirmStart(void)
+{
+  if (SeqState_GetFlags() & 2)
+    ram_1d46 = 3;
+  else if (SeqState_GetFlags() & 1)
+    ram_1d46 = 2;
+  else {
+    ram_1d46 = 1;
+    CDlikeSwTtl_ShowSongTitle();
+    SeqRecPlay_EnablePlayOnly();
+  }
+  Acc_StartFillIn();
+}

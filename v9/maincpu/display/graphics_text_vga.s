@@ -1449,20 +1449,12 @@ GetFrameSPSize:	.include "includes/generated/cc900/GetFrameSPSize.s"	; C: cc900/
 ; GetCharHeight - Return character height for a font
 ; Input:  XWA = font_id
 ; Output: HL = character height in pixels
-GetCharHeight:
-	sll xwa, 4		; font_id * 16
-	add xwa, 0x945c00	; + table base
-	ld hl, (xwa + 2)	; height at offset +2
-	ret
+GetCharHeight:	.include "includes/generated/cc900/GetCharHeight.s"	; C: cc900/graphics_text_vga_m274.c
 
 ; GetCharDescent - Return character descent for a font
 ; Input:  XWA = font_id
 ; Output: HL = descent in pixels (below baseline)
-GetCharDescent:
-	sll xwa, 4		; font_id * 16
-	add xwa, 0x945c00	; + table base
-	ld hl, (xwa + 4)	; descent at offset +4
-	ret
+GetCharDescent:	.include "includes/generated/cc900/GetCharDescent.s"	; C: cc900/graphics_text_vga_m274.c
 
 GetCenteredDelta:
 	cp xwa, 0x7

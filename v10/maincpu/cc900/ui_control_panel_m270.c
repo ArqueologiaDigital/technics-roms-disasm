@@ -27,3 +27,36 @@ void UI_InterruptTitleByIndex(unsigned char i)
 	DeleteEvent(-1L, 0x1c00016L);
 	ApPostEvent(-1L, 0x1c00016L, 0x1a00000L + i);
 }
+
+/* cc900-module: ClearAllSongSlots FindFirstEmptySlot SetDialFocus */
+struct pt { int x, y; };
+extern void DrawLine(struct pt *, struct pt *, int);
+extern void DrawLineHelper(struct pt *a, struct pt *b, int c, int swap);
+#define EVT_EDIT_DOWN_SET 0x1e00070L
+extern void UI_PostDialRangeEvent(unsigned char a);
+#define EVT_PARA_DRAW 0x1c0000fL
+#define EVT_SELE_DRAW 0x1c0000eL
+extern void UI_PostTimerResetEvent(void);
+
+void DrawLineHelper(struct pt *a, struct pt *b, int c, int swap)
+{
+  struct pt p1;
+  struct pt p2;
+  if (swap != 0) {
+    p1.x = a->y;
+    p1.y = a->x;
+    p2.x = b->y;
+    p2.y = b->x;
+    DrawLine(&p1, &p2, c);
+  } else
+    DrawLine(a, b, c);
+}
+void UI_PostDialRangeEvent(unsigned char a)
+{
+  ApPostEvent(-1L, EVT_EDIT_DOWN_SET, a);
+}
+void UI_PostTimerResetEvent(void)
+{
+  ApPostEvent(-1L, EVT_PARA_DRAW, 0L);
+  ApPostEvent(-1L, EVT_SELE_DRAW, 0L);
+}

@@ -13197,29 +13197,13 @@ ResetPage_Epilogue:
 	inc 8, xsp
 	ret
 
-Util_SignExtendAndDouble:
-	exts xwa
-	ld xhl, xwa
-	add xhl, xhl
-	add xhl, xwa
-	sll xhl, 2
-	add xhl, (0x3ea30:24)
-	ret
+Util_SignExtendAndDouble:	.include "includes/generated/cc900/Util_SignExtendAndDouble.s"	; C: cc900/drawbar_panel_ui_m264_b.c
 
-Util_StorePartArrayBase:
-	ld (0x03ea30:24), xwa
-	ret
+Util_StorePartArrayBase:	.include "includes/generated/cc900/Util_StorePartArrayBase.s"	; C: cc900/drawbar_panel_ui_m264_xr.c
 
-PsMixer_ReadWordArrayEntry:
-	exts xwa
-	add xwa, xwa
-	add xwa, (0x3ea34:24)
-	ld hl, (xwa)
-	ret
+PsMixer_ReadWordArrayEntry:	.include "includes/generated/cc900/PsMixer_ReadWordArrayEntry.s"	; C: cc900/drawbar_panel_ui_m264_xr.c
 
-Util_StoreGridArrayBase:
-	ld (0x03ea34:24), xwa
-	ret
+Util_StoreGridArrayBase:	.include "includes/generated/cc900/Util_StoreGridArrayBase.s"	; C: cc900/drawbar_panel_ui_m264_b.c
 
 
 ; -----------------------------------------------------------------------------
@@ -18968,31 +18952,13 @@ AcPresCtrl_Epilogue:
 	inc 8, xsp
 	ret
 
-Seq_DispatchEventType5:
-	ld de, wa
-	exts xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_START_SONG
-	jp ApPostEvent
+Seq_DispatchEventType5:	.include "includes/generated/cc900/Seq_DispatchEventType5.s"	; C: cc900/drawbar_panel_ui_m264_b.c
 
-Seq_DispatchEventType6:
-	ld de, wa
-	exts xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_END_SONG
-	jp ApPostEvent
+Seq_DispatchEventType6:	.include "includes/generated/cc900/Seq_DispatchEventType6.s"	; C: cc900/drawbar_panel_ui_m264_b.c
 
-Seq_StartMainControl:
-	ld xwa, NAKA_MAINFUNC_MainPreControl
-	ld xbc, EVT_INIT_PRESENTATION
-	ld xde, 0:i3
-	jp MainPreControl
+Seq_StartMainControl:	.include "includes/generated/cc900/Seq_StartMainControl.s"	; C: cc900/drawbar_panel_ui_m0_xr.c
 
-Seq_StartMainControlAlt:
-	ld xwa, NAKA_MAINFUNC_MainPreControl
-	ld xbc, EVT_EXIT_PRESENTATION
-	ld xde, 0:i3
-	jp MainPreControl
+Seq_StartMainControlAlt:	.include "includes/generated/cc900/Seq_StartMainControlAlt.s"	; C: cc900/drawbar_panel_ui_m264_b.c
 
 Seq_IsMelodyActive:
 	ld xwa, NAKA_MAINFUNC_MainPreControl

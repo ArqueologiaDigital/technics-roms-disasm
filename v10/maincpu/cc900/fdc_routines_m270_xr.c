@@ -263,3 +263,13 @@ void FDC_CONFIG_VERIFY(void)
     FDC_CmdRecalibrate();
     FDC_INIT_FLAG = 0;
 }
+
+/* cc900-module: ApTaskControl ClearAllSongSlots Composer_GetPassword FindFirstEmptySlot */
+extern unsigned char __tiny PD;
+extern unsigned char Check_for_Floppy_Disk_Change(void);
+
+unsigned char Check_for_Floppy_Disk_Change(void)
+{
+  if (PD & 0x40) return 0;
+  return 1;
+}

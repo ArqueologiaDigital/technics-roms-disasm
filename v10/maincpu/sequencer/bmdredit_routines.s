@@ -523,11 +523,7 @@ BmDrEdit_DecrementDelayB:
 
 ; When the timer 0x295e has reached 0x80: clears it and tail-jumps to
 ; BmDrEdit_DelayAction_PlayClick.
-BmDrEdit_DelayBExpired:
-	cp (0x295e:16), 128
-	ret nz
-	ld (0x295e:16), 0
-	jrl BmDrEdit_DelayAction_PlayClick
+BmDrEdit_DelayBExpired:	.include "includes/generated/cc900/BmDrEdit_DelayBExpired.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 BmDrEdit_DelayReturn:
 	ret
@@ -577,12 +573,7 @@ BmDrEdit_AllocateNote_NextSlot:
 
 ; Leaves the editor with an error: clears bit 0 of 0x8d88, sends sound command 0xee with
 ; GLOBAL_ERROR_CODE = 0x0f (SoundCtrl_SaveAndSendCmd_EE) and sets bit 4 of DEMO_CONTROL_FLAGS.
-BmDrEdit_RefreshDisplayState:
-	res 0, (0x8d88:16)
-	ldw wa, 0xf
-	call SoundCtrl_SaveAndSendCmd_EE
-	set 4, (DEMO_CONTROL_FLAGS:16)
-	ret
+BmDrEdit_RefreshDisplayState:	.include "includes/generated/cc900/BmDrEdit_RefreshDisplayState.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; HL = 0xffff when entry A of the song slot's type table (Part_ReadVoiceByte, WA = 0) is 0x0d, 0x0f
 ; or 0x10, else 0.
@@ -814,22 +805,10 @@ BmDrEdit_DecrementGateTime:
 	jrl BmDrEdit_UpdateGateDisplay
 
 ; Velocity 0x278a + 1, at most 0x7f, then NoteEditSy_SendVelocityCmd (tail jump).
-BmDrEdit_IncrementVelocityValue:
-	ld a, (0x278a:16)
-	cp a, 0x7f
-	ret nc
-	inc 1, a
-	ld (0x278a:16), a
-	jp NoteEditSy_SendVelocityCmd
+BmDrEdit_IncrementVelocityValue:	.include "includes/generated/cc900/BmDrEdit_IncrementVelocityValue.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Velocity 0x278a - 1, at least 1, then NoteEditSy_SendVelocityCmd (tail jump).
-BmDrEdit_DecrementVelocityValue:
-	ld a, (0x278a:16)
-	cp a, 1:i3
-	ret z
-	dec 1, a
-	ld (0x278a:16), a
-	jp NoteEditSy_SendVelocityCmd
+BmDrEdit_DecrementVelocityValue:	.include "includes/generated/cc900/BmDrEdit_DecrementVelocityValue.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Unless the timer runs with an action other than 3: BmDrEdit_IncrementDuration.
 BmDrEdit_DurationUp_Check:
@@ -913,35 +892,14 @@ BmDrEdit_DecrementDuration_Send:
 	jp NoteEditSy_SendScrollCmd8
 
 ; Only while the timer is idle: 0x2792 + 1, at most 0x60, then NoteEditSy_SendModeScrollCmd.
-BmDrEdit_ModeScrollUp:
-	bit 7, (0x295c:16)
-	ret nz
-	ld wa, (0x2792:16)
-	cp wa, 0x60
-	ret nc
-	inc 1, wa
-	ld (0x2792:16), wa
-	jp NoteEditSy_SendModeScrollCmd
+BmDrEdit_ModeScrollUp:	.include "includes/generated/cc900/BmDrEdit_ModeScrollUp.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Only while the timer is idle: 0x2792 - 1, at least 1, or 48 when it was 0; then
 ; NoteEditSy_SendModeScrollCmd.
-BmDrEdit_ModeScrollDown:
-	bit 7, (0x295c:16)
-	ret nz
-	ld wa, (0x2792:16)
-	cp wa, 0:i3
-	jr nz, BmDrEdit_ModeScrollDown_Clamp
-	ldw (0x2792:16), 48
-	jr BmDrEdit_ModeScrollDown_Send
-
-BmDrEdit_ModeScrollDown_Clamp:
-	cp wa, 1:i3
-	ret ule
-	dec 1, wa
-	ld (0x2792:16), wa
-
-BmDrEdit_ModeScrollDown_Send:
-	jp NoteEditSy_SendModeScrollCmd
+BmDrEdit_ModeScrollDown:	.include "includes/generated/cc900/BmDrEdit_ModeScrollDown.s"	; C: cc900/bmdredit_routines_m232_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_ModeScrollDown_Clamp, BmDrEdit_ModeScrollDown + 22
+	.set	BmDrEdit_ModeScrollDown_Send, BmDrEdit_ModeScrollDown + 32
 
 BmDrEdit_SetFeedbackTimer:
 	ld (0x295c:16), 133
@@ -1324,9 +1282,7 @@ BmDrEdit_ClearSlots_Loop:
 	ret
 
 ; BmDrEdit_CheckChannelActive, then tail-jumps to BmDrEdit_SelectActiveChannel.
-BmDrEdit_CheckAndSelectChannel:
-	calr BmDrEdit_CheckChannelActive
-	jrl BmDrEdit_SelectActiveChannel
+BmDrEdit_CheckAndSelectChannel:	.include "includes/generated/cc900/BmDrEdit_CheckAndSelectChannel.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 BmDrEdit_FindNoteInSlots:
 	pushw iz
@@ -2433,11 +2389,7 @@ BmDrEdit_SendMetronomeNoteOn:
 
 ; Plays the note under the editor cursor with its velocity: Metronome_PlayClick,
 ; BmDrEdit_BuildNoteOnEvent_WithVelocity, and 0x295e = 134.
-BmDrEdit_SendMetronomeNoteOn_Alt:
-	calr Metronome_PlayClick
-	calr BmDrEdit_BuildNoteOnEvent_WithVelocity
-	ld (0x295e:16), 134
-	ret
+BmDrEdit_SendMetronomeNoteOn_Alt:	.include "includes/generated/cc900/BmDrEdit_SendMetronomeNoteOn_Alt.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Alias entry: jumps to BmDrEdit_WriteNoteOffEntry.
 Metronome_PlayClick:
@@ -2566,15 +2518,9 @@ BmDrEdit_AlignGridBackward_Store:
 
 ; Restores the saved cursor (BmDrEdit_LoadAlternateState; a pending error records 0xb8), then goes
 ; on to BmDrEdit_CountMeasuresAndValidate.
-BmDrEdit_LoadAlternateAndValidate:
-	calr BmDrEdit_LoadAlternateState
-	cp (SEQ_ERROR_CODE:16), 0
-	jr z, BmDrEdit_LoadAlternateAndValidate_Done
-	ldw wa, 0xb8
-	call SeqData_SetErrorCode
-
-BmDrEdit_LoadAlternateAndValidate_Done:
-	jr BmDrEdit_CountMeasuresAndValidate
+BmDrEdit_LoadAlternateAndValidate:	.include "includes/generated/cc900/BmDrEdit_LoadAlternateAndValidate.s"	; C: cc900/bmdredit_routines_m232_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_LoadAlternateAndValidate_Done, BmDrEdit_LoadAlternateAndValidate + 17
 
 ; Counts the bar markers (0x81) from the playback position to the next end (0x82) or bar-start
 ; (0x84) marker into 0x2772.  A pending error records 0xd1 before and 0xce after the scan.
@@ -2740,13 +2686,7 @@ BmDrEdit_WalkScan_Return:
 
 ; Unless slot 0 at 0x2746 is in use or the timer runs: UI_ChangeTitleByIndex with WA = 0x96
 ; (tail jump).
-BmDrEdit_PostModeChange96:
-	bit 7, (0x2746:16)
-	ret nz
-	bit 7, (0x295c:16)
-	ret nz
-	ldw wa, TT_SQNOTECYCP
-	jp UI_ChangeTitleByIndex
+BmDrEdit_PostModeChange96:	.include "includes/generated/cc900/BmDrEdit_PostModeChange96.s"	; C: cc900/bmdredit_routines_m232_b.c
 
 ; Unless the timer runs with an action other than 5: clears bit 0 of 0x295f and goes on to
 ; BmDrEdit_DrumVoiceUp.
@@ -2833,23 +2773,11 @@ BmDrEdit_DrumVoiceDown_UpdateDisplay:
 
 ; In drum mode (bit 0 of 0x2742) sets the editor note 0x2786 to the visible top row (0x279e)
 ; plus the cursor row (0x27a0); does nothing in melodic mode.
-BmDrEdit_CalcTrackPosition:
-	bit 0, (0x2742:16)
-	ret z
-	ld wa, (0x279e:16)
-	add wa, (0x27a0:16)
-	ld (0x2786:16), a
-	ret
+BmDrEdit_CalcTrackPosition:	.include "includes/generated/cc900/BmDrEdit_CalcTrackPosition.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Unless slot 0 at 0x2746 is in use or the timer runs: UI_ChangeTitleByIndex with WA = 0x99
 ; (tail jump).
-BmDrEdit_PostModeChange99:
-	bit 7, (0x2746:16)
-	ret nz
-	bit 7, (0x295c:16)
-	ret nz
-	ldw wa, TT_SQDRMCYCP
-	jp UI_ChangeTitleByIndex
+BmDrEdit_PostModeChange99:	.include "includes/generated/cc900/BmDrEdit_PostModeChange99.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 BmDrEdit_DelayAction_WalkAndUpdateAlt:
 	calr BmDrEdit_SetupAndWalkToNote
@@ -2857,10 +2785,7 @@ BmDrEdit_DelayAction_WalkAndUpdateAlt:
 
 ; Plays the note under the cursor (BmDrEdit_SendMetronomeNoteOn) and starts the timer 0x295e =
 ; 134.
-BmDrEdit_PlayNoteAndSetDelay:
-	calr BmDrEdit_SendMetronomeNoteOn
-	ld (0x295e:16), 134
-	ret
+BmDrEdit_PlayNoteAndSetDelay:	.include "includes/generated/cc900/BmDrEdit_PlayNoteAndSetDelay.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 BmDrEdit_ApplyVelocityChange:
 	lda xsp, (xsp - 20)
@@ -3003,15 +2928,10 @@ PartCtrl_ReadWordWithBoundsCheck:	.include "includes/generated/cc900/PartCtrl_Re
 	.set	BmDrEdit_BoundsCheck_Epilog, PartCtrl_ReadWordWithBoundsCheck + 54
 
 ; Zero-extends BC and jumps to PartCtrl_ReadByte.
-PartCtrl_ReadByteExtended:
-	extz bc
-	jp PartCtrl_ReadByte
+PartCtrl_ReadByteExtended:	.include "includes/generated/cc900/PartCtrl_ReadByteExtended.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Zero-extends BC and DE and jumps to PartCtrl_WriteByteToBuf.
-PartCtrl_WriteByte_ZeroExtended:
-	extz bc
-	extz de
-	jp PartCtrl_WriteByteToBuf
+PartCtrl_WriteByte_ZeroExtended:	.include "includes/generated/cc900/PartCtrl_WriteByte_ZeroExtended.s"	; C: cc900/bmdredit_routines_m232_d.c
 
 ; Inserts one bar marker (0x81) at the editor position of part (BMDREDIT_CHANNEL) + 1:
 ; BmDrEdit_SaveSongPosition, then BmDrEdit_ApplyVelocityChange with a one-byte event.

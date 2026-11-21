@@ -1486,3 +1486,27 @@ Util_SignExtendAndDouble	17	2026-11-21-3-p6-r59	p6_R_20r1m264a@O3XSXr p6_R_20r1m
 Util_StoreGridArrayBase	6	2026-11-21-3-p6-r59	p6_R_20r1m264a@O3XSXr p6_R_20r1m264a@O3Xr p6_R_20r1m264a@Xr
 Vga_RestorePlane3FromBuffer	37	2026-11-21-3-p6-r59	p6_R_20r1m2a@O3Xr p6_R_20r1m2a@Xr
 Voice_ResetSearchState	12	2026-11-21-3-p6-r59	p6_R_20r1m300a@O3XSXr p6_R_20r1m300a@O3Xr p6_R_20r1m300a@Xr
+MidiPkt_XferOnDataPacket	33	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr
+MidiPkt_XferOnGroupEnd	34	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+MidiPkt_XferOnSeqEventBlock	44	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeWrtSnd_OnColumn7	17	2026-11-21-5-p6-r60	p6_S_20r2m152c@O3XSXr p6_S_20r2m152c@O3Xr
+SeqChan_DefaultHandler	13	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_ProcessStepCmd	13	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_StepCmd_Field13Write	57	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field1to2	44	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field20to21	46	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field2to3	44	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field4to5	44	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field5to6	48	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field8to9	46	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_StepCmd_Field9to10	46	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_WriteField_Data_A	17	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_WriteField_Data_B	17	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_WriteField_Data_C	17	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_WriteField_Data_D	17	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_WriteField_Data_E	17	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr p6_S_20r2m287b@O3XSXr p6_S_20r2m287b@O3Xr p6_S_20r2m287b@Xr
+SeqChan_XferStep_AccompBlock1	46	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_XferStep_AccompBlock2	46	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_XferStep_CurrentSong	57	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_XferStep_SongSlots	57	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr
+SeqChan_XferStep_StyleImageBlock1	45	2026-11-21-5-p6-r60	p6_S_20r2m287a@O3XSXr p6_S_20r2m287a@O3Xr p6_S_20r2m287a@Xr

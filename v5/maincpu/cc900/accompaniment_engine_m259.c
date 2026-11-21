@@ -21,3 +21,24 @@ void SoundCtrl_SendAccTempo(void)
     if (ACTIVE_TITLE == 181)
         ApDeliveryEvent(0xb5001eL, 0x1c0000bL, 0L);
 }
+
+extern void Kernel_SemaSignal(int);
+extern void AccAudio_LockRelease(void);
+extern long ApPostEvent(long, long, long);
+#define EVT_SET_NOT_DRAW_FLAG 0x1e0009eL
+extern void AccSeq_PostEvent9E_Enable(void);
+extern void Kernel_SemaWait(int);
+extern void AccAudio_LockAcquire(void);
+
+void AccAudio_LockRelease(void)
+{
+  Kernel_SemaSignal(8);
+}
+void AccSeq_PostEvent9E_Enable(void)
+{
+  ApPostEvent(-1L, EVT_SET_NOT_DRAW_FLAG, 1L);
+}
+void AccAudio_LockAcquire(void)
+{
+  Kernel_SemaWait(8);
+}

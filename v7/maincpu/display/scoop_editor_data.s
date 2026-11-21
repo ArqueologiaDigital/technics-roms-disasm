@@ -328,130 +328,15 @@ SeAmpAmp1_OnSwitch15:	.include "includes/generated/cc900/SeAmpAmp1_OnSwitch15.s"
 SeAmpAmp2_OnColumn3:	.include "includes/generated/cc900/SeAmpAmp2_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_c.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeAmpAmp2_OnColumn3_Skip6, SeAmpAmp2_OnColumn3 + 105
-SeAmpAmp2_OnColumn4:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+2)
-	dec	1, c
-	extz	bc
-	pushw	bc
-	ld	bc, 1:i3
-	ld	de, 0:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeAmpAmp2_OnColumn4_Skip7
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 27
-	call	SeMenu_RegisterElement_Extended
-	pushw	1
-	pushw	44
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeAmpAmp2_OnColumn4_Skip7:
-	ld	wa, 4:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
-SeAmpAmp2_OnColumn5:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+4)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+8)
-	extz	wa
-	ld	e, (xsp+4)
-	inc	1, e
-	extz	de
-	ld	c, (xsp+2)
-	dec	1, c
-	extz	bc
-	pushw	bc
-	ld	bc, 0:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeAmpAmp2_OnColumn5_Skip8
-	lda	xwa, (xsp+6)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 26
-	call	SeMenu_RegisterElement_Extended
-	pushw	0
-	pushw	44
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeAmpAmp2_OnColumn5_Skip8:
-	ld	wa, 5:i3
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+10)
-	ret
-SeAmpAmp2_OnColumn6:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	ld	e, (xsp+2)
-	inc	1, e
-	extz	de
-	pushw	127
-	ld	bc, 2:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeAmpAmp2_OnColumn6_Skip9
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 28
-	call	SeMenu_RegisterElement_Extended
-	pushw	2
-	pushw	44
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeAmpAmp2_OnColumn6_Skip9:
-	ld	wa, 6:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
+SeAmpAmp2_OnColumn4:	.include "includes/generated/cc900/SeAmpAmp2_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpAmp2_OnColumn4_Skip7, SeAmpAmp2_OnColumn4 + 91
+SeAmpAmp2_OnColumn5:	.include "includes/generated/cc900/SeAmpAmp2_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpAmp2_OnColumn5_Skip8, SeAmpAmp2_OnColumn5 + 106
+SeAmpAmp2_OnColumn6:	.include "includes/generated/cc900/SeAmpAmp2_OnColumn6.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpAmp2_OnColumn6_Skip9, SeAmpAmp2_OnColumn6 + 91
 SeAmpAmp2_OnSideRow1:	.include "includes/generated/cc900/SeAmpAmp2_OnSideRow1.s"	; C: cc900/scoop_editor_data_m0_xr.c
 SeAmpAmp2_OnSideRow2:
 	cp	a, 0:i3
@@ -905,130 +790,15 @@ SeAmpEnv2_OnColumn2:	.include "includes/generated/cc900/SeAmpEnv2_OnColumn2.s"	;
 SeAmpEnv2_OnColumn3:	.include "includes/generated/cc900/SeAmpEnv2_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_d.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeAmpEnv2_OnColumn3_Skip63, SeAmpEnv2_OnColumn3 + 138
-SeAmpEnv2_OnColumn4:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+2)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+2)
-	dec	1, c
-	extz	bc
-	pushw	bc
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeAmpEnv2_OnColumn4_Skip21
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 49
-	call	SeMenu_RegisterElement_Extended
-	pushw	3
-	pushw	46
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 2:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeAmpEnv2_OnColumn4_Skip21:
-	ld	wa, 4:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
-SeAmpEnv2_OnColumn5:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+2)
-	ld	wa, 4:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+4)
-	ld	wa, 3:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+8)
-	extz	wa
-	ld	e, (xsp+4)
-	inc	1, e
-	extz	de
-	ld	c, (xsp+2)
-	dec	1, c
-	extz	bc
-	pushw	bc
-	ld	bc, 2:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeAmpEnv2_OnColumn5_Skip22
-	lda	xwa, (xsp+6)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 48
-	call	SeMenu_RegisterElement_Extended
-	pushw	2
-	pushw	46
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 2:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeAmpEnv2_OnColumn5_Skip22:
-	ld	wa, 5:i3
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+10)
-	ret
-SeAmpEnv2_OnColumn6:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+2)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	ld	e, (xsp+2)
-	inc	1, e
-	extz	de
-	pushw	127
-	ld	bc, 4:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeAmpEnv2_OnColumn6_Skip23
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 50
-	call	SeMenu_RegisterElement_Extended
-	pushw	4
-	pushw	46
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 2:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeAmpEnv2_OnColumn6_Skip23:
-	ld	wa, 6:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
+SeAmpEnv2_OnColumn4:	.include "includes/generated/cc900/SeAmpEnv2_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpEnv2_OnColumn4_Skip21, SeAmpEnv2_OnColumn4 + 91
+SeAmpEnv2_OnColumn5:	.include "includes/generated/cc900/SeAmpEnv2_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpEnv2_OnColumn5_Skip22, SeAmpEnv2_OnColumn5 + 106
+SeAmpEnv2_OnColumn6:	.include "includes/generated/cc900/SeAmpEnv2_OnColumn6.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeAmpEnv2_OnColumn6_Skip23, SeAmpEnv2_OnColumn6 + 91
 SeAmpEnv2_OnColumn7:
 	lda	xsp, (xsp-16)
 	ld	(xsp+14), a
@@ -1669,130 +1439,15 @@ SeFilBcf1_OnSwitch15:	.include "includes/generated/cc900/SeFilBcf1_OnSwitch15.s"
 SeFilFil2_OnColumn3:	.include "includes/generated/cc900/SeFilFil2_OnColumn3.s"	; C: cc900/scoop_editor_data_m0_d.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeFilFil2_OnColumn3_Skip41, SeFilFil2_OnColumn3 + 105
-SeFilFil2_OnColumn4:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+2)
-	dec	1, c
-	extz	bc
-	pushw	bc
-	ld	bc, 1:i3
-	ld	de, 0:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeFilFil2_OnColumn4_Skip42
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 58
-	call	SeMenu_RegisterElement_Extended
-	pushw	1
-	pushw	54
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeFilFil2_OnColumn4_Skip42:
-	ld	wa, 4:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
-SeFilFil2_OnColumn5:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+4)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+8)
-	extz	wa
-	ld	e, (xsp+4)
-	inc	1, e
-	extz	de
-	ld	c, (xsp+2)
-	dec	1, c
-	extz	bc
-	pushw	bc
-	ld	bc, 0:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeFilFil2_OnColumn5_Skip43
-	lda	xwa, (xsp+6)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 57
-	call	SeMenu_RegisterElement_Extended
-	pushw	0
-	pushw	54
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeFilFil2_OnColumn5_Skip43:
-	ld	wa, 5:i3
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+10)
-	ret
-SeFilFil2_OnColumn6:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+6)
-	extz	wa
-	ld	e, (xsp+2)
-	inc	1, e
-	extz	de
-	pushw	127
-	ld	bc, 2:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeFilFil2_OnColumn6_Skip44
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 59
-	call	SeMenu_RegisterElement_Extended
-	pushw	2
-	pushw	54
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	call	SeMenu_DrawKeyScaleGraph
-SeFilFil2_OnColumn6_Skip44:
-	ld	wa, 6:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
+SeFilFil2_OnColumn4:	.include "includes/generated/cc900/SeFilFil2_OnColumn4.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilFil2_OnColumn4_Skip42, SeFilFil2_OnColumn4 + 91
+SeFilFil2_OnColumn5:	.include "includes/generated/cc900/SeFilFil2_OnColumn5.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilFil2_OnColumn5_Skip43, SeFilFil2_OnColumn5 + 106
+SeFilFil2_OnColumn6:	.include "includes/generated/cc900/SeFilFil2_OnColumn6.s"	; C: cc900/scoop_editor_data_m0_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeFilFil2_OnColumn6_Skip44, SeFilFil2_OnColumn6 + 91
 SeFilFil2_OnSideRow1:	.include "includes/generated/cc900/SeFilFil2_OnSideRow1.s"	; C: cc900/scoop_editor_data_m0_xr_b.c
 SeFilFil2_OnSideRow2:	.include "includes/generated/cc900/SeFilFil2_OnSideRow2.s"	; C: cc900/scoop_editor_data_m0_xr_b.c
 SeFilFil2_OnSideRow3:	.include "includes/generated/cc900/SeFilFil2_OnSideRow3.s"	; C: cc900/scoop_editor_data_m0_d.c

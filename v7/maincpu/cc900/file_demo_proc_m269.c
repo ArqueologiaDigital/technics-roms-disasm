@@ -98,3 +98,28 @@ void FileIO_GetDiskCapacity(unsigned char a)
 		break;
 	}
 }
+
+extern void SeqAcc_InitPlaybackState(void);
+extern void MidiIn_AcceptClockTransport(void);
+extern void CancelOperationCleanup(void);
+extern void CPanel_InitButtonState_SaveRegs(void);
+extern void RefreshSwEvent(void);
+extern void SignalProgressUpdate(void);
+
+void CancelOperationCleanup(void)
+{
+  unsigned char f;
+  f = SEQ_RTMCFG;
+  if (f & 0x04) {
+    f &= ~0x04;
+    SEQ_RTMCFG = f;
+  }
+  SEQ_RTMCFG &= ~0x08;
+  SeqAcc_InitPlaybackState();
+  MidiIn_AcceptClockTransport();
+}
+void SignalProgressUpdate(void)
+{
+  CPanel_InitButtonState_SaveRegs();
+  RefreshSwEvent();
+}

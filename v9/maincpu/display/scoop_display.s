@@ -591,11 +591,7 @@ PerfMode_LookupValueMapColumn5:
 	pop	xbc
 	ret
 
-ChannelFilter_InitAndApply:
-	call ChannelFilter_SetMode
-	call ChannelFilter_ApplyWrapper
-	ldw (4360:16), 0
-	ret
+ChannelFilter_InitAndApply:	.include "includes/generated/cc900/ChannelFilter_InitAndApply.s"	; C: cc900/scoop_display_m7_xr.c
 
 ChannelFilter_SetMode:
 	ld (3294:16), 2

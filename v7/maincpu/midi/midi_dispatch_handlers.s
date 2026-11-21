@@ -6385,12 +6385,7 @@ MidiStream_PrevBankCheck_Skip2:
 MidiStream_PrevBankCheck_Epilogue:
 	pop qiz
 	ret
-SeqAlt_ProcessAndFinalize:
-	call	MidiSeq_SwapActiveBuffers
-	calr	SeqBuf_WaitForEmpty
-	calr	MidiChan_ParseVoiceData
-	calr	SeqData_InitPlaybackFromField
-	jp	SeqAlt_CheckInitBuffer
+SeqAlt_ProcessAndFinalize:	.include "includes/generated/cc900/SeqAlt_ProcessAndFinalize.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
 SeqBuf_WaitForEmpty:	.include "includes/generated/cc900/SeqBuf_WaitForEmpty.s"	; C: cc900/midi_dispatch_handlers_m285.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeqBuf_WaitLoop, SeqBuf_WaitForEmpty + 4
@@ -8342,15 +8337,9 @@ MidiPkt_PreparePanelReceive:
 ;   Basis: callers + body -- the only caller MidiStream_PrevBankCheck, the post-send step of the MIDI data transfer,
 ;   runs it when bit 7 of 0xBC7C (wait for the receiver's reply) is clear, after SeqBuf_WaitForEmpty has drained the
 ;   MIDI output buffer: a fixed pause between messages instead of the handshake.
-MidiStream_Delay25Ticks:
-	ld	de, (SYSTEM_TIMESTAMP:16)
-MidiChan_TimerDispatch_Data_Code_Loop:
-	ld	wa, de
-	ld	bc, (SYSTEM_TIMESTAMP:16)
-	sub	bc, wa
-	cp	bc, 25
-	jr	lt, MidiChan_TimerDispatch_Data_Code_Loop
-	ret
+MidiStream_Delay25Ticks:	.include "includes/generated/cc900/MidiStream_Delay25Ticks.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChan_TimerDispatch_Data_Code_Loop, MidiStream_Delay25Ticks + 4
 Part_LookupByIndex:
 	ld	xbc, (PART_RECORD_PTRS:16)
 	extz wa
@@ -8549,11 +8538,7 @@ Param_SignExtendReturn_Helper3_Helper:	.include "includes/generated/cc900/Param_
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	Part_LookupTableEntry_Loop2, Param_SignExtendReturn_Helper3_Helper + 14
 	.set	Part_LookupTableEntry_Skip, Param_SignExtendReturn_Helper3_Helper + 25
-Param_SignExtendReturn_Helper3_Helper2:
-	calr	ArpQueue_Enqueue
-	ld	xwa, (0xbbc0:16)
-	calr	SeqOut_FlushWithChunking
-	jp	ArpQueue_SwapBuffers
+Param_SignExtendReturn_Helper3_Helper2:	.include "includes/generated/cc900/Param_SignExtendReturn_Helper3_Helper2.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
 	ret
 	ret
 ; MidiTable_NullRet: Empty routine (`ret`) that MidiTable_DispatchHelper calls last, after dispatching the MIDI data-
@@ -8566,14 +8551,9 @@ MidiChan_SetStateMode:	.include "includes/generated/cc900/MidiChan_SetStateMode.
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiChan_SetStateMode2, MidiChan_SetStateMode + 15
 	.set	MidiChan_CompareAndFlag, MidiChan_SetStateMode + 24
-MidiChan_SetVoiceBaseState:
-	bit	6, (0xbc7c:16)
-	jr	z, MidiChan_SetBaseState128
-	ld	(0xbc64:16), 128
-	ret
-MidiChan_SetBaseState128:
-	ld	(0xbc70:16), 128
-	ret
+MidiChan_SetVoiceBaseState:	.include "includes/generated/cc900/MidiChan_SetVoiceBaseState.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChan_SetBaseState128, MidiChan_SetVoiceBaseState + 12
 MidiSeq_UpdateAllParams:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld bc, 4:i3
@@ -9217,37 +9197,13 @@ SysEx_FinishBulkSend:	.include "includes/generated/cc900/SysEx_FinishBulkSend.s"
 	.set	SysEx_FinishBulkSend_Skip, SysEx_FinishBulkSend + 53
 	.set	SysEx_FinishBulkSend_Join2, SysEx_FinishBulkSend + 75
 	; --- Main: guard check, loop with bit 4 flag, multiple calls (76 bytes) ---
-MidiPkt_ArpChordHandler:
-	cp	(CURRENT_TITLE:16), 87
-	jr	nz, ArpChord_ClearBitAndReturn
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 0:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 7:i3
-	jr	c, ArpChord_ClearBitAndReturn
-	set	4, (0xbc7c:16)
-	call	MidiChan_ClearAllStates
-	jr	ArpChord_DispatchAndLoop
-ArpChord_CheckPlaybackDone:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	jr	z, ArpChord_ProcessAndDispatch
-	res	4, (0xbc7c:16)
-	jr	ArpChord_FinalizePass
-ArpChord_ProcessAndDispatch:
-	call	SeqAlt_ProcessAndFinalize
-ArpChord_DispatchAndLoop:
-	calr	MidiTable_DispatchHelper
-	bit	4, (0xbc7c:16)
-	jr	nz, ArpChord_CheckPlaybackDone
-ArpChord_FinalizePass:
-	calr	MidiPkt_RecoverIfXferAborted
-	call	MidiPkt_XferShowResult
-ArpChord_ClearBitAndReturn:
-	res	4, (0xbc7c:16)
-	ret
+MidiPkt_ArpChordHandler:	.include "includes/generated/cc900/MidiPkt_ArpChordHandler.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ArpChord_CheckPlaybackDone, MidiPkt_ArpChordHandler + 31
+	.set	ArpChord_ProcessAndDispatch, MidiPkt_ArpChordHandler + 51
+	.set	ArpChord_DispatchAndLoop, MidiPkt_ArpChordHandler + 55
+	.set	ArpChord_FinalizePass, MidiPkt_ArpChordHandler + 64
+	.set	ArpChord_ClearBitAndReturn, MidiPkt_ArpChordHandler + 71
 ; MIDI table dispatch helper
 	; --- Helper 1: table dispatch via (XBC+WA) with guard checks (58 bytes) ---
 MidiTable_DispatchHelper:	.include "includes/generated/cc900/MidiTable_DispatchHelper.s"	; C: cc900/midi_dispatch_handlers_m287.c
@@ -9864,11 +9820,7 @@ MidiSysEx_FinishPanelXfer:
 	calr	MidiSysEx_ProcessBlock_Helper5
 	res	7, (MIDIPKT_RX_GROUPS:16)
 	ret
-MidiSysEx_ProcessBlock_Helper5:
-	bit	4, (MIDIPKT_RX_GROUPS:16)
-	ret	z
-	set	0, (4330:16)
-	ret
+MidiSysEx_ProcessBlock_Helper5:	.include "includes/generated/cc900/MidiSysEx_ProcessBlock_Helper5.s"	; C: cc900/midi_dispatch_handlers_m287.c
 ; MidiSysEx_SendSoundRamEndCmd: Register-preserving (XDE/XHL/XIX/XIZ) call of MIDI_SendAllVoicesPitchUpdate, which sends
 ;   the command packet {4, 0xF0, 0x50, 0x92, 0} through MIDI_SendCmdPacket / sendCOMM -- the packet that ends a sound-
 ;   RAM transfer (the abort path sends it too). What the receiver does with it is not identified; the callee's name
@@ -10163,14 +10115,8 @@ ArpQueue_SwapBuffers:
 	ret
 ArpQueue_SwapFallthru:
 	jr	ArpQueue_ReinitCurrentBuffer
-MidiSeq_ReinitCurrentBuffer:
-	ld	xwa, (MIDISEQ_ACTIVE_BLOCK_PTR:16)
-	ld	xbc, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	jrl	ArpQueue_InitBuffer
-ArpQueue_ReinitCurrentBuffer:
-	ld	xwa, (0xbbc0:16)
-	ld	xbc, (0xbc18:16)
-	jrl	ArpQueue_InitBuffer
+MidiSeq_ReinitCurrentBuffer:	.include "includes/generated/cc900/MidiSeq_ReinitCurrentBuffer.s"	; C: cc900/midi_dispatch_handlers_m288_b.c
+ArpQueue_ReinitCurrentBuffer:	.include "includes/generated/cc900/ArpQueue_ReinitCurrentBuffer.s"	; C: cc900/midi_dispatch_handlers_m288_b_b.c
 MidiChan_InitSoundRegisters:
 	ld	xiy, MidiChan_ZeroRegTemplate
 	ld	xix, 0xbc20
@@ -10578,26 +10524,12 @@ TGReg_WriteCC11_PartMode:	.include "includes/generated/cc900/TGReg_WriteCC11_Par
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	TGReg_WriteCC11_Body, TGReg_WriteCC11_PartMode + 21
 	.set	TGReg_WriteCC11_Check, TGReg_WriteCC11_PartMode + 28
-SoundMode_SetReverbType:
-	ld a, (0x0340f8:24)
-	cp a, 3:i3
-	jr	z, SoundMode_ReverbType3
-	cp a, 2:i3
-	jr	z, SoundMode_ReverbType2
-	cp a, 1:i3
-	jr	z, SoundMode_ReverbType1
-	ld	(0xb750:16), 128
-	jr	SoundParam_SyncAndReturn
-SoundMode_ReverbType1:
-	ld	(0xb750:16), 155
-	jr	SoundParam_SyncAndReturn
-SoundMode_ReverbType2:
-	ld	(0xb750:16), 156
-	jr	SoundParam_SyncAndReturn
-SoundMode_ReverbType3:
-	ld	(0xb750:16), 157
-SoundParam_SyncAndReturn:
-	jp	SndParam_ApplyAndSync
+SoundMode_SetReverbType:	.include "includes/generated/cc900/SoundMode_SetReverbType.s"	; C: cc900/midi_dispatch_handlers_m288_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundMode_ReverbType1, SoundMode_SetReverbType + 24
+	.set	SoundMode_ReverbType2, SoundMode_SetReverbType + 31
+	.set	SoundMode_ReverbType3, SoundMode_SetReverbType + 38
+	.set	SoundParam_SyncAndReturn, SoundMode_SetReverbType + 43
 SoundMode_SetChorusType:
 	ld a, (0x0340f9:24)
 	cp a, 3:i3
@@ -10778,15 +10710,9 @@ MidiCtrl_GmSwitchListener:
 	extz	wa
 	calr	MidiCtrl_GmBitToPolyphonyMode
 	ret
-MidiCtrl_GmBitToPolyphonyMode:
-	ld c, 0x0:opc
-	bit 2, a
-	jr	z, MidiCtrl_GmBitToPolyphonyMode_Send
-	ld c, 0x1:opc
-MidiCtrl_GmBitToPolyphonyMode_Send:
-	extz bc
-	ld wa, bc
-	jp	SubCPU_SetPolyphonyModeAndResendVolumes
+MidiCtrl_GmBitToPolyphonyMode:	.include "includes/generated/cc900/MidiCtrl_GmBitToPolyphonyMode.s"	; C: cc900/midi_dispatch_handlers_m288_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiCtrl_GmBitToPolyphonyMode_Send, MidiCtrl_GmBitToPolyphonyMode + 9
 MidiCtrl_SendControlPacket:
 	dec 4, xsp
 	ld c, a

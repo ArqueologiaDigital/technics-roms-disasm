@@ -93,3 +93,30 @@ void SeqDMA_WriteMidi_NoteOn(unsigned char ch, unsigned char *p)
 		SeqBuf_NoteEvent_WriteByte(*p);
 	}
 }
+
+/* cc900-module: Vga_SelectWritePlane */
+extern unsigned int ram_ffcc;
+extern int Sys_CheckPowerStableFlag(void);
+extern volatile unsigned char __tiny T8RUN;
+extern void Timer3_Start(void);
+extern void Copy_DE_words_from_XBC_to_XWA(unsigned long, unsigned long, unsigned long);
+extern void Vga_SelectWritePlane(int);
+extern void Timer3_Stop(void);
+extern void Vga_RestorePlane3FromBuffer(void);
+
+int Sys_CheckPowerStableFlag(void)
+{
+  return ram_ffcc == 0x5a5a;
+}
+void Timer3_Start(void)
+{
+  T8RUN |= 0x08;
+}
+void Vga_RestorePlane3FromBuffer(void)
+{
+  Timer3_Stop();
+  Vga_SelectWritePlane(3);
+  Copy_DE_words_from_XBC_to_XWA(0x69800L, 0x1a9800L, 0xb400L);
+  Vga_SelectWritePlane(0);
+  Timer3_Start();
+}

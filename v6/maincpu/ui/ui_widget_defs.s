@@ -18068,9 +18068,7 @@ LcdOn:
 InitGraphics_SetupVRAM:
 	jr InitGraphics_SetupVRAM_Loop
 
-InitGraphics_SetupVRAM_Loop:
-	ldw (0x030464:24), 0x0001
-	jp VGA_ScreenUnblank
+InitGraphics_SetupVRAM_Loop:	.include "includes/generated/cc900/InitGraphics_SetupVRAM_Loop.s"	; C: cc900/ui_widget_defs_m273_xr.c
 
 ; LcdOff - Disable LCD display output (clears flag at 0x030464)
 LcdOff:

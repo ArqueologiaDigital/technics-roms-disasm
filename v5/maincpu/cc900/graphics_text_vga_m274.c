@@ -119,3 +119,18 @@ next:
 		dst += 1;
 	}
 }
+
+/* cc900-module: SetDialFocus */
+struct glyph { long bits; int descent; int w; long rest; int pad; int pad2; };
+extern int GetCharDescent(unsigned long c);
+struct font { unsigned int w; unsigned int h; unsigned char pad[12]; };
+extern unsigned int GetCharHeight(unsigned long id);
+
+int GetCharDescent(unsigned long c)
+{
+  return ((struct glyph *)0x945c00L)[c].descent;
+}
+unsigned int GetCharHeight(unsigned long id)
+{
+  return ((struct font *)0x945c00L)[id].h;
+}
