@@ -1129,3 +1129,34 @@ void InitializeKubo(void)
 	RegisterTitle(0xd6, NAKA_MAINFUNC_EtmenuTitleFunc, 0xd60000, 0x8, InitializeKubo_Str_TT_ETMENU);
 	RegisterTitle(0xe7, NAKA_MAINFUNC_HelpTitleFunc, 0xe70000, 0x8, InitializeKubo_Str_TT_SWHELP);
 }
+
+/* cc900-module: SMFMute_ClearBit0 SMFMute_GetBit0Status SMFMute_GetBit1Status SMFMute_GetUpperBits SqAftSet_LookupTableEntry */
+extern unsigned char __near SEQ_TRACK_ASSIGN[];
+extern unsigned char TrAsGrid_LookupByteTable(unsigned char i);
+extern unsigned char ram_21082;
+unsigned char TrAsGrid_CheckTrackType(unsigned char sel, unsigned char trk);
+extern unsigned char TrAsGrid_CheckTrackType(unsigned char sel, unsigned char trk);
+extern unsigned int ram_21086;
+extern unsigned int SqAftSet_LookupTableEntry_Table[];
+void SqAftSet_LookupTableEntry(unsigned char a);
+extern void SqAftSet_LookupTableEntry(unsigned char a);
+
+unsigned char TrAsGrid_LookupByteTable(unsigned char i)
+{
+	return SEQ_TRACK_ASSIGN[i];
+}
+unsigned char TrAsGrid_CheckTrackType(unsigned char sel, unsigned char trk)
+{
+	if (sel == 0) {
+		unsigned char t = SEQ_TRACK_ASSIGN[trk];
+		if (t == 0xe || t == 0xd) return 1;
+	} else {
+		unsigned char t = ram_21082;
+		if (t == 0xe || t == 0xd) return 1;
+	}
+	return 0;
+}
+void SqAftSet_LookupTableEntry(unsigned char a)
+{
+	ram_21086 = SqAftSet_LookupTableEntry_Table[a];
+}
