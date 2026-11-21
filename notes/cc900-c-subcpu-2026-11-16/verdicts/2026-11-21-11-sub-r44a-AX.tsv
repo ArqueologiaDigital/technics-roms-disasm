@@ -1,0 +1,4 @@
+function	bytes	matches	best_diff
+Voice_Calc_LevelPair_Mono	771	-	+65 sub_AX_44b@Xr
+Voice_NoteOff	269	sub_AX_44d@Xr sub_AX_44e@Xr sub_AX_44f@Xr	
+Voice_SetPitch	266	sub_AX_44d@Xr sub_AX_44e@Xr sub_AX_44f@Xr	

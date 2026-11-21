@@ -18,7 +18,9 @@ import to_llvm                                               # noqa: E402
 import check_bytes                                           # noqa: E402
 
 REG = {'XWA': 0, 'XBC': 1, 'XDE': 2, 'XHL': 3}
-CASES = [('XWA', '3.0'), ('XWA', '1'), ('XBC', '0.5'), ('XDE', '-12.0'), ('XHL', '1.5e3')]
+CASES = [('XWA', '3.0'), ('XWA', '1'), ('XBC', '0.5'), ('XDE', '-12.0'), ('XHL', '1.5e3'), ('XWA', '0'),
+         ('XWA', '0.0')]
+# fims(0): the short form `ld xwa, 0:i3` = e8+r a8 (the ROM's DSP_BiquadCoeff_Compute zero tap; helper AU, 2026-11-21)
 
 
 def main():
@@ -27,7 +29,7 @@ def main():
         line = '\tld %s,fims(%s)' % (r, v)
         text = to_llvm.translate_line(line, {}, set())
         bits = struct.unpack('<I', struct.pack('<f', float(v)))[0]
-        want = bytes([0x40 + REG[r]]) + struct.pack('<I', bits)
+        want = bytes([0xe8 + REG[r], 0xa8]) if bits == 0 else bytes([0x40 + REG[r]]) + struct.pack('<I', bits)
         got = check_bytes.assemble('\t.text\n\t.globl t\nt:\n%s\n' % text)['t'] if 'fims' not in text else None
         ok = got == want
         bad += not ok

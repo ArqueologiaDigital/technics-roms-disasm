@@ -270,7 +270,20 @@ v142 / v141: 4,530 B, **597 functions** built from C; v140: 3,121 B, **596 funct
 597 labels).  The promotion's v140 step stops until the hand text is captured (the order: promote_v423_run.sh, then
 hand_span_capture.py on `git show HEAD:v141/...` and the regenerated v141 files, then the v140 generator).
 
-Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43c.py, forms a-i): `(int)i * 2 + 0x27` and
+**Twenty-third promotion (2026-11-21; matched in run 2026-11-21-11-sub-r44a, verified per tree in run
+2026-11-21-12-sub-r44s-staged).**  voice_ctrlchange_ax_44d.c (helper AX): Voice_NoteOff (269 B) and Voice_SetPitch
+(266 B), the request buffer passed as `&req[0]` so that its address is built first.  535 B per tree; v142 / v141
+**599 functions**, v140 **598** built from C.  The same day: fims(0) translates to the short `ld xwa, 0:i3`
+(fims_check.py).
+
+**Twenty-fourth promotion (2026-11-21; matched in run 2026-11-21-13-sub-r45a, verified per tree in run
+2026-11-21-14-sub-r45s-staged).**  dsp_control_routines_au_45a.c (helper AU): DSP_FilterLUT_Fetch (787 B) and its ten
+FP constants.  A `volatile float` table read as `*(volatile float *)&T[tbl[k] * 4]` gives the ROM's library float
+copy (`._fld_ff` = FP_SP_Raw4Copy, helper AV's finding) and its 16-bit index; ._fld_ff, ._fld_dl (FP_ScalarToDP) and
+._fadd_d (FP_dadd) are now rows of `scripts/build/cc900_runtime_names.tsv`.  v142 / v141 **600 functions**, v140
+**599** built from C.
+
+Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43d.py, forms a-l): `(int)i * 2 + 0x27` and
 `((struct pair *)&t[..])->hi` give sub-command 0x24's bytes (form b).  The write path stays: whichever variable holds
 the channel gets IZ while the field is a variable (forms a-f), and with the field nested the channel's `and` happens
 in WA before the move to QIZ (helper AN's 30c; forms g-i).

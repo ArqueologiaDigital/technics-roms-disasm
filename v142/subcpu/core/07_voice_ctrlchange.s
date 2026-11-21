@@ -1814,108 +1814,11 @@ Voice_NoteOn_Rhythm_Exit:
 ; builds and emits the whole register block, and finally
 ; ToneGen_WriteSingleReg(WA = slot, BC = the u16 at 0x0430BB + slot*0x47 = live+0x2D)
 ; writes the key-on word. Only caller: Voice_NoteOn (0x02CFDB region).
-Voice_SetPitch:
-	lda xsp, (xsp - 20)
-	pushw_erp 0xFA
-	ld (xsp + 16), e
-	ld (xsp + 18), c
-	ld (xsp + 20), a
-	ld a, (xsp + 20)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x40
-	jrl nz, Voice_SetPitch_Exit
-	ld a, (xsp + 20)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	ld	wa, (xbc+wa)
-	and wa, 0x7
-	jrl z, Voice_SetPitch_Exit
-	bitm 7, (xsp + 16)
-	jrl nz, Voice_SetPitch_Exit
-	ld a, (xsp + 20)
-	ld e, a
-	extz de
-	ld a, (xsp + 26)
-	ld c, a
-	extz bc
-	ld wa, de
-	call Voice_Env_ApplyVelocity_Type0
-	ld a, (xsp + 20)
-	extz wa
-	call Voice_Env_UpdateVelocityCounters
-	lda xwa, (xsp + 2)
-	ld xhl, xwa
-	ld a, (xsp + 20)
-	ld c, a
-	extz bc
-	ld a, (xsp + 18)
-	ld e, a
-	extz de
-	ld a, (xsp + 16)
-	extz wa
-	pushw wa
-	ld xwa, xhl
-	calr Voice_NoteOn_Rhythm
-	ld a, (xsp + 12)
-	ldfr_berp A, 0xFB
-	cp_erpb 0xFB, 0x40
-	jr nc, Voice_SetPitch_Exit
-	res	7, (P6:8)
-	ldto_berp A, 0xFB
-	extz wa
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff00
-	jr Voice_SetPitch_NopCont1
-
-; Bus-settling pad (3 nops) after writing 0xFF00 to TG register 0x0840 + slot.
-Voice_SetPitch_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldto_berp A, 0xFB
-	extz wa
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff80
-	jr Voice_SetPitch_NopCont2
-
-; Bus-settling pad (3 nops) after writing 0xFF80 to TG register 0x0800 + slot.
-Voice_SetPitch_NopCont2:
-	nop
-	nop
-	nop
-	ldto_berp A, 0xFB
-	extz wa
-	calr Voice_Init_Type1
-	ldto_berp A, 0xFB
-	ld l, a
-	extz hl
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x47
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x4245:24)
-	ld wa, hl
-	ld	bc, (xde+bc)
-	call ToneGen_WriteSingleReg
-
-; Common exit for all three guards and the normal path; `retd 0x02`.
-Voice_SetPitch_Exit:
-	popw_erp 0xFA
-	lda xsp, (xsp + 20)
-	retd 0x2
+Voice_SetPitch:	.include "includes/generated/cc900/Voice_SetPitch.s"	; C: cc900/voice_ctrlchange_ax_44d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_SetPitch_NopCont1, Voice_SetPitch + 179
+	.set	Voice_SetPitch_NopCont2, Voice_SetPitch + 212
+	.set	Voice_SetPitch_Exit, Voice_SetPitch + 257
 
 ; NAME LEFT AS-IS (the reference file's existing non-LABEL_ name). The LLVM build calls this
 ; address Voice_NoteOff; the two agree in meaning. Documentation only.
@@ -1931,110 +1834,11 @@ Voice_SetPitch_Exit:
 ; then Voice_Init_Type1(slot), then ToneGen_WriteSingleReg(slot, live+0x2D), and finally
 ; VoiceSlot_NoteOff(slot) at 0x0225D3 -- the extra call that distinguishes this routine from
 ; Voice_SetPitch. Only caller: Voice_NoteOn_ZeroVelocity.
-Voice_NoteOff:
-	lda xsp, (xsp - 20)
-	pushw_erp 0xFA
-	ld (xsp + 16), e
-	ld (xsp + 18), c
-	ld (xsp + 20), a
-	ld a, (xsp + 20)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PatchRecord_Ptr:24)
-	ld	xwa, (xbc+wa)
-	ld a, (xwa + 16)
-	and a, 0xC0
-	cp a, 0x40
-	jrl nz, Voice_NoteOff_Exit
-	ld a, (xsp + 20)
-	extz wa
-	muls wa, 0x11F
-	lda xbc, (Part_PresentWord:24)
-	ld	wa, (xbc+wa)
-	and wa, 0x7
-	jrl z, Voice_NoteOff_Exit
-	ld a, (xsp + 20)
-	ld e, a
-	extz de
-	ld a, (xsp + 26)
-	ld c, a
-	extz bc
-	ld wa, de
-	call Voice_Env_ApplyVelocity_Type0
-	ld a, (xsp + 20)
-	extz wa
-	call Voice_Env_UpdateVelocityCounters
-	lda xwa, (xsp + 2)
-	ld xhl, xwa
-	ld a, (xsp + 20)
-	ld c, a
-	extz bc
-	ld a, (xsp + 18)
-	ld e, a
-	extz de
-	ld a, (xsp + 16)
-	extz wa
-	pushw wa
-	ld xwa, xhl
-	calr Voice_NoteOn_Rhythm
-	ld a, (xsp + 13)
-	ldfr_berp A, 0xFB
-	cp_erpb 0xFB, 0x40
-	jr nc, Voice_NoteOff_Exit
-	res	7, (P6:8)
-	ldto_berp A, 0xFB
-	extz wa
-	add wa, 0x840
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff00
-	jr Voice_NoteOff_NopCont1
-
-; Bus-settling pad (3 nops) after writing 0xFF00 to TG register 0x0840 + slot.
-Voice_NoteOff_NopCont1:
-	nop
-	nop
-	nop
-	res	7, (P6:8)
-	ldto_berp A, 0xFB
-	extz wa
-	add wa, 0x800
-	ld (ToneGen_RegAddrLatch:24), wa
-	nop
-	set	7, (P6:8)
-	ldw (ToneGen_RegDataPort:24), 0xff80
-	jr Voice_NoteOff_NopCont2
-
-; Bus-settling pad (3 nops) after writing 0xFF80 to TG register 0x0800 + slot.
-Voice_NoteOff_NopCont2:
-	nop
-	nop
-	nop
-	ldto_berp A, 0xFB
-	extz wa
-	calr Voice_Init_Type1
-	ldto_berp A, 0xFB
-	ld l, a
-	extz hl
-	ldto_berp A, 0xFB
-	extz wa
-	muls wa, 0x47
-	ld bc, wa
-	lda xde, (Payload_Bss_Start+0x4245:24)
-	ld wa, hl
-	ld	bc, (xde+bc)
-	call ToneGen_WriteSingleReg
-	ldto_berp A, 0xFB
-	extz wa
-	call VoiceSlot_NoteOff
-
-; Common exit for both guards and the normal path; `retd 0x02`. Last instruction of the
-; region (ends at 0x02C8E3).
-Voice_NoteOff_Exit:
-	popw_erp 0xFA
-	lda xsp, (xsp + 20)
-	retd 0x2
+Voice_NoteOff:	.include "includes/generated/cc900/Voice_NoteOff.s"	; C: cc900/voice_ctrlchange_ax_44d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Voice_NoteOff_NopCont1, Voice_NoteOff + 173
+	.set	Voice_NoteOff_NopCont2, Voice_NoteOff + 206
+	.set	Voice_NoteOff_Exit, Voice_NoteOff + 260
 
 ; Already named in symbols/subcpu_symbols_reference.txt and in the LLVM build; entry kept
 ; unchanged, this entry only adds documentation.

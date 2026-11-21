@@ -1,0 +1,151 @@
+#!/usr/bin/env python3
+"""Helper AU, lane_sub round 46: writes scripts/analysis/cc900/corpus/firmware/sub_AU_46{a,b,c}.c with
+DSP_SOS_LUT_Fetch, DSP_BiquadCoeff_Compute and DSP_SOS_Coeff_Compute (DSP_FilterLUT_Fetch is built: declared only).
+
+Inputs: sub_AU_45b.c (BiquadCoeff: the shape V4.23 reproduces, run 2026-11-21-13-sub-r45a) and sub_AU_45a.c
+(SOS_Coeff = helper AV's sub_AV_44b.c).  Run from the csub worktree root:
+
+    python3 -B ~/compartilhado/tmp/cc900-tab/lane_sub/AU/gen_AU_46.py
+"""
+import os, re
+
+OUT = os.path.join(os.getcwd(), 'scripts', 'analysis', 'cc900', 'corpus', 'firmware')
+assert os.path.isdir(OUT), OUT
+B45 = open(os.path.join(OUT, 'sub_AU_45b.c'), encoding='latin-1').read()
+A45 = open(os.path.join(OUT, 'sub_AU_45a.c'), encoding='latin-1').read()
+
+
+def block(text, start):
+    i = text.index(start)
+    j = text.index('\n}\n', i) + 3
+    return text[i:j]
+
+
+BIQ = block(B45, '/* cc900-data: DSP_BiquadCoeff_Compute 1 ')
+SOSC = block(A45, '/* cc900-data: DSP_SOS_Coeff_Compute 1 ')
+assert '(long)(' not in SOSC and '(void)&f0;' in BIQ and BIQ.count('(long)(') == 15
+K = '7.123792865e-05'
+KS = '0.0001424758573'
+
+
+def biq(form):
+    t = BIQ
+    if form == 'a':
+        t = re.sub(r'\(long\)\((\w+ \* \d+\.0F)\)', r'\1', t)
+        assert '(long)' not in t
+    elif form == 'b':
+        n = t.count('kq * pow(10.0, (g >= 0 ? g : -g) / 20.0F)')
+        assert n == 4, n
+        t = t.replace('kq * pow(10.0, (g >= 0 ? g : -g) / 20.0F)', 'pow(10.0, (g >= 0 ? g : -g) / 20.0F) * kq')
+    elif form == 'c':
+        n = t.count('tan(fr * %s)' % K)
+        assert n == 3, n
+        t = t.replace('tan(fr * %s)' % K, 'tan(%s * fr)' % K)
+    return t
+
+
+def sosc(form):
+    t = SOSC
+    if form == 'a':
+        t = re.sub(r'(DSP_Write\w+\((?:a, )?)(\w+ \* \d+\.0F)', r'\1(long)(\2)', t)
+        assert t.count('(long)(') == 9
+    elif form == 'b':
+        n = t.count('(amp / r + 1.0F)')
+        assert n == 6, n
+        t = t.replace('(amp / r + 1.0F)', '(1.0F + amp / r)')
+    elif form == 'c':
+        n = t.count('freq * %s' % KS)
+        assert n == 12, n
+        t = t.replace('freq * %s' % KS, '%s * freq' % KS)
+    return t
+
+
+SOSL = '''/* cc900-data: DSP_SOS_LUT_Fetch 1 = FPConst_DSP_SOS_LUT_Fetch_0p5 */
+/* cc900-data: DSP_SOS_LUT_Fetch 2 = FPConst_DSP_SOS_LUT_Fetch_Neg12 */
+/* cc900-data: DSP_SOS_LUT_Fetch 3 = FPConst_DSP_SOS_LUT_Mode0x10_0p5 */
+/* cc900-data: DSP_SOS_LUT_Fetch 4 = FPConst_DSP_SOS_LUT_Mode0x10_Neg12 */
+unsigned char *DSP_SOS_LUT_Fetch(register unsigned int i, float *fo, float *go, int *mo, int *tbl, unsigned char *p)
+{
+    float fr;
+    float g;
+    int m;
+    unsigned char c;
+
+    m = *p & 0xf;
+    c = *p++ & 0xf0;
+    switch (c) {
+    default:
+        fr = *(volatile float *)&DSP_EQ_FreqHz_Table[tbl[i] * 4];
+        g = tbl[i + 1] * 0.5 + -12.0;
+        break;
+    case 0x10:
+        fr = *(volatile float *)&DSP_EQ_FreqHz_Table[tbl[i - 1] * 4];
+        g = tbl[i] * 0.5 + -12.0;
+        break;
+    }
+    switch (m) {
+    case 2:
+        fr = *(volatile float *)&DSP_EQ_FreqHz_Table[%s];
+        break;
+    }
+    *mo = m;
+    *fo = fr;
+    *go = g;
+    return p;
+}
+'''
+IDX = {'a': '(int)(*p++ & 0x1f) * 4', 'b': '(unsigned int)(*p++ & 0x1f) * 4', 'c': '(int)(*p++ & 0x1f) << 2'}
+
+WHAT = {
+    'a': """   Run 2026-11-21-13-sub-r45a: DSP_FilterLUT_Fetch MATCH (byte table, `*(volatile float *)&T[tbl[k] * 4]`).
+   - DSP_SOS_LUT_Fetch (45a: one difference, the type-2 index `(*p++ & 0x1f) * 4` done in 8 bits, `sll 0x2,A`;
+     ROM `ld a,c` / `extz wa` / `sla wa,2`): the index widened first, `(int)(*p++ & 0x1f) * 4`.
+   - DSP_BiquadCoeff_Compute (45b: ROM length, shape.py 0 shape differences; one pool double at +26 where the ROM
+     has +78, the slots between shifted 8): the taps' `(long)` casts dropped (implicit conversion through the
+     prototypes): do tree nodes that emit no code move V4.23's pool slots?
+   - DSP_SOS_Coeff_Compute (helper AV's 44b; 0 shape differences, its 4 pool temporaries each one named temporary
+     lower than the ROM's): the writers' arguments `(long)(x * K)`.""",
+    'b': """   Form a with these changes:
+   - DSP_SOS_LUT_Fetch: the type-2 index `(unsigned int)(*p++ & 0x1f) * 4`.
+   - DSP_BiquadCoeff_Compute: the (long) casts kept (45b); the pow products written `pow(..) * kq` (the same code
+     by V4.23's operand rule; another tree order).
+   - DSP_SOS_Coeff_Compute: no casts (AV 44b); `(amp / r + 1.0F)` written `(1.0F + amp / r)`.""",
+    'c': """   Form a with these changes:
+   - DSP_SOS_LUT_Fetch: the type-2 index `(int)(*p++ & 0x1f) << 2`.
+   - DSP_BiquadCoeff_Compute: the (long) casts kept (45b); `tan(c * fr)` (constant first).
+   - DSP_SOS_Coeff_Compute: no casts (AV 44b); `freq * K` written `K * freq`.""",
+}
+
+
+def main():
+    for form in 'abc':
+        head = ('/* lane_sub round 46, helper AU, form %s (KN5000 sub-CPU payload v1.42, '
+                'core/14_dsp_control_routines.s): floating point.\n%s\n'
+                '   Generated by ~/compartilhado/tmp/cc900-tab/lane_sub/AU/gen_AU_46.py.\n'
+                '   cc900-options: -Xr */\n\n') % (form, WHAT[form])
+        decl = ('extern double __cdecl pow(double x, double y);\n'
+                'extern double __cdecl tan(double x);\n'
+                'extern double __cdecl sin(double x);\n'
+                'extern double __cdecl cos(double x);\n'
+                'extern unsigned char DSP_EQ_FreqHz_Table[];\n'
+                'extern int DSP_WriteOscParam(unsigned int a, long v, register int chip, int base);\n'
+                'extern int DSP_WriteCoeffData_5B_Direct(long v, int chip, int f0);\n'
+                'extern int DSP_WriteParamWord(long v, int chip);\n'
+                'unsigned char *DSP_FilterLUT_Fetch(unsigned int i, float *fo, float *qo, float *go, int *mo, '
+                'int *tbl,\n                                   unsigned char *p);\n'
+                'unsigned char *DSP_BiquadCoeff_Compute(int chip, unsigned int slot, unsigned int v, unsigned char *p,\n'
+                '                                       unsigned int a, int *rec, int f0, int *st);\n'
+                'unsigned char *DSP_SOS_LUT_Fetch(unsigned int i, float *fo, float *go, int *mo, int *tbl, '
+                'unsigned char *p);\n'
+                'unsigned char *DSP_SOS_Coeff_Compute(int chip, unsigned int slot, unsigned int v, unsigned char *p,\n'
+                '                                     unsigned int a, int *rec, int *st, int f0);\n\n'
+                '/* cc900-module: DSP_FilterLUT_Fetch DSP_BiquadCoeff_Compute DSP_SOS_LUT_Fetch '
+                'DSP_SOS_Coeff_Compute */\n')
+        text = head + decl + (SOSL % IDX[form]) + '\n' + biq(form) + '\n' + sosc(form)
+        path = os.path.join(OUT, 'sub_AU_46%s.c' % form)
+        with open(path, 'w', encoding='latin-1') as fh:
+            fh.write(text)
+        print(path)
+
+
+main()

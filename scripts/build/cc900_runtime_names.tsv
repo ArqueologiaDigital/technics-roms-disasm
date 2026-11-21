@@ -8,7 +8,8 @@
 # Sub-CPU: lane_sub, each confirmed by matches (Long_SignedDiv / Long_SignedRem: its renames, branch cc900/c-subcpu-hdae).
 # Sub-CPU floating point (2026-11-18): the nine ._f* / _pow rows, confirmed by DSP_ParamInterp_FPComplex, which V4.23
 # reproduces (run 2026-11-18-3-sub-r20-fp2, notes/cc900-c-subcpu-2026-11-16/verdicts/); ._fmul_d / ._fdiv_d / ._fsub_d by
-# DSP_ReverbCurve_FP (run 2026-11-18-6-sub-r20a); ._fld_ld by DSP_AlgoParam_Decode (run 2026-11-18-8-sub-r20b-staged).
+# DSP_ReverbCurve_FP (run 2026-11-18-6-sub-r20a); ._fld_ld by DSP_AlgoParam_Decode (run 2026-11-18-8-sub-r20b-staged);
+# ._fld_ff / ._fld_dl / ._fadd_d by DSP_FilterLUT_Fetch (run 2026-11-21-13-sub-r45a).
 # HD-AE5000 (all four trees): lane_hd.
 tree	name	label
 */maincpu	C9H_mullu	Math_Multiply32
@@ -36,6 +37,9 @@ tree	name	label
 */subcpu	._fsub_d	FP_dsub
 */subcpu	._fld_ld	FP_DP_DecodeToInt
 */subcpu	._fneg_f	FP_SP_CopyOrNegate4
+*/subcpu	._fld_ff	FP_SP_Raw4Copy
+*/subcpu	._fld_dl	FP_ScalarToDP
+*/subcpu	._fadd_d	FP_dadd
 hdae5000*	C9H_mullu	HDAE5000_Multiply
 hdae5000*	C9H_divlu	HDAE5000_UDivMod32
 hdae5000*	._fdiv_f	HDAE5000_FloatDiv

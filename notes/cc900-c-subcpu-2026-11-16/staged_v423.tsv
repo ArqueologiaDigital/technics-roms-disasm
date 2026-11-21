@@ -127,6 +127,7 @@ v140	v140/subcpu/cc900-staged/dsp_control_routines.c	8d8a441dc6dfa7fc7835a4ace81
 v140	v140/subcpu/cc900-staged/dsp_control_routines.c	8d8a441dc6dfa7fc7835a4ace810e856920a8a4a3dc311d892efa6fe0f88c734	Xr	2026-11-16-73-sub-r6	DSP_WriteGlobalConfig	15	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines.c	8d8a441dc6dfa7fc7835a4ace810e856920a8a4a3dc311d892efa6fe0f88c734	Xr	2026-11-16-73-sub-r6	DSP_WriteParamWord	52	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_ar_41a.c	c2135b8516f2b6efd16e3421db03cc5576258956c565d619c1d3e2811c99e37b	Xr	2026-11-19-96-sub-r42s-staged	DSP_DetuneCurve_SignedFP	495	MATCH
+v140	v140/subcpu/cc900-staged/dsp_control_routines_au_45a.c	2e774c3bd93b0a772787e09744f9830ad83afc5453e57f9bb4dc9fc5a2b6e8a7	Xr	2026-11-21-14-sub-r45s-staged	DSP_FilterLUT_Fetch	787	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_b.c	f868c66a0ccc67ff94c348baadc403c823974877aebf391fae41b10ef08e9117	Xr	2026-11-16-73-sub-r6	DSP_State_ApplyBuf	61	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_b.c	f868c66a0ccc67ff94c348baadc403c823974877aebf391fae41b10ef08e9117	Xr	2026-11-16-73-sub-r6	DSP_State_LoadAndApplyAll	49	MATCH
 v140	v140/subcpu/cc900-staged/dsp_control_routines_b_kernel.c	0fd35fed5c5fbf3d92fcb40ecceb61b41bb504efff448a60f39ef2728c5a33a9	Xr	2026-11-16-89-sub-staged3	DSP_State_ApplyBuf	61	MATCH
@@ -297,6 +298,8 @@ v140	v140/subcpu/cc900-staged/voice_ctrlchange_ah_20a.c	64e9f7af0a978f6e67e4df05
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_ah_21a.c	0ef916a15345e6bdcd09758e8f5483b4736eaa301eb513f57a5386c9a3ce5eae	Xr	2026-11-18-32-sub-r21g-staged	Voice_Allocate_Type2	405	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_ah_21a.c	0ef916a15345e6bdcd09758e8f5483b4736eaa301eb513f57a5386c9a3ce5eae	Xr	2026-11-18-32-sub-r21g-staged	Voice_NoteOn_Type3	404	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_al_34a.c	c5b2a616ed318f4eea783f6cabebd45cd88bb4f97df8d70130fe5fec3dfe2405	Xr	2026-11-19-58-sub-r34s-staged	Voice_Build_Partial_Descriptor	789	MATCH
+v140	v140/subcpu/cc900-staged/voice_ctrlchange_ax_44d.c	1d88096b4863a0518d237248ac119d725f5ae398bf352bcc50ab2fbc925851c2	Xr	2026-11-21-12-sub-r44s-staged	Voice_NoteOff	269	MATCH
+v140	v140/subcpu/cc900-staged/voice_ctrlchange_ax_44d.c	1d88096b4863a0518d237248ac119d725f5ae398bf352bcc50ab2fbc925851c2	Xr	2026-11-21-12-sub-r44s-staged	Voice_SetPitch	266	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_b.c	0613b5efd53038dd62bc09b3daec89cc628f25e0760e50903e3780acf939cd27	Xr	2026-11-16-73-sub-r6	Voice_KeyIndex_Pack3Nibbles	39	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_callnames.c	c9378ca3d90d58580cc58d3fefe0ad14d65b8eae2d07a71087545c445a030d96	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type1	132	MATCH
 v140	v140/subcpu/cc900-staged/voice_ctrlchange_callnames.c	c9378ca3d90d58580cc58d3fefe0ad14d65b8eae2d07a71087545c445a030d96	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type2	117	MATCH
@@ -746,6 +749,7 @@ v141	v141/subcpu/cc900-staged/dsp_control_routines.c	5700bc35695c5f9690cfeb69de3
 v141	v141/subcpu/cc900-staged/dsp_control_routines.c	5700bc35695c5f9690cfeb69de3b7ec64c6e7b9d687ea83f7e71693c2bd40346	Xr	2026-11-16-73-sub-r6	DSP_WriteGlobalConfig	15	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines.c	5700bc35695c5f9690cfeb69de3b7ec64c6e7b9d687ea83f7e71693c2bd40346	Xr	2026-11-16-73-sub-r6	DSP_WriteParamWord	52	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_ar_41a.c	c2135b8516f2b6efd16e3421db03cc5576258956c565d619c1d3e2811c99e37b	Xr	2026-11-19-96-sub-r42s-staged	DSP_DetuneCurve_SignedFP	495	MATCH
+v141	v141/subcpu/cc900-staged/dsp_control_routines_au_45a.c	2e774c3bd93b0a772787e09744f9830ad83afc5453e57f9bb4dc9fc5a2b6e8a7	Xr	2026-11-21-14-sub-r45s-staged	DSP_FilterLUT_Fetch	787	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_b.c	a848e61589bae25d4177c8b4cb82a943bec8e1161f06750bf6f29e963ffc271d	Xr	2026-11-16-73-sub-r6	DSP_State_ApplyBuf	61	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_b.c	a848e61589bae25d4177c8b4cb82a943bec8e1161f06750bf6f29e963ffc271d	Xr	2026-11-16-73-sub-r6	DSP_State_LoadAndApplyAll	49	MATCH
 v141	v141/subcpu/cc900-staged/dsp_control_routines_b_kernel.c	1e5b98c2be3235e563cc376233db0dd9796c552934fd1dc7438df57158dda29a	Xr	2026-11-16-89-sub-staged3	DSP_State_ApplyBuf	61	MATCH
@@ -916,6 +920,8 @@ v141	v141/subcpu/cc900-staged/voice_ctrlchange_ah_20a.c	dfa458c8d8c632b1bf2ead37
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_ah_21a.c	3e2a03449a164df0d1a15276f47fa92ee7899a5f4dc0b20eca73a801ffa2ef18	Xr	2026-11-18-32-sub-r21g-staged	Voice_Allocate_Type2	405	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_ah_21a.c	3e2a03449a164df0d1a15276f47fa92ee7899a5f4dc0b20eca73a801ffa2ef18	Xr	2026-11-18-32-sub-r21g-staged	Voice_NoteOn_Type3	404	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_al_34a.c	f08533b36f0fbbea554f749ab533aa25d6252a523e7aafdb2de5940161b50b59	Xr	2026-11-19-58-sub-r34s-staged	Voice_Build_Partial_Descriptor	789	MATCH
+v141	v141/subcpu/cc900-staged/voice_ctrlchange_ax_44d.c	9ab64c9eb52c4ebd1008aa3f8fdf135d5188ae27f93343b1c65e8f92e154d3ed	Xr	2026-11-21-12-sub-r44s-staged	Voice_NoteOff	269	MATCH
+v141	v141/subcpu/cc900-staged/voice_ctrlchange_ax_44d.c	9ab64c9eb52c4ebd1008aa3f8fdf135d5188ae27f93343b1c65e8f92e154d3ed	Xr	2026-11-21-12-sub-r44s-staged	Voice_SetPitch	266	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_b.c	0613b5efd53038dd62bc09b3daec89cc628f25e0760e50903e3780acf939cd27	Xr	2026-11-16-73-sub-r6	Voice_KeyIndex_Pack3Nibbles	39	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_callnames.c	841351ae21803aab81af85e8928198973138a2fcbd2bb729add677cf8a3f4eb2	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type1	132	MATCH
 v141	v141/subcpu/cc900-staged/voice_ctrlchange_callnames.c	841351ae21803aab81af85e8928198973138a2fcbd2bb729add677cf8a3f4eb2	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type2	117	MATCH
@@ -1365,6 +1371,7 @@ v142	v142/subcpu/cc900-staged/dsp_control_routines.c	a9edc3ea176097cbaaa363c06f3
 v142	v142/subcpu/cc900-staged/dsp_control_routines.c	a9edc3ea176097cbaaa363c06f3f7b870e32fd8150507ad3b569f755bccd6b66	Xr	2026-11-16-73-sub-r6	DSP_WriteGlobalConfig	15	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines.c	a9edc3ea176097cbaaa363c06f3f7b870e32fd8150507ad3b569f755bccd6b66	Xr	2026-11-16-73-sub-r6	DSP_WriteParamWord	52	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_ar_41a.c	c2135b8516f2b6efd16e3421db03cc5576258956c565d619c1d3e2811c99e37b	Xr	2026-11-19-96-sub-r42s-staged	DSP_DetuneCurve_SignedFP	495	MATCH
+v142	v142/subcpu/cc900-staged/dsp_control_routines_au_45a.c	2e774c3bd93b0a772787e09744f9830ad83afc5453e57f9bb4dc9fc5a2b6e8a7	Xr	2026-11-21-14-sub-r45s-staged	DSP_FilterLUT_Fetch	787	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_b.c	b81fadf0397bfdaca2d2ca799da4b4819b3c0a8b971763a88cd60834a4fb31dc	Xr	2026-11-16-73-sub-r6	DSP_State_ApplyBuf	61	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_b.c	b81fadf0397bfdaca2d2ca799da4b4819b3c0a8b971763a88cd60834a4fb31dc	Xr	2026-11-16-73-sub-r6	DSP_State_LoadAndApplyAll	49	MATCH
 v142	v142/subcpu/cc900-staged/dsp_control_routines_b_kernel.c	64414bc0f2b706d952a84d68eee56094511c7d4b18f2d70db38c83a1d4f54ca3	Xr	2026-11-16-89-sub-staged3	DSP_State_ApplyBuf	61	MATCH
@@ -1535,6 +1542,8 @@ v142	v142/subcpu/cc900-staged/voice_ctrlchange_ah_20a.c	ce4570f55723a8610f88c477
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_ah_21a.c	62c2f83dce024f097c31ff3a1aeb543ddd4720cb6f88b2776f1353994c531562	Xr	2026-11-18-32-sub-r21g-staged	Voice_Allocate_Type2	405	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_ah_21a.c	62c2f83dce024f097c31ff3a1aeb543ddd4720cb6f88b2776f1353994c531562	Xr	2026-11-18-32-sub-r21g-staged	Voice_NoteOn_Type3	404	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_al_34a.c	80c25013f56a08337ced671871cc2de5d62f8aef6fd3bbd39ce84395d72fae56	Xr	2026-11-19-58-sub-r34s-staged	Voice_Build_Partial_Descriptor	789	MATCH
+v142	v142/subcpu/cc900-staged/voice_ctrlchange_ax_44d.c	7b829bb1e40f80044ae7b778fa4d32448867fa9c05150238f1fde17d7b30183d	Xr	2026-11-21-12-sub-r44s-staged	Voice_NoteOff	269	MATCH
+v142	v142/subcpu/cc900-staged/voice_ctrlchange_ax_44d.c	7b829bb1e40f80044ae7b778fa4d32448867fa9c05150238f1fde17d7b30183d	Xr	2026-11-21-12-sub-r44s-staged	Voice_SetPitch	266	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_callnames.c	ea53322c9470441dfe6873ee3ba16bc614ac9b0d1a74cd38dbbd3a5fa7dea8c9	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type1	132	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_callnames.c	ea53322c9470441dfe6873ee3ba16bc614ac9b0d1a74cd38dbbd3a5fa7dea8c9	Xr	2026-11-16-89-sub-staged3	Voice_Init_Type2	117	MATCH
 v142	v142/subcpu/cc900-staged/voice_ctrlchange_callnames2.c	931dfbeb5796071ce4e985e55f4b520e88d62d31359aa1a8af9753718372dcab	Xr	2026-11-16-89-sub-staged3	Voice_Release_Type4	177	MATCH
