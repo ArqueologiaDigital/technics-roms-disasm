@@ -28,6 +28,7 @@ extern void SeqStep_MainTimerTick(void);
 extern int SeqStep_SkipToMeasure(unsigned int);
 extern int SeqStep_SkipInvertedA(unsigned char m);
 extern unsigned char __near ram_22fc;
+extern void (*SeqStep_TimerDispatchC_PtrTable[])(void);
 extern void SeqStep_TimerDispatchC(void);
 extern int SeqStep_SkipInvertedB(unsigned char a);
 extern unsigned int __near SQSTEP_SCAN_OFFSET;

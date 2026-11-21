@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: SeWrtSnd_ClearName SeWrtSnd_SetupNamingPage_Join4 */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern void SeWrtSnd_SetupNamingPage_Join4(unsigned int w);
 extern void SeWrtSnd_OnColumn7(unsigned char a);

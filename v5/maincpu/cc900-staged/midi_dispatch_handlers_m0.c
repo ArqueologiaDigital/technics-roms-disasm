@@ -6,41 +6,187 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: MidiPkt_RecoverIfXferAborted MidiTable_DispatchHelper MidiTable_FlushArpNotes SeqChan_StepCmd_Field1to2 SeqChan_StepCmd_Field2to3 SeqChan_StepCmd_Field4to5 SeqChan_StepCmd_Field5to6 SeqChan_StepCmd_Field8to9 SeqChan_StepCmd_Field9to10 SeqChan_XferStep_AccompBlock1 SeqChan_XferStep_AccompBlock2 SeqChan_XferStep_StyleImageBlock1 */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: SeqChan_StepCmd_Field13Write */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 struct mq;
 typedef struct mq *mqp;
-extern mqp __near MIDISEQ_ACTIVE_BUF_PTR;
 extern unsigned char SeqData_ReadFieldByIndex(mqp, unsigned int);
-struct xfer;
-extern mqp __near MIDISEQ_SPARE_BUF_PTR;
+extern mqp __near MIDISEQ_ACTIVE_BUF_PTR;
 extern void MIDI_ReadChannelParam(mqp, int, int);
-extern void MidiPkt_PreparePanelReceive(void);
-extern void MidiPkt_SetXferTotal_Panel(struct xfer *);
-extern void MidiPkt_SetXferBlock_LivePanel(struct xfer *);
+extern void SeqChan_StepCmd_Field13Write(void);
+extern void SeqChan_DefaultHandler(void);
+extern void SeqChan_ProcessStepCmd(void);
+extern int AccWrap_ReturnZero(int);
+extern void MidiPkt_UnpackNibblesToXfer(void);
 extern void SeqChan_StepCmd_Field1to2(void);
-extern void MidiPkt_ArpExtHandler_A(void);
-extern void MidiPkt_SetXferLengthFromMsg(void);
-extern void MidiPkt_SetXferBlk_StyleImgPool(struct xfer *);
+extern void SeqChan_StepCmd_Field20to21(void);
+extern void SeqChan_StepCmd_Field2to3(void);
+extern void SeqChan_StepCmd_Field4to5(void);
+extern void TmFlash_BulkTransferToSubCPU(void);
+extern void SeqChan_StepCmd_Field5to6(void);
+extern void SeqChan_StepCmd_Field8to9(void);
 extern void SeqChan_StepCmd_Field9to10(void);
-extern void MidiPkt_ArpExtHandler_G(void);
+extern unsigned char __near MIDIPKT_RX_GROUPS;
+extern void SeqChan_WriteField_Data_A(void);
+extern void SeqChan_WriteField_Data_B(void);
+extern void SeqChan_WriteField_Data_C(void);
+extern void SeqChan_WriteField_Data_D(void);
+extern void SeqChan_WriteField_Data_E(void);
+extern void SeqChan_XferStep_AccompBlock1(void);
+extern void SeqChan_XferStep_AccompBlock2(void);
+extern void SeqChan_XferStep_CurrentSong(void);
+extern void SeqChan_XferStep_SongSlots(void);
+extern void SeqChan_XferStep_StyleImageBlk1(void);
 
 
-/* cc900-name: MidiPkt_SetXferBlk_StyleImgPool=MidiPkt_SetXferBlock_StyleImagePool */
 
-/* cc900-name: MidiPkt_SetXferBlk_AccompBank=MidiPkt_SetXferBlock_AccompBankTables */
+/* cc900-name: MidiPkt_SetXferBlk_SeqEvents=MidiPkt_SetXferBlock_SeqEvents */
 
-/* cc900-name: MidiPkt_SetXferTotal_AccompBlk=MidiPkt_SetXferTotal_AccompBlocks */
-/* cc900-name: MidiPkt_SetXferBlk_AccompArea=MidiPkt_SetXferBlock_AccompAreaHeader */
-/* cc900-name: MidiPkt_PrepAccompBlocksReceive=MidiPkt_PrepareAccompBlocksReceive */
+void SeqChan_DefaultHandler(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 31);
+}
 
-/* cc900-name: MidiPkt_SetXferBlk_PanelMem=MidiPkt_SetXferBlock_PanelMemories */
+void SeqChan_ProcessStepCmd(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 19);
+}
 
-/* cc900-name: MidiPkt_SetXferBlk_SoundRamData=MidiPkt_SetXferBlock_SoundRamData */
+void SeqChan_StepCmd_Field13Write(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 13);
+	if (AccWrap_ReturnZero(4) != 0xffff)
+		MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 14);
+}
 
+void SeqChan_StepCmd_Field1to2(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 1);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 2);
+}
 
-/* cc900-name: MidiPkt_SetXferBlk_StyleImgTbl=MidiPkt_SetXferBlock_StyleImageTables */
+void SeqChan_StepCmd_Field20to21(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 20);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 21);
+}
 
-/* cc900-name: MidiPkt_SetXferBlk_StyleImgHdr=MidiPkt_SetXferBlock_StyleImageHeader */
-/* cc900-name: MidiPkt_PrepStyleImageReceive=MidiPkt_PrepareStyleImageReceive */
+void SeqChan_StepCmd_Field2to3(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 2);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 3);
+}
+
+void SeqChan_StepCmd_Field4to5(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 4);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 5);
+}
+
+void SeqChan_StepCmd_Field5to6(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 5);
+	MidiPkt_UnpackNibblesToXfer();
+	TmFlash_BulkTransferToSubCPU();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 6);
+}
+
+void SeqChan_StepCmd_Field8to9(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 8);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 9);
+}
+
+void SeqChan_StepCmd_Field9to10(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 9);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 10);
+}
+
+void SeqChan_WriteField_Data_A(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 0);
+	MIDIPKT_RX_GROUPS |= 0x80;
+}
+
+void SeqChan_WriteField_Data_B(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 0);
+	MIDIPKT_RX_GROUPS |= 0x40;
+}
+
+void SeqChan_WriteField_Data_C(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 0);
+	MIDIPKT_RX_GROUPS |= 0x20;
+}
+
+void SeqChan_WriteField_Data_D(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 0);
+	MIDIPKT_RX_GROUPS |= 0x10;
+}
+
+void SeqChan_WriteField_Data_E(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 0);
+	MIDIPKT_RX_GROUPS |= 0x04;
+}
+
+void SeqChan_XferStep_AccompBlock1(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 18);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 19);
+}
+
+void SeqChan_XferStep_AccompBlock2(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 19);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 20);
+}
+
+void SeqChan_XferStep_CurrentSong(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 11);
+	if (AccWrap_ReturnZero(4) != 0xffff)
+		MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 12);
+}
+
+void SeqChan_XferStep_SongSlots(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 12);
+	if (AccWrap_ReturnZero(4) != 0xffff)
+		MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 13);
+}
+
 /* cc900-name: SeqChan_XferStep_StyleImageBlk1=SeqChan_XferStep_StyleImageBlock1 */
+void SeqChan_XferStep_StyleImageBlk1(void)
+{
+	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 7);
+	MidiPkt_UnpackNibblesToXfer();
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 15) == 0)
+		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 8);
+}

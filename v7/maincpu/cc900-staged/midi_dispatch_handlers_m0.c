@@ -6,56 +6,41 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: SeqChan_StepCmd_Field13Write */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 struct mq;
 typedef struct mq *mqp;
-struct xfer;
-typedef void (*cmdfn)(void);
-extern mqp __near MIDISEQ_ACTIVE_BUF_PTR;
-extern mqp __near MIDISEQ_SPARE_BUF_PTR;
-extern unsigned char __near ram_bd1c;
-extern unsigned char __near MIDIPKT_RX_GROUPS;
-extern cmdfn SeqChan_StepCmdHandlers[];
-extern cmdfn SeqChan_WriteFieldHandlers[];
 extern unsigned char SeqData_ReadFieldByIndex(mqp, unsigned int);
+extern mqp __near MIDISEQ_ACTIVE_BUF_PTR;
 extern void MIDI_ReadChannelParam(mqp, int, int);
+extern void SeqChan_StepCmd_Field13Write(void);
+extern void SeqChan_DefaultHandler(void);
+extern void SeqChan_ProcessStepCmd(void);
 extern int AccWrap_ReturnZero(int);
 extern void MidiPkt_UnpackNibblesToXfer(void);
+extern void SeqChan_StepCmd_Field1to2(void);
+extern void SeqChan_StepCmd_Field20to21(void);
+extern void SeqChan_StepCmd_Field2to3(void);
+extern void SeqChan_StepCmd_Field4to5(void);
 extern void TmFlash_BulkTransferToSubCPU(void);
-extern void MidiPkt_SetXferLengthFromMsg(void);
-extern void MidiPkt_SetXferBlk_SeqEvents(struct xfer *);
-extern void SeqChan_StepCmd_Field13Write(void);
+extern void SeqChan_StepCmd_Field5to6(void);
+extern void SeqChan_StepCmd_Field8to9(void);
+extern void SeqChan_StepCmd_Field9to10(void);
+extern unsigned char __near MIDIPKT_RX_GROUPS;
+extern void SeqChan_WriteField_Data_A(void);
+extern void SeqChan_WriteField_Data_B(void);
+extern void SeqChan_WriteField_Data_C(void);
+extern void SeqChan_WriteField_Data_D(void);
+extern void SeqChan_WriteField_Data_E(void);
+extern void SeqChan_XferStep_AccompBlock1(void);
+extern void SeqChan_XferStep_AccompBlock2(void);
+extern void SeqChan_XferStep_CurrentSong(void);
+extern void SeqChan_XferStep_SongSlots(void);
+extern void SeqChan_XferStep_StyleImageBlk1(void);
 
-/* cc900-name: SeqChan_XferStep_StyleImageBlk1=SeqChan_XferStep_StyleImageBlock1 */
-void MidiPkt_XferOnDataPacket(void)
-{
-	unsigned char n;
 
-	n = SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3);
-	if (n < 22)
-		SeqChan_StepCmdHandlers[n]();
-}
 
-void MidiPkt_XferOnGroupEnd(void)
-{
-	unsigned char n;
-
-	n = ((unsigned char *)MIDISEQ_SPARE_BUF_PTR)[3];
-	if (n < 22) {
-		SeqChan_WriteFieldHandlers[n]();
-		ram_bd1c &= ~0x80;
-	}
-}
-
-void MidiPkt_XferOnSeqEventBlock(void)
-{
-	if (SeqData_ReadFieldByIndex(MIDISEQ_SPARE_BUF_PTR, 3) == 13) {
-		MidiPkt_SetXferBlk_SeqEvents((struct xfer *)0xbcecL);
-		MidiPkt_SetXferLengthFromMsg();
-		SeqChan_StepCmd_Field13Write();
-	} else
-		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 4, 28);
-}
+/* cc900-name: MidiPkt_SetXferBlk_SeqEvents=MidiPkt_SetXferBlock_SeqEvents */
 
 void SeqChan_DefaultHandler(void)
 {
@@ -197,6 +182,7 @@ void SeqChan_XferStep_SongSlots(void)
 		MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 13);
 }
 
+/* cc900-name: SeqChan_XferStep_StyleImageBlk1=SeqChan_XferStep_StyleImageBlock1 */
 void SeqChan_XferStep_StyleImageBlk1(void)
 {
 	MIDI_ReadChannelParam(MIDISEQ_ACTIVE_BUF_PTR, 3, 7);
