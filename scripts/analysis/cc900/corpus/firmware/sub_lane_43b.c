@@ -1,13 +1,43 @@
-/* Functions of core/13_audio_process_dsp_and_effects.s.
-   Firmware C (cc900), staged: Toshiba V4.23 reproduces each function (notes/cc900-c-subcpu-2026-11-16/staged_v423.tsv);
-   the build does not compile this directory yet.  Names are the tree's; ram_<hex> is a RAM cell the tree spells
-   as a number or as Payload_Bss_Start+offset.
-   __near / __tiny: the cells the ROM reaches with 16 / 8-bit operands (V4.23 then declares them medium / small;
-   a plain extern is large, 24-bit).  Each __near / __tiny declaration names one object: V4.23 applies the
-   qualifier to the first declarator only.
+/* lane_sub, round 43, form b: Audio_Process_DSP, v1.40 form (KN5000 sub-CPU payload v1.40; check with
+   sub_v423.py one LISTING --tree v140/subcpu).  Written by
+   notes/cc900-c-subcpu-2026-11-16/helper-generators/gen_lane_43.py from sub_AN_30c.c (its docstring says what
+   each form changes).  Helper AN's notes follow.
+*/
+/* lane_sub helper AN, round 30, form c: Audio_Process_DSP, v1.40 form.  From 28a.  0x24 as form a (`* 2` byte
+   reads).  Write path: 28a with `w = w & 0xf;` instead of `w &= 0xf;`.  See sub_AN_30a.c for round 29's result.
+   Round 28 a's notes follow.
+   Round 27 (run 2026-11-19-34-sub-r27n-v140), compared with v1.40's ROM over 1,491 B
+   (helper-generators/dump_AN140.py): a / b differ only in (1) the 0x24 reference reads, where V4.23 put the {lo, hi}
+   array at +0x28 (it word-aligns the inner 2-byte struct after the 0x27-byte pad), and (2) the 0x2b write path, where
+   the ROM computes the channel straight into QIZ and the field into IZ (a / b: channel IZ, field QIZ).  The type word
+   c in IZ, the frame and the jrl came out right with no C change.  27c (fields nested) put the field in IZ as the ROM
+   but computed the channel into IZ and then copied it to QIZ.
+   THIS FORM a = 27c with (1) the references as `unsigned char ref[8][2]` (byte alignment: +0x27), read [i][0] and
+   [i][1]; (2) the write path's channel a block-local `int w` (its whole life in that block, so V4.23 may give it
+   QIZ as its home), still through the int temporary k, the fields nested.  Form b: w and a block-local field v (v
+   declared after w).  Form c: as b with v declared before w.
+   Round 27 c's notes: form a with the write path's first field nested in the call (no block v;
+   v1.40 keeps the channel in QIZ and the field in IZ): Audio_Process_DSP, v1.40 form (KN5000 sub-CPU payload v1.40,
+   v140/subcpu/core/13_audio_process_dsp_and_effects.s; check with sub_v423.py one LISTING --tree v140/subcpu).
+   Starts from v140/subcpu/cc900-staged/audio_process_dsp_and_effects_an_26c.c (v142's matching C with v140's cells)
+   and changes only what scripts/generators/create_v140_subcpu_source.py's edit 2 changes in the source: sub-command
+   0x24 (DSP_Cmd2B_SetParam) looks the part's patch record up itself and passes the record's {lo, hi} sub-tone
+   reference to DSP_SetVoiceCoefficients:
+       t = ToneDB_Find_ToneRecord(ram_41335[part * 0x11f], ram_41336[part * 0x11f]);   (v1.40 Payload_Bss_Start
+       n = DSP_SetVoiceCoefficients(t->ref[i].lo, t->ref[i].hi, p);                     +0x250b / +0x250c)
+   with part = payload[0], i = payload[1].  The ROM's index `extz wa; add wa,wa; add wa,0x27` then `(xhl+wa)` for lo
+   and `exts xwa; add xwa,xhl; (xwa+1)` for hi read as a 2-byte struct array at +0x27 of the record (V4.23 scales a
+   2-byte element by add, and the +1 member needs the 32-bit sum).  t is block-scoped in the case and stays in XHL.
+   The other v1.40 edits (3: channel in QIZ and field in IZ in the write path; the type word c in IZ instead of the
+   frame slot +12) are register allocation: no C change is made for them here, on the guess that the longer 0x24
+   case moves V4.23's choices by itself.  Form b: t function-scope.  Form c: form a with the write path's field
+   nested in the call again (no block v), as round 26 a.
    cc900-options: -Xr
 */
 
+extern unsigned char ram_41335[];
+extern unsigned char ram_41336[];
+extern unsigned char *ToneDB_Find_ToneRecord(unsigned int, unsigned int);
 extern unsigned char __near DSP2_RingBuffer[];
 extern unsigned int __near ram_448c;
 extern unsigned char __near ram_4368[];
@@ -59,12 +89,14 @@ extern void DSP_ApplyConfig();
 /* cc900-module: Audio_Process_DSP DSP_Cmd_DequeueHeader DSP_Cmd_LoadEffectPreset DSP_RingBuf_Read DSP_RingBuf_ReadAndCompare DSP_RingBuf_Skip DSP_StoreBufferCount Extract_14Bit_PayloadSize Extract_14Bit_VoiceParam */
 /* cc900-data: Audio_Process_DSP 1 = CmdHandler2C_DispatchOffsets */
 /* cc900-data: Audio_Process_DSP 2 = DSP_Cmd2B_DispatchOffsets */
+struct pair { unsigned char lo; unsigned char hi; };
 void Audio_Process_DSP(void)
 {
     unsigned char *r;
     unsigned char part;
     unsigned char *p;
     int c;
+    unsigned int v;
     unsigned char sel;
     int ch;
     int k;
@@ -133,9 +165,12 @@ void Audio_Process_DSP(void)
                     case 0x22:
                         n = DSP_ReadVoiceParam5D(ram_4370[0], ram_4370[1], p);
                         break;
-                    case 0x24:
-                        n = DSP_SetVoiceCoefficients(ram_4370[0], ram_4370[1], p);
+                    case 0x24: {
+                        unsigned char *t;
+                        t = ToneDB_Find_ToneRecord(ram_41335[ram_4370[0] * 0x11f], ram_41336[ram_4370[0] * 0x11f]);
+                        n = DSP_SetVoiceCoefficients(t[(int)ram_4370[1] * 2 + 0x27], ((struct pair *)&t[(int)ram_4370[1] * 2 + 0x27])->hi, p);
                         break;
+                    }
                     case 0x27:
                         n = DSP_ReadVoiceParam11(ram_4370[0], ram_4370[1], p);
                         break;
@@ -148,7 +183,6 @@ void Audio_Process_DSP(void)
                         break;
                     }
                 } else {
-                    unsigned int v;
                     k = sel;
                     ch = k;
                     ch &= 0xf;
