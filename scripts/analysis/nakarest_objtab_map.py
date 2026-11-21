@@ -173,6 +173,13 @@ class Map:
                 m = re.match(r'^([A-Za-z_]\w*):', l)
                 if m and m.group(1).startswith('Initialize'):
                     init = m.group(1)
+                    # an Initialize* routine built from firmware C (cc900 phase 6): its label line includes the
+                    # compiled body, and the registrations are read from the C (2026-11-22, lane_p6)
+                    mc = re.search(r'\.include\s+"includes/generated/cc900/%s\.s".*;\s*C:\s*(cc900/\S+\.c)' % init, l)
+                    if mc:
+                        self._from_c(os.path.join(ROOT, self.v, 'maincpu', mc.group(1)),
+                                     init, os.path.relpath(f, ROOT), i + 1)
+                        continue
                 window = (window + [l])[-12:]
                 m = rx.match(l)
                 me = rxe.match(l)
@@ -197,6 +204,51 @@ class Map:
                                       init=init, file=os.path.relpath(f, ROOT), line=i + 1,
                                       count_at=count_at if me else self._count_at))
                 count_at = None
+
+    def _from_c(self, cpath, init, hand_file, hand_line):
+        """the registrations of `init`'s firmware C: per call, the `reg.cls = ...; reg.proc = ...; reg.count = ...;
+        reg.base = ...;` assignments before `RegisterObjectTable(slot, &reg)` (helper V's form, p6_V_21r1*.c).  A
+        count written as a name is RegObjTable's (the WORD at that address); a number is RegObjTabl's immediate;
+        `*(int *)(Sym + N)` is the word at Sym + N (the Hama copies)."""
+        src = open(cpath, encoding='latin-1').read()
+        alias = {m.group(1): m.group(2) for m in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', src)}
+        cname = next((k for k, v in alias.items() if v == init), init)
+        m = re.search(r'^[\w\s\*]*\b%s\s*\([^)]*\)\s*\{' % re.escape(cname), src, re.M)
+        if not m:
+            return
+        depth, k = 0, m.end() - 1
+        for k in range(m.end() - 1, len(src)):
+            depth += {'{': 1, '}': -1}.get(src[k], 0)
+            if depth == 0:
+                break
+        body = re.sub(r'/\*.*?\*/', ' ', src[m.end():k], flags=re.S)
+        val = lambda tok: self._val(alias.get(tok, tok))
+        cur = {}
+        for st in body.split(';'):
+            st = st.strip()
+            a = re.match(r'^\w+\.(cls|proc|count|base)\s*=\s*(.+)$', st, re.S)
+            if a:
+                cur[a.group(1)] = re.sub(r'\s+', ' ', a.group(2)).strip()
+                continue
+            c = re.match(r'^RegisterObjectTable\s*\(\s*([^,]+),\s*&\s*\w+\s*\)$', st)
+            if not c:
+                continue
+            e = cur.get('cls', '')
+            cls = val(e)
+            proc = val(re.sub(r'^\([^)]*\)\s*', '', cur.get('proc', '')))
+            tab = val(re.sub(r'^\([^)]*\)\s*', '', cur.get('base', '')))
+            slot = val(c.group(1).strip())
+            n, count_at = cur.get('count', ''), None
+            if re.match(r'^(0x[0-9a-fA-F]+|\d+)$', n):
+                cnt = int(n, 0)
+            else:
+                h = re.match(r'^\*\s*\(\s*(?:unsigned\s+)?int\s*\*\s*\)\s*\(\s*(\w+)\s*\+\s*(0x[0-9a-fA-F]+|\d+)\s*\)$', n)
+                count_at = (val(h.group(1)) + int(h.group(2), 0)) if h and val(h.group(1)) is not None else val(n)
+                cnt = self.u16(count_at) if count_at is not None and self.inrom(count_at) else None
+            if None in (cls, cnt, tab, slot):
+                continue
+            self.regs.append(dict(cls=cls, proc=proc, count=cnt, table=tab, slot=slot, init=init,
+                                  file=hand_file, line=hand_line, count_at=count_at))
 
     def _expanded(self, w):
         txt = [x.split(';')[0].strip() for x in w]

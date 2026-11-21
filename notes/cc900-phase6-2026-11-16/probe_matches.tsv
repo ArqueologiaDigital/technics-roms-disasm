@@ -1563,3 +1563,14 @@ TaskSched_DelayTicks	14	2026-11-21-7-p6-r62	p6_U_21r1m2a@O3XSXr p6_U_21r1m2a@O3X
 UpdateSeMenuSelection	44	2026-11-21-7-p6-r62	p6_V_21r1m131a@O3XSXr p6_V_21r1m131a@O3Xr p6_V_21r1m131a@Xr
 VoiceAlloc_TestBitRead	12	2026-11-21-7-p6-r62	p6_U_21r1m235a@O3XSXr p6_U_21r1m235a@O3Xr p6_U_21r1m235a@Xr
 VoicePreset_LoadAndInitPan	30	2026-11-21-7-p6-r62	p6_U_21r1m234a@O3XSXr p6_U_21r1m234a@O3Xr p6_U_21r1m234a@Xr
+InitializeCheap	2414	2026-11-21-9-p6-r64	p6_W_21r2m270c@O3Xr
+InitializeHama	592	2026-11-21-9-p6-r64	p6_W_21r2m159a@Xr p6_W_21r2m159b@Xr
+InitializeScoop	3638	2026-11-21-9-p6-r64	p6_W_21r2m128a@O3Xr
+InitializeYoko	2751	2026-11-21-9-p6-r64	p6_W_21r2m232c@O3Xr
+MspSave_InitAndCalcSize	17	2026-11-21-9-p6-r64	p6_W_21r2m243a@Xr
+Part_ReadVoiceBit7	19	2026-11-21-9-p6-r64	p6_W_21r2m234a@O3XSXr p6_W_21r2m234a@O3Xr p6_W_21r2m234b@O3XSXr p6_W_21r2m234b@O3Xr
+Part_ReadVoiceWord	15	2026-11-21-9-p6-r64	p6_W_21r2m234a@O3XSXr p6_W_21r2m234a@O3Xr p6_W_21r2m234b@O3XSXr p6_W_21r2m234b@O3Xr
+Part_WriteVoiceWord	15	2026-11-21-9-p6-r64	p6_W_21r2m234a@O3XSXr p6_W_21r2m234a@O3Xr p6_W_21r2m234b@O3XSXr p6_W_21r2m234b@O3Xr
+SeqStep_TimerDispatchB	21	2026-11-21-9-p6-r64	p6_W_21r2m236a@O3XSXr p6_W_21r2m236a@O3Xr p6_W_21r2m236a@Xr
+SingleLoadSrc_DrawSoundMemItemName	94	2026-11-21-9-p6-r64	p6_X_21r2m269e@O3XSXr p6_X_21r2m269e@O3Xr p6_X_21r2m269f@O3XSXr p6_X_21r2m269f@O3Xr
+SoundMode_SetChorusType	40	2026-11-21-9-p6-r64	p6_W_21r2m288a@O3XSXr p6_W_21r2m288a@O3Xr p6_W_21r2m288a@Xr
