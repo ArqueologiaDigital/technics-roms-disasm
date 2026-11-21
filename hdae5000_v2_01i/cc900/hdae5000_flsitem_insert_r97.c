@@ -1,6 +1,6 @@
-/* hdae5000: FlsItem_Insert (hdae5000_ui_display.s), round 97 (2026-11-21), run 2026-11-21-25-hd-r97: each copy's destination is a local of its own block
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_r97_fi.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_flsitem_insert_r97.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_flsitem_insert_r97.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
    cc900-name: FlsIns_x=HDAE5000_FlsItem_Insert
 */

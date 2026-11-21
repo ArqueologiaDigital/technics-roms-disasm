@@ -1095,3 +1095,7 @@ hdae5000	hdae5000/cc900-staged/hdae5000_jnext_r95.c	8d292935caf45e19a349a4d7199e
 hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_jnext_r95.c	e0f19d7710924e77d7b28fbdbb8d1bb8b432f92899a57800e459bfeac11b5eae	Xr	2026-11-21-20-hd-r96-staged	HDAE5000_FILE_Naming_Screen	46	MATCH
 hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_jnext_r95.c	25cdcc7beebd6214475d02eb47cc5a602f141b8243560e54186eba86afea40bc	Xr	2026-11-21-20-hd-r96-staged	HDAE5000_FILE_Naming_Screen	46	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_jnext_r95.c	85759341acfe949cfe7e7732a58bd451c6224cc5246879dcb3a698c829ae22d8	Xr	2026-11-21-20-hd-r96-staged	HDAE5000_FILE_Naming_Screen	46	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_flsitem_insert_r97.c	11ed40134d4d24c319c115943bf762aed3dcdbda6669b629b86943d3a9e02082	Xr	2026-11-21-26-hd-r98-staged	HDAE5000_FlsItem_Insert	384	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_flsitem_insert_r97.c	eddf220cc41250b6e81f805c3415e0d48d9740cfb26d794fc1bb55aa6df7fd9b	Xr	2026-11-21-26-hd-r98-staged	HDAE5000_FlsItem_Insert	384	MATCH
+hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_flsitem_insert_r97.c	0837f94d63edbde1ca747b55596d7290407a34760dfc9b93c8c53425347e0a65	Xr	2026-11-21-26-hd-r98-staged	HDAE5000_FlsItem_Insert	384	MATCH
+hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_flsitem_insert_r97.c	90e0f54b415265ae9c80dd94c87a602f7a77300d3575a0963411106ce4683190	Xr	2026-11-21-26-hd-r98-staged	HDAE5000_FlsItem_Insert	384	MATCH
