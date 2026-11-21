@@ -138,21 +138,9 @@ HDAE5000_FileLoadSwCatch:	.include "includes/generated/cc900/HDAE5000_FileLoadSw
 	.set	HDAE5000_FileLoadSwCatch_Join, HDAE5000_FileLoadSwCatch + 51
 	.set	HDAE5000_FileLoadSwCatch_Done, HDAE5000_FileLoadSwCatch + 78
 
-HDAE5000_FILE_Naming_Screen:
-	; registered as "FILE_Naming_Screen" in HDAE5000_ScreenProc_Table
-	cp	xbc, EVT_SW_IN
-	jr	nz, HDAE5000_FILE_Naming_Screen_Done
-	ld	xwa, (HDAE5000_RAM_MainWorkspacePtr)
-	ld	xwa, (xwa + WS_RootFnTable)
-	ld_sril	xix, (xwa + RootFn_SendEvent)
-	ld	xwa, 0x02600024
-	ld	xbc, EVT_MAKE_EDIT_SW_ID
-	call	(xix)
-	cp	xhl, 0x0000000b
-	jr	z, HDAE5000_FILE_Naming_Screen_Done
-HDAE5000_FILE_Naming_Screen_Done:
-	ld	xhl, 0:i3
-	ret
+HDAE5000_FILE_Naming_Screen:	.include "includes/generated/cc900/HDAE5000_FILE_Naming_Screen.s"	; C: cc900/hdae5000_jnext_r95.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	HDAE5000_FILE_Naming_Screen_Done, HDAE5000_FILE_Naming_Screen + 43
 
 HDAE5000_HDDNamingCheck:	.include "includes/generated/cc900/HDAE5000_HDDNamingCheck.s"	; C: cc900/hdae5000_drv_screens3.c
 ; the hand assembly's labels inside the compiled body, by their offsets
