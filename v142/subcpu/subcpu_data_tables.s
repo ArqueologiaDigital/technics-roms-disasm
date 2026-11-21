@@ -896,21 +896,11 @@ AUDIO_CMD_DSPUNIT_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_DSPUNI
 ; Audio_Cmd_ToneEdit_Reply_TableJump folds opcodes 0x19..0x24 and 0x2B..0x36 into
 ; one 0..0x17 index, maps it through this byte table to a case number 0..6, then
 ; jumps through AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE.
-AUDIO_CMD_TONEEDIT_REPLY_CASEMAP:
-	.byte 0x00, 0x01, 0x00, 0x01, 0x02, 0x01, 0x05, 0x01
-	.byte 0x06, 0x06, 0x06, 0x06, 0x00, 0x01, 0x00, 0x01
-	.byte 0x02, 0x01, 0x03, 0x01, 0x04, 0x04, 0x04, 0x04
+AUDIO_CMD_TONEEDIT_REPLY_CASEMAP:	.include "includes/generated/cc900/AUDIO_CMD_TONEEDIT_REPLY_CASEMAP.s"	; C: cc900/voice_noteon_and_tonegen_aw_47a.c (cc900-data)
 
 ; --- 0x00FAE0-0x00FAED  AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE -- 7 u16 jump offsets, base 0x0304B6
 ; Computed jump in Audio_Cmd_ToneEdit_Reply_TableJump (case number 0..6 from the casemap above): `jp T, 0x0304B6 + table[index*2]`.
-AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE:
-	.short Audio_Cmd_ToneEdit_Reply_Case_Pan - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 0
-	.short Audio_Cmd_ToneEdit_Reply_Send - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 1
-	.short Audio_Cmd_ToneEdit_Reply_Case_Sustain - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 2
-	.short Audio_Cmd_ToneEdit_Reply_Case_Slot1 - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 3
-	.short Audio_Cmd_ToneEdit_Reply_Case_ReadBack1 - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 4
-	.short Audio_Cmd_ToneEdit_Reply_Case_Slot0 - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 5
-	.short Audio_Cmd_ToneEdit_Reply_Case_ReadBack - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 6
+AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_47a.c (cc900-data)
 
 ; --- 0x00FAEE-0x00FB1D  DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE -- 24 u16 jump offsets, base 0x0317CF
 ; Computed jump in DSP_SetCoeff_MasterConfig (selector 0..23): `jp T, 0x0317CF + table[index*2]`.

@@ -290,6 +290,12 @@ v141 **601 functions**, v140 **600** built from C.  DSP_BiquadCoeff_Compute (+81
 at the ROM's lengths with the ROM's instructions; only the frame slots of their pooled FP temporaries differ (no C
 spelling has moved them yet; a V4.23 probe of temporary placement is the next step).
 
+**Twenty-sixth promotion (2026-11-21; matched in run 2026-11-21-23-sub-r47a, verified per tree in run
+2026-11-21-24-sub-r47s-staged).**  voice_noteon_and_tonegen_aw_47a.c (helper AW): Audio_Cmd_ToneEdit_Write_And_Reply
+(269 B, the whole switch with its two case tables; the reply address as the converted `&d[(int)(unsigned int)off]`,
+the DSPUnit row's shape).  v142 / v141 **602 functions**, v140 **601** built from C.  VoiceParam_Set_Tone_Option
+stays at +12 (sub_AW_47c).
+
 Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43d.py, forms a-l): `(int)i * 2 + 0x27` and
 `((struct pair *)&t[..])->hi` give sub-command 0x24's bytes (form b).  The write path stays: whichever variable holds
 the channel gets IZ while the field is a variable (forms a-f), and with the field nested the channel's `and` happens

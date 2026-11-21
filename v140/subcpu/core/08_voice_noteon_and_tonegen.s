@@ -2257,119 +2257,16 @@ DSP_SlotParam_Read_To_Cache_B:	.include "includes/generated/cc900/DSP_SlotParam_
 ; Stores (rec+4) at buffer[opcode].  Then dispatches opcodes 0x19..0x24 and 0x2B..0x36 via
 ; AUDIO_CMD_TONEEDIT_REPLY_CASEMAP / _JUMPTABLE (base 0x0304B6).  ALL paths, including the
 ; ignored opcodes, converge on Audio_Cmd_ToneEdit_Reply_Send.  Caller: 0x031B2B.
-Audio_Cmd_ToneEdit_Write_And_Reply:
-	dec	4, xsp
-	push xiz
-	ld	xiz, xwa
-	ld	a, (xiz+1)
-	extz	wa
-	muls	wa, 287
-	lda	xbc, (Part_PatchRecord_Ptr:24)
-	ld	xhl, (xbc+wa)
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	ld	c, a
-	extz	bc
-	ld	a, (xiz+1)
-	ld	e, a
-	extz	de
-	ld	xwa, xhl
-	call	ToneDB_Find_SubToneRecord
-	ld	(xsp+4), xhl
-	ld	a, (xiz+2)
-	extz	wa
-	extz	xwa
-	ld	xbc, xwa
-	add	xbc, (xsp+4)
-	ld	a, (xiz+4)
-	ld	(xbc), a
-	ld	a, (xiz+2)
-	extz	wa
-	sub	wa, 25
-	cp	wa, 0:i3
-	jrl	lt, Audio_Cmd_ToneEdit_Reply_Send
-	cp	wa, 11
-	jr	le, Audio_Cmd_ToneEdit_Reply_TableJump
-	sub	wa, 9
-	cp	wa, 12
-	jr	lt, Audio_Cmd_ToneEdit_Reply_Send
-	cp	wa, 23
-	jr	gt, Audio_Cmd_ToneEdit_Reply_Send
-; Fold opcodes 0x19..0x24 and 0x2B..0x36 into one 0..0x17 index and jump.
-Audio_Cmd_ToneEdit_Reply_TableJump:
-	lda	xix, (AUDIO_CMD_TONEEDIT_REPLY_CASEMAP:24)
-	ld	wa, (xix+wa)
-	extz	wa
-	sll	wa, 1
-	ld	xix, AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE
-	ld	wa, (xix+wa)
-	lda	xix, (Audio_Cmd_ToneEdit_Reply_Case_Pan:24)
-	jp	t, (xix+wa)
-; Voice_Query_PartVoices(part) then 0x029071 over the returned voice list.
-Audio_Cmd_ToneEdit_Reply_Case_Pan:
-	ld	a, (xiz+1)
-	extz	wa
-	call	Voice_Query_PartVoices
-	ld	xwa, xhl
-	call	AudioChannel_AllVoices_Update_Variant3
-	jr	t, Audio_Cmd_ToneEdit_Reply_Send
-; Voice_AllocateForSustain(part) then Voice_AllNotes_SustainRetrigger(list, 1).
-Audio_Cmd_ToneEdit_Reply_Case_Sustain:
-	ld	a, (xiz+1)
-	extz	wa
-	call	Voice_AllocateForSustain
-	ld	xwa, xhl
-	ld	bc, 1:i3
-	call	Voice_AllNotes_SustainRetrigger
-	jr	t, Audio_Cmd_ToneEdit_Reply_Send
-; Only when (rec+5) == 7: DSP_SlotParam_Write_From_Cache_B(index 0).
-Audio_Cmd_ToneEdit_Reply_Case_Slot0:
-	cp	(xiz+5), 7
-	jr	nz, Audio_Cmd_ToneEdit_Reply_Send
-	ld	wa, 0:i3
-	calr	DSP_SlotParam_Write_From_Cache_B
-	jr	Audio_Cmd_ToneEdit_Reply_Send
-; Only when (rec+5) == 7: DSP_SlotParam_Write_From_Cache_B(index 1).
-Audio_Cmd_ToneEdit_Reply_Case_Slot1:
-	cp	(xiz+5), 7
-	jr	nz, Audio_Cmd_ToneEdit_Reply_Send
-	ld	wa, 1:i3
-	calr	DSP_SlotParam_Write_From_Cache_B
-	jr	Audio_Cmd_ToneEdit_Reply_Send
-; DSP_SlotParam_Read_To_Cache_B for indices 0 and 1.
-Audio_Cmd_ToneEdit_Reply_Case_ReadBack:
-	ld	a, (xiz+1)
-	extz	wa
-	ld	bc, 0:i3
-	calr	DSP_SlotParam_Read_To_Cache_B
-; Table entry that enters the read-back pair at its second call only (index 1).
-Audio_Cmd_ToneEdit_Reply_Case_ReadBack1:
-	ld	a, (xiz+1)
-	extz	wa
-	ld	bc, 1:i3
-	calr	DSP_SlotParam_Read_To_Cache_B
-; ★ The unconditional sub->main reply.  Builds
-;   dst = 0x001E0000 + 0x4AA7 + editIndex*0x50   (editIndex = [ToneDB_RamBankA + 0x72A7])
-;   src = the buffer pointer saved at (XSP+0x04)
-;   len = 0x3A (58 bytes)
-; and calls InterCPU_E1_DMA_Transfer (0x020DB3).  If that call times out the command is
-; still acknowledged locally and the main CPU simply never sees the update.
-Audio_Cmd_ToneEdit_Reply_Send:
-	ld	xde, 1966080
-	ldw	bc, 58
-	ld	xwa, (Payload_Bss_Start+0x64a6:24)
-	ld	a, (xwa+29351)
-	extz	wa
-	muls	wa, 80
-	add	wa, 19111
-	exts	xwa
-	add	xwa, xde
-	ld	xde, xwa
-	ld	xwa, (xsp+4)
-	call	InterCPU_E1_DMA_Transfer
-	pop xiz
-	inc	4, xsp
-	ret
+Audio_Cmd_ToneEdit_Write_And_Reply:	.include "includes/generated/cc900/Audio_Cmd_ToneEdit_Write_And_Reply.s"	; C: cc900/voice_noteon_and_tonegen_aw_47a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Audio_Cmd_ToneEdit_Reply_TableJump, Audio_Cmd_ToneEdit_Write_And_Reply + 107
+	.set	Audio_Cmd_ToneEdit_Reply_Case_Pan, Audio_Cmd_ToneEdit_Write_And_Reply + 142
+	.set	Audio_Cmd_ToneEdit_Reply_Case_Sustain, Audio_Cmd_ToneEdit_Write_And_Reply + 159
+	.set	Audio_Cmd_ToneEdit_Reply_Case_Slot0, Audio_Cmd_ToneEdit_Write_And_Reply + 178
+	.set	Audio_Cmd_ToneEdit_Reply_Case_Slot1, Audio_Cmd_ToneEdit_Write_And_Reply + 191
+	.set	Audio_Cmd_ToneEdit_Reply_Case_ReadBack, Audio_Cmd_ToneEdit_Write_And_Reply + 204
+	.set	Audio_Cmd_ToneEdit_Reply_Case_ReadBack1, Audio_Cmd_ToneEdit_Write_And_Reply + 214
+	.set	Audio_Cmd_ToneEdit_Reply_Send, Audio_Cmd_ToneEdit_Write_And_Reply + 224
 ; Sibling of 0x030428 for the sub-field form of the command.  The opcode's top two bits
 ; select a group 0..3 (kept in QIZH) and its low six bits select a byte within that group.
 ; After ToneDB_Find_SubToneRecord it advances the buffer pointer by group*0x15 + 0x10,
