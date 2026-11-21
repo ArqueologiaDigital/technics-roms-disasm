@@ -9942,21 +9942,9 @@ MidiPkt_ArpExtHandler_L_Skip:
 ; MidiPkt_XferOnSeqEventBlock: Message id 20 (F0 50 2D 01 28 12 61 30 00 + length): block 3 of the sequencer group --
 ;   in state 13 points 0xBCEC at the event memory (0xB0000, 0x4D800 or the used size), takes the length from the
 ;   message and continues at SeqChan_StepCmd_Field13Write; else error 28. Basis: callers + body.
-MidiPkt_XferOnSeqEventBlock:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 13
-	jr	nz, MidiPkt_XferOnSeqEventBlock_Skip
-	ld	xwa, 0xbcec
-	call	MidiPkt_SetXferBlock_SeqEvents
-	call	MidiPkt_SetXferLengthFromMsg
-	jrl	SeqChan_StepCmd_Field13Write
-MidiPkt_XferOnSeqEventBlock_Skip:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 28
-	jp	MIDI_ReadChannelParam
+MidiPkt_XferOnSeqEventBlock:	.include "includes/generated/cc900/MidiPkt_XferOnSeqEventBlock.s"	; C: cc900/midi_dispatch_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_XferOnSeqEventBlock_Skip, MidiPkt_XferOnSeqEventBlock + 31
 MidiPkt_RetStub_A:
 	ret
 MidiPkt_RetStub_B:
@@ -9964,259 +9952,36 @@ MidiPkt_RetStub_B:
 ; MidiPkt_XferOnDataPacket: Message id 10 (F0 50 7E <nibble data>, a bulk-transfer data packet): dispatches on the
 ;   receive state (field 3, < 22) through SeqChan_StepCmdHandlers to the step of the block being received. Basis:
 ;   callers + body.
-MidiPkt_XferOnDataPacket:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	bc, 3:i3
-	call	SeqData_ReadFieldByIndex
-	cp	l, 22
-	ret	nc
-	extz	hl
-	sla	hl, 2
-	lda	xbc, (SeqChan_StepCmdHandlers:24)
-	ld	xhl, (xbc+hl)
-	call (xhl)
-	ret
-SeqChan_ProcessStepCmd:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 19
-	jp	MIDI_ReadChannelParam
-SeqChan_StepCmd_Field1to2:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 1:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 2:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field2to3:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 2:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 3:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field4to5:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 4:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 5:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field5to6:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 5:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	call	TmFlash_BulkTransferToSubCPU
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 6:i3
-	call	MIDI_ReadChannelParam
-	ret
+MidiPkt_XferOnDataPacket:	.include "includes/generated/cc900/MidiPkt_XferOnDataPacket.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_ProcessStepCmd:	.include "includes/generated/cc900/SeqChan_ProcessStepCmd.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field1to2:	.include "includes/generated/cc900/SeqChan_StepCmd_Field1to2.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field2to3:	.include "includes/generated/cc900/SeqChan_StepCmd_Field2to3.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field4to5:	.include "includes/generated/cc900/SeqChan_StepCmd_Field4to5.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field5to6:	.include "includes/generated/cc900/SeqChan_StepCmd_Field5to6.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; SeqChan_XferStep_StyleImageBlock1: Receive step for block 1 of the style image (RHYTHM_PATTERN_BUF_A, 0x60 bytes):
 ;   sets state 7, unpacks the packet into the block, and when the block is complete sets state 8 (awaiting block 2,
 ;   message id 16). Basis: callers + body.
-SeqChan_XferStep_StyleImageBlock1:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 7:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 8
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field8to9:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 8
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 9
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field9to10:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 9
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 10
-	call	MIDI_ReadChannelParam
-	ret
+SeqChan_XferStep_StyleImageBlock1:	.include "includes/generated/cc900/SeqChan_XferStep_StyleImageBlock1.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field8to9:	.include "includes/generated/cc900/SeqChan_StepCmd_Field8to9.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field9to10:	.include "includes/generated/cc900/SeqChan_StepCmd_Field9to10.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; SeqChan_XferStep_AccompBlock1: Receive step for block 1 of the accompaniment-block area (0x1E8800, 0x20 bytes): sets
 ;   state 18, unpacks the packet, and when complete sets state 19 (awaiting block 2, message id 24). Basis: callers +
 ;   body.
-SeqChan_XferStep_AccompBlock1:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 18
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 19
-	call	MIDI_ReadChannelParam
-	ret
+SeqChan_XferStep_AccompBlock1:	.include "includes/generated/cc900/SeqChan_XferStep_AccompBlock1.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; SeqChan_XferStep_AccompBlock2: Receive step for block 2 of the accompaniment-block area (0x1E8820, 0x2E0 bytes):
 ;   sets state 19, unpacks the packet, and when complete sets state 20 (awaiting the block pool, message id 25).
 ;   Basis: callers + body.
-SeqChan_XferStep_AccompBlock2:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 19
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 20
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field20to21:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 20
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 21
-	call	MIDI_ReadChannelParam
-	ret
+SeqChan_XferStep_AccompBlock2:	.include "includes/generated/cc900/SeqChan_XferStep_AccompBlock2.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field20to21:	.include "includes/generated/cc900/SeqChan_StepCmd_Field20to21.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; SeqChan_XferStep_CurrentSong: Receive step for block 1 of the sequencer group, the current-song record (0xF180,
 ;   0x800 bytes): sets state 11, unpacks the packet (AccWrap_ReturnZero(4) gate), and when complete sets state 12
 ;   (awaiting the song slots, message id 19). Basis: callers + body.
-SeqChan_XferStep_CurrentSong:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 11
-	call	MIDI_ReadChannelParam
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	call	nz, (MidiPkt_UnpackNibblesToXfer:24)
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 12
-	call	MIDI_ReadChannelParam
-	ret
+SeqChan_XferStep_CurrentSong:	.include "includes/generated/cc900/SeqChan_XferStep_CurrentSong.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; SeqChan_XferStep_SongSlots: Receive step for block 2 of the sequencer group, the ten song slots (0xAB000, 0x5000
 ;   bytes): sets state 12, unpacks the packet, and when complete sets state 13 (awaiting the event memory, message id
 ;   20). Basis: callers + body.
-SeqChan_XferStep_SongSlots:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 12
-	call	MIDI_ReadChannelParam
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	call	nz, (MidiPkt_UnpackNibblesToXfer:24)
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 13
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field13Write:
-	; --- Section 1: load XWA, setup BC/DE, call, then compare HL ---
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw de, 0x000d
-	call MIDI_ReadChannelParam
-	ld	wa, 4:i3
-	call AccWrap_ReturnZero
-	cp hl, 0xffff
-	call	nz, (MidiPkt_UnpackNibblesToXfer:24)
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	; --- Section 2: reload XWA, setup BC, call, check L ---
-	ldw bc, 0x000f
-	call SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret nz
-	; --- Section 3: reload XWA, setup BC/DE, call ---
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw de, 0x000e
-	call MIDI_ReadChannelParam
-	ret
+SeqChan_XferStep_SongSlots:	.include "includes/generated/cc900/SeqChan_XferStep_SongSlots.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field13Write:	.include "includes/generated/cc900/SeqChan_StepCmd_Field13Write.s"	; C: cc900/midi_dispatch_handlers_m0.c
 
 
 SeqChan_RetStub_A:
@@ -10227,60 +9992,15 @@ SeqChan_RetStub_B:
 ;   SeqChan_WriteFieldHandlers -- states 3/6/10/14/21 (panel, sound RAM, style image, sequencer, accompaniment blocks
 ;   complete) reset the state and set that group's bit 7/6/5/4/2 of 0xBD1A; other states store error 31. Basis:
 ;   callers + body.
-MidiPkt_XferOnGroupEnd:
-	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
-	ld	a, (xwa+3)
-	cp	a, 22
-	ret	nc
-	extz	wa
-	sla	wa, 2
-	lda	xbc, (SeqChan_WriteFieldHandlers:24)
-	ld	xhl, (xbc+wa)
-	call	(xhl)
-	res	7, (0xbd1c:16)
-	ret
-SeqChan_DefaultHandler:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 31
-	jp	MIDI_ReadChannelParam
-SeqChan_WriteField_Data_A:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	7, (MIDIPKT_RX_GROUPS:16)
-	ret
-SeqChan_WriteField_Data_B:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	6, (MIDIPKT_RX_GROUPS:16)
-	ret
-SeqChan_WriteField_Data_C:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	5, (MIDIPKT_RX_GROUPS:16)
-	ret
-SeqChan_WriteField_Data_D:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	4, (MIDIPKT_RX_GROUPS:16)
-	ret
+MidiPkt_XferOnGroupEnd:	.include "includes/generated/cc900/MidiPkt_XferOnGroupEnd.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_DefaultHandler:	.include "includes/generated/cc900/SeqChan_DefaultHandler.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_A:	.include "includes/generated/cc900/SeqChan_WriteField_Data_A.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_B:	.include "includes/generated/cc900/SeqChan_WriteField_Data_B.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_C:	.include "includes/generated/cc900/SeqChan_WriteField_Data_C.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_D:	.include "includes/generated/cc900/SeqChan_WriteField_Data_D.s"	; C: cc900/midi_dispatch_handlers_m0.c
 SeqChan_RetStub_C:
 	ret
-SeqChan_WriteField_Data_E:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	2, (MIDIPKT_RX_GROUPS:16)
-	ret
+SeqChan_WriteField_Data_E:	.include "includes/generated/cc900/SeqChan_WriteField_Data_E.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; MIDI SysEx processing block with dispatch
 MidiSysEx_ProcessBlock:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)

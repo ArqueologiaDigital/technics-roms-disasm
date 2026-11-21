@@ -5442,15 +5442,9 @@ SeWrtSnd_OnColumn3:	.include "includes/generated/cc900/SeWrtSnd_OnColumn3.s"	; C
 SeWrtSnd_OnColumn4:	.include "includes/generated/cc900/SeWrtSnd_OnColumn4.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnColumn5:	.include "includes/generated/cc900/SeWrtSnd_OnColumn5.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnColumn6:	.include "includes/generated/cc900/SeWrtSnd_OnColumn6.s"	; C: cc900/sound_editor_ui_m0_b.c
-SeWrtSnd_OnColumn7:
-	ld	c, a
-	res	7, c
-	ldw	wa, 32768
-	cp	c, 0:i3
-	jr	nz, SeWrtSnd_OnColumn7_Skip81
-	ld	wa, 0:i3
-SeWrtSnd_OnColumn7_Skip81:
-	jrl	SeWrtSnd_SetupNamingPage_Join4
+SeWrtSnd_OnColumn7:	.include "includes/generated/cc900/SeWrtSnd_OnColumn7.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeWrtSnd_OnColumn7_Skip81, SeWrtSnd_OnColumn7 + 14
 SeWrtSnd_OnColumn8:	.include "includes/generated/cc900/SeWrtSnd_OnColumn8.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp

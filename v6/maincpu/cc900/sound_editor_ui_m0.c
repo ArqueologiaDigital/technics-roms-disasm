@@ -52,3 +52,19 @@ void SeWrtSnd_SetupNamingPage_Join7(void)
         SeTitle_DrawField(63, 1);
     }
 }
+
+/* cc900-module: SeWrtSnd_ClearName SeWrtSnd_SetupNamingPage_Join4 */
+extern void SeWrtSnd_SetupNamingPage_Join4(unsigned int w);
+extern void SeWrtSnd_OnColumn7(unsigned char a);
+
+void SeWrtSnd_OnColumn7(unsigned char a)
+{
+	unsigned int w;
+	unsigned char c;
+
+	c = a & 0x7f;
+	w = 0x8000;
+	if (c == 0)
+		w = 0;
+	SeWrtSnd_SetupNamingPage_Join4(w);
+}
