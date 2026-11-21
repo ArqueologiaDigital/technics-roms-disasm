@@ -889,10 +889,10 @@ FDC_HardwareSetup_Skip7:
 FDC_CMD_SEND_Skip8:
 	jr	FDC_HardwareSetup_Epilogue
 FDC_CMD_SEND_Skip9:
-	calr	FDC_HardwareSetup_Helper7
+	calr	FDC_SendParams_Format
 	jr	FDC_HardwareSetup_Epilogue
 FDC_CMD_SEND_Skip10:
-	calr	FDC_HardwareSetup_Helper8
+	calr	FDC_SendParam_SeekTrack
 	jr	FDC_HardwareSetup_Epilogue
 FDC_HardwareSetup_Skip11:
 	calr	FDC_HardwareSetup_Helper9
@@ -963,7 +963,7 @@ FDC_SendParams_Specify:
 	or	a, c
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper7:
+FDC_SendParams_Format:
 	ld	a, (FDC_PARAM_N:16)
 	and	a, 7
 	extz	wa
@@ -977,7 +977,7 @@ FDC_HardwareSetup_Helper7:
 	ld	a, (FDC_FORMAT_FILL:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper8:
+FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	jrl	FDC_SendParameterByte

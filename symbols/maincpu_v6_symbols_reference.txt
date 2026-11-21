@@ -41898,8 +41898,8 @@ FDC_HardwareSetup_Skip14 00F96F28
 FDC_HardwareSetup_Helper5_Skip 00F96F2B
 FDC_HardwareSetup_Join 00F96F2E
 FDC_SendParams_Specify 00F96F3A
-FDC_HardwareSetup_Helper7 00F96F70
-FDC_HardwareSetup_Helper8 00F96F97
+FDC_SendParams_Format 00F96F70
+FDC_SendParam_SeekTrack 00F96F97
 FDC_HardwareSetup_Helper9 00F96FA0
 FDC_HardwareSetup_Skip16 00F96FEF
 FDC_HardwareSetup_Skip17 00F96FF2
