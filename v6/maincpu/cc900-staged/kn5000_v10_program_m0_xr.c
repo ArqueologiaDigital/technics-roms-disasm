@@ -31,3 +31,47 @@ void PlayStandBy(void)
 	SeqAcc_InitPlaybackState();
 	MidiIn_AcceptClockTransport();
 }
+
+void SetSepaOutMode(unsigned int mode)
+{
+	struct cc4 m0 = SepaOut_Config_0;
+	struct cc4 m1 = SepaOut_Msg_CC9B_Value32;
+	struct cc4 m2 = SepaOut_Msg_CC9D_Value0;
+	struct cc4 m3 = SepaOut_Msg_CC9D_Value1;
+	struct cc4 m4 = SepaOut_Msg_CC9D_Value2;
+
+	switch (mode) {
+	case 0:
+		m0.b[1] = 0x14; sendCOMM(0, 4, m0.b);
+		m2.b[1] = 0x14; sendCOMM(0, 4, m2.b);
+		m0.b[1] = 0x13; sendCOMM(0, 4, m0.b);
+		m2.b[1] = 0x13; sendCOMM(0, 4, m2.b);
+		m0.b[1] = 0x16; sendCOMM(0, 4, m0.b);
+		m2.b[1] = 0x16; sendCOMM(0, 4, m2.b);
+		break;
+	case 1:
+		m1.b[1] = 0x14; sendCOMM(0, 4, m1.b);
+		m2.b[1] = 0x14; sendCOMM(0, 4, m2.b);
+		m0.b[1] = 0x13; sendCOMM(0, 4, m0.b);
+		m2.b[1] = 0x13; sendCOMM(0, 4, m2.b);
+		m0.b[1] = 0x16; sendCOMM(0, 4, m0.b);
+		m2.b[1] = 0x16; sendCOMM(0, 4, m2.b);
+		break;
+	case 2:
+		m1.b[1] = 0x14; sendCOMM(0, 4, m1.b);
+		m2.b[1] = 0x14; sendCOMM(0, 4, m2.b);
+		m1.b[1] = 0x13; sendCOMM(0, 4, m1.b);
+		m2.b[1] = 0x13; sendCOMM(0, 4, m2.b);
+		m1.b[1] = 0x16; sendCOMM(0, 4, m1.b);
+		m2.b[1] = 0x16; sendCOMM(0, 4, m2.b);
+		break;
+	case 3:
+		m1.b[1] = 0x14; sendCOMM(0, 4, m1.b);
+		m4.b[1] = 0x14; sendCOMM(0, 4, m4.b);
+		m1.b[1] = 0x13; sendCOMM(0, 4, m1.b);
+		m3.b[1] = 0x13; sendCOMM(0, 4, m3.b);
+		m1.b[1] = 0x16; sendCOMM(0, 4, m1.b);
+		m3.b[1] = 0x16; sendCOMM(0, 4, m3.b);
+		break;
+	}
+}
