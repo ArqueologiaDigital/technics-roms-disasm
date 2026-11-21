@@ -17564,53 +17564,166 @@ StylCnvStorBnk_ProcDataBlock_Epilogue:
 	lda	xsp, (xsp+16)
 	ret
 
-CmpNameMenuBoxProc:	.include "includes/generated/cc900/CmpNameMenuBoxProc.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	CmpNameMenuBoxProc_OnDraw, CmpNameMenuBoxProc + 19
-	.set	CmpNameMenu_SetReturnZero, CmpNameMenuBoxProc + 45
-	.set	CmpNameMenu_Epilogue, CmpNameMenuBoxProc + 47
+CmpNameMenuBoxProc:
+	push xiz
+	ld xiz, xwa
+	cp xbc, EVT_DRAW
+	jr z, CmpNameMenuBoxProc_OnDraw
+	ld xwa, xiz
+	call InheritedProc
+	jr CmpNameMenu_Epilogue
 
-AttLangCheck:	.include "includes/generated/cc900/AttLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	AttLangCheck_ReturnZero, AttLangCheck + 14
+CmpNameMenuBoxProc_OnDraw:
+	cp (STYLE_SECTION:16), 12
+	jr nc, CmpNameMenu_SetReturnZero
+	ld xwa, xiz
+	call InheritedProc
+	ld xwa, xiz
+	ld xbc, EVT_PARA_DRAW
+	ld xde, 0:i3
+	call SendEvent
 
-SureLangCheck:	.include "includes/generated/cc900/SureLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	SureLangCheck_ReturnZero, SureLangCheck + 14
+CmpNameMenu_SetReturnZero:
+	ld xhl, 0:i3
 
-SndMemLangCheck:	.include "includes/generated/cc900/SndMemLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	SndMemLangCheck_ReturnZero, SndMemLangCheck + 14
+CmpNameMenu_Epilogue:
+	pop xiz
+	ret
 
-SndMem1LangCheck:	.include "includes/generated/cc900/SndMem1LangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	SndMem1LangCheck_ReturnZero, SndMem1LangCheck + 14
+AttLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, AttLangCheck_ReturnZero
+	lda xhl, (AttLangCheck_PtrTable:24)
+	ret
 
-MemfulLangCheck:	.include "includes/generated/cc900/MemfulLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	MemfulLangCheck_ReturnZero, MemfulLangCheck + 14
+AttLangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
 
-Memful2LangCheck:	.include "includes/generated/cc900/Memful2LangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	Memful2LangCheck_ReturnZero, Memful2LangCheck + 14
+SureLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, SureLangCheck_ReturnZero
+	lda xhl, (SureLangCheck_PtrTable:24)
+	ret
 
-StylCnvLangCheck:	.include "includes/generated/cc900/StylCnvLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	StylCnvLangCheck_ReturnZero, StylCnvLangCheck + 14
+SureLangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
 
-SndArrLangCheck:	.include "includes/generated/cc900/SndArrLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	SndArrLangCheck_ReturnZero, SndArrLangCheck + 14
+SndMemLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, SndMemLangCheck_ReturnZero
+	lda xhl, (SndMemLangCheck_PtrTable:24)
+	ret
 
-PsStylCnvVerProc:	.include "includes/generated/cc900/PsStylCnvVerProc.s"	; C: cc900/sound_editor_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	PsStylCnvVerProc_OnShow, PsStylCnvVerProc + 56
-	.set	PsStylCnvVerProc_OnHide, PsStylCnvVerProc + 60
-	.set	StylCnvVer_CallInherited, PsStylCnvVerProc + 62
-	.set	PsStylCnvVerProc_OnGetStrPtr, PsStylCnvVerProc + 68
-	.set	PsStylCnvVerProc_OnPaintOrRepaint, PsStylCnvVerProc + 74
-	.set	StylCnvVer_SetReturnZero, PsStylCnvVerProc + 110
-	.set	StylCnvVer_Epilogue, PsStylCnvVerProc + 112
+SndMemLangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+SndMem1LangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, SndMem1LangCheck_ReturnZero
+	lda xhl, (SndMem1LangCheck_PtrTable:24)
+	ret
+
+SndMem1LangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+MemfulLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, MemfulLangCheck_ReturnZero
+	lda xhl, (MemfulLangCheck_PtrTable:24)
+	ret
+
+MemfulLangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+Memful2LangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, Memful2LangCheck_ReturnZero
+	lda xhl, (Memful2LangCheck_PtrTable:24)
+	ret
+
+Memful2LangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+StylCnvLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, StylCnvLangCheck_ReturnZero
+	lda xhl, (StylCnvLangCheck_PtrTable:24)
+	ret
+
+StylCnvLangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+SndArrLangCheck:
+	cp xbc, EVT_GET_LANGUAGE_PTR
+	jr nz, SndArrLangCheck_ReturnZero
+	lda xhl, (Hama_ModeInit_Table:24)
+	ret
+
+SndArrLangCheck_ReturnZero:
+	ld xhl, 0:i3
+	ret
+
+PsStylCnvVerProc:
+	lda xsp, (xsp-512)
+	push xiz
+	ld xiz, xwa
+	cp xbc, EVT_REPAINT
+	jr z, PsStylCnvVerProc_OnPaintOrRepaint
+	cp xbc, EVT_PAINT
+	jr z, PsStylCnvVerProc_OnPaintOrRepaint
+	cp xbc, EVT_GET_STR_PTR
+	jr z, PsStylCnvVerProc_OnGetStrPtr
+	cp xbc, EVT_HIDE
+	jr z, PsStylCnvVerProc_OnHide
+	cp xbc, EVT_SHOW
+	jr z, PsStylCnvVerProc_OnShow
+	ld xwa, xiz
+	call InheritedProc
+	jr StylCnvVer_Epilogue
+
+PsStylCnvVerProc_OnShow:
+	ld xwa, xiz
+	jr StylCnvVer_CallInherited
+
+PsStylCnvVerProc_OnHide:
+	ld xwa, xiz
+
+StylCnvVer_CallInherited:
+	call InheritedProc
+	jr StylCnvVer_SetReturnZero
+
+PsStylCnvVerProc_OnGetStrPtr:
+	lda xhl, (0x3f68:16)
+	jr StylCnvVer_Epilogue
+
+PsStylCnvVerProc_OnPaintOrRepaint:
+	ld xwa, xiz
+	call InheritedProc
+	pushw 0x0
+	pushw 0x3f68
+	lda xwa, (xsp + 8)
+	push xwa
+	call Strcpy
+	inc 8, xsp
+	lda xde, (xsp + 4)
+	ld xwa, xiz
+	ld xbc, EVT_PARA_DRAW
+	call SendEvent
+
+StylCnvVer_SetReturnZero:
+	ld xhl, 0:i3
+
+StylCnvVer_Epilogue:
+	pop xiz
+	lda xsp, (xsp+512)
+	ret
 
 
 .include "factory_test/test_init.s"

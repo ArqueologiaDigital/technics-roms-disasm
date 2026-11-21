@@ -521,7 +521,25 @@ MainGetPmemName_StoreResult:
 	inc 8, xsp
 	ret
 
-MainTrSwControl:	.include "includes/generated/cc900/MainTrSwControl.s"	; C: cc900/sound_navigation_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	MainTrSwControl_HandleChannel, MainTrSwControl + 38
-	.set	MainTrSwControl_Return, MainTrSwControl + 42
+MainTrSwControl:
+	dec 4, xsp
+	ld (xsp), xde
+	ld xwa, (xsp)
+	extz wa
+	cp xbc, EVT_TOGGLE_TRACK_SWITCH
+	jr z, MainTrSwControl_HandleChannel
+	cp xbc, EVT_REQUEST_TRACK_SWITCH
+	jr nz, MainTrSwControl_Return
+	call SeqVoice_DispatchEventToHandler
+	ld xwa, (xsp)
+	extz wa
+	call SeqVoice_ComputeStatusFlags
+	jr MainTrSwControl_Return
+
+MainTrSwControl_HandleChannel:
+	call AppEvent_HandleChannelEvent
+
+MainTrSwControl_Return:
+	ld xhl, 0:i3
+	inc 4, xsp
+	ret

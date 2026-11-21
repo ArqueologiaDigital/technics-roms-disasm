@@ -2335,7 +2335,13 @@ IvNamingExit_ScreenData_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp+178)
 	ret
-TrAsGrid_LookupByteTable:	.include "includes/generated/cc900/TrAsGrid_LookupByteTable.s"	; C: cc900/sequencer_ui_m232.c
+TrAsGrid_LookupByteTable:
+	extz wa
+	lda xbc, (SEQ_TRACK_ASSIGN:16)
+	extz xwa
+	add xwa, xbc
+	ld l, (xwa)
+	ret
 ; AcTrAsGridBoxProc dispatch
 TrAsGrid_BoxProc:
 AcTrAsGridBoxProc:
@@ -2805,11 +2811,34 @@ TrAsGrid_StepListValue_Join:
 	ld	l, (xbc+wa)
 	ret
 
-TrAsGrid_CheckTrackType:	.include "includes/generated/cc900/TrAsGrid_CheckTrackType.s"	; C: cc900/sequencer_ui_m232.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	TrAsGrid_NotDrumType, TrAsGrid_CheckTrackType + 28
-	.set	TrAsGrid_CheckCurrentCell, TrAsGrid_CheckTrackType + 31
-	.set	TrAsGrid_IsDrumType, TrAsGrid_CheckTrackType + 46
+TrAsGrid_CheckTrackType:
+	cp a, 0:i3
+	jr nz, TrAsGrid_CheckCurrentCell
+	ld a, c
+	extz wa
+	lda xbc, (SEQ_TRACK_ASSIGN:16)
+	extz xwa
+	add xwa, xbc
+	ld a, (xwa)
+	cp a, 0xe
+	jr z, TrAsGrid_IsDrumType
+	cp a, 0xd
+	jr z, TrAsGrid_IsDrumType
+
+TrAsGrid_NotDrumType:
+	ld l, 0x0:opc
+	ret
+
+TrAsGrid_CheckCurrentCell:
+	ld a, (0x021082:24)
+	cp a, 0xe
+	jr z, TrAsGrid_IsDrumType
+	cp a, 0xd
+	jr nz, TrAsGrid_NotDrumType
+
+TrAsGrid_IsDrumType:
+	ld l, 0x1:opc
+	ret
 
 TrAsGridCheck:
 	lda xsp, (xsp - 18)
@@ -3314,11 +3343,36 @@ TrAsGridChk_ReturnZero:
 	ret
 TrAsGridChk_End:
 
-AcModeSelBoxProc:	.include "includes/generated/cc900/AcModeSelBoxProc.s"	; C: cc900/sequencer_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	VoiceConfig_HandleInit, AcModeSelBoxProc + 27
-	.set	VoiceConfig_ReturnZero, AcModeSelBoxProc + 58
-	.set	VoiceConfig_Epilogue, AcModeSelBoxProc + 60
+AcModeSelBoxProc:
+	dec 4, xsp
+	push xiz
+	ld (xsp + 4), xde
+	ld xiz, xwa
+	cp xbc, EVT_SET_SELECTED
+	jr z, VoiceConfig_HandleInit
+	ld xwa, xiz
+	ld xde, (xsp + 4)
+	call InheritedProc
+	jr VoiceConfig_Epilogue
+
+VoiceConfig_HandleInit:
+	ld xwa, xiz
+	ld xde, (xsp + 4)
+	call InheritedProc
+	ld xwa, (xsp + 4)
+	cp xwa, 0x1
+	jr nz, VoiceConfig_ReturnZero
+	ld xwa, xiz
+	call GetViewInstance
+	mrdb5 0x8b, 0x32, 0x19, 0x3e, 0x0d
+
+VoiceConfig_ReturnZero:
+	ld xhl, 0:i3
+
+VoiceConfig_Epilogue:
+	pop xiz
+	inc 4, xsp
+	ret
 
 VoiceConfig_ScreenTypeDispatch:
 	push xiz
@@ -3722,59 +3776,266 @@ SqAftSet_LookupExit:
 	pop xiz
 	ret
 
-SqAftSet_LookupTableEntry:	.include "includes/generated/cc900/SqAftSet_LookupTableEntry.s"	; C: cc900/sequencer_ui_m232.c
+SqAftSet_LookupTableEntry:
+	extz wa
+	add wa, wa
+	lda xbc, (SqAftSet_LookupTableEntry_Table:24)
+	ld	wa, (xbc+wa)
+	ld (0x021086:24), wa
+	ret
 
-MuteChSetFunc:	.include "includes/generated/cc900/MuteChSetFunc.s"	; C: cc900/sequencer_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	MuteChSet_Dispatch, MuteChSetFunc + 55
-	.set	MuteChSetFunc_OnGetLargeStep, MuteChSetFunc + 85
-	.set	MuteChSetFunc_OnGetMax, MuteChSetFunc + 89
-	.set	MuteChSetFunc_OnGetRamAddress, MuteChSetFunc + 96
-	.set	MuteChSet_ParamCheck, MuteChSetFunc + 103
-	.set	MuteChSetFunc_Exit, MuteChSetFunc + 137
-	.set	SqAftSet_LookupTableEntry_Epilogue, MuteChSetFunc + 139
+MuteChSetFunc:
+	push xiz
+	ld xiz, xwa
+	ld xwa, xbc
+	cp xbc, EVT_RAM_DATA_REQ
+	jr z, MuteChSet_ParamCheck
+	sub xwa, EVT_GET_LARGE_STEP
+	cp xwa, 0x0
+	jr lt, MuteChSetFunc_Exit
+	cp xwa, 0x9
+	jr gt, MuteChSetFunc_Exit
+	add xwa, xwa
+	add xwa, MuteChSetFunc_CaseTable
+	ld wa, (xwa)
+	lda xix, (MuteChSet_Dispatch:24)
+	jp	t, (xix+wa)
+
+; MuteChSetFunc dispatch
+MuteChSet_Dispatch:
+	ld	xwa, (xde+14)
+	sll	xwa, 2
+	ld	xbc, MuteChSet_Dispatch_PtrTable
+	add	xbc, xwa
+	ld	xwa, (xbc)
+	push	xwa
+	ld	xwa, (xde+18)
+	push	xwa
+	call	Strcpy
+	inc	8, xsp
+	ld	xhl, xiz
+	jr	SqAftSet_LookupTableEntry_Epilogue
+MuteChSetFunc_OnGetLargeStep:	; cases 31457342, 31457343, 31457350
+	ld	xhl, 1:i3
+	jr	SqAftSet_LookupTableEntry_Epilogue
+MuteChSetFunc_OnGetMax:
+	ld	xhl, 15
+	jr	SqAftSet_LookupTableEntry_Epilogue
+MuteChSetFunc_OnGetRamAddress:
+	lda	xhl, (135306:24)
+	jr	SqAftSet_LookupTableEntry_Epilogue
+; MuteChSetFunc parameter check
+MuteChSet_ParamCheck:
+	cp (0x021088:24), 0x01
+	jr nz, MuteChSetFunc_Exit
+	ld a, (0x02108a:24)
+	extz wa
+	calr SqAftSet_LookupTableEntry
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+	call MainFuncCall
+
+MuteChSetFunc_Exit:
+	ld xhl, 0:i3
+SqAftSet_LookupTableEntry_Epilogue:
+	pop xiz
+	ret
 SqAftSetFunc_End:
 
-AcMuteToggleBoxProc:	.include "includes/generated/cc900/AcMuteToggleBoxProc.s"	; C: cc900/sequencer_ui_m0_b.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	AcMuteToggle_HandleInit, AcMuteToggleBoxProc + 36
-	.set	AcMuteToggle_Epilogue, AcMuteToggleBoxProc + 88
+AcMuteToggleBoxProc:
+	dec 8, xsp
+	push xiz
+	ld (xsp + 4), xde
+	ld (xsp + 8), xbc
+	ld xiz, xwa
+	ld xwa, (xsp + 8)
+	cp xwa, EVT_SHOW
+	jr z, AcMuteToggle_HandleInit
+	ld xwa, xiz
+	ld xbc, (xsp + 8)
+	ld xde, (xsp + 4)
+	call InheritedProc
+	jr AcMuteToggle_Epilogue
 
-SMFMuteOnOffFunc:	.include "includes/generated/cc900/SMFMuteOnOffFunc.s"	; C: cc900/sequencer_ui_m0_b.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	SMFMuteOnOff_Enable, SMFMuteOnOffFunc + 16
-	.set	SMFMuteOnOff_Disable, SMFMuteOnOffFunc + 54
-	.set	SMFMuteOnOff_PostCall, SMFMuteOnOffFunc + 79
+AcMuteToggle_HandleInit:
+	ld xwa, xiz
+	call GetViewInstance
+	ld xwa, (xhl + 40)
+	ld xbc, EVT_GET_TOGGLE_SW
+	ld xde, 0:i3
+	call ApFuncCall
+	ld xde, xhl
+	ld (0x02108c:24), xde
+	ld xwa, xiz
+	ld xbc, EVT_SET_PARAM
+	call SendEvent
+	ld xwa, xiz
+	ld xbc, (xsp + 8)
+	ld xde, (xsp + 4)
+	call InheritedProc
+	ld xhl, 0:i3
 
-SMFMute_GetBit0Status:	.include "includes/generated/cc900/SMFMute_GetBit0Status.s"	; C: cc900/sequencer_ui_m0_b.c
+AcMuteToggle_Epilogue:
+	pop xiz
+	inc 8, xsp
+	ret
 
-SMFMute_GetBit1Status:	.include "includes/generated/cc900/SMFMute_GetBit1Status.s"	; C: cc900/sequencer_ui_m0.c
+SMFMuteOnOffFunc:
+	cp xbc, EVT_GET_TOGGLE_SW
+	jr nz, SMFMuteOnOff_Enable
+	ld xhl, 0:i3
+	ld l, (0x021088:24)
+	ret
 
-SMFMute_GetUpperBits:	.include "includes/generated/cc900/SMFMute_GetUpperBits.s"	; C: cc900/sequencer_ui_m0_b.c
+SMFMuteOnOff_Enable:
+	cp xde, 0x1
+	jr nz, SMFMuteOnOff_Disable
+	ld (0x021088:24), 0x01
+	ld a, (0x02108a:24)
+	extz wa
+	calr SqAftSet_LookupTableEntry
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+	jr SMFMuteOnOff_PostCall
 
-SMFMute_ClearBit0:	.include "includes/generated/cc900/SMFMute_ClearBit0.s"	; C: cc900/sequencer_ui_m0.c
+SMFMuteOnOff_Disable:
+	ld (0x021088:24), 0x00
+	ldw (0x021086:24), 0x0000
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
 
-Rt1MuteFunc:	.include "includes/generated/cc900/Rt1MuteFunc.s"	; C: cc900/sequencer_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	Rt1Mute_ClearAndPost, Rt1MuteFunc + 37
-	.set	Rt1Mute_PostCall, Rt1MuteFunc + 56
+SMFMuteOnOff_PostCall:
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
 
-Rt2MuteFunc:	.include "includes/generated/cc900/Rt2MuteFunc.s"	; C: cc900/sequencer_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	Rt2Mute_ClearAndPost, Rt2MuteFunc + 37
-	.set	Rt2Mute_PostCall, Rt2MuteFunc + 56
+SMFMute_GetBit0Status:
+	ld hl, (0x021086:24)
+	and hl, 0x1
+	extz xhl
+	ret
 
-DocOrchMuteFunc:	.include "includes/generated/cc900/DocOrchMuteFunc.s"	; C: cc900/sequencer_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	DocOrchMute_ClearAndPost, DocOrchMuteFunc + 38
-	.set	DocOrchMute_PostCall, DocOrchMuteFunc + 57
+SMFMute_GetBit1Status:
+	ld hl, (0x021086:24)
+	and hl, 0x2
+	extz xhl
+	ret
 
-PdOrchMuteFunc:	.include "includes/generated/cc900/PdOrchMuteFunc.s"	; C: cc900/sequencer_ui_m0.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	PdOrchMute_ClearAndPost, PdOrchMuteFunc + 38
-	.set	PdOrchMute_PostCall, PdOrchMuteFunc + 57
+SMFMute_GetUpperBits:
+	ld hl, (0x021086:24)
+	and hl, 0xfffc
+	extz xhl
+	ret
 
-SeqNameOKFunc:	.include "includes/generated/cc900/SeqNameOKFunc.s"	; C: cc900/sequencer_ui_m0.c
+SMFMute_ClearBit0:
+	ld hl, (0x021086:24)
+	res 0, hl
+	extz xhl
+	ret
+
+Rt1MuteFunc:
+	cp xbc, EVT_GET_TOGGLE_SW
+	jr z, SMFMute_GetBit0Status
+	cp xde, 0x1
+	jr nz, Rt1Mute_ClearAndPost
+	orw (0x021086:24), 1
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+	jr Rt1Mute_PostCall
+
+Rt1Mute_ClearAndPost:
+	andw (0x021086:24), 0xfffe
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+
+Rt1Mute_PostCall:
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
+
+Rt2MuteFunc:
+	cp xbc, EVT_GET_TOGGLE_SW
+	jr z, SMFMute_GetBit1Status
+	cp xde, 0x1
+	jr nz, Rt2Mute_ClearAndPost
+	orw (0x021086:24), 2
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+	jr Rt2Mute_PostCall
+
+Rt2Mute_ClearAndPost:
+	andw (0x021086:24), 0xfffd
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+
+Rt2Mute_PostCall:
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
+
+DocOrchMuteFunc:
+	cp xbc, EVT_GET_TOGGLE_SW
+	jrl z, SMFMute_GetUpperBits
+	cp xde, 0x1
+	jr nz, DocOrchMute_ClearAndPost
+	orw (0x021086:24), 0xfffc
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+	jr DocOrchMute_PostCall
+
+DocOrchMute_ClearAndPost:
+	andw (0x021086:24), 3
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+
+DocOrchMute_PostCall:
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
+
+PdOrchMuteFunc:
+	cp xbc, EVT_GET_TOGGLE_SW
+	jrl z, SMFMute_ClearBit0
+	cp xde, 0x1
+	jr nz, PdOrchMute_ClearAndPost
+	orw (0x021086:24), 0xfffe
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+	jr PdOrchMute_PostCall
+
+PdOrchMute_ClearAndPost:
+	andw (0x021086:24), 1
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_DIRECT_PLAY_MUTE
+	ld xde, 0:i3
+
+PdOrchMute_PostCall:
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
+
+SeqNameOKFunc:
+	call GetNamingWindowID
+	ld xwa, xhl
+	ld xbc, EVT_GET_STRING
+	ld xde, 0x20c92
+	call SendEvent
+	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
+	ld xbc, EVT_SONG_NAME_SET
+	ld xde, 0x20c92
+	call MainFuncCall
+	ld xhl, 0:i3
+	ret
 
 SeqNamingCheck:
 	dec	4, xsp

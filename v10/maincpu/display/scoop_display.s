@@ -19008,7 +19008,31 @@ Scoop_CurveUpdate_SegmentEnd_Skip4:
 	call	DrawBox
 	inc	8, xsp
 	ret
-Scoop_EnvCalc_Handler0:	.include "includes/generated/cc900/Scoop_EnvCalc_Handler0.s"	; C: cc900/scoop_display_m0_xr_b.c
+Scoop_EnvCalc_Handler0:
+	dec	8, xsp
+	ld	bc, (xwa+2)
+	extz	xbc
+	div	bc, 40
+	ld	(xsp+2), bc
+	ld	bc, (xwa+2)
+	extz	xbc
+	div	bc, 40
+	ld bc, qbc
+	sll bc, 3
+	ld (xsp+0:8), bc
+	ld	bc, (xsp+2)
+	add	bc, (xwa+6)
+	ld	(xsp+6), bc
+	ld	wa, (xwa+4)
+	sll	wa, 3
+	ld bc, (xsp+0:8)
+	add bc, wa
+	ld	(xsp+4), bc
+	lda	xwa, (xsp)
+	ldw	bc, 245
+	call	DrawBox
+	inc	8, xsp
+	ret
 Scoop_EnvCalc_Handler1:
 	lda xsp, (xsp-268)
 	ld	xiy, Scoop_StaticOp20_ClipBox

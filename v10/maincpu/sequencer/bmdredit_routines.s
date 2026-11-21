@@ -1264,9 +1264,17 @@ BmDrEdit_FindNote_SkipNonNote:
 	jr BmDrEdit_FindNote_Loop
 
 ; Clears byte 0 of the eight 3-byte slots at 0x2746.  BmDrEdit_CleanupMelodicMode also jumps here.
-BmDrEdit_ClearAllSlots:	.include "includes/generated/cc900/BmDrEdit_ClearAllSlots.s"	; C: cc900/bmdredit_routines_m232_e.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	BmDrEdit_ClearSlots_Loop, BmDrEdit_ClearAllSlots + 9
+BmDrEdit_ClearAllSlots:
+	lda xbc, (0x2746:16)
+	ld xwa, xbc
+	lda xbc, (xbc + 24)
+
+BmDrEdit_ClearSlots_Loop:
+	ld (xwa), 0x0
+	inc 3, xwa
+	cp xwa, xbc
+	jr c, BmDrEdit_ClearSlots_Loop
+	ret
 
 ; BmDrEdit_CheckChannelActive, then tail-jumps to BmDrEdit_SelectActiveChannel.
 BmDrEdit_CheckAndSelectChannel:	.include "includes/generated/cc900/BmDrEdit_CheckAndSelectChannel.s"	; C: cc900/bmdredit_routines_m232_d.c
@@ -1319,9 +1327,17 @@ BmDrEdit_FindNote_Return:
 	ret
 
 ; Clears byte 0 of each 3-byte entry from 0x2747 to 0x2747 + 24 (eight entries).
-BmDrEdit_ClearAllSlotsAlt:	.include "includes/generated/cc900/BmDrEdit_ClearAllSlotsAlt.s"	; C: cc900/bmdredit_routines_m232_e.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	BmDrEdit_ClearSlotsAlt_Loop, BmDrEdit_ClearAllSlotsAlt + 9
+BmDrEdit_ClearAllSlotsAlt:
+	lda xbc, (0x2747:16)
+	ld xwa, xbc
+	lda xbc, (xbc + 24)
+
+BmDrEdit_ClearSlotsAlt_Loop:
+	ld (xwa), 0x0
+	inc 3, xwa
+	cp xwa, xbc
+	jr c, BmDrEdit_ClearSlotsAlt_Loop
+	ret
 
 ; HL = 0xff when any of the eight 3-byte slots at 0x2746 is in use (bit 7 of byte 0), else 0.
 BmDrEdit_CheckSlotsAvailable:

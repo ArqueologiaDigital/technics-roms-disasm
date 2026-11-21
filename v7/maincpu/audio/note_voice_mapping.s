@@ -25919,13 +25919,36 @@ Strncat_LoadReg2:
 	jr	nz, Strncat_LoadReg
 	ld	(xix), 0x0
 	ret
-String_Compare:	.include "includes/generated/cc900/String_Compare.s"	; C: cc900/note_voice_mapping_m307.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	String_Compare_CheckZero, String_Compare + 11
-	.set	String_Compare_NextIter, String_Compare + 19
-	.set	String_Compare_Compare, String_Compare + 25
-	.set	String_Compare_ClearByte, String_Compare + 35
-	.set	String_Compare_Extend, String_Compare + 47
+String_Compare:
+	ld	bc, (xsp + 12)
+	ld	xde, (xsp + 8)
+	ld	xix, (xsp + 4)
+	jr	String_Compare_Compare
+String_Compare_CheckZero:
+	cp	(xix), 0x0
+	jr	nz, String_Compare_NextIter
+	ld	hl, 0:i3
+	ret
+String_Compare_NextIter:
+	inc	1, xix
+	inc	1, xde
+	dec	1, bc
+String_Compare_Compare:
+	cp	bc, 0:i3
+	jr	z, String_Compare_ClearByte
+	ld	a, (xde)
+	cp	a, (xix)
+	jr	z, String_Compare_CheckZero
+String_Compare_ClearByte:
+	ld	l, 0x0:opc
+	cp	bc, 0:i3
+	jr	z, String_Compare_Extend
+	ld	a, (xix)
+	sub	a, (xde)
+	ld	l, a
+String_Compare_Extend:
+	exts	hl
+	ret
 ; Strncpy -- Copy string with length limit, zero-pad remainder
 ; Args: (xsp+4)=dest, (xsp+8)=src, (xsp+12)=maxlen
 Strncpy:
@@ -26045,12 +26068,25 @@ Mem_Copy_Shift_Return:
 ; Finds null terminator in dest, then copies src bytes until null.
 ; Located near Strcpy and Strlen (standard C library functions).
 ; ============================================================================
-Strcat:	.include "includes/generated/cc900/Strcat.s"	; C: cc900/note_voice_mapping_m307_xs.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	Strcat_NextIter, Strcat + 7
-	.set	Strcat_CheckZero, Strcat + 9
-	.set	Strcat_Block, Strcat + 19
-	.set	Strcat_CheckZero2, Strcat + 25
+Strcat:
+	ld	xde, (xsp + 4)
+	ld	xhl, xde
+	jr	Strcat_CheckZero
+Strcat_NextIter:
+	inc	1, xde
+Strcat_CheckZero:
+	cp	(xde), 0x0
+	jr	nz, Strcat_NextIter
+	ld	xbc, (xsp + 8)
+	jr	Strcat_CheckZero2
+Strcat_Block:
+	ld	A, (xbc+)
+	ld	(xde+), a
+Strcat_CheckZero2:
+	cp	(xbc), 0x0
+	jr	nz, Strcat_Block
+	ld	(xde), 0x0
+	ret
 Itoa_Safe:	.include "includes/generated/cc900/Itoa_Safe.s"	; C: cc900/note_voice_mapping_m308.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	Itoa_Safe_LoadReg, Itoa_Safe + 22
