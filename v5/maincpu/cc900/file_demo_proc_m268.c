@@ -165,3 +165,13 @@ int TrimAndFormatFilename(int len, unsigned char *s, unsigned char sep)
 	}
 	return 0;
 }
+
+extern int FileIO_CheckMediaIsWritable(void);
+
+int FileIO_CheckMediaIsWritable(void)
+{
+  unsigned char t;
+  t = GetMediaType();
+  if (t != 2 && t != 3) return -1;
+  return 0;
+}

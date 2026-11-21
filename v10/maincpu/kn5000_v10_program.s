@@ -3339,68 +3339,47 @@ MainChordPre_ReturnDefaultResult:
 ; =============================================================================
 	.include "extensions/extension_init.s"
 
-InitializeKSS:
-	ret
+InitializeKSS:	.include "includes/generated/cc900/InitializeKSS.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser12:
-	ret
+InitializeUser12:	.include "includes/generated/cc900/InitializeUser12.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser13:
-	ret
+InitializeUser13:	.include "includes/generated/cc900/InitializeUser13.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser14:
-	ret
+InitializeUser14:	.include "includes/generated/cc900/InitializeUser14.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser15:
-	ret
+InitializeUser15:	.include "includes/generated/cc900/InitializeUser15.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser16:
-	ret
+InitializeUser16:	.include "includes/generated/cc900/InitializeUser16.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser17:
-	ret
+InitializeUser17:	.include "includes/generated/cc900/InitializeUser17.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser18:
-	ret
+InitializeUser18:	.include "includes/generated/cc900/InitializeUser18.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser19:
-	ret
+InitializeUser19:	.include "includes/generated/cc900/InitializeUser19.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser20:
-	ret
+InitializeUser20:	.include "includes/generated/cc900/InitializeUser20.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser21:
-	ret
+InitializeUser21:	.include "includes/generated/cc900/InitializeUser21.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser22:
-	ret
+InitializeUser22:	.include "includes/generated/cc900/InitializeUser22.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser23:
-	ret
+InitializeUser23:	.include "includes/generated/cc900/InitializeUser23.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser24:
-	ret
+InitializeUser24:	.include "includes/generated/cc900/InitializeUser24.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser25:
-	ret
+InitializeUser25:	.include "includes/generated/cc900/InitializeUser25.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser26:
-	ret
+InitializeUser26:	.include "includes/generated/cc900/InitializeUser26.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser27:
-	ret
+InitializeUser27:	.include "includes/generated/cc900/InitializeUser27.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser28:
-	ret
+InitializeUser28:	.include "includes/generated/cc900/InitializeUser28.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser29:
-	ret
+InitializeUser29:	.include "includes/generated/cc900/InitializeUser29.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser30:
-	ret
+InitializeUser30:	.include "includes/generated/cc900/InitializeUser30.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser31:
-	ret
+InitializeUser31:	.include "includes/generated/cc900/InitializeUser31.s"	; C: cc900/kn5000_v10_program_m277.c
 
 EmptyRoutine_01:
 	ret

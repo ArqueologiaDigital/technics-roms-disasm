@@ -9174,25 +9174,11 @@ PartDeact_CheckSubsystem:
 ; Sets bit 0 of 0x28a5 on title 129 or when parts are active (SEQ_TRACK_MASK), clears it otherwise; then
 ; restores the active-part mask from 0xffec, runs Audio_CheckSubsystemReady and updates panel
 ; indicator 0x4c (CtrlPanel_SetIndicatorBit).
-Accomp_UpdateModeFlag:
-	cp (CURRENT_TITLE:16), 129
-	jr z, AccompMode_SetFlag
-	cpw (SEQ_TRACK_MASK:16), 0
-	jr z, AccompMode_ClearFlag
-
-AccompMode_SetFlag:
-	set 0, (0x28a5:16)
-	jr AccompMode_ApplyAndNotify
-
-AccompMode_ClearFlag:
-	res 0, (0x28a5:16)
-
-AccompMode_ApplyAndNotify:
-	ld wa, (SEQ_TRACK_MASK_COPY:24)
-	ld (SEQ_TRACK_MASK:16), wa
-	call Audio_CheckSubsystemReady
-	ldw wa, 0x4c
-	jp CtrlPanel_SetIndicatorBit
+Accomp_UpdateModeFlag:	.include "includes/generated/cc900/Accomp_UpdateModeFlag.s"	; C: cc900/sequencer_engine_m234_f.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AccompMode_SetFlag, Accomp_UpdateModeFlag + 15
+	.set	AccompMode_ClearFlag, Accomp_UpdateModeFlag + 21
+	.set	AccompMode_ApplyAndNotify, Accomp_UpdateModeFlag + 25
 
 ; Sets 0x2308 = 1 when song slot 0 has a part of type 0x0d (Part_FindVoiceByByte) that is active
 ; in 0xf19e and whose voice-table flag is set; 0 otherwise.
@@ -14313,32 +14299,12 @@ SeqSkip_SetErrorCode:
 
 ; Copies the working record at 0xf180 (song slot 0, 0x800 bytes) into song slot A (1-based,
 ; SEQ_SONG_SLOTS + (A-1)*0x800) with LDIRW (XIX+),(XIY+).
-SeqData_CopyBlockToBuffer:
-	ld w, 0x0:opc
-	extz xwa
-	sll xwa, 11
-	lda xde, (SEQ_SONG_SLOTS:24)
-	add xde, xwa
-	ld xiy, SEQ_SONG_RECORD
-	ld xix, xde
-	ldw bc, 0x400
-	ldirw
-	ret
+SeqData_CopyBlockToBuffer:	.include "includes/generated/cc900/SeqData_CopyBlockToBuffer.s"	; C: cc900/sequencer_engine_m234_f.c
 
 ; Loads song slot A (1-based, SEQ_SONG_SLOTS + (A-1)*0x800) into the working record at 0xf180
 ; (0x400 words, LDIRW (XIX+),(XIY+)), then tail-jumps to VoiceChannels_InitPanFromPreset.
 ; SeqData_CopyBlockToBuffer is the opposite copy.
-VoicePreset_LoadAndInitPan:
-	ld w, 0x0:opc
-	extz xwa
-	sll xwa, 11
-	lda xbc, (SEQ_SONG_SLOTS:24)
-	add xbc, xwa
-	ld xiy, xbc
-	ld xix, SEQ_SONG_RECORD
-	ldw bc, 0x400
-	ldirw
-	jp VoiceChannels_InitPanFromPreset
+VoicePreset_LoadAndInitPan:	.include "includes/generated/cc900/VoicePreset_LoadAndInitPan.s"	; C: cc900/sequencer_engine_m234_f.c
 
 ; Sets the free-list head of the song-data blocks: word WA at offset 0xaf of song slots
 ; 0..10 (Part_WriteWord); for slot 0 that is 0xf22f, which the block allocators read.  The top byte of XIZ (code 0xfb) is the loop counter.  Preserves XIZ.
@@ -14510,17 +14476,7 @@ Part_ReadWord_DoRead:
 ;   In:  A = song slot (0 = the record at 0xf180, see Part_WriteWord), C = entry number
 ;        (1-based), DE = value.  The word written is at slot + 0x78 + 2*(C-1).
 ;   Tail-jumps to Part_WriteWord.
-Part_WriteWord_Indexed:
-	ld l, c
-	ldw bc, 0x78
-	ld w, l
-	add w, l
-	dec 2, w
-	ld l, w
-	extz hl
-	add bc, hl
-	extz wa
-	jrl Part_WriteWord
+Part_WriteWord_Indexed:	.include "includes/generated/cc900/Part_WriteWord_Indexed.s"	; C: cc900/sequencer_engine_m234_f.c
 
 ; Reads one entry of the word array at offset 0x78 of a song slot.
 ;   In:  A = song slot (0 = the record at 0xf180), C = entry (1-based).
@@ -14540,29 +14496,12 @@ Part_ReadWord_Indexed:
 ;   In:  A = song slot (0 = the record at 0xf180), C = entry (1-based), E = value.
 ;   The byte written is at slot + 0x98 + (C-1); tail-jumps to Part_WriteByte.
 ;   Part_WriteWord_Indexed is the companion for the word array at +0x78.
-Part_WriteByte_Indexed:
-	ldw hl, 0x98
-	dec 1, c
-	extz bc
-	add hl, bc
-	extz wa
-	extz de
-	ld bc, hl
-	jrl Part_WriteByte
+Part_WriteByte_Indexed:	.include "includes/generated/cc900/Part_WriteByte_Indexed.s"	; C: cc900/sequencer_engine_m234_f.c
 
 ; Reads one entry of the byte array at offset 0x98 of a song slot.
 ;   In:  A = song slot (0 = the record at 0xf180), C = entry (1-based).
 ;   Out: HL = byte at slot + 0x98 + (C-1), zero-extended.
-Part_ReadByte_Indexed:
-	ld e, c
-	ldw bc, 0x98
-	dec 1, e
-	extz de
-	add bc, de
-	extz wa
-	calr Part_ReadByteDirect
-	extz hl
-	ret
+Part_ReadByte_Indexed:	.include "includes/generated/cc900/Part_ReadByte_Indexed.s"	; C: cc900/sequencer_engine_m234_f.c
 
 ; Sets the free-block count (word at offset 0xb1 of song slots 0..10; 0xf231 for slot 0) to WA,
 ; recomputes the percentage in 0x1d68 (Seq_ComputePercentClamped99) and notifies the screen
@@ -18060,16 +17999,9 @@ SeqVoice_PopRetFA:
 
 ; Saves the active-part mask 0xf19e in 0xffec and, unless bit 0 of 0x28a5 is set, clears it;
 ; Audio_CheckSubsystemReady runs after either path.
-SeqPlay_SaveStateAndCleanup:
-	ld wa, (SEQ_TRACK_MASK:16)
-	ld (SEQ_TRACK_MASK_COPY:24), wa
-	bit 0, (0x28a5:16)
-	jr nz, SeqSave_JumpCheckSubsys
-	ldw (SEQ_TRACK_MASK:16), 0
-	call Audio_CheckSubsystemReady
-
-SeqSave_JumpCheckSubsys:
-	jp Audio_CheckSubsystemReady
+SeqPlay_SaveStateAndCleanup:	.include "includes/generated/cc900/SeqPlay_SaveStateAndCleanup.s"	; C: cc900/sequencer_engine_m234_f.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqSave_JumpCheckSubsys, SeqPlay_SaveStateAndCleanup + 25
 
 ; Starts sequencer playback from a received start request when everything is ready: re-inits the
 ; tempo ring buffer instead when 0x2524 is set, re-activates when bit 0 of 0x28c5 is set; otherwise
@@ -18114,13 +18046,7 @@ SeqPlay_CheckAndStartPlayback:
 
 ; Saves the active-part mask 0xf19e in 0x2875, runs Demo_PreSetup, clears bit 0 of 0x28a5 and
 ; updates panel indicator 0x4c.  SeqAcc_RestorePlaybackState is the counterpart.
-SeqAcc_SetIndicator_PB:
-	ld wa, (SEQ_TRACK_MASK:16)
-	ld (0x2875:16), wa
-	call Demo_PreSetup
-	res 0, (0x28a5:16)
-	ldw wa, 0x4c
-	jp CtrlPanel_SetIndicatorBit
+SeqAcc_SetIndicator_PB:	.include "includes/generated/cc900/SeqAcc_SetIndicator_PB.s"	; C: cc900/sequencer_engine_m234_f.c
 
 ; Restores the active-part mask from 0x2875; when it is not empty, re-prepares playback
 ; (SeqAcc_InitPlaybackState, with bit 3 of 0x28a7 cleared) and sets bit 0 of 0x28a5, else clears
@@ -25447,11 +25373,7 @@ VoiceAlloc_TestBitInMap:	.include "includes/generated/cc900/VoiceAlloc_TestBitIn
 
 ; Runs SeqStep_PostEventAndUpdate, SeqScan_CheckBarBitAndProcess and Portamento_ScanInitAndLoop,
 ; then continues in SeqTick_InitAndScanParts.
-VoiceAlloc_TestBitRead:
-	calr SeqStep_PostEventAndUpdate
-	calr SeqScan_CheckBarBitAndProcess
-	calr Portamento_ScanInitAndLoop
-	jrl SeqTick_InitAndScanParts
+VoiceAlloc_TestBitRead:	.include "includes/generated/cc900/VoiceAlloc_TestBitRead.s"	; C: cc900/sequencer_engine_m235.c
 
 VoiceAlloc_TestBitHigh:	.include "includes/generated/cc900/VoiceAlloc_TestBitHigh.s"	; C: cc900/sequencer_engine.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -25731,12 +25653,7 @@ SeqScan_PopIzAndReturn:
 	popw iz
 	ret
 
-SeqScan_RefreshReadAndCompare:
-	call PartCtrl_RefreshWordPeriodic
-	call SeqData_ReadNextByte
-	ld (9607:16), l
-	call PartCtrl_RefreshWordPeriodic
-	jr SeqScan_ComparePosition14vs1052
+SeqScan_RefreshReadAndCompare:	.include "includes/generated/cc900/SeqScan_RefreshReadAndCompare.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqScan_ComparePosition14vs1052:
 	ld wa, (9614:16)
@@ -26544,11 +26461,7 @@ SeqVoice_InitFirstSlotSearch:
 
 ; Starts the second nearest-timing search: 0x25a8 = 0xffff, 0x25aa = 0xff, 0x25be = (0x25b4),
 ; then continues in SeqEvt_SelectNearestTiming.  SeqVoice_InitFirstSlotSearch is the first.
-SeqSearch_InitNotFound:
-	ldw (9640:16), 0xffff
-	ld (9642:16), 255
-	ldmm16 9662, 9652
-	jr SeqEvt_SelectNearestTiming
+SeqSearch_InitNotFound:	.include "includes/generated/cc900/SeqSearch_InitNotFound.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqEvt_SelectNearestTiming:
 	ld bc, (9636:16)

@@ -45,3 +45,13 @@ void TmFlash_CopyToExtMem(void)
   InterCPU_E1_Bulk_Transfer((void *)((long)ram_300000 + 0xb0400L), 0xee1f, 0xa0000L);
   TmFlash_Return();
 }
+
+extern unsigned char SoundRam_IdentifyImage(unsigned char *);
+extern int PostTmSave_ByteBlock(unsigned char *p);
+
+int PostTmSave_ByteBlock(unsigned char *p)
+{
+  unsigned char k = SoundRam_IdentifyImage(p);
+  if (k <= 6 && k >= 1) return 0;
+  return -0x66;
+}

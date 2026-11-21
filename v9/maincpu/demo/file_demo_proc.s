@@ -338,27 +338,10 @@ ApPreControl_Exit:
 	pop xiz
 	ret
 
-FDemo_MultiGuardCheck:
-	; --- Routine 1: multi-guard check, return HL=1 or 0 (30 bytes) ---
-	cp	(ACTIVE_TITLE:16), 228
-	jr nz, Banner_ReturnZero
-	cpw	(SEQ_ACTIVE_PARTS:16), 0
-	jr nz, Banner_ReturnZero
-	cp	(DEMO_TIMER_COUNTDOWN:16), 0
-	jr nz, Banner_ReturnZero
-	bit	3, (DEMO_CONTROL_FLAGS:16)
-	jr nz, Banner_ReturnZero
-	ld	hl, 1:i3
-	ret
-Banner_ReturnZero:
-	ld	hl, 0:i3
-	ret
-FDemo_LoadRegsAndPostEvent:
-	; --- Routine 2: load regs, jp FA9D58 (23 bytes) ---
-	ld xwa, 0xffffffff
-	ld xbc, EVT_EXEC_PRESENTATION
-	ld xde, FDemo_LoadRegsAndPostEvent_Str_FEATURE
-	jp ApPostEvent
+FDemo_MultiGuardCheck:	.include "includes/generated/cc900/FDemo_MultiGuardCheck.s"	; C: cc900/file_demo_proc_m265.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Banner_ReturnZero, FDemo_MultiGuardCheck + 31
+FDemo_LoadRegsAndPostEvent:	.include "includes/generated/cc900/FDemo_LoadRegsAndPostEvent.s"	; C: cc900/file_demo_proc_m0.c
 
 
 FDemo_LinkedListSearch:	.include "includes/generated/cc900/FDemo_LinkedListSearch.s"	; C: cc900/file_demo_proc_m265.c
@@ -6407,18 +6390,9 @@ GetEntryRefresh_Return:
 	popw iz
 	ret
 
-FileIO_CheckMediaIsWritable:
-	call GetMediaType
-	cp l, 2:i3
-	jr z, CheckMediaWritable_Ok
-	cp l, 3:i3
-	jr z, CheckMediaWritable_Ok
-	ldw hl, 0xffff
-	ret
-
-CheckMediaWritable_Ok:
-	ld hl, 0:i3
-	ret
+FileIO_CheckMediaIsWritable:	.include "includes/generated/cc900/FileIO_CheckMediaIsWritable.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CheckMediaWritable_Ok, FileIO_CheckMediaIsWritable + 16
 
 FileIO_OpenWithBuiltPath:	.include "includes/generated/cc900/FileIO_OpenWithBuiltPath.s"	; C: cc900/file_demo_proc_m268.c
 

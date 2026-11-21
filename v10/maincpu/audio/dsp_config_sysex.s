@@ -2326,12 +2326,7 @@ Fade_ParamListener_StoreResetDelay:
 
 ; Returns in XHL the panel TLV payload (PanelTlv_PayloadOfTag) of the tag that
 ; DspBlock_ObjectCode_Table gives for DSP block A; 0xffffffff when that tag is absent.
-DSPCfg_LookupMidiMap:
-	extz xwa
-	ld xbc, DspBlock_ObjectCode_Table
-	add xbc, xwa
-	ld a, (xbc)
-	jp PanelTlv_PayloadOfTag
+DSPCfg_LookupMidiMap:	.include "includes/generated/cc900/DSPCfg_LookupMidiMap.s"	; C: cc900/dsp_config_sysex_m293_c.c
 
 DSPCfg_ExtractFieldPair:
 	ld xix, xde

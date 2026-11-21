@@ -9099,25 +9099,11 @@ PartDeact_CheckSubsystem:
 	inc 2, xsp
 	ret
 
-Accomp_UpdateModeFlag:
-	cp (CURRENT_TITLE:16), 129
-	jr z, AccompMode_SetFlag
-	cpw (SEQ_TRACK_MASK:16), 0
-	jr z, AccompMode_ClearFlag
-
-AccompMode_SetFlag:
-	set 0, (0x28a5:16)
-	jr AccompMode_ApplyAndNotify
-
-AccompMode_ClearFlag:
-	res 0, (0x28a5:16)
-
-AccompMode_ApplyAndNotify:
-	ld wa, (SEQ_TRACK_MASK_COPY:24)
-	ld (SEQ_TRACK_MASK:16), wa
-	call Audio_CheckSubsystemReady
-	ldw wa, 0x4c
-	jp CtrlPanel_SetIndicatorBit
+Accomp_UpdateModeFlag:	.include "includes/generated/cc900/Accomp_UpdateModeFlag.s"	; C: cc900/sequencer_engine_m234_f.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AccompMode_SetFlag, Accomp_UpdateModeFlag + 15
+	.set	AccompMode_ClearFlag, Accomp_UpdateModeFlag + 21
+	.set	AccompMode_ApplyAndNotify, Accomp_UpdateModeFlag + 25
 
 Accomp_ValidateAutoPlayChordVoice:
 	pushw_erp 0xfa
@@ -14117,29 +14103,9 @@ SeqSkip_SetErrorCode:
 	calr SeqData_SetErrorCode
 	ret
 
-SeqData_CopyBlockToBuffer:
-	ld w, 0x0:opc
-	extz xwa
-	sll xwa, 11
-	lda xde, (SEQ_SONG_SLOTS:24)
-	add xde, xwa
-	ld xiy, SEQ_SONG_RECORD
-	ld xix, xde
-	ldw bc, 0x400
-	ldirw
-	ret
+SeqData_CopyBlockToBuffer:	.include "includes/generated/cc900/SeqData_CopyBlockToBuffer.s"	; C: cc900/sequencer_engine_m234_f.c
 
-VoicePreset_LoadAndInitPan:
-	ld w, 0x0:opc
-	extz xwa
-	sll xwa, 11
-	lda xbc, (SEQ_SONG_SLOTS:24)
-	add xbc, xwa
-	ld xiy, xbc
-	ld xix, SEQ_SONG_RECORD
-	ldw bc, 0x400
-	ldirw
-	jp VoiceChannels_InitPanFromPreset
+VoicePreset_LoadAndInitPan:	.include "includes/generated/cc900/VoicePreset_LoadAndInitPan.s"	; C: cc900/sequencer_engine_m234_f.c
 
 Part_WriteWordBlock_OffsetAF:
 	push xiz
@@ -14290,17 +14256,7 @@ Part_ReadWord_DoRead:
 	ld hl, (xbc)
 	ret
 
-Part_WriteWord_Indexed:
-	ld l, c
-	ldw bc, 0x78
-	ld w, l
-	add w, l
-	dec 2, w
-	ld l, w
-	extz hl
-	add bc, hl
-	extz wa
-	jrl Part_WriteWord
+Part_WriteWord_Indexed:	.include "includes/generated/cc900/Part_WriteWord_Indexed.s"	; C: cc900/sequencer_engine_m234_f.c
 
 Part_ReadWord_Indexed:
 	ldw de, 0x78
@@ -14313,26 +14269,9 @@ Part_ReadWord_Indexed:
 	ld bc, de
 	jr Part_ReadWord
 
-Part_WriteByte_Indexed:
-	ldw hl, 0x98
-	dec 1, c
-	extz bc
-	add hl, bc
-	extz wa
-	extz de
-	ld bc, hl
-	jrl Part_WriteByte
+Part_WriteByte_Indexed:	.include "includes/generated/cc900/Part_WriteByte_Indexed.s"	; C: cc900/sequencer_engine_m234_f.c
 
-Part_ReadByte_Indexed:
-	ld e, c
-	ldw bc, 0x98
-	dec 1, e
-	extz de
-	add bc, de
-	extz wa
-	calr Part_ReadByteDirect
-	extz hl
-	ret
+Part_ReadByte_Indexed:	.include "includes/generated/cc900/Part_ReadByte_Indexed.s"	; C: cc900/sequencer_engine_m234_f.c
 
 Part_SetAllVoicePos:
 	push xiz
@@ -17690,16 +17629,9 @@ SeqVoice_PopRetFA:
 	popw_erp 0xfa
 	ret
 
-SeqPlay_SaveStateAndCleanup:
-	ld wa, (SEQ_TRACK_MASK:16)
-	ld (SEQ_TRACK_MASK_COPY:24), wa
-	bit 0, (0x28a5:16)
-	jr nz, SeqSave_JumpCheckSubsys
-	ldw (SEQ_TRACK_MASK:16), 0
-	call Audio_CheckSubsystemReady
-
-SeqSave_JumpCheckSubsys:
-	jp Audio_CheckSubsystemReady
+SeqPlay_SaveStateAndCleanup:	.include "includes/generated/cc900/SeqPlay_SaveStateAndCleanup.s"	; C: cc900/sequencer_engine_m234_f.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqSave_JumpCheckSubsys, SeqPlay_SaveStateAndCleanup + 25
 
 SeqPlay_CheckAndStartPlayback:
 	cp (9508:16), 0
@@ -17736,13 +17668,7 @@ SeqPlay_CheckAndStartPlayback:
 	calr SeqTimer_SetPlaybackFlags
 	ret
 
-SeqAcc_SetIndicator_PB:
-	ld wa, (SEQ_TRACK_MASK:16)
-	ld (0x2875:16), wa
-	call Demo_PreSetup
-	res 0, (0x28a5:16)
-	ldw wa, 0x4c
-	jp CtrlPanel_SetIndicatorBit
+SeqAcc_SetIndicator_PB:	.include "includes/generated/cc900/SeqAcc_SetIndicator_PB.s"	; C: cc900/sequencer_engine_m234_f.c
 
 SeqAcc_RestorePlaybackState:	.include "includes/generated/cc900/SeqAcc_RestorePlaybackState.s"	; C: cc900/sequencer_engine_m234.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -24989,11 +24915,7 @@ VoiceAlloc_TestBitInMap:	.include "includes/generated/cc900/VoiceAlloc_TestBitIn
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	VoiceAlloc_TestBitCalcAddr, VoiceAlloc_TestBitInMap + 20
 
-VoiceAlloc_TestBitRead:
-	calr SeqStep_PostEventAndUpdate
-	calr SeqScan_CheckBarBitAndProcess
-	calr Portamento_ScanInitAndLoop
-	jrl SeqTick_InitAndScanParts
+VoiceAlloc_TestBitRead:	.include "includes/generated/cc900/VoiceAlloc_TestBitRead.s"	; C: cc900/sequencer_engine_m235.c
 
 VoiceAlloc_TestBitHigh:	.include "includes/generated/cc900/VoiceAlloc_TestBitHigh.s"	; C: cc900/sequencer_engine.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -25271,12 +25193,7 @@ SeqScan_PopIzAndReturn:
 	popw iz
 	ret
 
-SeqScan_RefreshReadAndCompare:
-	call PartCtrl_RefreshWordPeriodic
-	call SeqData_ReadNextByte
-	ld (9607:16), l
-	call PartCtrl_RefreshWordPeriodic
-	jr SeqScan_ComparePosition14vs1052
+SeqScan_RefreshReadAndCompare:	.include "includes/generated/cc900/SeqScan_RefreshReadAndCompare.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqScan_ComparePosition14vs1052:
 	ld wa, (9614:16)
@@ -26077,11 +25994,7 @@ SeqVoice_InitFirstSlotSearch:
 	ldmm16 9660, 9652
 	jr SeqEvt_SelectNearestTiming
 
-SeqSearch_InitNotFound:
-	ldw (9640:16), 0xffff
-	ld (9642:16), 255
-	ldmm16 9662, 9652
-	jr SeqEvt_SelectNearestTiming
+SeqSearch_InitNotFound:	.include "includes/generated/cc900/SeqSearch_InitNotFound.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqEvt_SelectNearestTiming:
 	ld bc, (9636:16)

@@ -753,14 +753,9 @@ BmDrEdit_IncrementVelocityValue:	.include "includes/generated/cc900/BmDrEdit_Inc
 
 BmDrEdit_DecrementVelocityValue:	.include "includes/generated/cc900/BmDrEdit_DecrementVelocityValue.s"	; C: cc900/bmdredit_routines_m232_d.c
 
-BmDrEdit_DurationUp_Check:
-	bit	7, (0x2940:16)
-	jr z, BmDrEdit_DurationUp_Dispatch
-	cp	(0x2941:16), 3
-	ret nz
-
-BmDrEdit_DurationUp_Dispatch:
-	jr BmDrEdit_IncrementDuration
+BmDrEdit_DurationUp_Check:	.include "includes/generated/cc900/BmDrEdit_DurationUp_Check.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_DurationUp_Dispatch, BmDrEdit_DurationUp_Check + 13
 
 BmDrEdit_DurationDown_Check:
 	bit	7, (0x2940:16)
@@ -3264,12 +3259,7 @@ BmDrEdit_SendScrollCmds_CommonDrumEnd:
 	call NoteEditSy_SendScrollCmd2
 	jp NoteEditSy_SendModeScrollCmd
 
-NoteEdit_UpdateScrollAndDisplay:
-	ld	a, (0x275a:16)
-	mul a, 0x60
-	cp	(0x2780:16), wa
-	ret nc
-	jrl NoteEditSy_UpdateAllWidgets
+NoteEdit_UpdateScrollAndDisplay:	.include "includes/generated/cc900/NoteEdit_UpdateScrollAndDisplay.s"	; C: cc900/bmdredit_routines_m232.c
 ; BmDrEdit_SetRowOffsetFromDelta (was NoteEdit_UpdateScrollAndDisplay_Helper)
 ; -- A := A - C; in drum mode (bit 0 of RAM 0x2742, set by
 ; BmDrEdit_InitDrumMode) RAM 0x27CC := 11 - A, otherwise 0x27CC := A, plus 3

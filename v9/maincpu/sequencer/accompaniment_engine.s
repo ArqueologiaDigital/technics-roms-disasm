@@ -5946,10 +5946,7 @@ AccTuning_Toggle_NoStyle:
 AccTuning_Toggle_Return:
 	ret
 
-AccTuning_SaveState:
-	ld a, (0x3391:16)
-	ld (0x3392:16), a
-	ret
+AccTuning_SaveState:	.include "includes/generated/cc900/AccTuning_SaveState.s"	; C: cc900/accompaniment_engine_m245.c
 
 AccTuning_Init:
 	push xwa

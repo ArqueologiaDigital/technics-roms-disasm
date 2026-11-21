@@ -26827,17 +26827,9 @@ PreTmSave:
 
 PostTmSave:	.include "includes/generated/cc900/PostTmSave.s"	; C: cc900/note_voice_mapping_m306.c
 
-PostTmSave_ByteBlock:
-	calr	SoundRam_IdentifyImage
-	cp	l, 6:i3
-	jr	ugt, PostTmSave_ByteBlock_Skip
-	cp	l, 1:i3
-	jr	c, PostTmSave_ByteBlock_Skip
-	ld	hl, 0:i3
-	ret
-PostTmSave_ByteBlock_Skip:
-	ldw	hl, 0xff9a
-	ret
+PostTmSave_ByteBlock:	.include "includes/generated/cc900/PostTmSave_ByteBlock.s"	; C: cc900/note_voice_mapping_m306.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PostTmSave_ByteBlock_Skip, PostTmSave_ByteBlock + 14
 
 PostTmSave_Success:
 	cp wa, 0:i3

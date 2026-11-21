@@ -1676,12 +1676,7 @@ Fade_ParamListener_StoreResetDelay:
 	calr	Fade_MeasuresToTicks
 	ld	(0xc160:16), hl
 	ret
-DSPCfg_LookupMidiMap:
-	extz	xwa
-	ld	xbc, DspBlock_ObjectCode_Table
-	add	xbc, xwa
-	ld	a, (xbc)
-	jp	PanelTlv_PayloadOfTag
+DSPCfg_LookupMidiMap:	.include "includes/generated/cc900/DSPCfg_LookupMidiMap.s"	; C: cc900/dsp_config_sysex_m293_c.c
 DSPCfg_ExtractFieldPair:
 	ld	xix, xde
 	ld	xde, xwa
