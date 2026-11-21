@@ -872,99 +872,25 @@ VOICE_DSPOUT_SECOND_A_JUMPTABLE:	.include "includes/generated/cc900/VOICE_DSPOUT
 ; Audio_Cmd_EffParam_TableJump maps opcode-0x11 (0..84) through this byte table
 ; to a case number 0x00..0x1E, then jumps through AUDIO_CMD_EFFPARAM_JUMPTABLE.
 ; Case 0x02 is the dominant "generic parameter" case.
-AUDIO_CMD_EFFPARAM_CASEMAP:
-	.byte 0x00, 0x01, 0x02, 0x03, 0x02, 0x02, 0x04, 0x02
-	.byte 0x02, 0x05, 0x02, 0x02, 0x06, 0x02, 0x02, 0x07
-	.byte 0x02, 0x02, 0x08, 0x02, 0x02, 0x09, 0x02, 0x02
-	.byte 0x02, 0x02, 0x0a, 0x0a, 0x0a, 0x0a, 0x0b, 0x0b
-	.byte 0x0b, 0x0b, 0x0c, 0x0c, 0x0c, 0x0c, 0x0d, 0x0d
-	.byte 0x0d, 0x0d, 0x0e, 0x0e, 0x0e, 0x0e, 0x0f, 0x0f
-	.byte 0x0f, 0x0f, 0x10, 0x10, 0x10, 0x10, 0x11, 0x11
-	.byte 0x11, 0x11, 0x12, 0x12, 0x12, 0x12, 0x13, 0x13
-	.byte 0x13, 0x13, 0x14, 0x14, 0x14, 0x14, 0x15, 0x15
-	.byte 0x15, 0x15, 0x02, 0x02, 0x16, 0x17, 0x18, 0x19
-	.byte 0x1a, 0x1b, 0x1c, 0x1d, 0x1e
+AUDIO_CMD_EFFPARAM_CASEMAP:	.include "includes/generated/cc900/AUDIO_CMD_EFFPARAM_CASEMAP.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FA38-0x00FA75  AUDIO_CMD_EFFPARAM_JUMPTABLE -- 31 u16 jump offsets, base 0x02F9FA
 ; Computed jump in Audio_Cmd_EffParam_TableJump (case number 0x00..0x1E from the casemap above): `jp T, 0x02F9FA + table[index*2]`.
-AUDIO_CMD_EFFPARAM_JUMPTABLE:
-	.short Audio_Cmd_EffParam_Op11 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 0
-	.short Audio_Cmd_EffParam_Op12 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 1
-	.short Audio_Cmd_EffParam_Return - Audio_Cmd_EffParam_TableJump_CaseBase	; index 2
-	.short Audio_Cmd_EffParam_Op14 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 3
-	.short Audio_Cmd_EffParam_Op17 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 4
-	.short Audio_Cmd_EffParam_Op1A - Audio_Cmd_EffParam_TableJump_CaseBase	; index 5
-	.short Audio_Cmd_EffParam_Op1D - Audio_Cmd_EffParam_TableJump_CaseBase	; index 6
-	.short Audio_Cmd_EffParam_Op20 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 7
-	.short Audio_Cmd_EffParam_Op23 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 8
-	.short Audio_Cmd_EffParam_Op26 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 9
-	.short Audio_Cmd_EffParam_Grp0_Slot0 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 10
-	.short Audio_Cmd_EffParam_Grp0_Slot1 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 11
-	.short Audio_Cmd_EffParam_Grp0_Slot2 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 12
-	.short Audio_Cmd_EffParam_Grp0_Slot3 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 13
-	.short Audio_Cmd_EffParam_Grp1_Slot0 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 14
-	.short Audio_Cmd_EffParam_Grp1_Slot1 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 15
-	.short Audio_Cmd_EffParam_Grp1_Slot2 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 16
-	.short Audio_Cmd_EffParam_Grp1_Slot3 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 17
-	.short Audio_Cmd_EffParam_Grp2_Slot0 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 18
-	.short Audio_Cmd_EffParam_Grp2_Slot1 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 19
-	.short Audio_Cmd_EffParam_Grp2_Slot2 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 20
-	.short Audio_Cmd_EffParam_Grp2_Slot3 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 21
-	.short Audio_Cmd_EffParam_Op5D_FullRebuild - Audio_Cmd_EffParam_TableJump_CaseBase	; index 22
-	.short Audio_Cmd_EffParam_Op5E - Audio_Cmd_EffParam_TableJump_CaseBase	; index 23
-	.short Audio_Cmd_EffParam_Op5F - Audio_Cmd_EffParam_TableJump_CaseBase	; index 24
-	.short Audio_Cmd_EffParam_Op60 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 25
-	.short Audio_Cmd_EffParam_Op61 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 26
-	.short Audio_Cmd_EffParam_Op62 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 27
-	.short Audio_Cmd_EffParam_Op63 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 28
-	.short Audio_Cmd_EffParam_Op64 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 29
-	.short Audio_Cmd_EffParam_Op65 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 30
+AUDIO_CMD_EFFPARAM_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_EFFPARAM_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FA76-0x00FA9B  AUDIO_CMD_EFFECTPARAM_JUMPTABLE -- 19 u16 jump offsets, base 0x02F86F
 ; Computed jump in Audio_Cmd_EffectParam_Dispatch (opcodes 0x15..0x27 mapped to index 0..18): `jp T, 0x02F86F + table[index*2]`.
-AUDIO_CMD_EFFECTPARAM_JUMPTABLE:
-	.short Audio_Cmd_EffParam_Grp0 - Audio_Cmd_EffParam_Grp0	; index 0
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 1
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 2
-	.short Audio_Cmd_EffParam_Grp1 - Audio_Cmd_EffParam_Grp0	; index 3
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 4
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 5
-	.short Audio_Cmd_EffParam_Grp2 - Audio_Cmd_EffParam_Grp0	; index 6
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 7
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 8
-	.short Audio_Cmd_EffParam_Grp3 - Audio_Cmd_EffParam_Grp0	; index 9
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 10
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 11
-	.short Audio_Cmd_EffParam_Grp4 - Audio_Cmd_EffParam_Grp0	; index 12
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 13
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 14
-	.short Audio_Cmd_EffParam_Grp5 - Audio_Cmd_EffParam_Grp0	; index 15
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 16
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 17
-	.short Audio_Cmd_EffParam_Grp6 - Audio_Cmd_EffParam_Grp0	; index 18
+AUDIO_CMD_EFFECTPARAM_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_EFFECTPARAM_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FA9C-0x00FAB5  AUDIO_CMD_DSPUNIT_CASEMAP -- 26 bytes, opcode -> case
 ; Audio_Cmd_DSPUnit_TableJump maps opcode-0x1F (only 7..25 reachable) through
 ; this byte table to a case number 0..8, then jumps through
 ; AUDIO_CMD_DSPUNIT_JUMPTABLE.
-AUDIO_CMD_DSPUNIT_CASEMAP:
-	.byte 0x01, 0x05, 0x06, 0x06, 0x01, 0x07, 0x08, 0x00
-	.byte 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x01
-	.byte 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x03
-	.byte 0x01, 0x04
+AUDIO_CMD_DSPUNIT_CASEMAP:	.include "includes/generated/cc900/AUDIO_CMD_DSPUNIT_CASEMAP.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FAB6-0x00FAC7  AUDIO_CMD_DSPUNIT_JUMPTABLE -- 9 u16 jump offsets, base 0x02FFF9
 ; Computed jump in Audio_Cmd_DSPUnit_TableJump (case number 0..8 from the casemap above): `jp T, 0x02FFF9 + table[index*2]`.
-AUDIO_CMD_DSPUNIT_JUMPTABLE:
-	.short Audio_Cmd_DSPUnit_Op26 - Audio_Cmd_DSPUnit_Op01	; index 0
-	.short Audio_Cmd_DSPUnit_Return - Audio_Cmd_DSPUnit_Op01	; index 1
-	.short Audio_Cmd_DSPUnit_Op2D - Audio_Cmd_DSPUnit_Op01	; index 2
-	.short Audio_Cmd_DSPUnit_Op36 - Audio_Cmd_DSPUnit_Op01	; index 3
-	.short Audio_Cmd_DSPUnit_Op38 - Audio_Cmd_DSPUnit_Op01	; index 4
-	.short Audio_Cmd_DSPUnit_Op01 - Audio_Cmd_DSPUnit_Op01	; index 5
-	.short Audio_Cmd_DSPUnit_Op02 - Audio_Cmd_DSPUnit_Op01	; index 6
-	.short Audio_Cmd_DSPUnit_Op05 - Audio_Cmd_DSPUnit_Op01	; index 7
-	.short Audio_Cmd_DSPUnit_Op06 - Audio_Cmd_DSPUnit_Op01	; index 8
+AUDIO_CMD_DSPUNIT_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_DSPUNIT_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FAC8-0x00FADF  AUDIO_CMD_TONEEDIT_REPLY_CASEMAP -- 24 bytes, opcode -> case
 ; Audio_Cmd_ToneEdit_Reply_TableJump folds opcodes 0x19..0x24 and 0x2B..0x36 into
@@ -2460,35 +2386,12 @@ DSP2_InitTask_PtrTable:
 ; - 0x17); 0x09-0x1F are rejected before the table.  CmdHandler2C_JumpDispatch computes
 ; `jp (CmdHandler2C_TableData + offs[index])`.
 ; The two DSP_Process_ReadNext entries (0x1c, 0x20) are skip/ignore slots.
-CmdHandler2C_DispatchOffsets:
-	.short CmdHandler2C_TableData - CmdHandler2C_TableData           	; sub-cmd 0x00
-	.short CmdHandler2C_Global_MixParamA - CmdHandler2C_TableData    	; sub-cmd 0x01
-	.short CmdHandler2C_Global_MixParamB - CmdHandler2C_TableData    	; sub-cmd 0x02
-	.short CmdHandler2C_Global_MonoMode - CmdHandler2C_TableData     	; sub-cmd 0x03
-	.short CmdHandler2C_Global_BendRange - CmdHandler2C_TableData    	; sub-cmd 0x04
-	.short DSP_Process_ReadNext - CmdHandler2C_TableData             	; sub-cmd 0x05
-	.short CmdHandler2C_Global_MixParamC - CmdHandler2C_TableData    	; sub-cmd 0x06
-	.short CmdHandler2C_Global_SetValue45B8 - CmdHandler2C_TableData 	; sub-cmd 0x07
-	.short CmdHandler2C_Global_SetEnable45BA - CmdHandler2C_TableData	; sub-cmd 0x08
-	.short DSP_Process_ReadNext - CmdHandler2C_TableData             	; sub-cmd 0x20
-	.short CmdHandler2C_Global_SetValue4504 - CmdHandler2C_TableData 	; sub-cmd 0x21
-	.short CmdHandler2C_Global_SetValue453C - CmdHandler2C_TableData 	; sub-cmd 0x22
-	.short CmdHandler2C_Global_SetAlgoType - CmdHandler2C_TableData  	; sub-cmd 0x23
-	.short CmdHandler2C_Global_SetValue4574 - CmdHandler2C_TableData 	; sub-cmd 0x24
-	.short CmdHandler2C_Global_SetValue45AC - CmdHandler2C_TableData 	; sub-cmd 0x25
+CmdHandler2C_DispatchOffsets:	.include "includes/generated/cc900/CmdHandler2C_DispatchOffsets.s"	; C: cc900/audio_process_dsp_and_effects_an_26c.c (cc900-data)
 
 ; --- 0x0121db  8 x u16 dispatch offsets for sub-commands 0x10-0x17 of command 0x2B.
 ; The command-0x2B handler computes `jp (DSP_Cmd2B_AlgoSelect + offs[subcmd - 0x10])`;
 ; all eight targets are the 20-byte DSP_Cmd2B_ParamStub* value-store stubs.
-DSP_Cmd2B_DispatchOffsets:
-	.short DSP_Cmd2B_ParamStub0 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x10
-	.short DSP_Cmd2B_ParamStub1 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x11
-	.short DSP_Cmd2B_ParamStub2 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x12
-	.short DSP_Cmd2B_ParamStub3 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x13
-	.short DSP_Cmd2B_ParamStub4 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x14
-	.short DSP_Cmd2B_ParamStub5 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x15
-	.short DSP_Cmd2B_ParamStub6 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x16
-	.short DSP_Cmd2B_ParamStub7 - DSP_Cmd2B_AlgoSelect	; sub-cmd 0x17
+DSP_Cmd2B_DispatchOffsets:	.include "includes/generated/cc900/DSP_Cmd2B_DispatchOffsets.s"	; C: cc900/audio_process_dsp_and_effects_an_26c.c (cc900-data)
 
 ; --- 0x0121eb  three 4-byte canned messages for DSP_WriteAlgoInitPreset: after an
 ; algorithm change it pushes one of these into the MIDI ring (Audio_CmdHandler_00_1F,
