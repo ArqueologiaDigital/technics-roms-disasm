@@ -43,3 +43,29 @@ void SetWallColor(int c)
 	}
 	ChangeWallPalette(n);
 }
+
+/* cc900-module: SetDialFocus */
+extern long DIAL_UP_CALLBACK;
+extern long DIAL_UP_EVENT;
+extern long DIAL_UP_PARAM;
+extern void SetDialFocus(long);
+extern void SetDialUp(long cb, long ev, long par);
+extern long DIAL_DOWN_CALLBACK;
+extern long DIAL_DOWN_EVENT;
+extern long DIAL_DOWN_PARAM;
+extern void SetDialDown(long cb, long ev, long p);
+
+void SetDialUp(long cb, long ev, long par)
+{
+  DIAL_UP_CALLBACK = cb;
+  DIAL_UP_EVENT = ev;
+  DIAL_UP_PARAM = par;
+  SetDialFocus(cb);
+}
+void SetDialDown(long cb, long ev, long p)
+{
+  DIAL_DOWN_CALLBACK = cb;
+  DIAL_DOWN_EVENT = ev;
+  DIAL_DOWN_PARAM = p;
+  SetDialFocus(cb);
+}

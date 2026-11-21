@@ -13807,10 +13807,7 @@ Voice_ReadSearchResult:
 	ret
 
 ; Clears the word at 0xce66 and the byte at 0xceb2.
-Voice_ResetSearchState:
-	ldw (0xce66:16), 0
-	ld (0xceb2:16), 0
-	ret
+Voice_ResetSearchState:	.include "includes/generated/cc900/Voice_ResetSearchState.s"	; C: cc900/note_voice_mapping_m300.c
 
 UIParam_ScanAndCollect:
 	lda xsp, (xsp - 68)
@@ -16170,12 +16167,7 @@ InitPartAllocState_Epilogue:
 	pop xix
 	ret
 
-InitPartAllocState_Block4:
-	ld (CHORD_NOTE_COUNT:24), 0x00
-	ldw (0x00cf5f:24), 0x0000
-	ldw (0x00cf77:24), 0x0000
-	ld (0x00cef1:24), 0x00
-	ret
+InitPartAllocState_Block4:	.include "includes/generated/cc900/InitPartAllocState_Block4.s"	; C: cc900/note_voice_mapping_m300.c
 
 InitPartAllocState_TestBit242:
 	bit 4, (CHORD_FLAGS:24)
@@ -19279,12 +19271,7 @@ PitchReset_Flush:
 ; MIDI_SendAllVoicesPitchUpdate: Sends the sub-CPU system message {F0 50 92 00} and flushes; the sub-CPU runs
 ;   Voice_AllVoices_PortamentoUpdate (pitch refresh of parts 0-0x19) for it. Sent at the end of a sound-RAM transfer
 ;   and on its abort path. Basis: callers + body + receiver.
-MIDI_SendAllVoicesPitchUpdate:
-	ldw	wa, 80
-	ldw	bc, 146
-	ld	de, 0:i3
-	calr	SubCPU_SendSystemRecord
-	jp	MIDI_PostSendStub
+MIDI_SendAllVoicesPitchUpdate:	.include "includes/generated/cc900/MIDI_SendAllVoicesPitchUpdate.s"	; C: cc900/note_voice_mapping_m301.c
 
 MIDI_SendAllSoundOff:
 	pushw iz
@@ -19953,10 +19940,7 @@ PlayModeStateMachine_LoadParam:
 	ret
 
 ; Spins while bit 0 of the byte at 0x432 is set.
-SeqPlay_BusyWaitLoop:
-	bit 0, (1074:16)
-	jr nz, SeqPlay_BusyWaitLoop
-	ret
+SeqPlay_BusyWaitLoop:	.include "includes/generated/cc900/SeqPlay_BusyWaitLoop.s"	; C: cc900/note_voice_mapping_m302_xs.c
 
 ; Sends, for each of the 16 MIDI channels n, the three controller messages Bn 7B 00 (all notes
 ; off), Bn 00 40 and Bn 40 00 (sustain off), each through MIDI_SendSinglePacket.
@@ -23376,10 +23360,7 @@ SysexRingBuf_ReadByte:	.include "includes/generated/cc900/SysexRingBuf_ReadByte.
 	.set	SysexRingBuf_ReadReturn, SysexRingBuf_ReadByte + 55
 
 ; Returns HL = 0x7ff minus the word at 0xd8b2.
-SysexRingBuf_GetFreeSpace:
-	ldw hl, 0x7ff
-	sub hl, (0xd8b2:16)
-	ret
+SysexRingBuf_GetFreeSpace:	.include "includes/generated/cc900/SysexRingBuf_GetFreeSpace.s"	; C: cc900/note_voice_mapping_m302.c
 
 SysexRingBuf_ReadBytes:
 	dec 6, xsp
@@ -23955,10 +23936,7 @@ ApplyProgramChangeAs_LoadReg:
 	ldw de, 0x400
 	jr ApplyProgramChangeAs_LoadDRAM2
 
-ApplyProgramChangeAs_LoadReg2:
-	ld xbc, 0x20
-	ldw de, 0x200
-	jr ApplyProgramChangeAs_LoadDRAM2
+ApplyProgramChangeAs_LoadReg2:	.include "includes/generated/cc900/ApplyProgramChangeAs_LoadReg2.s"	; C: cc900/note_voice_mapping_m303_b.c
 SndBuf_WriteParamEntries_Helper:
 	jr ApplyProgramChangeAs_LoadReg
 
@@ -24013,9 +23991,7 @@ FetchOscTableEntry_LoadReg:
 	ld xbc, 0x14
 	jr FetchOscTableEntry_Prologue
 
-FetchOscTableEntry_LoadReg2:
-	ld xbc, 0x24
-	jr FetchOscTableEntry_Prologue
+FetchOscTableEntry_LoadReg2:	.include "includes/generated/cc900/FetchOscTableEntry_LoadReg2.s"	; C: cc900/note_voice_mapping_m303_b.c
 
 SndParam_ApplyProgramChange:	.include "includes/generated/cc900/SndParam_ApplyProgramChange.s"	; C: cc900/note_voice_mapping_m303.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -24056,10 +24032,7 @@ ApplyProgramChange_LoadReg:
 	jr ApplyProgramChange_LoadDRAM
 
 ; Enters ApplyProgramChange_LoadDRAM with XBC = 0x28 and DE = 0x200.
-SndParam_InitBufferConverge:
-	ld xbc, 0x28
-	ldw de, 0x200
-	jr ApplyProgramChange_LoadDRAM
+SndParam_InitBufferConverge:	.include "includes/generated/cc900/SndParam_InitBufferConverge.s"	; C: cc900/note_voice_mapping_m303_b.c
 
 SndParam_ComputeVoiceIndex:
 	push xiz
@@ -26886,13 +26859,7 @@ PostTmLoad:	.include "includes/generated/cc900/PostTmLoad.s"	; C: cc900/note_voi
 PreTmSave:
 	ret
 
-PostTmSave:
-	cp wa, 0:i3
-	ret ge
-	ldw wa, 0xff
-	ldw bc, 0xff
-	call COMM_BuildAndSendPacket
-	ret
+PostTmSave:	.include "includes/generated/cc900/PostTmSave.s"	; C: cc900/note_voice_mapping_m306.c
 
 PostTmSave_ByteBlock:
 	calr	SoundRam_IdentifyImage
@@ -27066,13 +27033,7 @@ TmFlashWrite_ValidateParams_Join:
 
 ; Calls InterCPU_E1_Bulk_Transfer with XWA = 0x3b0400 (0x300000 + 0xb0400, in the custom-data
 ; flash), BC = 0xee1f and XDE = 0xa0000, then continues at TmFlash_Return.
-TmFlash_CopyToExtMem:
-	lda xwa, (0x300000:24)
-	add xwa, 0xb0400
-	ldw bc, 0xee1f
-	ld xde, 0xa0000
-	call InterCPU_E1_Bulk_Transfer
-	jp TmFlash_Return
+TmFlash_CopyToExtMem:	.include "includes/generated/cc900/TmFlash_CopyToExtMem.s"	; C: cc900/note_voice_mapping_m306.c
 ; Flash_GetSlotAddressAndSize: Locates slot BC of the custom-data section-7 slot store (custom_data/kn5000_custom_data.s):
 ;   A bit 0 set = the flash slot (0x3B0410 + 470*BC small, 0x3B4D80 + 10535*BC large), clear = the RAM work-area
 ;   block at 0x1E0000; A bit 1 = large.  Stores the address at (XDE) and the size (470 / 10,535) at the second

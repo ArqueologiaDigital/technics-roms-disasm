@@ -740,25 +740,9 @@ AssswbWr_ReturnFail:
 AssswbWr_Return:
 	pop xiz
 	ret
-AssswbWr:
-	ld hl, (SWBTWR_WRITE_INDEX:16)
-	cp hl, 0x1fc
-	jr nc, AssswbWr_BufferFull
-	lda xix, (SWBTWR_EVENT_QUEUE:16)
-	extz xhl
-	add xhl, xix
-	ld (xhl+), a
-	ld (xhl+), c
-	ld (xhl+), e
-	ld a, (xsp + 4)
-	ld (xhl+), a
-	ld (xhl), 0xff
-	ld wa, (SWBTWR_WRITE_INDEX:16)
-	inc 4, wa
-	ld (SWBTWR_WRITE_INDEX:16), wa
-
-AssswbWr_BufferFull:
-	retd 0x2
+AssswbWr:	.include "includes/generated/cc900/AssswbWr.s"	; C: cc900/dsp_config_sysex_m291.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AssswbWr_BufferFull, AssswbWr + 46
 
 AddswbWr:
 	ld hl, (0x90e2:16)
@@ -780,30 +764,11 @@ AddswbWr:
 AddswbWr_BufferFull:
 	retd 0x2
 
-SwbtWr:
-	lda xix, (PANEL_EVENT_QUEUE:16)
-	ld xiy, xix
-	lda xhl, (xix + 60)
-	cp (xix), 0xff
-	jr z, SwbtWr_CheckSpace
-
-SwbtWr_ScanEnd:
-	inc 4, xiy
-	cp (xiy), 0xff
-	jr nz, SwbtWr_ScanEnd
-
-SwbtWr_CheckSpace:
-	cp xiy, xhl
-	jr nc, SwbtWr_Done
-	ld (xiy+), a
-	ld (xiy+), c
-	ld (xiy+), e
-	ld a, (xsp + 4)
-	ld (xiy+), a
-	ld (xiy), 0xff
-
-SwbtWr_Done:
-	retd 0x2
+SwbtWr:	.include "includes/generated/cc900/SwbtWr.s"	; C: cc900/dsp_config_sysex_m291.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SwbtWr_ScanEnd, SwbtWr + 14
+	.set	SwbtWr_CheckSpace, SwbtWr + 21
+	.set	SwbtWr_Done, SwbtWr + 43
 
 SwbtWr_CallProcessAll:
 	push xiz
@@ -5011,9 +4976,7 @@ AudioSubsystem_Callback:
 	call AudioInit_DispatchChanges
 	ret
 
-AudioInit_SelectAndDispatch:
-	call AudioInit_SelectPriority
-	jp AudioInit_DispatchChanges
+AudioInit_SelectAndDispatch:	.include "includes/generated/cc900/AudioInit_SelectAndDispatch.s"	; C: cc900/dsp_config_sysex_m294.c
 
 AudioInit_CheckMIDIAndDispatch:
 	call AudioInit_CheckMIDIStatus

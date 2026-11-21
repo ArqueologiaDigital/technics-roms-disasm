@@ -91,3 +91,12 @@ void AccTone_IBDC_Helper(void)
     ram_342a = *p;
     ram_342b = 0;
 }
+
+extern unsigned char __near ram_3422;
+extern unsigned char __near ram_3423;
+extern void Chord_LookupTypeFamily(void);
+
+void Chord_LookupTypeFamily(void)
+{
+  ram_3422 = Chord_TypeFamilyTable[ram_3423];
+}

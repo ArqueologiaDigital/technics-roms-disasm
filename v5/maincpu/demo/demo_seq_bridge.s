@@ -469,144 +469,37 @@ CDlikeSwTtl_SendEvt4_Post:
 	jp ApPostEvent
 ; Same event as CDlikeSwTtl_SendStartEvt (0x8B0003) but with XDE = 1.
 ; Called from ui/setwall_routines.s.
-CDlikeSwTtl_SendStartEvtArg1:
-	ld XWA,0x008b0003
-	ld XBC,EVT_SET_VISIBLE
-	ld xde, 1:i3
-	jp ApPostEvent
-CDlikeSwTtl_SendStartEvt:
-	ld xwa, 0x8b0003
-	ld xbc, EVT_SET_VISIBLE
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SendStartEvtArg1:	.include "includes/generated/cc900/CDlikeSwTtl_SendStartEvtArg1.s"	; C: cc900/demo_seq_bridge_m203.c
+CDlikeSwTtl_SendStartEvt:	.include "includes/generated/cc900/CDlikeSwTtl_SendStartEvt.s"	; C: cc900/demo_seq_bridge_m203.c
 
-CDlikeSwTtl_SendResetEvent:
-	ld xwa, 0x8b0000
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SendResetEvent:	.include "includes/generated/cc900/CDlikeSwTtl_SendResetEvent.s"	; C: cc900/demo_seq_bridge_m203.c
 
-CDlikeSwTtl_SendStopEvtD:
-	ld xwa, 0x8b000d
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SendStopEvtD:	.include "includes/generated/cc900/CDlikeSwTtl_SendStopEvtD.s"	; C: cc900/demo_seq_bridge_m203.c
 
-CDlikeSwTtl_SendEvent8C_0:
-	ld xwa, 0x8c0000
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SendEvent8C_0:	.include "includes/generated/cc900/CDlikeSwTtl_SendEvent8C_0.s"	; C: cc900/demo_seq_bridge_m203.c
 
-CDlikeSwTtl_SendEvent8C_A:
-	ld xwa, 0x8c000a
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SendEvent8C_A:	.include "includes/generated/cc900/CDlikeSwTtl_SendEvent8C_A.s"	; C: cc900/demo_seq_bridge_m203.c
 
-CDlikeSwTtl_SendEvent8C_13:
-	ld xwa, 0x8c0013
-	ld xbc, EVT_SHOW
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SendEvent8C_13:	.include "includes/generated/cc900/CDlikeSwTtl_SendEvent8C_13.s"	; C: cc900/demo_seq_bridge_m203.c
 
-CDlikeSwTtl_SetRecordAndNotify:
-	ld (0x021090:24), 0x01
-	ld xwa, NAKA_VIEW_DemoMed1
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xwa, NAKA_VIEW_DemoMed2
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xwa, NAKA_VIEW_DemoMed3
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	jp ApPostEvent
+CDlikeSwTtl_SetRecordAndNotify:	.include "includes/generated/cc900/CDlikeSwTtl_SetRecordAndNotify.s"	; C: cc900/demo_seq_bridge_m203.c
 
-SeqInit_PostEventSequence:
-	ld (0x021090:24), 0x00
-	ld xwa, NAKA_VIEW_DemoMed1
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xwa, NAKA_VIEW_DemoMed2
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xwa, NAKA_VIEW_DemoMed3
-	ld xbc, EVT_REPAINT
-	ld xde, 0:i3
-	jp ApPostEvent
+SeqInit_PostEventSequence:	.include "includes/generated/cc900/SeqInit_PostEventSequence.s"	; C: cc900/demo_seq_bridge_m203.c
 
-SeqInit_LookupDispatchEntry:
-	extz wa
-	sla wa, 2
-	lda xbc, (Demo_SongViewIdTable:24)
-	ld	xhl, (xbc+wa)
-	ret
+SeqInit_LookupDispatchEntry:	.include "includes/generated/cc900/SeqInit_LookupDispatchEntry.s"	; C: cc900/demo_seq_bridge_m203.c
 
-SeqInit_PostDispatchEvent:
-	ld a, (DEMO_ACTIVE_ENTRY:16)
-	extz wa
-	calr SeqInit_LookupDispatchEntry
-	ld xwa, xhl
-	ld xbc, EVT_SET_SELECTED
-	ld xde, 1:i3
-	jp ApDeliveryEvent
+SeqInit_PostDispatchEvent:	.include "includes/generated/cc900/SeqInit_PostDispatchEvent.s"	; C: cc900/demo_seq_bridge_m203_b.c
 
-SeqInit_FinalEvent:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_INDEX_SELECT
-	ld xde, 0:i3
-	jp ApPostEvent
+SeqInit_FinalEvent:	.include "includes/generated/cc900/SeqInit_FinalEvent.s"	; C: cc900/demo_seq_bridge_m203.c
 
-SeqRecPlay_EnableRecordOnly:
-	ld (0x021092:24), 0x01
-	ld (0x021094:24), 0x00
-	ld xwa, 0x6f0025
-	ld xbc, EVT_REFRESH_PARA_DRAW
-	ld xde, 1:i3
-	call ApPostEvent
-	ld xde, 0:i3
-	ld e, (0x021094:24)
-	ld xwa, 0x6f0024
-	ld xbc, EVT_REFRESH_PARA_DRAW
-	jp ApPostEvent
+SeqRecPlay_EnableRecordOnly:	.include "includes/generated/cc900/SeqRecPlay_EnableRecordOnly.s"	; C: cc900/demo_seq_bridge_m203.c
 
-SeqRecPlay_EnablePlayOnly:
-	ld (0x021092:24), 0x00
-	ld (0x021094:24), 0x01
-	ld xwa, 0x6f0025
-	ld xbc, EVT_REFRESH_PARA_DRAW
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xde, 0:i3
-	ld e, (0x021094:24)
-	ld xwa, 0x6f0024
-	ld xbc, EVT_REFRESH_PARA_DRAW
-	jp ApPostEvent
+SeqRecPlay_EnablePlayOnly:	.include "includes/generated/cc900/SeqRecPlay_EnablePlayOnly.s"	; C: cc900/demo_seq_bridge_m203.c
 
-SeqRecPlay_DisableBoth:
-	ld (0x021092:24), 0x00
-	ld (0x021094:24), 0x00
-	ld xwa, 0x6f0025
-	ld xbc, EVT_REFRESH_PARA_DRAW
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xde, 0:i3
-	ld e, (0x021094:24)
-	ld xwa, 0x6f0024
-	ld xbc, EVT_REFRESH_PARA_DRAW
-	jp ApPostEvent
+SeqRecPlay_DisableBoth:	.include "includes/generated/cc900/SeqRecPlay_DisableBoth.s"	; C: cc900/demo_seq_bridge_m203.c
 
 ; SqTrSelTtl case D
-SqTrSel_CaseD:
-	calr	SeqRecPlay_DisableBoth
-	call	Song_AbortPlayback
-	ld	(7494:16), 0
-	ret
+SqTrSel_CaseD:	.include "includes/generated/cc900/SqTrSel_CaseD.s"	; C: cc900/demo_seq_bridge_m203.c
 ; SqTrSelTtl case E
 SqTrSel_CaseE:
 	calr	SeqRecPlay_DisableBoth
@@ -618,16 +511,8 @@ SqTrSel_CaseE:
 	ld	(7494:16), 0
 	ret
 ; SqTrSelTtl case F
-SqTrSel_CaseF:
-	calr	SeqRecPlay_DisableBoth
-	call	Song_AbortPlayback
-	ld	(7494:16), 0
-	ret
-PlayMode_SendStopEvent:
-	ld xwa, 0x6f0026
-	ld xbc, EVT_LYRICS_ALL_CLEAR
-	ld xde, 0:i3
-	jp ApPostEvent
+SqTrSel_CaseF:	.include "includes/generated/cc900/SqTrSel_CaseF.s"	; C: cc900/demo_seq_bridge_m203.c
+PlayMode_SendStopEvent:	.include "includes/generated/cc900/PlayMode_SendStopEvent.s"	; C: cc900/demo_seq_bridge_m203.c
 
 ; SqTrSelTtl case G
 SqTrSel_CaseG:
@@ -721,20 +606,7 @@ PlayMode_CheckAndAbort:
 	ld xde, 0:i3
 	call ApPostEvent
 	ret
-PlayMode_SwitchToModeAndNotify:
-	ld	xwa, 4294967295
-	ld	xbc, EVT_SET_NOT_DRAW_FLAG
-	ld	xde, 1:i3
-	call	ApPostEvent
-	ldw	wa, TT_SQTRAS
-	call	UI_ChangeTitleByIndex
-	ld	xwa, 4294967295
-	ld	xbc, EVT_SET_NOT_DRAW_FLAG
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	(GLOBAL_ERROR_CODE:16), 35
-	ldw	wa, TT_MESAGE
-	jp	UI_InterruptTitleByIndex
+PlayMode_SwitchToModeAndNotify:	.include "includes/generated/cc900/PlayMode_SwitchToModeAndNotify.s"	; C: cc900/demo_seq_bridge_m203.c
 DispatchHandler_ConditionalJump:
 	jr	t, DispatchHandler_SubJumpTable_Join
 

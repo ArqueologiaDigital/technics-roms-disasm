@@ -3585,11 +3585,7 @@ BitMapOut_PrepareRender_CheckBit2:	.include "includes/generated/cc900/BitMapOut_
 
 BitMapOut_GetRenderMode:	.include "includes/generated/cc900/BitMapOut_GetRenderMode.s"	; C: cc900/bitmap_out_routines.c
 
-BitMapOut_GetRenderMode_CheckBit3:
-	lda xbc, (0x8d4a:16)
-	or (xbc), a
-	ld l, (xbc)
-	ret
+BitMapOut_GetRenderMode_CheckBit3:	.include "includes/generated/cc900/BitMapOut_GetRenderMode_CheckBit3.s"	; C: cc900/bitmap_out_routines_m274_xr.c
 
 BitMapOut_GetRenderMode_Return:
 	lda xbc, (0x8d4a:16)
@@ -3820,11 +3816,7 @@ PanelMemory_PreSlotLoad:
 ;   ROM default (PanelMem_InitFromFactory), otherwise validates it (PanelTlv_ValidatePanelMemory). Basis: callers +
 ;   body -- SingleLoad_LoadPanelMemory passes WA = destination index and BC = the read result, in the place PostPmLoad
 ;   (which calls PanelTlv_ValidatePanelMemories) takes for a whole-file load.
-PanelMemory_PostSlotLoad:
-	extz	wa
-	cp	bc, 0:i3
-	jp	lt, (PanelMem_InitFromFactory:24)
-	jp	PanelTlv_ValidatePanelMemory
+PanelMemory_PostSlotLoad:	.include "includes/generated/cc900/PanelMemory_PostSlotLoad.s"	; C: cc900/bitmap_out_routines_m274.c
 ; PanelMemory_PreBankLoad: Empty hook (ret) run before one panel-memory bank (16-byte bank name + 8 memories) is read
 ;   from a .PMT file; WA = destination bank. Basis: callers + body -- FileIO_LoadRegion1_VRAM (bank 0 of a one-bank
 ;   file) and SingleLoad_LoadPanelMemBank (bank load) call it before the reads, where the whole-file path calls

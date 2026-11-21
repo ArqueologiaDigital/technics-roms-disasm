@@ -374,19 +374,11 @@ GetDialFocus:	.include "includes/generated/cc900/GetDialFocus.s"	; C: cc900/pres
 ; Sets what the data dial's up direction sends: DIAL_UP_CALLBACK = XWA, DIAL_UP_EVENT = XBC,
 ; DIAL_UP_PARAM = XDE, then moves the dial focus to object XWA (SetDialFocus, which broadcasts
 ; EVT_CHANGE_DIAL_FOCUS when the focus changes).
-SetDialUp:
-	ld (DIAL_UP_CALLBACK:24), xwa
-	ld (DIAL_UP_EVENT:24), xbc
-	ld (DIAL_UP_PARAM:24), xde
-	jr SetDialFocus
+SetDialUp:	.include "includes/generated/cc900/SetDialUp.s"	; C: cc900/presentation_sound_nav_m271_xr.c
 
 ; Sets what the data dial's down direction sends: DIAL_DOWN_CALLBACK = XWA, DIAL_DOWN_EVENT =
 ; XBC, DIAL_DOWN_PARAM = XDE, then moves the dial focus to object XWA (SetDialFocus).
-SetDialDown:
-	ld (DIAL_DOWN_CALLBACK:24), xwa
-	ld (DIAL_DOWN_EVENT:24), xbc
-	ld (DIAL_DOWN_PARAM:24), xde
-	jr SetDialFocus
+SetDialDown:	.include "includes/generated/cc900/SetDialDown.s"	; C: cc900/presentation_sound_nav_m271_xr.c
 
 SetAutoIncDefault:
 	dec 4, xsp

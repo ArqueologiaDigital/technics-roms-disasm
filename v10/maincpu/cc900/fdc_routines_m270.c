@@ -100,3 +100,40 @@ void FDC_CmdRecalibrate(void)
 	FDC_TARGET_TRACK = t;
 	SOME_DELAY(16);
 }
+
+/* cc900-module: ApTaskControl ClearAllSongSlots Composer_GetPassword FindFirstEmptySlot SetDialFocus */
+extern unsigned char __tiny PA;
+extern void FDC_CMD_DISABLE(void);
+extern void FDC_ClearStatus_InitTimer(void);
+extern unsigned char __tiny PD;
+extern void FDC_PulseResetLine(void);
+extern unsigned char __near ram_8b20;
+extern unsigned char __near ram_8b22;
+extern void FDC_RecordDensityCode(unsigned char a);
+extern unsigned char __near FDC_RESULT;
+
+void FDC_CMD_DISABLE(void)
+{
+  PA &= ~0x08;
+  FDC_CMD_SEND(14);
+}
+void FDC_ClearStatus_InitTimer(void)
+{
+  FDC_ERROR_CODE = 0;
+}
+void FDC_PulseResetLine(void)
+{
+  PD |= 0x01;
+  SOME_DELAY(10);
+  PD &= ~0x01;
+  SOME_DELAY(10);
+}
+void FDC_RecordDensityCode(unsigned char a)
+{
+  ram_8b20 = ram_8b22;
+  ram_8b22 = a;
+}
+void FDC_TIMING_DELAY(void)
+{
+  FDC_RESULT = 255;
+}

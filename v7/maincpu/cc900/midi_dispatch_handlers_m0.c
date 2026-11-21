@@ -28,3 +28,63 @@ void MidiPkt_ArpCfgChain_Join(void)
 		MidiPkt_SendGroupEnd();
 	}
 }
+
+/* cc900-module: MidiPkt_RecoverIfXferAborted MidiTable_DispatchHelper MidiTable_FlushArpNotes SeqChan_StepCmd_Field1to2 SeqChan_StepCmd_Field2to3 SeqChan_StepCmd_Field4to5 SeqChan_StepCmd_Field5to6 SeqChan_StepCmd_Field8to9 SeqChan_StepCmd_Field9to10 SeqChan_XferStep_AccompBlock1 SeqChan_XferStep_AccompBlock2 SeqChan_XferStep_StyleImageBlock1 */
+struct mq;
+typedef struct mq *mqp;
+extern mqp __near MIDISEQ_ACTIVE_BUF_PTR;
+extern unsigned char __near ram_bc7c;
+extern unsigned char __near CURRENT_TITLE;
+extern unsigned char SeqData_ReadFieldByIndex(mqp, unsigned int);
+extern void MidiTable_DispatchHelper(void);
+extern void MidiChan_ClearAllStates(void);
+extern void SeqAlt_ProcessAndFinalize(void);
+extern void MidiPkt_RecoverIfXferAborted(void);
+extern void MidiPkt_XferShowResult(void);
+extern void MidiPkt_ArpChordHandler(void);
+struct xfer;
+extern mqp __near MIDISEQ_SPARE_BUF_PTR;
+extern void MIDI_ReadChannelParam(mqp, int, int);
+extern void MidiPkt_PreparePanelReceive(void);
+extern void MidiPkt_SetXferTotal_Panel(struct xfer *);
+extern void MidiPkt_SetXferBlock_LivePanel(struct xfer *);
+extern void SeqChan_StepCmd_Field1to2(void);
+extern void MidiPkt_ArpExtHandler_A(void);
+extern void MidiPkt_SetXferLengthFromMsg(void);
+extern void MidiPkt_SetXferBlk_StyleImgPool(struct xfer *);
+extern void SeqChan_StepCmd_Field9to10(void);
+extern void MidiPkt_ArpExtHandler_G(void);
+
+void MidiPkt_ArpChordHandler(void)
+{
+	if (CURRENT_TITLE == 87 && SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 0) >= 7) {
+		ram_bc7c |= 0x10;
+		MidiChan_ClearAllStates();
+		goto dispatch;
+		for (;;) {
+			if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 4) != 0) {
+				ram_bc7c &= ~0x10;
+				break;
+			}
+			SeqAlt_ProcessAndFinalize();
+dispatch:
+			MidiTable_DispatchHelper();
+			if (!(ram_bc7c & 0x10))
+				break;
+		}
+		MidiPkt_RecoverIfXferAborted();
+		MidiPkt_XferShowResult();
+	}
+	ram_bc7c &= ~0x10;
+}
+/* cc900-name: MidiPkt_SetXferBlk_StyleImgPool=MidiPkt_SetXferBlock_StyleImagePool */
+/* cc900-name: MidiPkt_SetXferBlk_AccompBank=MidiPkt_SetXferBlock_AccompBankTables */
+/* cc900-name: MidiPkt_SetXferTotal_AccompBlk=MidiPkt_SetXferTotal_AccompBlocks */
+/* cc900-name: MidiPkt_SetXferBlk_AccompArea=MidiPkt_SetXferBlock_AccompAreaHeader */
+/* cc900-name: MidiPkt_PrepAccompBlocksReceive=MidiPkt_PrepareAccompBlocksReceive */
+/* cc900-name: MidiPkt_SetXferBlk_PanelMem=MidiPkt_SetXferBlock_PanelMemories */
+/* cc900-name: MidiPkt_SetXferBlk_SoundRamData=MidiPkt_SetXferBlock_SoundRamData */
+/* cc900-name: MidiPkt_SetXferBlk_StyleImgTbl=MidiPkt_SetXferBlock_StyleImageTables */
+/* cc900-name: MidiPkt_SetXferBlk_StyleImgHdr=MidiPkt_SetXferBlock_StyleImageHeader */
+/* cc900-name: MidiPkt_PrepStyleImageReceive=MidiPkt_PrepareStyleImageReceive */
+/* cc900-name: SeqChan_XferStep_StyleImageBlk1=SeqChan_XferStep_StyleImageBlock1 */

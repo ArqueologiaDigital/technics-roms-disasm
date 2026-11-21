@@ -29,3 +29,19 @@ void PostTmLoad(int r)
 		COMM_BuildAndSendPacket(0xff, 0xff);
 	FDemoText_RefreshFullDisplay();
 }
+
+/* cc900-module: ApplyProgramChangeAs_LoadDRAM2 ApplyProgramChange_LoadDRAM FetchOscTableEntry_Prologue SoundRam_IdentifyImage */
+extern void PostTmSave(int r);
+extern unsigned char ram_300000[];
+extern void TmFlash_Return(void);
+extern void TmFlash_CopyToExtMem(void);
+
+void PostTmSave(int r)
+{
+  if (r < 0) COMM_BuildAndSendPacket(0xff, 0xff);
+}
+void TmFlash_CopyToExtMem(void)
+{
+  InterCPU_E1_Bulk_Transfer((void *)((long)ram_300000 + 0xb0400L), 0xee1f, 0xa0000L);
+  TmFlash_Return();
+}

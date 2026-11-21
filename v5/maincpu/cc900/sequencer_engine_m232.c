@@ -93,3 +93,28 @@ void SeqPlay_IncPunchCountIn(void)
 	ram_26d2 = SEQ_START_MEASURE = SEQ_PUNCH_IN_MEASURE - SEQ_COUNT_IN;
 	SeqAcc_SetupRepeatCount();
 }
+
+/* cc900-module: BmDrEdit_BuildNoteOnEvent_WithVelocity BmDrEdit_CheckChannelActive BmDrEdit_CountMeasuresAndValidate BmDrEdit_DelayAction_PlayClick BmDrEdit_IncrementDuration BmDrEdit_SelectActiveChannel Metronome_PlayClick NoteEditSy_UpdateAllWidgets SeqAcc_HandlePlaybackTick SeqAcc_InitAndDispatch */
+extern unsigned char __near CURRENT_TITLE;
+extern void SeqAcc_HandlePlaybackTick(void);
+extern void CtrlPanel_SetIndicatorBit(unsigned int);
+extern void SeqPlay_SaveStateAndCleanup(void);
+extern void SeqAcc_StopPlayback(void);
+extern void SeqAcc_InitAndDispatch(void);
+extern void SeqAcc_UpdateAndDispatch(void);
+
+void SeqAcc_StopPlayback(void)
+{
+  if (CURRENT_TITLE != 136) {
+    SEQ_SONG_RECORD[188] &= ~0x01;
+    SeqAcc_SetupRepeatCount();
+  }
+  SeqAcc_HandlePlaybackTick();
+  CtrlPanel_SetIndicatorBit(0x4c);
+  SeqPlay_SaveStateAndCleanup();
+}
+void SeqAcc_UpdateAndDispatch(void)
+{
+  Accomp_UpdateModeFlag();
+  SeqAcc_InitAndDispatch();
+}

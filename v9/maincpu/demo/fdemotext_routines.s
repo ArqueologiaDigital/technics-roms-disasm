@@ -1988,15 +1988,7 @@ FDemoText_ResetLayoutState:	.include "includes/generated/cc900/FDemoText_ResetLa
 
 FDemoText_ScaleDownCoords:	.include "includes/generated/cc900/FDemoText_ScaleDownCoords.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
-FDemoText_ScaleUpCoords:
-	ld de, (xwa)
-	sla de, 3
-	ld (xbc), de
-	ld wa, (xwa + 2)
-	sla wa, 2
-	inc 3, wa
-	ld (xbc + 2), wa
-	ret
+FDemoText_ScaleUpCoords:	.include "includes/generated/cc900/FDemoText_ScaleUpCoords.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
 FDemoText_CalcTextExtent:	.include "includes/generated/cc900/FDemoText_CalcTextExtent.s"	; C: cc900/fdemotext_routines_m265_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -2229,9 +2221,7 @@ Seq_InitVoiceLoop:
 	pop xiz
 	ret
 
-Seq_PostProcessDisplay:
-	ld	wa, (0x025b82:24)
-	jr	Seq_CopyResourcePtrs
+Seq_PostProcessDisplay:	.include "includes/generated/cc900/Seq_PostProcessDisplay.s"	; C: cc900/fdemotext_routines_m265_xr.c
 
 Seq_CopyResourcePtrs:	.include "includes/generated/cc900/Seq_CopyResourcePtrs.s"	; C: cc900/fdemotext_routines.c
 ; the hand assembly's labels inside the compiled body, by their offsets

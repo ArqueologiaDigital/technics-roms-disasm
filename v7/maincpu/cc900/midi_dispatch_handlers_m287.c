@@ -72,3 +72,13 @@ void MidiTable_FlushArpNotes(void)
 			SeqBuf_FlushNoteOffs(SysEx_Msg_359A, 5);
 	}
 }
+
+/* cc900-module: AnalogIn_PollAfterTouch AnalogIn_PollExpressionPedal ArpQueue_Enqueue ArpQueue_InitBuffer Audio_FlushPendingBankSelects MidiChan_ParseVoiceData PanelTlv_WriteBlock0Headers PanelTlv_WriteBlock1Headers PanelTlv_WriteLivePanelHeaders PanelTlv_WritePanelMemoryHeaders SeqBuf_WaitForEmpty SeqData_InitPlaybackFromField SeqOut_FlushWithChunking */
+extern unsigned char __near MIDIPKT_RX_GROUPS;
+extern unsigned char __near ram_10ea;
+extern void MidiSysEx_ProcessBlock_Helper5(void);
+
+void MidiSysEx_ProcessBlock_Helper5(void)
+{
+  if (MIDIPKT_RX_GROUPS & 0x10) ram_10ea |= 0x01;
+}

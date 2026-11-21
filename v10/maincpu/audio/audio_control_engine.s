@@ -2008,11 +2008,7 @@ AnalogIn_ReadAdcHigh_Read:
 	ld l, (xbc + 1)
 	ret
 
-AnalogIn_PollCpuAdc:
-	ld xwa, 0x8f10
-	calr AnalogIn_PollExpressionPedal
-	ld xwa, 0x8f16
-	jr AnalogIn_PollAfterTouch
+AnalogIn_PollCpuAdc:	.include "includes/generated/cc900/AnalogIn_PollCpuAdc.s"	; C: cc900/audio_control_engine_m278.c
 
 AnalogIn_PollExpressionPedal:
 	dec 4, xsp
@@ -3602,12 +3598,7 @@ UIState_ProcessSimpleMode:
 
 ; Returns in XHL entry WA (zero-extended byte index) of the u32 table
 ; CtrlPanel_SingleBitMaskTable.
-CtrlPanel_LookupIndicatorEntry:
-	extz wa
-	sla wa, 2
-	lda xbc, (CtrlPanel_SingleBitMaskTable:24)
-	ld	xhl, (xbc+wa)
-	ret
+CtrlPanel_LookupIndicatorEntry:	.include "includes/generated/cc900/CtrlPanel_LookupIndicatorEntry.s"	; C: cc900/audio_control_engine_m279.c
 
 Util_FindLowestSetBit:
 	ld hl, 0:i3
@@ -5404,16 +5395,7 @@ ExtData_Voice_CompareAndDispatch:
 ExtData_Voice_CompareAndDispatch_Skip:
 	calr	ExtData_Voice_CompareAndDispatch_Helper
 	ret
-ExtData_Voice_CompareAndDispatch_Helper:
-	ld	a, (ANALOG_MAIN_VOLUME_VALUE:16)
-	set	7, a
-	ld	(ANALOG_MAIN_VOLUME_PENDING:16), a
-	calr	Audio_FlushPendingBankSelects
-	ld	(0x917e:16), 176
-	ld	(0x917f:16), 0
-	ld	(0x9180), (EXTDATA_VALUE:16)
-	ld	(0x9181), (EXTDATA_MASK:16)
-	jp	MIDI_LoadParamsAndDispatchCC
+ExtData_Voice_CompareAndDispatch_Helper:	.include "includes/generated/cc900/ExtData_Voice_CompareAndDispatch_Helper.s"	; C: cc900/audio_control_engine_m280_c.c
 
 ; Re-sends the expression pedal (record 0xB0 byte +1, TOTAL EXPRESSION) after a reset: clears bit 7 of 0x28ae and copies
 ; ANALOG_EXPRESSION_PEDAL_VALUE, with bit 7 set, to ANALOG_EXPRESSION_PEDAL_PENDING.  When the value had bit 7
@@ -6911,12 +6893,7 @@ SwbtWr_AppendFixedParamBlock:
 	ret
 
 ; a = tag -> xhl = the RAM address of that record's payload (PanelTlv_PayloadByTag[tag]; 0xFFFFFFFF = none)
-PanelTlv_PayloadOfTag:
-	extz wa
-	sla wa, 2
-	lda xbc, (PanelTlv_PayloadByTag:24)
-	ld	xhl, (xbc+wa)
-	ret
+PanelTlv_PayloadOfTag:	.include "includes/generated/cc900/PanelTlv_PayloadOfTag.s"	; C: cc900/audio_control_engine_m280_c.c
 
 ; a = part tag -> xhl = its companion record's payload: PanelTlv_CompanionByPart[a] for a <= 0x1F, tag 0x49's
 ; payload (RAM 0xFF92) for the style record 0x48, else 0xFFFFFFFF

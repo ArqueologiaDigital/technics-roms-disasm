@@ -29,10 +29,7 @@ SeMenu_LoadObjectPtr_Data:
 	.byte 0x98, 0x06
 	ret
 
-SeMenu_LoadMasterPtr:
-	ld	c, (PART_SELECT:24)
-	ld	(xwa), c
-	ret
+SeMenu_LoadMasterPtr:	.include "includes/generated/cc900/SeMenu_LoadMasterPtr.s"	; C: cc900/semenu_routines_m129_e.c
 SeMenu_FlushDisplayObj:
 	ld xde, xwa
 	ld xbc, xde
@@ -1011,16 +1008,9 @@ SeMenu_SetupMenuDisplay_Finalize:
 
 ; SeMenu_SetCurrentPart: Stores A (1..4, else 1) as the sound editor's current part, RAM 0x65D, which
 ;   SeMenu_ValidatePartNumber reads back. Basis: callers + body.
-SeMenu_SetCurrentPart:
-	cp	a, 1:i3
-	jr	c, SeMenu_SetCurrentPart_Skip
-	cp	a, 4:i3
-	jr	ugt, SeMenu_SetCurrentPart_Skip
-	ld	(1629:16), a
-	ret
-SeMenu_SetCurrentPart_Skip:
-	ld	(1629:16), 1
-	ret
+SeMenu_SetCurrentPart:	.include "includes/generated/cc900/SeMenu_SetCurrentPart.s"	; C: cc900/semenu_routines_m129_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetCurrentPart_Skip, SeMenu_SetCurrentPart + 13
 
 SeMenu_ValidatePartNumber:
 	dec 4, xsp
@@ -1115,41 +1105,18 @@ SeMenu_IsPartEnabled_CheckMask:
 	scc16 nz, hl
 	ret
 
-SeMenu_StorePartParam:
-	extz wa
-	lda xde, (1632:16)
-	extz xwa
-	add xwa, xde
-	ld (xwa), c
-	ret
+SeMenu_StorePartParam:	.include "includes/generated/cc900/SeMenu_StorePartParam.s"	; C: cc900/semenu_routines_m129_e.c
 
-SeMenu_LoadPartParam:
-	extz wa
-	lda xde, (1632:16)
-	extz xwa
-	add xwa, xde
-	ld a, (xwa)
-	ld (xbc), a
-	ret
+SeMenu_LoadPartParam:	.include "includes/generated/cc900/SeMenu_LoadPartParam.s"	; C: cc900/semenu_routines_m129_e.c
 
 ; SeMenu_SwitchNop: Bare `ret`: the 'no action' entry of the sound-editor pages' switch-handler tables (185 slots).
 ;   Basis: callers (table entries) + body.
 SeMenu_SwitchNop:
 	ret
 
-SeMenu_BitShiftMask:
-	ld l, a
-	ld de, 0:i3
-	extz bc
-	cp bc, 0:i3
-	ret ule
-
-SeMenu_BitShiftMask_Loop:
-	add l, l
-	inc 1, de
-	cp de, bc
-	jr c, SeMenu_BitShiftMask_Loop
-	ret
+SeMenu_BitShiftMask:	.include "includes/generated/cc900/SeMenu_BitShiftMask.s"	; C: cc900/semenu_routines_m129_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_BitShiftMask_Loop, SeMenu_BitShiftMask + 10
 
 SeMenu_BitShiftMask_End:	.include "includes/generated/cc900/SeMenu_BitShiftMask_End.s"	; C: cc900/semenu_routines_m129.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -1604,15 +1571,9 @@ SeMenu_SetCurrentStep:	.include "includes/generated/cc900/SeMenu_SetCurrentStep.
 
 SeMenu_ResetSubIndex:	.include "includes/generated/cc900/SeMenu_ResetSubIndex.s"	; C: cc900/semenu_routines.c
 
-SeMenu_AdvanceSubIndex:
-	ld l, (1684:16)
-	inc 1, l
-	ld (1684:16), l
-	ret
+SeMenu_AdvanceSubIndex:	.include "includes/generated/cc900/SeMenu_AdvanceSubIndex.s"	; C: cc900/semenu_routines_m129_e.c
 
-SeMenu_ReadObjParam_Data:
-	ld	(1684:16), a
-	ret
+SeMenu_ReadObjParam_Data:	.include "includes/generated/cc900/SeMenu_ReadObjParam_Data.s"	; C: cc900/semenu_routines_m0.c
 
 SeMenu_ReadObjParam:
 	ldmi16 (xwa), 0x694
@@ -1949,22 +1910,12 @@ SeMenu_GetNameBufferChar:	.include "includes/generated/cc900/SeMenu_GetNameBuffe
 ; SeMenu_PostDialEnable: Zero-extends A and tail-jumps to UI_PostDialEnable, which posts EVT_VALEN_SET with that value
 ;   (every caller passes 1: dial enabled). Basis: callers + body -- SeMenu_BindDialToColumn calls it first (its
 ;   header: 'posts EVT_VALEN_SET(1)'), and two sound-editor page set-ups call it before posting their dial events.
-SeMenu_PostDialEnable:
-	extz	wa
-	jp	UI_PostDialEnable
+SeMenu_PostDialEnable:	.include "includes/generated/cc900/SeMenu_PostDialEnable.s"	; C: cc900/semenu_routines_m129_e.c
 ; SeMenu_PostEditUpDownSet: Posts EVT_EDIT_UP_SET (A = 0) or EVT_EDIT_DOWN_SET (A != 0) with the value (C - 1) | E.
 ;   Basis: callers + body.
-SeMenu_PostEditUpDownSet:
-	dec	1, c
-	or	c, e
-	extz	bc
-	cp	a, 0:i3
-	jr	nz, SeMenu_PostEditUpDownSet_Skip
-	ld	wa, bc
-	jp	UI_PostDialValueEvent
-SeMenu_PostEditUpDownSet_Skip:
-	ld	wa, bc
-	jp	UI_PostDialRangeEvent
+SeMenu_PostEditUpDownSet:	.include "includes/generated/cc900/SeMenu_PostEditUpDownSet.s"	; C: cc900/semenu_routines_m129_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_PostEditUpDownSet_Skip, SeMenu_PostEditUpDownSet + 16
 ; SeMenu_BindDialToColumn: Points the dial at sound-editor column A (1..8): posts EVT_VALEN_SET(1),
 ;   EVT_EDIT_UP_SET(A-1) and EVT_EDIT_DOWN_SET((A-1)|0x80). Basis: callers + body -- every SeXxx_OnColumnN handler
 ;   ends with `ld wa, N` + this call.
@@ -4565,9 +4516,7 @@ SeMenu_SetMode:	.include "includes/generated/cc900/SeMenu_SetMode.s"	; C: cc900/
 SeMenu_SetMode_Data:
 	ld	(1712:16), wa
 	ret
-SeMenu_SetMode_Data_0x5:
-	ldw	(xwa), (0x6b0)
-	ret
+SeMenu_SetMode_Data_0x5:	.include "includes/generated/cc900/SeMenu_SetMode_Data_0x5.s"	; C: cc900/semenu_routines_m129_e.c
 	ld	(1714:16), wa
 	ret
 SeMenu_SetMode_Data_0xF:
@@ -4818,21 +4767,9 @@ SeMenu_SetEditEnable:	.include "includes/generated/cc900/SeMenu_SetEditEnable.s"
 
 SeMenu_OrPartConfig:	.include "includes/generated/cc900/SeMenu_OrPartConfig.s"	; C: cc900/semenu_routines.c
 
-SeMenu_SetPartConfigBit3:
-	set	3, (58104:24)
-	ret
-SeMenu_GetPartConfigBit3:
-	ld	l, (0x00e2f8:24)
-	and L,0x08
-	ret
-SeMenu_StoreParamByte:
-	dec 1, a
-	extz wa
-	lda xde, (1722:16)
-	extz xwa
-	add xwa, xde
-	ld (xwa), c
-	ret
+SeMenu_SetPartConfigBit3:	.include "includes/generated/cc900/SeMenu_SetPartConfigBit3.s"	; C: cc900/semenu_routines_m129_e.c
+SeMenu_GetPartConfigBit3:	.include "includes/generated/cc900/SeMenu_GetPartConfigBit3.s"	; C: cc900/semenu_routines_m129_e.c
+SeMenu_StoreParamByte:	.include "includes/generated/cc900/SeMenu_StoreParamByte.s"	; C: cc900/semenu_routines_m129_e.c
 
 SeMenu_LoadParamByte:	.include "includes/generated/cc900/SeMenu_LoadParamByte.s"	; C: cc900/semenu_routines_m129.c
 
@@ -4863,22 +4800,9 @@ SeMenu_GetLastSwitch:
 	ld	(xwa), (0x65a)
 	ret
 
-SeMenu_StoreEffectParam:
-	extz wa
-	lda xde, (1726:16)
-	extz xwa
-	add xwa, xde
-	ld (xwa), c
-	ret
+SeMenu_StoreEffectParam:	.include "includes/generated/cc900/SeMenu_StoreEffectParam.s"	; C: cc900/semenu_routines_m129_e.c
 
-SeMenu_StoreEffectParam_Data:
-	extz	wa
-	lda	xde, (1726:16)
-	extz	xwa
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xbc), a
-	ret
+SeMenu_StoreEffectParam_Data:	.include "includes/generated/cc900/SeMenu_StoreEffectParam_Data.s"	; C: cc900/semenu_routines_m129_e.c
 
 SeMenu_StoreEffectCoeff:
 	extz wa

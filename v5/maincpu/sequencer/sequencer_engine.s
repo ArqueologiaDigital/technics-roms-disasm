@@ -85,17 +85,9 @@ NoteEditSy_ScanReturn:
 	lda xsp, (xsp + 16)
 	ret
 
-SeqAcc_UpdateAndDispatch:
-	call Accomp_UpdateModeFlag
-	jr SeqAcc_InitAndDispatch
+SeqAcc_UpdateAndDispatch:	.include "includes/generated/cc900/SeqAcc_UpdateAndDispatch.s"	; C: cc900/sequencer_engine_m232.c
 
-SeqAcc_InitAndDispatch:
-	ldw	(SEQ_START_MEASURE:16), 1
-	set	1, (8964:16)
-	res	3, (SEQ_RTMCFG:16)
-	set	4, (SEQ_CONTROL_FLAGS:16)
-	call AccWrap_PlayModeDispatch
-	jp SeqBuffer_ClearAndInitIteration
+SeqAcc_InitAndDispatch:	.include "includes/generated/cc900/SeqAcc_InitAndDispatch.s"	; C: cc900/sequencer_engine_m0.c
 
 
 ; -----------------------------------------------------------------------------
@@ -130,16 +122,9 @@ SeqAcc_StartPlaybackFromPosition:	.include "includes/generated/cc900/SeqAcc_Star
 	.set	SeqAcc_AdjustEndAndStart, SeqAcc_StartPlaybackFromPosition + 47
 	.set	SeqAcc_StartPlayback, SeqAcc_StartPlaybackFromPosition + 72
 
-SeqAcc_StopPlayback:
-	cp (CURRENT_TITLE:16), 0x88
-	jr z, SeqAcc_StopPlayback_HandleTick
-	res 0, (0xf23c:16)
-	calr SeqAcc_SetupRepeatCount
-SeqAcc_StopPlayback_HandleTick:
-	calr SeqAcc_HandlePlaybackTick
-	ldw wa, 0x4c
-	call CtrlPanel_SetIndicatorBit
-	jp SeqPlay_SaveStateAndCleanup
+SeqAcc_StopPlayback:	.include "includes/generated/cc900/SeqAcc_StopPlayback.s"	; C: cc900/sequencer_engine_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqAcc_StopPlayback_HandleTick, SeqAcc_StopPlayback + 14
 
 SeqAcc_UpdateEndPosition:	.include "includes/generated/cc900/SeqAcc_UpdateEndPosition.s"	; C: cc900/sequencer_engine.c
 
@@ -8355,12 +8340,7 @@ SeqBuf_WriteMidiEventDirect:	.include "includes/generated/cc900/SeqBuf_WriteMidi
 	.set	SeqBufDirect_HandleNonNoteOn, SeqBuf_WriteMidiEventDirect + 59
 	.set	SeqBufDirect_Return, SeqBuf_WriteMidiEventDirect + 98
 
-SeqBuf_FlushAndReinit_NoteEvents:
-	call	SeqBuf_SaveWritePos
-	call	AccNoteOn_ChannelDispatch
-	call	SeqBuf_Init
-	ld	(7550:16), 0
-	ret
+SeqBuf_FlushAndReinit_NoteEvents:	.include "includes/generated/cc900/SeqBuf_FlushAndReinit_NoteEvents.s"	; C: cc900/sequencer_engine_m234_e.c
 SeqBuf_FlushAndReinit_VoiceCCEvents:
 	call SeqBuf_SaveWritePos
 	call Audio_ReinitAndProcessEvents
@@ -8986,11 +8966,7 @@ BitMapOut_PrepareAndDisplaySimple:
 SeqBuf_AllocNextSlot:
 	jrl Rhythm_ComputeNoteAllocation
 
-SeqBuf_AllocNextSlotAdjusted:
-	inc 1, wa
-	calr Rhythm_ComputeNoteAllocation
-	dec 1, hl
-	ret
+SeqBuf_AllocNextSlotAdjusted:	.include "includes/generated/cc900/SeqBuf_AllocNextSlotAdjusted.s"	; C: cc900/sequencer_engine_m234_e.c
 
 SeqBuf_WriteNoteOffEntry:	.include "includes/generated/cc900/SeqBuf_WriteNoteOffEntry.s"	; C: cc900/sequencer_engine_m234.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -10184,15 +10160,9 @@ Seq_HandleModeTransition:	.include "includes/generated/cc900/Seq_HandleModeTrans
 	.set	SeqModeTransit_LoadPreset, Seq_HandleModeTransition + 68
 	.set	Voice_LoadPresetReturn, Seq_HandleModeTransition + 71
 
-SeqModeTransit_DemoPath:
-	calr SeqModeTransit_GetPresetWord
-	ld	(8974:16), hl
-	ret
+SeqModeTransit_DemoPath:	.include "includes/generated/cc900/SeqModeTransit_DemoPath.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqModeTransit_GetPresetWord:
-	ld a, (DEMO_ACTIVE_ENTRY:16)
-	extz wa
-	jp Voice_GetPresetFieldWord
+SeqModeTransit_GetPresetWord:	.include "includes/generated/cc900/SeqModeTransit_GetPresetWord.s"	; C: cc900/sequencer_engine_m234_e.c
 
 SeqModeTransit_UpdateParts:
 	ld wa, (SEQ_TRACK_MASK:16)
@@ -11634,27 +11604,11 @@ SeqPart_RestoreReturn2:
 ; Output: A = byte value from secondary buffer
 ; Reads a byte from the secondary (background) sequencer part data stream.
 ; ============================================================================
-SeqPart_ReadByte_Secondary:
-	ld	wa, (SEQOP_SECONDARY_OFFSET:16)
-	ld c, a
-	extz bc
-	ld	wa, (SEQOP_SECONDARY_BLOCK:16)
-	jrl PartCtrl_ReadByte
+SeqPart_ReadByte_Secondary:	.include "includes/generated/cc900/SeqPart_ReadByte_Secondary.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqPart_ReadByte_Primary:
-	ld	wa, (SEQOP_PRIMARY_OFFSET:16)
-	ld c, a
-	extz bc
-	ld	wa, (SEQOP_PRIMARY_BLOCK:16)
-	jrl PartCtrl_ReadByte
+SeqPart_ReadByte_Primary:	.include "includes/generated/cc900/SeqPart_ReadByte_Primary.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqPart_WriteByte_Secondary:
-	ld e, a
-	ld	bc, (SEQOP_SECONDARY_OFFSET:16)
-	extz bc
-	extz de
-	ld	wa, (SEQOP_SECONDARY_BLOCK:16)
-	jrl PartCtrl_WriteByteToBuf
+SeqPart_WriteByte_Secondary:	.include "includes/generated/cc900/SeqPart_WriteByte_Secondary.s"	; C: cc900/sequencer_engine_m234_e.c
 
 ; ============================================================================
 ; SeqPart_WriteByte_Primary - Write byte to primary sequencer part buffer
@@ -11663,13 +11617,7 @@ SeqPart_WriteByte_Secondary:
 ; Output: None
 ; Writes a byte to the primary (foreground) sequencer part data stream.
 ; ============================================================================
-SeqPart_WriteByte_Primary:
-	ld e, a
-	ld	bc, (SEQOP_PRIMARY_OFFSET:16)
-	extz bc
-	extz de
-	ld	wa, (SEQOP_PRIMARY_BLOCK:16)
-	jrl PartCtrl_WriteByteToBuf
+SeqPart_WriteByte_Primary:	.include "includes/generated/cc900/SeqPart_WriteByte_Primary.s"	; C: cc900/sequencer_engine_m234_e.c
 
 Part_ValidateVoiceChannel:
 	dec 2, xsp
@@ -11925,24 +11873,14 @@ SeqVoice_InitReturnZero:
 
 ; SeqError_MapViaTableE: GLOBAL_ERROR_CODE = SeqError_MapTableE[SEQ_ERROR_CODE] (SeqError_MapToGlobal). Basis:
 ;   callers + body -- the velocity-edit exit (SeqPart_VelEditReturn).
-SeqError_MapViaTableE:
-	ld xwa, SeqError_MapTableE
-	jr SeqError_MapToGlobal
-SeqError_MapViaTableF:
-	ld xwa, SeqError_MapTableF
-	jr SeqError_MapToGlobal
+SeqError_MapViaTableE:	.include "includes/generated/cc900/SeqError_MapViaTableE.s"	; C: cc900/sequencer_engine_m234_e.c
+SeqError_MapViaTableF:	.include "includes/generated/cc900/SeqError_MapViaTableF.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqError_MapViaTableB:
-	ld xwa, SeqError_MapTableB
-	jr SeqError_MapToGlobal
+SeqError_MapViaTableB:	.include "includes/generated/cc900/SeqError_MapViaTableB.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqError_MapViaTableA:
-	ld xwa, SeqError_MapTableA
-	jr SeqError_MapToGlobal
+SeqError_MapViaTableA:	.include "includes/generated/cc900/SeqError_MapViaTableA.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqError_MapViaTableC:
-	ld xwa, SeqError_MapTableC
-	jr SeqError_MapToGlobal
+SeqError_MapViaTableC:	.include "includes/generated/cc900/SeqError_MapViaTableC.s"	; C: cc900/sequencer_engine_m234_e.c
 
 SeqError_MapViaTableD:
 	ld xwa, SeqError_MapTableD
@@ -14143,44 +14081,16 @@ PartWrite_LoopAF:
 	pop xiz
 	ret
 
-Chan_SetActiveBit:
-	dec 1, a
-	ld de, 1:i3
-	and a, 0xf
-	jr z, Chan_ShiftComplete
-	slaa de
-
-Chan_ShiftComplete:
-	cp c, 0:i3
-	jr z, Chan_ClearBit
-	or (SEQ_TRACK_MASK:16), de
-	jr Chan_CheckSubsystem
-
-Chan_ClearBit:
-	cpl de
-	and (SEQ_TRACK_MASK:16), de
-
-Chan_CheckSubsystem:
-	jp	Audio_CheckSubsystemReady
-SeqVoice_SetOrClearBitMask:
-	dec 1, a
-	ld de, 1:i3
-	and a, 0xf
-	jr z, SeqVoiceBit_ShiftComplete
-	slaa de
-
-SeqVoiceBit_ShiftComplete:
-	cp c, 0:i3
-	jr z, SeqVoiceBit_ClearBit
-	or	(SEQ_REC_TRACKS:16), de
-	jr SeqVoiceBit_CheckSubsystem
-
-SeqVoiceBit_ClearBit:
-	cpl de
-	and	(SEQ_REC_TRACKS:16), de
-
-SeqVoiceBit_CheckSubsystem:
-	jp	Audio_CheckSubsystemReady
+Chan_SetActiveBit:	.include "includes/generated/cc900/Chan_SetActiveBit.s"	; C: cc900/sequencer_engine_m234_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Chan_ShiftComplete, Chan_SetActiveBit + 11
+	.set	Chan_ClearBit, Chan_SetActiveBit + 21
+	.set	Chan_CheckSubsystem, Chan_SetActiveBit + 27
+SeqVoice_SetOrClearBitMask:	.include "includes/generated/cc900/SeqVoice_SetOrClearBitMask.s"	; C: cc900/sequencer_engine_m234_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqVoiceBit_ShiftComplete, SeqVoice_SetOrClearBitMask + 11
+	.set	SeqVoiceBit_ClearBit, SeqVoice_SetOrClearBitMask + 21
+	.set	SeqVoiceBit_CheckSubsystem, SeqVoice_SetOrClearBitMask + 27
 Part_CopyBlock16:	.include "includes/generated/cc900/Part_CopyBlock16.s"	; C: cc900/sequencer_engine_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	PartCopy16_ComputeAddr, Part_CopyBlock16 + 10
@@ -14540,10 +14450,7 @@ PartFind_VoiceSearchReturn:
 	inc 4, xsp
 	ret
 
-Part_ReadVoiceByte:
-	extz wa
-	extz bc
-	jrl Part_ReadSubBlock32
+Part_ReadVoiceByte:	.include "includes/generated/cc900/Part_ReadVoiceByte.s"	; C: cc900/sequencer_engine_m234_e.c
 
 Part_ReadVoiceBit7:
 	extz wa
@@ -15131,20 +15038,9 @@ PartCtrl_TestBit7:
 	and l, 0x80
 	ret
 
-PartCtrl_SetClearBit7:
-	dec 1, wa
-	extz xwa
-	sll xwa, 8
-	lda xde, (0x0b0000:24)
-	add xde, xwa
-	cp c, 0:i3
-	jr z, PartCtrl_SetClearBit7_ClearPath
-	setm 7, (xde)
-	ret
-
-PartCtrl_SetClearBit7_ClearPath:
-	resm 7, (xde)
-	ret
+PartCtrl_SetClearBit7:	.include "includes/generated/cc900/PartCtrl_SetClearBit7.s"	; C: cc900/sequencer_engine_m234_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartCtrl_SetClearBit7_ClearPath, PartCtrl_SetClearBit7 + 21
 
 PartCtrl_ReadByte:
 	extz bc
@@ -15638,20 +15534,9 @@ SeqData_SeekToPartStart:
 ; and data pointer (10415). Returns byte in L register.
 ; Called by sequencer routines that check for end marks (0x81, 0x82, 0x84).
 ; ============================================================================
-SeqData_ReadNextByte:
-	ld	wa, (SEQ_DATA_OFFSET:16)
-	ld c, a
-	extz bc
-	ld	wa, (SEQ_DATA_BLOCK:16)
-	jrl PartCtrl_ReadByte
+SeqData_ReadNextByte:	.include "includes/generated/cc900/SeqData_ReadNextByte.s"	; C: cc900/sequencer_engine_m234_e.c
 
-PartCtrl_WriteByte_Indexed:
-	ld e, a
-	ld	bc, (SEQ_DATA_OFFSET:16)
-	extz bc
-	extz de
-	ld	wa, (SEQ_DATA_BLOCK:16)
-	jrl PartCtrl_WriteByteToBuf
+PartCtrl_WriteByte_Indexed:	.include "includes/generated/cc900/PartCtrl_WriteByte_Indexed.s"	; C: cc900/sequencer_engine_m234_e.c
 
 PartCtrl_RefreshWordPeriodic:
 	ld	wa, (SEQ_DATA_OFFSET:16)
@@ -17360,13 +17245,7 @@ SeqInit_ClearPartDataLoop:
 	pop	xiz
 	lda	xsp, (xsp+16)
 	ret
-SeqInit_ClearPlaybackFlags:
-	ld	a, (SEQ_RTMCFG:16)
-	res 3, a
-	res 1, a
-	res 0, a
-	ld	(SEQ_RTMCFG:16), a
-	jp SeqAcc_InitPlaybackState
+SeqInit_ClearPlaybackFlags:	.include "includes/generated/cc900/SeqInit_ClearPlaybackFlags.s"	; C: cc900/sequencer_engine_m234_e.c
 
 SeqPlay_HandleChannelToggle:
 	dec 2, xsp
@@ -17886,9 +17765,7 @@ SeqAcc_RestorePlaybackState:	.include "includes/generated/cc900/SeqAcc_RestorePl
 SeqPlay_JumpCopyVoiceData:
 	jrl Part_CopyVoiceDataToAllChannels
 
-SeqPlay_SetBarAndResetScroll:
-	ldw	(SEQ_START_MEASURE:16), 0x8002
-	jp NoteEditSy_SendModeScrollReset
+SeqPlay_SetBarAndResetScroll:	.include "includes/generated/cc900/SeqPlay_SetBarAndResetScroll.s"	; C: cc900/sequencer_engine_m234_e.c
 
 SeqPlay_HandleVoiceReassign:
 	bit	2, (SEQ_CONTROL_FLAGS:16)
@@ -17959,29 +17836,8 @@ SeqAcc_ReInitWithGuard:
 	call	SeqAcc_InitPlaybackState
 	ld	(58056:16), 0
 	ret
-SeqPlay_DispatchAndResetAll:
-	call AccWrap_PlayModeDispatch
-	calr Part_CopyVoiceDataToAllChannels
-	call SeqPlay_ActivateAllChannels
-	ld (0x11f4:16), 0x00
-	ld wa, 0:i3
-	call BitMapOut_PrepareAndRender
-	res	3, (SEQ_RTMCFG:16)
-	call TempoRingBuf_Init
-	set	4, (SEQ_CONTROL_FLAGS:16)
-	ldw WA, 0x000f
-	call SoundCtrl_SaveAndSendCmd_EE
-	ldw WA, 0x0008
-	jp MIDI_SendSysExCmd
-SeqPlay_StopAndClearChannels:
-	ldw	(SEQ_REC_TRACKS:16), 0
-	call	Audio_CheckSubsystemReady
-	ldw	(SEQ_RECORDING_TRACKS:16), 0
-	call	TempoRingBuf_Init
-	ldw	wa, 15
-	call	SoundCtrl_SaveAndSendCmd_EE
-	ldw	wa, 8
-	jp	MIDI_SendSysExCmd
+SeqPlay_DispatchAndResetAll:	.include "includes/generated/cc900/SeqPlay_DispatchAndResetAll.s"	; C: cc900/sequencer_engine_m234_e.c
+SeqPlay_StopAndClearChannels:	.include "includes/generated/cc900/SeqPlay_StopAndClearChannels.s"	; C: cc900/sequencer_engine_m234_e.c
 SeqPlay_StopAndClearSequence:
 	call AccWrap_PlayModeDispatch
 	ldw (SEQ_ACTIVE_PARTS:16), 0x0000
@@ -18124,15 +17980,9 @@ AccWrap_WaitSync_Loop:
 ; ============================================================================
 SeqData_SetErrorCode:	.include "includes/generated/cc900/SeqData_SetErrorCode.s"	; C: cc900/sequencer_engine.c
 
-SeqStatus_CheckBit2:
-	ld l, (PANEL_GM+3:16)
-	and l, 0x4
-	ret
+SeqStatus_CheckBit2:	.include "includes/generated/cc900/SeqStatus_CheckBit2.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqStatus_CheckMaskedBit:
-	ld l, (PANEL_MIDI+2:16)
-	and l, a
-	ret
+SeqStatus_CheckMaskedBit:	.include "includes/generated/cc900/SeqStatus_CheckMaskedBit.s"	; C: cc900/sequencer_engine_m234_e.c
 
 Seq_ComputePercentClamped99:	.include "includes/generated/cc900/Seq_ComputePercentClamped99.s"	; C: cc900/sequencer_engine.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -18180,20 +18030,7 @@ Part_IsVoiceActive_Return:
 	inc 2, xsp
 	ret
 
-SeqStatus_ResetAndSendCmd:
-	res 0, (PANEL_GM+3:16)
-
-	pushw 0x1
-
-	ldw wa, 0x91
-
-	ld bc, 3:i3
-
-	ld de, 0:i3
-
-	call	AddswbWr
-
-	ret
+SeqStatus_ResetAndSendCmd:	.include "includes/generated/cc900/SeqStatus_ResetAndSendCmd.s"	; C: cc900/sequencer_engine_m234_e.c
 
 
 
@@ -22113,52 +21950,22 @@ SeqAccomp_ReassignEpilogue:
 	lda xsp, (xsp + 18)
 	ret
 
-AppEvent_SendModeToggle:
-	cp a, 0:i3
-	scc16 nz, de
-	extz xde
-	ld xwa, 0x87000e
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+AppEvent_SendModeToggle:	.include "includes/generated/cc900/AppEvent_SendModeToggle.s"	; C: cc900/sequencer_engine_m235.c
 
-AppEvent_SendVoiceUpdate:
-	ld xde, xwa
-	ld xwa, 0x810003
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+AppEvent_SendVoiceUpdate:	.include "includes/generated/cc900/AppEvent_SendVoiceUpdate.s"	; C: cc900/sequencer_engine_m235.c
 
-AppEvent_SendPlayStatus:
-	ld xde, xwa
-	ld xwa, 0x850004
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+AppEvent_SendPlayStatus:	.include "includes/generated/cc900/AppEvent_SendPlayStatus.s"	; C: cc900/sequencer_engine_m235.c
 
 ; NoteEditSy scroll reset dispatch
-NoteEditSy_ScrollReset:
-	ld xde, xwa
-	ld xwa, 0x850006
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+NoteEditSy_ScrollReset:	.include "includes/generated/cc900/NoteEditSy_ScrollReset.s"	; C: cc900/sequencer_engine_m235.c
 
-AppEvent_SendAccompStatus:
-	ld xde, xwa
-	ld xwa, 0x860007
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+AppEvent_SendAccompStatus:	.include "includes/generated/cc900/AppEvent_SendAccompStatus.s"	; C: cc900/sequencer_engine_m235.c
 
 ; NoteEditSy scroll case 1
-NoteEditSy_ScrollCase1:
-	ld xde, xwa
-	ld xwa, 0x87000d
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+NoteEditSy_ScrollCase1:	.include "includes/generated/cc900/NoteEditSy_ScrollCase1.s"	; C: cc900/sequencer_engine_m235.c
 
 ; NoteEditSy scroll case 2
-NoteEditSy_ScrollCase2:
-	ld xde, xwa
-	ld xwa, 0x880004
-	ld xbc, EVT_SET_PARAM
-	jp ApDeliveryEvent
+NoteEditSy_ScrollCase2:	.include "includes/generated/cc900/NoteEditSy_ScrollCase2.s"	; C: cc900/sequencer_engine_m235.c
 
 NoteEditSy_SendModeScrollReset:
 	ld c, (ACTIVE_TITLE:16)
@@ -22302,10 +22109,7 @@ NoteEditSy_UpScrollTable:
 	popw_erp 0xfa
 	ret
 
-SoundCtrl_SaveAndSendCmd_EE:
-	ld	(GLOBAL_ERROR_CODE:16), a
-	ldw	wa, TT_MESAGE
-	jp	UI_InterruptTitleByIndex
+SoundCtrl_SaveAndSendCmd_EE:	.include "includes/generated/cc900/SoundCtrl_SaveAndSendCmd_EE.s"	; C: cc900/sequencer_engine_m235.c
 SoundCtrl_SendCmd_EE:
 	ldw wa, TT_MESAGE
 	jp UI_InterruptTitleByIndex
@@ -22447,52 +22251,21 @@ NoteEditSy_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-NoteEditSy_SendScrollCmd0:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendScrollCmd0:	.include "includes/generated/cc900/NoteEditSy_SendScrollCmd0.s"	; C: cc900/sequencer_engine_m235.c
 
-NoteEditSy_SendScrollCmd1:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 1:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendScrollCmd1:	.include "includes/generated/cc900/NoteEditSy_SendScrollCmd1.s"	; C: cc900/sequencer_engine_m235_b.c
 
-NoteEditSy_SendScrollCmd2:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 2:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendScrollCmd2:	.include "includes/generated/cc900/NoteEditSy_SendScrollCmd2.s"	; C: cc900/sequencer_engine_m235.c
 
-NoteEditSy_SendWidgetCmd0:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_GRAPH_DRAW
-	ld xde, 0:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendWidgetCmd0:	.include "includes/generated/cc900/NoteEditSy_SendWidgetCmd0.s"	; C: cc900/sequencer_engine_m235_b.c
 
-NoteEditSy_SendWidgetCmd1:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_GRAPH_DRAW
-	ld xde, 1:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendWidgetCmd1:	.include "includes/generated/cc900/NoteEditSy_SendWidgetCmd1.s"	; C: cc900/sequencer_engine_m235.c
 
-NoteEditSy_SendWidgetCmd2:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_GRAPH_DRAW
-	ld xde, 2:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendWidgetCmd2:	.include "includes/generated/cc900/NoteEditSy_SendWidgetCmd2.s"	; C: cc900/sequencer_engine_m235_b.c
 
-NoteEditSy_SendWidgetCmd3or4:
-	ld xde, 3:i3
-	bit	0, (0x2728:16)
-	jr z, NoteEditSy_SendWidgetCmdDispatch
-	ld xde, 4:i3
-
-NoteEditSy_SendWidgetCmdDispatch:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_GRAPH_DRAW
-	jp ApDeliveryEvent
+NoteEditSy_SendWidgetCmd3or4:	.include "includes/generated/cc900/NoteEditSy_SendWidgetCmd3or4.s"	; C: cc900/sequencer_engine_m235_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NoteEditSy_SendWidgetCmdDispatch, NoteEditSy_SendWidgetCmd3or4 + 10
 
 NoteEditSy_UpdateGridPosition:
 	dec 4, xsp
@@ -22563,26 +22336,12 @@ NoteEditSy_UpdateEditModeGrid:
 	ld xde, 7:i3
 	jp ApDeliveryEvent
 
-NoteEditSy_SendModeScrollCmd:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	bit	0, (0x2728:16)
-	jr z, NoteEditSy_SendScrollCmdEdit
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0x9
-	jr NoteEditSy_JumpFA9E07
+NoteEditSy_SendModeScrollCmd:	.include "includes/generated/cc900/NoteEditSy_SendModeScrollCmd.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NoteEditSy_SendScrollCmdEdit, NoteEditSy_SendModeScrollCmd + 22
+	.set	NoteEditSy_JumpFA9E07, NoteEditSy_SendModeScrollCmd + 29
 
-NoteEditSy_SendScrollCmdEdit:
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 6:i3
-
-NoteEditSy_JumpFA9E07:
-	jp ApDeliveryEvent
-
-NoteEditSy_SendScrollCmd3:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 3:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendScrollCmd3:	.include "includes/generated/cc900/NoteEditSy_SendScrollCmd3.s"	; C: cc900/sequencer_engine_m235.c
 
 NoteEditSy_SendVelocityCmd:
 	ldmm8	0x294e, 0x2770
@@ -22591,39 +22350,16 @@ NoteEditSy_SendVelocityCmd:
 	ld xde, 0xa
 	jp ApDeliveryEvent
 
-NoteEditSy_SendGateCmd:
-	ldmm8	0x294e, 0x276e
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 4:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendGateCmd:	.include "includes/generated/cc900/NoteEditSy_SendGateCmd.s"	; C: cc900/sequencer_engine_m235_b.c
 
-NoteEditSy_SendScrollCmd5:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 5:i3
-	jp ApDeliveryEvent
+NoteEditSy_SendScrollCmd5:	.include "includes/generated/cc900/NoteEditSy_SendScrollCmd5.s"	; C: cc900/sequencer_engine_m235_b.c
 
-NoteEditSy_SendScrollCmd8:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0x8
-	jp ApDeliveryEvent
+NoteEditSy_SendScrollCmd8:	.include "includes/generated/cc900/NoteEditSy_SendScrollCmd8.s"	; C: cc900/sequencer_engine_m235.c
 
-NoteEditSy_SendModeWidgetCmd:
-	ld	xwa, (SEQ_SCREEN_OBJECT:16)
-	bit	0, (0x2728:16)
-	jr z, NoteEditSy_WidgetCmdEdit
-	ld xbc, EVT_GRAPH_DRAW
-	ld xde, 0xd
-	jr NoteEditSy_JumpFA9E07_2
-
-NoteEditSy_WidgetCmdEdit:
-	ld xbc, EVT_GRAPH_DRAW
-	ld xde, 0x8
-
-NoteEditSy_JumpFA9E07_2:
-	jp ApDeliveryEvent
+NoteEditSy_SendModeWidgetCmd:	.include "includes/generated/cc900/NoteEditSy_SendModeWidgetCmd.s"	; C: cc900/sequencer_engine_m235.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NoteEditSy_WidgetCmdEdit, NoteEditSy_SendModeWidgetCmd + 22
+	.set	NoteEditSy_JumpFA9E07_2, NoteEditSy_SendModeWidgetCmd + 32
 
 NoteEditSy_UpdateNoteDisplay:
 	dec 4, xsp
@@ -23956,19 +23692,11 @@ HelpFlash_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-SeqIndicator_HideBoth:
-	ld xwa, 0x850013
-	ld bc, 0:i3
-	call SetVisible
-	ld xwa, 0x850014
-	ld bc, 0:i3
-	jp SetVisible
+SeqIndicator_HideBoth:	.include "includes/generated/cc900/SeqIndicator_HideBoth.s"	; C: cc900/sequencer_engine_m235.c
 
 VoiceParam_SetD6Group:	.include "includes/generated/cc900/VoiceParam_SetD6Group.s"	; C: cc900/sequencer_engine_m235.c
 
-SeqLoadPre:
-	call Part_ClearAllVoiceChannels
-	jp Part_UnlinkVoiceFromChain
+SeqLoadPre:	.include "includes/generated/cc900/SeqLoadPre.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqLoadPost:
 	cp wa, 0:i3
@@ -24096,31 +23824,7 @@ SeqLoad_ProcessDataBlock_Skip2:
 	pop qiz
 	inc	6, xsp
 	ret
-SingleLoad_PrepareSongSlot:
-	dec	2, xsp
-	pushw	iz
-	ld	(xsp+2), a
-	; ldw (0xf19e),(0x00ffec)
-	ldw	(SEQ_TRACK_MASK:16), (SEQ_TRACK_MASK_COPY:24)
-	call	Audio_CheckSubsystemReady
-	ld	a, (SEQ_CURRENT_SONG:24)
-	extz	wa
-	call	SeqData_CopyBlockToBuffer
-	ld	a, (xsp+2)
-	extz	wa
-	call	VoicePreset_LoadAndInitPan
-	ld	a, (xsp+2)
-	ld	(SEQ_CURRENT_SONG:24), a
-	call	SeqVoice_InitEntryForCurrentBank
-	ld	a, (SEQ_CURRENT_SONG:24)
-	extz	wa
-	call	SeqData_CopyBlockToBuffer
-	ld	iz, (61902:16)
-	call	SeqStep_FindAndCompact
-	ld	(61902:16), iz
-	popw	iz
-	inc	2, xsp
-	ret
+SingleLoad_PrepareSongSlot:	.include "includes/generated/cc900/SingleLoad_PrepareSongSlot.s"	; C: cc900/sequencer_engine_m235_xs.c
 SingleLoad_LoadPanelMemory_Helper2:
 	dec	8, xsp
 	push	xiz
@@ -24785,15 +24489,7 @@ SeqSave_ReadBlockFromMem:
 	ld	xbc, 256
 	jp	FileIO_WriteByte_Impl
 
-SeqSave_WriteBlockToFile:
-	ld c, a
-	ld b, 0x0:opc
-	extz xbc
-	sll xbc, 11
-	ld xwa, SEQ_SONG_SLOTS
-	add xwa, xbc
-	ld xbc, 0x800
-	jp FileIO_WriteByte_Impl
+SeqSave_WriteBlockToFile:	.include "includes/generated/cc900/SeqSave_WriteBlockToFile.s"	; C: cc900/sequencer_engine_m235.c
 
 FileIO_SeekReadAndCheck:	.include "includes/generated/cc900/FileIO_SeekReadAndCheck.s"	; C: cc900/sequencer_engine_m235.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -27111,9 +26807,7 @@ SeqPart_EventLoopSkip:
 	jr z, SeqPart_EventLoopD0
 	ret
 
-SeqPart_EventLoopContinue:
-	ldmm8	3378, TRACK_ASSIGN_EDIT_VALUE
-	jrl SeqStep_ParseRhythm
+SeqPart_EventLoopContinue:	.include "includes/generated/cc900/SeqPart_EventLoopContinue.s"	; C: cc900/sequencer_engine_m236.c
 
 SeqPart_ClearSingle:
 	dec 2, xsp

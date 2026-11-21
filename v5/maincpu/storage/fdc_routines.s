@@ -1070,12 +1070,8 @@ FDC_SetStatus_Return:
 ; to 0xff, saves prevbank state, starts timer-based timeout loop.
 ; Polls with cps bc, 0 for completion signal.
 ; Uses prevbank (D7 FA) for timer state management.
-FDC_ClearStatus_InitTimer:
-	ld (FDC_ERROR_CODE:16), 0x00
-	ret
-FDC_TIMING_DELAY:
-	ld	(FDC_RESULT:16), 0xff
-	ret
+FDC_ClearStatus_InitTimer:	.include "includes/generated/cc900/FDC_ClearStatus_InitTimer.s"	; C: cc900/fdc_routines_m270.c
+FDC_TIMING_DELAY:	.include "includes/generated/cc900/FDC_TIMING_DELAY.s"	; C: cc900/fdc_routines_m270.c
 FDC_POST_OP:
 	push XIZ
 	ldw QIZ, 0x01f4
@@ -1681,10 +1677,7 @@ FDC_MC_EXIT_Code_Loop2:
 FDC_MC_EXIT_Code_Epilogue:
 	popw	iz
 	ret
-FDC_CMD_DISABLE:
-	res	3, (PA:8)
-	ldw	wa, 14
-	jrl	FDC_CMD_SEND
+FDC_CMD_DISABLE:	.include "includes/generated/cc900/FDC_CMD_DISABLE.s"	; C: cc900/fdc_routines_m270.c
 FDC_STATUS_COPY:
 	ldmm8	FDC_ERROR_CODE, 0x896e
 FDC_STATUS_COPY_Code:
@@ -2013,13 +2006,7 @@ INT4_ExitRestore:
 ;   FDCRST line (service manual p. 32, CPU SECTION (A): IC5 TMP94C241F pin 12 PD0 -> FDCRST to the FDC;
 ;   notes/kn5000-a-2026-10-31/probes/sm_pd0_net.py renders the crop), set, SOME_DELAY 10, cleared, SOME_DELAY 10.
 ;   Twin of the boot loader's FDC_PulseResetLine (table_data/boot_disk_probe.s).
-FDC_PulseResetLine:
-	set	0, (PD:8)
-	ldw	wa, 10
-	calr	SOME_DELAY
-	res	0, (PD:8)
-	ldw	wa, 10
-	jrl	SOME_DELAY
+FDC_PulseResetLine:	.include "includes/generated/cc900/FDC_PulseResetLine.s"	; C: cc900/fdc_routines_m270.c
 TestTitleFunc_OnTbiosTest_Helper:
 	ld	(PHFC:8), 30:io
 	bit	6, (PD:8)
@@ -2091,14 +2078,8 @@ FDC_Reset_BuildParams:
 	calr	SOME_DELAY
 	incw	1, (58096:16)
 	ret
-Check_for_Floppy_Disk_Change:
-	bit	6, (PD:8)
-	jr z, Detected_Floppy_Disk_Change
-	ld l, 0x0:opc
-	ret
-
-Detected_Floppy_Disk_Change:
-	ld l, 0x1:opc
-	ret
+Check_for_Floppy_Disk_Change:	.include "includes/generated/cc900/Check_for_Floppy_Disk_Change.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Detected_Floppy_Disk_Change, Check_for_Floppy_Disk_Change + 8
 
 ; End of FDC routines

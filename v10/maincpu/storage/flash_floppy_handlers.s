@@ -1951,11 +1951,7 @@ NoteEvent_CopyToSlot:
 Pack12BitValueWithBank:	.include "includes/generated/cc900/Pack12BitValueWithBank.s"	; C: cc900/flash_floppy_handlers_m159.c
 
 ; NoteEventBuffer Store dispatch (7-entry, table 0xe16136)
-NoteEvent_Store:
-	extz wa
-	lda xbc, (RhythmSlot_FlashSectionTable:24)
-	ld	l, (xbc+wa)
-	ret
+NoteEvent_Store:	.include "includes/generated/cc900/NoteEvent_Store.s"	; C: cc900/flash_floppy_handlers_m159_c.c
 
 NoteEventBuffer_CopyToSlot:
 	ld c, a
@@ -5336,10 +5332,7 @@ FileHdr_CopyDataLoop:
 	calr ToneData_SetupCopyPointers
 	ret
 
-FileHdr_InitBasePointer:
-	lda xwa, (0x1e8800:24)
-	ld (MSP_SETTINGS:16), xwa
-	ret
+FileHdr_InitBasePointer:	.include "includes/generated/cc900/FileHdr_InitBasePointer.s"	; C: cc900/flash_floppy_handlers_m159_c.c
 
 ToneData_SetupCopyPointers:
 	ld xbc, (MSP_SETTINGS:16)

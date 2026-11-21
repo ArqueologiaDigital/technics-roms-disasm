@@ -92,3 +92,22 @@ long MainPanic(long obj, long ev)
 	}
 	return 0;
 }
+
+/* cc900-module: BmDrEdit_BuildNoteOnEvent_WithVelocity BmDrEdit_CheckChannelActive BmDrEdit_CountMeasuresAndValidate BmDrEdit_DelayAction_PlayClick BmDrEdit_IncrementDuration BmDrEdit_LoadAlternateState BmDrEdit_SelectActiveChannel BmDrEdit_SendMetronomeNoteOn Metronome_PlayClick NoteEditSy_UpdateAllWidgets SeqAcc_HandlePlaybackTick SeqAcc_InitAndDispatch SeqAcc_SetupRepeatCount */
+extern unsigned char __near ram_2304;
+extern unsigned int __near SEQ_START_MEASURE;
+extern unsigned char __near SEQ_RTMCFG;
+extern unsigned char __near SEQ_CONTROL_FLAGS;
+extern void SeqAcc_InitAndDispatch(void);
+extern void AccWrap_PlayModeDispatch(void);
+extern void SeqBuffer_ClearAndInitIteration(void);
+
+void SeqAcc_InitAndDispatch(void)
+{
+  SEQ_START_MEASURE = 1;
+  ram_2304 |= 0x02;
+  SEQ_RTMCFG &= ~0x08;
+  SEQ_CONTROL_FLAGS |= 0x10;
+  AccWrap_PlayModeDispatch();
+  SeqBuffer_ClearAndInitIteration();
+}

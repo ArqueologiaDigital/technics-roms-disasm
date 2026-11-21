@@ -36,24 +36,11 @@
 ; Entry: None
 ; Exit:  (REGION_CODE_VAR) = 1-4
 ; -----------------------------------------------------------------------------
-Detect_Region_Code:
-	bit	2, (PH:8)
-	jr z, Detect_Region_Code__check_bit1_only
-	bit	1, (PH:8)
-	jr z, Detect_Region_Code__mode2
-	ld (REGION_CODE_VAR:16), 1; Region 1
-	ret
-Detect_Region_Code__mode2:
-	ld (REGION_CODE_VAR:16), 2; Region 2
-	ret
-Detect_Region_Code__check_bit1_only:
-	bit	1, (PH:8)
-	jr z, Detect_Region_Code__mode4
-	ld (REGION_CODE_VAR:16), 3; Region 3
-	ret
-Detect_Region_Code__mode4:
-	ld (REGION_CODE_VAR:16), 4; Region 4
-	ret
+Detect_Region_Code:	.include "includes/generated/cc900/Detect_Region_Code.s"	; C: cc900/boot_routines_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Detect_Region_Code__mode2, Detect_Region_Code + 16
+	.set	Detect_Region_Code__check_bit1_only, Detect_Region_Code + 22
+	.set	Detect_Region_Code__mode4, Detect_Region_Code + 33
 
 ; -----------------------------------------------------------------------------
 ; Get_Region_Code - Get stored region code value
