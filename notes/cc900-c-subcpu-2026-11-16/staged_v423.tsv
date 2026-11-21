@@ -362,6 +362,8 @@ v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_ag_21a.c	ffcedff560f1
 v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_ag_21c.c	2d9b8d39311e011936c634fda410ce355aac0e6a47f1412482b273a81a2156e9	Xr	2026-11-18-32-sub-r21g-staged	AudioMod_Apply_Porta_Curve	179	MATCH
 v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_am_23a.c	0f18389513a364959ed3536eacce075d2e09870000727f7a7d6e247519993502	Xr	2026-11-19-12-sub-r23s-staged	AudioMod_Apply_Slot_Field29	281	MATCH
 v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_am_23a.c	0f18389513a364959ed3536eacce075d2e09870000727f7a7d6e247519993502	Xr	2026-11-19-12-sub-r23s-staged	AudioMod_Apply_Slot_Field2A	281	MATCH
+v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_ax_43a.c	3b9dc03391b2573659e5191fc305fbd07b6c4cc9b66135eb04bceced25022089	Xr	2026-11-21-1-sub-r43c	Voice_Step_ExprRamp	761	MATCH
+v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_ax_43b.c	5ea8812216c01fe3c1318eddf05d32d627afe4b72a5874bf319e04eb5aa52150	Xr	2026-11-21-1-sub-r43c	Voice_Calc_LevelPair_FixedAtk	314	MATCH
 v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	79c1806197fd6409d66d1b1590512dcfb34c58992b3fda5f6d1bec922c41c71c	Xr	2026-11-16-73-sub-r6	Voice_AdvanceLFOPhase	92	MATCH
 v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	79c1806197fd6409d66d1b1590512dcfb34c58992b3fda5f6d1bec922c41c71c	Xr	2026-11-16-73-sub-r6	Voice_CC_SetExpression	140	MATCH
 v140	v140/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	79c1806197fd6409d66d1b1590512dcfb34c58992b3fda5f6d1bec922c41c71c	Xr	2026-11-16-73-sub-r6	Voice_CC_SetVolume	140	MATCH
@@ -979,6 +981,8 @@ v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_ag_21a.c	1b4bb0d18605
 v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_ag_21c.c	38b1eda0f08f026f273c513ee8681b376283554cc6ca1af79c5fe18bed83267d	Xr	2026-11-18-32-sub-r21g-staged	AudioMod_Apply_Porta_Curve	179	MATCH
 v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_am_23a.c	cbbe75d57a6ee94da3ca0b39609b079a8449617d73a518d2e1d3e957e0faaaf7	Xr	2026-11-19-12-sub-r23s-staged	AudioMod_Apply_Slot_Field29	281	MATCH
 v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_am_23a.c	cbbe75d57a6ee94da3ca0b39609b079a8449617d73a518d2e1d3e957e0faaaf7	Xr	2026-11-19-12-sub-r23s-staged	AudioMod_Apply_Slot_Field2A	281	MATCH
+v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_ax_43a.c	63afb9e72fecfc9ab470f069f8098b456f6248f7c13970235ef69e4ed7bd8af9	Xr	2026-11-21-1-sub-r43c	Voice_Step_ExprRamp	761	MATCH
+v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_ax_43b.c	677379e98e4544d92653d61c07f27cef287807651861cc151b7629ed0138193b	Xr	2026-11-21-1-sub-r43c	Voice_Calc_LevelPair_FixedAtk	314	MATCH
 v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	4334b84989123e2ed345c6a34c7b31d0aa62d4694a855893a72ad303edc2843a	Xr	2026-11-16-73-sub-r6	Voice_AdvanceLFOPhase	92	MATCH
 v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	4334b84989123e2ed345c6a34c7b31d0aa62d4694a855893a72ad303edc2843a	Xr	2026-11-16-73-sub-r6	Voice_CC_SetExpression	140	MATCH
 v141	v141/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	4334b84989123e2ed345c6a34c7b31d0aa62d4694a855893a72ad303edc2843a	Xr	2026-11-16-73-sub-r6	Voice_CC_SetVolume	140	MATCH
@@ -1595,6 +1599,8 @@ v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_ag_21a.c	169a5e205597
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_ag_21c.c	bc24bdca41605fca055b94c122346623fea398d82dff72142e5518141d09790f	Xr	2026-11-18-32-sub-r21g-staged	AudioMod_Apply_Porta_Curve	179	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_am_23a.c	34bbb989972c4208901be7585251a12c497e6dcb331a7791dcb0e76d322ce3d2	Xr	2026-11-19-12-sub-r23s-staged	AudioMod_Apply_Slot_Field29	281	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_am_23a.c	34bbb989972c4208901be7585251a12c497e6dcb331a7791dcb0e76d322ce3d2	Xr	2026-11-19-12-sub-r23s-staged	AudioMod_Apply_Slot_Field2A	281	MATCH
+v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_ax_43a.c	8607f94be2aea02688eeb1cc90abe78ceb16166454719366700af8139404b805	Xr	2026-11-21-1-sub-r43c	Voice_Step_ExprRamp	761	MATCH
+v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_ax_43b.c	8a5bbe63f73e414243a010bef6a650c6406378a6c4393718f91a3e05216b70ba	Xr	2026-11-21-1-sub-r43c	Voice_Calc_LevelPair_FixedAtk	314	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	8ca321ee6a45716b615d0b15f267373594ecb8a5e30ab1bbc6cfd24060685095	Xr	2026-11-16-73-sub-r6	Voice_AdvanceLFOPhase	92	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	8ca321ee6a45716b615d0b15f267373594ecb8a5e30ab1bbc6cfd24060685095	Xr	2026-11-16-73-sub-r6	Voice_CC_SetExpression	140	MATCH
 v142	v142/subcpu/cc900-staged/voice_envelopes_and_channels_b.c	8ca321ee6a45716b615d0b15f267373594ecb8a5e30ab1bbc6cfd24060685095	Xr	2026-11-16-73-sub-r6	Voice_CC_SetVolume	140	MATCH
