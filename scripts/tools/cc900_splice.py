@@ -348,6 +348,7 @@ def main():
             if name not in sizes:
                 sys.exit("%s: no size for %s" % (src, name))
             end = ref[name] + sizes[name]                # inner labels, kept as offsets from NAME
+            exact_end = False
             # the hand lines up to the next label of the symbols reference (an assembler-local `.L` label has no
             # symbol: it is inner when any branch up to that next label targets it, backwards or forwards --
             # SwapBytes32's `.LSwapBytes32__loop`, reached only by the `jr lt` after it)
@@ -380,6 +381,7 @@ def main():
                     if ln not in ref:
                         sys.exit("%s:%d: %s is not in the symbols reference" % (asm, j + 1, ln))
                     if ref[ln] >= end:
+                        exact_end = ref[ln] == end       # the next label starts exactly where the C body ends
                         break
                     inner.append((ln, ref[ln] - ref[name]))
                     if lines[j].split(b";")[0].strip()[len(lm.group(1)) + 1:].strip():
@@ -417,6 +419,13 @@ def main():
                     break
                 if total > sizes[name]:
                     break
+            if cut is None and exact_end and any(re.match(rb'^[A-Z]\w*\s', lines[k].split(b";")[0].strip())
+                                                 for k in ins):
+                # a body of assembler MACRO lines (the NAKA registration functions' RegObjTable lines, 2026-11-21):
+                # one line emits several instructions, so the per-line sizes above cannot add up.  When the next
+                # outside label starts exactly at the end of the compiled body, the whole hand span is the function;
+                # `make gate` proves the bytes
+                cut = ins[-1]
             if cut is None:
                 sys.exit("%s: %s: no run of hand instructions from its label is %d bytes long (the compiled size)"
                          % (asm, name, sizes[name]))
