@@ -2920,16 +2920,57 @@ PdMed_Exit:
 	pop xiz
 	ret
 
-DocDiskNameFunc:	.include "includes/generated/cc900/DocDiskNameFunc.s"	; C: cc900/medley_m0_xs.c
-; the hand assembly's labels inside the compiled body, by their offsets
-	.set	DocDisk_CopyCharLoop, DocDiskNameFunc + 19
-	.set	DocDisk_SkipSpace, DocDiskNameFunc + 35
-	.set	DocDisk_CopyLoop, DocDiskNameFunc + 37
-	.set	DocDisk_TerminateStr, DocDiskNameFunc + 52
-	.set	DocDisk_ClearTrailing, DocDiskNameFunc + 62
-	.set	DocDisk_TrimLoop, DocDiskNameFunc + 65
-	.set	DocDisk_PostEvent, DocDiskNameFunc + 81
-	.set	DocDisk_Exit, DocDiskNameFunc + 92
+DocDiskNameFunc:
+	push xiz
+	ld xiz, xde
+	cp xbc, EVT_PAINT
+	jr nz, DocDisk_Exit
+	call FileIO_SearchAndLoadFile
+	ld ix, 0:i3
+	jr DocDisk_CopyLoop
+
+DocDisk_CopyCharLoop:
+	cp (xhl), 0x20
+	jr z, DocDisk_SkipSpace
+	ld de, ix
+	inc 1, ix
+	ld a, (xhl)
+	ld	(xbc+de), a
+
+DocDisk_SkipSpace:
+	inc 1, xhl
+
+DocDisk_CopyLoop:
+	lda	xbc, (0x86d4:16)
+	cp	(xhl), 0x0
+	jr	z, DocDisk_TerminateStr
+	cp	ix, 0x1e
+	jr	lt, DocDisk_CopyCharLoop
+DocDisk_TerminateStr:
+	ld xde, xbc
+	ld	(xbc+ix), 0x00
+	jr DocDisk_TrimLoop
+
+DocDisk_ClearTrailing:
+	ld (xwa), 0x0
+
+DocDisk_TrimLoop:
+	dec 1, ix
+	lda	xwa, (xde+ix)
+	cp (xwa), 0x20
+	jr nz, DocDisk_PostEvent
+	cp ix, 0:i3
+	jr gt, DocDisk_ClearTrailing
+
+DocDisk_PostEvent:
+	ld xwa, xiz
+	ld xbc, EVT_PARA_DRAW
+	call ApPostEvent
+
+DocDisk_Exit:
+	ld xhl, 0:i3
+	pop xiz
+	ret
 
 DocMed_FormatFileList:
 	dec 6, xsp
