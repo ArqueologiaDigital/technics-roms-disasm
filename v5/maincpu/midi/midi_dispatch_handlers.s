@@ -7664,7 +7664,7 @@ ArpQueue_ProcessAndSort_Data_Loop:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	cp	(xwa+4), 0
 	ret	nz
-	call	MidiSeq_PartConfigure_Data
+	call	MidiTable_PreDispatchNullRet
 	calr	ArpQueue_ProcessAndSort_Data_Helper
 	calr	ArpQueue_ProcessAndSort_Data_Helper2
 	calr	ArpQueue_ProcessAndSort_Data_Helper3
@@ -8615,7 +8615,7 @@ MidiSeq_CheckSyncDirty:	.include "includes/generated/cc900/MidiSeq_CheckSyncDirt
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiSeq_CheckSyncDirty_Lower, MidiSeq_CheckSyncDirty + 41
 	.set	DSP_Init_ErrorFlagSet, MidiSeq_CheckSyncDirty + 71
-MidiSeq_PartLookup_Data:
+MidiPkt_XferShowResult:
 	ld	wa, 0:i3
 	call	ParaLoadOpt_PostDualEvent
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -8656,7 +8656,7 @@ MidiSeq_ApplyPendingParams:	.include "includes/generated/cc900/MidiSeq_ApplyPend
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiSeq_ApplyParams_Lower, MidiSeq_ApplyPendingParams + 45
 	.set	MidiSeq_ClearSyncFlag, MidiSeq_ApplyPendingParams + 76
-MidiSeq_PartConfigure_Data:
+MidiTable_PreDispatchNullRet:
 	ret
 	ldw	wa, TT_MESAGE
 	jp	UI_InterruptTitleByIndex
@@ -9142,7 +9142,7 @@ ArpChord_DispatchAndLoop:
 	jr	nz, ArpChord_CheckPlaybackDone
 ArpChord_FinalizePass:
 	calr	MidiPkt_ArpChordHandler_Helper
-	call	MidiSeq_PartLookup_Data
+	call	MidiPkt_XferShowResult
 ArpChord_ClearBitAndReturn:
 	res	4, (0xbc58:16)
 	ret
@@ -9154,7 +9154,7 @@ MidiTable_DispatchHelper:
 	call	SeqData_ReadFieldByIndex
 	cp	l, 0:i3
 	ret nz
-	call	MidiSeq_PartConfigure_Data
+	call	MidiTable_PreDispatchNullRet
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	cp (xwa), 0x27
 	ret nc
@@ -10799,7 +10799,7 @@ SysEx_SendDispatch:
 	call	SysEx_SendDispatch_Helper
 SysEx_InitiateSend_Join:
 	call	SysEx_SendDispatch_Helper2
-	call	MidiSeq_PartLookup_Data
+	call	MidiPkt_XferShowResult
 SysEx_ResetAndReturn:
 	ld	(0xbc58:16), 0
 	jp	SoundMode_ResetAllParams

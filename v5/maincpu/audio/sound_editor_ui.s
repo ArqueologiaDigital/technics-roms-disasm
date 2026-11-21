@@ -746,7 +746,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join2:
 	pushw 0x0028
 	call SeTitle_DrawStaticScreen
 	inc 2,XSP
-	call SeMenu_ApplyPartEdit_Helper7
+	call SeMenu_DrawPitFilEnvGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -808,7 +808,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join3:
 	inc 2,XSP
 	ld wa, 2:i3
 	ld bc, 1:i3
-	call SeMenu_ApplyPartEdit_Helper12
+	call SeMenu_DrawKeyScaleGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -1101,7 +1101,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join6:
 	call SeMenu_StorePartParam
 	ld wa, 0:i3
 	ld bc, 0:i3
-	call SeMenu_ApplyPartEdit_Helper12
+	call SeMenu_DrawKeyScaleGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -1265,7 +1265,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join8:
 	inc 2,XSP
 	ld wa, 2:i3
 	ld bc, 0:i3
-	call SeMenu_ApplyPartEdit_Helper12
+	call SeMenu_DrawKeyScaleGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -1673,7 +1673,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join18:
 	inc 2,XSP
 	ld wa, 0:i3
 	ld bc, 0:i3
-	call SeMenu_ApplyPartEdit_Helper12
+	call SeMenu_DrawKeyScaleGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -1727,7 +1727,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join19:
 	pushw 0x0037
 	call SeTitle_DrawStaticScreen
 	inc 2,XSP
-	call SeMenu_ApplyPartEdit_Helper7
+	call SeMenu_DrawPitFilEnvGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -1789,7 +1789,7 @@ UpdSeSel_DetailedUpdate_SetDisplayState_Join20:
 	inc 2,XSP
 	ld wa, 2:i3
 	ld bc, 1:i3
-	call SeMenu_ApplyPartEdit_Helper12
+	call SeMenu_DrawKeyScaleGraph
 	ld wa, 1:i3
 	call SeMenu_SetupMenuDisplay
 	ld wa, 0:i3
@@ -2414,7 +2414,7 @@ SeWrtMem_DrawPage:
 	ld	wa, 2:i3
 	call	SeMenu_ClearNotification
 	ld	wa, 0:i3
-	call	SeMenu_CopyWriteUpdate_Helper15
+	call	SeMenu_CopyWriteUpdate_Step3_Helper14
 	jrl	SeMenu_CopyWriteUpdate_Epilogue
 SeMenu_CopyWriteUpdate_Skip:
 	lda	xwa, (xsp+24)
@@ -2846,7 +2846,7 @@ SeCtr3TitleFunc_DispatchSwitch_Epilogue4:
 SeCtr2_OnColumn2:
 	extz	wa
 	ld	bc, 2:i3
-	jp	SeMenu_ApplyPartEdit_Join6
+	jp	SeMenu_ApplyPartEdit_AltStore_Join21
 SeCtr2_OnColumn4:
 	extz	wa
 	jp	SeMenu_ApplyPartEdit_AltStore_Join22
@@ -3146,7 +3146,7 @@ SeMenu_CopyWriteUpdate_Epilogue8:
 	ld	wa, 3:i3
 	call	SeMenu_CopyWriteUpdate_Helper12
 	lda	xwa, (xsp+2)
-	call	SeMenu_CopyWriteUpdate_Helper11
+	call	SeMenu_GetEntryCount
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
@@ -3196,7 +3196,7 @@ SeMenu_CopyWriteUpdate_Epilogue9:
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	SeMenu_CopyWriteUpdate_Helper9
+	call	SeMenu_GetToneIndex
 	lda	xwa, (xsp)
 	call	SeMenu_CopyWriteUpdate_Helper10
 	ld	a, (xsp+8)
@@ -3524,7 +3524,7 @@ SeMenu_CopyWriteUpdate_Epilogue15:
 	jr	SeMenu_CopyWriteUpdate_Epilogue16
 SeMenu_CopyWriteUpdate_Skip7:
 	ld	wa, 0:i3
-	call	SeMenu_CopyWriteUpdate_Helper15
+	call	SeMenu_CopyWriteUpdate_Step3_Helper14
 	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
@@ -3923,7 +3923,7 @@ SeTonTon1_OnColumn2:
 	ld	wa, 0:i3
 	call	SeMenu_CopyWriteUpdate_Helper12
 	lda	xwa, (xsp+4)
-	call	SeMenu_CopyWriteUpdate_Helper11
+	call	SeMenu_GetEntryCount
 	ld	a, (xsp+8)
 	res	7, a
 	cp	a, 0:i3
@@ -3966,7 +3966,7 @@ SeTonTon1_OnColumn3:
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	SeMenu_CopyWriteUpdate_Helper9
+	call	SeMenu_GetToneIndex
 	lda	xwa, (xsp)
 	call	SeMenu_CopyWriteUpdate_Helper10
 	ld	a, (xsp+6)
@@ -4984,7 +4984,7 @@ SeTonHyb1_OnColumn2:
 	ld	wa, 1:i3
 	call	SeMenu_CopyWriteUpdate_Helper12
 	lda	xwa, (xsp+6)
-	call	SeMenu_CopyWriteUpdate_Helper11
+	call	SeMenu_GetEntryCount
 	ld	a, (xsp+10)
 	res	7, a
 	cp	a, 0:i3
@@ -5033,7 +5033,7 @@ SeTonHyb1_OnColumn3:
 	ld	a, (xsp+4)
 	extz	wa
 	lda	xbc, (xsp+2)
-	call	SeMenu_CopyWriteUpdate_Helper9
+	call	SeMenu_GetToneIndex
 	lda	xwa, (xsp)
 	call	SeMenu_CopyWriteUpdate_Helper10
 	ld	a, (xsp+8)
@@ -5602,7 +5602,7 @@ SeEasy_OnColumn4_Join16:
 	lda	xbc, (xde+10)
 	call	SeMenu_SwitchToValueStep
 	lda	xwa, (xsp+2)
-	call	SeMenu_RefreshPartDisplay_Data_2
+	call	SeMenu_StepParamField
 	cp	l, 1:i3
 	jrl	nz, SeEasy_OnColumn4_Epilogue31
 	ld	a, (xsp+18)
@@ -5702,7 +5702,7 @@ SeEasy_OnColumn4_Skip73:
 	jr	SeEasy_OnColumn4_Join19
 SeEasy_OnColumn4_Skip74:
 	ld	(xwa+10), 1
-	call	SeMenu_RefreshPartDisplay_Data_2
+	call	SeMenu_StepParamField
 	cp	l, 1:i3
 	jr	nz, SeEasy_OnColumn4_Epilogue31
 SeEasy_OnColumn4_Loop3:
@@ -5754,7 +5754,7 @@ SeEasy_OnColumn4_Join19:
 	jr	SeEasy_OnColumn4_Join17
 SeEasy_OnColumn4_Skip33:
 	ld	(xwa+10), 255
-	call	SeMenu_RefreshPartDisplay_Data_2
+	call	SeMenu_StepParamField
 	cp	l, 1:i3
 	jr	z, SeEasy_OnColumn4_Loop3
 SeEasy_OnColumn4_Epilogue31:
@@ -5765,7 +5765,7 @@ SeEasy_OnSideRow1:
 	cp	a, 0:i3
 	ret	z
 	ld	wa, 0:i3
-	call	SeMenu_CopyWriteUpdate_Helper15
+	call	SeMenu_CopyWriteUpdate_Step3_Helper14
 	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
@@ -6473,7 +6473,7 @@ SeWrtMem_OnSideRow1:
 	ldw	wa, 35
 	call	SeMenu_TriggerNotification
 	ld	wa, 1:i3
-	call	SeMenu_CopyWriteUpdate_Helper15
+	call	SeMenu_CopyWriteUpdate_Step3_Helper14
 	ld	wa, 0:i3
 	call	SeMenu_SetSelectedRow
 SeWrtMem_OnSideRow1_Epilogue2:
@@ -6641,7 +6641,7 @@ SeWrtSnd_OnSideRow1_Loop:
 	cp_erpb	251, 16
 	jr	c, SeWrtSnd_OnSideRow1_Loop
 	ld	wa, 0:i3
-	call	SeMenu_CopyWriteUpdate_Helper15
+	call	SeMenu_CopyWriteUpdate_Step3_Helper14
 	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
@@ -6702,7 +6702,7 @@ SeWrtSnd_OnSwitch15_Loop3:
 	cp_erpb	251, 16
 	jr	c, SeWrtSnd_OnSwitch15_Loop3
 	ld	wa, 0:i3
-	call	SeMenu_CopyWriteUpdate_Helper15
+	call	SeMenu_CopyWriteUpdate_Step3_Helper14
 	ldw	wa, TT_SEWRTMEM
 	ld	bc, 0:i3
 SeWrtSnd_OnSwitch15_Join2:

@@ -20087,7 +20087,7 @@ SeMenu_BitShiftMask 00F06A0A
 SeMenu_BitShiftMask_Loop 00F06A14
 SeMenu_BitShiftMask_End 00F06A1D
 SeMenu_BitShiftMask_End_Loop3 00F06A27
-SeMenu_RefreshPartDisplay_Data_2 00F06A31
+SeMenu_StepParamField 00F06A31
 SeMenu_RefreshPartDisplay_Data_2_Code_Skip 00F06A43
 SeMenu_RefreshPartDisplay_Data_2_Code_Skip2 00F06A46
 SeMenu_RefreshPartDisplay_Data_2_Code_Skip3 00F06A51
@@ -20312,7 +20312,7 @@ SeMenu_ApplyPartEdit_AltStore_Join18 00F07D7D
 SeLfo1_StepSelectorAndReload_Skip5 00F07DC4
 SeMenu_ApplyPartEdit_AltStore_Join19 00F07DCC
 SeMenu_ApplyPartEdit_AltStore_Join20 00F07E1F
-SeMenu_ApplyPartEdit_Join6 00F07E73
+SeMenu_ApplyPartEdit_AltStore_Join21 00F07E73
 SeMenu_ApplyPartEdit_Skip12 00F07EB8
 SeMenu_ApplyPartEdit_Join7 00F07EBB
 SeLfo1_StepSelectorAndReload_Skip6 00F07EF2
@@ -20350,7 +20350,7 @@ SeMenu_ApplyPartEdit_Helper6 00F08274
 SeMenu_ApplyPartEdit_Skip27 00F082AC
 SeMenu_ApplyPartEdit_Join19 00F082D2
 SeMenu_ApplyPartEdit_Skip28 00F082D4
-SeMenu_ApplyPartEdit_Helper7 00F082DE
+SeMenu_DrawPitFilEnvGraph 00F082DE
 SeMenu_ApplyPartEdit_Loop2 00F0831C
 SeMenu_ApplyPartEdit_Skip17 00F0832B
 SeMenu_ApplyPartEdit_Skip18 00F083DE
@@ -20385,7 +20385,7 @@ SeMenu_ApplyPartEdit_Join27 00F088AF
 SeMenu_ApplyPartEdit_Epilogue9 00F088BF
 SeMenu_ApplyPartEdit_Helper10 00F088C6
 SeMenu_ApplyPartEdit_Helper11 00F088CF
-SeMenu_ApplyPartEdit_Helper12 00F08909
+SeMenu_DrawKeyScaleGraph 00F08909
 SeMenu_ApplyPartEdit_Skip42 00F0897B
 SeMenu_ApplyPartEdit_Skip43 00F089D8
 SeMenu_ApplyPartEdit_Skip44 00F089E8
@@ -20434,9 +20434,9 @@ SeLfo1_StepSelectorAndReload_Skip11 00F090EB
 SeMenu_ApplyPartEdit_Join36 00F0912A
 SeMenu_ApplyPartEdit_Skip63 00F09146
 SeMenu_ApplyPartEdit_Join37 00F0914E
-SeMenu_CopyWriteUpdate_Helper9 00F0918E
+SeMenu_GetToneIndex 00F0918E
 SeMenu_CopyWriteUpdate_Helper10 00F091A5
-SeMenu_CopyWriteUpdate_Helper11 00F091AF
+SeMenu_GetEntryCount 00F091AF
 SeMenu_ProcessEffect 00F091B4
 SeMenu_ProcessEffect_StoreLoop 00F091E8
 SeMenu_ProcessEffect_CompareLoop 00F0920A
@@ -20494,7 +20494,7 @@ SeMenu_HandleMenuChange_NonZero 00F095D4
 SeMenu_HandleMenuChange_Overflow 00F0960A
 SeMenu_HandleMenuChange_End 00F0961A
 SeMenu_HandleMenuChange_Data 00F0961E
-SeMenu_CopyWriteUpdate_Helper15 00F09623
+SeMenu_CopyWriteUpdate_Step3_Helper14 00F09623
 SeMenu_LoadPatchStatus 00F09628
 SeMenu_SetPatchBank 00F0962D
 SeMenu_SetPartRecordBits 00F09632
@@ -41842,9 +41842,9 @@ FDC_ResultPhase_Read_Epilogue3 00F969BD
 FDC_SendCommandByte 00F969C1
 FDC_SendParameterByte 00F969D2
 FDC_WriteAuxCmdByte 00F969E3
-FDC_HardwareSetup_Helper3 00F969F4
+FDC_SendAuxCmd 00F969F4
 FDC_ResultPhase_Read_Epilogue 00F96A09
-FDC_HardwareSetup_Helper4 00F96A0C
+FDC_SendAuxCmdReadResult 00F96A0C
 FDC_ResultPhase_Read_Epilogue2 00F96A2B
 FDC_Exception_Status_Decoder 00F96A2E
 FDC_StatusDecode_DriveNotReady 00F96A50
@@ -41873,7 +41873,7 @@ FDC_CMD_SEND_Skip9 00F96BC2
 FDC_CMD_SEND_Skip10 00F96BC7
 FDC_HardwareSetup_Skip11 00F96BCC
 FDC_HardwareSetup_Epilogue 00F96BCF
-FDC_HardwareSetup_Helper5 00F96BD2
+FDC_ValidateOpcode 00F96BD2
 FDC_HardwareSetup_Skip12 00F96BEF
 FDC_HardwareSetup_Skip13 00F96BF2
 FDC_HardwareSetup_Skip14 00F96C1B
@@ -49976,7 +49976,7 @@ MidiSeq_Expression_Lower 00FD6888
 MidiSeq_CheckSyncDirty 00FD68C1
 MidiSeq_CheckSyncDirty_Lower 00FD68EA
 DSP_Init_ErrorFlagSet 00FD6908
-MidiSeq_PartLookup_Data 00FD690B
+MidiPkt_XferShowResult 00FD690B
 MidiSeq_PartLookup_Data_Skip 00FD6929
 MidiSeq_PartLookup_Data_Skip2 00FD692E
 DSP_Init_ErrorFlagSet_Join 00FD6931
@@ -49986,7 +49986,7 @@ MidiSeq_PartLookup_Data_Helper3 00FD6949
 MidiSeq_ApplyPendingParams 00FD6968
 MidiSeq_ApplyParams_Lower 00FD6995
 MidiSeq_ClearSyncFlag 00FD69B4
-MidiSeq_PartConfigure_Data 00FD69B9
+MidiTable_PreDispatchNullRet 00FD69B9
 SysEx_SendDispatch_Helper 00FD69C1
 SysEx_ResetAndReturn_Helper 00FD69D6
 SysEx_ResetAndReturn_Helper2 00FD69E2
