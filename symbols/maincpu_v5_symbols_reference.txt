@@ -41844,7 +41844,7 @@ FDC_SendParameterByte 00F969D2
 FDC_WriteAuxCmdByte 00F969E3
 FDC_SendAuxCmd 00F969F4
 FDC_ResultPhase_Read_Epilogue 00F96A09
-FDC_HardwareSetup_Helper4 00F96A0C
+FDC_SendAuxCmdReadResult 00F96A0C
 FDC_ResultPhase_Read_Epilogue2 00F96A2B
 FDC_Exception_Status_Decoder 00F96A2E
 FDC_StatusDecode_DriveNotReady 00F96A50
