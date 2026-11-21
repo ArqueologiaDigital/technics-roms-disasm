@@ -96,7 +96,9 @@ def defines(d):
         while re.search(r'\(([^()]*)\)\s*\(([^()]*)\)', flat) is None and re.search(r'(\w+\s*\()[^()]*\([^()]*\)[^()]*\)', flat):
             flat = re.sub(r'(\w+\s*\()[^()]*\([^()]*\)[^()]*\)', r'\1)', flat, count=1)
         for part in re.split(r',(?![^()]*\))', flat):
-            m = re.search(r'\(\s*\*\s*(\w+)\s*\)\s*\(', part) or re.search(r'(\w+)\s*\(', part)
+            # `(*X)(` and, 2026-11-21, an array of function pointers `(*X[])(` (SeqStep_TimerDispatchC_PtrTable:
+            # restage dropped its declaration and V4.23 stopped on "undefined", run p6-r60)
+            m = re.search(r'\(\s*\*\s*(\w+)\s*(?:\[[^\]]*\]\s*)*\)\s*\(', part) or re.search(r'(\w+)\s*\(', part)
             if m:
                 names.add(m.group(1))
             else:

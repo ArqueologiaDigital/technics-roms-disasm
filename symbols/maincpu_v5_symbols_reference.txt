@@ -41879,7 +41879,7 @@ FDC_HardwareSetup_Skip13 00F96BF2
 FDC_HardwareSetup_Skip14 00F96C1B
 FDC_HardwareSetup_Helper5_Skip 00F96C1E
 FDC_HardwareSetup_Join 00F96C21
-FDC_HardwareSetup_Helper6 00F96C2D
+FDC_SendParams_Specify 00F96C2D
 FDC_HardwareSetup_Helper7 00F96C63
 FDC_HardwareSetup_Helper8 00F96C8A
 FDC_HardwareSetup_Helper9 00F96C93

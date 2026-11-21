@@ -859,7 +859,7 @@ FDC_HardwareSetup_Skip6:
 	jr	z, FDC_HardwareSetup_Epilogue
 	cp	(xsp), 3
 	jr	nz, FDC_HardwareSetup_Skip7
-	calr	FDC_HardwareSetup_Helper6
+	calr	FDC_SendParams_Specify
 	jr	FDC_HardwareSetup_Epilogue
 FDC_HardwareSetup_Skip7:
 	ld	a, (FDC_HEAD:16)
@@ -942,7 +942,7 @@ FDC_HardwareSetup_Join:
 	and	a, 3
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper6:
+FDC_SendParams_Specify:
 	ld	a, (FDC_SPECIFY_SRT:16)
 	sll	a, 4
 	ld	e, a

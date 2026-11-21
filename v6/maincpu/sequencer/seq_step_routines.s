@@ -1477,19 +1477,9 @@ SeqStep_WalkReadNext:	.include "includes/generated/cc900/SeqStep_WalkReadNext.s"
 	.set	SeqStep_WalkAdvancePos, SeqStep_WalkReadNext + 36
 	.set	SeqStep_WalkAdvanceDone, SeqStep_WalkReadNext + 42
 
-SeqStep_WalkReadByte:
-	ld	wa, (SQSTEP_SCAN_OFFSET:16)
-	ld c, a
-	extz bc
-	ld	wa, (SQSTEP_SCAN_BLOCK:16)
-	jp PartCtrl_ReadByte
+SeqStep_WalkReadByte:	.include "includes/generated/cc900/SeqStep_WalkReadByte.s"	; C: cc900/seq_step_routines_m236.c
 
-SeqStep_InsertEvent:
-	calr SeqStep_PrepareReadBack
-	cp l, 0x81
-	ret z
-	calr SeqStep_InsertEventInner
-	ret
+SeqStep_InsertEvent:	.include "includes/generated/cc900/SeqStep_InsertEvent.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_InsertEventInner:
 	dec 2, xsp
@@ -1772,29 +1762,13 @@ SeqStep_SkipIfLeftReturn:
 	ldw hl, 0xffff
 	ret
 
-SeqStep_SkipInvertedA:
-	extz wa
-	calr SeqStep_SkipToMeasure
-	cp hl, 0:i3
-	jr z, SeqStep_SkipInvertedADone
-	ldw hl, 0xffff
-	ret
+SeqStep_SkipInvertedA:	.include "includes/generated/cc900/SeqStep_SkipInvertedA.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_SkipInvertedADone, SeqStep_SkipInvertedA + 13
 
-SeqStep_SkipInvertedADone:
-	ld hl, 0:i3
-	ret
-
-SeqStep_SkipInvertedB:
-	extz wa
-	calr SeqStep_SkipToMeasure
-	cp hl, 0:i3
-	jr z, SeqStep_SkipInvertedBDone
-	ldw hl, 0xffff
-	ret
-
-SeqStep_SkipInvertedBDone:
-	ld hl, 0:i3
-	ret
+SeqStep_SkipInvertedB:	.include "includes/generated/cc900/SeqStep_SkipInvertedB.s"	; C: cc900/seq_step_routines_m236.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_SkipInvertedBDone, SeqStep_SkipInvertedB + 13
 
 SeqStep_AdvanceOneEvent:
 	extz wa
@@ -2281,17 +2255,7 @@ SeqStep_ProcessB0ExtCleanup:
 	ldmi16 (xsp + 6), 0xd3c
 	jr SeqStep_ProcessB0ExtReturn
 
-SeqStep_MainTimerTick:
-	calr SeqStep_TimerDispatchA
-	call SeqPlay_SyncPlaybackPosition
-	calr SeqStep_TimerDispatchB
-	call Seq_HandleModeTransition
-	call SeqNotify_CheckAndClearStart
-	calr SeqStep_PlaybackStateMachine
-	call SeqPlay_SetupRhythmMode
-	call PlaybackMode_DispatchByType
-	call SeqTimer_CheckPlaybackCountdown
-	jp BmDrEdit_TempoAnimTimer
+SeqStep_MainTimerTick:	.include "includes/generated/cc900/SeqStep_MainTimerTick.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_TimerDispatchA:
 	ld	a, (8950:16)
@@ -2309,13 +2273,7 @@ SeqStep_TimerDispatchB:
 	ld	xhl, (xbc+wa)
 	jp (xhl)
 
-SeqStep_TimerDispatchC:
-	ld	a, (8950:16)
-	extz wa
-	sla wa, 2
-	lda xbc, (SeqStep_TimerDispatchC_PtrTable:24)
-	ld	xhl, (xbc+wa)
-	jp (xhl)
+SeqStep_TimerDispatchC:	.include "includes/generated/cc900/SeqStep_TimerDispatchC.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_PlaybackStateMachine:
 	pushw_erp 0xfa
@@ -2441,11 +2399,7 @@ SeqStep_TimerNop:
 ; port: v7's label SeqStep_FindLastReturn is not in v6 -- no v6 bytes correspond to what it named
 	ret
 
-SeqStep_FindAndCompactEntry:
-	ld wa, 1:i3
-	calr SeqStep_SearchForward
-	ld wa, hl
-	jrl SeqStep_RebuildPartChain
+SeqStep_FindAndCompactEntry:	.include "includes/generated/cc900/SeqStep_FindAndCompactEntry.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_FindAndCompact:
 	dec 4, xsp
