@@ -4503,66 +4503,7 @@ MidiPart_DataBlock:
 	call	UI_InterruptTitleByIndex
 	ret
 
-InitializeMurai:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Murai_ClassCount_161, Murai_ClassTable_161, 0x161
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Murai_ResEventCount_1C1, Murai_ResEventTable_1C1, 0x1c1
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Murai_ResMethodCount_1E1, Naka_Event_Table3, 0x1e1
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x2c, Murai_ApFuncTable_121, 0x121
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x2c, Murai_ApFuncNameTable_421, 0x421
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x25, Murai_FunctionTable_101, 0x101
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x25, Murai_FunctionTable_401, 0x401
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x2, Murai_MainFunctionTable_141, 0x141
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x2, Murai_MainFunctionTable_441, 0x441
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x14, Murai_ViewableTable_002, 0x2
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x14, Murai_ResNameTable_302, 0x302
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x54, Murai_ViewableTable_003, 0x3
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x54, Murai_ResNameTable_303, 0x303
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Murai_ViewableTable_004, 0x4
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Murai_ResNameTable_304, 0x304
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x36, Murai_ViewableTable_005, 0x5
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x36, Murai_ResNameTable_305, 0x305
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3, Murai_ViewableTable_007, 0x7
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x3, Murai_ResNameTable_307, 0x307
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Murai_ViewableTable_008, 0x8
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Murai_ResNameTable_308, 0x308
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1d, Murai_ViewableTable_00D, 0xd
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1d, NakaData_TechniChordStrings, 0x30d
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Murai_ViewableTable_0A5, 0xa5
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Murai_ResNameTable_3A5, 0x3a5
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xf, Murai_ViewableTable_0E4, 0xe4
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xf, Murai_ResNameTable_3E4, 0x3e4
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x2c, Murai_ViewableTable_0EA, 0xea
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x2c, Murai_ResNameTable_3EA, 0x3ea
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x25, Murai_ViewableTable_0EB, 0xeb
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x25, Murai_ResNameTable_3EB, 0x3eb
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x18, Murai_ViewableTable_0EE, 0xee
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x18, Murai_ResNameTable_3EE, 0x3ee
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xb, Murai_ViewableTable_0EF, 0xef
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xb, StrTable_WelcomVersion, 0x3ef
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Murai_ViewableTable_0F0, 0xf0
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x6, Murai_ResNameTable_3F0, 0x3f0
-
-	RegMode 0x1, InitializeMurai_Str_MD_SOUND, 0x2, NAKA_APFUNC_DefaultFunction, TITLE_SDMENU
-
-	RegTitle 0x1, InitializeMurai_Str_TT_SDMENU, 0x2, NAKA_APFUNC_DefaultFunction, 0x20000
-	RegTitle 0x1, InitializeMurai_Str_TT_SDPART, 0x3, NAKA_APFUNC_DefaultFunction, 0x30000
-	RegTitle 0x1, InitializeMurai_Str_TT_SDMTUNE, 0x4, NAKA_APFUNC_DefaultFunction, 0x40000
-	RegTitle 0x1, InitializeMurai_Str_TT_SDSCLTYP, 0x5, NAKA_APFUNC_DefaultFunction, 0x50000
-	RegTitle 0x1, InitializeMurai_Str_TT_SDLFTHLD, 0x7, NAKA_APFUNC_DefaultFunction, 0x70000
-	RegTitle 0x1, InitializeMurai_Str_TT_SDMIXER, 0x8, NAKA_APFUNC_DefaultFunction, 0x80000
-	RegTitle 0x1, InitializeMurai_Str_TT_SDTECD, 0xd, NAKA_APFUNC_DefaultFunction, 0xd0000
-	RegTitle 0x1, InitializeMurai_Str_TT_SQMIXER, 0xa5, NAKA_APFUNC_DefaultFunction, 0xa50000
-	RegTitle 0x1, InitializeMurai_Str_TT_DEMOFEATURE, 0xe4, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_Demofeature
-	RegTitle 0x1, InitializeMurai_Str_TT_DRAWBAR, 0xea, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_Drawbar
-	RegTitle 0x1, InitializeMurai_Str_TT_ACCORDION, 0xeb, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_Accordion
-	RegTitle 0x1, InitializeMurai_Str_TT_MESAGE, 0xee, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_Mesage
-	RegTitle 0x1, InitializeMurai_Str_TT_WELCOM, 0xef, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_Welcom
-	RegTitle 0x1, InitializeMurai_Str_TT_SOFTVER, 0xf0, NAKA_APFUNC_DefaultFunction, NAKA_VIEW_Softver
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeMurai:	.include "includes/generated/cc900/InitializeMurai.s"	; C: cc900/drawbar_panel_ui_m264.c
 
 BitmapAccita16:
 	cp xbc, EVT_GET_BITMAP_HEIGHT
