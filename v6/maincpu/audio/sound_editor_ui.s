@@ -6585,18 +6585,12 @@ SeWrtMem_OnSwitch15:
 	ld	bc, 0:i3
 	call	SeMenu_SendEvent
 	ret
-SeWrtSnd_OnColumn1:
-	jrl	SeWrtSnd_SetupNamingPage_Join6
-SeWrtSnd_OnColumn2:
-	jrl	SeWrtSnd_SetupNamingPage_Join7
-SeWrtSnd_OnColumn3:
-	jrl	SeWrtSnd_SetupNamingPage_Join8
-SeWrtSnd_OnColumn4:
-	jrl	SeWrtSnd_SetupNamingPage_Join
-SeWrtSnd_OnColumn5:
-	jrl	SeWrtSnd_SetupNamingPage_Join2
-SeWrtSnd_OnColumn6:
-	jrl	SeWrtSnd_SetupNamingPage_Join3
+SeWrtSnd_OnColumn1:	.include "includes/generated/cc900/SeWrtSnd_OnColumn1.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn2:	.include "includes/generated/cc900/SeWrtSnd_OnColumn2.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn3:	.include "includes/generated/cc900/SeWrtSnd_OnColumn3.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn4:	.include "includes/generated/cc900/SeWrtSnd_OnColumn4.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn5:	.include "includes/generated/cc900/SeWrtSnd_OnColumn5.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn6:	.include "includes/generated/cc900/SeWrtSnd_OnColumn6.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnColumn7:
 	ld	c, a
 	res	7, c
@@ -6606,8 +6600,7 @@ SeWrtSnd_OnColumn7:
 	ld	wa, 0:i3
 SeWrtSnd_OnColumn7_Skip81:
 	jrl	SeWrtSnd_SetupNamingPage_Join4
-SeWrtSnd_OnColumn8:
-	jrl	SeWrtSnd_SetupNamingPage_Join5
+SeWrtSnd_OnColumn8:	.include "includes/generated/cc900/SeWrtSnd_OnColumn8.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp
 	push	qiz
@@ -6649,10 +6642,7 @@ SeWrtSnd_OnSideRow1_Epilogue:
 	pop	qiz
 	inc	4, xsp
 	ret
-SeWrtSnd_OnSideRow2:
-	cp	a, 0:i3
-	ret	nz
-	jrl	SeWrtSnd_ClearName_Join
+SeWrtSnd_OnSideRow2:	.include "includes/generated/cc900/SeWrtSnd_OnSideRow2.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSwitch15:
 	lda	xsp, (xsp-20)
 	push	qiz

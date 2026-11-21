@@ -34,80 +34,10 @@
 	pop xiz
 	inc 8, xsp
 	ret
-MidiPkt_DispatchViaTable_4DA6:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList4
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
-MidiPkt_DispatchViaTable_4DAE:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList5
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	cp (xiz + 1), 0xb
-	jr	nz, MidiPkt_DispatchViaTable_4DAE_Done
-	lda xde, (xiz + 3)
-	ld xwa, (xsp + 8)
-	ld c, (xwa + 8)
-	cpl c
-	ld a, (xde)
-	and a, c
-	ld (xde), a
-	cp a, 0:i3
-	jr	z, MidiPkt_DispatchViaTable_4DAE_Done
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList5
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-MidiPkt_DispatchViaTable_4DAE_Done:
-	pop xiz
-	inc 8, xsp
-	ret
+MidiPkt_DispatchViaTable_4DA6:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4DA6.s"	; C: cc900/midipkt_routines_dvt.c
+MidiPkt_DispatchViaTable_4DAE:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4DAE.s"	; C: cc900/midipkt_routines_dvt.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_DispatchViaTable_4DAE_Done, MidiPkt_DispatchViaTable_4DAE + 118
 MidiPkt_DispatchSpecialType:	.include "includes/generated/cc900/MidiPkt_DispatchSpecialType.s"	; C: cc900/midipkt_routines_m289_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiPkt_DispatchSpecialType_Type10, MidiPkt_DispatchSpecialType + 30
