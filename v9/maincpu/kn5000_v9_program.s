@@ -1991,28 +1991,9 @@ get_tid_X:
 pdly_tim_X:
 	jp TaskSched_DelayTicks
 
-PlayHalt:
-	dec 2, xsp
-	ld (xsp), a
-	call SeqBuf_Init
-	call NoteMap_SendAllNotesOff
-	call Part_ReinitAllActive
-	call AccWrap_PlayModeDispatch
-	cp (xsp), 0x0
-	jr z, PlayHalt_SkipSetFlag
-	set 2, (SEQ_RTMCFG:16)
-
-PlayHalt_SkipSetFlag:
-	call AccompSeq_StopSequence
-	call AudioInit_RefreshToneBank
-	call NoteMap_ProcessAndMerge
-	call Voice_InitializeAll
-	call Voice_InitTablePair
-	call Voice_InitTableGroup
-	call MIDI_SendAllSoundOff
-	call MidiIn_IgnoreClockTransport
-	inc 2, xsp
-	ret
+PlayHalt:	.include "includes/generated/cc900/PlayHalt.s"	; C: cc900/kn5000_v10_program_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PlayHalt_SkipSetFlag, PlayHalt + 29
 
 PlayStandBy:
 	bit 2, (SEQ_RTMCFG:16)
@@ -2024,59 +2005,28 @@ PlayStandBy_SkipClearFlag:
 	call SeqAcc_InitPlaybackState
 	jp MidiIn_AcceptClockTransport
 
-EditSwRefresh:
-	call CPanel_InitButtonState_SaveRegs
-	call RefreshSwEvent
-	jp RefreshApTask
+EditSwRefresh:	.include "includes/generated/cc900/EditSwRefresh.s"	; C: cc900/kn5000_v10_program_m0.c
 
-putc_mtx_bf_X:
-	extz wa
-	pushw wa
-	call SeqBuf_MidiOut_WriteByte
-	inc 2, xsp
-	ret
+putc_mtx_bf_X:	.include "includes/generated/cc900/putc_mtx_bf_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
-putc_mrx_bf_X:
-	extz wa
-	pushw wa
-	call SeqMain_WriteByte
-	inc 2, xsp
-	ret
+putc_mrx_bf_X:	.include "includes/generated/cc900/putc_mrx_bf_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
 midi_out_en_X:
 	jp MIDI_SC0_TX_DISPATCH
 
-GetAdr_sqbtof:
-	lda xhl, (SEQ_BEAT_COUNT:16)
-	ret
+GetAdr_sqbtof:	.include "includes/generated/cc900/GetAdr_sqbtof.s"	; C: cc900/kn5000_v10_program_m0.c
 
-GetAdr_sq_beadt:
-	lda xhl, (SEQ_BEAT_TICK:16)
-	ret
+GetAdr_sq_beadt:	.include "includes/generated/cc900/GetAdr_sq_beadt.s"	; C: cc900/kn5000_v10_program_m0.c
 
-GetAdr_sqsrtc:
-	lda xhl, (SEQ_TRANSPORT_STATE:16)
-	ret
+GetAdr_sqsrtc:	.include "includes/generated/cc900/GetAdr_sqsrtc.s"	; C: cc900/kn5000_v10_program_m0.c
 
-GetAdr_rtmcfg:
-	lda xhl, (SEQ_RTMCFG:16)
-	ret
+GetAdr_rtmcfg:	.include "includes/generated/cc900/GetAdr_rtmcfg.s"	; C: cc900/kn5000_v10_program_m0.c
 
-SetGlobalError:
-	ld (GLOBAL_ERROR_CODE:16), a
-	ret
+SetGlobalError:	.include "includes/generated/cc900/SetGlobalError.s"	; C: cc900/kn5000_v10_program_m0.c
 
-malloc_X:
-	pushw wa
-	call Malloc
-	inc 2, xsp
-	ret
+malloc_X:	.include "includes/generated/cc900/malloc_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
-free_X:
-	push xwa
-	call Free
-	inc 4, xsp
-	ret
+free_X:	.include "includes/generated/cc900/free_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
 
 ; --- Wallpaper & Demo Routines ---

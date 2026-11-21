@@ -41882,7 +41882,7 @@ FDC_HardwareSetup_Join 00F96C21
 FDC_SendParams_Specify 00F96C2D
 FDC_SendParams_Format 00F96C63
 FDC_SendParam_SeekTrack 00F96C8A
-FDC_HardwareSetup_Helper9 00F96C93
+FDC_SendParams_ReadWrite 00F96C93
 FDC_HardwareSetup_Skip16 00F96CE2
 FDC_HardwareSetup_Skip17 00F96CE5
 FDC_DETECT_CHECK 00F96CEF
