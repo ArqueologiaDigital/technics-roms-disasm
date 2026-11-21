@@ -895,7 +895,7 @@ FDC_CMD_SEND_Skip10:
 	calr	FDC_SendParam_SeekTrack
 	jr	FDC_HardwareSetup_Epilogue
 FDC_HardwareSetup_Skip11:
-	calr	FDC_HardwareSetup_Helper9
+	calr	FDC_SendParams_ReadWrite
 FDC_HardwareSetup_Epilogue:
 	inc	2, xsp
 	ret
@@ -981,7 +981,7 @@ FDC_SendParam_SeekTrack:
 	ld	a, (FDC_TARGET_TRACK:16)
 	extz	wa
 	jrl	FDC_SendParameterByte
-FDC_HardwareSetup_Helper9:
+FDC_SendParams_ReadWrite:
 	ld	a, (FDC_PARAM_C:16)
 	extz	wa
 	calr	FDC_SendParameterByte
