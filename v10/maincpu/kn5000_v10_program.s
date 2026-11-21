@@ -1754,193 +1754,12 @@ rcm_ld_XAPR_j:
 rcm_sv_XAPR_j:
 	jp FloppyDisk_ComputeToneParams
 
-SetSepaOutMode:
-	lda xsp, (xsp - 20)
-	ld xiy, SepaOut_Config_0
-	lda xix, (xsp + 16)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9B_Value32
-	lda xix, (xsp + 12)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9D_Value0
-	lda xix, (xsp + 8)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9D_Value1
-	lda xix, (xsp + 4)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9D_Value2
-	ld xix, xsp
-	ldiw
-	ldiw
-	cp wa, 3:i3
-	jrl z, SetSepaOut_Mode3
-	cp wa, 2:i3
-	jrl z, SetSepaOut_Mode2
-	cp wa, 1:i3
-	jr z, SetSepaOut_Mode1
-	cp wa, 0:i3
-	jrl nz, FileIO_SendCommand_Return
-	ld (xsp + 17), 0x14
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x14
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x13
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x13
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x16
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x16
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	jrl FileIO_SendCommand_Return
-
-SetSepaOut_Mode1:
-	ld (xsp + 13), 0x14
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x14
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x13
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x13
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x16
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x16
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	jrl FileIO_SendCommand_Return
-
-SetSepaOut_Mode2:
-	ld (xsp + 13), 0x14
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x14
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x13
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x13
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x16
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x16
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	jr FileIO_SendCommand_Return
-
-SetSepaOut_Mode3:
-	ld (xsp + 13), 0x14
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 1), 0x14
-	lda xwa, (xsp)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x13
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 5), 0x13
-	lda xwa, (xsp + 4)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x16
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 5), 0x16
-	lda xwa, (xsp + 4)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-
-FileIO_SendCommand_Return:
-	lda xsp, (xsp + 20)
-	ret
+SetSepaOutMode:	.include "includes/generated/cc900/SetSepaOutMode.s"	; C: cc900/kn5000_v10_program_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SetSepaOut_Mode1, SetSepaOutMode + 186
+	.set	SetSepaOut_Mode2, SetSepaOutMode + 291
+	.set	SetSepaOut_Mode3, SetSepaOutMode + 395
+	.set	FileIO_SendCommand_Return, SetSepaOutMode + 496
 
 fopen_ext:
 	jp FileIO_OpenWithMode
@@ -1997,15 +1816,9 @@ PlayHalt:	.include "includes/generated/cc900/PlayHalt.s"	; C: cc900/kn5000_v10_p
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	PlayHalt_SkipSetFlag, PlayHalt + 29
 
-PlayStandBy:
-	bit 2, (SEQ_RTMCFG:16)
-	jr z, PlayStandBy_SkipClearFlag
-	res 2, (SEQ_RTMCFG:16)
-
-PlayStandBy_SkipClearFlag:
-	res 3, (SEQ_RTMCFG:16)
-	call SeqAcc_InitPlaybackState
-	jp MidiIn_AcceptClockTransport
+PlayStandBy:	.include "includes/generated/cc900/PlayStandBy.s"	; C: cc900/kn5000_v10_program_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PlayStandBy_SkipClearFlag, PlayStandBy + 10
 
 EditSwRefresh:	.include "includes/generated/cc900/EditSwRefresh.s"	; C: cc900/kn5000_v10_program_m0.c
 
