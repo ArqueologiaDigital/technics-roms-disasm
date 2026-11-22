@@ -26,6 +26,9 @@ def one_file(z):
         return c, first
     frames = list(s3_check.FRAMES)
     s4.load_types(z)
+    inter = z[:-len('_zimg.asm')] + '.inter'
+    if os.path.exists(inter):
+        s4.load_switches(inter)
     for k_, ((dmp, code), (fn, regs)) in enumerate(zip(fs, tr)):
         c['functions'] += 1
         _, offs, frame = frames[k_] if k_ < len(frames) else (fn, {}, 0)

@@ -66,6 +66,65 @@ def sp_adjust(n):
     return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
 
 
+CHAINS = []                                          # thc1's switch dispatch chains of the unit, in order
+CHAIN_POS = [0]
+
+
+def load_switches(inter):
+    """read thc1's dispatch chains (`==,X,#c,T` / `TRUE,T,,L` runs, then `JMP,Ldefault`) into CHAINS"""
+    del CHAINS[:]
+    CHAIN_POS[0] = 0
+    lines = [l.rstrip('\r\n') for l in open(inter, encoding='latin-1')]
+    i = 0
+    while i < len(lines):
+        vals, var, j = {}, None, i
+        while j < len(lines):
+            if lines[j].startswith('\t'):
+                j += 1
+                continue
+            m = re.match(r'^==,([^,]+),#[LC]?U?(-?\d+),(T\d+)$', lines[j])
+            k = j + 1
+            while k < len(lines) and lines[k].startswith('\t'):
+                k += 1
+            if m and k < len(lines) and re.match(r'^TRUE,%s,,(L\d+)$' % m.group(3), lines[k]) and \
+                    var in (None, m.group(1)):
+                var = m.group(1)
+                vals.setdefault(int(m.group(2)), lines[k].split(',')[-1])
+                j = k + 1
+                continue
+            break
+        if len(vals) >= 2:
+            m = re.match(r'^JMP,(L\d+)$', lines[j]) if j < len(lines) else None
+            CHAINS.append((vals, m.group(1) if m else None))
+            i = j
+        else:
+            i += 1
+
+
+def switch_shape(labels):
+    """(base, default) of a Switch whose case labels are `labels`, from the next matching dispatch chain; thc2 may have
+    merged labels, so a chain label maps to one Switch label, consistently"""
+    for c in range(CHAIN_POS[0], len(CHAINS)):
+        vals, dflt = CHAINS[c]
+        for lo in sorted(vals):
+            if lo + len(labels) - 1 > max(vals):
+                continue
+            mp, ok = {}, True
+            for i, l in enumerate(labels):
+                want = vals.get(lo + i, '<default>')
+                if mp.setdefault(want, l) != l:
+                    ok = False
+                    break
+            if not ok or labels[0] != mp.get(vals.get(lo)) or vals.get(lo + len(labels) - 1) is None:
+                continue
+            d = mp.get('<default>') or (mp.get(dflt, dflt) if dflt else None)
+            if d is None:
+                continue
+            CHAIN_POS[0] = c + 1
+            return lo, d
+    return None
+
+
 def tsize(t):
     """the size of a numbered type as an argument slot (chars widen to 2)"""
     if t in BASIC:
@@ -344,6 +403,11 @@ class Fn:
         return f2._gen()
 
     def _gen(self):
+        has_epi = bool(self.save_iz or self.frame) and sum(r.op == 'END' for r in self.recs) > 1
+        self.epi_label = 'L50000'
+        self.next_label = 50001 if has_epi else 50000
+        self.next_table = 50000
+        self.tables = []
         for i_, r in enumerate(self.recs):
             self.pos = i_
             op = r.op
@@ -375,10 +439,10 @@ class Fn:
                 last = not any(x.op == 'END' for x in self.recs[i_ + 1:])
                 if (self.save_iz or self.frame) and SHARED_EPILOGUE:
                     if not last:                     # one epilogue, at the end: the other returns jump to it
-                        self.emit('j', 'L50000')
+                        self.emit('j', self.epi_label)
                         continue
-                    if any(c == 'j L50000' for c in self.code):
-                        self.emit('L50000:')
+                    if any(c == 'j ' + self.epi_label for c in self.code):
+                        self.emit(self.epi_label + ':')
                 if self.save_iz:
                     self.emit('pop', self.save_iz)
                 if self.frame:
@@ -470,6 +534,46 @@ class Fn:
                             self.emit('pushw', '0x%x' % (v & 0xffff))
                     else:
                         self.emit('push', self.stack(a) or self.mem(a) or self.reg(a))
+            elif op == 'Switch':
+                labels = r.args[0].split() if len(r.args) == 1 else r.args
+                shape = switch_shape(labels)
+                if shape is None:
+                    raise Unsupported('Switch shape')
+                base, dflt = shape
+                x = r.res
+                n_ = self.name(x)
+                sz = size_of(x)
+                if re.match(r'^T\d+\(0\)', x) and n_ not in SIZE0:
+                    sz = 2                               # (a promoted switch operand: int)
+                    SIZE0[n_] = 2
+                rr = self.reg(x)
+                uns = unsigned(x)
+                if base:
+                    self.emit(*(('dec', '0x%x,%s' % (base, rr)) if 0 < base <= 8 else ('sub', '%s,0x%x' % (rr, base & 0xffffffff))))
+                if uns:
+                    if base:
+                        self.emit('cp', rr + ',0x0'); self.emit('j', 'ult,' + dflt)
+                    self.emit('cp', '%s,0x%x' % (rr, len(labels) - 1)); self.emit('j', 'ugt,' + dflt)
+                else:
+                    self.emit('cp', rr + ',0x0'); self.emit('j', ('lt,' if base else 'm,') + dflt)
+                    self.emit('cp', '%s,0x%x' % (rr, len(labels) - 1)); self.emit('j', 'gt,' + dflt)
+                S = 'S%d' % self.next_table
+                L = 'L%d' % self.next_label
+                self.next_table += 1
+                self.next_label += 1
+                self.emit('add', '%s,%s' % (rr, rr))
+                if sz == 4:
+                    w = NAMES[fam_of(rr)][1]
+                    self.emit('add', '%s,%s' % (rr, S))
+                    self.emit('ld', '%s,(%s)' % (w, rr))
+                else:
+                    w = rr
+                    self.emit('lda', 'XIX,' + S)
+                    self.emit('ld', '%s,(XIX+%s)' % (w, w))
+                self.emit('lda', 'XIX,' + L)
+                self.emit('j', 'XIX+' + w)
+                self.emit(L + ':')
+                self.tables += ['dw %s-%s' % (l, L) for l in labels]
             elif op == 'asm':
                 self.emit(r.args[0].strip())
             elif op == 'ACALP':
@@ -618,6 +722,7 @@ class Fn:
                 self.emit(m_, '0x%x,%s' % (v, d))
             else:
                 raise Unsupported(op)
+        self.code = getattr(self, 'tables', []) + self.code
         if RET_CC:
             self.ret_peephole()
         return self.code
