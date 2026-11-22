@@ -478,12 +478,14 @@ class Fn:
                     self.emit('push', self.save_iz)
                 spilled = sorted([p for p in self.regs if p.startswith('P') and int(p[1:]) < 3 and
                                   self.regs[p] == 'stack'], key=lambda p: -int(p[1:]))
-                o = {'XIZ': 4, 'IZ': 2, 'QIZ': 2}.get(self.save_iz, 0)
-                for k in spilled:                    # spilled register parameters: slots above the saved XIZ, the
-                    sz = self.psize.get(k, 2)        # highest first, each an even size; stored at entry
-                    self.offs[k] = o
-                    self.emit('ld', '%s,%s' % ('(XSP+0x%x)' % o if o else '(XSP)', sized(ARGREG[int(k[1:])], sz)))
-                    o += sz + (sz & 1)
+                top = {'XIZ': 4, 'IZ': 2, 'QIZ': 2}.get(self.save_iz, 0) + self.frame
+                for k in sorted(spilled, key=lambda p: int(p[1:])):   # spilled register parameters: the top of the
+                    sz = self.psize.get(k, 2)                          # frame, P0 highest, each an even size
+                    top -= sz + (sz & 1)
+                    self.offs[k] = top
+                for k in spilled:                    # stored at entry, the highest parameter first
+                    o = self.offs[k]
+                    self.emit('ld', '%s,%s' % ('(XSP+0x%x)' % o if o else '(XSP)', sized(ARGREG[int(k[1:])], self.psize.get(k, 2))))
                 for k in sorted([p for p in self.regs if p.startswith('P') and int(p[1:]) < 3], key=lambda p: int(p[1:])):
                     want, f = self.regs[k], ARGREG[int(k[1:])]
                     if want and want != 'stack' and fam_of(want) != f:   # a parameter kept elsewhere: moved in
