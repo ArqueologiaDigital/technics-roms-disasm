@@ -70,6 +70,9 @@ COALESCE_FROM = 'T'
 WIDEN_FROM = 'T'                                     # a dying source of these kinds is widened in place
 BYTE_TO_LONG_CLEAR = True                            # byte -> long zero extension: ld X,0 / ld low,src                                # copies of dying values of these kinds share the register
 STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
+CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
+FORCED = {}                                          # temporary -> family, imposed by a probe (s4_temps.py)
+LOG = []                                             # new_temp decisions of the last generation
 LABEL_NEXT = [50000]                                 # L5000n / S5000n counters: per unit, not per function
 TABLE_NEXT = [50000]
 EPI_NEEDS_TWO_ENDS = True                           # does the epilogue label need more than one return
@@ -276,6 +279,10 @@ class Fn:
         self.save_iz = 'XIZ' if lo and hi else ('IZ' if lo else ('QIZ' if hi else None))
         self.code = []
         self.hints = self.temp_hints()
+        self.soft = {}
+        for r in self.recs:                          # an indirect call's target: XHL, else XIX
+            if r.op == 'ACALP' and r.args and self.name(r.args[0]) and self.name(r.args[0]).startswith('T') and CALL_TARGET_HL:
+                self.soft[self.name(r.args[0])] = ['XHL', 'XIX']
         self.psize = {}
         for l in zim:
             m = re.search(r'\|(P\d+)(\([^()]*\))', l)
@@ -386,9 +393,18 @@ class Fn:
         else:
             busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
         prefs = [f for f in (self.hints.get(n), prefer) if f]
+        if n in FORCED:                              # (a choice imposed by a probe, s4_temps.py)
+            self.regs[n] = sized(FORCED[n], size)
+            LOG.append((n, size, FORCED[n], len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
+            return self.regs[n]
+        for f in [g for g in self.soft.get(n, []) if g not in busy]:
+            self.regs[n] = sized(f, size)            # a soft preference: taken only when free
+            LOG.append((n, size, f, len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
+            return self.regs[n]
         for f in prefs + FAMS:
             if (f not in busy or f in prefs) and (size != 1 or f in ('XWA', 'XBC', 'XDE', 'XHL') or BYTE_TEMPS):
                 self.regs[n] = sized(f, size)
+                LOG.append((n, size, f, len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
                 return self.regs[n]
         raise Unsupported('no register for ' + n)
 
@@ -472,6 +488,7 @@ class Fn:
         return f2._gen()
 
     def _gen(self):
+        del LOG[:]
         self.epi_label = 'L%d' % self.label0
         self.next_label = self.label0 + (1 if self.has_epi else 0)
         self.next_table = self.table0
