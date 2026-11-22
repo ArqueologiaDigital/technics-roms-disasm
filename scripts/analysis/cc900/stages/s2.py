@@ -105,6 +105,23 @@ def rewrite2(recs):
             r.op = '='                               # same size: a copy
         out.append(r)
     recs = out
+    if PTR_COPY_THROUGH:                             # Ta = Tb between temporaries, Tb read only there and Ta only
+        k = 0                                        # dereferenced: Ta's uses read Tb (so the address folds below)
+        while k < len(recs):
+            r = recs[k]
+            ta, tb = tname(r.res), tname(r.args[0]) if r.op == '=' and r.args else None
+            if ta and tb and r.op == '=' and not r.res.startswith('*') and not r.args[0].startswith(('*', '&')) and \
+                    reads_of(tb) == 1:
+                uses = [(u, x) for u in recs[k + 1:] for x in u.args + [u.res] if x and tname(x) == ta]
+                if uses and all(x.startswith('*') for _, x in uses):
+                    for u in recs[k + 1:]:
+                        u.args = [('*' + r.args[0] if x.startswith('*') else r.args[0]) if x and tname(x) == ta else x
+                                  for x in u.args]
+                        if u.res and tname(u.res) == ta:
+                            u.res = '*' + r.args[0]
+                    del recs[k]
+                    continue
+            k += 1
     # addressing modes: a pointer + constant / index, read once through a dereference
     changed = True
     while changed:
@@ -304,9 +321,10 @@ def s2_lines(zio, decl_order=None, cdecl=False):
 
 
 REWRITE2 = True
+PTR_COPY_THROUGH = True
 MEM_ROUTES = True
 NEW_TEMPS = True
 COALESCE = True
-STACK_PARAM_MM = True
+STACK_PARAM_MM = False
 POST_INC = True
 PARAM_MO = 'xiz'                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)
