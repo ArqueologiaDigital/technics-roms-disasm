@@ -1763,3 +1763,7 @@ PsMixer_CalcSwitchPointInFrame	96	2026-11-22-23-p6-r90	p6_Z_35r1m264a@O3XSXr p6_
 SeMenu_SelectPartAndRedraw	84	2026-11-22-23-p6-r90	p6_Z_35r1m129a@O3XSXr p6_Z_35r1m129a@O3Xr
 SeqScan_CompareAndAppend	34	2026-11-22-23-p6-r90	p6_A_35r1m235a@O3XSXr p6_A_35r1m235a@O3Xr
 SeqStep_RebuildPartChain	204	2026-11-22-23-p6-r90	p6_Z_35r1m236a@O3Xr
+DrawDesignFrame	79	2026-11-22-25-p6-r92	p6_B_36r1m271a@O3Xr p6_B_36r1m271b@O3Xr
+FDemoText_ByteData_TextRenderer	231	2026-11-22-25-p6-r92	p6_B_36r1m265b@O3XSXr p6_B_36r1m265b@O3Xr
+MIDI_SendSysExCmd	34	2026-11-22-25-p6-r92	p6_C_36r1m301a@Xr p6_C_36r1m301b@Xr
+SendSysExCmd_Data	15	2026-11-22-25-p6-r92	p6_C_36r1m301a@O3XSXr p6_C_36r1m301a@O3Xr p6_C_36r1m301a@Xr p6_C_36r1m301b@O3XSXr p6_C_36r1m301b@O3Xr p6_C_36r1m301b@Xr
