@@ -51,6 +51,9 @@ operations; thc1 already rotates loops (the test at the bottom).
 | `flow.py`     | control flow over dump records: successors, and whether a variable is live across a call                                                                                                                           |
 | `s3.py`       | S3 from V4.23's own -zim: the register of each parameter and local (memory marks = stack; parameters in their argument register or XIZ across calls; locals by a first rule)                                       |
 | `s3_check.py` | S3 against thc2's -g records, per variable and per function, with a (truth, ours) worklist                                                                                                                         |
+| `listing2.py` | thc2 `zimg` listings split per function into dump and code lines (labels kept, debug records dropped, inline assembler kept)                                                                                       |
+| `s4.py`       | S4, instruction selection, from V4.23's own -zim and -g registers: frames, moves, loads / stores, ALU, compares and branches, bit operations, shifts, conversions, register arguments, calls and tail jumps        |
+| `s4_check.py` | S4 against thc2's code lines per function, refusals and first differences as a worklist                                                                                                                            |
 
 Run the round trip, from technics-roms-disasm's root:
 
@@ -71,6 +74,7 @@ Run the round trip, from technics-roms-disasm's root:
 | 2026-11-22 | S2    | `-Xr` 466 exact, 629 up to numbering, of 2,671: register routing (memory-memory, 4-byte constants, 16-bit multiply / divide), XIZ spill marks, live-on-entry DUMMY lines                                      |
 | 2026-11-22 | S3    | from thc2's own -zim against -g: 1,957 / 3,394 named variables (57.7 %), 1,289 / 2,001 `-Xr` functions all right (returned locals in the HL family)                                                           |
 | 2026-11-22 | S3    | 2,659 / 3,394 named variables (78.3 %), 1,606 / 2,001 `-Xr` functions all right: interference colouring, XWA-first order, temporaries' families avoided, call results and returns in HL, bytes on high halves |
+| 2026-11-22 | S4    | from V4.23's own -zim and -g: 138 / 2,001 `-Xr` functions' code exact (S3 now 5,958 / 6,768 variables)                                                                                                        |
 
 ## S3, first measurement (2026-11-22)
 

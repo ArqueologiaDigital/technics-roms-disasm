@@ -28,7 +28,7 @@ def functions(path):
             s = l.split(';', 1)[0].rstrip()
             if not s:
                 continue
-            if s.startswith('\t'):
+            if s.startswith('\t') or s.startswith(' '):   # (inline assembler is written after a blank)
                 body = s.strip()
                 if re.match(r'^(symbol_\w+|line|file|public|extern|section|align|module|end|\$\w+)\b', body):
                     continue

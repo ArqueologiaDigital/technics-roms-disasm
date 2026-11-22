@@ -175,6 +175,11 @@ class Fn:
                     self.emit('dec', '0x%x,XSP' % self.frame)
                 if self.save_iz:
                     self.emit('push', 'XIZ')
+                for k in sorted([p for p in self.regs if p.startswith('P') and int(p[1:]) < 3], key=lambda p: int(p[1:])):
+                    want, f = self.regs[k], ARGREG[int(k[1:])]
+                    if want and want != 'stack' and fam_of(want) != f:   # a parameter kept elsewhere: moved in
+                        self.emit('ld', '%s,%s' % (want, sized(f, {0: 1, 1: 2, 2: 4}[NAMES[fam_of(want)].index(want)]
+                                                                 if want in NAMES[fam_of(want)] else 2)))
                 continue
             if op in ('DUMMY', 'PIN'):
                 continue
@@ -211,6 +216,22 @@ class Fn:
                                                   '' if not m.group(2) else '+0x%x' % int(m.group(2))))
                 else:
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), self.mem(a)[1:-1]))
+            elif op == 'asm':
+                self.emit(r.args[0].strip())
+            elif op == 'ACALP':
+                target = self.long_of(r.args[0])
+                nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
+                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz:
+                    self.emit('j', target)
+                    self.tail = True
+                else:
+                    self.emit('call', target)
+            elif op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
+                    self.name(r.res) not in self.regs and r.args and self.name(r.args[0]) and \
+                    not r.args[0].startswith(('*', '@', '#')) and self.dies(r.args[0], i_) and \
+                    self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack':
+                ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
+                self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
             elif op == '=':
                 size = size_of(r.res)
                 d = self.dst(r.res)
