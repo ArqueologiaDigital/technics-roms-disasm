@@ -24,10 +24,13 @@ def one_file(z):
     if len(fs) != len(tr):
         c['unpaired files'] += 1
         return c, first
-    for (dmp, code), (fn, regs) in zip(fs, tr):
+    frames = list(s3_check.FRAMES)
+    for k_, ((dmp, code), (fn, regs)) in enumerate(zip(fs, tr)):
         c['functions'] += 1
+        _, offs, frame = frames[k_] if k_ < len(frames) else (fn, {}, 0)
         try:
-            ours = s4.Fn(['FUNC_START'] + [d for d in dmp if 'FUNC_' not in d] + ['FUNC_END'], regs).gen()
+            ours = s4.Fn(['FUNC_START'] + [d for d in dmp if 'FUNC_' not in d] + ['FUNC_END'], regs, offs,
+                         frame).gen()
         except s4.Unsupported as ex:
             c['refused'] += 1
             first[('refused', str(ex).split(' ')[0])] += 1

@@ -61,13 +61,24 @@ def hexc(v, size):
 
 
 class Fn:
-    def __init__(self, zim, regs):
+    def __init__(self, zim, regs, offs=None, frame=0):
         self.recs = [dump.parse_line(l) for l in zim[1:-1]]
         self.regs = dict(regs)                       # 'P0' / 'I1' -> register name or 'stack'
+        self.offs = dict(offs or {})                 # stack variables' offsets from XSP (after the prologue)
+        self.frame = frame
+        self.save_iz = any(fam_of(r) == 'XIZ' or r in ('QIZ', 'QIZH', 'QIZL', 'IZH', 'IZL')
+                           for r in self.regs.values() if r)
         self.code = []
 
     def name(self, x):
         return re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x).group(1) if x and re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x) else None
+
+    def stack(self, x):
+        n = self.name(x)
+        if n in self.offs:
+            o = self.offs[n]
+            return '(XSP+0x%x)' % o if o else '(XSP)'
+        return None
 
     def reg(self, x):
         """the register an I / P / T operand lives in"""
@@ -87,14 +98,43 @@ class Fn:
                 return self.regs[n]
         raise Unsupported('no register for ' + n)
 
+    def long_of(self, x):
+        r = self.reg(x)
+        return NAMES[fam_of(r)][2]
+
+    def mem(self, x):
+        """a memory operand as the listing writes it, or None"""
+        if x.startswith('*'):
+            return '(%s)' % self.long_of(x[1:])
+        m = re.match(r'^@([\w.$]+)\([^()]*\)(?:\[([+-]\d+)\])?$', x)
+        if m:
+            return '(%s%s)' % (m.group(1), '' if not m.group(2) else '+0x%x' % int(m.group(2)))
+        if x.startswith('@('):
+            inner = x[2:-1]
+            e = dump.operand_end(inner, 0)
+            base, rest = inner[:e], inner[e:]
+            b = self.long_of(base)
+            if not rest:
+                return '(%s)' % b
+            m = re.match(r'^([+-])(\d+)$', rest)
+            if m:
+                d = int(m.group(2)) * (1 if m.group(1) == '+' else -1)
+                return '(%s%s0x%x)' % (b, '+' if d >= 0 else '-', abs(d)) if d else '(%s)' % b
+            if rest.startswith('+'):
+                return '(%s+%s)' % (b, self.reg(rest[1:]))
+        return None
+
     def src(self, x, size):
         v = const(x)
         if v is not None:
             return hexc(v, size)
-        m = re.match(r'^@([\w.$]+)\(', x)
+        m = self.stack(x) or self.mem(x)
         if m:
-            return '(%s)' % m.group(1)
+            return m
         return self.reg(x)
+
+    def dst(self, x):
+        return self.stack(x) or self.mem(x) or self.reg(x)
 
     def emit(self, *ins):
         self.code.append(' '.join(i for i in ins if i))
@@ -102,9 +142,19 @@ class Fn:
     def gen(self):
         for r in self.recs:
             op = r.op
-            if op in ('BEGIN', 'DUMMY', 'PIN'):
+            if op == 'BEGIN':
+                if self.frame:
+                    self.emit('dec', '0x%x,XSP' % self.frame)
+                if self.save_iz:
+                    self.emit('push', 'XIZ')
+                continue
+            if op in ('DUMMY', 'PIN'):
                 continue
             if op == 'END':
+                if self.save_iz:
+                    self.emit('pop', 'XIZ')
+                if self.frame:
+                    self.emit('inc', '0x%x,XSP' % self.frame)
                 self.emit('ret')
             elif op == 'LAB':
                 self.emit(r.args[0] + ':')
@@ -122,18 +172,26 @@ class Fn:
                 s = self.src(a, size)
                 if s != dst:
                     self.emit('ld', dst + ',' + s)
+            elif op == 'ADDR':
+                a = r.args[0]
+                m = re.match(r'^@([\w.$]+)\([^()]*\)(?:\[([+-]\d+)\])?$', a)
+                if m:
+                    self.emit('lda', '%s,%s%s' % (self.long_of(r.res), m.group(1),
+                                                  '' if not m.group(2) else '+0x%x' % int(m.group(2))))
+                else:
+                    self.emit('lda', '%s,%s' % (self.long_of(r.res), self.mem(a)[1:-1]))
             elif op == '=':
                 size = size_of(r.res)
-                d = self.reg(r.res)
+                d = self.dst(r.res)
                 s = self.src(r.args[0], size)
                 if s != d:
                     self.emit('ld', d + ',' + s)
             elif op in ALU:
                 size = size_of(r.res)
-                self.emit(ALU[op], self.reg(r.res) + ',' + self.src(r.args[0], size))
+                self.emit(ALU[op], self.dst(r.res) + ',' + self.src(r.args[0], size))
             elif op in ('++', '--'):
                 v = const(r.args[0])
-                self.emit('inc' if op == '++' else 'dec', '0x%x,%s' % (v, self.reg(r.res)))
+                self.emit('inc' if op == '++' else 'dec', '0x%x,%s' % (v, self.dst(r.res)))
             else:
                 raise Unsupported(op)
         return self.code
