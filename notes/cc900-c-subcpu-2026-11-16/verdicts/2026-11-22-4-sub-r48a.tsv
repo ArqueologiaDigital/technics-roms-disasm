@@ -1,0 +1,3 @@
+function	bytes	matches	best_diff
+Audio_Cmd_ToneEdit_Write_And_Reply	269	sub_lane_48a@Xr sub_lane_48b@Xr sub_lane_48c@Xr	
+VoiceParam_Set_Tone_Option	193	-	+12 sub_lane_48c@Xr

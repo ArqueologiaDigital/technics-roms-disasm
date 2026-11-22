@@ -1,0 +1,14 @@
+  682 02ba2c Voice_Build_Four_Partials                    91   core/07_voice_ctrlchange.s
+  255 020966 RingBuf_Init_256                             13   core/03_task_scheduler_kernel.s
+  174 0208b8 RingBuf_Init_1K                              12   core/03_task_scheduler_kernel.s
+  128 02e89b VoiceParam_Set_Tone_Option_CutoffOffset      122  core/08_voice_noteon_and_tonegen.s
+  110 01fc01 MemClear_DRAM_And_ExtRAM                     6    core/02_audio_system_init.s
+   87 03d34d FP_cos                                       260  core/14_dsp_control_routines.s
+   73 01fc95 DSP_Init_Channels                            11   core/02_audio_system_init.s
+   73 01fcde DSP_Write_Channel                            11   core/02_audio_system_init.s
+   48 03d3a4 FP_ddiv                                      261  core/14_dsp_control_routines.s
+   40 036252 DSP_Set_MicLevel                             175  core/13_audio_process_dsp_and_effects.s
+   40 03627a DSP_Set_MicSense                             176  core/13_audio_process_dsp_and_effects.s
+   27 020b2c FIFO_Engine512_Get_Marked                    18   core/03_task_scheduler_kernel.s
+   27 020b47 FIFO_Engine512_Get_From_Mark                 19   core/03_task_scheduler_kernel.s
+   27 03608c DSP_ApplyAlgoForVoiceType                    165  core/13_audio_process_dsp_and_effects.s

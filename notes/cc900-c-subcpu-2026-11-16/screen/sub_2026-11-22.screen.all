@@ -1,0 +1,14 @@
+1   682 02ba2c Voice_Build_Four_Partials                    core/07_voice_ctrlchange.s               push=1 frame=1 spill=3 reld=19 sr=0 ldac=14 hand=0 n=237
+0   255 020966 RingBuf_Init_256                             core/03_task_scheduler_kernel.s          push=0 frame=0 spill=0 reld=0 sr=0 ldac=9 hand=4 n=113
+0   174 0208b8 RingBuf_Init_1K                              core/03_task_scheduler_kernel.s          push=0 frame=0 spill=0 reld=0 sr=0 ldac=6 hand=4 n=77
+0   128 02e89b VoiceParam_Set_Tone_Option_CutoffOffset      core/08_voice_noteon_and_tonegen.s       push=0 frame=0 spill=0 reld=0 sr=0 ldac=0 hand=0 n=48
+0   110 01fc01 MemClear_DRAM_And_ExtRAM                     core/02_audio_system_init.s              push=0 frame=0 spill=0 reld=0 sr=0 ldac=0 hand=0 n=40
+0    87 03d34d FP_cos                                       core/14_dsp_control_routines.s           push=0 frame=1 spill=0 reld=0 sr=0 ldac=1 hand=0 n=34
+0    73 01fc95 DSP_Init_Channels                            core/02_audio_system_init.s              push=0 frame=0 spill=0 reld=0 sr=0 ldac=0 hand=3 n=32
+0    73 01fcde DSP_Write_Channel                            core/02_audio_system_init.s              push=0 frame=0 spill=0 reld=0 sr=0 ldac=0 hand=0 n=32
+0    48 03d3a4 FP_ddiv                                      core/14_dsp_control_routines.s           push=1 frame=1 spill=1 reld=1 sr=0 ldac=0 hand=0 n=19
+0    40 036252 DSP_Set_MicLevel                             core/13_audio_process_dsp_and_effects.s  push=0 frame=0 spill=0 reld=0 sr=0 ldac=1 hand=0 n=11
+0    40 03627a DSP_Set_MicSense                             core/13_audio_process_dsp_and_effects.s  push=0 frame=0 spill=0 reld=0 sr=0 ldac=1 hand=0 n=11
+0    27 020b2c FIFO_Engine512_Get_Marked                    core/03_task_scheduler_kernel.s          push=0 frame=0 spill=0 reld=0 sr=0 ldac=0 hand=1 n=10
+0    27 020b47 FIFO_Engine512_Get_From_Mark                 core/03_task_scheduler_kernel.s          push=0 frame=0 spill=0 reld=0 sr=0 ldac=0 hand=1 n=10
+0    27 03608c DSP_ApplyAlgoForVoiceType                    core/13_audio_process_dsp_and_effects.s  push=0 frame=0 spill=0 reld=0 sr=0 ldac=1 hand=0 n=8
