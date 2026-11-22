@@ -178,6 +178,43 @@ INVERT = {'BEQ': 'BNE', 'BNE': 'BEQ', 'BLT': 'BGE', 'BGE': 'BLT', 'BLE': 'BGT', 
           'JRBS': 'JRBC'}
 
 
+SWITCH_TABLE = True
+JUMP_THREAD = True
+
+
+def switch_table(disp, after):
+    """a moved dispatch of BEQ tests of one variable against constants: when at least 6 values remain within a span
+    of 3 x their count (after peeling the smallest / largest), they become one Switch over [min, max] (gaps to the
+    default: the dispatch's final jump, else the label after it); the peeled values stay BEQ tests, first"""
+    tests = [d for d in disp if d[0] == 'BEQ']
+    tail = [d for d in disp if d[0] != 'BEQ']
+    if len(tests) != len(disp) - len(tail) or len({d[2] for d in tests}) != 1 or len(tail) > 1 or \
+            any(d is not disp[-1] for d in tail) or len(tests) < 6:
+        return disp
+    vals = []
+    for d in tests:
+        m = re.match(r'^#([LC]?U?)(-?\d+)$', d[3] or '')
+        if not m:
+            return disp
+        vals.append((int(m.group(2)), d[1]))
+    default = tail[0][1] if tail else after
+    if default is None:
+        return disp
+    cl = sorted(vals)
+    while len(cl) >= 6 and cl[-1][0] - cl[0][0] + 1 > 3 * len(cl):
+        lo_gap = cl[1][0] - cl[0][0]
+        hi_gap = cl[-1][0] - cl[-2][0]
+        cl = cl[1:] if lo_gap >= hi_gap else cl[:-1]
+    if len(cl) < 6:
+        return disp
+    inside = {v for v, _ in cl}
+    lo, hi = cl[0][0], cl[-1][0]
+    target = dict(cl)
+    labels = [target.get(v, default) for v in range(lo, hi + 1)]
+    outl = [d for d, (v, _) in zip(tests, vals) if v not in inside]
+    return outl + [('Switch', tests[0][2], ' '.join(labels), None)]
+
+
 def move_dispatch(out):
     """a switch: thc1 jumps to a dispatch block (only compare branches) written after the cases and followed by a
     label; thc2 puts the dispatch where the jump was.  When its last branch then targets the label right below it,
@@ -205,6 +242,8 @@ def move_dispatch(out):
                     if last[0] in BRANCHES and out[k][0] == 'LAB' and nxt is not None and nxt[0] == 'LAB' and \
                             nxt[1] == last[1]:
                         disp[-1] = (INVERT[last[0]], after) + tuple(last[2:])
+                    if SWITCH_TABLE:
+                        disp = switch_table(disp, after if out[k][0] == 'LAB' else None)
                     out = out[:i] + disp + body
                     i += len(disp)
                     continue
@@ -222,7 +261,7 @@ def branch_over_jump(out):
             out[real[n]] = (INVERT[a[0]], b[1]) + tuple(a[2:])
             drop.add(real[n + 1])
     out = [r for k, r in enumerate(out) if k not in drop]
-    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'}
+    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | {x for r in out if r[0] == 'Switch' for x in r[2].split()}
     return [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
 
 
@@ -412,7 +451,9 @@ def rewrite(F):
     for x in run[:-1]:
         alias[x] = run[-1]
     out = [r for r in out if not (r[0] == 'LAB' and r[1] in alias)]
-    out = [(r[0], alias.get(r[1], r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else r for r in out]
+    out = [(r[0], alias.get(r[1], r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else
+           (r[0], r[1], ' '.join(alias.get(x, x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
+           for r in out]
     out = branch_over_jump(out)
     ends = set()                                     # a jump to a label whose block is just END: END
     real = [r for r in out if r[0] not in MARKERS]
@@ -420,7 +461,29 @@ def rewrite(F):
         if r[0] == 'LAB' and real[k + 1][0] == 'END':
             ends.add(r[1])
     out = [('END', None, None, None) if r[0] == 'JMP' and r[1] in ends else r for r in out]
-    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'}
+    if JUMP_THREAD:                                  # a label whose block is just `JMP Lx`: jumps to it go to Lx
+        hop = {}
+        real = [r for r in out if r[0] not in MARKERS]
+        for k, r in enumerate(real[:-1]):
+            if r[0] == 'LAB' and real[k + 1][0] == 'JMP' and real[k + 1][1] != r[1]:
+                hop[r[1]] = real[k + 1][1]
+        def dest(x, n=0):
+            return dest(hop[x], n + 1) if x in hop and n < 20 else x
+        out = [(r[0], dest(r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else
+               (r[0], r[1], ' '.join(dest(x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
+               for r in out]
+        used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
+            {x for r in out if r[0] == 'Switch' for x in r[2].split()}
+        drop = set()                                 # the hop's label and its jump go when nothing reaches them
+        for k, r in enumerate(out):
+            if r[0] == 'LAB' and r[1] in hop and r[1] not in used:
+                drop.add(k)
+                n_ = next((j for j in range(k + 1, len(out)) if out[j][0] not in MARKERS), None)
+                prev = next((out[j] for j in range(k - 1, -1, -1) if out[j][0] not in MARKERS), None)
+                if n_ is not None and prev is not None and prev[0] in ('JMP', 'END'):
+                    drop.add(n_)                     # unreachable after an unconditional transfer
+        out = [r for k, r in enumerate(out) if k not in drop]
+    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | {x for r in out if r[0] == 'Switch' for x in r[2].split()}
     out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
     out = [r for k, r in enumerate(out)               # a jump to the label that follows it goes
            if not (r[0] == 'JMP' and next((x for x in out[k + 1:] if x[0] not in MARKERS), (None, None))[:2] ==
@@ -596,6 +659,8 @@ def fmt(F, r, inv, defs):
         return '%s %s %s' % (S(res), op, S(a))
     if op == 'ADDR':
         return '%s ADDR %s' % (S(res), S(a))
+    if op == 'Switch':
+        return '%s Switch %s' % (S(res), a)
     if op == 'LAB':
         return 'LAB,%s' % res
     if op == 'JMP':
@@ -689,8 +754,10 @@ def s1_text(F):
             continue
         if (r[0] == 'LAB' or r[0] in CALLS or r[0] in ('asm', 'ASM') or start) and not first:
             block += 1                             # a block starts at a label, at a call or inline assembler, and
-        first, start = False, r[0] in CALLS or r[0] in BRANCHES or r[0] in ('asm', 'ASM')   # after one or a branch
+        first, start = False, r[0] in CALLS or r[0] in BRANCHES or r[0] in ('asm', 'ASM') or r[0] == 'Switch'
         blocked.append([block, r])
+        if r[0] == 'Switch':
+            block += len(r[2].split())                 # one block per table entry
     if ARG_COPIES:
         blocked = arg_copies(F, blocked, tmap, inv, defs)
     out = ['   :   |FUNC_START']
