@@ -1756,73 +1756,19 @@ NavSong_Exit:
 	inc 2, xsp
 	ret
 
-NavigateDocList:
-	pushw iz
-	ld iz, wa
-	cp iz, 1:i3
-	jr z, NavDoc_CheckBounds
-	cp iz, 0xffff
-	jr nz, NavDoc_Exit
+NavigateDocList:	.include "includes/generated/cc900/NavigateDocList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NavDoc_CheckBounds, NavigateDocList + 13
+	.set	NavDoc_WrapToEnd, NavigateDocList + 43
+	.set	NavDoc_CheckEnd, NavigateDocList + 51
+	.set	NavDoc_Exit, NavigateDocList + 58
 
-NavDoc_CheckBounds:
-	cpw (0x8508:16), 0
-	jr le, NavDoc_Exit
-	call FileIO_GetCurrentFileIndex_Alt
-	cp hl, 0:i3
-	jr lt, NavDoc_Exit
-	ld wa, hl
-	add wa, iz
-	jr ge, NavDoc_WrapToEnd
-	ld wa, (0x8508:16)
-	dec 1, wa
-	jr NavDoc_CheckEnd
-
-NavDoc_WrapToEnd:
-	cp wa, (0x8508:16)
-	jr lt, NavDoc_CheckEnd
-	ld wa, 0:i3
-
-NavDoc_CheckEnd:
-	cp hl, wa
-	call nz, (FileIO_SelectFileByIndex:24)
-
-NavDoc_Exit:
-	popw iz
-	ret
-
-NavigatePdList:
-	pushw iz
-	ld iz, wa
-	cp iz, 1:i3
-	jr z, NavPd_CheckBounds
-	cp iz, 0xffff
-	jr nz, NavPd_Exit
-
-NavPd_CheckBounds:
-	cpw (0x8506:16), 0
-	jr le, NavPd_Exit
-	call GetCurrentFileIndexAlt
-	cp hl, 0:i3
-	jr lt, NavPd_Exit
-	ld wa, hl
-	add wa, iz
-	jr ge, NavPd_WrapToEnd
-	ld wa, (0x8506:16)
-	dec 1, wa
-	jr NavPd_CheckEnd
-
-NavPd_WrapToEnd:
-	cp wa, (0x8506:16)
-	jr lt, NavPd_CheckEnd
-	ld wa, 0:i3
-
-NavPd_CheckEnd:
-	cp hl, wa
-	call nz, (SetCurrentFileIndex:24)
-
-NavPd_Exit:
-	popw iz
-	ret
+NavigatePdList:	.include "includes/generated/cc900/NavigatePdList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NavPd_CheckBounds, NavigatePdList + 13
+	.set	NavPd_WrapToEnd, NavigatePdList + 43
+	.set	NavPd_CheckEnd, NavigatePdList + 51
+	.set	NavPd_Exit, NavigatePdList + 58
 
 SmfMed_FormatSlotList:	.include "includes/generated/cc900/SmfMed_FormatSlotList.s"	; C: cc900/medley_m269.c
 ; the hand assembly's labels inside the compiled body, by their offsets

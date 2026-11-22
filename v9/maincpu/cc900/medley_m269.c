@@ -90,3 +90,53 @@ void PdMed_FormatSlotList(long obj, unsigned int total)
         ApPostEvent(obj, EVT_PARA_DRAW, ram_8444[i].s);
     }
 }
+
+extern int __near ram_8508;
+extern int FileIO_GetCurrentFileIndex_Alt(void);
+extern void FileIO_SelectFileByIndex(int);
+extern void NavigateDocList(int d);
+extern int __near ram_8506;
+extern int GetCurrentFileIndexAlt(void);
+extern void SetCurrentFileIndex(int);
+extern void NavigatePdList(int d);
+
+void NavigateDocList(int d)
+{
+	int i;
+	int n;
+
+	if (d == 1 || d == -1) {
+		if (ram_8508 > 0) {
+			i = FileIO_GetCurrentFileIndex_Alt();
+			if (i >= 0) {
+				n = i + d;
+				if (n < 0)
+					n = ram_8508 - 1;
+				else if (n >= ram_8508)
+					n = 0;
+				if (i != n)
+					FileIO_SelectFileByIndex(n);
+			}
+		}
+	}
+}
+void NavigatePdList(int d)
+{
+	int i;
+	int n;
+
+	if (d == 1 || d == -1) {
+		if (ram_8506 > 0) {
+			i = GetCurrentFileIndexAlt();
+			if (i >= 0) {
+				n = i + d;
+				if (n < 0)
+					n = ram_8506 - 1;
+				else if (n >= ram_8506)
+					n = 0;
+				if (i != n)
+					SetCurrentFileIndex(n);
+			}
+		}
+	}
+}

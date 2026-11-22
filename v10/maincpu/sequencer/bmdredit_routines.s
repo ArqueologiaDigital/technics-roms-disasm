@@ -903,21 +903,11 @@ BmDrEdit_SetFeedbackTimer:
 
 ; Saves the drum/bass editor cursor: 0x275e -> 0x2762 (count), byte 0x2760 -> 0x2764
 ; (ticks), 0x28af -> 0x2766 (data block), 0x2666 -> 0x2768 (offset).
-BmDrEdit_SaveEditState:
-	ldmm16 0x2762, 0x275e
-	ldmm8 0x2764, 0x2760
-	ldmm16 0x2766, SEQ_DATA_BLOCK
-	ldmm16 0x2768, SEQ_DATA_OFFSET
-	ret
+BmDrEdit_SaveEditState:	.include "includes/generated/cc900/BmDrEdit_SaveEditState.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; Restores the editor cursor saved by BmDrEdit_SaveEditState: 0x2762 -> 0x275e, byte 0x2764 ->
 ; 0x2760, 0x2766 -> 0x28af (block), 0x2768 -> 0x2666 (offset).
-BmDrEdit_RestoreEditState:
-	ldmm16 0x275e, 0x2762
-	ldmm8 0x2760, 0x2764
-	ldmm16 SEQ_DATA_BLOCK, 0x2766
-	ldmm16 SEQ_DATA_OFFSET, 0x2768
-	ret
+BmDrEdit_RestoreEditState:	.include "includes/generated/cc900/BmDrEdit_RestoreEditState.s"	; C: cc900/bmdredit_routines_m232.c
 
 ; Moves the playback position backwards to the previous status byte, following backward block
 ; links (offset restarts at 0xff); reaching the first block sets SEQ_ERROR_CODE = 0xff.

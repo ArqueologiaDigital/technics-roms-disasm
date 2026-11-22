@@ -142,28 +142,9 @@ PanelTlv_WritePanelMemoryHeaders:	.include "includes/generated/cc900/PanelTlv_Wr
 	.set	PanelTlv_WritePanelMemoryHeaders_Loop, PanelTlv_WritePanelMemoryHeaders + 13
 ; xwa = a block-0 base.  PanelTlv_WriteRecordHeader for each of the 46 PanelTlv_Block0_Layout records
 ; (10 bytes each: index*5*2).
-PanelTlv_WriteBlock0Headers:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), xwa
-	ld	iz, 0:i3
-PanelTlv_WriteBlock0Headers_Loop:
-	ld	bc, iz
-	extz	xbc
-	ld	xwa, xbc
-	sll	xwa, 2
-	add	xwa, xbc
-	add	xwa, xwa
-	ld	xbc, PanelTlv_Block0_Layout
-	add	xbc, xwa
-	ld	xwa, (xsp + 2)
-	calr	PanelTlv_WriteRecordHeader
-	inc	1, iz
-	cp	iz, 0x2e
-	jr	c, PanelTlv_WriteBlock0Headers_Loop
-	popw	iz
-	inc	4, xsp
-	ret
+PanelTlv_WriteBlock0Headers:	.include "includes/generated/cc900/PanelTlv_WriteBlock0Headers.s"	; C: cc900/tonegen_fileio_handlers_m277_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_WriteBlock0Headers_Loop, PanelTlv_WriteBlock0Headers + 8
 ; xwa = a block-0 base.  PanelTlv_ValidateRecord for each of the 46 PanelTlv_Block0_Layout records; then
 ; the five effect records go to DSPCfg_WriteAllSlots_Combined as slots 0..4 -- tags 0x61, 0x63, 0x65, 0x66,
 ; 0x64, whose payloads sit at base + 0x2D4, 0x2EE, 0x322, 0x33C, 0x308 (spelled 0xFC74.. - 0xF9A0 below).
@@ -215,28 +196,9 @@ PanelTlv_ValidateBlock0_Loop:
 	inc	4, xsp
 	ret
 ; xwa = a block-1 base.  PanelTlv_ValidateRecord for each of the 30 PanelTlv_Block1_Layout records.
-PanelTlv_ValidateBlock1:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), xwa
-	ld	iz, 0:i3
-PanelTlv_ValidateBlock1_Loop:
-	ld	bc, iz
-	extz	xbc
-	ld	xwa, xbc
-	sll	xwa, 2
-	add	xwa, xbc
-	add	xwa, xwa
-	ld	xbc, PanelTlv_Block1_Layout
-	add	xbc, xwa
-	ld	xwa, (xsp + 2)
-	calr	PanelTlv_ValidateRecord
-	inc	1, iz
-	cp	iz, 0x1e
-	jr	c, PanelTlv_ValidateBlock1_Loop
-	popw	iz
-	inc	4, xsp
-	ret
+PanelTlv_ValidateBlock1:	.include "includes/generated/cc900/PanelTlv_ValidateBlock1.s"	; C: cc900/tonegen_fileio_handlers_m277_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidateBlock1_Loop, PanelTlv_ValidateBlock1 + 8
 ; xwa = block base, xbc -> a layout record {u32 record_offset, u32 -> field rules, u8 tag, u8 len}
 ; (PanelTlv_Block0_Layout / PanelTlv_Block1_Layout, typed as panel_tlv_layout_t in
 ; ui_widgets/naka_extension_device.c).  The payload starts at base + record_offset + 2; the rules are
@@ -448,28 +410,9 @@ PanelTlv_Rule_ZeroByte:
 	lda_d16	xwa, (SEQ_SONG_RECORD+768)
 	jrl	PanelTlv_WriteBlock0Headers
 ; xwa = a block-1 base.  PanelTlv_WriteRecordHeader for each of the 30 PanelTlv_Block1_Layout records.
-PanelTlv_WriteBlock1Headers:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), xwa
-	ld	iz, 0:i3
-PanelTlv_WriteBlock1Headers_Loop:
-	ld	bc, iz
-	extz	xbc
-	ld	xwa, xbc
-	sll	xwa, 2
-	add	xwa, xbc
-	add	xwa, xwa
-	ld	xbc, PanelTlv_Block1_Layout
-	add	xbc, xwa
-	ld	xwa, (xsp + 2)
-	calr	PanelTlv_WriteRecordHeader
-	inc	1, iz
-	cp	iz, 0x1e
-	jr	c, PanelTlv_WriteBlock1Headers_Loop
-	popw	iz
-	inc	4, xsp
-	ret
+PanelTlv_WriteBlock1Headers:	.include "includes/generated/cc900/PanelTlv_WriteBlock1Headers.s"	; C: cc900/tonegen_fileio_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_WriteBlock1Headers_Loop, PanelTlv_WriteBlock1Headers + 8
 ; xwa = block base, xbc -> a layout record: base[record_offset] = tag, base[record_offset + 1] = len.
 PanelTlv_WriteRecordHeader:	.include "includes/generated/cc900/PanelTlv_WriteRecordHeader.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 DSPCfg_SyncBitmapData:

@@ -175,3 +175,99 @@ int FileIO_CheckMediaIsWritable(void)
   if (t != 2 && t != 3) return -1;
   return 0;
 }
+
+/* cc900-module: BuildPageRecords BuildSecondPageRecords FileIO_ScanDirEntries FileIO_ValidateModeAndRange ValidateFileRange ValidateFileRangeAlt ValidateFileRangeType5 ValidateFileSelectionIndex */
+extern int ram_271ec, ram_271ee, FILE_LIST_LAST, ram_272ca;
+extern int BuildPageRecords(void);
+extern void BuildPageRecordsAlt(void);
+extern int FileIO_ScanDirEntries(void);
+extern void FileIO_InitWallpaperNav(void);
+extern int BuildSecondPageRecords(void);
+extern void GetFileCountEncoded(void);
+extern int ram_25ea8, ram_271ea, ram_272c8;
+extern int ValidateFileRangeAlt(int i);
+extern int FileIO_GetCurrentFileIndex_Alt(void);
+extern int FileIO_ValidateModeAndRange(int i);
+extern int FileIO_GetCurrentWallpaperIndex(void);
+extern int ValidateFileSelectionIndex(int i);
+extern int GetCurrentFileIndex(void);
+extern int ValidateFileRangeType5(int i);
+extern int GetCurrentFileIndexAlt(void);
+extern int ValidateFileRange(int i);
+extern int GetFirstPageBase(void);
+
+void BuildPageRecordsAlt(void)
+{
+	int n;
+	int last;
+
+	ram_271ee = 0;
+	FILE_LIST_LAST = 59;
+	n = BuildPageRecords();
+	last = 0;
+	if (n > 0)
+		last = n - 1;
+	ram_271ec = last;
+	if (FILE_LIST_LAST > last)
+		FILE_LIST_LAST = last;
+}
+void FileIO_InitWallpaperNav(void)
+{
+	int n;
+	int last;
+
+	ram_271ee = 0;
+	FILE_LIST_LAST = 9;
+	n = FileIO_ScanDirEntries();
+	last = 0;
+	if (n > 0)
+		last = n - 1;
+	ram_272ca = last;
+	if (FILE_LIST_LAST > last)
+		FILE_LIST_LAST = last;
+}
+void GetFileCountEncoded(void)
+{
+	int n;
+	int last;
+
+	ram_271ee = 0;
+	FILE_LIST_LAST = 59;
+	n = BuildSecondPageRecords();
+	last = 0;
+	if (n > 0)
+		last = n - 1;
+	ram_271ec = last;
+	if (FILE_LIST_LAST > last)
+		FILE_LIST_LAST = last;
+}
+int FileIO_GetCurrentFileIndex_Alt(void)
+{
+	if (ValidateFileRangeAlt(ram_271ea) != 0)
+		return -104;
+	return ram_271ea;
+}
+int FileIO_GetCurrentWallpaperIndex(void)
+{
+	if (FileIO_ValidateModeAndRange(ram_272c8) != 0)
+		return -104;
+	return ram_272c8;
+}
+int GetCurrentFileIndex(void)
+{
+	if (ValidateFileSelectionIndex(ram_25ea8) != 0)
+		return -104;
+	return ram_25ea8;
+}
+int GetCurrentFileIndexAlt(void)
+{
+	if (ValidateFileRangeType5(ram_271ea) != 0)
+		return -104;
+	return ram_271ea;
+}
+int GetFirstPageBase(void)
+{
+	if (ValidateFileRange(ram_271ea) != 0)
+		return -104;
+	return ram_271ea;
+}

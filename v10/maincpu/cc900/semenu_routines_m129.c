@@ -227,3 +227,47 @@ void SeMenu_SetupSoundBankPair(unsigned char *a, unsigned char *b)
         }
     }
 }
+
+extern void SeCtr2_GetGroupBase(unsigned char s, unsigned char *p);
+extern void SeCtr2_GetKitGroupBase(unsigned char s, unsigned char *p);
+
+void SeCtr2_GetGroupBase(unsigned char s, unsigned char *p)
+{
+	unsigned char v;
+
+	switch (s) {
+	case 2:
+		v = 26;
+		break;
+	case 5:
+		v = 35;
+		break;
+	case 6:
+		v = 38;
+		break;
+	default:
+		v = 23;
+		break;
+	}
+	*p = v;
+}
+void SeCtr2_GetKitGroupBase(unsigned char s, unsigned char *p)
+{
+	unsigned char v;
+
+	switch (s) {
+	case 2:
+		v = 24;
+		break;
+	case 5:
+		v = 33;
+		break;
+	case 6:
+		v = 36;
+		break;
+	default:
+		v = 21;
+		break;
+	}
+	*p = v;
+}

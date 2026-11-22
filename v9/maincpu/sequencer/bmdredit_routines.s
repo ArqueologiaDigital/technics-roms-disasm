@@ -838,19 +838,9 @@ BmDrEdit_SetFeedbackTimer:
 	ld (0x295d:16), 1
 	ret
 
-BmDrEdit_SaveEditState:
-	ldmm16 0x2762, 0x275e
-	ldmm8 0x2764, 0x2760
-	ldmm16 0x2766, SEQ_DATA_BLOCK
-	ldmm16 0x2768, SEQ_DATA_OFFSET
-	ret
+BmDrEdit_SaveEditState:	.include "includes/generated/cc900/BmDrEdit_SaveEditState.s"	; C: cc900/bmdredit_routines_m232.c
 
-BmDrEdit_RestoreEditState:
-	ldmm16 0x275e, 0x2762
-	ldmm8 0x2760, 0x2764
-	ldmm16 SEQ_DATA_BLOCK, 0x2766
-	ldmm16 SEQ_DATA_OFFSET, 0x2768
-	ret
+BmDrEdit_RestoreEditState:	.include "includes/generated/cc900/BmDrEdit_RestoreEditState.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_ClearAndScanToEnd:	.include "includes/generated/cc900/BmDrEdit_ClearAndScanToEnd.s"	; C: cc900/bmdredit_routines_m232.c
 ; the hand assembly's labels inside the compiled body, by their offsets

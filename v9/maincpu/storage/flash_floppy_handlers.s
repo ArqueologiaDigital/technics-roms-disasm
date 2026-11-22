@@ -3445,159 +3445,17 @@ VoiceParam_AddOffset:
 	ld	(xwa+hl), c
 	ret
 
-DualVoice_ScanAllColumns:
-	dec 2, xsp
-	pushw_erp 0xfa
-	ld (xsp + 2), a
-	calr SlotTable_InitBank1748
-	ldib_erp 0xfb, 0
+DualVoice_ScanAllColumns:	.include "includes/generated/cc900/DualVoice_ScanAllColumns.s"	; C: cc900/flash_floppy_handlers_m159_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DualVoice_ScanColumnLoop, DualVoice_ScanAllColumns + 14
+	.set	DualVoice_StoreBankMatch, DualVoice_ScanAllColumns + 49
+	.set	DualVoice_ScanRow1, DualVoice_ScanAllColumns + 53
 
-DualVoice_ScanColumnLoop:
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 0:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0x700
-	cp bc, 0x600
-	jr z, DualVoice_StoreBankMatch
-	cp bc, 0x500
-	jr nz, DualVoice_ScanRow1
-
-DualVoice_StoreBankMatch:
-	ld (1748:16), wa
-
-DualVoice_ScanRow1:
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 1:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1748:24)
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 2:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1748:24)
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 3:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1748:24)
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 4:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1748:24)
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x0a
-	jrl c, DualVoice_ScanColumnLoop
-	popw_erp 0xfa
-	inc 2, xsp
-	ret
-
-DualVoice_ScanAllColumnsAlt:
-	dec 2, xsp
-	pushw_erp 0xfa
-	ld (xsp + 2), a
-	calr SlotTable_InitBank1850
-	ldib_erp 0xfb, 0
-
-DualVoice_ScanColumnLoopAlt:
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 0:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0x700
-	cp bc, 0x600
-	jr z, DualVoice_StoreBankMatchAlt
-	cp bc, 0x500
-	jr nz, DualVoice_ScanRow1Alt
-
-DualVoice_StoreBankMatchAlt:
-	ld (1850:16), wa
-
-DualVoice_ScanRow1Alt:
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 1:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1850:24)
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 2:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1850:24)
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 3:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1850:24)
-	ld a, (xsp + 2)
-	extz wa
-	ldto_berp C, 0xfb
-	extz bc
-	ld de, 4:i3
-	calr Util_FrameSetup10
-	ld wa, hl
-	ld bc, wa
-	and bc, 0xff
-	cp bc, 0x80
-	call nc, (SlotTable_Insert1850:24)
-	inc1b_erp 0xfb
-	cp_erpb 0xfb, 0x0a
-	jrl c, DualVoice_ScanColumnLoopAlt
-	popw_erp 0xfa
-	inc 2, xsp
-	ret
+DualVoice_ScanAllColumnsAlt:	.include "includes/generated/cc900/DualVoice_ScanAllColumnsAlt.s"	; C: cc900/flash_floppy_handlers_m159_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DualVoice_ScanColumnLoopAlt, DualVoice_ScanAllColumnsAlt + 14
+	.set	DualVoice_StoreBankMatchAlt, DualVoice_ScanAllColumnsAlt + 49
+	.set	DualVoice_ScanRow1Alt, DualVoice_ScanAllColumnsAlt + 53
 
 SlotTable_InitBank1748:
 	lda xbc, (1748:16)
