@@ -240,6 +240,11 @@ resumes narrowed (E1), one C lane takes the `djnz` pool and the v10-to-siblings 
 E-0 (E3), the model stays black-box (E4) and builds no firmware function (E5).  Work starts with Z1, Z2, Z3 and C0,
 one step at a time (the owner's token budget, 2026-11-20).  Progress is logged in `PROGRESS.md` beside this file.
 
+**E4 revised 2026-11-22, after C0** (C0 estimated about 3,900 batches to firmware parity, which meets E4's revisit
+condition).  Asked whether the model should stay black-box, the owner answered: "look at compiler internals".  So
+PLAN.md's D2 is lifted: thc1 / thc2 may be disassembled to learn their rules.  Section 13 says how, and what stays
+private because of D4.
+
 ## 12. What the reviews changed
 
 **First review (Fable 5.2, on 5b202c125):**
@@ -273,3 +278,42 @@ one step at a time (the owner's token budget, 2026-11-20).  Progress is logged i
 | `codegen.py` "from 7,978"                                     | 10,698 lines at 2026-11-10                                                                |
 | no base rate                                                  | the library's 235 / 16 / 40 of 291 as a prior                                             |
 | v5 / v6 / v7 residual counted as compiler evidence            | 96 with a built twin set apart as version work                                            |
+
+## 13. Step I: the compiler's internals (E4 revised, 2026-11-22)
+
+**Why.**  C0 showed that fitting rules from outputs, batch by batch, does not reach the firmware: the residual is
+mostly register choice, and register choice is what black-box fitting learned slowest.  The compiler's own code holds
+the answer directly: the allocator's order and costs, the peephole patterns, the switch and loop heuristics.
+
+**What we have.**  Static analysis only; the programs still run only in the oracle VM.  All are 32-bit Windows console
+programs (PE32, i386); the 1998 ones say "Copyright(C) TOSHIBA CORPORATION 1989-1997" and link the Microsoft
+Visual C++ runtime.
+
+| build                 | where (`~/compartilhado/upstream_repos/file_archive/`)                              | thc1 / thc2 bytes  |
+|-----------------------|-------------------------------------------------------------------------------------|--------------------|
+| V4.23 (1998-06-04)    | `devrs.com/ngpcbins/unpacked/zip/T900/BIN/`                                         | 276,992 / 301,568  |
+| IDE 2003              | `github.com/colinoflynn/Toshiba-TLCS-900-L-Resources/unpacked/toshiba-ide/.../bin/` | I0 measures        |
+| v1.10 (2009)          | `archive.org/ToshibaTLCS900CompilerV1.10/unpacked/msi/.../bin/`                     | I0 measures        |
+
+**The clean-room boundary (because of D4).**  The backend is meant for LLVM upstream, so no Toshiba code may reach it,
+even rewritten line by line.
+- Anything that reproduces Toshiba's code or tables (disassembly, decompiled C, a table dumped verbatim) lives only
+  in the private `~/compartilhado/cc900-oracle/internals/`, never pushed, like the oracle's outputs (D1).
+- Public notes (rules.md, this directory) carry our own description of a behaviour: what the compiler decides and
+  when, in our words, citing a binary by SHA-256 and a virtual address.  No listing lines.
+- The model and the LLVM code are written from those descriptions, and every rule taken from the internals is
+  still checked the usual way: it must survive the veto set (Z2) and fix near misses before it is kept.
+
+**Steps.**
+
+| step | what                                                                                                                                                                       | done when                                                                         |
+|------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|
+| I0   | inventory, no new tools: every thc1 / thc2 build's SHA-256, size, PE sections, imports, symbols if any, version and diagnostic strings, option names; which pass does what | `i0_inventory.py` and its table; a tool choice for I1                             |
+| I1   | tooling: a disassembler / decompiler for i386 PE run headless (Ghidra or an equivalent), its project private in `internals/`                                               | the V4.23 thc2 analysed, function count and call graph                            |
+| I2   | thc2's register allocator: the register order, the costs, what decides a choice; described in our words                                                                    | a rule from it fixes register-only near misses (A1's set) and passes the veto set |
+| I3   | thc2's peephole and pattern tables: the list, each pattern described, marked "in the model" or not                                                                         | the list in rules.md's style; the missing ones queued for the model               |
+| I4   | V4.23 against 2003 and 2009: which thc2 functions changed, to bound the Technics compiler (between 1998 and 2003)                                                          | a changed-function list with what each change does to the output                  |
+
+I0 runs first.  I2 and I3 replace C1-C3's rule fitting as the model's source of rules; B and D keep their role as the
+test of each rule.  Order 2's analysis steps (A1, B0, C2, D0) still give I2 and I3 their test sets.
+

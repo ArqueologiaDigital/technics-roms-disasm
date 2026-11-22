@@ -19,8 +19,9 @@ optimisations, same bytes.  The C data tables the disasm build already compiles 
 
 **Not goals.**
 - Running or reading Toshiba's programs anywhere but in the throwaway VM.
-- Disassembling thc1 / thc2 to copy their algorithms.  The approach is black-box: we infer the behaviour from
-  inputs and outputs (decision D2 below).
+- Copying thc1 / thc2's code.  Until 2026-11-22 the approach was black-box: we inferred the behaviour from inputs
+  and outputs (decision D2 below).  D2 was lifted that day: the programs may now be disassembled to learn their rules,
+  but only our own descriptions of those rules leave the private oracle repository (see D2's note under section 7).
 - Matching cc900's diagnostics, listings or debug records.
 - Committing Toshiba's library sources, or the objects compiled from them, to a public repository.
 
@@ -227,6 +228,12 @@ start once phase 5 has decided the rules that its first functions exercise.
 | D4 | Is the backend meant for LLVM upstream?                                             | yes.  So the compat pipeline stays in its own files behind the attribute check, and `-mabi=cc900` is written to upstream standards; whether the compat mode itself is proposed upstream is decided when the backend is |
 | D5 | May the oracle VM stay on the share permanently?                                    | yes.  It moved from `~/compartilhado/tmp/cc900-vm/` to `~/compartilhado/cc900-oracle/vm/` (git-ignored there), about 2.8 GB                                                                                            |
 | D6 | (raised by Felipe) Should the dev-kit compilers be imitated too?                    | yes, as a secondary goal: one variant flag per compiler (`v4.23`, `ide2003`, `v1.10`), produced as a by-product whenever that is viable, for the Neo Geo Pocket homebrew scene                                         |
+
+**D2 revised 2026-11-22.**  The feedback plan's step C0 estimated about 3,900 phase-3a batches to firmware parity, so
+its decision E4 was put to Felipe again; the answer was "look at compiler internals".  thc1 / thc2 may be
+disassembled.  Disassembly, decompiled code and verbatim tables stay in `~/compartilhado/cc900-oracle/internals/`;
+public notes and the LLVM code carry only our own descriptions of the behaviour (D4).  The steps are the feedback
+plan's section 13 (`notes/cc900-feedback-plan-2026-11-22/README.md`).
 
 ## 8. Working rules that apply
 
