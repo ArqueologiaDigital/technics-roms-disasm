@@ -132,6 +132,8 @@ def outputs(op, fl):
 
 
 def inputs(op, fl):
+    if op == '=':                                   # a plain assignment reads only its source
+        return [x for x in fl[2:3] if x] + ([fl[1]] if fl[1].startswith('*') else [])
     if op in COMPOUND or op in BINARY or op in CMP or op in CALLS or op == 'ADDR' or op in ('UMINUS', 'UPLUS', '~'):
         return [x for x in fl[1:3] if x]
     return [x for x in fl[1:] if x]
@@ -189,11 +191,24 @@ def rewrite(F):
             i += 2
             continue
         if op == '=' and len(fl) > 3 and fl[1] == fl[3] and fl[1].startswith('T') and nxt is not None and \
-                nxt.op in ('+=', '-=') and nxt.fields[1] == fl[2] and nxt.fields[2].startswith('#') and \
-                reads.get(fl[1], 0) == 1:
+                nxt.op in ('+=', '-=') and nxt.fields[1] == fl[2] and nxt.fields[2].startswith('#'):
+            if reads.get(fl[1], 0):                 # post-increment: the old value, when read, then x ++ c
+                out.append(('=', fl[1], fl[2], None))
             out.append(('++' if nxt.op == '+=' else '--', fl[2], '#' + nxt.fields[2][1:], None))
             i += 2
             continue
+        if op in ('|=', '&=') and fl[2].startswith('#'):
+            m = re.match(r'^#([LC]?)(U?)(\d+)$', fl[2])
+            t = F.vtype(fl[1])
+            bits = SIZE.get(t, 2) * 8 if 1 <= t <= 12 else 16
+            v = int(m.group(3)) if m else None
+            if v is not None and op == '&=':
+                v = ~v & ((1 << bits) - 1)
+            if v is not None and pow2('#%d' % v) is not None and v < (1 << bits):
+                out.append(('BSET' if op == '|=' else 'BCLR', fl[1], '#%s%s%d' % (m.group(1), m.group(2), pow2('#%d' % v)),
+                            None))
+                i += 1
+                continue
         if op in COMPOUND:
             o = op
             if op == '=':
@@ -220,7 +235,7 @@ def rewrite(F):
         elif op == 'ADDR':
             out.append(('ADDR', fl[3], fl[1], None))
         elif op in CALLS:                            # CCALL,@f,#argbytes,T: the result first, as the others
-            res_ = fl[3] if len(fl) > 3 and F.typ(fl[3]) not in ('1', None) else None
+            res_ = fl[3] if len(fl) > 3 and F.typ(fl[3]) not in ('1', None) and reads.get(fl[3], 0) else None
             out.append((op, res_, fl[1], fl[2]))
         elif op in ARGS:                             # AARG,value,call,index: the index is kept
             out.append((op, None, fl[1], fl[3] if op == 'AARG' and len(fl) > 3 else None))
@@ -299,13 +314,40 @@ def const(b):
     return '#%s%s' % (m.group(1) or ' ', m.group(2))
 
 
-def show(F, x, inv, defs):
+def ctype(F, x, inv):
+    """the basic type (1..12) or pointer-ness of the value operand x denotes, for typing a constant beside it"""
+    if x is None or x.startswith('#'):
+        return None
+    b = x.lstrip('*&')
+    orig = inv.get(b, b)
+    if b[:1] in 'IP' and b[1:].isdigit():
+        orig = '%s%d' % (b[0], int(b[1:]) + 1)
+    t = num(F.typ(orig))
+    if x.startswith('*') and F.types:
+        t = F.types.pointee(t)
+    if F.types and F.types.is_ptr(t):
+        return 'ptr'
+    return t if 1 <= t <= 12 else None
+
+
+def typed_const(b, t):
+    """a constant spelled as thc2 prints it beside a value of type t: C for 1 byte, L for 4, U unsigned"""
+    m = re.match(r'^#([LC]?)(U?)(-?\d+)$', b)
+    if not m or t is None:
+        return const(b)
+    if t == 'ptr':
+        return '#LU%s' % m.group(3)
+    size, uns = SIZE.get(t, 2), SIGNED.get(t) is False
+    return '#%s%s%s' % ({1: 'C', 4: 'L'}.get(size, ' '), 'U' if uns else '', m.group(3))
+
+
+def show(F, x, inv, defs, ctx=None):
     if x is None:
         return ''
     pre = x[:len(x) - len(x.lstrip('*&'))]
     b = x[len(pre):]
     if b.startswith('#'):
-        return const(b)
+        return typed_const(b, ctx) if ctx is not None else const(b)
     if b == 'A':
         return 'A'
     if b.startswith('@'):
@@ -319,11 +361,18 @@ def show(F, x, inv, defs):
 def fmt(F, r, inv, defs):
     op, res, a, b = r
     S = lambda x: show(F, x, inv, defs)
+    if op in COMPOUND or op in ('++', '--', 'BSET', 'BCLR') or op in BRANCHES and op not in ('JRBC', 'JRBS'):
+        ct = ctype(F, res if op not in BRANCHES else a, inv) if op not in BRANCHES else \
+            (ctype(F, a, inv) or ctype(F, b, inv))
+        S = lambda x: show(F, x, inv, defs, ct)
+    elif op in BINARY:
+        ct = ctype(F, res, inv)
+        S = lambda x: show(F, x, inv, defs, ct if op not in ('<<', '>>') else None)
     if op in BRANCHES:
         return '%s %s %s,%s' % (res, op, S(a), S(b))
     if op in BINARY or op == 'ADD':
         return '%s %s %s,%s' % (S(res), op, S(a), S(b))
-    if op in COMPOUND or op in ('++', '--', 'CONV', 'LDIR'):
+    if op in COMPOUND or op in ('++', '--', 'CONV', 'LDIR', 'BSET', 'BCLR'):
         return '%s %s %s' % (S(res), op, S(a))
     if op == 'ADDR':
         return '%s ADDR %s' % (S(res), S(a))
@@ -355,11 +404,47 @@ def fmt(F, r, inv, defs):
     return '%s %s' % (op, ' '.join(S(x) for x in (res, a, b) if x))
 
 
+ARG_COPIES = True
+
+
+def arg_copies(F, blocked, tmap, inv, defs):
+    """a register argument (AARG) that is not a constant or a dereference goes through a new temporary of type 0,
+    written right after the value's last definition in the call's block (else at the block's start); the new
+    temporaries are numbered after thc1's, from the last call backwards"""
+    base = len(tmap)
+    for k in range(len(F.f.temps) + 1):
+        if 'T%d' % k in inv:
+            base = max(base, k + 1)
+    sites = [i for i, (b, r) in enumerate(blocked) if r[0] == 'AARG' and r[2] and not r[2].startswith('#')
+             and not r[2].startswith('*') and not r[2].startswith('&')]
+    names = {}
+    for n, i in enumerate(reversed(sites)):
+        names[i] = 'T%d' % (base + n)
+    inserts = []
+    for i in sites:
+        b, r = blocked[i]
+        new = names[i]
+        F.ttype_new = getattr(F, 'ttype_new', {})
+        inv[new] = new
+        F.ttype[new] = '0'
+        defs.add(new)
+        j = i - 1
+        while j >= 0 and blocked[j][0] == b and blocked[j][1][1] != r[2]:
+            j -= 1
+        at = j + 1 if j >= 0 and blocked[j][0] == b else next(k for k in range(i + 1) if blocked[k][0] == b) + \
+            (1 if blocked[next(k for k in range(i + 1) if blocked[k][0] == b)][1][0] == 'LAB' else 0)
+        inserts.append((at, [b, ('=', new, r[2], None)]))
+        blocked[i] = [b, (r[0], r[1], new, r[3])]
+    for at, item in sorted(inserts, key=lambda x: -x[0]):
+        blocked.insert(at, item)
+    return blocked
+
+
 def s1_text(F):
     recs = rewrite(F)
     recs, tmap, defs = number(F, recs)
     inv = {v: k for k, v in tmap.items()}
-    out = ['   :   |FUNC_START']
+    blocked = []
     block, start, first = 0, False, True
     for r in recs:
         if r[0] in MARKERS:
@@ -367,6 +452,11 @@ def s1_text(F):
         if (r[0] == 'LAB' or r[0] in CALLS or start) and not first:
             block += 1                             # a block starts at a label, at a call, after a call or a branch
         first, start = False, r[0] in CALLS or r[0] in BRANCHES
+        blocked.append([block, r])
+    if ARG_COPIES:
+        blocked = arg_copies(F, blocked, tmap, inv, defs)
+    out = ['   :   |FUNC_START']
+    for block, r in blocked:
         out.append('%3u:   |%s' % (block, fmt(F, r, inv, defs)))
     out.append('   :   |FUNC_END')
     return out
