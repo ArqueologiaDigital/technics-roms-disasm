@@ -314,6 +314,15 @@ even rewritten line by line.
 | I3   | thc2's peephole and pattern tables: the list, each pattern described, marked "in the model" or not                                                                         | the list in rules.md's style; the missing ones queued for the model               |
 | I4   | V4.23 against 2003 and 2009: which thc2 functions changed, to bound the Technics compiler (between 1998 and 2003)                                                          | a changed-function list with what each change does to the output                  |
 
+**Found in I2 (2026-11-22): the compiler can be observed stage by stage.**  thc2 has hidden options that print its
+intermediate code as it enters code selection (`-zim`), after its optimiser (`-zio`), and every variable's storage
+(`-g`); and thc1's output, the file thc2 reads, can be kept (i2/job_i2.sh).  So each stage of a reimplementation can
+be checked against V4.23 on its own, instead of only on the final bytes.  That adds a step:
+
+| step | what                                                                                                                                                         | done when                                                                            |
+|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| I5   | stage oracles for every firmware C file and the validation corpus: thc1's file, `-zim`, `-zio`, `-g`; the model (and later the LLVM port) checked per stage | a per-stage score of the model; the first stage where each failing function diverges |
+
 I0 runs first.  I2 and I3 replace C1-C3's rule fitting as the model's source of rules; B and D keep their role as the
 test of each rule.  Order 2's analysis steps (A1, B0, C2, D0) still give I2 and I3 their test sets.
 

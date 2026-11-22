@@ -48,10 +48,17 @@ What the probe showed (run 45):
 | `-zperf` | pads after each `ret` with `nop`s ("for RTE")                                                                                                                      |
 | `-gb`    | no change for this probe                                                                                                                                           |
 
-**thc2's register numbering** (its register-name table): byte registers 0-31 (W, A, QW, QA, B, C, QB, QC, ... up to
-QSPL), word registers 32-55 (WA = 32, QWA = 33, BC = 34, QBC = 35, DE = 36, ..., IZ = 44, QIZ = 45, SP = 46,
-QSP = 47), 32-bit registers 56-63 (XWA ... XSP), F = 64.  So in the probe `leaf` the debug records put `i` in 40
-(IX), `s` in 38 (HL), `t` in 36 (DE), and in `calls` `i` in 44 (IZ) and `v` in 45 (QIZ), matching the listing.
+**thc2's register numbering** (its register-name table, indexed from W): byte registers 0-31 (W = 0, A = 1, QW, QA,
+B = 4, C, QB, QC, ... up to QSPL = 31), word registers 32-47 (WA = 32, QWA = 33, BC = 34, QBC = 35, DE = 36, QDE,
+HL = 38, QHL, IX = 40, QIX, IY = 42, QIY, IZ = 44, QIZ = 45, SP = 46, QSP = 47), 32-bit registers 48-55 (XWA ...
+XSP), F = 56.  So in the probe `leaf` the debug records put `i` in 40 (IX), `s` in 38 (HL), `t` in 36 (DE), and in
+`calls` `i` in 44 (IZ) and `v` in 45 (QIZ), matching the listing.
+
+**A free-register search** (0x405ed0): given an occupancy mask with 4 bits per 32-bit register (its two low bytes and
+its two Q bytes), XWA to XIZ, it returns the first free byte register (low bytes only), word register (the low word,
+never the Q word) or 32-bit register, in the order XWA, XBC, XDE, XHL, XIX, XIY, XIZ.  Under one value of a global
+set by the options it first marks the Q words of XWA..XHL as taken.  Nothing calls it directly (a function pointer,
+presumably); it looks like the temporaries' allocator, not the variables' (whose order starts at BC).
 
 **The pipeline** (thc2's per-function loop at 0x42be40): read a function, a large selection / optimisation pass
 (0x41fca0), then frame layout (0x42bff0: stack offsets for autos and temporaries), 0x42c310, 0x401210, 0x42c710,
