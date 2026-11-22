@@ -314,3 +314,20 @@ void SeqStep_TimerDispatchB(void)
 {
   (*SeqStep_TimerDispatchB_PtrTable[ram_22f6])();
 }
+
+/* cc900-module: SeqStep_CopyPartData SeqStep_SearchBackward SeqStep_UpdateForwardLinks SeqStep_UpdateRefsAfterSwap */
+extern void SeqStep_CopyPartData(unsigned int, unsigned int);
+extern void SeqStep_UpdateRefsAfterSwap(unsigned int, unsigned int);
+extern void SeqStep_UpdateForwardLinks(unsigned int, unsigned int);
+extern unsigned int SeqStep_SearchBackward(unsigned int);
+extern void SeqStep_SwapTwoParts(unsigned int *, unsigned int *);
+extern void SeqStep_SwapTwoParts(register unsigned int *a, unsigned int *b);
+
+void SeqStep_SwapTwoParts(register unsigned int *a, unsigned int *b)
+{
+    SeqStep_CopyPartData(*a, *b);
+    SeqStep_UpdateRefsAfterSwap(*a, *b);
+    SeqStep_UpdateForwardLinks(*a, *b);
+    *a = SeqStep_SearchBackward(*a);
+    *b = SeqStep_SearchForward(*b);
+}

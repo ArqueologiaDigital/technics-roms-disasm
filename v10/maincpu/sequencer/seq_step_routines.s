@@ -2490,34 +2490,7 @@ SeqStep_SearchForwardDone:
 ; Moves the used block *XWA into the free block *XBC (SeqStep_CopyPartData,
 ; SeqStep_UpdateRefsAfterSwap, SeqStep_UpdateForwardLinks), then moves both cursors on: *XWA to the
 ; previous used block (SeqStep_SearchBackward), *XBC to the next free one (SeqStep_SearchForward).
-SeqStep_SwapTwoParts:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ld wa, (xiz)
-	ld xbc, (xsp + 4)
-	ld bc, (xbc)
-	calr SeqStep_CopyPartData
-	ld wa, (xiz)
-	ld xbc, (xsp + 4)
-	ld bc, (xbc)
-	calr SeqStep_UpdateRefsAfterSwap
-	ld wa, (xiz)
-	ld xbc, (xsp + 4)
-	ld bc, (xbc)
-	calr SeqStep_UpdateForwardLinks
-	ld wa, (xiz)
-	calr SeqStep_SearchBackward
-	ld (xiz), hl
-	ld xwa, (xsp + 4)
-	ld wa, (xwa)
-	calr SeqStep_SearchForward
-	ld xwa, (xsp + 4)
-	ld (xwa), hl
-	pop xiz
-	inc 4, xsp
-	ret
+SeqStep_SwapTwoParts:	.include "includes/generated/cc900/SeqStep_SwapTwoParts.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_CopyPartData:
 	dec 4, xsp
