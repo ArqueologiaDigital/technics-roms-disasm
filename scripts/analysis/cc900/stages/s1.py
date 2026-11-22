@@ -383,7 +383,9 @@ def rewrite(F):
                 elif T and T.is_basic(dt) and T.is_basic(st) and (SIZE[dt] != SIZE[st] or SIGNED.get(dt) != SIGNED.get(st)):
                     o = 'CONV'
                 elif T and (T.is_basic(dt) and T.is_ptr(st) or T.is_ptr(dt) and T.is_basic(st)):
-                    o = 'CONV'                       # between a pointer and an integer
+                    it = dt if T.is_basic(dt) else st    # between a pointer and an integer: unless an unsigned long
+                    if SIZE.get(it) != 4 or SIGNED.get(it):
+                        o = 'CONV'
             out.append((o, fl[1], fl[2], None))
             if MEM_RESULT_NUMBERED and op == '=' and len(fl) > 3 and fl[3].startswith('T') and \
                     fl[1][:1] in '@*' and fl[2][:1] in '@*' and not reads.get(fl[3], 0):   # memory to memory
@@ -455,6 +457,8 @@ def rewrite(F):
            (r[0], r[1], ' '.join(alias.get(x, x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
            for r in out]
     out = branch_over_jump(out)
+    out = [r for k, r in enumerate(out) if not (r[0] == 'END' and next(
+        (x for x in reversed(out[:k]) if x[0] not in MARKERS), (None,))[0] == 'END')]   # END END: one
     ends = set()                                     # a jump to a label whose block is just END: END
     real = [r for r in out if r[0] not in MARKERS]
     for k, r in enumerate(real[:-1]):
