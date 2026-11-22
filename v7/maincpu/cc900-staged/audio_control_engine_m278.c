@@ -6,14 +6,61 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
-/* cc900-module: AnalogIn_PollAfterTouch AnalogIn_PollExpressionPedal ArpQueue_Enqueue ArpQueue_InitBuffer Audio_FlushPendingBankSelects MidiChan_ParseVoiceData PanelTlv_WriteBlock0Headers PanelTlv_WriteBlock1Headers PanelTlv_WriteLivePanelHeaders PanelTlv_WritePanelMemoryHeaders SeqBuf_WaitForEmpty SeqData_InitPlaybackFromField SeqOut_FlushWithChunking */   /* scripts/analysis/cc900/module_calls.py v10 */
 
-extern void AnalogIn_PollExpressionPedal(unsigned char *);
-extern void AnalogIn_PollAfterTouch(unsigned char *);
-extern void AnalogIn_PollCpuAdc(void);
+extern unsigned int __near LED_REQUEST_HOLD_1;
+extern unsigned int __near LED_REQUEST_HOLD_2;
+extern unsigned int __near LED_REQUEST_HOLD_3;
+extern unsigned int __near ram_8eac;
+extern unsigned long CtrlPanel_LookupIndicatorEntry(unsigned int a);
+extern void CtrlPanel_IndicatorDispatch(unsigned char a);
+extern unsigned int __near LED_REQUEST_1;
+extern unsigned int __near LED_REQUEST_2;
+extern unsigned int __near LED_REQUEST_3;
+extern unsigned int __near ram_8eaa;
+extern void CtrlPanel_SetIndicatorBit(unsigned char a);
 
-void AnalogIn_PollCpuAdc(void)
+void CtrlPanel_IndicatorDispatch(unsigned char a)
 {
-  AnalogIn_PollExpressionPedal((unsigned char *)0x8f10L);
-  AnalogIn_PollAfterTouch((unsigned char *)0x8f16L);
+	unsigned char g;
+	unsigned int m;
+
+	g = a & 0xf0;
+	m = CtrlPanel_LookupIndicatorEntry(a & 0x0f);
+	switch (g) {
+	case 0x00:
+		LED_REQUEST_HOLD_1 |= m;
+		break;
+	case 0x20:
+		LED_REQUEST_HOLD_2 |= m;
+		break;
+	case 0x40:
+		LED_REQUEST_HOLD_3 |= m;
+		break;
+	case 0x60:
+		ram_8eac |= m;
+		break;
+	}
+}
+
+void CtrlPanel_SetIndicatorBit(unsigned char a)
+{
+	unsigned char g;
+	unsigned int m;
+
+	g = a & 0xf0;
+	m = CtrlPanel_LookupIndicatorEntry(a & 0x0f);
+	switch (g) {
+	case 0x00:
+		LED_REQUEST_1 |= m;
+		break;
+	case 0x20:
+		LED_REQUEST_2 |= m;
+		break;
+	case 0x40:
+		LED_REQUEST_3 |= m;
+		break;
+	case 0x60:
+		ram_8eaa |= m;
+		break;
+	}
 }
