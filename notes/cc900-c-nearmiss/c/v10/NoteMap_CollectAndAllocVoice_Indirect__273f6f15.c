@@ -1,0 +1,62 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the function and the declarations it uses of firmware/p6_I_26r1m297b.c (2026-11-22-5-p6-r72)
+   sha256 273f6f15cd0c7737d371d0446397faa35f16e82473f601b1475214fe58413ec6 (tar-sha256); compiled at -O3 -Xr
+   cc900-options: -Xr
+   cc900-name: NoteMap_CollAllocVoice_Indirect=NoteMap_CollectAndAllocVoice_Indirect */
+struct nrec { unsigned char b0, count, b2, b3; unsigned char ent[32][5]; };
+extern unsigned int __near AUDIO_SEQ_TRACK_FLAGS;
+extern unsigned int __near HARMONY_NOTE_LIST;
+extern unsigned char NoteMap_LookupVoice(struct nrec *, void *, unsigned int, unsigned int);
+extern void NoteMap_FindEntry(struct nrec *, unsigned int);
+extern unsigned char NoteMap_FindBestVoiceSlot(struct nrec *);
+extern unsigned char NoteMap_FindBestFreeVoice(struct nrec *);
+extern unsigned char NoteMap_FindBestMatch(void);
+extern unsigned char VoiceMap_AllocateSlot(void);
+extern void NoteMap_AllocateVoice(unsigned char *, unsigned int);
+extern void NoteMap_AssignVoiceParams(unsigned char *, unsigned int);
+extern void NoteMap_InitVoiceSlots(unsigned char *, unsigned int);
+extern void NoteMap_AllocNewVoiceEntry(struct nrec *, unsigned int);
+extern void NoteMap_SetChannelParam(struct nrec *, unsigned int);
+extern void Voice_BuildAndEmitNoteOnEvents(struct nrec *, unsigned int);
+extern void SeqPart_EmitNoteOnMessages(void *, unsigned int);
+extern void Voice_EmitMidiNoteOnEvents(void *, unsigned int);
+void NoteMap_CollAllocVoice_Indirect(void *a, unsigned char *x, unsigned char e)
+{
+  struct nrec r;
+  unsigned char i;
+  unsigned char v;
+  if (e == 0x15) {
+    if (NoteMap_LookupVoice(&r, a, 4, 0) != 0) {
+      NoteMap_FindEntry(&r, 0);
+      if (NoteMap_FindBestVoiceSlot(&r) == 1) {
+        NoteMap_AllocateVoice(x, 0);
+        NoteMap_AllocateVoice(x, 1);
+        if (HARMONY_NOTE_LIST != 0 && NoteMap_FindBestMatch() != 0xff)
+          NoteMap_AllocateVoice(x, 2);
+      }
+      if (AUDIO_SEQ_TRACK_FLAGS & 0x200)
+        for (i = 0; i < 16; i++)
+          if (x[(unsigned long)((unsigned int)i + 0x84)] == e)
+            Voice_BuildAndEmitNoteOnEvents(&r, i);
+    }
+  } else {
+    if (e == x[182] && NoteMap_LookupVoice(&r, a, 4, 2) != 0) {
+      NoteMap_FindEntry(&r, 2);
+      if (NoteMap_FindBestFreeVoice(&r) == 1 && VoiceMap_AllocateSlot() != 0xff) {
+        NoteMap_AssignVoiceParams(x, 2);
+        NoteMap_InitVoiceSlots(x, 2);
+      }
+    }
+    if (NoteMap_LookupVoice(&r, a, 0, e) != 0) {
+      NoteMap_AllocNewVoiceEntry(&r, e);
+      NoteMap_SetChannelParam(&r, e);
+      if (AUDIO_SEQ_TRACK_FLAGS & 0x200)
+        for (i = 0; i < 16; i++)
+          if (x[(unsigned long)((unsigned int)i + 0x84)] == e)
+            Voice_BuildAndEmitNoteOnEvents(&r, i);
+      if ((v = x[(unsigned long)((unsigned int)e + 0x44)]) != 0xff)
+        SeqPart_EmitNoteOnMessages(a, v);
+      if ((v = x[(unsigned long)((unsigned int)e + 0x64)]) != 0xff)
+        Voice_EmitMidiNoteOnEvents(a, v);
+    }
+  }
+}

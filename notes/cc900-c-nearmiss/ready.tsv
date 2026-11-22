@@ -1,43 +1,38 @@
 lane	tree	function	bytes	flags	run	opt	c_copy	cc900_module	c_elsewhere
 lane_p6	v10	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v10/FatPath_Next83Component__20a913e2.c		none
-lane_p6	v10	PanelTlv_WriteAllHeaders	6	-O3 -XS -Xr	2026-11-21-3-p6-r59	O3XSXr	c/v10/PanelTlv_WriteAllHeaders__d162dded.c	PanelTlv_WriteLivePanelHeaders PanelTlv_WritePanelMemoryHeaders	none
-lane_p6	v10	PostPmLoad	13	-O3 -XS -Xr	2026-11-21-3-p6-r59	O3XSXr	c/v10/PostPmLoad__69a63fa4.c		none
-lane_p6	v5	AcModeSelBoxProc	64	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/AcModeSelBoxProc__550ad2c4.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
+lane_p6	v10	Part_ValidateAndSetupVoiceChannel	137	-O3 -XS -Xr	2026-11-22-15-p6-r82	O3XSXr	c/v10/Part_ValidateAndSetupVoiceChannel__3ddde394.c	PartCtrl_TestBit7 Part_ValidateVoiceChannel SeqData_ReadNextByte	none
+lane_p6	v10	Part_ValidateVoiceChannel	100	-O3 -XS -Xr	2026-11-22-15-p6-r82	O3XSXr	c/v10/Part_ValidateVoiceChannel__3ddde394.c	PartCtrl_TestBit7 Part_ReadVoiceBit7 Part_ReadVoiceWord	none
+lane_p6	v10	SeqPlay_HandleVoiceReassign	138	-O3 -XS -Xr	2026-11-22-15-p6-r82	O3XSXr	c/v10/SeqPlay_HandleVoiceReassign__3ddde394.c	SeqPlay_AllocBuffersAndInit	none
+lane_p6	v5	AcModeSelBoxProc	64	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/AcModeSelBoxProc__550ad2c4.c		src-root:staged+chd+csub+phase6
 lane_p6	v5	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v5/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	none
 lane_p6	v5	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v5/FatPath_Next83Component__568fd7b6.c		none
 lane_p6	v5	InitializeEast	2516	-O3 -Xr	2026-11-21-10-p6-r65	O3Xr	c/v5/InitializeEast__718b6468.c		none
 lane_p6	v5	MidiPkt_DispatchViaTable_4D9A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v5/MidiPkt_DispatchViaTable_4D9A__ad544ca9.c	MidiPkt_MatchParamInTable	none
-lane_p6	v5	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/MidiPkt_SendGroupEnd__f7eb6649.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/MidiPkt_SendGroup_SoundRam__f7eb6649.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	MuteChSetFunc	141	-O3 -Xr	2026-11-22-1-p6-r69	O3Xr	c/v5/MuteChSetFunc__550ad2c4.c	SqAftSet_LookupTableEntry	src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SMFMute_ClearBit0	11	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SMFMute_ClearBit0__550ad2c4.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SMFMute_GetBit0Status	12	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SMFMute_GetBit0Status__a507b7d7.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SMFMute_GetBit1Status	12	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SMFMute_GetBit1Status__550ad2c4.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SMFMute_GetUpperBits	12	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SMFMute_GetUpperBits__a507b7d7.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SeqEvent_AccumulateQueue	19	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SeqEvent_AccumulateQueue__716f05f4.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SeqNameOKFunc	42	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SeqNameOKFunc__550ad2c4.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SqAftSet_LookupTableEntry	20	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SqAftSet_LookupTableEntry__55c066ff.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/SysEx_SendNothing__f7eb6649.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v5	TrAsGrid_LookupByteTable	13	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v5/TrAsGrid_LookupByteTable__55c066ff.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
+lane_p6	v5	MidiPkt_SendGroupEnd	37	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/MidiPkt_SendGroupEnd__f7eb6649.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	MidiPkt_SendGroup_SoundRam	22	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/MidiPkt_SendGroup_SoundRam__f7eb6649.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	src-root:staged+chd+csub+phase6
+lane_p6	v5	MuteChSetFunc	141	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/MuteChSetFunc__550ad2c4.c	SqAftSet_LookupTableEntry	src-root:staged+chd+csub+phase6
+lane_p6	v5	SMFMute_ClearBit0	11	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SMFMute_ClearBit0__550ad2c4.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	SMFMute_GetBit0Status	12	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SMFMute_GetBit0Status__a507b7d7.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	SMFMute_GetBit1Status	12	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SMFMute_GetBit1Status__550ad2c4.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	SMFMute_GetUpperBits	12	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SMFMute_GetUpperBits__a507b7d7.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	SeqEvent_AccumulateQueue	19	-O3 -Xr	2026-11-22-14-p6-r81	O3Xr	c/v5/SeqEvent_AccumulateQueue__716f05f4.c		none
+lane_p6	v5	SeqNameOKFunc	42	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SeqNameOKFunc__550ad2c4.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	SqAftSet_LookupTableEntry	20	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SqAftSet_LookupTableEntry__55c066ff.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	SysEx_SendNothing	1	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/SysEx_SendNothing__f7eb6649.c		src-root:staged+chd+csub+phase6
+lane_p6	v5	TrAsGrid_LookupByteTable	13	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v5/TrAsGrid_LookupByteTable__55c066ff.c		src-root:staged+chd+csub+phase6
 lane_p6	v6	ExtData_Voice_CheckMode3_Helper	15	-O3 -XS -Xr	2026-11-16-92-p6-r18	O3XSXr	c/v6/ExtData_Voice_CheckMode3_Helper__5fb6c045.c	ExtData_SetTlvField SwbtWr_FlushAndAppendParams	none
 lane_p6	v6	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v6/FatPath_Next83Component__568fd7b6.c		none
 lane_p6	v6	MidiPkt_DispatchViaTable_4D9A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v6/MidiPkt_DispatchViaTable_4D9A__ad544ca9.c	MidiPkt_MatchParamInTable	none
-lane_p6	v6	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v6/MidiPkt_SendGroupEnd__f7eb6649.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v6	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v6/MidiPkt_SendGroup_SoundRam__f7eb6649.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v6	SeqEvent_AccumulateQueue	19	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v6/SeqEvent_AccumulateQueue__716f05f4.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v6	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v6/SysEx_SendNothing__f7eb6649.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
+lane_p6	v6	MidiPkt_SendGroupEnd	37	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v6/MidiPkt_SendGroupEnd__f7eb6649.c		src-root:staged+chd+csub+phase6
+lane_p6	v6	MidiPkt_SendGroup_SoundRam	22	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v6/MidiPkt_SendGroup_SoundRam__f7eb6649.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	src-root:staged+chd+csub+phase6
+lane_p6	v6	SeqEvent_AccumulateQueue	19	-O3 -Xr	2026-11-22-14-p6-r81	O3Xr	c/v6/SeqEvent_AccumulateQueue__716f05f4.c		none
+lane_p6	v6	SysEx_SendNothing	1	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v6/SysEx_SendNothing__f7eb6649.c		src-root:staged+chd+csub+phase6
 lane_p6	v7	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v7/FatPath_Next83Component__568fd7b6.c		none
 lane_p6	v7	MidiPkt_DispatchViaTable_4D9A	52	-O3 -XS -Xr	2026-11-19-43-p6-r48	O3XSXr	c/v7/MidiPkt_DispatchViaTable_4D9A__ab4fa4d8.c	MidiPkt_MatchParamInTable	none
-lane_p6	v7	MidiPkt_SendGroupEnd	37	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v7/MidiPkt_SendGroupEnd__70946f37.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v7	MidiPkt_SendGroup_SoundRam	22	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v7/MidiPkt_SendGroup_SoundRam__70946f37.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v7	MidiPkt_XferShowCompleted	12	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v7/MidiPkt_XferShowCompleted__70946f37.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v7	MidiPkt_XferShowErrorMessage	31	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v7/MidiPkt_XferShowErrorMessage__70946f37.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v7	MidiPkt_XferShowNothing	1	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v7/MidiPkt_XferShowNothing__70946f37.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
-lane_p6	v7	SysEx_SendNothing	1	-O3 -XS -Xr	2026-11-22-1-p6-r69	O3XSXr	c/v7/SysEx_SendNothing__70946f37.c		src-root:staged+chd+csub+phase6+branch:cc900/nearmiss+branch:phase6/first-functions
+lane_p6	v7	MidiPkt_SendGroupEnd	37	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v7/MidiPkt_SendGroupEnd__70946f37.c		src-root:staged+chd+csub+phase6
+lane_p6	v7	MidiPkt_SendGroup_SoundRam	22	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v7/MidiPkt_SendGroup_SoundRam__70946f37.c	MidiPkt_SendBlock_SoundRamData MidiPkt_SendBlock_SoundRamId MidiPkt_SendGroupEnd	src-root:staged+chd+csub+phase6
+lane_p6	v7	MidiPkt_XferShowCompleted	12	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v7/MidiPkt_XferShowCompleted__70946f37.c		src-root:staged+chd+csub+phase6
+lane_p6	v7	MidiPkt_XferShowErrorMessage	31	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v7/MidiPkt_XferShowErrorMessage__70946f37.c		src-root:staged+chd+csub+phase6
+lane_p6	v7	MidiPkt_XferShowNothing	1	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v7/MidiPkt_XferShowNothing__70946f37.c		src-root:staged+chd+csub+phase6
+lane_p6	v7	SysEx_SendNothing	1	-O3 -Xr	2026-11-22-26-p6-r93	O3Xr	c/v7/SysEx_SendNothing__70946f37.c		src-root:staged+chd+csub+phase6
 lane_p6	v9	FatPath_Next83Component	183	-Xr	2026-11-19-43-p6-r48	Xr	c/v9/FatPath_Next83Component__568fd7b6.c		none
-lane_sub	v140	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v140	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
-lane_sub	v141	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v141	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
-lane_sub	v142	DSP_StateTable_Reset	13	-Xr	2026-11-16-51-sub-staged1	Xr			none
-lane_sub	v142	Voice_ComputePitch_InlineData	17	-Xr	2026-11-16-127-sub-staged5	Xr			none
