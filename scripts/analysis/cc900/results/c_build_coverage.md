@@ -13,8 +13,8 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 1256922      | 1252658           | 16.633 %      | 1239802          | 17120           |
-| reference model               | 63651        | 60739             | 0.807 %       | 46259            | 17392           |
+| Toshiba V4.23                 | 1257411      | 1253147           | 16.640 %      | 1240291          | 17120           |
+| reference model               | 63939        | 61027             | 0.810 %       | 46547            | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
 All 20 images: 20643840 bytes, 7530970 of them census CODE.  Every version of an image counts on its own.
@@ -35,22 +35,22 @@ All 20 images: 20643840 bytes, 7530970 of them census CODE.  Every version of an
 | v6         | 2097152 | 992800 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v5         | 2097152 | 991718 | firmware C | 1521  | 94162 / 93970      | 7501 / 7501        | 0 / 0             | 0.756 %         | 0                     |
 | v5         | 2097152 | 991718 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v142       | 196608  | 128873 | firmware C | 602   | 85161 / 85127      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v142       | 196608  | 128873 | firmware C | 604   | 85228 / 85194      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v142       | 196608  | 128873 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v141       | 196608  | 128850 | firmware C | 602   | 85161 / 85127      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v141       | 196608  | 128850 | firmware C | 604   | 85228 / 85194      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v141       | 196608  | 128850 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v140       | 196608  | 128798 | firmware C | 601   | 83752 / 83718      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v140       | 196608  | 128798 | firmware C | 603   | 83819 / 83785      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v140       | 196608  | 128798 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | subboot    | 131072  | 3604   | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | tabledata  | 2097152 | 19426  | library C  | 2     | 89 / 89            | 89 / 89            | 0 / 0             | 0.458 %         | 0                     |
 | customdata | 1048576 | 0      | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | -               | 0                     |
-| hdae5000   | 524288  | 112306 | firmware C | 290   | 82531 / 82513      | 147 / 147          | 0 / 0             | 0.131 %         | 0                     |
+| hdae5000   | 524288  | 112306 | firmware C | 292   | 82603 / 82585      | 219 / 219          | 0 / 0             | 0.195 %         | 0                     |
 | hdae5000   | 524288  | 112306 | library C  | 20    | 1156 / 900         | 1392 / 1136        | 0 / 0             | 1.012 %         | 0                     |
-| hdae_v201  | 524288  | 110458 | firmware C | 287   | 80785 / 80767      | 147 / 147          | 0 / 0             | 0.133 %         | 0                     |
+| hdae_v201  | 524288  | 110458 | firmware C | 289   | 80857 / 80839      | 219 / 219          | 0 / 0             | 0.198 %         | 0                     |
 | hdae_v201  | 524288  | 110458 | library C  | 20    | 1156 / 900         | 1392 / 1136        | 0 / 0             | 1.028 %         | 0                     |
-| hdae_v115  | 524288  | 95866  | firmware C | 248   | 67280 / 67262      | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
+| hdae_v115  | 524288  | 95866  | firmware C | 250   | 67352 / 67334      | 92 / 92            | 0 / 0             | 0.096 %         | 0                     |
 | hdae_v115  | 524288  | 95866  | library C  | 18    | 1061 / 805         | 1297 / 1041        | 0 / 0             | 1.086 %         | 0                     |
-| hdae_v110  | 524288  | 95614  | firmware C | 248   | 67029 / 67011      | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
+| hdae_v110  | 524288  | 95614  | firmware C | 250   | 67101 / 67083      | 92 / 92            | 0 / 0             | 0.096 %         | 0                     |
 | hdae_v110  | 524288  | 95614  | library C  | 18    | 1061 / 805         | 1297 / 1041        | 0 / 0             | 1.089 %         | 0                     |
 | prom_a     | 524288  | 325759 | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | prom_b     | 524288  | 206615 | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
@@ -10011,6 +10011,8 @@ found yet.
 | v142      | DSP2_SPI_ClockPulseHigh                            | v142/subcpu/cc900/audio_process_dsp_and_effects_inlinejr.c                | -Xr         | 186   | yes   | differs | MATCH                  | cache 4678aaf77ac8 |
 | v142      | DSP_WaitForDelay                                   | v142/subcpu/cc900/audio_process_dsp_and_effects_kernel.c                  | -Xr         | 34    | yes   | differs | MATCH                  | cache a93999688532 |
 | v142      | DSP_WakeAudioTask                                  | v142/subcpu/cc900/audio_process_dsp_and_effects_kernel.c                  | -Xr         | 6     | yes   | differs | MATCH                  | cache a93999688532 |
+| v142      | DSP_ApplyAlgoForVoiceType                          | v142/subcpu/cc900/audio_process_dsp_and_effects_lane_49a.c                | -Xr         | 27    | yes   | differs | MATCH                  | cache 2ac9a2c2e5d8 |
+| v142      | DSP_Set_MicSense                                   | v142/subcpu/cc900/audio_process_dsp_and_effects_lane_49a.c                | -Xr         | 40    | yes   | differs | MATCH                  | cache 2ac9a2c2e5d8 |
 | v142      | EFF_VolumeUpdate_WithDebug                         | v142/subcpu/cc900/audio_process_dsp_and_effects_n_17a.c                   | -Xr         | 247   | yes   | differs | MATCH                  | cache cfbc444adb43 |
 | v142      | EFF_SlotActive_UpdateFlags                         | v142/subcpu/cc900/audio_process_dsp_and_effects_t_18a.c                   | -Xr         | 370   | yes   | differs | MATCH                  | cache da4dade13fa4 |
 | v142      | EFF_VolumeLoop                                     | v142/subcpu/cc900/audio_process_dsp_and_effects_t_18a.c                   | -Xr         | 283   | yes   | differs | MATCH                  | cache da4dade13fa4 |
@@ -10613,6 +10615,8 @@ found yet.
 | v141      | DSP2_SPI_ClockPulseHigh                            | v141/subcpu/cc900/audio_process_dsp_and_effects_inlinejr.c                | -Xr         | 186   | yes   | differs | MATCH                  | cache 2d87514f1895 |
 | v141      | DSP_WaitForDelay                                   | v141/subcpu/cc900/audio_process_dsp_and_effects_kernel.c                  | -Xr         | 34    | yes   | differs | MATCH                  | cache bfe796082f4c |
 | v141      | DSP_WakeAudioTask                                  | v141/subcpu/cc900/audio_process_dsp_and_effects_kernel.c                  | -Xr         | 6     | yes   | differs | MATCH                  | cache bfe796082f4c |
+| v141      | DSP_ApplyAlgoForVoiceType                          | v141/subcpu/cc900/audio_process_dsp_and_effects_lane_49a.c                | -Xr         | 27    | yes   | differs | MATCH                  | cache 2ac9a2c2e5d8 |
+| v141      | DSP_Set_MicSense                                   | v141/subcpu/cc900/audio_process_dsp_and_effects_lane_49a.c                | -Xr         | 40    | yes   | differs | MATCH                  | cache 2ac9a2c2e5d8 |
 | v141      | EFF_VolumeUpdate_WithDebug                         | v141/subcpu/cc900/audio_process_dsp_and_effects_n_17a.c                   | -Xr         | 247   | yes   | differs | MATCH                  | cache cfbc444adb43 |
 | v141      | EFF_SlotActive_UpdateFlags                         | v141/subcpu/cc900/audio_process_dsp_and_effects_t_18a.c                   | -Xr         | 370   | yes   | differs | MATCH                  | cache da4dade13fa4 |
 | v141      | EFF_VolumeLoop                                     | v141/subcpu/cc900/audio_process_dsp_and_effects_t_18a.c                   | -Xr         | 283   | yes   | differs | MATCH                  | cache da4dade13fa4 |
@@ -11214,6 +11218,8 @@ found yet.
 | v140      | DSP2_SPI_ClockPulseHigh                            | v140/subcpu/cc900/audio_process_dsp_and_effects_inlinejr.c                | -Xr         | 186   | yes   | differs | MATCH                  | cache 969249670451 |
 | v140      | DSP_WaitForDelay                                   | v140/subcpu/cc900/audio_process_dsp_and_effects_kernel.c                  | -Xr         | 34    | yes   | differs | MATCH                  | cache 4ecc3496704d |
 | v140      | DSP_WakeAudioTask                                  | v140/subcpu/cc900/audio_process_dsp_and_effects_kernel.c                  | -Xr         | 6     | yes   | differs | MATCH                  | cache 4ecc3496704d |
+| v140      | DSP_ApplyAlgoForVoiceType                          | v140/subcpu/cc900/audio_process_dsp_and_effects_lane_49a.c                | -Xr         | 27    | yes   | differs | MATCH                  | cache 2ac9a2c2e5d8 |
+| v140      | DSP_Set_MicSense                                   | v140/subcpu/cc900/audio_process_dsp_and_effects_lane_49a.c                | -Xr         | 40    | yes   | differs | MATCH                  | cache 2ac9a2c2e5d8 |
 | v140      | EFF_VolumeUpdate_WithDebug                         | v140/subcpu/cc900/audio_process_dsp_and_effects_n_17a.c                   | -Xr         | 247   | yes   | differs | MATCH                  | cache cfbc444adb43 |
 | v140      | EFF_SlotActive_UpdateFlags                         | v140/subcpu/cc900/audio_process_dsp_and_effects_t_18a.c                   | -Xr         | 370   | yes   | differs | MATCH                  | cache da4dade13fa4 |
 | v140      | EFF_VolumeLoop                                     | v140/subcpu/cc900/audio_process_dsp_and_effects_t_18a.c                   | -Xr         | 283   | yes   | differs | MATCH                  | cache da4dade13fa4 |
@@ -11832,6 +11838,8 @@ found yet.
 | hdae5000  | HDAE5000_HardTest_PortTest                         | hdae5000/cc900/hdae5000_hardtest_port.c                                   | -Xr         | 71    | yes   | differs | MATCH                  | cache df48b9c0d79b |
 | hdae5000  | HDAE5000_HardTest_Print                            | hdae5000/cc900/hdae5000_hardtest_print.c                                  | -Xr         | 29    | yes   | differs | MATCH                  | cache 4866f5983959 |
 | hdae5000  | HDAE5000_TypeSel_BuildMask                         | hdae5000/cc900/hdae5000_hd_driver.c                                       | -Xr         | 95    | yes   | differs | MATCH                  | cache 169b3607f060 |
+| hdae5000  | HDAE5000_HD_ClearStatusBytes                       | hdae5000/cc900/hdae5000_hd_small_r99.c                                    | -Xr         | 61    | yes   | MATCH   | MATCH                  | cache b52ce57c3f7c |
+| hdae5000  | HDAE5000_HD_ResetVersionKeyWord                    | hdae5000/cc900/hdae5000_hd_small_r99.c                                    | -Xr         | 11    | yes   | MATCH   | MATCH                  | cache b52ce57c3f7c |
 | hdae5000  | HDAE5000_DirName_SetAndStore                       | hdae5000/cc900/hdae5000_hd_tables.c                                       | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae5000  | HDAE5000_FlsName_SetAndStore                       | hdae5000/cc900/hdae5000_hd_tables.c                                       | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae5000  | HDAE5000_HD_StoreTables                            | hdae5000/cc900/hdae5000_hd_tables.c                                       | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
@@ -12120,6 +12128,8 @@ found yet.
 | hdae_v201 | HDAE5000_HardTest_PortTest                         | hdae5000_v2_01i/cc900/hdae5000_hardtest_port.c                            | -Xr         | 71    | yes   | differs | MATCH                  | cache d65e6415a718 |
 | hdae_v201 | HDAE5000_HardTest_Print                            | hdae5000_v2_01i/cc900/hdae5000_hardtest_print.c                           | -Xr         | 29    | yes   | differs | MATCH                  | cache e8a15ec35d38 |
 | hdae_v201 | HDAE5000_TypeSel_BuildMask                         | hdae5000_v2_01i/cc900/hdae5000_hd_driver.c                                | -Xr         | 95    | yes   | differs | MATCH                  | cache 169b3607f060 |
+| hdae_v201 | HDAE5000_HD_ClearStatusBytes                       | hdae5000_v2_01i/cc900/hdae5000_hd_small_r99.c                             | -Xr         | 61    | yes   | MATCH   | MATCH                  | cache 4c0c0f2dbdcc |
+| hdae_v201 | HDAE5000_HD_ResetVersionKeyWord                    | hdae5000_v2_01i/cc900/hdae5000_hd_small_r99.c                             | -Xr         | 11    | yes   | MATCH   | MATCH                  | cache 4c0c0f2dbdcc |
 | hdae_v201 | HDAE5000_DirName_SetAndStore                       | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                                | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v201 | HDAE5000_FlsName_SetAndStore                       | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                                | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v201 | HDAE5000_HD_StoreTables                            | hdae5000_v2_01i/cc900/hdae5000_hd_tables.c                                | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
@@ -12402,6 +12412,8 @@ found yet.
 | hdae_v115 | HDAE5000_HardTest_PortTest                         | hdae5000_v1_15i/cc900/hdae5000_hardtest_port.c                            | -Xr         | 71    | yes   | differs | MATCH                  | cache 48f8023d41e4 |
 | hdae_v115 | HDAE5000_HardTest_Print                            | hdae5000_v1_15i/cc900/hdae5000_hardtest_print.c                           | -Xr         | 29    | yes   | differs | MATCH                  | cache 45aa1b19e883 |
 | hdae_v115 | HDAE5000_TypeSel_BuildMask                         | hdae5000_v1_15i/cc900/hdae5000_hd_driver__typesel_buildmask_r72.c         | -Xr         | 85    | yes   | differs | MATCH                  | cache 5972604d5568 |
+| hdae_v115 | HDAE5000_HD_ClearStatusBytes                       | hdae5000_v1_15i/cc900/hdae5000_hd_small_r99.c                             | -Xr         | 61    | yes   | MATCH   | MATCH                  | cache 93ade2a9607d |
+| hdae_v115 | HDAE5000_HD_ResetVersionKeyWord                    | hdae5000_v1_15i/cc900/hdae5000_hd_small_r99.c                             | -Xr         | 11    | yes   | MATCH   | MATCH                  | cache 93ade2a9607d |
 | hdae_v115 | HDAE5000_DirName_SetAndStore                       | hdae5000_v1_15i/cc900/hdae5000_hd_tables.c                                | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v115 | HDAE5000_FlsName_SetAndStore                       | hdae5000_v1_15i/cc900/hdae5000_hd_tables.c                                | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v115 | HDAE5000_HD_StoreTables                            | hdae5000_v1_15i/cc900/hdae5000_hd_tables.c                                | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
@@ -12650,6 +12662,8 @@ found yet.
 | hdae_v110 | HDAE5000_HardTest_PortTest                         | hdae5000_v1_10i/cc900/hdae5000_hardtest_port.c                            | -Xr         | 71    | yes   | differs | MATCH                  | cache 08dc347f30c9 |
 | hdae_v110 | HDAE5000_HardTest_Print                            | hdae5000_v1_10i/cc900/hdae5000_hardtest_print.c                           | -Xr         | 29    | yes   | differs | MATCH                  | cache d8e9a196088e |
 | hdae_v110 | HDAE5000_TypeSel_BuildMask                         | hdae5000_v1_10i/cc900/hdae5000_hd_driver__typesel_buildmask_r72.c         | -Xr         | 85    | yes   | differs | MATCH                  | cache 5972604d5568 |
+| hdae_v110 | HDAE5000_HD_ClearStatusBytes                       | hdae5000_v1_10i/cc900/hdae5000_hd_small_r99.c                             | -Xr         | 61    | yes   | MATCH   | MATCH                  | cache aacef810762d |
+| hdae_v110 | HDAE5000_HD_ResetVersionKeyWord                    | hdae5000_v1_10i/cc900/hdae5000_hd_small_r99.c                             | -Xr         | 11    | yes   | MATCH   | MATCH                  | cache aacef810762d |
 | hdae_v110 | HDAE5000_DirName_SetAndStore                       | hdae5000_v1_10i/cc900/hdae5000_hd_tables.c                                | -Xr         | 34    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v110 | HDAE5000_FlsName_SetAndStore                       | hdae5000_v1_10i/cc900/hdae5000_hd_tables.c                                | -Xr         | 47    | yes   | differs | MATCH                  | cache 641c0f568cce |
 | hdae_v110 | HDAE5000_HD_StoreTables                            | hdae5000_v1_10i/cc900/hdae5000_hd_tables.c                                | -Xr         | 90    | yes   | differs | MATCH                  | cache 641c0f568cce |
