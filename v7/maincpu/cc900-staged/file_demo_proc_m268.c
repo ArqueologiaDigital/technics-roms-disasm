@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -Xr
 */
+/* cc900-module: FDC_CMD_SEND FDC_Set_Status SOME_DELAY */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern void FileIO_CopyString_WriteNull(char *d, char *s, unsigned int n);
 

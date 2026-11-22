@@ -6,6 +6,7 @@
    qualifier to the first declarator only.
    cc900-options: -Xr
 */
+/* cc900-module: FDC_CMD_SEND FDC_Set_Status SOME_DELAY */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern unsigned char __tiny PA;
 extern unsigned char __near FDC_ERROR_CODE;
