@@ -2506,101 +2506,12 @@ CDlikeSwTtl_PdConfirmStart:	.include "includes/generated/cc900/CDlikeSwTtl_PdCon
 	.set	CDlikeSwTtl_PdConfirmBit0, CDlikeSwTtl_PdConfirmStart + 16
 	.set	CDlikeSwTtl_PdConfirmDefault, CDlikeSwTtl_PdConfirmStart + 32
 	.set	CDlikeSwTtl_PdConfirmJump, CDlikeSwTtl_PdConfirmStart + 43
-CDlikeSwTtl_SongNavDispatch:
-	pushw	iz
-	ld	iz, wa
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	z, CDlikeSwTtl_SongNavBit0
-	call	Song_AbortPlayback
-	ld	xwa, 7274534
-	ld	xbc, EVT_LYRICS_ALL_CLEAR
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	wa, iz
-	call	NavigateSongList
-	ld	(135304:24), 0
-	ldw	(135302:24), 0
-	calr	DisplayMode_RefreshState
-	calr	DisplayMode_DispatchEvents
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_SMF_FILE_NAME
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_SMF_SONG_NAME
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_LYRICS_SONG_NAME
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_COMPOSER_NAME
-	ld	xde, 0:i3
-	jr	CDlikeSwTtl_SongNavFinishNames
-CDlikeSwTtl_SongNavBit0:
-	call	SeqState_GetFlags
-	bit	0, hl
-	jr	z, CDlikeSwTtl_SongNavNoRedraw
-	call	Song_AbortPlayback
-	ld	xwa, 7274534
-	ld	xbc, EVT_LYRICS_ALL_CLEAR
-	ld	xde, 0:i3
-	call	ApPostEvent
-	ld	wa, iz
-	call	NavigateSongList
-	ld	(135304:24), 0
-	ldw	(135302:24), 0
-	calr	DisplayMode_RefreshState
-	calr	DisplayMode_DispatchEvents
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_SMF_FILE_NAME
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_SMF_SONG_NAME
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_LYRICS_SONG_NAME
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_COMPOSER_NAME
-	ld	xde, 0:i3
-CDlikeSwTtl_SongNavFinishNames:
-	calr NameGetFuncCall
-	calr CDlikeSwTtl_ShowSongTitle
-	jr CDlikeSwTtl_SongNavReturn
-
-CDlikeSwTtl_SongNavNoRedraw:
-	ld wa, iz
-	call NavigateSongList
-	ld (0x021088:24), 0x00
-	ldw (0x021086:24), 0x0000
-	calr DisplayMode_RefreshState
-	calr DisplayMode_DispatchEvents
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_SMF_FILE_NAME
-	ld xde, 0:i3
-	calr NameGetFuncCall
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_SMF_SONG_NAME
-	ld xde, 0:i3
-	calr NameGetFuncCall
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_LYRICS_SONG_NAME
-	ld xde, 0:i3
-	calr NameGetFuncCall
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_COMPOSER_NAME
-	ld xde, 0:i3
-	calr NameGetFuncCall
-
-CDlikeSwTtl_SongNavReturn:
-	popw iz
-	ret
+CDlikeSwTtl_SongNavDispatch:	.include "includes/generated/cc900/CDlikeSwTtl_SongNavDispatch.s"	; C: cc900/ui_playback_modes_m203_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_SongNavBit0, CDlikeSwTtl_SongNavDispatch + 116
+	.set	CDlikeSwTtl_SongNavFinishNames, CDlikeSwTtl_SongNavDispatch + 227
+	.set	CDlikeSwTtl_SongNavNoRedraw, CDlikeSwTtl_SongNavDispatch + 235
+	.set	CDlikeSwTtl_SongNavReturn, CDlikeSwTtl_SongNavDispatch + 320
 
 CDlikeSwTtl_DocNavDispatch:	.include "includes/generated/cc900/CDlikeSwTtl_DocNavDispatch.s"	; C: cc900/ui_playback_modes_m203.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -2609,66 +2520,12 @@ CDlikeSwTtl_DocNavDispatch:	.include "includes/generated/cc900/CDlikeSwTtl_DocNa
 	.set	CDlikeSwTtl_DocNavNoRedraw, CDlikeSwTtl_DocNavDispatch + 131
 	.set	CDlikeSwTtl_DocNavReturn, CDlikeSwTtl_DocNavDispatch + 180
 
-CDlikeSwTtl_PdNavDispatch:
-	pushw	iz
-	ld	iz, wa
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	z, CDlikeSwTtl_PdNavBit0
-	call	Song_AbortPlayback
-	ld	wa, iz
-	call	NavigatePdList
-	ldw	(135302:24), 0
-	calr	DisplayMode_RefreshState
-	calr	DisplayMode_DispatchEvents
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_PD_FILE_NO
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_PD_SONG_NAME
-	ld	xde, 0:i3
-	jr	CDlikeSwTtl_PdNavFinishNames
-CDlikeSwTtl_PdNavBit0:
-	call	SeqState_GetFlags
-	bit	0, hl
-	jr	z, CDlikeSwTtl_PdNavNoRedraw
-	call	Song_AbortPlayback
-	ld	wa, iz
-	call	NavigatePdList
-	ldw	(135302:24), 0
-	calr	DisplayMode_RefreshState
-	calr	DisplayMode_DispatchEvents
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_PD_FILE_NO
-	ld	xde, 0:i3
-	calr	NameGetFuncCall
-	ld	xwa, 4294967295
-	ld	xbc, EVT_GET_PD_SONG_NAME
-	ld	xde, 0:i3
-CDlikeSwTtl_PdNavFinishNames:
-	calr NameGetFuncCall
-	calr CDlikeSwTtl_ShowPdTitle
-	jr CDlikeSwTtl_PdNavReturn
-
-CDlikeSwTtl_PdNavNoRedraw:
-	ld wa, iz
-	call NavigatePdList
-	ldw (0x021086:24), 0x0000
-	calr DisplayMode_RefreshState
-	calr DisplayMode_DispatchEvents
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_PD_FILE_NO
-	ld xde, 0:i3
-	calr NameGetFuncCall
-	ld xwa, 0xffffffff
-	ld xbc, EVT_GET_PD_SONG_NAME
-	ld xde, 0:i3
-	calr NameGetFuncCall
-
-CDlikeSwTtl_PdNavReturn:
-	popw iz
-	ret
+CDlikeSwTtl_PdNavDispatch:	.include "includes/generated/cc900/CDlikeSwTtl_PdNavDispatch.s"	; C: cc900/ui_playback_modes_m203_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_PdNavBit0, CDlikeSwTtl_PdNavDispatch + 64
+	.set	CDlikeSwTtl_PdNavFinishNames, CDlikeSwTtl_PdNavDispatch + 123
+	.set	CDlikeSwTtl_PdNavNoRedraw, CDlikeSwTtl_PdNavDispatch + 131
+	.set	CDlikeSwTtl_PdNavReturn, CDlikeSwTtl_PdNavDispatch + 180
 
 DpDocTtlFunc:
 	cp xbc, EVT_SW_OFF

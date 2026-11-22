@@ -24672,36 +24672,7 @@ SeqScan_UpdateBestPositionB:	.include "includes/generated/cc900/SeqScan_UpdateBe
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeqScan_WriteBestPositionB, SeqScan_UpdateBestPositionB + 26
 
-SeqScan_InitAllStateVars:
-	ldw	(9588:16), 0
-	ldw	(9594:16), 0
-	ldw	(9596:16), 0
-	ld	(SEQ_PART_LOOP:16), 0
-	ldw	(9598:16), 0
-	ldw	(9602:16), 0
-	ldw	(9600:16), 0
-	ldw	(9604:16), 0
-	ld	wa, (9590:16)
-	ld	(9606:16), wa
-	ld	(9610:16), wa
-	ld	(9614:16), wa
-	ld	(9622:16), wa
-	ld	(9618:16), wa
-	ld	a, (9592:16)
-	ld	(9608:16), a
-	ld	(9612:16), a
-	ld	(9616:16), a
-	ld	(9624:16), a
-	ld	(9620:16), a
-	ld	wa, (9626:16)
-	ld	(9628:16), wa
-	ld	(9630:16), wa
-	ld	(9634:16), wa
-	ld	(9636:16), wa
-	ld	(9632:16), wa
-	ld (1079:16), 255
-	ld (1078:16), 255
-	ret
+SeqScan_InitAllStateVars:	.include "includes/generated/cc900/SeqScan_InitAllStateVars.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqTick_InitAndScanParts:
 	calr SeqScan_InitAllStateVars
