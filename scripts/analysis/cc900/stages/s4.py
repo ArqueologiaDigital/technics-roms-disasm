@@ -16,6 +16,7 @@ NAMES = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE'
          'XIX': (None, 'IX', 'XIX'), 'XIY': (None, 'IY', 'XIY'), 'XIZ': (None, 'IZ', 'XIZ')}
 COND = {'BLT': 'lt', 'BLE': 'le', 'BGT': 'gt', 'BGE': 'ge', 'BEQ': 'eq', 'BNE': 'ne'}
 UCOND = {'BLT': 'ult', 'BLE': 'ule', 'BGT': 'ugt', 'BGE': 'uge', 'BEQ': 'eq', 'BNE': 'ne'}
+ARGREG = ['XWA', 'XBC', 'XDE']
 ALU = {'+=': 'add', '-=': 'sub', '&=': 'and', '|=': 'or', '^=': 'xor'}
 
 
@@ -69,6 +70,7 @@ class Fn:
         self.save_iz = any(fam_of(r) == 'XIZ' or r in ('QIZ', 'QIZH', 'QIZL', 'IZH', 'IZL')
                            for r in self.regs.values() if r)
         self.code = []
+        self.hints = self.temp_hints()
 
     def name(self, x):
         return re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x).group(1) if x and re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x) else None
@@ -90,10 +92,30 @@ class Fn:
             raise Unsupported('operand ' + str(x))
         return r
 
-    def new_temp(self, n, size):
-        busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack'}
-        for f in FAMS:
-            if f not in busy and (size != 1 or NAMES[f][0]):
+    def temp_hints(self):
+        """T -> preferred family: the argument register it is copied into, or a source that dies with it"""
+        h = {}
+        for i, r in enumerate(self.recs):
+            if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
+                h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
+        for i in range(len(self.recs) - 1, -1, -1):
+            r = self.recs[i]
+            n = self.name(r.res) if r.res else None
+            if r.op == '=' and n and n.startswith('T') and r.args and self.name(r.args[0]) and \
+                    self.name(r.args[0]).startswith('T') and n in h:
+                h.setdefault(self.name(r.args[0]), h[n])   # T1 = T0 copies pass the hint back
+        return h
+
+    def dies(self, x, i):
+        n = self.name(x)
+        return not any(n and any(self.name(y) == n or (y and n + '(' in y) for y in [rr.res] + rr.args)
+                       for rr in self.recs[i + 1:])
+
+    def new_temp(self, n, size, prefer=None):
+        busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
+        prefs = [f for f in (self.hints.get(n), prefer) if f]
+        for f in prefs + FAMS:
+            if (f not in busy or f in prefs) and (size != 1 or NAMES[f][0]):
                 self.regs[n] = sized(f, size)
                 return self.regs[n]
         raise Unsupported('no register for ' + n)
@@ -139,8 +161,14 @@ class Fn:
     def emit(self, *ins):
         self.code.append(' '.join(i for i in ins if i))
 
+    def live(self, k):
+        """is variable k still read at or after the current record"""
+        i = getattr(self, 'pos', 0)
+        return any(any(self.name(y) == k or (y and k + '(' in y) for y in [rr.res] + rr.args) for rr in self.recs[i:])
+
     def gen(self):
-        for r in self.recs:
+        for i_, r in enumerate(self.recs):
+            self.pos = i_
             op = r.op
             if op == 'BEGIN':
                 if self.frame:
@@ -151,6 +179,9 @@ class Fn:
             if op in ('DUMMY', 'PIN'):
                 continue
             if op == 'END':
+                if getattr(self, 'tail', False):
+                    self.tail = False
+                    continue
                 if self.save_iz:
                     self.emit('pop', 'XIZ')
                 if self.frame:
@@ -189,6 +220,53 @@ class Fn:
             elif op in ALU:
                 size = size_of(r.res)
                 self.emit(ALU[op], self.dst(r.res) + ',' + self.src(r.args[0], size))
+            elif op == 'CONV' and r.args and not r.args[0].startswith(('@', '*', '#')):
+                a = r.args[0]
+                sa, sd = size_of(a), size_of(r.res)
+                ra = self.reg(a)
+                n = self.name(r.res)
+                if n.startswith('T') and n not in self.regs and self.dies(a, i_):
+                    self.regs[n] = sized(fam_of(ra), sd)     # widened in place
+                rd = self.reg(r.res)
+                if sd > sa:
+                    if fam_of(rd) != fam_of(ra):
+                        self.emit('ld', sized(fam_of(rd), sa) + ',' + ra)
+                    self.emit('exts' if not unsigned(a) else 'extz', rd)
+                elif sd == sa:
+                    if rd != ra:
+                        self.emit('ld', rd + ',' + ra)
+                else:
+                    lo = sized(fam_of(ra), sd)
+                    if rd != lo:
+                        self.emit('ld', rd + ',' + lo)
+            elif op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra):
+                f = ARGREG[int(r.extra[-1]) - 1]
+                a = r.args[0]
+                v = const(a)
+                if v is not None:
+                    size = 4 if a.startswith('#L') else 2
+                    self.emit('ld', '%s,%s' % (sized(f, size), hexc(v, size)))
+                else:
+                    ra = self.reg(a)
+                    if fam_of(ra) != f:
+                        self.emit('ld', '%s,%s' % (sized(f, size_of(a)), ra))
+            elif op in ('ACALL', 'CCALL'):
+                target = r.args[0].split('(')[0].lstrip('@')
+                nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
+                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz:
+                    self.emit('j', target)               # a call that ends the function: a jump
+                    self.tail = True
+                else:
+                    self.emit('cal', target)
+                    if r.res:
+                        rr = sized('XHL', size_of(r.res))
+                        n = self.name(r.res)
+                        if r.res == 'A' or n is None:
+                            pass                     # the result is the function's own: already in HL
+                        elif n.startswith('T') and n not in self.regs:
+                            self.regs[n] = rr
+                        elif self.dst(r.res) != rr:
+                            self.emit('ld', self.dst(r.res) + ',' + rr)
             elif op in ('++', '--'):
                 v = const(r.args[0])
                 self.emit('inc' if op == '++' else 'dec', '0x%x,%s' % (v, self.dst(r.res)))

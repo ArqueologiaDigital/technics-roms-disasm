@@ -27,7 +27,7 @@ def param_orders(path):
     """{function: [parameter names in order]} from the -g function type records (`symbol_t N,xc,"f",ret,n,"a",..`)"""
     out = {}
     for l in open(path, encoding='latin-1'):
-        m = re.match(r'^\tsymbol_t\s+\d+,xc,"([^"]+)",(.*)$', l.rstrip('\r\n'))
+        m = re.match(r'^\tsymbol_t\s+\d+,x[a-z],"([^"]+)",(.*)$', l.rstrip('\r\n'))
         if m:
             out.setdefault(m.group(1), re.findall(r'"([^"]+)"', m.group(2)))
     return out
@@ -63,7 +63,7 @@ def truth(path):
         for var, d in vs.items():
             if 7 in d:
                 v, fl = d[7]
-                name = 'I%d' % (v - 1) if fl == 1 else ('P%d' % (v - 9) if v >= 9 else None)
+                name = 'I%d' % (v - 1) if fl == 1 else ('P%d' % (v - 9) if v >= 9 else 'P%d' % (v - 1))
             elif var in params:
                 name = 'P%d' % params.index(var)     # a parameter on the stack: by its place in the type record
             elif var in locals_.get(fn, []):
