@@ -12256,42 +12256,7 @@ SeqPart_DefaultRangeData:
 	ldw	(SQEDT_MINS_LAST:16), 1
 	ret
 
-Part_WriteWordAndByte:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), c
-	ld iz, wa
-	ld wa, (0x287d:16)
-	ld c, a
-	extz bc
-	ld wa, 0:i3
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld wa, (0x287d:16)
-	ld c, a
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	ld wa, 0:i3
-	calr Part_WriteByte_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld bc, (0x287d:16)
-	extz bc
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld bc, (0x287d:16)
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	calr Part_WriteByte_Indexed
-	popw iz
-	inc 2, xsp
-	ret
+Part_WriteWordAndByte:	.include "includes/generated/cc900/Part_WriteWordAndByte.s"	; C: cc900/sequencer_engine_m234.c
 
 SeqPart_CalcPlaybackOffset:
 	pushw iz
@@ -24318,22 +24283,7 @@ VoiceAlloc_CounterFound:
 	inc 2, xsp
 	ret
 
-SeqScan_CompareAndAppend:
-	dec 4, xsp
-	ld (xsp), e
-	ld (xsp + 2), c
-	ld c, (xsp + 2)
-	extz bc
-	ld e, (xsp)
-	extz de
-	calr PartCtrl_AppendToEventQueue
-	ld a, (xsp + 2)
-	extz wa
-	ld c, (xsp)
-	extz bc
-	calr Part_ClearVoiceSlot
-	inc 4, xsp
-	ret
+SeqScan_CompareAndAppend:	.include "includes/generated/cc900/SeqScan_CompareAndAppend.s"	; C: cc900/sequencer_engine_m235_d.c
 
 Part_ClearVoiceSlot:	.include "includes/generated/cc900/Part_ClearVoiceSlot.s"	; C: cc900/sequencer_engine_m235.c
 ; the hand assembly's labels inside the compiled body, by their offsets

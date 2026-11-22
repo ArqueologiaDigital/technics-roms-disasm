@@ -5150,35 +5150,10 @@ Flash_WriteFromMemory_Delay:
 ;        Flash_WriteFromMemory.
 ;   Flash_IdentifyChip, Flash_EraseSectorWithBankSelect (XBC = XDE), wait for Flash_CheckReady
 ;   to stop returning 0xffff, then Flash_WriteFromMemory with the original XBC / XDE.
-Flash_EraseSectorAndWrite:
-	lda xsp, (xsp - 10)
-	ld (xsp), xde
-	ld (xsp + 4), xbc
-	ld (xsp + 8), a
-	ld a, (xsp + 8)
-	extz wa
-	calr Flash_IdentifyChip
-	ld a, (xsp + 8)
-	extz wa
-	ld xbc, (xsp)
-	calr Flash_EraseSectorWithBankSelect
-	calr Flash_CheckReady
-	cp hl, 0xffff
-	jr nz, Flash_EraseSectorAndWrite_Write
-
-Flash_EraseSectorAndWrite_WaitLoop:
-	calr Flash_CheckReady
-	cp hl, 0xffff
-	jr z, Flash_EraseSectorAndWrite_WaitLoop
-
-Flash_EraseSectorAndWrite_Write:
-	ld a, (xsp + 8)
-	extz wa
-	ld xbc, (xsp + 4)
-	ld xde, (xsp)
-	calr Flash_WriteFromMemory
-	lda xsp, (xsp + 10)
-	ret
+Flash_EraseSectorAndWrite:	.include "includes/generated/cc900/Flash_EraseSectorAndWrite.s"	; C: cc900/system_handlers_m3_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Flash_EraseSectorAndWrite_WaitLoop, Flash_EraseSectorAndWrite + 38
+	.set	Flash_EraseSectorAndWrite_Write, Flash_EraseSectorAndWrite + 47
 
 ; FlashWrite - Write data to flash memory chip
 ; Identifies the target flash chip, copies ROM content to a buffer,

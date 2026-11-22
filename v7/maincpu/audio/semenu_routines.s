@@ -3732,43 +3732,10 @@ SeMenu_ApplyPartEdit_Epilogue7:
 ; SeMenu_SelectPartAndRedraw: Selects part C (1..4, the "1ST".."4TH" side buttons) for editing: no-op if already
 ;   selected or (E = 1) the part is disabled; else records it in (0x65D) and edit-buffer byte 0, redraws via screen
 ;   code WA and re-sends the part levels. Basis: callers + body -- OnSideRow2..5 pass C = 1..4.
-SeMenu_SelectPartAndRedraw:
-	dec	8, xsp
-	ld	(xsp+2), e
-	ld	(xsp+4), c
-	ld	(xsp+6), a
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	cp	a, (xsp)
-	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
-	cp	(xsp+2), 1
-	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip
-	ld	a, (xsp+4)
-	extz	wa
-	calr	SeMenu_IsPartEnabled
-	cp	hl, 0:i3
-	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
-SeMenu_ApplyPartEdit_Entry5_Code_Skip:
-	ld	a, (xsp+4)
-	extz	wa
-	calr	SeMenu_SetCurrentPart
-	ld	c, (xsp+4)
-	extz	bc
-	ld	wa, 0:i3
-	calr	SeMenu_StorePartParam
-	pushw 0
-	ld	a, (xsp+8)
-	extz	wa
-	pushw	wa
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 1:i3
-	calr	SeMenu_SetupMenuDisplay
-SeMenu_ApplyPartEdit_Entry5_Code_Epilogue:
-	inc	8, xsp
-	ret
+SeMenu_SelectPartAndRedraw:	.include "includes/generated/cc900/SeMenu_SelectPartAndRedraw.s"	; C: cc900/semenu_routines_m129_g.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_ApplyPartEdit_Entry5_Code_Skip, SeMenu_SelectPartAndRedraw + 43
+	.set	SeMenu_ApplyPartEdit_Entry5_Code_Epilogue, SeMenu_SelectPartAndRedraw + 81
 ; SeMenu_DrawFilterGraph: Clears and draws the filter response graph of the current part: corner x = 86 + part param 2
 ;   (cutoff), peak height from part param 3 (resonance, 0..5); A = 0 low-pass / 1 high-pass shape, C = 0 (Lpq/Hpq
 ;   pages) or 1 (L24/H24 pages, doubled slope, lower box). Basis: callers + body -- the four filter pages call it with

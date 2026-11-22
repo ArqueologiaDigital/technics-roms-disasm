@@ -60,3 +60,28 @@ void Util_StorePartArrayBase(long p)
 {
   ram_3ea2c = p;
 }
+
+struct pt { int x, y; };
+struct rect { int x0, y0, x1, y1; };
+extern void GetFrameSPSize(unsigned int i, unsigned int *w, unsigned int *h);
+extern void GetEditSwPoint(unsigned int, struct pt *);
+extern void GetBoxCenter(struct rect *, struct pt *);
+extern void PsMixer_CalcSwitchPointInFrame(struct rect *, struct pt *, int);
+extern void PsMixer_CalcSwitchPointInFrame(register struct rect *r, struct pt *out, int v);
+
+void PsMixer_CalcSwitchPointInFrame(register struct rect *r, struct pt *out, int v)
+{
+    struct rect rr;
+    struct pt pt;
+    unsigned int w;
+    unsigned int h;
+    register int k;
+
+    GetFrameSPSize(52, &w, &h);
+    rr = *r;
+    rr.y0 += h - 2;
+    k = v % 8;
+    GetEditSwPoint(k, &pt);
+    GetBoxCenter(&rr, out);
+    out->x = pt.x - (k * 2 - 8) - 2;
+}
