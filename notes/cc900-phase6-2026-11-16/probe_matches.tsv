@@ -1756,3 +1756,10 @@ SndParam_StoreDRAMInit	174	2026-11-22-19-p6-r86	p6_V_33r1m303a@O3XSXr p6_V_33r1m
 Part_LinkVoiceToChain	79	2026-11-22-21-p6-r88	p6_Y_34r1m234a@O3XSXr p6_Y_34r1m234a@O3Xr p6_Y_34r1m234b@O3XSXr p6_Y_34r1m234b@O3Xr
 SeqStep_SwapTwoParts	62	2026-11-22-21-p6-r88	p6_Y_34r1m236a@O3XSXr p6_Y_34r1m236a@O3Xr p6_Y_34r1m236a@Xr p6_Y_34r1m236b@O3XSXr p6_Y_34r1m236b@O3Xr p6_Y_34r1m236b@Xr
 SeqVoice_CountChainLength	94	2026-11-22-21-p6-r88	p6_Y_34r1m234a@O3Xr p6_Y_34r1m234b@O3Xr p6_Y_34r1m234c@O3Xr
+Flash_EraseSectorAndWrite	64	2026-11-22-23-p6-r90	p6_Z_35r1m3a@O3Xr p6_Z_35r1m3a@Xr p6_Z_35r1m3b@O3XSXr p6_Z_35r1m3b@O3Xr p6_Z_35r1m3b@Xr
+PanelInput_ReadRxRecord	65	2026-11-22-23-p6-r90	p6_Z_35r1m277a@O3XSXr p6_Z_35r1m277a@O3Xr p6_Z_35r1m277b@O3XSXr p6_Z_35r1m277b@O3Xr
+Part_WriteWordAndByte	88	2026-11-22-23-p6-r90	p6_A_35r1m234a@O3XSXr p6_A_35r1m234a@O3Xr p6_A_35r1m234b@O3XSXr p6_A_35r1m234b@O3Xr
+PsMixer_CalcSwitchPointInFrame	96	2026-11-22-23-p6-r90	p6_Z_35r1m264a@O3XSXr p6_Z_35r1m264a@O3Xr p6_Z_35r1m264a@Xr
+SeMenu_SelectPartAndRedraw	84	2026-11-22-23-p6-r90	p6_Z_35r1m129a@O3XSXr p6_Z_35r1m129a@O3Xr
+SeqScan_CompareAndAppend	34	2026-11-22-23-p6-r90	p6_A_35r1m235a@O3XSXr p6_A_35r1m235a@O3Xr
+SeqStep_RebuildPartChain	204	2026-11-22-23-p6-r90	p6_Z_35r1m236a@O3Xr
