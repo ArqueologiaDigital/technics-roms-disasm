@@ -63,6 +63,10 @@ def bare(x):
     return re.sub(r'\(Def\)', '', x) if x else x
 
 
+def is_mem(x):
+    return bool(x) and (x.startswith('@') or x.startswith('*'))
+
+
 def unsigned16(x):
     m = re.search(r'\((U[A-Z]+)\)', x or '')
     return bool(m) and m.group(1) in ('USHORT', 'UINT', 'UCHAR') and not (x or '').startswith('#')
@@ -139,6 +143,21 @@ def rewrite2(recs):
             continue
         if r.op == 'ADD' and len(r.args) == 2:     # an index still needed as an address
             r.op, r.args = 'ADDR', ['@(%s+%s)' % (r.args[0], r.args[1])]
+        if MEM_ROUTES and r.op == '=' and r.res and is_mem(r.res) and r.args and \
+                (is_mem(r.args[0]) or re.match(r'^#L', r.args[0] or '')):
+            t = new_temp() + '{MK}'                  # memory <- memory, memory <- 4-byte constant: via a register
+            out.append(dump.Rec(r.block, '=', t, r.args, None, ''))
+            out.append(dump.Rec(r.block, '=', r.res, [t], None, ''))
+            continue
+        if MEM_ROUTES and r.op in dump.BRANCH and r.op not in ('JRBC', 'JRBS') and len(r.args) == 2 and \
+                is_mem(r.args[0]) and is_mem(r.args[1]):
+            t = new_temp()                           # a compare of two memory operands: the left one loaded
+            out.append(dump.Rec(r.block, '=', t, [r.args[0]], None, ''))
+            r.args = [t, r.args[1]]
+        if MEM_ROUTES and r.op == 'CONV' and r.args and is_mem(r.args[0]) and not r.args[0].startswith('@_'):
+            t = new_temp()                           # a conversion of a value in memory: loaded first
+            out.append(dump.Rec(r.block, '=', t, [r.args[0]], None, ''))
+            r.args = [t]
         if r.op == 'CONV' and r.res and r.res.startswith('@') and NEW_TEMPS:
             t = new_temp()                           # a conversion into memory goes through a register
             out.append(dump.Rec(r.block, 'CONV', t, r.args, None, ''))
@@ -285,6 +304,7 @@ def s2_lines(zio, decl_order=None, cdecl=False):
 
 
 REWRITE2 = True
+MEM_ROUTES = True
 NEW_TEMPS = True
 COALESCE = True
 STACK_PARAM_MM = True
