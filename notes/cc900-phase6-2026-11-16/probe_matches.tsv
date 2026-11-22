@@ -1731,3 +1731,16 @@ AudioInit_InitPartSendLevels	77	2026-11-22-13-p6-r80	p6_Q_30r1m295a@Xr p6_Q_30r1
 BitMapOut_DeltaEncode_Type90Return	111	2026-11-22-13-p6-r80	p6_Q_30r1m274a@O3XSXr p6_Q_30r1m274a@O3Xr p6_Q_30r1m274b@O3XSXr p6_Q_30r1m274b@O3Xr
 SingleLoad_GetFileBankName	46	2026-11-22-13-p6-r80	p6_P_30r1m269a@O3XSXr p6_P_30r1m269a@O3Xr
 SingleLoad_GetUserKitEntryName	46	2026-11-22-13-p6-r80	p6_P_30r1m269b@O3XSXr p6_P_30r1m269b@O3Xr
+BmDrEdit_DecrementVelocity	44	2026-11-22-15-p6-r82	p6_S_31r1m232a@O3XSXr p6_S_31r1m232a@O3Xr p6_S_31r1m232a@Xr p6_S_31r1m232b@O3Xr
+BmDrEdit_IncrementVelocity	45	2026-11-22-15-p6-r82	p6_S_31r1m232a@O3XSXr p6_S_31r1m232a@O3Xr p6_S_31r1m232a@Xr p6_S_31r1m232b@O3Xr
+BmDrEdit_VelocityDown_Check	27	2026-11-22-15-p6-r82	p6_S_31r1m232a@O3XSXr p6_S_31r1m232a@O3Xr p6_S_31r1m232a@Xr
+BmDrEdit_VelocityUp_Check	27	2026-11-22-15-p6-r82	p6_S_31r1m232a@O3XSXr p6_S_31r1m232a@O3Xr p6_S_31r1m232a@Xr
+CDlikeSwTtl_PdNavDispatch	182	2026-11-22-15-p6-r82	p6_R_31r1m203a@O3XSXr p6_R_31r1m203a@O3Xr
+CDlikeSwTtl_SongNavDispatch	322	2026-11-22-15-p6-r82	p6_R_31r1m203a@O3XSXr p6_R_31r1m203a@O3Xr
+DisplaySmfFileList	118	2026-11-22-15-p6-r82	p6_S_31r1m269a@O3XSXr p6_S_31r1m269a@O3Xr
+EffectMode_CheckAndDispatch	137	2026-11-22-15-p6-r82	p6_R_31r1m276a@O3XSXr p6_R_31r1m276a@O3Xr
+Part_ValidateAndSetupVoiceChannel	137	2026-11-22-15-p6-r82	p6_S_31r1m234a@O3XSXr p6_S_31r1m234a@O3Xr
+Part_ValidateVoiceChannel	100	2026-11-22-15-p6-r82	p6_S_31r1m234a@O3XSXr p6_S_31r1m234a@O3Xr p6_S_31r1m234c@O3XSXr p6_S_31r1m234c@O3Xr
+SeqPlay_HandleVoiceReassign	138	2026-11-22-15-p6-r82	p6_S_31r1m234a@O3XSXr p6_S_31r1m234a@O3Xr p6_S_31r1m234a@Xr p6_S_31r1m234b@O3XSXr p6_S_31r1m234b@O3Xr p6_S_31r1m234b@Xr
+SeqScan_InitAllStateVars	130	2026-11-22-15-p6-r82	p6_S_31r1m235a@O3XSXr p6_S_31r1m235a@O3Xr p6_S_31r1m235a@Xr p6_S_31r1m235b@O3XSXr p6_S_31r1m235b@O3Xr p6_S_31r1m235b@Xr
+SndParam_FetchSequencerParams	118	2026-11-22-15-p6-r82	p6_R_31r1m280a@O3Xr
