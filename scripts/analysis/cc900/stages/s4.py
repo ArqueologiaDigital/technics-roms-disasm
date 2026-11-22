@@ -24,7 +24,18 @@ class Unsupported(Exception):
     pass
 
 
+SIZE0 = {}                                           # T<n> of type 0 -> size inferred for the current function
+
+
 def size_of(x):
+    if x and re.match(r'^[*&]?T\d+\(0\)', x):
+        return SIZE0.get(re.match(r'^[*&]?(T\d+)', x).group(1), 4)
+    if x and re.match(r'^#C', x):
+        return 1
+    if x and re.match(r'^#L', x):
+        return 4
+    if x and re.match(r'^#', x):
+        return 2
     m = re.search(r'\(([A-Z]+)( [FN]\*)?\)', x or '')
     if not m:
         return 4
@@ -44,6 +55,8 @@ def fam_of(r):
 
 
 def sized(f, size):
+    if size not in (1, 2, 4) or f not in NAMES:
+        raise Unsupported('size %s of %s' % (size, f))
     n = NAMES[f][{1: 0, 2: 1, 4: 2}[size]]
     if n is None:
         raise Unsupported('byte of ' + f)
@@ -67,10 +80,31 @@ class Fn:
         self.regs = dict(regs)                       # 'P0' / 'I1' -> register name or 'stack'
         self.offs = dict(offs or {})                 # stack variables' offsets from XSP (after the prologue)
         self.frame = frame
-        self.save_iz = any(fam_of(r) == 'XIZ' or r in ('QIZ', 'QIZH', 'QIZL', 'IZH', 'IZL')
-                           for r in self.regs.values() if r)
+        vals = [r for r in self.regs.values() if r]
+        lo = any(r in ('IZ', 'IZH', 'IZL', 'XIZ') for r in vals)
+        hi = any(r in ('QIZ', 'QIZH', 'QIZL', 'XIZ') for r in vals)
+        self.save_iz = 'XIZ' if lo and hi else ('IZ' if lo else ('QIZ' if hi else None))
         self.code = []
         self.hints = self.temp_hints()
+        self.psize = {}
+        for l in zim:
+            m = re.search(r'\|(P\d+)(\([^()]*\))', l)
+            if m:
+                self.psize.setdefault(m.group(1), size_of(m.group(1) + m.group(2)))
+        SIZE0.clear()
+        for _ in range(3):                           # a type-0 temporary has the size of what it is copied from/to
+            for r in self.recs:
+                xs = [x for x in [r.res] + r.args if x]
+                if r.op in ('=', 'CONV') and len(xs) == 2 and r.op == '=':
+                    a, b = xs
+                    for u, v in ((a, b), (b, a)):
+                        m = re.match(r'^[*&]?(T\d+)\(0\)', u)
+                        if m and not re.match(r'^[*&]?T\d+\(0\)', v) and not v.startswith(('@(', '*')):
+                            SIZE0.setdefault(m.group(1), size_of(v))
+                        elif m and re.match(r'^[*&]?T\d+\(0\)', v):
+                            n2 = re.match(r'^[*&]?(T\d+)', v).group(1)
+                            if n2 in SIZE0:
+                                SIZE0.setdefault(m.group(1), SIZE0[n2])
 
     def name(self, x):
         return re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x).group(1) if x and re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x) else None
@@ -174,9 +208,14 @@ class Fn:
                 if self.frame:
                     self.emit('dec', '0x%x,XSP' % self.frame)
                 if self.save_iz:
-                    self.emit('push', 'XIZ')
+                    self.emit('push', self.save_iz)
                 for k in sorted([p for p in self.regs if p.startswith('P') and int(p[1:]) < 3], key=lambda p: int(p[1:])):
                     want, f = self.regs[k], ARGREG[int(k[1:])]
+                    if want == 'stack' and k in self.offs:
+                        sz = self.psize.get(k, 2)
+                        o = self.offs[k]
+                        self.emit('ld', '%s,%s' % ('(XSP+0x%x)' % o if o else '(XSP)', sized(f, sz)))
+                        continue
                     if want and want != 'stack' and fam_of(want) != f:   # a parameter kept elsewhere: moved in
                         self.emit('ld', '%s,%s' % (want, sized(f, {0: 1, 1: 2, 2: 4}[NAMES[fam_of(want)].index(want)]
                                                                  if want in NAMES[fam_of(want)] else 2)))
@@ -188,7 +227,7 @@ class Fn:
                     self.tail = False
                     continue
                 if self.save_iz:
-                    self.emit('pop', 'XIZ')
+                    self.emit('pop', self.save_iz)
                 if self.frame:
                     self.emit('inc', '0x%x,XSP' % self.frame)
                 self.emit('ret')
@@ -214,8 +253,13 @@ class Fn:
                 if m:
                     self.emit('lda', '%s,%s%s' % (self.long_of(r.res), m.group(1),
                                                   '' if not m.group(2) else '+0x%x' % int(m.group(2))))
-                else:
+                elif self.stack(a):
+                    o = self.offs[self.name(a)]          # the address of a stack variable
+                    self.emit('lda', '%s,%s' % (self.long_of(r.res), 'XSP+0x%x' % o if o else 'XSP'))
+                elif self.mem(a):
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), self.mem(a)[1:-1]))
+                else:
+                    raise Unsupported('ADDR of ' + a)
             elif op == 'FORCE':
                 a = r.args[0]
                 ra = self.reg(a)                     # the 32-bit product lands in the operand's own family
