@@ -1753,3 +1753,6 @@ SeqPart_Splice	132	2026-11-22-17-p6-r84	p6_U_32r1m236b@O3XSXr p6_U_32r1m236b@O3X
 SndParam_SyncDisplayBitmap	138	2026-11-22-17-p6-r84	p6_T_32r1m277a@O3Xr
 SwbtWr_AppendFixedParamBlock	101	2026-11-22-17-p6-r84	p6_U_32r1m280a@O3Xr
 SndParam_StoreDRAMInit	174	2026-11-22-19-p6-r86	p6_V_33r1m303a@O3XSXr p6_V_33r1m303b@O3XSXr
+Part_LinkVoiceToChain	79	2026-11-22-21-p6-r88	p6_Y_34r1m234a@O3XSXr p6_Y_34r1m234a@O3Xr p6_Y_34r1m234b@O3XSXr p6_Y_34r1m234b@O3Xr
+SeqStep_SwapTwoParts	62	2026-11-22-21-p6-r88	p6_Y_34r1m236a@O3XSXr p6_Y_34r1m236a@O3Xr p6_Y_34r1m236a@Xr p6_Y_34r1m236b@O3XSXr p6_Y_34r1m236b@O3Xr p6_Y_34r1m236b@Xr
+SeqVoice_CountChainLength	94	2026-11-22-21-p6-r88	p6_Y_34r1m234a@O3Xr p6_Y_34r1m234b@O3Xr p6_Y_34r1m234c@O3Xr
