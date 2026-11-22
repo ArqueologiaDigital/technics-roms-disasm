@@ -289,11 +289,11 @@ the answer directly: the allocator's order and costs, the peephole patterns, the
 programs (PE32, i386); the 1998 ones say "Copyright(C) TOSHIBA CORPORATION 1989-1997" and link the Microsoft
 Visual C++ runtime.
 
-| build                 | where (`~/compartilhado/upstream_repos/file_archive/`)                              | thc1 / thc2 bytes  |
-|-----------------------|-------------------------------------------------------------------------------------|--------------------|
-| V4.23 (1998-06-04)    | `devrs.com/ngpcbins/unpacked/zip/T900/BIN/`                                         | 276,992 / 301,568  |
-| IDE 2003              | `github.com/colinoflynn/Toshiba-TLCS-900-L-Resources/unpacked/toshiba-ide/.../bin/` | I0 measures        |
-| v1.10 (2009)          | `archive.org/ToshibaTLCS900CompilerV1.10/unpacked/msi/.../bin/`                     | I0 measures        |
+| build              | where (`~/compartilhado/upstream_repos/file_archive/`)                              | thc1 / thc2 bytes |
+|--------------------|-------------------------------------------------------------------------------------|-------------------|
+| V4.23 (1998-06-04) | `devrs.com/ngpcbins/unpacked/zip/T900/BIN/`                                         | 276,992 / 301,568 |
+| IDE 2003           | `github.com/colinoflynn/Toshiba-TLCS-900-L-Resources/unpacked/toshiba-ide/.../bin/` | 311,296 / 352,256 |
+| v1.10 (2009)       | `archive.org/ToshibaTLCS900CompilerV1.10/unpacked/msi/.../bin/`                     | 409,600 / 479,232 |
 
 **The clean-room boundary (because of D4).**  The backend is meant for LLVM upstream, so no Toshiba code may reach it,
 even rewritten line by line.
