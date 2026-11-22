@@ -234,6 +234,11 @@ def move_dispatch(out):
                 if k < len(out) and out[k][0] == 'JMP':   # a dispatch may end with a jump to the default case
                     k += 1
                 disp = [x for x in out[j + 1:k] if x[0] in BRANCHES or x[0] == 'JMP']
+                tests = [x for x in disp if x[0] in BRANCHES]
+                if not tests or any(x[0] != 'BEQ' or not (x[3] or '').startswith('#') for x in tests) or \
+                        len({x[2] for x in tests}) != 1:
+                    i += 1                           # not a switch (a rotated loop's test, ...)
+                    continue
                 while k < len(out) and out[k][0] in MARKERS:
                     k += 1
                 if disp and k < len(out) and out[k][0] in ('LAB', 'END') and \
