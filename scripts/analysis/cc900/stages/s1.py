@@ -343,6 +343,8 @@ def rewrite(F):
                     o = 'LDIR'
                 elif T and T.is_basic(dt) and T.is_basic(st) and (SIZE[dt] != SIZE[st] or SIGNED.get(dt) != SIGNED.get(st)):
                     o = 'CONV'
+                elif T and (T.is_basic(dt) and T.is_ptr(st) or T.is_ptr(dt) and T.is_basic(st)):
+                    o = 'CONV'                       # between a pointer and an integer
             out.append((o, fl[1], fl[2], None))
             if MEM_RESULT_NUMBERED and op == '=' and len(fl) > 3 and fl[3].startswith('T') and \
                     fl[1][:1] in '@*' and fl[2][:1] in '@*' and not reads.get(fl[3], 0):   # memory to memory
@@ -426,7 +428,8 @@ def rewrite(F):
     res = []                                         # a temporary copied once into its destination: write that
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
-                and F.typ(r[1]) == F.typ(r[2]) and res[-1][0] != 'ADDR' and (re.match(r'^([IP]\d+|A)$', r[1]) or
+                and (F.typ(r[1]) == F.typ(r[2]) or r[1] == 'A') and res[-1][0] != 'ADDR' and \
+                (re.match(r'^([IP]\d+|A)$', r[1]) or
                                                     r[1].startswith('@') and res[-1][0] not in ('ADDR', 'CONV')):
             prev = res.pop()
             r = (prev[0], r[1]) + prev[2:]          # (and the chain rule below may apply to the folded line)
@@ -491,9 +494,11 @@ def number(F, recs):
             if x and x.lstrip('*&').startswith('T'):
                 reads[x.lstrip('*&')] = reads.get(x.lstrip('*&'), 0) + 1
     defs = {tmap[t] for t, n in writes.items() if n == 1 and t in tmap and reads.get(t, 0) <= 1}
-    for r in recs:                                  # a function pointer a call reads: no (Def)
-        if r[0] in ('ACALP', 'CCALP') and r[2] and r[2].lstrip('*&') in tmap:
-            defs.discard(tmap[r[2].lstrip('*&')])
+    for r in recs:                                  # a function pointer a call reads, and what it returns: no (Def)
+        if r[0] in ('ACALP', 'CCALP'):
+            for x in (r[1], r[2]):
+                if x and x.lstrip('*&') in tmap:
+                    defs.discard(tmap[x.lstrip('*&')])
     for t in list(writes):                          # ... and not when its source is written again before the read
         if t not in tmap or tmap[t] not in defs:
             continue
@@ -578,6 +583,11 @@ def fmt(F, r, inv, defs):
     elif op in BINARY:
         ct = ctype(F, res, inv)
         S = lambda x: show(F, x, inv, defs, ct if op not in ('<<', '>>') else None)
+    if op in ('JRBC', 'JRBS'):
+        t = ctype(F, a, inv)
+        m = re.match(r'^#[LC]?U?(\d+)$', b)
+        size = SIZE.get(t, 1) if isinstance(t, int) else 1
+        return '%s %s %s,#%sU%s' % (res, op, S(a), {1: 'C', 4: 'L'}.get(size, ' '), m.group(1))
     if op in BRANCHES:
         return '%s %s %s,%s' % (res, op, S(a), S(b))
     if op in BINARY or op == 'ADD':
@@ -633,7 +643,7 @@ def arg_copies(F, blocked, tmap, inv, defs):
         if 'T%d' % k in inv:
             base = max(base, k + 1)
     sites = [i for i, (b, r) in enumerate(blocked) if r[0] == 'AARG' and r[2] and not r[2].startswith('#')
-             and not r[2].startswith('*') and not r[2].startswith('&')]
+             and not r[2].startswith('*') and not r[2].startswith('&') and (not r[3] or int(r[3]) <= 3)]
     given = {}
     for k, (b, r) in enumerate(blocked):             # the call's unread result temporary: its last copied argument
         if r[0] in ('ACALL', 'ACALP') and len(r) > 4 and r[4] and str(r[4]).startswith('res:'):
