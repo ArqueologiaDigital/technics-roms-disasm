@@ -354,13 +354,22 @@ def rewrite(F):
     out = [r for r in out if not (r[0] == 'LAB' and r[1] in alias)]
     out = [(r[0], alias.get(r[1], r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else r for r in out]
     out = branch_over_jump(out)
+    ends = set()                                     # a jump to a label whose block is just END: END
+    real = [r for r in out if r[0] not in MARKERS]
+    for k, r in enumerate(real[:-1]):
+        if r[0] == 'LAB' and real[k + 1][0] == 'END':
+            ends.add(r[1])
+    out = [('END', None, None, None) if r[0] == 'JMP' and r[1] in ends else r for r in out]
+    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'}
+    out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
     out = [r for k, r in enumerate(out)               # a jump to the label that follows it goes
            if not (r[0] == 'JMP' and next((x for x in out[k + 1:] if x[0] not in MARKERS), (None, None))[:2] ==
                    ('LAB', r[1]))]
     res = []                                         # a temporary copied once into its destination: write that
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
-                and F.typ(r[1]) == F.typ(r[2]) and re.match(r'^([IP]\d+|A)$', r[1]):
+                and F.typ(r[1]) == F.typ(r[2]) and (re.match(r'^([IP]\d+|A)$', r[1]) or
+                                                    r[1].startswith('@') and res[-1][0] != 'ADDR'):
             prev = res.pop()
             res.append((prev[0], r[1]) + prev[2:])
             continue
@@ -546,14 +555,13 @@ def arg_copies(F, blocked, tmap, inv, defs):
                 defs.add(new)
                 out.append([b, ('=', new, r[2], None)])
                 r = (r[0], r[1], new, r[3]) + tuple(r[4:])
-            pending.append(r)
+            pending.append((b, r))
             continue
         if r[0] in ('ACALL', 'ACALP') and pending:
-            pb = out[-1][0] if out else b
-            out.extend([pb, x] for x in pending)
+            out.extend([pb, x] for pb, x in pending)
             pending = []
         out.append([b, r])
-    out.extend([out[-1][0] if out else 0, x] for x in pending)
+    out.extend([pb, x] for pb, x in pending)
     return out
 
 
