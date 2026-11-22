@@ -17825,24 +17825,8 @@ SendEpilogue_Data_Helper_Case22_Skip12:
 	ld	hl, 0:i3
 SendEpilogue_Data_Helper_Case22_Return2:
 	ret
-MIDI_SendSysExCmd:
-	dec	6, xsp
-	ld	(xsp + 0:8), 0x4
-	ld	(xsp + 1), 0xf0
-	ld	(xsp + 2), 0x50
-	ld	(xsp + 3), 0x87
-	ld	(xsp + 4), a
-	lda	xwa, (xsp)
-	call	MIDI_SendCmdPacket
-	call	MIDI_PostSendStub
-	inc	6, xsp
-	ret
-SendSysExCmd_Data:
-	ldw	wa, 80
-	ldw	bc, 133
-	ld	de, 0:i3
-	calr	SubCPU_SendSystemRecord
-	jp	MIDI_PostSendStub
+MIDI_SendSysExCmd:	.include "includes/generated/cc900/MIDI_SendSysExCmd.s"	; C: cc900/note_voice_mapping_m301_xr.c
+SendSysExCmd_Data:	.include "includes/generated/cc900/SendSysExCmd_Data.s"	; C: cc900/note_voice_mapping_m0.c
 SubCPU_SetPolyphonyModeAndResendVolumes:
 	dec	4, xsp
 	ld	(xsp + 2), a
