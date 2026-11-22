@@ -496,38 +496,9 @@ FDemo_FileOpen_Exit:
 
 DemoMode_Main_Operation:	.include "includes/generated/cc900/DemoMode_Main_Operation.s"	; C: cc900/file_demo_proc_m266_b.c
 FDemo_IndicatorSetup:	.include "includes/generated/cc900/FDemo_IndicatorSetup.s"	; C: cc900/file_demo_proc_m266.c
-DemoMode_Initialize:
-	calr	Demo_PreSetup
-	ld	(0x294a:16), 0
-	ld	(DEMO_DEBOUNCE:16), 0
-	ld	(DEMO_TIMER_COUNTDOWN:16), 0
-	res	7, (0x2892:16)
-	call	MidiChannel_ResetAndConfigure
-	calr	Audio_WaitForReady
-	call	SeqStep_PlaybackStateMachine
-	calr	Voice_SavePreset
-	res	3, (DEMO_CONTROL_FLAGS:16)
-	call	SeqInit_PostEventSequence
-	call	ToneGen_FileIO_RestoreFromBackup
-	call	SeqTimer_UpdateTempoReg
-	call	Voice_InitializeAll
-	call	Seq_StartMainControlAlt
-	call	TempoRingBuf_Init
-	call	SeqBuf_Init
-	ldw	wa, 0x22
-	call	CtrlPanel_SetIndicatorLED
-	bit	0, (0x2889:16)
-	jr	z, FDemo_PostBannerCheck
-	ldmm_sd24w	0xec, 0xff, 0x00, 0x9e, 0xf1
-; calr Banner_Loop_Check (v7 displacement)
-FDemo_PostBannerCheck:
-	calr	Banner_Loop_Check
-; call Audio_CheckSubsystemReady (v7 addr)
-	call	Audio_CheckSubsystemReady
-; resda 6, 0xb7e2 (v7 patched)
-	res	6, (0xb722:16)
-
-	ret
+DemoMode_Initialize:	.include "includes/generated/cc900/DemoMode_Initialize.s"	; C: cc900/file_demo_proc_m266_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemo_PostBannerCheck, DemoMode_Initialize + 88
 
 
 

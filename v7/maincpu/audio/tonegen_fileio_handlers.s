@@ -148,53 +148,9 @@ PanelTlv_WriteBlock0Headers:	.include "includes/generated/cc900/PanelTlv_WriteBl
 ; xwa = a block-0 base.  PanelTlv_ValidateRecord for each of the 46 PanelTlv_Block0_Layout records; then
 ; the five effect records go to DSPCfg_WriteAllSlots_Combined as slots 0..4 -- tags 0x61, 0x63, 0x65, 0x66,
 ; 0x64, whose payloads sit at base + 0x2D4, 0x2EE, 0x322, 0x33C, 0x308 (spelled 0xFC74.. - 0xF9A0 below).
-PanelTlv_ValidateBlock0:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), xwa
-	ld	iz, 0:i3
-PanelTlv_ValidateBlock0_Loop:
-	ld	wa, iz
-	extz	xwa
-	ld	xde, xwa
-	sll	xde, 2
-	add	xde, xwa
-	add	xde, xde
-	ld	xbc, PanelTlv_Block0_Layout
-	add	xbc, xde
-	ld	xwa, (xsp + 2)
-	calr	PanelTlv_ValidateRecord
-	inc	1, iz
-	cp	iz, 0x2e
-	jr	c, PanelTlv_ValidateBlock0_Loop
-	lda	xbc, (PANEL_DSP_EFFECT:16)
-	sub	xbc, 0xf9a0
-	add	xbc, (xsp + 2)
-	ld	wa, 0:i3
-	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (PANEL_DIGITAL_REVERB:16)
-	sub	xbc, 0xf9a0
-	add	xbc, (xsp + 2)
-	ld	wa, 1:i3
-	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (PANEL_ACOUSTIC_ILLUSION:16)
-	sub	xbc, 0xf9a0
-	add	xbc, (xsp + 2)
-	ld	wa, 2:i3
-	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (PANEL_MIC_REVERB:16)
-	sub	xbc, 0xf9a0
-	add	xbc, (xsp + 2)
-	ld	wa, 3:i3
-	call	DSPCfg_WriteAllSlots_Combined
-	lda	xbc, (PANEL_EQUALIZER:16)
-	sub	xbc, 0xf9a0
-	add	xbc, (xsp + 2)
-	ld	wa, 4:i3
-	call	DSPCfg_WriteAllSlots_Combined
-	popw	iz
-	inc	4, xsp
-	ret
+PanelTlv_ValidateBlock0:	.include "includes/generated/cc900/PanelTlv_ValidateBlock0.s"	; C: cc900/tonegen_fileio_handlers_m277_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidateBlock0_Loop, PanelTlv_ValidateBlock0 + 8
 ; xwa = a block-1 base.  PanelTlv_ValidateRecord for each of the 30 PanelTlv_Block1_Layout records.
 PanelTlv_ValidateBlock1:	.include "includes/generated/cc900/PanelTlv_ValidateBlock1.s"	; C: cc900/tonegen_fileio_handlers_m277_c.c
 ; the hand assembly's labels inside the compiled body, by their offsets

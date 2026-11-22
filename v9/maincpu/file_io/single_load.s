@@ -1672,73 +1672,11 @@ SingleLoadDst_DrawComposerBankRows:	.include "includes/generated/cc900/SingleLoa
 ;   is "ALL"; posts EVT_PARA_DRAW for both. Basis: callers + body -- SingleLoadDst_ComposerListProc calls it after
 ;   SingleLoadDst_DrawComposerBankRows on EVT_PAINT and paging, and alone on stepping (parameter 8), with C =
 ;   SingleLoadDst_ComposerBankSize (10).
-SingleLoadDst_DrawComposerItemRows:
-	dec	6, xsp
-	push	xiz
-	ld	(xsp+4), c
-	ld	(xsp+6), xwa
-	lda	xwa, (SINGLE_LOAD_DST_ROWS:16)
-	ld	(xwa+42), 2
-	lda	xwa, (xwa+43)
-	ld	c, (SINGLE_LOAD_AREA:16)
-	extz	bc
-	sla	bc, 2
-	lda	xde, (StorageArea_UnitNames:24)
-	ld	xbc, (xde+bc)
-	inc	1, xbc
-	call	FileIO_CopyString
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+43:16)
-	ld	xbc, SLDstBankList_FuncBody_Str_Colon_6
-	call	FileIO_BuildFilePath
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	nz, SingleLoadDst_DrawComposerItemRows_Skip
-	lda	xiz, (SINGLE_LOAD_DST_ROWS+43:16)
-	ld	a, (SLOAD_DST_CMP_POS:16)
-	extz	wa
-	div	wa, (xsp+0x4)
-	ld	a, w
-	extz	wa
-	calr	SingleLoad_GetVariationName
-	ld	xbc, xhl
-	ld	xwa, xiz
-	call	FileIO_BuildFilePath
-SingleLoadDst_DrawComposerItemRows_Skip:
-	lda	xwa, (SINGLE_LOAD_DST_ROWS+43:16)
-	ldw	bc, 16
-	calr	TrimAndPadSmfFilename
-	lda	xbc, (SINGLE_LOAD_DST_ROWS:16)
-	lda	xwa, (xbc+63)
-	cp	(SINGLE_LOAD_ALL:16), 0
-	jr	z, SingleLoadDst_DrawComposerItemRows_Skip2
-	ld	(xwa), 3
-	lda	xwa, (xbc+64)
-	ld	xbc, SLDstBankList_FuncBody_Str_ALL
-	call	FileIO_CopyString
-	jr	SingleLoadDst_DrawComposerItemRows_Join
-SingleLoadDst_DrawComposerItemRows_Skip2:
-	ld	e, (SLOAD_DST_CMP_POS:16)
-	ld	c, e
-	extz	bc
-	div	bc, (xsp+0x4)
-	extz	bc
-	extz	de
-	div	de, (xsp+0x4)
-	ld	e, d
-	extz	de
-	pushw	3
-	calr	SingleLoad_GetComposerSectionName
-SingleLoadDst_DrawComposerItemRows_Join:
-	lda	xde, (SINGLE_LOAD_DST_ROWS+42:16)
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	lda	xde, (SINGLE_LOAD_DST_ROWS+63:16)
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	pop	xiz
-	inc	6, xsp
-	ret
+SingleLoadDst_DrawComposerItemRows:	.include "includes/generated/cc900/SingleLoadDst_DrawComposerItemRows.s"	; C: cc900/single_load_m269_f.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SingleLoadDst_DrawComposerItemRows_Skip, SingleLoadDst_DrawComposerItemRows + 93
+	.set	SingleLoadDst_DrawComposerItemRows_Skip2, SingleLoadDst_DrawComposerItemRows + 134
+	.set	SingleLoadDst_DrawComposerItemRows_Join, SingleLoadDst_DrawComposerItemRows + 162
 ; SingleLoadDst_ComposerListProc: Single-load destination list for area 2 COMPOSER: banks of
 ;   SingleLoadDst_ComposerBankSize (10) up to 30 over RAM 0x8A06; EVT_PAINT draws SingleLoadDst_DrawComposerBankRows and
 ;   _Helper4; entry [2] of SingleLoadDst_AreaListProcs and CmpSingleLoadDst_AreaListProcs, called with XWA = file-name

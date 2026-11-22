@@ -2278,53 +2278,9 @@ SmfMed_Exit:
 	inc 4, xsp
 	ret
 
-PdMed_FormatFileList:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), bc
-	ld (xsp + 4), xwa
-	ld iz, 0:i3
-
-PdFmt_FormatLoop:
-	ld de, iz
-	sll de, 5
-	lda xbc, (0x850c:16)
-	extz xde
-	add xde, xbc
-	ldto_berp A, 0xf8
-	ld (xde), a
-	ld wa, (xsp + 2)
-	add wa, iz
-	call GetFileRecordPtr
-	ld xbc, xhl
-	ld wa, iz
-	sll wa, 5
-	ld de, 1:i3
-	add de, wa
-	lda xhl, (0x850c:16)
-	ld wa, de
-	extz xwa
-	add xwa, xhl
-	ld de, (xsp + 2)
-	add de, iz
-	inc 1, de
-	pushw 0x14
-	pushw 0x1
-	call FileIO_ReadHeader_ParseLoop
-	ld de, iz
-	sll de, 5
-	lda xbc, (0x850c:16)
-	extz xde
-	add xde, xbc
-	ld xwa, (xsp + 4)
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-	inc 1, iz
-	cp iz, 0xa
-	jr lt, PdFmt_FormatLoop
-	popw iz
-	inc 6, xsp
-	ret
+PdMed_FormatFileList:	.include "includes/generated/cc900/PdMed_FormatFileList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PdFmt_FormatLoop, PdMed_FormatFileList + 11
 
 FmmPdFileNameFunc:
 	dec 4, xsp
@@ -2962,53 +2918,9 @@ DocDiskNameFunc:	.include "includes/generated/cc900/DocDiskNameFunc.s"	; C: cc90
 	.set	DocDisk_PostEvent, DocDiskNameFunc + 81
 	.set	DocDisk_Exit, DocDiskNameFunc + 92
 
-DocMed_FormatFileList:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), bc
-	ld (xsp + 4), xwa
-	ld iz, 0:i3
-
-DocFmt_FormatLoop:
-	ld de, iz
-	sll de, 5
-	lda xbc, (0x850c:16)
-	extz xde
-	add xde, xbc
-	ldto_berp A, 0xf8
-	ld (xde), a
-	ld wa, (xsp + 2)
-	add wa, iz
-	call FileIO_GetFileEntryWithRefresh
-	ld xbc, xhl
-	ld wa, iz
-	sll wa, 5
-	ld de, 1:i3
-	add de, wa
-	lda xhl, (0x850c:16)
-	ld wa, de
-	extz xwa
-	add xwa, xhl
-	ld de, (xsp + 2)
-	add de, iz
-	inc 1, de
-	pushw 0xc
-	pushw 0x0
-	call FileIO_ReadHeader_ParseLoop
-	ld de, iz
-	sll de, 5
-	lda xbc, (0x850c:16)
-	extz xde
-	add xde, xbc
-	ld xwa, (xsp + 4)
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-	inc 1, iz
-	cp iz, 0xa
-	jr lt, DocFmt_FormatLoop
-	popw iz
-	inc 6, xsp
-	ret
+DocMed_FormatFileList:	.include "includes/generated/cc900/DocMed_FormatFileList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocFmt_FormatLoop, DocMed_FormatFileList + 11
 
 FmmDocFileNameFunc:
 	dec 4, xsp

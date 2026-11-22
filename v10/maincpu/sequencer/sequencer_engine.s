@@ -27198,63 +27198,17 @@ SeqPart_DualSwap:	.include "includes/generated/cc900/SeqPart_DualSwap.s"	; C: cc
 ; Copies one event from the right comparison cursor to the primary write position: byte A first,
 ; then (unless the cursor already ended, bit 1 of 0x27d2) the following bytes up to the next status
 ; byte, advancing both cursors; finishes in SeqPart_CompareRight.
-SeqPart_ValidateRight:
-	ld l, a
-	extz hl
-	ld wa, hl
-	call SeqPart_WriteByte_Primary
-	bit 1, (0x27d2:16)
-	jr nz, SeqPart_ValidateRightCore
-	call PartCtrl_AdvanceToNextEntry
-	ld a, (0x27de:16)
-	extz wa
-
-SeqPart_ValidateRightLoop:
-	call SeqPart_WriteByte_Primary
-
-SeqPart_ValidateRightCore:
-	ld xwa, 0x27d8
-	ld xbc, 0x27da
-	call PartCtrl_ReadWordWithBoundsCheck
-	call PartCtrl_AdvanceToNextEntry
-	ld wa, (0x27d8:16)
-	ld bc, (0x27da:16)
-	call PartCtrl_ReadByteExtended
-	bit 7, l
-	jrl nz, SeqPart_CompareRight
-	extz hl
-	ld wa, hl
-	jr SeqPart_ValidateRightLoop
+SeqPart_ValidateRight:	.include "includes/generated/cc900/SeqPart_ValidateRight.s"	; C: cc900/sequencer_engine_m236_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_ValidateRightLoop, SeqPart_ValidateRight + 26
+	.set	SeqPart_ValidateRightCore, SeqPart_ValidateRight + 30
 
 ; Same as SeqPart_ValidateRight for the left cursor (0x27d4 / 0x27d6, bit 0 of 0x27d2), finishing
 ; in SeqPart_CompareLeft.
-SeqPart_ValidateLeft:
-	ld l, a
-	extz hl
-	ld wa, hl
-	call SeqPart_WriteByte_Primary
-	bit 0, (0x27d2:16)
-	jr nz, SeqPart_ValidateLeftCore
-	call PartCtrl_AdvanceToNextEntry
-	ld a, (0x27dc:16)
-	extz wa
-
-SeqPart_ValidateLeftLoop:
-	call SeqPart_WriteByte_Primary
-
-SeqPart_ValidateLeftCore:
-	ld xwa, 0x27d4
-	ld xbc, 0x27d6
-	call PartCtrl_ReadWordWithBoundsCheck
-	call PartCtrl_AdvanceToNextEntry
-	ld wa, (0x27d4:16)
-	ld bc, (0x27d6:16)
-	call PartCtrl_ReadByteExtended
-	bit 7, l
-	jrl nz, SeqPart_CompareLeft
-	extz hl
-	ld wa, hl
-	jr SeqPart_ValidateLeftLoop
+SeqPart_ValidateLeft:	.include "includes/generated/cc900/SeqPart_ValidateLeft.s"	; C: cc900/sequencer_engine_m236_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_ValidateLeftLoop, SeqPart_ValidateLeft + 26
+	.set	SeqPart_ValidateLeftCore, SeqPart_ValidateLeft + 30
 
 SeqPart_InitWithValidation:	.include "includes/generated/cc900/SeqPart_InitWithValidation.s"	; C: cc900/sequencer_engine_m236.c
 ; the hand assembly's labels inside the compiled body, by their offsets
