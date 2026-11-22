@@ -326,3 +326,24 @@ be checked against V4.23 on its own, instead of only on the final bytes.  That a
 I0 runs first.  I2 and I3 replace C1-C3's rule fitting as the model's source of rules; B and D keep their role as the
 test of each rule.  Order 2's analysis steps (A1, B0, C2, D0) still give I2 and I3 their test sets.
 
+**Found later in I2 (2026-11-22): the seam between the passes is a small text language.**  thc1 hands thc2 a text
+file: a type table, the symbols, then three-address code, one operation per line.  Over the 1,133 firmware files whose
+thc1 output was kept (runs 2026-11-22-46..49) it is 534,968 lines using only 48 distinct operations (assignment and
+the C operators, labels, conditional and plain jumps, call arguments and calls, line and block markers, inline `asm`).
+And m1 (i2/m1_v10.md) showed that the current model, 21,429 lines of rules fitted to outputs, writes V4.23's exact
+listing for 32 % of v10's functions and refuses 33 %; the first refusal fixed (DECAY_AS_ADDR) let 75 more functions
+compile and none of them match yet.
+
+**Proposal (decision E6 for the owner): rebuild the model along the compiler's own seam.**
+
+| part        | what it is                                                                                     | checked against V4.23 by                                     |
+|-------------|------------------------------------------------------------------------------------------------|--------------------------------------------------------------|
+| front end   | C (clang's AST) to thc1's intermediate code                                                    | thc1's own file for the same C, line by line                 |
+| back end    | thc1's intermediate code to the listing, written from our descriptions of thc2's passes        | thc2 run on thc1's file: `-zim`, `-zio`, `-g`, then the listing |
+| LLVM        | the back end's decisions as the `-mcc900-compat` pipeline (design (b)), or a driver around both | the same oracles, through clang                              |
+
+Each half is then tested alone on the same input V4.23 had, so a front-end error can no longer hide a back-end one
+and the reverse; the stage dumps localise every difference to a pass.  The current model stays the reference until the
+new halves beat it on m1 and on validation.  Recommended; it changes E1's "model work resumes narrowed" into "the model
+is rebuilt per stage", so it is the owner's call.
+
