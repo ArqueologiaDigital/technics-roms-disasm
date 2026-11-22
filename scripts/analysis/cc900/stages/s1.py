@@ -722,7 +722,7 @@ def arg_copies(F, blocked, tmap, inv, defs):
         if 'T%d' % k in inv:
             base = max(base, k + 1)
     sites = [i for i, (b, r) in enumerate(blocked) if r[0] == 'AARG' and r[2] and not r[2].startswith('#')
-             and not r[2].startswith('*') and not r[2].startswith('&') and (not r[3] or int(r[3]) <= 3)]
+             and not r[2].startswith('&') and (not r[3] or int(r[3]) <= 3)]
     given = {}
     for k, (b, r) in enumerate(blocked):             # the call's unread result temporary: its last copied argument
         if r[0] in ('ACALL', 'ACALP') and len(r) > 4 and r[4] and str(r[4]).startswith('res:'):
@@ -737,6 +737,9 @@ def arg_copies(F, blocked, tmap, inv, defs):
     names.update(given)
     out, pending = [], []
     for i, (b, r) in enumerate(blocked):
+        if r[0] == 'AARG' and r[3] and int(r[3]) > 3:
+            out.append([b, r])                       # a stack argument stays where it is
+            continue
         if r[0] == 'AARG':
             if i in names:
                 new = names[i]
