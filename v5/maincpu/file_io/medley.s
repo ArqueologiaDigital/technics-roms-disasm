@@ -2448,89 +2448,13 @@ PdName_Exit:
 	inc 4, xsp
 	ret
 
-PdMed_FormatSlotList:
-	dec 6, xsp
-	push xiz
-	ld iz, bc
-	ld (xsp + 6), xwa
-	ld xwa, 0:i3
-	ld xbc, EVT_GET_SELECTED_FILE_NUMBER
-	ld xde, 0:i3
-	calr FmmPdFileNameFunc
-	ldfr_werp HL, 0xfa
-	ldto_werp WA, 0xfa
-	extz xwa
-	div wa, 0xa
-	ldfr_werp WA, 0xfa
-	mul wa, 0xa
-	ldfr_werp WA, 0xfa
-	ldw (xsp + 4), 0xa
-	ldto_werp WA, 0xfa
-	add wa, 0xa
-	cp wa, iz
-	jr c, PdFmtSlot_CalcVisible
-	ld (xsp + 4), iz
-	ldto_werp WA, 0xfa
-	sub (xsp + 4), wa
-
-PdFmtSlot_CalcVisible:
-	ld iz, 0:i3
-	cpw (xsp + 4), 0x0
-	jr ule, PdFmtSlot_FillEmpty
-PdFmtSlot_FormatLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33676:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	bc, qiz
-	add	bc, iz
-	lda	xde, (34792:16)
-	extz	xbc
-	add	xbc, xde
-	ld	c, (xbc)
-	extz	bc
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33676:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, (xsp+0x4)
-	jr	c, PdFmtSlot_FormatLoop
-PdFmtSlot_FillEmpty:
-	cp iz, 0xa
-	jr nc, PdFmtSlot_Exit
-
-PdFmtSlot_EmptyLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33676:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	bc, 255
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33676:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	c, PdFmtSlot_EmptyLoop
-PdFmtSlot_Exit:
-	pop xiz
-	inc 6, xsp
-	ret
+PdMed_FormatSlotList:	.include "includes/generated/cc900/PdMed_FormatSlotList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PdFmtSlot_CalcVisible, PdMed_FormatSlotList + 67
+	.set	PdFmtSlot_FormatLoop, PdMed_FormatSlotList + 76
+	.set	PdFmtSlot_FillEmpty, PdMed_FormatSlotList + 143
+	.set	PdFmtSlot_EmptyLoop, PdMed_FormatSlotList + 149
+	.set	PdFmtSlot_Exit, PdMed_FormatSlotList + 203
 
 FmmPdMedleyFunc_Entry:
 FmmPdMedleyFunc:
@@ -3174,89 +3098,13 @@ DocName_Exit:
 	inc 4, xsp
 	ret
 
-DocMed_FormatSlotList:
-	dec 6, xsp
-	push xiz
-	ld iz, bc
-	ld (xsp + 6), xwa
-	ld xwa, 0:i3
-	ld xbc, EVT_GET_SELECTED_FILE_NUMBER
-	ld xde, 0:i3
-	calr FmmDocFileNameFunc
-	ldfr_werp HL, 0xfa
-	ldto_werp WA, 0xfa
-	extz xwa
-	div wa, 0xa
-	ldfr_werp WA, 0xfa
-	mul wa, 0xa
-	ldfr_werp WA, 0xfa
-	ldw (xsp + 4), 0xa
-	ldto_werp WA, 0xfa
-	add wa, 0xa
-	cp wa, iz
-	jr c, DocFmtSlot_CalcVisible
-	ld (xsp + 4), iz
-	ldto_werp WA, 0xfa
-	sub (xsp + 4), wa
-
-DocFmtSlot_CalcVisible:
-	ld iz, 0:i3
-	cpw (xsp + 4), 0x0
-	jr ule, DocFmtSlot_FillEmpty
-DocFmtSlot_FormatLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33772:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	bc, qiz
-	add	bc, iz
-	lda	xde, (34792:16)
-	extz	xbc
-	add	xbc, xde
-	ld	c, (xbc)
-	extz	bc
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33772:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, (xsp+0x4)
-	jr	c, DocFmtSlot_FormatLoop
-DocFmtSlot_FillEmpty:
-	cp iz, 0xa
-	jr nc, DocFmtSlot_Exit
-
-DocFmtSlot_EmptyLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33772:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	bc, 255
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33772:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	c, DocFmtSlot_EmptyLoop
-DocFmtSlot_Exit:
-	pop xiz
-	inc 6, xsp
-	ret
+DocMed_FormatSlotList:	.include "includes/generated/cc900/DocMed_FormatSlotList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocFmtSlot_CalcVisible, DocMed_FormatSlotList + 67
+	.set	DocFmtSlot_FormatLoop, DocMed_FormatSlotList + 76
+	.set	DocFmtSlot_FillEmpty, DocMed_FormatSlotList + 143
+	.set	DocFmtSlot_EmptyLoop, DocMed_FormatSlotList + 149
+	.set	DocFmtSlot_Exit, DocMed_FormatSlotList + 203
 
 FmmDocMedleyFunc:
 	push	xiz

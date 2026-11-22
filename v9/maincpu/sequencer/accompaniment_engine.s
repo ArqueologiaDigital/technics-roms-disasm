@@ -16484,16 +16484,7 @@ AccPatch_ErrorExit:
 AccPatch_ScanForNoteOff_Done:
 	ret
 
-AccPatch_SeekToPosition:
-	calr AccPatch_SeekForwardSteps
-	ld a, (0x3706:16)
-	ld (0x36f8:16), a
-	calr AccPatch_ParseSequenceHeader
-	ld wa, (ACC_PATCH_CURSOR_BLOCK:16)
-	ld (0x35de:16), wa
-	ld wa, (ACC_PATCH_CURSOR_OFFSET:16)
-	ld (0x35e0:16), wa
-	ret
+AccPatch_SeekToPosition:	.include "includes/generated/cc900/AccPatch_SeekToPosition.s"	; C: cc900/accompaniment_engine_m250.c
 
 AccPatch_SeekForwardSteps:
 	ld a, (0x35f9:16)
@@ -16651,16 +16642,7 @@ AccPatch_ResumeSeq_InitSlot_Pad:
 	nop
 	nop
 
-AccPatch_PrepareSequencePlayback:
-	calr AccPatch_SeekForwardSteps
-	ld a, (0x3706:16)
-	ld (0x36f8:16), a
-	calr AccPatch_ParseSequenceHeader
-	ld wa, (ACC_PATCH_CURSOR_BLOCK:16)
-	ld (0x35e2:16), wa
-	ld wa, (ACC_PATCH_CURSOR_OFFSET:16)
-	ld (0x35e4:16), wa
-	ret
+AccPatch_PrepareSequencePlayback:	.include "includes/generated/cc900/AccPatch_PrepareSequencePlayback.s"	; C: cc900/accompaniment_engine_m250.c
 
 AccPatch_CheckSequenceChanged:
 	cpw (0x360a:16), 0
@@ -35502,71 +35484,11 @@ AccPatch_VoiceAssignDataBlock_Helper5:
 	calr	AccPatch_VoiceAssignDataBlock_Helper10
 AccPatch_VoiceAssignDataBlock_Helper5_Return:
 	ret
-AccPatch_VoiceAssignDataBlock_Helper6:
-	ld	wa, (0x3952:16)
-	ld	(0x3974:16), wa
-	ld	wa, (0x395c:16)
-	ld	(0x3976:16), wa
-	calr	AccPatch_VoiceAssignDataBlock_Helper11
-	ld	wa, (0x3974:16)
-	ld	(0x3952:16), wa
-	ld	wa, (0x3978:16)
-	ld	(0x3966:16), wa
-	ld	wa, (0x3976:16)
-	ld	(0x395c:16), wa
-	ret
-AccPatch_VoiceAssignDataBlock_Helper7:
-	ld	wa, (0x3954:16)
-	ld	(0x3974:16), wa
-	ld	wa, (0x395e:16)
-	ld	(0x3976:16), wa
-	calr	AccPatch_VoiceAssignDataBlock_Helper11
-	ld	wa, (0x3974:16)
-	ld	(0x3954:16), wa
-	ld	wa, (0x3978:16)
-	ld	(0x3968:16), wa
-	ld	wa, (0x3976:16)
-	ld	(0x395e:16), wa
-	ret
-AccPatch_VoiceAssignDataBlock_Helper8:
-	ld	wa, (0x3956:16)
-	ld	(0x3974:16), wa
-	ld	wa, (0x3960:16)
-	ld	(0x3976:16), wa
-	calr	AccPatch_VoiceAssignDataBlock_Helper11
-	ld	wa, (0x3974:16)
-	ld	(0x3956:16), wa
-	ld	wa, (0x3978:16)
-	ld	(0x396a:16), wa
-	ld	wa, (0x3976:16)
-	ld	(0x3960:16), wa
-	ret
-AccPatch_VoiceAssignDataBlock_Helper9:
-	ld	wa, (0x3958:16)
-	ld	(0x3974:16), wa
-	ld	wa, (0x3962:16)
-	ld	(0x3976:16), wa
-	calr	AccPatch_VoiceAssignDataBlock_Helper11
-	ld	wa, (0x3974:16)
-	ld	(0x3958:16), wa
-	ld	wa, (0x3978:16)
-	ld	(0x396c:16), wa
-	ld	wa, (0x3976:16)
-	ld	(0x3962:16), wa
-	ret
-AccPatch_VoiceAssignDataBlock_Helper10:
-	ld	wa, (0x395a:16)
-	ld	(0x3974:16), wa
-	ld	wa, (0x3964:16)
-	ld	(0x3976:16), wa
-	calr	AccPatch_VoiceAssignDataBlock_Helper11
-	ld	wa, (0x3974:16)
-	ld	(0x395a:16), wa
-	ld	wa, (0x3978:16)
-	ld	(0x396e:16), wa
-	ld	wa, (0x3976:16)
-	ld	(0x3964:16), wa
-	ret
+AccPatch_VoiceAssignDataBlock_Helper6:	.include "includes/generated/cc900/AccPatch_VoiceAssignDataBlock_Helper6.s"	; C: cc900/accompaniment_engine_m261.c
+AccPatch_VoiceAssignDataBlock_Helper7:	.include "includes/generated/cc900/AccPatch_VoiceAssignDataBlock_Helper7.s"	; C: cc900/accompaniment_engine_m261.c
+AccPatch_VoiceAssignDataBlock_Helper8:	.include "includes/generated/cc900/AccPatch_VoiceAssignDataBlock_Helper8.s"	; C: cc900/accompaniment_engine_m261.c
+AccPatch_VoiceAssignDataBlock_Helper9:	.include "includes/generated/cc900/AccPatch_VoiceAssignDataBlock_Helper9.s"	; C: cc900/accompaniment_engine_m261.c
+AccPatch_VoiceAssignDataBlock_Helper10:	.include "includes/generated/cc900/AccPatch_VoiceAssignDataBlock_Helper10.s"	; C: cc900/accompaniment_engine_m261.c
 AccPatch_VoiceAssignDataBlock_Helper11:
 	bit	7, (0x3950:16)
 	jr	nz, AccPatch_VoiceAssignDataBlock_Helper11_Return

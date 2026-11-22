@@ -39,3 +39,54 @@ void SmfMed_FormatSlotList(long obj, unsigned int total)
         ApPostEvent(obj, EVT_PARA_DRAW, ram_83e0[i].s);
     }
 }
+
+/* cc900-module: FmmDocFileNameFunc FmmPdFileNameFunc */
+extern struct mtxt __near ram_84a4[];
+extern long FmmDocFileNameFunc(long, long, long);
+extern void DocMed_FormatSlotList(long obj, unsigned int total);
+extern struct mtxt __near ram_8444[];
+extern long FmmPdFileNameFunc(long, long, long);
+extern void PdMed_FormatSlotList(long obj, unsigned int total);
+
+void DocMed_FormatSlotList(long obj, unsigned int total)
+{
+    unsigned int n;
+    unsigned int base;
+    unsigned int i;
+
+    base = FmmDocFileNameFunc(0, EVT_GET_SELECTED_FILE_NUMBER, 0);
+    base /= 10;
+    base *= 10;
+    n = 10;
+    if (base + 10 >= total)
+        n = total - base;
+    for (i = 0; i < n; i++) {
+        FormatMedleyNumber(ram_84a4[i].s, ram_88a0[base + i], i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_84a4[i].s);
+    }
+    for (; i < 10; i++) {
+        FormatMedleyNumber(ram_84a4[i].s, 0xff, i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_84a4[i].s);
+    }
+}
+void PdMed_FormatSlotList(long obj, unsigned int total)
+{
+    unsigned int n;
+    unsigned int base;
+    unsigned int i;
+
+    base = FmmPdFileNameFunc(0, EVT_GET_SELECTED_FILE_NUMBER, 0);
+    base /= 10;
+    base *= 10;
+    n = 10;
+    if (base + 10 >= total)
+        n = total - base;
+    for (i = 0; i < n; i++) {
+        FormatMedleyNumber(ram_8444[i].s, ram_88a0[base + i], i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_8444[i].s);
+    }
+    for (; i < 10; i++) {
+        FormatMedleyNumber(ram_8444[i].s, 0xff, i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_8444[i].s);
+    }
+}

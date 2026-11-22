@@ -175,3 +175,61 @@ void PaletteBankRotate(void)
 		DrawRing_Post(q);
 	}
 }
+
+/* cc900-module: ChangePalette_Impl ChangeWallPalette_Impl ChangeWall_Impl Display_FillPalBandFromEnt_Impl Display_FillPaletteBandFromEntry_Impl IsXspInDrawStack */
+struct icmd { void (*fn)(struct icmd *); unsigned int w; };
+extern void ChangePalette_Impl(unsigned int);
+void ChangePalette_QueueCallback(struct icmd *q);
+extern void ChangePalette(unsigned int w);
+extern void ChangePalette_QueueCallback(struct icmd *q);
+extern void ChangeWall_Impl(unsigned int);
+void ChangeWall_QueueCallback(struct icmd *q);
+extern void ChangeWall(unsigned int w);
+extern void ChangeWall_QueueCallback(struct icmd *q);
+extern void ChangeWallPalette_Impl(unsigned int);
+void ChangeWallPalette_QueueCallback(struct icmd *q);
+extern void ChangeWallPalette(unsigned int w);
+extern void ChangeWallPalette_QueueCallback(struct icmd *q);
+
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void ChangePalette(unsigned int w)
+{
+	struct icmd *q;
+
+	if (IsXspInDrawStack() != 0)
+		ChangePalette_Impl(w);
+	else {
+		q = (struct icmd *)DrawQueue_Alloc(6);
+		q->fn = ChangePalette_QueueCallback;
+		q->w = w;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void ChangeWall(unsigned int w)
+{
+	struct icmd *q;
+
+	if (IsXspInDrawStack() != 0)
+		ChangeWall_Impl(w);
+	else {
+		q = (struct icmd *)DrawQueue_Alloc(6);
+		q->fn = ChangeWall_QueueCallback;
+		q->w = w;
+		DrawRing_Post(q);
+	}
+}
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+void ChangeWallPalette(unsigned int w)
+{
+	struct icmd *q;
+
+	if (IsXspInDrawStack() != 0)
+		ChangeWallPalette_Impl(w);
+	else {
+		q = (struct icmd *)DrawQueue_Alloc(6);
+		q->fn = ChangeWallPalette_QueueCallback;
+		q->w = w;
+		DrawRing_Post(q);
+	}
+}

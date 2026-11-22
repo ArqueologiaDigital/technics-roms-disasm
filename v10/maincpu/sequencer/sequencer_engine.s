@@ -11648,45 +11648,13 @@ PartCtrl_AdvancePos_Return:
 ; offset 5 it continues at offset 0xff of the previous block.  Errors: a previous block not in
 ; use records 0x47 and sets SEQ_ERROR_CODE = 2; no previous block (0 or 0xffff) sets 11.
 ;   Preserves IZ.
-PartCtrl_NavigateBackward:
-	pushw iz
-	ld wa, (SEQOP_SECONDARY_OFFSET:16)
-	cp wa, 5:i3
-	jr z, PartCtrl_NavBack_AtMin
-	dec 1, wa
-	ld (SEQOP_SECONDARY_OFFSET:16), wa
-	jr SeqPart_RestoreReturn3
-
-PartCtrl_NavBack_AtMin:
-	ld wa, (SEQOP_SECONDARY_BLOCK:16)
-	calr PartCtrl_ReadWord_Off1
-	ld iz, hl
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, PartCtrl_NavBack_CheckZero
-	ldw wa, 0x47
-	calr SeqData_SetErrorCode
-	ld (SEQ_ERROR_CODE:16), 2
-	jr SeqPart_RestoreReturn3
-
-PartCtrl_NavBack_CheckZero:
-	cp iz, 0:i3
-	jr z, PartCtrl_NavBack_ErrorEnd
-	cp iz, 0xffff
-	jr nz, PartCtrl_NavBack_SaveNew
-
-PartCtrl_NavBack_ErrorEnd:
-	ld (SEQ_ERROR_CODE:16), 11
-	jr SeqPart_RestoreReturn3
-
-PartCtrl_NavBack_SaveNew:
-	ld (SEQOP_SECONDARY_BLOCK:16), iz
-	ldw (SEQOP_SECONDARY_OFFSET:16), 255
-
-SeqPart_RestoreReturn3:
-	popw iz
-	ret
+PartCtrl_NavigateBackward:	.include "includes/generated/cc900/PartCtrl_NavigateBackward.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartCtrl_NavBack_AtMin, PartCtrl_NavigateBackward + 17
+	.set	PartCtrl_NavBack_CheckZero, PartCtrl_NavigateBackward + 48
+	.set	PartCtrl_NavBack_ErrorEnd, PartCtrl_NavigateBackward + 58
+	.set	PartCtrl_NavBack_SaveNew, PartCtrl_NavigateBackward + 65
+	.set	SeqPart_RestoreReturn3, PartCtrl_NavigateBackward + 75
 
 ; Moves the edit read position one byte forward through the song-data block chain.
 ;   RAM: 0x2887 = current block, 0x2885 = offset in it.  At offset 0xff the next block is taken
@@ -11735,45 +11703,13 @@ PartCtrl_RestoreReturn:
 
 ; Same as PartCtrl_NavigateBackward for the edit write position (block 0x2887, offset 0x2885);
 ; records 0x48 for a previous block not in use.
-PartCtrl_NavigateBackwardAlt:
-	pushw iz
-	ld wa, (SEQOP_PRIMARY_OFFSET:16)
-	cp wa, 5:i3
-	jr z, PartCtrl_NavBackAlt_AtMin
-	dec 1, wa
-	ld (SEQOP_PRIMARY_OFFSET:16), wa
-	jr SeqPart_RestoreReturn2
-
-PartCtrl_NavBackAlt_AtMin:
-	ld wa, (SEQOP_PRIMARY_BLOCK:16)
-	calr PartCtrl_ReadWord_Off1
-	ld iz, hl
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, PartCtrl_NavBackAlt_CheckZero
-	ldw wa, 0x48
-	calr SeqData_SetErrorCode
-	ld (SEQ_ERROR_CODE:16), 2
-	jr SeqPart_RestoreReturn2
-
-PartCtrl_NavBackAlt_CheckZero:
-	cp iz, 0:i3
-	jr z, PartCtrl_NavBackAlt_ErrorEnd
-	cp iz, 0xffff
-	jr nz, PartCtrl_NavBackAlt_SaveNew
-
-PartCtrl_NavBackAlt_ErrorEnd:
-	ld (SEQ_ERROR_CODE:16), 11
-	jr SeqPart_RestoreReturn2
-
-PartCtrl_NavBackAlt_SaveNew:
-	ld (SEQOP_PRIMARY_BLOCK:16), iz
-	ldw (SEQOP_PRIMARY_OFFSET:16), 255
-
-SeqPart_RestoreReturn2:
-	popw iz
-	ret
+PartCtrl_NavigateBackwardAlt:	.include "includes/generated/cc900/PartCtrl_NavigateBackwardAlt.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartCtrl_NavBackAlt_AtMin, PartCtrl_NavigateBackwardAlt + 17
+	.set	PartCtrl_NavBackAlt_CheckZero, PartCtrl_NavigateBackwardAlt + 48
+	.set	PartCtrl_NavBackAlt_ErrorEnd, PartCtrl_NavigateBackwardAlt + 58
+	.set	PartCtrl_NavBackAlt_SaveNew, PartCtrl_NavigateBackwardAlt + 65
+	.set	SeqPart_RestoreReturn2, PartCtrl_NavigateBackwardAlt + 75
 
 ; ============================================================================
 ; SeqPart_ReadByte_Secondary - Read byte from secondary sequencer part buffer

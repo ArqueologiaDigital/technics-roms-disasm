@@ -267,3 +267,53 @@ int Seq_ValidatePartAndTempo(void)
 		return -1;
 	return 0;
 }
+
+/* cc900-module: PartCtrl_ReadWord_Off1 Part_WriteSubBlock32 Part_WriteSubBlock48 SeqData_SetErrorCode */
+extern unsigned int __near SEQOP_SECONDARY_BLOCK;
+extern unsigned int __near SEQOP_SECONDARY_OFFSET;
+extern unsigned int PartCtrl_ReadWord_Off1(unsigned int);
+extern unsigned char PartCtrl_TestBit7(unsigned int);
+extern void SeqData_SetErrorCode(unsigned int);
+extern void PartCtrl_NavigateBackward(void);
+extern unsigned int __near SEQOP_PRIMARY_BLOCK;
+extern unsigned int __near SEQOP_PRIMARY_OFFSET;
+extern void PartCtrl_NavigateBackwardAlt(void);
+
+void PartCtrl_NavigateBackward(void)
+{
+	unsigned int b;
+
+	if (SEQOP_SECONDARY_OFFSET != 5)
+		SEQOP_SECONDARY_OFFSET--;
+	else {
+		b = PartCtrl_ReadWord_Off1(SEQOP_SECONDARY_BLOCK);
+		if (PartCtrl_TestBit7(b) == 0) {
+			SeqData_SetErrorCode(0x47);
+			SEQ_ERROR_CODE = 2;
+		} else if (b == 0 || b == 0xffff)
+			SEQ_ERROR_CODE = 11;
+		else {
+			SEQOP_SECONDARY_BLOCK = b;
+			SEQOP_SECONDARY_OFFSET = 255;
+		}
+	}
+}
+void PartCtrl_NavigateBackwardAlt(void)
+{
+	unsigned int b;
+
+	if (SEQOP_PRIMARY_OFFSET != 5)
+		SEQOP_PRIMARY_OFFSET--;
+	else {
+		b = PartCtrl_ReadWord_Off1(SEQOP_PRIMARY_BLOCK);
+		if (PartCtrl_TestBit7(b) == 0) {
+			SeqData_SetErrorCode(0x48);
+			SEQ_ERROR_CODE = 2;
+		} else if (b == 0 || b == 0xffff)
+			SEQ_ERROR_CODE = 11;
+		else {
+			SEQOP_PRIMARY_BLOCK = b;
+			SEQOP_PRIMARY_OFFSET = 255;
+		}
+	}
+}

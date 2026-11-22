@@ -99,29 +99,11 @@ GraphicsRender_ByteData:
 ; Display_FillPaletteBandFromEntry: Sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC)
 ;   and flags a palette upload; runs directly on the draw task, otherwise posts itself to the draw ring. Basis:
 ;   callers + body -- screen (re)initialisation calls it with WA = 0xFF.
-Display_FillPaletteBandFromEntry:
-	pushw	iz
-	ld	iz, wa
-	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp	hl, 0:i3
-	jr	z, Display_FillPaletteBandFromEntry_Skip
-	ld	wa, iz
-	calr	Display_FillPaletteBandFromEntry_Impl
-	jr	Display_FillPaletteBandFromEntry_Epilogue
-Display_FillPaletteBandFromEntry_Skip:
-	ld	wa, 6:i3
-	calr	DrawQueue_Alloc
-	ld	xwa, xhl
-	lda	xbc, (GraphicsRender_ByteData_Code:24)
-	ld	(xwa), xbc
-	ld	(xwa+4), iz
-	calr	DrawRing_Post
-Display_FillPaletteBandFromEntry_Epilogue:
-	popw	iz
-	ret
-GraphicsRender_ByteData_Code:
-	ld	wa, (xwa+4)
-	jr	Display_FillPaletteBandFromEntry_Impl
+Display_FillPaletteBandFromEntry:	.include "includes/generated/cc900/Display_FillPaletteBandFromEntry.s"	; C: cc900/graphics_text_vga_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Display_FillPaletteBandFromEntry_Skip, Display_FillPaletteBandFromEntry + 17
+	.set	Display_FillPaletteBandFromEntry_Epilogue, Display_FillPaletteBandFromEntry + 37
+GraphicsRender_ByteData_Code:	.include "includes/generated/cc900/GraphicsRender_ByteData_Code.s"	; C: cc900/graphics_text_vga_m0.c
 ; Display_FillPaletteBandFromEntry_Impl: Immediate body of Display_FillPaletteBandFromEntry: records WA at 0x3EFA6,
 ;   sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC) and flags a palette upload
 ;   (PALETTE_INDEX_CACHED = 4, PALETTE_UPDATE_FLAG = 1). Basis: callers + body -- Display_FillPaletteBandFromEntry
