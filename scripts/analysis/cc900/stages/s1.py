@@ -707,8 +707,7 @@ def fmt(F, r, inv, defs):
             if k <= 3:
                 F.aarg_off = 0
                 return '%s %s #0,%d' % (op, S(a), k)
-            F.aarg_off = getattr(F, 'aarg_off', 0) + max(n, 2)
-            return '%s %s #%d,%d' % (op, S(a), F.aarg_off, k)
+            return '%s %s #%d,%d' % (op, S(a), max(n, 2), k)   # a stack argument: its pushed size
         return '%s %s #%d' % (op, S(a), n)
     return '%s %s' % (op, ' '.join(S(x) for x in (res, a, b) if x))
 
