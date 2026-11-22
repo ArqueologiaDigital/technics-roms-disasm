@@ -7429,10 +7429,7 @@ HDAE5000_DeadLib_CopyName26_Loop:
 ; HDAE5000_HD_CheckVersionKey compares with the "XXXX" of
 ; HDAE5000_Version_Key.  Called by HDAE5000_HD_CheckSignature.
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_ResetVersionKeyWord:
-	ld	xwa, 0x0000ffee
-	ld	(HDAE5000_RAM_HdVersionKeyWord), xwa
-	ret
+HDAE5000_HD_ResetVersionKeyWord:	.include "includes/generated/cc900/HDAE5000_HD_ResetVersionKeyWord.s"	; C: cc900/hdae5000_hd_small_r99.c
 
 ; ----------------------------------------------------------------------------
 ; UNREACHABLE CODE, 0x298936-0x298B6B and 0x298C52-0x298C7C, 0x298CBC-0x29992A
@@ -7748,18 +7745,7 @@ HDAE5000_HD_ComputeDiskUsage:
 ; found (each address literal searched in all seven hdae5000 sources).
 ; Callers: HDAE5000_HD_Init, HDAE5000_HD_Format.
 ; ---------------------------------------------------------------------------
-HDAE5000_HD_ClearStatusBytes:
-	ld	(HDAE5000_RAM_HdStatusBytes:24), 0x00
-	ld	(HDAE5000_RAM_HdStatusBytes+1:24), 0
-	ld	(HDAE5000_RAM_HdStatusBytes+2:24), 0
-	ld	(HDAE5000_RAM_HdStatusBytes+3:24), 0
-	ld	(HDAE5000_RAM_HdStatusBytes+4:24), 0
-	ld	(HDAE5000_RAM_HdStatusBytes+5:24), 0
-	ld	(HDAE5000_RAM_HdStatusBytes+6:24), 0
-	ld	(HDAE5000_RAM_HdStatusBytes+7:24), 0
-	ld	(0x229db4:24), 0x00
-	ld	(0x229db5:24), 0x00
-	ret
+HDAE5000_HD_ClearStatusBytes:	.include "includes/generated/cc900/HDAE5000_HD_ClearStatusBytes.s"	; C: cc900/hdae5000_hd_small_r99.c
 
 ; ---------------------------------------------------------------------------
 ; A = 1 when the 26-byte name buffer at 0x200C98 holds a non-space, else 0
