@@ -13,44 +13,44 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 1196468      | 1192348           | 15.832 %      | 1179348          | 17120           |
+| Toshiba V4.23                 | 1201943      | 1197703           | 15.904 %      | 1184823          | 17120           |
 | reference model               | 60462        | 57550             | 0.764 %       | 43070            | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
-All 20 images: 20643840 bytes, 7531114 of them census CODE.  Every version of an image counts on its own.
+All 20 images: 20643840 bytes, 7530994 of them census CODE.  Every version of an image counts on its own.
 
 ## Per image
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996555 | firmware C | 1595  | 116367 / 116193    | 6760 / 6760        | 0 / 0             | 0.678 %         | 0                     |
-| v10        | 2097152 | 996555 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996240 | firmware C | 1594  | 115971 / 115797    | 6760 / 6760        | 0 / 0             | 0.679 %         | 0                     |
-| v9         | 2097152 | 996240 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996240 | firmware C | 1594  | 115971 / 115797    | 6760 / 6760        | 0 / 0             | 0.679 %         | 0                     |
-| v8         | 2097152 | 996240 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993806 | firmware C | 1480  | 102012 / 101838    | 6727 / 6727        | 0 / 0             | 0.677 %         | 0                     |
-| v7         | 2097152 | 993806 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992824 | firmware C | 1418  | 93910 / 93740      | 7169 / 7169        | 0 / 0             | 0.722 %         | 0                     |
-| v6         | 2097152 | 992824 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991742 | firmware C | 1396  | 85761 / 85593      | 7111 / 7111        | 0 / 0             | 0.717 %         | 0                     |
-| v5         | 2097152 | 991742 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v142       | 196608  | 128873 | firmware C | 601   | 84892 / 84858      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v10        | 2097152 | 996535 | firmware C | 1597  | 116889 / 116695    | 6760 / 6760        | 0 / 0             | 0.678 %         | 0                     |
+| v10        | 2097152 | 996535 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v9         | 2097152 | 996220 | firmware C | 1596  | 116493 / 116299    | 6760 / 6760        | 0 / 0             | 0.679 %         | 0                     |
+| v9         | 2097152 | 996220 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v8         | 2097152 | 996220 | firmware C | 1596  | 116493 / 116299    | 6760 / 6760        | 0 / 0             | 0.679 %         | 0                     |
+| v8         | 2097152 | 996220 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
+| v7         | 2097152 | 993786 | firmware C | 1482  | 102534 / 102340    | 6727 / 6727        | 0 / 0             | 0.677 %         | 0                     |
+| v7         | 2097152 | 993786 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
+| v6         | 2097152 | 992804 | firmware C | 1420  | 94432 / 94242      | 7169 / 7169        | 0 / 0             | 0.722 %         | 0                     |
+| v6         | 2097152 | 992804 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
+| v5         | 2097152 | 991722 | firmware C | 1398  | 86283 / 86095      | 7111 / 7111        | 0 / 0             | 0.717 %         | 0                     |
+| v5         | 2097152 | 991722 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
+| v142       | 196608  | 128873 | firmware C | 602   | 85161 / 85127      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v142       | 196608  | 128873 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v141       | 196608  | 128850 | firmware C | 601   | 84892 / 84858      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v141       | 196608  | 128850 | firmware C | 602   | 85161 / 85127      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v141       | 196608  | 128850 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
-| v140       | 196608  | 128798 | firmware C | 600   | 83483 / 83449      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
+| v140       | 196608  | 128798 | firmware C | 601   | 83752 / 83718      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v140       | 196608  | 128798 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
 | subboot    | 131072  | 3604   | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | tabledata  | 2097152 | 19426  | library C  | 2     | 89 / 89            | 89 / 89            | 0 / 0             | 0.458 %         | 0                     |
 | customdata | 1048576 | 0      | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | -               | 0                     |
-| hdae5000   | 524288  | 112306 | firmware C | 289   | 82147 / 82129      | 147 / 147          | 0 / 0             | 0.131 %         | 0                     |
+| hdae5000   | 524288  | 112306 | firmware C | 290   | 82531 / 82513      | 147 / 147          | 0 / 0             | 0.131 %         | 0                     |
 | hdae5000   | 524288  | 112306 | library C  | 20    | 1156 / 900         | 1392 / 1136        | 0 / 0             | 1.012 %         | 0                     |
-| hdae_v201  | 524288  | 110458 | firmware C | 286   | 80401 / 80383      | 147 / 147          | 0 / 0             | 0.133 %         | 0                     |
+| hdae_v201  | 524288  | 110458 | firmware C | 287   | 80785 / 80767      | 147 / 147          | 0 / 0             | 0.133 %         | 0                     |
 | hdae_v201  | 524288  | 110458 | library C  | 20    | 1156 / 900         | 1392 / 1136        | 0 / 0             | 1.028 %         | 0                     |
-| hdae_v115  | 524288  | 95866  | firmware C | 247   | 66896 / 66878      | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
+| hdae_v115  | 524288  | 95866  | firmware C | 248   | 67280 / 67262      | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
 | hdae_v115  | 524288  | 95866  | library C  | 18    | 1061 / 805         | 1297 / 1041        | 0 / 0             | 1.086 %         | 0                     |
-| hdae_v110  | 524288  | 95614  | firmware C | 247   | 66645 / 66627      | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
+| hdae_v110  | 524288  | 95614  | firmware C | 248   | 67029 / 67011      | 20 / 20            | 0 / 0             | 0.021 %         | 0                     |
 | hdae_v110  | 524288  | 95614  | library C  | 18    | 1061 / 805         | 1297 / 1041        | 0 / 0             | 1.089 %         | 0                     |
 | prom_a     | 524288  | 325759 | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
 | prom_b     | 524288  | 206615 | -          | 0     | 0 / 0              | 0 / 0              | 0 / 0             | 0.000 %         | 0                     |
@@ -530,6 +530,8 @@ found yet.
 | v10       | malloc_X                                           | v10/maincpu/cc900/kn5000_v10_program_m0.c                                 | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 307c2aa722a8 |
 | v10       | putc_mrx_bf_X                                      | v10/maincpu/cc900/kn5000_v10_program_m0.c                                 | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache 307c2aa722a8 |
 | v10       | putc_mtx_bf_X                                      | v10/maincpu/cc900/kn5000_v10_program_m0.c                                 | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache 307c2aa722a8 |
+| v10       | PlayStandBy                                        | v10/maincpu/cc900/kn5000_v10_program_m0_xr.c                              | -Xr         | 22    | yes   | differs | MATCH                  | cache a18497610f6c |
+| v10       | SetSepaOutMode                                     | v10/maincpu/cc900/kn5000_v10_program_m0_xr.c                              | -Xr         | 500   | yes   | differs | MATCH                  | cache a18497610f6c |
 | v10       | InitializeKSS                                      | v10/maincpu/cc900/kn5000_v10_program_m276.c                               | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 3f6747c3730e |
 | v10       | InitializeUser12                                   | v10/maincpu/cc900/kn5000_v10_program_m276.c                               | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 3f6747c3730e |
 | v10       | InitializeUser13                                   | v10/maincpu/cc900/kn5000_v10_program_m276.c                               | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 3f6747c3730e |
@@ -2125,6 +2127,8 @@ found yet.
 | v9        | malloc_X                                           | v9/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache d1994dc97042 |
 | v9        | putc_mrx_bf_X                                      | v9/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache d1994dc97042 |
 | v9        | putc_mtx_bf_X                                      | v9/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache d1994dc97042 |
+| v9        | PlayStandBy                                        | v9/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 22    | yes   | differs | MATCH                  | cache 7e1fcee61b70 |
+| v9        | SetSepaOutMode                                     | v9/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 500   | yes   | differs | MATCH                  | cache 7e1fcee61b70 |
 | v9        | InitializeKSS                                      | v9/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 7924cbe3361e |
 | v9        | InitializeUser12                                   | v9/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 7924cbe3361e |
 | v9        | InitializeUser13                                   | v9/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 7924cbe3361e |
@@ -3719,6 +3723,8 @@ found yet.
 | v8        | malloc_X                                           | v9/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache d1994dc97042 |
 | v8        | putc_mrx_bf_X                                      | v9/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache d1994dc97042 |
 | v8        | putc_mtx_bf_X                                      | v9/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache d1994dc97042 |
+| v8        | PlayStandBy                                        | v9/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 22    | yes   | differs | MATCH                  | cache 7e1fcee61b70 |
+| v8        | SetSepaOutMode                                     | v9/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 500   | yes   | differs | MATCH                  | cache 7e1fcee61b70 |
 | v8        | InitializeKSS                                      | v9/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 7924cbe3361e |
 | v8        | InitializeUser12                                   | v9/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 7924cbe3361e |
 | v8        | InitializeUser13                                   | v9/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 7924cbe3361e |
@@ -5275,6 +5281,8 @@ found yet.
 | v7        | malloc_X                                           | v7/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 9237844258e1 |
 | v7        | putc_mrx_bf_X                                      | v7/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache 9237844258e1 |
 | v7        | putc_mtx_bf_X                                      | v7/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache 9237844258e1 |
+| v7        | PlayStandBy                                        | v7/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 22    | yes   | differs | MATCH                  | cache dfcc906eca8c |
+| v7        | SetSepaOutMode                                     | v7/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 500   | yes   | differs | MATCH                  | cache dfcc906eca8c |
 | v7        | InitializeKSS                                      | v7/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 40f0378c2898 |
 | v7        | InitializeUser12                                   | v7/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 40f0378c2898 |
 | v7        | InitializeUser13                                   | v7/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 40f0378c2898 |
@@ -6731,6 +6739,8 @@ found yet.
 | v6        | malloc_X                                           | v6/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache 758b95d2c111 |
 | v6        | putc_mrx_bf_X                                      | v6/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache 758b95d2c111 |
 | v6        | putc_mtx_bf_X                                      | v6/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache 758b95d2c111 |
+| v6        | PlayStandBy                                        | v6/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 22    | yes   | differs | MATCH                  | cache f06b40051c00 |
+| v6        | SetSepaOutMode                                     | v6/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 500   | yes   | differs | MATCH                  | cache f06b40051c00 |
 | v6        | InitializeKSS                                      | v6/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache e6210e5fabb5 |
 | v6        | InitializeUser12                                   | v6/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache e6210e5fabb5 |
 | v6        | InitializeUser13                                   | v6/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache e6210e5fabb5 |
@@ -8148,6 +8158,8 @@ found yet.
 | v5        | malloc_X                                           | v5/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 8     | yes   | MATCH   | MATCH                  | cache c2dae825e43e |
 | v5        | putc_mrx_bf_X                                      | v5/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache c2dae825e43e |
 | v5        | putc_mtx_bf_X                                      | v5/maincpu/cc900/kn5000_v10_program_m0.c                                  | -O3 -Xr     | 10    | yes   | MATCH   | MATCH                  | cache c2dae825e43e |
+| v5        | PlayStandBy                                        | v5/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 22    | yes   | differs | MATCH                  | cache 90d31f76c098 |
+| v5        | SetSepaOutMode                                     | v5/maincpu/cc900/kn5000_v10_program_m0_xr.c                               | -Xr         | 500   | yes   | differs | MATCH                  | cache 90d31f76c098 |
 | v5        | InitializeKSS                                      | v5/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 33e95ad9e6f7 |
 | v5        | InitializeUser12                                   | v5/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 33e95ad9e6f7 |
 | v5        | InitializeUser13                                   | v5/maincpu/cc900/kn5000_v10_program_m276.c                                | -O3 -Xr     | 1     | yes   | MATCH   | MATCH                  | cache 33e95ad9e6f7 |
@@ -9584,6 +9596,7 @@ found yet.
 | v142      | ToneGen_Write_Reg04C0                              | v142/subcpu/cc900/voice_noteon_and_tonegen_ao_23a.c                       | -Xr         | 34    | yes   | differs | MATCH                  | cache f008fb2b66f2 |
 | v142      | Audio_Cmd_DSPUnit_Param                            | v142/subcpu/cc900/voice_noteon_and_tonegen_aw_43a.c                       | -Xr         | 681   | yes   | differs | MATCH                  | cache 4e97d6c8f070 |
 | v142      | Audio_Cmd_EffectParam_Dispatch                     | v142/subcpu/cc900/voice_noteon_and_tonegen_aw_43a.c                       | -Xr         | 1365  | yes   | differs | MATCH                  | cache 4e97d6c8f070 |
+| v142      | Audio_Cmd_ToneEdit_Write_And_Reply                 | v142/subcpu/cc900/voice_noteon_and_tonegen_aw_47a.c                       | -Xr         | 269   | yes   | differs | MATCH (name cut to 31) | cache dc26eb345ccf |
 | v142      | VoiceParam_CustomTone_Apply_Catalog8C              | v142/subcpu/cc900/voice_noteon_and_tonegen_c_10a.c                        | -Xr         | 188   | yes   | differs | MATCH                  | cache dc262d0513a0 |
 | v142      | VoiceParam_SubSlot_Apply_Catalog50                 | v142/subcpu/cc900/voice_noteon_and_tonegen_c_10a_qizinc.c                 | -Xr         | 204   | yes   | differs | MATCH                  | cache 12dc322fd772 |
 | v142      | VoiceParam_CustomTone_Apply_Catalog94              | v142/subcpu/cc900/voice_noteon_and_tonegen_c_12b.c                        | -Xr         | 128   | yes   | differs | MATCH                  | cache 97b3b0a224b5 |
@@ -10185,6 +10198,7 @@ found yet.
 | v141      | ToneGen_Write_Reg04C0                              | v141/subcpu/cc900/voice_noteon_and_tonegen_ao_23a.c                       | -Xr         | 34    | yes   | differs | MATCH                  | cache 14d577bc309e |
 | v141      | Audio_Cmd_DSPUnit_Param                            | v141/subcpu/cc900/voice_noteon_and_tonegen_aw_43a.c                       | -Xr         | 681   | yes   | differs | MATCH                  | cache e846504abc75 |
 | v141      | Audio_Cmd_EffectParam_Dispatch                     | v141/subcpu/cc900/voice_noteon_and_tonegen_aw_43a.c                       | -Xr         | 1365  | yes   | differs | MATCH                  | cache e846504abc75 |
+| v141      | Audio_Cmd_ToneEdit_Write_And_Reply                 | v141/subcpu/cc900/voice_noteon_and_tonegen_aw_47a.c                       | -Xr         | 269   | yes   | differs | MATCH (name cut to 31) | cache d6475cb5afe6 |
 | v141      | VoiceParam_CustomTone_Apply_Catalog8C              | v141/subcpu/cc900/voice_noteon_and_tonegen_c_10a.c                        | -Xr         | 188   | yes   | differs | MATCH                  | cache 2c608c229167 |
 | v141      | VoiceParam_SubSlot_Apply_Catalog50                 | v141/subcpu/cc900/voice_noteon_and_tonegen_c_10a_qizinc.c                 | -Xr         | 204   | yes   | differs | MATCH                  | cache 82ef480b3175 |
 | v141      | VoiceParam_CustomTone_Apply_Catalog94              | v141/subcpu/cc900/voice_noteon_and_tonegen_c_12b.c                        | -Xr         | 128   | yes   | differs | MATCH                  | cache 3d5896af5eb5 |
@@ -10785,6 +10799,7 @@ found yet.
 | v140      | ToneGen_Write_Reg04C0                              | v140/subcpu/cc900/voice_noteon_and_tonegen_ao_23a.c                       | -Xr         | 34    | yes   | differs | MATCH                  | cache 1771fb8166d1 |
 | v140      | Audio_Cmd_DSPUnit_Param                            | v140/subcpu/cc900/voice_noteon_and_tonegen_aw_43a.c                       | -Xr         | 681   | yes   | differs | MATCH                  | cache 0cc646f73009 |
 | v140      | Audio_Cmd_EffectParam_Dispatch                     | v140/subcpu/cc900/voice_noteon_and_tonegen_aw_43a.c                       | -Xr         | 1365  | yes   | differs | MATCH                  | cache 0cc646f73009 |
+| v140      | Audio_Cmd_ToneEdit_Write_And_Reply                 | v140/subcpu/cc900/voice_noteon_and_tonegen_aw_47a.c                       | -Xr         | 269   | yes   | differs | MATCH (name cut to 31) | cache ffb1cbffd3d9 |
 | v140      | VoiceParam_CustomTone_Apply_Catalog8C              | v140/subcpu/cc900/voice_noteon_and_tonegen_c_10a.c                        | -Xr         | 188   | yes   | differs | MATCH                  | cache 3baf67657839 |
 | v140      | VoiceParam_SubSlot_Apply_Catalog50                 | v140/subcpu/cc900/voice_noteon_and_tonegen_c_10a_qizinc.c                 | -Xr         | 204   | yes   | differs | MATCH                  | cache 3aab4cfb4f56 |
 | v140      | VoiceParam_CustomTone_Apply_Catalog94              | v140/subcpu/cc900/voice_noteon_and_tonegen_c_12b.c                        | -Xr         | 128   | yes   | differs | MATCH                  | cache 705c79275507 |
@@ -10999,6 +11014,7 @@ found yet.
 | hdae5000  | HDAE5000_FlsItem_Get                               | hdae5000/cc900/hdae5000_flsitem2.c                                        | -Xr         | 191   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae5000  | HDAE5000_FlsItem_Set                               | hdae5000/cc900/hdae5000_flsitem2.c                                        | -Xr         | 148   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae5000  | HDAE5000_FlsItem_SongRecord                        | hdae5000/cc900/hdae5000_flsitem2.c                                        | -Xr         | 139   | yes   | differs | MATCH                  | cache 85de63ec84fa |
+| hdae5000  | HDAE5000_FlsItem_Insert                            | hdae5000/cc900/hdae5000_flsitem_insert_r97.c                              | -Xr         | 384   | yes   | differs | MATCH                  | cache 6019298346fc |
 | hdae5000  | HDAE5000_FlsItem_Remove                            | hdae5000/cc900/hdae5000_flsitem_remove.c                                  | -Xr         | 389   | yes   | differs | MATCH                  | cache f05b49024a1d |
 | hdae5000  | HDAE5000_FlsItem_SetAutoLoad                       | hdae5000/cc900/hdae5000_flsitem_set.c                                     | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
 | hdae5000  | HDAE5000_FlsItem_SetAutoStart                      | hdae5000/cc900/hdae5000_flsitem_set.c                                     | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
@@ -11286,6 +11302,7 @@ found yet.
 | hdae_v201 | HDAE5000_FlsItem_Get                               | hdae5000_v2_01i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 191   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae_v201 | HDAE5000_FlsItem_Set                               | hdae5000_v2_01i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 148   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae_v201 | HDAE5000_FlsItem_SongRecord                        | hdae5000_v2_01i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 139   | yes   | differs | MATCH                  | cache 85de63ec84fa |
+| hdae_v201 | HDAE5000_FlsItem_Insert                            | hdae5000_v2_01i/cc900/hdae5000_flsitem_insert_r97.c                       | -Xr         | 384   | yes   | differs | MATCH                  | cache f0a1aebe7a58 |
 | hdae_v201 | HDAE5000_FlsItem_Remove                            | hdae5000_v2_01i/cc900/hdae5000_flsitem_remove.c                           | -Xr         | 389   | yes   | differs | MATCH                  | cache f05b49024a1d |
 | hdae_v201 | HDAE5000_FlsItem_SetAutoLoad                       | hdae5000_v2_01i/cc900/hdae5000_flsitem_set.c                              | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
 | hdae_v201 | HDAE5000_FlsItem_SetAutoStart                      | hdae5000_v2_01i/cc900/hdae5000_flsitem_set.c                              | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
@@ -11567,6 +11584,7 @@ found yet.
 | hdae_v115 | HDAE5000_FlsItem_Get                               | hdae5000_v1_15i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 191   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae_v115 | HDAE5000_FlsItem_Set                               | hdae5000_v1_15i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 148   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae_v115 | HDAE5000_FlsItem_SongRecord                        | hdae5000_v1_15i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 139   | yes   | differs | MATCH                  | cache 85de63ec84fa |
+| hdae_v115 | HDAE5000_FlsItem_Insert                            | hdae5000_v1_15i/cc900/hdae5000_flsitem_insert_r97.c                       | -Xr         | 384   | yes   | differs | MATCH                  | cache 49357ebc3b17 |
 | hdae_v115 | HDAE5000_FlsItem_Remove                            | hdae5000_v1_15i/cc900/hdae5000_flsitem_remove.c                           | -Xr         | 389   | yes   | differs | MATCH                  | cache f05b49024a1d |
 | hdae_v115 | HDAE5000_FlsItem_SetAutoLoad                       | hdae5000_v1_15i/cc900/hdae5000_flsitem_set.c                              | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
 | hdae_v115 | HDAE5000_FlsItem_SetAutoStart                      | hdae5000_v1_15i/cc900/hdae5000_flsitem_set.c                              | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
@@ -11814,6 +11832,7 @@ found yet.
 | hdae_v110 | HDAE5000_FlsItem_Get                               | hdae5000_v1_10i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 191   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae_v110 | HDAE5000_FlsItem_Set                               | hdae5000_v1_10i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 148   | yes   | differs | MATCH                  | cache 85de63ec84fa |
 | hdae_v110 | HDAE5000_FlsItem_SongRecord                        | hdae5000_v1_10i/cc900/hdae5000_flsitem2.c                                 | -Xr         | 139   | yes   | differs | MATCH                  | cache 85de63ec84fa |
+| hdae_v110 | HDAE5000_FlsItem_Insert                            | hdae5000_v1_10i/cc900/hdae5000_flsitem_insert_r97.c                       | -Xr         | 384   | yes   | differs | MATCH                  | cache 0924fc7d4287 |
 | hdae_v110 | HDAE5000_FlsItem_Remove                            | hdae5000_v1_10i/cc900/hdae5000_flsitem_remove.c                           | -Xr         | 389   | yes   | differs | MATCH                  | cache f05b49024a1d |
 | hdae_v110 | HDAE5000_FlsItem_SetAutoLoad                       | hdae5000_v1_10i/cc900/hdae5000_flsitem_set.c                              | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
 | hdae_v110 | HDAE5000_FlsItem_SetAutoStart                      | hdae5000_v1_10i/cc900/hdae5000_flsitem_set.c                              | -Xr         | 66    | yes   | differs | MATCH                  | cache bb2f86ce1b29 |
