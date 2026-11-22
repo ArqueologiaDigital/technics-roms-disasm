@@ -104,6 +104,10 @@ def rewrite2(recs):
         if r.op == 'CONV' and r.res and r.args and tsize(r.res) and not is_mem(r.args[0]) and \
                 tsize(r.res) == tsize(r.args[0]):
             r.op = '='                               # same size: a copy
+        elif r.op == 'CONV' and r.res and r.args and r.args[0].startswith('*'):
+            m = re.search(r'\(([A-Z]+) [FN]\*\)', r.args[0])
+            if m and SIZES.get(m.group(1)) and SIZES.get(m.group(1)) == tsize(r.res):
+                r.op = '='                           # the pointee has the result's size: a load
         out.append(r)
     recs = out
     if PTR_COPY_THROUGH:                             # Ta = Tb between temporaries, Tb read only there and Ta only
@@ -114,7 +118,8 @@ def rewrite2(recs):
             if ta and tb and r.op == '=' and not r.res.startswith('*') and not r.args[0].startswith(('*', '&')) and \
                     reads_of(tb) == 1:
                 uses = [(u, x) for u in recs[k + 1:] for x in u.args + [u.res] if x and tname(x) == ta]
-                if uses and all(x.startswith('*') for _, x in uses):
+                if uses and all(x.startswith('*') or (u.op in ('+', 'ADD') and u.args and u.args[0] == x)
+                                for u, x in uses):
                     for u in recs[k + 1:]:
                         u.args = [('*' + r.args[0] if x.startswith('*') else r.args[0]) if x and tname(x) == ta else x
                                   for x in u.args]
@@ -148,7 +153,7 @@ def rewrite2(recs):
                 b, i = r.args
                 if r.op == 'ADD' and unsigned16(i):
                     continue                         # an unsigned 16-bit index: widened and added instead (below)
-                if is_mem(b) and b.startswith('@('):    # a memory operand as a base: loaded into a temporary
+                if is_mem(b) and (b.startswith('@(') or b.startswith('@_')):   # a value in memory as a base: loaded
                     lt = new_temp().replace('(0)', re.search(r'\([^()]*\)', r.res).group(0))
                     recs.insert(k, dump.Rec(r.block, '=', lt, [b], None, ''))
                     k += 1
@@ -183,6 +188,10 @@ def rewrite2(recs):
             out.append(dump.Rec(r.block, '=', t, r.args, None, ''))
             out.append(dump.Rec(r.block, '=', r.res, [t], None, ''))
             continue
+        if MEM_ROUTES and r.op in ('JRBC', 'JRBS') and r.args and r.args[0].startswith('@('):
+            t = new_temp() + '{MK}'                  # a bit test of memory: loaded into a register first
+            out.append(dump.Rec(r.block, '=', t, [r.args[0]], None, ''))
+            r.args = [t, r.args[1]]
         if MEM_ROUTES and r.op in dump.BRANCH and r.op not in ('JRBC', 'JRBS') and len(r.args) == 2 and \
                 is_mem(r.args[0]) and is_mem(r.args[1]):
             t = new_temp()                           # a compare of two memory operands: the left one loaded
