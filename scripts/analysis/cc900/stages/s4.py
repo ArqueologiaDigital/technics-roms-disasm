@@ -70,6 +70,8 @@ COALESCE_FROM = 'T'
 WIDEN_FROM = 'T'                                     # a dying source of these kinds is widened in place
 BYTE_TO_LONG_CLEAR = True                            # byte -> long zero extension: ld X,0 / ld low,src                                # copies of dying values of these kinds share the register
 STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
+COALESCE_READ_ONLY = False                            # a copy never written after shares its dying source's register
+RETURN_HINT = True                                   # a returned temporary is built in XHL
 CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
 FORCED = {}                                          # temporary -> family, imposed by a probe (s4_temps.py)
 LOG = []                                             # new_temp decisions of the last generation
@@ -346,6 +348,11 @@ class Fn:
         for i, r in enumerate(self.recs):
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
                 h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
+        if RETURN_HINT:
+            for r in self.recs:                      # a temporary returned: built in XHL
+                if r.op == '=' and r.res == 'A' and r.args and self.name(r.args[0]) and \
+                        self.name(r.args[0]).startswith('T') and not r.args[0].startswith(('*', '@', '&')):
+                    h.setdefault(self.name(r.args[0]), 'XHL')
         if USE_HINT:
             for r in self.recs:                      # a temporary converted / copied into a register variable
                 n = self.name(r.res) if r.res else None
@@ -360,6 +367,14 @@ class Fn:
                     self.name(r.args[0]).startswith('T') and n in h:
                 h.setdefault(self.name(r.args[0]), h[n])   # T1 = T0 copies pass the hint back
         return h
+
+    def written_after(self, n, i):
+        """is variable n written (or modified in place, a Switch included) by a record after i"""
+        for r in self.recs[i + 1:]:
+            if r.res and self.name(r.res) == n and not r.res.startswith(('*', '@')) and \
+                    r.op not in ('BEQ', 'BNE', 'BLT', 'BGE', 'BGT', 'BLE', 'JRBC', 'JRBS', 'AARG', 'CARG', 'DUMMY', 'PIN'):
+                return True
+        return False
 
     def dies(self, x, i):
         n = self.name(x)
@@ -675,7 +690,8 @@ class Fn:
                     self.name(r.res) not in self.regs and r.args and self.name(r.args[0]) and \
                     not r.args[0].startswith(('*', '@', '#')) and self.dies(r.args[0], i_) and \
                     self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack' and \
-                    (self.name(r.args[0])[0] in COALESCE_FROM):
+                    (self.name(r.args[0])[0] in COALESCE_FROM or
+                     (COALESCE_READ_ONLY and not self.written_after(self.name(r.res), i_))):
                 ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
                 self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
             elif LOAD_REUSE and op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
