@@ -379,7 +379,7 @@ def rewrite(F):
     res = []                                         # a temporary copied once into its destination: write that
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
-                and F.typ(r[1]) == F.typ(r[2]) and (re.match(r'^([IP]\d+|A)$', r[1]) or
+                and F.typ(r[1]) == F.typ(r[2]) and res[-1][0] != 'ADDR' and (re.match(r'^([IP]\d+|A)$', r[1]) or
                                                     r[1].startswith('@') and res[-1][0] not in ('ADDR', 'CONV')):
             prev = res.pop()
             r = (prev[0], r[1]) + prev[2:]          # (and the chain rule below may apply to the folded line)
@@ -435,6 +435,9 @@ def number(F, recs):
             if x and x.lstrip('*&').startswith('T'):
                 reads[x.lstrip('*&')] = reads.get(x.lstrip('*&'), 0) + 1
     defs = {tmap[t] for t, n in writes.items() if n == 1 and t in tmap and reads.get(t, 0) <= 1}
+    for r in recs:                                  # a function pointer a call reads: no (Def)
+        if r[0] in ('ACALP', 'CCALP') and r[2] and r[2].lstrip('*&') in tmap:
+            defs.discard(tmap[r[2].lstrip('*&')])
     for t in list(writes):                          # ... and not when its source is written again before the read
         if t not in tmap or tmap[t] not in defs:
             continue
@@ -598,6 +601,9 @@ def s1_text(F):
     block, start, first = 0, False, True
     for r in recs:
         if r[0] in MARKERS:
+            continue
+        if r[0] in ('asm', 'ASM') and blocked and blocked[-1][1][0] in ('asm', 'ASM'):
+            blocked.append([block, r])                 # a run of inline assembler is one block
             continue
         if (r[0] == 'LAB' or r[0] in CALLS or r[0] in ('asm', 'ASM') or start) and not first:
             block += 1                             # a block starts at a label, at a call or inline assembler, and
