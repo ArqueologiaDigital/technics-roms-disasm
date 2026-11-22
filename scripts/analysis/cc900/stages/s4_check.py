@@ -25,6 +25,7 @@ def one_file(z):
         c['unpaired files'] += 1
         return c, first
     frames = list(s3_check.FRAMES)
+    s4.load_types(z)
     for k_, ((dmp, code), (fn, regs)) in enumerate(zip(fs, tr)):
         c['functions'] += 1
         _, offs, frame = frames[k_] if k_ < len(frames) else (fn, {}, 0)

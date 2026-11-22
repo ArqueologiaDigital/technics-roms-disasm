@@ -24,8 +24,33 @@ class Unsupported(Exception):
     pass
 
 
+SIZE_POINTEE = True                                  # a type-0 load result has its pointer's pointee size
+LOAD_REUSE = False                                    # a load whose base register dies writes into that family
+USE_HINT = True                                      # a temporary copied into a register variable shares it
 UNS0 = {}                                            # T<n> of type 0 -> unsigned, as what it is copied from
 SIZE0 = {}                                           # T<n> of type 0 -> size inferred for the current function
+
+
+TYPES = {}                                           # the unit's -g type records: number -> (kind, fields)
+BASIC = {2: 'SCHAR', 3: 'UCHAR', 4: 'SSHORT', 5: 'USHORT', 6: 'SINT', 7: 'UINT', 8: 'SLONG', 9: 'ULONG'}
+
+
+def load_types(path):
+    """read the -g type records (`symbol_t N,kind,...`) of a listing into TYPES"""
+    TYPES.clear()
+    for l in open(path, encoding='latin-1'):
+        m = re.match(r'^\tsymbol_t\s+(\d+),(\w+),(.*)$', l.rstrip('\r\n'))
+        if m:
+            TYPES.setdefault(int(m.group(1)), (m.group(2), m.group(3).split(',')))
+
+
+def pointee(t):
+    """the basic type name a numbered pointer type points to, or None"""
+    k = TYPES.get(t)
+    if k and k[0] == 'P':
+        b = int(k[1][0])
+        return BASIC.get(b)
+    return None
 
 
 def size_of(x):
@@ -103,7 +128,15 @@ class Fn:
                     a, b = xs
                     for u, v in ((a, b), (b, a)):
                         m = re.match(r'^[*&]?(T\d+)\(0\)', u)
-                        if m and not re.match(r'^[*&]?T\d+\(0\)', v) and not v.startswith(('@(', '*')):
+                        pm = re.match(r'^@\([*&]?[A-Z]\d+\(([A-Z]+) [FN]\*\)', v) or \
+                            re.match(r'^\*[A-Z]\d+\(([A-Z]+) [FN]\*\)', v)
+                        pn = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)', v)
+                        if not pm and pn and pointee(int(pn.group(1))):
+                            pm = re.match(r'(.*)', pointee(int(pn.group(1))))
+                        if m and pm and u is a and SIZE_POINTEE:
+                            SIZE0.setdefault(m.group(1), size_of('X(%s)' % pm.group(1)))   # a load: the pointee's size
+                            UNS0.setdefault(m.group(1), pm.group(1).startswith('U'))
+                        elif m and not re.match(r'^[*&]?T\d+\(0\)', v) and not v.startswith(('@(', '*')):
                             SIZE0.setdefault(m.group(1), size_of(v))
                             UNS0.setdefault(m.group(1), unsigned(v))
                         elif m and re.match(r'^[*&]?T\d+\(0\)', v):
@@ -139,6 +172,13 @@ class Fn:
         for i, r in enumerate(self.recs):
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
                 h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
+        if USE_HINT:
+            for r in self.recs:                      # a temporary converted / copied into a register variable
+                n = self.name(r.res) if r.res else None
+                if r.op in ('CONV', '=') and n and n[0] in 'IP' and self.regs.get(n) not in (None, 'stack') and \
+                        r.args and self.name(r.args[0]) and self.name(r.args[0]).startswith('T') and \
+                        not r.args[0].startswith(('*', '@', '&')):
+                    h.setdefault(self.name(r.args[0]), fam_of(self.regs[n]))
         for i in range(len(self.recs) - 1, -1, -1):
             r = self.recs[i]
             n = self.name(r.res) if r.res else None
@@ -351,6 +391,15 @@ class Fn:
                     self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack':
                 ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
                 self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
+            elif LOAD_REUSE and op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
+                    self.name(r.res) not in self.regs and r.args and r.args[0].startswith(('@(', '*')) and \
+                    self.name(r.args[0].lstrip('*@(')) and self.dies(r.args[0].lstrip('*@('), i_) and \
+                    self.regs.get(self.name(r.args[0].lstrip('*@('))) not in (None, 'stack') and \
+                    self.name(r.res) not in self.hints:
+                size = size_of(r.res)
+                s_ = self.src(r.args[0], size)
+                self.regs[self.name(r.res)] = sized(fam_of(self.regs[self.name(r.args[0].lstrip('*@('))]), size)
+                self.emit('ld', self.regs[self.name(r.res)] + ',' + s_)
             elif op == '=':
                 size = size_of(r.res)
                 self.cur_size = size
@@ -446,7 +495,11 @@ class Fn:
                 self.emit('extz' if True else 'exts', rd)
             elif op in ('++', '--'):
                 v = const(r.args[0])
-                self.emit('inc' if op == '++' else 'dec', '0x%x,%s' % (v, self.dst(r.res)))
+                d = self.dst(r.res)
+                m_ = 'inc' if op == '++' else 'dec'
+                if d.startswith('('):
+                    m_ += {1: 'b', 2: 'w', 4: 'l'}[size_of(r.res)]   # a memory operand: sized mnemonic
+                self.emit(m_, '0x%x,%s' % (v, d))
             else:
                 raise Unsupported(op)
         return self.code
