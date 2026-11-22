@@ -67,3 +67,13 @@ Run the round trip, from technics-roms-disasm's root:
 | 2026-11-22 | S2    | from thc2's own -zio, `-Xr`: 383 / 2,671 equal its -zim (DUMMY lines only so far)                                                                                        |
 | 2026-11-22 | S2    | `-Xr` 416 exact, 439 up to numbering, of 2,671 (from V4.23's own -zio): DUMMY order, addressing modes, two-address form; {MO} on parameters still open                   |
 | 2026-11-22 | S2    | `-Xr` 466 exact, 629 up to numbering, of 2,671: register routing (memory-memory, 4-byte constants, 16-bit multiply / divide), XIZ spill marks, live-on-entry DUMMY lines |
+
+## S3, first measurement (2026-11-22)
+
+`-zim` is printed after thc2's allocate / spill loop, so its memory marks already carry the register-or-stack
+decision: in 1,956 of 2,001 firmware `-Xr` functions (whose `-g` records pair with their dumps), the number of named
+variables `-g` places on the stack equals the number of parameters and locals `-zim` marks `{MO}`, `{MM}` or `PIN`.
+S3 is therefore mainly the choice of register for the others (7,939 register variables in the `-g` records of runs
+2026-11-22-51..54, private table `cc900-oracle/internals/i2/fw-registers-2.tsv`), and for temporaries, which only
+the listing shows (S4).
+
