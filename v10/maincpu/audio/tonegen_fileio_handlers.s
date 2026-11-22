@@ -480,48 +480,7 @@ DSPCfg_SyncBitmapData_Join:
 	ret
 	ret
 
-SndParam_SyncDisplayBitmap:
-	ld xwa, 0:i3
-	call SndParam_LookupReadOnly
-	ld (0x8e6c:16), l
-	ld xwa, 0x102
-	call SndParam_LookupReadOnly
-	ld (0x8e6e:16), l
-	ld xwa, 0x103
-	call SndParam_LookupReadOnly
-	ld (0x8e70:16), l
-	ld xwa, 0x300
-	call SndParam_LookupReadOnly
-	ld (0x8e72:16), l
-	ld xwa, 0x4006
-	call SndParam_LookupReadOnly
-	ld (0x8e74:16), l
-	pushw 0x620
-	pushw 0x0
-	pushw 0xf9a0
-	pushw 0x3
-	pushw 0xc8e4
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	lda xbc, (PANEL_RECORDS:16)
-	lda xwa, (PANEL_PART_RT1:16)
-	sub xwa, xbc
-	lda xde, (PANEL_RECALL_BACKUP:24)
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_PART_RT2:16)
-	sub xwa, xbc
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_PART_LEFT:16)
-	sub xwa, xbc
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_PMEM_SETTINGS+1:16)
-	sub xwa, xbc
-	add xwa, xde
-	ormi8 (xwa), 0x7f
-	ret
+SndParam_SyncDisplayBitmap:	.include "includes/generated/cc900/SndParam_SyncDisplayBitmap.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 
 SoundParam_NotifyMultipleChanges:	.include "includes/generated/cc900/SoundParam_NotifyMultipleChanges.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 
