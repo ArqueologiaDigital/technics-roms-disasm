@@ -673,7 +673,8 @@ def show(F, x, inv, defs, ctx=None):
 def fmt(F, r, inv, defs):
     op, res, a, b = r[:4]
     S = lambda x: show(F, x, inv, defs)
-    if op in COMPOUND or op in ('++', '--', 'BSET', 'BCLR') or op in BRANCHES and op not in ('JRBC', 'JRBS'):
+    if (op in COMPOUND and op not in SHIFTS_UNTYPED) or op in ('++', '--', 'BSET', 'BCLR') or \
+            op in BRANCHES and op not in ('JRBC', 'JRBS'):
         ct = ctype(F, res if op not in BRANCHES else a, inv) if op not in BRANCHES else \
             (ctype(F, a, inv) or ctype(F, b, inv))
         S = lambda x: show(F, x, inv, defs, ct if op not in ('<<', '>>') else None)
@@ -719,8 +720,11 @@ def fmt(F, r, inv, defs):
         if a.startswith('#'):
             n = 4 if a.startswith('#L') else 2
         else:
-            orig = inv.get(a.lstrip('*&'), a) if a[:1] not in 'IP' else '%s%d' % (a[0], int(a[1:]) + 1)
+            b_ = a.lstrip('*&')
+            orig = inv.get(b_, b_) if b_[:1] not in 'IP' else '%s%d' % (b_[0], int(b_[1:]) + 1)
             t = num(F.typ(orig))
+            if a.startswith('*') and F.types:
+                t = F.types.pointee(t)                 # a dereferenced argument: the value's size
             n = SIZE.get(t, 4) if 1 <= t <= 12 else 4
         if op == 'AARG' and b:
             k = int(b)
@@ -733,6 +737,7 @@ def fmt(F, r, inv, defs):
 
 
 ARG_COPIES = True
+SHIFTS_UNTYPED = ()
 MEM_RESULT_NUMBERED = False                         # OPEN: some unread assignment results are numbered (Voice_WriteChPanShift T75); "target in memory" variants lose 111-319 functions
 CALL_RES_COPY = True
 
@@ -812,7 +817,7 @@ def symtypes(u):
     t = {}
     for l in u.header + u.between + [d for f in u.functions for d in f.decls]:
         if l.kind == 'decl' and l.fields[0].startswith('@') and len(l.fields) > 2:
-            t[l.fields[0]] = l.fields[2]
+            t.setdefault(l.fields[0], l.fields[2])   # the first declaration's type
     return t
 
 
