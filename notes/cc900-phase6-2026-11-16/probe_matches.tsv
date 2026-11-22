@@ -1708,3 +1708,22 @@ SndParam_NotifyAndReturn	20	2026-11-22-9-p6-r76	p6_L_28r1m283a@O3XSXr p6_L_28r1m
 SndParam_WrapNotify2	20	2026-11-22-9-p6-r76	p6_L_28r1m283a@O3XSXr p6_L_28r1m283a@O3Xr p6_L_28r1m283a@Xr
 Voice_CopyPreset	23	2026-11-22-9-p6-r76	p6_L_28r1m266a@O3XSXr p6_L_28r1m266a@O3Xr
 Voice_SavePreset	23	2026-11-22-9-p6-r76	p6_L_28r1m266a@O3XSXr p6_L_28r1m266a@O3Xr
+CalcAddrOffset_Data	55	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+DemoMode_Initialize	100	2026-11-22-11-p6-r78	p6_O_29r1m266a@O3XSXr p6_O_29r1m266a@O3Xr p6_O_29r1m266a@Xr
+DocMed_FormatFileList	113	2026-11-22-11-p6-r78	p6_N_29r1m269a@O3XSXr p6_N_29r1m269a@O3Xr p6_N_29r1m269b@O3XSXr p6_N_29r1m269b@O3Xr
+FileIO_ReadMultiByteRecord	74	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+MainLswPartPut	101	2026-11-22-11-p6-r78	p6_O_29r1m271a@O3XSXr p6_O_29r1m271a@O3Xr
+NoteMap_ComputePitchOffset	426	2026-11-22-11-p6-r78	p6_N_29r1m298a@Xr p6_N_29r1m298b@Xr
+PanelTlv_ValidateBlock0	141	2026-11-22-11-p6-r78	p6_O_29r1m277a@O3XSXr p6_O_29r1m277a@O3Xr
+PdMed_FormatFileList	113	2026-11-22-11-p6-r78	p6_N_29r1m269a@O3XSXr p6_N_29r1m269a@O3Xr p6_N_29r1m269b@O3XSXr p6_N_29r1m269b@O3Xr
+ReadVariableLengthDa_Prologue	56	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+SeqFile_ReadTrackData	58	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+SeqFile_ValidateAndStore	58	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+SeqPart_ValidateLeft	72	2026-11-22-11-p6-r78	p6_N_29r1m236a@O3XSXr p6_N_29r1m236a@O3Xr p6_N_29r1m236c@O3XSXr p6_N_29r1m236c@O3Xr
+SeqPart_ValidateRight	72	2026-11-22-11-p6-r78	p6_N_29r1m236a@O3XSXr p6_N_29r1m236a@O3Xr p6_N_29r1m236c@O3XSXr p6_N_29r1m236c@O3Xr
+SingleLoadDst_DrawComposerItemRows	198	2026-11-22-11-p6-r78	p6_O_29r1m269a@O3XSXr p6_O_29r1m269a@O3Xr
+SndParam_ComputeVoiceTuning	426	2026-11-22-11-p6-r78	p6_N_29r1m298a@Xr p6_N_29r1m298b@Xr
+StoreAndAdvance_Prologue	55	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+SysexRingBuf_ReadBytes	55	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
+Voice_InitTableGroup	81	2026-11-22-11-p6-r78	p6_N_29r1m295a@Xr p6_N_29r1m295b@Xr p6_N_29r1m295c@Xr
+Voice_InitTablePair	81	2026-11-22-11-p6-r78	p6_N_29r1m295a@Xr p6_N_29r1m295b@Xr p6_N_29r1m295c@Xr
