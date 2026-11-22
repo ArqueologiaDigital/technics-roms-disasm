@@ -66,11 +66,15 @@ def sp_adjust(n):
     return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
 
 
-COALESCE_FROM = 'T'
+COALESCE_FROM = 'T'                                  # copies of dying values of these kinds share the register
 WIDEN_FROM = 'T'                                     # a dying source of these kinds is widened in place
-BYTE_TO_LONG_CLEAR = True                            # byte -> long zero extension: ld X,0 / ld low,src                                # copies of dying values of these kinds share the register
+BYTE_TO_LONG_CLEAR = True                            # byte -> long zero extension: ld X,0 / ld low,src
 STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
-COALESCE_READ_ONLY = True                            # a copy never written after shares its dying source's register
+COALESCE_READ_ONLY = True                            # a dying variable's copy that is only compared shares its register
+BACK_HINTS = 'one'                                   # hints pass back through one T = T copy ('all': chains; False: none)
+RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
+COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
+HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
 RETURN_HINT = True                                   # a returned temporary is built in XHL
 CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
 FORCED = {}                                          # temporary -> family, imposed by a probe (s4_temps.py)
@@ -360,13 +364,29 @@ class Fn:
                         r.args and self.name(r.args[0]) and self.name(r.args[0]).startswith('T') and \
                         not r.args[0].startswith(('*', '@', '&')):
                     h.setdefault(self.name(r.args[0]), fam_of(self.regs[n]))
+        direct = set(h)
         for i in range(len(self.recs) - 1, -1, -1):
             r = self.recs[i]
             n = self.name(r.res) if r.res else None
-            if r.op == '=' and n and n.startswith('T') and r.args and self.name(r.args[0]) and \
-                    self.name(r.args[0]).startswith('T') and n in h:
+            if BACK_HINTS and r.op == '=' and n and n.startswith('T') and r.args and self.name(r.args[0]) and \
+                    self.name(r.args[0]).startswith('T') and n in h and (n in direct or BACK_HINTS == 'all'):
                 h.setdefault(self.name(r.args[0]), h[n])   # T1 = T0 copies pass the hint back
         return h
+
+    def reserved(self, n):
+        """families hinted to other temporaries defined while n is still live (after the current record)"""
+        self.live_out()
+        out = set()
+        for j in range(self.pos + 1, len(self.recs)):
+            r = self.recs[j]
+            m = self.name(r.res) if r.res else None
+            if m and m != n and m in self.hints and m not in self.regs and n in self._live[j] and \
+                    any(n in self._live[k] for k in self._succ[j]):
+                out.add(self.hints[m])
+            if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and \
+                    any(n in self._live[k] for k in self._succ[j]) and self.name(r.args[0]) != n:
+                out.add(ARGREG[int(r.extra[-1]) - 1])      # an argument register loaded while n lives
+        return out
 
     def only_compared(self, n, i):
         """is variable n, after record i, used only as the operand of compare branches"""
@@ -412,7 +432,9 @@ class Fn:
             busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and k in lo and k != n}
         else:
             busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
-        prefs = [f for f in (self.hints.get(n), prefer) if f]
+        res_ = self.reserved(n) if RESERVE_HINTED else set()
+        busy = set(busy) | res_
+        prefs = [f for f in (self.hints.get(n), prefer) if f and (f not in res_ or not HINT_YIELDS)]
         if n in FORCED:                              # (a choice imposed by a probe, s4_temps.py)
             self.regs[n] = sized(FORCED[n], size)
             LOG.append((n, size, FORCED[n], len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
@@ -698,6 +720,10 @@ class Fn:
                     (self.name(r.args[0])[0] in COALESCE_FROM or
                      (COALESCE_READ_ONLY and self.only_compared(self.name(r.res), i_))):
                 ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
+                if COALESCE_RESPECTS_RESERVED and fam_of(ra) in self.reserved(self.name(r.res)):
+                    ra = self.new_temp(self.name(r.res), size_of(r.res))   # (unless reserved for another value)
+                    self.emit('ld', '%s,%s' % (ra, sized(fam_of(self.regs[self.name(r.args[0])]), size_of(r.res))))
+                    continue
                 self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
             elif LOAD_REUSE and op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
                     self.name(r.res) not in self.regs and r.args and r.args[0].startswith(('@(', '*')) and \
