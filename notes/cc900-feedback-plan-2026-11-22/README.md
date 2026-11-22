@@ -235,6 +235,11 @@ Z3 find hidden compiled code, a lane resumes new-function work there.
 | E4  | Keep D2 (black-box only)?                                       | yes; revisit if the register-only residual is unexplained after B3 and B5, or if C0 estimates hundreds of batches for register choice |
 | E5  | Build a firmware function with the model where V4.23 cannot?    | not yet; later only under D4's restrictions                                                                                           |
 
+**Answered 2026-11-22: the owner accepted every recommendation** ("I accept all recommendations").  So the model work
+resumes narrowed (E1), one C lane takes the `djnz` pool and the v10-to-siblings porting (E2), design (b) waits for
+E-0 (E3), the model stays black-box (E4) and builds no firmware function (E5).  Work starts with Z1, Z2, Z3 and C0,
+one step at a time (the owner's token budget, 2026-11-20).  Progress is logged in `PROGRESS.md` beside this file.
+
 ## 12. What the reviews changed
 
 **First review (Fable 5.2, on 5b202c125):**
