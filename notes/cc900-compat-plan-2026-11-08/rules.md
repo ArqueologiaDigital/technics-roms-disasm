@@ -11,14 +11,14 @@ How rare the differences are: at `-O3 -XS`, V4.23 and the 2003 compiler give dif
 functions of the general micro corpora (`results/compiler_diff_v423_ide2003.md`), and for 3 of the 11 rule-trigger
 functions built from the library's shapes (`rules.c`, run `2026-11-09-1-micro-rules`).
 
-| rule                | V4.23                                                 | 2003                              | trigger                                    | kn5000 state | evidence                                                                                                                  |
-|---------------------|-------------------------------------------------------|-----------------------------------|--------------------------------------------|--------------|---------------------------------------------------------------------------------------------------------------------------|
-| reload-after-store  | `lda XWA,XSP+d` / `ld (XSP+e),XWA` / `ld XWA,(XSP+e)` | the reload is dropped             | `rules.c` `r_buf`                          | **2003**     | pairs `_ldiv`, `_ultoa`, `_ldexp`; census: V4.23 form 0, 2003 form 65 in main CPU v10, 0 / 29 in the HD-AE5000            |
-| djnz-loop           | `djnz r,L`                                            | `sub r,0x1` / `j ne,L`            | `rules.c` `r_countdown2`, `ctrl.c` `c_do`  | **V4.23**    | pair `_strrchr`; census: `djnz` 171 against 1 `sub`/`jr ne` in main CPU v10, 14 / 0 sub CPU, 10 / 0 HD-AE5000             |
-| lda-offset-fold     | `ld XIZ,XWA` / `add XIZ,XHL` / `dec 0x1,XIZ`          | `lda XIZ,XWA-0x1` / `add XIZ,XHL` | `rules.c` `r_rev`                          | **V4.23**    | pair `_strrev` (`HDAE5000_StrRev`: `add xix,xiz` / `dec 1,xix`); census: 1 / 0 in the HD-AE5000, none in main CPU v10     |
-| call-register-alloc | arguments re-read from the frame around calls         | more values kept in XIZ / XBC     | (library `_memccpy`; no micro trigger yet) | **V4.23**    | pair `_memccpy`                                                                                                           |
-| m_gps_a index form  | `add WA,0xc` then the 8-bit index register            | `ld BC,WA` first                  | `mem.c` `m_gps_a`                          | undecided    | none yet                                                                                                                  |
-| loop-entry-copy     | `j L_test` / body / `L_test:` test                    | not probed                        | `p6_m3.c` `trim_a`                         | **firmware** | firmware `TrimAndPadSmfFilename` (runs `2026-11-16-9` to `-11`); census: 332 one-compare tests copied, 29 jumped to (v10) |
+| rule                | V4.23                                                 | 2003                              | trigger                                    | kn5000 state   | evidence                                                                                                                                                                                       |
+|---------------------|-------------------------------------------------------|-----------------------------------|--------------------------------------------|----------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| reload-after-store  | `lda XWA,XSP+d` / `ld (XSP+e),XWA` / `ld XWA,(XSP+e)` | the reload is dropped             | `rules.c` `r_buf`                          | **2003**       | pairs `_ldiv`, `_ultoa`, `_ldexp`; census: V4.23 form 0, 2003 form 65 in main CPU v10, 0 / 29 in the HD-AE5000                                                                                 |
+| djnz-loop           | `djnz r,L`                                            | `sub r,0x1` / `j ne,L`            | `rules.c` `r_countdown2`, `ctrl.c` `c_do`  | **V4.23**      | pair `_strrchr`; census: `djnz` 171 against 1 `sub`/`jr ne` in main CPU v10, 14 / 0 sub CPU, 10 / 0 HD-AE5000                                                                                  |
+| lda-offset-fold     | `ld XIZ,XWA` / `add XIZ,XHL` / `dec 0x1,XIZ`          | `lda XIZ,XWA-0x1` / `add XIZ,XHL` | `rules.c` `r_rev`                          | **V4.23**      | pair `_strrev` (`HDAE5000_StrRev`: `add xix,xiz` / `dec 1,xix`); census: 1 / 0 in the HD-AE5000, none in main CPU v10                                                                          |
+| call-register-alloc | arguments re-read from the frame around calls         | more values kept in XIZ / XBC     | (library `_memccpy`; no micro trigger yet) | **V4.23**      | pair `_memccpy`                                                                                                                                                                                |
+| m_gps_a index form  | `add WA,0xc` then the 8-bit index register            | `ld BC,WA` first                  | `mem.c` `m_gps_a`                          | undecided      | none yet                                                                                                                                                                                       |
+| loop-entry-copy     | `j L_test` / body / `L_test:` test                    | not probed                        | `p6_m3.c` `trim_a`                         | **not a rule** | V4.23 at `-O3` without `-XS` copies the test (notes/cc900-phase6-2026-11-16/README.md, the option-set section; corrected 2026-11-22); census: 332 one-compare tests copied, 29 jumped to (v10) |
 
 Pairs that no rule setting explains yet (`__doprnt`, `__facnv`, `__doform` data, `_vsprintf` in two images, `_sbrk`,
 `__FloatErrorHandle`) are the next source of rules: once the model reproduces V4.23's output for them, the remaining
@@ -102,7 +102,12 @@ phase-6 C files record theirs (`cc900-options:`; `ui_widget_defs.c` is at `-Xr`)
 a pointer constant and `GetNamingWindowID`'s an integer, which V4.23 treats alike.  Of 36 small functions built so
 far, 35 give the same bytes at either option set, so most files' options are still unknown.
 
-**loop-entry-copy (kn5000 state: firmware).**  The Technics compiler copies a loop's test to the loop's entry when the
+**Corrected 2026-11-22: not a Technics rule.**  Phase 6 later found that V4.23 at `-O3 -Xr` (without `-XS`) gives
+the copied test with the `-O` registers, and `TrimAndPadSmfFilename` is now built by V4.23 at that option set
+(notes/cc900-phase6-2026-11-16/README.md, the option-set section; scripts/analysis/cc900/results/c_build_coverage.md).
+The paragraph below is the earlier reading, kept for the record; `KN_LOOP_INVERT` is not needed for it.
+
+**loop-entry-copy (kn5000 state: firmware, superseded).**  The Technics compiler copies a loop's test to the loop's entry when the
 test is one compare and its branch: test, fall into the body, test again at the bottom.  V4.23 jumps to the bottom
 test for every form tried (`while`, `for`, `if` + `do`-`while`, two hand-made `goto` loops: runs `2026-11-16-9` to
 `-11`).  For a longer test, one that loads or has `&&`, the firmware jumps too.
