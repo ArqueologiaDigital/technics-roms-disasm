@@ -14,6 +14,7 @@ SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2,
 FAMS = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ']
 NAMES = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 'XDE'), 'XHL': ('L', 'HL', 'XHL'),
          'XIX': ('IXL', 'IX', 'XIX'), 'XIY': ('IYL', 'IY', 'XIY'), 'XIZ': ('IZL', 'IZ', 'XIZ')}
+LIVENESS = True                                      # a temporary may take a register whose variable is dead
 SHARED_EPILOGUE = True                               # returns with pops / a frame share one epilogue (L50000)
 RET_CC = True                                        # a jump to a bare ret is that ret
 BYTE_TEMPS = False                                   # may a byte temporary take IXL / IYL / IZL
@@ -221,8 +222,25 @@ class Fn:
         return not any(n and any(self.name(y) == n or (y and n + '(' in y) for y in [rr.res] + rr.args)
                        for rr in self.recs[i + 1:])
 
+    def live_out(self):
+        """variables live after the current record (dataflow, flow.live_sets)"""
+        if not hasattr(self, '_live'):
+            import flow
+            names = sorted({self.name(x) for r in self.recs for x in [r.res] + r.args
+                            if x and self.name(x) and self.name(x)[0] in 'IPT'})
+            self._live = flow.live_sets(self.recs, names)
+            self._succ = flow.successors(self.recs)
+        out = set()
+        for j in self._succ[self.pos]:
+            out |= self._live[j]
+        return out
+
     def new_temp(self, n, size, prefer=None):
-        busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
+        if LIVENESS:
+            lo = self.live_out()
+            busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and k in lo and k != n}
+        else:
+            busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
         prefs = [f for f in (self.hints.get(n), prefer) if f]
         for f in prefs + FAMS:
             if (f not in busy or f in prefs) and (size != 1 or f in ('XWA', 'XBC', 'XDE', 'XHL') or BYTE_TEMPS):
