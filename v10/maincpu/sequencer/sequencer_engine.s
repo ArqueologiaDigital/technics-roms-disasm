@@ -11698,53 +11698,13 @@ SeqPart_WriteByte_Primary:	.include "includes/generated/cc900/SeqPart_WriteByte_
 ;   Errors (SEQ_ERROR_CODE): 1 = flag bit clear in the voice table, 2 = no data block (NAKA_INDEX_NONE),
 ;   10 = block number above 0x4d8, 11 = block not in use.  On success 0x28af = block,
 ;   0x2666 = 5 and SEQ_ERROR_CODE = 0.  Preserves IZ.
-Part_ValidateVoiceChannel:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), a
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	calr Part_ReadVoiceBit7
-	cp l, 0:i3
-	jr nz, Part_ValidateVoice_ReadWord
-	ld (SEQ_ERROR_CODE:16), 1
-	jr PartCtrl_ConfigureAndReturn
-
-Part_ValidateVoice_ReadWord:
-	ld c, (xsp + 2)
-	extz bc
-	ld wa, 0:i3
-	calr Part_ReadVoiceWord
-	ld iz, hl
-	cp iz, 0xffff
-	jr nz, Part_ValidateVoice_CheckFFFF
-	ld (SEQ_ERROR_CODE:16), 2
-	jr PartCtrl_ConfigureAndReturn
-
-Part_ValidateVoice_CheckFFFF:
-	cp iz, 0x4d8
-	jr ule, Part_ValidateVoice_CheckOverflow
-	ld (SEQ_ERROR_CODE:16), 10
-	jr PartCtrl_ConfigureAndReturn
-
-Part_ValidateVoice_CheckOverflow:
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, Part_ValidateVoice_SetPosition
-	ld (SEQ_ERROR_CODE:16), 11
-	jr PartCtrl_ConfigureAndReturn
-
-Part_ValidateVoice_SetPosition:
-	ld (SEQ_DATA_BLOCK:16), iz
-	ldw (SEQ_DATA_OFFSET:16), 5
-	ld (SEQ_ERROR_CODE:16), 0
-
-PartCtrl_ConfigureAndReturn:
-	popw iz
-	inc 2, xsp
-	ret
+Part_ValidateVoiceChannel:	.include "includes/generated/cc900/Part_ValidateVoiceChannel.s"	; C: cc900/sequencer_engine_m234_kr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Part_ValidateVoice_ReadWord, Part_ValidateVoiceChannel + 27
+	.set	Part_ValidateVoice_CheckFFFF, Part_ValidateVoiceChannel + 52
+	.set	Part_ValidateVoice_CheckOverflow, Part_ValidateVoiceChannel + 65
+	.set	Part_ValidateVoice_SetPosition, Part_ValidateVoiceChannel + 81
+	.set	PartCtrl_ConfigureAndReturn, Part_ValidateVoiceChannel + 96
 
 ; Validates part A and moves the playback position to its start.
 ;   Part_ValidateVoiceChannel must succeed.  The part's start offset is byte A-1 of the table at
@@ -11923,70 +11883,14 @@ SeqError_MapToGlobal:	.include "includes/generated/cc900/SeqError_MapToGlobal.s"
 ; position to the part's start (offset byte A-1 of 0xf218, at least 5; block word A-1 of
 ; 0xf1f8, at most 0x4d8, in use).
 ;   Errors: 10 = block number too large, 11 = no data, 6 = the start holds a bar marker (0x84).
-Part_ValidateAndSetupVoiceChannel:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 4), a
-	ld a, (xsp + 4)
-	extz wa
-	calr Part_ValidateVoiceChannel
-	ld a, (SEQ_ERROR_CODE:16)
-	cp a, 0:i3
-	jr z, Part_ValidateSetup_ClearAndProcess
-	cp a, 1:i3
-	jr nz, Part_ValidateSetup_ErrorReturn
-	ld (SEQ_ERROR_CODE:16), 0
-
-Part_ValidateSetup_ErrorReturn:
-	jr SeqData_TrackProcessComplete
-
-Part_ValidateSetup_ClearAndProcess:
-	ld (SEQ_ERROR_CODE:16), 0
-	ld c, (xsp + 4)
-	dec 1, c
-	extz bc
-	lda xwa, (SEQ_SONG_RECORD+152:16)
-	ld de, bc
-	extz xde
-	add xde, xwa
-	ld a, (xde)
-	ld (xsp + 2), a
-	cp (xsp + 2), 0x5
-	jr c, Part_ValidateSetup_NoData
-	add bc, bc
-	lda xwa, (SEQ_SONG_RECORD+120:16)
-	extz xbc
-	add xbc, xwa
-	ld iz, (xbc)
-	cp iz, 0x4d8
-	jr ule, Part_ValidateSetup_TestBit7
-	ld (SEQ_ERROR_CODE:16), 10
-	jr SeqData_TrackProcessComplete
-
-Part_ValidateSetup_TestBit7:
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, Part_ValidateSetup_StoreAndRead
-
-Part_ValidateSetup_NoData:
-	ld (SEQ_ERROR_CODE:16), 11
-	jr SeqData_TrackProcessComplete
-
-Part_ValidateSetup_StoreAndRead:
-	ld (SEQ_DATA_BLOCK:16), iz
-	ld a, (xsp + 2)
-	extz wa
-	ld (SEQ_DATA_OFFSET:16), wa
-	calr SeqData_ReadNextByte
-	cp l, 0x84
-	jr nz, SeqData_TrackProcessComplete
-	ld (SEQ_ERROR_CODE:16), 6
-
-SeqData_TrackProcessComplete:
-	popw iz
-	inc 4, xsp
-	ret
+Part_ValidateAndSetupVoiceChannel:	.include "includes/generated/cc900/Part_ValidateAndSetupVoiceChannel.s"	; C: cc900/sequencer_engine_m234_kr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Part_ValidateSetup_ErrorReturn, Part_ValidateAndSetupVoiceChannel + 31
+	.set	Part_ValidateSetup_ClearAndProcess, Part_ValidateAndSetupVoiceChannel + 33
+	.set	Part_ValidateSetup_TestBit7, Part_ValidateAndSetupVoiceChannel + 91
+	.set	Part_ValidateSetup_NoData, Part_ValidateAndSetupVoiceChannel + 100
+	.set	Part_ValidateSetup_StoreAndRead, Part_ValidateAndSetupVoiceChannel + 107
+	.set	SeqData_TrackProcessComplete, Part_ValidateAndSetupVoiceChannel + 133
 
 ; Walks the playback position across tracks 1..(SEQ_OP_MEASURES), counting the bytes passed in the
 ; long at 0x25da (starting at 1).  In each track it advances until (0x288e) bar markers (0x81)
@@ -17734,55 +17638,11 @@ SeqPlay_JumpCopyVoiceData:
 ; (NoteEditSy_SendModeScrollReset).
 SeqPlay_SetBarAndResetScroll:	.include "includes/generated/cc900/SeqPlay_SetBarAndResetScroll.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqPlay_HandleVoiceReassign:
-	bit 2, (SEQ_CONTROL_FLAGS:16)
-	jr z, SeqPlay_CheckNoteDisplayPending
-	ld a, (PANEL_STYLE+5:16)
-	and a, 0x30
-	jr nz, SeqPlay_CheckNoteDisplayPending
-	call SeqRestart_CheckAndDispatch
-	ld a, (SEQ_CONTROL_FLAGS:16)
-	res 2, a
-	set 4, a
-	ld (SEQ_CONTROL_FLAGS:16), a
-
-SeqPlay_CheckNoteDisplayPending:
-	cp (7568:16), 0
-	jr z, SeqPlay_InitBuffers
-	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, SeqPlay_InitBuffers
-	ld a, (SEQ_TRANSPORT_STATE:16)
-	and a, 0x14
-	jr nz, SeqPlay_InitBuffers
-	ld (4596:16), 0
-	ld wa, 0:i3
-	call BitMapOut_PrepareAndRender
-	ld (7568:16), 0
-
-SeqPlay_InitBuffers:
-	bit 4, (SEQ_CONTROL_FLAGS:16)
-	jr z, SeqPlay_CheckMidiPending
-	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, SeqPlay_CheckMidiPending
-	ld a, (SEQ_TRANSPORT_STATE:16)
-	and a, 0x14
-	jr nz, SeqPlay_CheckMidiPending
-	cp (7518:16), 0
-	jr nz, SeqPlay_CheckMidiPending
-	bit 1, (ACC_RUN_FLAGS:16)
-	jr nz, SeqPlay_CheckMidiPending
-	calr SeqPlay_AllocBuffersAndInit
-	res 4, (SEQ_CONTROL_FLAGS:16)
-
-SeqPlay_CheckMidiPending:
-	cp (7584:16), 0
-	ret z
-	ld a, (SEQ_TRANSPORT_STATE:16)
-	and a, 0x1c
-	ret nz
-	call SeqPlay_CheckStartConditions
-	ld (7584:16), 0
-	ret
+SeqPlay_HandleVoiceReassign:	.include "includes/generated/cc900/SeqPlay_HandleVoiceReassign.s"	; C: cc900/sequencer_engine_m234_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_CheckNoteDisplayPending, SeqPlay_HandleVoiceReassign + 33
+	.set	SeqPlay_InitBuffers, SeqPlay_HandleVoiceReassign + 71
+	.set	SeqPlay_CheckMidiPending, SeqPlay_HandleVoiceReassign + 112
 
 SeqPlay_SetupRhythmMode:
 	calr Rhythm_SetupAndDispatch

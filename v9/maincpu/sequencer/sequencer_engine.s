@@ -17351,55 +17351,11 @@ SeqPlay_JumpCopyVoiceData:
 
 SeqPlay_SetBarAndResetScroll:	.include "includes/generated/cc900/SeqPlay_SetBarAndResetScroll.s"	; C: cc900/sequencer_engine_m234_e.c
 
-SeqPlay_HandleVoiceReassign:
-	bit 2, (SEQ_CONTROL_FLAGS:16)
-	jr z, SeqPlay_CheckNoteDisplayPending
-	ld a, (PANEL_STYLE+5:16)
-	and a, 0x30
-	jr nz, SeqPlay_CheckNoteDisplayPending
-	call SeqRestart_CheckAndDispatch
-	ld a, (SEQ_CONTROL_FLAGS:16)
-	res 2, a
-	set 4, a
-	ld (SEQ_CONTROL_FLAGS:16), a
-
-SeqPlay_CheckNoteDisplayPending:
-	cp (7568:16), 0
-	jr z, SeqPlay_InitBuffers
-	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, SeqPlay_InitBuffers
-	ld a, (SEQ_TRANSPORT_STATE:16)
-	and a, 0x14
-	jr nz, SeqPlay_InitBuffers
-	ld (4596:16), 0
-	ld wa, 0:i3
-	call BitMapOut_PrepareAndRender
-	ld (7568:16), 0
-
-SeqPlay_InitBuffers:
-	bit 4, (SEQ_CONTROL_FLAGS:16)
-	jr z, SeqPlay_CheckMidiPending
-	bit 2, (ACC_TRANSPORT_STATE:16)
-	jr nz, SeqPlay_CheckMidiPending
-	ld a, (SEQ_TRANSPORT_STATE:16)
-	and a, 0x14
-	jr nz, SeqPlay_CheckMidiPending
-	cp (7518:16), 0
-	jr nz, SeqPlay_CheckMidiPending
-	bit 1, (ACC_RUN_FLAGS:16)
-	jr nz, SeqPlay_CheckMidiPending
-	calr SeqPlay_AllocBuffersAndInit
-	res 4, (SEQ_CONTROL_FLAGS:16)
-
-SeqPlay_CheckMidiPending:
-	cp (7584:16), 0
-	ret z
-	ld a, (SEQ_TRANSPORT_STATE:16)
-	and a, 0x1c
-	ret nz
-	call SeqPlay_CheckStartConditions
-	ld (7584:16), 0
-	ret
+SeqPlay_HandleVoiceReassign:	.include "includes/generated/cc900/SeqPlay_HandleVoiceReassign.s"	; C: cc900/sequencer_engine_m234_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_CheckNoteDisplayPending, SeqPlay_HandleVoiceReassign + 33
+	.set	SeqPlay_InitBuffers, SeqPlay_HandleVoiceReassign + 71
+	.set	SeqPlay_CheckMidiPending, SeqPlay_HandleVoiceReassign + 112
 
 SeqPlay_SetupRhythmMode:
 	calr Rhythm_SetupAndDispatch
