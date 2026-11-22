@@ -6,14 +6,15 @@
    qualifier to the first declarator only.
    cc900-options: -O3 -XS -Xr
 */
-/* cc900-module: AnalogIn_PollAfterTouch AnalogIn_PollExpressionPedal ArpQueue_Enqueue ArpQueue_InitBuffer Audio_FlushPendingBankSelects MidiChan_ParseVoiceData PanelTlv_WriteBlock0Headers PanelTlv_WriteBlock1Headers PanelTlv_WriteLivePanelHeaders PanelTlv_WritePanelMemoryHeaders SeqBuf_WaitForEmpty SeqData_InitPlaybackFromField SeqOut_FlushWithChunking */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-module: AnalogIn_PollAfterTouch AnalogIn_PollExpressionPedal ArpQueue_Enqueue ArpQueue_InitBuffer Audio_FlushPendingBankSelects MidiChan_ParseVoiceData PanelTlv_WriteBlock0Headers PanelTlv_WriteBlock1Headers PanelTlv_WriteLivePanelHeaders PanelTlv_WritePMemHeaders SeqBuf_WaitForEmpty SeqData_InitPlaybackFromField SeqOut_FlushWithChunking */   /* scripts/analysis/cc900/module_calls.py v10 */
 
 extern void PanelTlv_WriteLivePanelHeaders(void);
-extern void PanelTlv_WritePanelMemoryHeaders(void);
+/* cc900-name: PanelTlv_WritePMemHeaders=PanelTlv_WritePanelMemoryHeaders */
+extern void PanelTlv_WritePMemHeaders(void);
 extern void PanelTlv_WriteAllHeaders(void);
 
 void PanelTlv_WriteAllHeaders(void)
 {
   PanelTlv_WriteLivePanelHeaders();
-  PanelTlv_WritePanelMemoryHeaders();
+  PanelTlv_WritePMemHeaders();
 }

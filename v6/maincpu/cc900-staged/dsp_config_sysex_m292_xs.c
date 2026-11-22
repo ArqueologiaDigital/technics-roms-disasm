@@ -8,13 +8,14 @@
 */
 
 extern void PanelTlv_ValidatePanelMemories(void);
-extern void PanelTlv_WritePanelMemoryHeaders(void);
+/* cc900-name: PanelTlv_WritePMemHeaders=PanelTlv_WritePanelMemoryHeaders */
+extern void PanelTlv_WritePMemHeaders(void);
 extern void PostPmLoad(int r);
 
 void PostPmLoad(int r)
 {
   if (r >= 0) {
     PanelTlv_ValidatePanelMemories();
-    PanelTlv_WritePanelMemoryHeaders();
+    PanelTlv_WritePMemHeaders();
   }
 }
