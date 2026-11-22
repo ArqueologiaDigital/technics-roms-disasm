@@ -855,15 +855,7 @@ FDC_CmdSeek:	.include "includes/generated/cc900/FDC_CmdSeek.s"	; C: cc900/fdc_ro
 ;   I/O->memory (FDC_Setup_DMA_Mode), clears the result buffer (FDC_TIMING_DELAY), sends the command with FDC_CMD_SEND
 ;   and, if no error, waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_CMD_EXEC (read sectors,
 ;   FDC command 3) calls it per same-track burst; instruction twin of the bootloader's FDC_SubmitReadDataCmd.
-FDC_SubmitReadDataCmd:
-	ld	(FDC_CMD_OPCODE:16), 198
-	calr	FDC_Setup_DMA_Mode
-	calr	FDC_TIMING_DELAY
-	ldw	wa, 198
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	ret	nz
-	jrl	FDC_POST_OP
+FDC_SubmitReadDataCmd:	.include "includes/generated/cc900/FDC_SubmitReadDataCmd.s"	; C: cc900/fdc_routines_m270_d.c
 ; --- FDC_CMD_EXEC: Main FDC command execution engine ---
 ; Two nearly identical halves: READ path (command type 1) and
 ; WRITE path (command type 8), set in state variable 35432.
@@ -910,15 +902,7 @@ FDC_SECTOR_XFER:	.include "includes/generated/cc900/FDC_SECTOR_XFER.s"	; C: cc90
 ;   memory->I/O (FDC_Setup_DMA_Mode), clears the result buffer, sends the command with FDC_CMD_SEND and, if no error,
 ;   waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_SECTOR_XFER (write sectors, FDC command 4)
 ;   calls it per burst; instruction twin of the bootloader's FDC_SubmitWriteDataCmd.
-FDC_SubmitWriteDataCmd:
-	ld	(FDC_CMD_OPCODE:16), 197
-	calr	FDC_Setup_DMA_Mode
-	calr	FDC_TIMING_DELAY
-	ldw	wa, 197
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	ret	nz
-	jrl	FDC_POST_OP
+FDC_SubmitWriteDataCmd:	.include "includes/generated/cc900/FDC_SubmitWriteDataCmd.s"	; C: cc900/fdc_routines_m270_d.c
 ; --- FDC_MODE_CONFIG: Configure FDC format parameters by disk type ---
 ; Reads format type from state variable 35436.
 ; Dispatch by type: 0=default, 2=MFM, 3/4/5 = other formats.

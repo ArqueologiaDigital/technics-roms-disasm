@@ -1228,15 +1228,7 @@ FDC_SECTOR_XFER_Epilogue2:
 ;   memory->I/O (FDC_Setup_DMA_Mode), clears the result buffer, sends the command with FDC_CMD_SEND and, if no error,
 ;   waits for the result (FDC_POST_OP). Basis: callers + body + twin -- FDC_SECTOR_XFER (write sectors, FDC command 4)
 ;   calls it per burst; instruction twin of the bootloader's FDC_SubmitWriteDataCmd.
-FDC_SubmitWriteDataCmd:
-	ld	(FDC_CMD_OPCODE:16), 197
-	calr	FDC_Setup_DMA_Mode
-	calr	FDC_TIMING_DELAY
-	ldw	wa, 197
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	ret	nz
-	jrl	FDC_POST_OP
+FDC_SubmitWriteDataCmd:	.include "includes/generated/cc900/FDC_SubmitWriteDataCmd.s"	; C: cc900/fdc_routines_m270_d.c
 ; --- FDC_MODE_CONFIG: Configure FDC format parameters by disk type ---
 ; Reads format type from state variable 35436.
 ; Dispatch by type: 0=default, 2=MFM, 3/4/5 = other formats.

@@ -522,3 +522,23 @@ void NoteEdit_UpdateScrollAndDisplay(void)
     return;
   NoteEditSy_UpdateAllWidgets();
 }
+
+extern unsigned int __near ram_2762;
+extern unsigned char __near ram_2764;
+extern unsigned int __near ram_2766;
+extern unsigned int __near ram_2768;
+
+void BmDrEdit_RestoreEditState(void)
+{
+	ram_275e = ram_2762;
+	ram_2760 = ram_2764;
+	SEQ_DATA_BLOCK = ram_2766;
+	SEQ_DATA_OFFSET = ram_2768;
+}
+void BmDrEdit_SaveEditState(void)
+{
+	ram_2762 = ram_275e;
+	ram_2764 = ram_2760;
+	ram_2766 = SEQ_DATA_BLOCK;
+	ram_2768 = SEQ_DATA_OFFSET;
+}

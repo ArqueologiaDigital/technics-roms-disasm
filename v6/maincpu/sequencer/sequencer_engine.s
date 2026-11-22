@@ -11741,89 +11741,17 @@ SeqTrack_LookupChannelData_Skip3:
 	ld	hl, 0:i3
 	ret
 
-SeqPart_LoadAndValidateData:
-	pushw_erp 0xfa
-	ld	a, (SQEDT_MCP_REPEAT:16)
-	cp a, 0:i3
-	jr z, Part_PopRetFA2
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr nz, Part_PopRetFA2
-	ld a, (SQEDT_MCP_TRACK_B:16)
-	cp a, 0x11
-	jr nz, SeqPart_StoreChannelParams
-	ld a, 0x7f:opc
+SeqPart_LoadAndValidateData:	.include "includes/generated/cc900/SeqPart_LoadAndValidateData.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_StoreChannelParams, SeqPart_LoadAndValidateData + 28
+	.set	SeqPart_LoadDualPartLoop, SeqPart_LoadAndValidateData + 63
+	.set	Part_PopRetFA2, SeqPart_LoadAndValidateData + 114
 
-SeqPart_StoreChannelParams:
-	ld	(SEQ_TRACK:16), a
-	ld wa, (SQEDT_MCP_AT:16)
-	ld	(SEQ_OP_FROM:16), wa
-	ld wa, (SQEDT_MCP_AT:16)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	ldib_erp 0xfb, 0
-	ld	a, (SQEDT_MCP_REPEAT:16)
-	cp a, 0:i3
-	jr ule, Part_PopRetFA2
-
-SeqPart_LoadDualPartLoop:
-	ld	(GLOBAL_ERROR_CODE:16), 255
-	ld	(SEQ_ERROR_CODE:16), 0
-	call	SeqPart_DualPartLoad
-	cp	(GLOBAL_ERROR_CODE:16), 35
-	jr	nz, Part_PopRetFA2
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr	nz, Part_PopRetFA2
-	ldw_d16	wa, (SEQ_OP_DEST_MEASURE)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	inc1b_erp	251	; inc 1,qizh
-	ldto_berp	a, 251	; ld a,qizh
-	cp	a, (SQEDT_MCP_REPEAT:16)
-	jr	c, SeqPart_LoadDualPartLoop
-Part_PopRetFA2:
-	popw_erp 0xfa
-	ret
-
-SeqPart_LoadDualPartData:
-	push	qiz
-	ldb_d8	a, (SQEDT_MINS_REPEAT)
-	cp	a, 0:i3
-	jr	z, SeqPart_LoadDualPartData_Code_Epilogue
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	ldb_d8	a, (SQEDT_MINS_TRACK_B)
-	cp	a, 17
-	jr	nz, SeqPart_LoadDualPartData_Skip
-	ld	a, 127:opc
-SeqPart_LoadDualPartData_Skip:
-	ld	(SEQ_TRACK:16), a
-	ldw_d16	wa, (SQEDT_MINS_AT)
-	ld	(SEQ_OP_FROM:16), wa
-	ldw_d16	wa, (SQEDT_MINS_AT)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	ldib_erp	251, 0	; ld qizh,0
-	ldb_d8	a, (SQEDT_MINS_REPEAT)
-	cp	a, 0:i3
-	jr	ule, SeqPart_LoadDualPartData_Code_Epilogue
-SeqPart_LoadDualPartData_Loop:
-	ld	(GLOBAL_ERROR_CODE:16), 255
-	ld	(SEQ_ERROR_CODE:16), 0
-	call	SeqPart_ByteBlockA95A
-	cp	(GLOBAL_ERROR_CODE:16), 35
-	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	ldw_d16	wa, (SEQ_OP_DEST_MEASURE)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	inc1b_erp	251	; inc 1,qizh
-	ldto_berp	a, 251	; ld a,qizh
-	cp	a, (SQEDT_MINS_REPEAT:16)
-	jr	c, SeqPart_LoadDualPartData_Loop
-SeqPart_LoadDualPartData_Code_Epilogue:
-	pop	qiz
-	ret
+SeqPart_LoadDualPartData:	.include "includes/generated/cc900/SeqPart_LoadDualPartData.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_LoadDualPartData_Skip, SeqPart_LoadDualPartData + 28
+	.set	SeqPart_LoadDualPartData_Loop, SeqPart_LoadDualPartData + 63
+	.set	SeqPart_LoadDualPartData_Code_Epilogue, SeqPart_LoadDualPartData + 114
 SeqVoice_SeekToBar:
 	push xiz
 	ld iz, 1:i3
@@ -26826,65 +26754,17 @@ SeqPart_ClearSingle:
 SeqPart_ClearSingleReturn:
 	ret
 
-SeqPart_CompareLeft:
-	pushw_erp 0xfa
-	res	0, (0x27b8:16)
-	ld	wa, (0x27ba:16)
-	ld	bc, (0x27bc:16)
-	call PartCtrl_ReadByteExtended
-	ldfr_berp L, 0xfb
-	cp_erpb 0xfb, 0x82
-	jr z, SeqPart_CompareLeftCheck
-	cp_erpb 0xfb, 0x81
-	jr nz, SeqPart_CompareLeftLoop
+SeqPart_CompareLeft:	.include "includes/generated/cc900/SeqPart_CompareLeft.s"	; C: cc900/sequencer_engine_m236_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_CompareLeftCheck, SeqPart_CompareLeft + 34
+	.set	SeqPart_CompareLeftLoop, SeqPart_CompareLeft + 40
+	.set	SeqPart_CompareLeftDone, SeqPart_CompareLeft + 70
 
-SeqPart_CompareLeftCheck:
-	set	0, (0x27b8:16)
-	jr SeqPart_CompareLeftDone
-
-SeqPart_CompareLeftLoop:
-	ld	xwa, 0x27ba
-	ld	xbc, 0x27bc
-	call PartCtrl_ReadWordWithBoundsCheck
-	ld	wa, (0x27ba:16)
-	ld	bc, (0x27bc:16)
-	call PartCtrl_ReadByteExtended
-	ld	(0x27c2:16), l
-
-SeqPart_CompareLeftDone:
-	ldto_berp L, 0xfb
-	popw_erp 0xfa
-	ret
-
-SeqPart_CompareRight:
-	pushw_erp 0xfa
-	res	1, (0x27b8:16)
-	ld	wa, (0x27be:16)
-	ld	bc, (0x27c0:16)
-	call PartCtrl_ReadByteExtended
-	ldfr_berp L, 0xfb
-	cp_erpb 0xfb, 0x82
-	jr z, SeqPart_CompareRightCheck
-	cp_erpb 0xfb, 0x81
-	jr nz, SeqPart_CompareRightLoop
-
-SeqPart_CompareRightCheck:
-	set	1, (0x27b8:16)
-	jr SeqPart_CompareRightDone
-
-SeqPart_CompareRightLoop:
-	ld	xwa, 0x27be
-	ld	xbc, 0x27c0
-	call PartCtrl_ReadWordWithBoundsCheck
-	ld	wa, (0x27be:16)
-	ld	bc, (0x27c0:16)
-	call PartCtrl_ReadByteExtended
-	ld	(0x27c4:16), l
-
-SeqPart_CompareRightDone:
-	ldto_berp L, 0xfb
-	popw_erp 0xfa
-	ret
+SeqPart_CompareRight:	.include "includes/generated/cc900/SeqPart_CompareRight.s"	; C: cc900/sequencer_engine_m236_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_CompareRightCheck, SeqPart_CompareRight + 34
+	.set	SeqPart_CompareRightLoop, SeqPart_CompareRight + 40
+	.set	SeqPart_CompareRightDone, SeqPart_CompareRight + 70
 
 SeqPart_WaitLeftMatch:
 	ld l, a

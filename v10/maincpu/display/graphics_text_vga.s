@@ -185,45 +185,17 @@ GraphicsRender_ByteData_Loop3:
 
 ; Runs Display_DeferOrDrawWall_Direct on the draw task; from any other task queues a 4-byte
 ; command {Display_DeferOrDrawWall_Code} for it (DrawQueue_Alloc, DrawRing_Post).
-Display_DeferOrDrawWall:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, Display_DeferOrDrawWall_Direct
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (Display_DeferOrDrawWall_Code:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
-Display_DeferOrDrawWall_Code:
-	jr Display_DeferOrDrawWall_Direct
+Display_DeferOrDrawWall:	.include "includes/generated/cc900/Display_DeferOrDrawWall.s"	; C: cc900/graphics_text_vga_m273.c
+Display_DeferOrDrawWall_Code:	.include "includes/generated/cc900/Display_DeferOrDrawWall_Code.s"	; C: cc900/graphics_text_vga_m0.c
 
-Display_DeferOrDrawWall_Direct:
-	ldw (0x03ef92:24), 0x0000
-	ld wa, 0:i3
-	calr SetNeedUpdate
-	jrl DrawWall
+Display_DeferOrDrawWall_Direct:	.include "includes/generated/cc900/Display_DeferOrDrawWall_Direct.s"	; C: cc900/graphics_text_vga_m0_b.c
 
 ; Runs Display_DeferOrUpdateScreen_Direct on the draw task; from any other task queues a 4-byte
 ; command {Display_DeferOrUpdateScreen_Code} for it (DrawQueue_Alloc, DrawRing_Post).
-Display_DeferOrUpdateScreen:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, Display_DeferOrUpdateScreen_Direct
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (Display_DeferOrUpdateScreen_Code:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
-Display_DeferOrUpdateScreen_Code:
-	jr Display_DeferOrUpdateScreen_Direct
+Display_DeferOrUpdateScreen:	.include "includes/generated/cc900/Display_DeferOrUpdateScreen.s"	; C: cc900/graphics_text_vga_m273_b.c
+Display_DeferOrUpdateScreen_Code:	.include "includes/generated/cc900/Display_DeferOrUpdateScreen_Code.s"	; C: cc900/graphics_text_vga_m0.c
 
-Display_DeferOrUpdateScreen_Direct:
-	ldw (0x03ef92:24), 0x0001
-	ld wa, 1:i3
-	calr SetNeedUpdate
-	jrl UpdateScreen
+Display_DeferOrUpdateScreen_Direct:	.include "includes/generated/cc900/Display_DeferOrUpdateScreen_Direct.s"	; C: cc900/graphics_text_vga_m0_b.c
 Display_DeferOrUpdateScreen_Direct_0xF:
 	ret
 

@@ -3184,64 +3184,18 @@ CtrlPanelBit6_Done:
 ; Output: ORs bitmask into panel LED register (36666/36670/36674/36678)
 ; Looks up bitmask from table at 0xeda66c.
 ; ============================================================================
-CtrlPanel_SetIndicatorBit:
-	pushw_erp	0xfa
-	ld	c, a
-	and	c, 0xf0
-	ldfr_berp	C, 0xfb
-	and	a, 0xf
-	extz	wa
-	call	CtrlPanel_LookupIndicatorEntry
-	cp_erpb	0xfb, 0x60
-	jr	z, CtrlPanel_SetIndicator_Group4
-	cp_erpb	0xfb, 0x40
-	jr	z, CtrlPanel_SetIndicator_Group3
-	cp_erpb	0xfb, 0x20
-	jr	z, CtrlPanel_SetIndicator_Group2
-	cpib_erp	0xfb, 0
-	jr	nz, CtrlPanel_PopRetFA
-	or	(LED_REQUEST_1:16), hl
-	jr	CtrlPanel_PopRetFA
-CtrlPanel_SetIndicator_Group2:
-	or	(LED_REQUEST_2:16), hl
-	jr	CtrlPanel_PopRetFA
-CtrlPanel_SetIndicator_Group3:
-	or	(LED_REQUEST_3:16), hl
-	jr	CtrlPanel_PopRetFA
-CtrlPanel_SetIndicator_Group4:
-	or	(0x8e86:16), hl
-CtrlPanel_PopRetFA:
-	popw_erp	0xfa
-	ret
-CtrlPanel_IndicatorDispatch:
-	pushw_erp	0xfa
-	ld	c, a
-	and	c, 0xf0
-	ldfr_berp	C, 0xfb
-	and	a, 0xf
-	extz	wa
-	call	CtrlPanel_LookupIndicatorEntry
-	cp_erpb	0xfb, 0x60
-	jr	z, CtrlPanel_DispIndicator_Group4
-	cp_erpb	0xfb, 0x40
-	jr	z, CtrlPanel_DispIndicator_Group3
-	cp_erpb	0xfb, 0x20
-	jr	z, CtrlPanel_DispIndicator_Group2
-	cpib_erp	0xfb, 0
-	jr	nz, CtrlPanel_PopRetFA2
-	or	(LED_REQUEST_HOLD_1:16), hl
-	jr	CtrlPanel_PopRetFA2
-CtrlPanel_DispIndicator_Group2:
-	or	(LED_REQUEST_HOLD_2:16), hl
-	jr	CtrlPanel_PopRetFA2
-CtrlPanel_DispIndicator_Group3:
-	or	(LED_REQUEST_HOLD_3:16), hl
-	jr	CtrlPanel_PopRetFA2
-CtrlPanel_DispIndicator_Group4:
-	or	(0x8e88:16), hl
-CtrlPanel_PopRetFA2:
-	popw_erp	0xfa
-	ret
+CtrlPanel_SetIndicatorBit:	.include "includes/generated/cc900/CtrlPanel_SetIndicatorBit.s"	; C: cc900/audio_control_engine_m278.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CtrlPanel_SetIndicator_Group2, CtrlPanel_SetIndicatorBit + 49
+	.set	CtrlPanel_SetIndicator_Group3, CtrlPanel_SetIndicatorBit + 55
+	.set	CtrlPanel_SetIndicator_Group4, CtrlPanel_SetIndicatorBit + 61
+	.set	CtrlPanel_PopRetFA, CtrlPanel_SetIndicatorBit + 65
+CtrlPanel_IndicatorDispatch:	.include "includes/generated/cc900/CtrlPanel_IndicatorDispatch.s"	; C: cc900/audio_control_engine_m278.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CtrlPanel_DispIndicator_Group2, CtrlPanel_IndicatorDispatch + 49
+	.set	CtrlPanel_DispIndicator_Group3, CtrlPanel_IndicatorDispatch + 55
+	.set	CtrlPanel_DispIndicator_Group4, CtrlPanel_IndicatorDispatch + 61
+	.set	CtrlPanel_PopRetFA2, CtrlPanel_IndicatorDispatch + 65
 CtrlPanel_SetIndicatorLED:
 	pushw_erp	0xfa
 	ld	c, a

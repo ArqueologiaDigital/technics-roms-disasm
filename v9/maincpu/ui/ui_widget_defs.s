@@ -17982,36 +17982,16 @@ IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop:
 InitializeGraphics:	.include "includes/generated/cc900/InitializeGraphics.s"	; C: cc900/ui_widget_defs_m273_c.c
 
 ; LcdOn - Enable LCD display output (sets flag at 0x030464)
-LcdOn:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, InitGraphics_SetupVRAM_Loop
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (InitGraphics_SetupVRAM:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
+LcdOn:	.include "includes/generated/cc900/LcdOn.s"	; C: cc900/ui_widget_defs_m273_e.c
 
-InitGraphics_SetupVRAM:
-	jr InitGraphics_SetupVRAM_Loop
+InitGraphics_SetupVRAM:	.include "includes/generated/cc900/InitGraphics_SetupVRAM.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 InitGraphics_SetupVRAM_Loop:	.include "includes/generated/cc900/InitGraphics_SetupVRAM_Loop.s"	; C: cc900/ui_widget_defs_m273_xr.c
 
 ; LcdOff - Disable LCD display output (clears flag at 0x030464)
-LcdOff:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, LcdOn_Return
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (LcdOff_Done2:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
+LcdOff:	.include "includes/generated/cc900/LcdOff.s"	; C: cc900/ui_widget_defs_m273_e.c
 
-LcdOff_Done2:
-	jr LcdOn_Return
+LcdOff_Done2:	.include "includes/generated/cc900/LcdOff_Done2.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 LcdOn_Return:	.include "includes/generated/cc900/LcdOn_Return.s"	; C: cc900/ui_widget_defs_m273_xr.c
 

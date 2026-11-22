@@ -50,3 +50,21 @@ void SetMovable(unsigned long id, int f)
     else
         *p |= 0x2;
 }
+
+/* cc900-module: DrawQueue_Alloc DrawRing_Post IS_XSP_INSIDE_4K_REGION_AT_1C032 InitGraphics_SetupVRAM InitGraphics_SetupVRAM_Loop IsDrawTask LcdOff_Done2 LcdOn_Return */
+struct wcmd { void (*fn)(struct wcmd *); };
+extern void InitGraphics_SetupVRAM_Loop(void);
+void InitGraphics_SetupVRAM(struct wcmd *q);
+extern void InitGraphics_SetupVRAM(struct wcmd *q);
+extern void LcdOn_Return(void);
+void LcdOff_Done2(struct wcmd *q);
+extern void LcdOff_Done2(struct wcmd *q);
+
+void InitGraphics_SetupVRAM(struct wcmd *q)
+{
+	InitGraphics_SetupVRAM_Loop();
+}
+void LcdOff_Done2(struct wcmd *q)
+{
+	LcdOn_Return();
+}
