@@ -1289,103 +1289,12 @@ FDemoText_ProcessMarkup_Return:
 	lda xsp, (xsp + 86)
 	ret
 
-FDemoText_ByteData_TextRenderer:
-	; framing ported from v10's source for the same label (same span length, statement for statement); 82 of 100 slots byte-identical
-	lda	xsp, (xsp-12)
-	pushw	iz
-	ld	(xsp+6), xde
-	ld	(xsp+10), xbc
-	ld	iz, wa
-	ld	wa, iz
-	exts	xwa
-	sll	xwa, 2
-	add	xwa, (xsp+0xa)
-	ld	xwa, (xwa)
-	push	xwa
-	call	Strlen
-	inc	1, hl
-	pushw	hl
-	call	Malloc
-	ld	(xsp+8), xhl
-	ld	wa, iz
-	exts	xwa
-	sll	xwa, 2
-	add	xwa, (xsp+16)
-	ld	xwa, (xwa)
-	push	xwa
-	ld	xwa, (xsp+12)
-	push	xwa
-	call	Strcpy
-	ld	iz, 0:i3
-	pushw	64
-	ld	xwa, (xsp+18)
-	push	xwa
-	ld	xwa, (xsp+26)
-	push	xwa
-	call	Strncpy
-	lda	xsp, (xsp+24)
-	ld	xwa, (xsp+6)
-	ld	(xwa+64), 0
-	ld	xwa, (xsp+18)
-	ld	(xwa), 0
-	ld	xwa, (xsp+2)
-	cp	(xwa), 0
-	jr	z, FDemoText_ByteData_TextRenderer_Skip2
-FDemoText_ByteData_TextRenderer_Loop:
-	ld	xde, (xsp+2)
-	lda	xwa, (xde+iz)
-	ld	xbc, xwa
-	cp	(xwa), 61
-	jr	nz, FDemoText_ByteData_TextRenderer_Skip3
-	ld	(xbc), 0
-	push	xde
-	ld	xwa, (xsp+10)
-	push	xwa
-	call	Strcpy
-	inc	8, xsp
-	inc	1, iz
-	ld	xde, (xsp+2)
-	lda	xwa, (xde+iz)
-	ld	xbc, xwa
-	ld	a, (xwa)
-	cp	a, 34
-	jr	nz, FDemoText_ByteData_TextRenderer_Skip
-	inc	1, iz
-	lda	xwa, (xde+iz)
-	push	xwa
-	ld	xwa, (xsp+22)
-	push	xwa
-	call	Strcpy
-	ld	xwa, (xsp+26)
-	push	xwa
-	call	Strlen
-	lda	xsp, (xsp+12)
-	dec	1, hl
-	extz	xhl
-	add	xhl, (xsp+18)
-	ld	(xhl), 0
-	jr	FDemoText_ByteData_TextRenderer_Skip2
-FDemoText_ByteData_TextRenderer_Skip:
-	push	xbc
-	ld	xwa, (xsp+22)
-	push	xwa
-	call	Strcpy
-	inc	8, xsp
-	jr	FDemoText_ByteData_TextRenderer_Skip2
-FDemoText_ByteData_TextRenderer_Skip3:
-	inc	1, iz
-	ld	xwa, (xsp+2)
-; v10 does not spell this byte either
-	cp	(xwa+iz), 0x00
-	jr	nz, FDemoText_ByteData_TextRenderer_Loop
-FDemoText_ByteData_TextRenderer_Skip2:
-	ld	xwa, (xsp+2)
-	push	xwa
-	call	Free
-	inc	4, xsp
-	popw	iz
-	lda	xsp, (xsp+12)
-	retd	4
+FDemoText_ByteData_TextRenderer:	.include "includes/generated/cc900/FDemoText_ByteData_TextRenderer.s"	; C: cc900/fdemotext_routines_m265_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemoText_ByteData_TextRenderer_Loop, FDemoText_ByteData_TextRenderer + 101
+	.set	FDemoText_ByteData_TextRenderer_Skip, FDemoText_ByteData_TextRenderer + 188
+	.set	FDemoText_ByteData_TextRenderer_Skip3, FDemoText_ByteData_TextRenderer + 201
+	.set	FDemoText_ByteData_TextRenderer_Skip2, FDemoText_ByteData_TextRenderer + 214
 FDemoText_TextDispatch:
 	cp bc, 1:i3
 	jr z, FDemoText_TextDispatch_Return

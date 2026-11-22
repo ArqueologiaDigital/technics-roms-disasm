@@ -36,3 +36,23 @@ long LabelProc(long obj, long evt, long p)
 	DrawString((struct rect *)&r.x1, &pt, h->str, h->l26, h->i30, 0xf7);
 	return 0;
 }
+
+extern void DrawFrame(struct rect *r, int n);
+extern void DrawDesignFrame(struct rect *, int, int, int);
+extern void DrawDesignFrame(struct rect *r, int style, int thick, int color);
+
+void DrawDesignFrame(struct rect *r, int style, int thick, int color)
+{
+    struct rect b;
+    register long i;
+
+    b = *r;
+    if (style == 1)
+        for (i = 0; i < thick; i++) {
+            DrawFrame(&b, color);
+            b.y1++;
+            b.y2--;
+            b.x1++;
+            b.x2--;
+        }
+}

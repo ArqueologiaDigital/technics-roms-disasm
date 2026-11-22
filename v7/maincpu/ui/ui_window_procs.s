@@ -1624,42 +1624,10 @@ FrameLoop_Cleanup:
 	inc 2, xsp
 	retd 0x4
 
-DrawDesignFrame:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 12), de
-	ld de, bc
-	ld xiy, xwa
-	lda xix, (xsp + 4)
-	ld bc, 4:i3
-	ldirw
-	cp de, 1:i3
-	jr nz, DesignFrame_Epilogue
-	ld xiz, 0:i3
-	ld wa, (xsp + 12)
-	exts xwa
-	cp xwa, 0x0
-	jr le, DesignFrame_Epilogue
-
-DesignFrame_DrawLoop:
-	lda xwa, (xsp + 4)
-	ld bc, (xsp + 18)
-	call DrawFrame
-	lda xwa, (xsp + 4)
-	incw 1, (xwa + 2)
-	decw	1, (xwa+6)
-	incw 1, (xwa)
-	decw	1, (xwa+4)
-	inc 1, xiz
-	ld wa, (xsp + 12)
-	exts xwa
-	cp xiz, xwa
-	jr lt, DesignFrame_DrawLoop
-
-DesignFrame_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 10)
-	retd 0x2
+DrawDesignFrame:	.include "includes/generated/cc900/DrawDesignFrame.s"	; C: cc900/ui_window_procs_m271.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DesignFrame_DrawLoop, DrawDesignFrame + 37
+	.set	DesignFrame_Epilogue, DrawDesignFrame + 72
 
 EditSwProc:	.include "includes/generated/cc900/EditSwProc.s"	; C: cc900/ui_window_procs_m0.c
 ; the hand assembly's labels inside the compiled body, by their offsets
