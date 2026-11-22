@@ -140,3 +140,35 @@ void NavigatePdList(int d)
 		}
 	}
 }
+
+extern unsigned char __near ram_8470[][32];
+extern void *FileIO_GetFileEntryWithRefresh(unsigned int);
+extern void FileIO_ReadHeader_ParseLoop(unsigned char *, void *, unsigned int, int, int);
+extern void DocMed_FormatFileList(long obj, int first);
+extern void *GetFileRecordPtr(unsigned int);
+extern void PdMed_FormatFileList(long obj, int first);
+
+void DocMed_FormatFileList(long obj, int first)
+{
+    int i;
+    void *p;
+
+    for (i = 0; i < 10; i++) {
+        ram_8470[i][0] = i;
+        p = FileIO_GetFileEntryWithRefresh(first + i);
+        FileIO_ReadHeader_ParseLoop(&ram_8470[i][1], p, first + i + 1, 12, 0);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_8470[i]);
+    }
+}
+void PdMed_FormatFileList(long obj, int first)
+{
+    int i;
+    void *p;
+
+    for (i = 0; i < 10; i++) {
+        ram_8470[i][0] = i;
+        p = GetFileRecordPtr(first + i);
+        FileIO_ReadHeader_ParseLoop(&ram_8470[i][1], p, first + i + 1, 20, 1);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_8470[i]);
+    }
+}

@@ -1452,42 +1452,7 @@ LswEditCheck_Return:
 	ret
 
 MainLswPut:	.include "includes/generated/cc900/MainLswPut.s"	; C: cc900/ui_widget_defs_m271_b.c
-MainLswPartPut:
-	dec	8, xsp
-	pushw	iz
-	ld	(xsp+6), de
-	ld	(xsp+8), bc
-	ld	iz, wa
-	pushw	12
-	call	Malloc
-	inc	2, xsp
-	ld	(xsp+2), xhl
-	ld	bc, (xsp+8)
-	extz	xbc
-	ld	de, iz
-	extz	xde
-	sll	xde, 16
-	add	xde, xbc
-	ld	xwa, (xsp+2)
-	ld	(xwa), xde
-	ld	bc, (xsp+6)
-	ld	(xwa+4), bc
-	ld	bc, (xsp+14)
-	ld	(xwa+6), bc
-	ld	xbc, 0:i3
-	ld	(xwa+8), xbc
-	ld	xwa, NAKA_MAINFUNC_MainPmanControl
-	ld	xbc, EVT_LSW_PART_PUT
-	ld	xde, (xsp+2)
-	call	MainFuncCall
-	ld	xwa, NAKA_MAINFUNC_MainAutoFree
-	ld	xbc, EVT_AUTO_FREE
-	ld	xde, (xsp+2)
-	call	MainFuncCall
-	ld	hl, 0:i3
-	popw	iz
-	inc	8, xsp
-	retd	2
+MainLswPartPut:	.include "includes/generated/cc900/MainLswPartPut.s"	; C: cc900/ui_widget_defs_m271_e.c
 MainLswAdd:	.include "includes/generated/cc900/MainLswAdd.s"	; C: cc900/ui_widget_defs_m271_b.c
 MainLswPartAdd:	.include "includes/generated/cc900/MainLswPartAdd.s"	; C: cc900/ui_widget_defs_m271_d.c
 MainLswGet:	.include "includes/generated/cc900/MainLswGet.s"	; C: cc900/ui_widget_defs_m271_c.c

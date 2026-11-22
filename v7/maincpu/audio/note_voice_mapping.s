@@ -1501,62 +1501,14 @@ NoteOff_Return:
 	popw_erp	0xfa
 	lda	xsp, (xsp+168:16)
 	ret
-Voice_InitTableGroup:
-	lda	xsp, (xsp-168)
-	pushw_erp	0xfa
-	lda	xwa, (AUDIO_STATE:16)
-	ld	(xsp + 2), xwa
-	ld	(xsp + 6), 0x90
-	ld	(xsp + 8), 0x4
-	ldib_erp	0xfb, 0
-	cpib_erp	0xfb, 5
-	jr	nc, VoiceTableGroup_Return
-VoiceTableGroup_PartLoop:
-	ldto_berp	A, 0xfb
-	ld	(xsp + 9), a
-	ldto_berp	A, 0xfb
-	extz	wa
-	lda	xbc, (RhythmMidi_StatusMap:24)
-	ld	e, (xbc+wa)
-	lda	xwa, (xsp + 6)
-	extz	de
-	ld	xbc, (xsp + 2)
-	call	NoteMap_LookupAndAllocVoice
-	inc1b_erp	0xfb
-	cpib_erp	0xfb, 5
-	jr	c, VoiceTableGroup_PartLoop
-VoiceTableGroup_Return:
-	popw_erp	0xfa
-	lda	xsp, (xsp+168:16)
-	ret
-Voice_InitTablePair:
-	lda	xsp, (xsp-168)
-	pushw_erp	0xfa
-	lda	xwa, (AUDIO_STATE:16)
-	ld	(xsp + 2), xwa
-	ld	(xsp + 6), 0x90
-	ld	(xsp + 8), 0x5
-	ldib_erp	0xfb, 0
-	cpib_erp	0xfb, 2
-	jr	nc, VoiceTablePair_Return
-VoiceTablePair_PartLoop:
-	ldto_berp	A, 0xfb
-	ld	(xsp + 9), a
-	ldto_berp	A, 0xfb
-	extz	wa
-	lda	xbc, (RhythmMidi_SeqEvtMap:24)
-	ld	e, (xbc+wa)
-	lda	xwa, (xsp + 6)
-	extz	de
-	ld	xbc, (xsp + 2)
-	call	NoteMap_LookupAllocAndStoreResult
-	inc1b_erp	0xfb
-	cpib_erp	0xfb, 2
-	jr	c, VoiceTablePair_PartLoop
-VoiceTablePair_Return:
-	popw_erp	0xfa
-	lda	xsp, (xsp+168:16)
-	ret
+Voice_InitTableGroup:	.include "includes/generated/cc900/Voice_InitTableGroup.s"	; C: cc900/note_voice_mapping_m295_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceTableGroup_PartLoop, Voice_InitTableGroup + 31
+	.set	VoiceTableGroup_Return, Voice_InitTableGroup + 72
+Voice_InitTablePair:	.include "includes/generated/cc900/Voice_InitTablePair.s"	; C: cc900/note_voice_mapping_m295_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceTablePair_PartLoop, Voice_InitTablePair + 31
+	.set	VoiceTablePair_Return, Voice_InitTablePair + 72
 VoiceEvent_ResetAndInit:
 	ret
 VoiceEvent_AllocAllLayers:
@@ -9270,350 +9222,34 @@ WriteChannelDelay_Lo_LoadParam4:
 	popw_erp	0xfa
 	lda	xsp, (xsp + 18)
 	ret
-SndParam_ComputeVoiceTuning:
-	lda	xsp, (xsp - 16)
-	pushw_erp	0xfa
-	ld	(xsp + 12), e
-	ld	(xsp + 14), xwa
-	ld	a, (xsp + 12)
-	extz	wa
-	add	wa, wa
-	add	wa, 0x124
-	exts	xwa
-	add	xwa, xbc
-	ld	e, (xwa + 1)
-	sra	e, 4
-	ld	a, (xsp + 12)
-	extz	wa
-	add	wa, wa
-	add	wa, 0x124
-	ld	a, (xbc+wa)
-	sll	a, 4
-	sra	a, 5
-	muls	a, 0xc
-	ld	(xsp + 4), a
-	add	(xsp + 4), e
-	ld	a, (xsp + 12)
-	extz	wa
-	ld	bc, 0:i3
-	call	SndParam_LookupViaEncode
-	ld	(xsp + 8), hl
-	ld	a, (xsp + 12)
-	extz	wa
-	ldw	bc, 0x20
-	call	SndParam_LookupViaEncode
-	ld	(xsp + 10), hl
-	ld	a, 0x2:opc
-	ld	xwa, 0x2205
-	call	SndParam_LookupReadOnly
-	cp	hl, 3:i3
-	jr	z, ComputeVoiceTuning_LoadParam2
-	cp	hl, 1:i3
-	jr	z, ComputeVoiceTuning_LoadParam
-	cp	hl, 0:i3
-	jr	nz, Synth_WriteChannelGain_Loop
-	ld	(xsp + 6), 0x1
-	ld	a, 0x2:opc
-	jr	Synth_WriteChannelGain_Loop
-ComputeVoiceTuning_LoadParam:
-	ld	(xsp + 6), 0xff
-	ld	a, 0xff:opc
-	jr	Synth_WriteChannelGain_Loop
-ComputeVoiceTuning_LoadParam2:
-	ld	(xsp + 6), 0x3
-	ld	a, 0x4:opc
-Synth_WriteChannelGain_Loop:
-	ldw	(xsp + 2), 0x0
-	jrl	Synth_WriteParam_Check
-Synth_WriteParam_Loop:
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ld	(xbc + 4), 0x0
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	cp	(xbc + 1), 0x0
-	jrl	z, Synth_WriteParam_Next
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ld	a, (xbc)
-	ldfr_berp	A, 0xfb
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ldto_berp	A, 0xfb
-	ld	(xbc + 2), a
-	ld	wa, (xsp + 8)
-	ld	e, a
-	extz	de
-	ld	wa, (xsp + 10)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	Note_CheckTransposeRange
-	cp	l, 0:i3
-	jr	nz, TransposeRange_LookupParam
-	cp	(xsp + 4), 0x0
-	jr	z, TransposeRange_Clamp
-	ldto_berp	A, 0xfb
-	add	a, (xsp + 4)
-	ldfr_berp	A, 0xfb
-	cp	a, 0x7f
-	jr	ule, TransposeRange_Clamp
-	cp	(xsp + 4), 0x0
-	jr	le, TransposeRange_CheckLow
-	ldto_berp	A, 0xfb
-	cp	a, 0x7f
-	jr	ule, TransposeRange_Clamp
-TransposeRange_OctaveDown:
-	sub_erpb	0xfb, 0x0c
-	ldto_berp	A, 0xfb
-	cp	a, 0x7f
-	jr	ugt, TransposeRange_OctaveDown
-	jr	TransposeRange_Clamp
-TransposeRange_CheckLow:
-	ldto_berp	A, 0xfb
-	cp	a, 0:i3
-	jr	ge, TransposeRange_Clamp
-TransposeRange_OctaveUp:
-	add_erpb	0xfb, 0x0c
-	ldto_berp	A, 0xfb
-	cp	a, 0:i3
-	jr	lt, TransposeRange_OctaveUp
-TransposeRange_Clamp:
-	cp_erpb	0xfb, 0x78
-	jr	c, Synth_WriteChannelParam
-	ldi_erpb	0xfb, 0xff
-	jr	Synth_WriteChannelParam
-TransposeRange_LookupParam:
-	cp	(xsp + 6), 0xff
-	jr	z, Synth_WriteChannelParam
-	ld	a, (xsp + 6)
-	ld	l, a
-	extz	hl
-	ld	wa, (xsp + 8)
-	ld	c, a
-	extz	bc
-	ld	wa, (xsp + 10)
-	ld	e, a
-	extz	de
-	ldto_berp	A, 0xfb
-	extz	wa
-	pushw	wa
-	ld	wa, hl
-	call	SndParam_LookupByChannel
-	ldfr_berp	L, 0xfb
-Synth_WriteChannelParam:
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ldto_berp	A, 0xfb
-	ld	(xbc + 3), a
-Synth_WriteParam_Next:
-	incw	1, (xsp + 2)
-Synth_WriteParam_Check:
-	ld	xwa, (xsp + 14)
-	ld	a, (xwa + 1)
-	extz	wa
-	cp	(xsp + 2), wa
-	jrl	c, Synth_WriteParam_Loop
-	popw_erp	0xfa
-	lda	xsp, (xsp + 16)
-	ret
-NoteMap_ComputePitchOffset:
-	lda	xsp, (xsp - 16)
-	pushw_erp	0xfa
-	ld	(xsp + 12), e
-	ld	(xsp + 14), xwa
-	ld	a, (xsp + 12)
-	extz	wa
-	add	wa, wa
-	add	wa, 0x124
-	exts	xwa
-	add	xwa, xbc
-	ld	e, (xwa + 1)
-	sra	e, 4
-	ld	a, (xsp + 12)
-	extz	wa
-	add	wa, wa
-	add	wa, 0x124
-	ld	a, (xbc+wa)
-	sll	a, 4
-	sra	a, 5
-	muls	a, 0xc
-	ld	(xsp + 4), a
-	add	(xsp + 4), e
-	ld	a, (xsp + 12)
-	extz	wa
-	ld	bc, 0:i3
-	call	SndParam_LookupViaEncode
-	ld	(xsp + 8), hl
-	ld	a, (xsp + 12)
-	extz	wa
-	ldw	bc, 0x20
-	call	SndParam_LookupViaEncode
-	ld	(xsp + 10), hl
-	ld	a, 0x2:opc
-	ld	xwa, 0x2205
-	call	SndParam_LookupReadOnly
-	cp	hl, 3:i3
-	jr	z, PitchOffset_BothDirs
-	cp	hl, 1:i3
-	jr	z, PitchOffset_NegativeDir
-	cp	hl, 0:i3
-	jr	nz, Synth_InitChannelState_Loop
-	ld	(xsp + 6), 0x1
-	ld	a, 0x2:opc
-	jr	Synth_InitChannelState_Loop
-PitchOffset_NegativeDir:
-	ld	(xsp + 6), 0xff
-	ld	a, 0xff:opc
-	jr	Synth_InitChannelState_Loop
-PitchOffset_BothDirs:
-	ld	(xsp + 6), 0x3
-	ld	a, 0x4:opc
-Synth_InitChannelState_Loop:
-	ldw	(xsp + 2), 0x0
-	jrl	Synth_InitChannelState_Check
-Synth_InitChannelState_Body:
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ld	(xbc + 4), 0x0
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	cp	(xbc + 1), 0x0
-	jrl	z, Synth_InitChannelState_Next
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ld	a, (xbc)
-	ldfr_berp	A, 0xfb
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ldto_berp	A, 0xfb
-	ld	(xbc + 2), a
-	ld	wa, (xsp + 8)
-	ld	e, a
-	extz	de
-	ld	wa, (xsp + 10)
-	ld	c, a
-	extz	bc
-	ld	wa, de
-	calr	Note_CheckTransposeRange
-	cp	l, 0:i3
-	jr	nz, Synth_SkipTranspose
-	cp	(xsp + 4), 0x0
-	jr	z, Synth_StoreTransposedNote
-	ldto_berp	A, 0xfb
-	add	a, (xsp + 4)
-	ldfr_berp	A, 0xfb
-	cp	a, 0x7f
-	jr	ule, Synth_StoreTransposedNote
-	cp	(xsp + 4), 0x0
-	jr	le, Synth_CheckNegative
-	ldto_berp	A, 0xfb
-	cp	a, 0x7f
-	jr	ule, Synth_StoreTransposedNote
-Synth_OctaveDown_Loop:
-	sub_erpb	0xfb, 0x0c
-	ldto_berp	A, 0xfb
-	cp	a, 0x7f
-	jr	ugt, Synth_OctaveDown_Loop
-	jr	Synth_StoreTransposedNote
-Synth_CheckNegative:
-	ldto_berp	A, 0xfb
-	cp	a, 0:i3
-	jr	ge, Synth_StoreTransposedNote
-CheckNegative_AdjustIdx:
-	add_erpb	0xfb, 0x0c
-	ldto_berp	A, 0xfb
-	cp	a, 0:i3
-	jr	lt, CheckNegative_AdjustIdx
-Synth_StoreTransposedNote:
-	cp_erpb	0xfb, 0x78
-	jr	c, Synth_SetChannelTone_Continue
-	ldi_erpb	0xfb, 0xff
-	jr	Synth_SetChannelTone_Continue
-Synth_SkipTranspose:
-	cp	(xsp + 6), 0xff
-	jr	z, Synth_SetChannelTone_Continue
-	ld	a, (xsp + 6)
-	ld	l, a
-	extz	hl
-	ld	wa, (xsp + 8)
-	ld	c, a
-	extz	bc
-	ld	wa, (xsp + 10)
-	ld	e, a
-	extz	de
-	ldto_berp	A, 0xfb
-	extz	wa
-	pushw	wa
-	ld	wa, hl
-	call	SndParam_LookupByChannel
-	ldfr_berp	L, 0xfb
-Synth_SetChannelTone_Continue:
-	ld	wa, (xsp + 2)
-	extz	xwa
-	ld	xbc, xwa
-	sll	xbc, 2
-	add	xbc, xwa
-	inc	4, xbc
-	add	xbc, (xsp + 14)
-	ldto_berp	A, 0xfb
-	ld	(xbc + 3), a
-Synth_InitChannelState_Next:
-	incw	1, (xsp + 2)
-Synth_InitChannelState_Check:
-	ld	xwa, (xsp + 14)
-	ld	a, (xwa + 1)
-	extz	wa
-	cp	(xsp + 2), wa
-	jrl	c, Synth_InitChannelState_Body
-	popw_erp	0xfa
-	lda	xsp, (xsp + 16)
-	ret
+SndParam_ComputeVoiceTuning:	.include "includes/generated/cc900/SndParam_ComputeVoiceTuning.s"	; C: cc900/note_voice_mapping_m298_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ComputeVoiceTuning_LoadParam, SndParam_ComputeVoiceTuning + 124
+	.set	ComputeVoiceTuning_LoadParam2, SndParam_ComputeVoiceTuning + 132
+	.set	Synth_WriteChannelGain_Loop, SndParam_ComputeVoiceTuning + 138
+	.set	Synth_WriteParam_Loop, SndParam_ComputeVoiceTuning + 146
+	.set	TransposeRange_OctaveDown, SndParam_ComputeVoiceTuning + 293
+	.set	TransposeRange_CheckLow, SndParam_ComputeVoiceTuning + 307
+	.set	TransposeRange_OctaveUp, SndParam_ComputeVoiceTuning + 314
+	.set	TransposeRange_Clamp, SndParam_ComputeVoiceTuning + 325
+	.set	TransposeRange_LookupParam, SndParam_ComputeVoiceTuning + 337
+	.set	Synth_WriteChannelParam, SndParam_ComputeVoiceTuning + 379
+	.set	Synth_WriteParam_Next, SndParam_ComputeVoiceTuning + 402
+	.set	Synth_WriteParam_Check, SndParam_ComputeVoiceTuning + 405
+NoteMap_ComputePitchOffset:	.include "includes/generated/cc900/NoteMap_ComputePitchOffset.s"	; C: cc900/note_voice_mapping_m298_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PitchOffset_NegativeDir, NoteMap_ComputePitchOffset + 124
+	.set	PitchOffset_BothDirs, NoteMap_ComputePitchOffset + 132
+	.set	Synth_InitChannelState_Loop, NoteMap_ComputePitchOffset + 138
+	.set	Synth_InitChannelState_Body, NoteMap_ComputePitchOffset + 146
+	.set	Synth_OctaveDown_Loop, NoteMap_ComputePitchOffset + 293
+	.set	Synth_CheckNegative, NoteMap_ComputePitchOffset + 307
+	.set	CheckNegative_AdjustIdx, NoteMap_ComputePitchOffset + 314
+	.set	Synth_StoreTransposedNote, NoteMap_ComputePitchOffset + 325
+	.set	Synth_SkipTranspose, NoteMap_ComputePitchOffset + 337
+	.set	Synth_SetChannelTone_Continue, NoteMap_ComputePitchOffset + 379
+	.set	Synth_InitChannelState_Next, NoteMap_ComputePitchOffset + 402
+	.set	Synth_InitChannelState_Check, NoteMap_ComputePitchOffset + 405
 InitChannelState_Che_InitVal:	.include "includes/generated/cc900/InitChannelState_Che_InitVal.s"	; C: cc900/note_voice_mapping_m298_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	InitChannelState_Che_LoopBody, InitChannelState_Che_InitVal + 4
@@ -18396,40 +18032,13 @@ StartFillIn_Data:
 	swi	3
 	swi	7
 	ret
-FileIO_ReadMultiByteRecord:
-	push	xiz
-	calr	FileIO_ReadNextRecord
-	ld	iz, hl
-	exts	xiz
-	ld	xwa, xiz
-	cp	xwa, 0x0
-	jr	ge, ReadMultiByteRecord_TestBit7
-	ld	xhl, 0xffffffff
-	jr	ReadMultiByteRecord_Epilogue
-ReadMultiByteRecord_TestBit7:
-	bit	7, iz
-	jr	z, ReadMultiByteRecord_LoadReg2
-	and	xiz, 0x7f
-ReadMultiByteRecord_Block:
-	calr	FileIO_ReadNextRecord
-	ld	wa, hl
-	cp	wa, 0:i3
-	jr	ge, ReadMultiByteRecord_LoadReg
-	ld	xhl, 0xffffffff
-	jr	ReadMultiByteRecord_Epilogue
-ReadMultiByteRecord_LoadReg:
-	ld	wa, hl
-	and	wa, 0x7f
-	exts	xwa
-	sla	xiz, 7
-	add	xiz, xwa
-	bit	7, hl
-	jr	nz, ReadMultiByteRecord_Block
-ReadMultiByteRecord_LoadReg2:
-	ld	xhl, xiz
-ReadMultiByteRecord_Epilogue:
-	pop	xiz
-	ret
+FileIO_ReadMultiByteRecord:	.include "includes/generated/cc900/FileIO_ReadMultiByteRecord.s"	; C: cc900/note_voice_mapping_m302_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadMultiByteRecord_TestBit7, FileIO_ReadMultiByteRecord + 25
+	.set	ReadMultiByteRecord_Block, FileIO_ReadMultiByteRecord + 36
+	.set	ReadMultiByteRecord_LoadReg, FileIO_ReadMultiByteRecord + 52
+	.set	ReadMultiByteRecord_LoadReg2, FileIO_ReadMultiByteRecord + 70
+	.set	ReadMultiByteRecord_Epilogue, FileIO_ReadMultiByteRecord + 72
 FileIO_ReadVariableLengthData:	.include "includes/generated/cc900/FileIO_ReadVariableLengthData.s"	; C: cc900/note_voice_mapping_m302_xr.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	ReadVariableLengthDa_LoadParam, FileIO_ReadVariableLengthData + 34
@@ -18437,35 +18046,12 @@ FileIO_ReadVariableLengthData:	.include "includes/generated/cc900/FileIO_ReadVar
 	.set	ReadVariableLengthDa_LoadParam2, FileIO_ReadVariableLengthData + 85
 	.set	ReadVariableLengthDa_LoadParam3, FileIO_ReadVariableLengthData + 129
 	.set	ReadVariableLengthDa_Epilogue, FileIO_ReadVariableLengthData + 131
-ReadVariableLengthDa_Prologue:
-	dec	6, xsp
-	pushw	iz
-	ld	(xsp + 2), xbc
-	ld	(xsp + 6), wa
-	ld	iz, 0:i3
-	ld	wa, iz
-	cp	wa, (xsp + 6)
-	jr	nc, ReadVariableLengthDa_InitVal
-ReadVariableLengthDa_LoopBody:
-	call	TaskBuf_ReadNextByte
-	ld	wa, hl
-	cp	wa, 0:i3
-	jr	ge, ReadVariableLengthDa_LoopCheck
-	ldw	hl, 0xffff
-	jr	ReadVariableLengthDa_RestoreReg
-ReadVariableLengthDa_LoopCheck:
-	ld	xwa, (xsp + 2)
-	ld	(xwa+iz), l
-	inc	1, iz
-	ld	wa, iz
-	cp	wa, (xsp + 6)
-	jr	c, ReadVariableLengthDa_LoopBody
-ReadVariableLengthDa_InitVal:
-	ld	hl, 0:i3
-ReadVariableLengthDa_RestoreReg:
-	popw	iz
-	inc	6, xsp
-	ret
+ReadVariableLengthDa_Prologue:	.include "includes/generated/cc900/ReadVariableLengthDa_Prologue.s"	; C: cc900/note_voice_mapping_m302_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ReadVariableLengthDa_LoopBody, ReadVariableLengthDa_Prologue + 18
+	.set	ReadVariableLengthDa_LoopCheck, ReadVariableLengthDa_Prologue + 33
+	.set	ReadVariableLengthDa_InitVal, ReadVariableLengthDa_Prologue + 50
+	.set	ReadVariableLengthDa_RestoreReg, ReadVariableLengthDa_Prologue + 52
 AccWrap_PlayModeStateMachine:
 	cp	wa, 4:i3
 	jrl	z, PlayModeStateMachine_Block4
@@ -19426,62 +19012,16 @@ SeqFile_ParseHeader_LoadReg:
 SeqFile_ParseHeader_RestoreReg:
 	popw	iz
 	ret
-SeqFile_ReadTrackData:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), xwa
-	calr	SysexRingBuf_ReadByte
-	ld	iz, hl
-	ld	wa, iz
-	cp	wa, 0:i3
-	jr	ge, SeqFile_ReadTrackDat_LoadIter
-	ld	xwa, (xsp + 2)
-	ld	(xwa), 0x0
-	jr	SeqFile_ReadTrackDat_RestoreReg
-SeqFile_ReadTrackDat_LoadIter:
-	ld	wa, iz
-	ld	xbc, (xsp + 2)
-	calr	SysexRingBuf_ReadBytes
-	cp	hl, 0:i3
-	jr	ge, SeqFile_ReadTrackDat_LoadParam
-	ld	xwa, (xsp + 2)
-	ld	(xwa), 0x0
-	jr	SeqFile_ReadTrackDat_RestoreReg
-SeqFile_ReadTrackDat_LoadParam:
-	ld	xwa, (xsp + 2)
-	ld	(xwa+iz), 0x00
-SeqFile_ReadTrackDat_RestoreReg:
-	popw	iz
-	inc	4, xsp
-	ret
-SeqFile_ValidateAndStore:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), xwa
-	calr	StoreAndAdvance_LoadDRAM
-	ld	iz, hl
-	ld	wa, iz
-	cp	wa, 0:i3
-	jr	ge, SeqFile_ValidateAndS_LoadIter
-	ld	xwa, (xsp + 2)
-	ld	(xwa), 0x0
-	jr	SeqFile_ValidateAndS_RestoreReg
-SeqFile_ValidateAndS_LoadIter:
-	ld	wa, iz
-	ld	xbc, (xsp + 2)
-	calr	StoreAndAdvance_Prologue
-	cp	hl, 0:i3
-	jr	ge, SeqFile_ValidateAndS_LoadParam
-	ld	xwa, (xsp + 2)
-	ld	(xwa), 0x0
-	jr	SeqFile_ValidateAndS_RestoreReg
-SeqFile_ValidateAndS_LoadParam:
-	ld	xwa, (xsp + 2)
-	ld	(xwa+iz), 0x00
-SeqFile_ValidateAndS_RestoreReg:
-	popw	iz
-	inc	4, xsp
-	ret
+SeqFile_ReadTrackData:	.include "includes/generated/cc900/SeqFile_ReadTrackData.s"	; C: cc900/note_voice_mapping_m302_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqFile_ReadTrackDat_LoadIter, SeqFile_ReadTrackData + 25
+	.set	SeqFile_ReadTrackDat_LoadParam, SeqFile_ReadTrackData + 45
+	.set	SeqFile_ReadTrackDat_RestoreReg, SeqFile_ReadTrackData + 54
+SeqFile_ValidateAndStore:	.include "includes/generated/cc900/SeqFile_ValidateAndStore.s"	; C: cc900/note_voice_mapping_m302_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqFile_ValidateAndS_LoadIter, SeqFile_ValidateAndStore + 25
+	.set	SeqFile_ValidateAndS_LoadParam, SeqFile_ValidateAndStore + 45
+	.set	SeqFile_ValidateAndS_RestoreReg, SeqFile_ValidateAndStore + 54
 SongFile_DecodeMidiEvent:
 	lda	xsp, (xsp-528)
 	pushw	iz
@@ -21569,35 +21109,12 @@ RingBuffer_ReadByte:	.include "includes/generated/cc900/RingBuffer_ReadByte.s"	;
 	.set	RingBuffer_ReadByte_IncDRAM, RingBuffer_ReadByte + 51
 	.set	RingBuffer_ReadByte_Return, RingBuffer_ReadByte + 55
 Seq_CalcAddrOffset:	.include "includes/generated/cc900/Seq_CalcAddrOffset.s"	; C: cc900/note_voice_mapping_m302.c
-CalcAddrOffset_Data:
-	dec	6, xsp
-	pushw	iz
-	ld	(xsp+2), xbc
-	ld	(xsp+6), wa
-	ld	iz, 0:i3
-	ld	wa, iz
-	cp	wa, (xsp+6)
-	jr	nc, Seq_CalcAddrOffset_Skip2
-Seq_CalcAddrOffset_Loop:
-	calr	RingBuffer_ReadByte
-	ld	wa, hl
-	cp	wa, 0:i3
-	jr	ge, Seq_CalcAddrOffset_Skip
-	ldw	hl, 0xffff
-	jr	Seq_CalcAddrOffset_Epilogue
-Seq_CalcAddrOffset_Skip:
-	ld	xwa, (xsp+2)
-	ld	(xwa+iz), l
-	inc	1, iz
-	ld	wa, iz
-	cp	wa, (xsp+6)
-	jr	c, Seq_CalcAddrOffset_Loop
-Seq_CalcAddrOffset_Skip2:
-	ld	hl, 0:i3
-Seq_CalcAddrOffset_Epilogue:
-	popw	iz
-	inc	6, xsp
-	ret
+CalcAddrOffset_Data:	.include "includes/generated/cc900/CalcAddrOffset_Data.s"	; C: cc900/note_voice_mapping_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Seq_CalcAddrOffset_Loop, CalcAddrOffset_Data + 18
+	.set	Seq_CalcAddrOffset_Skip, CalcAddrOffset_Data + 32
+	.set	Seq_CalcAddrOffset_Skip2, CalcAddrOffset_Data + 49
+	.set	Seq_CalcAddrOffset_Epilogue, CalcAddrOffset_Data + 51
 MidiRingBuf_WriteBytes:
 	dec	6, xsp
 	pushw	iz
@@ -21667,35 +21184,12 @@ SysexRingBuf_ReadByte:	.include "includes/generated/cc900/SysexRingBuf_ReadByte.
 	.set	SysexRingBuf_IncrementRead, SysexRingBuf_ReadByte + 51
 	.set	SysexRingBuf_ReadReturn, SysexRingBuf_ReadByte + 55
 SysexRingBuf_GetFreeSpace:	.include "includes/generated/cc900/SysexRingBuf_GetFreeSpace.s"	; C: cc900/note_voice_mapping_m302.c
-SysexRingBuf_ReadBytes:
-	dec	6, xsp
-	pushw	iz
-	ld	(xsp + 2), xbc
-	ld	(xsp + 6), wa
-	ld	iz, 0:i3
-	ld	wa, iz
-	cp	wa, (xsp + 6)
-	jr	nc, SysexRingBuf_ReadBytesOK
-SysexRingBuf_ReadBytesLoop:
-	calr	SysexRingBuf_ReadByte
-	ld	wa, hl
-	cp	wa, 0:i3
-	jr	ge, SysexRingBuf_ReadBytesStore
-	ldw	hl, 0xffff
-	jr	SysexRingBuf_ReadBytesReturn
-SysexRingBuf_ReadBytesStore:
-	ld	xwa, (xsp + 2)
-	ld	(xwa+iz), l
-	inc	1, iz
-	ld	wa, iz
-	cp	wa, (xsp + 6)
-	jr	c, SysexRingBuf_ReadBytesLoop
-SysexRingBuf_ReadBytesOK:
-	ld	hl, 0:i3
-SysexRingBuf_ReadBytesReturn:
-	popw	iz
-	inc	6, xsp
-	ret
+SysexRingBuf_ReadBytes:	.include "includes/generated/cc900/SysexRingBuf_ReadBytes.s"	; C: cc900/note_voice_mapping_m302_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SysexRingBuf_ReadBytesLoop, SysexRingBuf_ReadBytes + 18
+	.set	SysexRingBuf_ReadBytesStore, SysexRingBuf_ReadBytes + 32
+	.set	SysexRingBuf_ReadBytesOK, SysexRingBuf_ReadBytes + 49
+	.set	SysexRingBuf_ReadBytesReturn, SysexRingBuf_ReadBytes + 51
 SysexRingBuf_WriteBytes:
 	dec	6, xsp
 	pushw	iz
@@ -21756,35 +21250,12 @@ StoreAndAdvance_LoadDRAM:	.include "includes/generated/cc900/StoreAndAdvance_Loa
 	.set	StoreAndAdvance_LoadDRAM2, StoreAndAdvance_LoadDRAM + 15
 	.set	StoreAndAdvance_IncDRAM2, StoreAndAdvance_LoadDRAM + 51
 	.set	StoreAndAdvance_Return2, StoreAndAdvance_LoadDRAM + 55
-StoreAndAdvance_Prologue:
-	dec	6, xsp
-	pushw	iz
-	ld	(xsp + 2), xbc
-	ld	(xsp + 6), wa
-	ld	iz, 0:i3
-	ld	wa, iz
-	cp	wa, (xsp + 6)
-	jr	nc, StoreAndAdvance_InitVal2
-StoreAndAdvance_LoopBody:
-	calr	StoreAndAdvance_LoadDRAM
-	ld	wa, hl
-	cp	wa, 0:i3
-	jr	ge, StoreAndAdvance_LoopCheck
-	ldw	hl, 0xffff
-	jr	StoreAndAdvance_RestoreReg
-StoreAndAdvance_LoopCheck:
-	ld	xwa, (xsp + 2)
-	ld	(xwa+iz), l
-	inc	1, iz
-	ld	wa, iz
-	cp	wa, (xsp + 6)
-	jr	c, StoreAndAdvance_LoopBody
-StoreAndAdvance_InitVal2:
-	ld	hl, 0:i3
-StoreAndAdvance_RestoreReg:
-	popw	iz
-	inc	6, xsp
-	ret
+StoreAndAdvance_Prologue:	.include "includes/generated/cc900/StoreAndAdvance_Prologue.s"	; C: cc900/note_voice_mapping_m302_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	StoreAndAdvance_LoopBody, StoreAndAdvance_Prologue + 18
+	.set	StoreAndAdvance_LoopCheck, StoreAndAdvance_Prologue + 32
+	.set	StoreAndAdvance_InitVal2, StoreAndAdvance_Prologue + 49
+	.set	StoreAndAdvance_RestoreReg, StoreAndAdvance_Prologue + 51
 StoreAndAdvance_Prologue2:
 	dec	6, xsp
 	pushw	iz
