@@ -41,10 +41,115 @@ def sym_order(symbols):
 WALK = (-1, -1)                                      # (bucket order, chain order): +1 ascending, -1 descending
 
 
+SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
+BIN3 = {'+', '-', '*', '/', '%', '<<', '>>', '&', '|', '^'}
+TNAME = re.compile(r'^[*&]?(T\d+)\(')
+
+
+def tname(x):
+    m = TNAME.match(x or '')
+    return m.group(1) if m else None
+
+
+def tsize(x):
+    m = re.search(r'\(([A-Z]+)( [FN]\*)?\)', x or '')
+    if not m:
+        return None
+    return 4 if m.group(2) else SIZES.get(m.group(1))
+
+
+def bare(x):
+    """an operand without its (Def) mark"""
+    return re.sub(r'\(Def\)', '', x) if x else x
+
+
+def rewrite2(recs):
+    """S2's rewrites on parsed -zio records"""
+    def reads_of(t):
+        n = 0
+        for r in recs:
+            for x in r.args + ([r.res] if r.res and r.res.startswith('*') else []):
+                if x and (tname(x) == t or ('@(' in x and re.search(r'\b%s\(' % t, x))):
+                    n += 1
+        return n
+    out = []
+    for r in recs:
+        if r.op == 'CONV' and r.res and r.args and tsize(r.res) and tsize(r.res) == tsize(r.args[0]):
+            r.op = '='                               # same size: a copy
+        out.append(r)
+    recs = out
+    # addressing modes: a pointer + constant / index, read once through a dereference
+    changed = True
+    while changed:
+        changed = False
+        for k, r in enumerate(recs):
+            if r.op in ('+', 'ADD') and r.res and len(r.args) == 2 and tname(r.res) and reads_of(tname(r.res)) == 1:
+                t = tname(r.res)
+                use = next((u for u in recs[k + 1:] if any(x and x.startswith('*') and tname(x) == t
+                                                           for x in u.args + [u.res])), None)
+                if use is None:
+                    continue
+                b, i = r.args
+                if r.op == '+':
+                    m = re.match(r'^#[ CL]?U?(-?\d+)$', i)
+                    if not m:
+                        continue
+                    mem = '@(%s%+d)' % (b, int(m.group(1)))
+                else:
+                    mem = '@(%s+%s)' % (b, i)
+                for j, x in enumerate(use.args):
+                    if x and x.startswith('*') and tname(x) == t:
+                        use.args[j] = mem
+                if use.res and use.res.startswith('*') and tname(use.res) == t:
+                    use.res = mem
+                del recs[k]
+                changed = True
+                break
+    out = []
+    for r in recs:
+        if r.op == 'ADD' and len(r.args) == 2:     # an index still needed as an address
+            r.op, r.args = 'ADDR', ['@(%s+%s)' % (r.args[0], r.args[1])]
+        if r.op in BIN3 and r.res and len(r.args) == 2 and not r.res.startswith('L'):
+            a, b = r.args
+            res = bare(r.res)
+            out.append(dump.Rec(r.block, '=', res, [a], None, ''))
+            out.append(dump.Rec(r.block, r.op + '=', res, [res if b == a else b], None, ''))
+            continue
+        out.append(r)
+    return out
+
+
+def def_marks(lines):
+    """(Def) recomputed on the S2 text: a temporary written once and read at most once"""
+    w, rd = {}, {}
+    for l in lines:
+        r = dump.parse_line(l)
+        if r is None:
+            continue
+        t = tname(r.res) if r.res and not r.res.startswith('*') else None
+        if t and r.op not in dump.BRANCH:
+            w[t] = w.get(t, 0) + 1
+        for x in r.args + ([r.res] if r.res and r.res.startswith('*') else []):
+            for y in re.findall(r'\b(T\d+)\(', x or ''):
+                rd[y] = rd.get(y, 0) + 1
+        if r.op.endswith('=') and r.op not in ('=',) and t:
+            rd[t] = rd.get(t, 0) + 1
+    ok = {t for t, n in w.items() if n == 1 and rd.get(t, 0) <= 1}
+
+    def mark(l):
+        if ' DUMMY' in l:
+            return l
+        l = re.sub(r'\(Def\)', '', l)
+        return re.sub(r'\b(T\d+)(\([^()]*\))', lambda m: m.group(0) + ('(Def)' if m.group(1) in ok else ''), l)
+    return [mark(l) for l in lines]
+
+
 def s2_lines(zio, decl_order=None):
     """thc2's -zio lines of one function (FUNC_START .. FUNC_END) -> our -zim lines; decl_order: the symbol names
     of thc1's file in declaration order up to this function (for the table walk's order)"""
     recs = [dump.parse_line(l) for l in zio[1:-1]]
+    if REWRITE2:
+        recs = rewrite2(recs)
     globs, params, addr_taken = [], [], []
     for r in recs:
         reads = list(r.args)
@@ -61,9 +166,11 @@ def s2_lines(zio, decl_order=None):
                 continue
             m = NAME.match(x)
             if not m:
-                for y in re.findall(r'(@[\w.$]+|P\d+)\(', x):   # inside a memory operand
+                for y, yt in re.findall(r'((?:@[\w.$]+|P\d+))(\([^()]*\))', x):   # inside a memory operand
                     if y.startswith('P') and y not in [p for p, _ in params]:
-                        params.append((y, x))
+                        params.append((y, y + yt))
+                    elif y.startswith('@') and y not in [g for g, _ in globs]:
+                        globs.append((y, y + yt))
                 continue
             n = m.group(1)
             full = x.lstrip('*&')
@@ -89,4 +196,7 @@ def s2_lines(zio, decl_order=None):
         r.block = 0
         out.append(dump.line(r))
     out.append(zio[-1])
-    return out
+    return def_marks(out) if REWRITE2 else out
+
+
+REWRITE2 = True
