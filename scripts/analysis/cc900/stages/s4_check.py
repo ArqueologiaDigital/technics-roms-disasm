@@ -31,7 +31,7 @@ def one_file(z):
         _, offs, frame = frames[k_] if k_ < len(frames) else (fn, {}, 0)
         try:
             ours = s4.Fn(['FUNC_START'] + [d for d in dmp if 'FUNC_' not in d] + ['FUNC_END'], regs, offs,
-                         frame).gen()
+                         frame, fn).gen()
         except s4.Unsupported as ex:
             c['refused'] += 1
             first[('refused', str(ex).split(' ')[0])] += 1

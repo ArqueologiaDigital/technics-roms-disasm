@@ -13,7 +13,9 @@ import dump
 SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
 FAMS = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ']
 NAMES = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 'XDE'), 'XHL': ('L', 'HL', 'XHL'),
-         'XIX': (None, 'IX', 'XIX'), 'XIY': (None, 'IY', 'XIY'), 'XIZ': (None, 'IZ', 'XIZ')}
+         'XIX': ('IXL', 'IX', 'XIX'), 'XIY': ('IYL', 'IY', 'XIY'), 'XIZ': ('IZL', 'IZ', 'XIZ')}
+RET_CC = True                                        # a jump to a bare ret is that ret
+BYTE_TEMPS = False                                   # may a byte temporary take IXL / IYL / IZL
 COND = {'BLT': 'lt', 'BLE': 'le', 'BGT': 'gt', 'BGE': 'ge', 'BEQ': 'eq', 'BNE': 'ne'}
 UCOND = {'BLT': 'ult', 'BLE': 'ule', 'BGT': 'ugt', 'BGE': 'uge', 'BEQ': 'eq', 'BNE': 'ne'}
 ARGREG = ['XWA', 'XBC', 'XDE']
@@ -51,6 +53,23 @@ def pointee(t):
         b = int(k[1][0])
         return BASIC.get(b)
     return None
+
+
+def tsize(t):
+    """the size of a numbered type as an argument slot (chars widen to 2)"""
+    if t in BASIC:
+        return max(2, SIZES[BASIC[t]])
+    k = TYPES.get(t)
+    return 4 if k and k[0] == 'P' else 2
+
+
+def callee_pops(fn):
+    """bytes of stack arguments a register-convention function pops itself (retd), from its -g type record"""
+    for t, (kind, f) in TYPES.items():
+        if kind == 'xa' and f and f[0] == '"%s"' % fn:
+            ps = [int(f[i]) for i in range(4, len(f) - 1, 3)]
+            return sum(tsize(x) for x in ps[3:])
+    return 0
 
 
 def size_of(x):
@@ -103,11 +122,13 @@ def hexc(v, size):
 
 
 class Fn:
-    def __init__(self, zim, regs, offs=None, frame=0):
+    def __init__(self, zim, regs, offs=None, frame=0, name=None):
         self.recs = [dump.parse_line(l) for l in zim[1:-1]]
         self.regs = dict(regs)                       # 'P0' / 'I1' -> register name or 'stack'
         self.offs = dict(offs or {})                 # stack variables' offsets from XSP (after the prologue)
         self.frame = frame
+        self.retd = callee_pops(name) if name else 0
+        self.spd = 0                                 # bytes pushed for a call in progress
         vals = [r for r in self.regs.values() if r]
         lo = any(r in ('IZ', 'IZH', 'IZL', 'XIZ') for r in vals)
         hi = any(r in ('QIZ', 'QIZH', 'QIZL', 'XIZ') for r in vals)
@@ -152,7 +173,7 @@ class Fn:
     def stack(self, x):
         n = self.name(x)
         if n in self.offs:
-            o = self.offs[n]
+            o = self.offs[n] + self.spd + getattr(self, 'carg', 0)
             return '(XSP+0x%x)' % o if o else '(XSP)'
         return None
 
@@ -196,7 +217,7 @@ class Fn:
         busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
         prefs = [f for f in (self.hints.get(n), prefer) if f]
         for f in prefs + FAMS:
-            if (f not in busy or f in prefs) and (size != 1 or NAMES[f][0]):
+            if (f not in busy or f in prefs) and (size != 1 or f in ('XWA', 'XBC', 'XDE', 'XHL') or BYTE_TEMPS):
                 self.regs[n] = sized(f, size)
                 return self.regs[n]
         raise Unsupported('no register for ' + n)
@@ -289,7 +310,7 @@ class Fn:
                     self.emit('pop', self.save_iz)
                 if self.frame:
                     self.emit('inc', '0x%x,XSP' % self.frame)
-                self.emit('ret')
+                self.emit('retd', '0x%x' % self.retd) if self.retd else self.emit('ret')
             elif op == 'LAB':
                 self.emit(r.args[0] + ':')
             elif op == 'JMP':
@@ -443,6 +464,18 @@ class Fn:
                     ra = self.reg(a)
                     if fam_of(ra) != f:
                         self.emit('ld', '%s,%s' % (sized(f, size_of(a)), ra))
+            elif op == 'AARG' and r.extra and re.match(r'^#[24],\d+$', r.extra):
+                sz = int(r.extra[1])                 # a stack argument of a register-convention call: pushed
+                a = r.args[0]
+                v = const(a)
+                if v is not None:
+                    if sz == 4:
+                        self.emit('pushw', '0x%x' % ((v >> 16) & 0xffff))
+                    self.emit('pushw', '0x%x' % (v & 0xffff))
+                else:
+                    ra = self.reg(a)
+                    self.emit('push', sized(fam_of(ra), sz))
+                self.spd += sz
             elif op == 'CCALL':
                 target = r.args[0].split('(')[0].lstrip('@')
                 self.emit('cal', target)
@@ -460,11 +493,13 @@ class Fn:
             elif op in ('ACALL', 'CCALL'):
                 target = r.args[0].split('(')[0].lstrip('@')
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
-                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz:
+                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz \
+                        and not self.spd and not self.retd:
                     self.emit('j', target)               # a call that ends the function: a jump
                     self.tail = True
                 else:
                     self.emit('cal', target)
+                    self.spd = 0                         # (the callee popped its stack arguments)
                     if r.res:
                         rr = sized('XHL', size_of(r.res))
                         n = self.name(r.res)
@@ -502,4 +537,24 @@ class Fn:
                 self.emit(m_, '0x%x,%s' % (v, d))
             else:
                 raise Unsupported(op)
+        if RET_CC:
+            self.ret_peephole()
         return self.code
+
+    def ret_peephole(self):
+        """a jump to a label whose code is a bare ret / retd becomes that return (conditional: ret cc)"""
+        at = {}
+        for i, l in enumerate(self.code):
+            if l.endswith(':'):
+                j = i
+                while j < len(self.code) and self.code[j].endswith(':'):
+                    j += 1
+                if j < len(self.code) and (self.code[j] == 'ret' or self.code[j].startswith('retd ')):
+                    at[l[:-1]] = self.code[j]
+        out = []
+        for l in self.code:
+            m = re.match(r'^j (?:(\w+),)?(L\d+)$', l)
+            if m and m.group(2) in at and at[m.group(2)] == 'ret':
+                l = 'ret' + (' ' + m.group(1) if m.group(1) else '')
+            out.append(l)
+        self.code = out
