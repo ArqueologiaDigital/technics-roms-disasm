@@ -408,6 +408,10 @@ def rewrite(F):
                 out.append(('ARICALL', fl[3], fl[1], fl[2], 'C9H_' + helper))   # a 4-byte multiply / divide:
                 i += 1                                                         # the runtime helper
                 continue
+            if op in ('+', '-', '|', '^', '<<', '>>') and re.match(r'^#[LC]?U?0$', fl[2]) and not (pa or pb):
+                out.append(('=', fl[3], fl[1], None))   # x op 0: a copy
+                i += 1
+                continue
             pm = re.match(r'^#([LC]?U?)(\d+)$', fl[2]) if op == '*' else None
             if pm and pow2(fl[2]) and pow2(fl[2]) > 1:
                 out.append(('<<', fl[3], fl[1], '#%s%d' % (pm.group(1), pow2(fl[2]))))   # x * 2^k -> x << k
@@ -663,8 +667,9 @@ def fmt(F, r, inv, defs):
     if op in ('JRBC', 'JRBS'):
         t = ctype(F, a, inv)
         m = re.match(r'^#[LC]?U?(\d+)$', b)
-        size = SIZE.get(t, 1) if isinstance(t, int) else 1
-        return '%s %s %s,#%sU%s' % (res, op, S(a), {1: 'C', 4: 'L'}.get(size, ' '), m.group(1))
+        if isinstance(t, int):
+            return '%s %s %s,%s' % (res, op, S(a), typed_const('#%s' % m.group(1), t))
+        return '%s %s %s,#CU%s' % (res, op, S(a), m.group(1))
     if op in BRANCHES:
         return '%s %s %s,%s' % (res, op, S(a), S(b))
     if op in BINARY or op == 'ADD':
