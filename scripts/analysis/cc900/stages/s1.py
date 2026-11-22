@@ -148,6 +148,7 @@ def pow2(c):
 def rewrite(F):
     """the S1 list of (op, result, a, b) tuples, operands in thc1's spelling"""
     T = F.types
+    F.kept = set()
     ops = []
     for l in F.f.ops:                               # the repeated END after the last line marker goes
         if l.kind != 'op':
@@ -179,6 +180,7 @@ def rewrite(F):
             if br in ('BEQ', 'BNE') and re.match(r'^#[LC]?U?0$', fl[2]) and out and out[-1][0] == '&' and \
                     out[-1][1] == fl[1] and reads.get(fl[1], 0) == 1 and pow2(out[-1][3]) is not None:
                 prev = out.pop()                    # (x & 2^k) == 0 -> JRBC x,#k
+                F.kept.add(prev[1])                 # (a later stage: the temporary keeps its number)
                 k = pow2(prev[3])
                 pre = re.match(r'^#([LC]?U?)', prev[3]).group(1)
                 out.append(('JRBC' if br == 'BEQ' else 'JRBS', nxt.fields[3], prev[2], '#%s%d' % (pre, k)))
@@ -209,10 +211,10 @@ def rewrite(F):
                 a, b = (fl[1], fl[2]) if pa else (fl[2], fl[1])
                 if re.match(r'^#[LC]?U?0$', b):
                     out.append(('=', fl[3], a, None))
-                elif b.startswith('#'):                 # a constant offset stays `+`, the pointer first
-                    out.append(('+', fl[3], a, b))
+                elif (b.startswith('#L') if b.startswith('#') else SIZE.get(num(F.typ(b)), 4) == 4):
+                    out.append(('+', fl[3], a, b))     # a 4-byte offset: `+`, the pointer first
                 else:
-                    out.append(('ADD', fl[3], a, b))
+                    out.append(('ADD', fl[3], a, b))   # a 1- or 2-byte offset: ADD
             else:
                 out.append((op, fl[3], fl[1], fl[2]))
         elif op == 'ADDR':
@@ -220,8 +222,8 @@ def rewrite(F):
         elif op in CALLS:                            # CCALL,@f,#argbytes,T: the result first, as the others
             res_ = fl[3] if len(fl) > 3 and F.typ(fl[3]) not in ('1', None) else None
             out.append((op, res_, fl[1], fl[2]))
-        elif op in ARGS:
-            out.append((op, None, fl[1], None))
+        elif op in ARGS:                             # AARG,value,call,index: the index is kept
+            out.append((op, None, fl[1], fl[3] if op == 'AARG' and len(fl) > 3 else None))
         else:
             out.append((op,) + tuple(fl[1:4]) + (None,) * (3 - len(fl[1:4])))
         i += 1
@@ -267,7 +269,7 @@ def number(F, recs):
             writes[w] = writes.get(w, 0) + 1
     tmap = {}
     for t in F.f.temps:
-        if t in live_t:
+        if t in live_t or t in getattr(F, 'kept', ()):
             tmap[t] = 'T%d' % len(tmap)
 
     def ren(x):
@@ -331,12 +333,25 @@ def fmt(F, r, inv, defs):
         return 'JMP,%s' % res
     if op in ('BEGIN', 'END'):
         return op
+    if op in ('ACALL', 'ACALP'):
+        return '%s %s %s' % (S(res), op, S(a))
     if op in CALLS:
         return '%s %s %s #%s' % (S(res), op, S(a), b.lstrip('#'))
     if op in ARGS:
-        orig = inv.get(a.lstrip('*&'), a) if a[:1] not in 'IP' else '%s%d' % (a[0], int(a[1:]) + 1)
-        t = num(F.typ(orig))
-        return '%s %s #%d' % (op, S(a), SIZE.get(t, 4) if 1 <= t <= 12 else 4)
+        if a.startswith('#'):
+            n = 4 if a.startswith('#L') else 2
+        else:
+            orig = inv.get(a.lstrip('*&'), a) if a[:1] not in 'IP' else '%s%d' % (a[0], int(a[1:]) + 1)
+            t = num(F.typ(orig))
+            n = SIZE.get(t, 4) if 1 <= t <= 12 else 4
+        if op == 'AARG' and b:
+            k = int(b)
+            if k <= 3:
+                F.aarg_off = 0
+                return '%s %s #0,%d' % (op, S(a), k)
+            F.aarg_off = getattr(F, 'aarg_off', 0) + max(n, 2)
+            return '%s %s #%d,%d' % (op, S(a), F.aarg_off, k)
+        return '%s %s #%d' % (op, S(a), n)
     return '%s %s' % (op, ' '.join(S(x) for x in (res, a, b) if x))
 
 
