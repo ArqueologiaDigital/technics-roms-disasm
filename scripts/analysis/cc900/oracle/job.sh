@@ -78,10 +78,7 @@ while IFS='|' read -r name tarball; do
             hdrs=$(cd "$C/SRC/$sdir" && find . -type f \( -name '*.h' -o -name '*.H' \) | sed 's|^\./||')
             for h in $hdrs; do mkdir -p "$d/$(dirname "$h")"; cp "$C/SRC/$sdir/$h" "$d/$h"; done
             winsrc=$(printf '%s' "$src" | tr '/' '\\')
-            # an option set whose label starts with "wdbg" runs under Wine's process trace: the .cc.log then holds
-            # the command line of every pass the driver starts (feedback plan step I2, the thc2 debug options)
-            case "$label" in wdbg*) wd='+process' ;; *) wd='-all' ;; esac
-            ( cd "$d" && WINEDEBUG=$wd timeout 120 wine "C:\\CC\\$name\\BIN\\CC900.EXE" $flags -I"C:\\CC\\$name\\INCLUDE" \
+            ( cd "$d" && timeout 120 wine "C:\\CC\\$name\\BIN\\CC900.EXE" $flags -I"C:\\CC\\$name\\INCLUDE" \
                   -I"C:\\SRC\\$(dirname "$winsrc")" -S "$file" >"$base.cc.log" 2>&1; echo "exit $?" >>"$base.cc.log"
               a=$(ls | grep -i -x "$base.asm" | head -1)
               [ -n "$a" ] && timeout 120 wine "C:\\CC\\$name\\BIN\\ASM900.EXE" "$a" >"$base.as.log" 2>&1

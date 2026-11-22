@@ -6,13 +6,16 @@ Feedback plan section 13, step I2.  Our own descriptions only; Toshiba's code, t
 
 ## Files
 
-| file          | question it answers                                                                                                     |
-|---------------|-------------------------------------------------------------------------------------------------------------------------|
-| `job_i2.sh`   | guest job (`JOB=` of run_oracle.sh): keeps thc1's intermediate file, re-runs THC2.EXE on it plain and with extra options |
-| `debug.txt`   | the extra thc2 option sets job_i2.sh tries, "label\|options" (passed through run_oracle.sh's `ASMFLAGS=` channel)       |
-| `options.txt` | the cc900 option sets of the probe runs                                                                                  |
-| `sources.txt` | the probe corpus's files                                                                                                 |
-| `corpus/`     | probe C (ours)                                                                                                           |
+| file                                               | question it answers                                                                                                      |
+|----------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------|
+| `job_i2.sh`                                        | guest job (`JOB=` of run_oracle.sh): keeps thc1's intermediate file, re-runs THC2.EXE on it plain and with extra options |
+| `debug.txt`                                        | the extra thc2 option sets job_i2.sh tries, "label\|options" (passed through run_oracle.sh's `ASMFLAGS=` channel)        |
+| `options.txt`                                      | the cc900 option sets of the probe runs                                                                                  |
+| `sources.txt`                                      | the probe corpus's files                                                                                                 |
+| `i2_dataset.py`, `i2_run_shards.sh`, `dataset.txt` | the firmware C as job_i2.sh shards (`-zim -g`), one VM slot each                                                         |
+| `i2_registers.py`                                  | thc2's `-g` storage records of those runs as one table (private)                                                         |
+| `m1_model_vs_v423.py`                              | the model's listing against V4.23's, per function (`m1_v10.md`, `m1_v10.tsv`)                                            |
+| `corpus/`                                          | probe C (ours)                                                                                                           |
 
 Run, from technics-roms-disasm's root:
 
@@ -25,8 +28,9 @@ driver's `<base>.asm`.  Run 2026-11-22-45-i2-debugopts (cc900-oracle e055cf7): e
 
 ## Findings so far (2026-11-22)
 
-**How the driver runs the passes** (job.sh's new `wdbg` label prefix runs a compile under Wine's process trace; run
-2026-11-22-42):
+**How the driver runs the passes** (run 2026-11-22-42: job.sh, at commit 962b5476a, ran a compile under Wine's
+process trace for labels starting with `wdbg`; that switch was removed again because job.sh's bytes are part of the
+build's V4.23 cache key, and job_i2.sh does the same work):
 - thc1 is started as `thc1 -z@` and takes its options from the environment (it reads every environment string as an
   option: under Wine it warns about each `WINE...` variable, harmlessly).
 - thc2 is started as `thc2 <options> <thc1's temporary file> <out>.asm`.  The driver gives it `-XO -XM` always, and
@@ -69,3 +73,19 @@ is the next question.
 That turns register choice from a byte-level black box into a per-variable labelled data set, and the code that
 decides it can be read in the decompilation.  Next: run `-zim -g` over the built firmware C (V4.23 MATCH functions)
 to get that data set at scale, then locate the allocator among the passes above.
+
+## The firmware data set (runs 2026-11-22-46..49, cc900-oracle 9341b06f)
+
+`i2_dataset.py prepare $TMPDIR/cc900-tab/i2-fw 4`, `i2_run_shards.sh $TMPDIR/cc900-tab/i2-fw`: 1,339 distinct C
+texts (2,736 files).  1,133 kept thc1's output, and every plain re-run equals the driver's listing; the watcher missed
+206 (to be re-run).  `i2_registers.py` over the four runs: 1,130 files, 6,599 variables in registers, 3,702 on the
+stack.
+
+## The model against V4.23 on v10 (`m1_v10.md`)
+
+Register choice is **not** where the reference model loses the firmware.  Of the 1,745 functions of v10's C that
+V4.23 compiles, the model writes the same listing for 560 (32 %), differs only in registers for 21 (1.2 %), and
+writes nothing for 657 (37.7 %): it refuses a construct (`unsupported: var` alone is 199) or its front end fails on
+the whole file (22).  The other 483 (27.7 %) differ otherwise.  So the first gain for the model is coverage of C
+constructs, and register choice matters for the ROM residual (V4.23 against the ROM), not for the model.
+
