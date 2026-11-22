@@ -123,6 +123,17 @@ def rewrite2(recs):
                     del recs[k]
                     continue
             k += 1
+    k = 0                                            # T ADDR @g; R + T,#c (T read only there)  ->  R ADDR @g[+c]
+    while k + 1 < len(recs):
+        a_, b_ = recs[k], recs[k + 1]
+        if a_.op == 'ADDR' and a_.args and re.match(r'^@[\w.$]+\(', a_.args[0]) and tname(a_.res) and \
+                b_.op in ('+', 'ADD') and len(b_.args) == 2 and tname(b_.args[0]) == tname(a_.res) and \
+                reads_of(tname(a_.res)) == 1 and re.match(r'^#[ CL]?U?(\d+)$', b_.args[1]) and \
+                not any(x and x.startswith('*') and tname(x) == tname(b_.res) for u in recs for x in u.args + [u.res]):
+            c = int(re.match(r'^#[ CL]?U?(\d+)$', b_.args[1]).group(1))
+            recs[k:k + 2] = [dump.Rec(b_.block, 'ADDR', b_.res, ['%s[%+d]' % (a_.args[0], c)], None, '')]
+            continue
+        k += 1
     # addressing modes: a pointer + constant / index, read once through a dereference
     changed = True
     while changed:
@@ -137,6 +148,11 @@ def rewrite2(recs):
                 b, i = r.args
                 if r.op == 'ADD' and unsigned16(i):
                     continue                         # an unsigned 16-bit index: widened and added instead (below)
+                if is_mem(b) and b.startswith('@('):    # a memory operand as a base: loaded into a temporary
+                    lt = new_temp().replace('(0)', re.search(r'\([^()]*\)', r.res).group(0))
+                    recs.insert(k, dump.Rec(r.block, '=', lt, [b], None, ''))
+                    k += 1
+                    b = lt
                 m = re.match(r'^#[ CL]?U?(-?\d+)$', i)
                 if r.op == '+' or m:
                     if not m:
@@ -256,7 +272,8 @@ def s2_lines(zio, decl_order=None, cdecl=False):
     globs, params, addr_taken, memvars, spilled_all = [], [], [], set(), set()
     for r in recs:
         reads = list(r.args)
-        if r.res and (r.res.startswith('*') or r.op.endswith('=') and r.op not in ('=', '==', '!=', '<=', '>=') or
+        if r.res and (r.res.startswith('*') or r.res.startswith('@(') or
+                      r.op.endswith('=') and r.op not in ('=', '==', '!=', '<=', '>=') or
                       r.op in ('++', '--', 'BSET', 'BCLR')):
             reads.append(r.res)                    # a compound operation reads its target; a three-address one not
         if r.op == 'ADDR' and r.args and re.match(r'^[ISP]\d+\(', r.args[0]):
