@@ -66,6 +66,7 @@ def sp_adjust(n):
     return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
 
 
+STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
 LABEL_NEXT = [50000]                                 # L5000n / S5000n counters: per unit, not per function
 TABLE_NEXT = [50000]
 EPI_NEEDS_TWO_ENDS = True                           # does the epilogue label need more than one return
@@ -192,8 +193,11 @@ def deref_type(x):
     m = re.match(r'^(?:@\(|\*)[A-Z]\d+\(([A-Z]+) [FN]\*\)', x or '')
     if m:
         return m.group(1)
-    m = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)', x or '')
+    m = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)(?:\(Def\))?(?:\{..\})?(?:([+-]\d+)\)$)?', x or '')
     if m:
+        k = TYPES.get(int(m.group(1)))
+        if k and k[0] == 'P' and (m.group(2) or STRUCT_AT_0):
+            return field_type(int(k[1][0]), int(m.group(2) or 0))   # a field of the pointee
         return pointee(int(m.group(1)))
     m = re.match(r'^(?:@[\w.$]+|[IP]\d+)\((\d+)\)(?:\{..\})?\[([+-]?\d*)\]$', x or '')
     if m:
