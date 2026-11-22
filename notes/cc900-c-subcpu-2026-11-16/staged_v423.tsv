@@ -72,6 +72,8 @@ v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_inlinejr.c	4afead80a
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_inlinejr.c	4afead80a4fb530c02218a4c6cb60a1f51f0b6649b57335e819bc515083a83dd	Xr	2026-11-16-89-sub-staged3	DSP2_SPI_ClockPulseHigh	186	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_kernel.c	94329e5e95c70a18359fedf2d4dd26d1f4d6f81d02cac51d7e0625483eaa0c46	Xr	2026-11-16-89-sub-staged3	DSP_WaitForDelay	34	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_kernel.c	94329e5e95c70a18359fedf2d4dd26d1f4d6f81d02cac51d7e0625483eaa0c46	Xr	2026-11-16-89-sub-staged3	DSP_WakeAudioTask	6	MATCH
+v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_lane_49a.c	042588ae42ee3282331920491093f2a097c6919223a85d460a9d71231b7ab561	Xr	2026-11-22-28-sub-r49s-staged	DSP_ApplyAlgoForVoiceType	27	MATCH
+v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_lane_49a.c	042588ae42ee3282331920491093f2a097c6919223a85d460a9d71231b7ab561	Xr	2026-11-22-28-sub-r49s-staged	DSP_Set_MicSense	40	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_n_17a.c	5a3a9495bb481aa55209a5f277a6b19858ce8908caae6b48ace455b1a368f391	Xr	2026-11-16-127-sub-staged5	EFF_VolumeUpdate_WithDebug	247	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_t_18a.c	67e584d1b92f8868a9302b6b140c5d51e6ad08b39269a12dfc24748eda699683	Xr	2026-11-17-9-sub-staged6	EFF_SlotActive_UpdateFlags	370	MATCH
 v140	v140/subcpu/cc900-staged/audio_process_dsp_and_effects_t_18a.c	67e584d1b92f8868a9302b6b140c5d51e6ad08b39269a12dfc24748eda699683	Xr	2026-11-17-9-sub-staged6	EFF_VolumeLoop	283	MATCH
@@ -696,6 +698,8 @@ v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_inlinejr.c	26f5ab56b
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_inlinejr.c	26f5ab56b5ab20bf3cf993c38030432d9bc0fbe32221807fe9100ccc816cc57e	Xr	2026-11-16-89-sub-staged3	DSP2_SPI_ClockPulseHigh	186	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_kernel.c	eccb1a160389262dc28260ee82cd44da3481482f0d0ae327894d7810b5afd377	Xr	2026-11-16-89-sub-staged3	DSP_WaitForDelay	34	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_kernel.c	eccb1a160389262dc28260ee82cd44da3481482f0d0ae327894d7810b5afd377	Xr	2026-11-16-89-sub-staged3	DSP_WakeAudioTask	6	MATCH
+v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_lane_49a.c	042588ae42ee3282331920491093f2a097c6919223a85d460a9d71231b7ab561	Xr	2026-11-22-28-sub-r49s-staged	DSP_ApplyAlgoForVoiceType	27	MATCH
+v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_lane_49a.c	042588ae42ee3282331920491093f2a097c6919223a85d460a9d71231b7ab561	Xr	2026-11-22-28-sub-r49s-staged	DSP_Set_MicSense	40	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_n_17a.c	5a3a9495bb481aa55209a5f277a6b19858ce8908caae6b48ace455b1a368f391	Xr	2026-11-16-127-sub-staged5	EFF_VolumeUpdate_WithDebug	247	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_t_18a.c	67e584d1b92f8868a9302b6b140c5d51e6ad08b39269a12dfc24748eda699683	Xr	2026-11-17-9-sub-staged6	EFF_SlotActive_UpdateFlags	370	MATCH
 v141	v141/subcpu/cc900-staged/audio_process_dsp_and_effects_t_18a.c	67e584d1b92f8868a9302b6b140c5d51e6ad08b39269a12dfc24748eda699683	Xr	2026-11-17-9-sub-staged6	EFF_VolumeLoop	283	MATCH
@@ -1320,6 +1324,8 @@ v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_inlinejr.c	5ab3c0803
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_inlinejr.c	5ab3c0803692028b2940d7f1c546a9c04e0ab28edee411fd0033dc213546b5e3	Xr	2026-11-16-89-sub-staged3	DSP2_SPI_ClockPulseHigh	186	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_kernel.c	fbec5d263c5d68983ba762d39a00751850479169c7487123633ea32bcd5d814b	Xr	2026-11-16-89-sub-staged3	DSP_WaitForDelay	34	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_kernel.c	fbec5d263c5d68983ba762d39a00751850479169c7487123633ea32bcd5d814b	Xr	2026-11-16-89-sub-staged3	DSP_WakeAudioTask	6	MATCH
+v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_lane_49a.c	042588ae42ee3282331920491093f2a097c6919223a85d460a9d71231b7ab561	Xr	2026-11-22-28-sub-r49s-staged	DSP_ApplyAlgoForVoiceType	27	MATCH
+v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_lane_49a.c	042588ae42ee3282331920491093f2a097c6919223a85d460a9d71231b7ab561	Xr	2026-11-22-28-sub-r49s-staged	DSP_Set_MicSense	40	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_n_17a.c	5a3a9495bb481aa55209a5f277a6b19858ce8908caae6b48ace455b1a368f391	Xr	2026-11-16-127-sub-staged5	EFF_VolumeUpdate_WithDebug	247	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_t_18a.c	67e584d1b92f8868a9302b6b140c5d51e6ad08b39269a12dfc24748eda699683	Xr	2026-11-17-9-sub-staged6	EFF_SlotActive_UpdateFlags	370	MATCH
 v142	v142/subcpu/cc900-staged/audio_process_dsp_and_effects_t_18a.c	67e584d1b92f8868a9302b6b140c5d51e6ad08b39269a12dfc24748eda699683	Xr	2026-11-17-9-sub-staged6	EFF_VolumeLoop	283	MATCH
