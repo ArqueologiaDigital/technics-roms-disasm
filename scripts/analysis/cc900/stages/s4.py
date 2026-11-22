@@ -55,6 +55,13 @@ def pointee(t):
     return None
 
 
+def sp_adjust(n):
+    """XSP += n: inc / dec take 1..8, larger steps are an lda"""
+    if abs(n) <= 8:
+        return ('inc' if n > 0 else 'dec', '0x%x,XSP' % abs(n))
+    return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
+
+
 def tsize(t):
     """the size of a numbered type as an argument slot (chars widen to 2)"""
     if t in BASIC:
@@ -283,7 +290,7 @@ class Fn:
             op = r.op
             if op == 'BEGIN':
                 if self.frame:
-                    self.emit('dec', '0x%x,XSP' % self.frame)
+                    self.emit(*sp_adjust(-self.frame))
                 if self.save_iz:
                     self.emit('push', self.save_iz)
                 spilled = sorted([p for p in self.regs if p.startswith('P') and int(p[1:]) < 3 and
@@ -309,7 +316,7 @@ class Fn:
                 if self.save_iz:
                     self.emit('pop', self.save_iz)
                 if self.frame:
-                    self.emit('inc', '0x%x,XSP' % self.frame)
+                    self.emit(*sp_adjust(self.frame))
                 self.emit('retd', '0x%x' % self.retd) if self.retd else self.emit('ret')
             elif op == 'LAB':
                 self.emit(r.args[0] + ':')
@@ -332,8 +339,9 @@ class Fn:
                 a = r.args[0]
                 m = re.match(r'^@([\w.$]+)\([^()]*\)(?:\[([+-]\d+)\])?$', a)
                 if m:
+                    d_ = int(m.group(2)) if m.group(2) else 0
                     self.emit('lda', '%s,%s%s' % (self.long_of(r.res), m.group(1),
-                                                  '' if not m.group(2) else '+0x%x' % int(m.group(2))))
+                                                  '' if not d_ else (' + 0x%x' % d_ if d_ > 0 else ' - 0x%x' % -d_)))
                 elif self.stack(a):
                     o = self.offs[self.name(a)]          # the address of a stack variable
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), 'XSP+0x%x' % o if o else 'XSP'))
@@ -426,8 +434,15 @@ class Fn:
                 self.cur_size = size
                 d = self.dst(r.res)
                 s = self.src(r.args[0], size)
+                mn = 'ld'
+                if r.args[0].startswith('&@') and not d.startswith('('):
+                    n = self.name(r.res)                 # the address of a global: ld when it is then added to,
+                    nxt = next((q for q in self.recs[i_ + 1:]        # lda when it is used as an address
+                                if any(x and self.name(x) == n for x in [q.res] + q.args)), None)
+                    if not (nxt is not None and nxt.op == '+=' and self.name(nxt.res) == n):
+                        mn = 'lda'
                 if s != d:
-                    self.emit('ld', d + ',' + s)
+                    self.emit(mn, d + ',' + s)
             elif op in ALU:
                 size = size_of(r.res)
                 self.cur_size = size
@@ -481,7 +496,7 @@ class Fn:
                 self.emit('cal', target)
                 k = getattr(self, 'carg', 0)
                 if k:
-                    self.emit('inc', '0x%x,XSP' % k)     # the caller pops the arguments
+                    self.emit(*sp_adjust(k))              # the caller pops the arguments
                     self.carg = 0
                 if r.res and r.res != 'A':
                     rr = sized('XHL', size_of(r.res))
@@ -554,7 +569,7 @@ class Fn:
         out = []
         for l in self.code:
             m = re.match(r'^j (?:(\w+),)?(L\d+)$', l)
-            if m and m.group(2) in at and at[m.group(2)] == 'ret':
+            if m and m.group(1) and m.group(2) in at and at[m.group(2)] == 'ret':
                 l = 'ret' + (' ' + m.group(1) if m.group(1) else '')
             out.append(l)
         self.code = out
