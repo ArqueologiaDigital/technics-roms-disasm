@@ -82,6 +82,7 @@ v140	v140/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e
 v140	v140/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Audio_CmdHandler_40_5F	22	MATCH
 v140	v140/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Audio_InitRingBuffers	12	MATCH
 v140	v140/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Task2_NeverSpawned	1	MATCH
+v140	v140/subcpu/cc900-staged/audio_system_init_o3xr_z3.c	15260fda20d62240a8e78a0a066fea381c4533f1d46f4d01369191cd7a3a842c	O3Xr	2026-11-22-39-sub-z3-r3-staged	DSP_FillMemWords	7	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Audio_CmdHandler_60_7F	163	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP2_Init	17	MATCH
 v140	v140/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP2_InitTask_NullStub	1	MATCH
@@ -254,6 +255,7 @@ v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_8a.c	7e04c6323186b0bbf
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_9a.c	23e50afdfbd0453047d0dc79902d470a5c1b8eab8c4bc6fe2a6a071ad2a95ec8	Xr	2026-11-16-89-sub-staged3	ToneGen_SetupPercussionVoice	115	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_lane_23c.c	5e2072dc7eefc4574fca630161ac476b239363ea47a10dbace8396bbb4c71d20	Xr	2026-11-19-12-sub-r23s-staged	DSP_VoiceState_Dispatch	207	MATCH
 v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_n_17a.c	7012371c8d00593ae0cec4b621677e955e07784633fd353f393bd5cbda3144ca	Xr	2026-11-16-127-sub-staged5	ToneGen_SetupPolyVoice	169	MATCH
+v140	v140/subcpu/cc900-staged/ringbuf_and_midi_dispatch_z3_2c.c	c6a2780f842dc1f951b768284adab8fc527f5a936987be0fde7080e99737a406	Xr	2026-11-22-39-sub-z3-r3-staged	DSP_WriteCount_Compute	33	MATCH
 v140	v140/subcpu/cc900-staged/subcpu_data_tables_o3xr_e_8a.c	46baa6692745e3ddc97bd990d31ece6752432e88f653172df2f5722710b1c795	O3Xr	2026-11-16-90-sub-r10	Serial1_DataTransmit_Loop	69	MATCH
 v140	v140/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_1K	26	MATCH
 v140	v140/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_256	26	MATCH
@@ -708,6 +710,7 @@ v141	v141/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e
 v141	v141/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Audio_CmdHandler_40_5F	22	MATCH
 v141	v141/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Audio_InitRingBuffers	12	MATCH
 v141	v141/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Task2_NeverSpawned	1	MATCH
+v141	v141/subcpu/cc900-staged/audio_system_init_o3xr_z3.c	15260fda20d62240a8e78a0a066fea381c4533f1d46f4d01369191cd7a3a842c	O3Xr	2026-11-22-39-sub-z3-r3-staged	DSP_FillMemWords	7	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Audio_CmdHandler_60_7F	163	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP2_Init	17	MATCH
 v141	v141/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP2_InitTask_NullStub	1	MATCH
@@ -880,6 +883,7 @@ v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_8a.c	7e04c6323186b0bbf
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_9a.c	23e50afdfbd0453047d0dc79902d470a5c1b8eab8c4bc6fe2a6a071ad2a95ec8	Xr	2026-11-16-89-sub-staged3	ToneGen_SetupPercussionVoice	115	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_lane_23c.c	3295c2ef7e890cfd87c60196a8d79b28a61691e410a07588bdcb7d4a6f3495b7	Xr	2026-11-19-12-sub-r23s-staged	DSP_VoiceState_Dispatch	207	MATCH
 v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_n_17a.c	7012371c8d00593ae0cec4b621677e955e07784633fd353f393bd5cbda3144ca	Xr	2026-11-16-127-sub-staged5	ToneGen_SetupPolyVoice	169	MATCH
+v141	v141/subcpu/cc900-staged/ringbuf_and_midi_dispatch_z3_2c.c	25263be89870af155af05248d0f2dfab425841ef8698fc5256e5282c3bd29507	Xr	2026-11-22-39-sub-z3-r3-staged	DSP_WriteCount_Compute	33	MATCH
 v141	v141/subcpu/cc900-staged/subcpu_data_tables_o3xr_e_8a.c	46baa6692745e3ddc97bd990d31ece6752432e88f653172df2f5722710b1c795	O3Xr	2026-11-16-90-sub-r10	Serial1_DataTransmit_Loop	69	MATCH
 v141	v141/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_1K	26	MATCH
 v141	v141/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_256	26	MATCH
@@ -1334,6 +1338,7 @@ v142	v142/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e
 v142	v142/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Audio_CmdHandler_40_5F	22	MATCH
 v142	v142/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Audio_InitRingBuffers	12	MATCH
 v142	v142/subcpu/cc900-staged/audio_system_init.c	db828b759132d02ff86f96b88e349e5d5528ecf91b3a6aee89e0195bdff96173	Xr	2026-11-16-73-sub-r6	Task2_NeverSpawned	1	MATCH
+v142	v142/subcpu/cc900-staged/audio_system_init_o3xr_z3.c	15260fda20d62240a8e78a0a066fea381c4533f1d46f4d01369191cd7a3a842c	O3Xr	2026-11-22-39-sub-z3-r3-staged	DSP_FillMemWords	7	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	Audio_CmdHandler_60_7F	163	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP2_Init	17	MATCH
 v142	v142/subcpu/cc900-staged/dsp2_init.c	33dbd3a6889652ad6b751f00bebb88ad1d6004d0bcc32cc9b22f1ec1716031ac	Xr	2026-11-16-73-sub-r6	DSP2_InitTask_NullStub	1	MATCH
@@ -1506,6 +1511,7 @@ v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_8a.c	7e04c6323186b0bbf
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_d_9a.c	23e50afdfbd0453047d0dc79902d470a5c1b8eab8c4bc6fe2a6a071ad2a95ec8	Xr	2026-11-16-89-sub-staged3	ToneGen_SetupPercussionVoice	115	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_lane_23c.c	d529ca6e084514617e3192ae807fa305f637cb72e438fa69fa308d41fe020e56	Xr	2026-11-19-12-sub-r23s-staged	DSP_VoiceState_Dispatch	207	MATCH
 v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_n_17a.c	7012371c8d00593ae0cec4b621677e955e07784633fd353f393bd5cbda3144ca	Xr	2026-11-16-127-sub-staged5	ToneGen_SetupPolyVoice	169	MATCH
+v142	v142/subcpu/cc900-staged/ringbuf_and_midi_dispatch_z3_2c.c	603d2dc0881370ade633880553c21098349fd3eb7ae2b05653315cc7a32547ce	Xr	2026-11-22-39-sub-z3-r3-staged	DSP_WriteCount_Compute	33	MATCH
 v142	v142/subcpu/cc900-staged/subcpu_data_tables_o3xr_e_8a.c	46baa6692745e3ddc97bd990d31ece6752432e88f653172df2f5722710b1c795	O3Xr	2026-11-16-90-sub-r10	Serial1_DataTransmit_Loop	69	MATCH
 v142	v142/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_1K	26	MATCH
 v142	v142/subcpu/cc900-staged/task_scheduler_kernel.c	41dbd79e332f9e1072b82fe689f046c8f1874fb9dad8e82308ddffa53977de69	Xr	2026-11-16-73-sub-r6	RingBuf_Reset_256	26	MATCH

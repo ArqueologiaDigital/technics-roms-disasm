@@ -1107,3 +1107,5 @@ hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_hd_small_r99.c	80b4eb3af5f
 hdae5000_v1_15i	hdae5000_v1_15i/cc900-staged/hdae5000_hd_small_r99.c	80b4eb3af5f70217b5acccb4d48ed876fb155732f42ba50b2a8d49433c760fa4	Xr	2026-11-22-30-hd-r100-staged	HDAE5000_HD_ResetVersionKeyWord	11	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_hd_small_r99.c	0ebb852ab60f660ecbc151bea0f9a670d76f3b64cb545ddcf8d901eae9cfa92d	Xr	2026-11-22-30-hd-r100-staged	HDAE5000_HD_ClearStatusBytes	61	MATCH
 hdae5000_v1_10i	hdae5000_v1_10i/cc900-staged/hdae5000_hd_small_r99.c	0ebb852ab60f660ecbc151bea0f9a670d76f3b64cb545ddcf8d901eae9cfa92d	Xr	2026-11-22-30-hd-r100-staged	HDAE5000_HD_ResetVersionKeyWord	11	MATCH
+hdae5000	hdae5000/cc900-staged/hdae5000_lyrics_varlen_z3.c	8bcbae4c311f7da3c7a5c4ef7c758cd3161eac22ba885f2e5b5d5d7e804f10ef	Xr	2026-11-22-40-hd-z3-r3-staged	HDAE5000_Lyrics_WriteVarLen	91	MATCH
+hdae5000_v2_01i	hdae5000_v2_01i/cc900-staged/hdae5000_lyrics_varlen_z3.c	8bcbae4c311f7da3c7a5c4ef7c758cd3161eac22ba885f2e5b5d5d7e804f10ef	Xr	2026-11-22-40-hd-z3-r3-staged	HDAE5000_Lyrics_WriteVarLen	91	MATCH

@@ -1911,10 +1911,7 @@ Copy_DE_words_from_XBC_to_XWA:
 ;   DE  = word count (16-bit: `djnz16 de` decrements DE)
 ;   BC  = 16-bit fill pattern (e.g., color | (color << 8) for 8bpp)
 ; =============================================================================
-Fill_memory_at_XWA_with_DE_words_of_BC_value:
-	ld (xwa+), BC
-	djnz16 de, Fill_memory_at_XWA_with_DE_words_of_BC_value
-	ret
+Fill_memory_at_XWA_with_DE_words_of_BC_value:	.include "includes/generated/cc900/Fill_memory_at_XWA_with_DE_words_of_BC_value.s"	; C: cc900/system_handlers_m0.c
 
 Checksum_ComputeComplement:
 	xor xhl, xhl

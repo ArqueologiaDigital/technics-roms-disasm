@@ -2706,27 +2706,11 @@ Sprintf_StrNSet_Join:
 	cp	(xix), 0
 	jr	nz, Sprintf_StrNSet_Loop
 	ret
-Sprintf_StringLength:
-	push	xiz
-	ld	xiz, (xsp + 8)
-	push	xiz
-	call	Strlen
-	inc	4, xsp
-	inc	1, hl
-	ld	bc, hl
-	lda	xhl, (xiz+bc)
-	cp	bc, 0:i3
-	jr	z, Sprintf_StrLen_NotFound
-	ld	wa, (xsp + 12)
-Sprintf_StrLen_ScanLoop:
-	cp	A, (-xhl)
-	jr	z, Sprintf_StrLen_Return
-	djnz16	bc, Sprintf_StrLen_ScanLoop
-Sprintf_StrLen_NotFound:
-	ld	xhl, 0:i3
-Sprintf_StrLen_Return:
-	pop	xiz
-	ret
+Sprintf_StringLength:	.include "includes/generated/cc900/Sprintf_StringLength.s"	; C: cc900/sprintf_core_m312.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Sprintf_StrLen_ScanLoop, Sprintf_StringLength + 27
+	.set	Sprintf_StrLen_NotFound, Sprintf_StringLength + 35
+	.set	Sprintf_StrLen_Return, Sprintf_StringLength + 37
 ; ---------------------------------------------------------------------------
 ; ERASED FLASH, 0xFF2154-0xFFFE7F (56,620 bytes, every one 0xFF).
 ;

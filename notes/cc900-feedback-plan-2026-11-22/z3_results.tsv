@@ -1,0 +1,57 @@
+image	routine	outcome	detail	run
+v10	FDC_CMD_ENABLE	MATCH	p6_Z3_37r1a / b at -Xr; the one-pass `for (i = 1; i != 0; i--)` left unfolded; per tree: -41-p6-z3-r4	2026-11-22-32-p6-z3-r1
+v10	FileIO_CopyString_WriteNull	MATCH	p6_Z3_37r1a at -O3 -Xr and -Xr (strncpy-like, register arguments)	2026-11-22-32-p6-z3-r1
+v10	SeqStep_SearchBackward	MATCH	p6_Z3_37r1a / b at -O3 -Xr and -O3 -XS -Xr	2026-11-22-32-p6-z3-r1
+v10	Sprintf_StringLength	MATCH	p6_Z3_37r2a at -O3 -Xr (strrchr, __cdecl; r1 +12 with an unsigned count)	2026-11-22-34-p6-z3-r2
+v10	SoundRam_ComputeChecksum	MATCH	p6_Z3_37r2b at -O3 -Xr (the image as an extern array, the sum declared first; r1 +3)	2026-11-22-34-p6-z3-r2
+v10	SoundRam_WriteChecksum	MATCH	p6_Z3_37r2b at -O3 -Xr (as SoundRam_ComputeChecksum; r1 +3)	2026-11-22-34-p6-z3-r2
+v10	Copy_DE_words_from_XBC_to_XWA	MATCH	its djnz is Fill_memory_at_XWA_with_DE_words_of_BC_value: p6_Z3_37r2a at -O3 -Xr; the ldirw copy before it is hand	2026-11-22-34-p6-z3-r2
+v10	DisplayStr_BlankLineBuffer	NEAR	+3, register choice (the ROM's pointer in XIX, the value in WA; 6 spellings in r1-r3)	2026-11-22-37-p6-z3-r3
+v10	SeqPlay_DelayLoop_Outer	NEAR	+3, register choice (the inner count in HL, V4.23 WA or DE; 6 spellings in r1-r3)	2026-11-22-37-p6-z3-r3
+v10	Fat_ReadFile	NEAR	+98 (+39 is the epilogue jrl's distance), operand order of `pos & vrec->mask`; struct layout and block order fixed in r2-r4	2026-11-22-41-p6-z3-r4
+v10	PartCtrl_CheckBitmaskBit	hand	preserves WA / BC (pushw), result in WA by shifting; not the C convention	-
+v10	AccPatch_AdvanceAllSteps	hand	callee takes XIX as an argument register; bitm on memory	-
+v10	DisplayStr_ClearRegion	hand	saves the scratch registers WA / BC / XIX around a fill	-
+v10	SMF_ClearOutputQueue	hand	saves scratch XIX; ldw wa then stores A	-
+v10	SMF_ClearFileBuffer	hand	saves scratch XIX / XWA; ldw (xix+) immediate store	-
+v10	SMF_AdvanceMultipleEvents	hand	count kept in BC across calr by pushw / popw	-
+v10	Voice_MatchVoicePairs	hand	steps pointers by `inc 2, ix` (the low half of XIX only); d8 forms	-
+v10	VoiceSlot_IterateAlloc_Block3	hand	packs two bytes in WA's halves (ld w, ld a, word store)	-
+v10	AccPatch_VoiceAssignDataBlock_Helper5	hand	loop count in A kept across calr by push xwa	-
+v10	DisplayStr_WriteStoredControlLine	hand	ldir block copy; repeats DisplayStr_BlankLineBuffer inline after calling it	-
+v10	Scoop_ButtonLabels_DrawAmpLabels	hand	saves scratch WA / BC / XIX / XIY	-
+v10	Scoop_ButtonLabels_DrawFilterLabels	hand	saves scratch WA / BC / XIX / XIY	-
+v10	Scoop_ButtonLabels_DrawPitchLabels	hand	saves scratch WA / BC / XIX / XIY	-
+v10	Scoop_ButtonLabels_SetupPartButtons	hand	saves scratch WA / BC / XIX / XIY	-
+v10	Scoop_ButtonLabels_CopySlotData	hand	saves scratch WA / BC / XIX / XIY	-
+v10	SeqRestart_CheckAndDispatch	hand	uses IZ without saving it; nop padding in the wait loop	-
+v10	SoundGen_RefreshAllVoices	hand	saves scratch XIY / BC around calls; `ld a, 0x81` twice	-
+v10	Report_test_result_by_blinking_LED	hand	argument in A, port bit set / res on (0x30:8), not the C convention	-
+v10	SeqTrack_SkipWrapMarkers	hand	argument in C, count saved by pushw bc around calls	-
+v10	SqStep_PanelButtonDispatch_Tbl2_Sub2	hand	argument in L; relies on A surviving a call	-
+v10	DisplayStr_ShowBeatCount	hand	saves scratch XIX across a fill; ld (xix+), immediate	-
+v10	AudioMix_WriteChannelGroup	hand	argument in A, saves DE; twin of the sub-CPU's DSP_Write_Channel_Loop	-
+v10	MidiVoiceNote_Dispatch	hand	jump table inline after `jp (xix)`	-
+v10	PerfMode_ClampValue	hand	arguments in A / H / L / W	-
+v10	AccPatch_ResumeSequencePlayback	hand	single-bit and on memory (and (mem), 254), the accompaniment family screened as hand	-
+v10	AccPatch_PrepareAndProcessEvents	hand	as AccPatch_ResumeSequencePlayback	-
+v10	PendingParam_ScanAllTables	hand	bitm / resm on memory, saves scratch BC / XIY around calr	-
+v10	SMF_ReadAndValidateMTrkHeader	hand	saves scratch BC / XIY around every call	-
+v142	DSP_WriteCount_Loop	MATCH	the loop label of DSP_WriteCount_Compute: sub_Z3_2c at -Xr (the halving 0x4970 / 2 unfolded; r1 +14, the sum's register)	2026-11-22-38-sub-z3-r2
+v142	DSP_FillMemWords	MATCH	sub_Z3_1a / b at -O3 -Xr only (the payload's other C is -Xr; at -Xr V4.23 writes no djnz)	2026-11-22-35-sub-z3-r1
+v142	MemClear_DRAM_BulkLoop	hand	inner loop of a hand memory clear (ldirw, bank register QBC)	-
+v142	MemClear_ExtRAM_BulkLoop	hand	inner loop of a hand memory clear (ldirw, bank register QBC)	-
+v142	DSP_Write_Channel_Loop	hand	argument in A, saves DE (pushw de); twin of v10 AudioMix_WriteChannelGroup	-
+v142	FP_UnsignedDiv_Done	hand	tail of the hand floating-point library's shift-and-subtract divide	-
+v142	FP_SP_NormCore_ShiftRight	hand	floating-point library inner loop (extpfx3 bank-register prefix)	-
+v142	FP_DP_AlignMantissa_ShiftBit	hand	floating-point library inner loop (extpfx3 bank-register prefix)	-
+v142	FP_DP_SubMantissa_ShiftBit	hand	floating-point library inner loop (extpfx3 bank-register prefix)	-
+v142	FP_SP_DecodeToInt_ShiftLeft	hand	floating-point library inner loop (stcf_erpw bank-register prefix)	-
+hdae5000	HDAE5000_Lyrics_WriteVarLen	MATCH	hd_z3_r2a at -Xr (the shift as its own statement; r1 +7), v2.06i and v2.01i	2026-11-22-36-hd-z3-r2
+hdae5000	HDAE5000_Clear_Work_Buffer__clear_loop	hand	inner loop of a hand clear (ldirw, count high word in bank register QBC)	-
+hdae5000	HDAE5000_Clear_Work_Buffer__copy_loop	hand	inner loop of a hand copy (ldir, count high word in bank register QBC)	-
+hdae5000	HDAE5000_MemFill__align_loop	hand	library memset, hand-optimised (alignment, 32-bit stores, QWA)	-
+hdae5000	HDAE5000_MemFill__fill_dwords	hand	library memset, hand-optimised (alignment, 32-bit stores, QWA)	-
+hdae5000	HDAE5000_MemFill__fill_bytes	hand	library memset, hand-optimised (alignment, 32-bit stores, QWA)	-
+hdae5000	HDAE5000_UDivMod32_Done3	hand	tail of the library's 32-bit divide (djnz to a numeric offset)	-
+hdae5000	HDAE5000_MemCmp	hand	library memcmp, hand-optimised (word compares, QHL / QWA bank registers)	-

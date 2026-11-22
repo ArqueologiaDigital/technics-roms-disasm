@@ -1,6 +1,6 @@
-/* hdae5000_ui_display.s's lyric variable-length encoder (lane_z3, feedback plan step Z3), run 2026-11-22-36-hd-z3-r2
-   Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv); from hd_z3_r2a.c.
+/* Functions of hdae5000_ui_display.s.  (hdae5000_lyrics_varlen_z3.c)
+   Firmware C (cc900 phase 6), built by Toshiba V4.23; promoted from cc900-staged/hdae5000_lyrics_varlen_z3.c (checked in
+   notes/cc900-c-hdae5000-2026-11-16/staged_v423.tsv).
    cc900-options: -Xr
 */
 int HDAE5000_Lyrics_WriteVarLen(unsigned long v, unsigned char *buf)

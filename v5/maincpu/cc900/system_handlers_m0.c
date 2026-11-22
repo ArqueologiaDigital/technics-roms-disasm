@@ -120,3 +120,13 @@ void Vga_RestorePlane3FromBuffer(void)
   Vga_SelectWritePlane(0);
   Timer3_Start();
 }
+
+extern void FillMemWordsXwaDeBc(unsigned int *p, unsigned int v, unsigned int n);
+
+/* cc900-name: FillMemWordsXwaDeBc=Fill_memory_at_XWA_with_DE_words_of_BC_value */
+void FillMemWordsXwaDeBc(unsigned int *p, unsigned int v, unsigned int n)
+{
+    do
+        *p++ = v;
+    while (--n != 0);
+}

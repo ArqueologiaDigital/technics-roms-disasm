@@ -3804,29 +3804,12 @@ FileIO_CopyString:	.include "includes/generated/cc900/FileIO_CopyString.s"	; C: 
 
 ; C strncpy: copies at most DE characters of the string at XBC to XWA and zero-fills the rest of
 ; the DE bytes.  As in C, no terminator is written when the source fills them.
-FileIO_CopyString_WriteNull:
-	ld xhl, xbc
-	jr FileIO_CopyString_CheckEnd
-
-FileIO_CopyString_Advance:
-	ld C, (xhl+)
-	ld (xwa+), c
-	dec 1, de
-
-FileIO_CopyString_CheckEnd:
-	cp de, 0:i3
-	jr z, FileIO_CopyString_StoreAndCont
-	cp (xhl), 0x0
-	jr nz, FileIO_CopyString_Advance
-
-FileIO_CopyString_StoreAndCont:
-	cp de, 0:i3
-	ret z
-
-FileIO_CopyString_Return:
-	ld (xwa+), 0x00
-	djnz16 de, FileIO_CopyString_Return
-	ret
+FileIO_CopyString_WriteNull:	.include "includes/generated/cc900/FileIO_CopyString_WriteNull.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FileIO_CopyString_Advance, FileIO_CopyString_WriteNull + 4
+	.set	FileIO_CopyString_CheckEnd, FileIO_CopyString_WriteNull + 12
+	.set	FileIO_CopyString_StoreAndCont, FileIO_CopyString_WriteNull + 21
+	.set	FileIO_CopyString_Return, FileIO_CopyString_WriteNull + 25
 
 ; C strcat: appends the NUL-terminated string at XBC to the one at XWA.
 ;   Out: XWA points at the new terminator, XDE at the source's.

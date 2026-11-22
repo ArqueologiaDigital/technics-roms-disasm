@@ -975,26 +975,10 @@ FDC_MC_EXIT_Code_Join2:
 ; Selects the floppy controller for a command: sets bit 3 of port A and sends byte 0xfe
 ; (FDC_CMD_SEND).  When that leaves an error in FDC_ERROR_CODE it records status 0x31
 ; (FDC_Set_Status); otherwise it waits SOME_DELAY 10 once.
-FDC_CMD_ENABLE:
-	pushw	iz
-	set	3, (PA:8)
-	ldw	wa, 254
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_MC_EXIT_Code_Skip3
-	ldw	wa, 49
-	calr	FDC_Set_Status
-	jr	FDC_MC_EXIT_Code_Epilogue
-FDC_MC_EXIT_Code_Skip3:
-	ld	iz, 1:i3
-	cp	iz, 0:i3
-	jr	z, FDC_MC_EXIT_Code_Epilogue
-	ldw	wa, 10
-	calr	SOME_DELAY
-	djnz16	iz, -9
-FDC_MC_EXIT_Code_Epilogue:
-	popw	iz
-	ret
+FDC_CMD_ENABLE:	.include "includes/generated/cc900/FDC_CMD_ENABLE.s"	; C: cc900/fdc_routines_m270_xr_f.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_MC_EXIT_Code_Skip3, FDC_CMD_ENABLE + 25
+	.set	FDC_MC_EXIT_Code_Epilogue, FDC_CMD_ENABLE + 40
 FDC_CMD_DISABLE:	.include "includes/generated/cc900/FDC_CMD_DISABLE.s"	; C: cc900/fdc_routines_m270.c
 ; --- FDC_STATUS_COPY: Copy FDC status and validate drive count ---
 ; Copies status from source to destination via (R+d16) load/store.
