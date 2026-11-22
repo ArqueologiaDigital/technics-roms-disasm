@@ -170,19 +170,19 @@ def def_marks(lines):
     return [mark(l) for l in lines]
 
 
-def s2_lines(zio, decl_order=None):
+def s2_lines(zio, decl_order=None, cdecl=False):
     """thc2's -zio lines of one function (FUNC_START .. FUNC_END) -> our -zim lines; decl_order: the symbol names
     of thc1's file in declaration order up to this function (for the table walk's order)"""
     recs = [dump.parse_line(l) for l in zio[1:-1]]
     if REWRITE2:
         recs = rewrite2(recs)
-    globs, params, addr_taken = [], [], []
+    globs, params, addr_taken, memvars = [], [], [], set()
     for r in recs:
         reads = list(r.args)
         if r.res and (r.res.startswith('*') or r.op.endswith('=') and r.op not in ('=', '==', '!=', '<=', '>=') or
                       r.op in ('++', '--', 'BSET', 'BCLR')):
             reads.append(r.res)                    # a compound operation reads its target; a three-address one not
-        if r.op == 'ADDR' and r.args and re.match(r'^[IS]\d+\(', r.args[0]):
+        if r.op == 'ADDR' and r.args and re.match(r'^[ISP]\d+\(', r.args[0]):
             if r.args[0] not in [x for _, x in addr_taken]:
                 addr_taken.append((r.args[0].split('(')[0], r.args[0]))   # a local / static whose address is taken
         if r.op in ('ACALL', 'CCALL', 'ACALP', 'CCALP') and r.args:
@@ -214,23 +214,30 @@ def s2_lines(zio, decl_order=None):
             for n, full in globs:
                 out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
             import flow
+            taken = {n for n, _ in addr_taken}
+            memvars.update(taken)
             for n, full in sorted(params, key=lambda p: -int(p[0][1:])):
-                if int(n[1:]) <= 2:                  # {MO}: live across a call (moved out of its argument register)
+                mm = '{MM}' if n in taken or ((cdecl or int(n[1:]) > 2) and STACK_PARAM_MM) else ''
+                if cdecl or int(n[1:]) > 2:          # a parameter passed on the stack: PIN (in memory: {MM})
+                    memvars.add(n)
+                    out.append('  0:   |%s%s PIN ' % (re.sub(r'(\(Def\))+$', '', full), mm))
+                else:                                # {MO}: (open) moved out of its argument register
                     mo = '{MO}' if PARAM_MO and flow.live_across_call(recs, n) else ''
-                    out.append('  0:   |%s%s DUMMY ' % (re.sub(r'(\(Def\))+$', '', full), mo))
-            for n, full in sorted(addr_taken, key=lambda p: -int(p[0][1:])):
+                    out.append('  0:   |%s%s%s DUMMY ' % (re.sub(r'(\(Def\))+$', '', full), mm, mo))
+            for n, full in sorted([a for a in addr_taken if not a[0].startswith('P')], key=lambda p: -int(p[0][1:])):
                 out.append('  0:   |%s{MM} DUMMY ' % re.sub(r'(\(Def\))+$', '', full))   # in memory
             continue
         r.block = 0
         out.append(dump.line(r))
     out.append(zio[-1])
-    if addr_taken:                                   # an address-taken local is in memory everywhere: {MM}
-        names = {n for n, _ in addr_taken}
+    if memvars:                                      # a variable in memory is marked so everywhere: {MM}
+        names = memvars
         out = [re.sub(r'\b(%s)(\([^()]*\))(?!\{)' % '|'.join(names), r'\1\2{MM}', l) if ' DUMMY' not in l else l
                for l in out]
     return def_marks(out) if REWRITE2 else out
 
 
 REWRITE2 = True
+STACK_PARAM_MM = True
 POST_INC = True
 PARAM_MO = False                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)

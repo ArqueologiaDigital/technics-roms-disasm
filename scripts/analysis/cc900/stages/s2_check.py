@@ -17,6 +17,20 @@ import s1_check  # noqa: E402
 import s2  # noqa: E402
 
 
+def contexts(inter):
+    """per function of thc1's file: the symbol names declared so far (file order) and whether it is __cdecl"""
+    import thc1ir
+    orders, seen = [], []
+    if os.path.exists(inter):
+        for l in thc1ir.parse(open(inter, 'rb').read().decode('latin-1')):
+            if l.kind == 'decl' and l.fields[0].startswith('@'):
+                seen.append(l.fields[0])
+            elif l.kind == 'op' and l.op == 'END' and (not orders or orders[-1][0] != l.fields[1]):
+                orders.append((l.fields[1], list(seen)))
+    cdecls = ['@_' + n in o and '@.' + n not in o for n, o in orders]
+    return [o for _, o in orders], cdecls
+
+
 def main():
     a = sys.argv[1:]
     labels = None
@@ -31,20 +45,11 @@ def main():
             m = z[:-len('_zio.asm')] + '_zimg.asm'
             if not os.path.exists(m):
                 continue
-            inter = z[:-len('_zio.asm')] + '.inter'
-            orders = []
-            if os.path.exists(inter):
-                import thc1ir                      # every symbol declaration in file order; a snapshot per function
-                seen = []
-                for l in thc1ir.parse(open(inter, 'rb').read().decode('latin-1')):
-                    if l.kind == 'decl' and l.fields[0].startswith('@'):
-                        seen.append(l.fields[0])
-                    elif l.kind == 'op' and l.op == 'END' and (not orders or orders[-1][0] != l.fields[1]):
-                        orders.append((l.fields[1], list(seen)))
-                orders = [o for _, o in orders]
+            orders, cdecls = contexts(z[:-len('_zio.asm')] + '.inter')
             for n_, (zio, zim) in enumerate(zip(s1_check.zio_functions(z), s1_check.zio_functions(m))):
                 try:
-                    ours = s2.s2_lines(zio, orders[n_] if n_ < len(orders) else None)
+                    ours = s2.s2_lines(zio, orders[n_] if n_ < len(orders) else None,
+                                       cdecls[n_] if n_ < len(orders) else False)
                 except Exception as ex:
                     count[(label, 'error')] += 1
                     first[('error', type(ex).__name__)] += 1
