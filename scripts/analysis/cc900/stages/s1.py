@@ -283,7 +283,7 @@ def rewrite(F):
             v = int(m.group(3)) if m else None
             if v is not None and op == '&=':
                 v = ~v & ((1 << bits) - 1)
-            if v is not None and pow2('#%d' % v) is not None and v < (1 << bits):
+            if v is not None and bits == 8 and pow2('#%d' % v) is not None and v < (1 << bits):
                 out.append(('BSET' if op == '|=' else 'BCLR', fl[1], '#%s%s%d' % (m.group(1), m.group(2), pow2('#%d' % v)),
                             None))
                 i += 1
@@ -317,7 +317,7 @@ def rewrite(F):
                 if re.match(r'^#[LC]?U?0$', b):
                     out.append(('=', fl[3], a, None))
                 elif (b.startswith('#L') if b.startswith('#') else SIZE.get(num(F.typ(b)), 4) == 4):
-                    out.append(('+', fl[3], a, b))     # a 4-byte offset: `+`, the pointer first
+                    out.append(('+', fl[3], fl[1], fl[2]))   # a 4-byte offset: `+`, in thc1's order
                 else:
                     out.append(('ADD', fl[3], a, b))   # a 1- or 2-byte offset: ADD
             else:
@@ -360,7 +360,7 @@ def rewrite(F):
     res = []                                         # a temporary copied once into its destination: write that
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
-                and F.typ(r[1]) == F.typ(r[2]):
+                and F.typ(r[1]) == F.typ(r[2]) and re.match(r'^([IP]\d+|A)$', r[1]):
             prev = res.pop()
             res.append((prev[0], r[1]) + prev[2:])
             continue
@@ -526,36 +526,35 @@ ARG_COPIES = True
 
 
 def arg_copies(F, blocked, tmap, inv, defs):
-    """a register argument (AARG) that is not a constant or a dereference goes through a new temporary of type 0,
-    written right after the value's last definition in the call's block (else at the block's start); the new
-    temporaries are numbered after thc1's, from the last call backwards"""
+    """a register argument (AARG) that is not a constant or a dereference goes through a new temporary of type 0: the
+    copy takes the AARG's place, and the call's AARGs all move to just before the call; the new temporaries are
+    numbered after thc1's, from the last call backwards"""
     base = len(tmap)
     for k in range(len(F.f.temps) + 1):
         if 'T%d' % k in inv:
             base = max(base, k + 1)
     sites = [i for i, (b, r) in enumerate(blocked) if r[0] == 'AARG' and r[2] and not r[2].startswith('#')
              and not r[2].startswith('*') and not r[2].startswith('&')]
-    names = {}
-    for n, i in enumerate(reversed(sites)):
-        names[i] = 'T%d' % (base + n)
-    inserts = []
-    for i in sites:
-        b, r = blocked[i]
-        new = names[i]
-        F.ttype_new = getattr(F, 'ttype_new', {})
-        inv[new] = new
-        F.ttype[new] = '0'
-        defs.add(new)
-        j = i - 1
-        while j >= 0 and blocked[j][0] == b and blocked[j][1][1] != r[2]:
-            j -= 1
-        at = j + 1 if j >= 0 and blocked[j][0] == b else next(k for k in range(i + 1) if blocked[k][0] == b) + \
-            (1 if blocked[next(k for k in range(i + 1) if blocked[k][0] == b)][1][0] in ('LAB', 'BEGIN') else 0)
-        inserts.append((at, [b, ('=', new, r[2], None)]))
-        blocked[i] = [b, (r[0], r[1], new, r[3]) + tuple(r[4:])]
-    for at, item in sorted(inserts, key=lambda x: -x[0]):
-        blocked.insert(at, item)
-    return blocked
+    names = {i: 'T%d' % (base + n) for n, i in enumerate(reversed(sites))}
+    out, pending = [], []
+    for i, (b, r) in enumerate(blocked):
+        if r[0] == 'AARG':
+            if i in names:
+                new = names[i]
+                inv[new] = new
+                F.ttype[new] = '0'
+                defs.add(new)
+                out.append([b, ('=', new, r[2], None)])
+                r = (r[0], r[1], new, r[3]) + tuple(r[4:])
+            pending.append(r)
+            continue
+        if r[0] in ('ACALL', 'ACALP') and pending:
+            pb = out[-1][0] if out else b
+            out.extend([pb, x] for x in pending)
+            pending = []
+        out.append([b, r])
+    out.extend([out[-1][0] if out else 0, x] for x in pending)
+    return out
 
 
 def s1_text(F):
