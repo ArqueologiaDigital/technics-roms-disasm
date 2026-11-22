@@ -14,6 +14,7 @@ SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2,
 FAMS = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ']
 NAMES = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 'XDE'), 'XHL': ('L', 'HL', 'XHL'),
          'XIX': ('IXL', 'IX', 'XIX'), 'XIY': ('IYL', 'IY', 'XIY'), 'XIZ': ('IZL', 'IZ', 'XIZ')}
+SHARED_EPILOGUE = True                               # returns with pops / a frame share one epilogue (L50000)
 RET_CC = True                                        # a jump to a bare ret is that ret
 BYTE_TEMPS = False                                   # may a byte temporary take IXL / IYL / IZL
 COND = {'BLT': 'lt', 'BLE': 'le', 'BGT': 'gt', 'BGE': 'ge', 'BEQ': 'eq', 'BNE': 'ne'}
@@ -313,6 +314,13 @@ class Fn:
                 if getattr(self, 'tail', False):
                     self.tail = False
                     continue
+                last = not any(x.op == 'END' for x in self.recs[i_ + 1:])
+                if (self.save_iz or self.frame) and SHARED_EPILOGUE:
+                    if not last:                     # one epilogue, at the end: the other returns jump to it
+                        self.emit('j', 'L50000')
+                        continue
+                    if any(c == 'j L50000' for c in self.code):
+                        self.emit('L50000:')
                 if self.save_iz:
                     self.emit('pop', self.save_iz)
                 if self.frame:
