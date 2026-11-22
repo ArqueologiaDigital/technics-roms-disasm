@@ -577,11 +577,16 @@ def number(F, recs):
             if x and x.lstrip('*&').startswith('T'):
                 reads[x.lstrip('*&')] = reads.get(x.lstrip('*&'), 0) + 1
     defs = {tmap[t] for t, n in writes.items() if n == 1 and t in tmap and reads.get(t, 0) <= 1}
-    for r in recs:                                  # a function pointer a call reads, and what it returns: no (Def)
-        if r[0] in ('ACALP', 'CCALP'):
-            for x in (r[1], r[2]):
-                if x and x.lstrip('*&') in tmap:
-                    defs.discard(tmap[x.lstrip('*&')])
+    for k, r in enumerate(recs):                    # what a pointer call returns: no (Def); its pointer neither
+        if r[0] in ('ACALP', 'CCALP'):              # when argument code lies between its load and the call
+            if r[1] and r[1].lstrip('*&') in tmap:
+                defs.discard(tmap[r[1].lstrip('*&')])
+            x = r[2]
+            if x and x.lstrip('*&') in tmap:
+                prevcall = max([j for j in range(k) if recs[j][0] in CALLS] or [-1])
+                if any(recs[j][0] == 'AARG' and (not recs[j][3] or int(recs[j][3]) <= 3)
+                       for j in range(prevcall + 1, k)):
+                    defs.discard(tmap[x.lstrip('*&')])   # (its register arguments move in between)
     for t in list(writes):                          # ... and not when its source is written again before the read
         if t not in tmap or tmap[t] not in defs:
             continue
