@@ -66,7 +66,9 @@ def sp_adjust(n):
     return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
 
 
-COALESCE_FROM = 'T'                                # copies of dying values of these kinds share the register
+COALESCE_FROM = 'T'
+WIDEN_FROM = 'T'                                     # a dying source of these kinds is widened in place
+BYTE_TO_LONG_CLEAR = True                            # byte -> long zero extension: ld X,0 / ld low,src                                # copies of dying values of these kinds share the register
 STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
 LABEL_NEXT = [50000]                                 # L5000n / S5000n counters: per unit, not per function
 TABLE_NEXT = [50000]
@@ -686,13 +688,21 @@ class Fn:
                 sa, sd = size_of(a), size_of(r.res)
                 ra = self.reg(a)
                 n = self.name(r.res)
-                if n.startswith('T') and n not in self.regs and self.dies(a, i_):
+                if n.startswith('T') and n not in self.regs and self.dies(a, i_) and \
+                        (self.name(a)[0] in WIDEN_FROM):
                     self.regs[n] = sized(fam_of(ra), sd)     # widened in place
                 rd = self.reg(r.res)
-                if sd > sa:
-                    if fam_of(rd) != fam_of(ra):
-                        self.emit('ld', sized(fam_of(rd), sa) + ',' + ra)
-                    self.emit('exts' if not unsigned(a) else 'extz', rd)
+                ext = 'exts' if not unsigned(a) else 'extz'
+                fd = fam_of(rd)
+                if sd == 4 and sa == 1 and fd != fam_of(ra) and ext == 'extz' and BYTE_TO_LONG_CLEAR:
+                    self.emit('ld', '%s,0x0' % rd)       # byte -> long, zero-extended: clear, then the low byte
+                    self.emit('ld', '%s,%s' % (sized(fd, 1), ra))
+                elif sd > sa:
+                    if fd != fam_of(ra):
+                        self.emit('ld', sized(fd, sa) + ',' + ra)
+                    if sd == 4 and sa == 1:
+                        self.emit(ext, sized(fd, 2))     # (extz / exts widen one step)
+                    self.emit(ext, rd)
                 elif sd == sa:
                     if rd != ra:
                         self.emit('ld', rd + ',' + ra)
