@@ -1038,12 +1038,7 @@ PrePmLoad:
 
 ; After a panel-memory load that succeeded (WA >= 0): PanelTlv_ValidatePanelMemories and
 ; PanelTlv_WritePanelMemoryHeaders.
-PostPmLoad:
-	cp wa, 0:i3
-	ret lt
-	call PanelTlv_ValidatePanelMemories
-	call PanelTlv_WritePanelMemoryHeaders
-	ret
+PostPmLoad:	.include "includes/generated/cc900/PostPmLoad.s"	; C: cc900/dsp_config_sysex_m292_xs.c
 
 PrePmSave:
 	ret

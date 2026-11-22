@@ -66,9 +66,7 @@ PanelTlv_ApplyResetMasks_Loop:
 	inc	8, xsp
 	ret
 ; Write every record header ([tag][len]) of the live panel and of the 80 panel memories.
-PanelTlv_WriteAllHeaders:
-	calr	PanelTlv_WriteLivePanelHeaders
-	jrl	PanelTlv_WritePanelMemoryHeaders
+PanelTlv_WriteAllHeaders:	.include "includes/generated/cc900/PanelTlv_WriteAllHeaders.s"	; C: cc900/tonegen_fileio_handlers_m277_xs.c
 PanelTlv_ValidateSongPanel:	.include "includes/generated/cc900/PanelTlv_ValidateSongPanel.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 ; a jr to PanelTlv_ResolvePartCompanions, for callers outside its calr reach
 PanelTlv_ResolvePartCompanions_Entry:
