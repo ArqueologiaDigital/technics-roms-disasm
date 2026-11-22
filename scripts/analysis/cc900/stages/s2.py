@@ -187,9 +187,11 @@ def s2_lines(zio, decl_order=None):
                 globs.sort(key=lambda g: key(g[0]))
             for n, full in globs:
                 out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
+            import flow
             for n, full in sorted(params, key=lambda p: -int(p[0][1:])):
-                if int(n[1:]) <= 2:
-                    out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
+                if int(n[1:]) <= 2:                  # {MO}: live across a call (moved out of its argument register)
+                    mo = '{MO}' if PARAM_MO and flow.live_across_call(recs, n) else ''
+                    out.append('  0:   |%s%s DUMMY ' % (re.sub(r'(\(Def\))+$', '', full), mo))
             for n, full in sorted(addr_taken, key=lambda p: -int(p[0][1:])):
                 out.append('  0:   |%s{MM} DUMMY ' % re.sub(r'(\(Def\))+$', '', full))   # in memory
             continue
@@ -204,3 +206,4 @@ def s2_lines(zio, decl_order=None):
 
 
 REWRITE2 = True
+PARAM_MO = False                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)
