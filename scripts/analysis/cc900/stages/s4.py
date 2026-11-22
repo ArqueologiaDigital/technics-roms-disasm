@@ -66,6 +66,7 @@ def sp_adjust(n):
     return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
 
 
+COALESCE_FROM = 'T'                                # copies of dying values of these kinds share the register
 STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
 LABEL_NEXT = [50000]                                 # L5000n / S5000n counters: per unit, not per function
 TABLE_NEXT = [50000]
@@ -649,7 +650,8 @@ class Fn:
             elif op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
                     self.name(r.res) not in self.regs and r.args and self.name(r.args[0]) and \
                     not r.args[0].startswith(('*', '@', '#')) and self.dies(r.args[0], i_) and \
-                    self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack':
+                    self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack' and \
+                    (self.name(r.args[0])[0] in COALESCE_FROM):
                 ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
                 self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
             elif LOAD_REUSE and op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
