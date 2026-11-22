@@ -49,6 +49,8 @@ operations; thc1 already rotates loops (the test at the bottom).
 | `s2.py`       | S2 from V4.23's own -zio: DUMMY lines (values live on entry: globals read, address-taken locals, register parameters used), blocks no longer printed; the symbol-table walk order (thc2's name hash) is under test |
 | `s2_check.py` | S2 against thc2's -zim, function by function (exact / up to temporary numbering), first-difference worklist                                                                                                        |
 | `flow.py`     | control flow over dump records: successors, and whether a variable is live across a call                                                                                                                           |
+| `s3.py`       | S3 from V4.23's own -zim: the register of each parameter and local (memory marks = stack; parameters in their argument register or XIZ across calls; locals by a first rule)                                       |
+| `s3_check.py` | S3 against thc2's -g records, per variable and per function, with a (truth, ours) worklist                                                                                                                         |
 
 Run the round trip, from technics-roms-disasm's root:
 
