@@ -11,6 +11,7 @@
 # and run_vm.sh's QEMU_ROOT / BASE_IMAGE defaults below.  vm_slot.sh picks a free slot of the VM pool (its own work
 # directory vm/home/slot-N and HTTP port), run_vm.sh boots the VM; this script prepares the job and files the run.
 # Several runs go at once, one per slot.
+# JOB=FILE (optional): a guest job script to run instead of job.sh (same inputs; e.g. the feedback plan's i2/job_i2.sh).
 # ASMFLAGS=FILE (optional): job.sh's asmflags.txt, "label|ASM900 flags" per line -- every listing is also assembled
 # with each of those (e.g. "lst|-l" for ASM900's list file with the final encodings); the file is filed with the run.
 #
@@ -46,7 +47,7 @@ for c in "$@"; do
     echo "$c|cc-$c.tar" >> "$S/compilers.txt"
 done
 tar -cf "$S/corpus.tar" -C "$CORPUS" .
-cp "$HERE/job.sh" "$S/job.sh"; cp "$SOURCES" "$S/sources.txt"; cp "$OPTIONS" "$S/options.txt"
+cp "${JOB:-$HERE/job.sh}" "$S/job.sh"; cp "$SOURCES" "$S/sources.txt"; cp "$OPTIONS" "$S/options.txt"
 [ -z "${ASMFLAGS:-}" ] || cp "$ASMFLAGS" "$S/asmflags.txt"
 
 echo "run_oracle.sh: VM slot $VM_SLOT (port $VM_PORT)" >&2

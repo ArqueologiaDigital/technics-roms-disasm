@@ -1,0 +1,8 @@
+zim|-zim
+zio|-zio
+zl|-zl
+zh|-zh
+zperf|-zperf
+g|-g
+gt|-gt
+gb|-gb
