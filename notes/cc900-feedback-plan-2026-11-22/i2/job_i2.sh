@@ -4,8 +4,9 @@
 #
 # QUESTION: what do thc2's hidden options (-zim, -zio, -zl, -zh, -zperf, -g<letters>; I2's reading of the option
 # table) print?  The cc900 driver cannot pass them on, so for every compiler x option set x source this job
-#   1. runs `cc900 <flags> -S` as job.sh does, under Wine's process trace, and keeps a copy of thc1's intermediate
-#      file (the temporary file thc2 reads) while thc2 runs;
+#   1. runs `cc900 <flags> -S` as job.sh does, under Wine's process trace (for thc2's command line), with Wine's
+#      Temp directory append-only so that thc1's intermediate file (the temporary file thc2 reads) survives, and
+#      copies it;
 #   2. re-runs THC2.EXE itself on that copy with the driver's own thc2 arguments: once unchanged (`plain`, which must
 #      give the same .asm as the driver: the check that the copy is complete) and once per line of asmflags.txt,
 #      read here as "dlabel|extra thc2 options" (inserted before the input file).
