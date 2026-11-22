@@ -281,6 +281,40 @@ class Fn:
                     self.emit('ld', '%s,%s' % (self.dst(r.res), sized(f, 2)))
                 elif op == 'HIGH':
                     raise Unsupported('HIGH')
+            elif op == 'ARICALL':
+                a, b = r.args                        # a runtime helper: operands in XWA / XBC, result in XHL
+                for x, f in ((b, 'XBC'), (a, 'XWA')):
+                    v = const(x)
+                    if v is not None:
+                        self.emit('ld', '%s,%s' % (f, hexc(v, 4)))
+                    else:
+                        sx = self.stack(x) or self.mem(x) or self.reg(x)
+                        if sx != f:
+                            self.emit('ld', '%s,%s' % (f, sx))
+                self.emit('cal', r.extra.strip())
+                n = self.name(r.res)
+                if n.startswith('T') and n not in self.regs:
+                    self.regs[n] = 'XHL'
+                elif self.dst(r.res) != 'XHL':
+                    self.emit('ld', '%s,XHL' % self.dst(r.res))
+            elif op in ('CARG', 'CARG &'):
+                a = r.args[0]
+                n = int(r.extra.strip().lstrip('#')) if r.extra else 2
+                self.carg = getattr(self, 'carg', 0) + n
+                if op == 'CARG &':
+                    sym = a.split('(')[0].lstrip('@')
+                    self.emit('pushw', '%s >> 16' % sym)
+                    self.emit('pushw', '%s & 0xffff' % sym)
+                else:
+                    v = const(a)
+                    if v is not None:
+                        if n == 4:
+                            self.emit('pushw', '0x%x' % ((v >> 16) & 0xffff))
+                            self.emit('pushw', '0x%x' % (v & 0xffff))
+                        else:
+                            self.emit('pushw', '0x%x' % (v & 0xffff))
+                    else:
+                        self.emit('push', self.stack(a) or self.mem(a) or self.reg(a))
             elif op == 'asm':
                 self.emit(r.args[0].strip())
             elif op == 'ACALP':
@@ -338,6 +372,20 @@ class Fn:
                     ra = self.reg(a)
                     if fam_of(ra) != f:
                         self.emit('ld', '%s,%s' % (sized(f, size_of(a)), ra))
+            elif op == 'CCALL':
+                target = r.args[0].split('(')[0].lstrip('@')
+                self.emit('cal', target)
+                k = getattr(self, 'carg', 0)
+                if k:
+                    self.emit('inc', '0x%x,XSP' % k)     # the caller pops the arguments
+                    self.carg = 0
+                if r.res and r.res != 'A':
+                    rr = sized('XHL', size_of(r.res))
+                    n = self.name(r.res)
+                    if n and n.startswith('T') and n not in self.regs:
+                        self.regs[n] = rr
+                    elif self.dst(r.res) != rr:
+                        self.emit('ld', self.dst(r.res) + ',' + rr)
             elif op in ('ACALL', 'CCALL'):
                 target = r.args[0].split('(')[0].lstrip('@')
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
