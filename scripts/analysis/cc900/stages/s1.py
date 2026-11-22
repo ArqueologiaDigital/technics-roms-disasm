@@ -344,6 +344,9 @@ def rewrite(F):
                 elif T and T.is_basic(dt) and T.is_basic(st) and (SIZE[dt] != SIZE[st] or SIGNED.get(dt) != SIGNED.get(st)):
                     o = 'CONV'
             out.append((o, fl[1], fl[2], None))
+            if MEM_RESULT_NUMBERED and op == '=' and len(fl) > 3 and fl[3].startswith('T') and \
+                    fl[1][:1] in '@*' and fl[2][:1] in '@*' and not reads.get(fl[3], 0):   # memory to memory
+                F.kept.add(fl[3])                    # numbered although unread (dropped after numbering)
             if len(fl) > 3 and fl[3] and fl[3] != fl[1] and fl[3].startswith('T') and reads.get(fl[3], 0):
                 out.append(('=', fl[3], fl[1].lstrip('&'), None))   # a read result: a copy of the target after it
         elif op in BINARY:
@@ -358,6 +361,11 @@ def rewrite(F):
                 helper = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('lu' if SIGNED.get(rt) is False else 'ls')
                 out.append(('ARICALL', fl[3], fl[1], fl[2], 'C9H_' + helper))   # a 4-byte multiply / divide:
                 i += 1                                                         # the runtime helper
+                continue
+            pm = re.match(r'^#([LC]?U?)(\d+)$', fl[2]) if op == '*' else None
+            if pm and pow2(fl[2]) and pow2(fl[2]) > 1:
+                out.append(('<<', fl[3], fl[1], '#%s%d' % (pm.group(1), pow2(fl[2]))))   # x * 2^k -> x << k
+                i += 1
                 continue
             if op == '*' and re.match(r'^#[LC]?U?2$', fl[2]):
                 out.append(('+', fl[3], fl[1], fl[1]))
@@ -548,6 +556,8 @@ def show(F, x, inv, defs, ctx=None):
         return 'A'
     if b.startswith('@'):
         return '%s@%s(%s)' % (pre, b[1:], type_name(F.symtypes.get(b, '?')) if b in F.symtypes else '?')
+    if b in getattr(F, 'newtemps', ()):
+        return '%s%s(0)%s' % (pre, b, '(Def)' if b in defs else '')
     orig = inv.get(b, b)
     if b[:1] in 'IP' and b[1:].isdigit():
         orig = '%s%d' % (b[0], int(b[1:]) + 1)
@@ -610,6 +620,7 @@ def fmt(F, r, inv, defs):
 
 
 ARG_COPIES = True
+MEM_RESULT_NUMBERED = False                         # OPEN: some unread assignment results are numbered (Voice_WriteChPanShift T75); "target in memory" variants lose 111-319 functions
 CALL_RES_COPY = True
 
 
@@ -640,8 +651,7 @@ def arg_copies(F, blocked, tmap, inv, defs):
         if r[0] == 'AARG':
             if i in names:
                 new = names[i]
-                inv[new] = new
-                F.ttype[new] = '0'
+                F.newtemps = getattr(F, 'newtemps', set()) | {new}   # (their own names: never thc1's table)
                 defs.add(new)
                 out.append([b, ('=', new, r[2], None)])
                 r = (r[0], r[1], new, r[3]) + tuple(r[4:])

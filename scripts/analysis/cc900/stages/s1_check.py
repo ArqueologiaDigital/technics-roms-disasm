@@ -39,6 +39,12 @@ def zio_functions(path):
     return out
 
 
+def renamed(lines):
+    """the lines with temporaries renumbered by first appearance (equal up to a consistent renaming)"""
+    m = {}
+    return [re.sub(r'\bT(\d+)\(', lambda x: 'T%d(' % m.setdefault(x.group(1), len(m)), l) for l in lines]
+
+
 def kind(line):
     if line is None:
         return '(missing)'
@@ -81,18 +87,22 @@ def main():
                 count[(label, 'functions')] += 1
                 if ours == t:
                     count[(label, 'exact')] += 1
+                    count[(label, 'renamed')] += 1
                     continue
+                if renamed(ours) == renamed(t):
+                    count[(label, 'renamed')] += 1
                 k = next(i for i in range(max(len(ours), len(t)))
                          if i >= len(ours) or i >= len(t) or ours[i] != t[i])
                 first[(kind(t[k] if k < len(t) else None), kind(ours[k] if k < len(ours) else None))] += 1
                 if shown < show:
                     shown += 1
                     print('differs: %s %s (line %d)' % (inter, f.name, k))
-    print('| option set | functions | exact | errors | count mismatch |')
-    print('|------------|-----------|-------|--------|----------------|')
+    print('| option set | functions | exact | equal up to temporary numbering | errors | count mismatch |')
+    print('|------------|-----------|-------|---------------------------------|--------|----------------|')
     for lab in sorted({k[0] for k in count}):
-        print('| %-10s | %9d | %5d | %6d | %14d |' % (lab, count[(lab, 'functions')], count[(lab, 'exact')],
-                                                     count[(lab, 'error')], count[(lab, 'count mismatch')]))
+        print('| %-10s | %9d | %5d | %31d | %6d | %14d |' % (
+            lab, count[(lab, 'functions')], count[(lab, 'exact')], count[(lab, 'renamed')], count[(lab, 'error')],
+            count[(lab, 'count mismatch')]))
     print('\nfirst difference (thc2 line kind, our line kind): count')
     for k, v in first.most_common(25):
         print('  %-40s %d' % ('%s / %s' % k, v))
