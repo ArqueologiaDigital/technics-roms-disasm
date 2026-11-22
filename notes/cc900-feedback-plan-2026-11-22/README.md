@@ -347,3 +347,7 @@ and the reverse; the stage dumps localise every difference to a pass.  The curre
 new halves beat it on m1 and on validation.  Recommended; it changes E1's "model work resumes narrowed" into "the model
 is rebuilt per stage", so it is the owner's call.
 
+**Answered 2026-11-22: E6 accepted** ("Rebuild along the seam").  The back end comes first: it can be tested at once
+on the kept thc1 files.  Then the front end.  The current model stays the reference until the new halves beat it on m1
+and on validation.
+
