@@ -512,6 +512,7 @@ def rewrite(F):
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
                 and (F.typ(r[1]) == F.typ(r[2]) or r[1] == 'A') and res[-1][0] != 'ADDR' and \
+                not (res[-1][0] == 'ADD' and str(res[-1][3]).startswith('#')) and \
                 (re.match(r'^([IP]\d+|A)$', r[1]) or
                                                     r[1].startswith('@') and res[-1][0] not in ('ADDR', 'CONV')):
             prev = res.pop()
