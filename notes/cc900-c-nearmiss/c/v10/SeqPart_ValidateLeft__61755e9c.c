@@ -1,0 +1,92 @@
+/* nearmiss copy (scripts/analysis/cc900/nearmiss.py): the whole file of firmware/p6_J_27r1m236a.c (2026-11-22-7-p6-r74)
+   sha256 61755e9c2cf140881ec4605e2c97a747569a10f0a60032dd4df2e6c0be7edd00 (tar-sha256); compiled at -O3 -Xr */
+/* lane_p6 helper J, round 27r1, form a: module 236 (sequencer/sequencer_engine.s), two families of
+   families27_J: SeqPart_CompareLeft / SeqPart_CompareRight (the comparison cursors 0x27d4 / 0x27d6 and
+   0x27d8 / 0x27da: read the current byte, flag bit 0 / 1 of 0x27d2 on an end (0x82) or bar (0x81) marker, else step
+   the cursor and keep the next byte in 0x27dc / 0x27de; the byte is homed in QIZ's high byte) and
+   SeqPart_ValidateLeft / SeqPart_ValidateRight (copy one event to the primary write position, finishing in the
+   Compare routine by a conditional tail jump).
+   Form a: plain C; the Validate routines' two SeqPart_WriteByte_Primary calls written separately (the ROM shares
+   one call between the if body and the loop).
+   cc900-options: -O3 -Xr
+*/
+/* cc900-module: SeqPart_CompareLeft SeqPart_CompareRight */   /* scripts/analysis/cc900/module_calls.py v10 */
+/* cc900-name: PartCtrl_ReadWordWithBoundsChk=PartCtrl_ReadWordWithBoundsCheck */
+
+extern unsigned char __near ram_27d2;
+extern unsigned int __near ram_27d4;
+extern unsigned int __near ram_27d6;
+extern unsigned int __near ram_27d8;
+extern unsigned int __near ram_27da;
+extern unsigned char __near ram_27dc;
+extern unsigned char __near ram_27de;
+extern unsigned char PartCtrl_ReadByteExtended(unsigned int b, unsigned int o);
+extern void PartCtrl_ReadWordWithBoundsChk(unsigned int *, unsigned int *);
+extern void PartCtrl_AdvanceToNextEntry(void);
+extern void SeqPart_WriteByte_Primary(int);
+unsigned char SeqPart_CompareLeft(void);
+unsigned char SeqPart_CompareRight(void);
+
+unsigned char SeqPart_CompareLeft(void)
+{
+	unsigned char c;
+
+	ram_27d2 &= ~1;
+	c = PartCtrl_ReadByteExtended(ram_27d4, ram_27d6);
+	if (c == 0x82 || c == 0x81)
+		ram_27d2 |= 1;
+	else {
+		PartCtrl_ReadWordWithBoundsChk(&ram_27d4, &ram_27d6);
+		ram_27dc = PartCtrl_ReadByteExtended(ram_27d4, ram_27d6);
+	}
+	return c;
+}
+
+unsigned char SeqPart_CompareRight(void)
+{
+	unsigned char c;
+
+	ram_27d2 &= ~2;
+	c = PartCtrl_ReadByteExtended(ram_27d8, ram_27da);
+	if (c == 0x82 || c == 0x81)
+		ram_27d2 |= 2;
+	else {
+		PartCtrl_ReadWordWithBoundsChk(&ram_27d8, &ram_27da);
+		ram_27de = PartCtrl_ReadByteExtended(ram_27d8, ram_27da);
+	}
+	return c;
+}
+
+unsigned char SeqPart_ValidateRight(unsigned char c)
+{
+	SeqPart_WriteByte_Primary(c);
+	if ((ram_27d2 & 2) == 0) {
+		PartCtrl_AdvanceToNextEntry();
+		SeqPart_WriteByte_Primary(ram_27de);
+	}
+	for (;;) {
+		PartCtrl_ReadWordWithBoundsChk(&ram_27d8, &ram_27da);
+		PartCtrl_AdvanceToNextEntry();
+		c = PartCtrl_ReadByteExtended(ram_27d8, ram_27da);
+		if (c & 0x80)
+			return SeqPart_CompareRight();
+		SeqPart_WriteByte_Primary(c);
+	}
+}
+
+unsigned char SeqPart_ValidateLeft(unsigned char c)
+{
+	SeqPart_WriteByte_Primary(c);
+	if ((ram_27d2 & 1) == 0) {
+		PartCtrl_AdvanceToNextEntry();
+		SeqPart_WriteByte_Primary(ram_27dc);
+	}
+	for (;;) {
+		PartCtrl_ReadWordWithBoundsChk(&ram_27d4, &ram_27d6);
+		PartCtrl_AdvanceToNextEntry();
+		c = PartCtrl_ReadByteExtended(ram_27d4, ram_27d6);
+		if (c & 0x80)
+			return SeqPart_CompareLeft();
+		SeqPart_WriteByte_Primary(c);
+	}
+}

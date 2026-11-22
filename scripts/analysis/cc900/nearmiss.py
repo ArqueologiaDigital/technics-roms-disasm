@@ -1921,7 +1921,10 @@ def write_ready(out, rows, runs):
     """OUT/ready.tsv: every (tree, function) that MATCHes in the index and is not built from C in the src-root's tree,
     per lane, with its newest matching attempt, a C copy (written when missing) and that function's cc900-module
     line (derive_module).  `c_elsewhere` says where else C for it exists (lane_staged: the src-root's cc900-staged/,
-    a lane worktree, a local branch main has not merged), `none` when nowhere: the C copy here is then the only one."""
+    a lane worktree, a local branch main has not merged), `none` when nowhere: the C copy here is then the only one.
+    A function the src-root's symbols reference no longer names (the label was renamed after the run, e.g.
+    DSP_StateTable_Reset -> DSP_StateTable_Save) is left out and printed: staging it under the old name cannot
+    build, and the attempts of later runs carry the new name."""
     best = {}
     for r in rows:
         if r['status'] != 'MATCH':
@@ -1931,10 +1934,13 @@ def write_ready(out, rows, runs):
             best[k] = r
     lanes = lane_staged()
     cand_cache = {}
-    lines, staged = [], 0
+    lines, staged, gone = [], 0, []
     for (tree, fn), r in sorted(best.items(), key=lambda kv: (LANES.get(kv[0][0], '?'), kv[0])):
         if fn in set(Ctx.tree(tree)['cnames'].values()):
             staged += 1
+            continue
+        if fn not in Ctx.tree(tree)['ref']:
+            gone.append(tree + ':' + fn)
             continue
         if not r['c_copy'] or not os.path.exists(os.path.join(out, r['c_copy'])):
             ctext, how = source_c(out, [r], runs)
@@ -1967,6 +1973,8 @@ def write_ready(out, rows, runs):
         per.setdefault(k, [0, 0]); per[k][0] += 1; per[k][1] += int(l[3] or 0)
     print('ready.tsv: %d functions already built from C in the tree left out; %s' % (
         staged, ', '.join('%s %s %d functions %d B' % (k[0], k[1], v[0], v[1]) for k, v in sorted(per.items()))))
+    print('ready.tsv: %d functions no longer a label of their tree left out (renamed since the run)%s' % (
+        len(gone), (': ' + ' '.join(gone)) if gone else ''))
 
 
 if __name__ == '__main__':
