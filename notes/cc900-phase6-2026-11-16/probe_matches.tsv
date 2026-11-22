@@ -1744,3 +1744,11 @@ Part_ValidateVoiceChannel	100	2026-11-22-15-p6-r82	p6_S_31r1m234a@O3XSXr p6_S_31
 SeqPlay_HandleVoiceReassign	138	2026-11-22-15-p6-r82	p6_S_31r1m234a@O3XSXr p6_S_31r1m234a@O3Xr p6_S_31r1m234a@Xr p6_S_31r1m234b@O3XSXr p6_S_31r1m234b@O3Xr p6_S_31r1m234b@Xr
 SeqScan_InitAllStateVars	130	2026-11-22-15-p6-r82	p6_S_31r1m235a@O3XSXr p6_S_31r1m235a@O3Xr p6_S_31r1m235a@Xr p6_S_31r1m235b@O3XSXr p6_S_31r1m235b@O3Xr p6_S_31r1m235b@Xr
 SndParam_FetchSequencerParams	118	2026-11-22-15-p6-r82	p6_R_31r1m280a@O3Xr
+Audio_InitSingleChannelParams	118	2026-11-22-17-p6-r84	p6_U_32r1m280a@O3XSXr p6_U_32r1m280a@O3Xr p6_U_32r1m280a@Xr
+Audio_SendModulationToParts	124	2026-11-22-17-p6-r84	p6_U_32r1m280a@O3XSXr p6_U_32r1m280a@O3Xr
+FmmDiskMedley1Func	95	2026-11-22-17-p6-r84	p6_U_32r1m269b@O3XSXr p6_U_32r1m269b@O3Xr
+MIDI_ProcessChangedChannels	115	2026-11-22-17-p6-r84	p6_U_32r1m278a@O3XSXr p6_U_32r1m278a@O3Xr
+MIDI_WriteMultiByteWithHeader	105	2026-11-22-17-p6-r84	p6_T_32r1m280a@O3Xr p6_T_32r1m280b@O3Xr
+SeqPart_Splice	132	2026-11-22-17-p6-r84	p6_U_32r1m236b@O3XSXr p6_U_32r1m236b@O3Xr
+SndParam_SyncDisplayBitmap	138	2026-11-22-17-p6-r84	p6_T_32r1m277a@O3Xr
+SwbtWr_AppendFixedParamBlock	101	2026-11-22-17-p6-r84	p6_U_32r1m280a@O3Xr
