@@ -282,7 +282,7 @@ class Fn:
         self.soft = {}
         for r in self.recs:                          # an indirect call's target: XHL, else XIX
             if r.op == 'ACALP' and r.args and self.name(r.args[0]) and self.name(r.args[0]).startswith('T') and CALL_TARGET_HL:
-                self.soft[self.name(r.args[0])] = ['XHL', 'XIX']
+                self.soft[self.name(r.args[0])] = ['XIX', 'XHL'] if r.res else ['XHL', 'XIX']   # (a result: XHL is its)
         self.psize = {}
         for l in zim:
             m = re.search(r'\|(P\d+)(\([^()]*\))', l)
