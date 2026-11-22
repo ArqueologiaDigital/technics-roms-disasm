@@ -14,6 +14,7 @@ SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2,
 FAMS = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ']
 NAMES = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 'XDE'), 'XHL': ('L', 'HL', 'XHL'),
          'XIX': ('IXL', 'IX', 'XIX'), 'XIY': ('IYL', 'IY', 'XIY'), 'XIZ': ('IZL', 'IZ', 'XIZ')}
+MEM_SIZES = True                                     # @(p..) / *p sized by p's pointee
 LIVENESS = True                                      # a temporary may take a register whose variable is dead
 SHARED_EPILOGUE = True                               # returns with pops / a frame share one epilogue (L50000)
 RET_CC = True                                        # a jump to a bare ret is that ret
@@ -81,7 +82,20 @@ def callee_pops(fn):
     return 0
 
 
+def deref_type(x):
+    """the basic type name a memory operand @(p..) / *p reads, from p's pointer type, or None"""
+    m = re.match(r'^(?:@\(|\*)[A-Z]\d+\(([A-Z]+) [FN]\*\)', x or '')
+    if m:
+        return m.group(1)
+    m = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)', x or '')
+    if m:
+        return pointee(int(m.group(1)))
+    return None
+
+
 def size_of(x):
+    if MEM_SIZES and deref_type(x):
+        return SIZES.get(deref_type(x), 2)
     if x and re.match(r'^[*&]?T\d+\(0\)', x):
         return SIZE0.get(re.match(r'^[*&]?(T\d+)', x).group(1), 4)
     if x and re.match(r'^#C', x):
@@ -97,6 +111,8 @@ def size_of(x):
 
 
 def unsigned(x):
+    if MEM_SIZES and deref_type(x):
+        return deref_type(x).startswith('U')
     if x and re.match(r'^[*&]?T\d+\(0\)', x):
         return UNS0.get(re.match(r'^[*&]?(T\d+)', x).group(1), False)
     m = re.search(r'\(([A-Z]+)( [FN]\*)?\)', x or '')
