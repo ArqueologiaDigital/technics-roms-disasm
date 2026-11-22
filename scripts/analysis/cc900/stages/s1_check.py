@@ -6,7 +6,7 @@ QUESTION ANSWERED: for how many functions does our S1 equal thc2's state after i
 option set; and, for the others, which kind of line differs first (the operation of thc2's line, our line's), as a
 worklist.  Prints counts only (the dumps are Toshiba's output).
 
-    python3 -B scripts/analysis/cc900/stages/s1_check.py [--labels Xr,...] [--show N] RUN_DIR [RUN_DIR ...]
+    python3 -B scripts/analysis/cc900/stages/s1_check.py [--labels Xr,...] [--record] [--show N] RUN_DIR [RUN_DIR ...]
 
 --show N prints the first N differing functions' paths and names (no dump lines), to open privately.
 """
@@ -59,6 +59,8 @@ def main():
     labels, show = None, 0
     if '--labels' in a:
         i = a.index('--labels'); labels = set(a[i + 1].split(',')); a = a[:i] + a[i + 2:]
+    record = '--record' in a
+    a = [x for x in a if x != '--record']
     if '--show' in a:
         i = a.index('--show'); show = int(a[i + 1]); a = a[:i] + a[i + 2:]
     count = collections.Counter()
@@ -103,6 +105,11 @@ def main():
         print('| %-10s | %9d | %5d | %31d | %6d | %14d |' % (
             lab, count[(lab, 'functions')], count[(lab, 'exact')], count[(lab, 'renamed')], count[(lab, 'error')],
             count[(lab, 'count mismatch')]))
+    if record:                                       # a point per option set on the dashboard (results/stage_scores.tsv)
+        import stage_scores
+        for lab in sorted({k[0] for k in count}):
+            stage_scores.record('S1' if lab == 'Xr' else 'S1 ' + lab, count[(lab, 'exact')], count[(lab, 'functions')],
+                                'functions', 'up to numbering %d' % count[(lab, 'renamed')])
     print('\nfirst difference (thc2 line kind, our line kind): count')
     for k, v in first.most_common(25):
         print('  %-40s %d' % ('%s / %s' % k, v))

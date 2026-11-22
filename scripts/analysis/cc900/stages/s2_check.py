@@ -5,7 +5,7 @@ dump against thc2's -zim dump (its dump lines only).
 QUESTION ANSWERED: for how many functions does our S2, started from V4.23's own S1, equal V4.23's S2 (exactly, and up
 to temporary numbering); for the others, the first differing line's kind (counts only).
 
-    python3 -B scripts/analysis/cc900/stages/s2_check.py [--labels Xr,...] RUN_DIR [RUN_DIR ...]
+    python3 -B scripts/analysis/cc900/stages/s2_check.py [--labels Xr,...] [--record] RUN_DIR [RUN_DIR ...]
 """
 import collections
 import glob
@@ -36,6 +36,8 @@ def main():
     labels = None
     if '--labels' in a:
         i = a.index('--labels'); labels = set(a[i + 1].split(',')); a = a[:i] + a[i + 2:]
+    record = '--record' in a
+    a = [x for x in a if x != '--record']
     count, first = collections.Counter(), collections.Counter()
     for r in a:
         for z in sorted(glob.glob(os.path.join(r, 'out', '*', '*', '**', '*_zio.asm'), recursive=True)):
@@ -68,6 +70,11 @@ def main():
     for lab in sorted({k[0] for k in count}):
         print('| %-10s | %9d | %5d | %31d | %6d |' % (lab, count[(lab, 'functions')], count[(lab, 'exact')],
                                                    count[(lab, 'renamed')], count[(lab, 'error')]))
+    if record:                                       # a point per option set on the dashboard (results/stage_scores.tsv)
+        import stage_scores
+        for lab in sorted({k[0] for k in count}):
+            stage_scores.record('S2' if lab == 'Xr' else 'S2 ' + lab, count[(lab, 'exact')], count[(lab, 'functions')],
+                                'functions', 'up to numbering %d' % count[(lab, 'renamed')])
     print('\nfirst difference (thc2 line kind, our line kind): count')
     for k, v in first.most_common(20):
         print('  %-40s %d' % ('%s / %s' % k, v))

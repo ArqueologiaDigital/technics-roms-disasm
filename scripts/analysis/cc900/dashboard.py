@@ -174,6 +174,24 @@ def collect_progress():
     return out
 
 
+STAGES = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'results', 'stage_scores.tsv')
+
+
+def collect_stages():
+    """results/stage_scores.tsv (stages/stage_scores.py): one point per measurement of a back-end stage (S1-S4)"""
+    out = []
+    if os.path.exists(STAGES):
+        for line in open(STAGES, encoding='utf-8'):
+            f = line.rstrip('\n').split('\t')
+            if line.startswith('time\t') or len(f) < 6: continue
+            subj = git('log', '-1', '--format=%s', f[1]).strip() if f[1] else ''
+            out.append(dict(date=f[0], h=f[1], subject=('%s %s / %s %s%s. ' % (f[2], f[3], f[4], f[5],
+                            (' (' + f[6] + ')') if len(f) > 6 and f[6] else '')) + subj, moved=True,
+                            stage=f[2], exact=int(f[3]), total=int(f[4]), unit=f[5]))
+    out.sort(key=lambda r: r['date'])
+    return out
+
+
 def collect_coverage():
     """one row per commit that changed c_build_coverage.md, with its figures; none before the file existed"""
     rows = []
@@ -258,6 +276,13 @@ commit and reloads itself every two minutes.</p>
 <button id="ax-commit" aria-pressed="true">one step per round</button><button id="ax-time" aria-pressed="false">real time</button>
 <span class="note">__FLAT__ of the __N__ rounds changed no score; they are plotted too, as flat steps.</span></div>
 <div class="tiles" id="tiles"></div>
+<h1 class="sec" id="stages">Back-end rebuild along thc1 / thc2's seam (stages S1-S4)</h1>
+<p class="sub">The model rebuilt stage by stage, each stage fed Toshiba V4.23's own output of the stage before and
+checked against its own output after it (firmware C, <code>-Xr</code>): S1 thc1's IR to thc2's <code>-zio</code>, S2
+<code>-zio</code> to <code>-zim</code>, S3 register allocation of named variables against <code>-g</code>, S4 the code
+(instruction selection, temporaries' registers, frames). One point per measurement (results/stage_scores.tsv,
+<code>stages/*_check.py --record</code>; earlier points from the numbers the stage commits quoted).</p>
+<div class="grid" id="stage-charts"></div>
 <div class="grid" id="charts"></div>
 <details><summary>Table view (every commit, newest first)</summary><div class="scroll"><table id="tbl"></table></div></details>
 <h1 class="sec" id="c-coverage">ROM bytes built from C</h1>
@@ -386,13 +411,27 @@ function chart(title, note, series, opts) {
   svg.addEventListener("mouseleave", () => { tip.style.display = "none"; cross.setAttribute("visibility", "hidden"); });
   document.getElementById(opts.into || "charts").appendChild(card);
 }
-function drawAll() { document.getElementById("charts").innerHTML = ""; document.getElementById("cov-charts").innerHTML = ""; charts(); covCharts(); }
+function drawAll() { document.getElementById("charts").innerHTML = ""; document.getElementById("cov-charts").innerHTML = ""; document.getElementById("stage-charts").innerHTML = ""; stageCharts(); charts(); covCharts(); }
 for (const [id, v] of [["ax-commit", "commit"], ["ax-time", "time"]]) document.getElementById(id).addEventListener("click", () => {
   AXIS = v; try { localStorage.setItem("cc900-axis", v); } catch (e) {}
   document.getElementById("ax-commit").setAttribute("aria-pressed", v === "commit"); document.getElementById("ax-time").setAttribute("aria-pressed", v === "time"); drawAll(); });
 document.getElementById("ax-commit").setAttribute("aria-pressed", AXIS === "commit"); document.getElementById("ax-time").setAttribute("aria-pressed", AXIS === "time");
 const bySet = (prefix, pct) => SETS.map(s => ({ name: LABEL[s], short: LABEL[s], c: COLOR[s],
   v: R.map(r => val(r, prefix + "/" + s, pct)), raw: R.map(r => r.scores[prefix + "/" + s] || null) }));
+function stageCharts() {
+  const ST = DATA.stages || [];
+  if (!ST.length) { document.getElementById("stage-charts").innerHTML = "<p>No stage measurement recorded yet.</p>"; return; }
+  const NAMES = [...new Set(ST.map(r => r.stage))].sort();
+  const DESC = {S1: "S1 IR -> -zio, functions", S2: "S2 -zio -> -zim, functions", S3: "S3 named variables' registers", S4: "S4 code, functions"};
+  const cur = {};
+  const vals = ST.map(r => { cur[r.stage] = r; return Object.assign({}, cur); });
+  chart("Stages: share exact", "Each stage's exact share against V4.23's own output, given V4.23's own input. A point is one measurement of one stage; the other lines carry their last value forward. The tooltip gives the counts.",
+    NAMES.map((k, j) => ({ name: DESC[k] || k, short: k, c: `var(--series-${(j % 10) + 1})`,
+      v: vals.map(m => m[k] ? 100 * m[k].exact / m[k].total : null),
+      extra: i => vals[i][k] ? `${vals[i][k].exact} / ${vals[i][k].total} ${vals[i][k].unit}` : "–" })),
+    { rows: ST, zero: true, pct: true, fmt: v => v == null ? "–" : v.toFixed(1) + " %", into: "stage-charts", right: 110, good: "▲ progress = lines going up; S4 is the code itself" });
+}
+stageCharts();
 function charts() {
 chart("Random programs: exact functions", "Four generated corpora, 800 functions per option set. Phase 3a asks for 95 % (760).", bySet("random", false), { zero: true, target: 760, max: 760, good: "▲ progress = lines going up, to the dashed target (760 of 800)" });
 chart("1997 library: exact functions", "Toshiba's own C library sources at -O3 -XS, 248 functions. Phase 3a asks for all of them.",
@@ -501,7 +540,8 @@ def main():
     if not rows: sys.exit('no ledger history found')
     import datetime
     cov = collect_coverage()
-    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions(), 'coverage': cov, 'progress': collect_progress()}))
+    page = (PAGE.replace('__DATA__', json.dumps({'rows': rows, 'breaks': interruptions(), 'coverage': cov, 'progress': collect_progress(),
+                                              'stages': collect_stages()}))
             .replace('__FLAT__', str(sum(1 for r in rows if not r['moved'])))
             .replace('__N__', str(len(rows))).replace('__FIRST__', rows[0]['date'][:10]).replace('__LAST__', rows[-1]['date'][:10])
             .replace('__NOW__', datetime.datetime.now().strftime('%Y-%m-%d %H:%M')))

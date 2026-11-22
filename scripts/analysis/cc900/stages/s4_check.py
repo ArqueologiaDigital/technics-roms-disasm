@@ -5,7 +5,7 @@
 QUESTION ANSWERED: for how many functions does our instruction selection write V4.23's exact code (given V4.23's own
 S3); refusals by reason and first differences by mnemonic, as a worklist.  Counts only.
 
-    python3 -B scripts/analysis/cc900/stages/s4_check.py [--labels Xr,...] RUN_DIR [RUN_DIR ...]
+    python3 -B scripts/analysis/cc900/stages/s4_check.py [--labels Xr,...] [--record] RUN_DIR [RUN_DIR ...]
 """
 import collections
 import glob
@@ -57,6 +57,8 @@ def main():
     labels = None
     if '--labels' in a:
         i = a.index('--labels'); labels = set(a[i + 1].split(',')); a = a[:i] + a[i + 2:]
+    record = '--record' in a
+    a = [x for x in a if x != '--record']
     files = [z for r in a for z in sorted(glob.glob(os.path.join(r, 'out', '*', '*', '**', '*_zimg.asm'), recursive=True))
              if not labels or os.path.relpath(z, os.path.join(r, 'out')).split(os.sep)[1] in labels]
     c, first = collections.Counter(), collections.Counter()
@@ -65,6 +67,9 @@ def main():
             c.update(c1)
             first.update(f1)
     print(' '.join('%s %d' % kv for kv in sorted(c.items())))
+    if record:                                       # a point on the dashboard (results/stage_scores.tsv)
+        import stage_scores
+        stage_scores.record('S4', c['exact'], c['functions'], 'functions', 'refused %d' % c['refused'])
     print('\nrefusals and first differences (thc2, ours):')
     for k, v in first.most_common(25):
         print('  %5d %s' % (v, k))

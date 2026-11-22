@@ -1,5 +1,6 @@
 #!/bin/sh
-# After a commit that changes the cc900 model or its results (a round, whether or not a score moved), rebuild the local score dashboard
+# After a commit that changes the cc900 model, its results or the stage rebuild (stages/; a round, whether or not a
+# score moved), rebuild the local score dashboard
 # (scripts/analysis/cc900/dashboard.py -> ~/compartilhado/tmp/cc900-dashboard/index.html) in the background, so the
 # page served by `dashboard.py --serve` shows the new round without anyone re-running it.  Never fails a commit.
 root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
@@ -8,7 +9,7 @@ root=$(git rev-parse --show-toplevel 2>/dev/null) || exit 0
 [ "$root" = "$HOME/compartilhado/technics-roms-disasm" ] || exit 0
 [ "$(git rev-parse --abbrev-ref HEAD 2>/dev/null)" = main ] || exit 0
 if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null |
-        grep -qE '^scripts/analysis/cc900/(model|results)/'; then
+        grep -qE '^scripts/analysis/cc900/(model|results|stages)/'; then
     out="$HOME/compartilhado/tmp/cc900-dashboard"
     mkdir -p "$out" 2>/dev/null
     # setsid + nohup: a plain background child dies with the committing shell's process group (Claude Code ends the

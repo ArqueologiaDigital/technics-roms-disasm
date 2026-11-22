@@ -5,7 +5,7 @@ thc2's own -zim dump, against thc2's -g storage record (job_i2.sh runs with the 
 QUESTION ANSWERED: for how many named variables (and functions, all variables right) does our allocation equal
 V4.23's; the most frequent (truth, ours) pairs as a worklist.  Counts only.
 
-    python3 -B scripts/analysis/cc900/stages/s3_check.py [--labels Xr,...] RUN_DIR [RUN_DIR ...]
+    python3 -B scripts/analysis/cc900/stages/s3_check.py [--labels Xr,...] [--record] RUN_DIR [RUN_DIR ...]
 -g records pair with -zim functions in order; the C name maps to I<n> / P<n> by the record of kind 7
 (flag 1: a local, I = value - 1; flag 0 and value >= 9: a parameter, P = value - 9).
 """
@@ -124,6 +124,8 @@ def main():
     labels = None
     if '--labels' in a:
         i = a.index('--labels'); labels = set(a[i + 1].split(',')); a = a[:i] + a[i + 2:]
+    record = '--record' in a
+    a = [x for x in a if x != '--record']
     files = []
     for r in a:
         for z in sorted(glob.glob(os.path.join(r, 'out', '*', '*', '**', '*_zimg.asm'), recursive=True)):
@@ -136,6 +138,10 @@ def main():
             c.update(c1)
             pairs.update(p1)
     print(' '.join('%s %d' % kv for kv in sorted(c.items())))
+    if record:                                       # a point on the dashboard (results/stage_scores.tsv)
+        import stage_scores
+        stage_scores.record('S3', c['right'], c['variables'], 'variables',
+                            'functions all right %d / %d' % (c['functions all right'], c['functions']))
     print('\nmost frequent (kind, V4.23, ours):')
     for k, v in pairs.most_common(20):
         print('  %5d %s' % (v, k))
