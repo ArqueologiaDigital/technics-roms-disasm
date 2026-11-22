@@ -21,6 +21,9 @@ FAM = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 
 SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
 ARGREG = ['XWA', 'XBC', 'XDE']
 RETURN_HL = True
+BYTE_QIZH = True
+LOCAL_DIR = -1
+LOCAL_ORDER = ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY')
 
 
 def size_of(full):
@@ -49,13 +52,16 @@ def allocate(zim):
     out = {}
     xiz = 2                                          # IZ / QIZ halves free
     params = sorted([n for n in names if n.startswith('P')], key=lambda n: int(n[1:]))
-    locs = sorted([n for n in names if n.startswith('I')], key=lambda n: -int(n[1:]))
+    locs = sorted([n for n in names if n.startswith('I')], key=lambda n: LOCAL_DIR * int(n[1:]))
     across = {n for n in names if not names[n][1] and flow.live_across_call(recs, n)}
     for n in sorted([x for x in locs if x in across], key=lambda n: int(n[1:])) + [p for p in params if p in across]:
         size = size_of(names[n][0])
         need = 2 if size == 4 else 1
         if need <= xiz:
-            out[n] = 'XIZ' if size == 4 else ('IZ' if xiz == 2 else 'QIZ')
+            if size == 1 and BYTE_QIZH:
+                out[n] = 'QIZH' if xiz == 2 else 'IZL'   # a byte kept across calls: the high byte of QIZ first
+            else:
+                out[n] = 'XIZ' if size == 4 else ('IZ' if xiz == 2 else 'QIZ')
             xiz -= need
     used = set()
     for n in params:
@@ -64,7 +70,7 @@ def allocate(zim):
         elif n not in out and int(n[1:]) < 3:
             out[n] = reg(ARGREG[int(n[1:])], size_of(names[n][0]))
             used.add(ARGREG[int(n[1:])])
-    order = ['XBC', 'XDE', 'XHL', 'XIX', 'XIY']
+    order = list(LOCAL_ORDER)
     for n in locs:
         if names[n][1]:
             out[n] = 'stack'
