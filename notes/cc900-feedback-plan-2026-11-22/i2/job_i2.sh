@@ -51,21 +51,14 @@ while IFS='|' read -r name tarball; do
             hdrs=$(cd "$C/SRC/$sdir" && find . -type f \( -name '*.h' -o -name '*.H' \) | sed 's|^\./||')
             for h in $hdrs; do mkdir -p "$d/$(dirname "$h")"; cp "$C/SRC/$sdir/$h" "$d/$h"; done
             winsrc=$(printf '%s' "$src" | tr '/' '\\')
-            # the watcher: hard-link every temporary file of the driver as soon as it appears (a link keeps the data
-            # after the driver deletes the name, and shows the final contents); the one thc2 read is picked below
-            K="$d/.keep"; mkdir -p "$K"
-            ( while :; do
-                  for t in $(ls "$TEMPDIR" 2>/dev/null); do
-                      [ -e "$K/$t" ] || ln "$TEMPDIR/$t" "$K/$t" 2>/dev/null
-                  done
-                  [ -e "$d/.stop" ] && break
-                  sleep 0.005
-              done ) &
-            w=$!
+            # thc1's output: Wine's Temp directory is append-only while the driver runs (chattr +a, root in the guest),
+            # so the driver cannot delete its temporary files; the one thc2 read is copied below and the directory
+            # emptied by this job.  (A watcher that hard-linked new files lost about 15 % of them: runs 46-49.)
+            chattr -a "$TEMPDIR"; find "$TEMPDIR" -maxdepth 1 -type f -delete; chattr +a "$TEMPDIR"
             ( cd "$d" && WINEDEBUG=+process timeout 120 wine "C:\\CC\\$name\\BIN\\CC900.EXE" $flags \
                   -I"C:\\CC\\$name\\INCLUDE" \
                   -I"C:\\SRC\\$(dirname "$winsrc")" -S "$file" >"$base.trace" 2>&1; echo "exit $?" >"$base.cc.log" )
-            : > "$d/.stop"; wait $w; rm -f -- "${d:?}/.stop"
+            chattr -a "$TEMPDIR"
             grep -a -o 'cmdline L"thc2 [^"]*"' "$d/$base.trace" | head -1 \
                 | sed 's/^cmdline L"thc2 //; s/"$//; s/\\\\/\\/g' > "$d/$base.thc2args.txt"
             grep -a -v ':trace:' "$d/$base.trace" >> "$d/$base.cc.log"
@@ -73,8 +66,8 @@ while IFS='|' read -r name tarball; do
             for h in $hdrs; do rm -f -- "${d:?}/${h:?}"; done
             [ -s "$d/$base.thc2args.txt" ] || { echo "no thc2 command line for $name $label $src"; continue; }
             tin=$(awk '{ print $(NF - 1) }' "$d/$base.thc2args.txt" | sed 's/.*\\//')
-            [ -n "$tin" ] && [ -s "$K/$tin" ] && cp "$K/$tin" "$d/$base.inter"
-            rm -rf -- "${K:?}"
+            [ -n "$tin" ] && [ -s "$TEMPDIR/$tin" ] && cp "$TEMPDIR/$tin" "$d/$base.inter"
+            find "$TEMPDIR" -maxdepth 1 -type f -delete
             [ -s "$d/$base.inter" ] || { echo "no intermediate for $name $label $src"; continue; }
             # the driver's thc2 arguments without the last two (input, output)
             args=$(awk '{ for (i = 1; i <= NF - 2; i++) printf "%s ", $i }' "$d/$base.thc2args.txt")
