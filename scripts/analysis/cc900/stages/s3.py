@@ -24,6 +24,8 @@ RETURN_HL = True
 INTERFERENCE = True
 AVOID_WA_TEMPS = True
 TEMP_FAMS = 4
+OP_CLOBBERS = True
+BYTE_HIGH = True
 TEMPS_FIRST = False                                 # tested: temporaries coloured first lose 197-257 variables
 TEMP_DIR = 1
 CALL_RESULT_HL = True
@@ -90,10 +92,29 @@ def allocate(zim):
             if r.res and re.match(r'^T\d+\(', r.res):
                 after = lives[i + 1] if i + 1 < len(recs) else set()
                 k = len({x for x in after if x.startswith('T')} | {r.res.split('(')[0]})
-                fams = ['XWA', 'XBC', 'XDE', 'XHL'][:min(k, TEMP_FAMS)]
+                held = set()                         # families of parameters live there are not the temporaries'
+                for x in (lives[i] | after):
+                    if x.startswith('P') and x in out:
+                        held |= {f for f, fam in FAM.items() if out[x] in fam}
+                fams = [f for f in ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY') if f not in held][:min(k, TEMP_FAMS)]
                 for x in after:
                     if not x.startswith('T'):
                         busy.setdefault(x, set()).update(fams)
+    if OP_CLOBBERS:                                  # instructions that clobber fixed registers (thc2's allocator):
+        lives2 = flow.live_sets(recs, list(names))   # what is live across them avoids those registers
+        for i, r in enumerate(recs):
+            fams = ()
+            if r.op == 'AARG' and r.extra and re.match(r'^#0,(\d+)$', r.extra):
+                k = int(r.extra.split(',')[1])
+                fams = (ARGREG[k - 1],) if 1 <= k <= 3 else ()
+            elif r.op in ('LDIR', 'LDDR'):
+                fams = ('XBC', 'XIX', 'XIY')
+            elif r.op == 'Switch':
+                fams = ('XIX',)
+            if fams:
+                after = lives2[i + 1] if i + 1 < len(recs) else set()
+                for x in after:
+                    busy.setdefault(x, set()).update(fams)
     owner = {}                                       # family -> variables holding it (for sharing when disjoint)
     for n, r_ in out.items():
         for f, fam in FAM.items():
@@ -124,4 +145,12 @@ def allocate(zim):
             used.add(f)
             owner.setdefault(f, set()).add(n)
             break
+        if n not in out and size == 1 and BYTE_HIGH:   # a byte: the high byte of a family whose low part a
+            for f, hi in (('XWA', 'W'), ('XBC', 'B'), ('XDE', 'D'), ('XHL', 'H')):   # temporary holds
+                blockers = {v for v in owner.get(f, set()) & inter.get(n, set()) if size_of(names[v][0]) > 1} \
+                    if inter is not None else set()
+                if not blockers and (f in busy.get(n, ()) or owner.get(f)):
+                    out[n] = hi
+                    owner.setdefault(f, set()).add(n)
+                    break
     return out

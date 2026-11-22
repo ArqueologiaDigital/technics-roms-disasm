@@ -45,34 +45,46 @@ def truth(path):
     return out
 
 
+def one_file(z):
+    """(counts, pairs) for one -zimg listing"""
+    c, pairs = collections.Counter(), collections.Counter()
+    zims, tr = s1_check.zio_functions(z), truth(z)
+    if len(zims) != len(tr):
+        c['unpaired files'] += 1
+        return c, pairs
+    for zim, (fn, t) in zip(zims, tr):
+        ours = s3.allocate(zim)
+        ok = True
+        for n, want in t.items():
+            got = ours.get(n, '?')
+            c['variables'] += 1
+            if got == want:
+                c['right'] += 1
+            else:
+                ok = False
+                pairs[(n[0], want, got)] += 1
+        c['functions'] += 1
+        c['functions all right'] += ok
+    return c, pairs
+
+
 def main():
+    import multiprocessing
     a = sys.argv[1:]
     labels = None
     if '--labels' in a:
         i = a.index('--labels'); labels = set(a[i + 1].split(',')); a = a[:i] + a[i + 2:]
-    c, pairs = collections.Counter(), collections.Counter()
+    files = []
     for r in a:
         for z in sorted(glob.glob(os.path.join(r, 'out', '*', '*', '**', '*_zimg.asm'), recursive=True)):
             label = os.path.relpath(z, os.path.join(r, 'out')).split(os.sep)[1]
-            if labels and label not in labels:
-                continue
-            zims, tr = s1_check.zio_functions(z), truth(z)
-            if len(zims) != len(tr):
-                c['unpaired files'] += 1
-                continue
-            for zim, (fn, t) in zip(zims, tr):
-                ours = s3.allocate(zim)
-                ok = True
-                for n, want in t.items():
-                    got = ours.get(n, '?')
-                    c['variables'] += 1
-                    if got == want:
-                        c['right'] += 1
-                    else:
-                        ok = False
-                        pairs[(n[0], want, got)] += 1
-                c['functions'] += 1
-                c['functions all right'] += ok
+            if not labels or label in labels:
+                files.append(z)
+    c, pairs = collections.Counter(), collections.Counter()
+    with multiprocessing.Pool(8) as pool:
+        for c1, p1 in pool.imap_unordered(one_file, files, chunksize=4):
+            c.update(c1)
+            pairs.update(p1)
     print(' '.join('%s %d' % kv for kv in sorted(c.items())))
     print('\nmost frequent (kind, V4.23, ours):')
     for k, v in pairs.most_common(20):
