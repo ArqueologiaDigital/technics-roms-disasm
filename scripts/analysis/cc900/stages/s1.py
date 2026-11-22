@@ -283,11 +283,22 @@ def rewrite(F):
             v = int(m.group(3)) if m else None
             if v is not None and op == '&=':
                 v = ~v & ((1 << bits) - 1)
-            if v is not None and bits == 8 and pow2('#%d' % v) is not None and v < (1 << bits):
+            if v is not None and (bits == 8 or re.match(r'^[IP]\d+$', fl[1])) and pow2('#%d' % v) is not None and \
+                    v < (1 << bits):
                 out.append(('BSET' if op == '|=' else 'BCLR', fl[1], '#%s%s%d' % (m.group(1), m.group(2), pow2('#%d' % v)),
                             None))
                 i += 1
                 continue
+        if op in ('+=', '-=') and re.match(r'^#[LC]?U?([1-8])$', fl[2]):
+            out.append(('++' if op == '+=' else '--', fl[1], fl[2], None))   # INC / DEC take 1..8
+            i += 1
+            continue
+        if op in ('*=', '/=', '%=') and 1 <= F.vtype(fl[1]) <= 12 and SIZE[F.vtype(fl[1])] == 4:
+            rt = F.vtype(fl[1])
+            helper = {'*=': 'mul', '/=': 'div', '%=': 'rem'}[op] + ('lu' if SIGNED.get(rt) is False else 'ls')
+            out.append(('ARICALL', fl[1], fl[1], fl[2], 'C9H_' + helper))
+            i += 1
+            continue
         if op in COMPOUND:
             o = op
             if op == '=':
@@ -369,12 +380,26 @@ def rewrite(F):
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
                 and F.typ(r[1]) == F.typ(r[2]) and (re.match(r'^([IP]\d+|A)$', r[1]) or
-                                                    r[1].startswith('@') and res[-1][0] != 'ADDR'):
+                                                    r[1].startswith('@') and res[-1][0] not in ('ADDR', 'CONV')):
             prev = res.pop()
+            r = (prev[0], r[1]) + prev[2:]          # (and the chain rule below may apply to the folded line)
+        if CHAIN_COMPOUND and r[0] in BINARY and r[1] and re.match(r'^([IP]\d+|A)$', r[1]) and r[2] and \
+                r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 and \
+                (r[3] or '').lstrip('*&') != r[1] and F.typ(r[1]) == F.typ(r[2]) and res[-1][0] not in ('ADDR',):
+            prev = res.pop()                         # T = ...; X = T op y  ->  X = ...; X op= y
             res.append((prev[0], r[1]) + prev[2:])
+            rt = num(F.typ(r[1]))
+            if r[0] in ('*', '/', '%') and 1 <= rt <= 12 and SIZE[rt] == 4:
+                helper = {'*': 'mul', '/': 'div', '%': 'rem'}[r[0]] + ('lu' if SIGNED.get(rt) is False else 'ls')
+                res.append(('ARICALL', r[1], r[1], r[3], 'C9H_' + helper))
+            else:
+                res.append((r[0] + '=', r[1], r[3], None))
             continue
         res.append(r)
     return res
+
+
+CHAIN_COMPOUND = True
 
 
 def number(F, recs):
