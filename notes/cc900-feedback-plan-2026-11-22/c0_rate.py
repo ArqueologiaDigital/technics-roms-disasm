@@ -71,6 +71,9 @@ def child(mdir):
     """in a fresh process: c_build_coverage.firmware('v10', ...) with the snapshot's model modules"""
     sys.path.insert(0, CC)
     import c_build_coverage as cbc
+    sys.path.insert(0, os.path.join(CC, 'model'))
+    import check_bytes  # noqa: F401  the current comparison helper (older snapshots' was a script that ran on import)
+    sys.path.pop(0)
     for m in MODEL_MODULES:                       # the build's helpers stay; the model's modules come from mdir
         if m != 'check_bytes':
             sys.modules.pop(m, None)
@@ -100,18 +103,24 @@ def main():
     if a and a[0] == '--child':
         return child(a[1])
     commits = a or SNAPSHOTS
-    rows = []
+    rows, series = [], []
     for c in commits:
         mdir = extract(c)
         date = git('log', '-1', '--format=%ad', '--date=format:%Y-%m-%d %H:%M', c).strip()
-        v = validation(mdir)
-        r = subprocess.run([sys.executable, '-B', os.path.abspath(__file__), '--child', mdir], capture_output=True,
-                           text=True)
+        cache_p = os.path.join(SCRATCH, c, 'result.json')     # a snapshot's scores never change: kept per commit
         try:
-            fwr = json.loads(r.stdout.strip().splitlines()[-1])
-        except (ValueError, IndexError):
-            fwr = dict(built=0, built_b=0, model=0, model_b=0)
-            sys.stderr.write('%s firmware: %s\n' % (c, r.stderr[-400:]))
+            v, fwr = json.load(open(cache_p))
+        except (OSError, ValueError):
+            v = validation(mdir)
+            r = subprocess.run([sys.executable, '-B', os.path.abspath(__file__), '--child', mdir], capture_output=True,
+                               text=True)
+            try:
+                fwr = json.loads(r.stdout.strip().splitlines()[-1])
+                json.dump([v, fwr], open(cache_p, 'w'))
+            except (ValueError, IndexError):
+                fwr = dict(built=0, built_b=0, model=0, model_b=0)
+                sys.stderr.write('%s firmware: %s\n' % (c, r.stderr[-400:]))
+        series.append((batch_at(c), sum(v.values()), fwr))
         rows.append((c, date, batch_at(c), v.get('none', ''), v.get('O3XS', ''), v.get('Xr', ''), v.get('O3XSXr', ''),
                      '%d / %d' % (fwr['model'], fwr['built']), '%d / %d' % (fwr['model_b'], fwr['built_b'])))
         sys.stderr.write('%s done\n' % c)
@@ -120,6 +129,26 @@ def main():
                 rows))
     print('\nval: validation functions exact of 600 per option set (val_agg.py).  v10 built: functions the build makes '
           'from C with V4.23 that the snapshot also reproduces, of all such functions (the current C files).')
+    series = [x for x in series if x[0] is not None and x[2]['built']]
+    if len(series) >= 2:
+        (b0, v0, f0), (b1, v1, f1) = series[0], series[-1]
+        nb = b1 - b0
+        fn_rate, b_rate, v_rate = (f1['model'] - f0['model']) / nb, (f1['model_b'] - f0['model_b']) / nb, (v1 - v0) / nb
+        left_fn, left_b = f1['built'] - f1['model'], f1['built_b'] - f1['model_b']
+        tail = [x for x in series if x[0] >= b1 - 30]
+        tb = tail[-1][0] - tail[0][0]
+        print('\n## C0: the estimate\n')
+        print(table(('measure', 'batch %d' % b0, 'batch %d' % b1, 'gain per batch', 'left', 'batches at that rate'), [
+            ('v10 built functions reproduced', f0['model'], f1['model'], '%.3f' % fn_rate, left_fn,
+             '%.0f' % (left_fn / fn_rate) if fn_rate > 0 else 'never'),
+            ('their ROM bytes', f0['model_b'], f1['model_b'], '%.2f' % b_rate, left_b,
+             '%.0f' % (left_b / b_rate) if b_rate > 0 else 'never'),
+            ('validation exact, four sets summed (of 2,400)', v0, v1, '%.3f' % v_rate, 2400 - v1,
+             '%.0f' % ((2400 - v1) / v_rate) if v_rate > 0 else 'never')]))
+        if tb > 0:
+            print('\nOver the last %d batches (%d to %d) validation gained %.3f per batch and the firmware %.3f functions '
+                  'per batch.' % (tb, tail[0][0], tail[-1][0], (tail[-1][1] - tail[0][1]) / tb,
+                                  (tail[-1][2]['model'] - tail[0][2]['model']) / tb))
 
 
 if __name__ == '__main__':

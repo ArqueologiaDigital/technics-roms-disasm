@@ -54,3 +54,21 @@ and llvm-mc (`../results/pairs_v423_llvm_kn5000.tsv`; `make cc900-c-coverage` ru
 
 `../results/model_ledger.md` records the scores; `sh model/ledger.sh` (from `scripts/analysis/cc900`) regenerates them.  The oracle
 directories are `~/compartilhado/cc900-oracle/runs/2026-11-08-7-micro/out/<compiler>/<options>`.
+
+## Effort estimate before resuming (feedback plan step C0, 2026-11-22)
+
+`notes/cc900-feedback-plan-2026-11-22/c0_rate.py` scores nine snapshots of this directory, taken from git between
+batch 72 and batch 366, on the validation corpus (never tuned on) and on the 1,738 v10 functions the build makes from C
+with V4.23 (output `c0.md` beside the script).  Each snapshot uses its own `to_llvm.py`.
+
+| measure                                       | batch 72 | batch 366 | gain per batch | left    | batches at that rate |
+|-----------------------------------------------|----------|-----------|----------------|---------|----------------------|
+| v10 built functions reproduced                | 456      | 475       | 0.065          | 1,263   | 19,543               |
+| their ROM bytes                               | 6,525    | 7,424     | 3.06           | 119,639 | 39,126               |
+| validation exact, four sets summed (of 2,400) | 120      | 261       | 0.480          | 2,139   | 4,460                |
+
+Over the last 25 batches (341-366, the first ones driven partly by the firmware lanes' rules) the firmware gained 0.32
+functions per batch and validation 0.16.  Even at 0.32, parity on the built v10 functions is about 3,900 batches, some
+65 days at phase 3a's pace of about 60 batches a day.  So batches judged on micro corpora are no route to the
+firmware; the plan's C1-C3 (firmware attempts as training data, scored per function) are its test, and C5's stop rule
+applies.  This meets the condition the plan set for revisiting decision E4 (black-box only).
