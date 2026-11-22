@@ -67,14 +67,13 @@ def main():
             if not os.path.exists(z):
                 continue
             theirs = zio_functions(z)
-            u = s0.load(inter)
-            st = s1.symtypes(u)
-            if len(theirs) != len(u.functions):
-                count[(label, 'count mismatch')] += len(u.functions)
+            fns = s1.functions(inter)
+            if len(theirs) != len(fns):
+                count[(label, 'count mismatch')] += len(fns)
                 continue
-            for f, t in zip(u.functions, theirs):
+            for (f, F), t in zip(fns, theirs):
                 try:
-                    ours = s1.s1_text(s1.Fn(f, st))
+                    ours = s1.s1_text(F)
                 except Exception as ex:                      # our stage fails: counted, never hidden
                     count[(label, 'error')] += 1
                     first[('error', type(ex).__name__)] += 1
