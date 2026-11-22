@@ -29284,46 +29284,9 @@ SeqPart_ReplayForward:	.include "includes/generated/cc900/SeqPart_ReplayForward.
 	.set	SeqPart_ReplayEnd, SeqPart_ReplayForward + 78
 	.set	SeqPart_ReplayReturn, SeqPart_ReplayForward + 93
 
-SeqPart_Splice:
-	dec 4, xsp
-	ld (SEQ_ERROR_CODE:16), 0
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr SeqPart_CountEventsInRange
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ld	wa, (SEQ_OP_DEST_MEASURE:16)
-	sub wa, (xsp + 2)
-	dec 1, wa
-	ld	(0x27da:16), wa
-	ld wa, (xsp + 2)
-	calr SeqPart_ComputeStepCount
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ldmm16	9858, 9794
-	ldmm16	9864, 9796
-	call SeqBuf_ComputePageLayout
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ldmm16	9874, 9886
-	ld	xwa, (9888:16)
-	ld	(9876:16), wa
-	calr SeqPart_ReplayForward
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ld	a, (9784:16)
-	extz wa
-	ld	(0x2861:16), wa
-	ldmm16	9796, SEQOP_SECONDARY_OFFSET
-	ld	wa, (SEQOP_SECONDARY_BLOCK:16)
-	ld	(9794:16), wa
-	ld	bc, (9796:16)
-	extz bc
-	call Part_WriteWordAndByte
-
-SeqPart_SpliceReturn:
-	inc 4, xsp
-	ret
+SeqPart_Splice:	.include "includes/generated/cc900/SeqPart_Splice.s"	; C: cc900/sequencer_engine_m236_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_SpliceReturn, SeqPart_Splice + 129
 
 SeqPart_RestoreState:
 	ld	c, (9784:16)

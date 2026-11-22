@@ -711,48 +711,11 @@ IntMed_Exit:
 	inc 8, xsp
 	ret
 
-FmmDiskMedley1Func:
-	pushw iz
-	cp xbc, EVT_PAINT
-	jr z, DiskMed1_InitLoop
-	cp xbc, EVT_PS_FILE_NAME_BOX_ID
-	jr nz, DiskMed1_Exit
-	ld (0x8332:16), xde
-	jr DiskMed1_Exit
-
-DiskMed1_InitLoop:
-	ld iz, 0:i3
-
-DiskMed1_FormatLoop:
-	ld wa, iz
-	sll wa, 3
-	lda xbc, (0x8336:16)
-	extz xwa
-	add xwa, xbc
-	lda xbc, (0x8926:16)
-	ld de, iz
-	extz xde
-	add xde, xbc
-	ld c, (xde)
-	extz bc
-	ld de, iz
-	calr FormatMedleyNumber
-	ld de, iz
-	sll de, 3
-	lda xwa, (0x8336:16)
-	extz xde
-	add xde, xwa
-	ld xwa, (0x8332:16)
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-	inc 1, iz
-	cp iz, 0xa
-	jr c, DiskMed1_FormatLoop
-
-DiskMed1_Exit:
-	ld xhl, 0:i3
-	popw iz
-	ret
+FmmDiskMedley1Func:	.include "includes/generated/cc900/FmmDiskMedley1Func.s"	; C: cc900/medley_m269_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DiskMed1_InitLoop, FmmDiskMedley1Func + 23
+	.set	DiskMed1_FormatLoop, FmmDiskMedley1Func + 25
+	.set	DiskMed1_Exit, FmmDiskMedley1Func + 91
 
 FmmDiskMedley2Func:
 	pushw iz
