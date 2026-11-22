@@ -147,6 +147,32 @@ def pow2(c):
     return v.bit_length() - 1 if v and v & (v - 1) == 0 else None
 
 
+def mul_steps(res, x, c, pre='LU'):
+    """res = x * c (c with one or two set bits) as thc2 expands it: the bits from the top; a single doubling is an
+    add of the value to itself, a run of k doublings one shift by k, and each set bit adds x; the first step is
+    three-address (from x), the others compound"""
+    steps, first, pend = [], True, 0
+
+    def flush(k):
+        nonlocal first
+        if k == 1:
+            steps.append(('+', res, x, x) if first else ('+=', res, res, None))
+        elif k > 1:
+            steps.append(('<<', res, x, '#%s%d' % (pre, k)) if first else ('<<=', res, '#%s%d' % (pre, k), None))
+        if k:
+            first = False
+    for bit in bin(c)[3:]:
+        pend += 1
+        if bit == '1':
+            flush(pend)
+            pend = 0
+            steps.append(('+=', res, x, None))
+    flush(pend)
+    if not steps:
+        steps.append(('=', res, x, None))
+    return steps
+
+
 def rewrite(F):
     """the S1 list of (op, result, a, b) tuples, operands in thc1's spelling"""
     T = F.types
@@ -221,6 +247,11 @@ def rewrite(F):
         elif op in BINARY:
             pa, pb = T and T.is_ptr(F.typ(fl[1])), T and T.is_ptr(F.typ(fl[2]))
             rt = F.vtype(fl[3])
+            cm = re.match(r'^#[LC]?U?(\d+)$', fl[2]) if op == '*' else None
+            if cm and 1 <= rt <= 12 and SIZE[rt] == 4 and 0 < int(cm.group(1)) and bin(int(cm.group(1))).count('1') <= 2:
+                out.extend(mul_steps(fl[3], fl[1], int(cm.group(1)), 'LU' if SIGNED.get(rt) is False else 'L'))
+                i += 1                                                  # two set bits: shifts and adds
+                continue
             if op in ('*', '/', '%') and 1 <= rt <= 12 and SIZE[rt] == 4:
                 helper = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('lu' if SIGNED.get(rt) is False else 'ls')
                 out.append(('ARICALL', fl[3], fl[1], fl[2], 'C9H_' + helper))   # a 4-byte multiply / divide:
@@ -386,10 +417,10 @@ def fmt(F, r, inv, defs):
     if op in COMPOUND or op in ('++', '--', 'BSET', 'BCLR') or op in BRANCHES and op not in ('JRBC', 'JRBS'):
         ct = ctype(F, res if op not in BRANCHES else a, inv) if op not in BRANCHES else \
             (ctype(F, a, inv) or ctype(F, b, inv))
-        S = lambda x: show(F, x, inv, defs, ct)
+        S = lambda x: show(F, x, inv, defs, ct if op not in ('<<', '>>') else None)
     elif op in CMP:
         ct = ctype(F, a, inv) or ctype(F, b, inv)
-        S = lambda x: show(F, x, inv, defs, ct)
+        S = lambda x: show(F, x, inv, defs, ct if op not in ('<<', '>>') else None)
         return '%s %s %s,%s' % (S(res), op, S(a), S(b))
     elif op in BINARY:
         ct = ctype(F, res, inv)
