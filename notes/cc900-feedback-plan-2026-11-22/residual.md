@@ -2,42 +2,53 @@
 
 | state (best attempt) | functions | ROM B   |
 |----------------------|-----------|---------|
-| built                | 10818     | 1081482 |
-| MATCH                | 203       | 16208   |
-| NEAR                 | 573       | 100413  |
-| DIFF                 | 272       | 33034   |
+| built                | 12773     | 1240291 |
+| MATCH                | 41        | 4641    |
+| NEAR                 | 553       | 98563   |
+| DIFF                 | 271       | 32958   |
 | error                | 289       | 0       |
 
-`built`: built from C on main, V4.23 MATCH (any attempt state).  `MATCH`: a MATCH attempt exists but the function is not built (ready.tsv).  NEAR / DIFF / error: never matched, not built.
+`built`: from the build table (every image, v8 included), V4.23 MATCH, also under a name cut to 31.  The other rows: functions of the index (no v8 tree) not built, by best attempt: `MATCH` a matching attempt exists (ready.tsv), NEAR / DIFF / error never matched.  Distinct names: built 2631, residual NEAR + DIFF 772.
 
-## Residual NEAR: 573 functions, 100413 ROM B, by class
+## Residual by image
+
+| image    | NEAR functions | NEAR ROM B | DIFF functions | DIFF ROM B |
+|----------|----------------|------------|----------------|------------|
+| v10      | 422            | 72798      | 236            | 31563      |
+| v142     | 52             | 15327      | 12             | 1048       |
+| v5       | 32             | 3530       | 5              | 76         |
+| hdae5000 | 3              | 3148       | 3              | 59         |
+| v6       | 22             | 2364       | 5              | 76         |
+| v7       | 22             | 1396       | 10             | 136        |
+
+## Residual NEAR: 553 functions, 98563 ROM B, by class
 
 | class        | functions | ROM B | sole | sole ROM B |
 |--------------|-----------|-------|------|------------|
-| register     | 320       | 73457 | 46   | 10374      |
-| other        | 367       | 70179 | 87   | 5902       |
-| order        | 185       | 46442 | 12   | 1574       |
+| register     | 316       | 72835 | 46   | 10374      |
+| other        | 360       | 69309 | 87   | 5902       |
+| order        | 184       | 46399 | 12   | 1574       |
 | operand      | 99        | 26809 | 18   | 3604       |
-| extend       | 108       | 24617 | 2    | 196        |
-| call-form    | 44        | 13822 | 10   | 591        |
+| extend       | 106       | 24480 | 2    | 196        |
+| call-form    | 27        | 12312 | 1    | 44         |
 | loop-shape   | 46        | 11609 | 1    | 145        |
 | size         | 26        | 8068  | 6    | 1610       |
 | address-form | 29        | 6159  | 3    | 162        |
 | swap         | 26        | 5891  | 0    | 0          |
-| length-only  | 20        | 2855  | 6    | 375        |
 | return-form  | 43        | 2654  | 23   | 747        |
+| length-only  | 18        | 2559  | 6    | 375        |
 | arith-type   | 10        | 1782  | 1    | 63         |
 | bit-form     | 12        | 1402  | 4    | 209        |
 | idiom        | 2         | 178   | 0    | 0          |
 | width        | 2         | 64    | 1    | 16         |
 | encoding     | 1         | 21    | 1    | 21         |
 
-## Residual DIFF: 272 functions, 33034 ROM B, by class
+## Residual DIFF: 271 functions, 32958 ROM B, by class
 
 | class        | functions | ROM B | sole | sole ROM B |
 |--------------|-----------|-------|------|------------|
-| register     | 226       | 31614 | 5    | 344        |
-| other        | 227       | 31558 | 10   | 238        |
+| register     | 225       | 31538 | 5    | 344        |
+| other        | 226       | 31482 | 10   | 238        |
 | order        | 119       | 24731 | 0    | 0          |
 | extend       | 126       | 20696 | 0    | 0          |
 | operand      | 91        | 19712 | 1    | 14         |

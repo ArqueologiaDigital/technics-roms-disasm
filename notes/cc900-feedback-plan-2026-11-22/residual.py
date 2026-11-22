@@ -23,7 +23,9 @@ RANK = {'MATCH': 3, 'NEAR': 2, 'DIFF': 1}
 
 
 def built_set():
-    built = set()
+    """(image, function) -> ROM bytes of every function built from C on main whose V4.23 column starts with MATCH
+    (`MATCH` or `MATCH (name cut to 31)`).  All images, v8 included (the index has no v8 tree: v8 is v9's source)."""
+    built = {}
     in_table = False
     with open(COVERAGE, encoding='utf-8') as f:
         for line in f:
@@ -36,9 +38,18 @@ def built_set():
                 cells = [c.strip() for c in line.strip().strip('|').split('|')]
                 if len(cells) < 8 or cells[0].startswith('-'):
                     continue
-                if cells[5] == 'yes' and cells[7] == 'MATCH':
-                    built.add((cells[0], cells[1]))
+                if cells[5] == 'yes' and cells[7].startswith('MATCH'):
+                    try:
+                        size = int(cells[4])
+                    except ValueError:
+                        size = 0
+                    built[(cells[0], cells[1])] = size
     return built
+
+
+def is_built(key, built, built_cut):
+    """V4.23 cuts names to 31 characters; the index may name a function by its cut or its full name."""
+    return key in built or (key[0], key[1][:31]) in built_cut
 
 
 def best_attempts():
@@ -69,17 +80,21 @@ def main():
     if '--list' in sys.argv:
         nlist = int(sys.argv[sys.argv.index('--list') + 1])
     built = built_set()
+    built_cut = {(img, fn[:31]) for img, fn in built}
     best = best_attempts()
-    totals = {}
+    totals = {'built': [len(built), sum(built.values())]}
     residual = []
     for key, (score, status, classes, size, pct, first, run) in best.items():
-        is_built = key in built
-        kind = 'built' if is_built else status if status in RANK else 'error'
+        if is_built(key, built, built_cut):
+            continue
+        kind = status if status in RANK else 'error'
         totals.setdefault(kind, [0, 0])
         totals[kind][0] += 1
         totals[kind][1] += size
-        if not is_built and status in ('NEAR', 'DIFF'):
+        if status in ('NEAR', 'DIFF'):
             residual.append((key, status, classes, size, pct, first, run))
+    names_built = len({fn for img, fn in built})
+    names_residual = len({r[0][1] for r in residual})
 
     def table(rows, head):
         widths = [max(len(str(x)) for x in col) for col in zip(head, *rows)] if rows else [len(h) for h in head]
@@ -93,8 +108,20 @@ def main():
     order = ['built', 'MATCH', 'NEAR', 'DIFF', 'error']
     rows = [(k, totals.get(k, [0, 0])[0], totals.get(k, [0, 0])[1]) for k in order]
     print(table(rows, ('state (best attempt)', 'functions', 'ROM B')))
-    print('\n`built`: built from C on main, V4.23 MATCH (any attempt state).  `MATCH`: a MATCH attempt exists but the'
-          ' function is not built (ready.tsv).  NEAR / DIFF / error: never matched, not built.\n')
+    print('\n`built`: from the build table (every image, v8 included), V4.23 MATCH, also under a name cut to 31.  The'
+          ' other rows: functions of the index (no v8 tree) not built, by best attempt: `MATCH` a matching attempt'
+          ' exists (ready.tsv), NEAR / DIFF / error never matched.  Distinct names: built %d, residual NEAR + DIFF %d.\n'
+          % (names_built, names_residual))
+
+    per_tree = {}
+    for key, st, classes, size, pct, first, run in residual:
+        per_tree.setdefault(key[0], [0, 0, 0, 0])
+        per_tree[key[0]][0 if st == 'NEAR' else 2] += 1
+        per_tree[key[0]][1 if st == 'NEAR' else 3] += size
+    rows = sorted(((t,) + tuple(v) for t, v in per_tree.items()), key=lambda r: -(r[2] + r[4]))
+    print('## Residual by image\n')
+    print(table(rows, ('image', 'NEAR functions', 'NEAR ROM B', 'DIFF functions', 'DIFF ROM B')))
+    print()
 
     for status in ('NEAR', 'DIFF'):
         cls = {}

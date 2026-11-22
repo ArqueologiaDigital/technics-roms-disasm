@@ -1,186 +1,228 @@
-# Plan: turning the C work's results into the Technics-compiler model and the LLVM drop-in (2026-11-22)
+# Plan: turning the C work's results into the Technics-compiler model and the LLVM drop-in (2026-11-22, revised)
 
 **Owner's request (2026-11-22).**  The dashboard's C-coverage curve is flattening.  Part of the reason may be that
 V4.23 is not the compiler Technics used.  The near misses the C lanes collected and classified may show where the two
 compilers differ.  Use them to resume the original task (PLAN.md: model the Toshiba compilers, then build an LLVM
 drop-in replacement), and plan how.
 
-**Short answer.**  The C work's biggest product for the original task is not the near misses but the matches:
-**10,818 functions (1.08 MB of ROM) whose source we now have and whose Technics-compiled bytes V4.23 reproduces
-exactly.**  PLAN.md section 2 expected the firmware to yield only "as many routines as the runtime has" (about 220
-library pairs); the C work multiplied that evidence by about fifty, and it is the right distribution: Matsushita's own
-code at the options it was built with.  The near misses (573 NEAR + 272 DIFF functions, 133 KB) are the second
-product: the place to look for Technics behaviours that V4.23 lacks.  The plan has four steps:
+**Revision.**  The first version (5b202c125) was reviewed by an independent Fable 5.2 subagent at the owner's request.
+The review found errors in `residual.py`'s join (v8 and names cut to 31 were lost), a unit mix in the plateau
+estimate, a tool cited that does not exist, a circular "hand assembly" ceiling, and, most important, that the matched
+functions cannot support a Technics rule, only veto one.  Section 11 lists every change.  The numbers in section 1 are from
+the corrected `residual.py` (output `residual.md`, main at bd5685575).  A few others come from the review's own ad hoc
+counts over committed files (index.tsv attempts and combinations, the option-grid figures of B2, the model's 475 of
+1,735 in v10, the 18 built functions with a non-call-form best attempt); the step that cites each one re-measures it
+with a committed script before it is relied on.
 
-1. **Separate the residual into spelling and compiler** (section 3): recompile it with the 2003 and 2009 compilers
-   the oracle already runs, cluster the remaining differences by signature, and census each candidate in the ROMs.
-2. **Retarget the model to the firmware corpus** (section 4): the 10,818 pairs become its calibration and held-out
-   sets, replacing the random programs that let it overfit (RESUME, 2026-11-15).  The model reproduces 46,547 B of
-   the firmware C today against V4.23's 1,240,291 B: that gap is the work, ranked by bytes.
-3. **Build the `kn5000` personality from the decided rules** and let the build use the model for the functions only
-   it reproduces (section 5); the dashboard's "reference model" row becomes the measure of the inference.
-4. **Port the model to clang** stage by stage (phase3b-design.md design (b)), with the whole firmware C rebuilt by
-   `clang -mcc900-compat=kn5000` byte-identically as the definition of "drop-in" (section 6).
+**Short answer.**  The C work gives the original task three things:
+
+1. **A veto set**: 12,773 functions (1,240,291 B; 2,631 distinct names, the rest are the same function in the six
+   main-CPU versions, the three sub-CPU payloads and the four HD-AE5000 versions) whose Technics-compiled bytes V4.23
+   reproduces from our C.  Any Technics rule that changes their code is wrong.  It is also ground truth for the model's
+   `v4.23` personality, on exactly the code the firmware has: about twelve times the 220 library pairs PLAN.md
+   expected, counted by distinct function.
+2. **The residual**: 553 NEAR (98,563 B) and 271 DIFF (32,958 B) functions, 772 distinct names, almost all in v10
+   (104,361 B there, 10.5 % of v10's code against 12.7 % built).  This is where a Technics behaviour V4.23 lacks can
+   show, and register choice dominates it.
+3. **The tricks**: every C spelling the lanes needed to make V4.23 match (`r ? r : r;`, `volatile float`, lower-case
+   `__asm`, `__near` declarations, declaration order, block-scoped locals).  Each is either ordinary C or a compiler
+   difference in disguise, and none has been checked.
+
+The plan: first measure what the plateau is made of (section 3), then separate spelling from compiler in the
+residual and the tricks (section 4), then retarget the model to the firmware with a leak-free split and a stop rule
+(section 5), then decide Technics rules from evidence that can support them (section 6), and only then port (section 7).
 
 ## 1. What the C work produced, measured
 
-From `residual.py` (beside this file; output `residual.md`), which joins the near-miss index
-(`notes/cc900-c-nearmiss/index.tsv`, 334 oracle runs) with the build's per-function table
-(`scripts/analysis/cc900/results/c_build_coverage.md`, main at 8e4810c58):
+| state of a function, main at bd5685575                        | functions | ROM B     |
+|---------------------------------------------------------------|-----------|-----------|
+| built from C, V4.23 byte-identical (every image, v8 included) | 12,773    | 1,240,291 |
+| a matching attempt exists, not built (staging blockers)       | 41        | 4,641     |
+| best attempt NEAR (≥ 70 % of bytes equal), not built          | 553       | 98,563    |
+| best attempt DIFF, not built                                  | 271       | 32,958    |
+| never compared (translation, data or name errors)             | 289       | 0         |
 
-| state of a function V4.23 compiled from our C        | functions | ROM B     |
-|------------------------------------------------------|-----------|-----------|
-| built from C on main, byte-identical (V4.23 MATCH)   | 10,818    | 1,081,482 |
-| a MATCH attempt exists, not built (staging blockers) | 203       | 16,208    |
-| best attempt NEAR (≥ 70 % of bytes equal), not built | 573       | 100,413   |
-| best attempt DIFF, not built                         | 272       | 33,034    |
-| never compared (translation, data or name errors)    | 289       | 0         |
+| image    | residual NEAR | ROM B  | residual DIFF | ROM B  |
+|----------|---------------|--------|---------------|--------|
+| v10      | 422           | 72,798 | 236           | 31,563 |
+| v142     | 52            | 15,327 | 12            | 1,048  |
+| v5       | 32            | 3,530  | 5             | 76     |
+| v6       | 22            | 2,364  | 5             | 76     |
+| v7       | 22            | 1,396  | 10            | 136    |
+| hdae5000 | 3             | 3,148  | 3             | 59     |
 
-The 10,818 are per image (v10, v9, v8, v7, v6, v5, three sub-CPU payloads, four HD-AE5000 versions); they carry
-2,631 distinct function names.  The build compiles them with V4.23 in the VM (`make`), or with our Python model
-(`make CC900_COMPILER=model`), which today reproduces 46,547 B of them (the coverage page's "reference model" row).
+The residual was attempted almost only in v10; built v10 functions are usually built in v9 / v8 / v7 / v6 / v5 too,
+so a residual v10 function that becomes buildable is worth several times its bytes on the dashboard.
 
-**The near-miss index overstates the residual.**  Its own class table (README there) puts "call-form" first: 629
-functions, 449 of them with nothing else wrong.  Most of those are built: the index compares one listing at a time,
-while the build links each C file at its ROM address with module-level call relaxation, which recovers `calr` / `jr`.
-Joined with the build, call-form drops to 44 residual NEAR functions.  Any use of the index as compiler evidence must
-start from `residual.py`'s set, not from the index's table.
+**The near-miss index overstates the residual.**  Its class table puts "call-form" first (449 functions with no
+other class); 439 of them are built.  The index compares one listing at a time; the build links each C file at its
+ROM address with module-level call relaxation.  After the join, call-form is the only class of 1 residual NEAR
+function.  The review also found 18 built functions whose best attempt has a non-call-form class, so other
+listing-level classes (length-only, operand) may hide link artefacts too: step A0 recompares the residual through
+the build's link.
 
-**The residual by class** (each function's best attempt; a function has several classes):
+**The residual by class** (`residual.md` has every class):
 
-| class      | residual NEAR functions | ROM B  | of them, the only class | residual DIFF functions |
-|------------|-------------------------|--------|-------------------------|-------------------------|
-| register   | 320                     | 73,457 | 46                      | 226                     |
-| other      | 367                     | 70,179 | 87                      | 227                     |
-| order      | 185                     | 46,442 | 12                      | 119                     |
-| operand    | 99                      | 26,809 | 18                      | 91                      |
-| extend     | 108                     | 24,617 | 2                       | 126                     |
-| loop-shape | 46                      | 11,609 | 1                       | 96                      |
+| class      | residual NEAR functions | ROM B  | only class | residual DIFF functions |
+|------------|-------------------------|--------|------------|-------------------------|
+| register   | 316                     | 72,835 | 46         | 225                     |
+| other      | 360                     | 69,309 | 87         | 226                     |
+| order      | 184                     | 46,399 | 12         | 119                     |
+| operand    | 99                      | 26,809 | 18         | 91                      |
+| extend     | 106                     | 24,480 | 2          | 126                     |
+| loop-shape | 46                      | 11,609 | 1          | 96                      |
 
-(`residual.md` has every class.)  **Register choice is the dominant difference**: 320 of 573 NEAR functions, and the
-largest single ones are register-only (`HDAE5000_SelectListProc` 2,641 B at 99.3 %, `ProcessLayeredNoteOn_WriteReg4`
-965 B).  The lanes report the same from the other side: their last rounds kept failing at the same spots, mostly which
-register holds a pointer, a counter or a temporary, and which frame slot a temporary gets.
+**Behaviours already found where the firmware and V4.23 part, or seemed to** (rules.md, the lanes' handoffs, RESUME):
 
-**Behaviours already found where the firmware and V4.23 part** (rules.md, the lanes' handoffs):
+| behaviour                                               | V4.23                    | firmware                                    | state                                                             |
+|---------------------------------------------------------|--------------------------|---------------------------------------------|-------------------------------------------------------------------|
+| reload after a store                                    | reloads                  | drops it (as the 2003 compiler)             | decided, `kn5000` = 2003                                          |
+| one-compare loop test copied to the loop entry          | jumps to the bottom test | copies it (Matsushita's C, not the library) | decided for the firmware's C (`KN_LOOP_INVERT`); 2003 never asked |
+| memory-to-memory moves                                  | seemed absent            | present                                     | spelling: V4.23 emits them for `__near` cells (lane_o3, RESUME)   |
+| conditional jump to the next instruction, with its test | removed with its test    | kept                                        | reproduced by `r ? r : r;`; spelling or compiler, undecided       |
+| per-file option sets                                    | n/a                      | `-Xr` or `-O3 -XS -Xr` per file             | recorded per file; may be a compiler difference in disguise (A4)  |
+| `__doprnt`                                              | differs                  | 3 bytes off V4.23 and the 2003 compiler     | undecided                                                         |
+| V4.23's 12 recorded bugs (`cc900-v423-bugs.md`)         | miscompiles or crashes   | not checked                                 | undecided per bug                                                 |
 
-| behaviour                                                 | V4.23                    | firmware                                | state                                                                 |
-|-----------------------------------------------------------|--------------------------|-----------------------------------------|-----------------------------------------------------------------------|
-| reload after a store                                      | reloads                  | drops it (as the 2003 compiler)         | decided, `kn5000` = 2003                                              |
-| a one-compare loop test copied to the loop entry          | jumps to the bottom test | copies the test (Matsushita's C only)   | decided for the firmware's C (`KN_LOOP_INVERT`)                       |
-| per-file option sets                                      | n/a                      | `-Xr` / `-O3 -XS -Xr` per file          | recorded per C file (`cc900-options:`)                                |
-| a conditional jump to the next instruction, with its test | removed with its test    | kept                                    | reproduced by a C trick (`r ? r : r;`); compiler or source, undecided |
-| the `__doprnt` routine                                    | differs                  | 3 bytes off V4.23 and the 2003 compiler | undecided (a later `__DOFORM.C`, or a rule neither neighbour has)     |
-| V4.23's 12 recorded bugs (`cc900-v423-bugs.md`)           | miscompiles or crashes   | not checked                             | undecided per bug                                                     |
+The `__near` precedent matters: a difference that looked like a compiler rule was a declaration.  Every candidate
+below gets the same suspicion.
 
-## 2. Is the plateau the compiler version?
+## 2. Two properties of the evidence that bound what it can show
 
-Partly, and the plan must measure how much before betting on it.  Two causes are visible:
+- **The matched set can veto a rule, not support one.**  On the 12,773, V4.23 already equals the ROM; a `kn5000`
+  rule that changes any of them is wrong there.  The C was also searched until V4.23 matched, so it is co-adapted to
+  V4.23.  Positive evidence for a Technics rule can only come from the residual, the library pairs, the tricks
+  (section 4), and the firmware-wide census of both forms of a behaviour.
+- **The screens are not hand-assembly detectors.**  `families.py` and `new_pool.py` say themselves that nothing marks
+  a routine as compiled C; the hand marks of `xr_screen.py`, `sub_screen.py` and `hd_screen.py` are "features V4.23
+  never writes", which would also label another compiler's idioms as hand written (one of them, `djnz`, is a decided
+  V4.23 behaviour: 171 occurrences in v10, rules.md).  So "most untried code is hand assembly" is not established.
 
-- **Candidates ran out.**  The main-CPU lane's family screens (`notes/cc900-phase6-2026-11-16/families.py`,
-  `xr_screen.py`) and the sub-CPU and HD-AE5000 screens (`sub_screen.py`, `hd_screen.py`) found that most routines
-  not yet tried carry marks of hand assembly or are Toshiba's library.  If that holds, no compiler change will build
-  them from C.
-- **The residual near misses** (133 KB, about 1.8 % of all ROM code against the 16.6 % now built) are where a
-  version difference can show.  Even a complete explanation of them moves the curve by under two points.
+## 3. Step A: what the plateau is made of (first, no VM)
 
-So the payoff of this plan is mainly the original goal (an exact, explainable model and its LLVM port), with the C
-coverage as a by-product.  Step A2 below measures the hand-assembly ceiling so the dashboard can show it.
+| step | what                                                                                                                                                                                                                                                                                                                                                                                                                                                            | done when                                                                                                                    |
+|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| A0   | recompare every residual function through the build's link (each C file at its ROM address, module call relaxation), as the build does, instead of the index's one-listing comparison                                                                                                                                                                                                                                                                           | the residual re-counted; listing artefacts removed                                                                           |
+| A1   | the residual set joined with the build                                                                                                                                                                                                                                                                                                                                                                                                                          | done (`residual.py`, corrected)                                                                                              |
+| A2   | **the ceiling, with compiler-positive marks**: classify every ROM byte not built from C by marks that say "a compiler wrote this" (cc900 frame `lda XSP` / `push XIZ`, the caller pops its arguments, the switch idiom, membership of a `calr` module) and those that say "hand written" independent of V4.23 (shared tails, entry points mid-routine, register conventions no cc900 uses); report "compiler frame plus a V4.23-negative mark" as its own class | each image's code split into compiled-looking, hand-looking, conflict and library; the conflict class sized; a dashboard row |
+| A3   | collect the lanes' reasons for rejecting candidates from their scratch (`~/compartilhado/tmp/cc900-tab/lane_p6/scan/` and the helpers' lists) into a committed table                                                                                                                                                                                                                                                                                            | every untried routine has a recorded reason                                                                                  |
 
-## 3. Step A: separating "spelling" from "compiler" in the residual (no new C)
+A2's conflict class is where a different compiler would show; its size decides how much the rest of this plan can
+move the curve.  If it is large, the screens were hiding compiled code and the C lanes resume on it.
 
-| step | what                                                                                                                                                                                                              | tool / run                                                                  | done when                                                                                                                                                            |
-|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| A1   | the residual set, joined with the build                                                                                                                                                                           | `residual.py` (committed with this plan)                                    | done: 573 NEAR, 272 DIFF                                                                                                                                             |
-| A2   | the ceiling: classify every ROM byte not built from C as hand assembly, Toshiba library, data or "compiled-looking, untried", with the lanes' screens as detectors, per image                                     | a `ceiling.py` built from the four screens; a dashboard row                 | each image's code bytes split into those four classes; the untried compiled-looking total known                                                                      |
-| A3   | **neighbour compilers on the residual**: recompile each residual function's best C file at its recorded option set with the 2003 IDE compiler and v1.10 (2009), both already in `compilers.conf`                  | two oracle runs (`ide2003`, `v110`); `nearmiss.py --compiler`               | each residual function tagged: matches 2003, matches 2009, same diff as V4.23, other diff                                                                            |
-| A4   | **neighbour compilers on the matched set**: the same for a sample of the 10,818 (or all, it is one VM batch per compiler)                                                                                         | the same runs                                                               | where 2003 or 2009 differ from the ROM while V4.23 matches: rules the Technics compiler did not have; brackets the Technics date between V4.23 and 2003 more tightly |
-| A5   | **difference signatures**: for each residual function, the first differing ROM / V4.23 instruction pair, normalised (registers and offsets by role, our syntax only, no listing text), clustered across functions | `signatures.py` (reads the private listings, writes only signature classes) | the signature clusters ranked by functions and bytes                                                                                                                 |
-| A6   | **census each candidate**: for each cluster or neighbour-compiler finding, a detector for both forms over all of the firmware's compiled code, as `idiom_census.py` does                                          | `idiom_census.py` grows one detector per candidate                          | each candidate decided (on / off / undecided) with counts, in rules.md                                                                                               |
+## 4. Step B: spelling or compiler?
 
-Reading the outcomes: a residual function that **the 2003 or 2009 compiler matches** is a version difference with a
-witness, the strongest evidence there is.  A signature that recurs **across unrelated functions and survives the
-lanes' rewrites** (they tried three or more spellings on many of them) is a compiler behaviour candidate even without
-a neighbour matching it.  A function where all three compilers agree with each other and differ from the ROM is most
-likely spelling, or a Technics-only rule; the census decides which.
+Ordered from cheapest and most decisive.
 
-## 4. Step B: the firmware corpus as the model's ground truth
+| step | what                                                                                                                                                                                                                                                                                                                                                 | tool / run                                                          | done when                                                                                 |
+|------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------|-------------------------------------------------------------------------------------------|
+| B0   | **stability of the first difference across rewrites** (no VM): `index.tsv` holds 76,854 compared attempts; for each residual function with attempts from several different C files, does the first difference stay at the same place with the same signature?  Stable across independent spellings points to the compiler; moving points to spelling | `stability.py` over `index.tsv`                                     | each residual function tagged stable / moving / single attempt                            |
+| B1   | **the trick catalogue**: every C spelling the lanes needed, from their READMEs and handoffs, with the functions that needed it; for each, a micro probe asking all three compilers whether the trick is needed there too                                                                                                                             | `tricks.md`; one oracle run per compiler                            | each trick marked "ordinary C" (all compilers need it) or "candidate rule"                |
+| B2   | **the option grid**: in v10, 111 functions (13,251 B) match only without `-O`, in 28 address runs, 20 of them single functions among `-O`-only neighbours, and 22 of 76 inferred modules mix both; test whether one Technics behaviour explains the "without `-O`" shape inside `-O` files                                                           | `options_cluster.py`; probes of the 20 singletons at the full grid  | the per-file option model confirmed, or replaced by a rule                                |
+| B3   | **neighbour compilers on the residual**: recompile each residual function's attempts with the 2003 IDE compiler and v1.10 (2009), at the full option grid (not only the recorded set); first check `to_llvm.py` on their listings (the 2003 / 2009 runs so far were micro corpora)                                                                   | write `nearmiss.py --compiler` (it does not exist); two oracle runs | each residual function tagged: matches 2003, matches 2009, same diff as V4.23, other diff |
+| B4   | **neighbour compilers on the matched set**: the same for the 12,773 (one batch per compiler); where 2003 or 2009 differ from the ROM, the Technics compiler did not have that behaviour                                                                                                                                                              | the same runs                                                       | a tighter bracket on the Technics compiler's date; rules ruled out                        |
+| B5   | **a permuter** (PLAN phase 6) on the 46 register-only NEAR functions: mechanical C rewrites (declaration order, temporaries, scopes, casts) compiled in bulk; a function no permutation fixes is a stronger compiler candidate                                                                                                                       | `permute.py`; batched oracle runs                                   | each of the 46 matched or "no permutation found" with the count tried                     |
+| B6   | **census of both forms** of each surviving candidate over all compiled-looking code (A2), as `idiom_census.py` does                                                                                                                                                                                                                                  | one detector per candidate                                          | each candidate decided on / off / undecided in rules.md, with counts                      |
 
-The model (`scripts/analysis/cc900/model/`, paused at batch 366) was fitted on micro tests and random programs.  On
-2026-11-15 a blind hold-out showed that this overfits (22 / 14 / 21 / 14 of 200 exact against about 55 / 34 / 45 / 31
-on the training pools).  The firmware pairs fix the distribution problem: they are exactly the code the personality
-must reproduce.
+Expectations, stated so they can be checked: V4.23 and the 2003 compiler differ on 3 of 749 micro functions
+(rules.md), and the one earlier firmware trial (run `2026-11-16-50-hd-x1-compilers`) gave V4.23's bytes from the
+other compilers.  So B3 is likely to find few witnesses; it is run because it is cheap and decisive.  B0, B1 and B5
+carry most of the weight.
 
-| step | what                                                                                                                                                                                                         | done when                                                                                |
-|------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------|
-| B1   | a `firmware` corpus for the model's ledger: every built C file with its option set; ROM bytes as the target (no oracle text needed); split once, frozen, into fit (about 70 %) and held-out (30 %) by C file | `score.py --corpus firmware` writes per-function verdicts and bytes; the split committed |
-| B2   | baseline: the model's exact functions and bytes on both halves, per class of first difference                                                                                                                | a ledger row; today's coverage figure (46,547 B) explained per class                     |
-| B3   | work order: the model's failures on the fit half, ranked by bytes and grouped by first-difference class (the same classes as the near-miss index)                                                            | the top ten classes each have a micro trigger or a firmware witness                      |
-| B4   | acceptance rule (replaces P11 of 2026-11-15): a model change is kept only if the held-out half does not lose a function and the fit half gains                                                               | written into the model's README; every batch quotes both halves                          |
-| B5   | the held items: lane_o3's fixes 29-31 and lane_nm's rules 30-43 (RESUME, 2026-11-16) are re-scored on the firmware corpus before any is merged; wrong code (semcheck) stays the first gate                   | each held item merged or dropped with its firmware score                                 |
+## 5. Step C: the model on the firmware
 
-Register allocation is where the residual and the model both fail most, so the firmware set's register-choice
-failures are the model's main target.  The register-allocator notes (`model/regalloc_notes.md`) already describe the
-allocator as fitted priority lists; with about 10,000 exact firmware functions those lists can be fitted on Matsushita's
-code instead of on the micro corpus.
+The model (`scripts/analysis/cc900/model/`, paused at batch 366) overfit its training pools (2026-11-15: 22 / 14 /
+21 / 14 of 200 on a blind hold-out against about 55 / 34 / 45 / 31 on training).  In v10 it matches 475 of the
+1,735 built functions today, none over 128 B; on validation it was at 96 / 47 / 77 / 41 of 600 per option set.
+PLAN.md's phase-3 exit (100 % of micro tests, ≥ 95 % of random programs) was never met.
 
-## 5. Step C: the `kn5000` personality and the build
+| step | what                                                                                                                                                                                                                                                                                                    | done when                                                   |
+|------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| C1   | **the `v4.23` training set is every compared attempt**, not only the matches: 40,590 distinct (function, C file, option set) combinations in 4,721 C files are valid V4.23 pairs, matched or not (the oracle listing is the target)                                                                     | `score.py --corpus firmware-attempts`; per-attempt verdicts |
+| C2   | **a leak-free split**: by function name across all images (a v10 function and its v9 / v8 / v7 / v6 / v5 twins together) and by look-alike family (`families.py` shapes); three tiers: fit, validation (acceptance), and a blind test kept as `random5` was, plus the random hold-out as a second guard | the split committed and frozen                              |
+| C3   | baseline on all tiers, per first-difference class; wrong code (semcheck) first, as before the pause                                                                                                                                                                                                     | a ledger row                                                |
+| C4   | the held items (lane_o3's fixes 29-31, lane_nm's rules 30-43) re-scored on the firmware tiers before any merge                                                                                                                                                                                          | each merged or dropped with its score                       |
+| C5   | **an effort estimate and a stop rule**: after C3, estimate the batches to V4.23 parity on the firmware validation tier from the rate of the last 30 batches; stop or re-plan if the blind tier stops gaining for 20 batches                                                                             | the estimate and the rule in the model's README             |
 
-| step | what                                                                                                                                                                                            | done when                                                                                           |
-|------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-| C1   | each rule decided in step A becomes a personality switch in the model (as the reload rule and `KN_LOOP_INVERT` already are), with its micro trigger and its firmware witnesses                  | rules.md lists every rule with state, trigger, witnesses and census                                 |
-| C2   | the model with `kn5000` on the residual: functions it reproduces and V4.23 does not are built with `CC900_COMPILER=model` per file (the build already has the flag; it needs a per-file switch) | the first residual function built by the model; the coverage page's "reference model" row counts it |
-| C3   | the V4.23 bugs: for each of the 12, a firmware census of the miscompiled shape; a bug whose shape the firmware has in the correct form is a Technics fix                                        | each bug marked "Technics has it", "Technics fixed it" or "no evidence"                             |
-| C4   | `__doprnt` and the other library pairs that no setting explains (rules.md) are re-examined with the A3 / A4 results                                                                             | each explained or listed as a Technics-only rule                                                    |
+PLAN.md's phase-3 exit stays the end goal for the `v4.23` personality; the firmware tiers are added beside the micro
+and random corpora, not in their place.
 
-The dashboard gains two curves: firmware bytes reproduced by the model (`v4.23` personality) and by `kn5000`.  The C
-coverage stops being the only progress measure.
+## 6. Step D: the `kn5000` personality
 
-## 6. Step D: the LLVM drop-in
+| step | what                                                                                                                                                                                                                                    | done when                                                                                        |
+|------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
+| D1   | each candidate decided in step B becomes a personality switch, with its trigger, its positive witnesses (residual, library, tricks, census) and the veto check: no function of the 12,773 changes                                       | rules.md lists every rule so                                                                     |
+| D2   | the V4.23 bugs: for each of the 12, the census of the miscompiled shape and of its correct form in the firmware                                                                                                                         | each marked "Technics has it", "Technics fixed it" or "no evidence"                              |
+| D3   | `__doprnt` and the other unexplained library pairs re-examined with B3 / B4                                                                                                                                                             | each explained or listed as a Technics-only rule                                                 |
+| D4   | building a firmware function with the model where V4.23 cannot (owner decision E5): only for functions in the blind or validation tier, with no function-specific rule, semcheck clean, chosen per file explicitly, never as a fallback | if approved: the first such function in `make gate`; the coverage page keeps the compilers apart |
 
-The port follows phase3b-design.md (design (b): a clang-resident code generator from the AST, emitting through our MC
-layer, behind `-mcc900-compat`), with one change: each stage's acceptance corpus adds the firmware functions that
-exercise it, taken from B1's per-class tables, beside the micro corpora it already lists.
+D4 reverses the recorded decision that the model is never an automatic fallback (Makefile, `CC900_COMPILER`), and a
+model fitted on a function's own bytes that then builds that function proves nothing.  The tier restriction is what
+keeps it honest.
 
-**Definition of "drop-in", the final gate:** `make CC900_COMPILER=llvm gate` builds every firmware C file now built
-by V4.23 with `clang -mcc900-compat=kn5000` and every ROM is byte-identical; with the model as the differential
-oracle (`port_check.py`, 100 % line equality per stage).  The Neo Geo Pocket by-products (`v4.23`, `ide2003`, `v1.10`
-personalities) come from the same port, checked against their own compilers in the oracle (PLAN phase 7).
+## 7. Step E: the LLVM drop-in
 
-## 7. Order, parallelism and what the C lanes do now
+phase3b-design.md's design (b) (a clang-resident code generator from the AST, emitting through our MC layer) stays
+the intended route, but its inventory dates from 2026-11-10, before the overfitting finding, and the model has grown
+since (`codegen.py` from 7,978 to 21,429 lines).  Its own condition for porting a module (stable for a week) is not
+met.  So:
 
-| order | steps                               | needs                       | runs in parallel with |
-|-------|-------------------------------------|-----------------------------|-----------------------|
-| 1     | A2, A3, A4 (two VM batches), B1, B2 | nothing                     | each other            |
-| 2     | A5, A6, B3, B4                      | A3 / A4 for A5; B1 for B3   | each other            |
-| 3     | C1-C4, B5                           | A6, B3                      | the port's stages 0-2 |
-| 4     | D, stage by stage                   | the model stable per module | C, continuing         |
+- **E-0**: re-inventory the model against the 3b design once step C's tiers exist; mark modules stable by the C5
+  rule; the owner approves the design then.
+- **Stages** as in 3b, each adding to its acceptance corpus the firmware functions of the validation tier that
+  exercise it.
+- **Definition of "drop-in"**: `make CC900_COMPILER=llvm gate` builds every firmware C file now built by V4.23 with
+  `clang -mcc900-compat=kn5000`, all ROMs byte-identical, with the model as the differential oracle
+  (`port_check.py`).  The Neo Geo Pocket personalities follow from the same port (PLAN phase 7).
 
-The C lanes stop hunting new functions and become **evidence generators**: targeted C for a rule's witness (as phase
-6 found the loop-entry rule), and the near-miss index kept current.  The staged-but-blocked functions (203 with a
-MATCH) stay a small side task.
+## 8. Order, parallelism and the C lanes
 
-## 8. Risks
+| order | steps                                  | needs                             |
+|-------|----------------------------------------|-----------------------------------|
+| 1     | A0, A2, A3, B0, B1 (catalogue), C1, C2 | nothing (A0, B1's probes: the VM) |
+| 2     | B1 (probes), B2, B3, B4, B5, C3, C4    | A0 for the residual; C2 for C3    |
+| 3     | B6, C5, D1-D3                          | step B's candidates; C3           |
+| 4     | E-0, then the port; D4 if approved     | C5's stable modules               |
 
-- **Spelling and compiler are confounded.**  A residual difference may come from C we have not guessed.  A3 (a
-  neighbour compiler matching) and A5 (a signature recurring across unrelated functions) are the two tests that do not
-  depend on our guess; a rule with neither stays undecided.
-- **The Technics compiler is between two neighbours, not equal to either.**  A3 / A4 show which way each behaviour
-  went, not when; a 2003 behaviour may be two changes (PLAN 6).  Rules are decided one by one.
-- **Options per file** confound everything: a difference can be an option set.  Every C file records its options, and
-  A3 / A4 use them.
-- **Toshiba text (D1).**  Signatures and censuses must be our normalised notation; the listings stay in the private
+**The C lanes**: one lane keeps porting v10's residual and matches to the sibling images, the cheapest dashboard
+gain left (the residual is almost all v10); the others become evidence generators (the trick catalogue's probes, the
+option-grid probes, the permuter's batches, targeted C for a candidate's witness).  If A2 finds a large conflict
+class, a lane resumes new-function work there.
+
+## 9. Risks
+
+- **Spelling and compiler are confounded.**  B0, B3 and B5 are the tests that do not depend on our guess; a candidate
+  with none of them stays undecided.
+- **The Technics compiler lies between two neighbours.**  B3 / B4 show which way a behaviour went, not when; rules are
+  decided one by one.
+- **Options per file** may hide a behaviour (B2).
+- **Toshiba text (D1).**  Signatures, censuses and the trick catalogue use our notation; listings stay in the private
   oracle repository.
-- **Overfitting again.**  B4's frozen held-out half is the guard; the firmware corpus is large enough to afford it.
-- **The ceiling.**  If A2 shows the untried compiled-looking code is small, the C coverage curve stays flat whatever
-  the model does; the plan's value is then the model and the port, not the curve.
+- **Overfitting again.**  C2's leak-free blind tier and C5's stop rule are the guards.
+- **The ceiling.**  If A2 finds little compiled-looking code left, the C curve stays flat whatever the model does; the
+  plan's value is then the model and the port.
 
-## 9. Decisions for the owner
+## 10. Decisions for the owner
 
-| #   | question                                                                                                                               | recommendation                                                                                |
-|-----|----------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------|
-| E1  | Resume the paused model work (phase 3a) now, driven by the firmware corpus (section 4)?                                                | yes                                                                                           |
-| E2  | Move the C lanes to evidence generation (section 7), ending new-function hunting?                                                      | yes                                                                                           |
-| E3  | Approve phase3b-design.md's design (b) and its Q1-Q4 recommendations, if not yet approved, with the firmware acceptance corpora added? | yes                                                                                           |
-| E4  | D2 (black-box only) stays?  Disassembling thc2's register allocator would answer the dominant residual class directly                  | keep black-box; revisit if A3-A6 leave register choice undecided                              |
-| E5  | Per-function model builds (C2): may a firmware function be built by the model when V4.23 cannot reproduce it?                          | yes, behind `make gate` like everything else; the coverage page keeps the two compilers apart |
+| #   | question                                                        | recommendation                                                                                                    |
+|-----|-----------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| E1  | Resume the model work (phase 3a), driven by the firmware tiers? | yes, narrowed: C1-C3 and wrong code first; no rule fitting until C2's split exists and A2 / B0 / B3 have reported |
+| E2  | Move the C lanes to evidence work?                              | partly: one lane keeps porting the v10 residual and matches to the sibling images; the rest to evidence work      |
+| E3  | Approve phase3b-design.md's design (b)?                         | not yet: re-inventory first (E-0), then approve                                                                   |
+| E4  | Keep D2 (black-box only)?                                       | yes; revisit if the register-only residual is still unexplained after B3 and the permuter (B5)                    |
+| E5  | Build a firmware function with the model where V4.23 cannot?    | not yet; later only under D4's restrictions                                                                       |
+
+## 11. What the review changed (Fable 5.2 subagent, 2026-11-22)
+
+| first version                                                              | now                                                                              |
+|----------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| 10,818 built, 203 matched-not-built, 573 NEAR (join lost v8 and cut names) | 12,773 built, 41 matched-not-built, 553 NEAR, 271 DIFF (`residual.py` fixed)     |
+| "about fifty times" the library pairs                                      | about twelve, by distinct function name                                          |
+| "under two points" of dashboard gain from the residual                     | per image: 10.5 % of v10's code; worth more once ported to the siblings          |
+| matched functions as support for Technics rules                            | a veto set only; positive evidence from the residual, library, tricks and census |
+| screens treated as hand-assembly detectors                                 | not established; A2 measures with compiler-positive marks                        |
+| `nearmiss.py --compiler` cited                                             | to be written (B3); `to_llvm.py` checked on 2003 / 2009 listings first           |
+| neighbour compilers first                                                  | B0 (no VM), the trick catalogue and the option grid first; the permuter added    |
+| split by C file, held-out used for acceptance                              | split by function name and family, three tiers, random hold-out kept             |
+| no effort estimate or stop rule; PLAN's phase-3 exit silently replaced     | C5's estimate and stop rule; the phase-3 exit kept as the end goal               |
+| E3 yes, E5 yes                                                             | E3 after a re-inventory, E5 not yet                                              |
