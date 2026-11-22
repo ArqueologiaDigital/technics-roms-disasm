@@ -12879,55 +12879,13 @@ SeqCount_Return:
 	pop xiz
 	ret
 
-SeqVoice_CountChainLength:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 4), c
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	ld c, (xsp + 4)
-	extz bc
-	calr Part_ReadVoiceWord
-	ld iz, hl
-	cp iz, 0xffff
-	jr z, SeqVoice_ChainNoData
-	ld a, (xsp + 6)
-	extz wa
-	ld c, (xsp + 4)
-	extz bc
-	calr Part_ReadVoiceBit7
-	cp l, 0:i3
-	jr nz, SeqVoice_ChainStartCount
-
-SeqVoice_ChainNoData:
-	ld hl, 0:i3
-	jr SeqVoice_ChainReturn
-
-SeqVoice_ChainStartCount:
-	ldw (xsp + 2), 0x1
-	cp iz, 0xffff
-	jr z, SeqVoice_ChainStoreCount
-
-SeqVoice_ChainFollowLoop:
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr z, SeqVoice_ChainStoreCount
-	ld wa, iz
-	calr PartCtrl_ReadWord
-	ld iz, hl
-	incw 1, (xsp + 2)
-	cp iz, 0xffff
-	jr nz, SeqVoice_ChainFollowLoop
-
-SeqVoice_ChainStoreCount:
-	ld hl, (xsp + 2)
-
-SeqVoice_ChainReturn:
-	popw iz
-	inc 6, xsp
-	ret
+SeqVoice_CountChainLength:	.include "includes/generated/cc900/SeqVoice_CountChainLength.s"	; C: cc900/sequencer_engine_m234_h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqVoice_ChainNoData, SeqVoice_CountChainLength + 47
+	.set	SeqVoice_ChainStartCount, SeqVoice_CountChainLength + 51
+	.set	SeqVoice_ChainFollowLoop, SeqVoice_CountChainLength + 62
+	.set	SeqVoice_ChainStoreCount, SeqVoice_CountChainLength + 87
+	.set	SeqVoice_ChainReturn, SeqVoice_CountChainLength + 90
 
 SeqData_CopyBlockWithLookup:
 	lda xsp, (xsp - 34)
@@ -15060,47 +15018,12 @@ PartCtrl_AppendToFreeList:
 	popw iz
 	ret
 
-Part_LinkVoiceToChain:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), wa
-	ld wa, (xsp + 2)
-	calr PartCtrl_ReadWord
-	cp hl, 0xffff
-	jr z, SeqPlay_CheckStartCondition
-	ldw wa, 0x8
-	calr SeqData_SetErrorCode
-	jr SeqPlay_StartReturn
-
-SeqPlay_CheckStartCondition:
-	calr Part_ProcessAndDecrementVoice
-	ld iz, hl
-	cp iz, 0xffff
-	jr nz, SeqPlay_InitPlayback
-
-SeqPlay_StartReturn:
-	ldw hl, 0xffff
-	jr SeqPlay_ValidateAndBegin
-
-SeqPlay_InitPlayback:
-	ld wa, (xsp + 2)
-	ld bc, iz
-	calr PartCtrl_WriteWord
-	ld wa, iz
-	ld bc, (xsp + 2)
-	calr PartCtrl_WriteWord_Off1
-	ld wa, iz
-	ldw bc, 0xffff
-	calr PartCtrl_WriteWord
-	ld wa, iz
-	ld bc, 1:i3
-	calr PartCtrl_SetClearBit7
-	ld hl, iz
-
-SeqPlay_ValidateAndBegin:
-	popw iz
-	inc 2, xsp
-	ret
+Part_LinkVoiceToChain:	.include "includes/generated/cc900/Part_LinkVoiceToChain.s"	; C: cc900/sequencer_engine_m234_h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_CheckStartCondition, Part_LinkVoiceToChain + 26
+	.set	SeqPlay_StartReturn, Part_LinkVoiceToChain + 37
+	.set	SeqPlay_InitPlayback, Part_LinkVoiceToChain + 42
+	.set	SeqPlay_ValidateAndBegin, Part_LinkVoiceToChain + 75
 
 Part_ProcessAndDecrementVoice:
 	push xiz
