@@ -171,7 +171,8 @@ class Fn:
             return '(%s)' % self.long_of(x[1:])
         m = re.match(r'^@([\w.$]+)\([^()]*\)(?:\[([+-]\d+)\])?$', x)
         if m:
-            return '(%s%s)' % (m.group(1), '' if not m.group(2) else '+0x%x' % int(m.group(2)))
+            d = int(m.group(2)) if m.group(2) else 0
+            return '(%s%s)' % (m.group(1), '' if not d else (' + 0x%x' % d if d > 0 else ' - 0x%x' % -d))
         if x.startswith('@('):
             inner = x[2:-1]
             e = dump.operand_end(inner, 0)
@@ -191,6 +192,9 @@ class Fn:
         v = const(x)
         if v is not None:
             return hexc(v, size)
+        m = re.match(r'^&@([\w.$]+)\([^()]*\)$', x or '')
+        if m:
+            return m.group(1)
         m = self.stack(x) or self.mem(x)
         if m:
             return m
@@ -200,7 +204,12 @@ class Fn:
         return self.stack(x) or self.mem(x) or self.reg(x)
 
     def emit(self, *ins):
-        self.code.append(' '.join(i for i in ins if i))
+        ins = [i for i in ins if i]
+        if len(ins) == 2 and ins[0] in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor', 'adc', 'sbc') and \
+                ins[1].startswith('(') and re.search(r'\),(0x[0-9a-f]+|-?\d+)$', ins[1]):
+            sz = getattr(self, 'cur_size', 2)            # a memory destination and an immediate: sized mnemonic
+            ins[0] += {1: 'b', 2: 'w'}.get(sz, '')
+        self.code.append(' '.join(ins))
 
     def live(self, k):
         """is variable k still read at or after the current record"""
@@ -248,7 +257,8 @@ class Fn:
             elif op in COND:
                 a, b = r.args
                 size = size_of(a)
-                self.emit('cp', (self.stack(a) or self.reg(a)) + ',' + self.src(b, size))
+                self.cur_size = size
+                self.emit('cp', (self.stack(a) or self.mem(a) or self.reg(a)) + ',' + self.src(b, size))
                 self.emit('j', (UCOND if unsigned(a) else COND)[op] + ',' + r.res)
             elif op == '=' and r.res == 'A':
                 a = r.args[0]
@@ -343,12 +353,14 @@ class Fn:
                 self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
             elif op == '=':
                 size = size_of(r.res)
+                self.cur_size = size
                 d = self.dst(r.res)
                 s = self.src(r.args[0], size)
                 if s != d:
                     self.emit('ld', d + ',' + s)
             elif op in ALU:
                 size = size_of(r.res)
+                self.cur_size = size
                 self.emit(ALU[op], self.dst(r.res) + ',' + self.src(r.args[0], size))
             elif op == 'CONV' and r.args and not r.args[0].startswith(('@', '*', '#')) and not self.stack(r.args[0]):
                 a = r.args[0]
