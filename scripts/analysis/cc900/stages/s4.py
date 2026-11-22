@@ -14,6 +14,7 @@ SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2,
 FAMS = ['XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY', 'XIZ']
 NAMES = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 'XDE'), 'XHL': ('L', 'HL', 'XHL'),
          'XIX': ('IXL', 'IX', 'XIX'), 'XIY': ('IYL', 'IY', 'XIY'), 'XIZ': ('IZL', 'IZ', 'XIZ')}
+SAVE_FROM_CODE = True                                # XIZ halves saved as the generated code uses them
 MEM_SIZES = True                                     # @(p..) / *p sized by p's pointee
 LIVENESS = True                                      # a temporary may take a register whose variable is dead
 SHARED_EPILOGUE = True                               # returns with pops / a frame share one epilogue (L50000)
@@ -148,6 +149,7 @@ def hexc(v, size):
 
 class Fn:
     def __init__(self, zim, regs, offs=None, frame=0, name=None):
+        self._args = (zim, regs, offs, frame, name)
         self.recs = [dump.parse_line(l) for l in zim[1:-1]]
         self.regs = dict(regs)                       # 'P0' / 'I1' -> register name or 'stack'
         self.offs = dict(offs or {})                 # stack variables' offsets from XSP (after the prologue)
@@ -235,6 +237,13 @@ class Fn:
 
     def dies(self, x, i):
         n = self.name(x)
+        if LIVENESS:
+            save = getattr(self, 'pos', 0)
+            self.pos = i
+            try:
+                return n not in self.live_out()
+            finally:
+                self.pos = save
         return not any(n and any(self.name(y) == n or (y and n + '(' in y) for y in [rr.res] + rr.args)
                        for rr in self.recs[i + 1:])
 
@@ -320,6 +329,21 @@ class Fn:
         return any(any(self.name(y) == k or (y and k + '(' in y) for y in [rr.res] + rr.args) for rr in self.recs[i:])
 
     def gen(self):
+        """the function's code; XIZ is saved by the halves the code itself uses (temporaries included)"""
+        code = self._gen()
+        if not SAVE_FROM_CODE:
+            return code
+        body = [c for c in code if not re.match(r'^(push|pop) (XIZ|IZ|QIZ)$', c)]
+        lo = any(re.search(r'\b(XIZ|IZ|IZL|IZH)\b', c) for c in body)
+        hi = any(re.search(r'\b(XIZ|QIZ|QIZL|QIZH)\b', c) for c in body)
+        want = 'XIZ' if lo and hi else ('IZ' if lo else ('QIZ' if hi else None))
+        if want == self.save_iz or (want == 'IZ' and any(re.search(r'\bXIZ\b', c) for c in body)):
+            return code
+        f2 = Fn(*self._args)
+        f2.save_iz = want if not any(re.search(r'\bXIZ\b', c) for c in body) else 'XIZ'
+        return f2._gen()
+
+    def _gen(self):
         for i_, r in enumerate(self.recs):
             self.pos = i_
             op = r.op
