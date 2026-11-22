@@ -49,8 +49,8 @@ def writes(r, name):
 def live_across_call(recs, name):
     succ = successors(recs)
     for c, r in enumerate(recs):
-        if r.op not in CALLS:
-            continue
+        if r.op not in CALLS or (r.res and re.match(r'^%s\(' % re.escape(name), r.res)):
+            continue                                 # (a call that writes the variable: not live across it)
         seen, todo = set(), list(succ[c])
         while todo:
             i = todo.pop()
