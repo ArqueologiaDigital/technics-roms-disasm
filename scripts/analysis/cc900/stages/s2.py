@@ -70,6 +70,16 @@ def unsigned16(x):
 
 def rewrite2(recs):
     """S2's rewrites on parsed -zio records"""
+    top = [0]
+    for r in recs:
+        for x in [r.res] + r.args:
+            for y in re.findall(r'\bT(\d+)\(', x or ''):
+                top[0] = max(top[0], int(y) + 1)
+
+    def new_temp():
+        t = 'T%d(0)' % top[0]
+        top[0] += 1
+        return t
     def reads_of(t):
         n = 0
         for r in recs:
@@ -129,9 +139,25 @@ def rewrite2(recs):
             continue
         if r.op == 'ADD' and len(r.args) == 2:     # an index still needed as an address
             r.op, r.args = 'ADDR', ['@(%s+%s)' % (r.args[0], r.args[1])]
+        if r.op == 'CONV' and r.res and r.res.startswith('@') and NEW_TEMPS:
+            t = new_temp()                           # a conversion into memory goes through a register
+            out.append(dump.Rec(r.block, 'CONV', t, r.args, None, ''))
+            out.append(dump.Rec(r.block, '=', r.res, [t], None, ''))
+            continue
         if r.op in BIN3 and r.res and len(r.args) == 2 and not r.res.startswith('L'):
             a, b = r.args
             res = bare(r.res)
+            prev = out[-1] if out else None
+            if COALESCE and prev is not None and tname(a) and prev.res and tname(prev.res) == tname(a) and \
+                    not prev.res.startswith('*') and reads_of(tname(a)) == 1 and a != b and \
+                    prev.op == 'ADDR' and prev.args and prev.args[0].startswith('@') and not prev.args[0].startswith('@('):
+                out.pop()                            # the left operand's definition writes the result itself
+                if prev.op == 'ADDR' and prev.args and prev.args[0].startswith('@') and not prev.args[0].startswith('@('):
+                    out.append(dump.Rec(r.block, '=', res, ['&' + prev.args[0]], None, ''))
+                else:
+                    out.append(dump.Rec(prev.block, prev.op, res, prev.args, prev.extra, ''))
+                out.append(dump.Rec(r.block, r.op + '=', res, [b], None, ''))
+                continue
             out.append(dump.Rec(r.block, '=', res, [a], None, ''))
             out.append(dump.Rec(r.block, r.op + '=', res, [res if b == a else b], None, ''))
             continue
@@ -238,6 +264,8 @@ def s2_lines(zio, decl_order=None, cdecl=False):
 
 
 REWRITE2 = True
+NEW_TEMPS = True
+COALESCE = True
 STACK_PARAM_MM = True
 POST_INC = True
 PARAM_MO = False                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)
