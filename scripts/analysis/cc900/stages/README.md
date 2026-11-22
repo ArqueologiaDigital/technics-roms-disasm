@@ -79,3 +79,20 @@ S3 is therefore mainly the choice of register for the others (7,939 register var
 2026-11-22-51..54, private table `cc900-oracle/internals/i2/fw-registers-2.tsv`), and for temporaries, which only
 the listing shows (S4).
 
+## thc2's allocator, as read (V4.23, our description; addresses in THC2.EXE, image base 0x400000)
+
+The allocate / spill loop of the big per-function pass runs 0x437740, which:
+  - pins the function's return value to the HL family (L, HL or XHL by size);
+  - gives each candidate (temporaries, locals, parameters) an allocation record: its size, an *avoid* mask (registers
+    something in its live range clobbers) and a *pinned* mask (all but one register excluded: an operand an
+    instruction needs in a fixed register, e.g. the runtime helpers' XWA / XBC / XHL, a block move's pointers); masks
+    have one bit per byte register (W, A, QW, QA, B, C, ...), so a word register covers two bits and a 32-bit one four;
+  - walks every block's instructions with the live set, adding clobbers to the avoid masks of the values live there
+    and recording interference (0x439d40: each live value's interference set gains the live set);
+  - counts the live bytes per register class at each point against the class's capacity; where a class overflows it
+    records the excess and the live set (0x439760, one record per distinct live set, keeping the largest excess);
+  - resolves those records in increasing order of excess (0x439840), choosing what to spill (0x439950) -- the
+    variables -zim then marks {MO} / {MK}; this repeats with the spill code inserted until nothing overflows.
+The register each surviving value gets is decided after this loop (0x43ac40 works on register numbers with the
+pinned / avoid masks); that is S3's remaining part.
+
