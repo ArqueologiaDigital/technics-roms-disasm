@@ -80,3 +80,40 @@ def live_at_entry(recs, name):
             continue
         todo.extend(succ[i])
     return False
+
+
+def live_sets(recs, names):
+    """the set of `names` live into each record (backward dataflow over successors())"""
+    succ = successors(recs)
+    use = [{n for n in names if reads(r, n)} for r in recs]
+    defs = [{n for n in names if writes(r, n)} for r in recs]
+    live_in = [set() for _ in recs]
+    changed = True
+    while changed:
+        changed = False
+        for i in range(len(recs) - 1, -1, -1):
+            out = set()
+            for j in succ[i]:
+                out |= live_in[j]
+            new = use[i] | (out - defs[i])
+            if new != live_in[i]:
+                live_in[i] = new
+                changed = True
+    return live_in
+
+
+def interference(recs, names):
+    """{name: names live together with it somewhere}"""
+    sets = live_sets(recs, names)
+    inter = {n: set() for n in names}
+    for i, s in enumerate(sets):
+        here = set(s)
+        for n in defs_at(recs[i], names):       # a definition interferes with what is live after it
+            here.add(n)
+        for a in here:
+            inter[a] |= here - {a}
+    return inter
+
+
+def defs_at(r, names):
+    return [n for n in names if writes(r, n)]

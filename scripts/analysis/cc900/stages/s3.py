@@ -21,6 +21,7 @@ FAM = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 
 SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
 ARGREG = ['XWA', 'XBC', 'XDE']
 RETURN_HL = True
+INTERFERENCE = True
 CALL_RESULT_HL = True
 BYTE_QIZH = True
 LOCAL_DIR = -1
@@ -72,6 +73,12 @@ def allocate(zim):
             out[n] = reg(ARGREG[int(n[1:])], size_of(names[n][0]))
             used.add(ARGREG[int(n[1:])])
     order = list(LOCAL_ORDER)
+    inter = flow.interference(recs, list(names)) if INTERFERENCE else None
+    owner = {}                                       # family -> variables holding it (for sharing when disjoint)
+    for n, r_ in out.items():
+        for f, fam in FAM.items():
+            if r_ in fam or r_ in ('QIZ', 'QIZH', 'IZL') and f == 'XIZ':
+                owner.setdefault(f, set()).add(n)
     for n in locs:
         if names[n][1]:
             out[n] = 'stack'
@@ -79,16 +86,22 @@ def allocate(zim):
         if n in out:
             continue
         size = size_of(names[n][0])
+        def free(f):
+            if inter is None:
+                return f not in used
+            return not (owner.get(f, set()) & (inter.get(n, set()) | ({p for p in params if p not in out} if False else set())))
         if RETURN_HL and (re.search(r'\|A = %s\(' % n, text) or
                           (CALL_RESULT_HL and re.search(r'\|%s\([^()]*\)(?:\{..\})? (?:A|C)CAL[LP] ' % n, text))) \
-                and 'XHL' not in used:
+                and free('XHL'):
             out[n] = reg('XHL', size)                # the returned value is pinned to the HL family
             used.add('XHL')
+            owner.setdefault('XHL', set()).add(n)
             continue
         for f in order:
-            if f in used or (size == 1 and FAM[f][0] is None):
+            if not free(f) or (size == 1 and FAM[f][0] is None):
                 continue
             out[n] = reg(f, size)
             used.add(f)
+            owner.setdefault(f, set()).add(n)
             break
     return out
