@@ -101,7 +101,8 @@ def rewrite2(recs):
         k += 1
     out = []
     for r in recs:
-        if r.op == 'CONV' and r.res and r.args and tsize(r.res) and tsize(r.res) == tsize(r.args[0]):
+        if r.op == 'CONV' and r.res and r.args and tsize(r.res) and not is_mem(r.args[0]) and \
+                tsize(r.res) == tsize(r.args[0]):
             r.op = '='                               # same size: a copy
         out.append(r)
     recs = out
@@ -220,6 +221,9 @@ def def_marks(lines):
         if r is None:
             continue
         t = tname(r.res) if r.res and not r.res.startswith('*') else None
+        if t and r.op == 'Switch':
+            rd[t] = rd.get(t, 0) + 1                 # a switch reads its operand
+            t = None
         if t and r.op not in dump.BRANCH:
             w[t] = w.get(t, 0) + 1
         for x in r.args + ([r.res] if r.res and r.res.startswith('*') else []):
