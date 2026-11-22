@@ -302,6 +302,9 @@ def s2_lines(zio, decl_order=None, cdecl=False):
     for r in recs:
         if r.op == 'BEGIN':
             out.append(dump.line(dump.Rec(0, 'BEGIN', None, [], None, '')))
+            if LIVE_ENTRY:                           # values live on entry only: not written first; no function
+                import flow
+                globs = [g for g in globs if not g[0].startswith('@.') and flow.live_at_entry(recs, g[0])]
             if decl_order is not None:
                 key = sym_order(decl_order)
                 globs.sort(key=lambda g: key(g[0]))
@@ -353,6 +356,7 @@ def s2_lines(zio, decl_order=None, cdecl=False):
 
 
 REWRITE2 = True
+LIVE_ENTRY = True
 MULDIV16 = True
 PTR_COPY_THROUGH = True
 MEM_ROUTES = True

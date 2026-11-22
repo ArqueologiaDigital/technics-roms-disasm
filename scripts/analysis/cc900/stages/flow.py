@@ -38,7 +38,8 @@ def reads(r, name):
         return True
     if r.res and (r.res.startswith('*') or r.res.startswith('@(')) and mentions(r.res, name):
         return True
-    return bool(r.res) and mentions(r.res, name) and r.op.endswith('=') and r.op not in ('=', 'CONV')
+    return bool(r.res) and mentions(r.res, name) and (
+        r.op.endswith('=') and r.op not in ('=', 'CONV') or r.op in ('++', '--', 'BSET', 'BCLR', 'Switch'))
 
 
 def writes(r, name):
@@ -61,4 +62,21 @@ def live_across_call(recs, name):
             if writes(recs[i], name):
                 continue
             todo.extend(succ[i])
+    return False
+
+
+def live_at_entry(recs, name):
+    """is the variable read (or its address taken) on some path from the start before it is written?"""
+    succ = successors(recs)
+    seen, todo = set(), [0] if recs else []
+    while todo:
+        i = todo.pop()
+        if i in seen:
+            continue
+        seen.add(i)
+        if reads(recs[i], name):
+            return True
+        if writes(recs[i], name):
+            continue
+        todo.extend(succ[i])
     return False
