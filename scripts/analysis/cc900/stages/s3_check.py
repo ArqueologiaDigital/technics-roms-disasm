@@ -46,7 +46,7 @@ def truth(path):
         m = re.match(r'^\tsymbol_n\s+"([^"]+)",', l)
         if m and cur:
             locals_.setdefault(cur, [])
-            if m.group(1) not in locals_[cur]:
+            if m.group(1) not in locals_[cur] and m.group(1) != cur:   # (the function's own record is not a local)
                 locals_[cur].append(m.group(1))   # the function's locals in order: I0, I1, ...
     for l in open(path, encoding='latin-1'):
         m = re.match(r'^\tsymbol_a\s+"([^"]+)",0,\s*(\d+),0', l)
