@@ -99,6 +99,8 @@ class Fn:
         self.ltype = {k: v[2] for k, v in f.locals.items()}
         self.ptype = {'P%d' % (i + 1): p[2] for i, p in enumerate(f.params)}
         self.ttype = dict(f.temps)
+        self.rettype = next((d.fields[4] for d in f.decls if len(d.fields) > 4 and d.fields[1] == 'x' and
+                             d.fields[2] == '"%s"' % f.name), None)
 
     def typ(self, x):
         if x is None:
@@ -180,6 +182,7 @@ INVERT = {'BEQ': 'BNE', 'BNE': 'BEQ', 'BLT': 'BGE', 'BGE': 'BLT', 'BLE': 'BGT', 
 
 SWITCH_TABLE = True
 JUMP_THREAD = True
+UNREACHABLE = True
 
 
 def switch_table(disp, after):
@@ -478,17 +481,21 @@ def rewrite(F):
                for r in out]
         used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
             {x for r in out if r[0] == 'Switch' for x in r[2].split()}
-        drop = set()                                 # the hop's label and its jump go when nothing reaches them
-        for k, r in enumerate(out):
-            if r[0] == 'LAB' and r[1] in hop and r[1] not in used:
-                drop.add(k)
-                n_ = next((j for j in range(k + 1, len(out)) if out[j][0] not in MARKERS), None)
-                prev = next((out[j] for j in range(k - 1, -1, -1) if out[j][0] not in MARKERS), None)
-                if n_ is not None and prev is not None and prev[0] in ('JMP', 'END'):
-                    drop.add(n_)                     # unreachable after an unconditional transfer
-        out = [r for k, r in enumerate(out) if k not in drop]
     used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | {x for r in out if r[0] == 'Switch' for x in r[2].split()}
     out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
+    if UNREACHABLE:                                  # after JMP / END / Switch, nothing until a label is reached
+        used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
+            {x for r in out if r[0] == 'Switch' for x in r[2].split()}
+        out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
+        keep, dead = [], False
+        for r in out:
+            if r[0] == 'LAB':
+                dead = False
+            if not dead or r[0] in MARKERS:
+                keep.append(r)
+            if r[0] in ('JMP', 'END', 'Switch') and not dead:
+                dead = True
+        out = keep
     out = [r for k, r in enumerate(out)               # a jump to the label that follows it goes
            if not (r[0] == 'JMP' and next((x for x in out[k + 1:] if x[0] not in MARKERS), (None, None))[:2] ==
                    ('LAB', r[1]))]
@@ -594,6 +601,9 @@ def ctype(F, x, inv):
     """the basic type (1..12) or pointer-ness of the value operand x denotes, for typing a constant beside it"""
     if x is None or x.startswith('#'):
         return None
+    if x == 'A':
+        t = num(getattr(F, 'rettype', 0))
+        return 'ptr' if F.types and F.types.is_ptr(t) else (t if 1 <= t <= 12 else None)
     b = x.lstrip('*&')
     orig = inv.get(b, b)
     if b[:1] in 'IP' and b[1:].isdigit():
