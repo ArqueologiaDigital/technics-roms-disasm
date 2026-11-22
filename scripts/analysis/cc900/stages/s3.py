@@ -21,6 +21,7 @@ FAM = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 
 SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
 ARGREG = ['XWA', 'XBC', 'XDE']
 RETURN_HL = True
+CALL_RESULT_HL = True
 BYTE_QIZH = True
 LOCAL_DIR = -1
 LOCAL_ORDER = ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY')
@@ -78,7 +79,9 @@ def allocate(zim):
         if n in out:
             continue
         size = size_of(names[n][0])
-        if RETURN_HL and re.search(r'\|A = %s\(' % n, text) and 'XHL' not in used:
+        if RETURN_HL and (re.search(r'\|A = %s\(' % n, text) or
+                          (CALL_RESULT_HL and re.search(r'\|%s\([^()]*\)(?:\{..\})? (?:A|C)CAL[LP] ' % n, text))) \
+                and 'XHL' not in used:
             out[n] = reg('XHL', size)                # the returned value is pinned to the HL family
             used.add('XHL')
             continue
