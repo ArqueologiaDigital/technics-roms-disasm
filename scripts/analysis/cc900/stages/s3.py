@@ -23,6 +23,7 @@ ARGREG = ['XWA', 'XBC', 'XDE']
 RETURN_HL = True
 INTERFERENCE = True
 AVOID_WA_TEMPS = True
+TEMP_FAMS = 4
 TEMPS_FIRST = False                                 # tested: temporaries coloured first lose 197-257 variables
 TEMP_DIR = 1
 CALL_RESULT_HL = True
@@ -81,12 +82,18 @@ def allocate(zim):
             used.add(ARGREG[int(n[1:])])
     order = list(LOCAL_ORDER)
     inter = flow.interference(recs, list(names)) if INTERFERENCE else None
-    busy_wa = set()                                  # live where a temporary is computed: XWA is the temporaries'
-    if AVOID_WA_TEMPS:
-        lives = flow.live_sets(recs, list(names))
+    busy = {}                                        # local -> families temporaries take while it is live: with k
+    if AVOID_WA_TEMPS:                               # temporaries live at a point, XWA, XBC, ... (k of them)
+        tnames = sorted(set(re.findall(r'\b(T\d+)\(', text)))
+        lives = flow.live_sets(recs, list(names) + tnames)
         for i, r in enumerate(recs):
             if r.res and re.match(r'^T\d+\(', r.res):
-                busy_wa |= lives[i + 1] if i + 1 < len(recs) else set()
+                after = lives[i + 1] if i + 1 < len(recs) else set()
+                k = len({x for x in after if x.startswith('T')} | {r.res.split('(')[0]})
+                fams = ['XWA', 'XBC', 'XDE', 'XHL'][:min(k, TEMP_FAMS)]
+                for x in after:
+                    if not x.startswith('T'):
+                        busy.setdefault(x, set()).update(fams)
     owner = {}                                       # family -> variables holding it (for sharing when disjoint)
     for n, r_ in out.items():
         for f, fam in FAM.items():
@@ -111,7 +118,7 @@ def allocate(zim):
             owner.setdefault('XHL', set()).add(n)
             continue
         for f in order:
-            if not free(f) or (size == 1 and FAM[f][0] is None) or (f == 'XWA' and n in busy_wa):
+            if not free(f) or (size == 1 and FAM[f][0] is None) or f in busy.get(n, ()):
                 continue
             out[n] = reg(f, size)
             used.add(f)
