@@ -34,7 +34,7 @@ CMP = {'<': ('BLT', 'BGE'), '<=': ('BLE', 'BGT'), '>': ('BGT', 'BLE'), '>=': ('B
 BRANCHES = {'BLT', 'BGE', 'BLE', 'BGT', 'BEQ', 'BNE', 'JRBC', 'JRBS'}
 COMPOUND = {'=', '+=', '-=', '*=', '/=', '%=', '<<=', '>>=', '&=', '|=', '^='}
 BINARY = {'+', '-', '*', '/', '%', '<<', '>>', '&', '|', '^'}
-CALLS = {'CCALL', 'CCALP', 'ACALL', 'ACALP'}
+CALLS = {'CCALL', 'CCALP', 'ACALL', 'ACALP', 'ARICALL'}
 ARGS = {'CARG', 'AARG'}
 MARKERS = {'LINE', '{', '}', 'FILE'}
 
@@ -220,6 +220,12 @@ def rewrite(F):
             out.append((o, fl[1], fl[2], None))
         elif op in BINARY:
             pa, pb = T and T.is_ptr(F.typ(fl[1])), T and T.is_ptr(F.typ(fl[2]))
+            rt = F.vtype(fl[3])
+            if op in ('*', '/', '%') and 1 <= rt <= 12 and SIZE[rt] == 4:
+                helper = {'*': 'mul', '/': 'div', '%': 'rem'}[op] + ('lu' if SIGNED.get(rt) is False else 'ls')
+                out.append(('ARICALL', fl[3], fl[1], fl[2], 'C9H_' + helper))   # a 4-byte multiply / divide:
+                i += 1                                                         # the runtime helper
+                continue
             if op == '*' and re.match(r'^#[LC]?U?2$', fl[2]):
                 out.append(('+', fl[3], fl[1], fl[1]))
             elif op == '+' and (pa or pb):
@@ -232,11 +238,15 @@ def rewrite(F):
                     out.append(('ADD', fl[3], a, b))   # a 1- or 2-byte offset: ADD
             else:
                 out.append((op, fl[3], fl[1], fl[2]))
+        elif op in CMP:                              # a compare whose value is used
+            out.append((op, fl[3], fl[1], fl[2]))
         elif op == 'ADDR':
             out.append(('ADDR', fl[3], fl[1], None))
         elif op in CALLS:                            # CCALL,@f,#argbytes,T: the result first, as the others
             res_ = fl[3] if len(fl) > 3 and F.typ(fl[3]) not in ('1', None) and reads.get(fl[3], 0) else None
             out.append((op, res_, fl[1], fl[2]))
+        elif op in ('asm', 'ASM'):                   # inline assembler: its text as thc1 wrote it
+            out.append((op, ','.join(fl[1:]), None, None))
         elif op in ARGS:                             # AARG,value,call,index: the index is kept
             out.append((op, None, fl[1], fl[3] if op == 'AARG' and len(fl) > 3 else None))
         else:
@@ -304,7 +314,19 @@ def number(F, recs):
             if x and x.lstrip('*&').startswith('T'):
                 reads[x.lstrip('*&')] = reads.get(x.lstrip('*&'), 0) + 1
     defs = {tmap[t] for t, n in writes.items() if n == 1 and t in tmap and reads.get(t, 0) <= 1}
-    return [(r[0],) + tuple(ren(x) for x in r[1:4]) for r in recs], tmap, defs
+    for t in list(writes):                          # ... and not when its source is written again before the read
+        if t not in tmap or tmap[t] not in defs:
+            continue
+        di = next((i for i, r in enumerate(recs) if r[1] == t), None)
+        ri = next((i for i, r in enumerate(recs) if i > (di or 0) and
+                   any(x and x.lstrip('*&') == t for x in r[2:4] + ((r[1],) if r[1] and r[1].startswith('*') else ()))),
+                  None)
+        if di is None or ri is None:
+            continue
+        srcs = {x.lstrip('*&') for x in recs[di][2:4] if x and not x.startswith('#')}
+        if any(r[1] and not r[1].startswith('*') and r[1] in srcs and r[0] not in BRANCHES for r in recs[di + 1:ri]):
+            defs.discard(tmap[t])
+    return [(r[0],) + tuple(ren(x) for x in r[1:4]) + tuple(r[4:]) for r in recs], tmap, defs
 
 
 def const(b):
@@ -359,12 +381,16 @@ def show(F, x, inv, defs, ctx=None):
 
 
 def fmt(F, r, inv, defs):
-    op, res, a, b = r
+    op, res, a, b = r[:4]
     S = lambda x: show(F, x, inv, defs)
     if op in COMPOUND or op in ('++', '--', 'BSET', 'BCLR') or op in BRANCHES and op not in ('JRBC', 'JRBS'):
         ct = ctype(F, res if op not in BRANCHES else a, inv) if op not in BRANCHES else \
             (ctype(F, a, inv) or ctype(F, b, inv))
         S = lambda x: show(F, x, inv, defs, ct)
+    elif op in CMP:
+        ct = ctype(F, a, inv) or ctype(F, b, inv)
+        S = lambda x: show(F, x, inv, defs, ct)
+        return '%s %s %s,%s' % (S(res), op, S(a), S(b))
     elif op in BINARY:
         ct = ctype(F, res, inv)
         S = lambda x: show(F, x, inv, defs, ct if op not in ('<<', '>>') else None)
@@ -382,6 +408,11 @@ def fmt(F, r, inv, defs):
         return 'JMP,%s' % res
     if op in ('BEGIN', 'END'):
         return op
+    if op in ('asm', 'ASM'):
+        return '%s,%s' % (op, res)
+    if op == 'ARICALL':
+        ct = ctype(F, res, inv)
+        return '%s ARICALL %s,%s %s' % (S(res), S(a), show(F, b, inv, defs, ct), r[4])
     if op in ('ACALL', 'ACALP'):
         return '%s %s %s' % (S(res), op, S(a))
     if op in CALLS:
@@ -432,9 +463,9 @@ def arg_copies(F, blocked, tmap, inv, defs):
         while j >= 0 and blocked[j][0] == b and blocked[j][1][1] != r[2]:
             j -= 1
         at = j + 1 if j >= 0 and blocked[j][0] == b else next(k for k in range(i + 1) if blocked[k][0] == b) + \
-            (1 if blocked[next(k for k in range(i + 1) if blocked[k][0] == b)][1][0] == 'LAB' else 0)
+            (1 if blocked[next(k for k in range(i + 1) if blocked[k][0] == b)][1][0] in ('LAB', 'BEGIN') else 0)
         inserts.append((at, [b, ('=', new, r[2], None)]))
-        blocked[i] = [b, (r[0], r[1], new, r[3])]
+        blocked[i] = [b, (r[0], r[1], new, r[3]) + tuple(r[4:])]
     for at, item in sorted(inserts, key=lambda x: -x[0]):
         blocked.insert(at, item)
     return blocked
@@ -449,9 +480,9 @@ def s1_text(F):
     for r in recs:
         if r[0] in MARKERS:
             continue
-        if (r[0] == 'LAB' or r[0] in CALLS or start) and not first:
-            block += 1                             # a block starts at a label, at a call, after a call or a branch
-        first, start = False, r[0] in CALLS or r[0] in BRANCHES
+        if (r[0] == 'LAB' or r[0] in CALLS or r[0] in ('asm', 'ASM') or start) and not first:
+            block += 1                             # a block starts at a label, at a call or inline assembler, and
+        first, start = False, r[0] in CALLS or r[0] in BRANCHES or r[0] in ('asm', 'ASM')   # after one or a branch
         blocked.append([block, r])
     if ARG_COPIES:
         blocked = arg_copies(F, blocked, tmap, inv, defs)

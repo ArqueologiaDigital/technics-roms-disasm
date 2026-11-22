@@ -53,7 +53,7 @@ Run the round trip, from technics-roms-disasm's root:
 
 ## Progress
 
-| date       | stage | measured                                                                                  |
-|------------|-------|-------------------------------------------------------------------------------------------|
-| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio` |
-
+| date       | stage | measured                                                                                                             |
+|------------|-------|----------------------------------------------------------------------------------------------------------------------|
+| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio`                              |
+| 2026-11-22 | S1    | firmware C, `-Xr` (runs 2026-11-22-51..54): 496 / 2,672 functions equal thc2's `-zio` (from 38 at the first version) |
