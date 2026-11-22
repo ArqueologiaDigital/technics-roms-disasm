@@ -1,0 +1,145 @@
+image	routine	file	djnz	hand	frame	spill	calls	insns	cls
+v10	MidiVoiceNote_Dispatch	v10/maincpu/audio/audio_control_engine.s	1	0	0	0	0	33	no frame
+v10	PendingParam_ScanAllTables	v10/maincpu/audio/audio_control_engine.s	5	0	0	0	5	82	no frame
+v10	PartCtrl_CheckBitmaskBit	v10/maincpu/audio/audio_control_engine.s	1	0	0	0	0	10	no frame
+v10	NoteMap_SearchVoiceEntry	v10/maincpu/audio/note_voice_mapping.s	1	8	0	0	10	679	hand
+v10	Voice_MatchVoicePairs	v10/maincpu/audio/note_voice_mapping.s	1	0	0	0	1	15	no frame
+v10	Chord_CollectHeldNotes	v10/maincpu/audio/note_voice_mapping.s	1	7	0	0	0	47	hand
+v10	VoiceSlot_StoreParams_LoadReg3	v10/maincpu/audio/note_voice_mapping.s	1	3	0	0	0	40	hand
+v10	Voice_ComputeNoteBitPosition	v10/maincpu/audio/note_voice_mapping.s	2	12	0	0	0	62	hand
+v10	VoiceSlot_CheckPitchIntervals	v10/maincpu/audio/note_voice_mapping.s	2	7	1	0	0	86	hand
+v10	NoteBuffer_CompactEn_Block2	v10/maincpu/audio/note_voice_mapping.s	1	1	0	0	0	24	hand
+v10	InitPartAllocState_TestBit242	v10/maincpu/audio/note_voice_mapping.s	1	3	0	0	0	46	hand
+v10	VoiceSlot_SetPitchParams_TestBit24	v10/maincpu/audio/note_voice_mapping.s	2	4	0	0	0	58	hand
+v10	VoiceSlot_IterateAlloc_Block3	v10/maincpu/audio/note_voice_mapping.s	1	0	0	0	0	14	no frame
+v10	VoiceSlot_IterateAlloc_LoadReg	v10/maincpu/audio/note_voice_mapping.s	1	1	0	0	0	13	hand
+v10	SoundRam_ComputeChecksum	v10/maincpu/audio/note_voice_mapping.s	1	0	0	0	1	32	no frame
+v10	SoundRam_WriteChecksum	v10/maincpu/audio/note_voice_mapping.s	1	0	0	0	0	9	no frame
+v10	Math_DivideU32	v10/maincpu/audio/note_voice_mapping.s	1	4	0	0	0	57	hand
+v10	Mem_Compare	v10/maincpu/audio/note_voice_mapping.s	3	2	0	0	0	52	hand
+v10	Memset	v10/maincpu/audio/note_voice_mapping.s	3	1	0	0	0	26	hand
+v10	SeMenu_DrawPartSelector	v10/maincpu/audio/sound_editor_ui.s	1	2	0	0	6	60	hand
+v10	SeMenu_DrawPartLabels	v10/maincpu/audio/sound_editor_ui.s	1	2	0	0	4	40	hand
+v10	SeMenu_DrawPartRadioButtons	v10/maincpu/audio/sound_editor_ui.s	1	2	0	0	2	33	hand
+v10	SeMenu_DrawTwoPartRadioButtons	v10/maincpu/audio/sound_editor_ui.s	1	2	0	0	2	29	hand
+v10	SeLfo1_DrawPartLabels	v10/maincpu/audio/sound_editor_ui.s	1	2	0	0	2	29	hand
+v10	Sprintf_StringLength	v10/maincpu/audio/sprintf_core.s	1	0	1	0	1	17	compiled-looking
+v10	Boot_InitWorkRAM	v10/maincpu/boot/system_handlers.s	4	22	0	0	12	456	hand
+v10	AudioMix_Init	v10/maincpu/boot/system_handlers.s	1	3	0	0	4	31	hand
+v10	AudioMix_WriteChannelGroup	v10/maincpu/boot/system_handlers.s	1	0	0	0	4	32	no frame
+v10	Copy_DE_words_from_XBC_to_XWA	v10/maincpu/boot/system_handlers.s	1	0	0	0	0	8	no frame
+v10	SeqBuf_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	22	hand
+v10	TempoRingBuf_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	16	hand
+v10	RhythmBuf_WriteByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	26	hand
+v10	AltEvtBuf_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	24	hand
+v10	SeqEvtBuf_WriteByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	34	hand
+v10	SeqMain_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	16	hand
+v10	SeqBuf_MidiOut_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	16	hand
+v10	SeqBuf2_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	24	hand
+v10	SeqBuf3_WriteBytes	v10/maincpu/boot/system_handlers.s	1	2	0	0	1	22	hand
+v10	SeqBuf_DspSysEx_WriteByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	26	hand
+v10	CPanel_RxEventQueue_Pop	v10/maincpu/boot/system_handlers.s	1	4	0	0	7	84	hand
+v10	CPanel_LedQueue_PushByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	5	70	hand
+v10	SeqBuf_VoiceMap_WriteByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	34	hand
+v10	SeqBuf_NoteEvent_WriteByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	34	hand
+v10	SeqBuf_DmaChan0_WriteByte	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	34	hand
+v10	SeqBuf_SoundEdit_BytecodeBlock	v10/maincpu/boot/system_handlers.s	1	4	0	0	2	26	hand
+v10	DispatchHandler_InitAllSlots	v10/maincpu/demo/demo_seq_bridge.s	6	1	0	0	1	53	hand
+v10	FileIO_CopyString_WriteNull	v10/maincpu/demo/file_demo_proc.s	1	0	0	0	0	14	no frame
+v10	PerfMode_ClampValue	v10/maincpu/display/scoop_display.s	1	0	0	0	4	42	no frame
+v10	PerfMode_ShowVolumeLine	v10/maincpu/display/scoop_display.s	1	1	0	0	9	61	hand
+v10	Display_FillMemoryLoop	v10/maincpu/display/scoop_display.s	1	1	0	0	15	110	hand
+v10	MemConfig_Handler_5_Helper4	v10/maincpu/display/scoop_display.s	1	3	0	0	14	54	hand
+v10	ToneParam_HandlerTable_BC_Helper7	v10/maincpu/display/scoop_display.s	1	2	0	0	6	43	hand
+v10	ToneParam_HandlerTable_BC_Helper8	v10/maincpu/display/scoop_display.s	1	2	0	0	9	65	hand
+v10	SeqTrack_SkipWrapMarkers	v10/maincpu/display/scoop_display.s	1	0	0	0	6	30	no frame
+v10	SqStep_WriteClockWrapMarkers	v10/maincpu/display/scoop_display.s	1	1	0	0	2	23	hand
+v10	SqStep_SetupScreenForDisplayMode	v10/maincpu/display/scoop_display.s	1	1	0	0	26	80	hand
+v10	PortConfig_Handler_0_Helper6	v10/maincpu/display/scoop_display.s	1	1	0	0	0	12	hand
+v10	SqStep_ResetPositionState	v10/maincpu/display/scoop_display.s	1	1	0	0	0	30	hand
+v10	SqStep_PanelButtonDispatch_Tbl2_Sub2	v10/maincpu/display/scoop_display.s	1	0	0	0	6	30	no frame
+v10	SqStep_PanelButtonDispatch_Tbl2_Sub4	v10/maincpu/display/scoop_display.s	1	2	0	0	32	121	hand
+v10	SeqTrack_AdvanceCursor	v10/maincpu/display/scoop_display.s	1	5	0	0	1	78	hand
+v10	SqStep_FindRhythmTrack	v10/maincpu/display/scoop_display.s	1	3	0	0	0	41	hand
+v10	VoiceState_DataBlock2_Tbl_Helper6	v10/maincpu/display/scoop_display.s	2	1	0	0	6	51	hand
+v10	DisplayStr_ShowPartParamLine	v10/maincpu/display/scoop_display.s	1	5	0	0	10	75	hand
+v10	SubCPU_ToneParamRet_Helper7	v10/maincpu/display/scoop_display.s	2	3	0	0	7	64	hand
+v10	SubCPU_ToneParamRet_Helper10	v10/maincpu/display/scoop_display.s	1	1	0	0	2	26	hand
+v10	SubCPU_ToneParamRet_Helper12	v10/maincpu/display/scoop_display.s	3	2	0	0	5	68	hand
+v10	OscScope_RenderBlock_Helper	v10/maincpu/display/scoop_display.s	1	1	0	0	0	6	hand
+v10	SqStep_ClearRow2CellRecords	v10/maincpu/display/scoop_display.s	1	1	0	0	0	6	hand
+v10	SqStep_ClearRow3CellRecords	v10/maincpu/display/scoop_display.s	1	1	0	0	0	6	hand
+v10	DisplayStr_WriteStoredControlLine	v10/maincpu/display/scoop_display.s	1	0	0	0	4	16	no frame
+v10	DisplayStr_ClearRegion	v10/maincpu/display/scoop_display.s	1	0	0	0	0	12	no frame
+v10	DisplayStr_StyleSectionInit	v10/maincpu/display/scoop_display.s	1	1	0	0	2	19	hand
+v10	DisplayStr_BlankLineBuffer	v10/maincpu/display/scoop_display.s	1	0	0	0	0	6	no frame
+v10	DisplayStr_ShowBeatCount	v10/maincpu/display/scoop_display.s	1	0	0	0	1	31	no frame
+v10	SubCPU_ToneParamRet_Helper19	v10/maincpu/display/scoop_display.s	1	7	0	0	31	185	hand
+v10	Tbl_PedalNames_Helper4	v10/maincpu/display/scoop_display.s	1	1	0	0	0	6	hand
+v10	Scoop_ButtonLabels_CopySlotData	v10/maincpu/display/scoop_display.s	3	0	0	0	0	29	no frame
+v10	Scoop_ButtonLabels_SetupPartButtons	v10/maincpu/display/scoop_display.s	3	0	0	0	0	28	no frame
+v10	Scoop_ButtonLabels_DrawPitchLabels	v10/maincpu/display/scoop_display.s	1	0	0	0	0	16	no frame
+v10	Scoop_ButtonLabels_DrawAmpLabels	v10/maincpu/display/scoop_display.s	1	0	0	0	0	16	no frame
+v10	Scoop_ButtonLabels_DrawFilterLabels	v10/maincpu/display/scoop_display.s	1	0	0	0	0	16	no frame
+v10	MidiRx_BuildChannelPartLists	v10/maincpu/midi/midi_dispatch_handlers.s	2	2	0	0	0	64	hand
+v10	AccPatch_InitAndLoadSequence	v10/maincpu/sequencer/accompaniment_engine.s	2	3	0	0	3	29	hand
+v10	AccPatch_ResetSeqCounters	v10/maincpu/sequencer/accompaniment_engine.s	2	3	0	0	2	26	hand
+v10	AccPatch_SeekForwardSteps	v10/maincpu/sequencer/accompaniment_engine.s	1	1	0	0	2	18	hand
+v10	AccPatch_ResumeSequencePlayback	v10/maincpu/sequencer/accompaniment_engine.s	1	0	0	0	10	60	no frame
+v10	AccPatch_PrepareAndProcessEvents	v10/maincpu/sequencer/accompaniment_engine.s	2	0	0	0	12	78	no frame
+v10	AccPatch_AdvanceAllSteps	v10/maincpu/sequencer/accompaniment_engine.s	1	0	0	0	1	12	no frame
+v10	AccPatch_InitSlotChain	v10/maincpu/sequencer/accompaniment_engine.s	1	5	0	0	4	49	hand
+v10	AccPatch_VoiceAssignDataBlock	v10/maincpu/sequencer/accompaniment_engine.s	2	6	0	0	0	165	hand
+v10	AccPatch_VoiceAssignDataBlock_Helper5	v10/maincpu/sequencer/accompaniment_engine.s	1	0	0	0	7	16	no frame
+v10	AccPatch_VoiceAssignDataBlock_Helper11_Helper2	v10/maincpu/sequencer/accompaniment_engine.s	1	1	0	0	3	32	hand
+v10	SeqStep_SearchBackward	v10/maincpu/sequencer/seq_step_routines.s	1	0	1	0	1	10	compiled-looking
+v10	SMF_ClearWorkArea	v10/maincpu/sequencer/smf_config_routines.s	1	1	0	0	0	12	hand
+v10	SMF_ClearOutputQueue	v10/maincpu/sequencer/smf_config_routines.s	1	0	0	0	0	8	no frame
+v10	SMF_AdvanceMultipleEvents	v10/maincpu/sequencer/smf_config_routines.s	1	0	0	0	2	7	no frame
+v10	SMF_ClearFileBuffer	v10/maincpu/sequencer/smf_config_routines.s	1	0	0	0	0	9	no frame
+v10	SMF_InitPlaybackState	v10/maincpu/sequencer/smf_event_processor.s	1	33	0	0	96	1682	hand
+v10	Fat_ReadFile	v10/maincpu/sequencer/smf_event_processor.s	1	0	1	1	5	222	compiled-looking
+v10	SoundBank_InitTrackParams_Inner	v10/maincpu/sequencer/smf_playback.s	1	5	0	0	0	46	hand
+v10	SMF_InitSequencerState	v10/maincpu/sequencer/smf_playback.s	3	3	0	0	40	252	hand
+v10	SeqTrack_ResetAllChannelSlots	v10/maincpu/sequencer/smf_tonegen_core.s	2	1	0	0	0	10	hand
+v10	SeqTrack_ClearPlaybackBuffers	v10/maincpu/sequencer/smf_tonegen_core.s	2	1	0	0	0	16	hand
+v10	SeqTrack_ClearPartParamBuffers	v10/maincpu/sequencer/smf_tonegen_core.s	1	1	0	0	0	12	hand
+v10	SeqPlay_DelayLoop_Outer	v10/maincpu/sequencer/smf_tonegen_core.s	2	0	0	0	0	5	no frame
+v10	SeqPlay_InitChannelParams	v10/maincpu/sequencer/smf_tonegen_core.s	1	2	0	0	0	20	hand
+v10	SeqTrack_ClearTempoAccumulators	v10/maincpu/sequencer/smf_tonegen_core.s	1	1	0	0	0	12	hand
+v10	SMF_ReadAndValidateMTrkHeader	v10/maincpu/sequencer/smf_tonegen_core.s	1	0	0	0	17	184	no frame
+v10	SoundGen_RefreshAllVoices	v10/maincpu/sequencer/smf_tonegen_core.s	1	0	0	0	3	18	no frame
+v10	ToneGen_UpdateBlocks	v10/maincpu/sequencer/smf_tonegen_core.s	1	1	0	0	3	20	hand
+v10	FloppyIO_ClearTrackParseBuffer	v10/maincpu/sequencer/smf_tonegen_core.s	1	1	0	0	0	6	hand
+v10	VoiceChannel_ClearParamTable	v10/maincpu/sequencer/smf_tonegen_core.s	1	1	0	0	0	6	hand
+v10	FDC_CMD_ENABLE	v10/maincpu/storage/fdc_routines.s	1	0	1	0	3	17	compiled-looking
+v10	SetWall_ParsePatternStream	v10/maincpu/ui/setwall_routines.s	1	5	0	0	12	229	hand
+v10	SetWall_BankInit	v10/maincpu/ui/setwall_routines.s	6	1	0	0	1	53	hand
+v10	SetWall_FullReset	v10/maincpu/ui/setwall_routines.s	4	4	0	0	1	58	hand
+v10	Report_test_result_by_blinking_LED	v10/maincpu/ui/ui_mode_handlers.s	2	0	0	0	0	26	no frame
+v10	EffectMode_MidiSetLEDs	v10/maincpu/ui/ui_mode_handlers.s	2	9	1	0	525	5111	hand
+v10	Seq_FindRhythmTrack	v10/maincpu/ui/ui_playback_modes.s	1	3	0	0	0	40	hand
+v10	SongBank_ScanActiveVoices	v10/maincpu/ui/ui_playback_modes.s	1	2	0	0	0	17	hand
+v10	SeqRestart_CheckAndDispatch	v10/maincpu/ui/ui_playback_modes.s	1	0	0	0	3	18	no frame
+v142	MemClear_DRAM_BulkLoop	v142/subcpu/core/02_audio_system_init.s	1	0	0	0	0	2	no frame
+v142	MemClear_ExtRAM_BulkLoop	v142/subcpu/core/02_audio_system_init.s	1	0	0	0	0	2	no frame
+v142	DSP_Init_Channels_Loop	v142/subcpu/core/02_audio_system_init.s	1	1	0	0	0	6	hand
+v142	DSP_Write_Channel_Loop	v142/subcpu/core/02_audio_system_init.s	1	0	0	0	0	7	no frame
+v142	DSP_FillMemWords	v142/subcpu/core/02_audio_system_init.s	1	0	0	0	0	3	no frame
+v142	FIFO1K_PutBytes_Loop	v142/subcpu/core/03_task_scheduler_kernel.s	1	1	0	0	1	9	hand
+v142	FIFO256_PutBytes_Loop	v142/subcpu/core/03_task_scheduler_kernel.s	1	1	0	0	1	9	hand
+v142	FIFO512_PutBytes_Loop	v142/subcpu/core/03_task_scheduler_kernel.s	1	1	0	0	1	9	hand
+v142	DSP_WriteCount_Loop	v142/subcpu/core/11_ringbuf_and_midi_dispatch.s	1	0	0	0	0	2	no frame
+v142	FP_UnsignedDiv_Done	v142/subcpu/subcpu_fp_math.s	1	0	0	0	0	4	no frame
+v142	FP_SP_NormCore_ShiftRight	v142/subcpu/subcpu_fp_math.s	1	0	0	0	0	5	no frame
+v142	FP_DP_AlignMantissa_ShiftBit	v142/subcpu/subcpu_fp_math.s	1	0	0	0	0	4	no frame
+v142	FP_DP_SubMantissa_ShiftBit	v142/subcpu/subcpu_fp_math.s	1	0	0	0	0	5	no frame
+v142	FP_SP_DecodeToInt_ShiftLeft	v142/subcpu/subcpu_fp_math.s	1	0	0	0	0	5	no frame
+hdae5000	HDAE5000_Lyrics_WriteVarLen	hdae5000/hdae5000_ui_display.s	1	0	0	0	0	41	no frame
+hdae5000	HDAE5000_Clear_Work_Buffer__clear_loop	hdae5000/hdae5000_ui_display.s	1	0	0	0	0	2	no frame
+hdae5000	HDAE5000_Clear_Work_Buffer__copy_loop	hdae5000/hdae5000_ui_display.s	1	0	0	0	0	2	no frame
+hdae5000	HDAE5000_MemCmp	hdae5000/hdae5000_ui_display.s	3	0	0	0	0	52	no frame
+hdae5000	HDAE5000_MemFill__align_loop	hdae5000/hdae5000_ui_display.s	1	0	0	0	0	4	no frame
+hdae5000	HDAE5000_MemFill__fill_dwords	hdae5000/hdae5000_ui_display.s	1	0	0	0	0	2	no frame
+hdae5000	HDAE5000_MemFill__fill_bytes	hdae5000/hdae5000_ui_display.s	1	0	0	0	0	3	no frame
+hdae5000	HDAE5000_UDivMod32_Done3	hdae5000/hdae5000_utilities.s	1	0	0	0	0	4	no frame
