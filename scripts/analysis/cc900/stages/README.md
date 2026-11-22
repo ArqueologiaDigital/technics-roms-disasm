@@ -39,12 +39,21 @@ operations; thc1 already rotates loops (the test at the bottom).
 
 ## Files
 
-| file        | question it answers                                                                                                                                                               |
-|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `thc1ir.py` | reads and writes thc1's intermediate file; `--roundtrip FILE...` checks the reader is exact (1,133 / 1,133, 2026-11-22)                                                           |
-| `s0.py`     | S0: the file split into one unit per function with its parameters, locals and temporaries; `--stats` (1,133 files: 4,726 functions, 239,783 operation lines, 143,532 temporaries) |
+| file          | question it answers                                                                                                                                                               |
+|---------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `thc1ir.py`   | reads and writes thc1's intermediate file; `--roundtrip FILE...` checks the reader is exact (1,133 / 1,133, 2026-11-22)                                                           |
+| `s0.py`       | S0: the file split into one unit per function with its parameters, locals and temporaries; `--stats` (1,133 files: 4,726 functions, 239,783 operation lines, 143,532 temporaries) |
+| `s1.py`       | S1 without optimisation: thc1's operations rewritten as thc2 holds them before code selection, printed as its `-zio` dump (rules in the docstring)                                |
+| `s1_check.py` | S1 against thc2's `-zio` for every kept file of job_i2.sh runs: exact functions per option set, first-difference worklist (counts only)                                           |
 
 Run the round trip, from technics-roms-disasm's root:
 
     find ~/compartilhado/cc900-oracle/runs/2026-11-22-4[6-9]-i2-fw-* -name '*.inter' | xargs \
         python3 -B scripts/analysis/cc900/stages/thc1ir.py --roundtrip
+
+## Progress
+
+| date       | stage | measured                                                                                  |
+|------------|-------|-------------------------------------------------------------------------------------------|
+| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio` |
+
