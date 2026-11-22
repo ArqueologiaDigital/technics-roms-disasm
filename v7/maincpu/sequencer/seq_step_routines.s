@@ -2454,21 +2454,10 @@ SeqStep_CompactDone:
 	inc 4, xsp
 	ret
 
-SeqStep_SearchBackward:
-	pushw iz
-	ld iz, wa
-
-SeqStep_SearchBackwardLoop:
-	ld wa, iz
-	call PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, SeqStep_SearchBackwardDone
-	djnz16 iz, SeqStep_SearchBackwardLoop
-
-SeqStep_SearchBackwardDone:
-	ld hl, iz
-	popw iz
-	ret
+SeqStep_SearchBackward:	.include "includes/generated/cc900/SeqStep_SearchBackward.s"	; C: cc900/seq_step_routines_m236_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_SearchBackwardLoop, SeqStep_SearchBackward + 3
+	.set	SeqStep_SearchBackwardDone, SeqStep_SearchBackward + 16
 
 SeqStep_SearchForward:
 	pushw iz

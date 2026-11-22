@@ -55,3 +55,39 @@ int PostTmSave_ByteBlock(unsigned char *p)
   if (k <= 6 && k >= 1) return 0;
   return -0x66;
 }
+
+extern unsigned int ram_1e0010[];
+extern unsigned int SoundRam_ComputeChecksum(void);
+extern unsigned char ram_1e0000[];
+extern void SoundRam_WriteChecksum(void);
+
+unsigned int SoundRam_ComputeChecksum(void)
+{
+    unsigned int s;
+    unsigned int *p;
+    unsigned int n;
+
+    n = 0x24b8;
+    p = ram_1e0010;
+    s = 0;
+    do
+        s += *p++;
+    while (--n != 0);
+    return ~s;
+}
+void SoundRam_WriteChecksum(void)
+{
+    unsigned int s;
+    unsigned int *p;
+    unsigned char *b;
+    unsigned int n;
+
+    n = 0x24b8;
+    b = ram_1e0000;
+    p = (unsigned int *)(b + 16);
+    s = 0;
+    do
+        s += *p++;
+    while (--n != 0);
+    *(unsigned int *)(b + 29352) = ~s;
+}

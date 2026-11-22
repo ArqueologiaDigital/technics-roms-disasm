@@ -450,10 +450,7 @@ DSP_BlockCopyWords:
 ; Entry: XWA = dest pointer, BC = fill value, DE = count
 ; Notes: ld (xwa+),bc stores BC then increments XWA
 ; ----------------------------------------------------------------------------
-DSP_FillMemWords:
-	ld	(xwa+), bc
-	djnz16 de, DSP_FillMemWords
-	ret
+DSP_FillMemWords:	.include "includes/generated/cc900/DSP_FillMemWords.s"	; C: cc900/audio_system_init_o3xr_z3.c
 
 ; ----------------------------------------------------------------------------
 ; DSP_ChecksumRange - Compute checksum of 32-bit words in memory range

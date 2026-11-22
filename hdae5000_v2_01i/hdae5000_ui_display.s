@@ -602,59 +602,7 @@ HDAE5000_Lyrics_ReadVarLen:	.include "includes/generated/cc900/HDAE5000_Lyrics_R
 	; Input: XWA = value to encode, XBC = output buffer pointer
 	; Output: HL = 0xFFFF (sentinel)
 
-HDAE5000_Lyrics_WriteVarLen:
-	; The encoder matching HDAE5000_Lyrics_ReadVarLen: write XWA as a
-	; variable-length number to (XBC), at most 5 bytes.  No caller was found
-	; (scripts/analysis/hdae5000_reachability.py).
-	; Step 1: Count how many 7-bit chunks are needed
-	ld xde, xwa			; XDE = value to encode
-	ld hl, 1:i3			; HL = chunk count (start at 1)
-	cp hl, 5:i3			; max 5 chunks
-	jr nc, .Lcds_apply
-.Lcds_search:
-	srl xde, 7			; shift out 7 bits
-	jr nz, .Lcds_next		; still nonzero? need more chunks
-	ld ix, hl			; IX = total chunks needed
-	jr t, .Lcds_apply		; done counting
-.Lcds_next:
-	inc 1, hl
-	cp hl, 5:i3
-	jr c, .Lcds_search
-	; Step 2: Serialize chunks MSB-first into buffer
-.Lcds_apply:
-	ld xde, xwa			; XDE = value (fresh copy)
-	ld hl, ix			; HL = chunk count
-	cp hl, 0:i3
-	jr z, .Lcds_done		; nothing to write
-.Lcds_apply_loop:
-	ld wa, hl
-	dec 1, wa			; WA = output index (HL-1)
-	extz xwa
-	ld xix, xwa
-	add xix, xbc			; XIX = &buffer[index]
-	ld a, e				; A = low 7 bits of XDE
-	res 7, a			; clear continuation bit (initially)
-	ld (xix), a			; buffer[index] = 7-bit payload
-	srl xde, 7			; shift out the 7 bits we just wrote
-	cp xde, 0x0000007F		; remaining value fits in 7 bits?
-	ret ule				; yes → last byte already written, done
-	; More bytes needed: set continuation bit on byte we just wrote
-	ld wa, hl
-	dec 1, wa
-	extz xwa
-	ld xix, xwa
-	add xix, xbc			; XIX = &buffer[index]
-	ld wa, hl
-	dec 1, wa
-	extz xwa
-	add xwa, xbc
-	ld a, (xwa)			; re-read byte we just stored
-	set 7, a			; set continuation bit (more bytes follow)
-	ld (xix), a			; write back with continuation
-	djnz16 hl, .Lcds_apply_loop	; next chunk
-.Lcds_done:
-	ldw hl, 0xFFFF			; return sentinel
-	ret
+HDAE5000_Lyrics_WriteVarLen:	.include "includes/generated/cc900/HDAE5000_Lyrics_WriteVarLen.s"	; C: cc900/hdae5000_lyrics_varlen_z3.c
 
 ; ---------------------------------------------------------------------------
 ; Check the lyric file's header chunk (the SMF MThd checks with its own id):

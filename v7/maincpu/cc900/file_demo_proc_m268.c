@@ -271,3 +271,18 @@ int GetFirstPageBase(void)
 		return -104;
 	return ram_271ea;
 }
+
+/* cc900-module: FDC_CMD_SEND FDC_Set_Status SOME_DELAY */
+extern void FileIO_CopyString_WriteNull(char *d, char *s, unsigned int n);
+
+void FileIO_CopyString_WriteNull(char *d, char *s, unsigned int n)
+{
+    while (n != 0 && *s != 0) {
+        *d++ = *s++;
+        n--;
+    }
+    while (n != 0) {
+        *d++ = 0;
+        n--;
+    }
+}

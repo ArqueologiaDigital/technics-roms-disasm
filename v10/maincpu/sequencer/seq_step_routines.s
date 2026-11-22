@@ -2451,21 +2451,10 @@ SeqStep_CompactDone:
 
 ; Finds the last song-data block, from block WA down to 1, whose in-use flag is set.
 ;   Out: HL = that block, or 0 when none is.  Preserves IZ.
-SeqStep_SearchBackward:
-	pushw iz
-	ld iz, wa
-
-SeqStep_SearchBackwardLoop:
-	ld wa, iz
-	call PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, SeqStep_SearchBackwardDone
-	djnz16 iz, SeqStep_SearchBackwardLoop
-
-SeqStep_SearchBackwardDone:
-	ld hl, iz
-	popw iz
-	ret
+SeqStep_SearchBackward:	.include "includes/generated/cc900/SeqStep_SearchBackward.s"	; C: cc900/seq_step_routines_m236_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_SearchBackwardLoop, SeqStep_SearchBackward + 3
+	.set	SeqStep_SearchBackwardDone, SeqStep_SearchBackward + 16
 
 ; Finds the first song-data block, from block WA up to 0x4d8, whose in-use flag is clear.
 ;   Out: HL = that block, or 0x4d9 when every block up to 0x4d8 is in use.  Preserves IZ.

@@ -1770,3 +1770,10 @@ SendSysExCmd_Data	15	2026-11-22-25-p6-r92	p6_C_36r1m301a@O3XSXr p6_C_36r1m301a@O
 Part_ValidateAndSetupVoiceChannel	137	2026-11-22-15-p6-r82 (lane_nmx re-check)	p6_nm_Part_ValidateAndSetupVoiceChannel__3ddde394@O3XSXr
 Part_ValidateVoiceChannel	100	2026-11-22-15-p6-r82 (lane_nmx re-check)	p6_nm_Part_ValidateVoiceChannel__3ddde394@O3XSXr
 SeqPlay_HandleVoiceReassign	138	2026-11-22-15-p6-r82 (lane_nmx re-check)	p6_nm_SeqPlay_HandleVoiceReassign__3ddde394@O3XSXr
+FDC_CMD_ENABLE	42	2026-11-22-32-p6-z3-r1	p6_Z3_37r1a@Xr p6_Z3_37r1b@Xr
+FileIO_CopyString_WriteNull	33	2026-11-22-32-p6-z3-r1	p6_Z3_37r1a@O3Xr p6_Z3_37r1a@Xr
+SeqStep_SearchBackward	20	2026-11-22-32-p6-z3-r1	p6_Z3_37r1a@O3XSXr p6_Z3_37r1a@O3Xr p6_Z3_37r1b@O3XSXr p6_Z3_37r1b@O3Xr
+Fill_memory_at_XWA_with_DE_words_of_BC_value	7	2026-11-22-34-p6-z3-r2	p6_Z3_37r2a@O3XSXr p6_Z3_37r2a@O3Xr
+SoundRam_ComputeChecksum	21	2026-11-22-34-p6-z3-r2	p6_Z3_37r2b@O3 p6_Z3_37r2b@O3XSXr p6_Z3_37r2b@O3Xr
+SoundRam_WriteChecksum	27	2026-11-22-34-p6-z3-r2	p6_Z3_37r2b@O3 p6_Z3_37r2b@O3XSXr p6_Z3_37r2b@O3Xr
+Sprintf_StringLength	39	2026-11-22-34-p6-z3-r2	p6_Z3_37r2a@O3 p6_Z3_37r2a@O3XSXr p6_Z3_37r2a@O3Xr

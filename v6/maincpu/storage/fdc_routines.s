@@ -1565,27 +1565,11 @@ FDC_MC_EXIT_Code_Join2:
 	cp	(FDC_ERROR_CODE:16), 0
 	ret	nz
 	jrl	FDC_POST_OP
-FDC_CMD_ENABLE:
-	pushw	iz
-	set	3, (PA:8)
-	ldw	wa, 254
-	calr	FDC_CMD_SEND
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	z, FDC_MC_EXIT_Code_Skip3
-	ldw	wa, 49
-	calr	FDC_Set_Status
-	jr	FDC_MC_EXIT_Code_Epilogue
-FDC_MC_EXIT_Code_Skip3:
-	ld	iz, 1:i3
-	cp	iz, 0:i3
-	jr	z, FDC_MC_EXIT_Code_Epilogue
-FDC_MC_EXIT_Code_Loop2:
-	ldw	wa, 10
-	calr	SOME_DELAY
-	djnz16	iz, FDC_MC_EXIT_Code_Loop2
-FDC_MC_EXIT_Code_Epilogue:
-	popw	iz
-	ret
+FDC_CMD_ENABLE:	.include "includes/generated/cc900/FDC_CMD_ENABLE.s"	; C: cc900/fdc_routines_m270_xr_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_MC_EXIT_Code_Skip3, FDC_CMD_ENABLE + 25
+	.set	FDC_MC_EXIT_Code_Loop2, FDC_CMD_ENABLE + 31
+	.set	FDC_MC_EXIT_Code_Epilogue, FDC_CMD_ENABLE + 40
 FDC_CMD_DISABLE:	.include "includes/generated/cc900/FDC_CMD_DISABLE.s"	; C: cc900/fdc_routines_m270.c
 FDC_STATUS_COPY:
 	ldmm8	FDC_ERROR_CODE, 0x896e

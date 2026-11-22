@@ -23171,16 +23171,9 @@ SendPartDataBlock_Return3:
 	ret
 ; SoundRam_ComputeChecksum: HL = the complemented 16-bit sum of the 0x24B8 words from 0x1E0010, the checksum SoundRam_WriteChecksum
 ;   stores at 0x1E72A8.  Basis: body.
-SoundRam_ComputeChecksum:
-	ldw	bc, 0x24b8
-	lda	xwa, (0x1e0010:24)
-	ld	de, 0:i3
-SoundRam_ComputeChecksum_Loop:
-	add	DE, (xwa+)
-	djnz16	bc, SoundRam_ComputeChecksum_Loop
-	cpl	de
-	ld	hl, de
-	ret
+SoundRam_ComputeChecksum:	.include "includes/generated/cc900/SoundRam_ComputeChecksum.s"	; C: cc900/note_voice_mapping_m306.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundRam_ComputeChecksum_Loop, SoundRam_ComputeChecksum + 10
 ; SoundRam_InitPhase0_SendImage: Init phase 0 of the sound-RAM subsystem (slot 0 of SoundRam_InitFuncTable): when the 16-byte id at 0x1E0000
 ;   is SoundRam_Id_KN5000 and SoundRam_ComputeChecksum equals the word at 0x1E72A8, bulk-transfers the 0x72AA-byte
 ;   image to sub-CPU 0x7800 (InterCPU_E1_Bulk_Transfer); otherwise sends COMM_BuildAndSendPacket(0xFF, 0xFF)
@@ -24108,17 +24101,9 @@ SendPartDataBlock_ClearByte5:
 	ret
 ; SoundRam_WriteChecksum: Stores the complemented 16-bit sum of the 0x24B8 words from 0x1E0010 at
 ;   0x1E72A8 (the image's checksum word); HL = 0. Basis: body + SoundRam_WriteIdAndChecksum.
-SoundRam_WriteChecksum:
-	ldw	de, 0x24b8
-	lda	xbc, (0x1e0000:24)
-	lda	xwa, (xbc + 16)
-	ld	hl, 0:i3
-SoundRam_WriteChecksum_Loop:
-	add	HL, (xwa+)
-	djnz16	de, SoundRam_WriteChecksum_Loop
-	cpl	hl
-	ld	(xbc+29352), hl
-	ret
+SoundRam_WriteChecksum:	.include "includes/generated/cc900/SoundRam_WriteChecksum.s"	; C: cc900/note_voice_mapping_m306.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundRam_WriteChecksum_Loop, SoundRam_WriteChecksum + 13
 ; SoundRam_ConvertSounds: Converts the sound records of the SOUND RAM image at 0x1E0000 when it is an older
 ;   model's (SoundRam_IdentifyImage): KN2000, MKA and MKB records (SoundRam_ConvertSounds_Kn2000MkaMkb) and
 ;   KN1500 records (SoundRam_ConvertSounds_Kn1500); a KN3000 or KN5000 image needs none; an unknown one

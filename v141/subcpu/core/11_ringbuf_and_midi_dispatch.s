@@ -144,26 +144,10 @@ MIDI_Dispatch:	.include "includes/generated/cc900/MIDI_Dispatch.s"	; C: cc900/ri
 ; HL = the one's complement (`cpl`) of the 16-bit total.
 ; Every caller immediately stores it at (0x04531C) + 0x72A8, i.e. the last word of the image.
 ; 4 call sites: DSP_WriteAlgoBuffer_Epilogue and three inside DSP_Reinit_VoiceSlots.
-DSP_WriteCount_Compute:
-	ldw bc, 0x4970
-	srl bc, 1
-	ld xwa, (Payload_Bss_Start+0x64a6:24)
-	lda xwa, (xwa + 16)
-	ld de, 0:i3
-	cp bc, 0:i3
-	jr z, DSP_WriteCount_Next
-
-; The `add DE,(XWA+)` / `djnz` accumulation loop.
-DSP_WriteCount_Loop:
-	add DE, (xwa+)
-	djnz16 bc, DSP_WriteCount_Loop
-
-; HL = ~sum.
-DSP_WriteCount_Next:
-	ld wa, de
-	cpl wa
-	ld hl, wa
-	ret
+DSP_WriteCount_Compute:	.include "includes/generated/cc900/DSP_WriteCount_Compute.s"	; C: cc900/ringbuf_and_midi_dispatch_z3_2c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_WriteCount_Loop, DSP_WriteCount_Compute + 20
+	.set	DSP_WriteCount_Next, DSP_WriteCount_Compute + 26
 
 ; Builds one 0x50-byte DSP channel record inside the DSP1 image.
 ; Inputs: XWA = source parameter block, BC = channel index (0..0x7F).
