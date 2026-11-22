@@ -39,9 +39,10 @@ operations; thc1 already rotates loops (the test at the bottom).
 
 ## Files
 
-| file       | question it answers                                                                                                   |
-|------------|-----------------------------------------------------------------------------------------------------------------------|
-| `thc1ir.py` | reads and writes thc1's intermediate file; `--roundtrip FILE...` checks the reader is exact (1,133 / 1,133, 2026-11-22) |
+| file        | question it answers                                                                                                                                                               |
+|-------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `thc1ir.py` | reads and writes thc1's intermediate file; `--roundtrip FILE...` checks the reader is exact (1,133 / 1,133, 2026-11-22)                                                           |
+| `s0.py`     | S0: the file split into one unit per function with its parameters, locals and temporaries; `--stats` (1,133 files: 4,726 functions, 239,783 operation lines, 143,532 temporaries) |
 
 Run the round trip, from technics-roms-disasm's root:
 
