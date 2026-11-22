@@ -21398,68 +21398,15 @@ SndParam_ApplyMaskClamp:	.include "includes/generated/cc900/SndParam_ApplyMaskCl
 	.set	ApplyMaskClamp_LoadReg, SndParam_ApplyMaskClamp + 143
 	.set	SndParam_StoreResult_Return, SndParam_ApplyMaskClamp + 148
 	.set	SndParam_PopIzSkip4Ret, SndParam_ApplyMaskClamp + 153
-SndParam_StoreDRAMInit:
-	lda	xsp, (xsp-304)
-	pushw	iz
-	ld	(xsp+300), de
-	ld	(xsp+302), bc
-	ld	(xsp+304), a
-	ld	(xsp + 6), 0xff
-	ld	xwa, 0:i3
-	ld	(xsp + 2), xwa
-	jr	StoreDRAMInit_Block2
-StoreDRAMInit_ReadBuf:
-	call	SeqBuf_VoiceMap_ReadByte
-	cp	hl, 0xffff
-	jr	z, StoreDRAMInit_Block
-	lda	xwa, (xsp + 12)
-	ld	(xsp + 8), xwa
-	ld	xwa, 1:i3
-	add	(xsp + 8), xwa
-	ld	iz, 0:i3
-StoreDRAMInit_ReadBuf2:
-	call	SeqBuf_VoiceMap_ReadByte
-	ld	xwa, (xsp + 8)
-	ld	(xwa+), l
-	ld	(xsp + 8), xwa
-	inc	1, iz
-	cp	iz, 7:i3
-	jr	c, StoreDRAMInit_ReadBuf2
-	lda	xbc, (xsp + 12)
-	ld	a, (xbc + 7)
-	cp	a, (xsp+304)
-	jr	nz, StoreDRAMInit_Block
-	ld	(xbc), 0x0
-	ld	iz, 0:i3
-	cpw	(xsp+302), 0x0000
-	jr	ule, StoreDRAMInit_LoadParam
-StoreDRAMInit_ReadBuf3:
-	call	SeqBuf_VoiceMap_ReadByte
-	ld	XWA, (xsp + 0x0136)
-	ld	(xwa+), l
-	ld	(xsp+310), xwa
-	inc	1, iz
-	cp	iz, (xsp+302)
-	jr	c, StoreDRAMInit_ReadBuf3
-StoreDRAMInit_LoadParam:
-	ld	(xsp + 6), 0x0
-	jr	StoreDRAMInit_LoadParam2
-StoreDRAMInit_Block:
-	ld	xwa, 1:i3
-	add	(xsp + 2), xwa
-	ld	xwa, (xsp + 2)
-	cp	xwa, 0xe00
-	jr	ge, StoreDRAMInit_LoadParam2
-StoreDRAMInit_Block2:
-	ld	wa, (xsp+300)
-	extz	xwa
-	cp	(xsp + 2), xwa
-	jrl	lt, StoreDRAMInit_ReadBuf
-StoreDRAMInit_LoadParam2:
-	ld	l, (xsp + 6)
-	popw	iz
-	lda	xsp, (xsp+304)
-	retd	0x4
+SndParam_StoreDRAMInit:	.include "includes/generated/cc900/SndParam_StoreDRAMInit.s"	; C: cc900/note_voice_mapping_m303_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	StoreDRAMInit_ReadBuf, SndParam_StoreDRAMInit + 32
+	.set	StoreDRAMInit_ReadBuf2, SndParam_StoreDRAMInit + 55
+	.set	StoreDRAMInit_ReadBuf3, SndParam_StoreDRAMInit + 101
+	.set	StoreDRAMInit_LoadParam, SndParam_StoreDRAMInit + 127
+	.set	StoreDRAMInit_Block, SndParam_StoreDRAMInit + 133
+	.set	StoreDRAMInit_Block2, SndParam_StoreDRAMInit + 149
+	.set	StoreDRAMInit_LoadParam2, SndParam_StoreDRAMInit + 162
 StoreDRAMInit_LoadDRAM:
 	ld	xhl, (SOUND_TABLE_BASE:16)
 	ld	xde, (xhl + 4)

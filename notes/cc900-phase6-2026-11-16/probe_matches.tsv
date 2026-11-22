@@ -1752,3 +1752,4 @@ MIDI_WriteMultiByteWithHeader	105	2026-11-22-17-p6-r84	p6_T_32r1m280a@O3Xr p6_T_
 SeqPart_Splice	132	2026-11-22-17-p6-r84	p6_U_32r1m236b@O3XSXr p6_U_32r1m236b@O3Xr
 SndParam_SyncDisplayBitmap	138	2026-11-22-17-p6-r84	p6_T_32r1m277a@O3Xr
 SwbtWr_AppendFixedParamBlock	101	2026-11-22-17-p6-r84	p6_U_32r1m280a@O3Xr
+SndParam_StoreDRAMInit	174	2026-11-22-19-p6-r86	p6_V_33r1m303a@O3XSXr p6_V_33r1m303b@O3XSXr
