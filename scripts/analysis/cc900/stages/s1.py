@@ -377,7 +377,8 @@ def rewrite(F):
             out.append(('ADDR', fl[3], fl[1], None))
         elif op in CALLS:                            # CCALL,@f,#argbytes,T: the result first, as the others
             res_ = fl[3] if len(fl) > 3 and F.typ(fl[3]) not in ('1', None) and reads.get(fl[3], 0) else None
-            out.append((op, res_, fl[1], fl[2]))
+            spare = fl[3] if len(fl) > 3 and fl[3] and res_ is None else None
+            out.append((op, res_, fl[1], fl[2]) + (('res:' + spare,) if spare and CALL_RES_COPY else ()))
         elif op in ('asm', 'ASM'):                   # inline assembler: its text as thc1 wrote it
             out.append((op, ','.join(fl[1:]), None, None))
         elif op in ARGS:                             # AARG,value,call,index: the index is kept
@@ -451,6 +452,15 @@ def number(F, recs):
         w = r[1]
         if w and not w.startswith('*') and w.startswith('T') and r[0] not in BRANCHES:
             writes[w] = writes.get(w, 0) + 1
+    spare = {r[4][4:] for r in recs if len(r) > 4 and str(r[4]).startswith('res:')}
+    if CALL_RES_COPY:                                # an unread call result is numbered when an argument of its
+        for k, r in enumerate(recs):                 # call is copied (it becomes that copy, arg_copies)
+            if len(r) > 4 and str(r[4]).startswith('res:'):
+                j = k - 1
+                while j >= 0 and recs[j][0] == 'AARG':
+                    j -= 1
+                if any(x[2] and not x[2].startswith(('#', '*', '&')) for x in recs[j + 1:k]):
+                    live_t.add(r[4][4:])
     tmap = {}
     for t in F.f.temps:
         if t in live_t or t in getattr(F, 'kept', ()):
@@ -488,7 +498,9 @@ def number(F, recs):
         srcs = {x.lstrip('*&') for x in recs[di][2:4] if x and not x.startswith('#')}
         if any(r[1] and not r[1].startswith('*') and r[1] in srcs and r[0] not in BRANCHES for r in recs[di + 1:ri]):
             defs.discard(tmap[t])
-    return [(r[0],) + tuple(ren(x) for x in r[1:4]) + tuple(r[4:]) for r in recs], tmap, defs
+    return [(r[0],) + tuple(ren(x) for x in r[1:4]) +
+            tuple(('res:' + tmap[x[4:]] if x[4:] in tmap else None) if str(x).startswith('res:') else x
+                  for x in r[4:]) for r in recs], tmap, defs
 
 
 def const(b):
@@ -598,6 +610,7 @@ def fmt(F, r, inv, defs):
 
 
 ARG_COPIES = True
+CALL_RES_COPY = True
 
 
 def arg_copies(F, blocked, tmap, inv, defs):
@@ -610,7 +623,18 @@ def arg_copies(F, blocked, tmap, inv, defs):
             base = max(base, k + 1)
     sites = [i for i, (b, r) in enumerate(blocked) if r[0] == 'AARG' and r[2] and not r[2].startswith('#')
              and not r[2].startswith('*') and not r[2].startswith('&')]
-    names = {i: 'T%d' % (base + n) for n, i in enumerate(reversed(sites))}
+    given = {}
+    for k, (b, r) in enumerate(blocked):             # the call's unread result temporary: its last copied argument
+        if r[0] in ('ACALL', 'ACALP') and len(r) > 4 and r[4] and str(r[4]).startswith('res:'):
+            mine = [i for i in sites if i < k and all(blocked[j][1][0] in ('AARG',) or j == i or
+                                                      blocked[j][1][0] not in CALLS for j in range(i, k))]
+            prevcall = max([j for j in range(k) if blocked[j][1][0] in CALLS] or [-1])
+            mine = [i for i in mine if i > prevcall]
+            if mine:
+                given[mine[-1]] = r[4][4:]
+    rest = [i for i in sites if i not in given]
+    names = {i: 'T%d' % (base + n) for n, i in enumerate(reversed(rest))}
+    names.update(given)
     out, pending = [], []
     for i, (b, r) in enumerate(blocked):
         if r[0] == 'AARG':
