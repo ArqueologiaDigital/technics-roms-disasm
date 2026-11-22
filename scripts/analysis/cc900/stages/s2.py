@@ -77,6 +77,14 @@ def rewrite2(recs):
                 if x and (tname(x) == t or ('@(' in x and re.search(r'\b%s\(' % t, x))):
                     n += 1
         return n
+    k = 0                                            # post-increment: T = P; P ++ c  ->  T ADDR @(P++(c))
+    while k + 1 < len(recs):
+        a_, b_ = recs[k], recs[k + 1]
+        if POST_INC and a_.op == '=' and a_.res and tname(a_.res) and a_.args and b_.op == '++' and b_.res and \
+                bare(b_.res) == bare(a_.args[0]) and re.match(r'^#LU\d+$', b_.args[0] or ''):
+            recs[k:k + 2] = [dump.Rec(a_.block, 'ADDR', a_.res, ['@(%s++(%s))' % (bare(b_.res), b_.args[0][3:])],
+                                      None, '')]
+        k += 1
     out = []
     for r in recs:
         if r.op == 'CONV' and r.res and r.args and tsize(r.res) and tsize(r.res) == tsize(r.args[0]):
@@ -97,8 +105,8 @@ def rewrite2(recs):
                 b, i = r.args
                 if r.op == 'ADD' and unsigned16(i):
                     continue                         # an unsigned 16-bit index: widened and added instead (below)
-                if r.op == '+':
-                    m = re.match(r'^#[ CL]?U?(-?\d+)$', i)
+                m = re.match(r'^#[ CL]?U?(-?\d+)$', i)
+                if r.op == '+' or m:
                     if not m:
                         continue
                     mem = '@(%s%+d)' % (b, int(m.group(1)))
@@ -224,4 +232,5 @@ def s2_lines(zio, decl_order=None):
 
 
 REWRITE2 = True
+POST_INC = True
 PARAM_MO = False                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)
