@@ -22,6 +22,8 @@ SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2,
 ARGREG = ['XWA', 'XBC', 'XDE']
 RETURN_HL = True
 INTERFERENCE = True
+TEMPS_FIRST = False                                 # tested: temporaries coloured first lose 197-257 variables
+TEMP_DIR = 1
 CALL_RESULT_HL = True
 BYTE_QIZH = True
 LOCAL_DIR = -1
@@ -45,7 +47,8 @@ def allocate(zim):
     recs = [dump.parse_line(l) for l in zim[1:-1]]
     text = '\n'.join(zim)
     names = {}
-    for m in re.finditer(r'\b([IP]\d+)(\([^()]*\))(\{..\})?', text):
+    for m in re.finditer(r'\b([IPT]\d+)(\([^()]*\))(\{..\})?' if TEMPS_FIRST else r'\b([IP]\d+)(\([^()]*\))(\{..\})?',
+                         text):
         names.setdefault(m.group(1), [m.group(1) + m.group(2), False])
         if m.group(3) in ('{MO}', '{MM}'):
             names[m.group(1)][1] = True
@@ -55,7 +58,10 @@ def allocate(zim):
     xiz = 2                                          # IZ / QIZ halves free
     params = sorted([n for n in names if n.startswith('P')], key=lambda n: int(n[1:]))
     locs = sorted([n for n in names if n.startswith('I')], key=lambda n: LOCAL_DIR * int(n[1:]))
-    across = {n for n in names if not names[n][1] and flow.live_across_call(recs, n)}
+    temps = sorted([n for n in names if n.startswith('T')], key=lambda n: TEMP_DIR * int(n[1:]))
+    if TEMPS_FIRST:
+        locs = temps + locs
+    across = {n for n in names if not n.startswith('T') and not names[n][1] and flow.live_across_call(recs, n)}
     for n in sorted([x for x in locs if x in across], key=lambda n: int(n[1:])) + [p for p in params if p in across]:
         size = size_of(names[n][0])
         need = 2 if size == 4 else 1
