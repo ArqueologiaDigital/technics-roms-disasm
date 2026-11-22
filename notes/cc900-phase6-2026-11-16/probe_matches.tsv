@@ -1684,3 +1684,27 @@ SeqPart_CompareLeft	77	2026-11-22-7-p6-r74	p6_J_27r1m236a@O3XSXr p6_J_27r1m236a@
 SeqPart_CompareRight	77	2026-11-22-7-p6-r74	p6_J_27r1m236a@O3XSXr p6_J_27r1m236a@O3Xr p6_J_27r1m236b@O3XSXr p6_J_27r1m236b@O3Xr p6_J_27r1m236c@O3XSXr p6_J_27r1m236c@O3Xr
 SeqPart_LoadAndValidateData	118	2026-11-22-7-p6-r74	p6_K_27r1m234b@O3XSXr p6_K_27r1m234b@O3Xr p6_K_27r1m234c@O3XSXr p6_K_27r1m234c@O3Xr
 SeqPart_LoadDualPartData	118	2026-11-22-7-p6-r74	p6_K_27r1m234b@O3XSXr p6_K_27r1m234b@O3Xr p6_K_27r1m234c@O3XSXr p6_K_27r1m234c@O3Xr
+ApFunctionProc	75	2026-11-22-9-p6-r76	p6_M_28r1m272b@O3XSXr p6_M_28r1m272b@O3Xr
+ApplyProgramChangeAs_LoadReg	10	2026-11-22-9-p6-r76	p6_L_28r1m303a@O3Xr p6_L_28r1m303a@Xr
+ApplyProgramChange_LoadReg	10	2026-11-22-9-p6-r76	p6_L_28r1m303a@O3Xr p6_L_28r1m303a@Xr
+Boot_ParseSubCPUTimestamp	13	2026-11-22-9-p6-r76	p6_L_28r1m0a@O3XSXr p6_L_28r1m0a@O3Xr p6_L_28r1m0a@Xr p6_L_28r1m0b@O3XSXr p6_L_28r1m0b@O3Xr p6_L_28r1m0b@Xr
+Boot_ParseTableDataTimestamp	13	2026-11-22-9-p6-r76	p6_L_28r1m0a@O3XSXr p6_L_28r1m0a@O3Xr p6_L_28r1m0a@Xr p6_L_28r1m0b@O3XSXr p6_L_28r1m0b@O3Xr p6_L_28r1m0b@Xr
+DirectReturn_LoadDRAM	49	2026-11-22-9-p6-r76	p6_L_28r1m302a@Xr p6_L_28r1m302b@Xr
+FileIO_SelectFileByIndex	76	2026-11-22-9-p6-r76	p6_M_28r1m268b@O3XSXr p6_M_28r1m268b@O3Xr p6_M_28r1m268c@O3XSXr p6_M_28r1m268c@O3Xr
+FileRead	73	2026-11-22-9-p6-r76	p6_M_28r1m236a@Xr p6_M_28r1m236b@Xr
+FileWrite	73	2026-11-22-9-p6-r76	p6_M_28r1m236a@Xr p6_M_28r1m236b@Xr
+MainFunctionProc	75	2026-11-22-9-p6-r76	p6_M_28r1m272b@O3XSXr p6_M_28r1m272b@O3Xr
+PanelMemory_BackupLivePanel	23	2026-11-22-9-p6-r76	p6_L_28r1m274a@O3XSXr p6_L_28r1m274a@O3Xr
+SeqValidate_PartAndTempoCombined	47	2026-11-22-9-p6-r76	p6_M_28r1m234a@O3XSXr p6_M_28r1m234a@O3Xr p6_M_28r1m234b@O3XSXr p6_M_28r1m234b@O3Xr
+Seq_CalcAddrOffset	8	2026-11-22-9-p6-r76	p6_L_28r1m302a@O3XSXr p6_L_28r1m302a@O3Xr p6_L_28r1m302a@Xr p6_L_28r1m302b@O3XSXr p6_L_28r1m302b@O3Xr p6_L_28r1m302b@Xr
+Seq_ValidateExtended_DataBlock	47	2026-11-22-9-p6-r76	p6_M_28r1m234a@O3XSXr p6_M_28r1m234a@O3Xr p6_M_28r1m234b@O3XSXr p6_M_28r1m234b@O3Xr
+Seq_ValidatePartAndTempoAlt	47	2026-11-22-9-p6-r76	p6_M_28r1m234a@O3XSXr p6_M_28r1m234a@O3Xr p6_M_28r1m234b@O3XSXr p6_M_28r1m234b@O3Xr
+SetCurrentFileIndex	76	2026-11-22-9-p6-r76	p6_M_28r1m268b@O3XSXr p6_M_28r1m268b@O3Xr p6_M_28r1m268c@O3XSXr p6_M_28r1m268c@O3Xr
+SingleLoad_GetComposerBankName	38	2026-11-22-9-p6-r76	p6_L_28r1m269a@O3XSXr p6_L_28r1m269a@O3Xr p6_L_28r1m269b@O3XSXr p6_L_28r1m269b@O3Xr
+SingleLoad_GetSoundMemBankName	38	2026-11-22-9-p6-r76	p6_L_28r1m269a@O3XSXr p6_L_28r1m269a@O3Xr p6_L_28r1m269b@O3XSXr p6_L_28r1m269b@O3Xr
+SndParam_CheckAndApplyMode	30	2026-11-22-9-p6-r76	p6_L_28r1m303a@O3Xr p6_L_28r1m303a@Xr
+SndParam_ComputeVoiceIndex	30	2026-11-22-9-p6-r76	p6_L_28r1m303a@O3Xr p6_L_28r1m303a@Xr
+SndParam_NotifyAndReturn	20	2026-11-22-9-p6-r76	p6_L_28r1m283a@O3XSXr p6_L_28r1m283a@O3Xr p6_L_28r1m283a@Xr
+SndParam_WrapNotify2	20	2026-11-22-9-p6-r76	p6_L_28r1m283a@O3XSXr p6_L_28r1m283a@O3Xr p6_L_28r1m283a@Xr
+Voice_CopyPreset	23	2026-11-22-9-p6-r76	p6_L_28r1m266a@O3XSXr p6_L_28r1m266a@O3Xr
+Voice_SavePreset	23	2026-11-22-9-p6-r76	p6_L_28r1m266a@O3XSXr p6_L_28r1m266a@O3Xr

@@ -11174,56 +11174,17 @@ SeqPart_SuccessReturn:
 	ld hl, 0:i3
 	ret
 
-Seq_ValidatePartAndTempoAlt:
-	ld	a, (SEQ_TRACK:16)
-	cp a, 0x11
-	jr z, SeqValPTA_CheckTempo
-	extz wa
-	calr Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr nz, SeqValPTA_FailReturn
+Seq_ValidatePartAndTempoAlt:	.include "includes/generated/cc900/Seq_ValidatePartAndTempoAlt.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValPTA_CheckTempo, Seq_ValidatePartAndTempoAlt + 18
+	.set	SeqValPTA_FailReturn, Seq_ValidatePartAndTempoAlt + 40
+	.set	SeqValPTA_OKReturn, Seq_ValidatePartAndTempoAlt + 44
 
-SeqValPTA_CheckTempo:
-	ld	wa, (SEQ_OP_FROM:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr nz, SeqValPTA_FailReturn
-	ld	wa, (SEQ_OP_MEASURES:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr z, SeqValPTA_OKReturn
-
-SeqValPTA_FailReturn:
-	ldw hl, 0xffff
-	ret
-
-SeqValPTA_OKReturn:
-	ld hl, 0:i3
-	ret
-
-Seq_ValidateExtended_DataBlock:
-	ld	a, (SEQ_TRACK:16)
-	cp	a, 127
-	jr	z, Seq_ValidateExtended_DataBlock_Skip
-	extz	wa
-	calr	Seq_ValidatePartNumber
-	cp	hl, 0:i3
-	jr	nz, Seq_ValidateExtended_DataBlock_Skip2
-Seq_ValidateExtended_DataBlock_Skip:
-	ld	wa, (SEQ_OP_FROM:16)
-	calr	Seq_ValidateTempoValue
-	cp	hl, 0:i3
-	jr	nz, Seq_ValidateExtended_DataBlock_Skip2
-	ld	wa, (SEQ_OP_MEASURES:16)
-	calr	Seq_ValidateTempoValue
-	cp	hl, 0:i3
-	jr	z, Seq_ValidateExtended_DataBlock_Skip3
-Seq_ValidateExtended_DataBlock_Skip2:
-	ldw	hl, 0xffff
-	ret
-Seq_ValidateExtended_DataBlock_Skip3:
-	ld	hl, 0:i3
-	ret
+Seq_ValidateExtended_DataBlock:	.include "includes/generated/cc900/Seq_ValidateExtended_DataBlock.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Seq_ValidateExtended_DataBlock_Skip, Seq_ValidateExtended_DataBlock + 18
+	.set	Seq_ValidateExtended_DataBlock_Skip2, Seq_ValidateExtended_DataBlock + 40
+	.set	Seq_ValidateExtended_DataBlock_Skip3, Seq_ValidateExtended_DataBlock + 44
 
 SeqPos_DecrementAndCheck:
 	dec 2, xsp
@@ -13214,32 +13175,11 @@ SeqScan_ClearNoteRange:	.include "includes/generated/cc900/SeqScan_ClearNoteRang
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeqScan_ClearNoteLoop, SeqScan_ClearNoteRange + 4
 
-SeqValidate_PartAndTempoCombined:
-	ld	a, (SEQ_TRACK:16)
-	cp a, 0x11
-	jr z, SeqValidate_CheckTempoValues
-	extz wa
-	calr Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr nz, SeqValidate_CombinedFail
-
-SeqValidate_CheckTempoValues:
-	ld	wa, (SEQ_OP_FROM:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr nz, SeqValidate_CombinedFail
-	ld	wa, (SEQ_OP_MEASURES:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr z, SeqValidate_CombinedOK
-
-SeqValidate_CombinedFail:
-	ldw hl, 0xffff
-	ret
-
-SeqValidate_CombinedOK:
-	ld hl, 0:i3
-	ret
+SeqValidate_PartAndTempoCombined:	.include "includes/generated/cc900/SeqValidate_PartAndTempoCombined.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValidate_CheckTempoValues, SeqValidate_PartAndTempoCombined + 18
+	.set	SeqValidate_CombinedFail, SeqValidate_PartAndTempoCombined + 40
+	.set	SeqValidate_CombinedOK, SeqValidate_PartAndTempoCombined + 44
 
 SeqVoice_CountEventsInBar:	.include "includes/generated/cc900/SeqVoice_CountEventsInBar.s"	; C: cc900/sequencer_engine_m234.c
 ; the hand assembly's labels inside the compiled body, by their offsets

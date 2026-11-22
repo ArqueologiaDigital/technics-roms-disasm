@@ -2380,15 +2380,7 @@ BitMapOut_RestoreExtra_Done:
 	ret
 
 ; Mem_Copy the live panel block 0 (RAM 0xF9A0, 960 bytes) to the recall backup at RAM 0x3C8E4.
-PanelMemory_BackupLivePanel:
-	pushw 0x3c0
-	pushw 0x0
-	pushw 0xf9a0
-	pushw 0x3
-	pushw 0xc8e4
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	ret
+PanelMemory_BackupLivePanel:	.include "includes/generated/cc900/PanelMemory_BackupLivePanel.s"	; C: cc900/bitmap_out_routines_m274.c
 
 BitMapOut_DetectChanges:
 	lda xsp, (xsp - 10)

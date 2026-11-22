@@ -101,16 +101,7 @@ SndParam_DispatchTypeDE5:
 	ld (xsp + 4), hl
 	jr SndParam_Epilogue
 
-SndParam_NotifyAndReturn:
-	pushw iz
-	ld iz, de
-	calr SndParam_EncodeAddress
-	ld xwa, xhl
-	ld bc, iz
-	ld de, (xsp + 6)
-	calr SoundParam_NotifyChange
-	popw iz
-	retd 0x2
+SndParam_NotifyAndReturn:	.include "includes/generated/cc900/SndParam_NotifyAndReturn.s"	; C: cc900/sndparam_routines_m283.c
 
 SndParam_LookupByKey:
 	lda xsp, (xsp - 10)
@@ -218,16 +209,7 @@ SndParam_Lkp2_Epilogue:
 	lda xsp, (xsp + 10)
 	ret
 
-SndParam_WrapNotify2:
-	pushw	iz
-	ld	iz, de
-	calr	SndParam_EncodeAddress
-	ld	xwa, xhl
-	ld	bc, iz
-	ld	de, (xsp+6)
-	calr	SndParam_LookupByKey
-	popw	iz
-	retd	2
+SndParam_WrapNotify2:	.include "includes/generated/cc900/SndParam_WrapNotify2.s"	; C: cc900/sndparam_routines_m283.c
 
 SndParam_LookupReadOnly:
 	dec 6, xsp

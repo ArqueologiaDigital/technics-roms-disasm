@@ -15,3 +15,12 @@ unsigned int SysexRingBuf_GetFreeSpace(void)
 {
   return 0x7ff - ram_d8b2;
 }
+
+/* cc900-module: FileIO_InitTrackSlots FileIO_ReadNextRecord MidiRingBuf_WriteByte RingBuffer_ReadByte RingBuffer_WriteByte StoreAndAdvance_LoadDRAM StoreAndAdvance_Prologue SysexRingBuf_ReadByte SysexRingBuf_ReadBytes SysexRingBuf_WriteByte */
+extern unsigned int __near ram_d0ac;
+extern int Seq_CalcAddrOffset(void);
+
+int Seq_CalcAddrOffset(void)
+{
+	return 2047 - ram_d0ac;
+}

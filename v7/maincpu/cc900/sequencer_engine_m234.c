@@ -379,3 +379,45 @@ void SeqPart_LoadDualPartData(void)
 		}
 	}
 }
+
+extern int SeqValidate_PartAndTempoComb(void);
+extern int Seq_ValidateExtended_DataBlock(void);
+extern int Seq_ValidatePartAndTempoAlt(void);
+
+/* cc900-name: SeqValidate_PartAndTempoComb=SeqValidate_PartAndTempoCombined */
+int SeqValidate_PartAndTempoComb(void)
+{
+	if (SEQ_TRACK != 0x11) {
+		if (Seq_ValidatePartNumber(SEQ_TRACK) != 0)
+			return -1;
+	}
+	if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0)
+		return -1;
+	if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0)
+		return -1;
+	return 0;
+}
+int Seq_ValidateExtended_DataBlock(void)
+{
+	if (SEQ_TRACK != 0x7f) {
+		if (Seq_ValidatePartNumber(SEQ_TRACK) != 0)
+			return -1;
+	}
+	if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0)
+		return -1;
+	if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0)
+		return -1;
+	return 0;
+}
+int Seq_ValidatePartAndTempoAlt(void)
+{
+	if (SEQ_TRACK != 0x11) {
+		if (Seq_ValidatePartNumber(SEQ_TRACK) != 0)
+			return -1;
+	}
+	if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0)
+		return -1;
+	if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0)
+		return -1;
+	return 0;
+}

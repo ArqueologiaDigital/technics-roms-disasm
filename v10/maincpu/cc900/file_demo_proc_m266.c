@@ -160,3 +160,18 @@ void FDemo_IndicatorSetup(void)
   CtrlPanel_IndicatorDispatch(0x22, 0, 0);
   DEMO_PLAY_STATE = 4;
 }
+
+extern unsigned char __near ram_cce[];
+extern unsigned char __near ram_f1a0[];
+extern void *__cdecl Mem_Copy(void *, void *, unsigned int);
+extern void Voice_CopyPreset(void);
+extern void Voice_SavePreset(void);
+
+void Voice_CopyPreset(void)
+{
+	Mem_Copy(ram_cce, ram_f1a0, 16);
+}
+void Voice_SavePreset(void)
+{
+	Mem_Copy(ram_f1a0, ram_cce, 16);
+}

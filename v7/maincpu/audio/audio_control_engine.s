@@ -11110,16 +11110,7 @@ SndParam_DispatchTypeDE5:
 	call	(xhl)
 	ld	(xsp+0x4), hl
 	jr	SndParam_Epilogue
-SndParam_NotifyAndReturn:
-	pushw	iz
-	ld	iz, de
-	calr	UIState_CheckAndRenderBitmap_Helper_Helper
-	ld	xwa, xhl
-	ld	bc, iz
-	ld	de, (xsp+0x6)
-	calr	SoundParam_NotifyChange
-	popw	iz
-	retd	2
+SndParam_NotifyAndReturn:	.include "includes/generated/cc900/SndParam_NotifyAndReturn.s"	; C: cc900/sndparam_routines_m283.c
 SndParam_LookupByKey:
 	lda	xsp, (xsp-0xa)
 	push	xiz

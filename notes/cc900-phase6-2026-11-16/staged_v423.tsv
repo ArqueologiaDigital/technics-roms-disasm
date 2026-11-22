@@ -52,7 +52,7 @@ v10	v10/maincpu/cc900-staged/audioinit_routines_m295_xr.c	028965cf85d106ffdea58e
 v10	v10/maincpu/cc900-staged/audioinit_routines_xr.c	7b5fe13a8cb76bdb7483f805adb846cd6f3c742fdba5d34301e3ed9780142c82	Xr	2026-11-16-40-p6-r8	AudioInit_CheckMIDIStatus	41	MATCH
 v10	v10/maincpu/cc900-staged/audioinit_routines_xr.c	7b5fe13a8cb76bdb7483f805adb846cd6f3c742fdba5d34301e3ed9780142c82	Xr	2026-11-16-40-p6-r8	AudioInit_ClearPartFlags_ByMode	175	MATCH
 v10	v10/maincpu/cc900-staged/audioinit_routines_xr.c	7b5fe13a8cb76bdb7483f805adb846cd6f3c742fdba5d34301e3ed9780142c82	Xr	2026-11-16-40-p6-r8	AudioInit_SelectPriority	220	MATCH
-v10	v10/maincpu/cc900-staged/bitmap_out_routines_m274.c	78daa95a1a638cbaf10b8f784bf2fafa1faf113fb06b992c0bd77c70abbf2f78	O3Xr	2026-11-21-5-p6-r60	PanelMemory_PostSlotLoad	13	MATCH
+v10	v10/maincpu/cc900-staged/bitmap_out_routines_m274.c	c264c781473b713b8c785b88fd48aa3e45fc01e5d209adaaad23c1082b20e58a	O3Xr	2026-11-22-10-p6-r77	PanelMemory_BackupLivePanel	23	MATCH
 v10	v10/maincpu/cc900-staged/bitmap_out_routines_m274_xr.c	fad96d13955ab0305366c04b2111b43fece24e54c408706c7e3da0d14291c1da	Xr	2026-11-21-5-p6-r60	BitMapOut_GetRenderMode_CheckBit3	9	MATCH
 v10	v10/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_ClearAndScanToEnd	59	DIFF at +53
 v10	v10/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_DecrementAndValidateCounter	58	MATCH
@@ -138,19 +138,12 @@ v10	v10/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb
 v10	v10/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	ReadVariableLengthInt	56	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-21-8-p6-r63	FDemo_LoadRegsAndPostEvent	19	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m265.c	3ca96136219a8bbb55ba86fb23d33311b6a4d3ff81cbc1b99b32ce0d34ae924b	O3Xr	2026-11-21-8-p6-r63	FDemo_MultiGuardCheck	34	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_PreSetup	18	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_SelectEntry_CheckCPanel	11	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	FDemo_IndicatorSetup	17	MATCH
+v10	v10/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_CopyPreset	23	MATCH
+v10	v10/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_SavePreset	23	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m266_xr.c	c221122189cb196280667e568850466b43d1ebc5f6fc265d8972a6fe8d9375b9	Xr	2026-11-21-5-p6-r60	GetFirstRecordAndOpen	24	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m267.c	3a10b8186936812f561f6e28bde3a5cd4d91bcd6d926a21737b5508c3bf3a9ba	O3Xr	2026-11-18-34-p6-r38-staged	FileIO_OpenWithMode	129	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	BuildPageRecordsAlt	45	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentFileIndex_Alt	22	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentWallpaperIndex	22	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_InitWallpaperNav	45	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndex	22	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndexAlt	22	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFileCountEncoded	45	MATCH
-v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFirstPageBase	22	MATCH
+v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	FileIO_SelectFileByIndex	76	MATCH
+v10	v10/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	SetCurrentFileIndex	76	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	FileIO_SelectWallpaperByIndex	76	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	NavigateToFileIndex	76	MATCH
 v10	v10/maincpu/cc900-staged/file_demo_proc_m269.c	4202380bf3ce0bbe01b0b7fd687195617ae779687bb4f5e6a5650b788088a1f9	O3Xr	2026-11-21-5-p6-r60	CancelOperationCleanup	28	MATCH
@@ -209,17 +202,8 @@ v10	v10/maincpu/cc900-staged/graphics_text_vga_m273.c	11808401d730943c3d91b6cfbe
 v10	v10/maincpu/cc900-staged/graphics_text_vga_m273_b.c	e38b1ccc608da690536ef5ca16b04548fc232da5de1684077d3f950047f07e86	O3Xr	2026-11-22-8-p6-r75	Display_DeferOrUpdateScreen	24	MATCH
 v10	v10/maincpu/cc900-staged/graphics_text_vga_m274.c	3fd212a36f8d6ff413924f443e5ee8cf2ce82e6be7aac4082f8638838ce9aff5	O3Xr	2026-11-21-10-p6-r65	InitializeRoot	571	MATCH
 v10	v10/maincpu/cc900-staged/graphics_text_vga_m274_xs.c	f5c5ed3871a8a0d18c1465aae67d329af86c467670a6518277bd90fce2b3c8d2	O3XSXr	2026-11-16-92-p6-r18	FontGlyph_ByteData	17	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	EditSwRefresh	12	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	GetAdr_rtmcfg	5	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	GetAdr_sq_beadt	5	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqbtof	5	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqsrtc	5	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	PlayHalt	64	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	SetGlobalError	5	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	free_X	8	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	malloc_X	8	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	putc_mrx_bf_X	10	MATCH
-v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	b6bf229ced231c507902150dcaeffceedcea99b989ded50152586d1b44c56fb7	O3Xr	2026-11-21-22-p6-r67	putc_mtx_bf_X	10	MATCH
+v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	edf8558814462ab7236f23b63bb6c9e5191e7a7a65f42d0a57dc30d1ea5caf0a	O3Xr	2026-11-22-10-p6-r77	Boot_ParseSubCPUTimestamp	13	MATCH
+v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0.c	edf8558814462ab7236f23b63bb6c9e5191e7a7a65f42d0a57dc30d1ea5caf0a	O3Xr	2026-11-22-10-p6-r77	Boot_ParseTableDataTimestamp	13	MATCH
 v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	3f2cf2893bcf995dfc5f9107e473c2470e750fc9e3efc20d26c643a24ce12658	Xr	2026-11-21-22-p6-r67	PlayStandBy	22	MATCH
 v10	v10/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	3f2cf2893bcf995dfc5f9107e473c2470e750fc9e3efc20d26c643a24ce12658	Xr	2026-11-21-22-p6-r67	SetSepaOutMode	500	MATCH
 v10	v10/maincpu/cc900-staged/kn5000_v10_program_m276.c	1d1cf5005401ec593733e15f32b88962e0188def08d6c457f63f3142679320ba	O3Xr	2026-11-21-8-p6-r63	InitializeKSS	1	MATCH
@@ -349,13 +333,13 @@ v10	v10/maincpu/cc900-staged/note_voice_mapping_m300.c	01ddb423b039c864975c095d4
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m300_xr.c	097cb05056a9ef6c97d2cca35884e58151e00c5b95e573c5cd8b62e4e1d7adb5	Xr	2026-11-16-111-p6-r22-staged	VoiceMap_AllocateSlot	123	MATCH
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m301.c	66c0e92b4f40f97d0034300e0c3ddb4e246e09edcdcc5a0568e1738b21ac762a	O3Xr	2026-11-21-5-p6-r60	MIDI_SendAllVoicesPitchUpdate	15	MATCH
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m301_xr.c	d283b7066b8ab882e7027bac960d200b9c1948fd277d41b067e23031043ae884	Xr	2026-11-19-43-p6-r48	SndParam_ApplyEventField	98	MATCH
-v10	v10/maincpu/cc900-staged/note_voice_mapping_m302.c	f8bb0881898ab0b24411940793c9d4221dac9b22b911f2702c1a7ebd50358fbf	O3Xr	2026-11-21-5-p6-r60	SysexRingBuf_GetFreeSpace	8	MATCH
-v10	v10/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	0ab922ef8dd17dc62f22cface2265accd37394de7139b23a1c84ade0a49cda2c	Xr	2026-11-19-43-p6-r48	FileIO_ReadVariableLengthData	135	MATCH
-v10	v10/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	0ab922ef8dd17dc62f22cface2265accd37394de7139b23a1c84ade0a49cda2c	Xr	2026-11-19-43-p6-r48	SongPlayer_ResetState	67	MATCH
+v10	v10/maincpu/cc900-staged/note_voice_mapping_m302.c	78f912a0611370dd9451767a69aea58d1b7920905a73dcd7e3198ad46c538379	O3Xr	2026-11-22-10-p6-r77	Seq_CalcAddrOffset	8	MATCH
+v10	v10/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	f74e6abad526c485a41d6b1105b7a9b5d62d220c753ba2fec1faaa9061d03c56	Xr	2026-11-22-10-p6-r77	DirectReturn_LoadDRAM	49	MATCH
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m302_xs.c	8bb068684293f35189100ee6df75fdeab5a44615060b9a5b9a1837d2761b32a6	O3XSXr	2026-11-21-5-p6-r60	SeqPlay_BusyWaitLoop	7	MATCH
-v10	v10/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	ApplyProgramChangeAs_LoadReg2	10	MATCH
-v10	v10/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	FetchOscTableEntry_LoadReg2	7	MATCH
-v10	v10/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	SndParam_InitBufferConverge	10	MATCH
+v10	v10/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChangeAs_LoadReg	10	MATCH
+v10	v10/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChange_LoadReg	10	MATCH
+v10	v10/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	SndParam_CheckAndApplyMode	30	MATCH
+v10	v10/maincpu/cc900-staged/note_voice_mapping_m303_b.c	ea92dd27b93a1beae1fc334a214232448bdb3d02b0ba9fa4488b33ddcacbf37d	O3Xr	2026-11-22-10-p6-r77	SndParam_ComputeVoiceIndex	30	MATCH
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m304.c	e8fa1ab7201a14198a060eb0cabe17741ded8d8277b80ee33f3b44c588fbeacf	O3Xr	2026-11-16-68-p6-r12	Param_SignExtendRetu_Block4	65	MATCH
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m304.c	e8fa1ab7201a14198a060eb0cabe17741ded8d8277b80ee33f3b44c588fbeacf	O3Xr	2026-11-16-68-p6-r12	SndParam_LookupPartIndex	65	MATCH
 v10	v10/maincpu/cc900-staged/note_voice_mapping_m304.c	e8fa1ab7201a14198a060eb0cabe17741ded8d8277b80ee33f3b44c588fbeacf	O3Xr	2026-11-16-68-p6-r12	SubCPU_RequestShortSoundName	65	MATCH
@@ -520,8 +504,9 @@ v10	v10/maincpu/cc900-staged/sequencer_engine_m0.c	4a5bb6e7ea30df5bcc374aafff1c7
 v10	v10/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_StopPlayback	28	MATCH
 v10	v10/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_UpdateAndDispatch	6	MATCH
 v10	v10/maincpu/cc900-staged/sequencer_engine_m233.c	9bbc8c96690fdb255a590ef4690206f05e415cf3f4c7d791356ff4351cccb588	O3Xr	2026-11-19-43-p6-r48	SeqPlay_CheckDrumAndStart	97	MATCH
-v10	v10/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadAndValidateData	118	MATCH
-v10	v10/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadDualPartData	118	MATCH
+v10	v10/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	SeqValidate_PartAndTempoCombined	47	MATCH
+v10	v10/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidateExtended_DataBlock	47	MATCH
+v10	v10/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidatePartAndTempoAlt	47	MATCH
 v10	v10/maincpu/cc900-staged/sequencer_engine_m235.c	2ba66cb89bb685f16b1f40346b51ec97a51b68700efaac0e956c705ecf6b6c88	O3Xr	2026-11-21-22-p6-r67	SeqEvent_AccumulateQueue	19	MATCH
 v10	v10/maincpu/cc900-staged/sequencer_engine_m235.c	2ba66cb89bb685f16b1f40346b51ec97a51b68700efaac0e956c705ecf6b6c88	O3Xr	2026-11-21-22-p6-r67	SeqEvent_MainHandler	1019	MATCH
 v10	v10/maincpu/cc900-staged/sequencer_engine_m235_b.c	c15dce2250c64a54bd83325ace66c6f6314db9eb7a7455065319b40ebacda0f1	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendGateCmd	21	MATCH
@@ -555,7 +540,8 @@ v10	v10/maincpu/cc900-staged/single_load_m269_b.c	4c770ef945a189c7b3f0589e3d638e
 v10	v10/maincpu/cc900-staged/single_load_m269_b.c	4c770ef945a189c7b3f0589e3d638e030a3116ae7070c6eeeb4a62ab16a4f896	O3Xr	2026-11-19-15-p6-r42	SingleLoadSrc_DrawSoundMemBankRows	126	MATCH
 v10	v10/maincpu/cc900-staged/smf_event_processor_m0_xr.c	5b788e5537c92d3bd7fe0368f0e4e88a18a5e940fb1cf95a53dbff398072bce3	Xr	2026-11-16-92-p6-r18	SeqStep_ByteBlockF245	138	MATCH
 v10	v10/maincpu/cc900-staged/smf_event_processor_m0_xr.c	5b788e5537c92d3bd7fe0368f0e4e88a18a5e940fb1cf95a53dbff398072bce3	Xr	2026-11-16-92-p6-r18	SeqStep_FileSectorDone	34	MATCH
-v10	v10/maincpu/cc900-staged/smf_event_processor_m236_xr.c	67b847f70771e4e4e28e25229b03da3cfb7a5676300bcfb1baa881ac8c8a22ae	Xr	2026-11-16-92-p6-r18	SeqStep_FileCloseInner	186	MATCH
+v10	v10/maincpu/cc900-staged/smf_event_processor_m236_xr.c	e79ca649f56739d07e547016b82ba750095280ecd0708f0a3cfec541e228563b	Xr	2026-11-22-10-p6-r77	FileRead	73	MATCH
+v10	v10/maincpu/cc900-staged/smf_event_processor_m236_xr_b.c	619ea95a82028889788a562f7fba2225651fccc0e4fd87f34c132cfb16b695c7	Xr	2026-11-22-10-p6-r77	FileWrite	73	MATCH
 v10	v10/maincpu/cc900-staged/smf_event_processor_m237_xr.c	78772a88f335235a78bd9cbe7f98783f166b9c43c4589b25a55b60753519ec72	Xr	2026-11-16-125-p6-r26-staged	SeqStep_FileSeekCleanup	265	MATCH
 v10	v10/maincpu/cc900-staged/smf_event_processor_m238_xr.c	20a913e2c3c09a95e832a48c8a4200dffd36bf777495d7d53eff220e3e7eb4d7	Xr	2026-11-19-43-p6-r48	FatPath_Next83Component	183	MATCH
 v10	v10/maincpu/cc900-staged/smf_event_processor_m238_xr_b.c	5c0a6a708c16ea011d35386b66a6559ea8543ec0751df7eda20447645da749e2	Xr	2026-11-16-111-p6-r22-staged	SeqStep_FileIoCheck	573	MATCH
@@ -572,6 +558,8 @@ v10	v10/maincpu/cc900-staged/sndparam_routines.c	a2fa4f34bec7c57c7b637be78d5b035
 v10	v10/maincpu/cc900-staged/sndparam_routines.c	a2fa4f34bec7c57c7b637be78d5b0351cd4717e078a23aeb854fa7f5e06183d5	O3Xr	2026-11-16-40-p6-r8	SndParam_EncodeAddress	39	MATCH
 v10	v10/maincpu/cc900-staged/sndparam_routines_m0.c	242cef0f61705297815c8d304d16e2752ffe4b1c97d973ce81c1e8e6cd878a0b	O3Xr	2026-11-16-122-p6-r24-staged	SndParam_BinarySearch	54	MATCH
 v10	v10/maincpu/cc900-staged/sndparam_routines_m0_xr.c	262b7014dc5b45cc99916d3db30114962698029a817df39636aed6006cf8a4fc	Xr	2026-11-17-1-p6-r28-staged	SndParam_ReadRegBitfield	89	MATCH
+v10	v10/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_NotifyAndReturn	20	MATCH
+v10	v10/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_WrapNotify2	20	MATCH
 v10	v10/maincpu/cc900-staged/sndparam_routines_m283_xr.c	dc2986ff7c25851bfb7fe5662afe1298d5defa273416a1040bbbd15128657c8e	Xr	2026-11-16-125-p6-r26-staged	SndParam_ReadRegWord	69	MATCH
 v10	v10/maincpu/cc900-staged/sound_editor_ui_m0.c	775b469a83fbb40bfe98484b052dd2b43c382d100147bc7093c0422e7e8cb128	O3Xr	2026-11-21-22-p6-r67	AttLangCheck	17	MATCH
 v10	v10/maincpu/cc900-staged/sound_editor_ui_m0.c	775b469a83fbb40bfe98484b052dd2b43c382d100147bc7093c0422e7e8cb128	O3Xr	2026-11-21-22-p6-r67	CmpNameMenuBoxProc	49	MATCH
@@ -660,11 +648,8 @@ v10	v10/maincpu/cc900-staged/ui_widget_defs_m0.c	a245a0f8b3e34e4735387b551039b47
 v10	v10/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	InitGraphics_SetupVRAM	2	MATCH
 v10	v10/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	LcdOff_Done2	2	MATCH
 v10	v10/maincpu/cc900-staged/ui_widget_defs_m271.c	90dda115b7a269b36a897738fb2ccbefc84065956a9c3f4e94ff5e150022acd9	O3Xr	2026-11-19-43-p6-r48	MainLswPartAdd	101	MATCH
-v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetNextView	50	MATCH
-v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetPrevView	50	MATCH
-v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSubView	50	MATCH
-v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSuperView	50	MATCH
-v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	InitializeObjectTable	460	MATCH
+v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	ApFunctionProc	75	MATCH
+v10	v10/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	MainFunctionProc	75	MATCH
 v10	v10/maincpu/cc900-staged/ui_widget_defs_m272_xr.c	d22c9514ce77376b52244303c0ddd048fe18cdf8e8060a7e54c0b3a8f249cca7	Xr	2026-11-17-19-p6-r32-staged	RegisterObjectTable	31	MATCH
 v10	v10/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOff	24	MATCH
 v10	v10/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOn	24	MATCH
@@ -687,7 +672,8 @@ v10	v10/maincpu/cc900-staged/ui_window_procs_m273.c	d4d3022fdce2ce1ffc15f6e990b6
 v10	v10/maincpu/cc900-staged/ui_window_procs_m273_xr.c	150ed35dd464c71c836eddda1367119362919420b9c7e122a91be0c63994c6a4	Xr	2026-11-16-68-p6-r12	IsColorValid	28	MATCH
 v10	v10/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	IsColorValid	28	MATCH
 v10	v10/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	UserBitmapCheck	39	MATCH
-v10	v10/maincpu/cc900-staged/wallpaper_m269.c	35f5e0053c37faa9be9dc6a98b657849fd96758325a61c426e87b1eeb08d9aff	O3Xr	2026-11-21-5-p6-r60	SingleLoad_GetVariationName	15	MATCH
+v10	v10/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetComposerBankName	38	MATCH
+v10	v10/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetSoundMemBankName	38	MATCH
 v5	v5/maincpu/cc900-staged/accompaniment_engine.c	a9eee1fcda8fa9465b31781feb610f2639591717becebe6aeb9ac9dc89c378fe	O3Xr	2026-11-16-55-p6-r10	AccSeq_DeliverC9_0009	24	MATCH
 v5	v5/maincpu/cc900-staged/accompaniment_engine.c	a9eee1fcda8fa9465b31781feb610f2639591717becebe6aeb9ac9dc89c378fe	O3Xr	2026-11-16-55-p6-r10	SoundCtrl_SendAccTempo	24	MATCH
 v5	v5/maincpu/cc900-staged/accompaniment_engine_m0.c	c1e99680d9fc858d5d8e40a25cbe0acb9d78f984adcfab8ace7cfc23d83b32d1	O3Xr	2026-11-16-68-p6-r12	Tempo_DisplayParamFormat	10	MATCH
@@ -719,7 +705,7 @@ v5	v5/maincpu/cc900-staged/audio_control_engine_m278.c	dafc99d28d0c185aed4a4894c
 v5	v5/maincpu/cc900-staged/audio_control_engine_m279.c	687ae30bcd1fe9441a87239dd3aad87537583adc4e06a727f8625efbf6b1a39c	O3Xr	2026-11-21-5-p6-r60	CtrlPanel_LookupIndicatorEntry	16	MATCH
 v5	v5/maincpu/cc900-staged/audio_control_engine_m280.c	8892e39e65678ecb1e40abc37ee4e1305dcc9e53091225ad664ef1bb6b81c0c8	O3Xr	2026-11-21-5-p6-r60	ExtData_Voice_CompareAndDispatch_Helper	40	MATCH
 v5	v5/maincpu/cc900-staged/audio_control_engine_m280.c	8892e39e65678ecb1e40abc37ee4e1305dcc9e53091225ad664ef1bb6b81c0c8	O3Xr	2026-11-21-5-p6-r60	PanelTlv_PayloadOfTag	16	MATCH
-v5	v5/maincpu/cc900-staged/bitmap_out_routines_m274.c	78daa95a1a638cbaf10b8f784bf2fafa1faf113fb06b992c0bd77c70abbf2f78	O3Xr	2026-11-21-5-p6-r60	PanelMemory_PostSlotLoad	13	MATCH
+v5	v5/maincpu/cc900-staged/bitmap_out_routines_m274.c	c264c781473b713b8c785b88fd48aa3e45fc01e5d209adaaad23c1082b20e58a	O3Xr	2026-11-22-10-p6-r77	PanelMemory_BackupLivePanel	23	MATCH
 v5	v5/maincpu/cc900-staged/bitmap_out_routines_m274_xr.c	7193e6d65ec30df821c6de65325af2765042fa6234c6dacc420a501c9f32e580	Xr	2026-11-21-5-p6-r60	BitMapOut_GetRenderMode_CheckBit3	9	MATCH
 v5	v5/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_ClearAndScanToEnd	59	DIFF at +53
 v5	v5/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_DecrementAndValidateCounter	58	MATCH
@@ -808,21 +794,14 @@ v5	v5/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3b
 v5	v5/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	GetEncodedFreeSpaceData	27	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	InitializeOperationState	64	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	ReadVariableLengthInt	56	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-22-8-p6-r75	FDemo_LoadRegsAndPostEvent	19	DIFF at +11
+v5	v5/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-22-10-p6-r77	FDemo_LoadRegsAndPostEvent	19	DIFF at +11
 v5	v5/maincpu/cc900-staged/file_demo_proc_m265.c	3ca96136219a8bbb55ba86fb23d33311b6a4d3ff81cbc1b99b32ce0d34ae924b	O3Xr	2026-11-21-8-p6-r63	FDemo_MultiGuardCheck	34	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_PreSetup	18	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_SelectEntry_CheckCPanel	11	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	FDemo_IndicatorSetup	17	MATCH
+v5	v5/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_CopyPreset	23	MATCH
+v5	v5/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_SavePreset	23	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc_m266_xr.c	c221122189cb196280667e568850466b43d1ebc5f6fc265d8972a6fe8d9375b9	Xr	2026-11-21-5-p6-r60	GetFirstRecordAndOpen	24	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc_m267.c	829e146e6085ebc1f52ffbe991894523198691cd5489a2dfcb71f7b6f2980005	O3Xr	2026-11-18-34-p6-r38-staged	FileIO_OpenWithMode	129	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	BuildPageRecordsAlt	45	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentFileIndex_Alt	22	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentWallpaperIndex	22	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_InitWallpaperNav	45	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndex	22	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndexAlt	22	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFileCountEncoded	45	MATCH
-v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFirstPageBase	22	MATCH
+v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	FileIO_SelectFileByIndex	76	MATCH
+v5	v5/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	SetCurrentFileIndex	76	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	FileIO_SelectWallpaperByIndex	76	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	NavigateToFileIndex	76	MATCH
 v5	v5/maincpu/cc900-staged/file_demo_proc_m269.c	4202380bf3ce0bbe01b0b7fd687195617ae779687bb4f5e6a5650b788088a1f9	O3Xr	2026-11-21-5-p6-r60	CancelOperationCleanup	28	MATCH
@@ -880,17 +859,8 @@ v5	v5/maincpu/cc900-staged/graphics_text_vga_m273.c	11808401d730943c3d91b6cfbe99
 v5	v5/maincpu/cc900-staged/graphics_text_vga_m273_b.c	4353807620a286098f61e439713b4f95a41f03b12009a437f7846ee4b373c9d6	O3Xr	2026-11-22-8-p6-r75	Display_DeferOrUpdateScreen	24	MATCH
 v5	v5/maincpu/cc900-staged/graphics_text_vga_m274.c	3fd212a36f8d6ff413924f443e5ee8cf2ce82e6be7aac4082f8638838ce9aff5	O3Xr	2026-11-21-10-p6-r65	InitializeRoot	571	MATCH
 v5	v5/maincpu/cc900-staged/graphics_text_vga_m274_xs.c	f5c5ed3871a8a0d18c1465aae67d329af86c467670a6518277bd90fce2b3c8d2	O3XSXr	2026-11-16-92-p6-r18	FontGlyph_ByteData	17	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	EditSwRefresh	12	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	GetAdr_rtmcfg	5	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	GetAdr_sq_beadt	5	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqbtof	5	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqsrtc	5	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	PlayHalt	64	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	SetGlobalError	5	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	free_X	8	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	malloc_X	8	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	putc_mrx_bf_X	10	MATCH
-v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	429480bf74e1bd591936f046acf208f8278d72241818901e1cb2a9a268ff0355	O3Xr	2026-11-21-22-p6-r67	putc_mtx_bf_X	10	MATCH
+v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	1f808e40251dad1dc8dff65127d93f9cec9e832b9c9ce9fce31b5c4ee807acb7	O3Xr	2026-11-22-10-p6-r77	Boot_ParseSubCPUTimestamp	13	MATCH
+v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0.c	1f808e40251dad1dc8dff65127d93f9cec9e832b9c9ce9fce31b5c4ee807acb7	O3Xr	2026-11-22-10-p6-r77	Boot_ParseTableDataTimestamp	13	MATCH
 v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	36267d1987a6c545fb29da07cade4dced66b03829a03a5d17bda1ffb7535ec70	Xr	2026-11-21-22-p6-r67	PlayStandBy	22	MATCH
 v5	v5/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	36267d1987a6c545fb29da07cade4dced66b03829a03a5d17bda1ffb7535ec70	Xr	2026-11-21-22-p6-r67	SetSepaOutMode	500	MATCH
 v5	v5/maincpu/cc900-staged/kn5000_v10_program_m276.c	8dd3b7e2f16f1912c0bcd61809a0d9a879e0dcb068b409726a489fc7c7bd9af6	O3Xr	2026-11-21-8-p6-r63	InitializeKSS	1	MATCH
@@ -953,26 +923,26 @@ v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m0.c	0e2edea51a4673fef0a13371e
 v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m0.c	0e2edea51a4673fef0a13371e26513c2fdd306bc638a763d51a74b50ccad1d5e	O3Xr	2026-11-21-6-p6-r61	SeqChan_XferStep_StyleImageBlock1	45	MATCH
 v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m0_xr.c	9fe51107568ff28e99e9cb5aedc1e34505b40ab8bdd0b5b58c2e97bbf656663e	Xr	2026-11-21-2-p6-r58	MidiPkt_HandleCmdCode01	73	MATCH
 v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m285.c	9fb00959e51cc3e70522fbe3f78d3e0ac3d772b7d00111fbb0e4bb46b0903f14	O3Xr	2026-11-21-8-p6-r63	Part_LookupByIndex	15	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data	15	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper10	57	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper8	52	DIFF at +27
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper9	53	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompAreaHeader	53	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompBankTables	53	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompBlockPool	57	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_LivePanel	52	DIFF at +27
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_PanelMemories	52	DIFF at +27
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_SoundRamData	52	DIFF at +27
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_SoundRamId	52	DIFF at +27
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroupEnd	37	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_AccompBlocks	12	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_Panel	9	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_SoundRam	22	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_StyleImage	25	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	SysEx_SendNothing	1	MATCH
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper11	53	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper12	53	DIFF at +28
-v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper13	57	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data	15	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper10	57	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper8	52	DIFF at +27
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper9	53	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompAreaHeader	53	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompBankTables	53	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompBlockPool	57	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_LivePanel	52	DIFF at +27
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_PanelMemories	52	DIFF at +27
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_SoundRamData	52	DIFF at +27
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_SoundRamId	52	DIFF at +27
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroupEnd	37	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_AccompBlocks	12	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_Panel	9	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_SoundRam	22	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_StyleImage	25	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	SysEx_SendNothing	1	MATCH
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper11	53	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper12	53	DIFF at +28
+v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper13	57	DIFF at +28
 v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m287.c	467be0b0e62fdb7c51857c1047793e8043b6cf3dddd3aa4235f127a3e4bd4d22	O3Xr	2026-11-21-5-p6-r60	MidiSysEx_ProcessBlock_Helper5	11	MATCH
 v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m288.c	8059c934c246d864fda374395b51a1676772e0ab923e75f2e03f0526b13c6fcc	O3Xr	2026-11-21-10-p6-r65	SoundMode_SetChorusType	40	MATCH
 v5	v5/maincpu/cc900-staged/midi_dispatch_handlers_m288_b.c	1c64025a6ac46b8be0346990002237dc3be3f73150ac6b211e3810637edc93bc	O3Xr	2026-11-21-5-p6-r60	ArpQueue_ReinitCurrentBuffer	11	MATCH
@@ -1008,13 +978,13 @@ v5	v5/maincpu/cc900-staged/note_voice_mapping_m300.c	2a985eaf704c011018cbfae4a3d
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m300_xr.c	41a1073739582b1fa7058e0e2b94da91fd468edcddb2f3e4e2d32241253c1f9f	Xr	2026-11-16-111-p6-r22-staged	VoiceMap_AllocateSlot	123	MATCH
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m301.c	66c0e92b4f40f97d0034300e0c3ddb4e246e09edcdcc5a0568e1738b21ac762a	O3Xr	2026-11-21-5-p6-r60	MIDI_SendAllVoicesPitchUpdate	15	MATCH
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m301_xr.c	d283b7066b8ab882e7027bac960d200b9c1948fd277d41b067e23031043ae884	Xr	2026-11-19-43-p6-r48	SndParam_ApplyEventField	98	MATCH
-v5	v5/maincpu/cc900-staged/note_voice_mapping_m302.c	350f914c5aa5c5018d73af45ef759a05ebed7dc0561c62bb22e319596b72916a	O3Xr	2026-11-21-5-p6-r60	SysexRingBuf_GetFreeSpace	8	MATCH
-v5	v5/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	9073fa13940d58008cbebc3600823bedae3eeb1503ab7ae9adcce6fa3a2d20e3	Xr	2026-11-19-43-p6-r48	FileIO_ReadVariableLengthData	135	MATCH
-v5	v5/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	9073fa13940d58008cbebc3600823bedae3eeb1503ab7ae9adcce6fa3a2d20e3	Xr	2026-11-19-43-p6-r48	SongPlayer_ResetState	67	MATCH
+v5	v5/maincpu/cc900-staged/note_voice_mapping_m302.c	b3cfad1de4c5094d7e161d89fec2bd07e6624c49db6bda73eeb3fd638f44f0ed	O3Xr	2026-11-22-10-p6-r77	Seq_CalcAddrOffset	8	MATCH
+v5	v5/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	7f2607d59421c3b1f66886f033d5dd4b85c50a98706c7c9252252917cbaf866d	Xr	2026-11-22-10-p6-r77	DirectReturn_LoadDRAM	49	MATCH
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m302_xs.c	8bb068684293f35189100ee6df75fdeab5a44615060b9a5b9a1837d2761b32a6	O3XSXr	2026-11-21-5-p6-r60	SeqPlay_BusyWaitLoop	7	MATCH
-v5	v5/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	ApplyProgramChangeAs_LoadReg2	10	MATCH
-v5	v5/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	FetchOscTableEntry_LoadReg2	7	MATCH
-v5	v5/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	SndParam_InitBufferConverge	10	MATCH
+v5	v5/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChangeAs_LoadReg	10	MATCH
+v5	v5/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChange_LoadReg	10	MATCH
+v5	v5/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	SndParam_CheckAndApplyMode	30	MATCH
+v5	v5/maincpu/cc900-staged/note_voice_mapping_m303_b.c	ea92dd27b93a1beae1fc334a214232448bdb3d02b0ba9fa4488b33ddcacbf37d	O3Xr	2026-11-22-10-p6-r77	SndParam_ComputeVoiceIndex	30	MATCH
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m305.c	02665a0933975e3e003a0b2e3d3ea7c9ce0bb8bb22b2d0e736a7553ddbbb3373	O3Xr	2026-11-16-68-p6-r12	COMM_SendEqualizerOnOff	33	MATCH
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m305.c	02665a0933975e3e003a0b2e3d3ea7c9ce0bb8bb22b2d0e736a7553ddbbb3373	O3Xr	2026-11-16-68-p6-r12	COMM_SendFadeLevel	24	MATCH
 v5	v5/maincpu/cc900-staged/note_voice_mapping_m305.c	02665a0933975e3e003a0b2e3d3ea7c9ce0bb8bb22b2d0e736a7553ddbbb3373	O3Xr	2026-11-16-68-p6-r12	SendPartDataBlock_ClearByte	33	MATCH
@@ -1166,10 +1136,11 @@ v5	v5/maincpu/cc900-staged/sequencer_engine_m0.c	a1c69595d9e4e6c40393231068ebbd7
 v5	v5/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_StopPlayback	28	MATCH
 v5	v5/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_UpdateAndDispatch	6	MATCH
 v5	v5/maincpu/cc900-staged/sequencer_engine_m233.c	e8a678ddc893d954887abc8d1d5bdb283b1ae063160bc5a501677bf2039c6ac3	O3Xr	2026-11-19-43-p6-r48	SeqPlay_CheckDrumAndStart	97	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadAndValidateData	118	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadDualPartData	118	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-8-p6-r75	SeqEvent_AccumulateQueue	19	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-8-p6-r75	SeqEvent_MainHandler	1019	DIFF at +866
+v5	v5/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	SeqValidate_PartAndTempoCombined	47	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidateExtended_DataBlock	47	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidatePartAndTempoAlt	47	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-10-p6-r77	SeqEvent_AccumulateQueue	19	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-10-p6-r77	SeqEvent_MainHandler	1019	DIFF at +866
 v5	v5/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44c45ec1df0a593be39e8d7c6c645579d1cf7fb	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendGateCmd	21	MATCH
 v5	v5/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44c45ec1df0a593be39e8d7c6c645579d1cf7fb	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendScrollCmd1	15	MATCH
 v5	v5/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44c45ec1df0a593be39e8d7c6c645579d1cf7fb	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendScrollCmd5	15	MATCH
@@ -1179,26 +1150,27 @@ v5	v5/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44
 v5	v5/maincpu/cc900-staged/sequencer_engine_m235_xs.c	1266e6bfcf2178e90f32cb212545f7b0d09b8a04cb5e4caaecb5868b35155796	O3XSXr	2026-11-21-5-p6-r60	SingleLoad_PrepareSongSlot	76	MATCH
 v5	v5/maincpu/cc900-staged/sequencer_engine_m236.c	cc8231c80bdc29062f5f30d7c25d82b85abae0960f0b917d704ac71355084ff6	O3Xr	2026-11-22-8-p6-r75	SeqPart_CompareLeft	77	MATCH
 v5	v5/maincpu/cc900-staged/sequencer_engine_m236.c	cc8231c80bdc29062f5f30d7c25d82b85abae0960f0b917d704ac71355084ff6	O3Xr	2026-11-22-8-p6-r75	SeqPart_CompareRight	77	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	AcModeSelBoxProc	64	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	DocOrchMuteFunc	64	DIFF at +2
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	MuteChSetFunc	141	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	PdOrchMuteFunc	64	DIFF at +2
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	Rt1MuteFunc	63	DIFF at +2
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	Rt2MuteFunc	63	DIFF at +2
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	SMFMute_ClearBit0	11	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	SMFMute_GetBit1Status	12	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-8-p6-r75	SeqNameOKFunc	42	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-8-p6-r75	AcMuteToggleBoxProc	92	DIFF at +46
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-8-p6-r75	SMFMuteOnOffFunc	86	DIFF at +2
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-8-p6-r75	SMFMute_GetBit0Status	12	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-8-p6-r75	SMFMute_GetUpperBits	12	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m232.c	55c066ff9ebf29a7451f03822bc79f46114d349059f1d8190ae2a891f71f44e1	O3Xr	2026-11-22-8-p6-r75	SqAftSet_LookupTableEntry	20	MATCH
-v5	v5/maincpu/cc900-staged/sequencer_ui_m232.c	55c066ff9ebf29a7451f03822bc79f46114d349059f1d8190ae2a891f71f44e1	O3Xr	2026-11-22-8-p6-r75	TrAsGrid_CheckTrackType	49	DIFF at +22
-v5	v5/maincpu/cc900-staged/sequencer_ui_m232.c	55c066ff9ebf29a7451f03822bc79f46114d349059f1d8190ae2a891f71f44e1	O3Xr	2026-11-22-8-p6-r75	TrAsGrid_LookupByteTable	13	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	AcModeSelBoxProc	64	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	DocOrchMuteFunc	64	DIFF at +2
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	MuteChSetFunc	141	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	PdOrchMuteFunc	64	DIFF at +2
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	Rt1MuteFunc	63	DIFF at +2
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	Rt2MuteFunc	63	DIFF at +2
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	SMFMute_ClearBit0	11	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	SMFMute_GetBit1Status	12	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0.c	550ad2c4d29e45f52882d62ae4cbf787223a07272ffc562f5d9ebba01f4d4490	O3Xr	2026-11-22-10-p6-r77	SeqNameOKFunc	42	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-10-p6-r77	AcMuteToggleBoxProc	92	DIFF at +46
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-10-p6-r77	SMFMuteOnOffFunc	86	DIFF at +2
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-10-p6-r77	SMFMute_GetBit0Status	12	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m0_b.c	a507b7d7fa551fe6bb96cf0d9432c89738520876603aed1ab15b6efe11df9e77	O3Xr	2026-11-22-10-p6-r77	SMFMute_GetUpperBits	12	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m232.c	55c066ff9ebf29a7451f03822bc79f46114d349059f1d8190ae2a891f71f44e1	O3Xr	2026-11-22-10-p6-r77	SqAftSet_LookupTableEntry	20	MATCH
+v5	v5/maincpu/cc900-staged/sequencer_ui_m232.c	55c066ff9ebf29a7451f03822bc79f46114d349059f1d8190ae2a891f71f44e1	O3Xr	2026-11-22-10-p6-r77	TrAsGrid_CheckTrackType	49	DIFF at +22
+v5	v5/maincpu/cc900-staged/sequencer_ui_m232.c	55c066ff9ebf29a7451f03822bc79f46114d349059f1d8190ae2a891f71f44e1	O3Xr	2026-11-22-10-p6-r77	TrAsGrid_LookupByteTable	13	MATCH
 v5	v5/maincpu/cc900-staged/single_load_m269.c	7fd496bc1dc02152e97e3d622c2859d72df119f7354d06c014f02c2d08778c05	O3Xr	2026-11-19-73-p6-r53	SingleLoad_SyncSoundMemCursorGroup	92	MATCH
 v5	v5/maincpu/cc900-staged/single_load_m269_b.c	7b03f878aacba78b5aeb39bcff4fd9421f554aa9a564adbbc0911c2528dea2e2	O3Xr	2026-11-19-15-p6-r42	SLSrcBankList_FuncBody	116	DIFF at +104
 v5	v5/maincpu/cc900-staged/smf_event_processor_m0_xr.c	95a486e1a5b5b7797925bc9768ee70739655c26374f2abbaa5b5eaacd7b566f7	Xr	2026-11-16-92-p6-r18	SeqStep_FileSectorDone	34	MATCH
-v5	v5/maincpu/cc900-staged/smf_event_processor_m236_xr.c	67b847f70771e4e4e28e25229b03da3cfb7a5676300bcfb1baa881ac8c8a22ae	Xr	2026-11-16-92-p6-r18	SeqStep_FileCloseInner	186	MATCH
+v5	v5/maincpu/cc900-staged/smf_event_processor_m236_xr.c	e79ca649f56739d07e547016b82ba750095280ecd0708f0a3cfec541e228563b	Xr	2026-11-22-10-p6-r77	FileRead	73	MATCH
+v5	v5/maincpu/cc900-staged/smf_event_processor_m236_xr_b.c	619ea95a82028889788a562f7fba2225651fccc0e4fd87f34c132cfb16b695c7	Xr	2026-11-22-10-p6-r77	FileWrite	73	MATCH
 v5	v5/maincpu/cc900-staged/smf_event_processor_m238_xr.c	568fd7b6a713f76a356321886d110370426489263ed8ac45beaa3b477d811f4e	Xr	2026-11-19-43-p6-r48	FatPath_Next83Component	183	MATCH
 v5	v5/maincpu/cc900-staged/smf_event_processor_m238_xr_b.c	5c0a6a708c16ea011d35386b66a6559ea8543ec0751df7eda20447645da749e2	Xr	2026-11-16-111-p6-r22-staged	SeqStep_FileIoCheck	573	MATCH
 v5	v5/maincpu/cc900-staged/smf_event_processor_m239_xr.c	a626394f74925750a17470500f2793ee7d939ee87002a1bac46e8652c59963d9	Xr	2026-11-18-34-p6-r38-staged	SeqChan_ByteBlockD	35	MATCH
@@ -1214,6 +1186,8 @@ v5	v5/maincpu/cc900-staged/sndparam_routines.c	b1482ea0b8d8e3add2ae4c2ea35526a61
 v5	v5/maincpu/cc900-staged/sndparam_routines.c	b1482ea0b8d8e3add2ae4c2ea35526a6162872e172220434def523ba5edee970	O3Xr	2026-11-16-40-p6-r8	SndParam_EncodeAddress	39	MATCH
 v5	v5/maincpu/cc900-staged/sndparam_routines_m0.c	242cef0f61705297815c8d304d16e2752ffe4b1c97d973ce81c1e8e6cd878a0b	O3Xr	2026-11-16-122-p6-r24-staged	SndParam_BinarySearch	54	MATCH
 v5	v5/maincpu/cc900-staged/sndparam_routines_m0_xr.c	262b7014dc5b45cc99916d3db30114962698029a817df39636aed6006cf8a4fc	Xr	2026-11-17-1-p6-r28-staged	SndParam_ReadRegBitfield	89	MATCH
+v5	v5/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_NotifyAndReturn	20	MATCH
+v5	v5/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_WrapNotify2	20	MATCH
 v5	v5/maincpu/cc900-staged/sndparam_routines_m283_xr.c	dc2986ff7c25851bfb7fe5662afe1298d5defa273416a1040bbbd15128657c8e	Xr	2026-11-16-125-p6-r26-staged	SndParam_ReadRegWord	69	MATCH
 v5	v5/maincpu/cc900-staged/sound_editor_ui_m0.c	4aad037a43cf5d775716e1bee6b838aed9cc00321fa8673e55a3f7945ab857e1	O3Xr	2026-11-21-22-p6-r67	AttLangCheck	17	MATCH
 v5	v5/maincpu/cc900-staged/sound_editor_ui_m0.c	4aad037a43cf5d775716e1bee6b838aed9cc00321fa8673e55a3f7945ab857e1	O3Xr	2026-11-21-22-p6-r67	CmpNameMenuBoxProc	49	MATCH
@@ -1364,11 +1338,8 @@ v5	v5/maincpu/cc900-staged/ui_widget_defs_m0.c	a245a0f8b3e34e4735387b551039b47fa
 v5	v5/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	InitGraphics_SetupVRAM	2	MATCH
 v5	v5/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	LcdOff_Done2	2	MATCH
 v5	v5/maincpu/cc900-staged/ui_widget_defs_m271.c	90dda115b7a269b36a897738fb2ccbefc84065956a9c3f4e94ff5e150022acd9	O3Xr	2026-11-19-43-p6-r48	MainLswPartAdd	101	MATCH
-v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetNextView	50	MATCH
-v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetPrevView	50	MATCH
-v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSubView	50	MATCH
-v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSuperView	50	MATCH
-v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	InitializeObjectTable	460	MATCH
+v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	ApFunctionProc	75	MATCH
+v5	v5/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	MainFunctionProc	75	MATCH
 v5	v5/maincpu/cc900-staged/ui_widget_defs_m272_xr.c	d22c9514ce77376b52244303c0ddd048fe18cdf8e8060a7e54c0b3a8f249cca7	Xr	2026-11-17-19-p6-r32-staged	RegisterObjectTable	31	MATCH
 v5	v5/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOff	24	MATCH
 v5	v5/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOn	24	MATCH
@@ -1391,7 +1362,8 @@ v5	v5/maincpu/cc900-staged/ui_window_procs_m273.c	d4d3022fdce2ce1ffc15f6e990b69e
 v5	v5/maincpu/cc900-staged/ui_window_procs_m273_xr.c	150ed35dd464c71c836eddda1367119362919420b9c7e122a91be0c63994c6a4	Xr	2026-11-16-68-p6-r12	IsColorValid	28	MATCH
 v5	v5/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	IsColorValid	28	MATCH
 v5	v5/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	UserBitmapCheck	39	MATCH
-v5	v5/maincpu/cc900-staged/wallpaper_m269.c	35f5e0053c37faa9be9dc6a98b657849fd96758325a61c426e87b1eeb08d9aff	O3Xr	2026-11-21-5-p6-r60	SingleLoad_GetVariationName	15	MATCH
+v5	v5/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetComposerBankName	38	MATCH
+v5	v5/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetSoundMemBankName	38	MATCH
 v6	v6/maincpu/cc900-staged/accompaniment_engine.c	a9eee1fcda8fa9465b31781feb610f2639591717becebe6aeb9ac9dc89c378fe	O3Xr	2026-11-16-55-p6-r10	AccSeq_DeliverC9_0009	24	MATCH
 v6	v6/maincpu/cc900-staged/accompaniment_engine.c	a9eee1fcda8fa9465b31781feb610f2639591717becebe6aeb9ac9dc89c378fe	O3Xr	2026-11-16-55-p6-r10	SoundCtrl_SendAccTempo	24	MATCH
 v6	v6/maincpu/cc900-staged/accompaniment_engine_m0.c	c1e99680d9fc858d5d8e40a25cbe0acb9d78f984adcfab8ace7cfc23d83b32d1	O3Xr	2026-11-16-68-p6-r12	Tempo_DisplayParamFormat	10	MATCH
@@ -1423,7 +1395,7 @@ v6	v6/maincpu/cc900-staged/audio_control_engine_m278.c	dafc99d28d0c185aed4a4894c
 v6	v6/maincpu/cc900-staged/audio_control_engine_m279.c	687ae30bcd1fe9441a87239dd3aad87537583adc4e06a727f8625efbf6b1a39c	O3Xr	2026-11-21-5-p6-r60	CtrlPanel_LookupIndicatorEntry	16	MATCH
 v6	v6/maincpu/cc900-staged/audio_control_engine_m280.c	8892e39e65678ecb1e40abc37ee4e1305dcc9e53091225ad664ef1bb6b81c0c8	O3Xr	2026-11-21-5-p6-r60	ExtData_Voice_CompareAndDispatch_Helper	40	MATCH
 v6	v6/maincpu/cc900-staged/audio_control_engine_m280.c	8892e39e65678ecb1e40abc37ee4e1305dcc9e53091225ad664ef1bb6b81c0c8	O3Xr	2026-11-21-5-p6-r60	PanelTlv_PayloadOfTag	16	MATCH
-v6	v6/maincpu/cc900-staged/bitmap_out_routines_m274.c	78daa95a1a638cbaf10b8f784bf2fafa1faf113fb06b992c0bd77c70abbf2f78	O3Xr	2026-11-21-5-p6-r60	PanelMemory_PostSlotLoad	13	MATCH
+v6	v6/maincpu/cc900-staged/bitmap_out_routines_m274.c	c264c781473b713b8c785b88fd48aa3e45fc01e5d209adaaad23c1082b20e58a	O3Xr	2026-11-22-10-p6-r77	PanelMemory_BackupLivePanel	23	MATCH
 v6	v6/maincpu/cc900-staged/bitmap_out_routines_m274_xr.c	7193e6d65ec30df821c6de65325af2765042fa6234c6dacc420a501c9f32e580	Xr	2026-11-21-5-p6-r60	BitMapOut_GetRenderMode_CheckBit3	9	MATCH
 v6	v6/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_ClearAndScanToEnd	59	DIFF at +53
 v6	v6/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_DecrementAndValidateCounter	58	MATCH
@@ -1512,21 +1484,14 @@ v6	v6/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3b
 v6	v6/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	GetEncodedFreeSpaceData	27	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	InitializeOperationState	64	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	ReadVariableLengthInt	56	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-22-8-p6-r75	FDemo_LoadRegsAndPostEvent	19	DIFF at +11
+v6	v6/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-22-10-p6-r77	FDemo_LoadRegsAndPostEvent	19	DIFF at +11
 v6	v6/maincpu/cc900-staged/file_demo_proc_m265.c	3ca96136219a8bbb55ba86fb23d33311b6a4d3ff81cbc1b99b32ce0d34ae924b	O3Xr	2026-11-21-8-p6-r63	FDemo_MultiGuardCheck	34	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_PreSetup	18	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_SelectEntry_CheckCPanel	11	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	FDemo_IndicatorSetup	17	MATCH
+v6	v6/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_CopyPreset	23	MATCH
+v6	v6/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_SavePreset	23	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc_m266_xr.c	c221122189cb196280667e568850466b43d1ebc5f6fc265d8972a6fe8d9375b9	Xr	2026-11-21-5-p6-r60	GetFirstRecordAndOpen	24	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc_m267.c	829e146e6085ebc1f52ffbe991894523198691cd5489a2dfcb71f7b6f2980005	O3Xr	2026-11-18-34-p6-r38-staged	FileIO_OpenWithMode	129	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	BuildPageRecordsAlt	45	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentFileIndex_Alt	22	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentWallpaperIndex	22	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_InitWallpaperNav	45	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndex	22	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndexAlt	22	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFileCountEncoded	45	MATCH
-v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFirstPageBase	22	MATCH
+v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	FileIO_SelectFileByIndex	76	MATCH
+v6	v6/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	SetCurrentFileIndex	76	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	FileIO_SelectWallpaperByIndex	76	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	NavigateToFileIndex	76	MATCH
 v6	v6/maincpu/cc900-staged/file_demo_proc_m269.c	4202380bf3ce0bbe01b0b7fd687195617ae779687bb4f5e6a5650b788088a1f9	O3Xr	2026-11-21-5-p6-r60	CancelOperationCleanup	28	MATCH
@@ -1584,17 +1549,8 @@ v6	v6/maincpu/cc900-staged/graphics_text_vga_m273.c	11808401d730943c3d91b6cfbe99
 v6	v6/maincpu/cc900-staged/graphics_text_vga_m273_b.c	4353807620a286098f61e439713b4f95a41f03b12009a437f7846ee4b373c9d6	O3Xr	2026-11-22-8-p6-r75	Display_DeferOrUpdateScreen	24	MATCH
 v6	v6/maincpu/cc900-staged/graphics_text_vga_m274.c	3fd212a36f8d6ff413924f443e5ee8cf2ce82e6be7aac4082f8638838ce9aff5	O3Xr	2026-11-21-10-p6-r65	InitializeRoot	571	MATCH
 v6	v6/maincpu/cc900-staged/graphics_text_vga_m274_xs.c	f5c5ed3871a8a0d18c1465aae67d329af86c467670a6518277bd90fce2b3c8d2	O3XSXr	2026-11-16-92-p6-r18	FontGlyph_ByteData	17	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	EditSwRefresh	12	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	GetAdr_rtmcfg	5	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	GetAdr_sq_beadt	5	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqbtof	5	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqsrtc	5	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	PlayHalt	64	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	SetGlobalError	5	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	free_X	8	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	malloc_X	8	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	putc_mrx_bf_X	10	MATCH
-v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	66dde619c809614fd0e63cb1d8be00156aecab2f7e2c13f9d34b165375cf7765	O3Xr	2026-11-21-22-p6-r67	putc_mtx_bf_X	10	MATCH
+v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	7be3eee236e65677403e0e431a266359941ea988728a426a4bcb93fa32faa09e	O3Xr	2026-11-22-10-p6-r77	Boot_ParseSubCPUTimestamp	13	MATCH
+v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0.c	7be3eee236e65677403e0e431a266359941ea988728a426a4bcb93fa32faa09e	O3Xr	2026-11-22-10-p6-r77	Boot_ParseTableDataTimestamp	13	MATCH
 v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	4d7685ecdff8106af6ec497f0f825ed3fd7227b7788a2aabfc5d3fe2658d11f3	Xr	2026-11-21-22-p6-r67	PlayStandBy	22	MATCH
 v6	v6/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	4d7685ecdff8106af6ec497f0f825ed3fd7227b7788a2aabfc5d3fe2658d11f3	Xr	2026-11-21-22-p6-r67	SetSepaOutMode	500	MATCH
 v6	v6/maincpu/cc900-staged/kn5000_v10_program_m276.c	2dcd726a0f0e1306abedaaa04ee3857f0d5b94a25ab3ccd6d7aa3a1b6c5c76b8	O3Xr	2026-11-21-8-p6-r63	InitializeKSS	1	MATCH
@@ -1657,26 +1613,26 @@ v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m0.c	0e2edea51a4673fef0a13371e
 v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m0.c	0e2edea51a4673fef0a13371e26513c2fdd306bc638a763d51a74b50ccad1d5e	O3Xr	2026-11-21-6-p6-r61	SeqChan_XferStep_StyleImageBlock1	45	MATCH
 v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m0_xr.c	9fe51107568ff28e99e9cb5aedc1e34505b40ab8bdd0b5b58c2e97bbf656663e	Xr	2026-11-21-2-p6-r58	MidiPkt_HandleCmdCode01	73	MATCH
 v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m285.c	9fb00959e51cc3e70522fbe3f78d3e0ac3d772b7d00111fbb0e4bb46b0903f14	O3Xr	2026-11-21-8-p6-r63	Part_LookupByIndex	15	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data	15	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper10	57	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper8	52	DIFF at +27
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper9	53	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompAreaHeader	53	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompBankTables	53	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompBlockPool	57	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_LivePanel	52	DIFF at +27
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_PanelMemories	52	DIFF at +27
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_SoundRamData	52	DIFF at +27
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_SoundRamId	52	DIFF at +27
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroupEnd	37	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_AccompBlocks	12	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_Panel	9	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_SoundRam	22	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_StyleImage	25	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-8-p6-r75	SysEx_SendNothing	1	MATCH
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper11	53	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper12	53	DIFF at +28
-v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper13	57	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data	15	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper10	57	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper8	52	DIFF at +27
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper9	53	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompAreaHeader	53	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompBankTables	53	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompBlockPool	57	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_LivePanel	52	DIFF at +27
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_PanelMemories	52	DIFF at +27
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_SoundRamData	52	DIFF at +27
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_SoundRamId	52	DIFF at +27
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroupEnd	37	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_AccompBlocks	12	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_Panel	9	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_SoundRam	22	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_StyleImage	25	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	f7eb66499474a04f412dbdbef754cb4ae464cbb012dcc216801816f1560c5a6c	O3Xr	2026-11-22-10-p6-r77	SysEx_SendNothing	1	MATCH
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper11	53	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper12	53	DIFF at +28
+v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	2c4d2da9bc20b5eb75e75788ff3f48f0283060c4ab4ce6d043c2942a97e05bf8	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper13	57	DIFF at +28
 v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m287.c	467be0b0e62fdb7c51857c1047793e8043b6cf3dddd3aa4235f127a3e4bd4d22	O3Xr	2026-11-21-5-p6-r60	MidiSysEx_ProcessBlock_Helper5	11	MATCH
 v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m288.c	8059c934c246d864fda374395b51a1676772e0ab923e75f2e03f0526b13c6fcc	O3Xr	2026-11-21-10-p6-r65	SoundMode_SetChorusType	40	MATCH
 v6	v6/maincpu/cc900-staged/midi_dispatch_handlers_m288_b.c	1c64025a6ac46b8be0346990002237dc3be3f73150ac6b211e3810637edc93bc	O3Xr	2026-11-21-5-p6-r60	ArpQueue_ReinitCurrentBuffer	11	MATCH
@@ -1712,13 +1668,13 @@ v6	v6/maincpu/cc900-staged/note_voice_mapping_m300.c	2a985eaf704c011018cbfae4a3d
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m300_xr.c	41a1073739582b1fa7058e0e2b94da91fd468edcddb2f3e4e2d32241253c1f9f	Xr	2026-11-16-111-p6-r22-staged	VoiceMap_AllocateSlot	123	MATCH
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m301.c	66c0e92b4f40f97d0034300e0c3ddb4e246e09edcdcc5a0568e1738b21ac762a	O3Xr	2026-11-21-5-p6-r60	MIDI_SendAllVoicesPitchUpdate	15	MATCH
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m301_xr.c	d283b7066b8ab882e7027bac960d200b9c1948fd277d41b067e23031043ae884	Xr	2026-11-19-43-p6-r48	SndParam_ApplyEventField	98	MATCH
-v6	v6/maincpu/cc900-staged/note_voice_mapping_m302.c	350f914c5aa5c5018d73af45ef759a05ebed7dc0561c62bb22e319596b72916a	O3Xr	2026-11-21-5-p6-r60	SysexRingBuf_GetFreeSpace	8	MATCH
-v6	v6/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	9073fa13940d58008cbebc3600823bedae3eeb1503ab7ae9adcce6fa3a2d20e3	Xr	2026-11-19-43-p6-r48	FileIO_ReadVariableLengthData	135	MATCH
-v6	v6/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	9073fa13940d58008cbebc3600823bedae3eeb1503ab7ae9adcce6fa3a2d20e3	Xr	2026-11-19-43-p6-r48	SongPlayer_ResetState	67	MATCH
+v6	v6/maincpu/cc900-staged/note_voice_mapping_m302.c	b3cfad1de4c5094d7e161d89fec2bd07e6624c49db6bda73eeb3fd638f44f0ed	O3Xr	2026-11-22-10-p6-r77	Seq_CalcAddrOffset	8	MATCH
+v6	v6/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	7f2607d59421c3b1f66886f033d5dd4b85c50a98706c7c9252252917cbaf866d	Xr	2026-11-22-10-p6-r77	DirectReturn_LoadDRAM	49	MATCH
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m302_xs.c	8bb068684293f35189100ee6df75fdeab5a44615060b9a5b9a1837d2761b32a6	O3XSXr	2026-11-21-5-p6-r60	SeqPlay_BusyWaitLoop	7	MATCH
-v6	v6/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	ApplyProgramChangeAs_LoadReg2	10	MATCH
-v6	v6/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	FetchOscTableEntry_LoadReg2	7	MATCH
-v6	v6/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	SndParam_InitBufferConverge	10	MATCH
+v6	v6/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChangeAs_LoadReg	10	MATCH
+v6	v6/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChange_LoadReg	10	MATCH
+v6	v6/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	SndParam_CheckAndApplyMode	30	MATCH
+v6	v6/maincpu/cc900-staged/note_voice_mapping_m303_b.c	ea92dd27b93a1beae1fc334a214232448bdb3d02b0ba9fa4488b33ddcacbf37d	O3Xr	2026-11-22-10-p6-r77	SndParam_ComputeVoiceIndex	30	MATCH
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m305.c	02665a0933975e3e003a0b2e3d3ea7c9ce0bb8bb22b2d0e736a7553ddbbb3373	O3Xr	2026-11-16-68-p6-r12	COMM_SendEqualizerOnOff	33	MATCH
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m305.c	02665a0933975e3e003a0b2e3d3ea7c9ce0bb8bb22b2d0e736a7553ddbbb3373	O3Xr	2026-11-16-68-p6-r12	COMM_SendFadeLevel	24	MATCH
 v6	v6/maincpu/cc900-staged/note_voice_mapping_m305.c	02665a0933975e3e003a0b2e3d3ea7c9ce0bb8bb22b2d0e736a7553ddbbb3373	O3Xr	2026-11-16-68-p6-r12	SendPartDataBlock_ClearByte	33	MATCH
@@ -1870,10 +1826,11 @@ v6	v6/maincpu/cc900-staged/sequencer_engine_m0.c	a1c69595d9e4e6c40393231068ebbd7
 v6	v6/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_StopPlayback	28	MATCH
 v6	v6/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_UpdateAndDispatch	6	MATCH
 v6	v6/maincpu/cc900-staged/sequencer_engine_m233.c	e8a678ddc893d954887abc8d1d5bdb283b1ae063160bc5a501677bf2039c6ac3	O3Xr	2026-11-19-43-p6-r48	SeqPlay_CheckDrumAndStart	97	MATCH
-v6	v6/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadAndValidateData	118	MATCH
-v6	v6/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadDualPartData	118	MATCH
-v6	v6/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-8-p6-r75	SeqEvent_AccumulateQueue	19	MATCH
-v6	v6/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-8-p6-r75	SeqEvent_MainHandler	1019	DIFF at +866
+v6	v6/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	SeqValidate_PartAndTempoCombined	47	MATCH
+v6	v6/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidateExtended_DataBlock	47	MATCH
+v6	v6/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidatePartAndTempoAlt	47	MATCH
+v6	v6/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-10-p6-r77	SeqEvent_AccumulateQueue	19	MATCH
+v6	v6/maincpu/cc900-staged/sequencer_engine_m235.c	716f05f49693b4b5762cd8565940382e316674942e4312ab26be9084a1ef2904	O3Xr	2026-11-22-10-p6-r77	SeqEvent_MainHandler	1019	DIFF at +866
 v6	v6/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44c45ec1df0a593be39e8d7c6c645579d1cf7fb	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendGateCmd	21	MATCH
 v6	v6/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44c45ec1df0a593be39e8d7c6c645579d1cf7fb	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendScrollCmd1	15	MATCH
 v6	v6/maincpu/cc900-staged/sequencer_engine_m235_b.c	856ccb1935035926cf6146efc44c45ec1df0a593be39e8d7c6c645579d1cf7fb	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendScrollCmd5	15	MATCH
@@ -1902,7 +1859,8 @@ v6	v6/maincpu/cc900-staged/sequencer_ui_m232.c	d1c85ffe17f3e1837f624634943d99837
 v6	v6/maincpu/cc900-staged/single_load_m269.c	7fd496bc1dc02152e97e3d622c2859d72df119f7354d06c014f02c2d08778c05	O3Xr	2026-11-19-73-p6-r53	SingleLoad_SyncSoundMemCursorGroup	92	MATCH
 v6	v6/maincpu/cc900-staged/single_load_m269_b.c	7b03f878aacba78b5aeb39bcff4fd9421f554aa9a564adbbc0911c2528dea2e2	O3Xr	2026-11-19-15-p6-r42	SLSrcBankList_FuncBody	116	DIFF at +104
 v6	v6/maincpu/cc900-staged/smf_event_processor_m0_xr.c	95a486e1a5b5b7797925bc9768ee70739655c26374f2abbaa5b5eaacd7b566f7	Xr	2026-11-16-92-p6-r18	SeqStep_FileSectorDone	34	MATCH
-v6	v6/maincpu/cc900-staged/smf_event_processor_m236_xr.c	67b847f70771e4e4e28e25229b03da3cfb7a5676300bcfb1baa881ac8c8a22ae	Xr	2026-11-16-92-p6-r18	SeqStep_FileCloseInner	186	MATCH
+v6	v6/maincpu/cc900-staged/smf_event_processor_m236_xr.c	e79ca649f56739d07e547016b82ba750095280ecd0708f0a3cfec541e228563b	Xr	2026-11-22-10-p6-r77	FileRead	73	MATCH
+v6	v6/maincpu/cc900-staged/smf_event_processor_m236_xr_b.c	619ea95a82028889788a562f7fba2225651fccc0e4fd87f34c132cfb16b695c7	Xr	2026-11-22-10-p6-r77	FileWrite	73	MATCH
 v6	v6/maincpu/cc900-staged/smf_event_processor_m238_xr.c	568fd7b6a713f76a356321886d110370426489263ed8ac45beaa3b477d811f4e	Xr	2026-11-19-43-p6-r48	FatPath_Next83Component	183	MATCH
 v6	v6/maincpu/cc900-staged/smf_event_processor_m238_xr_b.c	5c0a6a708c16ea011d35386b66a6559ea8543ec0751df7eda20447645da749e2	Xr	2026-11-16-111-p6-r22-staged	SeqStep_FileIoCheck	573	MATCH
 v6	v6/maincpu/cc900-staged/smf_event_processor_m239_xr.c	a626394f74925750a17470500f2793ee7d939ee87002a1bac46e8652c59963d9	Xr	2026-11-18-34-p6-r38-staged	SeqChan_ByteBlockD	35	MATCH
@@ -1918,6 +1876,8 @@ v6	v6/maincpu/cc900-staged/sndparam_routines.c	b1482ea0b8d8e3add2ae4c2ea35526a61
 v6	v6/maincpu/cc900-staged/sndparam_routines.c	b1482ea0b8d8e3add2ae4c2ea35526a6162872e172220434def523ba5edee970	O3Xr	2026-11-16-40-p6-r8	SndParam_EncodeAddress	39	MATCH
 v6	v6/maincpu/cc900-staged/sndparam_routines_m0.c	242cef0f61705297815c8d304d16e2752ffe4b1c97d973ce81c1e8e6cd878a0b	O3Xr	2026-11-16-122-p6-r24-staged	SndParam_BinarySearch	54	MATCH
 v6	v6/maincpu/cc900-staged/sndparam_routines_m0_xr.c	262b7014dc5b45cc99916d3db30114962698029a817df39636aed6006cf8a4fc	Xr	2026-11-17-1-p6-r28-staged	SndParam_ReadRegBitfield	89	MATCH
+v6	v6/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_NotifyAndReturn	20	MATCH
+v6	v6/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_WrapNotify2	20	MATCH
 v6	v6/maincpu/cc900-staged/sndparam_routines_m283_xr.c	dc2986ff7c25851bfb7fe5662afe1298d5defa273416a1040bbbd15128657c8e	Xr	2026-11-16-125-p6-r26-staged	SndParam_ReadRegWord	69	MATCH
 v6	v6/maincpu/cc900-staged/sound_editor_ui_m0.c	4aad037a43cf5d775716e1bee6b838aed9cc00321fa8673e55a3f7945ab857e1	O3Xr	2026-11-21-22-p6-r67	AttLangCheck	17	MATCH
 v6	v6/maincpu/cc900-staged/sound_editor_ui_m0.c	4aad037a43cf5d775716e1bee6b838aed9cc00321fa8673e55a3f7945ab857e1	O3Xr	2026-11-21-22-p6-r67	CmpNameMenuBoxProc	49	MATCH
@@ -2068,11 +2028,8 @@ v6	v6/maincpu/cc900-staged/ui_widget_defs_m0.c	a245a0f8b3e34e4735387b551039b47fa
 v6	v6/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	InitGraphics_SetupVRAM	2	MATCH
 v6	v6/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	LcdOff_Done2	2	MATCH
 v6	v6/maincpu/cc900-staged/ui_widget_defs_m271.c	90dda115b7a269b36a897738fb2ccbefc84065956a9c3f4e94ff5e150022acd9	O3Xr	2026-11-19-43-p6-r48	MainLswPartAdd	101	MATCH
-v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetNextView	50	MATCH
-v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetPrevView	50	MATCH
-v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSubView	50	MATCH
-v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSuperView	50	MATCH
-v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	InitializeObjectTable	460	MATCH
+v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	ApFunctionProc	75	MATCH
+v6	v6/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	MainFunctionProc	75	MATCH
 v6	v6/maincpu/cc900-staged/ui_widget_defs_m272_xr.c	d22c9514ce77376b52244303c0ddd048fe18cdf8e8060a7e54c0b3a8f249cca7	Xr	2026-11-17-19-p6-r32-staged	RegisterObjectTable	31	MATCH
 v6	v6/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOff	24	MATCH
 v6	v6/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOn	24	MATCH
@@ -2095,7 +2052,8 @@ v6	v6/maincpu/cc900-staged/ui_window_procs_m273.c	d4d3022fdce2ce1ffc15f6e990b69e
 v6	v6/maincpu/cc900-staged/ui_window_procs_m273_xr.c	150ed35dd464c71c836eddda1367119362919420b9c7e122a91be0c63994c6a4	Xr	2026-11-16-68-p6-r12	IsColorValid	28	MATCH
 v6	v6/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	IsColorValid	28	MATCH
 v6	v6/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	UserBitmapCheck	39	MATCH
-v6	v6/maincpu/cc900-staged/wallpaper_m269.c	35f5e0053c37faa9be9dc6a98b657849fd96758325a61c426e87b1eeb08d9aff	O3Xr	2026-11-21-5-p6-r60	SingleLoad_GetVariationName	15	MATCH
+v6	v6/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetComposerBankName	38	MATCH
+v6	v6/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetSoundMemBankName	38	MATCH
 v7	v7/maincpu/cc900-staged/accompaniment_engine.c	a9eee1fcda8fa9465b31781feb610f2639591717becebe6aeb9ac9dc89c378fe	O3Xr	2026-11-16-55-p6-r10	AccSeq_DeliverC9_0009	24	MATCH
 v7	v7/maincpu/cc900-staged/accompaniment_engine.c	a9eee1fcda8fa9465b31781feb610f2639591717becebe6aeb9ac9dc89c378fe	O3Xr	2026-11-16-55-p6-r10	SoundCtrl_SendAccTempo	24	MATCH
 v7	v7/maincpu/cc900-staged/accompaniment_engine_m0.c	500d1a3c4a1f37aa4abdd7d06fbb7af1dbc6b95dd6a6a16e3a07d3a5be62196d	O3Xr	2026-11-16-68-p6-r12	Tempo_DisplayParamFormat	10	MATCH
@@ -2127,7 +2085,7 @@ v7	v7/maincpu/cc900-staged/audio_control_engine_m278.c	a1b5de49430069cc8d2ed1882
 v7	v7/maincpu/cc900-staged/audio_control_engine_m279.c	687ae30bcd1fe9441a87239dd3aad87537583adc4e06a727f8625efbf6b1a39c	O3Xr	2026-11-21-5-p6-r60	CtrlPanel_LookupIndicatorEntry	16	MATCH
 v7	v7/maincpu/cc900-staged/audio_control_engine_m280.c	e084eeaca22dbef6cdf9861017aafc4b40df7d0e2893bbbb21a5e390f46ac151	O3Xr	2026-11-21-5-p6-r60	ExtData_Voice_CompareAndDispatch_Helper	40	MATCH
 v7	v7/maincpu/cc900-staged/audio_control_engine_m280.c	e084eeaca22dbef6cdf9861017aafc4b40df7d0e2893bbbb21a5e390f46ac151	O3Xr	2026-11-21-5-p6-r60	PanelTlv_PayloadOfTag	16	MATCH
-v7	v7/maincpu/cc900-staged/bitmap_out_routines_m274.c	78daa95a1a638cbaf10b8f784bf2fafa1faf113fb06b992c0bd77c70abbf2f78	O3Xr	2026-11-21-5-p6-r60	PanelMemory_PostSlotLoad	13	MATCH
+v7	v7/maincpu/cc900-staged/bitmap_out_routines_m274.c	c264c781473b713b8c785b88fd48aa3e45fc01e5d209adaaad23c1082b20e58a	O3Xr	2026-11-22-10-p6-r77	PanelMemory_BackupLivePanel	23	MATCH
 v7	v7/maincpu/cc900-staged/bitmap_out_routines_m274_xr.c	c3771c5be75bc5c719fe4f74c54dd1259ac093831157fd376cb68398bade5beb	Xr	2026-11-21-5-p6-r60	BitMapOut_GetRenderMode_CheckBit3	9	MATCH
 v7	v7/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_ClearAndScanToEnd	59	DIFF at +53
 v7	v7/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_DecrementAndValidateCounter	58	MATCH
@@ -2216,19 +2174,12 @@ v7	v7/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3b
 v7	v7/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	ReadVariableLengthInt	56	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-21-8-p6-r63	FDemo_LoadRegsAndPostEvent	19	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m265.c	3ca96136219a8bbb55ba86fb23d33311b6a4d3ff81cbc1b99b32ce0d34ae924b	O3Xr	2026-11-21-8-p6-r63	FDemo_MultiGuardCheck	34	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_PreSetup	18	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_SelectEntry_CheckCPanel	11	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	FDemo_IndicatorSetup	17	MATCH
+v7	v7/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_CopyPreset	23	MATCH
+v7	v7/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_SavePreset	23	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m266_xr.c	c221122189cb196280667e568850466b43d1ebc5f6fc265d8972a6fe8d9375b9	Xr	2026-11-21-5-p6-r60	GetFirstRecordAndOpen	24	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m267.c	103caa174147332640bb9ce90228973671c4f5808d531410da54b1f5c5a93e6b	O3Xr	2026-11-18-34-p6-r38-staged	FileIO_OpenWithMode	129	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	BuildPageRecordsAlt	45	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentFileIndex_Alt	22	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentWallpaperIndex	22	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_InitWallpaperNav	45	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndex	22	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndexAlt	22	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFileCountEncoded	45	MATCH
-v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFirstPageBase	22	MATCH
+v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	FileIO_SelectFileByIndex	76	MATCH
+v7	v7/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	SetCurrentFileIndex	76	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	FileIO_SelectWallpaperByIndex	76	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	NavigateToFileIndex	76	MATCH
 v7	v7/maincpu/cc900-staged/file_demo_proc_m269.c	4202380bf3ce0bbe01b0b7fd687195617ae779687bb4f5e6a5650b788088a1f9	O3Xr	2026-11-21-5-p6-r60	CancelOperationCleanup	28	MATCH
@@ -2286,17 +2237,8 @@ v7	v7/maincpu/cc900-staged/graphics_text_vga_m273.c	11808401d730943c3d91b6cfbe99
 v7	v7/maincpu/cc900-staged/graphics_text_vga_m273_b.c	4353807620a286098f61e439713b4f95a41f03b12009a437f7846ee4b373c9d6	O3Xr	2026-11-22-8-p6-r75	Display_DeferOrUpdateScreen	24	MATCH
 v7	v7/maincpu/cc900-staged/graphics_text_vga_m274.c	3fd212a36f8d6ff413924f443e5ee8cf2ce82e6be7aac4082f8638838ce9aff5	O3Xr	2026-11-21-10-p6-r65	InitializeRoot	571	MATCH
 v7	v7/maincpu/cc900-staged/graphics_text_vga_m274_xs.c	f5c5ed3871a8a0d18c1465aae67d329af86c467670a6518277bd90fce2b3c8d2	O3XSXr	2026-11-16-92-p6-r18	FontGlyph_ByteData	17	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	EditSwRefresh	12	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	GetAdr_rtmcfg	5	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	GetAdr_sq_beadt	5	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqbtof	5	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqsrtc	5	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	PlayHalt	64	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	SetGlobalError	5	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	free_X	8	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	malloc_X	8	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	putc_mrx_bf_X	10	MATCH
-v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	8dd1808ae026f9f65bcf1f1b6377c98b4df956ed511a3fe52c44b68a05fa7b9a	O3Xr	2026-11-21-22-p6-r67	putc_mtx_bf_X	10	MATCH
+v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	bc49071399dda36e1fe2418d9ab4b5d0f379e1469fe506e973487e6a399c9de3	O3Xr	2026-11-22-10-p6-r77	Boot_ParseSubCPUTimestamp	13	MATCH
+v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0.c	bc49071399dda36e1fe2418d9ab4b5d0f379e1469fe506e973487e6a399c9de3	O3Xr	2026-11-22-10-p6-r77	Boot_ParseTableDataTimestamp	13	MATCH
 v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	4e67bcb897bd59df9621c725e5a012d012dc828a105c1685b028f10cb7778bfd	Xr	2026-11-21-22-p6-r67	PlayStandBy	22	MATCH
 v7	v7/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	4e67bcb897bd59df9621c725e5a012d012dc828a105c1685b028f10cb7778bfd	Xr	2026-11-21-22-p6-r67	SetSepaOutMode	500	MATCH
 v7	v7/maincpu/cc900-staged/kn5000_v10_program_m276.c	1f06e83734d8c28e0661fed09cee4f3295ebbd90babd54c9c907d9cf38f8873d	O3Xr	2026-11-21-8-p6-r63	InitializeKSS	1	MATCH
@@ -2359,36 +2301,36 @@ v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m0.c	0e2edea51a4673fef0a13371e
 v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m0.c	0e2edea51a4673fef0a13371e26513c2fdd306bc638a763d51a74b50ccad1d5e	O3Xr	2026-11-21-6-p6-r61	SeqChan_XferStep_StyleImageBlock1	45	MATCH
 v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m0_xr.c	baa76daa1ad86fc37bf81a2d5c317bc06aadc60ba43f13a742f614d5e8c9543d	Xr	2026-11-21-2-p6-r58	MidiPkt_HandleCmdCode01	73	MATCH
 v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m285.c	9fb00959e51cc3e70522fbe3f78d3e0ac3d772b7d00111fbb0e4bb46b0903f14	O3Xr	2026-11-21-8-p6-r63	Part_LookupByIndex	15	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data	15	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper10	57	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper8	52	DIFF at +27
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper9	53	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompAreaHeader	53	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompBankTables	53	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_AccompBlockPool	57	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_LivePanel	52	DIFF at +27
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_PanelMemories	52	DIFF at +27
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_SoundRamData	52	DIFF at +27
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendBlock_SoundRamId	52	DIFF at +27
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroupEnd	37	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_AccompBlocks	12	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_Panel	9	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_SoundRam	22	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_SendGroup_StyleImage	25	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_XferShowCompleted	12	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_XferShowErrorMessage	31	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_XferShowNothing	1	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	MidiPkt_XferShowResult	49	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendAllData	21	DIFF at +5
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendMspUserData	12	DIFF at +1
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendNothing	1	MATCH
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendPanelMemoryData	12	DIFF at +1
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendSequencerData	12	DIFF at +1
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendSoundMemoryData	12	DIFF at +1
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-8-p6-r75	SysEx_SendStyleImageData	12	DIFF at +1
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	b3a52b406465a8c94b6e14ae3629142bfbd9bc8980eaeeac34ba012e481a9d8a	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper11	53	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	b3a52b406465a8c94b6e14ae3629142bfbd9bc8980eaeeac34ba012e481a9d8a	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper12	53	DIFF at +28
-v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	b3a52b406465a8c94b6e14ae3629142bfbd9bc8980eaeeac34ba012e481a9d8a	O3Xr	2026-11-22-8-p6-r75	MidiPkt_ArpConfigChain_Data_Helper13	57	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data	15	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper10	57	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper8	52	DIFF at +27
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper9	53	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompAreaHeader	53	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompBankTables	53	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_AccompBlockPool	57	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_LivePanel	52	DIFF at +27
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_PanelMemories	52	DIFF at +27
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_SoundRamData	52	DIFF at +27
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendBlock_SoundRamId	52	DIFF at +27
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroupEnd	37	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_AccompBlocks	12	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_Panel	9	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_SoundRam	22	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_SendGroup_StyleImage	25	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_XferShowCompleted	12	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_XferShowErrorMessage	31	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_XferShowNothing	1	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	MidiPkt_XferShowResult	49	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendAllData	21	DIFF at +5
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendMspUserData	12	DIFF at +1
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendNothing	1	MATCH
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendPanelMemoryData	12	DIFF at +1
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendSequencerData	12	DIFF at +1
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendSoundMemoryData	12	DIFF at +1
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286.c	70946f375194e4553de5aa2408bf7bca4fc8c361e17088ad61466f276943f5b4	O3Xr	2026-11-22-10-p6-r77	SysEx_SendStyleImageData	12	DIFF at +1
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	b3a52b406465a8c94b6e14ae3629142bfbd9bc8980eaeeac34ba012e481a9d8a	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper11	53	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	b3a52b406465a8c94b6e14ae3629142bfbd9bc8980eaeeac34ba012e481a9d8a	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper12	53	DIFF at +28
+v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m286_b.c	b3a52b406465a8c94b6e14ae3629142bfbd9bc8980eaeeac34ba012e481a9d8a	O3Xr	2026-11-22-10-p6-r77	MidiPkt_ArpConfigChain_Data_Helper13	57	DIFF at +28
 v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m287.c	467be0b0e62fdb7c51857c1047793e8043b6cf3dddd3aa4235f127a3e4bd4d22	O3Xr	2026-11-21-5-p6-r60	MidiSysEx_ProcessBlock_Helper5	11	MATCH
 v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m288.c	6bb8832b7d6cd4fe434005cac33a339717b51dd5ad5b979b5b031c45b605a5c0	O3Xr	2026-11-21-10-p6-r65	SoundMode_SetChorusType	40	MATCH
 v7	v7/maincpu/cc900-staged/midi_dispatch_handlers_m288_b.c	6d2f73c10c518ebcc23eadef28f8b2cfcae30db52f5fdc855e7f6b7875997339	O3Xr	2026-11-21-5-p6-r60	ArpQueue_ReinitCurrentBuffer	11	MATCH
@@ -2427,13 +2369,13 @@ v7	v7/maincpu/cc900-staged/note_voice_mapping_m300.c	537d6b83f765efd0bf903908474
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m300_xr.c	3e1f096d9a8b649afcd0c2b16730996b2c6ba6bf5434edf12f9b06c74ae8dda8	Xr	2026-11-16-111-p6-r22-staged	VoiceMap_AllocateSlot	123	MATCH
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m301.c	66c0e92b4f40f97d0034300e0c3ddb4e246e09edcdcc5a0568e1738b21ac762a	O3Xr	2026-11-21-5-p6-r60	MIDI_SendAllVoicesPitchUpdate	15	MATCH
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m301_xr.c	d283b7066b8ab882e7027bac960d200b9c1948fd277d41b067e23031043ae884	Xr	2026-11-19-43-p6-r48	SndParam_ApplyEventField	98	MATCH
-v7	v7/maincpu/cc900-staged/note_voice_mapping_m302.c	dc9f00e8584a6c96a1411f6082a1f7277754eeffe47f8d7c9140de682e4898ab	O3Xr	2026-11-21-5-p6-r60	SysexRingBuf_GetFreeSpace	8	MATCH
-v7	v7/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	db00174f69507d744d034d9e106449906078e9cfb923f0e90a98000d7fca5b9c	Xr	2026-11-19-43-p6-r48	FileIO_ReadVariableLengthData	135	MATCH
-v7	v7/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	db00174f69507d744d034d9e106449906078e9cfb923f0e90a98000d7fca5b9c	Xr	2026-11-19-43-p6-r48	SongPlayer_ResetState	67	MATCH
+v7	v7/maincpu/cc900-staged/note_voice_mapping_m302.c	3d165ea0fbcac17d67d4a9b97311b6d8719d41dbd8d809c950370212076b3873	O3Xr	2026-11-22-10-p6-r77	Seq_CalcAddrOffset	8	MATCH
+v7	v7/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	6d36de3cf8e1ec82f115492e0c46c65630b19864048e6274434aa4b58beeccff	Xr	2026-11-22-10-p6-r77	DirectReturn_LoadDRAM	49	MATCH
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m302_xs.c	8bb068684293f35189100ee6df75fdeab5a44615060b9a5b9a1837d2761b32a6	O3XSXr	2026-11-21-5-p6-r60	SeqPlay_BusyWaitLoop	7	MATCH
-v7	v7/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	ApplyProgramChangeAs_LoadReg2	10	MATCH
-v7	v7/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	FetchOscTableEntry_LoadReg2	7	MATCH
-v7	v7/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	SndParam_InitBufferConverge	10	MATCH
+v7	v7/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChangeAs_LoadReg	10	MATCH
+v7	v7/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChange_LoadReg	10	MATCH
+v7	v7/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	SndParam_CheckAndApplyMode	30	MATCH
+v7	v7/maincpu/cc900-staged/note_voice_mapping_m303_b.c	ea92dd27b93a1beae1fc334a214232448bdb3d02b0ba9fa4488b33ddcacbf37d	O3Xr	2026-11-22-10-p6-r77	SndParam_ComputeVoiceIndex	30	MATCH
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m305.c	b3ce91fdac5ca7071d65a93b2e8d2fa44c0d4127c4ed2bdb10f6b4aa48ac2bd8	O3Xr	2026-11-16-68-p6-r12	COMM_SendEqualizerOnOff	33	MATCH
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m305.c	b3ce91fdac5ca7071d65a93b2e8d2fa44c0d4127c4ed2bdb10f6b4aa48ac2bd8	O3Xr	2026-11-16-68-p6-r12	COMM_SendFadeLevel	24	MATCH
 v7	v7/maincpu/cc900-staged/note_voice_mapping_m305.c	b3ce91fdac5ca7071d65a93b2e8d2fa44c0d4127c4ed2bdb10f6b4aa48ac2bd8	O3Xr	2026-11-16-68-p6-r12	COMM_SendMicVolume	24	MATCH
@@ -2587,8 +2529,9 @@ v7	v7/maincpu/cc900-staged/sequencer_engine_m0.c	4a5bb6e7ea30df5bcc374aafff1c7a9
 v7	v7/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_StopPlayback	28	MATCH
 v7	v7/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_UpdateAndDispatch	6	MATCH
 v7	v7/maincpu/cc900-staged/sequencer_engine_m233.c	9bbc8c96690fdb255a590ef4690206f05e415cf3f4c7d791356ff4351cccb588	O3Xr	2026-11-19-43-p6-r48	SeqPlay_CheckDrumAndStart	97	MATCH
-v7	v7/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadAndValidateData	118	MATCH
-v7	v7/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadDualPartData	118	MATCH
+v7	v7/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	SeqValidate_PartAndTempoCombined	47	MATCH
+v7	v7/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidateExtended_DataBlock	47	MATCH
+v7	v7/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidatePartAndTempoAlt	47	MATCH
 v7	v7/maincpu/cc900-staged/sequencer_engine_m235.c	2ba66cb89bb685f16b1f40346b51ec97a51b68700efaac0e956c705ecf6b6c88	O3Xr	2026-11-21-22-p6-r67	SeqEvent_AccumulateQueue	19	MATCH
 v7	v7/maincpu/cc900-staged/sequencer_engine_m235.c	2ba66cb89bb685f16b1f40346b51ec97a51b68700efaac0e956c705ecf6b6c88	O3Xr	2026-11-21-22-p6-r67	SeqEvent_MainHandler	1019	MATCH
 v7	v7/maincpu/cc900-staged/sequencer_engine_m235_b.c	c15dce2250c64a54bd83325ace66c6f6314db9eb7a7455065319b40ebacda0f1	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendGateCmd	21	MATCH
@@ -2620,7 +2563,8 @@ v7	v7/maincpu/cc900-staged/single_load_m269.c	7fd496bc1dc02152e97e3d622c2859d72d
 v7	v7/maincpu/cc900-staged/single_load_m269_b.c	7b03f878aacba78b5aeb39bcff4fd9421f554aa9a564adbbc0911c2528dea2e2	O3Xr	2026-11-19-15-p6-r42	SLSrcBankList_FuncBody	116	DIFF at +104
 v7	v7/maincpu/cc900-staged/smf_event_processor_m0_xr.c	5b788e5537c92d3bd7fe0368f0e4e88a18a5e940fb1cf95a53dbff398072bce3	Xr	2026-11-16-92-p6-r18	SeqStep_ByteBlockF245	138	MATCH
 v7	v7/maincpu/cc900-staged/smf_event_processor_m0_xr.c	5b788e5537c92d3bd7fe0368f0e4e88a18a5e940fb1cf95a53dbff398072bce3	Xr	2026-11-16-92-p6-r18	SeqStep_FileSectorDone	34	MATCH
-v7	v7/maincpu/cc900-staged/smf_event_processor_m236_xr.c	67b847f70771e4e4e28e25229b03da3cfb7a5676300bcfb1baa881ac8c8a22ae	Xr	2026-11-16-92-p6-r18	SeqStep_FileCloseInner	186	MATCH
+v7	v7/maincpu/cc900-staged/smf_event_processor_m236_xr.c	e79ca649f56739d07e547016b82ba750095280ecd0708f0a3cfec541e228563b	Xr	2026-11-22-10-p6-r77	FileRead	73	MATCH
+v7	v7/maincpu/cc900-staged/smf_event_processor_m236_xr_b.c	619ea95a82028889788a562f7fba2225651fccc0e4fd87f34c132cfb16b695c7	Xr	2026-11-22-10-p6-r77	FileWrite	73	MATCH
 v7	v7/maincpu/cc900-staged/smf_event_processor_m237_xr.c	78772a88f335235a78bd9cbe7f98783f166b9c43c4589b25a55b60753519ec72	Xr	2026-11-16-125-p6-r26-staged	SeqStep_FileSeekCleanup	265	MATCH
 v7	v7/maincpu/cc900-staged/smf_event_processor_m238_xr.c	568fd7b6a713f76a356321886d110370426489263ed8ac45beaa3b477d811f4e	Xr	2026-11-19-43-p6-r48	FatPath_Next83Component	183	MATCH
 v7	v7/maincpu/cc900-staged/smf_event_processor_m238_xr_b.c	5c0a6a708c16ea011d35386b66a6559ea8543ec0751df7eda20447645da749e2	Xr	2026-11-16-111-p6-r22-staged	SeqStep_FileIoCheck	573	MATCH
@@ -2637,6 +2581,8 @@ v7	v7/maincpu/cc900-staged/sndparam_routines.c	cbab4eea5895adaedaef8755b9968674a
 v7	v7/maincpu/cc900-staged/sndparam_routines.c	cbab4eea5895adaedaef8755b9968674a5fe69228a79f365c5f9e18e5b9d7e68	O3Xr	2026-11-16-40-p6-r8	SndParam_EncodeAddress	39	MATCH
 v7	v7/maincpu/cc900-staged/sndparam_routines_m0.c	242cef0f61705297815c8d304d16e2752ffe4b1c97d973ce81c1e8e6cd878a0b	O3Xr	2026-11-16-122-p6-r24-staged	SndParam_BinarySearch	54	MATCH
 v7	v7/maincpu/cc900-staged/sndparam_routines_m0_xr.c	262b7014dc5b45cc99916d3db30114962698029a817df39636aed6006cf8a4fc	Xr	2026-11-17-1-p6-r28-staged	SndParam_ReadRegBitfield	89	MATCH
+v7	v7/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_NotifyAndReturn	20	MATCH
+v7	v7/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_WrapNotify2	20	MATCH
 v7	v7/maincpu/cc900-staged/sndparam_routines_m283_xr.c	dc2986ff7c25851bfb7fe5662afe1298d5defa273416a1040bbbd15128657c8e	Xr	2026-11-16-125-p6-r26-staged	SndParam_ReadRegWord	69	MATCH
 v7	v7/maincpu/cc900-staged/sound_editor_ui_m0.c	2790eca91081b0b10c3799227843ec60bc1a63ead5f42f2866c5153de1f5d919	O3Xr	2026-11-21-22-p6-r67	AttLangCheck	17	MATCH
 v7	v7/maincpu/cc900-staged/sound_editor_ui_m0.c	2790eca91081b0b10c3799227843ec60bc1a63ead5f42f2866c5153de1f5d919	O3Xr	2026-11-21-22-p6-r67	CmpNameMenuBoxProc	49	MATCH
@@ -2725,11 +2671,8 @@ v7	v7/maincpu/cc900-staged/ui_widget_defs_m0.c	a245a0f8b3e34e4735387b551039b47fa
 v7	v7/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	InitGraphics_SetupVRAM	2	MATCH
 v7	v7/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	LcdOff_Done2	2	MATCH
 v7	v7/maincpu/cc900-staged/ui_widget_defs_m271.c	90dda115b7a269b36a897738fb2ccbefc84065956a9c3f4e94ff5e150022acd9	O3Xr	2026-11-19-43-p6-r48	MainLswPartAdd	101	MATCH
-v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetNextView	50	MATCH
-v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetPrevView	50	MATCH
-v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSubView	50	MATCH
-v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSuperView	50	MATCH
-v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	InitializeObjectTable	460	MATCH
+v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	ApFunctionProc	75	MATCH
+v7	v7/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	MainFunctionProc	75	MATCH
 v7	v7/maincpu/cc900-staged/ui_widget_defs_m272_xr.c	d22c9514ce77376b52244303c0ddd048fe18cdf8e8060a7e54c0b3a8f249cca7	Xr	2026-11-17-19-p6-r32-staged	RegisterObjectTable	31	MATCH
 v7	v7/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOff	24	MATCH
 v7	v7/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOn	24	MATCH
@@ -2752,7 +2695,8 @@ v7	v7/maincpu/cc900-staged/ui_window_procs_m273.c	d4d3022fdce2ce1ffc15f6e990b69e
 v7	v7/maincpu/cc900-staged/ui_window_procs_m273_xr.c	150ed35dd464c71c836eddda1367119362919420b9c7e122a91be0c63994c6a4	Xr	2026-11-16-68-p6-r12	IsColorValid	28	MATCH
 v7	v7/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	IsColorValid	28	MATCH
 v7	v7/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	UserBitmapCheck	39	MATCH
-v7	v7/maincpu/cc900-staged/wallpaper_m269.c	35f5e0053c37faa9be9dc6a98b657849fd96758325a61c426e87b1eeb08d9aff	O3Xr	2026-11-21-5-p6-r60	SingleLoad_GetVariationName	15	MATCH
+v7	v7/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetComposerBankName	38	MATCH
+v7	v7/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetSoundMemBankName	38	MATCH
 v9	v9/maincpu/cc900-staged/accompaniment_engine.c	bc1b9c5f81977c1c3e3ca3aa0451f79a0f8e53b470427b60dbbb68bb1a654c94	O3Xr	2026-11-16-55-p6-r10	AccSeq_DeliverC9_0009	24	MATCH
 v9	v9/maincpu/cc900-staged/accompaniment_engine.c	bc1b9c5f81977c1c3e3ca3aa0451f79a0f8e53b470427b60dbbb68bb1a654c94	O3Xr	2026-11-16-55-p6-r10	AccTone_InlineBytecodeData_Code_Helper3_Helper	23	MATCH
 v9	v9/maincpu/cc900-staged/accompaniment_engine.c	bc1b9c5f81977c1c3e3ca3aa0451f79a0f8e53b470427b60dbbb68bb1a654c94	O3Xr	2026-11-16-55-p6-r10	AccTone_InlineBytecodeData_Code_Helper3_Helper2	23	MATCH
@@ -2804,7 +2748,7 @@ v9	v9/maincpu/cc900-staged/audioinit_routines_m295_xr.c	028965cf85d106ffdea58e86
 v9	v9/maincpu/cc900-staged/audioinit_routines_xr.c	7b5fe13a8cb76bdb7483f805adb846cd6f3c742fdba5d34301e3ed9780142c82	Xr	2026-11-16-40-p6-r8	AudioInit_CheckMIDIStatus	41	MATCH
 v9	v9/maincpu/cc900-staged/audioinit_routines_xr.c	7b5fe13a8cb76bdb7483f805adb846cd6f3c742fdba5d34301e3ed9780142c82	Xr	2026-11-16-40-p6-r8	AudioInit_ClearPartFlags_ByMode	175	MATCH
 v9	v9/maincpu/cc900-staged/audioinit_routines_xr.c	7b5fe13a8cb76bdb7483f805adb846cd6f3c742fdba5d34301e3ed9780142c82	Xr	2026-11-16-40-p6-r8	AudioInit_SelectPriority	220	MATCH
-v9	v9/maincpu/cc900-staged/bitmap_out_routines_m274.c	78daa95a1a638cbaf10b8f784bf2fafa1faf113fb06b992c0bd77c70abbf2f78	O3Xr	2026-11-21-5-p6-r60	PanelMemory_PostSlotLoad	13	MATCH
+v9	v9/maincpu/cc900-staged/bitmap_out_routines_m274.c	c264c781473b713b8c785b88fd48aa3e45fc01e5d209adaaad23c1082b20e58a	O3Xr	2026-11-22-10-p6-r77	PanelMemory_BackupLivePanel	23	MATCH
 v9	v9/maincpu/cc900-staged/bitmap_out_routines_m274_xr.c	fad96d13955ab0305366c04b2111b43fece24e54c408706c7e3da0d14291c1da	Xr	2026-11-21-5-p6-r60	BitMapOut_GetRenderMode_CheckBit3	9	MATCH
 v9	v9/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_ClearAndScanToEnd	59	DIFF at +53
 v9	v9/maincpu/cc900-staged/bmdredit_routines.c	1c588747f7a7a3af0537047d02d34917a36db8c4a23c0c8642d93ab2c082f5a5	O3Xr	2026-11-16-55-p6-r10	BmDrEdit_DecrementAndValidateCounter	58	MATCH
@@ -2890,19 +2834,12 @@ v9	v9/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3b
 v9	v9/maincpu/cc900-staged/file_demo_proc.c	7472fd7aac5942733077a1738f4bddd3fb3bf69803cd91dfb1af6a633889b28f	O3Xr	2026-11-16-55-p6-r10	ReadVariableLengthInt	56	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m0.c	59f99d6021a27ed7f269672d3dc7ad50375b38ca3f8d8760e4c5747f021b8cff	O3Xr	2026-11-21-8-p6-r63	FDemo_LoadRegsAndPostEvent	19	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m265.c	3ca96136219a8bbb55ba86fb23d33311b6a4d3ff81cbc1b99b32ce0d34ae924b	O3Xr	2026-11-21-8-p6-r63	FDemo_MultiGuardCheck	34	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_PreSetup	18	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	Demo_SelectEntry_CheckCPanel	11	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m266.c	f239cfd884b19261d8c4ae631110d50dbb4a9cacbdf8f9ac2f1f382390f071cf	O3Xr	2026-11-21-5-p6-r60	FDemo_IndicatorSetup	17	MATCH
+v9	v9/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_CopyPreset	23	MATCH
+v9	v9/maincpu/cc900-staged/file_demo_proc_m266.c	0a61502b4700fdbb5122c55a905f13fde1e8797b7ab07936afedcc107029ca5a	O3Xr	2026-11-22-10-p6-r77	Voice_SavePreset	23	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m266_xr.c	c221122189cb196280667e568850466b43d1ebc5f6fc265d8972a6fe8d9375b9	Xr	2026-11-21-5-p6-r60	GetFirstRecordAndOpen	24	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m267.c	3a10b8186936812f561f6e28bde3a5cd4d91bcd6d926a21737b5508c3bf3a9ba	O3Xr	2026-11-18-34-p6-r38-staged	FileIO_OpenWithMode	129	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	BuildPageRecordsAlt	45	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentFileIndex_Alt	22	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_GetCurrentWallpaperIndex	22	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	FileIO_InitWallpaperNav	45	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndex	22	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetCurrentFileIndexAlt	22	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFileCountEncoded	45	MATCH
-v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	4135e58b36f3f51747b10e0d77e91251dce0cd4797ee9378e1ce31a67189c199	O3Xr	2026-11-22-8-p6-r75	GetFirstPageBase	22	MATCH
+v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	FileIO_SelectFileByIndex	76	MATCH
+v9	v9/maincpu/cc900-staged/file_demo_proc_m268.c	d8b23aa807ed6b0e2cb0e8222c79f6b308489c4ae8a85f9b41e28e09e8fc13e4	O3Xr	2026-11-22-10-p6-r77	SetCurrentFileIndex	76	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	FileIO_SelectWallpaperByIndex	76	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m268_xr.c	9694eb0596771c5a82b75ac44053648163926bc9df3f010a761d55305f4e38a9	Xr	2026-11-19-43-p6-r48	NavigateToFileIndex	76	MATCH
 v9	v9/maincpu/cc900-staged/file_demo_proc_m269.c	4202380bf3ce0bbe01b0b7fd687195617ae779687bb4f5e6a5650b788088a1f9	O3Xr	2026-11-21-5-p6-r60	CancelOperationCleanup	28	MATCH
@@ -2961,17 +2898,8 @@ v9	v9/maincpu/cc900-staged/graphics_text_vga_m273.c	11808401d730943c3d91b6cfbe99
 v9	v9/maincpu/cc900-staged/graphics_text_vga_m273_b.c	4353807620a286098f61e439713b4f95a41f03b12009a437f7846ee4b373c9d6	O3Xr	2026-11-22-8-p6-r75	Display_DeferOrUpdateScreen	24	MATCH
 v9	v9/maincpu/cc900-staged/graphics_text_vga_m274.c	3fd212a36f8d6ff413924f443e5ee8cf2ce82e6be7aac4082f8638838ce9aff5	O3Xr	2026-11-21-10-p6-r65	InitializeRoot	571	MATCH
 v9	v9/maincpu/cc900-staged/graphics_text_vga_m274_xs.c	f5c5ed3871a8a0d18c1465aae67d329af86c467670a6518277bd90fce2b3c8d2	O3XSXr	2026-11-16-92-p6-r18	FontGlyph_ByteData	17	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	EditSwRefresh	12	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	GetAdr_rtmcfg	5	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	GetAdr_sq_beadt	5	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqbtof	5	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	GetAdr_sqsrtc	5	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	PlayHalt	64	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	SetGlobalError	5	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	free_X	8	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	malloc_X	8	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	putc_mrx_bf_X	10	MATCH
-v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	bd0a4f2512818659d3a6e2978a835051ebd18f5132bc0203ecbd5e4a332d63cf	O3Xr	2026-11-21-22-p6-r67	putc_mtx_bf_X	10	MATCH
+v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	03a140c33a9a7d0d91b777b047f4ecf838c3f5011244b2d5512dc96ac7841b75	O3Xr	2026-11-22-10-p6-r77	Boot_ParseSubCPUTimestamp	13	MATCH
+v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0.c	03a140c33a9a7d0d91b777b047f4ecf838c3f5011244b2d5512dc96ac7841b75	O3Xr	2026-11-22-10-p6-r77	Boot_ParseTableDataTimestamp	13	MATCH
 v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	f727522a689a89903422a332f9cee4fd4bfd8bb014fd56e285cb4b1585c843ce	Xr	2026-11-21-22-p6-r67	PlayStandBy	22	MATCH
 v9	v9/maincpu/cc900-staged/kn5000_v10_program_m0_xr.c	f727522a689a89903422a332f9cee4fd4bfd8bb014fd56e285cb4b1585c843ce	Xr	2026-11-21-22-p6-r67	SetSepaOutMode	500	MATCH
 v9	v9/maincpu/cc900-staged/kn5000_v10_program_m276.c	335c51fdfddfcc6d1d6506465236e1a9a03541872640b88f18f6ab9e41df4f41	O3Xr	2026-11-21-8-p6-r63	InitializeKSS	1	MATCH
@@ -3101,13 +3029,13 @@ v9	v9/maincpu/cc900-staged/note_voice_mapping_m300.c	01ddb423b039c864975c095d442
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m300_xr.c	097cb05056a9ef6c97d2cca35884e58151e00c5b95e573c5cd8b62e4e1d7adb5	Xr	2026-11-16-111-p6-r22-staged	VoiceMap_AllocateSlot	123	MATCH
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m301.c	66c0e92b4f40f97d0034300e0c3ddb4e246e09edcdcc5a0568e1738b21ac762a	O3Xr	2026-11-21-5-p6-r60	MIDI_SendAllVoicesPitchUpdate	15	MATCH
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m301_xr.c	d283b7066b8ab882e7027bac960d200b9c1948fd277d41b067e23031043ae884	Xr	2026-11-19-43-p6-r48	SndParam_ApplyEventField	98	MATCH
-v9	v9/maincpu/cc900-staged/note_voice_mapping_m302.c	f8bb0881898ab0b24411940793c9d4221dac9b22b911f2702c1a7ebd50358fbf	O3Xr	2026-11-21-5-p6-r60	SysexRingBuf_GetFreeSpace	8	MATCH
-v9	v9/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	0ab922ef8dd17dc62f22cface2265accd37394de7139b23a1c84ade0a49cda2c	Xr	2026-11-19-43-p6-r48	FileIO_ReadVariableLengthData	135	MATCH
-v9	v9/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	0ab922ef8dd17dc62f22cface2265accd37394de7139b23a1c84ade0a49cda2c	Xr	2026-11-19-43-p6-r48	SongPlayer_ResetState	67	MATCH
+v9	v9/maincpu/cc900-staged/note_voice_mapping_m302.c	78f912a0611370dd9451767a69aea58d1b7920905a73dcd7e3198ad46c538379	O3Xr	2026-11-22-10-p6-r77	Seq_CalcAddrOffset	8	MATCH
+v9	v9/maincpu/cc900-staged/note_voice_mapping_m302_xr.c	f74e6abad526c485a41d6b1105b7a9b5d62d220c753ba2fec1faaa9061d03c56	Xr	2026-11-22-10-p6-r77	DirectReturn_LoadDRAM	49	MATCH
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m302_xs.c	8bb068684293f35189100ee6df75fdeab5a44615060b9a5b9a1837d2761b32a6	O3XSXr	2026-11-21-5-p6-r60	SeqPlay_BusyWaitLoop	7	MATCH
-v9	v9/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	ApplyProgramChangeAs_LoadReg2	10	MATCH
-v9	v9/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	FetchOscTableEntry_LoadReg2	7	MATCH
-v9	v9/maincpu/cc900-staged/note_voice_mapping_m303.c	ac55e548abb8a47c137c2d732d80a3b05a563df372099e05e9e17982fa7537f1	O3Xr	2026-11-21-5-p6-r60	SndParam_InitBufferConverge	10	MATCH
+v9	v9/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChangeAs_LoadReg	10	MATCH
+v9	v9/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	ApplyProgramChange_LoadReg	10	MATCH
+v9	v9/maincpu/cc900-staged/note_voice_mapping_m303.c	7b38f49134e9e3f59e2b19047ad1b537c586aa8b00156b5b7a235f49b332e06c	O3Xr	2026-11-22-10-p6-r77	SndParam_CheckAndApplyMode	30	MATCH
+v9	v9/maincpu/cc900-staged/note_voice_mapping_m303_b.c	ea92dd27b93a1beae1fc334a214232448bdb3d02b0ba9fa4488b33ddcacbf37d	O3Xr	2026-11-22-10-p6-r77	SndParam_ComputeVoiceIndex	30	MATCH
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m304.c	e8fa1ab7201a14198a060eb0cabe17741ded8d8277b80ee33f3b44c588fbeacf	O3Xr	2026-11-16-68-p6-r12	Param_SignExtendRetu_Block4	65	MATCH
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m304.c	e8fa1ab7201a14198a060eb0cabe17741ded8d8277b80ee33f3b44c588fbeacf	O3Xr	2026-11-16-68-p6-r12	SndParam_LookupPartIndex	65	MATCH
 v9	v9/maincpu/cc900-staged/note_voice_mapping_m304.c	e8fa1ab7201a14198a060eb0cabe17741ded8d8277b80ee33f3b44c588fbeacf	O3Xr	2026-11-16-68-p6-r12	SubCPU_RequestShortSoundName	65	MATCH
@@ -3272,8 +3200,9 @@ v9	v9/maincpu/cc900-staged/sequencer_engine_m0.c	4a5bb6e7ea30df5bcc374aafff1c7a9
 v9	v9/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_StopPlayback	28	MATCH
 v9	v9/maincpu/cc900-staged/sequencer_engine_m232.c	fad98e906e460556dad08301ca9b624bdcdade6c3a7a9edcfab33f7df8a5759f	O3Xr	2026-11-21-5-p6-r60	SeqAcc_UpdateAndDispatch	6	MATCH
 v9	v9/maincpu/cc900-staged/sequencer_engine_m233.c	9bbc8c96690fdb255a590ef4690206f05e415cf3f4c7d791356ff4351cccb588	O3Xr	2026-11-19-43-p6-r48	SeqPlay_CheckDrumAndStart	97	MATCH
-v9	v9/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadAndValidateData	118	MATCH
-v9	v9/maincpu/cc900-staged/sequencer_engine_m234.c	af074566423bdb0c16fdf164b7ec2a10ef6a92c59be03dfb61f6d319bcb8dc6e	O3Xr	2026-11-22-8-p6-r75	SeqPart_LoadDualPartData	118	MATCH
+v9	v9/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	SeqValidate_PartAndTempoCombined	47	MATCH
+v9	v9/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidateExtended_DataBlock	47	MATCH
+v9	v9/maincpu/cc900-staged/sequencer_engine_m234.c	18255d0a637d0c3f7a64e42d231c1e0a166ff59b9bcbb36586cc12e719c4337d	O3Xr	2026-11-22-10-p6-r77	Seq_ValidatePartAndTempoAlt	47	MATCH
 v9	v9/maincpu/cc900-staged/sequencer_engine_m235.c	2ba66cb89bb685f16b1f40346b51ec97a51b68700efaac0e956c705ecf6b6c88	O3Xr	2026-11-21-22-p6-r67	SeqEvent_AccumulateQueue	19	MATCH
 v9	v9/maincpu/cc900-staged/sequencer_engine_m235.c	2ba66cb89bb685f16b1f40346b51ec97a51b68700efaac0e956c705ecf6b6c88	O3Xr	2026-11-21-22-p6-r67	SeqEvent_MainHandler	1019	MATCH
 v9	v9/maincpu/cc900-staged/sequencer_engine_m235_b.c	c15dce2250c64a54bd83325ace66c6f6314db9eb7a7455065319b40ebacda0f1	O3Xr	2026-11-21-5-p6-r60	NoteEditSy_SendGateCmd	21	MATCH
@@ -3307,7 +3236,8 @@ v9	v9/maincpu/cc900-staged/single_load_m269_b.c	4c770ef945a189c7b3f0589e3d638e03
 v9	v9/maincpu/cc900-staged/single_load_m269_b.c	4c770ef945a189c7b3f0589e3d638e030a3116ae7070c6eeeb4a62ab16a4f896	O3Xr	2026-11-19-15-p6-r42	SingleLoadSrc_DrawSoundMemBankRows	126	MATCH
 v9	v9/maincpu/cc900-staged/smf_event_processor_m0_xr.c	5b788e5537c92d3bd7fe0368f0e4e88a18a5e940fb1cf95a53dbff398072bce3	Xr	2026-11-16-92-p6-r18	SeqStep_ByteBlockF245	138	MATCH
 v9	v9/maincpu/cc900-staged/smf_event_processor_m0_xr.c	5b788e5537c92d3bd7fe0368f0e4e88a18a5e940fb1cf95a53dbff398072bce3	Xr	2026-11-16-92-p6-r18	SeqStep_FileSectorDone	34	MATCH
-v9	v9/maincpu/cc900-staged/smf_event_processor_m236_xr.c	67b847f70771e4e4e28e25229b03da3cfb7a5676300bcfb1baa881ac8c8a22ae	Xr	2026-11-16-92-p6-r18	SeqStep_FileCloseInner	186	MATCH
+v9	v9/maincpu/cc900-staged/smf_event_processor_m236_xr.c	e79ca649f56739d07e547016b82ba750095280ecd0708f0a3cfec541e228563b	Xr	2026-11-22-10-p6-r77	FileRead	73	MATCH
+v9	v9/maincpu/cc900-staged/smf_event_processor_m236_xr_b.c	619ea95a82028889788a562f7fba2225651fccc0e4fd87f34c132cfb16b695c7	Xr	2026-11-22-10-p6-r77	FileWrite	73	MATCH
 v9	v9/maincpu/cc900-staged/smf_event_processor_m237_xr.c	78772a88f335235a78bd9cbe7f98783f166b9c43c4589b25a55b60753519ec72	Xr	2026-11-16-125-p6-r26-staged	SeqStep_FileSeekCleanup	265	MATCH
 v9	v9/maincpu/cc900-staged/smf_event_processor_m238_xr.c	568fd7b6a713f76a356321886d110370426489263ed8ac45beaa3b477d811f4e	Xr	2026-11-19-43-p6-r48	FatPath_Next83Component	183	MATCH
 v9	v9/maincpu/cc900-staged/smf_event_processor_m238_xr_b.c	5c0a6a708c16ea011d35386b66a6559ea8543ec0751df7eda20447645da749e2	Xr	2026-11-16-111-p6-r22-staged	SeqStep_FileIoCheck	573	MATCH
@@ -3324,6 +3254,8 @@ v9	v9/maincpu/cc900-staged/sndparam_routines.c	a2fa4f34bec7c57c7b637be78d5b0351c
 v9	v9/maincpu/cc900-staged/sndparam_routines.c	a2fa4f34bec7c57c7b637be78d5b0351cd4717e078a23aeb854fa7f5e06183d5	O3Xr	2026-11-16-40-p6-r8	SndParam_EncodeAddress	39	MATCH
 v9	v9/maincpu/cc900-staged/sndparam_routines_m0.c	242cef0f61705297815c8d304d16e2752ffe4b1c97d973ce81c1e8e6cd878a0b	O3Xr	2026-11-16-122-p6-r24-staged	SndParam_BinarySearch	54	MATCH
 v9	v9/maincpu/cc900-staged/sndparam_routines_m0_xr.c	262b7014dc5b45cc99916d3db30114962698029a817df39636aed6006cf8a4fc	Xr	2026-11-17-1-p6-r28-staged	SndParam_ReadRegBitfield	89	MATCH
+v9	v9/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_NotifyAndReturn	20	MATCH
+v9	v9/maincpu/cc900-staged/sndparam_routines_m283.c	f3c742bd57e89899e21171a197bcd45323b31c4cbac2a8e8c57e3366723c1a7c	O3Xr	2026-11-22-10-p6-r77	SndParam_WrapNotify2	20	MATCH
 v9	v9/maincpu/cc900-staged/sndparam_routines_m283_xr.c	dc2986ff7c25851bfb7fe5662afe1298d5defa273416a1040bbbd15128657c8e	Xr	2026-11-16-125-p6-r26-staged	SndParam_ReadRegWord	69	MATCH
 v9	v9/maincpu/cc900-staged/sound_editor_ui_m0.c	775b469a83fbb40bfe98484b052dd2b43c382d100147bc7093c0422e7e8cb128	O3Xr	2026-11-21-22-p6-r67	AttLangCheck	17	MATCH
 v9	v9/maincpu/cc900-staged/sound_editor_ui_m0.c	775b469a83fbb40bfe98484b052dd2b43c382d100147bc7093c0422e7e8cb128	O3Xr	2026-11-21-22-p6-r67	CmpNameMenuBoxProc	49	MATCH
@@ -3412,11 +3344,8 @@ v9	v9/maincpu/cc900-staged/ui_widget_defs_m0.c	a245a0f8b3e34e4735387b551039b47fa
 v9	v9/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	InitGraphics_SetupVRAM	2	MATCH
 v9	v9/maincpu/cc900-staged/ui_widget_defs_m0_xr.c	7efb0c855726e464aec7178aa600e73c7137782c83ecffe6ca42aeef3f9d8b12	Xr	2026-11-22-8-p6-r75	LcdOff_Done2	2	MATCH
 v9	v9/maincpu/cc900-staged/ui_widget_defs_m271.c	90dda115b7a269b36a897738fb2ccbefc84065956a9c3f4e94ff5e150022acd9	O3Xr	2026-11-19-43-p6-r48	MainLswPartAdd	101	MATCH
-v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetNextView	50	MATCH
-v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetPrevView	50	MATCH
-v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSubView	50	MATCH
-v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	GetSuperView	50	MATCH
-v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	088667ef9921df9def8d2f926bfca400689be92e45aeaab97bbc728e4fa5f2cc	O3Xr	2026-11-16-122-p6-r24-staged	InitializeObjectTable	460	MATCH
+v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	ApFunctionProc	75	MATCH
+v9	v9/maincpu/cc900-staged/ui_widget_defs_m272.c	a1ac98dc3e7a02018042cb2da57e85b5e6412dac3d85406102f3d0bec30d89b9	O3Xr	2026-11-22-10-p6-r77	MainFunctionProc	75	MATCH
 v9	v9/maincpu/cc900-staged/ui_widget_defs_m272_xr.c	d22c9514ce77376b52244303c0ddd048fe18cdf8e8060a7e54c0b3a8f249cca7	Xr	2026-11-17-19-p6-r32-staged	RegisterObjectTable	31	MATCH
 v9	v9/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOff	24	MATCH
 v9	v9/maincpu/cc900-staged/ui_widget_defs_m273.c	d2722f276b4f364d1462ca82ab6d605d00103afac267731e8f2f5d59ab492a65	O3Xr	2026-11-22-8-p6-r75	LcdOn	24	MATCH
@@ -3439,4 +3368,5 @@ v9	v9/maincpu/cc900-staged/ui_window_procs_m273.c	d4d3022fdce2ce1ffc15f6e990b69e
 v9	v9/maincpu/cc900-staged/ui_window_procs_m273_xr.c	150ed35dd464c71c836eddda1367119362919420b9c7e122a91be0c63994c6a4	Xr	2026-11-16-68-p6-r12	IsColorValid	28	MATCH
 v9	v9/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	IsColorValid	28	MATCH
 v9	v9/maincpu/cc900-staged/ui_window_procs_xr.c	763b1adf71c59dbe912867e130b3587fe75f37d9924903bb2908e64929d9cafe	Xr	2026-11-16-55-p6-r10	UserBitmapCheck	39	MATCH
-v9	v9/maincpu/cc900-staged/wallpaper_m269.c	35f5e0053c37faa9be9dc6a98b657849fd96758325a61c426e87b1eeb08d9aff	O3Xr	2026-11-21-5-p6-r60	SingleLoad_GetVariationName	15	MATCH
+v9	v9/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetComposerBankName	38	MATCH
+v9	v9/maincpu/cc900-staged/wallpaper_m269.c	468024ac916f6574cda0fa7bba415a9ba56d4a8815cb85eded5ae5ed36b118ea	O3Xr	2026-11-22-10-p6-r77	SingleLoad_GetSoundMemBankName	38	MATCH

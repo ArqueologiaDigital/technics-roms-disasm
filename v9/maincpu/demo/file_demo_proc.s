@@ -890,25 +890,9 @@ Demo_ScanActivePartChannels:	.include "includes/generated/cc900/Demo_ScanActiveP
 	.set	Demo_ScanPartNext, Demo_ScanActivePartChannels + 78
 	.set	Demo_ScanPartDone, Demo_ScanActivePartChannels + 85
 
-Voice_SavePreset:
-	pushw 0x10
-	pushw 0x0
-	pushw 0xcce
-	pushw 0x0
-	pushw 0xf1a0
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	ret
+Voice_SavePreset:	.include "includes/generated/cc900/Voice_SavePreset.s"	; C: cc900/file_demo_proc_m266.c
 
-Voice_CopyPreset:
-	pushw 0x10
-	pushw 0x0
-	pushw 0xf1a0
-	pushw 0x0
-	pushw 0xcce
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	ret
+Voice_CopyPreset:	.include "includes/generated/cc900/Voice_CopyPreset.s"	; C: cc900/file_demo_proc_m266.c
 
 Demo_LookupPartTableEntry:
 	extz wa
@@ -5771,42 +5755,12 @@ BuildRecords_Return:
 	lda xsp, (xsp+274)
 	ret
 
-SetCurrentFileIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr ValidateFileRangeType5
-	cp hl, 0xffff
-	jr nz, SetIndex_InvalidWrap
-	ld hl, (0x0271ea:24)
-	jr SetIndex_Return
-
-SetIndex_InvalidWrap:
-	cp hl, 1:i3
-	jr nz, SetIndex_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0x3c
-	mul wa, 0x3c
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x3b
-	ld wa, (0x0271ec:24)
-	cp bc, wa
-	jr ge, SetIndex_UpdatePageEnd
-	ld wa, bc
-
-SetIndex_UpdatePageEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr BuildPageRecords
-
-SetIndex_StoreIndex:
-	ld hl, iz
-	ld (0x0271ea:24), hl
-
-SetIndex_Return:
-	popw iz
-	ret
+SetCurrentFileIndex:	.include "includes/generated/cc900/SetCurrentFileIndex.s"	; C: cc900/file_demo_proc_m268_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SetIndex_InvalidWrap, SetCurrentFileIndex + 21
+	.set	SetIndex_UpdatePageEnd, SetCurrentFileIndex + 59
+	.set	SetIndex_StoreIndex, SetCurrentFileIndex + 67
+	.set	SetIndex_Return, SetCurrentFileIndex + 74
 
 GetFileRecordPtr:
 	pushw iz
@@ -6063,42 +6017,12 @@ DirScan_AltNextEntry:
 	ld bc, 1:i3
 	jr DirScan_AltReadLoop
 
-FileIO_SelectFileByIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr ValidateFileRangeAlt
-	cp hl, 0xffff
-	jr nz, SelectFile_CheckPageBound
-	ld hl, (0x0271ea:24)
-	jr SelectFile_Return
-
-SelectFile_CheckPageBound:
-	cp hl, 1:i3
-	jr nz, SelectFile_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0x3c
-	mul wa, 0x3c
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x3b
-	ld wa, (0x0271ec:24)
-	cp bc, wa
-	jr ge, SelectFile_ClampEnd
-	ld wa, bc
-
-SelectFile_ClampEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr FileIO_InitDirScan
-
-SelectFile_StoreIndex:
-	ld hl, iz
-	ld (0x0271ea:24), hl
-
-SelectFile_Return:
-	popw iz
-	ret
+FileIO_SelectFileByIndex:	.include "includes/generated/cc900/FileIO_SelectFileByIndex.s"	; C: cc900/file_demo_proc_m268_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SelectFile_CheckPageBound, FileIO_SelectFileByIndex + 21
+	.set	SelectFile_ClampEnd, FileIO_SelectFileByIndex + 59
+	.set	SelectFile_StoreIndex, FileIO_SelectFileByIndex + 67
+	.set	SelectFile_Return, FileIO_SelectFileByIndex + 74
 
 FileIO_GetFileEntryByIndex:
 	pushw iz

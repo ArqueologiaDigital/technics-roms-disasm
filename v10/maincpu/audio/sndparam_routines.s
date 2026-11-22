@@ -106,16 +106,7 @@ SndParam_DispatchTypeDE5:
 ;        (popped on return, RETD 2).
 ;   Encodes the key (SndParam_EncodeAddress) and calls SoundParam_NotifyChange with XWA = key,
 ;   BC = value, DE = the stack word.
-SndParam_NotifyAndReturn:
-	pushw iz
-	ld iz, de
-	calr SndParam_EncodeAddress
-	ld xwa, xhl
-	ld bc, iz
-	ld de, (xsp + 6)
-	calr SoundParam_NotifyChange
-	popw iz
-	retd 0x2
+SndParam_NotifyAndReturn:	.include "includes/generated/cc900/SndParam_NotifyAndReturn.s"	; C: cc900/sndparam_routines_m283.c
 
 ; Writes a sound parameter by its 24-bit key.
 ;   In:  XWA = key, BC and DE = the value arguments handed to the setter.
@@ -229,16 +220,7 @@ SndParam_Lkp2_Epilogue:
 	lda xsp, (xsp + 10)
 	ret
 
-SndParam_WrapNotify2:
-	pushw	iz
-	ld	iz, de
-	calr	SndParam_EncodeAddress
-	ld	xwa, xhl
-	ld	bc, iz
-	ld	de, (xsp+6)
-	calr	SndParam_LookupByKey
-	popw	iz
-	retd	2
+SndParam_WrapNotify2:	.include "includes/generated/cc900/SndParam_WrapNotify2.s"	; C: cc900/sndparam_routines_m283.c
 
 ; Reads a sound parameter by its 24-bit key without changing it.
 ;   In:  XWA = key (the form SndParam_EncodeAddress builds).  Out: HL = value, 0xffff when the
