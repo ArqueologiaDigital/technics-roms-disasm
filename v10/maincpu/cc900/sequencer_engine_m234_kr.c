@@ -1,5 +1,5 @@
-/* Functions of sequencer/sequencer_engine.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
+/* Functions of sequencer/sequencer_engine.s.  Firmware C (cc900 phase 6), built with Toshiba V4.23; checked function by function
+   against the ROM (notes/cc900-phase6-2026-11-16/staged_v423.tsv).
    Part_ValidateVoiceChannel / Part_ValidateAndSetupVoiceChannel, old-style definitions, taken by hand from
    notes/cc900-c-nearmiss/c/v10/Part_ValidateVoiceChannel__3ddde394.c (probe p6_S_31r1m234a.c, run 2026-11-22-15-p6-r82;
    stage_probe.py cannot read old-style heads).

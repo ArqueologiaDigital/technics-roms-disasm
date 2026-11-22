@@ -1,6 +1,6 @@
-/* Functions of sequencer/sequencer_engine.s.  Firmware C (cc900 phase 6), STAGED: Toshiba V4.23 reproduces these functions' ROM bytes
-   (notes/cc900-phase6-2026-11-16/staged_v423.tsv); they move into cc900/ once `make` compiles with V4.23.
-   v5 only, by hand: SeqEvent_AccumulateQueue, from notes/cc900-c-nearmiss/c/v5/SeqEvent_AccumulateQueue__716f05f4.c
+/* Functions of sequencer/sequencer_engine.s.  Firmware C (cc900 phase 6), built with Toshiba V4.23; checked function by function
+   against the ROM (notes/cc900-phase6-2026-11-16/staged_v423.tsv).
+   v6 only, by hand: SeqEvent_AccumulateQueue, from notes/cc900-c-nearmiss/c/v6/SeqEvent_AccumulateQueue__716f05f4.c
    (run 2026-11-21-22-p6-r67; v10 / v9 / v7 build it already).
    cc900-options: -O3 -Xr
 */

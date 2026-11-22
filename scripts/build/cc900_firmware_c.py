@@ -488,10 +488,13 @@ def file_scope_declarations(path, prototypes=False):
     src = re.sub(r'/\*.*?\*/', ' ', src, flags=re.S)
     src = re.sub(r'//[^\n]*', '', src)
     src = re.sub(r'^\s*#[^\n]*', '', src, flags=re.M)
-    out, cur, depth = [], "", 0
+    out, cur, depth, knr = [], "", 0, False
     for ch in src:
-        if depth == 0 and ch == "{" and ")" in cur:          # a function body: drop its head and skip the body
-            cur, depth = "", 1
+        # a function body: drop its head and skip the body.  An old-style (K&R) definition declares its parameters
+        # between `)` and `{` (`void f(a) unsigned char a; {`): after such a head the `{` opens the body too
+        # (2026-12-07: Part_ValidateVoiceChannel, whose body statements were read as file-scope declarations)
+        if depth == 0 and ch == "{" and (")" in cur or (knr and not cur.strip())):
+            cur, depth, knr = "", 1, False
             continue
         if depth:
             depth += {"{": 1, "}": -1}.get(ch, 0)
@@ -500,6 +503,10 @@ def file_scope_declarations(path, prototypes=False):
             s = " ".join(cur.split())
             if s and ("(" in s) == prototypes and not s.startswith("typedef"):
                 out.append(s)
+            if re.match(r'^[\w\s\*]*\b\w+\s*\([\w\s,]*\)\s*\w', s):     # `void f(a) unsigned char a`
+                knr = True
+            elif "(" in s or "=" in s:
+                knr = False
             cur = ""
         else:
             cur += ch
