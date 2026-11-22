@@ -13,7 +13,7 @@ built from C only where V4.23 reproduces it (C it does not is kept in `<tree>/cc
 
 | toolchain                     | bytes from C | code bytes from C | % of all code | firmware C bytes | library C bytes |
 |-------------------------------|--------------|-------------------|---------------|------------------|-----------------|
-| Toshiba V4.23                 | 1257411      | 1253147           | 16.640 %      | 1240291          | 17120           |
+| Toshiba V4.23                 | 1258514      | 1254250           | 16.655 %      | 1241394          | 17120           |
 | reference model               | 63939        | 61027             | 0.810 %       | 46547            | 17392           |
 | LLVM backend (-mcc900-compat) | 0            | 0                 | 0.000 %       | 0                | 0               |
 
@@ -23,17 +23,17 @@ All 20 images: 20643840 bytes, 7530970 of them census CODE.  Every version of an
 
 | image      | size    | code   | category   | items | V4.23 bytes / code | model bytes / code | LLVM bytes / code | model % of code | V4.23 not yet checked |
 |------------|---------|--------|------------|-------|--------------------|--------------------|-------------------|-----------------|-----------------------|
-| v10        | 2097152 | 996531 | firmware C | 1735  | 126688 / 126490    | 7424 / 7424        | 0 / 0             | 0.745 %         | 0                     |
+| v10        | 2097152 | 996531 | firmware C | 1738  | 127063 / 126865    | 7424 / 7424        | 0 / 0             | 0.745 %         | 0                     |
 | v10        | 2097152 | 996531 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v9         | 2097152 | 996216 | firmware C | 1734  | 126292 / 126094    | 7424 / 7424        | 0 / 0             | 0.745 %         | 0                     |
+| v9         | 2097152 | 996216 | firmware C | 1735  | 126430 / 126232    | 7424 / 7424        | 0 / 0             | 0.745 %         | 0                     |
 | v9         | 2097152 | 996216 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v8         | 2097152 | 996216 | firmware C | 1734  | 126292 / 126094    | 7424 / 7424        | 0 / 0             | 0.745 %         | 0                     |
+| v8         | 2097152 | 996216 | firmware C | 1735  | 126430 / 126232    | 7424 / 7424        | 0 / 0             | 0.745 %         | 0                     |
 | v8         | 2097152 | 996216 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.135 %         | 0                     |
-| v7         | 2097152 | 993782 | firmware C | 1612  | 111854 / 111656    | 7144 / 7144        | 0 / 0             | 0.719 %         | 0                     |
+| v7         | 2097152 | 993782 | firmware C | 1613  | 111992 / 111794    | 7144 / 7144        | 0 / 0             | 0.719 %         | 0                     |
 | v7         | 2097152 | 993782 | library C  | 23    | 1469 / 1213        | 1605 / 1349        | 0 / 0             | 0.136 %         | 0                     |
-| v6         | 2097152 | 992800 | firmware C | 1545  | 102815 / 102621    | 7559 / 7559        | 0 / 0             | 0.761 %         | 0                     |
+| v6         | 2097152 | 992800 | firmware C | 1547  | 102972 / 102778    | 7559 / 7559        | 0 / 0             | 0.761 %         | 0                     |
 | v6         | 2097152 | 992800 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
-| v5         | 2097152 | 991718 | firmware C | 1521  | 94162 / 93970      | 7501 / 7501        | 0 / 0             | 0.756 %         | 0                     |
+| v5         | 2097152 | 991718 | firmware C | 1523  | 94319 / 94127      | 7501 / 7501        | 0 / 0             | 0.756 %         | 0                     |
 | v5         | 2097152 | 991718 | library C  | 23    | 1469 / 1211        | 1605 / 1347        | 0 / 0             | 0.136 %         | 0                     |
 | v142       | 196608  | 128873 | firmware C | 604   | 85228 / 85194      | 483 / 483          | 0 / 0             | 0.375 %         | 0                     |
 | v142       | 196608  | 128873 | library C  | 12    | 1261 / 1147        | 765 / 651          | 0 / 0             | 0.505 %         | 0                     |
@@ -1315,6 +1315,9 @@ found yet.
 | v10       | Part_WriteVoiceWord                                | v10/maincpu/cc900/sequencer_engine_m234_g.c                               | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 56254b1c6db1 |
 | v10       | Part_LinkVoiceToChain                              | v10/maincpu/cc900/sequencer_engine_m234_h.c                               | -O3 -Xr     | 79    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
 | v10       | SeqVoice_CountChainLength                          | v10/maincpu/cc900/sequencer_engine_m234_h.c                               | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
+| v10       | Part_ValidateAndSetupVoiceChannel                  | v10/maincpu/cc900/sequencer_engine_m234_kr.c                              | -O3 -Xr     | 137   | yes   | differs | MATCH (name cut to 31) | cache 79c190d0849e |
+| v10       | Part_ValidateVoiceChannel                          | v10/maincpu/cc900/sequencer_engine_m234_kr.c                              | -O3 -Xr     | 100   | yes   | differs | MATCH                  | cache 79c190d0849e |
+| v10       | SeqPlay_HandleVoiceReassign                        | v10/maincpu/cc900/sequencer_engine_m234_xs.c                              | -O3 -XS -Xr | 138   | yes   | differs | MATCH                  | cache 49bbf43c7683 |
 | v10       | AppEvent_SendAccompStatus                          | v10/maincpu/cc900/sequencer_engine_m235.c                                 | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 1694ae983b70 |
 | v10       | AppEvent_SendModeToggle                            | v10/maincpu/cc900/sequencer_engine_m235.c                                 | -O3 -Xr     | 20    | yes   | MATCH   | MATCH                  | cache 1694ae983b70 |
 | v10       | AppEvent_SendPlayStatus                            | v10/maincpu/cc900/sequencer_engine_m235.c                                 | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 1694ae983b70 |
@@ -3050,6 +3053,7 @@ found yet.
 | v9        | Part_WriteVoiceWord                                | v9/maincpu/cc900/sequencer_engine_m234_g.c                                | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 56254b1c6db1 |
 | v9        | Part_LinkVoiceToChain                              | v9/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 79    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
 | v9        | SeqVoice_CountChainLength                          | v9/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
+| v9        | SeqPlay_HandleVoiceReassign                        | v9/maincpu/cc900/sequencer_engine_m234_xs.c                               | -O3 -XS -Xr | 138   | yes   | differs | MATCH                  | cache 49bbf43c7683 |
 | v9        | AppEvent_SendAccompStatus                          | v9/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 519ced8edc9b |
 | v9        | AppEvent_SendModeToggle                            | v9/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 20    | yes   | MATCH   | MATCH                  | cache 519ced8edc9b |
 | v9        | AppEvent_SendPlayStatus                            | v9/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 519ced8edc9b |
@@ -4784,6 +4788,7 @@ found yet.
 | v8        | Part_WriteVoiceWord                                | v9/maincpu/cc900/sequencer_engine_m234_g.c                                | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 56254b1c6db1 |
 | v8        | Part_LinkVoiceToChain                              | v9/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 79    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
 | v8        | SeqVoice_CountChainLength                          | v9/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
+| v8        | SeqPlay_HandleVoiceReassign                        | v9/maincpu/cc900/sequencer_engine_m234_xs.c                               | -O3 -XS -Xr | 138   | yes   | differs | MATCH                  | cache 49bbf43c7683 |
 | v8        | AppEvent_SendAccompStatus                          | v9/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 519ced8edc9b |
 | v8        | AppEvent_SendModeToggle                            | v9/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 20    | yes   | MATCH   | MATCH                  | cache 519ced8edc9b |
 | v8        | AppEvent_SendPlayStatus                            | v9/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 519ced8edc9b |
@@ -6418,6 +6423,7 @@ found yet.
 | v7        | Part_WriteVoiceWord                                | v7/maincpu/cc900/sequencer_engine_m234_g.c                                | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 56254b1c6db1 |
 | v7        | Part_LinkVoiceToChain                              | v7/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 79    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
 | v7        | SeqVoice_CountChainLength                          | v7/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
+| v7        | SeqPlay_HandleVoiceReassign                        | v7/maincpu/cc900/sequencer_engine_m234_xs.c                               | -O3 -XS -Xr | 138   | yes   | differs | MATCH                  | cache 49bbf43c7683 |
 | v7        | AppEvent_SendAccompStatus                          | v7/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache bae8a2f47cdf |
 | v7        | AppEvent_SendModeToggle                            | v7/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 20    | yes   | MATCH   | MATCH                  | cache bae8a2f47cdf |
 | v7        | AppEvent_SendPlayStatus                            | v7/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache bae8a2f47cdf |
@@ -7985,6 +7991,7 @@ found yet.
 | v6        | Part_WriteVoiceWord                                | v6/maincpu/cc900/sequencer_engine_m234_g.c                                | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 56254b1c6db1 |
 | v6        | Part_LinkVoiceToChain                              | v6/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 79    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
 | v6        | SeqVoice_CountChainLength                          | v6/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
+| v6        | SeqPlay_HandleVoiceReassign                        | v6/maincpu/cc900/sequencer_engine_m234_xs.c                               | -O3 -XS -Xr | 138   | yes   | differs | MATCH                  | cache 185604e0692e |
 | v6        | AppEvent_SendAccompStatus                          | v6/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 78a6d3143fcf |
 | v6        | AppEvent_SendModeToggle                            | v6/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 20    | yes   | MATCH   | MATCH                  | cache 78a6d3143fcf |
 | v6        | AppEvent_SendPlayStatus                            | v6/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 78a6d3143fcf |
@@ -8045,6 +8052,7 @@ found yet.
 | v6        | SeqPart_ValidateLeft                               | v6/maincpu/cc900/sequencer_engine_m236_c.c                                | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache c2b9eb4ac044 |
 | v6        | SeqPart_ValidateRight                              | v6/maincpu/cc900/sequencer_engine_m236_c.c                                | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache c2b9eb4ac044 |
 | v6        | SeqPart_Splice                                     | v6/maincpu/cc900/sequencer_engine_m236_d.c                                | -O3 -Xr     | 132   | yes   | differs | MATCH                  | cache 9c2a0cde2a69 |
+| v6        | SeqEvent_AccumulateQueue                           | v6/maincpu/cc900/sequencer_engine_seqacc.c                                | -O3 -Xr     | 19    | yes   | differs | MATCH                  | cache 66306822452e |
 | v6        | AcModeSelBoxProc                                   | v6/maincpu/cc900/sequencer_ui_m0.c                                        | -O3 -Xr     | 64    | yes   | differs | MATCH                  | cache 80399e4cf9d2 |
 | v6        | DocOrchMuteFunc                                    | v6/maincpu/cc900/sequencer_ui_m0.c                                        | -O3 -Xr     | 64    | yes   | differs | MATCH                  | cache 80399e4cf9d2 |
 | v6        | MuteChSetFunc                                      | v6/maincpu/cc900/sequencer_ui_m0.c                                        | -O3 -Xr     | 141   | yes   | differs | MATCH                  | cache 80399e4cf9d2 |
@@ -9526,6 +9534,7 @@ found yet.
 | v5        | Part_WriteVoiceWord                                | v5/maincpu/cc900/sequencer_engine_m234_g.c                                | -O3 -Xr     | 15    | yes   | differs | MATCH                  | cache 56254b1c6db1 |
 | v5        | Part_LinkVoiceToChain                              | v5/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 79    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
 | v5        | SeqVoice_CountChainLength                          | v5/maincpu/cc900/sequencer_engine_m234_h.c                                | -O3 -Xr     | 94    | yes   | differs | MATCH                  | cache a72d9cce90d0 |
+| v5        | SeqPlay_HandleVoiceReassign                        | v5/maincpu/cc900/sequencer_engine_m234_xs.c                               | -O3 -XS -Xr | 138   | yes   | differs | MATCH                  | cache 185604e0692e |
 | v5        | AppEvent_SendAccompStatus                          | v5/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 78a6d3143fcf |
 | v5        | AppEvent_SendModeToggle                            | v5/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 20    | yes   | MATCH   | MATCH                  | cache 78a6d3143fcf |
 | v5        | AppEvent_SendPlayStatus                            | v5/maincpu/cc900/sequencer_engine_m235.c                                  | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 78a6d3143fcf |
@@ -9586,6 +9595,7 @@ found yet.
 | v5        | SeqPart_ValidateLeft                               | v5/maincpu/cc900/sequencer_engine_m236_c.c                                | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache c2b9eb4ac044 |
 | v5        | SeqPart_ValidateRight                              | v5/maincpu/cc900/sequencer_engine_m236_c.c                                | -O3 -Xr     | 72    | yes   | differs | MATCH                  | cache c2b9eb4ac044 |
 | v5        | SeqPart_Splice                                     | v5/maincpu/cc900/sequencer_engine_m236_d.c                                | -O3 -Xr     | 132   | yes   | differs | MATCH                  | cache 9c2a0cde2a69 |
+| v5        | SeqEvent_AccumulateQueue                           | v5/maincpu/cc900/sequencer_engine_seqacc.c                                | -O3 -Xr     | 19    | yes   | differs | MATCH                  | cache 96a93d576156 |
 | v5        | Audio_SendEventPostCmd                             | v5/maincpu/cc900/sequencer_ui_m232.c                                      | -O3 -Xr     | 16    | yes   | MATCH   | MATCH                  | cache 26348bf0c31f |
 | v5        | InitializeYoko                                     | v5/maincpu/cc900/sequencer_ui_m232.c                                      | -O3 -Xr     | 2751  | yes   | differs | MATCH                  | cache 26348bf0c31f |
 | v5        | TrAsGrid_LookupTable                               | v5/maincpu/cc900/sequencer_ui_m232.c                                      | -O3 -Xr     | 15    | yes   | MATCH   | MATCH                  | cache 26348bf0c31f |
