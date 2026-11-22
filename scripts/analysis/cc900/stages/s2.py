@@ -17,7 +17,7 @@ NAME = re.compile(r'^[*&]?(@[\w.$]+|P\d+)\(')
 
 
 HASH_AT = False
-HASH_STRIP = True
+HASH_STRIP = False
 
 
 def sym_hash(name):
@@ -38,7 +38,7 @@ def sym_order(symbols):
     return lambda n: (bs * sym_hash(n), cs * pos.get(n, -1))
 
 
-WALK = (-1, -1)                                      # (bucket order, chain order): +1 ascending, -1 descending
+WALK = (-1, 1)                                      # (bucket order, chain order): +1 ascending, -1 descending
 
 
 SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
@@ -187,15 +187,19 @@ def s2_lines(zio, decl_order=None):
                 globs.sort(key=lambda g: key(g[0]))
             for n, full in globs:
                 out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
-            for n, full in addr_taken:
-                out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
             for n, full in sorted(params, key=lambda p: -int(p[0][1:])):
                 if int(n[1:]) <= 2:
                     out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
+            for n, full in sorted(addr_taken, key=lambda p: -int(p[0][1:])):
+                out.append('  0:   |%s{MM} DUMMY ' % re.sub(r'(\(Def\))+$', '', full))   # in memory
             continue
         r.block = 0
         out.append(dump.line(r))
     out.append(zio[-1])
+    if addr_taken:                                   # an address-taken local is in memory everywhere: {MM}
+        names = {n for n, _ in addr_taken}
+        out = [re.sub(r'\b(%s)(\([^()]*\))(?!\{)' % '|'.join(names), r'\1\2{MM}', l) if ' DUMMY' not in l else l
+               for l in out]
     return def_marks(out) if REWRITE2 else out
 
 
