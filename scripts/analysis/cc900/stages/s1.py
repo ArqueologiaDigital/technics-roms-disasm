@@ -451,63 +451,72 @@ def rewrite(F):
         i += 1
     if SWITCH_MOVE:
         out = move_dispatch(out)
-    alias = {}                                       # consecutive labels: the last one stands for all of them
-    run = []
-    for r in out:
-        if r[0] in MARKERS:
-            continue
-        if r[0] == 'LAB':
-            run.append(r[1])
-            continue
+    def tidy(out):
+        alias = {}                                       # consecutive labels: the last one stands for all of them
+        run = []
+        for r in out:
+            if r[0] in MARKERS:
+                continue
+            if r[0] == 'LAB':
+                run.append(r[1])
+                continue
+            for x in run[:-1]:
+                alias[x] = run[-1]
+            run = []
         for x in run[:-1]:
             alias[x] = run[-1]
-        run = []
-    for x in run[:-1]:
-        alias[x] = run[-1]
-    out = [r for r in out if not (r[0] == 'LAB' and r[1] in alias)]
-    out = [(r[0], alias.get(r[1], r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else
-           (r[0], r[1], ' '.join(alias.get(x, x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
-           for r in out]
-    out = branch_over_jump(out)
-    out = [r for k, r in enumerate(out) if not (r[0] == 'END' and next(
-        (x for x in reversed(out[:k]) if x[0] not in MARKERS), (None,))[0] == 'END')]   # END END: one
-    ends = set()                                     # a jump to a label whose block is just END: END
-    real = [r for r in out if r[0] not in MARKERS]
-    for k, r in enumerate(real[:-1]):
-        if r[0] == 'LAB' and real[k + 1][0] == 'END':
-            ends.add(r[1])
-    out = [('END', None, None, None) if r[0] == 'JMP' and r[1] in ends else r for r in out]
-    if JUMP_THREAD:                                  # a label whose block is just `JMP Lx`: jumps to it go to Lx
-        hop = {}
+        out = [r for r in out if not (r[0] == 'LAB' and r[1] in alias)]
+        out = [(r[0], alias.get(r[1], r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else
+               (r[0], r[1], ' '.join(alias.get(x, x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
+               for r in out]
+        out = branch_over_jump(out)
+        out = [r for k, r in enumerate(out) if not (r[0] == 'END' and next(
+            (x for x in reversed(out[:k]) if x[0] not in MARKERS), (None,))[0] == 'END')]   # END END: one
+        ends = set()                                     # a jump to a label whose block is just END: END
         real = [r for r in out if r[0] not in MARKERS]
         for k, r in enumerate(real[:-1]):
-            if r[0] == 'LAB' and real[k + 1][0] == 'JMP' and real[k + 1][1] != r[1]:
-                hop[r[1]] = real[k + 1][1]
-        def dest(x, n=0):
-            return dest(hop[x], n + 1) if x in hop and n < 20 else x
-        out = [(r[0], dest(r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else
-               (r[0], r[1], ' '.join(dest(x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
-               for r in out]
-        used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
-            {x for r in out if r[0] == 'Switch' for x in r[2].split()}
-    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | {x for r in out if r[0] == 'Switch' for x in r[2].split()}
-    out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
-    if UNREACHABLE:                                  # after JMP / END / Switch, nothing until a label is reached
-        used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
-            {x for r in out if r[0] == 'Switch' for x in r[2].split()}
+            if r[0] == 'LAB' and real[k + 1][0] == 'END':
+                ends.add(r[1])
+        out = [('END', None, None, None) if r[0] == 'JMP' and r[1] in ends else r for r in out]
+        if JUMP_THREAD:                                  # a label whose block is just `JMP Lx`: jumps to it go to Lx
+            hop = {}
+            real = [r for r in out if r[0] not in MARKERS]
+            for k, r in enumerate(real[:-1]):
+                if r[0] == 'LAB' and real[k + 1][0] == 'JMP' and real[k + 1][1] != r[1]:
+                    hop[r[1]] = real[k + 1][1]
+            def dest(x, n=0):
+                return dest(hop[x], n + 1) if x in hop and n < 20 else x
+            out = [(r[0], dest(r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else
+                   (r[0], r[1], ' '.join(dest(x) for x in r[2].split())) + r[3:] if r[0] == 'Switch' else r
+                   for r in out]
+            used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
+                {x for r in out if r[0] == 'Switch' for x in r[2].split()}
+        used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | {x for r in out if r[0] == 'Switch' for x in r[2].split()}
         out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
-        keep, dead = [], False
-        for r in out:
-            if r[0] == 'LAB':
-                dead = False
-            if not dead or r[0] in MARKERS:
-                keep.append(r)
-            if r[0] in ('JMP', 'END', 'Switch') and not dead:
-                dead = True
-        out = keep
-    out = [r for k, r in enumerate(out)               # a jump to the label that follows it goes
-           if not (r[0] == 'JMP' and next((x for x in out[k + 1:] if x[0] not in MARKERS), (None, None))[:2] ==
-                   ('LAB', r[1]))]
+        if UNREACHABLE:                                  # after JMP / END / Switch, nothing until a label is reached
+            used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
+                {x for r in out if r[0] == 'Switch' for x in r[2].split()}
+            out = [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
+            keep, dead = [], False
+            for r in out:
+                if r[0] == 'LAB':
+                    dead = False
+                if not dead or r[0] in MARKERS:
+                    keep.append(r)
+                if r[0] in ('JMP', 'END', 'Switch') and not dead:
+                    dead = True
+            out = keep
+        out = [r for k, r in enumerate(out)               # a jump to the label that follows it goes
+               if not (r[0] == 'JMP' and next((x for x in out[k + 1:] if x[0] not in MARKERS), (None, None))[:2] ==
+                       ('LAB', r[1]))]
+        used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'} | \
+            {x for r in out if r[0] == 'Switch' for x in r[2].split()}
+        return [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
+    for _ in range(4):                               # the label / jump passes, until nothing changes
+        new_ = tidy(out)
+        if new_ == out:
+            break
+        out = new_
     res = []                                         # a temporary copied once into its destination: write that
     for r in out:
         if r[0] == '=' and r[2] and r[2].startswith('T') and res and res[-1][1] == r[2] and reads.get(r[2], 0) == 1 \
