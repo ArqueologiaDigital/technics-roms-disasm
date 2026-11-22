@@ -39,13 +39,15 @@ operations; thc1 already rotates loops (the test at the bottom).
 
 ## Files
 
-| file          | question it answers                                                                                                                                                                       |
-|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `thc1ir.py`   | reads and writes thc1's intermediate file; `--roundtrip FILE...` checks the reader is exact (1,133 / 1,133, 2026-11-22)                                                                   |
-| `s0.py`       | S0: the file split into one unit per function with its parameters, locals and temporaries; `--stats` (1,133 files: 4,726 functions, 239,783 operation lines, 143,532 temporaries)         |
-| `s1.py`       | S1 without optimisation: thc1's operations rewritten as thc2 holds them before code selection, printed as its `-zio` dump (rules in the docstring)                                        |
-| `s1_check.py` | S1 against thc2's `-zio` for every kept file of job_i2.sh runs: exact functions per option set, first-difference worklist (counts only)                                                   |
-| `dump.py`     | thc2's -zio / -zim dumps read into records and written back; `--roundtrip DUMP...` (all 495,642 lines of runs 2026-11-22-51..54 exact): a stage can start from V4.23's own previous stage |
+| file          | question it answers                                                                                                                                                                                                |
+|---------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `thc1ir.py`   | reads and writes thc1's intermediate file; `--roundtrip FILE...` checks the reader is exact (1,133 / 1,133, 2026-11-22)                                                                                            |
+| `s0.py`       | S0: the file split into one unit per function with its parameters, locals and temporaries; `--stats` (1,133 files: 4,726 functions, 239,783 operation lines, 143,532 temporaries)                                  |
+| `s1.py`       | S1 without optimisation: thc1's operations rewritten as thc2 holds them before code selection, printed as its `-zio` dump (rules in the docstring)                                                                 |
+| `s1_check.py` | S1 against thc2's `-zio` for every kept file of job_i2.sh runs: exact functions per option set, first-difference worklist (counts only)                                                                            |
+| `dump.py`     | thc2's -zio / -zim dumps read into records and written back; `--roundtrip DUMP...` (all 495,642 lines of runs 2026-11-22-51..54 exact): a stage can start from V4.23's own previous stage                          |
+| `s2.py`       | S2 from V4.23's own -zio: DUMMY lines (values live on entry: globals read, address-taken locals, register parameters used), blocks no longer printed; the symbol-table walk order (thc2's name hash) is under test |
+| `s2_check.py` | S2 against thc2's -zim, function by function (exact / up to temporary numbering), first-difference worklist                                                                                                        |
 
 Run the round trip, from technics-roms-disasm's root:
 
@@ -61,3 +63,4 @@ Run the round trip, from technics-roms-disasm's root:
 | 2026-11-22 | S1    | `-Xr` 676 / 2,672; `-O3 -Xr` 340 / 2,879 and `-O3 -XS -Xr` 1 / 21 (no optimiser modelled yet)                                                         |
 | 2026-11-22 | S1    | `-Xr` 773 / 2,672 (28.9 %); the largest remaining class of first differences is temporary numbering (818 functions before this row), then (Def) (135) |
 | 2026-11-22 | S1    | `-Xr` 872 exact, 1,238 up to temporary numbering (46 %), of 2,672: switch jump tables, jump threading                                                 |
+| 2026-11-22 | S2    | from thc2's own -zio, `-Xr`: 383 / 2,671 equal its -zim (DUMMY lines only so far)                                                                     |
