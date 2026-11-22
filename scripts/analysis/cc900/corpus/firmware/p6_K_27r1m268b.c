@@ -1,0 +1,51 @@
+/* lane_p6 helper K, round 27r1, form b: module 268 (demo/file_demo_proc.s), family of 2 x 76 B:
+   SetCurrentFileIndex / FileIO_SelectFileByIndex (see form a).  Form b: the page end by a ?: on page + 59, and the
+   index stored and returned by one expression.
+   cc900-options: -O3 -Xr
+*/
+/* cc900-module: BuildPageRecords FileIO_InitDirScan ValidateFileRangeAlt ValidateFileRangeType5 */
+
+extern int ram_271ea;
+extern int ram_271ec;
+extern int ram_271ee;
+extern int FILE_LIST_LAST;
+extern int ValidateFileRangeType5(int);
+extern int ValidateFileRangeAlt(int);
+extern void BuildPageRecords(void);
+extern void FileIO_InitDirScan(void);
+
+int SetCurrentFileIndex(int i)
+{
+	int r;
+	int b;
+
+	r = ValidateFileRangeType5(i);
+	if (r == -1)
+		return ram_271ea;
+	if (r == 1) {
+		b = (unsigned int)i / 60 * 60;
+		ram_271ee = b;
+		b += 59;
+		FILE_LIST_LAST = b < ram_271ec ? b : ram_271ec;
+		BuildPageRecords();
+	}
+	return ram_271ea = i;
+}
+
+int FileIO_SelectFileByIndex(int i)
+{
+	int r;
+	int b;
+
+	r = ValidateFileRangeAlt(i);
+	if (r == -1)
+		return ram_271ea;
+	if (r == 1) {
+		b = (unsigned int)i / 60 * 60;
+		ram_271ee = b;
+		b += 59;
+		FILE_LIST_LAST = b < ram_271ec ? b : ram_271ec;
+		FileIO_InitDirScan();
+	}
+	return ram_271ea = i;
+}
