@@ -655,61 +655,17 @@ BmDrEdit_PitchScrollDown:
 	calr BmDrEdit_BuildVoice_NullReturn
 	jrl BmDrEdit_SetFeedbackTimer
 
-BmDrEdit_VelocityUp_Check:
-	bit	7, (0x2940:16)
-	jr z, BmDrEdit_VelocityUp_Dispatch
-	cp	(0x2941:16), 2
-	ret nz
+BmDrEdit_VelocityUp_Check:	.include "includes/generated/cc900/BmDrEdit_VelocityUp_Check.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_VelocityUp_Dispatch, BmDrEdit_VelocityUp_Check + 13
 
-BmDrEdit_VelocityUp_Dispatch:
-	bit	0, (0x2943:16)
-	ret z
-	bit	0, (0x2728:16)
-	jr nz, BmDrEdit_DecrementVelocity
-	jr BmDrEdit_IncrementVelocity
+BmDrEdit_VelocityDown_Check:	.include "includes/generated/cc900/BmDrEdit_VelocityDown_Check.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_VelocityDown_Dispatch, BmDrEdit_VelocityDown_Check + 13
 
-BmDrEdit_VelocityDown_Check:
-	bit	7, (0x2940:16)
-	jr z, BmDrEdit_VelocityDown_Dispatch
-	cp	(0x2941:16), 2
-	ret nz
+BmDrEdit_IncrementVelocity:	.include "includes/generated/cc900/BmDrEdit_IncrementVelocity.s"	; C: cc900/bmdredit_routines_m0.c
 
-BmDrEdit_VelocityDown_Dispatch:
-	bit	0, (0x2943:16)
-	ret z
-	bit	0, (0x2728:16)
-	jr nz, BmDrEdit_IncrementVelocity
-	jr BmDrEdit_DecrementVelocity
-
-BmDrEdit_IncrementVelocity:
-	ld	a, (0x276c:16)
-	cp a, 0x7f
-	ret nc
-	inc 1, a
-	ld	(0x276c:16), a
-	bit	0, (0x2728:16)
-	call nz, (BmDrEdit_DrumVoiceUp:24)
-	calr BmDrEdit_UpdateVelocityDisplay
-	call NoteEditSy_SendScrollCmd3
-	calr BmDrEdit_NullReturn
-	ld	(0x2940:16), 131
-	ld	(0x2941:16), 2
-	ret
-
-BmDrEdit_DecrementVelocity:
-	ld	a, (0x276c:16)
-	cp a, 1:i3
-	ret z
-	dec 1, a
-	ld	(0x276c:16), a
-	bit	0, (0x2728:16)
-	call nz, (BmDrEdit_DrumVoiceDown:24)
-	calr BmDrEdit_UpdateVelocityDisplay
-	call NoteEditSy_SendScrollCmd3
-	calr BmDrEdit_NullReturn
-	ld	(0x2940:16), 131
-	ld	(0x2941:16), 2
-	ret
+BmDrEdit_DecrementVelocity:	.include "includes/generated/cc900/BmDrEdit_DecrementVelocity.s"	; C: cc900/bmdredit_routines_m0.c
 
 BmDrEdit_GateOrVelocityUp:
 	bit	7, (0x2940:16)
@@ -840,19 +796,9 @@ BmDrEdit_SetFeedbackTimer:
 	ld	(0x2941:16), 1
 	ret
 
-BmDrEdit_SaveEditState:
-	ldmm16	0x2748, 0x2744
-	ldmm8	0x274a, 0x2746
-	ldmm16	0x274c, SEQ_DATA_BLOCK
-	ldmm16	0x274e, SEQ_DATA_OFFSET
-	ret
+BmDrEdit_SaveEditState:	.include "includes/generated/cc900/BmDrEdit_SaveEditState.s"	; C: cc900/bmdredit_routines_m232.c
 
-BmDrEdit_RestoreEditState:
-	ldmm16	0x2744, 0x2748
-	ldmm8	0x2746, 0x274a
-	ldmm16	SEQ_DATA_BLOCK, 0x274c
-	ldmm16	SEQ_DATA_OFFSET, 0x274e
-	ret
+BmDrEdit_RestoreEditState:	.include "includes/generated/cc900/BmDrEdit_RestoreEditState.s"	; C: cc900/bmdredit_routines_m232.c
 
 BmDrEdit_ClearAndScanToEnd:	.include "includes/generated/cc900/BmDrEdit_ClearAndScanToEnd.s"	; C: cc900/bmdredit_routines_m232.c
 ; the hand assembly's labels inside the compiled body, by their offsets

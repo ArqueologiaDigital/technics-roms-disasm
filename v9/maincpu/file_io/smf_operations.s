@@ -286,55 +286,9 @@ TrimAndPadSmfFilename:	.include "includes/generated/cc900/TrimAndPadSmfFilename.
 	.set	TrimPad_PadLoop, TrimAndPadSmfFilename + 46
 	.set	TrimPad_NullTerminate, TrimAndPadSmfFilename + 56
 
-DisplaySmfFileList:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), bc
-	ld (xsp + 4), xwa
-	ld wa, 0:i3
-	calr InitializeOperationState
-	ld iz, 0:i3
-
-DispFileList_LoopBody:
-	ld de, iz
-	sll de, 5
-	lda xbc, (0x850c:16)
-	extz xde
-	add xde, xbc
-	ldto_berp A, 0xf8
-	ld (xde), a
-	ld wa, (xsp + 2)
-	add wa, iz
-	call GetRecordPtrForFile
-	ld xbc, xhl
-	ld wa, iz
-	sll wa, 5
-	ld de, 1:i3
-	add de, wa
-	lda xhl, (0x850c:16)
-	ld wa, de
-	extz xwa
-	add xwa, xhl
-	ld de, (xsp + 2)
-	add de, iz
-	inc 1, de
-	pushw 0xc
-	pushw 0x1
-	call FileIO_ReadHeader_ParseLoop
-	ld de, iz
-	sll de, 5
-	lda xbc, (0x850c:16)
-	extz xde
-	add xde, xbc
-	ld xwa, (xsp + 4)
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-	inc 1, iz
-	cp iz, 0xa
-	jr lt, DispFileList_LoopBody
-	popw iz
-	inc 6, xsp
-	ret
+DisplaySmfFileList:	.include "includes/generated/cc900/DisplaySmfFileList.s"	; C: cc900/smf_operations_m269_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DispFileList_LoopBody, DisplaySmfFileList + 16
 
 ValidateSmfFilename:
 	ld iy, 0:i3

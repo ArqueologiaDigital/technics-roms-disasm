@@ -31,16 +31,7 @@ SndParam_Lkp2_Epilogue:
 	pop	xiz
 	lda	xsp, (xsp + 10)
 	ret
-SndParam_WrapNotify2:
-	pushw	iz
-	ld	iz, de
-	calr	UIState_CheckAndRenderBitmap_Helper_Helper
-	ld	xwa, xhl
-	ld	bc, iz
-	ld	de, (xsp+6)
-	calr	SndParam_LookupByKey
-	popw	iz
-	retd	2
+SndParam_WrapNotify2:	.include "includes/generated/cc900/SndParam_WrapNotify2.s"	; C: cc900/sndparam_routines_m283.c
 SndParam_LookupReadOnly:
 	dec	6, xsp
 	push	xiz

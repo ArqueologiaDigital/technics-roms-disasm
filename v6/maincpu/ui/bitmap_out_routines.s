@@ -2006,15 +2006,7 @@ BitMapOut_RestoreExtra_Done:
 	ret
 
 ; Mem_Copy the live panel block 0 (RAM 0xF9A0, 960 bytes) to the recall backup at RAM 0x3C8E4.
-PanelMemory_BackupLivePanel:
-	pushw	960
-	pushw	0
-	pushw	63904
-	pushw	3
-	pushw	51428
-	call	Mem_Copy
-	lda	xsp, (xsp+10)
-	ret
+PanelMemory_BackupLivePanel:	.include "includes/generated/cc900/PanelMemory_BackupLivePanel.s"	; C: cc900/bitmap_out_routines_m274.c
 BitMapOut_DetectChanges:
 	lda xsp, (xsp - 0x0a)
 	pushw iz
@@ -3047,53 +3039,9 @@ BitMapOut_DeltaEncode_Type90Epilog:
 	inc 4, xsp
 	retd 0x6
 
-BitMapOut_DeltaEncode_Type90Return:
-	dec 6, xsp
-	pushw iz
-	ld iz, 0:i3
-
-BitMapOut_DeltaEncode_Type90Final:
-	lda xwa, (xsp + 2)
-	ld de, iz
-	extz xde
-	ld xbc, xde
-	sll xbc, 3
-	sub xbc, xde
-	add xbc, xbc
-	ld xde, PanelMemory_PartResolveTable
-	add xde, xbc
-	ld xbc, (xde)
-	ld c, (xbc)
-	and c, 0xff
-	ld (xwa + 3), c
-	ld xbc, (xde + 4)
-	ld c, (xbc)
-	res 7, c
-	ld (xwa + 4), c
-	ld c, (xde + 8)
-	ld (xwa + 2), c
-	call SndParam_ResolveVoiceEntry
-	ld wa, iz
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xhl, (PanelTlv_PartResolveRecs_CompanionCol:24)
-	add xhl, xbc
-	lda xde, (xsp + 2)
-	ld a, (xde)
-	ldfr_berp A, 0xf0
-	extz ix
-	ld xbc, (xhl)
-	ld a, (xde + 1)
-	ld	(xbc+ix), a
-	inc 1, iz
-	cp iz, 0x17
-	jr c, BitMapOut_DeltaEncode_Type90Final
-	popw iz
-	inc 6, xsp
-	ret
+BitMapOut_DeltaEncode_Type90Return:	.include "includes/generated/cc900/BitMapOut_DeltaEncode_Type90Return.s"	; C: cc900/bitmap_out_routines_m274.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BitMapOut_DeltaEncode_Type90Final, BitMapOut_DeltaEncode_Type90Return + 5
 
 BitMapOut_RefreshDisplay_CheckDirty:
 	extz	wa

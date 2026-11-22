@@ -676,46 +676,11 @@ IntMed_Exit:
 	inc 8, xsp
 	ret
 
-FmmDiskMedley1Func:
-	pushw	iz
-	cp	xbc, EVT_PAINT
-	jr	z, DiskMed1_InitLoop
-	cp	xbc, EVT_PS_FILE_NAME_BOX_ID
-	jr	nz, DiskMed1_Exit
-	ld	(33430:16), xde
-	jr	DiskMed1_Exit
-DiskMed1_InitLoop:
-	ld iz, 0:i3
-
-DiskMed1_FormatLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33434:16)
-	extz	xwa
-	add	xwa, xbc
-	lda	xbc, (34954:16)
-	ld	de, iz
-	extz	xde
-	add	xde, xbc
-	ld	c, (xde)
-	extz	bc
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33434:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (33430:16)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	c, DiskMed1_FormatLoop
-DiskMed1_Exit:
-	ld xhl, 0:i3
-	popw iz
-	ret
+FmmDiskMedley1Func:	.include "includes/generated/cc900/FmmDiskMedley1Func.s"	; C: cc900/medley_m269_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DiskMed1_InitLoop, FmmDiskMedley1Func + 23
+	.set	DiskMed1_FormatLoop, FmmDiskMedley1Func + 25
+	.set	DiskMed1_Exit, FmmDiskMedley1Func + 91
 
 FmmDiskMedley2Func:
 	pushw	iz
@@ -1674,69 +1639,19 @@ NavSong_Exit:
 	inc 2, xsp
 	ret
 
-NavigateDocList:
-	pushw iz
-	ld iz, wa
-	cp iz, 1:i3
-	jr z, NavDoc_CheckBounds
-	cp iz, 0xffff
-	jr nz, NavDoc_Exit
+NavigateDocList:	.include "includes/generated/cc900/NavigateDocList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NavDoc_CheckBounds, NavigateDocList + 13
+	.set	NavDoc_WrapToEnd, NavigateDocList + 43
+	.set	NavDoc_CheckEnd, NavigateDocList + 51
+	.set	NavDoc_Exit, NavigateDocList + 58
 
-NavDoc_CheckBounds:
-	cpw	(0x846c:16), 0
-	jr	le, NavDoc_Exit
-	call	FileIO_GetCurrentFileIndex_Alt
-	cp	hl, 0:i3
-	jr	lt, NavDoc_Exit
-	ld	wa, hl
-	add	wa, iz
-	jr	ge, NavDoc_WrapToEnd
-	ld	wa, (0x846c:16)
-	dec	1, wa
-	jr	NavDoc_CheckEnd
-NavDoc_WrapToEnd:
-	cp	wa, (0x846c:16)
-	jr	lt, NavDoc_CheckEnd
-	ld	wa, 0:i3
-NavDoc_CheckEnd:
-	cp hl, wa
-	call nz, (FileIO_SelectFileByIndex:24)
-
-NavDoc_Exit:
-	popw iz
-	ret
-
-NavigatePdList:
-	pushw iz
-	ld iz, wa
-	cp iz, 1:i3
-	jr z, NavPd_CheckBounds
-	cp iz, 0xffff
-	jr nz, NavPd_Exit
-
-NavPd_CheckBounds:
-	cpw	(0x846a:16), 0
-	jr	le, NavPd_Exit
-	call	GetCurrentFileIndexAlt
-	cp	hl, 0:i3
-	jr	lt, NavPd_Exit
-	ld	wa, hl
-	add	wa, iz
-	jr	ge, NavPd_WrapToEnd
-	ld	wa, (0x846a:16)
-	dec	1, wa
-	jr	NavPd_CheckEnd
-NavPd_WrapToEnd:
-	cp	wa, (0x846a:16)
-	jr	lt, NavPd_CheckEnd
-	ld	wa, 0:i3
-NavPd_CheckEnd:
-	cp hl, wa
-	call nz, (SetCurrentFileIndex:24)
-
-NavPd_Exit:
-	popw iz
-	ret
+NavigatePdList:	.include "includes/generated/cc900/NavigatePdList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	NavPd_CheckBounds, NavigatePdList + 13
+	.set	NavPd_WrapToEnd, NavigatePdList + 43
+	.set	NavPd_CheckEnd, NavigatePdList + 51
+	.set	NavPd_Exit, NavigatePdList + 58
 
 SmfMed_FormatSlotList:	.include "includes/generated/cc900/SmfMed_FormatSlotList.s"	; C: cc900/medley_m269.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -2205,52 +2120,9 @@ SmfMed_Exit:
 	inc 4, xsp
 	ret
 
-PdMed_FormatFileList:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), bc
-	ld (xsp + 4), xwa
-	ld iz, 0:i3
-PdFmt_FormatLoop:
-	ld	de, iz
-	sll	de, 5
-	lda	xbc, (33904:16)
-	extz	xde
-	add	xde, xbc
-	ldto_berp	a, 248
-	ld	(xde), a
-	ld	wa, (xsp+2)
-	add	wa, iz
-	call	GetFileRecordPtr
-	ld	xbc, xhl
-	ld	wa, iz
-	sll	wa, 5
-	ld	de, 1:i3
-	add	de, wa
-	lda	xhl, (33904:16)
-	ld	wa, de
-	extz	xwa
-	add	xwa, xhl
-	ld	de, (xsp+2)
-	add	de, iz
-	inc	1, de
-	pushw	0x14
-	pushw	0x1
-	call	FileIO_ReadHeader_ParseLoop
-	ld	de, iz
-	sll	de, 5
-	lda	xbc, (33904:16)
-	extz	xde
-	add	xde, xbc
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	lt, PdFmt_FormatLoop
-	popw	iz
-	inc	6, xsp
-	ret
+PdMed_FormatFileList:	.include "includes/generated/cc900/PdMed_FormatFileList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PdFmt_FormatLoop, PdMed_FormatFileList + 11
 FmmPdFileNameFunc:
 	dec	4, xsp
 	pushw	iz
@@ -2448,89 +2320,13 @@ PdName_Exit:
 	inc 4, xsp
 	ret
 
-PdMed_FormatSlotList:
-	dec 6, xsp
-	push xiz
-	ld iz, bc
-	ld (xsp + 6), xwa
-	ld xwa, 0:i3
-	ld xbc, EVT_GET_SELECTED_FILE_NUMBER
-	ld xde, 0:i3
-	calr FmmPdFileNameFunc
-	ldfr_werp HL, 0xfa
-	ldto_werp WA, 0xfa
-	extz xwa
-	div wa, 0xa
-	ldfr_werp WA, 0xfa
-	mul wa, 0xa
-	ldfr_werp WA, 0xfa
-	ldw (xsp + 4), 0xa
-	ldto_werp WA, 0xfa
-	add wa, 0xa
-	cp wa, iz
-	jr c, PdFmtSlot_CalcVisible
-	ld (xsp + 4), iz
-	ldto_werp WA, 0xfa
-	sub (xsp + 4), wa
-
-PdFmtSlot_CalcVisible:
-	ld iz, 0:i3
-	cpw (xsp + 4), 0x0
-	jr ule, PdFmtSlot_FillEmpty
-PdFmtSlot_FormatLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33704:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	bc, qiz
-	add	bc, iz
-	lda	xde, (34820:16)
-	extz	xbc
-	add	xbc, xde
-	ld	c, (xbc)
-	extz	bc
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33704:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, (xsp+0x4)
-	jr	c, PdFmtSlot_FormatLoop
-PdFmtSlot_FillEmpty:
-	cp iz, 0xa
-	jr nc, PdFmtSlot_Exit
-
-PdFmtSlot_EmptyLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33704:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	bc, 255
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33704:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	c, PdFmtSlot_EmptyLoop
-PdFmtSlot_Exit:
-	pop xiz
-	inc 6, xsp
-	ret
+PdMed_FormatSlotList:	.include "includes/generated/cc900/PdMed_FormatSlotList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PdFmtSlot_CalcVisible, PdMed_FormatSlotList + 67
+	.set	PdFmtSlot_FormatLoop, PdMed_FormatSlotList + 76
+	.set	PdFmtSlot_FillEmpty, PdMed_FormatSlotList + 143
+	.set	PdFmtSlot_EmptyLoop, PdMed_FormatSlotList + 149
+	.set	PdFmtSlot_Exit, PdMed_FormatSlotList + 203
 
 FmmPdMedleyFunc_Entry:
 FmmPdMedleyFunc:
@@ -2931,52 +2727,9 @@ DocDiskNameFunc:	.include "includes/generated/cc900/DocDiskNameFunc.s"	; C: cc90
 	.set	DocDisk_PostEvent, DocDiskNameFunc + 81
 	.set	DocDisk_Exit, DocDiskNameFunc + 92
 
-DocMed_FormatFileList:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 2), bc
-	ld (xsp + 4), xwa
-	ld iz, 0:i3
-DocFmt_FormatLoop:
-	ld	de, iz
-	sll	de, 5
-	lda	xbc, (33904:16)
-	extz	xde
-	add	xde, xbc
-	ldto_berp	a, 248
-	ld	(xde), a
-	ld	wa, (xsp+2)
-	add	wa, iz
-	call	FileIO_GetFileEntryWithRefresh
-	ld	xbc, xhl
-	ld	wa, iz
-	sll	wa, 5
-	ld	de, 1:i3
-	add	de, wa
-	lda	xhl, (33904:16)
-	ld	wa, de
-	extz	xwa
-	add	xwa, xhl
-	ld	de, (xsp+2)
-	add	de, iz
-	inc	1, de
-	pushw 12
-	pushw 0
-	call	FileIO_ReadHeader_ParseLoop
-	ld	de, iz
-	sll	de, 5
-	lda	xbc, (33904:16)
-	extz	xde
-	add	xde, xbc
-	ld	xwa, (xsp+4)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	lt, DocFmt_FormatLoop
-	popw	iz
-	inc	6, xsp
-	ret
+DocMed_FormatFileList:	.include "includes/generated/cc900/DocMed_FormatFileList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocFmt_FormatLoop, DocMed_FormatFileList + 11
 FmmDocFileNameFunc:
 	dec	4, xsp
 	pushw	iz
@@ -3174,89 +2927,13 @@ DocName_Exit:
 	inc 4, xsp
 	ret
 
-DocMed_FormatSlotList:
-	dec 6, xsp
-	push xiz
-	ld iz, bc
-	ld (xsp + 6), xwa
-	ld xwa, 0:i3
-	ld xbc, EVT_GET_SELECTED_FILE_NUMBER
-	ld xde, 0:i3
-	calr FmmDocFileNameFunc
-	ldfr_werp HL, 0xfa
-	ldto_werp WA, 0xfa
-	extz xwa
-	div wa, 0xa
-	ldfr_werp WA, 0xfa
-	mul wa, 0xa
-	ldfr_werp WA, 0xfa
-	ldw (xsp + 4), 0xa
-	ldto_werp WA, 0xfa
-	add wa, 0xa
-	cp wa, iz
-	jr c, DocFmtSlot_CalcVisible
-	ld (xsp + 4), iz
-	ldto_werp WA, 0xfa
-	sub (xsp + 4), wa
-
-DocFmtSlot_CalcVisible:
-	ld iz, 0:i3
-	cpw (xsp + 4), 0x0
-	jr ule, DocFmtSlot_FillEmpty
-DocFmtSlot_FormatLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33800:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	bc, qiz
-	add	bc, iz
-	lda	xde, (34820:16)
-	extz	xbc
-	add	xbc, xde
-	ld	c, (xbc)
-	extz	bc
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33800:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, (xsp+0x4)
-	jr	c, DocFmtSlot_FormatLoop
-DocFmtSlot_FillEmpty:
-	cp iz, 0xa
-	jr nc, DocFmtSlot_Exit
-
-DocFmtSlot_EmptyLoop:
-	ld	wa, iz
-	sll	wa, 3
-	lda	xbc, (33800:16)
-	extz	xwa
-	add	xwa, xbc
-	ldw	bc, 255
-	ld	de, iz
-	calr	FormatMedleyNumber
-	ld	de, iz
-	sll	de, 3
-	lda	xwa, (33800:16)
-	extz	xde
-	add	xde, xwa
-	ld	xwa, (xsp+6)
-	ld	xbc, EVT_PARA_DRAW
-	call	ApPostEvent
-	inc	1, iz
-	cp	iz, 10
-	jr	c, DocFmtSlot_EmptyLoop
-DocFmtSlot_Exit:
-	pop xiz
-	inc 6, xsp
-	ret
+DocMed_FormatSlotList:	.include "includes/generated/cc900/DocMed_FormatSlotList.s"	; C: cc900/medley_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocFmtSlot_CalcVisible, DocMed_FormatSlotList + 67
+	.set	DocFmtSlot_FormatLoop, DocMed_FormatSlotList + 76
+	.set	DocFmtSlot_FillEmpty, DocMed_FormatSlotList + 143
+	.set	DocFmtSlot_EmptyLoop, DocMed_FormatSlotList + 149
+	.set	DocFmtSlot_Exit, DocMed_FormatSlotList + 203
 
 FmmDocMedleyFunc:
 	push	xiz

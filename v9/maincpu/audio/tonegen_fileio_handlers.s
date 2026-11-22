@@ -153,106 +153,21 @@ PanelTlv_WritePanelMemoryHeaders:	.include "includes/generated/cc900/PanelTlv_Wr
 
 ; xwa = a block-0 base.  PanelTlv_WriteRecordHeader for each of the 46 PanelTlv_Block0_Layout records
 ; (10 bytes each: index*5*2).
-PanelTlv_WriteBlock0Headers:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ld iz, 0:i3
-
-PanelTlv_WriteBlock0Headers_Loop:
-	ld bc, iz
-	extz xbc
-	ld xwa, xbc
-	sll xwa, 2
-	add xwa, xbc
-	add xwa, xwa
-	ld xbc, PanelTlv_Block0_Layout
-	add xbc, xwa
-	ld xwa, (xsp + 2)
-	calr PanelTlv_WriteRecordHeader
-	inc 1, iz
-	cp iz, 0x2e
-	jr c, PanelTlv_WriteBlock0Headers_Loop
-	popw iz
-	inc 4, xsp
-	ret
+PanelTlv_WriteBlock0Headers:	.include "includes/generated/cc900/PanelTlv_WriteBlock0Headers.s"	; C: cc900/tonegen_fileio_handlers_m277_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_WriteBlock0Headers_Loop, PanelTlv_WriteBlock0Headers + 8
 
 ; xwa = a block-0 base.  PanelTlv_ValidateRecord for each of the 46 PanelTlv_Block0_Layout records; then
 ; the five effect records go to DSPCfg_WriteAllSlots_Combined as slots 0..4 -- tags 0x61, 0x63, 0x65, 0x66,
 ; 0x64, whose payloads sit at base + 0x2D4, 0x2EE, 0x322, 0x33C, 0x308 (spelled 0xFC74.. - 0xF9A0 below).
-PanelTlv_ValidateBlock0:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ld iz, 0:i3
-
-PanelTlv_ValidateBlock0_Loop:
-	ld wa, iz
-	extz xwa
-	ld xde, xwa
-	sll xde, 2
-	add xde, xwa
-	add xde, xde
-	ld xbc, PanelTlv_Block0_Layout
-	add xbc, xde
-	ld xwa, (xsp + 2)
-	calr PanelTlv_ValidateRecord
-	inc 1, iz
-	cp iz, 0x2e
-	jr c, PanelTlv_ValidateBlock0_Loop
-	lda xbc, (PANEL_DSP_EFFECT:16)
-	sub xbc, 0xf9a0
-	add xbc, (xsp + 2)
-	ld wa, 0:i3
-	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (PANEL_DIGITAL_REVERB:16)
-	sub xbc, 0xf9a0
-	add xbc, (xsp + 2)
-	ld wa, 1:i3
-	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (PANEL_ACOUSTIC_ILLUSION:16)
-	sub xbc, 0xf9a0
-	add xbc, (xsp + 2)
-	ld wa, 2:i3
-	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (PANEL_MIC_REVERB:16)
-	sub xbc, 0xf9a0
-	add xbc, (xsp + 2)
-	ld wa, 3:i3
-	call DSPCfg_WriteAllSlots_Combined
-	lda xbc, (PANEL_EQUALIZER:16)
-	sub xbc, 0xf9a0
-	add xbc, (xsp + 2)
-	ld wa, 4:i3
-	call DSPCfg_WriteAllSlots_Combined
-	popw iz
-	inc 4, xsp
-	ret
+PanelTlv_ValidateBlock0:	.include "includes/generated/cc900/PanelTlv_ValidateBlock0.s"	; C: cc900/tonegen_fileio_handlers_m277_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidateBlock0_Loop, PanelTlv_ValidateBlock0 + 8
 
 ; xwa = a block-1 base.  PanelTlv_ValidateRecord for each of the 30 PanelTlv_Block1_Layout records.
-PanelTlv_ValidateBlock1:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ld iz, 0:i3
-
-PanelTlv_ValidateBlock1_Loop:
-	ld bc, iz
-	extz xbc
-	ld xwa, xbc
-	sll xwa, 2
-	add xwa, xbc
-	add xwa, xwa
-	ld xbc, PanelTlv_Block1_Layout
-	add xbc, xwa
-	ld xwa, (xsp + 2)
-	calr PanelTlv_ValidateRecord
-	inc 1, iz
-	cp iz, 0x1e
-	jr c, PanelTlv_ValidateBlock1_Loop
-	popw iz
-	inc 4, xsp
-	ret
+PanelTlv_ValidateBlock1:	.include "includes/generated/cc900/PanelTlv_ValidateBlock1.s"	; C: cc900/tonegen_fileio_handlers_m277_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_ValidateBlock1_Loop, PanelTlv_ValidateBlock1 + 8
 
 ; xwa = block base, xbc -> a layout record {u32 record_offset, u32 -> field rules, u8 tag, u8 len}
 ; (PanelTlv_Block0_Layout / PanelTlv_Block1_Layout, typed as panel_tlv_layout_t in
@@ -468,29 +383,9 @@ PanelTlv_Rule_ZeroByte:
 	jrl	PanelTlv_WriteBlock0Headers
 
 ; xwa = a block-1 base.  PanelTlv_WriteRecordHeader for each of the 30 PanelTlv_Block1_Layout records.
-PanelTlv_WriteBlock1Headers:
-	dec 4, xsp
-	pushw iz
-	ld (xsp + 2), xwa
-	ld iz, 0:i3
-
-PanelTlv_WriteBlock1Headers_Loop:
-	ld bc, iz
-	extz xbc
-	ld xwa, xbc
-	sll xwa, 2
-	add xwa, xbc
-	add xwa, xwa
-	ld xbc, PanelTlv_Block1_Layout
-	add xbc, xwa
-	ld xwa, (xsp + 2)
-	calr PanelTlv_WriteRecordHeader
-	inc 1, iz
-	cp iz, 0x1e
-	jr c, PanelTlv_WriteBlock1Headers_Loop
-	popw iz
-	inc 4, xsp
-	ret
+PanelTlv_WriteBlock1Headers:	.include "includes/generated/cc900/PanelTlv_WriteBlock1Headers.s"	; C: cc900/tonegen_fileio_handlers_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelTlv_WriteBlock1Headers_Loop, PanelTlv_WriteBlock1Headers + 8
 
 ; xwa = block base, xbc -> a layout record: base[record_offset] = tag, base[record_offset + 1] = len.
 PanelTlv_WriteRecordHeader:	.include "includes/generated/cc900/PanelTlv_WriteRecordHeader.s"	; C: cc900/tonegen_fileio_handlers_m277.c
@@ -585,48 +480,7 @@ DSPCfg_SyncBitmapData_Join:
 	ret
 	ret
 
-SndParam_SyncDisplayBitmap:
-	ld xwa, 0:i3
-	call SndParam_LookupReadOnly
-	ld (0x8e6c:16), l
-	ld xwa, 0x102
-	call SndParam_LookupReadOnly
-	ld (0x8e6e:16), l
-	ld xwa, 0x103
-	call SndParam_LookupReadOnly
-	ld (0x8e70:16), l
-	ld xwa, 0x300
-	call SndParam_LookupReadOnly
-	ld (0x8e72:16), l
-	ld xwa, 0x4006
-	call SndParam_LookupReadOnly
-	ld (0x8e74:16), l
-	pushw 0x620
-	pushw 0x0
-	pushw 0xf9a0
-	pushw 0x3
-	pushw 0xc8e4
-	call Mem_Copy
-	lda xsp, (xsp + 10)
-	lda xbc, (PANEL_RECORDS:16)
-	lda xwa, (PANEL_PART_RT1:16)
-	sub xwa, xbc
-	lda xde, (PANEL_RECALL_BACKUP:24)
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_PART_RT2:16)
-	sub xwa, xbc
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_PART_LEFT:16)
-	sub xwa, xbc
-	add xwa, xde
-	xormi8 (xwa), 0x1
-	lda xwa, (PANEL_PMEM_SETTINGS+1:16)
-	sub xwa, xbc
-	add xwa, xde
-	ormi8 (xwa), 0x7f
-	ret
+SndParam_SyncDisplayBitmap:	.include "includes/generated/cc900/SndParam_SyncDisplayBitmap.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 
 SoundParam_NotifyMultipleChanges:	.include "includes/generated/cc900/SoundParam_NotifyMultipleChanges.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 

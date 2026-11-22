@@ -3698,43 +3698,10 @@ SeMenu_ApplyPartEdit_Join30:
 SeMenu_ApplyPartEdit_Epilogue10:
 	lda	xsp, (xsp+28)
 	ret
-SeMenu_SelectPartAndRedraw:
-	dec	8, xsp
-	ld	(xsp+2), e
-	ld	(xsp+4), c
-	ld	(xsp+6), a
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	cp	a, (xsp)
-	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
-	cp	(xsp+2), 1
-	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip
-	ld	a, (xsp+4)
-	extz	wa
-	calr	SeMenu_IsPartEnabled
-	cp	hl, 0:i3
-	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
-SeMenu_ApplyPartEdit_Entry5_Code_Skip:
-	ld	a, (xsp+4)
-	extz	wa
-	calr	SeMenu_SetCurrentPart
-	ld	c, (xsp+4)
-	extz	bc
-	ld	wa, 0:i3
-	calr	SeMenu_StorePartParam
-	pushw 0
-	ld	a, (xsp+8)
-	extz	wa
-	pushw	wa
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 1:i3
-	calr	SeMenu_SetupMenuDisplay
-SeMenu_ApplyPartEdit_Entry5_Code_Epilogue:
-	inc	8, xsp
-	ret
+SeMenu_SelectPartAndRedraw:	.include "includes/generated/cc900/SeMenu_SelectPartAndRedraw.s"	; C: cc900/semenu_routines_m129_g.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_ApplyPartEdit_Entry5_Code_Skip, SeMenu_SelectPartAndRedraw + 43
+	.set	SeMenu_ApplyPartEdit_Entry5_Code_Epilogue, SeMenu_SelectPartAndRedraw + 81
 SeMenu_DrawFilterGraph:
 	lda xsp, (xsp - 0x10)
 	push XIZ

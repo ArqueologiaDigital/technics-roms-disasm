@@ -1521,42 +1521,10 @@ FrameLoop_Cleanup:
 	inc 2, xsp
 	retd 0x4
 
-DrawDesignFrame:
-	lda xsp, (xsp - 10)
-	push xiz
-	ld (xsp + 12), de
-	ld de, bc
-	ld xiy, xwa
-	lda xix, (xsp + 4)
-	ld bc, 4:i3
-	ldirw
-	cp de, 1:i3
-	jr nz, DesignFrame_Epilogue
-	ld xiz, 0:i3
-	ld wa, (xsp + 12)
-	exts xwa
-	cp xwa, 0x0
-	jr le, DesignFrame_Epilogue
-
-DesignFrame_DrawLoop:
-	lda xwa, (xsp + 4)
-	ld bc, (xsp + 18)
-	call DrawFrame
-	lda xwa, (xsp + 4)
-	incw 1, (xwa + 2)
-	decw	1, (xwa+6)
-	incw 1, (xwa)
-	decw	1, (xwa+4)
-	inc 1, xiz
-	ld wa, (xsp + 12)
-	exts xwa
-	cp xiz, xwa
-	jr lt, DesignFrame_DrawLoop
-
-DesignFrame_Epilogue:
-	pop xiz
-	lda xsp, (xsp + 10)
-	retd 0x2
+DrawDesignFrame:	.include "includes/generated/cc900/DrawDesignFrame.s"	; C: cc900/ui_window_procs_m271.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DesignFrame_DrawLoop, DrawDesignFrame + 37
+	.set	DesignFrame_Epilogue, DrawDesignFrame + 72
 
 EditSwProc:	.include "includes/generated/cc900/EditSwProc.s"	; C: cc900/ui_window_procs_m0.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -5972,61 +5940,21 @@ CaptureLcd_Epilogue:
 	lda xsp, (xsp+1094)
 	ret
 
-ChangeWall:
-	pushw iz
-	ld iz, wa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, ChangeWall_QueuedPath
-	ld wa, iz
-	calr ChangeWall_Impl
-	jr ChangeWall_Epilogue
+ChangeWall:	.include "includes/generated/cc900/ChangeWall.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ChangeWall_QueuedPath, ChangeWall + 17
+	.set	ChangeWall_Epilogue, ChangeWall + 37
 
-ChangeWall_QueuedPath:
-	ld wa, 6:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (ChangeWall_QueueCallback:24)
-	ld (xwa), xbc
-	ld (xwa + 4), iz
-	calr DrawRing_Post
-
-ChangeWall_Epilogue:
-	popw iz
-	ret
-
-ChangeWall_QueueCallback:
-	ld	wa, (xwa+4)
-	jr	ChangeWall_Impl
+ChangeWall_QueueCallback:	.include "includes/generated/cc900/ChangeWall_QueueCallback.s"	; C: cc900/ui_window_procs_m0_xr.c
 
 ChangeWall_Impl:	.include "includes/generated/cc900/ChangeWall_Impl.s"	; C: cc900/ui_window_procs_xr.c
 
-ChangeWallPalette:
-	pushw iz
-	ld iz, wa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, ChangeWallPalette_QueuedPath
-	ld wa, iz
-	calr ChangeWallPalette_Impl
-	jr ChangeWallPalette_Epilogue
+ChangeWallPalette:	.include "includes/generated/cc900/ChangeWallPalette.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ChangeWallPalette_QueuedPath, ChangeWallPalette + 17
+	.set	ChangeWallPalette_Epilogue, ChangeWallPalette + 37
 
-ChangeWallPalette_QueuedPath:
-	ld wa, 6:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (ChangeWallPalette_QueueCallback:24)
-	ld (xwa), xbc
-	ld (xwa + 4), iz
-	calr DrawRing_Post
-
-ChangeWallPalette_Epilogue:
-	popw iz
-	ret
-
-ChangeWallPalette_QueueCallback:
-	ld	wa, (xwa+4)
-	jr	ChangeWallPalette_Impl
+ChangeWallPalette_QueueCallback:	.include "includes/generated/cc900/ChangeWallPalette_QueueCallback.s"	; C: cc900/ui_window_procs_m0_xr.c
 
 ChangeWallPalette_Impl:
 	push xiz
@@ -6078,32 +6006,12 @@ WallPalette_Done:
 ; The palette loop at UIRender_IterateCallbacks iterates 0x20..0xE0 (palette entries),
 ; looking up each entry's RGB values via a secondary table at 0x03ef14.
 ; =============================================================================
-ChangePalette:
-	pushw iz
-	ld iz, wa
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr z, ChangePalette_QueuedPath
-	ld wa, iz
-	calr ChangePalette_Impl
-	jr ChangePalette_Epilogue
+ChangePalette:	.include "includes/generated/cc900/ChangePalette.s"	; C: cc900/ui_window_procs_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ChangePalette_QueuedPath, ChangePalette + 17
+	.set	ChangePalette_Epilogue, ChangePalette + 37
 
-ChangePalette_QueuedPath:
-	ld wa, 6:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (ChangePalette_QueueCallback:24)
-	ld (xwa), xbc
-	ld (xwa + 4), iz
-	calr DrawRing_Post
-
-ChangePalette_Epilogue:
-	popw iz
-	ret
-
-ChangePalette_QueueCallback:
-	ld	wa, (xwa+4)
-	jr	ChangePalette_Impl
+ChangePalette_QueueCallback:	.include "includes/generated/cc900/ChangePalette_QueueCallback.s"	; C: cc900/ui_window_procs_m0_xr.c
 
 ChangePalette_Impl:
 	push xiz

@@ -39,3 +39,136 @@ void SmfMed_FormatSlotList(long obj, unsigned int total)
         ApPostEvent(obj, EVT_PARA_DRAW, ram_8328[i].s);
     }
 }
+
+/* cc900-module: FmmDocFileNameFunc FmmPdFileNameFunc */
+extern struct mtxt __near ram_83ec[];
+extern long FmmDocFileNameFunc(long, long, long);
+extern void DocMed_FormatSlotList(long obj, unsigned int total);
+extern struct mtxt __near ram_838c[];
+extern long FmmPdFileNameFunc(long, long, long);
+extern void PdMed_FormatSlotList(long obj, unsigned int total);
+
+void DocMed_FormatSlotList(long obj, unsigned int total)
+{
+    unsigned int n;
+    unsigned int base;
+    unsigned int i;
+
+    base = FmmDocFileNameFunc(0, EVT_GET_SELECTED_FILE_NUMBER, 0);
+    base /= 10;
+    base *= 10;
+    n = 10;
+    if (base + 10 >= total)
+        n = total - base;
+    for (i = 0; i < n; i++) {
+        FormatMedleyNumber(ram_83ec[i].s, ram_87e8[base + i], i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_83ec[i].s);
+    }
+    for (; i < 10; i++) {
+        FormatMedleyNumber(ram_83ec[i].s, 0xff, i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_83ec[i].s);
+    }
+}
+void PdMed_FormatSlotList(long obj, unsigned int total)
+{
+    unsigned int n;
+    unsigned int base;
+    unsigned int i;
+
+    base = FmmPdFileNameFunc(0, EVT_GET_SELECTED_FILE_NUMBER, 0);
+    base /= 10;
+    base *= 10;
+    n = 10;
+    if (base + 10 >= total)
+        n = total - base;
+    for (i = 0; i < n; i++) {
+        FormatMedleyNumber(ram_838c[i].s, ram_87e8[base + i], i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_838c[i].s);
+    }
+    for (; i < 10; i++) {
+        FormatMedleyNumber(ram_838c[i].s, 0xff, i);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_838c[i].s);
+    }
+}
+
+extern int __near ram_8450;
+extern int FileIO_GetCurrentFileIndex_Alt(void);
+extern void FileIO_SelectFileByIndex(int);
+extern void NavigateDocList(int d);
+extern int __near ram_844e;
+extern int GetCurrentFileIndexAlt(void);
+extern void SetCurrentFileIndex(int);
+extern void NavigatePdList(int d);
+
+void NavigateDocList(int d)
+{
+	int i;
+	int n;
+
+	if (d == 1 || d == -1) {
+		if (ram_8450 > 0) {
+			i = FileIO_GetCurrentFileIndex_Alt();
+			if (i >= 0) {
+				n = i + d;
+				if (n < 0)
+					n = ram_8450 - 1;
+				else if (n >= ram_8450)
+					n = 0;
+				if (i != n)
+					FileIO_SelectFileByIndex(n);
+			}
+		}
+	}
+}
+void NavigatePdList(int d)
+{
+	int i;
+	int n;
+
+	if (d == 1 || d == -1) {
+		if (ram_844e > 0) {
+			i = GetCurrentFileIndexAlt();
+			if (i >= 0) {
+				n = i + d;
+				if (n < 0)
+					n = ram_844e - 1;
+				else if (n >= ram_844e)
+					n = 0;
+				if (i != n)
+					SetCurrentFileIndex(n);
+			}
+		}
+	}
+}
+
+extern unsigned char __near ram_8454[][32];
+extern void *FileIO_GetFileEntryWithRefresh(unsigned int);
+extern void FileIO_ReadHeader_ParseLoop(unsigned char *, void *, unsigned int, int, int);
+extern void DocMed_FormatFileList(long obj, int first);
+extern void *GetFileRecordPtr(unsigned int);
+extern void PdMed_FormatFileList(long obj, int first);
+
+void DocMed_FormatFileList(long obj, int first)
+{
+    int i;
+    void *p;
+
+    for (i = 0; i < 10; i++) {
+        ram_8454[i][0] = i;
+        p = FileIO_GetFileEntryWithRefresh(first + i);
+        FileIO_ReadHeader_ParseLoop(&ram_8454[i][1], p, first + i + 1, 12, 0);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_8454[i]);
+    }
+}
+void PdMed_FormatFileList(long obj, int first)
+{
+    int i;
+    void *p;
+
+    for (i = 0; i < 10; i++) {
+        ram_8454[i][0] = i;
+        p = GetFileRecordPtr(first + i);
+        FileIO_ReadHeader_ParseLoop(&ram_8454[i][1], p, first + i + 1, 20, 1);
+        ApPostEvent(obj, EVT_PARA_DRAW, ram_8454[i]);
+    }
+}

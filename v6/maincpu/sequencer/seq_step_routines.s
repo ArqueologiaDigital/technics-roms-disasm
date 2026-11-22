@@ -2468,34 +2468,7 @@ SeqStep_SearchForwardDone:
 	popw iz
 	ret
 
-SeqStep_SwapTwoParts:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xbc
-	ld xiz, xwa
-	ld wa, (xiz)
-	ld xbc, (xsp + 4)
-	ld bc, (xbc)
-	calr SeqStep_CopyPartData
-	ld wa, (xiz)
-	ld xbc, (xsp + 4)
-	ld bc, (xbc)
-	calr SeqStep_UpdateRefsAfterSwap
-	ld wa, (xiz)
-	ld xbc, (xsp + 4)
-	ld bc, (xbc)
-	calr SeqStep_UpdateForwardLinks
-	ld wa, (xiz)
-	calr SeqStep_SearchBackward
-	ld (xiz), hl
-	ld xwa, (xsp + 4)
-	ld wa, (xwa)
-	calr SeqStep_SearchForward
-	ld xwa, (xsp + 4)
-	ld (xwa), hl
-	pop xiz
-	inc 4, xsp
-	ret
+SeqStep_SwapTwoParts:	.include "includes/generated/cc900/SeqStep_SwapTwoParts.s"	; C: cc900/seq_step_routines_m236.c
 
 SeqStep_CopyPartData:
 	dec 4, xsp
@@ -2639,84 +2612,13 @@ SeqStep_UpdateLinksReturn:
 	inc 2, xsp
 	ret
 
-SeqStep_RebuildPartChain:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), wa
-	cpw (xsp + 2), 0x4d8
-	jr ule, SeqStep_RebuildLoop
-	ldw (SEQ_FREE_BLOCKS:16), 0
-	ldw (SEQ_FREE_LIST_HEAD:16), 0xffff
-	jrl SeqStep_RebuildReturn
-
-SeqStep_RebuildLoop:
-	mrdw5 0x9f, 0x02, 0x19, 0x2f, 0xf2
-	ldw (SEQ_FREE_BLOCKS:16), 0
-	ld wa, (xsp + 2)
-	ld bc, 0:i3
-	call PartCtrl_SetClearBit7
-	ld wa, (xsp + 2)
-	ld bc, 0:i3
-	call PartCtrl_WriteWord_Off1
-	ld bc, (xsp + 2)
-	inc 1, bc
-	ld wa, (xsp + 2)
-	call PartCtrl_WriteWord
-	ld wa, (xsp + 2)
-	ld bc, 5:i3
-	ldw de, 0x82
-	call PartCtrl_WriteByteToBuf
-	incw 1, (SEQ_FREE_BLOCKS:16)
-	ld iz, (xsp + 2)
-	inc 1, iz
-	cp iz, 0x4d8
-	jr nc, SeqStep_RebuildAdvance
-
-SeqStep_RebuildCheck:
-	ld wa, iz
-	ld bc, 0:i3
-	call PartCtrl_SetClearBit7
-	ld bc, iz
-	dec 1, bc
-	ld wa, iz
-	call PartCtrl_WriteWord_Off1
-	ld bc, iz
-	inc 1, bc
-	ld wa, iz
-	call PartCtrl_WriteWord
-	ld wa, (xsp + 2)
-	ld bc, 5:i3
-	ldw de, 0x82
-	call PartCtrl_WriteByteToBuf
-	incw 1, (SEQ_FREE_BLOCKS:16)
-	inc 1, iz
-	cp iz, 0x4d8
-	jr c, SeqStep_RebuildCheck
-
-SeqStep_RebuildAdvance:
-	ldw wa, 0x4d8
-	ld bc, 0:i3
-	call PartCtrl_SetClearBit7
-	cpw (xsp + 2), 0x4d8
-	jr z, SeqStep_RebuildDone
-	ldw wa, 0x4d8
-	ldw bc, 0x4d7
-	call PartCtrl_WriteWord_Off1
-
-SeqStep_RebuildDone:
-	ldw wa, 0x4d8
-	ldw bc, 0xffff
-	call PartCtrl_WriteWord
-	ld wa, (xsp + 2)
-	ld bc, 5:i3
-	ldw de, 0x82
-	call PartCtrl_WriteByteToBuf
-	incw 1, (SEQ_FREE_BLOCKS:16)
-
-SeqStep_RebuildReturn:
-	popw iz
-	inc 2, xsp
-	ret
+SeqStep_RebuildPartChain:	.include "includes/generated/cc900/SeqStep_RebuildPartChain.s"	; C: cc900/seq_step_routines_m236_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_RebuildLoop, SeqStep_RebuildPartChain + 28
+	.set	SeqStep_RebuildCheck, SeqStep_RebuildPartChain + 96
+	.set	SeqStep_RebuildAdvance, SeqStep_RebuildPartChain + 148
+	.set	SeqStep_RebuildDone, SeqStep_RebuildPartChain + 174
+	.set	SeqStep_RebuildReturn, SeqStep_RebuildPartChain + 200
 
 ; -----------------------------------------------------------------------------
 ; SeqStep_ByteBlockEA5F (address-derived name kept: midi_dispatch_handlers.s

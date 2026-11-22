@@ -522,3 +522,52 @@ void NoteEdit_UpdateScrollAndDisplay(void)
     return;
   NoteEditSy_UpdateAllWidgets();
 }
+
+extern unsigned int __near ram_2762;
+extern unsigned char __near ram_2764;
+extern unsigned int __near ram_2766;
+extern unsigned int __near ram_2768;
+
+void BmDrEdit_RestoreEditState(void)
+{
+	ram_275e = ram_2762;
+	ram_2760 = ram_2764;
+	SEQ_DATA_BLOCK = ram_2766;
+	SEQ_DATA_OFFSET = ram_2768;
+}
+void BmDrEdit_SaveEditState(void)
+{
+	ram_2762 = ram_275e;
+	ram_2764 = ram_2760;
+	ram_2766 = SEQ_DATA_BLOCK;
+	ram_2768 = SEQ_DATA_OFFSET;
+}
+
+/* cc900-module: BmDrEdit_DecrementVelocity BmDrEdit_IncrementVelocity BmDrEdit_NullReturn BmDrEdit_UpdateVelocityDisplay */
+extern void BmDrEdit_VelocityDown_Check(void);
+extern void BmDrEdit_IncrementVelocity(void);
+extern void BmDrEdit_DecrementVelocity(void);
+extern void BmDrEdit_VelocityUp_Check(void);
+
+void BmDrEdit_VelocityDown_Check(void)
+{
+  if ((ram_295c & 0x80) && ram_295d != 2)
+    return;
+  if (!(ram_295f & 1))
+    return;
+  if (ram_2742 & 1)
+    BmDrEdit_IncrementVelocity();
+  else
+    BmDrEdit_DecrementVelocity();
+}
+void BmDrEdit_VelocityUp_Check(void)
+{
+  if ((ram_295c & 0x80) && ram_295d != 2)
+    return;
+  if (!(ram_295f & 1))
+    return;
+  if (ram_2742 & 1)
+    BmDrEdit_DecrementVelocity();
+  else
+    BmDrEdit_IncrementVelocity();
+}

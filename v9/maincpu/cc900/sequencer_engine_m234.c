@@ -267,3 +267,170 @@ int Seq_ValidatePartAndTempo(void)
 		return -1;
 	return 0;
 }
+
+/* cc900-module: PartCtrl_ReadWord_Off1 Part_WriteSubBlock32 Part_WriteSubBlock48 SeqData_SetErrorCode */
+extern unsigned int __near SEQOP_SECONDARY_BLOCK;
+extern unsigned int __near SEQOP_SECONDARY_OFFSET;
+extern unsigned int PartCtrl_ReadWord_Off1(unsigned int);
+extern unsigned char PartCtrl_TestBit7(unsigned int);
+extern void SeqData_SetErrorCode(unsigned int);
+extern void PartCtrl_NavigateBackward(void);
+extern unsigned int __near SEQOP_PRIMARY_BLOCK;
+extern unsigned int __near SEQOP_PRIMARY_OFFSET;
+extern void PartCtrl_NavigateBackwardAlt(void);
+
+void PartCtrl_NavigateBackward(void)
+{
+	unsigned int b;
+
+	if (SEQOP_SECONDARY_OFFSET != 5)
+		SEQOP_SECONDARY_OFFSET--;
+	else {
+		b = PartCtrl_ReadWord_Off1(SEQOP_SECONDARY_BLOCK);
+		if (PartCtrl_TestBit7(b) == 0) {
+			SeqData_SetErrorCode(0x47);
+			SEQ_ERROR_CODE = 2;
+		} else if (b == 0 || b == 0xffff)
+			SEQ_ERROR_CODE = 11;
+		else {
+			SEQOP_SECONDARY_BLOCK = b;
+			SEQOP_SECONDARY_OFFSET = 255;
+		}
+	}
+}
+void PartCtrl_NavigateBackwardAlt(void)
+{
+	unsigned int b;
+
+	if (SEQOP_PRIMARY_OFFSET != 5)
+		SEQOP_PRIMARY_OFFSET--;
+	else {
+		b = PartCtrl_ReadWord_Off1(SEQOP_PRIMARY_BLOCK);
+		if (PartCtrl_TestBit7(b) == 0) {
+			SeqData_SetErrorCode(0x48);
+			SEQ_ERROR_CODE = 2;
+		} else if (b == 0 || b == 0xffff)
+			SEQ_ERROR_CODE = 11;
+		else {
+			SEQOP_PRIMARY_BLOCK = b;
+			SEQOP_PRIMARY_OFFSET = 255;
+		}
+	}
+}
+
+extern unsigned char __near SQEDT_MCP_REPEAT;
+extern unsigned char __near SQEDT_MCP_TRACK_B;
+extern unsigned int __near SQEDT_MCP_AT;
+extern unsigned char __near SEQ_EDIT_FLAGS;
+extern unsigned char __near GLOBAL_ERROR_CODE;
+extern void SeqPart_DualPartLoad(void);
+extern void SeqPart_LoadAndValidateData(void);
+extern unsigned char __near SQEDT_MINS_REPEAT;
+extern unsigned char __near SQEDT_MINS_TRACK_B;
+extern unsigned int __near SQEDT_MINS_AT;
+extern void SeqPart_ByteBlockA95A(void);
+extern void SeqPart_LoadDualPartData(void);
+
+void SeqPart_LoadAndValidateData(void)
+{
+	unsigned char i;
+	unsigned char t;
+	unsigned int w;
+
+	if (SQEDT_MCP_REPEAT != 0 && !(SEQ_EDIT_FLAGS & 8)) {
+		t = SQEDT_MCP_TRACK_B;
+		if (t == 17)
+			t = 127;
+		SEQ_TRACK = t;
+		SEQ_OP_FROM = SQEDT_MCP_AT;
+		SEQ_OP_DEST_MEASURE = SQEDT_MCP_AT + SEQ_OP_MEASURES;
+		for (i = 0; i < SQEDT_MCP_REPEAT; i++) {
+			GLOBAL_ERROR_CODE = 0xff;
+			SEQ_ERROR_CODE = 0;
+			SeqPart_DualPartLoad();
+			if (GLOBAL_ERROR_CODE != 35 || (SEQ_EDIT_FLAGS & 8))
+				break;
+			w = SEQ_OP_DEST_MEASURE + SEQ_OP_MEASURES;
+			SEQ_OP_DEST_MEASURE = w;
+		}
+	}
+}
+void SeqPart_LoadDualPartData(void)
+{
+	unsigned char i;
+	unsigned char t;
+	unsigned int w;
+
+	if (SQEDT_MINS_REPEAT != 0 && !(SEQ_EDIT_FLAGS & 8)) {
+		t = SQEDT_MINS_TRACK_B;
+		if (t == 17)
+			t = 127;
+		SEQ_TRACK = t;
+		SEQ_OP_FROM = SQEDT_MINS_AT;
+		SEQ_OP_DEST_MEASURE = SQEDT_MINS_AT + SEQ_OP_MEASURES;
+		for (i = 0; i < SQEDT_MINS_REPEAT; i++) {
+			GLOBAL_ERROR_CODE = 0xff;
+			SEQ_ERROR_CODE = 0;
+			SeqPart_ByteBlockA95A();
+			if (GLOBAL_ERROR_CODE != 35 || (SEQ_EDIT_FLAGS & 8))
+				break;
+			w = SEQ_OP_DEST_MEASURE + SEQ_OP_MEASURES;
+			SEQ_OP_DEST_MEASURE = w;
+		}
+	}
+}
+
+extern int SeqValidate_PartAndTempoComb(void);
+extern int Seq_ValidateExtended_DataBlock(void);
+extern int Seq_ValidatePartAndTempoAlt(void);
+
+/* cc900-name: SeqValidate_PartAndTempoComb=SeqValidate_PartAndTempoCombined */
+int SeqValidate_PartAndTempoComb(void)
+{
+	if (SEQ_TRACK != 0x11) {
+		if (Seq_ValidatePartNumber(SEQ_TRACK) != 0)
+			return -1;
+	}
+	if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0)
+		return -1;
+	if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0)
+		return -1;
+	return 0;
+}
+int Seq_ValidateExtended_DataBlock(void)
+{
+	if (SEQ_TRACK != 0x7f) {
+		if (Seq_ValidatePartNumber(SEQ_TRACK) != 0)
+			return -1;
+	}
+	if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0)
+		return -1;
+	if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0)
+		return -1;
+	return 0;
+}
+int Seq_ValidatePartAndTempoAlt(void)
+{
+	if (SEQ_TRACK != 0x11) {
+		if (Seq_ValidatePartNumber(SEQ_TRACK) != 0)
+			return -1;
+	}
+	if (Seq_ValidateTempoValue(SEQ_OP_FROM) != 0)
+		return -1;
+	if (Seq_ValidateTempoValue(SEQ_OP_MEASURES) != 0)
+		return -1;
+	return 0;
+}
+
+extern unsigned int __near ram_287d;
+extern unsigned char SEQ_CURRENT_SONG;
+extern void Part_WriteWordAndByte(unsigned int, unsigned char);
+extern void Part_WriteWordAndByte(register unsigned int w, unsigned char b);
+
+void Part_WriteWordAndByte(register unsigned int w, unsigned char b)
+{
+    Part_WriteWord_Indexed(0, (unsigned char)ram_287d, w);
+    Part_WriteByte_Indexed(0, (unsigned char)ram_287d, b);
+    Part_WriteWord_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), (unsigned char)ram_287d, w);
+    Part_WriteByte_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), (unsigned char)ram_287d, b);
+}

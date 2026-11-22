@@ -491,38 +491,9 @@ FDemo_FileOpen_Exit:
 
 DemoMode_Main_Operation:	.include "includes/generated/cc900/DemoMode_Main_Operation.s"	; C: cc900/file_demo_proc_m266_c.c
 FDemo_IndicatorSetup:	.include "includes/generated/cc900/FDemo_IndicatorSetup.s"	; C: cc900/file_demo_proc_m266.c
-DemoMode_Initialize:
-	calr	Demo_PreSetup
-	ld	(0x2966:16), 0
-	ld	(DEMO_DEBOUNCE:16), 0
-	ld	(DEMO_TIMER_COUNTDOWN:16), 0
-	res	7, (0x28ae:16)
-	call	MidiChannel_ResetAndConfigure
-	calr	Audio_WaitForReady
-	call	SeqStep_PlaybackStateMachine
-	calr	Voice_SavePreset
-	res	3, (DEMO_CONTROL_FLAGS:16)
-	call	SeqInit_PostEventSequence
-	call	ToneGen_FileIO_RestoreFromBackup
-	call	SeqTimer_UpdateTempoReg
-	call	Voice_InitializeAll
-	call	Seq_StartMainControlAlt
-	call	TempoRingBuf_Init
-	call	SeqBuf_Init
-	ldw	wa, 0x22
-	call	CtrlPanel_SetIndicatorLED
-	bit	0, (0x28a5:16)
-	jr	z, FDemo_PostBannerCheck
-	ldmm_sd24w	0xec, 0xff, 0x00, 0x9e, 0xf1
-; calr Banner_Loop_Check (v7 displacement)
-FDemo_PostBannerCheck:
-	calr	Banner_Loop_Check
-; call Audio_CheckSubsystemReady (v7 addr)
-	call	Audio_CheckSubsystemReady
-; resda 6, 0xb7e2 (v7 patched)
-	res	6, (0xb746:16)
-
-	ret
+DemoMode_Initialize:	.include "includes/generated/cc900/DemoMode_Initialize.s"	; C: cc900/file_demo_proc_m266_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDemo_PostBannerCheck, DemoMode_Initialize + 88
 
 
 
@@ -887,24 +858,8 @@ Demo_ScanActivePartChannels:	.include "includes/generated/cc900/Demo_ScanActiveP
 	.set	Demo_ScanPartNext, Demo_ScanActivePartChannels + 78
 	.set	Demo_ScanPartDone, Demo_ScanActivePartChannels + 85
 
-Voice_SavePreset:
-	pushw	16
-	pushw	0
-	pushw	3278
-	pushw	0
-	pushw	61856
-	call	Mem_Copy
-	lda	xsp, (xsp+10)
-	ret
-Voice_CopyPreset:
-	pushw	16
-	pushw	0
-	pushw	61856
-	pushw	0
-	pushw	3278
-	call	Mem_Copy
-	lda	xsp, (xsp+10)
-	ret
+Voice_SavePreset:	.include "includes/generated/cc900/Voice_SavePreset.s"	; C: cc900/file_demo_proc_m266.c
+Voice_CopyPreset:	.include "includes/generated/cc900/Voice_CopyPreset.s"	; C: cc900/file_demo_proc_m266.c
 Demo_LookupPartTableEntry:
 	extz	wa
 	sla	wa, 2
@@ -4298,17 +4253,9 @@ ValidateFileSelectionIndex:	.include "includes/generated/cc900/ValidateFileSelec
 	.set	ValidateSelection_Error, ValidateFileSelectionIndex + 27
 	.set	ValidateSelection_Ok, ValidateFileSelectionIndex + 31
 
-GetCurrentFileIndex:
-	ld wa, (0x025ea8:24)
-	calr ValidateFileSelectionIndex
-	cp hl, 0:i3
-	jr z, GetCurrentFile_ReturnIndex
-	ldw hl, 0xff98
-	ret
-
-GetCurrentFile_ReturnIndex:
-	ld hl, (0x025ea8:24)
-	ret
+GetCurrentFileIndex:	.include "includes/generated/cc900/GetCurrentFileIndex.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetCurrentFile_ReturnIndex, GetCurrentFileIndex + 16
 
 NotifyUIOfSelectionChange:
 	pushw iz
@@ -4803,17 +4750,9 @@ ValidateFileRange:	.include "includes/generated/cc900/ValidateFileRange.s"	; C: 
 	.set	ValidateFileRange_SecondPage, ValidateFileRange + 51
 	.set	ValidateFileRange_Found, ValidateFileRange + 73
 
-GetFirstPageBase:
-	ld wa, (0x0271ea:24)
-	calr ValidateFileRange
-	cp hl, 0:i3
-	jr z, GetFirstPageBase_Valid
-	ldw hl, 0xff98
-	ret
-
-GetFirstPageBase_Valid:
-	ld hl, (0x0271ea:24)
-	ret
+GetFirstPageBase:	.include "includes/generated/cc900/GetFirstPageBase.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetFirstPageBase_Valid, GetFirstPageBase + 16
 
 BuildSecondPageRecords:
 	lda xsp, (xsp-274)
@@ -4963,22 +4902,9 @@ ValidateAndSearch_Return:
 	ret
 
 
-GetFileCountEncoded:
-	ldw (0x0271ee:24), 0x0000
-	ldw (FILE_LIST_LAST:24), 0x003b
-	calr BuildSecondPageRecords
-	ld wa, 0:i3
-	cp hl, 0:i3
-	jr le, GetFileCount_StoreAndClamp
-	ld wa, hl
-	dec 1, wa
-
-GetFileCount_StoreAndClamp:
-	ld (0x0271ec:24), wa
-	cp (FILE_LIST_LAST:24), wa
-	ret le
-	ld (FILE_LIST_LAST:24), wa
-	ret
+GetFileCountEncoded:	.include "includes/generated/cc900/GetFileCountEncoded.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetFileCount_StoreAndClamp, GetFileCountEncoded + 27
 
 ReadVariableLengthInt:	.include "includes/generated/cc900/ReadVariableLengthInt.s"	; C: cc900/file_demo_proc_m268.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -5633,17 +5559,9 @@ ValidateFileRangeType5:	.include "includes/generated/cc900/ValidateFileRangeType
 	.set	ValidateRange_CheckEmpty, ValidateFileRangeType5 + 42
 	.set	ValidateRange_IsValid, ValidateFileRangeType5 + 64
 
-GetCurrentFileIndexAlt:
-	ld wa, (0x0271ea:24)
-	calr ValidateFileRangeType5
-	cp hl, 0:i3
-	jr z, GetCurrentIndex_Return
-	ldw hl, 0xff98
-	ret
-
-GetCurrentIndex_Return:
-	ld hl, (0x0271ea:24)
-	ret
+GetCurrentFileIndexAlt:	.include "includes/generated/cc900/GetCurrentFileIndexAlt.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetCurrentIndex_Return, GetCurrentFileIndexAlt + 16
 
 BuildPageRecords:
 	lda xsp, (xsp-274)
@@ -5725,42 +5643,12 @@ BuildRecords_Return:
 	lda xsp, (xsp+274)
 	ret
 
-SetCurrentFileIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr ValidateFileRangeType5
-	cp hl, 0xffff
-	jr nz, SetIndex_InvalidWrap
-	ld hl, (0x0271ea:24)
-	jr SetIndex_Return
-
-SetIndex_InvalidWrap:
-	cp hl, 1:i3
-	jr nz, SetIndex_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0x3c
-	mul wa, 0x3c
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x3b
-	ld wa, (0x0271ec:24)
-	cp bc, wa
-	jr ge, SetIndex_UpdatePageEnd
-	ld wa, bc
-
-SetIndex_UpdatePageEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr BuildPageRecords
-
-SetIndex_StoreIndex:
-	ld hl, iz
-	ld (0x0271ea:24), hl
-
-SetIndex_Return:
-	popw iz
-	ret
+SetCurrentFileIndex:	.include "includes/generated/cc900/SetCurrentFileIndex.s"	; C: cc900/file_demo_proc_m268_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SetIndex_InvalidWrap, SetCurrentFileIndex + 21
+	.set	SetIndex_UpdatePageEnd, SetCurrentFileIndex + 59
+	.set	SetIndex_StoreIndex, SetCurrentFileIndex + 67
+	.set	SetIndex_Return, SetCurrentFileIndex + 74
 
 GetFileRecordPtr:
 	pushw iz
@@ -5787,22 +5675,9 @@ GetRecordPtrAlt_Return:
 	popw iz
 	ret
 
-BuildPageRecordsAlt:
-	ldw (0x0271ee:24), 0x0000
-	ldw (FILE_LIST_LAST:24), 0x003b
-	calr BuildPageRecords
-	ld wa, 0:i3
-	cp hl, 0:i3
-	jr le, BuildRecordsAlt_StoreCount
-	ld wa, hl
-	dec 1, wa
-
-BuildRecordsAlt_StoreCount:
-	ld (0x0271ec:24), wa
-	cp (FILE_LIST_LAST:24), wa
-	ret le
-	ld (FILE_LIST_LAST:24), wa
-	ret
+BuildPageRecordsAlt:	.include "includes/generated/cc900/BuildPageRecordsAlt.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BuildRecordsAlt_StoreCount, BuildPageRecordsAlt + 27
 
 TrimAndFormatFilename:	.include "includes/generated/cc900/TrimAndFormatFilename.s"	; C: cc900/file_demo_proc_m268.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -5891,17 +5766,9 @@ ValidateFileRangeAlt:	.include "includes/generated/cc900/ValidateFileRangeAlt.s"
 	.set	ValidateRangeAlt_CheckEmpty, ValidateFileRangeAlt + 47
 	.set	ValidateRangeAlt_IsValid, ValidateFileRangeAlt + 69
 
-FileIO_GetCurrentFileIndex_Alt:
-	ld wa, (0x0271ea:24)
-	calr ValidateFileRangeAlt
-	cp hl, 0:i3
-	jr z, GetCurrentFileAlt_ReturnIndex
-	ldw hl, 0xff98
-	ret
-
-GetCurrentFileAlt_ReturnIndex:
-	ld hl, (0x0271ea:24)
-	ret
+FileIO_GetCurrentFileIndex_Alt:	.include "includes/generated/cc900/FileIO_GetCurrentFileIndex_Alt.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetCurrentFileAlt_ReturnIndex, FileIO_GetCurrentFileIndex_Alt + 16
 
 FileIO_BuildFileExtName:
 	dec 8, xsp
@@ -6037,42 +5904,12 @@ DirScan_AltNextEntry:
 	ld bc, 1:i3
 	jr DirScan_AltReadLoop
 
-FileIO_SelectFileByIndex:
-	pushw iz
-	ld iz, wa
-	ld wa, iz
-	calr ValidateFileRangeAlt
-	cp hl, 0xffff
-	jr nz, SelectFile_CheckPageBound
-	ld hl, (0x0271ea:24)
-	jr SelectFile_Return
-
-SelectFile_CheckPageBound:
-	cp hl, 1:i3
-	jr nz, SelectFile_StoreIndex
-	ld wa, iz
-	extz xwa
-	div wa, 0x3c
-	mul wa, 0x3c
-	ld bc, wa
-	ld (0x0271ee:24), bc
-	add bc, 0x3b
-	ld wa, (0x0271ec:24)
-	cp bc, wa
-	jr ge, SelectFile_ClampEnd
-	ld wa, bc
-
-SelectFile_ClampEnd:
-	ld (FILE_LIST_LAST:24), wa
-	calr FileIO_InitDirScan
-
-SelectFile_StoreIndex:
-	ld hl, iz
-	ld (0x0271ea:24), hl
-
-SelectFile_Return:
-	popw iz
-	ret
+FileIO_SelectFileByIndex:	.include "includes/generated/cc900/FileIO_SelectFileByIndex.s"	; C: cc900/file_demo_proc_m268_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SelectFile_CheckPageBound, FileIO_SelectFileByIndex + 21
+	.set	SelectFile_ClampEnd, FileIO_SelectFileByIndex + 59
+	.set	SelectFile_StoreIndex, FileIO_SelectFileByIndex + 67
+	.set	SelectFile_Return, FileIO_SelectFileByIndex + 74
 
 FileIO_GetFileEntryByIndex:
 	pushw iz
@@ -6607,17 +6444,9 @@ FileIO_ValidateModeAndRange:	.include "includes/generated/cc900/FileIO_ValidateM
 	.set	ValidateMode_InPage, FileIO_ValidateModeAndRange + 51
 	.set	ValidateMode_Valid, FileIO_ValidateModeAndRange + 73
 
-FileIO_GetCurrentWallpaperIndex:
-	ld wa, (0x0272c8:24)
-	calr FileIO_ValidateModeAndRange
-	cp hl, 0:i3
-	jr z, GetWallpaper_ReturnIndex
-	ldw hl, 0xff98
-	ret
-
-GetWallpaper_ReturnIndex:
-	ld hl, (0x0272c8:24)
-	ret
+FileIO_GetCurrentWallpaperIndex:	.include "includes/generated/cc900/FileIO_GetCurrentWallpaperIndex.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetWallpaper_ReturnIndex, FileIO_GetCurrentWallpaperIndex + 16
 
 FileIO_ScanDirEntries:
 	lda xsp, (xsp-274)
@@ -6733,22 +6562,9 @@ GetWPEntry_Return:
 	popw iz
 	ret
 
-FileIO_InitWallpaperNav:
-	ldw (0x0271ee:24), 0x0000
-	ldw (FILE_LIST_LAST:24), 0x0009
-	calr FileIO_ScanDirEntries
-	ld wa, 0:i3
-	cp hl, 0:i3
-	jr le, InitWPNav_ClampEnd
-	ld wa, hl
-	dec 1, wa
-
-InitWPNav_ClampEnd:
-	ld (0x0272ca:24), wa
-	cp (FILE_LIST_LAST:24), wa
-	ret le
-	ld (FILE_LIST_LAST:24), wa
-	ret
+FileIO_InitWallpaperNav:	.include "includes/generated/cc900/FileIO_InitWallpaperNav.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	InitWPNav_ClampEnd, FileIO_InitWallpaperNav + 27
 
 ResetProgressIndication:
 	ldw (DISK_MEDIA_TYPE:16), 0xffff

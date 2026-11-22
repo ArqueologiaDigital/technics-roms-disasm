@@ -71,3 +71,15 @@ void SndParam_ApplyEventField(unsigned char *ev, unsigned char c)
 	}
 	ev[3] = save;
 }
+
+/* cc900-module: MIDI_SendControlChange SubCPU_SendSystemRecord */
+extern void MIDI_SendSysExCmd(unsigned char);
+extern void MIDI_SendSysExCmd(unsigned char cmd);
+
+void MIDI_SendSysExCmd(unsigned char cmd)
+{
+  unsigned char b[5];
+  b[0] = 4; b[1] = 0xf0; b[2] = 0x50; b[3] = 0x87; b[4] = cmd;
+  MIDI_SendCmdPacket(b);
+  MIDI_PostSendStub();
+}

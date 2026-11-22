@@ -159,3 +159,115 @@ void ExtData_Tag43_SetByte1Fields(void)
 	ExtData_SetTlvField(127);
 	SwbtWr_FlushAndAppendParams();
 }
+
+typedef unsigned char *ucp;
+extern unsigned int __near EXT_RECORD_OFFSET;
+extern unsigned char __near PANEL_EVENT_QUEUE[];
+extern ucp __near ram_908f;
+extern void SndParam_FetchSequencerParams(void);
+
+void SndParam_FetchSequencerParams(void)
+{
+    MIDI_MSG_STATUS = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    ram_908f = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+    EXTDATA_TLV_OFFSET = MIDI_MSG_DATA1 = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    EXTDATA_VALUE = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    MIDI_MSG_DATA2 = 0;
+    EXTDATA_MASK = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    MIDI_MSG_DATA3 = 0;
+}
+
+/* cc900-module: MIDI_WriteCommandToBuffer SwbtWr_WriteParamBlock */
+extern void MIDI_WriteCommandToBuffer(int, int, int, int);
+extern void MIDI_WriteMultiByteWithHeader(unsigned char *);
+extern void MIDI_WriteMultiByteWithHeader(unsigned char *s);
+extern unsigned char __near ram_90e2;
+extern unsigned char __near ram_90e3;
+extern unsigned char __near ram_90e4;
+extern unsigned char __near ram_90e5;
+extern void SwbtWr_WriteParamBlock(void);
+extern void MIDI_WriteVoiceParamFromBuffer(void);
+extern void Audio_InitSingleChannelParams(unsigned char a);
+extern unsigned char __near ram_905f[];
+extern void MIDI_LoadParamsAndDispatchCC(void);
+extern void AddswbWr(unsigned int, unsigned int, unsigned int, unsigned int);
+extern void Audio_SendModulationToParts(unsigned char a, unsigned char c);
+extern unsigned int __near SWBTWR_WRITE_INDEX;
+extern unsigned char __near SWBTWR_EVENT_QUEUE[];
+extern void SwbtWr_AppendFixedParamBlock(void);
+
+void MIDI_WriteMultiByteWithHeader(unsigned char *s)
+{
+    unsigned char ch;
+    unsigned char n;
+    unsigned char i;
+
+    ch = *s++;
+    n = *s++;
+    MIDI_WriteCommandToBuffer(ch, 1, s[1], 0xff);
+    MIDI_WriteCommandToBuffer(ch, 0, s[0], 0xff);
+    n -= 2;
+    i = 2;
+    s += 2;
+    while (n != 0) {
+        MIDI_WriteCommandToBuffer(ch, i, *s, 0xff);
+        n--;
+        i++;
+        s++;
+    }
+}
+void Audio_InitSingleChannelParams(unsigned char a)
+{
+	MIDI_MSG_STATUS = 177;
+	MIDI_MSG_DATA1 = a;
+	MIDI_MSG_DATA2 = 0;
+	MIDI_MSG_DATA3 = 64;
+	SwbtWr_WriteParamBlock();
+	MIDI_MSG_STATUS = 178;
+	MIDI_MSG_DATA1 = a;
+	MIDI_MSG_DATA2 = 0;
+	MIDI_MSG_DATA3 = 127;
+	SwbtWr_WriteParamBlock();
+	MIDI_MSG_STATUS = 179;
+	MIDI_MSG_DATA1 = a;
+	MIDI_MSG_DATA2 = 127;
+	MIDI_MSG_DATA3 = 127;
+	SwbtWr_WriteParamBlock();
+	ram_90e2 = a;
+	ram_90e3 = 4;
+	ram_90e4 = 0;
+	ram_90e5 = 8;
+	MIDI_WriteVoiceParamFromBuffer();
+	MIDI_MSG_STATUS = a;
+	MIDI_MSG_DATA1 = 4;
+	MIDI_MSG_DATA2 = 0;
+	MIDI_MSG_DATA3 = 8;
+	SwbtWr_WriteParamBlock();
+}
+void Audio_SendModulationToParts(unsigned char a, unsigned char c)
+{
+	unsigned int i;
+	unsigned char t;
+
+	for (i = 0; i < 0x20; i++) {
+		t = ram_905f[i];
+		if (t == 0xff) break;
+		if (t == 2 && c != 2) continue;
+		ram_90e2 = 178;
+		ram_90e3 = ram_905f[i];
+		ram_90e4 = a;
+		ram_90e5 = 127;
+		MIDI_LoadParamsAndDispatchCC();
+		if (PanelTlv_PayloadOfTag(ram_905f[i])[13] & 0x20) continue;
+		AddswbWr(ram_90e2, ram_90e3, ram_90e4, ram_90e5);
+	}
+}
+void SwbtWr_AppendFixedParamBlock(void)
+{
+	SWBTWR_EVENT_QUEUE[SWBTWR_WRITE_INDEX++] = MIDI_MSG_STATUS;
+	SWBTWR_EVENT_QUEUE[SWBTWR_WRITE_INDEX++] = MIDI_MSG_DATA1;
+	SWBTWR_EVENT_QUEUE[SWBTWR_WRITE_INDEX++] = MIDI_MSG_DATA2;
+	SWBTWR_EVENT_QUEUE[SWBTWR_WRITE_INDEX++] = MIDI_MSG_DATA3;
+	SWBTWR_EVENT_QUEUE[SWBTWR_WRITE_INDEX] = 0xff;
+	MIDI_MSG_DATA3 = 0;
+}

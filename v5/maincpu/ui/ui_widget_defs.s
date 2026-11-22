@@ -1452,42 +1452,7 @@ LswEditCheck_Return:
 	ret
 
 MainLswPut:	.include "includes/generated/cc900/MainLswPut.s"	; C: cc900/ui_widget_defs_m271_b.c
-MainLswPartPut:
-	dec	8, xsp
-	pushw	iz
-	ld	(xsp+6), de
-	ld	(xsp+8), bc
-	ld	iz, wa
-	pushw	12
-	call	Malloc
-	inc	2, xsp
-	ld	(xsp+2), xhl
-	ld	bc, (xsp+8)
-	extz	xbc
-	ld	de, iz
-	extz	xde
-	sll	xde, 16
-	add	xde, xbc
-	ld	xwa, (xsp+2)
-	ld	(xwa), xde
-	ld	bc, (xsp+6)
-	ld	(xwa+4), bc
-	ld	bc, (xsp+14)
-	ld	(xwa+6), bc
-	ld	xbc, 0:i3
-	ld	(xwa+8), xbc
-	ld	xwa, NAKA_MAINFUNC_MainPmanControl
-	ld	xbc, EVT_LSW_PART_PUT
-	ld	xde, (xsp+2)
-	call	MainFuncCall
-	ld	xwa, NAKA_MAINFUNC_MainAutoFree
-	ld	xbc, EVT_AUTO_FREE
-	ld	xde, (xsp+2)
-	call	MainFuncCall
-	ld	hl, 0:i3
-	popw	iz
-	inc	8, xsp
-	retd	2
+MainLswPartPut:	.include "includes/generated/cc900/MainLswPartPut.s"	; C: cc900/ui_widget_defs_m271_e.c
 MainLswAdd:	.include "includes/generated/cc900/MainLswAdd.s"	; C: cc900/ui_widget_defs_m271_b.c
 MainLswPartAdd:	.include "includes/generated/cc900/MainLswPartAdd.s"	; C: cc900/ui_widget_defs_m271_d.c
 MainLswGet:	.include "includes/generated/cc900/MainLswGet.s"	; C: cc900/ui_widget_defs_m271_c.c
@@ -9001,36 +8966,9 @@ FuncCall:
 	ld xwa, xhl
 	ret
 
-ApFunctionProc:
-	cp xbc, EVT_GET_NAME
-	jr z, ApFuncCall_VirtualDispatch
-	cp xbc, EVT_GET_CLASS_SP
-	jrl nz, FunctionProc
-	ld xhl, NAKA_CLASS_ApFunction
-	ret
-
-; ApFuncCall object ID lookup dispatch
-ApFuncCall_VirtualDispatch:
-	ld xbc, xwa
-	srl xbc, 16
-	and xbc, 0xfff
-	ldiw_erp 0xe2, 0
-	ld de, wa
-	add bc, 0x300
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ret
+ApFunctionProc:	.include "includes/generated/cc900/ApFunctionProc.s"	; C: cc900/ui_widget_defs_m272_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ApFuncCall_VirtualDispatch, ApFunctionProc + 23
 
 
 ApFuncCall:
@@ -9080,36 +9018,9 @@ DefaultFunction:
 	ld xhl, 0:i3
 	ret
 
-MainFunctionProc:
-	cp xbc, EVT_GET_NAME
-	jr z, MainFuncCall_DispatchDSP
-	cp xbc, EVT_GET_CLASS_SP
-	jrl nz, FunctionProc
-	ld xhl, NAKA_CLASS_MainFunction
-	ret
-
-; MainFuncCall DSP variant dispatch
-MainFuncCall_DispatchDSP:
-	ld xbc, xwa
-	srl xbc, 16
-	and xbc, 0xfff
-	ldiw_erp 0xe2, 0
-	ld de, wa
-	add bc, 0x300
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ret
+MainFunctionProc:	.include "includes/generated/cc900/MainFunctionProc.s"	; C: cc900/ui_widget_defs_m272_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MainFuncCall_DispatchDSP, MainFunctionProc + 23
 
 MainFuncCall:
 	call MainPostEvent
@@ -18054,36 +17965,16 @@ IS_XSP_INSIDE_4K_REGION_AT_1C032_Loop:
 
 InitializeGraphics:	.include "includes/generated/cc900/InitializeGraphics.s"	; C: cc900/ui_widget_defs_m273_c.c
 ; LcdOn - Enable LCD display output (sets flag at 0x030464)
-LcdOn:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, InitGraphics_SetupVRAM_Loop
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (InitGraphics_SetupVRAM:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
+LcdOn:	.include "includes/generated/cc900/LcdOn.s"	; C: cc900/ui_widget_defs_m273_e.c
 
-InitGraphics_SetupVRAM:
-	jr InitGraphics_SetupVRAM_Loop
+InitGraphics_SetupVRAM:	.include "includes/generated/cc900/InitGraphics_SetupVRAM.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 InitGraphics_SetupVRAM_Loop:	.include "includes/generated/cc900/InitGraphics_SetupVRAM_Loop.s"	; C: cc900/ui_widget_defs_m273_xr.c
 
 ; LcdOff - Disable LCD display output (clears flag at 0x030464)
-LcdOff:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, LcdOn_Return
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (LcdOff_Done2:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
+LcdOff:	.include "includes/generated/cc900/LcdOff.s"	; C: cc900/ui_widget_defs_m273_e.c
 
-LcdOff_Done2:
-	jr LcdOn_Return
+LcdOff_Done2:	.include "includes/generated/cc900/LcdOff_Done2.s"	; C: cc900/ui_widget_defs_m0_xr.c
 
 LcdOn_Return:	.include "includes/generated/cc900/LcdOn_Return.s"	; C: cc900/ui_widget_defs_m273_xr.c
 

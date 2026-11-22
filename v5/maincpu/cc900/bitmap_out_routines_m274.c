@@ -40,3 +40,33 @@ void PanelMemory_PostSlotLoad(unsigned char n, int r)
   else
     PanelTlv_ValidatePanelMemory(n);
 }
+
+extern unsigned char __near ram_f9a0[];
+extern unsigned char ram_3c8e4[];
+extern void PanelMemory_BackupLivePanel(void);
+
+void PanelMemory_BackupLivePanel(void)
+{
+	Mem_Copy(ram_3c8e4, ram_f9a0, 960);
+}
+
+struct resolve_ent { unsigned char *p0; unsigned char *p4; unsigned char b8; unsigned char b9; unsigned char *col; };
+struct voice_ent { unsigned char idx; unsigned char val; unsigned char b2; unsigned char b3; unsigned char b4; };
+extern struct resolve_ent PanelMemory_PartResolveTable[];
+extern void SndParam_ResolveVoiceEntry(struct voice_ent *);
+extern void BmoDelta_Type90Return(void);
+
+/* cc900-name: BmoDelta_Type90Return=BitMapOut_DeltaEncode_Type90Return */
+void BmoDelta_Type90Return(void)
+{
+	struct voice_ent v;
+	unsigned int i;
+
+	for (i = 0; i < 23; i++) {
+		v.b3 = *PanelMemory_PartResolveTable[i].p0 & 0xff;
+		v.b4 = *PanelMemory_PartResolveTable[i].p4 & 0x7f;
+		v.b2 = PanelMemory_PartResolveTable[i].b8;
+		SndParam_ResolveVoiceEntry(&v);
+		PanelMemory_PartResolveTable[i].col[v.idx] = v.val;
+	}
+}

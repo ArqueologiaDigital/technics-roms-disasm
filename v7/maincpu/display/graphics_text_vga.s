@@ -96,29 +96,11 @@ GraphicsRender_ByteData:
 ; Display_FillPaletteBandFromEntry: Sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC)
 ;   and flags a palette upload; runs directly on the draw task, otherwise posts itself to the draw ring. Basis:
 ;   callers + body -- screen (re)initialisation calls it with WA = 0xFF.
-Display_FillPaletteBandFromEntry:
-	pushw	iz
-	ld	iz, wa
-	calr	IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp	hl, 0:i3
-	jr	z, Display_FillPaletteBandFromEntry_Skip
-	ld	wa, iz
-	calr	Display_FillPaletteBandFromEntry_Impl
-	jr	Display_FillPaletteBandFromEntry_Epilogue
-Display_FillPaletteBandFromEntry_Skip:
-	ld	wa, 6:i3
-	calr	DrawQueue_Alloc
-	ld	xwa, xhl
-	lda	xbc, (GraphicsRender_ByteData_Code:24)
-	ld	(xwa), xbc
-	ld	(xwa+4), iz
-	calr	DrawRing_Post
-Display_FillPaletteBandFromEntry_Epilogue:
-	popw	iz
-	ret
-GraphicsRender_ByteData_Code:
-	ld	wa, (xwa+4)
-	jr	Display_FillPaletteBandFromEntry_Impl
+Display_FillPaletteBandFromEntry:	.include "includes/generated/cc900/Display_FillPaletteBandFromEntry.s"	; C: cc900/graphics_text_vga_m273.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Display_FillPaletteBandFromEntry_Skip, Display_FillPaletteBandFromEntry + 17
+	.set	Display_FillPaletteBandFromEntry_Epilogue, Display_FillPaletteBandFromEntry + 37
+GraphicsRender_ByteData_Code:	.include "includes/generated/cc900/GraphicsRender_ByteData_Code.s"	; C: cc900/graphics_text_vga_m0.c
 ; Display_FillPaletteBandFromEntry_Impl: Immediate body of Display_FillPaletteBandFromEntry: records WA at 0x3EFA6,
 ;   sets palette entries 64..191 to the RGB of palette entry WA (shadow table 0x324FC) and flags a palette upload
 ;   (PALETTE_INDEX_CACHED = 4, PALETTE_UPDATE_FLAG = 1). Basis: callers + body -- Display_FillPaletteBandFromEntry
@@ -198,43 +180,15 @@ GraphicsRender_ByteData_Loop3:
 	popw	iz
 	ret
 
-Display_DeferOrDrawWall:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, Display_DeferOrDrawWall_Direct
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (Display_DeferOrDrawWall_Code:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
-Display_DeferOrDrawWall_Code:
-	jr Display_DeferOrDrawWall_Direct
+Display_DeferOrDrawWall:	.include "includes/generated/cc900/Display_DeferOrDrawWall.s"	; C: cc900/graphics_text_vga_m273.c
+Display_DeferOrDrawWall_Code:	.include "includes/generated/cc900/Display_DeferOrDrawWall_Code.s"	; C: cc900/graphics_text_vga_m0.c
 
-Display_DeferOrDrawWall_Direct:
-	ldw (0x03ef92:24), 0x0000
-	ld wa, 0:i3
-	calr SetNeedUpdate
-	jrl DrawWall
+Display_DeferOrDrawWall_Direct:	.include "includes/generated/cc900/Display_DeferOrDrawWall_Direct.s"	; C: cc900/graphics_text_vga_m0_b.c
 
-Display_DeferOrUpdateScreen:
-	calr IS_XSP_INSIDE_4K_REGION_AT_1C032
-	cp hl, 0:i3
-	jr nz, Display_DeferOrUpdateScreen_Direct
-	ld wa, 4:i3
-	calr DrawQueue_Alloc
-	ld xwa, xhl
-	lda xbc, (Display_DeferOrUpdateScreen_Code:24)
-	ld (xwa), xbc
-	jrl DrawRing_Post
-Display_DeferOrUpdateScreen_Code:
-	jr Display_DeferOrUpdateScreen_Direct
+Display_DeferOrUpdateScreen:	.include "includes/generated/cc900/Display_DeferOrUpdateScreen.s"	; C: cc900/graphics_text_vga_m273_b.c
+Display_DeferOrUpdateScreen_Code:	.include "includes/generated/cc900/Display_DeferOrUpdateScreen_Code.s"	; C: cc900/graphics_text_vga_m0.c
 
-Display_DeferOrUpdateScreen_Direct:
-	ldw (0x03ef92:24), 0x0001
-	ld wa, 1:i3
-	calr SetNeedUpdate
-	jrl UpdateScreen
+Display_DeferOrUpdateScreen_Direct:	.include "includes/generated/cc900/Display_DeferOrUpdateScreen_Direct.s"	; C: cc900/graphics_text_vga_m0_b.c
 Display_DeferOrUpdateScreen_Direct_0xF:
 	ret
 

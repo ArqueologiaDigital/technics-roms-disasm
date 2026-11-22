@@ -49,3 +49,17 @@ void SndParamBank_WriteFlashDefaults(void)
 		Free(b);
 	}
 }
+
+/* cc900-module: PanelTlv_ValidateRecord PanelTlv_WriteRecordHeader */
+struct tlvrec { unsigned long off; unsigned char *rules; unsigned char tag; unsigned char len; };
+extern struct tlvrec PanelTlv_Block1_Layout[];
+extern void PanelTlv_WriteRecordHeader(unsigned char *base, struct tlvrec *l);
+extern void PanelTlv_WriteBlock1Headers(unsigned char *base);
+
+void PanelTlv_WriteBlock1Headers(unsigned char *base)
+{
+	unsigned int i;
+
+	for (i = 0; i < 30; i++)
+		PanelTlv_WriteRecordHeader(base, &PanelTlv_Block1_Layout[i]);
+}

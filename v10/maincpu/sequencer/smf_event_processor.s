@@ -3246,84 +3246,22 @@ FileOpen_Return:
 ;   of +4, else error 0x0d).  size * count bytes are read through the handle's device read
 ;   method (pointer at handle+14, entry +4).
 ;   Out: HL = items read (the byte count divided by size), 0 on error.
-FileRead:
-	ld xbc, (xsp + 12)
-	or xbc, xbc
-	jr z, SeqStep_FileReadSetup
-	cp (xbc + 4), 0x0
-	jr nz, SeqStep_FileReadCheck
-
-SeqStep_FileReadSetup:
-	ldw (FILE_ERROR:24), 0x0011
-	ld hl, 0:i3
-	ret
-
-SeqStep_FileReadCheck:
-	bitm 0, (xbc + 4)
-	jr nz, SeqStep_FileReadProcess
-	ldw (FILE_ERROR:24), 0x000d
-	ld hl, 0:i3
-	ret
-
-SeqStep_FileReadProcess:
-	ld wa, (xsp + 8)
-	mrdw3 0x9f, 0x0a, 0x48
-	pushw wa
-	ld xwa, (xsp + 6)
-	push xwa
-	ld xwa, xbc
-	push xwa
-	ld xwa, (xbc + 14)
-	ld xwa, (xwa + 4)
-	call (xwa)
-	lda xsp, (xsp + 10)
-	ld wa, hl
-	exts xwa
-	mrdw3 0x9f, 0x08, 0x58
-	ld hl, wa
-	ret
+FileRead:	.include "includes/generated/cc900/FileRead.s"	; C: cc900/smf_event_processor_m236_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileReadSetup, FileRead + 13
+	.set	SeqStep_FileReadCheck, FileRead + 23
+	.set	SeqStep_FileReadProcess, FileRead + 38
 
 ; C library write: FileWrite(buffer, size, count, handle), stack arguments.
 ;   The handle must be open (byte +4 non-zero, else error 0x11 in 0x1e53c) and writable (bit 1
 ;   of +4, else error 0x0d).  size * count bytes go through the device write method (pointer at
 ;   handle+14, entry +12).
 ;   Out: HL = items written (the byte count divided by size), 0 on error.
-FileWrite:
-	ld xbc, (xsp + 12)
-	or xbc, xbc
-	jr z, SeqStep_FileReadAdvance
-	cp (xbc + 4), 0x0
-	jr nz, SeqStep_FileReadLoop
-
-SeqStep_FileReadAdvance:
-	ldw (FILE_ERROR:24), 0x0011
-	ld hl, 0:i3
-	ret
-
-SeqStep_FileReadLoop:
-	bitm 1, (xbc + 4)
-	jr nz, SeqStep_FileReadDone
-	ldw (FILE_ERROR:24), 0x000d
-	ld hl, 0:i3
-	ret
-
-SeqStep_FileReadDone:
-	ld wa, (xsp + 8)
-	mrdw3 0x9f, 0x0a, 0x48
-	pushw wa
-	ld xwa, (xsp + 6)
-	push xwa
-	ld xwa, xbc
-	push xwa
-	ld xwa, (xbc + 14)
-	ld xwa, (xwa + 12)
-	call (xwa)
-	lda xsp, (xsp + 10)
-	ld wa, hl
-	exts xwa
-	mrdw3 0x9f, 0x08, 0x58
-	ld hl, wa
-	ret
+FileWrite:	.include "includes/generated/cc900/FileWrite.s"	; C: cc900/smf_event_processor_m236_xr_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqStep_FileReadAdvance, FileWrite + 13
+	.set	SeqStep_FileReadLoop, FileWrite + 23
+	.set	SeqStep_FileReadDone, FileWrite + 38
 
 SeqStep_FileReadReturn:
 	dec 2, xsp

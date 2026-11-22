@@ -137,3 +137,37 @@ void GraphicsRender_ShortByteBlock(unsigned char *p)
 {
 	GraphicsRender_ProcessEntries(p, p + 1);
 }
+
+/* cc900-module: ChangePalette_Impl ChangeWallPalette_Impl ChangeWall_Impl Display_FillPalBandFromEnt_Impl Display_FillPaletteBandFromEntry_Impl IsXspInDrawStack */
+struct icmd { void (*fn)(struct icmd *); unsigned int w; };
+extern void Display_FillPalBandFromEnt_Impl(unsigned int);
+void GraphicsRender_ByteData_Code(struct icmd *q);
+extern void GraphicsRender_ByteData_Code(struct icmd *q);
+
+/* cc900-name: Display_FillPalBandFromEnt_Impl=Display_FillPaletteBandFromEntry_Impl */
+void GraphicsRender_ByteData_Code(struct icmd *q)
+{
+	Display_FillPalBandFromEnt_Impl(q->w);
+}
+
+/* cc900-module: Display_DeferOrDrawWall_Code Display_DeferOrDrawWall_Direct Display_DeferOrUpdScreen_Code Display_DeferOrUpdScreen_Direct Display_DeferOrUpdateScreen_Direct DrawWall IsDrawTask SetNeedUpdate UpdateScreen */
+struct wcmd { void (*fn)(struct wcmd *); };
+void Display_DeferOrDrawWall_Code(struct wcmd *q);
+void Display_DeferOrDrawWall_Direct(void);
+void Display_DeferOrUpdScreen_Code(struct wcmd *q);
+extern void Display_DeferOrDrawWall_Code(struct wcmd *q);
+extern void Display_DeferOrDrawWall_Direct(void);
+extern void Display_DeferOrUpdScreen_Code(struct wcmd *q);
+extern void Display_DeferOrUpdScreen_Direct(void);
+
+/* cc900-name: Display_DeferOrUpdScreen_Code=Display_DeferOrUpdateScreen_Code */
+void Display_DeferOrDrawWall_Code(struct wcmd *q)
+{
+	Display_DeferOrDrawWall_Direct();
+}
+/* cc900-name: Display_DeferOrUpdScreen_Code=Display_DeferOrUpdateScreen_Code */
+/* cc900-name: Display_DeferOrUpdScreen_Direct=Display_DeferOrUpdateScreen_Direct */
+void Display_DeferOrUpdScreen_Code(struct wcmd *q)
+{
+	Display_DeferOrUpdScreen_Direct();
+}

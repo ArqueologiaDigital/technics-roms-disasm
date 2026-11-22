@@ -1699,32 +1699,9 @@ PanelInput_DrainRxQueue_Return:
 	ret
 ; xwa -> a 3-byte record: pop a header (-> event index, PanelInput_EventIndexOfHeader) and two data bytes from
 ; CPANEL_RX_EVENT_QUEUE; l = 0 when all three were there, 0xFF otherwise.
-PanelInput_ReadRxRecord:
-	dec	2, xsp
-	push	xiz
-	ld	xiz, xwa
-	ld	(xsp + 4), 0xff
-	call	CPanel_RxEventQueue_Pop
-	cp	hl, 0xffff
-	jr	z, PanelInput_ReadRxRecord_Return
-	extz	hl
-	ld	wa, hl
-	calr	PanelInput_EventIndexOfHeader
-	ld	(xiz), l
-	call	CPanel_RxEventQueue_Pop
-	cp	hl, 0xffff
-	jr	z, PanelInput_ReadRxRecord_Return
-	ld	(xiz + 1), l
-	call	CPanel_RxEventQueue_Pop
-	cp	hl, 0xffff
-	jr	z, PanelInput_ReadRxRecord_Return
-	ld	(xiz + 2), l
-	ld	(xsp + 4), 0x0
-PanelInput_ReadRxRecord_Return:
-	ld	l, (xsp + 4)
-	pop	xiz
-	inc	2, xsp
-	ret
+PanelInput_ReadRxRecord:	.include "includes/generated/cc900/PanelInput_ReadRxRecord.s"	; C: cc900/audio_control_engine_m277_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelInput_ReadRxRecord_Return, PanelInput_ReadRxRecord + 58
 ; Port G is the pedal port, active low (technics-docs cpu-subsystem.md): PG.3-2 -> the foot-switch record (event
 ; 28), PG.7-4 -> the foot-controller record (event 29; all four high = nothing engaged, which arms a 500-tick
 ; debounce at 0x8EC8), PD.6 -> the third record (event 30).  Records at 0x8EB6 / 0x8EBA / 0x8EBE.
@@ -2136,42 +2113,11 @@ Audio_UpdateLEDsAndChannels:
 	calr	Audio_InitChannelTimers
 	orw	(LED_REQUEST_3:16), 2
 	ret
-MIDI_ProcessChangedChannels:
-	cp	(CURRENT_TITLE:16), 251
-	ret	z
-	calr	Audio_CheckAndFlagChanges
-	ld	wa, (LED_REQUEST_HOLD_1:16)
-	cpl	wa
-	and	wa, (LED_REQUEST_1:16)
-	jr	z, MidiChanged_ProcessGroup2
-	ld	xbc, PanelLed_PendingGroup1Handlers
-	calr	DispatchBitmaskHandlers
-	ldw	(LED_REQUEST_1:16), 0
-MidiChanged_ProcessGroup2:
-	ld	wa, (LED_REQUEST_HOLD_2:16)
-	cpl	wa
-	and	wa, (LED_REQUEST_2:16)
-	jr	z, MidiChanged_ProcessGroup3
-	ld	xbc, PanelLed_PendingGroup2Handlers
-	calr	DispatchBitmaskHandlers
-	ldw	(LED_REQUEST_2:16), 0
-MidiChanged_ProcessGroup3:
-	ld	wa, (LED_REQUEST_HOLD_3:16)
-	cpl	wa
-	and	wa, (LED_REQUEST_3:16)
-	jr	z, MidiChanged_ProcessGroup4
-	ld	xbc, PanelLed_PendingGroup3Handlers
-	calr	DispatchBitmaskHandlers
-	ldw	(LED_REQUEST_3:16), 0
-MidiChanged_ProcessGroup4:
-	ld	wa, (0x8e88:16)
-	cpl	wa
-	and	wa, (0x8e86:16)
-	ret	z
-	ld	xbc, PanelLed_PendingGroup4Handlers
-	calr	DispatchBitmaskHandlers
-	ldw	(0x8e86:16), 0
-	ret
+MIDI_ProcessChangedChannels:	.include "includes/generated/cc900/MIDI_ProcessChangedChannels.s"	; C: cc900/audio_control_engine_m278_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChanged_ProcessGroup2, MIDI_ProcessChangedChannels + 36
+	.set	MidiChanged_ProcessGroup3, MIDI_ProcessChangedChannels + 62
+	.set	MidiChanged_ProcessGroup4, MIDI_ProcessChangedChannels + 88
 MidiChannel_DispatchChanged:
 	cp	(CURRENT_TITLE:16), 251
 	ret	z
@@ -3184,64 +3130,18 @@ CtrlPanelBit6_Done:
 ; Output: ORs bitmask into panel LED register (36666/36670/36674/36678)
 ; Looks up bitmask from table at 0xeda66c.
 ; ============================================================================
-CtrlPanel_SetIndicatorBit:
-	pushw_erp	0xfa
-	ld	c, a
-	and	c, 0xf0
-	ldfr_berp	C, 0xfb
-	and	a, 0xf
-	extz	wa
-	call	CtrlPanel_LookupIndicatorEntry
-	cp_erpb	0xfb, 0x60
-	jr	z, CtrlPanel_SetIndicator_Group4
-	cp_erpb	0xfb, 0x40
-	jr	z, CtrlPanel_SetIndicator_Group3
-	cp_erpb	0xfb, 0x20
-	jr	z, CtrlPanel_SetIndicator_Group2
-	cpib_erp	0xfb, 0
-	jr	nz, CtrlPanel_PopRetFA
-	or	(LED_REQUEST_1:16), hl
-	jr	CtrlPanel_PopRetFA
-CtrlPanel_SetIndicator_Group2:
-	or	(LED_REQUEST_2:16), hl
-	jr	CtrlPanel_PopRetFA
-CtrlPanel_SetIndicator_Group3:
-	or	(LED_REQUEST_3:16), hl
-	jr	CtrlPanel_PopRetFA
-CtrlPanel_SetIndicator_Group4:
-	or	(0x8e86:16), hl
-CtrlPanel_PopRetFA:
-	popw_erp	0xfa
-	ret
-CtrlPanel_IndicatorDispatch:
-	pushw_erp	0xfa
-	ld	c, a
-	and	c, 0xf0
-	ldfr_berp	C, 0xfb
-	and	a, 0xf
-	extz	wa
-	call	CtrlPanel_LookupIndicatorEntry
-	cp_erpb	0xfb, 0x60
-	jr	z, CtrlPanel_DispIndicator_Group4
-	cp_erpb	0xfb, 0x40
-	jr	z, CtrlPanel_DispIndicator_Group3
-	cp_erpb	0xfb, 0x20
-	jr	z, CtrlPanel_DispIndicator_Group2
-	cpib_erp	0xfb, 0
-	jr	nz, CtrlPanel_PopRetFA2
-	or	(LED_REQUEST_HOLD_1:16), hl
-	jr	CtrlPanel_PopRetFA2
-CtrlPanel_DispIndicator_Group2:
-	or	(LED_REQUEST_HOLD_2:16), hl
-	jr	CtrlPanel_PopRetFA2
-CtrlPanel_DispIndicator_Group3:
-	or	(LED_REQUEST_HOLD_3:16), hl
-	jr	CtrlPanel_PopRetFA2
-CtrlPanel_DispIndicator_Group4:
-	or	(0x8e88:16), hl
-CtrlPanel_PopRetFA2:
-	popw_erp	0xfa
-	ret
+CtrlPanel_SetIndicatorBit:	.include "includes/generated/cc900/CtrlPanel_SetIndicatorBit.s"	; C: cc900/audio_control_engine_m278.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CtrlPanel_SetIndicator_Group2, CtrlPanel_SetIndicatorBit + 49
+	.set	CtrlPanel_SetIndicator_Group3, CtrlPanel_SetIndicatorBit + 55
+	.set	CtrlPanel_SetIndicator_Group4, CtrlPanel_SetIndicatorBit + 61
+	.set	CtrlPanel_PopRetFA, CtrlPanel_SetIndicatorBit + 65
+CtrlPanel_IndicatorDispatch:	.include "includes/generated/cc900/CtrlPanel_IndicatorDispatch.s"	; C: cc900/audio_control_engine_m278.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CtrlPanel_DispIndicator_Group2, CtrlPanel_IndicatorDispatch + 49
+	.set	CtrlPanel_DispIndicator_Group3, CtrlPanel_IndicatorDispatch + 55
+	.set	CtrlPanel_DispIndicator_Group4, CtrlPanel_IndicatorDispatch + 61
+	.set	CtrlPanel_PopRetFA2, CtrlPanel_IndicatorDispatch + 65
 CtrlPanel_SetIndicatorLED:
 	pushw_erp	0xfa
 	ld	c, a
@@ -4186,51 +4086,10 @@ PanelMem_ApplyFixups_Next:
 	pop	xiz
 	inc	2, xsp
 	ret
-MIDI_WriteMultiByteWithHeader:
-	dec	6, xsp
-	push	xiz
-	ld	xiz, xwa
-	ld	A, (xiz+)
-	ld	(xsp + 4), a
-	ld	A, (xiz+)
-	ld	(xsp + 6), a
-	ld	a, (xsp + 4)
-	extz	wa
-	ld	e, (xiz + 1)
-	extz	de
-	pushw	0xff
-	ld	bc, 1:i3
-	calr	MIDI_WriteCommandToBuffer
-	ld	a, (xsp + 4)
-	extz	wa
-	ld	e, (xiz)
-	extz	de
-	pushw	0xff
-	ld	bc, 0:i3
-	calr	MIDI_WriteCommandToBuffer
-	decm8	2, (xsp + 6)
-	ld	(xsp + 8), 0x2
-	inc	2, xiz
-	cp	(xsp + 6), 0x0
-	jr	z, MidiMultiByte_Done
-MidiMultiByte_WriteLoop:
-	ld	a, (xsp + 4)
-	extz	wa
-	ld	c, (xsp + 8)
-	extz	bc
-	ld	e, (xiz)
-	extz	de
-	pushw	0xff
-	calr	MIDI_WriteCommandToBuffer
-	decm8	1, (xsp + 6)
-	incm8	1, (xsp + 8)
-	inc	1, xiz
-	cp	(xsp + 6), 0x0
-	jr	nz, MidiMultiByte_WriteLoop
-MidiMultiByte_Done:
-	pop	xiz
-	inc	6, xsp
-	ret
+MIDI_WriteMultiByteWithHeader:	.include "includes/generated/cc900/MIDI_WriteMultiByteWithHeader.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiMultiByte_WriteLoop, MIDI_WriteMultiByteWithHeader + 67
+	.set	MidiMultiByte_Done, MIDI_WriteMultiByteWithHeader + 101
 MIDI_WriteMultiByteNoHeader:
 	dec	6, xsp
 	push	xiz
@@ -4322,36 +4181,7 @@ AudioParamInit_Loop:
 	jr	ule, AudioParamInit_Loop
 	popw_erp	0xfa
 	ret
-Audio_InitSingleChannelParams:
-	dec	2, xsp
-	ld	(xsp), a
-	ld	(MIDI_MSG_STATUS:16), 177
-	mrib4	0x87, 0x19, 0x68, 0x90
-	ld	(MIDI_MSG_DATA2:16), 0
-	ld	(MIDI_MSG_DATA3:16), 64
-	calr	SwbtWr_WriteParamBlock
-	ld	(MIDI_MSG_STATUS:16), 178
-	mrib4	0x87, 0x19, 0x68, 0x90
-	ld	(MIDI_MSG_DATA2:16), 0
-	ld	(MIDI_MSG_DATA3:16), 127
-	calr	SwbtWr_WriteParamBlock
-	ld	(MIDI_MSG_STATUS:16), 179
-	mrib4	0x87, 0x19, 0x68, 0x90
-	ld	(MIDI_MSG_DATA2:16), 127
-	ld	(MIDI_MSG_DATA3:16), 127
-	calr	SwbtWr_WriteParamBlock
-	mrib4	0x87, 0x19, 0xbe, 0x90
-	ld	(0x90bf:16), 4
-	ld	(0x90c0:16), 0
-	ld	(0x90c1:16), 8
-	call	MIDI_WriteVoiceParamFromBuffer
-	mrib4	0x87, 0x19, 0x67, 0x90
-	ld	(MIDI_MSG_DATA1:16), 4
-	ld	(MIDI_MSG_DATA2:16), 0
-	ld	(MIDI_MSG_DATA3:16), 8
-	calr	SwbtWr_WriteParamBlock
-	inc	2, xsp
-	ret
+Audio_InitSingleChannelParams:	.include "includes/generated/cc900/Audio_InitSingleChannelParams.s"	; C: cc900/audio_control_engine_m280.c
 Audio_MainPeriodicUpdate:
 	cp	(PANEL_EVENT_QUEUE:16), 255
 	ret	z
@@ -5657,57 +5487,12 @@ BitmaskToIndex_Terminate:
 	add	xwa, xde
 	ld	(xwa), 0xff
 	ret
-Audio_SendModulationToParts:
-	dec	4, xsp
-	pushw	iz
-	ld	(xsp + 2), c
-	ld	(xsp + 4), a
-	ld	iz, 0:i3
-ModIter_NextPart:
-	lda	xwa, (0x903b:16)
-	ld	bc, iz
-	extz	xbc
-	add	xbc, xwa
-	ld	a, (xbc)
-	cp	a, 0xff
-	jr	z, ModIter_Done
-	cp	a, 2:i3
-	jr	nz, ModIter_ApplyParam
-	cp	(xsp + 2), 0x2
-	jr	nz, ModIter_AdvancePart
-ModIter_ApplyParam:
-	ld	(0x90be:16), 178
-	mrib4	0x81, 0x19, 0xbf, 0x90
-	mrdb5	0x8f, 0x04, 0x19, 0xc0, 0x90
-	ld	(0x90c1:16), 127
-	call	MIDI_LoadParamsAndDispatchCC
-	lda	xwa, (0x903b:16)
-	ld	bc, iz
-	extz	xbc
-	add	xbc, xwa
-	ld	a, (xbc)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	bitm	5, (xhl + 13)
-	jr	nz, ModIter_AdvancePart
-	ld	a, (0x90be:16)
-	extz	wa
-	ld	c, (0x90bf:16)
-	extz	bc
-	ld	e, (0x90c0:16)
-	extz	de
-	ld	l, (0x90c1:16)
-	extz	hl
-	pushw	hl
-	call	AddswbWr
-ModIter_AdvancePart:
-	inc	1, iz
-	cp	iz, 0x20
-	jr	c, ModIter_NextPart
-ModIter_Done:
-	popw	iz
-	inc	4, xsp
-	ret
+Audio_SendModulationToParts:	.include "includes/generated/cc900/Audio_SendModulationToParts.s"	; C: cc900/audio_control_engine_m280.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ModIter_NextPart, Audio_SendModulationToParts + 11
+	.set	ModIter_ApplyParam, Audio_SendModulationToParts + 38
+	.set	ModIter_AdvancePart, Audio_SendModulationToParts + 112
+	.set	ModIter_Done, Audio_SendModulationToParts + 120
 Audio_SendPitchBendToParts:
 	dec	2, xsp
 	push	xiz
@@ -5972,46 +5757,7 @@ UIState_RenderBitmapData_Skip2:
 	ret
 ToshiCmd_DefaultHandler_Ret:
 	ret
-SndParam_FetchSequencerParams:
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	bc, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	lda	xwa, (PANEL_EVENT_QUEUE:16)
-	extz	xbc
-	add	xbc, xwa
-	mrib4	0x81, 0x19, 0x67, 0x90
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	ld	(0x906b:16), xhl
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	lda	xbc, (PANEL_EVENT_QUEUE:16)
-	extz	xde
-	add	xde, xbc
-	ld	a, (xde)
-	ld	(MIDI_MSG_DATA1:16), a
-	ld	(EXTDATA_TLV_OFFSET:16), a
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	extz	xde
-	add	xde, xbc
-	mrib4	0x82, 0x19, 0x70, 0x90
-	ld	(MIDI_MSG_DATA2:16), 0
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	extz	xde
-	add	xde, xbc
-	mrib4	0x82, 0x19, 0x71, 0x90
-	ld	(MIDI_MSG_DATA3:16), 0
-	ret
+SndParam_FetchSequencerParams:	.include "includes/generated/cc900/SndParam_FetchSequencerParams.s"	; C: cc900/audio_control_engine_m280.c
 SndParam_WriteLookupAndStore:	.include "includes/generated/cc900/SndParam_WriteLookupAndStore.s"	; C: cc900/audio_control_engine_m280.c
 SwbtWr_FlushAndAppendParams:
 	cp	(MIDI_MSG_DATA3:16), 0
@@ -6584,42 +6330,7 @@ PanelVari_GetGroupSlot_NoRecord:
 PanelVari_GetGroupSlot_Epilogue:
 	inc	8, xsp
 	ret
-SwbtWr_AppendFixedParamBlock:
-	ld	wa, (SWBTWR_WRITE_INDEX:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(SWBTWR_WRITE_INDEX:16), wa
-	lda	xbc, (SWBTWR_EVENT_QUEUE:16)
-	extz	xde
-	add	xde, xbc
-	ldmi16	(xde), 0x9067
-	ld	wa, (SWBTWR_WRITE_INDEX:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(SWBTWR_WRITE_INDEX:16), wa
-	extz	xde
-	add	xde, xbc
-	ldmi16	(xde), 0x9068
-	ld	wa, (SWBTWR_WRITE_INDEX:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(SWBTWR_WRITE_INDEX:16), wa
-	extz	xde
-	add	xde, xbc
-	ldmi16	(xde), 0x9069
-	ld	wa, (SWBTWR_WRITE_INDEX:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(SWBTWR_WRITE_INDEX:16), wa
-	extz	xde
-	add	xde, xbc
-	ldmi16	(xde), 0x906a
-	ld	wa, (SWBTWR_WRITE_INDEX:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	(xwa), 0xff
-	ld	(MIDI_MSG_DATA3:16), 0
-	ret
+SwbtWr_AppendFixedParamBlock:	.include "includes/generated/cc900/SwbtWr_AppendFixedParamBlock.s"	; C: cc900/audio_control_engine_m280.c
 ; a = tag -> xhl = the RAM address of that record's payload (PanelTlv_PayloadByTag[tag]; 0xFFFFFFFF = none)
 PanelTlv_PayloadOfTag:	.include "includes/generated/cc900/PanelTlv_PayloadOfTag.s"	; C: cc900/audio_control_engine_m280_c.c
 ; a = part tag -> xhl = its companion record's payload: PanelTlv_CompanionByPart[a] for a <= 0x1F, tag 0x49's
@@ -11132,16 +10843,7 @@ SndParam_DispatchTypeDE5:
 	call	(xhl)
 	ld	(xsp+0x4), hl
 	jr	SndParam_Epilogue
-SndParam_NotifyAndReturn:
-	pushw	iz
-	ld	iz, de
-	calr	UIState_CheckAndRenderBitmap_Helper_Helper
-	ld	xwa, xhl
-	ld	bc, iz
-	ld	de, (xsp+0x6)
-	calr	SoundParam_NotifyChange
-	popw	iz
-	retd	2
+SndParam_NotifyAndReturn:	.include "includes/generated/cc900/SndParam_NotifyAndReturn.s"	; C: cc900/sndparam_routines_m283.c
 SndParam_LookupByKey:
 	lda	xsp, (xsp-0xa)
 	push	xiz

@@ -1542,23 +1542,13 @@ Boot_HandleComboDisplay_Check3:
 	call UI_InterruptTitleByIndex		; Display SOFT VERSION screen
 	ret
 
-Boot_ParseTableDataTimestamp:
-	ld xwa, 0x9fffc4
-	push xwa
-	call ParseInt16
-	inc 4, xsp
-	ret
+Boot_ParseTableDataTimestamp:	.include "includes/generated/cc900/Boot_ParseTableDataTimestamp.s"	; C: cc900/kn5000_v10_program_m0.c
 
 Boot_GetSystemPointer:
 	ld hl, (1028:16)
 	ret
 
-Boot_ParseSubCPUTimestamp:
-	ld xwa, 0x87fff5
-	push xwa
-	call ParseInt16
-	inc 4, xsp
-	ret
+Boot_ParseSubCPUTimestamp:	.include "includes/generated/cc900/Boot_ParseSubCPUTimestamp.s"	; C: cc900/kn5000_v10_program_m0.c
 
 ; ===========================================================================
 ; Boot_HandleFactoryReset - Factory reset if combo 1 AND checksums invalid

@@ -11057,56 +11057,17 @@ SeqPart_SuccessReturn:
 	ld hl, 0:i3
 	ret
 
-Seq_ValidatePartAndTempoAlt:
-	ld	a, (SEQ_TRACK:16)
-	cp a, 0x11
-	jr z, SeqValPTA_CheckTempo
-	extz wa
-	calr Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr nz, SeqValPTA_FailReturn
+Seq_ValidatePartAndTempoAlt:	.include "includes/generated/cc900/Seq_ValidatePartAndTempoAlt.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValPTA_CheckTempo, Seq_ValidatePartAndTempoAlt + 18
+	.set	SeqValPTA_FailReturn, Seq_ValidatePartAndTempoAlt + 40
+	.set	SeqValPTA_OKReturn, Seq_ValidatePartAndTempoAlt + 44
 
-SeqValPTA_CheckTempo:
-	ld	wa, (SEQ_OP_FROM:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr nz, SeqValPTA_FailReturn
-	ld	wa, (SEQ_OP_MEASURES:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr z, SeqValPTA_OKReturn
-
-SeqValPTA_FailReturn:
-	ldw hl, 0xffff
-	ret
-
-SeqValPTA_OKReturn:
-	ld hl, 0:i3
-	ret
-
-Seq_ValidateExtended_DataBlock:
-	ld	a, (SEQ_TRACK:16)
-	cp	a, 127
-	jr	z, Seq_ValidateExtended_DataBlock_Skip
-	extz	wa
-	calr	Seq_ValidatePartNumber
-	cp	hl, 0:i3
-	jr	nz, Seq_ValidateExtended_DataBlock_Skip2
-Seq_ValidateExtended_DataBlock_Skip:
-	ld	wa, (SEQ_OP_FROM:16)
-	calr	Seq_ValidateTempoValue
-	cp	hl, 0:i3
-	jr	nz, Seq_ValidateExtended_DataBlock_Skip2
-	ld	wa, (SEQ_OP_MEASURES:16)
-	calr	Seq_ValidateTempoValue
-	cp	hl, 0:i3
-	jr	z, Seq_ValidateExtended_DataBlock_Skip3
-Seq_ValidateExtended_DataBlock_Skip2:
-	ldw	hl, 0xffff
-	ret
-Seq_ValidateExtended_DataBlock_Skip3:
-	ld	hl, 0:i3
-	ret
+Seq_ValidateExtended_DataBlock:	.include "includes/generated/cc900/Seq_ValidateExtended_DataBlock.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Seq_ValidateExtended_DataBlock_Skip, Seq_ValidateExtended_DataBlock + 18
+	.set	Seq_ValidateExtended_DataBlock_Skip2, Seq_ValidateExtended_DataBlock + 40
+	.set	Seq_ValidateExtended_DataBlock_Skip3, Seq_ValidateExtended_DataBlock + 44
 
 SeqPos_DecrementAndCheck:
 	dec 2, xsp
@@ -11465,45 +11426,13 @@ PartCtrl_AdvancePos_Return:
 	popw iz
 	ret
 
-PartCtrl_NavigateBackward:
-	pushw iz
-	ld	wa, (SEQOP_SECONDARY_OFFSET:16)
-	cp wa, 5:i3
-	jr z, PartCtrl_NavBack_AtMin
-	dec 1, wa
-	ld	(SEQOP_SECONDARY_OFFSET:16), wa
-	jr SeqPart_RestoreReturn3
-
-PartCtrl_NavBack_AtMin:
-	ld	wa, (SEQOP_SECONDARY_BLOCK:16)
-	calr PartCtrl_ReadWord_Off1
-	ld iz, hl
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, PartCtrl_NavBack_CheckZero
-	ldw wa, 0x47
-	calr SeqData_SetErrorCode
-	ld (SEQ_ERROR_CODE:16), 2
-	jr SeqPart_RestoreReturn3
-
-PartCtrl_NavBack_CheckZero:
-	cp iz, 0:i3
-	jr z, PartCtrl_NavBack_ErrorEnd
-	cp iz, 0xffff
-	jr nz, PartCtrl_NavBack_SaveNew
-
-PartCtrl_NavBack_ErrorEnd:
-	ld (SEQ_ERROR_CODE:16), 11
-	jr SeqPart_RestoreReturn3
-
-PartCtrl_NavBack_SaveNew:
-	ld	(SEQOP_SECONDARY_BLOCK:16), iz
-	ldw	(SEQOP_SECONDARY_OFFSET:16), 255
-
-SeqPart_RestoreReturn3:
-	popw iz
-	ret
+PartCtrl_NavigateBackward:	.include "includes/generated/cc900/PartCtrl_NavigateBackward.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartCtrl_NavBack_AtMin, PartCtrl_NavigateBackward + 17
+	.set	PartCtrl_NavBack_CheckZero, PartCtrl_NavigateBackward + 48
+	.set	PartCtrl_NavBack_ErrorEnd, PartCtrl_NavigateBackward + 58
+	.set	PartCtrl_NavBack_SaveNew, PartCtrl_NavigateBackward + 65
+	.set	SeqPart_RestoreReturn3, PartCtrl_NavigateBackward + 75
 
 PartCtrl_AdvanceToNextEntry:
 	pushw iz
@@ -11544,45 +11473,13 @@ PartCtrl_RestoreReturn:
 	popw iz
 	ret
 
-PartCtrl_NavigateBackwardAlt:
-	pushw iz
-	ld	wa, (SEQOP_PRIMARY_OFFSET:16)
-	cp wa, 5:i3
-	jr z, PartCtrl_NavBackAlt_AtMin
-	dec 1, wa
-	ld	(SEQOP_PRIMARY_OFFSET:16), wa
-	jr SeqPart_RestoreReturn2
-
-PartCtrl_NavBackAlt_AtMin:
-	ld	wa, (SEQOP_PRIMARY_BLOCK:16)
-	calr PartCtrl_ReadWord_Off1
-	ld iz, hl
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr nz, PartCtrl_NavBackAlt_CheckZero
-	ldw wa, 0x48
-	calr SeqData_SetErrorCode
-	ld (SEQ_ERROR_CODE:16), 2
-	jr SeqPart_RestoreReturn2
-
-PartCtrl_NavBackAlt_CheckZero:
-	cp iz, 0:i3
-	jr z, PartCtrl_NavBackAlt_ErrorEnd
-	cp iz, 0xffff
-	jr nz, PartCtrl_NavBackAlt_SaveNew
-
-PartCtrl_NavBackAlt_ErrorEnd:
-	ld (SEQ_ERROR_CODE:16), 11
-	jr SeqPart_RestoreReturn2
-
-PartCtrl_NavBackAlt_SaveNew:
-	ld	(SEQOP_PRIMARY_BLOCK:16), iz
-	ldw	(SEQOP_PRIMARY_OFFSET:16), 255
-
-SeqPart_RestoreReturn2:
-	popw iz
-	ret
+PartCtrl_NavigateBackwardAlt:	.include "includes/generated/cc900/PartCtrl_NavigateBackwardAlt.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PartCtrl_NavBackAlt_AtMin, PartCtrl_NavigateBackwardAlt + 17
+	.set	PartCtrl_NavBackAlt_CheckZero, PartCtrl_NavigateBackwardAlt + 48
+	.set	PartCtrl_NavBackAlt_ErrorEnd, PartCtrl_NavigateBackwardAlt + 58
+	.set	PartCtrl_NavBackAlt_SaveNew, PartCtrl_NavigateBackwardAlt + 65
+	.set	SeqPart_RestoreReturn2, PartCtrl_NavigateBackwardAlt + 75
 
 ; ============================================================================
 ; SeqPart_ReadByte_Secondary - Read byte from secondary sequencer part buffer
@@ -11688,89 +11585,17 @@ SeqTrack_LookupChannelData_Skip3:
 	ld	hl, 0:i3
 	ret
 
-SeqPart_LoadAndValidateData:
-	pushw_erp 0xfa
-	ld	a, (SQEDT_MCP_REPEAT:16)
-	cp a, 0:i3
-	jr z, Part_PopRetFA2
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr nz, Part_PopRetFA2
-	ld a, (SQEDT_MCP_TRACK_B:16)
-	cp a, 0x11
-	jr nz, SeqPart_StoreChannelParams
-	ld a, 0x7f:opc
+SeqPart_LoadAndValidateData:	.include "includes/generated/cc900/SeqPart_LoadAndValidateData.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_StoreChannelParams, SeqPart_LoadAndValidateData + 28
+	.set	SeqPart_LoadDualPartLoop, SeqPart_LoadAndValidateData + 63
+	.set	Part_PopRetFA2, SeqPart_LoadAndValidateData + 114
 
-SeqPart_StoreChannelParams:
-	ld	(SEQ_TRACK:16), a
-	ld wa, (SQEDT_MCP_AT:16)
-	ld	(SEQ_OP_FROM:16), wa
-	ld wa, (SQEDT_MCP_AT:16)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	ldib_erp 0xfb, 0
-	ld	a, (SQEDT_MCP_REPEAT:16)
-	cp a, 0:i3
-	jr ule, Part_PopRetFA2
-
-SeqPart_LoadDualPartLoop:
-	ld	(GLOBAL_ERROR_CODE:16), 255
-	ld	(SEQ_ERROR_CODE:16), 0
-	call	SeqPart_DualPartLoad
-	cp	(GLOBAL_ERROR_CODE:16), 35
-	jr	nz, Part_PopRetFA2
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr	nz, Part_PopRetFA2
-	ldw_d16	wa, (SEQ_OP_DEST_MEASURE)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	inc1b_erp	251	; inc 1,qizh
-	ldto_berp	a, 251	; ld a,qizh
-	cp	a, (SQEDT_MCP_REPEAT:16)
-	jr	c, SeqPart_LoadDualPartLoop
-Part_PopRetFA2:
-	popw_erp 0xfa
-	ret
-
-SeqPart_LoadDualPartData:
-	push	qiz
-	ldb_d8	a, (SQEDT_MINS_REPEAT)
-	cp	a, 0:i3
-	jr	z, SeqPart_LoadDualPartData_Code_Epilogue
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	ldb_d8	a, (SQEDT_MINS_TRACK_B)
-	cp	a, 17
-	jr	nz, SeqPart_LoadDualPartData_Skip
-	ld	a, 127:opc
-SeqPart_LoadDualPartData_Skip:
-	ld	(SEQ_TRACK:16), a
-	ldw_d16	wa, (SQEDT_MINS_AT)
-	ld	(SEQ_OP_FROM:16), wa
-	ldw_d16	wa, (SQEDT_MINS_AT)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	ldib_erp	251, 0	; ld qizh,0
-	ldb_d8	a, (SQEDT_MINS_REPEAT)
-	cp	a, 0:i3
-	jr	ule, SeqPart_LoadDualPartData_Code_Epilogue
-SeqPart_LoadDualPartData_Loop:
-	ld	(GLOBAL_ERROR_CODE:16), 255
-	ld	(SEQ_ERROR_CODE:16), 0
-	call	SeqPart_ByteBlockA95A
-	cp	(GLOBAL_ERROR_CODE:16), 35
-	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	bit	3, (SEQ_EDIT_FLAGS:16)
-	jr	nz, SeqPart_LoadDualPartData_Code_Epilogue
-	ldw_d16	wa, (SEQ_OP_DEST_MEASURE)
-	add	wa, (SEQ_OP_MEASURES:16)
-	ld	(SEQ_OP_DEST_MEASURE:16), wa
-	inc1b_erp	251	; inc 1,qizh
-	ldto_berp	a, 251	; ld a,qizh
-	cp	a, (SQEDT_MINS_REPEAT:16)
-	jr	c, SeqPart_LoadDualPartData_Loop
-SeqPart_LoadDualPartData_Code_Epilogue:
-	pop	qiz
-	ret
+SeqPart_LoadDualPartData:	.include "includes/generated/cc900/SeqPart_LoadDualPartData.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_LoadDualPartData_Skip, SeqPart_LoadDualPartData + 28
+	.set	SeqPart_LoadDualPartData_Loop, SeqPart_LoadDualPartData + 63
+	.set	SeqPart_LoadDualPartData_Code_Epilogue, SeqPart_LoadDualPartData + 114
 SeqVoice_SeekToBar:
 	push xiz
 	ld iz, 1:i3
@@ -12361,42 +12186,7 @@ SeqPart_DefaultRangeData:
 	ldw	(SQEDT_MINS_LAST:16), 1
 	ret
 
-Part_WriteWordAndByte:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), c
-	ld iz, wa
-	ld	wa, (0x2861:16)
-	ld c, a
-	extz bc
-	ld wa, 0:i3
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld	wa, (0x2861:16)
-	ld c, a
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	ld wa, 0:i3
-	calr Part_WriteByte_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld	bc, (0x2861:16)
-	extz bc
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld	bc, (0x2861:16)
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	calr Part_WriteByte_Indexed
-	popw iz
-	inc 2, xsp
-	ret
+Part_WriteWordAndByte:	.include "includes/generated/cc900/Part_WriteWordAndByte.s"	; C: cc900/sequencer_engine_m234.c
 
 SeqPart_CalcPlaybackOffset:
 	pushw iz
@@ -12981,55 +12771,13 @@ SeqCount_Return:
 	pop xiz
 	ret
 
-SeqVoice_CountChainLength:
-	dec 6, xsp
-	pushw iz
-	ld (xsp + 4), c
-	ld (xsp + 6), a
-	ld a, (xsp + 6)
-	extz wa
-	ld c, (xsp + 4)
-	extz bc
-	calr Part_ReadVoiceWord
-	ld iz, hl
-	cp iz, 0xffff
-	jr z, SeqVoice_ChainNoData
-	ld a, (xsp + 6)
-	extz wa
-	ld c, (xsp + 4)
-	extz bc
-	calr Part_ReadVoiceBit7
-	cp l, 0:i3
-	jr nz, SeqVoice_ChainStartCount
-
-SeqVoice_ChainNoData:
-	ld hl, 0:i3
-	jr SeqVoice_ChainReturn
-
-SeqVoice_ChainStartCount:
-	ldw (xsp + 2), 0x1
-	cp iz, 0xffff
-	jr z, SeqVoice_ChainStoreCount
-
-SeqVoice_ChainFollowLoop:
-	ld wa, iz
-	calr PartCtrl_TestBit7
-	cp l, 0:i3
-	jr z, SeqVoice_ChainStoreCount
-	ld wa, iz
-	calr PartCtrl_ReadWord
-	ld iz, hl
-	incw 1, (xsp + 2)
-	cp iz, 0xffff
-	jr nz, SeqVoice_ChainFollowLoop
-
-SeqVoice_ChainStoreCount:
-	ld hl, (xsp + 2)
-
-SeqVoice_ChainReturn:
-	popw iz
-	inc 6, xsp
-	ret
+SeqVoice_CountChainLength:	.include "includes/generated/cc900/SeqVoice_CountChainLength.s"	; C: cc900/sequencer_engine_m234_h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqVoice_ChainNoData, SeqVoice_CountChainLength + 47
+	.set	SeqVoice_ChainStartCount, SeqVoice_CountChainLength + 51
+	.set	SeqVoice_ChainFollowLoop, SeqVoice_CountChainLength + 62
+	.set	SeqVoice_ChainStoreCount, SeqVoice_CountChainLength + 87
+	.set	SeqVoice_ChainReturn, SeqVoice_CountChainLength + 90
 
 SeqData_CopyBlockWithLookup:
 	lda xsp, (xsp - 34)
@@ -13233,32 +12981,11 @@ SeqScan_ClearNoteRange:	.include "includes/generated/cc900/SeqScan_ClearNoteRang
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeqScan_ClearNoteLoop, SeqScan_ClearNoteRange + 4
 
-SeqValidate_PartAndTempoCombined:
-	ld	a, (SEQ_TRACK:16)
-	cp a, 0x11
-	jr z, SeqValidate_CheckTempoValues
-	extz wa
-	calr Seq_ValidatePartNumber
-	cp hl, 0:i3
-	jr nz, SeqValidate_CombinedFail
-
-SeqValidate_CheckTempoValues:
-	ld	wa, (SEQ_OP_FROM:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr nz, SeqValidate_CombinedFail
-	ld	wa, (SEQ_OP_MEASURES:16)
-	calr Seq_ValidateTempoValue
-	cp hl, 0:i3
-	jr z, SeqValidate_CombinedOK
-
-SeqValidate_CombinedFail:
-	ldw hl, 0xffff
-	ret
-
-SeqValidate_CombinedOK:
-	ld hl, 0:i3
-	ret
+SeqValidate_PartAndTempoCombined:	.include "includes/generated/cc900/SeqValidate_PartAndTempoCombined.s"	; C: cc900/sequencer_engine_m234.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqValidate_CheckTempoValues, SeqValidate_PartAndTempoCombined + 18
+	.set	SeqValidate_CombinedFail, SeqValidate_PartAndTempoCombined + 40
+	.set	SeqValidate_CombinedOK, SeqValidate_PartAndTempoCombined + 44
 
 SeqVoice_CountEventsInBar:	.include "includes/generated/cc900/SeqVoice_CountEventsInBar.s"	; C: cc900/sequencer_engine_m234.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -15284,47 +15011,12 @@ PartCtrl_AppendToFreeList:
 	popw iz
 	ret
 
-Part_LinkVoiceToChain:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), wa
-	ld wa, (xsp + 2)
-	calr PartCtrl_ReadWord
-	cp hl, 0xffff
-	jr z, SeqPlay_CheckStartCondition
-	ldw wa, 0x8
-	calr SeqData_SetErrorCode
-	jr SeqPlay_StartReturn
-
-SeqPlay_CheckStartCondition:
-	calr Part_ProcessAndDecrementVoice
-	ld iz, hl
-	cp iz, 0xffff
-	jr nz, SeqPlay_InitPlayback
-
-SeqPlay_StartReturn:
-	ldw hl, 0xffff
-	jr SeqPlay_ValidateAndBegin
-
-SeqPlay_InitPlayback:
-	ld wa, (xsp + 2)
-	ld bc, iz
-	calr PartCtrl_WriteWord
-	ld wa, iz
-	ld bc, (xsp + 2)
-	calr PartCtrl_WriteWord_Off1
-	ld wa, iz
-	ldw bc, 0xffff
-	calr PartCtrl_WriteWord
-	ld wa, iz
-	ld bc, 1:i3
-	calr PartCtrl_SetClearBit7
-	ld hl, iz
-
-SeqPlay_ValidateAndBegin:
-	popw iz
-	inc 2, xsp
-	ret
+Part_LinkVoiceToChain:	.include "includes/generated/cc900/Part_LinkVoiceToChain.s"	; C: cc900/sequencer_engine_m234_h.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPlay_CheckStartCondition, Part_LinkVoiceToChain + 26
+	.set	SeqPlay_StartReturn, Part_LinkVoiceToChain + 37
+	.set	SeqPlay_InitPlayback, Part_LinkVoiceToChain + 42
+	.set	SeqPlay_ValidateAndBegin, Part_LinkVoiceToChain + 75
 
 Part_ProcessAndDecrementVoice:
 	push xiz
@@ -24868,36 +24560,7 @@ SeqScan_UpdateBestPositionB:	.include "includes/generated/cc900/SeqScan_UpdateBe
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeqScan_WriteBestPositionB, SeqScan_UpdateBestPositionB + 26
 
-SeqScan_InitAllStateVars:
-	ldw	(9588:16), 0
-	ldw	(9594:16), 0
-	ldw	(9596:16), 0
-	ld	(SEQ_PART_LOOP:16), 0
-	ldw	(9598:16), 0
-	ldw	(9602:16), 0
-	ldw	(9600:16), 0
-	ldw	(9604:16), 0
-	ld	wa, (9590:16)
-	ld	(9606:16), wa
-	ld	(9610:16), wa
-	ld	(9614:16), wa
-	ld	(9622:16), wa
-	ld	(9618:16), wa
-	ld	a, (9592:16)
-	ld	(9608:16), a
-	ld	(9612:16), a
-	ld	(9616:16), a
-	ld	(9624:16), a
-	ld	(9620:16), a
-	ld	wa, (9626:16)
-	ld	(9628:16), wa
-	ld	(9630:16), wa
-	ld	(9634:16), wa
-	ld	(9636:16), wa
-	ld	(9632:16), wa
-	ld (1079:16), 255
-	ld (1078:16), 255
-	ret
+SeqScan_InitAllStateVars:	.include "includes/generated/cc900/SeqScan_InitAllStateVars.s"	; C: cc900/sequencer_engine_m235.c
 
 SeqTick_InitAndScanParts:
 	calr SeqScan_InitAllStateVars
@@ -26753,65 +26416,17 @@ SeqPart_ClearSingle:
 SeqPart_ClearSingleReturn:
 	ret
 
-SeqPart_CompareLeft:
-	pushw_erp 0xfa
-	res	0, (0x27b8:16)
-	ld	wa, (0x27ba:16)
-	ld	bc, (0x27bc:16)
-	call PartCtrl_ReadByteExtended
-	ldfr_berp L, 0xfb
-	cp_erpb 0xfb, 0x82
-	jr z, SeqPart_CompareLeftCheck
-	cp_erpb 0xfb, 0x81
-	jr nz, SeqPart_CompareLeftLoop
+SeqPart_CompareLeft:	.include "includes/generated/cc900/SeqPart_CompareLeft.s"	; C: cc900/sequencer_engine_m236_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_CompareLeftCheck, SeqPart_CompareLeft + 34
+	.set	SeqPart_CompareLeftLoop, SeqPart_CompareLeft + 40
+	.set	SeqPart_CompareLeftDone, SeqPart_CompareLeft + 70
 
-SeqPart_CompareLeftCheck:
-	set	0, (0x27b8:16)
-	jr SeqPart_CompareLeftDone
-
-SeqPart_CompareLeftLoop:
-	ld	xwa, 0x27ba
-	ld	xbc, 0x27bc
-	call PartCtrl_ReadWordWithBoundsCheck
-	ld	wa, (0x27ba:16)
-	ld	bc, (0x27bc:16)
-	call PartCtrl_ReadByteExtended
-	ld	(0x27c2:16), l
-
-SeqPart_CompareLeftDone:
-	ldto_berp L, 0xfb
-	popw_erp 0xfa
-	ret
-
-SeqPart_CompareRight:
-	pushw_erp 0xfa
-	res	1, (0x27b8:16)
-	ld	wa, (0x27be:16)
-	ld	bc, (0x27c0:16)
-	call PartCtrl_ReadByteExtended
-	ldfr_berp L, 0xfb
-	cp_erpb 0xfb, 0x82
-	jr z, SeqPart_CompareRightCheck
-	cp_erpb 0xfb, 0x81
-	jr nz, SeqPart_CompareRightLoop
-
-SeqPart_CompareRightCheck:
-	set	1, (0x27b8:16)
-	jr SeqPart_CompareRightDone
-
-SeqPart_CompareRightLoop:
-	ld	xwa, 0x27be
-	ld	xbc, 0x27c0
-	call PartCtrl_ReadWordWithBoundsCheck
-	ld	wa, (0x27be:16)
-	ld	bc, (0x27c0:16)
-	call PartCtrl_ReadByteExtended
-	ld	(0x27c4:16), l
-
-SeqPart_CompareRightDone:
-	ldto_berp L, 0xfb
-	popw_erp 0xfa
-	ret
+SeqPart_CompareRight:	.include "includes/generated/cc900/SeqPart_CompareRight.s"	; C: cc900/sequencer_engine_m236_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_CompareRightCheck, SeqPart_CompareRight + 34
+	.set	SeqPart_CompareRightLoop, SeqPart_CompareRight + 40
+	.set	SeqPart_CompareRightDone, SeqPart_CompareRight + 70
 
 SeqPart_WaitLeftMatch:
 	ld l, a
@@ -26840,61 +26455,15 @@ SeqPart_DualSwap:	.include "includes/generated/cc900/SeqPart_DualSwap.s"	; C: cc
 	.set	SeqPart_DualSwapFinish, SeqPart_DualSwap + 52
 	.set	SeqPart_DualSwapReturn, SeqPart_DualSwap + 104
 
-SeqPart_ValidateRight:
-	ld l, a
-	extz hl
-	ld wa, hl
-	call SeqPart_WriteByte_Primary
-	bit	1, (0x27b8:16)
-	jr nz, SeqPart_ValidateRightCore
-	call PartCtrl_AdvanceToNextEntry
-	ld	a, (0x27c4:16)
-	extz wa
+SeqPart_ValidateRight:	.include "includes/generated/cc900/SeqPart_ValidateRight.s"	; C: cc900/sequencer_engine_m236_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_ValidateRightLoop, SeqPart_ValidateRight + 26
+	.set	SeqPart_ValidateRightCore, SeqPart_ValidateRight + 30
 
-SeqPart_ValidateRightLoop:
-	call SeqPart_WriteByte_Primary
-
-SeqPart_ValidateRightCore:
-	ld	xwa, 0x27be
-	ld	xbc, 0x27c0
-	call PartCtrl_ReadWordWithBoundsCheck
-	call PartCtrl_AdvanceToNextEntry
-	ld	wa, (0x27be:16)
-	ld	bc, (0x27c0:16)
-	call PartCtrl_ReadByteExtended
-	bit 7, l
-	jrl nz, SeqPart_CompareRight
-	extz hl
-	ld wa, hl
-	jr SeqPart_ValidateRightLoop
-
-SeqPart_ValidateLeft:
-	ld l, a
-	extz hl
-	ld wa, hl
-	call SeqPart_WriteByte_Primary
-	bit	0, (0x27b8:16)
-	jr nz, SeqPart_ValidateLeftCore
-	call PartCtrl_AdvanceToNextEntry
-	ld	a, (0x27c2:16)
-	extz wa
-
-SeqPart_ValidateLeftLoop:
-	call SeqPart_WriteByte_Primary
-
-SeqPart_ValidateLeftCore:
-	ld	xwa, 0x27ba
-	ld	xbc, 0x27bc
-	call PartCtrl_ReadWordWithBoundsCheck
-	call PartCtrl_AdvanceToNextEntry
-	ld	wa, (0x27ba:16)
-	ld	bc, (0x27bc:16)
-	call PartCtrl_ReadByteExtended
-	bit 7, l
-	jrl nz, SeqPart_CompareLeft
-	extz hl
-	ld wa, hl
-	jr SeqPart_ValidateLeftLoop
+SeqPart_ValidateLeft:	.include "includes/generated/cc900/SeqPart_ValidateLeft.s"	; C: cc900/sequencer_engine_m236_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_ValidateLeftLoop, SeqPart_ValidateLeft + 26
+	.set	SeqPart_ValidateLeftCore, SeqPart_ValidateLeft + 30
 
 SeqPart_InitWithValidation:	.include "includes/generated/cc900/SeqPart_InitWithValidation.s"	; C: cc900/sequencer_engine_m236.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -29603,46 +29172,9 @@ SeqPart_ReplayForward:	.include "includes/generated/cc900/SeqPart_ReplayForward.
 	.set	SeqPart_ReplayEnd, SeqPart_ReplayForward + 78
 	.set	SeqPart_ReplayReturn, SeqPart_ReplayForward + 93
 
-SeqPart_Splice:
-	dec 4, xsp
-	ld (SEQ_ERROR_CODE:16), 0
-	lda xwa, (xsp + 2)
-	lda xbc, (xsp)
-	calr SeqPart_CountEventsInRange
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ld	wa, (SEQ_OP_DEST_MEASURE:16)
-	sub wa, (xsp + 2)
-	dec 1, wa
-	ld	(0x27da:16), wa
-	ld wa, (xsp + 2)
-	calr SeqPart_ComputeStepCount
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ldmm16	9858, 9794
-	ldmm16	9864, 9796
-	call SeqBuf_ComputePageLayout
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ldmm16	9874, 9886
-	ld	xwa, (9888:16)
-	ld	(9876:16), wa
-	calr SeqPart_ReplayForward
-	cp (SEQ_ERROR_CODE:16), 0
-	jr nz, SeqPart_SpliceReturn
-	ld	a, (9784:16)
-	extz wa
-	ld	(0x2861:16), wa
-	ldmm16	9796, SEQOP_SECONDARY_OFFSET
-	ld	wa, (SEQOP_SECONDARY_BLOCK:16)
-	ld	(9794:16), wa
-	ld	bc, (9796:16)
-	extz bc
-	call Part_WriteWordAndByte
-
-SeqPart_SpliceReturn:
-	inc 4, xsp
-	ret
+SeqPart_Splice:	.include "includes/generated/cc900/SeqPart_Splice.s"	; C: cc900/sequencer_engine_m236_d.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeqPart_SpliceReturn, SeqPart_Splice + 129
 
 SeqPart_RestoreState:
 	ld	c, (9784:16)

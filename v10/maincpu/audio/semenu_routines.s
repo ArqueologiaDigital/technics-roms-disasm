@@ -1393,46 +1393,18 @@ SeMenu_TransferPartValues_EndData_Skip29:
 ;   body -- SeCtr2_OnSideRow2 (choices 2/1) and SeCtr2_OnSideRow3 (6/5) store their choice here and send event 59;
 ;   only SeCtr2_GetSelection reads 0x695.
 SeCtr2_SetSelection:	.include "includes/generated/cc900/SeCtr2_SetSelection.s"	; C: cc900/semenu_routines.c
-SeCtr2_GetGroupBase:
-	cp	a, 6:i3
-	jr	z, SeMenu_TransferPartValues_EndData_Skip14
-	cp	a, 5:i3
-	jr	z, SeMenu_TransferPartValues_EndData_Skip13
-	cp	a, 2:i3
-	jr	nz, SeMenu_TransferPartValues_EndData_Skip15
-	ld	a, 26:opc
-	jr	SeMenu_TransferPartValues_EndData_Join2
-SeMenu_TransferPartValues_EndData_Skip13:
-	ld	a, 35:opc
-	jr	SeMenu_TransferPartValues_EndData_Join2
-SeMenu_TransferPartValues_EndData_Skip14:
-	ld	a, 38:opc
-	jr	SeMenu_TransferPartValues_EndData_Join2
-SeMenu_TransferPartValues_EndData_Skip15:
-	ld	a, 23:opc
-SeMenu_TransferPartValues_EndData_Join2:
-	ld	(xbc), a
-	ret
-SeCtr2_GetKitGroupBase:
-	cp	a, 6:i3
-	jr	z, SeMenu_TransferPartValues_EndData_Skip17
-	cp	a, 5:i3
-	jr	z, SeMenu_TransferPartValues_EndData_Skip16
-	cp	a, 2:i3
-	jr	nz, SeMenu_TransferPartValues_EndData_Skip30
-	ld	a, 24:opc
-	jr	SeMenu_TransferPartValues_EndData_Join10
-SeMenu_TransferPartValues_EndData_Skip16:
-	ld	a, 33:opc
-	jr	SeMenu_TransferPartValues_EndData_Join10
-SeMenu_TransferPartValues_EndData_Skip17:
-	ld	a, 36:opc
-	jr	SeMenu_TransferPartValues_EndData_Join10
-SeMenu_TransferPartValues_EndData_Skip30:
-	ld	a, 21:opc
-SeMenu_TransferPartValues_EndData_Join10:
-	ld	(xbc), a
-	ret
+SeCtr2_GetGroupBase:	.include "includes/generated/cc900/SeCtr2_GetGroupBase.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_TransferPartValues_EndData_Skip13, SeCtr2_GetGroupBase + 16
+	.set	SeMenu_TransferPartValues_EndData_Skip14, SeCtr2_GetGroupBase + 20
+	.set	SeMenu_TransferPartValues_EndData_Skip15, SeCtr2_GetGroupBase + 24
+	.set	SeMenu_TransferPartValues_EndData_Join2, SeCtr2_GetGroupBase + 26
+SeCtr2_GetKitGroupBase:	.include "includes/generated/cc900/SeCtr2_GetKitGroupBase.s"	; C: cc900/semenu_routines_m129.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_TransferPartValues_EndData_Skip16, SeCtr2_GetKitGroupBase + 16
+	.set	SeMenu_TransferPartValues_EndData_Skip17, SeCtr2_GetKitGroupBase + 20
+	.set	SeMenu_TransferPartValues_EndData_Skip30, SeCtr2_GetKitGroupBase + 24
+	.set	SeMenu_TransferPartValues_EndData_Join10, SeCtr2_GetKitGroupBase + 26
 ; SeCtr2_StepDepth: AFTER TOUCH controller page (SeCtr2, screen 59), DEPTH column: steps page param 11 (RAM 0x66B,
 ;   0..127) by the switch step C; when it changed, sends it (SeMenu_RegisterElement_Extended, id = A + 2 with A = page
 ;   param 13; SeMenu_SetupDisplayObject_Alt1 with WA = 3 in the 2-part mode, word 0x6AE != 0), stores it and redraws
@@ -3832,43 +3804,10 @@ SeMenu_ApplyPartEdit_Epilogue7:
 ; SeMenu_SelectPartAndRedraw: Selects part C (1..4, the "1ST".."4TH" side buttons) for editing: no-op if already
 ;   selected or (E = 1) the part is disabled; else records it in (0x65D) and edit-buffer byte 0, redraws via screen
 ;   code WA and re-sends the part levels. Basis: callers + body -- OnSideRow2..5 pass C = 1..4.
-SeMenu_SelectPartAndRedraw:
-	dec	8, xsp
-	ld	(xsp+2), e
-	ld	(xsp+4), c
-	ld	(xsp+6), a
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	ld	a, (xsp+4)
-	cp	a, (xsp)
-	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
-	cp	(xsp+2), 1
-	jr	nz, SeMenu_ApplyPartEdit_Entry5_Code_Skip
-	ld	a, (xsp+4)
-	extz	wa
-	calr	SeMenu_IsPartEnabled
-	cp	hl, 0:i3
-	jr	z, SeMenu_ApplyPartEdit_Entry5_Code_Epilogue
-SeMenu_ApplyPartEdit_Entry5_Code_Skip:
-	ld	a, (xsp+4)
-	extz	wa
-	calr	SeMenu_SetCurrentPart
-	ld	c, (xsp+4)
-	extz	bc
-	ld	wa, 0:i3
-	calr	SeMenu_StorePartParam
-	pushw	0
-	ld	a, (xsp+8)
-	extz	wa
-	pushw	wa
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	wa, 1:i3
-	calr	SeMenu_SetupMenuDisplay
-SeMenu_ApplyPartEdit_Entry5_Code_Epilogue:
-	inc	8, xsp
-	ret
+SeMenu_SelectPartAndRedraw:	.include "includes/generated/cc900/SeMenu_SelectPartAndRedraw.s"	; C: cc900/semenu_routines_m129_g.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_ApplyPartEdit_Entry5_Code_Skip, SeMenu_SelectPartAndRedraw + 43
+	.set	SeMenu_ApplyPartEdit_Entry5_Code_Epilogue, SeMenu_SelectPartAndRedraw + 81
 ; SeMenu_DrawFilterGraph: Clears and draws the filter response graph of the current part: corner x = 86 + part param 2
 ;   (cutoff), peak height from part param 3 (resonance, 0..5); A = 0 low-pass / 1 high-pass shape, C = 0 (Lpq/Hpq
 ;   pages) or 1 (L24/H24 pages, doubled slope, lower box). Basis: callers + body -- the four filter pages call it with

@@ -19,3 +19,17 @@ void SndParamBank_LoadOptionBlock(void)
 	Mem_Copy(ram_340f6, (void *)0x3d3430L, 4);
 	Mem_Copy(ram_340fa, (void *)0x3d3440L, 6);
 }
+
+/* cc900-module: PanelTlv_ValidateRecord PanelTlv_WriteRecordHeader */
+struct tlvrec { unsigned long off; unsigned char *rules; unsigned char tag; unsigned char len; };
+extern struct tlvrec PanelTlv_Block1_Layout[];
+extern void PanelTlv_WriteRecordHeader(unsigned char *base, struct tlvrec *l);
+extern void PanelTlv_WriteBlock1Headers(unsigned char *base);
+
+void PanelTlv_WriteBlock1Headers(unsigned char *base)
+{
+	unsigned int i;
+
+	for (i = 0; i < 30; i++)
+		PanelTlv_WriteRecordHeader(base, &PanelTlv_Block1_Layout[i]);
+}

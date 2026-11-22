@@ -62,3 +62,92 @@ void SongPlayer_ResetState(void)
 	SysexRingBuf_Init();
 	MidiRingBuf_Init();
 }
+
+/* cc900-module: FileIO_ReadNextRecord MidiRingBuf_WriteByte RingBuffer_ReadByte RingBuffer_WriteByte StoreAndAdvance_LoadDRAM StoreAndAdvance_Prologue SysexRingBuf_ReadByte SysexRingBuf_ReadBytes SysexRingBuf_WriteByte */
+extern void FDC_DrainQueuesAndReset(void);
+extern void SndTable_LookupC(void);
+extern unsigned int __near ram_11f5;
+extern void DirectReturn_LoadDRAM(void);
+
+void DirectReturn_LoadDRAM(void)
+{
+	switch (ram_e8fa) {
+	case 1:
+		FDC_DrainQueuesAndReset();
+		FileIO_InitTrackSlots();
+		break;
+	case 2:
+	case 3:
+		FDC_DrainQueuesAndReset();
+		break;
+	case 4:
+		SndTable_LookupC();
+		FileIO_InitTrackSlots();
+		break;
+	}
+	ram_11f5 = 120;
+}
+
+extern int FileIO_ReadNextRecord(void);
+extern long FileIO_ReadMultiByteRecord(void);
+extern int ReadVariableLengthDa_Prologue(unsigned int n, unsigned char *buf);
+extern int SysexRingBuf_ReadByte(void);
+int SysexRingBuf_ReadBytes(unsigned int n, unsigned char *buf);
+extern void SeqFile_ReadTrackData(unsigned char *s);
+extern int SysexRingBuf_ReadBytes(unsigned int n, unsigned char *buf);
+extern int StoreAndAdvance_LoadDRAM(void);
+int StoreAndAdvance_Prologue(unsigned int n, unsigned char *buf);
+extern void SeqFile_ValidateAndStore(unsigned char *s);
+extern int StoreAndAdvance_Prologue(unsigned int n, unsigned char *buf);
+
+long FileIO_ReadMultiByteRecord(void)
+{
+	long v;
+	int c;
+
+	if ((v = FileIO_ReadNextRecord()) < 0)
+		return -1L;
+	if (v & 0x80) {
+		v &= 0x7f;
+		do {
+			if ((c = FileIO_ReadNextRecord()) < 0)
+				return -1L;
+			v = (v << 7) + (c & 0x7f);
+		} while (c & 0x80);
+	}
+	return v;
+}
+int ReadVariableLengthDa_Prologue(unsigned int n, unsigned char *buf)
+{
+	int i;
+	int c;
+
+	for (i = 0; i < n; i++) {
+		if ((c = TaskBuf_ReadNextByte()) < 0)
+			return -1;
+		buf[i] = c;
+	}
+	return 0;
+}
+void SeqFile_ReadTrackData(unsigned char *s)
+{
+	int n;
+
+	if ((n = SysexRingBuf_ReadByte()) < 0)
+		*s = 0;
+	else if (SysexRingBuf_ReadBytes(n, s) < 0)
+		*s = 0;
+	else
+		s[n] = 0;
+}
+void SeqFile_ValidateAndStore(unsigned char *s)
+{
+	int n;
+
+	if ((n = StoreAndAdvance_LoadDRAM()) < 0)
+		*s = 0;
+	else if (StoreAndAdvance_Prologue(n, s) < 0)
+		*s = 0;
+	else
+		s[n] = 0;
+}

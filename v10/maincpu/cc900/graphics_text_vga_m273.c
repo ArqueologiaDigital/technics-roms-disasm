@@ -79,3 +79,60 @@ void SeGfx_StaticOp03_Bitmap(struct bsrc *s)
     q->x1 = q->x0 + (s->w << 3);
     ColorBlit2_LargeCodeBlock(q, s->bits, GFX_FG_COLOR);
 }
+
+/* cc900-module: Display_FillPaletteBandFromEntry_Impl DrawQueue_Alloc DrawRing_Post IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+struct icmd { void (*fn)(struct icmd *); unsigned int w; };
+extern int IsXspInDrawStack(void);
+extern unsigned char *DrawQueue_Alloc(unsigned int n);
+extern void *DrawRing_Post(void *cmd);
+extern void Display_FillPalBandFromEnt_Impl(unsigned int);
+void GraphicsRender_ByteData_Code(struct icmd *q);
+extern void Display_FillPalBandFromEntry(unsigned int w);
+extern void GraphicsRender_ByteData_Code(struct icmd *q);
+
+/* cc900-name: Display_FillPalBandFromEntry=Display_FillPaletteBandFromEntry */
+/* cc900-name: IsXspInDrawStack=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+/* cc900-name: Display_FillPalBandFromEnt_Impl=Display_FillPaletteBandFromEntry_Impl */
+void Display_FillPalBandFromEntry(unsigned int w)
+{
+	struct icmd *q;
+
+	if (IsXspInDrawStack() != 0)
+		Display_FillPalBandFromEnt_Impl(w);
+	else {
+		q = (struct icmd *)DrawQueue_Alloc(6);
+		q->fn = GraphicsRender_ByteData_Code;
+		q->w = w;
+		DrawRing_Post(q);
+	}
+}
+
+/* cc900-module: Display_DeferOrDrawWall_Code Display_DeferOrDrawWall_Direct Display_DeferOrUpdScreen_Code Display_DeferOrUpdScreen_Direct Display_DeferOrUpdateScreen_Direct DrawWall IsDrawTask SetNeedUpdate UpdateScreen */
+struct wcmd { void (*fn)(struct wcmd *); };
+extern int IsDrawTask(void);
+void Display_DeferOrDrawWall_Code(struct wcmd *q);
+void Display_DeferOrDrawWall_Direct(void);
+void Display_DeferOrUpdScreen_Code(struct wcmd *q);
+extern void Display_DeferOrUpdScreen_Direct(void);
+void Display_DeferOrDrawWall(void);
+extern void Display_DeferOrDrawWall_Code(struct wcmd *q);
+extern void Display_DeferOrDrawWall_Direct(void);
+extern void Display_DeferOrUpdScreen_Code(struct wcmd *q);
+extern void Display_DeferOrUpdScreen_Direct(void);
+
+/* cc900-name: IsDrawTask=IS_XSP_INSIDE_4K_REGION_AT_1C032 */
+/* cc900-name: Display_DeferOrUpdScreen_Code=Display_DeferOrUpdateScreen_Code */
+/* cc900-name: Display_DeferOrUpdScreen_Direct=Display_DeferOrUpdateScreen_Direct */
+void Display_DeferOrUpdScreen_Direct(void);
+
+void Display_DeferOrDrawWall(void)
+{
+	struct wcmd *q;
+
+	if (IsDrawTask() == 0) {
+		q = (struct wcmd *)DrawQueue_Alloc(sizeof(struct wcmd));
+		q->fn = Display_DeferOrDrawWall_Code;
+		DrawRing_Post(q);
+	} else
+		Display_DeferOrDrawWall_Direct();
+}
