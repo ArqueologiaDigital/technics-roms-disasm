@@ -53,8 +53,9 @@ Run the round trip, from technics-roms-disasm's root:
 
 ## Progress
 
-| date       | stage | measured                                                                                                             |
-|------------|-------|----------------------------------------------------------------------------------------------------------------------|
-| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio`                              |
-| 2026-11-22 | S1    | firmware C, `-Xr` (runs 2026-11-22-51..54): 496 / 2,672 functions equal thc2's `-zio` (from 38 at the first version) |
-| 2026-11-22 | S1    | `-Xr` 676 / 2,672; `-O3 -Xr` 340 / 2,879 and `-O3 -XS -Xr` 1 / 21 (no optimiser modelled yet)                        |
+| date       | stage | measured                                                                                                                                              |
+|------------|-------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio`                                                               |
+| 2026-11-22 | S1    | firmware C, `-Xr` (runs 2026-11-22-51..54): 496 / 2,672 functions equal thc2's `-zio` (from 38 at the first version)                                  |
+| 2026-11-22 | S1    | `-Xr` 676 / 2,672; `-O3 -Xr` 340 / 2,879 and `-O3 -XS -Xr` 1 / 21 (no optimiser modelled yet)                                                         |
+| 2026-11-22 | S1    | `-Xr` 773 / 2,672 (28.9 %); the largest remaining class of first differences is temporary numbering (818 functions before this row), then (Def) (135) |

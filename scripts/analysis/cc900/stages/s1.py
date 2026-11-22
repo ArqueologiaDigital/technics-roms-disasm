@@ -344,6 +344,8 @@ def rewrite(F):
                 elif T and T.is_basic(dt) and T.is_basic(st) and (SIZE[dt] != SIZE[st] or SIGNED.get(dt) != SIGNED.get(st)):
                     o = 'CONV'
             out.append((o, fl[1], fl[2], None))
+            if len(fl) > 3 and fl[3] and fl[3] != fl[1] and fl[3].startswith('T') and reads.get(fl[3], 0):
+                out.append(('=', fl[3], fl[1].lstrip('&'), None))   # a read result: a copy of the target after it
         elif op in BINARY:
             pa, pb = T and T.is_ptr(F.typ(fl[1])), T and T.is_ptr(F.typ(fl[2]))
             rt = F.vtype(fl[3])
