@@ -1767,3 +1767,6 @@ DrawDesignFrame	79	2026-11-22-25-p6-r92	p6_B_36r1m271a@O3Xr p6_B_36r1m271b@O3Xr
 FDemoText_ByteData_TextRenderer	231	2026-11-22-25-p6-r92	p6_B_36r1m265b@O3XSXr p6_B_36r1m265b@O3Xr
 MIDI_SendSysExCmd	34	2026-11-22-25-p6-r92	p6_C_36r1m301a@Xr p6_C_36r1m301b@Xr
 SendSysExCmd_Data	15	2026-11-22-25-p6-r92	p6_C_36r1m301a@O3XSXr p6_C_36r1m301a@O3Xr p6_C_36r1m301a@Xr p6_C_36r1m301b@O3XSXr p6_C_36r1m301b@O3Xr p6_C_36r1m301b@Xr
+Part_ValidateAndSetupVoiceChannel	137	2026-11-22-15-p6-r82 (lane_nmx re-check)	p6_nm_Part_ValidateAndSetupVoiceChannel__3ddde394@O3XSXr
+Part_ValidateVoiceChannel	100	2026-11-22-15-p6-r82 (lane_nmx re-check)	p6_nm_Part_ValidateVoiceChannel__3ddde394@O3XSXr
+SeqPlay_HandleVoiceReassign	138	2026-11-22-15-p6-r82 (lane_nmx re-check)	p6_nm_SeqPlay_HandleVoiceReassign__3ddde394@O3XSXr
