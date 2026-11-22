@@ -267,6 +267,25 @@ class Fn:
                             self.regs[n] = rr
                         elif self.dst(r.res) != rr:
                             self.emit('ld', self.dst(r.res) + ',' + rr)
+            elif op in ('JRBC', 'JRBS'):
+                a, b = r.args
+                self.emit('bit', '0x%x,%s' % (const(b), self.src(a, size_of(a))))
+                self.emit('j', ('eq' if op == 'JRBC' else 'ne') + ',' + r.res)
+            elif op in ('BSET', 'BCLR'):
+                self.emit('set' if op == 'BSET' else 'res', '0x%x,%s' % (const(r.args[0]), self.dst(r.res)))
+            elif op in ('<<=', '>>='):
+                v = const(r.args[0])
+                m = 'sll' if op == '<<=' else ('srl' if unsigned(r.res) else 'sra')
+                if v is None:
+                    raise Unsupported('shift by a register')
+                self.emit(m, '0x%x,%s' % (v, self.reg(r.res)))
+            elif op == 'CONV' and r.args and r.args[0].startswith(('@', '*')):
+                sd = size_of(r.res)
+                rd = self.reg(r.res)
+                f = fam_of(rd)
+                sa = 2 if sd == 4 else 1                 # (a widening load: the lower half, then extended)
+                self.emit('ld', sized(f, sa) + ',' + self.src(r.args[0], sa))
+                self.emit('extz' if True else 'exts', rd)
             elif op in ('++', '--'):
                 v = const(r.args[0])
                 self.emit('inc' if op == '++' else 'dec', '0x%x,%s' % (v, self.dst(r.res)))
