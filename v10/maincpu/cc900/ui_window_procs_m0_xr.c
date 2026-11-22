@@ -72,3 +72,28 @@ void PaletteBankRotate_Code(unsigned char *q)
 {
 	PaletteBankRotate_Impl();
 }
+
+/* cc900-module: ChangePalette_Impl ChangeWallPalette_Impl ChangeWall_Impl Display_FillPalBandFromEnt_Impl Display_FillPaletteBandFromEntry_Impl IsXspInDrawStack */
+struct icmd { void (*fn)(struct icmd *); unsigned int w; };
+extern void ChangePalette_Impl(unsigned int);
+void ChangePalette_QueueCallback(struct icmd *q);
+extern void ChangePalette_QueueCallback(struct icmd *q);
+extern void ChangeWallPalette_Impl(unsigned int);
+void ChangeWallPalette_QueueCallback(struct icmd *q);
+extern void ChangeWallPalette_QueueCallback(struct icmd *q);
+extern void ChangeWall_Impl(unsigned int);
+void ChangeWall_QueueCallback(struct icmd *q);
+extern void ChangeWall_QueueCallback(struct icmd *q);
+
+void ChangePalette_QueueCallback(struct icmd *q)
+{
+	ChangePalette_Impl(q->w);
+}
+void ChangeWallPalette_QueueCallback(struct icmd *q)
+{
+	ChangeWallPalette_Impl(q->w);
+}
+void ChangeWall_QueueCallback(struct icmd *q)
+{
+	ChangeWall_Impl(q->w);
+}

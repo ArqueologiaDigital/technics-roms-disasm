@@ -16624,16 +16624,7 @@ AccPatch_ErrorExit:
 AccPatch_ScanForNoteOff_Done:
 	ret
 
-AccPatch_SeekToPosition:
-	calr	AccPatch_SeekForwardSteps
-	ld	a, (13902:16)
-	ld	(13888:16), a
-	calr	AccPatch_ParseSequenceHeader
-	ld	wa, (ACC_PATCH_CURSOR_BLOCK:16)
-	ld	(13606:16), wa
-	ld	wa, (ACC_PATCH_CURSOR_OFFSET:16)
-	ld	(13608:16), wa
-	ret
+AccPatch_SeekToPosition:	.include "includes/generated/cc900/AccPatch_SeekToPosition.s"	; C: cc900/accompaniment_engine_m250.c
 AccPatch_SeekForwardSteps:
 	ld	a, (13633:16)
 	ld	c, (13903:16)
@@ -16782,16 +16773,7 @@ AccPatch_ResumeSeq_InitSlot_Pad:
 	nop
 	nop
 
-AccPatch_PrepareSequencePlayback:
-	calr	AccPatch_SeekForwardSteps
-	ld	a, (13902:16)
-	ld	(13888:16), a
-	calr	AccPatch_ParseSequenceHeader
-	ld	wa, (ACC_PATCH_CURSOR_BLOCK:16)
-	ld	(13610:16), wa
-	ld	wa, (ACC_PATCH_CURSOR_OFFSET:16)
-	ld	(13612:16), wa
-	ret
+AccPatch_PrepareSequencePlayback:	.include "includes/generated/cc900/AccPatch_PrepareSequencePlayback.s"	; C: cc900/accompaniment_engine_m250.c
 AccPatch_CheckSequenceChanged:
 	cpw	(0x3552:16), 0x0000
 	jr z, AccPatch_CheckChanged_Return

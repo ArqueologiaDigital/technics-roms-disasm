@@ -137,3 +137,15 @@ void GraphicsRender_ShortByteBlock(unsigned char *p)
 {
 	GraphicsRender_ProcessEntries(p, p + 1);
 }
+
+/* cc900-module: ChangePalette_Impl ChangeWallPalette_Impl ChangeWall_Impl Display_FillPalBandFromEnt_Impl Display_FillPaletteBandFromEntry_Impl IsXspInDrawStack */
+struct icmd { void (*fn)(struct icmd *); unsigned int w; };
+extern void Display_FillPalBandFromEnt_Impl(unsigned int);
+void GraphicsRender_ByteData_Code(struct icmd *q);
+extern void GraphicsRender_ByteData_Code(struct icmd *q);
+
+/* cc900-name: Display_FillPalBandFromEnt_Impl=Display_FillPaletteBandFromEntry_Impl */
+void GraphicsRender_ByteData_Code(struct icmd *q)
+{
+	Display_FillPalBandFromEnt_Impl(q->w);
+}

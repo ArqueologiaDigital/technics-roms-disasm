@@ -1628,3 +1628,22 @@ putc_mrx_bf_X	10	2026-11-21-21-p6-r66	p6_B_22r2m159a@O3XSXr p6_B_22r2m159a@O3Xr 
 putc_mtx_bf_X	10	2026-11-21-21-p6-r66	p6_B_22r2m159a@O3XSXr p6_B_22r2m159a@O3Xr p6_B_22r2m159a@Xr p6_B_22r2m159b@O3XSXr p6_B_22r2m159b@O3Xr p6_B_22r2m159b@Xr
 PanelTlv_WriteAllHeaders	6	2026-11-21-3-p6-r59 (lane_nmx re-check)	p6_nm_PanelTlv_WriteAllHeaders__d162dded@O3XSXr
 PostPmLoad	13	2026-11-21-3-p6-r59 (lane_nmx re-check)	p6_nm_PostPmLoad__69a63fa4@O3XSXr
+AccPatch_PrepareSequencePlayback	31	2026-11-22-5-p6-r72	p6_H_26r1m250a@O3XSXr p6_H_26r1m250a@O3Xr p6_H_26r1m250a@Xr p6_H_26r1m250b@O3XSXr p6_H_26r1m250b@O3Xr p6_H_26r1m250b@Xr
+AccPatch_SeekToPosition	31	2026-11-22-5-p6-r72	p6_H_26r1m250a@O3XSXr p6_H_26r1m250a@O3Xr p6_H_26r1m250a@Xr p6_H_26r1m250b@O3XSXr p6_H_26r1m250b@O3Xr p6_H_26r1m250b@Xr
+AccPatch_VoiceAssignDataBlock_Helper10	44	2026-11-22-5-p6-r72	p6_H_26r1m261a@O3XSXr p6_H_26r1m261a@O3Xr p6_H_26r1m261a@Xr p6_H_26r1m261b@O3XSXr p6_H_26r1m261b@O3Xr p6_H_26r1m261b@Xr p6_H_26r1m261c@O3XSXr p6_H_26r1m261c@O3Xr p6_H_26r1m261c@Xr
+AccPatch_VoiceAssignDataBlock_Helper6	44	2026-11-22-5-p6-r72	p6_H_26r1m261a@O3XSXr p6_H_26r1m261a@O3Xr p6_H_26r1m261a@Xr p6_H_26r1m261b@O3XSXr p6_H_26r1m261b@O3Xr p6_H_26r1m261b@Xr p6_H_26r1m261c@O3XSXr p6_H_26r1m261c@O3Xr p6_H_26r1m261c@Xr
+AccPatch_VoiceAssignDataBlock_Helper7	44	2026-11-22-5-p6-r72	p6_H_26r1m261a@O3XSXr p6_H_26r1m261a@O3Xr p6_H_26r1m261a@Xr p6_H_26r1m261b@O3XSXr p6_H_26r1m261b@O3Xr p6_H_26r1m261b@Xr p6_H_26r1m261c@O3XSXr p6_H_26r1m261c@O3Xr p6_H_26r1m261c@Xr
+AccPatch_VoiceAssignDataBlock_Helper8	44	2026-11-22-5-p6-r72	p6_H_26r1m261a@O3XSXr p6_H_26r1m261a@O3Xr p6_H_26r1m261a@Xr p6_H_26r1m261b@O3XSXr p6_H_26r1m261b@O3Xr p6_H_26r1m261b@Xr p6_H_26r1m261c@O3XSXr p6_H_26r1m261c@O3Xr p6_H_26r1m261c@Xr
+AccPatch_VoiceAssignDataBlock_Helper9	44	2026-11-22-5-p6-r72	p6_H_26r1m261a@O3XSXr p6_H_26r1m261a@O3Xr p6_H_26r1m261a@Xr p6_H_26r1m261b@O3XSXr p6_H_26r1m261b@O3Xr p6_H_26r1m261b@Xr p6_H_26r1m261c@O3XSXr p6_H_26r1m261c@O3Xr p6_H_26r1m261c@Xr
+ChangePalette	39	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr
+ChangePalette_QueueCallback	5	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273a@Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr p6_I_26r1m273b@Xr
+ChangeWall	39	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr
+ChangeWallPalette	39	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr
+ChangeWallPalette_QueueCallback	5	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273a@Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr p6_I_26r1m273b@Xr
+ChangeWall_QueueCallback	5	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273a@Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr p6_I_26r1m273b@Xr
+Display_FillPaletteBandFromEntry	39	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr
+DocMed_FormatSlotList	207	2026-11-22-5-p6-r72	p6_I_26r1m269a@O3Xr
+GraphicsRender_ByteData_Code	5	2026-11-22-5-p6-r72	p6_I_26r1m273a@O3XSXr p6_I_26r1m273a@O3Xr p6_I_26r1m273a@Xr p6_I_26r1m273b@O3XSXr p6_I_26r1m273b@O3Xr p6_I_26r1m273b@Xr
+PartCtrl_NavigateBackward	77	2026-11-22-5-p6-r72	p6_I_26r1m234a@O3Xr p6_I_26r1m234b@O3XSXr p6_I_26r1m234b@O3Xr p6_I_26r1m234b@Xr
+PartCtrl_NavigateBackwardAlt	77	2026-11-22-5-p6-r72	p6_I_26r1m234a@O3Xr p6_I_26r1m234b@O3XSXr p6_I_26r1m234b@O3Xr p6_I_26r1m234b@Xr
+PdMed_FormatSlotList	207	2026-11-22-5-p6-r72	p6_I_26r1m269a@O3Xr
