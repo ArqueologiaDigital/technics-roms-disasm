@@ -238,7 +238,7 @@ class Fn:
             elif op in COND:
                 a, b = r.args
                 size = size_of(a)
-                self.emit('cp', self.reg(a) + ',' + self.src(b, size))
+                self.emit('cp', (self.stack(a) or self.reg(a)) + ',' + self.src(b, size))
                 self.emit('j', (UCOND if unsigned(a) else COND)[op] + ',' + r.res)
             elif op == '=' and r.res == 'A':
                 a = r.args[0]
@@ -306,7 +306,7 @@ class Fn:
             elif op in ALU:
                 size = size_of(r.res)
                 self.emit(ALU[op], self.dst(r.res) + ',' + self.src(r.args[0], size))
-            elif op == 'CONV' and r.args and not r.args[0].startswith(('@', '*', '#')):
+            elif op == 'CONV' and r.args and not r.args[0].startswith(('@', '*', '#')) and not self.stack(r.args[0]):
                 a = r.args[0]
                 sa, sd = size_of(a), size_of(r.res)
                 ra = self.reg(a)
@@ -332,6 +332,8 @@ class Fn:
                 if v is not None:
                     size = 4 if a.startswith('#L') else 2
                     self.emit('ld', '%s,%s' % (sized(f, size), hexc(v, size)))
+                elif self.stack(a) or self.mem(a):
+                    self.emit('ld', '%s,%s' % (sized(f, size_of(a)), self.stack(a) or self.mem(a)))
                 else:
                     ra = self.reg(a)
                     if fam_of(ra) != f:
@@ -365,7 +367,7 @@ class Fn:
                 if v is None:
                     raise Unsupported('shift by a register')
                 self.emit(m, '0x%x,%s' % (v, self.reg(r.res)))
-            elif op == 'CONV' and r.args and r.args[0].startswith(('@', '*')):
+            elif op == 'CONV' and r.args and (r.args[0].startswith(('@', '*')) or self.stack(r.args[0])):
                 sd = size_of(r.res)
                 rd = self.reg(r.res)
                 f = fam_of(rd)
