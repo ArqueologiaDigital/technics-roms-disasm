@@ -175,10 +175,21 @@ def rewrite2(recs):
             t = new_temp()                           # a conversion of a value in memory: loaded first
             out.append(dump.Rec(r.block, '=', t, [r.args[0]], None, ''))
             r.args = [t]
+        if r.op == 'Switch' and r.res and tsize(r.res) == 1 and NEW_TEMPS:
+            t = new_temp()                           # a switch on a byte: widened first
+            out.append(dump.Rec(r.block, 'CONV', t, [r.res], None, ''))
+            r.res = t
         if r.op == 'CONV' and r.res and r.res.startswith('@') and NEW_TEMPS:
             t = new_temp()                           # a conversion into memory goes through a register
             out.append(dump.Rec(r.block, 'CONV', t, r.args, None, ''))
             out.append(dump.Rec(r.block, '=', r.res, [t], None, ''))
+            continue
+        if MULDIV16 and r.op in ('*', '/', '%') and r.res and len(r.args) == 2 and tsize(r.res) == 2:
+            a, b = r.args                            # 16 x 16 -> 32 and 32 / 16: a register pair, then a half
+            n = new_temp()
+            out.append(dump.Rec(r.block, 'FORCE' if r.op == '*' else 'CONV', n, [a], None, ''))
+            out.append(dump.Rec(r.block, r.op + '=', n, [b], None, ''))
+            out.append(dump.Rec(r.block, 'HIGH' if r.op == '%' else 'LOW', bare(r.res), [n], None, ''))
             continue
         if r.op in BIN3 and r.res and len(r.args) == 2 and not r.res.startswith('L'):
             a, b = r.args
@@ -321,6 +332,7 @@ def s2_lines(zio, decl_order=None, cdecl=False):
 
 
 REWRITE2 = True
+MULDIV16 = True
 PTR_COPY_THROUGH = True
 MEM_ROUTES = True
 NEW_TEMPS = True
