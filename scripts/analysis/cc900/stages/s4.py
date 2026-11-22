@@ -142,6 +142,47 @@ def callee_pops(fn):
     return 0
 
 
+def full_size(t):
+    """bytes of a numbered or basic type"""
+    if t in BASIC:
+        return SIZES[BASIC[t]]
+    k = TYPES.get(t)
+    if not k:
+        return None
+    if k[0] == 'P':
+        return 4
+    if k[0] in ('S', 'U'):
+        return int(k[1][1])
+    if k[0] == 'Z':
+        e, n = full_size(int(k[1][1])), int(k[1][4])
+        return e * (n + 1) if e and n >= 0 else None
+    return None
+
+
+def field_type(t, d):
+    """the basic type at byte offset d of type t (a struct field / array element), or None"""
+    if t in BASIC:
+        return BASIC[t] if d == 0 else None
+    k = TYPES.get(t)
+    if not k:
+        return None
+    if k[0] == 'P':
+        return None
+    if k[0] in ('S', 'U'):
+        f = k[1]
+        best = None
+        for i in range(3, len(f) - 2, 3):
+            ft, off = int(f[i + 1]), int(f[i + 2])
+            if off <= d and (best is None or off >= best[1]):
+                best = (ft, off)
+        return field_type(best[0], d - best[1]) if best else None
+    if k[0] == 'Z':
+        e = int(k[1][1])
+        es = full_size(e)
+        return field_type(e, d % es) if es else None
+    return None
+
+
 def deref_type(x):
     """the basic type name a memory operand @(p..) / *p reads, from p's pointer type, or None"""
     m = re.match(r'^(?:@\(|\*)[A-Z]\d+\(([A-Z]+) [FN]\*\)', x or '')
@@ -150,6 +191,9 @@ def deref_type(x):
     m = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)', x or '')
     if m:
         return pointee(int(m.group(1)))
+    m = re.match(r'^(?:@[\w.$]+|[IP]\d+)\((\d+)\)(?:\{..\})?\[([+-]?\d*)\]$', x or '')
+    if m:
+        return field_type(int(m.group(1)), int(m.group(2) or 0))
     return None
 
 
@@ -340,7 +384,7 @@ class Fn:
         """a memory operand as the listing writes it, or None"""
         if x.startswith('*'):
             return '(%s)' % self.long_of(x[1:])
-        m = re.match(r'^@([\w.$]+)\([^()]*\)(?:\[([+-]\d+)\])?$', x)
+        m = re.match(r'^@([\w.$]+)\([^()]*\)(?:\[([+-]\d+)?\])?$', x)
         if m:
             d = int(m.group(2)) if m.group(2) else 0
             return '(%s%s)' % (m.group(1), '' if not d else (' + 0x%x' % d if d > 0 else ' - 0x%x' % -d))
