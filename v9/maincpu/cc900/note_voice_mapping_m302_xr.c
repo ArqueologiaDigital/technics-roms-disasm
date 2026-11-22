@@ -62,3 +62,28 @@ void SongPlayer_ResetState(void)
 	SysexRingBuf_Init();
 	MidiRingBuf_Init();
 }
+
+/* cc900-module: FileIO_ReadNextRecord MidiRingBuf_WriteByte RingBuffer_ReadByte RingBuffer_WriteByte StoreAndAdvance_LoadDRAM StoreAndAdvance_Prologue SysexRingBuf_ReadByte SysexRingBuf_ReadBytes SysexRingBuf_WriteByte */
+extern void FDC_DrainQueuesAndReset(void);
+extern void SndTable_LookupC(void);
+extern unsigned int __near ram_11f5;
+extern void DirectReturn_LoadDRAM(void);
+
+void DirectReturn_LoadDRAM(void)
+{
+	switch (ram_e9e4) {
+	case 1:
+		FDC_DrainQueuesAndReset();
+		FileIO_InitTrackSlots();
+		break;
+	case 2:
+	case 3:
+		FDC_DrainQueuesAndReset();
+		break;
+	case 4:
+		SndTable_LookupC();
+		FileIO_InitTrackSlots();
+		break;
+	}
+	ram_11f5 = 120;
+}

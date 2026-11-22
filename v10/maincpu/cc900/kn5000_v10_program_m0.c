@@ -172,3 +172,16 @@ void putc_mtx_bf_X(unsigned char c)
 {
 	SeqBuf_MidiOut_WriteByte(c);
 }
+
+extern int __cdecl ParseInt16(char *);
+extern int Boot_ParseSubCPUTimestamp(void);
+extern int Boot_ParseTableDataTimestamp(void);
+
+int Boot_ParseSubCPUTimestamp(void)
+{
+	return ParseInt16((char *)0x87fff5L);
+}
+int Boot_ParseTableDataTimestamp(void)
+{
+	return ParseInt16((char *)0x9fffc4L);
+}

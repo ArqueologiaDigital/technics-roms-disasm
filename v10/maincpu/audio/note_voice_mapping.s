@@ -23174,31 +23174,11 @@ ReadNextRecord_SetWord:
 SndParam_DirectReturn:
 	ret
 
-DirectReturn_LoadDRAM:
-	ld a, (0xe9e4:16)
-	cp a, 4:i3
-	jr z, DirectReturn_DoLookupC
-	cp a, 3:i3
-	jr z, DirectReturn_DoDrainQue
-	cp a, 2:i3
-	jr z, DirectReturn_DoDrainQue
-	cp a, 1:i3
-	jr nz, SndParam_StoreAndReturn
-	call FDC_DrainQueuesAndReset
-	calr FileIO_InitTrackSlots
-	jr SndParam_StoreAndReturn
-
-DirectReturn_DoDrainQue:
-	call FDC_DrainQueuesAndReset
-	jr SndParam_StoreAndReturn
-
-DirectReturn_DoLookupC:
-	call SndTable_LookupC
-	calr FileIO_InitTrackSlots
-
-SndParam_StoreAndReturn:
-	ldw (4597:16), 120
-	ret
+DirectReturn_LoadDRAM:	.include "includes/generated/cc900/DirectReturn_LoadDRAM.s"	; C: cc900/note_voice_mapping_m302_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DirectReturn_DoDrainQue, DirectReturn_LoadDRAM + 29
+	.set	DirectReturn_DoLookupC, DirectReturn_LoadDRAM + 35
+	.set	SndParam_StoreAndReturn, DirectReturn_LoadDRAM + 42
 
 ; SongPlayer_ResetState: Resets the song-file player: clears its state, mode, flags and counters in the block at
 ;   0xE9C4 (+0, +0x20, +0x21, +0x23, +0x27, +0x2B, +0x2D, +0x31, +0x239, +0x23D) and re-initialises the track slots
@@ -23244,10 +23224,7 @@ RingBuffer_ReadByte:	.include "includes/generated/cc900/RingBuffer_ReadByte.s"	;
 	.set	RingBuffer_ReadByte_Return, RingBuffer_ReadByte + 55
 
 ; Returns HL = 0x7ff minus the word at 0xd0ac.
-Seq_CalcAddrOffset:
-	ldw hl, 0x7ff
-	sub hl, (0xd0ac:16)
-	ret
+Seq_CalcAddrOffset:	.include "includes/generated/cc900/Seq_CalcAddrOffset.s"	; C: cc900/note_voice_mapping_m302.c
 
 CalcAddrOffset_Data:
 	dec	6, xsp
@@ -23931,10 +23908,7 @@ ApplyProgramChangeAs_LoadDRAM2:
 	ld (xwa + 1), c
 	ret
 
-ApplyProgramChangeAs_LoadReg:
-	ld xbc, 0x10
-	ldw de, 0x400
-	jr ApplyProgramChangeAs_LoadDRAM2
+ApplyProgramChangeAs_LoadReg:	.include "includes/generated/cc900/ApplyProgramChangeAs_LoadReg.s"	; C: cc900/note_voice_mapping_m303_c.c
 
 ApplyProgramChangeAs_LoadReg2:	.include "includes/generated/cc900/ApplyProgramChangeAs_LoadReg2.s"	; C: cc900/note_voice_mapping_m303_b.c
 SndBuf_WriteParamEntries_Helper:
@@ -24026,32 +24000,15 @@ ApplyProgramChange_LoadDRAM:
 	ld (xwa + 1), c
 	ret
 
-ApplyProgramChange_LoadReg:
-	ld xbc, 0x18
-	ldw de, 0x400
-	jr ApplyProgramChange_LoadDRAM
+ApplyProgramChange_LoadReg:	.include "includes/generated/cc900/ApplyProgramChange_LoadReg.s"	; C: cc900/note_voice_mapping_m303_c.c
 
 ; Enters ApplyProgramChange_LoadDRAM with XBC = 0x28 and DE = 0x200.
 SndParam_InitBufferConverge:	.include "includes/generated/cc900/SndParam_InitBufferConverge.s"	; C: cc900/note_voice_mapping_m303_b.c
 
-SndParam_ComputeVoiceIndex:
-	push xiz
-	ld xiz, xwa
-	ld xwa, 0xc0
-	call SndParam_LookupReadOnly
-	cp hl, 1:i3
-	jr nz, ComputeVoiceIndex_LoadIter
-	ld xwa, xiz
-	calr SndParam_InitBufferConverge
-	jr ComputeVoiceIndex_Epilogue
-
-ComputeVoiceIndex_LoadIter:
-	ld xwa, xiz
-	calr ApplyProgramChange_LoadReg
-
-ComputeVoiceIndex_Epilogue:
-	pop xiz
-	ret
+SndParam_ComputeVoiceIndex:	.include "includes/generated/cc900/SndParam_ComputeVoiceIndex.s"	; C: cc900/note_voice_mapping_m303_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ComputeVoiceIndex_LoadIter, SndParam_ComputeVoiceIndex + 23
+	.set	ComputeVoiceIndex_Epilogue, SndParam_ComputeVoiceIndex + 28
 
 SndParam_LookupOscEnvelope:
 	push xiz
@@ -24118,22 +24075,10 @@ SndParam_ApplyVoiceValue:	.include "includes/generated/cc900/SndParam_ApplyVoice
 	.set	SndParam_SetDefaultKeyOff, SndParam_ApplyVoiceValue + 47
 	.set	SndParam_ApplyReturn, SndParam_ApplyVoiceValue + 57
 
-SndParam_CheckAndApplyMode:
-	push	xiz
-	ld	xiz, xwa
-	ld	xwa, 192
-	call	SndParam_LookupReadOnly
-	cp	hl, 1:i3
-	jr	nz, SndParam_CheckAndApplyMode_Skip
-	ld	xwa, xiz
-	calr	SndParam_ApplyVoiceValue
-	jr	SndParam_CheckAndApplyMode_Epilogue
-SndParam_CheckAndApplyMode_Skip:
-	ld	xwa, xiz
-	calr	SndParam_LookupOscEnvelope
-SndParam_CheckAndApplyMode_Epilogue:
-	pop	xiz
-	ret
+SndParam_CheckAndApplyMode:	.include "includes/generated/cc900/SndParam_CheckAndApplyMode.s"	; C: cc900/note_voice_mapping_m303_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndParam_CheckAndApplyMode_Skip, SndParam_CheckAndApplyMode + 23
+	.set	SndParam_CheckAndApplyMode_Epilogue, SndParam_CheckAndApplyMode + 28
 
 SndParam_LookupFromPointerTable:
 	ld xix, (SOUND_TABLE_BASE:16)

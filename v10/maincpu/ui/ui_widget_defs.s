@@ -9067,36 +9067,9 @@ FuncCall:
 	ld xwa, xhl
 	ret
 
-ApFunctionProc:
-	cp xbc, EVT_GET_NAME
-	jr z, ApFuncCall_VirtualDispatch
-	cp xbc, EVT_GET_CLASS_SP
-	jrl nz, FunctionProc
-	ld xhl, NAKA_CLASS_ApFunction
-	ret
-
-; ApFuncCall object ID lookup dispatch
-ApFuncCall_VirtualDispatch:
-	ld xbc, xwa
-	srl xbc, 16
-	and xbc, 0xfff
-	ldiw_erp 0xe2, 0
-	ld de, wa
-	add bc, 0x300
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ret
+ApFunctionProc:	.include "includes/generated/cc900/ApFunctionProc.s"	; C: cc900/ui_widget_defs_m272_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	ApFuncCall_VirtualDispatch, ApFunctionProc + 23
 
 
 ; Calls an ApFunction object: the function pointer that the object id indexes in its table.
@@ -9152,36 +9125,9 @@ DefaultFunction:
 	ld xhl, 0:i3
 	ret
 
-MainFunctionProc:
-	cp xbc, EVT_GET_NAME
-	jr z, MainFuncCall_DispatchDSP
-	cp xbc, EVT_GET_CLASS_SP
-	jrl nz, FunctionProc
-	ld xhl, NAKA_CLASS_MainFunction
-	ret
-
-; MainFuncCall DSP variant dispatch
-MainFuncCall_DispatchDSP:
-	ld xbc, xwa
-	srl xbc, 16
-	and xbc, 0xfff
-	ldiw_erp 0xe2, 0
-	ld de, wa
-	add bc, 0x300
-	ld wa, bc
-	extz xwa
-	ld xbc, xwa
-	sll xbc, 3
-	sub xbc, xwa
-	add xbc, xbc
-	lda xwa, (0x027edc:24)
-	add xwa, xbc
-	ld xbc, (xwa)
-	extz xde
-	sll xde, 2
-	add xde, xbc
-	ld xhl, (xde)
-	ret
+MainFunctionProc:	.include "includes/generated/cc900/MainFunctionProc.s"	; C: cc900/ui_widget_defs_m272_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MainFuncCall_DispatchDSP, MainFunctionProc + 23
 
 ; Calls a MainFunction object by posting the call to the main event queue (MainPostEvent with
 ; the same XWA/XBC/XDE) and returns XHL = 0 without waiting for it.

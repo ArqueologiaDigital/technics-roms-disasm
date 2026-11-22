@@ -524,23 +524,7 @@ SingleLoad_GetFileMemoryName:
 
 ; SingleLoad_GetComposerBankName: Writes E, then SingleLoad_MemoryBankNames[BC] ("MEMORY-A" / "-B" / "-C")
 ;   to XWA, padded to 16. Basis: callers -- the COMPOSER source and destination lists (BC = position / 10).
-SingleLoad_GetComposerBankName:
-	push xiz
-	ld xiz, xwa
-	ld (xiz+), e
-	ld wa, bc
-	extz xwa
-	sll xwa, 2	; index * 4 (pointer size)
-	ld xbc, SingleLoad_MemoryBankNames	; ROM table address
-	add xbc, xwa
-	ld xbc, (xbc)	; Get string pointer
-	ld xwa, xiz
-	call FileIO_CopyString
-	ld xwa, xiz
-	ldw bc, 0x10
-	calr TrimAndPadSmfFilename
-	pop xiz
-	ret
+SingleLoad_GetComposerBankName:	.include "includes/generated/cc900/SingleLoad_GetComposerBankName.s"	; C: cc900/wallpaper_m269.c
 
 ; SingleLoad_GetVariationName: Returns XHL = PtrTbl_VariationNames[WA] ("VARI 1".."VARI 4", then empty).
 ;   Basis: callers -- the COMPOSER single-load lists (WA = item mod items per bank).
@@ -589,23 +573,7 @@ SingleLoad_GetComposerSectionName_Format:
 ; SingleLoad_GetSoundMemBankName: Writes E, then SingleLoad_SoundMemBankNames[BC] ("MEMORY A", "MEMORY B",
 ;   "USER KIT") to XWA, padded to 16. Basis: callers -- the SOUND MEMORY source and destination lists (BC =
 ;   position / 20).
-SingleLoad_GetSoundMemBankName:
-	push xiz
-	ld xiz, xwa
-	ld (xiz+), e
-	ld wa, bc
-	extz xwa
-	sll xwa, 2
-	ld xbc, SingleLoad_SoundMemBankNames
-	add xbc, xwa
-	ld xbc, (xbc)
-	ld xwa, xiz
-	call FileIO_CopyString
-	ld xwa, xiz
-	ldw bc, 0x10
-	calr TrimAndPadSmfFilename
-	pop xiz
-	ret
+SingleLoad_GetSoundMemBankName:	.include "includes/generated/cc900/SingleLoad_GetSoundMemBankName.s"	; C: cc900/wallpaper_m269.c
 
 ; SingleLoad_GetSoundRamName: Writes E, then the 16-byte name of sound-RAM sound BC (0x1E0000 + 16 + 470 * BC)
 ;   to XWA, padded to 16. Basis: callers -- the SOUND MEMORY destination list.

@@ -40,3 +40,12 @@ void PanelMemory_PostSlotLoad(unsigned char n, int r)
   else
     PanelTlv_ValidatePanelMemory(n);
 }
+
+extern unsigned char __near ram_f9a0[];
+extern unsigned char ram_3c8e4[];
+extern void PanelMemory_BackupLivePanel(void);
+
+void PanelMemory_BackupLivePanel(void)
+{
+	Mem_Copy(ram_3c8e4, ram_f9a0, 960);
+}
