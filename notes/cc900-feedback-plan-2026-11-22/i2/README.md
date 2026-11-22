@@ -89,3 +89,12 @@ writes nothing for 657 (37.7 %): it refuses a construct (`unsupported: var` alon
 the whole file (22).  The other 483 (27.7 %) differ otherwise.  So the first gain for the model is coverage of C
 constructs, and register choice matters for the ROM residual (V4.23 against the ROM), not for the model.
 
+**First fix from it (2026-11-22, model `DECAY_AS_ADDR`).**  The largest refusal, `unsupported: var`, was an array or
+function name used as a value (`b = ram_90ea;`, `use(table)`): the model's `strip()` drops the decay node and `gen()`
+had no case for the bare name.  It now generates the name's address (`lda XWA,_ram_90ea`; a function's address is
+spelled as a call to it would be, `.name` for a register-argument function).  v10: the model writes a listing for 75
+more functions (no listing 657 -> 582) but none of them matches V4.23 yet ("same" stays 560; e.g. ChangePalette now
+differs only in how a member store through a fresh pointer is sequenced), so these functions have further gaps.  Only
+code paths that refused before changed: validation is unchanged (`val_agg.py`: 96 / 47 / 77 / 41 exact, as batch 366).
+`m1_v10.md` / `.tsv` are after the fix.
+

@@ -1061,6 +1061,9 @@ def gen(F, e, fam, size, then_ret=False, store=False):
     if e0.k == 'addr' and strip(e0.e).k == 'var' and size == 4:      # _log: frexp(x / SQRT2, &nptr) ->
         d = strip(e0.e).decl; R = FAM[fam][4]                          # lda XWA,XSP+0x68 / push XWA
         if d.kind == 'global': F.emit('lda', '%s,_%s' % (R, d.name)); return fam
+        if DECAY_AS_ADDR and d.kind == 'func':           # a function's address, named as a call to it would be
+            dot = (F.adecl or UNIT_ADECL[0]) and not getattr(d.ty, 'cdecl', False)
+            F.emit('lda', '%s,%s%s' % (R, '.' if dot else '_', d.name)); return fam
         off = getattr(d, 'slot', None) if d.kind == 'local' else (getattr(d, 'slot', None) or getattr(d, 'off', None))
         if off is not None:
             F.emit('lda', '%s,%s' % (R, 'XSP+%s' % hx(off + F.push) if off + F.push else 'XSP')); return fam
@@ -1642,7 +1645,21 @@ def gen(F, e, fam, size, then_ret=False, store=False):
             F.emit('lda', '%s,_%s' % (B_, b.decl.name)); F.emit(ext_, X); F.emit('add', '%s,%s' % (X, B_)); return fam
     if e.k == 'bin':
         return gen_bin(F, e, fam, size, then_ret, store)
+    if DECAY_AS_ADDR and e.k == 'var' and e.decl.ty.kind in ('array', 'func'):
+        return gen(F, decay_addr(e), fam, 4, then_ret, store)   # a pointer, whatever size the array's type gave
     raise Unsupported(e.k)
+
+
+def decay_addr(e):
+    """the address node of an array or function name used as a value"""
+    from frontend import N, Type
+    t = e.decl.ty
+    return N('addr', e=e, ty=Type('ptr', 4, 2, base=t.base if t.kind == 'array' else t, spell='decay'))
+
+
+DECAY_AS_ADDR = True                                      # an array or function name used as a value (strip() drops its
+                                                          # decay) is its address: `b = ram_90ea;` (feedback plan I2 m1:
+                                                          # v10's largest refusal, `unsupported: var`)
 
 CALL_RIGHT_FIRST = True                                   # see gen_bin
 EVORDER = True                                            # see evorder_bin
