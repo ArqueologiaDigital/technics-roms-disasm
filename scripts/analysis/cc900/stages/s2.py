@@ -202,7 +202,7 @@ def s2_lines(zio, decl_order=None, cdecl=False):
     recs = [dump.parse_line(l) for l in zio[1:-1]]
     if REWRITE2:
         recs = rewrite2(recs)
-    globs, params, addr_taken, memvars = [], [], [], set()
+    globs, params, addr_taken, memvars, spilled_all = [], [], [], set(), set()
     for r in recs:
         reads = list(r.args)
         if r.res and (r.res.startswith('*') or r.op.endswith('=') and r.op not in ('=', '==', '!=', '<=', '>=') or
@@ -239,18 +239,36 @@ def s2_lines(zio, decl_order=None, cdecl=False):
                 globs.sort(key=lambda g: key(g[0]))
             for n, full in globs:
                 out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))
+            for n, full in sorted([a for a in addr_taken if a[0].startswith('S')], key=lambda p: -int(p[0][1:])):
+                out.append('  0:   |%s DUMMY ' % re.sub(r'(\(Def\))+$', '', full))   # statics: after the globals
             import flow
             taken = {n for n, _ in addr_taken}
-            memvars.update(taken)
+            spilled = set()
+            if PARAM_MO == 'xiz':                    # values live across a call compete for XIZ (IZ + QIZ):
+                halves = 2                           # locals first, then parameters, each in index order; a
+                locs = sorted({re.match(r'(I\d+\([^()]*\))', x).group(1) for r in recs for x in [r.res] + r.args
+                               if x and re.match(r'^I\d+\(', x)}, key=lambda x: int(x[1:x.index('(')]))
+                cands = [(x.split('(')[0], x) for x in locs] + sorted(params, key=lambda p: int(p[0][1:]))
+                for n, full in cands:                # 4-byte value takes both halves, the rest are spilled {MO}
+                    if n in taken or (n.startswith('P') and (cdecl or int(n[1:]) > 2)) or \
+                            not flow.live_across_call(recs, n):
+                        continue
+                    need = 2 if tsize(full) == 4 else 1
+                    if need <= halves:
+                        halves -= need
+                    else:
+                        spilled.add(n)
+            spilled_all.update(spilled)
+            memvars.update(t for t in taken if not t.startswith('S'))
             for n, full in sorted(params, key=lambda p: -int(p[0][1:])):
                 mm = '{MM}' if n in taken or ((cdecl or int(n[1:]) > 2) and STACK_PARAM_MM) else ''
                 if cdecl or int(n[1:]) > 2:          # a parameter passed on the stack: PIN (in memory: {MM})
                     memvars.add(n)
                     out.append('  0:   |%s%s PIN ' % (re.sub(r'(\(Def\))+$', '', full), mm))
                 else:                                # {MO}: (open) moved out of its argument register
-                    mo = '{MO}' if PARAM_MO and flow.live_across_call(recs, n) else ''
+                    mo = '{MO}' if (PARAM_MO is True and flow.live_across_call(recs, n)) or n in spilled else ''
                     out.append('  0:   |%s%s%s DUMMY ' % (re.sub(r'(\(Def\))+$', '', full), mm, mo))
-            for n, full in sorted([a for a in addr_taken if not a[0].startswith('P')], key=lambda p: -int(p[0][1:])):
+            for n, full in sorted([a for a in addr_taken if a[0].startswith('I')], key=lambda p: -int(p[0][1:])):
                 out.append('  0:   |%s{MM} DUMMY ' % re.sub(r'(\(Def\))+$', '', full))   # in memory
             continue
         r.block = 0
@@ -260,6 +278,9 @@ def s2_lines(zio, decl_order=None, cdecl=False):
         names = memvars
         out = [re.sub(r'\b(%s)(\([^()]*\))(?!\{)' % '|'.join(names), r'\1\2{MM}', l) if ' DUMMY' not in l else l
                for l in out]
+    if spilled_all:                                  # a spilled variable: {MO} everywhere
+        out = [re.sub(r'\b(%s)(\([^()]*\))(?!\{)' % '|'.join(spilled_all), r'\1\2{MO}', l) if ' DUMMY' not in l
+               else l for l in out]
     return def_marks(out) if REWRITE2 else out
 
 
@@ -268,4 +289,4 @@ NEW_TEMPS = True
 COALESCE = True
 STACK_PARAM_MM = True
 POST_INC = True
-PARAM_MO = False                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)
+PARAM_MO = 'xiz'                                    # OPEN: {MO} on parameters is not "live across a call" (1,150 right, 382 false positives, 45 missed; exact 416 -> 406)
