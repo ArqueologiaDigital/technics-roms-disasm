@@ -2920,57 +2920,16 @@ PdMed_Exit:
 	pop xiz
 	ret
 
-DocDiskNameFunc:
-	push xiz
-	ld xiz, xde
-	cp xbc, EVT_PAINT
-	jr nz, DocDisk_Exit
-	call FileIO_SearchAndLoadFile
-	ld ix, 0:i3
-	jr DocDisk_CopyLoop
-
-DocDisk_CopyCharLoop:
-	cp (xhl), 0x20
-	jr z, DocDisk_SkipSpace
-	ld de, ix
-	inc 1, ix
-	ld a, (xhl)
-	ld	(xbc+de), a
-
-DocDisk_SkipSpace:
-	inc 1, xhl
-
-DocDisk_CopyLoop:
-	lda	xbc, (0x86f0:16)
-	cp	(xhl), 0x0
-	jr	z, DocDisk_TerminateStr
-	cp	ix, 0x1e
-	jr	lt, DocDisk_CopyCharLoop
-DocDisk_TerminateStr:
-	ld xde, xbc
-	ld	(xbc+ix), 0x00
-	jr DocDisk_TrimLoop
-
-DocDisk_ClearTrailing:
-	ld (xwa), 0x0
-
-DocDisk_TrimLoop:
-	dec 1, ix
-	lda	xwa, (xde+ix)
-	cp (xwa), 0x20
-	jr nz, DocDisk_PostEvent
-	cp ix, 0:i3
-	jr gt, DocDisk_ClearTrailing
-
-DocDisk_PostEvent:
-	ld xwa, xiz
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-
-DocDisk_Exit:
-	ld xhl, 0:i3
-	pop xiz
-	ret
+DocDiskNameFunc:	.include "includes/generated/cc900/DocDiskNameFunc.s"	; C: cc900/medley_m0_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocDisk_CopyCharLoop, DocDiskNameFunc + 19
+	.set	DocDisk_SkipSpace, DocDiskNameFunc + 35
+	.set	DocDisk_CopyLoop, DocDiskNameFunc + 37
+	.set	DocDisk_TerminateStr, DocDiskNameFunc + 52
+	.set	DocDisk_ClearTrailing, DocDiskNameFunc + 62
+	.set	DocDisk_TrimLoop, DocDiskNameFunc + 65
+	.set	DocDisk_PostEvent, DocDiskNameFunc + 81
+	.set	DocDisk_Exit, DocDiskNameFunc + 92
 
 DocMed_FormatFileList:
 	dec 6, xsp
@@ -3802,14 +3761,10 @@ CheckAnySlotHasData:
 ; Composer_SetPassword: Stores WA as the Composer password, word +0x0E of the style image (0x9480E).  Basis: callers + body --
 ;   Password_ClearAndSetSlot (EVT_SET_PASSWORD, FmmPasswordFunc) stores the entered password with it after
 ;   ClearAllSongSlots (notes/kn5000-style-2026-10-31/README.md, hdr +0x0e).
-Composer_SetPassword:
-	ld (0x09480e:24), wa
-	ret
+Composer_SetPassword:	.include "includes/generated/cc900/Composer_SetPassword.s"	; C: cc900/medley_m270.c
 
 ; Composer_GetPassword: HL = the Composer password, word +0x0E of the style image (0x9480E).  Basis: body + Composer_SetPassword.
-Composer_GetPassword:
-	ld hl, (0x09480e:24)
-	ret
+Composer_GetPassword:	.include "includes/generated/cc900/Composer_GetPassword.s"	; C: cc900/medley_m270_b.c
 
 ; Composer_IsPassword: HL = 1 when WA equals the Composer password (Composer_GetPassword), else 0.  Basis: callers + body -- the
 ;   password delete / save handlers compare the entered value with it.
@@ -3824,11 +3779,7 @@ Composer_IsPassword:
 
 ; Composer_HasPassword: HL = 1 when a Composer password is set (Composer_GetPassword non-zero), else 0.  Basis: body -- the
 ;   EVT_SET_PASSWORD handler refuses a new password while one is set.
-Composer_HasPassword:
-	calr Composer_GetPassword
-	cp hl, 0:i3
-	scc16 nz, hl
-	ret
+Composer_HasPassword:	.include "includes/generated/cc900/Composer_HasPassword.s"	; C: cc900/medley_m270.c
 
 InitializeCheap:
 	lda xsp, (xsp - 0x0e)

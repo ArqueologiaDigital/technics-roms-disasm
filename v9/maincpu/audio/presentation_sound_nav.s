@@ -368,17 +368,9 @@ GetDialFocus:	.include "includes/generated/cc900/GetDialFocus.s"	; C: cc900/pres
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	GetDialFocus_Active, GetDialFocus + 15
 
-SetDialUp:
-	ld (DIAL_UP_CALLBACK:24), xwa
-	ld (DIAL_UP_EVENT:24), xbc
-	ld (DIAL_UP_PARAM:24), xde
-	jr SetDialFocus
+SetDialUp:	.include "includes/generated/cc900/SetDialUp.s"	; C: cc900/presentation_sound_nav_m271_xr.c
 
-SetDialDown:
-	ld (DIAL_DOWN_CALLBACK:24), xwa
-	ld (DIAL_DOWN_EVENT:24), xbc
-	ld (DIAL_DOWN_PARAM:24), xde
-	jr SetDialFocus
+SetDialDown:	.include "includes/generated/cc900/SetDialDown.s"	; C: cc900/presentation_sound_nav_m271_xr.c
 
 SetAutoIncDefault:
 	dec 4, xsp

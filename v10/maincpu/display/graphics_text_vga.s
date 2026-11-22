@@ -1458,20 +1458,12 @@ GetFrameSPSize:	.include "includes/generated/cc900/GetFrameSPSize.s"	; C: cc900/
 ; GetCharHeight - Return character height for a font
 ; Input:  XWA = font_id
 ; Output: HL = character height in pixels
-GetCharHeight:
-	sll xwa, 4		; font_id * 16
-	add xwa, 0x945c00	; + table base
-	ld hl, (xwa + 2)	; height at offset +2
-	ret
+GetCharHeight:	.include "includes/generated/cc900/GetCharHeight.s"	; C: cc900/graphics_text_vga_m274.c
 
 ; GetCharDescent - Return character descent for a font
 ; Input:  XWA = font_id
 ; Output: HL = descent in pixels (below baseline)
-GetCharDescent:
-	sll xwa, 4		; font_id * 16
-	add xwa, 0x945c00	; + table base
-	ld hl, (xwa + 4)	; descent at offset +4
-	ret
+GetCharDescent:	.include "includes/generated/cc900/GetCharDescent.s"	; C: cc900/graphics_text_vga_m274.c
 
 GetCenteredDelta:
 	cp xwa, 0x7
@@ -1661,30 +1653,7 @@ GetWallPaletteRGB:
 	ld xhl, (xde)
 	ret
 
-InitializeRoot:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Root_ClassCount_160, Root_ClassTable_160, 0x160
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Root_ResEventCount_1C0, Root_ResEventTable_1C0, 0x1c0
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Root_ResMethodCount_1E0, Root_ResMethodTable_1E0, 0x1e0
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0xc, Root_ApFunctionTable_120, 0x120
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0xc, Root_ApFunctionTable_420, 0x420
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x160, Root_FunctionTable_100, 0x100
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x160, WidgetName_InitPtrTable, 0x400
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0xd, Root_MainFunctionTable_140, 0x140
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0xd, Root_MainFunctionTable_440, 0x440
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x33, Root_ViewableTable_000, 0x0
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x33, Root_ResNameTable_300, 0x300
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x9, Root_ViewableTable_0FF, 0xff
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x9, Root_ResNameTable_3FF, 0x3ff
-
-	RegMode 0x0, InitializeRoot_Str_MD_PS, 0x0, NAKA_APFUNC_DefaultFunction, TITLE_PS
-
-	RegTitle 0x0, InitializeRoot_Str_TT_PS, 0x0, NAKA_APFUNC_DefaultFunction, 0x0
-	RegTitle 0x0, InitializeRoot_Str_TT_CHECK, 0xff, NAKA_MAINFUNC_CheckTitleFunc, NAKA_VIEW_CheckTitle
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeRoot:	.include "includes/generated/cc900/InitializeRoot.s"	; C: cc900/graphics_text_vga_m274.c
 
 
 .macro _VGA_WRITE regnum, value

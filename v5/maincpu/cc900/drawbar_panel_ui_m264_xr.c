@@ -46,3 +46,17 @@ unsigned int DemoMenu_WorkspaceReturn(unsigned int i)
 	}
 	return 0;
 }
+
+extern unsigned int *ram_3ea30;
+extern unsigned int PsMixer_ReadWordArrayEntry(int i);
+extern long ram_3ea2c;
+extern void Util_StorePartArrayBase(long p);
+
+unsigned int PsMixer_ReadWordArrayEntry(int i)
+{
+  return ram_3ea30[i];
+}
+void Util_StorePartArrayBase(long p)
+{
+  ram_3ea2c = p;
+}

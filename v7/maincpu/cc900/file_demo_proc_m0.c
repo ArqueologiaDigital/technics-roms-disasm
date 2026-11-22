@@ -288,3 +288,13 @@ int FileIO_SaveRegion7_Flash(char *src)
 		FileIO_OpenDefault(hd);
 	return r;
 }
+
+extern long ApPostEvent(long, long, long);
+#define EVT_EXEC_PRESENTATION 0x1c10007L
+#define STR_FEATURE 0xea009eL
+extern void FDemo_LoadRegsAndPostEvent(void);
+
+void FDemo_LoadRegsAndPostEvent(void)
+{
+  ApPostEvent(-1L, EVT_EXEC_PRESENTATION, STR_FEATURE);
+}

@@ -94,28 +94,7 @@
 ;   "TT_EXTAPR" (0xe1fd22) - Extension APR test, widget table 0xfc
 ; Both titles use TestTitleFunc (0xf1e39a) as their lifecycle callback.
 ; Title handler (TestTitleFunc) pointer is stored at 0xe1fd2c in fd_test_data.s.
-InitializeHama:
-	lda xsp, (xsp - 14)
-
-	RegObjTableHama NAKA_CLASS_Class, ClassProc, HamaStr_HamaList + 0xa, Hama_ClassTable_169, 0x169
-	RegObjTableHama NAKA_CLASS_ResEvent, ResEventProc, HamaStr_EV_INDEX_PUTS + 0xe, Hama_ResEventTable_1C9, 0x1c9
-	RegObjTableHama NAKA_CLASS_ResMethod, ResMethodProc, HamaStr_MT_CONTINUE + 0xc, Hama_ResMethodTable_1E9, 0x1e9
-	RegObjTablHama NAKA_CLASS_ApFunction, ApFunctionProc, 0x2, Hama_ApFuncTable_129, 0x129
-	RegObjTablHama NAKA_CLASS_ApFunction, ApFunctionProc, 0x2, Hama_ApFuncTable_429, 0x429
-	RegObjTablHama NAKA_CLASS_Function, FunctionProc, 0x4b, Hama_FunctionTable_109, 0x109
-	RegObjTablHama NAKA_CLASS_Function, FunctionProc, 0x4b, Hama_ModeParam_Table, 0x409
-	RegObjTablHama NAKA_CLASS_MainFunction, MainFunctionProc, 0x1, FDTest_CfgName_FDDTest + 0x1e, 0x149
-	RegObjTablHama NAKA_CLASS_MainFunction, MainFunctionProc, 0x1, FDTest_CfgName_FDDTest + 0x26, 0x449
-	RegObjTablHama NAKA_CLASS_Viewable, ViewableProc, 0x0, String_CONSOLE + 0x8, 0x7f
-	RegObjTablHama NAKA_CLASS_ResName, ResNameProc, 0x0, FDTest_DataBlock_Table + 0x68, 0x37f
-	RegObjTablHama NAKA_CLASS_Viewable, ViewableProc, 0x1a, String_CONSOLE + 0xc, 0xfc
-	RegObjTablHama NAKA_CLASS_ResName, ResNameProc, 0x1a, FDTest_Config_Table, 0x3fc
-
-	RegTitleHama 0x9, FDTest_CfgName_FDDTest + 0xa, 0x7f, NAKA_MAINFUNC_TestTitleFunc, NAKA_VIEW_FDD_TEST
-	RegTitleHama 0x9, FDTest_CfgName_FDDTest + 0x14, 0xfc, NAKA_MAINFUNC_TestTitleFunc, NAKA_VIEW_FDD_TEST
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeHama:	.include "includes/generated/cc900/InitializeHama.s"	; C: cc900/test_init_m159_xr.c
 
 FDTest_PrintDiag:
 	jp Debug_PrintString
@@ -337,23 +316,11 @@ CreateRunFDOp_Return:
 
 ; FDTest_Format2ddAndLabel: Switch 4 of the FDD test title: format_FD(2) (a 2DD disk), then
 ;   FileIO_CheckPathAndVolumeLabel("TEST_HAMA"); HL = 0. Basis: callers + body.
-FDTest_Format2ddAndLabel:
-	ld wa, 2:i3
-	call format_FD
-	lda xwa, (FDTest_Format2ddAndLabel_Str_TEST_HAMA:24)
-	call FileIO_CheckPathAndVolumeLabel
-	ld hl, 0:i3
-	ret
+FDTest_Format2ddAndLabel:	.include "includes/generated/cc900/FDTest_Format2ddAndLabel.s"	; C: cc900/test_init_m159_xr_b.c
 
 ; FDTest_Format2hdAndLabel: Switch 5 of the FDD test title: format_FD(3) (a 2HD disk), then
 ;   FileIO_CheckPathAndVolumeLabel("TESTHAMA2HD"); HL = 0. Basis: callers + body.
-FDTest_Format2hdAndLabel:
-	ld wa, 3:i3
-	call format_FD
-	lda xwa, (FDTest_Format2hdAndLabel_Str_TESTHAMA2HD:24)
-	call FileIO_CheckPathAndVolumeLabel
-	ld hl, 0:i3
-	ret
+FDTest_Format2hdAndLabel:	.include "includes/generated/cc900/FDTest_Format2hdAndLabel.s"	; C: cc900/test_init_m159_xr.c
 
 ; SendEventWithParam -- Sends event 0x1c00025 with xwa as parameter via 0xfa9660
 ; Args: xwa = event parameter (moved to xde)

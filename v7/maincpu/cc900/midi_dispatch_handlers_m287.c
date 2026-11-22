@@ -30,3 +30,55 @@ void SysEx_FinishBulkSend(void)
 			SeqBuf_FlushNoteOffs(SysEx_Msg_35AC, 5);
 	}
 }
+
+/* cc900-module: MidiPkt_RecoverIfXferAborted MidiTable_DispatchHelper MidiTable_FlushArpNotes SeqChan_StepCmd_Field1to2 SeqChan_StepCmd_Field2to3 SeqChan_StepCmd_Field4to5 SeqChan_StepCmd_Field5to6 SeqChan_StepCmd_Field8to9 SeqChan_StepCmd_Field9to10 SeqChan_XferStep_AccompBlock1 SeqChan_XferStep_AccompBlock2 SeqChan_XferStep_StyleImageBlock1 */
+typedef void (*cmdfn)(void);
+extern cmdfn SeqChan_CommandDispatch_Table[];
+extern void MidiTable_PreDispatchNullRet(void);
+extern void MidiSeq_UpdateAllParams(void);
+extern void MidiTable_NullRet(void);
+extern void MidiTable_FlushArpNotes(void);
+extern void MidiTable_DispatchHelper(void);
+extern unsigned char __near ram_bc7c;
+extern unsigned char SysEx_Msg_3594[];
+extern unsigned char SysEx_Msg_359A[];
+extern unsigned char SysEx_Msg_35B2[];
+extern void ArpQueue_SwapBuffers(void);
+
+void MidiTable_DispatchHelper(void)
+{
+	if (SeqData_ReadFieldByIndex(MIDISEQ_ACTIVE_BUF_PTR, 4) == 0) {
+		MidiTable_PreDispatchNullRet();
+		if (*(unsigned char *)MIDISEQ_ACTIVE_BUF_PTR < 0x27) {
+			SeqChan_CommandDispatch_Table[*(unsigned char *)MIDISEQ_ACTIVE_BUF_PTR]();
+			MidiTable_FlushArpNotes();
+			MidiSeq_UpdateAllParams();
+			MidiTable_NullRet();
+		}
+	}
+}
+void MidiTable_FlushArpNotes(void)
+{
+	unsigned char a;
+
+	if (ram_bc7c & 0x80) {
+		ArpQueue_SwapBuffers();
+		a = ((unsigned char *)MIDISEQ_ACTIVE_BUF_PTR)[4];
+		if (a == 0)
+			SeqBuf_FlushNoteOffs(SysEx_Msg_3594, 5);
+		else if (a == 0x16)
+			SeqBuf_FlushNoteOffs(SysEx_Msg_35B2, 5);
+		else
+			SeqBuf_FlushNoteOffs(SysEx_Msg_359A, 5);
+	}
+}
+
+/* cc900-module: AnalogIn_PollAfterTouch AnalogIn_PollExpressionPedal ArpQueue_Enqueue ArpQueue_InitBuffer Audio_FlushPendingBankSelects MidiChan_ParseVoiceData PanelTlv_WriteBlock0Headers PanelTlv_WriteBlock1Headers PanelTlv_WriteLivePanelHeaders PanelTlv_WritePanelMemoryHeaders SeqBuf_WaitForEmpty SeqData_InitPlaybackFromField SeqOut_FlushWithChunking */
+extern unsigned char __near MIDIPKT_RX_GROUPS;
+extern unsigned char __near ram_10ea;
+extern void MidiSysEx_ProcessBlock_Helper5(void);
+
+void MidiSysEx_ProcessBlock_Helper5(void)
+{
+  if (MIDIPKT_RX_GROUPS & 0x10) ram_10ea |= 0x01;
+}

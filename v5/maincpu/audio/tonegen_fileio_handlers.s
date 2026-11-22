@@ -28,13 +28,7 @@ ToneGen_IncrementWrap128_Skip:
 ToneGen_Config_AlignByte:
 	ret
 ; Validate the live panel -- block 0 at RAM 0xF9A0, block 1 at 0xFD60 -- then ToneGen_DispatchByMode.
-PanelTlv_ValidateLivePanel:
-	ld	xwa, 0xf9a0
-	calr	PanelTlv_ValidateBlock0
-	ld	xwa, 0xfd60
-	calr	PanelTlv_ValidateBlock1
-	call	ToneGen_DispatchByMode
-	jp	SwbtWr_NullRet
+PanelTlv_ValidateLivePanel:	.include "includes/generated/cc900/PanelTlv_ValidateLivePanel.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 ; Validate block 0 of each of the 80 panel memories (RAM 0x1ED400 + 960*n).
 PanelTlv_ValidatePanelMemories:	.include "includes/generated/cc900/PanelTlv_ValidatePanelMemories.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -75,9 +69,7 @@ PanelTlv_ApplyResetMasks_Loop:
 PanelTlv_WriteAllHeaders:
 	calr	PanelTlv_WriteLivePanelHeaders
 	jrl	PanelTlv_WritePanelMemoryHeaders
-PanelTlv_ValidateSongPanel:
-	lda	xwa, (0xf480:16)
-	jrl	PanelTlv_ValidateBlock0
+PanelTlv_ValidateSongPanel:	.include "includes/generated/cc900/PanelTlv_ValidateSongPanel.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 ; a jr to PanelTlv_ResolvePartCompanions, for callers outside its calr reach
 PanelTlv_ResolvePartCompanions_Entry:
 	jr	PanelTlv_ResolvePartCompanions
@@ -140,11 +132,7 @@ Voice_CopyFromScratch:
 	lda	xsp, (xsp + 10)
 	ret
 ; Write the record headers of the live panel: block 0 at RAM 0xF9A0, block 1 at 0xFD60.
-PanelTlv_WriteLivePanelHeaders:
-	ld	xwa, 0xf9a0
-	calr	PanelTlv_WriteBlock0Headers
-	ld	xwa, 0xfd60
-	jrl	PanelTlv_WriteBlock1Headers
+PanelTlv_WriteLivePanelHeaders:	.include "includes/generated/cc900/PanelTlv_WriteLivePanelHeaders.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 ; Write the block-0 record headers of each of the 80 panel memories (RAM 0x1ED400 + 960*n).
 PanelTlv_WritePanelMemoryHeaders:	.include "includes/generated/cc900/PanelTlv_WritePanelMemoryHeaders.s"	; C: cc900/tonegen_fileio_handlers_m277.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -313,23 +301,9 @@ PanelTlv_ApplyFieldRule_UnknownType:
 	ld	hl, 1:i3
 PanelTlv_ApplyFieldRule_Return:
 	ret
-PanelTlv_Rule_KeepBits:
-	ld	xde, xbc
-	ld	l, (xde+0x1)
-	extz	hl
-	ld	c, (xde+0x2)
-	and	(xwa+hl), c
-	ld	hl, 3:i3
-	ret
+PanelTlv_Rule_KeepBits:	.include "includes/generated/cc900/PanelTlv_Rule_KeepBits.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 PanelTlv_Rule_ClearBits:	.include "includes/generated/cc900/PanelTlv_Rule_ClearBits.s"	; C: cc900/tonegen_fileio_handlers_m277.c
-PanelTlv_Rule_SetBits:
-	ld	xde, xbc
-	ld	l, (xde+0x1)
-	extz	hl
-	ld	c, (xde+0x2)
-	or	(xwa+hl), c
-	ld	hl, 3:i3
-	ret
+PanelTlv_Rule_SetBits:	.include "includes/generated/cc900/PanelTlv_Rule_SetBits.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 PanelTlv_Rule_ResetOutsideRange:
 	ld	xde, xwa
 	ld	a, (xbc+0x1)
@@ -461,14 +435,7 @@ PanelTlv_Rule_ResetIfListed_Return:
 	popw	iz
 	inc	4, xsp
 	ret
-PanelTlv_Rule_StoreByte:
-	ld	xde, xbc
-	ld	l, (xde+0x1)
-	extz	hl
-	ld	c, (xde+0x2)
-	ld	(xwa+hl), c
-	ld	hl, 3:i3
-	ret
+PanelTlv_Rule_StoreByte:	.include "includes/generated/cc900/PanelTlv_Rule_StoreByte.s"	; C: cc900/tonegen_fileio_handlers_m277_b.c
 PanelTlv_Rule_ZeroByte:
 	ld	c, (xbc+0x1)
 	extz	bc

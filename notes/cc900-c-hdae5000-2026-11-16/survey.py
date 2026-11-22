@@ -32,6 +32,8 @@ routine of hdae5000/*.s -- a column-0 label up to the next one -- with:
     python3 -B notes/cc900-c-hdae5000-2026-11-16/survey.py --body LABEL [--comments]
         the hand source of one function as the survey delimits it (its label up to the next function), comments
         stripped unless --comments
+    --tree hdae5000_v2_01i | hdae5000_v1_15i | hdae5000_v1_10i (2026-11-20, with any of the above): survey that older
+        tree against its own symbols reference instead; `ported` then names the other three versions
 
 With no option it prints a summary and the C? routines by size.  Run from the repository root.  Reads only this
 repository's sources and symbols references.
@@ -40,6 +42,8 @@ import collections, os, re, sys
 
 REPO = os.path.abspath(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', '..'))
 TREE = os.path.join(REPO, 'hdae5000')
+VERSION = 'v2.06i'                  # --tree hdae5000_v2_01i (2026-11-20) surveys an older tree against its own symbols
+TREES = {'hdae5000': 'v2.06i', 'hdae5000_v2_01i': 'v2.01i', 'hdae5000_v1_15i': 'v1.15i', 'hdae5000_v1_10i': 'v1.10i'}
 REFS = {'v2.06i': 'symbols/hdae5000_symbols_reference.txt', 'v2.01i': 'symbols/hdae5000_v2_01i_symbols_reference.txt',
         'v1.15i': 'symbols/hdae5000_v1_15i_symbols_reference.txt', 'v1.10i': 'symbols/hdae5000_v1_10i_symbols_reference.txt'}
 XREF = 'notes/toshiba-runtime-xref-2026-11-08/results/xref.resolved.tsv'
@@ -140,10 +144,10 @@ def routines():
     """one row per function: a column-0 label that is called, whose address is taken, or that nothing references and
     nothing falls into; the column-0 labels after it that only branches reach (or that it falls into) are its inner
     blocks"""
-    ref = load_ref(REFS['v2.06i'])
+    ref = load_ref(REFS[VERSION])
     addrs = sorted(set(ref.values()))
     lib = library_labels()
-    ported = {k: load_ref(v) for k, v in REFS.items() if k != 'v2.06i'}
+    ported = {k: load_ref(v) for k, v in REFS.items() if k != VERSION}
     files = {f: open(os.path.join(TREE, f), encoding='latin-1').read().split('\n')
              for f in sorted(os.listdir(TREE)) if f.endswith('.s')}
     refs = label_refs(files.values())
@@ -296,7 +300,11 @@ def modules():
 
 
 def main():
+    global TREE, VERSION
     a = sys.argv[1:]
+    if '--tree' in a:                   # 2026-11-20: an older tree, with its own symbols ("ported" = the other trees)
+        VERSION = TREES[opt(a, '--tree')]
+        TREE = os.path.join(REPO, opt(a, '--tree'))
     if '--modules' in a:
         modules()
         return

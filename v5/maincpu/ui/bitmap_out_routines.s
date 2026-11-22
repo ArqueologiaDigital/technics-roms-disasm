@@ -3301,11 +3301,7 @@ BitMapOut_PrepareRender_CheckBit0:
 BitMapOut_PrepareRender_CheckBit1:	.include "includes/generated/cc900/BitMapOut_PrepareRender_CheckBit1.s"	; C: cc900/bitmap_out_routines.c
 BitMapOut_PrepareRender_CheckBit2:	.include "includes/generated/cc900/BitMapOut_PrepareRender_CheckBit2.s"	; C: cc900/bitmap_out_routines.c
 BitMapOut_GetRenderMode:	.include "includes/generated/cc900/BitMapOut_GetRenderMode.s"	; C: cc900/bitmap_out_routines.c
-BitMapOut_GetRenderMode_CheckBit3:
-	lda	xbc, (35986:16)
-	or	(xbc), a
-	ld	l, (xbc)
-	ret
+BitMapOut_GetRenderMode_CheckBit3:	.include "includes/generated/cc900/BitMapOut_GetRenderMode_CheckBit3.s"	; C: cc900/bitmap_out_routines_m274_xr.c
 BitMapOut_GetRenderMode_Return:
 	lda	xbc, (0x8c92:16)
 	cpl A
@@ -3521,11 +3517,7 @@ BitMapOut_UpdateWidget_Done_Join:
 	ret
 PanelMemory_PreSlotLoad:
 	ret
-PanelMemory_PostSlotLoad:
-	extz	wa
-	cp	bc, 0:i3
-	jp	lt, (PanelMem_InitFromFactory:24)
-	jp	PanelTlv_ValidatePanelMemory
+PanelMemory_PostSlotLoad:	.include "includes/generated/cc900/PanelMemory_PostSlotLoad.s"	; C: cc900/bitmap_out_routines_m274.c
 ; PanelMemory_PreBankLoad: Empty hook (ret) run before one panel-memory bank (16-byte bank name + 8 memories) is read
 ;   from a .PMT file; WA = destination bank. Basis: callers + body -- FileIO_LoadRegion1_VRAM (bank 0 of a one-bank
 ;   file) and SingleLoad_LoadPanelMemBank (bank load) call it before the reads, where the whole-file path calls

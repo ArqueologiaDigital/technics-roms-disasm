@@ -24,3 +24,16 @@ int LoadFromSecondaryPage(void)
     FileIO_CloseHandle();
     return r;
 }
+
+/* cc900-module: Seq_CopyResourcePtrs */
+extern int GetFirstPageBase(void);
+extern char *GetRecordPtrForFile(int);
+extern int FileIO_OpenDefault(char *);
+extern int GetFirstRecordAndOpen(void);
+
+int GetFirstRecordAndOpen(void)
+{
+  int n = GetFirstPageBase();
+  if (n < 0) return -0x68;
+  return FileIO_OpenDefault(GetRecordPtrForFile(n));
+}

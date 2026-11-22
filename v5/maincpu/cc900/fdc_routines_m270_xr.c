@@ -98,3 +98,13 @@ void FDC_CmdSeek(void)
     if (FDC_ERROR_CODE != 0) FDC_CURRENT_CYLINDER = 255;
     SOME_DELAY(16);
 }
+
+/* cc900-module: ApTaskControl ClearAllSongSlots Composer_GetPassword FindFirstEmptySlot */
+extern unsigned char __tiny PD;
+extern unsigned char Check_for_Floppy_Disk_Change(void);
+
+unsigned char Check_for_Floppy_Disk_Change(void)
+{
+  if (PD & 0x40) return 0;
+  return 1;
+}

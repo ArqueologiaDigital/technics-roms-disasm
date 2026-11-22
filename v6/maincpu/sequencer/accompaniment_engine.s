@@ -2383,11 +2383,7 @@ AccSeq_ReadNextByte:
 	inc	1, xhl
 	ld	a, (xhl)
 	ret
-AccSeq_AdvancePointer:
-	ld	xhl, (12763:16)
-	inc	1, xhl
-	ld	(12763:16), xhl
-	ret
+AccSeq_AdvancePointer:	.include "includes/generated/cc900/AccSeq_AdvancePointer.s"	; C: cc900/accompaniment_engine_m243.c
 AccSeq_ResetToStart:
 	ld	xhl, AccStyle_DefaultStream
 	add	xhl, 6
@@ -5812,10 +5808,7 @@ AccTuning_Toggle_NoStyle:
 AccTuning_Toggle_Return:
 	ret
 
-AccTuning_SaveState:
-	ld	a, (13017:16)
-	ld	(13018:16), a
-	ret
+AccTuning_SaveState:	.include "includes/generated/cc900/AccTuning_SaveState.s"	; C: cc900/accompaniment_engine_m245.c
 AccTuning_Init:
 	push XWA
 	push XHL
@@ -13092,12 +13085,7 @@ AccVoice_BarCounterBytecodeData_Join6_Skip:
 	pop	xiz
 	inc	2, xsp
 	ret
-Chord_LookupTypeFamily:
-	ld	a, (0x336b:16)
-	extz WA
-	lda xbc, (Chord_TypeFamilyTable:24)
-	ld	(13162), (xbc+wa)
-	ret
+Chord_LookupTypeFamily:	.include "includes/generated/cc900/Chord_LookupTypeFamily.s"	; C: cc900/accompaniment_engine_m249.c
 AccTuning_ComplexBytecodeData:
 	dec	2, xsp
 	push	xiz
@@ -33598,11 +33586,7 @@ MspRecTtl_ReturnZero:
 	ld xhl, 0:i3
 	ret
 
-AccSeq_PostEvent9E_Enable:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_SET_NOT_DRAW_FLAG
-	ld xde, 1:i3
-	jp ApPostEvent
+AccSeq_PostEvent9E_Enable:	.include "includes/generated/cc900/AccSeq_PostEvent9E_Enable.s"	; C: cc900/accompaniment_engine_m259.c
 
 AccSeq_PostEvent9E_Disable:
 	ld xwa, 0xffffffff
@@ -34028,13 +34012,9 @@ CmpStepTitle_OnSwitchIn:
 ; CmpStepTitle_Method3Nop: CmpStepTitleFunc_ProcTable[3], a lone `ret`; DirmdEmulator calls only methods 0-2.
 CmpStepTitle_Method3Nop:
 	ret
-AccAudio_LockAcquire:
-	ldw wa, 0x8
-	jp Kernel_SemaWait
+AccAudio_LockAcquire:	.include "includes/generated/cc900/AccAudio_LockAcquire.s"	; C: cc900/accompaniment_engine_m259.c
 
-AccAudio_LockRelease:
-	ldw wa, 0x8
-	jp Kernel_SemaSignal
+AccAudio_LockRelease:	.include "includes/generated/cc900/AccAudio_LockRelease.s"	; C: cc900/accompaniment_engine_m259.c
 AccAudio_DataBlock1:
 	ld	xwa, xiy
 	ld	xbc, xix
@@ -35993,13 +35973,7 @@ msp_sv_mae:
 	pop xiz
 	ret
 
-MspSave_InitAndCalcSize:
-	call Voice_RefreshBankData
-	ld xhl, 0x1e881c
-	ld hl, (xhl)
-	extz xhl
-	sll xhl, 4
-	ret
+MspSave_InitAndCalcSize:	.include "includes/generated/cc900/MspSave_InitAndCalcSize.s"	; C: cc900/accompaniment_engine_m261_xr.c
 
 msp_sv_ato:
 	push xiz
@@ -36447,14 +36421,9 @@ StyleConvInit_StoreChar:
 	popw iz
 	ret
 
-SoundMem_ClearRegion:
-	ld xwa, 0xffc00
-
-SoundMem_ClearLoop:
-	ld (xwa+), 0x00
-	cp xwa, 0x100000
-	jr c, SoundMem_ClearLoop
-	ret
+SoundMem_ClearRegion:	.include "includes/generated/cc900/SoundMem_ClearRegion.s"	; C: cc900/accompaniment_engine_m261.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundMem_ClearLoop, SoundMem_ClearRegion + 5
 
 StyleFile_ClearAllTables:
 	lda	xwa, (21668:16)

@@ -250,3 +250,15 @@ void SeqPart_SetupWithDispatch(void)
 	ram_285d &= ~0x01;
 	ram_285d &= ~0x02;
 }
+
+/* cc900-module: SeqStep_ParseRhythm SeqStep_SkipToMeasure */
+extern unsigned char __near ram_d32;
+extern unsigned char __near TRACK_ASSIGN_EDIT_VALUE;
+extern void SeqStep_ParseRhythm(void);
+extern void SeqPart_EventLoopContinue(void);
+
+void SeqPart_EventLoopContinue(void)
+{
+  ram_d32 = TRACK_ASSIGN_EDIT_VALUE;
+  SeqStep_ParseRhythm();
+}

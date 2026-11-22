@@ -346,21 +346,9 @@ ApPreControl_Exit:
 	pop xiz
 	ret
 
-FDemo_MultiGuardCheck:
-; [v10] --- Routine 1: multi-guard check, return HL=1 or 0 (30 bytes) ---
-	cp	(ACTIVE_TITLE:16), 228
-	jr	nz, Banner_ReturnZero
-	cpw	(SEQ_ACTIVE_PARTS:16), 0
-	jr	nz, Banner_ReturnZero
-	cp	(DEMO_TIMER_COUNTDOWN:16), 0
-	jr	nz, Banner_ReturnZero
-	bit	3, (DEMO_CONTROL_FLAGS:16)
-	jr	nz, Banner_ReturnZero
-	ld	hl, 1:i3
-	ret
-Banner_ReturnZero:
-	ld	hl, 0:i3
-	ret
+FDemo_MultiGuardCheck:	.include "includes/generated/cc900/FDemo_MultiGuardCheck.s"	; C: cc900/file_demo_proc_m265.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Banner_ReturnZero, FDemo_MultiGuardCheck + 31
 FDemo_LoadRegsAndPostEvent:
 	; --- Routine 2: load regs, jp FA9D58 (23 bytes) ---
 	ld xwa, 0xffffffff
@@ -507,13 +495,7 @@ FDemo_FileOpen_Exit:
 
 
 DemoMode_Main_Operation:	.include "includes/generated/cc900/DemoMode_Main_Operation.s"	; C: cc900/file_demo_proc_m266_b.c
-FDemo_IndicatorSetup:
-	ldw	wa, 34
-	ld	bc, 0:i3
-	ld	de, 0:i3
-	call	CtrlPanel_IndicatorDispatch
-	ld	(DEMO_PLAY_STATE:16), 4
-	ret
+FDemo_IndicatorSetup:	.include "includes/generated/cc900/FDemo_IndicatorSetup.s"	; C: cc900/file_demo_proc_m266.c
 DemoMode_Initialize:
 	calr	Demo_PreSetup
 	ld	(0x294a:16), 0
@@ -667,14 +649,7 @@ Demo_SelectEntry_StartAutoPlay:
 Demo_SelectEntry_TimerTick:	.include "includes/generated/cc900/Demo_SelectEntry_TimerTick.s"	; C: cc900/file_demo_proc_m266_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	Demo_SelectEntry_CheckCountdown, Demo_SelectEntry_TimerTick + 46
-Demo_SelectEntry_CheckCPanel:
-	cp	(CURRENT_MODE:16), 19
-
-	ret nz
-
-	calr	Demo_SelectEntry_Debounce
-
-	ret
+Demo_SelectEntry_CheckCPanel:	.include "includes/generated/cc900/Demo_SelectEntry_CheckCPanel.s"	; C: cc900/file_demo_proc_m266.c
 Demo_SelectEntry_Debounce:
 	ld	a, (DEMO_DEBOUNCE:16)
 	cp	a, 0:i3
@@ -908,12 +883,7 @@ Demo_PreSetupAndScan:
 	calr Demo_ScanActivePartChannels
 	jr Demo_PreSetup
 
-Demo_PreSetup:
-	call AccWrap_PlayModeDispatch
-	call SeqBuf_Init
-	call SeqPlay_EmergencyStopAll
-	ld (1073:16), 0
-	ret
+Demo_PreSetup:	.include "includes/generated/cc900/Demo_PreSetup.s"	; C: cc900/file_demo_proc_m266.c
 
 Demo_ScanActivePartChannels:	.include "includes/generated/cc900/Demo_ScanActivePartChannels.s"	; C: cc900/file_demo_proc_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -3384,18 +3354,9 @@ WriteVerify_Return:
 	lda xsp, (xsp + 58)
 	ret
 
-GetFirstRecordAndOpen:
-	call GetFirstPageBase
-	cp hl, 0:i3
-	jr ge, GetFirstRecord_GotPage
-	ldw hl, 0xff98
-	ret
-
-GetFirstRecord_GotPage:
-	ld wa, hl
-	call GetRecordPtrForFile
-	ld xwa, xhl
-	jp FileIO_OpenDefault
+GetFirstRecordAndOpen:	.include "includes/generated/cc900/GetFirstRecordAndOpen.s"	; C: cc900/file_demo_proc_m266_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	GetFirstRecord_GotPage, GetFirstRecordAndOpen + 12
 
 SearchAndOpen:	.include "includes/generated/cc900/SearchAndOpen.s"	; C: cc900/file_demo_proc_m266.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -4437,12 +4398,7 @@ GetEncodedFreeSpaceData:	.include "includes/generated/cc900/GetEncodedFreeSpaceD
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	GetEncoded_Return, GetEncodedFreeSpaceData + 21
 
-FileIO_GetDiskFreeSpace:
-	lda xwa, (0x025d6c:24)
-	lda xbc, (xwa + 4)
-	call GetDiskFreeSpace
-	ld xhl, (0x025d6c:24)
-	ret
+FileIO_GetDiskFreeSpace:	.include "includes/generated/cc900/FileIO_GetDiskFreeSpace.s"	; C: cc900/file_demo_proc_m268_c.c
 
 FileIO_ResetCurrentRecord:	.include "includes/generated/cc900/FileIO_ResetCurrentRecord.s"	; C: cc900/file_demo_proc.c
 
@@ -6499,18 +6455,9 @@ GetEntryRefresh_Return:
 	popw iz
 	ret
 
-FileIO_CheckMediaIsWritable:
-	call GetMediaType
-	cp l, 2:i3
-	jr z, CheckMediaWritable_Ok
-	cp l, 3:i3
-	jr z, CheckMediaWritable_Ok
-	ldw hl, 0xffff
-	ret
-
-CheckMediaWritable_Ok:
-	ld hl, 0:i3
-	ret
+FileIO_CheckMediaIsWritable:	.include "includes/generated/cc900/FileIO_CheckMediaIsWritable.s"	; C: cc900/file_demo_proc_m268.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CheckMediaWritable_Ok, FileIO_CheckMediaIsWritable + 16
 
 FileIO_OpenWithBuiltPath:	.include "includes/generated/cc900/FileIO_OpenWithBuiltPath.s"	; C: cc900/file_demo_proc_m268.c
 
@@ -6989,20 +6936,10 @@ FileIO_DiskRemoved:
 InitializeOperationState:	.include "includes/generated/cc900/InitializeOperationState.s"	; C: cc900/file_demo_proc_m269.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	InitOp_SkipSetFlag, InitializeOperationState + 29
-CancelOperationCleanup:
-	ld	a, (SEQ_RTMCFG:16)
-	bit 2, a
-	jr z, CancelOp_ClearSeq
-	res 2, a
-	ld	(SEQ_RTMCFG:16), a
-
-CancelOp_ClearSeq:
-	res	3, (SEQ_RTMCFG:16)
-	call	SeqAcc_InitPlaybackState
-	jp	MidiIn_AcceptClockTransport
-SignalProgressUpdate:
-	call CPanel_InitButtonState_SaveRegs
-	jp RefreshSwEvent
+CancelOperationCleanup:	.include "includes/generated/cc900/CancelOperationCleanup.s"	; C: cc900/file_demo_proc_m269.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CancelOp_ClearSeq, CancelOperationCleanup + 16
+SignalProgressUpdate:	.include "includes/generated/cc900/SignalProgressUpdate.s"	; C: cc900/file_demo_proc_m269.c
 
 SeqPhase_OperationStateCheck:
 	pushw iz

@@ -762,6 +762,7 @@ MODEL_HINT = ("\nThe Python reference model (CC900_COMPILER=model) does not supp
 
 
 JR_LOCAL_RE = re.compile(r'^\tjr[ \t]+(?:(\w+),\s*)?(\.L\w+)\s*$')
+BYTE_RE = re.compile(r'^\t\.byte\s+([^;]*?)\s*(?:;.*)?$')
 
 
 def assembler_errors(text):
@@ -779,15 +780,22 @@ def assembler_errors(text):
 
 def short_jr_out_of_reach(text):
     lines = text.split("\n")
-    if not any(JR_LOCAL_RE.match(l) for l in lines) or any(l.startswith("\t.") for l in lines):
+    # `.byte` lines are counted (2026-11-23: SetSepaOutMode's `ldiw`, written `.byte 0x95, 0x10`, made this check
+    # give up, its four far `jr` stayed for llvm-mc to relax, and v10 / v9's `.org 0xf97d8d` overran by a byte);
+    # any other directive still stops it
+    byte_n = {i: len([x for x in BYTE_RE.match(l).group(1).split(",") if x.strip()])
+              for i, l in enumerate(lines) if BYTE_RE.match(l)}
+    if not any(JR_LOCAL_RE.match(l) for l in lines) or \
+            any(l.startswith("\t.") and i not in byte_n for i, l in enumerate(lines)):
         return ""
     r = subprocess.run([os.path.join(LLVM_BIN, "llvm-mc"), "-triple=tlcs900", "-show-encoding"],
                        input=text + "\n", capture_output=True, text=True)
     sizes = [len(m.group(1).split(",")) for m in re.finditer(r'encoding: \[([^\]]*)\]', r.stdout)]
-    insn = [i for i, l in enumerate(lines) if l.startswith("\t") and l.strip()]
+    insn = [i for i, l in enumerate(lines) if l.startswith("\t") and l.strip() and i not in byte_n]
     if r.returncode or len(sizes) != len(insn):
         return ""
     at, label, off, size = {}, {}, 0, dict(zip(insn, sizes))
+    size.update(byte_n)
     for i, l in enumerate(lines):
         if not l.startswith("\t") and l.endswith(":"):
             label[l[:-1]] = off

@@ -33,10 +33,7 @@ SeMenu_LoadObjectPtr_Data:
 	ret
 
 ; Copies the selected part (PART_SELECT) to (XWA).  Despite the name no pointer is loaded.
-SeMenu_LoadMasterPtr:
-	ld c, (PART_SELECT:24)
-	ld (xwa), c
-	ret
+SeMenu_LoadMasterPtr:	.include "includes/generated/cc900/SeMenu_LoadMasterPtr.s"	; C: cc900/semenu_routines_m129_e.c
 
 SeMenu_FlushDisplayObj:
 	ld xde, xwa
@@ -1033,11 +1030,7 @@ SeMenu_SetupMenuDisplay_Section3_Loop:
 	lda xsp, (xsp + 14)
 	ret
 
-SeMenu_SetupMenuDisplay_Section3_End:
-	cp	a, 0:i3
-	scc8	nz, a
-	ld	(1628:16), a
-	ret
+SeMenu_SetupMenuDisplay_Section3_End:	.include "includes/generated/cc900/SeMenu_SetupMenuDisplay_Section3_End.s"	; C: cc900/semenu_routines_m129_f.c
 
 SeMenu_SetupMenuDisplay_Finalize:
 	ldmi16 (xwa), 0x65c
@@ -1045,16 +1038,9 @@ SeMenu_SetupMenuDisplay_Finalize:
 
 ; SeMenu_SetCurrentPart: Stores A (1..4, else 1) as the sound editor's current part, RAM 0x65D, which
 ;   SeMenu_ValidatePartNumber reads back. Basis: callers + body.
-SeMenu_SetCurrentPart:
-	cp	a, 1:i3
-	jr	c, SeMenu_SetCurrentPart_Skip
-	cp	a, 4:i3
-	jr	ugt, SeMenu_SetCurrentPart_Skip
-	ld	(1629:16), a
-	ret
-SeMenu_SetCurrentPart_Skip:
-	ld	(1629:16), 1
-	ret
+SeMenu_SetCurrentPart:	.include "includes/generated/cc900/SeMenu_SetCurrentPart.s"	; C: cc900/semenu_routines_m129_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_SetCurrentPart_Skip, SeMenu_SetCurrentPart + 13
 
 ; Returns a selectable sound-editor part in (XWA) and makes it the current one (RAM 0x65d).
 ;   In:  XWA = destination byte.
@@ -1158,24 +1144,11 @@ SeMenu_IsPartEnabled_CheckMask:
 
 ; Stores C in byte WA of the sound-editor part parameter block at 0x660.
 ;   In:  WA = parameter index, C = value.  Counterpart of SeMenu_LoadPartParam.
-SeMenu_StorePartParam:
-	extz wa
-	lda xde, (1632:16)
-	extz xwa
-	add xwa, xde
-	ld (xwa), c
-	ret
+SeMenu_StorePartParam:	.include "includes/generated/cc900/SeMenu_StorePartParam.s"	; C: cc900/semenu_routines_m129_e.c
 
 ; Copies byte WA of the sound-editor part parameter block at 0x660 to (XBC).
 ;   In:  WA = parameter index, XBC = destination byte.  Counterpart of SeMenu_StorePartParam.
-SeMenu_LoadPartParam:
-	extz wa
-	lda xde, (1632:16)
-	extz xwa
-	add xwa, xde
-	ld a, (xwa)
-	ld (xbc), a
-	ret
+SeMenu_LoadPartParam:	.include "includes/generated/cc900/SeMenu_LoadPartParam.s"	; C: cc900/semenu_routines_m129_e.c
 
 ; SeMenu_SwitchNop: Bare `ret`: the 'no action' entry of the sound-editor pages' switch-handler tables (185 slots).
 ;   Basis: callers (table entries) + body.
@@ -1183,19 +1156,9 @@ SeMenu_SwitchNop:
 	ret
 
 ; Returns L = A << BC (by repeated doubling; BC = 0 returns A).  Clobbers DE.
-SeMenu_BitShiftMask:
-	ld l, a
-	ld de, 0:i3
-	extz bc
-	cp bc, 0:i3
-	ret ule
-
-SeMenu_BitShiftMask_Loop:
-	add l, l
-	inc 1, de
-	cp de, bc
-	jr c, SeMenu_BitShiftMask_Loop
-	ret
+SeMenu_BitShiftMask:	.include "includes/generated/cc900/SeMenu_BitShiftMask.s"	; C: cc900/semenu_routines_m129_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_BitShiftMask_Loop, SeMenu_BitShiftMask + 10
 
 ; Returns L = A >> BC (logical, one bit per pass; BC = 0 returns A).  Counterpart of
 ; SeMenu_BitShiftMask.  Clobbers DE.
@@ -1682,15 +1645,9 @@ SeMenu_SetCurrentStep:	.include "includes/generated/cc900/SeMenu_SetCurrentStep.
 SeMenu_ResetSubIndex:	.include "includes/generated/cc900/SeMenu_ResetSubIndex.s"	; C: cc900/semenu_routines.c
 
 ; Increments the sound editor's sub-index byte at 0x694 and returns the new value in L.
-SeMenu_AdvanceSubIndex:
-	ld l, (1684:16)
-	inc 1, l
-	ld (1684:16), l
-	ret
+SeMenu_AdvanceSubIndex:	.include "includes/generated/cc900/SeMenu_AdvanceSubIndex.s"	; C: cc900/semenu_routines_m129_e.c
 
-SeMenu_ReadObjParam_Data:
-	ld	(1684:16), a
-	ret
+SeMenu_ReadObjParam_Data:	.include "includes/generated/cc900/SeMenu_ReadObjParam_Data.s"	; C: cc900/semenu_routines_m0.c
 
 ; Copies the sound editor's sub-index byte at RAM 0x694 to (XWA) (spelled `ldmi16 (xwa),
 ; 0x694`, the memory-to-memory move ld (xwa),(0x694)).
@@ -2034,22 +1991,12 @@ SeMenu_GetNameBufferChar:	.include "includes/generated/cc900/SeMenu_GetNameBuffe
 ; SeMenu_PostDialEnable: Zero-extends A and tail-jumps to UI_PostDialEnable, which posts EVT_VALEN_SET with that value
 ;   (every caller passes 1: dial enabled). Basis: callers + body -- SeMenu_BindDialToColumn calls it first (its
 ;   header: 'posts EVT_VALEN_SET(1)'), and two sound-editor page set-ups call it before posting their dial events.
-SeMenu_PostDialEnable:
-	extz	wa
-	jp	UI_PostDialEnable
+SeMenu_PostDialEnable:	.include "includes/generated/cc900/SeMenu_PostDialEnable.s"	; C: cc900/semenu_routines_m129_e.c
 ; SeMenu_PostEditUpDownSet: Posts EVT_EDIT_UP_SET (A = 0) or EVT_EDIT_DOWN_SET (A != 0) with the value (C - 1) | E.
 ;   Basis: callers + body.
-SeMenu_PostEditUpDownSet:
-	dec	1, c
-	or	c, e
-	extz	bc
-	cp	a, 0:i3
-	jr	nz, SeMenu_PostEditUpDownSet_Skip
-	ld	wa, bc
-	jp	UI_PostDialValueEvent
-SeMenu_PostEditUpDownSet_Skip:
-	ld	wa, bc
-	jp	UI_PostDialRangeEvent
+SeMenu_PostEditUpDownSet:	.include "includes/generated/cc900/SeMenu_PostEditUpDownSet.s"	; C: cc900/semenu_routines_m129_e.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeMenu_PostEditUpDownSet_Skip, SeMenu_PostEditUpDownSet + 16
 ; SeMenu_BindDialToColumn: Points the dial at sound-editor column A (1..8): posts EVT_VALEN_SET(1),
 ;   EVT_EDIT_UP_SET(A-1) and EVT_EDIT_DOWN_SET((A-1)|0x80). Basis: callers + body -- every SeXxx_OnColumnN handler
 ;   ends with `ld wa, N` + this call.
@@ -2295,803 +2242,58 @@ SeLfo1_StepSelectorAndReload_Skip30:
 SeLfo1_StepSelectorAndReload_Epilogue:
 	inc	2, xsp
 	ret
-SeMenu_ApplyPartEdit_AltStore_Join:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xsp+14)
-	calr	SeLfo_GetSelectedLfo
-	ld	a, (xsp+16)
-	extz	wa
-	ld	c, (xsp+14)
-	extz	bc
-	lda	xde, (xsp+12)
-	calr	SeLfo_GetEntryElement
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 3
-	ld	(xbc+7), 6
-	ld	(xbc+8), 3
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	a, (xsp+12)
-	inc	3, a
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 42
-	ld	bc, 4:i3
-	ld	de, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip31
-	cp	(xsp+14), 1
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip31
-	ld	c, (xsp+3)
-	extz	bc
-	ld	wa, 2:i3
-	calr	SeMenu_StoreEffectParam
-SeLfo1_StepSelectorAndReload_Skip31:
-	ld	wa, 3:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join2:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xsp+14)
-	calr	SeLfo_GetSelectedLfo
-	ld	a, (xsp+16)
-	extz	wa
-	ld	c, (xsp+14)
-	extz	bc
-	lda	xde, (xsp+12)
-	calr	SeLfo_GetEntryElement
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 31
-	ld	(xbc+7), 0
-	ld	(xbc+8), 30
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	a, (xsp+12)
-	inc	3, a
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 42
-	ld	bc, 4:i3
-	ld	de, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip32
-	cp	(xsp+14), 1
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip32
-	ld	c, (xsp+3)
-	extz	bc
-	ld	wa, 2:i3
-	calr	SeMenu_StoreEffectParam
-SeLfo1_StepSelectorAndReload_Skip32:
-	ld	wa, 4:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join3:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xsp+14)
-	calr	SeLfo_GetSelectedLfo
-	ld	a, (xsp+16)
-	extz	wa
-	ld	c, (xsp+14)
-	extz	bc
-	lda	xde, (xsp+12)
-	calr	SeLfo_GetEntryElement
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 127
-	ld	(xbc+7), 0
-	ld	(xbc+8), 127
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	a, (xsp+12)
-	inc	1, a
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 42
-	ld	bc, 2:i3
-	ld	de, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip33
-	cp	(xsp+14), 1
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip33
-	ld	c, (xsp+3)
-	extz	bc
-	ld	wa, 1:i3
-	calr	SeMenu_StoreEffectParam
-SeLfo1_StepSelectorAndReload_Skip33:
-	ld	wa, 5:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join4:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xsp+14)
-	calr	SeLfo_GetSelectedLfo
-	ld	a, (xsp+16)
-	extz	wa
-	ld	c, (xsp+14)
-	extz	bc
-	lda	xde, (xsp+12)
-	calr	SeLfo_GetEntryElement
-	lda	xbc, (xsp)
-	ld	wa, 1:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 127
-	ld	(xbc+7), 0
-	ld	(xbc+8), 127
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	a, (xsp+12)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 42
-	ld	bc, 1:i3
-	ld	de, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip34
-	cp	(xsp+14), 1
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip34
-	ld	c, (xsp+3)
-	extz	bc
-	ld	wa, 0:i3
-	calr	SeMenu_StoreEffectParam
-SeLfo1_StepSelectorAndReload_Skip34:
-	ld	wa, 6:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join5:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xsp+14)
-	calr	SeLfo_GetSelectedLfo
-	ld	a, (xsp+16)
-	extz	wa
-	ld	c, (xsp+14)
-	extz	bc
-	lda	xde, (xsp+12)
-	calr	SeLfo_GetEntryElement
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 63
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	a, (xsp+12)
-	inc	2, a
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 42
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	ld	wa, 7:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join6:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xsp+14)
-	calr	SeLfo_GetSelectedLfo
-	ld	a, (xsp+16)
-	extz	wa
-	ld	c, (xsp+14)
-	extz	bc
-	lda	xde, (xsp+12)
-	calr	SeLfo_GetEntryElement
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 1
-	ld	(xbc+7), 7
-	ld	(xbc+8), 1
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	a, (xsp+12)
-	inc	2, a
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 42
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	ldw	wa, 8
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join7:
-	dec	4, xsp
-	ld	(xsp+2), a
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+2), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip35
-	cp	(xsp), 0
-	jr	z, SeLfo1_StepSelectorAndReload_Epilogue8
-	ld	wa, 0:i3
-	ld	bc, 0:i3
-	jr	SeLfo1_StepSelectorAndReload_Join19
-SeLfo1_StepSelectorAndReload_Skip35:
-	cp	(xsp), 1
-	jr	z, SeLfo1_StepSelectorAndReload_Epilogue8
-	ld	wa, 0:i3
-	ld	bc, 1:i3
-SeLfo1_StepSelectorAndReload_Join19:
-	calr	SeMenu_StorePartParam
-	pushw	0
-	pushw	40
-	call	SeTitle_DrawField
-	inc	4, xsp
-SeLfo1_StepSelectorAndReload_Epilogue8:
-	inc	4, xsp
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join8:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xbc, (xsp+14)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+14), 0
-	jr	z, SeLfo1_StepSelectorAndReload_Epilogue2
-	lda	xwa, (xsp+12)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 127
-	ld	(xbc+7), 0
-	ld	(xbc+8), 100
-	ld	(xbc+9), 0
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+12)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 55
-	ld	bc, 3:i3
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 1:i3
-	calr	SeMenu_BindDialToColumn
-SeLfo1_StepSelectorAndReload_Epilogue2:
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join9:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xbc, (xsp+14)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+14), 0
-	jr	z, SeLfo1_StepSelectorAndReload_Epilogue3
-	lda	xwa, (xsp+12)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+12)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 55
-	ld	bc, 4:i3
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 2:i3
-	calr	SeMenu_BindDialToColumn
-SeLfo1_StepSelectorAndReload_Epilogue3:
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join10:
-	lda	xsp, (xsp-22)
-	push	qiz
-	ld	(xsp+18), e
-	ld	(xsp+20), c
-	ld	(xsp+22), a
-	lda	xwa, (xsp+14)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp+16)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip
-	ldib_erp 250, 2
-	ld wa, 2:i3
-	calr	SeMenu_LoadPartParam
-	lda	xwa, (xsp+2)
-	ld	(xwa+6), 255
-	ld	(xwa+7), 0
-	ld	(xwa+8), 50
-	ld	(xwa+9), 206
-	ld	a, (xsp+20)
-	ldfr_berp a, 251
-	jr SeLfo1_StepSelectorAndReload_Join2
-SeLfo1_StepSelectorAndReload_Skip:
-	ldib_erp 250, 5
-	ld wa, 5:i3
-	calr	SeMenu_LoadPartParam
-	lda	xwa, (xsp+2)
-	ld	(xwa+6), 127
-	ld	(xwa+7), 0
-	ld	(xwa+8), 100
-	ld	(xwa+9), 0
-	ld	a, (xsp+18)
-	ldfr_berp a, 251
-SeLfo1_StepSelectorAndReload_Join2:
-	ld	a, (xsp+22)
-	extz	wa
-	lda	xbc, (xsp+12)
-	calr	SeMenu_SwitchToValueStep
-	ldto_berp c, 250
-	extz	bc
-	ld	e, (xsp+14)
-	extz	de
-	ldto_berp a, 251
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+4)
-	push	xwa
-	ldw	wa, 55
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 3:i3
-	calr	SeMenu_BindDialToColumn
-	pop qiz
-	lda	xsp, (xsp+22)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join11:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xbc, (xsp+14)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+14), 0
-	jr	z, SeLfo1_StepSelectorAndReload_Epilogue4
-	lda	xwa, (xsp+12)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 6:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+12)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 55
-	ld	bc, 6:i3
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 4:i3
-	calr	SeMenu_BindDialToColumn
-SeLfo1_StepSelectorAndReload_Epilogue4:
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join12:
-	lda	xsp, (xsp-22)
-	push	qiz
-	ld	(xsp+18), e
-	ld	(xsp+20), c
-	ld	(xsp+22), a
-	lda	xwa, (xsp+14)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp+16)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip2
-	ldi_erpb 250, 10
-	ldw wa, 10
-	calr	SeMenu_LoadPartParam
-	lda	xwa, (xsp+2)
-	ld	(xwa+6), 255
-	ld	(xwa+7), 0
-	ld	(xwa+8), 50
-	ld	(xwa+9), 206
-	ld	a, (xsp+20)
-	ldfr_berp a, 251
-	jr SeLfo1_StepSelectorAndReload_Join3
-SeLfo1_StepSelectorAndReload_Skip2:
-	ldib_erp 250, 7
-	ld wa, 7:i3
-	calr	SeMenu_LoadPartParam
-	lda	xwa, (xsp+2)
-	ld	(xwa+6), 127
-	ld	(xwa+7), 0
-	ld	(xwa+8), 100
-	ld	(xwa+9), 0
-	ld	a, (xsp+18)
-	ldfr_berp a, 251
-SeLfo1_StepSelectorAndReload_Join3:
-	ld	a, (xsp+22)
-	extz	wa
-	lda	xbc, (xsp+12)
-	calr	SeMenu_SwitchToValueStep
-	ldto_berp c, 250
-	extz	bc
-	ld	e, (xsp+14)
-	extz	de
-	ldto_berp a, 251
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+4)
-	push	xwa
-	ldw	wa, 55
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 5:i3
-	calr	SeMenu_BindDialToColumn
-	pop qiz
-	lda	xsp, (xsp+22)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join13:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xbc, (xsp+14)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+14), 0
-	jr	z, SeLfo1_StepSelectorAndReload_Epilogue5
-	lda	xwa, (xsp+12)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ldw	wa, 8
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+12)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 55
-	ldw	bc, 8
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 6:i3
-	calr	SeMenu_BindDialToColumn
-SeLfo1_StepSelectorAndReload_Epilogue5:
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join14:
-	lda	xsp, (xsp-22)
-	push	qiz
-	ld	(xsp+18), e
-	ld	(xsp+20), c
-	ld	(xsp+22), a
-	lda	xwa, (xsp+14)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp+16)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	cp	(xsp+16), 0
-	jr	nz, SeLfo1_StepSelectorAndReload_Skip3
-	ldib_erp 250, 1
-	ld wa, 1:i3
-	calr	SeMenu_LoadPartParam
-	lda	xwa, (xsp+2)
-	ld	(xwa+6), 255
-	ld	(xwa+7), 0
-	ld	(xwa+8), 50
-	ld	(xwa+9), 206
-	ld	a, (xsp+20)
-	ldfr_berp a, 251
-	jr SeLfo1_StepSelectorAndReload_Join4
-SeLfo1_StepSelectorAndReload_Skip3:
-	ldi_erpb 250, 9
-	ldw wa, 9
-	calr	SeMenu_LoadPartParam
-	lda	xwa, (xsp+2)
-	ld	(xwa+6), 127
-	ld	(xwa+7), 0
-	ld	(xwa+8), 100
-	ld	(xwa+9), 0
-	ld	a, (xsp+18)
-	ldfr_berp a, 251
-SeLfo1_StepSelectorAndReload_Join4:
-	ld	a, (xsp+22)
-	extz	wa
-	lda	xbc, (xsp+12)
-	calr	SeMenu_SwitchToValueStep
-	ldto_berp c, 250
-	extz	bc
-	ld	e, (xsp+14)
-	extz	de
-	ldto_berp a, 251
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+4)
-	push	xwa
-	ldw	wa, 55
-	calr	SeMenu_StepParamFieldAndSend
-	calr	SeMenu_DrawPitFilEnvGraph
-	ld	wa, 7:i3
-	calr	SeMenu_BindDialToColumn
-	pop qiz
-	lda	xsp, (xsp+22)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join15:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xwa, (xsp+14)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+14)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 41
-	ld	bc, 3:i3
-	calr	SeMenu_StepParamFieldAndSend
-	lda	xbc, (xsp+12)
-	ld	wa, 3:i3
-	calr	SeMenu_LoadPartParam
-	ld	c, (xsp+12)
-	extz	bc
-	ldw	wa, 10
-	calr	SeMenu_StorePartParam
-	ld	wa, 2:i3
-	ld	bc, 1:i3
-	calr	SeMenu_DrawKeyScaleGraph
-	lda	xbc, (xsp+12)
-	ldw	wa, 9
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+12), 0
-	jr	z, SeLfo1_StepSelectorAndReload_Skip36
-	ldw	wa, 9
-	ld	bc, 0:i3
-	calr	SeMenu_StorePartParam
-	pushw	9
-	pushw	41
-	call	SeTitle_DrawField
-	inc	4, xsp
-SeLfo1_StepSelectorAndReload_Skip36:
-	ld	wa, 2:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join16:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xwa, (xsp+14)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+14)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 41
-	ld	bc, 4:i3
-	calr	SeMenu_StepParamFieldAndSend
-	lda	xbc, (xsp+12)
-	ld	wa, 4:i3
-	calr	SeMenu_LoadPartParam
-	ld	c, (xsp+12)
-	extz	bc
-	ldw	wa, 10
-	calr	SeMenu_StorePartParam
-	ld	wa, 2:i3
-	ld	bc, 1:i3
-	calr	SeMenu_DrawKeyScaleGraph
-	lda	xbc, (xsp+12)
-	ldw	wa, 9
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+12), 1
-	jr	z, SeLfo1_StepSelectorAndReload_Skip4
-	ldw	wa, 9
-	ld	bc, 1:i3
-	calr	SeMenu_StorePartParam
-	pushw	9
-	pushw	41
-	call	SeTitle_DrawField
-	inc	4, xsp
-SeLfo1_StepSelectorAndReload_Skip4:
-	ld	wa, 3:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join17:
-	lda	xsp, (xsp-20)
-	ld	(xsp+16), c
-	ld	(xsp+18), a
-	lda	xwa, (xsp+14)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 5:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+18)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+14)
-	extz	de
-	ld	a, (xsp+16)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 41
-	ld	bc, 5:i3
-	calr	SeMenu_StepParamFieldAndSend
-	lda	xbc, (xsp+12)
-	ld	wa, 5:i3
-	calr	SeMenu_LoadPartParam
-	ld	c, (xsp+12)
-	extz	bc
-	ldw	wa, 10
-	calr	SeMenu_StorePartParam
-	ld	wa, 2:i3
-	ld	bc, 1:i3
-	calr	SeMenu_DrawKeyScaleGraph
-	lda	xbc, (xsp+12)
-	ldw	wa, 9
-	calr	SeMenu_LoadPartParam
-	cp	(xsp+12), 2
-	jr	z, SeLfo1_StepSelectorAndReload_Skip37
-	ldw	wa, 9
-	ld	bc, 2:i3
-	calr	SeMenu_StorePartParam
-	pushw	9
-	pushw	41
-	call	SeTitle_DrawField
-	inc	4, xsp
-SeLfo1_StepSelectorAndReload_Skip37:
-	ld	wa, 4:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+20)
-	ret
+SeMenu_ApplyPartEdit_AltStore_Join:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip31, SeMenu_ApplyPartEdit_AltStore_Join + 116
+SeMenu_ApplyPartEdit_AltStore_Join2:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join2.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip32, SeMenu_ApplyPartEdit_AltStore_Join2 + 116
+SeMenu_ApplyPartEdit_AltStore_Join3:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join3.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip33, SeMenu_ApplyPartEdit_AltStore_Join3 + 116
+SeMenu_ApplyPartEdit_AltStore_Join4:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join4.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip34, SeMenu_ApplyPartEdit_AltStore_Join4 + 114
+SeMenu_ApplyPartEdit_AltStore_Join5:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join5.s"	; C: cc900/semenu_routines_m0_b_b.c
+SeMenu_ApplyPartEdit_AltStore_Join6:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join6.s"	; C: cc900/semenu_routines_m0_b_b.c
+SeMenu_ApplyPartEdit_AltStore_Join7:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join7.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip35, SeMenu_ApplyPartEdit_AltStore_Join7 + 29
+	.set	SeLfo1_StepSelectorAndReload_Join19, SeMenu_ApplyPartEdit_AltStore_Join7 + 38
+	.set	SeLfo1_StepSelectorAndReload_Epilogue8, SeMenu_ApplyPartEdit_AltStore_Join7 + 53
+SeMenu_ApplyPartEdit_AltStore_Join8:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join8.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Epilogue2, SeMenu_ApplyPartEdit_AltStore_Join8 + 96
+SeMenu_ApplyPartEdit_AltStore_Join9:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join9.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Epilogue3, SeMenu_ApplyPartEdit_AltStore_Join9 + 96
+SeMenu_ApplyPartEdit_AltStore_Join10:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join10.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip, SeMenu_ApplyPartEdit_AltStore_Join10 + 73
+	.set	SeLfo1_StepSelectorAndReload_Join2, SeMenu_ApplyPartEdit_AltStore_Join10 + 106
+SeMenu_ApplyPartEdit_AltStore_Join11:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join11.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Epilogue4, SeMenu_ApplyPartEdit_AltStore_Join11 + 96
+SeMenu_ApplyPartEdit_AltStore_Join12:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join12.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip2, SeMenu_ApplyPartEdit_AltStore_Join12 + 75
+	.set	SeLfo1_StepSelectorAndReload_Join3, SeMenu_ApplyPartEdit_AltStore_Join12 + 108
+SeMenu_ApplyPartEdit_AltStore_Join13:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join13.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Epilogue5, SeMenu_ApplyPartEdit_AltStore_Join13 + 98
+SeMenu_ApplyPartEdit_AltStore_Join14:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join14.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip3, SeMenu_ApplyPartEdit_AltStore_Join14 + 73
+	.set	SeLfo1_StepSelectorAndReload_Join4, SeMenu_ApplyPartEdit_AltStore_Join14 + 108
+SeMenu_ApplyPartEdit_AltStore_Join15:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join15.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip36, SeMenu_ApplyPartEdit_AltStore_Join15 + 135
+SeMenu_ApplyPartEdit_AltStore_Join16:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join16.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip4, SeMenu_ApplyPartEdit_AltStore_Join16 + 135
+SeMenu_ApplyPartEdit_AltStore_Join17:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join17.s"	; C: cc900/semenu_routines_m0_b_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeLfo1_StepSelectorAndReload_Skip37, SeMenu_ApplyPartEdit_AltStore_Join17 + 135
 SeMenu_ApplyPartEdit_AltStore_Join18:
 	dec	6, xsp
 	ld	(xsp+4), c
@@ -3126,70 +2328,8 @@ SeLfo1_StepSelectorAndReload_Skip5:
 	calr	SeMenu_BindDialToColumn
 	inc	6, xsp
 	ret
-SeMenu_ApplyPartEdit_AltStore_Join19:
-	lda	xsp, (xsp-18)
-	ld	(xsp+14), c
-	ld	(xsp+16), a
-	lda	xwa, (xsp+12)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 0:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+12)
-	extz	de
-	ld	a, (xsp+14)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 41
-	ld	bc, 0:i3
-	calr	SeMenu_StepParamFieldAndSend
-	ld	wa, 7:i3
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+18)
-	ret
-SeMenu_ApplyPartEdit_AltStore_Join20:
-	lda	xsp, (xsp-18)
-	ld	(xsp+14), c
-	ld	(xsp+16), a
-	lda	xwa, (xsp+12)
-	calr	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 1:i3
-	calr	SeMenu_LoadPartParam
-	lda	xbc, (xsp)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	calr	SeMenu_SwitchToValueStep
-	ld	e, (xsp+12)
-	extz	de
-	ld	a, (xsp+14)
-	extz	wa
-	pushw	wa
-	lda	xwa, (xsp+2)
-	push	xwa
-	ldw	wa, 41
-	ld	bc, 1:i3
-	calr	SeMenu_StepParamFieldAndSend
-	ldw	wa, 8
-	calr	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+18)
-	ret
+SeMenu_ApplyPartEdit_AltStore_Join19:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join19.s"	; C: cc900/semenu_routines_m0_b_b.c
+SeMenu_ApplyPartEdit_AltStore_Join20:	.include "includes/generated/cc900/SeMenu_ApplyPartEdit_AltStore_Join20.s"	; C: cc900/semenu_routines_m0_b_b.c
 SeMenu_ApplyPartEdit_AltStore_Join21:
 	lda	xsp, (xsp-24)
 	push	qiz
@@ -5189,9 +4329,7 @@ SeMenu_GetToneIndex:
 ;   SeMenu_ProcessEffect loads) to (XWA); the word counterpart of SeMenu_GetEntryCount (byte 0x6AC). Basis: callers +
 ;   body -- the column-3 handlers of SeTonTon1/SeTonHyb1 use it as the exclusive upper bound of the per-part 16-bit
 ;   index they step.
-SeMenu_GetWordEntryCount:
-	ldw	(xwa), (0x6aa)
-	ret
+SeMenu_GetWordEntryCount:	.include "includes/generated/cc900/SeMenu_GetWordEntryCount.s"	; C: cc900/semenu_routines_m129_e.c
 	ld	(1708:16), a
 	ret
 ; SeMenu_GetEntryCount: Copies the sound editor's entry-count byte (RAM 0x6AC) to (XWA). Basis: callers + body --
@@ -5538,9 +4676,7 @@ SeMenu_SetMode:	.include "includes/generated/cc900/SeMenu_SetMode.s"	; C: cc900/
 SeMenu_SetMode_Data:
 	ld	(1712:16), wa
 	ret
-SeMenu_SetMode_Data_0x5:
-	ldw	(xwa), (0x6b0)
-	ret
+SeMenu_SetMode_Data_0x5:	.include "includes/generated/cc900/SeMenu_SetMode_Data_0x5.s"	; C: cc900/semenu_routines_m129_e.c
 	ld	(1714:16), wa
 	ret
 SeMenu_SetMode_Data_0xF:
@@ -5790,24 +4926,12 @@ SeMenu_SetEditEnable:	.include "includes/generated/cc900/SeMenu_SetEditEnable.s"
 SeMenu_OrPartConfig:	.include "includes/generated/cc900/SeMenu_OrPartConfig.s"	; C: cc900/semenu_routines.c
 
 ; Sets bit 3 of 0xe3e2 (the flag SeTitle_DrawField also sets).
-SeMenu_SetPartConfigBit3:
-	set	3, (58338:24)
-	ret
-SeMenu_GetPartConfigBit3:
-	ld	l, (58338:24)
-	and	l, 8
-	ret
+SeMenu_SetPartConfigBit3:	.include "includes/generated/cc900/SeMenu_SetPartConfigBit3.s"	; C: cc900/semenu_routines_m129_e.c
+SeMenu_GetPartConfigBit3:	.include "includes/generated/cc900/SeMenu_GetPartConfigBit3.s"	; C: cc900/semenu_routines_m129_e.c
 
 ; Stores C as byte A - 1 of the per-part block at 0x6ba (A = part 1..4); counterpart of
 ; SeMenu_LoadParamByte.
-SeMenu_StoreParamByte:
-	dec 1, a
-	extz wa
-	lda xde, (1722:16)
-	extz xwa
-	add xwa, xde
-	ld (xwa), c
-	ret
+SeMenu_StoreParamByte:	.include "includes/generated/cc900/SeMenu_StoreParamByte.s"	; C: cc900/semenu_routines_m129_e.c
 
 ; Copies byte A - 1 of the per-part block at 0x6ba to (XBC).
 ;   In:  A = part (1..4), XBC = destination.
@@ -5843,22 +4967,9 @@ SeMenu_GetLastSwitch:
 	ret
 
 ; Stores C as byte WA of the block at 0x6be.
-SeMenu_StoreEffectParam:
-	extz wa
-	lda xde, (1726:16)
-	extz xwa
-	add xwa, xde
-	ld (xwa), c
-	ret
+SeMenu_StoreEffectParam:	.include "includes/generated/cc900/SeMenu_StoreEffectParam.s"	; C: cc900/semenu_routines_m129_e.c
 
-SeMenu_StoreEffectParam_Data:
-	extz	wa
-	lda	xde, (1726:16)
-	extz	xwa
-	add	xwa, xde
-	ld	a, (xwa)
-	ld	(xbc), a
-	ret
+SeMenu_StoreEffectParam_Data:	.include "includes/generated/cc900/SeMenu_StoreEffectParam_Data.s"	; C: cc900/semenu_routines_m129_e.c
 
 ; Stores C as byte WA of the block at 0x6c1.
 SeMenu_StoreEffectCoeff:
@@ -6112,115 +5223,9 @@ SePitLfo1TitleFunc_DispatchSwitch:
 SePitLfo1TitleFunc_DispatchSwitch_Epilogue4:
 	inc	4, xsp
 	ret
-SePitPit1_OnColumn2:
-	lda	xsp, (xsp-16)
-	push	qiz
-	ld	(xsp+16), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	ld	a, (xsp+14)
-	mul	a, 3
-	ldfr_berp a, 251
-	decb_erp 251, 2
-	ldto_berp a, 251
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 24
-	ld	(xbc+9), 232
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	ldto_berp c, 251
-	extz	bc
-	ld	e, (xsp+14)
-	extz	de
-	pushw	4
-	lda	xwa, (xsp+4)
-	push	xwa
-	ldw	wa, 39
-	call	SeMenu_StepParamFieldAndSend
-	ld	wa, 2:i3
-	call	SeMenu_BindDialToColumn
-	pop qiz
-	lda	xsp, (xsp+16)
-	ret
-SePitPit1_OnColumn3:
-	lda	xsp, (xsp-16)
-	push	qiz
-	ld	(xsp+16), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	ld	a, (xsp+14)
-	mul	a, 3
-	ldfr_berp a, 251
-	dec1b_erp 251
-	ldto_berp a, 251
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	ld	(xbc+6), 255
-	ld	(xbc+7), 0
-	ld	(xbc+8), 50
-	ld	(xbc+9), 206
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	ldto_berp c, 251
-	extz	bc
-	ld	e, (xsp+14)
-	extz	de
-	pushw	5
-	lda	xwa, (xsp+4)
-	push	xwa
-	ldw	wa, 39
-	call	SeMenu_StepParamFieldAndSend
-	ld	wa, 3:i3
-	call	SeMenu_BindDialToColumn
-	pop qiz
-	lda	xsp, (xsp+16)
-	ret
-SePitPit1_OnColumn4:
-	lda	xsp, (xsp-16)
-	push	qiz
-	ld	(xsp+16), a
-	lda	xwa, (xsp+14)
-	call	SeMenu_ValidatePartNumber
-	ld	a, (xsp+14)
-	mul	a, 3
-	ldfr_berp a, 251
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+2)
-	ld	(xbc+6), 7
-	ld	(xbc+7), 0
-	ld	(xbc+8), 7
-	ld	(xbc+9), 0
-	ld	a, (xsp+16)
-	extz	wa
-	lda	xbc, (xbc+10)
-	call	SeMenu_SwitchToValueStep
-	ldto_berp c, 251
-	extz	bc
-	ld	e, (xsp+14)
-	extz	de
-	pushw	6
-	lda	xwa, (xsp+4)
-	push	xwa
-	ldw	wa, 39
-	call	SeMenu_StepParamFieldAndSend
-	ld	wa, 4:i3
-	call	SeMenu_BindDialToColumn
-	pop qiz
-	lda	xsp, (xsp+16)
-	ret
+SePitPit1_OnColumn2:	.include "includes/generated/cc900/SePitPit1_OnColumn2.s"	; C: cc900/semenu_routines_m0.c
+SePitPit1_OnColumn3:	.include "includes/generated/cc900/SePitPit1_OnColumn3.s"	; C: cc900/semenu_routines_m0.c
+SePitPit1_OnColumn4:	.include "includes/generated/cc900/SePitPit1_OnColumn4.s"	; C: cc900/semenu_routines_m0.c
 SePitPit1_OnColumn6:
 	lda	xsp, (xsp-18)
 	push	qiz
@@ -6324,94 +5329,20 @@ SePitPit1_OnColumn6_Join3:
 	pop qiz
 	lda	xsp, (xsp+18)
 	ret
-SePitPit1_OnSideRow1:
-	cp	a, 0:i3
-	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SePitPit1_OnSideRow2:
-	cp	a, 0:i3
-	ret	z
-	ldw	wa, 39
-	ld	bc, 1:i3
-	ld	de, 1:i3
-	call	SeMenu_SelectPartAndRedraw
-	ret
-SePitPit1_OnSideRow3:
-	cp	a, 0:i3
-	jr	nz, SePitPit1_OnSideRow3_Skip4
-	ldw	wa, TT_SEPITLFO1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SePitPit1_OnSideRow3_Skip4:
-	ldw	wa, 39
-	ld	bc, 2:i3
-	ld	de, 1:i3
-	jp	SeMenu_SelectPartAndRedraw
-SePitPit1_OnSideRow4:
-	dec	2, xsp
-	cp	a, 0:i3
-	jr	nz, SePitPit1_OnSideRow4_Skip13
-	lda	xbc, (xsp)
-	ldw	wa, 13
-	call	SeMenu_LoadPartParam
-	cp	(xsp), 1
-	jr	ule, SePitPit1_OnSideRow4_Epilogue5
-	decm8	1, (xsp)
-	ld	c, (xsp)
-	extz	bc
-	ldw	wa, 13
-	call	SeMenu_StorePartParam
-	pushw	13
-	pushw	39
-	call	SeTitle_DrawField
-	inc	4, xsp
-	jr	SePitPit1_OnSideRow4_Epilogue5
-SePitPit1_OnSideRow4_Skip13:
-	ldw	wa, 39
-	ld	bc, 3:i3
-	ld	de, 1:i3
-	call	SeMenu_SelectPartAndRedraw
-SePitPit1_OnSideRow4_Epilogue5:
-	inc	2, xsp
-	ret
-SePitPit1_OnSideRow5:
-	dec	2, xsp
-	cp	a, 0:i3
-	jr	nz, SePitPit1_OnSideRow5_Skip14
-	lda	xbc, (xsp)
-	ldw	wa, 13
-	call	SeMenu_LoadPartParam
-	cp	(xsp), 4
-	jr	nc, SePitPit1_OnSideRow5_Epilogue6
-	incm8	1, (xsp)
-	ld	c, (xsp)
-	extz	bc
-	ldw	wa, 13
-	call	SeMenu_StorePartParam
-	pushw	13
-	pushw	39
-	call	SeTitle_DrawField
-	inc	4, xsp
-	jr	SePitPit1_OnSideRow5_Epilogue6
-SePitPit1_OnSideRow5_Skip14:
-	ldw	wa, 39
-	ld	bc, 4:i3
-	ld	de, 1:i3
-	call	SeMenu_SelectPartAndRedraw
-SePitPit1_OnSideRow5_Epilogue6:
-	inc	2, xsp
-	ret
-SePitPit1_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
+SePitPit1_OnSideRow1:	.include "includes/generated/cc900/SePitPit1_OnSideRow1.s"	; C: cc900/semenu_routines_m0.c
+SePitPit1_OnSideRow2:	.include "includes/generated/cc900/SePitPit1_OnSideRow2.s"	; C: cc900/semenu_routines_m0.c
+SePitPit1_OnSideRow3:	.include "includes/generated/cc900/SePitPit1_OnSideRow3.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitPit1_OnSideRow3_Skip4, SePitPit1_OnSideRow3 + 13
+SePitPit1_OnSideRow4:	.include "includes/generated/cc900/SePitPit1_OnSideRow4.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitPit1_OnSideRow4_Skip13, SePitPit1_OnSideRow4 + 47
+	.set	SePitPit1_OnSideRow4_Epilogue5, SePitPit1_OnSideRow4 + 58
+SePitPit1_OnSideRow5:	.include "includes/generated/cc900/SePitPit1_OnSideRow5.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitPit1_OnSideRow5_Skip14, SePitPit1_OnSideRow5 + 47
+	.set	SePitPit1_OnSideRow5_Epilogue6, SePitPit1_OnSideRow5 + 58
+SePitPit1_OnSwitch15:	.include "includes/generated/cc900/SePitPit1_OnSwitch15.s"	; C: cc900/semenu_routines_m0.c
 SePitEnv1_OnColumn1:	.include "includes/generated/cc900/SePitEnv1_OnColumn1.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv1_OnColumn2:	.include "includes/generated/cc900/SePitEnv1_OnColumn2.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv1_OnColumn3:	.include "includes/generated/cc900/SePitEnv1_OnColumn3.s"	; C: cc900/semenu_routines_m0_b.c
@@ -6419,203 +5350,55 @@ SePitEnv1_OnColumn4:	.include "includes/generated/cc900/SePitEnv1_OnColumn4.s"	;
 SePitEnv1_OnColumn5:	.include "includes/generated/cc900/SePitEnv1_OnColumn5.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv1_OnColumn6:	.include "includes/generated/cc900/SePitEnv1_OnColumn6.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv1_OnColumn7:	.include "includes/generated/cc900/SePitEnv1_OnColumn7.s"	; C: cc900/semenu_routines_m0_b.c
-SePitEnv1_OnSideRow1:
-	cp	a, 0:i3
-	ret	z
-	call	SeMenu_ToggleSolo
-	ret
-SePitEnv1_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SePitEnv1_OnSideRow2_Skip5
-	ldw	wa, TT_SEPITPIT1
-	ld	bc, 0:i3
-	jr	SePitEnv1_OnSideRow2_Join4
-SePitEnv1_OnSideRow2_Skip5:
-	ld	wa, 1:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 1:i3
-SePitEnv1_OnSideRow2_Join4:
-	call	SeMenu_SendEvent
-	ret
-SePitEnv1_OnSideRow3:
-	cp	a, 0:i3
-	jr	nz, SePitEnv1_OnSideRow3_Skip6
-	ldw	wa, TT_SEPITLFO1
-	ld	bc, 0:i3
-	jr	SePitEnv1_OnSideRow3_Join5
-SePitEnv1_OnSideRow3_Skip6:
-	ld	wa, 2:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 1:i3
-SePitEnv1_OnSideRow3_Join5:
-	call	SeMenu_SendEvent
-	ret
+SePitEnv1_OnSideRow1:	.include "includes/generated/cc900/SePitEnv1_OnSideRow1.s"	; C: cc900/semenu_routines_m0.c
+SePitEnv1_OnSideRow2:	.include "includes/generated/cc900/SePitEnv1_OnSideRow2.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitEnv1_OnSideRow2_Skip5, SePitEnv1_OnSideRow2 + 11
+	.set	SePitEnv1_OnSideRow2_Join4, SePitEnv1_OnSideRow2 + 26
+SePitEnv1_OnSideRow3:	.include "includes/generated/cc900/SePitEnv1_OnSideRow3.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitEnv1_OnSideRow3_Skip6, SePitEnv1_OnSideRow3 + 11
+	.set	SePitEnv1_OnSideRow3_Join5, SePitEnv1_OnSideRow3 + 26
 SePitEnv1_OnSideRow4:	.include "includes/generated/cc900/SePitEnv1_OnSideRow4.s"	; C: cc900/semenu_routines_m0_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SePitEnv1_OnSideRow4_Skip7, SePitEnv1_OnSideRow4 + 10
 SePitEnv1_OnSideRow5:	.include "includes/generated/cc900/SePitEnv1_OnSideRow5.s"	; C: cc900/semenu_routines_m0_b.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SePitEnv1_OnSideRow5_Skip8, SePitEnv1_OnSideRow5 + 10
-SePitEnv1_OnSwitch25:
-	cp	a, 0:i3
-	ret	nz
-	ldw	wa, TT_SEPITENV2
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SePitEnv1_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
+SePitEnv1_OnSwitch25:	.include "includes/generated/cc900/SePitEnv1_OnSwitch25.s"	; C: cc900/semenu_routines_m0.c
+SePitEnv1_OnSwitch15:	.include "includes/generated/cc900/SePitEnv1_OnSwitch15.s"	; C: cc900/semenu_routines_m0.c
 SePitEnv2_OnColumn2:	.include "includes/generated/cc900/SePitEnv2_OnColumn2.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv2_OnColumn3:	.include "includes/generated/cc900/SePitEnv2_OnColumn3.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv2_OnColumn4:	.include "includes/generated/cc900/SePitEnv2_OnColumn4.s"	; C: cc900/semenu_routines_m0_b.c
-SePitEnv2_OnColumn5:
-	extz	wa
-	ldw	bc, 19
-	jp	SeMenu_ApplyPartEdit_AltStore_Join18
+SePitEnv2_OnColumn5:	.include "includes/generated/cc900/SePitEnv2_OnColumn5.s"	; C: cc900/semenu_routines_m0.c
 SePitEnv2_OnColumn7:	.include "includes/generated/cc900/SePitEnv2_OnColumn7.s"	; C: cc900/semenu_routines_m0_b.c
 SePitEnv2_OnColumn8:	.include "includes/generated/cc900/SePitEnv2_OnColumn8.s"	; C: cc900/semenu_routines_m0_b.c
-SePitEnv2_OnSideRow1:
-	cp	a, 0:i3
-	ret	z
-	call	SeMenu_ToggleSolo
-	ret
-SePitEnv2_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SePitEnv2_OnSideRow2_Skip9
-	ldw	wa, TT_SEPITPIT1
-	ld	bc, 0:i3
-	jr	SePitEnv2_OnSideRow2_Join6
-SePitEnv2_OnSideRow2_Skip9:
-	ld	wa, 1:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV2
-	ld	bc, 1:i3
-SePitEnv2_OnSideRow2_Join6:
-	call	SeMenu_SendEvent
-	ret
-SePitEnv2_OnSideRow3:
-	cp	a, 0:i3
-	jr	nz, SePitEnv2_OnSideRow3_Skip10
-	ldw	wa, TT_SEPITLFO1
-	ld	bc, 0:i3
-	jr	SePitEnv2_OnSideRow3_Join7
-SePitEnv2_OnSideRow3_Skip10:
-	ld	wa, 2:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV2
-	ld	bc, 1:i3
-SePitEnv2_OnSideRow3_Join7:
-	call	SeMenu_SendEvent
-	ret
-SePitEnv2_OnSideRow4:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 3:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV2
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SePitEnv2_OnSideRow5:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 4:i3
-	call	SeMenu_SelectPartIfEnabled
-	cp	l, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV2
-	ld	bc, 1:i3
-	call	SeMenu_SendEvent
-	ret
-SePitEnv2_OnSwitch25:
-	cp	a, 0:i3
-	ret	z
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SePitEnv2_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
-SePitLfo1_OnColumn2:
-	extz	wa
-	ld	bc, 1:i3
-	jp	SeLfo1_StepSelectorAndReload
+SePitEnv2_OnSideRow1:	.include "includes/generated/cc900/SePitEnv2_OnSideRow1.s"	; C: cc900/semenu_routines_m0.c
+SePitEnv2_OnSideRow2:	.include "includes/generated/cc900/SePitEnv2_OnSideRow2.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitEnv2_OnSideRow2_Skip9, SePitEnv2_OnSideRow2 + 11
+	.set	SePitEnv2_OnSideRow2_Join6, SePitEnv2_OnSideRow2 + 26
+SePitEnv2_OnSideRow3:	.include "includes/generated/cc900/SePitEnv2_OnSideRow3.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitEnv2_OnSideRow3_Skip10, SePitEnv2_OnSideRow3 + 11
+	.set	SePitEnv2_OnSideRow3_Join7, SePitEnv2_OnSideRow3 + 26
+SePitEnv2_OnSideRow4:	.include "includes/generated/cc900/SePitEnv2_OnSideRow4.s"	; C: cc900/semenu_routines_m0.c
+SePitEnv2_OnSideRow5:	.include "includes/generated/cc900/SePitEnv2_OnSideRow5.s"	; C: cc900/semenu_routines_m0.c
+SePitEnv2_OnSwitch25:	.include "includes/generated/cc900/SePitEnv2_OnSwitch25.s"	; C: cc900/semenu_routines_m0.c
+SePitEnv2_OnSwitch15:	.include "includes/generated/cc900/SePitEnv2_OnSwitch15.s"	; C: cc900/semenu_routines_m0.c
+SePitLfo1_OnColumn2:	.include "includes/generated/cc900/SePitLfo1_OnColumn2.s"	; C: cc900/semenu_routines_m0.c
 SePitLfo1_OnColumn3:	.include "includes/generated/cc900/SePitLfo1_OnColumn3.s"	; C: cc900/semenu_routines_m0_b.c
 SePitLfo1_OnColumn4:	.include "includes/generated/cc900/SePitLfo1_OnColumn4.s"	; C: cc900/semenu_routines_m0_b.c
 SePitLfo1_OnColumn5:	.include "includes/generated/cc900/SePitLfo1_OnColumn5.s"	; C: cc900/semenu_routines_m0_b.c
 SePitLfo1_OnColumn6:	.include "includes/generated/cc900/SePitLfo1_OnColumn6.s"	; C: cc900/semenu_routines_m0_b.c
 SePitLfo1_OnColumn7:	.include "includes/generated/cc900/SePitLfo1_OnColumn7.s"	; C: cc900/semenu_routines_m0_b.c
 SePitLfo1_OnColumn8:	.include "includes/generated/cc900/SePitLfo1_OnColumn8.s"	; C: cc900/semenu_routines_m0_b.c
-SePitLfo1_OnSideRow1:
-	cp	a, 0:i3
-	jp	nz, (SeMenu_ToggleSolo:24)
-	ldw	wa, TT_SEPITENV1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SePitLfo1_OnSideRow2:
-	cp	a, 0:i3
-	jr	nz, SePitLfo1_OnSideRow2_Skip11
-	ldw	wa, TT_SEPITPIT1
-	ld	bc, 0:i3
-	jp	SeMenu_SendEvent
-SePitLfo1_OnSideRow2_Skip11:
-	ld	wa, 1:i3
-	ld	bc, 1:i3
-	jp	SeMenu_CyclePartLfoState
-SePitLfo1_OnSideRow3:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 1:i3
-	ld	bc, 2:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SePitLfo1_OnSideRow4:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 1:i3
-	ld	bc, 3:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SePitLfo1_OnSideRow5:
-	cp	a, 0:i3
-	ret	z
-	ld	wa, 1:i3
-	ld	bc, 4:i3
-	call	SeMenu_CyclePartLfoState
-	ret
-SePitLfo1_OnSwitch15:
-	cp	a, 0:i3
-	ret	nz
-	ld	wa, 0:i3
-	call	SeMenu_SetupMenuDisplay
-	ldw	wa, TT_SEMENU
-	ld	bc, 0:i3
-	call	SeMenu_SendEvent
-	ret
+SePitLfo1_OnSideRow1:	.include "includes/generated/cc900/SePitLfo1_OnSideRow1.s"	; C: cc900/semenu_routines_m0.c
+SePitLfo1_OnSideRow2:	.include "includes/generated/cc900/SePitLfo1_OnSideRow2.s"	; C: cc900/semenu_routines_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SePitLfo1_OnSideRow2_Skip11, SePitLfo1_OnSideRow2 + 13
+SePitLfo1_OnSideRow3:	.include "includes/generated/cc900/SePitLfo1_OnSideRow3.s"	; C: cc900/semenu_routines_m0.c
+SePitLfo1_OnSideRow4:	.include "includes/generated/cc900/SePitLfo1_OnSideRow4.s"	; C: cc900/semenu_routines_m0.c
+SePitLfo1_OnSideRow5:	.include "includes/generated/cc900/SePitLfo1_OnSideRow5.s"	; C: cc900/semenu_routines_m0.c
+SePitLfo1_OnSwitch15:	.include "includes/generated/cc900/SePitLfo1_OnSwitch15.s"	; C: cc900/semenu_routines_m0.c
 

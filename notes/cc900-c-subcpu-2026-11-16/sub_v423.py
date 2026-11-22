@@ -197,9 +197,9 @@ def compare(lst, tree='v142/subcpu', cfiles=()):
         # f_const data (a switch's jump table ...): the C file's `cc900-data: FUNCTION N = LABEL` places the N-th
         # object at the tree's LABEL, as the build does; the code is checked with that address (the table's own bytes
         # are checked by make gate, as in c_build_coverage.translate)
-        # asm900's `fims(3.0)` (a float constant as a 32-bit immediate, `ld xwa,0x40400000` in the ROM): to_llvm does
-        # not know it yet (a translator gap reported to lane_vmb, 2026-11-18); the checker writes the IEEE bits itself
-        lines = [FIMS_RE.sub(lambda m: '0x%08x' % struct.unpack('<I', struct.pack('<f', float(m.group(1))))[0], l)
+        # asm900's `fims(3.0)` (a float constant as a 32-bit immediate, `ld xwa,0x40400000` in the ROM); to_llvm knows
+        # it too.  No leading zeros: fims(0) is 0x0 and takes the short `ld xwa, 0:i3` (fims_check.py)
+        lines = [FIMS_RE.sub(lambda m: '0x%x' % struct.unpack('<I', struct.pack('<f', float(m.group(1))))[0], l)
                  for l in lines]
         consts, _ = to_llvm.split_consts(lines)
         pl = places.get(bare, places.get(full, {}))

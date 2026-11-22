@@ -1752,193 +1752,12 @@ rcm_ld_XAPR_j:
 rcm_sv_XAPR_j:
 	jp FloppyDisk_ComputeToneParams
 
-SetSepaOutMode:
-	lda xsp, (xsp - 20)
-	ld xiy, SepaOut_Config_0
-	lda xix, (xsp + 16)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9B_Value32
-	lda xix, (xsp + 12)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9D_Value0
-	lda xix, (xsp + 8)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9D_Value1
-	lda xix, (xsp + 4)
-	ldiw
-	ldiw
-	ld xiy, SepaOut_Msg_CC9D_Value2
-	ld xix, xsp
-	ldiw
-	ldiw
-	cp wa, 3:i3
-	jrl z, SetSepaOut_Mode3
-	cp wa, 2:i3
-	jrl z, SetSepaOut_Mode2
-	cp wa, 1:i3
-	jr z, SetSepaOut_Mode1
-	cp wa, 0:i3
-	jrl nz, FileIO_SendCommand_Return
-	ld (xsp + 17), 0x14
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x14
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x13
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x13
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x16
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x16
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	jrl FileIO_SendCommand_Return
-
-SetSepaOut_Mode1:
-	ld (xsp + 13), 0x14
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x14
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x13
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x13
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 17), 0x16
-	lda xwa, (xsp + 16)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x16
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	jrl FileIO_SendCommand_Return
-
-SetSepaOut_Mode2:
-	ld (xsp + 13), 0x14
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x14
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x13
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x13
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x16
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 9), 0x16
-	lda xwa, (xsp + 8)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	jr FileIO_SendCommand_Return
-
-SetSepaOut_Mode3:
-	ld (xsp + 13), 0x14
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 1), 0x14
-	lda xwa, (xsp)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x13
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 5), 0x13
-	lda xwa, (xsp + 4)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 13), 0x16
-	lda xwa, (xsp + 12)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-	ld (xsp + 5), 0x16
-	lda xwa, (xsp + 4)
-	ld xde, xwa
-	ld wa, 0:i3
-	ld bc, 4:i3
-	call sendCOMM
-
-FileIO_SendCommand_Return:
-	lda xsp, (xsp + 20)
-	ret
+SetSepaOutMode:	.include "includes/generated/cc900/SetSepaOutMode.s"	; C: cc900/kn5000_v10_program_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SetSepaOut_Mode1, SetSepaOutMode + 186
+	.set	SetSepaOut_Mode2, SetSepaOutMode + 291
+	.set	SetSepaOut_Mode3, SetSepaOutMode + 395
+	.set	FileIO_SendCommand_Return, SetSepaOutMode + 496
 
 fopen_ext:
 	jp FileIO_OpenWithMode
@@ -1991,92 +1810,36 @@ get_tid_X:
 pdly_tim_X:
 	jp TaskSched_DelayTicks
 
-PlayHalt:
-	dec 2, xsp
-	ld (xsp), a
-	call SeqBuf_Init
-	call NoteMap_SendAllNotesOff
-	call Part_ReinitAllActive
-	call AccWrap_PlayModeDispatch
-	cp (xsp), 0x0
-	jr z, PlayHalt_SkipSetFlag
-	set 2, (SEQ_RTMCFG:16)
+PlayHalt:	.include "includes/generated/cc900/PlayHalt.s"	; C: cc900/kn5000_v10_program_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PlayHalt_SkipSetFlag, PlayHalt + 29
 
-PlayHalt_SkipSetFlag:
-	call AccompSeq_StopSequence
-	call AudioInit_RefreshToneBank
-	call NoteMap_ProcessAndMerge
-	call Voice_InitializeAll
-	call Voice_InitTablePair
-	call Voice_InitTableGroup
-	call MIDI_SendAllSoundOff
-	call MidiIn_IgnoreClockTransport
-	inc 2, xsp
-	ret
+PlayStandBy:	.include "includes/generated/cc900/PlayStandBy.s"	; C: cc900/kn5000_v10_program_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PlayStandBy_SkipClearFlag, PlayStandBy + 10
 
-PlayStandBy:
-	bit 2, (SEQ_RTMCFG:16)
-	jr z, PlayStandBy_SkipClearFlag
-	res 2, (SEQ_RTMCFG:16)
+EditSwRefresh:	.include "includes/generated/cc900/EditSwRefresh.s"	; C: cc900/kn5000_v10_program_m0.c
 
-PlayStandBy_SkipClearFlag:
-	res 3, (SEQ_RTMCFG:16)
-	call SeqAcc_InitPlaybackState
-	jp MidiIn_AcceptClockTransport
+putc_mtx_bf_X:	.include "includes/generated/cc900/putc_mtx_bf_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
-EditSwRefresh:
-	call CPanel_InitButtonState_SaveRegs
-	call RefreshSwEvent
-	jp RefreshApTask
-
-putc_mtx_bf_X:
-	extz wa
-	pushw wa
-	call SeqBuf_MidiOut_WriteByte
-	inc 2, xsp
-	ret
-
-putc_mrx_bf_X:
-	extz wa
-	pushw wa
-	call SeqMain_WriteByte
-	inc 2, xsp
-	ret
+putc_mrx_bf_X:	.include "includes/generated/cc900/putc_mrx_bf_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
 midi_out_en_X:
 	jp MIDI_SC0_TX_DISPATCH
 
-GetAdr_sqbtof:
-	lda xhl, (SEQ_BEAT_COUNT:16)
-	ret
+GetAdr_sqbtof:	.include "includes/generated/cc900/GetAdr_sqbtof.s"	; C: cc900/kn5000_v10_program_m0.c
 
-GetAdr_sq_beadt:
-	lda xhl, (SEQ_BEAT_TICK:16)
-	ret
+GetAdr_sq_beadt:	.include "includes/generated/cc900/GetAdr_sq_beadt.s"	; C: cc900/kn5000_v10_program_m0.c
 
-GetAdr_sqsrtc:
-	lda xhl, (SEQ_TRANSPORT_STATE:16)
-	ret
+GetAdr_sqsrtc:	.include "includes/generated/cc900/GetAdr_sqsrtc.s"	; C: cc900/kn5000_v10_program_m0.c
 
-GetAdr_rtmcfg:
-	lda xhl, (SEQ_RTMCFG:16)
-	ret
+GetAdr_rtmcfg:	.include "includes/generated/cc900/GetAdr_rtmcfg.s"	; C: cc900/kn5000_v10_program_m0.c
 
-SetGlobalError:
-	ld (GLOBAL_ERROR_CODE:16), a
-	ret
+SetGlobalError:	.include "includes/generated/cc900/SetGlobalError.s"	; C: cc900/kn5000_v10_program_m0.c
 
-malloc_X:
-	pushw wa
-	call Malloc
-	inc 2, xsp
-	ret
+malloc_X:	.include "includes/generated/cc900/malloc_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
-free_X:
-	push xwa
-	call Free
-	inc 4, xsp
-	ret
+free_X:	.include "includes/generated/cc900/free_X.s"	; C: cc900/kn5000_v10_program_m0.c
 
 
 ; --- Wallpaper & Demo Routines ---
@@ -3330,68 +3093,47 @@ MainChordPre_ReturnDefaultResult:
 ; =============================================================================
 	.include "extensions/extension_init.s"
 
-InitializeKSS:
-	ret
+InitializeKSS:	.include "includes/generated/cc900/InitializeKSS.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser12:
-	ret
+InitializeUser12:	.include "includes/generated/cc900/InitializeUser12.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser13:
-	ret
+InitializeUser13:	.include "includes/generated/cc900/InitializeUser13.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser14:
-	ret
+InitializeUser14:	.include "includes/generated/cc900/InitializeUser14.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser15:
-	ret
+InitializeUser15:	.include "includes/generated/cc900/InitializeUser15.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser16:
-	ret
+InitializeUser16:	.include "includes/generated/cc900/InitializeUser16.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser17:
-	ret
+InitializeUser17:	.include "includes/generated/cc900/InitializeUser17.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser18:
-	ret
+InitializeUser18:	.include "includes/generated/cc900/InitializeUser18.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser19:
-	ret
+InitializeUser19:	.include "includes/generated/cc900/InitializeUser19.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser20:
-	ret
+InitializeUser20:	.include "includes/generated/cc900/InitializeUser20.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser21:
-	ret
+InitializeUser21:	.include "includes/generated/cc900/InitializeUser21.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser22:
-	ret
+InitializeUser22:	.include "includes/generated/cc900/InitializeUser22.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser23:
-	ret
+InitializeUser23:	.include "includes/generated/cc900/InitializeUser23.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser24:
-	ret
+InitializeUser24:	.include "includes/generated/cc900/InitializeUser24.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser25:
-	ret
+InitializeUser25:	.include "includes/generated/cc900/InitializeUser25.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser26:
-	ret
+InitializeUser26:	.include "includes/generated/cc900/InitializeUser26.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser27:
-	ret
+InitializeUser27:	.include "includes/generated/cc900/InitializeUser27.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser28:
-	ret
+InitializeUser28:	.include "includes/generated/cc900/InitializeUser28.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser29:
-	ret
+InitializeUser29:	.include "includes/generated/cc900/InitializeUser29.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser30:
-	ret
+InitializeUser30:	.include "includes/generated/cc900/InitializeUser30.s"	; C: cc900/kn5000_v10_program_m276.c
 
-InitializeUser31:
-	ret
+InitializeUser31:	.include "includes/generated/cc900/InitializeUser31.s"	; C: cc900/kn5000_v10_program_m277.c
 
 EmptyRoutine_01:
 	ret

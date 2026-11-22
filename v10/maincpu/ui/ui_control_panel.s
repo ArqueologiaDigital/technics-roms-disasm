@@ -831,31 +831,10 @@ VwTitle_Return:
 	inc 8, xsp
 	ret
 
-DrawLineHelper:
-	dec 8, xsp
-	ld xhl, xbc
-	cpw (xsp + 12), 0x0
-	jr z, DrawLine_UseBCCoords
-	lda xix, (xsp + 4)
-	ld bc, (xwa + 2)
-	ld (xix), bc
-	ld wa, (xwa)
-	ld (xix + 2), wa
-	lda xbc, (xsp)
-	ld wa, (xhl + 2)
-	ld (xbc), wa
-	ld wa, (xhl)
-	ld (xbc + 2), wa
-	ld xwa, xix
-	jr DrawLine_Execute
-
-DrawLine_UseBCCoords:
-	ld xbc, xhl
-
-DrawLine_Execute:
-	call DrawLine
-	inc 8, xsp
-	retd 0x2
+DrawLineHelper:	.include "includes/generated/cc900/DrawLineHelper.s"	; C: cc900/ui_control_panel_m270.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DrawLine_UseBCCoords, DrawLineHelper + 40
+	.set	DrawLine_Execute, DrawLineHelper + 42
 
 ; Arrow_DrawHorizontal: Paints ArrowProc's arrow into the client box at XWA (four words): DE percent of the box width is the
 ;   head, a fan of DrawLineHelper lines one pixel apart that widen towards the base, the rest is the
@@ -2130,11 +2109,7 @@ MainTaskCtrl_ReturnZero:
 	ret
 ; Sends EVT_SLEEP_MAIN_TASK to ApFunction NAKA_APFUNC_ApTaskControl (a tail call into
 ; ApTaskControl).
-SleepMainTask:
-	ld xwa, NAKA_APFUNC_ApTaskControl
-	ld xbc, EVT_SLEEP_MAIN_TASK
-	ld xde, 0:i3
-	jrl ApTaskControl
+SleepMainTask:	.include "includes/generated/cc900/SleepMainTask.s"	; C: cc900/ui_control_panel_m270_xr.c
 
 ; Sends EVT_WAKE_UP_MAIN_TASK to ApFunction NAKA_APFUNC_ApTaskControl (a tail call into
 ; ApTaskControl).
@@ -2215,9 +2190,7 @@ RefreshSwEvent:
 	ld xde, 0:i3
 	jp ApPostEvent
 
-KeyScan_Enable:
-	ldw (0x03ef4e:24), 0x0001
-	ret
+KeyScan_Enable:	.include "includes/generated/cc900/KeyScan_Enable.s"	; C: cc900/ui_control_panel_m270_xr.c
 
 KeyScan_Disable:
 	ldw (0x03ef4e:24), 0x0000
@@ -2911,34 +2884,16 @@ UI_ChangeTitleByIndex:	.include "includes/generated/cc900/UI_ChangeTitleByIndex.
 UI_InterruptTitleByIndex:	.include "includes/generated/cc900/UI_InterruptTitleByIndex.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Posts EVT_ALL_PAINT with parameter 0 to the current target (ApPostEvent).
-UI_PostRefreshEvent:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_ALL_PAINT
-	ld xde, 0:i3
-	jp ApPostEvent
+UI_PostRefreshEvent:	.include "includes/generated/cc900/UI_PostRefreshEvent.s"	; C: cc900/ui_control_panel_m270_xr.c
 
 ; Posts EVT_PARA_DRAW and then EVT_SELE_DRAW (parameter 0) to the current target (ApPostEvent).
-UI_PostTimerResetEvent:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0:i3
-	call ApPostEvent
-	ld xwa, 0xffffffff
-	ld xbc, EVT_SELE_DRAW
-	ld xde, 0:i3
-	jp ApPostEvent
+UI_PostTimerResetEvent:	.include "includes/generated/cc900/UI_PostTimerResetEvent.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Returns HL = 1 when CURRENT_TITLE differs from ACTIVE_TITLE, else 0.
 SeqState_HasModeChanged:	.include "includes/generated/cc900/SeqState_HasModeChanged.s"	; C: cc900/ui_control_panel.c
 
 ; Posts EVT_VALEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
-UI_PostDialEnable:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_VALEN_SET
-	jp ApPostEvent
+UI_PostDialEnable:	.include "includes/generated/cc900/UI_PostDialEnable.s"	; C: cc900/ui_control_panel_m270.c
 ; Two setters, `ld (RAM),a; ret`, for RAM 0x27494 and 0x27495.  Nothing
 ; calls or points at either: no 24- or 32-bit value in the ROM and no
 ; jr/jrl/calr displacement reaches 0xF99539 or 0xF9953F.  (Formerly UI_DialRangeData,
@@ -2951,31 +2906,13 @@ UI_StoreA_Ram27495:
 	ret
 
 ; Posts EVT_AICEN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
-UI_PostEvent_0x6E:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_AICEN_SET
-	jp ApPostEvent
+UI_PostEvent_0x6E:	.include "includes/generated/cc900/UI_PostEvent_0x6E.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Posts EVT_EDIT_DOWN_SET with parameter A (zero-extended) to the current target (ApPostEvent).
-UI_PostDialRangeEvent:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_EDIT_DOWN_SET
-	jp ApPostEvent
+UI_PostDialRangeEvent:	.include "includes/generated/cc900/UI_PostDialRangeEvent.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Posts EVT_EDIT_UP_SET with parameter A (zero-extended) to the current target (ApPostEvent).
-UI_PostDialValueEvent:
-	ld e, a
-	ld d, 0x0:opc
-	extz xde
-	ld xwa, 0xffffffff
-	ld xbc, EVT_EDIT_UP_SET
-	jp ApPostEvent
+UI_PostDialValueEvent:	.include "includes/generated/cc900/UI_PostDialValueEvent.s"	; C: cc900/ui_control_panel_m270.c
 
 ; Proc of the Box class: EVT_GET_BOX_COLOR / EVT_GET_BOX_BORDER return the instance's +22 / +24
 ; word (sign-extended); EVT_DRAW passes the event to ViewableProc and then draws the box
@@ -3321,29 +3258,13 @@ BoxCheck_ReturnZero:
 	ld hl, 0:i3
 	ret
 
-BoxLeftCheck:
-	cp wa, 0x88
-	jr gt, BoxLeftCheck_ReturnZero
-	cp wa, 0x80
-	jr lt, BoxLeftCheck_ReturnZero
-	ld hl, 1:i3
-	ret
+BoxLeftCheck:	.include "includes/generated/cc900/BoxLeftCheck.s"	; C: cc900/ui_control_panel_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BoxLeftCheck_ReturnZero, BoxLeftCheck + 15
 
-BoxLeftCheck_ReturnZero:
-	ld hl, 0:i3
-	ret
-
-BoxRightCheck:
-	cp wa, 0xa8
-	jr gt, BoxRightCheck_ReturnZero
-	cp wa, 0xa0
-	jr lt, BoxRightCheck_ReturnZero
-	ld hl, 1:i3
-	ret
-
-BoxRightCheck_ReturnZero:
-	ld hl, 0:i3
-	ret
+BoxRightCheck:	.include "includes/generated/cc900/BoxRightCheck.s"	; C: cc900/ui_control_panel_m271_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BoxRightCheck_ReturnZero, BoxRightCheck + 15
 
 ; =============================================================================
 ; GroupBoxProc (approx. 0xf998xx)

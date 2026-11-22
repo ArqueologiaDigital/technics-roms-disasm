@@ -75,3 +75,19 @@ void Seq_InitializeAndStart(char *name)
 	e = 0x1e00023L;
 	MainFuncCall(f, e, (long)s);
 }
+
+/* cc900-module: Seq_CopyResourcePtrs */
+extern void FDemoText_ScaleUpCoords(int *s, int *d);
+extern unsigned int ram_25b82;
+extern void Seq_CopyResourcePtrs(unsigned int);
+extern void Seq_PostProcessDisplay(void);
+
+void FDemoText_ScaleUpCoords(int *s, int *d)
+{
+  d[0] = s[0] << 3;
+  d[1] = (s[1] << 2) + 3;
+}
+void Seq_PostProcessDisplay(void)
+{
+  Seq_CopyResourcePtrs(ram_25b82);
+}

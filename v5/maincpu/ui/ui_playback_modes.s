@@ -407,9 +407,7 @@ ScanVoice_Found:
 ScanVoice_Return:
 	ret
 
-PlayMode_ClearModeFlag:
-	ld	(PLAYBACK_START_ARMED:16), 0
-	ret
+PlayMode_ClearModeFlag:	.include "includes/generated/cc900/PlayMode_ClearModeFlag.s"	; C: cc900/ui_playback_modes_m184.c
 
 PlayMode_CheckAndDispatch:
 	cp (PLAYBACK_START_ARMED:16), 1
@@ -546,9 +544,7 @@ SongMode_InitFlagBlock_Helper2:
 ;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyDocTtlFunc_OnTitleOld calls it;
 ;   0x0D34 is the flag PlayMode_ArmStartCountdown's header describes (set once per arming, tested before starting the
 ;   transport).
-DpMdlyDoc_DisarmStartCountdown:
-	ld	(PLAYBACK_START_ARMED:16), 0
-	ret
+DpMdlyDoc_DisarmStartCountdown:	.include "includes/generated/cc900/DpMdlyDoc_DisarmStartCountdown.s"	; C: cc900/ui_playback_modes_m189.c
 
 SongMode_CheckAndDispatch:
 	cp (PLAYBACK_START_ARMED:16), 1
@@ -705,9 +701,7 @@ PartFormat_InitFlagBlock_Helper2:
 ;   left, so the next activation arms the countdown again (PartFormat_InitFlagBlock_Helper); PartFormat_StartPlayback
 ;   starts the transport only while the flag is 1. Basis: callers + body -- DpMdlyPdTtlFunc_OnTitleOld calls it; twin
 ;   of DpMdlyDoc_DisarmStartCountdown for the PD medley title.
-DpMdlyPd_DisarmStartCountdown:
-	ld	(PLAYBACK_START_ARMED:16), 0
-	ret
+DpMdlyPd_DisarmStartCountdown:	.include "includes/generated/cc900/DpMdlyPd_DisarmStartCountdown.s"	; C: cc900/ui_playback_modes_m193.c
 
 PartFormat_CheckAndDispatch:
 	cp (PLAYBACK_START_ARMED:16), 1
@@ -2465,98 +2459,31 @@ CDlikeSwTtl_SongBit0Check:
 CDlikeSwTtl_JumpToFA9D58:
 	jp ApPostEvent
 
-CDlikeSwTtl_DocBitCheck:
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	nz, CDlikeSwTtl_DocRedraw
-	call	SeqState_GetFlags
-	bit	0, hl
-	jrl	z, CDlikeSwTtl_ShowDocTitle
-CDlikeSwTtl_DocRedraw:
-	calr	SeqRecPlay_DisableBoth
-	jp	Song_AbortPlayback
-CDlikeSwTtl_PdBitCheck:
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	nz, CDlikeSwTtl_PdRedraw
-	call	SeqState_GetFlags
-	bit	0, hl
-	jrl	z, CDlikeSwTtl_ShowPdTitle
-CDlikeSwTtl_PdRedraw:
-	calr	SeqRecPlay_DisableBoth
-	jp	Song_AbortPlayback
-CDlikeSwTtl_SongConfirmStart:
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	z, CDlikeSwTtl_SongConfirmBit0
-	ld	(7494:16), 3
-	jr	CDlikeSwTtl_SongConfirmJump
-CDlikeSwTtl_SongConfirmBit0:
-	call	SeqState_GetFlags
-	bit	0, hl
-	jr	z, CDlikeSwTtl_SongConfirmDefault
-	ld	(7494:16), 2
-	jr	CDlikeSwTtl_SongConfirmJump
-CDlikeSwTtl_SongConfirmDefault:
-	ld	(7494:16), 1
-	calr CDlikeSwTtl_ShowSongTitle
-	calr SeqRecPlay_EnablePlayOnly
-
-CDlikeSwTtl_SongConfirmJump:
-	jp	Acc_StartFillIn
-CDlikeSwTtl_SongConfirmDispatch:
-	ld	a, (7494:16)
-	cp a, 2:i3
-	jr z, CDlikeSwTtl_SongConfirmState2
-	cp a, 1:i3
-	jr z, CDlikeSwTtl_SongConfirmState1
-	cp a, 3:i3
-	ret nz
-
-CDlikeSwTtl_SongConfirmState1:
-	calr	SeqRecPlay_EnablePlayOnly
-	jp	Acc_TransitionPlayMode
-CDlikeSwTtl_SongConfirmState2:
-	calr	SeqRecPlay_EnableRecordOnly
-	jp	Acc_StopPlayMode
-CDlikeSwTtl_DocConfirmStart:
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	z, CDlikeSwTtl_DocConfirmBit0
-	ld	(7494:16), 3
-	jr	CDlikeSwTtl_DocConfirmJump
-CDlikeSwTtl_DocConfirmBit0:
-	call	SeqState_GetFlags
-	bit	0, hl
-	jr	z, CDlikeSwTtl_DocConfirmDefault
-	ld	(7494:16), 2
-	jr	CDlikeSwTtl_DocConfirmJump
-CDlikeSwTtl_DocConfirmDefault:
-	ld	(7494:16), 1
-	calr CDlikeSwTtl_ShowDocTitle
-	calr SeqRecPlay_EnablePlayOnly
-
-CDlikeSwTtl_DocConfirmJump:
-	jp	Acc_StartFillIn
-CDlikeSwTtl_PdConfirmStart:
-	call	SeqState_GetFlags
-	bit	1, hl
-	jr	z, CDlikeSwTtl_PdConfirmBit0
-	ld	(7494:16), 3
-	jr	CDlikeSwTtl_PdConfirmJump
-CDlikeSwTtl_PdConfirmBit0:
-	call	SeqState_GetFlags
-	bit	0, hl
-	jr	z, CDlikeSwTtl_PdConfirmDefault
-	ld	(7494:16), 2
-	jr	CDlikeSwTtl_PdConfirmJump
-CDlikeSwTtl_PdConfirmDefault:
-	ld	(7494:16), 1
-	calr CDlikeSwTtl_ShowPdTitle
-	calr SeqRecPlay_EnablePlayOnly
-
-CDlikeSwTtl_PdConfirmJump:
-	jp	Acc_StartFillIn
+CDlikeSwTtl_DocBitCheck:	.include "includes/generated/cc900/CDlikeSwTtl_DocBitCheck.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_DocRedraw, CDlikeSwTtl_DocBitCheck + 19
+CDlikeSwTtl_PdBitCheck:	.include "includes/generated/cc900/CDlikeSwTtl_PdBitCheck.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_PdRedraw, CDlikeSwTtl_PdBitCheck + 19
+CDlikeSwTtl_SongConfirmStart:	.include "includes/generated/cc900/CDlikeSwTtl_SongConfirmStart.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_SongConfirmBit0, CDlikeSwTtl_SongConfirmStart + 16
+	.set	CDlikeSwTtl_SongConfirmDefault, CDlikeSwTtl_SongConfirmStart + 32
+	.set	CDlikeSwTtl_SongConfirmJump, CDlikeSwTtl_SongConfirmStart + 43
+CDlikeSwTtl_SongConfirmDispatch:	.include "includes/generated/cc900/CDlikeSwTtl_SongConfirmDispatch.s"	; C: cc900/ui_playback_modes_m203_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_SongConfirmState1, CDlikeSwTtl_SongConfirmDispatch + 16
+	.set	CDlikeSwTtl_SongConfirmState2, CDlikeSwTtl_SongConfirmDispatch + 23
+CDlikeSwTtl_DocConfirmStart:	.include "includes/generated/cc900/CDlikeSwTtl_DocConfirmStart.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_DocConfirmBit0, CDlikeSwTtl_DocConfirmStart + 16
+	.set	CDlikeSwTtl_DocConfirmDefault, CDlikeSwTtl_DocConfirmStart + 32
+	.set	CDlikeSwTtl_DocConfirmJump, CDlikeSwTtl_DocConfirmStart + 43
+CDlikeSwTtl_PdConfirmStart:	.include "includes/generated/cc900/CDlikeSwTtl_PdConfirmStart.s"	; C: cc900/ui_playback_modes_m203.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CDlikeSwTtl_PdConfirmBit0, CDlikeSwTtl_PdConfirmStart + 16
+	.set	CDlikeSwTtl_PdConfirmDefault, CDlikeSwTtl_PdConfirmStart + 32
+	.set	CDlikeSwTtl_PdConfirmJump, CDlikeSwTtl_PdConfirmStart + 43
 CDlikeSwTtl_SongNavDispatch:
 	pushw	iz
 	ld	iz, wa

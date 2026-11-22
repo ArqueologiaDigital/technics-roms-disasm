@@ -2691,11 +2691,7 @@ AccSeq_ReadNextByte:
 	ret
 
 ; Increments the accompaniment pattern read pointer at 0x3293.  Out: XHL = new pointer.
-AccSeq_AdvancePointer:
-	ld xhl, (0x3293:16)
-	inc 1, xhl
-	ld (0x3293:16), xhl
-	ret
+AccSeq_AdvancePointer:	.include "includes/generated/cc900/AccSeq_AdvancePointer.s"	; C: cc900/accompaniment_engine_m243.c
 
 ; Points 0x3293 back at AccStyle_DefaultStream + 6 and returns its first byte in A (XHL = the
 ; address).
@@ -6390,10 +6386,7 @@ AccTuning_Toggle_Return:
 	ret
 
 ; Copies the tuning state 0x3391 to 0x3392.
-AccTuning_SaveState:
-	ld a, (0x3391:16)
-	ld (0x3392:16), a
-	ret
+AccTuning_SaveState:	.include "includes/generated/cc900/AccTuning_SaveState.s"	; C: cc900/accompaniment_engine_m245.c
 
 ; Sets the style-tuning state: for style numbers below 0x80 whose entry at 0x1e7810 +
 ; (AccHelper_ComputeVoiceOffset result) has bit 7 of byte +1 set, bit 0 of 0x3391 is set and the
@@ -13711,12 +13704,7 @@ AccVoice_BarCounterBytecodeData_Join6:
 	ret
 
 ; Sets 0x3422 = Chord_TypeFamilyTable[(0x3423)].
-Chord_LookupTypeFamily:
-	ld a, (0x3423:16)
-	extz wa
-	lda xbc, (Chord_TypeFamilyTable:24)
-	ld	(0x3422:16), (xbc+wa)
-	ret
+Chord_LookupTypeFamily:	.include "includes/generated/cc900/Chord_LookupTypeFamily.s"	; C: cc900/accompaniment_engine_m249.c
 
 AccTuning_ComplexBytecodeData:
 	dec	2, xsp
@@ -30826,9 +30814,7 @@ DrumParam_ReadMaxCount_Helper3:
 DrumParam_ReadMaxCount_Return4:
 	ret
 ; 0x34d7 = 3.
-DrumParam_ReadMaxCount_Helper4:
-	ld	(STYLE_SECTION_LAST_MEASURE:16), 3
-	ret
+DrumParam_ReadMaxCount_Helper4:	.include "includes/generated/cc900/DrumParam_ReadMaxCount_Helper4.s"	; C: cc900/accompaniment_engine_m258.c
 DrumParam_ReadMaxCount_Helper5:
 	bit	3, (0x37c8:16)
 	jr	z, DrumParam_ReadMaxCount_Helper5_Skip
@@ -35216,11 +35202,7 @@ MspRecTtl_ReturnZero:
 	ret
 
 ; Posts EVT_SET_NOT_DRAW_FLAG with XWA = 0xffffffff, XDE = 1 (tail jump to ApPostEvent).
-AccSeq_PostEvent9E_Enable:
-	ld xwa, 0xffffffff
-	ld xbc, EVT_SET_NOT_DRAW_FLAG
-	ld xde, 1:i3
-	jp ApPostEvent
+AccSeq_PostEvent9E_Enable:	.include "includes/generated/cc900/AccSeq_PostEvent9E_Enable.s"	; C: cc900/accompaniment_engine_m259.c
 
 ; Posts EVT_SET_NOT_DRAW_FLAG with XWA = 0xffffffff, XDE = 0 (tail jump to ApPostEvent).
 AccSeq_PostEvent9E_Disable:
@@ -35580,14 +35562,10 @@ CmpStepTitle_Method3Nop:
 	ret
 
 ; Acquires audio lock 8 (Kernel_SemaWait).
-AccAudio_LockAcquire:
-	ldw wa, 0x8
-	jp Kernel_SemaWait
+AccAudio_LockAcquire:	.include "includes/generated/cc900/AccAudio_LockAcquire.s"	; C: cc900/accompaniment_engine_m259.c
 
 ; Releases audio lock 8 (Kernel_SemaSignal).
-AccAudio_LockRelease:
-	ldw wa, 0x8
-	jp Kernel_SemaSignal
+AccAudio_LockRelease:	.include "includes/generated/cc900/AccAudio_LockRelease.s"	; C: cc900/accompaniment_engine_m259.c
 ; Calls GraphicsRender_ProcessEntries with XWA = XIY and XBC = XIX.
 ; Called from AccScreen_DataBlock_Code, AccDraw_Secondary_Helper5, AccDraw_Secondary_Helper6 and
 ; AccDraw_Secondary_Helper8.
@@ -37713,13 +37691,7 @@ msp_sv_mae:
 	ret
 
 ; Voice_RefreshBankData; out: XHL = the word at 0x1e881c * 16.
-MspSave_InitAndCalcSize:
-	call Voice_RefreshBankData
-	ld xhl, 0x1e881c
-	ld hl, (xhl)
-	extz xhl
-	sll xhl, 4
-	ret
+MspSave_InitAndCalcSize:	.include "includes/generated/cc900/MspSave_InitAndCalcSize.s"	; C: cc900/accompaniment_engine_m261_xr.c
 
 ; Music-style-player automatic save (HAMA function table): MspSaveAuto_Return (empty) with XIZ
 ; preserved.
@@ -38158,14 +38130,9 @@ StyleConvInit_StoreChar:
 	ret
 
 ; Clears the 1 KB from 0xffc00 up to 0x100000.
-SoundMem_ClearRegion:
-	ld xwa, 0xffc00
-
-SoundMem_ClearLoop:
-	ld (xwa+), 0x00
-	cp xwa, 0x100000
-	jr c, SoundMem_ClearLoop
-	ret
+SoundMem_ClearRegion:	.include "includes/generated/cc900/SoundMem_ClearRegion.s"	; C: cc900/accompaniment_engine_m261.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundMem_ClearLoop, SoundMem_ClearRegion + 5
 
 ; Clears the 32 100-byte entries at 0x48dc and the 32 longs at 0x555c.
 StyleFile_ClearAllTables:

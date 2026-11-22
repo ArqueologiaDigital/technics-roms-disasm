@@ -13800,10 +13800,7 @@ Voice_ReadSearchResult:
 	ld l, (HARMONY_REF_NOTE:16)
 	ret
 
-Voice_ResetSearchState:
-	ldw (0xce66:16), 0
-	ld (0xceb2:16), 0
-	ret
+Voice_ResetSearchState:	.include "includes/generated/cc900/Voice_ResetSearchState.s"	; C: cc900/note_voice_mapping_m300.c
 
 UIParam_ScanAndCollect:
 	lda xsp, (xsp - 68)
@@ -16163,12 +16160,7 @@ InitPartAllocState_Epilogue:
 	pop xix
 	ret
 
-InitPartAllocState_Block4:
-	ld (CHORD_NOTE_COUNT:24), 0x00
-	ldw (0x00cf5f:24), 0x0000
-	ldw (0x00cf77:24), 0x0000
-	ld (0x00cef1:24), 0x00
-	ret
+InitPartAllocState_Block4:	.include "includes/generated/cc900/InitPartAllocState_Block4.s"	; C: cc900/note_voice_mapping_m300.c
 
 InitPartAllocState_TestBit242:
 	bit 4, (CHORD_FLAGS:24)
@@ -19266,12 +19258,7 @@ PitchReset_Flush:
 ; MIDI_SendAllVoicesPitchUpdate: Sends the sub-CPU system message {F0 50 92 00} and flushes; the sub-CPU runs
 ;   Voice_AllVoices_PortamentoUpdate (pitch refresh of parts 0-0x19) for it. Sent at the end of a sound-RAM transfer
 ;   and on its abort path. Basis: callers + body + receiver.
-MIDI_SendAllVoicesPitchUpdate:
-	ldw	wa, 80
-	ldw	bc, 146
-	ld	de, 0:i3
-	calr	SubCPU_SendSystemRecord
-	jp	MIDI_PostSendStub
+MIDI_SendAllVoicesPitchUpdate:	.include "includes/generated/cc900/MIDI_SendAllVoicesPitchUpdate.s"	; C: cc900/note_voice_mapping_m301.c
 
 MIDI_SendAllSoundOff:
 	pushw iz
@@ -19933,10 +19920,7 @@ PlayModeStateMachine_LoadParam:
 	inc 4, xsp
 	ret
 
-SeqPlay_BusyWaitLoop:
-	bit 0, (1074:16)
-	jr nz, SeqPlay_BusyWaitLoop
-	ret
+SeqPlay_BusyWaitLoop:	.include "includes/generated/cc900/SeqPlay_BusyWaitLoop.s"	; C: cc900/note_voice_mapping_m302_xs.c
 
 MIDI_ResetAllChannels:
 	lda xsp, (xsp - 10)
@@ -23352,10 +23336,7 @@ SysexRingBuf_ReadByte:	.include "includes/generated/cc900/SysexRingBuf_ReadByte.
 	.set	SysexRingBuf_IncrementRead, SysexRingBuf_ReadByte + 51
 	.set	SysexRingBuf_ReadReturn, SysexRingBuf_ReadByte + 55
 
-SysexRingBuf_GetFreeSpace:
-	ldw hl, 0x7ff
-	sub hl, (0xd8b2:16)
-	ret
+SysexRingBuf_GetFreeSpace:	.include "includes/generated/cc900/SysexRingBuf_GetFreeSpace.s"	; C: cc900/note_voice_mapping_m302.c
 
 SysexRingBuf_ReadBytes:
 	dec 6, xsp
@@ -23929,10 +23910,7 @@ ApplyProgramChangeAs_LoadReg:
 	ldw de, 0x400
 	jr ApplyProgramChangeAs_LoadDRAM2
 
-ApplyProgramChangeAs_LoadReg2:
-	ld xbc, 0x20
-	ldw de, 0x200
-	jr ApplyProgramChangeAs_LoadDRAM2
+ApplyProgramChangeAs_LoadReg2:	.include "includes/generated/cc900/ApplyProgramChangeAs_LoadReg2.s"	; C: cc900/note_voice_mapping_m303_b.c
 SndBuf_WriteParamEntries_Helper:
 	jr ApplyProgramChangeAs_LoadReg
 
@@ -23987,9 +23965,7 @@ FetchOscTableEntry_LoadReg:
 	ld xbc, 0x14
 	jr FetchOscTableEntry_Prologue
 
-FetchOscTableEntry_LoadReg2:
-	ld xbc, 0x24
-	jr FetchOscTableEntry_Prologue
+FetchOscTableEntry_LoadReg2:	.include "includes/generated/cc900/FetchOscTableEntry_LoadReg2.s"	; C: cc900/note_voice_mapping_m303_b.c
 
 SndParam_ApplyProgramChange:	.include "includes/generated/cc900/SndParam_ApplyProgramChange.s"	; C: cc900/note_voice_mapping_m303.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -24029,10 +24005,7 @@ ApplyProgramChange_LoadReg:
 	ldw de, 0x400
 	jr ApplyProgramChange_LoadDRAM
 
-SndParam_InitBufferConverge:
-	ld xbc, 0x28
-	ldw de, 0x200
-	jr ApplyProgramChange_LoadDRAM
+SndParam_InitBufferConverge:	.include "includes/generated/cc900/SndParam_InitBufferConverge.s"	; C: cc900/note_voice_mapping_m303_b.c
 
 SndParam_ComputeVoiceIndex:
 	push xiz
@@ -26852,25 +26825,11 @@ PostTmLoad:	.include "includes/generated/cc900/PostTmLoad.s"	; C: cc900/note_voi
 PreTmSave:
 	ret
 
-PostTmSave:
-	cp wa, 0:i3
-	ret ge
-	ldw wa, 0xff
-	ldw bc, 0xff
-	call COMM_BuildAndSendPacket
-	ret
+PostTmSave:	.include "includes/generated/cc900/PostTmSave.s"	; C: cc900/note_voice_mapping_m306.c
 
-PostTmSave_ByteBlock:
-	calr	SoundRam_IdentifyImage
-	cp	l, 6:i3
-	jr	ugt, PostTmSave_ByteBlock_Skip
-	cp	l, 1:i3
-	jr	c, PostTmSave_ByteBlock_Skip
-	ld	hl, 0:i3
-	ret
-PostTmSave_ByteBlock_Skip:
-	ldw	hl, 0xff9a
-	ret
+PostTmSave_ByteBlock:	.include "includes/generated/cc900/PostTmSave_ByteBlock.s"	; C: cc900/note_voice_mapping_m306.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PostTmSave_ByteBlock_Skip, PostTmSave_ByteBlock + 14
 
 PostTmSave_Success:
 	cp wa, 0:i3
@@ -27030,13 +26989,7 @@ TmFlashWrite_ValidateParams_Join:
 	inc	2, xsp
 	ret
 
-TmFlash_CopyToExtMem:
-	lda xwa, (0x300000:24)
-	add xwa, 0xb0400
-	ldw bc, 0xee1f
-	ld xde, 0xa0000
-	call InterCPU_E1_Bulk_Transfer
-	jp TmFlash_Return
+TmFlash_CopyToExtMem:	.include "includes/generated/cc900/TmFlash_CopyToExtMem.s"	; C: cc900/note_voice_mapping_m306.c
 ; Flash_GetSlotAddressAndSize: Locates slot BC of the custom-data section-7 slot store (custom_data/kn5000_custom_data.s):
 ;   A bit 0 set = the flash slot (0x3B0410 + 470*BC small, 0x3B4D80 + 10535*BC large), clear = the RAM work-area
 ;   block at 0x1E0000; A bit 1 = large.  Stores the address at (XDE) and the size (470 / 10,535) at the second
@@ -27844,41 +27797,13 @@ Strncat_LoadReg2:
 	ld (xix), 0x0
 	ret
 
-String_Compare:
-	ld bc, (xsp + 12)
-	ld xde, (xsp + 8)
-	ld xix, (xsp + 4)
-	jr String_Compare_Compare
-
-String_Compare_CheckZero:
-	cp (xix), 0x0
-	jr nz, String_Compare_NextIter
-	ld hl, 0:i3
-	ret
-
-String_Compare_NextIter:
-	inc 1, xix
-	inc 1, xde
-	dec 1, bc
-
-String_Compare_Compare:
-	cp bc, 0:i3
-	jr z, String_Compare_ClearByte
-	ld a, (xde)
-	cp a, (xix)
-	jr z, String_Compare_CheckZero
-
-String_Compare_ClearByte:
-	ld l, 0x0:opc
-	cp bc, 0:i3
-	jr z, String_Compare_Extend
-	ld a, (xix)
-	sub a, (xde)
-	ld l, a
-
-String_Compare_Extend:
-	exts hl
-	ret
+String_Compare:	.include "includes/generated/cc900/String_Compare.s"	; C: cc900/note_voice_mapping_m307.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	String_Compare_CheckZero, String_Compare + 11
+	.set	String_Compare_NextIter, String_Compare + 19
+	.set	String_Compare_Compare, String_Compare + 25
+	.set	String_Compare_ClearByte, String_Compare + 35
+	.set	String_Compare_Extend, String_Compare + 47
 
 ; Strncpy -- Copy string with length limit, zero-pad remainder
 ; Args: (xsp+4)=dest, (xsp+8)=src, (xsp+12)=maxlen
@@ -28017,29 +27942,12 @@ Mem_Copy_Shift_Return:
 ; Finds null terminator in dest, then copies src bytes until null.
 ; Located near Strcpy and Strlen (standard C library functions).
 ; ============================================================================
-Strcat:
-	ld xde, (xsp + 4)
-	ld xhl, xde
-	jr Strcat_CheckZero
-
-Strcat_NextIter:
-	inc 1, xde
-
-Strcat_CheckZero:
-	cp (xde), 0x0
-	jr nz, Strcat_NextIter
-	ld xbc, (xsp + 8)
-	jr Strcat_CheckZero2
-
-Strcat_Block:
-	ld A, (xbc+)
-	ld (xde+), a
-
-Strcat_CheckZero2:
-	cp (xbc), 0x0
-	jr nz, Strcat_Block
-	ld (xde), 0x0
-	ret
+Strcat:	.include "includes/generated/cc900/Strcat.s"	; C: cc900/note_voice_mapping_m307_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Strcat_NextIter, Strcat + 7
+	.set	Strcat_CheckZero, Strcat + 9
+	.set	Strcat_Block, Strcat + 19
+	.set	Strcat_CheckZero2, Strcat + 25
 
 Itoa_Safe:	.include "includes/generated/cc900/Itoa_Safe.s"	; C: cc900/note_voice_mapping_m308.c
 ; the hand assembly's labels inside the compiled body, by their offsets

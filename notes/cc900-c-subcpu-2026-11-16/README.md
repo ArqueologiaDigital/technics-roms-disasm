@@ -255,6 +255,52 @@ DSP_DetuneCurve_SignedFP (helper AR, 495 B, `x >= 0 ? x : -x`; its 12 FP constan
 FP_SP_CopyOrNegate4, now a row of scripts/build/cc900_runtime_names.tsv); DSP_EFFParam_DiffAllAndFlag (helper AR,
 643 B, `(unsigned int)(int)(i * 56 + 8)`).  2,898 B per tree; **592 functions per tree** built from C.
 
+**Twenty-second promotion, round 43 (2026-11-21; matched in runs 2026-11-20-5-2026-11-20-6-sub-r43a and
+2026-11-20-7-sub-r43b, verified per tree in those runs and 2026-11-21-1-sub-r43c).**  Five functions:
+- Audio_Process_DSP (1,409 B, helper AN's sub_AN_26c, held back since 2026-11-19), in v142 and v141 only.  v140 keeps
+  its hand assembly: `create_v140_subcpu_source.py` now puts the v1.41 hand text of a spliced function back before
+  its EDITS (UNSPLICE; `scripts/generators/v140_subcpu_hand/` holds that text for Audio_Process_DSP and its two case
+  tables, captured with `hand_span_capture.py`), and `port_staged.py`'s DROP leaves its C out of v140.
+- Audio_Cmd_DSPUnit_Param (681 B) and Audio_Cmd_EffectParam_Dispatch (1,365 B), helper AW: each a whole switch over
+  its case labels (span_refs.py: every inner label inner-only), with five case tables; the row store `p = row; p +=
+  idx; *p = v;` as the built Audio_Cmd_DSPGlobal_Param_Store.
+- Voice_Step_ExprRamp (761 B) and Voice_Calc_LevelPair_FixedAtk (314 B), helper AX: the lower-case `__asm` and a
+  signed int ramp value (the old `__IZ` was unsigned: unsigned compares); the then-branch word built in `r`.
+v142 / v141: 4,530 B, **597 functions** built from C; v140: 3,121 B, **596 functions** (`c_duplicates.py` counts
+597 labels).  The promotion's v140 step stops until the hand text is captured (the order: promote_v423_run.sh, then
+hand_span_capture.py on `git show HEAD:v141/...` and the regenerated v141 files, then the v140 generator).
+
+**Twenty-third promotion (2026-11-21; matched in run 2026-11-21-11-sub-r44a, verified per tree in run
+2026-11-21-12-sub-r44s-staged).**  voice_ctrlchange_ax_44d.c (helper AX): Voice_NoteOff (269 B) and Voice_SetPitch
+(266 B), the request buffer passed as `&req[0]` so that its address is built first.  535 B per tree; v142 / v141
+**599 functions**, v140 **598** built from C.  The same day: fims(0) translates to the short `ld xwa, 0:i3`
+(fims_check.py).
+
+**Twenty-fourth promotion (2026-11-21; matched in run 2026-11-21-13-sub-r45a, verified per tree in run
+2026-11-21-14-sub-r45s-staged).**  dsp_control_routines_au_45a.c (helper AU): DSP_FilterLUT_Fetch (787 B) and its ten
+FP constants.  A `volatile float` table read as `*(volatile float *)&T[tbl[k] * 4]` gives the ROM's library float
+copy (`._fld_ff` = FP_SP_Raw4Copy, helper AV's finding) and its 16-bit index; ._fld_ff, ._fld_dl (FP_ScalarToDP) and
+._fadd_d (FP_dadd) are now rows of `scripts/build/cc900_runtime_names.tsv`.  v142 / v141 **600 functions**, v140
+**599** built from C.
+
+**Twenty-fifth promotion (2026-11-21; matched in run 2026-11-21-15-sub-r46a, verified per tree in run
+2026-11-21-16-sub-r46s-staged).**  dsp_control_routines_au_46a.c (helper AU): DSP_SOS_LUT_Fetch (321 B) and its four
+FP constants, FilterLUT's idiom plus the type-2 index widened before the scale, `(int)(*p++ & 0x1f) * 4`.  v142 /
+v141 **601 functions**, v140 **600** built from C.  DSP_BiquadCoeff_Compute (+81) and DSP_SOS_Coeff_Compute (+87) are
+at the ROM's lengths with the ROM's instructions; only the frame slots of their pooled FP temporaries differ (no C
+spelling has moved them yet; a V4.23 probe of temporary placement is the next step).
+
+**Twenty-sixth promotion (2026-11-21; matched in run 2026-11-21-23-sub-r47a, verified per tree in run
+2026-11-21-24-sub-r47s-staged).**  voice_noteon_and_tonegen_aw_47a.c (helper AW): Audio_Cmd_ToneEdit_Write_And_Reply
+(269 B, the whole switch with its two case tables; the reply address as the converted `&d[(int)(unsigned int)off]`,
+the DSPUnit row's shape).  v142 / v141 **602 functions**, v140 **601** built from C.  VoiceParam_Set_Tone_Option
+stays at +12 (sub_AW_47c).
+
+Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43d.py, forms a-l): `(int)i * 2 + 0x27` and
+`((struct pair *)&t[..])->hi` give sub-command 0x24's bytes (form b).  The write path stays: whichever variable holds
+the channel gets IZ while the field is a variable (forms a-f), and with the field nested the channel's `and` happens
+in WA before the move to QIZ (helper AN's 30c; forms g-i).
+
 **Translator: a byte register of the extended set as the second operand (2026-11-19).**  `model/to_llvm.py` now writes
 V4.23's `cp L,QC` (and add / sub / and / or with QA .. QH, IXL .. QIZH second) as llvm-mc's `cpb_erp l, 0xe6` and so
 on; `erp_operand_check.py` assembles seven such lines and compares with c7 <bank> <op + r>, the ROM's own encoding

@@ -8,6 +8,9 @@ absolute `call`: different modules (modules_v10.tsv, from modules_main.py).  So 
 functions only.  This rewrites every v10/maincpu/cc900-staged/<base>[_xr|_xs|_b...].c as one file per (option set,
 module): <base>_m<module>[_xr|_xs].c, each with the declarations its functions use (stage_probe.py's rule); a
 function no call reaches (no module) goes to <base>_m0.c.  Then port_staged.py rebuilds the other trees.
+Within one group, a function also starts a new file (_b, _c ...) when the ROM reaches one of its callees
+absolutely that another function of the file reaches relatively, or the reverse (fn_calls.py; needs the built v10
+ELF, 2026-11-20): the file's cc900-module line would give it the wrong call form.
 
 usage: python3 notes/cc900-phase6-2026-11-16/restage_modules.py [--dry-run]     (from the repository root)
 """
@@ -113,24 +116,52 @@ def main():
             groups.setdefault(key, []).append((d, nm, [x for x in ds if x in picked]))
             src_of[key] = src
         old_files.append(p)
+    # 2026-11-20: per function, the callees the ROM reaches relatively / absolutely (fn_calls.py, from the built
+    # v10 ELF).  A file's cc900-module line is the union of its functions' relative callees, so a function that
+    # calls one of them absolutely must go to another file (SePitPit1_OnSideRow4 / 5 in semenu_routines_m0.c, +5).
+    rel = {}
+    if os.path.exists(os.path.join(REPO, 'rebuilt_ROMs', 'kn5000_v10_program.llvm.elf')):
+        import fn_calls                                      # noqa: E402
+        lmap = {}
+        for key, fns in groups.items():
+            for d, nm, ds in fns:
+                for c in nm:
+                    for mm in re.finditer(r'cc900-name:\s*(\w+)\s*=\s*(\w+)', c):
+                        lmap[mm.group(1)] = mm.group(2)
+        wanted = {}
+        for key, fns in groups.items():
+            for d, nm, ds in fns:
+                cn = sp.fn_name(d)
+                wanted[lmap.get(cn, cn)] = fn_calls.fn_callees(d, lmap)
+        got = fn_calls.calls('v10', wanted)
+        for key, fns in groups.items():
+            for d, nm, ds in fns:
+                cn = sp.fn_name(d)
+                rel[d] = got.get(lmap.get(cn, cn), (set(), set()))
+    else:
+        print('no v10 ELF: files are not split by relative / absolute callees (run make first)')
     new = {}
     for key, fns in groups.items():
         base, flags, m = key
-        files = []                                           # [(name -> decl, [decls], [functions])]
+        files = []                                           # [(name -> decl, [decls], [functions], calls)]
         for d, nm, ds in fns:
-            for fmap, fdecls, ffns in files:
-                if not any(n in fmap and fmap[n] != norm(x) for x in ds for n in sp.defines(x)):
+            loc, ab = rel.get(d, (set(), set()))
+            for fmap, fdecls, ffns, fc in files:
+                if not any(n in fmap and fmap[n] != norm(x) for x in ds for n in sp.defines(x)) \
+                        and not (ab & fc['local']) and not (loc & fc['absolute']):
                     break
             else:
-                fmap, fdecls, ffns = {}, [], []
-                files.append((fmap, fdecls, ffns))
+                fmap, fdecls, ffns, fc = {}, [], [], {'local': set(), 'absolute': set()}
+                files.append((fmap, fdecls, ffns, fc))
+            fc['local'] |= loc
+            fc['absolute'] |= ab
             for x in ds:
                 if norm(x) not in [norm(y) for y in fdecls]:
                     fdecls.append(x)
                     for n in sp.defines(x):
                         fmap[n] = norm(x)
             ffns.append((d, nm))
-        for i, (fmap, fdecls, ffns) in enumerate(files):
+        for i, (fmap, fdecls, ffns, fc) in enumerate(files):
             name = '%s_m%d%s%s.c' % (base, m, SUFFIX[flags], '' if i == 0 else '_' + 'bcdefghij'[i - 1])
             body = sp.HEADER % (src_of[key], '\n   cc900-options: %s' % flags) + '\n' + '\n'.join(fdecls) + '\n\n' + \
                 '\n'.join('\n'.join(nm + [d]) + '\n' for d, nm in ffns)

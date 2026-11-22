@@ -544,13 +544,7 @@ SingleLoad_GetComposerBankName:
 
 ; SingleLoad_GetVariationName: Returns XHL = PtrTbl_VariationNames[WA] ("VARI 1".."VARI 4", then empty).
 ;   Basis: callers -- the COMPOSER single-load lists (WA = item mod items per bank).
-SingleLoad_GetVariationName:
-	extz xwa
-	sll xwa, 2	; index * 4
-	ld xbc, PtrTbl_VariationNames
-	add xbc, xwa
-	ld xhl, (xbc)
-	ret
+SingleLoad_GetVariationName:	.include "includes/generated/cc900/SingleLoad_GetVariationName.s"	; C: cc900/wallpaper_m269.c
 
 ; SingleLoad_GetComposerSectionName: Writes the marker (stack word), then the name of section DE of composer
 ;   bank BC to XWA: sections 0-3 (VARI 1-4) from the 96-byte composer records at RAM 0x948A0 + 96 * (4 * BC +

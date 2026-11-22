@@ -6,94 +6,7 @@
 ; editing, and the bitmap drum editor integration.
 ; =============================================================================
 
-InitializeYoko:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Yoko_ClassCount_167, Yoko_ClassTable_167, 0x167
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Yoko_ResEventCount_1C7, EvtName_PtrTable, 0x1c7
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Yoko_ResMethodCount_1E7, MtName_PtrTable, 0x1e7
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x2e, Yoko_ApFunctionTable_127, 0x127
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x2e, Yoko_ApFunctionTable_427, 0x427
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x1, Yoko_FunctionTable_107, 0x107
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x1, Yoko_FunctionTable_407, 0x407
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x1f, Yoko_MainFuncTable_147, 0x147
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x1f, Yoko_MainFuncNameTable_447, 0x447
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x2b, Yoko_ViewTable_06F, 0x6f
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x2b, Yoko_ResNameTable_36F, 0x36f
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Yoko_ViewTable_070, 0x70
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Yoko_ResNameTable_370, 0x370
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xb, Yoko_ViewTable_071, 0x71
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xb, Yoko_ResNameTable_371, 0x371
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x7, Yoko_ViewTable_072, 0x72
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x7, Yoko_ResNameTable_372, 0x372
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Yoko_ViewTable_073, 0x73
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Yoko_ResNameTable_373, 0x373
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xf, Yoko_ViewTable_074, 0x74
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xf, Yoko_ResNameTable_374, 0x374
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xd, Yoko_ViewTable_075, 0x75
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xd, Yoko_ResNameTable_375, 0x375
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Yoko_ViewTable_076, 0x76
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Yoko_ResNameTable_376, 0x376
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1e, Yoko_ViewTable_078, 0x78
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1e, Yoko_ResNameTable_378, 0x378
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Yoko_ViewTable_07A, 0x7a
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Yoko_ResNameTable_37A, 0x37a
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x5, Yoko_ViewTable_089, 0x89
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x5, Yoko_ResNameTable_389, 0x389
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1, Yoko_ViewTable_08A, 0x8a
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1, Yoko_ResNameTable_38A, 0x38a
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x16, Yoko_ViewTable_08B, 0x8b
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x16, Yoko_ResNameTable_38B, 0x38b
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1c, Yoko_ViewTable_08C, 0x8c
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1c, Yoko_ResNameTable_38C, 0x38c
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x5, Yoko_ViewTable_08E, 0x8e
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x5, Yoko_ResNameTable_38E, 0x38e
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Yoko_ViewTable_08F, 0x8f
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x6, Yoko_ResNameTable_38F, 0x38f
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Yoko_ViewTable_092, 0x92
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Yoko_ResNameTable_392, 0x392
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Yoko_ViewTable_0A7, 0xa7
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Yoko_ResNameTable_3A7, 0x3a7
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x6, Yoko_ViewTable_0A9, 0xa9
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x6, Yoko_ResNameTable_3A9, 0x3a9
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Yoko_ViewTable_0E0, 0xe0
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Yoko_ResNameTable_3E0, 0x3e0
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Yoko_ViewTable_0E1, 0xe1
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Yoko_ResNameTable_3E1, 0x3e1
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Yoko_ViewTable_0E2, 0xe2
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Yoko_ResNameTable_3E2, 0x3e2
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Yoko_ViewTable_0E3, 0xe3
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Yoko_ResNameTable_3E3, 0x3e3
-
-	RegMode 0x7, Yoko_ResNames_3E3_Strings, 0xd, NAKA_MAINFUNC_SeqStepModeFunc, TITLE_SQTRSEL
-	RegMode 0x7, InitializeYoko_Str_MD_DEMO, 0x13, NAKA_MAINFUNC_DemoModeFunc, TITLE_DEMOMENU
-
-	RegTitle 0x7, InitializeYoko_Str_TT_DPSMF, 0x6f, NAKA_MAINFUNC_DpSmfTtlFunc, 0x6f0000
-	RegTitle 0x7, InitializeYoko_Str_TT_DPDOC, 0x70, NAKA_MAINFUNC_DpDocTtlFunc, 0x700000
-	RegTitle 0x7, InitializeYoko_Str_TT_DPPD, 0x71, NAKA_MAINFUNC_DpPdTtlFunc, 0x710000
-	RegTitle 0x7, InitializeYoko_Str_TT_DPSMFLYR, 0x72, NAKA_MAINFUNC_DpSmfLyrTtlFunc, 0x720000
-	RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYSMF, 0x73, NAKA_MAINFUNC_DpMdlySmfTtlFunc, 0x730000
-	RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYDOC, 0x74, NAKA_MAINFUNC_DpMdlyDocTtlFunc, 0x740001
-	RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYPD, 0x75, NAKA_MAINFUNC_DpMdlyPdTtlFunc, 0x750000
-	RegTitle 0x7, InitializeYoko_Str_TT_DPMDLYSMFLYR, 0x76, NAKA_MAINFUNC_DpMdlySmfLyrTtlFunc, 0x760000
-	RegTitle 0x7, InitializeYoko_Str_TT_DKMDLYPLY, 0x78, NAKA_MAINFUNC_DkMdlyPlyTtlFunc, 0x780000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQMDLYPLY, 0x7a, NAKA_MAINFUNC_SqMdlyPlyTtlFunc, 0x7a0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQTRSEL, 0x89, NAKA_MAINFUNC_SqTrSelTtlFunc, 0x890000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQSTEP, 0x8a, NAKA_MAINFUNC_SqStepTtlFunc, 0x8a0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQTRAS, 0x8b, NAKA_MAINFUNC_SqTrAsTtlFunc, 0x8b0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQTRASPS, 0x8c, NAKA_MAINFUNC_SqTrAsPsTtlFunc, 0x8c0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQSNGSEL, 0x8e, NAKA_MAINFUNC_SqSngSelTtlFunc, 0x8e0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQSNGNAME, 0x8f, NAKA_MAINFUNC_SqSngNameTtlFunc, 0x8f0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQAFTSET, 0x92, NAKA_MAINFUNC_SqAftSetTtlFunc, 0x920000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQEASYNAME, 0xa7, NAKA_MAINFUNC_SqSngNameTtlFunc, 0x8f0000
-	RegTitle 0x7, InitializeYoko_Str_TT_SQSTEPBAL, 0xa9, NAKA_APFUNC_DefaultFunction, 0xa90000
-	RegTitle 0x7, InitializeYoko_Str_TT_DEMOMENU, 0xe0, NAKA_MAINFUNC_DemoMenuTtlFunc, NAKA_VIEW_DemoMenu
-	RegTitle 0x7, InitializeYoko_Str_TT_DEMOSTYLE, 0xe1, NAKA_MAINFUNC_DemoStyleTtlFunc, NAKA_VIEW_DemoStyle
-	RegTitle 0x7, InitializeYoko_Str_TT_DEMOSOUND, 0xe2, NAKA_MAINFUNC_DemoSoundTtlFunc, NAKA_VIEW_DemoSound
-	RegTitle 0x7, InitializeYoko_Str_TT_DEMORHY, 0xe3, NAKA_MAINFUNC_DemoRhyTtlFunc, NAKA_VIEW_DemoRhy
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeYoko:	.include "includes/generated/cc900/InitializeYoko.s"	; C: cc900/sequencer_ui_m232.c
 
 PartSelLangCheck:
 	cp xbc, EVT_GET_LANGUAGE_PTR
@@ -201,11 +114,7 @@ TrAsSureLang_ReturnZero:
 	ret
 
 ; Posts EVT_LYRICS_PLAY_REQUEST with 0x720006 and argument 0 (ApPostEvent).
-Audio_SendEventPostCmd:
-	ld xwa, 0x720006
-	ld xbc, EVT_LYRICS_PLAY_REQUEST
-	ld xde, 0:i3
-	jp ApPostEvent
+Audio_SendEventPostCmd:	.include "includes/generated/cc900/Audio_SendEventPostCmd.s"	; C: cc900/sequencer_ui_m232.c
 
 Audio_ExternalCallback:
 	ld xwa, 0x720006
@@ -2258,13 +2167,7 @@ IvNamingExit_ScreenData_Epilogue:
 	ret
 
 ; Out: L = byte A of the part-type table at 0xf1a0.
-TrAsGrid_LookupByteTable:
-	extz wa
-	lda xbc, (SEQ_TRACK_ASSIGN:16)
-	extz xwa
-	add xwa, xbc
-	ld l, (xwa)
-	ret
+TrAsGrid_LookupByteTable:	.include "includes/generated/cc900/TrAsGrid_LookupByteTable.s"	; C: cc900/sequencer_ui_m232.c
 ; AcTrAsGridBoxProc dispatch
 TrAsGrid_BoxProc:
 AcTrAsGridBoxProc:
@@ -2710,12 +2613,7 @@ TrAsGrid_Epilogue:
 	ret
 
 ; Out: HL = word A of TrAsGrid_LookupTable_Table.
-TrAsGrid_LookupTable:
-	extz wa
-	add wa, wa
-	lda xbc, (TrAsGrid_LookupTable_Table:24)
-	ld	hl, (xbc+wa)
-	ret
+TrAsGrid_LookupTable:	.include "includes/generated/cc900/TrAsGrid_LookupTable.s"	; C: cc900/sequencer_ui_m232.c
 
 ; TrAsGrid_StepListValue (formerly TrAsGrid_ByteData1: it is code) -- A :=
 ; position of value A in the 20-entry list TrAsGrid_ByteData1_Table; step
@@ -2745,34 +2643,11 @@ TrAsGrid_StepListValue_Join:
 ; Tells whether a track of the track-assign grid is a drum track (type 0x0d or 0x0e).
 ;   In:  A = 0 to test entry C of the part-type table at 0xf1a0, anything else to test the
 ;   current cell's type at 0x21082.  Out: L = 1 for a drum type, 0 otherwise.
-TrAsGrid_CheckTrackType:
-	cp a, 0:i3
-	jr nz, TrAsGrid_CheckCurrentCell
-	ld a, c
-	extz wa
-	lda xbc, (SEQ_TRACK_ASSIGN:16)
-	extz xwa
-	add xwa, xbc
-	ld a, (xwa)
-	cp a, 0xe
-	jr z, TrAsGrid_IsDrumType
-	cp a, 0xd
-	jr z, TrAsGrid_IsDrumType
-
-TrAsGrid_NotDrumType:
-	ld l, 0x0:opc
-	ret
-
-TrAsGrid_CheckCurrentCell:
-	ld a, (0x021082:24)
-	cp a, 0xe
-	jr z, TrAsGrid_IsDrumType
-	cp a, 0xd
-	jr nz, TrAsGrid_NotDrumType
-
-TrAsGrid_IsDrumType:
-	ld l, 0x1:opc
-	ret
+TrAsGrid_CheckTrackType:	.include "includes/generated/cc900/TrAsGrid_CheckTrackType.s"	; C: cc900/sequencer_ui_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	TrAsGrid_NotDrumType, TrAsGrid_CheckTrackType + 28
+	.set	TrAsGrid_CheckCurrentCell, TrAsGrid_CheckTrackType + 31
+	.set	TrAsGrid_IsDrumType, TrAsGrid_CheckTrackType + 46
 
 TrAsGridCheck:
 	lda xsp, (xsp - 18)
@@ -3284,36 +3159,11 @@ TrAsGridChk_ReturnZero:
 	ret
 TrAsGridChk_End:
 
-AcModeSelBoxProc:
-	dec 4, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld xiz, xwa
-	cp xbc, EVT_SET_SELECTED
-	jr z, VoiceConfig_HandleInit
-	ld xwa, xiz
-	ld xde, (xsp + 4)
-	call InheritedProc
-	jr VoiceConfig_Epilogue
-
-VoiceConfig_HandleInit:
-	ld xwa, xiz
-	ld xde, (xsp + 4)
-	call InheritedProc
-	ld xwa, (xsp + 4)
-	cp xwa, 0x1
-	jr nz, VoiceConfig_ReturnZero
-	ld xwa, xiz
-	call GetViewInstance
-	mrdb5 0x8b, 0x32, 0x19, 0x3e, 0x0d
-
-VoiceConfig_ReturnZero:
-	ld xhl, 0:i3
-
-VoiceConfig_Epilogue:
-	pop xiz
-	inc 4, xsp
-	ret
+AcModeSelBoxProc:	.include "includes/generated/cc900/AcModeSelBoxProc.s"	; C: cc900/sequencer_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	VoiceConfig_HandleInit, AcModeSelBoxProc + 27
+	.set	VoiceConfig_ReturnZero, AcModeSelBoxProc + 58
+	.set	VoiceConfig_Epilogue, AcModeSelBoxProc + 60
 
 VoiceConfig_ScreenTypeDispatch:
 	push xiz
@@ -3723,267 +3573,59 @@ SqAftSet_LookupExit:
 	ret
 
 ; Stores word A of SqAftSet_LookupTableEntry_Table in 0x21086.
-SqAftSet_LookupTableEntry:
-	extz wa
-	add wa, wa
-	lda xbc, (SqAftSet_LookupTableEntry_Table:24)
-	ld	wa, (xbc+wa)
-	ld (0x021086:24), wa
-	ret
+SqAftSet_LookupTableEntry:	.include "includes/generated/cc900/SqAftSet_LookupTableEntry.s"	; C: cc900/sequencer_ui_m232.c
 
-MuteChSetFunc:
-	push xiz
-	ld xiz, xwa
-	ld xwa, xbc
-	cp xbc, EVT_RAM_DATA_REQ
-	jr z, MuteChSet_ParamCheck
-	sub xwa, EVT_GET_LARGE_STEP
-	cp xwa, 0x0
-	jr lt, MuteChSetFunc_Exit
-	cp xwa, 0x9
-	jr gt, MuteChSetFunc_Exit
-	add xwa, xwa
-	add xwa, MuteChSetFunc_CaseTable
-	ld wa, (xwa)
-	lda xix, (MuteChSet_Dispatch:24)
-	jp	t, (xix+wa)
-
-; MuteChSetFunc dispatch
-MuteChSet_Dispatch:
-	ld	xwa, (xde+14)
-	sll	xwa, 2
-	ld	xbc, MuteChSet_Dispatch_PtrTable
-	add	xbc, xwa
-	ld	xwa, (xbc)
-	push	xwa
-	ld	xwa, (xde+18)
-	push	xwa
-	call	Strcpy
-	inc	8, xsp
-	ld	xhl, xiz
-	jr	SqAftSet_LookupTableEntry_Epilogue
-MuteChSetFunc_OnGetLargeStep:	; cases 31457342, 31457343, 31457350
-	ld	xhl, 1:i3
-	jr	SqAftSet_LookupTableEntry_Epilogue
-MuteChSetFunc_OnGetMax:
-	ld	xhl, 15
-	jr	SqAftSet_LookupTableEntry_Epilogue
-MuteChSetFunc_OnGetRamAddress:
-	lda	xhl, (0x02108a:24)
-	jr	SqAftSet_LookupTableEntry_Epilogue
-
-; MuteChSetFunc parameter check
-MuteChSet_ParamCheck:
-	cp (0x021088:24), 0x01
-	jr nz, MuteChSetFunc_Exit
-	ld a, (0x02108a:24)
-	extz wa
-	calr SqAftSet_LookupTableEntry
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-	call MainFuncCall
-
-MuteChSetFunc_Exit:
-	ld xhl, 0:i3
-SqAftSet_LookupTableEntry_Epilogue:
-	pop xiz
-	ret
+MuteChSetFunc:	.include "includes/generated/cc900/MuteChSetFunc.s"	; C: cc900/sequencer_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MuteChSet_Dispatch, MuteChSetFunc + 55
+	.set	MuteChSetFunc_OnGetLargeStep, MuteChSetFunc + 85
+	.set	MuteChSetFunc_OnGetMax, MuteChSetFunc + 89
+	.set	MuteChSetFunc_OnGetRamAddress, MuteChSetFunc + 96
+	.set	MuteChSet_ParamCheck, MuteChSetFunc + 103
+	.set	MuteChSetFunc_Exit, MuteChSetFunc + 137
+	.set	SqAftSet_LookupTableEntry_Epilogue, MuteChSetFunc + 139
 SqAftSetFunc_End:
 
-AcMuteToggleBoxProc:
-	dec 8, xsp
-	push xiz
-	ld (xsp + 4), xde
-	ld (xsp + 8), xbc
-	ld xiz, xwa
-	ld xwa, (xsp + 8)
-	cp xwa, EVT_SHOW
-	jr z, AcMuteToggle_HandleInit
-	ld xwa, xiz
-	ld xbc, (xsp + 8)
-	ld xde, (xsp + 4)
-	call InheritedProc
-	jr AcMuteToggle_Epilogue
+AcMuteToggleBoxProc:	.include "includes/generated/cc900/AcMuteToggleBoxProc.s"	; C: cc900/sequencer_ui_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AcMuteToggle_HandleInit, AcMuteToggleBoxProc + 36
+	.set	AcMuteToggle_Epilogue, AcMuteToggleBoxProc + 88
 
-AcMuteToggle_HandleInit:
-	ld xwa, xiz
-	call GetViewInstance
-	ld xwa, (xhl + 40)
-	ld xbc, EVT_GET_TOGGLE_SW
-	ld xde, 0:i3
-	call ApFuncCall
-	ld xde, xhl
-	ld (0x02108c:24), xde
-	ld xwa, xiz
-	ld xbc, EVT_SET_PARAM
-	call SendEvent
-	ld xwa, xiz
-	ld xbc, (xsp + 8)
-	ld xde, (xsp + 4)
-	call InheritedProc
-	ld xhl, 0:i3
+SMFMuteOnOffFunc:	.include "includes/generated/cc900/SMFMuteOnOffFunc.s"	; C: cc900/sequencer_ui_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SMFMuteOnOff_Enable, SMFMuteOnOffFunc + 16
+	.set	SMFMuteOnOff_Disable, SMFMuteOnOffFunc + 54
+	.set	SMFMuteOnOff_PostCall, SMFMuteOnOffFunc + 79
 
-AcMuteToggle_Epilogue:
-	pop xiz
-	inc 8, xsp
-	ret
+SMFMute_GetBit0Status:	.include "includes/generated/cc900/SMFMute_GetBit0Status.s"	; C: cc900/sequencer_ui_m0_b.c
 
-SMFMuteOnOffFunc:
-	cp xbc, EVT_GET_TOGGLE_SW
-	jr nz, SMFMuteOnOff_Enable
-	ld xhl, 0:i3
-	ld l, (0x021088:24)
-	ret
+SMFMute_GetBit1Status:	.include "includes/generated/cc900/SMFMute_GetBit1Status.s"	; C: cc900/sequencer_ui_m0.c
 
-SMFMuteOnOff_Enable:
-	cp xde, 0x1
-	jr nz, SMFMuteOnOff_Disable
-	ld (0x021088:24), 0x01
-	ld a, (0x02108a:24)
-	extz wa
-	calr SqAftSet_LookupTableEntry
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-	jr SMFMuteOnOff_PostCall
+SMFMute_GetUpperBits:	.include "includes/generated/cc900/SMFMute_GetUpperBits.s"	; C: cc900/sequencer_ui_m0_b.c
 
-SMFMuteOnOff_Disable:
-	ld (0x021088:24), 0x00
-	ldw (0x021086:24), 0x0000
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
+SMFMute_ClearBit0:	.include "includes/generated/cc900/SMFMute_ClearBit0.s"	; C: cc900/sequencer_ui_m0.c
 
-SMFMuteOnOff_PostCall:
-	call MainFuncCall
-	ld xhl, 0:i3
-	ret
+Rt1MuteFunc:	.include "includes/generated/cc900/Rt1MuteFunc.s"	; C: cc900/sequencer_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Rt1Mute_ClearAndPost, Rt1MuteFunc + 37
+	.set	Rt1Mute_PostCall, Rt1MuteFunc + 56
 
-SMFMute_GetBit0Status:
-	ld hl, (0x021086:24)
-	and hl, 0x1
-	extz xhl
-	ret
+Rt2MuteFunc:	.include "includes/generated/cc900/Rt2MuteFunc.s"	; C: cc900/sequencer_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Rt2Mute_ClearAndPost, Rt2MuteFunc + 37
+	.set	Rt2Mute_PostCall, Rt2MuteFunc + 56
 
-SMFMute_GetBit1Status:
-	ld hl, (0x021086:24)
-	and hl, 0x2
-	extz xhl
-	ret
+DocOrchMuteFunc:	.include "includes/generated/cc900/DocOrchMuteFunc.s"	; C: cc900/sequencer_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocOrchMute_ClearAndPost, DocOrchMuteFunc + 38
+	.set	DocOrchMute_PostCall, DocOrchMuteFunc + 57
 
-SMFMute_GetUpperBits:
-	ld hl, (0x021086:24)
-	and hl, 0xfffc
-	extz xhl
-	ret
+PdOrchMuteFunc:	.include "includes/generated/cc900/PdOrchMuteFunc.s"	; C: cc900/sequencer_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PdOrchMute_ClearAndPost, PdOrchMuteFunc + 38
+	.set	PdOrchMute_PostCall, PdOrchMuteFunc + 57
 
-SMFMute_ClearBit0:
-	ld hl, (0x021086:24)
-	res 0, hl
-	extz xhl
-	ret
-
-Rt1MuteFunc:
-	cp xbc, EVT_GET_TOGGLE_SW
-	jr z, SMFMute_GetBit0Status
-	cp xde, 0x1
-	jr nz, Rt1Mute_ClearAndPost
-	orw (0x021086:24), 1
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-	jr Rt1Mute_PostCall
-
-Rt1Mute_ClearAndPost:
-	andw (0x021086:24), 0xfffe
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-
-Rt1Mute_PostCall:
-	call MainFuncCall
-	ld xhl, 0:i3
-	ret
-
-Rt2MuteFunc:
-	cp xbc, EVT_GET_TOGGLE_SW
-	jr z, SMFMute_GetBit1Status
-	cp xde, 0x1
-	jr nz, Rt2Mute_ClearAndPost
-	orw (0x021086:24), 2
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-	jr Rt2Mute_PostCall
-
-Rt2Mute_ClearAndPost:
-	andw (0x021086:24), 0xfffd
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-
-Rt2Mute_PostCall:
-	call MainFuncCall
-	ld xhl, 0:i3
-	ret
-
-DocOrchMuteFunc:
-	cp xbc, EVT_GET_TOGGLE_SW
-	jrl z, SMFMute_GetUpperBits
-	cp xde, 0x1
-	jr nz, DocOrchMute_ClearAndPost
-	orw (0x021086:24), 0xfffc
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-	jr DocOrchMute_PostCall
-
-DocOrchMute_ClearAndPost:
-	andw (0x021086:24), 3
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-
-DocOrchMute_PostCall:
-	call MainFuncCall
-	ld xhl, 0:i3
-	ret
-
-PdOrchMuteFunc:
-	cp xbc, EVT_GET_TOGGLE_SW
-	jrl z, SMFMute_ClearBit0
-	cp xde, 0x1
-	jr nz, PdOrchMute_ClearAndPost
-	orw (0x021086:24), 0xfffe
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-	jr PdOrchMute_PostCall
-
-PdOrchMute_ClearAndPost:
-	andw (0x021086:24), 1
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_DIRECT_PLAY_MUTE
-	ld xde, 0:i3
-
-PdOrchMute_PostCall:
-	call MainFuncCall
-	ld xhl, 0:i3
-	ret
-
-SeqNameOKFunc:
-	call GetNamingWindowID
-	ld xwa, xhl
-	ld xbc, EVT_GET_STRING
-	ld xde, 0x20c92
-	call SendEvent
-	ld xwa, NAKA_MAINFUNC_MiddleFuncCall
-	ld xbc, EVT_SONG_NAME_SET
-	ld xde, 0x20c92
-	call MainFuncCall
-	ld xhl, 0:i3
-	ret
+SeqNameOKFunc:	.include "includes/generated/cc900/SeqNameOKFunc.s"	; C: cc900/sequencer_ui_m0.c
 
 SeqNamingCheck:
 	dec 4, xsp
@@ -4313,147 +3955,7 @@ IvExitTrSel_Epilogue:
 	ret
 
 
-InitializeKubo:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Kubo_ClassCount_168, Kubo_ClassTable_168, 0x168
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Kubo_ResEventCount_1C8, EvtEffDraw_PtrTable, 0x1c8
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, EffectsEditor_GapByte, MT_FuncName_PtrTable, 0x1e8
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x49, Kubo_ApFuncTable_128, 0x128
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x49, Kubo_ApFuncNameTable_428, 0x428
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x0, 0x3df10, 0x108
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0x0, 0x3df14, 0x408
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x2c, Kubo_MainFunctionTable_148, 0x148
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x2c, Kubo_MainFunctionTable_448, 0x448
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Kubo_ViewableTable_00A, 0xa
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Kubo_ResNameTable_30A, 0x30a
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Kubo_ViewableTable_00B, 0xb
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Kubo_ResNameTable_30B, 0x30b
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x25, Kubo_ViewableTable_00C, 0xc
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x25, Kubo_ResNameTable_30C, 0x30c
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Kubo_ViewableTable_00E, 0xe
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Kubo_ResNameTable_30E, 0x30e
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Kubo_ViewableTable_080, 0x80
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Kubo_ResNameTable_380, 0x380
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1c, Kubo_ViewableTable_081, 0x81
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1c, Kubo_ResNameTable_381, 0x381
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Kubo_ViewableTable_082, 0x82
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Kubo_ResNameTable_382, 0x382
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Kubo_ViewableTable_083, 0x83
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Kubo_ResNameTable_383, 0x383
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xa, Kubo_ViewableTable_084, 0x84
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xa, Kubo_ResNameTable_384, 0x384
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x19, Kubo_ViewableTable_085, 0x85
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x19, Kubo_ResNameTable_385, 0x385
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xb, Kubo_ViewableTable_086, 0x86
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xb, Kubo_ResNameTable_386, 0x386
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x18, Kubo_ViewableTable_087, 0x87
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x18, Kubo_ResNameTable_387, 0x387
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xc, Kubo_ViewableTable_088, 0x88
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xc, Kubo_ResNameTable_388, 0x388
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Kubo_ViewableTable_08D, 0x8d
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Kubo_ResNameTable_38D, 0x38d
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x11, Kubo_ViewableTable_090, 0x90
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x11, Kubo_ResNameTable_390, 0x390
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x13, Kubo_ViewableTable_091, 0x91
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x13, Kubo_ResNameTable_391, 0x391
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1a, Kubo_ViewableTable_093, 0x93
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1a, Kubo_ResNameTable_393, 0x393
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Kubo_ViewableTable_094, 0x94
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Kubo_ResNameTable_394, 0x394
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1b, Kubo_ViewableTable_095, 0x95
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1b, Kubo_ResNameTable_395, 0x395
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Kubo_ViewableTable_096, 0x96
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Kubo_ResNameTable_396, 0x396
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4, Kubo_ViewableTable_097, 0x97
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4, Kubo_ResNameTable_397, 0x397
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x1a, Kubo_ViewableTable_098, 0x98
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x1a, Kubo_ResNameTable_398, 0x398
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Kubo_ViewableTable_099, 0x99
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Kubo_ResNameTable_399, 0x399
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xe, Kubo_ViewableTable_09A, 0x9a
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xe, Kubo_ResNameTable_39A, 0x39a
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x16, Kubo_ViewableTable_09B, 0x9b
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x16, Kubo_ResNameTable_39B, 0x39b
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x15, Kubo_ViewableTable_09C, 0x9c
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x15, Kubo_ResNameTable_39C, 0x39c
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Kubo_ViewableTable_09D, 0x9d
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Kubo_ResNameTable_39D, 0x39d
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Kubo_ViewableTable_09E, 0x9e
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Kubo_ResNameTable_39E, 0x39e
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x19, Kubo_ViewableTable_09F, 0x9f
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x19, Kubo_ResNameTable_39F, 0x39f
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Kubo_ViewableTable_0A0, 0xa0
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Kubo_ResNameTable_3A0, 0x3a0
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x10, Kubo_ViewableTable_0A1, 0xa1
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x10, Kubo_ResNameTable_3A1, 0x3a1
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x11, Kubo_ViewableTable_0A2, 0xa2
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x11, Kubo_ResNameTable_3A2, 0x3a2
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xf, Kubo_ViewableTable_0A3, 0xa3
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xf, Kubo_ResNameTable_3A3, 0x3a3
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x11, Kubo_ViewableTable_0A4, 0xa4
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x11, Kubo_ResNameTable_3A4, 0x3a4
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Kubo_ViewableTable_0A8, 0xa8
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Kubo_ResNameTable_3A8, 0x3a8
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Kubo_ViewableTable_0AA, 0xaa
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Kubo_ResNameTable_3AA, 0x3aa
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x2, Kubo_ViewableTable_0AB, 0xab
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x2, Kubo_ResNameTable_3AB, 0x3ab
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0xf, Kubo_ViewableTable_0D6, 0xd6
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0xf, Kubo_ResNameTable_3D6, 0x3d6
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3d, Kubo_ViewableTable_0E7, 0xe7
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x3d, Kubo_ResNameTable_3E7, 0x3e7
-
-	RegMode 0x8, InitializeKubo_Str_MD_ENTERTAINER, 0x7, NAKA_APFUNC_DefaultFunction, TITLE_ETMENU
-	RegMode 0x8, InitializeKubo_Str_MD_SEQ, 0x8, NAKA_MAINFUNC_SeqModeFunc, TITLE_SQMENU
-	RegMode 0x8, InitializeKubo_Str_MD_SEQ_EREC, 0x9, NAKA_MAINFUNC_SeqErecModeFunc, TITLE_SQEASYREC
-	RegMode 0x8, InitializeKubo_Str_MD_SEQ_PLAY, 0xa, NAKA_MAINFUNC_SeqPlayModeFunc, TITLE_SQPLAY
-	RegMode 0x8, InitializeKubo_Str_MD_SEQ_REAL, 0xb, NAKA_MAINFUNC_SeqRealModeFunc, TITLE_SQREALREC
-	RegMode 0x8, InitializeKubo_Str_MD_SEQ_EDIT, 0xc, NAKA_MAINFUNC_SeqEditModeFunc, TITLE_SQEMENU
-	RegMode 0x8, InitializeKubo_Str_MD_HELP, 0x14, NAKA_MAINFUNC_HelpModeFunc, TITLE_SWHELP
-
-	RegTitle 0x8, InitializeKubo_Str_TT_SDREVSET, 0xa, NAKA_MAINFUNC_SdRevsetTitleFunc, 0xa0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SDDSPEFF, 0xb, NAKA_MAINFUNC_SdDspeffTitleFunc, 0xb0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SDEQUALIZER, 0xc, NAKA_APFUNC_DefaultFunction, 0xc0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SDACCILL, 0xe, NAKA_MAINFUNC_SdAccillTitleFunc, 0xe0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQMENU, 0x80, NAKA_APFUNC_DefaultFunction, 0x800000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQPLAY, 0x81, NAKA_MAINFUNC_SqPlayTitleFunc, 0x810000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQCYCPLY, 0x82, NAKA_APFUNC_DefaultFunction, 0x820000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQEASYREC, 0x83, NAKA_APFUNC_DefaultFunction, 0x830000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQCMENU, 0x84, NAKA_APFUNC_DefaultFunction, 0x840000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQREALREC, 0x85, NAKA_MAINFUNC_SqRealRecTitleFunc, 0x850000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQCYCREC, 0x86, NAKA_APFUNC_DefaultFunction, 0x860000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQPUNCH, 0x87, NAKA_MAINFUNC_SqPunchTitleFunc, 0x870000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQPUNCHM, 0x88, NAKA_MAINFUNC_SqPunchmTitleFunc, 0x880000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQPNLWR, 0x8d, NAKA_APFUNC_DefaultFunction, 0x8d0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQSNGCLR, 0x90, NAKA_MAINFUNC_SqSoclTitleFunc, 0x900000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQSNGCP, 0x91, NAKA_MAINFUNC_SqSngcpTitleFunc, 0x910000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQEMENU, 0x93, NAKA_APFUNC_DefaultFunction, 0x930000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQNOTESEL, 0x94, NAKA_MAINFUNC_SqNoteSelTitleFunc, 0x940000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQNOTEEDT, 0x95, NAKA_MAINFUNC_SqNoteEdtTitleFunc, 0x950000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQNOTECYCP, 0x96, NAKA_MAINFUNC_SqNoteCycpTitleFunc, 0x960000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQDRMSEL, 0x97, NAKA_MAINFUNC_SqDrmSelTitleFunc, 0x970000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQDRMEDT, 0x98, NAKA_MAINFUNC_SqDrmEdtTitleFunc, 0x980000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQDRMCYCP, 0x99, NAKA_MAINFUNC_SqDrmCycpTitleFunc, 0x990000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQTRKCLR, 0x9a, NAKA_MAINFUNC_SqTrclTitleFunc, 0x9a0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQTRKMRG, 0x9b, NAKA_MAINFUNC_SqTrmgTitleFunc, 0x9b0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQQTZ, 0x9c, NAKA_MAINFUNC_SqQtzTitleFunc, 0x9c0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQTRNS, 0x9d, NAKA_MAINFUNC_SqTrnsTitleFunc, 0x9d0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQVELOCNG, 0x9e, NAKA_MAINFUNC_SqVcngTitleFunc, 0x9e0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQNOTECNG, 0x9f, NAKA_MAINFUNC_SqNcngTitleFunc, 0x9f0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQADVDLY, 0xa0, NAKA_MAINFUNC_SqAdlyTitleFunc, 0xa00000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQMERS, 0xa1, NAKA_MAINFUNC_SqMersTitleFunc, 0xa10000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQMCP, 0xa2, NAKA_MAINFUNC_SqMcpyTitleFunc, 0xa20000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQMDEL, 0xa3, NAKA_MAINFUNC_SqMdelTitleFunc, 0xa30000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQMINS, 0xa4, NAKA_MAINFUNC_SqMinsTitleFunc, 0xa40000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQSNGCPC, 0xa8, NAKA_MAINFUNC_SqSngcpTitleFunc, 0x910000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQPNLWRM, 0xaa, NAKA_APFUNC_DefaultFunction, 0x8d0000
-	RegTitle 0x8, InitializeKubo_Str_TT_SQMETBAL, 0xab, NAKA_APFUNC_DefaultFunction, 0xab0000
-	RegTitle 0x8, InitializeKubo_Str_TT_ETMENU, 0xd6, NAKA_MAINFUNC_EtmenuTitleFunc, 0xd60000
-	RegTitle 0x8, InitializeKubo_Str_TT_SWHELP, 0xe7, NAKA_MAINFUNC_HelpTitleFunc, 0xe70000
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeKubo:	.include "includes/generated/cc900/InitializeKubo.s"	; C: cc900/sequencer_ui_m232.c
 
 AutoPunchTtlRqFunc:
 	cp xbc, EVT_SW_IN

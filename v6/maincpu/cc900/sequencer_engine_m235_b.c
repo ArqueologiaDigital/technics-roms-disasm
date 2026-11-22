@@ -47,3 +47,45 @@ void MainExe_SequencerStop(void)
 	Part_DetectSingleVoiceType();
 	UI_ChangeModeByIndex(MD_SEQ_REAL);
 }
+
+#define EVT_PARA_DRAW 0x1c0000fL
+extern void ApDeliveryEvent(long, long, long);
+extern long __near SEQ_SCREEN_OBJECT;
+extern unsigned char __near ram_294e;
+extern unsigned char __near ram_276e;
+extern void NoteEditSy_SendGateCmd(void);
+extern void NoteEditSy_SendScrollCmd1(void);
+extern void NoteEditSy_SendScrollCmd5(void);
+#define EVT_GRAPH_DRAW 0x1c80004L
+extern void NoteEditSy_SendWidgetCmd0(void);
+extern void NoteEditSy_SendWidgetCmd2(void);
+extern unsigned char __near ram_2728;
+extern void NoteEditSy_SendWidgetCmd3or4(void);
+
+void NoteEditSy_SendGateCmd(void)
+{
+  ram_294e = ram_276e;
+  ApDeliveryEvent(SEQ_SCREEN_OBJECT, EVT_PARA_DRAW, 4L);
+}
+void NoteEditSy_SendScrollCmd1(void)
+{
+  ApDeliveryEvent(SEQ_SCREEN_OBJECT, EVT_PARA_DRAW, 1L);
+}
+void NoteEditSy_SendScrollCmd5(void)
+{
+  ApDeliveryEvent(SEQ_SCREEN_OBJECT, EVT_PARA_DRAW, 5L);
+}
+void NoteEditSy_SendWidgetCmd0(void)
+{
+  ApDeliveryEvent(SEQ_SCREEN_OBJECT, EVT_GRAPH_DRAW, 0L);
+}
+void NoteEditSy_SendWidgetCmd2(void)
+{
+  ApDeliveryEvent(SEQ_SCREEN_OBJECT, EVT_GRAPH_DRAW, 2L);
+}
+void NoteEditSy_SendWidgetCmd3or4(void)
+{
+  long d = 3;
+  if (ram_2728 & 1) d = 4;
+  ApDeliveryEvent(SEQ_SCREEN_OBJECT, EVT_GRAPH_DRAW, d);
+}

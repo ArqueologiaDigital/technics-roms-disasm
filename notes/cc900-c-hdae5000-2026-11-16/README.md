@@ -57,6 +57,13 @@ The pipeline scripts after a V4.23 run (all run from the repository root; `$TMPD
 - **`probe_runs.py`**: which probe files no oracle run compiled.
   `python3 -B notes/cc900-c-hdae5000-2026-11-16/probe_runs.py`
 - **`selectlist/`**: SelectListProc's instruction-level comparison and probe generator; see `selectlist/README.md`.
+- **`older_gap.py`** (2026-11-20): which functions that v2.06i builds from C does each older tree define (same
+  label) but not build, how close did V4.23 come there (the near-miss index's best row for that tree), and which of
+  the tree's own functions (`survey.py --tree TREE`) are not built?
+  `python3 -B notes/cc900-c-hdae5000-2026-11-16/older_gap.py [--tsv OUT.tsv]`
+- **`survey.py --tree TREE`** (2026-11-20): the survey of an older tree against its own symbols reference.
+- **`stage_r87.sh TREE...`**, **`corpus_r88.sh` .. `corpus_r91.sh OUT`** (2026-11-20): round 87's staging and the
+  oracle corpora of rounds 88-91 (which files each run compiled; `HANDOFF-2026-11-20.md` has the runs).
 
 Where the work stopped and how to resume it: `HANDOFF-2026-11-19.md` (then `HANDOFF-2026-11-18.md` and
 `HANDOFF-2026-11-17.md`).

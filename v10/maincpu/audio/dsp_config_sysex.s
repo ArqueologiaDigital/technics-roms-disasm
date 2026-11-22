@@ -747,25 +747,9 @@ AssswbWr_Return:
 ; mark after it; the write offset is the word at 0x90de, advanced by 4.  When the offset is 0x1fc
 ; or more the command is dropped.  Pops its stack word on return (RETD 2).
 ;   Exported to extension ROMs as entry AssswbWr of the Hama function table.
-AssswbWr:
-	ld hl, (SWBTWR_WRITE_INDEX:16)
-	cp hl, 0x1fc
-	jr nc, AssswbWr_BufferFull
-	lda xix, (SWBTWR_EVENT_QUEUE:16)
-	extz xhl
-	add xhl, xix
-	ld (xhl+), a
-	ld (xhl+), c
-	ld (xhl+), e
-	ld a, (xsp + 4)
-	ld (xhl+), a
-	ld (xhl), 0xff
-	ld wa, (SWBTWR_WRITE_INDEX:16)
-	inc 4, wa
-	ld (SWBTWR_WRITE_INDEX:16), wa
-
-AssswbWr_BufferFull:
-	retd 0x2
+AssswbWr:	.include "includes/generated/cc900/AssswbWr.s"	; C: cc900/dsp_config_sysex_m291.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AssswbWr_BufferFull, AssswbWr + 46
 
 ; Appends the 4-byte command {A, C, E, stack byte} to the buffer at 0xbf39 and writes the 0xff
 ; end mark after it; the write offset is the word at 0x90e2, advanced by 4.  When the offset
@@ -794,30 +778,11 @@ AddswbWr_BufferFull:
 ; Appends the 4-byte command {A, C, E, stack byte} to the 0xff-terminated buffer at 0xc039 (60
 ; bytes) unless it is full.  Pops its stack word on return (RETD 2).
 ;   Exported to extension ROMs as entry SwbtWr of the Hama function table.
-SwbtWr:
-	lda xix, (PANEL_EVENT_QUEUE:16)
-	ld xiy, xix
-	lda xhl, (xix + 60)
-	cp (xix), 0xff
-	jr z, SwbtWr_CheckSpace
-
-SwbtWr_ScanEnd:
-	inc 4, xiy
-	cp (xiy), 0xff
-	jr nz, SwbtWr_ScanEnd
-
-SwbtWr_CheckSpace:
-	cp xiy, xhl
-	jr nc, SwbtWr_Done
-	ld (xiy+), a
-	ld (xiy+), c
-	ld (xiy+), e
-	ld a, (xsp + 4)
-	ld (xiy+), a
-	ld (xiy), 0xff
-
-SwbtWr_Done:
-	retd 0x2
+SwbtWr:	.include "includes/generated/cc900/SwbtWr.s"	; C: cc900/dsp_config_sysex_m291.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SwbtWr_ScanEnd, SwbtWr + 14
+	.set	SwbtWr_CheckSpace, SwbtWr + 21
+	.set	SwbtWr_Done, SwbtWr + 43
 
 ; SwbtWr_ProcessAll with XIZ preserved.
 SwbtWr_CallProcessAll:
@@ -2361,12 +2326,7 @@ Fade_ParamListener_StoreResetDelay:
 
 ; Returns in XHL the panel TLV payload (PanelTlv_PayloadOfTag) of the tag that
 ; DspBlock_ObjectCode_Table gives for DSP block A; 0xffffffff when that tag is absent.
-DSPCfg_LookupMidiMap:
-	extz xwa
-	ld xbc, DspBlock_ObjectCode_Table
-	add xbc, xwa
-	ld a, (xbc)
-	jp PanelTlv_PayloadOfTag
+DSPCfg_LookupMidiMap:	.include "includes/generated/cc900/DSPCfg_LookupMidiMap.s"	; C: cc900/dsp_config_sysex_m293_c.c
 
 DSPCfg_ExtractFieldPair:
 	ld xix, xde
@@ -5103,9 +5063,7 @@ AudioSubsystem_Callback:
 ; Re-derives the priority bytes 0xc252..0xc256 from the mode byte 0x379b (AudioInit_SelectPriority,
 ; which also sets bit 4 of the change mask AUDIO_STATE_CHANGES), then acts on the change mask
 ; (AudioInit_DispatchChanges, tail jump).
-AudioInit_SelectAndDispatch:
-	call AudioInit_SelectPriority
-	jp AudioInit_DispatchChanges
+AudioInit_SelectAndDispatch:	.include "includes/generated/cc900/AudioInit_SelectAndDispatch.s"	; C: cc900/dsp_config_sysex_m294.c
 
 ; Sets the bytes 0xc279 / 0xc27a from whether the byte at 0x7f0b is non-zero
 ; (AudioInit_CheckMIDIStatus, which also sets bit 5 of the change mask AUDIO_STATE_CHANGES), then acts on the

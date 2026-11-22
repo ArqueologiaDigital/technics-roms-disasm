@@ -3088,58 +3088,16 @@ PdMed_Exit:
 	pop xiz
 	ret
 
-DocDiskNameFunc:
-	push xiz
-	ld xiz, xde
-	cp xbc, EVT_PAINT
-	jr nz, DocDisk_Exit
-	call FileIO_SearchAndLoadFile
-	ld ix, 0:i3
-	jr DocDisk_CopyLoop
-
-DocDisk_CopyCharLoop:
-	cp (xhl), 0x20
-	jr z, DocDisk_SkipSpace
-	ld de, ix
-	inc 1, ix
-	ld a, (xhl)
-	ld	(xbc+de), a
-
-DocDisk_SkipSpace:
-	inc 1, xhl
-
-DocDisk_CopyLoop:
-	lda xbc, (0x878c:16)
-	cp (xhl), 0x0
-	jr z, DocDisk_TerminateStr
-	cp ix, 0x1e
-	jr lt, DocDisk_CopyCharLoop
-
-DocDisk_TerminateStr:
-	ld xde, xbc
-	ld	(xbc+ix), 0x00
-	jr DocDisk_TrimLoop
-
-DocDisk_ClearTrailing:
-	ld (xwa), 0x0
-
-DocDisk_TrimLoop:
-	dec 1, ix
-	lda	xwa, (xde+ix)
-	cp (xwa), 0x20
-	jr nz, DocDisk_PostEvent
-	cp ix, 0:i3
-	jr gt, DocDisk_ClearTrailing
-
-DocDisk_PostEvent:
-	ld xwa, xiz
-	ld xbc, EVT_PARA_DRAW
-	call ApPostEvent
-
-DocDisk_Exit:
-	ld xhl, 0:i3
-	pop xiz
-	ret
+DocDiskNameFunc:	.include "includes/generated/cc900/DocDiskNameFunc.s"	; C: cc900/medley_m0_xs.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DocDisk_CopyCharLoop, DocDiskNameFunc + 19
+	.set	DocDisk_SkipSpace, DocDiskNameFunc + 35
+	.set	DocDisk_CopyLoop, DocDiskNameFunc + 37
+	.set	DocDisk_TerminateStr, DocDiskNameFunc + 52
+	.set	DocDisk_ClearTrailing, DocDiskNameFunc + 62
+	.set	DocDisk_TrimLoop, DocDiskNameFunc + 65
+	.set	DocDisk_PostEvent, DocDiskNameFunc + 81
+	.set	DocDisk_Exit, DocDiskNameFunc + 92
 
 DocMed_FormatFileList:
 	dec 6, xsp
@@ -4010,14 +3968,10 @@ CheckAnySlotHasData:
 ; Composer_SetPassword: Stores WA as the Composer password, word +0x0E of the style image (0x9480E).  Basis: callers + body --
 ;   Password_ClearAndSetSlot (EVT_SET_PASSWORD, FmmPasswordFunc) stores the entered password with it after
 ;   ClearAllSongSlots (notes/kn5000-style-2026-10-31/README.md, hdr +0x0e).
-Composer_SetPassword:
-	ld (0x09480e:24), wa
-	ret
+Composer_SetPassword:	.include "includes/generated/cc900/Composer_SetPassword.s"	; C: cc900/medley_m270.c
 
 ; Composer_GetPassword: HL = the Composer password, word +0x0E of the style image (0x9480E).  Basis: body + Composer_SetPassword.
-Composer_GetPassword:
-	ld hl, (0x09480e:24)
-	ret
+Composer_GetPassword:	.include "includes/generated/cc900/Composer_GetPassword.s"	; C: cc900/medley_m270_b.c
 
 ; Composer_IsPassword: HL = 1 when WA equals the Composer password (Composer_GetPassword), else 0.  Basis: callers + body -- the
 ;   password delete / save handlers compare the entered value with it.
@@ -4032,90 +3986,9 @@ Composer_IsPassword:
 
 ; Composer_HasPassword: HL = 1 when a Composer password is set (Composer_GetPassword non-zero), else 0.  Basis: body -- the
 ;   EVT_SET_PASSWORD handler refuses a new password while one is set.
-Composer_HasPassword:
-	calr Composer_GetPassword
-	cp hl, 0:i3
-	scc16 nz, hl
-	ret
+Composer_HasPassword:	.include "includes/generated/cc900/Composer_HasPassword.s"	; C: cc900/medley_m270.c
 
-InitializeCheap:
-	lda xsp, (xsp - 14)
-
-	RegObjTable NAKA_CLASS_Class, ClassProc, Cheap_ClassCount_165, Cheap_ClassTable_165, 0x165
-	RegObjTable NAKA_CLASS_ResEvent, ResEventProc, Cheap_ResEventCount_1C5, PtrTbl_EventNames, 0x1c5
-	RegObjTable NAKA_CLASS_ResMethod, ResMethodProc, Cheap_ResMethodCount_1E5, Cheap_ResMethodTable_1E5, 0x1e5
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x1d, Cheap_ApFuncTable_125, 0x125
-	RegObjTabl NAKA_CLASS_ApFunction, ApFunctionProc, 0x1d, PtrTbl_DiskFuncNames, 0x425
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0xd, Cheap_FunctionTable_105, 0x105
-	RegObjTabl NAKA_CLASS_Function, FunctionProc, 0xd, PtrTbl_NakaModuleHandlers, 0x405
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x39, Cheap_MainFunctionTable_145, 0x145
-	RegObjTabl NAKA_CLASS_MainFunction, MainFunctionProc, 0x39, Cheap_MainFunctionTable_445, 0x445
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x4a, Cheap_ViewableTable_060, 0x60
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x4a, Cheap_ResNameTable_360, 0x360
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x80, Cheap_ViewableTable_061, 0x61
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x80, Cheap_ResNameTable_361, 0x361
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_062, 0x62
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_362, 0x362
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_063, 0x63
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_363, 0x363
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_064, 0x64
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_364, 0x364
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x3, Cheap_ViewableTable_065, 0x65
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x3, Cheap_ResNameTable_365, 0x365
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_066, 0x66
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, InitializeCheap_Str_Empty, 0x366
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x47, Cheap_ViewableTable_067, 0x67
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x47, Cheap_ResNameTable_367, 0x367
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_06A, 0x6a
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_36A, 0x36a
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x15, Cheap_ViewableTable_06B, 0x6b
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x15, Cheap_ResNameTable_36B, 0x36b
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x53, Cheap_ViewableTable_06C, 0x6c
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x53, Cheap_ResNameTable_36C, 0x36c
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_06D, 0x6d
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_36D, 0x36d
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_06E, 0x6e
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_36E, 0x36e
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x15, Cheap_ViewableTable_077, 0x77
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x15, Cheap_ResNameTable_377, 0x377
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_079, 0x79
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_379, 0x379
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x5e, Cheap_ViewableTable_07B, 0x7b
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x5e, Cheap_ResNameTable_37B, 0x37b
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_07C, 0x7c
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_37C, 0x37c
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_07D, 0x7d
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_37D, 0x37d
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x8, Cheap_ViewableTable_07E, 0x7e
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x8, Cheap_ResNameTable_37E, 0x37e
-	RegObjTabl NAKA_CLASS_Viewable, ViewableProc, 0x0, Cheap_ViewableTable_0BC, 0xbc
-	RegObjTabl NAKA_CLASS_ResName, ResNameProc, 0x0, Cheap_ResNameTable_3BC, 0x3bc
-
-	RegMode 0x5, InitializeCheap_Str_MD_DISK, 0x6, NAKA_APFUNC_DefaultFunction, TITLE_DKMENU
-
-	RegTitle 0x5, InitializeCheap_Str_TT_DKMENU, 0x60, NAKA_APFUNC_DefaultFunction, 0x600000
-	RegTitle 0x5, InitializeCheap_Str_TT_DKLD, 0x61, NAKA_MAINFUNC_FmmLoadTitleFunc, 0x610000
-	RegTitle 0x5, InitializeCheap_Str_TT_CMPLDSNGL, 0x62, NAKA_MAINFUNC_FmmCmpSingleLoadFunc, 0x610069
-	RegTitle 0x5, InitializeCheap_Str_TT_DKWPLD, 0x63, NAKA_MAINFUNC_FmmWallpaperLoadFunc, 0x60002b
-	RegTitle 0x5, InitializeCheap_Str_TT_DKLDSMF, 0x64, NAKA_MAINFUNC_FmmSmfLoadTitleFunc, 0x61004b
-	RegTitle 0x5, InitializeCheap_Str_TT_DKSVMENU, 0x65, NAKA_APFUNC_DefaultFunction, 0x650000
-	RegTitle 0x5, InitializeCheap_Str_TT_DKSVNAME, 0x66, NAKA_APFUNC_DefaultFunction, 0x600018
-	RegTitle 0x5, InitializeCheap_Str_TT_DKSV, 0x67, NAKA_MAINFUNC_FmmSaveTitleFunc, 0x670000
-	RegTitle 0x5, InitializeCheap_Str_TT_DKSVNAMESMF, 0x6a, NAKA_APFUNC_DefaultFunction, 0x600028
-	RegTitle 0x5, InitializeCheap_Str_TT_DKSVSMF, 0x6b, NAKA_MAINFUNC_FmmSmfSaveTitleFunc, 0x6b0000
-	RegTitle 0x5, InitializeCheap_Str_TT_DKDPSMF, 0x6c, NAKA_MAINFUNC_FmmSmfMedleyFunc, 0x6c0000
-	RegTitle 0x5, InitializeCheap_Str_TT_DKDPDOC, 0x6d, NAKA_MAINFUNC_FmmDocMedleyFunc, 0x6c0026
-	RegTitle 0x5, InitializeCheap_Str_TT_DKDPPD, 0x6e, NAKA_MAINFUNC_FmmPdMedleyFunc, 0x6c003d
-	RegTitle 0x5, InitializeCheap_Str_TT_DKMDLY, 0x77, NAKA_MAINFUNC_FmmDiskMedleySelectFunc, 0x770000
-	RegTitle 0x5, InitializeCheap_Str_TT_SQMDLY, 0x79, NAKA_MAINFUNC_FmmIntMedleyFunc, 0x60000a
-	RegTitle 0x5, InitializeCheap_Str_TT_DKUT, 0x7b, NAKA_MAINFUNC_FmmUtilityTitleFunc, 0x7b0000
-	RegTitle 0x5, InitializeCheap_Str_TT_DKUTSMF, 0x7c, NAKA_MAINFUNC_FmmSmfUtilityTitleFunc, 0x7b0019
-	RegTitle 0x5, InitializeCheap_Str_TT_DKUTFRMT, 0x7d, NAKA_MAINFUNC_FmmFormatFunc, 0x7b0018
-	RegTitle 0x5, InitializeCheap_Str_TT_DKSETUP, 0x7e, NAKA_APFUNC_DefaultFunction, 0x7e0000
-	RegTitle 0x5, InitializeCheap_Str_TT_CMPLD, 0xbc, NAKA_MAINFUNC_FmmComposerLoadFunc, 0x60001b
-
-	lda xsp, (xsp + 14)
-	ret
+InitializeCheap:	.include "includes/generated/cc900/InitializeCheap.s"	; C: cc900/medley_m270.c
 
 PasswordText:
 	cp xbc, EVT_GET_LANGUAGE_PTR

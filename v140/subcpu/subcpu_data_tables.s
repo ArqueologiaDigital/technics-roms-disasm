@@ -872,119 +872,35 @@ VOICE_DSPOUT_SECOND_A_JUMPTABLE:	.include "includes/generated/cc900/VOICE_DSPOUT
 ; Audio_Cmd_EffParam_TableJump maps opcode-0x11 (0..84) through this byte table
 ; to a case number 0x00..0x1E, then jumps through AUDIO_CMD_EFFPARAM_JUMPTABLE.
 ; Case 0x02 is the dominant "generic parameter" case.
-AUDIO_CMD_EFFPARAM_CASEMAP:
-	.byte 0x00, 0x01, 0x02, 0x03, 0x02, 0x02, 0x04, 0x02
-	.byte 0x02, 0x05, 0x02, 0x02, 0x06, 0x02, 0x02, 0x07
-	.byte 0x02, 0x02, 0x08, 0x02, 0x02, 0x09, 0x02, 0x02
-	.byte 0x02, 0x02, 0x0a, 0x0a, 0x0a, 0x0a, 0x0b, 0x0b
-	.byte 0x0b, 0x0b, 0x0c, 0x0c, 0x0c, 0x0c, 0x0d, 0x0d
-	.byte 0x0d, 0x0d, 0x0e, 0x0e, 0x0e, 0x0e, 0x0f, 0x0f
-	.byte 0x0f, 0x0f, 0x10, 0x10, 0x10, 0x10, 0x11, 0x11
-	.byte 0x11, 0x11, 0x12, 0x12, 0x12, 0x12, 0x13, 0x13
-	.byte 0x13, 0x13, 0x14, 0x14, 0x14, 0x14, 0x15, 0x15
-	.byte 0x15, 0x15, 0x02, 0x02, 0x16, 0x17, 0x18, 0x19
-	.byte 0x1a, 0x1b, 0x1c, 0x1d, 0x1e
+AUDIO_CMD_EFFPARAM_CASEMAP:	.include "includes/generated/cc900/AUDIO_CMD_EFFPARAM_CASEMAP.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FA38-0x00FA75  AUDIO_CMD_EFFPARAM_JUMPTABLE -- 31 u16 jump offsets, base 0x02F9FA
 ; Computed jump in Audio_Cmd_EffParam_TableJump (case number 0x00..0x1E from the casemap above): `jp T, 0x02F9FA + table[index*2]`.
-AUDIO_CMD_EFFPARAM_JUMPTABLE:
-	.short Audio_Cmd_EffParam_Op11 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 0
-	.short Audio_Cmd_EffParam_Op12 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 1
-	.short Audio_Cmd_EffParam_Return - Audio_Cmd_EffParam_TableJump_CaseBase	; index 2
-	.short Audio_Cmd_EffParam_Op14 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 3
-	.short Audio_Cmd_EffParam_Op17 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 4
-	.short Audio_Cmd_EffParam_Op1A - Audio_Cmd_EffParam_TableJump_CaseBase	; index 5
-	.short Audio_Cmd_EffParam_Op1D - Audio_Cmd_EffParam_TableJump_CaseBase	; index 6
-	.short Audio_Cmd_EffParam_Op20 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 7
-	.short Audio_Cmd_EffParam_Op23 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 8
-	.short Audio_Cmd_EffParam_Op26 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 9
-	.short Audio_Cmd_EffParam_Grp0_Slot0 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 10
-	.short Audio_Cmd_EffParam_Grp0_Slot1 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 11
-	.short Audio_Cmd_EffParam_Grp0_Slot2 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 12
-	.short Audio_Cmd_EffParam_Grp0_Slot3 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 13
-	.short Audio_Cmd_EffParam_Grp1_Slot0 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 14
-	.short Audio_Cmd_EffParam_Grp1_Slot1 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 15
-	.short Audio_Cmd_EffParam_Grp1_Slot2 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 16
-	.short Audio_Cmd_EffParam_Grp1_Slot3 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 17
-	.short Audio_Cmd_EffParam_Grp2_Slot0 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 18
-	.short Audio_Cmd_EffParam_Grp2_Slot1 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 19
-	.short Audio_Cmd_EffParam_Grp2_Slot2 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 20
-	.short Audio_Cmd_EffParam_Grp2_Slot3 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 21
-	.short Audio_Cmd_EffParam_Op5D_FullRebuild - Audio_Cmd_EffParam_TableJump_CaseBase	; index 22
-	.short Audio_Cmd_EffParam_Op5E - Audio_Cmd_EffParam_TableJump_CaseBase	; index 23
-	.short Audio_Cmd_EffParam_Op5F - Audio_Cmd_EffParam_TableJump_CaseBase	; index 24
-	.short Audio_Cmd_EffParam_Op60 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 25
-	.short Audio_Cmd_EffParam_Op61 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 26
-	.short Audio_Cmd_EffParam_Op62 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 27
-	.short Audio_Cmd_EffParam_Op63 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 28
-	.short Audio_Cmd_EffParam_Op64 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 29
-	.short Audio_Cmd_EffParam_Op65 - Audio_Cmd_EffParam_TableJump_CaseBase	; index 30
+AUDIO_CMD_EFFPARAM_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_EFFPARAM_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FA76-0x00FA9B  AUDIO_CMD_EFFECTPARAM_JUMPTABLE -- 19 u16 jump offsets, base 0x02F86F
 ; Computed jump in Audio_Cmd_EffectParam_Dispatch (opcodes 0x15..0x27 mapped to index 0..18): `jp T, 0x02F86F + table[index*2]`.
-AUDIO_CMD_EFFECTPARAM_JUMPTABLE:
-	.short Audio_Cmd_EffParam_Grp0 - Audio_Cmd_EffParam_Grp0	; index 0
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 1
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 2
-	.short Audio_Cmd_EffParam_Grp1 - Audio_Cmd_EffParam_Grp0	; index 3
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 4
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 5
-	.short Audio_Cmd_EffParam_Grp2 - Audio_Cmd_EffParam_Grp0	; index 6
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 7
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 8
-	.short Audio_Cmd_EffParam_Grp3 - Audio_Cmd_EffParam_Grp0	; index 9
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 10
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 11
-	.short Audio_Cmd_EffParam_Grp4 - Audio_Cmd_EffParam_Grp0	; index 12
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 13
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 14
-	.short Audio_Cmd_EffParam_Grp5 - Audio_Cmd_EffParam_Grp0	; index 15
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 16
-	.short Audio_Cmd_EffParam_Cache_And_Dispatch2 - Audio_Cmd_EffParam_Grp0	; index 17
-	.short Audio_Cmd_EffParam_Grp6 - Audio_Cmd_EffParam_Grp0	; index 18
+AUDIO_CMD_EFFECTPARAM_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_EFFECTPARAM_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FA9C-0x00FAB5  AUDIO_CMD_DSPUNIT_CASEMAP -- 26 bytes, opcode -> case
 ; Audio_Cmd_DSPUnit_TableJump maps opcode-0x1F (only 7..25 reachable) through
 ; this byte table to a case number 0..8, then jumps through
 ; AUDIO_CMD_DSPUNIT_JUMPTABLE.
-AUDIO_CMD_DSPUNIT_CASEMAP:
-	.byte 0x01, 0x05, 0x06, 0x06, 0x01, 0x07, 0x08, 0x00
-	.byte 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x02, 0x01
-	.byte 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x01, 0x03
-	.byte 0x01, 0x04
+AUDIO_CMD_DSPUNIT_CASEMAP:	.include "includes/generated/cc900/AUDIO_CMD_DSPUNIT_CASEMAP.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FAB6-0x00FAC7  AUDIO_CMD_DSPUNIT_JUMPTABLE -- 9 u16 jump offsets, base 0x02FFF9
 ; Computed jump in Audio_Cmd_DSPUnit_TableJump (case number 0..8 from the casemap above): `jp T, 0x02FFF9 + table[index*2]`.
-AUDIO_CMD_DSPUNIT_JUMPTABLE:
-	.short Audio_Cmd_DSPUnit_Op26 - Audio_Cmd_DSPUnit_Op01	; index 0
-	.short Audio_Cmd_DSPUnit_Return - Audio_Cmd_DSPUnit_Op01	; index 1
-	.short Audio_Cmd_DSPUnit_Op2D - Audio_Cmd_DSPUnit_Op01	; index 2
-	.short Audio_Cmd_DSPUnit_Op36 - Audio_Cmd_DSPUnit_Op01	; index 3
-	.short Audio_Cmd_DSPUnit_Op38 - Audio_Cmd_DSPUnit_Op01	; index 4
-	.short Audio_Cmd_DSPUnit_Op01 - Audio_Cmd_DSPUnit_Op01	; index 5
-	.short Audio_Cmd_DSPUnit_Op02 - Audio_Cmd_DSPUnit_Op01	; index 6
-	.short Audio_Cmd_DSPUnit_Op05 - Audio_Cmd_DSPUnit_Op01	; index 7
-	.short Audio_Cmd_DSPUnit_Op06 - Audio_Cmd_DSPUnit_Op01	; index 8
+AUDIO_CMD_DSPUNIT_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_DSPUNIT_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_43a.c (cc900-data)
 
 ; --- 0x00FAC8-0x00FADF  AUDIO_CMD_TONEEDIT_REPLY_CASEMAP -- 24 bytes, opcode -> case
 ; Audio_Cmd_ToneEdit_Reply_TableJump folds opcodes 0x19..0x24 and 0x2B..0x36 into
 ; one 0..0x17 index, maps it through this byte table to a case number 0..6, then
 ; jumps through AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE.
-AUDIO_CMD_TONEEDIT_REPLY_CASEMAP:
-	.byte 0x00, 0x01, 0x00, 0x01, 0x02, 0x01, 0x05, 0x01
-	.byte 0x06, 0x06, 0x06, 0x06, 0x00, 0x01, 0x00, 0x01
-	.byte 0x02, 0x01, 0x03, 0x01, 0x04, 0x04, 0x04, 0x04
+AUDIO_CMD_TONEEDIT_REPLY_CASEMAP:	.include "includes/generated/cc900/AUDIO_CMD_TONEEDIT_REPLY_CASEMAP.s"	; C: cc900/voice_noteon_and_tonegen_aw_47a.c (cc900-data)
 
 ; --- 0x00FAE0-0x00FAED  AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE -- 7 u16 jump offsets, base 0x0304B6
 ; Computed jump in Audio_Cmd_ToneEdit_Reply_TableJump (case number 0..6 from the casemap above): `jp T, 0x0304B6 + table[index*2]`.
-AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE:
-	.short Audio_Cmd_ToneEdit_Reply_Case_Pan - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 0
-	.short Audio_Cmd_ToneEdit_Reply_Send - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 1
-	.short Audio_Cmd_ToneEdit_Reply_Case_Sustain - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 2
-	.short Audio_Cmd_ToneEdit_Reply_Case_Slot1 - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 3
-	.short Audio_Cmd_ToneEdit_Reply_Case_ReadBack1 - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 4
-	.short Audio_Cmd_ToneEdit_Reply_Case_Slot0 - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 5
-	.short Audio_Cmd_ToneEdit_Reply_Case_ReadBack - Audio_Cmd_ToneEdit_Reply_Case_Pan	; index 6
+AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE:	.include "includes/generated/cc900/AUDIO_CMD_TONEEDIT_REPLY_JUMPTABLE.s"	; C: cc900/voice_noteon_and_tonegen_aw_47a.c (cc900-data)
 
 ; --- 0x00FAEE-0x00FB1D  DSP_SETCOEFF_MASTERCONFIG_JUMPTABLE -- 24 u16 jump offsets, base 0x0317CF
 ; Computed jump in DSP_SetCoeff_MasterConfig (selector 0..23): `jp T, 0x0317CF + table[index*2]`.
@@ -2967,16 +2883,16 @@ FPConst_DSP_ParamEQ_Range5_2:	.double 2.0	; f64 2.0, read by DSP_ParamEQ_Range5 
 ; FPConst_DSP_ParamEQ_Finalize_Q23One: f32 2^23 = 1.0 in Q23: DSP_ParamEQ_Finalize multiplies by it and FP_ftoi's the
 ;   product to get the Q23 DSP word. Basis: reader -- every use is fmul then ftoi.
 FPConst_DSP_ParamEQ_Finalize_Q23One:	.float 8388608	; 2^23; f32 8388608, read by DSP_ParamEQ_Finalize (operand at 0x03A20C)
-FPConst_DSP_FilterLUT_Fetch_0p5:	.double 0.5	; f64 0.5, read by DSP_FilterLUT_Fetch (operand at 0x03A6CD)
-FPConst_DSP_FilterLUT_Fetch_Neg12:	.double -12.0	; f64 -12.0, read by DSP_FilterLUT_Fetch (operand at 0x03A6DC)
-FPConst_DSP_FilterLUT_Mode0x10_0p5:	.double 0.5	; f64 0.5, read by DSP_FilterLUT_Mode0x10 (operand at 0x03A754)
-FPConst_DSP_FilterLUT_Mode0x10_Neg12:	.double -12.0	; f64 -12.0, read by DSP_FilterLUT_Mode0x10 (operand at 0x03A763)
-FPConst_DSP_FilterLUT_Mode0x20_0p5:	.double 0.5	; f64 0.5, read by DSP_FilterLUT_Mode0x20 (operand at 0x03A7DB)
-FPConst_DSP_FilterLUT_Mode0x20_Neg12:	.double -12.0	; f64 -12.0, read by DSP_FilterLUT_Mode0x20 (operand at 0x03A7EA)
-FPConst_DSP_FilterLUT_ModeType2_0p5:	.double 0.5	; f64 0.5, read by DSP_FilterLUT_ModeType2 (operand at 0x03A87F)
-FPConst_DSP_FilterLUT_ModeType2_Neg12:	.double -12.0	; f64 -12.0, read by DSP_FilterLUT_ModeType2 (operand at 0x03A88E)
-FPConst_DSP_FilterLUT_ModeType2_SubMode_0p5:	.double 0.5	; f64 0.5, read by DSP_FilterLUT_ModeType2_SubMode (operand at 0x03A8E4)
-FPConst_DSP_FilterLUT_ModeType2_SubMode_Neg12:	.double -12.0	; f64 -12.0, read by DSP_FilterLUT_ModeType2_SubMode (operand at 0x03A8F3)
+FPConst_DSP_FilterLUT_Fetch_0p5:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_Fetch_0p5.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_Fetch_Neg12:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_Fetch_Neg12.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_Mode0x10_0p5:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_Mode0x10_0p5.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_Mode0x10_Neg12:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_Mode0x10_Neg12.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_Mode0x20_0p5:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_Mode0x20_0p5.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_Mode0x20_Neg12:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_Mode0x20_Neg12.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_ModeType2_0p5:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_ModeType2_0p5.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_ModeType2_Neg12:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_ModeType2_Neg12.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_ModeType2_SubMode_0p5:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_ModeType2_SubMode_0p5.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
+FPConst_DSP_FilterLUT_ModeType2_SubMode_Neg12:	.include "includes/generated/cc900/FPConst_DSP_FilterLUT_ModeType2_SubMode_Neg12.s"	; C: cc900/dsp_control_routines_au_45a.c (cc900-data)
 FPConst_DSP_BiquadCoeff_Compute_7p1237929em5:	.double 7.123792865e-05	; f64 7.123792865e-05, read by DSP_BiquadCoeff_Compute (operand at 0x03A98D)
 FPConst_DSP_BiquadCoeff_Compute_1:	.float 1	; f32 1, read by DSP_BiquadCoeff_Compute (operand at 0x03A9F8)
 FPConst_DSP_BiquadCoeff_Compute_1_2:	.float 1	; f32 1, read by DSP_BiquadCoeff_Compute (operand at 0x03AA06)
@@ -3040,10 +2956,10 @@ FPConst_DSP_BiquadCoeff_Algo2_WriteParams_Q22One_2:	.float 4194304	; f32 4194304
 FPConst_DSP_BiquadCoeff_Algo2_WriteParams_Q23One:	.float 8388608	; 2^23; f32 8388608, read by DSP_BiquadCoeff_Algo2_WriteParams (operand at 0x03B47A)
 FPConst_DSP_BiquadCoeff_Algo2_WriteParams_Q22One_3:	.float 4194304	; f32 4194304, read by DSP_BiquadCoeff_Algo2_WriteParams (operand at 0x03B4A3)
 FPConst_DSP_BiquadCoeff_Algo2_WriteParams_Q22One_4:	.float 4194304	; f32 4194304, read by DSP_BiquadCoeff_Algo2_WriteParams (operand at 0x03B4CC)
-FPConst_DSP_SOS_LUT_Fetch_0p5:	.double 0.5	; f64 0.5, read by DSP_SOS_LUT_Fetch (operand at 0x03B56F)
-FPConst_DSP_SOS_LUT_Fetch_Neg12:	.double -12.0	; f64 -12.0, read by DSP_SOS_LUT_Fetch (operand at 0x03B57E)
-FPConst_DSP_SOS_LUT_Mode0x10_0p5:	.double 0.5	; f64 0.5, read by DSP_SOS_LUT_Mode0x10 (operand at 0x03B5D4)
-FPConst_DSP_SOS_LUT_Mode0x10_Neg12:	.double -12.0	; f64 -12.0, read by DSP_SOS_LUT_Mode0x10 (operand at 0x03B5E3)
+FPConst_DSP_SOS_LUT_Fetch_0p5:	.include "includes/generated/cc900/FPConst_DSP_SOS_LUT_Fetch_0p5.s"	; C: cc900/dsp_control_routines_au_46a.c (cc900-data)
+FPConst_DSP_SOS_LUT_Fetch_Neg12:	.include "includes/generated/cc900/FPConst_DSP_SOS_LUT_Fetch_Neg12.s"	; C: cc900/dsp_control_routines_au_46a.c (cc900-data)
+FPConst_DSP_SOS_LUT_Mode0x10_0p5:	.include "includes/generated/cc900/FPConst_DSP_SOS_LUT_Mode0x10_0p5.s"	; C: cc900/dsp_control_routines_au_46a.c (cc900-data)
+FPConst_DSP_SOS_LUT_Mode0x10_Neg12:	.include "includes/generated/cc900/FPConst_DSP_SOS_LUT_Mode0x10_Neg12.s"	; C: cc900/dsp_control_routines_au_46a.c (cc900-data)
 FPConst_DSP_SOS_Coeff_Compute_20:	.float 2e+01	; f32 2e+01, read by DSP_SOS_Coeff_Compute (operand at 0x03B68D)
 FPConst_DSP_SOS_Coeff_Compute_10:	.double 10.0	; f64 10.0, read by DSP_SOS_Coeff_Compute (operand at 0x03B6AD)
 FPConst_DSP_SOS_Coeff_Compute_0p00014247586:	.double 0.0001424758573	; f64 0.0001424758573, read by DSP_SOS_Coeff_Compute (operand at 0x03B6F3)

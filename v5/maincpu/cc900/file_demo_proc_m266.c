@@ -129,3 +129,34 @@ int SearchAndOpen(char *name)
     _findclose(h);
     return -10;
 }
+
+/* cc900-module: Demo_SelectEntry_Debounce */
+extern unsigned char __near ram_431;
+extern void AccWrap_PlayModeDispatch(void);
+extern void SeqBuf_Init(void);
+extern void SeqPlay_EmergencyStopAll(void);
+extern void Demo_PreSetup(void);
+extern unsigned char __near CURRENT_MODE;
+extern void Demo_SelectEntry_Debounce(void);
+extern void Demo_SelectEntry_CheckCPanel(void);
+extern unsigned char __near DEMO_PLAY_STATE;
+extern void CtrlPanel_IndicatorDispatch(unsigned int, unsigned int, unsigned int);
+extern void FDemo_IndicatorSetup(void);
+
+void Demo_PreSetup(void)
+{
+  AccWrap_PlayModeDispatch();
+  SeqBuf_Init();
+  SeqPlay_EmergencyStopAll();
+  ram_431 = 0;
+}
+void Demo_SelectEntry_CheckCPanel(void)
+{
+  if (CURRENT_MODE == 19)
+    Demo_SelectEntry_Debounce();
+}
+void FDemo_IndicatorSetup(void)
+{
+  CtrlPanel_IndicatorDispatch(0x22, 0, 0);
+  DEMO_PLAY_STATE = 4;
+}

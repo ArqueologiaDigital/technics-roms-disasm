@@ -35,6 +35,19 @@ QUESTION THIS ANSWERS
     located by its first and last lines and pinned by the SHA-1 of the v1.41 text it
     replaces, so any upstream change inside it stops the generator instead of being lost.
 
+    FUNCTIONS v142 / v141 BUILD FROM C BUT v1.40 DOES NOT (UNSPLICE, 2026-11-20).  When
+    v142 builds a function from C (cc900, scripts/tools/cc900_splice.py), its hand
+    assembly becomes one `.include` line plus `.set` lines for its inner labels, and the
+    EDITS above that rewrite text inside it would no longer find their text.  For each
+    UNSPLICE entry whose spliced block is in the v141 text, this script first puts the
+    v1.41 hand assembly back (scripts/generators/v140_subcpu_hand/<LABEL>.s, the exact
+    text the splice replaced, captured by notes/cc900-c-subcpu-2026-11-16/hand_span_capture.py)
+    and then applies EDITS as before; the v1.40 tree keeps hand assembly for that span,
+    and notes/cc900-c-subcpu-2026-11-16/port_staged.py's DROP leaves the function's C out
+    of v140/subcpu/cc900.  An entry whose label is still hand assembly in v141 is skipped,
+    so the list can name a function before its promotion.  A rename applied to v142 must be
+    applied to these files too (they are source text of the v140 tree).
+
 RUN
     python3 scripts/generators/create_v140_subcpu_source.py           # (re)write v140/subcpu
     python3 scripts/generators/create_v140_subcpu_source.py --check   # exit 1 if v140 drifted
@@ -44,6 +57,7 @@ RUN
 import difflib
 import hashlib
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -278,6 +292,41 @@ EDITS = [
 ]
 
 
+# (file, label): spliced C blocks whose v1.41 hand text v1.40 keeps (see UNSPLICE in the docstring).
+# Audio_Process_DSP: V4.23 reproduces v1.42 / v1.41 from one C file, but v1.40's body (EDITS 4-7)
+# is not reproduced yet; its two case-offset tables are the function's cc900-data objects.
+UNSPLICE_DIR = os.path.join(ROOT, "scripts/generators/v140_subcpu_hand")
+UNSPLICE = [
+    (MAIN_DST, b"Audio_Process_DSP"),
+    ("subcpu_data_tables.s", b"CmdHandler2C_DispatchOffsets"),
+    ("subcpu_data_tables.s", b"DSP_Cmd2B_DispatchOffsets"),
+]
+
+
+def spliced_block(label):
+    """the splice's text for LABEL: its include line, then the optional comment and `.set` lines of its
+    inner labels (scripts/tools/cc900_splice.py)"""
+    lab = re.escape(label)
+    return re.compile(
+        rb"^" + lab + rb':\t\.include "includes/generated/cc900/' + lab + rb'\.s"\t; C: [^\n]*\n'
+        rb"(?:; the hand assembly's labels inside the compiled body, by their offsets\n)?"
+        rb"(?:\t\.set\t[\w.$]+, " + lab + rb" \+ \d+\n)*", re.M)
+
+
+def unsplice(texts, f, label):
+    pat = spliced_block(label)
+    files = [f] if f != MAIN_DST else [MAIN_DST] + [k for k in texts if k.startswith(CORE + "/")]
+    hits = [(k, m) for k in files for m in pat.finditer(texts[k])]
+    if not hits:
+        return False                                    # still hand assembly in v141
+    if len(hits) != 1:
+        sys.exit("UNSPLICE %s: spliced block found %d times (want 1)" % (label.decode(), len(hits)))
+    k, m = hits[0]
+    hand = open(os.path.join(UNSPLICE_DIR, label.decode() + ".s"), "rb").read()
+    texts[k] = texts[k][:m.start()] + hand + texts[k][m.end():]
+    return True
+
+
 def apply_edit(texts, e):
     if e[0] == "SPAN":
         _, f, first, last, sha1, new = e
@@ -310,6 +359,8 @@ def generate(dst):
     for f in COPY + core_files(SRC):
         texts[f] = open(os.path.join(SRC, f), "rb").read()
     texts[MAIN_DST] = open(os.path.join(SRC, MAIN_SRC), "rb").read()
+    for f, label in UNSPLICE:
+        unsplice(texts, f, label)
     for e in EDITS:
         apply_edit(texts, e)
     for f, data in texts.items():

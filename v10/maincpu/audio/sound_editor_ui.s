@@ -7,39 +7,11 @@
 ; for saving/loading sound patches.
 ; =============================================================================
 
-InitializeSeMenuDefaults:
-	ld wa, 0:i3
-	call SeMenu_SetSoundBank
-	ld wa, 0:i3
-	call SeMenu_SetPatchBank
-	call AccWrap_PlayModeDispatch
-	ld wa, 1:i3
-	call SeMenu_SetEditEnable
-	ld wa, 1:i3
-	call SeMenu_OrPartConfig
-	ld wa, 0:i3
-	call SeMenu_SetConfirmState
-	jp SeMenu_ClearDisplayBuffer
+InitializeSeMenuDefaults:	.include "includes/generated/cc900/InitializeSeMenuDefaults.s"	; C: cc900/sound_editor_ui_m0.c
 
-UpdateSeMenuSelection:
-	dec 2, xsp
-	ld wa, 0:i3
-	call SeMenu_SetSelectedRow
-	ld wa, 0:i3
-	call SeMenu_SetEditEnable
-	lda xwa, (xsp)
-	call SeMenu_LoadObjEntries
-	cp (xsp), 0x2
-	jr z, UpdSeSel_SkipMenuSetup
-	ld wa, 0:i3
-	call SeMenu_SetupMenuDisplay
-
-UpdSeSel_SkipMenuSetup:
-	ld wa, 0:i3
-	call SeMenu_SetConfirmState
-	call SeMenu_RefreshPartDisplay
-	inc 2, xsp
-	ret
+UpdateSeMenuSelection:	.include "includes/generated/cc900/UpdateSeMenuSelection.s"	; C: cc900/sound_editor_ui_m131_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	UpdSeSel_SkipMenuSetup, UpdateSeMenuSelection + 31
 
 UpdSeSel_ProcessStep:	.include "includes/generated/cc900/UpdSeSel_ProcessStep.s"	; C: cc900/sound_editor_ui_m131.c
 ; the hand assembly's labels inside the compiled body, by their offsets
@@ -3918,183 +3890,18 @@ SeTonTon2_OnSideRow4:	.include "includes/generated/cc900/SeTonTon2_OnSideRow4.s"
 SeTonTon2_OnSideRow5:	.include "includes/generated/cc900/SeTonTon2_OnSideRow5.s"	; C: cc900/sound_editor_ui_m0.c
 SeTonTon2_OnSwitch25:	.include "includes/generated/cc900/SeTonTon2_OnSwitch25.s"	; C: cc900/sound_editor_ui_m0.c
 SeTonTon2_OnSwitch15:	.include "includes/generated/cc900/SeTonTon2_OnSwitch15.s"	; C: cc900/sound_editor_ui_m0.c
-SeTonRan1_OnColumn3:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+4)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	res	7, (xsp+4)
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+4)
-	extz	bc
-	pushw	bc
-	ld	bc, 2:i3
-	ld	de, 0:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeTonRan1_OnColumn3_Skip18
-	lda	xwa, (xsp+2)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+2)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 31
-	call	SeMenu_RegisterElement_Extended
-	pushw	2
-	pushw	36
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	c, (xsp+2)
-	extz	bc
-	ld	wa, 0:i3
-	ld	de, 1:i3
-	call	SeMenu_DrawPartRangeGraph
-SeTonRan1_OnColumn3_Skip18:
-	ld	wa, 3:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
-SeTonRan1_OnColumn4:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+6)
-	ld	wa, 2:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+4)
-	ld	wa, 3:i3
-	call	SeMenu_LoadPartParam
-	resm	7, (xsp+6)
-	resm	7, (xsp+4)
-	ld	a, (xsp+8)
-	extz	wa
-	ld	e, (xsp+6)
-	extz	de
-	ld	c, (xsp+4)
-	extz	bc
-	pushw	bc
-	ld	bc, 1:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeTonRan1_OnColumn4_Skip19
-	lda	xwa, (xsp+2)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+2)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 30
-	call	SeMenu_RegisterElement_Extended
-	pushw	1
-	pushw	36
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	c, (xsp+2)
-	extz	bc
-	ld	wa, 0:i3
-	ld	de, 1:i3
-	call	SeMenu_DrawPartRangeGraph
-SeTonRan1_OnColumn4_Skip19:
-	ld	wa, 4:i3
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+10)
-	ret
-SeTonRan1_OnColumn5:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+6)
-	ld	wa, 1:i3
-	call	SeMenu_LoadPartParam
-	lda	xbc, (xsp+4)
-	ld	wa, 4:i3
-	call	SeMenu_LoadPartParam
-	resm	7, (xsp+6)
-	resm	7, (xsp+4)
-	ld	a, (xsp+8)
-	extz	wa
-	ld	e, (xsp+6)
-	extz	de
-	ld	c, (xsp+4)
-	extz	bc
-	pushw	bc
-	ld	bc, 3:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeTonRan1_OnColumn5_Skip20
-	lda	xwa, (xsp+2)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 3:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+2)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 32
-	call	SeMenu_RegisterElement_Extended
-	pushw	3
-	pushw	36
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	c, (xsp+2)
-	extz	bc
-	ld	wa, 0:i3
-	ld	de, 1:i3
-	call	SeMenu_DrawPartRangeGraph
-SeTonRan1_OnColumn5_Skip20:
-	ld	wa, 5:i3
-	call	SeMenu_BindDialToColumn
-	lda	xsp, (xsp+10)
-	ret
-SeTonRan1_OnColumn6:
-	dec	8, xsp
-	ld	(xsp+6), a
-	lda	xbc, (xsp+4)
-	ld	wa, 3:i3
-	call	SeMenu_LoadPartParam
-	res	7, (xsp+4)
-	ld	a, (xsp+6)
-	extz	wa
-	ld	e, (xsp+4)
-	extz	de
-	pushw	127
-	ld	bc, 4:i3
-	call	SeMenu_StepNoteParamInRange
-	cp	l, 1:i3
-	jr	nz, SeTonRan1_OnColumn6_Skip21
-	lda	xwa, (xsp+2)
-	call	SeMenu_ValidatePartNumber
-	lda	xbc, (xsp)
-	ld	wa, 4:i3
-	call	SeMenu_LoadPartParam
-	ld	a, (xsp+2)
-	extz	wa
-	lda	xde, (xsp)
-	pushw	127
-	ldw	bc, 33
-	call	SeMenu_RegisterElement_Extended
-	pushw	4
-	pushw	36
-	call	SeTitle_DrawField
-	inc	4, xsp
-	ld	c, (xsp+2)
-	extz	bc
-	ld	wa, 0:i3
-	ld	de, 1:i3
-	call	SeMenu_DrawPartRangeGraph
-SeTonRan1_OnColumn6_Skip21:
-	ld	wa, 6:i3
-	call	SeMenu_BindDialToColumn
-	inc	8, xsp
-	ret
+SeTonRan1_OnColumn3:	.include "includes/generated/cc900/SeTonRan1_OnColumn3.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonRan1_OnColumn3_Skip18, SeTonRan1_OnColumn3 + 97
+SeTonRan1_OnColumn4:	.include "includes/generated/cc900/SeTonRan1_OnColumn4.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonRan1_OnColumn4_Skip19, SeTonRan1_OnColumn4 + 113
+SeTonRan1_OnColumn5:	.include "includes/generated/cc900/SeTonRan1_OnColumn5.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonRan1_OnColumn5_Skip20, SeTonRan1_OnColumn5 + 113
+SeTonRan1_OnColumn6:	.include "includes/generated/cc900/SeTonRan1_OnColumn6.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonRan1_OnColumn6_Skip21, SeTonRan1_OnColumn6 + 97
 SeTonRan1_OnSideRow1:	.include "includes/generated/cc900/SeTonRan1_OnSideRow1.s"	; C: cc900/sound_editor_ui_m0.c
 SeTonRan1_OnSideRow2:	.include "includes/generated/cc900/SeTonRan1_OnSideRow2.s"	; C: cc900/sound_editor_ui_m0.c
 SeTonRan1_OnSideRow3:	.include "includes/generated/cc900/SeTonRan1_OnSideRow3.s"	; C: cc900/sound_editor_ui_m0.c
@@ -4296,104 +4103,16 @@ SeTonHyb1_OnColumn8:	.include "includes/generated/cc900/SeTonHyb1_OnColumn8.s"	;
 	.set	SeTonHyb1_OnColumn8_Skip61, SeTonHyb1_OnColumn8 + 44
 	.set	SeTonHyb1_OnColumn8_Join29, SeTonHyb1_OnColumn8 + 78
 	.set	SeTonHyb1_OnColumn8_Epilogue55, SeTonHyb1_OnColumn8 + 94
-SeTonHyb1_OnColumn2:
-	lda	xsp, (xsp-12)
-	ld	(xsp+10), a
-	lda	xbc, (xsp+2)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	lda	xwa, (xsp+4)
-	call	SeMenu_ValidatePartNumber
-	ld	c, (xsp+2)
-	extz	bc
-	lda	xde, (xsp+8)
-	ld	wa, 1:i3
-	call	SeMenu_CopyWriteUpdate_Step3_Helper11
-	lda	xwa, (xsp+6)
-	call	SeMenu_GetEntryCount
-	ld	a, (xsp+10)
-	res	7, a
-	cp	a, 0:i3
-	jr	nz, SeTonHyb1_OnColumn2_Skip
-	ld	a, (xsp+6)
-	dec	1, a
-	cp	(xsp+8), a
-	jr	nc, SeMenu_CopyWriteUpdate_Epilogue22
-	incm8	1, (xsp+8)
-	jr	SeMenu_CopyWriteUpdate_Join11
-SeTonHyb1_OnColumn2_Skip:
-	cp	(xsp+8), 0
-	jr	z, SeMenu_CopyWriteUpdate_Epilogue22
-	decm8	1, (xsp+8)
-SeMenu_CopyWriteUpdate_Join11:
-	ld	c, (xsp+8)
-	extz	bc
-	lda	xde, (xsp)
-	ld	wa, 1:i3
-	call	SeMenu_GetGroupFirstToneIndex
-	ld	a, (xsp+4)
-	extz	wa
-	ld	c, (xsp+2)
-	extz	bc
-	ld	de, (xsp)
-	call	SeMenu_SendToneIndex
-	ld	a, (xsp+4)
-	extz	wa
-	ld	c, (xsp+2)
-	extz	bc
-	ldw	de, 16
-	call	SeMenu_InitDisplayField_Alt
-	ld	wa, 2:i3
-	call	SeMenu_BindDialToColumn
-SeMenu_CopyWriteUpdate_Epilogue22:
-	lda	xsp, (xsp+12)
-	ret
-SeTonHyb1_OnColumn3:
-	lda	xsp, (xsp-10)
-	ld	(xsp+8), a
-	lda	xbc, (xsp+4)
-	ld	wa, 0:i3
-	call	SeMenu_LoadPartParam
-	lda	xwa, (xsp+6)
-	call	SeMenu_ValidatePartNumber
-	ld	a, (xsp+4)
-	extz	wa
-	lda	xbc, (xsp+2)
-	call	SeMenu_GetToneIndex
-	lda	xwa, (xsp)
-	call	SeMenu_GetWordEntryCount
-	ld	a, (xsp+8)
-	res	7, a
-	cp	a, 0:i3
-	jr	nz, SeTonHyb1_OnColumn3_Skip28
-	ld	wa, (xsp)
-	dec	1, wa
-	cp	(xsp+2), wa
-	jr	nc, SeTonHyb1_OnColumn3_Epilogue23
-	incw	1, (xsp+2)
-	jr	SeTonHyb1_OnColumn3_Join12
-SeTonHyb1_OnColumn3_Skip28:
-	cpw	(xsp+2), 0
-	jr	z, SeTonHyb1_OnColumn3_Epilogue23
-	decm	1, (xsp+2)
-SeTonHyb1_OnColumn3_Join12:
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+4)
-	extz	bc
-	ld	de, (xsp+2)
-	call	SeMenu_SendToneIndex
-	ld	a, (xsp+6)
-	extz	wa
-	ld	c, (xsp+4)
-	extz	bc
-	ldw	de, 16
-	call	SeMenu_InitDisplayField_Alt
-	ld	wa, 3:i3
-	call	SeMenu_BindDialToColumn
-SeTonHyb1_OnColumn3_Epilogue23:
-	lda	xsp, (xsp+10)
-	ret
+SeTonHyb1_OnColumn2:	.include "includes/generated/cc900/SeTonHyb1_OnColumn2.s"	; C: cc900/sound_editor_ui_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonHyb1_OnColumn2_Skip, SeTonHyb1_OnColumn2 + 68
+	.set	SeMenu_CopyWriteUpdate_Join11, SeTonHyb1_OnColumn2 + 77
+	.set	SeMenu_CopyWriteUpdate_Epilogue22, SeTonHyb1_OnColumn2 + 129
+SeTonHyb1_OnColumn3:	.include "includes/generated/cc900/SeTonHyb1_OnColumn3.s"	; C: cc900/sound_editor_ui_m0_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeTonHyb1_OnColumn3_Skip28, SeTonHyb1_OnColumn3 + 64
+	.set	SeTonHyb1_OnColumn3_Join12, SeTonHyb1_OnColumn3 + 74
+	.set	SeTonHyb1_OnColumn3_Epilogue23, SeTonHyb1_OnColumn3 + 114
 SeTonHyb1_OnColumn6:
 	lda	xsp, (xsp-22)
 	push	qiz
@@ -5680,29 +5399,16 @@ SeWrtMem_OnSideRow4_Epilogue4:
 	ret
 SeWrtMem_OnSideRow5:	.include "includes/generated/cc900/SeWrtMem_OnSideRow5.s"	; C: cc900/sound_editor_ui_m0.c
 SeWrtMem_OnSwitch15:	.include "includes/generated/cc900/SeWrtMem_OnSwitch15.s"	; C: cc900/sound_editor_ui_m0.c
-SeWrtSnd_OnColumn1:
-	jrl	SeWrtSnd_SetupNamingPage_Join6
-SeWrtSnd_OnColumn2:
-	jrl	SeWrtSnd_SetupNamingPage_Join7
-SeWrtSnd_OnColumn3:
-	jrl	SeWrtSnd_SetupNamingPage_Join8
-SeWrtSnd_OnColumn4:
-	jrl	SeWrtSnd_SetupNamingPage_Join
-SeWrtSnd_OnColumn5:
-	jrl	SeWrtSnd_SetupNamingPage_Join2
-SeWrtSnd_OnColumn6:
-	jrl	SeWrtSnd_SetupNamingPage_Join3
-SeWrtSnd_OnColumn7:
-	ld	c, a
-	res	7, c
-	ldw	wa, 0x8000
-	cp	c, 0:i3
-	jr	nz, SeWrtSnd_OnColumn7_Skip81
-	ld	wa, 0:i3
-SeWrtSnd_OnColumn7_Skip81:
-	jrl	SeWrtSnd_SetupNamingPage_Join4
-SeWrtSnd_OnColumn8:
-	jrl	SeWrtSnd_SetupNamingPage_Join5
+SeWrtSnd_OnColumn1:	.include "includes/generated/cc900/SeWrtSnd_OnColumn1.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn2:	.include "includes/generated/cc900/SeWrtSnd_OnColumn2.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn3:	.include "includes/generated/cc900/SeWrtSnd_OnColumn3.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn4:	.include "includes/generated/cc900/SeWrtSnd_OnColumn4.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn5:	.include "includes/generated/cc900/SeWrtSnd_OnColumn5.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn6:	.include "includes/generated/cc900/SeWrtSnd_OnColumn6.s"	; C: cc900/sound_editor_ui_m0_b.c
+SeWrtSnd_OnColumn7:	.include "includes/generated/cc900/SeWrtSnd_OnColumn7.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SeWrtSnd_OnColumn7_Skip81, SeWrtSnd_OnColumn7 + 14
+SeWrtSnd_OnColumn8:	.include "includes/generated/cc900/SeWrtSnd_OnColumn8.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSideRow1:
 	dec	4, xsp
 	push	qiz
@@ -5744,10 +5450,7 @@ SeWrtSnd_OnSideRow1_Epilogue:
 	pop qiz
 	inc	4, xsp
 	ret
-SeWrtSnd_OnSideRow2:
-	cp	a, 0:i3
-	ret	nz
-	jrl	SeWrtSnd_ClearName_Join
+SeWrtSnd_OnSideRow2:	.include "includes/generated/cc900/SeWrtSnd_OnSideRow2.s"	; C: cc900/sound_editor_ui_m0_b.c
 SeWrtSnd_OnSwitch15:
 	lda	xsp, (xsp-20)
 	push	qiz
@@ -17861,166 +17564,53 @@ StylCnvStorBnk_ProcDataBlock_Epilogue:
 	lda	xsp, (xsp+16)
 	ret
 
-CmpNameMenuBoxProc:
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_DRAW
-	jr z, CmpNameMenuBoxProc_OnDraw
-	ld xwa, xiz
-	call InheritedProc
-	jr CmpNameMenu_Epilogue
+CmpNameMenuBoxProc:	.include "includes/generated/cc900/CmpNameMenuBoxProc.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	CmpNameMenuBoxProc_OnDraw, CmpNameMenuBoxProc + 19
+	.set	CmpNameMenu_SetReturnZero, CmpNameMenuBoxProc + 45
+	.set	CmpNameMenu_Epilogue, CmpNameMenuBoxProc + 47
 
-CmpNameMenuBoxProc_OnDraw:
-	cp (STYLE_SECTION:16), 12
-	jr nc, CmpNameMenu_SetReturnZero
-	ld xwa, xiz
-	call InheritedProc
-	ld xwa, xiz
-	ld xbc, EVT_PARA_DRAW
-	ld xde, 0:i3
-	call SendEvent
+AttLangCheck:	.include "includes/generated/cc900/AttLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AttLangCheck_ReturnZero, AttLangCheck + 14
 
-CmpNameMenu_SetReturnZero:
-	ld xhl, 0:i3
+SureLangCheck:	.include "includes/generated/cc900/SureLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SureLangCheck_ReturnZero, SureLangCheck + 14
 
-CmpNameMenu_Epilogue:
-	pop xiz
-	ret
+SndMemLangCheck:	.include "includes/generated/cc900/SndMemLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndMemLangCheck_ReturnZero, SndMemLangCheck + 14
 
-AttLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, AttLangCheck_ReturnZero
-	lda xhl, (AttLangCheck_PtrTable:24)
-	ret
+SndMem1LangCheck:	.include "includes/generated/cc900/SndMem1LangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndMem1LangCheck_ReturnZero, SndMem1LangCheck + 14
 
-AttLangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
+MemfulLangCheck:	.include "includes/generated/cc900/MemfulLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MemfulLangCheck_ReturnZero, MemfulLangCheck + 14
 
-SureLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, SureLangCheck_ReturnZero
-	lda xhl, (SureLangCheck_PtrTable:24)
-	ret
+Memful2LangCheck:	.include "includes/generated/cc900/Memful2LangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Memful2LangCheck_ReturnZero, Memful2LangCheck + 14
 
-SureLangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
+StylCnvLangCheck:	.include "includes/generated/cc900/StylCnvLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	StylCnvLangCheck_ReturnZero, StylCnvLangCheck + 14
 
-SndMemLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, SndMemLangCheck_ReturnZero
-	lda xhl, (SndMemLangCheck_PtrTable:24)
-	ret
+SndArrLangCheck:	.include "includes/generated/cc900/SndArrLangCheck.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SndArrLangCheck_ReturnZero, SndArrLangCheck + 14
 
-SndMemLangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-SndMem1LangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, SndMem1LangCheck_ReturnZero
-	lda xhl, (SndMem1LangCheck_PtrTable:24)
-	ret
-
-SndMem1LangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-MemfulLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, MemfulLangCheck_ReturnZero
-	lda xhl, (MemfulLangCheck_PtrTable:24)
-	ret
-
-MemfulLangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-Memful2LangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, Memful2LangCheck_ReturnZero
-	lda xhl, (Memful2LangCheck_PtrTable:24)
-	ret
-
-Memful2LangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-StylCnvLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, StylCnvLangCheck_ReturnZero
-	lda xhl, (StylCnvLangCheck_PtrTable:24)
-	ret
-
-StylCnvLangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-SndArrLangCheck:
-	cp xbc, EVT_GET_LANGUAGE_PTR
-	jr nz, SndArrLangCheck_ReturnZero
-	lda xhl, (Hama_ModeInit_Table:24)
-	ret
-
-SndArrLangCheck_ReturnZero:
-	ld xhl, 0:i3
-	ret
-
-PsStylCnvVerProc:
-	lda xsp, (xsp-512)
-	push xiz
-	ld xiz, xwa
-	cp xbc, EVT_REPAINT
-	jr z, PsStylCnvVerProc_OnPaintOrRepaint
-	cp xbc, EVT_PAINT
-	jr z, PsStylCnvVerProc_OnPaintOrRepaint
-	cp xbc, EVT_GET_STR_PTR
-	jr z, PsStylCnvVerProc_OnGetStrPtr
-	cp xbc, EVT_HIDE
-	jr z, PsStylCnvVerProc_OnHide
-	cp xbc, EVT_SHOW
-	jr z, PsStylCnvVerProc_OnShow
-	ld xwa, xiz
-	call InheritedProc
-	jr StylCnvVer_Epilogue
-
-PsStylCnvVerProc_OnShow:
-	ld xwa, xiz
-	jr StylCnvVer_CallInherited
-
-PsStylCnvVerProc_OnHide:
-	ld xwa, xiz
-
-StylCnvVer_CallInherited:
-	call InheritedProc
-	jr StylCnvVer_SetReturnZero
-
-PsStylCnvVerProc_OnGetStrPtr:
-	lda xhl, (0x3f68:16)
-	jr StylCnvVer_Epilogue
-
-PsStylCnvVerProc_OnPaintOrRepaint:
-	ld xwa, xiz
-	call InheritedProc
-	pushw 0x0
-	pushw 0x3f68
-	lda xwa, (xsp + 8)
-	push xwa
-	call Strcpy
-	inc 8, xsp
-	lda xde, (xsp + 4)
-	ld xwa, xiz
-	ld xbc, EVT_PARA_DRAW
-	call SendEvent
-
-StylCnvVer_SetReturnZero:
-	ld xhl, 0:i3
-
-StylCnvVer_Epilogue:
-	pop xiz
-	lda xsp, (xsp+512)
-	ret
+PsStylCnvVerProc:	.include "includes/generated/cc900/PsStylCnvVerProc.s"	; C: cc900/sound_editor_ui_m0.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PsStylCnvVerProc_OnShow, PsStylCnvVerProc + 56
+	.set	PsStylCnvVerProc_OnHide, PsStylCnvVerProc + 60
+	.set	StylCnvVer_CallInherited, PsStylCnvVerProc + 62
+	.set	PsStylCnvVerProc_OnGetStrPtr, PsStylCnvVerProc + 68
+	.set	PsStylCnvVerProc_OnPaintOrRepaint, PsStylCnvVerProc + 74
+	.set	StylCnvVer_SetReturnZero, PsStylCnvVerProc + 110
+	.set	StylCnvVer_Epilogue, PsStylCnvVerProc + 112
 
 
 .include "factory_test/test_init.s"

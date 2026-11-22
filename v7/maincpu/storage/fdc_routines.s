@@ -705,7 +705,7 @@ FDC_SendCommandByte:	.include "includes/generated/cc900/FDC_SendCommandByte.s"	;
 ;   per byte; bootloader twin FDC_SendParameterByte.
 FDC_SendParameterByte:	.include "includes/generated/cc900/FDC_SendParameterByte.s"	; C: cc900/fdc_routines_m270_b.c
 FDC_WriteAuxCmdByte:	.include "includes/generated/cc900/FDC_WriteAuxCmdByte.s"	; C: cc900/fdc_routines_m270_c.c
-FDC_HardwareSetup_Helper3:
+FDC_SendAuxCmd:
 	dec	2, xsp
 	ld	(xsp), a
 	calr	FDC_ResultPhase_Read
@@ -717,7 +717,7 @@ FDC_HardwareSetup_Helper3:
 FDC_ResultPhase_Read_Epilogue:
 	inc	2, xsp
 	ret
-FDC_HardwareSetup_Helper4:
+FDC_SendAuxCmdReadResult:
 	dec	2, xsp
 	ld	(xsp), a
 	calr	FDC_ResultPhase_Read
@@ -794,111 +794,20 @@ FDC_HardwareSetup:
 	or	a, 96
 	ld	(xbc), a
 	ret
-FDC_CMD_SEND:
-	dec	2, xsp
-	ld	(xsp), a
-	calr	FDC_WaitReady
-	cp	(FDC_ERROR_CODE:16), 0
-	jrl	nz, FDC_CMD_SEND_Epilogue
-	ld	a, (xsp)
-	ld	(FDC_CMD_OPCODE:16), a
-	calr	FDC_ValidateOpcode
-	cp	l, 0:i3
-	jrl	nz, FDC_CMD_SEND_Epilogue
-	ld	a, (xsp)
-	cp	a, 51
-	jr	z, FDC_CMD_SEND_Skip2
-	cp	a, 52
-	jr	z, FDC_CMD_SEND_Skip2
-	cp	a, 54
-	jr	z, FDC_CMD_SEND_Skip
-	cp	a, 53
-	jr	z, FDC_CMD_SEND_Skip
-	cp	a, 71
-	jr	nz, FDC_CMD_SEND_Skip3
-FDC_CMD_SEND_Skip:
-	ld	a, (xsp)
-	extz	wa
-	calr	FDC_HardwareSetup_Helper3
-	jrl	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip2:
-	ld	a, (xsp)
-	extz	wa
-	calr	FDC_HardwareSetup_Helper4
-	jrl	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip3:
-	ld	a, (xsp)
-	res	4, a
-	cp	a, 79
-	jr	nz, FDC_CMD_SEND_Skip4
-	ld	a, (xsp)
-	extz	wa
-	calr	FDC_HardwareSetup_Helper4
-	jrl	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip4:
-	ld	a, (xsp)
-	and	a, 15
-	cp	a, 14
-	jr	z, FDC_CMD_SEND_Skip5
-	ld	a, (xsp)
-	and	a, 15
-	cp	a, 11
-	jr	nz, FDC_CMD_SEND_Skip6
-FDC_CMD_SEND_Skip5:
-	ld	a, (xsp)
-	extz	wa
-	calr	FDC_HardwareSetup_Helper4
-	jr	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip6:
-	ld	a, (xsp)
-	extz	wa
-	calr	FDC_SendCommandByte
-	cp	(FDC_ERROR_CODE:16), 0
-	jr	nz, FDC_CMD_SEND_Epilogue
-	cp	(xsp), 8
-	jr	z, FDC_CMD_SEND_Epilogue
-	cp	(xsp), 3
-	jr	nz, FDC_CMD_SEND_Skip7
-	calr	FDC_SendParams_Specify
-	jr	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip7:
-	ld	a, (FDC_HEAD:16)
-	and	a, 1
-	sll	a, 2
-	ld	e, a
-	ld	a, (FDC_DRIVE:16)
-	and	a, 3
-	ld	c, a
-	ld	a, e
-	or	a, c
-	ld	a, e
-	set	0, a
-	extz	wa
-	calr	FDC_SendParameterByte
-	ld	a, (xsp)
-	cp	a, 15
-	jr	z, FDC_CMD_SEND_Skip10
-	cp	a, 77
-	jr	z, FDC_CMD_SEND_Skip9
-	cp	a, 7:i3
-	jr	z, FDC_CMD_SEND_Skip8
-	cp	a, 4:i3
-	jr	z, FDC_CMD_SEND_Skip8
-	cp	a, 74
-	jr	nz, FDC_CMD_SEND_Skip11
-FDC_CMD_SEND_Skip8:
-	jr	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip9:
-	calr	FDC_SendParams_Format
-	jr	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip10:
-	calr	FDC_SendParam_SeekTrack
-	jr	FDC_CMD_SEND_Epilogue
-FDC_CMD_SEND_Skip11:
-	calr	FDC_SendParams_ReadWrite
-FDC_CMD_SEND_Epilogue:
-	inc	2, xsp
-	ret
+FDC_CMD_SEND:	.include "includes/generated/cc900/FDC_CMD_SEND.s"	; C: cc900/fdc_routines_m270_xr_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	FDC_CMD_SEND_Skip, FDC_CMD_SEND + 56
+	.set	FDC_CMD_SEND_Skip2, FDC_CMD_SEND + 66
+	.set	FDC_CMD_SEND_Skip3, FDC_CMD_SEND + 76
+	.set	FDC_CMD_SEND_Skip4, FDC_CMD_SEND + 96
+	.set	FDC_CMD_SEND_Skip5, FDC_CMD_SEND + 116
+	.set	FDC_CMD_SEND_Skip6, FDC_CMD_SEND + 125
+	.set	FDC_CMD_SEND_Skip7, FDC_CMD_SEND + 154
+	.set	FDC_CMD_SEND_Skip8, FDC_CMD_SEND + 214
+	.set	FDC_CMD_SEND_Skip9, FDC_CMD_SEND + 216
+	.set	FDC_CMD_SEND_Skip10, FDC_CMD_SEND + 221
+	.set	FDC_CMD_SEND_Skip11, FDC_CMD_SEND + 226
+	.set	FDC_CMD_SEND_Epilogue, FDC_CMD_SEND + 229
 ; FDC_ValidateOpcode: Checks the opcode in 0x898C: L = 0 for the aux opcodes 0x4F/0x33/0x34/0x47/0x35 and for opcodes
 ;   whose low 5 bits are 0x02-0x0F, 0x11, 0x19, 0x1D or 0x1E (0x10 excluded); L = 1 otherwise. Basis: callers + body +
 ;   twin -- FDC_CMD_SEND stores the opcode, calls it and returns at once when L != 0; bootloader twin
@@ -1016,12 +925,8 @@ FDC_SetStatus_Return:
 ; to 0xff, saves prevbank state, starts timer-based timeout loop.
 ; Polls with cps bc, 0 for completion signal.
 ; Uses prevbank (D7 FA) for timer state management.
-FDC_ClearStatus_InitTimer:
-	ld (FDC_ERROR_CODE:16), 0x00
-	ret
-FDC_TIMING_DELAY:
-	ld (FDC_RESULT:16), 0xff
-	ret
+FDC_ClearStatus_InitTimer:	.include "includes/generated/cc900/FDC_ClearStatus_InitTimer.s"	; C: cc900/fdc_routines_m270.c
+FDC_TIMING_DELAY:	.include "includes/generated/cc900/FDC_TIMING_DELAY.s"	; C: cc900/fdc_routines_m270.c
 FDC_POST_OP:
 	push XIZ
 	ldw QIZ, 0x01f4
@@ -1630,10 +1535,7 @@ FDC_MC_EXIT_Code_Skip3:
 FDC_MC_EXIT_Code_Epilogue:
 	popw	iz
 	ret
-FDC_CMD_DISABLE:
-	res	3, (PA:8)
-	ldw	wa, 14
-	jrl	FDC_CMD_SEND
+FDC_CMD_DISABLE:	.include "includes/generated/cc900/FDC_CMD_DISABLE.s"	; C: cc900/fdc_routines_m270.c
 FDC_STATUS_COPY:
 	ldmm8	FDC_ERROR_CODE, 0x898a
 FDC_STATUS_COPY_Code:
@@ -1962,13 +1864,7 @@ INT4_ExitRestore:
 ;   FDCRST line (service manual p. 32, CPU SECTION (A): IC5 TMP94C241F pin 12 PD0 -> FDCRST to the FDC;
 ;   notes/kn5000-a-2026-10-31/probes/sm_pd0_net.py renders the crop), set, SOME_DELAY 10, cleared, SOME_DELAY 10.
 ;   Twin of the boot loader's FDC_PulseResetLine (table_data/boot_disk_probe.s).
-FDC_PulseResetLine:
-	set	0, (PD:8)
-	ldw	wa, 10
-	calr	SOME_DELAY
-	res	0, (PD:8)
-	ldw	wa, 10
-	jrl	SOME_DELAY
+FDC_PulseResetLine:	.include "includes/generated/cc900/FDC_PulseResetLine.s"	; C: cc900/fdc_routines_m270.c
 FDTest_ProbeDiskFormat:
 	ld	(PHFC:8), 30:io
 	bit	6, (PD:8)
@@ -2040,14 +1936,8 @@ FDC_Reset_BuildParams:
 	calr	SOME_DELAY
 	incw	1, (58132:16)
 	ret
-Check_for_Floppy_Disk_Change:
-	bit	6, (PD:8)
-	jr z, Detected_Floppy_Disk_Change
-	ld l, 0x0:opc
-	ret
-
-Detected_Floppy_Disk_Change:
-	ld l, 0x1:opc
-	ret
+Check_for_Floppy_Disk_Change:	.include "includes/generated/cc900/Check_for_Floppy_Disk_Change.s"	; C: cc900/fdc_routines_m270_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	Detected_Floppy_Disk_Change, Check_for_Floppy_Disk_Change + 8
 
 ; End of FDC routines

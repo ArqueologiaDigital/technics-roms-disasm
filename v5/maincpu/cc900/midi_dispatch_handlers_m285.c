@@ -980,3 +980,15 @@ void MidiPkt_SetXferTotal_StyleImg(struct xfer *x)
 		x->size = n;
 	}
 }
+
+typedef unsigned char *ucp;
+typedef ucp *ucpp;
+extern ucpp __near PART_RECORD_PTRS;
+extern unsigned char *Part_LookupByIndex(unsigned char i);
+
+unsigned char *Part_LookupByIndex(unsigned char i)
+{
+  ucpp t;
+  t = PART_RECORD_PTRS;
+  return t[i];
+}

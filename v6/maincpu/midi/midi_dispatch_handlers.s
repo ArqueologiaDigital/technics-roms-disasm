@@ -6368,12 +6368,7 @@ MidiStream_PrevBankCheck_Skip2:
 MidiStream_PrevBankCheck_Epilogue:
 	pop qiz
 	ret
-SeqAlt_ProcessAndFinalize:
-	call	MidiSeq_SwapActiveBuffers
-	calr	SeqBuf_WaitForEmpty
-	calr	MidiChan_ParseVoiceData
-	calr	SeqData_InitPlaybackFromField
-	jp	SeqAlt_CheckInitBuffer
+SeqAlt_ProcessAndFinalize:	.include "includes/generated/cc900/SeqAlt_ProcessAndFinalize.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
 SeqBuf_WaitForEmpty:	.include "includes/generated/cc900/SeqBuf_WaitForEmpty.s"	; C: cc900/midi_dispatch_handlers_m285.c
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	SeqBuf_WaitLoop, SeqBuf_WaitForEmpty + 4
@@ -7691,7 +7686,7 @@ ArpQueue_ProcessAndSort_Data_Loop:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	cp	(xwa+4), 0
 	ret	nz
-	call	MidiSeq_PartConfigure_Data
+	call	MidiTable_PreDispatchNullRet
 	calr	ArpQueue_ProcessAndSort_Data_Helper
 	calr	ArpQueue_ProcessAndSort_Data_Helper2
 	calr	ArpQueue_ProcessAndSort_Data_Helper3
@@ -8314,21 +8309,10 @@ MidiPkt_PreparePanelReceive:
 ;   Basis: callers + body -- the only caller MidiStream_PrevBankCheck, the post-send step of the MIDI data transfer,
 ;   runs it when bit 7 of 0xBC7C (wait for the receiver's reply) is clear, after SeqBuf_WaitForEmpty has drained the
 ;   MIDI output buffer: a fixed pause between messages instead of the handshake.
-MidiStream_Delay25Ticks:
-	ld	de, (SYSTEM_TIMESTAMP:16)
-MidiChan_TimerDispatch_Data_Code_Loop:
-	ld	wa, de
-	ld	bc, (SYSTEM_TIMESTAMP:16)
-	sub	bc, wa
-	cp	bc, 25
-	jr	lt, MidiChan_TimerDispatch_Data_Code_Loop
-	ret
-Part_LookupByIndex:
-	ld	xbc, (PART_RECORD_PTRS:16)
-	extz wa
-	sla wa, 2
-	ld	xhl, (xbc+wa)
-	ret
+MidiStream_Delay25Ticks:	.include "includes/generated/cc900/MidiStream_Delay25Ticks.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChan_TimerDispatch_Data_Code_Loop, MidiStream_Delay25Ticks + 4
+Part_LookupByIndex:	.include "includes/generated/cc900/Part_LookupByIndex.s"	; C: cc900/midi_dispatch_handlers_m285.c
 MIDI_PackNibbleParam:
 	lda xbc, (xwa + 6)
 	ld xwa, (xbc)
@@ -8521,11 +8505,7 @@ Param_SignExtendReturn_Helper3_Helper:	.include "includes/generated/cc900/Param_
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	Part_LookupTableEntry_Loop2, Param_SignExtendReturn_Helper3_Helper + 14
 	.set	Part_LookupTableEntry_Skip, Param_SignExtendReturn_Helper3_Helper + 25
-Param_SignExtendReturn_Helper3_Helper2:
-	calr	ArpQueue_Enqueue
-	ld	xwa, (0xbb9c:16)
-	calr	SeqOut_FlushWithChunking
-	jp	ArpQueue_SwapBuffers
+Param_SignExtendReturn_Helper3_Helper2:	.include "includes/generated/cc900/Param_SignExtendReturn_Helper3_Helper2.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
 	ret
 	ret
 MidiTable_DispatchHelper_Helper:
@@ -8535,14 +8515,9 @@ MidiChan_SetStateMode:	.include "includes/generated/cc900/MidiChan_SetStateMode.
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiChan_SetStateMode2, MidiChan_SetStateMode + 15
 	.set	MidiChan_CompareAndFlag, MidiChan_SetStateMode + 24
-MidiChan_SetVoiceBaseState:
-	bit	6, (0xbc58:16)
-	jr	z, MidiChan_SetBaseState128
-	ld	(0xbc40:16), 128
-	ret
-MidiChan_SetBaseState128:
-	ld	(0xbc4c:16), 128
-	ret
+MidiChan_SetVoiceBaseState:	.include "includes/generated/cc900/MidiChan_SetVoiceBaseState.s"	; C: cc900/midi_dispatch_handlers_m285_c.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiChan_SetBaseState128, MidiChan_SetVoiceBaseState + 12
 MidiSeq_UpdateAllParams:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	ld bc, 4:i3
@@ -8642,7 +8617,7 @@ MidiSeq_CheckSyncDirty:	.include "includes/generated/cc900/MidiSeq_CheckSyncDirt
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiSeq_CheckSyncDirty_Lower, MidiSeq_CheckSyncDirty + 41
 	.set	DSP_Init_ErrorFlagSet, MidiSeq_CheckSyncDirty + 71
-MidiSeq_PartLookup_Data:
+MidiPkt_XferShowResult:
 	ld	wa, 0:i3
 	call	ParaLoadOpt_PostDualEvent
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -8683,7 +8658,7 @@ MidiSeq_ApplyPendingParams:	.include "includes/generated/cc900/MidiSeq_ApplyPend
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	MidiSeq_ApplyParams_Lower, MidiSeq_ApplyPendingParams + 45
 	.set	MidiSeq_ClearSyncFlag, MidiSeq_ApplyPendingParams + 76
-MidiSeq_PartConfigure_Data:
+MidiTable_PreDispatchNullRet:
 	ret
 	ldw	wa, TT_MESAGE
 	jp	UI_InterruptTitleByIndex
@@ -9169,7 +9144,7 @@ ArpChord_DispatchAndLoop:
 	jr	nz, ArpChord_CheckPlaybackDone
 ArpChord_FinalizePass:
 	calr	MidiPkt_ArpChordHandler_Helper
-	call	MidiSeq_PartLookup_Data
+	call	MidiPkt_XferShowResult
 ArpChord_ClearBitAndReturn:
 	res	4, (0xbc58:16)
 	ret
@@ -9181,7 +9156,7 @@ MidiTable_DispatchHelper:
 	call	SeqData_ReadFieldByIndex
 	cp	l, 0:i3
 	ret nz
-	call	MidiSeq_PartConfigure_Data
+	call	MidiTable_PreDispatchNullRet
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
 	cp (xwa), 0x27
 	ret nc
@@ -9196,29 +9171,11 @@ MidiTable_DispatchHelper:
 	call	MidiTable_DispatchHelper_Helper
 	ret
 	; --- Helper 2: conditional A-based 3-way pointer selection (56 bytes) ---
-MidiTable_FlushArpNotes:
-	bit	7, (0xbc58:16)
-	ret z
-	call	ArpQueue_SwapBuffers
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld a, (xwa+4)
-	cp	a, 0:i3
-	jr	nz, MidiTable_CheckSpecialSlot
-	ld xwa, SysEx_Msg_3594
-	ld	bc, 5:i3
-	jr	MidiTable_CallFlush
-MidiTable_CheckSpecialSlot:
-	cp a, 0x16
-	jr	nz, MidiTable_UseDefaultBuf
-	ld xwa, SysEx_Msg_35B2
-	ld	bc, 5:i3
-	jr	MidiTable_CallFlush
-MidiTable_UseDefaultBuf:
-	ld xwa, SysEx_Msg_359A
-	ld	bc, 5:i3
-MidiTable_CallFlush:
-	call	SeqBuf_FlushNoteOffs
-	ret
+MidiTable_FlushArpNotes:	.include "includes/generated/cc900/MidiTable_FlushArpNotes.s"	; C: cc900/midi_dispatch_handlers_m287.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiTable_CheckSpecialSlot, MidiTable_FlushArpNotes + 30
+	.set	MidiTable_UseDefaultBuf, MidiTable_FlushArpNotes + 44
+	.set	MidiTable_CallFlush, MidiTable_FlushArpNotes + 51
 MidiPkt_InitSingleField_Data:
 	cp	(0xbc60:16), 0
 	ret	nz
@@ -9228,29 +9185,9 @@ MidiPkt_InitSingleField_Data:
 	call	SeqBuf_FlushNoteOffs
 	ret
 	; --- Two-path: 3x field extraction or single store (73 bytes) ---
-MidiPkt_HandleCmdCode01:
-	cp	(0xbc60:16), 1
-	jr	nz, MidiPkt_SetSlot18
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 6:i3
-	call	SeqData_ReadFieldByIndex
-	ld	(0xbba8:16), l
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 7:i3
-	call	SeqData_ReadFieldByIndex
-	ld	(0xbba9:16), l
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw bc, 0x0008
-	call	SeqData_ReadFieldByIndex
-	ld	(0xbbaa:16), l
-	set	7, (0xbc58:16)
-	ld	(0xbc60:16), 2
-	ret
-MidiPkt_SetSlot18:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld (xwa+4), 0x18
-	res	4, (0xbc58:16)
-	ret
+MidiPkt_HandleCmdCode01:	.include "includes/generated/cc900/MidiPkt_HandleCmdCode01.s"	; C: cc900/midi_dispatch_handlers_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiPkt_SetSlot18, MidiPkt_HandleCmdCode01 + 60
 MidiPkt_ArpExtHandler_A:
 	ld	xwa, (MIDISEQ_SPARE_BUF_PTR:16)
 	ld	bc, 3:i3
@@ -9465,232 +9402,21 @@ MidiPkt_ArpExtHandler_N_Data:
 	ld	xhl, (xbc+hl)
 	call (xhl)
 	ret
-SeqChan_ProcessStepCmd:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 19
-	jp	MIDI_ReadChannelParam
-SeqChan_StepCmd_Field1to2:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 1:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 2:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field2to3:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 2:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 3:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field4to5:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 4:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 5:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field5to6:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 5:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	call	TmFlash_BulkTransferToSubCPU
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 6:i3
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_XferStep_StyleImageBlock1:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 7:i3
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 8
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field8to9:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 8
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 9
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field9to10:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 9
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 10
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_XferStep_AccompBlock1:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 18
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 19
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_XferStep_AccompBlock2:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 19
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 20
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_StepCmd_Field20to21:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 20
-	call	MIDI_ReadChannelParam
-	call	MidiPkt_UnpackNibblesToXfer
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 21
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_XferStep_CurrentSong:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 11
-	call	MIDI_ReadChannelParam
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	call	nz, (MidiPkt_UnpackNibblesToXfer:24)
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 12
-	call	MIDI_ReadChannelParam
-	ret
-SeqChan_XferStep_SongSlots:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 12
-	call	MIDI_ReadChannelParam
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp	hl, 0xffff
-	call	nz, (MidiPkt_UnpackNibblesToXfer:24)
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ldw	bc, 15
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret	nz
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw	de, 13
-	call	MIDI_ReadChannelParam
-	ret
+SeqChan_ProcessStepCmd:	.include "includes/generated/cc900/SeqChan_ProcessStepCmd.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field1to2:	.include "includes/generated/cc900/SeqChan_StepCmd_Field1to2.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field2to3:	.include "includes/generated/cc900/SeqChan_StepCmd_Field2to3.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field4to5:	.include "includes/generated/cc900/SeqChan_StepCmd_Field4to5.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field5to6:	.include "includes/generated/cc900/SeqChan_StepCmd_Field5to6.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_XferStep_StyleImageBlock1:	.include "includes/generated/cc900/SeqChan_XferStep_StyleImageBlock1.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field8to9:	.include "includes/generated/cc900/SeqChan_StepCmd_Field8to9.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field9to10:	.include "includes/generated/cc900/SeqChan_StepCmd_Field9to10.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_XferStep_AccompBlock1:	.include "includes/generated/cc900/SeqChan_XferStep_AccompBlock1.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_XferStep_AccompBlock2:	.include "includes/generated/cc900/SeqChan_XferStep_AccompBlock2.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_StepCmd_Field20to21:	.include "includes/generated/cc900/SeqChan_StepCmd_Field20to21.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_XferStep_CurrentSong:	.include "includes/generated/cc900/SeqChan_XferStep_CurrentSong.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_XferStep_SongSlots:	.include "includes/generated/cc900/SeqChan_XferStep_SongSlots.s"	; C: cc900/midi_dispatch_handlers_m0.c
 	; --- Section 1: load XWA, setup BC/DE, call, then compare HL ---
-SeqChan_StepCmd_Field13Write:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw de, 0x000d
-	call	MIDI_ReadChannelParam
-	ld	wa, 4:i3
-	call	AccWrap_ReturnZero
-	cp hl, 0xffff
-	call	nz, (MidiPkt_UnpackNibblesToXfer:24)
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	; --- Section 2: reload XWA, setup BC, call, check L ---
-	ldw bc, 0x000f
-	call	SeqData_ReadFieldByIndex
-	cp	l, 0:i3
-	ret nz
-	; --- Section 3: reload XWA, setup BC/DE, call ---
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ldw de, 0x000e
-	call	MIDI_ReadChannelParam
-	ret
+SeqChan_StepCmd_Field13Write:	.include "includes/generated/cc900/SeqChan_StepCmd_Field13Write.s"	; C: cc900/midi_dispatch_handlers_m0.c
 SeqChan_RetStub_A:
 	ret
 SeqChan_RetStub_B:
@@ -9707,48 +9433,14 @@ SeqChan_DispatchByType_Data:
 	call	(xhl)
 	res	7, (0xbc5c:16)
 	ret
-SeqChan_DefaultHandler:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 4:i3
-	ldw	de, 31
-	jp	MIDI_ReadChannelParam
-SeqChan_WriteField_Data_A:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	7, (MIDIPKT_RX_GROUPS:16)
-	ret
-SeqChan_WriteField_Data_B:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	6, (MIDIPKT_RX_GROUPS:16)
-	ret
-SeqChan_WriteField_Data_C:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	5, (MIDIPKT_RX_GROUPS:16)
-	ret
-SeqChan_WriteField_Data_D:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	4, (MIDIPKT_RX_GROUPS:16)
-	ret
+SeqChan_DefaultHandler:	.include "includes/generated/cc900/SeqChan_DefaultHandler.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_A:	.include "includes/generated/cc900/SeqChan_WriteField_Data_A.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_B:	.include "includes/generated/cc900/SeqChan_WriteField_Data_B.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_C:	.include "includes/generated/cc900/SeqChan_WriteField_Data_C.s"	; C: cc900/midi_dispatch_handlers_m0.c
+SeqChan_WriteField_Data_D:	.include "includes/generated/cc900/SeqChan_WriteField_Data_D.s"	; C: cc900/midi_dispatch_handlers_m0.c
 SeqChan_RetStub_C:
 	ret
-SeqChan_WriteField_Data_E:
-	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	ld	bc, 3:i3
-	ld	de, 0:i3
-	call	MIDI_ReadChannelParam
-	set	2, (MIDIPKT_RX_GROUPS:16)
-	ret
+SeqChan_WriteField_Data_E:	.include "includes/generated/cc900/SeqChan_WriteField_Data_E.s"	; C: cc900/midi_dispatch_handlers_m0.c
 ; MIDI SysEx processing block with dispatch
 MidiSysEx_ProcessBlock:
 	ld	xwa, (MIDISEQ_ACTIVE_BUF_PTR:16)
@@ -9828,11 +9520,7 @@ MidiSysEx_ProcessBlock_Helper4:
 	calr	MidiSysEx_ProcessBlock_Helper5
 	res	7, (MIDIPKT_RX_GROUPS:16)
 	ret
-MidiSysEx_ProcessBlock_Helper5:
-	bit	4, (MIDIPKT_RX_GROUPS:16)
-	ret	z
-	set	0, (4330:16)
-	ret
+MidiSysEx_ProcessBlock_Helper5:	.include "includes/generated/cc900/MidiSysEx_ProcessBlock_Helper5.s"	; C: cc900/midi_dispatch_handlers_m287.c
 ; MidiSysEx_SendSoundRamEndCmd: Register-preserving (XDE/XHL/XIX/XIZ) call of MIDI_SendAllVoicesPitchUpdate, which sends
 ;   the command packet {4, 0xF0, 0x50, 0x92, 0} through MIDI_SendCmdPacket / sendCOMM -- the packet that ends a sound-
 ;   RAM transfer (the abort path sends it too). What the receiver does with it is not identified; the callee's name
@@ -10107,14 +9795,8 @@ ArpQueue_SwapBuffers:
 	ret
 ArpQueue_SwapFallthru:
 	jr	ArpQueue_ReinitCurrentBuffer
-MidiSeq_ReinitCurrentBuffer:
-	ld	xwa, (MIDISEQ_ACTIVE_BLOCK_PTR:16)
-	ld	xbc, (MIDISEQ_ACTIVE_BUF_PTR:16)
-	jrl	ArpQueue_InitBuffer
-ArpQueue_ReinitCurrentBuffer:
-	ld	xwa, (0xbb9c:16)
-	ld	xbc, (0xbbf4:16)
-	jrl	ArpQueue_InitBuffer
+MidiSeq_ReinitCurrentBuffer:	.include "includes/generated/cc900/MidiSeq_ReinitCurrentBuffer.s"	; C: cc900/midi_dispatch_handlers_m288_b.c
+ArpQueue_ReinitCurrentBuffer:	.include "includes/generated/cc900/ArpQueue_ReinitCurrentBuffer.s"	; C: cc900/midi_dispatch_handlers_m288_b_b.c
 MidiChan_InitSoundRegisters:
 	ld	xiy, MidiChan_ZeroRegTemplate
 	ld	xix, 0xbbfc
@@ -10515,43 +10197,17 @@ TGReg_WriteCC11_PartMode:	.include "includes/generated/cc900/TGReg_WriteCC11_Par
 ; the hand assembly's labels inside the compiled body, by their offsets
 	.set	TGReg_WriteCC11_Body, TGReg_WriteCC11_PartMode + 21
 	.set	TGReg_WriteCC11_Check, TGReg_WriteCC11_PartMode + 28
-SoundMode_SetReverbType:
-	ld a, (0x0340f8:24)
-	cp a, 3:i3
-	jr	z, SoundMode_ReverbType3
-	cp a, 2:i3
-	jr	z, SoundMode_ReverbType2
-	cp a, 1:i3
-	jr	z, SoundMode_ReverbType1
-	ld	(0xb72c:16), 128
-	jr	SoundParam_SyncAndReturn
-SoundMode_ReverbType1:
-	ld	(0xb72c:16), 155
-	jr	SoundParam_SyncAndReturn
-SoundMode_ReverbType2:
-	ld	(0xb72c:16), 156
-	jr	SoundParam_SyncAndReturn
-SoundMode_ReverbType3:
-	ld	(0xb72c:16), 157
-SoundParam_SyncAndReturn:
-	jp	SndParam_ApplyAndSync
-SoundMode_SetChorusType:
-	ld a, (0x0340f9:24)
-	cp a, 3:i3
-	jr	z, SoundMode_ChorusType3
-	cp a, 2:i3
-	jr	z, SoundMode_ChorusType2
-	cp a, 1:i3
-	ret nz
-	ld	(0xb72c:16), 91
-	jr	SoundMode_ChorusSyncAndRet
-SoundMode_ChorusType2:
-	ld	(0xb72c:16), 92
-	jr	SoundMode_ChorusSyncAndRet
-SoundMode_ChorusType3:
-	ld	(0xb72c:16), 93
-SoundMode_ChorusSyncAndRet:
-	jp	SndParam_ApplyAndSync
+SoundMode_SetReverbType:	.include "includes/generated/cc900/SoundMode_SetReverbType.s"	; C: cc900/midi_dispatch_handlers_m288_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundMode_ReverbType1, SoundMode_SetReverbType + 24
+	.set	SoundMode_ReverbType2, SoundMode_SetReverbType + 31
+	.set	SoundMode_ReverbType3, SoundMode_SetReverbType + 38
+	.set	SoundParam_SyncAndReturn, SoundMode_SetReverbType + 43
+SoundMode_SetChorusType:	.include "includes/generated/cc900/SoundMode_SetChorusType.s"	; C: cc900/midi_dispatch_handlers_m288.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	SoundMode_ChorusType2, SoundMode_SetChorusType + 24
+	.set	SoundMode_ChorusType3, SoundMode_SetChorusType + 31
+	.set	SoundMode_ChorusSyncAndRet, SoundMode_SetChorusType + 36
 VoiceData_ZeroFillAll:
 	lda	xbc, (PanelVari_PartRecordPtrs:24)
 	ld xwa, xbc
@@ -10715,15 +10371,9 @@ MidiCtrl_GmSwitchListener:
 	extz	wa
 	calr	MidiCtrl_GmBitToPolyphonyMode
 	ret
-MidiCtrl_GmBitToPolyphonyMode:
-	ld c, 0x0:opc
-	bit 2, a
-	jr	z, MidiCtrl_GmBitToPolyphonyMode_Send
-	ld c, 0x1:opc
-MidiCtrl_GmBitToPolyphonyMode_Send:
-	extz bc
-	ld wa, bc
-	jp	SubCPU_SetPolyphonyModeAndResendVolumes
+MidiCtrl_GmBitToPolyphonyMode:	.include "includes/generated/cc900/MidiCtrl_GmBitToPolyphonyMode.s"	; C: cc900/midi_dispatch_handlers_m288_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	MidiCtrl_GmBitToPolyphonyMode_Send, MidiCtrl_GmBitToPolyphonyMode + 9
 MidiCtrl_SendControlPacket:
 	dec 4, xsp
 	ld c, a
@@ -10826,7 +10476,7 @@ SysEx_SendDispatch:
 	call	SysEx_SendDispatch_Helper
 SysEx_InitiateSend_Join:
 	call	SysEx_SendDispatch_Helper2
-	call	MidiSeq_PartLookup_Data
+	call	MidiPkt_XferShowResult
 SysEx_ResetAndReturn:
 	ld	(0xbc58:16), 0
 	jp	SoundMode_ResetAllParams
@@ -12761,75 +12411,9 @@ MidiPkt_ProcessEventQueue_Done:
 	ret
 MidiPkt_Nop:
 	ret
-MidiPkt_DispatchViaTable_4D6A:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList0
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
-MidiPkt_DispatchViaTable_4D82:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList1
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
-MidiPkt_DispatchViaTable_4D8E:
-	dec 8, xsp
-	push xiz
-	ld xiz, xwa
-	ld xwa, xiz
-	ld	xbc, MidiCtl_MatchList2
-	calr	MidiPkt_MatchParamInTable
-	lda xwa, (xsp + 4)
-	lda xbc, (xwa + 4)
-	ld (xbc), xhl
-	ld (xwa), xiz
-	ld xbc, (xbc)
-	ld c, (xbc + 16)
-	extz bc
-	sla bc, 2
-	lda	xde, (MidiCtl_Handlers:24)
-	exts xbc
-	add xbc, xde
-	ld xhl, (xbc)
-	call (xhl)
-	pop xiz
-	inc 8, xsp
-	ret
+MidiPkt_DispatchViaTable_4D6A:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4D6A.s"	; C: cc900/midi_dispatch_handlers_dvt.c
+MidiPkt_DispatchViaTable_4D82:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4D82.s"	; C: cc900/midi_dispatch_handlers_dvt.c
+MidiPkt_DispatchViaTable_4D8E:	.include "includes/generated/cc900/MidiPkt_DispatchViaTable_4D8E.s"	; C: cc900/midi_dispatch_handlers_dvt.c
 MidiPkt_DispatchViaTable_4D9A:
 	dec 8, xsp
 	push xiz

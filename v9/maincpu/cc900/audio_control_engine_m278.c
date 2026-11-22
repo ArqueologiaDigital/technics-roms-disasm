@@ -56,3 +56,14 @@ void MidiChOut_DetectChanges(void)
 	LED_REQUEST_2 |= 4;
 	ram_347b = PLAY_TRANSPORT_STATE;
 }
+
+/* cc900-module: AnalogIn_PollAfterTouch AnalogIn_PollExpressionPedal ArpQueue_Enqueue ArpQueue_InitBuffer Audio_FlushPendingBankSelects MidiChan_ParseVoiceData PanelTlv_WriteBlock0Headers PanelTlv_WriteBlock1Headers PanelTlv_WriteLivePanelHeaders PanelTlv_WritePanelMemoryHeaders SeqBuf_WaitForEmpty SeqData_InitPlaybackFromField SeqOut_FlushWithChunking */
+extern void AnalogIn_PollExpressionPedal(unsigned char *);
+extern void AnalogIn_PollAfterTouch(unsigned char *);
+extern void AnalogIn_PollCpuAdc(void);
+
+void AnalogIn_PollCpuAdc(void)
+{
+  AnalogIn_PollExpressionPedal((unsigned char *)0x8f10L);
+  AnalogIn_PollAfterTouch((unsigned char *)0x8f16L);
+}
