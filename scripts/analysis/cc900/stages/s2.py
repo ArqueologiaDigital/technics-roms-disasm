@@ -63,6 +63,11 @@ def bare(x):
     return re.sub(r'\(Def\)', '', x) if x else x
 
 
+def unsigned16(x):
+    m = re.search(r'\((U[A-Z]+)\)', x or '')
+    return bool(m) and m.group(1) in ('USHORT', 'UINT', 'UCHAR') and not (x or '').startswith('#')
+
+
 def rewrite2(recs):
     """S2's rewrites on parsed -zio records"""
     def reads_of(t):
@@ -90,6 +95,8 @@ def rewrite2(recs):
                 if use is None:
                     continue
                 b, i = r.args
+                if r.op == 'ADD' and unsigned16(i):
+                    continue                         # an unsigned 16-bit index: widened and added instead (below)
                 if r.op == '+':
                     m = re.match(r'^#[ CL]?U?(-?\d+)$', i)
                     if not m:
@@ -107,6 +114,11 @@ def rewrite2(recs):
                 break
     out = []
     for r in recs:
+        if r.op == 'ADD' and len(r.args) == 2 and unsigned16(r.args[1]):
+            res = bare(r.res)                        # R CONV index; R += base
+            out.append(dump.Rec(r.block, 'CONV', res, [r.args[1]], None, ''))
+            out.append(dump.Rec(r.block, '+=', res, [r.args[0]], None, ''))
+            continue
         if r.op == 'ADD' and len(r.args) == 2:     # an index still needed as an address
             r.op, r.args = 'ADDR', ['@(%s+%s)' % (r.args[0], r.args[1])]
         if r.op in BIN3 and r.res and len(r.args) == 2 and not r.res.startswith('L'):
@@ -135,6 +147,12 @@ def def_marks(lines):
         if r.op.endswith('=') and r.op not in ('=',) and t:
             rd[t] = rd.get(t, 0) + 1
     ok = {t for t, n in w.items() if n == 1 and rd.get(t, 0) <= 1}
+    for l in lines:                                  # a helper call's operands and result: no (Def)
+        r = dump.parse_line(l)
+        if r is not None and r.op == 'ARICALL':
+            for x in [r.res] + r.args:
+                t = tname(x)
+                ok.discard(t)
 
     def mark(l):
         if ' DUMMY' in l:
