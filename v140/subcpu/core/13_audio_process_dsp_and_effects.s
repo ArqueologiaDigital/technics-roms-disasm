@@ -811,18 +811,9 @@ DSP_WriteAlgoInitPreset:	.include "includes/generated/cc900/DSP_WriteAlgoInitPre
 ; and then calls DSP_State_ApplyBuf(XWA = 0x448E) to push the whole
 ; configuration to the DSP. Callers: DSP_Reset, DSP_ApplyConfig, DSP_ReconfigAndStatus, and
 ; the global setter DSP_Set_RotarySpeed.
-DSP_ApplyAlgoForVoiceType:
-	cp wa, 0x35
-	jr z, DSP_ApplyAlgoForVoiceType_TypeF
-	cp wa, 0xF
-	ret nz
-
-; The shared body for both accepted voice types.
-DSP_ApplyAlgoForVoiceType_TypeF:
-	ldmm16 17588, 17840	; LDW_16_16 (044b4h), (045b0h)
-	lda xwa, (DSP_ConfigBuffer:16)
-	call DSP_State_ApplyBuf
-	ret
+DSP_ApplyAlgoForVoiceType:	.include "includes/generated/cc900/DSP_ApplyAlgoForVoiceType.s"	; C: cc900/audio_process_dsp_and_effects_lane_49a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_ApplyAlgoForVoiceType_TypeF, DSP_ApplyAlgoForVoiceType + 12
 
 ; ALREADY NAMED -- doc header only. Full DSP subsystem reset; called once from the audio
 ; init path at 0x032183. No parameters.
@@ -949,20 +940,10 @@ DSP_Set_MicLevel:
 ; DSP_Set_MicSense: Global 0x2C sub-command 0x08: stores the main CPU's MICSNS level (PE.4, sent on every change) at
 ;   0x45BA; while it is non-zero the mic level (0x45B8) is copied into EFF slot 3's parameter word +0x0C (0x454A),
 ;   otherwise 0, and the block is applied. Basis: caller + main-CPU sender + body.
-DSP_Set_MicSense:
-	ld	c, a
-	extz	bc
-	ld	(17850:16), bc
-	ldw	(DSP_ConfigBuffer:16), 0
-	cp	a, 0:i3
-	jr	z, DSP_Set_Enable_45BA_Skip
-	ldmm16	17738, 17848
-	jr	DSP_Set_Enable_45BA_Join
-DSP_Set_Enable_45BA_Skip:
-	ldw	(17738:16), 0
-DSP_Set_Enable_45BA_Join:
-	lda	xwa, (DSP_ConfigBuffer:16)
-	jp	DSP_State_ApplyBuf
+DSP_Set_MicSense:	.include "includes/generated/cc900/DSP_Set_MicSense.s"	; C: cc900/audio_process_dsp_and_effects_lane_49a.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	DSP_Set_Enable_45BA_Skip, DSP_Set_MicSense + 26
+	.set	DSP_Set_Enable_45BA_Join, DSP_Set_MicSense + 32
 ; ★ NEW NAME. (0x448E) = 0 ; (0x4504) = WA ; tail-jump DSP_State_ApplyBuf(0x448E).
 ; 0x4504 = 0x4496 + 0x6E = slot 1 record + 0x36. CmdHandler2C global sub-command 0x21.
 ; DSP_Set_DigitalReverbOnOff: Global 0x2C sub-command 0x21: stores WA (0/1) in EFF slot 1's +0x36 link word (0x4504)

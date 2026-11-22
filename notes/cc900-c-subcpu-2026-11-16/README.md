@@ -296,6 +296,14 @@ spelling has moved them yet; a V4.23 probe of temporary placement is the next st
 the DSPUnit row's shape).  v142 / v141 **602 functions**, v140 **601** built from C.  VoiceParam_Set_Tone_Option
 stays at +12 (sub_AW_47c).
 
+**Twenty-seventh promotion (2026-11-22; matched in run 2026-11-22-27-sub-r49a, verified per tree in run
+2026-11-22-28-sub-r49s-staged).**  audio_process_dsp_and_effects_lane_49a.c: DSP_ApplyAlgoForVoiceType (27 B) and
+DSP_Set_MicSense (40 B), found by `sub_screen.py` (lane_p6's new_pool / xr_screen / families adapted to v142,
+`screen/sub_2026-11-22.*`): 14 untried routines remain in survey.tsv (1,791 B), the -Xr screen keeps one
+(Voice_Build_Four_Partials, blocked), no family of two; the old pools had dropped these setters for their
+memory-to-memory moves (V4.23 writes them).  v142 / v141 **604 functions**, v140 **603** built from C.
+DSP_Set_MicLevel +30 (its dead trailing return).
+
 Audio_Process_DSP's v1.40 form (gen_lane_43.py .. gen_lane_43d.py, forms a-l): `(int)i * 2 + 0x27` and
 `((struct pair *)&t[..])->hi` give sub-command 0x24's bytes (form b).  The write path stays: whichever variable holds
 the channel gets IZ while the field is a variable (forms a-f), and with the field nested the channel's `and` happens
