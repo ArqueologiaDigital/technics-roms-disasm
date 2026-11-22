@@ -20,6 +20,7 @@ FAM = {'XWA': ('A', 'WA', 'XWA'), 'XBC': ('C', 'BC', 'XBC'), 'XDE': ('E', 'DE', 
        'XIX': (None, 'IX', 'XIX'), 'XIY': (None, 'IY', 'XIY'), 'XIZ': (None, 'IZ', 'XIZ')}
 SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2, 'SLONG': 4, 'ULONG': 4}
 ARGREG = ['XWA', 'XBC', 'XDE']
+RETURN_HL = True
 
 
 def size_of(full):
@@ -71,6 +72,10 @@ def allocate(zim):
         if n in out:
             continue
         size = size_of(names[n][0])
+        if RETURN_HL and re.search(r'\|A = %s\(' % n, text) and 'XHL' not in used:
+            out[n] = reg('XHL', size)                # the returned value is pinned to the HL family
+            used.add('XHL')
+            continue
         for f in order:
             if f in used or (size == 1 and FAM[f][0] is None):
                 continue

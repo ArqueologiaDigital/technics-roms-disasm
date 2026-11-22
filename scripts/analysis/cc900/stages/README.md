@@ -69,6 +69,7 @@ Run the round trip, from technics-roms-disasm's root:
 | 2026-11-22 | S2    | from thc2's own -zio, `-Xr`: 383 / 2,671 equal its -zim (DUMMY lines only so far)                                                                                        |
 | 2026-11-22 | S2    | `-Xr` 416 exact, 439 up to numbering, of 2,671 (from V4.23's own -zio): DUMMY order, addressing modes, two-address form; {MO} on parameters still open                   |
 | 2026-11-22 | S2    | `-Xr` 466 exact, 629 up to numbering, of 2,671: register routing (memory-memory, 4-byte constants, 16-bit multiply / divide), XIZ spill marks, live-on-entry DUMMY lines |
+| 2026-11-22 | S3    | from thc2's own -zim against -g: 1,957 / 3,394 named variables (57.7 %), 1,289 / 2,001 `-Xr` functions all right (returned locals in the HL family)                      |
 
 ## S3, first measurement (2026-11-22)
 
