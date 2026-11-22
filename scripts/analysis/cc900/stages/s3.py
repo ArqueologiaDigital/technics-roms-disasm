@@ -26,6 +26,7 @@ AVOID_WA_TEMPS = True
 TEMP_FAMS = 4
 OP_CLOBBERS = True
 BYTE_HIGH = True
+TEMP_ORDER = ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY')
 TEMPS_FIRST = False                                 # tested: temporaries coloured first lose 197-257 variables
 TEMP_DIR = 1
 CALL_RESULT_HL = True
@@ -96,7 +97,7 @@ def allocate(zim):
                 for x in (lives[i] | after):
                     if x.startswith('P') and x in out:
                         held |= {f for f, fam in FAM.items() if out[x] in fam}
-                fams = [f for f in ('XWA', 'XBC', 'XDE', 'XHL', 'XIX', 'XIY') if f not in held][:min(k, TEMP_FAMS)]
+                fams = [f for f in TEMP_ORDER if f not in held][:min(k, TEMP_FAMS)]
                 for x in after:
                     if not x.startswith('T'):
                         busy.setdefault(x, set()).update(fams)

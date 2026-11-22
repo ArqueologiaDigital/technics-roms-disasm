@@ -59,17 +59,18 @@ Run the round trip, from technics-roms-disasm's root:
 
 ## Progress
 
-| date       | stage | measured                                                                                                                                                                 |
-|------------|-------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio`                                                                                  |
-| 2026-11-22 | S1    | firmware C, `-Xr` (runs 2026-11-22-51..54): 496 / 2,672 functions equal thc2's `-zio` (from 38 at the first version)                                                     |
-| 2026-11-22 | S1    | `-Xr` 676 / 2,672; `-O3 -Xr` 340 / 2,879 and `-O3 -XS -Xr` 1 / 21 (no optimiser modelled yet)                                                                            |
-| 2026-11-22 | S1    | `-Xr` 773 / 2,672 (28.9 %); the largest remaining class of first differences is temporary numbering (818 functions before this row), then (Def) (135)                    |
-| 2026-11-22 | S1    | `-Xr` 872 exact, 1,238 up to temporary numbering (46 %), of 2,672: switch jump tables, jump threading                                                                    |
-| 2026-11-22 | S2    | from thc2's own -zio, `-Xr`: 383 / 2,671 equal its -zim (DUMMY lines only so far)                                                                                        |
-| 2026-11-22 | S2    | `-Xr` 416 exact, 439 up to numbering, of 2,671 (from V4.23's own -zio): DUMMY order, addressing modes, two-address form; {MO} on parameters still open                   |
-| 2026-11-22 | S2    | `-Xr` 466 exact, 629 up to numbering, of 2,671: register routing (memory-memory, 4-byte constants, 16-bit multiply / divide), XIZ spill marks, live-on-entry DUMMY lines |
-| 2026-11-22 | S3    | from thc2's own -zim against -g: 1,957 / 3,394 named variables (57.7 %), 1,289 / 2,001 `-Xr` functions all right (returned locals in the HL family)                      |
+| date       | stage | measured                                                                                                                                                                                                      |
+|------------|-------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 2026-11-22 | S1    | the probe (run 2026-11-22-50, `i2a.c`), no options: 2 / 2 functions equal thc2's `-zio`                                                                                                                       |
+| 2026-11-22 | S1    | firmware C, `-Xr` (runs 2026-11-22-51..54): 496 / 2,672 functions equal thc2's `-zio` (from 38 at the first version)                                                                                          |
+| 2026-11-22 | S1    | `-Xr` 676 / 2,672; `-O3 -Xr` 340 / 2,879 and `-O3 -XS -Xr` 1 / 21 (no optimiser modelled yet)                                                                                                                 |
+| 2026-11-22 | S1    | `-Xr` 773 / 2,672 (28.9 %); the largest remaining class of first differences is temporary numbering (818 functions before this row), then (Def) (135)                                                         |
+| 2026-11-22 | S1    | `-Xr` 872 exact, 1,238 up to temporary numbering (46 %), of 2,672: switch jump tables, jump threading                                                                                                         |
+| 2026-11-22 | S2    | from thc2's own -zio, `-Xr`: 383 / 2,671 equal its -zim (DUMMY lines only so far)                                                                                                                             |
+| 2026-11-22 | S2    | `-Xr` 416 exact, 439 up to numbering, of 2,671 (from V4.23's own -zio): DUMMY order, addressing modes, two-address form; {MO} on parameters still open                                                        |
+| 2026-11-22 | S2    | `-Xr` 466 exact, 629 up to numbering, of 2,671: register routing (memory-memory, 4-byte constants, 16-bit multiply / divide), XIZ spill marks, live-on-entry DUMMY lines                                      |
+| 2026-11-22 | S3    | from thc2's own -zim against -g: 1,957 / 3,394 named variables (57.7 %), 1,289 / 2,001 `-Xr` functions all right (returned locals in the HL family)                                                           |
+| 2026-11-22 | S3    | 2,659 / 3,394 named variables (78.3 %), 1,606 / 2,001 `-Xr` functions all right: interference colouring, XWA-first order, temporaries' families avoided, call results and returns in HL, bytes on high halves |
 
 ## S3, first measurement (2026-11-22)
 
