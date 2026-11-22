@@ -2330,31 +2330,7 @@ AudioInit_Volume_Next:
 AudioInit_Volume_Return:
 	popw	iz
 	ret
-AudioInit_InitPartSendLevels:
-	ld	de, 0:i3
-	cp	de, 161
-	jr	nc, AudioInit_InitPartSendLevels_Skip
-AudioInit_InitPartSendLevels_Loop:
-	ld	wa, de
-	add	wa, wa
-	lda	xbc, (0xc58e:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	(xwa), 16
-	ld	wa, de
-	add	wa, wa
-	lda	xbc, (0xc58f:16)
-	extz	xwa
-	add	xwa, xbc
-	ld	(xwa), 0
-	inc	1, de
-	cp	de, 161
-	jr	c, AudioInit_InitPartSendLevels_Loop
-AudioInit_InitPartSendLevels_Skip:
-	ld	(0xc9ce:16), 8
-	ld	(0xc9cf:16), 0
-	ld	(0xc9d0:16), 8
-	ld	(0xc9d1:16), 0
-	ld	(0xc9d2:16), 16
-	ld	(0xc9d3:16), 0
-	ret
+AudioInit_InitPartSendLevels:	.include "includes/generated/cc900/AudioInit_InitPartSendLevels.s"	; C: cc900/audioinit_routines_m0_xr.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	AudioInit_InitPartSendLevels_Loop, AudioInit_InitPartSendLevels + 8
+	.set	AudioInit_InitPartSendLevels_Skip, AudioInit_InitPartSendLevels + 46

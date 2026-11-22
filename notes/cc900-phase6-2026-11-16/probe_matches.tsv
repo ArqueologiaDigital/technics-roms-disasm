@@ -1727,3 +1727,7 @@ StoreAndAdvance_Prologue	55	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302
 SysexRingBuf_ReadBytes	55	2026-11-22-11-p6-r78	p6_N_29r1m302a@Xr p6_N_29r1m302b@Xr p6_N_29r1m302c@Xr
 Voice_InitTableGroup	81	2026-11-22-11-p6-r78	p6_N_29r1m295a@Xr p6_N_29r1m295b@Xr p6_N_29r1m295c@Xr
 Voice_InitTablePair	81	2026-11-22-11-p6-r78	p6_N_29r1m295a@Xr p6_N_29r1m295b@Xr p6_N_29r1m295c@Xr
+AudioInit_InitPartSendLevels	77	2026-11-22-13-p6-r80	p6_Q_30r1m295a@Xr p6_Q_30r1m295b@Xr
+BitMapOut_DeltaEncode_Type90Return	111	2026-11-22-13-p6-r80	p6_Q_30r1m274a@O3XSXr p6_Q_30r1m274a@O3Xr p6_Q_30r1m274b@O3XSXr p6_Q_30r1m274b@O3Xr
+SingleLoad_GetFileBankName	46	2026-11-22-13-p6-r80	p6_P_30r1m269a@O3XSXr p6_P_30r1m269a@O3Xr
+SingleLoad_GetUserKitEntryName	46	2026-11-22-13-p6-r80	p6_P_30r1m269b@O3XSXr p6_P_30r1m269b@O3Xr
