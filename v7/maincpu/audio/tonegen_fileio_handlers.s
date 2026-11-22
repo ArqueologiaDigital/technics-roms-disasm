@@ -66,9 +66,7 @@ PanelTlv_ApplyResetMasks_Loop:
 	inc	8, xsp
 	ret
 ; Write every record header ([tag][len]) of the live panel and of the 80 panel memories.
-PanelTlv_WriteAllHeaders:
-	calr	PanelTlv_WriteLivePanelHeaders
-	jrl	PanelTlv_WritePanelMemoryHeaders
+PanelTlv_WriteAllHeaders:	.include "includes/generated/cc900/PanelTlv_WriteAllHeaders.s"	; C: cc900/tonegen_fileio_handlers_m277_xs.c
 ; PanelTlv_ValidateSongPanel: Validates the block-0 panel records stored at 0xF480, inside the current-song record
 ;   0xF180-0xF980: XWA = 0xF480, tail-jump to PanelTlv_ValidateBlock0. Basis: callers + body --
 ;   MidiSysEx_FinishSeqXfer calls it first after a sequencer transfer, and its header calls this validating 'the
