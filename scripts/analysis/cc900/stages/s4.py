@@ -283,6 +283,11 @@ class Fn:
                 self.psize.setdefault(m.group(1), size_of(m.group(1) + m.group(2)))
         SIZE0.clear()
         UNS0.clear()
+        for r in self.recs:                          # a bit test fixes its type-0 operand's size by the bit number
+            if r.op in ('JRBC', 'JRBS') and len(r.args) == 2 and re.match(r'^T\d+\(0\)', r.args[0] or ''):
+                b = const(r.args[1])
+                if b is not None and b >= 8:
+                    SIZE0[re.match(r'^(T\d+)', r.args[0]).group(1)] = 2 if b < 16 else 4
         for _ in range(3):                           # a type-0 temporary has the size of what it is copied from/to
             for r in self.recs:
                 xs = [x for x in [r.res] + r.args if x]

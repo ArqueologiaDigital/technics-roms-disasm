@@ -75,6 +75,7 @@ Run the round trip, from technics-roms-disasm's root:
 | 2026-11-22 | S3    | from thc2's own -zim against -g: 1,957 / 3,394 named variables (57.7 %), 1,289 / 2,001 `-Xr` functions all right (returned locals in the HL family)                                                           |
 | 2026-11-22 | S3    | 2,659 / 3,394 named variables (78.3 %), 1,606 / 2,001 `-Xr` functions all right: interference colouring, XWA-first order, temporaries' families avoided, call results and returns in HL, bytes on high halves |
 | 2026-11-22 | S4    | from V4.23's own -zim and -g: 138 / 2,001 `-Xr` functions' code exact (S3 now 5,958 / 6,768 variables)                                                                                                        |
+| 2026-11-22 | S4    | 397 / 2,001 `-Xr` functions' code exact, 341 refused (switches, struct fields, stack arguments, shared epilogue, liveness-based temporaries); S3 6,172 / 6,982 variables                                      |
 
 ## S3, first measurement (2026-11-22)
 
