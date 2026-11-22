@@ -226,6 +226,40 @@ def branch_over_jump(out):
     return [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
 
 
+TEMP_COPY_MERGE = False                             # OPEN: thc2 merges some temp-to-temp copies at read time (the
+                                                    # copy's temporary takes the source's definition: Audio_CmdHandler
+                                                    # _00_1F, T7 = T8 of USHORT / UINT), but every variant tried so far
+                                                    # (any copy; binary sources; differing types) loses more functions
+                                                    # than it gains (767 -> 743 / 746 / 758 on -Xr, 2026-11-22)
+
+
+def merge_temp_copies(F, ops):
+    """read time: `=,Ta,Tb,Ta` copying a temporary Tb (read only there) into Ta of a basic integer type of the same
+    size: Tb's definition writes Ta instead, and the copy goes (Tb gets no number)"""
+    import thc1ir
+    nreads = {}
+    for l in ops:
+        for x in inputs(l.op, l.fields):
+            x = x.lstrip('*&')
+            nreads[x] = nreads.get(x, 0) + 1
+    ops = list(ops)
+    k = 0
+    while k < len(ops):
+        l = ops[k]
+        fl = l.fields
+        if l.op == '=' and len(fl) > 3 and fl[1] == fl[3] and fl[1].startswith('T') and fl[2].startswith('T') and \
+                nreads.get(fl[2], 0) == 1 and k > 0 and ops[k - 1].kind == 'op' and \
+                outputs(ops[k - 1].op, ops[k - 1].fields)[-1:] == [fl[2]] and ops[k - 1].op in BINARY:
+            ta, tb = num(F.typ(fl[1])), num(F.typ(fl[2]))
+            if 1 <= ta <= 12 and 1 <= tb <= 12 and SIZE[ta] == SIZE[tb] and ta != tb:
+                p = ops[k - 1]
+                ops[k - 1] = thc1ir.Line('op', p.fields[:3] + [fl[1]] + p.fields[4:], p.raw)
+                del ops[k]
+                continue
+        k += 1
+    return ops
+
+
 def rewrite(F):
     """the S1 list of (op, result, a, b) tuples, operands in thc1's spelling"""
     T = F.types
@@ -238,6 +272,8 @@ def rewrite(F):
                 [o for o in ops if o.op not in MARKERS][-1].op == 'END':
             continue
         ops.append(l)
+    if TEMP_COPY_MERGE:
+        ops = merge_temp_copies(F, ops)
     F.writes = {}
     for l in ops:
         for x in outputs(l.op, l.fields):
