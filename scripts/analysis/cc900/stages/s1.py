@@ -173,6 +173,59 @@ def mul_steps(res, x, c, pre='LU'):
     return steps
 
 
+SWITCH_MOVE = True
+INVERT = {'BEQ': 'BNE', 'BNE': 'BEQ', 'BLT': 'BGE', 'BGE': 'BLT', 'BLE': 'BGT', 'BGT': 'BLE', 'JRBC': 'JRBS',
+          'JRBS': 'JRBC'}
+
+
+def move_dispatch(out):
+    """a switch: thc1 jumps to a dispatch block (only compare branches) written after the cases and followed by a
+    label; thc2 puts the dispatch where the jump was.  When its last branch then targets the label right below it,
+    that branch is inverted and sent to the label that followed the dispatch"""
+    i = 0
+    while i < len(out):
+        r = out[i]
+        if r[0] == 'JMP':
+            j = next((k for k in range(i + 1, len(out)) if out[k][0] == 'LAB' and out[k][1] == r[1]), None)
+            if j is not None:
+                k = j + 1
+                while k < len(out) and (out[k][0] in BRANCHES or out[k][0] in MARKERS):
+                    k += 1
+                if k < len(out) and out[k][0] == 'JMP':   # a dispatch may end with a jump to the default case
+                    k += 1
+                disp = [x for x in out[j + 1:k] if x[0] in BRANCHES or x[0] == 'JMP']
+                while k < len(out) and out[k][0] in MARKERS:
+                    k += 1
+                if disp and k < len(out) and out[k][0] in ('LAB', 'END') and \
+                        not any(x[0] in ('JMP', 'LAB') and x[1] == r[1] for x in out[:j] + out[k:] if x is not r):
+                    after = out[k][1]
+                    body = out[i + 1:j] + out[k:]
+                    nxt = next((x for x in out[i + 1:j] if x[0] not in MARKERS), None)
+                    last = disp[-1]
+                    if last[0] in BRANCHES and out[k][0] == 'LAB' and nxt is not None and nxt[0] == 'LAB' and \
+                            nxt[1] == last[1]:
+                        disp[-1] = (INVERT[last[0]], after) + tuple(last[2:])
+                    out = out[:i] + disp + body
+                    i += len(disp)
+                    continue
+        i += 1
+    return out
+
+
+def branch_over_jump(out):
+    """B<cond> La / JMP Lb / LAB La  ->  B<inverse> Lb / LAB La, and La goes when nothing else jumps to it"""
+    real = [k for k, r in enumerate(out) if r[0] not in MARKERS]
+    drop = set()
+    for n in range(len(real) - 2):
+        a, b, c = (out[real[n + m]] for m in range(3))
+        if a[0] in INVERT and b[0] == 'JMP' and c[0] == 'LAB' and c[1] == a[1] and real[n + 1] not in drop:
+            out[real[n]] = (INVERT[a[0]], b[1]) + tuple(a[2:])
+            drop.add(real[n + 1])
+    out = [r for k, r in enumerate(out) if k not in drop]
+    used = {r[1] for r in out if r[0] in BRANCHES or r[0] == 'JMP'}
+    return [r for r in out if not (r[0] == 'LAB' and r[1] not in used)]
+
+
 def rewrite(F):
     """the S1 list of (op, result, a, b) tuples, operands in thc1's spelling"""
     T = F.types
@@ -283,6 +336,8 @@ def rewrite(F):
         else:
             out.append((op,) + tuple(fl[1:4]) + (None,) * (3 - len(fl[1:4])))
         i += 1
+    if SWITCH_MOVE:
+        out = move_dispatch(out)
     alias = {}                                       # consecutive labels: the last one stands for all of them
     run = []
     for r in out:
@@ -298,6 +353,7 @@ def rewrite(F):
         alias[x] = run[-1]
     out = [r for r in out if not (r[0] == 'LAB' and r[1] in alias)]
     out = [(r[0], alias.get(r[1], r[1])) + r[2:] if r[0] in BRANCHES or r[0] == 'JMP' else r for r in out]
+    out = branch_over_jump(out)
     out = [r for k, r in enumerate(out)               # a jump to the label that follows it goes
            if not (r[0] == 'JMP' and next((x for x in out[k + 1:] if x[0] not in MARKERS), (None, None))[:2] ==
                    ('LAB', r[1]))]
