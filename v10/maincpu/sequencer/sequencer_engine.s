@@ -12427,42 +12427,7 @@ SeqPart_DefaultRangeData:
 ; and of song slot (SEQ_CURRENT_SONG) + 1, both at entry (0x287d).
 ;   In:  WA = word value, C = byte value.  Calls Part_WriteWord_Indexed and Part_WriteByte_Indexed
 ;   twice each.  Preserves IZ.
-Part_WriteWordAndByte:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), c
-	ld iz, wa
-	ld wa, (0x287d:16)
-	ld c, a
-	extz bc
-	ld wa, 0:i3
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld wa, (0x287d:16)
-	ld c, a
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	ld wa, 0:i3
-	calr Part_WriteByte_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld bc, (0x287d:16)
-	extz bc
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld bc, (0x287d:16)
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	calr Part_WriteByte_Indexed
-	popw iz
-	inc 2, xsp
-	ret
+Part_WriteWordAndByte:	.include "includes/generated/cc900/Part_WriteWordAndByte.s"	; C: cc900/sequencer_engine_m234.c
 
 ; Computes in 0x26ba how many 0xfb-byte blocks the bytes counted in 0x25da need beyond the space
 ; left in the part's current block (0xff minus the entry (0x2634) of the 0x78 word array), 0 when
@@ -24769,22 +24734,7 @@ VoiceAlloc_CounterFound:
 	inc 2, xsp
 	ret
 
-SeqScan_CompareAndAppend:
-	dec 4, xsp
-	ld (xsp), e
-	ld (xsp + 2), c
-	ld c, (xsp + 2)
-	extz bc
-	ld e, (xsp)
-	extz de
-	calr PartCtrl_AppendToEventQueue
-	ld a, (xsp + 2)
-	extz wa
-	ld c, (xsp)
-	extz bc
-	calr Part_ClearVoiceSlot
-	inc 4, xsp
-	ret
+SeqScan_CompareAndAppend:	.include "includes/generated/cc900/SeqScan_CompareAndAppend.s"	; C: cc900/sequencer_engine_m235_d.c
 
 ; Clears entry C of song slot A: word array 0xffff, byte array 5, voice flag cleared, voice word
 ; 0xffff; for slot 0 also clears part C's active bit.

@@ -1686,32 +1686,9 @@ PanelInput_DrainRxQueue_Return:
 	ret
 ; xwa -> a 3-byte record: pop a header (-> event index, PanelInput_EventIndexOfHeader) and two data bytes from
 ; CPANEL_RX_EVENT_QUEUE; l = 0 when all three were there, 0xFF otherwise.
-PanelInput_ReadRxRecord:
-	dec	2, xsp
-	push	xiz
-	ld	xiz, xwa
-	ld	(xsp + 4), 0xff
-	call	CPanel_RxEventQueue_Pop
-	cp	hl, 0xffff
-	jr	z, PanelInput_ReadRxRecord_Return
-	extz	hl
-	ld	wa, hl
-	calr	PanelInput_EventIndexOfHeader
-	ld	(xiz), l
-	call	CPanel_RxEventQueue_Pop
-	cp	hl, 0xffff
-	jr	z, PanelInput_ReadRxRecord_Return
-	ld	(xiz + 1), l
-	call	CPanel_RxEventQueue_Pop
-	cp	hl, 0xffff
-	jr	z, PanelInput_ReadRxRecord_Return
-	ld	(xiz + 2), l
-	ld	(xsp + 4), 0x0
-PanelInput_ReadRxRecord_Return:
-	ld	l, (xsp + 4)
-	pop	xiz
-	inc	2, xsp
-	ret
+PanelInput_ReadRxRecord:	.include "includes/generated/cc900/PanelInput_ReadRxRecord.s"	; C: cc900/audio_control_engine_m277_b.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	PanelInput_ReadRxRecord_Return, PanelInput_ReadRxRecord + 58
 ; Port G is the pedal port, active low (technics-docs cpu-subsystem.md): PG.3-2 -> the foot-switch record (event
 ; 28), PG.7-4 -> the foot-controller record (event 29; all four high = nothing engaged, which arms a 500-tick
 ; debounce at 0x8EC8), PD.6 -> the third record (event 30).  Records at 0x8EB6 / 0x8EBA / 0x8EBE.

@@ -12186,42 +12186,7 @@ SeqPart_DefaultRangeData:
 	ldw	(SQEDT_MINS_LAST:16), 1
 	ret
 
-Part_WriteWordAndByte:
-	dec 2, xsp
-	pushw iz
-	ld (xsp + 2), c
-	ld iz, wa
-	ld	wa, (0x2861:16)
-	ld c, a
-	extz bc
-	ld wa, 0:i3
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld	wa, (0x2861:16)
-	ld c, a
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	ld wa, 0:i3
-	calr Part_WriteByte_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld	bc, (0x2861:16)
-	extz bc
-	ld de, iz
-	calr Part_WriteWord_Indexed
-	ld a, (SEQ_CURRENT_SONG:24)
-	inc 1, a
-	extz wa
-	ld	bc, (0x2861:16)
-	extz bc
-	ld e, (xsp + 2)
-	extz de
-	calr Part_WriteByte_Indexed
-	popw iz
-	inc 2, xsp
-	ret
+Part_WriteWordAndByte:	.include "includes/generated/cc900/Part_WriteWordAndByte.s"	; C: cc900/sequencer_engine_m234.c
 
 SeqPart_CalcPlaybackOffset:
 	pushw iz

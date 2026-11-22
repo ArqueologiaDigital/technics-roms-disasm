@@ -421,3 +421,16 @@ int Seq_ValidatePartAndTempoAlt(void)
 		return -1;
 	return 0;
 }
+
+extern unsigned int __near ram_287d;
+extern unsigned char SEQ_CURRENT_SONG;
+extern void Part_WriteWordAndByte(unsigned int, unsigned char);
+extern void Part_WriteWordAndByte(register unsigned int w, unsigned char b);
+
+void Part_WriteWordAndByte(register unsigned int w, unsigned char b)
+{
+    Part_WriteWord_Indexed(0, (unsigned char)ram_287d, w);
+    Part_WriteByte_Indexed(0, (unsigned char)ram_287d, b);
+    Part_WriteWord_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), (unsigned char)ram_287d, w);
+    Part_WriteByte_Indexed((unsigned char)(SEQ_CURRENT_SONG + 1), (unsigned char)ram_287d, b);
+}

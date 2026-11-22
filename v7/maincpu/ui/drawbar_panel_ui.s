@@ -13320,44 +13320,7 @@ PsMixer_DrawCaptionFrame_Join:
 	lda	xsp, (xsp+22)
 	ret
 PsMixer_CalcRowBandRect:	.include "includes/generated/cc900/PsMixer_CalcRowBandRect.s"	; C: cc900/drawbar_panel_ui_m264.c
-PsMixer_CalcSwitchPointInFrame:
-	lda	xsp, (xsp-22)
-	push	xiz
-	ld	(xsp+20), de
-	ld	(xsp+22), xbc
-	ld	xiz, xwa
-	lda	xbc, (xsp+6)
-	lda	xde, (xsp+4)
-	ldw	wa, 52
-	call	GetFrameSPSize
-	ld	xiy, xiz
-	lda	xix, (xsp+12)
-	ld	bc, 4:i3
-	ldirw	; v10 does not spell this byte either
-	ld	wa, (xsp+4)
-	dec	2, wa
-	add	(xsp+14), wa
-	ld	wa, (xsp+20)
-	exts	xwa
-	divs	wa, 8
-	ld	iz, qwa
-	ld	wa, iz
-	lda	xbc, (xsp+8)
-	call	GetEditSwPoint
-	lda	xwa, (xsp+12)
-	ld	xbc, (xsp+22)
-	call	GetBoxCenter
-	ld	wa, iz
-	add	wa, wa
-	dec	8, wa
-	ld	bc, (xsp+8)
-	sub	bc, wa
-	dec	2, bc
-	ld	xwa, (xsp+22)
-	ld	(xwa), bc
-	pop	xiz
-	lda	xsp, (xsp+22)
-	ret
+PsMixer_CalcSwitchPointInFrame:	.include "includes/generated/cc900/PsMixer_CalcSwitchPointInFrame.s"	; C: cc900/drawbar_panel_ui_m264_xr.c
 PsMixer_CalcGridCellPoint:
 	lda	xsp, (xsp-18)
 	push	xiz
