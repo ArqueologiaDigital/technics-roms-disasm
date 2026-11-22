@@ -66,6 +66,9 @@ def sp_adjust(n):
     return ('lda', 'XSP,XSP%s0x%x' % ('+' if n > 0 else '-', abs(n)))
 
 
+LABEL_NEXT = [50000]                                 # L5000n / S5000n counters: per unit, not per function
+TABLE_NEXT = [50000]
+EPI_NEEDS_TWO_ENDS = True                           # does the epilogue label need more than one return
 CHAINS = []                                          # thc1's switch dispatch chains of the unit, in order
 CHAIN_POS = [0]
 
@@ -74,6 +77,7 @@ def load_switches(inter):
     """read thc1's dispatch chains (`==,X,#c,T` / `TRUE,T,,L` runs, then `JMP,Ldefault`) into CHAINS"""
     del CHAINS[:]
     CHAIN_POS[0] = 0
+    LABEL_NEXT[0] = TABLE_NEXT[0] = 50000
     lines = [l.rstrip('\r\n') for l in open(inter, encoding='latin-1')]
     i = 0
     while i < len(lines):
@@ -433,6 +437,14 @@ class Fn:
 
     def gen(self):
         """the function's code; XIZ is saved by the halves the code itself uses (temporaries included)"""
+        has_epi = bool(self.save_iz or self.frame) and (sum(r.op == 'END' for r in self.recs) > 1
+                                                        or not EPI_NEEDS_TWO_ENDS)
+        nsw = sum(r.op == 'Switch' for r in self.recs)
+        self.label0 = LABEL_NEXT[0]
+        self.table0 = TABLE_NEXT[0]
+        self.has_epi = has_epi
+        LABEL_NEXT[0] += has_epi + nsw
+        TABLE_NEXT[0] += nsw
         code = self._gen()
         if not SAVE_FROM_CODE:
             return code
@@ -443,14 +455,14 @@ class Fn:
         if want == self.save_iz or (want == 'IZ' and any(re.search(r'\bXIZ\b', c) for c in body)):
             return code
         f2 = Fn(*self._args)
+        f2.label0, f2.table0, f2.has_epi = self.label0, self.table0, self.has_epi
         f2.save_iz = want if not any(re.search(r'\bXIZ\b', c) for c in body) else 'XIZ'
         return f2._gen()
 
     def _gen(self):
-        has_epi = bool(self.save_iz or self.frame) and sum(r.op == 'END' for r in self.recs) > 1
-        self.epi_label = 'L50000'
-        self.next_label = 50001 if has_epi else 50000
-        self.next_table = 50000
+        self.epi_label = 'L%d' % self.label0
+        self.next_label = self.label0 + (1 if self.has_epi else 0)
+        self.next_table = self.table0
         self.tables = []
         for i_, r in enumerate(self.recs):
             self.pos = i_
