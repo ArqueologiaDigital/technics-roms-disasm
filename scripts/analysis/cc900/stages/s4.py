@@ -70,7 +70,7 @@ COALESCE_FROM = 'T'
 WIDEN_FROM = 'T'                                     # a dying source of these kinds is widened in place
 BYTE_TO_LONG_CLEAR = True                            # byte -> long zero extension: ld X,0 / ld low,src                                # copies of dying values of these kinds share the register
 STRUCT_AT_0 = True                                   # *p / @(p) of a struct pointer reads its first field
-COALESCE_READ_ONLY = False                            # a copy never written after shares its dying source's register
+COALESCE_READ_ONLY = True                            # a copy never written after shares its dying source's register
 RETURN_HINT = True                                   # a returned temporary is built in XHL
 CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
 FORCED = {}                                          # temporary -> family, imposed by a probe (s4_temps.py)
@@ -367,6 +367,11 @@ class Fn:
                     self.name(r.args[0]).startswith('T') and n in h:
                 h.setdefault(self.name(r.args[0]), h[n])   # T1 = T0 copies pass the hint back
         return h
+
+    def only_compared(self, n, i):
+        """is variable n, after record i, used only as the operand of compare branches"""
+        uses = [r for r in self.recs[i + 1:] if any(x and self.name(x) == n for x in [r.res] + r.args)]
+        return bool(uses) and all(r.op in ('BEQ', 'BNE', 'BLT', 'BGE', 'BGT', 'BLE') for r in uses)
 
     def written_after(self, n, i):
         """is variable n written (or modified in place, a Switch included) by a record after i"""
@@ -691,7 +696,7 @@ class Fn:
                     not r.args[0].startswith(('*', '@', '#')) and self.dies(r.args[0], i_) and \
                     self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack' and \
                     (self.name(r.args[0])[0] in COALESCE_FROM or
-                     (COALESCE_READ_ONLY and not self.written_after(self.name(r.res), i_))):
+                     (COALESCE_READ_ONLY and self.only_compared(self.name(r.res), i_))):
                 ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
                 self.regs[self.name(r.res)] = sized(fam_of(ra), size_of(r.res)) if size_of(r.res) != 4 or True else ra
             elif LOAD_REUSE and op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
