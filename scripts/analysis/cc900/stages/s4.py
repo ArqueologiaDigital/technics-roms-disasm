@@ -216,6 +216,27 @@ class Fn:
                                                   '' if not m.group(2) else '+0x%x' % int(m.group(2))))
                 else:
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), self.mem(a)[1:-1]))
+            elif op == 'FORCE':
+                a = r.args[0]
+                ra = self.reg(a)                     # the 32-bit product lands in the operand's own family
+                self.regs[self.name(r.res)] = NAMES[fam_of(ra)][2]
+                self.signed_of = getattr(self, 'signed_of', {})
+                self.signed_of[self.name(r.res)] = not unsigned(a)
+            elif op in ('*=', '/=', '%=') and self.name(r.res) in self.regs and size_of(r.res) == 4 and \
+                    re.search(r'\(0\)', r.res or ''):
+                sg = getattr(self, 'signed_of', {}).get(self.name(r.res), True)
+                m = {'*=': 'mul', '/=': 'div', '%=': 'div'}[op] + ('s' if sg else '')
+                self.emit(m, '%s,%s' % (self.reg(r.res), self.src(r.args[0], 2)))
+            elif op in ('LOW', 'HIGH'):
+                rn = self.reg(r.args[0])
+                f = fam_of(rn)
+                n = self.name(r.res)
+                if n.startswith('T') and n not in self.regs:
+                    self.regs[n] = sized(f, size_of(r.res))
+                elif op == 'LOW' and self.dst(r.res) != sized(f, 2):
+                    self.emit('ld', '%s,%s' % (self.dst(r.res), sized(f, 2)))
+                elif op == 'HIGH':
+                    raise Unsupported('HIGH')
             elif op == 'asm':
                 self.emit(r.args[0].strip())
             elif op == 'ACALP':
