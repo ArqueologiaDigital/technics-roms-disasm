@@ -1,0 +1,67 @@
+#!/usr/bin/env python3
+"""Check stage S4 against V4.23: s4.py's code for every function of job_i2.sh's `zimg` listings, from thc2's own
+-zim dump and the -g registers of its parameters and locals, against the code lines thc2 wrote (listing2.py).
+
+QUESTION ANSWERED: for how many functions does our instruction selection write V4.23's exact code (given V4.23's own
+S3); refusals by reason and first differences by mnemonic, as a worklist.  Counts only.
+
+    python3 -B scripts/analysis/cc900/stages/s4_check.py [--labels Xr,...] RUN_DIR [RUN_DIR ...]
+"""
+import collections
+import glob
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import listing2  # noqa: E402
+import s3_check  # noqa: E402
+import s4  # noqa: E402
+
+
+def one_file(z):
+    c, first = collections.Counter(), collections.Counter()
+    fs, tr = listing2.functions(z), s3_check.truth(z)
+    if len(fs) != len(tr):
+        c['unpaired files'] += 1
+        return c, first
+    for (dmp, code), (fn, regs) in zip(fs, tr):
+        c['functions'] += 1
+        try:
+            ours = s4.Fn(['FUNC_START'] + [d for d in dmp if 'FUNC_' not in d] + ['FUNC_END'], regs).gen()
+        except s4.Unsupported as ex:
+            c['refused'] += 1
+            first[('refused', str(ex).split(' ')[0])] += 1
+            continue
+        except Exception as ex:
+            c['error'] += 1
+            first[('error', type(ex).__name__)] += 1
+            continue
+        if ours == code:
+            c['exact'] += 1
+            continue
+        k = next(i for i in range(max(len(ours), len(code))) if i >= len(ours) or i >= len(code) or ours[i] != code[i])
+        first[((code[k].split(' ')[0] if k < len(code) else '-'), (ours[k].split(' ')[0] if k < len(ours) else '-'))] += 1
+    return c, first
+
+
+def main():
+    import multiprocessing
+    a = sys.argv[1:]
+    labels = None
+    if '--labels' in a:
+        i = a.index('--labels'); labels = set(a[i + 1].split(',')); a = a[:i] + a[i + 2:]
+    files = [z for r in a for z in sorted(glob.glob(os.path.join(r, 'out', '*', '*', '**', '*_zimg.asm'), recursive=True))
+             if not labels or os.path.relpath(z, os.path.join(r, 'out')).split(os.sep)[1] in labels]
+    c, first = collections.Counter(), collections.Counter()
+    with multiprocessing.Pool(8) as pool:
+        for c1, f1 in pool.imap_unordered(one_file, files, chunksize=4):
+            c.update(c1)
+            first.update(f1)
+    print(' '.join('%s %d' % kv for kv in sorted(c.items())))
+    print('\nrefusals and first differences (thc2, ours):')
+    for k, v in first.most_common(25):
+        print('  %5d %s' % (v, k))
+
+
+if __name__ == '__main__':
+    main()
