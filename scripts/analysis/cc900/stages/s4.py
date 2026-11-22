@@ -24,6 +24,7 @@ class Unsupported(Exception):
     pass
 
 
+UNS0 = {}                                            # T<n> of type 0 -> unsigned, as what it is copied from
 SIZE0 = {}                                           # T<n> of type 0 -> size inferred for the current function
 
 
@@ -43,6 +44,8 @@ def size_of(x):
 
 
 def unsigned(x):
+    if x and re.match(r'^[*&]?T\d+\(0\)', x):
+        return UNS0.get(re.match(r'^[*&]?(T\d+)', x).group(1), False)
     m = re.search(r'\(([A-Z]+)( [FN]\*)?\)', x or '')
     return bool(m) and (m.group(2) is not None or m.group(1).startswith('U'))
 
@@ -92,6 +95,7 @@ class Fn:
             if m:
                 self.psize.setdefault(m.group(1), size_of(m.group(1) + m.group(2)))
         SIZE0.clear()
+        UNS0.clear()
         for _ in range(3):                           # a type-0 temporary has the size of what it is copied from/to
             for r in self.recs:
                 xs = [x for x in [r.res] + r.args if x]
@@ -101,10 +105,13 @@ class Fn:
                         m = re.match(r'^[*&]?(T\d+)\(0\)', u)
                         if m and not re.match(r'^[*&]?T\d+\(0\)', v) and not v.startswith(('@(', '*')):
                             SIZE0.setdefault(m.group(1), size_of(v))
+                            UNS0.setdefault(m.group(1), unsigned(v))
                         elif m and re.match(r'^[*&]?T\d+\(0\)', v):
                             n2 = re.match(r'^[*&]?(T\d+)', v).group(1)
                             if n2 in SIZE0:
                                 SIZE0.setdefault(m.group(1), SIZE0[n2])
+                            if n2 in UNS0:
+                                UNS0.setdefault(m.group(1), UNS0[n2])
 
     def name(self, x):
         return re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x).group(1) if x and re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x) else None
