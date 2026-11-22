@@ -5926,46 +5926,7 @@ UIState_RenderBitmapData_Skip2:
 	ret
 ToshiCmd_DefaultHandler_Ret:
 	ret
-SndParam_FetchSequencerParams:
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	bc, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	lda	xwa, (PANEL_EVENT_QUEUE:16)
-	extz	xbc
-	add	xbc, xwa
-	mrib4	0x81, 0x19, 0x67, 0x90
-	ld	a, (MIDI_MSG_STATUS:16)
-	extz	wa
-	calr	PanelTlv_PayloadOfTag
-	ld	(0x906b:16), xhl
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	lda	xbc, (PANEL_EVENT_QUEUE:16)
-	extz	xde
-	add	xde, xbc
-	ld	a, (xde)
-	ld	(MIDI_MSG_DATA1:16), a
-	ld	(EXTDATA_TLV_OFFSET:16), a
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	extz	xde
-	add	xde, xbc
-	mrib4	0x82, 0x19, 0x70, 0x90
-	ld	(MIDI_MSG_DATA2:16), 0
-	ld	wa, (EXT_RECORD_OFFSET:16)
-	ld	de, wa
-	inc	1, wa
-	ld	(EXT_RECORD_OFFSET:16), wa
-	extz	xde
-	add	xde, xbc
-	mrib4	0x82, 0x19, 0x71, 0x90
-	ld	(MIDI_MSG_DATA3:16), 0
-	ret
+SndParam_FetchSequencerParams:	.include "includes/generated/cc900/SndParam_FetchSequencerParams.s"	; C: cc900/audio_control_engine_m280.c
 SndParam_WriteLookupAndStore:	.include "includes/generated/cc900/SndParam_WriteLookupAndStore.s"	; C: cc900/audio_control_engine_m280.c
 SwbtWr_FlushAndAppendParams:
 	cp	(MIDI_MSG_DATA3:16), 0

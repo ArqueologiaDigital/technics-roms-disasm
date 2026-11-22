@@ -159,3 +159,20 @@ void ExtData_Tag43_SetByte1Fields(void)
 	ExtData_SetTlvField(127);
 	SwbtWr_FlushAndAppendParams();
 }
+
+typedef unsigned char *ucp;
+extern unsigned int __near EXT_RECORD_OFFSET;
+extern unsigned char __near PANEL_EVENT_QUEUE[];
+extern ucp __near ram_908f;
+extern void SndParam_FetchSequencerParams(void);
+
+void SndParam_FetchSequencerParams(void)
+{
+    MIDI_MSG_STATUS = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    ram_908f = PanelTlv_PayloadOfTag(MIDI_MSG_STATUS);
+    EXTDATA_TLV_OFFSET = MIDI_MSG_DATA1 = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    EXTDATA_VALUE = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    MIDI_MSG_DATA2 = 0;
+    EXTDATA_MASK = PANEL_EVENT_QUEUE[EXT_RECORD_OFFSET++];
+    MIDI_MSG_DATA3 = 0;
+}

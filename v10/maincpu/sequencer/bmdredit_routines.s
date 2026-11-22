@@ -702,65 +702,21 @@ BmDrEdit_PitchScrollDown:
 ; Unless the timer runs with an action other than 2, and only with bit 0 of 0x295f set: moves the
 ; note 0x2786 down in drum mode (bit 0 of 0x2742), up otherwise (BmDrEdit_DecrementVelocity /
 ; BmDrEdit_IncrementVelocity, in BmDrEdit_VelocityDown_Check).
-BmDrEdit_VelocityUp_Check:
-	bit 7, (0x295c:16)
-	jr z, BmDrEdit_VelocityUp_Dispatch
-	cp (0x295d:16), 2
-	ret nz
-
-BmDrEdit_VelocityUp_Dispatch:
-	bit 0, (0x295f:16)
-	ret z
-	bit 0, (0x2742:16)
-	jr nz, BmDrEdit_DecrementVelocity
-	jr BmDrEdit_IncrementVelocity
+BmDrEdit_VelocityUp_Check:	.include "includes/generated/cc900/BmDrEdit_VelocityUp_Check.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_VelocityUp_Dispatch, BmDrEdit_VelocityUp_Check + 13
 
 ; The reverse of BmDrEdit_VelocityUp_Check.  The two bodies after it step the note 0x2786 within
 ; 1..0x7f (in drum mode through BmDrEdit_DrumVoiceUp / _DrumVoiceDown), write and play it
 ; (BmDrEdit_UpdateVelocityDisplay), redraw (NoteEditSy_SendScrollCmd3) and set the timer 0x295c =
 ; 131, 0x295d = 2.
-BmDrEdit_VelocityDown_Check:
-	bit 7, (0x295c:16)
-	jr z, BmDrEdit_VelocityDown_Dispatch
-	cp (0x295d:16), 2
-	ret nz
+BmDrEdit_VelocityDown_Check:	.include "includes/generated/cc900/BmDrEdit_VelocityDown_Check.s"	; C: cc900/bmdredit_routines_m232.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	BmDrEdit_VelocityDown_Dispatch, BmDrEdit_VelocityDown_Check + 13
 
-BmDrEdit_VelocityDown_Dispatch:
-	bit 0, (0x295f:16)
-	ret z
-	bit 0, (0x2742:16)
-	jr nz, BmDrEdit_IncrementVelocity
-	jr BmDrEdit_DecrementVelocity
+BmDrEdit_IncrementVelocity:	.include "includes/generated/cc900/BmDrEdit_IncrementVelocity.s"	; C: cc900/bmdredit_routines_m0.c
 
-BmDrEdit_IncrementVelocity:
-	ld a, (0x2786:16)
-	cp a, 0x7f
-	ret nc
-	inc 1, a
-	ld (0x2786:16), a
-	bit 0, (0x2742:16)
-	call nz, (BmDrEdit_DrumVoiceUp:24)
-	calr BmDrEdit_UpdateVelocityDisplay
-	call NoteEditSy_SendScrollCmd3
-	calr BmDrEdit_NullReturn
-	ld (0x295c:16), 131
-	ld (0x295d:16), 2
-	ret
-
-BmDrEdit_DecrementVelocity:
-	ld a, (0x2786:16)
-	cp a, 1:i3
-	ret z
-	dec 1, a
-	ld (0x2786:16), a
-	bit 0, (0x2742:16)
-	call nz, (BmDrEdit_DrumVoiceDown:24)
-	calr BmDrEdit_UpdateVelocityDisplay
-	call NoteEditSy_SendScrollCmd3
-	calr BmDrEdit_NullReturn
-	ld (0x295c:16), 131
-	ld (0x295d:16), 2
-	ret
+BmDrEdit_DecrementVelocity:	.include "includes/generated/cc900/BmDrEdit_DecrementVelocity.s"	; C: cc900/bmdredit_routines_m0.c
 
 ; Only while the timer is idle: with bit 0 of 0x295f the gate 0x2788 + 1 (BmDrEdit_IncrementGateTime,
 ; in BmDrEdit_GateOrVelocityDown); otherwise, in drum mode, BmDrEdit_IncrementVelocityValue.

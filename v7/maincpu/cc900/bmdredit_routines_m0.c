@@ -55,3 +55,49 @@ refresh:
 	if (ram_295f & 0x01)
 		BmDrEdit_SendMetronomeNoteOn();
 }
+
+/* cc900-module: BmDrEdit_DecrementVelocity BmDrEdit_IncrementVelocity BmDrEdit_NullReturn BmDrEdit_UpdateVelocityDisplay */
+extern unsigned char __near ram_295c;
+extern unsigned char __near ram_295d;
+extern unsigned char __near ram_2742;
+extern unsigned char __near ram_2786;
+extern void BmDrEdit_DrumVoiceDown(void);
+extern void BmDrEdit_UpdateVelocityDisplay(void);
+extern void NoteEditSy_SendScrollCmd3(void);
+extern void BmDrEdit_NullReturn(void);
+extern void BmDrEdit_DecrementVelocity(void);
+extern void BmDrEdit_DrumVoiceUp(void);
+extern void BmDrEdit_IncrementVelocity(void);
+
+void BmDrEdit_DecrementVelocity(void)
+{
+  unsigned char v;
+
+  v = ram_2786;
+  if (v == 1)
+    return;
+  ram_2786 = v - 1;
+  if (ram_2742 & 1)
+    BmDrEdit_DrumVoiceDown();
+  BmDrEdit_UpdateVelocityDisplay();
+  NoteEditSy_SendScrollCmd3();
+  BmDrEdit_NullReturn();
+  ram_295c = 0x83;
+  ram_295d = 2;
+}
+void BmDrEdit_IncrementVelocity(void)
+{
+  unsigned char v;
+
+  v = ram_2786;
+  if (v >= 0x7f)
+    return;
+  ram_2786 = v + 1;
+  if (ram_2742 & 1)
+    BmDrEdit_DrumVoiceUp();
+  BmDrEdit_UpdateVelocityDisplay();
+  NoteEditSy_SendScrollCmd3();
+  BmDrEdit_NullReturn();
+  ram_295c = 0x83;
+  ram_295d = 2;
+}

@@ -1595,52 +1595,11 @@ SelfTest_PopCount:	.include "includes/generated/cc900/SelfTest_PopCount.s"	; C: 
 	.set	SelfTest_PopCount_Loop, SelfTest_PopCount + 4
 	.set	SelfTest_PopCount_ShiftNext, SelfTest_PopCount + 11
 
-EffectMode_CheckAndDispatch:
-	cp (CURRENT_TITLE:16), 0xfb
-	jr nz, EffectMode_DispatchUpdate
-	ld	a, (0x8cc2:16)
-	cp a, 2:i3
-	jr z, EffectMode_ResetDiagMode
-	ld	a, (0x8cc0:16)
-	bit 0x00,A
-	jr z, EffectMode_CheckAndDispatch_Bit4Clear
-	bit 0x04,A
-	jr nz, EffectMode_DispatchUpdate
-	set 0x04,A
-	ld	(0x8cc0:16), a
-	ld	a, (0x8cc2:16)
-	cp a, 1:i3
-	jr z, EffectMode_DispatchUpdate
-	ld	(0x8cc2:16), 0x01
-	calr EffectMode_InitSwbWr_DiagMode
-	calr EffectMode_SetAllLEDs
-	jr t, EffectMode_DispatchUpdate
-EffectMode_CheckAndDispatch_Bit4Clear:
-	bit	4, a
-	jr	z, EffectMode_DispatchUpdate
-	res	4, a
-	ld	(36032:16), a
-	ld	a, (36034:16)
-	cp	a, 0:i3
-	jr	z, EffectMode_DispatchUpdate
-	ld	(36034:16), 0
-	calr	EffectMode_RestoreSwbWr_NormalMode
-	calr	LED_SetAll_WithBlank
-	ld	(58100:16), 16
-	jr	EffectMode_DispatchUpdate
-EffectMode_ResetDiagMode:
-	ld	(36034:16), 0
-	calr	LED_SetAll_WithBlank
-	calr	EffectMode_RestoreSwbWr_NormalMode
-EffectMode_DispatchUpdate:
-	cp	(CURRENT_TITLE:16), 0xf8
-	call	z, (EffectMode_HandleTimerEvents:24)
-	cp	(CURRENT_TITLE:16), 0xf7
-	call	z, (EffectMode_ModeChangeTransition:24)
-	cp	(CURRENT_TITLE:16), 0xfb
-	ret	nz
-	calr	EffectMode_RunDiagSequence
-	ret
+EffectMode_CheckAndDispatch:	.include "includes/generated/cc900/EffectMode_CheckAndDispatch.s"	; C: cc900/ui_mode_handlers_m276.c
+; the hand assembly's labels inside the compiled body, by their offsets
+	.set	EffectMode_CheckAndDispatch_Bit4Clear, EffectMode_CheckAndDispatch + 57
+	.set	EffectMode_ResetDiagMode, EffectMode_CheckAndDispatch + 95
+	.set	EffectMode_DispatchUpdate, EffectMode_CheckAndDispatch + 106
 EffectMode_InitSwbWr_DiagMode:
 	lda xwa, (PANEL_PART_RT1:16)
 

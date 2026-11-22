@@ -524,3 +524,32 @@ void BmDrEdit_SaveEditState(void)
 	ram_274c = SEQ_DATA_BLOCK;
 	ram_274e = SEQ_DATA_OFFSET;
 }
+
+/* cc900-module: BmDrEdit_DecrementVelocity BmDrEdit_IncrementVelocity BmDrEdit_NullReturn BmDrEdit_UpdateVelocityDisplay */
+extern void BmDrEdit_VelocityDown_Check(void);
+extern void BmDrEdit_IncrementVelocity(void);
+extern void BmDrEdit_DecrementVelocity(void);
+extern void BmDrEdit_VelocityUp_Check(void);
+
+void BmDrEdit_VelocityDown_Check(void)
+{
+  if ((ram_2940 & 0x80) && ram_2941 != 2)
+    return;
+  if (!(ram_2943 & 1))
+    return;
+  if (ram_2728 & 1)
+    BmDrEdit_IncrementVelocity();
+  else
+    BmDrEdit_DecrementVelocity();
+}
+void BmDrEdit_VelocityUp_Check(void)
+{
+  if ((ram_2940 & 0x80) && ram_2941 != 2)
+    return;
+  if (!(ram_2943 & 1))
+    return;
+  if (ram_2728 & 1)
+    BmDrEdit_DecrementVelocity();
+  else
+    BmDrEdit_IncrementVelocity();
+}
