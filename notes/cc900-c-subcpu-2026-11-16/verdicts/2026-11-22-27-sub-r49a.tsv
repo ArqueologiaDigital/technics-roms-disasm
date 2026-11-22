@@ -1,0 +1,4 @@
+function	bytes	matches	best_diff
+DSP_ApplyAlgoForVoiceType	27	sub_lane_49a@Xr	
+DSP_Set_MicLevel	34	-	+30 sub_lane_49c@Xr
+DSP_Set_MicSense	40	sub_lane_49a@Xr sub_lane_49b@Xr	
