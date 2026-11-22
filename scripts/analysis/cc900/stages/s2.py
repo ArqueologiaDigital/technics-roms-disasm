@@ -197,7 +197,8 @@ def rewrite2(recs):
             t = new_temp()                           # a compare of two memory operands: the left one loaded
             out.append(dump.Rec(r.block, '=', t, [r.args[0]], None, ''))
             r.args = [t, r.args[1]]
-        if MEM_ROUTES and r.op == 'CONV' and r.args and is_mem(r.args[0]) and not r.args[0].startswith('@_'):
+        if MEM_ROUTES and r.op == 'CONV' and r.args and is_mem(r.args[0]) and not r.args[0].startswith('@_') and \
+                tsize(r.res) != 4:                   # (to a 4-byte type the conversion reads memory directly)
             t = new_temp()                           # a conversion of a value in memory: loaded first
             out.append(dump.Rec(r.block, '=', t, [r.args[0]], None, ''))
             r.args = [t]
