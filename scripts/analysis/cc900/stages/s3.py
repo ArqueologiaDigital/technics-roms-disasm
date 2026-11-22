@@ -22,6 +22,7 @@ SIZES = {'SCHAR': 1, 'UCHAR': 1, 'SSHORT': 2, 'USHORT': 2, 'SINT': 2, 'UINT': 2,
 ARGREG = ['XWA', 'XBC', 'XDE']
 RETURN_HL = True
 INTERFERENCE = True
+AVOID_WA_TEMPS = True
 TEMPS_FIRST = False                                 # tested: temporaries coloured first lose 197-257 variables
 TEMP_DIR = 1
 CALL_RESULT_HL = True
@@ -80,6 +81,12 @@ def allocate(zim):
             used.add(ARGREG[int(n[1:])])
     order = list(LOCAL_ORDER)
     inter = flow.interference(recs, list(names)) if INTERFERENCE else None
+    busy_wa = set()                                  # live where a temporary is computed: XWA is the temporaries'
+    if AVOID_WA_TEMPS:
+        lives = flow.live_sets(recs, list(names))
+        for i, r in enumerate(recs):
+            if r.res and re.match(r'^T\d+\(', r.res):
+                busy_wa |= lives[i + 1] if i + 1 < len(recs) else set()
     owner = {}                                       # family -> variables holding it (for sharing when disjoint)
     for n, r_ in out.items():
         for f, fam in FAM.items():
@@ -104,7 +111,7 @@ def allocate(zim):
             owner.setdefault('XHL', set()).add(n)
             continue
         for f in order:
-            if not free(f) or (size == 1 and FAM[f][0] is None):
+            if not free(f) or (size == 1 and FAM[f][0] is None) or (f == 'XWA' and n in busy_wa):
                 continue
             out[n] = reg(f, size)
             used.add(f)
