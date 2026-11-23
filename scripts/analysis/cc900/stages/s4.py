@@ -76,6 +76,7 @@ RESERVE_HINTED = True                                # avoid registers hinted to
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
 COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
+ADDR_EXT_ADD = True                                  # @(temporary base + dying index): ext index / add base
 FORCE_COPY_LIVE = True                               # a multiply / divide operand still needed is copied first
 ACROSS_XIZ = True                                    # a temporary live across a call goes to XIZ
 BYTE_LOAD_A = True                                   # a byte temporary loaded from memory is built in A
@@ -454,6 +455,19 @@ class Fn:
             out |= self._live[j]
         return out
 
+    def addr_parts(self, a):
+        """(base name, index name) of @(B+I) with a register index, or None"""
+        inner = a[2:-1]
+        e = dump.operand_end(inner, 0)
+        rest = inner[e:]
+        if not rest.startswith('+') or re.match(r'^\+\d+$', rest):
+            return None
+        return self.name(inner[:e]), self.name(rest[1:])
+
+    def idx_operand(self, a):
+        inner = a[2:-1]
+        return inner[dump.operand_end(inner, 0) + 1:]
+
     def across(self, n):
         """is temporary n live across a call (it then needs XIZ, the register calls keep)"""
         if not ACROSS_XIZ:
@@ -661,6 +675,17 @@ class Fn:
                 elif self.stack(a):
                     o = self.offs[self.name(a)]          # the address of a stack variable
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), 'XSP+0x%x' % o if o else 'XSP'))
+                elif ADDR_EXT_ADD and re.match(r'^@\(', a) and self.addr_parts(a) and self.addr_parts(a)[0][0] == 'T' \
+                        and self.dies(self.addr_parts(a)[1], i_) and self.name(r.res) not in self.regs:
+                    base, idx = self.addr_parts(a)      # base + a dying 16-bit index: the index widened, base added,
+                    ri = self.regs.get(idx)              # the result in the index's family
+                    rb = self.regs.get(base)
+                    if ri in (None, 'stack') or rb in (None, 'stack') or ri not in NAMES.get(fam_of(ri), ()):
+                        raise Unsupported('ADDR index')
+                    li = NAMES[fam_of(ri)][2]
+                    self.emit('extz' if unsigned(self.idx_operand(a)) else 'exts', li)
+                    self.emit('add', '%s,%s' % (li, NAMES[fam_of(rb)][2]))
+                    self.regs[self.name(r.res)] = li
                 elif self.mem(a):
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), self.mem(a)[1:-1]))
                 else:
