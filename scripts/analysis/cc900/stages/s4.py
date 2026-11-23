@@ -562,6 +562,9 @@ class Fn:
         if m:
             d = int(m.group(2)) if m.group(2) else 0
             return '(%s%s)' % (m.group(1), '' if not d else (' + 0x%x' % d if d > 0 else ' - 0x%x' % -d))
+        m = re.match(r'^@\((.+)\+\+\((\d+)\)\)$', x)
+        if m:                                        # post-increment: (Xrr+:n)
+            return '(%s+:%s)' % (self.long_of(m.group(1)), m.group(2))
         if x.startswith('@('):
             inner = x[2:-1]
             e = dump.operand_end(inner, 0)
