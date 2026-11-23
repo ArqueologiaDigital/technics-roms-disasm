@@ -499,6 +499,12 @@ class Fn:
                 self.regs[n] = sized(f, size)
                 LOG.append((n, size, f, len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
                 return self.regs[n]
+        live_busy = busy - res_                      # every family taken once reservations count: ignore them;
+        for f in FAMS:                               # a byte may then take IXL / IYL as well
+            if f not in live_busy and f != 'XIZ':
+                self.regs[n] = sized(f, size)
+                LOG.append((n, size, f, len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
+                return self.regs[n]
         raise Unsupported('no register for ' + n)
 
     def long_of(self, x):
