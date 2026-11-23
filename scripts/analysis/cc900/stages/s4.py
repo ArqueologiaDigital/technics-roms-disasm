@@ -23,6 +23,7 @@ BYTE_TEMPS = False                                   # may a byte temporary take
 COND = {'BLT': 'lt', 'BLE': 'le', 'BGT': 'gt', 'BGE': 'ge', 'BEQ': 'eq', 'BNE': 'ne'}
 UCOND = {'BLT': 'ult', 'BLE': 'ule', 'BGT': 'ugt', 'BGE': 'uge', 'BEQ': 'eq', 'BNE': 'ne'}
 ARGREG = ['XWA', 'XBC', 'XDE']
+SETCC = {'==': 'BEQ', '!=': 'BNE', '<': 'BLT', '<=': 'BLE', '>': 'BGT', '>=': 'BGE'}
 ALU = {'+=': 'add', '-=': 'sub', '&=': 'and', '|=': 'or', '^=': 'xor'}
 
 
@@ -367,7 +368,7 @@ class Fn:
         """the register an I / P / T operand lives in"""
         n = self.name(x)
         r = self.regs.get(n)
-        if r is None and n and n.startswith('T'):
+        if r is None and n and n[0] in 'TG':
             r = self.new_temp(n, size_of(x))
         if r is None or r == 'stack':
             raise Unsupported('operand ' + str(x))
@@ -849,8 +850,20 @@ class Fn:
                         self.emit('lda' if re.search(r'[+-]', a_) else 'ld', '%s,%s' % (reg_, a_))
                 self.emit('ld', 'BC,0x%x' % (n_ // 2))
                 self.emit('ldirw', '(XIX+),(XIY+)')
-            elif op == 'asm':
+            elif op in ('asm', 'ASM'):
                 self.emit(r.args[0].strip())
+            elif op in SETCC and r.res and len(r.args) == 2:
+                a, b = r.args                            # a compare producing a value: cp, then scc cond,reg
+                size = size_of(a)
+                self.cur_size = size
+                left = self.stack(a) or self.mem(a) or self.reg(a)
+                self.emit('cp', left + ',' + self.src(b, size))
+                if r.res == 'A':
+                    rd = 'HL'
+                else:
+                    n = self.name(r.res)
+                    rd = self.regs.get(n) or self.new_temp(n, 2)
+                self.emit('scc', '%s,%s' % ((UCOND if unsigned(a) else COND)[SETCC[op]], rd))
             elif op == 'ACALP':
                 target = self.long_of(r.args[0])
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
@@ -929,7 +942,7 @@ class Fn:
                 n = self.name(r.res)
                 store = None
                 if r.res == 'A':                         # into the return value: XHL
-                    n = '_ret%d' % i_
+                    n = 'T8%03d' % i_
                     self.regs[n] = sized('XHL', sd)
                     r = dump.Rec(r.block, r.op, n + '(%s)' % ('ULONG' if sd == 4 else ('UINT' if sd == 2 else 'UCHAR')), r.args, r.extra, r.raw)
                 elif self.mem(r.res) or self.stack(r.res):   # into memory: through a register, then stored
