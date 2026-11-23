@@ -75,6 +75,7 @@ BACK_HINTS = 'one'                                   # hints pass back through o
 RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
+ACROSS_XIZ = True                                    # a temporary live across a call goes to XIZ
 BYTE_LOAD_A = True                                   # a byte temporary loaded from memory is built in A
 RETURN_HINT = True                                   # a returned temporary is built in XHL
 CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
@@ -433,6 +434,17 @@ class Fn:
             out |= self._live[j]
         return out
 
+    def across(self, n):
+        """is temporary n live across a call (it then needs XIZ, the register calls keep)"""
+        if not ACROSS_XIZ:
+            return False
+        if not hasattr(self, '_across'):
+            self._across = {}
+        if n not in self._across:
+            import flow
+            self._across[n] = flow.live_across_call(self.recs, n)
+        return self._across[n]
+
     def new_temp(self, n, size, prefer=None):
         if LIVENESS:
             lo = self.live_out()
@@ -442,6 +454,18 @@ class Fn:
         res_ = self.reserved(n) if RESERVE_HINTED else set()
         busy = set(busy) | res_
         prefs = [f for f in (self.hints.get(n), prefer) if f and (f not in res_ or not HINT_YIELDS)]
+        if n not in FORCED and self.across(n):
+            held = {r for k, r in self.regs.items() if r and k != n and k in self.live_out() and r in
+                    ('XIZ', 'IZ', 'QIZ', 'IZL', 'IZH', 'QIZL', 'QIZH')}
+            lo_ = held & {'XIZ', 'IZ', 'IZL', 'IZH'}
+            hi_ = held & {'XIZ', 'QIZ', 'QIZL', 'QIZH'}
+            pick = ('XIZ' if not held else None) if size == 4 else \
+                (('IZ' if not lo_ else ('QIZ' if not hi_ else None)) if size == 2 else
+                 ('QIZH' if not hi_ else ('IZL' if not lo_ else None)))
+            if pick:                                 # a temporary live across a call: XIZ's free part
+                self.regs[n] = pick
+                LOG.append((n, size, 'XIZ', len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
+                return pick
         if n in FORCED:                              # (a choice imposed by a probe, s4_temps.py)
             self.regs[n] = sized(FORCED[n], size)
             LOG.append((n, size, FORCED[n], len(self.code), sorted(str(b) for b in busy), prefs, self.recs[self.pos].op))
@@ -648,8 +672,10 @@ class Fn:
                             self.emit('ld', '%s,%s' % (f, sx))
                 self.emit('cal', r.extra.strip())
                 n = self.name(r.res)
-                if n.startswith('T') and n not in self.regs:
+                if n.startswith('T') and n not in self.regs and not self.across(n):
                     self.regs[n] = 'XHL'
+                elif n.startswith('T') and n not in self.regs:
+                    self.emit('ld', '%s,XHL' % self.new_temp(n, 4))   # kept across a later call: moved to XIZ
                 elif self.dst(r.res) != 'XHL':
                     self.emit('ld', '%s,XHL' % self.dst(r.res))
             elif op in ('CARG', 'CARG &'):
@@ -821,8 +847,10 @@ class Fn:
                 if r.res and r.res != 'A':
                     rr = sized('XHL', size_of(r.res))
                     n = self.name(r.res)
-                    if n and n.startswith('T') and n not in self.regs:
+                    if n and n.startswith('T') and n not in self.regs and not self.across(n):
                         self.regs[n] = rr
+                    elif n and n.startswith('T') and n not in self.regs:
+                        self.emit('ld', '%s,%s' % (self.new_temp(n, size_of(r.res)), rr))
                     elif self.dst(r.res) != rr:
                         self.emit('ld', self.dst(r.res) + ',' + rr)
             elif op in ('ACALL', 'CCALL'):
@@ -840,8 +868,10 @@ class Fn:
                         n = self.name(r.res)
                         if r.res == 'A' or n is None:
                             pass                     # the result is the function's own: already in HL
-                        elif n.startswith('T') and n not in self.regs:
+                        elif n.startswith('T') and n not in self.regs and not self.across(n):
                             self.regs[n] = rr
+                        elif n.startswith('T') and n not in self.regs:
+                            self.emit('ld', '%s,%s' % (self.new_temp(n, size_of(r.res)), rr))
                         elif self.dst(r.res) != rr:
                             self.emit('ld', self.dst(r.res) + ',' + rr)
             elif op in ('JRBC', 'JRBS'):
