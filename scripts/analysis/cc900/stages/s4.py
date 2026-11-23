@@ -79,7 +79,9 @@ RESERVE_SOFT = True
 OR_ZERO = True
 SLA_SIGNED = True
 CONST_SIZES_STORE = True
-BIT_WORD_HALF = True                                 # bit / set / res on a long register use its word halves
+BIT_WORD_HALF = True
+ARICALL_HINTS = True                                 # a runtime helper's operand temporaries are built in XWA / XBC
+DEF_INTERFERES = 'byte2long'                              # a new temporary avoids its defining instruction's variable sources                                 # bit / set / res on a long register use its word halves
 RES_SINGLE_BIT = 'reg'                               # &= clearing one bit as res: 'reg', 'all' or None
 SET_SINGLE_BIT = 'reg'                                # |= setting one bit as set: 'reg', 'all' or None                             # a typed constant stored to memory sizes the store                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
 WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
@@ -377,6 +379,13 @@ class Fn:
         for i, r in enumerate(self.recs):
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
                 h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
+        if ARICALL_HINTS:
+            for r in self.recs:                      # a runtime helper's operands: XWA, XBC
+                if r.op == 'ARICALL' and len(r.args) == 2:
+                    for x, f in zip(r.args, ('XWA', 'XBC')):
+                        k = self.name(x) if x else None
+                        if k and k.startswith('T') and not x.startswith(('*', '@', '&')):
+                            h.setdefault(k, f)
         for r in self.recs:                          # a block copy's address temporaries: XIX (destination), XIY (source)
             if r.op == 'LDIR':
                 for x, f in ((r.res, 'XIX'), (r.args[0] if r.args else None, 'XIY')):
@@ -498,6 +507,14 @@ class Fn:
             busy = {fam_of(r) for k, r in self.regs.items() if r and r != 'stack' and self.live(k)}
         res_ = self.reserved(n) if RESERVE_HINTED else set()
         busy = set(busy) | res_
+        cur = self.recs[self.pos]
+        if DEF_INTERFERES and (DEF_INTERFERES == 'all' or (cur.op == 'CONV' and (DEF_INTERFERES == 'conv' or (
+                size == 4 and cur.args and size_of(cur.args[0]) == 1 and unsigned(cur.args[0]))))) and \
+                self.name(cur.res or '') == n:
+            for x in cur.args:                       # the defining instruction's own sources (not coalesced)
+                k = self.name(x) if x else None
+                if k and (k[0] in 'IP' or DEF_INTERFERES == 'byte2long') and self.regs.get(k) not in (None, 'stack'):
+                    busy.add(fam_of(self.regs[k]))
         prefs = [f for f in (self.hints.get(n), prefer) if f and (f not in res_ or not HINT_YIELDS)]
         if n not in FORCED and self.across(n):
             held = {r for k, r in self.regs.items() if r and k != n and k in self.live_out() and r in
@@ -922,7 +939,8 @@ class Fn:
                     r = dump.Rec(r.block, r.op, n + '(%s)' % ('ULONG' if sd == 4 else ('UINT' if sd == 2 else 'UCHAR')), r.args, r.extra, r.raw)
                 if n.startswith('T') and n not in self.regs and self.dies(a, i_) and \
                         (self.name(a)[0] in WIDEN_FROM) and \
-                        not (WIDEN_RESPECTS_RESERVED and fam_of(ra) in self.reserved(n)):
+                        not (WIDEN_RESPECTS_RESERVED and fam_of(ra) in self.reserved(n)) and \
+                        not (BYTE_TO_LONG_CLEAR and sd == 4 and sa == 1 and unsigned(a)):   # (cleared elsewhere)
                     self.regs[n] = sized(fam_of(ra), sd)     # widened in place
                 rd = self.reg(r.res)
                 ext = 'exts' if not unsigned(a) else 'extz'
