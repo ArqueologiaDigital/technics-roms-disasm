@@ -76,7 +76,8 @@ RESERVE_HINTED = True                                # avoid registers hinted to
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
 RESERVE_SOFT = True
-OR_ZERO = True                                       # a 32-bit register == / != 0 is or r,r
+OR_ZERO = True
+SLA_SIGNED = True                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
 WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
 COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
 ADDR_EXT_ADD = True                                  # @(temporary base + dying index): ext index / add base
@@ -992,9 +993,21 @@ class Fn:
                 self.emit('j', ('eq' if op == 'JRBC' else 'ne') + ',' + r.res)
             elif op in ('BSET', 'BCLR'):
                 self.emit('set' if op == 'BSET' else 'res', '0x%x,%s' % (const(r.args[0]), self.dst(r.res)))
+            elif op in ('NOT', 'NEG'):
+                rr = self.reg(r.res)                     # one's complement: cpl; a long by its halves;
+                f = fam_of(rr)                           # negation: complement, then + 1
+                if size_of(r.res) == 4:
+                    w = NAMES[f][1]
+                    self.emit('cpl', w)
+                    self.emit('cpl', 'Q' + w)
+                else:
+                    self.emit('cpl', rr)
+                if op == 'NEG':
+                    self.emit('inc', '0x1,' + rr)
             elif op in ('<<=', '>>='):
                 v = const(r.args[0])
-                m = 'sll' if op == '<<=' else ('srl' if unsigned(r.res) else 'sra')
+                m = ('sll' if unsigned(r.res) or not SLA_SIGNED else 'sla') if op == '<<=' else \
+                    ('srl' if unsigned(r.res) else 'sra')
                 if v is None:
                     raise Unsupported('shift by a register')
                 self.emit(m, '0x%x,%s' % (v, self.reg(r.res)))
