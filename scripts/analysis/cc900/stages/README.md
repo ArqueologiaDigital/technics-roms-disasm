@@ -79,6 +79,7 @@ Run the round trip, from technics-roms-disasm's root:
 | 2026-11-22 | S4    | from V4.23's own -zim and -g: 138 / 2,001 `-Xr` functions' code exact (S3 now 5,958 / 6,768 variables)                                                                                                          |
 | 2026-11-22 | S4    | 397 / 2,001 `-Xr` functions' code exact, 341 refused (switches, struct fields, stack arguments, shared epilogue, liveness-based temporaries); S3 6,172 / 6,982 variables                                        |
 | 2026-11-23 | S4    | 516 / 2,001 `-Xr` functions' code exact, 241 refused: temporaries' registers studied with `s4_temps.py` (indirect-call targets, returned values, reservations, XIZ across calls), block copies, switch defaults |
+| 2026-11-23 | S4    | 702 / 2,001 `-Xr` functions' code exact, 136 refused (calls and tail jumps, or r,r / scc / res / set, sizes, stack arrays, deferred pops); handoff: `HANDOFF-2026-11-23.md`                                     |
 
 ## S3, first measurement (2026-11-22)
 
