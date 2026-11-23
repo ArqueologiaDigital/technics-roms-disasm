@@ -731,6 +731,12 @@ class Fn:
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), self.mem(a)[1:-1]))
                 else:
                     raise Unsupported('ADDR of ' + a)
+            elif op == 'FORCE' and const(r.args[0]) is not None:
+                rn = self.new_temp(self.name(r.res), 4)  # a constant operand: loaded into a new word register
+                self.emit('ld', '%s,%s' % (sized(fam_of(rn), 2), hexc(const(r.args[0]), 2)))
+                self.regs[self.name(r.res)] = NAMES[fam_of(rn)][2]
+                self.signed_of = getattr(self, 'signed_of', {})
+                self.signed_of[self.name(r.res)] = not r.args[0].startswith('# U')
             elif op == 'FORCE':
                 a = r.args[0]
                 ra = self.reg(a)                     # the 32-bit product lands in the operand's own family
@@ -867,6 +873,22 @@ class Fn:
                     n = self.name(r.res)
                     rd = self.regs.get(n) or self.new_temp(n, 2)
                 self.emit('scc', '%s,%s' % ((UCOND if unsigned(a) else COND)[SETCC[op]], rd))
+            elif op == 'CCALP':
+                target = self.long_of(r.args[0])         # an indirect __cdecl call: the caller pops
+                self.emit('call', target)
+                k = getattr(self, 'carg', 0)
+                if k:
+                    self.emit(*sp_adjust(k))
+                    self.carg = 0
+                if r.res and r.res != 'A' and self.name(r.res):
+                    rr = sized('XHL', size_of(r.res))
+                    n = self.name(r.res)
+                    if n.startswith('T') and n not in self.regs and not self.across(n):
+                        self.regs[n] = rr
+                    elif n.startswith('T') and n not in self.regs:
+                        self.emit('ld', '%s,%s' % (self.new_temp(n, size_of(r.res)), rr))
+                    elif self.dst(r.res) != rr:
+                        self.emit('ld', self.dst(r.res) + ',' + rr)
             elif op == 'ACALP':
                 target = self.long_of(r.args[0])
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
@@ -1063,9 +1085,14 @@ class Fn:
                 v = const(r.args[0])
                 m = ('sll' if unsigned(r.res) or not SLA_SIGNED else 'sla') if op == '<<=' else \
                     ('srl' if unsigned(r.res) else 'sra')
-                if v is None:
-                    raise Unsupported('shift by a register')
-                self.emit(m, '0x%x,%s' % (v, self.reg(r.res)))
+                if v is None:                            # a count in a register: it goes in A
+                    cnt = self.stack(r.args[0]) or self.mem(r.args[0]) or self.reg(r.args[0])
+                    cb = sized(fam_of(cnt), 1) if fam_of(cnt) and not cnt.startswith('(') else cnt
+                    if cb != 'A':
+                        self.emit('ld', 'A,' + cb)
+                    self.emit(m, 'A,' + self.reg(r.res))
+                else:
+                    self.emit(m, '0x%x,%s' % (v, self.reg(r.res)))
             elif op == 'CONV' and r.args and (r.args[0].startswith(('@', '*')) or self.stack(r.args[0])):
                 sd = size_of(r.res)
                 rd = self.reg(r.res)
