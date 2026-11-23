@@ -39,7 +39,8 @@ def reads(r, name):
     if r.res and (r.res.startswith('*') or r.res.startswith('@(')) and mentions(r.res, name):
         return True
     return bool(r.res) and mentions(r.res, name) and (
-        r.op.endswith('=') and r.op not in ('=', 'CONV') or r.op in ('++', '--', 'BSET', 'BCLR', 'Switch'))
+        r.op.endswith('=') and r.op not in ('=', 'CONV', '==', '!=', '<=', '>=') or
+        r.op in ('++', '--', 'BSET', 'BCLR', 'Switch', 'NOT', 'NEG'))   # (a compare producing a value writes only)
 
 
 def writes(r, name):

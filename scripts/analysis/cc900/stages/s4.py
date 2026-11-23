@@ -733,7 +733,7 @@ class Fn:
                 size = size_of(a)
                 dst = sized('XHL', size)
                 s = self.src(a, size)
-                if s != dst:
+                if s != dst and not (fam_of(s) == 'XHL'):    # (already in the HL family: nothing to move)
                     self.emit('ld', dst + ',' + s)
             elif op == 'ADDR':
                 a = r.args[0]
