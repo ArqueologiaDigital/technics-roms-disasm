@@ -76,6 +76,7 @@ RESERVE_HINTED = True                                # avoid registers hinted to
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
 RESERVE_SOFT = True
+OR_ZERO = True                                       # a 32-bit register == / != 0 is or r,r
 WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
 COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
 ADDR_EXT_ADD = True                                  # @(temporary base + dying index): ext index / add base
@@ -661,7 +662,11 @@ class Fn:
                 a, b = r.args
                 size = size_of(a)
                 self.cur_size = size
-                self.emit('cp', (self.stack(a) or self.mem(a) or self.reg(a)) + ',' + self.src(b, size))
+                left = self.stack(a) or self.mem(a) or self.reg(a)
+                if OR_ZERO and size == 4 and const(b) == 0 and op in ('BEQ', 'BNE') and not left.startswith('('):
+                    self.emit('or', '%s,%s' % (left, left))   # a long tested for zero: or r,r
+                else:
+                    self.emit('cp', left + ',' + self.src(b, size))
                 self.emit('j', (UCOND if unsigned(a) else COND)[op] + ',' + r.res)
             elif op == '=' and r.res == 'A':
                 a = r.args[0]
@@ -822,11 +827,22 @@ class Fn:
             elif op == 'ACALP':
                 target = self.long_of(r.args[0])
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
-                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz:
+                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz \
+                        and not self.spd and not self.retd:
                     self.emit('j', target)
                     self.tail = True
                 else:
                     self.emit('call', target)
+                    self.spd = 0
+                    if r.res and r.res != 'A' and self.name(r.res):   # the result, as a direct call's: XHL
+                        rr = sized('XHL', size_of(r.res))
+                        n = self.name(r.res)
+                        if n.startswith('T') and n not in self.regs and not self.across(n):
+                            self.regs[n] = rr
+                        elif n.startswith('T') and n not in self.regs:
+                            self.emit('ld', '%s,%s' % (self.new_temp(n, size_of(r.res)), rr))
+                        elif self.dst(r.res) != rr:
+                            self.emit('ld', self.dst(r.res) + ',' + rr)
             elif op == '=' and self.name(r.res) and self.name(r.res).startswith('T') and \
                     self.name(r.res) not in self.regs and r.args and self.name(r.args[0]) and \
                     not r.args[0].startswith(('*', '@', '#')) and self.dies(r.args[0], i_) and \
