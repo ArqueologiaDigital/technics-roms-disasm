@@ -75,6 +75,8 @@ BACK_HINTS = 'one'                                   # hints pass back through o
 RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
+RESERVE_SOFT = True
+WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
 COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
 ADDR_EXT_ADD = True                                  # @(temporary base + dying index): ext index / add base
 FORCE_COPY_LIVE = True                               # a multiply / divide operand still needed is copied first
@@ -412,6 +414,9 @@ class Fn:
             if m and m != n and m in self.hints and m not in self.regs and n in self._live[j] and \
                     any(n in self._live[k] for k in self._succ[j]):
                 out.add(self.hints[m])
+            elif RESERVE_SOFT and m and m != n and m in self.soft and m not in self.regs and \
+                    any(n in self._live[k] for k in self._succ[j]):
+                out.add(self.soft[m][0])                 # (a soft preference, e.g. a byte load into A)
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and \
                     any(n in self._live[k] for k in self._succ[j]) and self.name(r.args[0]) != n:
                 out.add(ARGREG[int(r.extra[-1]) - 1])      # an argument register loaded while n lives
@@ -878,7 +883,8 @@ class Fn:
                     self.new_temp(n, sd)
                     r = dump.Rec(r.block, r.op, n + '(%s)' % ('ULONG' if sd == 4 else ('UINT' if sd == 2 else 'UCHAR')), r.args, r.extra, r.raw)
                 if n.startswith('T') and n not in self.regs and self.dies(a, i_) and \
-                        (self.name(a)[0] in WIDEN_FROM):
+                        (self.name(a)[0] in WIDEN_FROM) and \
+                        not (WIDEN_RESPECTS_RESERVED and fam_of(ra) in self.reserved(n)):
                     self.regs[n] = sized(fam_of(ra), sd)     # widened in place
                 rd = self.reg(r.res)
                 ext = 'exts' if not unsigned(a) else 'extz'
