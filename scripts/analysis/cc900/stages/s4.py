@@ -74,7 +74,7 @@ COALESCE_READ_ONLY = True                            # a dying variable's copy t
 BACK_HINTS = 'one'                                   # hints pass back through one T = T copy ('all': chains; False: none)
 RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
-HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
+HINT_YIELDS = True                                   # a hint gives way to a register reserved for another temporary
 RESERVE_SOFT = True
 OR_ZERO = True
 SLA_SIGNED = True
