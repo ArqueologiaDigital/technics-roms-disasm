@@ -115,8 +115,8 @@ def load_switches(inter):
                 continue
             break
         if len(vals) >= 2:
-            m = re.match(r'^JMP,(L\d+)$', lines[j]) if j < len(lines) else None
-            CHAINS.append((vals, m.group(1) if m else None))
+            m = re.match(r'^(?:JMP|LAB),(L\d+)$', lines[j]) if j < len(lines) else None
+            CHAINS.append((vals, m.group(1) if m else None))   # (no JMP: the dispatch falls through to the label below)
             i = j
         else:
             i += 1
