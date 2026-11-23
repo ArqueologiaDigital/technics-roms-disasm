@@ -81,6 +81,8 @@ OR_ZERO = True
 SLA_SIGNED = True
 CONST_SIZES_STORE = True
 BIT_WORD_HALF = True
+DEFERRED_POPS = True                                 # a __cdecl call pops the bytes its #N says (thc2 defers pops)
+COALESCE_PUSHED = True                               # a dying variable's copy that is only pushed shares its register
 ARICALL_HINTS = True                                 # a runtime helper's operand temporaries are built in XWA / XBC
 DEF_INTERFERES = 'byte2long'                              # a new temporary avoids its defining instruction's variable sources                                 # bit / set / res on a long register use its word halves
 RES_SINGLE_BIT = 'reg'                               # &= clearing one bit as res: 'reg', 'all' or None
@@ -441,7 +443,8 @@ class Fn:
     def only_compared(self, n, i):
         """is variable n, after record i, used only as the operand of compare branches"""
         uses = [r for r in self.recs[i + 1:] if any(x and self.name(x) == n for x in [r.res] + r.args)]
-        return bool(uses) and all(r.op in ('BEQ', 'BNE', 'BLT', 'BGE', 'BGT', 'BLE') for r in uses)
+        return bool(uses) and all(r.op in ('BEQ', 'BNE', 'BLT', 'BGE', 'BGT', 'BLE') or
+                                  (r.op == 'CARG' and COALESCE_PUSHED) for r in uses)
 
     def written_after(self, n, i):
         """is variable n written (or modified in place, a Switch included) by a record after i"""
@@ -714,7 +717,7 @@ class Fn:
                     self.emit('lda', '%s,%s%s' % (self.long_of(r.res), m.group(1),
                                                   '' if not d_ else (' + 0x%x' % d_ if d_ > 0 else ' - 0x%x' % -d_)))
                 elif self.stack(a):
-                    o = self.offs[self.name(a)]          # the address of a stack variable
+                    o = self.offs[self.name(a)] + self.spd + getattr(self, 'carg', 0)   # a stack variable's address
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), 'XSP+0x%x' % o if o else 'XSP'))
                 elif ADDR_EXT_ADD and re.match(r'^@\(', a) and self.addr_parts(a) and self.addr_parts(a)[0][0] == 'T' \
                         and self.dies(self.addr_parts(a)[1], i_) and self.name(r.res) not in self.regs:
@@ -877,9 +880,11 @@ class Fn:
                 target = self.long_of(r.args[0])         # an indirect __cdecl call: the caller pops
                 self.emit('call', target)
                 k = getattr(self, 'carg', 0)
-                if k:
-                    self.emit(*sp_adjust(k))
-                    self.carg = 0
+                m_ = re.match(r'^#(\d+)$', (r.extra or '').strip())
+                pop = int(m_.group(1)) if m_ and DEFERRED_POPS else k
+                if pop:
+                    self.emit(*sp_adjust(pop))
+                self.carg = k - pop
                 if r.res and r.res != 'A' and self.name(r.res):
                     rr = sized('XHL', size_of(r.res))
                     n = self.name(r.res)
@@ -1031,9 +1036,11 @@ class Fn:
                 target = r.args[0].split('(')[0].lstrip('@')
                 self.emit('cal', target)
                 k = getattr(self, 'carg', 0)
-                if k:
-                    self.emit(*sp_adjust(k))              # the caller pops the arguments
-                    self.carg = 0
+                m_ = re.match(r'^#(\d+)$', (r.extra or '').strip())
+                pop = int(m_.group(1)) if m_ and DEFERRED_POPS else k
+                if pop:
+                    self.emit(*sp_adjust(pop))            # the caller pops (#N: thc2 defers pops across calls)
+                self.carg = k - pop
                 if r.res and r.res != 'A':
                     rr = sized('XHL', size_of(r.res))
                     n = self.name(r.res)
