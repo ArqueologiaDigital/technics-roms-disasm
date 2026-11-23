@@ -703,7 +703,9 @@ class Fn:
                             self.emit('ld', '%s,%s' % (f, sx))
                 self.emit('cal', r.extra.strip())
                 n = self.name(r.res)
-                if n.startswith('T') and n not in self.regs and not self.across(n):
+                if r.res == 'A' or n is None:
+                    pass                                 # (the function's own result: already in XHL)
+                elif n.startswith('T') and n not in self.regs and not self.across(n):
                     self.regs[n] = 'XHL'
                 elif n.startswith('T') and n not in self.regs:
                     self.emit('ld', '%s,XHL' % self.new_temp(n, 4))   # kept across a later call: moved to XIZ
@@ -840,6 +842,16 @@ class Fn:
                 sa, sd = size_of(a), size_of(r.res)
                 ra = self.reg(a)
                 n = self.name(r.res)
+                store = None
+                if r.res == 'A':                         # into the return value: XHL
+                    n = '_ret%d' % i_
+                    self.regs[n] = sized('XHL', sd)
+                    r = dump.Rec(r.block, r.op, n + '(%s)' % ('ULONG' if sd == 4 else ('UINT' if sd == 2 else 'UCHAR')), r.args, r.extra, r.raw)
+                elif self.mem(r.res) or self.stack(r.res):   # into memory: through a register, then stored
+                    store = self.mem(r.res) or self.stack(r.res)
+                    n = 'T9%03d' % i_
+                    self.new_temp(n, sd)
+                    r = dump.Rec(r.block, r.op, n + '(%s)' % ('ULONG' if sd == 4 else ('UINT' if sd == 2 else 'UCHAR')), r.args, r.extra, r.raw)
                 if n.startswith('T') and n not in self.regs and self.dies(a, i_) and \
                         (self.name(a)[0] in WIDEN_FROM):
                     self.regs[n] = sized(fam_of(ra), sd)     # widened in place
@@ -862,6 +874,9 @@ class Fn:
                     lo = sized(fam_of(ra), sd)
                     if rd != lo:
                         self.emit('ld', rd + ',' + lo)
+                if store:
+                    self.cur_size = sd
+                    self.emit('ld', '%s,%s' % (store, rd))
             elif op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra):
                 f = ARGREG[int(r.extra[-1]) - 1]
                 a = r.args[0]
