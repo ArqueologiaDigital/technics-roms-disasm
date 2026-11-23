@@ -18,6 +18,7 @@ SAVE_FROM_CODE = True                                # XIZ halves saved as the g
 MEM_SIZES = True                                     # @(p..) / *p sized by p's pointee
 LIVENESS = True                                      # a temporary may take a register whose variable is dead
 SHARED_EPILOGUE = True                               # returns with pops / a frame share one epilogue (L50000)
+RET_INVERT = True                                    # j cc,L / ret / L: becomes ret !cc / L:
 RET_CC = True                                        # a jump to a bare ret is that ret
 BYTE_TEMPS = False                                   # may a byte temporary take IXL / IYL / IZL
 COND = {'BLT': 'lt', 'BLE': 'le', 'BGT': 'gt', 'BGE': 'ge', 'BEQ': 'eq', 'BNE': 'ne'}
@@ -1171,4 +1172,17 @@ class Fn:
             if m and m.group(1) and m.group(2) in at and at[m.group(2)] == 'ret':
                 l = 'ret' + (' ' + m.group(1) if m.group(1) else '')
             out.append(l)
+        if RET_INVERT:                               # j cc,L / ret / L:  ->  ret !cc / L:
+            inv = {'eq': 'ne', 'ne': 'eq', 'lt': 'ge', 'ge': 'lt', 'le': 'gt', 'gt': 'le', 'ult': 'uge', 'uge': 'ult',
+                   'ule': 'ugt', 'ugt': 'ule', 'm': 'p', 'p': 'm', 'z': 'nz', 'nz': 'z', 'c': 'nc', 'nc': 'c'}
+            res, i = [], 0
+            while i < len(out):
+                m = re.match(r'^j (\w+),(L\d+)$', out[i])
+                if m and m.group(1) in inv and i + 2 < len(out) and out[i + 1] == 'ret' and out[i + 2] == m.group(2) + ':':
+                    res.append('ret ' + inv[m.group(1)])
+                    i += 2
+                    continue
+                res.append(out[i])
+                i += 1
+            out = res
         self.code = out
