@@ -78,7 +78,9 @@ HINT_YIELDS = False                                   # a hint gives way to a re
 RESERVE_SOFT = True
 OR_ZERO = True
 SLA_SIGNED = True
-CONST_SIZES_STORE = True                             # a typed constant stored to memory sizes the store                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
+CONST_SIZES_STORE = True
+RES_SINGLE_BIT = 'reg'                               # &= clearing one bit as res: 'reg', 'all' or None
+SET_SINGLE_BIT = 'reg'                                # |= setting one bit as set: 'reg', 'all' or None                             # a typed constant stored to memory sizes the store                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
 WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
 COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
 ADDR_EXT_ADD = True                                  # @(temporary base + dying index): ext index / add base
@@ -886,7 +888,17 @@ class Fn:
             elif op in ALU:
                 size = size_of(r.res)
                 self.cur_size = size
-                self.emit(ALU[op], self.dst(r.res) + ',' + self.src(r.args[0], size))
+                v = const(r.args[0])
+                full = (1 << (8 * size)) - 1
+                d = self.dst(r.res)
+                if v is not None and op == '&=' and RES_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or RES_SINGLE_BIT == 'all') \
+                        and bin(~v & full).count('1') == 1:
+                    self.emit('res', '0x%x,%s' % ((~v & full).bit_length() - 1, d))   # clears one bit: res
+                elif v is not None and op == '|=' and SET_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or SET_SINGLE_BIT == 'all') \
+                        and v & full and bin(v & full).count('1') == 1:
+                    self.emit('set', '0x%x,%s' % ((v & full).bit_length() - 1, d))     # sets one bit: set
+                else:
+                    self.emit(ALU[op], d + ',' + self.src(r.args[0], size))
             elif op == 'CONV' and r.args and not r.args[0].startswith(('@', '*', '#')) and not self.stack(r.args[0]):
                 a = r.args[0]
                 sa, sd = size_of(a), size_of(r.res)
