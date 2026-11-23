@@ -77,7 +77,8 @@ COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a regi
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
 RESERVE_SOFT = True
 OR_ZERO = True
-SLA_SIGNED = True                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
+SLA_SIGNED = True
+CONST_SIZES_STORE = True                             # a typed constant stored to memory sizes the store                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
 WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
 COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
 ADDR_EXT_ADD = True                                  # @(temporary base + dying index): ext index / add base
@@ -573,7 +574,7 @@ class Fn:
     def emit(self, *ins):
         ins = [i for i in ins if i]
         if len(ins) == 2 and ins[0] in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor', 'adc', 'sbc') and \
-                ins[1].startswith('(') and re.search(r'\),(0x[0-9a-f]+|-?\d+)$', ins[1]):
+                ins[1].startswith('(') and (re.search(r'\),(0x[0-9a-f]+|-?\d+)$', ins[1]) or ins[1].endswith(')')):
             sz = getattr(self, 'cur_size', 2)            # a memory destination and an immediate: sized mnemonic
             ins[0] += {1: 'b', 2: 'w'}.get(sz, '')
         self.code.append(' '.join(ins))
@@ -868,6 +869,8 @@ class Fn:
                 self.emit('ld', self.regs[self.name(r.res)] + ',' + s_)
             elif op == '=':
                 size = size_of(r.res)
+                if CONST_SIZES_STORE and const(r.args[0]) is not None and r.res.startswith(('@', '*')):
+                    size = size_of(r.args[0])            # a typed constant stored to memory gives the store's size
                 self.cur_size = size
                 d = self.dst(r.res)
                 s = self.src(r.args[0], size)
