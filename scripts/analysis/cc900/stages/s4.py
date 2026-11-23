@@ -82,7 +82,7 @@ SLA_SIGNED = True
 CONST_SIZES_STORE = True
 BIT_WORD_HALF = True
 DEFERRED_POPS = True
-PTR_ADD_LDA = False                                   # a pointer register plus a constant is lda r,r+N                                 # a __cdecl call pops the bytes its #N says (thc2 defers pops)
+PTR_ADD_LDA = True                                   # a pointer register plus a constant is lda r,r+N                                 # a __cdecl call pops the bytes its #N says (thc2 defers pops)
 COALESCE_PUSHED = True                               # a dying variable's copy that is only pushed shares its register
 ARICALL_HINTS = True                                 # a runtime helper's operand temporaries are built in XWA / XBC
 DEF_INTERFERES = 'byte2long'                              # a new temporary avoids its defining instruction's variable sources                                 # bit / set / res on a long register use its word halves
@@ -987,7 +987,8 @@ class Fn:
                 is_ptr = bool(re.match(r'^[A-Z]\d+\([A-Z]+ [FN]\*\)', r.res or '')) or bool(
                     re.match(r'^[A-Z]\d+\((\d+)\)', r.res or '') and
                     TYPES.get(int(re.match(r'^[A-Z]\d+\((\d+)\)', r.res).group(1)), ('',))[0] == 'P')
-                if PTR_ADD_LDA and v is not None and op in ('+=', '-=') and is_ptr and d[0] != '(':
+                if PTR_ADD_LDA and v is not None and op in ('+=', '-=') and is_ptr and d[0] != '(' and \
+                        -0x8000 <= (v if op == '+=' else -v) <= 0x7fff:   # (lda's displacement is a signed 16 bits)
                     k_ = v if op == '+=' else -v               # a pointer moved by a constant: lda r,r+N
                     self.emit('lda', '%s,%s%s0x%x' % (d, d, '+' if k_ >= 0 else '-', abs(k_)))
                 elif v is not None and op == '&=' and RES_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or RES_SINGLE_BIT == 'all') \
