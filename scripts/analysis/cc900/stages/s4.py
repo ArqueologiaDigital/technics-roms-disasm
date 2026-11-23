@@ -81,7 +81,8 @@ OR_ZERO = True
 SLA_SIGNED = True
 CONST_SIZES_STORE = True
 BIT_WORD_HALF = True
-DEFERRED_POPS = True                                 # a __cdecl call pops the bytes its #N says (thc2 defers pops)
+DEFERRED_POPS = True
+PTR_ADD_LDA = False                                   # a pointer register plus a constant is lda r,r+N                                 # a __cdecl call pops the bytes its #N says (thc2 defers pops)
 COALESCE_PUSHED = True                               # a dying variable's copy that is only pushed shares its register
 ARICALL_HINTS = True                                 # a runtime helper's operand temporaries are built in XWA / XBC
 DEF_INTERFERES = 'byte2long'                              # a new temporary avoids its defining instruction's variable sources                                 # bit / set / res on a long register use its word halves
@@ -385,7 +386,8 @@ class Fn:
     def stack(self, x):
         n = self.name(x)
         if n in self.offs:
-            o = self.offs[n] + self.spd + getattr(self, 'carg', 0)
+            m = re.search(r'\[([+-]\d+)\]$', x or '')
+            o = self.offs[n] + self.spd + getattr(self, 'carg', 0) + (int(m.group(1)) if m else 0)
             return '(XSP+0x%x)' % o if o else '(XSP)'
         return None
 
@@ -740,7 +742,8 @@ class Fn:
                     self.emit('lda', '%s,%s%s' % (self.long_of(r.res), m.group(1),
                                                   '' if not d_ else (' + 0x%x' % d_ if d_ > 0 else ' - 0x%x' % -d_)))
                 elif self.stack(a):
-                    o = self.offs[self.name(a)] + self.spd + getattr(self, 'carg', 0)   # a stack variable's address
+                    m_ = re.search(r'\[([+-]\d+)\]$', a)
+                    o = self.offs[self.name(a)] + self.spd + getattr(self, 'carg', 0) + (int(m_.group(1)) if m_ else 0)
                     self.emit('lda', '%s,%s' % (self.long_of(r.res), 'XSP+0x%x' % o if o else 'XSP'))
                 elif ADDR_EXT_ADD and re.match(r'^@\(', a) and self.addr_parts(a) and self.addr_parts(a)[0][0] == 'T' \
                         and self.dies(self.addr_parts(a)[1], i_) and self.name(r.res) not in self.regs:
@@ -812,7 +815,7 @@ class Fn:
             elif op in ('CARG', 'CARG &'):
                 a = r.args[0]
                 n = int(r.extra.strip().lstrip('#')) if r.extra else 2
-                self.carg = getattr(self, 'carg', 0) + n
+                self.carg_next = n                       # (counted after the push: the operand is read before it)
                 if op == 'CARG &':
                     sym = a.split('(')[0].lstrip('@')
                     self.emit('pushw', '%s >> 16' % sym)
@@ -827,6 +830,7 @@ class Fn:
                             self.emit('pushw', '0x%x' % (v & 0xffff))
                     else:
                         self.emit('push', self.stack(a) or self.mem(a) or self.reg(a))
+                self.carg = getattr(self, 'carg', 0) + n
             elif op == 'Switch':
                 labels = r.args[0].split() if len(r.args) == 1 else r.args
                 shape = switch_shape(labels)
@@ -980,7 +984,13 @@ class Fn:
                 v = const(r.args[0])
                 full = (1 << (8 * size)) - 1
                 d = self.dst(r.res)
-                if v is not None and op == '&=' and RES_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or RES_SINGLE_BIT == 'all') \
+                is_ptr = bool(re.match(r'^[A-Z]\d+\([A-Z]+ [FN]\*\)', r.res or '')) or bool(
+                    re.match(r'^[A-Z]\d+\((\d+)\)', r.res or '') and
+                    TYPES.get(int(re.match(r'^[A-Z]\d+\((\d+)\)', r.res).group(1)), ('',))[0] == 'P')
+                if PTR_ADD_LDA and v is not None and op in ('+=', '-=') and is_ptr and d[0] != '(':
+                    k_ = v if op == '+=' else -v               # a pointer moved by a constant: lda r,r+N
+                    self.emit('lda', '%s,%s%s0x%x' % (d, d, '+' if k_ >= 0 else '-', abs(k_)))
+                elif v is not None and op == '&=' and RES_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or RES_SINGLE_BIT == 'all') \
                         and bin(~v & full).count('1') == 1:
                     self.emit('res', '0x%x,%s' % ((~v & full).bit_length() - 1, d))   # clears one bit: res
                 elif v is not None and op == '|=' and SET_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or SET_SINGLE_BIT == 'all') \
