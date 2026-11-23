@@ -75,7 +75,7 @@ BACK_HINTS = 'one'                                   # hints pass back through o
 RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
-BYTE_LOAD_A = False                                   # a byte temporary loaded from memory is built in A
+BYTE_LOAD_A = True                                   # a byte temporary loaded from memory is built in A
 RETURN_HINT = True                                   # a returned temporary is built in XHL
 CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
 FORCED = {}                                          # temporary -> family, imposed by a probe (s4_temps.py)
@@ -353,12 +353,6 @@ class Fn:
         for i, r in enumerate(self.recs):
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
                 h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
-        if BYTE_LOAD_A:
-            for r in self.recs:                      # a byte loaded from memory into a temporary: through A
-                n = self.name(r.res) if r.res else None
-                if r.op == '=' and n and n.startswith('T') and not r.res.startswith(('*', '@')) and r.args and \
-                        r.args[0].startswith(('@', '*')) and size_of(r.res) == 1:
-                    h.setdefault(n, 'XWA')
         if RETURN_HINT:
             for r in self.recs:                      # a temporary returned: built in XHL
                 if r.op == '=' and r.res == 'A' and r.args and self.name(r.args[0]) and \
@@ -371,6 +365,12 @@ class Fn:
                         r.args and self.name(r.args[0]) and self.name(r.args[0]).startswith('T') and \
                         not r.args[0].startswith(('*', '@', '&')):
                     h.setdefault(self.name(r.args[0]), fam_of(self.regs[n]))
+        if BYTE_LOAD_A:
+            for r in self.recs:                      # a byte loaded from memory into a temporary: through A
+                n = self.name(r.res) if r.res else None
+                if r.op == '=' and n and n.startswith('T') and not r.res.startswith(('*', '@')) and r.args and \
+                        r.args[0].startswith(('@', '*')) and size_of(r.res) == 1 and n not in h:
+                    self.soft.setdefault(n, ['XWA'])     # (soft: only when A is free)
         direct = set(h)
         for i in range(len(self.recs) - 1, -1, -1):
             r = self.recs[i]
