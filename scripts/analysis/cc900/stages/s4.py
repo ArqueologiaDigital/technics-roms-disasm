@@ -79,6 +79,7 @@ RESERVE_SOFT = True
 OR_ZERO = True
 SLA_SIGNED = True
 CONST_SIZES_STORE = True
+BIT_WORD_HALF = True                                 # bit / set / res on a long register use its word halves
 RES_SINGLE_BIT = 'reg'                               # &= clearing one bit as res: 'reg', 'all' or None
 SET_SINGLE_BIT = 'reg'                                # |= setting one bit as set: 'reg', 'all' or None                             # a typed constant stored to memory sizes the store                                    # a signed left shift is sla                                       # a 32-bit register == / != 0 is or r,r
 WIDEN_RESPECTS_RESERVED = True                       # no widening in place into a register reserved for another value                                  # soft preferences of later temporaries reserve too
@@ -575,6 +576,11 @@ class Fn:
 
     def emit(self, *ins):
         ins = [i for i in ins if i]
+        if len(ins) == 2 and ins[0] in ('bit', 'set', 'res', 'chg') and BIT_WORD_HALF:
+            m = re.match(r'^0x([0-9a-f]+),(X\w\w)$', ins[1])
+            if m and m.group(2) in [NAMES[f][2] for f in NAMES]:
+                b_, w = int(m.group(1), 16), NAMES[fam_of(m.group(2))][1]
+                ins[1] = '0x%x,%s' % (b_, w) if b_ < 16 else '0x%x,Q%s' % (b_ - 16, w)   # (no 32-bit form)
         if len(ins) == 2 and ins[0] in ('ld', 'cp', 'add', 'sub', 'and', 'or', 'xor', 'adc', 'sbc') and \
                 ins[1].startswith('(') and (re.search(r'\),(0x[0-9a-f]+|-?\d+)$', ins[1]) or ins[1].endswith(')')):
             sz = getattr(self, 'cur_size', 2)            # a memory destination and an immediate: sized mnemonic
