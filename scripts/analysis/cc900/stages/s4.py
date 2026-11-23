@@ -75,6 +75,8 @@ BACK_HINTS = 'one'                                   # hints pass back through o
 RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
+COALESCE_UNMODIFIED = False                          # a copy that is modified afterwards gets its own register
+FORCE_COPY_LIVE = True                               # a multiply / divide operand still needed is copied first
 ACROSS_XIZ = True                                    # a temporary live across a call goes to XIZ
 BYTE_LOAD_A = True                                   # a byte temporary loaded from memory is built in A
 RETURN_HINT = True                                   # a returned temporary is built in XHL
@@ -642,7 +644,12 @@ class Fn:
             elif op == 'FORCE':
                 a = r.args[0]
                 ra = self.reg(a)                     # the 32-bit product lands in the operand's own family
-                self.regs[self.name(r.res)] = NAMES[fam_of(ra)][2]
+                if FORCE_COPY_LIVE and (self.name(a)[0] != 'T' or not self.dies(a, i_)):
+                    rn = self.new_temp(self.name(r.res), 4)  # (an operand still needed: copied first)
+                    self.emit('ld', '%s,%s' % (sized(fam_of(rn), 2), ra))
+                    self.regs[self.name(r.res)] = NAMES[fam_of(rn)][2]
+                else:
+                    self.regs[self.name(r.res)] = NAMES[fam_of(ra)][2]
                 self.signed_of = getattr(self, 'signed_of', {})
                 self.signed_of[self.name(r.res)] = not unsigned(a)
             elif op in ('*=', '/=', '%=') and self.name(r.res) in self.regs and size_of(r.res) == 4 and \
@@ -750,7 +757,8 @@ class Fn:
                     self.name(r.res) not in self.regs and r.args and self.name(r.args[0]) and \
                     not r.args[0].startswith(('*', '@', '#')) and self.dies(r.args[0], i_) and \
                     self.name(r.args[0]) in self.regs and self.regs[self.name(r.args[0])] != 'stack' and \
-                    (self.name(r.args[0])[0] in COALESCE_FROM or
+                    ((self.name(r.args[0])[0] in COALESCE_FROM and
+                      not (COALESCE_UNMODIFIED and self.written_after(self.name(r.res), i_))) or
                      (COALESCE_READ_ONLY and self.only_compared(self.name(r.res), i_))):
                 ra = self.regs[self.name(r.args[0])]      # a copy of a variable that dies here: the same register
                 if COALESCE_RESPECTS_RESERVED and fam_of(ra) in self.reserved(self.name(r.res)):
