@@ -991,7 +991,10 @@ class Fn:
                 if PTR_ADD_LDA and v is not None and op in ('+=', '-=') and is_ptr and d[0] != '(' and \
                         -0x8000 <= (v if op == '+=' else -v) <= 0x7fff:   # (lda's displacement is a signed 16 bits)
                     k_ = v if op == '+=' else -v               # a pointer moved by a constant: lda r,r+N
-                    self.emit('lda', '%s,%s%s0x%x' % (d, d, '+' if k_ >= 0 else '-', abs(k_)))
+                    if 1 <= abs(k_) <= 8:                      # (1..8: inc / dec)
+                        self.emit('inc' if k_ > 0 else 'dec', '0x%x,%s' % (abs(k_), d))
+                    else:
+                        self.emit('lda', '%s,%s%s0x%x' % (d, d, '+' if k_ >= 0 else '-', abs(k_)))
                 elif v is not None and op == '&=' and RES_SINGLE_BIT in ('reg', 'all') and (d[0] != '(' or RES_SINGLE_BIT == 'all') \
                         and bin(~v & full).count('1') == 1:
                     self.emit('res', '0x%x,%s' % ((~v & full).bit_length() - 1, d))   # clears one bit: res
