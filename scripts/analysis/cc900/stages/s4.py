@@ -204,6 +204,18 @@ def field_type(t, d):
     return None
 
 
+def block_size(x):
+    """bytes of the object a memory operand @(p..) / *p / @sym(T) names, from the -g type records, or None"""
+    m = re.match(r'^@[\w.$]+\((\d+)\)', x or '')
+    if m:
+        return full_size(int(m.group(1)))
+    m = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)', x or '')
+    if m:
+        k = TYPES.get(int(m.group(1)))
+        return full_size(int(k[1][0])) if k and k[0] == 'P' else None
+    return None
+
+
 def deref_type(x):
     """the basic type name a memory operand @(p..) / *p reads, from p's pointer type, or None"""
     m = re.match(r'^(?:@\(|\*)[A-Z]\d+\(([A-Z]+) [FN]\*\)', x or '')
@@ -356,6 +368,12 @@ class Fn:
         for i, r in enumerate(self.recs):
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
                 h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
+        for r in self.recs:                          # a block copy's address temporaries: XIX (destination), XIY (source)
+            if r.op == 'LDIR':
+                for x, f in ((r.res, 'XIX'), (r.args[0] if r.args else None, 'XIY')):
+                    m = re.match(r'^(?:\*|@\()(T\d+)\([^()]*\)(?:\(Def\))?(?:\{..\})?\)?$', x or '')
+                    if m:
+                        h.setdefault(m.group(1), f)
         if RETURN_HINT:
             for r in self.recs:                      # a temporary returned: built in XHL
                 if r.op == '=' and r.res == 'A' and r.args and self.name(r.args[0]) and \
@@ -743,6 +761,24 @@ class Fn:
                 self.emit('j', 'XIX+' + w)
                 self.emit(L + ':')
                 self.tables += ['dw %s-%s' % (l, L) for l in labels]
+            elif op == 'LDIR':
+                dst_, src_ = r.res, r.args[0]          # a block copy: source address to XIY, destination to XIX
+                n_ = block_size(dst_) or block_size(src_)
+                if not n_:
+                    raise Unsupported('LDIR size')
+                for x, reg_ in ((src_, 'XIY'), (dst_, 'XIX')):
+                    m = re.match(r'^@([\w.$]+)\([^()]*\)$', x)
+                    if m:
+                        self.emit('ld', '%s,%s' % (reg_, m.group(1)))
+                        continue
+                    a_ = self.mem(x)
+                    if a_ is None:
+                        raise Unsupported('LDIR operand ' + x)
+                    a_ = a_[1:-1]
+                    if a_ != reg_:
+                        self.emit('lda' if re.search(r'[+-]', a_) else 'ld', '%s,%s' % (reg_, a_))
+                self.emit('ld', 'BC,0x%x' % (n_ // 2))
+                self.emit('ldirw', '(XIX+),(XIY+)')
             elif op == 'asm':
                 self.emit(r.args[0].strip())
             elif op == 'ACALP':
