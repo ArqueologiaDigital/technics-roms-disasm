@@ -230,8 +230,14 @@ def block_size(x):
     return None
 
 
+PTR0 = {}                                            # T<n> of type 0 -> the pointee it was copied with (a type name)
+
+
 def deref_type(x):
     """the basic type name a memory operand @(p..) / *p reads, from p's pointer type, or None"""
+    m = re.match(r'^(?:@\(|\*)(T\d+)\(0\)', x or '')
+    if m and m.group(1) in PTR0:
+        return PTR0[m.group(1)]
     m = re.match(r'^(?:@\(|\*)[A-Z]\d+\(([A-Z]+) [FN]\*\)', x or '')
     if m:
         return m.group(1)
@@ -325,6 +331,21 @@ class Fn:
                 self.psize.setdefault(m.group(1), size_of(m.group(1) + m.group(2)))
         SIZE0.clear()
         UNS0.clear()
+        PTR0.clear()
+        for _ in range(2):                           # a type-0 temporary copied from a pointer keeps its pointee
+            for r in self.recs:
+                if r.op == '=' and r.res and r.args and re.match(r'^T\d+\(0\)', r.res):
+                    t = re.match(r'^(T\d+)', r.res).group(1)
+                    v = r.args[0]
+                    pm = re.match(r'^[A-Z]\d+\(([A-Z]+) [FN]\*\)', v)
+                    pn = re.match(r'^[A-Z]\d+\((\d+)\)', v)
+                    p0 = re.match(r'^(T\d+)\(0\)', v)
+                    if pm:
+                        PTR0.setdefault(t, pm.group(1))
+                    elif pn and pointee(int(pn.group(1))):
+                        PTR0.setdefault(t, pointee(int(pn.group(1))))
+                    elif p0 and p0.group(1) in PTR0:
+                        PTR0.setdefault(t, PTR0[p0.group(1)])
         for r in self.recs:                          # a bit test fixes its type-0 operand's size by the bit number
             if r.op in ('JRBC', 'JRBS') and len(r.args) == 2 and re.match(r'^T\d+\(0\)', r.args[0] or ''):
                 b = const(r.args[1])
@@ -342,6 +363,8 @@ class Fn:
                         pn = re.match(r'^(?:@\(|\*)[A-Z]\d+\((\d+)\)', v)
                         if not pm and pn and pointee(int(pn.group(1))):
                             pm = re.match(r'(.*)', pointee(int(pn.group(1))))
+                        if m and not pm and u is a and SIZE_POINTEE and v.startswith(('@(', '*')) and deref_type(v):
+                            pm = re.match(r'(.*)', deref_type(v))            # (through a type-0 pointer, PTR0)
                         if m and pm and u is a and SIZE_POINTEE:
                             SIZE0.setdefault(m.group(1), size_of('X(%s)' % pm.group(1)))   # a load: the pointee's size
                             UNS0.setdefault(m.group(1), pm.group(1).startswith('U'))
