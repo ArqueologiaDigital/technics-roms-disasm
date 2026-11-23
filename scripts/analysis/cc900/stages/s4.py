@@ -75,6 +75,7 @@ BACK_HINTS = 'one'                                   # hints pass back through o
 RESERVE_HINTED = True                                # avoid registers hinted to temporaries defined while live
 COALESCE_RESPECTS_RESERVED = True                    # no coalescing into a register reserved for another value
 HINT_YIELDS = False                                   # a hint gives way to a register reserved for another temporary
+BYTE_LOAD_A = False                                   # a byte temporary loaded from memory is built in A
 RETURN_HINT = True                                   # a returned temporary is built in XHL
 CALL_TARGET_HL = True                                # an indirect call's target temporary prefers XHL, then XIX
 FORCED = {}                                          # temporary -> family, imposed by a probe (s4_temps.py)
@@ -284,7 +285,6 @@ class Fn:
         hi = any(r in ('QIZ', 'QIZH', 'QIZL', 'XIZ') for r in vals)
         self.save_iz = 'XIZ' if lo and hi else ('IZ' if lo else ('QIZ' if hi else None))
         self.code = []
-        self.hints = self.temp_hints()
         self.soft = {}
         for r in self.recs:                          # an indirect call's target: XHL, else XIX
             if r.op == 'ACALP' and r.args and self.name(r.args[0]) and self.name(r.args[0]).startswith('T') and CALL_TARGET_HL:
@@ -325,6 +325,7 @@ class Fn:
                                 SIZE0.setdefault(m.group(1), SIZE0[n2])
                             if n2 in UNS0:
                                 UNS0.setdefault(m.group(1), UNS0[n2])
+        self.hints = self.temp_hints()         # (after the type-0 sizes: hints read them)
 
     def name(self, x):
         return re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x).group(1) if x and re.match(r'^[*&]?([A-Z]\d+|@[\w.$]+)', x) else None
@@ -352,6 +353,12 @@ class Fn:
         for i, r in enumerate(self.recs):
             if r.op == 'AARG' and r.extra and re.match(r'^#0,[123]$', r.extra) and self.name(r.args[0]):
                 h[self.name(r.args[0])] = ARGREG[int(r.extra[-1]) - 1]
+        if BYTE_LOAD_A:
+            for r in self.recs:                      # a byte loaded from memory into a temporary: through A
+                n = self.name(r.res) if r.res else None
+                if r.op == '=' and n and n.startswith('T') and not r.res.startswith(('*', '@')) and r.args and \
+                        r.args[0].startswith(('@', '*')) and size_of(r.res) == 1:
+                    h.setdefault(n, 'XWA')
         if RETURN_HINT:
             for r in self.recs:                      # a temporary returned: built in XHL
                 if r.op == '=' and r.res == 'A' and r.args and self.name(r.args[0]) and \
