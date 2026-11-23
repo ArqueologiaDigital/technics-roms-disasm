@@ -827,7 +827,7 @@ class Fn:
             elif op == 'ACALP':
                 target = self.long_of(r.args[0])
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
-                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz \
+                if r.res in (None, 'A') and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz \
                         and not self.spd and not self.retd:
                     self.emit('j', target)
                     self.tail = True
@@ -968,7 +968,7 @@ class Fn:
             elif op in ('ACALL', 'CCALL'):
                 target = r.args[0].split('(')[0].lstrip('@')
                 nxt = next((x for x in self.recs[i_ + 1:] if x.op not in ('DUMMY',)), None)
-                if r.res is None and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz \
+                if r.res in (None, 'A') and nxt is not None and nxt.op == 'END' and not self.frame and not self.save_iz \
                         and not self.spd and not self.retd:
                     self.emit('j', target)               # a call that ends the function: a jump
                     self.tail = True
